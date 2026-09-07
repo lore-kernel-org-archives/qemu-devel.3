@@ -4,76 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F252CC79F8C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 03:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E80C79F8C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 03:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Pnt-0005HB-JX; Sun, 06 Sep 2026 23:13:53 -0400
+	id 1x3PuC-00068l-5y; Sun, 06 Sep 2026 23:20:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x3Pnr-0005Gz-Hd
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 23:13:51 -0400
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1x3Pu9-00068I-HD
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 23:20:21 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x3Pno-0002kg-LA
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 23:13:51 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Cxf9PmK55qEU0JAA--.26782S3;
- Mon, 07 Sep 2026 11:13:42 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxBc3lK55qLUAcAA--.32603S2;
- Mon, 07 Sep 2026 11:13:41 +0800 (CST)
-Subject: Re: [PATCH v4 23/75] loongarch/virt: convert OnOffAuto properties to
- QAPI-aware registration
-To: =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?=
- <berrange@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
- Song Gao <17746591750@163.com>, Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
- <20260904-qom-qapi-v4-23-a985f168e938@redhat.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <27569d46-e1fc-072b-9606-4ff1c26901a5@loongson.cn>
-Date: Mon, 7 Sep 2026 11:13:24 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <lixianglai@loongson.cn>) id 1x3Pu6-0003N9-M8
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 23:20:21 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxLtNuLZ5qS00JAA--.26795S3;
+ Mon, 07 Sep 2026 11:20:14 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJAx1cxtLZ5qfkAcAA--.32564S2;
+ Mon, 07 Sep 2026 11:20:13 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: qemu-devel@nongnu.org,
+	lixianglai@loongson.cn
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Subject: [PATCH V5] target/loongarch: clear the registers when cpu is reset
+Date: Mon,  7 Sep 2026 11:00:04 +0800
+Message-Id: <20260907030004.1521032-1-lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-In-Reply-To: <20260904-qom-qapi-v4-23-a985f168e938@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxBc3lK55qLUAcAA--.32603S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3GFykXFWrZFW5Xry8Ww1fXwc_yoW7trykpF
- nxZanxZF1UJF4I9aykK3WDu3WUKwsxCa4YgF4fur10kF1qgr1jqryfCw12gFyUA3yDX3WF
- qa1ku39xZF1fJagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
+X-CM-TRANSID: qMiowJAx1cxtLZ5qfkAcAA--.32564S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,162 +64,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use virt-manager to start a virtual machine, and then use the following
+command to manually trigger the crash of the virtual machine:
+echo c > /proc/sysrq-trigger
 
+After the VM is abnormal, the ESTAT register has a certain probability of
+remaining interrupted. Then the VM is forced to restart and the VM is
+suspended in the interrupt handling function during startup.
 
-On 2026/9/5 上午3:58, Marc-André Lureau wrote:
-> Convert the acpi, v-eiointc, and dmsi OnOffAuto properties from
-> manual visitor-based callbacks to property_add_qapi_enum().
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/loongarch/virt.c | 85 +++++++++++++++++++++++++----------------------------
->   1 file changed, 40 insertions(+), 45 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 9cc79929a8ab..750ce2dbe5fc 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -36,7 +36,8 @@
->   #include "target/loongarch/cpu.h"
->   #include "target/loongarch/cpu-mmu.h"
->   #include "hw/firmware/smbios.h"
-> -#include "qapi/qapi-visit-common.h"
-> +#include "qapi/qapi-type-infos-common.h"
-> +#include "qapi/visitor.h"
->   #include "hw/acpi/generic_event_device.h"
->   #include "hw/mem/nvdimm.h"
->   #include "hw/core/platform-bus.h"
-> @@ -51,26 +52,21 @@
->   #include "qemu/log.h"
->   #include "kvm/kvm_loongarch.h"
->   
-> -static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
-> -                             void *opaque, Error **errp)
-> +static int virt_get_dmsi(Object *obj, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -    OnOffAuto dmsi = lvms->dmsi;
-> -
-> -    visit_type_OnOffAuto(v, name, &dmsi, errp);
-> -
-> +    return lvms->dmsi;
->   }
-> -static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
-> -                              void *opaque, Error **errp)
-> +
-> +static void virt_set_dmsi(Object *obj, int value, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    lvms->dmsi = value;
->   
-> -    visit_type_OnOffAuto(v, name, &lvms->dmsi, errp);
-> -
-> -    if (lvms->dmsi == ON_OFF_AUTO_OFF) {
-> +    if (value == ON_OFF_AUTO_OFF) {
->           lvms->misc_feature &= ~BIT(IOCSRF_DMSI);
->           lvms->misc_status &= ~BIT_ULL(IOCSRM_DMSI_EN);
-> -    } else if (lvms->dmsi == ON_OFF_AUTO_ON) {
-> +    } else if (value == ON_OFF_AUTO_ON) {
->           lvms->misc_feature = BIT(IOCSRF_DMSI);
->       }
->   }
-> @@ -78,21 +74,16 @@ static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
->   #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 64
->   #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
->   
-> -static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
-> -                              void *opaque, Error **errp)
-> +static int virt_get_veiointc(Object *obj, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -    OnOffAuto veiointc = lvms->veiointc;
-> -
-> -    visit_type_OnOffAuto(v, name, &veiointc, errp);
-> +    return lvms->veiointc;
->   }
->   
-> -static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
-> -                              void *opaque, Error **errp)
-> +static void virt_set_veiointc(Object *obj, int value, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -
-> -    visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
-> +    lvms->veiointc = value;
->   }
->   
->   static bool virt_get_highmem_mmio(Object *obj, Error **errp)
-> @@ -1025,21 +1016,16 @@ static void virt_init(MachineState *machine)
->       loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
->   }
->   
-> -static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
-> -                          void *opaque, Error **errp)
-> +static int virt_get_acpi(Object *obj, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -    OnOffAuto acpi = lvms->acpi;
-> -
-> -    visit_type_OnOffAuto(v, name, &acpi, errp);
-> +    return lvms->acpi;
->   }
->   
-> -static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
-> -                               void *opaque, Error **errp)
-> +static void virt_set_acpi(Object *obj, int value, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -
-> -    visit_type_OnOffAuto(v, name, &lvms->acpi, errp);
-> +    lvms->acpi = value;
->   }
->   
->   static char *virt_get_oem_id(Object *obj, Error **errp)
-> @@ -1483,20 +1469,29 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->       hc->unplug_request = virt_device_unplug_request;
->       hc->unplug = virt_device_unplug;
->   
-> -    object_class_property_add(oc, "acpi", "OnOffAuto",
-> -        virt_get_acpi, virt_set_acpi,
-> -        NULL, NULL);
-> -    object_class_property_set_description(oc, "acpi",
-> -        "Enable ACPI");
-> -    object_class_property_add(oc, "v-eiointc", "OnOffAuto",
-> -        virt_get_veiointc, virt_set_veiointc,
-> -        NULL, NULL);
-> -    object_class_property_set_description(oc, "v-eiointc",
-> -                            "Enable Virt Extend I/O Interrupt Controller.");
-> -    object_class_property_add(oc, "dmsi", "OnOffAuto",
-> -        virt_get_dmsi, virt_set_dmsi, NULL, NULL);
-> -    object_class_property_set_description(oc, "dmsi",
-> -                            "Enable direct Message-interrupts Controller.");
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name = "acpi",
-> +        .description = "Enable ACPI",
-> +        .qapi_type = &OnOffAuto_type_info,
-> +        .get = virt_get_acpi,
-> +        .set = virt_set_acpi,
-> +    ));
-> +
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name = "v-eiointc",
-> +        .description = "Enable Virt Extend I/O Interrupt Controller.",
-> +        .qapi_type = &OnOffAuto_type_info,
-> +        .get = virt_get_veiointc,
-> +        .set = virt_set_veiointc,
-> +    ));
-> +
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name = "dmsi",
-> +        .description = "Enable direct Message-interrupts Controller.",
-> +        .qapi_type = &OnOffAuto_type_info,
-> +        .get = virt_get_dmsi,
-> +        .set = virt_set_dmsi,
-> +    ));
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->   #ifdef CONFIG_TPM
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+In order to clear the remaining interrupt information in the ESTAT
+register, we performed this operation during the reset process, while also
+checking and optimizing the status of other CSR registers.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+---
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>
+
+changelog:
+V4->V5:
+In the `CPUSysState` structure, the members `CSR_ASID`, `CSR_PRCFG1`,
+`CSR_PRCFG2`, and `CSR_PRCFG3` cannot be directly cleared to zero.
+Therefore, we have also added the `end_reset_fields` member to the 
+`CPUSysState` structure to prevent them from being directly zeroed out.
+
+V3->V4:
+Remove the field end_reset_fields from the CPUSysState structure, and
+rearrange other fields as needed to avoid them being zeroed out.
+
+V2->V3:
+Remove or update outdated comments related to this patch.
+
+V1->V2:
+1.Add a description of the issues related to this patch
+2.Replace the macro definition MAX_PERF_EVENTS with the variable
+perf_event_num as the condition for the for loop.
+3.Rebase against the latest codebase.
+4.Refer to the usage of end_reset_fields on ARM and other architectures,
+and modify the current implementation accordingly.
+
+ target/loongarch/cpu.c | 54 +++++++-----------------------------------
+ target/loongarch/cpu.h | 34 ++++++++++++++++----------
+ 2 files changed, 29 insertions(+), 59 deletions(-)
+
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 84a130956d..18d73ebc1b 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -623,6 +623,13 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+         lacc->parent_phases.hold(obj, type);
+     }
+ 
++    /*
++     * Workaround for edk2-stable202408, CSR PGD register is set only if
++     * its value is equal to zero for boot cpu, it causes reboot issue.
++     */
++    memset(env, 0, offsetof(CPULoongArchState, end_reset_fields));
++    memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
++
+ #ifdef CONFIG_TCG
+     env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
+ 
+@@ -637,47 +644,11 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+                            R_TLBENTRY_32_PPN_MASK;
+     }
+ #endif
+-    env->fcsr0 = 0x0;
+ 
+-    int n;
+-    /* Set csr registers value after reset, see the manual 6.4. */
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
+     sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
+-
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
+-
+-    sys->CSR_MISC = 0;
+-
+-    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
+-    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
+-
+-    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+-    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+     sys->CSR_CPUID = cs->cpu_index;
+-    sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+-    sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
+-    sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+-    sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
+     sys->CSR_TID = cs->cpu_index;
+-    /*
+-     * Workaround for edk2-stable202408, CSR PGD register is set only if
+-     * its value is equal to zero for boot cpu, it causes reboot issue.
+-     *
+-     * Here clear CSR registers relative with TLB.
+-     */
+-    sys->CSR_PGDH = 0;
+-    sys->CSR_PGDL = 0;
+-    sys->CSR_PWCH = 0;
+-    sys->CSR_EENTRY = 0;
+-    sys->CSR_TLBRENTRY = 0;
+-    sys->CSR_MERRENTRY = 0;
++
+     /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
+     if (sys->CSR_PRCFG2 == 0) {
+         sys->CSR_PRCFG2 = 0x3fffff000;
+@@ -685,18 +656,9 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+     tlb_ps = ctz32(sys->CSR_PRCFG2);
+     sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
+     sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
+-    for (n = 0; n < 4; n++) {
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV0, 0);
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV1, 0);
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV2, 0);
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV3, 0);
+-    }
+ 
+ #ifndef CONFIG_USER_ONLY
+     env->pc = 0x1c000000;
+-#ifdef CONFIG_TCG
+-    memset(env->tlb, 0, sizeof(env->tlb));
+-#endif
+     if (kvm_enabled()) {
+         kvm_arch_reset_vcpu(cs);
+     }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 97db3b453f..d83dcef6f8 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -334,7 +334,6 @@ typedef struct CPUSysState {
+     uint64_t CSR_TLBEHI;
+     uint64_t CSR_TLBELO0;
+     uint64_t CSR_TLBELO1;
+-    uint64_t CSR_ASID;
+     uint64_t CSR_PGDL;
+     uint64_t CSR_PGDH;
+     uint64_t CSR_PGD;
+@@ -343,9 +342,6 @@ typedef struct CPUSysState {
+     uint64_t CSR_STLBPS;
+     uint64_t CSR_RVACFG;
+     uint64_t CSR_CPUID;
+-    uint64_t CSR_PRCFG1;
+-    uint64_t CSR_PRCFG2;
+-    uint64_t CSR_PRCFG3;
+     uint64_t CSR_SAVE[16];
+     uint64_t CSR_TID;
+     uint64_t CSR_TCFG;
+@@ -380,6 +376,14 @@ typedef struct CPUSysState {
+     uint64_t CSR_MSGIS[N_MSGIS];
+     uint64_t CSR_MSGIR;
+     uint64_t CSR_MSGIE;
++
++    /* Fields up to this point are cleared by a CPU reset */
++    struct {} end_reset_fields;
++
++    uint64_t CSR_ASID;
++    uint64_t CSR_PRCFG1;
++    uint64_t CSR_PRCFG2;
++    uint64_t CSR_PRCFG3;
+ } CPUSysState;
+ 
+ typedef struct CPUArchState {
+@@ -391,16 +395,9 @@ typedef struct CPUArchState {
+     uint32_t fcsr0;
+     lbt_t  lbt;
+ 
+-    uint32_t cpucfg[21];
+-    uint32_t pv_features;
+-    uint64_t vendor_id;
+-    uint64_t cpu_id;
+-    CPUSysState sys_states[1];
+-
+     struct {
+         uint64_t guest_addr;
+     } stealtime;
+-    uint32_t perf_event_num;
+ 
+ #ifdef CONFIG_TCG
+     float_status fp_status;
+@@ -410,12 +407,23 @@ typedef struct CPUArchState {
+     uint64_t llval_high; /* For 128-bit atomic SC.Q */
+     uint64_t llbit_scq; /* Potential LL.D+LD.D+SC.Q sequence in effect */
+     uint64_t hw_pte_mask; /* Mask of architecturally-defined (hardware) PTE bits. */
+-#endif
++
+ #ifndef CONFIG_USER_ONLY
+-#ifdef CONFIG_TCG
+     LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
++#endif
+ #endif
+ 
++    /* Fields up to this point are cleared by a CPU reset */
++    struct {} end_reset_fields;
++
++    CPUSysState sys_states[1];
++    uint32_t cpucfg[21];
++    uint32_t pv_features;
++    uint64_t vendor_id;
++    uint64_t cpu_id;
++    uint32_t perf_event_num;
++
++#ifndef CONFIG_USER_ONLY
+     AddressSpace *address_space_iocsr;
+     uint32_t mp_state;
+ #endif
+-- 
+2.39.1
 
 
