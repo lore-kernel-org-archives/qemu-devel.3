@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B6CC79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C6BC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:09:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3XDW-0004U7-UU; Mon, 07 Sep 2026 07:08:50 -0400
+	id 1x3XDO-00049m-8m; Mon, 07 Sep 2026 07:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x3XDV-0004SU-LG; Mon, 07 Sep 2026 07:08:49 -0400
+ id 1x3XDB-0003XH-85; Mon, 07 Sep 2026 07:08:29 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x3XDT-00043g-QX; Mon, 07 Sep 2026 07:08:49 -0400
+ id 1x3XD9-0003yI-IJ; Mon, 07 Sep 2026 07:08:28 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 789734008E;
- Mon,  7 Sep 2026 11:08:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553ED1F00A3A;
- Mon,  7 Sep 2026 11:08:44 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 30AF64008E;
+ Mon,  7 Sep 2026 11:08:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C311F00A3A;
+ Mon,  7 Sep 2026 11:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788779326;
- bh=88iPDX3iP/b1Vj6C+uitMmT4Rl5MNZD7bE6s4bLp/X8=;
+ s=k20260515; t=1788779306;
+ bh=6In/0Mws2BMD9gkRJbFioNelwcbx/otmGgYGfdAxe4M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fLcM0TCI3i1HyY/hRkxAWROR++PkEpgT80lYEhw02fL32EGAq5LTAzvjnQoiYmF5Y
- LiRvmYW7uQmCO6mtY7/bwUWI01XJOwrwdPsbJRgR1oryN85gUuEg6jD01mzba/caq/
- 7yDOntA6yfvcyZdgPUSHnM007D2pX4NofW1Io80CXGTvxbCJwon16U+CeT4VGHCWQh
- HXqu7+xeIWXsocWcBx1fa3C7uUuMpu9WbxZVb3ApFEP8Wh8/+JsW4sxdsu4qbUPliD
- WMY8GdysU2JgI3fujuzy0Rdx8zmRww0Jp/UDmuKmB+V3GK4zTV1Ho9Bxv3kEA/1iPQ
- rkDtWgHRuUYVw==
+ b=f56bfzwMvQL9qF1lz3BIz8iE+uGtXVUlrhWJkqObXa4I1mmwaB5+JYGBB6g0DIPoq
+ ccwhDAiTJ1oVdE1oJDrxURODmH5TNzjnFTag0RWSPbL6DX4gAxe7zmVKTgA7ix29WY
+ Tf/weeuweqrv0RKMBAihfXeP+82EjVka5F6wkv+tMe/TI30CmufJ0JTkdUYhgwCjHU
+ w94Vpz17htMIO3nHW8MDenQiRc6z27APQ+ePk5/Gi9AVRJP4UJcO8uwW/lHlLhSXku
+ emnN8NfgTV2Mcy4rnA+2oKyMOyGbv2BGx1V0JimGQI59f8UeDLfgLBwBIOnOa7c0IL
+ uxeyTetUo/NAw==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 12/12] file-posix: reject a zone append to a full or
- conventional zone
-Date: Mon,  7 Sep 2026 13:07:47 +0200
-Message-ID: <20260907110748.1868714-13-cassel@kernel.org>
+Subject: [PATCH v4 04/12] virtio-blk: report the effective zone write
+ granularity
+Date: Mon,  7 Sep 2026 13:07:39 +0200
+Message-ID: <20260907110748.1868714-5-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907110748.1868714-1-cassel@kernel.org>
 References: <20260907110748.1868714-1-cassel@kernel.org>
@@ -71,118 +72,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raw_co_prw() replaces the offset of a zone append with the write pointer
-of the addressed zone, which assumes that the stored value names a
-position inside that zone. It does not in two cases.
+For ZBC/ZAC devices the write granularity is the physical block size, so
+a 512e SMR disk exposed through a host_device backend has a logical block
+size of 512 and a zone write granularity of 4096. We told the guest driver 512
+while raw_co_zone_append() rejects anything that is not 4096 byte
+aligned, so the driver saw a plain I/O error for a request it had been
+told was valid.
 
-A full zone has its write pointer recorded at the end of the zone, since
-get_zones_wp() stores start + len for BLK_ZONE_COND_FULL. That is the
-first sector of the following zone, so the append is submitted there. The
-kernel accepts it whenever that zone is empty, because it is a legal
-write at its write pointer, and the completion path advances the wrong
-zone because it recomputes the zone index from the replaced offset. The
-data is written to a zone that was never addressed and success is
-returned:
+Report the larger of the backend granularity and the logical block size
+instead. The guest driver cannot issue writes finer than the logical
+size, so the larger of the two is the constraint that applies. This
+matches what a Linux guest derives for itself: blk_validate_zoned_limits()
+raises zone_write_granularity to the logical block size, and
+blk_stack_limits() stacks it with max().
 
-  zone 2 finished, then a 4 KiB append to zone 2:
-  After zap done, the append sector is 0x180000     <- zone 3
-  zone 2: wptr 0x180000, zcond:14 (full)
-  zone 3: wptr 0x180008                             <- advanced
+Add it as a helper next to blkconf_blocksizes(), since it is derived from
+a BlockConf and the limits of the backend below it, and use it for the
+zone append offset check in check_zoned_request(), which validated
+against bs->bl.write_granularity. The value reported to the driver and
+the value that requests are validated against then cannot drift apart.
+The helper cannot return zero because blkconf_blocksizes() always leaves
+a logical block size behind, so the check no longer needs to guard
+against an unset granularity.
 
-A conventional zone has no write pointer at all, and its array entry
-carries only the type marker in the top bit, so the offset becomes
-negative and the write fails with EINVAL. That is harmless but it reports
-nothing about the actual mistake.
-
-Reject both while the write pointer lock is held, since the state has to
-be read and acted on atomically. check_zoned_request() in virtio-blk
-refuses an append to a conventional zone, so that case needs a caller
-that goes to the driver directly, but nothing there examines whether a
-zone is full, so a guest can reach the misdirected write.
-
-Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
+Fixes: 4f7366506a96 ("virtio-blk: add zoned storage emulation for zoned devices")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/file-posix.c       | 27 +++++++++++++++++++++++++--
- block/io.c               |  9 +++++++++
- include/block/block-io.h |  6 ++++++
- 3 files changed, 40 insertions(+), 2 deletions(-)
+ hw/block/block.c         |  7 +++++++
+ hw/block/virtio-blk.c    | 13 +++++++------
+ include/hw/block/block.h |  8 ++++++++
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 0e8ffe91c4..2cd16f58a2 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2565,8 +2565,31 @@ raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
-         bs->bl.zoned != BLK_Z_NONE) {
-         qemu_co_mutex_lock(&bs->wps->colock);
-         if (type & QEMU_AIO_ZONE_APPEND) {
--            int index = bdrv_zone_index(bs, offset);
--            offset = bs->wps->wp[index];
-+            uint32_t index = bdrv_zone_index(bs, offset);
-+            uint64_t wp = bs->wps->wp[index];
-+
-+            /*
-+             * The write pointer of the addressed zone becomes the offset of
-+             * the write, so it has to name a position inside that zone. It
-+             * does not for a conventional zone, which has no write pointer and
-+             * stores a type marker in the top bit instead, and it does not for
-+             * a full zone, whose write pointer is reported at the zone end.
-+             * Either would send the data to a zone that was never addressed.
-+             */
-+            if (BDRV_ZT_IS_CONV(wp)) {
-+                error_report("zone append at offset 0x%" PRIx64 " addresses a "
-+                             "conventional zone", offset);
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                return -EINVAL;
-+            }
-+            if (bdrv_zone_is_full(bs, index)) {
-+                error_report("zone append at offset 0x%" PRIx64 " addresses a "
-+                             "full zone", offset);
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                return -ENOSPC;
-+            }
-+
-+            offset = wp;
-         }
-     }
- #endif
-diff --git a/block/io.c b/block/io.c
-index 64e2f2b046..b657816688 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3383,6 +3383,15 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
-     return offset >> bs->bl.zone_size_bits;
+diff --git a/hw/block/block.c b/hw/block/block.c
+index f187fa025d..1c3135843d 100644
+--- a/hw/block/block.c
++++ b/hw/block/block.c
+@@ -201,6 +201,13 @@ bool blkconf_blocksizes(BlockConf *conf, Error **errp)
+     return true;
  }
  
-+bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index)
++uint32_t blkconf_zone_write_granularity(BlockConf *conf)
 +{
-+    uint64_t zone_end = MIN((uint64_t)(index + 1) * bs->bl.zone_size,
-+                            (uint64_t)bs->total_sectors << BDRV_SECTOR_BITS);
-+    IO_CODE();
++    BlockDriverState *bs = blk_bs(conf->blk);
 +
-+    return bs->wps->wp[index] >= zone_end;
++    return MAX(bs->bl.write_granularity, conf->logical_block_size);
 +}
 +
- void *qemu_blockalign(BlockDriverState *bs, size_t size)
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp)
  {
-     IO_CODE();
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index 9d1c0eb7fb..c21dd6444e 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -128,6 +128,12 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
-                                                   BdrvRequestFlags flags);
- /* The index of the zone that @offset falls in. */
- uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
-+/*
-+ * True when the write pointer of a zone has reached the end of the writable
-+ * part of that zone, so that nothing more can be written to it until it is
-+ * reset. The write pointer lock must be held when called.
-+ */
-+bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index);
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 8c5b87793e..f6781ff5f6 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -520,11 +520,11 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+     }
  
- bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
+     if (append) {
+-        if (bs->bl.write_granularity) {
+-            if ((offset % bs->bl.write_granularity) != 0) {
+-                *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
+-                return false;
+-            }
++        uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
++
++        if (offset & wg_mask) {
++            *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
++            return false;
+         }
+ 
+         index = bdrv_zone_index(bs, offset);
+@@ -1274,7 +1274,8 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+                      bs->bl.max_active_zones);
+         virtio_stl_p(vdev, &blkcfg.zoned.max_open_zones,
+                      bs->bl.max_open_zones);
+-        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity, blk_size);
++        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
++                     blkconf_zone_write_granularity(conf));
+         virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
+                      bs->bl.max_append_sectors);
+     } else {
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index df941df19f..f98525c01a 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -114,6 +114,14 @@ bool blkconf_geometry(BlockConf *conf, int *trans,
+                       unsigned cyls_max, unsigned heads_max, unsigned secs_max,
+                       Error **errp);
+ bool blkconf_blocksizes(BlockConf *conf, Error **errp);
++/*
++ * The alignment constraint that applies to writes to a sequential zone. The
++ * medium may require a coarser granularity than the logical block size, while
++ * a guest cannot issue writes finer than the logical block size, so the
++ * constraint that applies is the larger of the two. A frontend must report this
++ * value to its guest and validate requests against it.
++ */
++uint32_t blkconf_zone_write_granularity(BlockConf *conf);
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp);
  
 -- 
 2.55.0
