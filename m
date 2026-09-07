@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760F8C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C39AC79F99
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Wyb-0004W9-Fv; Mon, 07 Sep 2026 06:53:25 -0400
+	id 1x3Wyi-0004Wx-QP; Mon, 07 Sep 2026 06:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3WyY-0004Vm-Lu
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x3Wyb-0004WL-Ot
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3WyU-0008WD-EG
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:20 -0400
+ id 1x3WyX-000052-Kg
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788778397;
+ s=mimecast20190719; t=1788778400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/qIMG2YygDO+bEvssxKQBG+LKR1ijNpdOfCqT6Qk6dM=;
- b=F2BwpcDVbWXDMbQJbw6QUdAtiUt7XScRpQV6RRDuyc5uK+IUq3qEuNCQ7RSXCdailE0N6N
- MkiekNEgBYHHM4SNzaC3ZWD9yuaUAHaNdrshfbt5vSherKFKtVgYb1l3UzQ9et1CcjaUIb
- r93XeZsZPT00iNTk/MtLUa/x0r+N/v8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2J4h1MLwsa6v9AdSB/cjdqrcF7St+KHBYqO/t9Qy89c=;
+ b=UE4Fhph0jhQonKr6Y/t2PaoWBuu5yKRDa/VLQgOKB9MSBBVQ5DoZYnaqe7Kroi51DICxWS
+ ddkMK5wKf9bna27EGFgV4SB94ldOq5pf3WbQWrM+x1fvPaeWvx1GMQ7EFOOvwyCWxHKSVq
+ SwgJIYFO2rU8DoAzhEXLghfQw4AA+PM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-UNUZ4i2xPbeFnofw79G6aA-1; Mon,
- 07 Sep 2026 06:53:14 -0400
-X-MC-Unique: UNUZ4i2xPbeFnofw79G6aA-1
-X-Mimecast-MFC-AGG-ID: UNUZ4i2xPbeFnofw79G6aA_1788778393
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-9zXeL_ciPdO5z21RAeY5OQ-1; Mon,
+ 07 Sep 2026 06:53:17 -0400
+X-MC-Unique: 9zXeL_ciPdO5z21RAeY5OQ-1
+X-Mimecast-MFC-AGG-ID: 9zXeL_ciPdO5z21RAeY5OQ_1788778396
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F81C1828B02; Mon,  7 Sep 2026 10:53:13 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAD7619560B6; Mon,  7 Sep 2026 10:53:15 +0000 (UTC)
 Received: from berrange.fritz.box (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 860821956056; Mon,  7 Sep 2026 10:53:11 +0000 (UTC)
+ id D1EA31956042; Mon,  7 Sep 2026 10:53:13 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v3 00/12] Misc fixes patches
-Date: Mon,  7 Sep 2026 11:52:58 +0100
-Message-ID: <20260907105310.497730-1-berrange@redhat.com>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Evgeny Kolmakov <randomjack94dev@gmail.com>
+Subject: [PULL v3 01/12] crypto: Use g_autofree
+Date: Mon,  7 Sep 2026 11:52:59 +0100
+Message-ID: <20260907105310.497730-2-berrange@redhat.com>
+In-Reply-To: <20260907105310.497730-1-berrange@redhat.com>
+References: <20260907105310.497730-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,67 +89,300 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ff1d2d19d7e24893e2012d879f8e73077e17b9bd:
+From: Evgeny Kolmakov <randomjack94dev@gmail.com>
 
-  Merge tag 'pull-11.1-check-tcg-meson-040926-2' of https://gitlab.com/stsquad/qemu into staging (2026-09-04 16:52:58 +0100)
+Use g_autofree attribute to reduce the amount
+of manual g_free() calls and 'goto out' code
 
-are available in the Git repository at:
+Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/block.c          | 17 ++++++-----------
+ crypto/hmac-gcrypt.c    | 12 ++++--------
+ crypto/hmac-glib.c      | 10 +++-------
+ crypto/ivgen-essiv.c    | 15 ++++-----------
+ crypto/ivgen.c          |  6 ++----
+ crypto/secret_keyring.c |  5 ++---
+ 6 files changed, 21 insertions(+), 44 deletions(-)
 
-  https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
-
-for you to fetch changes up to 0766e83d2f94285338e6c642b4b003ffafb142f4:
-
-  docs/system/security: exclude uninitialized stack variables as bugs (2026-09-07 11:31:03 +0100)
-
-----------------------------------------------------------------
-Merge crypto, I/O and misc fixes
-
- * Deprecated the AF_ALG crypto backend
- * Improve checkpatch output in CI jobs
- * Document security policy for uninitialized stack variables
- * Fix multiple denial of service flaws in websockets
- * Fix error handling in some x509 APIs
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (3):
-  crypto: deprecate the AF_ALG crypto backend
-  gitlab: use --emacs --quiet for checkpatch.pl instead of --terse
-  docs/system/security: exclude uninitialized stack variables as bugs
-
-Denis V. Lunev (6):
-  io/channel-socket: do not treat a zero length write as an error
-  io/channel-websock: send an HTTP 400 when the greeting has no space
-  io/channel-websock: handle a blocked write during the handshake
-  tests/unit: add websock handshake test
-  io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
-  tests/unit: cover blocked IO during the websock handshake
-
-Evgeny Kolmakov (1):
-  crypto: Use g_autofree
-
-Marc-André Lureau (2):
-  crypto/x509-utils: don't double set errp
-  crypto/x509-utils: propagate the error
-
- .gitlab-ci.d/check-patch.py          |   6 +-
- crypto/block.c                       |  17 +-
- crypto/hmac-gcrypt.c                 |  12 +-
- crypto/hmac-glib.c                   |  10 +-
- crypto/ivgen-essiv.c                 |  15 +-
- crypto/ivgen.c                       |   6 +-
- crypto/secret_keyring.c              |   5 +-
- crypto/x509-utils.c                  |   4 +-
- docs/about/deprecated.rst            |  21 +++
- docs/system/security.rst             |  10 ++
- io/channel-socket.c                  |   2 +-
- io/channel-websock.c                 |  10 +-
- meson.build                          |   6 +
- tests/unit/meson.build               |   1 +
- tests/unit/test-io-channel-websock.c | 249 +++++++++++++++++++++++++++
- 15 files changed, 326 insertions(+), 48 deletions(-)
- create mode 100644 tests/unit/test-io-channel-websock.c
-
+diff --git a/crypto/block.c b/crypto/block.c
+index 96c83e60b9..42558f3caf 100644
+--- a/crypto/block.c
++++ b/crypto/block.c
+@@ -55,7 +55,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+                                  unsigned int flags,
+                                  Error **errp)
+ {
+-    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
++    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+ 
+     qemu_mutex_init(&block->mutex);
+ 
+@@ -65,7 +65,6 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+         !qcrypto_block_drivers[options->format]) {
+         error_setg(errp, "Unsupported block driver %s",
+                    QCryptoBlockFormat_str(options->format));
+-        g_free(block);
+         return NULL;
+     }
+ 
+@@ -74,11 +73,10 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+     if (block->driver->open(block, options, optprefix,
+                             readfunc, opaque, flags, errp) < 0)
+     {
+-        g_free(block);
+         return NULL;
+     }
+ 
+-    return block;
++    return g_steal_pointer(&block);
+ }
+ 
+ 
+@@ -90,7 +88,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
+                                    unsigned int flags,
+                                    Error **errp)
+ {
+-    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
++    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+ 
+     qemu_mutex_init(&block->mutex);
+ 
+@@ -100,7 +98,6 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
+         !qcrypto_block_drivers[options->format]) {
+         error_setg(errp, "Unsupported block driver %s",
+                    QCryptoBlockFormat_str(options->format));
+-        g_free(block);
+         return NULL;
+     }
+ 
+@@ -109,11 +106,10 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
+ 
+     if (block->driver->create(block, options, optprefix, initfunc,
+                               writefunc, opaque, errp) < 0) {
+-        g_free(block);
+         return NULL;
+     }
+ 
+-    return block;
++    return g_steal_pointer(&block);
+ }
+ 
+ 
+@@ -185,17 +181,16 @@ int qcrypto_block_amend_options(QCryptoBlock *block,
+ QCryptoBlockInfo *qcrypto_block_get_info(QCryptoBlock *block,
+                                          Error **errp)
+ {
+-    QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
++    g_autofree QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
+ 
+     info->format = block->format;
+ 
+     if (block->driver->get_info &&
+         block->driver->get_info(block, info, errp) < 0) {
+-        g_free(info);
+         return NULL;
+     }
+ 
+-    return info;
++    return g_steal_pointer(&info);
+ }
+ 
+ 
+diff --git a/crypto/hmac-gcrypt.c b/crypto/hmac-gcrypt.c
+index e428d17479..44631fb348 100644
+--- a/crypto/hmac-gcrypt.c
++++ b/crypto/hmac-gcrypt.c
+@@ -50,7 +50,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
+                            const uint8_t *key, size_t nkey,
+                            Error **errp)
+ {
+-    QCryptoHmacGcrypt *ctx;
++    g_autofree QCryptoHmacGcrypt *ctx = NULL;
+     gcry_error_t err;
+ 
+     if (!qcrypto_hmac_supports(alg)) {
+@@ -66,7 +66,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
+     if (err != 0) {
+         error_setg(errp, "Cannot initialize hmac: %s",
+                    gcry_strerror(err));
+-        goto error;
++        return NULL;
+     }
+ 
+     err = gcry_mac_setkey(ctx->handle, (const void *)key, nkey);
+@@ -74,14 +74,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
+         error_setg(errp, "Cannot set key: %s",
+                    gcry_strerror(err));
+         gcry_mac_close(ctx->handle);
+-        goto error;
++        return NULL;
+     }
+ 
+-    return ctx;
+-
+-error:
+-    g_free(ctx);
+-    return NULL;
++    return g_steal_pointer(&ctx);
+ }
+ 
+ static void
+diff --git a/crypto/hmac-glib.c b/crypto/hmac-glib.c
+index b845133a05..1f17769c1c 100644
+--- a/crypto/hmac-glib.c
++++ b/crypto/hmac-glib.c
+@@ -46,7 +46,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
+                            const uint8_t *key, size_t nkey,
+                            Error **errp)
+ {
+-    QCryptoHmacGlib *ctx;
++    g_autofree QCryptoHmacGlib *ctx = NULL;
+ 
+     if (!qcrypto_hmac_supports(alg)) {
+         error_setg(errp, "Unsupported hmac algorithm %s",
+@@ -60,14 +60,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
+                             (const uint8_t *)key, nkey);
+     if (!ctx->ghmac) {
+         error_setg(errp, "Cannot initialize hmac and set key");
+-        goto error;
++        return NULL;
+     }
+ 
+-    return ctx;
+-
+-error:
+-    g_free(ctx);
+-    return NULL;
++    return g_steal_pointer(&ctx);
+ }
+ 
+ static void
+diff --git a/crypto/ivgen-essiv.c b/crypto/ivgen-essiv.c
+index 3d5a188795..d5fa269888 100644
+--- a/crypto/ivgen-essiv.c
++++ b/crypto/ivgen-essiv.c
+@@ -31,10 +31,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
+                                     const uint8_t *key, size_t nkey,
+                                     Error **errp)
+ {
+-    uint8_t *salt;
++    g_autofree uint8_t *salt = NULL;
+     size_t nhash;
+     size_t nsalt;
+-    QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
++    g_autofree QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
+ 
+     /* Not necessarily the same as nkey */
+     nsalt = qcrypto_cipher_get_key_len(ivgen->cipher);
+@@ -46,8 +46,6 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
+     if (qcrypto_hash_bytes(ivgen->hash, (const gchar *)key, nkey,
+                            &salt, &nhash,
+                            errp) < 0) {
+-        g_free(essiv);
+-        g_free(salt);
+         return -1;
+     }
+ 
+@@ -57,13 +55,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
+                                        salt, MIN(nhash, nsalt),
+                                        errp);
+     if (!essiv->cipher) {
+-        g_free(essiv);
+-        g_free(salt);
+         return -1;
+     }
+ 
+-    g_free(salt);
+-    ivgen->private = essiv;
++    ivgen->private = g_steal_pointer(&essiv);
+ 
+     return 0;
+ }
+@@ -75,7 +70,7 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
+ {
+     QCryptoIVGenESSIV *essiv = ivgen->private;
+     size_t ndata = qcrypto_cipher_get_block_len(ivgen->cipher);
+-    uint8_t *data = g_new(uint8_t, ndata);
++    g_autofree uint8_t *data = g_new(uint8_t, ndata);
+ 
+     sector = cpu_to_le64(sector);
+     memcpy(data, (uint8_t *)&sector, MIN(sizeof(sector), ndata));
+@@ -88,7 +83,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
+                                data,
+                                ndata,
+                                errp) < 0) {
+-        g_free(data);
+         return -1;
+     }
+ 
+@@ -99,7 +93,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
+     if (ndata < niv) {
+         memset(iv + ndata, 0, niv - ndata);
+     }
+-    g_free(data);
+     return 0;
+ }
+ 
+diff --git a/crypto/ivgen.c b/crypto/ivgen.c
+index 6b7d24d889..9f1f7d7dca 100644
+--- a/crypto/ivgen.c
++++ b/crypto/ivgen.c
+@@ -33,7 +33,7 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
+                                 const uint8_t *key, size_t nkey,
+                                 Error **errp)
+ {
+-    QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
++    g_autofree QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
+ 
+     ivgen->algorithm = alg;
+     ivgen->cipher = cipheralg;
+@@ -51,16 +51,14 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
+         break;
+     default:
+         error_setg(errp, "Unknown block IV generator algorithm %d", alg);
+-        g_free(ivgen);
+         return NULL;
+     }
+ 
+     if (ivgen->driver->init(ivgen, key, nkey, errp) < 0) {
+-        g_free(ivgen);
+         return NULL;
+     }
+ 
+-    return ivgen;
++    return g_steal_pointer(&ivgen);
+ }
+ 
+ 
+diff --git a/crypto/secret_keyring.c b/crypto/secret_keyring.c
+index 78d7f09b3b..3b332276ef 100644
+--- a/crypto/secret_keyring.c
++++ b/crypto/secret_keyring.c
+@@ -41,7 +41,7 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
+                                  Error **errp)
+ {
+     QCryptoSecretKeyring *secret = QCRYPTO_SECRET_KEYRING(sec_common);
+-    uint8_t *buffer = NULL;
++    g_autofree uint8_t *buffer = NULL;
+     long retcode;
+ 
+     *output = NULL;
+@@ -61,12 +61,11 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
+ 
+     retcode = keyctl_read(secret->serial, buffer, retcode);
+     if (retcode < 0) {
+-        g_free(buffer);
+         goto keyctl_error;
+     }
+ 
+     *outputlen = retcode;
+-    *output = buffer;
++    *output = g_steal_pointer(&buffer);
+     return;
+ 
+ keyctl_error:
 -- 
 2.55.0
 
