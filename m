@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49837C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E3AC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Yzd-0006A1-5t; Mon, 07 Sep 2026 09:02:37 -0400
+	id 1x3Yzr-0006EL-Qq; Mon, 07 Sep 2026 09:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3YzX-00067r-BT
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:32 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1x3YzZ-00068M-16
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:34 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3YzV-0004zz-A0
+ id 1x3YzU-0004zp-9E
  for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:31 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4956869750eso30824205e9.2
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:02:28 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-49d05d51553so15338145e9.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788786148; x=1789390948; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788786147; x=1789390947; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=BjmanBQ6cdorW9qdGQW5sVUyC1W6a6RSIT+PlHeq248=;
- b=XBTYi+cDx8T1qaduZQJqvI5nNO2AlilAAZED0LuKI3NqptyqcOJVJq8C7zkRSW7bxz
- zZMmo2YixJsJ8VRUBvgk5ZvYOkVVHs0avuZaH05XAKIThfAVr3tXBGJxbxtjjQGuPiQc
- OpAvEU2rgP3BlDDao8RiWapkx4wqPbRDBdTIMT1bS7rFk8EvEevVjQoKw6wKZtIm3Dei
- Gqfxa2YUBz+XaECx2OezKbXW4CpW6XbOiWuruzmR5OKd21EvfabWJSdBZCtApLu7xBVx
- pgk0A/pSwNKo2rWeJt5xFkSecpUt4TSyHmj8FB9UnyzjXDBvPdMBqcTUP+JXf7eHW2Mj
- b08w==
+ bh=2SIbkR3zLUPorTsZ3CZUe6Kq3hBul8d9QZlsky3KnOQ=;
+ b=ZbWuwJr3Etvxu0tlbpsTJD/SLppictoQELzFLJER87ZN0v0+svc9ReV3kSID6ZqE8W
+ LUPPyVemd1MsT4oMOYIEGv9KbscZNkfXBfzHPgbIA3JJUbLUipBRWsEONCpFwH3gPEyi
+ oQwh1yLeUo4qeH4fEGqWTGnEruvlqCN5uEwunZ8aJjXGkBeIO+c/ZanVZW7cc7t5/24o
+ KTSBJCI7zK6MdKAoKnpPJz38kX0tzpoBpQcPoViku1EnSYrs0ZrbVHy02WxAoLyn7sCv
+ PQQ4EJFq7KrIqu+/tUcIDAkFd63MUQbQPB8WDS4XMJTjQOnQUKNBpRmywHH+A+COqq8e
+ xl0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788786148; x=1789390948;
+ d=1e100.net; s=20251104; t=1788786147; x=1789390947;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BjmanBQ6cdorW9qdGQW5sVUyC1W6a6RSIT+PlHeq248=;
- b=sln7Zh/ghUICIjAqWbRn5RgaCk/Y/RCfNOSpuMvHMrGq46AQ0d6MdiwGcr4tiJNrnI
- gGBDc1KGtYRehGc8jWlIczKEOHh+iOIIc1thKe9VgsHsnipKvH8m4VT0jNkRKfjVrDMU
- elz8yEgj3D6pUNgTCvL6vxu2++ZGnC5kyubSCruRZIYsYj4JghBkKw32XOrkCZtWqlcn
- +BruNyzlx54zOEk/xSJ9diSg8tsRg41je3G97wGl7k8dSQcaOecsyjmsfOBmgMRpphEe
- eR7D1aPJWxsD7LYyFWT7JPV+vbMSPsR7q4t0yfnwtngDZFpEHiYQnoPUlba9wLlj8VK1
- 3t7g==
+ bh=2SIbkR3zLUPorTsZ3CZUe6Kq3hBul8d9QZlsky3KnOQ=;
+ b=P2IIJ8iWc8sKe6Y7JZHYtmIdz5FVQVGU+H1i0j2WACfl1ZHygDo/c/nb8MvdU0ovUC
+ CCgI/GjH6T+4BzfSa15IHhJ5rL1/JVOWKLCoKa8lXOPtL6Zlp38btprHq3Q+S2H0kL1J
+ RyCMeHhK+WCbU6SPZvS2w3Zx/OhkuP9MtbEC/IwKKgFsV45DIiH7k1KtUl6AgQBp2dWb
+ /h/0a9vfPTUpusgFSiBTVShvpkLwK2ynB8TuDGczZb4Z92znC7dgO4Myce2Keh5UExmI
+ M/8Qq7nZg9jA5Mqs7hjbjaAULVxMCEjY0UlgNpPBBJRGg++Hpgx12cYx8coWrlkPg0cU
+ AJRQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwMbFTEOFimBv5dNnpmTfjS+WJaDs+nFZgelPUFG3sNe4bTlawcu4W1zLsJ7TH4bGuvnuOHPdQh11E9@nongnu.org
-X-Gm-Message-State: AFuF++ncVd26Qw/wbBIxepFka3NHhxGGnbIE0LclXqHnbWQtnQnsSEjw
- eyKmGjY8wh8QMm8F6UR6+f3QucXQeSFk8yjeHIl3p7DOPto4bwC8rGe7OD8AC5xu7vQ=
-X-Gm-Gg: AYBFou011DVydmrNtI9ujwJdFxHJFt+W4FF5TVo/xz1rNZRy9c6uL4rUWBHGoKdomrR
- Xb0ekBhE6pc5eWUfu15KaGtHshTwZnKnzYG8g9Ibf1dVHpGlIAim41mBm9xHby8rYTHEj/cPrzX
- Ilj0SHL0JC5jvNuWV85dnlmY8dK7EBYY70Ila5Gh9Z9IVKOZ+xLCuehx0Hw5P3j2YTd7l1Xez5K
- fNw2Oe0sXwiAgiNnH1L0qrhNFT7juyW3Lhw4x12UJ9mxZKbCL6bc6cR75/Si4V5ljRqrP+cLwE4
- /j4rlarwgzZjjIPNo77kiZCiOw39XH7fGhcz+XWcfXhCCgfpGG9q1nbJvk8AWB773TLPBh5NzYH
- TbIvpPTNMYKxSsxdDWO8Q/dtrSqZo++0gg+Jdjw62brQ8dnf4W8nlOgQ5fpK2sskE9r57Tzbb10
- W+on0931witVL2v/SbVKV45N7pzTqI485icoXQfS9PyghtYcbIylTCjcL4XF94FyDSArfR8uVh1
- D+vS734je1Bq9J9e8gFkB/gSOnmw7USxuRQe6eVvim7fsUqREQFp8ZxPaAaeg3hAjUG+A==
-X-Received: by 2002:a05:600c:3495:b0:49c:dadb:18a7 with SMTP id
- 5b1f17b1804b1-49cf8244260mr225172095e9.10.1788786147628; 
- Mon, 07 Sep 2026 06:02:27 -0700 (PDT)
+ AKwUvBx6EbOrPhX7GzclOkuDJIaxjGOBuHjaCDLCaDOqr3tUOqDmdvoahw0KU7qzomdlARtxK7NC7XTAcGCg@nongnu.org
+X-Gm-Message-State: AFuF++l276eMF6C52AU2167HAsCRR5rD+ZRu3v+0IBgu3wslTDe9jtd8
+ rCybGSnwIuMk4R8HljOEHC2xg6ZtuOKtmZBYbsrof5mHsIEoCKVRk8LKWrhqfPtdRIY=
+X-Gm-Gg: AYBFou0TfdQmmLRTkouGznjBbQV57w5jE0JffMiB1VYF3ZH4VQ6a9vbTsICps8JJpOi
+ ynxOWrFE/G1/ng/ZDVY/sbKsue/+WRYxYad0lgzHCUoj5BQvXI1vXM8btA2Z59ld2+G22F75olg
+ PZh/nccXL16of4sKap4LG7GfXSvNPYsS4z4QN+0+uJUE4aX0GTcRg7+rGMh5HiaNEdQ39SRxqkh
+ plTjVkRJm8wB3sPPcCSwBqKTVs6XVP/LAYyWOCsnA9eMDfpGc8sGlOOhZMf6t1UOJKX2rvqVxjm
+ rF2wdnb/V/0Viaw2jdkz7BY+hzjkpR+mJCwU7ecL4+s3zT8DKC6T7hKF6oo1oV373LN11vNt06Q
+ 7R9yWZc5pFfles9mSII2kuwcxWSNyBW/PNniplVxkuoELx0+7oryM5QnPoxYd4bVUJcB0ZR+lpC
+ 4sbJfC9Xw4i4c3Qdkxi8kvswI9YH7txgg+gePZkel2QywNmMur6qHByb8Mgg174BXnJz/3ilkfA
+ 8qlxmD2UFLZQwn0WEtlM8tmlkjQM5ozfEVnR5WSRRG3i1bO9wuNe/OYUie3RCxqdndgLg==
+X-Received: by 2002:a05:600c:8b88:b0:49c:fc6e:a3d8 with SMTP id
+ 5b1f17b1804b1-49cffde8d95mr176142925e9.23.1788786146554; 
+ Mon, 07 Sep 2026 06:02:26 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee60bae6sm468589935e9.9.2026.09.07.06.02.26
+ 5b1f17b1804b1-49cee60bae6sm468589935e9.9.2026.09.07.06.02.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 06:02:26 -0700 (PDT)
+ Mon, 07 Sep 2026 06:02:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Tao Ding <dingtao0430@163.com>
-Subject: [PATCH 2/8] target/arm: Don't assume secure-banked registers are
- migrated by 64-bit regs
-Date: Mon,  7 Sep 2026 14:02:17 +0100
-Message-ID: <20260907130223.3148989-3-peter.maydell@linaro.org>
+Subject: [PATCH 1/8] target/arm: Keep the S/NS bit in migration data
+Date: Mon,  7 Sep 2026 14:02:16 +0100
+Message-ID: <20260907130223.3148989-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907130223.3148989-1-peter.maydell@linaro.org>
 References: <20260907130223.3148989-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,129 +103,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In add_cpreg_to_hashtable() we have some code that automatically
-marks the secure version of an AArch32 banked cpreg as ARM_CP_ALIAS
-under two conditions:
+For Arm, the format we use on the wire for migration of sysregs
+(cpregs on AArch32) is a set of arrays, where cpreg_indexes[] holds
+the register IDs and cpreg_values[] holds the corresponding values.
+The ID format we use is KVM's ID format, which is 64 bits.  This is
+not quite the same as the 32-bit ID format QEMU uses internally for
+things like the coprocessor register hashtable keys, and so we have
+conversion functions kvm_to_cpreg_id() and cpreg_to_kvm_id() to swap
+between them.
 
- 1) If the register has both 32-bit and 64-bit instances then we can
-    count on the 64-bit instance taking care of the non-secure bank.
+This conversion has never handled AArch32 Secure coprocessor
+registers correctly: the KVM ID format has no way to indicate a
+Secure register, because KVM VMs on AArch32 were always NonSecure.
+The current code doesn't touch the CP_REG_AA32_NS_MASK bit when
+converting from the 32-bit ID format to a KVM ID, and it forces the
+NS bit to 1 when converting from a KVM ID to a cpreg.  The effect of
+this on migration is that the indexes in cpreg_indexes[] have NS = 0
+for the Secure banked registers and NS = 1 for the NS banked
+registers, but when we read and write the values into the CPUState by
+finding the register using kvm_to_cpreg_id(cpreg_indexes[i]) we
+always find the NS register, and so the S register values aren't
+actually migrated.
 
- 2) If ARMv8 is enabled then we can count on a 64-bit version taking
-    care of the secure bank.  This requires that separate 32 and
-    64-bit definitions are provided.
+This went unnoticed most of the time because a typical Linux guest is
+running only in NS and doesn't really care about the S register
+state, but it breaks migration of a guest which is running in S, such
+as Linux on the imx boards.
 
-Item 1 is correct: if the ARMCPRegInfo has ARM_CP_STATE_BOTH then we
-will always add it as an AA32 entry (which then splits into an S
-entry with bank_fieldoffsets[0] and an NS entry with
-bank_fieldoffsets[1]) and as an AA64 entry (which uses
-bank_fieldoffsets[1]), so the AA64 entry will always be present to
-cover the NS banked AA32 entry.
+This would be more awkward to fix if KVM still supported AArch32
+hosts, but luckily that was dropped some years ago, and AArch32
+guests on an AArch64 host expose the sysregs as CP_REG_ARM64, not
+CP_REG_ARM32.  So the only place where we use a CP_REG_ARM32 KVM
+register ID is for TCG migrations.  We can therefore (continue to)
+steal a bit in the KVM format for the NS bit, with the semantics
+we've given it on the wire in the past.  We just need to let
+kvm_to_cpreg_id() pass it through rather than forcing it to 1.
 
-Item 2 is not correct: the idea was that because typically AArch32
-Secure banked registers are (non-architecturally) mapped to EL3
-AArch64 registers, the AArch64 EL3 register would handle things
-(and that we would be adding the AArch64 register to the hashtable
-even if the CPU didn't have AArch64).
+To retain compatibility with migration from older QEMU versions
+without this fix, we need to add a subsection to the migration data
+that tells the destination that it can trust the values for Secure
+banked registers.  For incoming migrations, if we don't see this then
+we ignore all the values for Secure banked registers, giving the same
+behaviour as before.  This means we continue to work for migrations
+where the Secure world exists but the guest is basically not using
+it, such as a direct kernel boot on boards which don't set
+arm_boot_info::secure_boot to true; this includes the cubieboard,
+bananapi and orangepi.
 
-However, this fails in several cases:
- (a) registers like CSSELR, where there is only a CSSELR_EL1, and
-     no _EL3 version. CSSELR_S's underlying state isn't migrated
- (b) registers like TPIDRURW, where the secure banked register
-     isn't mapped to any AArch64 register, so the state isn't
-     migrated
- (c) IFAR_S and DFAR_S are odd special cases, because they map to
-     AArch32 HIFAR and HDFAR, which in turn map to AArch64 FAR_EL2.
-     If the CPU doesn't have EL2, we don't register FAR_EL2 and
-     the IFAR_S and DFAR_S registers don't get migrated.
+Attempting migration from a new QEMU to an older QEMU version will
+now fail cleanly (because the destination doesn't recognize the new
+subsection) rather than silently corrupting the Secure banked
+registers.
 
-More generally, the architecture dropped the concept of documenting
-secure AArch32 registers as being "non-architecturally mapped" to EL3
-AArch64 registers and relegated it to an implementation detail, which
-is why TPIDRURW and friends got mishandled.
-
-It also conflates "has 64-bit registers" with "is ARMv8", which is
-wrong for the qemu-system-arm "max" type and for any AArch64 CPU
-started with "aarch64=off".
-
-Instead of marking the S-banked register as an alias if
-ARM_FEATURE_V8, don't put it into the hashtable at all if
-ARM_FEATURE_AARCH64 is present.
-
-There are not all that many banked registers, and they're easy to
-find by searching for regdefs that set bank_fieldoffsets:
- DACR, IFAR, DFAR, IFSR, DFSR, CSSELR, MAIR0, MAIR1,
- TPIDRURW, TPIDRURO, TPIDRPRW, TTBR0, TTBR1, TTBCR, TTBCR2,
- PAR, VBAR, SCTLR
-
-None of these do complicated things on reset, so having both an
-AArch64 view and an AArch32 view reset the same register state to the
-same value and migrate the same data twice is harmless.  This is
-better than sometimes not migrating or resetting it at all.
-
-This changes the set of cpregs we will try to migrate for CPUs with
-ARM_FEATURE_V8 but not ARM_FEATURE_AARCH64, and is a migration break
-there.  However, the only such CPUs are the qemu-system-aarch32 "max"
-CPU and AArch64 CPUs with "aarch64=off".
-
-In an ideal world we would also not bother putting the S cpreg into
-the hashtable if the CPU is AArch32 without EL3 (i.e.  it doesn't
-implement Secure state at all), because nothing will ever look up the
-S version of the register (access_secure_reg() always returns false).
-But that would be a migration compat break for those CPUs.
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/467
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ target/arm/cpregs.h  | 21 ++++++++----
+ target/arm/cpu.h     |  6 ++++
+ target/arm/machine.c | 80 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 100 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index c3f607e6d6b..1b024adc703 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -7787,18 +7787,33 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, ARMCPRegInfo *r,
-         if (state == ARM_CP_STATE_AA32) {
-             if (isbanked) {
-                 /*
--                 * If the register is banked then we don't need to migrate or
--                 * reset the 32-bit instance in certain cases:
-+                 * If this is an AArch64 CPU then AArch32 cpregs are never
-+                 * banked, and if we put an NS version into the hash table
-+                 * it would never be accessed (compare the condition we test
-+                 * in access_secure_reg()). So drop it rather than adding it.
-                  *
--                 * 1) If the register has both 32-bit and 64-bit instances
--                 *    then we can count on the 64-bit instance taking care
--                 *    of the non-secure bank.
--                 * 2) If ARMv8 is enabled then we can count on a 64-bit
--                 *    version taking care of the secure bank.  This requires
--                 *    that separate 32 and 64-bit definitions are provided.
-+                 * Ideally we would also ignore the S banked register here
-+                 * for an AArch32 register without EL3; however, that would
-+                 * be a migration compatibility break for those CPUs, so we
-+                 * continue with having the cpregs in the hashtable.
-                  */
--                if ((r->state == ARM_CP_STATE_BOTH && ns) ||
--                    (arm_feature(env, ARM_FEATURE_V8) && !ns)) {
-+                if (!ns && arm_feature(env, ARM_FEATURE_AARCH64)) {
-+                    g_free(r);
-+                    return;
-+                }
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 9f2532fe667..ce651a4faa6 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -215,7 +215,20 @@ enum {
+ 
+ /*
+  * Convert a full 64 bit KVM register ID to the truncated 32 bit
+- * version used as a key for the coprocessor register hashtable
++ * version used as a key for the coprocessor register hashtable.
++ *
++ * Note that we deviate slightly from the KVM register ID format as
++ * used by the kernel for AArch32 cpregs, by using bit 29 as "1
++ * for NonSecure, 0 for Secure". (When KVM still supported AArch32
++ * hosts it didn't set this bit; all sysregs for KVM guests are
++ * NonSecure anyway.) This shouldn't cause any issues as KVM no longer
++ * supports AArch32 hosts (and other accelerators never did), so the
++ * only thing that generates KVM regids for AArch32 cpregs is QEMU
++ * TCG.
++ *
++ * The NS bit being in the KVM ID is implicit in the fact that we
++ * don't mask out CP_REG_AA32_NS_MASK in the conversions to and from
++ * the QEMU hashtable key ID format.
+  */
+ static inline uint32_t kvm_to_cpreg_id(uint64_t kvmid)
+ {
+@@ -226,12 +239,6 @@ static inline uint32_t kvm_to_cpreg_id(uint64_t kvmid)
+         if ((kvmid & CP_REG_SIZE_MASK) == CP_REG_SIZE_U64) {
+             cpregid |= CP_REG_AA32_64BIT_MASK;
+         }
+-
+-        /*
+-         * KVM is always non-secure so add the NS flag on AArch32 register
+-         * entries.
+-         */
+-         cpregid |= CP_REG_AA32_NS_MASK;
+     }
+     return cpregid;
+ }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e3f931dba26..231fdf710b7 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1128,6 +1128,12 @@ struct ArchCPU {
+     bool prop_pauth_qarma5;
+     bool prop_lpa2;
+ 
++    /*
++     * Used only during migration, to handle back-compat with older QEMU
++     * that mishandled migration of AArch32 banked cpregs.
++     */
++    bool secure_banked_regs_ok;
++
+     /* GM blocksize, in log_2(words), ie low 4 bits of GMID_EL0 */
+     uint8_t gm_blocksize;
+ 
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 89127e5d83c..1fc3acc31ca 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -979,6 +979,39 @@ static const VMStateDescription vmstate_fpmr = {
+     },
+ };
+ 
++static bool secure_banked_regs_ok_needed(void *opaque)
++{
++    ARMCPU *cpu = opaque;
++
++    /*
++     * We must send this subsection if this is an AArch32 CPU with
++     * banked coprocessor registers. Older QEMU mishandled migration
++     * of these by listing both Secure and NonSecure banked registers
++     * in the cpreg_vmstate_indexes but reading and writing the
++     * NonSecure register for both indexes. Providing this subsection
++     * tells the destination that we do not have this bug and it
++     * should not ignore the Secure banked register values.
++     *
++     * We don't need the subsection for CPUs without banked registers
++     * (notably AArch64 ones and M-profile ones), and don't send
++     * it to avoid breaking migration compat for them.
++     */
++    return !arm_feature(&cpu->env, ARM_FEATURE_AARCH64) &&
++        !arm_feature(&cpu->env, ARM_FEATURE_M) &&
++        arm_feature(&cpu->env, ARM_FEATURE_EL3);
++}
++
++static const VMStateDescription vmstate_secure_banked_regs_ok = {
++    .name = "cpu/secure-banked-regs-ok",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = secure_banked_regs_ok_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(secure_banked_regs_ok, ARMCPU),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static int cpu_pre_save(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+@@ -1014,6 +1047,9 @@ static int cpu_pre_save(void *opaque)
+     cpu->cpreg_vmstate_values = cpu->cpreg_values;
+     cpu->cpreg_vmstate_array_len = cpu->cpreg_array_len;
+ 
++    /* We don't have the bug where we send wrong data for Secure regs */
++    cpu->secure_banked_regs_ok = true;
++
+     return 0;
+ }
+ 
+@@ -1062,6 +1098,9 @@ static int cpu_pre_load(void *opaque)
+     g_assert(!cpu->cpreg_vmstate_indexes);
+     g_assert(!cpu->cpreg_vmstate_values);
+ 
++    /* So cpu_post_load() can see if we saw secure-banked-regs-ok */
++    cpu->secure_banked_regs_ok = false;
++
+     return 0;
+ }
+ 
+@@ -1120,6 +1159,7 @@ static int cpu_post_load(void *opaque, int version_id)
+     ARMCPU *cpu = opaque;
+     CPUARMState *env = &cpu->env;
+     bool fail = false;
++    bool ignore_s_regs;
+     int i, v;
+ 
+     trace_cpu_post_load(cpu->cpreg_vmstate_array_len,
+@@ -1142,6 +1182,21 @@ static int cpu_post_load(void *opaque, int version_id)
+              CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VFIQ);
+     }
+ 
++    /*
++     * Handle migration compatibility from an old QEMU which didn't get
++     * AArch32 Secure banked cpregs right. That QEMU will not have sent
++     * us the secure-banked-regs-ok subsection, and although its
++     * vmstate_indexes will include the S banked regs, the values in
++     * vmstate_values will be duplicates of the values of the NS banked
++     * regs. Ignore the S banked registers, which is the same effective
++     * behaviour of an old->old migration. (That is, the S regs will
++     * be at their reset values, which is usually good enough for the
++     * case of "guest is actually executing in NS and doesn't care
++     * about the S state".)
++     */
++    ignore_s_regs = secure_banked_regs_ok_needed(cpu) &&
++        !cpu->secure_banked_regs_ok;
++
+     /* Update the values list from the incoming migration data.
+      * Anything in the incoming data which we don't know about is
+      * a migration failure; anything we know about but the incoming
+@@ -1165,6 +1220,30 @@ static int cpu_post_load(void *opaque, int version_id)
+             continue;
+         }
+         /* matching register, copy the value over */
++
++        if (ignore_s_regs) {
++            /*
++             * If this is an AArch32 Secure cpreg, read the current (reset)
++             * value instead of using the migration state value. That way
++             * write_list_to_cpustate() will effectively be a NOP.
++             */
++            uint64_t kvmidx = cpu->cpreg_vmstate_indexes[v];
++
++            if ((kvmidx & CP_REG_ARCH_MASK) == CP_REG_ARM &&
++                (kvmidx & CP_REG_AA32_NS_MASK) == 0) {
++                uint32_t regidx = kvm_to_cpreg_id(kvmidx);
++                const ARMCPRegInfo *ri = get_arm_cp_reginfo(cpu->cp_regs,
++                                                            regidx);
 +                /*
-+                 * If the register is banked then we don't need to migrate or
-+                 * reset the 32-bit instance if this is a STATE_BOTH regdef.
-+                 * This is because we can know for certain that there's a
-+                 * 64-bit regdef that's using bank_fieldoffsets[1] as its
-+                 * fieldoffset, because the code that handles STATE_BOTH
-+                 * always registers it. In other situations either the NS
-+                 * or the S banked register might be aliased (architecturally
-+                 * or non-architecturally) to a 64-bit register, but it might
-+                 * not be. For those we must manually mark the alias in the
-+                 * regdef struct if we care.
++                 * Missing ri or NO_RAW ri will be ignored or errored in
++                 * write_list_to_cpustate() later, so safe to skip.
 +                 */
-+                if (r->state == ARM_CP_STATE_BOTH && ns) {
-                     r->type |= ARM_CP_ALIAS;
-                 }
-             } else if ((secstate != r->secure) && !ns) {
++                if (ri && !(ri->type & ARM_CP_NO_RAW)) {
++                    cpu->cpreg_vmstate_values[v] = read_raw_cp_reg(env, ri);
++                }
++            }
++        }
++
+         cpu->cpreg_values[i] = cpu->cpreg_vmstate_values[v];
+         i++;
+         v++;
+@@ -1343,6 +1422,7 @@ const VMStateDescription vmstate_arm_cpu = {
+         &vmstate_pstate64,
+         &vmstate_event,
+         &vmstate_fpmr,
++        &vmstate_secure_banked_regs_ok,
+         NULL
+     }
+ };
 -- 
 2.43.0
 
