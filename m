@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18885C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE64BC79F9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3VgA-0007wR-Vw; Mon, 07 Sep 2026 05:30:19 -0400
+	id 1x3VjD-0000YE-Dt; Mon, 07 Sep 2026 05:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3Vg9-0007uo-84
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:30:17 -0400
+ id 1x3VjB-0000XX-RC
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:33:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3Vg7-0003Ba-3W
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:30:16 -0400
+ id 1x3Vj9-0003XE-PR
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:33:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788773414;
+ s=mimecast20190719; t=1788773603;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jhOkWosh/COVcN3DyRG0jWCkpBd5I7Os1yH/9WmrYiE=;
- b=W72LysVMlnyvmpOd3DOSUU3ueVysvuMMQLPpVS9ALtIx2W6Y0GDZ5QLLerpqrwW9Vio54Z
- g46vosif87zuAPKHAVlkBue1bRCkQ7HXjL13cEV3YUHdygEDIDO+359qJJY3bJ3so6PeUL
- xaI/sdjZ84VhKWZxmR330uwavJ86WpQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=QKcMZSGTuhoWh6ZXGK/QS838zVBZEKbiqnEONjcgWM8=;
+ b=iXOmIqFUweQysBmUlxZNwkshWSML8Ea4QlJr860xoGWfzXNgxdAsPrzYb4zOVJNy84XLep
+ aDjEsmojnn2YJ3tNP7Lq6ZP37YRB1LdKehxwmlwvYhhlfheJWzanKnNcDGQcg+3iRUG/sP
+ BjeUyWuzT66L5xs6AaU/f3BJ+32aD58=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-U07AvFcTM3-Rytsst42mog-1; Mon,
- 07 Sep 2026 05:30:10 -0400
-X-MC-Unique: U07AvFcTM3-Rytsst42mog-1
-X-Mimecast-MFC-AGG-ID: U07AvFcTM3-Rytsst42mog_1788773408
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-oMDAqBUiMgavZ3Bt2e1D-w-1; Mon,
+ 07 Sep 2026 05:33:19 -0400
+X-MC-Unique: oMDAqBUiMgavZ3Bt2e1D-w-1
+X-Mimecast-MFC-AGG-ID: oMDAqBUiMgavZ3Bt2e1D-w_1788773597
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CA3319540DC; Mon,  7 Sep 2026 09:30:07 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DC83180AE14; Mon,  7 Sep 2026 09:33:17 +0000 (UTC)
 Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67D3A30002F0; Mon,  7 Sep 2026 09:30:02 +0000 (UTC)
-Date: Mon, 7 Sep 2026 10:29:59 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 485F91955F0E; Mon,  7 Sep 2026 09:33:11 +0000 (UTC)
+Date: Mon, 7 Sep 2026 10:33:09 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
@@ -66,26 +66,26 @@ Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
  Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 3/9] tests/functional/s390x: use QMP for balloon
-Message-ID: <ap6EF0mnxTSICNfD@redhat.com>
+Subject: Re: [PATCH 5/9] tests/ide-test: convert to QMP
+Message-ID: <ap6E1eVfkt1cRWme@redhat.com>
 References: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
- <20260906-nohmp-v1-3-daee96491c43@redhat.com>
+ <20260906-nohmp-v1-5-daee96491c43@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260906-nohmp-v1-3-daee96491c43@redhat.com>
+In-Reply-To: <20260906-nohmp-v1-5-daee96491c43@redhat.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,13 +102,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 06, 2026 at 12:42:34PM +0400, Marc-André Lureau wrote:
-> Unit is changed from megabytes to bytes.
+On Sun, Sep 06, 2026 at 12:42:36PM +0400, Marc-André Lureau wrote:
+> The QMP command is explicit, specify both the vmstate and devices.
+> We use the helper introduced previously to wait for job completion.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  tests/functional/s390x/test_ccw_virtio.py | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  tests/qtest/ide-test.c | 37 ++++++++++++++++++++++++++++---------
+>  1 file changed, 28 insertions(+), 9 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
