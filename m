@@ -4,116 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D345C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F40C79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:31:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Wbk-0003Xr-VA; Mon, 07 Sep 2026 06:29:48 -0400
+	id 1x3Wcp-0004F9-9y; Mon, 07 Sep 2026 06:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3Wbi-0003XF-EM
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:29:47 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3Wbf-0002lz-RB
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:29:46 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-86b03b75fecso50739447b3.0
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 03:29:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788776982; cv=none;
- d=google.com; s=arc-20260327;
- b=QYG59lnkvGiKV/7StI1dvlCl5vTKLcSz7tsXjmgIKX0CRGgHErz4V5SLl77AHY6RKo
- RBHtZ2j55lzaEONwgqkPk5LIzNdfusbAFWTy6iveznoDX1rSHJOYgWKhOptum7qK/HBt
- zkwunKkKE1JU9wBS8Defo/fBrF0Mr2VzUw/fDhi8tc1tb9i92qvTix4gYonbbhFHWNVT
- dIjozog4HeY88ZZjxxWzD2v1VdL7pDDQ1egIp7SAqTUmyqO93ITr2vgvDVUXkxigfWmU
- GzwDSIM0TwbGnRRtyq6xKsBzhHYeqiUaLt3wpzzgLqWDiLZRJGzpfMOJ3JFFQ18DBp9g
- NQLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=kpovk2wDR4cuq4dslsWniRlZuj3byLtaKoc1QMTNeK0=;
- fh=g77EAzovYqokRhGQmsohhz1E5xEmX8Aq0laGhUPZvvw=;
- b=KlL16e6xrwf6JHQB1wCGGgMxKemFUUuJzaZ6wv2nDtZ4zKqiiST1fyFft3gjNuQ8W8
- zRO6NVd7hm7rOKpBdPFYR0UCFPZjb499WhHA0FMTgRJYvesDGbHBMtxA9xDrEAkgerlw
- tq+hs0e7/yy1NP2s++/xjcvUJmKIqySV7kcx3FfeNqxArX/anLgtsuQ7CsaYUjlf+3HY
- UiX/MINE+U6hTQU6nX8Iph5zh/OreTVWOJZaZFYJSFq9Rv+LY9p+SXleROWv05hYaB22
- FiWJc7TM/b8mVNazW9GFgW/iorYW7sIo/DDTFKVGuoUss2auGAj/N6KeENw/Hx2OYjpW
- d/kQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788776982; x=1789381782; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=kpovk2wDR4cuq4dslsWniRlZuj3byLtaKoc1QMTNeK0=;
- b=zTm2jEU6FSPkcQEiirDPLXYyxmgmLtol6N7turF3bCfJIqFTrFwokzjGw4bIZrjxH0
- K4O0d/NxqJaY/VgE9B0EFOkoCqiYHCjOGFLg0w1qaZxIy5qjH4r04vTt9DzkWqDbKLqS
- pqpo+XDgbeAgg23g1ZX8mIvnjl8LkCTLYU/nnvGUTcWrxqpKBlk5l7SGUbKY4E7WJw+6
- pACYXV2qHONxdd928w/r5Q0N3fa1v89d6sAioa/IQ3FEytzh9pLcAuIfAsT+TBR3x3dS
- cZS2Gm2WcxSjSSArEPRNvPzqKQqdOQVik/TN6E+rTfmnW5YYsKydklsxcQohr9Fp+iG5
- f3RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788776982; x=1789381782;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=kpovk2wDR4cuq4dslsWniRlZuj3byLtaKoc1QMTNeK0=;
- b=TZ/quNGQi5FoSaBYJKSFg353XMvQSra2QRu/bq03BZRWh95rptnPazEvh3+8ajqDSJ
- SGELq3nzUnS2bZl3JJvOo/T7pS+GWpNCFaPbTZyQt7TI4LOPolCyRJDXOcvxdnvo46Ch
- IphhMTbbnC9JCVezpc4Eiz+RHMYpb0stmpiQNISXYcwp9nSwALDTuWYvE1IT6g8o79G9
- l7HQVrbqAIBDYmYAPVh03S4uHITnM1Q2PMOc23uGX+uXxpnsaO+zk84pnAAHzl7+8pEy
- gQtTE+p73H856almBVLsDRDCvBoMB2AYzGdkuJFkxNIa+DZJV8nOp1fjVJNTPV2MmrtE
- JkNw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwJ++F58994zHeTzP2PNdhUA3SgngfTHK/qONA0BOco1nxmVvyb0DWpr2KNFTO3wr48vU+HLsFVuglf@nongnu.org
-X-Gm-Message-State: AFuF++nmfeJkl41HF/jPm0bh/Ae6yp8VdyXd8AYLcf10Dd1WF9peW+Jc
- 39riao702yiuQ5HI3EDqjDcgWW96h6309UV9Y7ZOi+mB4NHHeZ7NxSdeSoR60tBBiQiAkldBGRa
- e9M97G0B1Ui/38N7u6w09ocvlmwh13OSvnQ3R3WNneA==
-X-Gm-Gg: AYBFou0V7F1rtiZZZ5jIg5gVohYjJLJ8Pt5esI8mx+66ZfXMB/oOoOjvbTb6LPbqaVY
- FF0cGwzrtuEYzIj8xhzbmYKaYXZdYPmNqMGgnNV+6UZDZFTWwMMeKU+tdHxgIqNW+qGyKEaTd2r
- xSiqPuuC8C4kzJQKDVjR76IshMNdSuEQUzD2yuREmwywishN5KLaZ8MNmI8OE5hRjF8fpJU5d+c
- grIuYwuogRQTzdoJMcIWkcCIQfOwxrqUxSSLgsGgQ+QI73kDELvTc6VWl4ECGOBNWI2vzLFPStH
- TnQpeGAOYrP6fuhPg2hnflqDLlm27GIuhZrnWYwrmnSkPoDfCQI0ryclE2kDgaaY+tg6lqYYSLB
- Z7Zt9Ni9lvS/sMQbLMzTO6AptfSbO
-X-Received: by 2002:a05:690c:e3ec:b0:873:5bd1:98b5 with SMTP id
- 00721157ae682-8735bd19ff0mr53492707b3.39.1788776982490; Mon, 07 Sep 2026
- 03:29:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x3Wcd-0004Dm-IX
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:30:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x3Wcb-0003Sr-Pi
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:30:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788777041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pw8oM7XvTZ8UrOcsyDmNklaQrGBxEBQh+OPjYQaTMXA=;
+ b=hVTJ7u2wRi80ajWJl9KA0C23clJTp16gJ3SxSqpgJ5OTlLjiDb9B/6dWRaLt4oePep3Xn9
+ MLhtkKvXI87OWy46eJHAMw4qoy9E3cdIEC6T75o87FlwnjYQQDSV971AWOePG88v1QOSkX
+ jwBuPfKAnW1Mko4wqqpse5rDNOfzkSQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-uQQO6oekMqeBYKibD37WwQ-1; Mon,
+ 07 Sep 2026 06:30:37 -0400
+X-MC-Unique: uQQO6oekMqeBYKibD37WwQ-1
+X-Mimecast-MFC-AGG-ID: uQQO6oekMqeBYKibD37WwQ_1788777035
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3325518009DF; Mon,  7 Sep 2026 10:30:35 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B5531427; Mon,  7 Sep 2026 10:30:33 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Mon, 07 Sep 2026 14:30:19 +0400
+Subject: [PATCH v2 01/10] tests/ahci-test: replace HMP usage with QMP
 MIME-Version: 1.0
-References: <20260821100856.1794011-1-xiangwencheng@lanxincomputing.com>
- <CAFEAcA_kLpaz0UQi3Q315kLVqvDtxKh77kU2meN9G1_evfKBeQ@mail.gmail.com>
- <bad5c8b3-668f-4893-974f-9dbca8dc6893@linaro.org>
- <02da9676-febf-4389-b09b-5e5d41c1084e@lanxincomputing.com>
- <aoxiBB2Wn8NiL5s6@x1.local>
- <5a2a8e0e-2fa6-4905-9752-b2ed0ab3f0ac@lanxincomputing.com>
- <aprI8xQIDCRTJOV1@x1.local>
- <9d125a95-0fa1-4ea8-a8a6-4869afc629bc@lanxincomputing.com>
-In-Reply-To: <9d125a95-0fa1-4ea8-a8a6-4869afc629bc@lanxincomputing.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 7 Sep 2026 11:29:31 +0100
-X-Gm-Features: AcwNN1VWk8NRxaWIEuR3tuJ59HYNQN-ogtxwUqbglZw6rDiK6gDjVvy_tPlbesI
-Message-ID: <CAFEAcA-hV-eZHfH1FMYNLaFY8M-emt8aN+Nt4MvfhSfkUZv7AQ@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio: Add aligned ld/st accessors for vring
-To: BillXiang <xiangwencheng@lanxincomputing.com>
-Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, mst@redhat.com, 
- pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260907-nohmp-v2-1-6d952d972c21@redhat.com>
+References: <20260907-nohmp-v2-0-6d952d972c21@redhat.com>
+In-Reply-To: <20260907-nohmp-v2-0-6d952d972c21@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org, 
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1418;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=tLrFlT/tcpYg1fK592+t5TVWs+WZQ4KtzWrEIWmaBQ8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnpJCeOOGlpiWzHT6XhP38kCqcYRpei6N5aehu
+ Wk3FtoaKb+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap6SQgAKCRDa6OEJdZac
+ 5T0cEACZHkKeWpCCGLtbYX3EFUiZDCPwh6YgUZsH/SFIsOX+i23i3a3cdbFZeBBl8iqn9SwyFc8
+ IqoNpOrV2HWAQf90BrflD5WPI6S5X7ZsqaJtL+QjJ5VXG9M03MxtqzDxc3mWZYJCA5i8wrLy8Pc
+ Ys8RxFfAslDz9ppnmPIBbjypeGx6/mF7dSldkmYXPRaWRBbok+vIB3ggmv4ow8FvxXUO5PYp/KE
+ caklFOSzzszfALtvQRC/ZlFR9CQti4z5maNnjhzCQe3PT343IRiAKsN2da3zNzMzHuNdlaGsl5z
+ GYnemgjxnhFfWA3eHc/fas/gtpUU6rcAXA1/S129Y3K6ZTG2AegUIP+bUf/oaw/hkdpk29vKSbw
+ GztFcj7cLOrge/o0WCk2HuIQLfveDq/Thwc8xBhNyw33aCKxkA21ADFhtfh38rV1TKudGLGFM3l
+ mUZYSzuxOYRNmK5q5gpjLgLjDWcrcpBBroQ/+gBbjmxe1Ri9wRRoWJhVPcylMvkLmhDizKOA7B9
+ hO0vZpchIAZEQ9UTnASwSN2Vh6+bpP36H2O7qaON1pUy3aFFw6bwMj3v8j5ALIeFc+Z+QUrFWU7
+ tM2ZcwrfI08ZYWHa1rPipi94C4AmSyBKWCcK94plTscrk4evgX9MMuvUHLwxF2lp8A4wYR1w5g2
+ NDO+oMtYnOD4HMg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,62 +115,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Sept 2026 at 11:12, BillXiang
-<xiangwencheng@lanxincomputing.com> wrote:
->
-> On 9/4/2026 9:34 PM, Peter Xu wrote:
-> > On Tue, Sep 01, 2026 at 10:44:13AM +0800, BillXiang wrote:
-> >> On 8/24/2026 11:23 PM, Peter Xu wrote:
-> >>> On Mon, Aug 24, 2026 at 12:19:15PM +0800, BillXiang wrote:
-> >>>> Hi Richard, I've read your code in accel/tcg/ldst_atomicity.c.inc. D=
-o
-> >>>> you think it would be better to make the load/store_atomic* public?
-> >>>
-> >>> They do not fit by default, as we need to still process unaligned cas=
-es?
-> >>
-> >> You mentioned the use of guest CPU context in [1]. However, what I mea=
-nt
-> >> by load/store_atomic* is code like the following:
-> >>
-> >> static inline uint16_t load_atomic2(void *pv)
-> >> {
-> >>       uint16_t *p =3D __builtin_assume_aligned(pv, 2);
-> >>       return qatomic_read(p);
-> >> }
-> >>
-> >> static inline void store_atomic2(void *pv, uint16_t val)
-> >> {
-> >>       uint16_t *p =3D __builtin_assume_aligned(pv, 2);
-> >>       qatomic_set(p, val);
-> >> }
-> >>
-> >> I consider these to be generic atomic load/store primitives.
-> >
-> > __builtin_assume_aligned() tells the compiler the address is aligned.  =
-What
-> > if it is not?
->
-> When using __builtin_assume_aligned, the compiler will generate
-> unaligned load/store instructions if the data is not aligned, rather
-> than emitting byte=E2=80=91by=E2=80=91byte code, which may cause errors o=
-n processors
-> that do not support unaligned accesses. That's what I mean: callers must
-> ensure @addr is naturally aligned to the access size.
+Use qemu-io command instead.
 
-Indeed. That's why the ldst_atomicity.c.inc code only calls them
-when it can guarantee the alignment, with fallback cases for
-when it isn't. Those are the lowest level internal functions
-in that code, and the higher level ones are things like
-load_atom_2() (which might call load_atomic2() if the address
-is 2-aligned, or lduw_he_p() if it's not but the caller said
-it doesn't care about getting a 2-byte-atomic load for an
-unaligned pointer, or a function to do an atomic 8-byte access
-and extract the 2 bytes we care about, or if all else fails
-falling back to "stop all QEMU threads and do a non-atomic read".
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ tests/qtest/ahci-test.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-The difficulty in generalizing that code for device use I suspect
-is whether the fallback cases remain the right thing to do.
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 3406ca884fb4..eb8d23999738 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1900,8 +1900,7 @@ static void test_write_engine_stop_in_flight(void)
+     ahci_io(ahci, port, CMD_WRITE_DMA, rx, AHCI_SECTOR_SIZE, 1);
+ 
+     /* Suspend the backend write so the first sector stays in flight. */
+-    g_free(qtest_hmp(ahci->parent->qts,
+-                     "qemu-io drive0 \"break write_aio wr\""));
++    qtest_qemu_io(ahci->parent->qts, "drive0", "break write_aio wr");
+ 
+     cmd = ahci_command_create(CMD_WRITE_PIO);
+     ahci_command_adjust(cmd, 0, ptr, bufsize, 0);
+@@ -1911,7 +1910,7 @@ static void test_write_engine_stop_in_flight(void)
+     /* Drop the command list while the write is still outstanding. */
+     ahci_px_clr(ahci, port, AHCI_PX_CMD, AHCI_PX_CMD_ST);
+ 
+-    g_free(qtest_hmp(ahci->parent->qts, "qemu-io drive0 \"resume wr\""));
++    qtest_qemu_io(ahci->parent->qts, "drive0", "resume wr");
+ 
+     /* Round-trip through the device to confirm qemu is still alive. */
+     ahci_px_rreg(ahci, port, AHCI_PX_TFD);
 
--- PMM
+-- 
+2.55.0.543.g5ebe2ebe4ea8
+
 
