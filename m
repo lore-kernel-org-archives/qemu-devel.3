@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B74CC79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B5DC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3RqN-0004rN-LA; Mon, 07 Sep 2026 01:24:35 -0400
+	id 1x3RqX-0004t8-AE; Mon, 07 Sep 2026 01:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3RqL-0004qH-II; Mon, 07 Sep 2026 01:24:33 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1x3RqV-0004ss-Mp; Mon, 07 Sep 2026 01:24:43 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3RqI-0007s9-6G; Mon, 07 Sep 2026 01:24:33 -0400
+ id 1x3RqS-0007t5-Ts; Mon, 07 Sep 2026 01:24:43 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdb974vzrzBqWd;
- Mon,  7 Sep 2026 07:24:27 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdb983YfYz7vHR;
+ Mon,  7 Sep 2026 07:24:28 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788758667;
- bh=TyzAWDw6K8iVoYqbb7VgS6DIXyhvvpYxYn4dWwqtGZM=;
+ s=dkim; t=1788758668;
+ bh=pa7SnlgbHc7Rzu0XQlZrAN6YVeTHnFI7QAXnViIed9w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UT3kxNOXurQlR98aVnPRvfgwnoEHtdy7jGxd5sOmRq76broq0JzZx16AMEU5JETvv
- 4f612Mzhf1EL2k2gZGtZnTpFxJ2OQTu/KiEG19ut6T5kiTqFiT5ax8EU7CUJqWYWdW
- 4HgjHXSA24yyunhj4F7VWl1O2dqWIZXO19v8rQOR7S73wCX9rmJ3QQLs6yJO7BJCXN
- Y9eMRfDhGnzrldqDwMiAXzgqmkoHgNQPQ9A+BnVIcB/fhNBHfKgd/mUfS/bCCPRLyC
- DvLmTFuxG1flZBpO50b8bECUkPkPIVEDy7gE/4Lkm2NhCocERDnkE+mgJINx7RbSd7
- 5dEG5sXQGf8JQ==
+ b=nxHCfQl4GuQRSe5n3c9VvPQzmbg2Stvx+ID41ubk7LsrKpmsyE9GqQbGv2vrbxXfR
+ NReZMbbGnk9Mij0hjWJlYsP5FzNsdhzHYVGFXEpJnRPGhKmFIMBV2DMUmw1oKDHGLp
+ F6gmhLPElaec5sYTAeK/8NPkRwfNae+QWel9qOy+JvCPjBiYf0iriTpzP1+t/falFi
+ qYGhimC44REQJW24eyGbUlFRqUuDNDXJC6jdfPgjtWdfCHyg2iDBSqOAamK+R6KIH7
+ n3Yx15QfIiOY3eIjWPE8up5LezIPxFyAI6Xgf+kUQpvIVp4Wqxf94jv0SOSusLsc4B
+ Jh9uxNIaelWAQ==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb972s08z7xqf;
- Mon,  7 Sep 2026 07:24:27 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb980xF4z7xqf;
+ Mon,  7 Sep 2026 07:24:28 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 18/36] hw/misc: add RP2040 IO_BANK0
-Date: Mon,  7 Sep 2026 07:24:06 +0200
-Message-ID: <20260907052426.24849-2-gilles.grimaud@univ-lille.fr>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v3 20/36] hw/char: integrate RP2040 UART pinmux
+Date: Mon,  7 Sep 2026 07:24:08 +0200
+Message-ID: <20260907052426.24849-4-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
  <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -74,510 +76,415 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model GPIO control registers and the PROC0, PROC1 and dormant-wake
-interrupt banks, including atomic aliases and last-bank masks. Connect the
-PROC0 interrupt output to the Cortex-M0+ NVIC and add focused qtests for
-register behavior and interrupt propagation.
-
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/rp2040.c                   |  11 +-
- hw/misc/meson.build               |   1 +
- hw/misc/rp2040_iobank0.c          | 333 ++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h           |   2 +
- include/hw/misc/rp2040_iobank0.h  |  45 ++++
- tests/qtest/meson.build           |   1 +
- tests/qtest/rp2040-iobank0-test.c | 119 +++++++++++
- 7 files changed, 511 insertions(+), 1 deletion(-)
- create mode 100644 hw/misc/rp2040_iobank0.c
- create mode 100644 include/hw/misc/rp2040_iobank0.h
- create mode 100644 tests/qtest/rp2040-iobank0-test.c
+ hw/arm/raspi_pico.c                |  33 +++++++
+ hw/arm/rp2040.c                    |  58 +++++++++++-
+ hw/char/pl011.c                    |  86 +++++++++++++++++-
+ include/hw/arm/rp2040.h            |   5 ++
+ include/hw/char/pl011.h            |   6 ++
+ tests/qtest/meson.build            |   1 +
+ tests/qtest/rp2040-uart-test.c     | 139 +++++++++++++++++++++++++++++
+ tests/tcg/arm/system/rp2040-mpu.S  |   5 ++
+ tests/tcg/arm/system/rp2040-uart.S |   5 ++
+ 9 files changed, 333 insertions(+), 5 deletions(-)
+ create mode 100644 tests/qtest/rp2040-uart-test.c
 
+diff --git a/hw/arm/raspi_pico.c b/hw/arm/raspi_pico.c
+index 1c01a27e89..e361a0dbc9 100644
+--- a/hw/arm/raspi_pico.c
++++ b/hw/arm/raspi_pico.c
+@@ -30,6 +30,7 @@ struct RaspiPicoMachineState {
+     MemoryRegion flash;
+     uint64_t rosc_random_seed;
+     bool rosc_random_seed_set;
++    bool strict_uart_pins;
+ };
+ 
+ static void raspi_pico_get_rosc_random_seed(Object *obj, Visitor *v,
+@@ -65,6 +66,8 @@ static void raspi_pico_init(MachineState *machine)
+     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RP2040);
+     qdev_prop_set_chr(DEVICE(&s->soc), "serial0", serial_hd(0));
+     qdev_prop_set_chr(DEVICE(&s->soc), "serial1", serial_hd(1));
++    qdev_prop_set_bit(DEVICE(&s->soc), "strict-uart-pins",
++                      s->strict_uart_pins);
+     qdev_prop_set_uint64(DEVICE(&s->soc.rosc), "random-seed",
+                          s->rosc_random_seed);
+     qdev_prop_set_bit(DEVICE(&s->soc.rosc), "random-seed-set",
+@@ -86,6 +89,28 @@ static void raspi_pico_init(MachineState *machine)
+                        RP2040_XIP_BASE, PICO_FLASH_SIZE);
+ }
+ 
++static bool raspi_pico_get_strict_uart_pins(Object *obj, Error **errp)
++{
++    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
++
++    return s->strict_uart_pins;
++}
++
++static void raspi_pico_set_strict_uart_pins(Object *obj, bool value,
++                                            Error **errp)
++{
++    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
++
++    s->strict_uart_pins = value;
++}
++
++static void raspi_pico_machine_initfn(Object *obj)
++{
++    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
++
++    s->strict_uart_pins = true;
++}
++
+ static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -107,12 +132,20 @@ static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Use a deterministic seed for the "
+                                           "ROSC RANDOMBIT stream; if unset, "
+                                           "QEMU guest entropy is used");
++    object_class_property_add_bool(oc, "strict-uart-pins",
++                                   raspi_pico_get_strict_uart_pins,
++                                   raspi_pico_set_strict_uart_pins);
++    object_class_property_set_description(oc, "strict-uart-pins",
++                                          "Require the RP2040 IO_BANK0 "
++                                          "UART pinmux before UART0 or UART1 "
++                                          "reaches its host serial backend");
+ }
+ 
+ static const TypeInfo raspi_pico_machine_info = {
+     .name = TYPE_RASPI_PICO_MACHINE,
+     .parent = TYPE_MACHINE,
+     .instance_size = sizeof(RaspiPicoMachineState),
++    .instance_init = raspi_pico_machine_initfn,
+     .class_init = raspi_pico_machine_class_init,
+ };
+ 
 diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 15a5cb0d3f..a52738b3e2 100644
+index aa1407b4dd..b503a4213c 100644
 --- a/hw/arm/rp2040.c
 +++ b/hw/arm/rp2040.c
-@@ -22,6 +22,7 @@
- #define RP2040_UART0_IRQ  20
- #define RP2040_UART1_BASE 0x40038000
- #define RP2040_UART1_IRQ  21
-+#define RP2040_IO_IRQ_BANK0 13
- 
- /*
-  * Temporary boot ROM used until the synthetic ROM is introduced. It loads
-@@ -48,7 +49,6 @@ static const struct {
-     hwaddr base;
+@@ -50,8 +50,6 @@ static const struct {
      hwaddr size;
  } rp2040_unimplemented[] = {
--    { "rp2040.iobank0",  0x40014000, 0x4000 },
-     { "rp2040.ioqspi",   0x40018000, 0x4000 },
      { "rp2040.busctrl",  0x40030000, 0x4000 },
-     { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
-@@ -130,6 +130,8 @@ static void rp2040_soc_init(Object *obj)
-     }
+-    { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
+-    { "rp2040.uart1_aliases", 0x40039000, 0x3000 },
+     { "rp2040.spi0",     0x4003c000, 0x4000 },
+     { "rp2040.spi1",     0x40040000, 0x4000 },
+     { "rp2040.i2c0",     0x40044000, 0x4000 },
+@@ -102,11 +100,54 @@ static void rp2040_set_irq(void *opaque, int irq, int level)
+     rp2040_update_nmi(s);
+ }
  
-     object_initialize_child(obj, "clocks", &s->clocks, TYPE_RP2040_CLOCKS);
-+    object_initialize_child(obj, "iobank0", &s->iobank0,
-+                            TYPE_RP2040_IOBANK0);
-     object_initialize_child(obj, "pads-bank0", &s->pads_bank0,
-                             TYPE_RP2040_PADS_BANK0);
-     object_initialize_child(obj, "pads-qspi", &s->pads_qspi,
-@@ -320,6 +322,13 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-     }
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysinfo), 0, RP2040_SYSINFO_BASE);
++static void rp2040_update_uart_pins(RP2040State *s)
++{
++    pl011_set_tx_connected(&s->uart[0],
++                           !s->strict_uart_pins ||
++                           s->uart0_tx_pin_enabled);
++    pl011_set_rx_connected(&s->uart[0],
++                           !s->strict_uart_pins ||
++                           s->uart0_rx_pin_enabled);
++    pl011_set_tx_connected(&s->uart[1],
++                           !s->strict_uart_pins ||
++                           s->uart1_tx_pin_enabled);
++    pl011_set_rx_connected(&s->uart[1],
++                           !s->strict_uart_pins ||
++                           s->uart1_rx_pin_enabled);
++}
++
++static void rp2040_set_uart_pin(void *opaque, int pin, int level)
++{
++    RP2040State *s = opaque;
++
++    switch (pin) {
++    case 0:
++        s->uart0_tx_pin_enabled = level;
++        break;
++    case 1:
++        s->uart0_rx_pin_enabled = level;
++        break;
++    case 2:
++        s->uart1_tx_pin_enabled = level;
++        break;
++    case 3:
++        s->uart1_rx_pin_enabled = level;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    rp2040_update_uart_pins(s);
++}
++
+ static void rp2040_soc_init(Object *obj)
+ {
+     RP2040State *s = RP2040(obj);
+     int i;
  
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->iobank0), errp)) {
++    qdev_init_gpio_in_named(DEVICE(obj), rp2040_set_uart_pin,
++                            "uart-pin", 4);
++
+     for (i = 0; i < RP2040_NUM_CORES; i++) {
+         g_autofree char *name = g_strdup_printf("proc%d", i);
+ 
+@@ -329,6 +370,14 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->iobank0), 0, RP2040_IOBANK0_BASE);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 0,
+                        s->irq[RP2040_IO_IRQ_BANK0]);
++    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 0,
++                                qdev_get_gpio_in_named(dev, "uart-pin", 0));
++    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 1,
++                                qdev_get_gpio_in_named(dev, "uart-pin", 1));
++    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 0,
++                                qdev_get_gpio_in_named(dev, "uart-pin", 2));
++    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 1,
++                                qdev_get_gpio_in_named(dev, "uart-pin", 3));
+ 
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioqspi), errp)) {
+         return;
+@@ -383,17 +432,20 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+             return;
+         }
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, uart_base[i]);
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 1,
++                        uart_base[i] + 0x1000);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+                            s->irq[uart_irq[i]]);
+     }
+-
+     rp2040_update_nmi(s);
++    rp2040_update_uart_pins(s);
+ }
+ 
+ static const Property rp2040_soc_properties[] = {
+     DEFINE_PROP_LINK("memory", RP2040State, board_memory, TYPE_MEMORY_REGION,
+                      MemoryRegion *),
+     DEFINE_PROP_STRING("bootrom-file", RP2040State, bootrom_file),
++    DEFINE_PROP_BOOL("strict-uart-pins", RP2040State, strict_uart_pins, true),
+ };
+ 
+ static void rp2040_soc_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 7e982e54bb..828c314100 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -101,6 +101,12 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+ /* Fractional Baud Rate Divider, UARTFBRD */
+ #define FBRD_MASK 0x3f
+ 
++/* RP2040 APB atomic register aliases. */
++#define PL011_ATOMIC_ALIAS_MASK 0x3000
++#define PL011_ATOMIC_XOR        0x1000
++#define PL011_ATOMIC_SET        0x2000
++#define PL011_ATOMIC_CLR        0x3000
++
+ static const unsigned char pl011_id_arm[8] =
+   { 0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1 };
+ static const unsigned char pl011_id_luminary[8] =
+@@ -173,6 +179,21 @@ static void pl011_update_dreq(PL011State *s)
+                  (s->dmacr & DMACR_RXDMAE) && s->read_count > 0);
+ }
+ 
++static uint32_t pl011_apply_atomic_alias(uint32_t old, uint32_t value,
++                                         hwaddr alias)
++{
++    switch (alias) {
++    case PL011_ATOMIC_XOR:
++        return old ^ value;
++    case PL011_ATOMIC_SET:
++        return old | value;
++    case PL011_ATOMIC_CLR:
++        return old & ~value;
++    default:
++        return value;
++    }
++}
++
+ static inline void pl011_reset_rx_fifo(PL011State *s)
+ {
+     s->read_count = 0;
+@@ -271,7 +292,13 @@ static void pl011_write_txdata(PL011State *s, uint8_t data)
+      * XXX this blocks entire thread. Rewrite to use
+      * qemu_chr_fe_write and background I/O callbacks
+      */
+-    qemu_chr_fe_write_all(&s->chr, &data, 1);
++    if (s->tx_connected) {
++        qemu_chr_fe_write_all(&s->chr, &data, 1);
++    } else if (!s->logged_disconnected_tx) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "PL011 data written while TX pin is disconnected\n");
++        s->logged_disconnected_tx = true;
++    }
+     pl011_loopback_tx(s, data);
+     s->int_level |= INT_TX;
+     pl011_update(s);
+@@ -542,6 +569,10 @@ static int pl011_can_receive(void *opaque)
+      * UART continuously enabled regardless of the enable bits.
+      */
+ 
++    if (!s->rx_connected) {
++        return 0;
++    }
++
+     trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
+     return fifo_available;
+ }
+@@ -549,6 +580,9 @@ static int pl011_can_receive(void *opaque)
+ static void pl011_receive(void *opaque, const uint8_t *buf, int size)
+ {
+     trace_pl011_receive(size);
++    if (!PL011(opaque)->rx_connected) {
 +        return;
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->iobank0), 0, RP2040_IOBANK0_BASE);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 0,
-+                       s->irq[RP2040_IO_IRQ_BANK0]);
+     /*
+      * In loopback mode, the RX input signal is internally disconnected
+      * from the entire receiving logics; thus, all inputs are ignored,
+@@ -565,11 +599,45 @@ static void pl011_receive(void *opaque, const uint8_t *buf, int size)
+ 
+ static void pl011_event(void *opaque, QEMUChrEvent event)
+ {
+-    if (event == CHR_EVENT_BREAK && !pl011_loopback_enabled(opaque)) {
++    PL011State *s = opaque;
 +
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rosc), errp)) {
-         return;
++    if (event == CHR_EVENT_BREAK && s->rx_connected &&
++        !pl011_loopback_enabled(opaque)) {
+         pl011_fifo_rx_put(opaque, DR_BE);
      }
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 0c5f8f2b4a..18a0afdc93 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -99,6 +99,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
-   'bcm2835_powermgt.c',
- ))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_clocks.c'))
-+system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_iobank0.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_pads.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_pll.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_psm.c'))
-diff --git a/hw/misc/rp2040_iobank0.c b/hw/misc/rp2040_iobank0.c
-new file mode 100644
-index 0000000000..3ecb30b60f
---- /dev/null
-+++ b/hw/misc/rp2040_iobank0.c
-@@ -0,0 +1,333 @@
-+/*
-+ * RP2040 GPIO IO bank emulation
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/misc/rp2040_iobank0.h"
-+#include "hw/misc/rp2040.h"
-+#include "hw/core/irq.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+
-+#define IOBANK0_GPIO_STRIDE         0x8
-+#define IOBANK0_GPIO_STATUS         0x0
-+#define IOBANK0_GPIO_CTRL           0x4
-+
-+#define IOBANK0_INTR                0x0f0
-+#define IOBANK0_PROC0_INTE          0x100
-+#define IOBANK0_PROC0_INTF          0x110
-+#define IOBANK0_PROC0_INTS          0x120
-+#define IOBANK0_PROC1_INTE          0x130
-+#define IOBANK0_PROC1_INTF          0x140
-+#define IOBANK0_PROC1_INTS          0x150
-+#define IOBANK0_DORMANT_INTE        0x160
-+#define IOBANK0_DORMANT_INTF        0x170
-+#define IOBANK0_DORMANT_INTS        0x180
-+
-+#define IOBANK0_CTRL_RESET          0x1f
-+#define IOBANK0_CTRL_RW_MASK        0x33333f
-+#define IOBANK0_CTRL_FUNCSEL_MASK   0x1f
-+#define IOBANK0_FUNCSEL_UART        2
-+#define IOBANK0_INTR_EDGE_MASK      0xcccccccc
-+#define IOBANK0_INTR_LAST_EDGE_MASK 0x00cccccc
-+#define IOBANK0_IRQ_MASK            0xffffffff
-+#define IOBANK0_IRQ_LAST_MASK       0x00ffffff
-+
-+static bool rp2040_iobank0_gpio_offset(hwaddr offset, unsigned *gpio,
-+                                       unsigned *reg)
+ }
+ 
++void pl011_set_tx_connected(PL011State *s, bool connected)
 +{
-+    if (offset >= RP2040_IOBANK0_NUM_GPIOS * IOBANK0_GPIO_STRIDE) {
-+        return false;
-+    }
-+
-+    *gpio = offset / IOBANK0_GPIO_STRIDE;
-+    *reg = offset & (IOBANK0_GPIO_STRIDE - 1);
-+    return *reg == IOBANK0_GPIO_STATUS || *reg == IOBANK0_GPIO_CTRL;
-+}
-+
-+static bool rp2040_iobank0_bank_offset(hwaddr offset, hwaddr base,
-+                                       unsigned *bank)
-+{
-+    if (offset < base || offset >= base + RP2040_IOBANK0_IRQ_BANKS * 4 ||
-+        (offset & 0x3)) {
-+        return false;
-+    }
-+
-+    *bank = (offset - base) / 4;
-+    return true;
-+}
-+
-+static uint32_t rp2040_iobank0_irq_mask(unsigned bank)
-+{
-+    return bank == 3 ? IOBANK0_IRQ_LAST_MASK : IOBANK0_IRQ_MASK;
-+}
-+
-+static uint32_t rp2040_iobank0_intr_edge_mask(unsigned bank)
-+{
-+    return bank == 3 ? IOBANK0_INTR_LAST_EDGE_MASK : IOBANK0_INTR_EDGE_MASK;
-+}
-+
-+static uint32_t rp2040_iobank0_ints(uint32_t intr, uint32_t inte,
-+                                    uint32_t intf)
-+{
-+    return (intr & inte) | intf;
-+}
-+
-+static bool rp2040_iobank0_gpio_is_uart(RP2040IoBank0State *s, unsigned gpio)
-+{
-+    return (s->ctrl[gpio] & IOBANK0_CTRL_FUNCSEL_MASK) == IOBANK0_FUNCSEL_UART;
-+}
-+
-+bool rp2040_iobank0_uart0_tx_enabled(RP2040IoBank0State *s)
-+{
-+    return rp2040_iobank0_gpio_is_uart(s, 0);
-+}
-+
-+bool rp2040_iobank0_uart0_rx_enabled(RP2040IoBank0State *s)
-+{
-+    return rp2040_iobank0_gpio_is_uart(s, 1);
-+}
-+
-+bool rp2040_iobank0_uart1_tx_enabled(RP2040IoBank0State *s)
-+{
-+    return rp2040_iobank0_gpio_is_uart(s, 4);
-+}
-+
-+bool rp2040_iobank0_uart1_rx_enabled(RP2040IoBank0State *s)
-+{
-+    return rp2040_iobank0_gpio_is_uart(s, 5);
-+}
-+
-+static void rp2040_iobank0_update_uart_pins(RP2040IoBank0State *s)
-+{
-+    qemu_set_irq(s->uart0_pin[0], rp2040_iobank0_uart0_tx_enabled(s));
-+    qemu_set_irq(s->uart0_pin[1], rp2040_iobank0_uart0_rx_enabled(s));
-+    qemu_set_irq(s->uart1_pin[0], rp2040_iobank0_uart1_tx_enabled(s));
-+    qemu_set_irq(s->uart1_pin[1], rp2040_iobank0_uart1_rx_enabled(s));
-+}
-+
-+static void rp2040_iobank0_update_irq(RP2040IoBank0State *s)
-+{
-+    bool proc0_level = false;
-+    bool proc1_level = false;
-+    int i;
-+
-+    for (i = 0; i < RP2040_IOBANK0_IRQ_BANKS; i++) {
-+        proc0_level |= rp2040_iobank0_ints(s->intr[i], s->proc0_inte[i],
-+                                           s->proc0_intf[i]) != 0;
-+        proc1_level |= rp2040_iobank0_ints(s->intr[i], s->proc1_inte[i],
-+                                           s->proc1_intf[i]) != 0;
-+    }
-+
-+    qemu_set_irq(s->proc0_irq, proc0_level);
-+    qemu_set_irq(s->proc1_irq, proc1_level);
-+}
-+
-+static uint64_t rp2040_iobank0_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    RP2040IoBank0State *s = opaque;
-+    hwaddr offset = addr & 0xfff;
-+    unsigned gpio;
-+    unsigned reg;
-+    unsigned bank;
-+    uint64_t value;
-+
-+    if (rp2040_iobank0_gpio_offset(offset, &gpio, &reg)) {
-+        value = reg == IOBANK0_GPIO_STATUS ? 0 : s->ctrl[gpio];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_INTR, &bank)) {
-+        value = s->intr[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC0_INTE, &bank)) {
-+        value = s->proc0_inte[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC0_INTF, &bank)) {
-+        value = s->proc0_intf[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC0_INTS, &bank)) {
-+        value = rp2040_iobank0_ints(s->intr[bank], s->proc0_inte[bank],
-+                                    s->proc0_intf[bank]);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC1_INTE, &bank)) {
-+        value = s->proc1_inte[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC1_INTF, &bank)) {
-+        value = s->proc1_intf[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC1_INTS, &bank)) {
-+        value = rp2040_iobank0_ints(s->intr[bank], s->proc1_inte[bank],
-+                                    s->proc1_intf[bank]);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_DORMANT_INTE,
-+                                          &bank)) {
-+        value = s->dormant_wake_inte[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_DORMANT_INTF,
-+                                          &bank)) {
-+        value = s->dormant_wake_intf[bank];
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_DORMANT_INTS,
-+                                          &bank)) {
-+        value = rp2040_iobank0_ints(s->intr[bank],
-+                                    s->dormant_wake_inte[bank],
-+                                    s->dormant_wake_intf[bank]);
-+    } else {
-+        value = 0;
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented read at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+    }
-+
-+    return value;
-+}
-+
-+static void rp2040_iobank0_write_irq_reg(uint32_t *reg, uint64_t value64,
-+                                         hwaddr alias, unsigned bank)
-+{
-+    *reg = rp2040_atomic_update(*reg, value64, alias) &
-+           rp2040_iobank0_irq_mask(bank);
-+}
-+
-+static void rp2040_iobank0_write(void *opaque, hwaddr addr, uint64_t value64,
-+                                 unsigned size)
-+{
-+    RP2040IoBank0State *s = opaque;
-+    hwaddr alias = addr & RP2040_ATOMIC_ALIAS_MASK;
-+    hwaddr offset = addr & 0xfff;
-+    unsigned gpio;
-+    unsigned reg;
-+    unsigned bank;
-+    uint32_t value = value64;
-+
-+    if (rp2040_iobank0_gpio_offset(offset, &gpio, &reg)) {
-+        if (reg == IOBANK0_GPIO_CTRL) {
-+            s->ctrl[gpio] =
-+                rp2040_atomic_update(s->ctrl[gpio], value, alias) &
-+                IOBANK0_CTRL_RW_MASK;
-+            if (gpio <= 1 || gpio == 4 || gpio == 5) {
-+                rp2040_iobank0_update_uart_pins(s);
-+            }
-+        }
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_INTR, &bank)) {
-+        s->intr[bank] &= ~(value & rp2040_iobank0_intr_edge_mask(bank));
-+        rp2040_iobank0_update_irq(s);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC0_INTE, &bank)) {
-+        rp2040_iobank0_write_irq_reg(&s->proc0_inte[bank], value, alias,
-+                                     bank);
-+        rp2040_iobank0_update_irq(s);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC0_INTF, &bank)) {
-+        rp2040_iobank0_write_irq_reg(&s->proc0_intf[bank], value, alias,
-+                                     bank);
-+        rp2040_iobank0_update_irq(s);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC1_INTE, &bank)) {
-+        rp2040_iobank0_write_irq_reg(&s->proc1_inte[bank], value, alias,
-+                                     bank);
-+        rp2040_iobank0_update_irq(s);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_PROC1_INTF, &bank)) {
-+        rp2040_iobank0_write_irq_reg(&s->proc1_intf[bank], value, alias,
-+                                     bank);
-+        rp2040_iobank0_update_irq(s);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_DORMANT_INTE,
-+                                          &bank)) {
-+        rp2040_iobank0_write_irq_reg(&s->dormant_wake_inte[bank], value,
-+                                     alias, bank);
-+    } else if (rp2040_iobank0_bank_offset(offset, IOBANK0_DORMANT_INTF,
-+                                          &bank)) {
-+        rp2040_iobank0_write_irq_reg(&s->dormant_wake_intf[bank], value,
-+                                     alias, bank);
-+    } else if (!rp2040_iobank0_bank_offset(offset, IOBANK0_PROC0_INTS,
-+                                           &bank) &&
-+               !rp2040_iobank0_bank_offset(offset, IOBANK0_PROC1_INTS,
-+                                           &bank) &&
-+               !rp2040_iobank0_bank_offset(offset, IOBANK0_DORMANT_INTS,
-+                                           &bank)) {
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented write at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
++    s->tx_connected = connected;
++    if (connected) {
++        s->logged_disconnected_tx = false;
 +    }
 +}
 +
-+static const MemoryRegionOps rp2040_iobank0_ops = {
-+    .read = rp2040_iobank0_read,
-+    .write = rp2040_iobank0_write,
++void pl011_set_rx_connected(PL011State *s, bool connected)
++{
++    s->rx_connected = connected;
++    qemu_chr_fe_accept_input(&s->chr);
++}
++
++static uint64_t pl011_atomic_alias_read(void *opaque, hwaddr offset,
++                                        unsigned size)
++{
++    return pl011_read(opaque, offset & 0xfff, size);
++}
++
++static void pl011_atomic_alias_write(void *opaque, hwaddr offset,
++                                     uint64_t value, unsigned size)
++{
++    hwaddr alias = (offset + PL011_ATOMIC_XOR) & PL011_ATOMIC_ALIAS_MASK;
++    hwaddr reg = offset & 0xfff;
++    uint32_t old = pl011_read(opaque, reg, size);
++    uint32_t new = pl011_apply_atomic_alias(old, value, alias);
++
++    pl011_write(opaque, reg, new, size);
++}
++
+ static void pl011_clock_update(void *opaque, ClockEvent event)
+ {
+     PL011State *s = PL011(opaque);
+@@ -585,6 +653,14 @@ static const MemoryRegionOps pl011_ops = {
+     .impl.max_access_size = 4,
+ };
+ 
++static const MemoryRegionOps pl011_atomic_alias_ops = {
++    .read = pl011_atomic_alias_read,
++    .write = pl011_atomic_alias_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
 +};
 +
-+static void rp2040_iobank0_reset(DeviceState *dev)
-+{
-+    RP2040IoBank0State *s = RP2040_IOBANK0(dev);
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(s->ctrl); i++) {
-+        s->ctrl[i] = IOBANK0_CTRL_RESET;
-+    }
-+
-+    memset(s->intr, 0, sizeof(s->intr));
-+    memset(s->proc0_inte, 0, sizeof(s->proc0_inte));
-+    memset(s->proc0_intf, 0, sizeof(s->proc0_intf));
-+    memset(s->proc1_inte, 0, sizeof(s->proc1_inte));
-+    memset(s->proc1_intf, 0, sizeof(s->proc1_intf));
-+    memset(s->dormant_wake_inte, 0, sizeof(s->dormant_wake_inte));
-+    memset(s->dormant_wake_intf, 0, sizeof(s->dormant_wake_intf));
-+    rp2040_iobank0_update_irq(s);
-+    rp2040_iobank0_update_uart_pins(s);
-+}
-+
-+static void rp2040_iobank0_init(Object *obj)
-+{
-+    RP2040IoBank0State *s = RP2040_IOBANK0(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &rp2040_iobank0_ops, s,
-+                          "rp2040.iobank0", RP2040_IOBANK0_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->proc0_irq);
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->proc1_irq);
-+    qdev_init_gpio_out_named(DEVICE(obj), s->uart0_pin, "uart0-pin",
-+                             ARRAY_SIZE(s->uart0_pin));
-+    qdev_init_gpio_out_named(DEVICE(obj), s->uart1_pin, "uart1-pin",
-+                             ARRAY_SIZE(s->uart1_pin));
-+}
-+
-+static const VMStateDescription rp2040_iobank0_vmstate = {
-+    .name = TYPE_RP2040_IOBANK0,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(ctrl, RP2040IoBank0State,
-+                             RP2040_IOBANK0_NUM_GPIOS),
-+        VMSTATE_UINT32_ARRAY(intr, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_UINT32_ARRAY(proc0_inte, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_UINT32_ARRAY(proc0_intf, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_UINT32_ARRAY(proc1_inte, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_UINT32_ARRAY(proc1_intf, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_UINT32_ARRAY(dormant_wake_inte, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_UINT32_ARRAY(dormant_wake_intf, RP2040IoBank0State,
-+                             RP2040_IOBANK0_IRQ_BANKS),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void rp2040_iobank0_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_legacy_reset(dc, rp2040_iobank0_reset);
-+    dc->vmsd = &rp2040_iobank0_vmstate;
-+}
-+
-+static const TypeInfo rp2040_iobank0_info = {
-+    .name          = TYPE_RP2040_IOBANK0,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040IoBank0State),
-+    .instance_init = rp2040_iobank0_init,
-+    .class_init    = rp2040_iobank0_class_init,
-+};
-+
-+static void rp2040_iobank0_register_types(void)
-+{
-+    type_register_static(&rp2040_iobank0_info);
-+}
-+type_init(rp2040_iobank0_register_types)
+ static bool pl011_clock_needed(void *opaque)
+ {
+     PL011State *s = PL011(opaque);
+@@ -673,8 +749,14 @@ static void pl011_init(Object *obj)
+     PL011State *s = PL011(obj);
+     int i;
+ 
++    s->tx_connected = true;
++    s->rx_connected = true;
+     memory_region_init_io(&s->iomem, OBJECT(s), &pl011_ops, s, "pl011", 0x1000);
+     sysbus_init_mmio(sbd, &s->iomem);
++    memory_region_init_io(&s->atomic_alias_iomem, OBJECT(s),
++                          &pl011_atomic_alias_ops, s,
++                          "pl011-atomic-alias", 0x3000);
++    sysbus_init_mmio(sbd, &s->atomic_alias_iomem);
+     for (i = 0; i < ARRAY_SIZE(s->irq); i++) {
+         sysbus_init_irq(sbd, &s->irq[i]);
+     }
 diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 42eb3c8fca..ae393195d3 100644
+index fdfcf28f3b..6beb4cafff 100644
 --- a/include/hw/arm/rp2040.h
 +++ b/include/hw/arm/rp2040.h
-@@ -14,6 +14,7 @@
- #include "hw/core/clock.h"
- #include "hw/core/sysbus.h"
- #include "hw/misc/rp2040_clocks.h"
-+#include "hw/misc/rp2040_iobank0.h"
- #include "hw/misc/rp2040_pads.h"
- #include "hw/misc/rp2040_pll.h"
- #include "hw/misc/rp2040_psm.h"
-@@ -48,6 +49,7 @@ struct RP2040State {
-     ARMv7MState armv7m[RP2040_NUM_CORES];
-     PL011State uart[2];
-     RP2040ClocksState clocks;
-+    RP2040IoBank0State iobank0;
-     RP2040PadsBank0State pads_bank0;
-     RP2040PadsQspiState pads_qspi;
-     RP2040PllState pll_sys;
-diff --git a/include/hw/misc/rp2040_iobank0.h b/include/hw/misc/rp2040_iobank0.h
-new file mode 100644
-index 0000000000..93f5b4b2f4
---- /dev/null
-+++ b/include/hw/misc/rp2040_iobank0.h
-@@ -0,0 +1,45 @@
-+/*
-+ * RP2040 GPIO IO bank emulation
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MISC_RP2040_IOBANK0_H
-+#define HW_MISC_RP2040_IOBANK0_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RP2040_IOBANK0 "rp2040-iobank0"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040IoBank0State, RP2040_IOBANK0)
-+
-+#define RP2040_IOBANK0_BASE 0x40014000
-+#define RP2040_IOBANK0_SIZE 0x4000
-+#define RP2040_IOBANK0_NUM_GPIOS 30
-+#define RP2040_IOBANK0_IRQ_BANKS 4
-+
-+struct RP2040IoBank0State {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+    qemu_irq proc0_irq;
-+    qemu_irq proc1_irq;
-+    qemu_irq uart0_pin[2];
-+    qemu_irq uart1_pin[2];
-+
-+    uint32_t ctrl[RP2040_IOBANK0_NUM_GPIOS];
-+    uint32_t intr[RP2040_IOBANK0_IRQ_BANKS];
-+    uint32_t proc0_inte[RP2040_IOBANK0_IRQ_BANKS];
-+    uint32_t proc0_intf[RP2040_IOBANK0_IRQ_BANKS];
-+    uint32_t proc1_inte[RP2040_IOBANK0_IRQ_BANKS];
-+    uint32_t proc1_intf[RP2040_IOBANK0_IRQ_BANKS];
-+    uint32_t dormant_wake_inte[RP2040_IOBANK0_IRQ_BANKS];
-+    uint32_t dormant_wake_intf[RP2040_IOBANK0_IRQ_BANKS];
-+};
-+
-+bool rp2040_iobank0_uart0_tx_enabled(RP2040IoBank0State *s);
-+bool rp2040_iobank0_uart0_rx_enabled(RP2040IoBank0State *s);
-+bool rp2040_iobank0_uart1_tx_enabled(RP2040IoBank0State *s);
-+bool rp2040_iobank0_uart1_rx_enabled(RP2040IoBank0State *s);
-+
-+#endif
+@@ -77,6 +77,11 @@ struct RP2040State {
+     qemu_irq cpu_irq[RP2040_NUM_CORES][RP2040_NUM_IRQS];
+     qemu_irq nmi_irq[RP2040_NUM_CORES];
+     bool irq_level[RP2040_NUM_IRQS];
++    bool strict_uart_pins;
++    bool uart0_tx_pin_enabled;
++    bool uart0_rx_pin_enabled;
++    bool uart1_tx_pin_enabled;
++    bool uart1_rx_pin_enabled;
+ 
+     Clock *sysclk;
+ };
+diff --git a/include/hw/char/pl011.h b/include/hw/char/pl011.h
+index c7b5a3a2b3..20c0b5694b 100644
+--- a/include/hw/char/pl011.h
++++ b/include/hw/char/pl011.h
+@@ -32,6 +32,7 @@ struct PL011State {
+     SysBusDevice parent_obj;
+ 
+     MemoryRegion iomem;
++    MemoryRegion atomic_alias_iomem;
+     uint32_t flags;
+     uint32_t lcr;
+     uint32_t rsr;
+@@ -53,7 +54,10 @@ struct PL011State {
+     qemu_irq dreq_rx;
+     Clock *clk;
+     bool migrate_clk;
++    bool tx_connected;
++    bool rx_connected;
+     bool logged_disabled_uart;
++    bool logged_disconnected_tx;
+     const unsigned char *id;
+     /*
+      * Since some users embed this struct directly, we must
+@@ -63,5 +67,7 @@ struct PL011State {
+ };
+ 
+ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr);
++void pl011_set_tx_connected(PL011State *s, bool connected);
++void pl011_set_rx_connected(PL011State *s, bool connected);
+ 
+ #endif
 diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 26ed04bc51..9cf40e50ec 100644
+index 8009ec7f8d..dee90c57c8 100644
 --- a/tests/qtest/meson.build
 +++ b/tests/qtest/meson.build
-@@ -266,6 +266,7 @@ qtests_arm = \
-    ['rp2040-syscfg-test',
-      'rp2040-sysinfo-test',
-     'rp2040-clocks-test',
-+    'rp2040-iobank0-test',
-     'rp2040-pads-test',
+@@ -272,6 +272,7 @@ qtests_arm = \
      'rp2040-resets-test',
      'rp2040-rosc-test',
-diff --git a/tests/qtest/rp2040-iobank0-test.c b/tests/qtest/rp2040-iobank0-test.c
+     'rp2040-tbman-test',
++    'rp2040-uart-test',
+     'rp2040-vreg-test',
+     'rp2040-watchdog-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
+diff --git a/tests/qtest/rp2040-uart-test.c b/tests/qtest/rp2040-uart-test.c
 new file mode 100644
-index 0000000000..c77baa502e
+index 0000000000..05d2f3c763
 --- /dev/null
-+++ b/tests/qtest/rp2040-iobank0-test.c
-@@ -0,0 +1,119 @@
++++ b/tests/qtest/rp2040-uart-test.c
+@@ -0,0 +1,139 @@
 +/*
-+ * QTest testcase for the RP2040 IO_BANK0.
++ * QTest testcase for the RP2040 UART pinmux integration.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
@@ -585,102 +492,120 @@ index 0000000000..c77baa502e
 +#include "qemu/osdep.h"
 +#include "libqtest.h"
 +#include "hw/misc/rp2040.h"
-+#include "qemu/bitops.h"
 +
-+#define IOBANK0_BASE         0x40014000
-+#define GPIO0_STATUS         0x000
-+#define GPIO0_CTRL           0x004
-+#define GPIO29_CTRL          0x0ec
-+#define INTR0                0x0f0
-+#define PROC0_INTE0          0x100
-+#define PROC0_INTF0          0x110
-+#define PROC0_INTS0          0x120
-+#define PROC1_INTE3          0x13c
-+#define PROC1_INTF3          0x14c
-+#define PROC1_INTS3          0x15c
-+#define DORMANT_INTE3        0x16c
-+#define DORMANT_INTF3        0x17c
-+#define DORMANT_INTS3        0x18c
++#define IOBANK0_BASE  0x40014000
++#define GPIO_CTRL(n)  (0x004 + (n) * 8)
++#define GPIO_FUNC_UART 2
 +
-+#define CTRL_RESET           0x1f
-+#define CTRL_RW_MASK         0x33333f
-+#define IRQ_LAST_MASK        0x00ffffff
-+#define IO_IRQ_BANK0         13
++#define UART0_BASE 0x40034000
++#define UART1_BASE 0x40038000
++#define UART_DR     0x000
++#define UART_FR     0x018
++#define UART_CR     0x030
++#define UART_FR_RXFE 0x10
 +
-+#define NVIC_ISPR            0xe000e200
-+#define NVIC_ICPR            0xe000e280
-+
-+static QTestState *rp2040_iobank0_start(void)
++static char *new_output_path(void)
 +{
-+    return qtest_init("-machine raspi-pico");
++    int fd;
++    char *path = NULL;
++
++    fd = g_file_open_tmp("rp2040-uart-XXXXXX", &path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++    close(fd);
++    return path;
 +}
 +
-+static void test_gpio_control(void)
++static void assert_file_contents(const char *path, const char *expected)
 +{
-+    QTestState *qts = rp2040_iobank0_start();
++    g_autofree char *contents = NULL;
++    gsize length;
 +
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + GPIO0_STATUS), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + GPIO0_CTRL), ==,
-+                    CTRL_RESET);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + GPIO29_CTRL), ==,
-+                    CTRL_RESET);
++    g_assert_true(g_file_get_contents(path, &contents, &length, NULL));
++    g_assert_cmpuint(length, ==, strlen(expected));
++    g_assert_cmpmem(contents, length, expected, strlen(expected));
++}
 +
-+    qtest_writel(qts, IOBANK0_BASE + GPIO0_CTRL, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + GPIO0_CTRL), ==,
-+                    CTRL_RW_MASK);
-+    qtest_writel(qts, IOBANK0_BASE + RP2040_ATOMIC_CLR + GPIO0_CTRL, 0x30);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + GPIO0_CTRL), ==,
-+                    CTRL_RW_MASK & ~0x30);
-+    qtest_writel(qts, IOBANK0_BASE + RP2040_ATOMIC_XOR + GPIO0_CTRL, 0x03);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + GPIO0_CTRL), ==,
-+                    (CTRL_RW_MASK & ~0x30) ^ 0x03);
++static void test_uart0_pinmux(void)
++{
++    g_autofree char *path = new_output_path();
++    QTestState *qts = qtest_initf("-machine raspi-pico "
++                                  "-chardev file,id=uart0,path=%s "
++                                  "-serial chardev:uart0", path);
 +
++    qtest_writel(qts, UART0_BASE + UART_DR, 'X');
++    qtest_writel(qts, IOBANK0_BASE + GPIO_CTRL(0), GPIO_FUNC_UART);
++    qtest_writel(qts, UART0_BASE + UART_DR, '0');
++    qtest_quit(qts);
++
++    assert_file_contents(path, "0");
++    unlink(path);
++}
++
++static void test_uart1_pinmux(void)
++{
++    g_autofree char *path = new_output_path();
++    QTestState *qts = qtest_initf("-machine raspi-pico -serial null "
++                                  "-chardev file,id=uart1,path=%s "
++                                  "-serial chardev:uart1", path);
++
++    qtest_writel(qts, UART1_BASE + UART_DR, 'X');
++    qtest_writel(qts, IOBANK0_BASE + GPIO_CTRL(4), GPIO_FUNC_UART);
++    qtest_writel(qts, UART1_BASE + UART_DR, '1');
++    qtest_quit(qts);
++
++    assert_file_contents(path, "1");
++    unlink(path);
++}
++
++static void test_non_strict_uart_pins(void)
++{
++    g_autofree char *path = new_output_path();
++    QTestState *qts = qtest_initf("-machine raspi-pico,strict-uart-pins=off "
++                                  "-chardev file,id=uart0,path=%s "
++                                  "-serial chardev:uart0", path);
++
++    qtest_writel(qts, UART0_BASE + UART_DR, 'L');
++    qtest_quit(qts);
++
++    assert_file_contents(path, "L");
++    unlink(path);
++}
++
++static void test_uart0_rx_pinmux(void)
++{
++    int sock_fd;
++    int retries;
++    QTestState *qts = qtest_init_with_serial("-machine raspi-pico",
++                                             &sock_fd);
++
++    qtest_writel(qts, IOBANK0_BASE + GPIO_CTRL(1), GPIO_FUNC_UART);
++    g_assert_cmpint(send(sock_fd, "R", 1, 0), ==, 1);
++    for (retries = 0; retries < 1000; retries++) {
++        if (!(qtest_readl(qts, UART0_BASE + UART_FR) & UART_FR_RXFE)) {
++            break;
++        }
++        g_usleep(1000);
++    }
++    g_assert_cmpint(retries, <, 1000);
++    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_DR), ==, 'R');
++
++    close(sock_fd);
 +    qtest_quit(qts);
 +}
 +
-+static void test_proc0_irq(void)
++static void test_atomic_aliases(void)
 +{
-+    QTestState *qts = rp2040_iobank0_start();
-+    uint32_t irq = BIT(IO_IRQ_BANK0);
++    QTestState *qts = qtest_init("-machine raspi-pico");
++    uint32_t reset = qtest_readl(qts, UART0_BASE + UART_CR);
 +
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + INTR0), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + PROC0_INTS0), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, NVIC_ISPR) & irq, ==, 0);
-+
-+    qtest_writel(qts, IOBANK0_BASE + PROC0_INTF0, BIT(7));
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + PROC0_INTS0), ==,
-+                    BIT(7));
-+    g_assert_cmphex(qtest_readl(qts, NVIC_ISPR) & irq, ==, irq);
-+
-+    qtest_writel(qts, IOBANK0_BASE + RP2040_ATOMIC_CLR + PROC0_INTF0, BIT(7));
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + PROC0_INTS0), ==, 0);
-+    qtest_writel(qts, NVIC_ICPR, irq);
-+    g_assert_cmphex(qtest_readl(qts, NVIC_ISPR) & irq, ==, 0);
-+
-+    qtest_writel(qts, IOBANK0_BASE + RP2040_ATOMIC_SET + PROC0_INTE0, BIT(3));
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + PROC0_INTE0), ==,
-+                    BIT(3));
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_last_bank_masks(void)
-+{
-+    QTestState *qts = rp2040_iobank0_start();
-+
-+    qtest_writel(qts, IOBANK0_BASE + PROC1_INTE3, 0xffffffff);
-+    qtest_writel(qts, IOBANK0_BASE + PROC1_INTF3, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + PROC1_INTE3), ==,
-+                    IRQ_LAST_MASK);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + PROC1_INTS3), ==,
-+                    IRQ_LAST_MASK);
-+
-+    qtest_writel(qts, IOBANK0_BASE + DORMANT_INTE3, 0xffffffff);
-+    qtest_writel(qts, IOBANK0_BASE + DORMANT_INTF3, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + DORMANT_INTE3), ==,
-+                    IRQ_LAST_MASK);
-+    g_assert_cmphex(qtest_readl(qts, IOBANK0_BASE + DORMANT_INTS3), ==,
-+                    IRQ_LAST_MASK);
++    qtest_writel(qts, UART0_BASE + RP2040_ATOMIC_CLR + UART_CR, 0x100);
++    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_CR), ==,
++                    reset & ~0x100);
++    qtest_writel(qts, UART0_BASE + RP2040_ATOMIC_SET + UART_CR, 0x100);
++    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_CR), ==, reset);
++    qtest_writel(qts, UART0_BASE + RP2040_ATOMIC_XOR + UART_CR, 0x200);
++    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_CR), ==,
++                    reset ^ 0x200);
 +
 +    qtest_quit(qts);
 +}
@@ -689,12 +614,60 @@ index 0000000000..c77baa502e
 +{
 +    g_test_init(&argc, &argv, NULL);
 +
-+    qtest_add_func("/rp2040-iobank0/gpio-control", test_gpio_control);
-+    qtest_add_func("/rp2040-iobank0/proc0-irq", test_proc0_irq);
-+    qtest_add_func("/rp2040-iobank0/last-bank-masks", test_last_bank_masks);
++    qtest_add_func("/rp2040-uart/uart0-pinmux", test_uart0_pinmux);
++    qtest_add_func("/rp2040-uart/uart1-pinmux", test_uart1_pinmux);
++    qtest_add_func("/rp2040-uart/non-strict", test_non_strict_uart_pins);
++    qtest_add_func("/rp2040-uart/uart0-rx-pinmux", test_uart0_rx_pinmux);
++    qtest_add_func("/rp2040-uart/atomic-aliases", test_atomic_aliases);
 +
 +    return g_test_run();
 +}
+diff --git a/tests/tcg/arm/system/rp2040-mpu.S b/tests/tcg/arm/system/rp2040-mpu.S
+index 5cc98f3d0e..60fa1292e6 100644
+--- a/tests/tcg/arm/system/rp2040-mpu.S
++++ b/tests/tcg/arm/system/rp2040-mpu.S
+@@ -13,6 +13,8 @@
+ #define TEST_ADDRESS 0x20001000
+ #define TEST_VALUE 0x12345678
+ #define UART0_DR 0x40034000
++#define GPIO0_CTRL 0x40014004
++#define GPIO_FUNC_UART 2
+ #define MPU_TYPE 0xe000ed90
+ #define MPU_CTRL 0xe000ed94
+ #define MPU_RNR 0xe000ed98
+@@ -42,6 +44,9 @@ vector_table:
+ .thumb_func
+ .global reset_handler
+ reset_handler:
++    ldr r0, =GPIO0_CTRL
++    movs r1, GPIO_FUNC_UART
++    str r1, [r0]
+     ldr r0, =start_message
+     bl puts
+ 
+diff --git a/tests/tcg/arm/system/rp2040-uart.S b/tests/tcg/arm/system/rp2040-uart.S
+index bdb58cc7f2..6058699200 100644
+--- a/tests/tcg/arm/system/rp2040-uart.S
++++ b/tests/tcg/arm/system/rp2040-uart.S
+@@ -11,6 +11,8 @@
+ 
+ #define SRAM_END 0x20042000
+ #define UART0_DR 0x40034000
++#define GPIO0_CTRL 0x40014004
++#define GPIO_FUNC_UART 2
+ #define SYS_EXIT 0x18
+ #define ADP_STOPPED_APPLICATION_EXIT 0x20026
+ 
+@@ -25,6 +27,9 @@ vector_table:
+ .thumb_func
+ .global reset_handler
+ reset_handler:
++    ldr r0, =GPIO0_CTRL
++    movs r1, GPIO_FUNC_UART
++    str r1, [r0]
+     ldr r0, =UART0_DR
+     ldr r1, =message
+ 
 -- 
 2.55.0
 
