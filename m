@@ -4,120 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5835BC79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE3CC79F99
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3XIW-0002G4-VL; Mon, 07 Sep 2026 07:14:00 -0400
+	id 1x3XJX-0002mW-DY; Mon, 07 Sep 2026 07:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1x3XIU-0002FX-J8
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:13:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x3XJV-0002m1-DX
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:15:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1x3XIR-0005Ok-AG
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:13:58 -0400
+ id 1x3XJT-00066R-A9
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:15:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788779634;
+ s=mimecast20190719; t=1788779698;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=129aGMOppIvs7DM0D+x5WTDYJFayJvwlM9+iPsAyyMs=;
- b=W1es+dGYiX7NdmWQAk3sZ39yhqbAT1qgOcH9+xqvyFpXnj7Kd2jUftbhjS/6nZDc/m1BUp
- eeIZX1WGNL4+YxO7kIqW47XO1fcoYVyegHi9xEv0LtdUMEm0xiFj8bHiAvZJwt4B4jm0bX
- Aolsa/4OMshVq/AXlpK4sq+z+CrgVIE=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fkkDm/ffbL/Z02ivGrW2CgTB5BA3h8U74fBysqH5/rI=;
+ b=KYhw+MGKMojR+ZWkzTFal5H0f/RDoW/hWgWJ0WPNZcva3DQ7gP5MSJxeQJjzKIGX80mPz0
+ P++JdKvYaRg65depND6lTdxjMmyyk7Zogf+KWE3GGJEXoyoWt+nRzmxqj/shXqSsGVqU9W
+ RgRBbliKbSOKHOTrCTtaLj554B2fz3E=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-jIhECJZ8O4KveV4ttO64pQ-1; Mon, 07 Sep 2026 07:13:52 -0400
-X-MC-Unique: jIhECJZ8O4KveV4ttO64pQ-1
-X-Mimecast-MFC-AGG-ID: jIhECJZ8O4KveV4ttO64pQ_1788779632
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-9105be46009so14630436d6.1
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 04:13:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788779632; cv=none;
+ us-mta-65-Iaq6tiIgOCKwGhQRtLS2Cg-1; Mon, 07 Sep 2026 07:14:56 -0400
+X-MC-Unique: Iaq6tiIgOCKwGhQRtLS2Cg-1
+X-Mimecast-MFC-AGG-ID: Iaq6tiIgOCKwGhQRtLS2Cg_1788779696
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-90e7f98bcb9so33367896d6.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 04:14:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788779696; cv=none;
  d=google.com; s=arc-20260327;
- b=KovgFmnwMOvzXC+euF1xJIWP38Ab8vDSaMdvff5buQ/hDurIBVcCxKHmZuuxFDeuG/
- Rp9L+OAicF0jI7rDMGxiqA5o2yJN4+JIru7Jfo0DDwXPPATqMZjhNaiEQlg7iXg2PIQH
- 33XL0e5+m7W2QrqtvUC9vujgDELwgnr2Tyl//rwoontfAYgZB7dDdaOpUxfcp7sLXUvc
- nSFv27SCHBWZ3lajKKN9PBDg53jS9rwzdPyoeTWKCWg7iFArCHBHT5BWx3bXYNiFmJrQ
- zuPMj4kFOAqNzF/WBzLJ2o+P8Q03KkQVmS3qoT31tgaFDyNQLw4Wq1fTnJLn6DLETJ4A
- 8SDw==
+ b=dwQI6sSntWgJbpQ+so+fjRE4cnvMPx6saYUz04Li51gWWCzWQ13OSFam3pZlAIWdbv
+ 71sYJh1uR3mPyxMSp6RipywBoRF53XwxNa8zlHxwTek1t3sdsak9Mie6j3WHZFuEC99M
+ tK7vVsG0XyeCTbAk19fLJSClYp6xgj0bD4sTXfeNqSJEUJAIp180yo/TeStUMUvdibB2
+ nZYQI89YS4O66G5Vtw91fDSfSt24TDBO/1rV8nK2RUrq29oCAxVJZd3CHhhS3I7ciRhL
+ mGkwB8IcucdLlM99PqZcpaq0+XWGau8W+bMzpj8hO/1BTGrMOGcpcSLdTTUfT1YAh8Pb
+ KYOQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=129aGMOppIvs7DM0D+x5WTDYJFayJvwlM9+iPsAyyMs=;
+ bh=fkkDm/ffbL/Z02ivGrW2CgTB5BA3h8U74fBysqH5/rI=;
  fh=2UZlmMdSzD3+f507HMdukLRvlcEDzodjJVY4NLN3tLg=;
- b=gGNqGVsZUecuUnrRwFOpPCukcp7qrY62mZVXa2pA727PEvsWnnHzDHUba4FgQQQnQw
- GySTPNxGh5PWTH9oXHJyBhjMwzf/mVvRPf954fPHOvdZXy3kTcW9zVjZu/9i18IjGhoT
- hYrSheTYqi70rlUbLEX9PnEsshzbLdzAb7RvIdMQIWDwdwYD0KT4fCZ3goiMG5Hir+4C
- F7nBW6h9EWLKg/KHAcJEw+8nrR6oj/zoyShHMJniu2vCElFKRQzU+hsXK4hKhtMosgCZ
- iTVmQ33Q+VsDxok+Tb/xbm6A18bleaqoQwLRpMJOlYgPnIxLi1VIjfz3tHgyY40oP6oe
- BzBg==; darn=nongnu.org
+ b=Q5QsOeWRRNn+aat9l7ba5CksmITdxR3Ctrpmb19xeu9vv1E6Ii9o0Z+v047dMTmPxm
+ MqX6kyJ0hFMSAaNxXx5p5BGOgG02IIEihJ8RucfOfevfY61KmdNXfyjMW/36aF4PY53Z
+ WizXBNq2T+KDrGqNEz1xg7+sloLt78orWS1K+furqP4iLTqo/Jv6rbkLgnXDr7+qivTL
+ VozTu9BNUhnpzXI4G79Mmb/PIqsxELgWVq8UtsqvWCF0Y/1CXwEq3bbrhH2kIMXzixL6
+ LSiMd/iieFRyaLE+dTY2Odsrib48n3UJ0Z808rtxvL+slZsV4rcUV6pKqsyErvvb2I+H
+ kGEQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788779632; x=1789384432; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788779696; x=1789384496; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=129aGMOppIvs7DM0D+x5WTDYJFayJvwlM9+iPsAyyMs=;
- b=CeFOL4Ip7Z62rlb+mBBwVm5llATQYPP+ooIXCxWR3WuJ99Mg6/f47Wmm4/tUumcMP1
- a3SBBlHrCFamHqi7HOxRSRqiXApanodKVOdvjRmTS8F57MHDZ0BqeVtTEAtbHJArW9ws
- n2fr7UmyesPzm+NtO/Nmp2zdsDMJinQ5Zsu5Wm50sLbAAQDGCrq2qCbAZsI91YDEYP8H
- Aqx9gdfVnf+i09S4Heni88Gskv+jdaovV06Njlo+PVCH1QYeMkhZe+QGtDScIqynbbSL
- knxxxPNb30OKXVnsGBd5xYESOn1EzJdFasyAL8pRrV+uhFuDk2VQwaTwLmapQ1pomLYz
- dMTA==
+ :content-type; bh=fkkDm/ffbL/Z02ivGrW2CgTB5BA3h8U74fBysqH5/rI=;
+ b=PMZFslPxL16FhoZ36XqhfxXQXYueg+0r62zDP0+lRaYqENzc9LLOKILgPTT4y8zbon
+ 5bZWLskoFQlSeqTCQFO43LY84YFIJFBN7RlQ2TUoS0EmQpa2DcZhVgB+89UM9TjWeEL6
+ rsBVYkVpTkqnwzVHwvj1NaqwFEhTxLf7LXybmxGgvXnM2tWgk/7Y1L3ClPx+YFDcoYtp
+ cCxhDAdrkfDi2mdSW2RHEImZ3lfnmzb7mw4RwAd2/EFK4hiHqEA8ilWoOB9iyTwiT1YO
+ zFrCzZWzXgUjGHHSyGzzaF35ISZChj411nq9azlYURTSXEkdqoC4gNTdcT4rr/WrAUrh
+ vV0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788779632; x=1789384432;
+ d=1e100.net; s=20251104; t=1788779696; x=1789384496;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=129aGMOppIvs7DM0D+x5WTDYJFayJvwlM9+iPsAyyMs=;
- b=CwGN/QJ/L3EHqIxkAZaHVxcttV5uDu4ciEAHMjixzs5YDqU5VgST6xysjHEYy61Nsg
- x+5m2/duNu09Jb1zvFVsIBUyKvedKW0ABSqzYji5aPpBhv41+NdcdFxRVpN1vvKkERUA
- oM639Nht1A50/th20J5MvEAZWK9VtmrVn9Mr8MF14BxnVwlX9RexOPXxggfo2CTATJjX
- YJe7GNqqXhdn73+oVhUBw6TH0uzTRNGTCa8TlNpm5zehA86Q7tOeqKkA50Mjge2tkmS0
- kmHNdOjE3hTs/4u2h7rir3LvFiZXVjWSdEsqj1Gw/X2W5AbF+mkZ4/8j5hPE5fU2nxfG
- +bmA==
-X-Gm-Message-State: AFuF++k6pq4diMIygZzf1l1rIvKPyW/SFaNOQaKUy2lifUWbhZkKooGH
- 7Q7kKF7c8dhTNkYZvjnIIkTBth8rC0fgA9iZgUiL8aj9mEL41uhfdq2F20SmCyphn/qq/8WUQMS
- p9F2bxNeZkidBUw2aotDq3sgscspneYmzR103pp3fHupSEK06S0gKefz3RJ/y1OEQloTPUVniLy
- fqT9cq2t3PwbkbGy8EjLZduATIyTjIr2E=
-X-Gm-Gg: AYBFou2kwEUIUMTIObeO8Cw3sr4uBvT0LdXBAHjmWVheEZh5KG++UN/eOOF28sm7U/W
- hxGt17sQJeGod7uw76b0W1Kp6C2klOkbTEpF/SSfd3odjVVRj5/khc361T1bHp9edRTMTGU5tpo
- VS82YwWABiy7G/1VBEy565/DQKQEZi81zMKTpCfs6clW2kw/MHFUiJkourA4A=
-X-Received: by 2002:a05:6214:c21:b0:910:3923:cc6c with SMTP id
- 6a1803df08f44-9103923d14dmr228228406d6.21.1788779632175; 
- Mon, 07 Sep 2026 04:13:52 -0700 (PDT)
-X-Received: by 2002:a05:6214:c21:b0:910:3923:cc6c with SMTP id
- 6a1803df08f44-9103923d14dmr228228046d6.21.1788779631753; Mon, 07 Sep 2026
- 04:13:51 -0700 (PDT)
+ bh=fkkDm/ffbL/Z02ivGrW2CgTB5BA3h8U74fBysqH5/rI=;
+ b=BtmdapzoKFfFK/VQt6hsVha99JjaIUf1XdMqf9P6ag6V/55xgHSt2whrgIvff8Jd9y
+ kVjNKNLPzs6mD8apBs8RFOqtUsHFr09rU7x8pJWIVJ8ONwCUU3fFrKErYE4BNAVCmwVL
+ lklzneXZpfB1N3Xj12PMol1FlGBkCFeubu0Hei2L9YONmDhRPMqJOAUAOtx/TDzOJf8C
+ YOtAR6pFyBbahVhbiDq1w3wIToDpIf2EcnyxxVG/SLgi08vO75I/gtoW+rS+pC928wLA
+ tnfsAxyadw8FIjgTxeTwLOUg0NEbY+bojNTWf8+7HrbLkPLmeoXkb87ygqWpcVqVT1R3
+ 77sg==
+X-Gm-Message-State: AFuF++lq31Wu1AliV3zJSGjEqrr1iaAOgFNZFJYzXgtHZIVhZcjYbnhr
+ zsuIRXTqnSFUf0/hWsj4FC8gk9C8Ow10VT2qMDb96l3sb27zT8KSPWT3a/aL0p82B4TtIjNYS+O
+ qMlVMs0FMh9Ls6s6rGfbkOA9qdFJGXb/K/Qia7iSIqFTJp4pppUnOJXbLIekLRANeqLaRVO1CIl
+ KJFViVagVAEY2wPnYQ0MF9Z0BJSwKkvOk=
+X-Gm-Gg: AYBFou13Jzn3ehXloQSb/pNm9Cq1WrKLr6alSw29Kq5FrMWgoSiRZfkmJ8hbccmfmHf
+ Y6D2ytr6x9Jp2z97s/X0HMqkLC1FrljSLL8MjEnlng2lWGNCUmAZt5vsuhQnkvuFXPNvURvoqGP
+ DQRwFLzD7Gut/NqBJK9TYmHv6yKvApsNJ5gDBasq3nwFSaP0eKoBttJNEeWLY=
+X-Received: by 2002:ad4:5c6b:0:b0:90e:93b2:3205 with SMTP id
+ 6a1803df08f44-9103eff88d1mr255789386d6.22.1788779696365; 
+ Mon, 07 Sep 2026 04:14:56 -0700 (PDT)
+X-Received: by 2002:ad4:5c6b:0:b0:90e:93b2:3205 with SMTP id
+ 6a1803df08f44-9103eff88d1mr255788946d6.22.1788779695955; Mon, 07 Sep 2026
+ 04:14:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260907-qga-v1-0-86456ad356e2@redhat.com>
- <20260907-qga-v1-5-86456ad356e2@redhat.com>
-In-Reply-To: <20260907-qga-v1-5-86456ad356e2@redhat.com>
+ <20260907-qga-v1-6-86456ad356e2@redhat.com>
+In-Reply-To: <20260907-qga-v1-6-86456ad356e2@redhat.com>
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 7 Sep 2026 14:13:41 +0300
-X-Gm-Features: AcwNN1XQCfj4-lJgzKJKXZr4U-E7T6lx8c01pd2VPBe8GvCuS6iQws3UAZzoobA
-Message-ID: <CAPMcbCrUXbkxZm0-nONRLFP=CJy=75B5AGfyC1SsEH1XiRWX6A@mail.gmail.com>
-Subject: Re: [PATCH 05/17] qga/vss-win32: free bstrWriterName in outer writer
- loop
+Date: Mon, 7 Sep 2026 14:14:44 +0300
+X-Gm-Features: AcwNN1UPN2RpG8-VeWXj975IyHkc_OnRaWBx2KFtah1dMjoyqI3xkRirintcJsU
+Message-ID: <CAPMcbCrK3Gm5-WtGTk-77UaeZAgrJr+-17xEFcz_Da2ryZcKUQ@mail.gmail.com>
+Subject: Re: [PATCH 06/17] qga/vss-win32: pass character count instead of byte
+ count to volume APIs
 To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000008852be065ae2b6d5"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: multipart/alternative; boundary="0000000000005bf601065ae2ba7f"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,115 +132,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008852be065ae2b6d5
+--0000000000005bf601065ae2ba7f
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-
-On Mon, Sep 7, 2026 at 1:52=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
+On Mon, Sep 7, 2026 at 1:50=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
 marcandre.lureau@redhat.com> wrote:
 
-> bstrWriterName is obtained from GetIdentity in the outer writer loop,
-> but freed inside the inner component loop. When a writer has multiple
-> components, the second and subsequent iterations operate with a NULL
-> bstrWriterName. If an error occurs in those iterations, the error
-> message passes NULL
+> FindFirstVolumeW, FindNextVolumeW and GetVolumePathNamesForVolumeNameW
+> expect a buffer length in characters, not bytes.
 >
-> Move SysFreeString(bstrWriterName) to the end of the outer loop where
-> it belongs.
+> Use ARRAYSIZE() to pass the correct character count.
 >
 > Fixes: b39297aedfab ("qemu-ga: Add Windows VSS provider and requester as
 > DLL")
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->  qga/vss-win32/requester.cpp | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  qga/vss-win32/requester.cpp | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
 > diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-> index 52176d751274..b9269acb5b8e 100644
+> index b9269acb5b8e..1fd73312bab2 100644
 > --- a/qga/vss-win32/requester.cpp
 > +++ b/qga/vss-win32/requester.cpp
-> @@ -230,11 +230,11 @@ static void AddComponents(ErrorSet *errset)
->                      goto out;
->                  }
->              }
-> -            SysFreeString(bstrWriterName);
-> -            bstrWriterName =3D NULL;
->              pComponent->FreeComponentInfo(info);
->              info =3D NULL;
->          }
-> +        SysFreeString(bstrWriterName);
-> +        bstrWriterName =3D NULL;
+> @@ -432,7 +432,7 @@ void requester_freeze(int *num_vols, void
+> *mountpoints, ErrorSet *errset)
 >      }
->  out:
->      if (bstrWriterName) {
+>
+>      if (!mountpoints) {
+> -        volume =3D FindFirstVolumeW(short_volume_name,
+> sizeof(short_volume_name));
+> +        volume =3D FindFirstVolumeW(short_volume_name,
+> ARRAYSIZE(short_volume_name));
+>          if (volume =3D=3D INVALID_HANDLE_VALUE) {
+>              err_set(errset, hr, "failed to find first volume");
+>              goto out;
+> @@ -447,7 +447,7 @@ void requester_freeze(int *num_vols, void
+> *mountpoints, ErrorSet *errset)
+>                      WCHAR volume_path_name[MAX_PATH];
+>                      if (GetVolumePathNamesForVolumeNameW(
+>                              short_volume_name, volume_path_name,
+> -                            sizeof(volume_path_name), NULL) &&
+> +                            ARRAYSIZE(volume_path_name), NULL) &&
+>                              *volume_path_name) {
+>                          display_name =3D volume_path_name;
+>                      }
+> @@ -459,7 +459,7 @@ void requester_freeze(int *num_vols, void
+> *mountpoints, ErrorSet *errset)
+>                  num_fixed_drives++;
+>              }
+>              if (!FindNextVolumeW(volume, short_volume_name,
+> -                                 sizeof(short_volume_name))) {
+> +                                 ARRAYSIZE(short_volume_name))) {
+>                  FindVolumeClose(volume);
+>                  break;
+>              }
 >
 > --
 > 2.55.0.543.g5ebe2ebe4ea8
 >
 >
->
 
---0000000000008852be065ae2b6d5
+--0000000000005bf601065ae2ba7f
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div><br clear=3D"all"></div><div><div dir=3D"ltr" class=
-=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">Re=
-viewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kk=
-ostiuk@redhat.com</a>&gt;</div></div></div><br></div><br><div class=3D"gmai=
-l_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon=
-, Sep 7, 2026 at 1:52=E2=80=AFPM Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mail=
-to:marcandre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">bstrWriterName i=
-s obtained from GetIdentity in the outer writer loop,<br>
-but freed inside the inner component loop. When a writer has multiple<br>
-components, the second and subsequent iterations operate with a NULL<br>
-bstrWriterName. If an error occurs in those iterations, the error<br>
-message passes NULL<br>
+<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
+uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, S=
+ep 7, 2026 at 1:50=E2=80=AFPM Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:=
+marcandre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt; wrote:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">FindFirstVolumeW, F=
+indNextVolumeW and GetVolumePathNamesForVolumeNameW<br>
+expect a buffer length in characters, not bytes.<br>
 <br>
-Move SysFreeString(bstrWriterName) to the end of the outer loop where<br>
-it belongs.<br>
+Use ARRAYSIZE() to pass the correct character count.<br>
 <br>
 Fixes: b39297aedfab (&quot;qemu-ga: Add Windows VSS provider and requester =
 as DLL&quot;)<br>
 Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lurea=
 u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
 ---<br>
-=C2=A0qga/vss-win32/requester.cpp | 4 ++--<br>
-=C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
+=C2=A0qga/vss-win32/requester.cpp | 6 +++---<br>
+=C2=A01 file changed, 3 insertions(+), 3 deletions(-)<br>
 <br>
 diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp<br>
-index 52176d751274..b9269acb5b8e 100644<br>
+index b9269acb5b8e..1fd73312bab2 100644<br>
 --- a/qga/vss-win32/requester.cpp<br>
 +++ b/qga/vss-win32/requester.cpp<br>
-@@ -230,11 +230,11 @@ static void AddComponents(ErrorSet *errset)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 SysFreeString(bstrWriterName);<b=
-r>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bstrWriterName =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pComponent-&gt;FreeComponen=
-tInfo(info);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0info =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 SysFreeString(bstrWriterName);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 bstrWriterName =3D NULL;<br>
+@@ -432,7 +432,7 @@ void requester_freeze(int *num_vols, void *mountpoints,=
+ ErrorSet *errset)<br>
 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0out:<br>
-=C2=A0 =C2=A0 =C2=A0if (bstrWriterName) {<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (!mountpoints) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 volume =3D FindFirstVolumeW(short_volume_name,=
+ sizeof(short_volume_name));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 volume =3D FindFirstVolumeW(short_volume_name,=
+ ARRAYSIZE(short_volume_name));<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (volume =3D=3D INVALID_HANDLE_VALUE) {=
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0err_set(errset, hr, &quot;f=
+ailed to find first volume&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
+@@ -447,7 +447,7 @@ void requester_freeze(int *num_vols, void *mountpoints,=
+ ErrorSet *errset)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0WCHAR volume_path_name[MAX_PATH];<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0if (GetVolumePathNamesForVolumeNameW(<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0short_volume_name, volume_path_name,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 sizeof(volume_path_name), NULL) &amp;&amp;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ARRAYSIZE(volume_path_name), NULL) &amp;&amp;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*volume_path_name) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0display_name =3D volume_path_name;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0}<br>
+@@ -459,7 +459,7 @@ void requester_freeze(int *num_vols, void *mountpoints,=
+ ErrorSet *errset)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0num_fixed_dri=
+ves++;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!FindNextVolumeW(volume=
+, short_volume_name,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(short_volume_name))) {<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ARRAYSIZE(short_volume_name)))=
+ {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0FindVolumeClo=
+se(volume);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
 <br>
 -- <br>
 2.55.0.543.g5ebe2ebe4ea8<br>
 <br>
-<br>
 </blockquote></div>
 
---0000000000008852be065ae2b6d5--
+--0000000000005bf601065ae2ba7f--
 
 
