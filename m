@@ -4,103 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39375C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 02:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AE2C79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 02:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3P5D-0007ef-Ra; Sun, 06 Sep 2026 22:27:44 -0400
+	id 1x3P9A-0008Kn-3G; Sun, 06 Sep 2026 22:31:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x3P5C-0007eN-MX
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:27:42 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x3P5A-0007Br-DR
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:27:42 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-85b293528a9so35422217b3.1
- for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 19:27:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788748059; cv=none;
- d=google.com; s=arc-20260327;
- b=f5ol+gNLtxoKBeMWs6p1T4fopG/u5+XdeqSAkIY1uBzHbMczA2yaLtQ06XWaU50dqB
- lGyUT/yDvlv8CNJinrmAwD+8JIfYISXEPIC0YyRTE6f70k7maog1GAs91UQIVi/d5diQ
- 0Iy/OCXCBTP+c3jMIWPdTxv0zXWFx6uHfQMszK5GeVO585eUvZ1y5tP6YtgxVedZO/XQ
- ieHyJuQVroIBwcGmW7F+QfTLsuUuV7s1tRLzjXXeP/cPCoORxQW3M4DRnVcQ2XQCuAlp
- dXgqywburCNTrRO99qw39zEE7LjHtY2VoQFYhzTGQEOVMH0vSPDWufctA2zibOvfWiYH
- Nmbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Fmo+ecuEKQm+N37XLc/59ti0srpTndziRJEkJ+jpT3w=;
- fh=TaV04S92YTMBZqlQk5mgBoy046eIOdCT4qpsyQnPa0w=;
- b=e4ODBfLqlRTj3a2SZH5dc+5ux+tNH1Ib2D20LnrwUNEq0ASP1PtZfuttFjfPxY3Gbk
- xikcMEUU1BMx8GpSmtK6x0RtuysgQt/Ua/s8QHINIwrqLjvmrF4Wfe5ZP+/wShhWWBBg
- gspaeXa2pxiJT2ESp0z/svRiYUXEqJVlkQZv/5Yo6ILUs3W9qHegTmkVdiVRSC9gh9zW
- cNWd1wy0b7XVUtRRJVj8gMaH1hWBZncOg00gMEX6ZPmAJx37WyzX6fP27961VV3mzgi3
- /3+w2oLgVZlWqjAWiWOsZk8jIvg0j0x48QMGhs9IB5wo/FUej/qmzgXNy2uKdNzdeu0i
- AOLQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1788748059; x=1789352859; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Fmo+ecuEKQm+N37XLc/59ti0srpTndziRJEkJ+jpT3w=;
- b=Nx1kW60kZbuNIVQmeRqzFWGNC3o6e1FQpSVIPgE8KjfeAT7FQ5ia2cBzgiLd1vGMQI
- j53IouVxPif6wVhXmj2w+l0X+eBWE3Zbv2qpF046gcQ0ptL/+ohfMsqKRwmTv+2VkWMg
- 9DkkLFang8CSsqYf73cJAnT0JH5jhoUABnsxc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788748059; x=1789352859;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Fmo+ecuEKQm+N37XLc/59ti0srpTndziRJEkJ+jpT3w=;
- b=aOC4yzEeL1N27dbl92Dp1pYBNRJDZyYL6nNty/AkF9qzgb0QAfNUpGgjDZWB07GwIE
- Wsr9Utj9jI7s/+QWMpeq8EOxuY1fM/ybYtBlZjfAULzT8ma9vHZvMwbfgpkv88hzPZRX
- HkvOasNjOx91aPGmTWksYK6YXSxkI0um1GdHe5A9/9H7+ffs0OEePQpOLB0C9UMjjWBa
- r+xrQTZ3xssyZJKXxyqm+V1tk/t+oRdltvrgjuhIb+9E30c1rWynIxQg+dvsP7OHJQwM
- cS851CsZPkQtaapctxCCspfH5PpYFZn78VrjTGP/aVO3S09PdlvTwUK1oPaTOzl+Ce5A
- dDrw==
-X-Gm-Message-State: AFuF++nAZDX96p3GThOrs0Bj63SNfNBaY9BQDiP6uY6LTewwBCQ0/c2r
- 2w+y0DYe7eynkxlZDqIA6w+St0wPng8c4Gqkp70BvtasZsvUCBph14vpc5Tfb4nMQbDIy8I9LEZ
- bT17Yuy1FFR3Lesb3WicY7t9si8wCM1A=
-X-Gm-Gg: AYBFou0JOy1tblB6zbCQqG1JzzuH6nIzO+3bsV5NXArFsb3d0ZlmimvWhn7u9AljeFn
- 6WZ/YKSMhiAceKGOQUHZci1vKl1LNdgKtfl3C9h7tebkZlcZCzVBZZafwc1UeBTeTFHfs442/+8
- G/IaW0l1Fgdgu5VqKb7D/JKaLVUrxJF61vrIGHD1T7KEl1B2SXMk9nMSBzseFroe5gVilnDoe3s
- whZKe9sKrCVrlhQ1YyZ5e6OTVfxWRdcW1xPyDZ/DC6RtVHFK779QN4G1maxH1nHiA4fH58iQtxU
- iJP1yb0BlaTOFs1l+4EVIyj9jIoID23yjfADx49Mip0tIc/B6E5T81GvcLVyFoWwggVS6Y8s/4U
- euwSDvMin2BR8+agZnEEp8uBywiIJo9qnQUMDn0wHothW8PSBYPnIqwR7vSmwpmH1pMMZqGhWUp
- SJSy90BqPJlGoao+/81ANbbS3A9aI=
-X-Received: by 2002:a53:d012:0:b0:66a:b15e:bb93 with SMTP id
- 956f58d0204a3-66fb6d605fdmr2544848d50.13.1788748059166; Sun, 06 Sep 2026
- 19:27:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1x3P97-0008Kb-T5
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:31:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1x3P94-0007W8-De
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:31:45 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8AxS_AEIp5qlkoJAA--.26850S3;
+ Mon, 07 Sep 2026 10:31:34 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJCxtMwCIp5qeD0cAA--.33102S2;
+ Mon, 07 Sep 2026 10:31:32 +0800 (CST)
+Subject: Re: [PATCH V5] target/loongarch: clear the registers when cpu is reset
+To: qemu-devel@nongnu.org
+References: <20260903075808.1175159-1-lixianglai@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <fac9ed3e-21eb-17c4-4afc-43d7268b0d42@loongson.cn>
+Date: Mon, 7 Sep 2026 10:30:01 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260831133000.982059-1-liumingliang.dev@bytedance.com>
- <20260831133000.982059-4-liumingliang.dev@bytedance.com>
-In-Reply-To: <20260831133000.982059-4-liumingliang.dev@bytedance.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 7 Sep 2026 11:57:28 +0930
-X-Gm-Features: AcwNN1WfmvzMZ69dvtEJC7ehjUvqaRiP4ezxDBKui0LJoE-ot9q9IAqmOLnmySA
-Message-ID: <CACPK8Xc4u-79Tcga3tw3PKj9g3Om79evM1qK38d9pfbVi9kzeg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] tests/tcg/riscv64: Add tests for Zvabd extension
-To: Mingliang Liu <liumingliang.dev@bytedance.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- Alistair.Francis@wdc.com, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, chao.liu@processmission.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=joel.stan@gmail.com; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+In-Reply-To: <20260903075808.1175159-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxtMwCIp5qeD0cAA--.33102S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Jw4Dtw1fXFWxZF48GrW8KrX_yoW3WFWUpr
+ 43KFZI9a15KF4fCrn5X398AFsxZr1xGa1Iq3srKr1FkayFqr9aqFWvqr1SkFWDAryrCr4r
+ ZFnrWr47tF47Z3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jr0_JrylIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,74 +79,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 31 Aug 2026 at 23:00, Mingliang Liu
-<liumingliang.dev@bytedance.com> wrote:
+for testing
+> Use virt-manager to start a virtual machine, and then use the following
+> command to manually trigger the crash of the virtual machine:
+> echo c > /proc/sysrq-trigger
 >
-> Co-Auther: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-Typo: Co-Author
-
-This should include a Signed-off-by from Daniel as well.
-
-Mention in the commit message that the assembler doesn't support the
-opcodes yet so instructions are hardcoded for the time being.
-
-Also worth mentioning that binutils/gas 2.47 has the 0.7 opcodes(!),
-so the test should never be built with that version, even once support
-is changed over to use the mnemonics.
-
-https://github.com/gnutools/binutils-gdb/commit/d3b84dac949ac10f8736c85253b4a1073d244ac1
-
-> Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
+> After the VM is abnormal, the ESTAT register has a certain probability of
+> remaining interrupted. Then the VM is forced to restart and the VM is
+> suspended in the interrupt handling function during startup.
+>
+> In order to clear the remaining interrupt information in the ESTAT
+> register, we performed this operation during the reset process, while also
+> checking and optimizing the status of other CSR registers.
+>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 > ---
->  tests/tcg/riscv64/Makefile.softmmu-target |   8 +
->  tests/tcg/riscv64/test-zvabd.S            | 659 ++++++++++++++++++++++
->  2 files changed, 667 insertions(+)
->  create mode 100644 tests/tcg/riscv64/test-zvabd.S
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Cc: Song Gao <gaosong@loongson.cn>
 >
-> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-> index 6a219c306c..787fdaab40 100644
-> --- a/tests/tcg/riscv64/Makefile.softmmu-target
-> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-> @@ -71,5 +71,13 @@ EXTRA_RUNS += run-test-misa-w
->  run-test-misa-w: test-misa-w
->         $(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-misa-w=true$(comma)c=true$(comma)v=true $(QEMU_OPTS)$<)
+> changelog:
+> V4->V5:
+> In the `CPUSysState` structure, the members `CSR_ASID`, `CSR_PRCFG1`,
+> `CSR_PRCFG2`, and `CSR_PRCFG3` cannot be directly cleared to zero.
+> Therefore, we have also added the `end_reset_fields` member to the
+> `CPUSysState` structure to prevent them from being directly zeroed out.
 >
-> +EXTRA_RUNS += run-test-zvabd
-> +ZVABD_CPU = rv64$(comma)v=true$(comma)vlen=256$(comma)x-zvabd=true
-> +CLEANFILES += test-zvabd
-> +test-zvabd: test-zvabd.o $(LINK_SCRIPT)
-> +       $(LD) $(LDFLAGS) $< -o $@
-> +run-test-zvabd: test-zvabd
-> +       $(call run-test, $<, $(QEMU) -cpu $(ZVABD_CPU) $(QEMU_OPTS)$<)
+> V3->V4:
+> Remove the field end_reset_fields from the CPUSysState structure, and
+> rearrange other fields as needed to avoid them being zeroed out.
+>
+> V2->V3:
+> Remove or update outdated comments related to this patch.
+>
+> V1->V2:
+> 1.Add a description of the issues related to this patch
+> 2.Replace the macro definition MAX_PERF_EVENTS with the variable
+> perf_event_num as the condition for the for loop.
+> 3.Rebase against the latest codebase.
+> 4.Refer to the usage of end_reset_fields on ARM and other architectures,
+> and modify the current implementation accordingly.
+>
+>   target/loongarch/cpu.c | 54 +++++++-----------------------------------
+>   target/loongarch/cpu.h | 34 ++++++++++++++++----------
+>   2 files changed, 29 insertions(+), 59 deletions(-)
+>
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 84a130956d..18d73ebc1b 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -623,6 +623,13 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>           lacc->parent_phases.hold(obj, type);
+>       }
+>   
+> +    /*
+> +     * Workaround for edk2-stable202408, CSR PGD register is set only if
+> +     * its value is equal to zero for boot cpu, it causes reboot issue.
+> +     */
+> +    memset(env, 0, offsetof(CPULoongArchState, end_reset_fields));
+> +    memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
 > +
->  # We don't currently support the multiarch system tests
->  undefine MULTIARCH_TESTS
-> diff --git a/tests/tcg/riscv64/test-zvabd.S b/tests/tcg/riscv64/test-zvabd.S
-> new file mode 100644
-> index 0000000000..01db2fd7dc
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/test-zvabd.S
-> @@ -0,0 +1,659 @@
-> +/*
-> + * Test the Zvabd vector absolute-difference instructions and the vabs.v
-> + * pseudoinstruction.
-> + *
-
-> +test_vabs_v:
-> +       vsetivli zero, 2, e8, m1, ta, ma
+>   #ifdef CONFIG_TCG
+>       env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
+>   
+> @@ -637,47 +644,11 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>                              R_TLBENTRY_32_PPN_MASK;
+>       }
+>   #endif
+> -    env->fcsr0 = 0x0;
+>   
+> -    int n;
+> -    /* Set csr registers value after reset, see the manual 6.4. */
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
+>       sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
+> -
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
+> -
+> -    sys->CSR_MISC = 0;
+> -
+> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
+> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
+> -
+> -    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+> -    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+>       sys->CSR_CPUID = cs->cpu_index;
+> -    sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+> -    sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
+> -    sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+> -    sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
+>       sys->CSR_TID = cs->cpu_index;
+> -    /*
+> -     * Workaround for edk2-stable202408, CSR PGD register is set only if
+> -     * its value is equal to zero for boot cpu, it causes reboot issue.
+> -     *
+> -     * Here clear CSR registers relative with TLB.
+> -     */
+> -    sys->CSR_PGDH = 0;
+> -    sys->CSR_PGDL = 0;
+> -    sys->CSR_PWCH = 0;
+> -    sys->CSR_EENTRY = 0;
+> -    sys->CSR_TLBRENTRY = 0;
+> -    sys->CSR_MERRENTRY = 0;
 > +
-> +       /* Load .arr_neg array in v1 */
-> +       la     t0,.arr_neg
-> +       vle8.v v1,0(t0)
+>       /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
+>       if (sys->CSR_PRCFG2 == 0) {
+>           sys->CSR_PRCFG2 = 0x3fffff000;
+> @@ -685,18 +656,9 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>       tlb_ps = ctz32(sys->CSR_PRCFG2);
+>       sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
+>       sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
+> -    for (n = 0; n < 4; n++) {
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV0, 0);
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV1, 0);
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV2, 0);
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV3, 0);
+> -    }
+>   
+>   #ifndef CONFIG_USER_ONLY
+>       env->pc = 0x1c000000;
+> -#ifdef CONFIG_TCG
+> -    memset(env->tlb, 0, sizeof(env->tlb));
+> -#endif
+>       if (kvm_enabled()) {
+>           kvm_arch_reset_vcpu(cs);
+>       }
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index 97db3b453f..d83dcef6f8 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -334,7 +334,6 @@ typedef struct CPUSysState {
+>       uint64_t CSR_TLBEHI;
+>       uint64_t CSR_TLBELO0;
+>       uint64_t CSR_TLBELO1;
+> -    uint64_t CSR_ASID;
+>       uint64_t CSR_PGDL;
+>       uint64_t CSR_PGDH;
+>       uint64_t CSR_PGD;
+> @@ -343,9 +342,6 @@ typedef struct CPUSysState {
+>       uint64_t CSR_STLBPS;
+>       uint64_t CSR_RVACFG;
+>       uint64_t CSR_CPUID;
+> -    uint64_t CSR_PRCFG1;
+> -    uint64_t CSR_PRCFG2;
+> -    uint64_t CSR_PRCFG3;
+>       uint64_t CSR_SAVE[16];
+>       uint64_t CSR_TID;
+>       uint64_t CSR_TCFG;
+> @@ -380,6 +376,14 @@ typedef struct CPUSysState {
+>       uint64_t CSR_MSGIS[N_MSGIS];
+>       uint64_t CSR_MSGIR;
+>       uint64_t CSR_MSGIE;
 > +
-> +       /* vabs.v v2, v1 (vabd.vx v2, v1, x0) raw opcode */
-> +       .word   0x56106157
+> +    /* Fields up to this point are cleared by a CPU reset */
+> +    struct {} end_reset_fields;
+> +
+> +    uint64_t CSR_ASID;
+> +    uint64_t CSR_PRCFG1;
+> +    uint64_t CSR_PRCFG2;
+> +    uint64_t CSR_PRCFG3;
+>   } CPUSysState;
+>   
+>   typedef struct CPUArchState {
+> @@ -391,16 +395,9 @@ typedef struct CPUArchState {
+>       uint32_t fcsr0;
+>       lbt_t  lbt;
+>   
+> -    uint32_t cpucfg[21];
+> -    uint32_t pv_features;
+> -    uint64_t vendor_id;
+> -    uint64_t cpu_id;
+> -    CPUSysState sys_states[1];
+> -
+>       struct {
+>           uint64_t guest_addr;
+>       } stealtime;
+> -    uint32_t perf_event_num;
+>   
+>   #ifdef CONFIG_TCG
+>       float_status fp_status;
+> @@ -410,12 +407,23 @@ typedef struct CPUArchState {
+>       uint64_t llval_high; /* For 128-bit atomic SC.Q */
+>       uint64_t llbit_scq; /* Potential LL.D+LD.D+SC.Q sequence in effect */
+>       uint64_t hw_pte_mask; /* Mask of architecturally-defined (hardware) PTE bits. */
+> -#endif
+> +
+>   #ifndef CONFIG_USER_ONLY
+> -#ifdef CONFIG_TCG
+>       LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
+> +#endif
+>   #endif
+>   
+> +    /* Fields up to this point are cleared by a CPU reset */
+> +    struct {} end_reset_fields;
+> +
+> +    CPUSysState sys_states[1];
+> +    uint32_t cpucfg[21];
+> +    uint32_t pv_features;
+> +    uint64_t vendor_id;
+> +    uint64_t cpu_id;
+> +    uint32_t perf_event_num;
+> +
+> +#ifndef CONFIG_USER_ONLY
+>       AddressSpace *address_space_iocsr;
+>       uint32_t mp_state;
+>   #endif
 
-Palmer mentioned using .insn instead of .word. It is a little bit
-easier to check than the raw .word:
-
-.insn r 0x57, 0x6, 0x2b, x2, x0, x1
-
-I don't have a strong opinion either way.
 
