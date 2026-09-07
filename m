@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A475BC79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED101C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Vnm-0001f4-F2; Mon, 07 Sep 2026 05:38:10 -0400
+	id 1x3Vnm-0001gA-SO; Mon, 07 Sep 2026 05:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x3Vnk-0001dO-3A; Mon, 07 Sep 2026 05:38:08 -0400
-Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
+ id 1x3Vnk-0001dQ-7C; Mon, 07 Sep 2026 05:38:08 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x3Vnd-00047O-Rn; Mon, 07 Sep 2026 05:38:07 -0400
+ id 1x3Vnd-00047K-Re; Mon, 07 Sep 2026 05:38:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1788773869; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=WmhvmGPUNy77AIuahmD4mTp3kq8V1wWxZtZ1BZHb17w=;
- b=fj73P8VCeWdMKFczN+RGsI14f12xXulEzBpZWQPreamgfwNaQN56aHM6wJlw51zsIANnuW5kivISn7vR7ZrYwFL8NYC9F5trpczJrDcDdbNJfy/jsUimiHTBMfy4QK4JocyzPx2G+alDTb0h8VCiyV7XqCO4e0004qrnhV33bk0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R501e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ t=1788773868; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=yc5KhGVgl+0DuLZrt8gjwOQ2YjB/WdP3UupIKvk84hk=;
+ b=XK1swFaiA4Bqd9F0URePupAZwuTPPJul/PzWxDTuJEcdWcwrIEycYKUZ7o5jR8y4WfvzGZNVVCK2eMzEsWPlFucPyAUrftwQVPcY7BMoR95u6GUvpAoittRNvza9d0nvGTxIymols/9vdlAOXzAK3ylFwSOktWjEvRcO8e6Shb8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R251e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
  MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=19; SR=0;
- TI=SMTPD_---0XATXGyV_1788773868; 
+ TI=SMTPD_---0XATXGyL_1788773867; 
 Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0XATXGyV_1788773868 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 07 Sep 2026 17:37:48 +0800
+ fp:SMTPD_---0XATXGyL_1788773867 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 07 Sep 2026 17:37:47 +0800
 From: Chen Pei <cp0613@linux.alibaba.com>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
  imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
@@ -38,19 +38,19 @@ Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
  junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: [PATCH v6 4/6] tests/qtest: Prepare golden files for the RISC-V CXL
- ACPI test
-Date: Mon,  7 Sep 2026 17:37:31 +0800
-Message-ID: <20260907093735.2753-5-cp0613@linux.alibaba.com>
+Subject: [PATCH v6 3/6] hw/riscv/virt: Advertise the CXL host bridge to
+ firmware via extra-pci-roots
+Date: Mon,  7 Sep 2026 17:37:30 +0800
+Message-ID: <20260907093735.2753-4-cp0613@linux.alibaba.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907093735.2753-1-cp0613@linux.alibaba.com>
 References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
-Received-SPF: pass client-ip=115.124.30.124;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
  envelope-from=cp0613@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+ helo=out30-111.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -74,36 +74,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add empty DSDT.cxl and CEDT.cxl golden files and list them in
-bios-tables-test-allowed-diff.h, in preparation for the RISC-V CXL
-bios-tables test added in the following patch.  The populated golden
-master binaries are committed separately in a final patch, following
-the bios-tables-test update process.
+The pxb-cxl expander bridge presents as a class 0x0600 host bridge with
+a type-0 header, so EDK2's PciBusDxe never recurses into it and never
+assigns the CXL root port a memory window or bus numbers.  As a result
+build_crs() produces an empty _CRS for the ACPI0016 host bridge and the
+CXL devices behind it are not enumerated by the OS.
+
+Advertise the pxb-cxl expander root buses to firmware via the
+etc/extra-pci-roots fw_cfg file, the same way arm/virt and x86 do, by
+calling pci_bus_add_fw_cfg_extra_pci_roots() from virt_machine_done().
+EDK2's PciBusDxe then enumerates behind the CXL host bridge and assigns
+the root-port window and bus numbers.  The ACPI tables are rebuilt when
+the guest reads them (after that firmware enumeration), so build_crs()
+then emits a correct _CRS for the ACPI0016 host bridge.
+
+The call is made unconditionally, in line with arm/virt, pc and hppa,
+so plain pxb-pcie expander bridges, which likewise depend on
+etc/extra-pci-roots, are advertised as well; the generator simply
+returns nothing when there is no expander root bus.
+
+This approach also scales to multiple pxb-cxl host bridges (each gets
+its own window from the shared aperture) and lets firmware size the
+window to what is actually behind the bridge, rather than reserving a
+fixed carve-out.
+
+Verified by booting an RVA22 guest: the CXL root port and Type3 device
+enumerate, and 'cxl enable-memdev' / 'cxl create-region' /
+'daxctl online-memory' bring the CXL memory online as system RAM.
 
 Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
 Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
 ---
- tests/data/acpi/riscv64/virt/CEDT.cxl       | 0
- tests/data/acpi/riscv64/virt/DSDT.cxl       | 0
- tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
- 3 files changed, 2 insertions(+)
- create mode 100644 tests/data/acpi/riscv64/virt/CEDT.cxl
- create mode 100644 tests/data/acpi/riscv64/virt/DSDT.cxl
+ hw/riscv/virt.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tests/data/acpi/riscv64/virt/CEDT.cxl b/tests/data/acpi/riscv64/virt/CEDT.cxl
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/riscv64/virt/DSDT.cxl b/tests/data/acpi/riscv64/virt/DSDT.cxl
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..c05fb697a5 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,3 @@
- /* List of comma-separated changed AML files to ignore */
-+"riscv64/virt/DSDT.cxl",
-+"riscv64/virt/CEDT.cxl",
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 70090ca70a..885020af83 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -657,6 +657,15 @@ static void virt_machine_done(Notifier *notifier, void *data)
+         cxl_fmws_link_targets(&error_fatal);
+     }
+ 
++    /*
++     * Advertise the pxb/pxb-cxl expander root buses to firmware so that
++     * it enumerates behind them and assigns bus numbers and windows.  For
++     * the CXL host bridges, build_crs() then builds the ACPI0016 _CRS
++     * from the resulting state when the guest reads the ACPI tables.
++     * This is a no-op without any expander root bus.
++     */
++    pci_bus_add_fw_cfg_extra_pci_roots(s->fw_cfg, s->pci_bus, &error_abort);
++
+     /*
+      * An user provided dtb must include everything, including
+      * dynamic sysbus devices. Our FDT needs to be finalized.
 -- 
 2.50.1
 
