@@ -4,95 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41342C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 544B4C79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3VLp-0000Zf-QB; Mon, 07 Sep 2026 05:09:17 -0400
+	id 1x3VWZ-0002Uk-EG; Mon, 07 Sep 2026 05:20:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3VLo-0000ZH-6n
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:09:16 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3VLm-0008M0-GB
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:09:15 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-8726acc5eadso20778077b3.0
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 02:09:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788772153; cv=none;
- d=google.com; s=arc-20260327;
- b=FVqrpY+Ybn8yTPuXIEOj0wr5mS8vit0pjytN3i2xjRKx/W2naBYoEM5lK5I+QQ3WeX
- GvyvCAa6WM/rj84S5w/2CfdFVqgLV6TTN2OeiMwvxTymMINPCW3JKitSWrIBuuuuBhyT
- pevlztWnb2MUXlJ2eVD7CC2kEFRESeXI0OjRZdFDDw7mhxlUWIpmuFDvr10PjRbKQWOY
- iyAnYw0yk5V5f4hZXfe3yYRG8zyByptHQgyNBL/WnD/3Ce1Uu+zbbn8lfFsFZDhccoCZ
- b7l7E6kkK5a5UlfR+ICO79kRltR3m78b3ZroMU8BtcYR5oKGn0dr3TQNjhgC4mcRKm3j
- GuzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AgLMzHNdQvTp6QSSmqNNnxU6TShe63VrzqfdxLISUy4=;
- fh=fVPfpHMeJX2gxPKYTBQCzQO60hB2p26ro2vRuUEPsJ4=;
- b=SSPvPo1YzOgMULDOvmR0sPspKVR2cSRbh2QTWn7xnUqh7IJQDXVs7l5BHr2rokXuD4
- Mhioeq/ZYWT7iM6omdZrkeFuvr3rcjkKbkjiXlxSBy47hi9dXW5bAjbBFb27c0oMclEz
- LP0rXiSGxmkZWD1UXcKI/d4JYULiH1zxQBAc0FVi1E74he7wyfdzxalDFIAmTX0HcLnE
- j04qUya7Pr3INi5zkAcF+EWC2AdS3Pp9jJUKUPZ5MHINzvHVARMN6I5m8/giqOZqAwCh
- bBaJ6aERMnOsyPSvwtDh6MTr9Dsz35gllkQQq6l9PB843Fk6JYJ7fg4mag+YJuFYMDvn
- rdiA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788772153; x=1789376953; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=AgLMzHNdQvTp6QSSmqNNnxU6TShe63VrzqfdxLISUy4=;
- b=srh+EgzCt+gOBqEFujnVKuRjsfIlcjwjX/DqDhkweOeGHSqGMGxAX3a5RWOHIajFDl
- dQ4giPBjr+tE+KxDlZcGlvOXTe0M8J0gxbpWiBedbqMN09BvEU0cT8pE74ppdCIjI4R7
- 9qh5N8yBZbKYIus/baagLnQTPnlMTVJd+KRsf9ebf9aokdyPYBp1Lu8i78WMf+wT2gIN
- HZK9qkFieO06EaYDPBlErmzlEthxTtSX3eXXKICKDTbtdj2HUBxkQDIPqquUa08LgegC
- u6TeSO+NdREhYISJFqssFJ6YzwP+n/r5XloRBQQRyuVpd356eRCA45nNYpu1Jbg8LSIX
- ciQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788772153; x=1789376953;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=AgLMzHNdQvTp6QSSmqNNnxU6TShe63VrzqfdxLISUy4=;
- b=eIkuSjgoeMAS247P/bf4OSMozxzGHaWL9/FZw0bMRgswyTpx9VN50yabtgfBGKVaVL
- eKf137NtToCCYRnirTZvlRY+CTRgPhCH0YLMyfepczHvJfi6tENpode7jimucU+y5Rhg
- SJJmgmY161xZJFj7zrD05b70qXTGnww0bAEl+icoReIVgasMU0iy5IDHt4N2+kdqEvOR
- LaMJ6qEpalw7jbs8wLbm/lEvwnvAS/dvMqOzgtQV2je3GR3eeb2Q1FPbNlgY9/T/jEZy
- as93ZmW4oiCZ+BN/KimnDp/8JP3B5K6wDev07UgVGZEkEFf1f1MQMcdJvtfhTO7kWKNb
- toIg==
-X-Gm-Message-State: AFuF++mi+o8R8ATQSsESb43gY3PbOMfirp9h/l6KxBFXWkdGsVNmR5qD
- VvWm0t6jB8rmaF4EnXdeOlaWrpw61MPsQMyG1Ht023bgMlh2MMW4RgLMc0tXkFM1rEv1gt43Hag
- OssUi9YVksfP9u5bzpButPC0647tOduUFS61J1nq1Mw==
-X-Gm-Gg: AYBFou1ac7254ichzTKqlK5e21Vt2q471ik5whFZOVS5C45joeLyEYBD0uub8HLo6gi
- KGNw9SJgA+F42ViVgmYXlHeRw1+rZR4GVa+q+9chB10Ivm6gNfSdLcpGLc1Dj6kk/BTAc/9tMjg
- 6rinCseE5xVA7nLQtqSvRnq5OnVpqOmjFYVdH/uHqvnqDgoO7aeyIemvi/vyqHLB3gOjzciT9UM
- 0jPG02Yam6nuz+Mj7IybNti7+sX2DLheCd3KJHUvzjR7uWMNuY5ywsBRdOxnrb0K0C7HtLENr1v
- FNA9yAXKxKDTvep+Up1WS8wzdFr9fsTiqZfdEnNbHqsqxlJjPYdOea/kp9PjnYAUmLgshUGj+9k
- fEbkIkXH1I9C1ax8M8ah84iSsTDGQ7w==
-X-Received: by 2002:a05:690c:4a13:b0:857:f33:6f03 with SMTP id
- 00721157ae682-8712a41d647mr90790327b3.29.1788772152848; Mon, 07 Sep 2026
- 02:09:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x3VWX-0002SF-0i; Mon, 07 Sep 2026 05:20:21 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x3VWV-0001gO-D0; Mon, 07 Sep 2026 05:20:20 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FVE2jiKTjh3fHvt7nd25IjmsOMivwRMSJ5S1LTFz4h02Va7uVjCRZkZJBC+V/3LetwfEILgO1ilRlN5hcETLDZNten0K7ySUlK3uV9TF3zrdUVq8lgJsKEiBhuSKZ8M/qdrs/mCXt8pUHCG4giDG4sdi7zPX2LdQ6SfOAaZKhXhqX8SGxqx3NIsTbroH/Y/991i5WwvDESnC0Fxg/Mso306aGFNB7uDPlQQ7XNJGWFZDeWgbE50x9sYDEAHGuBkOv/Cmv7tQdoobN8NP7T/bfrp7berdi910FCQFfda6llR16eJTeGrXckiOrMMa0FJ0r84S/+FBQkElZpBytWdNMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ONmu7mWZVOdcv7kylr0GgtPkr4kkGqggZ0coDJCAaN8=;
+ b=Zrr7w3S67nVI7YjbHbGNF9gGBdrN+Om+bpAEMPJrY6R3MuLqdlE9Aifro2YNGVvOsqSd+bleWlJ8Qj4gFziQDWz/ifErRX0FznnPzjV20UYqlnZ4zZSICw5ZxDgNFYOdxziTlHGDpCM+fii3gS1UqPNxmhzaCQ/5O7q/ZXUP00DoS/TlzxngNvipVYWz/r8q7osPotBekHou7xQP+cfY7AL24lW/Hm5tcsD6TlH5W14NmMxMncr7bIY6YZlQHn4Y9dEGwDap/SgFvXA8X4fXhmakOe0yHZCzc5+L8U0QTo0LA9Xx+y/ZE1UZ6FFeejlO6Fwbx2ZJfIQ4Yn7oRid29Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ONmu7mWZVOdcv7kylr0GgtPkr4kkGqggZ0coDJCAaN8=;
+ b=r+rlQRjHKyBOAxRIrCbI0DuV0QJetg0Pt1zBfM8Ru2S/xZErh5PWeh5H14CPmSmWneRl4bD0IS+fVpWvLLTV1XjJKnyPOE0ukoFYPRXaAXffVTxu5c66KqR7rJGnyJSIsmi4qoF6h1skftxWzyhod/WpYrO9vVxlq3QRwYxkxlP4QdjaV0ymaATIVeyQgYO9Ry6x68MHjRUSUHvK/ciIffY1OV0PEjtAqrRcRW/onWjWkrX6s10vEv7PQOQnbOU0oXJ3q82DKzqbOxPlepz00MQbjaHA+ewi3Y9tnWzVjz1sUYDXKDwkyiR1W/2Ib5oH2WOnAbiov7HXPIWTXn9mTw==
+Received: from SEYPR06MB4989.apcprd06.prod.outlook.com (2603:1096:101:3d::12)
+ by SEYPR06MB5301.apcprd06.prod.outlook.com (2603:1096:101:82::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
+ 2026 09:20:07 +0000
+Received: from SEYPR06MB4989.apcprd06.prod.outlook.com
+ ([fe80::e4df:26cb:6609:971c]) by SEYPR06MB4989.apcprd06.prod.outlook.com
+ ([fe80::e4df:26cb:6609:971c%6]) with mapi id 15.21.0382.012; Mon, 7 Sep 2026
+ 09:20:07 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v1 2/7] hw/display/vga: Move VGA_HPEL_NEUTRAL to vga_int.h
+Thread-Topic: [PATCH v1 2/7] hw/display/vga: Move VGA_HPEL_NEUTRAL to vga_int.h
+Thread-Index: AQHdPqoSjBzz/xOVJkyrQNLo0XZnjA==
+Date: Mon, 7 Sep 2026 09:20:07 +0000
+Message-ID: <20260907092004.2590015-3-jamin_lin@aspeedtech.com>
+References: <20260907092004.2590015-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260907092004.2590015-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEYPR06MB4989:EE_|SEYPR06MB5301:EE_
+x-ms-office365-filtering-correlation-id: 2c572691-d01a-4f94-80c3-08df0cc1358b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|23010399003|366016|921020|38070700021|10067099003|56012099006|18002099003|22082099003;
+x-microsoft-antispam-message-info: KH8nPNtO/StGYvQc9FhrFkaz5r0JVqcoWEc4KnA8602bcXGjX7mTD2kS71QDZwxkvZvtGWhCe7HnzZnGzuFNhBpLPhwVUSVIzy09m26VoDmBDNcakzmsjbi+hEP9QihKoQap/eXzao4xyzAyVAa2PaiVAIEbr799hnycw2dQh7NRdVJFJ4aozAQgqyJFU987xa7CYwE8WCZ8FcC7iMBClHcdA/B4ubaDMH3yI+59PiOYTkD0e5E0kogNbhMviyaT6o7bPOACb879xGV94DMqqaT/AdbYQ3KuC+opNMboNwMl9BGdI2+i68vBTJhr80mla5rVIo7nPGUNnhMsV2H45dvevZKxiCW5qnT53EVGACy0mrQzm5uFz4MgeJe+ra+mueYUP69GmMb7gtdUkQD26dFy34NvNvyfEsk1ffMTjBpi/18pF09LnQmHbeME03ryZw14kQZeriyVnxbh0Cm3uIN2kIeFSxIBbN47mAoPZFRacuOzBQfC9YNDkz24c/f0VHC1OmIKqMVaCYrFFnJA87fd/5OR6ze9QJnm1flaHuILo6IVdl773Q6jNQIRwNugbowm0FE8tANq4hk2eFPZHncv0lN4NuzMJktcS8X+UBBLx8dIsTlrFTf4fpSwfu+5YNqUIhTcEIrzL7Zy5Eu8MS7FqIBx7wKDbCB/f9XUK83o/kQcdX35phZFq2gB9jqq5k2lgiTvxUjZTexxyyzkooWhO0+7dgyudJxtUNLgpXQs+TT+5HUKpih64Hrlj5XX
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SEYPR06MB4989.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(921020)(38070700021)(10067099003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?y/aCWWDVWR+M4RiHEkidMbKX9A9qyxbCXdHQnc6aKO3bOH1fl8wCEvq6Ze?=
+ =?iso-8859-1?Q?t4njZn+72+gV73+5d+Ly3mznkKD/ZQ0q5Jn47TAVn/8/bCyb8PUK3cqnIq?=
+ =?iso-8859-1?Q?i7phnh+49zzgk7ZHRt0lnE5Oq90dHiQh6oyzCOBPnDDgRRJ2sllgAHMem3?=
+ =?iso-8859-1?Q?oI6rZoyZjDEOhgnGSRjDnkAMVGmAkN0xKfJGM/6YD0fBoORpK03kx0lqfg?=
+ =?iso-8859-1?Q?ooRQh7fM/Y9Nm9ZpRgao48h6BdtSqstf0EC/6w8Rai7gFTJedNbzIzdXPW?=
+ =?iso-8859-1?Q?CjJ6mNNdYFqgmAp8HjXRj+2x8aiKOnZg0dJwARsw6oiEIK3wpt0+H67V2A?=
+ =?iso-8859-1?Q?7dIUp0mbWNS1bITGPdI9pTY8bOTKOZFiLHIctWbRw7Q37kwQprm7vBZyjI?=
+ =?iso-8859-1?Q?k8qTVohkz9uOdKAsqESQu8e9tknMA2aEcQCvXZixpnRUYqSGptWhY6Aqdr?=
+ =?iso-8859-1?Q?bfbGGrmwiD/U+9eEYlTUtozrPouHg1kH+trKS7UcjxSCpsF+ujt/mF0KSg?=
+ =?iso-8859-1?Q?C1y+9Dy1bnKZ+9KpXwSJ80SpqrA1bNfpaLWTNG4ch2OxLjVI7t+qmOBLEc?=
+ =?iso-8859-1?Q?Mbk7jAtUHR5Cs/4lyRdqlGKmLeH9D//pyCks3bR3Sh6IcUcT8BNttmEkv3?=
+ =?iso-8859-1?Q?vVQnJAwljrEvP/B+QzRA6iDIUMnUAV9Hfeqb4RBlAF1dfjNpdAhKLoECJG?=
+ =?iso-8859-1?Q?HgK8MStbsreGJgA/n8KfaG8iMfkhb1gg19aFF5gXjdZCfsdZ84kNqUseO1?=
+ =?iso-8859-1?Q?ZTETFESQrTDkGNJbAZB5K2SWFQSMj0s2OI+hTS4cxt8AIhYM0hssLAnNEd?=
+ =?iso-8859-1?Q?zK//mgvOJ5In3BeGQ9z55p/JJaKnVfcaqYNWhaS+GC+CmGBdJ9dteQcxE8?=
+ =?iso-8859-1?Q?dyjIvbc7LpvIFpKU7SwidwHWQH7NnrxnD+nxhFHgaNnnAkIh0PWqxAcxLf?=
+ =?iso-8859-1?Q?J7MKuOLvHF3oe6aEJubA8KrURIVWs6mp9bpmE6e/Qc01B6OzeEpgEoJWwM?=
+ =?iso-8859-1?Q?UtS3sVhWLKOKz284W//5ZpV3Y8W7Q4AbLpTEmpmtwPIOy8Y+IJrY4Ft7Dm?=
+ =?iso-8859-1?Q?Ykwitd0tNCYOcrKExwy5rzdMQtBQl8r8drOyY+wfRxkDcoMgQA7ugJqfdJ?=
+ =?iso-8859-1?Q?Z6DN3HKa2ZGzclFTK7NLS8TtbD4lsNypxGRySAscXFs21AxFCY7UVTdAgR?=
+ =?iso-8859-1?Q?2CxQBChObNebtjWC5FULANZVU3RiejG0kIM1WNHaRcYiIZxosauNhb8OY6?=
+ =?iso-8859-1?Q?/H5KtdfEX69+F2Suz/Y0zqvfG1UdYNvHqeTwKKCTAALoZSA1UNn74+1/Gc?=
+ =?iso-8859-1?Q?H41Qzf6K3FZtEU4FSe/GWR2iSdBFlOk6ot2YqiU8gSsrdz0/2qrhjHwUT7?=
+ =?iso-8859-1?Q?PqnGubaxyhDYu8DByqEj7GRHEDFRxZiJYBLc6GuLEf6s3Nr5JiMnSx7uio?=
+ =?iso-8859-1?Q?rR6CqyENiK+aTDh8Ihl06OpJj5nzWjHSfp+pkCx9zwc0dJy95m1WERZdJv?=
+ =?iso-8859-1?Q?rUYwibGDE57XRoBlFqqPKdhDsJH9CY/LsTFGYF9iCE8lwWKhBrnzWEhhN7?=
+ =?iso-8859-1?Q?uBHYV2wTDdsJz0NO1Oj2Uz7shjab9lF+1crp0g6iHVStiDK2jVqkO+Jcto?=
+ =?iso-8859-1?Q?EI0oskhS7SeTAkdY9Wa0zAsx8gOXk5EzvVa3BuI91gYeYqFKBXIhMGfB8x?=
+ =?iso-8859-1?Q?GEcdnSdOAIl9J3802xtE+8nczljRwxT9HkVaZSDBOZNzpIweISKFX66lt2?=
+ =?iso-8859-1?Q?tYsu1PnZiiD2kQC6Tak/IsoBvFjUE2umc9AOMK79Vgq3+S7gXvgBkREDuM?=
+ =?iso-8859-1?Q?pcqGvSXW4Q=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
- <20260906194438.93046-3-gilles.grimaud@univ-lille.fr>
-In-Reply-To: <20260906194438.93046-3-gilles.grimaud@univ-lille.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 7 Sep 2026 10:09:01 +0100
-X-Gm-Features: AcwNN1Xfw07d8kdokwYZk6rn3gAjzlKwyPz8_RB2JK4F_amOP1Rz_RChlWDwHGg
-Message-ID: <CAFEAcA8OYNNDn7tV8gzoVcKnpNc5MZZ1u0AmbbNpRfuzdoqfKg@mail.gmail.com>
-Subject: Re: [PATCH v3 02/36] target/arm: allow Armv6-M to set CONTROL.nPRIV
-To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Exchange-RoutingPolicyChecked: gUP/OUMKN9o6At6pgn6KFq7A5JKh9F3NmxwvkuP2OjjycK01XkD+v1IzARZv+R1Iq4DQyyYRgpc4i1R8+Y0msV94hALFRr/mvBDWLvyUuvL3LsqP9ER8r+Kj0sdYYP76vViQV6ApC4UqIKyZ40BK6NsdWqRswdQlaAohq3otuw7Qwctc4o3322q4tJ/4NSWrmKdKq24TvlkIDo4cBxOtj3w3uuT/f9q0wrU1UEIXZrQNTydhEFdLCcqLp/zaZROL1FZas71Trxxl0xzj9+4HIXaAIdbXRR8six6f7bURy5qj9OAHV/MrH3ROY7NpnVEYkFRXsrHYuk7rmn/DvmqSIA==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB4989.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2c572691-d01a-4f94-80c3-08df0cc1358b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2026 09:20:07.5292 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: m/L/jch0+TYviCCKeevtKVbQ8425EJQ/wrZms/PtNrISrNFJ4oagugtUsG1Dd0gzT86JbACXYP8blqfRzRaj9Vfj9a/dHBncoekDMRuPhb0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5301
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,60 +149,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 6 Sept 2026 at 20:44, Gilles Grimaud
-<gilles.grimaud@univ-lille.fr> wrote:
->
-> Armv6-M implements CONTROL.nPRIV even though it does not implement the Main
-> Extension. The M-profile MSR helper currently gates writes to nPRIV on
-> ARM_FEATURE_M_MAIN, preventing Cortex-M0 CPUs from entering unprivileged
-> Thread mode.
->
-> Allow privileged code to write nPRIV on every M-profile CPU. The translator
-> already ends the translation block and rebuilds the execution flags after
-> an M-profile MSR, so this does not require explicit TLB maintenance.
->
-> Add a check-tcg test using the generic microbit machine. It verifies entry
-> into unprivileged Thread mode, that unprivileged code cannot clear nPRIV,
-> and that an exception handler can restore privileged Thread mode.
->
-> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-> ---
->  target/arm/tcg/m_helper.c                  |  2 +-
->  tests/tcg/arm/system/meson.build           |  6 ++
->  tests/tcg/arm/system/test-armv6m-control.S | 85 ++++++++++++++++++++++
->  3 files changed, 92 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
->
-> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-> index 33c9e7c55b..0cd51c52ba 100644
-> --- a/target/arm/tcg/m_helper.c
-> +++ b/target/arm/tcg/m_helper.c
-> @@ -2775,7 +2775,7 @@ void HELPER(v7m_msr)(CPUARMState *env, uint32_t maskreg, uint32_t val)
->                             !arm_v7m_is_handler_mode(env))) {
->              write_v7m_control_spsel(env, (val & R_V7M_CONTROL_SPSEL_MASK) != 0);
->          }
-> -        if (cur_el > 0 && arm_feature(env, ARM_FEATURE_M_MAIN)) {
-> +        if (cur_el > 0) {
->              env->v7m.control[env->v7m.secure] &= ~R_V7M_CONTROL_NPRIV_MASK;
->              env->v7m.control[env->v7m.secure] |= val & R_V7M_CONTROL_NPRIV_MASK;
->          }
-
-For v6M, whether you can write to CONTROL.nPRIV depends on whether the
-CPU implements the "Unprivileged/Privileged Extension". In v8M, if
-the Main Extension is not present then this is IMPDEF.
-
-In particular, the Cortex-M0 TRM says it doesn't have that
-extension, and that's the one v6M CPU we currently model.
-On Cortex-M0+ it is a configurable option.
-
-We don't model any v8M CPUs without the Main extension, so we
-don't need to adjust anything there. (As it happens, I think
-the Cortex-M23 is the only v8M Baseline CPU, and it chooses to
-implement allowing nPRIV to be written.)
-
-I think we probably need to model this with a new ARM_FEATURE_ bit,
-so we can make Cortex-M0 and Cortex-M0+ behave differently.
-
-thanks
--- PMM
+VGA_HPEL_NEUTRAL is the pel panning value that means no shift. Move it=0A=
+to the header so that other VGA devices can use it.=0A=
+=0A=
+No functional change.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ hw/display/vga_int.h | 8 ++++++++=0A=
+ hw/display/vga.c     | 7 -------=0A=
+ 2 files changed, 8 insertions(+), 7 deletions(-)=0A=
+=0A=
+diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h=0A=
+index 68f082acba..978b05e7eb 100644=0A=
+--- a/hw/display/vga_int.h=0A=
++++ b/hw/display/vga_int.h=0A=
+@@ -38,6 +38,14 @@=0A=
+ #define CH_ATTR_SIZE (160 * 100)=0A=
+ #define VGA_MAX_HEIGHT 2048=0A=
+ =0A=
++/*=0A=
++ * This value corresponds to a shift of zero pixels=0A=
++ * in 9-dot text mode.  In other modes, bit 3 is undefined;=0A=
++ * we just ignore it, so that 8 corresponds to zero pixels=0A=
++ * in all modes.=0A=
++ */=0A=
++#define VGA_HPEL_NEUTRAL 8=0A=
++=0A=
+ struct vga_precise_retrace {=0A=
+     int64_t ticks_per_char;=0A=
+     int64_t total_chars;=0A=
+diff --git a/hw/display/vga.c b/hw/display/vga.c=0A=
+index b273244cd5..b951d84736 100644=0A=
+--- a/hw/display/vga.c=0A=
++++ b/hw/display/vga.c=0A=
+@@ -53,13 +53,6 @@ bool have_vga =3D true;=0A=
+ /* Address mask for non-VESA modes.  */=0A=
+ #define VGA_VRAM_SIZE                   (256 * KiB)=0A=
+ =0A=
+-/* This value corresponds to a shift of zero pixels=0A=
+- * in 9-dot text mode.  In other modes, bit 3 is undefined;=0A=
+- * we just ignore it, so that 8 corresponds to zero pixels=0A=
+- * in all modes.=0A=
+- */=0A=
+-#define VGA_HPEL_NEUTRAL		8=0A=
+-=0A=
+ /*=0A=
+  * Video Graphics Array (VGA)=0A=
+  *=0A=
+-- =0A=
+2.53.0=0A=
 
