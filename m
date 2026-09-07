@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C39AC79F99
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B55C79F99
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Wyi-0004Wx-QP; Mon, 07 Sep 2026 06:53:34 -0400
+	id 1x3Wz1-0004l9-FF; Mon, 07 Sep 2026 06:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3Wyb-0004WL-Ot
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:26 -0400
+ id 1x3Wyr-0004bt-SD
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3WyX-000052-Kg
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:24 -0400
+ id 1x3Wyo-0000AH-Ga
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788778400;
+ s=mimecast20190719; t=1788778417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2J4h1MLwsa6v9AdSB/cjdqrcF7St+KHBYqO/t9Qy89c=;
- b=UE4Fhph0jhQonKr6Y/t2PaoWBuu5yKRDa/VLQgOKB9MSBBVQ5DoZYnaqe7Kroi51DICxWS
- ddkMK5wKf9bna27EGFgV4SB94ldOq5pf3WbQWrM+x1fvPaeWvx1GMQ7EFOOvwyCWxHKSVq
- SwgJIYFO2rU8DoAzhEXLghfQw4AA+PM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=NmeywneEt7+8x5kfLx9jyfan/B1X/zkeAiDGoB6OxEs=;
+ b=CW53NU0qHtOeZyOteGfvSIWCDdcGr2vUUYZPEhZmy++m3HiWEbMR4OducZ8TLmAvnqyY4X
+ XOAGTFlQxObI7vaJhaP2N6whHchcckfa0bBZU7wPJEm6LQK+/troxXzqt4sgYZ2UnOhXiV
+ ine52opU4ef0nz/dmRglC1uj4bgL5dw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-9zXeL_ciPdO5z21RAeY5OQ-1; Mon,
- 07 Sep 2026 06:53:17 -0400
-X-MC-Unique: 9zXeL_ciPdO5z21RAeY5OQ-1
-X-Mimecast-MFC-AGG-ID: 9zXeL_ciPdO5z21RAeY5OQ_1788778396
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-GhLGakRDPo-2ZmsMsvCq_A-1; Mon,
+ 07 Sep 2026 06:53:36 -0400
+X-MC-Unique: GhLGakRDPo-2ZmsMsvCq_A-1
+X-Mimecast-MFC-AGG-ID: GhLGakRDPo-2ZmsMsvCq_A_1788778415
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CAD7619560B6; Mon,  7 Sep 2026 10:53:15 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D2A6180B5F3; Mon,  7 Sep 2026 10:53:35 +0000 (UTC)
 Received: from berrange.fritz.box (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D1EA31956042; Mon,  7 Sep 2026 10:53:13 +0000 (UTC)
+ id 6C0391956042; Mon,  7 Sep 2026 10:53:33 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -55,10 +55,11 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Evgeny Kolmakov <randomjack94dev@gmail.com>
-Subject: [PULL v3 01/12] crypto: Use g_autofree
-Date: Mon,  7 Sep 2026 11:52:59 +0100
-Message-ID: <20260907105310.497730-2-berrange@redhat.com>
+ "Denis V. Lunev" <den@openvz.org>
+Subject: [PULL v3 09/12] tests/unit: cover blocked IO during the websock
+ handshake
+Date: Mon,  7 Sep 2026 11:53:07 +0100
+Message-ID: <20260907105310.497730-10-berrange@redhat.com>
 In-Reply-To: <20260907105310.497730-1-berrange@redhat.com>
 References: <20260907105310.497730-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -67,13 +68,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,300 +90,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
+From: Denis V. Lunev <den@openvz.org>
 
-Use g_autofree attribute to reduce the amount
-of manual g_free() calls and 'goto out' code
+Add a channel which reports QIO_CHANNEL_ERR_BLOCK on demand, the way a
+TLS channel does when a record arrives split across segments or when
+the socket cannot take the whole reply at once, and drive the server
+handshake through it in both directions. Without the fixes each
+direction dereferences a NULL Error and the test dies on SIGSEGV.
 
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/block.c          | 17 ++++++-----------
- crypto/hmac-gcrypt.c    | 12 ++++--------
- crypto/hmac-glib.c      | 10 +++-------
- crypto/ivgen-essiv.c    | 15 ++++-----------
- crypto/ivgen.c          |  6 ++----
- crypto/secret_keyring.c |  5 ++---
- 6 files changed, 21 insertions(+), 44 deletions(-)
+ tests/unit/test-io-channel-websock.c | 150 ++++++++++++++++++++++++++-
+ 1 file changed, 147 insertions(+), 3 deletions(-)
 
-diff --git a/crypto/block.c b/crypto/block.c
-index 96c83e60b9..42558f3caf 100644
---- a/crypto/block.c
-+++ b/crypto/block.c
-@@ -55,7 +55,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-                                  unsigned int flags,
-                                  Error **errp)
+diff --git a/tests/unit/test-io-channel-websock.c b/tests/unit/test-io-channel-websock.c
+index 2a55a4bcdf..88da24f993 100644
+--- a/tests/unit/test-io-channel-websock.c
++++ b/tests/unit/test-io-channel-websock.c
+@@ -12,6 +12,123 @@
+ #include "qapi/error.h"
+ #include "qemu/module.h"
+ #include "qemu/sockets.h"
++#include "qom/object.h"
++
++#define TYPE_QIO_CHANNEL_STALL "qio-channel-stall"
++OBJECT_DECLARE_SIMPLE_TYPE(QIOChannelStall, QIO_CHANNEL_STALL)
++
++/*
++ * Reports QIO_CHANNEL_ERR_BLOCK for the first @rstalls reads and @wstalls
++ * writes, the way a TLS channel does when a record arrives split across TCP
++ * segments or the socket cannot take the whole reply at once.
++ */
++struct QIOChannelStall {
++    QIOChannel parent;
++    QIOChannel *master;
++    unsigned rstalls;
++    unsigned wstalls;
++};
++
++static ssize_t qio_channel_stall_readv(QIOChannel *ioc,
++                                       const struct iovec *iov,
++                                       size_t niov,
++                                       int **fds,
++                                       size_t *nfds,
++                                       int flags,
++                                       Error **errp)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
++
++    if (sioc->rstalls) {
++        sioc->rstalls--;
++        return QIO_CHANNEL_ERR_BLOCK;
++    }
++    return qio_channel_readv_full(sioc->master, iov, niov, fds, nfds,
++                                  flags, errp);
++}
++
++static ssize_t qio_channel_stall_writev(QIOChannel *ioc,
++                                        const struct iovec *iov,
++                                        size_t niov,
++                                        int *fds,
++                                        size_t nfds,
++                                        int flags,
++                                        Error **errp)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
++
++    if (sioc->wstalls) {
++        sioc->wstalls--;
++        return QIO_CHANNEL_ERR_BLOCK;
++    }
++    return qio_channel_writev_full(sioc->master, iov, niov, fds, nfds,
++                                   flags, errp);
++}
++
++static int qio_channel_stall_set_blocking(QIOChannel *ioc, bool enabled,
++                                          Error **errp)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
++
++    return qio_channel_set_blocking(sioc->master, enabled, errp) ? 0 : -1;
++}
++
++static int qio_channel_stall_close(QIOChannel *ioc, Error **errp)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
++
++    return qio_channel_close(sioc->master, errp);
++}
++
++static GSource *qio_channel_stall_create_watch(QIOChannel *ioc,
++                                               GIOCondition condition)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
++
++    return qio_channel_create_watch(sioc->master, condition);
++}
++
++static void qio_channel_stall_finalize(Object *obj)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(obj);
++
++    object_unref(OBJECT(sioc->master));
++}
++
++static void qio_channel_stall_class_init(ObjectClass *klass,
++                                         const void *class_data G_GNUC_UNUSED)
++{
++    QIOChannelClass *ioc_klass = QIO_CHANNEL_CLASS(klass);
++
++    ioc_klass->io_writev = qio_channel_stall_writev;
++    ioc_klass->io_readv = qio_channel_stall_readv;
++    ioc_klass->io_set_blocking = qio_channel_stall_set_blocking;
++    ioc_klass->io_close = qio_channel_stall_close;
++    ioc_klass->io_create_watch = qio_channel_stall_create_watch;
++}
++
++static const TypeInfo qio_channel_stall_info = {
++    .parent = TYPE_QIO_CHANNEL,
++    .name = TYPE_QIO_CHANNEL_STALL,
++    .instance_size = sizeof(QIOChannelStall),
++    .instance_finalize = qio_channel_stall_finalize,
++    .class_init = qio_channel_stall_class_init,
++};
++
++static QIOChannelStall *qio_channel_stall_new(QIOChannel *master,
++                                              unsigned rstalls,
++                                              unsigned wstalls)
++{
++    QIOChannelStall *sioc = QIO_CHANNEL_STALL(
++        object_new(TYPE_QIO_CHANNEL_STALL));
++
++    object_ref(OBJECT(master));
++    sioc->master = master;
++    sioc->rstalls = rstalls;
++    sioc->wstalls = wstalls;
++
++    return sioc;
++}
+ 
+ typedef struct {
+     bool finished;
+@@ -31,10 +148,12 @@ static void test_websock_handshake_done(QIOTask *task, gpointer opaque)
+  * the server wrote back, NUL terminated. The handshake is expected to
+  * fail; the point of the test is the HTTP response that goes with it.
+  */
+-static char *test_websock_handshake_reply(const char *request)
++static char *test_websock_handshake_reply(const char *request,
++                                          unsigned rstalls, unsigned wstalls)
  {
--    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-+    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+     QIOChannelWebsockHandshake res = { false, false };
+     QIOChannelSocket *cli, *srv;
++    QIOChannelStall *stall;
+     QIOChannelWebsock *wioc;
+     GMainContext *mainloop;
+     int channel[2];
+@@ -48,7 +167,8 @@ static char *test_websock_handshake_reply(const char *request)
+     qio_channel_set_blocking(QIO_CHANNEL(srv), false, &error_abort);
+     qio_channel_set_blocking(QIO_CHANNEL(cli), false, &error_abort);
  
-     qemu_mutex_init(&block->mutex);
+-    wioc = qio_channel_websock_new_server(QIO_CHANNEL(srv));
++    stall = qio_channel_stall_new(QIO_CHANNEL(srv), rstalls, wstalls);
++    wioc = qio_channel_websock_new_server(QIO_CHANNEL(stall));
+     qio_channel_websock_handshake(wioc, test_websock_handshake_done,
+                                   &res, NULL);
  
-@@ -65,7 +65,6 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-         !qcrypto_block_drivers[options->format]) {
-         error_setg(errp, "Unsupported block driver %s",
-                    QCryptoBlockFormat_str(options->format));
--        g_free(block);
-         return NULL;
+@@ -68,6 +188,7 @@ static char *test_websock_handshake_reply(const char *request)
      }
  
-@@ -74,11 +73,10 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-     if (block->driver->open(block, options, optprefix,
-                             readfunc, opaque, flags, errp) < 0)
-     {
--        g_free(block);
-         return NULL;
-     }
+     object_unref(OBJECT(wioc));
++    object_unref(OBJECT(stall));
+     object_unref(OBJECT(srv));
+     object_unref(OBJECT(cli));
  
--    return block;
-+    return g_steal_pointer(&block);
+@@ -77,7 +198,23 @@ static char *test_websock_handshake_reply(const char *request)
+ static void test_websock_bad_request(const void *opaque)
+ {
+     const char *request = opaque;
+-    g_autofree char *reply = test_websock_handshake_reply(request);
++    g_autofree char *reply = test_websock_handshake_reply(request, 0, 0);
++
++    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
++}
++
++static void test_websock_stalled_read(const void *opaque)
++{
++    const char *request = opaque;
++    g_autofree char *reply = test_websock_handshake_reply(request, 1, 0);
++
++    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
++}
++
++static void test_websock_stalled_write(const void *opaque)
++{
++    const char *request = opaque;
++    g_autofree char *reply = test_websock_handshake_reply(request, 0, 1);
+ 
+     g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
  }
- 
- 
-@@ -90,7 +88,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-                                    unsigned int flags,
-                                    Error **errp)
+@@ -85,6 +222,7 @@ static void test_websock_bad_request(const void *opaque)
+ int main(int argc, char **argv)
  {
--    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-+    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+     module_call_init(MODULE_INIT_QOM);
++    type_register_static(&qio_channel_stall_info);
+     g_test_init(&argc, &argv, NULL);
  
-     qemu_mutex_init(&block->mutex);
+ #define TEST_BAD_REQUEST(name, request)                         \
+@@ -101,5 +239,11 @@ int main(int argc, char **argv)
+     TEST_BAD_REQUEST("bad-method", "POST / HTTP/1.1\r\nx: y\r\n\r\n");
+     TEST_BAD_REQUEST("bad-version", "GET / HTTP/1.0\r\nx: y\r\n\r\n");
  
-@@ -100,7 +98,6 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-         !qcrypto_block_drivers[options->format]) {
-         error_setg(errp, "Unsupported block driver %s",
-                    QCryptoBlockFormat_str(options->format));
--        g_free(block);
-         return NULL;
-     }
- 
-@@ -109,11 +106,10 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
- 
-     if (block->driver->create(block, options, optprefix, initfunc,
-                               writefunc, opaque, errp) < 0) {
--        g_free(block);
-         return NULL;
-     }
- 
--    return block;
-+    return g_steal_pointer(&block);
++    /* A read which blocks before any header arrives is not a fatal error. */
++    g_test_add_data_func("/io/channel/websock/stalled-read",
++                         "stats\r\nx\r\n\r\n", test_websock_stalled_read);
++    g_test_add_data_func("/io/channel/websock/stalled-write",
++                         "stats\r\nx\r\n\r\n", test_websock_stalled_write);
++
+     return g_test_run();
  }
- 
- 
-@@ -185,17 +181,16 @@ int qcrypto_block_amend_options(QCryptoBlock *block,
- QCryptoBlockInfo *qcrypto_block_get_info(QCryptoBlock *block,
-                                          Error **errp)
- {
--    QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
-+    g_autofree QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
- 
-     info->format = block->format;
- 
-     if (block->driver->get_info &&
-         block->driver->get_info(block, info, errp) < 0) {
--        g_free(info);
-         return NULL;
-     }
- 
--    return info;
-+    return g_steal_pointer(&info);
- }
- 
- 
-diff --git a/crypto/hmac-gcrypt.c b/crypto/hmac-gcrypt.c
-index e428d17479..44631fb348 100644
---- a/crypto/hmac-gcrypt.c
-+++ b/crypto/hmac-gcrypt.c
-@@ -50,7 +50,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
- {
--    QCryptoHmacGcrypt *ctx;
-+    g_autofree QCryptoHmacGcrypt *ctx = NULL;
-     gcry_error_t err;
- 
-     if (!qcrypto_hmac_supports(alg)) {
-@@ -66,7 +66,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-     if (err != 0) {
-         error_setg(errp, "Cannot initialize hmac: %s",
-                    gcry_strerror(err));
--        goto error;
-+        return NULL;
-     }
- 
-     err = gcry_mac_setkey(ctx->handle, (const void *)key, nkey);
-@@ -74,14 +74,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-         error_setg(errp, "Cannot set key: %s",
-                    gcry_strerror(err));
-         gcry_mac_close(ctx->handle);
--        goto error;
-+        return NULL;
-     }
- 
--    return ctx;
--
--error:
--    g_free(ctx);
--    return NULL;
-+    return g_steal_pointer(&ctx);
- }
- 
- static void
-diff --git a/crypto/hmac-glib.c b/crypto/hmac-glib.c
-index b845133a05..1f17769c1c 100644
---- a/crypto/hmac-glib.c
-+++ b/crypto/hmac-glib.c
-@@ -46,7 +46,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
- {
--    QCryptoHmacGlib *ctx;
-+    g_autofree QCryptoHmacGlib *ctx = NULL;
- 
-     if (!qcrypto_hmac_supports(alg)) {
-         error_setg(errp, "Unsupported hmac algorithm %s",
-@@ -60,14 +60,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                             (const uint8_t *)key, nkey);
-     if (!ctx->ghmac) {
-         error_setg(errp, "Cannot initialize hmac and set key");
--        goto error;
-+        return NULL;
-     }
- 
--    return ctx;
--
--error:
--    g_free(ctx);
--    return NULL;
-+    return g_steal_pointer(&ctx);
- }
- 
- static void
-diff --git a/crypto/ivgen-essiv.c b/crypto/ivgen-essiv.c
-index 3d5a188795..d5fa269888 100644
---- a/crypto/ivgen-essiv.c
-+++ b/crypto/ivgen-essiv.c
-@@ -31,10 +31,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-                                     const uint8_t *key, size_t nkey,
-                                     Error **errp)
- {
--    uint8_t *salt;
-+    g_autofree uint8_t *salt = NULL;
-     size_t nhash;
-     size_t nsalt;
--    QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
-+    g_autofree QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
- 
-     /* Not necessarily the same as nkey */
-     nsalt = qcrypto_cipher_get_key_len(ivgen->cipher);
-@@ -46,8 +46,6 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-     if (qcrypto_hash_bytes(ivgen->hash, (const gchar *)key, nkey,
-                            &salt, &nhash,
-                            errp) < 0) {
--        g_free(essiv);
--        g_free(salt);
-         return -1;
-     }
- 
-@@ -57,13 +55,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-                                        salt, MIN(nhash, nsalt),
-                                        errp);
-     if (!essiv->cipher) {
--        g_free(essiv);
--        g_free(salt);
-         return -1;
-     }
- 
--    g_free(salt);
--    ivgen->private = essiv;
-+    ivgen->private = g_steal_pointer(&essiv);
- 
-     return 0;
- }
-@@ -75,7 +70,7 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
- {
-     QCryptoIVGenESSIV *essiv = ivgen->private;
-     size_t ndata = qcrypto_cipher_get_block_len(ivgen->cipher);
--    uint8_t *data = g_new(uint8_t, ndata);
-+    g_autofree uint8_t *data = g_new(uint8_t, ndata);
- 
-     sector = cpu_to_le64(sector);
-     memcpy(data, (uint8_t *)&sector, MIN(sizeof(sector), ndata));
-@@ -88,7 +83,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
-                                data,
-                                ndata,
-                                errp) < 0) {
--        g_free(data);
-         return -1;
-     }
- 
-@@ -99,7 +93,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
-     if (ndata < niv) {
-         memset(iv + ndata, 0, niv - ndata);
-     }
--    g_free(data);
-     return 0;
- }
- 
-diff --git a/crypto/ivgen.c b/crypto/ivgen.c
-index 6b7d24d889..9f1f7d7dca 100644
---- a/crypto/ivgen.c
-+++ b/crypto/ivgen.c
-@@ -33,7 +33,7 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
-                                 const uint8_t *key, size_t nkey,
-                                 Error **errp)
- {
--    QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
-+    g_autofree QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
- 
-     ivgen->algorithm = alg;
-     ivgen->cipher = cipheralg;
-@@ -51,16 +51,14 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
-         break;
-     default:
-         error_setg(errp, "Unknown block IV generator algorithm %d", alg);
--        g_free(ivgen);
-         return NULL;
-     }
- 
-     if (ivgen->driver->init(ivgen, key, nkey, errp) < 0) {
--        g_free(ivgen);
-         return NULL;
-     }
- 
--    return ivgen;
-+    return g_steal_pointer(&ivgen);
- }
- 
- 
-diff --git a/crypto/secret_keyring.c b/crypto/secret_keyring.c
-index 78d7f09b3b..3b332276ef 100644
---- a/crypto/secret_keyring.c
-+++ b/crypto/secret_keyring.c
-@@ -41,7 +41,7 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
-                                  Error **errp)
- {
-     QCryptoSecretKeyring *secret = QCRYPTO_SECRET_KEYRING(sec_common);
--    uint8_t *buffer = NULL;
-+    g_autofree uint8_t *buffer = NULL;
-     long retcode;
- 
-     *output = NULL;
-@@ -61,12 +61,11 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
- 
-     retcode = keyctl_read(secret->serial, buffer, retcode);
-     if (retcode < 0) {
--        g_free(buffer);
-         goto keyctl_error;
-     }
- 
-     *outputlen = retcode;
--    *output = buffer;
-+    *output = g_steal_pointer(&buffer);
-     return;
- 
- keyctl_error:
 -- 
 2.55.0
 
