@@ -4,116 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41B1C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 21:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A5EC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 21:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3ghq-0001ly-Vw; Mon, 07 Sep 2026 17:16:47 -0400
+	id 1x3h6z-0004nH-PO; Mon, 07 Sep 2026 17:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x3ghp-0001li-Ua
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 17:16:45 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x3h6y-0004n3-1Z
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 17:42:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x3ghn-0000So-UB
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 17:16:45 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x3h6w-0002iG-1H
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 17:42:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788815802;
+ s=mimecast20190719; t=1788817360;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mw8RFV/2HjpqWkwUwmTokzDl1/223/6QlsoHVWfboPU=;
- b=ZQtJQT+40FKV+Cp9d46ynUejfzV12UVRwU8Ad3AM3z50pCN1T+/548tCShRX7Y6zrjnyKS
- vSqGEUMpsKaWILMloK4Ytw47sYaKg4/uXqHAgNe7A+QJQx1EAvmpTDZ+LW3NHBZOuEV8yw
- NxrMsgqgAHLjxYwTFGnlQN8UF2ZEjB4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-BPNs2DabNra9LqNUkIHehA-1; Mon, 07 Sep 2026 17:16:41 -0400
-X-MC-Unique: BPNs2DabNra9LqNUkIHehA-1
-X-Mimecast-MFC-AGG-ID: BPNs2DabNra9LqNUkIHehA_1788815800
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-484337a63bbso2342838f8f.3
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 14:16:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788815800; x=1789420600; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=mw8RFV/2HjpqWkwUwmTokzDl1/223/6QlsoHVWfboPU=;
- b=Pk/vuo67rRIZsqawRb79YYinUvHCfUVvfRUrqR3gG6thYMuHybYblOi7dhJhhzRn2c
- wBniEoaIOTjTkEBTdsoUCq8V42XzVmD2sJMBSB5Fpl1guolglGHTUZBvqCZZymdQTbaN
- hbqPKVLITSZ8Mo5P9CFgTP59SW+Grvn8NHjKvBq0gAJNP9Z/3san81lo0FpVT1mvRMFS
- 79RFdsKZyURdGrVciKPgF+Am2GMk8fBtBbAXydPhMIyDDITNsXO7+4REXUmUXKxmWxIH
- JW8vKFAj95mXJORlN+KjLE5iOWWtKxwqBvOsdttSbhnCv3QGs4F/5wSodfKwNmHjX1zK
- SPPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788815800; x=1789420600;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mw8RFV/2HjpqWkwUwmTokzDl1/223/6QlsoHVWfboPU=;
- b=F29SKKSHxZs2uVoSp5QvMM7i5pgGfZLtktqZKZZaD3XCOZiK6rb29QLWhK9t/kALVL
- VmyGva3G/ApvK8baibQhjW0UhFAWMQzhlOt813mYyZyU653eA+hHVb0/9fjgjm4uvw2B
- WmoWpkQaE1t5GoGO+Q5D1SQkiqgRxtgfi96eGCHWzYJqt7Sd8JVIQ1K253j76PoRmeb5
- vC5OstzaSTUEvHiMJYA1qLjiYSoELWaqanBneUapdACqYpaASch2QiRgay4AXgnRuPqJ
- l5NbFGJZQ0VNCIREHXOg+azzcnRf8twSjIJ8W/dKltcLrCJvJXiPMM3JrzcTmPS6ZxZL
- mWpQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvByB8M76r3kDhwwvWo1wqNFfo8CHOzb4vo3opfNaSMUd9ek2Rk5M3I7ZqnhKMe5NIflv27FBKOkTNcDR@nongnu.org
-X-Gm-Message-State: AFuF++k1LQ8OP8941RD/JxomKUjHhf1wA74M5f7EoWbx8T4NwH9Lf/iX
- AWTXnqezesnU+kI1P+Ffr5hRy5Q/wb/xamaSdgGhubP9FgmZDJHZm9uz3553Yde0p/2/klJiqcL
- sKRl0TIv5iJhi0SckERYoYPToSLKIcMPTsaoteU2o3kOJtc/Qx+TeXyhC
-X-Gm-Gg: AYBFou2OV1i0XDnRrY5f//CLX2tqjSD1HQ/zwGHCmAAnsFjCmJlq3mu+/2z8x8qKQpA
- fKeItn4kQ9SCFk/bRqqjlUve3Ywvme4Q6aV6bmn7Y+oUS+Gb6hsTdI56ceuQNNRIjabP4sZ8GTb
- wja0bU6NgoN2ptBTbTwn2BxBuzoZs8XkvE6qycLJ52UeAbDMZEsXkkClBYSMXcS175+UrbG5ZK5
- C6MedUuVTDauag3JJXLlgRdhT5R25tpmPE0VfQGrFm5xY31KCMtU6l8k9RD+ME1UAwx59RZRDXz
- bAtRXLvU2h4VXNlCn8/IF3KzRGvpaPItmjhNx0QEhHUE0NRM31X/cUmdqa09wka4q08aWxc8/Wk
- VzsOOHI9ySzqX9/igvjCdD4E=
-X-Received: by 2002:a05:6000:1a52:b0:481:51ce:542f with SMTP id
- ffacd0b85a97d-485872b40e3mr21034571f8f.21.1788815799868; 
- Mon, 07 Sep 2026 14:16:39 -0700 (PDT)
-X-Received: by 2002:a05:6000:1a52:b0:481:51ce:542f with SMTP id
- ffacd0b85a97d-485872b40e3mr21034526f8f.21.1788815799406; 
- Mon, 07 Sep 2026 14:16:39 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858e239862sm26191451f8f.9.2026.09.07.14.16.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 14:16:38 -0700 (PDT)
-Date: Mon, 7 Sep 2026 17:16:34 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, dave@treblig.org,
- anisinha@redhat.com, philmd@mailo.com, aurelien@aurel32.net,
- mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, cohuck@redhat.com,
- alex@shazbot.org, clg@redhat.com, akrowiak@linux.ibm.com,
- jjherne@linux.ibm.com, sstabellini@kernel.org,
- anthony@xenproject.org, edgar.iglesias@gmail.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- joe.jin@oracle.com
-Subject: Re: [PATCH 0/8] Force detach PCI devices for ACPI-based and PCIe
- native hot-unplug
-Message-ID: <20260907171522-mutt-send-email-mst@kernel.org>
-References: <20260824011420.752806-1-dongli.zhang@oracle.com>
- <aoxY4Rxst2qAyn5z@redhat.com>
- <01ee4841-76d8-4749-a80e-eb945ab8799a@oracle.com>
- <20260903172835.0e253a25@imammedo>
- <6154b857-16b3-476b-a2cb-8837464dd4cb@oracle.com>
- <20260907044608-mutt-send-email-mst@kernel.org>
- <296a04a7-f917-4abd-b564-4a6b8fc6aace@oracle.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Zcfkufi3WHowQ/JW2iZDvwib3hBtPkXhkw7NoxlJF60=;
+ b=cLeHdVBBRaOuPsqt6M9b0l8et4aQ8s4jAxB5VGQ6vvZrMA2xlKCmHl4bDOazg76PpQtrkz
+ IGKYTgz5NlbPpn71FTMB1JyF2fo0LfRCCahX80mogheh2iAaoZjV1Z7wSgSrnzKg2bkYOe
+ 3T9E6S8l+sI+/UHSkxAQF2xxm/Lw9Mo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-h844naD6McKqdPvQrlhfGg-1; Mon,
+ 07 Sep 2026 17:42:37 -0400
+X-MC-Unique: h844naD6McKqdPvQrlhfGg-1
+X-Mimecast-MFC-AGG-ID: h844naD6McKqdPvQrlhfGg_1788817356
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D37A518015DE; Mon,  7 Sep 2026 21:42:35 +0000 (UTC)
+Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0A0FE1956044; Mon,  7 Sep 2026 21:42:33 +0000 (UTC)
+Message-ID: <5aba99f7-5310-4cd3-a38c-3e9b922c8b05@redhat.com>
+Date: Mon, 7 Sep 2026 23:42:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <296a04a7-f917-4abd-b564-4a6b8fc6aace@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
+ arm_cpu_exec_halt()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
+ <20260819145649.23439-7-philmd@oss.qualcomm.com>
+ <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
+ <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
+ <bbe4b7d0-96ad-45d8-a5a9-0be2c5479d51@oss.qualcomm.com>
+ <7766d96b-4065-4917-9d7d-094bd6d1f29c@oss.qualcomm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <7766d96b-4065-4917-9d7d-094bd6d1f29c@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -121,7 +115,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,13 +131,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 07, 2026 at 02:06:29PM -0700, Dongli Zhang wrote:
-> 5. By instrumenting QEMU code and possibly adding additional metadata, we can
-> track whether a PCI device has been accessed by the guest VM, especially during
-> PCI hotplug. If the device has never been used by the guest VM, it may be safer
-> to force-detach it.
+On 9/2/26 20:02, Philippe Mathieu-Daudé wrote:
+>>> On the other hand, if we do have the BQL in exec_halt
+>>> then why is the x86 implementation explicitly taking
+>>> the BQL when it calls apic_poll_irq()?
+> 
+> Trying harder, my understanding is apic_poll_irq() only requires
+> the BQL for the apic_update_irq() call, not apic_sync_vapic().
+> 
+> So maybe only apic_sync_vapic() belongs to process_async_events(),
+> leaving apic_update_irq() to transition_halt_to_exec().
+> 
+> Paolo does that sound like going in the good direction?
+Unfortunately not, because apic_update_irq() is needed to call 
+cpu_interrupt() and break out of halt.
 
-this last one I am not sure about. as I said, devices are commonly
-accessed by firmware.
+By the way... cpu_has_work_after_processing_async_events() is a bit 
+long, what about simply cpu_poll_while_halted()?
+
+Answering Peter's question above, the way in which the code is protected 
+against the BQL is basically two-fold: 1) kicking the CPU out of 
+whatever it's doing, for example in tcg_handle_interrupt, 2) changing 
+what other conditions affect cpu_has_work() only in the vCPU thread, 
+e.g. with run_on_cpu.
+
+Specifically for Arm, it does seem like e.g. cpu->power_state needs 
+qatomic_read/set, and arm_set_cpu_power_state() needs a qemu_cpu_kick(). 
+  The SEV helper already does it (though for clarity and paranoia it 
+would be appropriate to use qatomic_read/set more consistently).
+
+Paolo
+
+> On the one hand, if we don't have the BQL in has_work and
+> exec_halt then we should be a lot more careful about how
+> we code them (e.g. use of the right kind of atomics, and
+> there's no way the call to do_interrupt_all() in the x86
+> exec_halt can be safe without the BQL, surely).
 
 
