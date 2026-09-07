@@ -4,88 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE64BC79F9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07CEC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3VjD-0000YE-Dt; Mon, 07 Sep 2026 05:33:27 -0400
+	id 1x3Vnn-0001gr-Rk; Mon, 07 Sep 2026 05:38:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3VjB-0000XX-RC
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:33:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1x3Vnk-0001e1-P4; Mon, 07 Sep 2026 05:38:08 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3Vj9-0003XE-PR
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 05:33:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788773603;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QKcMZSGTuhoWh6ZXGK/QS838zVBZEKbiqnEONjcgWM8=;
- b=iXOmIqFUweQysBmUlxZNwkshWSML8Ea4QlJr860xoGWfzXNgxdAsPrzYb4zOVJNy84XLep
- aDjEsmojnn2YJ3tNP7Lq6ZP37YRB1LdKehxwmlwvYhhlfheJWzanKnNcDGQcg+3iRUG/sP
- BjeUyWuzT66L5xs6AaU/f3BJ+32aD58=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-oMDAqBUiMgavZ3Bt2e1D-w-1; Mon,
- 07 Sep 2026 05:33:19 -0400
-X-MC-Unique: oMDAqBUiMgavZ3Bt2e1D-w-1
-X-Mimecast-MFC-AGG-ID: oMDAqBUiMgavZ3Bt2e1D-w_1788773597
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DC83180AE14; Mon,  7 Sep 2026 09:33:17 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 485F91955F0E; Mon,  7 Sep 2026 09:33:11 +0000 (UTC)
-Date: Mon, 7 Sep 2026 10:33:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 5/9] tests/ide-test: convert to QMP
-Message-ID: <ap6E1eVfkt1cRWme@redhat.com>
-References: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
- <20260906-nohmp-v1-5-daee96491c43@redhat.com>
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1x3Vnd-00047L-GA; Mon, 07 Sep 2026 05:38:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1788773867; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=zYZIRnVm4EVgjOeiEy+OXbDkRrDL+s/FNTgJFXZLnu0=;
+ b=O0w+lK8YUhmL6O2USdQkNoBipP/uman2Bs/oe9n5ralju+xKnvdUs2Dxq0StdcqcMkB0whZCEB2lGXEKhD2+Q29mGC4fUS4vnGtfP9EliPI8CYfmB/wHBKd7ovT1/zGNgBNFjcVE6z83vQCHiK47Em4TkOV5WAp6a1E4B+yKDBA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=20; SR=0;
+ TI=SMTPD_---0XATXGyA_1788773866; 
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
+ fp:SMTPD_---0XATXGyA_1788773866 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 07 Sep 2026 17:37:46 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
+ imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
+Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
+ junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ Sunil V L <sunilvl@oss.qualcomm.com>
+Subject: [PATCH v6 2/6] hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for CXL
+ host bridge dependency
+Date: Mon,  7 Sep 2026 17:37:29 +0800
+Message-ID: <20260907093735.2753-3-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260907093735.2753-1-cp0613@linux.alibaba.com>
+References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260906-nohmp-v1-5-daee96491c43@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=cp0613@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,27 +71,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 06, 2026 at 12:42:36PM +0400, Marc-André Lureau wrote:
-> The QMP command is explicit, specify both the vmstate and devices.
-> We use the helper introduced previously to wait for job completion.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  tests/qtest/ide-test.c | 37 ++++++++++++++++++++++++++++---------
->  1 file changed, 28 insertions(+), 9 deletions(-)
+On RISC-V QEMU virt platform with CXL enabled, the probe ordering
+of acpi_pci_root (ACPI0016) and cxl_acpi (ACPI0017) is not
+guaranteed. If cxl_acpi probes before acpi_pci_root has attached
+the CXL host bridges, the CXL port topology will be incomplete
+because to_cxl_host_bridge() silently skips devices whose PCI root
+is not yet ready.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Add a _DEP object to the ACPI0017 device in the DSDT, declaring
+its dependency on the ACPI0016 CXL host bridge devices. This tells
+the OS to defer ACPI0017 enumeration until all ACPI0016 devices
+have been attached by acpi_pci_root.
 
+This pairs with two kernel commits, both merged in v7.2:
+bf5418a5fe63 ("ACPI: scan: Honor _DEP for ACPI0016 PCI/CXL host
+bridge") makes the ACPI core defer ACPI0017 enumeration while its
+_DEP targets are unattached, and 3a59c3b772e5 ("ACPI: PCI: Clear _DEP
+dependencies after PCI root bridge attach") clears the dependency
+from acpi_pci_root_add() once the host bridge is attached.
 
-With regards,
-Daniel
+Note on kernel compatibility: this is a "new QEMU feature requires a
+sufficiently new kernel" situation.  Kernels that process _DEP but
+lack the acpi_dev_clear_dependencies() call will leave the CXLM device
+deferred, so CXL memory is unusable there; kernels old enough to ignore
+_DEP entirely behave exactly as before this change.  In neither case is
+existing (non-CXL) PCIe affected.
+
+The resulting DSDT fragment (iasl -d output) for a single CXL host
+bridge at bus 0x0C looks like:
+
+  Device (CXLM)
+  {
+      Name (_HID, "ACPI0017")
+      Name (_DEP, Package (0x01)
+      {
+          \_SB.PC0C
+      })
+      Method (_STA, 0, NotSerialized)
+      {
+          Return (0x0B)
+      }
+      ...
+  }
+
+Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+---
+ hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 2be8c6d572..e1beb2068d 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -525,6 +525,38 @@ static void build_dsdt(GArray *table_data,
+     if (s->cxl_devices_state.is_enabled) {
+         Aml *cxl_dev = aml_device("CXLM");
+         aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
++
++        /*
++         * Declare a _DEP on every ACPI0016 CXL host bridge so the OS
++         * defers ACPI0017 enumeration until acpi_pci_root has attached
++         * the CXL host bridges. Without this, cxl_acpi may probe before
++         * to_cxl_host_bridge() can resolve the PCI root and the CXL
++         * port topology comes up empty.
++         */
++        if (s->pci_bus) {
++            PCIBus *bus;
++            uint32_t num_cxl_hbs = 0;
++
++            QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
++                if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
++                    num_cxl_hbs++;
++                }
++            }
++
++            if (num_cxl_hbs > 0) {
++                Aml *dep_pkg = aml_package(num_cxl_hbs);
++
++                QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
++                    if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
++                        aml_append(dep_pkg,
++                                   aml_name("\\_SB.PC%.02X",
++                                            pci_bus_num(bus)));
++                    }
++                }
++                aml_append(cxl_dev, aml_name_decl("_DEP", dep_pkg));
++            }
++        }
++
+         Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
+         aml_append(method, aml_return(aml_int(0x0B)));
+         aml_append(cxl_dev, method);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.50.1
 
 
