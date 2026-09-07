@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCD29C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3ACAC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3RqZ-0004u4-Ja; Mon, 07 Sep 2026 01:24:47 -0400
+	id 1x3RrD-0005U8-Pl; Mon, 07 Sep 2026 01:25:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3RqX-0004tM-HP; Mon, 07 Sep 2026 01:24:45 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1x3Rr2-0005CG-MK; Mon, 07 Sep 2026 01:25:16 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3RqT-0007t7-9m; Mon, 07 Sep 2026 01:24:45 -0400
+ id 1x3Rr0-00086z-5I; Mon, 07 Sep 2026 01:25:16 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdb991MFxzBqYv;
- Mon,  7 Sep 2026 07:24:29 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdb9C301zz7vQq;
+ Mon,  7 Sep 2026 07:24:31 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788758669;
- bh=aUPcaG46OnBQW4kdWYjRVOsE4cbMm4NcH+LloWfBNXE=;
+ s=dkim; t=1788758671;
+ bh=iJAd8xK1wbVjEJStVw35E2Sq0UVDnS9fGGQAa4fj0Xg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=kQYFD77s32VeycPxRL1ZDTPRNZ1euvCzhcFZIDorns9aWWXGZ982pRfKuUe5fwn15
- eh5P5OCoyWO68I7E+RSpxn5WFRnzfce6uKnbgFch4A9okjCQFBT1Bl7dkyOu9iHH2z
- klZmL8ugZ8ZDiGeA/nraHC/1i3i/9QefwZpYY05Jb6YtJ7H9lLGcz+XCXvIqzU95jP
- uheQBU2O6JNgzIyhGKwaMpSFxZP/q4fdnbChcyCfjn+uGPRl6O1UYNrqQn2dCbEcH8
- mRhcB3OZJN/WNpnOWGkFNIqogixk7dz/+y6y3Dfvy1NX7+Md2s25LteWhowmwqyg0b
- 3YK/pJ9cVJsAg==
+ b=CQr8QdzHSLtU/6/jiQDDmBg/AhFquKpqFpjkgfSTSX7ROzexZ167S9+PmuqjAWaU/
+ O5PIQDY6yhpSFIRR5J+IZ7zTOacXCGKHgadzF5g2ACibL3s4j+ONh0Jm8Tzd5jme2z
+ LXPIZL0yWvrnxFbM9ptOVGsaeuE/DCS4ut6JdDzb60vGX0EfwMR2axEDeF3jDmoubj
+ XLMHW4nvEBlFDAoTBlPrwET6wui8XGB9V8ZeOr7B7F+vSewyjtRc+8VeLv7yf04iU8
+ QBibHawUufWrmRrl3+V+8RKG4Yr3TJtVB4btMWDxYhG5pbTzZqfntJrWhrKkdE/CHl
+ e+qRZukFXVjSw==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb9870LWz7xqf;
- Mon,  7 Sep 2026 07:24:28 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb9C1W2bz7xqd;
+ Mon,  7 Sep 2026 07:24:31 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [PATCH v3 22/36] tests/tcg/arm: test RP2040 SIO and multicore
-Date: Mon,  7 Sep 2026 07:24:10 +0200
-Message-ID: <20260907052426.24849-6-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH v3 28/36] tests/tcg/arm: test RP2040 DMA transfers
+Date: Mon,  7 Sep 2026 07:24:16 +0200
+Message-ID: <20260907052426.24849-12-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
  <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -72,320 +72,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add source-built bare-metal tests for memory copy and fill transfers,
+completion status and interrupt acknowledgement.
+
+Exercise UART0 and UART1 transmit and receive pacing through their DMA
+request lines. Each UART test waits for DMA IRQ completion and validates
+looped-back input before reporting success.
+
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- tests/tcg/arm/system/meson.build             |  27 ++-
- tests/tcg/arm/system/rp2040-core1-launch.S   | 216 +++++++++++++++++++
- tests/tcg/arm/system/rp2040-core1-launch.ref |   4 +
- tests/tcg/arm/system/rp2040-psm-proc1.S      | 143 ++++++++++++
- tests/tcg/arm/system/rp2040-psm-proc1.ref    |   5 +
- tests/tcg/arm/system/rp2040-sio-divider.S    | 169 +++++++++++++++
- tests/tcg/arm/system/rp2040-sio-divider.ref  |   2 +
- tests/tcg/arm/system/rp2040-sio-fifo.S       | 154 +++++++++++++
- tests/tcg/arm/system/rp2040-sio-fifo.ref     |   2 +
- 9 files changed, 720 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/arm/system/rp2040-core1-launch.S
- create mode 100644 tests/tcg/arm/system/rp2040-core1-launch.ref
- create mode 100644 tests/tcg/arm/system/rp2040-psm-proc1.S
- create mode 100644 tests/tcg/arm/system/rp2040-psm-proc1.ref
- create mode 100644 tests/tcg/arm/system/rp2040-sio-divider.S
- create mode 100644 tests/tcg/arm/system/rp2040-sio-divider.ref
- create mode 100644 tests/tcg/arm/system/rp2040-sio-fifo.S
- create mode 100644 tests/tcg/arm/system/rp2040-sio-fifo.ref
+ tests/tcg/arm/system/meson.build           |  25 ++
+ tests/tcg/arm/system/rp2040-dma-memory.S   | 198 +++++++++++++++
+ tests/tcg/arm/system/rp2040-dma-memory.ref |   4 +
+ tests/tcg/arm/system/rp2040-dma-uart.S     | 267 +++++++++++++++++++++
+ tests/tcg/arm/system/rp2040-dma-uart0.ref  |   3 +
+ tests/tcg/arm/system/rp2040-dma-uart1.ref  |   3 +
+ 6 files changed, 500 insertions(+)
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-memory.S
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-memory.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-uart.S
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-uart0.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-uart1.ref
 
 diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index a959830b1c..494f13995f 100644
+index c57bf5f0d0..a12aed74fa 100644
 --- a/tests/tcg/arm/system/meson.build
 +++ b/tests/tcg/arm/system/meson.build
-@@ -20,6 +20,9 @@ rp2040_cflags = ['-mcpu=cortex-m0plus', '-mthumb', '-mfloat-abi=soft',
-                  '-T', files('rp2040-minimal.ld')]
- rp2040_qemu_args = ['-M', 'raspi-pico', '-monitor', 'none',
-                     qemu_base_args]
-+rp2040_uart_qemu_args = ['-M', 'raspi-pico,strict-uart-pins=off',
-+                         '-monitor', 'none', '-serial', 'stdio',
-+                         qemu_base_args]
+@@ -24,6 +24,9 @@ rp2040_qemu_args = ['-M', 'raspi-pico', '-monitor', 'none',
+ rp2040_uart_qemu_args = ['-M', 'raspi-pico,strict-uart-pins=off',
+                          '-monitor', 'none', '-serial', 'stdio',
+                          qemu_base_args]
++rp2040_uart1_qemu_args = ['-M', 'raspi-pico,strict-uart-pins=off',
++                          '-monitor', 'none', '-serial', 'null',
++                          '-serial', 'stdio', qemu_base_args]
+ rp2040_flash_persist = find_program('rp2040-flash-persist.sh')
  
  # Multi arch tests
- multi_src = []
-@@ -62,14 +65,34 @@ tests += {
+@@ -132,6 +135,28 @@ tests += {
+     'qemu_args': rp2040_uart_qemu_args,
+     'expected_output': 'rp2040-core1-xip-fault.ref',
    },
-   'rp2040-uart.S': {
-     'cflags': rp2040_cflags,
--    'qemu_args': ['-serial', 'stdio', rp2040_qemu_args],
-+    'qemu_args': rp2040_uart_qemu_args,
-     'expected_output': 'rp2040-uart.ref',
-   },
-   'rp2040-mpu.S': {
-     'cflags': rp2040_cflags,
--    'qemu_args': ['-serial', 'stdio', rp2040_qemu_args],
-+    'qemu_args': rp2040_uart_qemu_args,
-     'expected_output': 'rp2040-mpu.ref',
-   },
-+  'rp2040-sio-fifo.S': {
++  'rp2040-dma-memory.S': {
 +    'cflags': rp2040_cflags,
 +    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-sio-fifo.ref',
++    'expected_output': 'rp2040-dma-memory.ref',
 +  },
-+  'rp2040-sio-divider.S': {
-+    'cflags': rp2040_cflags,
++  'rp2040-dma-uart.S': {
++    'exe_name': 'rp2040-dma-uart0',
++    'test_name': 'rp2040-dma-uart0',
++    'cflags': rp2040_cflags + ['-DUART_INDEX=0'],
 +    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-sio-divider.ref',
++    'expected_output': 'rp2040-dma-uart0.ref',
 +  },
-+  'rp2040-psm-proc1.S': {
-+    'cflags': rp2040_cflags,
-+    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-psm-proc1.ref',
-+  },
-+  'rp2040-core1-launch.S': {
-+    'cflags': rp2040_cflags,
-+    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-core1-launch.ref',
++}
++
++tests += {
++  'rp2040-dma-uart.S': {
++    'exe_name': 'rp2040-dma-uart1',
++    'test_name': 'rp2040-dma-uart1',
++    'cflags': rp2040_cflags + ['-DUART_INDEX=1'],
++    'qemu_args': rp2040_uart1_qemu_args,
++    'expected_output': 'rp2040-dma-uart1.ref',
 +  },
    'semiconsole.c': {
      'cflags': cflags,
      'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-diff --git a/tests/tcg/arm/system/rp2040-core1-launch.S b/tests/tcg/arm/system/rp2040-core1-launch.S
+diff --git a/tests/tcg/arm/system/rp2040-dma-memory.S b/tests/tcg/arm/system/rp2040-dma-memory.S
 new file mode 100644
-index 0000000000..a280014b3c
+index 0000000000..015c7241dc
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-core1-launch.S
-@@ -0,0 +1,216 @@
++++ b/tests/tcg/arm/system/rp2040-dma-memory.S
+@@ -0,0 +1,198 @@
 +/*
-+ * Raspberry Pi Pico core 1 mask-ROM launch protocol test.
++ * Raspberry Pi Pico DMA memory transfer test.
 + *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END               0x20042000
-+#define CORE1_STACK            0x20041000
-+#define UART0_DR               0x40034000
-+#define SIO_BASE               0xd0000000
-+#define SIO_CPUID              0x00
-+#define SIO_FIFO_ST            0x50
-+#define SIO_FIFO_WR            0x54
-+#define SIO_FIFO_RD            0x58
-+#define SIO_FIFO_ST_VLD        0x01
-+#define SIO_FIFO_ST_RDY        0x02
-+#define CORE1_ACK              0x0000d01e
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl puts
-+
-+    ldr r4, =SIO_BASE
-+    ldr r0, [r4, SIO_CPUID]
-+    cmp r0, 0
-+    bne fail_core0_id
-+
-+    ldr r6, =launch_sequence
-+    movs r7, 0
-+
-+launch_next:
-+    ldr r0, [r6, r7]
-+    cmp r0, 0
-+    bne launch_send
-+    bl fifo_drain
-+    sev
-+
-+launch_send:
-+    bl fifo_push
-+    bl fifo_pop
-+    ldr r1, [r6, r7]
-+    cmp r0, r1
-+    bne fail_echo
-+    adds r7, 4
-+    cmp r7, 24
-+    bne launch_next
-+
-+    ldr r0, =echo_message
-+    bl puts
-+
-+    bl fifo_pop
-+    ldr r1, =CORE1_ACK
-+    cmp r0, r1
-+    bne fail_ack
-+
-+    ldr r0, =ack_message
-+    bl puts
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+.thumb_func
-+core1_entry:
-+    ldr r4, =SIO_BASE
-+    ldr r0, [r4, SIO_CPUID]
-+    cmp r0, 1
-+    bne core1_failed
-+    bl core1_send_ack
-+
-+2:
-+    b 2b
-+
-+.thumb_func
-+core1_send_ack:
-+    push {lr}
-+    ldr r0, =CORE1_ACK
-+    bl fifo_push
-+    pop {pc}
-+
-+core1_failed:
-+    ldr r0, =0xbad10001
-+    bl fifo_push
-+
-+3:
-+    b 3b
-+
-+.thumb_func
-+fifo_drain:
-+    push {r0, r1, lr}
-+
-+4:
-+    ldr r0, [r4, SIO_FIFO_ST]
-+    movs r1, SIO_FIFO_ST_VLD
-+    tst r0, r1
-+    beq 5f
-+    ldr r0, [r4, SIO_FIFO_RD]
-+    b 4b
-+
-+5:
-+    pop {r0, r1, pc}
-+
-+.thumb_func
-+fifo_push:
-+    push {r1, r2, lr}
-+
-+6:
-+    ldr r1, [r4, SIO_FIFO_ST]
-+    movs r2, SIO_FIFO_ST_RDY
-+    tst r1, r2
-+    beq 6b
-+    str r0, [r4, SIO_FIFO_WR]
-+    sev
-+    pop {r1, r2, pc}
-+
-+.thumb_func
-+fifo_pop:
-+    push {r1, lr}
-+
-+7:
-+    ldr r1, [r4, SIO_FIFO_ST]
-+    movs r0, SIO_FIFO_ST_VLD
-+    tst r1, r0
-+    beq 7b
-+    ldr r0, [r4, SIO_FIFO_RD]
-+    pop {r1, pc}
-+
-+fail_core0_id:
-+    ldr r0, =fail_core0_id_message
-+    b test_failed
-+
-+fail_echo:
-+    ldr r0, =fail_echo_message
-+    b test_failed
-+
-+fail_ack:
-+    ldr r0, =fail_ack_message
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+8:
-+    b 8b
-+
-+.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+    b test_failed
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+9:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 10f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 9b
-+
-+10:
-+    bx lr
-+
-+.section .rodata, "a", %progbits
-+.align 2
-+launch_sequence:
-+    .word 0
-+    .word 0
-+    .word 1
-+    .word vector_table
-+    .word CORE1_STACK
-+    .word core1_entry + 1
-+
-+start_message:
-+    .asciz "PICO TCG CORE1 START\n"
-+echo_message:
-+    .asciz "PICO TCG CORE1 ECHO OK\n"
-+ack_message:
-+    .asciz "PICO TCG CORE1 ACK OK\n"
-+ok_message:
-+    .asciz "PICO TCG CORE1 OK\n"
-+fail_core0_id_message:
-+    .asciz "PICO TCG CORE1 FAIL: CORE0 ID\n"
-+fail_echo_message:
-+    .asciz "PICO TCG CORE1 FAIL: ECHO\n"
-+fail_ack_message:
-+    .asciz "PICO TCG CORE1 FAIL: ACK\n"
-+fail_exception_message:
-+    .asciz "PICO TCG CORE1 FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-core1-launch.ref b/tests/tcg/arm/system/rp2040-core1-launch.ref
-new file mode 100644
-index 0000000000..b9f9d4252d
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-core1-launch.ref
-@@ -0,0 +1,4 @@
-+PICO TCG CORE1 START
-+PICO TCG CORE1 ECHO OK
-+PICO TCG CORE1 ACK OK
-+PICO TCG CORE1 OK
-diff --git a/tests/tcg/arm/system/rp2040-psm-proc1.S b/tests/tcg/arm/system/rp2040-psm-proc1.S
-new file mode 100644
-index 0000000000..f88166b906
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-psm-proc1.S
-@@ -0,0 +1,143 @@
-+/*
-+ * Raspberry Pi Pico PSM PROC1 power-state test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
@@ -395,176 +155,14 @@ index 0000000000..f88166b906
 +
 +#define SRAM_END               0x20042000
 +#define UART0_DR               0x40034000
-+#define PSM_BASE               0x40010000
-+#define PSM_FRCE_OFF           0x04
-+#define PSM_DONE               0x0c
-+#define PSM_SET_ALIAS          0x2000
-+#define PSM_CLR_ALIAS          0x3000
-+#define PSM_PROC1              0x00010000
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl puts
-+
-+    ldr r4, =(PSM_BASE + PSM_FRCE_OFF)
-+    ldr r5, =PSM_PROC1
-+    ldr r6, =(PSM_BASE + PSM_DONE)
-+
-+    ldr r0, [r4]
-+    tst r0, r5
-+    bne fail_initial
-+    ldr r0, [r6]
-+    tst r0, r5
-+    beq fail_initial
-+
-+    ldr r0, =initial_message
-+    bl puts
-+
-+    ldr r0, =(PSM_BASE + PSM_SET_ALIAS + PSM_FRCE_OFF)
-+    str r5, [r0]
-+    ldr r0, [r4]
-+    tst r0, r5
-+    beq fail_force_off
-+    ldr r0, [r6]
-+    tst r0, r5
-+    bne fail_force_off
-+
-+    ldr r0, =off_message
-+    bl puts
-+
-+    ldr r0, =(PSM_BASE + PSM_CLR_ALIAS + PSM_FRCE_OFF)
-+    str r5, [r0]
-+    ldr r0, [r4]
-+    tst r0, r5
-+    bne fail_restart
-+    ldr r0, [r6]
-+    tst r0, r5
-+    beq fail_restart
-+
-+    ldr r0, =on_message
-+    bl puts
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+fail_initial:
-+    ldr r0, =fail_initial_message
-+    b test_failed
-+
-+fail_force_off:
-+    ldr r0, =fail_force_off_message
-+    b test_failed
-+
-+fail_restart:
-+    ldr r0, =fail_restart_message
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+2:
-+    b 2b
-+
-+.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+    b test_failed
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+3:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 4f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 3b
-+
-+4:
-+    bx lr
-+
-+.section .rodata, "a", %progbits
-+start_message:
-+    .asciz "PICO TCG PSM PROC1 START\n"
-+initial_message:
-+    .asciz "PICO TCG PSM PROC1 INITIAL ON\n"
-+off_message:
-+    .asciz "PICO TCG PSM PROC1 FORCED OFF\n"
-+on_message:
-+    .asciz "PICO TCG PSM PROC1 RESTARTED\n"
-+ok_message:
-+    .asciz "PICO TCG PSM PROC1 OK\n"
-+fail_initial_message:
-+    .asciz "PICO TCG PSM PROC1 FAIL: INITIAL\n"
-+fail_force_off_message:
-+    .asciz "PICO TCG PSM PROC1 FAIL: FORCE OFF\n"
-+fail_restart_message:
-+    .asciz "PICO TCG PSM PROC1 FAIL: RESTART\n"
-+fail_exception_message:
-+    .asciz "PICO TCG PSM PROC1 FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-psm-proc1.ref b/tests/tcg/arm/system/rp2040-psm-proc1.ref
-new file mode 100644
-index 0000000000..b14da263b9
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-psm-proc1.ref
-@@ -0,0 +1,5 @@
-+PICO TCG PSM PROC1 START
-+PICO TCG PSM PROC1 INITIAL ON
-+PICO TCG PSM PROC1 FORCED OFF
-+PICO TCG PSM PROC1 RESTARTED
-+PICO TCG PSM PROC1 OK
-diff --git a/tests/tcg/arm/system/rp2040-sio-divider.S b/tests/tcg/arm/system/rp2040-sio-divider.S
-new file mode 100644
-index 0000000000..fc924a2f3d
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-sio-divider.S
-@@ -0,0 +1,169 @@
-+/*
-+ * Raspberry Pi Pico SIO hardware divider test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END               0x20042000
-+#define UART0_DR               0x40034000
-+#define SIO_BASE               0xd0000000
-+#define SIO_DIV_UDIVIDEND      0x60
-+#define SIO_DIV_UDIVISOR       0x64
-+#define SIO_DIV_SDIVIDEND      0x68
-+#define SIO_DIV_SDIVISOR       0x6c
-+#define SIO_DIV_QUOTIENT       0x70
-+#define SIO_DIV_REMAINDER      0x74
-+#define SIO_DIV_CSR            0x78
-+#define SIO_DIV_CSR_READY_DIRTY 0x03
-+#define SIO_DIV_CSR_READY      0x01
++#define DMA_BASE               0x50000000
++#define DMA_READ_ADDR          0x000
++#define DMA_WRITE_ADDR         0x004
++#define DMA_TRANS_COUNT        0x008
++#define DMA_CTRL_TRIG          0x00c
++#define DMA_INTR               0x400
++#define DMA_CTRL_WORD_COPY     0x001f8039
++#define DMA_CTRL_WORD_FILL     0x001f8029
 +#define SYS_EXIT               0x18
 +#define ADP_STOPPED_APPLICATION_EXIT 0x20026
 +#define ADP_STOPPED_RUNTIME_ERROR    0x20023
@@ -591,58 +189,81 @@ index 0000000000..fc924a2f3d
 +reset_handler:
 +    ldr r0, =start_message
 +    bl puts
-+    ldr r4, =SIO_BASE
 +
-+    /* Unsigned: 100 / 7 = 14 remainder 2. */
-+    movs r0, 100
-+    str r0, [r4, SIO_DIV_UDIVIDEND]
-+    movs r0, 7
-+    str r0, [r4, SIO_DIV_UDIVISOR]
-+    ldr r0, [r4, SIO_DIV_CSR]
-+    fail_if_ne r0, SIO_DIV_CSR_READY_DIRTY, fail_unsigned
-+    ldr r0, [r4, SIO_DIV_REMAINDER]
-+    fail_if_ne r0, 2, fail_unsigned
-+    ldr r0, [r4, SIO_DIV_CSR]
-+    fail_if_ne r0, SIO_DIV_CSR_READY_DIRTY, fail_unsigned
-+    ldr r0, [r4, SIO_DIV_QUOTIENT]
-+    fail_if_ne r0, 14, fail_unsigned
-+    ldr r0, [r4, SIO_DIV_CSR]
-+    fail_if_ne r0, SIO_DIV_CSR_READY, fail_unsigned
-+
-+    /* Signed: -100 / 7 = -14 remainder -2. */
-+    ldr r0, =-100
-+    str r0, [r4, SIO_DIV_SDIVIDEND]
-+    movs r0, 7
-+    str r0, [r4, SIO_DIV_SDIVISOR]
-+    ldr r0, [r4, SIO_DIV_REMAINDER]
-+    fail_if_ne r0, -2, fail_signed
-+    ldr r0, [r4, SIO_DIV_QUOTIENT]
-+    fail_if_ne r0, -14, fail_signed
-+
-+    /* Division by zero follows the RP2040 result contract. */
-+    ldr r0, =0x1234
-+    str r0, [r4, SIO_DIV_UDIVIDEND]
-+    movs r0, 0
-+    str r0, [r4, SIO_DIV_UDIVISOR]
-+    ldr r0, [r4, SIO_DIV_REMAINDER]
-+    fail_if_ne r0, 0x1234, fail_divzero
-+    ldr r0, [r4, SIO_DIV_QUOTIENT]
-+    fail_if_ne r0, 0xffffffff, fail_divzero
-+
-+    /* Result writes restore a saved divider context and set DIRTY. */
-+    ldr r0, =0xaabbccdd
-+    str r0, [r4, SIO_DIV_REMAINDER]
++    ldr r5, =copy_source
 +    ldr r0, =0x11223344
-+    str r0, [r4, SIO_DIV_QUOTIENT]
-+    ldr r0, [r4, SIO_DIV_CSR]
-+    fail_if_ne r0, SIO_DIV_CSR_READY_DIRTY, fail_restore
-+    ldr r0, [r4, SIO_DIV_REMAINDER]
-+    fail_if_ne r0, 0xaabbccdd, fail_restore
-+    ldr r0, [r4, SIO_DIV_QUOTIENT]
-+    fail_if_ne r0, 0x11223344, fail_restore
-+    ldr r0, [r4, SIO_DIV_CSR]
-+    fail_if_ne r0, SIO_DIV_CSR_READY, fail_restore
++    str r0, [r5, #0]
++    ldr r0, =0xaabbccdd
++    str r0, [r5, #4]
++    ldr r0, =0x01020304
++    str r0, [r5, #8]
++    ldr r0, =0xfeedc0de
++    str r0, [r5, #12]
++    ldr r5, =fill_source
++    ldr r0, =0x55aa55aa
++    str r0, [r5]
 +
++    ldr r4, =DMA_BASE
++
++    ldr r0, =copy_source
++    str r0, [r4, DMA_READ_ADDR]
++    ldr r0, =copy_destination
++    str r0, [r4, DMA_WRITE_ADDR]
++    movs r0, 4
++    str r0, [r4, DMA_TRANS_COUNT]
++    ldr r0, =DMA_CTRL_WORD_COPY
++    str r0, [r4, DMA_CTRL_TRIG]
++
++    ldr r5, =copy_source
++    ldr r6, =copy_destination
++    movs r3, 4
++
++copy_check_loop:
++    ldr r0, [r5]
++    ldr r1, [r6]
++    cmp r0, r1
++    bne fail_copy
++    adds r5, 4
++    adds r6, 4
++    subs r3, 1
++    bne copy_check_loop
++
++    ldr r6, =DMA_BASE + DMA_INTR
++    ldr r0, [r6]
++    movs r1, 1
++    tst r0, r1
++    beq fail_irq
++    str r1, [r6]
++    ldr r0, [r6]
++    tst r0, r1
++    bne fail_irq
++
++    ldr r0, =copy_ok_message
++    bl puts
++
++    ldr r0, =fill_source
++    str r0, [r4, DMA_READ_ADDR]
++    ldr r0, =fill_destination
++    str r0, [r4, DMA_WRITE_ADDR]
++    movs r0, 4
++    str r0, [r4, DMA_TRANS_COUNT]
++    ldr r0, =DMA_CTRL_WORD_FILL
++    str r0, [r4, DMA_CTRL_TRIG]
++
++    ldr r5, =fill_destination
++    ldr r1, =0x55aa55aa
++    movs r3, 4
++
++fill_check_loop:
++    ldr r0, [r5]
++    cmp r0, r1
++    bne fail_fill
++    adds r5, 4
++    subs r3, 1
++    bne fill_check_loop
++
++    ldr r0, =fill_ok_message
++    bl puts
 +    ldr r0, =ok_message
 +    bl puts
 +    movs r0, SYS_EXIT
@@ -652,20 +273,16 @@ index 0000000000..fc924a2f3d
 +1:
 +    b 1b
 +
-+fail_unsigned:
-+    ldr r0, =fail_unsigned_message
++fail_copy:
++    ldr r0, =fail_copy_message
 +    b test_failed
 +
-+fail_signed:
-+    ldr r0, =fail_signed_message
++fail_fill:
++    ldr r0, =fail_fill_message
 +    b test_failed
 +
-+fail_divzero:
-+    ldr r0, =fail_divzero_message
-+    b test_failed
-+
-+fail_restore:
-+    ldr r0, =fail_restore_message
++fail_irq:
++    ldr r0, =fail_irq_message
 +
 +test_failed:
 +    bl puts
@@ -696,39 +313,53 @@ index 0000000000..fc924a2f3d
 +4:
 +    bx lr
 +
++.section .bss, "aw", %nobits
++.align 2
++copy_source:
++    .space 16
++copy_destination:
++    .space 16
++fill_source:
++    .space 4
++fill_destination:
++    .space 16
++
 +.section .rodata, "a", %progbits
 +start_message:
-+    .asciz "PICO TCG SIO DIVIDER START\n"
++    .asciz "PICO TCG DMA MEMORY START\n"
++copy_ok_message:
++    .asciz "PICO TCG DMA MEMORY COPY OK\n"
++fill_ok_message:
++    .asciz "PICO TCG DMA MEMORY FILL OK\n"
 +ok_message:
-+    .asciz "PICO TCG SIO DIVIDER OK\n"
-+fail_unsigned_message:
-+    .asciz "PICO TCG SIO DIVIDER FAIL: UNSIGNED\n"
-+fail_signed_message:
-+    .asciz "PICO TCG SIO DIVIDER FAIL: SIGNED\n"
-+fail_divzero_message:
-+    .asciz "PICO TCG SIO DIVIDER FAIL: DIVZERO\n"
-+fail_restore_message:
-+    .asciz "PICO TCG SIO DIVIDER FAIL: RESTORE\n"
++    .asciz "PICO TCG DMA MEMORY OK\n"
++fail_copy_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: COPY\n"
++fail_fill_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: FILL\n"
++fail_irq_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: IRQ\n"
 +fail_exception_message:
-+    .asciz "PICO TCG SIO DIVIDER FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-sio-divider.ref b/tests/tcg/arm/system/rp2040-sio-divider.ref
++    .asciz "PICO TCG DMA MEMORY FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-dma-memory.ref b/tests/tcg/arm/system/rp2040-dma-memory.ref
 new file mode 100644
-index 0000000000..c03c8338dd
+index 0000000000..5960220ead
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-sio-divider.ref
-@@ -0,0 +1,2 @@
-+PICO TCG SIO DIVIDER START
-+PICO TCG SIO DIVIDER OK
-diff --git a/tests/tcg/arm/system/rp2040-sio-fifo.S b/tests/tcg/arm/system/rp2040-sio-fifo.S
++++ b/tests/tcg/arm/system/rp2040-dma-memory.ref
+@@ -0,0 +1,4 @@
++PICO TCG DMA MEMORY START
++PICO TCG DMA MEMORY COPY OK
++PICO TCG DMA MEMORY FILL OK
++PICO TCG DMA MEMORY OK
+diff --git a/tests/tcg/arm/system/rp2040-dma-uart.S b/tests/tcg/arm/system/rp2040-dma-uart.S
 new file mode 100644
-index 0000000000..4395167203
+index 0000000000..36972bbc98
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-sio-fifo.S
-@@ -0,0 +1,154 @@
++++ b/tests/tcg/arm/system/rp2040-dma-uart.S
+@@ -0,0 +1,267 @@
 +/*
-+ * Raspberry Pi Pico SIO FIFO status test.
++ * Raspberry Pi Pico UART-paced DMA transfer test.
 + *
-+ * Copyright 2026 Gilles Grimaud
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
@@ -736,15 +367,46 @@ index 0000000000..4395167203
 +.cpu cortex-m0plus
 +.thumb
 +
++#ifndef UART_INDEX
++#error UART_INDEX must select UART0 or UART1
++#elif UART_INDEX == 0
++#define UART_BASE              0x40034000
++#define DREQ_UART_TX           20
++#define DREQ_UART_RX           21
++#define UART_NAME              "UART0"
++#elif UART_INDEX == 1
++#define UART_BASE              0x40038000
++#define DREQ_UART_TX           22
++#define DREQ_UART_RX           23
++#define UART_NAME              "UART1"
++#else
++#error Unsupported UART_INDEX
++#endif
++
 +#define SRAM_END               0x20042000
-+#define UART0_DR               0x40034000
-+#define SIO_BASE               0xd0000000
-+#define SIO_CPUID              0x00
-+#define SIO_FIFO_ST            0x50
-+#define SIO_FIFO_RD            0x58
-+#define SIO_FIFO_ST_VLD        0x01
-+#define SIO_FIFO_ST_RDY        0x02
-+#define SIO_FIFO_ST_ROE        0x08
++#define UART_LCR_H             0x2c
++#define UART_CR                0x30
++#define UART_DMACR             0x48
++#define UART_CR_ENABLED        0x301
++#define UART_CR_LOOPBACK       0x381
++#define DMA_BASE               0x50000000
++#define DMA_READ_ADDR          0x000
++#define DMA_WRITE_ADDR         0x004
++#define DMA_TRANS_COUNT        0x008
++#define DMA_CTRL_TRIG          0x00c
++#define DMA_INTR               0x400
++#define DMA_INTE0              0x404
++#define DMA_CTRL_EN            0x00000001
++#define DMA_CTRL_INCR_R        0x00000010
++#define DMA_CTRL_INCR_W        0x00000020
++#define DMA_CTRL_TX            (DMA_CTRL_EN | DMA_CTRL_INCR_R | \
++                                (DREQ_UART_TX << 15))
++#define DMA_CTRL_RX            (DMA_CTRL_EN | DMA_CTRL_INCR_W | \
++                                (DREQ_UART_RX << 15))
++#define DMA_IRQ_0              11
++#define NVIC_ISER              0xe000e100
++#define NVIC_ICER              0xe000e180
++#define NVIC_ICPR              0xe000e280
 +#define SYS_EXIT               0x18
 +#define ADP_STOPPED_APPLICATION_EXIT 0x20026
 +#define ADP_STOPPED_RUNTIME_ERROR    0x20023
@@ -756,51 +418,75 @@ index 0000000000..4395167203
 +    .word reset_handler + 1
 +    .word default_handler + 1
 +    .word default_handler + 1
++    .rept 12
++    .word default_handler + 1
++    .endr
++    .rept DMA_IRQ_0
++    .word default_handler + 1
++    .endr
++    .word dma_irq_handler + 1
 +
 +.section .text, "ax", %progbits
 +.thumb_func
 +.global reset_handler
 +reset_handler:
++    cpsid i
++    ldr r0, =UART_BASE
++    movs r1, 0x10
++    str r1, [r0, UART_LCR_H]
++    ldr r1, =UART_CR_ENABLED
++    str r1, [r0, UART_CR]
++    movs r1, 3
++    str r1, [r0, UART_DMACR]
++
++    ldr r0, =NVIC_ICER
++    movs r2, 0
++    mvns r2, r2
++    str r2, [r0]
++    ldr r0, =NVIC_ICPR
++    str r2, [r0]
++    ldr r0, =NVIC_ISER
++    ldr r1, =(1 << DMA_IRQ_0)
++    str r1, [r0]
++    cpsie i
++
 +    ldr r0, =start_message
++    movs r1, START_MESSAGE_LEN
++    bl dma_tx
++
++    ldr r0, =UART_BASE
++    ldr r1, =UART_CR_LOOPBACK
++    str r1, [r0, UART_CR]
++    ldr r0, =hello_message
++    movs r1, 5
++    bl dma_tx
++    ldr r0, =UART_BASE
++    ldr r1, =UART_CR_ENABLED
++    str r1, [r0, UART_CR]
++    ldr r0, =newline_message
 +    bl puts
 +
-+    ldr r4, =SIO_BASE
-+    ldr r0, [r4, SIO_CPUID]
-+    cmp r0, 0
-+    bne fail_cpuid
++    ldr r0, =rx_buffer
++    movs r1, 5
++    bl dma_rx
 +
-+    ldr r0, [r4, SIO_FIFO_ST]
-+    movs r1, SIO_FIFO_ST_RDY
-+    tst r0, r1
-+    beq fail_rdy
++    ldr r0, =rx_buffer
++    ldr r1, =hello_message
++    movs r2, 5
 +
-+    /* The mask ROM on core 1 may have queued its initial ready word. */
-+    movs r1, SIO_FIFO_ST_VLD
-+    tst r0, r1
-+    beq fifo_empty
-+    ldr r0, [r4, SIO_FIFO_RD]
-+    cmp r0, 0
-+    bne fail_ready_word
-+
-+fifo_empty:
-+    ldr r0, [r4, SIO_FIFO_ST]
-+    movs r1, SIO_FIFO_ST_VLD
-+    tst r0, r1
-+    bne fail_vld
-+
-+    ldr r0, [r4, SIO_FIFO_RD]
-+    ldr r0, [r4, SIO_FIFO_ST]
-+    movs r1, SIO_FIFO_ST_ROE
-+    tst r0, r1
-+    beq fail_roe
-+
-+    str r1, [r4, SIO_FIFO_ST]
-+    ldr r0, [r4, SIO_FIFO_ST]
-+    tst r0, r1
-+    bne fail_roe_clear
++check_loop:
++    ldrb r3, [r0]
++    ldrb r4, [r1]
++    cmp r3, r4
++    bne fail_data
++    adds r0, 1
++    adds r1, 1
++    subs r2, 1
++    bne check_loop
 +
 +    ldr r0, =ok_message
-+    bl puts
++    movs r1, OK_MESSAGE_LEN
++    bl dma_tx
 +    movs r0, SYS_EXIT
 +    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
 +    bkpt 0xab
@@ -808,28 +494,17 @@ index 0000000000..4395167203
 +1:
 +    b 1b
 +
-+fail_cpuid:
-+    ldr r0, =fail_cpuid_message
++fail_data:
++    ldr r0, =fail_data_message
 +    b test_failed
 +
-+fail_rdy:
-+    ldr r0, =fail_rdy_message
++fail_irq:
++    ldr r0, =fail_irq_message
 +    b test_failed
 +
-+fail_vld:
-+    ldr r0, =fail_vld_message
-+    b test_failed
-+
-+fail_ready_word:
-+    ldr r0, =fail_ready_word_message
-+    b test_failed
-+
-+fail_roe:
-+    ldr r0, =fail_roe_message
-+    b test_failed
-+
-+fail_roe_clear:
-+    ldr r0, =fail_roe_clear_message
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
 +
 +test_failed:
 +    bl puts
@@ -841,52 +516,132 @@ index 0000000000..4395167203
 +    b 2b
 +
 +.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+    b test_failed
++dma_tx:
++    push {r4, lr}
++    mov r4, r1
++    bl clear_dma_irq
++    ldr r2, =DMA_BASE
++    str r0, [r2, DMA_READ_ADDR]
++    ldr r3, =UART_BASE
++    str r3, [r2, DMA_WRITE_ADDR]
++    str r4, [r2, DMA_TRANS_COUNT]
++    ldr r3, =DMA_CTRL_TX
++    str r3, [r2, DMA_CTRL_TRIG]
++    bl wait_dma_irq
++    pop {r4, pc}
 +
 +.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
++dma_rx:
++    push {r4, lr}
++    mov r4, r1
++    bl clear_dma_irq
++    ldr r2, =DMA_BASE
++    ldr r3, =UART_BASE
++    str r3, [r2, DMA_READ_ADDR]
++    str r0, [r2, DMA_WRITE_ADDR]
++    str r4, [r2, DMA_TRANS_COUNT]
++    ldr r3, =DMA_CTRL_RX
++    str r3, [r2, DMA_CTRL_TRIG]
++    bl wait_dma_irq
++    pop {r4, pc}
++
++.thumb_func
++clear_dma_irq:
++    ldr r2, =irq_flag
++    movs r3, 0
++    str r3, [r2]
++    ldr r2, =DMA_BASE + DMA_INTR
++    movs r3, 1
++    str r3, [r2]
++    ldr r2, =DMA_BASE + DMA_INTE0
++    str r3, [r2]
++    bx lr
++
++.thumb_func
++wait_dma_irq:
++    ldr r2, =irq_flag
 +
 +3:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 4f
-+    str r1, [r2]
-+    adds r0, 1
++    ldr r3, [r2]
++    movs r4, 1
++    tst r3, r4
++    bne 4f
 +    b 3b
 +
 +4:
 +    bx lr
 +
++.thumb_func
++dma_irq_handler:
++    ldr r0, =DMA_BASE + DMA_INTR
++    ldr r1, [r0]
++    movs r2, 1
++    tst r1, r2
++    beq fail_irq
++    str r1, [r0]
++    ldr r0, =irq_flag
++    str r1, [r0]
++    bx lr
++
++.thumb_func
++puts:
++    ldr r2, =UART_BASE
++
++5:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 6f
++    str r1, [r2]
++    adds r0, 1
++    b 5b
++
++6:
++    bx lr
++
++.section .bss, "aw", %nobits
++.align 2
++irq_flag:
++    .word 0
++rx_buffer:
++    .space 8
++
 +.section .rodata, "a", %progbits
 +start_message:
-+    .asciz "PICO TCG SIO FIFO START\n"
++    .ascii "PICO TCG DMA " UART_NAME " START\n"
++start_message_end:
++hello_message:
++    .ascii "HELLO"
++newline_message:
++    .asciz "\n"
 +ok_message:
-+    .asciz "PICO TCG SIO FIFO OK\n"
-+fail_cpuid_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: CPUID\n"
-+fail_rdy_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: RDY\n"
-+fail_vld_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: VLD\n"
-+fail_ready_word_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: READY WORD\n"
-+fail_roe_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: ROE\n"
-+fail_roe_clear_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: ROE CLEAR\n"
++    .ascii "PICO TCG DMA " UART_NAME " TX/RX OK\n"
++ok_message_end:
++.equ START_MESSAGE_LEN, start_message_end - start_message
++.equ OK_MESSAGE_LEN, ok_message_end - ok_message
++fail_data_message:
++    .asciz "PICO TCG DMA " UART_NAME " FAIL: DATA\n"
++fail_irq_message:
++    .asciz "PICO TCG DMA " UART_NAME " FAIL: IRQ\n"
 +fail_exception_message:
-+    .asciz "PICO TCG SIO FIFO FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-sio-fifo.ref b/tests/tcg/arm/system/rp2040-sio-fifo.ref
++    .asciz "PICO TCG DMA " UART_NAME " FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-dma-uart0.ref b/tests/tcg/arm/system/rp2040-dma-uart0.ref
 new file mode 100644
-index 0000000000..c0de9abb9f
+index 0000000000..5cb57c56cc
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-sio-fifo.ref
-@@ -0,0 +1,2 @@
-+PICO TCG SIO FIFO START
-+PICO TCG SIO FIFO OK
++++ b/tests/tcg/arm/system/rp2040-dma-uart0.ref
+@@ -0,0 +1,3 @@
++PICO TCG DMA UART0 START
++HELLO
++PICO TCG DMA UART0 TX/RX OK
+diff --git a/tests/tcg/arm/system/rp2040-dma-uart1.ref b/tests/tcg/arm/system/rp2040-dma-uart1.ref
+new file mode 100644
+index 0000000000..1509dc034a
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-dma-uart1.ref
+@@ -0,0 +1,3 @@
++PICO TCG DMA UART1 START
++HELLO
++PICO TCG DMA UART1 TX/RX OK
 -- 
 2.55.0
 
