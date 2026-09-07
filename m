@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AE0C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 06:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BED3C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 06:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Szs-0005yI-36; Mon, 07 Sep 2026 02:38:28 -0400
+	id 1x3SzX-0005hs-R3; Mon, 07 Sep 2026 02:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x3Szr-0005y2-8l
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:27 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1x3SzW-0005hf-Kx
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:06 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x3Szp-00069w-J6
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:26 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2d9520b9155so27595665ad.3
- for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 23:38:25 -0700 (PDT)
+ id 1x3SzV-00068c-0g
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:06 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2d9b60c652aso37675775ad.1
+ for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 23:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788763104; x=1789367904; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788763083; x=1789367883; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zNkftpkxFVpDoZUxzARQ6dpOC1MsUJSxg+vsslS00BI=;
- b=kBdAbJr3gygehGa+LkqYjU8LNjsoReEHIr5HW4kQrVVoCRze4xF3TV7uib+v/TuCGw
- Ph0WdCf91B6SRkG+fzEoAAdIu498C1dgBrINMsTmWj4ARcT6/iodnxxTfVfpzk3dX3x2
- Z9zbvVEjmuhNWuMiFyKkMA77NH4+B6Mc2KJdrQrK3xy752Xav4JlBib90XzgxQq4FC15
- enRpXH0WJb2Fp26zUWNnMRpbaGc0/6EiYsscRHo8NkEXvg/9DuBCkagVgq51ogWeMcaE
- tJ9IGn4AJEydHCr1PC0E/IB98SLm94YEQkcUZjra4MiJBLP+aMuhtNUaCOe5oH8V6xpk
- ruEw==
+ bh=A98whTvdVRQzMIBod4u+GjQWUac5pbRmbOiKgjUuYUQ=;
+ b=MW5KAkbiT3tqtddThd7p/k8LrUNdr5iOT/Pxng3Y6k15IYhNq0wVTqtegUD4jmMNww
+ DO5DMjdowdMgKPvXLOFK30Y38vu1Ai+1vM+UY5ZJ7N7WguJXapi0YrXc4ua0/A0FyK8P
+ xE5tvXVD/FGGe1qq2DiOvqaqxIHvR2OgDSwYUMA+PreA7LAvKOz1OPLPy9oWEjiUp7yC
+ IAGmK+lkWs8abgaO5XTRJYYNUp7qiDSSWsUOXsYHX4YKM0HN/0JnN9DJscy2hAUCFSv+
+ Olt4gkJdzoPNGmWmYANRbyXVNbwZpORIHdxdiaDvE+LHnvbEfdbfiPLysfompWn2Qi1p
+ Xgdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788763104; x=1789367904;
+ d=1e100.net; s=20251104; t=1788763083; x=1789367883;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zNkftpkxFVpDoZUxzARQ6dpOC1MsUJSxg+vsslS00BI=;
- b=rkgu5isVyCeDLbcZPbV8hR2LtXlcOEK9zpO3fpfIwui6jnolF+vhzeVYhJpPczablR
- Kh83+quQ5lWt69/5QnaeRvGVdna1P32vO63e35oitVmlQGxWf8k/Gv8cS/WUn0BqplQX
- 6TcUj93bJX8INjR+sDHlObjQzWdANub3t3qndyCS/ERluQwxFUE0nfwOrXf+eD17KxoR
- CJyXPf5OJIIrLQeWghbWrsWjKOlh4C8C3N9vYUp8TwykbY6LufXexQcDMcmIfa8cbg3R
- oTPhZfd3oesjG25gwJf86eeBHyjsLJJK0fyAKOE9jPUEzj+aJhcJqY9lEalsRdQngP8D
- Jaqw==
-X-Gm-Message-State: AFuF++n6F2mTurWkQ7QSyUT8nbfN8bHIGZx/WWnXS5gubci42loJqbWq
- kjELXWGjH+aRW0uOH4nLP+hfS0cevdQqOXpBMt3rzN33Hsl9xv54/LO7EC/CXObtOUvq5w==
-X-Gm-Gg: AYBFou3r0zpWi2kgPgQEchAYkH5RWK4AlS3NM/lAtjMRr0Qe43v34KWNwE2xhsB9iW6
- i2Dz6RVu6Zgf+Xg0QxNo2HVWCeb1+2Q+iapVjMyOb9tI+SJOKqxSOe1YIaG4EC11hf85V8u+DbW
- 3OwReUyaZgnCeiroS4lLFh4oCwiEtPU19OM1ZKks8KOg+Rzrvtoxfnhyfp5WN2n2IClLvbs+8XP
- 6RMQCiBQLW9BQQJp1V6SG4Iosd4s/WgShKa5FSeuNokEaq5jb3w5nmk+2USJZ6tDW3IERxaGxkA
- KK6/zrUYYlofGpZNz+7ppEhg323gI7iy0qjjzF6euIFPdGxPcuuQwnlkukVzk8rfYTyeHkjbN1H
- Iy+dh9G9DRY5NHoy/IJWdQXkk377AGve4Vji3TUC67fw4U8RcWuZSfBpNOrlT4dHyK/Sxo7bNPF
- T/1HJte00voTLNW90OEG2dFj7sGnAYolc54VC4p1y1AbsKSmrQAbG2IBT1eIUnylzZG96tIs5kr
- UT3da9bE2Ylh+83
-X-Received: by 2002:a17:903:3803:b0:2d7:7cb:a44a with SMTP id
- d9443c01a7336-2db127bf3damr337859395ad.11.1788763104149; 
- Sun, 06 Sep 2026 23:38:24 -0700 (PDT)
+ bh=A98whTvdVRQzMIBod4u+GjQWUac5pbRmbOiKgjUuYUQ=;
+ b=iKTUeDe9Uqiqp07HNs9NIiwgUl9sqgZe6dr24JFFlGGNPbaPJAGwtNC4jsDbulfjaa
+ zkAXeKTlTiiRR7xOl0OG4VWUIoRG1ydk/zkg9tZT7Mu5RNnRQr5yVu/Wrh2JNIbiHi3P
+ 150sIwJsCe9Y5g84v4hxHV+I5L7wmE2oLzVqGHWOnQaUzNj0PtA66TwHrMDuUAmsqOt5
+ FUgk2K+ii/FA+qsHThV0SZ31bdIKnrCkrEmdk+oJ4d6BORkBhOMcQNfuEFI5pbzkur21
+ opiYXpkRXcy26gdd9P5H6ehlGmWa2MiI1QTvPpXmGbmkkf5IcfDIwLVzh3ixl5Jx36LZ
+ Mh3A==
+X-Gm-Message-State: AFuF++nqy4HIbId1EqhCJkys6XH/gcvLB36lSCS1KMoAyeE9t5cJRzvO
+ toA6vb6UkCj8lT2cdrRpn6QcBJGOcvQNTodlyfAnyzyM5PF8mHej9FvBoaIilJiBucVbYg==
+X-Gm-Gg: AYBFou1c4imOLyzNHtslwxhHG43ujfmjsiE0WAB9xHq3jICtDVCI98E2kMfJ9B/WyNu
+ jQ1+IgMfSn1j6p7Rna9QXhvJC38Hh70z2JtB3sn0F88QNa2NuOcerpfqyNbSC7OJf3GmuPA/lYa
+ vKFuM5OemnxPfi8r9ywKWnL2Rh8Kg3xY9p5PeC1XU1VHs/sZ0io5JMXzsyqS4gYxzB5VPpMqSlB
+ lTVANsi35PEKvBla4DH+IrOTT961QFI674OKPs3XRcIULoJUhYG9nSncTu+34a4XFnTmkHe1+eb
+ LJ0y+0EOZFYYRxGp3Y04tFzmSrT7+7FynVsTAFsg8jaQJN8fgRHdyYGUSpg+WV7RT3aJDRozg3F
+ 5XYJUruptSEcZOTtuN7T5moPSKxnF3AdoQwmoTVAKkNYitcUPDt/SjMvFRx/bVVPd1/toJeMn+H
+ stwZQNP7MeEn7bNKvBlYnzuaVH9jx0pT0wHLG4kA/fqPPdxYDZWGhLibCAHEGyns5RG/9BAhu2O
+ LsAysRFFEgrOaxo
+X-Received: by 2002:a17:902:bb88:b0:2d3:716e:e2ae with SMTP id
+ d9443c01a7336-2db1261df71mr223346885ad.6.1788763083303; 
+ Sun, 06 Sep 2026 23:38:03 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2db1499f06fsm38502555ad.54.2026.09.06.23.38.20
+ d9443c01a7336-2db1499f06fsm38502555ad.54.2026.09.06.23.37.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 06 Sep 2026 23:38:23 -0700 (PDT)
+ Sun, 06 Sep 2026 23:38:02 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,17 +73,16 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V15 10/14] vfio-user/proxy: Update tracking iothread users
- with holder name
-Date: Mon,  7 Sep 2026 14:37:21 +0800
-Message-ID: <20260907063725.626685-11-zhangckid@gmail.com>
+Subject: [PATCH V15 05/14] monitor: track IOThread users with QOM paths
+Date: Mon,  7 Sep 2026 14:37:16 +0800
+Message-ID: <20260907063725.626685-6-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907063725.626685-1-zhangckid@gmail.com>
 References: <20260907063725.626685-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,69 +105,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add object_ref/unref calls with
-iothread_ref_and_get/unref_and_put_aio_context.
+Monitors that require an IOThread share the internal mon_iothread.
+Account for each monitor explicitly in IOThread holder tracking, using
+the monitor's canonical QOM path to distinguish holders.
+
+Acquire the shared monitor IOThread AioContext once and store the
+IOThread and canonical QOM path so the holder can be released after the
+monitor has been removed from the QOM tree. Reuse the stored context for
+later operations.
+
+Release the holder from monitor_finalize(), after resources associated
+with the AioContext have been destroyed. This pairs the reference taken
+in complete() with instance finalization and keeps the IOThread alive
+throughout monitor teardown.
+
+The internal mon_iothread remains hidden from query-iothreads, as before.
+Management applications therefore cannot use it to determine which
+monitors are using the IOThread. Nevertheless, track the monitor
+holders so that they follow the same explicit holder and
+IOThread reference lifecycle as other AioContext users.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- hw/vfio-user/proxy.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ monitor/monitor-internal.h |  5 +++++
+ monitor/monitor.c          | 26 +++++++++++++++++++++-----
+ monitor/qmp.c              |  5 +++--
+ 3 files changed, 29 insertions(+), 7 deletions(-)
 
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 197aee07bf..e642fb0ad3 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -898,6 +898,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-     QIOChannelSocket *sioc;
-     QIOChannel *ioc;
-     char *sockname;
-+    g_autofree char *path = NULL;
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 822a66d06d..1d5aeae5e6 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -77,6 +77,11 @@ struct Monitor {
+     GString *outbuf;
+     guint out_watch;
+     int mux_out;
++
++    /* iothread context and holder identity */
++    IOThread *iothread;
++    char *iothread_qom_path;
++    AioContext *ctx;
+ };
  
-     if (addr->type != SOCKET_ADDRESS_TYPE_UNIX) {
-         error_setg(errp, "vfio_user_connect - bad address family");
-@@ -917,6 +918,11 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-     proxy = g_malloc0(sizeof(VFIOUserProxy));
-     proxy->sockname = g_strdup_printf("unix:%s", sockname);
-     proxy->ioc = ioc;
-+    path = object_get_canonical_path(OBJECT(proxy->ioc));
-+    const IOThreadHolder io_holder = {
-+        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-+        .u.qom_object.qom_path = path,
-+    };
+ struct MonitorQMPClass {
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 2654b81890..cc7f6785b5 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -93,6 +93,16 @@ static void monitor_finalize(Object *obj)
+     qemu_chr_fe_deinit(&mon->chr, false);
+     g_string_free(mon->outbuf, true);
+     qemu_mutex_destroy(&mon->mon_lock);
++
++    if (mon->iothread) {
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = mon->iothread_qom_path,
++        };
++
++        iothread_unref_and_put_aio_context(mon->iothread, &io_holder);
++    }
++    g_free(mon->iothread_qom_path);
+ }
  
-     /* init defaults */
-     proxy->max_xfer_size = VFIO_USER_DEF_MAX_XFER;
-@@ -936,7 +942,8 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-         vfio_user_iothread = iothread_create("vfio-user", errp);
+ static char *monitor_get_chardev_id(Object *obj, Error **errp)
+@@ -521,7 +531,7 @@ void monitor_suspend(Monitor *mon)
+          * Kick I/O thread to make sure this takes effect.  It'll be
+          * evaluated again in prepare() of the watch object.
+          */
+-        aio_notify(iothread_get_aio_context(mon_iothread));
++        aio_notify(mon->ctx);
      }
  
--    proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
-+    proxy->ctx = iothread_ref_and_get_aio_context(vfio_user_iothread,
-+                                                  &io_holder);
-     proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
- 
-     QTAILQ_INIT(&proxy->outgoing);
-@@ -967,6 +974,11 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
- void vfio_user_disconnect(VFIOUserProxy *proxy)
+     trace_monitor_suspend(mon, 1);
+@@ -661,7 +671,6 @@ char *monitor_compat_id(void)
+ static void monitor_complete(UserCreatable *uc, Error **errp)
  {
-     VFIOUserMsg *r1, *r2;
-+    g_autofree char *path = object_get_canonical_path(OBJECT(proxy->ioc));
-+    const IOThreadHolder io_holder = {
-+        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-+        .u.qom_object.qom_path = path,
-+    };
+     Monitor *mon = MONITOR(uc);
+-    AioContext *ctx;
  
-     qemu_mutex_lock(&proxy->lock);
+     if (mon->chardev_id) {
+         Chardev *chr = qemu_chr_find(mon->chardev_id);
+@@ -680,11 +689,18 @@ static void monitor_complete(UserCreatable *uc, Error **errp)
+             mon_iothread = iothread_create("mon_iothread", &error_abort);
+         }
  
-@@ -1021,6 +1033,8 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
-     qemu_cond_destroy(&proxy->close_cv);
-     qemu_mutex_destroy(&proxy->lock);
- 
-+    iothread_unref_and_put_aio_context(vfio_user_iothread, &io_holder);
+-        ctx = iothread_get_aio_context(mon_iothread);
++        mon->iothread = mon_iothread;
++        mon->iothread_qom_path = object_get_canonical_path(OBJECT(mon));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = mon->iothread_qom_path,
++        };
 +
-     QLIST_REMOVE(proxy, next);
-     if (QLIST_EMPTY(&vfio_user_sockets)) {
-         iothread_destroy(vfio_user_iothread);
++        mon->ctx = iothread_ref_and_get_aio_context(mon->iothread, &io_holder);
+     } else {
+-        ctx = qemu_get_aio_context();
++        mon->ctx = qemu_get_aio_context();
+     }
+-    mon->accept_input_bh = aio_bh_new(ctx, monitor_accept_input, mon);
++    mon->accept_input_bh = aio_bh_new(mon->ctx, monitor_accept_input, mon);
+ }
+ 
+ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index aec0315775..de56345456 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -734,7 +734,8 @@ static void monitor_qmp_complete(UserCreatable *uc, Error **errp)
+          * thread.  Schedule a bottom half.
+          */
+         mon->setup_pending = true;
+-        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
++
++        aio_bh_schedule_oneshot(MONITOR(mon)->ctx,
+                                 monitor_qmp_setup_handlers_bh, mon);
+         /* The bottom half will add @mon to @mon_list */
+     } else {
+@@ -789,7 +790,7 @@ static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
+ 
+     /* Synchronize with in-flight iothread callbacks. */
+     if (monitor_requires_iothread(mon)) {
+-        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
++        aio_wait_bh_oneshot(MONITOR(mon)->ctx,
+                             monitor_qmp_iothread_quiesce, NULL);
+     }
+ 
 -- 
 2.43.0
 
