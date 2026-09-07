@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6EDC79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B9DC79F99
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3WzA-000511-Jb; Mon, 07 Sep 2026 06:54:00 -0400
+	id 1x3WzA-0004tS-00; Mon, 07 Sep 2026 06:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3Wym-0004Xb-3K
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:37 -0400
+ id 1x3Wyn-0004Y5-Tf
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x3Wyi-00007k-Ie
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:34 -0400
+ id 1x3Wyk-00008V-1D
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:53:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788778408;
+ s=mimecast20190719; t=1788778412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ASYz6iulwfFvbmqEMTfqctGI341Oz4dZKbFqz9gwcLM=;
- b=WTfAn9pMGhpX/GhQ0CBq+8SGrvirXWgZY5qKJIRxigZigmM1eHOFbY4/M5+utJhJBf5SRz
- 4V6dpAfvRTADNSRgT137MuqA/DJeJZEijS0WDtIExzbnVININ2qkt5nJ6/4i4kNwtnYuTB
- h288MjwvslRUrMTwvD/MhGctXvsSDc8=
+ bh=UMnbT3lrKNN1v0P6OiNnV9u3B7JZqFQBvQYeYiSjTh0=;
+ b=gFrOa9Jf9iH7k7q97YuBvFzLlSuGU61tqDQ2rHPkQ6HrLbi4JOnGpPZoTiM/ykVGDM8CjP
+ YSpi7SpHr/uKnGCFIQE5/fbyp4/hGqFo0ToZI+9JtA5g+6yb8xJk4WbYnVTQpZqteoBOTd
+ kAsFT3m2VZpbpelvdf3agNPP/0Umr8o=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-Dx8uKVzbOhaih_2hErqRTg-1; Mon,
- 07 Sep 2026 06:53:24 -0400
-X-MC-Unique: Dx8uKVzbOhaih_2hErqRTg-1
-X-Mimecast-MFC-AGG-ID: Dx8uKVzbOhaih_2hErqRTg_1788778403
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-Ei2OyYpEMjeBdpUrDgFWiw-1; Mon,
+ 07 Sep 2026 06:53:29 -0400
+X-MC-Unique: Ei2OyYpEMjeBdpUrDgFWiw-1
+X-Mimecast-MFC-AGG-ID: Ei2OyYpEMjeBdpUrDgFWiw_1788778408
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D9A119540C6; Mon,  7 Sep 2026 10:53:23 +0000 (UTC)
+ id 4073A1954120; Mon,  7 Sep 2026 10:53:28 +0000 (UTC)
 Received: from berrange.fritz.box (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 030081956042; Mon,  7 Sep 2026 10:53:20 +0000 (UTC)
+ id 0B6501956042; Mon,  7 Sep 2026 10:53:25 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -56,10 +56,10 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>
-Subject: [PULL v3 04/12] io/channel-socket: do not treat a zero length write
- as an error
-Date: Mon,  7 Sep 2026 11:53:02 +0100
-Message-ID: <20260907105310.497730-5-berrange@redhat.com>
+Subject: [PULL v3 06/12] io/channel-websock: handle a blocked write during the
+ handshake
+Date: Mon,  7 Sep 2026 11:53:04 +0100
+Message-ID: <20260907105310.497730-7-berrange@redhat.com>
 In-Reply-To: <20260907105310.497730-1-berrange@redhat.com>
 References: <20260907105310.497730-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -93,25 +93,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-qio_channel_socket_writev() checks "ret <= 0" after sendmsg(). A zero
-length iovec is written successfully and returns 0, so the success
-falls into the errno switch, which acts on whatever the last failing
-syscall left in errno. A stale EAGAIN turns it into
-QIO_CHANNEL_ERR_BLOCK with errp untouched, and a caller which treats
-every negative return as fatal then passes a NULL Error to
-error_get_pretty(). The websocket handshake does exactly that, so an
-unauthenticated client crashes QEMU during the greeting.
+qio_channel_websock_handshake_send() treats every negative return from
+qio_channel_write() as fatal and passes err to error_get_pretty().
+QIO_CHANNEL_ERR_BLOCK is negative but leaves err NULL, so a socket
+which cannot take the response immediately crashes QEMU before the
+client has authenticated.
 
-Returning 0 is safe for callers which loop until everything is
-written. qio_channel_writev_full_all() has no zero progress guard, but
-iov_copy() yields no entries for a zero length write, so that loop is
-never entered. A connected stream socket returns 0 only when there is
-nothing to send.
+Keep the G_IO_OUT watch armed and retry instead.
 
-The WIN32 implementation in the same file uses "ret < 0".
-
+Fixes: 2d1d0e70cf3e ("io: add QIOChannelWebsock class")
 Fixes: CVE-2026-84788
-Fixes: 559607ea173a ("io: add QIOChannelSocket class")
 Cc: qemu-stable@nongnu.org
 Cc: Daniel P. Berrangé <berrange@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
@@ -120,22 +111,25 @@ Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- io/channel-socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io/channel-websock.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 12773b832c..7920cee639 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -667,7 +667,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 66c91ed2a2..8f27b1f12b 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -562,6 +562,11 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+                             wioc->encoutput.offset,
+                             &err);
  
-  retry:
-     ret = sendmsg(sioc->fd, &msg, sflags);
--    if (ret <= 0) {
-+    if (ret < 0) {
-         switch (errno) {
-         case EAGAIN:
-             return QIO_CHANNEL_ERR_BLOCK;
++    if (ret == QIO_CHANNEL_ERR_BLOCK) {
++        /* Socket buffer is full, the G_IO_OUT watch stays armed */
++        return TRUE;
++    }
++
+     if (ret < 0) {
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
 -- 
 2.55.0
 
