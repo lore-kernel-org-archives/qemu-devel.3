@@ -4,65 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07CEC79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D520DC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Vnn-0001gr-Rk; Mon, 07 Sep 2026 05:38:11 -0400
+	id 1x3VoD-0001ou-V5; Mon, 07 Sep 2026 05:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x3Vnk-0001e1-P4; Mon, 07 Sep 2026 05:38:08 -0400
-Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1x3VoC-0001lv-Ck; Mon, 07 Sep 2026 05:38:36 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x3Vnd-00047L-GA; Mon, 07 Sep 2026 05:38:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1788773867; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=zYZIRnVm4EVgjOeiEy+OXbDkRrDL+s/FNTgJFXZLnu0=;
- b=O0w+lK8YUhmL6O2USdQkNoBipP/uman2Bs/oe9n5ralju+xKnvdUs2Dxq0StdcqcMkB0whZCEB2lGXEKhD2+Q29mGC4fUS4vnGtfP9EliPI8CYfmB/wHBKd7ovT1/zGNgBNFjcVE6z83vQCHiK47Em4TkOV5WAp6a1E4B+yKDBA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=20; SR=0;
- TI=SMTPD_---0XATXGyA_1788773866; 
-Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0XATXGyA_1788773866 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 07 Sep 2026 17:37:46 +0800
-From: Chen Pei <cp0613@linux.alibaba.com>
-To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
- imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
-Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
- junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- Sunil V L <sunilvl@oss.qualcomm.com>
-Subject: [PATCH v6 2/6] hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for CXL
- host bridge dependency
-Date: Mon,  7 Sep 2026 17:37:29 +0800
-Message-ID: <20260907093735.2753-3-cp0613@linux.alibaba.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260907093735.2753-1-cp0613@linux.alibaba.com>
-References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1x3Vo9-0004EP-Js; Mon, 07 Sep 2026 05:38:36 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:86a0:0:640:75de:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 7ACD480D37;
+ Mon, 07 Sep 2026 12:38:27 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:803e:400:af0b:4555:1b5d:9561] (unknown
+ [2a02:6bf:803e:400:af0b:4555:1b5d:9561])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id NcIJUt1jXCg0-L3xC9DCw; Mon, 07 Sep 2026 12:38:26 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1788773906;
+ bh=TvWSqH63hem2hiSF+vN/ZyBXAN2QLhhUWGY2kN253J8=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=LbhKpA3jwVPFNiz9zrsBvS/0Akx1Dzt4UoW0qYq3QYo/CZXWSCJmn+QHb7ReSHVEy
+ iVgqvlI3Oypn9kBr7KkHa9nH4JrZsWvd11uIbaw/5HIBV/hKb1evpbv8v1zG2mg3ol
+ b6H3reei7VTggh4+9q9LIg4xzo8Ca+714Ruqzhhs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <342ed1fe-3c1c-4fab-9c8a-ede5eb6b6d7c@yandex-team.ru>
+Date: Mon, 7 Sep 2026 14:38:23 +0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/6] vhost-user-blk: allow toggling inflight-migration
+ at runtime
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, zhenwei pi <zhenwei.pi@linux.dev>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Jason Wang
+ <jasowangio@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>,
+ virtio-fs@lists.linux.dev,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>
+References: <20260803072853.2920007-1-dtalexundeer@yandex-team.ru>
+ <c6841f52-4d74-4343-b958-067b110fb532@yandex-team.ru>
+Content-Language: en-US
+In-Reply-To: <c6841f52-4d74-4343-b958-067b110fb532@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=cp0613@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -74,100 +89,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On RISC-V QEMU virt platform with CXL enabled, the probe ordering
-of acpi_pci_root (ACPI0016) and cxl_acpi (ACPI0017) is not
-guaranteed. If cxl_acpi probes before acpi_pci_root has attached
-the CXL host bridges, the CXL port topology will be incomplete
-because to_cxl_host_bridge() silently skips devices whose PCI root
-is not yet ready.
+Greetings! Another ping :)
 
-Add a _DEP object to the ACPI0017 device in the DSDT, declaring
-its dependency on the ACPI0016 CXL host bridge devices. This tells
-the OS to defer ACPI0017 enumeration until all ACPI0016 devices
-have been attached by acpi_pci_root.
-
-This pairs with two kernel commits, both merged in v7.2:
-bf5418a5fe63 ("ACPI: scan: Honor _DEP for ACPI0016 PCI/CXL host
-bridge") makes the ACPI core defer ACPI0017 enumeration while its
-_DEP targets are unattached, and 3a59c3b772e5 ("ACPI: PCI: Clear _DEP
-dependencies after PCI root bridge attach") clears the dependency
-from acpi_pci_root_add() once the host bridge is attached.
-
-Note on kernel compatibility: this is a "new QEMU feature requires a
-sufficiently new kernel" situation.  Kernels that process _DEP but
-lack the acpi_dev_clear_dependencies() call will leave the CXLM device
-deferred, so CXL memory is unusable there; kernels old enough to ignore
-_DEP entirely behave exactly as before this change.  In neither case is
-existing (non-CXL) PCIe affected.
-
-The resulting DSDT fragment (iasl -d output) for a single CXL host
-bridge at bus 0x0C looks like:
-
-  Device (CXLM)
-  {
-      Name (_HID, "ACPI0017")
-      Name (_DEP, Package (0x01)
-      {
-          \_SB.PC0C
-      })
-      Method (_STA, 0, NotSerialized)
-      {
-          Return (0x0B)
-      }
-      ...
-  }
-
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
----
- hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 2be8c6d572..e1beb2068d 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -525,6 +525,38 @@ static void build_dsdt(GArray *table_data,
-     if (s->cxl_devices_state.is_enabled) {
-         Aml *cxl_dev = aml_device("CXLM");
-         aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
-+
-+        /*
-+         * Declare a _DEP on every ACPI0016 CXL host bridge so the OS
-+         * defers ACPI0017 enumeration until acpi_pci_root has attached
-+         * the CXL host bridges. Without this, cxl_acpi may probe before
-+         * to_cxl_host_bridge() can resolve the PCI root and the CXL
-+         * port topology comes up empty.
-+         */
-+        if (s->pci_bus) {
-+            PCIBus *bus;
-+            uint32_t num_cxl_hbs = 0;
-+
-+            QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
-+                if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
-+                    num_cxl_hbs++;
-+                }
-+            }
-+
-+            if (num_cxl_hbs > 0) {
-+                Aml *dep_pkg = aml_package(num_cxl_hbs);
-+
-+                QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
-+                    if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
-+                        aml_append(dep_pkg,
-+                                   aml_name("\\_SB.PC%.02X",
-+                                            pci_bus_num(bus)));
-+                    }
-+                }
-+                aml_append(cxl_dev, aml_name_decl("_DEP", dep_pkg));
-+            }
-+        }
-+
-         Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
-         aml_append(method, aml_return(aml_int(0x0B)));
-         aml_append(cxl_dev, method);
--- 
-2.50.1
-
+On 8/17/26 10:29, Alexandr Moshkov wrote:
+> Greetings! Ping.
+>
+> On 8/3/26 12:28, Alexandr Moshkov wrote:
+>> v5 -> v6:
+>> - block changing inflight-migration property while VM is not running
+>> - remove checking runstate in vhost_user_blk_stop() since it's not 
+>> necessary
+>> - updated cover letter: changed subject and description to focus on
+>>    runtime toggling of inflight-migration rather than cross-version
+>>    migration compatibility
+>>
+>> v4 -> v5:
+>> - introduce protocol feature 
+>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN
+>>    to guard the new message, instead of reusing the existing
+>>    VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INLIFGHT. Update docs.
+>> - improved commit messages.
+>>
+>> v3 -> v4:
+>> - add new protocol message GET_VRING_BASE_SKIP_DRAIN instead of 
+>> parameter to GET_VRING_BASE message. This new message can be send 
+>> instead of GET_VRING_BASE, allowing back-end to suspend inflight I/O 
+>> immediately instead of waiting and completing them.
+>> - rebase to newer master
+>>
+>> v2 -> v3:
+>> - fix complile problems
+>> - add assert check in do_vhost_virtio_stop
+>> - make inflight-migration property mutable
+>>
+>> v1 -> v2:
+>> - reorganize commits: make refactor commits first, then core semantic 
+>> change
+>> - add additional pre_save check for inflight migration possibility
+>>
+>> ---
+>>
+>> This is v6 of the series previously sent as:
+>> "[PATCH v5 0/6] vhost-user-blk: add compatibility with older qemu 
+>> versions"
+>>
+>> This series allows the inflight-migration property of vhost-user-blk to
+>> be toggled at runtime via qom-set without restarting the VM or
+>> reconnecting to the back-end.
+>>
+>> Currently, the inflight migration behaviour is controlled by
+>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT, which is negotiated once
+>> at connection time. Once negotiated, the back-end always uses suspend
+>> semantics on GET_VRING_BASE -- there is no way for the front-end to
+>> request normal drain behaviour on a per-call basis. This makes it
+>> impossible to disable inflight-migration at runtime.
+>>
+>> To solve this, the series introduces a new protocol message
+>> VHOST_USER_GET_VRING_BASE_SKIP_DRAIN (id=45) guarded by a new protocol
+>> feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN. The message
+>> instructs the back-end to suspend in-flight I/O immediately rather than
+>> draining it. This gives the front-end explicit per-call control:
+>> GET_VRING_BASE for normal drain, GET_VRING_BASE_SKIP_DRAIN when
+>> inflight-migration is enabled.
+>>
+>> In vhost-user-blk, GET_VRING_BASE_SKIP_DRAIN is sent whenever
+>> inflight-migration is on. The inflight-migration
+>> property can only be changed while the VM is running, so its value at
+>> stop time reliably reflects the user's intent.
+>>
+>> Alexandr Moshkov (6):
+>>    vhost-user: add skip_drain param to do_vhost_virtqueue_stop
+>>    vhost-user: add GET_VRING_BASE_SKIP_DRAIN message
+>>    vhost-user: use skip_drain with GET_VRING_BASE_SKIP_DRAIN message
+>>    vhost-user-blk: make inflight-migration prop mutable on running vm
+>>    vhost-user-blk: move inflight_needed higher
+>>    vhost-user-blk: use GET_VRING_BASE_SKIP_DRAIN when inflight-migration
+>>      is on
+>>
+>>   backends/cryptodev-vhost.c        |  2 +-
+>>   backends/vhost-user.c             |  2 +-
+>>   docs/interop/vhost-user.rst       | 88 +++++++++++++++++++------------
+>>   hw/block/vhost-user-blk.c         | 60 ++++++++++++++++++---
+>>   hw/net/vhost_net.c                |  9 ++--
+>>   hw/scsi/vhost-scsi-common.c       |  2 +-
+>>   hw/virtio/vdpa-dev.c              |  2 +-
+>>   hw/virtio/vhost-user-base.c       |  2 +-
+>>   hw/virtio/vhost-user-fs.c         |  2 +-
+>>   hw/virtio/vhost-user-scmi.c       |  2 +-
+>>   hw/virtio/vhost-user.c            | 47 ++++++++++++++---
+>>   hw/virtio/vhost-vsock-common.c    |  2 +-
+>>   hw/virtio/vhost.c                 | 34 ++++++++----
+>>   include/hw/virtio/vhost-backend.h |  1 +
+>>   include/hw/virtio/vhost-user.h    |  2 +-
+>>   include/hw/virtio/vhost.h         |  7 ++-
+>>   16 files changed, 189 insertions(+), 75 deletions(-)
+>>
 
