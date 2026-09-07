@@ -4,108 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4C9C79F99
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 14:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4453C79FA0
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 14:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3amn-0003ky-6F; Mon, 07 Sep 2026 10:57:29 -0400
+	id 1x3aoM-0004AT-CO; Mon, 07 Sep 2026 10:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x3amj-0003ke-7S
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 10:57:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x3aoK-0004A8-V9
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 10:59:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x3amh-0001oq-Fx
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 10:57:24 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x3aoI-0001uw-Vw
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 10:59:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788793041;
+ s=mimecast20190719; t=1788793142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jyI4WYndUAG9uia6wbIYzlWipnYru8MCmKOtYIiXX+o=;
- b=bV8Fa2BbDNPqh1AYZndy0R1nUkfMzk8AyfKLINqiha1C9YeVtLsztZHSZ1nvT5+RDxMEcx
- dRg81LFtqGHQ2JZPrGJ/DdHyVjm2J8FJZjTcmAPa1+n3i2QSJx6OIEPzZP9/VpsWfiIYzG
- MOIh9zMeq0WQL4T9g9TfZAGyK/31BC0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ewsjl4P9HV5PxyCZvnEo1+OO62AJeLfBNjeOm3CVmXs=;
+ b=IWTQ2JEVZqQIvms3cSUH6oHfvrjTT4KKAX/+yPbAqUw3aLVg95XDBjv4YyUsqbot02hCpH
+ 6hcAoK4oSPWjb4IB+Aa4ZrdJDrK7K88v1cv7QxOGkR5ev17svdjZ0ALdeUfcv06St3wAwI
+ XeGJMBWlBYBZELE6KfrrJpZfQZl6Fbs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-6U6E9FrMO36YBpFpIIHbMQ-1; Mon, 07 Sep 2026 10:57:20 -0400
-X-MC-Unique: 6U6E9FrMO36YBpFpIIHbMQ-1
-X-Mimecast-MFC-AGG-ID: 6U6E9FrMO36YBpFpIIHbMQ_1788793039
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-482db84a6eeso3391012f8f.3
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 07:57:20 -0700 (PDT)
+ us-mta-68-RVqjUO7tMrepD3GJvwaLAQ-1; Mon, 07 Sep 2026 10:59:00 -0400
+X-MC-Unique: RVqjUO7tMrepD3GJvwaLAQ-1
+X-Mimecast-MFC-AGG-ID: RVqjUO7tMrepD3GJvwaLAQ_1788793139
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49cf5bd2f12so51088815e9.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 07:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788793039; x=1789397839; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jyI4WYndUAG9uia6wbIYzlWipnYru8MCmKOtYIiXX+o=;
- b=I0R8O1asEk41LWN8cPBP0qm4Ib1r7sFj8CD7N6bc/FIJsoHTE4JbnWJRitG/7+OPul
- j2Uj2rg3dWxBxz0AombdXLQmoAsRGqLVm9sflHHw3AQFSKlY/rImNNZLJQi3s9+0adjm
- WsLNzty+w2ciVcZwxf8aF8Bh4+Suzz7Og6aV3izKGMYRPDrebVjjWI77cPuQR53TsPfe
- 5LldGI8NCtMmPuEglaAfHr58BJfuDlXbP6odzAOumhXP6W2EXhIlyBKblc3A0MWRwslZ
- iRZPnIIj+2x6Zc/ZJLSvtHLVCZeFOwt2Ej55crfCXyTJxVEwhUg4Ti/3YogCDtk5s+Ok
- gNHw==
+ d=redhat.com; s=google; t=1788793139; x=1789397939; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ewsjl4P9HV5PxyCZvnEo1+OO62AJeLfBNjeOm3CVmXs=;
+ b=hn421fKVF5Y6fowXFpzpqw6HRxTbqXAUmcLcloK8KRGirqTfWqbDoo3jKowTupoeCO
+ Y9v4lZX37gkHTkiRtcZcAVfyyFLwRa9L+NpsqfLQ5ZiKZMaZHxm6AlxsCRuWF5XXAEpa
+ H55D04WPNtpdaPbbVBWjD0KNAoOASvCLbkyTdeq1GYyxdO7EmXOwuyvJieno5DOhTXxf
+ 4egTNqoX+d0cxq3Y2dV6bFTgmAdIY/LQe9R5BVJSnFWCIIMAPfsMgM4Uc7gMPkZ64zoQ
+ JHXFumGrHjATu6XJKeW2KsSXGRI41ajLZPexUGhN28GKuvYQL6c6V2/hHjUy1iV4Zbin
+ oS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788793039; x=1789397839;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jyI4WYndUAG9uia6wbIYzlWipnYru8MCmKOtYIiXX+o=;
- b=O6kfgE6Cxz/Q/5Yj9h4vlXPzE5rDl6G/seRmgxinpgDonu7sCXDMk3yUCabOXlSBod
- lAK8yKKma25BBGrbzYcvyMrl0QReBRd4j4EO1jcve+/OR0qlgUIw2UtCVkwj7pn5sChE
- BadW4IFxzQrj+lOAFWnXYf0qgSE0vv/IFDC3o2lhzERKwuWENug3kRElVfIXE5NBsclW
- GVBshfCGIAQw2Lk6QraZ5VfA7Ywj3Qyl2bXY7eOje9NW36RZUxkz8gFoJv5Hex63kd3E
- KFsnuxdGZShQmI/mbxHHzFd7MyFKHEDT3VsO1haKXN3nE7txrsfVe4cLWU8xisLQJSAn
- xmTw==
-X-Gm-Message-State: AFuF++nhm8mE2HGtNBY9iITDcgknJY1sSD1tGnD+dXiKumP2YVa5iD3Z
- c0IhWdKWN/tczbhCi7RlsNjUaKHiK0Ol+CexPySJMWhomdvxcHbH3evXpB8Yiboxau0yIhVLgwR
- 41vbqN2Qrr0QHNZQONEs+rqA/wkGLi2nxl22Kl3WC3NtluWjNiuuj+OMy
-X-Gm-Gg: AYBFou2tXtO6vYgveEpyux7TVWJSEETtLccmUO9rLcIJPfTWusUAs4G+4+Oatf2+E3O
- vZplpWQ9l8D4nTiG2Ki+4CIrp+DUjD9ltjSRFvreDPEWtaw4HTZ4qcWRejeflsgj0a+WPUd/LR1
- T4r5Owfw4ktP2GZU3QJJb8kLpYBno+Lt+YssPzPUXTR1Bv5DxXtPGYaXzaLmoQj1hmzrHxg4xGm
- rzQpRS+VoQx6zZR7sVu+aWdE3qKTEsFuOJYJt+77bNt+wsyIXyMppDHmMKxYAkxRmefSUtsA1+w
- NvBV/07qIfTmX9k6kGVg3OeyMpHbh8jtEEora62PU2Lkmjgto1oHw+EquY3UjDDL+CsE0oryVYO
- NoVYev5MQ/4AnUUntX13+cV5W7k/d3Ovz2OjkZ23c+VHcAQ==
-X-Received: by 2002:a05:6000:2388:b0:47f:9283:1fbe with SMTP id
- ffacd0b85a97d-48586bf25b8mr44929800f8f.0.1788793037464; 
- Mon, 07 Sep 2026 07:57:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:2388:b0:47f:9283:1fbe with SMTP id
- ffacd0b85a97d-48586bf25b8mr44929151f8f.0.1788793032962; 
- Mon, 07 Sep 2026 07:57:12 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858bc74298sm25952682f8f.6.2026.09.07.07.57.11
+ d=1e100.net; s=20251104; t=1788793139; x=1789397939;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ewsjl4P9HV5PxyCZvnEo1+OO62AJeLfBNjeOm3CVmXs=;
+ b=Fg/FhmCF62LCPR9nmTOIwdNiNNEZdrBjvFu4RO+Cu2d0tkcPgfaDdRE1/6OGgUQkEo
+ i/l87EOaFwDCFAz8iGf5Z4VI7Xs3BAyUVkocyUPbDSSQgpnyP4PhRk+XxguI3qquX6+a
+ FocqjwqTvKLwGwPFTUVfxF8TV0IPz+BDUMz0uxVRbkuDo86geIu7RWZ6WtNvaJZijB4z
+ vuxENUOupmcuuKxbtjCSU5ylOBfke5hU9dYtpX+hqu+1Hz9+nSBNMIBIsSwCbceuXtMO
+ O2uGKMAhCT+lXsYr9A9vZ4CSuI2LK5RxrbKW6jhmHAGWGFuOBdlVIaE3oG9Zm8JPL+N8
+ qGIQ==
+X-Gm-Message-State: AFuF++lnfGUFXhgmztwdNFW8L635ttVS00uA9V3wOSCUHRxhyrExIyEQ
+ YAOEu8vWTI+YvPOH1BxWjzE9qaQJMbOjWQpEl3+XfdtqIzks89ThQhrOe/clnmzULWLuOjwXzA6
+ 1+Y09rOjLD0XIUalt2J77wcDNxlJo3oz+/RzuwW0qTEPTCxXBWg4PlA6J
+X-Gm-Gg: AYBFou3uGQHtYe+IQwzAp7VCE2m6+dcTb0ckD1vM0Um3asDBlAUkX1VUD8c7Eur695G
+ yi0Cja7R2HVcRBbgiV+LZhit9MAh9a8vpbYmK/h/BOpYBHd2/VK3BjUN4jXtcMBfFs2oH0TRQc5
+ wgktXpKo8oZgTH48W9HpKvolANdDIX790S29kBscTkU3limW6kz3MUBRlPoY9ElR9HCg+A6xyMM
+ n+2loQd9g5c3eonA7cuWW62tFFuiN6yiN09suIlJdWC1K4e1y8Zi6eBh2tdxykkU2h7TPRq+T8B
+ pjAPHo+d0t8vSC8gNBUR7p9LM4/t4ic/JPAMw32WLD4mFCed5XaeDfUgQ5du76hXnuydcMrNqGC
+ iVtm656X+uNz/xfIQqKEukBJJpa/INuvyzvVonATbvb10DIINwNcb/QGVxeF3JZ855RuI
+X-Received: by 2002:a05:600c:5303:b0:49c:fa21:1c87 with SMTP id
+ 5b1f17b1804b1-49cfa211dadmr196064865e9.28.1788793139379; 
+ Mon, 07 Sep 2026 07:58:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:5303:b0:49c:fa21:1c87 with SMTP id
+ 5b1f17b1804b1-49cfa211dadmr196064455e9.28.1788793139006; 
+ Mon, 07 Sep 2026 07:58:59 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-485883927a3sm22547547f8f.11.2026.09.07.07.58.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 07:57:12 -0700 (PDT)
-Date: Mon, 7 Sep 2026 16:57:10 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, farosas@suse.de, 
- peterx@redhat.com, dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, 
- bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
-Subject: Re: [PATCH v4 09/10] vhost: add vhost_dev_is_initialized() helper
-Message-ID: <ap7KFvxz4LVR1Hg4@sgarzare-redhat>
-References: <20260820113955.509478-1-andrey.drobyshev@virtuozzo.com>
- <20260820113955.509478-10-andrey.drobyshev@virtuozzo.com>
+ Mon, 07 Sep 2026 07:58:58 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Subject: [PATCH v3 0/2] igvm: fix byte_offset handling in parameter directives
+Date: Mon, 07 Sep 2026 16:58:54 +0200
+Message-Id: <20260907-fix_offset-v3-0-bcffcefc0985@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260820113955.509478-10-andrey.drobyshev@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22MQQ6CMBBFr2JmbU07FgRX3sMY05YZ6UJqWtJoC
+ He3sJLE5fs/702QKHpKcN5NECn75MNQ4LjfgevN8CDhu8KAEmvZShTs3/fAnGgUBuvGWYXGsIM
+ ivCKVd41db4V7n8YQP2s7q2X9m8lKSCG1VQ2fqrayeInU9WY8uPCEpZPx19UbF4vLlbXacd1pK
+ zfuPM9feXTcRuEAAAA=
+X-Change-ID: 20260902-fix_offset-a268cb12aafc
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ qemu-stable@nongnu.org, Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,23 +124,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 20, 2026 at 02:39:54PM +0300, Andrey Drobyshev wrote:
->The upcoming CPR support for vhost-vsock defers the full vhost_dev_init()
->to .post_load(). On an incoming CPR .realize() only sets up the backend,
->so we need a way to tell a fully initialized vhost device from a partially
->initialized one.
->
->Add an explicit 'bool initialized' field, set once vhost_dev_init()
->succeeds, and cleared only in vhost_dev_cleanup() (by memset(0)). Also add
->a public vhost_dev_is_initialized() helper.
->
->Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
->Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->---
-> hw/virtio/vhost.c         |  2 ++
-> include/hw/virtio/vhost.h | 14 ++++++++++++++
-> 2 files changed, 16 insertions(+)
+Several IGVM directives (memory map, vp-count, environment info, MADT,
+device tree) _can_ place their data at a byte_offset within a shared
+parameter area, letting multiple parameters be packed into one area.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Patch 1 introduces qigvm_get_param_data(), which looks up a
+parameter area and validates that byte_offset falls within it in one
+step, and uses it in the vp-count and environment-info handlers, which
+already relied on byte_offset.
+
+Patch 2 fixes the memory map, MADT and device tree handlers, which
+ignored byte_offset entirely and always wrote at the start of the
+buffer, potentially corrupting earlier data when several parameters
+share an area.
+
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+Changes in v3:
+- Renamed the function to `qigvm_get_param_data`. [Stefano]
+- `qigvm_get_param_data` now returns the data pointer directly [Stefano]
+- Added fixes tags. [Stefano]
+- Renamed variables to param_data and param_size [Stefano]
+- Link to v2: https://lore.kernel.org/qemu-devel/20260904-fix_offset-v2-0-f5bb4cf6d4b0@redhat.com
+
+Changes in v2:
+- Inverted commit order: first I introduce the helper and use it where
+  necessary, then in commit 2 I handle the `offset`. [Stefano]
+- The helper now returns data and size, that already consider the byte
+  offset [Stefano]
+- Link to v1: https://lore.kernel.org/qemu-devel/20260902-fix_offset-v1-0-04b18f7595b2@redhat.com
+
+---
+Luigi Leonardi (2):
+      igvm: validate byte_offset before using it in parameter directives
+      igvm: honor byte_offset when writing memory map, MADT and device tree
+
+ backends/igvm.c                | 96 ++++++++++++++++++++++++++++++++----------
+ include/system/igvm-internal.h |  6 +++
+ target/i386/igvm.c             | 13 +++---
+ 3 files changed, 86 insertions(+), 29 deletions(-)
+---
+base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
+change-id: 20260902-fix_offset-a268cb12aafc
+
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
 
 
