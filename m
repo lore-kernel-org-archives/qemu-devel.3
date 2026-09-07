@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C30C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0FAC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Yzj-0006Ci-VN; Mon, 07 Sep 2026 09:02:45 -0400
+	id 1x3Yzu-0006FR-8U; Mon, 07 Sep 2026 09:02:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3YzZ-00068L-18
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:34 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1x3Yzd-0006AB-9I
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:38 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3YzW-000509-5R
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:32 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-49d0da752ffso13868555e9.3
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:02:29 -0700 (PDT)
+ id 1x3YzY-00050u-OR
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:35 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-49b965570d7so41908705e9.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788786149; x=1789390949; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788786151; x=1789390951; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MCXaA9JKSbsLcHED56ZOmYfMXgeBVruvAR+utYnVKl4=;
- b=ngcKfUw+uWQqSCwLD89xTCzTU4piYfIssFqvzOW/vDfLIXCN0OYtm91dv6I9TwAMlK
- dLSM0m73n5+gOFfQq+uN/SY6j3OFGnJcNXvaxfX7Q3E7ziWPw3DSjE4Vkf31sen32/Jv
- XeNE5pZ3QuJi4tRcog/X6/Cd5jB+BXuBIjVnChG74UiNrk4ZbZkT0Ju50actL7zcQegS
- galgMdK4OcPOGRU0zoBfE/c+BfRfYbQrjBW9ID+/p+EFXD/O53wHIH+RS9m9s8xeJwlR
- 0GkVJihKTaOAsWGx6VOFvEWYIV7f/7YYn4givd9vt3FW+Q1eK8oBvsngZdrKFIHzHk3V
- 2Cwg==
+ bh=xHOpqk1d77YmC+yqfEv/L5VjmCn6NlRjjzjSXGyDKdg=;
+ b=rPuM06huWAo/KEz0x+shpOcDwVaifkzXEtQOJv4K1mRQcNJsPFZswAxQkGV/OiDhb/
+ 0h1+oPRgwYiURgB6OsfVw2KEbvg96+sgyq/KVrl3fmyNUgwO7FekDTL/oI/Dx2pFsW+C
+ kkXb3PTb3gt4gtQyDtOukpaSuNnM8N4gEmhk3+lBEh6c3092Dm7P477UlP7KVdE60vFs
+ H1mKKp2xoFTLhraxzkCjaJF7bennpQZTq2vyJVhxkUb/pN9comAZTgpcwSPRqhfoHIPx
+ 66kaxg9zXskhYN7l7AlzYU++1BBbpYkCwi/mu4cglIOWQOz9fVo/CzMjBbghi7c6lnyL
+ XDbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788786149; x=1789390949;
+ d=1e100.net; s=20251104; t=1788786151; x=1789390951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=MCXaA9JKSbsLcHED56ZOmYfMXgeBVruvAR+utYnVKl4=;
- b=Po2s9xJ+/FJ+oBtzeRhm7cqUDIazNCOXBZbzP9ZfeoRDjF7D9VjWBJHeUowJfi9f5v
- Z4z5tY4QconppJzbyz8YshyJkJwi6Jg173svPNSeF4kxwixsaJYO+Yezmq/wuio4i7N5
- hCb1nILMODi3fb4tcWWlTREWODtOn48zpXfSBqHFlRvbzEoEESRjTH6lMVJpmhOK2XRw
- hSkD2PFu+OTe44xbJHxnFLh37XOukLnNnAqM2RDR7LSOSuwcoSdH6JsFOSw9WJHkmFGY
- NliCtl4xb5EdHtni771UbuiZBoFsTmA8xKzWntzAu0W6CnuFnR3u7SncVMgcWtm/cNKv
- ZyfA==
+ bh=xHOpqk1d77YmC+yqfEv/L5VjmCn6NlRjjzjSXGyDKdg=;
+ b=nr+HagK2viwvOiIP/VeM4gRU3lApNGkSxM8So5t2hyIMrzjgWhnDAqnI1Lo67z/NIk
+ Mu+LV/esNzB/5fMtERo2rnUIuRZ0SIm2RxXE1TLufqhSHmKMCiUz6YwWqA8NfAf6/+Ol
+ aTya28e462rat0kVR7JSp8skax/mWS2+O+TBBczcBDhUOP6AIHzGXlxEvPUgSoivWuLL
+ s5qsMHY5t9//G3hF647BNn7jhPVxHE7DfMeoUk1r+kmPcSByKahxvBkTUf+UkcG4ueb9
+ mQJq+DuDMXHpLOrjwPNfGht3Lnj3jKGWYWbXGIAD6ijbV4j35/V8ZZsCDvu/pUqm7yNv
+ N7hg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxNOXKQ1uVxANr03TbdjJoKUkp60jzuMFK1VGy662VauYUQ3ORFV3PLbkelciZbD7aGdsdT0whevjli@nongnu.org
-X-Gm-Message-State: AFuF++kitvpXJa0UCG33WyE4OWnHAeITF4EWc6vnM8YDZSh+VgDK+Xu4
- xwqkX3g5I5++UnkUcqcrImY8pwGlXw2S2DijY/3NhIjuMKCNc26Y4XF6mba/pwmKisS5W100TbS
- F3HlJ++8=
-X-Gm-Gg: AYBFou1p2f3H46+QjZHx3Q/ky0MMEcvQKUSLBCHP161cvNwdNzzANdF1d53fuGVtI/o
- fRcnhNMKddMF7CSBAdBqUyD3D7PAM0mNnGIivgLquXQeDiolDs1swSIRppWCyaRsA2DmuRlfuH0
- hnr1Qt/9+VtC9FpUn6vuyVPI9QY7egm8tUrpRuYNOiEcC+AhXogzQTJRpaIqpCX9CmA19sCGRGl
- hE1mZjR0Zw2kVhpBMNFzX/+sLat4K1LS4bW7K61nAGLyfuRjl6rx1NorjmPjOpJOVxqHBrseEqj
- EGFFjKbFnFIa4okf/6Qq6CvRhozBcGn3kWtE5DNSVb3ADgIFOnOpetoVMoChJ8xbHGhmCR/gkRA
- vT5wzDhLFyDDCSey8NtpZLJA9fkT0U1GGmdhl2dN9nfbtbsu+zVA5ZE5pPB+6EXJ+DR+2GufWTV
- 5i59z+V0Nbbw+J7GxP4udWz3oji8YrtK/gwuHHUL/6vQKLbL0cVnKRwfGgKJLQaUwJWcZn/SNSx
- /0fr8GRzdkdf0DJfjMw9s9e9Ibdfl06s7nqDieLi0W2Dq88WQKQoWbYVUoUjmqdpCmovg==
-X-Received: by 2002:a05:600c:4e11:b0:49c:f2f4:eddd with SMTP id
- 5b1f17b1804b1-49cf8268795mr244661775e9.16.1788786148773; 
- Mon, 07 Sep 2026 06:02:28 -0700 (PDT)
+ AKwUvBwQ9Z6wbUhIKblaexnjC+GAM2Fjy3HVJCl7aMFDoQas3ZIjqdhpnvQk9NsSb6cXseu1dIJ9gFCYz9+O@nongnu.org
+X-Gm-Message-State: AFuF++l6TZG96tP3GTpEUwv2tsFt5ZphTe6Xe9/PbWdGMV0IAipX8WBe
+ ggeWIH0TaZaMafLWeH/Pd/lFaUPVx0Jg8Vd1mcVkjLeYrf0aTlDlTMQ3EO0Z3YRsY78=
+X-Gm-Gg: AYBFou2iIo2fcWBfJQJIQJR89rpcV4vYt9zrM/Pw/vehax8BRNnne23LvPf1I/nw0DJ
+ zcpHe1OLC4DKE/CNBxmSY/Sn/qmIUL72FWu5Ma89ToyfIcPTDOLwap9KM/NnUOIxI6l/QgTDE9w
+ d3QQokolPjYPo7qi3RB32bND+KnjMLXtQbFwjMhYmHAV0kP6l8TxNq8rC269RCpvdnojfGeZjqL
+ tu0K8Dbvio4VEwsQxvktcsH6sqKH/InTRH6CUgrptGXyy3IA4Qtl90Q7m4NZtgPokOIaTc273kV
+ MRTrNJ036bj//jQbA0wfiKVRBQQBTlVUjaPvjRkFzL32TMFyiA9qjGOjLnFUZ5DNe4Pq783WvS8
+ fZTXZisCI+nCU6psToYuaNEuYxnwm032Pd7+XL6ycOEEJ1UGHk8IYpr8H2DOfzRynNwCtSZ6Qpr
+ neeusKaTBdgf50IFmzAhoEnPYRNjBjvhVoYzyS9Fojml42VSM/IHM7qL2hkxmiTJPDKJsUfKV+O
+ PmQJPUqaVVgWz9E0tg8d+s4uvnDb54DkRq8xYNzXjwQLzQ4LF0TxfEPqzhT+ZVVeQwOauo2b3lY
+ tj5q
+X-Received: by 2002:a05:600d:848e:20b0:495:4d88:e630 with SMTP id
+ 5b1f17b1804b1-49cf824f697mr161817485e9.10.1788786151186; 
+ Mon, 07 Sep 2026 06:02:31 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee60bae6sm468589935e9.9.2026.09.07.06.02.27
+ 5b1f17b1804b1-49cee60bae6sm468589935e9.9.2026.09.07.06.02.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 06:02:28 -0700 (PDT)
+ Mon, 07 Sep 2026 06:02:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Tao Ding <dingtao0430@163.com>
-Subject: [PATCH 3/8] target/arm: Drop uses of reset_ignore for banked AArch32
- registers
-Date: Mon,  7 Sep 2026 14:02:18 +0100
-Message-ID: <20260907130223.3148989-4-peter.maydell@linaro.org>
+Subject: [PATCH 5/8] target/arm: Move ESR_EL1 definition to
+ vmsa_pmsa_cp_reginfo
+Date: Mon,  7 Sep 2026 14:02:20 +0100
+Message-ID: <20260907130223.3148989-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907130223.3148989-1-peter.maydell@linaro.org>
 References: <20260907130223.3148989-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,81 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some banked AArch32 cpregs set up a resetfn of arm_cp_reset_ignore.
-This is presumably in an expectation that some other AArch64
-register will handle resetting the underlying state. However
-this isn't true for some of them:
+Currently we define ESR_EL1 in vmsa_cp_reginfo[], but ESR_EL1 isn't
+VMSA specific.  This doesn't matter for "is the register visible when
+it should be?", because currently all our AArch64 CPUs are VMSA.  But
+it does matter for migration, because the DFSR definition in
+vmsa_pmsa_cp_reginfo[] is marked ARM_CP_ALIAS on the assumption that
+the migration of cp15.dfsr_ns will be handled by migrating esr_el[1],
+which is the same underlying field in the CPU state.
 
- * TPIDRURO's S bank is in cp15.tpidruro_s and this isn't shared
-   with any AArch64 register
- * TPIDRURW's S bank similarly is in cp15.tpidrurw_s, not shared
-   with any AArch64 register
+Move ESR_EL1 to vmsa_pmsa_cp_reginfo[]; this will fix the lack of
+migration of DFSR for R-profile CPUs.  This is a migration break for
+those CPUs, but none of them are used in versioned machine types.
 
-Remove the use of arm_cp_reset_ignore here; this means that the state
-for the NS versions of these registers will be reset twice, but that
-is fine because it will always be to the same value (and the
-cp_reg_check_reset() code will assert if we introduce a bug where the
-AArch64 and AArch32 regs disagree about the reset value).
-
-For the MAIR0 and MAIR1 banked registers, doing nothing on reset is
-OK because they are backed by state that is always covered by the
-MAIR_EL1 and MAIR_EL3 AArch64 registers that will always be present
-if the AArch32 registers are.  But it's not consistent with how we
-handle all the other banked regs, so drop it here too.  Again, the
-cp_reg_check_reset() checks will catch any mismatches in what the
-reset value should be.
-
-The lack of reset-to-zero for the S banked versions of TPIDRURO and
-TPIDRURW is very unlikely to have had any guest visible consquences,
-because these registers are architecturally UNKNOWN at reset and so
-guest code should be initializing them itself regardless.
+(The S banked DFSR is already migrated, because we register ESR_EL3
+in el3_cp_reginfo[] if EL3 exists, regardless of whether we have VMSA
+or PMSA.)
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ target/arm/helper.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 1b024adc703..f8185b201be 100644
+index 9d8f09f13b4..e4028e0eba6 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -1072,14 +1072,12 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
-       .cp = 15, .opc1 = 0, .crn = 10, .crm = 2, .opc2 = 0,
+@@ -2894,6 +2894,14 @@ static void vttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ }
+ 
+ static const ARMCPRegInfo vmsa_pmsa_cp_reginfo[] = {
++    { .name = "ESR_EL1", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .crn = 5, .crm = 2, .opc1 = 0, .opc2 = 0,
++      .access = PL1_RW, .accessfn = access_tvm_trvm,
++      .fgt = FGT_ESR_EL1,
++      .nv2_redirect_offset = 0x138 | NV2_REDIR_NV1,
++      .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 5, 2, 0),
++      .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 5, 2, 0),
++      .fieldoffset = offsetof(CPUARMState, cp15.esr_el[1]), .resetvalue = 0, },
+     { .name = "DFSR", .cp = 15, .crn = 5, .crm = 0, .opc1 = 0, .opc2 = 0,
+       .access = PL1_RW, .accessfn = access_tvm_trvm, .type = ARM_CP_ALIAS,
+       .bank_fieldoffsets = { offsetoflow32(CPUARMState, cp15.dfsr_s),
+@@ -2918,14 +2926,6 @@ static const ARMCPRegInfo vmsa_pmsa_cp_reginfo[] = {
+ };
+ 
+ static const ARMCPRegInfo vmsa_cp_reginfo[] = {
+-    { .name = "ESR_EL1", .state = ARM_CP_STATE_AA64,
+-      .opc0 = 3, .crn = 5, .crm = 2, .opc1 = 0, .opc2 = 0,
+-      .access = PL1_RW, .accessfn = access_tvm_trvm,
+-      .fgt = FGT_ESR_EL1,
+-      .nv2_redirect_offset = 0x138 | NV2_REDIR_NV1,
+-      .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 5, 2, 0),
+-      .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 5, 2, 0),
+-      .fieldoffset = offsetof(CPUARMState, cp15.esr_el[1]), .resetvalue = 0, },
+     { .name = "TTBR0_EL1", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
        .access = PL1_RW, .accessfn = access_tvm_trvm,
-       .bank_fieldoffsets = { offsetof(CPUARMState, cp15.mair0_s),
--                             offsetof(CPUARMState, cp15.mair0_ns) },
--      .resetfn = arm_cp_reset_ignore },
-+                             offsetof(CPUARMState, cp15.mair0_ns) }, },
-     { .name = "MAIR1", .state = ARM_CP_STATE_AA32,
-       .cp = 15, .opc1 = 0, .crn = 10, .crm = 2, .opc2 = 1,
-       .access = PL1_RW, .accessfn = access_tvm_trvm,
-       .bank_fieldoffsets = { offsetof(CPUARMState, cp15.mair1_s),
--                             offsetof(CPUARMState, cp15.mair1_ns) },
--      .resetfn = arm_cp_reset_ignore },
-+                             offsetof(CPUARMState, cp15.mair1_ns) }, },
-     { .name = "ISR_EL1", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 1, .opc2 = 0,
-       .fgt = FGT_ISR_EL1,
-@@ -1136,8 +1134,7 @@ static const ARMCPRegInfo v6k_cp_reginfo[] = {
-       .access = PL0_RW,
-       .fgt = FGT_TPIDR_EL0,
-       .bank_fieldoffsets = { offsetoflow32(CPUARMState, cp15.tpidrurw_s),
--                             offsetoflow32(CPUARMState, cp15.tpidrurw_ns) },
--      .resetfn = arm_cp_reset_ignore },
-+                             offsetoflow32(CPUARMState, cp15.tpidrurw_ns) }, },
-     { .name = "TPIDRRO_EL0", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 3, .opc2 = 3, .crn = 13, .crm = 0,
-       .access = PL0_R | PL1_W,
-@@ -1148,8 +1145,7 @@ static const ARMCPRegInfo v6k_cp_reginfo[] = {
-       .access = PL0_R | PL1_W,
-       .fgt = FGT_TPIDRRO_EL0,
-       .bank_fieldoffsets = { offsetoflow32(CPUARMState, cp15.tpidruro_s),
--                             offsetoflow32(CPUARMState, cp15.tpidruro_ns) },
--      .resetfn = arm_cp_reset_ignore },
-+                             offsetoflow32(CPUARMState, cp15.tpidruro_ns) }, },
-     { .name = "TPIDR_EL1", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 0, .opc2 = 4, .crn = 13, .crm = 0,
-       .access = PL1_RW,
 -- 
 2.43.0
 
