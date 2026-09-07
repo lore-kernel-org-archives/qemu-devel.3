@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBC3C79FA3
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 06:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59854C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 06:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3T05-00061m-RU; Mon, 07 Sep 2026 02:38:41 -0400
+	id 1x3Szn-0005tJ-1w; Mon, 07 Sep 2026 02:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x3T04-00061e-5L
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:40 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1x3Szm-0005nU-4r
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:22 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x3T02-0006Ag-H6
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:39 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2d942c7cc2fso25000115ad.3
- for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 23:38:37 -0700 (PDT)
+ id 1x3Szk-00069d-KV
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:21 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2cace91f112so26032235ad.0
+ for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 23:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788763117; x=1789367917; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788763099; x=1789367899; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=80gGLHUNp9a2qS0zepvCgbYVB3aORrvxr/A17drJBkg=;
- b=gUBEFDji1yI/HvOx/vIsKOPcRuoWRsf0uj7mH/q9vtq4BlOlc5CCbZMPTPtbJeWxvq
- GD0ckgvodgAU/xm2mpF6Zlah5Dzs5i/NKK8V/H237th588O7oHbSPiX3H4IpTGJMS7ur
- i32AGxOnlhdrJjFOeUgWyF+eOCfHg89tTxbzIbUCbGRngieLLL2xI+OFrD34IGQbATmi
- x4J590cNfdLKk/8dWRN9p8N/D1j+YgT4iF9kPOKzNKI6LYcCB97Ryheo89ksAu3dB3bg
- iloqRqokYLTCICGGBGHGrpNfMnYpWTWTV8O9/+2sR1G5Mij1gQBOsey/IDi4bHjpkNAD
- tDng==
+ bh=mf9E5O+vpQ3XA+Jie+/p9nC3sGIPSjge6K4hjAZVK9U=;
+ b=CnN/ScZqkJbEbr/QT3byAXnuMt8tQPWdjXwHQX7MKCcgNng+U/h5QarB9SXZr93xA7
+ GRskhy9roV4K81xu2nhLD1uwYH2F0EOPWikoo8gi51AV3UwUI129wV3RIzzIXQpsAZaa
+ VaW4e1W3VaGP/EP6KaIrUCRU2W0T9Uf2wlZXjKGcvoABKII4r2J00hSrI8e2koJgCuSj
+ saFrJRB03yANYACVe0ySlLueAPB3gv7ap8LA1p0ckcv978fGiw2/vz3hZj3aItECXq0l
+ yb9clhyiTsvKrukWOFXJGlqvh4ePa4mxiy5ARF8hV8j4nDnP+tgcSeW/v98JxwWte7Zs
+ yZsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788763117; x=1789367917;
+ d=1e100.net; s=20251104; t=1788763099; x=1789367899;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=80gGLHUNp9a2qS0zepvCgbYVB3aORrvxr/A17drJBkg=;
- b=bBZMw3SSXezrqjTn6fG266U0uMtemmOyhAV61NRfkVjn54JM1NTlqcDX19Z0y9Li/j
- k2Yo2PIC4Vgyb5Eo8yGHWLoBhVhCfjl8uXqmvIxcZfOSxw4zhVQEtWWCImKcJnCH+gqn
- rxyYLarKs7FxtbwUnP7H4slolSAE2hc+9HnTeq5pU19ZATLKajuYhbHn3EgZq/pf2Czz
- R9rehDr9UabrGHr2vXaRsvmvbW4fZrWw49ix/IZtu+MwmAZyAwEpMf4dtOdXDwNH09ZP
- 8ePAskFg6VszTGTP65bptZVdlwIRr1cVsX/3qKeWKwoYnab3wDqRQ0/E6iB2L0VrwOvO
- fN4w==
-X-Gm-Message-State: AFuF++kOSbCu87Bf1h4Bj2B3ykwhGdB9xuKvwe9tIMQmF2vzkuH9+TQk
- RdrEzWnltea5nKcAVlNZ+22QMpbLt6Rt7NCjcM/Osz0kqXpfwphYqsttMWvMAvhcXKCAcQ==
-X-Gm-Gg: AYBFou2RnTSMnfQvB1EL6SvX5dr6PVn6V4kYZr+186CieIUaMEQ1WzzcrYjrg+GOR/g
- j0awogMOTfO/yQqk5CLHpvcJi7+RrZvEPITGgCW9jNJALm1NtJFDP7x0tH2CuXGHVhGVTl19Y7h
- FVMG80OKPlaVrT+qABtHo5j/5JDT5tW94n3jlz9h8aKawmQJX+MoGMXO4tV9tkZ7hLBMn/CXLJy
- 3Ar8c+qWmLPLxIriaRSDIH4kjUKNfjX85pnRMVgB27/K1WfflSarOAvIBkPbOR/iTsOpkzZwBgq
- SSYcXqGLXkLiNVSuXiRkvqpBTJeCB4tSj2NhIvdMdfLqBZd45IDHgRvHz8YN8voGcM9JzOP37u+
- Vcq6YgX2bRxOJc37a1VwilM3C7lYYNBki9uuGsqT35G9ugGSjvP88CP9I4apEIr4HhZRQ7FXtJw
- yYUlwClnP3xNjuenlP1WOWpM0DJrdkPmoL5JEQRCgqYL+CgAM+sBAbJCAS7idIkjmXKSJyTWBFW
- q9V2JXf6ebIYX5G
-X-Received: by 2002:a17:902:ed8b:b0:2c8:2808:3ec9 with SMTP id
- d9443c01a7336-2db126d8fc2mr198500665ad.12.1788763116472; 
- Sun, 06 Sep 2026 23:38:36 -0700 (PDT)
+ bh=mf9E5O+vpQ3XA+Jie+/p9nC3sGIPSjge6K4hjAZVK9U=;
+ b=L8VFf65IV00zQd/TJoTxdPoflm9viWgwIUBwvzConDMO+x+g/DAnMD9C7k5QRuCA5y
+ vSjETrXMpB3H5ILhUJZPt3aWWNoaEDGNzGNyLN1XRRsxsDHAWSi3M4g1mvov2Yuq7cB5
+ Cm8QX+BXb9e/8cAhfDOipaaVtydme9dEhddQ83pjDW6cU/FQackrQiiBQYUlCpRFvj2q
+ YEDXYgpMnfAJp9vZJM7Huw0jlqohKcxIk+lNePY84n5aOP4oZ9N01vZufkZHRTFRGvOX
+ ka1YPF86hCUNO/H4W3CnXzWV9xobf3mrG0gAXcOf51K/yQOv3HdB/DNPwbY/NgTPf9Ys
+ dHaQ==
+X-Gm-Message-State: AFuF++moWAD3JZ3y6QYlresdoxmbIzV6m4C8zWVRy8qEBlMlurbPDuVv
+ oT5h0MsUKU0LTQlOcHBXM043PzDGpsahGMXzN06XKP3/upfweN0iRUdDXxHUuNVjj62hug==
+X-Gm-Gg: AYBFou1IHjOTCvIdibtk6ul532MaHpLCtVqiyfMvy5cYRERQB3k8E9MhAiUDsB/+gLF
+ nWjyZtD7jKUR9VvQ2M7X5kxbgxIk5FSIq0ZSjQGQzVVHkW6eiCSnnE2lNo5W1RK0ecCqazfIxOC
+ ww9h3qc2sQDzkxj1/Zo+2Iy9zURJuP6fWs/zoF1n6DWXfLGW3w/9CgRIBZh/6io4kfbcChuIec4
+ tzBFaq6L80fLP2mEgTctX0LpbI1cx/qmWdUJ6LFB1rIIX4idQ8OF4c86/o4QmgMsfx+icFIfEyO
+ IMqEaRHatIE46ek8wYx1xOi8VOXHouH8cYc7tC40XLEbiU/5edz6Wddfx1KimG4FLUqth7SigzR
+ dUKY5LJN6u6x1ZZEzrBtK3A4tGOekkFPYC5OCMW6u8+ggb9TcxUMFITAH1srKhhCHWPZjeaLLsE
+ D262t4WbRmAx0Wn31vLsAS3EsnrsPgMGz/xnV+syKHOSs2l+kjp8gppQb/hcyPbXpaFWPWCLP04
+ QihJ5ZFJbSAXvgc
+X-Received: by 2002:a17:903:3c24:b0:2db:479a:5127 with SMTP id
+ d9443c01a7336-2db479a55c8mr89297985ad.19.1788763099063; 
+ Sun, 06 Sep 2026 23:38:19 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2db1499f06fsm38502555ad.54.2026.09.06.23.38.32
+ d9443c01a7336-2db1499f06fsm38502555ad.54.2026.09.06.23.38.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 06 Sep 2026 23:38:36 -0700 (PDT)
+ Sun, 06 Sep 2026 23:38:18 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,17 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V15 13/14] iothread: make legacy AioContext getter explicitly
- unsafe
-Date: Mon,  7 Sep 2026 14:37:24 +0800
-Message-ID: <20260907063725.626685-14-zhangckid@gmail.com>
+Subject: [PATCH V15 09/14] virtio-balloon: Update tracking iothread users with
+ holder
+Date: Mon,  7 Sep 2026 14:37:20 +0800
+Message-ID: <20260907063725.626685-10-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907063725.626685-1-zhangckid@gmail.com>
 References: <20260907063725.626685-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,79 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that holder-aware callers have been converted, rename
-iothread_get_aio_context() to iothread_unsafe_get_aio_context() and
-update qmp_x_blockdev_set_iothread(). This avoids adding a duplicate
-accessor only to remove the old one later.
+Replace raw object_ref/unref calls with
+iothread_ref_and_get/unref_and_put_aio_context.
 
-The block graph retains only the AioContext, while detachment happens
-outside qmp_x_blockdev_set_iothread(), so this call site cannot provide
-a matching holder lifecycle. The new name makes its existing lifetime
-assumption explicit.
-
-New code should use iothread_ref_and_get_aio_context().
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- blockdev.c                |  7 ++++++-
- include/system/iothread.h | 11 ++++++++++-
- iothread.c                |  2 +-
- 3 files changed, 17 insertions(+), 3 deletions(-)
+ hw/virtio/virtio-balloon.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/blockdev.c b/blockdev.c
-index 6e86c6262f..97d161079a 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -3683,7 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
-             goto out;
-         }
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 4c5f486ba2..7c9c8d2a41 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -892,14 +892,20 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+     s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
  
--        new_context = iothread_get_aio_context(obj);
-+        /*
-+         * The block graph retains only the AioContext, not the IOThread.
-+         * Context detachment happens outside this command, so there is no
-+         * point here where a matching IOThread holder can be released.
-+         */
-+        new_context = iothread_unsafe_get_aio_context(obj);
-     } else {
-         new_context = qemu_get_aio_context();
-     }
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index f6c5f95dd9..9850cdb3dc 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -66,7 +66,16 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
- 
- char *iothread_get_id(IOThread *iothread);
- IOThread *iothread_by_id(const char *id);
--AioContext *iothread_get_aio_context(IOThread *iothread);
+     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(s));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
 +
-+/*
-+ * Return @iothread's AioContext without registering a holder or taking a
-+ * reference on @iothread.  The caller must ensure that the IOThread remains
-+ * alive for as long as the returned AioContext is used.
-+ *
-+ * This API exists for legacy callers without a clear ref/unref lifecycle.  Do
-+ * not use it in new code; use iothread_ref_and_get_aio_context() instead.
-+ */
-+AioContext *iothread_unsafe_get_aio_context(IOThread *iothread);
+         s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
+                                            virtio_balloon_handle_free_page_vq);
+         precopy_add_notifier(&s->free_page_hint_notify);
  
- /*
-  * Register @holder and return @iothread's AioContext.  The holder is copied,
-diff --git a/iothread.c b/iothread.c
-index 58dace351c..ae9290c733 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -422,7 +422,7 @@ char *iothread_get_id(IOThread *iothread)
-     return g_strdup(object_get_canonical_path_component(OBJECT(iothread)));
- }
+-        object_ref(OBJECT(s->iothread));
+-        s->free_page_bh = aio_bh_new_guarded(iothread_get_aio_context(s->iothread),
+-                                             virtio_ballloon_get_free_page_hints, s,
+-                                             &dev->mem_reentrancy_guard);
++        s->free_page_bh = aio_bh_new_guarded(
++                      iothread_ref_and_get_aio_context(s->iothread, &io_holder),
++                      virtio_ballloon_get_free_page_hints, s,
++                      &dev->mem_reentrancy_guard);
+     }
  
--AioContext *iothread_get_aio_context(IOThread *iothread)
-+AioContext *iothread_unsafe_get_aio_context(IOThread *iothread)
- {
-     return iothread->ctx;
- }
+     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_REPORTING)) {
+@@ -919,9 +925,15 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
+ 
+     qemu_unregister_resettable(OBJECT(dev));
+     if (s->free_page_bh) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(s));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
++
+         qemu_bh_delete(s->free_page_bh);
+-        object_unref(OBJECT(s->iothread));
+         virtio_balloon_free_page_stop(s);
++        iothread_unref_and_put_aio_context(s->iothread, &io_holder);
+         precopy_remove_notifier(&s->free_page_hint_notify);
+     }
+     balloon_stats_destroy_timer(s);
 -- 
 2.43.0
 
