@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE23C79FA1
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 15:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624C1C79FA1
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 15:26:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3bDY-0000fs-No; Mon, 07 Sep 2026 11:25:10 -0400
+	id 1x3bEA-000108-Ea; Mon, 07 Sep 2026 11:25:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1x3bDT-0000en-AU
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:25:03 -0400
-Received: from va-1-113.ptr.blmpb.com ([209.127.230.113])
+ id 1x3bE8-0000zP-FE
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:25:44 -0400
+Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1x3bDP-00056R-2W
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:25:03 -0400
+ id 1x3bE5-0005M9-Vh
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:25:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1788794685; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1788794737; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=X1smG7YZrVv8w/+73atNrtl4NI3HBJ0T1S6dqZmUak8=;
- b=FxP1NkYEhc4Zw/lJA0QJh9wp4PQsXG1lOxzb/FwVQMPD3m/S90Fm3FXMzQuWPHVieOAx5+
- D4uPxqdZgIBWnf5SAoBS4kgVAIGWmT8UO8HCcTGCeb/mgtqPwWP7uXQnQvDPvdJKJF6QHa
- a+qD/i0nZWIGmRU77RKWREfb5jFlqgjVumWE2r7KnhWih2krr/QtlgkYfY4cOPfBWSa3wD
- 4rVtiXb6VypoYDnTsMVl8NnizFlqqu5ElJKBgr+4stqAxSeH+GoKjw4AH5Xk7eZIpoCZt/
- XK4AZZShA2C4/YZo0Qohz3TNvKLSdYP1wv+Z2eMjbG3t3+jCcODPYP6dEZwpkQ==
-Date: Mon,  7 Sep 2026 23:22:58 +0800
+ bh=J5Qh55+z1x//ZA33EB3puHZQ/5+rDXbJLIxFM48Fj90=;
+ b=bidrOm3R9DqB6AybGxhbriHgp1vPTtMo2rGYHRea3Mmm7DF8y+5E5p1E7Qhr033vZC6X2X
+ uEHawqypHl6jgUooh0ZRKHWgfTMHFJSZlaZP/8TGpXMgo2jvoCqgo/KbCcy060eiiwf6Y7
+ tEt1+ogBbqOei/Lrj7kL7zmXhbafcmvOo8Xii6k4dXj/cgrL1WPzo8fCfoqePdrc2uM2p2
+ +PckPeJFvT1nRpRCa5883rQfkdh/F66I+oOUK7JaxXGU62EP6J/HnM5GoUzk8HVGUiOs9b
+ IneTUCnfAPcsAwItJ0x/HS3wRnlmiUmSa4FDdjY6hXicKRIYiAu5LRoI8Qh0qw==
+Content-Transfer-Encoding: 7bit
+References: <20260907152301.1701394-1-liumingliang.dev@bytedance.com>
 Mime-Version: 1.0
 X-Original-From: Mingliang Liu <liumingliang.dev@bytedance.com>
-Subject: [PATCH v3 0/3] target/riscv: Add experimental Zvabd extension support
+X-Lms-Return-Path: <lba+26a9ed76f+0b4162+nongnu.org+liumingliang.dev@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, 
  <Alistair.Francis@wdc.com>, <zhiwei_liu@linux.alibaba.com>, 
  <liwei1518@gmail.com>, <daniel.barboza@oss.qualcomm.com>, 
  <chao.liu@processmission.com>, 
  "Mingliang Liu" <liumingliang.dev@bytedance.com>
-From: "Mingliang Liu" <liumingliang.dev@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-To: <qemu-devel@nongnu.org>
-Message-Id: <20260907152301.1701394-1-liumingliang.dev@bytedance.com>
-X-Lms-Return-Path: <lba+26a9ed73b+da0120+nongnu.org+liumingliang.dev@bytedance.com>
+Date: Mon,  7 Sep 2026 23:23:01 +0800
+Message-Id: <20260907152301.1701394-4-liumingliang.dev@bytedance.com>
+In-Reply-To: <20260907152301.1701394-1-liumingliang.dev@bytedance.com>
 X-Mailer: git-send-email 2.39.5
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.127.230.113;
- envelope-from=liumingliang.dev@bytedance.com; helo=va-1-113.ptr.blmpb.com
+From: "Mingliang Liu" <liumingliang.dev@bytedance.com>
+Subject: [PATCH v3 3/3] tests/tcg/riscv64: Add Zvabd extension tests
+To: <qemu-devel@nongnu.org>
+Received-SPF: pass client-ip=209.127.230.112;
+ envelope-from=liumingliang.dev@bytedance.com; helo=va-1-112.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,52 +71,709 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds support for version 0.9 of the draft RISC-V Zvabd
-extension. The extension provides vector integer absolute-difference
-instructions for image, video, and other data-processing workloads.
-It introduces eight new instructions:
+Add a RV64 TCG test covering the masked and unmasked vector-vector
+and vector-scalar forms of vabd, vabdu, vwabda, and vwabdau.
 
-  - vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW values from
-    8 through ELEN, with SEW 64 requiring Zve64x.
-  - vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support SEW 8
-    and 16 and accumulate into a double-width destination.
+Assemblers do not yet support the version 0.9 instruction mnemonics,
+so the instruction encodings are hardcoded for the time being.
 
-The specification is currently under review at:
-https://github.com/riscv/riscv-isa-manual/pull/3279
+GNU binutils 2.47 supports the incompatible version 0.7 instruction
+encodings. Therefore, this test must not be built with that version,
+even after it is converted to use instruction mnemonics.
 
-The series implement this instruction extension, including instruction
-decoder, TCG translation, helpers, and tests, etc.
-
-Changes in v1:
-  - Added support for recognizing the vabs.v pseudo-instruction in the disassembler.
-  - Added tests for the eight Zvabd instructions based on Daniel's tests.
-
-Changes in v2:
-  - Order the switch cases numerically in patch 1.
-  - Use .insn instead of .word to encode instructions in patch 3.
-  - Refine the commit messages for patches 1 and 3.
-
-Mingliang Liu (2):
-  disas/riscv: Support vabs.v pseudo-instruction
-  tests/tcg/riscv64: Add Zvabd extension tests
-
-Zhibo Hong (1):
-  target/riscv: Add support for the Zvabd extension
-
- disas/riscv-op.c.inc                        |   9 +
- disas/riscv.c                               |  14 +
- target/riscv/cpu.c                          |   1 +
- target/riscv/cpu_cfg_fields.h.inc           |   1 +
- target/riscv/helper.h                       |  26 +
- target/riscv/insn32.decode                  |  10 +
- target/riscv/tcg/insn_trans/trans_rvv.c.inc |  45 ++
- target/riscv/tcg/tcg-cpu.c                  |   6 +
- target/riscv/tcg/vector_helper.c            |  56 ++
- tests/tcg/riscv64/Makefile.softmmu-target   |   8 +
- tests/tcg/riscv64/test-zvabd.S              | 659 ++++++++++++++++++++
- 11 files changed, 835 insertions(+)
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Co-Author: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
+---
+ tests/tcg/riscv64/Makefile.softmmu-target |   8 +
+ tests/tcg/riscv64/test-zvabd.S            | 659 ++++++++++++++++++++++
+ 2 files changed, 667 insertions(+)
  create mode 100644 tests/tcg/riscv64/test-zvabd.S
 
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 6a219c306c..787fdaab40 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -71,5 +71,13 @@ EXTRA_RUNS += run-test-misa-w
+ run-test-misa-w: test-misa-w
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-misa-w=true$(comma)c=true$(comma)v=true $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-zvabd
++ZVABD_CPU = rv64$(comma)v=true$(comma)vlen=256$(comma)x-zvabd=true
++CLEANFILES += test-zvabd
++test-zvabd: test-zvabd.o $(LINK_SCRIPT)
++	$(LD) $(LDFLAGS) $< -o $@
++run-test-zvabd: test-zvabd
++	$(call run-test, $<, $(QEMU) -cpu $(ZVABD_CPU) $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-zvabd.S b/tests/tcg/riscv64/test-zvabd.S
+new file mode 100644
+index 0000000000..4f91acea0c
+--- /dev/null
++++ b/tests/tcg/riscv64/test-zvabd.S
+@@ -0,0 +1,659 @@
++/*
++ * Test the Zvabd vector absolute-difference instructions and the vabs.v
++ * pseudoinstruction.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option arch, +v
++	.option norvc
++
++	.text
++
++	.global _start
++_start:
++	/* Enable the vector unit (mstatus.VS = Initial). */
++	li	t0, 1 << 9
++	csrs	mstatus, t0
++
++	/* Route synchronous traps to trap_handler (mtvec direct mode). */
++	la	t0, trap_handler
++	csrw	mtvec, t0
++
++	/* Run each test function. */
++	call	test_vabs_v
++	bnez	a0, _exit
++	call	test_vabs_v_mask
++	bnez	a0, _exit
++
++	call	test_vabd_vv
++	bnez	a0, _exit
++	call	test_vabd_vv_mask
++	bnez	a0, _exit
++
++	call	test_vabd_vx
++	bnez	a0, _exit
++	call	test_vabd_vx_mask
++	bnez	a0, _exit
++
++	call	test_vabdu_vv
++	bnez	a0, _exit
++	call	test_vabdu_vv_mask
++	bnez	a0, _exit
++
++	call	test_vabdu_vx
++	bnez	a0, _exit
++	call	test_vabdu_vx_mask
++	bnez	a0, _exit
++
++	call	test_vwabda_vv
++	bnez	a0, _exit
++	call	test_vwabda_vv_mask
++	bnez	a0, _exit
++
++	call	test_vwabda_vx
++	bnez	a0, _exit
++	call	test_vwabda_vx_mask
++	bnez	a0, _exit
++
++	call	test_vwabdau_vv
++	bnez	a0, _exit
++	call	test_vwabdau_vv_mask
++	bnez	a0, _exit
++
++	call	test_vwabdau_vx
++	bnez	a0, _exit
++	call	test_vwabdau_vx_mask
++	bnez	a0, _exit
++
++	j	_exit
++
++test_vabs_v:
++	vsetivli zero, 2, e8, m1, ta, ma
++
++	/* Load .arr_neg array in v1 */
++	la     t0,.arr_neg
++	vle8.v v1,0(t0)
++
++	/* vabs.v v2, v1 (vabd.vx v2, v1, x0) raw opcode */
++	.insn r 0x57, 0x6, 0x2b, x2, x0, x1
++
++	/* Load .arr_pos in v3 */
++	la      t1,.arr_pos
++	vle8.v  v3,0(t1)
++
++	/* Compare v2 and v3 into v0 */
++	vmsne.vv  v0,v2,v3
++	vcpop.m a0,v0
++	snez    a0,a0
++
++	ret
++
++test_vabs_v_mask:
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load .arr_neg array in v1 */
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++
++	/* Zero v2 using .arr_zero */
++	la     t0,.arr_zero
++	vle8.v v2,0(t0)
++
++	/* Load .v0_mask array in v0 */
++	la     t1,.v0_mask
++	vle8.v v0,0(t1)
++
++	/* vabs.v v2, v1, v0.t raw opcode */
++	.insn r 0x57, 0x6, 0x2a, x2, x0, x1
++
++	/* Load .arr_masked in v3 */
++	la      t0,.arr_masked
++	vle8.v  v3,0(t0)
++
++	/* Compare v2 and v3 into v0 */
++	vmsne.vv  v0,v2,v3
++	vcpop.m a0,v0
++	snez    a0,a0
++
++	ret
++
++test_vabd_vv:
++	/*
++	 * Test signed vector-vector absolute difference:
++	 * abs({-5, -7} - {5, 7}) = {10, 14}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load the two signed source vectors into v1 and v3. */
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v3, 0(t0)
++
++	/* Execute vabd.vv v2, v1, v3. */
++	.insn r 0x57, 0x2, 0x2b, x2, x3, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabd_vv
++	vle8.v  v3, 0(t0)
++
++	/* Compare v2 and v3 into v0 */
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++
++	ret
++
++test_vabd_vv_mask:
++	/*
++	 * Test masked vabd.vv.  Element 0 remains 9 and element 1 becomes
++	 * abs(-7 - 7) = 14.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load the two signed source vectors into v1 and v3. */
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v3, 0(t0)
++
++	/* Load original value into v2 */
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	/* Load mask value into v0 */
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x2, 0x2a, x2, x3, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabd_vv_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabd_vx:
++	/*
++	 * Test signed vector-scalar absolute difference:
++	 * abs({-5, -7} - 3) = {8, 10}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	/* Execute vabd.vx v2, v1, a2. */
++	.insn r 0x57, 0x6, 0x2b, x2, x12, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabd_vx
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabd_vx_mask:
++	/*
++	 * Test masked vabd.vx.  Element 0 remains 9 and element 1 becomes
++	 * abs(-7 - 3) = 10.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x6, 0x2a, x2, x12, x1
++
++	la      t0, .expect_vabd_vx_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vv:
++	/*
++	 * Test unsigned vector-vector absolute difference:
++	 * abs({0, 255} - {255, 0}) = {255, 255}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load the two unsigned source vectors into v1 and v3. */
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v3, 0(t0)
++
++	/* Execute vabdu.vv v2, v1, v3. */
++	.insn r 0x57, 0x2, 0x2d, x2, x3, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabdu_vv
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vv_mask:
++	/*
++	 * Test masked vabdu.vv.  Element 0 remains 9 and element 1 becomes
++	 * abs(255 - 0) = 255.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v3, 0(t0)
++
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x2, 0x2c, x2, x3, x1
++
++	la      t0, .expect_vabdu_vv_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vx:
++	/*
++	 * Test unsigned vector-scalar absolute difference:
++	 * abs({0, 255} - 128) = {128, 127}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	/* Execute vabdu.vx v2, v1, a2. */
++	.insn r 0x57, 0x6, 0x2d, x2, x12, x1
++
++	la      t0, .expect_vabdu_vx
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vx_mask:
++	/*
++	 * Test masked vabdu.vx.  Element 0 remains 9 and element 1 becomes
++	 * abs(255 - 128) = 127.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x6, 0x2c, x2, x12, x1
++
++	la      t0, .expect_vabdu_vx_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vv:
++	/*
++	 * Test signed widening vector-vector absolute difference and
++	 * accumulation. Start with v4 = {1000, -1000}, and the expected
++	 * widened result is {1000, -1000} + abs({-5, -7} - {5, 7}) =
++	 * {1010, -986}.
++	 */
++	/* Load the 16-bit accumulator before selecting 8-bit operands. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v2, 0(t0)
++
++	/* Execute vwabda.vv v4, v1, v2. */
++	.insn r 0x57, 0x0, 0x7b, x4, x2, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vv
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vv_mask:
++	/*
++	 * Test masked vwabda.vv.
++	 * Start with v4 = {1000, -1000}, v0 = {0, 1}, and the expected widened
++	 * result is {1000, -1000} + abs({-5, -7} - {5, 7}) = {1000, -986}.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x0, 0x7a, x4, x2, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vv_masked
++
++	vle16.v v6, 0(t0)
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vx:
++	/*
++	 * Test signed widening vector-scalar absolute difference and
++	 * accumulation. With scalar 3, v4 becomes {1000 + 8, -1000 + 10}.
++	 */
++	/* Load the 16-bit accumulator before selecting 8-bit operands. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	/* Execute vwabda.vx v4, v1, a2. */
++	.insn r 0x57, 0x4, 0x7b, x4, x12, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vx
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vx_mask:
++	/*
++	 * Test masked vwabda.vx.  Element 0 remains 1000 while element 1
++	 * accumulates 10 and becomes -990.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x4, 0x7a, x4, x12, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vx_masked
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vv:
++	/*
++	 * Test unsigned widening vector-vector absolute difference and
++	 * accumulation. Start with v4 = {1000, 2000}, adding {255, 255}
++	 * produces {1255, 2255}.
++	 */
++	/* Load the unsigned 16-bit accumulator and 8-bit source vectors. */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v2, 0(t0)
++
++	/* Execute vwabdau.vv v4, v1, v2. */
++	.insn r 0x57, 0x0, 0x7d, x4, x2, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vv
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vv_mask:
++	/*
++	 * Test masked vwabdau.vv.  Element 0 remains 1000 while element 1
++	 * accumulates 255 and becomes 2255.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x0, 0x7c, x4, x2, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vv_masked
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vx:
++	/*
++	 * Test unsigned widening vector-scalar absolute difference and
++	 * accumulation. With scalar 128, v4 becomes {1000 + 128, 2000 + 127}.
++	 */
++	/* Load the unsigned 16-bit accumulator and 8-bit source vector. */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	/* Execute vwabdau.vx v4, v1, a2. */
++	.insn r 0x57, 0x4, 0x7d, x4, x12, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vx
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vx_mask:
++	/*
++	 * Test masked vwabdau.vx.  Element 0 remains 1000 while element 1
++	 * accumulates 127 and becomes 2127.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x4, 0x7c, x4, x12, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vx_masked
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++
++/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
++_exit:
++	la	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.balign	4
++trap_handler:
++	csrr	t4, mcause
++	la	t5, trap_mcause
++	sd	t4, 0(t5)
++	csrr	t4, mtval
++	la	t5, trap_mtval
++	sd	t4, 0(t5)
++	li	a0, 1
++	j	_exit
++
++	.data
++	.balign	8
++semiargs:
++	.space	16
++trap_mcause:
++	.space	8
++trap_mtval:
++	.space	8
++.arr_neg:
++	.byte -5, -7
++.arr_pos:
++	.byte 5, 7
++.arr_zero:
++	.byte 0, 0
++.arr_init:
++	.byte 9, 9
++.v0_mask:
++	.byte 0b10
++.arr_masked:
++	.byte 0, 7
++
++/* Unsigned input vectors used by vabdu and vwabdau. */
++.arr_unsigned_lhs:
++	.byte 0, 255
++.arr_unsigned_rhs:
++	.byte 255, 0
++	.balign 2
++
++/* Nonzero accumulators verify the add part of widening operations. */
++.arr_signed_acc:
++	.half 1000, -1000
++.arr_unsigned_acc:
++	.half 1000, 2000
++
++/* Expected results for the unmasked and masked forms. */
++.expect_vabd_vv:
++	.byte 10, 14
++.expect_vabd_vv_masked:
++	.byte 9, 14
++.expect_vabd_vx:
++	.byte 8, 10
++.expect_vabd_vx_masked:
++	.byte 9, 10
++.expect_vabdu_vv:
++	.byte 255, 255
++.expect_vabdu_vv_masked:
++	.byte 9, 255
++.expect_vabdu_vx:
++	.byte 128, 127
++.expect_vabdu_vx_masked:
++	.byte 9, 127
++.expect_vwabda_vv:
++	.half 1010, -986
++.expect_vwabda_vv_masked:
++	.half 1000, -986
++.expect_vwabda_vx:
++	.half 1008, -990
++.expect_vwabda_vx_masked:
++	.half 1000, -990
++.expect_vwabdau_vv:
++	.half 1255, 2255
++.expect_vwabdau_vv_masked:
++	.half 1000, 2255
++.expect_vwabdau_vx:
++	.half 1128, 2127
++.expect_vwabdau_vx_masked:
++	.half 1000, 2127
 -- 
 2.39.5
 
