@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330D6C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A10C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3RrM-0005lr-0r; Mon, 07 Sep 2026 01:25:36 -0400
+	id 1x3Rqj-0004x1-D5; Mon, 07 Sep 2026 01:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3RrC-0005UQ-Hp; Mon, 07 Sep 2026 01:25:27 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ id 1x3Rqg-0004wG-LI; Mon, 07 Sep 2026 01:24:54 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3RrA-00087m-0Y; Mon, 07 Sep 2026 01:25:26 -0400
+ id 1x3Rqf-0007u8-2h; Mon, 07 Sep 2026 01:24:54 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdb9D1QcTz7xgm;
- Mon,  7 Sep 2026 07:24:32 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdb9964VzzBqZH;
+ Mon,  7 Sep 2026 07:24:29 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788758672;
- bh=WszpJO1U0TIrQCwbpbtYVrKZeHM5qqJcI9AA5AjsByM=;
+ s=dkim; t=1788758669;
+ bh=vOL17FJv2z28se4xWO4GYv7cQg5RGDjD+Q+FlL96zWA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=C69qni0XZtjNr49yIIREmOyCGfozUR/sHAVC90KpR+NhImOc652uWQl1Ue5FqNGrv
- OtNoHzzbynbBBzRUPOB4QKAVZQLsl//JJIv5Movse9gyXx96nntYXUPcMBaR3EY0ij
- odzxiG/3USlhNjEvHeWmMigEj2oRBVYuMF2eD0aKfNfddeG6h2aCWaBI5iyMWkXIFR
- YwHRorC/uPc/LiC+TM8hvZf9p8ELGUq9VusQDjy1VOFuC30zdGFjLnaPyvwrboW/i7
- MQ1X0pcgB4EuJKZDSFcQDNyY7O4EWKUHYEIoVXw0Gg05BE7c/7XFo5zzxlIBgJidl6
- EXmfOtWwG51fA==
+ b=KvLXYuQooAzU+shRGdrAp6diTJ+6Gt4cNQy43ekfyAAb781oCYc/69vcnTTH1ETE4
+ 260iYy9y0kqLj6ZSIphDzqnJCzMp6pGCTCi/ytDcjgLRVwVuj6KUUJfnHOA2KPxmz7
+ RoytK5V72ryovARMawIWF0vN1DqxjNEiAk9cXJwfFTVXinFinFr8mL17IJRpl4x40A
+ LMfXwyi9q2oP4TlpAhe0ULMmlt4KbHWriP1YE1u3jnt6uvBLd2JVqZSpTMdSBwcrgC
+ rduMqZxzlXC/3LRiZrUGwCFsouvy+drwa+x/WD1dmpM6B60U5k7ZejSK0DkqyB9sKc
+ +8Fr2Qgj7RHNQ==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb9C6PJfz7vyt;
- Mon,  7 Sep 2026 07:24:31 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb994LMFz7xqf;
+ Mon,  7 Sep 2026 07:24:29 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 30/36] hw/misc: add RP2040 bus controller
-Date: Mon,  7 Sep 2026 07:24:18 +0200
-Message-ID: <20260907052426.24849-14-gilles.grimaud@univ-lille.fr>
+ Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Subject: [PATCH v3 24/36] tests/tcg/arm: test RP2040 timer alarm interrupt
+Date: Mon,  7 Sep 2026 07:24:12 +0200
+Message-ID: <20260907052426.24849-8-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
  <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -76,423 +74,159 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/rp2040.c                   |   8 +-
- hw/misc/meson.build               |   1 +
- hw/misc/rp2040_busctrl.c          | 189 ++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h           |   2 +
- include/hw/misc/rp2040_busctrl.h  |  29 +++++
- tests/qtest/meson.build           |   1 +
- tests/qtest/rp2040-busctrl-test.c |  92 +++++++++++++++
- 7 files changed, 321 insertions(+), 1 deletion(-)
- create mode 100644 hw/misc/rp2040_busctrl.c
- create mode 100644 include/hw/misc/rp2040_busctrl.h
- create mode 100644 tests/qtest/rp2040-busctrl-test.c
+ tests/tcg/arm/system/meson.build      |   5 ++
+ tests/tcg/arm/system/rp2040-timer.S   | 116 ++++++++++++++++++++++++++
+ tests/tcg/arm/system/rp2040-timer.ref |   2 +
+ 3 files changed, 123 insertions(+)
+ create mode 100644 tests/tcg/arm/system/rp2040-timer.S
+ create mode 100644 tests/tcg/arm/system/rp2040-timer.ref
 
-diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index c5a15af197..37a9a6d4df 100644
---- a/hw/arm/rp2040.c
-+++ b/hw/arm/rp2040.c
-@@ -142,7 +142,6 @@ static const struct {
-     hwaddr base;
-     hwaddr size;
- } rp2040_unimplemented[] = {
--    { "rp2040.busctrl",  0x40030000, 0x4000 },
-     { "rp2040.spi0",     0x4003c000, 0x4000 },
-     { "rp2040.spi1",     0x40040000, 0x4000 },
-     { "rp2040.i2c0",     0x40044000, 0x4000 },
-@@ -326,6 +325,8 @@ static void rp2040_soc_init(Object *obj)
-     }
- 
-     object_initialize_child(obj, "xip", &s->xip, TYPE_RP2040_XIP);
-+    object_initialize_child(obj, "busctrl", &s->busctrl,
-+                            TYPE_RP2040_BUSCTRL);
- 
-     object_initialize_child(obj, "clocks", &s->clocks, TYPE_RP2040_CLOCKS);
-     object_initialize_child(obj, "dma", &s->dma, TYPE_RP2040_DMA);
-@@ -460,6 +461,11 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-                                 RP2040_XIP_NOCACHE_NOALLOC_BASE,
-                                 &s->xip.xip_nocache_noalloc);
- 
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->busctrl), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->busctrl), 0, RP2040_BUSCTRL_BASE);
-+
-     object_property_set_link(OBJECT(&s->dma), "memory",
-                              OBJECT(s->board_memory), &err);
-     if (err) {
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 47e53fc49e..c0da65c4ce 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -98,6 +98,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
-   'bcm2835_cprman.c',
-   'bcm2835_powermgt.c',
- ))
-+system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_busctrl.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_clocks.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_iobank0.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_ioqspi.c'))
-diff --git a/hw/misc/rp2040_busctrl.c b/hw/misc/rp2040_busctrl.c
+diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+index 494f13995f..d39359419b 100644
+--- a/tests/tcg/arm/system/meson.build
++++ b/tests/tcg/arm/system/meson.build
+@@ -93,6 +93,11 @@ tests += {
+     'qemu_args': rp2040_uart_qemu_args,
+     'expected_output': 'rp2040-core1-launch.ref',
+   },
++  'rp2040-timer.S': {
++    'cflags': rp2040_cflags,
++    'qemu_args': rp2040_uart_qemu_args,
++    'expected_output': 'rp2040-timer.ref',
++  },
+   'semiconsole.c': {
+     'cflags': cflags,
+     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
+diff --git a/tests/tcg/arm/system/rp2040-timer.S b/tests/tcg/arm/system/rp2040-timer.S
 new file mode 100644
-index 0000000000..e82e2e2f0e
+index 0000000000..249df6433a
 --- /dev/null
-+++ b/hw/misc/rp2040_busctrl.c
-@@ -0,0 +1,189 @@
++++ b/tests/tcg/arm/system/rp2040-timer.S
+@@ -0,0 +1,116 @@
 +/*
-+ * RP2040 bus fabric control emulation
++ * Raspberry Pi Pico timer alarm interrupt test.
 + *
++ * Copyright 2026 Gilles Grimaud
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "hw/misc/rp2040_busctrl.h"
-+#include "hw/misc/rp2040.h"
-+#include "migration/vmstate.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
++.syntax unified
++.cpu cortex-m0plus
++.thumb
 +
-+#define BUSCTRL_PRIORITY        0x00
-+#define BUSCTRL_PRIORITY_ACK    0x04
-+#define BUSCTRL_PERFCTR_BASE    0x08
-+#define BUSCTRL_PERFSEL_BASE    0x0c
-+#define BUSCTRL_PERF_STRIDE     0x08
-+#define BUSCTRL_NUM_COUNTERS    4
++#define SRAM_END               0x20042000
++#define TEST_FLAG              0x20000000
++#define UART0_DR               0x40034000
++#define TIMER_BASE             0x40054000
++#define TIMER_ALARM0           0x10
++#define TIMER_RAWL             0x28
++#define TIMER_INTR             0x34
++#define TIMER_INTE             0x38
++#define NVIC_ISER              0xe000e100
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
 +
-+#define BUSCTRL_PRIORITY_MASK   0x00001111
-+#define BUSCTRL_PRIORITY_ACKED  BIT(0)
-+#define BUSCTRL_PERFCTR_MASK    0x00ffffff
-+#define BUSCTRL_PERFSEL_RESET   0x1f
-+#define BUSCTRL_PERFSEL_MASK    0x1f
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++    .rept 12
++    .word default_handler + 1
++    .endr
++    .word timer_irq + 1
 +
-+static uint32_t rp2040_busctrl_read_counter(RP2040BusCtrlState *s,
-+                                            unsigned index)
-+{
-+    if (s->perfsel[index] != BUSCTRL_PERFSEL_RESET &&
-+        s->perfctr[index] != BUSCTRL_PERFCTR_MASK) {
-+        s->perfctr[index]++;
-+    }
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
 +
-+    return s->perfctr[index];
-+}
++    ldr r0, =TEST_FLAG
++    movs r1, 0
++    str r1, [r0]
 +
-+static uint64_t rp2040_busctrl_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    RP2040BusCtrlState *s = opaque;
-+    hwaddr offset = addr & 0xfff;
-+    unsigned index;
-+    uint64_t value;
++    ldr r0, =NVIC_ISER
++    movs r1, 1
++    str r1, [r0]
 +
-+    if (offset >= BUSCTRL_PERFCTR_BASE &&
-+        offset < BUSCTRL_PERFCTR_BASE + BUSCTRL_NUM_COUNTERS *
-+        BUSCTRL_PERF_STRIDE &&
-+        (offset - BUSCTRL_PERFCTR_BASE) % BUSCTRL_PERF_STRIDE == 0) {
-+        index = (offset - BUSCTRL_PERFCTR_BASE) / BUSCTRL_PERF_STRIDE;
-+        return rp2040_busctrl_read_counter(s, index);
-+    }
++    ldr r4, =TIMER_BASE
++    str r1, [r4, TIMER_INTR]
++    str r1, [r4, TIMER_INTE]
++    ldr r2, [r4, TIMER_RAWL]
++    ldr r3, =1000
++    adds r2, r2, r3
++    str r2, [r4, TIMER_ALARM0]
 +
-+    if (offset >= BUSCTRL_PERFSEL_BASE &&
-+        offset < BUSCTRL_PERFSEL_BASE + BUSCTRL_NUM_COUNTERS *
-+        BUSCTRL_PERF_STRIDE &&
-+        (offset - BUSCTRL_PERFSEL_BASE) % BUSCTRL_PERF_STRIDE == 0) {
-+        index = (offset - BUSCTRL_PERFSEL_BASE) / BUSCTRL_PERF_STRIDE;
-+        return s->perfsel[index];
-+    }
++1:
++    ldr r0, =TEST_FLAG
++    ldr r1, [r0]
++    cmp r1, 0
++    beq 1b
 +
-+    switch (offset) {
-+    case BUSCTRL_PRIORITY:
-+        value = s->priority;
-+        break;
-+    case BUSCTRL_PRIORITY_ACK:
-+        value = BUSCTRL_PRIORITY_ACKED;
-+        break;
-+    default:
-+        value = 0;
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented read at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+        break;
-+    }
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
 +
-+    return value;
-+}
++2:
++    b 2b
 +
-+static void rp2040_busctrl_write(void *opaque, hwaddr addr,
-+                                 uint64_t value64, unsigned size)
-+{
-+    RP2040BusCtrlState *s = opaque;
-+    hwaddr alias = addr & RP2040_ATOMIC_ALIAS_MASK;
-+    hwaddr offset = addr & 0xfff;
-+    unsigned index;
-+    uint32_t value = value64;
++.thumb_func
++timer_irq:
++    ldr r0, =TIMER_BASE
++    movs r1, 1
++    str r1, [r0, TIMER_INTR]
++    ldr r0, =TEST_FLAG
++    str r1, [r0]
++    bx lr
 +
-+    if (offset >= BUSCTRL_PERFCTR_BASE &&
-+        offset < BUSCTRL_PERFCTR_BASE + BUSCTRL_NUM_COUNTERS *
-+        BUSCTRL_PERF_STRIDE &&
-+        (offset - BUSCTRL_PERFCTR_BASE) % BUSCTRL_PERF_STRIDE == 0) {
-+        index = (offset - BUSCTRL_PERFCTR_BASE) / BUSCTRL_PERF_STRIDE;
-+        s->perfctr[index] =
-+            rp2040_atomic_update(s->perfctr[index], value, alias) &
-+            BUSCTRL_PERFCTR_MASK;
-+        return;
-+    }
++.thumb_func
++default_handler:
++    ldr r0, =fail_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
 +
-+    if (offset >= BUSCTRL_PERFSEL_BASE &&
-+        offset < BUSCTRL_PERFSEL_BASE + BUSCTRL_NUM_COUNTERS *
-+        BUSCTRL_PERF_STRIDE &&
-+        (offset - BUSCTRL_PERFSEL_BASE) % BUSCTRL_PERF_STRIDE == 0) {
-+        index = (offset - BUSCTRL_PERFSEL_BASE) / BUSCTRL_PERF_STRIDE;
-+        s->perfsel[index] =
-+            rp2040_atomic_update(s->perfsel[index], value, alias) &
-+            BUSCTRL_PERFSEL_MASK;
-+        return;
-+    }
++3:
++    b 3b
 +
-+    switch (offset) {
-+    case BUSCTRL_PRIORITY:
-+        s->priority = rp2040_atomic_update(s->priority, value, alias) &
-+                      BUSCTRL_PRIORITY_MASK;
-+        break;
-+    case BUSCTRL_PRIORITY_ACK:
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented write at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+        break;
-+    }
-+}
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
 +
-+static const MemoryRegionOps rp2040_busctrl_ops = {
-+    .read = rp2040_busctrl_read,
-+    .write = rp2040_busctrl_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
++4:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 5f
++    str r1, [r2]
++    adds r0, 1
++    b 4b
 +
-+static void rp2040_busctrl_reset(DeviceState *dev)
-+{
-+    RP2040BusCtrlState *s = RP2040_BUSCTRL(dev);
-+    int i;
++5:
++    bx lr
 +
-+    s->priority = 0;
-+    for (i = 0; i < BUSCTRL_NUM_COUNTERS; i++) {
-+        s->perfctr[i] = 0;
-+        s->perfsel[i] = BUSCTRL_PERFSEL_RESET;
-+    }
-+}
-+
-+static void rp2040_busctrl_init(Object *obj)
-+{
-+    RP2040BusCtrlState *s = RP2040_BUSCTRL(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &rp2040_busctrl_ops, s,
-+                          "rp2040.busctrl", RP2040_BUSCTRL_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+}
-+
-+static const VMStateDescription rp2040_busctrl_vmstate = {
-+    .name = TYPE_RP2040_BUSCTRL,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(priority, RP2040BusCtrlState),
-+        VMSTATE_UINT32_ARRAY(perfctr, RP2040BusCtrlState, 4),
-+        VMSTATE_UINT32_ARRAY(perfsel, RP2040BusCtrlState, 4),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void rp2040_busctrl_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_legacy_reset(dc, rp2040_busctrl_reset);
-+    dc->vmsd = &rp2040_busctrl_vmstate;
-+}
-+
-+static const TypeInfo rp2040_busctrl_info = {
-+    .name          = TYPE_RP2040_BUSCTRL,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040BusCtrlState),
-+    .instance_init = rp2040_busctrl_init,
-+    .class_init    = rp2040_busctrl_class_init,
-+};
-+
-+static void rp2040_busctrl_register_types(void)
-+{
-+    type_register_static(&rp2040_busctrl_info);
-+}
-+type_init(rp2040_busctrl_register_types)
-diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 05a03655e9..974f3220b5 100644
---- a/include/hw/arm/rp2040.h
-+++ b/include/hw/arm/rp2040.h
-@@ -14,6 +14,7 @@
- #include "hw/core/clock.h"
- #include "hw/core/sysbus.h"
- #include "hw/dma/rp2040_dma.h"
-+#include "hw/misc/rp2040_busctrl.h"
- #include "hw/misc/rp2040_clocks.h"
- #include "hw/misc/rp2040_iobank0.h"
- #include "hw/misc/rp2040_ioqspi.h"
-@@ -56,6 +57,7 @@ struct RP2040State {
- 
-     ARMv7MState armv7m[RP2040_NUM_CORES];
-     PL011State uart[2];
-+    RP2040BusCtrlState busctrl;
-     RP2040ClocksState clocks;
-     RP2040DmaState dma;
-     RP2040IoBank0State iobank0;
-diff --git a/include/hw/misc/rp2040_busctrl.h b/include/hw/misc/rp2040_busctrl.h
++.section .rodata, "a", %progbits
++start_message:
++    .asciz "PICO TCG TIMER START\n"
++ok_message:
++    .asciz "PICO TCG TIMER OK\n"
++fail_message:
++    .asciz "PICO TCG TIMER FAIL\n"
+diff --git a/tests/tcg/arm/system/rp2040-timer.ref b/tests/tcg/arm/system/rp2040-timer.ref
 new file mode 100644
-index 0000000000..5c4a6d6d2b
+index 0000000000..32e6e169b6
 --- /dev/null
-+++ b/include/hw/misc/rp2040_busctrl.h
-@@ -0,0 +1,29 @@
-+/*
-+ * RP2040 bus fabric control emulation
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MISC_RP2040_BUSCTRL_H
-+#define HW_MISC_RP2040_BUSCTRL_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RP2040_BUSCTRL "rp2040-busctrl"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040BusCtrlState, RP2040_BUSCTRL)
-+
-+#define RP2040_BUSCTRL_BASE 0x40030000
-+#define RP2040_BUSCTRL_SIZE 0x4000
-+
-+struct RP2040BusCtrlState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    uint32_t priority;
-+    uint32_t perfctr[4];
-+    uint32_t perfsel[4];
-+};
-+
-+#endif
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 86e72dc4c5..50ef6f0c7d 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -265,6 +265,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_RP2040') ?
-    ['rp2040-syscfg-test',
-      'rp2040-sysinfo-test',
-+    'rp2040-busctrl-test',
-     'rp2040-clocks-test',
-     'rp2040-dma-test',
-     'rp2040-iobank0-test',
-diff --git a/tests/qtest/rp2040-busctrl-test.c b/tests/qtest/rp2040-busctrl-test.c
-new file mode 100644
-index 0000000000..a86fd8a20e
---- /dev/null
-+++ b/tests/qtest/rp2040-busctrl-test.c
-@@ -0,0 +1,92 @@
-+/*
-+ * QTest testcase for the RP2040 bus fabric control block.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#define BUSCTRL_BASE           0x40030000
-+#define BUSCTRL_PRIORITY       0x00
-+#define BUSCTRL_PRIORITY_ACK   0x04
-+#define BUSCTRL_PERFCTR0       0x08
-+#define BUSCTRL_PERFSEL0       0x0c
-+#define BUSCTRL_PERFCTR1       0x10
-+#define BUSCTRL_PERFSEL1       0x14
-+#define BUSCTRL_PRIORITY_MASK  0x00001111
-+#define BUSCTRL_PERFCTR_MASK   0x00ffffff
-+#define BUSCTRL_PERFSEL_RESET  0x1f
-+#define BUSCTRL_PERFSEL_SRAM5  0x05
-+
-+static QTestState *rp2040_start(void)
-+{
-+    return qtest_init("-machine raspi-pico");
-+}
-+
-+static void test_busctrl_reset_values(void)
-+{
-+    QTestState *qts = rp2040_start();
-+
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY_ACK),
-+                    ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL0),
-+                    ==, BUSCTRL_PERFSEL_RESET);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL1),
-+                    ==, BUSCTRL_PERFSEL_RESET);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_busctrl_priority(void)
-+{
-+    QTestState *qts = rp2040_start();
-+
-+    qtest_writel(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY),
-+                    ==, BUSCTRL_PRIORITY_MASK);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY_ACK),
-+                    ==, 1);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_busctrl_perf_counter(void)
-+{
-+    QTestState *qts = rp2040_start();
-+    uint32_t first;
-+    uint32_t second;
-+
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0),
-+                    ==, 0);
-+    qtest_writel(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL0,
-+                 BUSCTRL_PERFSEL_SRAM5);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL0),
-+                    ==, BUSCTRL_PERFSEL_SRAM5);
-+
-+    first = qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0);
-+    second = qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0);
-+    g_assert_cmphex(first, ==, 1);
-+    g_assert_cmphex(second, ==, 2);
-+
-+    qtest_writel(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0,
-+                 BUSCTRL_PERFCTR_MASK);
-+    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0),
-+                    ==, BUSCTRL_PERFCTR_MASK);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/rp2040-busctrl/reset-values",
-+                   test_busctrl_reset_values);
-+    qtest_add_func("/rp2040-busctrl/priority", test_busctrl_priority);
-+    qtest_add_func("/rp2040-busctrl/perf-counter",
-+                   test_busctrl_perf_counter);
-+
-+    return g_test_run();
-+}
++++ b/tests/tcg/arm/system/rp2040-timer.ref
+@@ -0,0 +1,2 @@
++PICO TCG TIMER START
++PICO TCG TIMER OK
 -- 
 2.55.0
 
