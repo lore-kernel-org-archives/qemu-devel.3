@@ -4,91 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0FAC79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D6BC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Yzu-0006FR-8U; Mon, 07 Sep 2026 09:02:54 -0400
+	id 1x3Z2S-0001ho-Rk; Mon, 07 Sep 2026 09:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3Yzd-0006AB-9I
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:38 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3YzY-00050u-OR
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:02:35 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-49b965570d7so41908705e9.0
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:02:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x3Z2P-0001gx-BB
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:05:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x3Z2M-0005F5-1u
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:05:29 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 687Amron3872679
+ for <qemu-devel@nongnu.org>; Mon, 7 Sep 2026 13:05:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cAjzyiuILn6+OaeltpkP/1uSU4XGR9Q/WoMJDwLAAro=; b=hR94l22sgTpgYT6y
+ 5EnDu4EP+22zLAkWAdBInwNrvw2TOfQb/0jEMJuGZOBsQHASh1RpeR8QwmE+/hxt
+ o3KTJjbbmm00YX+UtENsUL6GaMDlHre8WW4en+dOOunOSRlhkr2lg0Qa/+NXnY3R
+ tdV60LRl5EJuCXCnmtN0v/o5zuiZDe41+7RwkNcYH11OpbAQYEU3pWQSGMRzkJCY
+ pUaCinNn/dj+qPbzNL93Lwq/aZVpZz6LOP5LQrmt8UwHwzpnBgN5iLBRse1bRiP2
+ UssN9AxB/fAqepitc3QOp0UaCRKDzx3TsEHoFrOVheyJz69iMo2Ejk+icWpnOD7/
+ BoQ1ig==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghnmj246w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 13:05:23 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e820609d9so580417285a.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788786151; x=1789390951; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xHOpqk1d77YmC+yqfEv/L5VjmCn6NlRjjzjSXGyDKdg=;
- b=rPuM06huWAo/KEz0x+shpOcDwVaifkzXEtQOJv4K1mRQcNJsPFZswAxQkGV/OiDhb/
- 0h1+oPRgwYiURgB6OsfVw2KEbvg96+sgyq/KVrl3fmyNUgwO7FekDTL/oI/Dx2pFsW+C
- kkXb3PTb3gt4gtQyDtOukpaSuNnM8N4gEmhk3+lBEh6c3092Dm7P477UlP7KVdE60vFs
- H1mKKp2xoFTLhraxzkCjaJF7bennpQZTq2vyJVhxkUb/pN9comAZTgpcwSPRqhfoHIPx
- 66kaxg9zXskhYN7l7AlzYU++1BBbpYkCwi/mu4cglIOWQOz9fVo/CzMjBbghi7c6lnyL
- XDbw==
+ d=oss.qualcomm.com; s=google; t=1788786322; x=1789391122; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cAjzyiuILn6+OaeltpkP/1uSU4XGR9Q/WoMJDwLAAro=;
+ b=BYTY++cqioRscfv5By0NSDZC0YsA7BS1FV2RVBn9E993buuzS7ihM6i/5wsHGiZ02r
+ BKnGAWG0FP73d7bumm5YC0OUeKtONIxT6XmHawCoybZj8SfQOHu87LcReQlo/HAG2NKM
+ ehtPNlaMZDuzYamG9GU5K1PEZkD+Lyxw7XDGpCzAj1851whvovGex+QtW6PkRAJdZsjo
+ EuNBURBaZPhBjkNhKpMoJzhcqu8IsB11JgZR99gPxpVhOdFnU7DfN2/U3ze2eNl+txJ4
+ 9irrwtTBl9i+pIZYqhV1TIJIpmWa+MB/0qqBC5P9Yk5cMlyIh1xAZcbv2kF1mbAGxqCW
+ Bd4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788786151; x=1789390951;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xHOpqk1d77YmC+yqfEv/L5VjmCn6NlRjjzjSXGyDKdg=;
- b=nr+HagK2viwvOiIP/VeM4gRU3lApNGkSxM8So5t2hyIMrzjgWhnDAqnI1Lo67z/NIk
- Mu+LV/esNzB/5fMtERo2rnUIuRZ0SIm2RxXE1TLufqhSHmKMCiUz6YwWqA8NfAf6/+Ol
- aTya28e462rat0kVR7JSp8skax/mWS2+O+TBBczcBDhUOP6AIHzGXlxEvPUgSoivWuLL
- s5qsMHY5t9//G3hF647BNn7jhPVxHE7DfMeoUk1r+kmPcSByKahxvBkTUf+UkcG4ueb9
- mQJq+DuDMXHpLOrjwPNfGht3Lnj3jKGWYWbXGIAD6ijbV4j35/V8ZZsCDvu/pUqm7yNv
- N7hg==
+ d=1e100.net; s=20251104; t=1788786322; x=1789391122;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cAjzyiuILn6+OaeltpkP/1uSU4XGR9Q/WoMJDwLAAro=;
+ b=LTOnqDnAUxByD+xBBRz5ewU0y3GevpaO5JPmFuBz3FxuFJWx/PnV1dQQjDDn2Tt431
+ Sr9SKgTqH2/iO8UaD2vmOZsAu0EOrM9s0szCFm5B+2wMXp0PnUWbBLEB7P7HiPxyESWp
+ gskUdcd+hKAvq+PT+hm8tMLVs2X8uvtYPfIFRGQbXBYJtoNtj3Qw7ds12cmBbArKJTJ8
+ YvG8Zulv2/qYZXNBKDSx+mvYsW5uQaNf/T0CdbIAUNkWD/MQaBTI7C/XLJNRIeK62GvO
+ NdPqBLtxwlrtshu0NRXo8+sSLTHuCoqdNUjdAJo1Kg4hj9fPRQ+wz2mxBdcSNuJ0OoQr
+ QXLg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwQ9Z6wbUhIKblaexnjC+GAM2Fjy3HVJCl7aMFDoQas3ZIjqdhpnvQk9NsSb6cXseu1dIJ9gFCYz9+O@nongnu.org
-X-Gm-Message-State: AFuF++l6TZG96tP3GTpEUwv2tsFt5ZphTe6Xe9/PbWdGMV0IAipX8WBe
- ggeWIH0TaZaMafLWeH/Pd/lFaUPVx0Jg8Vd1mcVkjLeYrf0aTlDlTMQ3EO0Z3YRsY78=
-X-Gm-Gg: AYBFou2iIo2fcWBfJQJIQJR89rpcV4vYt9zrM/Pw/vehax8BRNnne23LvPf1I/nw0DJ
- zcpHe1OLC4DKE/CNBxmSY/Sn/qmIUL72FWu5Ma89ToyfIcPTDOLwap9KM/NnUOIxI6l/QgTDE9w
- d3QQokolPjYPo7qi3RB32bND+KnjMLXtQbFwjMhYmHAV0kP6l8TxNq8rC269RCpvdnojfGeZjqL
- tu0K8Dbvio4VEwsQxvktcsH6sqKH/InTRH6CUgrptGXyy3IA4Qtl90Q7m4NZtgPokOIaTc273kV
- MRTrNJ036bj//jQbA0wfiKVRBQQBTlVUjaPvjRkFzL32TMFyiA9qjGOjLnFUZ5DNe4Pq783WvS8
- fZTXZisCI+nCU6psToYuaNEuYxnwm032Pd7+XL6ycOEEJ1UGHk8IYpr8H2DOfzRynNwCtSZ6Qpr
- neeusKaTBdgf50IFmzAhoEnPYRNjBjvhVoYzyS9Fojml42VSM/IHM7qL2hkxmiTJPDKJsUfKV+O
- PmQJPUqaVVgWz9E0tg8d+s4uvnDb54DkRq8xYNzXjwQLzQ4LF0TxfEPqzhT+ZVVeQwOauo2b3lY
- tj5q
-X-Received: by 2002:a05:600d:848e:20b0:495:4d88:e630 with SMTP id
- 5b1f17b1804b1-49cf824f697mr161817485e9.10.1788786151186; 
- Mon, 07 Sep 2026 06:02:31 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ AKwUvBy/LJI1Ai7/cs2bdvk5p0DFmGqKsU4R4K+FR0TiQCsJyAxloJOfOytb6gOykhWUCejQ5/qmxsH5ZryJ@nongnu.org
+X-Gm-Message-State: AFuF++m6GycD3J/SvHF9MJrnBNzmTU7rNAjHGotD+oTEYgZ2JYYHMrKh
+ tiql0hRyD/nuKk7QRjb6WjEULW0QkBA7LasOUXxMd+SWbQzDARjpccVffiaSr5l0CckvX+G/z7O
+ 5ft6xTQAJIF4UEs0ULgfIo+7853MUyjYo39iIV41XcpczHmb7exe/e/elrQ==
+X-Gm-Gg: AYBFou0DlTL/K7VBjWZ4CYGayiJ7Ln7CtCIupSLBIOYb2xogw0aRQg7hUfl6nokbfSd
+ S/HIO2eeZj/zWjWXfOpsfpgPLdwGMa8upDs/IDX0Us6xluyuMopfbsdHhzrcFjEXTUTK648rHyx
+ dPAQkvGBkSEskGA9iJJAVxrC5IB/Ersfk0KxNkVN2EELBd4RvZvEia8qZfC0deCcHREg6wZPWrD
+ sgg5ikDjC3PjJzbjsWxUtxhfrIWJD7/CfbDeP6MNIDhPc48Yswg/3MHrJt7qrV09SPiClb5uwji
+ XdkJUiqZu2+lSAuQiyYfR6JcSf2MLt0G8toNOAdHmghDowStifilpMxy7b0grGQrokgTvo2R4Rv
+ SQpltTvEBx45lf1MnBFEpWhWd295rfufRgkc=
+X-Received: by 2002:a05:620a:870d:20b0:939:6df9:1278 with SMTP id
+ af79cd13be357-939804c0ce4mr1904643485a.51.1788786322422; 
+ Mon, 07 Sep 2026 06:05:22 -0700 (PDT)
+X-Received: by 2002:a05:620a:870d:20b0:939:6df9:1278 with SMTP id
+ af79cd13be357-939804c0ce4mr1904632785a.51.1788786321946; 
+ Mon, 07 Sep 2026 06:05:21 -0700 (PDT)
+Received: from [192.168.68.102] ([177.18.66.131])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee60bae6sm468589935e9.9.2026.09.07.06.02.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 06:02:30 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Tao Ding <dingtao0430@163.com>
-Subject: [PATCH 5/8] target/arm: Move ESR_EL1 definition to
- vmsa_pmsa_cp_reginfo
-Date: Mon,  7 Sep 2026 14:02:20 +0100
-Message-ID: <20260907130223.3148989-6-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260907130223.3148989-1-peter.maydell@linaro.org>
-References: <20260907130223.3148989-1-peter.maydell@linaro.org>
+ af79cd13be357-939b871742esm10173285a.39.2026.09.07.06.05.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Sep 2026 06:05:21 -0700 (PDT)
+Message-ID: <ce444959-912c-47e2-867c-db011473d806@oss.qualcomm.com>
+Date: Mon, 7 Sep 2026 10:05:17 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] target/riscv: extract check_sfence_vma() from
+ helper_tlb_flush()
+To: Trevor Gamblin <tgamblin@baylibre.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
+References: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
+ <20260904-riscv_tlb_page_flush-v2-1-defec3f29312@baylibre.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260904-riscv_tlb_page_flush-v2-1-defec3f29312@baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDE0NCBTYWx0ZWRfX8pMQpmaAwWT4
+ pYL/4yyAcFm3XRzL3Yasz6CvBUtE2nS36x2xcgkN7Sc8BFlZbfMeOKAfBU/2/ZNMzuiTzOgmBj+
+ B7xpjqdBhnQPasP6Je8a7FBqwqUGeycWdAglFLCYjaZWR07Ppmu97FlO1I/xsxw/90FFBza0ZoR
+ mS+bgjgjMN6naYOAcnkczYO81CMKfX6GI7g3/dMjh1OXbOGXpIMPxeZ+3SN4nNFE/0E5mOYrZBR
+ yTYTD1GqBLP0lev16ND2eS50OyCuxNChRBEf5Dp8Xb4wDWRhZVCLZ6UYVrIUtkx/txbvH5IZFTG
+ 8IOfvntvKkmfuyA+wURRsJKuzEjQxDZyW/gaEtDEQarpEma3QoYTAIw9lOMG0py6cAtPN16RIcM
+ EoLUXbKpkL0kd+AwY+vvzghiDqKHK2c7GGMDU0YcBm+5DhkF8xx7tHMoOO9l84XiNXz0EgTakir
+ PQlxe5wVMlQBGMd3Qlw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDE0NCBTYWx0ZWRfX2MJn/u5wcQqY
+ sVtfSvPesFzyyINKa8OLzNAjPVbQIKaqK1/FQ51qZVQ/hjXZGrzvlQAavU34SfUrvzYncKyeGzy
+ EojdZVhCuJa26t2Y3yRPAt/1MTR2aEM=
+X-Proofpoint-ORIG-GUID: m0Wpo23xZqnYs4O6JB31Qi0pkHtYu06Q
+X-Proofpoint-GUID: m0Wpo23xZqnYs4O6JB31Qi0pkHtYu06Q
+X-Authority-Analysis: v=2.4 cv=LZYMLDfi c=1 sm=1 tr=0 ts=6a9eb693 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=IpJZQVW2AAAA:8 a=EUspDBNiAAAA:8 a=fIT3gf-4d1xXVelyxpkA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=IawgGOuG5U0WyFbmm1f5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-07_03,2026-09-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609070144
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,62 +158,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we define ESR_EL1 in vmsa_cp_reginfo[], but ESR_EL1 isn't
-VMSA specific.  This doesn't matter for "is the register visible when
-it should be?", because currently all our AArch64 CPUs are VMSA.  But
-it does matter for migration, because the DFSR definition in
-vmsa_pmsa_cp_reginfo[] is marked ARM_CP_ALIAS on the assumption that
-the migration of cp15.dfsr_ns will be handled by migrating esr_el[1],
-which is the same underlying field in the CPU state.
 
-Move ESR_EL1 to vmsa_pmsa_cp_reginfo[]; this will fix the lack of
-migration of DFSR for R-profile CPUs.  This is a migration break for
-those CPUs, but none of them are used in versioned machine types.
 
-(The S banked DFSR is already migrated, because we register ESR_EL3
-in el3_cp_reginfo[] if EL3 exists, regardless of whether we have VMSA
-or PMSA.)
+On 9/4/2026 3:43 PM, Trevor Gamblin wrote:
+> Create a new function to encapsulate the privilege/hypervisor checks
+> performed inside helper_tlb_flush(). The idea is to pass GETPC() as an
+> argument directly to it inside the helper_tlb_flush() function. We'll
+> use this function in the following patch for helper_tlb_flush_page().
+> 
+> Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
+> ---
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/helper.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 9d8f09f13b4..e4028e0eba6 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2894,6 +2894,14 @@ static void vttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
- }
- 
- static const ARMCPRegInfo vmsa_pmsa_cp_reginfo[] = {
-+    { .name = "ESR_EL1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .crn = 5, .crm = 2, .opc1 = 0, .opc2 = 0,
-+      .access = PL1_RW, .accessfn = access_tvm_trvm,
-+      .fgt = FGT_ESR_EL1,
-+      .nv2_redirect_offset = 0x138 | NV2_REDIR_NV1,
-+      .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 5, 2, 0),
-+      .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 5, 2, 0),
-+      .fieldoffset = offsetof(CPUARMState, cp15.esr_el[1]), .resetvalue = 0, },
-     { .name = "DFSR", .cp = 15, .crn = 5, .crm = 0, .opc1 = 0, .opc2 = 0,
-       .access = PL1_RW, .accessfn = access_tvm_trvm, .type = ARM_CP_ALIAS,
-       .bank_fieldoffsets = { offsetoflow32(CPUARMState, cp15.dfsr_s),
-@@ -2918,14 +2926,6 @@ static const ARMCPRegInfo vmsa_pmsa_cp_reginfo[] = {
- };
- 
- static const ARMCPRegInfo vmsa_cp_reginfo[] = {
--    { .name = "ESR_EL1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 3, .crn = 5, .crm = 2, .opc1 = 0, .opc2 = 0,
--      .access = PL1_RW, .accessfn = access_tvm_trvm,
--      .fgt = FGT_ESR_EL1,
--      .nv2_redirect_offset = 0x138 | NV2_REDIR_NV1,
--      .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 5, 2, 0),
--      .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 5, 2, 0),
--      .fieldoffset = offsetof(CPUARMState, cp15.esr_el[1]), .resetvalue = 0, },
-     { .name = "TTBR0_EL1", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
-       .access = PL1_RW, .accessfn = access_tvm_trvm,
--- 
-2.43.0
+>   target/riscv/tcg/op_helper.c | 16 ++++++++++------
+>   1 file changed, 10 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+> index 3e94005d2b..7f63f3ada5 100644
+> --- a/target/riscv/tcg/op_helper.c
+> +++ b/target/riscv/tcg/op_helper.c
+> @@ -588,21 +588,25 @@ void helper_wrs_nto(CPURISCVState *env)
+>       }
+>   }
+>   
+> -void helper_tlb_flush(CPURISCVState *env)
+> +static void check_sfence_vma(CPURISCVState *env, uintptr_t ra)
+>   {
+> -    CPUState *cs = env_cpu(env);
+>       if (!env->virt_enabled &&
+>           (env->priv == PRV_U ||
+>            (env->priv == PRV_S && get_field(env->mstatus, MSTATUS_TVM)))) {
+> -        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+> +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
+>       } else if (env->virt_enabled &&
+>                  (env->priv == PRV_U || get_field(env->hstatus, HSTATUS_VTVM))) {
+> -        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
+> -    } else {
+> -        tlb_flush(cs);
+> +        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, ra);
+>       }
+>   }
+>   
+> +void helper_tlb_flush(CPURISCVState *env)
+> +{
+> +    CPUState *cs = env_cpu(env);
+> +    check_sfence_vma(env, GETPC());
+> +    tlb_flush(cs);
+> +}
+> +
+>   void helper_tlb_flush_all(CPURISCVState *env)
+>   {
+>       CPUState *cs = env_cpu(env);
+> 
 
 
