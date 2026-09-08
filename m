@@ -4,61 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6542AC79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE30AC79FA0
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rNG-0002eL-OU; Tue, 08 Sep 2026 04:40:15 -0400
+	id 1x3rNu-00038e-6J; Tue, 08 Sep 2026 04:40:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3rNE-0002dp-3l
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:40:12 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3rN9-0007eD-Dn
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:40:11 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6888drXv065841
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 8 Sep 2026 17:39:53 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=GwQUhpvEsFwgECXpE1h2WUzaIrkIEBXgZpZ8qAA2KsA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788856793; v=1;
- b=TFI3vK/z+84MdaixIZlKg/BRReiF7U52kU0rBK56SneD1I5gt6YaHA/ZuljVHJiM
- 2f3Ga4e28KsFOllVojRCJxQXaORC98i/Sas5xMWd1QAI8u/rHm17T3y/tgs3bAEI
- i+9sBqDOQww+C0LDVr21wmIrmb9SbGMcmJsEyQ0qatZr2BGVlgAagDtG93qgjdLe
- ha6p4B4+Rar0AnoH+nkYgLgD/rl1SsZLSaIQpvIGMn5u538zazdjlXolSWUgnUnv
- +qW9fOKI+a+Xy5O8XwfpnXYxgKSoyuwYjXw7CRH7AJkzbSIQikyM5pabhlpU79rI
- SKHPEkR+ygJE6Hac/eju5w==
-Message-ID: <6c1b17a8-d9a5-4238-89af-d121838c525b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 8 Sep 2026 17:39:53 +0900
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3rNl-00037s-6j
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:40:48 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3rNe-0007um-0c
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:40:39 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-861a2ae9c51so49518137b3.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 01:40:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788856836; cv=none;
+ d=google.com; s=arc-20260327;
+ b=stJCCTNqWixt5PmQi+uXZZG1hAYUaUzXVZ+cfEN6UtxTkHBq8i/DVn3D1Cj7HRUXXo
+ OrXpJjWlNVSXeUusuzsie+hAt06JOw+LJlR1VbDpIfyxs0TEyLbSWKhla3R8rbWgWsSc
+ /AkuByIyv2GLbrr8IdTuof+uupZXusRHotT/wZSgWx8dczYFVu64OrQxJZlHrqnufAcX
+ Q7P6cu7pU0q6/Dn0+puPRGPWQFjD02Sy/NXWiYhqCrJIvPx1EJudj3mBqgXvRhzCL/yg
+ B1Opv6+vkxIFWkj3hH3WBvEhQcM0T1l9tHrL8eVUTacib2KPfZVx9MfxgH0sRgwcLxwF
+ 7uQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XCWezoK2vnKZ6w2pTM57qQ4AqMiu3kxh95olZhOADU8=;
+ fh=Dst0vFEtVrFvsxnCJUmAskdwY24haUlqtaHL+byGzvo=;
+ b=JayVvulT62Q17XMy2qhMyFXPzjarz/rn8y9c62lmv07BW2/U51bMTYHnABGeNtt4v7
+ 56biKzv/9em1l/m508PMGq6QKDBMzi87Zma3miJKjzVJn3HutVui587P7/WEDbRps8TX
+ b8YU6CyRDzaT00sSHi6mwoSl2DkCamgv3yNBIkqCOB+aI7bF7rjpWK6cWbDJzP9OwaRo
+ K7Ekro4TqjmlApIENGWaqib2Lc7LRN+xIyFtp8JULtTpVJmI0kwB7WP34s9jyDYeGVDQ
+ VP5/R1EPalbmUX6gKHzCwIaRBv5Paz4/TcOcx6KqaqQm55joMfm6PMLphpdjxhlZyf2r
+ 0v1Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788856836; x=1789461636; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=XCWezoK2vnKZ6w2pTM57qQ4AqMiu3kxh95olZhOADU8=;
+ b=cNMog1DaBDVqfHkFppYSalyzHR7KH2AR73IOp84SVUFhqVASAfG5pHohc8W6f6HOpO
+ pSSKcMqlCNTvuU5IjycfB/yBrHeSnHwSIoNfkdxMLunvoyTz9iqfS4rgxGdhEYvom1Ht
+ dNhHg1u6KLgQbTLhwgfHt9GNC8KHkaDkKWBA2T2IpgtoPCeCMvJCj/mmMwlVDQIelRL0
+ 4oiSqgOD7P35Woq9Drq3cVnqTGV7G2wr3hK5O1Murasg6jtNjAwU/pVaxeboV4xr//hF
+ 0Ndygh3pAsCvknJvn6Z6PZ7ltQWZJ3gUWeyphQ99onfXMwf1bf1BXF1B3sDZ7hVyIIml
+ SOtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788856836; x=1789461636;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XCWezoK2vnKZ6w2pTM57qQ4AqMiu3kxh95olZhOADU8=;
+ b=BsTH1ooekE1wX0fq4bX0OWYwZ7jp2UWHwQk1yc/Dv+57GXMSBTdBYkUpmO+U6AOmNT
+ Cfp4bVOWCkRXFTNN0rQ6fgrdHU1AsLWrYefy1Xe1vpdFMR9CbGTTfMwLvKBVTQNTeYTt
+ 74GABg22XwfwUA3gVPyPyV84XxEnWZ205rs7tW3DjA8k5jJcJpYwyn09OLuIwppeqgJW
+ 0pd7hIsSBij9odCuqixrOu7WsX6YVuDmRSoRQsKSZ9oVjOSEtZ3fZ6aP55CpuVQVkOqP
+ x7UchL2x8nwuodXEAjKaCuxvecMleD2IxE748T65oN8YZJ0CCn1593Bls5dTleu6OYLa
+ oZ8Q==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx93YDNnwLmoUHCs6W1JHY76ZmtnWhmXXwxX32qbOVZpJLiOEDTpsZh768hu1qcBmWFM98i+2BduoTz@nongnu.org
+X-Gm-Message-State: AFuF++miMpOKMMYp9FRsRpNXuYmx10qG8fiG1I7GwjpjMNkeTutJkqKO
+ g436HWyD+REnpxXOSdTfixVBU582ApvqsmXGIvNpAAYZv+nv0Fx4sPCHRx5Az42/Zi/OyrGHweq
+ P/0CLYtSQQ10OMTvGXAab0zdLSqTfWM1q9gSRhTFKCA==
+X-Gm-Gg: AYBFou1SWt2bvmWv3K1XGVCJIGb9i7ccVtBhU515wKrAUrLWk5bsXd9gzHRWsLXf7DA
+ XTjNA9kE5/WhWZLyFM3BQweFvzHFhmM8pTBSZ/WmyRuYnx0TybWPV4Xy5P2UFuUnVbS0U4ia+bW
+ J15sE9elK5KiQEph3rDP15fmdg78yb1V+gZF4qajlDJUAoBxi0J2uEdhfV5Cbx2m9D04Mwj/gVQ
+ uqV9Kc9O3xEmbN3TWsH9xLZ6J2BIfxPvuYljWbGn5x6fV+In1PeTIDhKDFIIoscfZSwrFC+JQEs
+ /jK3B0nhuvmf9T1c7BtM6xmx7nNEVTIgsMmu3LwQ8XBvCIXKWifOihkWA+qyq6uFv3kxcmjTj2Y
+ qsIO1PVBNVaYjpJHw4y4FK8cmRdCCSSrx+8B62eA=
+X-Received: by 2002:a05:690c:f15:b0:873:5bb2:6c26 with SMTP id
+ 00721157ae682-8735bb26d34mr69378877b3.45.1788856835932; Tue, 08 Sep 2026
+ 01:40:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 9/9] docs: Add igb VF migration testing setup guide
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>
-References: <20260902192054.3329753-1-clg@redhat.com>
- <20260902192054.3329753-10-clg@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260902192054.3329753-10-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
+ <20260819145649.23439-7-philmd@oss.qualcomm.com>
+ <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
+ <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
+ <bbe4b7d0-96ad-45d8-a5a9-0be2c5479d51@oss.qualcomm.com>
+ <7766d96b-4065-4917-9d7d-094bd6d1f29c@oss.qualcomm.com>
+ <5aba99f7-5310-4cd3-a38c-3e9b922c8b05@redhat.com>
+In-Reply-To: <5aba99f7-5310-4cd3-a38c-3e9b922c8b05@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 8 Sep 2026 09:40:24 +0100
+X-Gm-Features: AcwNN1XgADVT9nOqmldpUKTR_qO7xqA2v0HWYs9lF_-D-E7d2pSx9oEnFv2OAAU
+Message-ID: <CAFEAcA9tz=Br3dRe3mN1fPkjm4y36eRSWUMs=bU8zDbKczCCsg@mail.gmail.com>
+Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
+ arm_cpu_exec_halt()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,487 +129,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/03 4:20, Cédric Le Goater wrote:
-> Document the igb VF migration interface: DVSEC register layout, dirty
-> page tracking, testing setup with nested virtualization.
-> 
-> AI-used-for: docs
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   MAINTAINERS                           |   1 +
->   docs/system/device-emulation.rst      |   1 +
->   docs/system/devices/igb-migration.rst | 417 ++++++++++++++++++++++++++
->   docs/system/devices/igb.rst           |   6 +
->   4 files changed, 425 insertions(+)
->   create mode 100644 docs/system/devices/igb-migration.rst
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f88b526be238..4a2f1357e936 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2820,6 +2820,7 @@ igb VF migration
->   M: Cédric Le Goater <clg@redhat.com>
->   S: Maintained
->   F: hw/net/igb_migration.*
-> +F: docs/system/devices/igb-migration.rst
->   
->   eepro100
->   M: Stefan Weil <sw@weilnetz.de>
-> diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-> index 40054bb7dfcc..75f423b795cd 100644
-> --- a/docs/system/device-emulation.rst
-> +++ b/docs/system/device-emulation.rst
-> @@ -90,6 +90,7 @@ Emulated Devices
->      devices/cxl.rst
->      devices/emmc.rst
->      devices/igb.rst
-> +   devices/igb-migration.rst
->      devices/ivshmem-flat.rst
->      devices/ivshmem.rst
->      devices/keyboard.rst
-> diff --git a/docs/system/devices/igb-migration.rst b/docs/system/devices/igb-migration.rst
-> new file mode 100644
-> index 000000000000..d72f14f5fe63
-> --- /dev/null
-> +++ b/docs/system/devices/igb-migration.rst
-> @@ -0,0 +1,417 @@
-> +.. SPDX-License-Identifier: GPL-2.0-or-later
-> +.. _igb-migration:
-> +
-> +igb VF Migration
-> +----------------
-> +
-> +Live migration of VFIO-passthrough devices (SR-IOV VFs, vGPUs) is a
-> +growing requirement, but real hardware with migration support is scarce
-> +and hard to debug. An emulated device provides a fully controlled
-> +testbed for developing and validating the entire software stack --
-> +vfio-pci variant drivers, VFIO core migration v2 framework, QEMU,
-> +libvirt -- and for tuning complex migration policies such as downtime
-> +convergence. It also serves as an educational reference for
-> +understanding VFIO migration end-to-end, from device state
-> +serialization to dirty page tracking.
-> +
-> +The igb device supports an experimental VF migration interface that allows
-> +the `igb-vfio-pci`_ variant driver to migrate VF state during live
-> +migration using the standard VFIO migration v2 protocol with stop-copy
-> +and pre-copy support.
-> +
-> +This is enabled with the ``x-vf-migration`` property::
-> +
-> +  -device igb,x-vf-migration=on,...
-> +
-> +Each emulated VF then advertises a DVSEC discovered by the
-> +`igb-vfio-pci`_ variant driver at bind time. This feature is
-> +experimental (``x-`` prefix, default off).
-> +
-> +Architecture
-> +~~~~~~~~~~~~
-> +
-> +The target scenario is nested virtualization::
-> +
-> +  L0 QEMU
-> +    igb PF with x-vf-migration=on
-> +    └── VFs with migration DVSEC
-> +
-> +  L1 kernel
-> +    igb-vfio-pci variant driver
-> +    translates VFIO migration v2 ioctls → DVSEC config writes
-> +
-> +  L1 QEMU (stock, unmodified)
-> +    vfio-pci device model, standard migration fd
-> +
-> +  L2 guest
-> +    standard igbvf driver, unaware of migration
-> +
-> +The L1 QEMU is completely unmodified -- it sees a standard VFIO
-> +migratable device and uses the normal migration fd path. The
-> +`igb-vfio-pci`_ variant driver handles the translation between
-> +VFIO migration v2 ioctls and DVSEC config writes.
-> +
-> +Design
-> +~~~~~~
-> +
-> +The migration interface is exposed through a DVSEC at offset 0x160
-> +in VF extended config space (see `DVSEC register layout`_ below for
-> +the full register map).
-> +
-> +Device state is serialized as a versioned blob of per-VF register
-> +(offset, value) pairs covering control, interrupt, RX/TX queue,
-> +receive address (RA/RA2), etc. plus TX context descriptors and
-> +VFRE/VFTE enable bits. The buffer address is a guest physical address
-> +(GPA) written by the driver via ``virt_to_phys``; the device accesses
-> +guest RAM directly through the system address space.
-> +
-> +Dirty page tracking is implemented with per-range bitmaps maintained
-> +in IGBCore. All VF DMA paths in ``igb_core.c`` (TX data, RX data,
-> +descriptor writeback) are instrumented to record touched pages. The
-> +`igb-vfio-pci`_ variant driver registers tracked IOVA ranges and
-> +queries dirty bitmaps through a shared buffer. Buffer structures
-> +include len, flags, and reserved fields for future extensibility.
-> +
-> +The dirty bitmaps are maintained inside the device, which is not
-> +realistic for discrete NICs without on-chip DRAM.
-> +
-> +DVSEC register layout
-> +~~~~~~~~~~~~~~~~~~~~~
-> +
-> +The migration DVSEC (36 bytes at offset ``0x160``) uses a command
-> +doorbell model. All commands are synchronous -- the device completes
-> +the operation before the config write returns::
-> +
-> +  Offset  Name          Access  Description
-> +  +0x00   ExtCap Hdr    RO      PCIe extended cap (id=0x23, ver=1)
-> +  +0x04   DVSEC Hdr 1   RO      length[31:20] | rev[19:16] | vendor_id[15:0]
-> +  +0x08   DVSEC Hdr 2   RO      DVSEC ID (1)
-> +  +0x0A   Reserved      -       Padding for DWORD alignment
-> +  +0x0C   CAPS          RO      F_STATE[0], F_DIRTY[1], max_ranges[11:8], pgsize[16:12]
-> +  +0x10   CTRL          WO      Doorbell: cmd[7:0], arg[31:8]
-> +  +0x14   STATUS        RO      state[7:0], error_code[15:8], quiesced[16]
-> +  +0x18   BUF_ADDR_LO   RW      Shared DMA buffer GPA (low 32 bits)
-> +  +0x1C   BUF_ADDR_HI   RW      Shared DMA buffer GPA (high 32 bits)
-> +  +0x20   DATA_SIZE     RO      State blob size in bytes
-> +
-> +CTRL commands::
-> +
-> +  Cmd  Name            Arg             Description
-> +  1    SET_STATE       state[31:8]     Set migration state
-> +  2    SAVE            -               DMA-write state to buffer
-> +  3    LOAD            size[31:8]      DMA-read state from buffer
-> +  4    DIRTY_ENABLE    -               Enable dirty tracking (params in DMA buffer)
-> +  5    DIRTY_DISABLE   -               Disable dirty tracking
-> +  6    DIRTY_QUERY     -               Query dirty bitmap (via DMA buffer)
-> +  7    GET_STATS       -               Query statistics (via DMA buffer)
-> +
-> +The driver sets ``BUF_ADDR_LO/HI`` before issuing commands that use a
-> +DMA buffer (SAVE, LOAD, DIRTY_ENABLE, DIRTY_QUERY, GET_STATS). The
-> +buffer address is latched per CTRL write, so the driver can use
-> +different buffers for different commands. The buffer address is a
-> +guest physical address (GPA).
-> +
-> +State transitions follow the VFIO migration v2 state machine. The
-> +driver issues ``SET_STATE`` with the target state in the arg field and
-> +reads ``STATUS`` to confirm the transition. Device states::
-> +
-> +  0  ERROR       1  STOP       2  RUNNING
-> +  3  STOP_COPY   4  RESUMING   5  PRE_COPY
-> +
-> +``DATA_SIZE`` reflects the state blob size. At reset and in ``STOP``
-> +state it holds the maximum size the driver should allocate. After
-> +``SET_STATE(STOP_COPY)`` or ``SAVE`` it holds the actual serialized
-> +size. The driver reads it after entering ``STOP_COPY`` to allocate an
-> +exact-sized DMA buffer before issuing ``SAVE``.
-> +
-> +The state blob is a versioned sequence of register (offset, value)
-> +pairs with magic ``0x4D494742`` ("MIGB").
-> +
-> +When ``STATUS`` state is ``ERROR`` (0), bits [15:8] contain an error
-> +code identifying the failure::
-> +
-> +  1   UNK_CMD           Unknown CTRL command
-> +  2   BAD_STATE         Command issued in wrong migration state
-> +  3   NO_BUFFER         Command requires buffer but BUF_ADDR not set
-> +  4   DMA_FAILED        DMA transfer to/from buffer failed
-> +  5   BAD_SIZE          State blob too large or empty
-> +  6   BAD_MAGIC         State blob magic mismatch
-> +  7   BAD_VERSION       State blob version mismatch
-> +  8   TOO_MANY_RANGES   Exceeds max_ranges from CAPS
-> +  9   BAD_RANGE         Invalid range (zero size, misaligned, not contained)
-> +  10  BAD_PGSIZE        Invalid or misaligned page size
-> +  11  NOT_ENABLED       Dirty query without prior enable
-> +
-> +Dirty page tracking
-> +~~~~~~~~~~~~~~~~~~~
-> +
-> +The migration interface supports per-VF dirty page tracking, advertised
-> +by the ``F_DIRTY`` flag (bit 1) in ``CAPS``. This allows the variant
-> +driver to enter ``PRE_COPY`` state while the VM continues to run,
-> +iterating on dirty pages to reduce the final stop-and-copy window.
-> +
-> +The device maintains one dirty tracking engine per range, each with its
-> +own bitmap scoped to the range boundaries. The ``CAPS`` register
-> +advertises the maximum number of ranges in bits [11:8].
-> +
-> +Dirty tracking is controlled through CTRL commands:
-> +
-> +- **DIRTY_ENABLE** (4): the driver fills an ``igb_mig_dirty_enable_req``
-> +  struct in the DMA buffer with the page size, range IOVA, and range
-> +  size, then issues the command. The device allocates a bitmap for the
-> +  range and begins recording pages touched by DMA. Supported page sizes
-> +  are advertised in ``CAPS`` bits [16:12] (bit N = 2^N bytes). The driver
-> +  checks ``STATUS`` for errors after the command completes.
-> +- **DIRTY_DISABLE** (5): tears down all ranges and stops tracking.
-> +- **DIRTY_QUERY** (6): the driver writes (iova, size) into the
-> +  ``igb_mig_dirty_query`` DMA buffer, then issues the command. The
-> +  device validates the range, copies the dirty bitmap into the buffer,
-> +  and clears the tracked bits after successful DMA. The driver checks
-> +  ``STATUS`` for errors after the command.
-> +
-> +Dirty enable DMA buffer
-> +~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +The ``DIRTY_ENABLE`` command reads its parameters from the DMA buffer.
-> +The ``len`` field holds the total structure size (including reserved
-> +bytes) so the device can detect newer formats. ``flags`` and
-> +``reserved`` must be zero::
-> +
-> +  Offset  Field        Type      Description
-> +  0x00    len          uint32    Structure size in bytes
-> +  0x04    flags        uint32    Reserved, must be 0
-> +  0x08    pgsize       uint64    Page granularity (must match a CAPS pgsize bit)
-> +  0x10    range_iova   uint64    Tracked range start address
-> +  0x18    range_size   uint64    Tracked range size in bytes
-> +  0x20    reserved[4]  uint32    Reserved, must be 0
-> +
-> +Dirty query DMA buffer
-> +~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +The ``DIRTY_QUERY`` command uses a shared DMA buffer for both request
-> +and response. The ``len`` field holds the total buffer size (header +
-> +bitmap). ``flags`` and ``reserved`` must be zero::
-> +
-> +  Offset  Field              Written by  Description
-> +  0x00    len                driver      Total buffer size in bytes
-> +  0x04    flags              driver      Reserved, must be 0
-> +  0x08    iova               driver      Query range start
-> +  0x10    size               driver      Query range size
-> +  0x18    bitmap_size        device      Bytes written to bitmap
-> +  0x1C    dirty_page_count   device      Number of set bits
-> +  0x20    dma_writes         device      DMA write count (diagnostic)
-> +  0x28    reserved[6]        -           Reserved, must be 0
-> +  0x40    bitmap[]           device      Dirty page bitmap
-> +
-> +Migration statistics
-> +~~~~~~~~~~~~~~~~~~~~
-> +
-> +The ``GET_STATS`` command DMA-writes a statistics response into the
-> +driver-provided buffer. The driver sets ``BUF_ADDR_LO/HI`` and issues
-> +the command; the device writes the response and returns::
-> +
-> +  Offset  Field                Type      Description
-> +  0x00    dma_writes           uint64    DMA write operations tracked
-> +  0x08    dma_bytes            uint64    DMA bytes written
-> +  0x10    dirty_pages_set      uint32    Dirty pages marked since enable
-> +  0x14    dirty_pages_cleared  uint32    Dirty pages cleared by queries
-> +  0x18    dirty_page_count     uint32    Current dirty pages (set - cleared)
-> +  0x1C    dirty_query_count    uint32    Number of QUERY operations
-> +
-> +The variant driver exposes these via debugfs at
-> +``/sys/kernel/debug/vfio/<device>/migration/dirty/stats``.
-> +
-> +Testing setup
-> +~~~~~~~~~~~~~
-> +
-> +The target scenario is nested virtualization: L0 runs QEMU with an
-> +igb PF (``x-vf-migration=on``), L1 runs the `igb-vfio-pci`_ variant
-> +driver and an unmodified QEMU, and L2 runs a standard igbvf driver.
-> +See `Architecture`_ above for the full stack diagram.
-> +
-> +NetworkManager configuration
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +In a nested setup, the L1 VMs (source and destination) have emulated
-> +igb PFs connected to the L0 bridge. By default, NetworkManager
-> +acquires DHCP leases on those PF interfaces and on any igb VFs created
-> +later. This causes the VF MAC address to be learned on the L0 bridge,
-> +which can misdirect iperf3 traffic after migration.
-> +
-> +To prevent this, configure NetworkManager on **both L1 VMs** and on the
-> +**L2 guest disk image**.
-> +
-> +L1 VMs (source and destination)
-> +...............................
-> +
-> +1. Prevent NetworkManager from managing igbvf interfaces:
-> +
-> +.. code-block:: bash
-> +
-> +   cat > /etc/NetworkManager/conf.d/99-no-igbvf.conf <<EOF
-> +   [keyfile]
-> +   unmanaged-devices=driver:igbvf
-> +   EOF
-> +
-> +2. Disable IP on the igb PF connections (keep the interfaces UP for
-> +   bridging, but with no DHCP lease):
-> +
-> +.. code-block:: bash
-> +
-> +   # Identify the NM connections for the igb PFs (NOT the virtio management NIC)
-> +   nmcli -t -f NAME,DEVICE connection show
-> +
-> +   # For each igb PF connection:
-> +   nmcli connection modify "<igb-pf-connection>" ipv4.method disabled ipv6.method disabled
-> +
-> +3. Reload NetworkManager:
-> +
-> +.. code-block:: bash
-> +
-> +   nmcli general reload
-> +
-> +L2 guest disk image
-> +...................
-> +
-> +Use ``virt-customize`` to add the igbvf unmanaged config to the guest
-> +image (offline, before any test run):
-> +
-> +.. code-block:: bash
-> +
-> +   virt-customize -a /srv/migration/rhel10.qcow2 \
-> +     --write /etc/NetworkManager/conf.d/99-no-igbvf.conf:'[keyfile]
-> +   unmanaged-devices=driver:igbvf'
-> +
-> +Network diagram
-> +^^^^^^^^^^^^^^^
-> +
-> +The diagram below shows the nested setup where the source and
-> +destination hosts are themselves VMs (L1) running on a physical
-> +host (L0) that emulates the igb NIC::
-> +
-> +  ┌────────────────────────────────────────────────────────────────────────────┐
-> +  │  L0: physical host                                                         │
-> +  │                                                                            │
-> +  │  virbr0  192.168.199.1/24                                                  │
-> +  │  ├── NFS server: /srv/migration                                            │
-> +  │  └── iperf3 client: iperf3 -c 192.168.199.200 -t 60 -i 1                   │
-> +  │      │                                                                     │
-> +  │      │  L0 virbr0 bridge (192.168.199.0/24)                                │
-> +  │  ────┼──────────┬──────────────────┬──────────────────────────────         │
-> +  │      │          │                  │                                       │
-> +  │      │     ┌────┴────┐        ┌────┴────┐                                  │
-> +  │      │     │ virtio  │        │ emulated│                                  │
-> +  │      │     │c0:ff:ee:│        │  igb PF │    L0 QEMU (vm6)                 │
-> +  │      │     │ :00:06  │        │ + igbvf │    tracks DMA dirty pages        │
-> +  │      │     └────┬────┘        └────┬────┘                                  │
-> +  │      │          │                  │                                       │
-> +  │  ┌───┼──────────┼──────────────────┼──────────────────────────────────┐    │
-> +  │  │   │  L1: vm6 (source)           │                                  │    │
-> +  │  │   │  enp1s0: 192.168.199.6      │                                  │    │
-> +  │  │   │  (management)               │                                  │    │
-> +  │  │   │                        enp8s0 (igb PF, no IP)                  │    │
-> +  │  │   │                             │                                  │    │
-> +  │  │   │                        igb VF0 ──► igb-vfio-pci (VFIO)         │    │
-> +  │  │   │                             │      dirty_sync → L0 igbvf       │    │
-> +  │  │   │                             │                                  │    │
-> +  │  │   │   virbr0                    │ VFIO passthrough                 │    │
-> +  │  │   │   192.168.200.1/24          │                                  │    │
-> +  │  │   │       │                     │                                  │    │
-> +  │  │   │  ┌────┼─────────────────────┼───────────────────────────┐      │    │
-> +  │  │   │  │    │  L2: rhel10 guest   │                           │      │    │
-> +  │  │   │  │    │                     │                           │      │    │
-> +  │  │   │  │  virtio NIC           igb VF (enp7s0)                │      │    │
-> +  │  │   │  │  192.168.200.130/24   192.168.199.200/24             │      │    │
-> +  │  │   │  │  (SSH login)          (iperf3 data path)             │      │    │
-> +  │  │   │  │                          │                           │      │    │
-> +  │  │   │  │            iperf3 -s -D  │ (listens on 0.0.0.0)      │      │    │
-> +  │  │   │  └──────────────────────────┼───────────────────────────┘      │    │
-> +  │  │   │                             │                                  │    │
-> +  │  │   │  virsh migrate --live ──────┼──────────────────► vm7           │    │
-> +  │  │   │                             │                                  │    │
-> +  │  └───┼─────────────────────────────┼──────────────────────────────────┘    │
-> +  │      │                             │                                       │
-> +  │      │          iperf3 traffic     │                                       │
-> +  │      └─────────────────────────────┘                                       │
-> +  │                                                                            │
-> +  │  ────────────────────────────────────────────────────────────────          │
-> +  │      │                  │                                                  │
-> +  │      │     ┌────────┐   │   ┌─────────┐                                    │
-> +  │      │     │ virtio │   │   │emulated │    L0 QEMU (vm7)                   │
-> +  │      │     │c0:ff:ee│   │   │ igb PF  │                                    │
-> +  │      │     │ :00:07 │   │   │ + igbvf │                                    │
-> +  │      │     └────┬───┘   │   └────┬────┘                                    │
-> +  │  ┌──────────────┼───────┼────────┼────────────────────────────────────┐    │
-> +  │  │   L1: vm7 (destination)       │                                    │    │
-> +  │  │   enp1s0: 192.168.199.7       │                                    │    │
-> +  │  │   (management)           enp8s0 (igb PF, no IP)                    │    │
-> +  │  │                               │                                    │    │
-> +  │  │                          igb VF0 ──► igb-vfio-pci (VFIO)           │    │
-> +  │  │                               │                                    │    │
-> +  │  │   virbr0                      │ VFIO passthrough                   │    │
-> +  │  │   192.168.200.1/24            │                                    │    │
-> +  │  │       │                       │                                    │    │
-> +  │  │  ┌────┼───────────────────────┼────────────────────────────┐       │    │
-> +  │  │  │    │  L2: rhel10 (after migration)                      │       │    │
-> +  │  │  │    │                       │                            │       │    │
-> +  │  │  │  virtio NIC             igb VF (enp7s0)                 │       │    │
-> +  │  │  │  192.168.200.130/24     192.168.199.200/24              │       │    │
-> +  │  │  │                            │                            │       │    │
-> +  │  │  │              iperf3 -s -D  │ (connection survives)      │       │    │
-> +  │  │  └────────────────────────────┼────────────────────────────┘       │    │
-> +  │  └───────────────────────────────┼────────────────────────────────────┘    │
-> +  │                                  │                                         │
-> +  │      iperf3 traffic resumes ─────┘                                         │
-> +  │      (same IP, same MAC, same L2 segment → transparent to client)          │
-> +  └────────────────────────────────────────────────────────────────────────────┘
-> +
-> +Migration under iperf3 load works correctly: dirty page tracking
-> +converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
-> +STOP_COPY), and STOP_COPY stays under 250ms.
-> +
-> +Todo
-> +~~~~
-> +
-> +1. Add migration blocker when ``x-vf-migration=on`` (no VMState yet) or
-> +   add VMState support for L0 migration (dirty bitmaps, tracking
-> +   engines, DVSEC registers, stats)
-> +2. Add PRE_COPY state transfer to validate device INIT data (magic,
-> +   version, etc.)
-> +3. Add qtests for migration state machine transitions, dirty page
-> +   tracking
-> +
-> +Ideas
-> +~~~~~
-> +
-> +1. **RX bandwidth throttle** (``x-mig-rx-limit``, uint32, default 0)
-> +
-> +   Return false from ``can_receive`` when the per-VF packet count in the
-> +   current tracking interval exceeds the limit. Reduces DMA writes and
-> +   dirty pages realistically.
-> +
-> +2. **Migration phase timing** (GET_STATS extension)
-> +
-> +   Add per-VF timestamps: ``precopy_start_ns``, ``stopcopy_start_ns``,
-> +   ``precopy_duration_ns``, ``stopcopy_duration_ns``,
-> +   ``state_transition_count``. Expose via GET_STATS.
-> +
-> +3. **Hot page simulation** (``x-mig-hot-pages``, uint32, default 0)
-> +
-> +   Re-set the first N bitmap bits after each DIRTY_QUERY, simulating
-> +   workloads with hot pages that prevent convergence.
-> +
-> +4. **Error injection** (``x-mig-inject-error``, uint32, default 0)
-> +
-> +   One-shot error code injection before command dispatch. A separate
-> +   ``x-mig-inject-dma-fail`` (bool) for persistent DMA failure testing.
-> +
-> +AI disclaimer
-> +~~~~~~~~~~~~~
-> +
-> +Claude was used to analyze the IGB PF and VF internal state and
-> +identify the pain points of a working live migration of such devices.
-> +The generated code served as a starting point but *significant* time
-> +was then spent cleaning up, reworking, and shaping it into a clear,
-> +reviewable IGB model extension.
+On Mon, 7 Sept 2026 at 22:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> On 9/2/26 20:02, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>> On the other hand, if we do have the BQL in exec_halt
+> >>> then why is the x86 implementation explicitly taking
+> >>> the BQL when it calls apic_poll_irq()?
+> >
+> > Trying harder, my understanding is apic_poll_irq() only requires
+> > the BQL for the apic_update_irq() call, not apic_sync_vapic().
+> >
+> > So maybe only apic_sync_vapic() belongs to process_async_events(),
+> > leaving apic_update_irq() to transition_halt_to_exec().
+> >
+> > Paolo does that sound like going in the good direction?
+> Unfortunately not, because apic_update_irq() is needed to call
+> cpu_interrupt() and break out of halt.
+>
+> By the way... cpu_has_work_after_processing_async_events() is a bit
+> long, what about simply cpu_poll_while_halted()?
+>
+> Answering Peter's question above, the way in which the code is protected
+> against the BQL is basically two-fold: 1) kicking the CPU out of
+> whatever it's doing, for example in tcg_handle_interrupt, 2) changing
+> what other conditions affect cpu_has_work() only in the vCPU thread,
+> e.g. with run_on_cpu.
 
-I don't think it's really a good idea to keep this "AI disclaimer" in 
-the documentation.
+Ah, so it is called without the BQL held? That's quite unusual
+for CPU methods, so we should clearly document that. I bet
+also that most targets don't expect it. Picking one at
+random, the sparc has_work function calls e.g. cpu_interrupts_enabled()
+which does not look like a function that is expecting to be called
+without the BQL.
 
-> +
-> +.. _igb-vfio-pci: https://github.com/legoater/vfio-pci-extras
-> diff --git a/docs/system/devices/igb.rst b/docs/system/devices/igb.rst
-> index 50f625fd77e4..00271dbc92c3 100644
-> --- a/docs/system/devices/igb.rst
-> +++ b/docs/system/devices/igb.rst
-> @@ -64,6 +64,12 @@ command:
->   
->     pyvenv/bin/meson test --suite thorough func-x86_64-netdev_ethtool
->   
-> +VF Migration (experimental)
-> +===========================
-> +
-> +See :ref:`igb-migration` for details on the experimental VF live migration
-> +interface.
-> +
->   References
->   ==========
->   
+Is it OK for a has_work function to just take the BQL across
+what it's doing if it doesn't want to be bothered with trying
+to make the handling truly thread safe without a lock? That
+seems to me like it would be a lot simpler and more reliable.
 
+-- PMM
 
