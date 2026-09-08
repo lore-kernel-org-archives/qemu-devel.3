@@ -4,62 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9C4C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C38C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qmN-00017m-PN; Tue, 08 Sep 2026 04:02:08 -0400
+	id 1x3qou-0001rt-Mg; Tue, 08 Sep 2026 04:04:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3qmL-00017U-JO
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:02:05 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
+ id 1x3qon-0001of-S7
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:04:40 -0400
+Received: from smarthost4.eviden.com ([80.78.11.85])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3qmH-0002xc-6v
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:02:05 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68881mY9027549
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 8 Sep 2026 17:01:48 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=i3tMWTt7PzrIjwsxR2r72ThQhszAuk6/El5qOEV5HoA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788854508; v=1;
- b=JnAXbXMSlIGTPtKI5JpG+WlQ8qv22nwCb6D9FvNxUmopb5k8cUVPtM7GSHzhQbWB
- mPb7zEo6EKWaoHinQT3R8NbIgE8auT9HuvcYG6Z4q5KJAOlKXXDNDObGqZHU0gG8
- hqGFqDMvtZNfMcfe9COSYQCcr4+TOKW+SMLeu6NhU82tqwD8a5HPXx1lAWjtnXFw
- 3EhkpcIKbuABTeCfXTZGPA4HuVE9gPFCC0ubYoulbxLPM26LmAVVlt8gwYCTQZUW
- h6dkAt1wboeMfzaaS+R9Zk1jn1TOGO/wtB3oSIUqyb9WBqWnBWiRBsebKq6EhIZ4
- eMkqH0EcGlmN3mJ7/tLSfw==
-Message-ID: <846e77a1-56df-4d14-a1ee-d6c6489a2bcb@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 8 Sep 2026 17:01:48 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 3/9] igb: Add VF state serialization for live
- migration
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>
-References: <20260902192054.3329753-1-clg@redhat.com>
- <20260902192054.3329753-4-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
+ id 1x3qok-0003AD-BR
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:04:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=bull.com; i=@bull.com; q=dns/txt; s=mail;
+ t=1788854674; x=1820390674;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=sGxrxyZSc5gKHfNzSTgM21Rz4o6ZSrmU19MKiiWaWc0=;
+ b=BB1kzs/7ST4RwdbPGZzvVU44t/tuCLAZQhkGTq955LCRs5B2nFyYCrC9
+ bilsBoEw6dYZ6cCYYApGbvlaEB8uIWJnRpp2g/D8lygETWzhLRwECghMp
+ XS/tSfF57yOfA4T3S9ULOa8UlvaB00sjKMD5815N0QWXrC+D8+bIM4X8x
+ P656dCoBDAnI+8lNjx/rbCpdXL4I7MGYOpmrumJ8EIHtJ5HSiSS2hVcam
+ ecWTKzuo9tG9R9FQvniVXKLvRuKOmp1XuORE220SZE9BiWZegkNtmd62r
+ ccsxHHXTF1U8Zd03sQ9G3CmHuhLt3UHq3AUhuHkImP+wMb6+IvS5L7IUy w==;
+X-CSE-ConnectionGUID: +hUWxhbCRMaBTMHEgwlKPA==
+X-CSE-MsgGUID: bokS+uVBSRiPbSvTlOqUeg==
+IronPort-SDR: 6a9fc18c_7yIkl4tPGu6AJfAOkZVSkgiknwxnbw1x7zwxyMP0nRzDbKm
+ /P54ADcTPBiXCKG4zF8uYZsFUODUSKZc7nMQUDQ==
+X-IronPort-AV: E=Sophos;i="6.25,268,1779141600"; d="scan'208";a="50830448"
+X-MGA-submission: =?us-ascii?q?MDESY4Jur7/YdQN8cGnkw8GtDNe1jGkBCvFILQ?=
+ =?us-ascii?q?9hyohScVZsIyI4qS2xzFaT00l2AirKfbkjPWQueoomVFGKWXSUTg89MH?=
+ =?us-ascii?q?cPOcMoJCi6Qd3bHcvg2ILgqu9TTmgHVUWBdVPhcd/BAahjZ2HcLLCdLl?=
+ =?us-ascii?q?PMzYn4DqkZqBrbkHdbf9me3Q=3D=3D?=
+Received: from mail-westeuropeazon11010019.outbound.protection.outlook.com
+ (HELO AM0PR83CU005.outbound.protection.outlook.com) ([52.101.69.19])
+ by smarthost4.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 08 Sep 2026 10:04:27 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=O//Nu+acUO9l5vOUbqnoMzkFt4ChrjnHRsPj0RZnm3R0jHK24VYdtNLeT7un1DH62Zl9YGcEPVK7qoA2GjYh0h5C4X5baxaNCh/khYQg/g7suHxSO202b8wEs6QEJrDwGfLo2BhtvdBTEOyrEPgjTG6xooVOfgyT/qQ9s/uET6kFfz+Xk8D5RRY2Tx4Wuw4sEsrSx0nlKeI9DTrINt/q262yrfCxq0r4EEN/9i262NJuRxE3S6eUNi3TCooHVBZPLSItNTSv3z2tbdDiFKKdbfbzt3rgSNvtaVUMReLPtQ6OX+pt+9w8xPTox/hJR6TxGxpitT8duPhE9Xkvu6zXvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sGxrxyZSc5gKHfNzSTgM21Rz4o6ZSrmU19MKiiWaWc0=;
+ b=tE0yP+GjHUXe4RQaR8fTHry2AbKJoAwHeUhPbAv2EpnnPPAipuj9c5jkL+Q77rd3rmAAUXQnWCdJy51htpJ9naB/GlXkEVOC/idYanAf0Xe70yXCKWcf9mJPIyQ0siGOGt8XM3cBd9aP+CyCI93+JjTbtG/UU15KqSbssHWHDhDB0fQi43LS9WabQkgrkqUmJBKI0Y6IpoE/JYynbJJ7ct0aBoAXZ/9vbrH922moNGB6ry0iB+DjVEX11qwVJzVrv/MV9pv94RD+NthDFM/RF4QBiJaGS21k0E/O0xkSLkG9MxQ2tfeIfIfkFHMe2k1HKYq9qrKsxgm3J35C4SQccw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
+ dkim=pass header.d=bull.com; arc=none
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by BESPR07MB10652.eurprd07.prod.outlook.com (2603:10a6:b10:ed::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
+ 2026 08:04:23 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.21.0382.014; Tue, 8 Sep 2026
+ 08:04:23 +0000
+From: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
+ <clement.mathieu--drif@bull.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowangio@gmail.com" <jasowangio@gmail.com>, "Tian, Kevin"
+ <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>
+Subject: Re: [PATCH v1] intel_iommu: Support concurrent page fault handling
+ with PRI
+Thread-Topic: [PATCH v1] intel_iommu: Support concurrent page fault handling
+ with PRI
+Thread-Index: AQHdO7Orx/6HOHEK7kiJZZLQqCFugLbER87AgAASHIA=
+Date: Tue, 8 Sep 2026 08:04:23 +0000
+Message-ID: <9c94e7a7ed4f84eb9bed8b6ab2c709dcdde79988.camel@bull.com>
+References: <20260903145044.2245609-1-clement.mathieu--drif@bull.com>
+ <DS4PPF93A1BBECDE07BE6A9E338055C18B892B12@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
+In-Reply-To: <DS4PPF93A1BBECDE07BE6A9E338055C18B892B12@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
+Accept-Language: en-GB, fr-FR, en-US
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260902192054.3329753-4-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|BESPR07MB10652:EE_
+x-ms-office365-filtering-correlation-id: 4be7f371-606f-47a2-ab08-08df0d7fcb90
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|23010399003|38070700021|6133799003|3023799007|10067099003|4143699003|11063799006|56012099006|18002099003|22082099003;
+x-microsoft-antispam-message-info: WNbvXfUd/KmVMD/Ke/q3iGxeWuEvIYa8s+5Zmfr7hvdhIVotnjP7Sr9yWHPU0DY5IKrbkHHqDnnJRiQw4bMYhJhGA41ghSYaaNT0//fkAeuKACUrG9WTNO2pobnmj5t4z6yR0sjOtSQBVEygWz3woeSm+iS397YUOgUI3FOAgE0nDwc+r73/Am9xy96JZKYjMuSHj+rUtXFZKD7Xk+Bvyg20eTmsmlwTlXO7VpMU6RumUx/1ZYxqYcLNgl6u/5GpTHC4uX6DRpZT18FNedsVAeGKJLBWWmtvsRc4WQmphdvBaaPv5gxuggfkN3UhGCm9emnpIdrh5o9W7i3GMLDYbsxoNLHhwgZlsrKtvSH6U2wtjL0A/u29hw1SYU0K2jZOyNFNsunRaUlUnCzVbPgUiAVbdCmTTBbxoVDcPBjpYa/Rtm9yNzM6RVNNSee4pFS0lam5kPGtph/Tcdt6veH90Ff/QvM7uhQuD5I5AvgaHpQREqwl6pWSAi1XIpvMzv8eqgX2hsEWnWHQyVdYAdd2m45s/q03lHVoUnzfT0d8S86+ckIDl5tdzQ3Dt4Eej7NSyMPJ74Yog7pjVw61hvuRIwjwVUk0CJ6W/hdbQPJVsVyPESCQtXnnrx55yt1Xucfb2xKtD090YE2jnkJ3bj05iDbsxNMVzSOQaCIqseD5ykJHtWnNsjZxzQ4tbu2Y3G7HnyKYziXgaQhyVYo2MByaiw==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(38070700021)(6133799003)(3023799007)(10067099003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TnZTNC84UURaVlFkZmd6ZW9WSVJ6R1pxdnhPVmpRMXlUS3VMSEloSm5MZ285?=
+ =?utf-8?B?RlRzQkxSRDJyUzZhYzl1TlN0QVROaENCRkNIdEVhL0JNeW9mQldLQXpWcjlh?=
+ =?utf-8?B?ay9aWWU0VXhtTkJ0VnpuZDR1V2Z1ZFdQdFFvMVhYWmh4RE0wb1VZb3p2a0V1?=
+ =?utf-8?B?ZmhjS292dFVNckJja013ZGNjeWFDV2dQQmM5OUhsYmE2RGpXTkhyYXVHUU9o?=
+ =?utf-8?B?SjVNRjBtL2V6SldYdUNFejR5b25nOWRUbUtGdDB4bFJVOWZuZ3I1QUZaTkRU?=
+ =?utf-8?B?REViQnlPMEg1dVlsamd5bnJZSS9iV3JSaXRORU4vRFpSVWxxL2dzNzZrUEhW?=
+ =?utf-8?B?Z0twakFyaFF4d3FpVHZKMEFJcjhkZzQ2aVNPUlgzWWMxdTBkaElDN29JTFFK?=
+ =?utf-8?B?ZnZFZFpGdWkvTkFKWGo2emx1Z0c2RG50d3pPNFpuaTJsMzJiRzI3YTAweTFJ?=
+ =?utf-8?B?QUpCcUFac1pJeWJNU21wMjVsdHovZjlvSjArV05DUW1XU0k4VCtKVmZwM091?=
+ =?utf-8?B?RVNMRE5UUUluY1R5V1Y5aHpwb2VSc2pIa1d5Qlc4eWJydGpESG1zLzhSSGhP?=
+ =?utf-8?B?VlVIaUdzcFpTazQxbVZsdWIyeWNZamVCanZZbENhOXBSaWp6RmpzM3BvZEE5?=
+ =?utf-8?B?V1cyZWQycWdNYnJacldLTGZXUU1pY2Q4OGtCZm4vSDFVcm9IMzJnS1VBS2Jw?=
+ =?utf-8?B?TFRHN3dRNGlVSFBRcVQ2S0ZnTTdqTXZpdkMzMHBrZjBuYkFnUDhMeFJYQmFp?=
+ =?utf-8?B?Sk9nTkEvMkxKdFRuWDltUk83aWEzQ3BwRHRSL05NSmo3cGpnYnZ3TnN6TS9u?=
+ =?utf-8?B?eEszbEJTbDNEOUt1d3p6MUV5Z21JNEljcDZBQ2JPU0lmSHBJZFVTS0U0UDd5?=
+ =?utf-8?B?clVkQkVoM01TaDEwOFJjRGRwakVscDgrNTVEZzFHcDBydVpVRzdsbTNiUWZR?=
+ =?utf-8?B?QlpKNEtzNkRoMFhKekJHZGp5SnhsWVZlWHZzSFdFSXBIdFQ2Y2s5RWg3S1RE?=
+ =?utf-8?B?d0JlK1VpS29zNVJDcWk5K3pCOGNaLzZoTHFISTJxdEtGOWVTTVZQRStsbDE1?=
+ =?utf-8?B?QWNJbllzTDg1RzBlcFlxY1crRmFMMkVvWUdwWW5aNXAzUzhqS0pLdzBnR2Vy?=
+ =?utf-8?B?SUcyS0pGbFFlRHhzN1JwVkM4enh3S3hnWUVTZHJoeUFhbytHSzlLZlQvZm9D?=
+ =?utf-8?B?Uk1wb1RmbmNsQjV2bUREUkxLY3FmdnhnQkNLU1VNdy93c1F4ZVc2aDhlYXY5?=
+ =?utf-8?B?LzY3bVVuV0JkY1BpeGxOdHZieURXL0hBeEtzMCswcjI2Y254ZzJ4NG00RTlU?=
+ =?utf-8?B?eXh0M0NWOEk2SjR6TlhNTWt2ZnFqbE03MmtqTjdPbUp1WDJTdHpIRkgxUWhu?=
+ =?utf-8?B?c1Q0c0ErcDFKZDBxbGMyczdhalVGc29CS3VYeDZFa1E3Vm1lSDZ3RUFCVUZw?=
+ =?utf-8?B?ano0a0dRbGtnaWtia2daUmZTTmRubjhwSzh3QjljWUZwNmxtZStCMW9qZW02?=
+ =?utf-8?B?ZXFXRXVGL2hqbWo3VmJqTW02RU1jTWJzNjgxZUVJVE1wVWdHaS80RmJLOTM5?=
+ =?utf-8?B?L2wwQ0lRKzluREJuaWo5aDJ0blVSTDRPZGlMWUlmTjQ1ai9tTUFOa0tGbVVT?=
+ =?utf-8?B?M3pBbDRuNm0vKzFaYnNmZ1FYdFcxUmtyR1Y5WUR6b2o1YUJnYXZKSSsyVkpC?=
+ =?utf-8?B?TGZBb1cxUkkxZHRkK3RaU3k1eU9kSlpBMWVVZFhOYW5XN1NvcURydGpTQnhh?=
+ =?utf-8?B?ZElEUFV0ZGNzMzNLOFFVNDNoNEYxWkpyWHdPOG95NWt1TXhZY003U3h2VVVQ?=
+ =?utf-8?B?RmJ4RFQzemUxVDZLeUlQZVF0TlNzK0RCc3RCc3NwZm9YS3c1dEs0cW96a2VJ?=
+ =?utf-8?B?ZFpvWGdpaVNmcmwzalNJeGNhZXZUVVJvU1RPQzA5UDlxeFgvOC9zZFEzVkxt?=
+ =?utf-8?B?UnZHazBSL0NWdHNUYWtBQTN1YlJIRWFtRnF6dGUvYkZzZEdObXhyb2h1d1U3?=
+ =?utf-8?B?R04zdzgrTVcrVVRLRHloNE5GdVVDcWNLUHc1MnQrVTdEZmtjdUZrL2hwYUhC?=
+ =?utf-8?B?b2hIcGE3eFJhc2s4LzlHaWZxVXdnQVFzb2ViZG9NTytDNUtydXRKdDdzTFJ2?=
+ =?utf-8?B?NXh4SFUzWENvQW9sZlF3OUQvNlZUYU9VYW1oUDJlVFNEWks5Sms4cGNtTjRo?=
+ =?utf-8?B?ZzliU2RYT3NacWI0Nzc0eExuaEdwYmd5Q3pxMklEbVoveWFya1Fsd0Q3SzEy?=
+ =?utf-8?B?b3RLc2VrQ3hhTUxjMFdjbFNhb3VobUtpZ284T3pIcndRM1BMbjYyOUJBKzEy?=
+ =?utf-8?B?MjEwTktUR3hnRngrbU5xSVZCbmowVUhrNE1OMUhEL2FBM1ZtTW1tdlNOaTRN?=
+ =?utf-8?Q?fd7o5wXkCy19uq7Xl8jjUChtw9wKpAnsaMa6b?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <4A9364F21BA3D84AB64A3BB0F0FA869D@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: RU7ze6IHcYrKBTRAH8GSfMuRnLuZL2WWmr7XNNUJyqA/pqa/p/DEEkHBZQEzzPnwKlRytlcNn+aGwybxHMS56YdS9uwPyvZ+fGNDtYW0DtVfVeKmNKQX+78zTHlAOuxOZmgtK6ZFYwALUj0PGxpmzrvrgWaE0B6MPHYFQFfWu1Rfr444X6y+aHd5U02XFiLiEfJ8Z2vVJv8ssCV11FdsadIttzzY1mrbDfEavxZUhUh36Sto+xYHxhzd9rd09vwTHjrMPD6nF1jxSyas2tqqRwmsTYlD1slxHClcoqBUkYnCeEfcYZAmL3VjEG4r0fBnL7i1PnU4TI2xkx0pDm2gTw==
+X-OriginatorOrg: bull.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4be7f371-606f-47a2-ab08-08df0d7fcb90
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Sep 2026 08:04:23.6587 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: I45LYQ3T9+2Vp8jSIeVGngb9KYuMa78i7QvlhuHCrQuTPWSh9LQ2LzVEgOw4YVD2tX3a4vMrbNJ6CqzP/eMszeC6nS52pZxGDbY/VT3IuSE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BESPR07MB10652
+Received-SPF: pass client-ip=80.78.11.85;
+ envelope-from=clement.mathieu--drif@bull.com; helo=smarthost4.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,474 +178,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/09/03 4:20, Cédric Le Goater wrote:
-> Implement per-VF state serialization and deserialization for the SAVE
-> and LOAD commands. The wire format consists of a header (magic,
-> version, VF number, register count), per-VF register offset/value
-> pairs from a whitelist, RA table entries owned by the VF, and TX
-> queue contexts.
-> 
-> Register offsets are relocated on load so a VF can migrate to a
-> different VF number on the destination. RA pool ownership bits are
-> swapped accordingly.
-> 
-> AI-used-for: analysis, code (prototype)
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/net/igb_core.h      |   2 +
->   hw/net/igb_migration.h |   2 +
->   hw/net/igb.c           |   5 +
->   hw/net/igb_migration.c | 347 ++++++++++++++++++++++++++++++++++++++++-
->   4 files changed, 354 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-> index d70b54e318f1..60724e2824ab 100644
-> --- a/hw/net/igb_core.h
-> +++ b/hw/net/igb_core.h
-> @@ -143,4 +143,6 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
->   void
->   igb_start_recv(IGBCore *core);
->   
-> +IGBCore *igb_pf_get_core(void *pf);
-> +
->   #endif
-> diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
-> index ea40ac65c54b..b2f601e74346 100644
-> --- a/hw/net/igb_migration.h
-> +++ b/hw/net/igb_migration.h
-> @@ -73,6 +73,8 @@
->   #define IGB_MIG_ERR_NO_BUFFER           3
->   #define IGB_MIG_ERR_DMA_FAILED          4
->   #define IGB_MIG_ERR_BAD_SIZE            5
-> +#define IGB_MIG_ERR_BAD_MAGIC           6
-> +#define IGB_MIG_ERR_BAD_VERSION         7
->   
->   /* Shared buffer constants */
->   #define IGB_VF_STATE_MAX_SIZE           4096
-> diff --git a/hw/net/igb.c b/hw/net/igb.c
-> index 7268e5473fc3..f39f2bc3a04e 100644
-> --- a/hw/net/igb.c
-> +++ b/hw/net/igb.c
-> @@ -133,6 +133,11 @@ void igb_vf_reset(void *opaque, uint16_t vfn)
->       igb_core_vf_reset(&s->core, vfn);
->   }
->   
-> +IGBCore *igb_pf_get_core(void *pf)
-> +{
-> +    return &IGB(pf)->core;
-> +}
-> +
->   static bool
->   igb_io_get_reg_index(IGBState *s, uint32_t *idx)
->   {
-> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-> index 8e7e6fac9b9b..c34035974620 100644
-> --- a/hw/net/igb_migration.c
-> +++ b/hw/net/igb_migration.c
-> @@ -10,18 +10,241 @@
->   #include "qemu/log.h"
->   #include "hw/pci/pci_device.h"
->   #include "hw/pci/pcie.h"
-> +#include "net/eth.h"
-> +#include "net/net.h"
->   #include "igb_common.h"
-> +#include "igb_core.h"
->   #include "igb_migration.h"
->   #include "system/address-spaces.h"
->   #include "trace.h"
->   
-> +static IGBCore *igbvf_get_core(IgbVfState *s)
-> +{
-> +    return igb_pf_get_core(pcie_sriov_get_pf(PCI_DEVICE(s)));
-> +}
-> +
->   /*
->    * Per-VF state serialization / deserialization
->    */
->   
-> +#define IGB_MIG_BLOB_MAGIC        0x4D494742  /* "MIGB" */
-> +#define IGB_MIG_BLOB_VERSION      1
-> +
-> +typedef struct IgbMigRegPair {
-> +    uint32_t offset;
-> +    uint32_t value;
-> +} IgbMigRegPair;
-> +
-> +typedef struct IgbMigTxCtx {
-> +    uint32_t ctx_desc[8];         /* 2 × adv_tx_context_desc (4 dwords each) */
-> +    uint32_t first_cmd_type_len;
-> +    uint32_t first_olinfo_status;
-> +    uint32_t first;
-> +    uint32_t skip_cp;
-> +} IgbMigTxCtx;
-> +
-> +#define IGB_VF_MAX_FIXED_REGS     64
-> +#define IGB_VF_MAX_RA_REGS        48  /* (16 + 8) RA entries × 2 (RAL+RAH) */
-> +
-> +typedef struct IgbMigBlob {
-> +    uint32_t magic;
-> +    uint32_t version;
-> +    uint32_t vfn;
-> +    uint32_t num_regs;
-> +    IgbMigRegPair regs[IGB_VF_MAX_FIXED_REGS];
-> +    uint32_t num_ra;
-> +    IgbMigRegPair ra[IGB_VF_MAX_RA_REGS];
-> +    uint32_t num_tx_ctx;
-> +    IgbMigTxCtx tx_ctx[2];
-> +} IgbMigBlob;
-> +
-> +#define IGB_MIG_BLOB_SIZE            sizeof(IgbMigBlob)
-> +
-> +QEMU_BUILD_BUG_ON(IGB_MIG_BLOB_SIZE > IGB_VF_STATE_MAX_SIZE);
-> +
-> +/* Register offsets that constitute a VF's state slice */
-> +static int igb_vf_reg_list(uint16_t vfn, uint32_t *offsets)
-> +{
-> +    int n = 0;
-> +    int q0 = vfn;
-> +    int q1 = vfn + IGB_NUM_VM_POOLS;
-> +
-> +    /* Per-VF control and interrupt registers */
-> +    offsets[n++] = E1000_PVTCTRL(vfn) >> 2;
-> +    offsets[n++] = E1000_PVTEICS(vfn) >> 2;
-> +    offsets[n++] = E1000_PVTEIMS(vfn) >> 2;
-> +    offsets[n++] = E1000_PVTEIMC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVTEIAC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVTEIAM(vfn) >> 2;
-> +    offsets[n++] = E1000_PVTEICR(vfn) >> 2;
-> +
-> +    /* Per-VF statistics */
-> +    offsets[n++] = E1000_PVFGPRC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGPTC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGORC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGOTC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFMPRC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGPRLBC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGPTLBC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGORLBC(vfn) >> 2;
-> +    offsets[n++] = E1000_PVFGOTLBC(vfn) >> 2;
-> +
-> +    /*
-> +     * Mailbox control registers only - the 16-dword payload buffer
-> +     * (VMBMEM) is transient and drained on quiesce.
-> +     */
-> +    offsets[n++] = E1000_V2PMAILBOX(vfn) >> 2;
-> +    offsets[n++] = E1000_P2VMAILBOX(vfn) >> 2;
-> +
-> +    /* Per-VF config */
-> +    offsets[n++] = E1000_VMOLR(vfn) >> 2;
-> +    offsets[n++] = E1000_VMVIR(vfn) >> 2;
-> +    offsets[n++] = E1000_PSRTYPE(vfn) >> 2;
-> +
-> +    /*
-> +     * VF receive addresses (RA/RA2) are saved dynamically in
-> +     * igb_core_vf_save_state by scanning for entries whose pool
-> +     * bits match this VF - the PF driver chooses the RA slot.
-> +     */
-> +
-> +    /* Interrupt routing */
-> +    offsets[n++] = (E1000_VTIVAR + vfn * 4) >> 2;
-> +    offsets[n++] = (E1000_VTIVAR_MISC + vfn * 4) >> 2;
-> +
-> +    /*
-> +     * EITR (Extended Interrupt Throttle Register) - 3 vectors per VF.
-> +     * Each VF has 3 MSI-X vectors, each with its own EITR controlling
-> +     * interrupt coalescing. Without saving these, interrupt
-> +     * throttling resets to zero after migration which can cause
-> +     * interrupt storms or latency changes. VF N uses PF EITR indices
-> +     * (22 - N*3) .. (24 - N*3).
-> +     */
-> +    {
-> +        int eitr_base = 22 - vfn * 3;
-> +        offsets[n++] = E1000_EITR(eitr_base) >> 2;
-> +        offsets[n++] = E1000_EITR(eitr_base + 1) >> 2;
-> +        offsets[n++] = E1000_EITR(eitr_base + 2) >> 2;
-> +    }
-> +
-> +    /* RX and TX queue registers for queues q0 and q1 */
-> +#define ADD_QUEUE_REGS(q) do { \
-> +    offsets[n++] = E1000_RDBAL(q) >> 2; \
-> +    offsets[n++] = E1000_RDBAH(q) >> 2; \
-> +    offsets[n++] = E1000_RDLEN(q) >> 2; \
-> +    offsets[n++] = E1000_SRRCTL(q) >> 2; \
-> +    offsets[n++] = E1000_RDH(q) >> 2; \
-> +    offsets[n++] = E1000_RDT(q) >> 2; \
-> +    offsets[n++] = E1000_RXDCTL(q) >> 2; \
-> +    offsets[n++] = E1000_RXCTL(q) >> 2; \
-> +    offsets[n++] = E1000_RQDPC(q) >> 2; \
-> +    offsets[n++] = E1000_TDBAL(q) >> 2; \
-> +    offsets[n++] = E1000_TDBAH(q) >> 2; \
-> +    offsets[n++] = E1000_TDLEN(q) >> 2; \
-> +    offsets[n++] = E1000_TDH(q) >> 2; \
-> +    offsets[n++] = E1000_TDT(q) >> 2; \
-> +    offsets[n++] = E1000_TXDCTL(q) >> 2; \
-> +    offsets[n++] = E1000_TXCTL(q) >> 2; \
-> +    offsets[n++] = E1000_TDWBAL(q) >> 2; \
-> +    offsets[n++] = E1000_TDWBAH(q) >> 2; \
-> +} while (0)
-> +
-> +    ADD_QUEUE_REGS(q0);
-> +    ADD_QUEUE_REGS(q1);
-> +#undef ADD_QUEUE_REGS
-> +
-> +    g_assert(n <= IGB_VF_MAX_FIXED_REGS);
-> +    return n;
-> +}
-> +
-> +/*
-> + * Scan RA and RA2 arrays for receive address entries assigned to
-> + * this VF. The PF driver picks the RA slot, so we cannot use a
-> + * fixed index - instead check each entry's pool bits.
-> + */
-> +static int igb_core_vf_save_ra(IGBCore *core, uint16_t vfn,
-> +                               IgbMigRegPair *regs)
-> +{
-> +    uint32_t vf_pool_bit = E1000_RAH_POOL_1 << vfn;
-> +    int n = 0;
-> +    static const struct {
-> +        uint32_t base;
-> +        int count;
-> +    } ra_banks[] = {
-> +        { RA,  16 },
-> +        { RA2,  8 },
-> +    };
-> +
-> +    for (int i = 0; i < ARRAY_SIZE(ra_banks); i++) {
-> +        for (int j = 0; j < ra_banks[i].count; j++) {
-> +            uint32_t ral_off = ra_banks[i].base + j * 2;
-> +            uint32_t rah_off = ra_banks[i].base + j * 2 + 1;
-> +            uint32_t rah_val = core->mac[rah_off];
-> +
-> +            if ((rah_val & E1000_RAH_AV) && (rah_val & vf_pool_bit)) {
-> +                regs[n].offset = cpu_to_le32(ral_off);
-> +                regs[n].value = cpu_to_le32(core->mac[ral_off]);
-> +                n++;
-> +                regs[n].offset = cpu_to_le32(rah_off);
-> +                regs[n].value = cpu_to_le32(rah_val);
-> +                n++;
-> +            }
-> +        }
-> +    }
-> +    return n;
-> +}
-> +
-> +static void igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
-> +                                    IgbMigTxCtx *tx)
-> +{
-> +    struct igb_tx *src = &core->tx[queue];
-> +
-> +    memcpy(tx->ctx_desc, src->ctx, sizeof(tx->ctx_desc));
-> +    tx->first_cmd_type_len = cpu_to_le32(src->first_cmd_type_len);
-> +    tx->first_olinfo_status = cpu_to_le32(src->first_olinfo_status);
-> +    tx->first = cpu_to_le32(src->first);
-> +    tx->skip_cp = cpu_to_le32(src->skip_cp);
-> +}
-> +
->   static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
->   {
-> -    int size = 0;
-> +    int size = IGB_MIG_BLOB_SIZE;
-> +    IGBCore *core = igbvf_get_core(s);
-> +    IgbMigBlob *blob = buf;
-> +    uint32_t offsets[IGB_VF_MAX_FIXED_REGS];
-> +    int num_regs;
-> +    int q0 = s->vfn;
-> +    int q1 = s->vfn + IGB_NUM_VM_POOLS;
-> +
-> +    /*
-> +     * Save PVT shadow registers (PVTEIMS/PVTEIAC/PVTEIAM) instead of
-> +     * extracting from PF aggregates - the L1 PF driver may have
-> +     * transiently cleared EIMS via EIMC. The load path ORs them back.
-> +     */
-> +    num_regs = igb_vf_reg_list(s->vfn, offsets);
-> +
-> +    if (!buf) {
-> +        return size;
-> +    }
-> +
-> +    if (size > buf_size) {
-> +        return -IGB_MIG_ERR_BAD_SIZE;
-> +    }
-> +
-> +    blob->magic = cpu_to_le32(IGB_MIG_BLOB_MAGIC);
-> +    blob->version = cpu_to_le32(IGB_MIG_BLOB_VERSION);
-> +    blob->vfn = cpu_to_le32(s->vfn);
-> +
-> +    blob->num_regs = cpu_to_le32(num_regs);
-> +    for (int i = 0; i < num_regs; i++) {
-> +        blob->regs[i].offset = cpu_to_le32(offsets[i]);
-> +        blob->regs[i].value = cpu_to_le32(core->mac[offsets[i]]);
-> +    }
-> +
-> +    blob->num_ra = cpu_to_le32(igb_core_vf_save_ra(core, s->vfn, blob->ra));
-
-The serialized state contains RA entries but excludes VFTA/VLVF and 
-MTA/UTA state. A guest-configured VLAN therefore resumes on a 
-destination lacking its filter membership: packets are rejected by the 
-global VLAN check or have their VF queue removed  in 
-igb_receive_assign(),. Likewise, restored VMOLR.ROMPE cannot receive 
-subscribed multicast without its MTA hash bits. These are 
-guest-requested settings communicated through the PF mailbox, and the 
-resumed guest does not recreate them automatically.
-
-> +
-> +    blob->num_tx_ctx = cpu_to_le32(2);
-> +    igb_core_vf_save_tx_ctx(core, q0, &blob->tx_ctx[0]);
-> +    igb_core_vf_save_tx_ctx(core, q1, &blob->tx_ctx[1]);
->   
->       trace_igbvf_mig_save_state(s->vfn, size);
->       return size;
-> @@ -29,11 +252,131 @@ static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
->   
->   static int igb_core_vf_max_data_size(IgbVfState *s)
->   {
-> -    return sizeof(s->mig.mig_data);
-> +    int size = igb_core_vf_save_state(s, NULL, 0);
-> +
-> +    g_assert(size > 0 && size <= IGB_VF_STATE_MAX_SIZE);
-> +    return size;
-> +}
-> +
-> +static void igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
-> +                                    const IgbMigTxCtx *tx)
-> +{
-> +    struct igb_tx *dst = &core->tx[queue];
-> +
-> +    /*
-> +     * Preserve the destination's tx_pkt - it's a host-side object,
-> +     * not guest state
-> +     */
-> +    memcpy(dst->ctx, tx->ctx_desc, sizeof(dst->ctx));
-> +    dst->first_cmd_type_len = le32_to_cpu(tx->first_cmd_type_len);
-> +    dst->first_olinfo_status = le32_to_cpu(tx->first_olinfo_status);
-> +    dst->first = le32_to_cpu(tx->first);
-> +    dst->skip_cp = le32_to_cpu(tx->skip_cp);
-> +}
-> +
-> +static uint32_t igb_vf_relocate_offset(uint32_t offset,
-> +                                       const uint32_t *src_offsets,
-> +                                       const uint32_t *dst_offsets,
-> +                                       int num_offsets)
-> +{
-> +    for (int i = 0; i < num_offsets; i++) {
-> +        if (src_offsets[i] == offset) {
-> +            return dst_offsets[i];
-> +        }
-> +    }
-> +    return 0;
->   }
->   
->   static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
->   {
-> +    IGBCore *core = igbvf_get_core(s);
-> +    uint32_t src_offsets[IGB_VF_MAX_FIXED_REGS];
-> +    uint32_t dst_offsets[IGB_VF_MAX_FIXED_REGS];
-> +    int q0 = s->vfn;
-> +    int q1 = s->vfn + IGB_NUM_VM_POOLS;
-> +
-> +    if (size < IGB_MIG_BLOB_SIZE) {
-> +        return -IGB_MIG_ERR_BAD_SIZE;
-> +    }
-> +
-> +    const IgbMigBlob *blob = buf;
-> +
-> +    uint32_t magic = le32_to_cpu(blob->magic);
-> +    uint32_t version = le32_to_cpu(blob->version);
-> +    uint32_t saved_vfn = le32_to_cpu(blob->vfn);
-> +    uint32_t num_regs = le32_to_cpu(blob->num_regs);
-> +
-> +    if (magic != IGB_MIG_BLOB_MAGIC) {
-> +        return -IGB_MIG_ERR_BAD_MAGIC;
-> +    }
-> +    if (version != IGB_MIG_BLOB_VERSION) {
-> +        return -IGB_MIG_ERR_BAD_VERSION;
-> +    }
-> +    if (num_regs > IGB_VF_MAX_FIXED_REGS) {
-> +        return -IGB_MIG_ERR_BAD_SIZE;
-> +    }
-> +
-> +    uint32_t num_ra = le32_to_cpu(blob->num_ra);
-> +    if (num_ra > IGB_VF_MAX_RA_REGS) {
-> +        return -IGB_MIG_ERR_BAD_SIZE;
-> +    }
-> +
-> +    int num_offsets = igb_vf_reg_list(saved_vfn, src_offsets);
-> +    igb_vf_reg_list(s->vfn, dst_offsets);
-> +
-> +    for (uint32_t i = 0; i < num_regs; i++) {
-> +        uint32_t src_off = le32_to_cpu(blob->regs[i].offset);
-> +        uint32_t value = le32_to_cpu(blob->regs[i].value);
-> +        uint32_t offset = igb_vf_relocate_offset(src_off,
-> +            src_offsets, dst_offsets, num_offsets);
-> +        if (!offset) {
-> +            return -IGB_MIG_ERR_BAD_SIZE;
-> +        }
-> +
-> +        core->mac[offset] = value;
-> +
-> +        /*
-> +         * Sync EITR to eitr_guest_value[] shadow array, stripping
-> +         * E1000_EITR_CNT_IGNR so guest register readback returns the
-> +         * correct value.
-> +         */
-> +        if (offset >= EITR0 && offset < EITR0 + IGB_INTR_NUM) {
-> +            core->eitr_guest_value[offset - EITR0] =
-> +                value & ~E1000_EITR_CNT_IGNR;
-> +        }
-> +    }
-> +
-> +    /*
-> +     * MSI-X table/PBA is not saved - L1's VFIO reprograms it with
-> +     * destination-specific IRTE references after migration.
-> +     */
-> +
-> +    uint32_t src_pool = E1000_RAH_POOL_1 << saved_vfn;
-> +    uint32_t dst_pool = E1000_RAH_POOL_1 << s->vfn;
-> +
-> +    for (uint32_t i = 0; i < num_ra; i++) {
-> +        uint32_t offset = le32_to_cpu(blob->ra[i].offset);
-> +        uint32_t value = le32_to_cpu(blob->ra[i].value);
-> +
-> +        /* RAH entries: swap pool ownership bits */
-> +        if (offset >= RA && offset < RA + 32 && (offset - RA) % 2 == 1) {
-> +            value = (value & ~src_pool) | dst_pool;
-> +        }
-> +        if (offset >= RA2 && offset < RA2 + 16 && (offset - RA2) % 2 == 1) {
-> +            value = (value & ~src_pool) | dst_pool;
-> +        }
-> +
-> +        core->mac[offset] = value;
-
-Please validate RA offsets before writing core->mac. A valid-sized LOAD 
-blob with one RA entry and an out-of-range offset produces an 
-out-of-bounds 32-bit host write. LOAD reads this blob directly from 
-guest RAM. Please validate all offsets and saved_vfn before modifying state.
-
-This loop also changes the VF pool bit but preserves the source RA slot. 
-A valid VF0→VF1 migration onto a destination already using VF0 
-overwrites destination VF0’s primary MAC entry. Linux assigns the 
-primary entry as rar_entry_count - (vf + 1); receive filtering consumes 
-these slots directly in igb_receive_assign(). Thus the unrelated 
-destination VF loses unicast reception. Existing destination entries 
-owned by the migrating VF are also left behind.
-
-Regards,
-Akihiko Odaki
-
-> +    }
-> +
-> +    uint32_t num_tx = le32_to_cpu(blob->num_tx_ctx);
-> +    if (num_tx != 2) {
-> +        return -IGB_MIG_ERR_BAD_SIZE;
-> +    }
-> +
-> +    igb_core_vf_load_tx_ctx(core, q0, &blob->tx_ctx[0]);
-> +    igb_core_vf_load_tx_ctx(core, q1, &blob->tx_ctx[1]);
-> +
->       trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
->       return 0;
->   }
-
+DQpPbiBUdWUsIDIwMjYtMDktMDggYXQgMDc6MDEgKzAwMDAsIER1YW4sIFpoZW56aG9uZyB3cm90
+ZToNCj4gQ2F1dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRzIG9y
+IGNsaWNrIGxpbmtzLCB1bmxlc3MgdGhpcyBlbWFpbCBjb21lcyBmcm9tIGEga25vd24gc2VuZGVy
+IGFuZCB5b3Uga25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0KPiANCj4gDQo+IA0KPiA+IC0tLS0t
+T3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4gRnJvbTogQ2zDqW1lbnQgTUFUSElFVS0tRFJJRiA8
+W2NsZW1lbnQubWF0aGlldS0tZHJpZkBidWxsLmNvbV0obWFpbHRvOmNsZW1lbnQubWF0aGlldS0t
+ZHJpZkBidWxsLmNvbSk+DQo+ID4gU3ViamVjdDogW1BBVENIIHYxXSBpbnRlbF9pb21tdTogU3Vw
+cG9ydCBjb25jdXJyZW50IHBhZ2UgZmF1bHQgaGFuZGxpbmcgd2l0aCBQUkkNCj4gPiANCj4gPiBQ
+UlEgc2xvdCBhbGxvY2F0aW9uIG11c3QgYmUgdGhyZWFkIHNhZmUgdG8gYXZvaWQgcG9zdGluZyBt
+dWx0aXBsZQ0KPiA+IGNvbW1hbmRzIGluIHRoZSBzYW1lIHNsb3Qgc28gd2UgdGFrZSBhIGxvY2sg
+aW4gdnRkX3ByaV9yZXF1ZXN0X3BhZ2UuDQo+ID4gDQo+ID4gVGhpcyBhbGxvd3MgbXVsdGlwbGUg
+ZGV2aWNlcyB0byBjYWxsIHRoZSBwYWdlIHJlcXVlc3QgaW50ZXJmYWNlDQo+ID4gb2YgdGhlIHNh
+bWUgaW9tbXUgaW5zdGFuY2UuDQo+IA0KPiANCj4gQXJlbid0IHRoZXNlIGRldmljZXMnIGVtdWxh
+dGlvbnMgc2VyaWFsaXplZCBieSBCUUw/DQo+IA0KDQpIaSwNCg0KTm90IHJlYWxseSwgZW11bGF0
+ZWQgZGV2aWNlcyBjYWxsaW5nIHRoZSBQUkkgaW50ZXJmYWNlICANCmFyZSBkaXNjb3VyYWdlZCBm
+cm9tIHRha2luZyB0aGUgQlFMIHRvIGF2b2lkIGRlYWRsb2Nrcy4gIA0KQSBkZXZpY2UncyBETUEg
+bW9kdWxlIGlzIGxpa2VseSB0byBoYXZlIGFuIGludGVybmFsIGxvY2suICANClRoZSBmb2xsb3dp
+bmcgY29uY3VycmVudCBwYXRocyBjYW4gbGVhZCB0byBkZWFkbG9ja3M6DQoNCi0gRE1BIGxvY2sg
+LT4gLi4uIGludGVybmFsIGxvZ2ljIC0+IEJRTCBsb2NrICsgUFJJIHJlcXVlc3QNCi0gUFJJIHJl
+c3BvbnNlIC0+IE1NSU8gd2l0aCBCUUwgaW4gVlQtZCAtPiBQUkkgbm90aWZpZXIgLT4gRE1BIGxv
+Y2sNCg0KRE1BIGxvY2sgYW5kIEJRTCB0YWtlbiBpbiByZXZlcnNlIG9yZGVyLg0KDQpUaGFua3Ms
+ICANCmNtZA0KDQo+IA0KPiANCj4gPiBTaWduZWQtb2ZmLWJ5OiBDbGVtZW50IE1hdGhpZXUtLURy
+aWYgPFtjbGVtZW50Lm1hdGhpZXUtLWRyaWZAYnVsbC5jb21dKG1haWx0bzpjbGVtZW50Lm1hdGhp
+ZXUtLWRyaWZAYnVsbC5jb20pPg0KPiA+IC0tLQ0KPiA+IGh3L2kzODYvaW50ZWxfaW9tbXUuYyB8
+IDkxICsrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0NCj4gPiAxIGZp
+bGUgY2hhbmdlZCwgNTcgaW5zZXJ0aW9ucygrKSwgMzQgZGVsZXRpb25zKC0pDQo+ID4gDQo+ID4g
+ZGlmZiAtLWdpdCBhL2h3L2kzODYvaW50ZWxfaW9tbXUuYyBiL2h3L2kzODYvaW50ZWxfaW9tbXUu
+Yw0KPiA+IGluZGV4IDlmMjE2MjJhNGYuLjM1MGQyYjc3NTMgMTAwNjQ0DQo+ID4gLS0tIGEvaHcv
+aTM4Ni9pbnRlbF9pb21tdS5jDQo+ID4gKysrIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+ID4g
+QEAgLTM2MjcsMTUgKzM2MjcsMjYgQEAgc3RhdGljIHZvaWQgdnRkX2hhbmRsZV9pZWN0bF93cml0
+ZShJbnRlbElPTU1VU3RhdGUNCj4gPiAqcykNCj4gPiANCj4gPiBzdGF0aWMgdm9pZCB2dGRfaGFu
+ZGxlX3Byc193cml0ZShJbnRlbElPTU1VU3RhdGUgKnMpDQo+ID4gew0KPiA+IC3CoMKgwqAgdWlu
+dDMyX3QgcHJzID0gdnRkX2dldF9sb25nX3JhdyhzLCBETUFSX1BSU19SRUcpOw0KPiA+ICvCoMKg
+wqAgdWludDMyX3QgcHJzOw0KPiA+ICsNCj4gPiArwqDCoMKgIHZ0ZF9pb21tdV9sb2NrKHMpOw0K
+PiA+ICsNCj4gPiArwqDCoMKgIHBycyA9IHZ0ZF9nZXRfbG9uZ19yYXcocywgRE1BUl9QUlNfUkVH
+KTsNCj4gPiDCoMKgwqAgaWYgKCEocHJzICYgVlREX1BSX1NUQVRVU19QUFIpICYmICEocHJzICYg
+VlREX1BSX1NUQVRVU19QUk8pKSB7DQo+ID4gwqDCoMKgwqDCoMKgwqAgdnRkX3NldF9jbGVhcl9t
+YXNrX2xvbmcocywgRE1BUl9QRUNUTF9SRUcsIFZURF9QUl9QRUNUTF9JUCwgMCk7DQo+ID4gwqDC
+oMKgIH0NCj4gPiArDQo+ID4gK8KgwqDCoCB2dGRfaW9tbXVfdW5sb2NrKHMpOw0KPiA+IH0NCj4g
+PiANCj4gPiBzdGF0aWMgdm9pZCB2dGRfaGFuZGxlX3BlY3RsX3dyaXRlKEludGVsSU9NTVVTdGF0
+ZSAqcykNCj4gPiB7DQo+ID4gLcKgwqDCoCB1aW50MzJfdCBwZWN0bCA9IHZ0ZF9nZXRfbG9uZ19y
+YXcocywgRE1BUl9QRUNUTF9SRUcpOw0KPiA+ICvCoMKgwqAgdWludDMyX3QgcGVjdGw7DQo+ID4g
+Kw0KPiA+ICvCoMKgwqAgdnRkX2lvbW11X2xvY2socyk7DQo+ID4gKw0KPiA+ICvCoMKgwqAgcGVj
+dGwgPSB2dGRfZ2V0X2xvbmdfcmF3KHMsIERNQVJfUEVDVExfUkVHKTsNCj4gPiArDQo+ID4gwqDC
+oMKgIGlmICgocGVjdGwgJiBWVERfUFJfUEVDVExfSVApICYmICEocGVjdGwgJiBWVERfUFJfUEVD
+VExfSU0pKSB7DQo+ID4gwqDCoMKgwqDCoMKgwqAgLyoNCj4gPiDCoMKgwqDCoMKgwqDCoMKgICog
+SWYgSVAgZmllbGQgd2FzIDEgd2hlbiBzb2Z0d2FyZSBjbGVhcnMgdGhlIElNIGZpZWxkLA0KPiA+
+IEBAIC0zNjQ0LDYgKzM2NTUsOCBAQCBzdGF0aWMgdm9pZCB2dGRfaGFuZGxlX3BlY3RsX3dyaXRl
+KEludGVsSU9NTVVTdGF0ZQ0KPiA+ICpzKQ0KPiA+IMKgwqDCoMKgwqDCoMKgIHZ0ZF9zZXRfY2xl
+YXJfbWFza19sb25nKHMsIERNQVJfUEVDVExfUkVHLCBWVERfUFJfUEVDVExfSVAsIDApOw0KPiA+
+IMKgwqDCoMKgwqDCoMKgIHZ0ZF9nZW5lcmF0ZV9pbnRlcnJ1cHQocywgRE1BUl9QRUFERFJfUkVH
+LCBETUFSX1BFREFUQV9SRUcpOw0KPiA+IMKgwqDCoCB9DQo+ID4gKw0KPiA+ICvCoMKgwqAgdnRk
+X2lvbW11X3VubG9jayhzKTsNCj4gPiB9DQo+ID4gDQo+ID4gc3RhdGljIHVpbnQ2NF90IHZ0ZF9t
+ZW1fcmVhZCh2b2lkICpvcGFxdWUsIGh3YWRkciBhZGRyLCB1bnNpZ25lZCBzaXplKQ0KPiA+IEBA
+IC01Mzc4LDE5ICs1MzkxLDE4IEBAIHN0YXRpYyBpbnQgdnRkX3ByaV9yZXF1ZXN0X3BhZ2UoUENJ
+QnVzICpidXMsIHZvaWQNCj4gPiAqb3BhcXVlLCBpbnQgZGV2Zm4sDQo+ID4gew0KPiA+IMKgwqDC
+oCBJbnRlbElPTU1VU3RhdGUgKnMgPSBvcGFxdWU7DQo+ID4gwqDCoMKgIFZUREFkZHJlc3NTcGFj
+ZSAqdnRkX2FzOw0KPiA+ICvCoMKgwqAgdWludDY0X3QgcXVldWVfYWRkcl9yZWc7DQo+ID4gK8Kg
+wqDCoCB1aW50NjRfdCBxdWV1ZV90YWlsX29mZnNldF9yZWc7DQo+ID4gK8KgwqDCoCB1aW50NjRf
+dCBuZXdfcXVldWVfdGFpbF9vZmZzZXQ7DQo+ID4gK8KgwqDCoCB1aW50NjRfdCBxdWV1ZV9oZWFk
+X29mZnNldF9yZWc7DQo+ID4gK8KgwqDCoCBod2FkZHIgcXVldWVfdGFpbDsNCj4gPiArwqDCoMKg
+IHVpbnQzMl90IG9sZF9wcl9zdGF0dXM7DQo+ID4gK8KgwqDCoCB1aW50MTZfdCBzaWQ7DQo+ID4g
+K8KgwqDCoCBWVERQUkRlc2MgZGVzYzsNCj4gPiArwqDCoMKgIGludCByZXQgPSAwOw0KPiA+IA0K
+PiA+IMKgwqDCoCB2dGRfYXMgPSB2dGRfZmluZF9hZGRfYXMocywgYnVzLCBkZXZmbiwgcGFzaWQp
+Ow0KPiA+IC0NCj4gPiAtwqDCoMKgIHVpbnQ2NF90IHF1ZXVlX2FkZHJfcmVnID0gdnRkX2dldF9x
+dWFkKHMsIERNQVJfUFFBX1JFRyk7DQo+ID4gLcKgwqDCoCB1aW50NjRfdCBxdWV1ZV90YWlsX29m
+ZnNldF9yZWcgPSB2dGRfZ2V0X3F1YWQocywgRE1BUl9QUVRfUkVHKTsNCj4gPiAtwqDCoMKgIHVp
+bnQ2NF90IG5ld19xdWV1ZV90YWlsX29mZnNldCA9ICgNCj4gPiAtwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKHF1ZXVlX3RhaWxf
+b2Zmc2V0X3JlZyArIFZURF9QUUFfRU5UUllfU0laRSkgJQ0KPiA+IC3CoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAodnRkX3BycV9z
+aXplKHMpICogVlREX1BRQV9FTlRSWV9TSVpFKSk7DQo+ID4gLcKgwqDCoCB1aW50NjRfdCBxdWV1
+ZV9oZWFkX29mZnNldF9yZWcgPSB2dGRfZ2V0X3F1YWQocywgRE1BUl9QUUhfUkVHKTsNCj4gPiAt
+wqDCoMKgIGh3YWRkciBxdWV1ZV90YWlsID0gKHF1ZXVlX2FkZHJfcmVnICYgVlREX1BRQV9BRERS
+KSArDQo+ID4gcXVldWVfdGFpbF9vZmZzZXRfcmVnOw0KPiA+IC3CoMKgwqAgdWludDMyX3Qgb2xk
+X3ByX3N0YXR1cyA9IHZ0ZF9nZXRfbG9uZyhzLCBETUFSX1BSU19SRUcpOw0KPiA+IC3CoMKgwqAg
+dWludDE2X3Qgc2lkID0gUENJX0JVSUxEX0JERihwY2lfYnVzX251bSh2dGRfYXMtPmJ1cyksIHZ0
+ZF9hcy0+ZGV2Zm4pOw0KPiA+IC3CoMKgwqAgVlREUFJEZXNjIGRlc2M7DQo+ID4gK8KgwqDCoCBz
+aWQgPSBQQ0lfQlVJTERfQkRGKHBjaV9idXNfbnVtKHZ0ZF9hcy0+YnVzKSwgdnRkX2FzLT5kZXZm
+bik7DQo+ID4gDQo+ID4gwqDCoMKgIGlmICghKHMtPmVjYXAgJiBWVERfRUNBUF9QUlMpKSB7DQo+
+ID4gwqDCoMKgwqDCoMKgwqAgcmV0dXJuIC1FUEVSTTsNCj4gPiBAQCAtNTQxNCw1MiArNTQyNiw2
+MyBAQCBzdGF0aWMgaW50IHZ0ZF9wcmlfcmVxdWVzdF9wYWdlKFBDSUJ1cyAqYnVzLCB2b2lkDQo+
+ID4gKm9wYXF1ZSwgaW50IGRldmZuLA0KPiA+IMKgwqDCoMKgwqDCoMKgIHJldHVybiAtRVBFUk07
+DQo+ID4gwqDCoMKgIH0NCj4gPiANCj4gPiArwqDCoMKgIC8qIFByZXBhcmUgdGhlIGRlc2NyaXB0
+b3IgKi8NCj4gPiArwqDCoMKgIGRlc2MubG8gPSBWVERfUFJEX1RZUEUgfCBWVERfUFJEX1BQKHRy
+dWUpIHwgVlREX1BSRF9SSUQoc2lkKSB8DQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IFZURF9QUkRfUEFTSUQodnRkX2FzLT5wYXNpZCkgfCBWVERfUFJEX1BNUihwcml2X3JlcSk7DQo+
+ID4gK8KgwqDCoCBkZXNjLmhpID0gVlREX1BSRF9SRFIoaXNfcmVhZCkgfCBWVERfUFJEX1dSUihp
+c193cml0ZSkgfA0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBWVERfUFJEX0xQSUco
+bHBpZykgfCBWVERfUFJEX1BSR0kocHJnaSkgfCBWVERfUFJEX0FERFIoYWRkcik7DQo+ID4gKw0K
+PiA+ICvCoMKgwqAgZGVzYy5sbyA9IGNwdV90b19sZTY0KGRlc2MubG8pOw0KPiA+ICvCoMKgwqAg
+ZGVzYy5oaSA9IGNwdV90b19sZTY0KGRlc2MuaGkpOw0KPiA+ICsNCj4gPiArwqDCoMKgIGlmICh2
+dGRfcHJpX3BlcmZvcm1faW1wbGljaXRfaW52YWxpZGF0aW9uKHZ0ZF9hcywgYWRkcikpIHsNCj4g
+PiArwqDCoMKgwqDCoMKgwqAgcmV0dXJuIC1FSU5WQUw7DQo+ID4gK8KgwqDCoCB9DQo+ID4gKw0K
+PiA+ICvCoMKgwqAgdnRkX2lvbW11X2xvY2socyk7DQo+ID4gKw0KPiA+ICvCoMKgwqAgcXVldWVf
+YWRkcl9yZWcgPSB2dGRfZ2V0X3F1YWQocywgRE1BUl9QUUFfUkVHKTsNCj4gPiArwqDCoMKgIHF1
+ZXVlX3RhaWxfb2Zmc2V0X3JlZyA9IHZ0ZF9nZXRfcXVhZChzLCBETUFSX1BRVF9SRUcpOw0KPiA+
+ICvCoMKgwqAgbmV3X3F1ZXVlX3RhaWxfb2Zmc2V0ID0gKChxdWV1ZV90YWlsX29mZnNldF9yZWcg
+KyBWVERfUFFBX0VOVFJZX1NJWkUpICUNCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICh2dGRfcHJxX3NpemUocykgKiBWVERfUFFBX0VO
+VFJZX1NJWkUpKTsNCj4gPiArwqDCoMKgIHF1ZXVlX2hlYWRfb2Zmc2V0X3JlZyA9IHZ0ZF9nZXRf
+cXVhZChzLCBETUFSX1BRSF9SRUcpOw0KPiA+ICvCoMKgwqAgcXVldWVfdGFpbCA9IChxdWV1ZV9h
+ZGRyX3JlZyAmIFZURF9QUUFfQUREUikgKyBxdWV1ZV90YWlsX29mZnNldF9yZWc7DQo+ID4gK8Kg
+wqDCoCBvbGRfcHJfc3RhdHVzID0gdnRkX2dldF9sb25nKHMsIERNQVJfUFJTX1JFRyk7DQo+ID4g
+Kw0KPiA+IMKgwqDCoCBpZiAob2xkX3ByX3N0YXR1cyAmIFZURF9QUl9TVEFUVVNfUFJPKSB7DQo+
+ID4gwqDCoMKgwqDCoMKgwqAgLyoNCj4gPiDCoMKgwqDCoMKgwqDCoMKgICogTm8gYWN0aW9uIGlz
+IHRha2VuIGJ5IGhhcmR3YXJlIHRvIHJlcG9ydCBhIGZhdWx0DQo+ID4gwqDCoMKgwqDCoMKgwqDC
+oCAqIG9yIGdlbmVyYXRlIGFuIGV2ZW50DQo+ID4gwqDCoMKgwqDCoMKgwqDCoCAqLw0KPiA+IC3C
+oMKgwqDCoMKgwqDCoCByZXR1cm4gLUVOT1NQQzsNCj4gPiArwqDCoMKgwqDCoMKgwqAgcmV0ID0g
+LUVOT1NQQzsNCj4gPiArwqDCoMKgwqDCoMKgwqAgZ290byBvdXQ7DQo+ID4gwqDCoMKgIH0NCj4g
+PiANCj4gPiDCoMKgwqAgLyogQ2hlY2sgZm9yIG92ZXJmbG93ICovDQo+ID4gwqDCoMKgIGlmIChu
+ZXdfcXVldWVfdGFpbF9vZmZzZXQgPT0gcXVldWVfaGVhZF9vZmZzZXRfcmVnKSB7DQo+ID4gwqDC
+oMKgwqDCoMKgwqAgdnRkX3NldF9jbGVhcl9tYXNrX2xvbmcocywgRE1BUl9QUlNfUkVHLCAwLCBW
+VERfUFJfU1RBVFVTX1BSTyk7DQo+ID4gwqDCoMKgwqDCoMKgwqAgdnRkX2dlbmVyYXRlX3BhZ2Vf
+cmVxdWVzdF9ldmVudChzLCBvbGRfcHJfc3RhdHVzKTsNCj4gPiAtwqDCoMKgwqDCoMKgwqAgcmV0
+dXJuIC1FTk9TUEM7DQo+ID4gLcKgwqDCoCB9DQo+ID4gLQ0KPiA+IC3CoMKgwqAgaWYgKHZ0ZF9w
+cmlfcGVyZm9ybV9pbXBsaWNpdF9pbnZhbGlkYXRpb24odnRkX2FzLCBhZGRyKSkgew0KPiA+IC3C
+oMKgwqDCoMKgwqDCoCByZXR1cm4gLUVJTlZBTDsNCj4gPiArwqDCoMKgwqDCoMKgwqAgcmV0ID0g
+LUVOT1NQQzsNCj4gPiArwqDCoMKgwqDCoMKgwqAgZ290byBvdXQ7DQo+ID4gwqDCoMKgIH0NCj4g
+PiANCj4gPiAtwqDCoMKgIGRlc2MubG8gPSBWVERfUFJEX1RZUEUgfCBWVERfUFJEX1BQKHRydWUp
+IHwgVlREX1BSRF9SSUQoc2lkKSB8DQo+ID4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFZU
+RF9QUkRfUEFTSUQodnRkX2FzLT5wYXNpZCkgfCBWVERfUFJEX1BNUihwcml2X3JlcSk7DQo+ID4g
+LcKgwqDCoCBkZXNjLmhpID0gVlREX1BSRF9SRFIoaXNfcmVhZCkgfCBWVERfUFJEX1dSUihpc193
+cml0ZSkgfA0KPiA+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBWVERfUFJEX0xQSUcobHBp
+ZykgfCBWVERfUFJEX1BSR0kocHJnaSkgfCBWVERfUFJEX0FERFIoYWRkcik7DQo+ID4gLQ0KPiA+
+IC3CoMKgwqAgZGVzYy5sbyA9IGNwdV90b19sZTY0KGRlc2MubG8pOw0KPiA+IC3CoMKgwqAgZGVz
+Yy5oaSA9IGNwdV90b19sZTY0KGRlc2MuaGkpOw0KPiA+IMKgwqDCoCBpZiAoZG1hX21lbW9yeV93
+cml0ZSgmYWRkcmVzc19zcGFjZV9tZW1vcnksIHF1ZXVlX3RhaWwsICZkZXNjLA0KPiA+IHNpemVv
+ZihkZXNjKSwNCj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgTUVNVFhBVFRSU19VTlNQRUNJRklFRCkpIHsNCj4gPiDCoMKgwqDCoMKgwqDCoCBlcnJv
+cl9yZXBvcnRfb25jZSgiSU8gZXJyb3IsIHRoZSBQUSB0YWlsIGNhbm5vdCBiZSB1cGRhdGVkIik7
+DQo+ID4gLcKgwqDCoMKgwqDCoMKgIHJldHVybiAtRUlPOw0KPiA+ICvCoMKgwqDCoMKgwqDCoCBy
+ZXQgPSAtRUlPOw0KPiA+ICvCoMKgwqDCoMKgwqDCoCBnb3RvIG91dDsNCj4gPiDCoMKgwqAgfQ0K
+PiA+IA0KPiA+IMKgwqDCoCAvKiBpbmNyZW1lbnQgdGhlIHRhaWwgcmVnaXN0ZXIgYW5kIHNldCB0
+aGUgcGVuZGluZyByZXF1ZXN0IGJpdCAqLw0KPiA+IMKgwqDCoCB2dGRfc2V0X3F1YWQocywgRE1B
+Ul9QUVRfUkVHLCBuZXdfcXVldWVfdGFpbF9vZmZzZXQpOw0KPiA+IC3CoMKgwqAgLyoNCj4gPiAt
+wqDCoMKgwqAgKiByZWFkIHN0YXR1cyBhZ2FpbiBzbyB0aGF0IHRoZSBrZXJuZWwgZG9lcyBub3Qg
+bWlzcyBhIHJlcXVlc3QuDQo+ID4gLcKgwqDCoMKgICogaW4gc29tZSBjYXNlcywgd2UgY2FuIHRy
+aWdnZXIgYW4gdW5lY2Vzc2FyeSBpbnRlcnJ1cHQgYnV0IHRoaXMgc3RyYXRlZ3kNCj4gPiAtwqDC
+oMKgwqAgKiBkcmFzdGljYWxseSBpbXByb3ZlcyBwZXJmb3JtYW5jZSBhcyB3ZSBkb24ndCBuZWVk
+IHRvIHRha2UgYSBsb2NrLg0KPiA+IC3CoMKgwqDCoCAqLw0KPiA+IC3CoMKgwqAgb2xkX3ByX3N0
+YXR1cyA9IHZ0ZF9nZXRfbG9uZyhzLCBETUFSX1BSU19SRUcpOw0KPiA+IMKgwqDCoCBpZiAoIShv
+bGRfcHJfc3RhdHVzICYgVlREX1BSX1NUQVRVU19QUFIpKSB7DQo+ID4gwqDCoMKgwqDCoMKgwqAg
+dnRkX3NldF9jbGVhcl9tYXNrX2xvbmcocywgRE1BUl9QUlNfUkVHLCAwLCBWVERfUFJfU1RBVFVT
+X1BQUik7DQo+ID4gwqDCoMKgwqDCoMKgwqAgdnRkX2dlbmVyYXRlX3BhZ2VfcmVxdWVzdF9ldmVu
+dChzLCBvbGRfcHJfc3RhdHVzKTsNCj4gPiDCoMKgwqAgfQ0KPiA+IA0KPiA+IC3CoMKgwqAgcmV0
+dXJuIDA7DQo+ID4gK291dDoNCj4gPiArwqDCoMKgIHZ0ZF9pb21tdV91bmxvY2socyk7DQo+ID4g
+K8KgwqDCoCByZXR1cm4gcmV0Ow0KPiA+IH0NCj4gPiANCj4gPiBzdGF0aWMgdm9pZCB2dGRfaW5p
+dF9pb3RsYl9ub3RpZmllcihQQ0lCdXMgKmJ1cywgdm9pZCAqb3BhcXVlLCBpbnQgZGV2Zm4sDQo+
+ID4gLS0NCj4gPiAyLjU0LjANCj4g
 
