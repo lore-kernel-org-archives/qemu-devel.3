@@ -4,95 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BA4C79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 06:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC726C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3pha-00049j-6L; Tue, 08 Sep 2026 02:53:06 -0400
+	id 1x3poq-0005CA-H5; Tue, 08 Sep 2026 03:00:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x3phX-00049S-2W
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 02:53:03 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x3phU-0004KO-II
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 02:53:02 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-49556f97a9dso36064345e9.1
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 23:52:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x3pon-00058D-Rh
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:00:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x3pol-00053q-I3
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:00:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788850829;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BVH6SBfVU6S7gvL0aVMDaClmyYxKZDRsec1qjraPg8M=;
+ b=a+u5sP4Zwen2/xGmTmNWarDNMqZ80nR/IYsuIykCfFjT52+fK62Y+aHWfcKOIIfbEQgh22
+ WCvwyjCjJqXoi6q1Ei8LmKWgAU/AQaVf5VqOO773Gh+9dU9UtSFvwvaMIK1ud0WotVisWF
+ 4kNPKEmkIvxhuxSETj+PXyAchNagGW4=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-A26ryvvEOoK6qvKTU0WDog-1; Tue, 08 Sep 2026 03:00:28 -0400
+X-MC-Unique: A26ryvvEOoK6qvKTU0WDog-1
+X-Mimecast-MFC-AGG-ID: A26ryvvEOoK6qvKTU0WDog_1788850827
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-395543dc382so5610875a91.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 00:00:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788850827; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fqFnUgHP6a5ezrPUoXgZtXWpnwQeanmReU9edk2v7mZ+5UD7/YeEEk/8v3QtyG/Uvr
+ PzWm6pZGYb6JSBGFTnKZjzvscG7thiTWOEkdAMURHNQSpTvsw9dTXrvMpVRwC4JQzi2C
+ rS9byujiv8uVGA81NEpUUDZpudNTXrO2N4qepyEWd/wNzxsvSsQzTTWnkxF/iCG/oXIJ
+ Y/6X4jb3LW0gTo6los/ezlRIkjEG6rtcIVMqRP6F12prftV/cpu3eGw3Xfp075jGkIe6
+ 4ICmxfztArATYHu0O8tTXNY/B4XvN204QpWvj4ed9yXQB3d+qSLfhTny9YiHAcz0rhnL
+ roSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BVH6SBfVU6S7gvL0aVMDaClmyYxKZDRsec1qjraPg8M=;
+ fh=W6CxA2oz1yGR/6IGrxMgKl47k/4n4yGwHaf3TFfFPco=;
+ b=IQV4BXn4QzDLrWNNnFlukpF0va7CVgyrmpZ6+phvVQ8oB6UFyZyOr4wIDGKQGzlp9M
+ W5fW78Lv+MOAyz5BOJBFXPrqVePPSXZWRjWxupeyvsywoBWTdIluHhhIstk45ELvnddF
+ PIR3idHTg2R1sgW6HIV66ULTzpoRzaA3JnNxjrUkrvqI4AdaYQ8wphQDM79NvcK8qdmX
+ MOEJg9UTcUp28UTQ28y+Bag5u4qdPcuApqhnR8ZShADG0WZxM/KptAUzMVLB35BW9x3N
+ izISYPWT3EN2/5x8t0uHJpOKt8j1V+u/WrSo2JmIOM1XkqpKObhPtkpSqfUvrXzG3P+c
+ cPjw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788850378; x=1789455178; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=oCvVJPbKrXLQ8F+qzcwxNkXIHuhV99X8g2NsTSjOOZU=;
- b=TxoDAWmmZ22MGwgLa3eUb5bk10uvSDrxlZTIf1eL1h1g/AyqqabdG/UqBEagvLTPax
- aa+6+8pl+cJJLU42eSM4sxacAxwJd2lCBcD69xNOa1JGS6tLowGS3kyl2Fa7G7gDOk70
- s53G/nVYVcRFgjZLPaKvyU3fHoDhoIqkA/uJbJdLCEDJHdkKewUGJLLdxk6w5KiE4MXM
- BZM1B8AcYA6ycEMOYJjSjk9bzcpqgDAS3K5cKtvcgKaC94bE0w0tXRuD4mipyBeqEWj8
- HU/k/s+c5G3ehLFAx8li3Mp8DqQVGeOpPrqcXxU1rHJaPDA2uHShd8MxFwCcyj7f92Av
- eyKA==
+ d=redhat.com; s=google; t=1788850827; x=1789455627; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=BVH6SBfVU6S7gvL0aVMDaClmyYxKZDRsec1qjraPg8M=;
+ b=a4Y7IfyAD4mOGRRHaunxdYAsli6dORQ1z/4ZQmJYKzu8FznAyMfYYW13ywj7aV49Bz
+ Cj+T+RwKsN4SOKht1m661RtEteuiZ5J9umMbC5mwKal4H34pVHnFiLCzzvpPYL8v1Jly
+ dOVZYX1kImRvRgCyHwHRcIpj/+308IoA4uCEEY7QKkU7KXEluWg3Ed9KCPaCht3xzrUH
+ flQFxLHkyMVMUJwTbWzZmPQr/Z0VhMYPC6Tq341UnkeTqCDYGwZ3UUNobxs0KDwDZDHY
+ P1Sh+R57vNGvOZBuyjI857Hqar/Eehz96okVEngnJy7rag2kDfzvcazppa67eLhleHGD
+ dn3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788850378; x=1789455178;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1788850827; x=1789455627;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=oCvVJPbKrXLQ8F+qzcwxNkXIHuhV99X8g2NsTSjOOZU=;
- b=s7s+U6+bITRgr8RqIDzJtJi4uhQGzr1pt4lpqi4cIipHZ7no2FTmyRwHzLljeaFY57
- 2aBz3zt6Cs6AdGCsLc9AsCstF1fGLcKUfRPTXuUGb3vDvBIY8NTO/YrNJjwn35PqKbn0
- 2las737yhQS7CUq9/LIvR1IaXcN13b1ZV+Td0J3yTmBPbvFgkC4daBMhaM0mjhtiZ+xM
- B+Cg7tOI/V5pyMOhwm70awJVtNWhv55jFUqFsPZJEfujQwQUmUkw+Ji3fYyfEmtvqPFd
- sEWvse35BB5Z3emMUP0nUl+jpgM6bOINgB40iCxB8gLeXXCQ/8+BPGM9k8FGVgh86pKj
- jUTg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwKtcNTp/qsBApy69eu1GrrXbcid9lGxMUVOV8BJ7sG5PQ8shFCdZla6UtdjeOnAPw5Rcq8vLnnfjQt@nongnu.org
-X-Gm-Message-State: AFuF++kWOLMgBpEs11ZtbLl8oBEPBPuVPsVDQ978+gHLJdcrIAxcrnPh
- B/iAosYBfKamT4dfq7VhrYmf6BUGOXJd4UvIpJ3SBVYYPjvGGxHEjtGeO0YYIbeYedo+BZZyITe
- KJsrsDeo=
-X-Gm-Gg: AYBFou0AZqtxnW9AIs8+6cbiXyyl/WbpcfZw9pXYKJe1/hnbqcmff2GuDK0ogA7NnGW
- lZ5cWS6JTm/CLJkYKOpjlJMc/j5LYjXGGSJTcd+QKQEWipYmprypoUqG5Iw86DsVk1fHNOs19aq
- VMsO1tzOdVbW8y5epJNBuFyq+vKWtguyEO7eamVUM560dpwzAfpsDSn0tYKzIvC+cWyUUV6uGBv
- OYQ/G1OYrEgUQVqD82RPC9VgeiJmU4xrb0/wKa18bFMhVOihrsGL4cyo+8SxRo3THkCeC/0vb5r
- Dr78lDfi83GC9SOP/X7lNDQSTlGjzYagMVAzrDcSVfI3qcLqFsDbg5TkUhAkjeGCD/00+tvXH3I
- 84/+0JJsu5CGT+NZw5O4HolgX1sdyywCPqKLZbSQM2405eq3slD1EFDso61f5Fv47fUIoB1wihe
- Ey+E5EtVe7b3NHPF6n6JeNWQM8sErtlzRwXvX8uZWsGcL2HAbs0MH/1zVDK7AW
-X-Received: by 2002:a05:600c:4709:b0:49c:fa21:e748 with SMTP id
- 5b1f17b1804b1-49cfa21e99bmr244454495e9.30.1788850377828; 
- Mon, 07 Sep 2026 23:52:57 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5d476esm499070305e9.1.2026.09.07.23.52.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 23:52:56 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 64FC35F845;
- Tue, 08 Sep 2026 07:52:55 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] agents: Add a skill for finding your way around QEMU
-In-Reply-To: <apqheL090KYVRRBJ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Fri, 4 Sep 2026 11:46:16 +0100")
-References: <20260904074314.896384-1-pbonzini@redhat.com>
- <apqheL090KYVRRBJ@redhat.com>
-User-Agent: mu4e 1.14.4-pre2; emacs 30.1
-Date: Tue, 08 Sep 2026 07:52:55 +0100
-Message-ID: <874ig0b5fc.fsf@draig.linaro.org>
+ bh=BVH6SBfVU6S7gvL0aVMDaClmyYxKZDRsec1qjraPg8M=;
+ b=TGrWWPtQ+DXUBB1cxCE4Ce1dVKLv4dds6BbaEkD0rQy/zkdPlAMegMjPhUDQIVAFd/
+ i60/HPZXXl1j0mRzCcoM761qOwbvalHpST+x+Q7vNN5WauhVGoS0R26CQvN8gTTM7+Bv
+ p9IDC+S6gEgjJcZgBDTixchtLT9pK0gXB4ENhNGkDPZ3RkX4bOLacUMv2NSJ2/9kdo1G
+ FuOTi6ui5lesMTn6addgHNWOG58XK2kR8tCDqa3BGBOsPaCZ7aRqwoHbHLfFeA/tTbQR
+ hwcYrlXbGCPs67UImM97KSEmvJq1SUHinMVLlyyTXNGzQ8UaFSWoUkK7i7S+tSlH79PS
+ y/+g==
+X-Gm-Message-State: AFuF++mXOUNUMghlpRi+t6JUhZhxUrQo0WK7WPLa2RjJltxbLNbM6iLx
+ sn0pBoFSMO0Std7phGY8wEo7y69k/daQvLISju7g0IE7BAQkKE0o3s5BGLSqREbbruxlfeWeo0x
+ X+yb7YKgJzr04m8S0ofr3+PzL5Z7wgr6Y0073i1Hu/Zyhrp9QWU4oxuklq+Dc6BKUxMRVG0A19v
+ PTiaNTdHYXZLtHYtTjMuYOKhlSOHma4s8=
+X-Gm-Gg: AYBFou36sKiKWNDxI1L43KaGreXZQ58zMFCBTM63P6QSxLSy12E9h6JuhpL6R0ekmkE
+ qrGuxdtK3LJRWiJxULRvW/LV+VmBiDdm/wZDYYOpYVMXDWbTaRIj4drv9Gdjo/u7VWUe9nymlSo
+ POj747npb34IKJLEhbTaOGioUXIZuNducLWVgwzJVgOYJp31YF7VqQECbIPv8hTw3+w/qOzsg3B
+ sgcV3gv5D+ZBJ1MaNK5Way5FQODonrqpBFyBuzogOYf04AC0vVyp8GkzTD2oMODIJJFv0Xdk2eC
+ qg==
+X-Received: by 2002:a17:90b:2808:b0:398:b46d:48c0 with SMTP id
+ 98e67ed59e1d1-39b262aaeb7mr43808977a91.18.1788850826758; 
+ Tue, 08 Sep 2026 00:00:26 -0700 (PDT)
+X-Received: by 2002:a17:90b:2808:b0:398:b46d:48c0 with SMTP id
+ 98e67ed59e1d1-39b262aaeb7mr43808845a91.18.1788850826118; Tue, 08 Sep 2026
+ 00:00:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260907211233.501672-1-rtvernam@gmail.com>
+In-Reply-To: <20260907211233.501672-1-rtvernam@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 8 Sep 2026 11:00:12 +0400
+X-Gm-Features: AcwNN1WLCFZMARCm8JV5JvpkY-3USrjbWZ5w558k_IdQr8MWC3-pOYZDI9q60e4
+Message-ID: <CAMxuvazF+pGAwJvLzR_VGnACh4JgupB49Mn_xBGwmEfG-5Ji2g@mail.gmail.com>
+Subject: Re: [PATCH] ui/dbus: forward guest clipboard grabs that lack a serial
+To: Rick Vernam <rtvernam@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,224 +136,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hi
 
-> On Fri, Sep 04, 2026 at 09:43:13AM +0200, Paolo Bonzini wrote:
->> As a side effect, establish scaffolding for the .agents/.claude/.gemini
->> directories, as a base for future patches to build on.
+On Tue, Sep 8, 2026 at 1:13=E2=80=AFAM Rick Vernam <rtvernam@gmail.com> wro=
+te:
 >
-> FWIW, While researching the AGENTS.md stuff I came across this
+> dbus_clipboard_update_info() drops any incoming grab whose
+> QemuClipboardInfo has no serial number:
 >
->   https://arxiv.org/pdf/2602.11988
+>     if (self_update || !info->has_serial) {
+>         return;
+>     }
 >
-> which suggests that providing code tree overviews may not be as
-> helpful as people suspect, while causing the agents to consume
-> more tokens in their work.
+> For grabs coming from ui/vdagent.c, has_serial is only set when the
+> guest's vdagent client has negotiated VD_AGENT_CAP_CLIPBOARD_GRAB_SERIAL
+> (see vdagent_clipboard_recv_grab()). When the guest doesn't negotiate
+> it, the grab is silently dropped here and never forwarded to the
+> D-Bus display client via Clipboard.Grab.
 >
-> It is pretty hard to benchmark / evaluate this, but it does
-> suggest the "Finding things" / "Core abstractions" sections
-> might be overkill/counterproductive.
+> It seems other protocols (ui/gtk-clipboard.c, ui/vnc-clipboard.c) do not
+> incorporate a validation on has_serial, so this patch matches their
+> behavior.
 
-I've been using local rules to try and force using semcode which allows
-for a more tied together browsing of the code as well as interrogating
-lore instead of lots of shell grepping. But yes it seems the tree
-overview doesn't help as much as it could. We could just point to
-docs/devel/codebase.rst and let the agent read that if it needs to.=20
+But dbus display relies on "serial" being valid. The client has no way
+to check !info->serial. Iow, the agent must support
+VD_AGENT_CAP_CLIPBOARD_GRAB_SERIAL. When not supported, the clipboard
+state get out of sync due to races.
 
-> Aspects that are less
-> discoverable or describing QEMU specific policies/practices
-> ought to remain valuable.
 >
->>=20
->> Some parts of this skill are based on
->> https://lore.kernel.org/r/20260529101437.410181-4-alex.bennee@linaro.org=
-/.
->>=20
->> Co-authored-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->> v1->v2: add .claude/.gitignore.  Suggest using get_maintainer.pl and ./r=
-un.
->>         Fix thinko around build/source directory
->>=20
->>=20
->>  .agents/skills/qemu-codebase/SKILL.md | 100 ++++++++++++++++++++++++++
->>  .claude/.gitignore                    |   2 +
->>  .claude/skills                        |   1 +
->>  .gemini/skills                        |   1 +
->>  4 files changed, 104 insertions(+)
->>  create mode 100644 .agents/skills/qemu-codebase/SKILL.md
->>  create mode 100644 .claude/.gitignore
->>  create mode 120000 .claude/skills
->>  create mode 120000 .gemini/skills
->>=20
->> diff --git a/.agents/skills/qemu-codebase/SKILL.md b/.agents/skills/qemu=
--codebase/SKILL.md
->> new file mode 100644
->> index 00000000000..17fb55b5289
->> --- /dev/null
->> +++ b/.agents/skills/qemu-codebase/SKILL.md
->> @@ -0,0 +1,100 @@
->> +---
->> +name: qemu-codebase
->> +description: Orientation for QEMU =E2=80=94 tree structure, build syste=
-m, documentation pointers
->> +---
->> +
->> +# Useful reminders for working on QEMU
->> +
->> +## Finding things
->> +
->> +`MAINTAINERS` is the authoritative list of subsystems.  You can
->> +use it and `scripts/get_maintainer.pl --nogit` to query it, for example
->> +
->> +```
->> +$ scripts/get_maintainer.pl --nogit -f block/
->> +```
->> +
->> +`docs/devel/codebase.rst` is a guided tour of every top-level directory.
->> +Here are some important ones:
->> +
->> +- **target/** holds CPU models and the TCG frontends
->> +- **tcg/** holds the backends and the IR. See `docs/devel/tcg.rst`,
->> +  `docs/devel/tcg-ops.rst`.
->> +- **hw/** is devices and boards, categorized by type.
->> +- **linux-user/** and **bsd-user/** are almost entirely separate, and o=
-nly
->> +  have parts of **hw/core/** and **accel/**'s CPU emulation infrastruct=
-ure
->> +  in common with system emulation
->> +
->> +Other directories include the back-end subsystems, for example **`block=
-/`**
->> +for the block layer.
->> +
->> +The `include/` tree mostly mirrors the top-level tree.
->> +
->> +## Build layout
->> +
->> +Build is always out-of-tree; the build directory is created by
->> +`configure` and a checkout can have several. Determine it from context
->> +(`ls */meson-info`) rather than assuming.
->> +
->> +The `run` script in the root of the build dir wraps `meson devenv` and
->> +should be used to execute commands in the build directory.  It activates
->> +the build tree's venv `pyvenv/`, adds various Python modules from
->> +the source tree to `PYTHONPATH`, and defines a `MESON_BUILD_ROOT`
->> +variable for general use.
->> +
->> +`make` at the top level forwards to `ninja` in the configured build
->> +directory, and any `build.ninja` target can be invoked that way.
->> +
->> +## Build & Test
->> +- **Build**: `ninja` or `make -jN` from build directory
->> +- **Test All**: `make check`
->> +- **Suites**: `make check-unit`, `make check-qtest`, `make check-functi=
-onal`, `make check-rust`
->> +- **Single Test**: `./run meson test <testname>` (e.g., `./run meson te=
-st qtest-x86_64/boot-serial-test`)
->> +- **Debug**: Append `V=3D1` for verbose output or `DEBUG=3D1` for inter=
-active test debugging.
->> +
->> +## Code Style
->> +- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100=
-).
->> +- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on =
-same line (except functions).
->> +- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include i=
-n every `.c` file.
->> +- **C Comments**: Use `/* ... */` only. No `//` comments.
->> +- **Naming**: `snake_case` for variables and functions; `CamelCase` for=
- types and enums.
->> +- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`q=
-emu_memalign`) APIs. No `malloc`.
->> +- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` fo=
-r errors.
->> +- **Lints**: Run `./scripts/checkpatch.pl`.  On top, `make clippy` and =
-`make rustfmt` for Rust.
->> +
->> +# Documentation pointers
->> +
->> +Developer docs live in `docs/devel`.  A `kernel-doc::` directive includ=
-es
->> +documentation comments from source files when Sphinx builds the documen=
-tation.
->> +These comments be consulted just as easily in the source tree without g=
-oing
->> +through e.g. `make html`.
->> +
->> +Here are some useful pointers.
->> +
->> +## Core abstractions
->> +
->> +- **QOM** (`qom/`, `include/qom/`) is the type/object system underneath
->> +  everything.  It includes class and interface hierarchies, properties,=
- and
->> +  the object composition tree.  See `docs/devel/qom.rst`.
->> +- **qdev** builds devices on top of QOM, adding for example buses, the
->> +  realize/unrealize lifecycle (including hot-plug/unplug), and reset.  =
-See
->> +  `docs/devel/qdev-api.rst` and `docs/devel/reset.rst`.
->> +- **MemoryRegion** (`system/memory.c`, `include/system/memory.h`) is the
->> +  guest address-space model: regions, aliases, address spaces, dirty tr=
-acking,
->> +  load/store and map/unmap operations, etc.  See `docs/devel/memory.rst=
-`.
->> +
->> +## Concurrency
->> +
->> +Getting the threading model wrong is a common source of subtle bugs her=
-e.
->> +
->> +- The **BQL** (big QEMU lock) protects most device emulation; vCPU thre=
-ads
->> +  hold it when exiting to emulation.  See `include/qemu/main-loop.h`.
->> +  Memory regions can (carefully) opt out of the BQL.
->> +- **AioContext**/iothreads: block devices and their virtio front-ends c=
-an run
->> +  outside the BQL.  See `docs/devel/multiple-iothreads.rst`.
->> +- The **block layer** is coroutine-based.  `co_` prefixes and `coroutin=
-e_fn`
->> +  annotations are advisory but relevant for reviewers.  Coroutines have=
- their
->> +  own locking primitives.
->> +- **RCU** is used for hot, rarely-modified structures such as memory ma=
-ps.
->> +  Because of the BQL, RCU is mostly used with `call_rcu()` rather than
->> +  `synchronize_rcu()`.  See `docs/devel/rcu.rst` and `docs/devel/atomic=
-s.rst`.
->> diff --git a/.claude/.gitignore b/.claude/.gitignore
->> new file mode 100644
->> index 00000000000..b0a57a19c01
->> --- /dev/null
->> +++ b/.claude/.gitignore
->> @@ -0,0 +1,2 @@
->> +# reserved for the user to add their own per-project rules
->> +/CLAUDE.md
->> diff --git a/.claude/skills b/.claude/skills
->> new file mode 120000
->> index 00000000000..a7540c24423
->> --- /dev/null
->> +++ b/.claude/skills
->> @@ -0,0 +1 @@
->> +.agents/skills/
->> \ No newline at end of file
->> diff --git a/.gemini/skills b/.gemini/skills
->> new file mode 120000
->> index 00000000000..a7540c24423
->> --- /dev/null
->> +++ b/.gemini/skills
->> @@ -0,0 +1 @@
->> +.agents/skills/
->> \ No newline at end of file
->> --=20
->> 2.55.0
->>=20
+> Signed-off-by: Rick Vernam <rtvernam@gmail.com>
+> ---
+>  ui/dbus-clipboard.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> With regards,
-> Daniel
+> diff --git a/ui/dbus-clipboard.c b/ui/dbus-clipboard.c
+> index 90318384ee..1389ec0edc 100644
+> --- a/ui/dbus-clipboard.c
+> +++ b/ui/dbus-clipboard.c
+> @@ -72,7 +72,7 @@ dbus_clipboard_update_info(DBusDisplay *dpy, QemuClipbo=
+ardInfo *info)
+>          return;
+>      }
+>
+> -    if (self_update || !info->has_serial) {
+> +    if (self_update) {
+>          return;
+>      }
+>
+> --
+> 2.55.0
+>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
