@@ -4,160 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9CCC79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA4BC79FA0
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qNj-0004nI-Hm; Tue, 08 Sep 2026 03:36:42 -0400
+	id 1x3qRR-0005d3-JM; Tue, 08 Sep 2026 03:40:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1x3qNg-0004mZ-Do
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:36:36 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x3qRQ-0005cs-5d
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:40:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1x3qNe-0000NQ-MW
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:36:35 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6886LrEc2502501
- for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 07:36:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=
- qcppdkim1; bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=; b=DD
- h0vegffNPjypr1mnIVLL7nBoO5fyjibYZoDBITmjjjKUOTvOpT0X2doAiRsr9JS9
- 1I0MYzsh9SdV23etSKUe53NRn77kDxWm+VK73z/iScCfYW2keyeR103o40LBZ8ke
- MgFb7C/06/DWdFtfbN01jAxpl9xZXYpEFX1nm31bAbDjxttHgm+xor3VSOr3XSSJ
- cSmhzYnstOnrlUwRFtJGCJf97as7IgGfYqntoM92EKLlWcleik9JhGxGBgXRL0w5
- pfs4fQkO3WZvR9EB1pNLtISAqBZ7ExabTWskJ7FcwqHbaTd+FjRUmtLgnrNBLypg
- dvZaVrH14anRJKQQZr1g==
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjcv7gbyq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:36:32 +0000 (GMT)
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-66fb71198e9so1748920d50.0
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 00:36:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788852992; cv=none;
- d=google.com; s=arc-20260327;
- b=rBfsIDJB/Q/VHo3sBL/aM5HOitGC81ahhfYj1sX9trxV1kyG+bNeLMVBNY7mqfWlni
- 0lcl1qJpgwo3K3fIfbi75IHIwiSI21J/tE2T+OtvwdoUwmX71vOvEa9rbJZgNA3klPD0
- OQdnR6PF6mnUeyvwXNxRa08OYmVhkITfY+9XCr2S+hrwc5S0nmUhGkNIXEC/dcrvz8fU
- BY7aTRA39wNIktv9xzTtgAquNOyQ/oPjhqfkX1jGrd14V3deZ/ZvQT5pLDWUXzK1IJm8
- JaqBM3WplgDLgMFmgOxmPXmAY89Sv7ud94cVypkuDM44GConRTmRKS9ZP6YweT/TDwLc
- NENA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=;
- fh=XedGbJeEWtob3UBtxKSdy6f0PeC7Kio6o+l0fceLOvk=;
- b=Ek1g7JR+lyT1WsG3ucu8dqh0BFQEWS441Rqyyzb8Ti2LPpteLebbW0+DLXRt589S2D
- vE7cBsMPQO0LgGzH1u82UthOyjVbOStu0t01r+g+nl93pyQabgydO1XebARv6DfKoon5
- bezRmQLz+HeWosKTq8PE67/fSDnrtSmw0YFoLdi0BDHkefJwQAZMC7F4LSEC2F+ieFrW
- WwtdhHMzAK2u1nHqRXy9ci79cy/ioqOivjz4N9sXQAVhvtTHHSVjdE+Y2kLnr1LmcKy4
- MzD1JVmOFadl3wast8nNTans7qThLxTXjurZzHBeHWp+RhXv3Np7cYjyr7jfTsgiGH+9
- TwjQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788852992; x=1789457792; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=;
- b=U5fVKaN/k2h/NPNBngYh8AdAnRxyCVa7EjMoqmem2emR+8VYSQlhyONy0mXH2eVu6J
- eU9vlxS1RJICTqiKDXNb41XDumPPcyqoC+YwEON2ki/zTxyhutnh+1a+aCp+0zLv1FCN
- mTU2baPqEHlBpjsEu+Ir+tkLqUXiY4aSbYM42pZMwkhc1oGGwHykXdo3uY2Em+zPFh76
- i4WCSgbxkg7IgKxTfCOZrUEp7Bf2KW5bX/ArC/ZgbtD7oPWsOmPEQnOuiJDxVEKtVMi4
- 9fgUfWuGxm48rd53TWNAFx/6sOi3TEtzyUsCsmvfzZcp2Ld4wmvUvMjEViCDDV0E9Mbq
- h5fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788852992; x=1789457792;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=;
- b=fiwC65wnsqFaeHGsBVZMk95jq3PIgfPx1lRpVarBXlDHRvwlFMVK5ZF/GWcEP/Jo2s
- 491oRq977PnEZU/KHFTl/mZHapZXuzDqSLrcnSU8HblhudtjNN0uQPYvqf75byV+qtw7
- hE7RAS0UfjExEUakNZvbbSmwHsAcS55jM2MFzthekbgO//nA+nKIG0pmNXj46x5h2Q/g
- HzP5pG/T0NJLoiiu0ZKKI8x0Q3i3DTCKyQOeEFctqzN9vqp4RkKt0XzM3vM6+vs/kHo0
- hVAo5kLgXYSeZ5omFq3r6Kxy//Kfi/qV5hX7alIyhrZ8OtQEFTW2gGepIumDbKf4U9pe
- ff5A==
-X-Gm-Message-State: AFuF++lt4nfc1bSnYrgTCIvl7TRZWkT489t0A+sfhn4RtPlGypJL570S
- VVlUfpXLf+LmLvI9t/SfUg1z8Y6Xonx8Jlbpq0zn5fzEwmFEX4XMFX+i/7kbZZYafDWcKmULwmF
- znk1V9FMyDrrnKOYOekV5oIvje5JaemEaiIUmdsR+HJhlqyv7xMlr/IuxB0RiUJELzlvWmABnRE
- dVmVJ/1nOMTynsvUgCgHjUnItN6iBACeeW
-X-Gm-Gg: AYBFou2+qbDnKOPJWAxwld+tasmNVdS+8AHUb9V1BhzJParzReVC9Kq+R2sGJlnKufN
- kofPP365ibFAdO0iW1rgoG6EN2Swnn6ec90Y4P6ZVOAA1FL+HjzRtgYjkUX8cNjozb9qMu8UIJz
- 8/YMU+ObdaWf1FglfgWfHux4PwE1tTlIcpLSChLz1PXy5e5rdV1Z4RQup9gfA=
-X-Received: by 2002:a05:690e:1306:b0:66f:8a2b:b693 with SMTP id
- 956f58d0204a3-670f493e1ebmr946449d50.17.1788852992503; 
- Tue, 08 Sep 2026 00:36:32 -0700 (PDT)
-X-Received: by 2002:a05:690e:1306:b0:66f:8a2b:b693 with SMTP id
- 956f58d0204a3-670f493e1ebmr946443d50.17.1788852992150; Tue, 08 Sep 2026
- 00:36:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260828112803.86636-1-subrahmanya.lingappa@oss.qualcomm.com>
- <20260828112803.86636-2-subrahmanya.lingappa@oss.qualcomm.com>
-In-Reply-To: <20260828112803.86636-2-subrahmanya.lingappa@oss.qualcomm.com>
-From: Sunil V L <sunilvl@oss.qualcomm.com>
-Date: Tue, 8 Sep 2026 13:06:20 +0530
-X-Gm-Features: AcwNN1XKZbNARl6HP-wKvI-4_Cmb74eIeZa_mNiJTxROv49L27PAf4OYpDXrYeU
-Message-ID: <CAB19ukFa3mUc7LuWMuJHFwTYs+7o-bp5Jdpk2gjQVBa1VDKGNQ@mail.gmail.com>
-Subject: Re: [PATCH v10 01/10] build: add optional librpmi dependency
-To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x3qRN-0000k4-8z
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:40:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788853223;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=C5UDaAeLcRvUKgALiDteW2rW6IuR4/zx3UC3Seipl5s=;
+ b=I4uh6LeB8nDF9zfUAksUQJdZiVkL5gzYBadqXIwmDSCbVha5cTVSB95I359ecmz/Klm4rJ
+ WX/1SUjGx0gH/+mVudhdSyhp7zXQ0V0P6JWogmuGZzeztBTF2foJIO20ToF5xZV++oJGAq
+ 1KjX07zKZ0TVUMWTVytpXtUFr/kezGY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-At8jyVNuOAWHzXU0UU5m2Q-1; Tue,
+ 08 Sep 2026 03:40:20 -0400
+X-MC-Unique: At8jyVNuOAWHzXU0UU5m2Q-1
+X-Mimecast-MFC-AGG-ID: At8jyVNuOAWHzXU0UU5m2Q_1788853219
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1413D182A100; Tue,  8 Sep 2026 07:40:19 +0000 (UTC)
+Received: from berrange.fritz.box (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B38145B1; Tue,  8 Sep 2026 07:40:17 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=CMEamxrD c=1 sm=1 tr=0 ts=6a9fbb00 cx=c_pps
- a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8 a=8rMF-3-UOXLQO1KvhcIA:9
- a=QEXdDO2ut3YA:10 a=0lgtpPvCYYIA:10 a=Epx66wHExT0cjJnnR-oj:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA3OCBTYWx0ZWRfX4I0wgocsGnvU
- FKVy2LFPxafaoK6SV4eO38C52WkpG1QekAQl2IgQLiQSu7WX9tlQZlOz+8RFUIZSaS1XqOPgxX7
- 1vodTBCRfpFf+jtTEXXboOG7TfMtWv0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA3OCBTYWx0ZWRfX9PkKrBtLj3lT
- iqGfoAy1HHaxdD315EUps1nJ4tJCgDPaU4zpCtwwWZvRIJGY6guXQsyFTzJHNQndmt3IWPZHgDQ
- fRLupf5mYPxDM8qAk0lu5Q6AQEnu1uF0x2iYaL677BmbFZadPsHJW+3CeJayvFr3mE25ORN1v1u
- sOdil969xXL1zthD2grPfaqMrdgayMb3dRieoFItOQ6ZpTsff5NVAaHGvpFZQst3WJQ1zek5lWF
- J4CJbq8B/y1kPtXBrgCJOlg2+TveOAq3xl3Etm8yOVRq93Kngz3rz+KTm550oVMn2LsexTGzxgd
- h1Ol9dTSvgZuX6WBLOWxM8zcT7sSeaD1LkQVdcOOsYokZLqOZZR0AoWjLDXxwwV0QahbV7fMiab
- wNVgRAeB17la4dUpEledXVOFIAcnj+V2Pj9lQ1t/ZCyHbBHaCRnVnFPTxM1q6T/HhCVpzet9YLf
- AAPOIzoyqyGmXPZgX9w==
-X-Proofpoint-ORIG-GUID: HnOVUTx5p0D_CCBE5qyYhtmJPZJtBZrm
-X-Proofpoint-GUID: HnOVUTx5p0D_CCBE5qyYhtmJPZJtBZrm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- spamscore=0 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080078
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] meson: refresh build options script
+Date: Tue,  8 Sep 2026 08:40:16 +0100
+Message-ID: <20260908074016.2143292-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,27 +81,192 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: sunilvl@oss.qualcomm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 28, 2026 at 4:59=E2=80=AFPM Subrahmanya Lingappa
-<subrahmanya.lingappa@oss.qualcomm.com> wrote:
->
-> Add a meson option and config probe for librpmi so RISC-V machines can
-> opt into RPMI support when the library is available. Keep the dependency
-> optional so default builds without librpmi continue to work.
->
-> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.co=
-m>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
->  Kconfig.host                  |  3 +++
->  meson.build                   | 14 ++++++++++++++
->  meson_options.txt             |  2 ++
->  scripts/meson-buildoptions.sh |  3 +++
->  4 files changed, 22 insertions(+)
->
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Recent changes added more meson options, but missed refreshing of
+the meson-buildoptions.sh file, causing it to frequently appear
+dirty when doing builds.
+
+Fixes: 7e1d54da6faf (tests/tcg/meson.build: implement ./configure -cross-cc-* options)
+Fixes: 522b299ca431 (tests/tcg/meson.build: implement ./configure containers options)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/meson-buildoptions.sh | 138 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 138 insertions(+)
+
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 5a67e59a16..eb15551286 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -10,7 +10,10 @@ meson_options_help() {
+   printf "%s\n" '  --block-drv-rw-whitelist=VALUE'
+   printf "%s\n" '                           set block driver read-write whitelist (by default'
+   printf "%s\n" '                           affects only QEMU, not tools like qemu-img)'
++  printf "%s\n" '  --container-command=VALUE'
++  printf "%s\n" '                           command to build/run containers'
+   printf "%s\n" '  --datadir=VALUE          Data file directory [share]'
++  printf "%s\n" '  --disable-containers     use containers to cross compile tcg tests'
+   printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better performance)'
+   printf "%s\n" '  --disable-debug-info     Enable debug symbols and other information'
+   printf "%s\n" '  --disable-hexagon-idef-parser'
+@@ -77,6 +80,94 @@ meson_options_help() {
+   printf "%s\n" '  --rtsig-map=VALUE        default value of QEMU_RTSIG_MAP [NULL]'
+   printf "%s\n" '  --smbd=VALUE             Path to smbd for slirp networking'
+   printf "%s\n" '  --sysconfdir=VALUE       Sysconf data directory [etc]'
++  printf "%s\n" '  --tcg-tests-cross-cc-aarch64=VALUE'
++  printf "%s\n" '                           cc for aarch64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-aarch64-be=VALUE'
++  printf "%s\n" '                           cc for aarch64_be tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-alpha=VALUE'
++  printf "%s\n" '                           cc for alpha tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-arm=VALUE'
++  printf "%s\n" '                           cc for arm tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-hexagon=VALUE'
++  printf "%s\n" '                           cc for hexagon tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-hppa=VALUE'
++  printf "%s\n" '                           cc for hppa tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-i386=VALUE'
++  printf "%s\n" '                           cc for i386 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-loongarch64=VALUE'
++  printf "%s\n" '                           cc for loongarch64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-m68k=VALUE'
++  printf "%s\n" '                           cc for m68k tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-mips=VALUE'
++  printf "%s\n" '                           cc for mips tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-mips64=VALUE'
++  printf "%s\n" '                           cc for mips64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-mips64el=VALUE'
++  printf "%s\n" '                           cc for mips64el tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-or1k=VALUE'
++  printf "%s\n" '                           cc for or1k tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-ppc64=VALUE'
++  printf "%s\n" '                           cc for ppc64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-ppc64le=VALUE'
++  printf "%s\n" '                           cc for ppc64le tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-riscv64=VALUE'
++  printf "%s\n" '                           cc for riscv64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-s390x=VALUE'
++  printf "%s\n" '                           cc for s390x tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-sh4=VALUE'
++  printf "%s\n" '                           cc for sh4 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-tricore=VALUE'
++  printf "%s\n" '                           cc for tricore tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-x86-64=VALUE'
++  printf "%s\n" '                           cc for x86_64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-xtensa=VALUE'
++  printf "%s\n" '                           cc for xtensa tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cc-xtensaeb=VALUE'
++  printf "%s\n" '                           cc for xtensaeb tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64=VALUE'
++  printf "%s\n" '                           cflags for aarch64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64-be=VALUE'
++  printf "%s\n" '                           cflags for aarch64_be tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-alpha=VALUE'
++  printf "%s\n" '                           cflags for alpha tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-arm=VALUE'
++  printf "%s\n" '                           cflags for arm tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-hexagon=VALUE'
++  printf "%s\n" '                           cflags for hexagon tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-hppa=VALUE'
++  printf "%s\n" '                           cflags for hppa tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-i386=VALUE'
++  printf "%s\n" '                           cflags for i386 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-loongarch64=VALUE'
++  printf "%s\n" '                           cflags for loongarch64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-m68k=VALUE'
++  printf "%s\n" '                           cflags for m68k tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-mips=VALUE'
++  printf "%s\n" '                           cflags for mips tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-mips64=VALUE'
++  printf "%s\n" '                           cflags for mips64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-mips64el=VALUE'
++  printf "%s\n" '                           cflags for mips64el tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-or1k=VALUE'
++  printf "%s\n" '                           cflags for or1k tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64=VALUE'
++  printf "%s\n" '                           cflags for ppc64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64le=VALUE'
++  printf "%s\n" '                           cflags for ppc64le tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-riscv64=VALUE'
++  printf "%s\n" '                           cflags for riscv64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-s390x=VALUE'
++  printf "%s\n" '                           cflags for s390x tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-sh4=VALUE'
++  printf "%s\n" '                           cflags for sh4 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-tricore=VALUE'
++  printf "%s\n" '                           cflags for tricore tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-x86-64=VALUE'
++  printf "%s\n" '                           cflags for x86_64 tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-xtensa=VALUE'
++  printf "%s\n" '                           cflags for xtensa tcg tests'
++  printf "%s\n" '  --tcg-tests-cross-cflags-xtensaeb=VALUE'
++  printf "%s\n" '                           cflags for xtensaeb tcg tests'
+   printf "%s\n" '  --tls-priority=VALUE     Default TLS protocol/cipher priority string'
+   printf "%s\n" '                           [NORMAL]'
+   printf "%s\n" '  --with-coroutine=CHOICE  coroutine backend to use (choices:'
+@@ -281,6 +372,9 @@ _meson_option_parse() {
+     --disable-cocoa) printf "%s" -Dcocoa=disabled ;;
+     --enable-colo-proxy) printf "%s" -Dcolo_proxy=enabled ;;
+     --disable-colo-proxy) printf "%s" -Dcolo_proxy=disabled ;;
++    --container-command=*) quote_sh "-Dcontainer_command=$2" ;;
++    --enable-containers) printf "%s" -Dcontainers=true ;;
++    --disable-containers) printf "%s" -Dcontainers=false ;;
+     --enable-coreaudio) printf "%s" -Dcoreaudio=enabled ;;
+     --disable-coreaudio) printf "%s" -Dcoreaudio=disabled ;;
+     --with-coroutine=*) quote_sh "-Dcoroutine_backend=$2" ;;
+@@ -517,6 +611,50 @@ _meson_option_parse() {
+     --disable-tcg) printf "%s" -Dtcg=disabled ;;
+     --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=true ;;
+     --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=false ;;
++    --tcg-tests-cross-cc-aarch64=*) quote_sh "-Dtcg_tests_cross_cc_aarch64=$2" ;;
++    --tcg-tests-cross-cc-aarch64-be=*) quote_sh "-Dtcg_tests_cross_cc_aarch64_be=$2" ;;
++    --tcg-tests-cross-cc-alpha=*) quote_sh "-Dtcg_tests_cross_cc_alpha=$2" ;;
++    --tcg-tests-cross-cc-arm=*) quote_sh "-Dtcg_tests_cross_cc_arm=$2" ;;
++    --tcg-tests-cross-cc-hexagon=*) quote_sh "-Dtcg_tests_cross_cc_hexagon=$2" ;;
++    --tcg-tests-cross-cc-hppa=*) quote_sh "-Dtcg_tests_cross_cc_hppa=$2" ;;
++    --tcg-tests-cross-cc-i386=*) quote_sh "-Dtcg_tests_cross_cc_i386=$2" ;;
++    --tcg-tests-cross-cc-loongarch64=*) quote_sh "-Dtcg_tests_cross_cc_loongarch64=$2" ;;
++    --tcg-tests-cross-cc-m68k=*) quote_sh "-Dtcg_tests_cross_cc_m68k=$2" ;;
++    --tcg-tests-cross-cc-mips=*) quote_sh "-Dtcg_tests_cross_cc_mips=$2" ;;
++    --tcg-tests-cross-cc-mips64=*) quote_sh "-Dtcg_tests_cross_cc_mips64=$2" ;;
++    --tcg-tests-cross-cc-mips64el=*) quote_sh "-Dtcg_tests_cross_cc_mips64el=$2" ;;
++    --tcg-tests-cross-cc-or1k=*) quote_sh "-Dtcg_tests_cross_cc_or1k=$2" ;;
++    --tcg-tests-cross-cc-ppc64=*) quote_sh "-Dtcg_tests_cross_cc_ppc64=$2" ;;
++    --tcg-tests-cross-cc-ppc64le=*) quote_sh "-Dtcg_tests_cross_cc_ppc64le=$2" ;;
++    --tcg-tests-cross-cc-riscv64=*) quote_sh "-Dtcg_tests_cross_cc_riscv64=$2" ;;
++    --tcg-tests-cross-cc-s390x=*) quote_sh "-Dtcg_tests_cross_cc_s390x=$2" ;;
++    --tcg-tests-cross-cc-sh4=*) quote_sh "-Dtcg_tests_cross_cc_sh4=$2" ;;
++    --tcg-tests-cross-cc-tricore=*) quote_sh "-Dtcg_tests_cross_cc_tricore=$2" ;;
++    --tcg-tests-cross-cc-x86-64=*) quote_sh "-Dtcg_tests_cross_cc_x86_64=$2" ;;
++    --tcg-tests-cross-cc-xtensa=*) quote_sh "-Dtcg_tests_cross_cc_xtensa=$2" ;;
++    --tcg-tests-cross-cc-xtensaeb=*) quote_sh "-Dtcg_tests_cross_cc_xtensaeb=$2" ;;
++    --tcg-tests-cross-cflags-aarch64=*) quote_sh "-Dtcg_tests_cross_cflags_aarch64=$2" ;;
++    --tcg-tests-cross-cflags-aarch64-be=*) quote_sh "-Dtcg_tests_cross_cflags_aarch64_be=$2" ;;
++    --tcg-tests-cross-cflags-alpha=*) quote_sh "-Dtcg_tests_cross_cflags_alpha=$2" ;;
++    --tcg-tests-cross-cflags-arm=*) quote_sh "-Dtcg_tests_cross_cflags_arm=$2" ;;
++    --tcg-tests-cross-cflags-hexagon=*) quote_sh "-Dtcg_tests_cross_cflags_hexagon=$2" ;;
++    --tcg-tests-cross-cflags-hppa=*) quote_sh "-Dtcg_tests_cross_cflags_hppa=$2" ;;
++    --tcg-tests-cross-cflags-i386=*) quote_sh "-Dtcg_tests_cross_cflags_i386=$2" ;;
++    --tcg-tests-cross-cflags-loongarch64=*) quote_sh "-Dtcg_tests_cross_cflags_loongarch64=$2" ;;
++    --tcg-tests-cross-cflags-m68k=*) quote_sh "-Dtcg_tests_cross_cflags_m68k=$2" ;;
++    --tcg-tests-cross-cflags-mips=*) quote_sh "-Dtcg_tests_cross_cflags_mips=$2" ;;
++    --tcg-tests-cross-cflags-mips64=*) quote_sh "-Dtcg_tests_cross_cflags_mips64=$2" ;;
++    --tcg-tests-cross-cflags-mips64el=*) quote_sh "-Dtcg_tests_cross_cflags_mips64el=$2" ;;
++    --tcg-tests-cross-cflags-or1k=*) quote_sh "-Dtcg_tests_cross_cflags_or1k=$2" ;;
++    --tcg-tests-cross-cflags-ppc64=*) quote_sh "-Dtcg_tests_cross_cflags_ppc64=$2" ;;
++    --tcg-tests-cross-cflags-ppc64le=*) quote_sh "-Dtcg_tests_cross_cflags_ppc64le=$2" ;;
++    --tcg-tests-cross-cflags-riscv64=*) quote_sh "-Dtcg_tests_cross_cflags_riscv64=$2" ;;
++    --tcg-tests-cross-cflags-s390x=*) quote_sh "-Dtcg_tests_cross_cflags_s390x=$2" ;;
++    --tcg-tests-cross-cflags-sh4=*) quote_sh "-Dtcg_tests_cross_cflags_sh4=$2" ;;
++    --tcg-tests-cross-cflags-tricore=*) quote_sh "-Dtcg_tests_cross_cflags_tricore=$2" ;;
++    --tcg-tests-cross-cflags-x86-64=*) quote_sh "-Dtcg_tests_cross_cflags_x86_64=$2" ;;
++    --tcg-tests-cross-cflags-xtensa=*) quote_sh "-Dtcg_tests_cross_cflags_xtensa=$2" ;;
++    --tcg-tests-cross-cflags-xtensaeb=*) quote_sh "-Dtcg_tests_cross_cflags_xtensaeb=$2" ;;
+     --tls-priority=*) quote_sh "-Dtls_priority=$2" ;;
+     --enable-tools) printf "%s" -Dtools=enabled ;;
+     --disable-tools) printf "%s" -Dtools=disabled ;;
+-- 
+2.55.0
+
 
