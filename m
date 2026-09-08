@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 058A2C79F9E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 14:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFF8C79F9E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 14:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3xF1-0007lT-0k; Tue, 08 Sep 2026 10:56:07 -0400
+	id 1x3xGG-00015d-57; Tue, 08 Sep 2026 10:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x3xEy-0007ju-TB
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:56:04 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3xG8-0000zG-0n
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:57:16 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x3xEu-0005wm-58
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:56:04 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-499ae1c6471so45479615e9.3
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:55:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3xG6-00062G-Gz
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:57:15 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-836c4474028so43126157b3.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:57:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788879433; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Q3XC9GClFP4NEKcpyrrYqOlLCvnNx5Y8O4IFP7YMfAitUDsXRd4/X7j2s5feUCYQJD
+ DjSHZsN3GAHIQKYv5RQse/5bPLQN5zkRgpm1WCnTrK4cPcIVY2t0IFb8iK8rRXYuxv9F
+ lhpxkiOy1Tgp8aEeXGdnfUdMamszhaVP3NsF9wNpyMNMeuw7NJxXAsRB2oOTwOxkaNJ8
+ GqCpqKhZAXo9bsqseB7TXcLjUn8l788cuMGMAs7/boHCDyWslPRA0DHkvBfYzVDExe4g
+ hJ1P0Kz89x9w4TUCNHBGW7UF6DL1JjWwGakIzJ62N8pELChssald0qV0NiqtmVy3o1Ma
+ 8HCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=K502AstubGpzuMkVuzpf2cJqRo/TEiK7/6dVIYv68OM=;
+ fh=ieLaz7e/0RpAqfE5XLQ1RcBHWjTUv1z6arE2SouQh04=;
+ b=mZnV2zbvlMAkLbb5fr5uHxDe4KsnErkGmyS7bD3+KyvDDREiS42daQQqL6q6Omzo1E
+ IS66a7cK3DRmmQlFRFxvGxoe8BTW5rwWDkWNiWajCJu9dVXXSJUi3yzCGeV3OVPmWqTL
+ bZmLBfsaku2UAKV22F1rhn5v5UWP+9SjPrjrRDk3Ql4GS3dunRm8Ym5sfJMxp6p/G4mF
+ qD9rRCgHMdFJ+4QndxiYtgNUwmxbqOlidwas725JWlEpNpTqwMOLRU0nNo8yFhHvOTO0
+ IBKf0VlcD+0JiHV9dnq6oIDE/sbN454qbE6j39L5urpM16yz/pmOCB0gbhIdf3H7lHT0
+ 59WA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788879358; x=1789484158; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GJe9uMqiJ7PAQfCXo+h1K8uHGVVKiXLgLu8g5cRrXtE=;
- b=GBamlsZCz9rql6X+k+2Tvo7EfiM9F692oLgWrTjbMw3bhOFdWBEjOFR7doC+TRPwXw
- 0ixcjoAIRBwtVjaRNMzhFnG3Tto1zJ5TLhST6J6IFSSGJjxi/6LWzvF+zFNKo/HsdrSk
- HLBCWkfYdX/L3TCqVhA6a7zKM2l+4SAkM8w6m6jgbnuEFpxJs+n+brjQkGvPKOKxvLcS
- v1x3WaMJR28qnmeiOSfKHz6u1+cxyb179mWCwbOD+xWkJpMCDUN0V8uNNK++DboZZAVM
- vOXA6o8O5ErFzbpVmK1I2FgHGHSAwlEvLz0PDaH6fJ8Uh3/LKErwzpT2ovv9Pjt9cngD
- d72w==
+ d=linaro.org; s=google; t=1788879433; x=1789484233; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=K502AstubGpzuMkVuzpf2cJqRo/TEiK7/6dVIYv68OM=;
+ b=tZMuG/CV1vEuHjaiAu18cPJF1k+8xVMvU+ZeqhkfzmDyYXJE8HsKgw7HZQSE89c3xM
+ qkszb+6OMlRBIBEC4DNsn74I10UzZlirk1uJJAgBBETS3Ktbrf40Z+cF9PErha3tXkRL
+ wlsxht14W+fzoC7g8fJ3kOnowQnCPTZhd3RPKSgAY1mTmdNeScdndXacMrLd75lZT3hF
+ iWNQZpHK+DECkxuXvsr8Kn0dMkVgpgs93vJe/aZsKm8T7h0udDL49vMo9lIJi6eXsuOc
+ /VzYQYNMV64EhhObBuu90lN0J6bpGAl/wDZkEsGVkBfrl3Lh5cnovThlpbu36l01GBSW
+ rkrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788879358; x=1789484158;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GJe9uMqiJ7PAQfCXo+h1K8uHGVVKiXLgLu8g5cRrXtE=;
- b=sqoFdzYdBWsOC8l1OlIoXJh/Nhs6pfB+gHvMnDrm9lsmPM2ctyAXXqOehnikMkA+Rw
- +jgVf1N3JFYoanH0yTwTA5wbSEgd0LB8jtV3hSO9QKuW9lC+LQ+6gT6XrWKj68qGRXzs
- klc8PcxbZ2kjt8ilTUCYyASacK9pkSwDdpGn2amU7mWq2YUFBLWrG8ta6pUGP2VhVAAS
- Tl5vxeT+rmrIq7ZANMnm23zxecfaEVhYo1pXONbQ85b1OfdwrV4n6UMPhgLenQXfu30+
- tmEQ7a5R4L0pXSw4supH9FcDX2DQyT5QHbIlP7x1GZa3WT+r6EtS9gRtaC6aSxU1031E
- Bspw==
-X-Gm-Message-State: AFuF++moPhKoWcBnbNOH4pJIqRqsnCUzPdj0NR8MhcMQWJN2LOEehReY
- xyqpunQRWp/TXx7xcb6XWkgNC/0x11WXhMG2Rk4J73GfT7tI5sydVAuZxgpzCM0cqDP5JiPC9hO
- b68Oa
-X-Gm-Gg: AYBFou2SG1GBW70/J0AD7piO/iAtYzHB0vf5TtVKpetr8olJpiYTFlyX/NmBYfnrESR
- h6cucRIy9uy4CRVN1p36hBPnpDE2c88k/m/Qigk4Hiz2FMlTHFrH7LKbMiCtujmszT72WA4NYrE
- mXn/qpVSmxYg1mz6HKFaKneYkqIaFzPxn2xVIDRTXQ3n3gWirQBgQ4fxMTkeNOoNqDoMYLbt05U
- VKopFaGctvOIiNqTlB/j7FieToA6qKhVCwLhVFxANeftQdJTtcXKmg0rlyAYXdHF0aLtxyCMI+Z
- yJlXc9WpTKOrEUW6cwbpU4WMgo40q1mQQGQz17XwAY7CJiOn4KLfQb7r1fMSTwFBE4/jQjy3Htr
- knSH5O/2NE17INRsSyVuzFynNSH5B8fahLx6kbESsDQZAv+Y1736Kdm8rOL+f8wKfdF4PobyklO
- WuXx2E8kS47jJm0o0ze8FusFkz5HADC3JfiTAr9+CGlh2cntKo61DjsauuRjo=
-X-Received: by 2002:a05:600c:3b11:b0:49c:f7c4:dc54 with SMTP id
- 5b1f17b1804b1-49cf82512b9mr511461025e9.14.1788879358142; 
- Tue, 08 Sep 2026 07:55:58 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:695d:ab39:8b90:f8d6])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cff81c9b5sm275342355e9.4.2026.09.08.07.55.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Sep 2026 07:55:57 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
- "Denis V. Lunev" <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Alberto Garcia <berto@igalia.com>
-Subject: [PATCH] block/throttle-groups: fix crash when enabling I/O limits on
- a busy disk
-Date: Tue,  8 Sep 2026 16:55:53 +0200
-Message-ID: <20260908145554.3215221-2-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260908145554.3215221-1-den@openvz.org>
-References: <20260908145554.3215221-1-den@openvz.org>
+ d=1e100.net; s=20251104; t=1788879433; x=1789484233;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=K502AstubGpzuMkVuzpf2cJqRo/TEiK7/6dVIYv68OM=;
+ b=l3DFX23gO1QGVhArfSX7lKbV7VvGgFN3glswoBilnnZVjRj6qhJXUHfLpuUfRJryq9
+ wIQp9HKs90DOgvNXzGKfLz5+y3P7Valg8Ew+XeSc6KniVyNHZT70/K2zuua3dHUFRr7s
+ lYreHUwwOSamxQjV28wg+2h8UNt+zLHLJ8bmCVz0usyebI4DHGP67HsTZbpnQqYXLQKo
+ y+rB6pMeQFIAmRZeLJD5nxSEPCU3ZZAu1HZg5MrIL2Zfvd+w+cHVYCNA6wBhH/xhYMNz
+ 0Ewx9USrHchifPk7QNtcCXZ0Cc1JLZVttjQyJerNUmQ8Z39sRzP4tOeAi1hcfPEkUYXX
+ 0n/g==
+X-Gm-Message-State: AFuF++kJLn1/8hWBGu5GmXZKx6FPiFeVCLLN4hYkhdsq4dG8ytghY87M
+ kI5ZkRHeqaL2QbtXK/ADlRfoJBNrXnAGSsDszLQL2eB/H1lAndQ2lpHRfR49gX8l5qdKGzlcTzn
+ g+efEr5ElqIW9sONLJ7kou0SHzF9wLE56lhYUVNlSng==
+X-Gm-Gg: AYBFou3Dl5kU+s5l36CnipYbP0N0TRJjmqb4ganl1pHDgXL9y07YrkPhJEjYaGiIeYp
+ MFVer/PMhA/ofazvwo4PYZajLA5BxbPRBc2OqFJF+KBb8UDzL7mm/P76POt+lU77PxO3FvAvbG1
+ jxA4XEWkMnL7KrkxCYg/f9YOnKq+bLso9z4Z1j76l1sJ3w/04yAR5LgmYOHc7sHaZ7+G+598G1V
+ Ge5PHbZEsqrP+TpUCYYH88Y4kmqR5ifxMmd8v/yZBtlSbZvfaHzTtZkAGc5MUruOzQwLh863btm
+ 2V13YCYgGISDXFNoNyLrQyYp3eciPG4kSRCK4gazB8mSLa5PPADm3PmJMaNMh9pHNCG7Y/pcojU
+ oM2l1wQsK9s/54CpjsVzWYdJ8yhlJfg==
+X-Received: by 2002:a05:690c:dd3:b0:874:894:9a52 with SMTP id
+ 00721157ae682-87408949e85mr61995617b3.40.1788879432869; Tue, 08 Sep 2026
+ 07:57:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
+References: <20260902122646.2848464-1-imammedo@redhat.com>
+ <20260902122646.2848464-6-imammedo@redhat.com>
+In-Reply-To: <20260902122646.2848464-6-imammedo@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 8 Sep 2026 15:57:01 +0100
+X-Gm-Features: AcwNN1VvIRkc1Pif0A-rgioUQYAgPl5jr-bBNyrTUrh1Co6y_S1-zQzP20U1_lk
+Message-ID: <CAFEAcA8-e8FGfBkgWjvv6CsaM4ft+0sXK+1bCWziu5RmS=NSbA@mail.gmail.com>
+Subject: Re: [PATCH 5/6] sbsa-gwdt: don't arm timer for compare values above
+ INT64_MAX
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, leif.lindholm@oss.qualcomm.com, eauger@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,108 +116,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+On Wed, 2 Sept 2026 at 13:27, Igor Mammedov <imammedo@redhat.com> wrote:
+>
+> QEMU timer subsystem uses int64_t, so a WCV value with bit 63 set
+> would overflow and cause the timer to fire immediately. The SBSA
+> spec defines WCV as an unsigned 64-bit compare value, so such
+> values are valid per spec and represent far-future deadlines
+> (however unpractical).
+>
+> The current code is not affected: WCV writes don't reschedule the
+> timer yet, so a guest-supplied compare value never reaches the
+> timer API. The follow-up patch ("sbsa-gwdt: reschedule timer on
+> direct WCV load") changes that, at which point an out-of-range WCV
+> would overflow the timer. For example, Windows in GTDT mode writes
+> WCV in two 32-bit halves while the watchdog is running:
+>
+>  sbsa-gwdt_control_write [0x8]  <- 0xffffffff    # WOR (~4 sec)
+>  sbsa-gwdt_control_write [0x0]  <- 0x1           # WCS enable
+>  sbsa-gwdt_control_write [0x14] <- 0xffffffff    # WCVU (intermediate)
+>  sbsa-gwdt_control_write [0x10] <- 0xa906ca28    # WCVL
+>  sbsa-gwdt_control_write [0x14] <- 0xecb1        # WCVU (final)
+>
+> The intermediate WCVU write (0xffffffff) yields a WCV above
+> INT64_MAX; once WCV writes arm the timer, this overflows QEMU's
+> signed timer and fires immediately -- triggering WS0 => WS1 =>
+> reboot before the final WCVU write lands.
+>
+> Add the guard first, before the WCV rescheduling patch, so the
+> tree stays bisectable. Instead of arming the timer with an
+> unsupported deadline, leave it disarmed. This reuses
+> hw/timer/sse-timer.c:sse_set_timer() (commit 0b8ceee822
+> "hw/timer/sse-timer: Model the SSE Subsystem System Timer").
+>
+> Introduce a sbsa_gwdt_set_timer() helper for this and route the
+> WOR-based timeout through it.
+>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
 
-throttle_group_register_tgm() stores tgm->throttle_state before it takes
-tg->lock, so the I/O path can see a member whose group still has NULL
-tokens[] and an empty member list. A request in an iothread then reaches
-throttle_group_co_io_limits_intercept(), wins tg->lock ahead of the
-registering thread, and next_throttle_token() passes the NULL token to
-throttle_group_next_tgm(), which dereferences it:
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-  throttle_group_next_tgm (tgm=0x0) at block/throttle-groups.c:185
-  next_throttle_token (tgm=..., direction=THROTTLE_READ)
-  throttle_group_co_io_limits_intercept (tgm=..., bytes=8192, ...)
-  blk_co_do_preadv_part (blk=..., offset=..., bytes=8192, ...)
-  blk_aio_read_entry (opaque=...)
-  coroutine_trampoline (i0=..., i1=...)
-
-blk_io_limits_enable() does not drain the BlockBackend, unlike its disable
-counterpart, so nothing keeps requests away while the group is built. A
-guest probing a disk that libvirt has just attached, at the moment the QoS
-settings for it are applied, is enough to hit this.
-
-Publish tgm->throttle_state with a release store once the member is
-linked into the group and its timers exist, and read it with an acquire
-load on the two unlocked I/O paths. A request that sees the new pointer
-then also sees a fully built group.
-
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Alberto Garcia <berto@igalia.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- block/block-backend.c   | 12 ++++++------
- block/throttle-groups.c |  4 +++-
- 2 files changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 37ba7e9fc4..5e59bac1a3 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1338,6 +1338,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-                       QEMUIOVector *qiov, size_t qiov_offset,
-                       BdrvRequestFlags flags)
- {
-+    ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
-     int ret;
-     BlockDriverState *bs;
-     IO_CODE();
-@@ -1357,9 +1358,8 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     bdrv_inc_in_flight(bs);
- 
-     /* throttling disk I/O */
--    if (blk->public.throttle_group_member.throttle_state) {
--        throttle_group_co_io_limits_intercept(&blk->public.throttle_group_member,
--                bytes, THROTTLE_READ);
-+    if (qatomic_load_acquire(&tgm->throttle_state)) {
-+        throttle_group_co_io_limits_intercept(tgm, bytes, THROTTLE_READ);
-     }
- 
-     ret = bdrv_co_preadv_part(blk->root, offset, bytes, qiov, qiov_offset,
-@@ -1413,6 +1413,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-                        QEMUIOVector *qiov, size_t qiov_offset,
-                        BdrvRequestFlags flags)
- {
-+    ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
-     int ret;
-     BlockDriverState *bs;
-     IO_CODE();
-@@ -1431,9 +1432,8 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
- 
-     bdrv_inc_in_flight(bs);
-     /* throttling disk I/O */
--    if (blk->public.throttle_group_member.throttle_state) {
--        throttle_group_co_io_limits_intercept(&blk->public.throttle_group_member,
--                bytes, THROTTLE_WRITE);
-+    if (qatomic_load_acquire(&tgm->throttle_state)) {
-+        throttle_group_co_io_limits_intercept(tgm, bytes, THROTTLE_WRITE);
-     }
- 
-     if (!blk->enable_write_cache) {
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 805e47270c..faf74a969d 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -581,7 +581,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
-     ThrottleState *ts = throttle_group_incref(groupname);
-     ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
- 
--    tgm->throttle_state = ts;
-     tgm->aio_context = ctx;
-     qatomic_set(&tgm->restart_pending, 0);
- 
-@@ -602,6 +601,9 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
-                          read_timer_cb,
-                          write_timer_cb,
-                          tgm);
-+
-+    /* The I/O path reads this without tg->lock, so publish it last */
-+    qatomic_store_release(&tgm->throttle_state, ts);
- }
- 
- /* Unregister a ThrottleGroupMember from its group, removing it from the list,
--- 
-2.53.0
-
+thanks
+-- PMM
 
