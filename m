@@ -4,104 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B840C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 18:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6B6C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 18:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x40Jo-0003N8-UO; Tue, 08 Sep 2026 14:13:16 -0400
+	id 1x40cz-0005o1-0y; Tue, 08 Sep 2026 14:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x40Jn-0003Mw-0r
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 14:13:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1x40cx-0005nG-5E; Tue, 08 Sep 2026 14:33:03 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x40Jk-0007CX-BL
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 14:13:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788891191;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dzT50tSUqTTSs22D9dAFFPHAr4bLdk2M3hzeiJ+Rdes=;
- b=W9wnr22TTUVmf00W92krBPM9y0JoKwQyqX557UAM2sSYh2Zy/hVIU1eZy8Cx8yXUqVAeZy
- q21oop6lVnv98nlpQyxXZXC/kJbNGXBKvGx1yXAM+hA++w1DH424WipbnVgZghJQAfYp1W
- DudTfgkOuDwiMGhd3a3FVgWZj6ut8jM=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-6tzSrUtJMzWqcpzqH0LAlQ-1; Tue, 08 Sep 2026 14:13:07 -0400
-X-MC-Unique: 6tzSrUtJMzWqcpzqH0LAlQ-1
-X-Mimecast-MFC-AGG-ID: 6tzSrUtJMzWqcpzqH0LAlQ_1788891187
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9393ac4961fso445938985a.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 11:13:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788891187; x=1789495987; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=dzT50tSUqTTSs22D9dAFFPHAr4bLdk2M3hzeiJ+Rdes=;
- b=gazst7IkfHt/SQFxXzO4rYhmhMmPj8WxZETlxyxWckDKBbCtHbKfMYzXxFf6X2mHSr
- ID3aDSInjaA894Vv8O1DlHL1/UJ2vqIpb7B8F7YB459Who7i9Nq7fZswMcnt4lFc2AiX
- tPLA3HGvzH3+YOELmKtnYV1rQlotPWyolpIwCp6TKnwtLMpftFTBTOjU3HJFytQx2NAc
- wOx+Q6mjUfjvPGpbfBAqTTUhRpg/b5Pz5c2nPc7dHMCekC0SBud6Fzhy10cB+BpMkzgJ
- JuIY1P1hu+7F7Wsg85kVwPrl2E1jSirFy+roFS9kTSvjb1QGt8G2/oVoqK1IfD3JkavO
- PIpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788891187; x=1789495987;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=dzT50tSUqTTSs22D9dAFFPHAr4bLdk2M3hzeiJ+Rdes=;
- b=p8/4ZG21RsDaq/ypo0PyWYEvPzQKppXXM65Anp4b4AuQ4j8yvgJeAOLpLB2S1vzvOn
- vL/Y45TyI6n4tHFahsE9rZyuiMzNYd3HoZ90GlnskxrHQ2ClXaf3lst1My17plQT0rXP
- Lmszd12pg6gxf1b3nimuql0oN4EiDPZVb5XhaHpaQ7bV7GPldtGSvs/CybPuYzeA+Nia
- yik8LtnAnpSj73z4Ir+otmtfP4VsKYaN00lpHamJDmCgQ8mp0VS0gvWDHvsHxX3oBMDg
- Ot5EOoAyJcef/GygIcnSqGQcuDVZ7xCj347wKKTB29DKxn8iIZY3ciqEBfBS79VTrpEi
- D1fQ==
-X-Gm-Message-State: AFuF++kK6tI/ZJ2QXWh7yYUasKckMrDQw4zntngoaF7AeZzBQO6za6j9
- Erb9didL2Tl1sL7MM2RghPmFaQrjOT4dodMAV8EIjhQkI5HY4bA4XXkNh1hkJbg0jbhHvZBcrf+
- 45IVWxorP00wn2LXDlD7moKvsipKYYoL4rE/spGo/spULbmYNjIzPq5dN
-X-Gm-Gg: AYBFou38zdSVfLN8V9xMtC/Mb+xqfhTmAs8YqI0CS/KU8Fi7PjGQz/o6/ludWC6OAY5
- KyCFw2QOmjyOtXOdR217kJCVfe+Qy8UYdLXo0BCjK0eS8vV0JQGRAPSszFneFzXlbGZZXGg4JBN
- NvB4drNSL6XGi7AJM3qTM4+wLtNGinheGHTY1Q7fckMY2LjJ/v85ej3r+I22RNx9KIYOHRebC4L
- mdz66uWReKK0Vq86q5L5YLVGOi6kyZbhrjZdzb5epqaCOdxpkuWZj2hru+5nQQcaekRQxcynZ6u
- 5FleakfBsUmabCoBJxwWQRKJLH9as1n78xsvUnOkN2vDg++3I8Ao6JtWpj8JP/pNcVOS
-X-Received: by 2002:a05:620a:4885:b0:938:fd60:4f0 with SMTP id
- af79cd13be357-939803ad4dfmr3338569085a.10.1788891187045; 
- Tue, 08 Sep 2026 11:13:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:4885:b0:938:fd60:4f0 with SMTP id
- af79cd13be357-939803ad4dfmr3338560485a.10.1788891186399; 
- Tue, 08 Sep 2026 11:13:06 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9397fb62710sm1214445385a.28.2026.09.08.11.13.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Sep 2026 11:13:05 -0700 (PDT)
-Date: Tue, 8 Sep 2026 14:12:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] io: bounce-buffer TLS writes to avoid nagle go-slow
-Message-ID: <aqBQJenwT_GcEr14@t14>
-References: <20260907145112.852497-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1x40cv-0002V3-Ad; Tue, 08 Sep 2026 14:33:02 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 688F1nT7080816; Tue, 8 Sep 2026 18:32:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3RHdMF
+ wcEIwIG0ZnRutnz8XnJJ8Dl7+dov+V6e3zAX8=; b=riHDw7vAhvpkJOsu3QMCCw
+ p727OrqV+HDtrtHApiVLS5Rls8nhl1RM7UHVpfzdYJ0BLoZ+OZuhh/7fJUgcYZ9O
+ XlNQ6YMPgSQAW0q0EX5fnue7QUUb8/nMUDc/Z+pH1XZp36oxCjKdby04nRTI3P4j
+ 8ATsm/of2KAyApUc2hz2cDy7Xp04sJZXNVLKAEvDZhTKbm3CHnimDpfAVZbqLVdY
+ GGDdbE/Wiv9AaJS+U4qeG1Sd4eb9wsNNdkw43mmXwvzE6IcsipmNalotUzw2ZW41
+ EWwMdW4YIRT8Q68Eih2u/z6DhMQ7yIzIewwa8/cD3+DUhJ2P3VW3pMajqMu5Hh0g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbjrrub9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Sep 2026 18:32:59 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 688IQG2d025627;
+ Tue, 8 Sep 2026 18:32:58 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ggwdqdung-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Sep 2026 18:32:58 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 688IWuZ227525784
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Sep 2026 18:32:56 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 897F358056;
+ Tue,  8 Sep 2026 18:32:56 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7BC265805A;
+ Tue,  8 Sep 2026 18:32:55 +0000 (GMT)
+Received: from [9.61.69.254] (unknown [9.61.69.254])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  8 Sep 2026 18:32:55 +0000 (GMT)
+Message-ID: <55c42f23-8372-45c5-8d89-3deeee840128@linux.ibm.com>
+Date: Tue, 8 Sep 2026 14:32:54 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260907145112.852497-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] pc-bios/s390-ccw: Add dynamic net header size
+ handling
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
+ cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
+ jdaley@linux.ibm.com, pbonzini@redhat.com
+References: <20260903162449.2588271-1-zycai@linux.ibm.com>
+ <20260903162449.2588271-3-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260903162449.2588271-3-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E7T9Y6dl c=1 sm=1 tr=0 ts=6aa054db cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=9-f3ttb9_-6f4UP9zi4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIwMSBTYWx0ZWRfXxzD+v9oi/OZD
+ zE4RoQCvSX+VDC2bfZEL9p6CHvyylXaf5u9hBoTNA77uO7r3xWSJqUPM9uYbkHcJE7weE234FVe
+ 1oFUS3ACMXSHMkKDfzGXTKP6ZXyndCM=
+X-Proofpoint-ORIG-GUID: OpBkjF7_izyU6bCuwV6RdVUA1Ao5zh6n
+X-Proofpoint-GUID: OpBkjF7_izyU6bCuwV6RdVUA1Ao5zh6n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIwMSBTYWx0ZWRfX0Im1wGS8HUmu
+ zvrPgo1g3SSu3ZTDEwrjJTPmmii2hIdFuVEhFl7hl7C+FhiNipy9Ncf61GM3ioFid0eTvzXLgGf
+ GVjfiwR/OeEsFtTxh5UOYQFCXRbzGzWEx8Jg61JH74zMdyreBoqvldg26s8ipcqIl5norAS0XUK
+ tFdk9MvsuUgz2dRT1OlkRyvOzK9kBynCGR1O/bUE9WmCzxwvtDfUDDkeA623+T/1HPz/p+iEdGi
+ d3PRXCsWGLyDoJF0gKQmOHvZMddu90eDH7Y6F97dGDD8ddurkPFpW4Qox8QNjBqRkC3Hj7V2tKa
+ R39DOxnQ/h7Xu5aRSqOLcXX1kelcixww0p09oHZ52hizNw58wz+lfmEtaJJzisJGsIZyC0/QtuA
+ b/YJsHl2EpbJBLLcqhc18l2DWBtploLggGdnP2bdkgvbUpNs+07FJkKLVzqLLt9VYmZuqrCiAF+
+ jUWFYRhvH0yJAM4fXNg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080201
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,241 +128,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 07, 2026 at 03:51:12PM +0100, Daniel P. Berrangé wrote:
-> The migration code caches vmstate/ram writes into an iovec and
-> flushes this every 128kb.
 
-I am just curious how did this 128K came from. Perhaps this?
 
-  MAX_IOV_SIZE / 2 * 4K
-
-Where QEMU has:
-
-#define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
-
-And it needs to divides 2 because we always push save_page_header() first,
-which is 8B (in reality, maybe that'll also include some footers ahead from
-the last page..), then another 4K following it.  Then in average when
-hitting 64 io vectors there're 32 pages, coming up to be that.
-
-I think that is right math for bulk ram phase, but maybe worth spelling out
-a bit.. because if above holds it's not very obvious..
-
-> 
-> The QIOChannelTLS receives the iovec, but size GNUTLS cannot
-> accept iovec data, it iterates calling send for each element.
-> 
-> As a result of the migration data pattern, this results in
-> GNUTLS putting writes on the wire that alternate between about
-> 4k and 30 bytes.
-> 
-> This is triggering the nagle algorithm on migration-test for
-> many of the TLS test cases, resulting in a "go slow" for I/O
-> that eventually hits the migration timeout configured by the
-> test.
-
-Worth spell out the qio_channel_set_delay() experiment?
-
-Frankly, even knowing qio_channel_set_delay(NO_DELAY) on all channels would
-fix it too, I don't think I fully get why the hang happened.
-
-Nagle, if my understanding is correct.. should be something trying to
-accumulate small writes only, it means write can be slightly delayed, but
-it didn't further explain why even if we push writting to it, it didn't
-flush properly.
-
-Say, I understand TLS is special now with its io_writev(), being
-qio_channel_tls_writev(), split the iov into multiple calls to
-qcrypto_tls_session_write(), which is likely why the problem existed, but I
-don't think I know why multiple qcrypto_tls_session_write() (and I believe
-ultimately, assuming small but continuous write()s to the socket fd) will
-cause a hang.  Any clue?
-
-> 
-> Not every contributor reports seeing the "go slow" but for
-> those who do see it, it hits >= 95% of the time for at least
-> one of the migration TLS test cases run by 'make check'.
-> 
-> While we could disable the nagle algorithm (and multifd
-> channels already do this), that would just lead to lots of
-> small TCP packets hitting the wire which is not good for
-> throughput. The migration code flushes in batches of 128kb
-> because it wants large writes for high throughput.
-> 
-> The only way to achieve this in the TLS code is to bounce
-> buffer the writes in order to flatten the iovec. We cannot
-> fully flatten, however, since GNUTLS puts a cap on the max
-> TLS record size it is willing to send, which is negotiated
-> with the server, typically 16 kb out of the box.
-> 
-> This patch thus queries the max TLS record size and then
-> flattens the iovec into buffers of this size. If the
-> iovec only contains a single element, bounce buffering
-> is skipped to avoid the redundant copy.
-
-I saw there is also gnutls_record_cork() and the uncork(), which seems to
-resolve the same issue (I tried to look at gnutls git history but I didn't
-find any mention of why the API introduced.. though).
-
-Any thoughts on why not relying on that, say, would it work too if cork()
-at start of qio_channel_tls_writev(), loop, then uncork()?
-
-Thanks,
-
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On 9/3/26 12:24 PM, Zhuoying Cai wrote:
+> The virtio-net device used a fixed header size that did not account for
+> the num_buffers field used in VirtIO 1.0 or for the mergeable receive
+> buffers feature.
+>
+> Use dynamic header sizing: 10 bytes for legacy mode and 12 bytes for
+> VirtIO 1.0 or when VIRTIO_NET_F_MRG_RXBUF is enabled. This ensures
+> correct packet handling across different VirtIO configurations.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->  crypto/tlssession.c         | 10 ++++++++++
->  include/crypto/tlssession.h |  2 ++
->  include/io/channel-tls.h    |  2 ++
->  io/channel-tls.c            | 35 ++++++++++++++++++++++++++++++-----
->  io/trace-events             |  1 +
->  5 files changed, 45 insertions(+), 5 deletions(-)
-> 
-> diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-> index 314e3e96ba..cf4daf8544 100644
-> --- a/crypto/tlssession.c
-> +++ b/crypto/tlssession.c
-> @@ -653,6 +653,11 @@ qcrypto_tls_session_get_peer_name(QCryptoTLSSession *session)
->      return NULL;
->  }
->  
-> +size_t qcrypto_tls_session_get_send_buffer(QCryptoTLSSession *session)
-> +{
-> +    return gnutls_record_get_max_size(session->handle);
-> +}
-> +
->  
->  #else /* ! CONFIG_GNUTLS */
->  
-> @@ -757,4 +762,9 @@ qcrypto_tls_session_get_peer_name(QCryptoTLSSession *sess)
->      return NULL;
->  }
->  
-> +size_t qcrypto_tls_session_get_send_buffer(QCryptoTLSSession *sess)
-> +{
-> +    return 1;
-> +}
-> +
->  #endif
-> diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
-> index 28e419681e..b29648a0a9 100644
-> --- a/include/crypto/tlssession.h
-> +++ b/include/crypto/tlssession.h
-> @@ -369,4 +369,6 @@ int qcrypto_tls_session_get_key_size(QCryptoTLSSession *sess,
->   */
->  char *qcrypto_tls_session_get_peer_name(QCryptoTLSSession *sess);
->  
-> +size_t qcrypto_tls_session_get_send_buffer(QCryptoTLSSession *sess);
-> +
->  #endif /* QCRYPTO_TLSSESSION_H */
-> diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-> index 7e9023570d..1c22a3fd07 100644
-> --- a/include/io/channel-tls.h
-> +++ b/include/io/channel-tls.h
-> @@ -50,6 +50,8 @@ struct QIOChannelTLS {
->      QIOChannelShutdown shutdown;
->      guint hs_ioc_tag;
->      guint bye_ioc_tag;
-> +    char *send_buffer;
-> +    size_t send_buffer_len;
->  };
->  
->  /**
-> diff --git a/io/channel-tls.c b/io/channel-tls.c
-> index 31ec4d236d..ba2699786e 100644
-> --- a/io/channel-tls.c
-> +++ b/io/channel-tls.c
-> @@ -24,6 +24,7 @@
->  #include "io/channel-tls.h"
->  #include "trace.h"
->  #include "qemu/atomic.h"
-> +#include "qemu/iov.h"
->  
->  
->  static ssize_t qio_channel_tls_write_handler(const void *buf,
-> @@ -201,6 +202,12 @@ static gboolean qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
->          } else {
->              trace_qio_channel_tls_credentials_allow(ioc);
->          }
-> +
-> +        ioc->send_buffer_len = qcrypto_tls_session_get_send_buffer(
-> +            ioc->session);
-> +        ioc->send_buffer = g_new0(char, ioc->send_buffer_len);
-> +        trace_qio_channel_tls_send_buffer_len(ioc, ioc->send_buffer_len);
-> +
->          qio_task_complete(task);
->          return TRUE;
->      } else {
-> @@ -376,6 +383,7 @@ static void qio_channel_tls_finalize(Object *obj)
->          g_clear_handle_id(&ioc->bye_ioc_tag, g_source_remove);
->      }
->  
-> +    g_free(ioc->send_buffer);
->      object_unref(OBJECT(ioc->master));
->      qcrypto_tls_session_free(ioc->session);
->  }
-> @@ -446,13 +454,30 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
->                                        Error **errp)
->  {
->      QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
-> -    size_t i;
->      ssize_t done = 0;
-> +    size_t tot = iov_size(iov, niov);
->  
-> -    for (i = 0 ; i < niov ; i++) {
-> +    /* Skip bounce buffer in simple case */
-> +    if (niov == 1) {
->          ssize_t ret = qcrypto_tls_session_write(tioc->session,
-> -                                                iov[i].iov_base,
-> -                                                iov[i].iov_len,
-> +                                                iov[0].iov_base,
-> +                                                iov[0].iov_len,
-> +                                                errp);
-> +        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-> +            return QIO_CHANNEL_ERR_BLOCK;
-> +        } else if (ret < 0) {
-> +            return -1;
-> +        }
-> +        return ret;
-> +    }
-> +
-> +    while (done < tot) {
-> +        size_t got = iov_to_buf(iov, niov, done,
-> +                                tioc->send_buffer,
-> +                                tioc->send_buffer_len);
-> +        ssize_t ret = qcrypto_tls_session_write(tioc->session,
-> +                                                tioc->send_buffer,
-> +                                                got,
->                                                  errp);
->          if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
->              if (done) {
-> @@ -464,7 +489,7 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
->              return -1;
->          }
->          done += ret;
-> -        if (ret < iov[i].iov_len) {
-> +        if (ret < got) {
->              break;
->          }
->      }
-> diff --git a/io/trace-events b/io/trace-events
-> index ec91453335..88ebd5b478 100644
-> --- a/io/trace-events
-> +++ b/io/trace-events
-> @@ -44,6 +44,7 @@ qio_channel_tls_handshake_pending(void *ioc, int status) "TLS handshake pending
->  qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
->  qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
->  qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
-> +qio_channel_tls_send_buffer_len(void *ioc, int len) "TLS send buffer len ioc=%p len=%d"
->  qio_channel_tls_bye_start(void *ioc) "TLS termination start ioc=%p"
->  qio_channel_tls_bye_pending(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
->  qio_channel_tls_bye_fail(void *ioc) "TLS termination fail ioc=%p"
-> -- 
-> 2.55.0
-> 
+>   pc-bios/s390-ccw/virtio-net.c | 30 ++++++++++++++++++++++++------
+>   1 file changed, 24 insertions(+), 6 deletions(-)
+>
+> diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+> index f58f7ffc55..afa728bc32 100644
+> --- a/pc-bios/s390-ccw/virtio-net.c
+> +++ b/pc-bios/s390-ccw/virtio-net.c
+> @@ -20,6 +20,7 @@
+>   #include "s390-ccw.h"
+>   #include "virtio.h"
+>   #include "virtio-ccw.h"
+> +#include "virtio-pci.h"
+>   #include "s390-time.h"
+>   #include "helper.h"
+>   
+> @@ -28,6 +29,7 @@
+>   #endif
+>   
+>   #define VIRTIO_NET_F_MAC_BIT  (1 << 5)
+> +#define VIRTIO_NET_F_MRG_RXBUF_BIT (1 << 15)
 
--- 
-Peter Xu
+We define this new feature bit, but it looks like we never set it.
+
+The existing virtio_net_init() code has only:
+
+vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+
+Should it be updated to VIRTIO_NET_F_MAC_BIT | VIRTIO_NET_F_MRG_RXBUF_BIT?
+
+Is the new feature bit something we want to unconditionally request, only
+request for PCI, or do we simply not care about it?
+>   
+>   #define VQ_RX 0         /* Receive queue */
+>   #define VQ_TX 1         /* Transmit queue */
+> @@ -43,7 +45,18 @@ struct VirtioNetHdr {
+>   };
+>   typedef struct VirtioNetHdr VirtioNetHdr;
+>   
+> +struct VirtioNetHdrMrgRxbuf {
+> +    struct VirtioNetHdr hdr;
+> +    uint16_t num_buffers; /* Only with VIRTIO_NET_F_MRG_RXBUF or VIRTIO1 */
+> +};
+> +typedef struct VirtioNetHdrMrgRxbuf VirtioNetHdrMrgRxbuf;
+> +
+> +/* Header sizes for different modes */
+> +#define VIRTIO_NET_HDR_SIZE_LEGACY  sizeof(VirtioNetHdr)
+> +#define VIRTIO_NET_HDR_SIZE_V1      sizeof(VirtioNetHdrMrgRxbuf)
+> +
+>   static uint16_t rx_last_idx;  /* Last index in receive queue "used" ring */
+> +static int virtio_net_hdr_size;
+>   
+>   int virtio_net_init(void *mac_addr)
+>   {
+> @@ -62,12 +75,17 @@ int virtio_net_init(void *mac_addr)
+>           return -1;
+>       }
+>   
+> +    virtio_net_hdr_size = ((vdev->guest_features[1] & VIRTIO_F_VERSION_1) ||
+> +                           (vdev->guest_features[0] & VIRTIO_NET_F_MRG_RXBUF_BIT))
+
+Because we do not set VIRTIO_NET_F_MRG_RXBUF in net_init(), only the first
+half of this check can ever return true.
+
+Maybe that is correct, but in that case we can simplify this to just
+vdev->guest_features[1] & VIRTIO_F_VERSION_1, right?
+
+Regards,
+Jared Rossi
+> +                          ? VIRTIO_NET_HDR_SIZE_V1
+> +                          : VIRTIO_NET_HDR_SIZE_LEGACY;
+> +
+>       memcpy(mac_addr, vdev->config.net.mac, ETH_ALEN);
+>   
+>       for (i = 0; i < 64; i++) {
+> -        buf = malloc(ETH_MTU_SIZE + sizeof(VirtioNetHdr));
+> +        buf = malloc(ETH_MTU_SIZE + virtio_net_hdr_size);
+>           IPL_assert(buf != NULL, "Can not allocate memory for receive buffers");
+> -        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + sizeof(VirtioNetHdr),
+> +        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + virtio_net_hdr_size,
+>                          VRING_DESC_F_WRITE);
+>       }
+>       vring_notify(rxvq);
+> @@ -77,14 +95,14 @@ int virtio_net_init(void *mac_addr)
+>   
+>   int send(int fd, const void *buf, int len, int flags)
+>   {
+> -    VirtioNetHdr tx_hdr;
+> +    VirtioNetHdrMrgRxbuf tx_hdr;
+>       VDev *vdev = virtio_get_device();
+>       VRing *txvq = &vdev->vrings[VQ_TX];
+>   
+>       /* Set up header - we do not use anything special, so simply clear it */
+>       memset(&tx_hdr, 0, sizeof(tx_hdr));
+>   
+> -    vring_send_buf(txvq, &tx_hdr, sizeof(tx_hdr), VRING_DESC_F_NEXT);
+> +    vring_send_buf(txvq, &tx_hdr, virtio_net_hdr_size, VRING_DESC_F_NEXT);
+>       vring_send_buf(txvq, (void *)buf, len, VRING_HIDDEN_IS_CHAIN);
+>       while (!vr_poll(txvq)) {
+>           yield();
+> @@ -108,13 +126,13 @@ int recv(int fd, void *buf, int maxlen, int flags)
+>           return 0;
+>       }
+>   
+> -    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - sizeof(VirtioNetHdr);
+> +    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
+>       if (len > maxlen) {
+>           puts("virtio-net: Receive buffer too small");
+>           len = maxlen;
+>       }
+>       id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
+> -    pkt = (uint8_t *)(rxvq->desc[id].addr + sizeof(VirtioNetHdr));
+> +    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
+>   
+>   #if DEBUG_VIRTIO_NET   /* Dump packet */
+>       int i;
 
 
