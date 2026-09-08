@@ -4,101 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07393C79FA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F08C79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3tLB-0001Rl-Mb; Tue, 08 Sep 2026 06:46:13 -0400
+	id 1x3tID-0000Jl-3J; Tue, 08 Sep 2026 06:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x3tLA-0001NU-9L
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:46:12 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x3tL6-0007AE-Mw
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:46:12 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6a9459caac0so336564a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 03:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788864366; x=1789469166; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=m/61nE4RZAQCSiXlvZv8ZPhxDHQ+auYzWrng+fg5aUU=;
- b=huPEZGrW+WapsX7m13zgsWmSmOPXEIPYGTPCS6vb2JjZCf1BJy9cLjUTpfULb56MSK
- 1cut+SExz5Qg4QWCH5yTmPYJIKLqlpzcpFgA3oYn3ROvd+675JxunPG8RYUxUOBifNGw
- KnqtnwiMS22lwP0U5CQfWkvoJrT1uxKUaj6KyrIEsfvnayW5Q9r4RG9+XR7OwM+vfHTB
- 1ijMECSAojK6KVDV+jcb79/cJPbJAnKfC2a931u1JT6f7W6d4dSqWhOlK5ZTAzrk0Jsu
- /fTi8YoE1RIUeHbeKm+Uo170ZgOQ67S/l75PrMOjrwuCpz7o/3HaBHEeQNmCKZPCFRYF
- pzaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788864366; x=1789469166;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=m/61nE4RZAQCSiXlvZv8ZPhxDHQ+auYzWrng+fg5aUU=;
- b=c+NoQd6Q5f66T8SO1XGhADpGjhDv2o9DIX5AdhVWWs9hyiYSbZB1Qc/QFScj3EYRVo
- s++zdkheAmdHOP8ugKz9+CXSgajS8Ymrz8SA6QXZJQyDaZHTquuvRucCJNrEsn3UzLbr
- KK7OHg6mW6a3xE5+foMl4cGZIDX2RopM4FNg0yu7VhuLnauqHYlVkjXshtHqitzxCh37
- sCz1Kdh5mlq55bCm6gFQCKQnM1yQXfJw3Z81vSv+TKkIDoNCM5UBio+RqClgihF7M0P8
- q32KFx9IBZFjW4gLwnI+9NPHCbkeSX3s6F/dGUYEA6d4LQquF3XEbil4B0akT5CDrccg
- XFNg==
-X-Forwarded-Encrypted: i=1;
- AKwUvByOmO8c+i+HtWXjDmKfQlAiLsbM/5s3hm8a1tideTmHbyH+n1ejSg8/E6g1tReoeA5uD1CBWeIf8EBQ@nongnu.org
-X-Gm-Message-State: AFuF++k/2eTd0EiEe+Zf1322rsQjwy/sgjEccsRyL8n/PvEIwxVixrnW
- MTFO7vCwHccTrBMblY0Z4LvdUakhObJ9003GVFX++3IICn8Ha8krajP4
-X-Gm-Gg: AYBFou0GOWGn2HCOHnkNqUJtRLog8haNaX08XhOxD5gOLxT1R81irOsOOh3DyClghu1
- h74cu6Zqfb4WDue+TxrKY0eTnv5aN8JV7IoJhtg7R/OXhX28KIeNRCDDVEa/5YI9rnyuZm9grvi
- NE/QcE1XkUHyvmtStLq1bCDhpGOyPUN/Y8Gmt3E1F8xNB8J6/5dJA/LRZOvxLyNXIJXd5fQJZk9
- hszqMOjvzTmvjwjUPyQj+30jPSDV68JhtTqI6SDtb2Qbps+Hs8yDQTt9ri04ZvlQZ4v6wWgNYNn
- i3gMoi78PrhmLAbmRhO+YnHUQxjrfwN66PRJ+z+Xb02EfB7XHuQAk31Yl4CNbyhSYB8ZMnjzgEk
- m9myfs6EHwZ7hClP3O2Jjs0F9HEC9PeI625oXIYBRMhMqZfRYNW8uHa3ToPN+WhhcHrE2556T4Q
- 78YKM1yFKvH2hX6R+UTxKUkNgWaashC/yNO/QkXQDEtZyVeUZkZm8Q9sfG1ExLrrfQAA==
-X-Received: by 2002:a05:6402:a244:10b0:6a7:f2fc:deb7 with SMTP id
- 4fb4d7f45d1cf-6a7f2fce000mr11967045a12.14.1788864365993; 
- Tue, 08 Sep 2026 03:46:05 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([62.214.191.67])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a7e68e921esm5359704a12.18.2026.09.08.03.46.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Sep 2026 03:46:05 -0700 (PDT)
-Date: Tue, 08 Sep 2026 10:44:52 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Emmanuel Blot <emmanuel.blot@free.fr>,
- Emmanuel Blot via qemu development <qemu-devel@nongnu.org>,
- qemu-devel@nongnu.org
-CC: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
- Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_09/50=5D_hw=3A_ds1338=3A_use_the_TYPE=5FD?=
- =?US-ASCII?Q?S1338_constant_instead_of_the_=22ds1338=22_string?=
-In-Reply-To: <20260907-bmc-minerva-v1-9-0d83ad610c3b@free.fr>
-References: <20260907-bmc-minerva-v1-0-0d83ad610c3b@free.fr>
- <20260907-bmc-minerva-v1-9-0d83ad610c3b@free.fr>
-Message-ID: <55B670A1-7B96-46AF-963F-0E105462AF6B@gmail.com>
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1x3tIB-0000ED-Eq; Tue, 08 Sep 2026 06:43:07 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1x3tI9-0006bO-3E; Tue, 08 Sep 2026 06:43:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SfWMfhGQQyW3HGYM03GSX8eWc3RRXc27ryyyX2//P3R7qvOXLbMm5zZBqzyTza1+7JGsoPq+t3Ea7PpAw2s64N9qobTpVRs1mzK7XY0r3tX5/ABQZ1BwysfQCMdNVZ1k/3Xmay3RY8zxYRh8Z2RynTmqXiEQktdGTgYdW5sJf0hJqhzwvaoMQlbJ1YYmKw5I3f/HZbkOTFZKbQ05bP3G7rdfZhfp3xTFmXXxx/uXeabAf/4Kly74Q7aSWqL9aRK1q0o9ogsOeXHZA8bUo/ksYjfux692yG/mXIKHUf1dC2yGKalzfx+ZHW9oBLWDduoKMgwFVsJ09y/+0DkoAQl+ZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RjGoCma/9MC7D9iMaG42uXF+m7bDu5Dmk8Amcu2UWvE=;
+ b=tgx3hHB8i/qzBgUV0f9KSm+gItlNelnK0ybfskNIZ5jduWIe1TQcXDDP7l/PEbS1BGAemVcXW9jOYM82OfrnYtP6ry47mi/nIDeFQaVOaulf99lsMo6+Mwxlz92nDY4Y8hTi7uNjue4Ol9q5AHXwpUDasOlMpJMXrhRlwqTpYxCFBx/2gwoksyP6J5ewMKv0ETIis7eYYhDBs+JbGzHRwWCWjbqP4Bvw8Pu8TwGbFNzJNMPAOWZpSP+wASuu6GVwub6AH2VDc+Sxd9JCJrHjU1CID6y63YQekFRf7Me3h7cO/pUyQkzCCPqNy63OQTHLCt3ptKtKNjzOMJ2OVqdzeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RjGoCma/9MC7D9iMaG42uXF+m7bDu5Dmk8Amcu2UWvE=;
+ b=jLSRX859ARyiJaHSs4GhUFAKxW8fDERewTDfKvtyQCVYuzVU8OuZrROarwxp+CSJzc3Hg5RTUL0M10rhiLVPMXu9X14y83CQqubWxns3b9fszEGlfHGBuNQcaW9pxJ/XXkeRCF1OInqgAvydaKCPk8qFw5dhTyxksdHqvIeucSavYcd1M5l9eyyxDMHb/yPT3w0+5mKCWv1Whp3HoHW/jyO7UaqDgjyruBjiNJV3a6vTFFfJgaBSFc/7qK27X3sw3MsY2hiTnotGfXQ1Xc1j67BH7BLx3pPYhD4z0FXU6u8DrEcSnYGTPpkm7aqAfmy+qVyU678U+T/pQSeQ9uwVRw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from PSAPR02MB4984.apcprd02.prod.outlook.com (2603:1096:301:78::7)
+ by SEYPR02MB6579.apcprd02.prod.outlook.com (2603:1096:101:139::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
+ 2026 10:42:56 +0000
+Received: from PSAPR02MB4984.apcprd02.prod.outlook.com
+ ([fe80::fd75:bbda:6f27:c616]) by PSAPR02MB4984.apcprd02.prod.outlook.com
+ ([fe80::fd75:bbda:6f27:c616%6]) with mapi id 15.21.0382.014; Tue, 8 Sep 2026
+ 10:42:56 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <alistair@alistair23.me>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Subject: [PATCH v2 25/32] hw/block: m25p80: Add GigaDevice GD25Q128 flash
+Date: Tue,  8 Sep 2026 18:41:34 +0800
+Message-ID: <20260908104159.1621764-26-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260908104159.1621764-1-bin.meng@processmission.com>
+References: <20260908104159.1621764-1-bin.meng@processmission.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TY4P301CA0041.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:2be::15) To PSAPR02MB4984.apcprd02.prod.outlook.com
+ (2603:1096:301:78::7)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PSAPR02MB4984:EE_|SEYPR02MB6579:EE_
+X-MS-Office365-Filtering-Correlation-Id: ad4a1893-1e8d-4585-1dad-08df0d95f176
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|23010399003|10067099003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: rXWRAKqet/7p2yZ55nl/sRgVji6i9e2+SymSTdqfXmc9V9yBbzyRefskKbH3QoTp+YWLaVBuhPyWmrFZttIWP9CVFKCRCnU9MSV8Iqg1jIMx5oa6XlaiNH0xFVRpmHX2fWhvKG/I6tZtwqKcBpfI8Nko8l9PyCdlvnUd8Qr3/bmSoItSmrkcr7mOob2+TYhEfhKGaREqi0xudXt5yhwO1gcEdO75nazFSyrkdQaJ9Tsqx1nnSAIW3Kutu1WbPsyrOaX7zl9cwyGjOT+WZaYv9LsvQ6AWri41Kl8tOd6gSqP/b+btnZJQbKSG4tjNo+zL+YvzAx1OAAIub+kIlcmalAiqXEIMkGMXygtDfFZYVNeXQ8w1HKTgRM/dED+01Foh2rMPPkpO1IULEU97ZiDtfmojzQNR/+LkxwmVUdw5+0NGwdomVt8bsMtfW9Igh6P+iZIxGx8m7ngXQr1M0H2ePnaK7K5QZaWIfLuofoy2PlJ8LHobq7voyGsO9TacFLAKq0nXQDTjQfyn2c8Xmld6W2OIQNIhzZjGWNkBOUbFe/Kv8E8M08T3Pi2RfTevkOJCa85szKKkg67JsTM3xrD+mXuM/4/0CC0Hlsn5itWGbm4MqUq8D/GY7cQwFuZmpQCD5HERdWpJGKBF/uchcQi/wzSJNWjLxdkEY/i7lw3UCRo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PSAPR02MB4984.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(10067099003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?eGXRNSK1EHiKxQXH7TJ4Ja8Cal76fRed1evq7tHhxaZ37/Dy8b5uBJnm0w+0?=
+ =?us-ascii?Q?5v36t7kA6zYgeFTs8DGkJDdsgMcO9t0nfwTHdQXfRxdyzPhAEgMB9iGNGeRx?=
+ =?us-ascii?Q?ORPjxsHsiAB5+EzCuqLjLhttTsLMz3jbo1HJKyvOFNwogbJfR1CrnafkBV3K?=
+ =?us-ascii?Q?Lc69uN7lAxMezXxWxmZDe1/AgfJGWNYXHhHshL6/xmb0INX7/d3mOUMVZeVl?=
+ =?us-ascii?Q?9Pq+7uyqjAQrnsmXrBKnyvTQZIxSZjBaowQw1iek1LfoJkv7sjulie+zbX8O?=
+ =?us-ascii?Q?T/mAx1KH3ttg6+juo6lAFZ2FnD1LT4VUwhCqbIy0Rz8pujSnMRl96obsUPfJ?=
+ =?us-ascii?Q?oD4atyg9dH+gGp/+P/p6yNx4v19CHihIGr2yECLPtx2wuVkVDdAdb0As0dno?=
+ =?us-ascii?Q?ysXjJf4oS0R3eVnB7LOuvDZiBumiRiGlnTcyRk9C7AjPMAN6D59WyS2ZTaZA?=
+ =?us-ascii?Q?N4gd41ehy3rPI0AcCQv0xfBcCPKS0hy/XGvmNj060A1+6RPZr+fgoNL6nCi0?=
+ =?us-ascii?Q?yOWyZYtMrjVFzUNr05msybta4kolNVPgN2rKAVpmP0iuNuNWQWK18BlQnWTl?=
+ =?us-ascii?Q?i6c590dE+gmhL+/XmCAsyaOhPiQyHCdlXGAxgVsUpf3O1aD+mO/4Tmu8qoOe?=
+ =?us-ascii?Q?7tKlr1amnXyUI3tUwgTndCGZENpzgpbVWsa+8fFgVk9BzIk29K8MN/PkfyZc?=
+ =?us-ascii?Q?dvJbZKpRMgM5x1t7WZwD8b+N6yafLCPOYUq2heZ8+SQVs1sIfhLWfFgCfhAi?=
+ =?us-ascii?Q?DAHbtKAiuvSYTUbQ7HZJgV1hkUSlKWC+VhLqcXuzhCy4BfHy5TbUxFbrBcf3?=
+ =?us-ascii?Q?LBu8m/aO9QYWJTgkD+hmZq1lNb0lSIZ0kbSYWHKv9jtlRvMcFfb2XXsNzQsf?=
+ =?us-ascii?Q?qDyk2XxW0/qVczcZr2YXgs6fQWo0+9SZZQrWuX8XE82mqpxtjFwzRWrusnrj?=
+ =?us-ascii?Q?ukpfkaeY4Acj2UOH4cX28v+HNzRbEufHb8CXcSUAJhkxj3QqECkC4kbkCOzW?=
+ =?us-ascii?Q?SV4EaNzKqWUb2pNTzLAjZYqOyR2sSaeuyFQ2/BHJoXEou6oud+DHQ3L7+Yl7?=
+ =?us-ascii?Q?CsNijbliaXh/t+ePNkNHZgcT4kRzktIP4A7QJwHGR4yLPncKrhKLzu5zYe4c?=
+ =?us-ascii?Q?XQFH4PHJzTZ49vXgwOwRIUlOUrpjt21PVJffLV1codnZvQxcfW8hc4rkAIG5?=
+ =?us-ascii?Q?6l0KQKBZArokjNLhN9KH8tJNU5dEFN9yKaI8GG0gD8DPgO7GCCPxGiEYmuyH?=
+ =?us-ascii?Q?pHxMtZerpxALZGRT/Owdmd8OkntS7qeuLK6pfdq9NuUEOyDdO4W3V6KZ8SS6?=
+ =?us-ascii?Q?/L9cto+HccoZTnXAfRwQw8u/SEQnPfC0DQO5BIY/7gCnz4RHyc8H7YrYvgDL?=
+ =?us-ascii?Q?Vdmh+I08FyzoR3hqBq55gSyL6SyjKr0mZFLXIP3volk9AUKQL0PoL+GvR1v2?=
+ =?us-ascii?Q?HJShx+8F5vo986hZ0DWAZwJ/x60d+4iX3FhoSOHyNzHy+aVksccFiRsDVwWv?=
+ =?us-ascii?Q?5tAeXWQ6oHtVJtHoQMqCFUc5IJPqZIVVdTvjvf+NUa+AUV3JSBZCi03pJPOA?=
+ =?us-ascii?Q?FkK1mIzLBxvVtUfVe52xUT7vN0gXT/JnCVrfXg5EAy8bMxLZO7rVh2DDjgdv?=
+ =?us-ascii?Q?hB106JHqjc/H3oJdj0i7j07bUYpdjXKNnGYSK9GnYygjX/ZodW9lxUYGxMQM?=
+ =?us-ascii?Q?DVz9g29pfoEhB9vnN/YJomFhx576n4Sbepps3nGPdvzIAC/KoEEhog/rf3EY?=
+ =?us-ascii?Q?KB2sV3B7urKOspG+gKrTrXsnJjAuvjE=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ad4a1893-1e8d-4585-1dad-08df0d95f176
+X-MS-Exchange-CrossTenant-AuthSource: PSAPR02MB4984.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:42:56.3488 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Wywuyjvc+o82eYWzBzxf4i8UpeWxnWXzzQbMMXFtC14Ti/B3eJiWXkRHqEQi1CSReMEsVF2jIzfKogV47buFqkmABEJnoE6rI61+R4RzgJw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB6579
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=bin.meng@processmission.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,325 +139,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add the 128-Mbit GigaDevice GD25Q128 SPI NOR flash with JEDEC ID
+0xc84018, 64 KiB sectors, and 4 KiB erase support.
 
+The Phytium E2000Q COMe board uses this device for its QSPI boot flash.
 
-Am 7=2E September 2026 16:41:59 UTC schrieb Emmanuel Blot via qemu develop=
-ment <qemu-devel@nongnu=2Eorg>:
->Now that TYPE_DS1338 is exposed by include/hw/rtc/ds1338=2Eh, use it in
->the machines that instantiate the RTC by its raw type name string=2E
->
->No functional change=2E
->
->Signed-off-by: Emmanuel Blot <emmanuel=2Eblot@free=2Efr>
->---
-> hw/arm/aspeed_ast2400_palmetto=2Ec          | 4 +++-
-> hw/arm/aspeed_ast2400_supermicrox11=2Ec     | 4 +++-
-> hw/arm/aspeed_ast2500_romulus=2Ec           | 4 +++-
-> hw/arm/aspeed_ast2500_supermicro-x11spi=2Ec | 4 +++-
-> hw/arm/aspeed_ast2500_witherspoon=2Ec       | 4 +++-
-> hw/arm/aspeed_ast2600_bletchley=2Ec         | 3 ++-
-> hw/arm/aspeed_ast2600_catalina=2Ec          | 2 +-
-> hw/arm/aspeed_ast2600_sanmiguel=2Ec         | 3 +--
-> hw/arm/realview=2Ec                         | 3 ++-
-> hw/arm/versatilepb=2Ec                      | 3 ++-
-> hw/ppc/e500=2Ec                             | 3 ++-
-> hw/riscv/tt_atlantis=2Ec                    | 3 ++-
-> 12 files changed, 27 insertions(+), 13 deletions(-)
->
->diff --git a/hw/arm/aspeed_ast2400_palmetto=2Ec b/hw/arm/aspeed_ast2400_p=
-almetto=2Ec
->index e2350e5b6c=2E=2E185185f0bb 100644
->--- a/hw/arm/aspeed_ast2400_palmetto=2Ec
->+++ b/hw/arm/aspeed_ast2400_palmetto=2Ec
->@@ -11,6 +11,7 @@
-> #include "hw/arm/aspeed=2Eh"
-> #include "hw/arm/aspeed_soc=2Eh"
-> #include "hw/i2c/smbus_eeprom=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> /* Palmetto hardware value: 0x120CE416 */
-> #define PALMETTO_BMC_HW_STRAP1 (                                        =
-\
->@@ -36,7 +37,8 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *b=
-mc)
->      * The palmetto platform expects a ds3231 RTC but a ds1338 is
->      * enough to provide basic RTC features=2E Alarms will be missing
->      */
->-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", =
-0x68);
->+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), TYPE_DS133=
-8,
->+                            0x68);
->=20
->     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
->                           eeprom_buf);
->diff --git a/hw/arm/aspeed_ast2400_supermicrox11=2Ec b/hw/arm/aspeed_ast2=
-400_supermicrox11=2Ec
->index c75898cc6d=2E=2E051e072c5a 100644
->--- a/hw/arm/aspeed_ast2400_supermicrox11=2Ec
->+++ b/hw/arm/aspeed_ast2400_supermicrox11=2Ec
->@@ -11,6 +11,7 @@
-> #include "hw/arm/aspeed=2Eh"
-> #include "hw/arm/aspeed_soc=2Eh"
-> #include "hw/i2c/smbus_eeprom=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> /* TODO: Find the actual hardware value */
-> #define SUPERMICROX11_BMC_HW_STRAP1 (                                   =
-\
->@@ -36,7 +37,8 @@ static void supermicrox11_bmc_i2c_init(AspeedMachineSta=
-te *bmc)
->      * The palmetto platform expects a ds3231 RTC but a ds1338 is
->      * enough to provide basic RTC features=2E Alarms will be missing
->      */
->-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", =
-0x68);
->+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), TYPE_DS133=
-8,
->+                            0x68);
->=20
->     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
->                           eeprom_buf);
->diff --git a/hw/arm/aspeed_ast2500_romulus=2Ec b/hw/arm/aspeed_ast2500_ro=
-mulus=2Ec
->index 340a74408b=2E=2E87f90ed361 100644
->--- a/hw/arm/aspeed_ast2500_romulus=2Ec
->+++ b/hw/arm/aspeed_ast2500_romulus=2Ec
->@@ -10,6 +10,7 @@
-> #include "qapi/error=2Eh"
-> #include "hw/arm/aspeed=2Eh"
-> #include "hw/arm/aspeed_soc=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> /* Romulus hardware value: 0xF10AD206 */
-> #define ROMULUS_BMC_HW_STRAP1 (                                         =
-\
->@@ -29,7 +30,8 @@ static void romulus_bmc_i2c_init(AspeedMachineState *bm=
-c)
->      * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
->      * good enough
->      */
->-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338",=
- 0x32);
->+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_DS13=
-38,
->+                            0x32);
-> }
->=20
-> static void aspeed_machine_romulus_class_init(ObjectClass *oc,
->diff --git a/hw/arm/aspeed_ast2500_supermicro-x11spi=2Ec b/hw/arm/aspeed_=
-ast2500_supermicro-x11spi=2Ec
->index 5a7e49d6cc=2E=2Edc0248422d 100644
->--- a/hw/arm/aspeed_ast2500_supermicro-x11spi=2Ec
->+++ b/hw/arm/aspeed_ast2500_supermicro-x11spi=2Ec
->@@ -11,6 +11,7 @@
-> #include "hw/arm/aspeed=2Eh"
-> #include "hw/arm/aspeed_soc=2Eh"
-> #include "hw/i2c/smbus_eeprom=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> /* TODO: Find the actual hardware value */
-> #define SUPERMICRO_X11SPI_BMC_HW_STRAP1 (                               =
-\
->@@ -32,7 +33,8 @@ static void supermicro_x11spi_bmc_i2c_init(AspeedMachin=
-eState *bmc)
->      * The palmetto platform expects a ds3231 RTC but a ds1338 is
->      * enough to provide basic RTC features=2E Alarms will be missing
->      */
->-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", =
-0x68);
->+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), TYPE_DS133=
-8,
->+                            0x68);
->=20
->     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
->                           eeprom_buf);
->diff --git a/hw/arm/aspeed_ast2500_witherspoon=2Ec b/hw/arm/aspeed_ast250=
-0_witherspoon=2Ec
->index 26ddb67347=2E=2Ec69065846c 100644
->--- a/hw/arm/aspeed_ast2500_witherspoon=2Ec
->+++ b/hw/arm/aspeed_ast2500_witherspoon=2Ec
->@@ -14,6 +14,7 @@
-> #include "hw/sensor/tmp105=2Eh"
-> #include "hw/i2c/smbus_eeprom=2Eh"
-> #include "hw/gpio/pca9552=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> /* Witherspoon hardware value: 0xF10AD216 */
-> #define WITHERSPOON_BMC_HW_STRAP1 (                                     =
-\
->@@ -70,7 +71,8 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState=
- *bmc)
->      * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 i=
-s
->      * good enough
->      */
->-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338",=
- 0x32);
->+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_DS13=
-38,
->+                            0x32);
->=20
->     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
->                           eeprom_buf);
->diff --git a/hw/arm/aspeed_ast2600_bletchley=2Ec b/hw/arm/aspeed_ast2600_=
-bletchley=2Ec
->index 2822f6bdf5=2E=2E7bd1f90555 100644
->--- a/hw/arm/aspeed_ast2600_bletchley=2Ec
->+++ b/hw/arm/aspeed_ast2600_bletchley=2Ec
->@@ -12,6 +12,7 @@
-> #include "hw/arm/aspeed_soc=2Eh"
-> #include "hw/gpio/pca9552=2Eh"
-> #include "hw/nvram/eeprom_at24c=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> #define TYPE_TMP421 "tmp421"
-> /* Bletchley hardware value */
->@@ -44,7 +45,7 @@ static void bletchley_bmc_i2c_init(AspeedMachineState *=
-bmc)
->     /* Bus 6 */
->     at24c_eeprom_init(i2c[6], 0x56, 65536);
->     /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
->-    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
->+    i2c_slave_create_simple(i2c[6], TYPE_DS1338, 0x51);
->=20
->=20
->     /* Bus 7 */
->diff --git a/hw/arm/aspeed_ast2600_catalina=2Ec b/hw/arm/aspeed_ast2600_c=
-atalina=2Ec
->index ad2953dfea=2E=2Ee1dc988425 100644
->--- a/hw/arm/aspeed_ast2600_catalina=2Ec
->+++ b/hw/arm/aspeed_ast2600_catalina=2Ec
->@@ -14,6 +14,7 @@
-> #include "hw/gpio/pca9552=2Eh"
-> #include "hw/gpio/pca9554=2Eh"
-> #include "hw/nvram/eeprom_at24c=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
-> #include "hw/sensor/tmp105=2Eh"
->=20
-> /* Catalina hardware value */
->@@ -22,7 +23,6 @@
-> #define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
->=20
-> #define TYPE_TMP421 "tmp421"
->-#define TYPE_DS1338 "ds1338"
->=20
-> /*
->  * "BMC Storage Module" FRU data=2E  Generated with frugen=2E
->diff --git a/hw/arm/aspeed_ast2600_sanmiguel=2Ec b/hw/arm/aspeed_ast2600_=
-sanmiguel=2Ec
->index 1dbbef11f2=2E=2E5ab2b43e9c 100644
->--- a/hw/arm/aspeed_ast2600_sanmiguel=2Ec
->+++ b/hw/arm/aspeed_ast2600_sanmiguel=2Ec
->@@ -13,6 +13,7 @@
-> #include "hw/gpio/pca9552=2Eh"
-> #include "hw/gpio/pca9554=2Eh"
-> #include "hw/nvram/eeprom_at24c=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
-> #include "hw/sensor/tmp105=2Eh"
->=20
-> /* SanMiguel hardware values */
->@@ -20,8 +21,6 @@
-> #define SANMIGUEL_BMC_HW_STRAP2 0x00000000
-> #define SANMIGUEL_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
->=20
->-#define TYPE_DS1338 "ds1338"
->-
-> /*
->  * "Front IO" FRU data=2E Generated with frugen=2E
->  *
->diff --git a/hw/arm/realview=2Ec b/hw/arm/realview=2Ec
->index ceba0331b0=2E=2E4cdf939511 100644
->--- a/hw/arm/realview=2Ec
->+++ b/hw/arm/realview=2Ec
->@@ -28,6 +28,7 @@
-> #include "hw/intc/realview_gic=2Eh"
-> #include "hw/core/irq=2Eh"
-> #include "hw/i2c/arm_sbcon_i2c=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
-> #include "hw/sd/sd=2Eh"
-> #include "target/arm/cpu-qom=2Eh"
->=20
->@@ -323,7 +324,7 @@ static void realview_init(MachineState *machine,
->=20
->     dev =3D sysbus_create_simple(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
->     i2c =3D (I2CBus *)qdev_get_child_bus(dev, "i2c");
->-    i2c_slave_create_simple(i2c, "ds1338", 0x68);
->+    i2c_slave_create_simple(i2c, TYPE_DS1338, 0x68);
->=20
->     /* Memory map for RealView Emulation Baseboard:  */
->     /* 0x10000000 System registers=2E  */
->diff --git a/hw/arm/versatilepb=2Ec b/hw/arm/versatilepb=2Ec
->index f94bf96599=2E=2E737cd21c27 100644
->--- a/hw/arm/versatilepb=2Ec
->+++ b/hw/arm/versatilepb=2Ec
->@@ -18,6 +18,7 @@
-> #include "hw/pci/pci=2Eh"
-> #include "hw/i2c/i2c=2Eh"
-> #include "hw/i2c/arm_sbcon_i2c=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
-> #include "hw/core/irq=2Eh"
-> #include "hw/core/boards=2Eh"
-> #include "hw/block/flash=2Eh"
->@@ -346,7 +347,7 @@ static void versatile_init(MachineState *machine, int=
- board_id)
->=20
->     dev =3D sysbus_create_simple(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
->     i2c =3D (I2CBus *)qdev_get_child_bus(dev, "i2c");
->-    i2c_slave_create_simple(i2c, "ds1338", 0x68);
->+    i2c_slave_create_simple(i2c, TYPE_DS1338, 0x68);
->=20
->     /* Add PL041 AACI Interface to the LM4549 codec */
->     pl041 =3D qdev_new("pl041");
->diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
->index 1876882a04=2E=2E469cef9d2f 100644
->--- a/hw/ppc/e500=2Ec
->+++ b/hw/ppc/e500=2Ec
->@@ -50,6 +50,7 @@
-> #include "hw/core/platform-bus=2Eh"
-> #include "hw/net/fsl_etsec/etsec=2Eh"
-> #include "hw/i2c/i2c=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
-> #include "hw/core/irq=2Eh"
-> #include "hw/sd/sdhci=2Eh"
-> #include "hw/misc/unimp=2Eh"
->@@ -1025,7 +1026,7 @@ void ppce500_init(MachineState *machine)
->     memory_region_add_subregion(ccsr_addr_space, MPC8544_I2C_REGS_OFFSET=
-,
->                                 sysbus_mmio_get_region(s, 0));
->     i2c =3D I2C_BUS(qdev_get_child_bus(dev, "i2c"));
->-    i2c_slave_create_simple(i2c, "ds1338", RTC_REGS_OFFSET);
->+    i2c_slave_create_simple(i2c, TYPE_DS1338, RTC_REGS_OFFSET);
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+---
 
-Good idea!
+(no changes since v1)
 
-For e500:
-Acked-by: Bernhard Beschow <sgentey@gmail=2Ecom>
+ hw/block/m25p80.c | 1 +
+ 1 file changed, 1 insertion(+)
 
->=20
->     /* eSDHC */
->     if (pmc->has_esdhc) {
->diff --git a/hw/riscv/tt_atlantis=2Ec b/hw/riscv/tt_atlantis=2Ec
->index 8a219afef7=2E=2E910713c6bb 100644
->--- a/hw/riscv/tt_atlantis=2Ec
->+++ b/hw/riscv/tt_atlantis=2Ec
->@@ -27,6 +27,7 @@
-> #include "hw/char/serial-mm=2Eh"
-> #include "hw/intc/riscv_aclint=2Eh"
-> #include "hw/misc/unimp=2Eh"
->+#include "hw/rtc/ds1338=2Eh"
->=20
-> #include "system/system=2Eh"
-> #include "system/device_tree=2Eh"
->@@ -657,7 +658,7 @@ static void tt_atlantis_machine_init(MachineState *ma=
-chine)
->     qdev_realize(DEVICE(&ams->soc), NULL, &error_fatal);
->=20
->     /* I2C peripherals: qemu specific */
->-    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
->+    i2c_slave_create_simple(i2c_get_bus(s, 0), TYPE_DS1338, 0x6f);
->     i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
->=20
->     /* Load or create device tree */
->
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 545e0b5728..60a9b1f8d5 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -207,6 +207,7 @@ static const FlashPartInfo known_devices[] = {
+     /* GigaDevice */
+     { INFO("gd25q32",     0xc84016,      0,  64 << 10,  64, ER_4K) },
+     { INFO("gd25q64",     0xc84017,      0,  64 << 10, 128, ER_4K) },
++    { INFO("gd25q128",    0xc84018,      0,  64 << 10, 256, ER_4K) },
+ 
+     /* Intel/Numonyx -- xxxs33b */
+     { INFO("160s33b",     0x898911,      0,  64 << 10,  32, 0) },
+-- 
+2.53.0
+
 
