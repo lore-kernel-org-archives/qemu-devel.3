@@ -4,141 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43691C79FAD
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35EF5C79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3stO-00043j-Sl; Tue, 08 Sep 2026 06:17:30 -0400
+	id 1x3t2r-0005XL-BE; Tue, 08 Sep 2026 06:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1x3stM-000439-KD
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:17:28 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1x3stK-0001XF-Mq
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:17:28 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688ADNUh2005629
- for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 10:17:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=D/eIz2W0L9+SZ/8icAFjl/Li
- ZCQeh/Iq7CLNtM2lN4w=; b=Bh1/o2xgeP5T2fRFcIgQSnaLiBtu6J0yT28sICkO
- agRNCkWxgyziotpxQojNQqPI82YxC4sma3Huv2k91XVGvmGk2XVQ6jy8f6tpjqs2
- xPnkDw1OvL7X0YAuoi4uSALXgvWEb7m3qo1HohTh7auu1nGIYezzjg0TkkntTZwO
- jOHgyFbAZV2kmzHVigJEhE9AwRvY/WTRJEaYBm00otOZ8zLyn1lOLcwKkWiKFGts
- kiX/QwXvUERFH7uK9lEbNOUI4U5qVCMxzv1p/nUJ4kZIZZkGocrFjLiYZzLoewFm
- 2cY7FenxGGFvPmIrpfmGUgCwqHnN4G4m/60jyg0Q62A2jA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjatjhfwd-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 10:17:24 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93975d63ffcso492348985a.3
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 03:17:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x3t2q-0005X3-8m
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:27:16 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x3t2o-00040d-9l
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:27:16 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-3964dfb5b9aso5446389a91.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 03:27:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788863232; cv=none;
+ d=google.com; s=arc-20260327;
+ b=MtU9gkXexjoh9FCwNzNhW+oy/ggyz3ZolJ4kXeKhUaBto2UjV1gIBweC5dqmX2Lxvg
+ NH0xWNSTIeOVdTMsYmizHk3/kbKVtbWwRFqr4O9BqZMrOSV4gux7NF7iVjbWLxFSHIGL
+ gWNLVq+QEv8RLEDEjXihaz7DH4cMgAB1NdUqdiTvs7kuu2wssHaEqiYAXcLG+Fm9+Apm
+ 6TaG/wYkw7xJm5AIT8jFhs9iqbgKk0IgUAosJNarpELdEkEhEDNLH4/xGDF+jUofTk8X
+ fjxGTPV8Hotp6xT67Xo1biHqMi/CjnaMpchuMJ5779BtKKIsWS0yQs99n6MV2teeaWBm
+ a+OA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=SyGQtXe/fGVs7ORZYkYjVa2mY40t1hBK+QCp6iajFWY=;
+ fh=qselUejVXDvP5pnXhKG7u8hdCcrrqPK9JJS1C6fp4Dg=;
+ b=sDBrMiURwkLJCrL1tC7IHZTb1GD6IWlMqwnNWbcdaSp/24FA1MSpmU12PYuKfNWD/9
+ reDxsDqu25F9e4S94wQWOsSVP+iR/F8kMNyOlhMnlHz6YJ+JKeEAhmSWavdn22c9DXDh
+ YctTDi4BxbZo2ofWXiL8nYqdWUiQ+Et+rx1ejK96/JKbqGfauiRky4xRKpqWNrYj13VO
+ RJhAzGe6oz8ewQAyf3F2okNoZ/8rP23Stvur1usD69ordLDHDMTB8rTZZR3D6aLYp1HE
+ LZE5O563cz3dtSQjNkyBg7lMxbKmtTyuXx9msoUdL/+CtXWgNVg/gzYkjTpl9RI2Fppg
+ sqJA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788862644; x=1789467444; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1788863232; x=1789468032; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=D/eIz2W0L9+SZ/8icAFjl/LiZCQeh/Iq7CLNtM2lN4w=;
- b=FRLRnGSiY03q17HpE/k91zj+vR53PqK1X2pSZhZGzrhprPlOcKHF3jqwW2L/jNO9Wr
- +bBqKe6SxTMu+UujCe8NZD65373MjKausycG10DZLouotQrrtr8ontNdaJbS0fKyRIqF
- 3Kl0ZYu/ZsoQge9f/Gm9f64qb3/0LlIVw1aXhxqxX6wTfMZI9izs7XF429xd+VYIoyA1
- +COOPk4U40JALGL3bPurgJghvqyMlueoU5Lis149N2YnzicNthy1PrG26v1oBXRLrblI
- Hoxvx9/qRQZmbF82FUlbQX1CZPW2C/16lixz4SiUy/A+wtGzpKYW6GLCN61MiY/YEImC
- GG/A==
+ bh=SyGQtXe/fGVs7ORZYkYjVa2mY40t1hBK+QCp6iajFWY=;
+ b=aj1bZH4hPH3ZTIa7m2B6MLWfbzexmevte0SpteYnTrTZi97kpujN7nO8oHUMuU5fEd
+ jH/rGMGorlAC96VUC4Mb1YgIsfrmfNQZphN9tIjAj4NPfX/cNTTwSThrAaJXG2ZmTy8D
+ TzNaLYvlKMfE5pQlYaizOgFKpMD33CqcMbR0u1ddMWj86T9cLp6zys1NVVu7OS7tvOu0
+ bU++qTG0xZwpoTwNhaicPLeAXX4f6JTgBntEDtTNcIAbqLMvjISnRecAEQkgUf/AVGmQ
+ F3sKrrK1FCJkfyamfAwezqlLFCmGFZQGOVH9QpthP7FnFER6x8fW6EVc/ZKF/fJprWTi
+ SMlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788862644; x=1789467444;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788863232; x=1789468032;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=D/eIz2W0L9+SZ/8icAFjl/LiZCQeh/Iq7CLNtM2lN4w=;
- b=IZuxXmq5L6iKrRi621YcxlZSd/YbdCSTcBFP9BJhK48uCvn+RxXvGAEFh9/0RhPpFu
- iqs8W3UaT3437cWdtusaCODgCpWzzacFVTkSK1/XfMABsT2YNxHiQis3TatFsiJ14TZz
- syvDEcaOuVnzhrSa8oiErWZA9MP5kpfACgYrZs9G7SeYwk2vDIY+TxaH6rFc3Wgxt4Yb
- UYV26u6qyXxqrMaioflf0XuhlMAD+/0lHgnpDT9Ll+wfLC9S7vAq1DZErFSB3/CtexlU
- 7RoPu4kaHoGOZKdTyOMmSQObq0Qt5Rm8usU6JyjyDhw/JIkV3m7ddHks6uFQP22+44Gd
- FDxQ==
-X-Gm-Message-State: AFuF++n0QGWaeOTkHBnchPXsWPgygW5eASdalfCFnPQGY8qwD9MEWNPK
- FRlXIBrWsbSzeD2uTkLjXBWZaKpa+ELWzU8jDap/2vWqL5B5sDGGvQQu6lD/oTQrp/k2xJ21Q2+
- D2YMurMHYvclvkQzsymfO6lIrtUwqYtjL8yFNyqjend7P2r1WOb3Gr/R/Yw==
-X-Gm-Gg: AYBFou2ZYIfF0GTSAdLQxFsYgPhDFLPJmc+PAnyOTIoudAQ029ynndHqFVXiPVE5XKz
- 0U0eT5AthfBYSkOMAAZS8kA0Ylsf7C3YVcuq/Rj7lEpqEijE7fJBoNQMYxBWB5c4VlPaovKnAGq
- ME2Zs59DhAXp0XHfAI/1QSma/Jxuhs97MKFuPRBEGZNBFucdz6Rb7Ix3PuTRkWPKyYz/5ZDOyUk
- oPhMM/1W3jh78zBv8OpXgMn2k9aeLxIjiu9bAaxqfA5WQqPwK7tY/jRv863Mfn1ewme87apaBxG
- 9v/EjERha02TNR/Ljln+B7Kk+/C0r9XLHleTiGjXyL16I9TZnsTp70Z8HETTdk1Vdr23OmO1Zoy
- mdNIvH8oSkMIJE049ZcK4RejwC8MhKNZ+YpEm6w==
-X-Received: by 2002:a05:620a:aa01:b0:939:35e5:94ba with SMTP id
- af79cd13be357-9398031e112mr2770251285a.6.1788862644018; 
- Tue, 08 Sep 2026 03:17:24 -0700 (PDT)
-X-Received: by 2002:a05:620a:aa01:b0:939:35e5:94ba with SMTP id
- af79cd13be357-9398031e112mr2770248585a.6.1788862643681; 
- Tue, 08 Sep 2026 03:17:23 -0700 (PDT)
-Received: from localhost (ip-86-49-245-11.bb.vodafone.cz. [86.49.245.11])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c260d575fccsm607057566b.37.2026.09.08.03.17.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Sep 2026 03:17:22 -0700 (PDT)
-Date: Tue, 8 Sep 2026 12:17:21 +0200
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Nutty Liu <nutty.liu@hotmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v10 4/5] tests/functional/riscv64: add riscv-server-ref
- tests
-Message-ID: <72i3sw43dwea2qqxtya7qx4h3azfxadrde76kl6e2gqnua53pp@eqtn5466liio>
-References: <20260904195610.964829-1-daniel.barboza@oss.qualcomm.com>
- <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
- <5pcda5mlbnlftgqemlix5sudyutlje7l66rmy7wjsvzmkrbju5@zsofeqrhmnos>
+ bh=SyGQtXe/fGVs7ORZYkYjVa2mY40t1hBK+QCp6iajFWY=;
+ b=Q/AFM5QdMW49u23atP9Lcbu8jm+aa6QdQd/Z1XlC+CF+JQLsQXcP+Pg+eAM4f6G1cw
+ yRXJprErhiSSidTxykttJ0QIsOhbcslW+lyYj/W/zkUHJaO+Wb3LxXcHnDXOJ+6ZwlFI
+ D8RQz6L/C2HXFTuga1PkYcJ/mClMf/fkUZpBIF/Yk5SNtTO3bEMJ9+T3gbYIibmuvgpT
+ rLvlDEZBma1wcaxAOXz3ItYocgGvpjLbRVhSGBJvvqHV5mcriXzYOmmydo/b3IwYoKGZ
+ au+FFKWaxGlzoyXsWVMPp3PiRj0LVeignozIziMXkiOuc/WNwLz0OU/LS8tHfr4kl+Qx
+ ggwg==
+X-Gm-Message-State: AFuF++kmGkdZDscELDyEfKl7iWvtBLfOnUCGVJX9rLthljGac1M24ttK
+ gxgeIxoNO553GW4KHqnE1jQmgzKxUYdKCHeMAjY5KmJsnMoR5eCwBPg+P2ASjMQ1UOvQg45pqh+
+ MmOocQVkEEuxngmqshgD2zjOjLPo560s=
+X-Gm-Gg: AYBFou1P2BBCBkYZZGgjUfQLP2onCiTsPBkUbu3OjoXpLhSTgNkqSEJKwEcF3xoPWdA
+ NU47ex8FIzlUXy9ta3xSQXVqwkAZiSsX1CU7VM63lepQzpgB2EFQtuLvWFJ0NTKGuxWpsJ/4Q3d
+ J5SqUNCAry5EHqBJHuVlS33iA6TpexUmUNXGLrT9eGESHaN/Pq7qpHF49Xu0T0LjUYNmYm8Lw/k
+ cK9xKUoa9U8+bFlth1sySKAbiecjKO/VW8HgGGzMWalUy3xYJNr2ebRE0b4jiGBb3cAOEEt7V7O
+ DveXHrg22djGMsLLgSWGxY20Uo4LQj2sgm4bh2GYRrAE5AzW2svgIy2CBXFsosbv2v2fU7fdqCk
+ gKQ==
+X-Received: by 2002:a17:90b:264c:b0:36b:bec8:94c5 with SMTP id
+ 98e67ed59e1d1-39b2612f7dbmr42235607a91.10.1788863232283; Tue, 08 Sep 2026
+ 03:27:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5pcda5mlbnlftgqemlix5sudyutlje7l66rmy7wjsvzmkrbju5@zsofeqrhmnos>
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDEwOCBTYWx0ZWRfX3BysGCA0Jk8L
- vfYH265fVLMNN20TF0zb13nkw0ddSvYGmzJRHd/qZkFfykjtE65bt03HSesi38Xg29l75sOatUH
- ID6baPOpD2i4XCFZiHSoRPtrbQGUZZ0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDEwOCBTYWx0ZWRfX/K4mNEBNv9py
- 2Qj9l5yMfakT+cNGQZRb2z335bnVDgTsfhNl1a9wReUA3LsYRgxn30N/wBXmFJ3JjpjIjlQPQ2J
- 2lICzapnCKkp7wulGCWPBqaWJm4mGv9C/cCyYXKCMt1bWQfwESVx1CBDjdKlqcPg5w+v2ej1rh4
- 1GyyxMuKGQEMFjcL1v03xTPqrJcQ1PiMEfSE/fuAhEnhLmD5GN6Rq11C+yizkiEP4MC1IMaOhcQ
- WXGXEZCnzBcQQORescDhaH9qZBDROHk7EPlr0S7p98fHSYPRVfGP33636RvqGEBz04nlCV7pdM3
- R/x6LLoYG/Lo2bRlj1HowIV3E0HzYLzmCLHPLG3Ft3qFxs1K7J+fJaVTD50H1iKMKP1ceYfjOED
- cJjkwcKPkyRF7z9+eHaaPMgzKiB/BsuT98WKaYQ1MJmtYsxqPKOEuhcMXGjuyDCSaNNgAtZ68B2
- bpzNihhKp4dI6EJrDSQ==
-X-Proofpoint-ORIG-GUID: DAhXKYV2LphlYuQBtXXf5e5_HWEZp0sc
-X-Authority-Analysis: v=2.4 cv=QrduG1yd c=1 sm=1 tr=0 ts=6a9fe0b4 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4CXLxsOAgPM/krjtHEZQyA==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=4SlSymV0zzcDb60NZQUA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: DAhXKYV2LphlYuQBtXXf5e5_HWEZp0sc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_02,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080108
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+ <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 8 Sep 2026 14:27:00 +0400
+X-Gm-Features: AcwNN1Um5XYiQQbVAg3nOvouvYDYQ53vEC5xbYWBozmG8pUA4Ghl03IV3Ug8Fz8
+Message-ID: <CAJ+F1C+QiHZ3Pp3Q_Dy=KCzR=UCWpYAosdQxVaqgLTnQudkVeg@mail.gmail.com>
+Subject: Re: [PATCH v3 6/9] hw/display/virtio-gpu: Fix fenced blob unmapping
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Greg Kurz <groug@kaod.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ David Hildenbrand <david@kernel.org>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-block@nongnu.org, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,16 +134,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 08, 2026 at 11:11:49AM +0200, Andrew Jones wrote:
-> On Fri, Sep 04, 2026 at 04:56:09PM -0300, Daniel Henrique Barboza wrote:
-> > Add tests for the recently added riscv-server-ref machine:
-> 
-> This commit uses 'riscv-server-ref' instead of 'rvserver-ref' for the
-> name.
+Hi
 
-Ignore this. The machine name is 'riscv-server-ref'. I was thinking of the
-cpu name.
+On Tue, Sep 8, 2026 at 10:14=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> Blob unmapping may be suspended because of remaining uses of the
+> mapping. virtio_gpu_process_cmdq() uses the following condition to
+> detect a suspended command:
+>
+>     !cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)
+>
+> However, the guest may set VIRTIO_GPU_FLAG_FENCE for a command that
+> performs blob unmapping. Such a command will be incorrectly assumed
+> as not being suspended. Add a dedicated flag for the suspended state
+> to avoid overloading VIRTIO_GPU_FLAG_FENCE.
+>
+> Fixes: 640f9149c3dc ("virtio-gpu: Support suspension of commands processi=
+ng")
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  include/hw/virtio/virtio-gpu.h |  1 +
+>  hw/display/virtio-gpu-virgl.c  | 17 +++++++----------
+>  hw/display/virtio-gpu.c        |  5 ++---
+>  3 files changed, 10 insertions(+), 13 deletions(-)
+>
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index 9404e488208a..3eccc4bc39c3 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -141,6 +141,7 @@ struct virtio_gpu_ctrl_command {
+>      struct virtio_gpu_ctrl_hdr cmd_hdr;
+>      uint32_t error;
+>      bool finished;
+> +    bool suspended;
 
-Thanks,
-drew
+>      QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
+>  };
+>
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+> index 9bda572426b2..c37df91e3ed1 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -440,8 +440,7 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+>  }
+>
+>  static void virgl_cmd_resource_unref(VirtIOGPU *g,
+> -                                     struct virtio_gpu_ctrl_command *cmd=
+,
+> -                                     bool *cmd_suspended)
+> +                                     struct virtio_gpu_ctrl_command *cmd=
+)
+>  {
+>      struct virtio_gpu_resource_unref unref;
+>      struct virtio_gpu_virgl_resource *res;
+> @@ -457,7 +456,7 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>          return;
+>      }
+>
+> -    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
+> +    virtio_gpu_virgl_resource_unref(g, res, &cmd->suspended);
+>  }
+>
+>  void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> @@ -946,8 +945,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+>  }
+>
+>  static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
+> -                                          struct virtio_gpu_ctrl_command=
+ *cmd,
+> -                                          bool *cmd_suspended)
+> +                                          struct virtio_gpu_ctrl_command=
+ *cmd)
+>  {
+>      struct virtio_gpu_resource_unmap_blob ublob;
+>      struct virtio_gpu_virgl_resource *res;
+> @@ -964,7 +962,7 @@ static void virgl_cmd_resource_unmap_blob(VirtIOGPU *=
+g,
+>          return;
+>      }
+>
+> -    ret =3D virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
+> +    ret =3D virtio_gpu_virgl_unmap_resource_blob(g, res, &cmd->suspended=
+);
+>      if (ret) {
+>          cmd->error =3D VIRTIO_GPU_RESP_ERR_UNSPEC;
+>          return;
+> @@ -1036,7 +1034,6 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g=
+,
+>  void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cm=
+d)
+>  {
+> -    bool cmd_suspended =3D false;
+>      int ret;
+>
+>      VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+> @@ -1080,7 +1077,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>          virgl_cmd_resource_flush(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_RESOURCE_UNREF:
+> -        virgl_cmd_resource_unref(g, cmd, &cmd_suspended);
+> +        virgl_cmd_resource_unref(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_CTX_ATTACH_RESOURCE:
+>          /* TODO add security */
+> @@ -1110,7 +1107,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>          virgl_cmd_resource_map_blob(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB:
+> -        virgl_cmd_resource_unmap_blob(g, cmd, &cmd_suspended);
+> +        virgl_cmd_resource_unmap_blob(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_SET_SCANOUT_BLOB:
+>          virgl_cmd_set_scanout_blob(g, cmd);
+> @@ -1121,7 +1118,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>          break;
+>      }
+>
+> -    if (cmd_suspended || cmd->finished) {
+> +    if (cmd->suspended || cmd->finished) {
+>          return;
+>      }
+>      if (cmd->error) {
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index d520f69e6453..dd6c09d1ddcf 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -1193,11 +1193,10 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+>              break;
+>          }
+>
+> -        /* process command */
+> +        cmd->suspended =3D false;
+
+The field could be initialized after virtqueue_pop(), otherwise it has
+a random allocation value. Then perhaps, drop this assignment?
+
+>          vgc->process_cmd(g, cmd);
+>
+> -        /* command suspended */
+> -        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FEN=
+CE)) {
+> +        if (cmd->suspended) {
+>              trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
+>              break;
+>          }
+>
+> --
+> 2.55.0
+>
+>
 
