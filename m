@@ -4,104 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1915AC79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 20:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F04DC79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 20:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x42Ud-0004Fd-HK; Tue, 08 Sep 2026 16:32:36 -0400
+	id 1x42da-0006Ws-K9; Tue, 08 Sep 2026 16:41:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amanasrani1712@gmail.com>)
- id 1x42UN-0004Eh-S0
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:32:19 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <amanasrani1712@gmail.com>)
- id 1x42UL-0003wt-SC
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:32:19 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c25420fe973so899059966b.0
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 13:32:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788899536; cv=none;
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1x42dY-0006WT-Ih
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:41:48 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1x42dW-0005Lp-Jj
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:41:48 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 688FdWt13964170
+ for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 20:41:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ZHbuidBdX4rMQgAWyNlL47/VtgWLs0Htr4S3oSzSdek=; b=AMjwULEPy6oCfRYc
+ 6+fMxQXglvjAmuX/TN6P0BocUp3ndZX3GNccNWnc1Jkp4ZPXwqBYHUtozu2BeWfB
+ uD0R54h9aN4O+Y2LT1gQKOU2KO3B547fwPmPS9mwEL7PrjgPk9oBo+Sm+V8PDX2G
+ vMUU/bQ9xEUvI/iUVgISm6kyRkUT1XEztSbhaxLOUBVYJrkFP7KuGaLq8VaF50yo
+ 2Irm4eBq0qFP3p7RCz1I13qcS1WdqkTMr+QLpoaot78agIbTrbAWOrtWQs/mh/PL
+ emJhRq1AVS3Teq/TSm54zLfYeRAV3SOg0UXJ1srPPHdJv97tj0tj6L43QJ3OL2Ue
+ E5kXTQ==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjfp4b16t-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 20:41:42 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-4ab260600easo6437616b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 13:41:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788900102; cv=none;
  d=google.com; s=arc-20260327;
- b=nGX6JQxYuUtaMxAZFKY48cC/CFiSGYvmhz1K9morSf7qZWmqQ6lCLWQ5aKzlMZ3fx1
- UF/BqVeoN2CqHXHSsGgpqJi1ab4F5kf5r7wPUp0u54EimpLF+RbJn2lo7MNX9Cjx/Rg/
- L99AOO9jH1Dx89VguY0mzsAzMfMH2gKMTtg1CfXHqZRBZCw5Rh0oWAlQuSzYOrFGRYZZ
- 5uROQlLi23gAdVZqW5ZXGmlCRI+B1lwip261FMIz/a9eLOp5eP2D72F/aztn0RQ3l5ph
- JOEhc18PvSxy3fLbeBWXGN/R2C/c12FSF4tUByW/wHSiWM72zCz1z2o28E5oC3yhD2v1
- 4cnw==
+ b=meEzvtdVWM6Lbzonz9EYc+92v87sB6NDdVN1tofm+SyOEQqj/5XMRnb6UtbkEfyRSj
+ Ha4QDZGpTgdgl6rKou39p5rTLVxHculib7YObywS478ZBWLDBILl2cgfM2F9Zu1i2Dko
+ rzOd9kosRhC/Tx4MgJmX6lbaMwoce/ujmBqAeIggwKG/xlzjdkhECW8qVzX/uWtKHcGC
+ LNqfV0NFkBmu0vD8q7K6aDHnomigFvtOrwjtVhrQJan8rCLN5JT9yn++nv4rJtspKLlh
+ 0HrQDCPPkx7eoN0vddpqTf5j+63eAx0QzEpwZiGyj9sObqnamoNHOP9oOHVaRIwwEQeA
+ SC2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=BsVFwUedrlvIDFxNKc388Nh96M7fu3K7rkT6heFk8tI=;
- fh=vPii6Fro72GnsvsO8GqqWh2y2ZwYqRUMBEz7CK42yVY=;
- b=iVGkXOHLfFtJp4FoNxU1bzX4VsEbYWiXfYl7jsMxqDia+laMNOqvYqMCYaWyKsUG4s
- ZSAWGOyCXSjAUjXYcZlB2rdY/ctzAct8i7TX0FVB/v15KUkEy5VSu4LjwzDAawygeK25
- OdlS59Q3p32uOa3imulRNHfAA3oJIHRspF2X/D7cQY11oIraz0VZNWgRwUPLpIxjnJG3
- 3GI4vlxAgH/pGPp3F7jqvHFB1pAP3GibN5wUbtxZpylzIOx8o9/D0CGr8vbIEKMlQX4u
- 9+cZLEa/hLDbxSCH+FWC/RtiaqJsrbqZWACj6CE+H/kTcNUAZG4+c1Z2Wl8eTtS3Obpe
- CXiw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZHbuidBdX4rMQgAWyNlL47/VtgWLs0Htr4S3oSzSdek=;
+ fh=LfxqVHs7iB+giXalVcz/pbqkbOXeZSBmGzkNDoDAtdQ=;
+ b=GGDvD3Sj8zVmnABHlupsymmHwoBh7J4U7kC45yWA6uMobzPkGBr9ue4V3Y8bv2TXI/
+ UuVzThT7kCyZqiAdoqgBdkjrfEANGVVyo08EzgwHwGf8L6K3LHVbN2JahbEnHkSF92eR
+ gSR1soo3zSCz+ww4QJf8/N4XJsYsAK7qPZ7bxJJwxyuyS/68Hr2jv8U3vtlZGIGE4kuW
+ EYMwyaCRzYr+/Y30RtVHBJ6G1wit97xCJwGagQcl7WH/WPtgKQkW+oIwheXjKWqmuYb1
+ lGl5BWAl510DrTdwrOiZq8APNsghem7/DwOrNyXjUxaaEsbGXilQw50bWwSmUBPqko9n
+ rkOw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788899536; x=1789504336; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=BsVFwUedrlvIDFxNKc388Nh96M7fu3K7rkT6heFk8tI=;
- b=ePTSYng+PtP2uTctY4gSTSnnyvI4WTYPYmNY9iwMNUFA+Ti8gvx3POSg2hTgEw2A+V
- 5s2K/OkN1oALwr3z6wWDtNi5LoA0nzd5LvCu/KYXXKNtQ+Tw2vBrqYpja1UpFnWnst9B
- kOuxqWZDuIqeN1Ti3HUJbhQYoCQEYWNrF9Lo0b+EueGtlGhxNTajHms3IUtLtxsL3Jcf
- ymtwuui2gNDCd4+KxHBwSbHd3KZogDIPPo8P6Q1RQ4hWbgzEZL9ypUkS+cpZEmAscty6
- NXlV5XuAmKJBEoxIr/U+ynQjeq176C9MEKrezYhPkW0DmnYvap6Fp3S7naNregt+wdZK
- wVPw==
+ d=oss.qualcomm.com; s=google; t=1788900102; x=1789504902; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZHbuidBdX4rMQgAWyNlL47/VtgWLs0Htr4S3oSzSdek=;
+ b=iBAf2dPm/ep6pPRTFEox0GKMiI7jnz3jodHoY4YM6EQ9aAuqb7PCnIvlxqheIhXDAN
+ USq7c+5A7s+ugjlkLgkVQwh71gC4Y7Jq6nES/MiOJegaNpE+bBAqDtyi8i7JzZZuMfG0
+ lNJzSBLWBrrFcWnRa9PNjwQc8CohGOoTZ2oeWgiPbMzNau8btQLZti5MFqosBe7ik+Ql
+ dK9SvMbpzFkvEXvyYrlJE+Hr+j2XhANIAgY20nVAa7Y4mGKu34VBB+7jknUeHnB0hMVx
+ b4YPQWLODH8Nm7PRkwTGV+4d9EyQTFdip5ekqi/oDbMEWxfsD4rdO5nCFAMzAUj9oviA
+ Ru7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788899536; x=1789504336;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=BsVFwUedrlvIDFxNKc388Nh96M7fu3K7rkT6heFk8tI=;
- b=QJ6JpW/8yJAcDNXXFDTyEzDSsby4aRDxNCOIMxt6F5+O3Lr5eK7hXgqammUvS4K+OU
- egkyHdUU6HEJmATaEbJ81yF+H+PZUd6ZsgzOQFFwk6HhWAD0B2Mq8mdXkUXP6BT7px9E
- 1tHeRxXg+VITcH/aWsEu/j9uRGy9WR5Cv1x6/CwHAqQBxTv6CjBCo6eRtf8iU2AMv78N
- dP3Yj1qG4mpFC+qS1zlsN4IbDs7oyc1wHAc0P7QQFoBFajSFbCCCfNYCIVqrL1xTKPrg
- rajpVvX0iuNRJtnEotfvJd7YaYEW4YFuGALKELIomo6X4EUD+XHQFigGj1d7IK7qdtHh
- 6xmg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxfy6IdTCoVfaP3dWOXyjLDNaUSVKdXFd2zOXpvTMswZ7fsYzVM6yGbaP03uBhBbw5sY7QrcFT1jGl/@nongnu.org
-X-Gm-Message-State: AFuF++nIWeVmbY19niBB3KJfMvo25wfNWDoiRg7ysiMIh7acc4fbHSgW
- y7xC+BonAum9TG3OWS8STZFmjVjFlSiTr7w2bC3ysvDderI8MtDsBWTzJEhOaJuS/DS2uUwXEvB
- RyfcJ9n5S//f+FEWbxsqIxvXElmCzbzY=
-X-Gm-Gg: AYBFou2UfmcB0eLmMFwNghja31bJLl22YWL8R7pSSv1spJNksyjW4d4EiQpR/Yn01u7
- RJGpY6HsQO3lQMWu6+I4INPDvRsFJ1mMQ4Q5OvAHFEmKSyCun9ToQM4aqH31VnpRv4mSd1ohmHg
- 2Elqnd5DWUBLMZXCsRhTFD2Twd2QbMzuPg2oyacBVd9FP7/QrYiC5Fx7dVstQPAQePGMUPhGuG/
- tTYcPeePWBE0xE+0tjCJewIXBNUVwl//qAxFV+/4CdXet0TRL0ljkSLMN+yC3xdcHrto9Omg3El
- c6PBNfUdQV1SKb4sFTPGLQSiK38j+YONplWbQkYmXi3V
-X-Received: by 2002:a17:906:c112:b0:c24:d6f0:2071 with SMTP id
- a640c23a62f3a-c260c987f76mr1327079866b.12.1788899535898; Tue, 08 Sep 2026
- 13:32:15 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788900102; x=1789504902;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZHbuidBdX4rMQgAWyNlL47/VtgWLs0Htr4S3oSzSdek=;
+ b=MBPOJe0LhlWS5KqulZOQe4Iq0suinBDMPjgqDPzfMcItx48dejMtMRN9oZWy0Wh0RM
+ uWjRTpols/iL8qgDpkrpAr5fnqujhdWyyBoD7k6mOgow8lpaLdSMHj+9xFjgUriv2Ch4
+ eBpalxnlewi8NtmET1EmPtI650yOoNXwXPjNtQCsEBwE3Pa7Rn2x9tec2BcXVK3I/CRf
+ F4kB27ecUSz07xgKoJMi0fIXsRBquHmLMqVuoiyQXQ97/BfOUgr0KKYB0bUoOe0+d7rA
+ GCykdmImiKwiDTUCHb4ug2s9yKiOPMk/vQ4u6/BXj1z0GK4kBF9N4O6Pb4fJLDBaKLmn
+ HxKw==
+X-Gm-Message-State: AFuF++mTuwpZT3d9VimxduefvKUnYy4kK4mBKDbCQQSVPjv6KLrbprNl
+ jG7twTxtcXrIzDi4U3AwDd8Rp4JkB70gxfXr36VYvLHN63jg7ttPG0wqBR7nxWpcn5c4uyTOgz9
+ XktRLH1dbyQJWYLcQzPhSDo/SFEHOwWTMNFEoXu6ak8Rl8XiwuFYS2aF4IAxu+9WsCLVqWtCZNA
+ KaMQ/Sa1omWPjcST8WkIUMnC+GpBJVvP3h
+X-Gm-Gg: AYBFou0x//+dnYuXl2Qi54i/OOCxwytsAD7Aq62tUtllhIRVYFvTNhIKONCnfKhKPK2
+ Joi6ijck/x7uHekBpZXMx86LX1b/zg6lrtI/FVUKKF4I+C8YMVEXLWhIE6UWtG+wZEEEeq2JQv5
+ oTE4LC0naj4NDpxoVFU0W6l7kOFJMSYM5MD2GkD839B/aST+9BCfs2sy7Ahw==
+X-Received: by 2002:a05:6820:4b0e:b0:6b1:19dd:f2cb with SMTP id
+ 006d021491bc7-6b584ba523emr13967525eaf.12.1788900102190; 
+ Tue, 08 Sep 2026 13:41:42 -0700 (PDT)
+X-Received: by 2002:a05:6820:4b0e:b0:6b1:19dd:f2cb with SMTP id
+ 006d021491bc7-6b584ba523emr13967496eaf.12.1788900101744; Tue, 08 Sep 2026
+ 13:41:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <CADExdLCU82TQaQ8+Po1cJ4QVdeyvMJmnY+JmnJtQn_xgztdQRA@mail.gmail.com>
- <c8b5723a-a05e-41c2-9e1a-77719b598f6b@tls.msk.ru>
-In-Reply-To: <c8b5723a-a05e-41c2-9e1a-77719b598f6b@tls.msk.ru>
-From: Aman Asrani <amanasrani1712@gmail.com>
-Date: Wed, 9 Sep 2026 02:02:04 +0530
-X-Gm-Features: AcwNN1UA6wpedv4ZwSeWr94fGdWetMKpoD_Hya-0Pp7KJ5YunVIyUQ_uwmxmr8I
-Message-ID: <CADExdLC9GPLLM1pU=U6+QEmi71u8bB_RvJoe2LHKarOp5AZBUQ@mail.gmail.com>
-Subject: Re: [stable-8.2] Backport request: rbd: Fix .bdrv_get_specific_info
- implementation
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-stable@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000604a78065afea1ed"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=amanasrani1712@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260908133512.2353957-1-brian.cain@oss.qualcomm.com>
+ <20260908133512.2353957-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260908133512.2353957-3-brian.cain@oss.qualcomm.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Tue, 8 Sep 2026 15:41:29 -0500
+X-Gm-Features: AcwNN1XELvp9afAItIRc6NWXj4h-ScUhUaXVShsNk6bemjRvRnjQL1g4VvYQLDg
+Message-ID: <CAJ+KCYOUpOmoR-kiYq==7W6HY9CaeQGF1HZdsMKXFRHpm6XT7A@mail.gmail.com>
+Subject: Re: [PATCH 2/5] target/hexagon: add the v73 J2_unpause scalar
+ instruction
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=Qu9uG1yd c=1 sm=1 tr=0 ts=6aa07306 cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8 a=pNrECa6T1zHNMNfhpU8A:9
+ a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22
+X-Proofpoint-ORIG-GUID: HoXfWc8dlGKhKYfzUxAtuk1TAK6WFpnX
+X-Proofpoint-GUID: HoXfWc8dlGKhKYfzUxAtuk1TAK6WFpnX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIyNiBTYWx0ZWRfXzjWh7VfUOTwl
+ R7M6DM5emZ+dHJQn2o98XnQrP9BArsGduZkWAqpjxuFdPXY0FFamkfbrVkz0WCKlsq0hyqtpL4u
+ Cbuk09dI0ABbn7rCg3DLjF69QOvTic9uGDV8ci4vDq5x+p46suYA+oQTbjVLZs63pKI6y//MG/o
+ Z0ABx7Vs7RJLO6H46cAWeB5O0FLwqBZEXR1meanT8+vFi82d6LEXCQjAEV5qTIRYSzHuP0Vwfq9
+ 4u5tT3xbYqNkT3qDt7SHs4Whc6GD4ZQ3iuZPNo7i35t8exhgb30Pk50Gchz125O2gtUv1Zgfxhl
+ SFij5Zt2JreM8YyRWX+xwJwMU89mHy138tuPQxnVNWpreI1ofl4xdd/Wp8fHRhb9MsYBd54GWxm
+ TIEy1BVD0V1qnfxh9As+CYsurvzh+2oHOYeu8DUzJcDSvmtP6y31ccSfitS2GfWYtzzUQlSd8y0
+ OJNoIYfp7TdyaZUKxOQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIyNiBTYWx0ZWRfX7LsJXaFDMhyD
+ /ZowDq7pLX12p1/vTjHfZW+9PjbUi5NTB4XhTAumJwNo6WynfBSGb/ZeVQ2Fjfgw2YGoipwSaNE
+ biwYFr6DJ7u1BKLDMuOPwRZmNgGB+18=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080226
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,174 +167,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000604a78065afea1ed
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Sep 8, 2026 at 8:35=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm.=
+com> wrote:
+>
+> v73 already added J2_callrh and J2_jumprh but unintentionally
+> omitted `unpause`.  Its effect is to cause other threads' pause
+> instructions to cease pausing, but we treat `pause` as a nop or
+> a yield in RR, so unpause can safely be a nop.
+>
+> While here, spell the other two v73 entries' version as HEX_VER_V73
+> instead of the literal 0x73, matching every other entry in the table.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/check_rev_gating.c  | 12 +++++++++---
+>  tests/tcg/hexagon/v73_scalar.c        |  7 +++++++
+>  target/hexagon/tag_rev_info.c.inc     |  5 +++--
+>  target/hexagon/imported/encode_pp.def |  1 +
+>  target/hexagon/imported/system.idef   |  3 +++
+>  5 files changed, 23 insertions(+), 5 deletions(-)
 
-Hi Michael,
-
-Thank you for the clarification and for the context regarding the status of
-the 8.2 branch. I completely understand the situation and will proceed by
-coordinating directly with the Ubuntu maintainers.
-
-Thanks again for your time and for the work you do on QEMU.
-
-Best regards,
-Aman Asrani
-
-On Tue, 8 Sept 2026 at 20:03, Michael Tokarev <mjt@tls.msk.ru> wrote:
-
-> On 9/8/26 13:52, Aman Asrani wrote:
-> > Hi,
-> >
-> > I would like to ask whether commit |4af976ef398e| ("rbd: Fix
-> .bdrv_get_specific_info implementation") could be considered for a
-> stable-8.2 release.
-> >
-> > This refers to the original upstream patch submission:
-> > https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg04048.html <
-> https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg04048.html>
-> >
-> > I am aware that stable-8.2 is closed, and that stable releases normally
-> follow the currently maintained major release. I am therefore asking
-> knowing
-> > this is outside the normal stable policy, and I would completely
-> understand if the answer is no.
->
-> Yes, 8.2 is end-of-life for a long time.
->
-> > The reason for asking is that Ubuntu 24.04 LTS ships QEMU
-> |1:8.2.2+ds-0ubuntu1.16| and is supported until 2029. As a result,
-> deployments using this
-> > QEMU version with Ceph/RBD storage can remain affected for the remainder
-> of the Ubuntu LTS support lifetime. The fix is present in newer maintained
-> > QEMU branches but cannot reach 8.2 through an upstream stable release.
->
-> Heh.
->
-> The problem with ubuntu is like they don't know what they want.
->
-> First, before closing 8.2.x line, I asked them if they want this
-> line to be maintained for longer than usual.  They didn't answer,
-> so I closed it.
->
-> Later I talked to one of their qemu maintainers, and he asked me
-> to resume that 8.2.x line, - he wanted to update qemu in ubuntu
-> based on the upstream 8.2.x stable series.  I was like, meh, but
-> we're quite behind already, it's been closed a couple months ago.
->
-> So I went back and re-evaluated all updates happened during this
-> time, and resumed 8.2.x line.  This went on for quite some time.
->
-> Later, there were a few (ubuntu) users complaining some bugs were
-> not fixed in 8.2.x stable line.  But I knew for sure I fixed them
-> in subsequent 8.2.x, long ago already.  Meh.
->
-> So I looked which version is available in ubuntu, and discovered
-> they never, ever, updated their 8.2.2 (or .3?) in ubuntu 24.04
-> since 24.04.  There were a few hand-applied updates which bothered
-> their users, and that's it.  No single release I made for them were
-> actually used, and their people complained to *me* that their version
-> is buggy.
->
-> So I asked them again what's going on, but never got a reply.
->
-> So in the end I closed this line, now for good.  They're on their
-> own, together with their users.  I don't care about ubuntu anymore,
-> -- ubuntu is just a waste of resources and frustration, nothing more.
->
-> Thanks,
->
-> /mjt
->
-
---000000000000604a78065afea1ed
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><div dir=3D"ltr">Hi Michael,<br><br>Thank you for the clarification an=
-d for the context regarding the status of the 8.2 branch. I completely unde=
-rstand the situation and will proceed by coordinating directly with the Ubu=
-ntu maintainers.<br><br>Thanks again for your time and for the work you do =
-on QEMU.<br><br>Best regards,<br>Aman Asrani</div></div><div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, 8 Sept 2026 =
-at 20:03, Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru" target=3D"_=
-blank">mjt@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">On 9/8/26 13:52, Aman Asrani wrote:<br>
-&gt; Hi,<br>
-&gt; <br>
-&gt; I would like to ask whether commit |4af976ef398e| (&quot;rbd: Fix .bdr=
-v_get_specific_info implementation&quot;) could be considered for a stable-=
-8.2 release.<br>
-&gt; <br>
-&gt; This refers to the original upstream patch submission:<br>
-&gt; <a href=3D"https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg04=
-048.html" rel=3D"noreferrer" target=3D"_blank">https://lists.gnu.org/archiv=
-e/html/qemu-devel/2025-08/msg04048.html</a> &lt;<a href=3D"https://lists.gn=
-u.org/archive/html/qemu-devel/2025-08/msg04048.html" rel=3D"noreferrer" tar=
-get=3D"_blank">https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg040=
-48.html</a>&gt;<br>
-&gt; <br>
-&gt; I am aware that stable-8.2 is closed, and that stable releases normall=
-y follow the currently maintained major release. I am therefore asking know=
-ing <br>
-&gt; this is outside the normal stable policy, and I would completely under=
-stand if the answer is no.<br>
-<br>
-Yes, 8.2 is end-of-life for a long time.<br>
-<br>
-&gt; The reason for asking is that Ubuntu 24.04 LTS ships QEMU |1:8.2.2+ds-=
-0ubuntu1.16| and is supported until 2029. As a result, deployments using th=
-is <br>
-&gt; QEMU version with Ceph/RBD storage can remain affected for the remaind=
-er of the Ubuntu LTS support lifetime. The fix is present in newer maintain=
-ed <br>
-&gt; QEMU branches but cannot reach 8.2 through an upstream stable release.=
-<br>
-<br>
-Heh.<br>
-<br>
-The problem with ubuntu is like they don&#39;t know what they want.<br>
-<br>
-First, before closing 8.2.x line, I asked them if they want this<br>
-line to be maintained for longer than usual.=C2=A0 They didn&#39;t answer,<=
-br>
-so I closed it.<br>
-<br>
-Later I talked to one of their qemu maintainers, and he asked me<br>
-to resume that 8.2.x line, - he wanted to update qemu in ubuntu<br>
-based on the upstream 8.2.x stable series.=C2=A0 I was like, meh, but<br>
-we&#39;re quite behind already, it&#39;s been closed a couple months ago.<b=
-r>
-<br>
-So I went back and re-evaluated all updates happened during this<br>
-time, and resumed 8.2.x line.=C2=A0 This went on for quite some time.<br>
-<br>
-Later, there were a few (ubuntu) users complaining some bugs were<br>
-not fixed in 8.2.x stable line.=C2=A0 But I knew for sure I fixed them<br>
-in subsequent 8.2.x, long ago already.=C2=A0 Meh.<br>
-<br>
-So I looked which version is available in ubuntu, and discovered<br>
-they never, ever, updated their 8.2.2 (or .3?) in ubuntu 24.04<br>
-since 24.04.=C2=A0 There were a few hand-applied updates which bothered<br>
-their users, and that&#39;s it.=C2=A0 No single release I made for them wer=
-e<br>
-actually used, and their people complained to *me* that their version<br>
-is buggy.<br>
-<br>
-So I asked them again what&#39;s going on, but never got a reply.<br>
-<br>
-So in the end I closed this line, now for good.=C2=A0 They&#39;re on their<=
-br>
-own, together with their users.=C2=A0 I don&#39;t care about ubuntu anymore=
-,<br>
--- ubuntu is just a waste of resources and frustration, nothing more.<br>
-<br>
-Thanks,<br>
-<br>
-/mjt<br>
-</blockquote></div>
-</div>
-
---000000000000604a78065afea1ed--
+Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 
