@@ -4,122 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCD3C79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 16:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3893C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 16:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3yRD-0008Ri-JE; Tue, 08 Sep 2026 12:12:47 -0400
+	id 1x3yVi-0000nW-80; Tue, 08 Sep 2026 12:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x3yRB-0008RO-NZ
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:12:45 -0400
-Received: from mail-westus3azon11010000.outbound.protection.outlook.com
- ([52.101.201.0] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1x3yVg-0000n8-4g
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:17:24 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x3yR8-0003bg-J6
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:12:44 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bMC0VwNx5iT0FnBckv/JYM8IHKT8cHq/tr2oGdhZ/YSGhFXcs8AYk3xkd9v6iwk+zWorRADuzgsVuo2U5+uKdqePFNoWMQR2VaMuAUCjhbH1YxbWYXL/7hULRM8pNDkNM6MOrfqmg7KTam+sVSxhATl4iIpDnXEGyaoFJrFx9f9a11JaF1gOqXUClEoNZtq8asgaMrv4xD9YITJvmJSBBg6kFhkGizFFRLfXx4C7fE+rd8YZmEYuQFOckQ5/R5ucW3a+DZzJxUSEqP8ruw4Gebg5BXt2GdZmLXv+atv5rDTBnV5en7FvuPUXA/4jSdWzZqytRgOz+MjNgFgmV3Vyew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JSrXjdkw5+wB3p+wqUYlaxamIOxn78V3L6s7gMDD5II=;
- b=viaDJUcG4Bd0d+FDRwk3CDsUW/dJPX+kOitu1d0ZeTLkLp30BAAkkPtWRJ5SRiQ85LK8d+l90fyJe9e9hMqCdRv5rvfBo2xzEfVOnW9twG50uGVfoTxVzhnbGUH8Gt74AzVMysK9QFFYseonlT1lR9AkmxtLXnSsc+E32Sts7DpHBM0xiN07QblsYKwwTLnCXp9RUf8zGPGrrLLgwCtp9gGx+LXUysdCx++6OeXO8A3jkW8qVl3zqdTzYlMRoNcK8JKQQ1yl0AuAPLVVaUsyLMCAZyhV+LN+XSHhed1E2zz2RYYWsRQgG/BjZLL09guPiMIlcESTafr1SOsFemUuMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JSrXjdkw5+wB3p+wqUYlaxamIOxn78V3L6s7gMDD5II=;
- b=ptZX+Z4efdd+4AYgubWDYPsEeXnmOsvbeeoI8Q120HHzAwfv4wpH68FSFkoCqbkomqPJGVWBmX/vHjn3qrt9PAFedyyr+2T6BAa1LxRuoSDXBburq120T9wHzKQHwv5FhorZPkotX1Ke1yKu882lPEGmm81tTZl11xvNfTwicM4ueRiEAf/pFd1XHtf+N2brUx4IlSvz6/9jH77ILWmlGvZtlWsQztCp4Y7q+il1Gn/jJmAVL0TuEGUyl9cfJ0t0NH9+NbQkIPZGyOADsyMEw42u1enIksjR3gXTV0x6TmZifpaSa28oa8ci0JJ+HEX9MnibOVH5XwjYKWu0dt4q1w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB9736.namprd12.prod.outlook.com (2603:10b6:8:225::9) by
- PH7PR12MB7018.namprd12.prod.outlook.com (2603:10b6:510:1b8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Tue, 8 Sep 2026
- 16:07:33 +0000
-Received: from DM4PR12MB9736.namprd12.prod.outlook.com
- ([fe80::ed33:f342:886b:dc8e]) by DM4PR12MB9736.namprd12.prod.outlook.com
- ([fe80::ed33:f342:886b:dc8e%6]) with mapi id 15.21.0360.008; Tue, 8 Sep 2026
- 16:07:33 +0000
-From: Tushar Dave <tdave@nvidia.com>
-To: alex@shazbot.org, clg@redhat.com, qemu-devel@nongnu.org,
- skolothumtho@nvidia.com
-Cc: jgg@nvidia.com
-Subject: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
-Date: Tue,  8 Sep 2026 11:07:31 -0500
-Message-Id: <20260908160731.1658621-1-tdave@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SN7PR04CA0022.namprd04.prod.outlook.com
- (2603:10b6:806:f2::27) To DM4PR12MB9736.namprd12.prod.outlook.com
- (2603:10b6:8:225::9)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1x3yVd-0004Ni-Oo
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:17:23 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 688F1OXa1232701; Tue, 8 Sep 2026 16:17:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=oNjlC6
+ FROkYFVP7j8nZbMO+081enrKl+wt/sNufHfDQ=; b=N6vA4wP5dNSmSciBAvpZaG
+ 8al8kxNzb14llFGuzljEiNSeJhlCwQ7yWLXAsWusRhDJ4JPVK3XajdAOEHnRcAe+
+ XzZPFK2hIYo5SPSVdYmp7TLpPo6Crm1NV0rFbWc5W1KfNc2AZ9ziTP5TRCxC+7ca
+ ybtN7xSrC6HXcgE0aB+S2fBL7wpnBZq033eVL5fQh3E8oCLOI+wfVH+yzty97gZl
+ hpGwibgFQbl9F6XcqPqFdsr410LJyC1LL603a2hXAGSOHwhwJLoITv2WMxriheSM
+ hLyUPK2+4fBrRWJEYKBJ7LA57uiAJWZysnUBOxPNKW3LZ8+oVuzNI8lHVJGgqiaw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbf40bh5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Sep 2026 16:17:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 688GBF4c014116;
+ Tue, 8 Sep 2026 16:17:06 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gh03ycrue-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Sep 2026 16:17:06 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 688GH6ew7602792
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Sep 2026 16:17:06 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7C76958065;
+ Tue,  8 Sep 2026 16:17:06 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC91D5805D;
+ Tue,  8 Sep 2026 16:17:05 +0000 (GMT)
+Received: from [9.47.158.153] (unknown [9.47.158.153])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  8 Sep 2026 16:17:05 +0000 (GMT)
+Message-ID: <80c743a2-e241-4187-9bce-a1cc22445b15@linux.ibm.com>
+Date: Tue, 8 Sep 2026 12:17:05 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB9736:EE_|PH7PR12MB7018:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2f5b6659-1e36-4bf4-300b-08df0dc34ae3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|23010399003|366016|10067099003|11063799006|56012099006|18002099003;
-X-Microsoft-Antispam-Message-Info: BHWZuRDhvW6ovDD4wjGiAo6ojBwjk3Xh/YIcImmc+WgrcZckOL0vm4z/ymherfUg1kcenqjLUvYnH308fkpULRnngCiV0WlX32u9vQLP7ZQz+GEZMjZ3oWFEtg+f4ldKaYLc325QeTpSz4l/67S2jiokt15dPFTq8kJyqVRexiMkMCWBPMGiLyQ3JCCXx4yEZnAzrmnEcgMZ2Pyb6rFqElCr3A3Fjj7i8cFn6ZpgkqpHpGbY69PpGZwzvbXtcEkY4/5FQ2hchW07snPwsWpmMhWojcZKIeY+t5Zwv/JBAOy0wAcbeHOZK1yrWYHW6wUJje54PrYkyDzOrNdAfbOXtJSxhOIM1dBef2HwE5P60Dpvt3N9VR84l8B8jTaN/441C6EtR6qmpy8E1E6JGxyuIl5ASXHnRJGzlsz7WVhxnzcZMaKZaw4OAMkQnatxxdOKmYFTW9xpVRxAJ4nkxvoSeCtqqSHY5YyVu8pipTEsZonn2caNHxkTzLyarJacY4msHKR6z7aLbyud87sefw3DGjrly3P0gkDp1D0UUNzCIFUGSVOcbEDAW6bRDqSwrVIko8AyiigZdt1m8zTkecuH27YQBmmi016i+oTBTk5v5m7pNpC8UfONgsQqdQu+X5JJVXv4BkgR6YMW9HQurSo6yfIyjMauw9jkTjuV56EmGDE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB9736.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(11063799006)(56012099006)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xpTJrx1nVAjh/ANPEJvoI6g+XNdJnL9r62TTDEmDHZUXy8bfdU5bNfvBbYzt?=
- =?us-ascii?Q?TXfeOoJWuk2jgUHst4cRbPiABXesZap57k8CBXqfhhzOUdR7THQm/eKHIjhS?=
- =?us-ascii?Q?GlRrPWYq5ur67cY4jWshDfvYH3CO2n5kZgSqG+1tPubabc1kkc6F1rKS+MZ+?=
- =?us-ascii?Q?Dm9ffs8tIGDOk1SGMKJX4g+0hAmbIGcbGnUEKGqAkrxIUN+9kFp2iv4xOpcP?=
- =?us-ascii?Q?FHzkwUNKgyk62AJf6HZBtpuYCL8tOqILRyzikhqPPTLV/EdyUKSrjVA4aq/3?=
- =?us-ascii?Q?PoG4BN3tPZL8cvqmO+v1Ndwc4VCSeiJlOzylFmmZqAauBLtpTmxbZh3Xccjc?=
- =?us-ascii?Q?EikzHnHbxHCfmz8PpuSFw2J0ql3MoGH90XHa9aNIr/KVSnizvYtvbV7rWMsP?=
- =?us-ascii?Q?OsGXQ+I3Fkoyr5yoJIsu7gaMJVtCX3g1+8NZyy+jd3O6EHrQzbM7GqqEdmUB?=
- =?us-ascii?Q?oXmtH8+Tq4Okp5IIileqLOI26PxxVmUujDDv3+PBevwtFKtKoPJXxdFZ2WCf?=
- =?us-ascii?Q?ITUxEstjuDHGRGwsem7MD19Pd3+fWScwMPfCD2BbxFZcwTDDF9Pqq4xT3sfC?=
- =?us-ascii?Q?jeIC4k9Y0Ryw9XJR7cwdO44xDnTlqdeLYa50wQO9e3pFtcRiw8xI/DokyVjg?=
- =?us-ascii?Q?kdr8Nswr5ur8Qq7G3q2nhdQaXNErLxI3zk2xPb/qwtSklvyNVM3VGYvGNVFe?=
- =?us-ascii?Q?+tCkPQdvRWJyvwLrW1+ykEm+zihzMZJeNkTFAzIAj2cRjUi/+qpervFRRyVz?=
- =?us-ascii?Q?/OkyYxQ4/S9A7b4s2lZj4joK2I+xYy9tfbDXIXvRcUOjtrcMQtUliA0DHUSq?=
- =?us-ascii?Q?1gTdgZWXHucKWM+PSsKrhSHcYl/sy1J2ug6TBiXnAlr0WybJZ6vE3gWhZaKk?=
- =?us-ascii?Q?brrW683PbMczSdBH6CC9Ds1wRUr8i5ziNP7fu1wRjhG5/nWd/bAOHaRiD+mM?=
- =?us-ascii?Q?eJ4ypt65wPkjKVgsjiReVU7P+PKSZyieXY3RMibaM/8sGOxsdKxvU9NULQKd?=
- =?us-ascii?Q?p4ZUWnCA3d4dJSf8SAFgT9sgIxeillOmOezl/XJRpMHwLDcKyxjptA/m2iMJ?=
- =?us-ascii?Q?1KwPIOL5tdPAwuyNms0RrzGZW5gwmQ2hI3hfCP1hoqweoX4jZ2fsmacgmlKA?=
- =?us-ascii?Q?+T4EYS3aRVoDOrQfffhiCLU83hQNVX8W33eFpmDRbhnySVOL4HYJmKmaoxv4?=
- =?us-ascii?Q?ZsjlvYiNobQzMRd30ziuFEy8L7ODNqPIDNYMrudyNTfEEsb2jNk8USlk5Q1s?=
- =?us-ascii?Q?G8XptCcwXbVQNZqvNFD13ssbI6zqKq3XbfDum3DVrwmQ4+DcyGDQnrP6v/Mv?=
- =?us-ascii?Q?LA9OTvL7KPJwCOdWiBTGIPtj4tsRon7NVcd7NJNGdYAiCTqfLRwV3vAbgOqf?=
- =?us-ascii?Q?Y/f59qvBCxqz7IjX69ZNgc2oKUpaT/vNYLO331CwMoayj0GGwCh7Jir2rD4k?=
- =?us-ascii?Q?4+88mTM+HzT7EPYNnvQv5NjHkqS39QxaaoqZSO4tD9EIdICOQRcq2Rbxze+7?=
- =?us-ascii?Q?BWVcBx+N+KGZMNIE9uQ8IaHkEfwfX5nYFeF+Ww3h+GwVHedYyZYvln+T6igT?=
- =?us-ascii?Q?8/7RugbovadjirVlxA40fpIZJZiwk6SM7NMyp46sqIVhM0idzMUu7n+oi2vz?=
- =?us-ascii?Q?eMA2DVLO5pP3z4OLFQ5r+355lqSRtGxk106b6TPH4QcXCe4oZmEYhmr6kwXz?=
- =?us-ascii?Q?2GQQYPgPeHZNSHkC3XqaoV1zmEeHP6ipmVvwrwI6fNrV28c5?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2f5b6659-1e36-4bf4-300b-08df0dc34ae3
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB9736.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 16:07:33.7280 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WH18eDWp2XfeJ30P02lmbaac9jchRKe0MJr44sL0rA2WiHJuA3lkP2JjyOyAX3490cFJFai5+X0pM4cHua8TRw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7018
-Received-SPF: permerror client-ip=52.101.201.0; envelope-from=tdave@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 67/75] qdev: convert PropertyInfo definitions to use
+ qapi_type
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
+ <20260904-qom-qapi-v4-67-a985f168e938@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260904-qom-qapi-v4-67-a985f168e938@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: icHC5OW7iFp097P4_VSfepwwILs5UrUa
+X-Proofpoint-GUID: 4_MmHNzLHOOr1S90bkyAxZ7Pp3vHvNlo
+X-Authority-Analysis: v=2.4 cv=DbEnbPtW c=1 sm=1 tr=0 ts=6aa03504 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=ULvi3PbT2xsdihy8b-8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDE3MyBTYWx0ZWRfX5lCTdJebkb8u
+ C+3YbnG83tjYU7krKMgVgcA+m3jZ4cHJBm0puemxorG6hjoM4tg8XeaDXnAkzU9CmWfG1ubx6Mh
+ W3GMF7BU7Xv0cwnse8/TxqxmMbBJk1hfsvZvY4gIVysMpdcWmtbo13dKZWmShQU9hIABbRRTQYR
+ jE+MsjkLzUig4R+oYKMpryVNrYTH6Y4P16RGJSSngHrgK5uRKqWJU4OaGPQZFPMqkBVXlok5Udt
+ LF48SRgesEoENifDpoSbzheFGzce5/fQHWt3iPzM2A+mvaRHC33Oky+mCNrl6lLk8MdbZiK9EyH
+ Fv/aIzEe85TmFKPmDDDmZymt5//IwO7gHtSpeuB/p/pmRGgmR93gbhE6jYt2g5DmQRKcfQ8l/tC
+ 26VbAaxE9YvEjazTZHyrsA3Cjj8r9EuippFtLPgsUR6rKzyEPbMjbtgPlGYT+4qb4hZuHkOVVfu
+ O5H3FwTeDCr7/RoquvQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDE3MyBTYWx0ZWRfX4FnsXmTZoTKe
+ aWd3FSiX6zBl+y5akpmvkKXRl1cRtHySGb+Aoj1SdkgP04OeSqvlicF6TwrrW5JExqygN/sMZF9
+ uiO2x7gA1FW5woy9HxleMgXLvmqGSW8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0
+ clxscore=1011 suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080173
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,49 +138,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A VF fails to bind through the iommufd/cdev backend when its PF is
-bound to vfio-pci and requires a matching VF token.
 
-QEMU currently initializes struct vfio_device_bind_iommufd without
-the token flag or token UUID.
 
-Pass the existing vf-token device property to the IOMMUFD bind ioctl
-for PCI devices.
+On 9/4/26 3:58 PM, Marc-André Lureau wrote:
+> Convert the remaining PropertyInfo definitions outside hw/
+> 
+> After this patch, all PropertyInfo definitions have .qapi_type set,
+> except qdev_prop_link (uses .create) and qdev_prop_array (refactored
+> in the next patches).
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Tushar Dave <tdave@nvidia.com>
----
- hw/vfio/iommufd.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 242644aa00..de482128bf 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -155,6 +155,7 @@ static void iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
- 
- static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
- {
-+    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
-     IOMMUFDBackend *iommufd = vbasedev->iommufd;
-     struct vfio_device_bind_iommufd bind = {
-         .argsz = sizeof(bind),
-@@ -180,6 +181,15 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
- 
-     /* Bind device to iommufd */
-     bind.iommufd = iommufd->fd;
-+
-+    /*
-+     * Pass the VF token when binding a PCI device.
-+     */
-+    if (vdev && !qemu_uuid_is_null(&vdev->vf_token)) {
-+        bind.flags |= VFIO_DEVICE_BIND_FLAG_TOKEN;
-+        bind.token_uuid_ptr = (uintptr_t)&vdev->vf_token;
-+    }
-+
-     if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
-         error_setg_errno(errp, errno, "error bind device fd=%d to iommufd=%d",
-                          vbasedev->fd, bind.iommufd);
--- 
-2.34.1
+> ---
+>   backends/spdm-socket.c  | 4 ++--
+>   backends/tpm/tpm_util.c | 3 ++-
+>   migration/options.c     | 4 +++-
+>   target/sparc/cpu.c      | 3 ++-
+>   4 files changed, 9 insertions(+), 5 deletions(-)
+> 
+> diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
+> index 826efc276dcd..4a4307975965 100644
+> --- a/backends/spdm-socket.c
+> +++ b/backends/spdm-socket.c
+> @@ -17,6 +17,7 @@
+>   #include "hw/core/qdev-properties.h"
+>   #include "hw/core/qdev-properties-system.h"
+>   #include "hw/core/qdev-prop-internal.h"
+> +#include "qapi/qapi-type-infos-sockets.h"
+>   
+>   static bool read_bytes(const int socket, uint8_t *buffer,
+>                          size_t number_of_bytes)
+> @@ -253,9 +254,8 @@ void spdm_socket_close(const int socket, SpdmTransportType transport_type)
+>   }
+>   
+>   const PropertyInfo qdev_prop_spdm_trans = {
+> -    .type = "SpdmTransportType",
+> +    .qapi_type = &SpdmTransportType_type_info,
+>       .description = "Spdm Transport, doe/nvme/mctp/scsi/unspecified",
+> -    .enum_table = &SpdmTransportType_lookup,
+>       .get = qdev_propinfo_get_enum,
+>       .set = qdev_propinfo_set_enum,
+>       .set_default_value = qdev_propinfo_set_default_value_enum,
+> diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
+> index 264bff22a91a..ecbc771baa6f 100644
+> --- a/backends/tpm/tpm_util.c
+> +++ b/backends/tpm/tpm_util.c
+> @@ -30,6 +30,7 @@
+>   #include "system/tpm_backend.h"
+>   #include "system/tpm_util.h"
+>   #include "trace.h"
+> +#include "qapi/qapi-builtin-type-infos.h"
+>   
+>   /* tpm backend property */
+>   
+> @@ -77,7 +78,7 @@ static void release_tpm(Object *obj, const char *name, void *opaque)
+>   }
+>   
+>   const PropertyInfo qdev_prop_tpm = {
+> -    .type  = "str",
+> +    .qapi_type = &str_type_info,
+>       .description = "ID of a tpm to use as a backend",
+>       .get   = get_tpm,
+>       .set   = set_tpm,
+> diff --git a/migration/options.c b/migration/options.c
+> index d2575edb6cbe..78d4d4818514 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -31,6 +31,8 @@
+>   #include "ram.h"
+>   #include "options.h"
+>   #include "system/kvm.h"
+> +#include "qapi/qapi-builtin-type-infos.h"
+> +#include "qapi/qapi-type-infos-common.h"
+>   
+>   /* Maximum migrate downtime set to 2000 seconds */
+>   #define MAX_MIGRATE_DOWNTIME_SECONDS 2000
+> @@ -287,7 +289,7 @@ static void set_default_value_tls_opt(ObjectProperty *op, const Property *prop)
+>    * TYPE_MIGRATION's TLS options.
+>    */
+>   const PropertyInfo qdev_prop_StrOrNull = {
+> -    .type  = "StrOrNull",
+> +    .qapi_type = &StrOrNull_type_info,
+>       .get = get_StrOrNull,
+>       .set = set_StrOrNull,
+>       .release = release_StrOrNull,
+> diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+> index ae9bdca9df82..d0354a4d02af 100644
+> --- a/target/sparc/cpu.c
+> +++ b/target/sparc/cpu.c
+> @@ -30,6 +30,7 @@
+>   #include "tcg/tcg.h"
+>   #include "fpu/softfloat.h"
+>   #include "target/sparc/translate.h"
+> +#include "qapi/qapi-builtin-type-infos.h"
+>   
+>   //#define DEBUG_FEATURES
+>   
+> @@ -948,7 +949,7 @@ static void sparc_set_nwindows(Object *obj, Visitor *v, const char *name,
+>   }
+>   
+>   static const PropertyInfo qdev_prop_nwindows = {
+> -    .type  = "int",
+> +    .qapi_type = &int_type_info,
+>       .description = "Number of register windows",
+>       .get   = sparc_get_nwindows,
+>       .set   = sparc_set_nwindows,
+> 
 
 
