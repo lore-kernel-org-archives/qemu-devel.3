@@ -4,135 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2698EC79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22FE7C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3s98-0000qf-1O; Tue, 08 Sep 2026 05:29:42 -0400
+	id 1x3sBG-0001Ya-Jc; Tue, 08 Sep 2026 05:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x3s96-0000oY-JW
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:29:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x3s94-0006Ja-K5
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:29:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788859777;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
- b=h8ihUavprjMuZJusDkO0zc4kpKl1QwUZmtJ8l16eVZTKnRg4Gg3uFaP0BmQnZLYC+J3vz6
- A8lqvwNLS5nOqxLWdr7K/dADjGH9B7MdPKYP581MLwv4U5esqjeoHwnejZXhNBp5o2mez2
- TtCYvSRgxNB/09pwyL2HBqi2c/zmycc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-kmiWJsBEObSmXxMF3qJmLA-1; Tue, 08 Sep 2026 05:29:35 -0400
-X-MC-Unique: kmiWJsBEObSmXxMF3qJmLA-1
-X-Mimecast-MFC-AGG-ID: kmiWJsBEObSmXxMF3qJmLA_1788859775
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49991beee7aso41209795e9.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:29:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788859774; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3sBD-0001Xf-Dx
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:31:51 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3sBB-0007Kt-3Y
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:31:51 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8726acc5eadso30584787b3.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:31:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788859906; cv=none;
  d=google.com; s=arc-20260327;
- b=a9XvKR+6VXJdIp1GxAFDrJ5nNiKITI2zGxPuh19i/SzpSKn98kvw9Mzd74RhuHVW0w
- WB4WBEuBGfwTx06JfoniUytN59AnzDYJbqEmrhhSUQfTlePW+SS/KAaHcBnzKA4Hbrb9
- snViz/sf/lkA1YvOmgRv8G6nCub59BJv08mtMHaDDHlcyiaKzwWi5VVUCPNdSoEA9mef
- XNQtIfdnqKciez/8PIJMgt9dwHm3xz50//ZzyAI/qe2/1npo0qhMt6A/wi3ZGsg2mBAa
- A2jfaV0veokyOnwQfQV8UyDzbLcrUIsnjUckyTyKiOLER1bymzsp9zx+vyYofWVBNVaw
- D5bg==
+ b=iRbTN+QPTlPFFwdq5YZlfLaGar7P/kbykWd1JkHNeAjj5V4fcYcrDi7Hg1KeUw+aA2
+ BXC9Bs8IeoeUJ3C84MSpFzQ0OGosWdJZWelsu8rPKs8RrAAFZNDZNBy+niR9OuSXzgcy
+ aLBAEjSxVemTe9lCG40VdJYHHOW0W1T4nmWwE3ESK0LXtuQa4y49tjiAWczgJTwonRF1
+ b4cIfFH93/UhvJf2yy0w0JwmGpd/Q0gSvU7w1Q82kj3bM4EwwfQoXync+rxG4qAnM02g
+ T+erPSlIquqyFVZ3sJw753bnlntqyaQOA0hj6RHS3giIIj9j9mT+6pP46XxmlACTw6+J
+ YhQQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
- fh=RZB1IYSmZ5sMBtJbiq9zjMYU5L/WpKEgxUm5akNH6jk=;
- b=XktA1tgcJDvl+jABzHmj0zxorh6LZRFsWIHkPXXwLFyvmSc0xD/viyHBft3deBQuzX
- EGDIay3/z4oOUMlZBTzHXyUULSR8Hasn++apRkwpMZtXuzBUaaxSpYLwfmz9OFhisRrW
- xzklT+PC0HWA79zJ4zC7KQ9su3exXNOTwmHgsjRwTzFVzMPvXX2av+ikRxDq2G1HFtqk
- FrCQkW0/z03SiSk6L+1MV9h3fDEjY7c4fjuYCJp4IBB8Co1xLXLRSoqWUEr+VZbd5ARX
- +T0toGteMoCB6aW65qPz0j/WC/BFlkFy+U7BkAoSc8WWHN6EDzW64id40/HTQvAERiCS
- gybQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7GKDo1etqBehuVleDyKR7C+x1la3ki921G0KqZ87U4U=;
+ fh=fVPfpHMeJX2gxPKYTBQCzQO60hB2p26ro2vRuUEPsJ4=;
+ b=UMMrixWazub2JIBW7puWmqCgUerAN0AtnZh1727nmpdXd5yQHxIEbr/BUzFhLXv8KX
+ GGpVLY8Lyfi/nAxpmKzdsx/JMeTJMwbGJnwzuPeb9GnHlrgcgNjYEQkMvD2sAqi96xhr
+ AUP3iVOdJxrW+cRNOdsMbaMBVcFfXn/Q3iIoa8mGVjmW4uZ4d0AvzVeWCtVVP/W0eU7E
+ q3cf7EaDpHGqD1hVhN6ru5cXsyF2bPBi+qsMcrIERaGb3CoWqnssv3HSOEmDKPdmAgY6
+ aPiOv7it9vfRSFMoVJ7c4xlY3PqKSVQ3o3+hNEAmK222pGfQdxlvKaIQgcKc6nBQnWiw
+ PERA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788859774; x=1789464574; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
- b=cEtRQw0oo1c0k+jV321uxw5NuiVfYTzoBFeKwIJYp+7hm/2mD3l8xmWakLkwIdMocC
- rxaYl1bAqyrUgE5N2w6XGMOBE0LEU/HBBPwdcN4owjJOtKyvb5slU8zlmea+azSZfx+l
- AAI8l59QK3LClMtFT99MiBcpopTTwf5XN2xEtiTkG08SYZ/HTAk11Z3BmVn2xd8ivI9N
- iXykw507DHyR2t4AEXSKS/dnUvtwp2vrIx617cFiY3BKrpRm2g/LduWn1NbAdG0piBl4
- 3G7budYJUktkzQ9iv8/F5pedurSFNGv5WVNpIXhr3hw7Z3TDXJlLJzQmi2Kzw6H0d9o/
- TYyw==
+ d=linaro.org; s=google; t=1788859906; x=1789464706; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7GKDo1etqBehuVleDyKR7C+x1la3ki921G0KqZ87U4U=;
+ b=LYsNDB3QfC/87aBOSLj9JYt1Y7qUqbdxWp4RfreuVCKU4zvNGRUdkuJ4iiZccaX+fg
+ Uvb+J4Mkn28ToIvX6L7p7ELx0HolTOPoMfNFopLNijBJITjQjArq9kXucpG2nHcuYE7H
+ HEugtOc6YGL+WB+MeCNqFvEzfxTB6+fPRMMK3xwiEGG/49cjdhwHYYJfOUYZMuW4RjJB
+ A6RxTC2M1KJyCDHIbgoqmGIfA+xM0INcIUbvCAe3e5pGfcodwP2ycQMkMoThkwO0Ucjo
+ ppZ5sd5bKtQunDj9J1ME86BD7TUhKuEs+MBI1NHrwjAZU/j+IZz1hAuRdmnMY70X/8/S
+ d9hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788859774; x=1789464574;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
- b=j0/KYE2xbNxRFgEXG5XeGh5j9OOR8HmykDbdKcYPzhYnDP30AxHjODbnCGZaGPTH8h
- TMD+zN5FFD35ytiq4uuliIw3UNaGQVolUbvGLhdG54ktH41pXpVp1vtKg6ftj0t4CZni
- QnkVw1lGCFEmt9J00tJXnmduF5JQH/4ah41uIhw9S3mVqXcxfn3aTI5+AUs/vP585JJg
- 7ip8Xo2kKpFab/ho859ZLkn9q6lYy4s6urihDXHJm8pAX4pB2i19f5hb0mX7DG4OQEJ5
- YZxYRQyHxuCiCfKBO/K0zHqcdzAUC0AmvmOLC4AzQBzgkhndy+K07D4A8dytj7SUyb4h
- cHpg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzRymeh/DyhgpvvX7fD2Zoorxb6Qz/bYYW4+nCz9mbdWxOkpRpTG5rGpp7VXfeP0yYsAG8VArQ9G+u/@nongnu.org
-X-Gm-Message-State: AFuF++l87maQKL3o+VQPZ10C+khAgkVbLsRukVFsZuKm4iPz11m4LJRp
- xqHjkZxLuThA4pe2x1WlAhWvz9j1AHsmfbZrOHuz+4j88lxhY3WEM/8xE4SOnGfN3e2zXxmSEl/
- ilA3j5tpdrY8cj+4xGaCZXtf0lxkPTc+pWbAzmaBGeIyGEPaHmjDSodgiy8BP69BzbEgvwpfxDO
- wVDszFDGMOCI9OO9X4Kz6tbd4VeuIVNlI=
-X-Gm-Gg: AYBFou3VDHp0Zk0y+JHAKqkQTFpd1HgFQYbwj49gF21Rg/V2CERzV69ICuqryVJdfCb
- dLLZyH2FpRPxt3HOx6MW04nE4rxU5ZX7puIsQMpJKIU9IuUtr9zmvtcyLx/NvixNWxjvbfh593X
- 9N8tbVWWnVZePOgV6TRXvEGL8WRnnz8SFQCCEdjlcoxhKt2lnLyxe8ykllkQ0FMi+8H0VqFAqeO
- gvUoSKHScpo4RqwIMAtJo2BEVIPKuyDfgX/RYVxoBJ52fz0GFCPQQGaEW3M0w==
-X-Received: by 2002:a05:600c:5488:b0:49d:1cc7:5ec3 with SMTP id
- 5b1f17b1804b1-49d1cc761afmr20558645e9.9.1788859774576; 
- Tue, 08 Sep 2026 02:29:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:5488:b0:49d:1cc7:5ec3 with SMTP id
- 5b1f17b1804b1-49d1cc761afmr20558215e9.9.1788859774135; Tue, 08 Sep 2026
- 02:29:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788859906; x=1789464706;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7GKDo1etqBehuVleDyKR7C+x1la3ki921G0KqZ87U4U=;
+ b=tGHVE5OPMiWboJyOHaaQAi8rpAK7vTpZyxdcxI66EpP7zWik8QlHiPfb/8btcek2Wy
+ AZxH0XyCOWrsk3IorsRuNeF28/iPjH0J7ACeTBWd3Srb4p/AuoYOEKqZfcVhosjGse5d
+ lPsZJ9gkel4aWq4Nw0TTBl1r3dpWXbqdGhrWcmQPXBAmIRwiPY22M38Yo371UGbDNad+
+ oOhUCr6PzovXBfT4evLoyKfFzd+OoinXz2aWcWxMOLyt/O+RBXknC4aSgtvGiyyWoB+I
+ Hb+TZWwVZ0MHaPAN9N/5uK9aUjALkdOur1EBkcBewOCdofJ3D1GdHMx9UoihAv9HTis/
+ QTcA==
+X-Gm-Message-State: AFuF++mSf/1RgKul9CLlMno0uPE+p8C5wx3mFAsEvKg6AUYXjm2bWDkg
+ RoQSHMh4EjUapxOxH+hVlUGn0cmh8aEDBDXY1LTdGbrhydFLmcOC8FxGtVUE1N10E8reTJhuBIE
+ XVRD6l49cgLsR6chgyh/iv9whjh2UBHEPW1+1tV5UbQ==
+X-Gm-Gg: AYBFou0oEV4YcduUiBMN1lMN/C3nxp1n3Ja/5Q3kNoj10XxbZuKsymslXJYlpo2h8gr
+ rYADPfbKk90jTvU9puj1v3BJafWEKUV7vGeF0qkFeIYovMPAu/8X5sS0Hc1SfouHwzV0ZM46TLj
+ QTXxiDXf7kPy0QOSxHChGPJga7XKPbDfT3fggWGWfvm2hHihPgBgoKDLTJaZuNoKUNofFM9maXz
+ IfC2jNKUCFg1WBpe2xLk1CxL6cla6fEeKYkMhwCmr3YX408p8EPHOnC4LDpCZA1S8aY23JJIYSO
+ uHcaAAzUhFxERx4Zk3OI+ZSj4Ikm8YuKOZQ8mzDTFKGb7AUEfqV+9vR72wAiCB78m8rnIB0RWTN
+ smOu6oESPMbBxktQX3fJ1yLq1l7KD
+X-Received: by 2002:a05:690c:22c6:b0:81f:64e8:cac5 with SMTP id
+ 00721157ae682-87124c7cf59mr112994797b3.7.1788859905900; Tue, 08 Sep 2026
+ 02:31:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
- <20260819145649.23439-7-philmd@oss.qualcomm.com>
- <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
- <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
- <bbe4b7d0-96ad-45d8-a5a9-0be2c5479d51@oss.qualcomm.com>
- <7766d96b-4065-4917-9d7d-094bd6d1f29c@oss.qualcomm.com>
- <5aba99f7-5310-4cd3-a38c-3e9b922c8b05@redhat.com>
- <CAFEAcA9tz=Br3dRe3mN1fPkjm4y36eRSWUMs=bU8zDbKczCCsg@mail.gmail.com>
-In-Reply-To: <CAFEAcA9tz=Br3dRe3mN1fPkjm4y36eRSWUMs=bU8zDbKczCCsg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 8 Sep 2026 11:29:22 +0200
-X-Gm-Features: AcwNN1W_NGC8plnEvOk-6gM3fivJmbRtNPbUZ4BJI7iAS0S1x9EmpiRhvoabE98
-Message-ID: <CABgObfZQb8FwDubg=pZk6nRSrUgdMxoDpRwG3Kd=GwpQeccLhg@mail.gmail.com>
-Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
- arm_cpu_exec_halt()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
+ <20260906194438.93046-4-gilles.grimaud@univ-lille.fr>
+In-Reply-To: <20260906194438.93046-4-gilles.grimaud@univ-lille.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 8 Sep 2026 10:31:33 +0100
+X-Gm-Features: AcwNN1W1giourbBeIRogk9CNzzLL8nFkg8QVidsTpxr9rU5lc86AYCb_wkoRxkM
+Message-ID: <CAFEAcA_O=k4=9Y1tnmuv0_Bfn8rfAzZ1gdR3br80=obYgObuFg@mail.gmail.com>
+Subject: Re: [PATCH v3 03/36] target/arm: support Cortex-M0+ MPU
+To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,78 +115,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 8, 2026 at 10:40=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
+On Sun, 6 Sept 2026 at 20:44, Gilles Grimaud
+<gilles.grimaud@univ-lille.fr> wrote:
 >
-> On Mon, 7 Sept 2026 at 22:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > On 9/2/26 20:02, Philippe Mathieu-Daud=C3=A9 wrote:
-> > >>> On the other hand, if we do have the BQL in exec_halt
-> > >>> then why is the x86 implementation explicitly taking
-> > >>> the BQL when it calls apic_poll_irq()?
-> > >
-> > > Trying harder, my understanding is apic_poll_irq() only requires
-> > > the BQL for the apic_update_irq() call, not apic_sync_vapic().
-> > >
-> > > So maybe only apic_sync_vapic() belongs to process_async_events(),
-> > > leaving apic_update_irq() to transition_halt_to_exec().
-> > >
-> > > Paolo does that sound like going in the good direction?
-> > Unfortunately not, because apic_update_irq() is needed to call
-> > cpu_interrupt() and break out of halt.
-> >
-> > By the way... cpu_has_work_after_processing_async_events() is a bit
-> > long, what about simply cpu_poll_while_halted()?
-> >
-> > Answering Peter's question above, the way in which the code is protecte=
-d
-> > against the BQL is basically two-fold: 1) kicking the CPU out of
-> > whatever it's doing, for example in tcg_handle_interrupt, 2) changing
-> > what other conditions affect cpu_has_work() only in the vCPU thread,
-> > e.g. with run_on_cpu.
+> Cortex-M0+ implementations may provide an Armv6-M PMSA MPU with eight
+> regions. QEMU uses its historical v7m/PMSAv7 naming for M-profile code
+> shared by v6-M and v7-M, but currently exposes, allocates and migrates the
+> existing region model only when ARM_FEATURE_V7 is set. This prevents a
+> Cortex-M0+ board from enabling its optional MPU.
 >
-> Ah, so it is called without the BQL held? That's quite unusual
-> for CPU methods, so we should clearly document that.
+> Allow non-v8 M-profile CPUs to use the existing PMSAv7 state, migration
+> state and translation path. Restrict the shared register model to the v6-M
+> layout: do not expose the v7-M alias registers or TEX bits, and reject
+> region sizes below the v6-M minimum of 256 bytes.
+>
+> The dedicated PMSAv8 path remains selected first for v8-M CPUs. Expose the
+> pmsav7-dregion property and clear region state on reset.
 
-I agree.
+I think I would split this into more than one patch; all these
+things are distinct changes:
+ * don't expose RBAR and RASR alias registers when Main Extension not present
+ * TEX bits are RES0
+ * region size minimum check is wrong
+ * change if() conditions to include v6M when we are asking "is this PMSAv7?"
 
-> I bet also that most targets don't expect it. Picking one at
-> random, the sparc has_work function calls e.g. cpu_interrupts_enabled()
-> which does not look like a function that is expecting to be called
-> without the BQL.
 
-Why? It only accesses fields for the local CPU. The problem is
-interprocedural communication, and only if it does not use
-cpu_interrupt().
+> Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
+> ---
+>  hw/intc/armv7m_nvic.c | 27 ++++++++++++++++++++++++++-
+>  target/arm/cpu.c      | 12 +++++++++---
+>  target/arm/machine.c  |  3 ++-
+>  target/arm/ptw.c      | 10 +++++++---
+>  4 files changed, 44 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+> index c1ceb7450f..a702bd0c38 100644
+> --- a/hw/intc/armv7m_nvic.c
+> +++ b/hw/intc/armv7m_nvic.c
+> @@ -1405,6 +1405,11 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+>              return cpu->env.pmsav8.rbar[attrs.secure][region];
+>          }
+>
+> +        if (offset != 0xd9c &&
+> +            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +            goto bad_offset;
+> +        }
+> +
+>          if (region >= cpu->pmsav7_dregion) {
+>              return 0;
+>          }
+> @@ -1432,6 +1437,11 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+>              return cpu->env.pmsav8.rlar[attrs.secure][region];
+>          }
+>
+> +        if (offset != 0xda0 &&
+> +            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +            goto bad_offset;
+> +        }
+> +
+>          if (region >= cpu->pmsav7_dregion) {
+>              return 0;
+>          }
+> @@ -1919,6 +1929,11 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+>              return;
+>          }
+>
+> +        if (offset != 0xd9c &&
+> +            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +            goto bad_offset;
+> +        }
+> +
+>          if (value & (1 << 4)) {
+>              /* VALID bit means use the region number specified in this
+>               * value and also update MPU_RNR.REGION with that value.
+> @@ -1969,12 +1984,22 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+>              return;
+>          }
+>
+> +        if (offset != 0xda0 &&
+> +            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +            goto bad_offset;
+> +        }
 
-Alpha -> ok, interrupts
-Arm -> see above
-AVR -> ok, interrupts + registers
-Hexagon -> ok, global registers writes use run_on_cpu afaict
-HPPA -> ok, interrupts
-i386 -> complex but ok - though it should use qatomic_load_acquire
-loongarch -> ok, interrupts + registers
-m68k -> ok, interrupts
-microblaze -> ok, interrupts
-mips -> i think ok, interrupts + registers
-openrisc -> ok, interrupts
-riscv -> sort of ok, uses BQL for register writes but should use
-qatomic_read/set as well
-rx -> ok, interrupts
-s390 -> probably wrong, s390_cpu_set_state sometimes not on CPU thread?
+These alias registers don't exist on v8M without the Main Extension
+either. We should model that by rearranging the case lines like this:
 
-So the only one that is blatantly wrong is s390; Arm is slightly
-wrong, i386 and riscv are technically wrong but have correct locking.
+    case 0xda4: /* MPU_RBAR_A1 */
+    case 0xdac: /* MPU_RBAR_A2 */
+    case 0xdb4: /* MPU_RBAR_A3 */
+        if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
+            /* These aliases are not present for v6M or v8M without Main */
+            goto bad_offset;
+        }
+        /* fall through */
+    case 0xd9c: /* MPU_RBAR */
+    {
+        [existing code here]
 
-> Is it OK for a has_work function to just take the BQL across
-> what it's doing if it doesn't want to be bothered with trying
-> to make the handling truly thread safe without a lock? That
-> seems to me like it would be a lot simpler and more reliable.
+(similarly for the other 3 places.)
 
-The simplest way to write has_work is to make it use only
-cpu_test_interrupt and checks on local registers. That is, use the
-synchronization provided by common code.
 
-Paolo
 
+> +
+>          if (region >= cpu->pmsav7_dregion) {
+>              return;
+>          }
+>
+>          cpu->env.pmsav7.drsr[region] = value & 0xff3f;
+> -        cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x173f;
+> +        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +            cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x173f;
+> +        } else {
+> +            /* Armv6-M has XN, AP, S, C and B, but no TEX field. */
+> +            cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x1707;
+> +        }
+>          tlb_flush(CPU(cpu));
+>          break;
+>      }
+
+This part is OK.
+
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 77aa78f00e..f58a1db843 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -617,7 +617,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+>                             sizeof(*env->pmsav8.rlar[M_REG_S])
+>                             * cpu->pmsav7_dregion);
+>                  }
+> -            } else if (arm_feature(env, ARM_FEATURE_V7)) {
+> +            } else if (arm_feature(env, ARM_FEATURE_V7) ||
+> +                       arm_feature(env, ARM_FEATURE_M)) {
+>                  memset(env->pmsav7.drbar, 0,
+>                         sizeof(*env->pmsav7.drbar) * cpu->pmsav7_dregion);
+>                  memset(env->pmsav7.drsr, 0,
+> @@ -1656,7 +1657,11 @@ static void arm_cpu_post_init(Object *obj)
+>  #ifndef CONFIG_USER_ONLY
+>      if (arm_feature(&cpu->env, ARM_FEATURE_PMSA)) {
+>          qdev_property_add_static(DEVICE(obj), &arm_cpu_has_mpu_property);
+> -        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +        /*
+> +         * QEMU's PMSAv7 state also models the Armv6-M MPU register layout.
+> +         */
+> +        if (arm_feature(&cpu->env, ARM_FEATURE_V7) ||
+> +            arm_feature(&cpu->env, ARM_FEATURE_M)) {
+>              qdev_property_add_static(DEVICE(obj),
+>                                       &arm_cpu_pmsav7_dregion_property);
+>          }
+> @@ -2332,7 +2337,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>      }
+>
+>      if (arm_feature(env, ARM_FEATURE_PMSA) &&
+> -        arm_feature(env, ARM_FEATURE_V7)) {
+> +        (arm_feature(env, ARM_FEATURE_V7) ||
+> +         arm_feature(env, ARM_FEATURE_M))) {
+>          uint32_t nr = cpu->pmsav7_dregion;
+>
+>          if (nr > 0xff) {
+> diff --git a/target/arm/machine.c b/target/arm/machine.c
+> index 7005f4e5d7..53a2734d25 100644
+> --- a/target/arm/machine.c
+> +++ b/target/arm/machine.c
+> @@ -584,7 +584,8 @@ static bool pmsav7_needed(void *opaque)
+>      CPUARMState *env = &cpu->env;
+>
+>      return arm_feature(env, ARM_FEATURE_PMSA) &&
+> -           arm_feature(env, ARM_FEATURE_V7) &&
+> +           (arm_feature(env, ARM_FEATURE_V7) ||
+> +            arm_feature(env, ARM_FEATURE_M)) &&
+>             !arm_feature(env, ARM_FEATURE_V8);
+>  }
+>
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index a29de0385f..6cb8a8394a 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -2748,9 +2748,12 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+>                  continue;
+>              }
+>
+> -            if (!rsize) {
+> +            if (!rsize ||
+> +                (arm_feature(env, ARM_FEATURE_M) &&
+> +                 !arm_feature(env, ARM_FEATURE_V7) && rsize < 7)) {
+>                  qemu_log_mask(LOG_GUEST_ERROR,
+> -                              "DRSR[%d]: Rsize field cannot be 0\n", n);
+> +                              "DRSR[%d]: invalid Rsize field 0x%x\n",
+> +                              n, rsize);
+>                  continue;
+>              }
+>              rsize++;
+
+We don't get this "minimum size check" right for v7M either,
+because that wants a SIZE field of at least 4. The zero check
+is only correct for R-profile.
+
+It's not strictly necessary to fix this bug as part of adding
+cortex-m0+ support, because we already get this wrong for other
+M-profile CPUs, and a correctly programmed guest won't run into it.
+If we want to do it, then better as a separate patch that fixes both
+v6M and v7M, something like:
+
+    /* minimum valid value for rsize varies between v7R, v6M, v7M */
+    uint32_t rsize_min = 1;
+    if (arm_feature(env, ARM_FEATURE_M) {
+        rsize_min = arm_feature(env, ARM_FEATURE_V7) ? 4 : 7;
+    }
+
+    for (n = ... )  {
+        ...
+        if (rsize < rsize_min) {
+            log and continue;
+        }
+
+
+
+> @@ -3901,7 +3904,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+>              /* PMSAv8 */
+>              ret = get_phys_addr_pmsav8(env, ptw, address, access_type,
+>                                         result, fi);
+> -        } else if (arm_feature(env, ARM_FEATURE_V7)) {
+> +        } else if (arm_feature(env, ARM_FEATURE_V7) ||
+> +                   arm_feature(env, ARM_FEATURE_M)) {
+>              /* PMSAv7 */
+>              ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
+>                                         result, fi);
+
+I think these other if condition changes are all OK.
+
+thanks
+-- PMM
 
