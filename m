@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF38BC79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 14:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C906C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 14:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3wec-0005ej-PA; Tue, 08 Sep 2026 10:18:30 -0400
+	id 1x3wkL-0006d4-JT; Tue, 08 Sep 2026 10:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3wea-0005eM-Mk
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:18:28 -0400
+ id 1x3wkK-0006cu-8r
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:24:24 -0400
 Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3weY-0000nT-Qk
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:18:28 -0400
+ id 1x3wkI-0001gJ-My
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:24:24 -0400
 Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-871c8a36fe3so48431417b3.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:18:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788877105; cv=none;
+ 00721157ae682-861a2ae9c51so54294227b3.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:24:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788877461; cv=none;
  d=google.com; s=arc-20260327;
- b=K8nunxcHeoS641KJL71PMPSr7ZRmbq4Sw9G8P+vrM3HHfqaxGUM+ZL37fiUhXi5Avg
- UNKPINWVh148xuYcuH9Eh5in1aV8HY07K5jbai5xN4c1ttREYAwCt4GySaVS0e8R13xc
- 4SIHzItm2NgHfNpb0mtsXtiy0o/lsQ6q/dhAXatFTD6lvyzFmft20Csw306nT4b+VYz4
- 9KdciTjtaNtt7T5WlmDDhHZChfKTbsXtnYOGkRLiJAq+EpagcM2TG0EmU2EfaJEj6mMh
- ZbISuVPm55IAMT11vTiJauzCbboy2vyAJHbqNuwQNlaS/ISfVeiSzF/ll2DC7X94sDZh
- tvJA==
+ b=lkSKGCuSHqbUbZvyQpYtpuAeEShNpY6ZgvP6pJXmcWgFeumYasxLeevgPjzIfujLCt
+ TlGjMTd5lh37yr3R80PIwZR++xSVDJRJZGg/uxQJ6AKdsh+T2e8rQOlyoc7J7yQMCdA0
+ qU7vG4qzFjvIKnVnQeaAKe+baMESZtB/bHkE00X9tECvgEkT/C4S7+1+1rldTfZku17z
+ csLSyfbpcGBxGYnvFuHTHNxe39UTJS8vcQcBIAzG+huK+KnbwVBMEyp7WsHGXR9RMgDi
+ TpZvn5tieBHV+NzKCTv64BClQLI0Zi0WHAfkcTFMauHT7v1yf4LHV3ryIE7oJgbCMFkZ
+ fS3A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=M0XGYthQivEpgQogQki5Glre8rRlGd/DcFDYqYqczLg=;
- fh=gicmf1zLCz5mLo37/slHRwiGNwG9FuwwhzHTeCt9t94=;
- b=mFhtQI+IRDtUWIWkn82LE8LMFP2Gz+45bsaX4XxbL71uZi/BYdSulMXLs+FodAMds3
- YvBLXtI2rTa8/qaN1Dr69njiy+TcFpdu5yDE3zCUnZocshKlbFfTnzhWWzXKDxAzXGSe
- /7BwMR1AnGyiQKguiz24QyaNhQrCeB27uHF+1L93PyZ7y4q73BX3blo5dt6lKtudjiaQ
- vJg8MlGw6d9nHimITRqjO8hnBLjr1HDMKdeIzDbvLN37sCBJl/TBGO2UEfaTDKt60fxJ
- kvm7YE7QrZk0ka2hxGHKIIBm1mLu6bwOfHrN86E9AiAbJtZchFXMlme0icsa5i3fw+hd
- 7ouQ==; darn=nongnu.org
+ bh=yU8EP+PrbggFY2U5+b0p2TGhdz73P/4O5iA8E7drwn8=;
+ fh=rpGB3NvKeN3bzo0GuzjgwrLCmDY+TuJKG7jeGX4qgjk=;
+ b=bhfYshAr8mKMl0Hj6qAHL/xxCEJrJiwUMSCRYJ5qKzuUDKGMaTBswr+mi2QWnOBZM4
+ Zv5pbPfmvV4QGPoNOu6+yUt2OI7YGeuCEIYsNvG4GLqx+rvwL62n4hP9Sib4PCBcdYcp
+ eRVBjJKPYOP8dE1zST/Pa4rgDu3uPHa1ZPDfvF9ZRPPdDAhrqA0U6lr4D2Q4e5c4UCS0
+ DtJflfaZ+uSGj/GAN5bBo64RKNKDwvmzl0rkfzib6R7v2UmJwnnjIvkl7u+RoQYV5l33
+ UI3BZUcZGAzeOHgD2VGTylyi8ORUMs1velQ4TwFHcP4PRqiCY5FhdQTMZXbB2+148Ybl
+ bLTA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788877105; x=1789481905; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788877461; x=1789482261; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=M0XGYthQivEpgQogQki5Glre8rRlGd/DcFDYqYqczLg=;
- b=eG9he6J9RA/GoglyFEJjeiZCZWRnDvYLDnPE/VBZDqBAvbT/4C5YdFwPjxpd7uADbD
- 3vP+DQ4v+ws23afQbXcdTtO8AFbztOxN7ZRQthH32cUjcB2BTtlFtwmQ1m1iIR2Onsya
- 4m9XFTK2BV3zLi/4qYNhHyUGM4sYJjP8JNm4Bh445Y7wLCAvie2x5JWlrgGifRTnUOr8
- tkua0qRwcJcnkjl61a4Ocfn8MZF6W1O6NP+iaX/BIDiLkCXxPjgJb1Xk+6wQIXMknthd
- uadPKq/c5D2ePw/p284J1EHhK1C+g7Y+3YpFMh+XUOamcUxC3NfdyoAZynpHCaGN+gGE
- J12g==
+ :content-type; bh=yU8EP+PrbggFY2U5+b0p2TGhdz73P/4O5iA8E7drwn8=;
+ b=FfF3QyikvNTumFq12kpLnk3LmhsMHRHkWzJbANL7maZdmgGmemxM4QruN2yg2qiMXq
+ Rj2X/JNgb/q0UV7uqASgJlWuuTleIikfeNTdsZjms6PEERx/mGkTR1KL+gG/+VrVDxab
+ iyhnjMklmR+4AClUaE9P5SqlSwa9Z6qY+b2JyFJZn9vD5sJe8P05vYRb8GbQ5uWJkiEd
+ qMAk3//1r4bbTicj44M/g1G/EGGM0LQeL1iVu42Nti19hxO0ZYiiRlWlwb7sHaJTENeM
+ 0qyhGStbR24etAUr8ShKkdk0tUWVWdHWnCUD/IaB7aqMj6T2wC9iaHX2fJAQTLuP6F8s
+ tsEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788877105; x=1789481905;
+ d=1e100.net; s=20251104; t=1788877461; x=1789482261;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=M0XGYthQivEpgQogQki5Glre8rRlGd/DcFDYqYqczLg=;
- b=cN/x/whnlaGTLSDLLnqSW81gK2DRZ+vvPCdgDjELltPQNb437KEi5eFY9xIr13hTdo
- k13wsIebGoPfJEumxTh+BZXDq0LlsE2T6Ef6yy41gONk1Qzw8kowAEoM2BFgOvnnYqqO
- qQ6G2OL4Y/IgXUBLl3Oi43NqyzWFD7Drw1xhG0WbTCnZL/XsdwVAWrptOrdW6aBa5qRw
- GYcl+91vMWJS5QtRYR0oWA2e3WA21G5SLp1+QUOnvJljafErty/VY6ijVV63ax86M7i7
- 8GReUz0xoJFtdDrbyJha1uBnOtG6D70FhiyGmsxXTsZm1ok9cGJrG5b/NuKKEEIUwuS0
- q08w==
-X-Gm-Message-State: AFuF++ka0H5+T9rIlwvzk2ZRPEv0vp6htJjpCr/3/pWe4qDECjK84Anq
- KjXXtQaYa8gdJwyXzkbzun5MfE01TLuxlY4RlyH480oojUuCYDaA3NGhLixTZ1O9uPrmKhiXgib
- Uo4r85JyT9krJ+Iq03lnObGyOu1UfcJuzKFHOVvp1hA==
-X-Gm-Gg: AYBFou1WYBTseob9b3nxrdElu+6Bpa83f5Fr2KpMQPxksH0SmLAJuoZJgoO2HIQWROf
- EcTvcfB63bEeBrU0bk8CJNrRavWh61M4vZPzb/BSFqYGOnPN0ZDukVuAIiQXK+JdTJ7EdceMWrq
- RSMVGem+z9fN6fwDNdpgx2cBeN4sRa3NBjvEC5BMo+M2Fo4+cD9pAlE//nFRg9ApVB+r9Suewef
- 7aJ8wUB4XMDNbRjTK2NnDAroBRbhIA92KCK/rJTLwYLsEIfvdQ89wcMoWQi9Fyc2wOh6iZsOQMl
- WIRN1E289zjVcMDWyFxwZ8uM05duI/SzoMPh3fuACWii70n45eRL+ceMKiItfeFKKE5XDZDlJFB
- xOtfALdSp2Xdw9wJ4j9WLW/sbcvoJ
-X-Received: by 2002:a05:690c:6513:b0:873:5bb2:6c37 with SMTP id
- 00721157ae682-8735bb26f91mr76983917b3.62.1788877104947; Tue, 08 Sep 2026
- 07:18:24 -0700 (PDT)
+ bh=yU8EP+PrbggFY2U5+b0p2TGhdz73P/4O5iA8E7drwn8=;
+ b=pYCKuS0rfN7Q4Hesc5j+kh2ftb4/66OJz0a+ssLc53C8dPALW0vd1VYhvrXrxkS+q2
+ CK9fDRj3WAjQ6EXoeU3Mj+ZDVypacQO3xfPReCGT4koU93hIapM8npnzkPUpjAxRFUr8
+ U4jK+ldkdtK/VTXow5IHteanlemucGme5MrbuBQF+BrkSqZAumNOohTZpFn75VcO93PP
+ s/XyxgNAIqTReq1WmClKPpukL+HkPTKaJAqALSV+IY3U2L+8bAHPBgalZNz7kuLNcWTA
+ Vdnp5lixB1DLDvh8vWd8AFYcDFTgCyL3V45NSb9QWw4Y10PK0Qj0NZKafw72yIQjtKRX
+ WYyw==
+X-Gm-Message-State: AFuF++l4e2hi9Zox4toHDV5gnT9HkQ5khBKN9TmHUEYGNhMK6Xz04B7/
+ j3deP5J0/W03HO7SSM8Tyi1NLOjxdVnePL/6e3d3FzMic/MZDYBgQFM+uxJKQZM2BPzIO9GYcQ4
+ DFLYJ6R4+28MwU39C5xztnlI/3Ght7yw3fywMYbHJrMbIt8kxFysDohw=
+X-Gm-Gg: AYBFou1mm+irG+ldDAvG3IMz/Rg0qCI24TEzmA71D6xsrv/dXuc6thK6rhUghebNSU3
+ slQjUwguIgj5DLD0iYGfaJTv0/ilUohAeXuMjfETmqVV/L2H/Sel4Cv2Nrirex35Bw5oolDkgW4
+ vAO7un+v+ZtI9Fo+yYGzTKnYpGFQdvBW2iMArXozwDWMKJlS9vzy0x6184XQWzYxjH+kF05WR6M
+ e78cMzD6o1p244eXifU5BQlLyJ40eFXQayr3QMQJ4mmhjYkHJ+Dtw5VgIWtDiea+UAMyitQuvXu
+ 5t2fB4Wu35vzFU8x67EIMMI3Dh45OLTLNvARGDuJCvU1ulcZIoTKQpK1JZQuVjKvUL3NHJiyfkD
+ mG75Kc+J0LWIIPGdJJqYeCdFlvt9K
+X-Received: by 2002:a05:690c:a604:b0:870:b039:9816 with SMTP id
+ 00721157ae682-8712cedde9fmr87301727b3.32.1788877460902; Tue, 08 Sep 2026
+ 07:24:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260829-allwinner-gpio-v2-0-f0ebcb07302e@gmail.com>
- <20260829-allwinner-gpio-v2-3-f0ebcb07302e@gmail.com>
-In-Reply-To: <20260829-allwinner-gpio-v2-3-f0ebcb07302e@gmail.com>
+References: <20260908073548.3249551-1-maobibo@loongson.cn>
+In-Reply-To: <20260908073548.3249551-1-maobibo@loongson.cn>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 15:18:13 +0100
-X-Gm-Features: AcwNN1U8Z4stcX4eP1xQ_iBDv5dK5Wt2U_nsK73OTXadEMyB3P8MScdMjszRWCM
-Message-ID: <CAFEAcA9+H-RQbpf2Fdv-C0Z5zxncBCAccYTNUBfJHzRHfVc+3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] tests/qtest: Allwinner GPIO tests
-To: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Jack wang <163wangjack@gmail.com>
+Date: Tue, 8 Sep 2026 15:24:08 +0100
+X-Gm-Features: AcwNN1VudyRtOW2VoB69dOHjnH8V_uK3p_PvawVc6c3OkmnCexGesnsL1A9P6po
+Message-ID: <CAFEAcA_pvDUk1b6GooFWWqQGXAfydRGobxErFb=SVoxfv5RH_w@mail.gmail.com>
+Subject: Re: [PULL 0/5] loongarch queue
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
@@ -118,148 +114,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 29 Aug 2026 at 13:56, Strahinja Jankovic
-<strahinja.p.jankovic@gmail.com> wrote:
+On Tue, 8 Sept 2026 at 08:35, Bibo Mao <maobibo@loongson.cn> wrote:
 >
-> Add Allwinner GPIO set of qtests to validate functionality.
-> Tests cover input and output port setting, as well as interrupt
-> functionality.
+> The following changes since commit 35500e5c41aec76cde59befe750600dac7a9e37a:
 >
-> Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-> ---
-
-
-> +static void test_irq_pin_rising(const void *data)
-> +{
-> +    PortPinTestParam *param = (PortPinTestParam *)data;
-> +    QTestState *s = qtest_init("-machine cubieboard");
-> +    const int gpio_port = param->port;
-> +    const int port_pin = param->pin;
-> +    g_autofree char *in_name = portname_in(gpio_port);
-> +    int irq_pin = irq_nr(gpio_port, port_pin);
-> +    unsigned int irq_mask = 1u << irq_pin;
-> +
-> +    qtest_irq_intercept_in(s, "/machine/soc");
-> +
-> +    /* Configure as input and set pin low */
-> +    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-> +    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-> +    qtest_set_irq_in(
-> +        s, "/machine/soc/gpio", in_name, port_pin, AW_GPIO_LEVEL_LOW);
-
-Breaking the line immediately after the opening "(" looks odd;
-generally put the first parameter there and break the line
-after that where it makes sense.
-
-> +
-> +    /* Enable interrupt */
-> +    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_RISING_EDGE);
-> +    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_RISING_EDGE);
-> +    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
-> +
-> +    /* Raise interrupt */
-> +    qtest_set_irq_in(
-> +        s, "/machine/soc/gpio", in_name, port_pin, AW_GPIO_LEVEL_HIGH);
-> +    /* Check that value is written */
-> +    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
-> +    /* Check interrupt status */
-> +    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-> +    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-> +
-> +    /* Clear interrupt */
-> +    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-> +
-> +    /* Check that IRQ line is low */
-> +    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-> +    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-> +
-> +    qtest_quit(s);
-> +}
+>   Merge tag 'pull-aspeed-20260906' of https://github.com/legoater/qemu into staging (2026-09-07 13:33:12 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/bibo-mao/qemu.git pull-loongarch-20260908
+>
+> for you to fetch changes up to 970657e490c05b0d2dd8ffbd68466d22685083d1:
+>
+>   hw/intc/loongarch_extioi: Add extioi interrupt status display (2026-09-08 15:26:56 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20260908 queue
+>
+> ----------------------------------------------------------------
 
 
 
-> +int main(int argc, char **argv)
-> +{
-> +  int r;
-> +
-> +  g_test_init(&argc, &argv, NULL);
-> +
-> +  for (int i = 0; i < G_N_ELEMENTS(in_out_test_parameters); i++) {
+Applied, thanks.
 
-Prefer ARRAY_SIZE() over G_N_ELEMENTS().
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
+for any user-visible changes.
 
-> +    g_autofree char *out_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/set_output_pins/%s%d",
-> +    portname(in_out_test_parameters[i].port), in_out_test_parameters[i].pin);
-> +    g_autofree char *in_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/set_input_pins/%s%d",
-> +    portname(in_out_test_parameters[i].port), in_out_test_parameters[i].pin);
-
-This has turned into an unreadable lump especially given the
-lack of indentation. I suggest factoring out the creation of the
-test:
-
-static char *add_test(const char *type, const PortPinTestParam *p,
-                      void (*testfn)(const void *))
-{
-    g_autofree char *name =
-         g_strdup_printf("/allwinner-cubieboard/gpio/%s/%s%d",
-                         type, portname(p->port), p->pin);
-
-    qtest_add_data_func(name, p, testfn);
-}
-
-Then you in your loop you can do:
-
-    PortPinTestParam *p = &in_out_test_parameters[i];
-
-    add_test("set_output_pins", p, test_set_output_pins);
-    add_test("set_input_pins", p, test_set_input_pins);
-
-
-> +    qtest_add_data_func(out_name, &in_out_test_parameters[i],
-> +                        test_set_output_pins);
-> +    qtest_add_data_func(in_name, &in_out_test_parameters[i],
-> +                        test_set_input_pins);
-> +  }
-> +  qtest_add_func("/allwinner-cubieboard/gpio/reset_values",
-> +                      test_reset_values);
-> +  for (int i = 0; i < G_N_ELEMENTS(irq_test_parameters); i++) {
-> +    g_autofree char *rising_edge_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/irq_pin_rising/%s%d",
-> +    portname(irq_test_parameters[i].port), irq_test_parameters[i].pin);
-> +    qtest_add_data_func(
-> +            rising_edge_name, &irq_test_parameters[i], test_irq_pin_rising);
-> +    g_autofree char *falling_edge_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/irq_pin_falling/%s%d",
-> +    portname(irq_test_parameters[i].port), irq_test_parameters[i].pin);
-
-add_test() should make this loop more readable too.
-
-> +    qtest_add_data_func(
-> +            falling_edge_name, &irq_test_parameters[i], test_irq_pin_falling);
-> +    g_autofree char *high_level_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/irq_pin_high_level/%s%d",
-> +    portname(irq_test_parameters[i].port), irq_test_parameters[i].pin);
-> +    qtest_add_data_func(
-> +            high_level_name, &irq_test_parameters[i], test_irq_pin_high_level);
-> +    g_autofree char *low_level_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/irq_pin_low_level/%s%d",
-> +    portname(irq_test_parameters[i].port), irq_test_parameters[i].pin);
-> +    qtest_add_data_func(
-> +            low_level_name, &irq_test_parameters[i], test_irq_pin_low_level);
-> +    g_autofree char *both_edge_name = g_strdup_printf(
-> +    "/allwinner-cubieboard/gpio/irq_pin_both_edge/%s%d",
-> +    portname(irq_test_parameters[i].port), irq_test_parameters[i].pin);
-> +    qtest_add_data_func(
-> +            both_edge_name, &irq_test_parameters[i], test_irq_pin_both_edge);
-> +
-> +  }
-> +  r = g_test_run();
-> +
-> +  return r;
-> +}
-
-thanks
 -- PMM
 
