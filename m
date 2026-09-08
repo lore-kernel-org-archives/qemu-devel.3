@@ -4,103 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BC2C79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D409C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qtf-0003Pm-IZ; Tue, 08 Sep 2026 04:09:40 -0400
+	id 1x3quP-0003vL-Jg; Tue, 08 Sep 2026 04:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x3qtZ-0003PH-Ub
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:09:35 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x3qtY-0003kF-CO
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:09:33 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-cc1bcdb3c4cso2867540a12.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 01:09:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788854970; cv=none;
- d=google.com; s=arc-20260327;
- b=BTjTJ0+TyQiMga8gLIlE/VLRcCHANScWHStD9Tu5oW9uK2GkhvEj4qJfuD0SiCaOUx
- mqnPDqEB95XasBQk1b397NXZ9SGtksA9QDQefaStgnEDKk+yuDEMbRrpbDny7HjaJXVH
- DjrZ0/wlohyadQ44W2JFJT3t60mj0qk/SkBOi0zgRsuwc21ZmP5wMNnghl2ZiG5KN4BT
- 9pQVyMphMAYz6oj9+4XEL/6iKFuIysbK63b9oH9yxCRlctO9r+03opbQ+Tk5zRjQkqQX
- y/77BApUqRqvcjid6slrZ+92DpzHWGmXWJN0rfWhGbFdEZpqmqzBvHSKuCNcO5kpsL6O
- CzTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=szNosciYtl9yHLnGx5eDxl91gUPp88mCyER93ICJvkQ=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=YobieQpvGOCpUKivXaup5F6u0jsM4GPloiu7pbbuQjtbJUIeuow3Uo51cC1Ls+0l1g
- C9CYetcEV2T/vQ2WsmlhBwFECGgwBkvDdSsjGC9RmyeKENCwMLRcx9FMCyZtkYPodWTo
- bAZUBX0454NjGTWy/FH5sOSuUBTTVx5WPYpDbP4yCNzAjlB5r0ksGYu92jHh9zs1rAgS
- EaQRv1aSs/4mSQZI8PbLnpYEPOgq2vN+wEtwGPv+bTg94dJysXQ6nPkyowvSGRY3/gD2
- 5keH17zJGAdqWvXLAVIOZEbEjBBvcjF8r1nsTE0dcbAduOtcFGJrzPUXGd/PV6MdAeIt
- Ezuw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788854970; x=1789459770; darn=nongnu.org;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=szNosciYtl9yHLnGx5eDxl91gUPp88mCyER93ICJvkQ=;
- b=d2gpHn8vngBTpQRiBA7IDZb7G8lb4z/oSzJLIm6tyR4ZiSjLHqsqJ9lFx5XMu55oKt
- YlgzGw9YyYLshzgR0hVMB39e47GpMQ4ZTBMn6F+GEBQ8WWX0Fg/42wGJoOcho0VtESr0
- SRckz5pF+nFA32w2x8nOVBVjqLeM5lzL+LXI4HbYAsNzNplxWRsQPQ435y7RlX4NnL2B
- aLyY+0nFCYwFB3iJQCv3gtLkWgsueVOPv1U+vmuA6a60Y41mlyBuCc3Wgf6uKUpzs1JY
- jd2x04adNXZtSQ9hI3sX59vLFMoZtEWjpJqc8tlOLCfb2uzFbEfG0TN33stSFv8S3cWK
- WKnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788854970; x=1789459770;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=szNosciYtl9yHLnGx5eDxl91gUPp88mCyER93ICJvkQ=;
- b=EhjRO8sWSBkasfOT/VUCqs6a4TQiM+SUwtJuYs7ccbY/Tl3KjBDW2qxYrdgTZf8J1y
- xVvya9++YS0LmUaEQWGFT0hs+3UzBjlMKMZvQcBKeYcsFb2Lw/5fnYUZhbk4VqicefXE
- 4HM5CfLhxPIPXn70FvxJvwp5j9FuMl2zUlNemcCjShDr+mZq+EpKMxP0WRRU36tiBYR9
- FgbH8R//OyF7+mxK4sP6F4zqpc3TW0ZDYGeWH7Fq4MNsTFtHeURJwvEHCT3dv8/tRFRe
- /cEr27j1IxzlZLAQQltCXBZB+VLUwEsB3RXGUtXkUXpOsmmchmBnUrfE8z7AezyOlwVQ
- 2IJg==
-X-Gm-Message-State: AFuF++ndEIJ0D/9V0Upmy2KyHoERw3NPo0ujZl54QpPGVWFnSIgVeXrG
- GrE2fCJBb15N1qj91GbzPp+FEjCJMNG0VaV2IyjVz2wLCs6jj3zmbbWKxGkXDA2W6qrhDV9LOAt
- MA2bAC0z8eqZmDGabs37bscX6nrhcVBGxhg==
-X-Gm-Gg: AYBFou2xGg3N/EzRTvzns0X7rXAJv98Y1HRSd9feEBFLetE6mAygmI+9q+1yq1hyaa5
- eX40Bu5+aPErseqF5kQbvSUnAzp01bvk5sX8lL+C3Cf34tWjwst153jOLbwpYjgYIX/n0aVmRpg
- MvpJlNizIqh4gPwJYFfE8VtKQARBb+fa3rKBuwSn2YddHfoJkBeY/0a2ex7PeepN/y/c/TtE1H2
- yt9NEJeHm7ImN6D+/CqncgcioDOMs+KSada54zodec9cAX0U6gNiONmXeWPjhfSH8KuNyyuWXH4
- 24/IYOG4T1j5weiiyirpef2hF1+dNYa7STvyRXve6BXDROpvnyN8Mawoc7eS9sJcE+qS9JatGpZ
- p
-X-Received: by 2002:a05:6a20:c91c:b0:3d0:8cbb:8c2d with SMTP id
- adf61e73a8af0-3da39d18686mr46754429637.4.1788854969270; Tue, 08 Sep 2026
- 01:09:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x3quN-0003uE-0D
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:10:23 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x3quJ-0003yR-IF
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:10:22 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6888A6xv032560
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 8 Sep 2026 17:10:06 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/DXIDzpjmrhsS5c//yC5rbcbcUGMuF1XW4hQOLua9uI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1788855006; v=1;
+ b=i81juTjGo4+z0RmbHhUhyKHxrN0t3ioVIL+johT3RuP3oYjKLAAv0SLJsYfoRWUW
+ JBDX+Q1NcNd0rAQM89c9PZhunyUor7NewvCLV17wNcW/e9bJwiNeiNRtjvl4hcJz
+ TcNEn6/KQRzHOqxn/CshMMfa49JTc4Ujbs+DqUt47B/hrrZB+EQURVojlD50xZ67
+ UNt5D+T5GbmjZx/IaTOCBoxFcYz58+ARV1TkvoCC84kOfn7kloYHoS6zn5m9lqyx
+ T+aZheLLDwpMCuVkrgxFvn0RORKwkKazEE69UhcTFVdhhUeTCx70lDdiRGVn4V1Q
+ vnkahsNWeP6BiYu+GIsg6w==
+Message-ID: <ac517c84-40a3-422c-b022-41b3c8456855@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 8 Sep 2026 17:10:05 +0900
 MIME-Version: 1.0
-References: <20260831114749.2758129-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20260831114749.2758129-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 8 Sep 2026 12:09:16 +0400
-X-Gm-Features: AcwNN1XqvSTfs5eKkQmdR5ssVHQTaH5wXqNln5yIQGpTZFBDEwCAU604C09P_S0
-Message-ID: <CAJ+F1C+RV6=nU=8d+QXd=X14WppRvPP76-jxBE0jNhx5UWpqWw@mail.gmail.com>
-Subject: Re: [PATCH] migration: remove duplicate VMSTATE_STRUCT_VARRAY
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 4/9] igb: Add VF post-load fixups for live migration
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ Peter Xu <peterx@redhat.com>
+References: <20260902192054.3329753-1-clg@redhat.com>
+ <20260902192054.3329753-5-clg@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260902192054.3329753-5-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,47 +75,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 31, 2026 at 3:48=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
-:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Fixes: 028d4ec43de6 ("migration: Remove duplicate vmstate macros")
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-ping, trivial
-
+On 2026/09/03 4:20, Cédric Le Goater wrote:
+> After restoring per-VF register state, propagate the VF's PVT shadow
+> values back into the PF's aggregate EIMS/EIAC/EIAM registers and
+> re-apply the VTIVAR interrupt vector routing to the shared IVAR0.
+> 
+> AI-used-for: analysis, code (prototype)
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  include/migration/vmstate.h | 10 ----------
->  1 file changed, 10 deletions(-)
->
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index e72c3fae9a69..21a31ed7053c 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -723,16 +723,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
->  #define VMSTATE_STRUCT_VARRAY_POINTER_UINT32 VMSTATE_STRUCT_VARRAY_POINT=
-ER
->  #define VMSTATE_STRUCT_VARRAY_POINTER_UINT16 VMSTATE_STRUCT_VARRAY_POINT=
-ER
->
-> -#define VMSTATE_STRUCT_VARRAY(_field, _state, _field_num, _version, _vms=
-d, \
-> -                              _type) {                                  =
-\
-> -    .name       =3D (stringify(_field)),                               \
-> -    .num_indirect =3D vmstate_field_offset(_state, _field_num),        \
-> -    .version_id =3D (_version),                                        \
-> -    .vmsd       =3D &(_vmsd),                                          \
-> -    .size       =3D sizeof(_type),                                     \
-> -    .flags      =3D VMS_STRUCT | VMS_VARRAY,                           \
-> -    .offset     =3D vmstate_offset_varray(_state, _field, _type),      \
-> -}
->  #define VMSTATE_STRUCT_VARRAY_INT32 VMSTATE_STRUCT_VARRAY
->  #define VMSTATE_STRUCT_VARRAY_UINT32 VMSTATE_STRUCT_VARRAY
->
-> --
-> 2.55.0.543.g5ebe2ebe4ea8
->
->
+>   hw/net/igb_core.h      |  3 ++
+>   hw/net/igb_core.c      | 66 ++++++++++++++++++++++++++++++++++++++++++
+>   hw/net/igb_migration.c |  7 +++++
+>   3 files changed, 76 insertions(+)
+> 
+> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+> index 60724e2824ab..22e10e4e6d0b 100644
+> --- a/hw/net/igb_core.h
+> +++ b/hw/net/igb_core.h
+> @@ -145,4 +145,7 @@ igb_start_recv(IGBCore *core);
+>   
+>   IGBCore *igb_pf_get_core(void *pf);
+>   
+> +void igb_core_vf_propagate_irqs(IGBCore *core, uint16_t vfn);
+> +void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn);
+> +
+>   #endif
+> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+> index 2a4883907353..01745fe756d0 100644
+> --- a/hw/net/igb_core.c
+> +++ b/hw/net/igb_core.c
+> @@ -4552,3 +4552,69 @@ igb_core_post_load(IGBCore *core)
+>   
+>       return 0;
+>   }
+> +
+> +/*
+> + * Propagate VF interrupt state to PF aggregates after loading VF
+> + * registers. The load path writes directly to mac[] bypassing the
+> + * register handlers that OR VF bits into EIMS/EIAC/EIAM. Also clear
+> + * stale VF bits in EICR that may have been set by packets arriving
+> + * between PF vmstate restore and VF state load.
+> + */
+> +void igb_core_vf_propagate_irqs(IGBCore *core, uint16_t vfn)
+> +{
+> +    uint32_t shift = 22 - vfn * IGBVF_MSIX_VEC_NUM;
+> +    uint32_t vf_mask = 0x7 << shift;
+> +    uint32_t pvt_idx;
+> +
+> +    core->mac[EIMS] &= ~vf_mask;
+
+Restore the effective interrupt mask rather than the last EIMS write.
+
+This clears the destination VF mask and copies PVTEIMS, but that shadow 
+records only the last write: igb_set_vteims() assigns it before applying 
+set-bit semantics to aggregate EIMS. For example, source writes EIMS=1, 
+then EIMS=2, leave effective mask 3 and shadow 2; migration restores 2, 
+suppressing vector 0 until explicitly enabled again. Conversely, EIMC 
+updates aggregate EIMS without updating PVTEIMS, so migration reenables 
+explicitly masked vectors. Patch 7 repeats this fixup on unquiesce 
+without repairing the bookkeeping.
+
+Regards,
+Akihiko Odaki
+
+> +    pvt_idx = PVTEIMS0 + vfn * 0x40;
+> +    core->mac[EIMS] |= (core->mac[pvt_idx] & 0x7) << shift;
+> +
+> +    core->mac[EIAC] &= ~vf_mask;
+> +    pvt_idx = PVTEIAC0 + vfn * 0x40;
+> +    core->mac[EIAC] |= (core->mac[pvt_idx] & 0x7) << shift;
+> +
+> +    core->mac[EIAM] &= ~vf_mask;
+> +    pvt_idx = PVTEIAM0 + vfn * 0x40;
+> +    core->mac[EIAM] |= (core->mac[pvt_idx] & 0x7) << shift;
+> +
+> +    core->mac[EICR] &= ~vf_mask;
+> +}
+> +
+> +/*
+> + * Re-apply VTIVAR -> IVAR0 interrupt routing. The L1 PF driver
+> + * may have overwritten the shared IVAR0 entries with its own
+> + * queue routing after L0 vmstate restore.
+> + */
+> +void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn)
+> +{
+> +    uint32_t vtivar = core->mac[VTIVAR + vfn];
+> +    int n;
+> +    uint8_t ent;
+> +    uint32_t mask;
+> +
+> +    n = igb_ivar_entry_rx(vfn);
+> +    mask = 0xffU << (8 * (n % 4));
+> +    if (vtivar & E1000_IVAR_VALID) {
+> +        ent = E1000_IVAR_VALID |
+> +              (24 - vfn * IGBVF_MSIX_VEC_NUM - (2 - (vtivar & 0x7)));
+> +        core->mac[IVAR0 + n / 4] =
+> +            (core->mac[IVAR0 + n / 4] & ~mask) |
+> +            ((uint32_t)ent << (8 * (n % 4)));
+> +    } else {
+> +        core->mac[IVAR0 + n / 4] &= ~mask;
+> +    }
+> +
+> +    n = igb_ivar_entry_tx(vfn);
+> +    mask = 0xffU << (8 * (n % 4));
+> +    ent = vtivar >> 8;
+> +    if (ent & E1000_IVAR_VALID) {
+> +        ent = E1000_IVAR_VALID |
+> +              (24 - vfn * IGBVF_MSIX_VEC_NUM - (2 - (ent & 0x7)));
+> +        core->mac[IVAR0 + n / 4] =
+> +            (core->mac[IVAR0 + n / 4] & ~mask) |
+> +            ((uint32_t)ent << (8 * (n % 4)));
+> +    } else {
+> +        core->mac[IVAR0 + n / 4] &= ~mask;
+> +    }
+> +}
+> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
+> index c34035974620..af7257ccc4fd 100644
+> --- a/hw/net/igb_migration.c
+> +++ b/hw/net/igb_migration.c
+> @@ -384,12 +384,19 @@ static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
+>   static int igbvf_mig_load(IgbVfState *s, const void *buf, size_t size)
+>   {
+>       int ret;
+> +    IGBCore *core = igbvf_get_core(s);
+>   
+>       ret = igb_core_vf_load_state(s, buf, size);
+>       if (ret < 0) {
+>           return ret;
+>       }
+>   
+> +    /*
+> +     * Post-load: sync VF interrupt and routing state to PF aggregates
+> +     */
+> +    igb_core_vf_propagate_irqs(core, s->vfn);
+> +    igb_core_vf_propagate_ivar(core, s->vfn);
+> +
+>       return 0;
+>   }
+>   
+
 
