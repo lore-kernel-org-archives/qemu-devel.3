@@ -4,113 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91E3C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 19:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F46CC79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 19:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x41SE-0000oJ-0F; Tue, 08 Sep 2026 15:26:02 -0400
+	id 1x41cv-0002hj-2p; Tue, 08 Sep 2026 15:37:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x41SC-0000jh-A6; Tue, 08 Sep 2026 15:26:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x41cu-0002hG-0D
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 15:37:04 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x41SA-0003WU-4z; Tue, 08 Sep 2026 15:26:00 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688F1Trb1232924; Tue, 8 Sep 2026 19:25:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=f4pB8v
- ZAvIROSqPjV965hDOEURe6VjsmHMPTHiCZ754=; b=HbOCyQ9xyZJ09uhPSqs3Q3
- TJwbbqaz+kh0cgmwZGUj8LWLAp4sfCQXmPynjOAYJrRRL4PFlWsGXp3IXOWu4Yqg
- 3I+NHbJMz9fp6dBSuo/3Nhhx/NQux5h8yDbqJv3ex5Vhrbw1TK535PiBwxQ/Z/KG
- bB7+hlQhkTh8TNaADxOJrjM4pv3+j6A+8VOi3XjdqiYDQdDGJDz0ZNAH70lwgyjJ
- 5JEDQGInpOs1kB+nTckEx6yMSB6Dz1sqihbV1gtMdIZAYUXo7K1XjvYpAR2KF7W2
- 9pCYYATSGoFR1tzCANzzn8r51tMuMABd1GVfUr9bBLoJOjzh4AVf7A9KR2kLIJxg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbf41e1v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Sep 2026 19:25:54 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 688JBIW6030279;
- Tue, 8 Sep 2026 19:25:53 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggwsw622b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Sep 2026 19:25:53 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 688JPpHk34079344
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Sep 2026 19:25:52 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE55D58059;
- Tue,  8 Sep 2026 19:25:51 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1F72B58058;
- Tue,  8 Sep 2026 19:25:51 +0000 (GMT)
-Received: from [9.61.245.52] (unknown [9.61.245.52])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Sep 2026 19:25:50 +0000 (GMT)
-Message-ID: <f7a362b5-fd79-4ccb-a2af-29e802ca8ddc@linux.ibm.com>
-Date: Tue, 8 Sep 2026 12:25:51 -0700
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x41cr-0005Fw-Qc
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 15:37:03 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 688IILAJ403287
+ for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 19:36:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=SJ6+4Xm6Y3gN/Mz/SqqHQu
+ tSNYLw7hZgPOHa0soR6Yo=; b=HPS1xRcb7+kj5F+BO7bB59WCrY2a3vBUEqlxWJ
+ 8PmoVfsV8jMd7GDG1TQb6crPsWbvFK4eRR+muWofh/HgpLr+/65AAO7QsNh4Xs3+
+ 4ntAc/O5Vy2Z1GxD/znwDxvf7LMV82GlTppYPM38swnyTKq4ZriQ9DmBKm5PIXo8
+ lGyCAFY9uisR4pKkXsDaxesaG/T2lNlCxZa/ZInaqtr0A6uigtmJsG36t4Nvtmom
+ Apb+TTNaMUEROWpULik84Raz9fdgNqmHf49Iw0zBfQoNmFDh3Hd8POqceAaww5Vi
+ 4NJiWLXlWWjy+E63CWptKV1/FkAmyXjm6EOq8jkYpEmDvLqw==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjqha0ds9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 19:36:59 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cc1a439db36so4910524a12.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 12:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788896218; x=1789501018; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=SJ6+4Xm6Y3gN/Mz/SqqHQutSNYLw7hZgPOHa0soR6Yo=;
+ b=TpJIVnOcX6u1WjLdD/xMp/30VIZash3MzBVP2ATs0RhS10VJtfHzEG7Ynzh9e+RitF
+ lYc1OE7v4i3TxHBCg/WujA062xOyHGOT0QBbxu4olIbxN+0PC3KIeZgrpuMagT5G+GF4
+ dd9KGhuwF9r5mGKZhANYc2OZwsFEEI03PFiiSn1Q3mMML4ilAifSnjfCqFHSZpTUsyEQ
+ Ref6LYA16lEBxs6jA1yhJgKD+MqPJwI6ey4SqGs701BNPrPEtSiEq0XvZr3gY7Hckwk9
+ EPfN2A9bJRAtynVeAx+1TfMSh+xm1f5xEVcfPxUU0yGLZwvbtoxzGSTiDLdaZPKXBE9s
+ zuWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788896218; x=1789501018;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=SJ6+4Xm6Y3gN/Mz/SqqHQutSNYLw7hZgPOHa0soR6Yo=;
+ b=Gh81khmf6zY7o+t73LokZZ2DQ02za7nGWYWxpN1Jp5A7tACuHDsBw9zxNqmCTt384B
+ eaGYLtDlSUziAdSY3MDmButpH8T37fXKS9DgAw8hZ+IfmjRhTCdk/SRfYEKEHm+foA5Z
+ sgEd9oJ24sL0REHSfyp6wPT1sdyzYS+k6z0sD56z4JrEwXMKHIecH5ubS9zfkvSsm9UO
+ Q7EIxdyM53CllphCMNcpwSAs0rS7YTdiTldsc3Y8lGLkFusv3hxYZVg+/8AyIs9UnYTi
+ bC3Kg8pURhOcku/31ZhROSXbadK1UkRJ6LGkDHJr0+DsffsqVMOwMIxPvhXofHkCSEIN
+ fP6A==
+X-Gm-Message-State: AFuF++lBgglpTFoFQdl/FMlS1JL0miFU/wTWeh5DU5NScrPanfay8RmW
+ ZHX57BHuSR+RVgcPdMocLymRLA/N4tovrVGnALiB+W/eD+4emnCTX9oKdF5yMpvsi8FdIH+3Q8H
+ Zvut7hky3SQs6tj1dzR4HmGKFW7NakKXrTlspRARtssKrbF7FJMhgiigwqdYDJtv2Tw==
+X-Gm-Gg: AYBFou3ka82F3rSyPJ8r+wli+dTIX97h1gM5Ph4Dpmsm7nYF32pc9Lk71utMU/Mn7Kv
+ DsNhxQvx4YVtditTenUBgkVz/QERrK+JyXFKdIJXyDycEfgtO6NF7sugToGoM1YqceLGLxtpEXT
+ GbvMG64wLKBxi3rqrCG6PEATxtCO1qmakOmp9tRDQDGZuUiqQggy9oQLUAnFMajnL9+LLk+oJLF
+ 8kRFaawYNW0/uvSMGfDaN9VdLRJ3sU2WlLWFzN/vIVbORdKnnKOZVo3TqFmURJ5Kvs+Yj0Jn4kH
+ O8bMQ1Jhjuyk/UHoBlwWfezuG6nkTealaanZMAlvsVGEacJI3jSNBpLMr+098SmkkZig5cPXhyZ
+ S9sTf3uxWWSNxyn+ZJ7+3aE1/O8YXnHfVzhoCT1vTzHG0zSQE
+X-Received: by 2002:a05:6a20:12c8:b0:3da:bea4:621e with SMTP id
+ adf61e73a8af0-3dabea46dadmr109658637.26.1788896218403; 
+ Tue, 08 Sep 2026 12:36:58 -0700 (PDT)
+X-Received: by 2002:a05:6a20:12c8:b0:3da:bea4:621e with SMTP id
+ adf61e73a8af0-3dabea46dadmr109610637.26.1788896217837; 
+ Tue, 08 Sep 2026 12:36:57 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3397d6d1becsm173868eec.22.2026.09.08.12.36.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Sep 2026 12:36:56 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH] tests: install pylint for functional linters
+Date: Tue,  8 Sep 2026 12:36:56 -0700
+Message-Id: <20260908193656.2787108-1-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Error recovery for zPCI passthrough devices
-From: Farhan Ali <alifm@linux.ibm.com>
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>
-Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
- armbru@redhat.com, Shameer Kolothum <skolothumtho@nvidia.com>
-References: <20260831183151.12626-1-alifm@linux.ibm.com>
- <a5dea766-1131-49cb-bd26-6a09673b176e@redhat.com>
- <e6dfaf88-e1af-4744-baa2-ef1d760e0bd0@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <e6dfaf88-e1af-4744-baa2-ef1d760e0bd0@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 8tpMhWV9gxAPl4K8HNsroS_YJxZsJBq7
-X-Proofpoint-GUID: 8tpMhWV9gxAPl4K8HNsroS_YJxZsJBq7
-X-Authority-Analysis: v=2.4 cv=DbEnbPtW c=1 sm=1 tr=0 ts=6aa06142 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=Ikd4Dj_1AAAA:8 a=NEAV23lmAAAA:8 a=gO1p6hVbrQ49QzXqqX0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIwNyBTYWx0ZWRfX/OTFrKYZPNFQ
- /tSBifa1qEEbOyH4wFhPBCTEG356C62x8IAI2GebVuRgpTBUqzsoFOKsv//vnlZ24YsjBu1XnRH
- VAU9KaLutCsthWbVth5T3m+ofZqMMkAZCSgDeITAFvHaK+2YPayvPKtjwMugGvuo9MbS56iNKdD
- B4ChaQ5DtlJyYLYHulfxloiUVZixr6XWSTlw91XJpmaliJ6Bm8o91HLAxXpxK/3+YDD5cJ18Qsk
- +Q0OHfvVgEGt1Kj5QCYmi/VB8Z1iaO0XkW9GvwlARIaDuJkwPi2mf8sh+cabdSxDcfmp28qDDOA
- fP5zueAepseNPioygw3kN8wmYTjsvAI+HmwRAMYdV7K3QgDUl69O8K8Ig3YBBxJWgbbaW/w1lZ+
- YPA8pku7nTjvvOroKfmYUQ5j2iP161Ahvif0NrFP7Q2UVezkcjrroxDxAdszoT4zMZhkoxUWWwu
- PpFlYLkf6AuCIavvFTg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIwNyBTYWx0ZWRfX6UZcQWXDUqcA
- fwfD9ZRo0ngeDA00N3v/6fhfjqtBnxgQqB+cREesV5tQXXllT91WnHZkwW9ObMYpOgiq3M+8OJQ
- SfhWxADvJIO/NikRxsQGkntQ8BApIro=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIxNCBTYWx0ZWRfX4BN+uXb99+Nd
+ Q9JTFJlj1EwBGRt1BrBYuMOizoRtUG5mSkC15q9+QD8NK7EJ4DbZXIrrBm9ZsH1Ae5f13jb6wbJ
+ 816CeMgODEdHLhk6dBoANTLhNahdljrBG8TM92Gy6Ja55lUJtkAEpNK8lJHAc4mR/urNnY959a+
+ oW3toKrQIKcQAjQ2E37yBDplstc45jNWOjGrndt5ue4kSFuFO98F6cCrqGMPaD1xwmiD8kCJTkM
+ AzF8gBPFTtivGG1x3Sf65mNEDLCVLIMx6kXnqgaFvIXxnkjcH7jI5+lriOL0To7FqtE4RO2Q0tA
+ x5SzXHe3cF/3XnccKI0hZ+ThT21WBJk8ETgiPcOR9ZeI9qYRudsVMOStw9lxp8FRl0ry6nWdG+Y
+ 6qxXh4MwM12DjalVdgOP8/bI01Alpd3hiyNrsA8TYPN7BiJ1Gi69LiTaRKO0CorEXo1SzADLI61
+ j4kXeaF7C4cbVw4ZkRQ==
+X-Authority-Analysis: v=2.4 cv=Z5Xc2nRA c=1 sm=1 tr=0 ts=6aa063db cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=jJHGEvBZ9D_KORtLzZAA:9 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: fh2t7iN8mpVfXCWgtghaXF3iRkp_MdxB
+X-Proofpoint-ORIG-GUID: fh2t7iN8mpVfXCWgtghaXF3iRkp_MdxB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIxNCBTYWx0ZWRfXxBHxiIlXt1J+
+ 8vwQdXpKXWuz0I5GwWZJ4HCpCv9/oCrbuKB0uEd4F3nhP2bT8Suo1LNBLGmHAZmGHivssgVUgYb
+ tgJUDs6hLaXlGOmr+DgJDkMgHpLGyVU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0
- clxscore=1015 suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ adultscore=0 phishscore=0 priorityscore=1501 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080207
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080214
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,99 +147,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/3/2026 10:55 AM, Farhan Ali wrote:
->
-> On 9/3/2026 2:19 AM, Cédric Le Goater wrote:
->> On 8/31/26 20:31, Farhan Ali wrote:
->>> Hi,
->>>
->>> This patch series introduces support for error recovery for 
->>> passthrough PCI
->>> devices on System Z (s390x). This is the user space component for 
->>> the Linux
->>> kernel patches [1]. The kernel patches were merged for 7.3 and it 
->>> had some
->>> significant changes in VFIO API since the last QEMU series was 
->>> posted. But the
->>> design for QEMU component is still the same.
->>>
->>> For QEMU on eventfd notification for PCI error from vfio-pci driver 
->>> we call the
->>> vfio error handler. We can use a per device error handler callback 
->>> to override
->>> the default vfio error handler.  For s390x specific error handler, 
->>> we retrieve
->>> the architecture specific PCI error information and inject the 
->>> information into
->>> the guest. Once the guest receives the error information, the guest 
->>> drivers will
->>> drive the error recovery.  Typically recovery involves a device 
->>> reset which
->>> translate to CLP disable/enable cycle for the device.
->>>
->>> I would appreciate some feedback on this patch series.
->>
-> Hi Cedric,
->
->> Hi Farhan,
->>
->> Have you seen Shameer's kernel series for PCI error recovery [1] ?
->> It uses a dedicated eventfd registered via VFIO_DEVICE_FEATURE_SET,
->> with a self-contained handler independent of the legacy err_notifier.
->>
->> The QEMU side [2] just probes the feature, installs the eventfd, and
->> suppresses the legacy vm_stop path with a bool flag : no callback in
->> generic VFIO PCI code, which is cleaner.
->>
->> This is also the pattern used by the other s390 VFIO devices: vfio-ccw
->> has three dedicated eventfds (io_notifier, crw_notifier, req_notifier)
->> and vfio-ap has two (req_notifier, cfg_notifier).
->
-> My thought process was to use the existing legacy err_notifier and let 
-> each vfio-pci device handle the error. I thought the callback would 
-> also provide some flexibility on each device handling the error.
->
-> I can take a look at Shameer's approach and see if its something we 
-> can do. Just briefly looking at the QEMU code, it looks like it it 
-> ties the eventfd to the generic vfio-pci code (of course this is in 
-> flux). This would become problematic for s390x as unfortunately AER 
-> recovery will not work for zPCI devices due to platform firmware being 
-> involved in the recovery process.
->
->> For zPCI, it would mean extending VFIO_DEVICE_FEATURE_ZPCI_ERROR to
->> support SET with an eventfd field. The ABI is still new so the struct
->> can be extended, keeping the s390 error recovery code self-contained,
->> with no changes to generic VFIO  PCI code. I think this approach is
->> preferable.
->>
-> I would like to get some feedback from Alex to see if we could extend 
-> the ABI.
->
->
-I had been thinking about this a bit more, and I think having a another 
-eventfd for s390 to just notify on error would just be unnecessary 
-duplication. Because now we will have the legacy err_notifier + s390 
-error notifer eventfds for the same purpose but with different handlers. 
-Can we replace fd handler for the legacy err_notifier from 
-vfio_err_notifier_handler() to an s390 specific handler for s390 
-devices? This would also avoid any callback in the vfio core common code.
-
-Thanks
-
-Farhan
-
->
->
->> Thanks,
->>
->> C.
->>
->> [1] 
->> https://lore.kernel.org/all/20260901093217.8539-1-skolothumtho@nvidia.com/
->> [2] 
->> https://github.com/shamiali2008/qemu-master/commit/e45458710cd8509fa5bd81f4376126b77b6f40be
->>
->>
->
+VGhlIGZ1bmN0aW9uYWwgbGludGVyIHRlc3Qgb3RoZXJ3aXNlIGltcG9ydHMgdGhlIHN5c3RlbSBw
+eWxpbnQgMi4xMi4yLgpPbiBteSBzeXN0ZW0gdy9QeXRob24gMy4xMiwgaXRzIHdyYXB0IGRlcGVu
+ZGVuY3kgd291bGQgZmFpbCB3aXRoOgoKICAgIEltcG9ydEVycm9yOiBjYW5ub3QgaW1wb3J0IG5h
+bWUgJ2Zvcm1hdGFyZ3NwZWMnIGZyb20gJ2luc3BlY3QnCgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBD
+YWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogcHl0aG9uZGVwcy50b21sIHwg
+MSArCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykKCmRpZmYgLS1naXQgYS9weXRob25k
+ZXBzLnRvbWwgYi9weXRob25kZXBzLnRvbWwKaW5kZXggZTRjMTBkNGE5ZjcuLjY1OGQwYWFjMzY4
+IDEwMDY0NAotLS0gYS9weXRob25kZXBzLnRvbWwKKysrIGIvcHl0aG9uZGVwcy50b21sCkBAIC00
+OCwzICs0OCw0IEBAIHNwaGlueF9ydGRfdGhlbWUgPSB7IGFjY2VwdGVkID0gIj49MS4yLjIiLCBp
+bnN0YWxsZWQgPSAiMS4yLjIiIH0KICMgZmV0Y2hlZCBmcm9tIFB5UEkuCiBbZnVuY3Rlc3RzXQog
+cHlnZGJtaSA9IHsgYWNjZXB0ZWQgPSAiPj0wLjExLjAuMCIsIGluc3RhbGxlZCA9ICIwLjExLjAu
+MCIgfQorcHlsaW50ID0geyBhY2NlcHRlZCA9ICI+PTMuMC4wIiwgaW5zdGFsbGVkID0gIjMuMC4w
+IiB9Ci0tIAoyLjM0LjEKCg==
 
