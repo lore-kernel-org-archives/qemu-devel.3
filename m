@@ -4,114 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6B6C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 18:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C725AC79FAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 18:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x40cz-0005o1-0y; Tue, 08 Sep 2026 14:33:05 -0400
+	id 1x40kW-0007Hl-Rw; Tue, 08 Sep 2026 14:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1x40cx-0005nG-5E; Tue, 08 Sep 2026 14:33:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x40kU-0007H9-IW
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 14:40:50 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1x40cv-0002V3-Ad; Tue, 08 Sep 2026 14:33:02 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688F1nT7080816; Tue, 8 Sep 2026 18:32:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3RHdMF
- wcEIwIG0ZnRutnz8XnJJ8Dl7+dov+V6e3zAX8=; b=riHDw7vAhvpkJOsu3QMCCw
- p727OrqV+HDtrtHApiVLS5Rls8nhl1RM7UHVpfzdYJ0BLoZ+OZuhh/7fJUgcYZ9O
- XlNQ6YMPgSQAW0q0EX5fnue7QUUb8/nMUDc/Z+pH1XZp36oxCjKdby04nRTI3P4j
- 8ATsm/of2KAyApUc2hz2cDy7Xp04sJZXNVLKAEvDZhTKbm3CHnimDpfAVZbqLVdY
- GGDdbE/Wiv9AaJS+U4qeG1Sd4eb9wsNNdkw43mmXwvzE6IcsipmNalotUzw2ZW41
- EWwMdW4YIRT8Q68Eih2u/z6DhMQ7yIzIewwa8/cD3+DUhJ2P3VW3pMajqMu5Hh0g
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbjrrub9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Sep 2026 18:32:59 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 688IQG2d025627;
- Tue, 8 Sep 2026 18:32:58 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ggwdqdung-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Sep 2026 18:32:58 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 688IWuZ227525784
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Sep 2026 18:32:56 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 897F358056;
- Tue,  8 Sep 2026 18:32:56 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BC265805A;
- Tue,  8 Sep 2026 18:32:55 +0000 (GMT)
-Received: from [9.61.69.254] (unknown [9.61.69.254])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue,  8 Sep 2026 18:32:55 +0000 (GMT)
-Message-ID: <55c42f23-8372-45c5-8d89-3deeee840128@linux.ibm.com>
-Date: Tue, 8 Sep 2026 14:32:54 -0400
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x40kS-0003Kd-C0
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 14:40:50 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 688IBiEt3955680
+ for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 18:40:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rOFeW8sZrlHkgD0kRE0EvFxGh0kAAQhw1GwD4MKuFx8=; b=lLt9hpKQWTXwDU5v
+ ExcTwboKMC7Mhh4GEyYsrD84VEalHKYMsBxVIeKv5JJT+x7ixMdLYJoZY9i9UqDJ
+ FvrhhQIif/GQeAQzvoQWfLgCZ6ZnnZ16o4aa2TUA/5QaRcfREBVCXRv41K+jjwll
+ ZBjpr4LB0eznSLUAMIFUi/r/g0NS9gLIcTwwfAEgaMUKOrqzVb7JppNW0HFndmdx
+ tU1EAjgZQz67abGv1hF/fp85L4BNnqsPfjHnjO1/fg1JrAoyfQp3G/kd8osFof1P
+ +qyBS8T41X22x0zqSXf2WzHZ6KH1ECOCz1M4eCUoAKMCbvHIyMjHp6SEgiavC4/v
+ BKoJ9A==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjqe7g3yh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 18:40:46 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-90e8472ee1eso83234536d6.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 11:40:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788892846; x=1789497646; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rOFeW8sZrlHkgD0kRE0EvFxGh0kAAQhw1GwD4MKuFx8=;
+ b=jVGwRNfUemN2uSTy/SivU9T4yMILtfZszt4RdAvrEN1kpZye0OP3G3gUS4WsIh9tHa
+ caprUIIeDNXAHZs1clL560w5szt+CLQMm5V7h1QhCWzL+3DQyO1/kvFX85v82+oIDFd3
+ fWpkUkDLFTEPJW6FaXCu+DIt6Hfa/kV6i/pWER+b4U+HzcnGeK1fDuEMNV7fZI0Lo8/K
+ 5JALH8wsaPQCxI91my/vbeeVI0pcgKmJxNSdJagTn70L22QRyceyApXStXGhYlgSZlgM
+ rkm87kR5gt+mYn3TIy0aCjmzCt5TVNT+nOcybXGoCBwACXoI60km435hnPj3LkkTaMCj
+ abdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788892846; x=1789497646;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rOFeW8sZrlHkgD0kRE0EvFxGh0kAAQhw1GwD4MKuFx8=;
+ b=smGodGn1DJ0y6KF/d4GSewDlvKYxBco6Rs0xFM7snldyA7vnNHJsQQF1/QVkvhz6OC
+ f/DRrc1B/1pNs1jM8hA5nLuroJcwFMIJUE55tKuxs68H388T+6I1VuDMpU1EjdvbAYrh
+ PsgV9E8DV0Iiz18Ps+GgfoUToK24EYAX2G9rYJJ5fINz+6Jqftctb0uy+Zk5Wt66G7wU
+ sm63gIJ+Sb7yXfedFVL0X1tiIjXQb+YZdMPH9lroRBtjjsTkXcnYRzB2pobrOWNXZP3j
+ kzZ16veO+x3NxNxJ/jzKag/uwSCoC3BjsxJaARXXthizvvXRqcHGkH2+1xq03juh6cvP
+ qq7Q==
+X-Gm-Message-State: AFuF++lRpq3nggZDBG3zlfJ8v+crYgQDtcA6njhjjv9dRYJnkORNFgU5
+ cZMkx4oHtt9LyjKjPlirwCfJY8AGiu5NsHPiFDovEArCF3PumCE9Kg2U5ZxGiUyz65+rIWpN+FT
+ 9VXmoGQb45qvA6IYWYbiMqYy29Q1un/lV0ZXjP3b/hwviIMBgLxkkBz4RQA==
+X-Gm-Gg: AYBFou1xwR4gNYWpdVFNsCKW7LkcjXMN87InIpNxEl+QDxS2vk7UAMcEHkpA48f80QW
+ 465TSp8fP4ymgEkVa0kF3/FOHlaurLcSjBxrXrZFBECqp4aCh3tgUHzWWix0YiiY6Jtt7b2xY5N
+ nYp5aqIZDVG/AQbRAZcmqn+sRBPenRdVSzRBvwZlv2l88A8iixbFVH1fz+iQ75sQlHET8jewQjK
+ iBJ7dqrG8/FDsnrI9PVzwFSvlCVxahHBbT3sq+dyCskLb2QApAAA+oTv4ShEPdn0Zg0xzUzlwpN
+ 99ctzRSBz6Xxr81hbDXIZPnYL1bUmL1UTZGf8tUhTZ4+7dqzu3o2NALrs3q7nH2MIF5hGUR+3xD
+ Occ9YwX0G3WQlYPlmiNF4v2kPmTegL1xsL3M=
+X-Received: by 2002:a05:6214:1313:b0:90e:e1c6:7542 with SMTP id
+ 6a1803df08f44-9106b40754dmr24365146d6.22.1788892845777; 
+ Tue, 08 Sep 2026 11:40:45 -0700 (PDT)
+X-Received: by 2002:a05:6214:1313:b0:90e:e1c6:7542 with SMTP id
+ 6a1803df08f44-9106b40754dmr24364046d6.22.1788892845250; 
+ Tue, 08 Sep 2026 11:40:45 -0700 (PDT)
+Received: from [192.168.68.102] ([177.18.66.131])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9104067b099sm124099476d6.28.2026.09.08.11.40.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Sep 2026 11:40:44 -0700 (PDT)
+Message-ID: <8b5b9cc2-fa84-4237-b24e-cdd327cda2e0@oss.qualcomm.com>
+Date: Tue, 8 Sep 2026 15:40:40 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] pc-bios/s390-ccw: Add dynamic net header size
- handling
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- jdaley@linux.ibm.com, pbonzini@redhat.com
-References: <20260903162449.2588271-1-zycai@linux.ibm.com>
- <20260903162449.2588271-3-zycai@linux.ibm.com>
+Subject: Re: [PATCH v10 2/5] target/riscv: add riscv-server-ref CPU
+To: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
+ Icenowy Zheng <uwu@icenowy.me>, Matheus Ferst
+ <matheus.ferst@eldorado.org.br>, Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260904195610.964829-1-daniel.barboza@oss.qualcomm.com>
+ <20260904195610.964829-3-daniel.barboza@oss.qualcomm.com>
+ <qe5iku7uldi7ok4tnfmph64mns62uz26vgbokn657rajjblfzr@k4tyenhmhuwb>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260903162449.2588271-3-zycai@linux.ibm.com>
+In-Reply-To: <qe5iku7uldi7ok4tnfmph64mns62uz26vgbokn657rajjblfzr@k4tyenhmhuwb>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=E7T9Y6dl c=1 sm=1 tr=0 ts=6aa054db cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=9-f3ttb9_-6f4UP9zi4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIwMSBTYWx0ZWRfXxzD+v9oi/OZD
- zE4RoQCvSX+VDC2bfZEL9p6CHvyylXaf5u9hBoTNA77uO7r3xWSJqUPM9uYbkHcJE7weE234FVe
- 1oFUS3ACMXSHMkKDfzGXTKP6ZXyndCM=
-X-Proofpoint-ORIG-GUID: OpBkjF7_izyU6bCuwV6RdVUA1Ao5zh6n
-X-Proofpoint-GUID: OpBkjF7_izyU6bCuwV6RdVUA1Ao5zh6n
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIwMSBTYWx0ZWRfX0Im1wGS8HUmu
- zvrPgo1g3SSu3ZTDEwrjJTPmmii2hIdFuVEhFl7hl7C+FhiNipy9Ncf61GM3ioFid0eTvzXLgGf
- GVjfiwR/OeEsFtTxh5UOYQFCXRbzGzWEx8Jg61JH74zMdyreBoqvldg26s8ipcqIl5norAS0XUK
- tFdk9MvsuUgz2dRT1OlkRyvOzK9kBynCGR1O/bUE9WmCzxwvtDfUDDkeA623+T/1HPz/p+iEdGi
- d3PRXCsWGLyDoJF0gKQmOHvZMddu90eDH7Y6F97dGDD8ddurkPFpW4Qox8QNjBqRkC3Hj7V2tKa
- R39DOxnQ/h7Xu5aRSqOLcXX1kelcixww0p09oHZ52hizNw58wz+lfmEtaJJzisJGsIZyC0/QtuA
- b/YJsHl2EpbJBLLcqhc18l2DWBtploLggGdnP2bdkgvbUpNs+07FJkKLVzqLLt9VYmZuqrCiAF+
- jUWFYRhvH0yJAM4fXNg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIwMSBTYWx0ZWRfX4zcmPYDX0Bp9
+ WaGBYO3U6Xx1kPYK5vHGStNevbjKhFQgO7USBomzjICtOmMRzr+gKc27Hqo48Rm+4k+I+1LSZug
+ QxnHegP1MdumZ8bW6QMV0WtNc8C2iKk=
+X-Proofpoint-ORIG-GUID: o9vXCTuAg8Xa1AjCommOwup2FUY_UwpF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIwMSBTYWx0ZWRfX5B9mQpPcffut
+ VkvXMJXTdl/ea7kNunF/fWxd7ZuhN9DHVSgBMBBOWnUWG/zeLzcps2WH/Bu2jGqT+1/6JfL9LRN
+ E1QMxYU5y2S48pfRCVlJ+N1zNjanzLlW5POvOMabqmRgZ69Kh5nhL6MLlxpvZ5ZD7CGsdC/Z6bE
+ CFpKCGeKmi8HlTfO6JC0wBWDpJ7Gai/8yHz9jHSBFTMJ6OMveLrkTvaNHbTe7T7JLy3aeRnt8vQ
+ TgEf7JMK1sDy3TzvcAIc6SwEkgHGYLdeHEm9XNDQFVZi7Dv07kO9BhAw3jAdDxJToeMutzPuC6a
+ 6Y9SIlFNofiNc1sCquDPanbB6/eE13EJYOjKhWPy3Do2DlrkgWHPc49Ac8m6zgtvjhUU4N6EdwH
+ whjJhCn0IogpJj6OdzkGHSQZMhBfHWpYvP9sn7BKs8Mb/a8/6ByRZCIgh9Nr2TyC78Zh+TuBz6b
+ fYTbtclS78NCfoCagvA==
+X-Authority-Analysis: v=2.4 cv=Xey5Co55 c=1 sm=1 tr=0 ts=6aa056ae cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=PXcuKL70AAAA:8
+ a=FRSEYCzRAAAA:8 a=pTs-M1waXw2_HFRbnroA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22 a=xVlTc564ipvMDusKsbsT:22 a=1qLaeP4TCVy2vqIEy19U:22
+ a=H4N_Y-AU75W7NKDNhZlT:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: o9vXCTuAg8Xa1AjCommOwup2FUY_UwpF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080201
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,131 +161,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/3/26 12:24 PM, Zhuoying Cai wrote:
-> The virtio-net device used a fixed header size that did not account for
-> the num_buffers field used in VirtIO 1.0 or for the mergeable receive
-> buffers feature.
->
-> Use dynamic header sizing: 10 bytes for legacy mode and 12 bytes for
-> VirtIO 1.0 or when VIRTIO_NET_F_MRG_RXBUF is enabled. This ensures
-> correct packet handling across different VirtIO configurations.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/virtio-net.c | 30 ++++++++++++++++++++++++------
->   1 file changed, 24 insertions(+), 6 deletions(-)
->
-> diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-> index f58f7ffc55..afa728bc32 100644
-> --- a/pc-bios/s390-ccw/virtio-net.c
-> +++ b/pc-bios/s390-ccw/virtio-net.c
-> @@ -20,6 +20,7 @@
->   #include "s390-ccw.h"
->   #include "virtio.h"
->   #include "virtio-ccw.h"
-> +#include "virtio-pci.h"
->   #include "s390-time.h"
->   #include "helper.h"
->   
-> @@ -28,6 +29,7 @@
->   #endif
->   
->   #define VIRTIO_NET_F_MAC_BIT  (1 << 5)
-> +#define VIRTIO_NET_F_MRG_RXBUF_BIT (1 << 15)
+On 9/8/2026 6:08 AM, Andrew Jones wrote:
+> On Fri, Sep 04, 2026 at 04:56:07PM -0300, Daniel Henrique Barboza wrote:
+>> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+>> profile support and others.
+>>
+>> We're going for a profile-based implementation, instead of a regular CPU
+>> that can inherit RVA23, to allow future CPUs to use it internally as a
+>> starting base for their own extension sets.  There's also a new
+>> 'rvserver-ref-1.0' flag that can be used to set the extensions in the
+>> command line for other CPUs, which can be used for testing/debugging
+>> purposes.
+>>
+>> Note that for all intents and purposes "riscv-server-ref" is a regular
+>> CPU and no, we're not trying to set a precedent of calling the riscv
+>> server platform spec a profile.
+>>
+>> [1] defines in rule SEE_020 that we must support at least 11 debug
+>> triggers (4 for insn address, 4 for insn load/store, 1 for icount,
+>> one for int, one for excp).  We're going for the minimum.  If more
+>> triggers are needed users can set any trigger amount with:
+>>
+>> -cpu riscv-server-ref,trigger-count=N
+>>
+>> Note that N must be <= 128.
+>>
+>> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+>>
+>> Suggested-by: Icenowy Zheng <uwu@icenowy.me>
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>> Reviewed-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
+>> Reviewed-by: Chao Liu <chao.liu@processmission.com>
+>> ---
+>>   target/riscv/cpu-qom.h |  1 +
+>>   target/riscv/cpu.c     | 31 +++++++++++++++++++++++++++++++
+>>   2 files changed, 32 insertions(+)
+>>
+>> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+>> index 1a28f1369c..61234842e3 100644
+>> --- a/target/riscv/cpu-qom.h
+>> +++ b/target/riscv/cpu-qom.h
+>> @@ -42,6 +42,7 @@
+>>   #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>>   #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+>>   #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+>> +#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
+>>   #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+>>   #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>>   #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 185474a8cf..b5a75fbc1c 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -2417,11 +2417,35 @@ static RISCVCPUProfile RVA23S64 = {
+>>       }
+>>   };
+>>   
+>> +/*
+>> + * The riscv-server-ref spec isn't a profile per se but its
+> 
+> spec?
 
-We define this new feature bit, but it looks like we never set it.
+I'll replace this comment with:
 
-The existing virtio_net_init() code has only:
+"This riscv-server-ref entry isn't a profile per se but ..."
 
-vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+> 
+>> + * CPU definition can be modelled as a profile that extends
+>> + * RVA23, with additional things on top of it, and allowing
+>> + * future CPUs to derive from it via
+>> + * ".profile = &RVServerRef1_0;".
+>> + */
+>> +static RISCVCPUProfile RVServerRef1_0 = {
+>> +    .s_parent = &RVA23S64,
+>> +    .name = "rvserver-ref-1.0",
+> 
+> The commit message and comment call this "riscv-server-ref"
 
-Should it be updated to VIRTIO_NET_F_MAC_BIT | VIRTIO_NET_F_MRG_RXBUF_BIT?
+The CPU is called riscv-server-ref:
 
-Is the new feature bit something we want to unconditionally request, only
-request for PCI, or do we simply not care about it?
->   
->   #define VQ_RX 0         /* Receive queue */
->   #define VQ_TX 1         /* Transmit queue */
-> @@ -43,7 +45,18 @@ struct VirtioNetHdr {
->   };
->   typedef struct VirtioNetHdr VirtioNetHdr;
->   
-> +struct VirtioNetHdrMrgRxbuf {
-> +    struct VirtioNetHdr hdr;
-> +    uint16_t num_buffers; /* Only with VIRTIO_NET_F_MRG_RXBUF or VIRTIO1 */
-> +};
-> +typedef struct VirtioNetHdrMrgRxbuf VirtioNetHdrMrgRxbuf;
-> +
-> +/* Header sizes for different modes */
-> +#define VIRTIO_NET_HDR_SIZE_LEGACY  sizeof(VirtioNetHdr)
-> +#define VIRTIO_NET_HDR_SIZE_V1      sizeof(VirtioNetHdrMrgRxbuf)
-> +
->   static uint16_t rx_last_idx;  /* Last index in receive queue "used" ring */
-> +static int virtio_net_hdr_size;
->   
->   int virtio_net_init(void *mac_addr)
->   {
-> @@ -62,12 +75,17 @@ int virtio_net_init(void *mac_addr)
->           return -1;
->       }
->   
-> +    virtio_net_hdr_size = ((vdev->guest_features[1] & VIRTIO_F_VERSION_1) ||
-> +                           (vdev->guest_features[0] & VIRTIO_NET_F_MRG_RXBUF_BIT))
+#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
 
-Because we do not set VIRTIO_NET_F_MRG_RXBUF in net_init(), only the first
-half of this check can ever return true.
 
-Maybe that is correct, but in that case we can simplify this to just
-vdev->guest_features[1] & VIRTIO_F_VERSION_1, right?
+"rvserver-ref-1.0" is the CPU profile name I came up with as a placeholder.  I
+believe we can rename it to  "riscv-server-ref-1.0" to avoid confusion.
 
-Regards,
-Jared Rossi
-> +                          ? VIRTIO_NET_HDR_SIZE_V1
-> +                          : VIRTIO_NET_HDR_SIZE_LEGACY;
-> +
->       memcpy(mac_addr, vdev->config.net.mac, ETH_ALEN);
->   
->       for (i = 0; i < 64; i++) {
-> -        buf = malloc(ETH_MTU_SIZE + sizeof(VirtioNetHdr));
-> +        buf = malloc(ETH_MTU_SIZE + virtio_net_hdr_size);
->           IPL_assert(buf != NULL, "Can not allocate memory for receive buffers");
-> -        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + sizeof(VirtioNetHdr),
-> +        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + virtio_net_hdr_size,
->                          VRING_DESC_F_WRITE);
->       }
->       vring_notify(rxvq);
-> @@ -77,14 +95,14 @@ int virtio_net_init(void *mac_addr)
->   
->   int send(int fd, const void *buf, int len, int flags)
->   {
-> -    VirtioNetHdr tx_hdr;
-> +    VirtioNetHdrMrgRxbuf tx_hdr;
->       VDev *vdev = virtio_get_device();
->       VRing *txvq = &vdev->vrings[VQ_TX];
->   
->       /* Set up header - we do not use anything special, so simply clear it */
->       memset(&tx_hdr, 0, sizeof(tx_hdr));
->   
-> -    vring_send_buf(txvq, &tx_hdr, sizeof(tx_hdr), VRING_DESC_F_NEXT);
-> +    vring_send_buf(txvq, &tx_hdr, virtio_net_hdr_size, VRING_DESC_F_NEXT);
->       vring_send_buf(txvq, (void *)buf, len, VRING_HIDDEN_IS_CHAIN);
->       while (!vr_poll(txvq)) {
->           yield();
-> @@ -108,13 +126,13 @@ int recv(int fd, void *buf, int maxlen, int flags)
->           return 0;
->       }
->   
-> -    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - sizeof(VirtioNetHdr);
-> +    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
->       if (len > maxlen) {
->           puts("virtio-net: Receive buffer too small");
->           len = maxlen;
->       }
->       id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
-> -    pkt = (uint8_t *)(rxvq->desc[id].addr + sizeof(VirtioNetHdr));
-> +    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
->   
->   #if DEBUG_VIRTIO_NET   /* Dump packet */
->       int i;
+
+> 
+>> +    .satp_mode = VM_1_10_SV48,
+>> +    .ext_offsets = {
+>> +        CPU_CFG_OFFSET(ext_zkr),
+>> +        CPU_CFG_OFFSET(ext_sdtrig),
+>> +        CPU_CFG_OFFSET(ext_ssaia),
+>> +        CPU_CFG_OFFSET(ext_ssccfg),
+> 
+> The cover letter says that the sdext patches need to be merged first.
+> Don't we need to configure it here?
+
+Yeah ... we had a very earlier version where enabling sdtrig implied enabling sdext.
+That's not the case for some time now and forgot to manually add 'sdext' here.
+
+I'll do that.  Thanks,
+Daniel
+
+> 
+>> +        /* ssstrict is always enabled for PRIV_VER_1_12 */
+>> +
+>> +        RISCV_PROFILE_EXT_LIST_END
+>> +    }
+>> +};
+>> +
+>> +
+>>   RISCVCPUProfile *riscv_profiles[] = {
+>>       &RVA22U64,
+>>       &RVA22S64,
+>>       &RVA23U64,
+>>       &RVA23S64,
+>> +    &RVServerRef1_0,
+>>       NULL,
+>>   };
+>>   
+>> @@ -3759,6 +3783,13 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>>   #endif
+>>       ),
+>>   
+>> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
+>> +        .profile = &RVServerRef1_0,
+>> +        .misa_mxl_max = MXL_RV64,
+>> +        .cfg.max_satp_mode = VM_1_10_SV57,
+>> +        .num_triggers = 11,
+>> +    ),
+>> +
+>>   #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+>>           .cfg.max_satp_mode = VM_1_10_SV57,
+>> -- 
+>> 2.43.0
+>>
+> 
+> Thanks,
+> drew
 
 
