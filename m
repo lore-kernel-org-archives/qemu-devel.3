@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BEDAC79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464C5C79FA0
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qLw-0002B4-JI; Tue, 08 Sep 2026 03:34:48 -0400
+	id 1x3qLw-0002Ay-8F; Tue, 08 Sep 2026 03:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x3qLu-0002AI-Sa
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
+ id 1x3qLt-0002A7-Ee
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:45 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x3qLr-00006p-Kv
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x3qLr-00006n-9h
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:45 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8BxW_CHup9qrLcJAA--.28335S3;
- Tue, 08 Sep 2026 15:34:32 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bx69GLup9qs7cJAA--.27945S3;
+ Tue, 08 Sep 2026 15:34:35 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJDxDc+Eup9qSQ0dAA--.29522S2;
- Tue, 08 Sep 2026 15:34:28 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxDc+Eup9qSQ0dAA--.29522S5;
+ Tue, 08 Sep 2026 15:34:35 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/5] loongarch queue
-Date: Tue,  8 Sep 2026 15:35:43 +0800
-Message-ID: <20260908073548.3249551-1-maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
+Subject: [PULL 3/5] hw/intc/loongarch_ipi: Add ipi interrupt status display
+Date: Tue,  8 Sep 2026 15:35:46 +0800
+Message-ID: <20260908073548.3249551-4-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260908073548.3249551-1-maobibo@loongson.cn>
+References: <20260908073548.3249551-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxDc+Eup9qSQ0dAA--.29522S2
+X-CM-TRANSID: qMiowJDxDc+Eup9qSQ0dAA--.29522S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ur1xAr1fKF15ury8WFyDJwc_yoW8Xw4rpr
- y3u343Gr48Jr9rJrn3Jw1UXrs8Jrn3Wry7X3W3try8Jr15Ar18Xr18Jry8XFyUG348Jr1j
- qr1rJr1UWF1UJrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxWF13Zw47Kry8Xr15ArWDGFX_yoW5WrWkpF
+ W3uF4Ykr48AFsrGrZxAasIqFn8Gw1xuFy7uFs7C348AFWDJrn0q3yIyr9xXFyUC3y8GF1Y
+ qw4fJa4q9a1UCrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
  14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
  0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jr0_JrylIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
  04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+ CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8wNVDUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -74,37 +76,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 35500e5c41aec76cde59befe750600dac7a9e37a:
+When irqchip in kernel is enabled, the register status of ipi irqchip is
+in KVM kernel. Here add interrupt status display in user side in order to
+debug irqchip driver.
 
-  Merge tag 'pull-aspeed-20260906' of https://github.com/legoater/qemu into staging (2026-09-07 13:33:12 +0100)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Xianglai Li <lixianglai@loongson.cn>
+---
+ hw/intc/loongarch_ipi.c | 42 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-are available in the Git repository at:
-
-  https://github.com/bibo-mao/qemu.git pull-loongarch-20260908
-
-for you to fetch changes up to 970657e490c05b0d2dd8ffbd68466d22685083d1:
-
-  hw/intc/loongarch_extioi: Add extioi interrupt status display (2026-09-08 15:26:56 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20260908 queue
-
-----------------------------------------------------------------
-Bibo Mao (4):
-      hw/intc/loongarch_dintc: Add loongarch_dintc_cpu_by_arch_id() function
-      hw/intc/loongarch_ipi: Add ipi interrupt status display
-      hw/intc/loongarch_pch_pic: Add pic interrupt status display
-      hw/intc/loongarch_extioi: Add extioi interrupt status display
-
-Xianglai Li (1):
-      target/loongarch: clear the registers when cpu is reset
-
- hw/intc/loongarch_dintc.c   | 49 ++++++++++++++++++++++----------------
- hw/intc/loongarch_extioi.c  | 58 +++++++++++++++++++++++++++++++++++++++++++++
- hw/intc/loongarch_ipi.c     | 42 ++++++++++++++++++++++++++++++++
- hw/intc/loongarch_pch_pic.c | 38 +++++++++++++++++++++++++++++
- target/loongarch/cpu.c      | 54 +++++++----------------------------------
- target/loongarch/cpu.h      | 34 ++++++++++++++++----------
- 6 files changed, 196 insertions(+), 79 deletions(-)
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index 5d8b8c96df..28d816e3f5 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -9,6 +9,7 @@
+ #include "qemu/error-report.h"
+ #include "hw/core/boards.h"
+ #include "qapi/error.h"
++#include "hw/intc/intc.h"
+ #include "hw/intc/loongarch_ipi.h"
+ #include "hw/core/qdev-properties.h"
+ #include "system/kvm.h"
+@@ -193,8 +194,47 @@ static int loongarch_ipi_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
++static void loongarch_ipi_print_info(InterruptStatsProvider *obj, GString *buf)
++{
++    LoongsonIPICommonState *lics = LOONGSON_IPI_COMMON(obj);
++    int i, j;
++    IPICore *core;
++    uint64_t mbx;
++    unsigned long pos;
++
++    loongarch_ipi_pre_save(lics);
++
++    g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
++    for (i = 0; i < lics->num_cpu; i++) {
++        core = lics->cpu + i;
++        /* IPI with targeted CPU available however not present */
++        if (!core->cpu) {
++            continue;
++        }
++
++        g_string_append_printf(buf, "  CPU %-3u status=0x%x en=0x%x\n",
++                                    i, core->status, core->en);
++
++        pos = find_first_bit((unsigned long *)core->buf, IPI_MBX_NUM * 64);
++        /* All zero in mailbox */
++        if (pos == (IPI_MBX_NUM * 64)) {
++            continue;
++        }
++
++        for (j = 0; j < IPI_MBX_NUM; j++) {
++            mbx = *(uint64_t *)&core->buf[2 * j];
++            if (mbx) {
++                g_string_append_printf(buf, "  MBX[%-1u] 0x%016"PRIx64, j, mbx);
++            }
++        }
++
++        g_string_append_c(buf, '\n');
++    }
++}
++
+ static void loongarch_ipi_class_init(ObjectClass *klass, const void *data)
+ {
++    InterruptStatsProviderClass *ic = INTERRUPT_STATS_PROVIDER_CLASS(klass);
+     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
+     LoongarchIPIClass *lic = LOONGARCH_IPI_CLASS(klass);
+@@ -211,6 +251,7 @@ static void loongarch_ipi_class_init(ObjectClass *klass, const void *data)
+     hc->unplug = loongarch_ipi_cpu_unplug;
+     licc->pre_save = loongarch_ipi_pre_save;
+     licc->post_load = loongarch_ipi_post_load;
++    ic->print_info = loongarch_ipi_print_info;
+ }
+ 
+ static const TypeInfo loongarch_ipi_types[] = {
+@@ -222,6 +263,7 @@ static const TypeInfo loongarch_ipi_types[] = {
+         .class_init         = loongarch_ipi_class_init,
+         .interfaces         = (const InterfaceInfo[]) {
+             { TYPE_HOTPLUG_HANDLER },
++            { TYPE_INTERRUPT_STATS_PROVIDER },
+             { }
+         },
+     }
+-- 
+2.54.0
 
 
