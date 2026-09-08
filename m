@@ -4,110 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71767C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 16:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCD3C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 16:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3yOf-0007RQ-E7; Tue, 08 Sep 2026 12:10:09 -0400
+	id 1x3yRD-0008Ri-JE; Tue, 08 Sep 2026 12:12:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3yOe-0007OA-2r
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:10:08 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3yOa-0003Gn-UK
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:10:07 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-8630c1503f2so39143047b3.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 09:10:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788883803; cv=none;
- d=google.com; s=arc-20260327;
- b=Xco5o8XsIbQ7GV+D2zyFJ358yDjmuQel4p572WsfIdzwaD1DYqtE+fcH2fMPZSsXIw
- w9nHf3nuIRjtVVm4dsrF8CYw6AR+GuBvF1Xmer6BFv7kwY0ay+vgO991/5OmrN3sKPBh
- v+Kz3Xwr0KzfATD5NZGtmmOn2Qp4IErI6zi88iuGx8hOtpMh4ko1N2a6LmPo19q90Xs1
- 7NyxZZZm4g2e0JQAadrt+ueL86S6+kYHE+AVHMS67adDB1K8wH65FdKlMUC6WhS/PMIr
- kW6H5MwenauIr4e08XhUju5wZrnd6m1HA256vyD7KEDk5BYm+jILbMEcz7CkWBTVKiXd
- T4rA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vAEuw08maigOcy72eNyfJe9xbcSK+2Att5GuaQphA+c=;
- fh=CKGv7PpI7GuseLo3IyfferWYLuL7PC/ovF0PN+PD6ds=;
- b=hfdj9KF5CqU7D9cYx3m/xClwFdKeLPMpjS0+QHJQmkcnTsxoTi77AmsGgCA8S3onM4
- pa7ZOY4O5C62a42wdfHWvyMvH8neqqh4KEzbWNNUBtG/Xii3yMxNUsjjAYMhQ1jMClOU
- k6QDJigDmjPlF27C+zTKjN9AFTIHnP2bICB7jJuM9vkxeABHg9iBVWS0Ls6gBU938qbz
- 2zkuR6UYzPOn/d6xUMD+rPn9NZIYIURX62hjp4NVe0sr6GDam/ZJKPcEllToj2Q8UPsD
- zyqZbSxOcMMOMCwPtvAO3Djn8rtxgQAc7vr68kqiyu64ZQvTbh3Eda3ftumEU4RDhNWB
- 1nsg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788883803; x=1789488603; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=vAEuw08maigOcy72eNyfJe9xbcSK+2Att5GuaQphA+c=;
- b=T7/zERxy5oBE4iE8xlUpY3qx8zWek/4l1rk3/x8zO/qcpbNJik0Bk/wLqzxNZ6J5Fm
- vCD8E9tCg5o8UhTixHpLkfxFgFtBLqYi6kso4hcBtMzDcWBtUO7i0iVq8PS9zyUGTDaM
- QAwfbnFX2Y6rJrECTlRMwxgw/h2qb7Po7NkwBLByygyiPlPdRWOVxkhbm7rxljZbhSqm
- sRXryUh6WIaymb0hXhWRIhMpUK/fajzIhoeZAVrnIj9SoU3/UDT36391VRm2oY69QV5s
- +/1JdfcpCX+HPPQ9xSBG6acb8v6KYycOoXZrp59dGMt7P5U8TF1zjL8NgXlYz4Ulp4xs
- zbcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788883803; x=1789488603;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=vAEuw08maigOcy72eNyfJe9xbcSK+2Att5GuaQphA+c=;
- b=Ij6XS9HREHvSV+ot3KHZzaG45Dl7FV88sIZ+czeF97T2HOKvuDVSU9hF9DmT93GpFz
- DLpckIs67i4juHSZZNboOiGPh/Hb5fNt0PC6HSPAty1G2KFBxknj6wfbIFpUgZkCe+vT
- 5Mu1z40tz9RJjxNHUjPDZKvjpCOeih4a2jsk9+NbCTiid4rpp0C7vZYXzRCO4+TVyjXd
- wF4zQf1UAeybuFUotkfyk6t8D2O0Aj25q7ZcITe5sHQMUpjFduSQnhry8LzG91xSXsK7
- 3rfxEoYdBpH6/c1XyXTePuSYIicqQagLlQ1IAqzMQ4eF+VjBbt8q1r70m488WO0J45nF
- wU2w==
-X-Gm-Message-State: AFuF++kWOcqEC0+EmWKKhX9zuWkow6eNhFZ37o8cSz+pfLKT/1EHWcSh
- fadsGIKuZ0IkOViQ6U/F99vGCrutlghUTsV9iI9lKGowI269hqkhwUIMKe9D2wAkrQ4kcYUStP7
- AAnbxPxUlMtczzOhNupY+erMN/ZxSSvgbxLB9+JPePA==
-X-Gm-Gg: AYBFou0/buHa02KKYRZZXVLAgxjiG1/1aw3XJOVlE2yUYfLL++SzoLcy50QHPTZdXtw
- 499LJ8EiexN/rm1ywhQs9+1gmleiOerCGI76d6fcicKc8juZmsxF62i2FB26he6DwBVBNHaXcv4
- nI0dtcs11aUXr0ICNWSiOiYJbxVMlNnNFmZLE5xprp7DNCer3hkUPJ39QJSX1Ckkw8GTFSSvA0d
- xLegq0iQdvow8f/hxhUJ3czJ8Q1TOVwCoscrKqXVikiS7pOYj5ton8hqjAtul8P/bpHJFKw8W6Q
- LPar/K8rt0cMTp3M6t1QgO+OYGNB04rVMrwklOHalLf88yR4vHp+k0RNaLLmC2E4jurfTK5qvX4
- 1igFvmjAprhVabsTpKfjapTh47/fo
-X-Received: by 2002:a05:690c:e1d8:20b0:87d:b776:c659 with SMTP id
- 00721157ae682-87db776c69cmr15832277b3.11.1788883803340; Tue, 08 Sep 2026
- 09:10:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x3yRB-0008RO-NZ
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:12:45 -0400
+Received: from mail-westus3azon11010000.outbound.protection.outlook.com
+ ([52.101.201.0] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x3yR8-0003bg-J6
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:12:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bMC0VwNx5iT0FnBckv/JYM8IHKT8cHq/tr2oGdhZ/YSGhFXcs8AYk3xkd9v6iwk+zWorRADuzgsVuo2U5+uKdqePFNoWMQR2VaMuAUCjhbH1YxbWYXL/7hULRM8pNDkNM6MOrfqmg7KTam+sVSxhATl4iIpDnXEGyaoFJrFx9f9a11JaF1gOqXUClEoNZtq8asgaMrv4xD9YITJvmJSBBg6kFhkGizFFRLfXx4C7fE+rd8YZmEYuQFOckQ5/R5ucW3a+DZzJxUSEqP8ruw4Gebg5BXt2GdZmLXv+atv5rDTBnV5en7FvuPUXA/4jSdWzZqytRgOz+MjNgFgmV3Vyew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JSrXjdkw5+wB3p+wqUYlaxamIOxn78V3L6s7gMDD5II=;
+ b=viaDJUcG4Bd0d+FDRwk3CDsUW/dJPX+kOitu1d0ZeTLkLp30BAAkkPtWRJ5SRiQ85LK8d+l90fyJe9e9hMqCdRv5rvfBo2xzEfVOnW9twG50uGVfoTxVzhnbGUH8Gt74AzVMysK9QFFYseonlT1lR9AkmxtLXnSsc+E32Sts7DpHBM0xiN07QblsYKwwTLnCXp9RUf8zGPGrrLLgwCtp9gGx+LXUysdCx++6OeXO8A3jkW8qVl3zqdTzYlMRoNcK8JKQQ1yl0AuAPLVVaUsyLMCAZyhV+LN+XSHhed1E2zz2RYYWsRQgG/BjZLL09guPiMIlcESTafr1SOsFemUuMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JSrXjdkw5+wB3p+wqUYlaxamIOxn78V3L6s7gMDD5II=;
+ b=ptZX+Z4efdd+4AYgubWDYPsEeXnmOsvbeeoI8Q120HHzAwfv4wpH68FSFkoCqbkomqPJGVWBmX/vHjn3qrt9PAFedyyr+2T6BAa1LxRuoSDXBburq120T9wHzKQHwv5FhorZPkotX1Ke1yKu882lPEGmm81tTZl11xvNfTwicM4ueRiEAf/pFd1XHtf+N2brUx4IlSvz6/9jH77ILWmlGvZtlWsQztCp4Y7q+il1Gn/jJmAVL0TuEGUyl9cfJ0t0NH9+NbQkIPZGyOADsyMEw42u1enIksjR3gXTV0x6TmZifpaSa28oa8ci0JJ+HEX9MnibOVH5XwjYKWu0dt4q1w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM4PR12MB9736.namprd12.prod.outlook.com (2603:10b6:8:225::9) by
+ PH7PR12MB7018.namprd12.prod.outlook.com (2603:10b6:510:1b8::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Tue, 8 Sep 2026
+ 16:07:33 +0000
+Received: from DM4PR12MB9736.namprd12.prod.outlook.com
+ ([fe80::ed33:f342:886b:dc8e]) by DM4PR12MB9736.namprd12.prod.outlook.com
+ ([fe80::ed33:f342:886b:dc8e%6]) with mapi id 15.21.0360.008; Tue, 8 Sep 2026
+ 16:07:33 +0000
+From: Tushar Dave <tdave@nvidia.com>
+To: alex@shazbot.org, clg@redhat.com, qemu-devel@nongnu.org,
+ skolothumtho@nvidia.com
+Cc: jgg@nvidia.com
+Subject: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
+Date: Tue,  8 Sep 2026 11:07:31 -0500
+Message-Id: <20260908160731.1658621-1-tdave@nvidia.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SN7PR04CA0022.namprd04.prod.outlook.com
+ (2603:10b6:806:f2::27) To DM4PR12MB9736.namprd12.prod.outlook.com
+ (2603:10b6:8:225::9)
 MIME-Version: 1.0
-References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
- <20260902152044.31291-2-philmd@oss.qualcomm.com>
-In-Reply-To: <20260902152044.31291-2-philmd@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 17:09:51 +0100
-X-Gm-Features: AcwNN1XCnvRaYc8V1KAeF9JjDhyphbZh4b-jEOM8h43oC1OOMB17y_un4hbb4bU
-Message-ID: <CAFEAcA-w24c71SHh1Sr7JkO5RTVK7THH8GP_ixVvnWiBXWQMdg@mail.gmail.com>
-Subject: Re: [PATCH v3 01/11] target/arm: Call arm*_cpu_do_interrupt directly
- instead of via TCGCPUOps
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB9736:EE_|PH7PR12MB7018:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2f5b6659-1e36-4bf4-300b-08df0dc34ae3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|23010399003|366016|10067099003|11063799006|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: BHWZuRDhvW6ovDD4wjGiAo6ojBwjk3Xh/YIcImmc+WgrcZckOL0vm4z/ymherfUg1kcenqjLUvYnH308fkpULRnngCiV0WlX32u9vQLP7ZQz+GEZMjZ3oWFEtg+f4ldKaYLc325QeTpSz4l/67S2jiokt15dPFTq8kJyqVRexiMkMCWBPMGiLyQ3JCCXx4yEZnAzrmnEcgMZ2Pyb6rFqElCr3A3Fjj7i8cFn6ZpgkqpHpGbY69PpGZwzvbXtcEkY4/5FQ2hchW07snPwsWpmMhWojcZKIeY+t5Zwv/JBAOy0wAcbeHOZK1yrWYHW6wUJje54PrYkyDzOrNdAfbOXtJSxhOIM1dBef2HwE5P60Dpvt3N9VR84l8B8jTaN/441C6EtR6qmpy8E1E6JGxyuIl5ASXHnRJGzlsz7WVhxnzcZMaKZaw4OAMkQnatxxdOKmYFTW9xpVRxAJ4nkxvoSeCtqqSHY5YyVu8pipTEsZonn2caNHxkTzLyarJacY4msHKR6z7aLbyud87sefw3DGjrly3P0gkDp1D0UUNzCIFUGSVOcbEDAW6bRDqSwrVIko8AyiigZdt1m8zTkecuH27YQBmmi016i+oTBTk5v5m7pNpC8UfONgsQqdQu+X5JJVXv4BkgR6YMW9HQurSo6yfIyjMauw9jkTjuV56EmGDE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB9736.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(11063799006)(56012099006)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xpTJrx1nVAjh/ANPEJvoI6g+XNdJnL9r62TTDEmDHZUXy8bfdU5bNfvBbYzt?=
+ =?us-ascii?Q?TXfeOoJWuk2jgUHst4cRbPiABXesZap57k8CBXqfhhzOUdR7THQm/eKHIjhS?=
+ =?us-ascii?Q?GlRrPWYq5ur67cY4jWshDfvYH3CO2n5kZgSqG+1tPubabc1kkc6F1rKS+MZ+?=
+ =?us-ascii?Q?Dm9ffs8tIGDOk1SGMKJX4g+0hAmbIGcbGnUEKGqAkrxIUN+9kFp2iv4xOpcP?=
+ =?us-ascii?Q?FHzkwUNKgyk62AJf6HZBtpuYCL8tOqILRyzikhqPPTLV/EdyUKSrjVA4aq/3?=
+ =?us-ascii?Q?PoG4BN3tPZL8cvqmO+v1Ndwc4VCSeiJlOzylFmmZqAauBLtpTmxbZh3Xccjc?=
+ =?us-ascii?Q?EikzHnHbxHCfmz8PpuSFw2J0ql3MoGH90XHa9aNIr/KVSnizvYtvbV7rWMsP?=
+ =?us-ascii?Q?OsGXQ+I3Fkoyr5yoJIsu7gaMJVtCX3g1+8NZyy+jd3O6EHrQzbM7GqqEdmUB?=
+ =?us-ascii?Q?oXmtH8+Tq4Okp5IIileqLOI26PxxVmUujDDv3+PBevwtFKtKoPJXxdFZ2WCf?=
+ =?us-ascii?Q?ITUxEstjuDHGRGwsem7MD19Pd3+fWScwMPfCD2BbxFZcwTDDF9Pqq4xT3sfC?=
+ =?us-ascii?Q?jeIC4k9Y0Ryw9XJR7cwdO44xDnTlqdeLYa50wQO9e3pFtcRiw8xI/DokyVjg?=
+ =?us-ascii?Q?kdr8Nswr5ur8Qq7G3q2nhdQaXNErLxI3zk2xPb/qwtSklvyNVM3VGYvGNVFe?=
+ =?us-ascii?Q?+tCkPQdvRWJyvwLrW1+ykEm+zihzMZJeNkTFAzIAj2cRjUi/+qpervFRRyVz?=
+ =?us-ascii?Q?/OkyYxQ4/S9A7b4s2lZj4joK2I+xYy9tfbDXIXvRcUOjtrcMQtUliA0DHUSq?=
+ =?us-ascii?Q?1gTdgZWXHucKWM+PSsKrhSHcYl/sy1J2ug6TBiXnAlr0WybJZ6vE3gWhZaKk?=
+ =?us-ascii?Q?brrW683PbMczSdBH6CC9Ds1wRUr8i5ziNP7fu1wRjhG5/nWd/bAOHaRiD+mM?=
+ =?us-ascii?Q?eJ4ypt65wPkjKVgsjiReVU7P+PKSZyieXY3RMibaM/8sGOxsdKxvU9NULQKd?=
+ =?us-ascii?Q?p4ZUWnCA3d4dJSf8SAFgT9sgIxeillOmOezl/XJRpMHwLDcKyxjptA/m2iMJ?=
+ =?us-ascii?Q?1KwPIOL5tdPAwuyNms0RrzGZW5gwmQ2hI3hfCP1hoqweoX4jZ2fsmacgmlKA?=
+ =?us-ascii?Q?+T4EYS3aRVoDOrQfffhiCLU83hQNVX8W33eFpmDRbhnySVOL4HYJmKmaoxv4?=
+ =?us-ascii?Q?ZsjlvYiNobQzMRd30ziuFEy8L7ODNqPIDNYMrudyNTfEEsb2jNk8USlk5Q1s?=
+ =?us-ascii?Q?G8XptCcwXbVQNZqvNFD13ssbI6zqKq3XbfDum3DVrwmQ4+DcyGDQnrP6v/Mv?=
+ =?us-ascii?Q?LA9OTvL7KPJwCOdWiBTGIPtj4tsRon7NVcd7NJNGdYAiCTqfLRwV3vAbgOqf?=
+ =?us-ascii?Q?Y/f59qvBCxqz7IjX69ZNgc2oKUpaT/vNYLO331CwMoayj0GGwCh7Jir2rD4k?=
+ =?us-ascii?Q?4+88mTM+HzT7EPYNnvQv5NjHkqS39QxaaoqZSO4tD9EIdICOQRcq2Rbxze+7?=
+ =?us-ascii?Q?BWVcBx+N+KGZMNIE9uQ8IaHkEfwfX5nYFeF+Ww3h+GwVHedYyZYvln+T6igT?=
+ =?us-ascii?Q?8/7RugbovadjirVlxA40fpIZJZiwk6SM7NMyp46sqIVhM0idzMUu7n+oi2vz?=
+ =?us-ascii?Q?eMA2DVLO5pP3z4OLFQ5r+355lqSRtGxk106b6TPH4QcXCe4oZmEYhmr6kwXz?=
+ =?us-ascii?Q?2GQQYPgPeHZNSHkC3XqaoV1zmEeHP6ipmVvwrwI6fNrV28c5?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2f5b6659-1e36-4bf4-300b-08df0dc34ae3
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB9736.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 16:07:33.7280 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WH18eDWp2XfeJ30P02lmbaac9jchRKe0MJr44sL0rA2WiHJuA3lkP2JjyOyAX3490cFJFai5+X0pM4cHua8TRw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7018
+Received-SPF: permerror client-ip=52.101.201.0; envelope-from=tdave@nvidia.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,58 +135,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Sept 2026 at 16:20, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> The TCGCPUOps.do_interrupt handler is a target-specific
-> callback installed for use by target-agnostic TCG core methods.
-> Target-specific code should not dispatch through this indirection;
-> call the ARM implementation directly instead.
->
-> Reported-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
->  target/arm/cpu-irq.c     | 2 +-
->  target/arm/tcg/cpu-v7m.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/target/arm/cpu-irq.c b/target/arm/cpu-irq.c
-> index 883e8a176c3..e8a6520e5ca 100644
-> --- a/target/arm/cpu-irq.c
-> +++ b/target/arm/cpu-irq.c
-> @@ -270,7 +270,7 @@ bool arm_cpu_exec_interrupt(CPUState *cs, int interru=
-pt_request)
->   found:
->      cs->exception_index =3D excp_idx;
->      env->exception.target_el =3D target_el;
-> -    cs->cc->tcg_ops->do_interrupt(cs);
-> +    arm_cpu_do_interrupt(cs);
->      return true;
->  }
->  #endif /* CONFIG_TCG */
-> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-> index 48b31d5eac8..502998dbd1c 100644
-> --- a/target/arm/tcg/cpu-v7m.c
-> +++ b/target/arm/tcg/cpu-v7m.c
-> @@ -34,7 +34,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, in=
-t interrupt_request)
->      if (interrupt_request & CPU_INTERRUPT_HARD
->          && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
->          cs->exception_index =3D EXCP_IRQ;
-> -        cs->cc->tcg_ops->do_interrupt(cs);
-> +        arm_v7m_cpu_do_interrupt(cs);
->          ret =3D true;
->      }
+A VF fails to bind through the iommufd/cdev backend when its PF is
+bound to vfio-pci and requires a matching VF token.
 
-This works because we have separate cpu_exec_interrupt
-methods for M-profile and A/R-profile, so we can drop the
-indirection. If we had anywhere where we were trying to
-do "call the appropriate do_interrupt function" from
-code that's agnostic to M vs A/R this wouldn't work, but
-happily we don't.
+QEMU currently initializes struct vfio_device_bind_iommufd without
+the token flag or token UUID.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Pass the existing vf-token device property to the IOMMUFD bind ioctl
+for PCI devices.
 
-thanks
--- PMM
+Signed-off-by: Tushar Dave <tdave@nvidia.com>
+---
+ hw/vfio/iommufd.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 242644aa00..de482128bf 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -155,6 +155,7 @@ static void iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
+ 
+ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+ {
++    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
+     IOMMUFDBackend *iommufd = vbasedev->iommufd;
+     struct vfio_device_bind_iommufd bind = {
+         .argsz = sizeof(bind),
+@@ -180,6 +181,15 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+ 
+     /* Bind device to iommufd */
+     bind.iommufd = iommufd->fd;
++
++    /*
++     * Pass the VF token when binding a PCI device.
++     */
++    if (vdev && !qemu_uuid_is_null(&vdev->vf_token)) {
++        bind.flags |= VFIO_DEVICE_BIND_FLAG_TOKEN;
++        bind.token_uuid_ptr = (uintptr_t)&vdev->vf_token;
++    }
++
+     if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
+         error_setg_errno(errp, errno, "error bind device fd=%d to iommufd=%d",
+                          vbasedev->fd, bind.iommufd);
+-- 
+2.34.1
+
 
