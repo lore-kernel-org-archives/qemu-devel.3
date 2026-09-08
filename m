@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A85C79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 02:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30760C79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 02:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3lNc-0008Nw-FR; Mon, 07 Sep 2026 22:16:12 -0400
+	id 1x3lNb-0008NX-Av; Mon, 07 Sep 2026 22:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x3lNV-0008Kc-0N; Mon, 07 Sep 2026 22:16:05 -0400
+ id 1x3lNV-0008Kh-1v; Mon, 07 Sep 2026 22:16:05 -0400
 Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x3lNQ-00034P-Pi; Mon, 07 Sep 2026 22:16:04 -0400
+ id 1x3lNQ-00034R-Op; Mon, 07 Sep 2026 22:16:04 -0400
 Received: from [192.168.144.1] (unknown [124.16.137.194])
- by APP-01 (Coremail) with SMTP id qwCowACneu7Vb59qVCxsBw--.59943S7;
+ by APP-01 (Coremail) with SMTP id qwCowACneu7Vb59qVCxsBw--.59943S4;
  Tue, 08 Sep 2026 10:15:50 +0800 (CST)
 From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 To: qemu-devel@nongnu.org
@@ -29,9 +29,9 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>,    qemu-riscv@nongnu.org
-Subject: [PATCH v2 5/5] target/riscv: canonicalize reserved CBIE encoding
+Subject: [PATCH v2 2/5] target/riscv: mask RV32 XTheadBb th.srri shift amount
 Date: Tue, 08 Sep 2026 10:15:50 +0800
-Message-ID: <20260908101550.v2-wangyang25@otcaix.iscas.ac.cn-6>
+Message-ID: <20260908101550.v2-wangyang25@otcaix.iscas.ac.cn-3>
 In-Reply-To: <20260908101550.v2-wangyang25@otcaix.iscas.ac.cn-1>
 References: <20260905093749.491-1-wangyang25@otcaix.iscas.ac.cn>
  <20260908101550.v2-wangyang25@otcaix.iscas.ac.cn-1>
@@ -39,24 +39,24 @@ X-Mailer: git-send-email 2.55.0.windows.2
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-X-CM-TRANSID: qwCowACneu7Vb59qVCxsBw--.59943S7
-X-Coremail-Antispam: 1UD129KBjvJXoW7CFy3Wr48uF1kXr15urW7Jwb_yoW8tF48pF
- 4UWF45KrWq9ryI9a93Jr1UWF13Kr4rGay5Wwnruw4kXa13CFyftFnrK345Kr4UXFWxK3sF
- 9wsxGry5Cws5JFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUmqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
- 8067AKxVWUAVCq3wA2048vs2IY020Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28C
- jxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI
- 8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r1j6r4UM28EF7xvwVC2z280
- aVCY1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcV
- AaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0E
- x4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY1x
- 0262kKe7AKxVWUAVWUtwCY02Avz4vE14v_Gr1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC
- 6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWw
- C2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_
- Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJV
- WUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIY
- CTnIWIevJa73UjIFyTuYvjxUg9jbDUUUU
+X-CM-TRANSID: qwCowACneu7Vb59qVCxsBw--.59943S4
+X-Coremail-Antispam: 1UD129KBjvdXoW7Xw4fGrW8Xr4kur4Uur15Jwb_yoWkCrX_KF
+ 18GFn7u395Xr47Ka9Fkr18CF1UCry5KFn0y39xtay3u3sxWF15uFn7WFn5A3WUCwn5Grs3
+ AwsrXa429r1Y9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbvxYjsxI4VWkKwAYFVCjjxCrM7AC8VAFwI0_Wr0E3s1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7
+ IE14v26r15M28IrcIa0xkI8VCY1x0267AKxVW8JVW5JwA2ocxC64kIII0Yj41l84x0c7CE
+ w4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6x
+ kF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF
+ 7I0E14v26r4j6r4UJwAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv04
+ 87Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280
+ aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxkF7I0En4
+ kS14v26r126r1DMxkIecxEwVAFwVW8JwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+ bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+ AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+ 42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+ IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
+ xhVjvjDU0xZFpf9x07b7Vy3UUUUU=
 X-Originating-IP: [124.16.137.194]
 X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
 Received-SPF: pass client-ip=159.226.251.21;
@@ -82,74 +82,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CBIE encoding 10 is reserved when Zicbom is implemented, while
-encoding 11 has defined behavior. Canonicalize only encoding 10 in the
-menvcfg, senvcfg, and henvcfg write paths so the reserved value is not
-retained and the defined encoding remains unchanged.
+The XTheadBb th.srri instruction uses the low log2(XLEN) bits of
+imm6. The generic shift helper rejects values greater than or equal to
+XLEN, which incorrectly rejects imm6 values 32 through 63 on RV32.
+Normalize the operand before calling the helper.
 
-Tested: RV64 menvcfg, senvcfg, and henvcfg CBIE 10 and CBIE 11
-write/readback test cases.
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4416
+Tested: RV32 imm6 0, 31, 32, and 63 witnesses with XTheadBb
+enabled and disabled.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4413
 
 Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 ---
- target/riscv/tcg/csr.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ target/riscv/tcg/insn_trans/trans_xthead.c.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index bd4b6dc114..cf59f9ae54 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -3260,6 +3260,16 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-             stce_changed = true;
-         }
-     }
-+
-+    /*
-+     * CBIE is a WARL field: encoding 10 is reserved.  A software write of
-+     * this encoding must canonicalize to a supported value instead of being
-+     * retained in the readback.
-+     */
-+    if (cfg->ext_zicbom && get_field(val, MENVCFG_CBIE) == 2) {
-+        val &= ~MENVCFG_CBIE;
-+    }
-+
-     env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
- 
-     if (stce_changed) {
-@@ -3354,6 +3364,16 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
-         mask |= SENVCFG_UKTE;
-     }
- 
-+    /*
-+     * CBIE is a WARL field: encoding 10 is reserved.  A software write of
-+     * this encoding must canonicalize to a supported value instead of being
-+     * retained in the readback.
-+     */
-+    if (env_archcpu(env)->cfg.ext_zicbom &&
-+        get_field(val, SENVCFG_CBIE) == 2) {
-+        val &= ~SENVCFG_CBIE;
-+    }
-+
-     env->senvcfg = (env->senvcfg & ~mask) | (val & mask);
-     return RISCV_EXCP_NONE;
+diff --git a/target/riscv/tcg/insn_trans/trans_xthead.c.inc b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+index 681f70e5bc..34226b1be5 100644
+--- a/target/riscv/tcg/insn_trans/trans_xthead.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+@@ -141,6 +141,7 @@ GEN_TRANS_TH_ADDSL(3)
+ static bool trans_th_srri(DisasContext *ctx, arg_th_srri * a)
+ {
+     REQUIRE_XTHEADBB(ctx);
++    a->shamt &= get_olen(ctx) - 1;
+     return gen_shift_imm_fn_per_ol(ctx, a, EXT_NONE,
+                                    tcg_gen_rotri_tl, gen_roriw, NULL);
  }
-@@ -3422,6 +3442,15 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-         }
-     }
- 
-+    /*
-+     * CBIE is a WARL field: encoding 10 is reserved.  A software write of
-+     * this encoding must canonicalize to a supported value instead of being
-+     * retained in the readback.
-+     */
-+    if (cfg->ext_zicbom && get_field(val, HENVCFG_CBIE) == 2) {
-+        val &= ~HENVCFG_CBIE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV32) {
-         /*
-          * RV32 stores STCE/ADUE/PBMTE/DTE in henvcfgh, so a low-half henvcfg
 -- 
 2.55.0.windows.2
 
