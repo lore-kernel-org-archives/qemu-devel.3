@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062F9C79FAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0442DC79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rJ7-0007Bd-9K; Tue, 08 Sep 2026 04:35:57 -0400
+	id 1x3rJM-0007IX-Iv; Tue, 08 Sep 2026 04:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3rJ4-0007BL-JC
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:54 -0400
+ id 1x3rJL-0007II-Eb
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:36:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3rJ2-0007Eu-Ss
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:54 -0400
+ id 1x3rJJ-0007Hs-UE
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:36:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788856552;
+ s=mimecast20190719; t=1788856569;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:to:
  cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=40LyvCDlaHAQHcMLKYj1Q0OPDSPjXdpYRkudFHr+oJg=;
- b=GOJ6bun9R2czalSi+rOyD2I2YOolgwKJdiVZzocc3GWo613BXYLa8hU/5mZSGQ/HnO3pb/
- qBZPjIroXVC7e3ZZJRzKxSJqDR3OKi7YI8qN7Yd//vKQzxDe7Mknqjxap4kZ10qt0iQRRt
- drjNal7rz6hwOgcc6jXpUXjqEp/pNvQ=
+ bh=xyU9QwTUbB5vxuqM2nqh/iZX1DasxSImd4r33FMozgY=;
+ b=elBTCAQnWeo/smEoJFQyvbcQcAaHZtBd0Iu7CLpREOTynN4CwtAWLzYvKNtarJAezEKqqO
+ DEOcEJQP7q+ADfwHoIxidBJRn2t53BVSz5JqVk4k2ZyW2h7ZKUOpMEU2dvfjnNjemWqCtw
+ 5ChnYIzrLVHq7oWTHvne/u/S0UrrIyk=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-PkgkHzyaNqO9SDSyxA4_Jw-1; Tue,
- 08 Sep 2026 04:35:49 -0400
-X-MC-Unique: PkgkHzyaNqO9SDSyxA4_Jw-1
-X-Mimecast-MFC-AGG-ID: PkgkHzyaNqO9SDSyxA4_Jw_1788856548
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-Z9zQEMKZMNqeuWDG1nloTQ-1; Tue,
+ 08 Sep 2026 04:36:06 -0400
+X-MC-Unique: Z9zQEMKZMNqeuWDG1nloTQ-1
+X-Mimecast-MFC-AGG-ID: Z9zQEMKZMNqeuWDG1nloTQ_1788856565
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCE1B183EEEA; Tue,  8 Sep 2026 08:35:47 +0000 (UTC)
+ id D2B5E183EEE9; Tue,  8 Sep 2026 08:36:04 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 016191800346; Tue,  8 Sep 2026 08:35:46 +0000 (UTC)
+ id 0B7EF180034F; Tue,  8 Sep 2026 08:36:03 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 08 Sep 2026 12:35:34 +0400
-Subject: [GIT PULL 02/10] tests/functional: add skipTestIfNoHMP() helper
+Date: Tue, 08 Sep 2026 12:35:39 +0400
+Subject: [GIT PULL 07/10] tests/ide-test: convert to QMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260908-nohmp-v1-2-7a3d1f0f1caf@redhat.com>
+Message-Id: <20260908-nohmp-v1-7-7a3d1f0f1caf@redhat.com>
 References: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
 In-Reply-To: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
-Cc: peter.maydell@linaro.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1108;
+Cc: peter.maydell@linaro.org, John Snow <jsnow@redhat.com>, 
+ "Denis V. Lunev" <den@openvz.org>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3003;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=DKQeIhpML80zf1OYVo6I9MFIu0Q4mYbkgHIMXRWzZK0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jYee5DnzUtNWA5AHKOnouiWGRK2DhUi7tJz
- QRXJIdnU5yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
- 5TGiEACoh4sTyAYmSY4hE1NXKUprpyvFo62uBsFYBiuOJ9OF2DU725yO9oqTgaxvBzaBxdXVWOH
- Bz626V/UjLGhvjNqPWHgfzEbcLMQ9LSJ/cvz6RbV+4XKaGmF0Gd8nMxxIEZMo/siAgA2ZZxhuVD
- CKKeCuIUsVMwVMiSfbbX3n9hZbNoQiYYttK3UJIXgGxLeRjpUGCLMtTMEhIVYxkLu9H1gJSPqnc
- 8EgEmJ/6YWlcSjb/B66fgC1rWqhA5EdjnUK3bFdFd8VzhUlehBlZQDvRFWQT5Y8+02tEQt5ocBP
- oOM9lhXLLzzeBVOCZfJT8FDr1Uyju6WYGw5xUlguSRSVXNJUyQVoUUg3ts4D/etuC5nnWXkXlKG
- vuOO4yDI8hB2xM+p9cwhIv/HNke6rbCSwxSyTcIjzNYjyYJFFRfk8PAGPK6mcruhEH0LuPMHCep
- 6IfQZpNALGYjjRdhQkoLM5eRxlJn+uAImXhpZhzEYP0kI37UPLJdNm+A3ymxFC2/T0J5oPp9pjs
- b/PF6fMbHd8X6jh0mUWh0ZfMrudUVRgq3nhOsbAZ5XsaxBmgL9CslIiTHsbCIqsBNpcZZ6z2X6i
- Fnz3eqegP2a9uYncZ298201CI8VIVHs1GBQQMYpAC6CQNmbOSM3xhDEuP7Xtk6oiHqkjq8x9Qdx
- 7boVLJAXlexnpBA==
+ bh=kpIFIaEUDafx8nYOdubWPhRUqetRVB530kKQpNu5xqU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jYfDnWPc1bvzpzNdsD0tUQPUg/yTcx8p2Re
+ Awvl5aBLcqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
+ 5T6KEACkMqBxflhobX4yZcLSa+8cfu4B8wZkTC6omfYYk+EnayFo9f0k6+aHjT1vROzeaiOO9go
+ jaRp6E6EC76uwJS9zfEOAQhxbQzEyW+ivE9TTm/GgYePgGqEDEhoRVopQejbyIvBMRphyFCDZik
+ A7vE+9+Kz8fvszxIdN409f4iVYIMG0QhTLpGpdZGUYOBla/53+I7vTw9dau7vyGWZ7+Yg742S/H
+ KehU6k+CMgZgzLhfjQE4ShHxY+xPI/2bY/8gAaQ9WOPivLP9x7wsL5uEzLLO+7IwqswfhrGNWAO
+ LkFI7aDzrhb5jyN1o5HoyZ5bl9AFvZZjlLW0srBCJ6MeVV0HgLOwylBuQW4XI8QotZ5w/KgYMCd
+ S7SNUWgFkEJhA1AQqFWZyrOI8RPkov6IsusSfZsNPn3NbbqWuvGeqy4BvK4ZgWk10zeGQwOevoK
+ b3Jo5yDV/d9Wa+cwVvzZ4JRAmwEcg9XdF1RwNmmlelymJNqUCFlkf33g83lDs9rONlvA8+ncKgK
+ EEQwzSKz46rfDasjsPNkcVIWnPwsyqoP0JgL9ZOTeN2TIlMFHnKxR4nz3gddrbiGVOtSUrcTHo6
+ 4QJPLe/mQ3LL7ojVhj6VAq7BzrbpPuCpcGUsAdrzbIuTrzAsNmS4NgPO98JL4tGJk7nHDViGfxk
+ oN7c7EhHw4Xb6dQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -104,29 +104,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
+The QMP command is explicit, specify both the vmstate and devices.
+We use the helper introduced previously to wait for job completion.
+
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tests/qtest/ide-test.c | 37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 69d3d06cc0e3..bf2dc1dc101c 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -369,6 +369,12 @@ def require_accelerator(self, accelerator):
-             self.skipTest("%s accelerator does not seem to be "
-                           "available" % accelerator)
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index 895fec6d0806..cf109b079982 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -1345,11 +1345,34 @@ static void ide_prepare_markers(QTestState *qts, QPCIDevice *dev,
+     ide_write_marker(qts, dev, ide_bar, 63, CHS_MARKER_DEFAULT);
+ }
  
-+    def skipTestIfNoHMP(self):
-+        commands = self.vm.cmd('query-commands')
-+        if not any(cmd['name'] == 'human-monitor-command'
-+                   for cmd in commands):
-+            self.skipTest('HMP support is not available')
-+
-     def require_netdev(self, netdevname):
-         helptxt = run([self.qemu_bin, '-M', 'none', '-netdev', 'help'],
-                       capture_output=True, check=True, encoding='utf8').stdout
+-static void ide_hmp_quiet(QTestState *qts, const char *command)
++static void ide_snapshot_save(QTestState *qts, const char *tag,
++                              const char *vmstate, const char *device)
+ {
+-    g_autofree char *out = qtest_hmp(qts, "%s", command);
++    qtest_qmp_assert_success(qts,
++        "{ 'execute': 'snapshot-save',"
++        "  'arguments': {"
++        "    'job-id': 'save0',"
++        "    'tag': %s,"
++        "    'vmstate': %s,"
++        "    'devices': [%s]"
++        "  }"
++        "}", tag, vmstate, device);
++    qtest_qmp_job_wait(qts, "save0");
++}
+ 
+-    g_assert_cmpstr(out, ==, "");
++static void ide_snapshot_load(QTestState *qts, const char *tag,
++                              const char *vmstate, const char *device)
++{
++    qtest_qmp_assert_success(qts,
++        "{ 'execute': 'snapshot-load',"
++        "  'arguments': {"
++        "    'job-id': 'load0',"
++        "    'tag': %s,"
++        "    'vmstate': %s,"
++        "    'devices': [%s]"
++        "  }"
++        "}", tag, vmstate, device);
++    qtest_qmp_job_wait(qts, "load0");
+ }
+ 
+ static char *ide_migration_status(QTestState *qts)
+@@ -1455,10 +1478,6 @@ static void test_migrate_chs_snapshot(void)
+     char marker[9];
+     int fd;
+ 
+-#ifndef CONFIG_HMP
+-    g_test_skip("HMP not enabled");
+-    return;
+-#endif
+     if (!have_qemu_img()) {
+         g_test_skip("QTEST_QEMU_IMG not set, snapshots need a qcow2 image");
+         return;
+@@ -1480,13 +1499,13 @@ static void test_migrate_chs_snapshot(void)
+     /* Snapshot taken while the default translation is in effect */
+     ide_read_chs_marker(qts, dev, ide_bar, 0, 1, 1, marker);
+     g_assert_cmpstr(marker, ==, CHS_MARKER_DEFAULT);
+-    ide_hmp_quiet(qts, "savevm s0");
++    ide_snapshot_save(qts, "s0", "hda", "hda");
+ 
+     ide_set_translation(dev, ide_bar, 8, 32);
+     ide_read_chs_marker(qts, dev, ide_bar, 0, 1, 1, marker);
+     g_assert_cmpstr(marker, ==, CHS_MARKER_CUSTOM);
+ 
+-    ide_hmp_quiet(qts, "loadvm s0");
++    ide_snapshot_load(qts, "s0", "hda", "hda");
+ 
+     ide_read_chs_marker(qts, dev, ide_bar, 0, 1, 1, marker);
+     g_assert_cmpstr(marker, ==, CHS_MARKER_DEFAULT);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
