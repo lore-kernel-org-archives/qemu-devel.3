@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E92C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 13:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3331C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 13:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3vb0-00077n-Au; Tue, 08 Sep 2026 09:10:43 -0400
+	id 1x3vx3-0001kL-O4; Tue, 08 Sep 2026 09:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3vay-000779-4O
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:10:40 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1x3vx1-0001jx-Oq
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:33:28 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3vaw-00005x-IV
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:10:39 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-861145fc841so36976797b3.3
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 06:10:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788873037; cv=none;
- d=google.com; s=arc-20260327;
- b=dgPoc9HRc8GLzNvttoEYsUvm7qvXxyF01lqsh9fgWX7iB7yhLN75vcWmsJwGuHEau9
- ToDcIM0WV8G4AIS0CU7AnaNBkekr+JOTex6bvWLzJgJQo/uAWw7F4hNOy3w0CCU8osmy
- c+Y6q5q8QGhlMcLuNTe3MzbnMnr16qeW6s++c4t0C0OdHr3kwNaAdjaEfmzQ0WpX13mp
- r7q6T3bWnZIoYMCnwpePWfzxjSt3YuUgoFPsqq6RdCEc3EUeG4C4fXvQB97Ce+CME2yV
- mlwDiWr1iUGdjpCBazkUPWRO6dpciTTITcwIpeG5BGjeATb1oqreG148dfogQeFbWRHa
- aliw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jzq7JG1nyZnFATiQ44B2hcRJMT2iriPWKyEcqp4jvw4=;
- fh=gicmf1zLCz5mLo37/slHRwiGNwG9FuwwhzHTeCt9t94=;
- b=Tt+tP6EhITGq0drCyW1ht4DLfTgJ4iAYAWtV4S/E0tn99TGJr8/iHUwX/48BSlEI5G
- VnSyKkyjBunldARcX2des/oSsXp7Yp/gigEq50gzYQ84k6SgoMA0lP9hSHfsednXiTHc
- nW4DMvVxEl0qE3BUgOmZse99q0OUb9CAau81W2B9omql2xEsQjl1t/J3afVA0DPpZtdT
- V8vNa+/c1fpUStPe4NEdEen+D5sZAV+LhuG0Lpc+EwVzurbA4XKqdQQH+nsZZZVBIQlJ
- pLBuGfP8i5+JckhzKFFGkke06S2wl0m52/6a74Ju3INrRD+ibW/eowAKwqTrIpjsVSON
- Xb/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1x3vwz-0005ZI-QW
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:33:27 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0794669a6so6897625a12.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 06:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788873037; x=1789477837; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=jzq7JG1nyZnFATiQ44B2hcRJMT2iriPWKyEcqp4jvw4=;
- b=ZFW7Z4rDGRjTbxTFHoZVHfy83RZljzNplRjxZ3lYyG9bVRIZYUDdK6/0wjSjy1y6Xp
- vjo1uzKP6i7AT8pBIQkNJJYnJy7Yu9KBgaaW9GX5hh0l124v5wWZT0PBL2OyFl49mhXS
- zt6zp8a1kdVK/mz7v5UCgO4lmcYbdla2iL+zXUaNSrkvnMP4ZY86GtIHGh+x58cfbi59
- lgeD5LvICYKPfFuGhIaiIFxd1LViaNJb23AYa3bVAdHmFZK+vBD7FBWKwsfTA7wklN2J
- 8z+Tmtqj7O9fVAv4AceHvWV4KsHeARN6nltqgrrO2AIeGQR3etbEs7hv1uPUjI+5thji
- 9q4Q==
+ d=gmail.com; s=20251104; t=1788874404; x=1789479204; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:content-type:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=qsXUN0ZSiymaLucTNiJbPFjd+9xaMr3N08xJF26N9dc=;
+ b=JQWMmtfZaxCXHJNUqBnOVB910OWsVwByFCgFb1cDIXfG/TRGup+B1xTjBWQEO12VjG
+ EVNwUdMsqAt6tFFke1sW/c0tboeiihHBVrrxemdQ/6vL7lFUf8Pg3yg4zB4YZafGWyYj
+ PjoPLhEZLZDrLgv/ogX3uGalV0Ol3LzCeVHFi+TR5/8sV5Mc/MHRKQX2A+uTQh5EQdU7
+ nDXebMJI+nMQTuqud/hjbFPEt8F/m3kr5NaY+d0PCJnZfUsk6IIX0ry1klxemEz8dqP7
+ MgmfwmW0bTQjnAAjnLLL9UA4eKTVrMbC8J3Cbj7HKje9hG5DEX4rWKQc1wCzwADQJ3WS
+ DU+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788873037; x=1789477837;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20251104; t=1788874404; x=1789479204;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:content-type:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=jzq7JG1nyZnFATiQ44B2hcRJMT2iriPWKyEcqp4jvw4=;
- b=gnW1S5EN0JPZN/3H2xIKfuj3ZkJzLTF+tCHeGIY8vMRPDPTuUZRNrm2XRvWFtw+NvZ
- E6FICcLZnueYONLt/xYwe/pcj8Qut5WEl4WI5cflV/VrR1zcvoC+JMHM8j+veP5ZCqT9
- Q4VoPXhPPMVI3NVDxYTPkA9fqPuEuIOMp0eZ+9bTJz+lTmnNpI6u24lXN4sWz+lLP7jS
- WGFRAcmW5qjD8QGQh0O+E248sPlZdv6tNSd73/kYmt+f37SvxDb8W0l/+GrlgLPllFET
- HMl3Zi4yKllaOZT6HUM2LRnCRToVtV4pg6IcOvXVPTavBoTxeLNXcEBGZ9tgJKanr5Wk
- d/kw==
-X-Gm-Message-State: AFuF++kFZ+AJ21h1tecsWdHKGRXAiDBnkx0D1xhtZmhsNF01co+hMq/1
- eUUN0yaZb0QjTE4pAm2Fn2ht53k00awLK5vc74+oi1jxsM7WpY5rk+pwi5GEhzsCxc7Lg2kyL8+
- /6vyNvhgvINrHTt/ZNcBYMclqnVvQDkuZ56/dJ+LBEA==
-X-Gm-Gg: AYBFou3MCcx3J802mJuT+Dz+5wgusdWcNYKT2Svbk+s3OvifnTJ9ufeoRSBFQeeaOXO
- Yhd5vMOqqKPVI9jw8qKEBQkQTstDPxZ9LTO2fSuiSoJWava32by1x7hMZfnfT14RXNyuIIDBd/a
- P2P468l+a8ZP7WbqXEMrqxRC6tPiIcBQE1fseVgHFBiknurGbduYtHC7qt3T85DZC8P07Lk4ebj
- m3faRxVVsH5ai8TZLThX+0N+Ev2rBr7DVmlDVeZRINh1BCQu6P/xXVha6yxnNXod9OYIGweBo8/
- sa9PtDuG8zudb6HwMbmWyA4bqOaaVvhjVUb7e1LEuMRTAV77WLWlqWwgb12oTOgoy53nOdsb0O3
- oc6jlKI6k/mKZOcs4WB0iiyWERI4Z
-X-Received: by 2002:a05:690c:89:b0:872:2d6c:9397 with SMTP id
- 00721157ae682-8722d6c9c6amr103395627b3.18.1788873037004; Tue, 08 Sep 2026
- 06:10:37 -0700 (PDT)
+ bh=qsXUN0ZSiymaLucTNiJbPFjd+9xaMr3N08xJF26N9dc=;
+ b=srm20mfnqE5WPW3laVVrdG8jxtCs8JyeKy4SR/jvLV8MSr+gQOWJ0Q48ajK2rg24l+
+ HTKYmmALbZGA9CsntCcn4naNhpU4bv+n1wT/gUygCSYvr1NEfvO7Eirn3IllxgIir+96
+ eOKclnwjjr+vtwtYMsPPJeoeyNrdJh+LJrMBov2s9q1J07jeZpmxuLts7943MC9w48EL
+ m0ZvXgDM3kUnBanNNZYmYusLvG2nefuit4usp/ArSPBNtShEnGmUmOUFPHn/CZnHu+aI
+ Bde27Uwrt2T2c7GkHdaJCg2kDxpL6pW6UZzeVPmf91nceHfnugIDxd3mGAgLl/CLrlij
+ 4urA==
+X-Gm-Message-State: AFuF++njZDEoTRHRvzFmP4akQ8Cf/3WTVqeYxLWhjA6cuUQCbbqsQ7S6
+ Cga3BJDL53xnRC8+Ns3FeYaotFA7gzxrmPw/yhTAeUfRvKCK/SshVxbZ
+X-Gm-Gg: AYBFou2Xu0eO1aZEqT9+DykztaaR3ciSJt/PxxIccPfozTJAlw1Uy1Kr6TXE9crvZCb
+ etz5ksaAIM2dFkuWkqvLvJRhFU5RCoUQSqw0JduwxuB/gtJN97IgynAgxHYk2or+9dANXnn87Um
+ 7iPRfraRBFJ+t0d7Q5p1+6/kW85ujFe1jLOZ+GLjYNvOYlmcf3hRY6srnK0x/pHSZ8ELrdTyMt7
+ iyLrglrNCvy95iQhfLPkHbetPd/2h4YAqUK5hqVGXsnN40yACCJIkvAixan7kI/JpwWoOZ2AD+/
+ ib+nmoGrTzvSG0tv62v0gadVlODUmnjQLtvAPc3VcVLyRe2fq1H+CsKcK9DaXoRBM6bUWvZ8f0N
+ YqahB+x6NOZN3PuhQBWs8mhrs1hP+DDvSVY//E0FnhDs/Z9xkP521aLgjplWe0kr/jZ9yxDdS9r
+ ZzmcPAqrDRIcQ4a+4uLbGfITTioAOjUHLJs3FWbOugc2OvG25mlbOCiyF4wWBb1oG5IZFXwpAUq
+ GtKmFLwHVmzC06GT7E7TnUKVbh6JAzMe5WADmHIEPrKMYS5orILWi/tlCx4p0PPWrwPs/RT
+X-Received: by 2002:a05:6402:3706:b0:6a6:7818:b18 with SMTP id
+ 4fb4d7f45d1cf-6a7e90a9981mr10549839a12.22.1788874403281; 
+ Tue, 08 Sep 2026 06:33:23 -0700 (PDT)
+Received: from tulp
+ (2001-1c02-1a15-3000-ee82-4536-a8f2-9e22.cable.dynamic.v6.ziggo.nl.
+ [2001:1c02:1a15:3000:ee82:4536:a8f2:9e22])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a9882a8510sm6147a12.21.2026.09.08.06.33.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Sep 2026 06:33:22 -0700 (PDT)
+Date: Tue, 8 Sep 2026 15:32:24 +0200
+From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v3] qga: implement 'guest-get-fsinfo' for FreeBSD
+Message-ID: <aqAOaBGmp5oOAIIT@tulp>
+References: <20260714165759.7521-1-bogorodskiy@gmail.com>
+ <anxADf6QF3lqzLLw@tulp>
+ <CAPMcbCr9=tX=PKCiqOK=kPa70ccw3_WUArYepLYdUxvx5q0gmg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260829-allwinner-gpio-v2-0-f0ebcb07302e@gmail.com>
- <20260829-allwinner-gpio-v2-2-f0ebcb07302e@gmail.com>
-In-Reply-To: <20260829-allwinner-gpio-v2-2-f0ebcb07302e@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 14:10:25 +0100
-X-Gm-Features: AcwNN1X5goXjpAWtx2LMNz0RMITNrR0m01e5mPYu2CcG7eVpxMLZMhZbY9rWzQQ
-Message-ID: <CAFEAcA_xakujJSnsq=+PhLeWZPKVE=egfDa5xJwKMe9Jp8YyNA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] hw/arm: Add GPIO to Allwinner A10 model
-To: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Jack wang <163wangjack@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPMcbCr9=tX=PKCiqOK=kPa70ccw3_WUArYepLYdUxvx5q0gmg@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,24 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 29 Aug 2026 at 13:56, Strahinja Jankovic
-<strahinja.p.jankovic@gmail.com> wrote:
->
-> The Allwinner A10 GPIO is added to the Allwinner A10
-> description, so it is available when Cubieboard is emulated.
->
-> Update the documentation for Cubieboard to indicate GPIO availability.
->
-> Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-> ---
->  docs/system/arm/cubieboard.rst | 1 +
->  hw/arm/Kconfig                 | 1 +
->  hw/arm/allwinner-a10.c         | 8 ++++++++
->  include/hw/arm/allwinner-a10.h | 2 ++
->  4 files changed, 12 insertions(+)
+  Kostiantyn Kostiuk wrote:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> 
+> Will be merged after code freeze
 
-thanks
--- PMM
+Hi Kostiantyn,
+
+Gentle ping on this one now that the code freeze should be over.
+
+> On Wed, Aug 12, 2026 at 12:43 PM Roman Bogorodskiy <bogorodskiy@gmail.com>
+> wrote:
+> 
+> >   Roman Bogorodskiy wrote:
+> >
+> > > Implement the qmp_guest_get_fsinfo() API for FreeBSD.
+> > > To implement it, reuse build_fs_mount_list() which is already
+> > > implemented for FreeBSD. Extend the FsMount type to include
+> > > a string "fromname" attribute to store the disk the FS is mounted from.
+> > >
+> > > Disk mapping info is not covered by this implementation.
+> > >
+> > > Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> > > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > > Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> > > ---
+> > > Changes since v1:
+> > >
+> > >  - Replace g_malloc0() with g_new0(.., 1) for GuestFilesystemInfo
+> > >
+> > > Changes since v2:
+> > >
+> > >  - Drop the unused 'errp' argument to build_guest_fsinfo() and
+> > >    clean up the related code.
+> > >  - Fix leaking string through g_strdup() for a g_path_get_basename()
+> > >    allocated string.
+> > >
+> > >  qga/commands-bsd.c    | 53 ++++++++++++++++++++++++++++++++++++++++++-
+> > >  qga/commands-common.h |  1 +
+> > >  qga/commands-posix.c  |  3 +++
+> > >  qga/qapi-schema.json  | 12 +++++-----
+> > >  4 files changed, 62 insertions(+), 7 deletions(-)
+> >
+> > ping
+> >
+> > https://patchew.org/QEMU/20260714165759.7521-1-bogorodskiy@gmail.com/
+> >
+> >
 
