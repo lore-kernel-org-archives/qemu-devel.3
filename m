@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95609C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B616AC79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3tRl-0006VX-61; Tue, 08 Sep 2026 06:53:01 -0400
+	id 1x3tVs-0007Gw-L7; Tue, 08 Sep 2026 06:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3tRi-0006Uy-2D
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:52:58 -0400
+ id 1x3tVq-0007Gc-PZ
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:57:14 -0400
 Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3tRg-0007vA-7w
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:52:57 -0400
+ id 1x3tVp-00008y-Ea
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 06:57:14 -0400
 Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-865bdc6ed72so73391747b3.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 03:52:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788864775; cv=none;
+ 00721157ae682-8664769db58so21205747b3.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 03:57:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788865032; cv=none;
  d=google.com; s=arc-20260327;
- b=FutakqNMGG/jjKLixxx4rQBdra+FlebHVX84lAs68GQxNdRMJg9usn2UjgQT0/5/7q
- MqaXMloFSf+6XDqC7+gPWgVMsNv+0A4/835w8nn85prsvsAq0X6B5B7OdoOBv5N1SD9W
- XDv4CzRwedDuTgxW5Nmyr0zACnmOjBi8j8ntjbeS49kaYA+4Qf8ECjCGeMD7bacjUFbo
- +8j8XGx/LluXSt/MgPUwVQHAnHNGzvfcyv6I8x2P8xQwyTGJ4ahQV1HEEJTvRLZEHPsF
- bhKc+9vvvwFNCnubmZ6QLlnpJlUpHAd2u2HQIfL5tAIFGN7/qcS2yNW84aXlk9kfd6tr
- NwXQ==
+ b=UduGORwOGXnqUaZUvC+4EHGVrYv9kLLCVAQd6URXUoDnEiFL74OOONZrKiWR9iN03v
+ lr2F52++ss+H2vxEiB1dd24BqbEp29Ssc7XXJRPBmk/wNwai0huJvgqJUqdlgv7wMvGR
+ M9FgzV3LBOE0oqdEcTCFuBSPZFqtBDULST74U+YB7CqylWq+l5qBD9cyxUQRLcZasfha
+ rq3vRUGCg99iMXrlhGryorll1Bi+fvzLWbVH4rcWyx9pmIUIqtJKyu5PsHXZ4x1cVmf/
+ 9L++pW3NOh0XFIcmsyn6Rh0YVItUOteeNbREI3JpctgmjcVbxoznvwx3dsyPyfxAh2EX
+ QxyA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=1J8vxuDXqLCYZZyMA7TT7r1/xNlq1o3om5nwLugTks8=;
- fh=sRUZhOrtQrMqc/eFOHKvsgkQfkY6GQJF84aRUpG8Ebc=;
- b=DMZ2bJQc/1VI2UvV7+ewxWNn2x67nrYLhtyUql7mfMyerJBCMiogAW5nFbSNbTLX2F
- 94uENTbkEAcXmt71cZIgdiAowe4RywJpoG7B4RORoI0BHPP2I1ZlQ5USZzsddB79ssiK
- afwY2dC+2HOXHSlefEmWxBwBxbMUi5edvuNtiaJCx/Wg5eQHQnKdZduNzSWMjBaALOCH
- DfvkRLAb/4ml497WGc3oQiuD4M2jyW9umqFZUPORXPbso3DRGAQo1r+b3ndeKbphw8a6
- kfnPEm2ihf0uiXAnZW8kDp8lajEuVBahVPh6XVfQAWf8SRVyEY5sXwh4kbizXGHAXCFM
- ePSw==; darn=nongnu.org
+ bh=wQ9WmKGL8giA6BBf2/BQrVAt1bLQIDDgWR/2kPbzTr8=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=oMkO1Atp7A7Eq/7ywO/FrozsKIQOQYdSyGV0dwGNYWUlqMeivfpLIThvtDUpGAwQYR
+ MDKMTo1Gu0eKh6Uk8XHyOh6MuBZu3B4XCd2QohTrVR9NaD2crTGdy6t+0WgVIzjSzTcE
+ b4QUpzj32Zz0LtQIzYpu7jsdnVPArJLafhUpgsicrOaBxFC68Xd496iUcQ97iTLFX9xh
+ HCjyhjkMNfIUSy5BQYOBJs9uC/Z/E4uXAP665bbtfgtF3gm4xoglRDnYvLQnjk8gf8kX
+ PTtgKQeI0uWl4/4fwPHGgHKtYQ3VewnCbK24Cn1wRAZB4ywyAUo6MgmeMmfFf+ijPvMd
+ RPyQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788864775; x=1789469575; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788865032; x=1789469832; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=1J8vxuDXqLCYZZyMA7TT7r1/xNlq1o3om5nwLugTks8=;
- b=WGzARZg56lUX6zayMPz3u5dFEcw4LLAQ4X1h1BN0naGpmiGWxtJkyntiYGUDKWewrM
- n8cfU2w96vF8XqUax9iMvcKeADvuUUHmECq9DBpZPgjPB6nSYJ4IBmxAQ88BOF72EuAu
- QG8+BK9qgdqFdK4+b1XWuE0vgSeTZ7T6v7lHLZpbuIaAeSdD6LHcNA5OqZRVBTK+ihDk
- 2EQVlmzu6ulKIdXsNnUaVotudCeaq4Ocd+wNYtssrOLqsvwO40woQRKx8VfMwlDYqh7w
- ArkWbgaIy7LQ7I0z/SRLdKS82dGB7EWT05mJgdqiJz3roQM77IWHi5b+FZlftwDp9uWB
- wzHA==
+ :content-type; bh=wQ9WmKGL8giA6BBf2/BQrVAt1bLQIDDgWR/2kPbzTr8=;
+ b=vQnJmQSX9Uh1felo6elQlvYbJNcwqZab5gLgmPwE0C/jhdmZFtGqgtd8sJAPz1mX/0
+ 0RpAAfzWsfqB3/ZCOpFUY8LKR9frHtDpXj+ULM3arBviGs+uZes3vmJW6CUF16tLSpkE
+ Jc4JO3E5m/qzYZ49+SpqBirZTu8Jts3AQ56GBwiU5hA2XVjbTPjUqYvIOf/UtgucFqnL
+ e9+9RYAGvqux0mztmbN5uvqHbirvF7EuWl6YlCRdMzwkUFHKagWHbhGqgkS+uhDWEUHD
+ RKxUrJOee2k2o078/OCb6EDJtz6vm6dmOE+B8UaWhM4q5xP8GeW3eEJ9uJ0C7nEE9GGf
+ LlzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788864775; x=1789469575;
+ d=1e100.net; s=20251104; t=1788865032; x=1789469832;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=1J8vxuDXqLCYZZyMA7TT7r1/xNlq1o3om5nwLugTks8=;
- b=Q11PtFPYhnm9QeswDO+gjhPDwkjHXZLSUkSLdElLmoDOmvnN14CZEwqRpRXpW1ThIu
- p9tX7Z+HNXYKnKIAXZDk5XxkLR21S8qUQwVaSii/QLUsSm9E3DicUqRlxXya/Pw3qP4e
- vRXPR/RXWfP7fBvoVHqUVVy/zUyYL6PcJ9+catQLrYdRiWH54oSqPtrUo7U2Ns2pQf4c
- 1H/Ixi/cIB/CJDUTKo8Tc3WlYjXqf70SmpHnX/P+p1GxeOFuCETO6wBpLps4OA2A7/qW
- uP5ZRUPGLdBbAZ3J4RCb/X8utnhq3hw4XTUZogYAmWinEDnRCGd6acXgjH/214484sME
- tusA==
-X-Gm-Message-State: AFuF++mBDNxEqhgFczPNv3tOhVxS/EOkmSajoph0MuhSS5fGwOLfL4U0
- 8Beue3lE7hCPub7YLcUqLDVij20HPWjAel7r3celXKL5LlbcL54Eozbx0UkRzFV/Cahkb1Mc3mf
- 0WsgBwm9L+usHjxqmoAbQszycSldOIXZoIXi5OqvYt25EcTgoSeXe8EI=
-X-Gm-Gg: AYBFou0S3nPWTvo1Ua8pSuTRzZ9WIi82wDX/BHBdC0aTc4WpwUGJX0/+ZowdyyvXue0
- 6lo/KDHsr2a+GqAx2mq9EdIBaB1vxLVPMemVkdBaBXgzsOGLoOfY8DHWICp9RnVmBU4IYBlpw6R
- 9Jh4bJ+XQLSLkY6GXBXqR282SWGnmD/DyZriH+0Xz4NZKv2IeIXj/4+whEA2uYDhkutsEEsXtMg
- iJmeIZ2Yho9k1rM/2hhtW3B7H7Bdr379AhB9QNOZuhjsN5j4XF3DAEclo3kqdTf5H4iobhBp7Eb
- ljlhbaitbUmSyr9nJyOVUXDkK14ACIeUUP+QCZTcJPcI6p9AfnaAgYmT1vI0hSYIwdbkb70dq3C
- QyLDIW3GAf3jai9X+HtLtRABFzfHg
-X-Received: by 2002:a05:690e:12c7:b0:66b:300b:e95d with SMTP id
- 956f58d0204a3-66fb5b2190bmr7753144d50.50.1788864774856; Tue, 08 Sep 2026
- 03:52:54 -0700 (PDT)
+ bh=wQ9WmKGL8giA6BBf2/BQrVAt1bLQIDDgWR/2kPbzTr8=;
+ b=mT6qxcWIePBYBRyjQDQa+95FgWsIR/qd460jetrmto7AfOR3u6cXszSQjVNkASKTJY
+ CT4MyzwRdb3XCv4j6cUfLVlDCwe0kLxbLg1nQypb+XJw+3PEfEtrFsqZLvHFYhWUYHBY
+ cgeBCLoCXuvRPMdslgZBzjWGMSoZ1s2xBO/hWfy3wQClwjfv8TJE8mFDhvl6mPrEz9zt
+ uSKCvY3+5AChC7Lzx4lDbhwL0hF5kWPMR6Cjt17Z54z0F7TmjRG4FcMN6GujO383NfK9
+ rnR40SPytmugVD+bmXgQV/8UO3h9H3qwnxaU/O/huxZwXvj9k7/m9G6Jdw77DSBQsqx1
+ iRMQ==
+X-Gm-Message-State: AFuF++krpSahOIh8/KIfmXXmKa8e2+w++cIGgajdQXtBBRlpVpaNpT+B
+ TicNUBmBpZCQYw/tBE56/R82mGpSnuL/aEF0oOhNRJm955k2KfS+cJHcEP+wkPVKTj+/3nd0UDA
+ 7CoXR7iWxyNpfSuIEJDsz9kEdsyX/DI4izX9Yu2sECw==
+X-Gm-Gg: AYBFou0PBNgglaDtBxHcQVsgTHt6fF4xGy3B0Nby4HCkBI5io0e7v2kPna1V7/+UcB4
+ a/cCr3IQLfc1S8uoGibFQnSPxNlnphrzDvb1q0U1raSNnkNwvSmpCjN8KlEp0XKnFC6E9Ui4Y0s
+ GieUxRsEjavu+W1jIZ9iYXNJCb1UHo6d77HIxZdfP2cayn+dxHh8LWbbj1RnT3BV1qnsVxp/K6F
+ VQmEKzZuT5ytEua4IRqM66R/X2HS+N5nqYrus2sGRQsN3/YlBlIGOr11V5iUq1KPNHvheIwmDQe
+ 2wEjknp6d0tY88ETP3oIRVVyTuOG40NHCB6qJljywlycfodfPL8HtRIOWLKIVnEdOWCy4rIvNVI
+ qjWpETcUjaidArahEyrIwa1LOmPmA
+X-Received: by 2002:a05:690c:a4db:b0:873:5c0f:28e with SMTP id
+ 00721157ae682-8735c0f0462mr53492697b3.56.1788865031998; Tue, 08 Sep 2026
+ 03:57:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260831081709.77725-1-guobin@linux.alibaba.com>
-In-Reply-To: <20260831081709.77725-1-guobin@linux.alibaba.com>
+References: <20260828222639.1432046-1-richard.henderson@linaro.org>
+ <20260828222639.1432046-7-richard.henderson@linaro.org>
+In-Reply-To: <20260828222639.1432046-7-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 11:52:42 +0100
-X-Gm-Features: AcwNN1UHDdNqB3wZGi8w9Eo6D3c4n-sqm2lzOe75ZmJG0Ix4a2aCCW-u2jtv1yE
-Message-ID: <CAFEAcA-SGEY4+fhFTVTcRVieqh_eTQWAcRzOAQLas_oPnZ31aA@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/bcm2835_ic: reject out-of-range FIQ source values
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, philmd@mailo.com, farosas@suse.de, 
- lvivier@redhat.com, pbonzini@redhat.com, qemu-arm@nongnu.org
+Date: Tue, 8 Sep 2026 11:56:59 +0100
+X-Gm-Features: AcwNN1XLGSYVeUq5PVnGc0rGldvQYhb4Njf0MMqwKd0YpvF_bZke504yFYXChrY
+Message-ID: <CAFEAcA_i+bbSavAZ8tBBaspwn7rn41di-n1f24jfrq49S_McPQ@mail.gmail.com>
+Subject: Re: [PATCH 06/13] target/arm: Add isar_feature_aa64_uinj
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
@@ -115,25 +115,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 31 Aug 2026 at 09:17, Bin Guo <guobin@linux.alibaba.com> wrote:
+On Fri, 28 Aug 2026 at 23:27, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> The FIQ_CONTROL register accepts a 7-bit source selector, but only
-> sources 0..71 (64 GPU + 8 ARM IRQs) exist.  Values 96..127 cause
-> bcm2835_ic_update() to call extract32(arm_irq_level, start, 1) with
-> start >= 32, which trips the assertion in bitops.h and aborts QEMU.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/cpu-features.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
-> Reject writes that select a non-existent source and log a guest error,
-> so that a malicious or buggy guest cannot kill the emulator.
->
-> Add a qtest that verifies both valid and out-of-range FIQ source
-> selections on raspi3b.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4368
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-Applied to target-arm.next, thanks.
-
+thanks
 -- PMM
 
