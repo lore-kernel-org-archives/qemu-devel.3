@@ -4,123 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D55C79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB9FC79FA0
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:36:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rEi-0006TO-U1; Tue, 08 Sep 2026 04:31:25 -0400
+	id 1x3rJ3-0007B5-Io; Tue, 08 Sep 2026 04:35:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x3rEg-0006TB-PX
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:31:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x3rJ1-0007Ae-H4
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x3rEe-0006dj-Rs
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:31:22 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x3rIz-0007EW-Uc
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788856278;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1788856549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:to:
+ cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6S3WwBXAO3+K05ownmDV0Gb2hLBw2kuyviqC7B/n8Ck=;
- b=TQ5gVBE78ZYb66kc2IXI4pHEB74mhQZnXO9AQ3dIVqxF5Ql6wSRCbJCf52PKz/ncjyzViR
- +VN8v/Xeo8Zp4ha/dtSCaP6Kyijw56DYhNp1opIc0AS0zQRJyo7bb9cd7gq1O/7wNLdAfF
- d7pYNMqjYLwHVU8pgxg2XP3r3zsbJgM=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-17hvAqVxPduNY997a02Zlw-1; Tue, 08 Sep 2026 04:31:17 -0400
-X-MC-Unique: 17hvAqVxPduNY997a02Zlw-1
-X-Mimecast-MFC-AGG-ID: 17hvAqVxPduNY997a02Zlw_1788856276
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-396638f9a18so2933939a91.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 01:31:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788856276; cv=none;
- d=google.com; s=arc-20260327;
- b=OiOz/Tj4sMYdVBqL+0XWQlFXZJtG5pLU2NJk2MmZMU+ZU71PxSrFnGbfunQH1+mv4n
- f7NpLBOqc/YzWU2e7HUjiyn0YfTZXj+BpdDTeh8OdPuH1syq2y82pRv6KbttrxTD88Pw
- VKNX60XRzFzA1NWfSst+YpByeBJA5M0lqXmdofaXuShwe64FuD0yH5nFzAYsBZUbF33K
- n9RvlPlR4ORH83i9l3bFZ8DGvBfMN89w/Ec8+ika/l+6HbKcs+bTsi9lciI45kVXoo9G
- DuURZrPIZB6IxwvltV2JfAYf+R+t9ygKrFKHCLJoTd/lXhrJ1LC3Y9XUFQEu+kiiFi5E
- /ESg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6S3WwBXAO3+K05ownmDV0Gb2hLBw2kuyviqC7B/n8Ck=;
- fh=W6CxA2oz1yGR/6IGrxMgKl47k/4n4yGwHaf3TFfFPco=;
- b=lgqyoMj2YmAOJOaL6Ps0/cAXL63GZQ6dBJgOtezjr4rHwOBMl2zrmZf4+Tjw4plImP
- WwGyVCcwWC4UKvRg/mfvn0A7PYR4jksyadanC9EjLr8uS+xFaFpeQZ2ACGQiEZkCANWd
- 0CWqgLceBCMeLDd6P1mNbsXxqMTJ6gPaBAbBGfsieRmvvIYTKjQ+BuulDlUUnfEMhefs
- 1muR1dz6VutrKhy+CIT1EvZZ5fSgcZ5StlMd8rTrn82dX1XKfsOdqBjYXdk32Doswjt4
- wmagwUWcTf5u8IKFm5JzPfsXJbg3zyb0cYz4u37VsvKrSmGK5hklYL91TUDufseADBlJ
- 3UtA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788856276; x=1789461076; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6S3WwBXAO3+K05ownmDV0Gb2hLBw2kuyviqC7B/n8Ck=;
- b=HH06uc/Ibg2XUq5rJ2P3HmLSRbhoYPo0Sj6qVAQy7xjyqA+TS7Q+8UMmz16TdWas1x
- Y7GvgMJrPni/lNAXSqI87/NnovzakMPKl9M6Bs8ktvqW/kYAdLCso3YAkqME5ISe5Typ
- CMe/txBxYrgTMJ8yGzSeRsqPOhVYDcXS+JqQqT8XJJ/Won7w3SJfUNEbj+dYwYRMGkPM
- TXhLgg3vnSOqsiHxofn1T1y7CSxgzPfFRwhWY3XsyyCB+EAwzmHWIeaTDmzT8Ne1uyWY
- VUhC0x7xrwwBCTGYChGLyO7+oW+WOiFYIAyAEfYFNZZhp+L8Tbt6+b0DNawrO4b6QJ/N
- /TqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788856276; x=1789461076;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6S3WwBXAO3+K05ownmDV0Gb2hLBw2kuyviqC7B/n8Ck=;
- b=kAypKjI3zqvD9H43Bl6UFSTZXr4DOSHVbW8dWnF+XTyFPtNCdjgsMq4xzIaXVOlaUB
- xlVa57AGlNEgFbpm5fdy0tYsUpK3CfY/w+5oAqiNYEQKrf5M9c1AHyZzRa/UOcmez94L
- RAZyxvK0FRG1sL8wJyn/ZWa7KehMOSPfnvCf8wsWNK9Y0FXfczYxY7HtUrZxT2TdfVo/
- qMI2F/oIU4oH9nDlh21BBxRazcNFRZ8uHek2E72O0HUEYGE2kxgpWVu8DH1GJeAruqAn
- ri5gttYcXe7Di4rLmWjiEsJJY7KmBckAQ6DVjtaEgtbxnckQaAuCgKO/r7rGCP0jj/qA
- 2xzg==
-X-Gm-Message-State: AFuF++lxmHc8g2YKBF/DRWIEBxCZ27idbmGP08NQIPV6qKKsdS9ixV2p
- qQncuTTW8oL6EjRGA2KaZu6wim4Y1cQwUnHNcVlD0Y9msIGT+FYXvMo/N5yXTLno5Q1j1qme0Xf
- 0U9I5bkaSJjrNn20OgB1II4Wju0hCFRwLgEIsStTrlG6dX1M6GKed+oZEG7ejUaIk3APv/SpAbV
- GARGfq02p7zu7c0Ff/1dYYuQmJsPD33ic=
-X-Gm-Gg: AYBFou0sXwJtaTesso1B6YhxjYZNf8p+AbBUGO9jZjE8N1xW7jw7pajXBTVXQzMN/qG
- vMfFrKbibqsJ1sC45i/3h6TsUj4xNucAcGwldS83OAQ5Ih7jNKVnO45xRHLhTwlWWkdP0yWRlly
- tskUWoD3xA9k/jVlM/NrtZbTk079osGgJETDrRh/0n1Mp8uFChNnR2gc6GoHDSfmJWuJl4UC5u1
- OzmmkcNuv9JPjg7Dq9hlPPd3O5p0YjKNA9fGBVkuf4yQKkybmiqBS7bh2DcLYAWCi/944aY6waI
- uA==
-X-Received: by 2002:a17:90b:5844:b0:398:e436:370 with SMTP id
- 98e67ed59e1d1-39b260ff0e9mr43930597a91.2.1788856276044; 
- Tue, 08 Sep 2026 01:31:16 -0700 (PDT)
-X-Received: by 2002:a17:90b:5844:b0:398:e436:370 with SMTP id
- 98e67ed59e1d1-39b260ff0e9mr43930517a91.2.1788856275281; Tue, 08 Sep 2026
- 01:31:15 -0700 (PDT)
+ bh=MJ3JKz6ii3UHXbYgbY5KF1obV3J6lMcORoFh8rbcuII=;
+ b=QAkSuZdUc6H/w7iOXMbZf25b4o+M+fQg8OpdykNGRMYXjV0hP/+wLuawPVhHc8Yp7PqBIc
+ LY8hyvTH12tk88vzkvclfyhqNe1TyvHmxibI4CWaoRoa65I96MwhVr8EDvSJ89UjkLX7js
+ BoAJH4QuYNB5vOUVF9jf6mgtQbiJGEY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-bVz0ejSrOj6BOwzE_Z2lNg-1; Tue,
+ 08 Sep 2026 04:35:45 -0400
+X-MC-Unique: bVz0ejSrOj6BOwzE_Z2lNg-1
+X-Mimecast-MFC-AGG-ID: bVz0ejSrOj6BOwzE_Z2lNg_1788856544
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01C2919776B4; Tue,  8 Sep 2026 08:35:44 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D3CAF1800598; Tue,  8 Sep 2026 08:35:42 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 08 Sep 2026 12:35:33 +0400
+Subject: [GIT PULL 01/10] tests/functional: replace HMP with QMP
 MIME-Version: 1.0
-References: <20260907221838.519111-1-rtvernam@gmail.com>
-In-Reply-To: <20260907221838.519111-1-rtvernam@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 8 Sep 2026 12:31:03 +0400
-X-Gm-Features: AcwNN1VNaOIeiYp74hi_hA5Wt0K9xnz4usjkVi011vvz5JP6mlgXbqonP7bQCPM
-Message-ID: <CAMxuvaxP-4WhUtue3J9o946t_x308r09KtE82Wbdb2Kx_tZZMQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/dbus: skip GL scanout dispatch for placeholder surfaces
-To: Rick Vernam <rtvernam@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260908-nohmp-v1-1-7a3d1f0f1caf@redhat.com>
+References: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
+In-Reply-To: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
+Cc: peter.maydell@linaro.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4380;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=Enc5oozE2GmO4F1KrQprCafEbYY2rlyNKpoQ+I9nrjg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jYQiMuIqXDCM+1IouDi6PKF28zs3JvnP0Kc
+ 0BEZuq2oiiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
+ 5Tv9EAC6NLaJk0nqjmLQMFHyl5yD7gX0xvZmPPRAgOD1Wup8uvyukbARMAXgJksloaW3m8coe0C
+ zzMEe0DefD8J++dPkXe784YVotGqCaQemQ9CC6/klbqvorqv+JGtL1lqeApHOBDBF8/4aVham1x
+ MyOMhtvD+9LME9oTsQqT5xMwOge/5f0TYWE6JuWOuAMCy6Fj5r+OGEAAn1GnY22+svXzbCCrwyS
+ rVQuma/7y6QDEJmLmcXQaFE0Wla7l7cQnH+UcezFadb8beegVfb2UTn4ieW1ZUosFlsAt9FSkZw
+ z2q7OmSPeCeJ6GQjYBZu1lWCT1s1SxC5F7V0vWFQJv+KFWv53f6SWL6ChTt+V1+elCi4sCcZ6ND
+ jnL/jVHGPHkgZH3xblbS7e5fYjPAwBlVBxnesyf3TNPU5kAVclckfWLb5BFsJXhH+Bp8j/Zf9R+
+ h5Sq4bkI1Efb8ZX4rbp9uE6gukNQSFt+dphZzhOW/fZSwSSZ0TIMWneBNGTN9KlENAVpjklsmMv
+ H+iRxkgie/qUdgYmqK7mj/Jp6WnOlsSGSVV/YfIbD9esk3NRZ3QgI9lEQbaHe/bd+6Dvso8NI3Y
+ x3XMRdzbxeYmoPxNOMZ3llHG4eqoStehVu4NBiucX70n714bKuMMzF4OkRj4GO8fxCZfjHYMRTM
+ USY6Uhe9QwETUXA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 23
+X-Spam_score: 2.3
+X-Spam_bar: ++
+X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,60 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Replace HMP with QMP equivalent.
 
-On Tue, Sep 8, 2026 at 2:18=E2=80=AFAM Rick Vernam <rtvernam@gmail.com> wro=
-te:
->
-> When using -display dbus,gl=3Don together with a virgl-capable video
-> device (e.g. virtio-vga-gl), a guest-initiated reboot aborts QEMU
-> with "dbus_scanout_texture: Assertion `tex_id' failed"
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ tests/functional/arm/test_integratorcp.py | 13 ++++++++-----
+ tests/functional/m68k/test_nextcube.py    | 11 +++++++----
+ tests/functional/mips64el/test_malta.py   | 13 ++++++++-----
+ 3 files changed, 23 insertions(+), 14 deletions(-)
 
-I do not observe such crash. How did you configure QEMU? Can you
-provide a backtrace?
+diff --git a/tests/functional/arm/test_integratorcp.py b/tests/functional/arm/test_integratorcp.py
+index 23ae919359d5..b79e81393547 100755
+--- a/tests/functional/arm/test_integratorcp.py
++++ b/tests/functional/arm/test_integratorcp.py
+@@ -14,6 +14,7 @@
+ 
+ import logging
+ 
++from qemu.qmp.qmp_client import ExecuteError
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
+ from qemu_test import skipIfMissingImports, skipUntrustedTest
+@@ -72,11 +73,13 @@ def test_framebuffer_tux_logo(self):
+         self.boot_integratorcp()
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+         wait_for_console_pattern(self, framebuffer_ready)
+-        self.vm.cmd('human-monitor-command', command_line='stop')
+-        res = self.vm.cmd('human-monitor-command',
+-                          command_line='screendump %s' % screendump_path)
+-        if 'unknown command' in res:
+-            self.skipTest('screendump not available')
++        self.vm.cmd('stop')
++        try:
++            self.vm.cmd('screendump', filename=screendump_path)
++        except ExecuteError as e:
++            if e.error_class == 'CommandNotFound':
++                self.skipTest('screendump command not found')
++            raise
+ 
+         cpu_count = 1
+         match_threshold = 0.92
+diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
+index d917cf5424fe..f3d92034b127 100755
+--- a/tests/functional/m68k/test_nextcube.py
++++ b/tests/functional/m68k/test_nextcube.py
+@@ -9,6 +9,7 @@
+ 
+ import time
+ 
++from qemu.qmp.qmp_client import ExecuteError
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import skipIfMissingImports, skipIfMissingCommands
+ from qemu_test.tesseract import tesseract_ocr
+@@ -39,10 +40,12 @@ def check_bootrom_framebuffer(self, screenshot_path):
+                 break
+             time.sleep(0.1)
+ 
+-        res = self.vm.cmd('human-monitor-command',
+-                          command_line=f"screendump {screenshot_path}")
+-        if 'unknown command' in res:
+-            self.skipTest('screendump not available')
++        try:
++            self.vm.cmd('screendump', filename=screenshot_path)
++        except ExecuteError as e:
++            if e.error_class == 'CommandNotFound':
++                self.skipTest('screendump command not found')
++            raise
+ 
+     @skipIfMissingImports("PIL")
+     def test_bootrom_framebuffer_size(self):
+diff --git a/tests/functional/mips64el/test_malta.py b/tests/functional/mips64el/test_malta.py
+index 163bbaf5ca36..4544f950d96e 100755
+--- a/tests/functional/mips64el/test_malta.py
++++ b/tests/functional/mips64el/test_malta.py
+@@ -11,6 +11,7 @@
+ 
+ import os
+ 
++from qemu.qmp.qmp_client import ExecuteError
+ from qemu_test import LinuxKernelTest, Asset
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
+@@ -154,11 +155,13 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+         self.vm.launch()
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+         self.wait_for_console_pattern(framebuffer_ready)
+-        self.vm.cmd('human-monitor-command', command_line='stop')
+-        res = self.vm.cmd('human-monitor-command',
+-                          command_line=f'screendump {screendump_path}')
+-        if 'unknown command' in res:
+-            self.skipTest('screendump not available')
++        self.vm.cmd('stop')
++        try:
++            self.vm.cmd('screendump', filename=screendump_path)
++        except ExecuteError as e:
++            if e.error_class == 'CommandNotFound':
++                self.skipTest('screendump command not found')
++            raise
+ 
+         match_threshold = 0.95
+         screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
 
->
-> virtio-gpu's device reset path blanks each console via
-> qemu_console_set_surface(con, NULL), qemu_console_set_surface()
-> in turn substitues a placeholder DisplaySurface.  The placeholder
-> DisplaySurface does not have a GL texture.
-
-Before calling gfx_switch(), it calls gfx_create_texture()
-
->
-> Other GL-capable UI backends already guard against this: both
-> sdl2_gl_switch() (ui/sdl2-gl.c) and the 2D SDL path (ui/sdl2-2d.c)
-> check surface_is_placeholder() before touching GL-texture state.
-
-Not for this reason though, afaict. (for secondary/disabled screens)
-
->
-> This patch adds an equivalent check in
-> ui/dbus-listener.c dbus_gl_gfx_switch().
->
-> Signed-off-by: Rick Vernam <rtvernam@gmail.com>
-> ---
->  ui/dbus-listener.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-> index 2e2f6ba418..5f627f6acf 100644
-> --- a/ui/dbus-listener.c
-> +++ b/ui/dbus-listener.c
-> @@ -861,6 +861,9 @@ static void dbus_gl_gfx_switch(DisplayChangeListener =
-*dcl,
->      trace_dbus_gl_gfx_switch(new_surface);
->
->      ddl->ds =3D new_surface;
-> +    if (surface_is_placeholder(new_surface)) {
-> +        return;   /* nothing real to scan out; avoid dereferencing a non=
--GL surface */
-> +    }
->      ddl->ds_share =3D SHARE_KIND_NONE;
->      if (ddl->ds) {
->          int width =3D surface_width(ddl->ds);
-> --
-> 2.55.0
->
+-- 
+2.55.0.543.g5ebe2ebe4ea8
 
 
