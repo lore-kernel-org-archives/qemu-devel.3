@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0267C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0690C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qLx-0002CE-53; Tue, 08 Sep 2026 03:34:49 -0400
+	id 1x3qLx-0002CG-HR; Tue, 08 Sep 2026 03:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x3qLv-0002Af-3K
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:47 -0400
+ id 1x3qLu-0002AF-O5
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x3qLr-00006o-Mi
+ (envelope-from <maobibo@loongson.cn>) id 1x3qLr-000070-9K
  for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8CxKvCLup9qsrcJAA--.27845S3;
- Tue, 08 Sep 2026 15:34:35 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bxn9GOup9qtbcJAA--.27746S3;
+ Tue, 08 Sep 2026 15:34:38 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJDxDc+Eup9qSQ0dAA--.29522S4;
- Tue, 08 Sep 2026 15:34:34 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxrM6Nup9qVA0dAA--.29211S3;
+ Tue, 08 Sep 2026 15:34:38 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Song Gao <17746591750@163.com>
-Subject: [PULL 2/5] hw/intc/loongarch_dintc: Add
- loongarch_dintc_cpu_by_arch_id() function
-Date: Tue,  8 Sep 2026 15:35:45 +0800
-Message-ID: <20260908073548.3249551-3-maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
+Subject: [PULL 5/5] hw/intc/loongarch_extioi: Add extioi interrupt status
+ display
+Date: Tue,  8 Sep 2026 15:35:48 +0800
+Message-ID: <20260908073548.3249551-6-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260908073548.3249551-1-maobibo@loongson.cn>
 References: <20260908073548.3249551-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxDc+Eup9qSQ0dAA--.29522S4
+X-CM-TRANSID: qMiowJBxrM6Nup9qVA0dAA--.29211S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAFW5JFyDKryxGFyfKw4xKrX_yoW5AF1Dpr
- Wxurn0gr1UAanrX39xJa4rZr4fCrn3u3W2q3WakF92kF4kXr15Xr48GryDXF9Fka4UWr1j
- qwn7J3WUWF13JFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxWF1fAFyrGFy5GF48ZrWfCrX_yoW5Kw1rpF
+ 43uFW3Wr4UGanxJr9xWayDuF1rtws3ur12qFZFv348uayUGryDuas2qry7XF4UCws7t3Wv
+ kwn5tryYgF1DArcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
  Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
  14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
  0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
  7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
  04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UUUUU==
+ CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1LiSJUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -77,100 +77,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similar with IPI, add function loongarch_dintc_cpu_by_arch_id() for
-dintc driver. It searches dintc device from physical CPUID, also it
-used binary search method, rather than one by one with common API
-cpu_by_arch_id().
-
-And use this newly added API in loongarch_dintc_get_cpu() and
-loongarch_dintc_mem_write().
+When irqchip in kernel is enabled, the register status of extioi irqchip
+is in KVM kernel. Here add interrupt status display in user side in order
+to debug extioi irqchip driver.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by:  Song Gao <17746591750@163.com>
+Reviewed-by: Xianglai Li <lixianglai@loongson.cn>
 ---
- hw/intc/loongarch_dintc.c | 49 +++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ hw/intc/loongarch_extioi.c | 58 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index 94d418261c..c01f1fe07e 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -26,6 +26,25 @@ FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
- FIELD(MSG_ADDR, CPU_NUM, 12, 8)
- FIELD(MSG_ADDR, FIX, 28, 12)
- 
-+static int loongarch_dintc_cmp(const void *a, const void *b)
-+{
-+    DINTCCore *dintc_a = (DINTCCore *)a;
-+    DINTCCore *dintc_b = (DINTCCore *)b;
-+
-+    return dintc_a->arch_id - dintc_b->arch_id;
-+}
-+
-+static DINTCCore *loongarch_dintc_cpu_by_arch_id(LoongArchDINTCState *s,
-+                                                 int64_t arch_id)
-+{
-+    DINTCCore dintc, *found;
-+
-+    dintc.arch_id = arch_id;
-+    found = bsearch(&dintc, s->cpu, s->num_cpu, sizeof(DINTCCore),
-+                    loongarch_dintc_cmp);
-+    return found;
-+}
-+
- static uint64_t loongarch_dintc_mem_read(void *opaque,
-                                         hwaddr addr, unsigned size)
- {
-@@ -49,23 +68,20 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
- {
-     int irq_num, cpu_num = 0;
-     LoongArchDINTCState *s = LOONGARCH_DINTC(opaque);
--    uint64_t msg_addr = addr + VIRT_DINTC_BASE;
-+    uint64_t msg_addr = addr + VIRT_DINTC_BASE, arch_id;
-+    DINTCCore *core;
-     CPUState *cs;
- 
--    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
--
--    /* Validate cpu_num against the configured number of CPUs */
--    if (cpu_num >= s->num_cpu) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
--        return;
--    }
--    cs = cpu_by_arch_id(cpu_num);
--    if (!cs) {
-+    arch_id = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-+    core = loongarch_dintc_cpu_by_arch_id(s, arch_id);
-+    if (!core || !core->cpu) {
-         qemu_log_mask(LOG_GUEST_ERROR,
--                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
-+                      "loongarch-dintc: no CPU for arch_id %"PRId64"\n",
-+                      arch_id);
-         return;
-     }
-+    cpu_num = core - s->cpu;
-+    cs = core->cpu;
-     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
- 
-     if (kvm_irqchip_in_kernel()) {
-@@ -148,15 +164,8 @@ static DINTCCore *loongarch_dintc_get_cpu(LoongArchDINTCState *s,
- {
-     CPUClass *k = CPU_GET_CLASS(dev);
-     uint64_t arch_id = k->get_arch_id(CPU(dev));
--    int i;
--
--    for (i = 0; i < s->num_cpu; i++) {
--        if (s->cpu[i].arch_id == arch_id) {
--            return &s->cpu[i];
--        }
--    }
- 
--    return NULL;
-+    return loongarch_dintc_cpu_by_arch_id(s, arch_id);
+diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+index 2999740269..06f2aa7b14 100644
+--- a/hw/intc/loongarch_extioi.c
++++ b/hw/intc/loongarch_extioi.c
+@@ -10,6 +10,7 @@
+ #include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "hw/core/irq.h"
++#include "hw/intc/intc.h"
+ #include "hw/loongarch/virt.h"
+ #include "system/address-spaces.h"
+ #include "system/kvm.h"
+@@ -420,11 +421,63 @@ static int vmstate_extioi_post_load(void *opaque, int version_id)
+     return 0;
  }
  
- static void loongarch_dintc_cpu_plug(HotplugHandler *hotplug_dev,
++static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
++                                        GString *buf)
++{
++    LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(obj);
++    uint64_t *val;
++    unsigned long irq;
++    ExtIOICore *core;
++    int i;
++
++    vmstate_extioi_pre_save(s);
++    g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
++
++    val = (uint64_t *)s->isr;
++    g_string_append_printf(buf, "  ISR     0x%016"PRIx64" 0x%016"PRIx64
++                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
++                                *val, *(val + 1), *(val + 2), *(val + 3));
++    val = (uint64_t *)s->enable;
++    g_string_append_printf(buf, "  ENABLE  0x%016"PRIx64" 0x%016"PRIx64
++                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
++                                *val, *(val + 1), *(val + 2), *(val + 3));
++    val = (uint64_t *)s->ipmap;
++    g_string_append_printf(buf, "  IPMAP   0x%016"PRIx64"\n", *val);
++
++    val = (uint64_t *)s->coremap;
++    for (i = 0; i < EXTIOI_IRQS; i += 32) {
++        g_string_append_printf(buf, "  COREMAP 0x%016"PRIx64" 0x%016"PRIx64
++                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
++                                    *val, *(val + 1), *(val + 2), *(val + 3));
++        val += 4;
++    }
++
++    core = s->cpu;
++    for (i = 0; i < s->num_cpu; i++, core++) {
++        if (!core->cpu) {
++            continue;
++        }
++
++        irq = find_first_bit((unsigned long *)core->coreisr, EXTIOI_IRQS);
++        /* No pending IRQ */
++        if (irq == EXTIOI_IRQS) {
++            continue;
++        }
++
++        val = (uint64_t *)core->coreisr;
++        g_string_append_printf(buf, "  CPU[%d] ISR 0x%016"PRIx64" 0x%016"PRIx64
++                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
++                                    i, *val, *(val + 1), *(val + 2),
++                                    *(val + 3));
++    }
++}
++
+ static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_CLASS(klass);
+     LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
++    InterruptStatsProviderClass *ic = INTERRUPT_STATS_PROVIDER_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     device_class_set_parent_realize(dc, loongarch_extioi_realize,
+@@ -433,6 +486,7 @@ static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &lec->parent_phases);
+     lecc->pre_save  = vmstate_extioi_pre_save;
+     lecc->post_load = vmstate_extioi_post_load;
++    ic->print_info = loongarch_extioi_print_info;
+ }
+ 
+ static const TypeInfo loongarch_extioi_types[] = {
+@@ -442,6 +496,10 @@ static const TypeInfo loongarch_extioi_types[] = {
+         .instance_size = sizeof(LoongArchExtIOIState),
+         .class_size    = sizeof(LoongArchExtIOIClass),
+         .class_init    = loongarch_extioi_class_init,
++        .interfaces         = (const InterfaceInfo[]) {
++            { TYPE_INTERRUPT_STATS_PROVIDER },
++            { }
++        },
+     }
+ };
+ 
 -- 
 2.54.0
 
