@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16317C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 17:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B840C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 18:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3zoT-00078g-BX; Tue, 08 Sep 2026 13:40:53 -0400
+	id 1x40Jo-0003N8-UO; Tue, 08 Sep 2026 14:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3zoM-000789-RJ
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 13:40:47 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3zoL-00016Y-90
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 13:40:46 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-857ff9fef54so45955997b3.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 10:40:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788889244; cv=none;
- d=google.com; s=arc-20260327;
- b=GeXfAsbjtpuMfNngZU3pn/7fkxDPKvM9tLxMxztq2cPoBDsr0Y2mCsCMNKp7CzHlPA
- pWmiwLKmrff334JDkbtBoT+DUVKXXHywQgsPxBn6Lm+KbbGsr+dubRlMVFpeqfNvs9U/
- 4jJfk5Zf6bME6cffDBJApOAfLPBvQhlVDHNrRz8b2QumCrecaCdpqkD8gJ4PWO5BYWYG
- TLF2dGLONTwp9NP/lG89vfZzhshm+c8gaXRJXKv0ZI3oImHOcY9QaBz8OLKNobhTrP7A
- LmbqIn0vcvy282eZmuNyS6OgqyC2tmKakhrRCMJlbY6VfrJ0wANkKddaMkJwjhpAmeX5
- fHDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mDZeK/hP5+0CyeUFwevSlRMIrpib5V78bSozvkyPg8k=;
- fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
- b=dpDTRB3aVP23zlkCbeav0I8cOJiS7KM8yb99A+OgRLpN21JRTEw2HkMelNx4prc7wH
- dxPlvtBaL2P7/JUZBTaWLOO34ON7Qrw7X/pr7l4pmbjCMEysJfReVyb8pdbe9BnJJSND
- Iul9d8v6wv7R89JGQdzx/jGFQfefahxD1/sDHmEC7hyDCqnOkhOXsCTZ5ANd9lrYQYB+
- LT6mBLz/OImBNVc7YYRsevmZkaj9tGwEPcXXogERpDHpm8Qr9LmXf+sp9ZHu5A30OemC
- k8AGC6TWM1XffNBGKgCsqFUosef1xAxttZkzNtXJU7c0r4w2/ZxANojKfmZohENbAtGZ
- 2LGw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x40Jn-0003Mw-0r
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 14:13:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x40Jk-0007CX-BL
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 14:13:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788891191;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dzT50tSUqTTSs22D9dAFFPHAr4bLdk2M3hzeiJ+Rdes=;
+ b=W9wnr22TTUVmf00W92krBPM9y0JoKwQyqX557UAM2sSYh2Zy/hVIU1eZy8Cx8yXUqVAeZy
+ q21oop6lVnv98nlpQyxXZXC/kJbNGXBKvGx1yXAM+hA++w1DH424WipbnVgZghJQAfYp1W
+ DudTfgkOuDwiMGhd3a3FVgWZj6ut8jM=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-548-6tzSrUtJMzWqcpzqH0LAlQ-1; Tue, 08 Sep 2026 14:13:07 -0400
+X-MC-Unique: 6tzSrUtJMzWqcpzqH0LAlQ-1
+X-Mimecast-MFC-AGG-ID: 6tzSrUtJMzWqcpzqH0LAlQ_1788891187
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9393ac4961fso445938985a.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 11:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788889244; x=1789494044; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=mDZeK/hP5+0CyeUFwevSlRMIrpib5V78bSozvkyPg8k=;
- b=cheeLuLvN94TrroNe8fKyluYKC2CxXgs4rYzneIVsXp3yGzoR7/I1IBWAIHaXYIJ3I
- bmi66cRh5faYBJuT+SK5mWQb7TtZdWxvR9q2tbdtMkBFDmCclHFRDKds8O4p1a/a7jeR
- hryy8tPlVf4oUHHtPrlHQOGffazHbXPXhdyg3Qh2W+FiArd6xkX4xd9YCYrmpQU9AiUo
- A7MmUH9+jka8YcE5mAuKdxNNx8cJB9NWxgHaF/+eMkr6h+gRRaK3BYKC7Q+Vp5z3z3Gt
- HDolRUZgKQvgOSWNiY+K763hldkS4d0wHtabwRQgRNl/ThktmBtt3JGNhaHVpujREfcY
- LGlQ==
+ d=redhat.com; s=google; t=1788891187; x=1789495987; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dzT50tSUqTTSs22D9dAFFPHAr4bLdk2M3hzeiJ+Rdes=;
+ b=gazst7IkfHt/SQFxXzO4rYhmhMmPj8WxZETlxyxWckDKBbCtHbKfMYzXxFf6X2mHSr
+ ID3aDSInjaA894Vv8O1DlHL1/UJ2vqIpb7B8F7YB459Who7i9Nq7fZswMcnt4lFc2AiX
+ tPLA3HGvzH3+YOELmKtnYV1rQlotPWyolpIwCp6TKnwtLMpftFTBTOjU3HJFytQx2NAc
+ wOx+Q6mjUfjvPGpbfBAqTTUhRpg/b5Pz5c2nPc7dHMCekC0SBud6Fzhy10cB+BpMkzgJ
+ JuIY1P1hu+7F7Wsg85kVwPrl2E1jSirFy+roFS9kTSvjb1QGt8G2/oVoqK1IfD3JkavO
+ PIpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788889244; x=1789494044;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=mDZeK/hP5+0CyeUFwevSlRMIrpib5V78bSozvkyPg8k=;
- b=NXhyxonS7d3EnIOHZeAJfuvxg5xEWmzyZSE7uK+I40dHbbVzVKIYejvM5xHGIYp8zQ
- HQtOVSQUPgG19d3JID9JoQH4oGFmCKnBKLrNUIFKo/5IudERfQqfY3yT8jy/mIaWhMIG
- YkU9HyWVRH/gm+d6YFcSedyOTh5B9hEWFtZGBUsx84zluL05F1kgae2Rp/XizM/igr34
- W8GCY5a44ONg0wrw+s2Cd5lp6F7QlD5kTfhUPsEY930rHzcVStyfxaa2uqQGvnGOL8R0
- jPyTp7XjV+9Ini64ySbgjXwgV4iZ1NOvcP62v9acykbjEzw7tKysGmoH36PJO4DR62JC
- eAew==
-X-Gm-Message-State: AFuF++kLbXvocXX/zjIFImrdIEy5m1V+AsY92ZiIahK6dpl20oyg3YML
- n9yWxqS8zCBm12t9aDQLlVe6+K6qv8DNFcWWMesNnpYS79hmw5qLdJ7b81/EElZAjRlwmaRLcSL
- fS/hEkDGPxVNK5+U31Mj9aohdSyErwE8W7crcmMnIqRbNr/T7ma5S8OU=
-X-Gm-Gg: AYBFou2mz/4zR1FEhiEneRlQe+uj+No2Vyy8j02rv+eASdSg3RA4NHVAzxR6AKjXTgj
- rXeN39yK4obh5c2yMhWdE1vW+TX7Ykl6JDCI2QxjQOS8GRuaQ11pxopam6d2as3ZXgk8UwnTnwn
- sM/i2SmrhyznHt5zRW/cix7M+d/AvCc7wzobZ1fCzp3P9ieHhDYA6d2VPgDZXv2jJHWRb7CvkPU
- 2xeock65Fp9qA1m+8+t7zeewcpB9xuvWP8joojFy1JZc38rUH5gojJTTdPnfEcOCfu2snUa80Z2
- qsjFDT4QXpVwWjTfVMJ+rvUOijr6T9h12uXefvK0XIoe6n8cW4BnnnENwELUpZXXCjryUDhKI0t
- O0ov4MIEssxGHgvttTamBkpAKbj9h
-X-Received: by 2002:a05:690c:c50e:b0:873:5bb2:6c04 with SMTP id
- 00721157ae682-8735bb26ce9mr80339727b3.46.1788889243813; Tue, 08 Sep 2026
- 10:40:43 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788891187; x=1789495987;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=dzT50tSUqTTSs22D9dAFFPHAr4bLdk2M3hzeiJ+Rdes=;
+ b=p8/4ZG21RsDaq/ypo0PyWYEvPzQKppXXM65Anp4b4AuQ4j8yvgJeAOLpLB2S1vzvOn
+ vL/Y45TyI6n4tHFahsE9rZyuiMzNYd3HoZ90GlnskxrHQ2ClXaf3lst1My17plQT0rXP
+ Lmszd12pg6gxf1b3nimuql0oN4EiDPZVb5XhaHpaQ7bV7GPldtGSvs/CybPuYzeA+Nia
+ yik8LtnAnpSj73z4Ir+otmtfP4VsKYaN00lpHamJDmCgQ8mp0VS0gvWDHvsHxX3oBMDg
+ Ot5EOoAyJcef/GygIcnSqGQcuDVZ7xCj347wKKTB29DKxn8iIZY3ciqEBfBS79VTrpEi
+ D1fQ==
+X-Gm-Message-State: AFuF++kK6tI/ZJ2QXWh7yYUasKckMrDQw4zntngoaF7AeZzBQO6za6j9
+ Erb9didL2Tl1sL7MM2RghPmFaQrjOT4dodMAV8EIjhQkI5HY4bA4XXkNh1hkJbg0jbhHvZBcrf+
+ 45IVWxorP00wn2LXDlD7moKvsipKYYoL4rE/spGo/spULbmYNjIzPq5dN
+X-Gm-Gg: AYBFou38zdSVfLN8V9xMtC/Mb+xqfhTmAs8YqI0CS/KU8Fi7PjGQz/o6/ludWC6OAY5
+ KyCFw2QOmjyOtXOdR217kJCVfe+Qy8UYdLXo0BCjK0eS8vV0JQGRAPSszFneFzXlbGZZXGg4JBN
+ NvB4drNSL6XGi7AJM3qTM4+wLtNGinheGHTY1Q7fckMY2LjJ/v85ej3r+I22RNx9KIYOHRebC4L
+ mdz66uWReKK0Vq86q5L5YLVGOi6kyZbhrjZdzb5epqaCOdxpkuWZj2hru+5nQQcaekRQxcynZ6u
+ 5FleakfBsUmabCoBJxwWQRKJLH9as1n78xsvUnOkN2vDg++3I8Ao6JtWpj8JP/pNcVOS
+X-Received: by 2002:a05:620a:4885:b0:938:fd60:4f0 with SMTP id
+ af79cd13be357-939803ad4dfmr3338569085a.10.1788891187045; 
+ Tue, 08 Sep 2026 11:13:07 -0700 (PDT)
+X-Received: by 2002:a05:620a:4885:b0:938:fd60:4f0 with SMTP id
+ af79cd13be357-939803ad4dfmr3338560485a.10.1788891186399; 
+ Tue, 08 Sep 2026 11:13:06 -0700 (PDT)
+Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9397fb62710sm1214445385a.28.2026.09.08.11.13.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Sep 2026 11:13:05 -0700 (PDT)
+Date: Tue, 8 Sep 2026 14:12:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] io: bounce-buffer TLS writes to avoid nagle go-slow
+Message-ID: <aqBQJenwT_GcEr14@t14>
+References: <20260907145112.852497-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20260906222551.3712954-1-brian.cain@oss.qualcomm.com>
- <20260906222551.3712954-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260906222551.3712954-2-brian.cain@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 18:40:32 +0100
-X-Gm-Features: AcwNN1VfuIeBfcirKdMNoAIt5b-CHBaUe6U9l5HO9WiLThdX_pSPk_dXrWr4qqc
-Message-ID: <CAFEAcA92z5Hqn=Rb8dH+e8-G_WUSnhruYooq_fDzEC_VYiithA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/hexagon: Fix semihosting OPEN filename handling
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260907145112.852497-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,38 +117,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 6 Sept 2026 at 23:25, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> HEX_SYS_OPEN copied guest bytes into a fixed-size buffer until it found a NUL.
-> A missing terminator could overrun that buffer, so use lock_user_string() instead.
+On Mon, Sep 07, 2026 at 03:51:12PM +0100, Daniel P. Berrangé wrote:
+> The migration code caches vmstate/ram writes into an iovec and
+> flushes this every 128kb.
 
-Do you have a link to the specification for these hexagon semihosting
-calls? Looking at this patch I'm wondering if maybe I steered you
-a bit wrong with suggesting lock_user_string():
+I am just curious how did this 128K came from. Perhaps this?
 
-> @@ -461,31 +462,14 @@ static void sim_handle_trap0(CPUHexagonState *env)
->
->      case HEX_SYS_OPEN:
->      {
-> -        char filename[BUFSIZ];
-> +        char *filename;
->          target_ulong physical_filename_addr;
->          unsigned int filemode;
-> -        int length;
->          int real_openmode;
->          int ret, err = 0;
-> -        int i = 0;
->
->          hexagon_read_memory(env, swi_info, 4, &physical_filename_addr, retaddr);
->          hexagon_read_memory(env, swi_info + 4, 4, &filemode, retaddr);
-> -        hexagon_read_memory(env, swi_info + 8, 4, &length, retaddr);
+  MAX_IOV_SIZE / 2 * 4K
 
-We no longer do anything with the length argument, which seems
-like it might not be right.
+Where QEMU has:
 
-If we know the (max) length of the string, then perhaps
-lock_user() (which takes a length argument) would fit better.
+#define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
 
-thanks
--- PMM
+And it needs to divides 2 because we always push save_page_header() first,
+which is 8B (in reality, maybe that'll also include some footers ahead from
+the last page..), then another 4K following it.  Then in average when
+hitting 64 io vectors there're 32 pages, coming up to be that.
+
+I think that is right math for bulk ram phase, but maybe worth spelling out
+a bit.. because if above holds it's not very obvious..
+
+> 
+> The QIOChannelTLS receives the iovec, but size GNUTLS cannot
+> accept iovec data, it iterates calling send for each element.
+> 
+> As a result of the migration data pattern, this results in
+> GNUTLS putting writes on the wire that alternate between about
+> 4k and 30 bytes.
+> 
+> This is triggering the nagle algorithm on migration-test for
+> many of the TLS test cases, resulting in a "go slow" for I/O
+> that eventually hits the migration timeout configured by the
+> test.
+
+Worth spell out the qio_channel_set_delay() experiment?
+
+Frankly, even knowing qio_channel_set_delay(NO_DELAY) on all channels would
+fix it too, I don't think I fully get why the hang happened.
+
+Nagle, if my understanding is correct.. should be something trying to
+accumulate small writes only, it means write can be slightly delayed, but
+it didn't further explain why even if we push writting to it, it didn't
+flush properly.
+
+Say, I understand TLS is special now with its io_writev(), being
+qio_channel_tls_writev(), split the iov into multiple calls to
+qcrypto_tls_session_write(), which is likely why the problem existed, but I
+don't think I know why multiple qcrypto_tls_session_write() (and I believe
+ultimately, assuming small but continuous write()s to the socket fd) will
+cause a hang.  Any clue?
+
+> 
+> Not every contributor reports seeing the "go slow" but for
+> those who do see it, it hits >= 95% of the time for at least
+> one of the migration TLS test cases run by 'make check'.
+> 
+> While we could disable the nagle algorithm (and multifd
+> channels already do this), that would just lead to lots of
+> small TCP packets hitting the wire which is not good for
+> throughput. The migration code flushes in batches of 128kb
+> because it wants large writes for high throughput.
+> 
+> The only way to achieve this in the TLS code is to bounce
+> buffer the writes in order to flatten the iovec. We cannot
+> fully flatten, however, since GNUTLS puts a cap on the max
+> TLS record size it is willing to send, which is negotiated
+> with the server, typically 16 kb out of the box.
+> 
+> This patch thus queries the max TLS record size and then
+> flattens the iovec into buffers of this size. If the
+> iovec only contains a single element, bounce buffering
+> is skipped to avoid the redundant copy.
+
+I saw there is also gnutls_record_cork() and the uncork(), which seems to
+resolve the same issue (I tried to look at gnutls git history but I didn't
+find any mention of why the API introduced.. though).
+
+Any thoughts on why not relying on that, say, would it work too if cork()
+at start of qio_channel_tls_writev(), loop, then uncork()?
+
+Thanks,
+
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  crypto/tlssession.c         | 10 ++++++++++
+>  include/crypto/tlssession.h |  2 ++
+>  include/io/channel-tls.h    |  2 ++
+>  io/channel-tls.c            | 35 ++++++++++++++++++++++++++++++-----
+>  io/trace-events             |  1 +
+>  5 files changed, 45 insertions(+), 5 deletions(-)
+> 
+> diff --git a/crypto/tlssession.c b/crypto/tlssession.c
+> index 314e3e96ba..cf4daf8544 100644
+> --- a/crypto/tlssession.c
+> +++ b/crypto/tlssession.c
+> @@ -653,6 +653,11 @@ qcrypto_tls_session_get_peer_name(QCryptoTLSSession *session)
+>      return NULL;
+>  }
+>  
+> +size_t qcrypto_tls_session_get_send_buffer(QCryptoTLSSession *session)
+> +{
+> +    return gnutls_record_get_max_size(session->handle);
+> +}
+> +
+>  
+>  #else /* ! CONFIG_GNUTLS */
+>  
+> @@ -757,4 +762,9 @@ qcrypto_tls_session_get_peer_name(QCryptoTLSSession *sess)
+>      return NULL;
+>  }
+>  
+> +size_t qcrypto_tls_session_get_send_buffer(QCryptoTLSSession *sess)
+> +{
+> +    return 1;
+> +}
+> +
+>  #endif
+> diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
+> index 28e419681e..b29648a0a9 100644
+> --- a/include/crypto/tlssession.h
+> +++ b/include/crypto/tlssession.h
+> @@ -369,4 +369,6 @@ int qcrypto_tls_session_get_key_size(QCryptoTLSSession *sess,
+>   */
+>  char *qcrypto_tls_session_get_peer_name(QCryptoTLSSession *sess);
+>  
+> +size_t qcrypto_tls_session_get_send_buffer(QCryptoTLSSession *sess);
+> +
+>  #endif /* QCRYPTO_TLSSESSION_H */
+> diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
+> index 7e9023570d..1c22a3fd07 100644
+> --- a/include/io/channel-tls.h
+> +++ b/include/io/channel-tls.h
+> @@ -50,6 +50,8 @@ struct QIOChannelTLS {
+>      QIOChannelShutdown shutdown;
+>      guint hs_ioc_tag;
+>      guint bye_ioc_tag;
+> +    char *send_buffer;
+> +    size_t send_buffer_len;
+>  };
+>  
+>  /**
+> diff --git a/io/channel-tls.c b/io/channel-tls.c
+> index 31ec4d236d..ba2699786e 100644
+> --- a/io/channel-tls.c
+> +++ b/io/channel-tls.c
+> @@ -24,6 +24,7 @@
+>  #include "io/channel-tls.h"
+>  #include "trace.h"
+>  #include "qemu/atomic.h"
+> +#include "qemu/iov.h"
+>  
+>  
+>  static ssize_t qio_channel_tls_write_handler(const void *buf,
+> @@ -201,6 +202,12 @@ static gboolean qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+>          } else {
+>              trace_qio_channel_tls_credentials_allow(ioc);
+>          }
+> +
+> +        ioc->send_buffer_len = qcrypto_tls_session_get_send_buffer(
+> +            ioc->session);
+> +        ioc->send_buffer = g_new0(char, ioc->send_buffer_len);
+> +        trace_qio_channel_tls_send_buffer_len(ioc, ioc->send_buffer_len);
+> +
+>          qio_task_complete(task);
+>          return TRUE;
+>      } else {
+> @@ -376,6 +383,7 @@ static void qio_channel_tls_finalize(Object *obj)
+>          g_clear_handle_id(&ioc->bye_ioc_tag, g_source_remove);
+>      }
+>  
+> +    g_free(ioc->send_buffer);
+>      object_unref(OBJECT(ioc->master));
+>      qcrypto_tls_session_free(ioc->session);
+>  }
+> @@ -446,13 +454,30 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
+>                                        Error **errp)
+>  {
+>      QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
+> -    size_t i;
+>      ssize_t done = 0;
+> +    size_t tot = iov_size(iov, niov);
+>  
+> -    for (i = 0 ; i < niov ; i++) {
+> +    /* Skip bounce buffer in simple case */
+> +    if (niov == 1) {
+>          ssize_t ret = qcrypto_tls_session_write(tioc->session,
+> -                                                iov[i].iov_base,
+> -                                                iov[i].iov_len,
+> +                                                iov[0].iov_base,
+> +                                                iov[0].iov_len,
+> +                                                errp);
+> +        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+> +            return QIO_CHANNEL_ERR_BLOCK;
+> +        } else if (ret < 0) {
+> +            return -1;
+> +        }
+> +        return ret;
+> +    }
+> +
+> +    while (done < tot) {
+> +        size_t got = iov_to_buf(iov, niov, done,
+> +                                tioc->send_buffer,
+> +                                tioc->send_buffer_len);
+> +        ssize_t ret = qcrypto_tls_session_write(tioc->session,
+> +                                                tioc->send_buffer,
+> +                                                got,
+>                                                  errp);
+>          if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+>              if (done) {
+> @@ -464,7 +489,7 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
+>              return -1;
+>          }
+>          done += ret;
+> -        if (ret < iov[i].iov_len) {
+> +        if (ret < got) {
+>              break;
+>          }
+>      }
+> diff --git a/io/trace-events b/io/trace-events
+> index ec91453335..88ebd5b478 100644
+> --- a/io/trace-events
+> +++ b/io/trace-events
+> @@ -44,6 +44,7 @@ qio_channel_tls_handshake_pending(void *ioc, int status) "TLS handshake pending
+>  qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
+>  qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
+>  qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
+> +qio_channel_tls_send_buffer_len(void *ioc, int len) "TLS send buffer len ioc=%p len=%d"
+>  qio_channel_tls_bye_start(void *ioc) "TLS termination start ioc=%p"
+>  qio_channel_tls_bye_pending(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
+>  qio_channel_tls_bye_fail(void *ioc) "TLS termination fail ioc=%p"
+> -- 
+> 2.55.0
+> 
+
+-- 
+Peter Xu
+
 
