@@ -4,64 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0129C79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 04:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DC3C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 05:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3nkh-0004jn-9L; Tue, 08 Sep 2026 00:48:11 -0400
+	id 1x3o5I-0001sC-16; Tue, 08 Sep 2026 01:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x3nke-0004gM-Fd; Tue, 08 Sep 2026 00:48:08 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x3nkZ-00019A-Uk; Tue, 08 Sep 2026 00:48:08 -0400
-Received: from [192.168.144.1] (unknown [124.16.137.194])
- by APP-01 (Coremail) with SMTP id qwCowACnfPB7k59qBn5uBw--.61717S2;
- Tue, 08 Sep 2026 12:47:56 +0800 (CST)
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,    qemu-riscv@nongnu.org
-Subject: [PATCH v3 0/5] target/riscv: fix privilege, PMP, CFI, envcfg checks
-Date: Tue, 08 Sep 2026 12:47:55 +0800
-Message-ID: <20260908124755-v3-0-wangyang25@otcaix.iscas.ac.cn>
-X-Mailer: git-send-email 2.55.0.windows.2
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x3o5F-0001rj-Nn
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 01:09:25 -0400
+Received: from mail-pj2-x07.google.com ([2607:f8b0:4864:39::7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x3o5E-0003F0-3e
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 01:09:25 -0400
+Received: by mail-pj2-x07.google.com with SMTP id
+ 98e67ed59e1d1-398e10200a6so2217946a91.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 22:09:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788844162; x=1789448962; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=VYy8Tu/Hshu985z2qFyoip2I62SwqYXwvEahvMOkIUE=;
+ b=RJ336z5pxnmi14UxcYf68Oaaf1ZY0uNu5mQ4qVa46leVC6wnrXFsb/8v2Otl70CXVC
+ zYjcjtq9xWo+2Dhltxwp3aS9+A3jBKDNleWkhncp5ojVnSJcuuOToO8MIupSqEcv4FeV
+ zSwXgdOKnXj/8ImaDYOmxbedMRHm/suCmirh6OlUkdxVCOf6AIO18eyWpNXb/2hopS9X
+ 39IjvcIX0g3SAv5VfJ7zIYahBWlK3ywEuOCTPRt8UJes5MkZvz0wE7IvtstD+v1uDrg9
+ JV8Z8f9JkIk5Biyxkr/NMRimPTA282JBaRSeLatPKVSWIX0SJvP5Uhv+I/yk/oUCXJSM
+ uXRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788844162; x=1789448962;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=VYy8Tu/Hshu985z2qFyoip2I62SwqYXwvEahvMOkIUE=;
+ b=rwJxqZ5mRSplIaTjjpVEm0FOrj7jDOP4oDsu14F0ECIqdXONEPfsFZgDqKVuqxTW+2
+ oqjEoELDaJn/nupY1dn7Yv8ArSSckQicjAHm16S+KM2iu5eFDDF9kZI2OnaAN/eE1odQ
+ gfFHodffCVK2QM7oGLAZxPz89RjU3F3Dpd9kmkIDWT3re3+odnAU8JPvGLHN9J1QUvZv
+ kHjioCCyGQqlOyvtw0fCP0bdLa/G/xIXks9hBMgsw5SeBgSVPOOjLZwrYA6E8JNFjSnn
+ DBWILBrEDYhvk/vG6OJa+kD8oSQjra/fEHEZPr4sVzW5MNlDGR7o/b5IgvLoihrUKkmi
+ ccnA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzoOnrwnaiyQbK3CwgYZKXxlGW7+O1Ng7BCDqyu0V2i8g7uhJrdPIbVlRhRRp4Sfnd827on4gftV3UN@nongnu.org
+X-Gm-Message-State: AFuF++lRQaq6Ic5Z/PidurTEOFvrTtVJGQBTvDRKh2+7mDlpxIud5SWL
+ T/suYtpOsZevTgJBm+2iAVBWscJ38bleWuw4RBzHNjmc/TUtUjmTrXg=
+X-Gm-Gg: AYBFou0mIEuvmhXGPnx5jw41m2+KkY7kazkYOIYBbTP2mO7iJM8TaYEhs9cfo/T0OU/
+ 5vMKrnaH3SOdPbw443ALaAZ57fojlTiXJMcSN95EsbKWis0lM3JHHjDRJXm6deWbAjs0dKc/HiO
+ sizTT/RXSWnZ5TEJuQSXt1Dx5ZODu/jodGcn0KXFBUi5Xciw9JXaQLofWlws6h0/Nh6hOfomHNW
+ zNIRbaJKVlR9PathXFTiWoRgi45arQwVcO6H/eVI7gaC71NMjHzAHVsyeROEERJF3Zu6HPuIA07
+ 65RblZML8zyxlhPxGswWaFrTBA9iYaw35VVvjGFv6+gF6Xp9/w8bY4GmJ/eWg7Ucd3ikzNCC0Wo
+ s11OOCXkww4zMA+OEYko+zW7mXpKoJwI5wzdzYpmzyC5YHpXyGyUphPvkm/8hwDjuxx5JxkEqD/
+ Ao3UBEOuEJsjAu129loJD2wSf/hdrQIOUvVmmR2lLy5OkThGKyLqSVwn/XKQGyptFZztTcnZ7w8
+ JJJ2pBFL4d4pVNk52ql1H60VuERbAk1YmBgk+VtUSm21kq/bX5Q
+X-Received: by 2002:a17:90b:5790:b0:398:9bd5:4910 with SMTP id
+ 98e67ed59e1d1-39b2624f0ffmr39291094a91.23.1788844161719; 
+ Mon, 07 Sep 2026 22:09:21 -0700 (PDT)
+Received: from ?IPV6:2408:820c:8ffa:c0f0:25c7:53f7:86b3:955?
+ ([2408:820c:8ffa:c0f0:25c7:53f7:86b3:955])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1432423f99fsm29947541c88.1.2026.09.07.22.09.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Sep 2026 22:09:21 -0700 (PDT)
+Message-ID: <c425dffd-ccc6-42b0-b083-51f06562237d@gmail.com>
+Date: Tue, 8 Sep 2026 13:09:18 +0800
 MIME-Version: 1.0
-X-CM-TRANSID: qwCowACnfPB7k59qBn5uBw--.61717S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXF4xtw48XrWfJw43uw1Utrb_yoW5XF4xpF
- 4rGay3urZ5KF9Fkw4fAa17ZF15Wr4rGa1UXF1DXr1Fvay5CrWFqrs3Kw45Xa48JasrWw1a
- 9FyqkrnYkFyYvaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9ab7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
- A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x2
- 0xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18Mc
- Ij6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l
- c7CjxVAaw2AFwI0_JF0_Jw1lc2xSY4AK67AK6r45MxAIw28IcxkI7VAKI48JMxC20s026x
- CaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_
- JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r
- 1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_
- Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8Jr
- UvcSsGvfC2KfnxnUUI43ZEXa7IU5ZAwDUUUUU==
-X-Originating-IP: [124.16.137.194]
-X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/igd: Add device ID support for Meteor Lake and
+ Arrow Lake
+To: Yuan Wang <yuan1.wang@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com
+References: <20260825090435.1492485-1-yuan1.wang@intel.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <20260825090435.1492485-1-yuan1.wang@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::7;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj2-x07.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,70 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes five independent RISC-V emulation issues in the
-XTheadCmo, XTheadBb, HLVX/PMP, Zicfilp, and environment-configuration
-paths.
+Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
 
-The first two patches correct XThead instruction handling. The third
-adds the missing final PMP read check for HLVX. The fourth fixes
-Zicfilp exception priority for tracked misaligned JALR targets. The
-fifth canonicalizes reserved CBIE encoding while preserving the
-defined CBIE=11 encoding.
+Thank you for your contribution!
 
-Each patch is independently applicable and includes its own test
-description and Signed-off-by line. The corresponding public QEMU
-Work Items are linked in the commit messages:
-
-  XTheadCmo U-mode privilege:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4412
-  XTheadBb RV32 th.srri:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4413
-  HLVX.WU execute-only PMP:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4414
-  Zicfilp misaligned JALR:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4415
-  CBIE reserved encoding:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4416
-
-The series is based on d2843fbf, the first parent of current upstream
-master ff1d2d19. No target/riscv path changed between those commits.
-
-Validation performed:
-
-  - QEMU 11.1.1 baseline and patched witness replays passed.
-  - Every intermediate patch state built for qemu-system-riscv32,
-    qemu-system-riscv64, qemu-riscv32, and qemu-riscv64.
-  - The five patches pass checkpatch.pl and get_maintainer.pl review.
-
-Please disregard v2 of this series. I missed QEMU's guidance to send
-each new revision as a new top-level thread and to carry Reviewed-by
-tags into the next revision. I apologize for missing these guidelines
-and for the confusion. Please forgive the mistake.
-
-Changes since v2:
-
-  - Resend the complete five-patch series as a fresh top-level
-    revision.
-  - Carry Daniel's Reviewed-by tags on patches 1, 2, and 4.
-  - Keep the code unchanged; patches 3 and 5 retain the requested
-    `Tested:` terminology updates.
-
-wangyang (5):
-  target/riscv: enforce XTheadCmo U-mode privilege checks
-  target/riscv: mask RV32 XTheadBb th.srri shift amount
-  target/riscv: require read permission for HLVX accesses
-  target/riscv: prioritize Zicfilp checks for misaligned JALR
-  target/riscv: canonicalize reserved CBIE encoding
-
- target/riscv/internals.h                      |  6 ++++
- target/riscv/tcg/cpu_helper.c                 | 24 ++++++++++-----
- target/riscv/tcg/csr.c                        | 29 +++++++++++++++++++
- target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  9 +++++-
- .../riscv/tcg/insn_trans/trans_xthead.c.inc   |  5 ++--
- target/riscv/tcg/op_helper.c                  | 11 ++++---
- 6 files changed, 67 insertions(+), 17 deletions(-)
-
--- 
-2.55.0.windows.2
+On 2026-08-25 17:04, Yuan Wang wrote:
+> Currently, igd_gen() does not include the PCI device IDs for Meteor
+> Lake and Arrow Lake platforms, causing it to return -1 for these GPUs.
+> 
+> As a result, QEMU calculates the stolen memory size as 0 and exposes a
+> zero-sized 'etc/igd-bdsm-size' entry via fw_cfg. When OVMF boots,
+> IgdAssignmentDxe fails validation on the zero BDSM size and aborts
+> without programming the ASLS register. Consequently, the guest Intel
+> GOP driver fails to locate and read the OpRegion (ASLS remains 0x0).
+> 
+> Add the device ID prefixes (0x7D00 and 0xB600) to igd_gen() as Gen 12
+> so that stolen memory is correctly determined, allowing OVMF to properly
+> initialize the OpRegion and BDSM for the Intel GOP driver.
+> 
+> Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
+> ---
+> v2:
+> - Resending because the v1 patch was sent with an incorrect future 
+>   system timestamp due to an unsynchronized local clock. No code
+>   changes.
+> ---
+>  hw/vfio/igd.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 413a49aae9..a0b6b34d81 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -96,6 +96,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
+>      case 0x4C00:    /* Rocket Lake */
+>      case 0x4600:    /* Alder Lake */
+>      case 0xA700:    /* Raptor Lake */
+> +    case 0x7D00:    /* Meteor Lake / Arrow Lake */
+> +    case 0xB600:    /* Arrow Lake */
+>          return 12;
+>      }
+>  
 
 
