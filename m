@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D07C79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 06:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66861C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 06:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3p5G-00026K-8F; Tue, 08 Sep 2026 02:13:30 -0400
+	id 1x3p5L-00029F-Km; Tue, 08 Sep 2026 02:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3p5C-00023J-7D; Tue, 08 Sep 2026 02:13:26 -0400
+ id 1x3p5K-00028m-Qi; Tue, 08 Sep 2026 02:13:34 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3p58-0000jh-4b; Tue, 08 Sep 2026 02:13:25 -0400
+ id 1x3p5I-0000ks-KJ; Tue, 08 Sep 2026 02:13:34 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6886CG8x048190
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6886CG91048190
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 8 Sep 2026 15:12:26 +0900 (JST)
+ Tue, 8 Sep 2026 15:12:27 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=p/bFNnvJf2EbYTmRiqw4Np3Yp00f3812P2yY6Of3u/A=; 
+DKIM-Signature: a=rsa-sha256; bh=GEjSVZsK/FjZl4C3KzdrtPbRyBxOF2Mp5btvoSNkpkE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1788847946; v=1;
- b=kH7oJ+kNDd5r4asSiZtJY4LLQ71lXbkURe8okKfYRRn+/4ePMGNsMEe8wGBx48iU
- +ECOAwHiKIlCzsyeFoLx2bpOs60dESGc05JY1Z+Xh6D0DKTZMHjmvGYHNmYRY0vE
- 3Y9x3q/mEp9QGDtrfxiHlJUhVeHAQKlaAYsAnCmYpd0moDX8X9QrePTkplk2kPDv
- V2F8NiX60i7EfAiXfFS3PeRAzd8ceDr+Esf5IF2key7W1Zqk7ZzKccDSE1oCz/rT
- ecOatet1SrXuj6jFiMezhzXPygRVeOJCOWee2+JnFtmltIT0VyaefYWE0MJbldJ1
- 70Z8HcJI6659f4vyEqGpxw==
+ s=rs20250326; t=1788847947; v=1;
+ b=njgzEUZnE6whcZp+1yPa9Gt0wOblbYhf7DdAvDOzxVdysPl/0EO4NzqGawRZm8mR
+ DlmKS6822KAaO/wjrHAuSw8vIxXt8Mmw64O1nzr1ZS1JA5BrMo74c93jZj5rCC2H
+ 1hPJlmOOFxXL9dMcaDLIvzDqXeJvijgnllY6Yj9Kwmoo4zk7eqxhj5HsoxGkXhcg
+ if1UwsYlHSnRAbQ2b85OFcR69MhYohGER4heuIuPENrub2JBkrOiRl6bmawDL1zi
+ nxT9WueOVo9fI3z338yQsKvkU97wIG/oWKPEnD61iPJaY3hd+BikaqOzgX1KugSS
+ cVSFO3jPQjZtQXRuuQ2KEQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 08 Sep 2026 15:11:19 +0900
-Subject: [PATCH v3 2/9] virtio: Move the virtio_complete_reset() call
+Date: Tue, 08 Sep 2026 15:11:21 +0900
+Subject: [PATCH v3 4/9] hw/display/virtio-gpu-rutabaga: Reset Rutabaga
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260908-gpu-v3-2-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260908-gpu-v3-4-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>
@@ -62,13 +62,13 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7026;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2733;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=SKZChTReagvxsA+8q0QnbP2HUjuxNQQF62u58PZaAUc=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9b85c5RCsonuRJqb+t61PxJrNGtCv+b9eFJwMx+3zPfN
- 2pdkFPpKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmMhxfkaGh3PlDrR3RVpxly/a
- +DI5if1TSmqXv5zLXdW1Pr3Xr4rZMfyzT88K9/j+/Kpzk+/c4rMPxW56GK88zNJYcabIbWrYw2W
- MAA==
+ bh=eOizTvjkS4G5bwGn4YWNrYtc01Yd3FSoWh8aiXPTZIM=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9b85S4cyUc/11YJ2n02du5+qVSpW/HiqLfSwbUZJpNft
+ +6f0yrYUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMJHnJxn+VygFzPZ78+fLUkER
+ 9ZYdKxOSOc9b3N/A1K0uHsOW0sVhy8iwlqfGjY+jYu6aLUkZh6OjDDql71dwtJy9lPqodZPx2aX
+ cAA==
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -94,216 +94,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the virtio_complete_reset() call to VirtioDeviceClass::reset
-implementations to allow changing the completion timing.
+Properly reset Rutabaga so that Rutabaga will not continue to interact
+with guest memory, for example.
 
+Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/9pfs/virtio-9p-device.c   | 1 +
- hw/audio/virtio-snd.c        | 2 ++
- hw/block/vhost-user-blk.c    | 1 +
- hw/block/virtio-blk.c        | 1 +
- hw/char/virtio-serial-bus.c  | 1 +
- hw/display/vhost-user-gpu.c  | 3 +--
- hw/display/virtio-gpu-base.c | 2 ++
- hw/input/virtio-input.c      | 2 ++
- hw/net/virtio-net.c          | 1 +
- hw/scsi/vhost-user-scsi.c    | 1 +
- hw/scsi/virtio-scsi.c        | 2 ++
- hw/virtio/virtio-balloon.c   | 1 +
- hw/virtio/virtio-crypto.c    | 2 ++
- hw/virtio/virtio.c           | 7 ++-----
- 14 files changed, 20 insertions(+), 7 deletions(-)
+ include/hw/virtio/virtio-gpu.h   |  1 +
+ hw/display/virtio-gpu-rutabaga.c | 16 ++++++++++++++++
+ hw/display/virtio-gpu.c          |  4 ++++
+ 3 files changed, 21 insertions(+)
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 2774fc2290a8..c9de102d39c1 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -115,6 +115,7 @@ static void virtio_9p_reset(VirtIODevice *vdev)
-     V9fsVirtioState *v = (V9fsVirtioState *)vdev;
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 69b5ee2e382f..acae2b4778b3 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -226,6 +226,7 @@ struct VirtIOGPU {
+ struct VirtIOGPUClass {
+     VirtIOGPUBaseClass parent;
  
-     v9fs_reset(&v->state);
-+    virtio_complete_reset(vdev);
++    void (*reset)(VirtIOGPU *g);
+     void (*handle_ctrl)(VirtIODevice *vdev, VirtQueue *vq);
+     void (*process_cmd)(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd);
+     void (*update_cursor_data)(VirtIOGPU *g,
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index 041216a10d04..7bdeeeb5c023 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -1074,6 +1074,21 @@ virtio_gpu_rutabaga_get_num_capsets(VirtIOGPU *g, uint32_t *num_capsets, Error *
+     return true;
  }
  
- static ssize_t coroutine_fn
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 694bcebb60f6..40bae0cb9c82 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -1383,6 +1383,8 @@ static void virtio_snd_reset(VirtIODevice *vdev)
-             virtio_snd_ctrl_cmd_free(cmd);
-         }
-     }
++static void virtio_gpu_rutabaga_reset(VirtIOGPU *g)
++{
++    VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
++    Error *local_err = NULL;
 +
-+    virtio_complete_reset(vdev);
- }
- 
- static void virtio_snd_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 2e5b3ae1b14b..09e52745b31c 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -348,6 +348,7 @@ static void vhost_user_blk_reset(VirtIODevice *vdev)
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
- 
-     vhost_dev_free_inflight(s->inflight);
-+    virtio_complete_reset(vdev);
- }
- 
- static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 6b92066aff4c..a8ae8294fa47 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1168,6 +1168,7 @@ static void virtio_blk_reset(VirtIODevice *vdev)
-     }
- 
-     blk_set_enable_write_cache(s->blk, s->original_wce);
-+    virtio_complete_reset(vdev);
- }
- 
- /* coalesce internal state, copy to pci i/o region 0
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index c1973f0248fc..5efca2505990 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -638,6 +638,7 @@ static void vser_reset(VirtIODevice *vdev)
- 
-     vser = VIRTIO_SERIAL(vdev);
-     guest_reset(vser);
-+    virtio_complete_reset(vdev);
- }
- 
- static void virtio_serial_save_device(VirtIODevice *vdev, QEMUFile *f)
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index cd684d63639e..f8d640557c28 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -640,9 +640,8 @@ vhost_user_gpu_reset(VirtIODevice *vdev)
++    if (vr->rutabaga) {
++        rutabaga_finish(&vr->rutabaga);
++    }
++
++    if (!virtio_gpu_rutabaga_init(g, &local_err)) {
++        virtio_error(VIRTIO_DEVICE(g), "%s", error_get_pretty(local_err));
++        error_free(local_err);
++    }
++}
++
+ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
  {
-     VhostUserGPU *g = VHOST_USER_GPU(vdev);
+     VirtIOGPU *g = VIRTIO_GPU(vdev);
+@@ -1156,6 +1171,7 @@ static void virtio_gpu_rutabaga_class_init(ObjectClass *klass, const void *data)
+     VirtIOGPUClass *vgc = VIRTIO_GPU_CLASS(klass);
  
--    virtio_gpu_base_reset(VIRTIO_GPU_BASE(vdev));
--
-     vhost_user_backend_stop(g->vhost);
-+    virtio_gpu_base_reset(VIRTIO_GPU_BASE(vdev));
- }
- 
- static int
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 270fbaae1029..d7032ac1def2 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -36,6 +36,8 @@ virtio_gpu_base_reset(VirtIOGPUBase *g)
-         g->scanout[i].y = 0;
-         g->scanout[i].ds = NULL;
+     vbc->gl_flushed = virtio_gpu_rutabaga_gl_flushed;
++    vgc->reset = virtio_gpu_rutabaga_reset;
+     vgc->handle_ctrl = virtio_gpu_rutabaga_handle_ctrl;
+     vgc->process_cmd = virtio_gpu_rutabaga_process_cmd;
+     vgc->update_cursor_data = virtio_gpu_rutabaga_update_cursor;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 55a1c7f80fb8..b57f07bd26c8 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1761,6 +1761,10 @@ static void virtio_gpu_reset_bh(void *opaque)
+         qemu_console_set_surface(g->parent_obj.scanout[i].con, NULL);
      }
+ 
++    if (vgc->reset) {
++        vgc->reset(g);
++    }
 +
-+    virtio_complete_reset(VIRTIO_DEVICE(g));
+     g->reset_finished = true;
+     qemu_cond_signal(&g->reset_cond);
  }
- 
- void
-diff --git a/hw/input/virtio-input.c b/hw/input/virtio-input.c
-index 6494cfbbe82d..0a533a6fff6e 100644
---- a/hw/input/virtio-input.c
-+++ b/hw/input/virtio-input.c
-@@ -216,6 +216,8 @@ static void virtio_input_reset(VirtIODevice *vdev)
-             vic->change_active(vinput);
-         }
-     }
-+
-+    virtio_complete_reset(vdev);
- }
- 
- static int virtio_input_post_load(void *opaque, int version_id)
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 814b99a43d20..bd12780076f4 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -4151,6 +4151,7 @@ static void virtio_net_reset(VirtIODevice *vdev)
-     }
- 
-     virtio_net_disable_rss(n);
-+    virtio_complete_reset(vdev);
- }
- 
- static void virtio_net_instance_init(Object *obj)
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 5070178dc28b..6f525268f93a 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -371,6 +371,7 @@ static void vhost_user_scsi_reset(VirtIODevice *vdev)
-     VHostSCSICommon *vsc = VHOST_SCSI_COMMON(s);
- 
-     vhost_dev_free_inflight(vsc->inflight);
-+    virtio_complete_reset(vdev);
- }
- 
- static struct vhost_dev *vhost_user_scsi_get_vhost(VirtIODevice *vdev)
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index bf64d1231a81..c70cef7ba122 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -1028,6 +1028,8 @@ static void virtio_scsi_reset(VirtIODevice *vdev)
-     WITH_QEMU_LOCK_GUARD(&s->event_lock) {
-         s->events_dropped = false;
-     }
-+
-+    virtio_complete_reset(vdev);
- }
- 
- typedef struct {
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 4c5f486ba238..e3a8545fa612 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -954,6 +954,7 @@ static void virtio_balloon_device_reset(VirtIODevice *vdev)
-     }
- 
-     s->poison_val = 0;
-+    virtio_complete_reset(vdev);
- }
- 
- static int virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 79e2acb56cc4..bab09f6f8714 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -1015,6 +1015,8 @@ static void virtio_crypto_reset(VirtIODevice *vdev)
-     } else {
-         vcrypto->status |= VIRTIO_CRYPTO_S_HW_READY;
-     }
-+
-+    virtio_complete_reset(vdev);
- }
- 
- static uint32_t virtio_crypto_init_services(uint32_t qservices)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 8d5f58a02df6..ed43c8bcb0bd 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3443,11 +3443,7 @@ void virtio_reset(VirtIODevice *vdev)
-         }
-     }
- 
--    if (k->reset) {
--        k->reset(vdev);
--    }
--
--    virtio_complete_reset(vdev);
-+    k->reset(vdev);
- }
- 
- void virtio_complete_reset(VirtIODevice *vdev)
-@@ -4483,6 +4479,7 @@ static void virtio_device_class_init(ObjectClass *klass, const void *data)
-     dc->unrealize = virtio_device_unrealize;
-     dc->bus_type = TYPE_VIRTIO_BUS;
-     device_class_set_props(dc, virtio_properties);
-+    vdc->reset = virtio_complete_reset;
-     vdc->start_ioeventfd = virtio_device_start_ioeventfd_impl;
-     vdc->stop_ioeventfd = virtio_device_stop_ioeventfd_impl;
- 
 
 -- 
 2.55.0
