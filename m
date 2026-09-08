@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB9FC79FA0
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D5CC79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rJ3-0007B5-Io; Tue, 08 Sep 2026 04:35:53 -0400
+	id 1x3rJE-0007Gj-SH; Tue, 08 Sep 2026 04:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3rJ1-0007Ae-H4
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x3rJC-0007DA-Nl
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:36:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3rIz-0007EW-Uc
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:51 -0400
+ id 1x3rJA-0007G6-Vo
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:36:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788856549;
+ s=mimecast20190719; t=1788856560;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:to:
  cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MJ3JKz6ii3UHXbYgbY5KF1obV3J6lMcORoFh8rbcuII=;
- b=QAkSuZdUc6H/w7iOXMbZf25b4o+M+fQg8OpdykNGRMYXjV0hP/+wLuawPVhHc8Yp7PqBIc
- LY8hyvTH12tk88vzkvclfyhqNe1TyvHmxibI4CWaoRoa65I96MwhVr8EDvSJ89UjkLX7js
- BoAJH4QuYNB5vOUVF9jf6mgtQbiJGEY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=o4wZ10w5TCyFWkISKjZMdAhqDtOFEX7Ga9DDoZ/ZUjk=;
+ b=ZhjJmiAGBezFJq7/qgpFUx58KihqoTgIcPc8r3t/XDjgtU1Gy46Ywm2RNwxxqGALvl7no0
+ DXVYIZvNOY7o5Oc1GMi3Wzt9iJXH3coBO4jWUvNG0Xd3OWZkTZUExYTKwFFAK9cZdm0jsE
+ 0ivWd6qKshjsrLqJwP3ZaFFL2u2/pFc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-bVz0ejSrOj6BOwzE_Z2lNg-1; Tue,
- 08 Sep 2026 04:35:45 -0400
-X-MC-Unique: bVz0ejSrOj6BOwzE_Z2lNg-1
-X-Mimecast-MFC-AGG-ID: bVz0ejSrOj6BOwzE_Z2lNg_1788856544
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-sgzIFUi6O06VLz9U2NzibQ-1; Tue,
+ 08 Sep 2026 04:35:59 -0400
+X-MC-Unique: sgzIFUi6O06VLz9U2NzibQ-1
+X-Mimecast-MFC-AGG-ID: sgzIFUi6O06VLz9U2NzibQ_1788856558
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01C2919776B4; Tue,  8 Sep 2026 08:35:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DFD02180257B; Tue,  8 Sep 2026 08:35:57 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3CAF1800598; Tue,  8 Sep 2026 08:35:42 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0D4EA1955F08; Tue,  8 Sep 2026 08:35:56 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 08 Sep 2026 12:35:33 +0400
-Subject: [GIT PULL 01/10] tests/functional: replace HMP with QMP
+Date: Tue, 08 Sep 2026 12:35:37 +0400
+Subject: [GIT PULL 05/10] tests/ahci-test: replace HMP usage with QMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260908-nohmp-v1-1-7a3d1f0f1caf@redhat.com>
+Message-Id: <20260908-nohmp-v1-5-7a3d1f0f1caf@redhat.com>
 References: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
 In-Reply-To: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
-Cc: peter.maydell@linaro.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4380;
+Cc: peter.maydell@linaro.org, John Snow <jsnow@redhat.com>, 
+ "Denis V. Lunev" <den@openvz.org>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1464;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Enc5oozE2GmO4F1KrQprCafEbYY2rlyNKpoQ+I9nrjg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jYQiMuIqXDCM+1IouDi6PKF28zs3JvnP0Kc
- 0BEZuq2oiiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
- 5Tv9EAC6NLaJk0nqjmLQMFHyl5yD7gX0xvZmPPRAgOD1Wup8uvyukbARMAXgJksloaW3m8coe0C
- zzMEe0DefD8J++dPkXe784YVotGqCaQemQ9CC6/klbqvorqv+JGtL1lqeApHOBDBF8/4aVham1x
- MyOMhtvD+9LME9oTsQqT5xMwOge/5f0TYWE6JuWOuAMCy6Fj5r+OGEAAn1GnY22+svXzbCCrwyS
- rVQuma/7y6QDEJmLmcXQaFE0Wla7l7cQnH+UcezFadb8beegVfb2UTn4ieW1ZUosFlsAt9FSkZw
- z2q7OmSPeCeJ6GQjYBZu1lWCT1s1SxC5F7V0vWFQJv+KFWv53f6SWL6ChTt+V1+elCi4sCcZ6ND
- jnL/jVHGPHkgZH3xblbS7e5fYjPAwBlVBxnesyf3TNPU5kAVclckfWLb5BFsJXhH+Bp8j/Zf9R+
- h5Sq4bkI1Efb8ZX4rbp9uE6gukNQSFt+dphZzhOW/fZSwSSZ0TIMWneBNGTN9KlENAVpjklsmMv
- H+iRxkgie/qUdgYmqK7mj/Jp6WnOlsSGSVV/YfIbD9esk3NRZ3QgI9lEQbaHe/bd+6Dvso8NI3Y
- x3XMRdzbxeYmoPxNOMZ3llHG4eqoStehVu4NBiucX70n714bKuMMzF4OkRj4GO8fxCZfjHYMRTM
- USY6Uhe9QwETUXA==
+ bh=b+lTBCsun6YleRr58wgZMzenJkZsl+BywditbLZ0aZE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jY4uPjZ6aGiVgR4eWzgPQHtsTH5bVPeIzvK
+ hPRZhu1kkWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
+ 5cCnD/oDxrmYAMz2L/sSNdvlAbvR3s9fympvgS2871b5Z+vACKAUmSt3SjZTA9i/g49SvzYoHhG
+ u67fIPFwB0OT0BuTDByyknRxOqgAuVZI7KtJcEM1D0uvCI3pOc2hU2uB1gF+Qtyzx5rUE21ARsQ
+ 0EslYDY3HmegssCryx+BEUj/czFtuCzp2MlH51bgkh/POJUtD1HBpQfG9JDRIYy82Cc5xENVaNT
+ CzvxC7rRHDLAYx2P6kxTTsFjgHp6ULDnhkjeQn6z5VfsKtwnHrgnvIQUTz8Q5hc494K+8WXMGWZ
+ zBZAVFDSsw5NfNtgr2fS6ChOol7KMtCCHeZueN61eSZaP3DsKbpau4kqfaYq47ouUWgNndSpB/N
+ UhPo5YwgXuToZhg0fuD9d3l77ICr/1+arYTchG7fmnzhO2IFi6s3JzJ//eN8JZvYHcJmLd9VFoA
+ EMTaoms6Tw2jY3Ba/IQIN29vxqtAo0WZT4QuKQP4YhkO0tVWiOCV3lhQ0O3vyL8aCXNO5rJYaPy
+ lKSj2E6B7VUk8HVprOm7jcTqKwWLPdK1YXt7t8VCzWYrgofcI9xLK6bA5XB4L/M8uvyFjqz2+Tr
+ 4Rhr6qYi4qf/dd1MjOkPW8OMszyzFWjDXg5Q/2NXu6j6YVJxl3zZCO7tHQ8emRz44kNyF+jd3DR
+ A8V/z4D1LJZp8Lw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 23
-X-Spam_score: 2.3
-X-Spam_bar: ++
-X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,107 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace HMP with QMP equivalent.
+Use qemu-io command instead.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/arm/test_integratorcp.py | 13 ++++++++-----
- tests/functional/m68k/test_nextcube.py    | 11 +++++++----
- tests/functional/mips64el/test_malta.py   | 13 ++++++++-----
- 3 files changed, 23 insertions(+), 14 deletions(-)
+ tests/qtest/ahci-test.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/arm/test_integratorcp.py b/tests/functional/arm/test_integratorcp.py
-index 23ae919359d5..b79e81393547 100755
---- a/tests/functional/arm/test_integratorcp.py
-+++ b/tests/functional/arm/test_integratorcp.py
-@@ -14,6 +14,7 @@
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 3406ca884fb4..eb8d23999738 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1900,8 +1900,7 @@ static void test_write_engine_stop_in_flight(void)
+     ahci_io(ahci, port, CMD_WRITE_DMA, rx, AHCI_SECTOR_SIZE, 1);
  
- import logging
+     /* Suspend the backend write so the first sector stays in flight. */
+-    g_free(qtest_hmp(ahci->parent->qts,
+-                     "qemu-io drive0 \"break write_aio wr\""));
++    qtest_qemu_io(ahci->parent->qts, "drive0", "break write_aio wr");
  
-+from qemu.qmp.qmp_client import ExecuteError
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- from qemu_test import skipIfMissingImports, skipUntrustedTest
-@@ -72,11 +73,13 @@ def test_framebuffer_tux_logo(self):
-         self.boot_integratorcp()
-         framebuffer_ready = 'Console: switching to colour frame buffer device'
-         wait_for_console_pattern(self, framebuffer_ready)
--        self.vm.cmd('human-monitor-command', command_line='stop')
--        res = self.vm.cmd('human-monitor-command',
--                          command_line='screendump %s' % screendump_path)
--        if 'unknown command' in res:
--            self.skipTest('screendump not available')
-+        self.vm.cmd('stop')
-+        try:
-+            self.vm.cmd('screendump', filename=screendump_path)
-+        except ExecuteError as e:
-+            if e.error_class == 'CommandNotFound':
-+                self.skipTest('screendump command not found')
-+            raise
+     cmd = ahci_command_create(CMD_WRITE_PIO);
+     ahci_command_adjust(cmd, 0, ptr, bufsize, 0);
+@@ -1911,7 +1910,7 @@ static void test_write_engine_stop_in_flight(void)
+     /* Drop the command list while the write is still outstanding. */
+     ahci_px_clr(ahci, port, AHCI_PX_CMD, AHCI_PX_CMD_ST);
  
-         cpu_count = 1
-         match_threshold = 0.92
-diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
-index d917cf5424fe..f3d92034b127 100755
---- a/tests/functional/m68k/test_nextcube.py
-+++ b/tests/functional/m68k/test_nextcube.py
-@@ -9,6 +9,7 @@
+-    g_free(qtest_hmp(ahci->parent->qts, "qemu-io drive0 \"resume wr\""));
++    qtest_qemu_io(ahci->parent->qts, "drive0", "resume wr");
  
- import time
- 
-+from qemu.qmp.qmp_client import ExecuteError
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import skipIfMissingImports, skipIfMissingCommands
- from qemu_test.tesseract import tesseract_ocr
-@@ -39,10 +40,12 @@ def check_bootrom_framebuffer(self, screenshot_path):
-                 break
-             time.sleep(0.1)
- 
--        res = self.vm.cmd('human-monitor-command',
--                          command_line=f"screendump {screenshot_path}")
--        if 'unknown command' in res:
--            self.skipTest('screendump not available')
-+        try:
-+            self.vm.cmd('screendump', filename=screenshot_path)
-+        except ExecuteError as e:
-+            if e.error_class == 'CommandNotFound':
-+                self.skipTest('screendump command not found')
-+            raise
- 
-     @skipIfMissingImports("PIL")
-     def test_bootrom_framebuffer_size(self):
-diff --git a/tests/functional/mips64el/test_malta.py b/tests/functional/mips64el/test_malta.py
-index 163bbaf5ca36..4544f950d96e 100755
---- a/tests/functional/mips64el/test_malta.py
-+++ b/tests/functional/mips64el/test_malta.py
-@@ -11,6 +11,7 @@
- 
- import os
- 
-+from qemu.qmp.qmp_client import ExecuteError
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
-@@ -154,11 +155,13 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
-         self.vm.launch()
-         framebuffer_ready = 'Console: switching to colour frame buffer device'
-         self.wait_for_console_pattern(framebuffer_ready)
--        self.vm.cmd('human-monitor-command', command_line='stop')
--        res = self.vm.cmd('human-monitor-command',
--                          command_line=f'screendump {screendump_path}')
--        if 'unknown command' in res:
--            self.skipTest('screendump not available')
-+        self.vm.cmd('stop')
-+        try:
-+            self.vm.cmd('screendump', filename=screendump_path)
-+        except ExecuteError as e:
-+            if e.error_class == 'CommandNotFound':
-+                self.skipTest('screendump command not found')
-+            raise
- 
-         match_threshold = 0.95
-         screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
+     /* Round-trip through the device to confirm qemu is still alive. */
+     ahci_px_rreg(ahci, port, AHCI_PX_TFD);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
