@@ -4,153 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA5AC79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 20:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C47C4C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 20:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x42j7-0000Ny-14; Tue, 08 Sep 2026 16:47:33 -0400
+	id 1x42os-0001Uv-9a; Tue, 08 Sep 2026 16:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1x42j5-0000NY-DM
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:47:31 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x42oq-0001Ua-I9
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:53:28 -0400
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1x42j3-0006Cz-Qg
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:47:31 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688HLVCE2966652
- for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 20:47:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tN4vCqVjxZkS7nPK733UW5Eh+nRSKFywT/98LITfRdc=; b=nNPnFESHT5fN+VOC
- lFPsQ0LuUzKiZ+Oezb6vIzE1TqnPIpFUBjbQGy0nvaUELiGH2LqK+RacRhDzzcMM
- WALJk9Tk4pJTkYUPpYP7/j6fLMH5siREl/eAjbPIG+SqKFXRYoM3KQoSKMEbA7yO
- UTrnz4Ada27QISrid/9SEwW0RnqdlrJh6U10l3MXEWc+l7dMdNAyNqZNKHhU2Xln
- wT4rlSf+enEKMw5QEvNuUZqz3ffm3gYdoB+pQzONZrDRuTRlg3tz4eIvielQSCM+
- 0LYG7a3RDwKoaxmox9v1fq4iSCTi4QCkRIAwOFhBoEM8kNmmx8ImE/EhxVWsB0dS
- pgcOvQ==
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
- [209.85.160.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjppp0y3y-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 20:47:27 +0000 (GMT)
-Received: by mail-oa1-f72.google.com with SMTP id
- 586e51a60fabf-456ab1a7f2cso8170771fac.3
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 13:47:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788900447; cv=none;
- d=google.com; s=arc-20260327;
- b=P97Q0u8bqSCvnAStXBZ5MSD26C6MRLSkrZ86jgiBAcl+mTbXayyWwQvrqajNP6TOUP
- hKyLGpnIt3QubACM1JYj2ae5EW/WM/Zcu1EHk5G/tEDtNjI9tLBKoSWZGteQP2O/QPRz
- qfQ/t/JWXviLzXlb2tSY8HdhMDqNbPAF9UjuziS+9Fp9JLWrTRzDnD7XGCzcn8i2MtJ2
- XZ3kJNWHFNT6WROzLuu8EGIj67PcTxFxmp2Q6ZA2tPO+zCO3TiFocZCAInao5CHakTLJ
- l/qENVdbTrRCgYWx8x2MnG9FJdw/1I245zqdobI5WIc2BND3oT8KWSNhemk3XqfDafqD
- gbkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=tN4vCqVjxZkS7nPK733UW5Eh+nRSKFywT/98LITfRdc=;
- fh=LfxqVHs7iB+giXalVcz/pbqkbOXeZSBmGzkNDoDAtdQ=;
- b=MJLhHy0/BSgOn0YchM2ppqnwp7FADFSPR+88YKFW/YfywqbG29yjXoUlsVMP9o/Fzl
- W4rympoyYj4ps52HP7zNONkGQ+sBu1Tso+CstwhJAxQoPzjB1cxLJcREfsJ0MxcwmYUX
- vEO/plJelci7HMLuvaFPTlqsQA+spFJ5+FARez9x1fqTDpMQFxwQ8lqDvy9/0jAp2fZB
- ulrNHs4TLRu3imF07OKvcIkP77DfKa+TvU4hPdbjDPE6u+UZlPZVWV6liS7snZpGeyeu
- iTNi+Sa2mmFGKii8Hdsa6ZHJr06hIWJMyh6zSkA96nlVs/+kf2WtK5VE+nD1tIDpIcEh
- Y1mQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788900447; x=1789505247; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tN4vCqVjxZkS7nPK733UW5Eh+nRSKFywT/98LITfRdc=;
- b=Pper9SeM2kzax6ZUJ8QsSSplQPkWQuGqgRE1zadg6nV4RuWugsEno/3KD8foBMmLUg
- DtQXyU18vCtR8jAY3mj+66Jk+4EIYLZKDIfxkgu1dIVERs/7cZ2/pzPkrM1uouJZJAIt
- C+mbcUg7b4GAZ6SSl6JgLoXqKm4swbS1dljsk45A9i0qOIhw+HjPT2B36GCZt8KscwKa
- mF/la5wrGYBwpoj4NNu8eyvwcMpciU0fFNTXKDvqgXIcLUQdb3x8ldGY+SBo/MTLr/Xj
- VGI+9Z9Plza4z4FoND0Oic9GmWVfCtuVy9N94pRfKoCTR7Bfm9Y/5Q38FWH1IaHk0kgK
- Z+ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788900447; x=1789505247;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tN4vCqVjxZkS7nPK733UW5Eh+nRSKFywT/98LITfRdc=;
- b=JbOpwbQ7v1ntFqLSlM5DJeeruNnN5aIH9oreZhhG1kF6P5GOYUCTpgRFtWtSGCbwTF
- tqE2WeaxvRG1q9NMFb6ljwLGmhqs7X4CaZEFYG2wJXN2dedOB3lJbxoPPV9zF5ib2+Cs
- Y32t6bix1RKmGF1gBq3T96b6qhddrXN8hAcVAPAytRjUQR5FHuPwbGdsS7SJHE2IbJzu
- cx31SlrhTF+xV5NhcfuBTkqd3xcJIPO/kAqtCPfnMJyp/PeA7XPEir9RjUQiDmC3Nhnh
- 6KtqmqvBBxKlRRFI7UhA2BbUBrcSuGX6dv7r+aAXL1CwfcLD9JcCxpD6JJRae3qPdGGM
- 6pXg==
-X-Gm-Message-State: AFuF++lwrs8vlKHlqyh1eb0d+25XYibM9Z55++cePcmfEGJ1ErVcKU4I
- FCaNuoMeFu/lmSsEyo0Gqgh5Vfbx2YKEL3svvVoK6z1NIxkhYaGBmbQJtHrUZg+Ql8Fsz3/kgqY
- xqL50J+zVw+som7brX1UIl740Yj7wQufJ/4JFyad3cpv7jNYyP8Y94Sm1dr/LRMahUGXXVdzEyU
- 4HwOfELhBxQUKQbjmmgCm5cxJaX+3iW4X8
-X-Gm-Gg: AYBFou3JMZSCFHh6QkJEGwlsAbrBvnjU/4LzWWAc9PV/EYTiaVKGVWTGukD82PV4PTe
- hQ5y5Utlo4lPUtxBN330y9R+E4d1LXwd/nzARvl2R1vcy021VCy5ta2vq5N4HSmIaS4avBva7P5
- wDPm4L5f8jwfp1hGryCfzhXcCaGqkUfo5X9qh8JERmtVVI8w1NyNMe2BKA2w==
-X-Received: by 2002:a05:6820:16a6:b0:6b7:8415:d779 with SMTP id
- 006d021491bc7-6b78415d96fmr14943051eaf.36.1788900446751; 
- Tue, 08 Sep 2026 13:47:26 -0700 (PDT)
-X-Received: by 2002:a05:6820:16a6:b0:6b7:8415:d779 with SMTP id
- 006d021491bc7-6b78415d96fmr14943027eaf.36.1788900446334; Tue, 08 Sep 2026
- 13:47:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x42oo-0006ob-3Y
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 16:53:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=L+PU7momG7snc95Khmc3mRm5ACwVUBEBYCCuwfx5PeWIqQL/HeBGdjuGMx9taejn2A/CZmApoazSY7y4wAzZOLXDJSFF+IRuRu+N5Pp6/eKiMx/Pmi3fHwFdRhiUk4h9Wz99MYe49z9kES/wzyFc/Pq/5hFyx4l2nloO//E1xi48DT3YGS4WzjzJFPdCNGAU1gbNTZ7oq4VFzSTsUPdY9JJZHQXkNbtmvtA+EgKiWQowZaK1tEDNKHlLdYOJJi7MhCAPa1au79cydo2IPnjCPEETesGGFhdyAZqBRPI0/rog6rXG2uKQxai/dyfcLcdQcuPZ4+eq09FR1bErFmQSOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Z/ATI8xHG3sBP9BTnBAUw0vNEqEn3qhd+nR+cz98RWY=;
+ b=y6nAmPG1zmYE7T5b+2cAAg+gbkdCsqfkd61kZSO2VaEjntEAuG25l2SPvYwRU4igGlGI+DcxKAU7KtKNmk5jQDLtc9w9WjdgJqi/TbNLFoTzqbdpNVaGA6gozKBfR8C71px/UAgJavIdK26t42yWIqaEvlHE/mpD1s//QcgMxcHjGHwnHf0M+T4mDIIs1MbNFRga2ikGo90vVK4PoLwM6KPULpqWNw5Efrmv/KK1Ec7JgOz+jKQqML4ksKcOthjFGegfGcv4It3QnU2VoBXT59UQcqww+cd0Ad7XQzjVW5pufJIaIF/ahvh3ja0y2ep7Ii5dYlJoqtMsRc1U4+BvyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Z/ATI8xHG3sBP9BTnBAUw0vNEqEn3qhd+nR+cz98RWY=;
+ b=DjHF3zjNHkZj6si3fkDeLBhcWSkyFYFO4UEtm6JLV2V3p5mVkcg0RfIFLFoUIgxS0ftJjpdmidvZCiX9B+UC8sm23+KVZceMDyau8cDmbwYTJjFN+tPYGrM3qT8IX3wJnwC14YkqBKzCw3A+DC+fkquqZLbCxT1zUWybd6S0tc4=
+Received: from CH0PR03CA0084.namprd03.prod.outlook.com (2603:10b6:610:cc::29)
+ by DM6PR12MB4354.namprd12.prod.outlook.com (2603:10b6:5:28f::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Tue, 8 Sep 2026
+ 20:53:17 +0000
+Received: from CH2PEPF0000009F.namprd02.prod.outlook.com
+ (2603:10b6:610:cc:cafe::83) by CH0PR03CA0084.outlook.office365.com
+ (2603:10b6:610:cc::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.15 via Frontend Transport; Tue, 8
+ Sep 2026 20:53:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CH2PEPF0000009F.mail.protection.outlook.com (10.167.244.21) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.406.5 via Frontend Transport; Tue, 8 Sep 2026 20:53:15 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Tue, 8 Sep
+ 2026 15:53:14 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
+ <armbru@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
+ <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
+ <ashish.kalra@amd.com>, <ackerleytng@google.com>, <lpieralisi@kernel.org>
+Subject: [PATCH v2 09/19] accel/kvm: Handle guest_memfd flags internally when
+ creating instances
+Date: Tue, 8 Sep 2026 15:48:29 -0500
+Message-ID: <20260908205236.838281-10-michael.roth@amd.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260908205236.838281-1-michael.roth@amd.com>
+References: <20260908205236.838281-1-michael.roth@amd.com>
 MIME-Version: 1.0
-References: <20260908133512.2353957-1-brian.cain@oss.qualcomm.com>
- <20260908133512.2353957-5-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260908133512.2353957-5-brian.cain@oss.qualcomm.com>
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Tue, 8 Sep 2026 15:47:14 -0500
-X-Gm-Features: AcwNN1U-2HQ3H55v0FJRz_n_CeNQKVbDzRhNxpsXiQY4nr7vqqc-9zt1NwU_9gM
-Message-ID: <CAJ+KCYN8+tMekf1HtX=2JZaAGzFXbOM=b5jdWNO8TSNyKz60qg@mail.gmail.com>
-Subject: Re: [PATCH 4/5] target/hexagon: add Y2_tlbpp as unimplemented
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: i5jlI5tmHnjktw5CqJ78psTK9rSvC7yh
-X-Proofpoint-ORIG-GUID: i5jlI5tmHnjktw5CqJ78psTK9rSvC7yh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDIyNyBTYWx0ZWRfX8GV++4HM6JQM
- evdfhd1F0YFcosokG7DRWMhqOLd8NV7uFhDDuEaLGrjrk7yIPi6R4xguYUqK0rQgq1K8SBIaRpB
- 3XSiI79LcVVMhI2z2ieJ2zzo9ToyOGeSwLh61HlZSEvPvH3pZJY4pZWhkqKhQyjHfTCq5a+7uWU
- snEnyXq/7GdaTOo6sKDwusWrdXcnqFQkih6v942od6H9mUBqvQAYn1n3AoNyAzmIj7CVRxAb5G1
- ULauwbflklsC/30NuC1oKsuvHTGa/CO2QcgqM/L6DLDwOO61OizBPWCEKbUgnNiVfBFU26RuTSx
- PzNT7g0n3XMnIA48Nl+QeUmBvbOYoN72zdAI0xWOvrYTLk/kZZnZGyUeBTK3cNzIeCoaTLUBfLg
- NwrcBmuIP67rXcawwkTV8lLw3UejFZasB0/+qoLTP7a5CLvUc1qszRTsCJI468RmqyA79gPt94g
- lbIai0nJLWDmgeVwTqg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDIyNyBTYWx0ZWRfX2Yc/TX+gwGrk
- dp+pd/0fAlZbXM4oIKYhyLYXLsPyAcYH8a1J/OeEONkCsGrkXtY4CfhLQhLJCQtgKGVkWlkMbhr
- UdyxpFUa+vSlQEUO9+NPMTnjtYL80P4=
-X-Authority-Analysis: v=2.4 cv=DcInbPtW c=1 sm=1 tr=0 ts=6aa0745f cx=c_pps
- a=Z3eh007fzM5o9awBa1HkYQ==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8 a=CflDV7B1V62bKSi_a9MA:9
- a=QEXdDO2ut3YA:10 a=eBU8X_Hb5SQ8N-bgNfv4:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 suspectscore=0 phishscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080227
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000009F:EE_|DM6PR12MB4354:EE_
+X-MS-Office365-Filtering-Correlation-Id: e64631d7-7d51-40ac-aedc-08df0deb3440
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700016|23010399003|7416014|376014|1800799024|6133799003|22082099003|18002099003|11063799006|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info: J0UTI24mlm/DMvFaqZ0zkcx5dAjuVY/MwqXGLRySoYgPokH82ijcAkYCLBYhtMuLEhBGbxHTuH68PE4n29+/h+n4UtsvNjydDKceZ9OD9AmI9v089FTc3rweI/p0/J7BjhjNhIxVV2uwiETPzKrsc1mGCxIqCDr58SlSHy5//ErAnWIObBq3iBIEsaVB2ZcUBod+6TIW+vE3PWyZRJCBUkohqRmIF5p3n+YUCRuOizwpmx2hqT3BymejEFL3o54FGywNamcGNmy7DroHkCkgl+i2wwy0O7dIiA2fyPrOGbuhkEjHmIGte7574rQbbdQy2xozIGYCUsOM7bDn6uWkQVs0u4MkSvgXH7aE1CBF0bQIunbXO9//Ux94Lvlf+Ne168codGyfd2FwpAmuNqOZ2jk3JSDua5UGS2kAQkyP0ZjRTm1AMTLj6XtnaPK+bBrHuKFoHqHZS6WLmSZjT9jQJoqdJPcIX9flVTChzIg/vUrbKeSzBRn5MVdA0OfidS8NJogfojrxTNU/z+lt0hUIg3l8TyhZBJkQAhfXyw4EIQPAep15+jZCOUcMqITx71wUFmkM2S0xb/sH8PhU3IvEYtRmFPGrWtDv53z3/6ZqDdoU+sCk6h86N++qT0pQr+I8IigxQ67niezAD2hNxXzNR1JpkWmPqU8KsPHwY0/oeFJDziGOiplo7yPYOArE9G6pP1dhGUKQBr0P1U6d930Fpw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(23010399003)(7416014)(376014)(1800799024)(6133799003)(22082099003)(18002099003)(11063799006)(56012099006)(10067099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: yg4/pcXchC85dSz0g4K6IRksu6bVEiZyyad8Ml2PDPO5FnO553rdwsBBZx/B7wziYmpUBFEx9dYsbSgkjJjtRKi91fL0EwEZOESuIwRURV28w/W6qrpuBVqUk2a2UT4XtLnyNyvn1cqqFyWwK+1jRHrdtD1fMrLktCDCKOhKZ1oI0RVkA20fN0JkPXZLbpMdtxnzR1/Sm1kccqnu+Bwnu5xz51jQ2dzHyJrykArBeiuVTvUTeSf2BT2MNQpO7Cpf8gySU+IZC/AamhWGZ9+AOIfJESJ3RSHi91ugggi+KUZIxCs0eDK+zvnpYdhqlWKa8hGRlAS4pqAc8oGV8qusEFGCvB4XMzvfbF2y9QLr0f9zKAmf8KReZ5fVlppGXP/F8MG5vnF5+QwOeZEZqsyQ+dBFgz75vmkg3irMfXLc4je9/7m8N1LscV2nCc9R8X2L
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 20:53:15.4486 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e64631d7-7d51-40ac-aedc-08df0deb3440
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009F.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4354
+Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,20 +128,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 8, 2026 at 8:35=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm.=
-com> wrote:
->
-> Y2_tlbpp is mostly associated with the not-yet-implemented DMA
-> engine.  Let's decode it as unimpl for now.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/sys_macros.h           | 3 +++
->  target/hexagon/attribs_def.h.inc      | 1 +
->  target/hexagon/tag_rev_info.c.inc     | 2 ++
->  target/hexagon/imported/encode_pp.def | 1 +
->  target/hexagon/imported/system.idef   | 2 ++
->  5 files changed, 9 insertions(+)
+Current hostmem code (which is callable even outside of KVM) specifies
+guest_memfd flags directly, which requires pulling in kernel headers.
+Additionally, it will eventually require additional knowledge that is
+more suitable for KVM-aware code (e.g. whether or not to default to
+private memory for confidential VMs).
 
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Instead, push the determination for what flags are needed down into the
+KVM/guest_memfd code so they can be handled internally based on VM
+type/configuration and avoid further potential leakage of KVM-specific
+code to general code.
+
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+---
+ accel/kvm/kvm-all.c      | 26 ++++++++++++++++++++++++--
+ accel/stubs/kvm-stub.c   |  2 +-
+ backends/hostmem-memfd.c |  6 +-----
+ include/system/kvm.h     |  2 +-
+ 4 files changed, 27 insertions(+), 9 deletions(-)
+
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 2b838eb690..bf81a19423 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -4857,7 +4857,8 @@ void kvm_mark_guest_state_protected(void)
+     kvm_state->guest_state_protected = true;
+ }
+ 
+-int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
++static int kvm_create_guest_memfd_flags(uint64_t size, uint64_t flags,
++                                        Error **errp)
+ {
+     int fd;
+     struct kvm_create_guest_memfd guest_memfd = {
+@@ -4898,6 +4899,27 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+     return fd;
+ }
+ 
++int kvm_create_guest_memfd(uint64_t size, Error **errp)
++{
++    /*
++     * There isn't currently any use for non-mmap()'able gmem instances
++     * outside of kvm_create_guest_memfd_private(), so hardcode it here
++     * for general use.
++     *
++     * Additionally, *_INIT_SHARED is needed for non-confidential VMs, and
++     * confidential VMs will default to this as well to allow similar flows
++     * for initializing the VM's initial memory contents as with normal
++     * guests. In the future, the initial state may become a global policy
++     * decision based on the confidential VM configuration, in which case
++     * this would likely be the right place to decide whether or not to set
++     * the flag since it would likely be a globally-configured option.
++     */
++    return kvm_create_guest_memfd_flags(size,
++                                        GUEST_MEMFD_FLAG_MMAP |
++                                        GUEST_MEMFD_FLAG_INIT_SHARED,
++                                        errp);
++}
++
+ int kvm_create_guest_memfd_private(uint64_t size, Error **errp)
+ {
+     if (!(kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)) {
+@@ -4905,5 +4927,5 @@ int kvm_create_guest_memfd_private(uint64_t size, Error **errp)
+         return -1;
+     }
+ 
+-    return kvm_create_guest_memfd(size, 0, errp);
++    return kvm_create_guest_memfd_flags(size, 0, errp);
+ }
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index 9fe58efe91..26003b01a3 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -139,7 +139,7 @@ bool kvm_hwpoisoned_mem(void)
+     return false;
+ }
+ 
+-int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
++int kvm_create_guest_memfd(uint64_t size, Error **errp)
+ {
+     error_setg(errp, "KVM is not enabled");
+     return -ENOSYS;
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index a9759e682b..de51cf738a 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -19,7 +19,6 @@
+ #include "qom/object.h"
+ #include "migration/cpr.h"
+ #include "system/kvm.h"
+-#include <linux/kvm.h>
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+@@ -69,10 +68,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+             return false;
+         }
+ 
+-        fd = kvm_create_guest_memfd(backend->size,
+-                                    GUEST_MEMFD_FLAG_MMAP |
+-                                    GUEST_MEMFD_FLAG_INIT_SHARED,
+-                                    errp);
++        fd = kvm_create_guest_memfd(backend->size, errp);
+     } else {
+         fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+                                m->hugetlb, m->hugetlbsize, m->seal ?
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index b1e43ddc93..2a1501bba6 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -547,7 +547,7 @@ void kvm_mark_guest_state_protected(void);
+  */
+ bool kvm_hwpoisoned_mem(void);
+ 
+-int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp);
++int kvm_create_guest_memfd(uint64_t size, Error **errp);
+ int kvm_create_guest_memfd_private(uint64_t size, Error **errp);
+ 
+ int kvm_set_memory_attributes_private(hwaddr start, uint64_t size);
+-- 
+2.43.0
+
 
