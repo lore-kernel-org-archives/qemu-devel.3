@@ -4,64 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0690C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9CCC79FA0
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qLx-0002CG-HR; Tue, 08 Sep 2026 03:34:49 -0400
+	id 1x3qNj-0004nI-Hm; Tue, 08 Sep 2026 03:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x3qLu-0002AF-O5
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x3qLr-000070-9K
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Bxn9GOup9qtbcJAA--.27746S3;
- Tue, 08 Sep 2026 15:34:38 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBxrM6Nup9qVA0dAA--.29211S3;
- Tue, 08 Sep 2026 15:34:38 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 5/5] hw/intc/loongarch_extioi: Add extioi interrupt status
- display
-Date: Tue,  8 Sep 2026 15:35:48 +0800
-Message-ID: <20260908073548.3249551-6-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260908073548.3249551-1-maobibo@loongson.cn>
-References: <20260908073548.3249551-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
+ id 1x3qNg-0004mZ-Do
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:36:36 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
+ id 1x3qNe-0000NQ-MW
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:36:35 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6886LrEc2502501
+ for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 07:36:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=
+ qcppdkim1; bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=; b=DD
+ h0vegffNPjypr1mnIVLL7nBoO5fyjibYZoDBITmjjjKUOTvOpT0X2doAiRsr9JS9
+ 1I0MYzsh9SdV23etSKUe53NRn77kDxWm+VK73z/iScCfYW2keyeR103o40LBZ8ke
+ MgFb7C/06/DWdFtfbN01jAxpl9xZXYpEFX1nm31bAbDjxttHgm+xor3VSOr3XSSJ
+ cSmhzYnstOnrlUwRFtJGCJf97as7IgGfYqntoM92EKLlWcleik9JhGxGBgXRL0w5
+ pfs4fQkO3WZvR9EB1pNLtISAqBZ7ExabTWskJ7FcwqHbaTd+FjRUmtLgnrNBLypg
+ dvZaVrH14anRJKQQZr1g==
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjcv7gbyq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:36:32 +0000 (GMT)
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-66fb71198e9so1748920d50.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 00:36:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788852992; cv=none;
+ d=google.com; s=arc-20260327;
+ b=rBfsIDJB/Q/VHo3sBL/aM5HOitGC81ahhfYj1sX9trxV1kyG+bNeLMVBNY7mqfWlni
+ 0lcl1qJpgwo3K3fIfbi75IHIwiSI21J/tE2T+OtvwdoUwmX71vOvEa9rbJZgNA3klPD0
+ OQdnR6PF6mnUeyvwXNxRa08OYmVhkITfY+9XCr2S+hrwc5S0nmUhGkNIXEC/dcrvz8fU
+ BY7aTRA39wNIktv9xzTtgAquNOyQ/oPjhqfkX1jGrd14V3deZ/ZvQT5pLDWUXzK1IJm8
+ JaqBM3WplgDLgMFmgOxmPXmAY89Sv7ud94cVypkuDM44GConRTmRKS9ZP6YweT/TDwLc
+ NENA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=;
+ fh=XedGbJeEWtob3UBtxKSdy6f0PeC7Kio6o+l0fceLOvk=;
+ b=Ek1g7JR+lyT1WsG3ucu8dqh0BFQEWS441Rqyyzb8Ti2LPpteLebbW0+DLXRt589S2D
+ vE7cBsMPQO0LgGzH1u82UthOyjVbOStu0t01r+g+nl93pyQabgydO1XebARv6DfKoon5
+ bezRmQLz+HeWosKTq8PE67/fSDnrtSmw0YFoLdi0BDHkefJwQAZMC7F4LSEC2F+ieFrW
+ WwtdhHMzAK2u1nHqRXy9ci79cy/ioqOivjz4N9sXQAVhvtTHHSVjdE+Y2kLnr1LmcKy4
+ MzD1JVmOFadl3wast8nNTans7qThLxTXjurZzHBeHWp+RhXv3Np7cYjyr7jfTsgiGH+9
+ TwjQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788852992; x=1789457792; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=;
+ b=U5fVKaN/k2h/NPNBngYh8AdAnRxyCVa7EjMoqmem2emR+8VYSQlhyONy0mXH2eVu6J
+ eU9vlxS1RJICTqiKDXNb41XDumPPcyqoC+YwEON2ki/zTxyhutnh+1a+aCp+0zLv1FCN
+ mTU2baPqEHlBpjsEu+Ir+tkLqUXiY4aSbYM42pZMwkhc1oGGwHykXdo3uY2Em+zPFh76
+ i4WCSgbxkg7IgKxTfCOZrUEp7Bf2KW5bX/ArC/ZgbtD7oPWsOmPEQnOuiJDxVEKtVMi4
+ 9fgUfWuGxm48rd53TWNAFx/6sOi3TEtzyUsCsmvfzZcp2Ld4wmvUvMjEViCDDV0E9Mbq
+ h5fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788852992; x=1789457792;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=kbCriSpLgERKkHaU+yFAALyqSYyuhbB5huelH1UtSX0=;
+ b=fiwC65wnsqFaeHGsBVZMk95jq3PIgfPx1lRpVarBXlDHRvwlFMVK5ZF/GWcEP/Jo2s
+ 491oRq977PnEZU/KHFTl/mZHapZXuzDqSLrcnSU8HblhudtjNN0uQPYvqf75byV+qtw7
+ hE7RAS0UfjExEUakNZvbbSmwHsAcS55jM2MFzthekbgO//nA+nKIG0pmNXj46x5h2Q/g
+ HzP5pG/T0NJLoiiu0ZKKI8x0Q3i3DTCKyQOeEFctqzN9vqp4RkKt0XzM3vM6+vs/kHo0
+ hVAo5kLgXYSeZ5omFq3r6Kxy//Kfi/qV5hX7alIyhrZ8OtQEFTW2gGepIumDbKf4U9pe
+ ff5A==
+X-Gm-Message-State: AFuF++lt4nfc1bSnYrgTCIvl7TRZWkT489t0A+sfhn4RtPlGypJL570S
+ VVlUfpXLf+LmLvI9t/SfUg1z8Y6Xonx8Jlbpq0zn5fzEwmFEX4XMFX+i/7kbZZYafDWcKmULwmF
+ znk1V9FMyDrrnKOYOekV5oIvje5JaemEaiIUmdsR+HJhlqyv7xMlr/IuxB0RiUJELzlvWmABnRE
+ dVmVJ/1nOMTynsvUgCgHjUnItN6iBACeeW
+X-Gm-Gg: AYBFou2+qbDnKOPJWAxwld+tasmNVdS+8AHUb9V1BhzJParzReVC9Kq+R2sGJlnKufN
+ kofPP365ibFAdO0iW1rgoG6EN2Swnn6ec90Y4P6ZVOAA1FL+HjzRtgYjkUX8cNjozb9qMu8UIJz
+ 8/YMU+ObdaWf1FglfgWfHux4PwE1tTlIcpLSChLz1PXy5e5rdV1Z4RQup9gfA=
+X-Received: by 2002:a05:690e:1306:b0:66f:8a2b:b693 with SMTP id
+ 956f58d0204a3-670f493e1ebmr946449d50.17.1788852992503; 
+ Tue, 08 Sep 2026 00:36:32 -0700 (PDT)
+X-Received: by 2002:a05:690e:1306:b0:66f:8a2b:b693 with SMTP id
+ 956f58d0204a3-670f493e1ebmr946443d50.17.1788852992150; Tue, 08 Sep 2026
+ 00:36:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxrM6Nup9qVA0dAA--.29211S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWF1fAFyrGFy5GF48ZrWfCrX_yoW5Kw1rpF
- 43uFW3Wr4UGanxJr9xWayDuF1rtws3ur12qFZFv348uayUGryDuas2qry7XF4UCws7t3Wv
- kwn5tryYgF1DArcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1LiSJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260828112803.86636-1-subrahmanya.lingappa@oss.qualcomm.com>
+ <20260828112803.86636-2-subrahmanya.lingappa@oss.qualcomm.com>
+In-Reply-To: <20260828112803.86636-2-subrahmanya.lingappa@oss.qualcomm.com>
+From: Sunil V L <sunilvl@oss.qualcomm.com>
+Date: Tue, 8 Sep 2026 13:06:20 +0530
+X-Gm-Features: AcwNN1XKZbNARl6HP-wKvI-4_Cmb74eIeZa_mNiJTxROv49L27PAf4OYpDXrYeU
+Message-ID: <CAB19ukFa3mUc7LuWMuJHFwTYs+7o-bp5Jdpk2gjQVBa1VDKGNQ@mail.gmail.com>
+Subject: Re: [PATCH v10 01/10] build: add optional librpmi dependency
+To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=CMEamxrD c=1 sm=1 tr=0 ts=6a9fbb00 cx=c_pps
+ a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8 a=8rMF-3-UOXLQO1KvhcIA:9
+ a=QEXdDO2ut3YA:10 a=0lgtpPvCYYIA:10 a=Epx66wHExT0cjJnnR-oj:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA3OCBTYWx0ZWRfX4I0wgocsGnvU
+ FKVy2LFPxafaoK6SV4eO38C52WkpG1QekAQl2IgQLiQSu7WX9tlQZlOz+8RFUIZSaS1XqOPgxX7
+ 1vodTBCRfpFf+jtTEXXboOG7TfMtWv0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA3OCBTYWx0ZWRfX9PkKrBtLj3lT
+ iqGfoAy1HHaxdD315EUps1nJ4tJCgDPaU4zpCtwwWZvRIJGY6guXQsyFTzJHNQndmt3IWPZHgDQ
+ fRLupf5mYPxDM8qAk0lu5Q6AQEnu1uF0x2iYaL677BmbFZadPsHJW+3CeJayvFr3mE25ORN1v1u
+ sOdil969xXL1zthD2grPfaqMrdgayMb3dRieoFItOQ6ZpTsff5NVAaHGvpFZQst3WJQ1zek5lWF
+ J4CJbq8B/y1kPtXBrgCJOlg2+TveOAq3xl3Etm8yOVRq93Kngz3rz+KTm550oVMn2LsexTGzxgd
+ h1Ol9dTSvgZuX6WBLOWxM8zcT7sSeaD1LkQVdcOOsYokZLqOZZR0AoWjLDXxwwV0QahbV7fMiab
+ wNVgRAeB17la4dUpEledXVOFIAcnj+V2Pj9lQ1t/ZCyHbBHaCRnVnFPTxM1q6T/HhCVpzet9YLf
+ AAPOIzoyqyGmXPZgX9w==
+X-Proofpoint-ORIG-GUID: HnOVUTx5p0D_CCBE5qyYhtmJPZJtBZrm
+X-Proofpoint-GUID: HnOVUTx5p0D_CCBE5qyYhtmJPZJtBZrm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ spamscore=0 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080078
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,115 +170,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: sunilvl@oss.qualcomm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When irqchip in kernel is enabled, the register status of extioi irqchip
-is in KVM kernel. Here add interrupt status display in user side in order
-to debug extioi irqchip driver.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Xianglai Li <lixianglai@loongson.cn>
----
- hw/intc/loongarch_extioi.c | 58 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
-
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 2999740269..06f2aa7b14 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -10,6 +10,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "hw/core/irq.h"
-+#include "hw/intc/intc.h"
- #include "hw/loongarch/virt.h"
- #include "system/address-spaces.h"
- #include "system/kvm.h"
-@@ -420,11 +421,63 @@ static int vmstate_extioi_post_load(void *opaque, int version_id)
-     return 0;
- }
- 
-+static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-+                                        GString *buf)
-+{
-+    LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(obj);
-+    uint64_t *val;
-+    unsigned long irq;
-+    ExtIOICore *core;
-+    int i;
-+
-+    vmstate_extioi_pre_save(s);
-+    g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
-+
-+    val = (uint64_t *)s->isr;
-+    g_string_append_printf(buf, "  ISR     0x%016"PRIx64" 0x%016"PRIx64
-+                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+                                *val, *(val + 1), *(val + 2), *(val + 3));
-+    val = (uint64_t *)s->enable;
-+    g_string_append_printf(buf, "  ENABLE  0x%016"PRIx64" 0x%016"PRIx64
-+                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+                                *val, *(val + 1), *(val + 2), *(val + 3));
-+    val = (uint64_t *)s->ipmap;
-+    g_string_append_printf(buf, "  IPMAP   0x%016"PRIx64"\n", *val);
-+
-+    val = (uint64_t *)s->coremap;
-+    for (i = 0; i < EXTIOI_IRQS; i += 32) {
-+        g_string_append_printf(buf, "  COREMAP 0x%016"PRIx64" 0x%016"PRIx64
-+                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+                                    *val, *(val + 1), *(val + 2), *(val + 3));
-+        val += 4;
-+    }
-+
-+    core = s->cpu;
-+    for (i = 0; i < s->num_cpu; i++, core++) {
-+        if (!core->cpu) {
-+            continue;
-+        }
-+
-+        irq = find_first_bit((unsigned long *)core->coreisr, EXTIOI_IRQS);
-+        /* No pending IRQ */
-+        if (irq == EXTIOI_IRQS) {
-+            continue;
-+        }
-+
-+        val = (uint64_t *)core->coreisr;
-+        g_string_append_printf(buf, "  CPU[%d] ISR 0x%016"PRIx64" 0x%016"PRIx64
-+                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+                                    i, *val, *(val + 1), *(val + 2),
-+                                    *(val + 3));
-+    }
-+}
-+
- static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_CLASS(klass);
-     LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
-+    InterruptStatsProviderClass *ic = INTERRUPT_STATS_PROVIDER_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     device_class_set_parent_realize(dc, loongarch_extioi_realize,
-@@ -433,6 +486,7 @@ static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
-                                        NULL, &lec->parent_phases);
-     lecc->pre_save  = vmstate_extioi_pre_save;
-     lecc->post_load = vmstate_extioi_post_load;
-+    ic->print_info = loongarch_extioi_print_info;
- }
- 
- static const TypeInfo loongarch_extioi_types[] = {
-@@ -442,6 +496,10 @@ static const TypeInfo loongarch_extioi_types[] = {
-         .instance_size = sizeof(LoongArchExtIOIState),
-         .class_size    = sizeof(LoongArchExtIOIClass),
-         .class_init    = loongarch_extioi_class_init,
-+        .interfaces         = (const InterfaceInfo[]) {
-+            { TYPE_INTERRUPT_STATS_PROVIDER },
-+            { }
-+        },
-     }
- };
- 
--- 
-2.54.0
-
+On Fri, Aug 28, 2026 at 4:59=E2=80=AFPM Subrahmanya Lingappa
+<subrahmanya.lingappa@oss.qualcomm.com> wrote:
+>
+> Add a meson option and config probe for librpmi so RISC-V machines can
+> opt into RPMI support when the library is available. Keep the dependency
+> optional so default builds without librpmi continue to work.
+>
+> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.co=
+m>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  Kconfig.host                  |  3 +++
+>  meson.build                   | 14 ++++++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  3 +++
+>  4 files changed, 22 insertions(+)
+>
+Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
 
