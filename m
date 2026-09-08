@@ -4,91 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6389FC79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65934C79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3sV6-0004BP-5J; Tue, 08 Sep 2026 05:52:24 -0400
+	id 1x3sXH-0008Fq-W1; Tue, 08 Sep 2026 05:54:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3sUx-00049W-Hx
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:52:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3sUw-0002be-4T
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:52:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788861133;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1p7jtalzlLyhCAYc3MxC7WWwgcA0LpGHOMMDNN/DBTg=;
- b=K0ziSx92PSKR+a7Y26ToXgmwEbA9xH90hOwte/fIkWia74x+l9+CvnKB0C+YFq5z4QNijt
- tSXt3tt9neTv5lVM4OC8EMGcciGV9d/WJQiRb/CcyE4nmBZBNnWtQ8FoX7hIhxeulwyIZf
- iTnBNPvTXBzqMBqbBgQt6D4zWR/9HmM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-4CdGSN02NmuJbwo2-rxO6g-1; Tue,
- 08 Sep 2026 05:52:10 -0400
-X-MC-Unique: 4CdGSN02NmuJbwo2-rxO6g-1
-X-Mimecast-MFC-AGG-ID: 4CdGSN02NmuJbwo2-rxO6g_1788861129
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BE2B1933F87; Tue,  8 Sep 2026 09:52:09 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5FC9430001A2; Tue,  8 Sep 2026 09:52:07 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 08 Sep 2026 13:51:52 +0400
-Subject: [GIT PULL 03/10] tests/functional: skip some tests that require
- HMP
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3sXF-0008Ff-LJ
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:54:37 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x3sXE-0003Ah-5d
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:54:37 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-66e611e7c05so3166472d50.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:54:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788861275; cv=none;
+ d=google.com; s=arc-20260327;
+ b=n0zdXYdciOgrtw4djkwIXcS5DQjtGzRwApyk3PL0m5GF6EhlzdQtQEzHzeUg/0b7t5
+ 7PhcWXjvo9g6gfL4Zd8lbef1TnhCFGqXNhaCWoL6M1FZJInKJ26AZd4fPuuNaJ4g7pf6
+ ROeWv1cdZ7s/lSWQpd5KxMWxoph3MtsCvXMlQtFfEQrx3MavQDw06jL2+UtVucto4bSI
+ byMTaJK0UhUh4ewlXBmycQiJramht5C7Y9Co2Ss0shG2lXFM8wRjcPmPfoLhMjKtL8pH
+ C4FLCMFECBPYsGeGGuPmLSgX5zibYx3lfUX1Mmgnz/rqRuG1Ybjnse8UGu4lfPqDZyaD
+ tJvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=jr7cM+KAWmTxu8hsaiknku2O1wvoAa7r9/msiMS3iRc=;
+ fh=JD9EfOa/V7/8s41UybzBVsujwUWftQ0LytYkunVKnf8=;
+ b=NHWRz2ifaq90o09bdQNu6l4+MxhY7ouw0l7MfAqUIZGm0yz82h34+pSRoFFk+10+Lt
+ c9FwTEUe/9h9+MqX040HXZN0h6S/hW++IaF5j+S5Zok6r1GclHDx2z54WDLMgutqiYdc
+ r3XQCGfmkMuWQpIDrtinsQj9cHqz8ISXQvHgVrlowyAsmNIZ+c/RJVexrY4BvSiDjIIC
+ 8TkWO+uqGJThOrrVDAnMejet+S6JE1MsIaLF/hZSs2G1MaKKoWgS2S8PALsKehgJL7hR
+ lmqH733RWhYZT/t68D5c/3BDLWVSyfkBIKYTxbDCKoNCZBWCGgkt+qe7iuL670apIxts
+ BImg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788861275; x=1789466075; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=jr7cM+KAWmTxu8hsaiknku2O1wvoAa7r9/msiMS3iRc=;
+ b=XMayApsUL8OL+04l9hHHkPqEDbsSr9lbBaidxFunkwo7aBQMtrwpa48aRURnCgZkzV
+ stDyD4jqUiGmfAZkKeZ704z++VPCXGrmfQL14wXTXQ1t3gs14+a7L1rKGn0WQ12qlgJ8
+ QOqc3zdNoJAaa10pPgbEd7kNl8TUc/8Wws597OusKVgBM0MYAM1vblq/rmwtjCqNvMbS
+ efQCBzF9x1zQaTlyiuMIgMKGSxWwGzIu5d65ZkT73C/zp4h0kfXF49XWT9lBf2v3MTdB
+ dy0ec2zjeaGKF4V29wJCq1wyp21XMYcgGmj1qWXCQLTe+O62GvapZ1DIlIynGkdu1g3X
+ rUgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788861275; x=1789466075;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jr7cM+KAWmTxu8hsaiknku2O1wvoAa7r9/msiMS3iRc=;
+ b=gI1A0++Wgr/FVcOKUTXHIkDvlrX/nXaQS+X+eMX66zpRN4nvnpDA4qIRZVAL/f8jCM
+ jiBFi4vY3eaNEp/KquPjEQG0VB3xWCyAJfzPd/SHsXNKsaCTB7xOOZZ1Ly3O30pu7bae
+ r8gJEz7ccEb8lfQX4LTh7YSM0GJLk8gIobY7Knjjk0WbRg5Gx7ec6zEoKtvE5VDujxa3
+ psvsw8U9TCxC67XUT9OxwAQSw87hY2ONDoR0PWzHa0fqfWFsy0m3L4Ibaila9CHeHETn
+ xo6Avc+qyYOieH25ZcUv1Qj07kM1qFYAtlAV7IAu9aBBbVnsillZKs/XDfkIZj52ISzt
+ 53OQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzLhk0JgK8FLowwfmafFE74juXwSiFUddmo2HiXuoWK9yCrThYZ3JhpubQ9drqkA2G9SdG6YZh1sBC7@nongnu.org
+X-Gm-Message-State: AFuF++lj9B+/jL5sGGl3LZVzEQIf13k1OQ2Wsd+8oDuby+j2OapULypo
+ RFcQmMTrV3JHWDAQoXBzpkwrDWjIJAPTEvftcV1HcLo1FB35MzMr71mbEY/6q4pwhW90f+tKPSk
+ tE64+3OxN17bEYW8DBssaEmaXYEczdYnr8AufpcNlew==
+X-Gm-Gg: AYBFou1CV6qIs5Meki4e0vG/bBH9Ng95CSBlOJl/l5m6cJUdExlUPGwjyQce0+iwguH
+ dPiEBW4+m2IfEaiKI9FWJpttOZG2rMaOFMLbWeSndPKdFQR5S59Bsv9XUZgcl3qszY/cyTfCwvI
+ WuVZdXxIDyCpeF/X+2CI/92qgK+edZUUiSj0MGSFTbnETwImDP4lWBDRTrzz2qW/mlYfIROj9h4
+ Bld6lRS6/vDuPOX7r50b1C+HvoHz+WZ/XHndxcMM2TWmCggJYyzdsWYxk9WWu51Z73w1jjeaV6Z
+ 0wsojDOU5IJIPFm27+M0/EsMt0653LvJD3TYD+zJOxJEIFwPpVnkv+rT0YKssaUfcykdHEeJNX8
+ oMLvE6bXK+DzaD9NoB9DsZ9jDWyAy
+X-Received: by 2002:a05:690e:b47:b0:66f:b219:9ed8 with SMTP id
+ 956f58d0204a3-66fc1b95b33mr6827139d50.23.1788861274740; Tue, 08 Sep 2026
+ 02:54:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260908-nohmp-v1-3-b19b693a5665@redhat.com>
-References: <20260908-nohmp-v1-0-b19b693a5665@redhat.com>
-In-Reply-To: <20260908-nohmp-v1-0-b19b693a5665@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
- Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1529;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=c8qgPpmZ3XLl9uO8pUVbfyeeb4zTdwm0KeCmlMQU5BE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn9q6ybvHP0q9LeVgKsqErpvFgY6Vtn96GOhIu
- 5JWGlBju4+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/augAKCRDa6OEJdZac
- 5UWAD/9iqfYtr4JCZzbUvhr1XDfL6StCrswTQfn2wKyB3i8/4oxpnm7dBsw50hvgZbeElZW4F8G
- fnyv9KrwAY//a8FL/pOPBMt8ScyCh/9zWDemUTALp+JpwkJboPZC6BS/BOpQQykZy0heC4xejKL
- G3NlcT7qC89LBdQM8Tl3eMT+F4eP+GCDaUapdhqd6Ii6Dx0SHb28we/UwR7bPiA8UGgYl4XpXTN
- EYSd9mBB+CKGyQvfLb6An7Wr4arUuXejyPh//KARN7kR3XjPEqZPJ2whzigLkrPjbBcjXozs+mV
- /B/LlxGVPdj6Hrnnak4vYG8TxNht7YyX0aD4zHIypJCUGYYHMzWYdil1uXCLE7ifVa4iStSIeP1
- UJjTPTosKw7fWxccs01U2MEofGsWEiTlnh/z/sG0ioEyN9KAfpBnXyD6bINVcNOh7WMgyqFF9R3
- 4stb4T6/aZZPaufPPBtV8+5OaHd+echomlx4TUg7bTzdunW1wAopuSrRQvsUhE9dC8IAXoYnw2+
- 2Z0Agyi3U2N/yC38gsm1f2li3Cor6nZ2hkbxP8vn3+OBJ9nE0+CGMSipPlNvTrR3B6d99/PETia
- LVp7z2U3xJMTELj+fvWRNy+iJByhHl4HYwkH2FCVrQQcwC58r6tN1yJhFLxNXowKDX1P3AhbqH6
- AixKBdoLYjDb9dQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
+ <20260819145649.23439-7-philmd@oss.qualcomm.com>
+ <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
+ <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
+ <bbe4b7d0-96ad-45d8-a5a9-0be2c5479d51@oss.qualcomm.com>
+ <7766d96b-4065-4917-9d7d-094bd6d1f29c@oss.qualcomm.com>
+ <5aba99f7-5310-4cd3-a38c-3e9b922c8b05@redhat.com>
+ <CAFEAcA9tz=Br3dRe3mN1fPkjm4y36eRSWUMs=bU8zDbKczCCsg@mail.gmail.com>
+ <CABgObfZQb8FwDubg=pZk6nRSrUgdMxoDpRwG3Kd=GwpQeccLhg@mail.gmail.com>
+In-Reply-To: <CABgObfZQb8FwDubg=pZk6nRSrUgdMxoDpRwG3Kd=GwpQeccLhg@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 8 Sep 2026 10:54:23 +0100
+X-Gm-Features: AcwNN1X4pI5pEHppN0BrhSOQnBCj-un_kMnHniThDIL7_IyiGTDTk5QQf8VVdq8
+Message-ID: <CAFEAcA9mvz4U1v49-Pt20+Zw4LUsaVrOW3LuL0xhT-xHEuM_sA@mail.gmail.com>
+Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
+ arm_cpu_exec_halt()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,42 +131,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those tests use "info registers" command and cannot be converted
-easily, for now skip them
+On Tue, 8 Sept 2026 at 10:29, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> On Tue, Sep 8, 2026 at 10:40=E2=80=AFAM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> > Ah, so it is called without the BQL held? That's quite unusual
+> > for CPU methods, so we should clearly document that.
+>
+> I agree.
+>
+> > I bet also that most targets don't expect it. Picking one at
+> > random, the sparc has_work function calls e.g. cpu_interrupts_enabled()
+> > which does not look like a function that is expecting to be called
+> > without the BQL.
+>
+> Why? It only accesses fields for the local CPU. The problem is
+> interprocedural communication, and only if it does not use
+> cpu_interrupt().
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- tests/functional/m68k/test_nextcube.py | 1 +
- tests/functional/ppc/test_ppe42.py     | 1 +
- 2 files changed, 2 insertions(+)
+Mmm, I guess this is OK: actual TCG code execution also accesses
+local CPU fields with the BQL not held, and if we're definitely
+always on the local vcpu thread when we call has_work then
+this is more or less the same thing. Doing anything more complicated
+than "we hold a lock" for thread-safety makes me nervous, is all :-)
 
-diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
-index f3d92034b127..e7fca50292b6 100755
---- a/tests/functional/m68k/test_nextcube.py
-+++ b/tests/functional/m68k/test_nextcube.py
-@@ -28,6 +28,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
- 
-         self.vm.add_args('-bios', rom_path)
-         self.vm.launch()
-+        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
- 
-         self.log.info('VM launched, waiting for display')
-         # Wait for the FPU test to finish, then the display is available, too:
-diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/test_ppe42.py
-index 53958a7938d1..a9c154f67328 100755
---- a/tests/functional/ppc/test_ppe42.py
-+++ b/tests/functional/ppc/test_ppe42.py
-@@ -72,6 +72,7 @@ def test_ppe42_instructions(self):
-         self.vm.add_args('-device', 'loader,addr=0xfff80040,cpu-num=0')
-         self.vm.add_args('-action', 'panic=pause')
-         self.vm.launch()
-+        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
-         self._wait_pass_fail(self.timeout)
- 
- if __name__ == '__main__':
-
--- 
-2.55.0.543.g5ebe2ebe4ea8
-
+-- PMM
 
