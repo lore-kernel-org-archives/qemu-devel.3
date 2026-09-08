@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CC5C79FAE
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C74C79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3tHw-00089t-L8; Tue, 08 Sep 2026 06:42:52 -0400
+	id 1x3tI3-0008Sk-Ho; Tue, 08 Sep 2026 06:42:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x3tHu-000898-MV; Tue, 08 Sep 2026 06:42:50 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1x3tI1-0008QO-L6; Tue, 08 Sep 2026 06:42:57 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x3tHs-0006YC-CU; Tue, 08 Sep 2026 06:42:50 -0400
+ id 1x3tHz-0006ZW-1F; Tue, 08 Sep 2026 06:42:57 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tTrHmAYh3TzLWIXftahqUxnPBE9n5Uq9Z6qNrU2myOlIKhM0XdM8GukmwYR9uMfHvOLmA+xuLtjVd81kt7XFs3IQt3uMmdBfn2ju6MbzUYBviNiwTDZckWY/efjshlcZOLQo83/F7qRPbSIzLi99MhrQNZNJKvDGzoOPrV9VAftbL83PiXfd2T+YPxU2DSL/ykj8CtEVshNWXB9MX5MAQb5P9s7uufwnXw814NyCl9G6fkpedJTPYgTMFk5wkcfbJE1ZL33zCnXsrJ4UJFwSmjKB0tjIeZ+wM+AegCWiu8gyb4Df0gOUM7pe6aVTMVX+peNAuu79embjcCSKogQ18g==
+ b=D1z9oYlryw9XrkCF5qZK5KaH/JPQYOzMNSGiI7fmY6bxHFzq+b9CMVNVUzbwSoRx41aDpaY6yccuHD7ZpbneWD8rkmYxGr5AU1tnLNNdT9KNF/ryofIQVtD5GPu7ZyiEGLpKCK8DMuiEgjVjqgv/CQDSt7R1pKZF1dgwHjgkEuEir5BaNd7dKXNjuonwhmB3kGPhllpw9mPd71HfyU+AuihJ16keUwYBUxUfETgsWGVKLhd3bnmeY+2gUFFQkwWgUV0ElxK0gf0c7u2/gKOLojaEy/1HlNQT6eEtabV/Ec/nuFPsu6oXmQ2Mvjo6+wG9FGUboeAnaxtQ3N95UfIzKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=62kIHUn/9r7Nz2RxxLMPHQXrNcKUDI0LgMnmN6EIa6w=;
- b=w08j+C3YO9i0bclYNAxNMXJr+Ex/cJRZSFRC+HSRLcOnBilQ2Z3pOkWHLlqpAFOUdZWECNIWJSamgeQnbPcB7ivdzPFebG9hTnksdTpKE9+c/1Ga0PF8uN2HuiOvevKK5X5xk8zr/6LLxj8DgInX1HAhQGpQW+AhguTRo3DKuIRdCFSEvDKYWDU3hF4OW14czOwfUC7Sfx2TJ3MBR2Fj7/HM+yQ+muEL/sERtg+pa4v0qbvovCKH/TbMH3qJ5Kq9caMpXp6StfgLK5Hs2n8Ec6F92Hih5AktN8rvGNA5TVr36UJ8ZqhVIJGJrs2ZF+IqcxPWMGD6dS9QN0CKXM6acg==
+ bh=ehGDTOvrLzALgZLkhXUF0nIR0T+vcPJnbyTRi8i7a8k=;
+ b=jOoZof38mhPy7wEtTajhX9HDent7YiC4f4uXaYHrPMlHyaXA8QR5y+/mfT205lNRuprDHiAzUrZ+mlHM3Vgjwghap0qBFLODRfjQ9/Sa3Zlta0RYy0aBOxicvQAJBOLNHAHLGn6QKH2e/jiu7G+toe3Ltmfm80nuIKGhOshv9tvzYXTy3DI0bxb2M/G+9R8/xtxro+pfzA65JAVwP3gYO0fnaY4cQd2qihky/VF0Jd5FYcVslSdBEaeb9HGiHj1enY98StC8HVCCi61THy5oFzN9k4h7zoSYeMsFj+cnBkSHvF+8qxgIGCExRlw6QJmG79HL4LYHxzo8UMe0HACOJQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,25 +33,26 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=62kIHUn/9r7Nz2RxxLMPHQXrNcKUDI0LgMnmN6EIa6w=;
- b=p7HxF65Zdp1Lxc0gKpVe3cWz01u0Z9qCpI+/equ5pEDIFNRtATyEsdq//3waqdRfiPmJjOee1gfukkpOqUW1c/TwjCYs3EOuRqHF9l+oP/PKMn4gU8+/P+0kSwh4tjTr9CqxYKoR6Cs7936yuBrF6XaLm/TQBo0GDQoBD9np1BjpeyVldCDr9r/UkmUM+xhSc/Nrzc9d8KNN4QHdsUJd+2kGOk6YyDae8cz1M+5RQr9AMh9gggu5eJx0I7mIr57s+cShwGZ/Spw2QZNbMqwcblnMVBFsuvR/nSRGdZc3DbJPPWe8aIynKrOftd9i0K+EEHqI0VQEQD6RS2Z4DrIXGQ==
+ bh=ehGDTOvrLzALgZLkhXUF0nIR0T+vcPJnbyTRi8i7a8k=;
+ b=W1CMK6iyLoZBiUcBO4A+68bg734V/qn2BB+VQbJmd23kbQ9pMct556TtIkLgxvQeUT/ZzfW6om2Cu0NyzTZe6FoZEHQHgzQ9BvWeYPJbQOKvPEZ6F73Df0ou8sNDzmnW/rKkAU3Zfzh656/iKQ8EEGOwk3U9ul67BMNPFsvvOkuC9DKMWuyVedHuYMEOUk6O2d3RgbZsL3HIrnw6kIfCwUu1GqU718nTx7aLeyCXPC9U8fYAkTBw64BT9mgEwOOqQ38aF0CMBkZV2Sp8QBHO4A/ZbgLWWrVdzG551FaXJANauob5mqPnGQbCvC5vUkaWN5pzk4djCCetcuCBeOuKGQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from PSAPR02MB4984.apcprd02.prod.outlook.com (2603:1096:301:78::7)
  by OSQPR02MB7928.apcprd02.prod.outlook.com (2603:1096:604:291::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
- 2026 10:42:34 +0000
+ 2026 10:42:37 +0000
 Received: from PSAPR02MB4984.apcprd02.prod.outlook.com
  ([fe80::fd75:bbda:6f27:c616]) by PSAPR02MB4984.apcprd02.prod.outlook.com
  ([fe80::fd75:bbda:6f27:c616%6]) with mapi id 15.21.0382.014; Tue, 8 Sep 2026
- 10:42:34 +0000
+ 10:42:37 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 10/32] hw/misc: Add Phytium E2000 MHU doorbell
-Date: Tue,  8 Sep 2026 18:41:19 +0800
-Message-ID: <20260908104159.1621764-11-bin.meng@processmission.com>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+Subject: [PATCH v2 12/32] hw/ssi: Add Phytium E2000 QSPI controller
+Date: Tue,  8 Sep 2026 18:41:21 +0800
+Message-ID: <20260908104159.1621764-13-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260908104159.1621764-1-bin.meng@processmission.com>
 References: <20260908104159.1621764-1-bin.meng@processmission.com>
@@ -63,65 +64,66 @@ X-ClientProxiedBy: TY4P301CA0041.JPNP301.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PSAPR02MB4984:EE_|OSQPR02MB7928:EE_
-X-MS-Office365-Filtering-Correlation-Id: b4876f3b-b3fd-4b55-42e2-08df0d95e467
+X-MS-Office365-Filtering-Correlation-Id: 83c38969-57a0-4417-2b44-08df0d95e647
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|10067099003|6133799003|3023799007|18002099003|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: 4Ic4lfgbBqZnLL7O95pSYoMmuUHM2gROYBpPEfIxBib9gombybInD0+vGkKznvlIclcH487ZpUdlKmHqUbnocYFlYbJWO/M+Zbgi7jRrcgWb02JWp+9VuA5KEwU+Zet+be7XRSF4MaqHBAEp9cK7Zf0czZ0YWEoAmBA9z0artNSsU2HG6gb7SzcdTTBuWQ8oGwBekCO1gikJEb/wtT0M5H6HxZztqJWuh5fascLHpO/w4Bw55oh2hXLT3uUq7qsi55F8qURamEe8aapk2wJd1jQ/ERpmjFH+TIGlR691IjCOyrNKe7g5xni3acmL9HK771ZmoTf1tDhEwekQNfgcwMEJx3My56EMQvMzgVrwPrr5L1GdJPbEkGck56catfJYCJY4NhE0R6Fj22t3PfF+7e4th0yxArHokhSP3Hy2vOakKFwAy1bdez5Ka5wz6+/hi9L3HDbOUjGCtpZYwPvf64bnqVLC6BQbmWLcG2eS6ZaFGRFRQZ75WJb7SVmWvN8HGxdJykV4MdABdaO+7e6GlFeWc7sB+TLgpfYR8WFOUXWszugt/9TbmmZPWILrQE9eilFnqKUZ9t2c4X4lyJ/mGL1IKV8aBCqPAhiECyYmDewkZ1UovEOZ4kjIP9x3G+4sNGgsYQYLi4cBDDv9a5V9CvO76AJH7T/j2oDrPyMcVTU=
+ ARA:13230040|23010399003|366016|1800799024|376014|10067099003|6133799003|3023799007|18002099003|22082099003|56012099006|5023799004;
+X-Microsoft-Antispam-Message-Info: /lg2907GY/GT/MkLFKzcfd633PQeoMS0POIlS1LHKQzPZuRLFc+uaFwCPv2XLPtQY0vDQTv829fHMcH4OOT7QHbdiO6KUsCwvfsPkcoXZGz+qnft+ly2IT40J7aJu+8TRBkkIkXhPePgNN0b2lZgmWiASpU3PPFiC2A4JGJdlLX33V1Zvc+fGbmCVgAXxwk6rFUc8hqLLybsYbmZ48MeOudhmfnr9Fxu+kiTViulA5bKQT74MtL5jh2Pni3cwgWViU87PwG52tLKJznb3PW6WBaGA32IYIDUHlSy/UPk8DCqsbZ6GtNP7dxcZ1kdRlNJtuxE304y3IzfRgnWesf9KswahNlfpmhukEGH8GWAsUdYk+lJevCXFgRrrNjJ8nHucabBnK16xYICZFmGMYM34FmpDArOeYLW85hAd3Jf4YQmzz0aJFc3RHP3kIfEHPOHclH/yN2KMoEIwT5/kXaAVCYe6wLBGpDEpDVRnJIF6X8+qLy3Mi4mTfsvYNFPaSCwd+3k6tlRQkExt3X7URxyLy4aeFrhLXDY8JMgxm4f5FvhvYT2c53xPnbQxpSLYtulWBTbXi2ObrRwU+RxQurxTFBiZFjLHto6i+XoljxjrraOB6g5FAOXIk7t/AkUOnGTVXKme+YlDmbD1KDjehj9ThvRAu3X8bUogMveXm4c6Ec=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PSAPR02MB4984.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(6133799003)(3023799007)(18002099003)(22082099003)(56012099006);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(6133799003)(3023799007)(18002099003)(22082099003)(56012099006)(5023799004);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?KVID4dUkzV+ZC6RSaQgps8hsSuKgqmtIMAts9vxuCWjVjgfKACjPsVdeVM2z?=
- =?us-ascii?Q?qBZGcZnITaX8toLGrHO0U9F8nlUdNW96MrQ+uPkwuwqrTJTcM15VdeKNaCYy?=
- =?us-ascii?Q?0aFSzN/t9o0LCfn9gQXPN/GTEoMAtEQ+3etcYKde96JwYLgUli/mTUww1/xM?=
- =?us-ascii?Q?dlZ95dZSxVx0vt5Q7FaXNZ1WmNesVCR3AHfXcCCFCTdzNbYz0Qhgui91qGmi?=
- =?us-ascii?Q?t8K1uF+HUE/lCJ+kRXL6/+sIR6yrh18ApgrraE6OUbfxK6s2AkV4Y1+jMh80?=
- =?us-ascii?Q?PfpvYX6FJAhCtwC8F+SS8L5FMNlQRW2pF4jOX2c0fpoMIgiXSxk1KVflUebq?=
- =?us-ascii?Q?EYCL9eHHJ/xzDIUflWe0F3YpEtFoOW+ue9V4yKKBkCeLz73MSlBnlcpY9sEL?=
- =?us-ascii?Q?srw/VmqmD4BwaXCgw3ypjqB5XpknCKothwGCPyQYcj3JvRqqd9WBG38qg7et?=
- =?us-ascii?Q?zaEU4zJqcoc4WEo2oEFFm97SrdmF8NKy8Q5oKgxvusuhZUV4hymsfB1BtoVp?=
- =?us-ascii?Q?/ErFFc2WSiM3LQ75aPj2stVVFg8iDeQTPdswg6J8aBochkPRQNOiIZPyKEz8?=
- =?us-ascii?Q?AD+LeNKQRCUwQjXpj2vwYNHi6CfqBWimfa5jrXhMmdB5o6pH7d10VaXBvx5I?=
- =?us-ascii?Q?i8JbXcmvaTC2jswcEmnLdyf7g52Ihxhgqi4pT0KsHW/5SFW/zPYN/yaOauBA?=
- =?us-ascii?Q?cFVx+VhIeMDbGO8u+w9gz68+QoyM6KVyT0QOQ2r2Io+6LOf6xHV3HzMsA1zB?=
- =?us-ascii?Q?AbWKVJgfBFaywSvlkG5eFcB1QQpWdTqkddpzQyHyasaFtpI5Ad7frNvVv+SQ?=
- =?us-ascii?Q?oAZLYBbkpnDxi1DPHXYpjjS3peSQwYxTRC/bJr9mAJhuU8o5mwL/+4uO01Ih?=
- =?us-ascii?Q?foddu6HwhfMLdfS0kU0ooljnHE8emaUhrLRYiUYDmMXU6qJUHQgenBCftVqK?=
- =?us-ascii?Q?K2Uxofa/y3OTVKJSLUbaHTINQkZ+nyFu2459C06Gli4R1RE6FASxzmcL9WEL?=
- =?us-ascii?Q?MuheE5ZKEWExs4sOZlAYEX0+es1Lhu7jXSGPs2CJbYy2g1YNZ9A49ZUBFua/?=
- =?us-ascii?Q?aI4ywucK4/KPKCWXWUisRdX8cYm4A/xgjSKbbgmSU13c4atg+6DkqG0sq4Gm?=
- =?us-ascii?Q?rz0n5W+VLWjtYvEuc7aBAv+Io8S+Tzo4Sid4zvMRKE/a9vyOWNhS3xUVtvRx?=
- =?us-ascii?Q?FWUv1XIzTG44pJIKPpo+cSpl5U3tlCQBdtTJ7lRt1EeJLj7o3UOWO9keXi8U?=
- =?us-ascii?Q?SaYCnGRr6HZm+7+TzPOVMmT3kAb/3uxi6HgDWFtNjNGZdR0a2Dn/7sZ4N3qT?=
- =?us-ascii?Q?0ssLke+JyKFJdtUjV6UO1fuyvoiDnA5VN9/6gLMrsgjN3WDxPO+MJOz00pSI?=
- =?us-ascii?Q?4sm5f5d3EIP0IwSG9M1i5B5B1JDEPGbMYjHzZt9owx/3NnfoTDrFc9gkkEo9?=
- =?us-ascii?Q?ILeyDsqDm37e52tS6o8L0FmkKF7YHtMvm7xUxtgQQaWMCpEplV0sJguw+GBq?=
- =?us-ascii?Q?ZmtcYD9b3k586oHBcaMuNtTn2dMbbLGeYET2h44+2gmDG6L6N67DbgMTXC/h?=
- =?us-ascii?Q?p0rxmB4lHOWnE2tbn+4HHokQpWd7z+VklxAP1kJ1DYUtDbDrzkF4FdLbVW3O?=
- =?us-ascii?Q?093JlDbXfpk+LDzB2cJcj0qAsPgqy/s7K7cvTUh0KXPNP6ryR7Tj7j3QZwjE?=
- =?us-ascii?Q?C7Icd3CB4yjk0oaBXqW/BP/DsGLZP6+MYT37DT//kw3FSMrx56cVVoMqRSUQ?=
- =?us-ascii?Q?vwcyzRkDFk2w4JmV9aq/ZQEIGc1TTMU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?mlDsinwUWe2w7UnhVzKj6yIjfR90iHMrp9JDXZSuJT0HeIUNY5PfSoCyf658?=
+ =?us-ascii?Q?BElm0Lg3nZJxUuX0B/+ZA8HKiY3PyCOSxFSr79/1eHOx3JBlEzERNcSbXggI?=
+ =?us-ascii?Q?booAE0IUSI5cWubYlK1bPiXifwBLf0YbS5QH98L7u/tShPL4UTDQoKZXsVj8?=
+ =?us-ascii?Q?eoTXfWTO6izuN4ZrO7Qfo/W3vhaUd6WK4Xel7kIZSYxGPf3tEhzk+H5/aOEv?=
+ =?us-ascii?Q?If4EeRiu6O43tBqp9wUgDqMQOlz8UXNKBIGNh4bvx3OtT/iZ1iZ1H/0Tv0QP?=
+ =?us-ascii?Q?S1iMzar52sMJ+w8JplNaz384CYvBfW6jIbXt10+Dp15EmGkp8hKyYtF0CSsA?=
+ =?us-ascii?Q?lQYw2DGsdAndG5mmwDYa5+80SAKhwtrNoqofaV4JK9bEXNS/RiaD9QCtp0a9?=
+ =?us-ascii?Q?F83MeqsyXTwxwOM+b6t7tb7Gs352/57QWgTEvzgZ8YBAMY+JSAyJaTsqBN21?=
+ =?us-ascii?Q?EmtpRqFhPXYZxryy3LI2mDx5EaunuR7wYXbXpFU0Z1Ia84aLUjF1VpyRlzA3?=
+ =?us-ascii?Q?VWjMLCiEZBXczCUeZWFBHlgtCHAuI4hCo63G+5RAknHeMAZRdvuQ/0LyOuUR?=
+ =?us-ascii?Q?Rawx9+euRXcz6XmBkR6bhZ2PE55zPe5ZLfh8oJ2NVR+nAav2CkYgvkKhbQNd?=
+ =?us-ascii?Q?5bw66tw9IIVPVtCM9X2KBcTCllldk/1+UrQ3rqNHtZVImT0MmdDa+Prmx71I?=
+ =?us-ascii?Q?RP1Y0/l+XN8ll3ZlKFEk+AC4e1cgIGAJsZrz2YdyJWWQZ/C7mgTIqcQqJUpz?=
+ =?us-ascii?Q?xKiQezP/XxRuQ/foO6HdWO4Tg/uXFvog7LtpfnmMVaePSrwi4JVtHRwUJiRz?=
+ =?us-ascii?Q?V42LnIlK/abpMwjPFB7+lj1YtPxpYyuxvHhJubp1wjKyk/97qYuIqR7Wzsxs?=
+ =?us-ascii?Q?YhLEVW/lVpqpcyi47O9yVNe1S4fJJKZNZPnqjyArIb2FmHvIGg3I2QVTvL7P?=
+ =?us-ascii?Q?mXundblr7hdFcm5ydiGRHagYHLxl9nhZnAf6jI3WOsgo6G2zyx/t8aniE6n0?=
+ =?us-ascii?Q?xhGisDmveuE7swb+GE7drgfhTRdOaKp5AvCUzTjxYXQSy+UluxL29f3UZ0wW?=
+ =?us-ascii?Q?H9RBEyovYhnjwmKEPaYINE3iXWh/0kDo/mtXNrAJiMjSRRw/x37E/HtYXa+K?=
+ =?us-ascii?Q?WgWQQIZMRVfW6op46h9V4yFTSTFegQQ/kkoHY+EX3WGm4/P0nUueLQRhaE0A?=
+ =?us-ascii?Q?OCB3mQ4UPdALqgBKd9BGQb1AeNR30Zep2oWmKqJ/U7WNPvuMqaxKjll5m3LA?=
+ =?us-ascii?Q?ksVOY19G3GD6l2uxkeTSNkAkaxHz+pGEQyg9sr+XiMbdCQwOnSckU6cg47Pr?=
+ =?us-ascii?Q?IpZJphUJ7nh73TWpQwDkkrdgjVg2oju8LZ4f3Xd/Oesc1CMLH6XxgWq55xLe?=
+ =?us-ascii?Q?K268E2HILYYFBpl6GR8SsqlVKVp/Gz/ps/7pC0KGCOXD8cS6/GOFboeKhCRN?=
+ =?us-ascii?Q?Bn4SLuvis/MKwdOrHDYXeA7kzIVf1D++AODQ9bVnvqZ5veMeFMQaotTmGc7C?=
+ =?us-ascii?Q?5PUtHy+zBITHciLjm06jKTRMEBPOYF8a+dls6UMcuMpsKYkvl64PKX0DscJ8?=
+ =?us-ascii?Q?0f/5+ngIqGT9ZxkaXNBkSCppE6Bt2YME5bQqNpFT4LlwxJbzLLYTfTF/Tyx5?=
+ =?us-ascii?Q?7TxNC2ZmR2XdNhlTAmVwjgFaow4bQiOs8EKjrYZL9JN2EAb45cb6UmOkNj/F?=
+ =?us-ascii?Q?fQw3HxCVJ5FKk/woN0fRsn6GX3IkDtdinorCzZK54cMvB02ZXN5vf8gyJwxa?=
+ =?us-ascii?Q?ACUvY6hpUD/kfTp9Zyxlr+GOjVW7jIU=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4876f3b-b3fd-4b55-42e2-08df0d95e467
+X-MS-Exchange-CrossTenant-Network-Message-Id: 83c38969-57a0-4417-2b44-08df0d95e647
 X-MS-Exchange-CrossTenant-AuthSource: PSAPR02MB4984.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:42:34.5366 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:42:37.5686 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: B9CJWcFDNKx4xETHJbI2jzB7fUkxtmPEdDGXR/mf+Eh7SmO1Cmb7FWhUctG2lq+HjUjEF6CgfJBj8ZevkP61MuDYbC+v0dili+12LDdju0U=
+X-MS-Exchange-CrossTenant-UserPrincipalName: ST/wEjVGQk5iv6fwkW0WKyEHBcIqjF7iHtLl7u5NYivyQxjr3OPHL0gRnYTqblRb3KPEmaNvJ9CycEQyZ+m8s8A9f+r8FTCfma2PNB4rIoI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR02MB7928
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,34 +140,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a model for the E2000 AP OS MHU channel used by vendor firmware.
-Model its status, set and clear registers and complete nonzero
-notifications by updating the shared SCMI mailbox.
-
-The device also provides the mailbox seeding helper required by
-the later PBR handoff. Board address mapping and SCP SRAM ownership
-are intentionally left to a following machine-integration commit.
+Phytium E2000Q integrates a QSPI controller which seems to be an
+in-house IP. This adds a model for it with command-port and
+direct-map paths, and exposes an SSI bus and chip-select output.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
 (no changes since v1)
 
- include/hw/misc/phytium_e2000_mhu.h |  25 ++++
- hw/misc/phytium_e2000_mhu.c         | 185 ++++++++++++++++++++++++++++
- hw/misc/meson.build                 |   1 +
- 3 files changed, 211 insertions(+)
- create mode 100644 include/hw/misc/phytium_e2000_mhu.h
- create mode 100644 hw/misc/phytium_e2000_mhu.c
+ include/hw/ssi/phytium_qspi.h |  23 ++
+ hw/ssi/phytium_qspi.c         | 398 ++++++++++++++++++++++++++++++++++
+ hw/ssi/Kconfig                |   5 +
+ hw/ssi/meson.build            |   1 +
+ 4 files changed, 427 insertions(+)
+ create mode 100644 include/hw/ssi/phytium_qspi.h
+ create mode 100644 hw/ssi/phytium_qspi.c
 
-diff --git a/include/hw/misc/phytium_e2000_mhu.h b/include/hw/misc/phytium_e2000_mhu.h
+diff --git a/include/hw/ssi/phytium_qspi.h b/include/hw/ssi/phytium_qspi.h
 new file mode 100644
-index 0000000000..0527d6fe8d
+index 0000000000..c6534af16d
 --- /dev/null
-+++ b/include/hw/misc/phytium_e2000_mhu.h
-@@ -0,0 +1,25 @@
++++ b/include/hw/ssi/phytium_qspi.h
+@@ -0,0 +1,23 @@
 +/*
-+ * Phytium E2000 MHU/SCMI doorbell
++ * Phytium E2000 QSPI controller
 + *
 + * Copyright (c) 2026 Process Mission
 + *
@@ -175,32 +174,26 @@ index 0000000000..0527d6fe8d
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_MISC_PHYTIUM_E2000_MHU_H
-+#define HW_MISC_PHYTIUM_E2000_MHU_H
++#ifndef HW_SSI_PHYTIUM_QSPI_H
++#define HW_SSI_PHYTIUM_QSPI_H
 +
 +#include "hw/core/sysbus.h"
-+#include "qom/object.h"
 +
-+#define TYPE_PHYTIUM_E2000_MHU "phytium-e2000-mhu"
-+OBJECT_DECLARE_SIMPLE_TYPE(PhytiumE2000MHUState, PHYTIUM_E2000_MHU)
++#define TYPE_PHYTIUM_E2000_QSPI "phytium-e2000-qspi"
++OBJECT_DECLARE_SIMPLE_TYPE(PhytiumE2000QSPIState, PHYTIUM_E2000_QSPI)
 +
-+#define PHYTIUM_E2000_MHU_MMIO_SIZE 0x1000
-+
-+void phytium_e2000_mhu_seed_mailbox(void);
++#define PHYTIUM_E2000_QSPI_REG_SIZE    0x1000
++#define PHYTIUM_E2000_QSPI_DIRECT_SIZE 0x10000000
 +
 +#endif
-diff --git a/hw/misc/phytium_e2000_mhu.c b/hw/misc/phytium_e2000_mhu.c
+diff --git a/hw/ssi/phytium_qspi.c b/hw/ssi/phytium_qspi.c
 new file mode 100644
-index 0000000000..4ea23af900
+index 0000000000..da7dce1d46
 --- /dev/null
-+++ b/hw/misc/phytium_e2000_mhu.c
-@@ -0,0 +1,185 @@
++++ b/hw/ssi/phytium_qspi.c
+@@ -0,0 +1,398 @@
 +/*
-+ * Phytium E2000 MHU/SCMI doorbell
-+ *
-+ * This is a boot-oriented SCMI transport proxy. It acknowledges requests in
-+ * shared SRAM so PBF can complete clock and platform setup; it is not a full
-+ * SCMI protocol server.
++ * Phytium E2000 QSPI controller
 + *
 + * Copyright (c) 2026 Process Mission
 + *
@@ -211,109 +204,221 @@ index 0000000000..4ea23af900
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/misc/phytium_e2000_mhu.h"
++#include "hw/ssi/phytium_qspi.h"
 +
 +#include "hw/core/register.h"
++#include "hw/core/irq.h"
++#include "hw/ssi/ssi.h"
 +#include "migration/vmstate.h"
++#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "system/address-spaces.h"
 +
-+#define PHYTIUM_E2000_PBF_SCMI_MBOX_BASE  0x32a10400
-+#define PHYTIUM_E2000_SCMI_STATUS_OFFSET  0x04
-+#define PHYTIUM_E2000_SCMI_LEN_OFFSET     0x14
-+#define PHYTIUM_E2000_SCMI_PAYLOAD_OFFSET 0x1c
-+#define PHYTIUM_E2000_SCMI_STATUS_FREE    BIT(0)
++REG32(FLASH_CAP, 0x00)
++REG32(RD_CFG, 0x04)
++    FIELD(RD_CFG, CMD, 24, 8)
++    FIELD(RD_CFG, ADDR_SEL, 19, 1)
++    FIELD(RD_CFG, LATENCY, 18, 1)
++    FIELD(RD_CFG, DUMMY, 4, 5)
++REG32(WR_CFG, 0x08)
++    FIELD(WR_CFG, CMD, 24, 8)
++    FIELD(WR_CFG, ADDR_SEL, 4, 1)
++    FIELD(WR_CFG, MODE, 3, 1)
++REG32(FLUSH, 0x0c)
++REG32(CMD_PORT, 0x10)
++    FIELD(CMD_PORT, CMD, 24, 8)
++    FIELD(CMD_PORT, CS, 19, 2)
++    FIELD(CMD_PORT, CMD_ADDR, 15, 1)
++    FIELD(CMD_PORT, LATENCY, 14, 1)
++    FIELD(CMD_PORT, DATA_XFER, 13, 1)
++    FIELD(CMD_PORT, ADDR_SEL, 12, 1)
++    FIELD(CMD_PORT, DUMMY, 7, 5)
++    FIELD(CMD_PORT, RW_NUM, 3, 3)
++REG32(ADDR_PORT, 0x14)
++REG32(HD_PORT, 0x18)
++REG32(LD_PORT, 0x1c)
++REG32(FUN_SET, 0x20)
++REG32(WIP, 0x24)
++REG32(WP, 0x28)
++REG32(MODE, 0x2c)
++REG32(LEGACY_CTRL, 0x30)
 +
-+/*
-+ * The SDK defines AP OS status/set/clear at 0x100/0x108/0x110 within a
-+ * channel. PBF selects the channel at MHU offset 0x200, producing the global
-+ * offsets below. Writes to AP_OS_SET are the request notification.
-+ */
-+REG32(AP_OS_STAT, 0x300)
-+REG32(AP_OS_SET, 0x308)
-+REG32(AP_OS_CLR, 0x310)
++#define PHYTIUM_E2000_QSPI_R_MAX     (A_LEGACY_CTRL / sizeof(uint32_t) + 1)
++#define PHYTIUM_E2000_QSPI_PAGE_SIZE 256
 +
-+#define PHYTIUM_E2000_MHU_R_MAX \
-+    (PHYTIUM_E2000_MHU_MMIO_SIZE / sizeof(uint32_t))
-+
-+struct PhytiumE2000MHUState {
++struct PhytiumE2000QSPIState {
 +    SysBusDevice parent_obj;
 +
-+    uint32_t regs[PHYTIUM_E2000_MHU_R_MAX];
-+    RegisterInfo regs_info[PHYTIUM_E2000_MHU_R_MAX];
++    uint32_t regs[PHYTIUM_E2000_QSPI_R_MAX];
++    RegisterInfo regs_info[PHYTIUM_E2000_QSPI_R_MAX];
++    MemoryRegion direct_mr;
++    SSIBus *spi;
++    qemu_irq cs;
++    uint8_t write_buffer[PHYTIUM_E2000_QSPI_PAGE_SIZE];
++    uint32_t write_address;
++    uint16_t write_len;
++    bool write_pending;
++    bool resetting;
 +};
 +
-+static void phytium_e2000_mhu_complete_scmi(void)
++static void phytium_e2000_qspi_select(PhytiumE2000QSPIState *s)
 +{
-+    uint8_t buf[sizeof(uint32_t)];
-+    uint32_t len;
-+
-+    /*
-+     * Preserve the caller's message length, but reserve one status word for
-+     * the minimal success response returned in the payload.
-+     */
-+    address_space_read(&address_space_memory,
-+                       PHYTIUM_E2000_PBF_SCMI_MBOX_BASE +
-+                       PHYTIUM_E2000_SCMI_LEN_OFFSET,
-+                       MEMTXATTRS_UNSPECIFIED, buf, sizeof(buf));
-+    len = MAX(ldl_le_p(buf), (uint32_t)sizeof(uint32_t));
-+
-+    stl_le_p(buf, 0);
-+    address_space_write(&address_space_memory,
-+                        PHYTIUM_E2000_PBF_SCMI_MBOX_BASE +
-+                        PHYTIUM_E2000_SCMI_PAYLOAD_OFFSET,
-+                        MEMTXATTRS_UNSPECIFIED, buf, sizeof(buf));
-+    stl_le_p(buf, len);
-+    address_space_write(&address_space_memory,
-+                        PHYTIUM_E2000_PBF_SCMI_MBOX_BASE +
-+                        PHYTIUM_E2000_SCMI_LEN_OFFSET,
-+                        MEMTXATTRS_UNSPECIFIED, buf, sizeof(buf));
-+    stl_le_p(buf, PHYTIUM_E2000_SCMI_STATUS_FREE);
-+    /*
-+     * Publish the free bit last. PBF polls this field as the ownership handoff
-+     * and may consume the response immediately after observing it.
-+     */
-+    address_space_write(&address_space_memory,
-+                        PHYTIUM_E2000_PBF_SCMI_MBOX_BASE +
-+                        PHYTIUM_E2000_SCMI_STATUS_OFFSET,
-+                        MEMTXATTRS_UNSPECIFIED, buf, sizeof(buf));
++    qemu_irq_lower(s->cs);
 +}
 +
-+void phytium_e2000_mhu_seed_mailbox(void)
++static void phytium_e2000_qspi_deselect(PhytiumE2000QSPIState *s)
 +{
-+    /*
-+     * PBR leaves the shared channel available before releasing PBF. Seed the
-+     * same ownership and success state even before the first doorbell write.
-+     */
-+    phytium_e2000_mhu_complete_scmi();
++    qemu_irq_raise(s->cs);
 +}
 +
-+static void phytium_e2000_mhu_doorbell_post_write(RegisterInfo *reg,
-+                                                  uint64_t value)
++static void phytium_e2000_qspi_send_address(PhytiumE2000QSPIState *s,
++                                            uint32_t address,
++                                            unsigned int length)
 +{
-+    /*
-+     * Complete requests synchronously because no separate SCP CPU executes in
-+     * this model. Zero writes only update doorbell storage.
-+     */
-+    if (value) {
-+        phytium_e2000_mhu_complete_scmi();
++    int shift;
++
++    for (shift = (length - 1) * 8; shift >= 0; shift -= 8) {
++        ssi_transfer(s->spi, extract32(address, shift, 8));
 +    }
 +}
 +
-+static const RegisterAccessInfo phytium_e2000_mhu_regs_info[] = {
++static void phytium_e2000_qspi_send_dummy(PhytiumE2000QSPIState *s,
++                                          unsigned int cycles)
++{
++    unsigned int i;
++
++    for (i = 0; i < DIV_ROUND_UP(cycles, 8); i++) {
++        ssi_transfer(s->spi, 0);
++    }
++}
++
++static void phytium_e2000_qspi_exec_port(PhytiumE2000QSPIState *s)
++{
++    uint32_t cfg = s->regs[R_CMD_PORT];
++    uint64_t tx = s->regs[R_LD_PORT] |
++                  ((uint64_t)s->regs[R_HD_PORT] << 32);
++    uint64_t rx = 0;
++    unsigned int cs = FIELD_EX32(cfg, CMD_PORT, CS);
++    unsigned int length;
++    unsigned int i;
++
++    if (cs != 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: command selects unwired CS%u\n",
++                      TYPE_PHYTIUM_E2000_QSPI, cs);
++        s->regs[R_LD_PORT] = 0;
++        s->regs[R_HD_PORT] = 0;
++        return;
++    }
++
++    phytium_e2000_qspi_select(s);
++    ssi_transfer(s->spi, FIELD_EX32(cfg, CMD_PORT, CMD));
++
++    if (FIELD_EX32(cfg, CMD_PORT, CMD_ADDR)) {
++        length = FIELD_EX32(cfg, CMD_PORT, ADDR_SEL) ? 4 : 3;
++        phytium_e2000_qspi_send_address(s, s->regs[R_ADDR_PORT], length);
++    }
++
++    if (FIELD_EX32(cfg, CMD_PORT, LATENCY)) {
++        phytium_e2000_qspi_send_dummy(
++            s, FIELD_EX32(cfg, CMD_PORT, DUMMY) + 1);
++    }
++
++    if (FIELD_EX32(cfg, CMD_PORT, DATA_XFER)) {
++        length = FIELD_EX32(cfg, CMD_PORT, RW_NUM) + 1;
++        for (i = 0; i < length; i++) {
++            rx = deposit64(rx, i * 8, 8,
++                           ssi_transfer(s->spi, extract64(tx, i * 8, 8)));
++        }
++    }
++
++    phytium_e2000_qspi_deselect(s);
++    s->regs[R_LD_PORT] = extract64(rx, 0, 32);
++    s->regs[R_HD_PORT] = extract64(rx, 32, 32);
++}
++
++static void phytium_e2000_qspi_ld_post_write(RegisterInfo *reg,
++                                             uint64_t value)
++{
++    PhytiumE2000QSPIState *s = PHYTIUM_E2000_QSPI(reg->opaque);
++
 +    /*
-+     * The functional transport does not model an SCP interrupt line. STAT is
-+     * therefore idle, SET completes the shared-memory transaction, and CLR
-+     * remains ordinary register storage for the firmware acknowledge path.
++     * LD_PORT is the final staging write and commits the command assembled in
++     * CMD_PORT, ADDR_PORT, HD_PORT, and LD_PORT. register_reset() invokes the
++     * same callback, so suppress SPI side effects while installing defaults.
 +     */
-+    { .name = "AP_OS_STAT", .addr = A_AP_OS_STAT,
-+      .ro = UINT32_MAX },
-+    { .name = "AP_OS_SET", .addr = A_AP_OS_SET,
-+      .post_write = phytium_e2000_mhu_doorbell_post_write },
-+    { .name = "AP_OS_CLR", .addr = A_AP_OS_CLR },
++    if (!s->resetting) {
++        phytium_e2000_qspi_exec_port(s);
++    }
++}
++
++static void phytium_e2000_qspi_flush_write_buffer(PhytiumE2000QSPIState *s)
++{
++    uint32_t cfg = s->regs[R_WR_CFG];
++    unsigned int address_len;
++    unsigned int i;
++
++    if (!s->write_pending) {
++        return;
++    }
++    if (!FIELD_EX32(cfg, WR_CFG, MODE)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: FLUSH with direct writes disabled\n",
++                      TYPE_PHYTIUM_E2000_QSPI);
++        return;
++    }
++
++    phytium_e2000_qspi_select(s);
++    ssi_transfer(s->spi, FIELD_EX32(cfg, WR_CFG, CMD));
++    address_len = FIELD_EX32(cfg, WR_CFG, ADDR_SEL) ? 4 : 3;
++    phytium_e2000_qspi_send_address(s, s->write_address, address_len);
++    for (i = 0; i < s->write_len; i++) {
++        ssi_transfer(s->spi, s->write_buffer[i]);
++    }
++    phytium_e2000_qspi_deselect(s);
++
++    s->write_pending = false;
++    s->write_address = 0;
++    s->write_len = 0;
++}
++
++static uint64_t phytium_e2000_qspi_flush_pre_write(RegisterInfo *reg,
++                                                   uint64_t value)
++{
++    PhytiumE2000QSPIState *s = PHYTIUM_E2000_QSPI(reg->opaque);
++
++    if (value & BIT(0)) {
++        phytium_e2000_qspi_flush_write_buffer(s);
++    }
++    return 0;
++}
++
++static const RegisterAccessInfo phytium_e2000_qspi_regs_info[] = {
++    { .name = "FLASH_CAP", .addr = A_FLASH_CAP,
++      .rsvd = 0xfffc0000 },
++    { .name = "RD_CFG", .addr = A_RD_CFG },
++    { .name = "WR_CFG", .addr = A_WR_CFG,
++      .rsvd = 0x00fffc00 },
++    { .name = "FLUSH", .addr = A_FLUSH,
++      .rsvd = 0xfffffffe,
++      .pre_write = phytium_e2000_qspi_flush_pre_write },
++    { .name = "CMD_PORT", .addr = A_CMD_PORT,
++      .rsvd = BIT(23) },
++    { .name = "ADDR_PORT", .addr = A_ADDR_PORT },
++    { .name = "HD_PORT", .addr = A_HD_PORT },
++    { .name = "LD_PORT", .addr = A_LD_PORT,
++      .post_write = phytium_e2000_qspi_ld_post_write },
++    { .name = "FUN_SET", .addr = A_FUN_SET },
++    { .name = "WIP", .addr = A_WIP,
++      .rsvd = 0x00ffffe0 },
++    { .name = "WP", .addr = A_WP,
++      .rsvd = 0xfffc0000 },
++    { .name = "MODE", .addr = A_MODE,
++      .rsvd = 0xffff0000 },
++    { .name = "LEGACY_CTRL", .addr = A_LEGACY_CTRL,
++      .rsvd = 0xfffffeff },
 +};
 +
-+static const MemoryRegionOps phytium_e2000_mhu_ops = {
++static const MemoryRegionOps phytium_e2000_qspi_regs_ops = {
 +    .read = register_read_memory,
 +    .write = register_write_memory,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
@@ -324,74 +429,192 @@ index 0000000000..4ea23af900
 +    },
 +};
 +
-+static void phytium_e2000_mhu_reset(DeviceState *dev)
++static uint64_t phytium_e2000_qspi_direct_read(void *opaque, hwaddr address,
++                                               unsigned int size)
 +{
-+    PhytiumE2000MHUState *s = PHYTIUM_E2000_MHU(dev);
-+    int i;
++    PhytiumE2000QSPIState *s = opaque;
++    uint32_t cfg = s->regs[R_RD_CFG];
++    uint64_t value = 0;
++    unsigned int address_len;
++    unsigned int i;
 +
-+    for (i = 0; i < ARRAY_SIZE(phytium_e2000_mhu_regs_info); i++) {
-+        register_reset(&s->regs_info[
-+            phytium_e2000_mhu_regs_info[i].addr / sizeof(uint32_t)]);
++    phytium_e2000_qspi_select(s);
++    ssi_transfer(s->spi, FIELD_EX32(cfg, RD_CFG, CMD));
++    address_len = FIELD_EX32(cfg, RD_CFG, ADDR_SEL) ? 4 : 3;
++    phytium_e2000_qspi_send_address(s, address, address_len);
++
++    if (FIELD_EX32(cfg, RD_CFG, LATENCY)) {
++        phytium_e2000_qspi_send_dummy(
++            s, FIELD_EX32(cfg, RD_CFG, DUMMY) + 1);
++    }
++
++    for (i = 0; i < size; i++) {
++        value = deposit64(value, i * 8, 8, ssi_transfer(s->spi, 0));
++    }
++    phytium_e2000_qspi_deselect(s);
++
++    return value;
++}
++
++static void phytium_e2000_qspi_direct_write(void *opaque, hwaddr address,
++                                            uint64_t value,
++                                            unsigned int size)
++{
++    PhytiumE2000QSPIState *s = opaque;
++    uint32_t cfg = s->regs[R_WR_CFG];
++    unsigned int i;
++
++    if (!FIELD_EX32(cfg, WR_CFG, MODE)) {
++        return;
++    }
++
++    /*
++     * The direct aperture accepts multiple CPU stores for one page program.
++     * Buffer them until FLUSH supplies the transaction boundary required by
++     * the flash command.
++     */
++    if (!s->write_pending) {
++        if ((address & ~(PHYTIUM_E2000_QSPI_PAGE_SIZE - 1)) !=
++            ((address + size - 1) &
++             ~(PHYTIUM_E2000_QSPI_PAGE_SIZE - 1))) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: direct write crosses a flash page\n",
++                          TYPE_PHYTIUM_E2000_QSPI);
++            return;
++        }
++        s->write_pending = true;
++        s->write_address = address;
++        s->write_len = 0;
++    } else if (address != s->write_address + s->write_len ||
++               (s->write_address &
++                (PHYTIUM_E2000_QSPI_PAGE_SIZE - 1)) +
++               s->write_len + size > PHYTIUM_E2000_QSPI_PAGE_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: non-contiguous direct writes before FLUSH\n",
++                      TYPE_PHYTIUM_E2000_QSPI);
++        return;
++    }
++
++    for (i = 0; i < size; i++) {
++        s->write_buffer[s->write_len++] = extract64(value, i * 8, 8);
 +    }
 +}
 +
-+static void phytium_e2000_mhu_init(Object *obj)
-+{
-+    PhytiumE2000MHUState *s = PHYTIUM_E2000_MHU(obj);
-+    RegisterInfoArray *reg_array;
++static const MemoryRegionOps phytium_e2000_qspi_direct_ops = {
++    .read = phytium_e2000_qspi_direct_read,
++    .write = phytium_e2000_qspi_direct_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
++    },
++};
 +
-+    reg_array = register_init_block32(
-+        DEVICE(obj), phytium_e2000_mhu_regs_info,
-+        ARRAY_SIZE(phytium_e2000_mhu_regs_info), s->regs_info, s->regs,
-+        &phytium_e2000_mhu_ops, false, PHYTIUM_E2000_MHU_MMIO_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &reg_array->mem);
++static void phytium_e2000_qspi_reset(DeviceState *dev)
++{
++    PhytiumE2000QSPIState *s = PHYTIUM_E2000_QSPI(dev);
++    size_t i;
++
++    s->resetting = true;
++    for (i = 0; i < ARRAY_SIZE(phytium_e2000_qspi_regs_info); i++) {
++        register_reset(&s->regs_info[
++            phytium_e2000_qspi_regs_info[i].addr / sizeof(uint32_t)]);
++    }
++    memset(s->write_buffer, 0, sizeof(s->write_buffer));
++    s->write_address = 0;
++    s->write_len = 0;
++    s->write_pending = false;
++    s->resetting = false;
++    phytium_e2000_qspi_deselect(s);
 +}
 +
-+static const VMStateDescription phytium_e2000_mhu_vmsd = {
-+    .name = TYPE_PHYTIUM_E2000_MHU,
++static void phytium_e2000_qspi_init(Object *obj)
++{
++    PhytiumE2000QSPIState *s = PHYTIUM_E2000_QSPI(obj);
++    RegisterInfoArray *reg_array;
++
++    s->spi = ssi_create_bus(DEVICE(obj), "spi");
++    qdev_init_gpio_out_named(DEVICE(obj), &s->cs, "cs", 1);
++
++    reg_array = register_init_block32(
++        DEVICE(obj), phytium_e2000_qspi_regs_info,
++        ARRAY_SIZE(phytium_e2000_qspi_regs_info), s->regs_info, s->regs,
++        &phytium_e2000_qspi_regs_ops, false,
++        PHYTIUM_E2000_QSPI_REG_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &reg_array->mem);
++
++    memory_region_init_io(&s->direct_mr, obj,
++                          &phytium_e2000_qspi_direct_ops, s,
++                          TYPE_PHYTIUM_E2000_QSPI ".direct",
++                          PHYTIUM_E2000_QSPI_DIRECT_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->direct_mr);
++}
++
++static const VMStateDescription phytium_e2000_qspi_vmsd = {
++    .name = TYPE_PHYTIUM_E2000_QSPI,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, PhytiumE2000MHUState,
-+                             PHYTIUM_E2000_MHU_R_MAX),
++        VMSTATE_UINT32_ARRAY(regs, PhytiumE2000QSPIState,
++                             PHYTIUM_E2000_QSPI_R_MAX),
++        VMSTATE_UINT8_ARRAY(write_buffer, PhytiumE2000QSPIState,
++                            PHYTIUM_E2000_QSPI_PAGE_SIZE),
++        VMSTATE_UINT32(write_address, PhytiumE2000QSPIState),
++        VMSTATE_UINT16(write_len, PhytiumE2000QSPIState),
++        VMSTATE_BOOL(write_pending, PhytiumE2000QSPIState),
 +        VMSTATE_END_OF_LIST()
 +    },
 +};
 +
-+static void phytium_e2000_mhu_class_init(ObjectClass *klass, const void *data)
++static void phytium_e2000_qspi_class_init(ObjectClass *klass,
++                                          const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->vmsd = &phytium_e2000_mhu_vmsd;
-+    device_class_set_legacy_reset(dc, phytium_e2000_mhu_reset);
++    dc->vmsd = &phytium_e2000_qspi_vmsd;
++    device_class_set_legacy_reset(dc, phytium_e2000_qspi_reset);
 +}
 +
-+static const TypeInfo phytium_e2000_mhu_info = {
-+    .name = TYPE_PHYTIUM_E2000_MHU,
++static const TypeInfo phytium_e2000_qspi_info = {
++    .name = TYPE_PHYTIUM_E2000_QSPI,
 +    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(PhytiumE2000MHUState),
-+    .instance_init = phytium_e2000_mhu_init,
-+    .class_init = phytium_e2000_mhu_class_init,
++    .instance_size = sizeof(PhytiumE2000QSPIState),
++    .instance_init = phytium_e2000_qspi_init,
++    .class_init = phytium_e2000_qspi_class_init,
 +};
 +
-+static void phytium_e2000_mhu_register_types(void)
++static void phytium_e2000_qspi_register_types(void)
 +{
-+    type_register_static(&phytium_e2000_mhu_info);
++    type_register_static(&phytium_e2000_qspi_info);
 +}
 +
-+type_init(phytium_e2000_mhu_register_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index dca5f67ca9..149ec8e797 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -17,6 +17,7 @@ system_ss.add(when: 'CONFIG_INTEGRATOR_DEBUG', if_true: files('arm_integrator_de
- system_ss.add(when: 'CONFIG_A9SCU', if_true: files('a9scu.c'))
- system_ss.add(when: 'CONFIG_ARM11SCU', if_true: files('arm11scu.c'))
- system_ss.add(when: 'CONFIG_PHYTIUM_E2000', if_true: files('phytium_e2000_ddr.c'))
-+system_ss.add(when: 'CONFIG_PHYTIUM_E2000', if_true: files('phytium_e2000_mhu.c'))
++type_init(phytium_e2000_qspi_register_types)
+diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+index 1bd56463c1..202c81c5ac 100644
+--- a/hw/ssi/Kconfig
++++ b/hw/ssi/Kconfig
+@@ -9,6 +9,11 @@ config SIFIVE_SPI
+ config SSI
+     bool
  
- system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_ras.c'))
- 
++config PHYTIUM_E2000_QSPI
++    bool
++    select REGISTER
++    select SSI
++
+ config XILINX_SPI
+     bool
+     select SSI
+diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+index 6afb1ea200..c76945ddf4 100644
+--- a/hw/ssi/meson.build
++++ b/hw/ssi/meson.build
+@@ -13,3 +13,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
+ system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
+ system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
++system_ss.add(when: 'CONFIG_PHYTIUM_E2000_QSPI', if_true: files('phytium_qspi.c'))
 -- 
 2.53.0
 
