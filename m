@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A383CC79F9E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 15:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCA7C79F9E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 15:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3xRO-0008G2-NI; Tue, 08 Sep 2026 11:08:54 -0400
+	id 1x3xQX-000526-WA; Tue, 08 Sep 2026 11:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3xRL-0007wW-V5
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:08:52 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3xRJ-0007sD-Eh
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:08:51 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-8588583a7c3so46395247b3.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 08:08:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788880128; cv=none;
- d=google.com; s=arc-20260327;
- b=Sfs7+KqmVWAZf/5ZjIdPXGEZYIfbcUzc9I9GaLr7NXwEUlJVUsrg19CU1Z7mqT9V49
- JZQy5cxvS7njDe1Z+ax/sJje3yOZxKieQYp5Gyr0nioUBlCbC2YEweJ9+YxzcBIHmblp
- PjhOmhtBMFo2Gd5H9RY1/CebyfLBJvv2XmnBNbZzrbnYZtiHe6spGo3fT3clr9dasuDI
- sd07N63Cq3CBayoas+e/33+GdRmd7zTMMSCibJyACTSEVypR/HG6kX3tSSBU3jMiC4tj
- ZOwH4ahDitL9tfUT32/e9lSxGM0vQWPAqNf/DdljZkkkhbLUs2QQwvvYJct5wLuzSlCO
- Nxpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=lG5Ki8PQpUUwKhw1Y8knnrwmS/fSxYm+38NAUe54Z7Y=;
- fh=ieLaz7e/0RpAqfE5XLQ1RcBHWjTUv1z6arE2SouQh04=;
- b=qdKMO5x9LThE5r9P0KmD5qhMqeBahOL8X8HHIgv85RH5CPh3cwHHaQdBJhcIonF+JK
- Vy0tJVtSISLCAwICWnC3qkxTafhX2h/SCsGhWe5VMW0TRCh3uG0xuX3vQ8uZRmbyq+Jh
- ii0Cas+ftnto6RkekLgeYDvJbcb0TxWmhlyFUJelMBeHs8GpkCG5J+sNfDE/jJ/P3Gp1
- QkzDwp3RRvxufdjG04/qjmLwRt3rM1NFRk38/1gmzqXC8SDm14DbioyCeHuJB87G3JMU
- 0+/yeqgMKbyI3dtlBQGJWIV0B0A9rxis2CdtDv14X+Rdp/7zYrBzyZZE/ohskRdzEWlf
- 7hSA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788880128; x=1789484928; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=lG5Ki8PQpUUwKhw1Y8knnrwmS/fSxYm+38NAUe54Z7Y=;
- b=WVlJHDgjuh+tfHLCSyKF1oIXCF7X3lNVguaUgNRFFvw22xxl7MW0y/p+FCBLOdM4eZ
- T4y6TI2xx/yzg7+0Ao3HkSqLtHdPR72SY3bBFQzrTUEVdh2FHePUWgJURGG0nxq4D+xm
- UHmuAFNagP7um9sjfMaWrK10Bvahg1wOzRNR5w8PiOWSrIHOIezqIYRIRI59ZYYHSLI1
- pjNKF8M8gmPZZeDmZQCII3kyey4y7Ck233LXrg93TpGT2R+excTst/HW0i+qlHc4EYVQ
- 6bvZ6NoziDg0GWy1bl0oOTHntisCbWRBxJuFu3jAYvPv9y3jrsB91xS36fcY60Lq5ZWW
- d2Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788880128; x=1789484928;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=lG5Ki8PQpUUwKhw1Y8knnrwmS/fSxYm+38NAUe54Z7Y=;
- b=lqIZrcFx5JO36kKkov91fZKTZIH1tdSpcQ9AcucAdoLezBdquiRHgMlJ6Xk1Mi+Xmb
- aV6+IwzxwFbEmLWU29WUcgt0t9jiqxZ+pkqBrmmV/xkQPjIBi4CUwQYavffrV1ynbr/O
- U/egDEG1XX/rtTttPywpOMxlUOsXcvWUFjQM8w0HFRyPzw8StOPtky7hoZUKtLlPtwMT
- 6TSj5PnMKk9CHt/iOxE5Ljowm+S2M60U4sQkgJBGJOJeR28n3IA40bqXVAM8ys3YAzYA
- quwC2Ueq9839b/+nsTwsi1pIlIWoDTNLAYycZtu7HV5nIzeFk/syf6z+ljP98O3wL6+B
- j1Uw==
-X-Gm-Message-State: AFuF++nQbpwQwRfbDZ50uJb3y8FJRZh5Zq5KmPLkZHcs/6UfWnZ3IPM9
- YEcu6yXuSQn4/Ra1rv19dzIE/V3H4NmwnkZbh3ZhKVReiNlau1hflUxLuxuW/jyeCH+aNRGoT+4
- ji9urRCD4jflsc13o9DXj7Bk6LyKgWrX301HW/5m+2w==
-X-Gm-Gg: AYBFou1Pgpu8apgv8zU+V1EyHh73NWHhJWFENYmomxh44jbkLWWmsUkNxaODZeqnbMY
- NWYP/grblobCyJ4Iq2aRyyU6b1djY/CrtHGM3QJrGjXdROPKCq793N52DOLiwQJ0bfEhCftMfe4
- t1hlqYRUtNYWfAYJRLjbTGEOs3ND1VEwqQo9tjoQ59qFAEj+ZC/JBY4J1T220EBrVSPsJzTspW+
- s0mUTdjyU8f7E8atfFjOfpqSQIrUg3ZRdMecy3c0WQtLj3FhtHYBVGop24wJOoYL1ntvtjnGgSl
- A0GwhjcqZVqtaIh16yOJCwZiT7i01P7kZKf8tYDa7edpcuGuiCfJPqnK9EmazGmhNWS9UbTkarv
- Dp3oWV+ZPenhsuF2sEd/loKle0LG4/2lfzMmH1ng=
-X-Received: by 2002:a05:690c:e649:10b0:873:5bb2:6c16 with SMTP id
- 00721157ae682-8735bb26f7bmr54865947b3.64.1788880127668; Tue, 08 Sep 2026
- 08:08:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x3xQX-0004zy-2b
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:08:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x3xQV-0007l3-I5
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:08:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788880079;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yldmEwkCNpSAaCHFlIQGOZ7JUY549V31U/UBObXIEDE=;
+ b=YZdOI58DJSnDZ68bIjoba7k+xxTgz2YkD7bDPaqg6H63LyTKY2Jn5ph4vF20/x4hVzRJlt
+ JPmtYsMcoC2e9IdMoDOLyP/TbwLD1CeypPpL0vzI/uoGLznZ+8q8LC2PFnVmEZuH/6zDLA
+ YbuW/CBEpVrXXLR6kr1e+1vJK8yVCoY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-wz4-Wgd3MteB_JgwcsjSiA-1; Tue,
+ 08 Sep 2026 11:07:52 -0400
+X-MC-Unique: wz4-Wgd3MteB_JgwcsjSiA-1
+X-Mimecast-MFC-AGG-ID: wz4-Wgd3MteB_JgwcsjSiA_1788880070
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D421219540EA; Tue,  8 Sep 2026 15:07:49 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A10781956042; Tue,  8 Sep 2026 15:07:48 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 08 Sep 2026 19:06:57 +0400
+Subject: [GIT PULL 14/15] target/riscv: fix incorrect QAPI types and u8 casting
 MIME-Version: 1.0
-References: <20260902122646.2848464-1-imammedo@redhat.com>
-In-Reply-To: <20260902122646.2848464-1-imammedo@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 16:08:35 +0100
-X-Gm-Features: AcwNN1UpUaEkzGudHPz7lDbwxxrmgZ7BbVDcthWsvgSh0S9pz3fYemKVb_KKYyo
-Message-ID: <CAFEAcA-AgMXT8LKWCH46FhqLPh1NNv84DoZz-16Ub92K_5-HjA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] sbsa-gwdt cleanup and fixes
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, leif.lindholm@oss.qualcomm.com, eauger@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260908-qom-qapi-pr-v1-14-a4d75a2573cc@redhat.com>
+References: <20260908-qom-qapi-pr-v1-0-a4d75a2573cc@redhat.com>
+In-Reply-To: <20260908-qom-qapi-pr-v1-0-a4d75a2573cc@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1696;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=fLStIjct5Bua1ig/fYM26uiw+vkQ7c2+e/BFIkz5E3E=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoCSPkiBgFnt8egAabo7Mjt97RrUDlCO2aQWs1
+ CBvWjpU+syJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqAkjwAKCRDa6OEJdZac
+ 5QaaD/9+2VkSakcQtzOZ6POtfeTeV3vadA9cKQ3yX3NSd35LcWdFPsTARIIVUeU0V0Po2nXQP0V
+ JAthSG2KmtzO0/oAfzR5BXU2es9o+ucTiuEH5B4SjSous5e0UqYntzUeZV/spqHEnZwsLgbAJi1
+ mpQQqX6APTzrxx8dtSDAZaHKXm5dPNQWHokshgFrMIRGl/VnyWjxQjYnjBNDq62uRJFr4Tn0MK2
+ pdPiBOonC1qmvj9KZULAuhsuapTLEPH6pXpkibp5sxdCIoklwXRMwBehvbEVGx4/LMS6xTLSZrI
+ jFzJVNegb+Tu9z4LAoT3sPIAubpU3WggbU2G204Hn5xgt1+a3vjQ0X/kS77sWNSmu7qfRQalMJP
+ gDEHu74DJq1vhkAkmZWzr0oexpqo/lGO2tOilVxLyvN6P5UltJ6vbQPsmm+7LL4b0BdCdxO2qwi
+ yt//NrGSIlKauVdb/CjceERGGlk+Mh3vvJ7nN51YKhSuyFnfRCoTZWysVTdvSbFKX5DoFIcA+hq
+ B8Ffz070j6RuSh9a0bi3KscoBW+R9rKJRDkJ4Z8Ckrxe9geia/0syzTXgzBWBmYNe+uu31o9uqx
+ YyGEnBiwzilA/OrPvHMwlGem8YajpBwzXBB2zn59gdKh+IrI4S/0J7WYZFTv6NgCcqBFy+WeWTY
+ kIHjSFTVIoQXZUA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,30 +108,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Sept 2026 at 13:26, Igor Mammedov <imammedo@redhat.com> wrote:
->
->
-> Series picks up dropped gwdt fixes from
->
->   [PATCH v3 00/17] Add watchdog support to arm/virt board
->   https://patchew.org/QEMU/20260624102830.1355552-1-imammedo@redhat.com/
->
-> patches were basically rewritten to make changes simpler/easier to reson about.
->
-> patch 6/6 is partial fix with open question:
->
-> sbsa-gwdt currently mantains WVC in since VM start ticks, which works fine under
-> TCG. However under KVM those system counter domains diverge and CNTPCT in guest
-> starts to return host's value. As result WCV reads/writes got mixed up with
-> QEMU still assuming VM timeframe while guest using host's one.
-> Question is how should we fix it?
+"pmu_num" is u8, "pmu_mask" is u32, so is "pmp-granularity"
 
-Presumably we should be dealing in deltas from the
-QEMU_CLOCK_VIRTUAL value?
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ target/riscv/cpu.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Anyway, for this series, since the only thing I wanted to change
-was expanding a comment, I'll apply this to target-arm.next and
-make that tweak there.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 652311ddef2f..5fff9d745e9b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1687,7 +1687,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ static const PropertyInfo prop_pmu_num = {
+-    .type = "int8",
++    .type = "uint8",
+     .description = "pmu-num",
+     .get = prop_pmu_num_get,
+     .set = prop_pmu_num_set,
+@@ -1723,13 +1723,13 @@ static void prop_pmu_mask_set(Object *obj, Visitor *v, const char *name,
+ static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
+                              void *opaque, Error **errp)
+ {
+-    uint8_t pmu_mask = RISCV_CPU(obj)->cfg.pmu_mask;
++    uint32_t pmu_mask = RISCV_CPU(obj)->cfg.pmu_mask;
+ 
+-    visit_type_uint8(v, name, &pmu_mask, errp);
++    visit_type_uint32(v, name, &pmu_mask, errp);
+ }
+ 
+ static const PropertyInfo prop_pmu_mask = {
+-    .type = "int8",
++    .type = "uint32",
+     .description = "pmu-mask",
+     .get = prop_pmu_mask_get,
+     .set = prop_pmu_mask_set,
+@@ -1872,6 +1872,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ static const PropertyInfo prop_pmp_granularity = {
++    .type = "uint32",
+     .description = "pmp-granularity",
+     .get = prop_pmp_granularity_get,
+     .set = prop_pmp_granularity_set,
 
--- PMM
+-- 
+2.55.0.543.g5ebe2ebe4ea8
+
 
