@@ -4,50 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E76C79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 06:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2C2C79FA0
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 06:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3p5I-00027x-AB; Tue, 08 Sep 2026 02:13:32 -0400
+	id 1x3p5E-000252-H0; Tue, 08 Sep 2026 02:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3p5C-00023c-Fv; Tue, 08 Sep 2026 02:13:27 -0400
+ id 1x3p5A-00021s-Lw; Tue, 08 Sep 2026 02:13:24 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x3p58-0000jk-GQ; Tue, 08 Sep 2026 02:13:26 -0400
+ id 1x3p58-0000jl-D0; Tue, 08 Sep 2026 02:13:24 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6886CG8v048190
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6886CG93048190
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 8 Sep 2026 15:12:26 +0900 (JST)
+ Tue, 8 Sep 2026 15:12:27 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=3wjH0e5JQ8wLuNyiv2/dVG4sWQoGp7DphpquhKTENgE=; 
+DKIM-Signature: a=rsa-sha256; bh=Wqg411X6kLRW/EQGXIl4BhhjQoaxFpEtuNgHQ08Dk4g=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1788847946; v=1;
- b=pKaZ4zth1xRJaPMX3cEse9bEdPM2RdKzVYpwrgmVuu7Q00s8ORNeAA3yeFf0WWbz
- VvX9QkJIfLfDuuTUi5gjAE7zoX1Al7gMn9rZSbX66bimsboTtwq9Up5iAXg10KgD
- SfVGqQgInfYxjpG8mjPD0ju3/dizitTyqT2mIudBOWCfLD0Cij1SkkZ3fEhjOala
- OZh6jj86sUb/Z/shjdvCCDdNvXwswl+sWQVNPc0k8nJDzZb86/C88aMFPAhfz6Br
- BsgnXzZcVCYgyQUUGyN02TgjOHTj8HimgYkTL1HRG+QZdwfxGywDp7ELHOK4NS3N
- qQ5frFQJ0c/x27p86nAZig==
+ s=rs20250326; t=1788847948; v=1;
+ b=ikMatKFpJn6XnDxZpl+aiAhSMKI/n4pWLbkkJTfVcqOGebXxtJMx8HWKZme2EH57
+ wzNXQVhVoLR/nq9BBnMbZXqd5nzvek+4ap7CqPOePd7gQdWV29MHuqZeSyeoBjI8
+ 5/QuEt330tZp3ont1e+YgSt+WUW4MesfOgwVPNNTSW+gq/k3C5eKKHDx7j1vRXcM
+ EjsB9CLNnTFBiS6+/Gkl71pDVynO+Pvg63tbWPajobTdnMtpppcag9ZnnW3U4osn
+ jk18KGZDynMEYkaZ1vIWG+LP91sG4GPZfqzQr1E5bCtezzPkRZyFUDfyzBBM8jdR
+ 2C7HrIA2FI/GDiBbj2nPZQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v3 0/9] virtio-gpu: Do not wait for the main thread during
- reset
-Date: Tue, 08 Sep 2026 15:11:17 +0900
-Message-Id: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 08 Sep 2026 15:11:23 +0900
+Subject: [PATCH v3 6/9] hw/display/virtio-gpu: Fix fenced blob unmapping
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XPTW7DIBAF4KtYrAvi14Sseo+qCxgGh1YJLthWo
- yh3L4nVRRddvqeZTzM30rBmbOQ43EjFLbdcLj2ol4HAyV8mpDn2TCSXRnDp6DSvFFTSxmqbbPC
- kT84VU/5+Km/vPZ9yW0q9PtFNPNq/+5uggqJCBRYxgMPX2iYGmWW20qV8XgvzwD5m8sA2+QuMX
- Eu9A5Jy6lKUCXiMIsR/gft+XsWvtf+27DeS4BtSKOdzXo5DlGgsB+DJ2eDU6Lj0JohwGINVvTX
- OHYK2pmP3H7y8uZ0wAQAA
-X-Change-ID: 20251029-gpu-c3f45747f7ba
+Message-Id: <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>
 Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -67,13 +62,13 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7343;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4919;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=IxKH4txKef2gooxhbGNKISeiB3/hau2P1OLZ5vUS2Pc=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9b85Y4B9WuTX8xM8qpfv2WSwSzuyZ9WrXgozvIl34ftp
- bjgFR+3jlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgIkoHWVkmN1ZLfiFp5XLP/zh
- +YtH5z6QmrOocp9cSVAD4xZm2y9nlzL897/GuIh7///MZie72KOF4dFiDInnDrxeb8pi+n8+T5c
- tLwA=
+ bh=KwQmvw0JJoVOJJ/W9yoKcRvQA9ko2naUvEzs+b3T/Co=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9b85W5Pbnm9K2l8Orfmfsdc4cfJVjnzpV5/+TlZ8/avx
+ KOJPP72HaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABMpcWD4xcTBvt/8y6kDs71d
+ naJUPqY9yY3rO8gRFfHT7+uXNyalSxgZjrME6Djm2k7afLxp7741n9emz7l0etNHvt2LuD4ulyl
+ R5AAA
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -99,168 +94,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Compatibility note: This series makes virtio-gpu-rutabaga-device
-incompatible with virtio-mmio-bus, as there is no straightforward way to
-fix reset for this combination. I believe nobody uses it, but please let
-me know if anyone relies on it.
+Blob unmapping may be suspended because of remaining uses of the
+mapping. virtio_gpu_process_cmdq() uses the following condition to
+detect a suspended command:
 
-Gurchetan, please confirm if this impacts the use case behind your
-original virtio-gpu-rutabaga contribution.
+    !cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)
 
-=======================================================================
+However, the guest may set VIRTIO_GPU_FLAG_FENCE for a command that
+performs blob unmapping. Such a command will be incorrectly assumed
+as not being suspended. Add a dedicated flag for the suspended state
+to avoid overloading VIRTIO_GPU_FLAG_FENCE.
 
-This series fixes a deadlock I previously observed with the test in [1].
-It also fixes a command-ordering race exposed by the same BQL handoff,
-along with command and fence lifetime and accounting issues found while
-auditing device and virtqueue reset. Reset now drains command and fence
-queues without dropping the BQL, while resource destruction and surface
-replacement are deferred to the next control or cursor BH. Scanout state
-needed for migration is cleared synchronously before that deferred
-cleanup. The remaining patches detach popped queue elements before
-freeing commands, track suspension independently of fencing, balance
-inflight accounting, handle control-queue reset for the non-renderer
-backend, and stop advertising queue reset for virtio-gpu-gl,
-virtio-gpu-rutabaga, and vhost-user-gpu, whose current backend
-interfaces cannot quiesce a single queue.
-
-Finally, the virtio core changes split reset initiation from completion
-so device reset handlers can choose when reset is complete. An error
-during reset leaves the device broken and prevents its status from being
-cleared. Rutabaga's same-thread API requires whole-device reset to
-finish in the main-loop GPU BH, where the old backend is torn down and
-reinitialized before completion is reported.
-
-Note on the deadlock: I can no longer reproduce the issue reliably with
-the test in [1], so I used Codex, a coding agent, to write a more
-reliable local test case, shown below. I applied to Codex for Open
-Source to get access. The test case is not intended for merge: current
-policy prohibits that, and it is probably not worth carrying anyway
-because race-condition tests are inherently fragile. The remaining
-patches were written by me.
-
-[1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-alex.bennee@linaro.org/
-
-Below is the Codex-written test case:
-
-diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/functional/aarch64/test_gpu_blob.py
-index a913d3b29c84..52627b4541f9 100755
---- a/tests/functional/aarch64/test_gpu_blob.py
-+++ b/tests/functional/aarch64/test_gpu_blob.py
-@@ -13,7 +13,9 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--from qemu.machine.machine import VMLaunchFailure
-+import subprocess
-+
-+from qemu.machine.machine import AbnormalShutdown, VMLaunchFailure
- 
- from qemu_test import Asset
- from qemu_test import wait_for_console_pattern
-@@ -25,8 +27,7 @@ class Aarch64VirtBlobTest(LinuxKernelTest):
-                        'download?path=%2Fblob-test&files=qemu-880.bin',
-                        '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
- 
--    def test_virtio_gpu_blob(self):
--
-+    def launch_blob_test(self):
-         self.set_machine('virt')
-         self.require_accelerator("tcg")
- 
-@@ -65,9 +66,27 @@ def test_virtio_gpu_blob(self):
-                 self.log.info("unhandled launch failure: %s", excp.output)
-                 raise excp
- 
-+    def test_virtio_gpu_blob(self):
-+        self.launch_blob_test()
-+
-         self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
-         # the test should cleanly exit
- 
-+    def test_virtio_gpu_blob_shutdown_race(self):
-+        self.launch_blob_test()
-+
-+        self.wait_for_console_pattern('[INFO] unmapping blob object resource')
-+
-+        try:
-+            self.vm.shutdown(timeout=10)
-+        except AbnormalShutdown as excp:
-+            if isinstance(excp.__cause__, subprocess.TimeoutExpired):
-+                raise AssertionError(
-+                    "QEMU failed to exit while virtio-gpu reset was racing "
-+                    "with shutdown") from excp
-+            self.log.info("QEMU exited before the shutdown request completed: %s",
-+                          excp)
-+
- 
- if __name__ == '__main__':
-     LinuxKernelTest.main()
-
+Fixes: 640f9149c3dc ("virtio-gpu: Support suspension of commands processing")
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-Changes in v3:
-- Rebased.
-- Dropped the patch "virtio-gpu: Run reset cleanup in the same BH" and
-  reworked reset cleanup to preserve control and cursor queue ordering
-  and migration-visible state without dropping the BQL.
-- Detached popped virtqueue elements before freeing reset commands.
-- Added fixes for fenced blob unmapping and inflight counter accounting.
-- Added control-queue reset handling for the non-renderer backend.
-- Disabled queue reset for virtio-gpu-gl, virtio-gpu-rutabaga, and
-  vhost-user-gpu, whose current backend interfaces cannot quiesce a
-  single queue.
-- Split virtio reset initiation from completion, moved completion into
-  device reset handlers, and preserved errors raised during reset.
-- Added Rutabaga teardown and reinitialization in the main-loop GPU BH
-  before reporting whole-device reset completion.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp
+ include/hw/virtio/virtio-gpu.h |  1 +
+ hw/display/virtio-gpu-virgl.c  | 17 +++++++----------
+ hw/display/virtio-gpu.c        |  5 ++---
+ 3 files changed, 10 insertions(+), 13 deletions(-)
 
-Changes in v2:
-- Added the patch "virtio-gpu: Run reset cleanup in the same BH".
-- My assumption about the ordering was incorrect, so I changed the patch
-  to follow the approach used by virtio-gpu-gl.
-- Link to v1: https://lore.kernel.org/qemu-devel/20251029-gpu-v1-1-e3e3c7eebc9e@rsg.ci.i.u-tokyo.ac.jp
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 9404e488208a..3eccc4bc39c3 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -141,6 +141,7 @@ struct virtio_gpu_ctrl_command {
+     struct virtio_gpu_ctrl_hdr cmd_hdr;
+     uint32_t error;
+     bool finished;
++    bool suspended;
+     QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
+ };
+ 
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 9bda572426b2..c37df91e3ed1 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -440,8 +440,7 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+ }
+ 
+ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+-                                     struct virtio_gpu_ctrl_command *cmd,
+-                                     bool *cmd_suspended)
++                                     struct virtio_gpu_ctrl_command *cmd)
+ {
+     struct virtio_gpu_resource_unref unref;
+     struct virtio_gpu_virgl_resource *res;
+@@ -457,7 +456,7 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+         return;
+     }
+ 
+-    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
++    virtio_gpu_virgl_resource_unref(g, res, &cmd->suspended);
+ }
+ 
+ void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+@@ -946,8 +945,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+ }
+ 
+ static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
+-                                          struct virtio_gpu_ctrl_command *cmd,
+-                                          bool *cmd_suspended)
++                                          struct virtio_gpu_ctrl_command *cmd)
+ {
+     struct virtio_gpu_resource_unmap_blob ublob;
+     struct virtio_gpu_virgl_resource *res;
+@@ -964,7 +962,7 @@ static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
++    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, &cmd->suspended);
+     if (ret) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         return;
+@@ -1036,7 +1034,6 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                       struct virtio_gpu_ctrl_command *cmd)
+ {
+-    bool cmd_suspended = false;
+     int ret;
+ 
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+@@ -1080,7 +1077,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+         virgl_cmd_resource_flush(g, cmd);
+         break;
+     case VIRTIO_GPU_CMD_RESOURCE_UNREF:
+-        virgl_cmd_resource_unref(g, cmd, &cmd_suspended);
++        virgl_cmd_resource_unref(g, cmd);
+         break;
+     case VIRTIO_GPU_CMD_CTX_ATTACH_RESOURCE:
+         /* TODO add security */
+@@ -1110,7 +1107,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+         virgl_cmd_resource_map_blob(g, cmd);
+         break;
+     case VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB:
+-        virgl_cmd_resource_unmap_blob(g, cmd, &cmd_suspended);
++        virgl_cmd_resource_unmap_blob(g, cmd);
+         break;
+     case VIRTIO_GPU_CMD_SET_SCANOUT_BLOB:
+         virgl_cmd_set_scanout_blob(g, cmd);
+@@ -1121,7 +1118,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+         break;
+     }
+ 
+-    if (cmd_suspended || cmd->finished) {
++    if (cmd->suspended || cmd->finished) {
+         return;
+     }
+     if (cmd->error) {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index d520f69e6453..dd6c09d1ddcf 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1193,11 +1193,10 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+             break;
+         }
+ 
+-        /* process command */
++        cmd->suspended = false;
+         vgc->process_cmd(g, cmd);
+ 
+-        /* command suspended */
+-        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
++        if (cmd->suspended) {
+             trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
+             break;
+         }
 
----
-Akihiko Odaki (9):
-      virtio: Introduce virtio_complete_reset()
-      virtio: Move the virtio_complete_reset() call
-      virtio: Preserve an error during reset
-      hw/display/virtio-gpu-rutabaga: Reset Rutabaga
-      virtio-gpu: Do not wait for the main thread during reset
-      hw/display/virtio-gpu: Fix fenced blob unmapping
-      hw/display/virtio-gpu: Balance inflight counter changes
-      hw/display/virtio-gpu: Reject queue_reset when unsupported
-      hw/display/virtio-gpu: Handle virtqueue reset
-
- include/hw/virtio/virtio-gpu.h   |   7 +-
- include/hw/virtio/virtio.h       |   1 +
- hw/9pfs/virtio-9p-device.c       |   1 +
- hw/audio/virtio-snd.c            |   2 +
- hw/block/vhost-user-blk.c        |   1 +
- hw/block/virtio-blk.c            |   1 +
- hw/char/virtio-serial-bus.c      |   1 +
- hw/display/vhost-user-gpu.c      |  10 ++-
- hw/display/virtio-gpu-base.c     |   2 +
- hw/display/virtio-gpu-gl.c       |  12 +++
- hw/display/virtio-gpu-rutabaga.c |  29 +++++++
- hw/display/virtio-gpu-virgl.c    |  25 +++---
- hw/display/virtio-gpu.c          | 174 +++++++++++++++++++++++++--------------
- hw/input/virtio-input.c          |   2 +
- hw/net/virtio-net.c              |   1 +
- hw/scsi/vhost-user-scsi.c        |   1 +
- hw/scsi/virtio-scsi.c            |   2 +
- hw/virtio/virtio-balloon.c       |   1 +
- hw/virtio/virtio-crypto.c        |   2 +
- hw/virtio/virtio.c               |  25 ++++--
- system/qdev-monitor.c            |   2 -
- 21 files changed, 210 insertions(+), 92 deletions(-)
----
-base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
-change-id: 20251029-gpu-c3f45747f7ba
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.55.0
 
 
