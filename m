@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 363A4C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DD9C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:36:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rJB-0007CL-4v; Tue, 08 Sep 2026 04:36:01 -0400
+	id 1x3rJk-0007eI-0T; Tue, 08 Sep 2026 04:36:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3rJ9-0007Bu-B9
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:59 -0400
+ id 1x3rJX-0007OY-C1
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:36:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3rJ7-0007FD-TB
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:35:59 -0400
+ id 1x3rJV-0007Jo-Vo
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:36:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788856555;
+ s=mimecast20190719; t=1788856580;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:to:
  cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1p7jtalzlLyhCAYc3MxC7WWwgcA0LpGHOMMDNN/DBTg=;
- b=cnnppi9DMuw7MHxh/tYr5mQrFLWqM5Btc9V++FPrx6/3kMTnKx8pFbwSctT0TH4E9xwwbt
- +1Psv9tYIN6ZEYmaGQg958Y18lKM037J5hEGzWZRxaZQNlfwiunC+ORgHP+KcnhhsONRhb
- q3Y3whdKbi1r6rGNVSYG7RfmTHCCHq0=
+ bh=h45NC8FecTNEUOzbKc/p4cUQZxb46uQ+uutWrRRVbZI=;
+ b=CI3QJaNWtAGoRIoBu+slobZdU6fcyQ1nRaOQw4/HKDE5HxZgmYLoFtvuB3kZCJM41fGb5w
+ LrM4UirwncJaTktJ1+5BO7Kk8thFzswqv6u8zEGvbyqF0Y5ZpF9Scl+UMVCy75tAeM/eSQ
+ gDVJ4YKpNgbazoB6cLTaf9hkArNhnFc=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94--7e5CyMUOhm9mnk6qZ9voQ-1; Tue,
- 08 Sep 2026 04:35:52 -0400
-X-MC-Unique: -7e5CyMUOhm9mnk6qZ9voQ-1
-X-Mimecast-MFC-AGG-ID: -7e5CyMUOhm9mnk6qZ9voQ_1788856551
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-gIeul6hmPxCovDE7hUk4aQ-1; Tue,
+ 08 Sep 2026 04:36:16 -0400
+X-MC-Unique: gIeul6hmPxCovDE7hUk4aQ-1
+X-Mimecast-MFC-AGG-ID: gIeul6hmPxCovDE7hUk4aQ_1788856575
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DAF11830768; Tue,  8 Sep 2026 08:35:51 +0000 (UTC)
+ id 02833182A137; Tue,  8 Sep 2026 08:36:15 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1CD5C30001A2; Tue,  8 Sep 2026 08:35:49 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3A4361800598; Tue,  8 Sep 2026 08:36:13 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 08 Sep 2026 12:35:35 +0400
-Subject: [GIT PULL 03/10] tests/functional: skip some tests that require
- HMP
+Date: Tue, 08 Sep 2026 12:35:42 +0400
+Subject: [GIT PULL 10/10] tests: fix qemu:func-hexagon-linters
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260908-nohmp-v1-3-7a3d1f0f1caf@redhat.com>
+Message-Id: <20260908-nohmp-v1-10-7a3d1f0f1caf@redhat.com>
 References: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
 In-Reply-To: <20260908-nohmp-v1-0-7a3d1f0f1caf@redhat.com>
-Cc: peter.maydell@linaro.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
- Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1529;
+Cc: peter.maydell@linaro.org, Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1719;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=c8qgPpmZ3XLl9uO8pUVbfyeeb4zTdwm0KeCmlMQU5BE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jYmhagKipc2tVnS4iGdjKau+jcFEuOafGid
- 7FBIobZ+5KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
- 5eOOD/9zoDD27HZmP6q5MlUOtzgrPzPqM5qwyF90+9Et30YkDsgwKVnrf6ESGVf3BYkSFGqrTyn
- lXqL4EE79cVr0gmaNXzGCCV4K83rYEpwIpAjnWgRmFTTyZq22dX3q01yg0H68HBsMNZ5cBIZxlV
- DLYb5xDqobw2G9ewgqOLiCMBpfbVOfq3uV5eE4uj/P9G8iG1HCEZeE9DEwlSePyGsYyhvWxgeYe
- XXnml8b7fB/Uz2NxKtt2gTVAO1c10XGi6gWe54d9RBuiG3wIaTzympqHQkGpERpvJHjPvx3gH3o
- bWkKmegOgiDJcvl99fRg1K5z2yb6TF1WgEegUVQb/uP+YDdqspoT/5/rJspsK4sDMbsEWWm7sti
- xP89/k/HS8MrzopgBHN2pqqmv3uPaFOa295p51J1aButI+DWojf0rtgW1Ip+rAcEfWRR8eO16/V
- NEK7mwRnGqT/7EWX0BBy1zjWKLyLO1ai+XXD6sMEkiQBaNpdw7L9+MsEnD3GZeQBkEiSb+X47/W
- PEy0RvDMPJQqYKO9HQDUt6e12TT7ArjjXfPOOnAIYl28UWPO6hdPrRN0ZUi3W/3SLzpiqkZhriS
- CRw/JXCXCPwQdc/YcWwsqAHP7iVSRsRJq284NcqjuQQjCq7EKULsSCt1e8jVMJ1cTMN3I5NYaMv
- Nn/N8fZdPmG01vA==
+ bh=q6LE4Fr91J2kSugK7tsTuxXr+CRfx98ipN0FH65D0U8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqn8jYAUhJTr28eRLbDtimLKJR/HgmR0C2dsloq
+ fjzczjcKxKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap/I2AAKCRDa6OEJdZac
+ 5a8aEACt7qgbYBU//IdPAmj7QecZ4tQRPwgdFvHWgh5GXxH0adXD8SB+//Pawi0ifFSN4RZBjS7
+ PuuX7G2TuIz+Miogy+2YJuHfWwqYlUEXsEpAY5qKi46zFgeN7JFOdncXlfQTC2gW2k9vIqNFhac
+ fbjLFtSresYV9SkZAX2ol5lDmhKoBBLp3JqCNZECWi/tGlzbPFtUtThooL5iw0YCtuOXJzvvHcE
+ pzn94g30/EsdXfKmzblooobnEwdPLuFludeXne9eZB4Z+/puHwumm7SjT23exowZdBEqKSN+gep
+ TsW+nt+kebpqniJNfifICtGL+/mpqcyt0VLRDjhWQlOrnp3NmxvUT8+gKVwZmYfj9NP650T6E4Q
+ xzqOK5MwEM4t1uTy1w01CYQUD/gnn6zJ7PbOGnznjIidy71R6sjWakmGjjQy7gmkqANRY7aMqda
+ oi8on9hjDSkME3ouiopsOhsKVvXbTlKjLorN4CGz3B3oQLFi5XENcW8iaN1vd9AnBQiAEM5tMp4
+ uRvBhygiTbG18WLvEMrP0yJgUnpg/veJBOpDaXqSK/DwX+wRFIThSXbRSBtGNxkszNf71UwG7E8
+ /HroJX1bFGvlvOEhfk9SIdU32W1rnEs93NWEAvvrf9kta4T+Mk9Aqq1VN02VSuy5ev4GViatVi+
+ 24inCqadgN7PRCg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,40 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those tests use "info registers" command and cannot be converted
-easily, for now skip them
+Fix pylint W1514: unspecified-encoding
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/m68k/test_nextcube.py | 1 +
- tests/functional/ppc/test_ppe42.py     | 1 +
- 2 files changed, 2 insertions(+)
+ tests/functional/hexagon/test_systests.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
-index f3d92034b127..e7fca50292b6 100755
---- a/tests/functional/m68k/test_nextcube.py
-+++ b/tests/functional/m68k/test_nextcube.py
-@@ -28,6 +28,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
+diff --git a/tests/functional/hexagon/test_systests.py b/tests/functional/hexagon/test_systests.py
+index 983ee1672ce4..2779efa9172f 100755
+--- a/tests/functional/hexagon/test_systests.py
++++ b/tests/functional/hexagon/test_systests.py
+@@ -65,14 +65,14 @@ def test_fopen(self):
+         import tempfile
+         # The fopen binary has a short cmdline buffer; use a short path.
+         dummy = os.path.join(tempfile.gettempdir(), "qemu_fopen_test.so")
+-        with open(dummy, "w") as f:
++        with open(dummy, "w", encoding="utf-8") as f:
+             f.write("valid\n")
+         self.run_exit_zero("fopen", "-append", dummy)
  
-         self.vm.add_args('-bios', rom_path)
-         self.vm.launch()
-+        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
+     def test_ftrunc(self):
+         """ftrunc truncates _testfile_ftrunc from 6 bytes to 1 byte."""
+         ftrunc_path = self.scratch_file("_testfile_ftrunc")
+-        with open(ftrunc_path, "w") as f:
++        with open(ftrunc_path, "w", encoding="utf-8") as f:
+             f.write("valid\n")
+         # Sleep 1 s so mtime change is observable
+         time.sleep(1)
+@@ -83,7 +83,7 @@ def test_ftrunc(self):
+     def test_access(self):
+         """access checks R_OK|W_OK on _testfile_access."""
+         testfile = self.scratch_file("_testfile_access")
+-        with open(testfile, "w") as f:
++        with open(testfile, "w", encoding="utf-8") as f:
+             f.write("valid\n")
+         self.run_exit_zero("access", "-append", testfile)
  
-         self.log.info('VM launched, waiting for display')
-         # Wait for the FPU test to finish, then the display is available, too:
-diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/test_ppe42.py
-index 53958a7938d1..a9c154f67328 100755
---- a/tests/functional/ppc/test_ppe42.py
-+++ b/tests/functional/ppc/test_ppe42.py
-@@ -72,6 +72,7 @@ def test_ppe42_instructions(self):
-         self.vm.add_args('-device', 'loader,addr=0xfff80040,cpu-num=0')
-         self.vm.add_args('-action', 'panic=pause')
-         self.vm.launch()
-+        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
-         self._wait_pass_fail(self.timeout)
- 
- if __name__ == '__main__':
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
