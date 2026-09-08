@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B3CC79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 13:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D20C79F99
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 13:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3vyJ-0003nP-3p; Tue, 08 Sep 2026 09:34:47 -0400
+	id 1x3vyp-000494-20; Tue, 08 Sep 2026 09:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x3vyH-0003n4-ES
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:34:45 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ id 1x3vyn-00048k-IP
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:35:17 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x3vyF-0005my-CR
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:34:45 -0400
+ id 1x3vyb-0005wT-Ak
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 09:35:17 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YkXJkZ1oG5HkXSWwGwnJyO/60E8o03R4E7xhSDAlbCJHVVjTfgkH5C10tcASEb3M2mesdBto6PIBErbAtvqoNGZWt93FCQfx6FsmZuX926tiTBeY3pYaRCqS3TZKA5gsS0LGzLzRh24ArH0hkda5ATi+uOCyg/EP3F7oPOKqe0P/SrsB701vXb/EroDAXyeRBywY2kU+/qYp4CdsGCLQVHgXNmZMXLsyKNMcLP0resdxmApi5ugpavd0RchSWGUljpEWogBm7llO6C4LyL0HBuOkJJabUkBow7rXdC0VFDFu7i8pBCJXBYbSoFR2frhWoPohhsA1cDPDa36qWt2cyw==
+ b=jHF6IT1ICyy2thr6VTMc7W6plBBlWb2SxiOe8CGV4RTr8UOvLNElk9uVthQKHqVL8NiK7zK9hu2v8U+CjAPLcg4K0949XO20csILZTUWCuolivnlzXXdHhoh6pl9J4u9+f+GWoQcGbQ96Fi3FC4Fu9MD1aeltQrzB0fEVZUP1h+87sbauZCskhEmAoV1yRwvo8XyMpUAe2GyB8B9SyVfzXw2onCaVJ/coE8UAL1A6P804NePtccvy+M+FalwVwtZRQOvd6hM/qrQbvUgnDKYyyvqbV32eLZGpldwldava+Xt9Onl5GM3YibYMlCHuAvS0o7sH37ASxAw6XqZArfweA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oRj3zg+9itdYyS6z7QNXQBDIItCdYPar+DU2LFF/qUc=;
- b=CBoTijMuYDoW3ZYZ4VrLg5Ci52CyOlle8hU9odN/hkPVRH6Khl/zi0aLzapwkaRplxLUDr1ELzJ7hssGSsVFtpg8thI4ks7oTRF2K4thRJt7hFAS0VNFVEjEPt3mzVx8N5HV8mlMArntBQSkskLFwaQSkkLfQ72EvJfPwm54SRYtGGz/HOQ4ugPrIZvZwVayleAdszPMM7OnxsMRSCihEdhvzYbfMwoRpmGrE7u1ppDp2Xw8RiCafcmZ3Y8ck8u6by/YL8lb6VqshXvd3qMv6CHDCTuKSglFLY3cILcGv3k+hrWH7HRmerQq3cFj4M+9qiqjQbSa0twago3LAfyUmA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
+ bh=XwjrVJV+f4mWJDGj4PcbteJ6Zm8Y2erJlIsN7lWaEuc=;
+ b=WJqV3SuaVQzBV32Tx7UCcgdaF4zmoyNS3p+A+WjFvEhsZlDD531Cfu8EzGzd4Vd/hVhYtzqT9QiO4Nf44MJjWRj8q5pyD9d//K/tMDdK2AnERzdWu13IswZDK8gMODjjiPSWUGyG5iqzKAE1XOSTs4BiFgyCSCEmKYo7IlVGzm8rnloTOqSP5Hb4rhoLJbOS72Ca5OXJBF3PTm3oxGBLbO9YUlY1KA3zrkRC1ACazzahGt5JjJis3dM2Xl1C64KLISqqza21NaoSQ7udJom7Zv4MgOqvEp5Db9qPvgd75ZFgg0z65Poz125vGJcq0Sjx+ncQOc7tMzdj+4ucLBSGuA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=temperror (sender ip
+ is 165.204.84.17) smtp.rcpttodomain=nongnu.org
+ smtp.mailfrom=amd.com; 
+ dmarc=temperror action=none header.from=amd.com; dkim=none (message not
+ signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oRj3zg+9itdYyS6z7QNXQBDIItCdYPar+DU2LFF/qUc=;
- b=VunEDgdXmkzvvdq9RVSKHl+9VPgYwmzfCp2pVhB/oaOapyouEXiE5K2+8EjEk9TYLaArWf1Y96zvajrwtNAJaBMaWQw1fqxiffQIMbCDXkrFV4KnvPecPsOQUEbY9nw2C59YjrXWNaMWPaTiDT4YK7n1B3crnqOnYEDXwl7SrxA=
-Received: from MN0P220CA0016.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::26)
- by DM4PR12MB5866.namprd12.prod.outlook.com (2603:10b6:8:65::6) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.7; Tue, 8 Sep 2026 13:34:32 +0000
-Received: from BN3PEPF00022BC7.namprd05.prod.outlook.com
- (2603:10b6:208:52e:cafe::2d) by MN0P220CA0016.outlook.office365.com
- (2603:10b6:208:52e::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.7 via Frontend Transport; Tue, 8
- Sep 2026 13:34:31 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+ bh=XwjrVJV+f4mWJDGj4PcbteJ6Zm8Y2erJlIsN7lWaEuc=;
+ b=ErNgbZ3n/etqfa+0E2OJdKX4VUY7Dv983GOxiwnr8VQZ33LkmvpZiujTin0f5yG7b64nMH8OwvbTz63PA1RfdG1ta3EiMYtbKjj99qouHQIGvX6wyZ4sQvs5nfzZWdXtsCgsar3GaspkXGCyN6ByJm6VNp7NgHUFk7aQ+3pkSaI=
+Received: from BN0PR07CA0020.namprd07.prod.outlook.com (2603:10b6:408:141::18)
+ by MN2PR12MB4421.namprd12.prod.outlook.com (2603:10b6:208:26c::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
+ 2026 13:34:54 +0000
+Received: from BN3PEPF00022BC3.namprd05.prod.outlook.com
+ (2603:10b6:408:141:cafe::37) by BN0PR07CA0020.outlook.office365.com
+ (2603:10b6:408:141::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.15 via Frontend Transport; Tue, 8
+ Sep 2026 13:34:53 +0000
+X-MS-Exchange-Authentication-Results: spf=temperror (sender IP is
+ 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=temperror action=none header.from=amd.com;
+Received-SPF: TempError (protection.outlook.com: error in processing during
+ lookup of amd.com: DNS Timeout)
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BN3PEPF00022BC7.mail.protection.outlook.com (10.167.248.212) with Microsoft
+ BN3PEPF00022BC3.mail.protection.outlook.com (10.167.248.215) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.5 via Frontend Transport; Tue, 8 Sep 2026 13:34:31 +0000
+ 15.21.406.5 via Frontend Transport; Tue, 8 Sep 2026 13:34:52 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Tue, 8 Sep
- 2026 08:34:31 -0500
+ 2026 08:34:52 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <pbonzini@redhat.com>, <berrange@redhat.com>, <armbru@redhat.com>,
  <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>, <xiaoyao.li@intel.com>,
  <chao.p.peng@linux.intel.com>, <david@kernel.org>, Peter Xu
  <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 02/12] kvm: Detect guest-memfd flags supported
-Date: Tue, 8 Sep 2026 08:30:52 -0500
-Message-ID: <20260908133151.836685-3-michael.roth@amd.com>
+Subject: [PATCH v5 03/12] kvm: Provide explicit error for
+ kvm_create_guest_memfd()
+Date: Tue, 8 Sep 2026 08:30:53 -0500
+Message-ID: <20260908133151.836685-4-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260908133151.836685-1-michael.roth@amd.com>
 References: <20260908133151.836685-1-michael.roth@amd.com>
@@ -80,38 +81,38 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF00022BC7:EE_|DM4PR12MB5866:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16e9f05f-1791-4bfa-261d-08df0dadea0e
+X-MS-TrafficTypeDiagnostic: BN3PEPF00022BC3:EE_|MN2PR12MB4421:EE_
+X-MS-Office365-Filtering-Correlation-Id: af43c3b6-f016-4eff-3b54-08df0dadf67d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|82310400026|1800799024|36860700016|23010399003|6133799003|10067099003|11063799006|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: OlwJaSZfk5DkR1fE7lYVqr1jrALe43AKivakiOMf6SilXMBKeFsijy+Z8iTdUL/Px8jsNmljNWZUdcNLQIm2P5G2cXGDwVgBrmnLfxABBf8T0AF9fSYPaK+wrZDkwlX6Rf1zjQaFN7L5B0LrdHLKedArz86elK2bKIAI5mGje3wQoWZD8JgYul3hptEEKzRjPH6GGBMqG3S+zWRMFeXyjofhO52MXudJqmCeyO4hxBjKqJNR68xugiU2jfqj9v6Rbs93KD5tAhgu5CGOuDX7A4xcbJ3jFx/FdLJGRmTld2iLvup6szk6rMaZgtfB4zGf9ckstOFgS2SqE1SNP62WJ1gJMtRTcheU5AovZnbO9l632SObQHGCK+4RqbqijN1vyXIg3JBdMFewJ9Z8PRcWxh64gYZdqIF2KjrD397KCNhn+4ZHzwRVG02woWNd2occpJVQrzhlsRltJ6jYXNvLncQ+i39oq+ZHCAxm1ALMnp8rgge6gMC17w04lYDBzuod7ie812LPM5/c/RYP14juc0IrkXHwt6mrro0g2B6YsxRM6kmdaSsddXbYVlF7cuq/XQgtc1hU7AZbDtKSz4gMrDRZyV3tS4amPF83jBcOWgfzfgIh0INyINkLTJkux0BjwpctlAXvG38T0webIK1TtkYyPwIKPyuNDJS/djOxQqShcijkOiPwG1gRAtSlWaCq3jlF2RwLrfdHgrkNcENKqA==
+ ARA:13230040|1800799024|82310400026|36860700016|7416014|376014|23010399003|6133799003|10067099003|5023799004|11063799006|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 6/meLEeB/EGJTh2m3icmz3F6j5uZwQFHMSrvnSJrTDxsRekqlQwa6BOeA5EOPd9Ye0OPU5x60HxBsnB5FkcXL5ip8dQCs9wFwtU9EOE8KfttSV8E6iMMf/U1UC+QBogApri6ZbWxowBWEy64FnBhntQrpxj4M/xDyEzXC8SeVr/OGC5Ywt/AOy5fYMIUX17iO99ez+s+D46i5cCgLG4rArrRUV1I6J23nBtsGV0v/zXDbOAmzZaqXB9fa9s3QfGr0PicN8bVNAseiiSO8HvLbh5f1l0cp2FmHbyY6TFexrBOwhnb93Ck21ybrjxixBNDyxMw+hY+HIz8By8ZJ1nLVsv07BC0e3SwwDFvwoveH2+5u2uIuDAdDnsUceYsCZNHZ14XCMxmKz1FhQyHc02HLLAaioXfPWXjy0hSnN0+33ZhKa6IrejeAIEAdqZz8Z6hcTuSJ/fy8AwAVFtANCmxjcl2/UKTnyrxmsjvfCi8XZToTKs8o25MNyJD+TfukFSpgKz0DqXswXGICuh/b7i3WF6WDCFJWJ9vYAG1QMfAgj06slu0KcDW2hHyGB8eIoL5LFmLHQP291pc5J+LApjgbzkSoABjmyb8cRBMIuMB3KN7CN331DqpyysZdIL2CwnXcJlAc622ZcMaZoaXxUD2dvXpImcIw+prIE0Ymo+ocHAJt9Dk8bVxaavFfC4W6Dwc/e9syBGb/3nZmYMWIhS9MA==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(82310400026)(1800799024)(36860700016)(23010399003)(6133799003)(10067099003)(11063799006)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(1800799024)(82310400026)(36860700016)(7416014)(376014)(23010399003)(6133799003)(10067099003)(5023799004)(11063799006)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: iE9PW4kQIfyOMflLoEKAI0cjHBipXPwFVsQTyHAMZgW3sXPwi/1jkF3MLEedtWGBeXTFcEuh3HcViIf8FuAF0kS/lRc0iMuV6B8FC1KejCt8DlSevLOklqIXLdCTCTbKdBppaMiz3/a7YuH0jbJSzsdW6YQBd3dBEgSd78Tkx2KCblAm97oaW3gKy16R8qTvxibR2N6/WFuLEVMabunkIHFpeGkbanKovVuW73/r6xOMqxfsuYxL/LFRK+oJGTyBr2XXoViKN5ssT7g1BbZcCL7IeYTe+GsL/CW7KRAcnMuY2i2/Exy+ok1nUiWgb5Dx7PE2rtpHbrKc7jaq65BRNHnbCOHyhSpH/L3dyCry5a8TPZT0gwvyf7+eTniOpVcX1WLiBV6u4+3ySGNGNXjQz2qCMGHIHoxkKY3mhfbzLsTuBWEZ64jyeziG+ndQyXL4
+X-MS-Exchange-AntiSpam-MessageData-0: 5JkIzvodp9Nxin/mCjJRF1HDM0N7onwpYMoZ5jWqpxG9KcMHKSVGsLcRe+fm+pfi6gR40ePJUmct4BAYttlmkU5hFOx64HRmYwQqjjrUdmai8t46wCXvgRRClVUjQWKTn5qOWSvnGFo+wfgfMN4OYao+oPlJRsZBviU8Farvb24+K6e/QSkzqQhm/7PPKt2g0y2h3sMB/RVv2XBuGNJatw2GRmdmeaxaFVZRRDckpEqc/xkJDcchB8U9yzTNVbBV2Ky6I2/Wt4WpZqdzXArcHOGn/0W5seuoJJOX971yxsPkMnszSjnXvaQnTui2oDJvJFYfV6xTBPET/EUzHc1rWDQ5ABalEupr5TdBwP8LSNJ/eVK9v7i1HQy3sa89dnfb1QdpmDzTHbkq2MgDpvDGXDP8+QlYHQDkcWlYkR1KBnQOxWpBLTEozKSOK7mfeodf
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 13:34:31.6785 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16e9f05f-1791-4bfa-261d-08df0dadea0e
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 13:34:52.4920 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: af43c3b6-f016-4eff-3b54-08df0dadf67d
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF00022BC7.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF00022BC3.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5866
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4421
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
  envelope-from=Michael.Roth@amd.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
+ helo=CO1PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,54 +130,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Detect supported guest-memfd flags by the current kernel, and reject
-creations of guest-memfd using invalid flags.  When the cap isn't
-available, then no flag is supported.
+So that there will be a verbal string returned when kvm not enabled, or
+kvm not compiled.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- accel/kvm/kvm-all.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ accel/kvm/kvm-all.c    | 12 ++++++++++++
+ accel/stubs/kvm-stub.c |  1 +
+ 2 files changed, 13 insertions(+)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index cdc7554082..120cab1e22 100644
+index 120cab1e22..a851b8f628 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -107,6 +107,7 @@ bool kvm_pre_fault_memory_supported;
- static bool kvm_immediate_exit;
- static uint64_t kvm_supported_memory_attributes;
- static bool kvm_guest_memfd_supported;
-+static uint64_t kvm_guest_memfd_flags_supported;
- static hwaddr kvm_max_slot_size = ~0;
+@@ -4758,6 +4758,18 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+         .flags = flags,
+     };
  
- static const KVMCapabilityInfo kvm_required_capabilities[] = {
-@@ -3065,6 +3066,8 @@ static int kvm_init(AccelState *as, MachineState *ms)
-         kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-         kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
-     kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
-+    kvm_guest_memfd_flags_supported =
-+        kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
- 
-     if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-         s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-@@ -4760,6 +4763,13 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
-         return -1;
-     }
- 
-+    if (flags & ~kvm_guest_memfd_flags_supported) {
-+        error_setg(errp, "Current KVM instance does not support "
-+                   "guest-memfd flag: 0x%"PRIx64,
-+                   flags & ~kvm_guest_memfd_flags_supported);
++    /*
++     * kvm_create_guest_memfd() can be invoked from generic hostmem code
++     * where KVM might be compiled but not necessarily enabled. Because
++     * of this, check for KVM support explictly before continuing with
++     * any KVM-specific checks.
++     *
++     */
++    if (!kvm_enabled()) {
++        error_setg(errp, "guest-memfd requires KVM accelerator");
 +        return -1;
 +    }
 +
-     fd = kvm_vm_ioctl(kvm_state, KVM_CREATE_GUEST_MEMFD, &guest_memfd);
-     if (fd < 0) {
-         error_setg_errno(errp, errno, "Error creating KVM guest_memfd");
+     if (!kvm_guest_memfd_supported) {
+         error_setg(errp, "KVM does not support guest_memfd");
+         return -1;
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index 3d34e3b99d..acbd0785e0 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -141,6 +141,7 @@ bool kvm_hwpoisoned_mem(void)
+ 
+ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+ {
++    error_setg(errp, "KVM is not enabled");
+     return -ENOSYS;
+ }
+ 
 -- 
 2.43.0
 
