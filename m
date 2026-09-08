@@ -4,157 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AECC79FAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0267C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qMG-0002H3-VS; Tue, 08 Sep 2026 03:35:08 -0400
+	id 1x3qLx-0002CE-53; Tue, 08 Sep 2026 03:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1x3qMF-0002GQ-N6
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:35:07 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1x3qME-0000KJ-4g
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:35:07 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6886LfP71477274
- for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 07:35:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=
- qcppdkim1; bh=ApVK2K6CK+SDMLvCTUfJLG00IBBZ+ndDHv1jcOYX8sk=; b=Z0
- cj6FuHgXyy42eFWYz4bqn7GEqDdiiTXQnOWME0ic11OMdnOeUOfb5wZke+CAqaLR
- TDC2GAu9v1rkL1Cp0TYbmd2r5dGloBKASXsYOllNmFWUBVa8DS3UhyudL4HscjcP
- FvCVYydz60I6e05ELI/xpK+EGvMlHZkzY4JyggxABtCNNe6NeWYXjt9bdFB6/H32
- IZ9Ho569jkbiuQEvVrm/CxC0iamYalUaBF+jltlGgp3Qf7+TcbQoTLVSI9xjGUNY
- 4XtVhQu8t2gEeCvHNpSl64WKEB3cUf3mroinz7nipmRVnXrAIWaYweeFbev2S3t7
- RWR3GojiE7FExtvN4KGA==
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjatjgsdg-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:35:04 +0000 (GMT)
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-66e509682ccso5565629d50.3
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 00:35:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788852904; cv=none;
- d=google.com; s=arc-20260327;
- b=klljyN8Emmgwr5JxM2H0k9BN7AGLxhIdEV9WgNozLwpb3yqK/bEWE8k9mP/qgIAtBn
- 8UvPfhXXjtSnfjKZ9LGl2FdmymPkECRfzWPRDcT5HVrMTIwOZy6hdIiI/KlMo6bZdG1D
- CHA5g3CNr9e8TJRQB+gUvsMx3AB+OX8UXbBLaBfAf4cbaapvl926ksg1zWUiQALMqrl5
- lbX3jP+7IkyIecAK168aezopCzCFpIfySHZnvMPipyh9dp+0XbmIeBWOqsRmk5XMRQf+
- TRzIl8l3eKL07Zhz2G8894Oq3pYpSvuyUSPfV4HrJz9rK8clHearUf2JR6TpimZtg9Zi
- 1sFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=ApVK2K6CK+SDMLvCTUfJLG00IBBZ+ndDHv1jcOYX8sk=;
- fh=wGCFoFUcW839KdtXS3Bzt9WYZWIaOCR17c6jvYHCqnI=;
- b=lCYl8AAToF1G64N1a+0wtoh/8LkW0Q2U9KqJmK0yhz1Aym3BATxI6zvUgv30fB8oGg
- OnOe4q0E9Sa61jsS3GRV7xRKRyO/GVlZVjvvvjPKa3GJ9bpgPs4yDuCTxdkm0StdkTgM
- 1jnACg1tJ9a/krTo7kkilfGHys3e1ewHmWOYuEsLuakoyct3rehnEQun6oXeXHZvBxPT
- f+sVjHDEovLwJMqonv1qRUjwARAlBo5KFCKwHz8kpgna5+xK2gsIsF/4MQ8J8pWLn2SB
- lV/4I+fLTyi/6izV2pnUmOwEZ4rYGvolpKso2Ya+sSP46t+v8r6+UTEAKERRi0e3D6Bc
- wcZA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788852904; x=1789457704; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ApVK2K6CK+SDMLvCTUfJLG00IBBZ+ndDHv1jcOYX8sk=;
- b=Sob9f9mn6HDpbKG/NEOn521BWc/qBgL5RAgoga+HjD6KRj0Y7AHshewtEY8HZldJqw
- C+zPWyAh0SK1KyDQpDGpulBQwbjA8wTOl2X2jpKbCTquECJASUojCOeGSQDgkLgnfyBf
- 10PRUMDYiZtiOWHPX0yEE5kwoB2OuEA4cmViFeCCTqW9Jsvz6WQ8uzAd75eQh0V6Rvbj
- ySyAVC3JHZ/fqEEUsGBus/3abWFNCbRy1MUftZH3jqVfsMZYUpQlQ1UGv/1Yf3OVxGFI
- ydhg27NCcEfduPgCTMm3VKGlTXrAOcnIoBZddepHrnVueDqQJKSVmmKMrQ7sqtHRlSBq
- VnDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788852904; x=1789457704;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ApVK2K6CK+SDMLvCTUfJLG00IBBZ+ndDHv1jcOYX8sk=;
- b=mQxtrtRyxsJLLPZl+snhBK8nyLYJe8ZTdXXq/Tmo8xsENS0P4M0agcvPHIB0xBztq0
- JW9Tr2aOdW1weHEGbrEILi8ev1t77N439Dp7MXQ22ZOCcX0MmjQcZRW7yIts8/fu9iqO
- P/OUEY0gizZ+Kf3F0iufe+ZBuQEOVHZtHYqDqZhNIC52d+m0hqh6GhP/0kH1xS8uJOo/
- OWL/eQuQAt6zN82AhiDoJCO6m4ypa+3kB7m9dh4Cl5BsfhZLBR4m9t1+LI7v2FmVkhnr
- agvtMgvAE6Fg7L91t8WMu9SkEBI3B5jogrtbWsL74M5VIbDV7YZXRXCslUSzdKcxc6XH
- Gf5w==
-X-Gm-Message-State: AFuF++kkqCKA/8glQ6WuklKej0pFRmz5prJmj7AHVkBjnOsjBNgtEBOn
- n42bqFYx2nZRV2x97Pbu2dhObW81unTTbchfEmTzhhcXiR81UJlIgyTm4d1ftfpV2MpLXUs/l9O
- pc0RVWpHAbqHdbycNc6BGRgcDirW5gv8tJplkjxAQY+cLJ0zCnS8xfmWKC4dmJtXabwrNzIVmrm
- /Ido+OA09+lUcsiI56jF0p/2+q+4vO7WGw
-X-Gm-Gg: AYBFou0wSJGcD+JjcZF7r6680wIvnfFoPzz2ikA/mVufV+gz+lHpPlZJF2ogIaPCZcp
- abQlTsMzJ5i+qIyRkdZNMfoYEfD7JdoccaOZ8OQNZtf7EQKPXfPuakaSCRAV61dEpx/rELReAlB
- IGxSWp4Hlq9SO+prOrEyWdidKmrs2f4zoWUOydbXqMU48BauPTS5DSuZCMvok=
-X-Received: by 2002:a05:690e:d88:b0:66e:51e0:f6a4 with SMTP id
- 956f58d0204a3-66fc1be6e2bmr6563036d50.42.1788852903701; 
- Tue, 08 Sep 2026 00:35:03 -0700 (PDT)
-X-Received: by 2002:a05:690e:d88:b0:66e:51e0:f6a4 with SMTP id
- 956f58d0204a3-66fc1be6e2bmr6563027d50.42.1788852903201; Tue, 08 Sep 2026
- 00:35:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x3qLv-0002Af-3K
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:47 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x3qLr-00006o-Mi
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:34:46 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8CxKvCLup9qsrcJAA--.27845S3;
+ Tue, 08 Sep 2026 15:34:35 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJDxDc+Eup9qSQ0dAA--.29522S4;
+ Tue, 08 Sep 2026 15:34:34 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>
+Subject: [PULL 2/5] hw/intc/loongarch_dintc: Add
+ loongarch_dintc_cpu_by_arch_id() function
+Date: Tue,  8 Sep 2026 15:35:45 +0800
+Message-ID: <20260908073548.3249551-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260908073548.3249551-1-maobibo@loongson.cn>
+References: <20260908073548.3249551-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-References: <20260904195610.964829-1-daniel.barboza@oss.qualcomm.com>
- <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
-From: Sunil V L <sunilvl@oss.qualcomm.com>
-Date: Tue, 8 Sep 2026 13:04:52 +0530
-X-Gm-Features: AcwNN1Xkaokp33i3BNbjSLIGhNWxOGSoEpBXtV08Fk-jM1dydhYceZHYhOr6FgI
-Message-ID: <CAB19ukGG7=FUWbuBj8fnYEz8d3ze6gg-yVCccdO0Dj-Zg77HuQ@mail.gmail.com>
-Subject: Re: [PATCH v10 4/5] tests/functional/riscv64: add riscv-server-ref
- tests
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, andrew.jones@oss.qualcomm.com,
- leif.lindholm@oss.qualcomm.com, Chao Liu <chao.liu.zevorn@gmail.com>,
- Nutty Liu <nutty.liu@hotmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA3NiBTYWx0ZWRfXxst2Y+DtP8SB
- 5FfmAaIqsvoduTjN8vcTjANpG/GHTAajYvMSspwTIUs7VKKWHFLWACoJpyneMrBDaunSLhSOkZd
- cjZ4Z1H3hsyFKxZmiCDkohY+Fy4qB8c=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA3NiBTYWx0ZWRfX21rZHELKh1nk
- uXPUkhGHHLSjFIX20LOFdgIt8sMtWjucs4S1U/cJs5AVWPVJNapiuyW5+ZUStCkjbFxAlZu/Vo5
- gVNs9uyDDKFcW8hFXUefxOMBhTMuW71RwiQM+nva24Av8z9RkmXKqsorWS/HYbYmsxKHDKY4e86
- v8I3qmpIHfcndm3ZioiPzt7ulppSe6EGT2L91o+4If5r5u916z2p2MTvMucpDHqBJNOMHdPc8p8
- xaGSsBfVwx0ZstB25WbB6Shb1hl6R6ADRw0VTis6BNls8WCFUibsTrux/AigV6A818mR6Wbhbez
- /5XwxXBnvOGGdMRPBSBeM5kks7Vfmjv8W2W/q93n2thUH+nGopfqSzWQoQ/AqPFpvtcigBvE5Y5
- NUn/MJVFUeascYTFVvjs0tpnV6gAmKqzfsEmNEqW0wh3g2kn78/Ge/+s17kkqZ31+ZCmd0+uiAk
- ePL1rEZMN6B2Nhb9JNA==
-X-Proofpoint-ORIG-GUID: 3VJmYYFjVvewnhm-EjoNB_sim_tMWgGx
-X-Authority-Analysis: v=2.4 cv=QrduG1yd c=1 sm=1 tr=0 ts=6a9fbaa8 cx=c_pps
- a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=69EAbJreAAAA:8
- a=JF9118EUAAAA:8 a=vQIqPbW8F-S7p7p2BZUA:9 a=QEXdDO2ut3YA:10
- a=Epx66wHExT0cjJnnR-oj:22 a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-GUID: 3VJmYYFjVvewnhm-EjoNB_sim_tMWgGx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080076
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxDc+Eup9qSQ0dAA--.29522S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAFW5JFyDKryxGFyfKw4xKrX_yoW5AF1Dpr
+ Wxurn0gr1UAanrX39xJa4rZr4fCrn3u3W2q3WakF92kF4kXr15Xr48GryDXF9Fka4UWr1j
+ qwn7J3WUWF13JFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -168,32 +74,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: sunilvl@oss.qualcomm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 5, 2026 at 1:27=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> Add tests for the recently added riscv-server-ref machine:
->
-> - a new test_opensbi.py test.  The idea is to have a quick test that can
-> catch trivial regressions that would prevent OpenSBI to finish;
-> - a new Linux boot "thorough" test that will boot the machine up to the
-> buildroot prompt.
-> - a TPM specific selftest for the riscv-server-ref board.  The test
-> will be skipped if there's no 'swtpm' in the host.
->
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  tests/functional/riscv64/meson.build        |  2 +
->  tests/functional/riscv64/test_opensbi.py    |  4 +
->  tests/functional/riscv64/test_server_ref.py | 88 +++++++++++++++++++++
->  3 files changed, 94 insertions(+)
->  create mode 100755 tests/functional/riscv64/test_server_ref.py
->
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Similar with IPI, add function loongarch_dintc_cpu_by_arch_id() for
+dintc driver. It searches dintc device from physical CPUID, also it
+used binary search method, rather than one by one with common API
+cpu_by_arch_id().
+
+And use this newly added API in loongarch_dintc_get_cpu() and
+loongarch_dintc_mem_write().
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by:  Song Gao <17746591750@163.com>
+---
+ hw/intc/loongarch_dintc.c | 49 +++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
+
+diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
+index 94d418261c..c01f1fe07e 100644
+--- a/hw/intc/loongarch_dintc.c
++++ b/hw/intc/loongarch_dintc.c
+@@ -26,6 +26,25 @@ FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
+ FIELD(MSG_ADDR, CPU_NUM, 12, 8)
+ FIELD(MSG_ADDR, FIX, 28, 12)
+ 
++static int loongarch_dintc_cmp(const void *a, const void *b)
++{
++    DINTCCore *dintc_a = (DINTCCore *)a;
++    DINTCCore *dintc_b = (DINTCCore *)b;
++
++    return dintc_a->arch_id - dintc_b->arch_id;
++}
++
++static DINTCCore *loongarch_dintc_cpu_by_arch_id(LoongArchDINTCState *s,
++                                                 int64_t arch_id)
++{
++    DINTCCore dintc, *found;
++
++    dintc.arch_id = arch_id;
++    found = bsearch(&dintc, s->cpu, s->num_cpu, sizeof(DINTCCore),
++                    loongarch_dintc_cmp);
++    return found;
++}
++
+ static uint64_t loongarch_dintc_mem_read(void *opaque,
+                                         hwaddr addr, unsigned size)
+ {
+@@ -49,23 +68,20 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
+ {
+     int irq_num, cpu_num = 0;
+     LoongArchDINTCState *s = LOONGARCH_DINTC(opaque);
+-    uint64_t msg_addr = addr + VIRT_DINTC_BASE;
++    uint64_t msg_addr = addr + VIRT_DINTC_BASE, arch_id;
++    DINTCCore *core;
+     CPUState *cs;
+ 
+-    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+-
+-    /* Validate cpu_num against the configured number of CPUs */
+-    if (cpu_num >= s->num_cpu) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
+-        return;
+-    }
+-    cs = cpu_by_arch_id(cpu_num);
+-    if (!cs) {
++    arch_id = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
++    core = loongarch_dintc_cpu_by_arch_id(s, arch_id);
++    if (!core || !core->cpu) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
++                      "loongarch-dintc: no CPU for arch_id %"PRId64"\n",
++                      arch_id);
+         return;
+     }
++    cpu_num = core - s->cpu;
++    cs = core->cpu;
+     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
+ 
+     if (kvm_irqchip_in_kernel()) {
+@@ -148,15 +164,8 @@ static DINTCCore *loongarch_dintc_get_cpu(LoongArchDINTCState *s,
+ {
+     CPUClass *k = CPU_GET_CLASS(dev);
+     uint64_t arch_id = k->get_arch_id(CPU(dev));
+-    int i;
+-
+-    for (i = 0; i < s->num_cpu; i++) {
+-        if (s->cpu[i].arch_id == arch_id) {
+-            return &s->cpu[i];
+-        }
+-    }
+ 
+-    return NULL;
++    return loongarch_dintc_cpu_by_arch_id(s, arch_id);
+ }
+ 
+ static void loongarch_dintc_cpu_plug(HotplugHandler *hotplug_dev,
+-- 
+2.54.0
+
 
