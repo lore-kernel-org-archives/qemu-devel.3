@@ -4,106 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89BC1C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 07:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9C4C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 08:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3qdY-0007Vt-E8; Tue, 08 Sep 2026 03:53:00 -0400
+	id 1x3qmN-00017m-PN; Tue, 08 Sep 2026 04:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x3qdW-0007Vi-Sd
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:52:58 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x3qdU-0002Bt-JE
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 03:52:58 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-cc149372c14so2060913a12.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 00:52:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788853970; cv=none;
- d=google.com; s=arc-20260327;
- b=SxkNXQqgTKTTvvmXbNtCraSHEk9uuyeUAQJTDzcjw6193loh2GclKMXx+3LoBL6uBU
- Mo/o34hy1cTCjn+vFbI1mJY7fnOqMzsTSClF39Bw81/+yDhWwGtnzend5VCH8IIxiima
- AOy5Zra9TnLluSfcEWryilnF0QZh223FPYcWvnb8NopDsdHo6H5efMIDmxP+GLB/8RXF
- ZULVVm5z/TN0GLPI7fWKQkFAXxbi8ZUS7bHpceDPi605cn1LZbz50sSNcz24RpyD7+HM
- krlOetVAuTuXv4k30ZfBHlCyfzb70EeTC96iOKnwizG5TtUkRh51DHQ69UNN5zjLc2Z/
- K4pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=wm6O4PqBk0NINGlhwEDq3Cyjn5LnB13dIOgrKhaxk3w=;
- fh=9nn+YFgC53vZ+VMZJMydBBV04JAGUMm3lN9pDyggxqQ=;
- b=VxkABqp32FPIScFXOhNViLbkXLczi5UjAYbJZO/DwevnSVJ39J0mq8+5JdF1rwHJwT
- mzcTlS2vkwYPqNfVBVeYuBEKN2FKMQrHcEAAV829F8sBhOx4pNUGbsDiHEDpQaN0Pb8a
- Pr8xG2h4POXGs2KJ397iUex4h9Eve/2xptj1tLngMxRK4KCxrVbbxLLv+eorP5C+HZeS
- JKC0oK8E1izWRHqNmeyJD3V14sOW9MqfZ0vksapFi6Bv7GCHVx/0MfqNPmp5UJb5C0Du
- WZZFswiBSNuIe3TVcQGqiTEt4yMgBgDAhVSExZ4hlVRshtsnkPkHu/dQBzXl2nsIr5mP
- ESpg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788853970; x=1789458770; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=wm6O4PqBk0NINGlhwEDq3Cyjn5LnB13dIOgrKhaxk3w=;
- b=GscI/PxRtj0S2BydvNRDUGabulWlj3q5E80eDSKgXXl0ix5rzYXxts1fZR12IK8zYJ
- I6QSX87Jyt4sPUfRHYJ3nsftZ8f0DcQmHT0gz0To/4f59gqmfJEMkD93I/aYOGmxkuea
- Jjyy8/KNlh0hPsGSvsvc8kW719on5opJhs1XHkNDcGHS2kmSqxcEiw4YRJ1oY3WaonW+
- QfQA6iHyXfeXeq0ntbPwWGTdDDFczSulZNEL2P116T7uMnP88XVuYnF9faeOYs5MiC6S
- ZspDhxijG/iDrj49QNapPpfcqrjsS+nxQgHXi4+x8R9A45M35hkLklIWX1WC9QzT5T3L
- 2YCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788853970; x=1789458770;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=wm6O4PqBk0NINGlhwEDq3Cyjn5LnB13dIOgrKhaxk3w=;
- b=bXyqlhGpICev4vrZhpJMvtn3QoGyBaeVh9z56Z0wMQDFCmlTeIi1EhunMIOYF3maos
- 6od9Nn59O24x9Q5ZTUIR5ZXE8ekojmKmAmEeNyyxnGOmbbMQDSLJuALbQRInqxD2SvLk
- VYpPegTDoDaKhuxvVipWT7WlFmjtC4HaS0cnFmvqjiINlOSUT4zoe1HE+XtO71km3zJq
- +gD5s8j2LfLkTqIJrbrE1v6TZZlFjSFVCoY8l32Iu4g0uOBAHCiZagCHd5ADXqDqK37x
- AFRCSYWokA3adBrPq4PBijAjcNLbrX/4wAVkTYi60+VIcVVswuitUTT6/JlvaWmGI+K/
- wV2g==
-X-Gm-Message-State: AFuF++l5iDN0rOnxiX73cO/GU50KbkHLXik72uyeznERnVblZC80dp5p
- 6jLKHEPbbwqsplltcJoGH814aMLCvKRLlscic295/7ysyU/XFxOAya7SEjj6kmboomH83WHO1u5
- SSG/B5z8ZLadTNmjryiNkY9uHWCLmhDg=
-X-Gm-Gg: AYBFou1wQa5q2+5ZAtK0iKubGrDyvi7JuZsjmY8GrI+3LvvF6Hej/8j7ffirhLpu1UL
- IMl4cD4rLyB8v0oVB9OXIoeaDrK0+zH13PP9ttzCDjZ7dVHUPztTaEREydOxBA8SC05HhPdb/4Q
- dSVb+f2p0Y09PpK40EkdcmO2pE4cIMw/baFPBXMr1OvhyhCsEWeFeLMXUO572+Oyynb7vKjsOuH
- kJNAp+xlhjWazkqV4152C2D7LPpER7DSOJ+/VxdaiXXR9TPtM9UCAgkpeS23DYQ+Xx8wNWgBu+m
- aBi6jhH201TT5uac90XLWZYC5wlachOnWfbb0xbffAtyOeSvOWLGxlkqrBYaOHvtVSMFJAtSmLH
- 1
-X-Received: by 2002:a17:90b:2ccf:b0:398:a2a3:b631 with SMTP id
- 98e67ed59e1d1-39b262aaf3dmr44095620a91.19.1788853969635; Tue, 08 Sep 2026
- 00:52:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x3qmL-00017U-JO
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:02:05 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x3qmH-0002xc-6v
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 04:02:05 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68881mY9027549
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 8 Sep 2026 17:01:48 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=i3tMWTt7PzrIjwsxR2r72ThQhszAuk6/El5qOEV5HoA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1788854508; v=1;
+ b=JnAXbXMSlIGTPtKI5JpG+WlQ8qv22nwCb6D9FvNxUmopb5k8cUVPtM7GSHzhQbWB
+ mPb7zEo6EKWaoHinQT3R8NbIgE8auT9HuvcYG6Z4q5KJAOlKXXDNDObGqZHU0gG8
+ hqGFqDMvtZNfMcfe9COSYQCcr4+TOKW+SMLeu6NhU82tqwD8a5HPXx1lAWjtnXFw
+ 3EhkpcIKbuABTeCfXTZGPA4HuVE9gPFCC0ubYoulbxLPM26LmAVVlt8gwYCTQZUW
+ h6dkAt1wboeMfzaaS+R9Zk1jn1TOGO/wtB3oSIUqyb9WBqWnBWiRBsebKq6EhIZ4
+ eMkqH0EcGlmN3mJ7/tLSfw==
+Message-ID: <846e77a1-56df-4d14-a1ee-d6c6489a2bcb@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 8 Sep 2026 17:01:48 +0900
 MIME-Version: 1.0
-References: <20260908074016.2143292-1-berrange@redhat.com>
-In-Reply-To: <20260908074016.2143292-1-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 8 Sep 2026 11:52:36 +0400
-X-Gm-Features: AcwNN1WDTMx4-pFIlJdnCUKLH4RtlYfmDx6TEPHVORtegLgYyUQhEf1ilLGvmYw
-Message-ID: <CAJ+F1C+ePMV0Zd7_YFsVMC31JnEopG0V9cwKJjCcqxfBUwkNRg@mail.gmail.com>
-Subject: Re: [PATCH] meson: refresh build options script
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 3/9] igb: Add VF state serialization for live
+ migration
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ Peter Xu <peterx@redhat.com>
+References: <20260902192054.3329753-1-clg@redhat.com>
+ <20260902192054.3329753-4-clg@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260902192054.3329753-4-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,270 +76,474 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 8, 2026 at 11:41=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> Recent changes added more meson options, but missed refreshing of
-> the meson-buildoptions.sh file, causing it to frequently appear
-> dirty when doing builds.
->
-> Fixes: 7e1d54da6faf (tests/tcg/meson.build: implement ./configure -cross-=
-cc-* options)
-> Fixes: 522b299ca431 (tests/tcg/meson.build: implement ./configure contain=
-ers options)
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-indeed,
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
+On 2026/09/03 4:20, Cédric Le Goater wrote:
+> Implement per-VF state serialization and deserialization for the SAVE
+> and LOAD commands. The wire format consists of a header (magic,
+> version, VF number, register count), per-VF register offset/value
+> pairs from a whitelist, RA table entries owned by the VF, and TX
+> queue contexts.
+> 
+> Register offsets are relocated on load so a VF can migrate to a
+> different VF number on the destination. RA pool ownership bits are
+> swapped accordingly.
+> 
+> AI-used-for: analysis, code (prototype)
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  scripts/meson-buildoptions.sh | 138 ++++++++++++++++++++++++++++++++++
->  1 file changed, 138 insertions(+)
->
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
-h
-> index 5a67e59a16..eb15551286 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -10,7 +10,10 @@ meson_options_help() {
->    printf "%s\n" '  --block-drv-rw-whitelist=3DVALUE'
->    printf "%s\n" '                           set block driver read-write =
-whitelist (by default'
->    printf "%s\n" '                           affects only QEMU, not tools=
- like qemu-img)'
-> +  printf "%s\n" '  --container-command=3DVALUE'
-> +  printf "%s\n" '                           command to build/run contain=
-ers'
->    printf "%s\n" '  --datadir=3DVALUE          Data file directory [share=
-]'
-> +  printf "%s\n" '  --disable-containers     use containers to cross comp=
-ile tcg tests'
->    printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better p=
-erformance)'
->    printf "%s\n" '  --disable-debug-info     Enable debug symbols and oth=
-er information'
->    printf "%s\n" '  --disable-hexagon-idef-parser'
-> @@ -77,6 +80,94 @@ meson_options_help() {
->    printf "%s\n" '  --rtsig-map=3DVALUE        default value of QEMU_RTSI=
-G_MAP [NULL]'
->    printf "%s\n" '  --smbd=3DVALUE             Path to smbd for slirp net=
-working'
->    printf "%s\n" '  --sysconfdir=3DVALUE       Sysconf data directory [et=
-c]'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64=3DVALUE'
-> +  printf "%s\n" '                           cc for aarch64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64-be=3DVALUE'
-> +  printf "%s\n" '                           cc for aarch64_be tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-alpha=3DVALUE'
-> +  printf "%s\n" '                           cc for alpha tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-arm=3DVALUE'
-> +  printf "%s\n" '                           cc for arm tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-hexagon=3DVALUE'
-> +  printf "%s\n" '                           cc for hexagon tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-hppa=3DVALUE'
-> +  printf "%s\n" '                           cc for hppa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-i386=3DVALUE'
-> +  printf "%s\n" '                           cc for i386 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-loongarch64=3DVALUE'
-> +  printf "%s\n" '                           cc for loongarch64 tcg tests=
-'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-m68k=3DVALUE'
-> +  printf "%s\n" '                           cc for m68k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-mips=3DVALUE'
-> +  printf "%s\n" '                           cc for mips tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64=3DVALUE'
-> +  printf "%s\n" '                           cc for mips64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64el=3DVALUE'
-> +  printf "%s\n" '                           cc for mips64el tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-or1k=3DVALUE'
-> +  printf "%s\n" '                           cc for or1k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64=3DVALUE'
-> +  printf "%s\n" '                           cc for ppc64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64le=3DVALUE'
-> +  printf "%s\n" '                           cc for ppc64le tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-riscv64=3DVALUE'
-> +  printf "%s\n" '                           cc for riscv64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-s390x=3DVALUE'
-> +  printf "%s\n" '                           cc for s390x tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-sh4=3DVALUE'
-> +  printf "%s\n" '                           cc for sh4 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-tricore=3DVALUE'
-> +  printf "%s\n" '                           cc for tricore tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-x86-64=3DVALUE'
-> +  printf "%s\n" '                           cc for x86_64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensa=3DVALUE'
-> +  printf "%s\n" '                           cc for xtensa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensaeb=3DVALUE'
-> +  printf "%s\n" '                           cc for xtensaeb tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64=3DVALUE'
-> +  printf "%s\n" '                           cflags for aarch64 tcg tests=
-'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64-be=3DVALUE'
-> +  printf "%s\n" '                           cflags for aarch64_be tcg te=
-sts'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-alpha=3DVALUE'
-> +  printf "%s\n" '                           cflags for alpha tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-arm=3DVALUE'
-> +  printf "%s\n" '                           cflags for arm tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-hexagon=3DVALUE'
-> +  printf "%s\n" '                           cflags for hexagon tcg tests=
-'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-hppa=3DVALUE'
-> +  printf "%s\n" '                           cflags for hppa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-i386=3DVALUE'
-> +  printf "%s\n" '                           cflags for i386 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-loongarch64=3DVALUE'
-> +  printf "%s\n" '                           cflags for loongarch64 tcg t=
-ests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-m68k=3DVALUE'
-> +  printf "%s\n" '                           cflags for m68k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips=3DVALUE'
-> +  printf "%s\n" '                           cflags for mips tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64=3DVALUE'
-> +  printf "%s\n" '                           cflags for mips64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64el=3DVALUE'
-> +  printf "%s\n" '                           cflags for mips64el tcg test=
-s'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-or1k=3DVALUE'
-> +  printf "%s\n" '                           cflags for or1k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64=3DVALUE'
-> +  printf "%s\n" '                           cflags for ppc64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64le=3DVALUE'
-> +  printf "%s\n" '                           cflags for ppc64le tcg tests=
-'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-riscv64=3DVALUE'
-> +  printf "%s\n" '                           cflags for riscv64 tcg tests=
-'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-s390x=3DVALUE'
-> +  printf "%s\n" '                           cflags for s390x tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-sh4=3DVALUE'
-> +  printf "%s\n" '                           cflags for sh4 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-tricore=3DVALUE'
-> +  printf "%s\n" '                           cflags for tricore tcg tests=
-'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-x86-64=3DVALUE'
-> +  printf "%s\n" '                           cflags for x86_64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensa=3DVALUE'
-> +  printf "%s\n" '                           cflags for xtensa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensaeb=3DVALUE'
-> +  printf "%s\n" '                           cflags for xtensaeb tcg test=
-s'
->    printf "%s\n" '  --tls-priority=3DVALUE     Default TLS protocol/ciphe=
-r priority string'
->    printf "%s\n" '                           [NORMAL]'
->    printf "%s\n" '  --with-coroutine=3DCHOICE  coroutine backend to use (=
-choices:'
-> @@ -281,6 +372,9 @@ _meson_option_parse() {
->      --disable-cocoa) printf "%s" -Dcocoa=3Ddisabled ;;
->      --enable-colo-proxy) printf "%s" -Dcolo_proxy=3Denabled ;;
->      --disable-colo-proxy) printf "%s" -Dcolo_proxy=3Ddisabled ;;
-> +    --container-command=3D*) quote_sh "-Dcontainer_command=3D$2" ;;
-> +    --enable-containers) printf "%s" -Dcontainers=3Dtrue ;;
-> +    --disable-containers) printf "%s" -Dcontainers=3Dfalse ;;
->      --enable-coreaudio) printf "%s" -Dcoreaudio=3Denabled ;;
->      --disable-coreaudio) printf "%s" -Dcoreaudio=3Ddisabled ;;
->      --with-coroutine=3D*) quote_sh "-Dcoroutine_backend=3D$2" ;;
-> @@ -517,6 +611,50 @@ _meson_option_parse() {
->      --disable-tcg) printf "%s" -Dtcg=3Ddisabled ;;
->      --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dtrue ;;
->      --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dfalse ;;
-> +    --tcg-tests-cross-cc-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cc_aar=
-ch64=3D$2" ;;
-> +    --tcg-tests-cross-cc-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross_cc_=
-aarch64_be=3D$2" ;;
-> +    --tcg-tests-cross-cc-alpha=3D*) quote_sh "-Dtcg_tests_cross_cc_alpha=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-arm=3D*) quote_sh "-Dtcg_tests_cross_cc_arm=3D$=
-2" ;;
-> +    --tcg-tests-cross-cc-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cc_hex=
-agon=3D$2" ;;
-> +    --tcg-tests-cross-cc-hppa=3D*) quote_sh "-Dtcg_tests_cross_cc_hppa=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-i386=3D*) quote_sh "-Dtcg_tests_cross_cc_i386=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-loongarch64=3D*) quote_sh "-Dtcg_tests_cross_cc=
-_loongarch64=3D$2" ;;
-> +    --tcg-tests-cross-cc-m68k=3D*) quote_sh "-Dtcg_tests_cross_cc_m68k=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-mips=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-mips64=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
-64=3D$2" ;;
-> +    --tcg-tests-cross-cc-mips64el=3D*) quote_sh "-Dtcg_tests_cross_cc_mi=
-ps64el=3D$2" ;;
-> +    --tcg-tests-cross-cc-or1k=3D*) quote_sh "-Dtcg_tests_cross_cc_or1k=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc64=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc=
-64le=3D$2" ;;
-> +    --tcg-tests-cross-cc-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cc_ris=
-cv64=3D$2" ;;
-> +    --tcg-tests-cross-cc-s390x=3D*) quote_sh "-Dtcg_tests_cross_cc_s390x=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-sh4=3D*) quote_sh "-Dtcg_tests_cross_cc_sh4=3D$=
-2" ;;
-> +    --tcg-tests-cross-cc-tricore=3D*) quote_sh "-Dtcg_tests_cross_cc_tri=
-core=3D$2" ;;
-> +    --tcg-tests-cross-cc-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cc_x86_=
-64=3D$2" ;;
-> +    --tcg-tests-cross-cc-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cc_xten=
-sa=3D$2" ;;
-> +    --tcg-tests-cross-cc-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_cc_xt=
-ensaeb=3D$2" ;;
-> +    --tcg-tests-cross-cflags-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_aarch64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross=
-_cflags_aarch64_be=3D$2" ;;
-> +    --tcg-tests-cross-cflags-alpha=3D*) quote_sh "-Dtcg_tests_cross_cfla=
-gs_alpha=3D$2" ;;
-> +    --tcg-tests-cross-cflags-arm=3D*) quote_sh "-Dtcg_tests_cross_cflags=
-_arm=3D$2" ;;
-> +    --tcg-tests-cross-cflags-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_hexagon=3D$2" ;;
-> +    --tcg-tests-cross-cflags-hppa=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_hppa=3D$2" ;;
-> +    --tcg-tests-cross-cflags-i386=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_i386=3D$2" ;;
-> +    --tcg-tests-cross-cflags-loongarch64=3D*) quote_sh "-Dtcg_tests_cros=
-s_cflags_loongarch64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-m68k=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_m68k=3D$2" ;;
-> +    --tcg-tests-cross-cflags-mips=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_mips=3D$2" ;;
-> +    --tcg-tests-cross-cflags-mips64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
-ags_mips64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-mips64el=3D*) quote_sh "-Dtcg_tests_cross_c=
-flags_mips64el=3D$2" ;;
-> +    --tcg-tests-cross-cflags-or1k=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_or1k=3D$2" ;;
-> +    --tcg-tests-cross-cflags-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cfla=
-gs_ppc64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_ppc64le=3D$2" ;;
-> +    --tcg-tests-cross-cflags-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_riscv64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-s390x=3D*) quote_sh "-Dtcg_tests_cross_cfla=
-gs_s390x=3D$2" ;;
-> +    --tcg-tests-cross-cflags-sh4=3D*) quote_sh "-Dtcg_tests_cross_cflags=
-_sh4=3D$2" ;;
-> +    --tcg-tests-cross-cflags-tricore=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_tricore=3D$2" ;;
-> +    --tcg-tests-cross-cflags-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
-ags_x86_64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cfl=
-ags_xtensa=3D$2" ;;
-> +    --tcg-tests-cross-cflags-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_c=
-flags_xtensaeb=3D$2" ;;
->      --tls-priority=3D*) quote_sh "-Dtls_priority=3D$2" ;;
->      --enable-tools) printf "%s" -Dtools=3Denabled ;;
->      --disable-tools) printf "%s" -Dtools=3Ddisabled ;;
-> --
-> 2.55.0
->
->
+>   hw/net/igb_core.h      |   2 +
+>   hw/net/igb_migration.h |   2 +
+>   hw/net/igb.c           |   5 +
+>   hw/net/igb_migration.c | 347 ++++++++++++++++++++++++++++++++++++++++-
+>   4 files changed, 354 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+> index d70b54e318f1..60724e2824ab 100644
+> --- a/hw/net/igb_core.h
+> +++ b/hw/net/igb_core.h
+> @@ -143,4 +143,6 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
+>   void
+>   igb_start_recv(IGBCore *core);
+>   
+> +IGBCore *igb_pf_get_core(void *pf);
+> +
+>   #endif
+> diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
+> index ea40ac65c54b..b2f601e74346 100644
+> --- a/hw/net/igb_migration.h
+> +++ b/hw/net/igb_migration.h
+> @@ -73,6 +73,8 @@
+>   #define IGB_MIG_ERR_NO_BUFFER           3
+>   #define IGB_MIG_ERR_DMA_FAILED          4
+>   #define IGB_MIG_ERR_BAD_SIZE            5
+> +#define IGB_MIG_ERR_BAD_MAGIC           6
+> +#define IGB_MIG_ERR_BAD_VERSION         7
+>   
+>   /* Shared buffer constants */
+>   #define IGB_VF_STATE_MAX_SIZE           4096
+> diff --git a/hw/net/igb.c b/hw/net/igb.c
+> index 7268e5473fc3..f39f2bc3a04e 100644
+> --- a/hw/net/igb.c
+> +++ b/hw/net/igb.c
+> @@ -133,6 +133,11 @@ void igb_vf_reset(void *opaque, uint16_t vfn)
+>       igb_core_vf_reset(&s->core, vfn);
+>   }
+>   
+> +IGBCore *igb_pf_get_core(void *pf)
+> +{
+> +    return &IGB(pf)->core;
+> +}
+> +
+>   static bool
+>   igb_io_get_reg_index(IGBState *s, uint32_t *idx)
+>   {
+> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
+> index 8e7e6fac9b9b..c34035974620 100644
+> --- a/hw/net/igb_migration.c
+> +++ b/hw/net/igb_migration.c
+> @@ -10,18 +10,241 @@
+>   #include "qemu/log.h"
+>   #include "hw/pci/pci_device.h"
+>   #include "hw/pci/pcie.h"
+> +#include "net/eth.h"
+> +#include "net/net.h"
+>   #include "igb_common.h"
+> +#include "igb_core.h"
+>   #include "igb_migration.h"
+>   #include "system/address-spaces.h"
+>   #include "trace.h"
+>   
+> +static IGBCore *igbvf_get_core(IgbVfState *s)
+> +{
+> +    return igb_pf_get_core(pcie_sriov_get_pf(PCI_DEVICE(s)));
+> +}
+> +
+>   /*
+>    * Per-VF state serialization / deserialization
+>    */
+>   
+> +#define IGB_MIG_BLOB_MAGIC        0x4D494742  /* "MIGB" */
+> +#define IGB_MIG_BLOB_VERSION      1
+> +
+> +typedef struct IgbMigRegPair {
+> +    uint32_t offset;
+> +    uint32_t value;
+> +} IgbMigRegPair;
+> +
+> +typedef struct IgbMigTxCtx {
+> +    uint32_t ctx_desc[8];         /* 2 × adv_tx_context_desc (4 dwords each) */
+> +    uint32_t first_cmd_type_len;
+> +    uint32_t first_olinfo_status;
+> +    uint32_t first;
+> +    uint32_t skip_cp;
+> +} IgbMigTxCtx;
+> +
+> +#define IGB_VF_MAX_FIXED_REGS     64
+> +#define IGB_VF_MAX_RA_REGS        48  /* (16 + 8) RA entries × 2 (RAL+RAH) */
+> +
+> +typedef struct IgbMigBlob {
+> +    uint32_t magic;
+> +    uint32_t version;
+> +    uint32_t vfn;
+> +    uint32_t num_regs;
+> +    IgbMigRegPair regs[IGB_VF_MAX_FIXED_REGS];
+> +    uint32_t num_ra;
+> +    IgbMigRegPair ra[IGB_VF_MAX_RA_REGS];
+> +    uint32_t num_tx_ctx;
+> +    IgbMigTxCtx tx_ctx[2];
+> +} IgbMigBlob;
+> +
+> +#define IGB_MIG_BLOB_SIZE            sizeof(IgbMigBlob)
+> +
+> +QEMU_BUILD_BUG_ON(IGB_MIG_BLOB_SIZE > IGB_VF_STATE_MAX_SIZE);
+> +
+> +/* Register offsets that constitute a VF's state slice */
+> +static int igb_vf_reg_list(uint16_t vfn, uint32_t *offsets)
+> +{
+> +    int n = 0;
+> +    int q0 = vfn;
+> +    int q1 = vfn + IGB_NUM_VM_POOLS;
+> +
+> +    /* Per-VF control and interrupt registers */
+> +    offsets[n++] = E1000_PVTCTRL(vfn) >> 2;
+> +    offsets[n++] = E1000_PVTEICS(vfn) >> 2;
+> +    offsets[n++] = E1000_PVTEIMS(vfn) >> 2;
+> +    offsets[n++] = E1000_PVTEIMC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVTEIAC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVTEIAM(vfn) >> 2;
+> +    offsets[n++] = E1000_PVTEICR(vfn) >> 2;
+> +
+> +    /* Per-VF statistics */
+> +    offsets[n++] = E1000_PVFGPRC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGPTC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGORC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGOTC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFMPRC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGPRLBC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGPTLBC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGORLBC(vfn) >> 2;
+> +    offsets[n++] = E1000_PVFGOTLBC(vfn) >> 2;
+> +
+> +    /*
+> +     * Mailbox control registers only - the 16-dword payload buffer
+> +     * (VMBMEM) is transient and drained on quiesce.
+> +     */
+> +    offsets[n++] = E1000_V2PMAILBOX(vfn) >> 2;
+> +    offsets[n++] = E1000_P2VMAILBOX(vfn) >> 2;
+> +
+> +    /* Per-VF config */
+> +    offsets[n++] = E1000_VMOLR(vfn) >> 2;
+> +    offsets[n++] = E1000_VMVIR(vfn) >> 2;
+> +    offsets[n++] = E1000_PSRTYPE(vfn) >> 2;
+> +
+> +    /*
+> +     * VF receive addresses (RA/RA2) are saved dynamically in
+> +     * igb_core_vf_save_state by scanning for entries whose pool
+> +     * bits match this VF - the PF driver chooses the RA slot.
+> +     */
+> +
+> +    /* Interrupt routing */
+> +    offsets[n++] = (E1000_VTIVAR + vfn * 4) >> 2;
+> +    offsets[n++] = (E1000_VTIVAR_MISC + vfn * 4) >> 2;
+> +
+> +    /*
+> +     * EITR (Extended Interrupt Throttle Register) - 3 vectors per VF.
+> +     * Each VF has 3 MSI-X vectors, each with its own EITR controlling
+> +     * interrupt coalescing. Without saving these, interrupt
+> +     * throttling resets to zero after migration which can cause
+> +     * interrupt storms or latency changes. VF N uses PF EITR indices
+> +     * (22 - N*3) .. (24 - N*3).
+> +     */
+> +    {
+> +        int eitr_base = 22 - vfn * 3;
+> +        offsets[n++] = E1000_EITR(eitr_base) >> 2;
+> +        offsets[n++] = E1000_EITR(eitr_base + 1) >> 2;
+> +        offsets[n++] = E1000_EITR(eitr_base + 2) >> 2;
+> +    }
+> +
+> +    /* RX and TX queue registers for queues q0 and q1 */
+> +#define ADD_QUEUE_REGS(q) do { \
+> +    offsets[n++] = E1000_RDBAL(q) >> 2; \
+> +    offsets[n++] = E1000_RDBAH(q) >> 2; \
+> +    offsets[n++] = E1000_RDLEN(q) >> 2; \
+> +    offsets[n++] = E1000_SRRCTL(q) >> 2; \
+> +    offsets[n++] = E1000_RDH(q) >> 2; \
+> +    offsets[n++] = E1000_RDT(q) >> 2; \
+> +    offsets[n++] = E1000_RXDCTL(q) >> 2; \
+> +    offsets[n++] = E1000_RXCTL(q) >> 2; \
+> +    offsets[n++] = E1000_RQDPC(q) >> 2; \
+> +    offsets[n++] = E1000_TDBAL(q) >> 2; \
+> +    offsets[n++] = E1000_TDBAH(q) >> 2; \
+> +    offsets[n++] = E1000_TDLEN(q) >> 2; \
+> +    offsets[n++] = E1000_TDH(q) >> 2; \
+> +    offsets[n++] = E1000_TDT(q) >> 2; \
+> +    offsets[n++] = E1000_TXDCTL(q) >> 2; \
+> +    offsets[n++] = E1000_TXCTL(q) >> 2; \
+> +    offsets[n++] = E1000_TDWBAL(q) >> 2; \
+> +    offsets[n++] = E1000_TDWBAH(q) >> 2; \
+> +} while (0)
+> +
+> +    ADD_QUEUE_REGS(q0);
+> +    ADD_QUEUE_REGS(q1);
+> +#undef ADD_QUEUE_REGS
+> +
+> +    g_assert(n <= IGB_VF_MAX_FIXED_REGS);
+> +    return n;
+> +}
+> +
+> +/*
+> + * Scan RA and RA2 arrays for receive address entries assigned to
+> + * this VF. The PF driver picks the RA slot, so we cannot use a
+> + * fixed index - instead check each entry's pool bits.
+> + */
+> +static int igb_core_vf_save_ra(IGBCore *core, uint16_t vfn,
+> +                               IgbMigRegPair *regs)
+> +{
+> +    uint32_t vf_pool_bit = E1000_RAH_POOL_1 << vfn;
+> +    int n = 0;
+> +    static const struct {
+> +        uint32_t base;
+> +        int count;
+> +    } ra_banks[] = {
+> +        { RA,  16 },
+> +        { RA2,  8 },
+> +    };
+> +
+> +    for (int i = 0; i < ARRAY_SIZE(ra_banks); i++) {
+> +        for (int j = 0; j < ra_banks[i].count; j++) {
+> +            uint32_t ral_off = ra_banks[i].base + j * 2;
+> +            uint32_t rah_off = ra_banks[i].base + j * 2 + 1;
+> +            uint32_t rah_val = core->mac[rah_off];
+> +
+> +            if ((rah_val & E1000_RAH_AV) && (rah_val & vf_pool_bit)) {
+> +                regs[n].offset = cpu_to_le32(ral_off);
+> +                regs[n].value = cpu_to_le32(core->mac[ral_off]);
+> +                n++;
+> +                regs[n].offset = cpu_to_le32(rah_off);
+> +                regs[n].value = cpu_to_le32(rah_val);
+> +                n++;
+> +            }
+> +        }
+> +    }
+> +    return n;
+> +}
+> +
+> +static void igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
+> +                                    IgbMigTxCtx *tx)
+> +{
+> +    struct igb_tx *src = &core->tx[queue];
+> +
+> +    memcpy(tx->ctx_desc, src->ctx, sizeof(tx->ctx_desc));
+> +    tx->first_cmd_type_len = cpu_to_le32(src->first_cmd_type_len);
+> +    tx->first_olinfo_status = cpu_to_le32(src->first_olinfo_status);
+> +    tx->first = cpu_to_le32(src->first);
+> +    tx->skip_cp = cpu_to_le32(src->skip_cp);
+> +}
+> +
+>   static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
+>   {
+> -    int size = 0;
+> +    int size = IGB_MIG_BLOB_SIZE;
+> +    IGBCore *core = igbvf_get_core(s);
+> +    IgbMigBlob *blob = buf;
+> +    uint32_t offsets[IGB_VF_MAX_FIXED_REGS];
+> +    int num_regs;
+> +    int q0 = s->vfn;
+> +    int q1 = s->vfn + IGB_NUM_VM_POOLS;
+> +
+> +    /*
+> +     * Save PVT shadow registers (PVTEIMS/PVTEIAC/PVTEIAM) instead of
+> +     * extracting from PF aggregates - the L1 PF driver may have
+> +     * transiently cleared EIMS via EIMC. The load path ORs them back.
+> +     */
+> +    num_regs = igb_vf_reg_list(s->vfn, offsets);
+> +
+> +    if (!buf) {
+> +        return size;
+> +    }
+> +
+> +    if (size > buf_size) {
+> +        return -IGB_MIG_ERR_BAD_SIZE;
+> +    }
+> +
+> +    blob->magic = cpu_to_le32(IGB_MIG_BLOB_MAGIC);
+> +    blob->version = cpu_to_le32(IGB_MIG_BLOB_VERSION);
+> +    blob->vfn = cpu_to_le32(s->vfn);
+> +
+> +    blob->num_regs = cpu_to_le32(num_regs);
+> +    for (int i = 0; i < num_regs; i++) {
+> +        blob->regs[i].offset = cpu_to_le32(offsets[i]);
+> +        blob->regs[i].value = cpu_to_le32(core->mac[offsets[i]]);
+> +    }
+> +
+> +    blob->num_ra = cpu_to_le32(igb_core_vf_save_ra(core, s->vfn, blob->ra));
 
+The serialized state contains RA entries but excludes VFTA/VLVF and 
+MTA/UTA state. A guest-configured VLAN therefore resumes on a 
+destination lacking its filter membership: packets are rejected by the 
+global VLAN check or have their VF queue removed  in 
+igb_receive_assign(),. Likewise, restored VMOLR.ROMPE cannot receive 
+subscribed multicast without its MTA hash bits. These are 
+guest-requested settings communicated through the PF mailbox, and the 
+resumed guest does not recreate them automatically.
 
---=20
-Marc-Andr=C3=A9 Lureau
+> +
+> +    blob->num_tx_ctx = cpu_to_le32(2);
+> +    igb_core_vf_save_tx_ctx(core, q0, &blob->tx_ctx[0]);
+> +    igb_core_vf_save_tx_ctx(core, q1, &blob->tx_ctx[1]);
+>   
+>       trace_igbvf_mig_save_state(s->vfn, size);
+>       return size;
+> @@ -29,11 +252,131 @@ static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
+>   
+>   static int igb_core_vf_max_data_size(IgbVfState *s)
+>   {
+> -    return sizeof(s->mig.mig_data);
+> +    int size = igb_core_vf_save_state(s, NULL, 0);
+> +
+> +    g_assert(size > 0 && size <= IGB_VF_STATE_MAX_SIZE);
+> +    return size;
+> +}
+> +
+> +static void igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
+> +                                    const IgbMigTxCtx *tx)
+> +{
+> +    struct igb_tx *dst = &core->tx[queue];
+> +
+> +    /*
+> +     * Preserve the destination's tx_pkt - it's a host-side object,
+> +     * not guest state
+> +     */
+> +    memcpy(dst->ctx, tx->ctx_desc, sizeof(dst->ctx));
+> +    dst->first_cmd_type_len = le32_to_cpu(tx->first_cmd_type_len);
+> +    dst->first_olinfo_status = le32_to_cpu(tx->first_olinfo_status);
+> +    dst->first = le32_to_cpu(tx->first);
+> +    dst->skip_cp = le32_to_cpu(tx->skip_cp);
+> +}
+> +
+> +static uint32_t igb_vf_relocate_offset(uint32_t offset,
+> +                                       const uint32_t *src_offsets,
+> +                                       const uint32_t *dst_offsets,
+> +                                       int num_offsets)
+> +{
+> +    for (int i = 0; i < num_offsets; i++) {
+> +        if (src_offsets[i] == offset) {
+> +            return dst_offsets[i];
+> +        }
+> +    }
+> +    return 0;
+>   }
+>   
+>   static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
+>   {
+> +    IGBCore *core = igbvf_get_core(s);
+> +    uint32_t src_offsets[IGB_VF_MAX_FIXED_REGS];
+> +    uint32_t dst_offsets[IGB_VF_MAX_FIXED_REGS];
+> +    int q0 = s->vfn;
+> +    int q1 = s->vfn + IGB_NUM_VM_POOLS;
+> +
+> +    if (size < IGB_MIG_BLOB_SIZE) {
+> +        return -IGB_MIG_ERR_BAD_SIZE;
+> +    }
+> +
+> +    const IgbMigBlob *blob = buf;
+> +
+> +    uint32_t magic = le32_to_cpu(blob->magic);
+> +    uint32_t version = le32_to_cpu(blob->version);
+> +    uint32_t saved_vfn = le32_to_cpu(blob->vfn);
+> +    uint32_t num_regs = le32_to_cpu(blob->num_regs);
+> +
+> +    if (magic != IGB_MIG_BLOB_MAGIC) {
+> +        return -IGB_MIG_ERR_BAD_MAGIC;
+> +    }
+> +    if (version != IGB_MIG_BLOB_VERSION) {
+> +        return -IGB_MIG_ERR_BAD_VERSION;
+> +    }
+> +    if (num_regs > IGB_VF_MAX_FIXED_REGS) {
+> +        return -IGB_MIG_ERR_BAD_SIZE;
+> +    }
+> +
+> +    uint32_t num_ra = le32_to_cpu(blob->num_ra);
+> +    if (num_ra > IGB_VF_MAX_RA_REGS) {
+> +        return -IGB_MIG_ERR_BAD_SIZE;
+> +    }
+> +
+> +    int num_offsets = igb_vf_reg_list(saved_vfn, src_offsets);
+> +    igb_vf_reg_list(s->vfn, dst_offsets);
+> +
+> +    for (uint32_t i = 0; i < num_regs; i++) {
+> +        uint32_t src_off = le32_to_cpu(blob->regs[i].offset);
+> +        uint32_t value = le32_to_cpu(blob->regs[i].value);
+> +        uint32_t offset = igb_vf_relocate_offset(src_off,
+> +            src_offsets, dst_offsets, num_offsets);
+> +        if (!offset) {
+> +            return -IGB_MIG_ERR_BAD_SIZE;
+> +        }
+> +
+> +        core->mac[offset] = value;
+> +
+> +        /*
+> +         * Sync EITR to eitr_guest_value[] shadow array, stripping
+> +         * E1000_EITR_CNT_IGNR so guest register readback returns the
+> +         * correct value.
+> +         */
+> +        if (offset >= EITR0 && offset < EITR0 + IGB_INTR_NUM) {
+> +            core->eitr_guest_value[offset - EITR0] =
+> +                value & ~E1000_EITR_CNT_IGNR;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * MSI-X table/PBA is not saved - L1's VFIO reprograms it with
+> +     * destination-specific IRTE references after migration.
+> +     */
+> +
+> +    uint32_t src_pool = E1000_RAH_POOL_1 << saved_vfn;
+> +    uint32_t dst_pool = E1000_RAH_POOL_1 << s->vfn;
+> +
+> +    for (uint32_t i = 0; i < num_ra; i++) {
+> +        uint32_t offset = le32_to_cpu(blob->ra[i].offset);
+> +        uint32_t value = le32_to_cpu(blob->ra[i].value);
+> +
+> +        /* RAH entries: swap pool ownership bits */
+> +        if (offset >= RA && offset < RA + 32 && (offset - RA) % 2 == 1) {
+> +            value = (value & ~src_pool) | dst_pool;
+> +        }
+> +        if (offset >= RA2 && offset < RA2 + 16 && (offset - RA2) % 2 == 1) {
+> +            value = (value & ~src_pool) | dst_pool;
+> +        }
+> +
+> +        core->mac[offset] = value;
+
+Please validate RA offsets before writing core->mac. A valid-sized LOAD 
+blob with one RA entry and an out-of-range offset produces an 
+out-of-bounds 32-bit host write. LOAD reads this blob directly from 
+guest RAM. Please validate all offsets and saved_vfn before modifying state.
+
+This loop also changes the VF pool bit but preserves the source RA slot. 
+A valid VF0→VF1 migration onto a destination already using VF0 
+overwrites destination VF0’s primary MAC entry. Linux assigns the 
+primary entry as rar_entry_count - (vf + 1); receive filtering consumes 
+these slots directly in igb_receive_assign(). Thus the unrelated 
+destination VF loses unicast reception. Existing destination entries 
+owned by the migrating VF are also left behind.
+
+Regards,
+Akihiko Odaki
+
+> +    }
+> +
+> +    uint32_t num_tx = le32_to_cpu(blob->num_tx_ctx);
+> +    if (num_tx != 2) {
+> +        return -IGB_MIG_ERR_BAD_SIZE;
+> +    }
+> +
+> +    igb_core_vf_load_tx_ctx(core, q0, &blob->tx_ctx[0]);
+> +    igb_core_vf_load_tx_ctx(core, q1, &blob->tx_ctx[1]);
+> +
+>       trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
+>       return 0;
+>   }
+
 
