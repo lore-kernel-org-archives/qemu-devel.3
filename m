@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC48EC79FA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF307C79FA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 10:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3tIo-0001q5-FN; Tue, 08 Sep 2026 06:43:46 -0400
+	id 1x3tIl-0001hX-4j; Tue, 08 Sep 2026 06:43:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x3tIm-0001mu-27; Tue, 08 Sep 2026 06:43:44 -0400
+ id 1x3tIj-0001Xy-EE; Tue, 08 Sep 2026 06:43:41 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x3tIk-0006jE-73; Tue, 08 Sep 2026 06:43:43 -0400
+ id 1x3tIg-0006jE-7y; Tue, 08 Sep 2026 06:43:41 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Dc47l0MaRD4FX5lx81qj97YhdS6OU/jilJR7WL1d8mQ0SFFCzpnhRtuCB42c9PKFz2B8k8ncZNqt6/EVEJTpnMsiwEl7G2iVHLFgLtjEdrBfAqKIf4MuRC/qYUFcBKi6ubHzNKplJpnL+ZtjhBwuA5jDfY+UtkJPJRLAq0+7+k5YB3AALc/Uw6R7oeHfXxtIkRYChFW1pyar0AcwS9x+QTe7Z9n4A9eSMaTBw9vf1QbFsKQn5dQ2Zsl4hWnaDaeDdL4TsagyoOHzGav9ryNeIMOSulLQ8ykI0mBYBQhZr1fZX5r+rbB6+Ghk4W9g++NBi1Xvz6xOKOKL+r9LBZc5qQ==
+ b=szAg+UnFhYX8MmlFfx9i1BnaiS1tNhZD2evuKk9VuU5MCs9CgsrsUkekuDT6uLOWQr2nR+8jAangzlttoSC9PiA+JFf7UwP2106xWUE7HL9ZunHfNHUujR6c2pBcMBt+Me+nj2qRJhFGmYtHlzZQCheN/ztLsHu4XkvXBsSm/j/tPDhZ5TJxE9W8Y0FkFLBn/uzy6WKN2a9LxWtb83HjcxGoySqzpaRcgBPGdL2O0GK8e6PbGMpPI/HTc0GPOLa0Ucc9MepeZkxuImeQpToqzVk//2cEyUtGJ+9Q1PBvxl/ToztvLXoEWUaO6cVllPepAdSt6QJD0pGluSwRaRpgFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V2Mwtf6ufQ2BTKr1+tIn7JMew4bc8JQQe5f65TE+1Ik=;
- b=UiqECZBtZ49T5H1nD3tCTxAVGW1JmKdQqeK/LoU/6fwcNYSDmzo/z2o71lvNYIexMx5OXbUoX/Mt4JW/vq7SRjqnWgwjxJ0412RTcBXplc4auDHHvbDQUfS0+OKPg+amPD45Q69Q+UEZYQxK7aldXEVdlaSEXSnNN12N8N1qRrHr8RbUjhj7jGdO4JOa5kdTRQ64nst3x718Tu+rhFgsnVKTwtibPI+FEnb7dt66a6E+d+HDbSK7DnBTClxNBQWSPL3Feaf7f60DQ0XC5q5o74DDk/Y39QEjSNaYny2JmWidmie8Pbi6K9S1d2c3O7bWVGOTlmK7snITAEXXTDEgEA==
+ bh=+UC8smkc2CsB6pl2D1eUENcEOnL2eCp1mvyn1XlZtE4=;
+ b=PwR6kmunVA50bq2ZPxRX1VldZXBF5X4IA34pOK+uVZlH20LiIZaRUr2qdoZFIC98xVMO/8RNs6YIm4XWJxPa6QyVYGb41O9XLT9bf2kpDkUpvAhBDo3Vpf5CHpwvBi8BbhrvfUyWxjsmoKSPYEnw1n5P5p48E46VhBUFml1+lnCWTCnkmb7wfx0HgPaS092dZAWhtxoNqwjcJ1EYunfv13ee/EpJnQO/iLejq1Wz7nQjxe/k3v+Qg9ugniN/WUmSiXzKc4uqvrVdCYtR9Vgt4P/X0rB9H0w7ZT6ec8YuZPKiEEG05Bahnvp9VAR/7BX45Nq1yWJdnE9HrdvaS0ZYtA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,97 +33,87 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V2Mwtf6ufQ2BTKr1+tIn7JMew4bc8JQQe5f65TE+1Ik=;
- b=bK0jevN0dwY5G8M++zpTcenpgZh0TVVdOOlp+PiwQwVe8F39vQhM3MCEj7Q1iJzWobbEzyUjNH3bOYDS1XIlXs3D+Fs+jn0ti6Ns2y3s0/HhueDUruE0jZP10vq4+x7il5mPBzTIOZq0uNZm/hQiouAhivQuNp4bhPBhzwUWTB2V6qElVSpcy1dQnxa1IbBmYt92j/nmUl4S8+kROi52qTNllCtBzj84QuIrhEmFupRQ4PE2lw2BXTcCghCXhkTSYf+Ls/kbdKOk4W/d4BHjxZ329952VND4GkspCDoIX+L9t569K68+oYt8rc17PZm8RN6xcp21kwqbb9z1WYy8GA==
+ bh=+UC8smkc2CsB6pl2D1eUENcEOnL2eCp1mvyn1XlZtE4=;
+ b=ZAeURrHvH+w78UNDme1G0cuWWRfxfOpW1fdHo9/49B/BWVmxMWm1MMrUEr6nUlE4bLL2Q2pznnYzA+qe6UVXNVcFzxvJuq2XD5NyshEPelWFVisO/rTlqXarQHKNgxaY3KHa/ZavLWCA0qResTFlkv1t8WFWEZDbjzUwVS1tC+d7xWexauArOagWOwnfzevIPSG9EXshcmeLiLNM6JF84jgYncBLev0edGeNA832bylbt9GGclvGXuybAdze3hb37hA7byZvWBcmmnSz92hc1EOeNXv3tq4a2n5xZ9xLZXcxi3qaGO2MZTBSxtpdWD3xdWE5dTIbKFgdXJIdfgUTvw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from PSAPR02MB4984.apcprd02.prod.outlook.com (2603:1096:301:78::7)
  by SEYPR02MB6579.apcprd02.prod.outlook.com (2603:1096:101:139::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
- 2026 10:43:34 +0000
+ 2026 10:43:33 +0000
 Received: from PSAPR02MB4984.apcprd02.prod.outlook.com
  ([fe80::fd75:bbda:6f27:c616]) by PSAPR02MB4984.apcprd02.prod.outlook.com
  ([fe80::fd75:bbda:6f27:c616%6]) with mapi id 15.21.0382.014; Tue, 8 Sep 2026
- 10:43:34 +0000
+ 10:43:33 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH v2 31/32] tests/functional/aarch64: Add Phytium Pi boot tests
-Date: Tue,  8 Sep 2026 18:41:40 +0800
-Message-ID: <20260908104159.1621764-32-bin.meng@processmission.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
+Subject: [PATCH v2 30/32] docs/system/arm: Document Phytium E2000 machines
+Date: Tue,  8 Sep 2026 18:41:39 +0800
+Message-ID: <20260908104159.1621764-31-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260908104159.1621764-1-bin.meng@processmission.com>
 References: <20260908104159.1621764-1-bin.meng@processmission.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: TY4P301CA0041.JPNP301.PROD.OUTLOOK.COM
  (2603:1096:405:2be::15) To PSAPR02MB4984.apcprd02.prod.outlook.com
  (2603:1096:301:78::7)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PSAPR02MB4984:EE_|SEYPR02MB6579:EE_
-X-MS-Office365-Filtering-Correlation-Id: 720107b9-3114-442f-e9b5-08df0d95f6c0
+X-MS-Office365-Filtering-Correlation-Id: 8d4ffe77-ebfd-42ce-22ec-08df0d95f5d7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|23010399003|3023799007|10067099003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: TOvefMDeeOBNZ+HFKMT/hA5WZFv3iI/B7uIZA8qdRAvH1d7MLbBbT2wgyr9TjQJxa9qn1gq3yX4pSyDdWtrQK/gLLjrLpkdj5ynglvGz3ZGIMUP5sxbm9IA9u01cGdR+ERxHGQ143IME07BltyynGV0Wj8lFF/+8pNN0nl0PTXM+ZKu9z3+vUnQRCpUM6bSfXIbYLRyC1IH/CRG0H8rGJMH7W9uxN20BtRcmCPfjLSVlguRfFNocuJC+KC5XiaJTwXvwwu3+ztv8BVOUTSg9+JQrCOS56IESL0f0cLpYW7ykItAhBixSXYIlYuWn96EoapwK3oWKRi5/XzMePEviYCFxe2Dt3er6+ACOiXF82f/faKHPX0EOw/w1FgXZol/EXOpY10n2pFhzryBaPT3WOUqMBNvFBG3E6Szfmr6z5dUHBQcJKHodkE9N8mFfUsrAUoJS4IRWGNVXTnwPPTnLS3HnjtnV7y3ZgRi/Oy9VmxH/vk178AB54s7PONQOCCQEo6+En3hOHFPXGlc9d6KFX7aYYyzrpQ5lHbl12qSR8pAn7amUzkiMmkonSo7g67IseYajAKpZbaV0u3py0be9VqyyNBplf9ngHvXQJbnz7ENBwBrF2z3FKnId1p5qPhkqQkjx0RA+V9C866z6MveTeFNHJQ0IwpiRusx0mxuZsFk=
+ ARA:13230040|1800799024|366016|376014|23010399003|13003099007|6133799003|3023799007|10067099003|5023799004|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: jR+ZwfW15xys76gdBCmu3iCy95NGHdS0MMQdKtUGoS95dn5tbqaEk6eFbA5zhH0ew0aBUqr2XzMOe0Vs+IIsnQYTGdchlePuFMIEFCOQP5NQTSj7dkAL7IZwyem1lS7/30ireJSuyvgfuRuzAW62GIKwbgY+ugTKTWZn6DPSTNcHdZOAQV5lQzfoqiuECkFenRdR3V8xEgXawnLYoTp9g6LOWxrcdUS3VcnJ2S2+obOqubWDeR+K8wGFdg6Uu8bmg6QjYeMBQpCpUbYQWm9anNa3mSQJ7zuW3Mah88F8cG4TQubUNbv3t/SgtfdAdwc6P2FLjx3Ztuffzypazf6gJ1xtYpjYVlXcZB+SPxkeQJ5RC9/8b3lPDwF1QTRzDnw9XtR8iYWnz6hV9+RYWmYzPtoGirU8x3gAXXMyFBSk62DrnpVpvAtrhxXyO+OFRqFry6grsgeRABLuW37gkJSW7tIV9RduhspjQGbsXkDVyUXDRt/1qLiPhvornjKqAfgve6YVUFXTUWgEpSoQblH/QItQ7hRjxwT1XL1X8NeAbyXTx3SlOsKNDkq+Jgtak6Q2j3Bx2C7HdoP/Yw5KJyGGKci6R5Ddb7cTA9iLBOZUZmCDq+8T3wzy9iKjMx9iM3gQ
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PSAPR02MB4984.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(3023799007)(10067099003)(56012099006)(18002099003)(22082099003);
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(13003099007)(6133799003)(3023799007)(10067099003)(5023799004)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YmNUd2J1NWpUWERuSTdqaGRUaWhIbGtrMUFzTGhNdW9raTE0ZjBXSTBpd1BN?=
- =?utf-8?B?Znd1b2NPSlovN3lMQThCOFczdENJQmJDL2lSNm8vM2VsOFJYUnBUVEpjZkpD?=
- =?utf-8?B?ay9uMWlvYllJRVNQdGdVWXpVVXhHRHQ5ZElSclBFVGxCMHpPanFMeUh0cDYy?=
- =?utf-8?B?SVBQb2xtM1JCV3VmY1ZMVGhlalI4RFd2UFBBOWQ3ZTczbjVBcktrM2dGUG9i?=
- =?utf-8?B?bDl5cCtmazlKa1FRQ2xreWhuN2xJVnl6UWQrS1VRNjFDOTRCVHFzWUt3UkN1?=
- =?utf-8?B?ZzVvU3hBcEFPQmszZkk3TlRtQTVZd0IrRThsdy9JK2J5MUt1Nkh1THBMSWh4?=
- =?utf-8?B?Y3BBQzE0cTQ4elBobkFhdUpXWUd6MlYrajkyQ3l3Rkl0aTY1R0RpZUtEQ0l1?=
- =?utf-8?B?RG1RNzlPSW5UZEROdVQ5NjlCU09vSUd4WWNCQUs0V3BqYWZHU1ZGQmROVGwv?=
- =?utf-8?B?bG9vV0czSnhvYWZ6cW1zS080R05NSXlKeTF4clF2M3hFd1ZFTlNpWngyMGZF?=
- =?utf-8?B?VmVpWStoTmMwd3QwTDgzM2tkdjAybEtXM3k4cUp2d2JJZVJUVmY2Y2YwaU9h?=
- =?utf-8?B?eUJIcFJuOE94RXMvWjVjWDNocGI5cGZkY0NQTlc1dk5VeUlFVTAxbVN3MDQ5?=
- =?utf-8?B?UlNFenBNL2F2UjJlbWlXR0h3dGtVZXg5RVBXWTViQzduQ2JqSnowUVIyMkY4?=
- =?utf-8?B?V3dTZWZ3VWphbnZsOG5OVS9ickdscmJTQmpRYXJMUGhXZ24xYlFZdHR1VXRr?=
- =?utf-8?B?NzgzKzFhdHRKeFUyYVNFYUhPTmtuU2xXOFdjOGNjUEl1cmdmdStCMVcxVWc2?=
- =?utf-8?B?ZHl6VkZDUzMwcTlDOHZ5cUV6WjZYYVJFUldpTkRCRkNvZ2ZrVXpUYWVTbTlm?=
- =?utf-8?B?V2Jpdm5Ld1JyWm8zczRFVmFreWlPdy8wTzh0SlZMRW10b1JLYU9tRlJTS2ow?=
- =?utf-8?B?azNudHpIMzVRTUZMODFFUjBNV2d0UlFJc09ZblNBNVRQaTlmeXJwbDdMUzJ4?=
- =?utf-8?B?L29aZUVFclZDWnkxcE5XU2swaUdFcTlWWWtacFd5aXZLci9BU2lXcldlMGtR?=
- =?utf-8?B?ZWcrazhpYWdWdmpqVUJkbU83ai9uaXV4YUsydDhZbUJac1UrTFcxRHlIMGFi?=
- =?utf-8?B?RkNCdjdkODhZY0txU2EwQURmWitveHNIV2JOaFNXa1RVS29ITThIKzJxc1Fy?=
- =?utf-8?B?SVR4d0R3TmczT3g2eGFwOEJodFM5SjlPYnYxOGlncVcySGRhZDF0TGg0QkxR?=
- =?utf-8?B?bi9jcjVLOE9tTVFrZzF1U2hBUGRTM2xLbGJCUWIvcHRrMUFCb0hiSm91RlZJ?=
- =?utf-8?B?R3hKb2YxbythdVh0SUtHVXk1MHo1SlhhWkphT1FuaytmUFpzdi9SUllkK0FG?=
- =?utf-8?B?QjQ3QTYvdVpKZ1dPUXJHemRaNmRPeW9jMG1RV251cldleUJuM2o4ZDJSWFMv?=
- =?utf-8?B?eTMzS0dEWTh2NlZQUjdnOUl3UHcydHBzOGxZOC9ZbVNybklZQ0pWWGF6Q1RZ?=
- =?utf-8?B?OVViNGtqQnh4SktNOU93UGlZRDgxdmR5ak1FeEFDUFh2K2VUQVErS2g0S3c4?=
- =?utf-8?B?cGVaN1Noa0loYldta3VmbDlqU0tNM01KZlpSS3hDckp2SlFiZkhFTlZicXJ2?=
- =?utf-8?B?cElxWU9uWUVpUi9xMzdEbWoreG9tUzE1ZUMyL1lrWExqa2MxTFVVYVNTUjlE?=
- =?utf-8?B?Z0FTWG1SWExSWEZLNDVUVTVBSmJEVnFFQmpKNTAzcWhHQ3FvalpIaUNCaS9z?=
- =?utf-8?B?MHlzdEgrV2NmU3c1dXhPU1RPdFNxN01vaFZ5MGcrdVhKbWoxaHNiVlJBZ0hE?=
- =?utf-8?B?bVNTREtMSVhWNDYxUjBUUHcrdTZRWCtoWHJlWWNKbmtiTnFLcnV5WW1hVTdQ?=
- =?utf-8?B?Q2o1TGNXbTBoRmxJdzMvUm1pMXF0TUJuWjIwcnJBcHVQQnljV0pLeWFBNzdy?=
- =?utf-8?B?TWVsNVBneVNXUlNMRVVacGVqWG4raUFjVlN2R0FGVnZhaGlvUTJMZDM1c1RW?=
- =?utf-8?B?UXdCYnFEMVdBeUc4Z1pOeFdrK0FXRTFadmRPWGpzRFUreXZmc2RseExEUTFB?=
- =?utf-8?B?MkQ5eVVwd213TS9Fbnd6N21nVy9zOTZYdUtmZmMwdExWb0dtSTVnY0ZDYUlD?=
- =?utf-8?B?d2MzS1ZGUlBUUEp4UVd2RHEwVjNTT3N0ZlVjZTE1WnVPY0VmR2tMamppWDA0?=
- =?utf-8?B?dDVqTCt3MWU0M2xodWJqY3IrcUxYOWpSMk8rcVpnWFYyUE1tcmRDSEF4V240?=
- =?utf-8?B?Wm1KM0pUMCtONUdwd21TbnJNVHh1ZkVoei9nd1h6cHdleTk5ZVJaemcyZnV4?=
- =?utf-8?B?anVuL1VxcWkvNW1iR3BXTWN2dWFRVDlxdHZxR0lITzdWU2JhdFhlemwzbHN3?=
- =?utf-8?Q?Vmv/MLs3k3H3373I=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sV8NZVWYEPQiVhDBhR/ItLTxr3I5ER54a4AUrhcIx0HS43fM1vexi77qPqC6?=
+ =?us-ascii?Q?oUB641OQiu7hg7bWQsdTKjZshIzYSg/O3KVrfbTL8JTup8efdBBZL6Fl4vaH?=
+ =?us-ascii?Q?E9z6pCUOmsJBKSQYZJpwTxBMp0D/4mMBzifbpXzolKiz2W4I0JtCFcM6YAsp?=
+ =?us-ascii?Q?h3tl/BW+Mz+WRJiptIt3+iA9iyEfJUsKPVTMUCdaIV/2UEq8qy/aSujQYX12?=
+ =?us-ascii?Q?0Y3o3BrzpU3WO0B6lO8R/0RdjOd9HIC4ZiXrD7JBWe2lwN2JxobYw/rfVYjb?=
+ =?us-ascii?Q?iupY7TVFNXVPAzt9LyfFIrWnO4eelkquFEcVnLfFp6JvbCSi8F1mwHqF4WLb?=
+ =?us-ascii?Q?gPjSK/xHC5qV3lkk0sMPlUSqJ5VTQhL28eHqP2IPzlnkoAalWxqGGQZbr91n?=
+ =?us-ascii?Q?feKwqgMK4DrnwDmsaZ9+Y1zlppEMx77qtZIuIJXfaoQuFgBvPTd9dlXIiw0F?=
+ =?us-ascii?Q?F98wEhEi3XyYetstDbx+2Y+RXTGSRGBLnBEO7NQZoexiVVY7uiCfQnqWs0PD?=
+ =?us-ascii?Q?1vzi0mKv/9ose97qniK756MWBqutw8XT5AwQtb1gfVaFVl4KffV+YHJ8SUIp?=
+ =?us-ascii?Q?BxtCTER/HyRgo8HbGJ+9GjGFkQBDWlaGR7YcD6gVnsERlgMhoTJDVxXvxiNO?=
+ =?us-ascii?Q?OYHBknJyxxV8fmnUbS/1VJCvnxuoqVDcrowHPetGMFLhmgKNcHBCLXdxnZPl?=
+ =?us-ascii?Q?UpKgrMGq05lyvwnZVfXNSyvyWyt3ro9JSD8AIOg7GLT09JVVGT6hJQeP0Uwr?=
+ =?us-ascii?Q?L9mz5LrvEy3PHl8IWmu7jTUnDV3mCS0Ed3TPEaT8AdHa9qooXu4HPelhuV3F?=
+ =?us-ascii?Q?2V1x2EG1DpdindQtvRqCtmKVoVg7i8DGjJb+/8810hDQiO5Q/UKwI6Ygow7M?=
+ =?us-ascii?Q?piOqUJxPH++VWFw7xGcyu741g/OBS1+l0p0Qc4dXyuyYXAx30GVUSDb67H8r?=
+ =?us-ascii?Q?oSd+ADhSdHv0H6w5j2U0Fe/L8Qxt3c5itsNDjS5POs+gNRkK+50lHiYeYW+K?=
+ =?us-ascii?Q?/L1apH1cPbNJ1u8X/T+ebjHJVyXTWciwd8jObsMvk1kHkWZBLAzh1/dKM1ak?=
+ =?us-ascii?Q?xoDa4G478Kkf7wEW/grps88EwOqz5XtTravEpUgeJzqgGwkSXxjIQSquvAIq?=
+ =?us-ascii?Q?sK8r4kBjU2UgBOZwYtiAyCCf5p5v7XH7l6WiiFsQs/OZLiSD1zRWaLldjkZx?=
+ =?us-ascii?Q?2Qkb/U7ilDET410M/dOsLdRishVBVUvnHrgiIg7+rE3R1Cuudsfyh8TsIK7h?=
+ =?us-ascii?Q?pCVchi7fxdY8BtiBmF0Omgi2RBXRLIXVbpngFkLO+yyhbyripNmIB+Kk2xKb?=
+ =?us-ascii?Q?EJtbch9CAbAZ5QHheQ8gp9V0KYjVl7dc+7ONtaLws/i7oHkIK/lor3FZJJiz?=
+ =?us-ascii?Q?7//kcQLTogD8Q4wvr/jsYgbWKWMEbOay+YrXZOtACHnEu04C4tWWYLIK3dbv?=
+ =?us-ascii?Q?rXfLhyZ7y89RSd80AQvkSmYgzTAYZqRC8+47ztlBHhn1G1RpbreAnFvYf2WQ?=
+ =?us-ascii?Q?cLczXCj0sNlcux896tCcKFKcy6DIWLt943Nl1lh4CPYgxJsxpgW/n4hzGk9H?=
+ =?us-ascii?Q?FVgs5ktA8K7JT0r/7y3raSN5l2luoUD3sAVmGvkD5TpU7kAbqtsT1x0iYA4p?=
+ =?us-ascii?Q?SCpR4K6spFrNRhjPihmK3hVYDozYZA+dh4pzwdaT9PLR6xgcmEbpEd3Q/chK?=
+ =?us-ascii?Q?A7sKn4D80/dwYjwnFjb1ev1ZLtvXinUoPVrqqpZN4L5zZ/VXhEYiHv52Y/fo?=
+ =?us-ascii?Q?HCp8FAEBLh8B2Q8eWcwBcznoDjtzNhw=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 720107b9-3114-442f-e9b5-08df0d95f6c0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d4ffe77-ebfd-42ce-22ec-08df0d95f5d7
 X-MS-Exchange-CrossTenant-AuthSource: PSAPR02MB4984.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:43:05.1810 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:43:03.6831 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GMZ2Lf64G968j1HHrZj3Yz+UZqhkeBtIUGOdfMNgFtdq4YAA6JQqUPOcvHQZpw9zPRVsUuOjviXMv26pqtkC8P8+Y522yZgUeCVk3uQVcrw=
+X-MS-Exchange-CrossTenant-UserPrincipalName: cQ9XDfAe0TGCtvOwGaKMurfTuhYzIOSx/G/gpSeCatlD8qZO99ozPymk4fPdNeKNyRVshd8lqBtaU2/OJ72k/vt7Z4fOpxo57ITlHkUmAZg=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB6579
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
@@ -149,128 +139,464 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Phytium Pi machine supports both the board firmware flow from SD
-and direct Linux boot. Exercise both paths with an SDK image bundle so
-firmware handoff and kernel loading regressions are caught.
-
-Verify U-Boot, PBF relocation, the Linux handoff, and login for the
-firmware path. The Linux test loads the bundled kernel, DTB, and
-initramfs and waits for the same login prompt.
+Document the shared E2000Q SoC model and the Phytium Pi and COMe board
+variants in one file. Keep common PBR, CPU, device, direct-boot, and
+limitation details together while separating the SD0 and QSPI-to-SATA
+workflows.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+
 ---
 
-(no changes since v1)
+Changes in v2:
+- Describe the machine and SoC QOM split
+- Describe the SoC-owned Cortex-A72 CPU configuration
 
- tests/functional/aarch64/meson.build        |  2 +
- tests/functional/aarch64/test_phytium_pi.py | 77 +++++++++++++++++++++
- 2 files changed, 79 insertions(+)
- create mode 100644 tests/functional/aarch64/test_phytium_pi.py
+ docs/system/arm/phytium_e2000.rst | 422 ++++++++++++++++++++++++++++++
+ docs/system/target-arm.rst        |   1 +
+ 2 files changed, 423 insertions(+)
+ create mode 100644 docs/system/arm/phytium_e2000.rst
 
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index f0881bed16..71bf45e4ea 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -7,6 +7,7 @@ test_aarch64_timeouts = {
-   'device_passthrough' : 720,
-   'imx8mm_evk' : 240,
-   'imx8mp_evk' : 240,
-+  'phytium_pi' : 600,
-   'raspi4' : 480,
-   'reverse_debug' : 180,
-   'rme_virt' : 1200,
-@@ -39,6 +40,7 @@ tests_aarch64_system_thorough = [
-   'imx8mp_evk',
-   'kvm',
-   'multiprocess',
-+  'phytium_pi',
-   'raspi3',
-   'raspi4',
-   'replay',
-diff --git a/tests/functional/aarch64/test_phytium_pi.py b/tests/functional/aarch64/test_phytium_pi.py
+diff --git a/docs/system/arm/phytium_e2000.rst b/docs/system/arm/phytium_e2000.rst
 new file mode 100644
-index 0000000000..4ae0392bdd
+index 0000000000..7253a4f60b
 --- /dev/null
-+++ b/tests/functional/aarch64/test_phytium_pi.py
-@@ -0,0 +1,77 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for the Phytium Pi machine
-+#
-+# Copyright (c) 2026 Process Mission
-+#
-+# Author:
-+#   Bin Meng <bin.meng@processmission.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/docs/system/arm/phytium_e2000.rst
+@@ -0,0 +1,422 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
 +
-+from qemu_test import Asset, LinuxKernelTest
-+from qemu_test import skipBigDataTest, skipIfMissingCommands
++Phytium E2000Q machines (``phytium-pi``, ``phytium-e2000-come``)
++================================================================
 +
++Overview
++--------
 +
-+class PhytiumPiMachine(LinuxKernelTest):
++QEMU models two boards built around the heterogeneous Phytium E2000Q SoC:
 +
-+    ASSET_BUILDROOT = Asset(
-+        ('https://github.com/processmission/qemu-machine-images/releases/'
-+         'download/v1.0.0/aarch64-phytium-pi-v1.0.0.tar.zst'),
-+        '5219d52b862e1245b12f79ba72e9a6144f5e0cf1a50061f8fda2db0aeeb92428')
++.. list-table:: E2000Q machine variants
++   :header-rows: 1
++   :widths: 20 20 20 20 20
 +
-+    def _prepare_images(self):
-+        self.set_machine('phytium-pi')
++   * - Machine
++     - Firmware medium
++     - Linux storage
++     - SDK DTB
++     - Direct kernel
++   * - ``phytium-pi``
++     - SD0
++     - SD0
++     - ``phytiumpi_firefly.dtb``
++     - ``Image.gz``
++   * - ``phytium-e2000-come``
++     - QSPI0
++     - AHCI1 SATA
++     - ``e2000q-come-board.dtb``
++     - ``Image``
 +
-+        archive_path = self.uncompress(
-+            self.ASSET_BUILDROOT,
-+            target='aarch64-phytium-pi-v1.0.0.tar',
-+            format='zstd')
-+        self.archive_extract(archive_path, format='tar')
++Each board machine embeds a ``phytium-e2000-soc`` QOM child. The SoC owns the
++CPUs, interrupt controller, and integrated peripheral controllers. The machine
++owns RAM and the boot configuration, and attaches the board-level SD card,
++QSPI flash, and SATA disk to buses exported by the SoC.
 +
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args('-smp', '4',
-+                         '-m', '4G',
-+                         '-display', 'none',
-+                         '-nic', 'none',
-+                         '-no-reboot')
++Both machines are intended for Linux and firmware images produced by the
++Phytium Buildroot SDK. Phytium Pi has no board-attached SATA boot disk. The
++COMe board attaches a GD25Q128 SPI NOR flash to QSPI0 and a SATA disk to
++AHCI1.
 +
-+    @skipIfMissingCommands('zstd')
-+    @skipBigDataTest()
-+    def test_firmware_boot(self):
-+        self._prepare_images()
-+        sdcard = self.scratch_file('images', 'sdcard.img')
++The Phytium firmware stack has three conceptual layers. The on-chip Phytium
++Boot ROM (PBR) establishes the root of trust and prepares the early handoff,
++Processor Base Firmware (PBF) initializes the processor, and System Firmware
++(SFW) provides later firmware services and the bootloader. QEMU does not
++execute the internal ROM. It recreates the PBR handoff state, reads a
++``fip-all.bin`` image from byte zero of the board's selected firmware medium,
++starts the PBF payload at EL3, and lets PBF hand off through the SFW stages to
++U-Boot in the same image.
 +
-+        self.vm.add_args(
-+            '-snapshot',
-+            '-drive', f'file={sdcard},format=raw,if=sd,index=0')
-+        self.vm.launch()
++The SFW flow loads BL31, whose resident EL3 runtime services handle the
++Phytium private SMCs issued by U-Boot and Linux. QEMU does not intercept these
++calls on the firmware boot path.
 +
-+        self.wait_for_console_pattern('U-Boot 2022.01')
-+        self.wait_for_console_pattern('PBF relocate done')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern('Phytium login:')
++The boot strap is fixed board wiring. Phytium Pi reports SD0 through the PBR
++handoff while COMe reports QSPI0. Firmware may persist its environment or DDR
++training data to the selected backend, so use a writable image or ``-snapshot``.
 +
-+    @skipIfMissingCommands('zstd')
-+    @skipBigDataTest()
-+    def test_linux_boot(self):
-+        self._prepare_images()
-+        kernel = self.scratch_file('images', 'Image.gz')
-+        dtb = self.scratch_file('images', 'phytiumpi_firefly.dtb')
-+        initrd = self.scratch_file('images', 'rootfs.cpio.gz')
++The machines do not generate a device tree. Direct Linux boot with ``-kernel``
++requires the corresponding SDK DTB listed above through ``-dtb``. A later
++Linux boot performed by firmware likewise requires the matching board DTB in
++the guest-visible boot environment.
 +
-+        self.vm.add_args(
-+            '-kernel', kernel,
-+            '-dtb', dtb,
-+            '-initrd', initrd,
-+            '-append', 'console=ttyAMA1,115200 '
-+                       'earlycon=pl011,mmio32,0x2800d000 rdinit=/init')
-+        self.vm.launch()
++PBR device ownership
++--------------------
 +
-+        self.wait_for_console_pattern('Booting Linux on physical CPU')
-+        self.wait_for_console_pattern('Machine model: Phytium Pi Board')
-+        self.wait_for_console_pattern('Phytium login:')
++Firmware boot is implemented by the ``phytium-e2000-pbr`` device. The board
++machine selects the boot strap and backend when configuring its E2000 SoC
++child. The SoC creates the QSPI and MCI controllers, maps the PBR status
++window, boot SRAM, and IACC, and connects the PBR to its CPU topology. Neither
++the machine nor the SoC parses or stages the firmware itself. ``boot-mode``
++belongs to the PBR device and is not exposed as a user-settable machine
++property.
 +
++The PBR device reads only the selected board medium. It validates the outer
++image extent, the embedded TF-A FIP, the primary MPIDR, and the
++platform-parameter records. It then stages the complete computed image extent
++at IACC ``0x38000000``, relocates PBF/BL1 to ``0xf8c40000``, constructs the
++boot SRAM handoff, and releases the primary CPU named by the image.
 +
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
++The public PBF interface defines a common 16-byte header containing magic,
++version, size, and a reserved word for PLL, PCIe, DDR, and COMMON service
++parameters. The E2000 firmware profile supplies their private container and
++handoff placement:
++
++* PLL: FIP offset ``0xf5000`` to SCP SRAM ``0x32a10c00``, magic
++  ``0x54460020``
++* DDR/MCU (Memory Controller Unit): FIP offset ``0xf5300`` to SCP SRAM
++  ``0x32a10d00``, magic ``0x54460024``
++* PCIe: FIP offset ``0xf5100`` to SCP SRAM ``0x32a10e00``, magic
++  ``0x54460021``
++* COMMON: FIP offset ``0xf5200`` to SCP SRAM ``0x32a10f00``, magic
++  ``0x54460013``
++
++In this PBF terminology, MCU means Memory Controller Unit. The record supplies
++DDR controller configuration, DIMM/SPD data, and training parameters.
++
++The PBR device validates each exact E2000 magic, declared size, source bounds,
++and the ``0x100``-byte destination-slot bound. It copies the declared record
++without interpreting its service-specific payload and clears the remainder
++of the destination slot. Parameter versions belong to their individual PBF
++services and do not select a PBR handoff or TF-A object layout. In particular,
++QEMU does not generate DDR/SPD data, rewrite the DDR/MCU record version, or
++force DDR training controls.
++
++PBF embeds TF-A v2.3 FIP and memmap I/O drivers plus its platform I/O policy
++table. The PBR device locates these from their TF-A data-structure
++relationships and constructs the boot-SRAM state that registration and
++``dev_open`` would have produced. This permits different PBF builds,
++including two builds carrying version 4 DDR/MCU parameter records, to relocate
++their I/O objects independently of the record version.
++
++Some remaining handoff details are private to the vendor PBR/PBF contract
++rather than a published TF-A or hardware ABI. In particular, the fixed
++boot-SRAM parameter graph and the placement of the FIP driver's runtime state
++were reconstructed from the early PBF accesses and callback disassembly in
++the 2 GiB and 4 GiB Phytium Pi SDK firmware samples and the COMe SDK firmware
++sample. The implementation documents these evidence boundaries next to the
++relevant code and rejects firmware whose surrounding TF-A structures do not
++match.
++
++The device also owns reset, migration, and cleanup for this state. Its status
++registers and firmware/primary-CPU state have explicit VMState, while the
++device-owned boot SRAM and IACC RAM regions are migrated as RAMBlocks. A reset
++restages the immutable input image and restores the handoff and primary entry.
++This is a behavioral model of the ROM contract, not an Arm instruction-level
++implementation of the on-chip PBR.
++
++CPU topology
++------------
++
++The E2000Q is heterogeneous. QEMU models the three non-uniform CPU clusters
++described by the SDK Linux device tree:
++
++* cluster 0 contains one FTC664 core at MPIDR affinity ``0x0``
++* cluster 1 contains one FTC664 core at MPIDR affinity ``0x100``
++* cluster 2 contains two FTC310 cores at MPIDR affinities ``0x200`` and
++  ``0x201``
++
++The corresponding QEMU CPU slot order is ``0x0``, ``0x100``, ``0x200``,
++``0x201``. Firmware images that select primary affinity ``0x200`` therefore
++release QEMU CPU index 2.
++
++All four slots instantiate SoC-owned Cortex-A72 TCG CPU objects. Before
++realizing each object, the SoC applies its FTC310 or FTC664 identity and the
++E2000 system registers used by firmware. The ``-cpu`` option therefore accepts
++only the Cortex-A72 execution base and cannot replace the heterogeneous slot
++assignments.
++
++The Phytium MIDR values, architectural instruction-feature fields, AArch32
++floating-point feature fields, and VIPT/PIPT I-cache policy match the values
++observed on the physical E2000Q board. This is an architectural compatibility
++model, not a performance or cache-capacity model.
++
++Supported devices
++-----------------
++
++Both machines currently support:
++
++* two FTC664 and two FTC310 AArch64 CPU slots in three clusters
++* RAM starting at ``0x80000000``, with 2 GiB by default and up to 8 GiB
++* PBR-owned boot SRAM and IACC RAM used by the vendor firmware stack
++* a GICv3 interrupt controller with ITS
++* seven PL011 UARTs
++* the DesignWare-compatible I2C controller
++* the E2000 hardware random number generator
++* two USB 3.0 xHCI host controllers
++* two one-port sysbus AHCI controllers
++* two SD/MMC controllers
++* a GPEX PCIe host bridge with MSI support through the ITS and stage-1 DMA
++  translation through an Arm SMMUv3; PCIe endpoints such as network devices
++  must be added explicitly with ``-device``
++* a QSPI0 controller with a direct-mapped read window
++* PBR, DDR, and MHU/SCMI compatibility behavior needed by the vendor
++  firmware, plus the SCMI Base protocol used by Linux
++
++Board wiring differs as follows:
++
++* Phytium Pi uses SD0 for firmware and its root filesystem and has no attached
++  QSPI flash or SATA boot disk
++* COMe uses the GD25Q128 on QSPI0 for firmware and the AHCI1 SATA disk for
++  Linux
++
++Firmware boot
++-------------
++
++Passing firmware through ``-bios`` or a pflash drive is not supported. Use
++the board's fixed SD0 or QSPI0 medium as described below.
++
++Phytium Pi SD boot
++~~~~~~~~~~~~~~~~~~
++
++Build the complete SD image from the Phytium-maintained Buildroot release. No
++separate ``make phytium_defconfig`` step is needed because
++``merge_config.sh`` consumes the base defconfig directly:
++
++.. code-block:: shell
++
++   $ git clone https://gitee.com/phytium_embedded/phytium-linux-buildroot.git
++   $ cd phytium-linux-buildroot
++   $ git checkout phytium-linux-buildroot_v2.4
++
++   $ ./support/kconfig/merge_config.sh \
++       configs/phytium_defconfig \
++       configs/phytiumpi_sdcard.config
++   $ make
++
++The resulting complete image is ``output/images/sdcard.img``. The SD-card
++fragment selects the vendor 4 GiB firmware, builds ``fitImage`` from the
++Buildroot kernel and Phytium Pi DTB, and packages those files together with
++``rootfs.ext2``. Use this image directly rather than assembling its components
++by hand.
++
++The vendor-generated SD layout reserves the first 64 MiB outside the root
++filesystem:
++
++.. list-table:: Phytium Pi SD image layout
++   :header-rows: 1
++   :widths: 25 20 55
++
++   * - Start
++     - Reserved size
++     - Content
++   * - ``0x00000000``
++     - 4 MiB
++     - ``fip-all.bin`` firmware region
++   * - ``0x00400000``
++     - 60 MiB
++     - U-Boot FIT image
++   * - ``0x04000000``
++     - remaining image
++     - first partition, containing the ext4 root filesystem
++
++The default Phytium Pi SDK U-Boot environment reads the FIT from SD block
++``0x2000`` (byte offset 4 MiB) and boots with ``root=/dev/mmcblk0p1``. The
++first partition must therefore start at byte offset 64 MiB. A DOS partition
++table may replace FIP sector zero, matching the vendor image recipe; the PBR
++data used by the model begins at later fixed offsets in the firmware region.
++
++The SDK v2.4 image recipe declares the root partition as 16 GiB even when the
++generated ``sdcard.img`` is shorter. Linux consequently reports that
++``mmcblk0p1`` extends beyond the end of the device and truncates the reported
++partition size. This warning is expected and does not prevent the contained
++ext4 filesystem from mounting.
++
++UART1 carries the U-Boot and Linux console. The following command boots a
++complete raw SD image without injecting U-Boot commands. ``-snapshot`` keeps
++the source image unchanged when firmware writes its environment or DDR
++training data:
++
++The following examples use images generated by Buildroot::
++
++  IMAGES=/path/to/buildroot/output/images
++
++.. code-block:: shell
++
++   $ qemu-system-aarch64 \
++       -machine phytium-pi \
++       -smp 4 -m 4G \
++       -display none -monitor none \
++       -serial file:pbr-uart0.log \
++       -serial stdio \
++       -nic user \
++       -snapshot \
++       -drive file="$IMAGES/sdcard.img",if=sd,index=0,format=raw
++
++The explicit 4 GiB RAM size matches the firmware selected by
++``phytiumpi_sdcard.config``. The verified flow with a version 4 DDR/MCU
++parameter record completes PBF and DDR initialization, enters OP-TEE and
++U-Boot, reads the FIT from SD, starts Linux on all four modeled CPUs, detects
++SD0 as ``mmcblk0``, mounts partition 1, and reaches the login prompt without
++serial or monitor input.
++The SDK root filesystem uses a normal ``getty`` rather than an automatic
++login, so entering a shell requires an interactive UART1 chardev.
++
++COMe QSPI-to-SATA boot
++~~~~~~~~~~~~~~~~~~~~~~
++
++This is the preferred COMe boot flow when a matching E2000Q
++``fip-all.bin`` is available. The FIP container must begin at byte zero of a
++raw QSPI image.
++
++Build the standard SATA disk image from the Phytium-maintained Buildroot
++release:
++
++.. code-block:: shell
++
++   $ git clone https://gitee.com/phytium_embedded/phytium-linux-buildroot.git
++   $ cd phytium-linux-buildroot
++   $ git checkout phytium-linux-buildroot_v2.4
++
++   $ make phytium_defconfig
++   $ make
++
++The resulting ``$SDK/disk.img`` has a GPT partition table. Its first partition
++is a 400 MiB FAT filesystem containing ``Image``, the DTBs, and GRUB. Its
++second partition contains the ext4 root filesystem. Attach this image directly
++to AHCI1; no host-side repartitioning or file copying is required.
++
++Create a disposable 16 MiB GD25Q128 image in the erased state and copy the
++FIP to byte zero:
++
++.. code-block:: shell
++
++   $ export FIP=/path/to/sdk/fip-all.bin
++   $ export QSPI=/path/to/e2000q-gd25q128.bin
++
++   $ dd if=/dev/zero bs=1M count=16 | tr '\000' '\377' > "$QSPI"
++   $ dd if="$FIP" of="$QSPI" conv=notrunc
++
++UART1 carries the interactive U-Boot console. UART0 is written to a separate
++log so that early firmware output remains available. ``-snapshot`` keeps the
++input images unchanged when firmware writes training data, its environment,
++or the root filesystem:
++
++.. code-block:: shell
++
++   $ qemu-system-aarch64 \
++       -machine phytium-e2000-come \
++       -smp 4 -m 2G \
++       -display none -monitor none \
++       -serial file:pbr-uart0.log \
++       -serial stdio \
++       -nic user \
++       -snapshot \
++       -drive file="$QSPI",if=mtd,index=0,format=raw \
++       -drive file="$IMAGES/disk.img",if=ide,index=0,format=raw
++
++With the SDK firmware, the verified flow preserves the version 5 DDR/MCU
++parameter record, identifies 2 GiB DDR4/X16, completes software training, data
++BIST, and address BIST, detects the GD25Q128, reports ``boot media is qspi!``,
++and enumerates the SATA disk as ``scsi 0`` through AHCI1.
++
++The U-Boot default environment may not match the layout of the Buildroot
++``disk.img``. Press any key during the autoboot countdown to reach the
++``E2000#`` prompt, then enter the following commands to load the raw arm64
++kernel and COMe DTB from the FAT partition and boot without an initrd:
++
++.. code-block:: shell
++
++   setenv bootargs 'console=ttyAMA1,115200 root=/dev/sda2 rootwait rw cma=256M'
++   fatload scsi 0:1 0x90100000 Image
++   fatload scsi 0:1 0x90000000 e2000q-come-board.dtb
++   booti 0x90100000 - 0x90000000
++
++The verified flow starts Linux on all four modeled CPUs, mounts ``sda2``, and
++reaches the Buildroot login prompt on UART1.
++
++Direct Linux boot fallback
++--------------------------
++
++Use QEMU's direct ``-kernel`` interface only as a fallback when the Buildroot
++SDK does not provide matching EDK2 or U-Boot source code and no usable vendor
++FIP flow is available. This path bypasses PBR, PBF, SFW, and U-Boot. It
++requires the board-specific SDK kernel and matching DTB listed in the overview;
++omitting ``-dtb`` is an error.
++
++Starting the vendor U-Boot binary directly with ``-kernel`` is not supported.
++That would bypass BL31 and leave the bootloader without the Phytium private
++SMC services normally provided by the resident EL3 firmware.
++
++The following commands boot the SDK kernel with its initramfs and do not
++require a disk image.
++
++Phytium Pi direct boot
++~~~~~~~~~~~~~~~~~~~~~~
++
++.. code-block:: shell
++
++   $ qemu-system-aarch64 \
++       -machine phytium-pi \
++       -smp 4 \
++       -display none -monitor none \
++       -serial null \
++       -serial stdio \
++       -nic user \
++       -kernel "$IMAGES/Image.gz" \
++       -dtb "$IMAGES/phytiumpi_firefly.dtb" \
++       -initrd "$IMAGES/rootfs.cpio.gz" \
++       -append 'console=ttyAMA1,115200 earlycon=pl011,mmio32,0x2800d000 rdinit=/init'
++
++COMe direct boot
++~~~~~~~~~~~~~~~~
++
++.. code-block:: shell
++
++   $ qemu-system-aarch64 \
++       -machine phytium-e2000-come \
++       -smp 4 \
++       -display none -monitor none \
++       -serial null \
++       -serial stdio \
++       -nic user \
++       -kernel "$IMAGES/Image" \
++       -dtb "$IMAGES/e2000q-come-board.dtb" \
++       -initrd "$IMAGES/rootfs.cpio.gz" \
++       -append 'console=ttyAMA1,115200 earlycon=pl011,mmio32,0x2800d000 rdinit=/init'
++
++QEMU applies the normal Arm direct-boot fixups to the supplied SDK DTB, but
++does not synthesize a replacement hardware description.
++
++Known limitations
++-----------------
++
++The machines are functional models for the tested firmware and direct Linux
++boot paths, not complete models of the physical development boards.
++
++* QEMU models the PBR handoff behavior needed by the tested ``fip-all.bin``
++  image, not ROM instruction execution, authentication, or the complete
++  on-chip root of trust.
++* The boot SRAM object graph and SFW callback addresses are limited to the
++  inspected firmware samples. Those samples carry version 4 or version 5
++  DDR/MCU parameter records.
++* FTC310 and FTC664 cache capacities and microarchitectural performance are
++  not modeled. Only the evidenced architected identities and I-cache policy
++  differ between the configured core variants.
++* Standalone vendor U-Boot with ``-kernel`` is not supported; use a matching
++  ``fip-all.bin`` so BL31 provides the platform SMC services.
++* Non-boot-critical peripherals remain unimplemented, so guest probe failures
++  are expected. The Phytium Pi ES8336 audio codec is not modeled.
++* The Linux SCMI transport implements the Base protocol only. Performance and
++  Sensor protocols are not modeled, so SCMI CPU-frequency and temperature
++  interfaces are unavailable.
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index 260cd7e4d6..77c18b5f2e 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -95,6 +95,7 @@ Board-specific documentation
+    arm/mcimx7d-sabre
+    arm/imx8m
+    arm/orangepi
++   arm/phytium_e2000
+    arm/raspi
+    arm/collie
+    arm/sx1
 -- 
 2.53.0
 
