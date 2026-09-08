@@ -4,97 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3094C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 16:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C93C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 16:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3yig-0003FC-QN; Tue, 08 Sep 2026 12:30:50 -0400
+	id 1x3ymU-0004LO-Bj; Tue, 08 Sep 2026 12:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x3yif-0003Ev-UW
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:30:50 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x3yid-0006u2-H8
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:30:49 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-49b8e527d63so58278405e9.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 09:30:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x3ymT-0004LG-Ml
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:34:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x3ymR-0007PL-M5
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 12:34:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788885281;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4PUtwbQ6wN+9ZGS6RolrgY3gzZLlgaAJ9dGbgE/L2no=;
+ b=ZTjxKOSZwAKMdFSltktZXXRoriwJTteZ9XWNoC6nPZuzYI1/8ujYTb9AWSFGMocUG0CVRb
+ rwTcqi93HninKUiLFeN6RPjulewLRDS3kL+km3BSfdfd2DvxLob4w9BGY8158EQ96tS8yF
+ hdJ87934pPOUGNGO4y0xg+VD9BF60LE=
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-ru9uDmHZOkOz08xVbJ7Spw-1; Tue, 08 Sep 2026 12:34:40 -0400
+X-MC-Unique: ru9uDmHZOkOz08xVbJ7Spw-1
+X-Mimecast-MFC-AGG-ID: ru9uDmHZOkOz08xVbJ7Spw_1788885279
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-66faff68c0bso377322d50.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 09:34:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788885279; cv=none;
+ d=google.com; s=arc-20260327;
+ b=SdlRULgFiFJNrwtNnavx9rSxYKrOklaxxJx2s1vv7ETBciTlkE2bC8T2mw2E1hvPKX
+ UScIs30op8yq3iZAqWIpRIQFqp5HRvosn6fpQq6vrAZV9dgmavZl/mwmLkN2fQ759cnA
+ o6WoNLY+BsSGCJI5JpOm9bwlwvaBYj00YmecBfWvdtMWumSWUXVT4N3MMhP1yfgwbfN+
+ 6vVGcgePfQmW78Y9lSlPN5RZ3Ygk8ycULUkn3PzCCKh8QnHRK95edf9v5agzcu+SUmqg
+ nDXNllaXBxULTNkzaJMh8YmhksoT3RbidsFxWtXFKGWRxF+FerPEUYSP24eTDzshGjJU
+ 9qZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=4PUtwbQ6wN+9ZGS6RolrgY3gzZLlgaAJ9dGbgE/L2no=;
+ fh=ESuptqnqG/MKn4BxYFlRx/KGAD8dDslAj3Rmwxm5qw0=;
+ b=cbfS3ExhtVcP3vlb6pJDYxrr3NU8XHAHBISR34bOKpspRlJqEQGfLnpbzVA2bcrjDR
+ bBkYcIoEVCJiaUDk77Rp/C1wNt+hUUbMwR4TRlHZ778yANh8/p0JBi+TICKzZfUTuroS
+ u4jVLmmWSKD3AwB2couVsnbFEhJywsIgglcVeo+7B9Kz8udSCFt+5bq1fFJTsSnMCXjC
+ 4oQ8ViPvGW1TP13HYZ+23geJQ/+rHlq2Iir6Ueaxm7ovH0zpJ4rhFLtr9DXu8OhPlcRn
+ E8AvylhVuaflN+HkmMnZvpFJk8iigCavoYSP1fW/3AeAS9Cij7Pitdbxx6cCu55EEJUI
+ Q9XA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788885045; x=1789489845; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=uKzMu/w+W5SBxdXqEuP/+VCuQVtzy93cR1Y42Tzffdk=;
- b=U43ANh85KRFKjB4dLlb4suj8EdPQNlLaPfolz4e+joL+Y1+rzy0Qpi7KFRIrIkiomS
- xjobOs5cvmGVl/bpHw6giXRypNWfn4RnR4x9OqGQuM6yWuW6UiEludnMPrxjP/D7Qnj1
- yAzqvqK2gyK1m9drBoFKdxYHeZTCSsgle4LRWBEzR4UlIRPT24+L3GenwHGcrx1n2R4J
- iq68M9AvRk2kBKawKkWTd7MQ3E6b918DP/W/m2MixWE9oNM5QjeW4CRKEah9d8XPRiYc
- vey8XMgm+X5RcR3ZsBaqsL5c6iXvdjY86vfW9534JL6E5MGQTTvqNbsw0wzfDtVQLvgX
- 35fg==
+ d=redhat.com; s=google; t=1788885279; x=1789490079; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=4PUtwbQ6wN+9ZGS6RolrgY3gzZLlgaAJ9dGbgE/L2no=;
+ b=fHozjI8NdSzEQDi3VDkggT4oRQBV9aWeZ+hSj7wmB9oOUEJxVez8uB4qpMvXwgjRly
+ uwb/xI44gjs/0Y4CLqIyWgGKRKK1Tn/GS2kV9wT08vUBK+pKdJbP1dU0nXvslnpV7iE4
+ FVSxse2oD1J/xyl9y8Bun+TPItxJD7Sqt6AfMtuJ0UVN2aIshTlpxRxB2dLDljYIEqaP
+ brtQngT1jEVrX7jKIYkizHIKnmuSxUNPWuDgbDgX+8Ip/TNcnOrKP94zWnE+YFvykoog
+ xgIhZRtThMuEwIaDPPULUmr5wGhachLA+Qa3zn+60tIyNKjN0oPjZ3ydN4GuWflbrwEj
+ ozBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788885045; x=1789489845;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1788885279; x=1789490079;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=uKzMu/w+W5SBxdXqEuP/+VCuQVtzy93cR1Y42Tzffdk=;
- b=UMwfYGutosBUguJTvojstXJO7vtIUPc3tfSb5x2SBJmWVH/0ZMMh7qRVWz27DnPDtY
- lpMhJxK+ieEL4IVacbUeulLK3imUCm987vS0ocfrgJCzsiihl1DDj1eq/KN7Jj5NamFR
- LPybUDkUNnvnWFUsmT6p409dvQBnPNZtO/wYL6NJc5jJ+aV2vijDHDbAqYEbLK7i/X3Q
- 4HFnvBgY3qMKUOHHr3nrHVkCONf/F3BoriZiRmPkONzM5T8bR43zwvi9s3vSlRupTMao
- GZGMAXUFHzYeWu8UGfdFKOXMRQsI2w7Uo8eCKSM3cMHL06ejbgykQKqBA2eMl4CX3YZl
- RfAA==
-X-Gm-Message-State: AFuF++lVBcOD2esKpqge0A5jTYxBcEcUdTjef+Wme0/jzG4fIqXIBKI7
- +6/KjcrP/UYI8pfLzN6xzsxZLIcZTnwBpdaTgT29QBFDvnkoxWcIJ9FJvPaWyVp3WUA=
-X-Gm-Gg: AYBFou2AwvI3CKk48qP66J+NKxRyUPSpVkUtnv0irjJqJhsE4KHl4T1+TASm09ilR/t
- Fyu1T89i5ifrApxGPcwQ/Mb+U57tJQt+g4RXBCszh90DniPIrN6Wcu6f5Q8WY8ZcFV9EoEAF72e
- 77GPtlW4Kl9BCUVg3zuxEaON1U6m6ZcvPlk6u8fGwIERw916dQzoh+NBWpl0Hl5XLb4BiLFqtMF
- wLSlSaZNAIWWxrrO3444dNFip2fDl3IzF7v1WTfOdnz+RSwhwBQrfSnBaV0AihEVKpMSzZCfSR2
- naFLUNx+1SPRCGUJm5O0PUaJPIT1h7YYPiYPSjH+gW4An0wDb0K8cOuBmseUMsDWUbtE2C8TUlR
- laznVv+GeHcGXHQ27uEtb6N1HQ1vsofLCjUcS2S5eynJY/xNDDvigz4Nrhdu/xJ6Cz/tvATsa5U
- Hb1z22nj/K9+UV0zvuSjjw2cz2r/nwYPCyP28V1EgCzHtTpYafdy/HZDwupD7P
-X-Received: by 2002:a05:600c:81c5:b0:49d:433:c3b6 with SMTP id
- 5b1f17b1804b1-49d0443096amr204987225e9.27.1788885045448; 
- Tue, 08 Sep 2026 09:30:45 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf772692dsm476245385e9.10.2026.09.08.09.30.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Sep 2026 09:30:43 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 96EFC5F845;
- Tue, 08 Sep 2026 17:30:42 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Samuel Tardieu <sam@rfc1149.net>,  =?utf-8?Q?M?=
- =?utf-8?Q?arc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  "open list:STM32L4x5 SoC Family"
- <qemu-arm@nongnu.org>
-Subject: Re: [PATCH] hw/char/stm32l4x5_usart: Accept character input upon
- RDR read
-In-Reply-To: <CAFEAcA_hbEUYO+0vSDZDGtyp8uo+The9q_Bkry2WwJY40EVvTQ@mail.gmail.com>
- (Peter Maydell's message of "Tue, 8 Sep 2026 16:51:11 +0100")
-References: <20260902165956.582901-1-alex.bennee@linaro.org>
- <CAFEAcA_hbEUYO+0vSDZDGtyp8uo+The9q_Bkry2WwJY40EVvTQ@mail.gmail.com>
-User-Agent: mu4e 1.14.4-pre2; emacs 30.1
-Date: Tue, 08 Sep 2026 17:30:42 +0100
-Message-ID: <87y0dbaeod.fsf@draig.linaro.org>
+ bh=4PUtwbQ6wN+9ZGS6RolrgY3gzZLlgaAJ9dGbgE/L2no=;
+ b=V0OhblWNdkNRL3HOfTEAEerdWp7tcDjM2BuWEBg6R/wKDMA9GZN9VWT3MTVA1nrsu1
+ C6H7KisOdoUCYFtY7HfHhY2zo3quFjEOReOdgsepTTLASvCFMtfwvPhgcKuaRv7WtEvs
+ TWtGSMSxdRg+9t1rZBMam7r4fVRnDyYs3TdZuonvkT3DNSd/y1fXYAxSABGm7mSjHfq8
+ k/XJcypLYVm99TRyUGyYJbtYrHfbJAsgjZEnnaNrR9uaymisvjXXrmlhoJnQ8IcQRYO6
+ Z/361hCrxW4aDePwzKWEcxpI3njqVRGUZsSLevKHGeh/FKjA0MyXvJmdIEJ/Jx6cnY2d
+ tczg==
+X-Gm-Message-State: AFuF++mPEcO4BdX8TwiunLVjOZC7DdsME19qWdTcTGY2ukhlyQFkrCft
+ 8graC7U2omVR1RiCE7OV4AaTu4Y+jCHNB7TgLOiMG5zkQzCfbiWV1mrsu4x8LlWBXjoZEXlsYA0
+ AgDCTEJ8RgsVI1cJ4a/ldl/+3Pz8CQdfsQ+31DhzjRNiacSGP6LUSCrRIhHgyfUJEdGdVkUY3Ia
+ Pjvk3mOI9Vzl152gIz5mMhEL5lx41qxOk=
+X-Gm-Gg: AYBFou3mkyr0hAWSYuevpoRUDTFJp63uXNB7sLp64UD1zVjrSPw++kqEuAc/Zei+Ngf
+ Et10xpgCkvk9VkbexcvtvUsDoS2J/yqh8uXnhoBtlFeyeF7KZyNx3WriScgmoANf4vyV58iJddo
+ BQ0tkayBvFr/IsEfuYiQzzD8YUh9nhlFB8y7A8oyRgqBZjWQEXKmkgtgLkgdj5GvdH49YVDbaNq
+ 1XHYOb3tlx6AWwH
+X-Received: by 2002:a05:690e:1247:b0:66c:c640:a7a9 with SMTP id
+ 956f58d0204a3-670f576cc47mr2838573d50.1.1788885279255; 
+ Tue, 08 Sep 2026 09:34:39 -0700 (PDT)
+X-Received: by 2002:a05:690e:1247:b0:66c:c640:a7a9 with SMTP id
+ 956f58d0204a3-670f576cc47mr2838540d50.1.1788885278627; Tue, 08 Sep 2026
+ 09:34:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260906222926.3714852-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260906222926.3714852-1-brian.cain@oss.qualcomm.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 8 Sep 2026 12:34:28 -0400
+X-Gm-Features: AcwNN1WK2RkQc8rOPkibd5yccVRX-76wPO_MMxpMAhHHaGHlKtyCvsoM4jQYPr0
+Message-ID: <CAFn=p-bQeHAw6KQW2xpKki+a9WMHrQctKXosRG5NHhJ+46jETA@mail.gmail.com>
+Subject: Re: [PATCH] docs: bump sphinx_rtd_theme pin to fix --enable-docs build
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,32 +138,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Wed, 2 Sept 2026 at 18:00, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> Looking through existing serial devices this seems to be a common
->> pattern so it makes sense to me this is the right fix and matches the
->> API description.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4389
->> Reported-by: Jan Brittenson (@bson)
->> Suggested-by: Jan Brittenson (@bson)
->> AI-used-for: fetch issue, apply proposed patch, verify build and qtests
+On Sun, Sep 6, 2026 at 6:29=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm.=
+com> wrote:
 >
-> I think the fix is fine, but given this tag I'm not sure what
-> you want me to do with this.
+> pythondeps.toml and docs/requirements.txt pin sphinx=3D=3D7.2.6 alongside
+> sphinx_rtd_theme=3D=3D1.2.2, but 1.2.2 requires sphinx<7 on PyPI.
+>
+> A fresh install of the docs group silently downgrades Sphinx to 6.2.1 to
+> satisfy that cap, which then fails Sphinx's own >=3D7.2.6 runtime check
+> in docs/meson.build.
+>
+> sphinx_rtd_theme=3D=3D2.0.0 is the first release that drops the sphinx<7 =
+cap
+> and resolves cleanly against sphinx=3D=3D7.2.6.
 
-well in this case the AI never wrote any code, it just applied the fix
-from the issue and tested it which I think is within the current policy.
+Thank you for catching this and writing a very targeted fix.
+
+I did not notice the silent downgrade as I have sufficiently modern
+releases on my base system which our build system happily used
+instead, and none of our CI tests noticed. I'll have to invest some
+time to ensure this is tested somewhere for the future.
 
 >
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> -- PMM
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: John Snow <jsnow@redhat.com>
+
+(I did not test this, but based on the failure logs I saw and the PyPI
+version constraints for Sphinx, I believe this fix is appropriate.
+Peter, would you be so kind as to take this patch directly as a build
+fix? I am taking today off as a sick day and don't want a build
+failure to linger.)
+
+> ---
+>  docs/requirements.txt | 2 +-
+>  pythondeps.toml       | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/docs/requirements.txt b/docs/requirements.txt
+> index c10c4cf7c91..509d56bd1e8 100644
+> --- a/docs/requirements.txt
+> +++ b/docs/requirements.txt
+> @@ -2,4 +2,4 @@
+>  # Should be in sync with the "installed" key of pythondeps.toml
+>
+>  sphinx=3D=3D7.2.6
+> -sphinx_rtd_theme=3D=3D1.2.2
+> +sphinx_rtd_theme=3D=3D2.0.0
+> diff --git a/pythondeps.toml b/pythondeps.toml
+> index e4c10d4a9f7..afb1364dd28 100644
+> --- a/pythondeps.toml
+> +++ b/pythondeps.toml
+> @@ -29,7 +29,7 @@ meson =3D { accepted =3D ">=3D1.12.0", installed =3D "1=
+.12.0", canary =3D "meson" }
+>  [docs]
+>  # Please keep the installed versions in sync with docs/requirements.txt
+>  sphinx =3D { accepted =3D ">=3D7.2.6", installed =3D "7.2.6", canary =3D=
+ "sphinx-build" }
+> -sphinx_rtd_theme =3D { accepted =3D ">=3D1.2.2", installed =3D "1.2.2" }
+> +sphinx_rtd_theme =3D { accepted =3D ">=3D1.2.2", installed =3D "2.0.0" }
+>
+>  # This test group is for dependencies required to run various tooling
+>  # and tests that should always be installed at configure time. It should
+> --
+> 2.34.1
+>
+>
+
 
