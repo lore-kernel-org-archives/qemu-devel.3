@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFF8C79F9E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 14:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F0C6C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 14:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3xGG-00015d-57; Tue, 08 Sep 2026 10:57:24 -0400
+	id 1x3xGz-0001bl-C1; Tue, 08 Sep 2026 10:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3xG8-0000zG-0n
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:57:16 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1x3xGx-0001bS-VA
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:58:07 -0400
+Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x3xG6-00062G-Gz
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:57:15 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-836c4474028so43126157b3.0
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:57:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788879433; cv=none;
+ id 1x3xGw-00067W-Ej
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 10:58:07 -0400
+Received: by mail-yx2-x10.google.com with SMTP id
+ 956f58d0204a3-66e56a1b327so34872d50.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 07:58:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788879485; cv=none;
  d=google.com; s=arc-20260327;
- b=Q3XC9GClFP4NEKcpyrrYqOlLCvnNx5Y8O4IFP7YMfAitUDsXRd4/X7j2s5feUCYQJD
- DjSHZsN3GAHIQKYv5RQse/5bPLQN5zkRgpm1WCnTrK4cPcIVY2t0IFb8iK8rRXYuxv9F
- lhpxkiOy1Tgp8aEeXGdnfUdMamszhaVP3NsF9wNpyMNMeuw7NJxXAsRB2oOTwOxkaNJ8
- GqCpqKhZAXo9bsqseB7TXcLjUn8l788cuMGMAs7/boHCDyWslPRA0DHkvBfYzVDExe4g
- hJ1P0Kz89x9w4TUCNHBGW7UF6DL1JjWwGakIzJ62N8pELChssald0qV0NiqtmVy3o1Ma
- 8HCw==
+ b=GNauN2nfmQ1Z3HIgYOsCAo4OpvWuDZujiQVPhJHpwuDAtry4nZ2Dl+br7JnzvK1EC0
+ ZBRRbDgt0c/1z/RHyCjOJmYZ6H8ufyhUrkSSgBDJwQwnHRBh61AkH6SvbPwegSFsFOQk
+ 6u6hHzNJrsA7gGsQc03q9agsM1on0GQUj9GGlACPLEvumbZd4ATy1CUCC7DfpbEqZPLI
+ tPC0T9RPBzZoNBE6VgjTO+5z0G95VeyX3HZNvSW54pChKImTjFZprMf7uXzbRl9dM7Vp
+ w8Qwe3VRZkE97Y6Teg0e4lSP00WI4PMPbIvfIe/VAZSeBv1Aie9/mBoIOaSurNGedAoQ
+ q4Dg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=K502AstubGpzuMkVuzpf2cJqRo/TEiK7/6dVIYv68OM=;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ap+GdGer3/HCGhNx4Mq8lM16w3xHRPE9D7RY1HlcJU0=;
  fh=ieLaz7e/0RpAqfE5XLQ1RcBHWjTUv1z6arE2SouQh04=;
- b=mZnV2zbvlMAkLbb5fr5uHxDe4KsnErkGmyS7bD3+KyvDDREiS42daQQqL6q6Omzo1E
- IS66a7cK3DRmmQlFRFxvGxoe8BTW5rwWDkWNiWajCJu9dVXXSJUi3yzCGeV3OVPmWqTL
- bZmLBfsaku2UAKV22F1rhn5v5UWP+9SjPrjrRDk3Ql4GS3dunRm8Ym5sfJMxp6p/G4mF
- qD9rRCgHMdFJ+4QndxiYtgNUwmxbqOlidwas725JWlEpNpTqwMOLRU0nNo8yFhHvOTO0
- IBKf0VlcD+0JiHV9dnq6oIDE/sbN454qbE6j39L5urpM16yz/pmOCB0gbhIdf3H7lHT0
- 59WA==; darn=nongnu.org
+ b=H1XqCPO+lh81Bm092uwlF97WpSjjMlWKw5LYGxGVvCP+B7XWVbCi+wQdjnWh5B13UN
+ RshCDctaOgQo4S152v61pncOzcQAIgFI2w4anOekeh3esCV4ak8hQGeYFhPGyCwUHVVP
+ CfL0/rmLgwdx/yfW2Fon2YRbhViVKr7j5ymIgjyA0vbRz+I5R8kxQOWPNb3TVZwiKv61
+ vyDmwMYVnkR5gGoJh0GjDPrIsqGkiHM27doMAfY5dyh+CvBM22+dBFTSIe/QXobip+Zj
+ kuNlfog5sjTdr5BMeQVTTI8ozdXJCEnyPwMtFa278jxTlQAt2dIiY6pZrxX3OkDYvFK0
+ 6MIQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788879433; x=1789484233; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=K502AstubGpzuMkVuzpf2cJqRo/TEiK7/6dVIYv68OM=;
- b=tZMuG/CV1vEuHjaiAu18cPJF1k+8xVMvU+ZeqhkfzmDyYXJE8HsKgw7HZQSE89c3xM
- qkszb+6OMlRBIBEC4DNsn74I10UzZlirk1uJJAgBBETS3Ktbrf40Z+cF9PErha3tXkRL
- wlsxht14W+fzoC7g8fJ3kOnowQnCPTZhd3RPKSgAY1mTmdNeScdndXacMrLd75lZT3hF
- iWNQZpHK+DECkxuXvsr8Kn0dMkVgpgs93vJe/aZsKm8T7h0udDL49vMo9lIJi6eXsuOc
- /VzYQYNMV64EhhObBuu90lN0J6bpGAl/wDZkEsGVkBfrl3Lh5cnovThlpbu36l01GBSW
- rkrw==
+ d=linaro.org; s=google; t=1788879485; x=1789484285; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ap+GdGer3/HCGhNx4Mq8lM16w3xHRPE9D7RY1HlcJU0=;
+ b=m88WQIcDoRcqBsHimM5ZVFI9ZGPf0xUZPw4xmliOa9mPgeoi7AHrPQ7lAbGcQK9OGl
+ 1E7xoRuWA5EATeUWrMsNdr8WbwD+hWntcqxB6gzzOMizPpGQRZNFYSyiPguZ92f1iw1d
+ Xk+wlQLuzjP0Y3Sd6vv4Z3uZQTj//HLH0N8jwIixwtJDWpNAmCnD7U0IfTzYGewk0oaj
+ LJ0PqrO1zcVZEZ5h5d1K4W7UGdOoIwbIhRZCaq8Qys1zZ0seFHgl6uGayH2vQ8j+hXqS
+ WOnzluSZFAlGa1UhS0gTF8xhBy7CD5AnmDTw2Po991wtGQoaEWRdKFdskrgSMkfAAXUe
+ NuiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788879433; x=1789484233;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=K502AstubGpzuMkVuzpf2cJqRo/TEiK7/6dVIYv68OM=;
- b=l3DFX23gO1QGVhArfSX7lKbV7VvGgFN3glswoBilnnZVjRj6qhJXUHfLpuUfRJryq9
- wIQp9HKs90DOgvNXzGKfLz5+y3P7Valg8Ew+XeSc6KniVyNHZT70/K2zuua3dHUFRr7s
- lYreHUwwOSamxQjV28wg+2h8UNt+zLHLJ8bmCVz0usyebI4DHGP67HsTZbpnQqYXLQKo
- y+rB6pMeQFIAmRZeLJD5nxSEPCU3ZZAu1HZg5MrIL2Zfvd+w+cHVYCNA6wBhH/xhYMNz
- 0Ewx9USrHchifPk7QNtcCXZ0Cc1JLZVttjQyJerNUmQ8Z39sRzP4tOeAi1hcfPEkUYXX
- 0n/g==
-X-Gm-Message-State: AFuF++kJLn1/8hWBGu5GmXZKx6FPiFeVCLLN4hYkhdsq4dG8ytghY87M
- kI5ZkRHeqaL2QbtXK/ADlRfoJBNrXnAGSsDszLQL2eB/H1lAndQ2lpHRfR49gX8l5qdKGzlcTzn
- g+efEr5ElqIW9sONLJ7kou0SHzF9wLE56lhYUVNlSng==
-X-Gm-Gg: AYBFou3Dl5kU+s5l36CnipYbP0N0TRJjmqb4ganl1pHDgXL9y07YrkPhJEjYaGiIeYp
- MFVer/PMhA/ofazvwo4PYZajLA5BxbPRBc2OqFJF+KBb8UDzL7mm/P76POt+lU77PxO3FvAvbG1
- jxA4XEWkMnL7KrkxCYg/f9YOnKq+bLso9z4Z1j76l1sJ3w/04yAR5LgmYOHc7sHaZ7+G+598G1V
- Ge5PHbZEsqrP+TpUCYYH88Y4kmqR5ifxMmd8v/yZBtlSbZvfaHzTtZkAGc5MUruOzQwLh863btm
- 2V13YCYgGISDXFNoNyLrQyYp3eciPG4kSRCK4gazB8mSLa5PPADm3PmJMaNMh9pHNCG7Y/pcojU
- oM2l1wQsK9s/54CpjsVzWYdJ8yhlJfg==
-X-Received: by 2002:a05:690c:dd3:b0:874:894:9a52 with SMTP id
- 00721157ae682-87408949e85mr61995617b3.40.1788879432869; Tue, 08 Sep 2026
- 07:57:12 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788879485; x=1789484285;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ap+GdGer3/HCGhNx4Mq8lM16w3xHRPE9D7RY1HlcJU0=;
+ b=qKtZxlm/4f7HSHX1vMnT84vBUvIPli3DuZEajNnj399MEs5p2qWINYWw6qY7XZtp43
+ lgGUHzX0WgHTXJThK/wSZxypuN+P5yEpo5ON8jbzkJiiVz1aR1VLmAscsBMam/L30dXy
+ jAmgsPHoiGmxcfjhk4aAEjtFPPk0S+IOV1kH4YtQLweUBmimv/27NYp0Y+vFA8wBPJCi
+ U6hw+rx0ugkmg/gQf3yvvaTIN+MOkXZru6So/Nvbyb0OpeW5u9nmRXV+UCVm/Esf7X+C
+ 5j+S3oH1S6gLBgn9oTo8SxCRUqOsa+heOnxxsiHFmZtp0kCa+fypRvLxsCaUP4a4yKpS
+ Haxw==
+X-Gm-Message-State: AFuF++mtXB8WepFvJNzqDgUZPVI7hjh2ykop4cqP9MQkvq7KS4/v+FFM
+ z2BDx6XrTmFD/v+d3x4BEUcQu+xV+bHsgrGP8bzEivrpmmDfMSk11kVtDnU65ZTcLePHfaRWPPp
+ OV/969DnKAC842y2LmvnwSdofQRg7EO1P3PzOexIpCA==
+X-Gm-Gg: AYBFou1KU7VvTsmCkNr2KOGQwgPuqolcvdUGiVTcmBc5oOxcuR4ZpEvlXhBchYeZ2F8
+ pSnEznIgJCgq0rs4XHl35E3GCklIeI6OSOi2xD79oJjMmi5Sd5a8L8CAJyGBs1UmVUXiYM3eQxr
+ pKwhqloN8gP9po281Hv6GU73nwVeDXMLGxZ+c9zNZyrFhS0LPvaf+dHMsgk8ZeBfU14XUhJofu5
+ 1TOilFk4wF+oHAKoCjcn01+fctuxdD1MVwGLTDMPYjqbYeKB8oTZ8Yir9Jp2g85Tho+spMzCh1D
+ RTzzeGz2xFboGZCHxnBgdW530EjsMhSOGf1NgA94m4r4cl++UaNm2Ray9XmH+kSn/VRff8gY+Xf
+ 56eWiQDQstau1l+29jXiq5bf0KDT6
+X-Received: by 2002:a05:690c:e199:20b0:81d:6af3:b9b5 with SMTP id
+ 00721157ae682-87f23a0df93mr1322467b3.9.1788879484809; Tue, 08 Sep 2026
+ 07:58:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260902122646.2848464-1-imammedo@redhat.com>
- <20260902122646.2848464-6-imammedo@redhat.com>
-In-Reply-To: <20260902122646.2848464-6-imammedo@redhat.com>
+ <20260902122646.2848464-7-imammedo@redhat.com>
+In-Reply-To: <20260902122646.2848464-7-imammedo@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Sep 2026 15:57:01 +0100
-X-Gm-Features: AcwNN1VvIRkc1Pif0A-rgioUQYAgPl5jr-bBNyrTUrh1Co6y_S1-zQzP20U1_lk
-Message-ID: <CAFEAcA8-e8FGfBkgWjvv6CsaM4ft+0sXK+1bCWziu5RmS=NSbA@mail.gmail.com>
-Subject: Re: [PATCH 5/6] sbsa-gwdt: don't arm timer for compare values above
- INT64_MAX
+Date: Tue, 8 Sep 2026 15:57:52 +0100
+X-Gm-Features: AcwNN1VL-rjyCfI_tovs__pYH9Saj5c4cXUW5-Y5bnirO5LIVom9_GeWjCw9upg
+Message-ID: <CAFEAcA_zLdxcDismxgP5YjK4UT=EBYES1995wppFVRw41CxJyQ@mail.gmail.com>
+Subject: Re: [PATCH 6/6] sbsa-gwdt: reschedule timer on direct WCV load
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: qemu-devel@nongnu.org, leif.lindholm@oss.qualcomm.com, eauger@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,41 +120,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 2 Sept 2026 at 13:27, Igor Mammedov <imammedo@redhat.com> wrote:
 >
-> QEMU timer subsystem uses int64_t, so a WCV value with bit 63 set
-> would overflow and cause the timer to fire immediately. The SBSA
-> spec defines WCV as an unsigned 64-bit compare value, so such
-> values are valid per spec and represent far-future deadlines
-> (however unpractical).
+> According to spec[1]:
 >
-> The current code is not affected: WCV writes don't reschedule the
-> timer yet, so a guest-supplied compare value never reaches the
-> timer API. The follow-up patch ("sbsa-gwdt: reschedule timer on
-> direct WCV load") changes that, at which point an out-of-range WCV
-> would overflow the timer. For example, Windows in GTDT mode writes
-> WCV in two 32-bit halves while the watchdog is running:
+>  "The compare value can either be loaded directly or indirectly on an
+>   explicit refresh or timeout refresh"
 >
->  sbsa-gwdt_control_write [0x8]  <- 0xffffffff    # WOR (~4 sec)
->  sbsa-gwdt_control_write [0x0]  <- 0x1           # WCS enable
->  sbsa-gwdt_control_write [0x14] <- 0xffffffff    # WCVU (intermediate)
->  sbsa-gwdt_control_write [0x10] <- 0xa906ca28    # WCVL
->  sbsa-gwdt_control_write [0x14] <- 0xecb1        # WCVU (final)
+> QEMU accepts writes to WCV but doesn't reschedule the timer,
+> which it should per the spec pseudo code:
 >
-> The intermediate WCVU write (0xffffffff) yields a WCV above
-> INT64_MAX; once WCV writes arm the timer, this overflows QEMU's
-> signed timer and fires immediately -- triggering WS0 => WS1 =>
-> reboot before the final WCVU write lands.
+>  "TimeoutRefresh =3D ( SystemCounter [63:0] > CompareValue [63:0])"
 >
-> Add the guard first, before the WCV rescheduling patch, so the
-> tree stays bisectable. Instead of arming the timer with an
-> unsupported deadline, leave it disarmed. This reuses
-> hw/timer/sse-timer.c:sse_set_timer() (commit 0b8ceee822
-> "hw/timer/sse-timer: Model the SSE Subsystem System Timer").
+> Fix it by updating the timer on WCV write.
 >
-> Introduce a sbsa_gwdt_set_timer() helper for this and route the
-> WOR-based timeout through it.
+> partialy[2] fixes Windows in GTDT mode, which never issues a WRR refresh.
+> Instead, it programs WOR to ~4 sec, enables WCS, and immediately
+> writes a large absolute value into WCV to push the timeout far
+> into the future. Without this, QEMU ignores the WCV write,
+> the short WOR expires, and the guest reboots unexpectedly.
+>
+> 1) Arm=C2=AE Server Base System Architecture 6.0
+>    Platform Design Document
+>    DEN0029D 6.0
+>    "A.2 Watchdog Operation"
+> 2) under KVM system counter (CNTPCT) as read by guest apprears to
+>    produce host's value, so watchdog timeout effectively gets
+>    extended on host uptime offset. But that's a separate issue
+>    to be fixed.
 >
 > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
