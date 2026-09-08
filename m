@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429DCC79F99
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 04:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C4EC79F9E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 04:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3nMl-0000pb-2e; Tue, 08 Sep 2026 00:23:27 -0400
+	id 1x3nkg-0004jH-Qr; Tue, 08 Sep 2026 00:48:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x3nMj-0000pO-7g
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 00:23:25 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x3nMh-0007Fa-BL
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 00:23:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788841403; x=1820377403;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=HmRmQD9YKX84eLU/ZgkTm9R8wxWqW7AlQcjViEJchMw=;
- b=kMd1+4ETFW3Tg3oVCZcJODu+kYD9L7/u61//izjIDRgtB49xk2Y6Gw3B
- FwJoEDJm0tDtfPipLfned4LAciK99e4icVSdw/efo+C2dohmJ8uFjgulo
- /PsjlAL0jXqR0UzmiK9FsdHyPTfJUpa+prieHV6S6l9zDM5+qvTTldvP7
- h8PKBd4HDg8q/G40XVY3ZkUqSOu0xSlUjyJQekr5lrSaFlBOXYlZj/oNJ
- RJgS3JlQzKEOb7ixNbCXn5KGuQqUgA9lvcyIrZNPElqrnU/wKUjkuXNsc
- q+pJ+b8yPy8hK1WeS7DDaewrHLJDiP5TWutoFEsvlGSYvocSBhuC/ULyO g==;
-X-CSE-ConnectionGUID: IkGWZq5zQrG7/eSJfPou4w==
-X-CSE-MsgGUID: yrftIoyzTk64SoslHR3lIg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="76794268"
-X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; d="scan'208";a="76794268"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Sep 2026 21:23:20 -0700
-X-CSE-ConnectionGUID: mbnxLrnsQpuZhA5F3lDsOg==
-X-CSE-MsgGUID: R9qyuIZfQ6+jx10zMA4hlQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; d="scan'208";a="272808648"
-Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Sep 2026 21:23:18 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: qemu-devel@nongnu.org, mst@redhat.com, jic23@kernel.org,
- jonathan.cameron@oss.qualcomm.com
-Cc: linux-cxl@vger.kernel.org
-Subject: [PATCH] MAINTAINERS: add Junjie Cao as CXL reviewer
-Date: Tue,  8 Sep 2026 12:23:10 +0800
-Message-ID: <20260908042310.493882-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1x3nke-0004gO-Gb; Tue, 08 Sep 2026 00:48:08 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1x3nkZ-00019B-V0; Tue, 08 Sep 2026 00:48:08 -0400
+Received: from [192.168.144.1] (unknown [124.16.137.194])
+ by APP-01 (Coremail) with SMTP id qwCowACnfPB7k59qBn5uBw--.61717S6;
+ Tue, 08 Sep 2026 12:47:56 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,    qemu-riscv@nongnu.org
+Subject: [PATCH v3 4/5] target/riscv: prioritize Zicfilp checks for misaligned
+ JALR
+Date: Tue, 08 Sep 2026 12:47:55 +0800
+Message-ID: <20260908124755-v3-4-wangyang25@otcaix.iscas.ac.cn>
+In-Reply-To: <20260908124755-v3-0-wangyang25@otcaix.iscas.ac.cn>
+References: <20260908124755-v3-0-wangyang25@otcaix.iscas.ac.cn>
+X-Mailer: git-send-email 2.55.0.windows.2
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+X-CM-TRANSID: qwCowACnfPB7k59qBn5uBw--.61717S6
+X-Coremail-Antispam: 1UD129KBjvJXoW7tF4UWF17Zr1fWF4DJryDtrb_yoW8Wryrpr
+ 40k3yUKrZ8tF95ZF4SqF4UtF43Xa1fWa10qws2q3Z5tF4YyrW3tF1qkryagFyUAF4kur1a
+ 9FWqya45WFWUJ3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUmqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
+ 8067AKxVWUAVCq3wA2048vs2IY020Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28C
+ jxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI
+ 8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280
+ aVCY1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcV
+ AaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0E
+ x4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY1x
+ 0262kKe7AKxVWUAVWUtwCY02Avz4vE14v_Gryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC
+ 6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWw
+ C2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_
+ JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJV
+ WUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIY
+ CTnIWIevJa73UjIFyTuYvjxUyknOUUUUU
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,29 +81,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have been reviewing, testing and contributing to hw/cxl for the past
-few months, and would like to be Cc'd on incoming CXL changes to help
-with review.
+When Zicfilp tracking is active, a misaligned indirect JALR target also
+violates the landing-pad requirement. Generate the landing-pad
+software-check before the generic instruction-address-misaligned
+exception for tracked targets, while retaining the existing exception
+for untracked targets.
 
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Tested: RV64 M-mode and S-mode Zicfilp controls and misaligned
+targets with c=true and c=false.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4415
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7183babd6a..bbabcf8cca 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3328,6 +3328,7 @@ F: docs/devel/migration/CPR.rst
+diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+index cc1b5dbbad..aa79a5ef3c 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+@@ -187,7 +187,14 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a)
  
- Compute Express Link
- M: Jonathan Cameron <jic23@kernel.org>
-+R: Junjie Cao <junjie.cao@intel.com>
- L: linux-cxl@vger.kernel.org
- S: Supported
- F: hw/cxl/
+     if (misaligned) {
+         gen_set_label(misaligned);
+-        gen_exception_inst_addr_mis(ctx, target_pc);
++        if (ctx->fcfi_enabled &&
++            a->rs1 != xRA && a->rs1 != xT0 && a->rs1 != xT2) {
++            tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
++                            tcg_env, offsetof(CPURISCVState, sw_check_code));
++            generate_exception(ctx, RISCV_EXCP_SW_CHECK);
++        } else {
++            gen_exception_inst_addr_mis(ctx, target_pc);
++        }
+     }
+     ctx->base.is_jmp = DISAS_NORETURN;
+ 
 -- 
-2.43.0
+2.55.0.windows.2
 
 
