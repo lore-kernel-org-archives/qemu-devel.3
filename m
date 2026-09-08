@@ -4,155 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CC5C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 15:55:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 586CEC79F9E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 15:55:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3yAG-00030j-94; Tue, 08 Sep 2026 11:55:16 -0400
+	id 1x3yA7-0002un-Uv; Tue, 08 Sep 2026 11:55:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sid.manning@oss.qualcomm.com>)
- id 1x3yAE-0002wh-Ma
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:55:14 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x3yA6-0002uL-Hv
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:55:06 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sid.manning@oss.qualcomm.com>)
- id 1x3yAC-0000Em-Mv
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:55:14 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688FdZDc2194385
- for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 15:55:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=BoiOdGkNTRiQ20DUGx/CzUhC
- mOuJHI3zN1BG1SmDyC8=; b=gwBibAIQqIGgaN2pKzOcjMemqo1jU0o1Ekh5IARm
- vzvmebXJbf/uOeAn2zKgnw/LPTK4i4df0fHiHRdB0qvz9CNWOZiAsmxotRXgrJBp
- C6GKH9BDjGiHR3oA43bMO0IhxtzgSO+BLIZahxoIpCkFPmSMkVgx0snQdTdjRUAI
- NocRRrkIWfxWafMgm04EpR5NxI9CY28W/cOyal4BtZt8aK++8XtieFGdbWjNYTjT
- w1Q5v5vjZ89+MXugFjKPofSH+4jcUb69ydVYKkeBEZB97CgdxM6wNP+4ITrN3zsy
- qkVljjicpRKviLMY2IRbvcSuDOb6/q0lBEi3TuxbBr/b6Q==
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjkshrhu1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 15:55:09 +0000 (GMT)
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-836c8fc09cfso96168917b3.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 08:55:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788882908; cv=none;
- d=google.com; s=arc-20260327;
- b=GSqx9/Q3HQkyWygoUUJrs+oNnChFhiPIO2eeVH5LB84oNMxq9fA7jqSSqsQaoolFUv
- VytfbWC49Pn0kNEi7OAIdJk7ZvwlmIk9GlTQ16gCxD41MkbpCwemMYBVZ3J+dOFe5ChP
- Se2m6u69gmjDd36ifE/VDtXRYHAoQFCOj1h5HKL60766JYcmVdfgDPsGwxwkI3+W9BgY
- tLScLOMddz4zSLBZLlq+E50lRQCHG7/fv23PZ0shyXjsdBcr2gXe9oCKWj0ZJGZCXu50
- SY3MG/pae74BLdRhzIW4cEN45zATNttKVOu8y0RLrN/oMX+NFntCGk8Ni4JjJwQRCFE8
- 9zBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=BoiOdGkNTRiQ20DUGx/CzUhCmOuJHI3zN1BG1SmDyC8=;
- fh=+NGiuCaJkBcMFhTaOsG/B5aXYeWujaYLuYLP/6yolpU=;
- b=Fk/PdVWHsb7KM10nVVUI2gm+98EnWOL+taX7l9QAoZHaqzWdMDUUUwYO159CQQpH3J
- +xMjqLIEVgIdICMZqI1bCfplgbF9Q5bENO/n27gKbT0BrSn4CKjpH8wlIquqGTP9sHrX
- kaMwh++YvgRjkOsViFJvv0mNWUf1jtvzcgQOqE5oPguzdGLyfEGd0sG+mJd2u4dpimxr
- pSnWg4+cHPbC+h8o13VcboPPhTrCm1EXEu2mxpUTrTNrS5D7iI4VMzYeMrH/o7lorVng
- mojAlZ+K5lGOtmE32H5oqR8Uyv/FQbFGYigmiD50aY7ravPhoHQpKCrkKIaQcWBIf0Fn
- OJtQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788882908; x=1789487708; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=BoiOdGkNTRiQ20DUGx/CzUhCmOuJHI3zN1BG1SmDyC8=;
- b=Fgqg6TIJ93ONW6SHRtK7s+LsSNAdvICcHdNsT2hr2MfgYdeUoDxpOtB/pM/yVXXJu0
- dXgV4JlD0bkvWRpL7QUmPpPSHAwO7N/Sh2R18HG8fWXC7oLWbbWYFOw/9Y6fOPQHt1gl
- 7wPuRj4d7fLTeMR+BpVrPfFYv3LbzfnnOWvR0hdPWQoVEi/8chwQ1FGChfKl8JDql7oS
- 2SArR5sOWLIdXyMdAID83YoCZl6GP2e8Eynvckt2I1cZRIiabPKAOjiBlRs+sfKjQ3F/
- 1UZQxCMhXmIy6VAcsq7GBTBJ4O3j9kIYWLJmCiYa3dslypK7Q+jEMS7x4D5zDOjJ1F+u
- pC6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788882908; x=1789487708;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=BoiOdGkNTRiQ20DUGx/CzUhCmOuJHI3zN1BG1SmDyC8=;
- b=TSGgakcd5y/M3933OVPuEpPU/po2OwtS9kS1BnHSnHA5w+pz/E9HQrSnq7zqDI11u/
- tb2U6fJhvQK30hwnObwCxwjVtvxHT1Ma4yBAQp4k65QWG2HSFulsXxYcXsaU9VYlBGpE
- lsbzTq3G4IsTzP+dgSYi+p6tTnq0GQDz+f9Z7cN668B+6VNgBuTcoYeUUUfAqm//KdwU
- KQ6id0PB6G4L1mBHJ/OH28OiWxyAMOrgxmuNKL61jrgvwm/vdgOJcISURujMYJMWccpp
- oXGmrUIVDh3xcj4TuOaPQWlmzcdE1O6AaXH85ugeiNRZm8kCXLaY6og+xtEmtrYJPXl9
- uu4g==
-X-Gm-Message-State: AFuF++knJY81V6LtMYGeO6EThDf0nDEyX+kTVVe31pi45vhf7z3oRQ9s
- DHd91TBzT3+J4Sk0MZoKR5Qy5/gGQcprLClrXByuDc9vOF0TloRS7aWnO78gav3oQ+Kxtl3Kz6W
- TaCfiPuG0OP+jjSovUPXo08XVxXce8vSR8nTN171SDL2KdSGyKeUGejpakZUcs6e2WP6tAPEEk/
- SBZydRlPP0rvGdCurrL6WFUhDPQZmVzSva
-X-Gm-Gg: AYBFou28MOH0T1A2r73St/IephXIXQx/Ip+hKRX5WzqV97Gu102mnaLdns3fJBqqDcy
- bsR2Nj6aBEHjX/fuBsSOJulqcDNYoTrdlAMPBawOelQypsWkv2RyOOEQBb1T28O/GeCe1KgJ/3a
- SM4ACbXsC8J6n9DPXJdzdpi3G7wm2CIuBEO23b2yH3hYXNPPZx0AJu9THRIQ==
-X-Received: by 2002:a05:690c:e0d5:10b0:857:f33:6f1d with SMTP id
- 00721157ae682-87122396144mr80484667b3.6.1788882908181; 
- Tue, 08 Sep 2026 08:55:08 -0700 (PDT)
-X-Received: by 2002:a05:690c:e0d5:10b0:857:f33:6f1d with SMTP id
- 00721157ae682-87122396144mr80484447b3.6.1788882907658; Tue, 08 Sep 2026
- 08:55:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x3yA2-0008TH-Jh
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 11:55:06 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 4691880D5A;
+ Tue, 08 Sep 2026 18:54:57 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:4d::1:17] (unknown [2a02:6bf:8080:4d::1:17])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id tsPoFq6ZVCg0-YZNdqrkj; Tue, 08 Sep 2026 18:54:56 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1788882896;
+ bh=ZYhp6G+1BY2deUSNfV9usPCRpah9i0LeQWihni07bHo=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=EUn37KLDBmMg9pMVC0IqQFyR25fsiaknfn2W6zx0k+1sOLTvjWz4bcF7YmCObIg1u
+ /iMTQV94bgGVwCkn8nvHR9yoUQblGCb7PQxnFunjVxKxofu4fxW6ziK+dHqMh6kDXN
+ P2h/AHgOFyOWZPZy1Pp3JXcaKPQT+jeCoI1S7FQ0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <09ef6347-a49d-4297-87b7-ef41a7b47457@yandex-team.ru>
+Date: Tue, 8 Sep 2026 18:54:55 +0300
 MIME-Version: 1.0
-References: <20260905180949.1852673-1-brian.cain@oss.qualcomm.com>
- <20260905180949.1852673-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260905180949.1852673-2-brian.cain@oss.qualcomm.com>
-From: Sid Manning <sid.manning@oss.qualcomm.com>
-Date: Tue, 8 Sep 2026 10:54:56 -0500
-X-Gm-Features: AcwNN1UKQXQIbB6b2F2CRoN4lHLgdGW8PY0Q6jApesVSf_W3vNfkIAIfDMF7uSE
-Message-ID: <CAJpW4SXu9Otn_O37d-dGqiOcF+9-zL8mYVn0B33sC=b=8FFoKA@mail.gmail.com>
-Subject: Re: [PATCH 01/17] tests/tcg/hexagon: fix undefined signed left shift
- in circ.c
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000004194c3065afac2e5"
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDE3MSBTYWx0ZWRfX8nr1YSqHcUwg
- egZ4/rFS73KQ2TZgz0Wr7155tfiMm0hSSjBOpJB/kPcuWE9IILXE9aOfAwSor6279iluZ3JbnkU
- s/xoy8pFgwxVuxV04NSK6VPYorQFyxY=
-X-Proofpoint-ORIG-GUID: 8vPaGbXyUTkiXtFwD6NG6BfoMuitTXLC
-X-Authority-Analysis: v=2.4 cv=TammcxQh c=1 sm=1 tr=0 ts=6aa02fdd cx=c_pps
- a=g1v0Z557R90hA0UpD/5Yag==:117 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=sC25wYaVvpZHD3WcN6UA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
- a=G6KhYomvbhgvyHxHSrEA:9 a=oxr4_ypfeJXb6gGU:21 a=lqcHg5cX4UMA:10
- a=MFSWADHSvvjO3QEy5MdX:22
-X-Proofpoint-GUID: 8vPaGbXyUTkiXtFwD6NG6BfoMuitTXLC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDE3MSBTYWx0ZWRfXxfyy2JX29Y9K
- gN09cRMJGfvRckV2bVtcPf4Kux9Ghrxk1OSUvukjGU5K3pv/BUyGaO7535kyLXJ73u6ubi+bOgw
- WR1kCX/K9IFYpGiBIBR6J2hv6sOqSf+Qa1sfHMgAkVAL1tzMeL6ZWIqqi58XfCSt9HdysRN7+wS
- MDFnp5ATxDDdzwjFwRVuj6mCZAsOp2lUK3wjuv9B2i5e61oGAmlc5KwcONiQi7L5Xq+j+wFMnuD
- 6J2dpbhBbzDQFuDVl2qZn4w42ln39A7FUXC3pOlGjkXnPZIAUfwj+CUmmPPTct+qYFgIl0qgLMZ
- qdoqIWs7jNHM7f38VLbUGmCt2fR9bYA7Nd7DiZWevQanXV2IU3Rk0sx30DPy+67qr8HYHL+VGgF
- 6z/5KSEW8+2xQmDdkFCZ9AiV5ZPFo11SWoqWCTGeHtyQsgKeA/AATcj/30gRrrG243+Zgq7LzTK
- yqpNjr5b/H49kdLZR2Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
- spamscore=0 suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080171
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=sid.manning@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v21 00/16] virtio-net: live-TAP local migration
+To: jasowang@redhat.com, mst@redhat.com
+Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com
+References: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -164,91 +78,431 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004194c3065afac2e5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+One more gently ping)
 
-LGTM
+Seems, all questions discussed. Could we proceed with these series?
 
-On Sat, Sep 5, 2026 at 1:09=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm.=
-com>
-wrote:
+On 19.08.26 21:01, Vladimir Sementsov-Ogievskiy wrote:
+> Hi all!
+> 
+> Here is a migration for TAP net backend, including its properties and
+> open fds.
+> 
+> With this new feature, management software doesn't need to initialize
+> new TAP and do a switch to it. Nothing should be done around
+> virtio-net in local migration: it just migrates and continues to use
+> same TAP device. So we avoid extra logic in management software, extra
+> allocations in kernel (for new TAP), and corresponding extra delay in
+> migration downtime.
+> 
+> v21:
+> 09: wording, add r-b and a-b by Markus and Peter
+> 10-12: new, reworkd v20/10
+> 15: rename x-local-migration-supported to x-permit-local-migration,
+>      small docs improvements, keep r-b
+> 
+> v21 is pushed to
+> 
+>      https://gitlab.com/vsementsov/qemu.git
+>        tag: up-tap-fd-migration-with-bk-opt-v21
+> 
+> To run the test, use sudo, as test needs to configure TAP device:
+> 
+>      sudo PYTHONPATH=python:tests/functional \
+>      QEMU_TEST_QEMU_BINARY=$PWD/build/qemu-system-x86_64 \
+>      MESON_BUILD_ROOT=$PWD/build \
+>      ./build/pyvenv/bin/python3 tests/functional/x86_64/test_tap_migration.py
+> 
+> Or, to test the feature by hand, you may follow the instruction at
+> the and of this document (search for "How to run local fd migration by hand"
+> caption).
+> 
+> Why this series, and why do it this way
+> =======================================
+> 
+> This came up in the v19 discussion, so it's summarized here to avoid
+> repeating the same questions.
+> There was a large discussion at v19, covered many questions. I'm
+> summarizing them below.
+> 
+> v19: https://lore.kernel.org/qemu-devel/20260714154246.1242856-1-vsementsov@yandex-team.ru/
+> 
+> Why local migration matters
+> ---------------------------
+> 
+> Local migration (migrating to a new QEMU process on the same host) is not
+> a rare operation for in the cloud.  When upgrading QEMU, _all_ VMs on
+> _all_ hosts are locally migrated.  The freeze time of such update affects
+> _all_ customers, and some are sensitive to even small freezes.  Remote
+> migrations, by contrast, are done mostly to release a physical server for
+> service/redeploy, which is relatively infrequent.
+> 
+> The aggregate impact is large, and reducing the per-VM downtime is
+> significant.
+> 
+> Why not just create a new TAP and switch to it
+> ----------------------------------------------
+> 
+> It is possible to create a new TAP device on the target and
+> migrate the usual way.  But the overhead is in switching to the new TAP
+> in our cloud virtual networking component.  Could the switching itself
+> be optimized to always be very fast?  Probably yes, but we chose a
+> different approach: drop extra components from the process and avoid
+> any switching at all.  Both the cloud networking component and the
+> storage backend (with the vhost-user-blk live-update series) don't even
+> know that QEMU is migrating.  This gives a simpler design (fewer
+> components involved) and shows good results -- several times reduction
+> in freeze time.
+> 
+> Also, on hosts with many CPUs, TAP queues allocate a noticeable amount of
+> RAM, so having 2x queues during migration is an overhead.
+> 
+> Why not use a persistent TAP (open the same TAP on both source and target)
+> -------------------------------------------------------------------------
+> 
+> First, same memory overhead like with "new TAP" case.
+> 
+> Second, MAX_TAP_QUEUES is 256 in the kernel; if the source already has more
+>    than 128 queues open, the target cannot open the same device.
+> 
+> [Note also, that such persistent TAP migration will not "just work",
+> it also needs QEMU changes like patch 12/15 to avoid packet lost]
+> 
+> Why not pass FDs externally (e.g. from libvirt / management tool)
+> -----------------------------------------------------------------
+> 
+> - The management tool would need to store (or retrieve from source QEMU)
+>    and pass these FDs, requiring it to know about FDs that QEMU already
+>    owns.  Libvirt may restart, and that shouldn't break migration.
+> - Adding an API to retrieve FDs from QEMU just to pass them to target QEMU
+>    is not a clearer solution.
+> - QEMU owns the TAP fd and has full knowledge of its state.  Pushing
+>    this responsibility to an external tool means the tool needs to
+>    understand QEMU internals -- that's a worse separation of concerns.
+> - QEMU already passes FDs through migration for VFIO devices (CPR), we
+>    do continue this practice
+> 
+> Looking at wider picture, where we want to migrate not only TAP, but also
+> vfio devices (already implemented as CPR migration, but may be updated to
+> use similar approach as in this series, to use one migration channel),
+> vhost-user-blk (my another series in flight) and vhost-user-fs (not yet
+> published), vhost-vsock migration ("[PATCH v3 0/7] migration/cpr: support
+> vhost-vsock devices" in flight-series from Virtuozzo), it seems to be a
+> good generic approach: simply pass backends (including open FDs) to the
+> target, not involving mgmt. Qemu has full knowledge about these FDs and
+> owns the whole state. Migrating them in QEMU looks correct.
+> 
+> Why not use the cpr-transfer approach (pass FDs before device creation)
+> -----------------------------------------------------------------------
+> 
+> The CPR approach passes FDs _before_ any devices are created on the
+> target.  While this avoids touching frontend code (patch 11/15), it
+> means the target starts using (calling ioctls on) FDs that are still
+> actively used by the running source QEMU.  That works for TAP, but it
+> does _not_ work with vhost-user-blk, where sharing the fd between
+> source and running target can break things.  My series uses the same
+> approach for both net and storage, and it also works with CPR (see
+> below).
+> 
+> That's not saying about "local" approach provides simpler user
+> experience than cpr-transfer:
+> 
+> - no need in secondary migration channel
+> - no need to work with unavailable QMP for target process until
+>    "migrate" on source
+> 
+> Does this work with CPR?
+> ------------------------
+> 
+> Yes.  For cpr-transfer, TAP migrates through the main migration channel
+> like other (non-CPR) devices.  For cpr-exec, TAP FDs don't have
+> FD_CLOEXEC set, so they are inherited by the new process as-is; the
+> same core mechanism (load_fd / save_fd in migration/vmstate-types.c) is
+> used.  The 'local' migration parameter documentation now also covers
+> cpr-exec mode (skip the UNIX-socket requirement in that case).
+> New test cases exercising both cpr-transfer and cpr-exec with TAP
+> local migration will be sent as separate series.
+> 
+> 
+> How to run local fd migration by hand
+> =====================================
+> 
+> The walkthrough uses four terminals:
+> 
+>    source-cmd  -- source VM console (serial output, guest login)
+>    source-qmp  -- QMP connection to the source QEMU
+>    target-cmd  -- target VM console (serial output, guest login after migration)
+>    target-qmp  -- QMP connection to the target QEMU
+> 
+> 1. Prerequisites
+> ----------------
+> 
+>      QEMU=/path/to/your/build/qemu-system-x86_64
+> 
+> # download same image as in test
+> 
+>      wget -O /tmp/alpine.iso "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
+> 
+> 
+> # prepare tap device (be careful to not break your own networks)
+> 
+>      sudo ip tuntap add dev tap0 mode tap multi_queue
+>      sudo ip addr add 192.168.100.1/24 dev tap0
+>      sudo ip link set tap0 up
+> 
+> 
+> 2. Start source VM
+> ------------------
+> 
+> In source-cmd, run:
+> 
+>      $QEMU \
+>          -name source \
+>          -machine q35 \
+>          -accel kvm \
+>          -m 1G \
+>          -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
+>          -machine memory-backend=ram0 \
+>          -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
+>          -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
+>          -serial stdio \
+>          -nographic \
+>          -S \
+>          -qmp unix:/tmp/qmp-source.sock,server=on,wait=off
+> 
+> Note: the netdev and virtio-net device are added via QMP below for symmetry
+> with the target.  On the source you could also pass them on the command line
+> (with x-permit-local-migration=on).
+> 
+> In source-qmp, connect and add the TAP netdev and virtio-net device:
+> 
+>      socat - UNIX-CONNECT:/tmp/qmp-source.sock
+> 
+>      {"execute": "qmp_capabilities"}
+> 
+>      {"execute": "netdev_add", "arguments": {
+>          "id": "netdev.1",
+>          "type": "tap",
+>          "ifname": "tap0",
+>          "queues": 4,
+>          "vnet_hdr": true,
+>          "script": "no",
+>          "downscript": "no",
+>          "x-permit-local-migration": true
+>      }}
+> 
+>      {"execute": "device_add", "arguments": {
+>          "driver": "virtio-net-pci",
+>          "id": "vnet.1",
+>          "netdev": "netdev.1",
+>          "bus": "pci.1",
+>          "mq": true,
+>          "vectors": 18,
+>          "romfile": "",
+>          "disable-legacy": "off"
+>      }}
+> 
+>      {"execute": "cont"}
+> 
+> Wait for Alpine to boot in source-cmd.  When you see the login prompt, log
+> in as root (no password):
+> 
+>      localhost login: root
+> 
+> Configure the guest network:
+> 
+>      ip addr add 192.168.100.2/24 dev eth0
+>      ip link set eth0 up
+> 
+> Verify connectivity from the guest:
+> 
+>      ping -c 3 192.168.100.1
+> 
+> And from the host (in any spare terminal):
+> 
+>      ping -c 3 192.168.100.2
+> 
+> 
+> 3. Start target VM
+> ------------------
+> 
+> The TAP netdev must be created via QMP after enabling the "local" migration
+> parameter -- the target will not open tap0 itself; instead it will receive the
+> TAP file descriptors from the source over the migration channel.
+> 
+> In target-cmd, run:
+> 
+>      $QEMU \
+>          -name target \
+>          -machine q35 \
+>          -accel kvm \
+>          -m 1G \
+>          -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
+>          -machine memory-backend=ram0 \
+>          -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
+>          -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
+>          -serial stdio \
+>          -nographic \
+>          -qmp unix:/tmp/qmp-target.sock,server=on,wait=off \
+>          -incoming defer
+> 
+> In target-qmp, connect, enable local migration, and add the TAP netdev and
+> virtio-net device.  The "local" parameter must be set before creating the TAP.
+> Do not pass ifname/fd -- the fd will arrive via the migration channel:
+> 
+>      socat - UNIX-CONNECT:/tmp/qmp-target.sock
+> 
+>      {"execute": "qmp_capabilities"}
+> 
+>      {"execute": "migrate-set-capabilities", "arguments": {
+>          "capabilities": [
+>              {"capability": "events",          "state": true},
+>              {"capability": "x-ignore-shared", "state": true}
+>          ]
+>      }}
+> 
+>      {"execute": "migrate-set-parameters", "arguments": {"local": true}}
+> 
+>      {"execute": "netdev_add", "arguments": {
+>          "id": "netdev.1",
+>          "type": "tap",
+>          "queues": 4,
+>          "script": "",
+>          "downscript": "",
+>          "x-permit-local-migration": true
+>      }}
+> 
+>      {"execute": "device_add", "arguments": {
+>          "driver": "virtio-net-pci",
+>          "id": "vnet.1",
+>          "netdev": "netdev.1",
+>          "bus": "pci.1",
+>          "mq": true,
+>          "vectors": 18,
+>          "romfile": "",
+>          "disable-legacy": "off"
+>      }}
+> 
+> 4. Start migration
+> ------------------
+> 
+> In target-qmp, tell the target to listen for the incoming migration:
+> 
+>      {"execute": "migrate-incoming",
+>       "arguments": {"uri": "unix:/tmp/migration.sock"}}
+> 
+> In source-qmp, configure migration capabilities and parameters:
+> 
+>      {"execute": "migrate-set-capabilities", "arguments": {
+>          "capabilities": [
+>              {"capability": "events",          "state": true},
+>              {"capability": "x-ignore-shared", "state": true}
+>          ]
+>      }}
+> 
+>      {"execute": "migrate-set-parameters", "arguments": {"local": true}}
+> 
+> In source-qmp, trigger the migration:
+> 
+>      {"execute": "migrate",
+>       "arguments": {"uri": "unix:/tmp/migration.sock"}}
+> 
+> Poll migration status until it completes (source-qmp):
+> 
+>      {"execute": "query-migrate"}
+>      # repeat until "status" == "completed"
+> 
+> Or just wait for the MIGRATION event that QEMU emits automatically:
+> 
+>      # {"event": "MIGRATION", "data": {"status": "completed"}, ...}
+> 
+> Once the source reports "completed", resume the target VM (target-qmp):
+> 
+>      {"execute": "cont"}
+> 
+> The target VM is now running with the migrated state and the TAP file
+> descriptors that were passed from the source. Still, target console
+> (in target-cmd) may still be empty, until you at least press Enter in
+> it.
+> 
+> Verify that the guest is still reachable from the host:
+> 
+>      ping -c 3 192.168.100.2
+> 
+> And from inside the guest in target-cmd:
+> 
+>      ping -c 3 192.168.100.1
+> 
+> 
+> 5. Cleanup
+> ----------
+> 
+> Shut down the target VM (target-qmp):
+> 
+>      {"execute": "quit"}
+> 
+> Shut down the source VM (source-qmp):
+> 
+>      {"execute": "quit"}
+> 
+> Remove the TAP device:
+> 
+>      sudo ip tuntap del tap0 mode tap multi_queue
+> 
+> Remove the shared memory file:
+> 
+>      rm /dev/shm/qemu_migration_test
+> 
+> Remove leftover sockets if they still exist:
+> 
+>      rm -f /tmp/migration.sock /tmp/qmp-source.sock /tmp/qmp-target.sock
+> 
+> Vladimir Sementsov-Ogievskiy (16):
+>    net/tap: rework tap_parse_script
+>    net/tap: improve script/downscript options documentation
+>    net/tap: deprecate "no" as special value for script/downscript
+>    net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
+>    net/tap: move vhost initialization to tap_setup_vhost()
+>    net/tap: use container_of instead of DO_UPCAST
+>    net/tap: QOMify tap backend
+>    net/tap: add TYPE_VMSTATE_IF interface
+>    qapi: add local migration parameter
+>    migration/fd: fix fd leak when fd is not valid for migration
+>    migration/fd: add errp parameter to migration_fd_valid()
+>    migration: check that transfer is UNIX socket when "local" set
+>    virtio-net: support local migration of backend
+>    net/tap: disable read polling for stopped VM
+>    net/tap: support local migration with virtio-net
+>    tests/functional: add test_tap_migration
+> 
+>   docs/about/deprecated.rst                     |  18 +
+>   docs/system/i386/microvm.rst                  |   4 +-
+>   docs/system/i386/xenpvh.rst                   |   2 +-
+>   docs/system/ppc/ppce500.rst                   |   4 +-
+>   docs/system/riscv/microchip-icicle-kit.rst    |   2 +-
+>   docs/system/riscv/sifive_u.rst                |   2 +-
+>   hw/net/virtio-net.c                           |  89 +++-
+>   include/hw/virtio/virtio-net.h                |   1 +
+>   include/migration/misc.h                      |   2 +
+>   include/migration/vmstate.h                   |   2 +
+>   include/net/net.h                             |   9 +
+>   include/net/tap.h                             |   2 +
+>   migration/fd.c                                |  28 +-
+>   migration/migration.c                         |  13 +
+>   migration/options.c                           |  18 +-
+>   net/net.c                                     |  14 +-
+>   net/tap.c                                     | 446 ++++++++++++++---
+>   qapi/migration.json                           |  21 +-
+>   qapi/net.json                                 |  47 +-
+>   qemu-options.hx                               |  13 +-
+>   tests/functional/x86_64/meson.build           |   1 +
+>   tests/functional/x86_64/test_tap_migration.py | 461 ++++++++++++++++++
+>   22 files changed, 1081 insertions(+), 118 deletions(-)
+>   create mode 100755 tests/functional/x86_64/test_tap_migration.py
+> 
 
-> Cast operands to uint32_t before left-shifting in build_mreg() to
-> avoid undefined behavior when the shift result overflows int32_t.
-> Found with UBSan.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  tests/tcg/hexagon/circ.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/tests/tcg/hexagon/circ.c b/tests/tcg/hexagon/circ.c
-> index ab949ebef1c..2a15c324242 100644
-> --- a/tests/tcg/hexagon/circ.c
-> +++ b/tests/tcg/hexagon/circ.c
-> @@ -97,9 +97,9 @@ INIT(dbuf, NDOBLS)
->   */
->  static int32_t build_mreg(int32_t inc, int32_t K, int32_t len)
->  {
-> -    return ((inc & 0x780) << 21) |
-> -           ((K & 0xf) << 24) |
-> -           ((inc & 0x7f) << 17) |
-> +    return ((uint32_t)(inc & 0x780) << 21) |
-> +           ((uint32_t)(K & 0xf) << 24) |
-> +           ((uint32_t)(inc & 0x7f) << 17) |
->             (len & 0x1ffff);
->  }
->
-> --
-> 2.34.1
->
->
 
---0000000000004194c3065afac2e5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">LGTM</div><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Sep 5, 2026 at 1:09=E2=
-=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com">bria=
-n.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">Cast operands to uint32_t before left-shifting in bu=
-ild_mreg() to<br>
-avoid undefined behavior when the shift result overflows int32_t.<br>
-Found with UBSan.<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0tests/tcg/hexagon/circ.c | 6 +++---<br>
-=C2=A01 file changed, 3 insertions(+), 3 deletions(-)<br>
-<br>
-diff --git a/tests/tcg/hexagon/circ.c b/tests/tcg/hexagon/circ.c<br>
-index ab949ebef1c..2a15c324242 100644<br>
---- a/tests/tcg/hexagon/circ.c<br>
-+++ b/tests/tcg/hexagon/circ.c<br>
-@@ -97,9 +97,9 @@ INIT(dbuf, NDOBLS)<br>
-=C2=A0 */<br>
-=C2=A0static int32_t build_mreg(int32_t inc, int32_t K, int32_t len)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return ((inc &amp; 0x780) &lt;&lt; 21) |<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((K &amp; 0xf) &lt;&lt; 24) |<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((inc &amp; 0x7f) &lt;&lt; 17) |<=
-br>
-+=C2=A0 =C2=A0 return ((uint32_t)(inc &amp; 0x780) &lt;&lt; 21) |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((uint32_t)(K &amp; 0xf) &lt;&lt;=
- 24) |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((uint32_t)(inc &amp; 0x7f) &lt;&=
-lt; 17) |<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (len &amp; 0x1ffff);<br>
-=C2=A0}<br>
-<br>
--- <br>
-2.34.1<br>
-<br>
-</blockquote></div>
-
---0000000000004194c3065afac2e5--
+-- 
+Best regards,
+Vladimir
 
