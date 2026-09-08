@@ -4,93 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7225BC79FA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADD7C79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rq6-0006Fo-I1; Tue, 08 Sep 2026 05:10:02 -0400
+	id 1x3rs1-00072c-0X; Tue, 08 Sep 2026 05:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1x3rq5-0006FS-3Z
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:10:01 -0400
-Received: from mail-oo2-x02.google.com ([2607:f8b0:4864:31::2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1x3rq3-0002uJ-52
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:10:00 -0400
-Received: by mail-oo2-x02.google.com with SMTP id
- 006d021491bc7-6bd3ee01a0dso50612eaf.0
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:09:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1x3rry-00072K-1N
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:11:58 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1x3rru-0003FL-RC
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:11:57 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6886LcPA3299120
+ for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 09:11:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=QC6qhvdU3pT7y10dLqA7CiXf
+ l7RYcOBKBN5mbZS7txk=; b=UoqmlDPXBGKXxrOhhb4gOj3F3UbNFINMVKD9kNCU
+ TlnBXBqhWrDrs6XNfH4o7HcjZzHFaZHVOLqffuNXY7yDYVfG6aqhlCbvaj3EF69r
+ axjFWd8YkXcPWtFkvpm+rqREzZ7Wq+OFKXKpF1WXPgYXOAi5V7qNWZgxGFh7omVE
+ mQfWtldu1We3TbnqvU9N/ZPLdImFuUBuiquStBRypYcUvfVjq6nDAT3ciGgJd/nB
+ 3QU7jcniuJ89csm46O3TUpakY5LE9Sa+JOBAEVJBAwnvS+VruZ1ZF+gJ5YVuZqGK
+ 53WdQKDgUUpEOV+BphVcuFTp4/8jVMKANagHJNkXUUX8iw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjb0p94rq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 09:11:52 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93915f50a5cso1054793385a.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788858597; x=1789463397; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=71Mpuv729WYbiaUyjl4E7MxfENwavn5KXYJix8I7SxQ=;
- b=e9ZaeZGjpH16KX97oLvSyhtIiZGgzcYS8+FaBDcLCMb/6CEnPzoDHO3ZA1vEMeqS0I
- eQULrY7ufq6iRC96MLdeYJsHmC11uzFSEjgjJ/1Lg+yDkx3ir2E6ZYnldhUG3/btJoOg
- IHYjlPKsscaCadeUI3tGx+oEScTNQKnpnlBWrBazWCjTm3n2g4E0PDQplw948B+k8qer
- xRJ/vUUHHa8aT1a768/JczLcNrIxqDl0Gh0m1IntorsMbAzJyF5dUIGgAhU8dIceAr5P
- SNgHmkougS2OJiLeh+PhRKCxghje49anz04Bytbzh94M8uPUuyQktFD9cGY9fGEQ6WI6
- UR7A==
+ d=oss.qualcomm.com; s=google; t=1788858712; x=1789463512; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QC6qhvdU3pT7y10dLqA7CiXfl7RYcOBKBN5mbZS7txk=;
+ b=MRRMlhZ6MslQ+UkX3PuuSEu1alJDA7vSFx+wOBoHYwBgq/ZRqnS5nVdqPyB6Uk0+NH
+ 7d5ArZh8mQyQqDjE1Z6rMG7oDl1y7RbFJdEbcrRfjBUooNuoI3jB31eWe3XlqQUOj7hU
+ PnIMy7VSDrNqGMEzYfC6zK0xrETBjSPG+SpqsSXwAmhB/SyhKRixU0GyGK4SHBXAAwx8
+ uBocrYMap5lLh6VFoMecN4b7d/ZFdliuMRiKY0oCrFUnB8dbIc9IyHMRxqirAsnT+Pi2
+ n+U4MZLm1Y3wdkTDFfxUQPFnL100dIjKF9XdZPZamyR/0vBsiVFMNEqSmFe2DZEBjPBx
+ ALaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788858597; x=1789463397;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ d=1e100.net; s=20251104; t=1788858712; x=1789463512;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=71Mpuv729WYbiaUyjl4E7MxfENwavn5KXYJix8I7SxQ=;
- b=k6D8v9GY02RsEhnTzTm5sxwOcud41VfAGTV7n4JmKRVe5H9ndgN0XhgxK0upd50rI5
- fMv4RmOKVU9ScmVQnv//Swg2v+/rfim9kLUUmxtqABNkvl6hsB8S8dMSENyvt57cpaCN
- yA59YiPtmfil2NiqamB43zYL7mmFuWUlt4BqMVfqgSArWlbWHor3tKuMUL/3LKbXyZMg
- 0A1Fb/xrTc7Jypk4ycS5bKAnjtLD/F3uRfyTxAxVeyZ/DtrVMmYao14eQyVm1A62jJVm
- l/j0U1ADmOf9F+CcZeoiygmNL7K1c6jUH83yxF+AQcVdBm9XeQmSOqB3b1FDBf71KCu8
- wYhA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzpjxRQBVjLDQdRAkD+Vwn+swN3vnZNmvOlB8F3v+l6gmtDTU4BkYJrXbBfYZ2mE9e2nFVlrf9Q2hsq@nongnu.org
-X-Gm-Message-State: AFuF++l/noAOL+jDpyDW2WRZjIySBD0QgMEn9nHEP/BzFlIqhDp3B6Wj
- 3HAFKpaLZnh6E1eR5uZ9D4x/2cLiWjTT1rVApXH7kmVu/yrcS5TvZg4=
-X-Gm-Gg: AYBFou3tnsfPScuo65dszxxXYi0w3KqcnsNJ5keTiw++HJndTscHJUH/CarBTjp4wHT
- AWOoF3MQpkZhxz4hExgkp/o08d/e8YyNUEehmBx4OmvMXSrb+5KM6XV/q2IrfACyAL+9Er4olT6
- Sd0kuqpx9r+KUB9R2GQXRa3oRtNvDqDYKVgMfzl2XLafFMNgrdRId4TqU15ZoI0clXM0PDsEq+L
- g/Lqp4fkOLQX3lpzCumhtEY0Vra8piPUxlIkEE9JVTqfmSE1d0sNZryLZ2Spk6wLf0anLWvqGLq
- iTdF1baFKpMCWYYIRI/8K0VTSJqY6be2XQtYmMYPY3p50k2tRFiAc4a0B9EP0RRRK02aIqCliVg
- j0Uq/aI8Q2wcGsf2GemkhnzQ5bdBLzlYRjZZzJSiZWrhI1mnQwMBcCIsE3g3dGN34Pdh/g3DCYt
- 8Jpjm6Svc9BH0Q/GFZ1gr83QBI/JzZG5/9L7uoj3kbE+BgkkBusAkGMZ2xAimugH0vqhheLYahP
- XcAKJUUZVcnCF/Al1P6RkCdd36IarObDGBKMjv+nA==
-X-Received: by 2002:a05:6820:809:b0:6b3:519e:dfdf with SMTP id
- 006d021491bc7-6b6fc7d3f12mr15654689eaf.28.1788858597459; 
- Tue, 08 Sep 2026 02:09:57 -0700 (PDT)
-Received: from ?IPV6:2408:820c:8ffa:c0f0:25c7:53f7:86b3:955?
- ([2408:820c:8ffa:c0f0:25c7:53f7:86b3:955])
+ bh=QC6qhvdU3pT7y10dLqA7CiXfl7RYcOBKBN5mbZS7txk=;
+ b=R0EV7RX3kR2cuLEhK4xgfIQdP6NktvDtHe+ywKDA+f79kWLFgLk6WsYvjS7QUVgjmF
+ UOxOIryFwao44/cuw5LEAWy0AGQED967dSBX1HzGhctBse+TlIMTFwN8oW/M15AbMK+0
+ n5OeEIo5KU6FPzVRTV+4XtcpxEPIIxjvpDCE8q/6BKzYmKJe2LXPZRyBDRHaRA/DQ2PK
+ p466c0O65j+/aVrWCgXCR+TVPrjdUzi4dz1q05FJE3IezEwF6joR4SaCnmncIJGDHgs8
+ K0I/w8YRiZ0XhiE4FRO+13zcqEoIS21ZE5+TJ16cnNk8lN4S+ExUapBeCjRDMMa0k/ow
+ 4Nug==
+X-Gm-Message-State: AFuF++lm1khXe9p0a2jMeOpKqJoky+L1nb1mre8d9Gjl5CWW3MiykIfy
+ tdJCwJ19Qus4zi39nycBcdLYPK7JAG09DFiRPspT4C5pj4FFM3IbcVZBAb6Il9aHaAg0B7oqG2Z
+ y+SWGJrcP2SWt3KQyFlpTSzNho6rNVqNiBLppOIS98+sm+YEM30TSLAsGhg==
+X-Gm-Gg: AYBFou2fcbUOfU652OgguxeUimGbKYTqyyfiF36Z0nv0FuX3T/b+QOKIta1yNESVuwX
+ tlUv2ihn86chLKn0JjsQPqaOTGFngWKVohOIJe5WL+hdrLDBXglqOoEdeUNTNvQZguX9FgFMB+/
+ KaJ3LvWlM2x0E1de241OCZ+ZGRr86Q7Hu/TratdhR/HnyTJ/seTTmlRDfASiCLei51ADIVQYatM
+ tsWqtBdWYF/aE09pBn6je72s2o4+36FSCvx+GFiKnJKeFB9gh5OIZqonQYx5ptg2DJFFeMXLS0+
+ 4iLJh5U/z2L4CWJpyw9ApqKDna/x5X/YyO88CxTXFK5zdNwYbywF/cFrC+s57Ge9OqUSKHgi4k7
+ 09IIdrHa2OyRbg8NgXZV2yceERBk91LDvlB7a2w==
+X-Received: by 2002:a05:620a:bd5:b0:937:4550:96c9 with SMTP id
+ af79cd13be357-9396e0e1302mr3016416785a.21.1788858711926; 
+ Tue, 08 Sep 2026 02:11:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:bd5:b0:937:4550:96c9 with SMTP id
+ af79cd13be357-9396e0e1302mr3016414585a.21.1788858711533; 
+ Tue, 08 Sep 2026 02:11:51 -0700 (PDT)
+Received: from localhost (ip-86-49-245-11.bb.vodafone.cz. [86.49.245.11])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-334fbd5e6f6sm27287446eec.23.2026.09.08.02.09.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Sep 2026 02:09:57 -0700 (PDT)
-Message-ID: <2dde7fa2-de05-4a8b-91d0-22e0fb1df107@gmail.com>
-Date: Tue, 8 Sep 2026 17:09:54 +0800
+ a640c23a62f3a-c260d5cfaa2sm580226866b.59.2026.09.08.02.11.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Sep 2026 02:11:50 -0700 (PDT)
+Date: Tue, 8 Sep 2026 11:11:49 +0200
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v10 4/5] tests/functional/riscv64: add riscv-server-ref
+ tests
+Message-ID: <5pcda5mlbnlftgqemlix5sudyutlje7l66rmy7wjsvzmkrbju5@zsofeqrhmnos>
+References: <20260904195610.964829-1-daniel.barboza@oss.qualcomm.com>
+ <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vfio/igd: Add device ID support for Meteor Lake and
- Arrow Lake
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Yuan Wang <yuan1.wang@intel.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com
-References: <20260825090435.1492485-1-yuan1.wang@intel.com>
- <c425dffd-ccc6-42b0-b083-51f06562237d@gmail.com>
-In-Reply-To: <c425dffd-ccc6-42b0-b083-51f06562237d@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:31::2;
- envelope-from=tomitamoeko@gmail.com; helo=mail-oo2-x02.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: IvRDesKj6vcdBRwEIqg13e8xSQBSM5XQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA5NiBTYWx0ZWRfX5yNfxy2S6wOq
+ gY214yOSwRQdQkD/bUr5IJJYL2lKEMllhlDCqE7/ef97G8wlqHR6elNl4zNInKNMn4dvKSj5qPM
+ KemMkh5XT7kjm9kG1vQC5Q1hmie660E=
+X-Authority-Analysis: v=2.4 cv=HL3z0Itv c=1 sm=1 tr=0 ts=6a9fd158 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4CXLxsOAgPM/krjtHEZQyA==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=WguLxQ3cqw7mU-68o14A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: IvRDesKj6vcdBRwEIqg13e8xSQBSM5XQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA5NiBTYWx0ZWRfX5qZ37Z7HaC9v
+ /1MCN2AwGboEDC1Y6usRU2A1vtJd0JbJIuVdUae/mJ16t90DBiTtSXWLZMISVv5gw4su92TUaAb
+ Q3+7tAxdQ6dyxqElCzHbhdCmUOIdrqv9Q8p1GNWyiEcIP1TknnssIBZabahIzUdwoQqD+NvzIc0
+ y+tUJ0QyuUOFCxMu4knbx3OB2qo+Ys5mQPXkmd0G8Ehj06Qufl+2Z89jUXLt32vIq5YD9gt2S3c
+ g+dnZe7Af22+9+okH+noNI7o7MSwhBXtgA+1z3LKx7vmLQKAeTnsgYTDM4Clcytve2Fm6OxRtF6
+ 06Manjl04HBHMASIZ2x1EQHo2LuURa9ZlmgIVkibIpnbjfvI9XkBym9o2D3sXreLF9EC0m7MdcU
+ 3CFjGZlB0hDGyYBZNmov48jKJFoqdodARkhaImVHAc+eovnlMk94btPigq6e/wbSaxqZlk+zG+w
+ Gg9S+3aPtvJLtEuhwtQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609080096
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,127 +154,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-08 13:09, Tomita Moeko wrote:
-> Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
+On Fri, Sep 04, 2026 at 04:56:09PM -0300, Daniel Henrique Barboza wrote:
+> Add tests for the recently added riscv-server-ref machine:
 
-Sorry I'd like to withdraw this Reviewed-by... 
-> Thank you for your contribution!
-> 
-> On 2026-08-25 17:04, Yuan Wang wrote:
->> Currently, igd_gen() does not include the PCI device IDs for Meteor
->> Lake and Arrow Lake platforms, causing it to return -1 for these GPUs.
->>
->> As a result, QEMU calculates the stolen memory size as 0 and exposes a
->> zero-sized 'etc/igd-bdsm-size' entry via fw_cfg. When OVMF boots,
->> IgdAssignmentDxe fails validation on the zero BDSM size and aborts
->> without programming the ASLS register. Consequently, the guest Intel
->> GOP driver fails to locate and read the OpRegion (ASLS remains 0x0).
->>
->> Add the device ID prefixes (0x7D00 and 0xB600) to igd_gen() as Gen 12
->> so that stolen memory is correctly determined, allowing OVMF to properly
->> initialize the OpRegion and BDSM for the Intel GOP driver.
->>
->> Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
-I took a deeper look about the change, this change actually changes
-vfio_probe_igd_bar0_quirk() to go with the 64-bit emulated BDSM register
-path, right? But the problem is, does the BDSM register really exists on
-Meteor/Arrow Lake and later iGPUs?
-
-In drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c:xe_ttm_stolen_mgr_init()
-
-	if (IS_SRIOV_VF(xe))
-		stolen_size = 0;
-	else if (IS_DGFX(xe))
-		stolen_size = detect_bar2_dgfx(xe, mgr);
-	else if (GRAPHICS_VERx100(xe) >= 1270)  // MTL+
-		stolen_size = detect_bar2_integrated(xe, mgr);
-	else
-		stolen_size = detect_stolen(xe, mgr);
-
-For Meteor Lake and later, detect_bar2_integrated() is called. The DSM
-region used is at (BAR2 + 8M).
-
-	/*
-	 * Graphics >= 1270 uses the offset to the GSMBASE as address in the
-	 * PTEs, together with the DM flag being set. Previously there was no
-	 * such flag so the address was the io_base.
-	 *
-	 * DSMBASE = GSMBASE + 8MB
-	 */
-	mgr->stolen_base = SZ_8M;
-	mgr->io_base = pci_resource_start(pdev, 2) + mgr->stolen_base;
-
-drivers/gpu/drm/i915/gem/i915_gem_stolen.c:i915_gem_stolen_lmem_setup()
-also suggests it is (BAR2 + 8M) on MTL (i915 only supports up to MTL)
-
-	if (HAS_LMEMBAR_SMEM_STOLEN(i915)) {  // Only True for MTL
-		/*
-		 * MTL dsm size is in GGC register.
-		 * Also MTL uses offset to GSMBASE in ptes, so i915
-		 * uses dsm_base = 8MBs to setup stolen region, since
-		 * DSMBASE = GSMBASE + 8MB.
-		 */
-		ret = mtl_get_gms_size(uncore);
-		if (ret < 0) {
-			drm_err(&i915->drm, "invalid MTL GGC register setting\n");
-			return ERR_PTR(ret);
-		}
-
-		dsm_base = SZ_8M;
-		dsm_size = (resource_size_t)(ret * SZ_1M);
-
-		GEM_BUG_ON(pci_resource_len(pdev, GEN12_LMEM_BAR) != SZ_256M);
-		GEM_BUG_ON((dsm_base + dsm_size) > lmem_size);
-	} else {
-		...
-	}
-
-	if (i915_direct_stolen_access(i915)) {
-		...
-	} else if (pci_resource_len(pdev, GEN12_LMEM_BAR) < lmem_size) {
-		...
-	} else {  // MTL
-		io_start = pci_resource_start(pdev, GEN12_LMEM_BAR) + dsm_base;
-		io_size = dsm_size;
-	}
-
-In addition, nothing about the BDSM register can be found in MTL datasheet vol2,
-neither 32-bit 0x5C nor 64-bit 0xC0. I believed it is removed since Meteor Lake.
-https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
-
-Since you are probably an intel employee (from your mail address), you may check
-the GOP driver code to see if the BDSM register (0x5C/0xC0 in config space and
-0x1080C0 in BAR0) is really used or not. Please kindly correct me if I am wrong.
-
-For the "IgdAssignmentDxe fails validation on the zero BDSM size and aborts
-without programming the ASLS register", having a fix skipping BDSM size check
-on Meteor Lake and later ones could make it work? OpRegion is automatically
-detected and exposed to guest on IGD as I remember.
+This commit uses 'riscv-server-ref' instead of 'rvserver-ref' for the
+name.
 
 Thanks,
-Moeko
->> ---
->> v2:
->> - Resending because the v1 patch was sent with an incorrect future 
->>   system timestamp due to an unsynchronized local clock. No code
->>   changes.
->> ---
->>  hw/vfio/igd.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
->> index 413a49aae9..a0b6b34d81 100644
->> --- a/hw/vfio/igd.c
->> +++ b/hw/vfio/igd.c
->> @@ -96,6 +96,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
->>      case 0x4C00:    /* Rocket Lake */
->>      case 0x4600:    /* Alder Lake */
->>      case 0xA700:    /* Raptor Lake */
->> +    case 0x7D00:    /* Meteor Lake / Arrow Lake */
->> +    case 0xB600:    /* Arrow Lake */
->>          return 12;
->>      }
->>  
-> 
-
+drew
 
