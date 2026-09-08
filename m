@@ -4,140 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADD7C79F82
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2698EC79F82
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Sep 2026 09:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3rs1-00072c-0X; Tue, 08 Sep 2026 05:12:01 -0400
+	id 1x3s98-0000qf-1O; Tue, 08 Sep 2026 05:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1x3rry-00072K-1N
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:11:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x3s96-0000oY-JW
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:29:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1x3rru-0003FL-RC
- for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:11:57 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6886LcPA3299120
- for <qemu-devel@nongnu.org>; Tue, 8 Sep 2026 09:11:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=QC6qhvdU3pT7y10dLqA7CiXf
- l7RYcOBKBN5mbZS7txk=; b=UoqmlDPXBGKXxrOhhb4gOj3F3UbNFINMVKD9kNCU
- TlnBXBqhWrDrs6XNfH4o7HcjZzHFaZHVOLqffuNXY7yDYVfG6aqhlCbvaj3EF69r
- axjFWd8YkXcPWtFkvpm+rqREzZ7Wq+OFKXKpF1WXPgYXOAi5V7qNWZgxGFh7omVE
- mQfWtldu1We3TbnqvU9N/ZPLdImFuUBuiquStBRypYcUvfVjq6nDAT3ciGgJd/nB
- 3QU7jcniuJ89csm46O3TUpakY5LE9Sa+JOBAEVJBAwnvS+VruZ1ZF+gJ5YVuZqGK
- 53WdQKDgUUpEOV+BphVcuFTp4/8jVMKANagHJNkXUUX8iw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gjb0p94rq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 09:11:52 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93915f50a5cso1054793385a.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:11:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x3s94-0006Ja-K5
+ for qemu-devel@nongnu.org; Tue, 08 Sep 2026 05:29:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788859777;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
+ b=h8ihUavprjMuZJusDkO0zc4kpKl1QwUZmtJ8l16eVZTKnRg4Gg3uFaP0BmQnZLYC+J3vz6
+ A8lqvwNLS5nOqxLWdr7K/dADjGH9B7MdPKYP581MLwv4U5esqjeoHwnejZXhNBp5o2mez2
+ TtCYvSRgxNB/09pwyL2HBqi2c/zmycc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-kmiWJsBEObSmXxMF3qJmLA-1; Tue, 08 Sep 2026 05:29:35 -0400
+X-MC-Unique: kmiWJsBEObSmXxMF3qJmLA-1
+X-Mimecast-MFC-AGG-ID: kmiWJsBEObSmXxMF3qJmLA_1788859775
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49991beee7aso41209795e9.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 02:29:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788859774; cv=none;
+ d=google.com; s=arc-20260327;
+ b=a9XvKR+6VXJdIp1GxAFDrJ5nNiKITI2zGxPuh19i/SzpSKn98kvw9Mzd74RhuHVW0w
+ WB4WBEuBGfwTx06JfoniUytN59AnzDYJbqEmrhhSUQfTlePW+SS/KAaHcBnzKA4Hbrb9
+ snViz/sf/lkA1YvOmgRv8G6nCub59BJv08mtMHaDDHlcyiaKzwWi5VVUCPNdSoEA9mef
+ XNQtIfdnqKciez/8PIJMgt9dwHm3xz50//ZzyAI/qe2/1npo0qhMt6A/wi3ZGsg2mBAa
+ A2jfaV0veokyOnwQfQV8UyDzbLcrUIsnjUckyTyKiOLER1bymzsp9zx+vyYofWVBNVaw
+ D5bg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
+ fh=RZB1IYSmZ5sMBtJbiq9zjMYU5L/WpKEgxUm5akNH6jk=;
+ b=XktA1tgcJDvl+jABzHmj0zxorh6LZRFsWIHkPXXwLFyvmSc0xD/viyHBft3deBQuzX
+ EGDIay3/z4oOUMlZBTzHXyUULSR8Hasn++apRkwpMZtXuzBUaaxSpYLwfmz9OFhisRrW
+ xzklT+PC0HWA79zJ4zC7KQ9su3exXNOTwmHgsjRwTzFVzMPvXX2av+ikRxDq2G1HFtqk
+ FrCQkW0/z03SiSk6L+1MV9h3fDEjY7c4fjuYCJp4IBB8Co1xLXLRSoqWUEr+VZbd5ARX
+ +T0toGteMoCB6aW65qPz0j/WC/BFlkFy+U7BkAoSc8WWHN6EDzW64id40/HTQvAERiCS
+ gybQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788858712; x=1789463512; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1788859774; x=1789464574; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=QC6qhvdU3pT7y10dLqA7CiXfl7RYcOBKBN5mbZS7txk=;
- b=MRRMlhZ6MslQ+UkX3PuuSEu1alJDA7vSFx+wOBoHYwBgq/ZRqnS5nVdqPyB6Uk0+NH
- 7d5ArZh8mQyQqDjE1Z6rMG7oDl1y7RbFJdEbcrRfjBUooNuoI3jB31eWe3XlqQUOj7hU
- PnIMy7VSDrNqGMEzYfC6zK0xrETBjSPG+SpqsSXwAmhB/SyhKRixU0GyGK4SHBXAAwx8
- uBocrYMap5lLh6VFoMecN4b7d/ZFdliuMRiKY0oCrFUnB8dbIc9IyHMRxqirAsnT+Pi2
- n+U4MZLm1Y3wdkTDFfxUQPFnL100dIjKF9XdZPZamyR/0vBsiVFMNEqSmFe2DZEBjPBx
- ALaw==
+ bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
+ b=cEtRQw0oo1c0k+jV321uxw5NuiVfYTzoBFeKwIJYp+7hm/2mD3l8xmWakLkwIdMocC
+ rxaYl1bAqyrUgE5N2w6XGMOBE0LEU/HBBPwdcN4owjJOtKyvb5slU8zlmea+azSZfx+l
+ AAI8l59QK3LClMtFT99MiBcpopTTwf5XN2xEtiTkG08SYZ/HTAk11Z3BmVn2xd8ivI9N
+ iXykw507DHyR2t4AEXSKS/dnUvtwp2vrIx617cFiY3BKrpRm2g/LduWn1NbAdG0piBl4
+ 3G7budYJUktkzQ9iv8/F5pedurSFNGv5WVNpIXhr3hw7Z3TDXJlLJzQmi2Kzw6H0d9o/
+ TYyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788858712; x=1789463512;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788859774; x=1789464574;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=QC6qhvdU3pT7y10dLqA7CiXfl7RYcOBKBN5mbZS7txk=;
- b=R0EV7RX3kR2cuLEhK4xgfIQdP6NktvDtHe+ywKDA+f79kWLFgLk6WsYvjS7QUVgjmF
- UOxOIryFwao44/cuw5LEAWy0AGQED967dSBX1HzGhctBse+TlIMTFwN8oW/M15AbMK+0
- n5OeEIo5KU6FPzVRTV+4XtcpxEPIIxjvpDCE8q/6BKzYmKJe2LXPZRyBDRHaRA/DQ2PK
- p466c0O65j+/aVrWCgXCR+TVPrjdUzi4dz1q05FJE3IezEwF6joR4SaCnmncIJGDHgs8
- K0I/w8YRiZ0XhiE4FRO+13zcqEoIS21ZE5+TJ16cnNk8lN4S+ExUapBeCjRDMMa0k/ow
- 4Nug==
-X-Gm-Message-State: AFuF++lm1khXe9p0a2jMeOpKqJoky+L1nb1mre8d9Gjl5CWW3MiykIfy
- tdJCwJ19Qus4zi39nycBcdLYPK7JAG09DFiRPspT4C5pj4FFM3IbcVZBAb6Il9aHaAg0B7oqG2Z
- y+SWGJrcP2SWt3KQyFlpTSzNho6rNVqNiBLppOIS98+sm+YEM30TSLAsGhg==
-X-Gm-Gg: AYBFou2fcbUOfU652OgguxeUimGbKYTqyyfiF36Z0nv0FuX3T/b+QOKIta1yNESVuwX
- tlUv2ihn86chLKn0JjsQPqaOTGFngWKVohOIJe5WL+hdrLDBXglqOoEdeUNTNvQZguX9FgFMB+/
- KaJ3LvWlM2x0E1de241OCZ+ZGRr86Q7Hu/TratdhR/HnyTJ/seTTmlRDfASiCLei51ADIVQYatM
- tsWqtBdWYF/aE09pBn6je72s2o4+36FSCvx+GFiKnJKeFB9gh5OIZqonQYx5ptg2DJFFeMXLS0+
- 4iLJh5U/z2L4CWJpyw9ApqKDna/x5X/YyO88CxTXFK5zdNwYbywF/cFrC+s57Ge9OqUSKHgi4k7
- 09IIdrHa2OyRbg8NgXZV2yceERBk91LDvlB7a2w==
-X-Received: by 2002:a05:620a:bd5:b0:937:4550:96c9 with SMTP id
- af79cd13be357-9396e0e1302mr3016416785a.21.1788858711926; 
- Tue, 08 Sep 2026 02:11:51 -0700 (PDT)
-X-Received: by 2002:a05:620a:bd5:b0:937:4550:96c9 with SMTP id
- af79cd13be357-9396e0e1302mr3016414585a.21.1788858711533; 
- Tue, 08 Sep 2026 02:11:51 -0700 (PDT)
-Received: from localhost (ip-86-49-245-11.bb.vodafone.cz. [86.49.245.11])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c260d5cfaa2sm580226866b.59.2026.09.08.02.11.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Sep 2026 02:11:50 -0700 (PDT)
-Date: Tue, 8 Sep 2026 11:11:49 +0200
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Nutty Liu <nutty.liu@hotmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v10 4/5] tests/functional/riscv64: add riscv-server-ref
- tests
-Message-ID: <5pcda5mlbnlftgqemlix5sudyutlje7l66rmy7wjsvzmkrbju5@zsofeqrhmnos>
-References: <20260904195610.964829-1-daniel.barboza@oss.qualcomm.com>
- <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
+ bh=xfgA8aa/yGaVOBw14R1U0cQ0FrDVTK6BJ23gxPGOANU=;
+ b=j0/KYE2xbNxRFgEXG5XeGh5j9OOR8HmykDbdKcYPzhYnDP30AxHjODbnCGZaGPTH8h
+ TMD+zN5FFD35ytiq4uuliIw3UNaGQVolUbvGLhdG54ktH41pXpVp1vtKg6ftj0t4CZni
+ QnkVw1lGCFEmt9J00tJXnmduF5JQH/4ah41uIhw9S3mVqXcxfn3aTI5+AUs/vP585JJg
+ 7ip8Xo2kKpFab/ho859ZLkn9q6lYy4s6urihDXHJm8pAX4pB2i19f5hb0mX7DG4OQEJ5
+ YZxYRQyHxuCiCfKBO/K0zHqcdzAUC0AmvmOLC4AzQBzgkhndy+K07D4A8dytj7SUyb4h
+ cHpg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzRymeh/DyhgpvvX7fD2Zoorxb6Qz/bYYW4+nCz9mbdWxOkpRpTG5rGpp7VXfeP0yYsAG8VArQ9G+u/@nongnu.org
+X-Gm-Message-State: AFuF++l87maQKL3o+VQPZ10C+khAgkVbLsRukVFsZuKm4iPz11m4LJRp
+ xqHjkZxLuThA4pe2x1WlAhWvz9j1AHsmfbZrOHuz+4j88lxhY3WEM/8xE4SOnGfN3e2zXxmSEl/
+ ilA3j5tpdrY8cj+4xGaCZXtf0lxkPTc+pWbAzmaBGeIyGEPaHmjDSodgiy8BP69BzbEgvwpfxDO
+ wVDszFDGMOCI9OO9X4Kz6tbd4VeuIVNlI=
+X-Gm-Gg: AYBFou3VDHp0Zk0y+JHAKqkQTFpd1HgFQYbwj49gF21Rg/V2CERzV69ICuqryVJdfCb
+ dLLZyH2FpRPxt3HOx6MW04nE4rxU5ZX7puIsQMpJKIU9IuUtr9zmvtcyLx/NvixNWxjvbfh593X
+ 9N8tbVWWnVZePOgV6TRXvEGL8WRnnz8SFQCCEdjlcoxhKt2lnLyxe8ykllkQ0FMi+8H0VqFAqeO
+ gvUoSKHScpo4RqwIMAtJo2BEVIPKuyDfgX/RYVxoBJ52fz0GFCPQQGaEW3M0w==
+X-Received: by 2002:a05:600c:5488:b0:49d:1cc7:5ec3 with SMTP id
+ 5b1f17b1804b1-49d1cc761afmr20558645e9.9.1788859774576; 
+ Tue, 08 Sep 2026 02:29:34 -0700 (PDT)
+X-Received: by 2002:a05:600c:5488:b0:49d:1cc7:5ec3 with SMTP id
+ 5b1f17b1804b1-49d1cc761afmr20558215e9.9.1788859774135; Tue, 08 Sep 2026
+ 02:29:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260904195610.964829-5-daniel.barboza@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: IvRDesKj6vcdBRwEIqg13e8xSQBSM5XQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDA5NiBTYWx0ZWRfX5yNfxy2S6wOq
- gY214yOSwRQdQkD/bUr5IJJYL2lKEMllhlDCqE7/ef97G8wlqHR6elNl4zNInKNMn4dvKSj5qPM
- KemMkh5XT7kjm9kG1vQC5Q1hmie660E=
-X-Authority-Analysis: v=2.4 cv=HL3z0Itv c=1 sm=1 tr=0 ts=6a9fd158 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4CXLxsOAgPM/krjtHEZQyA==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=WguLxQ3cqw7mU-68o14A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: IvRDesKj6vcdBRwEIqg13e8xSQBSM5XQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDA5NiBTYWx0ZWRfX5qZ37Z7HaC9v
- /1MCN2AwGboEDC1Y6usRU2A1vtJd0JbJIuVdUae/mJ16t90DBiTtSXWLZMISVv5gw4su92TUaAb
- Q3+7tAxdQ6dyxqElCzHbhdCmUOIdrqv9Q8p1GNWyiEcIP1TknnssIBZabahIzUdwoQqD+NvzIc0
- y+tUJ0QyuUOFCxMu4knbx3OB2qo+Ys5mQPXkmd0G8Ehj06Qufl+2Z89jUXLt32vIq5YD9gt2S3c
- g+dnZe7Af22+9+okH+noNI7o7MSwhBXtgA+1z3LKx7vmLQKAeTnsgYTDM4Clcytve2Fm6OxRtF6
- 06Manjl04HBHMASIZ2x1EQHo2LuURa9ZlmgIVkibIpnbjfvI9XkBym9o2D3sXreLF9EC0m7MdcU
- 3CFjGZlB0hDGyYBZNmov48jKJFoqdodARkhaImVHAc+eovnlMk94btPigq6e/wbSaxqZlk+zG+w
- Gg9S+3aPtvJLtEuhwtQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_01,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609080096
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
+ <20260819145649.23439-7-philmd@oss.qualcomm.com>
+ <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
+ <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
+ <bbe4b7d0-96ad-45d8-a5a9-0be2c5479d51@oss.qualcomm.com>
+ <7766d96b-4065-4917-9d7d-094bd6d1f29c@oss.qualcomm.com>
+ <5aba99f7-5310-4cd3-a38c-3e9b922c8b05@redhat.com>
+ <CAFEAcA9tz=Br3dRe3mN1fPkjm4y36eRSWUMs=bU8zDbKczCCsg@mail.gmail.com>
+In-Reply-To: <CAFEAcA9tz=Br3dRe3mN1fPkjm4y36eRSWUMs=bU8zDbKczCCsg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 8 Sep 2026 11:29:22 +0200
+X-Gm-Features: AcwNN1W_NGC8plnEvOk-6gM3fivJmbRtNPbUZ4BJI7iAS0S1x9EmpiRhvoabE98
+Message-ID: <CABgObfZQb8FwDubg=pZk6nRSrUgdMxoDpRwG3Kd=GwpQeccLhg@mail.gmail.com>
+Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
+ arm_cpu_exec_halt()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,12 +148,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 04, 2026 at 04:56:09PM -0300, Daniel Henrique Barboza wrote:
-> Add tests for the recently added riscv-server-ref machine:
+On Tue, Sep 8, 2026 at 10:40=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Mon, 7 Sept 2026 at 22:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >
+> > On 9/2/26 20:02, Philippe Mathieu-Daud=C3=A9 wrote:
+> > >>> On the other hand, if we do have the BQL in exec_halt
+> > >>> then why is the x86 implementation explicitly taking
+> > >>> the BQL when it calls apic_poll_irq()?
+> > >
+> > > Trying harder, my understanding is apic_poll_irq() only requires
+> > > the BQL for the apic_update_irq() call, not apic_sync_vapic().
+> > >
+> > > So maybe only apic_sync_vapic() belongs to process_async_events(),
+> > > leaving apic_update_irq() to transition_halt_to_exec().
+> > >
+> > > Paolo does that sound like going in the good direction?
+> > Unfortunately not, because apic_update_irq() is needed to call
+> > cpu_interrupt() and break out of halt.
+> >
+> > By the way... cpu_has_work_after_processing_async_events() is a bit
+> > long, what about simply cpu_poll_while_halted()?
+> >
+> > Answering Peter's question above, the way in which the code is protecte=
+d
+> > against the BQL is basically two-fold: 1) kicking the CPU out of
+> > whatever it's doing, for example in tcg_handle_interrupt, 2) changing
+> > what other conditions affect cpu_has_work() only in the vCPU thread,
+> > e.g. with run_on_cpu.
+>
+> Ah, so it is called without the BQL held? That's quite unusual
+> for CPU methods, so we should clearly document that.
 
-This commit uses 'riscv-server-ref' instead of 'rvserver-ref' for the
-name.
+I agree.
 
-Thanks,
-drew
+> I bet also that most targets don't expect it. Picking one at
+> random, the sparc has_work function calls e.g. cpu_interrupts_enabled()
+> which does not look like a function that is expecting to be called
+> without the BQL.
+
+Why? It only accesses fields for the local CPU. The problem is
+interprocedural communication, and only if it does not use
+cpu_interrupt().
+
+Alpha -> ok, interrupts
+Arm -> see above
+AVR -> ok, interrupts + registers
+Hexagon -> ok, global registers writes use run_on_cpu afaict
+HPPA -> ok, interrupts
+i386 -> complex but ok - though it should use qatomic_load_acquire
+loongarch -> ok, interrupts + registers
+m68k -> ok, interrupts
+microblaze -> ok, interrupts
+mips -> i think ok, interrupts + registers
+openrisc -> ok, interrupts
+riscv -> sort of ok, uses BQL for register writes but should use
+qatomic_read/set as well
+rx -> ok, interrupts
+s390 -> probably wrong, s390_cpu_set_state sometimes not on CPU thread?
+
+So the only one that is blatantly wrong is s390; Arm is slightly
+wrong, i386 and riscv are technically wrong but have correct locking.
+
+> Is it OK for a has_work function to just take the BQL across
+> what it's doing if it doesn't want to be bothered with trying
+> to make the handling truly thread safe without a lock? That
+> seems to me like it would be a lot simpler and more reliable.
+
+The simplest way to write has_work is to make it use only
+cpu_test_interrupt and checks on local registers. That is, use the
+synchronization provided by common code.
+
+Paolo
+
 
