@@ -4,99 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D88C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44910C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Bha-0008WH-7c; Wed, 09 Sep 2026 02:22:34 -0400
+	id 1x4Bjh-0000n5-5Y; Wed, 09 Sep 2026 02:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x4BhY-0008W4-5M
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:22:32 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x4Bjf-0000mV-KB
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:24:43 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x4BhW-0003xP-4l
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:22:31 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-ca12086c06eso4219823a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 23:22:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788934948; cv=none;
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x4Bje-0004RB-0r
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:24:43 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c28eef361f0so502306866b.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 23:24:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788935080; cv=none;
  d=google.com; s=arc-20260327;
- b=CHGRIz4JIqQ/PYfuj3TMqg/w2FAOGXNaQY4ceXIn4zZluWk9c+oFyE/BEgisf8h8Jq
- YhKB2czldMckPx450rk4b8Ny+0f9TTd4Q5f+bL2hQ2JY+atyLVoFYyCD6XV2JZ5XHahq
- yguGZc79/nqwT+E4/mLD6+wcw9uJsDoQ8piXBmKOCWz9zqv+W/qyFxCzEoDS8mapIM88
- Fic2JS+wkHgp5Qi3CMwNVQoFN37xFxUZvCtVwiXIhG/h09V6lKKXpeoSwSjSAlDPsEdr
- K5KIepgIEayS3QhGivtfoL/A6k7VQsXZD+1rCnetXoASEXrYJY5CXQyJuURFz/C3We7w
- D+cw==
+ b=BrWDAW/vNFkvRcQARmU7ZrPm9hxYi3R2S9xAJg/6WEkx4KD5FGyPdJ+GeMHpkatXyu
+ Ss/Vw/Ec1i17m9Sde+6ByBq6QE0Fy3VyZ9c8JnreDJnxtJPV/HyVCzI2aR4Y3q0C1aQp
+ hbiNYK3szG2diJiTmibBfkBppluqYEEiJoyv+AxZEbNA+lNDKMPtYRHocoq70n4AI3ji
+ BywFtRoJGUU9I4khu/mqwUBV7qoMjqCnG2EnE3VTW4LMJ0RaaL30FHz0LiUgAjV+NUWM
+ PVYYE6XoCJFyp3ZKkimmBM5GWomidZjRqrhryjUr8EUN8zWZBdQZVJIyZZnDeS5VE0o9
+ VGXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=d7ffpBRaHzZLr66kaBg9CU4rTUv0OWrNi7vLggnnbqo=;
- fh=qut9WCGoiumS8buQKfV4VTgRMJrLq2rWzZgt13Ew7uM=;
- b=j8AKAwa97R3WqqqyD7HEVjW4W3CQOnpWu/QiSo310IWRx2U9TEl6H5UoJmespaUdwP
- Clvu4FUTM64JKV7hnwUq0djer3T1KR3mJwWmrIyhC6h40EElW4EHmlzdIa3CPrRzk0XV
- gfrc+iNweptYeTHFlx1311HkC3jI2JCs8EG4Sq7mPG7XMyqpOaq7x1xIt/8qkWXg2MKe
- JA2vEk3UdULlk5lN3Nwsn8v+lR7b1j57BgkNSITK66CjSYHEnXaU51TRihVtvj2MBISg
- Z1LUpwxr2f3+yXN79NxSVMjYw2gI0NJYIbh/zMcpdPB//g22c+7Uab0JnWthdccuGUli
- WNvg==; darn=nongnu.org
+ bh=Jp2JOmSdU/n48YRUr+LMqcwd+AV8sXHBTVZRe6AJ21U=;
+ fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
+ b=KVUXo6yGSsxPQlk6o0/fz04R0R5mX/rhzIBqK3Y9WYf8ksFUvon5BuCfa7mIx/TmPI
+ xciBr6FGkGr6vBrUuN27pSbnJQaTnIkU8vXM2lrEshP7KjTC7AkKgXZkfQ++ZDmX9QUL
+ XVC1YqA9bIwREFTVWpzRVuC5ivEb2+NE8s44vNk508Z1FY1V8eUrPdrFOqZmdYsOmY6X
+ NtukQ7DTOK0zhK7t8Nw+ooSZVUT+8Rm6xe0Ec6KqKhREIa18F8ibCz8usC9Qg1rMC11q
+ gR7x2OqBDfBymBfahEIHi7/b9yMiAqZ+B8CI5W7/Tfz/tFY0vk8E7tNzn+YfUv1kIL9v
+ OEig==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788934948; x=1789539748; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788935080; x=1789539880; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=d7ffpBRaHzZLr66kaBg9CU4rTUv0OWrNi7vLggnnbqo=;
- b=fjb6M3kAJzayblYdr6qXDnHJ+x8DBvRwM0JGW845njaCO45AaI3AYpy3gJSxPSO4EV
- xd8XJ8A/8iSMRlezTPki0LCaNF9v7YOIeeFQBZW8tbcNxpnfaWeN3xpwTtXhy6K3pZrn
- 3zQsEn8oD//5pow0rVJDNXS+GG1vVWwK7YKsWnDrkp/SBaNoMqrkRQHPci1xey7VZYxM
- GDpvH5plgJ8t2RoOHx0vzZ9rNUxS0LUMf0xY8w1Yj/CcDBSpYRbgDB7Ffis5etuDPEHh
- zow23u2no/Wt3twzVWooK9mrbaHZ+TnnZJkTWUa0nVhjypiHVsyUVuAVmEl1dusHcwSb
- SDKQ==
+ bh=Jp2JOmSdU/n48YRUr+LMqcwd+AV8sXHBTVZRe6AJ21U=;
+ b=HZL6dhNq5f3+dcwBJbII4bhpxa6JtLldlPCND2blkHyP/EaMNEu6b4ddoK6e8R3w6w
+ F7L8ysv/4DmFvSkNxxQ1f/2UP72bBtGaPb0ijW1fVSskDFFPL+MfYRHtmT1hfqY3nWTX
+ 3xm5Kid9hp8/yOw0VBlXlwDEcVZ0MlbcTWD7v1A300A9ElcqynpE0O+hH7ttfhd/JKo0
+ +PmLH9PRR2dQYcfyRZqUC6enrlg2Ms2kUirZW2sMamDkhwp2mRgsmNXUunP3nKV8vTjd
+ XbEinO/81moL7sJpR58o+ggRj728iSLGf0BntFpW0NtKYzPrR7O6iPZQFZ5mS/B6tzmw
+ Z06w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788934948; x=1789539748;
+ d=1e100.net; s=20251104; t=1788935080; x=1789539880;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=d7ffpBRaHzZLr66kaBg9CU4rTUv0OWrNi7vLggnnbqo=;
- b=UYWueW8iEiV8XoSS9FNS7sTvzF8CWFlS1SzLVVFWE0JF2o4OLeWEMMQnIOjdJU2sNb
- hEV+5doMzT4njlwbkZ/WJsWGY7OX5Ole+hcFkD4Mxae9Vor51yNjOA0aYErM/rsrxjB5
- AlAGMn8S8J4TKH2qobkwspjvEFKLaITy7K9U59rhGcduOne5NymN+y8Za6nZorOHKl/1
- PKBfp1PgG8q+JABEYtAwfBX/tMOY1Vdd++L1haqwPC7oip3W2a0HsT94U0zOeW2kn1bs
- U4S6IyZfgaQg2pX5lyCbg1B8mPYFxYECYz21rW7Oy+3rp9HgUMrn3/DHSXAiysUTIvg3
- 8Lfw==
-X-Gm-Message-State: AFuF++nM7RDmJBwXOD50GARbHYHSz8Tfnetyc4tAvK8/pKaA1pj3bQmv
- lZlDMqQNLOHv8T9Eo5Jv2G2mlb328IuQo8rTPHdfEC+hran41L6cOoiPN3svwzqN4+Mv60sZrz+
- dnfokglvpmsfJAD5KJG73SYwubDbD3KLtZQ==
-X-Gm-Gg: AYBFou1G8ksLzZK4URezTiYJw1g3WhHPyMabsqjEJd1Jz9gRrNsV7DLr0wzqcP9VGQI
- aNGgta5EivwOFGO6UiJUA5Byih+PYGawkZb42w7YrI9YAwCUVY6o7Tkq23puWh16YQItZxiMG6r
- 2907qPGOXNGvKNY3guumAjyVKI0MK7dKnCa/TWObAEks2PY1hax9+ZA37R6z5fOhAgFDNzBpXps
- BMZTDjrRJHVbVTzwE5mKv3EMy7iIm+Z0mJgHtceof07pOZxDsAENopMNbhtRuncIxWxtzXNfe7q
- XeLE3guqr23xXNGmk9/ZxGUEfoF+lCtHXylhbU+c/rgC8G+2Akim2WPhnE70+B9t5eTUn4IC2dM
- b5aav+u2WEcg=
-X-Received: by 2002:a05:6a20:7284:b0:3c3:875d:c52f with SMTP id
- adf61e73a8af0-3da39ec3ef2mr47467448637.10.1788934948302; Tue, 08 Sep 2026
- 23:22:28 -0700 (PDT)
+ bh=Jp2JOmSdU/n48YRUr+LMqcwd+AV8sXHBTVZRe6AJ21U=;
+ b=jDAzBnQRonBAxY3URPDYWyvsQgySb25b78K0X539lOeQw3NGNv3flKQj70vrAmN8y2
+ jp/dcIxLvuspivin6umPiD6FJ6MVGbede5At7XFmhmOMfVDiYCIvPZbf672yFCbFumIx
+ 1DMuPMQuOd6kc/PRrxunaio/mI6P0pgVOvZmnR76qiV0I66gXiZ5XfdxoeC5kpUklgqI
+ G0AH5tVFAKoPDjDuFd4tz9BDxWtAue2htnnyZ9I/PYt1pnmjcWZPgtnEoXDmzyoids5V
+ zvIfvt+R98fZW3QsOZcmrf4+HdhTVsKB+WihkpfO4LW2BngKea9bVYg6SmC0q7ykhq8m
+ DfLQ==
+X-Gm-Message-State: AFuF++n+i02C88LhKTsO62x763fKgIoegjwzBNeT1sv8LNH6WceG5EXc
+ eTkKcNDgjCVxspEs9S9cIY5r4sfGIw6ACn2ixpTZ3sNLgIJABErAYZ1RpE25LajncQtiU5zIaGm
+ G8KpJxR51OQJdPUxb9COugQa/LA5RSDA=
+X-Gm-Gg: AYBFou3ONtcced0dwFn5yVXBlr6vuvNEC3mEmS7OyV1Vd1tmH6cZn59tVDqkjOy2jGG
+ fcBZlbf2ENT4NpWJ9Gi/l6HconxUCRgkPkCN42jcwaL0mMBB/193oNYTKc4lA2FP1xhHTGsMN+N
+ 2h7zf3wnpDIYv8hlZbx6ijvfLvaH3fnwlWJHbamnKhpwSmmFmLhmYYhHdlNpYNDW5Fi6o32KCfU
+ FwFrJTD7MWSLo1alNrD9bjUUK1QTAJLP0ZKG+v7ZZEnVP4HOOiljU8K+plgi5CCkL7uY9MPL/kO
+ 0XmQ3zcF3n7GbZMyd/wD4EZhundHnB93bq/sNOGTaXEkY7N8EjywUeh2/cMz+4OF
+X-Received: by 2002:a17:907:3f8b:b0:c28:e01d:1d10 with SMTP id
+ a640c23a62f3a-c28e01d2ae8mr862971966b.49.1788935079768; Tue, 08 Sep 2026
+ 23:24:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260907201724.523270-1-dongwon.kim@intel.com>
- <CAJ+F1CKJN8enxs5Me-QydcG-8mH4oQqd8aCtQa=phHa+r6yANw@mail.gmail.com>
- <PH0PR11MB5112DE2261942C6F3058CD0FFAB12@PH0PR11MB5112.namprd11.prod.outlook.com>
-In-Reply-To: <PH0PR11MB5112DE2261942C6F3058CD0FFAB12@PH0PR11MB5112.namprd11.prod.outlook.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 9 Sep 2026 10:22:14 +0400
-X-Gm-Features: AcwNN1Wza1-Ho5nluCqikfooQgZILGvETm9_0qGJedtpm7bf_fm3ng-CsEZyCvM
-Message-ID: <CAJ+F1CLj6ydVzfUaYfGz7_6g5sfkPX4G1e2VPJDr3W_iYN_-tg@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Handle empty notebook state in menu handlers
-To: "Kim, Dongwon" <dongwon.kim@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20260907063725.626685-1-zhangckid@gmail.com>
+ <20260907063725.626685-14-zhangckid@gmail.com>
+ <87zextw78o.fsf@pond.sub.org>
+In-Reply-To: <87zextw78o.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Wed, 9 Sep 2026 14:24:03 +0800
+X-Gm-Features: AcwNN1VD0LpDc5XKO426fzqaKH3RRTrcvxKy7RZKALleoMTYGwFYPaLTrKKqDho
+Message-ID: <CAK3tnvJALU_i6OzrCb-t20un=AALTySuRamkmyqrbS8Zumk2Tg@mail.gmail.com>
+Subject: Re: [PATCH V15 13/14] iothread: make legacy AioContext getter
+ explicitly unsafe
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,263 +123,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Mon, Sep 7, 2026 at 8:55=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > Now that holder-aware callers have been converted, rename
+> > iothread_get_aio_context() to iothread_unsafe_get_aio_context() and
+> > update qmp_x_blockdev_set_iothread(). This avoids adding a duplicate
+> > accessor only to remove the old one later.
+>
+> The last sentence appears to justify the change since v14.  If that's
+> the intent, drop it, please.  If not, what is the intent?
 
-On Tue, Sep 8, 2026 at 8:49=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.com>=
- wrote:
->
-> Hi Marc-Andr=C3=A9,
->
-> > Subject: Re: [PATCH] ui/gtk: Handle empty notebook state in menu handle=
-rs
-> >
-> > Hi
-> >
-> > On Tue, Sep 8, 2026 at 12:18=E2=80=AFAM <dongwon.kim@intel.com> wrote:
-> > >
-> > > From: Dongwon Kim <dongwon.kim@intel.com>
-> > >
-> > > When the GTK notebook has no active page (e.g. before pages are added
-> > > or if all pages are detached/removed), gtk_notebook_get_current_page(=
-)
-> > > returns -1. Previously, this value was passed unchecked to
-> > > gd_vc_find_by_page(), which could result in unexpected lookups or NUL=
-L
-> > > dereferences.
-> > >
-> > > Update gd_vc_find_current() to explicitly return NULL when page < 0.
-> > > Additionally, add NULL checks for the current VirtualConsole across
-> > > all relevant UI menu callbacks to avoid dereferencing an invalid or
-> > > NULL pointer when no console tab is currently focused.
-> >
-> > This looks reasonable, but can it happen? if so, how? Rather than handl=
-ing a
-> > situation that should not happen, I would rather crash or abort if we b=
-roke an
-> > invariant.
-> >
-> > thanks
->
-> The mention of "NULL dereferences" in the commit message was inaccurate.
-> It's not causing a crash, but rather logic bugs. This happens when all VC=
- tabs
-> are detached (untabified). In that state:
->
-> gtk_notebook_get_current_page() returns -1.
->
-> For any detached tab, gtk_notebook_page_num() also returns -1.
->
-> Consequently, gd_vc_find_by_page(s, -1) matches the very first detached
-> console in s->vcs. Menu actions triggered on the empty main window mistak=
-enly
-> route to that detached window instead of being ignored.
->
+Thanks. Yes, that sentence was about the changes since v14; I'll
+drop it from the commit message.
 
-Please correct the commit message then
-thanks
-
-> Thanks!
 >
+> > The block graph retains only the AioContext, while detachment happens
+> > outside qmp_x_blockdev_set_iothread(), so this call site cannot provide
+> > a matching holder lifecycle. The new name makes its existing lifetime
+> > assumption explicit.
+>
+> Suggest to start like "The only remaining user is
+> qmp_x_blockdev_set_iothread()" and then explain why this caller cannot
+> use iothread_ref_and_get_aio_context().
+>
+> > New code should use iothread_ref_and_get_aio_context().
 > >
-> > >
-> > > Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> > > ---
-> > >  ui/gtk.c | 56
-> > > ++++++++++++++++++++++++++++++++++++++++++++++++++------
-> > >  1 file changed, 50 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/ui/gtk.c b/ui/gtk.c
-> > > index 7078d89d67..0b5139ef31 100644
-> > > --- a/ui/gtk.c
-> > > +++ b/ui/gtk.c
-> > > @@ -184,6 +184,11 @@ static VirtualConsole
-> > *gd_vc_find_current(GtkDisplayState *s)
-> > >      gint page;
-> > >
-> > >      page =3D gtk_notebook_get_current_page(GTK_NOTEBOOK(s->notebook)=
-);
-> > > +
-> > > +    if (page < 0) {
-> > > +        return NULL;
-> > > +    }
-> > > +
-> > >      return gd_vc_find_by_page(s, page);  }
-> > >
-> > > @@ -1462,7 +1467,10 @@ static void gd_menu_show_tabs(GtkMenuItem
-> > *item, void *opaque)
-> > >      } else {
-> > >          gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE)=
-;
-> > >      }
-> > > -    gd_update_windowsize(vc);
-> > > +
-> > > +    if (vc) {
-> > > +        gd_update_windowsize(vc);
-> > > +    }
-> > >  }
-> > >
-> > >  static int gd_vc_notebook_pos(GtkDisplayState *s, VirtualConsole
-> > > *target) @@ -1535,6 +1543,10 @@ static void
-> > gd_menu_untabify(GtkMenuItem *item, void *opaque)
-> > >      GtkDisplayState *s =3D opaque;
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > > +    if (!vc) {
-> > > +        return;
-> > > +    }
-> > > +
-> > >      if (vc->type =3D=3D GD_VC_GFX &&
-> > >          qemu_console_is_graphic(vc->gfx.dcl.con)) {
-> > >
-> > > gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->grab_item),
-> > > @@ -1588,7 +1600,10 @@ static void
-> > gd_menu_show_menubar(GtkMenuItem *item, void *opaque)
-> > >      } else {
-> > >          gtk_widget_hide(s->menu_bar);
-> > >      }
-> > > -    gd_update_windowsize(vc);
-> > > +
-> > > +    if (vc) {
-> > > +        gd_update_windowsize(vc);
-> > > +    }
-> > >  }
-> > >
-> > >  static void gd_accel_show_menubar(void *opaque) @@ -1605,7 +1620,7
-> > @@
-> > > static void gd_menu_full_screen(GtkMenuItem *item, void *opaque)
-> > >      if (!s->full_screen) {
-> > >          gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE)=
-;
-> > >          gtk_widget_hide(s->menu_bar);
-> > > -        if (vc->type =3D=3D GD_VC_GFX) {
-> > > +        if (vc && vc->type =3D=3D GD_VC_GFX) {
-> > >              gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1=
-);
-> > >          }
-> > >          gtk_window_fullscreen(GTK_WINDOW(s->window));
-> > > @@ -1618,14 +1633,16 @@ static void gd_menu_full_screen(GtkMenuItem
-> > *item, void *opaque)
-> > >              gtk_widget_show(s->menu_bar);
-> > >          }
-> > >          s->full_screen =3D FALSE;
-> > > -        if (vc->type =3D=3D GD_VC_GFX) {
-> > > +        if (vc && vc->type =3D=3D GD_VC_GFX) {
-> > >              vc->gfx.scale_x =3D vc->gfx.preferred_scale;
-> > >              vc->gfx.scale_y =3D vc->gfx.preferred_scale;
-> > >              gd_update_windowsize(vc);
-> > >          }
-> > >      }
-> > >
-> > > -    gd_update_cursor(vc);
-> > > +    if (vc) {
-> > > +        gd_update_cursor(vc);
-> > > +    }
-> > >  }
-> > >
-> > >  static void gd_accel_full_screen(void *opaque) @@ -1639,6 +1656,10 @=
-@
-> > > static void gd_menu_zoom_in(GtkMenuItem *item, void *opaque)
-> > >      GtkDisplayState *s =3D opaque;
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > > +    if (!vc) {
-> > > +        return;
-> > > +    }
-> > > +
-> > >      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s-
-> > >zoom_fit_item),
-> > >                                     FALSE);
-> > >
-> > > @@ -1659,6 +1680,10 @@ static void gd_menu_zoom_out(GtkMenuItem
-> > *item, void *opaque)
-> > >      GtkDisplayState *s =3D opaque;
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > > +    if (!vc) {
-> > > +        return;
-> > > +    }
-> > > +
-> > >      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s-
-> > >zoom_fit_item),
-> > >                                     FALSE);
-> > >
-> > > @@ -1676,6 +1701,10 @@ static void gd_menu_zoom_fixed(GtkMenuItem
-> > *item, void *opaque)
-> > >      GtkDisplayState *s =3D opaque;
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > > +    if (!vc) {
-> > > +        return;
-> > > +    }
-> > > +
-> > >      vc->gfx.scale_x =3D vc->gfx.preferred_scale;
-> > >      vc->gfx.scale_y =3D vc->gfx.preferred_scale;
-> > >
-> > > @@ -1687,6 +1716,10 @@ static void gd_menu_zoom_fit(GtkMenuItem
-> > *item, void *opaque)
-> > >      GtkDisplayState *s =3D opaque;
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > > +    if (!vc) {
-> > > +        return;
-> > > +    }
-> > > +
-> > >      if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(s-
-> > >zoom_fit_item))) {
-> > >          s->free_scale =3D TRUE;
-> > >      } else {
-> > > @@ -1800,6 +1833,11 @@ static void gd_menu_grab_input(GtkMenuItem
-> > *item, void *opaque)
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > >      if (gd_is_grab_active(s)) {
-> > > +        if (!vc) {
-> > > +            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s-
-> > >grab_item),
-> > > +                                           FALSE);
-> > > +            return;
-> > > +        }
-> > >          gd_grab_keyboard(vc, "user-request-main-window");
-> > >          gd_grab_pointer(vc, "user-request-main-window");
-> > >      } else {
-> > > @@ -1807,7 +1845,9 @@ static void gd_menu_grab_input(GtkMenuItem
-> > *item, void *opaque)
-> > >          gd_ungrab_pointer(s);
-> > >      }
-> > >
-> > > -    gd_update_cursor(vc);
-> > > +    if (vc) {
-> > > +        gd_update_cursor(vc);
-> > > +    }
-> > >  }
-> > >
-> > >  static void gd_change_page(GtkNotebook *nb, gpointer arg1, guint
-> > > arg2, @@ -1983,6 +2023,10 @@ static void gd_menu_copy(GtkMenuItem
-> > *item, void *opaque)
-> > >      GtkDisplayState *s =3D opaque;
-> > >      VirtualConsole *vc =3D gd_vc_find_current(s);
-> > >
-> > > +    if (!vc) {
-> > > +        return;
-> > > +    }
-> > > +
-> > >  #if VTE_CHECK_VERSION(0, 50, 0)
-> > >      vte_terminal_copy_clipboard_format(VTE_TERMINAL(vc->vte.terminal=
-),
-> > >                                         VTE_FORMAT_TEXT);
-> > > --
-> > > 2.43.0
-> > >
-> > >
+> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  blockdev.c                |  7 ++++++-
+> >  include/system/iothread.h | 11 ++++++++++-
+> >  iothread.c                |  2 +-
+> >  3 files changed, 17 insertions(+), 3 deletions(-)
 > >
+> > diff --git a/blockdev.c b/blockdev.c
+> > index 6e86c6262f..97d161079a 100644
+> > --- a/blockdev.c
+> > +++ b/blockdev.c
+> > @@ -3683,7 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *nod=
+e_name, StrOrNull *iothread,
+> >              goto out;
+> >          }
 > >
-> > --
-> > Marc-Andr=C3=A9 Lureau
+> > -        new_context =3D iothread_get_aio_context(obj);
+> > +        /*
+> > +         * The block graph retains only the AioContext, not the IOThre=
+ad.
+> > +         * Context detachment happens outside this command, so there i=
+s no
+> > +         * point here where a matching IOThread holder can be released=
+.
+> > +         */
+>
+> This is fine for readers who already know what this is about: why we
+> can't use iothread_ref_and_get_aio_context() /
+> iothread_unsafe_get_aio_context() here.  Others will lack context.
+>
+> Suggest to start like
+>
+>            /*
+>             * We cannot use iothread_ref_and_get_aio_context() /
+>             * iothread_unref_and_put_aio_context() here.
+>
+> then explain why.
 
+OK, will change it  to:
+/*
+ * We cannot use iothread_ref_and_get_aio_context() /
+ * iothread_unref_and_put_aio_context() here. The block graph stores
+ * the AioContext but not the IOThread, and continues using the
+ * context after this command returns. A matching put would need
+ * to be tied to the block graph's context lifecycle.
+ */
 
+Thanks
+Chen
 
---=20
-Marc-Andr=C3=A9 Lureau
+>
+> > +        new_context =3D iothread_unsafe_get_aio_context(obj);
+> >      } else {
+> >          new_context =3D qemu_get_aio_context();
+> >      }
+>
+> [...]
+>
 
