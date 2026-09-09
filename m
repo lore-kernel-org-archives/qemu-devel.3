@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67929C79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 15:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E41C2C79FB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 15:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4KfF-0001fH-PR; Wed, 09 Sep 2026 11:56:45 -0400
+	id 1x4KfD-0001ey-TZ; Wed, 09 Sep 2026 11:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x4KfD-0001em-3D
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 11:56:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x4KfC-0001eP-2o
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 11:56:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x4KfB-0002qo-G9
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 11:56:42 -0400
+ id 1x4Kf9-0002qa-Uz
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 11:56:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788969400;
+ s=mimecast20190719; t=1788969398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eh2o8PBloE0aQ+zk48uHsbdRMAdrWo9YGkNnH8a5/y8=;
- b=JIBWVZMgXU4XzD5eXg4P0eKIA8y6QmLYIazEIzPOwXDG83u4DuA4WtPJC3T5mO0jLrq0BJ
- DWGXfBqEeb4/cJ+zxjJgrm6jrnSTScfYcsYWuMluyALRr4EF6ORhmRVZY228f0d/itmjwg
- REciua42a8WlA3/2NikMFKPkHBiBCSs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Cdb/tr56eVLilxXQOAAtT08NGtDN7d8H2xoi0GsgBFA=;
+ b=PElm/o+qBaXwz7WDwTrb8QVRvYxqqmeCwIQSlBS7lqZM514GbZmOzdrTYVr0fsC7Vw4WF6
+ +eu3PVfl2YZDGJMwXsu1py3lg6pe9kqTA2JkFknoZ0yPEe1r3fOuMvrv1N1dKA3iM1Tcfs
+ 5bMPxwC2eV+v+lU0sifXgEb5Ks22HG0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-BM7ysx6LPla5xMCxV2svZg-1; Wed, 09 Sep 2026 11:56:39 -0400
-X-MC-Unique: BM7ysx6LPla5xMCxV2svZg-1
-X-Mimecast-MFC-AGG-ID: BM7ysx6LPla5xMCxV2svZg_1788969398
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48436a5fb42so3380164f8f.1
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 08:56:38 -0700 (PDT)
+ us-mta-299-5bwpvL02P9WXkyZ29fEVBw-1; Wed, 09 Sep 2026 11:56:37 -0400
+X-MC-Unique: 5bwpvL02P9WXkyZ29fEVBw-1
+X-Mimecast-MFC-AGG-ID: 5bwpvL02P9WXkyZ29fEVBw_1788969396
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-482e05af072so5025008f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 08:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788969398; x=1789574198; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788969396; x=1789574196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eh2o8PBloE0aQ+zk48uHsbdRMAdrWo9YGkNnH8a5/y8=;
- b=irfIdcMIT9t9FYjRdCReX7WklK2VQRmVtmIGzFacI06sLOSNAG3oZ8OYJvOi9wkVYS
- FLwaBi/czK0jOfN7qbhnKBGs6R+/58mPGDeMdoQqrYwP64hX+UfIoVg8KqfMK/OA3Iqs
- ajoyGsMlM5RFft6KHFoJxYj37fUJFgU4nUAuOTi5Md6EtE0DWNf39m+mV01BXhEsoCbR
- ld1kLFO/fHPdPCXX+H2S479rIRhuzvXUr7mE9wAY1tCqCrLX+uzBIM6idlQu8zKD92fg
- Xg8/knP5SRAcSqka74H7+o9OlI0gxhA0dOiT9K1PmkZyQINKudIs7MNS0OeZyqbbJV4d
- sWYQ==
+ bh=Cdb/tr56eVLilxXQOAAtT08NGtDN7d8H2xoi0GsgBFA=;
+ b=gESugly4NPlwOZbm/EuzpgNmZ4+MzidUZ15Cp6dmI287nApnU79gRcbPFZqQuWCAlZ
+ +Wb6cQsIuUfiBCBmCkfYGsp5Q6DeWn6EoB5KVjkARmTqcai3LStM80JFhi+2l4QcW3+b
+ 6e/8rjfay/85edd7CHAJusM0s7v+41zFxRo694Sbqb4JrJBswj4jDpjcNjkQL82FqPHl
+ qnHBn6dnSVu1QPtjD7RgOaNFOFGyyJJekh0gIoUcxpNEAUZ4i2u/PNLqWQx/1oUa2yUY
+ KWEn8+Q5o/XJhMA0qFrFpJG39UddCWM4d5AEESDBBwNs7Vvc0H9Ip3sMPv87rlzQR/fE
+ VrIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788969398; x=1789574198;
+ d=1e100.net; s=20251104; t=1788969396; x=1789574196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=eh2o8PBloE0aQ+zk48uHsbdRMAdrWo9YGkNnH8a5/y8=;
- b=iBXzvEZSi/wwjwZp/SZHR5k5vaAVTeYpzBAEP51LPBBej46cEahl3qkWCuCvF12FJW
- YoZoEc5ChtUxq1CGEsKuHXrDZWZVpPgcP2Mz+D9gEpMkQCGA4shDdK6wMhIx0SH/8vjg
- l+SxG8MY4b8Db0/I3d17IbTBzsb8+1vRFzpyLwgLZOo9HslnIJ4H1OfFKHmEGj6fMA2V
- 86opxqwZzSsm582e1Yt9dcVORH8muMXorBcsYxBy73mOCJMC+6HqmZ+dj9gGIkq3MvkT
- fsFFEekYLPie3qqrIBMMbhZe6wF039UQ83oqF6VuPOsjmnzSiOV7AZ0Zw+P0o1tZot8t
- jkUQ==
-X-Gm-Message-State: AFuF++ktpgahfeDg4tkq06PbeEnC2pU6fVviHY+NcZOnhmm/c3/qJJGw
- McLhYolzQhFmCgX3hTCsJSuLYIKmATOM7I/8c8tu9YgHcBJMETEgqHhF92V6PqkkDxWCUQq2Zae
- gt9OlTG5OQnhSsti9Ef5CX2amfwihDb5/68zYeAH1BWptDxpzwAfn57lz8cnLh1XIJCrm7iVLAo
- KcL2nffV5cSAYwpmQfb+bjM8pCw1bLga5bsrLPj1uH
-X-Gm-Gg: AYBFou3KVil8FOLlQymGbgArqd8XTr0Thg6DK2Fv+iBbefwX5WOtqrB7DHsW5+/iRGk
- JSXFm4cP9YYagsz1Eza8rPkGIQ6d9uOqTtoHwMZAIR6/CM04VocNs9jWoTJNVw9Ij9n9A7PEY7R
- /lenjBeJ46C4vDcHN3P1cmRETI9Oyfwd8uEMI6MYQKIGfPUxAYdRXigoPXdfUjYePCDmojPqkBq
- UNJn8WaFYFaJmfd2eBG3a0IrpkKrOIxa2+gAeOy3zyBRjXV0cTQj7aXvg+EAl9y0g5RagBLlfkh
- /kTUUbw5i0sby9ao+/egH0ZfkFORg0Wkd3iPgPTE0NU3L22eg64DvS3M8bAfCODJ/puyLpAjK1f
- hx4uUqHRQEQEICr4eJVFfCJUJo3+kkDZOZXrqLS2I4VODO5xm8dcQ3gr+lg2+SkiduLkPC08gja
- wrj8u6
-X-Received: by 2002:a05:6000:186a:b0:485:8fe2:eda1 with SMTP id
- ffacd0b85a97d-4858fe2eedcmr29628673f8f.17.1788969397806; 
- Wed, 09 Sep 2026 08:56:37 -0700 (PDT)
-X-Received: by 2002:a05:6000:186a:b0:485:8fe2:eda1 with SMTP id
- ffacd0b85a97d-4858fe2eedcmr29628647f8f.17.1788969397423; 
- Wed, 09 Sep 2026 08:56:37 -0700 (PDT)
+ bh=Cdb/tr56eVLilxXQOAAtT08NGtDN7d8H2xoi0GsgBFA=;
+ b=Z/dj7nCh9yj/pZcYveX8ph6s9zLb9+B/9HiNYI7xIErj80zEV8Gj/OjsdqvRQimxCa
+ RgT0R0hRUMVVQTMvRMt3ukHozJwxBvvUNgXyjfM40Qey4LxN5N0yK8/gdX/jkaooYHvD
+ DvgyikF3gqsIgWuHjXkCPSm23M+t3TSjbtnuyFWX+8/TlEaYMwDNtFAuW//ABFgPKAnb
+ NX+ClzPateVeGnJteQJ9d7eynGgiy3ZvRtJsKsXd+v2mSlzK6ZJy8caecCSi1AiOe1yw
+ VXsrPSzT/CQvXpYiMPVGC+b9iIYcmMigsm5Uncuvj7XMBhHsbTmuJa89A1zZbudIdMAC
+ wh4A==
+X-Gm-Message-State: AFuF++k4rw5hwT+iQX6/RYwD0Y+9P3bQ662TUix2PALK265fiiLht7V+
+ VuQjOOZBUJMGtrWoMT1fuhqJADpfjMBGtPrvPSLT0EfcDzlIgfo+U373sbqBpsw9O/hVJ5jZ9W4
+ VCU6GY+0sAoK74IrONwihKD6xLbCZZhHDCusbfhU20zMy+xi1UU50v+/nyJ0sxLNyZxGpepS2tW
+ cT/7Z+zo5Bnth6MdrRoEQs//8Zb42gWX8UILepNRbe
+X-Gm-Gg: AYBFou1N1J2GlKg0b+Je89qdL3HpfGoURjUrH7kxmLfaY7os+F2eIMW0gmj0Ipa0HFa
+ djZk1l66nalEEF5vrZ7mxSm/lowDTPPQ318dyHNT3cIous9Tl5CCWdG4XWRXOxEsCMMveQyPgg4
+ ATGVdILv94H4EBN0XmQUlaYD6v96MP65WW8C7KcDwa6f7TBa943WMIgHctJMbIWRnRzcmkGMYgr
+ HYe/98W54t+kbtglBotemdFKpAIpTxElA/b4D44l1gX9CUThs/VG2Qv8UTelf/1Fh5XPUrIZjPD
+ NfCnKycSpBR5rcaSrbDWKDYR5QZDXZJcPyr4K50joNj8aLtP3VJnMfG1/EBAU0ihjLhDIEdlLIt
+ w5f/F5yYBgLWXKdYPIcn+objl8nLd8KshFC6nHIwoGl21cG6SzvlNSTpLPRCxvaFXJND8X5+GXt
+ vLi6IL
+X-Received: by 2002:a05:6000:1882:b0:485:8313:9f43 with SMTP id
+ ffacd0b85a97d-485872b86b9mr39495998f8f.25.1788969396278; 
+ Wed, 09 Sep 2026 08:56:36 -0700 (PDT)
+X-Received: by 2002:a05:6000:1882:b0:485:8313:9f43 with SMTP id
+ ffacd0b85a97d-485872b86b9mr39495962f8f.25.1788969395834; 
+ Wed, 09 Sep 2026 08:56:35 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885b1320sm43579129f8f.27.2026.09.09.08.56.36
+ ffacd0b85a97d-485883927a3sm34734996f8f.11.2026.09.09.08.56.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2026 08:56:36 -0700 (PDT)
+ Wed, 09 Sep 2026 08:56:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Simon Scherer <scherer.simon89@gmail.com>
-Subject: [PULL 04/12] target/i386: Update FPU tag word for FSTP
-Date: Wed,  9 Sep 2026 17:56:16 +0200
-Message-ID: <20260909155624.1082893-5-pbonzini@redhat.com>
+Subject: [PULL 03/12] target/i386: Update FPU tag word for FXTRACT's old ST(0)
+Date: Wed,  9 Sep 2026 17:56:15 +0200
+Message-ID: <20260909155624.1082893-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909155624.1082893-1-pbonzini@redhat.com>
 References: <20260909155624.1082893-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,37 +122,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Simon Scherer <scherer.simon89@gmail.com>
 
-FSTP ST(i) copies the value in ST(0) into ST(i) and then pops the
-register stack. ST(i) should end up marked valid in the FPU tag word
-and the old ST(0) should end up marked empty.
+FXTRACT writes two registers: the old ST(0) gets the exponent (it
+becomes ST(1) after the push), and the new ST(0) gets the
+significand. Both should end up marked valid in the FPU tag word.
 
-helper_fmov_STN_ST0() copies the value into ST(i) but never touches
-its tag. So if ST(i) happened to be tagged empty beforehand, it is
-still wrongly tagged empty afterwards.
+helper_fxtract() only marks the new one valid, via fpush(). The old
+ST(0) just keeps whatever tag it had before the instruction, even
+though it was just written with the exponent. So if it happened to
+be tagged empty beforehand, it is still (wrongly) tagged empty
+afterwards.
 
-Mark the destination tag to valid in helper_fmov_STN_ST0().
-This also fixes FST ST(i), which shares the same helper.
+Add a fpush_fxtract() helper that does the usual fpush() and also
+marks the old ST(0) (now ST(1)) valid, and use it in place of plain
+fpush() at all previous call sites in helper_fxtract().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4395
 Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260902120419.212855-2-scherer.simon89@gmail.com
+Link: https://lore.kernel.org/r/20260901085839.138094-1-scherer.simon89@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/fpu_helper.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/tcg/fpu_helper.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index df16c54c208..f42448ab206 100644
+index 56fb94c957b..df16c54c208 100644
 --- a/target/i386/tcg/fpu_helper.c
 +++ b/target/i386/tcg/fpu_helper.c
-@@ -510,6 +510,7 @@ void helper_fmov_ST0_STN(CPUX86State *env, int st_index)
- void helper_fmov_STN_ST0(CPUX86State *env, int st_index)
- {
-     ST(st_index) = ST0;
-+    env->fptags[(env->fpstt + st_index) & 7] = 0;
+@@ -1814,6 +1814,13 @@ void helper_fpatan(CPUX86State *env)
+     merge_exception_flags(env, old_flags);
  }
  
- void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
++/* fpush() only validates the new top. FXTRACT also needs ST(1) validated. */
++static inline void fpush_fxtract(CPUX86State *env)
++{
++    fpush(env);
++    env->fptags[(env->fpstt + 1) & 7] = 0;
++}
++
+ void helper_fxtract(CPUX86State *env)
+ {
+     int old_flags = save_exception_flags(env);
+@@ -1825,22 +1832,22 @@ void helper_fxtract(CPUX86State *env)
+         /* Easy way to generate -inf and raising division by 0 exception */
+         ST0 = floatx80_div(floatx80_chs(floatx80_one), floatx80_zero,
+                            &env->fp_status);
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = temp.d;
+     } else if (floatx80_invalid_encoding(ST0, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST0 = floatx80_default_nan(&env->fp_status);
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = ST1;
+     } else if (floatx80_is_any_nan(ST0)) {
+         if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
+             float_raise(float_flag_invalid, &env->fp_status);
+             ST0 = floatx80_silence_nan(ST0, &env->fp_status);
+         }
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = ST1;
+     } else if (floatx80_is_infinity(ST0, &env->fp_status)) {
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = ST1;
+         ST1 = floatx80_default_inf(0, &env->fp_status);
+     } else {
+@@ -1856,7 +1863,7 @@ void helper_fxtract(CPUX86State *env)
+         }
+         /* DP exponent bias */
+         ST0 = int32_to_floatx80(expdif, &env->fp_status);
+-        fpush(env);
++        fpush_fxtract(env);
+         BIASEXPONENT(temp);
+         ST0 = temp.d;
+     }
 -- 
 2.55.0
 
