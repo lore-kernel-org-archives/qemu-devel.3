@@ -4,145 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44ABDC79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 20:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E90FC79FB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 20:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4OVq-0000Ei-La; Wed, 09 Sep 2026 16:03:18 -0400
+	id 1x4Om0-0003nL-5U; Wed, 09 Sep 2026 16:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x4OVp-0000CU-Bs
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:03:17 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x4Olv-0003lj-Ki
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:19:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x4OVn-0005IY-HT
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:03:17 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 689JIW8E3423129
- for <qemu-devel@nongnu.org>; Wed, 9 Sep 2026 20:03:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2op8PIjEPqYtM3IFg6x1Vzw1//SQ13FJS4sDkTDMSJM=; b=GgMO67EGwueMV94e
- 3m86qDDls+5INat1bCAhEh1hbnw4rq7ul2PCqDQtUQu8gsE3neVIRZLtoxJavZf0
- wWhSaguxG53HuBGIskanFoiGKliw3vxuAqXVtwZgg1JSHyl1pcwHv3wcxecSwP+j
- GIeeJtMXTqd2TSvLHStdkerAlS2OyYJkpX1eN5xPALoE0cVO7AvcEr5QExwHGkY5
- /QJL6i1QUFXmoTkL16PHG8WCHxYNbzM3I5dCqvjVj8ahARg/zRuul8YwNC79exLj
- GQ2Q7HwDrvRtvAx6axgMdGLoRyiAa6L64wlQVcQ3LAr01fnGkVf80b8sA1DktvRc
- PRxZsw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gkcyggb15-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 20:03:13 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9394ad7f64aso974315885a.3
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 13:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788984193; x=1789588993; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2op8PIjEPqYtM3IFg6x1Vzw1//SQ13FJS4sDkTDMSJM=;
- b=GH+O6L2SkvZwkg9nBLvij2xBy0I8mkJXjogPmxkEXc1cS2AdRVjdmjIjAL1FD4xwxZ
- OJDDkloncWK8efgFFU3O9HuvlkzTKdRVDJeY1/WKZHpMWsNdKOKxYvzvbgSK0JUVaxTF
- rd4YYygOb/8xLcBlwr4AM1BVun5Vh65Co/bbNMoYSJy5J4Osmq31ONZUKs84WR4XmbcN
- To6anN0Vf41fu9AKNpAnqop61t9VwPgjhBpjwzx0uwchhQm4GEpuKhOl2/ySwreBOVLg
- 5m5Fb5WvHtDqeJbs29QLilJMc9D3X9Ufl74fGb/vx7j9/TxGbH+OZ+IWxmPIBTCsKYzY
- tRWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788984193; x=1789588993;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2op8PIjEPqYtM3IFg6x1Vzw1//SQ13FJS4sDkTDMSJM=;
- b=AgCrUQ+FXBXLe/EWH7aFh9+6wiDNALcnuOCcPZEuORA7Did4L83MSDw6kIhI0kAgkF
- +D1WzLd1/JxBAP8bm0ADXR32sWEJldHhliJ5npBHbU3LiLOuOhAbBgQPEp/m8CkF9H4v
- FgV2AcsZBe8R4PpCSdd66arEL2oxmaBIsitSjyZAMkMHSdPArIKgrVF3KrymwBC05eAJ
- sFguA7PwbJmrfClkfWUFCcSan/0/nIquMnC1VQqExzuYQcOWozbriqehAZWGBBeJQt2B
- qAdpwWNbLXHqDMzN/tuW4cO07ZbODImb9inao75e8KNmLRacOIxTnRQRaU1f9Hsbv1cw
- HroA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByBCtruCyBRdoVBMRr64ktlXcpdHNo/I05aUsO9hGCAsV5LFOVqHyPJmaQ3xZIzqOnTuZcq0Uxn4yeI@nongnu.org
-X-Gm-Message-State: AFuF++lobI4jHtYGQk8gQyjomAZgg3ykkOgxfOCIgsshnhQgPs+3aP0Y
- RN75Wj8xVDHlZcdPQhKhp6nxyZjGkJPcKfrfDz8icxoKQR3SVV4aqyiHXxzXxWmmB4QjyGZuvBv
- DGlrrbRBE8jqocQVel7G7JZQshJvqcOq0Nji6gq088WtgzbS02p2DectWfQ==
-X-Gm-Gg: AYBFou0mUisEuo/4TGs37Rsu/RRx0qUp670K/tyA+Y6ePGrTQSFSGUzEjLdD1LV7hmE
- 9ITHLeyUQ2oIakuzBrzJC17AZWYpNTTyP25uVzKVe1AGTYKfJ5eLOBt839tsiaRAd8eaykdIhUH
- skMNqC563QVoG534R715CIYpwpDyvcxKDTqWfuOAj9fFMTQ9cvYmoWmubF77rEkzucy6iTPUe4C
- Hug/bF+dk6kFecMMhLXMzEawu44WO82qJKkBOutbMZ5UFW0LxE+f5ZLNVVI+adMRoch5xqRLcdt
- T7t9OHLkwV03tc7dIggcaFk4SMXxGe4oifnYTvDYbG0m54RaVbJ47xgDEiVXZbFrsnmlksWO+VX
- De7ULbt6s3qWCODQh9tPgACi+4A/QslCko2c=
-X-Received: by 2002:a05:620a:4381:b0:939:926f:221e with SMTP id
- af79cd13be357-939d4a8e77emr581579485a.38.1788984193294; 
- Wed, 09 Sep 2026 13:03:13 -0700 (PDT)
-X-Received: by 2002:a05:620a:4381:b0:939:926f:221e with SMTP id
- af79cd13be357-939d4a8e77emr581500285a.38.1788984188876; 
- Wed, 09 Sep 2026 13:03:08 -0700 (PDT)
-Received: from [192.168.68.102] ([177.18.66.131])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9397f9f4b3csm1489200885a.5.2026.09.09.13.03.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Sep 2026 13:03:08 -0700 (PDT)
-Message-ID: <010e9bea-5ceb-4640-9817-2695dce10c0c@oss.qualcomm.com>
-Date: Wed, 9 Sep 2026 17:03:05 -0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x4Olu-0006qF-4w
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:19:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788985193;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oZjPrOg/hnVs/BKFBYAQxkq5NJCxjkiZ3myc0AFRN00=;
+ b=Za/hMckaWtSpLbH2bTm96YuCEevLz9b2chZUyDTSBJaugLcPP8ouPGL5YPCvZx40nwNpKu
+ swNfP2B4uHMl7CCopYWAJqUqIvoVZfsZjcrdz37/AcLZyv1v/rwT8n7rS7ZOJTFijwPnFo
+ NOeYxxSGhRFJdX/Hjq9Yfv2563kFrv4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-kEeJ0ZOEM2elzL0-lWpPtQ-1; Wed,
+ 09 Sep 2026 16:19:50 -0400
+X-MC-Unique: kEeJ0ZOEM2elzL0-lWpPtQ-1
+X-Mimecast-MFC-AGG-ID: kEeJ0ZOEM2elzL0-lWpPtQ_1788985189
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDD1F18005A2; Wed,  9 Sep 2026 20:19:48 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1794A19560AB; Wed,  9 Sep 2026 20:19:47 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] target/riscv: canonicalize reserved CBIE encoding
-To: wangyang <wangyang25@otcaix.iscas.ac.cn>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-References: <20260908124755-v3-0-wangyang25@otcaix.iscas.ac.cn>
- <20260908124755-v3-5-wangyang25@otcaix.iscas.ac.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260908124755-v3-5-wangyang25@otcaix.iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDIyNCBTYWx0ZWRfXyDeGr34KPUqW
- oNijbbyBxG175eO95t9tQTZ3AZHiBdTlG+qhJ1uWmdfAOu6KrLil4NIqVoKeUJvRj3+eEvcIh0g
- OANd48QWJ/mzQ3ni8tIwl5qExckF5+Y=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDIyNCBTYWx0ZWRfXxFVvjbNf0o9j
- bL5Pyo8eFYiQlVseErmd9spkjOMKnAWwKkEqwB1wMvOj7UJuO4s17dugY5GSXQ+Uv/PfCCCcyhQ
- iblcN8lvplqRZXKW3bn17zBYyZyAuprwiYQQiOTdUM81QVfc9BVlBeVi364Ek/DrNVjrqvryQXL
- F6pxIYEbMQRKmTQQ4PYr686mW6exMFJKuiO1ndCPC3juaYQeY5n/Ivgrm1qP7j75PIv6WEfXyiu
- 90weyRoyMxpr0fkIN1qAFkgyOzZQi4gkJSrFg/bEQrjVIeF5iEuYp/goIvA6JBNyUcCJC1Lgf93
- P8Sehe9H0s0+WMzpqEXPoygRKSPECjcIi9hwkqgO1oFt90zDDDU43hoMp4yaqd3sRv09Fvawp27
- Z1hXS0CbIkjDh9NnIBpCddt8mB6gfv/PHG0dn2DkIDNMXjd7zSvbz+I6nIY1uf0R6bmQ9yX65Hz
- uoP32BXHokU153H6SEg==
-X-Proofpoint-ORIG-GUID: DzEmXPU9A1Pl_Qiwxz94stXvPA_lV286
-X-Proofpoint-GUID: DzEmXPU9A1Pl_Qiwxz94stXvPA_lV286
-X-Authority-Analysis: v=2.4 cv=Z/F5j3RA c=1 sm=1 tr=0 ts=6aa1bb81 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=x-x9FmLcmKcBr6A0_pgA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-09_01,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609090224
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 04/14] system: check security for accelerator types
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+In-Reply-To: <20260909175656.1572689-5-berrange@redhat.com>
+References: <20260909175656.1572689-1-berrange@redhat.com>
+ <20260909175656.1572689-5-berrange@redhat.com>
+Date: Thu, 10 Sep 2026 00:19:30 +0400
+Message-Id: <178898517055.2613908.14482868961436708322.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=527;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=FZ8AFznySCy1zZCShGO9ppy3Y1eqZEwwij9jGZA2+rg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqob9VY8gEufFoGkuXxc2jFxYC6fS9tW1pqGcmI
+ lsJdr8RfKSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqG/VQAKCRDa6OEJdZac
+ 5TXSD/48Tfldn0TbAabCZC11x2p7F4uywJhjE8gVhGsOHpG0ZL8sFibbsUftDLl+lpoi4Az5EI5
+ HrPgIVX9n4hfXAMYlhNId0ve5/sYDG6SJGylDxL3Nla/15UAetuDzeJmysE6g16GuKAKTIEqcgF
+ xU96KlQ/6hVKPPK/z5ktQcJwc3JGx4J3v4UKY/K0ikn9vZ50Tm5Q0Y2qi/qq9e4icWHUgcvS8/U
+ BGCPrPaQioTH+EF1er4Y+qDgTLUNhjsrD1DJcgFNIsMZlPXgttCjeOCX9/y/GYwnWsPHPrAmZ/0
+ 2sqP5nNtGZmsUdvrSc3sxe3ngUiPYBkQML+XzWyFXoFuUTfUuDS2yVg2RrIKU4fBLKFcCFxB/F2
+ bmHWJBq6BfQnUS+GE1MpTARdG7LEapFSkaAE12zGPFW+KuiNvGs1nMq2cEPFz1OiqojmScA4spl
+ m3RM43eBz2v3eUrbYfTbK7NkenNh8qXDefOahiATpuUt+myegCJ8Gugk4i1kpMP/0QCrda1CEyz
+ uMf6fXia6584lx1y258/Q/46sGVgWPWy4xEZAVrz84j+oLksVTCvJAsoDFEM6uId6RFJbDyGWOF
+ uJ/73hNitq7kWBFmnlRNkJa5tK7Xl4aa0gAoN9bSs5fZWz9uzveqGtrWY3+zGbYGZ2HerxheFV9
+ 3lKPo64TMr5Givg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,79 +110,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/8/2026 1:47 AM, wangyang wrote:
-> CBIE encoding 10 is reserved when Zicbom is implemented, while
-> encoding 11 has defined behavior. Canonicalize only encoding 10 in the
-> menvcfg, senvcfg, and henvcfg write paths so the reserved value is not
-> retained and the defined encoding remains unchanged.
+On Wed, 09 Sep 2026 18:56:46 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> This wires up the accelerator creation code to apply the compat policy
+> security check. When multiple -accel options are given, normal fallback
+> logic applies. IOW, if one is rejected by the security check, it will
+> carry on to try the next accelerator until one passes the security
+> check.
 > 
-> Tested: RV64 menvcfg, senvcfg, and henvcfg CBIE 10 and CBIE 11
-> write/readback test cases.
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4416
 > 
-> Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-> ---
+> [...]
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
->   target/riscv/tcg/csr.c | 29 +++++++++++++++++++++++++++++
->   1 file changed, 29 insertions(+)
-> 
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index bd4b6dc114..cf59f9ae54 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -3260,6 +3260,16 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
->               stce_changed = true;
->           }
->       }
-> +
-> +    /*
-> +     * CBIE is a WARL field: encoding 10 is reserved.  A software write of
-> +     * this encoding must canonicalize to a supported value instead of being
-> +     * retained in the readback.
-> +     */
-> +    if (cfg->ext_zicbom && get_field(val, MENVCFG_CBIE) == 2) {
-> +        val &= ~MENVCFG_CBIE;
-> +    }
-> +
->       env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
->   
->       if (stce_changed) {
-> @@ -3354,6 +3364,16 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
->           mask |= SENVCFG_UKTE;
->       }
->   
-> +    /*
-> +     * CBIE is a WARL field: encoding 10 is reserved.  A software write of
-> +     * this encoding must canonicalize to a supported value instead of being
-> +     * retained in the readback.
-> +     */
-> +    if (env_archcpu(env)->cfg.ext_zicbom &&
-> +        get_field(val, SENVCFG_CBIE) == 2) {
-> +        val &= ~SENVCFG_CBIE;
-> +    }
-> +
->       env->senvcfg = (env->senvcfg & ~mask) | (val & mask);
->       return RISCV_EXCP_NONE;
->   }
-> @@ -3422,6 +3442,15 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->           }
->       }
->   
-> +    /*
-> +     * CBIE is a WARL field: encoding 10 is reserved.  A software write of
-> +     * this encoding must canonicalize to a supported value instead of being
-> +     * retained in the readback.
-> +     */
-> +    if (cfg->ext_zicbom && get_field(val, HENVCFG_CBIE) == 2) {
-> +        val &= ~HENVCFG_CBIE;
-> +    }
-> +
->       if (riscv_cpu_mxl(env) == MXL_RV32) {
->           /*
->            * RV32 stores STCE/ADUE/PBMTE/DTE in henvcfgh, so a low-half henvcfg
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
