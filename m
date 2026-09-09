@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC01C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53FD1C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4EFl-00085y-FM; Wed, 09 Sep 2026 05:06:01 -0400
+	id 1x4EJN-0000k0-1Q; Wed, 09 Sep 2026 05:09:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EFk-00085h-CJ
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:06:00 -0400
+ id 1x4EJL-0000jl-Kf
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:09:43 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EFi-0007Bz-JJ
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:06:00 -0400
+ id 1x4EJJ-0007T4-W1
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:09:43 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68995occ059282
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68999WL6060567
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:05:50 +0900 (JST)
+ Wed, 9 Sep 2026 18:09:32 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Ezm8gNtbzGherCz+X6ek1I51x1x0kNyBRKejzkIz/hk=; 
+DKIM-Signature: a=rsa-sha256; bh=Unim+eiPKDEGVJFmIHOWXVS6YD/wRsD0sMbUjbUk5fs=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788944750; v=1;
- b=nCQGc9bxDVYSZlGv55D3A6GVl8RdhE3+TRKnNLdJObKK/S7TCcARLLHr3Mxnf7u0
- Krs+kWfvrpapFfdJrWE1PSlx7sq/Imsl5FoH7eVdeb28pZYtlTjtY2ggaKb5l7+k
- ABJzOWBNe2h0yHm0LbdVut6fJXJs4sz4Yx8fazyYWuJurelVasBpmkG4Li78Thgk
- BZod19YpU0nAyuFM/M+4bGpZ1I74EvuTu/MljGQjseBhsUd8SUSqsMwLFJlleqft
- CLx21STn34LZQxr1RD+/aUWM+Is312TEcQwpM5rStaWolNsNSsrFCcOTVRaCjnHL
- JQquec4W6/6eohIPjZhJ1A==
-Message-ID: <455a9176-83e4-4a3d-a9f5-2df6827e8f41@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:05:50 +0900
+ s=rs20250326; t=1788944972; v=1;
+ b=f47KPrBhyry5VwR2SVLhLrYtEHUzb6VV+N5MAG5nTyxdk/1qC34UykZ1EPQBsEt+
+ rYLoIVkvumydT0zpd7/nWpLrhZjomFaoq1yUHcuhfqmHjTrqLVAa4voTAIjOG3cp
+ /NHCnMiQq6rEa+mOFNtv68fmzKQ5n3vGNQAgyGJ69Nec6EzDWbVbxyYcHjgKQH5y
+ xBY7Yv31dB0jdyObOIeSlk2A+na3P2iBpn3SaP+AwlK0ffjvLKBmkBNtQb7FiViM
+ V/jPV4XVD/AS8qrB0BqxAflplHKHFnQJw6LyNDy8B67V9dy9X5KNelmQm5T6OJx4
+ So6gA4u5ZnmdTeySO1jZ/w==
+Message-ID: <20c72bfc-0940-4192-9624-d5686ce587fe@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:09:32 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/25] ui/gtk: move draw_submitted from QemuDmaBuf to
- VirtualGfxConsole
+Subject: Re: [PATCH v2 08/25] ui/dbus: disable scanout iff dmabuf is current
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -50,10 +49,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-7-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-8-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-7-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-8-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,16 +79,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> The draw_submitted flag on QemuDmaBuf is only used by the GTK display
-> backend to gate the draw pipeline and prevent gl_block refcount
-> imbalance when the guest submits frames faster than GTK draws them. It
-> is not an intrinsic property of the DMA-BUF but transient display
-> listener state.
+> Narrows release_dmabuf to the active scanout, as the device & console
+> may interleave new scanouts before releasing old ones.
 > 
-> Move it to VirtualGfxConsole, replacing the getter/setter calls with
-> direct struct member access. Reset the flag when the active dmabuf is
-> released in gd_gl_release_dmabuf().
-> 
+> Fixes: 142ca628a733 ("ui: add a D-Bus display backend")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
