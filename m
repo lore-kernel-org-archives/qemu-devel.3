@@ -4,139 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714C5C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C0B6C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 10:00:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4F4t-0003RG-DV; Wed, 09 Sep 2026 05:58:51 -0400
+	id 1x4F5v-00040r-Lw; Wed, 09 Sep 2026 05:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x4F4s-0003R1-T4
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:58:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x4F4q-0005FI-IE
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:58:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788947926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
- b=VGUnSq+w8yJMI4lbKdW+fnFRlAGl+xWg08WRgVxR+n79vXcZTaMzRdDI9DpcaXIZzegnBx
- PaeNqz/F5cFdl+/yng+kwqvvjSLnf+Ne7AJYhE2VaTx9thlxYPKjDRekEKBjVPSic61U3K
- L7TRU2wIfTko4/qQ3AwP66jb/9+91l4=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-307-zMSa0iTDPiC_Gnz5CD1bYg-1; Wed, 09 Sep 2026 05:58:45 -0400
-X-MC-Unique: zMSa0iTDPiC_Gnz5CD1bYg-1
-X-Mimecast-MFC-AGG-ID: zMSa0iTDPiC_Gnz5CD1bYg_1788947924
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38dbf293831so11746318a91.3
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 02:58:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788947924; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x4F5t-00040E-1s
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:59:53 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x4F5r-0005KD-El
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:59:52 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-861f30636f9so84794367b3.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 02:59:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788947990; cv=none;
  d=google.com; s=arc-20260327;
- b=Y2jppTTDpngybo3fbUDuraSRLNkk8KBVOyY+YuOSAQi3oVwR+j13j4ESBXGEccOHrG
- 92pY/lUbMaFr9SrotliRWr0eUArraAnyLEsTinL1g3mYwSImNGqx553CT7XqlWMSdH0G
- /Lid/+GPCrIJOsm+rNcE5pqgSUUZTZgL1CdzifTrLNX/57pUIio1EACb2oBCYJ4J3Q7M
- 561xPYIhyITO2xbRylgrpatd4/nqA+zUe4ZRPFeDhDAN+VmVNb2pC4Ru+J0KBoA5f27p
- ltg0+GqotTxMFmLJ2ScXJnXlWo+TLlwfbPJyS0Aj4Jw2u8/dU3pvukKUyJjm3SIkbSW8
- YIwg==
+ b=Amid2tC9Ds+svdH/3rt9/kq0FsfuhWl6f29s9fCQjSQvq0Jj8bhS6L2721H4rWoKYg
+ SEvkoFOFFsN+9ND0tmaUFlGhr9Awbv0KlGj9QqkKhpFJYwvmGMaD6UFdBJhuL4JZgFeI
+ 9W7pPmNq7IucFb9BF2xJaNSQ67EIWhtCVQFuXDIMNz9tRCPe19X9tF3ms2xmUS+rpIzi
+ Q2dMRQELbQL2FG65WiNZPRnj5xZ/bxmT3lOVWtuy8lUFYgpsR8/dAykxdEU7cYyy9m7G
+ et/GunQnF5JY1mfVN9Md9trtjDG5jv0B+6jWQzCSgEMwAzQl5+53ttAQjbwq8O91tSOq
+ yz2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
- fh=qselUejVXDvP5pnXhKG7u8hdCcrrqPK9JJS1C6fp4Dg=;
- b=aTXEFr9aPvhHjNHvaIXCtCuLWJHb2V97bJ7WGxpoFsDi6R+7C3Kug0vZmWe1YpZbnZ
- H65hbWw+JBy5n/wdssocoRP4EZHEwO4IDIkIlwbllR/tOCTiYf/xnCPqVf3hKOEkBHFZ
- SHtHsNsReNGwTG6rFbAcBMD13mybf2R+22ooEx+B6VvMJkxSa0D/qJqOdH1F7KT/DEMN
- 5xxRqdW41RydHHwSS/ZLPru4GKuTc3Y5swTKXSyOixDfDFDCLC7kJBR793OhqrfgnsAL
- 0Wlld1EERhn3AV/akwvho5MQ9b6UgUIooODeUpmYhOeQUAY6DL8ReWmBZN1+5p1c8fWE
- VUQQ==; darn=nongnu.org
+ bh=P0yg9s3f1ChwQ2/M0XR/5eIz10Z+xTKuOJzrZvbx6LY=;
+ fh=anZl6Td6NaKjHGFM8y4oK3yu8UEI3L8plTd5OD+C2Mo=;
+ b=avG4hwiI5GHqF6imVmysoO6m1CeHGh4SRDk5ynIkSN1tKu7G8jWQfmZcC/5EL17YAx
+ ws9dH18QNWfu6EuQKZOUlcXibUuBIx+V6gSMDekigqbJ3JW5fMYadHjzX5i5z07bAzts
+ RFtXH/JZHKa8I+xdYHUGs5o4J4d8CnMF2lb3y2KWmnKgt6KtHjnZp8N5kBqLx5VA6ZVA
+ QGe84X3JJ1F+JnP1M6omNs/E7Ipq6w8cP4FdIJHkJ+fPGBEs+kgUY7B6g2Pu1ZUnMK3O
+ SI7ZgNb8yvzy2ulteGRuIpV7toq4VBT+QKIWW58Xs9s7JQiIC6r7SIH6MAurQfZqdkY4
+ VbvA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788947924; x=1789552724; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788947990; x=1789552790; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
- b=RUnFOXugsQYi6MqBypmy1rluFZ0Q7+sMbVZSqVzEzPm7c0Ic2JxC2RGJOd+bBtDNnx
- 9sJICA/EVSE44yW847qNFklKqLpO/YJTWvcNm9ocl9Zq3HimjPTkkhWBM0lhjFbhg+Yi
- N+O9rp4mGI1uWv38macWwIAXAS1QEYUyO6UbylguZOdkzlgbZUs7ZO1IJu5EVn7XDi4o
- bWzuiOwguohxK+j5Oa/ms5vIucAfMia8UVRE/Hj5WZUS75dNi01+IVdThDjm+jJvg4gP
- NUtUS5168guSHaZRAKbFCGMZfzI3DtfPTjPjfVezRcb/raNgrx2QgtsOmg6p/sMBeLlW
- aGxA==
+ bh=P0yg9s3f1ChwQ2/M0XR/5eIz10Z+xTKuOJzrZvbx6LY=;
+ b=QpxhGSu+ETR7DQZPaYPNGFco/LPWWOVzt7gP7HKCCgcyXXXvhGiZvyyuI3zM5dOVsq
+ Rv3eY4J/o06Ujn32xs51IJqkdtAK9TtBOS8XZRXa5gswPtNfxzzEwwNp1ZtNZoemI90x
+ Loe0mq2KOnV/Zph2Nb/MwKmZ35ylX4kxhhnutHQRoK2+tg0+X2Iyx2q29kwHLsA33HcE
+ y9Al0bUyq/eQNBIbeJJMY7olD5hKDOhcYqLYhzIpO1es+iL/NJ7QAuKAaphL7xtQ0wrj
+ F4IPBH/JKDNOt9OCX7SAMWvBVAgI/wv2R6LSKE5+IrKFAhCsxlhaY9L9peCeiTrmxf6D
+ DlyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788947924; x=1789552724;
+ d=1e100.net; s=20251104; t=1788947990; x=1789552790;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
- b=ss9hCcuvVBrOM9ppaS7nF+ecSe4yUy2Y8ilUMqi9j9Oc1f8RV7PwV53wAAGFhzF0DS
- e0XKc+219dlZKr3WoPwb9CGhoGt8ouAFNKeD5zVKKnhgzmbJmU8fWTc8gRFvVY6rViIP
- zrIJBM21p3DMaEOChL7MA+LjwS40vPX/Xpct/HMirrrGv+rz86Ktr6J84zPg06iFHWUp
- BtSsRfFBE9MrKQEvxG+Xyfb0H9bd5keEZWtcidzMTZfkg47YiKc07PhRyPP4vVk1OUqx
- 1g8XPGRDXTdIxv+GeGZLXSpykRJoDbJHZ/FGJ/PHoJtRKQosMad53o8kPexdgs91NMwY
- JRug==
-X-Gm-Message-State: AFuF++mlIrHQvrfWp5OzENFDNgpIFP4MYJC8x6ho1wXN589GKcZbIEeW
- Mig1+OnrvffNI9vG5zDubUIA+tn+Gr7GLAdRJgB9mO2jqh3gyF/znoU+ucEkx/0qRQKuqYJ3aye
- gs8HPWbpouPn/SgVHRTWtqRSGPDmu3xPfAqf3fZXtewht5+1VgawSwWCPDK1Ll/dL1txQu+creI
- 5IILg8elIP9Il4hzf5JnCbXInjKwBjdt8=
-X-Gm-Gg: AYBFou3jg8TF1XYVoTjO1YuT+hKldLJ7t/VZzuh9zsKQ8e9NAownHD1/g/ZPMxS6u2g
- +DKi2+O77IDBAqGgXnijZQMEE7SewSt9j+y2CkkDhFi/1ItJhVXzak4osPNZJfa3P+yzlB8SGza
- QEa8Zim/e1ygvPenWT20VVk9mtPzeQBLkyWdwE3iZqJYvevyMfWtjUnZ6klePm0/XQiJmeWOo3c
- swDWOFXXbZX9E3r49farN2zlEQBA8AEv86uBheZnE+0DJJjeVs/rGr1dD2S7InFyqFPCD6BtLW3
- aw==
-X-Received: by 2002:a17:90b:440e:b0:380:fead:448d with SMTP id
- 98e67ed59e1d1-39b261e1011mr48099963a91.13.1788947923977; 
- Wed, 09 Sep 2026 02:58:43 -0700 (PDT)
-X-Received: by 2002:a17:90b:440e:b0:380:fead:448d with SMTP id
- 98e67ed59e1d1-39b261e1011mr48099924a91.13.1788947923472; Wed, 09 Sep 2026
- 02:58:43 -0700 (PDT)
+ bh=P0yg9s3f1ChwQ2/M0XR/5eIz10Z+xTKuOJzrZvbx6LY=;
+ b=AreB4OjkBgeckSmPpc3Or0R5lhcWJyad7gQlhuu8omw1xZkvsbvJI09bx0iJbhmHZ6
+ OdefGZpTjVzhTwuSTLHHLJ4M9ijoT0B3Um+RkbMV+//JOEBq72s+lj2n6wZcmxsCtOq8
+ dvz+tE9YyRIsezlFyuR27Q9Ec/bP3tCrfPdeOxa8tdZ/jn40xoUQb+PDQwJwA0fHaBE8
+ zH3KJOUw3K7fx2n42knKqC9qk60ZcufBkqj6aTtaFjgRF/mkFh3iJYaed0hcQST8Zyh1
+ yksPgRlnhjNvCqhpm6RJtWeHUqnCdnHzbSStFYNw2GV2Dje1OEcClge6VPeZd7jTfbzm
+ YgFg==
+X-Gm-Message-State: AFuF++lrNErO3cCkaoEcpYvEN8fS246VX3v4I86GGDdfdnmmtfbEd56K
+ mnyYcOwBvH88ucJlSwUZjat2jsGOSDYgNMC93t/yZ70Rgxm0tgJgat3AqIoVXJd54KM+4GLbEiB
+ lw3+nspc49uZcikowhEeBo4C3Z3uiJ9qqCeP0CP12YQ==
+X-Gm-Gg: AYBFou3Rvtu3lQeUvBOAALmm2+rnkUzK/u71MTp4zxv9Yp13PXSrQAhfkji/QKq6HZ7
+ q7XeaFoNde/DYpxYj8HsRGLmiVeVtAMWZqGCNFG9rU8xGaQ+8PCFAxPyrh+anKMDD1m+8zd4enY
+ WwKOZry3HRZNigyXhhLLCFBE/0M3P4AjD0g9zE9ThIMxU7SyzWB7/Br9a44JRjH8ydXQZv1VjHH
+ 34L6amLgNMSNZJDOSMrtcVjjcocMKZFwBdpk2Ql+L5o9PnFce43pQYwAVta3hxn6Y8IQ61p4oM5
+ LAy3RRlTV9w8dkapbNrE6Km1KDvHnYEHoSM55W+93kFrPOa/TfMlDiOQ6MXbNBSxEHzO2F/Ej2F
+ MUK4kVL8XgyRjpCRY5mZikzx8fOE780Njlt53vQE=
+X-Received: by 2002:a05:690c:710a:b0:873:5c7b:c0fa with SMTP id
+ 00721157ae682-8735c7bc5b3mr95930167b3.50.1788947990051; Wed, 09 Sep 2026
+ 02:59:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
- <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 9 Sep 2026 13:58:31 +0400
-X-Gm-Features: AcwNN1U6mXPq1TmvHlImsoTWBjtVfSyfX_p4apJjFptTdnhfZ3MBOVH1kfTHxbA
-Message-ID: <CAMxuvazGXs9d-32LFP8MYhipzqPvGskwMk7hmgJMA87QJ4fX1A@mail.gmail.com>
-Subject: Re: [PATCH v3 6/9] hw/display/virtio-gpu: Fix fenced blob unmapping
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Greg Kurz <groug@kaod.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Amit Shah <amit@kernel.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- David Hildenbrand <david@kernel.org>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-block@nongnu.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260908-qom-qapi-pr-v1-0-a4d75a2573cc@redhat.com>
+In-Reply-To: <20260908-qom-qapi-pr-v1-0-a4d75a2573cc@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 9 Sep 2026 10:59:38 +0100
+X-Gm-Features: AcwNN1VYTnMJjecseBJVlWFaQCVRd4wQ5Dxr6fveTBL_i2jet_u8ivtd94r_j_E
+Message-ID: <CAFEAcA84y8=rx5-r3oA9i81Z_pPNoZejwYVmahVKVDpo=yNqRg@mail.gmail.com>
+Subject: Re: [GIT PULL 00/15] Preliminary fixes from "qom/qdev: associate
+ properties with QAPI"
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,153 +118,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 8, 2026 at 10:13=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+On Tue, 8 Sept 2026 at 16:07, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
 >
-> Blob unmapping may be suspended because of remaining uses of the
-> mapping. virtio_gpu_process_cmdq() uses the following condition to
-> detect a suspended command:
+> The following changes since commit 55347990687e7bc5b6b0d624f290025726e8fb=
+fa:
 >
->     !cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)
+>   Merge tag 'nohmp-pr-v1' of https://gitlab.com/marcandre.lureau/qemu int=
+o staging (2026-09-08 10:57:00 +0100)
 >
-> However, the guest may set VIRTIO_GPU_FLAG_FENCE for a command that
-> performs blob unmapping. Such a command will be incorrectly assumed
-> as not being suspended. Add a dedicated flag for the suspended state
-> to avoid overloading VIRTIO_GPU_FLAG_FENCE.
+> are available in the Git repository at:
 >
-> Fixes: 640f9149c3dc ("virtio-gpu: Support suspension of commands processi=
-ng")
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/qom-qapi-pr-pr-v1
+>
+> for you to fetch changes up to 554a1f83c6118df74b2cb1e4da2271152857b5ad:
+>
+>   memory: use object_property_add_link for container property (2026-09-08=
+ 19:06:36 +0400)
+>
+> ----------------------------------------------------------------
+> Preliminary fixes from "qom/qdev: associate properties with QAPI"
+>
+> Mostly typenames fixes and minor refactoring that were reviewed and will
+> make the series slightly smaller on next rebase.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-> ---
->  include/hw/virtio/virtio-gpu.h |  1 +
->  hw/display/virtio-gpu-virgl.c  | 17 +++++++----------
->  hw/display/virtio-gpu.c        |  5 ++---
->  3 files changed, 10 insertions(+), 13 deletions(-)
->
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
-u.h
-> index 9404e488208a..3eccc4bc39c3 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -141,6 +141,7 @@ struct virtio_gpu_ctrl_command {
->      struct virtio_gpu_ctrl_hdr cmd_hdr;
->      uint32_t error;
->      bool finished;
-> +    bool suspended;
->      QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
->  };
->
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
-c
-> index 9bda572426b2..c37df91e3ed1 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -440,8 +440,7 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
->  }
->
->  static void virgl_cmd_resource_unref(VirtIOGPU *g,
-> -                                     struct virtio_gpu_ctrl_command *cmd=
-,
-> -                                     bool *cmd_suspended)
-> +                                     struct virtio_gpu_ctrl_command *cmd=
-)
->  {
->      struct virtio_gpu_resource_unref unref;
->      struct virtio_gpu_virgl_resource *res;
-> @@ -457,7 +456,7 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
->          return;
->      }
->
-> -    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
-> +    virtio_gpu_virgl_resource_unref(g, res, &cmd->suspended);
->  }
->
->  void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-> @@ -946,8 +945,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
->  }
->
->  static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
-> -                                          struct virtio_gpu_ctrl_command=
- *cmd,
-> -                                          bool *cmd_suspended)
-> +                                          struct virtio_gpu_ctrl_command=
- *cmd)
->  {
->      struct virtio_gpu_resource_unmap_blob ublob;
->      struct virtio_gpu_virgl_resource *res;
-> @@ -964,7 +962,7 @@ static void virgl_cmd_resource_unmap_blob(VirtIOGPU *=
-g,
->          return;
->      }
->
-> -    ret =3D virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
-> +    ret =3D virtio_gpu_virgl_unmap_resource_blob(g, res, &cmd->suspended=
-);
->      if (ret) {
->          cmd->error =3D VIRTIO_GPU_RESP_ERR_UNSPEC;
->          return;
-> @@ -1036,7 +1034,6 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g=
-,
->  void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->                                        struct virtio_gpu_ctrl_command *cm=
-d)
->  {
-> -    bool cmd_suspended =3D false;
->      int ret;
->
->      VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
-> @@ -1080,7 +1077,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->          virgl_cmd_resource_flush(g, cmd);
->          break;
->      case VIRTIO_GPU_CMD_RESOURCE_UNREF:
-> -        virgl_cmd_resource_unref(g, cmd, &cmd_suspended);
-> +        virgl_cmd_resource_unref(g, cmd);
->          break;
->      case VIRTIO_GPU_CMD_CTX_ATTACH_RESOURCE:
->          /* TODO add security */
-> @@ -1110,7 +1107,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->          virgl_cmd_resource_map_blob(g, cmd);
->          break;
->      case VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB:
-> -        virgl_cmd_resource_unmap_blob(g, cmd, &cmd_suspended);
-> +        virgl_cmd_resource_unmap_blob(g, cmd);
->          break;
->      case VIRTIO_GPU_CMD_SET_SCANOUT_BLOB:
->          virgl_cmd_set_scanout_blob(g, cmd);
-> @@ -1121,7 +1118,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->          break;
->      }
->
-> -    if (cmd_suspended || cmd->finished) {
-> +    if (cmd->suspended || cmd->finished) {
->          return;
->      }
->      if (cmd->error) {
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index d520f69e6453..dd6c09d1ddcf 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1193,11 +1193,10 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
->              break;
->          }
->
-> -        /* process command */
-> +        cmd->suspended =3D false;
->          vgc->process_cmd(g, cmd);
->
-> -        /* command suspended */
-> -        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FEN=
-CE)) {
-> +        if (cmd->suspended) {
->              trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
->              break;
->          }
->
-> --
-> 2.55.0
->
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
+for any user-visible changes.
+
+-- PMM
 
