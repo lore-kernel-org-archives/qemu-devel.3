@@ -4,109 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F371C79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 12:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA243C79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 12:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4H4d-0006rk-4L; Wed, 09 Sep 2026 08:06:43 -0400
+	id 1x4HFG-0008Cu-PA; Wed, 09 Sep 2026 08:17:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <readqemu@gmail.com>)
- id 1x4Cnk-0007UD-VE
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:33:00 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <readqemu@gmail.com>)
- id 1x4Cnj-0004OO-JC
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:33:00 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6a0a4aa99bdso6935805a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 00:32:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788939177; cv=none;
- d=google.com; s=arc-20260327;
- b=EIGe6GWOefDJtFkLh5QkeJfTjcYP/zYeFgqJ8bmnBGNEmM9NqWzV6lgY8EvnkMeL5d
- TjdiEz2vBzAabhqtBewBS6/E/fOGmnoX6M5YsGXIUdXmjvETvn0OkeDTdDNCvk3UcTn9
- 1CVrLLJjsCK3sS/PjAt+fzgALGxZsKylEcCbd1f1eRKPLzNE4pP6wlnUZTtGMe8IsFUi
- 0GrQn8E91cNSbg5nv81avyyDyJbZbVzHttqzzbDX3YGZjCiL1mRPK7jtnGiif9yIdLjs
- mxeI8JXpwMZV7/r8UFtERCA/AaTbiYeANj2mtmQuWrZPFlQ6xALQUap8lV0/DTbk1d62
- R2BQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=L1lp+a6grUq9QWrKs7p5Wo+a4nCUMqQfkPzxpyIiF+8=;
- fh=Gg4+Esnrv6Q3zmSkTl2BjbiQzr4/Ze7SUtbskGGAjqg=;
- b=OvpUuulmb9hLFCO11eng6hEbl+cCamNXLvUxVvNByVMGN5eYpzfNYLvOdbEhsDefdC
- QewGM3BQxbpU2BmPVC3Tm0sfudrC5xJFATas3LXhgQTNdgygACsuAYz/3Ug+OSiqzwlo
- JqbePGZhg+b+rHQNFT0eOwRqYzkA/2nuYVuVfcynLkoDlGMnroR+F7UfeqD+kDtXOA2G
- CkpAGwVpUEHoFmE0QaR/vxkKE4SOQyJutkURzLdLxBqPmSk6/N75yQz1eEvZdCVUQ0Ko
- T/OzXrwFKJE7xNx9s7wS02pLmFcN3XXYxTzglRcaSZAZJj0BaGm2RiWNI0LbzYFCLs/w
- bHvw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788939177; x=1789543977; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=L1lp+a6grUq9QWrKs7p5Wo+a4nCUMqQfkPzxpyIiF+8=;
- b=QktBvQMYFMK3aZpmaDVQjtGbd8JeqTqb6SROYp476j2eY2BmFEKy8ho1qs9R4sXiVd
- S1KSHJpJc55TRjoBAM9gSG2HDOY1eZcycWA/o8QnALi4pbdTuTCkiYFhuoPvAiE3DyD/
- TsQ6w4ADNv60xgcOXRjibnfu+lhuEVVcY5+7Aa/y7hze/zg/QYo2Kjp4hRilUegH2TRG
- VsemNhRflfZDi1BI/6mYXhkZ06poNezDk4/il8/cdggnDEexjvof7nFAgtWDUip8lD7f
- dJxszPamCxTB38UxcowujRz7F1YAD3zPPuPcW23HR6BfaU4nNuThFOfo5lgPaha99G1H
- axIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788939177; x=1789543977;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=L1lp+a6grUq9QWrKs7p5Wo+a4nCUMqQfkPzxpyIiF+8=;
- b=KconFZ9S1UARUbKWyMhutagMvOtKFFZPS7++q9i/0GWAjVqL36EZicf+EJfB/YL/K/
- +ckFMIBHgXvR4B7CyZNqXFhpUkXor0odAMvZKG1ePUH4p8iTue717USrjHtIC20jvf09
- wbU+8+TGDCRemgTaNR+hbh6Zim1n9qaZufU0lXp4gTPIB3kGxkiKn+FYI+7g7lCZfm+n
- v1IlDwEiHByzsshxw7xqD0s+8z8upHJhuWuwbkTyrADenNsZCUOsD1hYoXZ6O39V35Iy
- 786wQ6sZfFzPS/etQZwSqhYyUC9NXG4PQHFuI91r5QeLJa5fvY0a1oHt7jYs5K0ONuKo
- OAxA==
-X-Gm-Message-State: AFuF++mX75qkpilzNNirn6OQpl2eixpAp1BwhLG0qWnsORkp4wKdq1J/
- dYVTIOoOAteiRHG6qBKOjWNg2rdkXbkNkWpIXaJ/8PEJhZ4sssf2Y+JMc2IEG+TPyQ2gU8iAx6M
- p6E5H0W+FSKXKQIJCO+sB8gaCtoX6wIc=
-X-Gm-Gg: AYBFou21m0YDPG4U33psvgNGsDxWx8vymC8ZB3k/cJRSCtlBHFYAorfN5QBNuLJbqO1
- oYqmRhGyuZyX8HQe6b1S/VLB91zm2mxbAZjcD/47uP5l7IkB2NJfWiKwbgu72swoISc5i709KbO
- xRwvwgPJugdogLdR3dPX58aJoN2IggY4riCueVVdX71DXVIGouURKoZQdoTnuAZM45QYamXGsOV
- mLoyM3SkxOEpytDe2Jk+5UfkGB/6iW1wMO12cGGoDwHk05zjFENuPHR/RIe2E2QbqDrjbptIyHV
- WgzApENwZsLaJ3HY+MfZz2HFPll4eU+K7lSItE4DwTeWcVD41m/iHxR1iQ==
-X-Received: by 2002:a05:6402:13d2:b0:698:e614:e4bf with SMTP id
- 4fb4d7f45d1cf-6a7e8cb530amr11447107a12.0.1788939177276; Wed, 09 Sep 2026
- 00:32:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
+ id 1x4HF2-0008By-8k; Wed, 09 Sep 2026 08:17:28 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
+ id 1x4HF0-0008Nf-0b; Wed, 09 Sep 2026 08:17:27 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 1413E60207;
+ Wed,  9 Sep 2026 12:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957321F00A3A;
+ Wed,  9 Sep 2026 12:17:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1788956241;
+ bh=XAsYGST3fK75sdqD5BtU1+vIYyrQfCFom8k9fVsh1PY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=IMrzoV4OhNq57UET6zC5VuIWCkk7UYhCWY9zAas2uwX4RO9gXOyYWGf2wQ8i8RIMo
+ 6FqJWObA6gNNOSSvdsgDdnHyfklE1+xa/Vq4m0pk6k6VwalKcTDaOtcbvXsFYOaNZ1
+ LzXjJsItBPexiAQp486UnShhd6GXXm6hxy4WgOz5czHhAnkEyJOU4F955adQ9QJ3Ip
+ awP4zTnItUnHY0eQJGzWapszKF10+1AN8ktTIx2Eu6fd73jdx5rEHZk1NAiKV5I0w9
+ M+LOV+Lbbn4VRUay6NhrzZeUdLN9WVoI75d1ns5Yat7Sf7HhkZKTeKmceYTis3ta9i
+ zLpQ9ydpdMYjw==
+Date: Wed, 9 Sep 2026 14:17:07 +0200
+From: Daniel Gomez <da.gomez@kernel.org>
+To: Jesper Wendel Devantier <foss@defmacro.it>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, Philippe Mathieu-Daudé <philmd@mailo.com>, Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>, qemu-block@nongnu.org, Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
+Subject: Re: [PATCH v2 1/7] dma-helpers: fix unaligned discard_back
+Message-ID: <20260907222356.1-da.gomez@kernel.org>
+In-Reply-To: <20260904235516.2-foss@defmacro.it>
+References: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
+ <20260819-align-nvme-mdts-with-linux-v2-1-351ac2dfed64@samsung.com>
+ <20260904235516.2-foss@defmacro.it>
 MIME-Version: 1.0
-References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
- <20260723200325.24969-2-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20260723200325.24969-2-zhiwei_liu@linux.alibaba.com>
-From: Qemu <readqemu@gmail.com>
-Date: Wed, 9 Sep 2026 15:32:44 +0800
-X-Gm-Features: AcwNN1UthEaXlNHv0uiJDAv2G2v1Z8J-UPbzgvVms4BfFSJ9r3khhaCgEsqZf7g
-Message-ID: <CAMXXpfZoEHGRXTMzWtmtkBcnp+YO9O=sJqV0M4oyUYKvoPs7hg@mail.gmail.com>
-Subject: Re: [PATCH v8 01/11] target/riscv: Add basic definitions and CSRs for
- SMMPT
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- daniel.barboza@oss.qualcomm.com, chao.liu.zevorn@gmail.com, 
- liwei1518@gmail.com, qemu-riscv@nongnu.org, rahul@summations.net, 
- xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com, 
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="0000000000002fb934065b07dce6"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=readqemu@gmail.com; helo=mail-ed1-x535.google.com
+Content-Type: text/plain; charset=utf-8
+X-Mailer: lorebird
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=da.gomez@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 09 Sep 2026 08:06:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -121,35 +69,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002fb934065b07dce6
-Content-Type: text/plain; charset="UTF-8"
 
-> This provides the necessary infrastructure for the core MPT logic and
-> MMU integration that will follow.
+
+On 2026-09-04T23:57:16+02:00, Jesper Wendel Devantier <foss@defmacro.it> wrote:
 >
-> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+>
+> On 2026-08-19T17:24:03+02:00, Daniel Gomez <da.gomez@kernel.org> wrote:
+> > From: Daniel Gomez <da.gomez@samsung.com>
+> It is obviously locally correct.
+>
+> (I am more confused by the code, broadly. How come the IO isn't rejected
+> if unaligned?).
 
-Reviewed-by: Jay Chang <jay.chang@sifive.com>
+IOs were never unaligned from nvme side. However, chunking introduces an
+unalignment case that patch 2 fixes by ensuring that each IOV_MAX chunk
+boundary is sector-aligned (not present in v1), which is what led me to
+this fio test and unalignment check.
 
-Thanks.
+But your question made me look at the discard path more closely. And
+looking at the commit introducing it, 58f423fbd5f7 "dma-helpers: Fix too
+long qiov", it was meant to fix something unrelated: "This fixes the IDE
+qtest case /x86_64/ide/bmdma/short_prdt." So, I guess it's fine for that
+case.
 
---0000000000002fb934065b07dce6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I will drop the reproducer from the commit message as it belongs to
+patch 2.
 
-<div dir=3D"ltr"><div><span class=3D"gmail-il">&gt; This provides the neces=
-sary infrastructure for the core MPT logic and<br>&gt; MMU integration that=
- will follow.<br>&gt;=C2=A0<br>&gt; Co-authored-by: Huang Tao &lt;<a href=
-=3D"mailto:eric.huang@linux.alibaba.com" target=3D"_blank">eric.huang@linux=
-.alibaba.com</a>&gt;<br>&gt; Co-authored-by: TANG Tiancheng &lt;<a href=3D"=
-mailto:lyndra@linux.alibaba.com" target=3D"_blank">lyndra@linux.alibaba.com=
-</a>&gt;<br>&gt; Signed-off-by: LIU Zhiwei &lt;<a href=3D"mailto:zhiwei_liu=
-@linux.alibaba.com" target=3D"_blank">zhiwei_liu@linux.alibaba.com</a>&gt;<=
-/span></div><div><span class=3D"gmail-il"><br></span></div><span class=3D"g=
-mail-il">Reviewed</span>-by: Jay Chang &lt;<a href=3D"mailto:jay.chang@sifi=
-ve.com">jay.chang@sifive.com</a>&gt;<div><br></div><div>Thanks.</div></div>
 
---0000000000002fb934065b07dce6--
 
