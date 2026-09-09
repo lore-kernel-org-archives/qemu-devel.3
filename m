@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D32AC79FAA
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A38C79FAA
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Cjv-0004Hw-5y; Wed, 09 Sep 2026 03:29:03 -0400
+	id 1x4CkD-0004Y6-3f; Wed, 09 Sep 2026 03:29:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Cjt-0004HY-GI
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:01 -0400
+ id 1x4CkB-0004P2-Na
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:19 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Cjs-0003gs-0N
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:01 -0400
+ id 1x4CkA-0003ls-18
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788938940; x=1820474940;
+ t=1788938958; x=1820474958;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=f12rT1oVsQxui4wfBXUQ2DFK71TtMXEqUn4sY43FYLI=;
- b=Bpr+7GKDoiTqT3+t0IJNMhY5fg5cM1pYeZvI3okTNFQnjtmg3Q9cHT/7
- SwokyoCtIHEf+SnB4tqdBQBrIWMpvnUl4VA58nqhuobS/BOVlVzfiNcEG
- HmZoWIOLXhdsh0+AnagAu2D8Nq4icITh7fCCoEbaYyzll6ApqgLjtQYXm
- 1NkhTz4Ud7lawhCaoIF5Ddk5RBo9yXHA3yW46lD8P2F5MXz4lbBRbY24B
- wK7JKHlZS08MWG9Qe0c+vtHmPsNTFHZqnJ6W/ji0XuaR+V9CSBkIrHpeh
- jXIr29xY/dehZgv/VfqJmVBeMf23C0ETd/mwoAqiHu9oUq/1ISeTGFWWq A==;
-X-CSE-ConnectionGUID: o/dbMQJzSuesWhKJgSPYxw==
-X-CSE-MsgGUID: hXbTNufyQIO9FPld3JuhOw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723277"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723277"
+ bh=cWt9SbppR2wQ5EyUo5pQvI2kj/nQHpey+rjIeQrhC4k=;
+ b=mC6qup6z59mT301oZ1QcdvGBZ8qHypVR1IE07w86Sp9iOVrKOd3E2QQg
+ cCmhVq/fdeuJXwkvGPa/Mn1ArWEOz2AqxiydKq73jwVT2OQWIxmqCNtaD
+ hRt+MFyafum8jWn1DZzAUwobmsp3hZ2RvFd7acHIH8GI4BOuXh+/8Xn/m
+ 2+lB+lWfNFp+l9B85lydLEaLRzX0f1gfyNKrqAAPeZ93xgcNcuTFGiVXz
+ xnRRZEp1GOUkbUFC7sHnPbTgL8eBIvKZeUHVwjL1BjnALaGNDkmtaA0Zb
+ 8MoNN3Zs1yYWpuk2kKvYl4CqFyTPFYd1MmtM6k1Y/nErHMJkW9v7PzS4s Q==;
+X-CSE-ConnectionGUID: 61voAIujQxa5oJoUREhjKw==
+X-CSE-MsgGUID: +Vjj5twZSDqCpPQi5geSGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723329"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723329"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:28:58 -0700
-X-CSE-ConnectionGUID: 1RgFKynDTJCgMKXNUb0XDw==
-X-CSE-MsgGUID: ocDLavK+S96jUIh87Z2ygg==
+ 09 Sep 2026 00:29:17 -0700
+X-CSE-ConnectionGUID: rE417i+gTtesx4xXljTEkw==
+X-CSE-MsgGUID: H3+kAt1TQp6p4xfdexDFfg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982387"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982487"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:28:55 -0700
+ 09 Sep 2026 00:29:14 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,16 +53,15 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v6 1/6] intel_iommu_accel: Guard VTDAccelPASIDCacheEntry
- definition
-Date: Wed,  9 Sep 2026 15:28:32 +0800
-Message-ID: <20260909072837.3183154-2-zhenzhong.duan@intel.com>
+ Xudong Hao <xudong.hao@intel.com>
+Subject: [PATCH v6 6/6] intel_iommu_accel: teardown FAULTQ resources in bottom
+ half
+Date: Wed,  9 Sep 2026 15:28:37 +0800
+Message-ID: <20260909072837.3183154-7-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
 References: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.10;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -88,42 +87,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the VTDAccelPASIDCacheEntry typedef structure inside the
-CONFIG_VTD_ACCEL ifdef block.
+When a pasid entry becomes invalid, we need to release all resources
+allocated for that entry including FAULTQ object and fault_fd.
 
-When CONFIG_VTD_ACCEL is disabled, this structure is entirely unused
-throughout the code. Moving the layout under the existing preprocessor
-guard prevents exposing dead type definitions and ensures the header
-remains clean when building without VTD acceleration support.
+We call qemu_set_fd_handler() to detach fault_fd's io_read handler and
+wakes up main thread from poll(), but there could still be a small
+window we call iommufd_backend_free_id(fault_id) before poll() exit
+and release fault_id file reference. In this rare case, FAULTQ object
+free return -EBUSY because opened fault_id file keeps reference of
+FAULTQ object.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Teardown FAULTQ resources in bottom half to ensure poll() has released
+fault_id file reference.
+
+Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- hw/i386/intel_iommu_accel.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/intel_iommu_accel.c | 40 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-index 4a9003c92d..46c1a29409 100644
---- a/hw/i386/intel_iommu_accel.h
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -12,6 +12,7 @@
- #define HW_I386_INTEL_IOMMU_ACCEL_H
- #include CONFIG_DEVICES
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 903c74bad1..25803a1e50 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -261,17 +261,51 @@ free_faultq:
+     return false;
+ }
  
-+#ifdef CONFIG_VTD_ACCEL
- typedef struct VTDAccelPASIDCacheEntry {
-     VTDHostIOMMUDevice *vtd_hiod;
-     VTDPASIDEntry pasid_entry;
-@@ -20,7 +21,6 @@ typedef struct VTDAccelPASIDCacheEntry {
-     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
- } VTDAccelPASIDCacheEntry;
++typedef struct IOMMUFaultQueue {
++    IOMMUFDBackend *iommufd;
++    uint32_t id;
++    int fd;
++    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
++} IOMMUFaultQueue;
++
++static void faultq_teardown_bh(void *opaque)
++{
++    IOMMUFaultQueue *fq = opaque;
++    VTDPRQEntry *prqe, *next;
++
++    QLIST_FOREACH_SAFE(prqe, &fq->vtd_prq_list, next, next) {
++        QLIST_REMOVE(prqe, next);
++        g_free(prqe);
++    }
++
++    qemu_set_fd_handler(fq->fd, NULL, NULL, NULL);
++    close(fq->fd);
++    iommufd_backend_free_id(fq->iommufd, fq->id);
++
++    g_free(fq);
++}
++
+ static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
+ {
++    HostIOMMUDeviceIOMMUFD *idev =
++        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
++    IOMMUFaultQueue *fq;
++
+     if (vtd_pce->fault_fd < 0) {
+         return;
+     }
  
--#ifdef CONFIG_VTD_ACCEL
- bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
-                           Error **errp);
- VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
+-    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
+-    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
+-                          vtd_pce->fault_fd);
++    fq = g_malloc(sizeof(IOMMUFaultQueue));
++    fq->iommufd = idev->iommufd;
++    fq->fd = vtd_pce->fault_fd;
++    fq->id = vtd_pce->fault_id;
+     vtd_pce->fault_id = 0;
+     vtd_pce->fault_fd = -1;
++    fq->vtd_prq_list.lh_first = vtd_pce->vtd_prq_list.lh_first;
++    QLIST_INIT(&vtd_pce->vtd_prq_list);
++
++    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
++                            faultq_teardown_bh, fq);
+ }
+ 
+ static void vtd_setup_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
 -- 
 2.52.0
 
