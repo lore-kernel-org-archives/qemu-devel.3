@@ -4,131 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF05BC79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 10:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A8FC79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 10:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4FwE-0003Ln-Eh; Wed, 09 Sep 2026 06:53:58 -0400
+	id 1x4FyF-00043s-ML; Wed, 09 Sep 2026 06:56:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x4FwC-0003LZ-RS
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 06:53:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1x4FyD-00040m-8o; Wed, 09 Sep 2026 06:56:01 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x4FwA-0003oB-O0
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 06:53:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788951232;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TRhbnx9+CI4pjajpy371a2FMdbyb2j3Qu6kw7m0Efyw=;
- b=Le6yw09fi2YDUjfOdfnj2/ZTlM7BaJo5HAYcjOWqBtfk7GwJ2tVDYbm0glvEB1wKnBeOdN
- BzuaOT9KAcafjudDxrILUIJrLm5wjIs/jBx2S2XDLZ5WuggLJ/Xtvl+U4NNl5y1Vfi3DUB
- xIDYKl26F53Y18+iRJ3B+3eJ4AMuE1U=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-wF969zdFPSi8EL-cMZGszQ-1; Wed, 09 Sep 2026 06:53:51 -0400
-X-MC-Unique: wF969zdFPSi8EL-cMZGszQ-1
-X-Mimecast-MFC-AGG-ID: wF969zdFPSi8EL-cMZGszQ_1788951230
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2d63bad3d09so84774005ad.3
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 03:53:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788951230; cv=none;
- d=google.com; s=arc-20260327;
- b=la5IURtYaahcrdmMSrKJPJuOkfVb3kBTqjZN1JvwZu7/Kx/IKp6xbR4q2F6R4bKEmZ
- 7zPk4NvY6fAZM4T5erxhgE3sfT8nWPA6frW7E6bGHUNdlEB+PToo0FTQmhB+PPCyd0Sb
- 6jdeYhRI7ISeBW/g8rzee/fb/VGWwCWA4iVLci/tgmHBN7DpiyaEN/dCtKOgs9wvy+aM
- VJDSGgbzFni7pkibRz1d0hoS71WUgdnIo4MNFB24jR5eVL5ueeAP45MhSbLiNMoq48TL
- oCvu2fxZL5PBrAgEnwPRNx0a19BKvDUA+PqVPbpfTMhjKOYvCy2fNb9iVPh1vuSFZox8
- bdSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TRhbnx9+CI4pjajpy371a2FMdbyb2j3Qu6kw7m0Efyw=;
- fh=HLSuPskybtIIysCDrrCUGCclYLaEEdtpVmqnrjAgGtQ=;
- b=GSHdnGOmKSh3IDvrzkueKrw73xLZFKYN/7eBQjhi7Nd4o28T0TJe/yqYPpuAkmr/HJ
- AqOcNWwcUthCZY1FRyQYAuOKbm/iccwWPUC7di4ZlC3iVIMIK3cIpCp9rkCwHbdoq/+H
- fFF+A0qdroVLIj2r0XC3XCSYqgx53/TbGcBRl5VLJoZQ6wC0UeW/P2oMreKqzyef/Eo5
- O5+TfRdAOU1iQJfDWKGV8Qr3ullhXeokZnKBZ/u1STm7Ug1/WklVXVuj64TkGlC18eXR
- 6iidTJYw3pnlIYomu5ZS0ZBvVuBLBsaFmRrjHlc+SMspDGgNkWSGPNydwzqtQaszk8nJ
- IyXQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788951230; x=1789556030; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=TRhbnx9+CI4pjajpy371a2FMdbyb2j3Qu6kw7m0Efyw=;
- b=ZFe9c03LzI6+Q1xEN1u9f45SDNy+ZqrX3DwwPa2phyG3uShPJ9hI0y069BYnpf1aA2
- mkRqnATBLyVIxya+iFNA9iGwUAt3sRDsJTOsvQWfq5UjBD8BTHUdLBWDfJhSgTywA0eq
- dwQupGsT5JHA5oPOGjTecRadiIl3p1yqxBC21LwxSbEFYoZoO5JKQQnryXRkQpzJ89EV
- dgXEduPkWXJNzEb5rHzoP1kKQtPGvhnnuiEL9gWJ8IRn/j53+uDtL9v3dGXQj1yo1m4N
- nvWlIpzuh2owHE552zpssQYD0hKRwUHSVFqa0cqbfWp9v9h/3HLrTS15l3rOjI/CRXd1
- 1IeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788951230; x=1789556030;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TRhbnx9+CI4pjajpy371a2FMdbyb2j3Qu6kw7m0Efyw=;
- b=brm4Agl/YitcZpPJjWSj8WLvPeaj/0OaM0V8WXaPYscGZWW4Q8YRHaIcXos85Ko6n1
- 7/IFKRbrToBsoEqrkm+tyitOm+zrcyWECpT6RDwckxWamL6xt48WhnUdGeDi8Zyb/MEl
- madOgTKH9/bUVqogdWbCuFtIWNkRaa2lVixnJQZ24ThlswPGMTv8DDPibaAVdh6IfpsM
- g55XtTvJQx7dPWtS/LHFu34HCje0YD6SKTjUNwBGOlIfdmUaC1jjpIF9K0Jd6B1AkzzW
- n9m4pt8XIrMeYfFcDR4ao/pVaKgzD/LDm1dzAxjJXjR1wSz7k4L/joupJgqxOUv+3/Fq
- UY+Q==
-X-Gm-Message-State: AFuF++keInrV8D74MdOgtVxWJOQrUdr8EtCN7pxgl6G0oJ6/mVXy/xDq
- 10zIsLEPRsSxdizB69smrTmlorjuuirrQqHDLFYDr5GcZoP/r5j5zgoWIf4f8160mvHpPx+b62d
- ZTvaPN1n3mEp6T0NwDmZgpwCaf3H+zyOXpHSEgi/tY9b/rDIB4jc2KK9jWma1Uim8V7duAbLZmR
- 2kZlM5YJA1qtWe0yHrSfG5uj7QJ+ForPA=
-X-Gm-Gg: AYBFou1TI5pxlIc29s5NGm62UeDQehsgpu8nLU/NyCf8OtQsaQ15Bj+kJBfkLN4I1L3
- 9PCMkIT6o9TYbx4rIZTVmAyr28dBrJ6nX9qboL9CDy2nooFhRLWgrLM530fB1fTf1fiPNsrYXDy
- 0gGtm/WHAbiGvAKyuDwZE+LrJpBM1eab6+biWzEk/dvn+2jJyvUc+8U6wHglQh+nXLblyZXpPBZ
- de3aVyZUdrMLB/A6YWa2v1n1oEgJV3uvsX9teE2uu0W0j5ns5dAA8MtpOoZ0aqhGGoscGFkeqJt
- xA==
-X-Received: by 2002:a17:90b:2542:b0:398:9beb:5c17 with SMTP id
- 98e67ed59e1d1-39b2620a2bfmr48035433a91.18.1788951230063; 
- Wed, 09 Sep 2026 03:53:50 -0700 (PDT)
-X-Received: by 2002:a17:90b:2542:b0:398:9beb:5c17 with SMTP id
- 98e67ed59e1d1-39b2620a2bfmr48035375a91.18.1788951229575; Wed, 09 Sep 2026
- 03:53:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1x4Fy9-0004FU-OB; Wed, 09 Sep 2026 06:56:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cKy7Mwdnf3mnbL/kkJ3/pHvZWCpSP7sPkKnjjueWDMYkp4HVNrexVj06NfD0ejdAylBszCBYYg5DkXD3gmJSi/B/ZxY6H8RR2T/QKL5sFsH3P2Rwx6ULGuScdotiM6JSVC+2lz1t/IKZzpGefJ2OdiNRPVFZ2MTmMeuThQ3eKHHlnpk3Xcge5dXBXW/6EqXopQ/DP9pJIZ6rRhURGf+eDhrPY5ZIAjR5ofZqEeQhxFdbrlE0qRohXkQQomqHZHBZpWkBENuxbl54oq+fdQ/YTFoXIVHwSFZ1he6J6YXNxJeSCmAhVliFQPOYc0vd15++a/BzX+uLTA7jRJnp/UWeTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l1XHDLr2lCk/6Qr2x9Y8T5yZojzHQNkfXzh9bZlTCyA=;
+ b=aQuScByukTiQRtUjM4cYFyEvoiMek3CL9TeH8NMrjZlTJvw/euHGETyAh9htjTTQmEEDrzcThGriDNaXcpfBNlEg55bHoTM2ozXDypwp7cxu3ZnaR/WhLXnkSIQeVipZHgijFmDRiFNmljWG2oOgKqo/kji7fEdity7gMRpXQAlbUHui58kkzqip1w9luAq89o1eg8VmuOB/4XERycYpyohI/GmCa5IISWpz+OlLNGQPmozXIG1rIBv4TJldLJn5j1d427XTibvE87qjNwg/GcJmdRd/r8NJIovvM9GrFQXqE9OaXJzlB8MHrSsHB+sSSHZVgTZEopEuuYXbFyF2Ug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l1XHDLr2lCk/6Qr2x9Y8T5yZojzHQNkfXzh9bZlTCyA=;
+ b=D3FI3AVW1AOtZ1zeXH8AZw5MueKS7zHmsPUzf02VMAY8ZcWoxi36qv07976B3ZIeVfkr27Z470Uf5ww9mvT86Etf5JSaYZ5ijDnyWhEuomq+uWkPGL3+RoucagjvqCly9ZMwEF6KpiTFo6zQzxABHkP1HhDf4d6/mHAiM3pWM6rlw+q869kktfX8tG+43KKlbj4Haz/x/sxR2RCnPS93Um1+lgTOCHwvpUIGzfpa+dQC/XpZ9NGbCivmU2R8+HWsH6j3dr96H5TXlBlXru5gnXCUXdlesh4DgEwZ+8NsUu50/ldz8j2ECPvEX9tSj2ei7H1aXgg2sUD/4jxnz3C0BA==
+Received: from BN9PR03CA0755.namprd03.prod.outlook.com (2603:10b6:408:13a::10)
+ by PH0PR18MB5168.namprd18.prod.outlook.com (2603:10b6:510:165::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.8; Wed, 9 Sep 2026
+ 10:55:50 +0000
+Received: from BN6PEPF00000072.namprd03.prod.outlook.com
+ (2603:10b6:408:13a:cafe::22) by BN9PR03CA0755.outlook.office365.com
+ (2603:10b6:408:13a::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.15 via Frontend Transport; Wed, 9
+ Sep 2026 10:55:50 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ BN6PEPF00000072.mail.protection.outlook.com (10.167.248.199) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.5
+ via Frontend Transport; Wed, 9 Sep 2026 10:55:49 +0000
+Received: from axiado.com (unknown [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id C792740BFE12;
+ Wed,  9 Sep 2026 03:55:48 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: philmd@oss.qualcomm.com, 163wangjack@gmail.com, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, qemu-arm@nongnu.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v6 08/12] hw/arm/ax3000-boards: Remove redundant pointor from
+ struct
+Date: Wed,  9 Sep 2026 03:55:35 -0700
+Message-Id: <20260909105543.1478008-9-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260909105543.1478008-1-kchiu@axiado.com>
+References: <20260909105543.1478008-1-kchiu@axiado.com>
 MIME-Version: 1.0
-References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-20-15b5ae6b0023@redhat.com>
- <0699b5e3-23de-4199-9689-c5b98a7c4583@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1C+Ymzre7AdX=Gy66YL_OHwAgH9e06qqMNxLCvJNbt0kpA@mail.gmail.com>
- <6bed3d15-8d76-4802-b335-0615131e3572@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <6bed3d15-8d76-4802-b335-0615131e3572@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 9 Sep 2026 14:53:36 +0400
-X-Gm-Features: AcwNN1UUuNadMcdJ8C1iwvRwOe_CjvnomW49eKXPNW1OOJOWXSIPT8W0HqUmiGM
-Message-ID: <CAMxuvayn0crubd77DbTrbPS7Zf2phMDCEk0X6D09ZYEsKu2VNg@mail.gmail.com>
-Subject: Re: [PATCH v2 20/25] virtio-gpu: consolidate disabling scanout
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson <alex@shazbot.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN6PEPF00000072:EE_|PH0PR18MB5168:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: e75db981-936d-4cf4-cd48-08df0e60e928
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|36860700016|376014|82310400026|10067099003|18002099003|22082099003|56012099006;
+X-Microsoft-Antispam-Message-Info: 3/qBpJ9hMcQ7UZbO1KqCi0GvATMbw579pPyuAizHMv9zx3TmsmUViXGrh9Jy/J+6QSm0KjbXEHKDlspqPI/eGoo0m0mWx9WS3RRPzuWPrPoXIWnIxwUOomqdpd4p+g/t7sHujLTtuwsrlgLfFTUzhGJoCul1WvUF1sio/SXUjmYXR9Rynbrac/t05BC+zRrzDwLkiBpeSIH4P8gPk+dk7GozPPZnSQgaiF5mEdUC2hiOPrVL4OxJxI92EPqcB4nkrADvj9PVS6Ob2Eax0Fzs1su4mQ+4VnwKpOYB83NlohzHDEB+v8CqdL3FbrRPxMMO9Q8ss35qWZ9O9ttXeBKPKYps9cYyvLnW8FzdAF5KUbXXruiTC25ythBS0vv2e5h0HkuI5ewaEJoxROOQEVVAAuNYYt3hY0l1GM6/s3JyU6lNJlZRtSSOvD4Lh7j3CGB5NG7rVQ8xT+x8Zue3qOOfkyDMH8aqrHKEy2IlZE36+PuXrvbgWU4mNR+zNOzPl6rFTCxYlZT2/Pz19fxdyz1uvV9CpFxKTOATZG8QNB+f0FZSj9QoSbV0IB/v3+uePi8zjCaeknFe2e9HSlt4C5fpPS+PNeiWakyHYocgmEESftgwvZ3Scw+r5NdskZeEyDuPpvth8iBRNaYJAUJYKKa93iicVgL5M+wqP7RdU6XTg8fRwAHoaiytU3PBYwvIgT1oy35cPx5FbXF+9RvWR057qA==
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(36860700016)(376014)(82310400026)(10067099003)(18002099003)(22082099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: PhWO2PCWciuY7Qc2mfT4WMIzkj8jKKVfQLB3w7WD4Frtr7X5eqtHEMHY+vyq3nNWNVoPEsChZuY9g5D/pVzH9ID5cdbaWE4SH+RfBkHhxaOOfdKdfc1+bqxwBw6pTG30bThpFkl/cLI5u11yo9jWlbIXQziDpdtUodGKq3ceJBotlF5lOpBAVnDk6RjGeV53eGsQpZtbK8YH7D/oMbDY7/VODuGseiuHguxGNXogyA6K3X7wpiEPoranKwmJRdxV3pLw+6P8F9OQVl7HEMS12WUStytTGlzR5Jqz9cFZWja4oPHai/QU7amKPTiAaAMXpekzJNBWQoaA5RuqbJIISIy0RCqFRJ710QzXYAMAfwYikfw9uZXMcc/0IpouSBuCIYrtD7BICXzPIpDoGjMA22lPIVHpMXBcvMO/4A+YW3yWFl1jr2L0mDiTeQjstR/g
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 10:55:49.9643 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e75db981-936d-4cf4-cd48-08df0e60e928
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN6PEPF00000072.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR18MB5168
+Received-SPF: pass client-ip=2a01:111:f403:c005::5;
+ envelope-from=kchiu@axiado.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,109 +121,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Since ax3000-boards is bound with Ax3000 SoC, we don't need to have a
+pointer in struct for SoC type
 
-On Wed, Sep 9, 2026 at 1:33=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/09/08 19:42, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > On Tue, Sep 8, 2026 at 10:46=E2=80=AFAM Akihiko Odaki
-> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>
-> >> On 2026/09/04 22:10, Marc-Andr=C3=A9 Lureau wrote:
-> >>> Use the common virtio_gpu_disable_scanout() to reset the scanout stat=
-e,
-> >>> including GL state if any.
-> >>>
-> >>> Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
-> >>> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >>> ---
-> >>>    hw/display/virtio-gpu-rutabaga.c | 4 +---
-> >>>    hw/display/virtio-gpu-virgl.c    | 6 ++----
-> >>>    hw/display/virtio-gpu.c          | 7 +++++--
-> >>>    3 files changed, 8 insertions(+), 9 deletions(-)
-> >>>
-> >>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu=
--rutabaga.c
-> >>> index 8a82e96b7461..8697dd6936ba 100644
-> >>> --- a/hw/display/virtio-gpu-rutabaga.c
-> >>> +++ b/hw/display/virtio-gpu-rutabaga.c
-> >>> @@ -312,9 +312,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct vir=
-tio_gpu_ctrl_command *cmd)
-> >>>        scanout =3D &vb->scanout[ss.scanout_id];
-> >>>
-> >>>        if (ss.resource_id =3D=3D 0) {
-> >>> -        scanout->resource_id =3D 0;
-> >>> -        qemu_console_set_surface(scanout->con, NULL);
-> >>> -        qemu_console_gl_scanout_disable(scanout->con);
-> >>> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
-> >>>            return;
-> >>>        }
-> >>>
-> >>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-vi=
-rgl.c
-> >>> index 79d4c0b569fb..87d1fc3d5f65 100644
-> >>> --- a/hw/display/virtio-gpu-virgl.c
-> >>> +++ b/hw/display/virtio-gpu-virgl.c
-> >>> @@ -618,8 +618,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-> >>>                ss.r.x, ss.r.y, ss.r.width, ss.r.height,
-> >>>                d3d_tex2d);
-> >>>        } else {
-> >>> -        qemu_console_set_surface(g->parent_obj.scanout[ss.scanout_id=
-].con, NULL);
-> >>> -        qemu_console_gl_scanout_disable(g->parent_obj.scanout[ss.sca=
-nout_id].con);
-> >>> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
-> >>>        }
-> >>>        g->parent_obj.scanout[ss.scanout_id].resource_id =3D ss.resour=
-ce_id;
-> >>>    }
-> >>> @@ -1426,8 +1425,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *=
-g)
-> >>>        int i;
-> >>>
-> >>>        for (i =3D 0; i < g->parent_obj.conf.max_outputs; i++) {
-> >>> -        qemu_console_set_surface(g->parent_obj.scanout[i].con, NULL)=
-;
-> >>> -        qemu_console_gl_scanout_disable(g->parent_obj.scanout[i].con=
-);
-> >>> +        virtio_gpu_disable_scanout(g, i);
-> >>>        }
-> >>>    }
-> >>>
-> >>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> >>> index ae1f87ad68b2..cb096cb349cd 100644
-> >>> --- a/hw/display/virtio-gpu.c
-> >>> +++ b/hw/display/virtio-gpu.c
-> >>> @@ -435,8 +435,11 @@ void virtio_gpu_disable_scanout(VirtIOGPU *g, in=
-t scanout_id)
-> >>>    {
-> >>>        struct virtio_gpu_scanout *scanout =3D &g->parent_obj.scanout[=
-scanout_id];
-> >>>
-> >>> -    virtio_gpu_release_scanout_dmabuf(g, scanout_id);
-> >>> -
-> >>> +    if (scanout->dmabuf) {
-> >>> +        virtio_gpu_release_scanout_dmabuf(g, scanout_id);
-> >>> +    } else {
-> >>> +        qemu_console_gl_scanout_disable(scanout->con);
-> >>> +    }
-> >>
-> >> GL needs to be always disabled when clearing a scanout.
-> >>
-> >
-> > Ok, I removed the else condition.
-> >
-> > Are you going to review the remaining 1-23 patches?
-> > thanks
->
-> I reviewed them all. I have comments for "[PATCH v2 02/25] virtio-gpu:
-> fix use-after-free on blob cursor after detach". The other patches look
-> good to me.
+This patch remove pointer soc from Ax3000MachineState and create instance
+in init() directly
 
-Thanks; I'll send a v3 removing the vhost-user-gpu patch 24, leaving
-only 2 patches missing an r-b.
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/arm/ax3000-boards.c         | 10 +++++-----
+ include/hw/arm/axiado-boards.h |  1 -
+ 2 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
+index 75e0aedb4d..3ca4a6f93a 100644
+--- a/hw/arm/ax3000-boards.c
++++ b/hw/arm/ax3000-boards.c
+@@ -68,7 +68,7 @@ static struct arm_boot_info ax3000_binfo = {
+ 
+ static void ax3000_machine_init(MachineState *machine)
+ {
+-    Ax3000MachineState *ams = AX3000_MACHINE(machine);
++    Ax3000SoCState *s;
+ 
+     if (machine->ram_size != AX3000_DRAM_SIZE) {
+         g_autofree char *size_str = size_to_str(AX3000_DRAM_SIZE);
+@@ -77,12 +77,12 @@ static void ax3000_machine_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
++    s = AX3000_SOC(object_new_with_props(TYPE_AX3000_SOC, OBJECT(machine),
++                                         "soc", &error_fatal, NULL));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+     ax3000_binfo.ram_size = machine->ram_size;
+-    arm_load_kernel(&ams->soc->cpu[0], machine, &ax3000_binfo);
++    arm_load_kernel(&s->cpu[0], machine, &ax3000_binfo);
+ }
+ 
+ static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/axiado-boards.h b/include/hw/arm/axiado-boards.h
+index 4a632661e1..566f22cd96 100644
+--- a/include/hw/arm/axiado-boards.h
++++ b/include/hw/arm/axiado-boards.h
+@@ -18,7 +18,6 @@ OBJECT_DECLARE_TYPE(Ax3000MachineState, Ax3000MachineClass, AX3000_MACHINE)
+ typedef struct Ax3000MachineState {
+     MachineState parent;
+ 
+-    Ax3000SoCState *soc;
+ } Ax3000MachineState;
+ 
+ typedef struct Ax3000MachineClass {
+-- 
+2.34.1
 
 
