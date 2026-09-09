@@ -4,59 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D24ACC79FAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8C2C79F8C
 	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Cju-0004Hf-0V; Wed, 09 Sep 2026 03:29:02 -0400
+	id 1x4Cjz-0004IY-7q; Wed, 09 Sep 2026 03:29:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Cjs-0004HK-Ho
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:00 -0400
+ id 1x4Cjx-0004ID-KD
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:05 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Cjq-0003cj-Mm
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:00 -0400
+ id 1x4Cjv-0003ls-TX
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788938938; x=1820474938;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=xKiayMsCWAy7X4boh8Y6SgHtQJkvJQEbgmpkPCg0c8E=;
- b=BrlwRKKkMRp/oCGirrm0p0Ax/bgZfni7E/VTfJ5e99pk7YksQFSPfKjT
- IVlEh1QP16lGOPKYVt3/FXsVbmR5YfQ29Q3mu/9txGAkxUNoYeajgIDcu
- o2j9MeYbtEKDTsZ5z9VXP1oKqqt3ju1oRR4cVCwDW/Ie7/hqrain6Ajmo
- N0W7rD3JL80Ssq1gegZ9iGVBa4bGTJ7ONivhbdAgdTt/b0bvnCUwhLc8r
- yyffjrXXA0JW+dX0HEBMdGgNzOCo/JzOtbzlG7wT8BELB8iBWXz1+3H3u
- rNqxwN9yGeXfSUlpsMoAqq25fundbyx6z5/wEXAbAf1/B61LuCMefucFw Q==;
-X-CSE-ConnectionGUID: RHG+GWMZS6q+J49uzOqZ4w==
-X-CSE-MsgGUID: Cn2L82dAT+ewV3Ijzxt55g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723269"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723269"
+ t=1788938944; x=1820474944;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=oXa9aU/pnOkKiAjG1eoG8cmrXg38L1xjPhqUAnvKK1M=;
+ b=c2P0keulDT1qd69X7U3LvtpH1tVIoFmKDfiSIkbktjLR7gq9+cQQiI9C
+ bJDK84Ri06mvQvHkAkZeDIqBfbAPVCrQnhl1R9A63ueUk01Y/8VwlV0M1
+ 7L3yOqIaCqfhMb6xY/RRT1dRVB74ztyBkXV8rTSgZocmT7fGtK9yFkRML
+ 4WB/DPZ2y7ocqmObQtpKPn0YFrCXRY5KYRaYTfXXv5dwmdlpszZztgrC1
+ q2g6M1EhLxAQW/SxxgRaPCUjn4XWb3yFZni2cimqIKPF8+DwHfQpP2U1T
+ Y/b9budTeo3u/lJuIujK/qgQi8vR0D/1JdWCeR4mvrwxJXJNwwNFAKHan A==;
+X-CSE-ConnectionGUID: CN8Ur9KySNSxc7dSV4NKqg==
+X-CSE-MsgGUID: C6C5AdcpTiSnOhjJlLC0yA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723290"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723290"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:28:55 -0700
-X-CSE-ConnectionGUID: CuGicn8aSuaOXY9R+HY89A==
-X-CSE-MsgGUID: +94xDjtXTIipZThsAz4bNQ==
+ 09 Sep 2026 00:29:02 -0700
+X-CSE-ConnectionGUID: QyRcQMxIQPeuwC8Idd06zw==
+X-CSE-MsgGUID: kKC4Mr91SKqENgcbdjYm0g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982352"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982416"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:28:51 -0700
+ 09 Sep 2026 00:28:58 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowangio@gmail.com, jgg@nvidia.com, nicolinc@nvidia.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v6 0/6] intel_iommu: Enable PRQ support for passthrough device
-Date: Wed,  9 Sep 2026 15:28:31 +0800
-Message-ID: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Xudong Hao <xudong.hao@intel.com>
+Subject: [PATCH v6 2/6] backends/iommufd: Introduce
+ iommufd_backend_alloc_faultq
+Date: Wed,  9 Sep 2026 15:28:33 +0800
+Message-ID: <20260909072837.3183154-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
+References: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.10;
@@ -83,86 +87,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Add a new helper for IOMMU_FAULT_QUEUE_ALLOC ioctl to allocate a fault
+handling object which will be used in hwpt allocation.
 
-When svm=on,pasid-bits=N,fsts=on is configured for virtual vtd, we enable
-guest's support for vSVM. In this case, the host VTD may generate
-recoverable first stage page fault event, QEMU read the event and inject
-it to guest.
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+---
+ include/system/iommufd.h |  3 +++
+ backends/iommufd.c       | 21 +++++++++++++++++++++
+ backends/trace-events    |  1 +
+ 3 files changed, 25 insertions(+)
 
-After guest handles the event, it sends a page group response, QEMU gets
-the response and pass it to host VTD.
-
-This series adds QEMU support for receiving such host events through the
-FAULTQ interface and propagating them to the guest, then catching guest's
-responses and propagating them to host.
-
-GIT branch: https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_prq.v6
-
-Tests:
-Tested with DSA wq attached to an user APP which triggers IO page fault on
-process page table durging DMA.
-Build test with window cross-build.
-
-Thanks
-Zhenzhong
-
-Changelog:
-v6:
-- further polish doc comments for vtd_pri_request_page (Liuyi)
-- set FAULTQ_BUF_SIZE to 2048 to avoid prq lost (Liuyi)
-- move PRE validation hunk in the caller side (Liuyi)
-- add break in vtd_prq_list search loop in vtd_prq_response_notify (Clement)
-- s/vtd_prq_report_fault/vtd_propagate_recoverable_fault (Liuyi, Clement)
-- s/vtd_prq_read_fault/vtd_read_fs_faultq (Liuyi)
-- s/vtd_prq_write_response/vtd_write_fs_faultq
-- s/vtd_prq_response_notify/vtd_prq_handle_pasid_response
-
-v5:
-- add comment "Accept the PCI PASID as input" to docstring of function vtd_pri_request_page (Clement)
-- change vtd_prq_report_fault() parameter type "int cnt" -> "unsigned cnt" (Clement)
-- check return value of vtd_pri_request_page() and send response (Clement)
-- free all vtd_prq_list entries when detaching (Clement)
-
-v4:
-- add the comment to the docstring of the function vtd_prq_report_fault itself (Clement)
-- add "out_" prefix for fault_id & fault_fd output parameter (Clement)
-
-v3:
-- convert to PCI pasid before passing to vtd_pri_request_page (Clement)
-- expose vtd_pri_request_page and drop accel_ops pointer (Clement)
-- add a cleanup patch "intel_iommu_accel: Guard VTDAccelPASIDCacheEntry definition" (Philippe)
-
-v2:
-- define fault_fd int type (Liuyi)
-- update comments on FAULTQ_BUF_SIZE (Liuyi)
-- drop param vtd_hiod in vtd_destroy_old_fs_faultq() (Liuyi)
-- s/vtd_propagate_page_group_response_accel/vtd_accel_propagate_page_group_response (Liuyi)
-- call vtd_prq_response_notify() directly instead of through pri_notifier (Liuyi)
-- replace "fault_id != 0" check with "fault_fd < 0" check (Liuyi)
-
-
-Zhenzhong Duan (6):
-  intel_iommu_accel: Guard VTDAccelPASIDCacheEntry definition
-  backends/iommufd: Introduce iommufd_backend_alloc_faultq
-  backends/iommufd: Extend iommufd_backend_alloc_hwpt() with fault_id
-  intel_iommu_accel: Add PRQ injection for passthrough device
-  intel_iommu_accel: Accept PRQ response for passthrough device
-  intel_iommu_accel: teardown FAULTQ resources in bottom half
-
- hw/i386/intel_iommu_accel.h    |  16 +-
- hw/i386/intel_iommu_internal.h |   3 +
- include/hw/i386/intel_iommu.h  |   6 +
- include/system/iommufd.h       |   7 +-
- backends/iommufd.c             |  28 +++-
- hw/arm/smmuv3-accel.c          |   6 +-
- hw/i386/intel_iommu.c          |  18 ++-
- hw/i386/intel_iommu_accel.c    | 281 ++++++++++++++++++++++++++++++++-
- hw/vfio/iommufd.c              |   2 +-
- backends/trace-events          |   3 +-
- hw/i386/trace-events           |   2 +
- 11 files changed, 350 insertions(+), 22 deletions(-)
-
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 17bf1a3727..36b34b4899 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -106,6 +106,9 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
+                                    uint32_t *out_veventq_id,
+                                    uint32_t *out_veventq_fd, Error **errp);
+ 
++bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *out_fault_id,
++                                  uint32_t *out_fault_fd, Error **errp);
++
+ bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
+                                     uint32_t queue_type, uint32_t index,
+                                     uint64_t addr, uint64_t length,
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 15f2a51350..2775eef741 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -554,6 +554,27 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
+     return true;
+ }
+ 
++bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *out_fault_id,
++                                  uint32_t *out_fault_fd, Error **errp)
++{
++    int ret, fd = be->fd;
++    struct iommu_fault_alloc cmd = {
++        .size = sizeof(cmd),
++    };
++
++    ret = ioctl(fd, IOMMU_FAULT_QUEUE_ALLOC, &cmd);
++    trace_iommufd_backend_alloc_faultq(fd, cmd.out_fault_id, cmd.out_fault_fd,
++                                       ret);
++    if (ret) {
++        error_setg_errno(errp, errno, "Failed to allocate fault queue");
++        return false;
++    }
++
++    *out_fault_id = cmd.out_fault_id;
++    *out_fault_fd = cmd.out_fault_fd;
++    return true;
++}
++
+ bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
+                                     uint32_t queue_type, uint32_t index,
+                                     uint64_t addr, uint64_t length,
+diff --git a/backends/trace-events b/backends/trace-events
+index 9b7b9b7d68..b1c1d89dd8 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -17,6 +17,7 @@ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, u
+ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
++iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
+ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+ iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
 -- 
 2.52.0
 
