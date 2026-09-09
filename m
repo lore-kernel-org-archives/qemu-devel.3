@@ -4,110 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4EFC79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F30C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4CfB-0002cy-Dn; Wed, 09 Sep 2026 03:24:09 -0400
+	id 1x4Cfb-0002y6-TL; Wed, 09 Sep 2026 03:24:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1x4Cf9-0002cp-IS
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:24:07 -0400
-Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x4CfZ-0002xL-42
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:24:33 -0400
+Received: from mail-pj2-x08.google.com ([2607:f8b0:4864:39::8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1x4Cf6-0002gz-Oc
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:24:07 -0400
-Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c254f9c60b9so156713566b.0
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 00:24:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788938642; cv=none;
- d=google.com; s=arc-20260327;
- b=KHk12gfyqZ+FupGleCcWZmVTCuQ7vcd0Hjn4pdp4RB53aI2qBV6m+/7jVggqbdxBDm
- dqhR4TSwze5bmNUoPBdNNiKuqBlqGsxNj26eBOgvyhk10yKRFTD5QrEKSSLqti2Lg1vZ
- xjswBg2YcGpxp5AQn+d1NJQvr1nbgiJzxjMHlXw7relwtR5kB7kf5yP2wWox4T4f7B85
- EuqYWXapFRnjivd4xzQSHw1mnkDNCE/msqeWZvBTJPjg7HJVUmLpgiKfCpfIz4LluNO3
- 67lhh9fznygGm5laQFeu5jrWe7QXzM0+Uo1P3/7UpyH9ttL3a4++x36nk73obugIv/iJ
- BfpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=iE96SeWs007tmawi+lHgPeJKOgrzQ5bFzOhZjRk5HQs=;
- fh=+YY8Td6BzP/pG4PCbnufthTNhmxWwkmv9wr1dFxI/U4=;
- b=Mo9T3cPziUyIX/nNUGww/y9lE6FtxSH06Pz74a+yzBmkhzAhpcC2qjRD7W2sfkNXp6
- CifuBqYY5EFkeCRBRHXZz8CknVnfRw8o8n8lra4cGl1uyxFOtFjQAz0dxIlROaBE3KsD
- tvr7NjHLIePb/AuVKWowEL7g7o9uWsZoq1cfu7TVRaufU/DX/XyfpRIugPvlBWV4xYZI
- 4YnkKnBx1BRdnhXRyqkCCyUFIJPAreMkPbU3Lb1ZC6C5W9aGAtkx/VuwA42hAEse0w+8
- LKcAkNX1YHyAPBWyErE0hEANJX/2lrnmlJLKp9BbT12p9vLLGSVD3eIP8t8CUOi4WQwG
- au9A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x4CfU-0002ht-W6
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:24:32 -0400
+Received: by mail-pj2-x08.google.com with SMTP id
+ d9443c01a7336-2db33361b2fso22645315ad.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 00:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1788938642; x=1789543442; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=iE96SeWs007tmawi+lHgPeJKOgrzQ5bFzOhZjRk5HQs=;
- b=E7EwUEyqYD1to/27FNiWH6p5dgyFs14Mjti7aH+UdEjRuE6+fZTOf2J3Khjl3TzyjJ
- HyZvffjCu20AfIEyLRauO37R6pB+ADIwEBGfLTBgnBCeM6+17XOtopzML0hipTzTJNFS
- L9onCkWntGWtAUeipthfU6FQavSu6GXHNjeL8=
+ d=gmail.com; s=20251104; t=1788938667; x=1789543467; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+uU2gXfS1myt7enjNIVdCj8KJ86abQ0iiAxL4qdzD74=;
+ b=maxfMCruYsJEIqts2CYTiXwedCCgExYYdYSNc29y/rDJFwHBTLG8mwzEQblkFejegw
+ fqDvJe6rH3gnXKKN/cGPgYDJpvChiVIizGZBhkDWkZZ5NO/pJfCdFTfuku7d1fPkzWdf
+ 4X2+ywM7k+YgOi7WesUmmxYdG//ibF67LTOT6Gv2J3tzsnz2mj8FH1t9+Ez6PSv0Y6Ov
+ JuUdju0AOU2NcEwbVXYeUm4oKYrmYN+D1rOtFNRPdPJdI8D8yZ30HyvwLkyb0945b2fm
+ fHsli1LI7BWyAxaNlCvom2ZYxPTfTFW8KDkKfMil1HrkfApbvNPPkHGwaQe9932i/bTJ
+ yESQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788938642; x=1789543442;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=iE96SeWs007tmawi+lHgPeJKOgrzQ5bFzOhZjRk5HQs=;
- b=dSpTb82Jp7Ie/CHPhZsZgbIivpfV2zoyoCJuSZ/zqcS+xsSunp+J3Ho0wxf0dQRJOJ
- 7h7emfT9ih7zPJF5NOt7z3zOJCngnhZAGSWxld4peJYfY44M06Y2S7JfmAwHtg1a6Wx8
- XftugvaakNv/dD0ywY0XZT4iUNKt6NX6Q7uj4hpIMnTSJetgnaigRxo/5AClrdpkjoOr
- zi39kPorW+d4nF+SBuZVJaWn5xNz9YPQ7yO927F9ex9GKZdu21iDsup2lYInaNVxqtIs
- Uw5EjiGNdMwz8bDdYTylaYBtvQissfMS+Kwf6iqEixQYxnK68i0sB6YeA3TtLPPzVtY+
- 92Jg==
-X-Gm-Message-State: AFuF++nHkZgN/Ksvms3cqx9UO/m6uy2d/TPAKjevWyN9CfblhDZozWs2
- tuRY4JldAWPriMxjZn4UhjfuMjWImajTABt3Hs4HHk0T7fboIDiG8c3C2TYGPhgMFnmYGzuwUDy
- s1OKJR3X9/AAU1eIod0QsRrjg28SsyKBndoAaoGtLNg==
-X-Gm-Gg: AYBFou1JzmCoMh0kanE9ih29jNi86pDk+G59OzRz1fqXVZcK9woboofL13/anBPxhYk
- Y8XFg2JIqYge5vv+YQ7bE59t5nl0p+T99zUxhsbIWO40UYKqMcKoBMVjOSPi2pLXAa2ah4SAdSL
- lY7HT9BezV+RiNRhSOB+kGSp8uRGkxg+1snZ9TtlezDnDOkJq3P0jUW9jGJFJcqrjVxwtP51Ryb
- US5McSWr8ZPyZYsFqa7tLq9hgUX4qVmLQBA461UaxF42bvqgnxTmNtD7QRyUYO7HSaMgl6g/OpP
- Ak7KrznvaUJ1uWNeGT+R/+4djj+2r3VEndqBv95NoWzqEL01RK6XiJX9P+08zpLjnA9vCo0dOUG
- 0j21CGv9wmCo=
-X-Received: by 2002:a17:907:3f09:b0:c25:f7db:4bea with SMTP id
- a640c23a62f3a-c290446b88cmr525200866b.16.1788938641834; Wed, 09 Sep 2026
- 00:24:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788938667; x=1789543467;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+uU2gXfS1myt7enjNIVdCj8KJ86abQ0iiAxL4qdzD74=;
+ b=ZIKKHnOuDSfIGA55LjTZI/F8eCEYyMO7xEOf9sgTTpQfoSQsj3uUBGeAnE1B/Ytnrk
+ fcMe9BJzvpcPpTrgTGUbAnEYQSjxufEsL7jdXvF+TRWr0LyzI+aIQQ2ncFYn+85z5InI
+ 1w3hC2gjg0960fEn4Xtgz9qsLu4ysgBT6/8an2+8v+B75TRVkRk8G7BC3+EYEreHLLQ+
+ W22Sj9NVCLf/lWmYPfSJTHZk0kxZdCYkqoz9/Zr7bwpScnyyuOsnnmN+2MAnfIdtcLLO
+ VRcmZyS19Vc9BzB8Gvloaccs9tiKB43FOfT9X4fw+uKKSn9xAWa9w2MzyiPyTZ/yEj8s
+ 7X6g==
+X-Gm-Message-State: AFuF++n40i1GPtaPcCXoywFGnF7NQlmcMOS77759n0kMRuvzmRYBCnOt
+ GZrgpia5VMUKhFNBcZyCYW+NbKg0ArlwEylZmJRHR53Dlio25MznkHMP0huXykhH
+X-Gm-Gg: AYBFou1IRpz3WzBGp77Asw7j/R5mUCYIQoaV/EBVPGsXSew9IfWnU1sl8H2DKYhpRLF
+ z0onjnfHaE5nWmLjGKsvtmzvhJks/rwolMWftwHEVywoqAqkgsKuHCHqvaFVuOPZlOr5hT9blYO
+ D4/plQ+ceRsttJyqjpd9vVAoPvaq1G/1UQOtj5QKdsH050yH1di6l+0XX+4hswQ0mgYk5UA3R2K
+ im4BYQjzBbpy3In4XbbMkQxn3po0p2fkKhMTLrwQ0IeABosUhJjisgcqHNtKfcGjXd0mPl6jwGd
+ XKO5WLCGZ3M3ampVPL1Kbyt01773rR0a4GjOhESdfiSRJlxkBEZRSbjp8+NmklDVrZyc7Aj6OJz
+ dRyrEMo2o52mbdT3JlMt49bCen/MXGWoRwSNbmOiZC8//FQhyX3s0xir7nw+aXDQE1ngrEiHnI0
+ EEuvZrg828uDw1wL6Ij7ZXdKdGcIe1ykbW6OgG5Kpf/kAaFpFlcdqQxc3DfbNNSGswTpYneOjNX
+ Bp4JdkgEhGraRlA+ohASohkHYvM
+X-Received: by 2002:a05:6a21:3a44:b0:3cc:8344:1213 with SMTP id
+ adf61e73a8af0-3da39e68250mr52821620637.8.1788938666784; 
+ Wed, 09 Sep 2026 00:24:26 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([103.190.179.27])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc45c62012bsm5949351a12.4.2026.09.09.00.24.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Sep 2026 00:24:26 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-stable@nongnu.org, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, berrange@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, alex.bennee@linaro.org,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH v2] target/riscv: fix RV32 fixed counter accesses
+Date: Wed,  9 Sep 2026 15:23:55 +0800
+Message-ID: <20260909072356.42784-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260803081159.91981-1-alexander@mihalicyn.com>
- <20260803081159.91981-11-alexander@mihalicyn.com>
- <tl35q0.2bcgb86nv445o@linaro.org>
-In-Reply-To: <tl35q0.2bcgb86nv445o@linaro.org>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Wed, 9 Sep 2026 09:23:49 +0200
-X-Gm-Features: AcwNN1WqEcDQfMjPzZHudySK2aC307Fp3br0Yy7v9oCqxP-vtTf5PsqLcU0ipw8
-Message-ID: <CAJqdLrq++t_pLJcpCqODnnaZznxFZ7YHk5JqL69n9Dt1eXD66Q@mail.gmail.com>
-Subject: Re: [PATCH v5 10/10] hw/audio/virtio-sound: add missing vmstate fields
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:34::10;
- envelope-from=alexander@mihalicyn.com; helo=mail-ej2-x10.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::8;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x08.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,264 +102,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mi., 9. Sept. 2026 um 09:20 Uhr schrieb Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org>:
->
-> On Mon, 03 Aug 2026 11:11, Alexander Mikhalitsyn <alexander@mihalicyn.com=
-> wrote:
-> >From: Volker R=C3=BCmelin <vr_qemu@t-online.de>
-> >
-> >The virtio-sound device is currently not migratable. Add the
-> >missing VMSTATE fields, enable migration and reconnect the audio
-> >streams after migration.
-> >
-> >The queue_inuse[] array variables mimic the inuse variable in
-> >struct VirtQueue which is private. They are needed to restart
-> >the virtio queues after migration.
-> >
-> >Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
-> >[AM: trivial rebase changes]
-> >Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.=
-io>
-> >Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >---
-> >v4:
-> >       - added assert(. > 0) before decremeting s->queue_inuse[.]
-> >         (suggested by Manos Pitsidianakis)
-> >v3:
-> >       - added latency_bytes field to VMStateDescription
-> >
-> >       As suggested by Marc-Andr=C3=A9 Lureau:
-> >       - removed the "rc" variable from virtio_snd_post_load()
-> >       - dropped info field from VMStateDescription, because
-> >         it can't be modified by guest and initialized only from realize
-> >       - added minimum_version_id/version_id so we can extend VMStateDes=
-cription
-> >         without breaking compatibility in the future
-> >---
-> > hw/audio/virtio-snd.c         | 83 +++++++++++++++++++++++++++++++----
-> > include/hw/audio/virtio-snd.h |  1 +
-> > 2 files changed, 76 insertions(+), 8 deletions(-)
-> >
-> >diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> >index 12473862d24..6df7ea0eb04 100644
-> >--- a/hw/audio/virtio-snd.c
-> >+++ b/hw/audio/virtio-snd.c
-> >@@ -24,7 +24,6 @@
-> > #include "qapi/error.h"
-> > #include "hw/audio/virtio-snd.h"
-> >
-> >-#define VIRTIO_SOUND_VM_VERSION 1
-> > #define VIRTIO_SOUND_JACK_DEFAULT 0
-> > #define VIRTIO_SOUND_STREAM_DEFAULT 2
-> > #define VIRTIO_SOUND_CHMAP_DEFAULT 0
-> >@@ -74,17 +73,40 @@ static uint32_t supported_rates =3D BIT(VIRTIO_SND_P=
-CM_RATE_5512)
-> >                                 | BIT(VIRTIO_SND_PCM_RATE_192000)
-> >                                 | BIT(VIRTIO_SND_PCM_RATE_384000);
-> >
-> >+static const VMStateDescription vmstate_virtio_snd_stream =3D {
-> >+    .name =3D "virtio-sound-stream",
-> >+    .version_id =3D 1,
-> >+    .minimum_version_id =3D 1,
-> >+    .fields =3D (const VMStateField[]) {
-> >+        VMSTATE_UINT32(state, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT32(params.buffer_bytes, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT32(params.period_bytes, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT32(params.features, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT8(params.channels, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT8(params.format, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT8(params.rate, VirtIOSoundPCMStream),
-> >+        VMSTATE_UINT32(latency_bytes, VirtIOSoundPCMStream),
-> >+        VMSTATE_END_OF_LIST()
-> >+    },
-> >+};
-> >+
-> > static const VMStateDescription vmstate_virtio_snd_device =3D {
-> >-    .name =3D TYPE_VIRTIO_SND,
-> >-    .version_id =3D VIRTIO_SOUND_VM_VERSION,
-> >-    .minimum_version_id =3D VIRTIO_SOUND_VM_VERSION,
-> >+    .name =3D "virtio-sound-device",
-> >+    .version_id =3D 1,
-> >+    .minimum_version_id =3D 1,
-> >+    .fields =3D (const VMStateField[]) {
-> >+        VMSTATE_UINT32_ARRAY(queue_inuse, VirtIOSound, VIRTIO_SND_VQ_MA=
-X),
-> >+        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(streams, VirtIOSound,
-> >+            snd_conf.streams,
-> >+            vmstate_virtio_snd_stream, VirtIOSoundPCMStream),
-> >+        VMSTATE_END_OF_LIST()
-> >+    },
-> > };
-> >
-> > static const VMStateDescription vmstate_virtio_snd =3D {
-> >-    .name =3D TYPE_VIRTIO_SND,
-> >-    .unmigratable =3D 1,
-> >-    .minimum_version_id =3D VIRTIO_SOUND_VM_VERSION,
-> >-    .version_id =3D VIRTIO_SOUND_VM_VERSION,
-> >+    .name =3D "virtio-sound",
-> >+    .version_id =3D 1,
-> >+    .minimum_version_id =3D 1,
-> >     .fields =3D (const VMStateField[]) {
-> >         VMSTATE_VIRTIO_DEVICE,
-> >         VMSTATE_END_OF_LIST()
-> >@@ -813,6 +835,8 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command =
-*cmd)
-> >                  sizeof(virtio_snd_hdr));
-> >     virtqueue_push(cmd->vq, cmd->elem,
-> >                    sizeof(virtio_snd_hdr) + cmd->payload_size);
-> >+    g_assert(s->queue_inuse[VIRTIO_SND_VQ_CONTROL] > 0);
-> >+    s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -=3D 1;
-> >     virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
-> > }
-> >
-> >@@ -859,6 +883,7 @@ static void virtio_snd_handle_ctrl(VirtIODevice *vde=
-v, VirtQueue *vq)
-> >
-> >     elem =3D virtqueue_pop(vq, sizeof(VirtQueueElement));
-> >     while (elem) {
-> >+        s->queue_inuse[VIRTIO_SND_VQ_CONTROL] +=3D 1;
-> >         cmd =3D g_new0(virtio_snd_ctrl_command, 1);
-> >         cmd->elem =3D elem;
-> >         cmd->vq =3D vq;
-> >@@ -976,6 +1001,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice =
-*vdev, VirtQueue *vq)
-> >             goto tx_err;
-> >         }
-> >
-> >+        vsnd->queue_inuse[VIRTIO_SND_VQ_TX] +=3D 1;
-> >         buffer =3D g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-> >         buffer->elem =3D elem;
-> >         buffer->populated =3D false;
-> >@@ -1060,6 +1086,7 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice=
- *vdev, VirtQueue *vq)
-> >             goto rx_err;
-> >         }
-> >
-> >+        vsnd->queue_inuse[VIRTIO_SND_VQ_RX] +=3D 1;
-> >         buffer =3D g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-> >         buffer->elem =3D elem;
-> >         buffer->vq =3D vq;
-> >@@ -1200,6 +1227,8 @@ static inline void return_tx_buffer(VirtIOSoundPCM=
-Stream *stream,
-> >     virtqueue_push(buffer->vq,
-> >                    buffer->elem,
-> >                    sizeof(virtio_snd_pcm_status));
-> >+    g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_TX] > 0);
-> >+    stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -=3D 1;
-> >     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
-> >     QSIMPLEQ_REMOVE(&stream->queue,
-> >                     buffer,
-> >@@ -1293,6 +1322,8 @@ static inline void return_rx_buffer(VirtIOSoundPCM=
-Stream *stream,
-> >     virtqueue_push(buffer->vq,
-> >                    buffer->elem,
-> >                    sizeof(virtio_snd_pcm_status) + buffer->size);
-> >+    g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_RX] > 0);
-> >+    stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -=3D 1;
-> >     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
-> >     QSIMPLEQ_REMOVE(&stream->queue,
-> >                     buffer,
-> >@@ -1411,6 +1442,37 @@ static void virtio_snd_unrealize(DeviceState *dev=
-)
-> >     virtio_cleanup(vdev);
-> > }
-> >
-> >+static int virtio_snd_post_load(VirtIODevice *vdev)
-> >+{
-> >+    VirtIOSound *s =3D VIRTIO_SND(vdev);
-> >+    uint32_t i;
-> >+
-> >+    for (i =3D 0; i < s->snd_conf.streams; i++) {
-> >+        struct VirtIOSoundPCMStream *stream;
-> >+
-> >+        stream =3D virtio_snd_pcm_get_stream(s, i);
+Since commit cfc96df65e01, riscv_pmu_ctr_get_fixed_counters_val()
+returns the complete 64-bit fixed-counter value. The RV32 counter
+access paths, however, still perform parts of the offset calculation
+on separately extracted 32-bit halves.
 
-Dear Manos,
+In particular, riscv_pmu_write_ctrh() deposits the low 32 bits of the
+complete fixed-counter value into the high half of mhpmcounter_prev.
+riscv_pmu_read_ctr() also subtracts a 32-bit half of the previous value
+from the complete 64-bit fixed-counter value. Consequently, writes to
+mcycleh can be lost and carries between the low and high halves are not
+handled correctly.
 
->
-> i < s->snd_conf.streams so this will not be NULL. Is it okay if I add an
-> assert anyway before we merging this? I can add it before sending a pull
-> request.
+Keep the fixed-counter offset calculation entirely in 64 bits. Before
+a running counter is partially written, materialize its current
+architectural value and reset the fixed-counter baseline. On reads,
+calculate the complete 64-bit counter value before extracting the half
+requested by RV32.
 
-Sure, please do ;-)
+Register RV32 system TCG tests with the Meson build. Add a test for
+high-half writes, low-to-high carry, and preserving the carried high
+half across a subsequent low-half write.
 
->
-> (A little paranoia can't hurt).
+Fixes: cfc96df65e01 ("target/riscv: Remove upper_half from riscv_pmu_ctr_get_fixed_counters_val")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4219
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
 
+---
+Changes in v2:
+- Move the test to a new tests/tcg/riscv32 directory.
+- Convert the test registration to the Meson TCG test framework.
+- Add RV32 TCG cross-compiler options and cover the test directory in
+  MAINTAINERS.
+- Add a riscv32-local semihosting linker script.
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7183babd6a..5f75b2684f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -377,6 +377,7 @@ F: include/hw/riscv/
+ F: common-user/host/riscv*
+ F: tests/functional/riscv32
+ F: tests/functional/riscv64
++F: tests/tcg/riscv32/
+ F: tests/tcg/riscv64/
+ F: tests/qtest/iommu-riscv-test.c
+ 
+diff --git a/meson_options.txt b/meson_options.txt
+index 292625af08..2ceebe7a44 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -452,6 +452,10 @@ option('tcg_tests_cross_cc_ppc64le', type: 'string',
+        description: 'cc for ppc64le tcg tests')
+ option('tcg_tests_cross_cflags_ppc64le', type: 'string',
+        description: 'cflags for ppc64le tcg tests')
++option('tcg_tests_cross_cc_riscv32', type: 'string',
++       description: 'cc for riscv32 tcg tests')
++option('tcg_tests_cross_cflags_riscv32', type: 'string',
++       description: 'cflags for riscv32 tcg tests')
+ option('tcg_tests_cross_cc_riscv64', type: 'string',
+        description: 'cc for riscv64 tcg tests')
+ option('tcg_tests_cross_cflags_riscv64', type: 'string',
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index bd4b6dc114..65985efb22 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1337,23 +1337,23 @@ static RISCVException riscv_pmu_write_ctr(CPURISCVState *env, target_ulong val,
+     int deposit_size = rv32 ? 32 : 64;
+     uint64_t ctr;
+ 
+-    counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
+-                                         0, deposit_size, val);
+-
+     if (!get_field(env->mcountinhibit, BIT(ctr_idx)) &&
+         (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+          riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
+         ctr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
+-        counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
+-                                              0, deposit_size, ctr);
++        counter->mhpmcounter_val += ctr - counter->mhpmcounter_prev;
++        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
++                                             0, deposit_size, val);
++        counter->mhpmcounter_prev = ctr;
+         if (ctr_idx > 2) {
+             riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
+         }
+      } else {
++        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
++                                             0, deposit_size, val);
+         /* Other counters can keep incrementing from the given value */
+         counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
+                                               0, deposit_size, val);
+-
+     }
+ 
+     return RISCV_EXCP_NONE;
+@@ -1363,20 +1363,22 @@ static RISCVException riscv_pmu_write_ctrh(CPURISCVState *env, target_ulong val,
+                                           uint32_t ctr_idx)
+ {
+     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
+-    uint64_t ctrh;
++    uint64_t ctr;
+ 
+-    counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
+-                                         32, 32, val);
+     if (!get_field(env->mcountinhibit, BIT(ctr_idx)) &&
+         (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+          riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
+-        ctrh = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
+-        counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
+-                                              32, 32, ctrh);
++        ctr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
++        counter->mhpmcounter_val += ctr - counter->mhpmcounter_prev;
++        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
++                                             32, 32, val);
++        counter->mhpmcounter_prev = ctr;
+         if (ctr_idx > 2) {
+             riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
+         }
+     } else {
++        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
++                                             32, 32, val);
+         counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
+                                               32, 32, val);
+     }
+@@ -1407,12 +1409,11 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+     bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
+     int start = upper_half ? 32 : 0;
+     int length = rv32 ? 32 : 64;
+-    uint64_t ctr_prev, ctr_val;
++    uint64_t ctr_val;
+ 
+     /* Ensure upper_half is only set for XLEN == 32 */
+     g_assert(rv32 || !upper_half);
+ 
+-    ctr_prev = extract64(counter->mhpmcounter_prev, start, length);
+     ctr_val  = extract64(counter->mhpmcounter_val, start, length);
+ 
+     if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
+@@ -1431,7 +1432,8 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+     if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+         riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+         uint64_t cntr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
+-                                                             ctr_prev + ctr_val;
++                        counter->mhpmcounter_prev +
++                        counter->mhpmcounter_val;
+         *val = extract64(cntr, start, length);
+     } else {
+         *val = ctr_val;
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index d41a228fb3..60b5ce2529 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -169,6 +169,7 @@ subdir('mips64el')
+ subdir('or1k')
+ subdir('ppc64')
+ subdir('ppc64le')
++subdir('riscv32')
+ subdir('riscv64')
+ subdir('s390x')
+ subdir('sh4')
+diff --git a/tests/tcg/riscv32/meson.build b/tests/tcg/riscv32/meson.build
+new file mode 100644
+index 0000000000..c08dfd772d
+--- /dev/null
++++ b/tests/tcg/riscv32/meson.build
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-
->
-> In any case:
->
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
-Thank you!
-
-Kind regards,
-Alex
-
->
-> >+        if (virtio_snd_pcm_state_prepared(stream->state)) {
-> >+            virtio_snd_pcm_open(stream);
-> >+
-> >+            if (stream->state =3D=3D VIRTIO_SND_PCM_STATE_STARTED) {
-> >+                virtio_snd_pcm_set_active(stream, true);
-> >+            }
-> >+        }
-> >+    }
-> >+
-> >+    for (i =3D 0; i < VIRTIO_SND_VQ_MAX; i++) {
-> >+        if (s->queue_inuse[i]) {
-> >+            if (!virtqueue_rewind(s->queues[i], s->queue_inuse[i])) {
-> >+                error_report(
-> >+                    "virtio-snd: could not rewind %u elements in queue =
-%u",
-> >+                    s->queue_inuse[i], i);
-> >+            }
-> >+            s->queue_inuse[i] =3D 0;
-> >+        }
-> >+    }
-> >+
-> >+    return 0;
-> >+}
-> >
-> > static void virtio_snd_reset(VirtIODevice *vdev)
-> > {
-> >@@ -1442,6 +1504,10 @@ static void virtio_snd_reset(VirtIODevice *vdev)
-> >             virtio_snd_pcm_buffer_free(buffer);
-> >         }
-> >     }
-> >+
-> >+    for (uint32_t i =3D 0; i < VIRTIO_SND_VQ_MAX; i++) {
-> >+        vsnd->queue_inuse[i] =3D 0;
-> >+    }
-> > }
-> >
-> > static void virtio_snd_class_init(ObjectClass *klass, const void *data)
-> >@@ -1455,6 +1521,7 @@ static void virtio_snd_class_init(ObjectClass *kla=
-ss, const void *data)
-> >
-> >     dc->vmsd =3D &vmstate_virtio_snd;
-> >     vdc->vmsd =3D &vmstate_virtio_snd_device;
-> >+    vdc->post_load =3D virtio_snd_post_load;
-> >     vdc->realize =3D virtio_snd_realize;
-> >     vdc->unrealize =3D virtio_snd_unrealize;
-> >     vdc->get_config =3D virtio_snd_get_config;
-> >diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd=
-.h
-> >index 85d5d7c8619..384d2868c19 100644
-> >--- a/include/hw/audio/virtio-snd.h
-> >+++ b/include/hw/audio/virtio-snd.h
-> >@@ -194,6 +194,7 @@ struct VirtIOSound {
-> >     VirtIODevice parent_obj;
-> >
-> >     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
-> >+    uint32_t queue_inuse[VIRTIO_SND_VQ_MAX];
-> >     uint64_t features;
-> >     VirtIOSoundPCMStream *streams;
-> >     AudioBackend *audio_be;
-> >--
-> >2.47.3
-> >
++cc = 'riscv64-linux-gnu-gcc'
++cc_dockerfile = 'debian-all-test-cross'
++cc_docker_host_arch = ['aarch64', 'x86_64']
++
++subdir('system')
+diff --git a/tests/tcg/riscv32/semihost.ld b/tests/tcg/riscv32/semihost.ld
+new file mode 100644
+index 0000000000..874838a865
+--- /dev/null
++++ b/tests/tcg/riscv32/semihost.ld
+@@ -0,0 +1,23 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++ENTRY(_start)
++
++SECTIONS
++{
++    /* virt machine, RAM starts at 2gb */
++    . = 0x80000000;
++    .text : {
++        *(.text)
++    }
++    .rodata : {
++        *(.rodata)
++    }
++    /* align r/w section to next 2mb */
++    . = ALIGN(1 << 21);
++    .data : {
++        *(.data)
++    }
++    .bss : {
++        *(.bss)
++    }
++}
+diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
+new file mode 100644
+index 0000000000..16f9a06c94
+--- /dev/null
++++ b/tests/tcg/riscv32/system/meson.build
+@@ -0,0 +1,37 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests = []
++
++link_script = files('../semihost.ld')[0]
++cflags = ['-march=rv32im_zicsr',
++          '-mabi=ilp32',
++          '-nostdlib',
++          '-ffreestanding',
++          '-Wa,--noexecstack',
++          '-Wl,-T', link_script]
++qemu_args = ['-M', 'virt',
++             '-display', 'none',
++             '-serial', 'stdio',
++             '-semihosting',
++             '-bios']
++
++tests += {
++  'test-mcycle.S': {
++    'cflags': cflags,
++    'qemu_args': ['-icount', 'shift=1', qemu_args],
++  },
++}
++
++if 'qemu-system-riscv32' in emulators
++  tcg_tests += {
++    'riscv32-softmmu': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'cc_docker_host_arch': cc_docker_host_arch,
++      'folder': 'riscv32',
++      'gdb_arch': 'riscv32',
++      'qemu': emulators['qemu-system-riscv32'],
++      'tests': tests,
++    }
++  }
++endif
+diff --git a/tests/tcg/riscv32/test-mcycle.S b/tests/tcg/riscv32/test-mcycle.S
+new file mode 100644
+index 0000000000..189d1e13a2
+--- /dev/null
++++ b/tests/tcg/riscv32/test-mcycle.S
+@@ -0,0 +1,45 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++
++	.text
++	.global	_start
++_start:
++	/* Exercise writes while mcycle is running. */
++	csrw	mcountinhibit, zero
++	csrw	mcycle, zero
++
++	/* A write to the high half must be immediately observable. */
++	li	s0, 0x1234ffff
++	csrw	mcycleh, s0
++	csrr	t0, mcycleh
++	bne	t0, s0, fail
++
++	/* Check carry from the low half into the high half. */
++	li	s0, 0x12345678
++	csrw	mcycleh, s0
++	li	t0, 0xfffffff0
++	csrw	mcycle, t0
++	.rept	32
++	nop
++	.endr
++	csrr	t0, mcycleh
++	addi	s0, s0, 1
++	bne	t0, s0, fail
++
++	/* A low-half write must preserve the carried high half. */
++	li	t0, 0x22222222
++	csrw	mcycle, t0
++	csrr	t0, mcycleh
++	bne	t0, s0, fail
++
++	li	t0, 0x100000
++	li	t1, 0x5555	/* FINISHER_PASS */
++	sw	t1, 0(t0)
++	j	.
++
++fail:
++	li	t0, 0x100000
++	li	t1, 0x13333	/* status = FINISHER_FAIL, code = 1 */
++	sw	t1, 0(t0)
++	j	.
+-- 
+2.43.0
 
