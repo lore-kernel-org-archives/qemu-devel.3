@@ -4,146 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115BDC79FB7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440E5C79FB9
 	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 20:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4PEs-0004EI-Fx; Wed, 09 Sep 2026 16:49:50 -0400
+	id 1x4PEg-00047t-3a; Wed, 09 Sep 2026 16:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x4PEl-0004AP-QL
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:49:44 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4PEf-00047d-6a
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:49:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x4PEj-00053R-EN
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:49:43 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 689JI7wx2896197
- for <qemu-devel@nongnu.org>; Wed, 9 Sep 2026 20:49:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9LTa7ZqnCfcxe2A1k2KyaoI364ha3WHTvARZ/wYwA80=; b=L9kLd8xO7x/XjBO3
- O35Yl0ZqKt3MstcDUODzNJTMMNApi+Z9NPsVNHDjEfkxALsWLwSr1Yv5aMJN8U7y
- DjNdCoxD1+XA1N66mq4CM7EnPsj4R3c3poFn4eegIuVi3ev/GSrFX4wAW/IVohvG
- 1G/Dqjh5C0whADxxra2ptU6Yc2vPKe0obCmD2WowtCgYxnUT2m4QpJ4ZVyAFDS0y
- iBfsN2xqbq9jydLAvwc85YqcEkk2UjXNmWN78z1v9l5rlHNN1w4VGAFWmYqjQ/lb
- EPg3A2DqCRKyRLWxasUn8oFezR0zsMhpMPedkQS7zSk11XH5WbHbBgYyozGeXSxT
- 3i3YPQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gkcygrgqb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 20:49:33 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-90e80ce3597so112190996d6.1
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 13:49:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4PEc-00053J-JS
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 16:49:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788986973;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iHiSepGinwiII0mvyeXa4Lpu4fO4fTRZi4IFC+jBTrQ=;
+ b=OiyWhGyVylt6p0UsyZwwWu+s1ev6w2BQ5Zpw5gCxa9W+opDw+L5Q8GkPDkd0KijES6sNq1
+ GGeZ7ddPWr5EkrD+2aCDyHTUxrch1I3COaHJDUiDkziUh1WBu1JkzdfBc1Erp0zF9ZHHUP
+ H909SChdaLkTAy8OnhfgVN2Ex2MzpJQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-362-PXcWeoisPYmJz5FmFTOahw-1; Wed, 09 Sep 2026 16:49:32 -0400
+X-MC-Unique: PXcWeoisPYmJz5FmFTOahw-1
+X-Mimecast-MFC-AGG-ID: PXcWeoisPYmJz5FmFTOahw_1788986971
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4994aebe932so81577875e9.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 13:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788986967; x=1789591767; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=9LTa7ZqnCfcxe2A1k2KyaoI364ha3WHTvARZ/wYwA80=;
- b=VyXCfT2WXF13ldcS/fQeYrPRTcNill8ndsnEme8+WjMNlOaf0NVuHepMarNaDxqgOw
- 3z/30gPxkBkyZOnpAxO0uZez+QbLwtLjSgaSfLwwIZWf09wyqe9HBKg4XZ+Nu/502RrU
- oFYybun3HvlUQTzNQgFXYQy8fv0uANHKGCmljgIQ2S2SkD6i0b05ZVtdoV8lWYPAjP7D
- 9tXngAnHSummUIzxoQb5TGdhLD7TsF3k0sfsR0ZjLsMNghahphpY/n1eipLRhXP7MYaR
- 0ENC+3v6cVKU6ZdibO1k6CS9zmpCWSm+gpq1RXc9qKUHxfEMgRUgcjAllfj0CiYj6Qlg
- e3vg==
+ d=redhat.com; s=google; t=1788986971; x=1789591771; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iHiSepGinwiII0mvyeXa4Lpu4fO4fTRZi4IFC+jBTrQ=;
+ b=YGlkN2yr6jkybV5UgXMTOMukO4VgdkAsxi3HS+N5dtPe8r0MVt0cTS9FLGAJLSRTU/
+ 8J0ESRYWeJcgJK2hCfNJ6NBBrWvJSmI9cNhTApxS3GeULNnlRLbHVxKcMvfsVTmsoEw7
+ 112Sl8LcKZv/N/C/ltzsTLw8yPIAQZx0GVud8a4rK5ATKeLUHYw6npIsZs43WqXAxzBk
+ EdARXgucuEvSl8zO2pzw/w5ncwfGJ4EFO9SWYVhGa4h+eWp7txsaQ5tgbbQtw2SxZWn3
+ wr2v5pLxvY58X4kJMp5lBiDIPlnhuHEBxBT43Bj3OmleshzdL+aeQ8ZVanaDfrAX+VSo
+ rvCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788986967; x=1789591767;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=9LTa7ZqnCfcxe2A1k2KyaoI364ha3WHTvARZ/wYwA80=;
- b=Xp4b4f/uNEbkPcppLONvzfG1/eCBovKzFfWtxMCXMJVEalPuK2FgYNspuulEoYVyjM
- 2j+94cHdFKkFWHI0ZCWgNxzKIatKNz5CVI5dSJRBpMb9Qv5Y7gPnra28fYE7akEkcsZp
- AL4d+rD2o0O7gEh0ycE3L3A++hoiZhfZnJgQ6w9+LyjQoOEbj5LwTlFWUeOvGLBIcKXe
- iBFzLJZN0ZX2guo8Un2mi6LPkgdJ6H1DYlMqbFUy/NccMdH9unilkNvp+kDGmE3bMZub
- YkTFbGAtkg3jnMi3g9kdNKqh+ie00E3rRpRzLs8AjLzSjubTGwrB7pITx+8MxwPhiQn2
- QOXA==
+ d=1e100.net; s=20251104; t=1788986971; x=1789591771;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=iHiSepGinwiII0mvyeXa4Lpu4fO4fTRZi4IFC+jBTrQ=;
+ b=GY41whKYh1DNH5RUjFZ2KcbrqcDKeIwQ8wwDwoqkarJScLuoDS9HjSSCTYTpP22l6B
+ 0hE14EUmbF/0COVicCFnvB2dRxHYhOYiNnRmTYaE7I1FhCwWSQY7MRSNsDHI2M+eTLkP
+ 9j+84aNO6PJnkJ29zvOq6I8yenuXiUHMJB/VpB05x9DS1EOzKI76kh2+ksiz0/Ar9WM6
+ jZxj17/vglLZ6mRGq+L02tamPGWY1nuvEWni4U8313D1ABoUoRoSNoFyPtBSU+wtjHuC
+ XS4s0oq4W4rWBmfd3EG5iFmOwQoczCWlN58XoxbbyxHg0wZg4Ms+FepHdeSuTTH9yeMh
+ SBBw==
 X-Forwarded-Encrypted: i=1;
- AKwUvByvQGKew2tAtm2O36JENoPfRWPbahQtcwUTUQbNB/4aP7eFEDo4EHvYO/+QpRHoTVb620VQ+EqVigKk@nongnu.org
-X-Gm-Message-State: AFuF++lf0a1FUp0nDUPi7wtE6HcX4i8kn/Ok/euZcspl6c9HjRnARWxl
- p6L9bv9utfLY6t4ljw+ojwRTxQRsOCWGW4fC6nT7AGAGP2kFyGGB+rqcDdHMaSdvIKDf2eYP+tY
- LxRlgOqlMd5RkahUJ5y73wUXxSixOyLJZKQBsPCGLYjLVhWfOw+vdZLTSMQ==
-X-Gm-Gg: AYBFou24PaZRaXUcmfLctmTUYSvC+aNyHgbMDSyLJrIYqaQz5Q4wFVYr1TA/B8QFdkG
- b0NjGxze/oQaa8z9rozzvJojP7Hxm81gI5L/gQ2s5nR1wHzxB7FeRYLCcg8iO2lbN0YEq/xEyLB
- 43Ac6GJ6xDA8VzxSpN6+2h0dIPbYOPelSV3vQVgKzR+rBz6LjcQXQp1NbHXrBRTH5QA2HlnAkgx
- DaZyP3Mv+dXVwiBDz4Nu3fALcKGJKhIyhPT1XSUmLFAQRZr+84tdt+CIVFUCzQDIaS0S0n+xbND
- 8PvSjMYDnq76G5Dzacsxq7r/3OdMPNDyK4FMbhAXq+iuBQPML/Vhs8jt3yLvu/vZ9U5B0Lb24Ht
- fHC5iU/TP4UUXc/PhliuRcydF8oZTr0sN0gQ=
-X-Received: by 2002:a05:6214:858d:10b0:910:3451:b181 with SMTP id
- 6a1803df08f44-9103efd4489mr33418036d6.34.1788986966677; 
- Wed, 09 Sep 2026 13:49:26 -0700 (PDT)
-X-Received: by 2002:a05:6214:858d:10b0:910:3451:b181 with SMTP id
- 6a1803df08f44-9103efd4489mr33417236d6.34.1788986965877; 
- Wed, 09 Sep 2026 13:49:25 -0700 (PDT)
-Received: from [192.168.68.102] ([177.18.66.131])
+ AKwUvBwGSZtReEJxrpZu/5nSuA11vozwwbOtHLBnsHsPpqO2vNOR/NLLjP+I6iq4VBB1f/xs3U60rBclc0nY@nongnu.org
+X-Gm-Message-State: AFuF++l0n8MfuYrb0y3jVsffABSgPgpg6pxHaxEot8Ig6ooylj6Ic4Vt
+ 7TsDt2jUJHXCuNpvVXMmr0D7vsNbANlV/+6zWz8JnnbEHUbOkiHu+3TcitC8TgP3BG9wcSEhJMG
+ Esh/4NR+KSOrqXcLVWxUiEX0A8zoVepzlBt/ieiYFvkAj14bbtF6mvmWi
+X-Gm-Gg: AYBFou0MRnM5ytJZ4TKGgtRHkwcoov7HDnH6YuiMdSEOJ2DQaVFeiWqXCXm8rUIjxPX
+ 8vGz/XhfGy4BeH8/6V3Tkz9/zrkhlQ9r6Yo8mY1bDN5BvYr0zimoVrC6NH2v5CgcenVy3wfm3Tl
+ h2adHVgYxgmRtBmAC6EnZ0Zc5cuiTsHjFMkbctIcBzGBrt4PeJO0ti9bgihU9mhU/fsTDwnEezw
+ 8Jeh40IAjWe4NppOwwHO2h+zmm4dWQYhTQHMPPv6n84lYr12hj+rj0iX7845aLAvaFzP25brEPX
+ fudK7cE8xP33nJqsfacZpCQlVHHknR6G2Zq1chsLXd5ZkJsfw58WkZRmEHxpv6qLjgol9B42GMH
+ qyyC4DV5V2FNiTkLcjxjbzcU=
+X-Received: by 2002:a05:600c:630a:b0:49c:f89b:f82 with SMTP id
+ 5b1f17b1804b1-49d2592c540mr64631805e9.12.1788986970639; 
+ Wed, 09 Sep 2026 13:49:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:630a:b0:49c:f89b:f82 with SMTP id
+ 5b1f17b1804b1-49d2592c540mr64631285e9.12.1788986970075; 
+ Wed, 09 Sep 2026 13:49:30 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-9104fc73ea5sm105336696d6.39.2026.09.09.13.49.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Sep 2026 13:49:25 -0700 (PDT)
-Message-ID: <083828b1-5847-4fb7-8872-725dac0c2f1a@oss.qualcomm.com>
-Date: Wed, 9 Sep 2026 17:49:21 -0300
+ 5b1f17b1804b1-49d26c1bc5fsm16859975e9.3.2026.09.09.13.49.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Sep 2026 13:49:29 -0700 (PDT)
+Date: Wed, 9 Sep 2026 16:49:25 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Chen Pei <cp0613@linux.alibaba.com>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, imammedo@redhat.com,
+ sunilvl@ventanamicro.com, jic23@kernel.org, pbonzini@redhat.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ anisinha@redhat.com, dave.jiang@intel.com,
+ alison.schofield@intel.com, junjie.cao@intel.com, guoren@kernel.org,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v6 0/6] hw/riscv/virt: Add CXL support to the RISC-V virt
+ machine
+Message-ID: <20260909164855-mutt-send-email-mst@kernel.org>
+References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] RISC-V TCG PMU correctness fixes
-To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDIzMyBTYWx0ZWRfX1jab48PlMvdP
- eT7mfJ1ziMHLx4qjwNOl2cHBnbNYEM+YMKUA5VIUrwmNU4XSFTmEVHJy+VVDvkGqXgGjHrFBBeZ
- eeIr2T15DFltzLZHnC5EN2n2THPDrcnF4ZguTwHUm+Qhw72tzWWdapoelh3QpOQwe+jXNhXqLxZ
- JUz19ssPt+AR9iV3shzeP8Wm0AoVnyMlf5GoI8Fek+URgvVEOqAu1D74Y9fdmAzIt96+E2gLL2x
- +nHHVWytnKiXpfwCBDYdy3L2WWEbdui2kKzUFrgqNRFT5HjT0K5NDn3AUUAcVcN1g4vrjcDBHWW
- VAabDVuYVIhqUEICfZIaD7ycyg6mdYquXk9dH5tpuw+SM67EBMapdgwTC67zFvad/PdiKLWm+Xf
- qoEfeweKAxGymIoo4qsiNCvIiaKUjoAIqYNTxeozB8BpizJrtUOSU4PxvwCW2yPcLwUso7B8Acg
- iLX094RJO7u3OmW8M3g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDIzMyBTYWx0ZWRfX7vp2Ax+UDLjs
- B3LHALzY5B2wQETWjtZcU7gxhN2Toc+/KFPaaTX2ukgcd47GUM0NU+z9lPkwydIrvwK/sO4Bzw7
- rKBXGC2q1fi1u4UVaYgHoRZRz1sgrTk=
-X-Proofpoint-ORIG-GUID: VrYge05iacrAHy-pkTvjjhtLzITcAtUK
-X-Authority-Analysis: v=2.4 cv=VONIDNPX c=1 sm=1 tr=0 ts=6aa1c65d cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=SRrdq9N9AAAA:8 a=X6rMypcUmwSNIqAgvc8A:9
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: VrYge05iacrAHy-pkTvjjhtLzITcAtUK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-09_01,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- clxscore=1015 suspectscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609090233
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260907093735.2753-1-cp0613@linux.alibaba.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,111 +127,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tang,
+On Mon, Sep 07, 2026 at 05:37:27PM +0800, Chen Pei wrote:
+> This series adds CXL support to the RISC-V virt machine, following the
+> approach used by the ARM virt machine: CXL host bridges (pxb-cxl) are
+> described as ACPI0016 devices, an ACPI0017 (CXLM) device is added to the
+> DSDT with a _DEP on the CXL host bridges, and a CEDT table is built. A
+> bios-tables test is added to pin down the generated ACPI tables.
 
+ACPI things:
 
-I took a look in all patches and they all look LGTM code-wise.  But seems
-like we need a new version of all patches rebased on top of a recent
-master, using a new meson framework instead of Makefile, otherwise check-tcg
-won't be able to run them.  In theory is as simple as adding entries in
-tests/tcg/riscv32/system/meson.build and tests/tcg/riscv64/system/meson.build
-instead of Makefile.softmmu-target.
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-Given that the series is based on the v1 of "target/riscv: fix RV32 fixed counter
-accesses"  I believe you can re-send v2 based on the new version Zephyr Li
-sent:
+pls merge in riscv tree.
 
-[PATCH v2] target/riscv: fix RV32 fixed counter accesses
-
-This v2 has additional scaffolding for meson tcg tests for riscv32.  Might as well
-use it to rebase this work.
-
-
-Thanks,
-Daniel
-
-
-On 9/6/2026 1:37 PM, TANG Tiancheng wrote:
-> This series fixes RISC-V TCG PMU accounting, overflow notification, and
-> migration. It is based on Zephyr Li's "target/riscv: fix RV32 fixed
-> counter accesses" [1], which is a prerequisite and is not included here.
+> Changes since v5
+> ----------------
+>   - Rebased onto current master, over the gpex_pcie_init() move to
+>     device-common.c: s->pci_bus is now assigned at the
+>     riscv_gpex_pcie_init() call site in virt_machine_init().
+>   - tests/qtest: switched to the renamed in-tree firmware blobs
+>     pc-bios/edk2-riscv64-{code,vars}.fd (Junjie).  The goldens are
+>     unchanged and still match with the updated edk2-stable202608 blob;
+>     all riscv64 ACPI cases pass.
+>   - hw/riscv/virt-acpi-build: the _DEP commit message now cites the
+>     companion kernel commit bf5418a5fe63 ("ACPI: scan: Honor _DEP for
+>     ACPI0016 PCI/CXL host bridge") alongside 3a59c3b772e5, both in
+>     v7.2 (Junjie).
+>   - Collected review tags: Junjie Cao's Reviewed-by/Tested-by on
+>     patches 1, 2 and 6.  Michael S. Tsirkin acked the ACPI parts on
+>     the v5 cover letter thread.
 > 
-> The patches allow multiple HPM counters to select the same event and
-> preserve counts across selector, privilege-filter, and inhibit writes.
-> They use consistent cycle/instruction sources and compute the shared
-> overflow deadline from all eligible counters. Timer callbacks queue
-> checks on the owner vCPU instead of racing MTTCG execution.
+> Changes since v4
+> ----------------
+>   - tests/qtest: DSDT.cxl regenerated against the in-tree
+>     edk2-riscv-code.fd blob that the test boots (Junjie): the v4 golden
+>     carried the window allocation of my local edk2-stable202602 build.
+>     The 64-bit window is now 0x400100000..0x40010FFFF with the matching
+>     PCI0 range shift; the AML fragment in the commit message is updated
+>     accordingly.  CEDT.cxl is unchanged.
+>   - hw/riscv/virt: pci_bus_add_fw_cfg_extra_pci_roots() moved out of
+>     the cxl block (Junjie), so plain pxb-pcie expander bridges are also
+>     advertised to firmware with cxl=off, in line with arm/virt, pc and
+>     hppa.
+>   - Collected review tags.
 > 
-> Migration saves counter values including pending increments and restores
-> destination-local source baselines, event mappings, and overflow
-> scheduling. A new cpu/pmu-fixed subsection carries mcyclecfg/minstretcfg
-> and identifies this format. All TCG CPUs require the subsection; loading
-> older TCG streams without it is rejected. Source and destination still
-> need compatible CPU configurations. KVM PMU migration is unchanged.
+> Changes since v3
+> ----------------
+>   - The CXL host bridge resource handling is reworked, following Junjie
+>     Cao's suggestion (and Igor Mammedov's earlier "fix UEFI" direction):
+>     instead of reserving a fixed 256 MiB carve-out and simulating the
+>     firmware PCI initialization in QEMU, the machine now advertises the
+>     pxb-cxl expander root buses to firmware via the etc/extra-pci-roots
+>     fw_cfg file (pci_bus_add_fw_cfg_extra_pci_roots(), as arm/virt and
+>     x86 do).  EDK2's PciBusDxe then enumerates behind the CXL host
+>     bridge and assigns the root-port window and bus numbers, and
+>     build_crs() emits a correct _CRS for the ACPI0016 host bridge.
+>     This keeps the machine code minimal (a single call, no carve-out),
+>     scales to multiple pxb-cxl host bridges, and lets firmware size the
+>     window to what is actually behind the bridge.
+>   - The bios-tables test is split into the staged flow documented in
+>     bios-tables-test.c, and ordered the same way the riscv64 goldens were
+>     originally added upstream (Sunil V L's commit cc3ba2422554 et al.):
+>     the feature code comes first, then three consecutive commits -- empty
+>     golden files + allowed-diff.h, the test code, and the populated golden
+>     master binaries with an emptied allowed-diff.h.
 > 
-> The reset changes preserve the final counts in the old privilege/V mode
-> before entering M-mode with V=0.
+> Changes since v2
+> ----------------
+>   - hw/riscv/virt: The MMIO-window patch no longer touches the common
+>     gpex code (Igor).  The gpex_cfg.cxl_mmio32 field and the is_cxl
+>     static _CRS branch are dropped; the ACPI0016 _CRS now comes from the
+>     generic build_crs() path.  Since EDK2 does not enumerate the pxb-cxl
+>     expander bridge, riscv simulates the firmware PCI initialization
+>     (reserved window + depth-first bridge bus numbers) and re-applies it
+>     via a reset handler.
+>   - hw/riscv/virt: Drops the machine-global window/bus-range synthesis
+>     that did not scale past one pxb-cxl (Junjie).  The series targets a
+>     single CXL host bridge for now, documented in the commit message and
+>     a TODO.
+>   - hw/riscv/virt: CXL host register region and FMW setup folded into a
+>     single cxl_host_state_init() helper; redundant braces removed in
+>     create_fdt_pcie() (Daniel).
+>   - hw/riscv/virt-acpi-build: the _DEP commit message documents the
+>     kernel-compatibility behaviour (Alistair).
+>   - Carried review tags: Sunil V L's Reviewed-by on the _DEP patch and
+>     Alistair Francis's Acked-by on the test.
 > 
-> TCG tests cover RV32/RV64 counter accesses, delegated registers, selector
-> and filter changes, multiple counters per event, overflow notification
-> with and without Sscofpmf, instruction exceptions, and reset. The RV32
-> HPM tests also cover full-width accesses through the shared counter path.
+> Changes since v1
+> ----------------
+>   - hw/riscv/virt: PCIBus *bus renamed to PCIBus *pci_bus (Jonathan).
+>   - hw/riscv/virt: Dropped outer if (s->pci_bus) guard around
+>     cxl_hook_up_pxb_registers(); the function already handles a NULL
+>     bus internally (Jonathan).
+>   - hw/riscv/virt-acpi-build: All s->bus references updated to
+>     s->pci_bus; iasl -d decompiled DSDT fragment added to commit
+>     message.
+>   - hw/riscv/virt,gpex: Commit message expanded with PCI-to-PCI Bridge
+>     Spec §3.2.5.8/9/10 citations (Jonathan).
+>   - Original patch 4 ("Map committed HDM decoder ranges as RAM for
+>     direct DMA") dropped; superseded by Alireza Sanaee's v8 series [1],
+>     which is now merged upstream and thus no longer a prerequisite.
+>   - New patch 4: RISC-V ACPI bios-tables test for CXL, with golden AML
+>     files generated and included.
 > 
-> [1] https://lore.kernel.org/qemu-devel/20260905092810.660-1-fritchleybohrer@gmail.com/
-> Based-on: <20260905092810.660-1-fritchleybohrer@gmail.com>
+> [1] https://lore.kernel.org/qemu-devel/20260318171918.146-1-alireza.sanaee@huawei.com/
 > 
-> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> ---
-> TANG Tiancheng (14):
->        target/riscv: Preserve PMU state across event selector writes
->        target/riscv: Support multiple counters per PMU event
->        target/riscv: Use VM-elapsed sources for fixed PMU events
->        target/riscv: Preserve MINH on delegated config reads
->        target/riscv: Preserve minstretcfgh on RV32 minstretcfg writes
->        target/riscv: Fix RV32 accesses to delegated PMU registers
->        target/riscv: Preserve fixed counters across PMU state changes
->        target/riscv: Require Sscofpmf for non-fixed event overflow
->        target/riscv: Rebuild fixed-event PMU overflow deadlines
->        target/riscv: Apply minstret exception accounting to HPM counters
->        target/riscv: Process PMU timer expiry on the owner vCPU
->        target/riscv: Migrate fixed PMU counter state
->        target/riscv: Clear virtualization mode on reset
->        target/riscv: Preserve fixed PMU state across reset
+> Test
+> ----
+> Built riscv64-softmmu and ran the new bios-tables test together with the
+> existing riscv64 ACPI tests; all pass.
 > 
->   system/cpu-timers.c                         |   4 +-
->   system/cpus.c                               |   6 +-
->   target/riscv/cpu.c                          |  17 +
->   target/riscv/cpu.h                          |  14 +-
->   target/riscv/machine.c                      |  92 +++-
->   target/riscv/tcg/cpu_helper.c               |   2 +
->   target/riscv/tcg/csr.c                      | 281 +++-------
->   target/riscv/tcg/pmu.c                      | 793 +++++++++++++++++++---------
->   target/riscv/tcg/pmu.h                      |  29 +-
->   target/riscv/tcg/tcg-cpu.c                  |  10 +
->   tests/tcg/riscv32/Makefile.softmmu-target   |  42 ++
->   tests/tcg/riscv32/pmu-fixed-rv32.S          |  90 ++++
->   tests/tcg/riscv32/pmu-minstretcfg-rv32.S    |  48 ++
->   tests/tcg/riscv32/smcdeleg-counter-rv32.S   |  84 +++
->   tests/tcg/riscv32/smcdeleg-event-rv32.S     |  69 +++
->   tests/tcg/riscv32/smcdeleg-minh-rv32.S      |  70 +++
->   tests/tcg/riscv32/sscofpmf-event-rv32.S     |  91 ++++
->   tests/tcg/riscv64/Makefile.softmmu-target   |  63 ++-
->   tests/tcg/riscv64/pmu-cycle-controls.S      | 104 ++++
->   tests/tcg/riscv64/pmu-lpad.S                |  69 +++
->   tests/tcg/riscv64/pmu-reset-vs.S            | 102 ++++
->   tests/tcg/riscv64/smcdeleg-minh.S           |  70 +++
->   tests/tcg/riscv64/smcdeleg-sxl32.S          | 219 ++++++++
->   tests/tcg/riscv64/sscofpmf-cycle-overflow.S |  58 ++
->   tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++
->   tests/tcg/riscv64/sscofpmf-overflow.S       | 134 +++++
->   tests/tcg/riscv64/test-minstret-ecall.S     |  26 +
->   27 files changed, 2223 insertions(+), 467 deletions(-)
-> ---
-> base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
-> change-id: 20260827-riscv-pmu-correctness-fa880fd9c48d
-> prerequisite-message-id: <20260905092810.660-1-fritchleybohrer@gmail.com>
-> prerequisite-patch-id: 3dfb379e910f47acaa9e94ac5766045f86e76799
+> Also booted an RVA22 guest with EDK2 firmware, using pxb-cxl + cxl-rp +
+> cxl-type3 + a CFMW: EDK2's PciBusDxe enumerates behind the CXL host
+> bridge (advertised via etc/extra-pci-roots), the root port and Type3
+> device show up (0000:0c:00.0 / 0000:0d:00.0), and 'cxl list' reports
+> the memdev (4 GiB) and the CFMWS root decoder.
 > 
-> Best regards,
+> QEMU invocation (CXL-relevant options shown):
+> 
+>     qemu-system-riscv64 \
+>         -M virt,aia=aplic-imsic,acpi=on,cxl=on \
+>         -cpu rva22s64 -smp 2 -m 4G \
+>         -object memory-backend-ram,id=vmem0,share=on,size=4G \
+>         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+>         -device cxl-rp,port=0,bus=cxl.1,id=rp0,chassis=0,slot=2 \
+>         -device cxl-type3,bus=rp0,volatile-memdev=vmem0 \
+>         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G \
+>         ...
+> 
+> Verification (total system memory grows by 4 GiB after onlining):
+> 
+>     # cxl list
+>     # cxl enable-memdev mem0
+>     # cxl create-region -m -t ram -d decoder0.0 -w 1 mem0 -s 4G
+>     # daxctl online-memory dax0.0
+>     # free -h
+> 
+> Chen Pei (6):
+>   hw/riscv/virt: Add CXL support to the RISC-V virt machine
+>   hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for CXL host bridge
+>     dependency
+>   hw/riscv/virt: Advertise the CXL host bridge to firmware via
+>     extra-pci-roots
+>   tests/qtest: Prepare golden files for the RISC-V CXL ACPI test
+>   tests/qtest: Add RISC-V ACPI bios tables test for CXL
+>   tests/qtest: Update RISC-V CXL ACPI golden master binaries
+> 
+>  hw/riscv/Kconfig                      |   2 +
+>  hw/riscv/virt-acpi-build.c            |  52 +++++++++++++++++++++++++
+>  hw/riscv/virt.c                       |  56 +++++++++++++++++++++++++++++++---
+>  include/hw/riscv/virt.h               |   3 ++
+>  tests/data/acpi/riscv64/virt/CEDT.cxl | Bin 0 -> 108 bytes
+>  tests/data/acpi/riscv64/virt/DSDT.cxl | Bin 0 -> 6331 bytes
+>  tests/qtest/bios-tables-test.c        |  54 ++++++++++++++++++++++++++
+>  7 files changed, 163 insertions(+), 4 deletions(-)
+>  create mode 100644 tests/data/acpi/riscv64/virt/CEDT.cxl
+>  create mode 100644 tests/data/acpi/riscv64/virt/DSDT.cxl
+> 
+> -- 
+> 2.50.1
+> 
 
 
