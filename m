@@ -4,72 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB6EC79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 12:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F371C79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 12:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Gyu-0005U0-Of; Wed, 09 Sep 2026 08:00:48 -0400
+	id 1x4H4d-0006rk-4L; Wed, 09 Sep 2026 08:06:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x4Gyq-0005TG-SV
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 08:00:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x4Gyo-00046o-9a
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 08:00:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788955241;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W1bXX1vH3nJFE/rc6t4KxJhp5QchV/0nvDLwFkuTeK4=;
- b=jWS11AsbHuuETEHnipRNbCWsYSDMUxhl/JQoSrBxn9PKkT5QraI1oHraskAfQfdGf2R7vN
- /jwXLEOQAH6O1k5rm9FdIhjePvnnm9tzl6LsgQFrAL8m2wOW+l0pQOfUqiUc4SaABzKJmo
- PbIl/+Y4Z8q/dEpXUDqbVjBl4UmglwY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-a9phwIuJMUSZlSYKyFR8ZQ-1; Wed,
- 09 Sep 2026 08:00:37 -0400
-X-MC-Unique: a9phwIuJMUSZlSYKyFR8ZQ-1
-X-Mimecast-MFC-AGG-ID: a9phwIuJMUSZlSYKyFR8ZQ_1788955236
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3998E19560A2; Wed,  9 Sep 2026 12:00:36 +0000 (UTC)
-Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C4725195608E; Wed,  9 Sep 2026 12:00:34 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH] io: cork TLS writes to avoid small TLS records
-Date: Wed,  9 Sep 2026 13:00:33 +0100
-Message-ID: <20260909120033.1303511-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <readqemu@gmail.com>)
+ id 1x4Cnk-0007UD-VE
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:33:00 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <readqemu@gmail.com>)
+ id 1x4Cnj-0004OO-JC
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:33:00 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0a4aa99bdso6935805a12.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 00:32:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788939177; cv=none;
+ d=google.com; s=arc-20260327;
+ b=EIGe6GWOefDJtFkLh5QkeJfTjcYP/zYeFgqJ8bmnBGNEmM9NqWzV6lgY8EvnkMeL5d
+ TjdiEz2vBzAabhqtBewBS6/E/fOGmnoX6M5YsGXIUdXmjvETvn0OkeDTdDNCvk3UcTn9
+ 1CVrLLJjsCK3sS/PjAt+fzgALGxZsKylEcCbd1f1eRKPLzNE4pP6wlnUZTtGMe8IsFUi
+ 0GrQn8E91cNSbg5nv81avyyDyJbZbVzHttqzzbDX3YGZjCiL1mRPK7jtnGiif9yIdLjs
+ mxeI8JXpwMZV7/r8UFtERCA/AaTbiYeANj2mtmQuWrZPFlQ6xALQUap8lV0/DTbk1d62
+ R2BQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=L1lp+a6grUq9QWrKs7p5Wo+a4nCUMqQfkPzxpyIiF+8=;
+ fh=Gg4+Esnrv6Q3zmSkTl2BjbiQzr4/Ze7SUtbskGGAjqg=;
+ b=OvpUuulmb9hLFCO11eng6hEbl+cCamNXLvUxVvNByVMGN5eYpzfNYLvOdbEhsDefdC
+ QewGM3BQxbpU2BmPVC3Tm0sfudrC5xJFATas3LXhgQTNdgygACsuAYz/3Ug+OSiqzwlo
+ JqbePGZhg+b+rHQNFT0eOwRqYzkA/2nuYVuVfcynLkoDlGMnroR+F7UfeqD+kDtXOA2G
+ CkpAGwVpUEHoFmE0QaR/vxkKE4SOQyJutkURzLdLxBqPmSk6/N75yQz1eEvZdCVUQ0Ko
+ T/OzXrwFKJE7xNx9s7wS02pLmFcN3XXYxTzglRcaSZAZJj0BaGm2RiWNI0LbzYFCLs/w
+ bHvw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788939177; x=1789543977; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=L1lp+a6grUq9QWrKs7p5Wo+a4nCUMqQfkPzxpyIiF+8=;
+ b=QktBvQMYFMK3aZpmaDVQjtGbd8JeqTqb6SROYp476j2eY2BmFEKy8ho1qs9R4sXiVd
+ S1KSHJpJc55TRjoBAM9gSG2HDOY1eZcycWA/o8QnALi4pbdTuTCkiYFhuoPvAiE3DyD/
+ TsQ6w4ADNv60xgcOXRjibnfu+lhuEVVcY5+7Aa/y7hze/zg/QYo2Kjp4hRilUegH2TRG
+ VsemNhRflfZDi1BI/6mYXhkZ06poNezDk4/il8/cdggnDEexjvof7nFAgtWDUip8lD7f
+ dJxszPamCxTB38UxcowujRz7F1YAD3zPPuPcW23HR6BfaU4nNuThFOfo5lgPaha99G1H
+ axIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788939177; x=1789543977;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=L1lp+a6grUq9QWrKs7p5Wo+a4nCUMqQfkPzxpyIiF+8=;
+ b=KconFZ9S1UARUbKWyMhutagMvOtKFFZPS7++q9i/0GWAjVqL36EZicf+EJfB/YL/K/
+ +ckFMIBHgXvR4B7CyZNqXFhpUkXor0odAMvZKG1ePUH4p8iTue717USrjHtIC20jvf09
+ wbU+8+TGDCRemgTaNR+hbh6Zim1n9qaZufU0lXp4gTPIB3kGxkiKn+FYI+7g7lCZfm+n
+ v1IlDwEiHByzsshxw7xqD0s+8z8upHJhuWuwbkTyrADenNsZCUOsD1hYoXZ6O39V35Iy
+ 786wQ6sZfFzPS/etQZwSqhYyUC9NXG4PQHFuI91r5QeLJa5fvY0a1oHt7jYs5K0ONuKo
+ OAxA==
+X-Gm-Message-State: AFuF++mX75qkpilzNNirn6OQpl2eixpAp1BwhLG0qWnsORkp4wKdq1J/
+ dYVTIOoOAteiRHG6qBKOjWNg2rdkXbkNkWpIXaJ/8PEJhZ4sssf2Y+JMc2IEG+TPyQ2gU8iAx6M
+ p6E5H0W+FSKXKQIJCO+sB8gaCtoX6wIc=
+X-Gm-Gg: AYBFou21m0YDPG4U33psvgNGsDxWx8vymC8ZB3k/cJRSCtlBHFYAorfN5QBNuLJbqO1
+ oYqmRhGyuZyX8HQe6b1S/VLB91zm2mxbAZjcD/47uP5l7IkB2NJfWiKwbgu72swoISc5i709KbO
+ xRwvwgPJugdogLdR3dPX58aJoN2IggY4riCueVVdX71DXVIGouURKoZQdoTnuAZM45QYamXGsOV
+ mLoyM3SkxOEpytDe2Jk+5UfkGB/6iW1wMO12cGGoDwHk05zjFENuPHR/RIe2E2QbqDrjbptIyHV
+ WgzApENwZsLaJ3HY+MfZz2HFPll4eU+K7lSItE4DwTeWcVD41m/iHxR1iQ==
+X-Received: by 2002:a05:6402:13d2:b0:698:e614:e4bf with SMTP id
+ 4fb4d7f45d1cf-6a7e8cb530amr11447107a12.0.1788939177276; Wed, 09 Sep 2026
+ 00:32:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
+ <20260723200325.24969-2-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20260723200325.24969-2-zhiwei_liu@linux.alibaba.com>
+From: Qemu <readqemu@gmail.com>
+Date: Wed, 9 Sep 2026 15:32:44 +0800
+X-Gm-Features: AcwNN1UthEaXlNHv0uiJDAv2G2v1Z8J-UPbzgvVms4BfFSJ9r3khhaCgEsqZf7g
+Message-ID: <CAMXXpfZoEHGRXTMzWtmtkBcnp+YO9O=sJqV0M4oyUYKvoPs7hg@mail.gmail.com>
+Subject: Re: [PATCH v8 01/11] target/riscv: Add basic definitions and CSRs for
+ SMMPT
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ daniel.barboza@oss.qualcomm.com, chao.liu.zevorn@gmail.com, 
+ liwei1518@gmail.com, qemu-riscv@nongnu.org, rahul@summations.net, 
+ xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com, 
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+Content-Type: multipart/alternative; boundary="0000000000002fb934065b07dce6"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=readqemu@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 09 Sep 2026 08:06:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,267 +121,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migration code caches vmstate/ram writes into an iovec and
-flushes this periodically. The total amount of data to sent
-may be 100's of KB, but split across many iovec, each of which
-is potentially quite small.
+--0000000000002fb934065b07dce6
+Content-Type: text/plain; charset="UTF-8"
 
-The QIOChannelTLS receives the iovec, but since GNUTLS cannot
-accept iovec data, it iterates calling send for each element.
+> This provides the necessary infrastructure for the core MPT logic and
+> MMU integration that will follow.
+>
+> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-As a result of the migration data pattern, this results in
-GNUTLS putting lots of small TLS records on the wire. This
-has shown writes alternate between about 4k and 30 bytes
-in some tests.
+Reviewed-by: Jay Chang <jay.chang@sifive.com>
 
-This is triggering the nagle algorithm on migration-test for
-many of the TLS test cases, resulting in a "go slow" for I/O
-that eventually hits the migration timeout configured by the
-test.
+Thanks.
 
-Not every contributor reports seeing the "go slow" but for
-those who do see it, it hits >= 95% of the time for at least
-one of the migration TLS test cases run by 'make check'.
+--0000000000002fb934065b07dce6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-While we could disable the nagle algorithm (and multifd
-channels already do this), that would stil result in lots
-of small TLS records hitting the wire which is not good for
-throughput. The migration code flushes in batches because
-it wants large writes for high throughput.
+<div dir=3D"ltr"><div><span class=3D"gmail-il">&gt; This provides the neces=
+sary infrastructure for the core MPT logic and<br>&gt; MMU integration that=
+ will follow.<br>&gt;=C2=A0<br>&gt; Co-authored-by: Huang Tao &lt;<a href=
+=3D"mailto:eric.huang@linux.alibaba.com" target=3D"_blank">eric.huang@linux=
+.alibaba.com</a>&gt;<br>&gt; Co-authored-by: TANG Tiancheng &lt;<a href=3D"=
+mailto:lyndra@linux.alibaba.com" target=3D"_blank">lyndra@linux.alibaba.com=
+</a>&gt;<br>&gt; Signed-off-by: LIU Zhiwei &lt;<a href=3D"mailto:zhiwei_liu=
+@linux.alibaba.com" target=3D"_blank">zhiwei_liu@linux.alibaba.com</a>&gt;<=
+/span></div><div><span class=3D"gmail-il"><br></span></div><span class=3D"g=
+mail-il">Reviewed</span>-by: Jay Chang &lt;<a href=3D"mailto:jay.chang@sifi=
+ve.com">jay.chang@sifive.com</a>&gt;<div><br></div><div>Thanks.</div></div>
 
-To achieve this we must tell GNUTLS to encrypt data but not
-immediately sent TLS records by "corking" its output. Once
-the complete iovec has been written to GNUTLS, it can be
-uncorked allowing it to hit the wire.
-
-There is added complexity with uncorking on non-blocking
-channels as not all encrypted data can be sent at once.
-qio_channel_write() will return what was sent, but some
-data might remain pending inside GNUTLS buffers. A later
-call to qio_channel_write() will provide the same plain
-text data buffers that have already been cached. Thus the
-code must attempt to uncork GNUTLS again to clear pending
-data and then deduct the equivalent amount of plain text.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/tlssession.c         | 33 ++++++++++++++
- include/crypto/tlssession.h | 25 +++++++++++
- include/io/channel-tls.h    |  1 +
- io/channel-tls.c            | 87 ++++++++++++++++++++++++++++++++++---
- 4 files changed, 140 insertions(+), 6 deletions(-)
-
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index 314e3e96ba..ffb6a27e47 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -513,6 +513,39 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
- }
- 
- 
-+void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess)
-+{
-+    gnutls_record_cork(sess->handle);
-+}
-+
-+
-+ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
-+                                         Error **errp)
-+{
-+    int ret;
-+    ret = gnutls_record_uncork(sess->handle, 0);
-+    if (ret == GNUTLS_E_AGAIN ||
-+        ret == GNUTLS_E_INTERRUPTED) {
-+        ret = gnutls_record_check_corked(sess->handle);
-+        if (ret < 0) {
-+            error_setg(errp,
-+                       "Cannot query pending TLS output: %s",
-+                       gnutls_strerror(ret));
-+            return -1;
-+        }
-+
-+        return ret;
-+    } else if (ret < 0) {
-+        error_setg(errp,
-+                   "Cannot uncork TLS output: %s",
-+                   gnutls_strerror(ret));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+
- size_t
- qcrypto_tls_session_check_pending(QCryptoTLSSession *session)
- {
-diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
-index 28e419681e..5415503eba 100644
---- a/include/crypto/tlssession.h
-+++ b/include/crypto/tlssession.h
-@@ -208,6 +208,31 @@ typedef ssize_t (*QCryptoTLSSessionReadFunc)(void *buf,
-                                              void *opaque,
-                                              Error **errp);
- 
-+/**
-+ * qcrypto_tls_session_write_cork:
-+ * @sess: the TLS session object
-+ *
-+ * Causes future qcrypto_tls_session_write() calls to encrypt
-+ * and queue data, without sending on the wire.
-+ */
-+void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess);
-+
-+/**
-+ * qcrypto_tls_session_write_uncork:
-+ * @sess: the TLS session object
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Attempt to send previously queued data. If the underlying
-+ * stream is non-blocking, then only a subset of data (if any)
-+ * may be written. To process outstanding data, this method
-+ * must be called again until it returns 0.
-+ *
-+ * Returns: the number of bytes remaining to be sent,
-+ * or -1 on error.
-+ */
-+ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
-+                                         Error **errp);
-+
- /**
-  * qcrypto_tls_session_set_callbacks:
-  * @sess: the TLS session object
-diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-index 7e9023570d..9e9b00c034 100644
---- a/include/io/channel-tls.h
-+++ b/include/io/channel-tls.h
-@@ -50,6 +50,7 @@ struct QIOChannelTLS {
-     QIOChannelShutdown shutdown;
-     guint hs_ioc_tag;
-     guint bye_ioc_tag;
-+    size_t corked;
- };
- 
- /**
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 31ec4d236d..05317ed5a3 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "qemu/iov.h"
- #include "io/channel-tls.h"
- #include "trace.h"
- #include "qemu/atomic.h"
-@@ -448,12 +449,24 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
-     size_t i;
-     ssize_t done = 0;
-+    ssize_t remain;
-+    g_autofree struct iovec *tmpiov = NULL;
-+    size_t ntmpiov = 0;
- 
--    for (i = 0 ; i < niov ; i++) {
--        ssize_t ret = qcrypto_tls_session_write(tioc->session,
--                                                iov[i].iov_base,
--                                                iov[i].iov_len,
--                                                errp);
-+    /*
-+     * The previous write encrypted all the data, but some
-+     * was not able to be sent on the wire when uncorked,
-+     * so we returned a short write. The encrypted data
-+     * will still be cached by GNUTLS and the session will
-+     * be in a corked state.
-+     *
-+     * This write call will be trying to write the remaining
-+     * plain text data again, but we must avoid sending that
-+     * into GNUTLS. Instead flush the previously encrypted
-+     * pending data.
-+     */
-+    while (tioc->corked) {
-+        ssize_t ret = qcrypto_tls_session_write_uncork(tioc->session, errp);
-         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-             if (done) {
-                 return done;
-@@ -463,12 +476,74 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
-         } else if (ret < 0) {
-             return -1;
-         }
-+        done += (tioc->corked - ret);
-+        tioc->corked = ret;
-+    }
-+
-+    /*
-+     * If we flushed pending data, we must discard an
-+     * equivalent amount of plain text data from this
-+     * write call, and then process what's left over,
-+     * if any.
-+     */
-+    if (done) {
-+        ssize_t total = iov_size(iov, niov);
-+        if (done == total) {
-+            return done;
-+        }
-+
-+        tmpiov = g_new0(struct iovec, niov);
-+        ntmpiov = iov_copy(tmpiov, niov, iov, niov,
-+                           done, total - done);
-+
-+        iov = tmpiov;
-+        niov = ntmpiov;
-+    }
-+
-+    /*
-+     * At this point we should ony be processing "new"
-+     * data, not seen by a previous write call so we
-+     * send to GNUTLS as normal.
-+     */
-+    qcrypto_tls_session_write_cork(tioc->session);
-+    for (i = 0 ; i < niov ; i++) {
-+        ssize_t ret = qcrypto_tls_session_write(tioc->session,
-+                                                iov[i].iov_base,
-+                                                iov[i].iov_len,
-+                                                errp);
-+        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-+            error_setg(errp, "Unexpected TLS blocking I/O while corked");
-+            return -1;
-+        } else if (ret < 0) {
-+            return -1;
-+        }
-         done += ret;
-         if (ret < iov[i].iov_len) {
-             break;
-         }
-     }
--    return done;
-+
-+    /*
-+     * On non-blocking sockets, uncorking may not succeed
-+     * in sending all encrypted data, so we have to check
-+     * what was actually sent to see if GNUTLS remains in
-+     * the corked state with pending data.
-+     */
-+    remain = qcrypto_tls_session_write_uncork(tioc->session, errp);
-+    if (remain < 0) {
-+        return -1;
-+    } else if (remain) {
-+        tioc->corked = remain;
-+    }
-+    /*
-+     * done == what we sent to GNUTLS for encryption & sending
-+     * remain == subset of 'done' that was encrypted but not sent
-+     */
-+    if (done && (remain == done)) {
-+        return QIO_CHANNEL_ERR_BLOCK;
-+    } else {
-+        return done - remain;
-+    }
- }
- 
- static int qio_channel_tls_set_blocking(QIOChannel *ioc,
--- 
-2.55.0
-
+--0000000000002fb934065b07dce6--
 
