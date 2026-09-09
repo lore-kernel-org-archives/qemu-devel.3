@@ -4,108 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B87C79FAA
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 412CFC79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4DBh-00022e-EY; Wed, 09 Sep 2026 03:57:45 -0400
+	id 1x4DUj-00047u-HO; Wed, 09 Sep 2026 04:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x4DBf-00022G-1b
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:57:43 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x4DBd-0006lR-4L
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:57:42 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6a68279dd86so6935862a12.3
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 00:57:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788940659; cv=none;
- d=google.com; s=arc-20260327;
- b=W8RVig51bStVbdRHvD4PVh0ZDoNVIRsA/JP5ITHRLzNwDYnmNIxKVk9Yd80jJi5OrG
- +yRGMLvjtSzFzjSDO2wq6yU0Gi/uqAW7hpqZ7oBJfl+eRx/kLXqoVgQ4aOpBqOxD5PXC
- l6Q634aS/EhdpHomshVDJ/RiWsZyuz5BFPjCL0PYfeAf68gk5X/debhdTx2nuh0ApEeX
- SdEgDVwdzaw3Pjz2AM9b97htdb1vtqLkbgEQtqMgiw+lwbkkhLPicjt1pSAfPEfAK+BI
- zbRWv9lI5B4+3OiiB6WVJwebQhNNZ38d9d/K9iRhPvokZFISBEXmw6FS/43fiNuu927D
- rWzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mghUWIUVlF0b/VA50/2jiXeAvIKpW4vtJh2ANQDhBVw=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=jMLIZQmWhwDeCqslvrjWHqVcezVuOf5h4cjylvweUFJMu9sPUVB/oD+3wKMqln4biH
- KTb17S0sdm/sT53Nd+cTg2+HvuXj91A2epR2SFlm0ezX7Ih3mP4ZFhXhNqFl2yQdycBM
- jdUjijY+B/L2w90M4UDotIsMhkDcoAa7JCTZpgYYz2jT8R00AWuW/9i+laEHgcGeVUj1
- 9dqYEwaUjTDO45WT87cB+A1AyTLatCMNdgdVkiMR/6XhMIyuE2J+fUcPPDMIH22otWmZ
- 2v5BzgThWPd6paoXdvQDaF08o0AQos5qZPWSqjMMhi8nq01BA/i5vEGwLRV4KkkC4Kyd
- AwrQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1x4DUb-00047W-Sl
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:17:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1x4DUZ-0000wn-JC
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:17:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788941833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QSd6m2An9r7YCKN/ZypM3fouCY8vDnGGD5aBpi9DVB4=;
+ b=a0MZ7eT9KAbITA6rGECB9R0cuYW4r9NkNZc24DFxgGolvZCBNXfU58G9f1T4newhzElCJG
+ rFusk5ICSW98sl1p9XBHwhLwnGjo1uXLHCGbl9rM1mSrjben7rbaWwS1d+6IK0+zm9fEVR
+ MZZiQ/7rm3GT58hw6uofkqJIdP+8UNo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-315-xh0485OcNoi6GHaLYMwNvA-1; Wed, 09 Sep 2026 04:17:11 -0400
+X-MC-Unique: xh0485OcNoi6GHaLYMwNvA-1
+X-Mimecast-MFC-AGG-ID: xh0485OcNoi6GHaLYMwNvA_1788941831
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48597bbd963so3637172f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 01:17:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788940659; x=1789545459; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=redhat.com; s=google; t=1788941830; x=1789546630; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=mghUWIUVlF0b/VA50/2jiXeAvIKpW4vtJh2ANQDhBVw=;
- b=tCisX03WUNCVgTjBE4RYoJYyFFdkm/cpvGGY1zqvtJ/+p59drfPyF4DSVEyIYpHfo9
- xk9vBCBizOG6SQv7Mb87jOBup+gMR+VEWbfWioFgRB0jiY/sN3+JB+wuE1I17YdGu5Wz
- ouyJs2BvhQn7FVj4mH8h+wuTnEDHF9C46vjEQHuDqWXqR2dysYz+5A+Ger5w8yxR40Db
- MOz1JSma+7y9MGSdunHGzttVwGmmnTENtuqkgmXXIFgV7jEZNjq0JBVSUWTTfEU8ACeu
- 0CJdMWvrga0E3RnFgGfp4vm3AMex4s04VIrNbsboOLK/p0Rb+2ZOebcshl4YdaUtXtiJ
- cwdA==
+ bh=QSd6m2An9r7YCKN/ZypM3fouCY8vDnGGD5aBpi9DVB4=;
+ b=icfmmV1S5XsQxlOvMFzjSCjgfWiIGg/T7tSJY7zMdY4tlo+Gr6nAQt02k/wWAT7G/l
+ FI0EJnV06+prHK9epY4eEMyRC+bY5mWEvbrqJ42s4qFGP3gAJ30caH4OR2N5TLZ2kWZo
+ 9IyHLaJIQS6wOErwskguq5BSsWjJjqT8AHFJffzhsKkZVjDr7BGG8rSuuiP1YoM2BDuq
+ tsfSP+2tVUqLuisIEoht7d6vYGKbdt2bxMBppyw9wYNfCf6LwoUgy/On6saAn88ttoBk
+ ds7oISsEMECPpxdygdnrt5zLym3OJdnWa1tZ11G+pVhQL6GrupHnAY7bfUfF6mZ0PrcN
+ cTdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788940659; x=1789545459;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1788941830; x=1789546630;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mghUWIUVlF0b/VA50/2jiXeAvIKpW4vtJh2ANQDhBVw=;
- b=CYB5Xp38hoKzBD1i1HcxT2Y9/3U2HylnRHKEmVPpDZGXGfIry5HclJ2Zi1Q6GIT4uy
- bMR5TD3k2p/NEmxjdvDjDpwc9XRR7e5yImcXRPkUWqdUxXU2tMhio5Uh3DvX+dXcQp5L
- vatZIi7SbFIjVd1iX25ZvKDweeJ7PI37kTFIEhb+RKIxFjjBw0f51Ca1a05Fdmk9XFhH
- CTtF1Rhz4zUG2z+dF32OC/cFamDQB1D44sXd8z3ydfaRfnPQbAsLSH/awYSj5W+bPK7O
- mkQpi0eGR9Cy75wabILesVIh6srUaHrxDhtGDQGf8BXc93xQhUKTimDwNJI4xPbqgOKD
- Ab2A==
-X-Gm-Message-State: AFuF++nojMGstzFMA9vksaoVbndTLB/tiBSJQKAvF326d3jU/ovFCIeI
- q9jtUzyvwgehNeb64JKZ1qD7tLJpcE6cFWaCDQB5dyhPmEXPwVlFiGMc1rtN8VbAmMr8n/ZngDP
- ZQQ/oBgyPiN1Dthu/Qbie0x4Qu6nIOvY=
-X-Gm-Gg: AYBFou1u57qgx5nNm9KByAzpsN4F3Il8DWTTEvQb3oBYtQnE5CBnN/4yyg0JZ9K6mno
- Epv6nhN6Dr1JbgnEwd+GkUCYGtIooG/43RC+qKnM6YzA33azBcliDRoNlIXKjcqUlUVN7TY2+aU
- pPyK3DMW7NKs01yH7/aJKcdwHXf4+wtrMTiAT61gUU5YN84vVNrkU/QE4qitavAI3n0ZDq6G8Bb
- /UqIA5/SFneIMu2YpzUhIIjidPq86lvFiL0RkTC1az0c9JbCBZ5SElKG0BhSV/KwqgvkEY6vN+y
- rELpB+NiDeHcwuKq6yqtdM2vkZa9ytGNce9oxqNlZd8i2Jemp1Sgm4AeoQ==
-X-Received: by 2002:a05:6402:4608:b0:6a8:37b6:3a6e with SMTP id
- 4fb4d7f45d1cf-6a837b63cdemr3083439a12.43.1788940659116; Wed, 09 Sep 2026
- 00:57:39 -0700 (PDT)
+ bh=QSd6m2An9r7YCKN/ZypM3fouCY8vDnGGD5aBpi9DVB4=;
+ b=EQQhobB4ry3wlqekxIU1Dc55IdtGdv/kK/tLKVnPSEs8hamqizsIXOHtt0DIWTFvWA
+ Bie6gminGpSqyVOGfeJEM/ZdHaZaAwnnp7K8Z5TyTtQxVpLkegF93MM/kgqcTJxpYmZA
+ KS71qpO9mFN7eJdWn3kuphHvtUklUO9IeVqVgMw6ewVsoZhdG2bnFpEwoNMsCmgz4PdY
+ nm6KhzluvEKlWL1bjWr2sguU8vcboBIBlzoe3yO3e+52WCgMDRnjIzD6lrJagm0ckDqe
+ GDKDj/YMBx5K3wnMb8wCYkUFc93UvOSpst3lPm3T+bMuGFacCwr0HOa7+dATq0N0JuBq
+ pcng==
+X-Gm-Message-State: AFuF++knWemknhJ+7lRJBeKffZonMG8SxMwdRnE1dk7w8/8M622fGVnG
+ 4lnv9brDuGQcC9ht8E7za9eJKL23WMUXrK1wlWEL4aJY/nN5nnEGev8eIEWj/Zm7giKi2rAvtaV
+ g5FPxgu50IfyrAzpoyeu7R+E5BozofOJrZinqGBuZQZtXlDtwHISmMd4c
+X-Gm-Gg: AYBFou2qeYrUvJ7vkDkab3pV5+cu+lUb1plYaW1gxiXWl390M2jEgefVxmFwY0vHPXV
+ qqC0cPZnZ0OAtBaWeJ+Ya0Gys16qisQvPwv+06W/v3VGPyEM/BPmF2M468B+SihW1+dSDH02vPa
+ w5MSd8+bGLvrV/qEedKo3943ElyuERDRabGC3AszciCPHOUu4R2SIFc1XTM/HgFr19TW6QYBBEP
+ lTTjAIUNJyGaGdtnWM/isGKUCwJ2KPFZmEK7b8PMcBQR3+g4/IK/Wc/8ELE5G9HkEz/c45qJ0J5
+ 8wZE6mapk/vdweSjfjaE1M/lERHuLvNpdjoofu36iSlYSWuAgdiCtQL2kmlUT8iWhFiJ6w==
+X-Received: by 2002:a5d:6f03:0:b0:485:ad55:208d with SMTP id
+ ffacd0b85a97d-485ad552246mr6292461f8f.18.1788941830554; 
+ Wed, 09 Sep 2026 01:17:10 -0700 (PDT)
+X-Received: by 2002:a5d:6f03:0:b0:485:ad55:208d with SMTP id
+ ffacd0b85a97d-485ad552246mr6292364f8f.18.1788941830229; 
+ Wed, 09 Sep 2026 01:17:10 -0700 (PDT)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4859162f354sm34825586f8f.20.2026.09.09.01.17.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Sep 2026 01:17:09 -0700 (PDT)
+Date: Wed, 9 Sep 2026 10:17:08 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, leif.lindholm@oss.qualcomm.com, eauger@redhat.com
+Subject: Re: [PATCH 0/6] sbsa-gwdt cleanup and fixes
+Message-ID: <20260909101708.23c6e37f@imammedo>
+In-Reply-To: <CAFEAcA-AgMXT8LKWCH46FhqLPh1NNv84DoZz-16Ub92K_5-HjA@mail.gmail.com>
+References: <20260902122646.2848464-1-imammedo@redhat.com>
+ <CAFEAcA-AgMXT8LKWCH46FhqLPh1NNv84DoZz-16Ub92K_5-HjA@mail.gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20260907063725.626685-1-zhangckid@gmail.com>
- <20260907063725.626685-6-zhangckid@gmail.com>
- <874ig1xmbi.fsf@pond.sub.org>
-In-Reply-To: <874ig1xmbi.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 9 Sep 2026 15:57:02 +0800
-X-Gm-Features: AcwNN1XfsYchoX5J_gbu-tRPyk4eM_sv83ElIWvC-8A0XZltpYvANhmY71tZbME
-Message-ID: <CAK3tnvKfeJK-p8POfzDoG2NLt=NWgKnF_WcmAWAHWXnuQdCWTw@mail.gmail.com>
-Subject: Re: [PATCH V15 05/14] monitor: track IOThread users with QOM paths
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52d.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,196 +119,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 7, 2026 at 8:44=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > Monitors that require an IOThread share the internal mon_iothread.
-> > Account for each monitor explicitly in IOThread holder tracking, using
-> > the monitor's canonical QOM path to distinguish holders.
-> >
-> > Acquire the shared monitor IOThread AioContext once and store the
-> > IOThread and canonical QOM path so the holder can be released after the
-> > monitor has been removed from the QOM tree. Reuse the stored context fo=
-r
-> > later operations.
-> >
-> > Release the holder from monitor_finalize(), after resources associated
-> > with the AioContext have been destroyed. This pairs the reference taken
-> > in complete() with instance finalization and keeps the IOThread alive
-> > throughout monitor teardown.
-> >
-> > The internal mon_iothread remains hidden from query-iothreads, as befor=
-e.
-> > Management applications therefore cannot use it to determine which
-> > monitors are using the IOThread. Nevertheless, track the monitor
-> > holders so that they follow the same explicit holder and
-> > IOThread reference lifecycle as other AioContext users.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  monitor/monitor-internal.h |  5 +++++
-> >  monitor/monitor.c          | 26 +++++++++++++++++++++-----
-> >  monitor/qmp.c              |  5 +++--
-> >  3 files changed, 29 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> > index 822a66d06d..1d5aeae5e6 100644
-> > --- a/monitor/monitor-internal.h
-> > +++ b/monitor/monitor-internal.h
-> > @@ -77,6 +77,11 @@ struct Monitor {
-> >      GString *outbuf;
-> >      guint out_watch;
-> >      int mux_out;
-> > +
-> > +    /* iothread context and holder identity */
-> > +    IOThread *iothread;
-> > +    char *iothread_qom_path;
-> > +    AioContext *ctx;
-> >  };
-> >
-> >  struct MonitorQMPClass {
-> > diff --git a/monitor/monitor.c b/monitor/monitor.c
-> > index 2654b81890..cc7f6785b5 100644
-> > --- a/monitor/monitor.c
-> > +++ b/monitor/monitor.c
-> > @@ -93,6 +93,16 @@ static void monitor_finalize(Object *obj)
-> >      qemu_chr_fe_deinit(&mon->chr, false);
-> >      g_string_free(mon->outbuf, true);
-> >      qemu_mutex_destroy(&mon->mon_lock);
-> > +
-> > +    if (mon->iothread) {
->
-> As we'll see in monitor_complete() below, mon->iothread is mon_iothread
-> if monitor_requires_iothread(mon), else null.  Which means
-> mon->mon_iothread is non-null if and only if
-> monitor_requires_iothread(mon).
->
-> Here, you check whether mon->mon_iothread is non-null to find out
-> whether @mon uses the monitor I/O thread, and you read the monitor I/O
-> thread from mon->mon_iothread.
->
-> Elsewhere in this file, we check monitor_requires_iothread(mon) and you
-> read mon_iothread, e.g. in monitor_cancel_out_watch()
->
->            if (monitor_requires_iothread(mon)) {
->                ctx =3D iothread_get_g_main_context(mon_iothread);
->            }
->
-> I don't like this inconsistency.  Two ways to avoid it:
->
-> 1. Always use monitor_requires_iothread(mon) to check and mon_iothread
-> to read.  Drop struct Monitor member iothread.
->
-> 2. Always use mon_iothread, except where we initialize it in
-> monitor_complete().
+On Tue, 8 Sep 2026 16:08:35 +0100
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Just to clarify: by option 2, do you mean using mon->iothread
-consistently for per-monitor checks and accesses, except in
-monitor_complete(), where monitor_requires_iothread() determines
-whether to initialize it?
+> On Wed, 2 Sept 2026 at 13:26, Igor Mammedov <imammedo@redhat.com> wrote:
+> >
+> >
+> > Series picks up dropped gwdt fixes from
+> >
+> >   [PATCH v3 00/17] Add watchdog support to arm/virt board
+> >   https://patchew.org/QEMU/20260624102830.1355552-1-imammedo@redhat.com/
+> >
+> > patches were basically rewritten to make changes simpler/easier to reson about.
+> >
+> > patch 6/6 is partial fix with open question:
+> >
+> > sbsa-gwdt currently mantains WVC in since VM start ticks, which works fine under
+> > TCG. However under KVM those system counter domains diverge and CNTPCT in guest
+> > starts to return host's value. As result WCV reads/writes got mixed up with
+> > QEMU still assuming VM timeframe while guest using host's one.
+> > Question is how should we fix it?  
+> 
+> Presumably we should be dealing in deltas from the
+> QEMU_CLOCK_VIRTUAL value?
 
-Thanks
-Chen
+deltas could works as workaround at cost of polluting sbsa-gwdt
+device model with KVM quirk. but then real fun begins when we
+bring in picture migration (even not counting CNTPCT jump),
+WCV would either diverge or jump as well => more KVM quirks
+in whatchdog code to deal with.
 
->
-> > +        const IOThreadHolder io_holder =3D {
-> > +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-> > +            .u.qom_object.qom_path =3D mon->iothread_qom_path,
-> > +        };
-> > +
-> > +        iothread_unref_and_put_aio_context(mon->iothread, &io_holder);
-> > +    }
-> > +    g_free(mon->iothread_qom_path);
-> >  }
-> >
-> >  static char *monitor_get_chardev_id(Object *obj, Error **errp)
-> > @@ -521,7 +531,7 @@ void monitor_suspend(Monitor *mon)
-> >           * Kick I/O thread to make sure this takes effect.  It'll be
-> >           * evaluated again in prepare() of the watch object.
-> >           */
-> > -        aio_notify(iothread_get_aio_context(mon_iothread));
-> > +        aio_notify(mon->ctx);
-> >      }
-> >
-> >      trace_monitor_suspend(mon, 1);
-> > @@ -661,7 +671,6 @@ char *monitor_compat_id(void)
-> >  static void monitor_complete(UserCreatable *uc, Error **errp)
-> >  {
-> >      Monitor *mon =3D MONITOR(uc);
-> > -    AioContext *ctx;
-> >
-> >      if (mon->chardev_id) {
-> >          Chardev *chr =3D qemu_chr_find(mon->chardev_id);
-> > @@ -680,11 +689,18 @@ static void monitor_complete(UserCreatable *uc, E=
-rror **errp)
->        if (monitor_requires_iothread(mon)) {
->            if (!mon_iothread) {
-> >              mon_iothread =3D iothread_create("mon_iothread", &error_ab=
-ort);
->
-> Create the single, shared monitor I/O thread on demand, and store it in
-> mon_iothread.
->
-> >          }
-> >
-> > -        ctx =3D iothread_get_aio_context(mon_iothread);
-> > +        mon->iothread =3D mon_iothread;
->
-> Set mon->iothread to the monitor I/O thread.
->
-> > +        mon->iothread_qom_path =3D object_get_canonical_path(OBJECT(mo=
-n));
-> > +        const IOThreadHolder io_holder =3D {
-> > +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-> > +            .u.qom_object.qom_path =3D mon->iothread_qom_path,
-> > +        };
-> > +
-> > +        mon->ctx =3D iothread_ref_and_get_aio_context(mon->iothread, &=
-io_holder);
-> >      } else {
-> > -        ctx =3D qemu_get_aio_context();
-> > +        mon->ctx =3D qemu_get_aio_context();
->
-> Leave mon->iothread null.
->
-> >      }
->
-> mon->iothread is mon_iothread if monitor_requires_iothread(mon), else
-> null.
->
-> > -    mon->accept_input_bh =3D aio_bh_new(ctx, monitor_accept_input, mon=
-);
-> > +    mon->accept_input_bh =3D aio_bh_new(mon->ctx, monitor_accept_input=
-, mon);
-> >  }
-> >
-> >  int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
-> > diff --git a/monitor/qmp.c b/monitor/qmp.c
-> > index aec0315775..de56345456 100644
-> > --- a/monitor/qmp.c
-> > +++ b/monitor/qmp.c
-> > @@ -734,7 +734,8 @@ static void monitor_qmp_complete(UserCreatable *uc,=
- Error **errp)
-> >           * thread.  Schedule a bottom half.
-> >           */
-> >          mon->setup_pending =3D true;
-> > -        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread)=
-,
-> > +
-> > +        aio_bh_schedule_oneshot(MONITOR(mon)->ctx,
-> >                                  monitor_qmp_setup_handlers_bh, mon);
-> >          /* The bottom half will add @mon to @mon_list */
-> >      } else {
-> > @@ -789,7 +790,7 @@ static bool monitor_qmp_prepare_delete(UserCreatabl=
-e *uc, Error **errp)
-> >
-> >      /* Synchronize with in-flight iothread callbacks. */
-> >      if (monitor_requires_iothread(mon)) {
-> > -        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
-> > +        aio_wait_bh_oneshot(MONITOR(mon)->ctx,
-> >                              monitor_qmp_iothread_quiesce, NULL);
-> >      }
->
+I'd think that we would want to track QEMU_CLOCK_VIRTUAL in WCV,
+basically make CNTPCT = CNTVCT and treat as such everywhere.
+
+What is lost on me is history/reasoning why CNTPCT tracks host value?
+Why can't we make it track virtual clock instead (there is KVM_ARM_SET_COUNTER_OFFSET
+that supposedly should do the job)?
+
+> Anyway, for this series, since the only thing I wanted to change
+> was expanding a comment, I'll apply this to target-arm.next and
+> make that tweak there.
+
+Thanks!
+> 
+> -- PMM
+> 
+
 
