@@ -4,114 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F20C79FBB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9BE6C79FB7
 	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 22:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4QYq-0001kj-Kw; Wed, 09 Sep 2026 18:14:32 -0400
+	id 1x4QYn-0001jt-Tr; Wed, 09 Sep 2026 18:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4QYo-0001kN-LM
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 18:14:30 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4QYn-0001jk-65
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 18:14:29 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4QYn-0000y6-0x
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 18:14:30 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4QYl-0000xq-L6
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 18:14:28 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 205A81FCF2;
- Wed,  9 Sep 2026 22:14:19 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CC2AB21CC8;
+ Wed,  9 Sep 2026 22:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788992063; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1788992062; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
- b=Tu+W6jq5j4FcrDAVzP7xS4nSvlCu7BwKoQar1Aplk1wYKXIq0OY5GoSUCA9GGg2N7M7OWY
- UIXi/Ne+Na1guF17vp7McotIjdUcXGRosCXudJlr80GJ/c0lC4d1vYIaY/Q9Kyneu2fJnT
- 7T3ixQWdwwSoRGnxO6BuU3Lmxe+tiHY=
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=Jp9vbenFRJvn3gksSifsGsylbGq0htA45hW8a1Sduken0gO6Jw09iIJv/fqxm30hHpdJMN
+ +ZIrtwIn4O/zwGEGtQQg6znbjXQS4Yz6MHwHraS92EaBk1K+17knpe/FW8oYsMPavrUXTa
+ sRjEp5w35G+z6/+QyVMyfThb0TnxopY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788992063;
+ s=susede2_ed25519; t=1788992062;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
- b=R3Bt1vCgALMJc5whDtXVXJKFvLAbJaovwg2GAAntbrVHJEdGiyeeRpCdc8qlS1XOMS91tR
- lDLB2oAP2Xvr3WBA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=aWUGYY8T;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rKfEvtsc
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=VeRGZpcnHW+AeflhqOuAgTqKVFnMusHqjTd6/z4u/vsg8guhdYUcnw9CXdFsT9/6imhWyV
+ 4LiEyvYO5Ash8eCg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=oCSv0edt;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=33xXRRop
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788992059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1788992057; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
- b=aWUGYY8TaRjPVzotOKIOIsFVWiVuc7jtbF6jy3Na1jSRokN2fJOOANyWvnMpvp/Un6+gXp
- dzmMtnrxrSn/V5O30pD4x2pVmkSnd9BzyeXTRiNMLUIa4dlUeWvshYll6obIPFodPge+D0
- alnNm0xmBvwQSMKE4MYS9oD64boIzto=
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=oCSv0edtMl8mQOdMsjWa2/WlRfC9kLOAMyZlrNHte4QjqOMFSbWYW6eD0dfd4A38ePmAQ0
+ 8UjUewgakyu5RoDeLDenjy4S9q8bDbmmJlrvIFYUtzXBg1TBkhvyGgv+pPeyPckSOGJ1sJ
+ 7+xEvSbb1GVCaAFhAUA8qNwA+Etmcjg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788992059;
+ s=susede2_ed25519; t=1788992057;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
- b=rKfEvtscwT/O1KB55pEOjnTA4W8zDcAOAszy4+n6Won5FSIL+rMU8FHtZEWUPnIVOTsz8I
- lS3vvknKFQZO6DCA==
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=33xXRRopSDc45XgORBgFQL2Jl6zguPRwWtlc9FCrphopLGN0aZeFq3Bp+YoZddIAMd8jNf
+ WXSIou7/aEXiH9BQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EEC8E1376E;
- Wed,  9 Sep 2026 22:14:17 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A36D0136ED;
+ Wed,  9 Sep 2026 22:14:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gNGDLznaoWqMPwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 09 Sep 2026 22:14:17 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uHglHTjaoWqMPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 09 Sep 2026 22:14:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2 2/3] migration: Drop iochannel reference during snapshot
- setup
-Date: Wed,  9 Sep 2026 19:14:08 -0300
-Message-ID: <20260909221409.291560-3-farosas@suse.de>
+Cc: "Denis V. Lunev" <den@openvz.org>,
+	John Snow <jsnow@redhat.com>
+Subject: [PATCH v2 1/3] ahci: Fix leak of IRQState
+Date: Wed,  9 Sep 2026 19:14:07 -0300
+Message-ID: <20260909221409.291560-2-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260909221409.291560-1-farosas@suse.de>
 References: <20260909221409.291560-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 205A81FCF2
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: CC2AB21CC8
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,63 +125,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During migration there are usually two references to the iochannel,
-one from the channel creation itself and another from the ownership
-transfer into QEMUFile.
+ASAN spotted an indirect leak in ahci-test:
 
-- The reference from the QEMUFile is decremented at qemu_fclose.
+Indirect leak of 576 byte(s) in 6 object(s) allocated from:
+    #0 0x556112a08ca0 in malloc
+    #1 0x7f21591e595d in g_malloc
+    #2 0x7f21591ffe38 in g_slice_alloc
+    #3 0x7f21591c988d in g_hash_table_new_full
+    #4 0x556114d756f1 in object_initialize_with_type ../qom/object.c:506:23
+    #5 0x556114d77590 in object_new_with_type ../qom/object.c:706:5
+    #6 0x556114d777e8 in object_new ../qom/object.c:722:12
+    #7 0x556114d6d2be in qemu_allocate_irq ../hw/core/irq.c:94:25
+    #8 0x556114d6d1bc in qemu_extend_irqs ../hw/core/irq.c:82:16
+    #9 0x556114d6d329 in qemu_allocate_irqs ../hw/core/irq.c:89:12
+    #10 0x5561135da9bd in ahci_realize ../hw/ide/ahci.c:1644:12
+    #11 0x55611360156a in pci_ich9_ahci_realize ../hw/ide/ich.c:132:5
 
-- The original reference is decremented at migration_connect_outgoing()
-for regular migration and not at all for snapshots.
+Although ahci_realize() frees the return of qemu_allocate_irqs() right
+away, the individual IRQStates are still left around.
 
-The ide-test has recently added migration support and ASAN has
-flagged:
+Issue qemu_free_irq() at ahci_uninit().
 
-Indirect leak of 32 byte(s) in 1 object(s) allocated from:
-    #0 0x55ca12aac0b9 in realloc
-    #1 0x7fd97d7e5a05 in g_realloc
-    #3 0x7fd97d7c98c6 in g_hash_table_new_full
-    #4 0x55ca14e186f1 in object_initialize_with_type ../qom/object.c:506:23
-    #5 0x55ca14e1a590 in object_new_with_type ../qom/object.c:706:5
-    #6 0x55ca14e1a7e8 in object_new ../qom/object.c:722:12
-    #7 0x55ca12de896f in qio_channel_block_new ../migration/channel-block.c:32:29
-    #8 0x55ca12ec8f2d in qemu_fopen_bdrv ../migration/savevm.c:172:49
-    #9 0x55ca12ec8b42 in save_snapshot ../migration/savevm.c:3375:9
-    #10 0x55ca12ee18e3 in hmp_savevm ../migration/migration-hmp-cmds.c:497:5
-
-Change qemu_fopen_bdrv() to drop the original reference once the
-QEMUFile has taken over the object. The xen code already does the
-same.
-
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/savevm.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ hw/ide/ahci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 5b0e89ca7c..8d4bdc28ab 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -168,11 +168,16 @@ static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
- 
- static QEMUFile *qemu_fopen_bdrv(BlockDriverState *bs, int is_writable)
- {
-+    QIOChannel *ioc = QIO_CHANNEL(qio_channel_block_new(bs));
-+    QEMUFile *f;
-+
-     if (is_writable) {
--        return qemu_file_new_output(QIO_CHANNEL(qio_channel_block_new(bs)));
-+        f = qemu_file_new_output(ioc);
-     } else {
--        return qemu_file_new_input(QIO_CHANNEL(qio_channel_block_new(bs)));
-+        f = qemu_file_new_input(ioc);
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 6b04762c4a..86f6297dc9 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -1688,6 +1688,7 @@ void ahci_uninit(AHCIState *s)
+             }
+             ide_exit(ide_state);
+         }
++        qemu_free_irq(ad->port.irq);
+         object_unparent(OBJECT(&ad->port));
      }
-+    object_unref(ioc);
-+    return f;
- }
- 
  
 -- 
 2.53.0
