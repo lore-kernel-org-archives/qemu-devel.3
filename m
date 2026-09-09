@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9D7C79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0136C79FAA
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Bnc-0001l7-B5; Wed, 09 Sep 2026 02:28:48 -0400
+	id 1x4Bp8-0002Nw-SI; Wed, 09 Sep 2026 02:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vgarhw@gmail.com>) id 1x4Agj-0002bh-Si
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 01:17:37 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vgarhw@gmail.com>) id 1x4Agh-0005M5-GH
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 01:17:36 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-868b3248b2cso283125b3a.1
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 22:17:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788931053; x=1789535853; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=lH21qSRjt/8Q/AD8g78BmCGIWoDOBkBsX6AcoNnGDi8=;
- b=JQNWIJbdyA4U7KQTwQhtKbJihAaWEjx/T+sebTMBqIMPYh2/9G6rfpYutYLY7rdu0E
- 1QezxSmfyhiWQakThw2K7m/xG2hta0X1B4+2WUxcL0zaltmp4SCguld7NSlQSLx+rbpz
- 2llsrEiyfRPjZ6eNRy2AQhtxE1a/QAa0GDsEnfVoAPW2UAL4F81jFTZps2fj/5Vo8GFH
- /y/GO+Uwg62Nm41J/fpF3y0XNVhvPsCyBYEo7tdJidxwkmdgmcyJ1A1SwWtFaIfYGkWW
- 5HOzQ8LOrSYidaR+MJmr2VMPAtXDE26Ze+r8qxgTi6sJkZ0L6eIdv1LY+C9FJsJhvd57
- 75Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788931053; x=1789535853;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lH21qSRjt/8Q/AD8g78BmCGIWoDOBkBsX6AcoNnGDi8=;
- b=Z/iPzf/tU8HcfKH+EJ9iYNeCUnJ5CPaPRAQ29U4PI6BNw75FtDfEk7SjKHY2hBI8LD
- 2dgsnHD3CJ9QQEErHmp1+3V3gOHrlPro59PGzZektW58qc8b+fT/D8RbE2edGAbtaQ52
- o4cyQwCgB8V/CQat1MVUYHHkq3qQXgbxNqXwT/cJxu3vazaZJVxayXxBzJxC7L1SAJbR
- pb0NSBSljA6TBlyUoVLpnGCdnSWjX6YiU0uRsYhY+Il9d/A3mp2W+WlIk1owUQ5bNcUz
- XPWQIx7atxtKwHYXfsU7wbINQeg/gjqkbm6rFZXvbdX28T9UhJPELvzlUzlmw0c+Naoy
- kd9Q==
-X-Gm-Message-State: AFuF++k/QV+jmxp2s90A/+l0jDrsrbFqWjpqtQzHvcss6Tk5jjPLsj66
- MZUGzsFbz6QXnTrzRApfwJbVOyNTCZ/S+WgNsre/2g81MoH1lFva+fNiuMN9NQQPCUjOoA==
-X-Gm-Gg: AYBFou032BZK4RwoBTGP17gzlehanLUJXzSixmiN0hoimN4F3ykkCmC6nuk0EitqC0v
- /R5RUweU7uFUVsXIYFrDYyhcA/0DkY2TpzpmEewQnSIoBZvfDO6ePGmB+teD9IfW8H1Xgpqj1VD
- LewgWeAHqAJc8tA80JQxj28wo0QUtCkMfWuhGCYYphARF+LbdLU9FPqOgJa6ZKgWmgBamPdf4Lm
- Qh2kQkyobpHwN9Qi2J+aDZMY38EaJ+owIqUF2/6Ca4bA8+uTcCZQSJ5b4xyjxRW2OHcs6H1J5JU
- 51o1MU4YVy54w5Ev1cbJsYoPIoL9E1/Mk8yHzaYzmpvfg2e/r4Kcv5eDaFvQjMGB3xmmAiATzc9
- BqmPgr6CTwsiYhcb4X3tZCd++fVBVVPPPbokuA9gdNWaWlHJMAG42pyVI0lmthO4zbIODjjAaNu
- yMghE535e9MjDggrIeyPIIgQ/aGcecYqpBqLmbZiTzhKgiZPDrwsGm8Cv8lwszHtPt/0MoyAUPp
- ICY4S84HCGKqN5k5RN6XL3w
-X-Received: by 2002:a05:6a21:3cc2:b0:3d7:7b6d:4997 with SMTP id
- adf61e73a8af0-3da3a16bfd5mr52504644637.27.1788931053107; 
- Tue, 08 Sep 2026 22:17:33 -0700 (PDT)
-Received: from mac.lan (c-73-241-3-198.hsd1.ca.comcast.net. [73.241.3.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-338f7bad290sm11130409eec.14.2026.09.08.22.17.32
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 08 Sep 2026 22:17:32 -0700 (PDT)
-From: Vikram Garhwal <vgarhw@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: francisco.iglesias@amd.com,
-	vgarhw@gmail.com
-Subject: [PATCH] MAINTAINERS: Update email address for Vikram Garhwal
-Date: Tue,  8 Sep 2026 22:17:17 -0700
-Message-Id: <20260909051717.19647-1-vgarhw@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4Bp3-0002KV-DA
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:30:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4Bp1-0005Fj-3S
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:30:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788935412;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LC8+YbgnfxjDMTWkI2yYU7JFG1cx5/F6SPMn8GP1R3g=;
+ b=YYov/ph+uSuNpbU/lIpMf7h+eso+R0ueEr5k7GY1R6aJ/ZjPRII7nr2JSJi32waqxoQTmV
+ /eR8nAAUqhwpePHh981MJQvmk5IsH3moYxUyLM1NVHnZaC74Mp39y4Cpw16uqZqMyVs2OV
+ 59/S7d7/y3/mnA6jth8+uJEOFbgic3c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-wfQRiOkkNlO55PQrgd115Q-1; Wed,
+ 09 Sep 2026 02:30:10 -0400
+X-MC-Unique: wfQRiOkkNlO55PQrgd115Q-1
+X-Mimecast-MFC-AGG-ID: wfQRiOkkNlO55PQrgd115Q_1788935409
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9AD521800741; Wed,  9 Sep 2026 06:30:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 19560418; Wed,  9 Sep 2026 06:30:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C62B121E6A04; Wed, 09 Sep 2026 08:30:05 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: <qemu-devel@nongnu.org>,  <kvm@vger.kernel.org>,  <pbonzini@redhat.com>,
+ <berrange@redhat.com>,  <pankaj.gupta@amd.com>,
+ <isaku.yamahata@intel.com>,  <xiaoyao.li@intel.com>,
+ <chao.p.peng@linux.intel.com>,  <david@kernel.org>,
+ <ashish.kalra@amd.com>,  <ackerleytng@google.com>, <lpieralisi@kernel.org>
+Subject: Re: [PATCH v2 19/19] hostmem: Automatically select set
+ guest-memfd=on for in-place conversion
+In-Reply-To: <20260908205236.838281-20-michael.roth@amd.com> (Michael Roth's
+ message of "Tue, 8 Sep 2026 15:48:39 -0500")
+References: <20260908205236.838281-1-michael.roth@amd.com>
+ <20260908205236.838281-20-michael.roth@amd.com>
+Date: Wed, 09 Sep 2026 08:30:05 +0200
+Message-ID: <874ifzos2a.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=vgarhw@gmail.com; helo=mail-pf1-x431.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 09 Sep 2026 02:28:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,34 +89,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Vikram Garhwal <vgarhw@gmail.com>
----
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Michael Roth <michael.roth@amd.com> writes:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7183babd6a..f001bf0d67 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2178,7 +2178,7 @@ F: tests/qtest/fuzz-sb16-test.c
- 
- Xilinx CAN
- M: Francisco Iglesias <francisco.iglesias@amd.com>
--M: Vikram Garhwal <vikram.garhwal@bytedance.com>
-+M: Vikram Garhwal <vgarhw@gmail.com>
- S: Maintained
- F: hw/net/can/xlnx-*
- F: include/hw/net/xlnx-*
-@@ -3042,7 +3042,7 @@ F: include/hw/rx/
- CAN bus subsystem and hardware
- M: Pavel Pisa <pisa@cmp.felk.cvut.cz>
- M: Francisco Iglesias <francisco.iglesias@amd.com>
--M: Vikram Garhwal <vikram.garhwal@bytedance.com>
-+M: Vikram Garhwal <vgarhw@gmail.com>
- S: Maintained
- W: https://canbus.pages.fel.cvut.cz/
- F: net/can/*
--- 
-2.39.3 (Apple Git-145)
+> When in-place conversion is enabled, both the shared memory and private
+> memory must come from the same guest_memfd instance. Thus, the
+> memory-backend-memfd options must in turn correspond to a guest_memfd
+> instance, e.g. guest-memfd=on must be specified. Since there is no
+> use-case for enabling in-place conversion without setting
+> guest-memfd=on, just set it automatically if in-place conversion is
+> enabled.
+>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 20d6fefb04..32df7cb794 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -772,7 +772,8 @@
+>  #     resizing of the memory (default: true)
+>  #
+>  # @guest-memfd: if true, use guest-memfd to back the memory region.
+> -#     (default: false, since: 11.2)
+> +#     (default: true for Confidential VMs with in-place conversion,
+> +#     false otherwise, since: 11.2)
+
+What does "Confidential VMs with in-place conversion" mean exactly?
+Which configuration settings need to be set how?
+
+>  #
+>  # Since: 2.12
+>  ##
+> @@ -781,7 +782,7 @@
+>    'data': { '*hugetlb': 'bool',
+>              '*hugetlbsize': 'size',
+>              '*seal': 'bool',
+> -            '*guest-memfd': 'bool' },
+> +            '*guest-memfd': 'OnOffAuto' },
+
+Valid values change from JSON true and false to JSON "on", "off", and
+"auto".
+
+If @guest-memfd was already in a release, this would be a compatibility
+break, i.e. a hard "don't".  But it isn't, it's in the series this is
+one based on.  So it's merely a "either avoid or justify in the commit
+message, and avoiding feels easier to me."
+
+The doc comment still uses true and false.
+
+>    'if': 'CONFIG_LINUX' }
+>  
+>  ##
 
 
