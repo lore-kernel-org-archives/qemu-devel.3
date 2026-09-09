@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F33C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 493B4C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4DtL-0008Gf-7V; Wed, 09 Sep 2026 04:42:51 -0400
+	id 1x4DtP-0008IJ-VW; Wed, 09 Sep 2026 04:42:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x4DtJ-0008G9-RX
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:49 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1x4DtO-0008Hq-JH
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:54 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x4DtG-0003J8-QN
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:49 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2d8fd3b729dso47233105ad.1
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 01:42:46 -0700 (PDT)
+ id 1x4DtM-0003K3-QX
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:54 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2d944747d41so61006025ad.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 01:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1788943365; x=1789548165; darn=nongnu.org;
+ d=sifive.com; s=google; t=1788943371; x=1789548171; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wN+jBrsk9ZXuLNa7PYx1X0UEa+sJ9PCm+XtlYprhtYg=;
- b=Rla+VW0Qm4zObi+7P9QDTBWEAD/ONjFXS0Vx3hxTMPZdWzWQUxHfwkMKdw+7FY7Yym
- OR6+Mi/ndAcj+vIOOohmLtx1QmIiLZTE2nhdvOx21w0HiicAL6ltsPxrli7Zl/afcWu6
- OucGmNC5kaFETP2Joiz4kdU1WyWZidUFnCba5gBqUD5GZg2vxbChZrNQgnQU6ybvbjDV
- WVKYrGztOP0bbVqAetDB6lNBM8wjjuJzvXzD/0ThlOgwb/RhNhax2Ymyc/I4DX6Ep4jP
- ICNGXAN/g5Tr3up1vXW30U2+PGab8liOpH5hzKTyUmQjseumhueyWIYZ0iRQCa9sKisi
- VdgQ==
+ bh=3/JSEN4yZJQug9AgbAgWw+4fekDHImfUc2lZDl80p84=;
+ b=DQ9dL677NoWmHBzHOeiHaD0vc2xMax+B0qvdsoPJGTlZNKGAQUrigGhB7TpverFhl8
+ 5ykiqrpHrfyT0X/b3CyYL/D6DxeWkfKtfINEeVBTG7y+zs2lrlQKiR5pwJIo1PnRGkY2
+ xdrCWJdDxd09vwEBjcpoLSFvNF4J2Iogu4S4l+p0wDobKySY4cfnTQWtUNYT3TToa0UJ
+ 35TM0AOfCHFTHE4Mbx5uoDC97ewwXxEquU8bKAIszgpmzUBH21OuQMKAN0Y2QV/Ehy/I
+ y4HJiR+unPNghYajoIpib4RMWAM2HM3e/agIkiGF8mvX4H8lmw0nGkvWsLKemDtaGBeY
+ ltXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788943365; x=1789548165;
+ d=1e100.net; s=20251104; t=1788943371; x=1789548171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wN+jBrsk9ZXuLNa7PYx1X0UEa+sJ9PCm+XtlYprhtYg=;
- b=JVh+xBhKHCkkvoJtEmzUiOVGs3d4BK6lqMXqTi/Eo+Juwj9Wm0Z0wBgoEgU+G+c/2y
- GHEdCHnVzaxdUYMXP8AAQXUgtzPxzobNofx0/f4K7shewinHbExY9KQHO32UOJiCSI25
- RKRRvK2Yt99N5Ci3FFERd65CE0lfV/2hs+kVW3TC/AAYh28ck/SZ63BIl/RgijHXS8PV
- YpXRQ6JI9YkSGTE4a1SRfm1VzobCQps84pRjUxqoVac1dfjKps37mWXsND/+0czAjzJs
- skQAyvC6NZeO1fR1MfYjNqCLQeiM9ZCl+v8Go1ZaZAVntGaXQrewnoD2b2Ug6koJaeFc
- x9mA==
-X-Gm-Message-State: AFuF++lFEs3moISqdwWjR39KovA+CcFg2KlNCae2Rry1nE/QUNFwFcVg
- i0TI/QVvnK8eQQTAyVtP0qyK+wmIoG0crd01g6Qiq8RBKKtJ5gwbcqTSiC3uzaEsPKc39K6K6gZ
- EVXFjSdbR3UYHhsXB3v/2inGN0jLCDH3V2HkiYNtZexbmwvwnd0VVUf9P0E2F/+F8gXpofbVz2I
- MGYOwk3pLkVGK8Es3Kv6yuSMeJaLYnQIIk45KcL0gPFA==
-X-Gm-Gg: AYBFou0QD15ubVRSF/kH6UYyslqcHClIN/XuidWHoQ1QVEEDmka8p+xrAe4cqiojU61
- 0gbGBHgU4Dh5W15FY8by5gxmW0sJi+v1sSRZL0hexFRvciNFFXpleThUokefbMiGAFN1k7iBmAV
- t5u3DcFDQo9a/NG9TGZ6a0spVQ0l9QtQJ/eGa+ogOE0Q1EBy2td0Q2Au6dPlVH8ZxiE1PknCEYP
- eCLGM0ET7OlSePHPgJVIqzDtm2mcS+0Fn/GQgvn7HzQ0JYmTVr/UHFVeqo0Q+ZSZjZxtGcsxg1w
- raImyIqv6hpTowurUcXFf8h4/d3qJ+cHHSNqzDTRS3UGA3DFUg3+A6EHxLR4TBh7tFMcUTNIYfS
- 69iXsnG10owP44yy+ysXHo+vn289CbbtRds60F6HCqsX2Ahi6YWRTbeFN/7MIdW13v4Tqvw3REL
- JqZQMWwyBH1brXynrpFNR3IH22KjpsJH0dVNluTtuCZQVpBLlURqaajYLl0HxwMXfOnOEY2viIO
- nWPNYt9tI9Qui0YKybUFBm/RPzecmduu3vGjFX0ywN/TFdEfUaAm7nI+B27D/PLGcVcDb9WEZFh
- 9SoKIOUU
-X-Received: by 2002:a17:902:c94f:b0:2d6:df31:5bd0 with SMTP id
- d9443c01a7336-2db125c3322mr492527375ad.10.1788943365199; 
- Wed, 09 Sep 2026 01:42:45 -0700 (PDT)
+ bh=3/JSEN4yZJQug9AgbAgWw+4fekDHImfUc2lZDl80p84=;
+ b=I9yIZJF3obYcAT02ERvQQADq4dKle4wfxuBmV0C7Tt8cAnCFUlU5M6GDefKfxgU+q5
+ Lvu4zEVPoB/4Zzqa5v/SpcUJcW6KxYnn8QqW70ghyuKrxvT2X399UXGJ4NlgnzidNT+u
+ VryWV8rklmp/sYIgcQvf5WfzqeP9uBzozWWygA0SWK2bq3HgeeEttuqIbYV4ta/hXdSn
+ HLq5AulX/Ncr54qzkr10Fif8oJP5cDrJWn5i3TzL9YwnbC5O9YofGc5zaj7vHaexb0PW
+ 27ToAOea86zJuq6dqhkCHy1hMZfGJaqgHYsRfLVUFidAOZW+qmTlb8WvmvoDePHnP7uu
+ 2Fmw==
+X-Gm-Message-State: AFuF++k0dHTynhcAFrG3+Jj9xWyiG15FBbhfVAAzbH2a8TvSbpDBXsNG
+ Jk4jHepmf9sADx7x5w5IBQp4CvuJzRfKz/52cam/zVVqNTe7pbBeRnGxSK9mE0E9GwgVD4GsPWw
+ dccFFYZn8NYgS3Ro10ADrv2wSbMSkvWu0nxrK6pVoKR1wW5I45Iy/grsa2xNEF6i8WOgm4+pidz
+ Hv6brsFFM3CTDltwNJeG1BNUMXOgNQUcn1zi4276PpFA==
+X-Gm-Gg: AYBFou2+TciKwCA3ixMcSS0cfaj0TRvbqoJJaGIYuLO7TffMG1AItfoflLcn8YdqFRt
+ iNy6s0fEztuR6GTM9ezG1CA1hkm6INgjnZM5zp7amcneuX8uVOk1osb+6S6G5hvcQWyKiay17S9
+ lriXFKzrl8N53sa3VGjbkmd7H8pK00S0xOUa37sQRgtOl9veDGajUiVO4NweaV8iV9r0GvgD8eH
+ iap48YRdedoI+J7aID2IrY/GOPaNOtA3YEJJA99HS/VauJEHghsmSl1Wx34Gba5Ea+/snJl5oYv
+ dimcxPXmRkrX2VF/SEfG4YAx+GkwzIVV4f88n6GTiqjVf1VzHqcNm2fQVM5BdDs7LbIW2CeoBP5
+ zCW00GRFcl4dqADioW0EqtbDnENIlkUF0wpr+jCZP7FUegDsFcrlln1U5KGcI8Up5EZBxvRawWG
+ fTGmm1V+COUiJ8egnpGAAzDFGoHo8rBRpJGbmXwC0A+HH2d2Z3WXvcCpqg3nPrPjQ4EBXiVkNcI
+ shtJx2l6oOLIz+IY8AiwaTdKm7bNKYFlpiynxCI3i2xdKKdDfTNNxgFkcrINSESiafvb3ZVMex8
+ CBR/i4Wk
+X-Received: by 2002:a17:902:930a:b0:2d6:e074:9cad with SMTP id
+ d9443c01a7336-2db1236f4femr349937195ad.6.1788943371077; 
+ Wed, 09 Sep 2026 01:42:51 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2db56c2a1f1sm38328225ad.78.2026.09.09.01.42.42
+ d9443c01a7336-2db56c2a1f1sm38328225ad.78.2026.09.09.01.42.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2026 01:42:44 -0700 (PDT)
+ Wed, 09 Sep 2026 01:42:50 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, richard.henderson@linaro.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -76,17 +76,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 3/6] tests/tcg/riscv64: Add vector masked fault-only-first PMP
+Subject: [PATCH 5/6] tests/tcg/riscv64: Add vector fault-only-first page probe
  test
-Date: Wed,  9 Sep 2026 16:41:50 +0800
-Message-ID: <20260909084154.223529-4-max.chou@sifive.com>
+Date: Wed,  9 Sep 2026 16:41:52 +0800
+Message-ID: <20260909084154.223529-6-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260909084154.223529-1-max.chou@sifive.com>
 References: <20260909084154.223529-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,164 +109,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a bare-metal test for masked vector fault-only-first loads across
-locked NA4 PMP regions inside one page. The test covers masked-off
-elements, a faulting active element 0, and later active faults that
-shorten vl.
+Add a bare-metal test for vector fault-only-first loads whose
+first-element probe crosses a page boundary. The test covers a body
+access that crosses the boundary after the first element, and a first
+element that itself straddles the boundary, checking that both cases
+report a full vl and vstart of 0 rather than faulting on a mapped page.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- tests/tcg/riscv64/Makefile.softmmu-target |  13 ++
- tests/tcg/riscv64/rvv-ldst.inc            |  91 ++++++++
- tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S  | 259 ++++++++++++++++++++++
- 3 files changed, 363 insertions(+)
- create mode 100644 tests/tcg/riscv64/rvv-ldst.inc
- create mode 100644 tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S
+ tests/tcg/riscv64/Makefile.softmmu-target |  9 ++-
+ tests/tcg/riscv64/test-rvv-ldst-ff-page.S | 83 +++++++++++++++++++++++
+ 2 files changed, 90 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst-ff-page.S
 
 diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index f2c75abd57a..0fdf242f735 100644
+index 9e0e0490753..93c4e58e0c2 100644
 --- a/tests/tcg/riscv64/Makefile.softmmu-target
 +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -85,5 +85,18 @@ run-test-vle32ff: test-vle32ff
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true $(QEMU_OPTS)$<)
+@@ -86,14 +86,16 @@ run-test-vle32ff: test-vle32ff
  test-vle32ff: CFLAGS += -march=rv64gcv
  
-+RVV_LDST_MARCH = -march=rv64gcv
-+RVV_LDST_TESTS = test-rvv-ldst-ff-pmp
-+CLEANFILES += $(RVV_LDST_TESTS)
-+
-+$(RVV_LDST_TESTS): %: %.S rvv-ldst.inc $(LINK_SCRIPT)
-+	$(CC) $(CFLAGS) $(RVV_LDST_MARCH) $< -Wa,--noexecstack -c -o $@.o
-+	$(LD) $(LDFLAGS) $@.o -o $@
-+
-+EXTRA_RUNS += run-test-rvv-ldst-ff-pmp
-+
-+run-test-rvv-ldst-ff-pmp: test-rvv-ldst-ff-pmp
-+	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0$(comma)rvv_ta_all_1s=true$(comma)rvv_ma_all_1s=true $(QEMU_OPTS)$<)
+ RVV_LDST_MARCH = -march=rv64gcv
+-RVV_LDST_TESTS = test-rvv-ldst-ff-pmp test-rvv-ldst-us-pmp
++RVV_LDST_TESTS = test-rvv-ldst-ff-pmp test-rvv-ldst-us-pmp \
++	test-rvv-ldst-ff-page
+ CLEANFILES += $(RVV_LDST_TESTS)
+ 
+ $(RVV_LDST_TESTS): %: %.S rvv-ldst.inc $(LINK_SCRIPT)
+ 	$(CC) $(CFLAGS) $(RVV_LDST_MARCH) $< -Wa,--noexecstack -c -o $@.o
+ 	$(LD) $(LDFLAGS) $@.o -o $@
+ 
+-EXTRA_RUNS += run-test-rvv-ldst-ff-pmp run-test-rvv-ldst-us-pmp
++EXTRA_RUNS += run-test-rvv-ldst-ff-pmp run-test-rvv-ldst-us-pmp \
++	run-test-rvv-ldst-ff-page
+ 
+ run-test-rvv-ldst-ff-pmp: test-rvv-ldst-ff-pmp
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0$(comma)rvv_ta_all_1s=true$(comma)rvv_ma_all_1s=true $(QEMU_OPTS)$<)
+@@ -101,5 +103,8 @@ run-test-rvv-ldst-ff-pmp: test-rvv-ldst-ff-pmp
+ run-test-rvv-ldst-us-pmp: test-rvv-ldst-us-pmp
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0$(comma)rvv_ta_all_1s=true$(comma)rvv_ma_all_1s=true $(QEMU_OPTS)$<)
+ 
++run-test-rvv-ldst-ff-page: test-rvv-ldst-ff-page
++	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0 $(QEMU_OPTS)$<)
 +
  # We don't currently support the multiarch system tests
  undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/rvv-ldst.inc b/tests/tcg/riscv64/rvv-ldst.inc
+diff --git a/tests/tcg/riscv64/test-rvv-ldst-ff-page.S b/tests/tcg/riscv64/test-rvv-ldst-ff-page.S
 new file mode 100644
-index 00000000000..061f330abef
+index 00000000000..63b1e0ac8a8
 --- /dev/null
-+++ b/tests/tcg/riscv64/rvv-ldst.inc
-@@ -0,0 +1,91 @@
++++ b/tests/tcg/riscv64/test-rvv-ldst-ff-page.S
+@@ -0,0 +1,83 @@
 +/*
-+ * Common support for bare-metal RVV load/store regressions
++ * RISC-V vector fault-only-first probe page-crossing tests
 + *
-+ * Register contract: these macros use t0, t1, t5 and t6 as scratch and
-+ * keep the current case number in s11.  ASSERT_EQ and CHECK_VELEM hold
-+ * their expected value in t6 across a branch, so a trap handler that can
-+ * run in between must leave t6 alone; use t5 and s5 for that instead.
++ * A first-element probe validates the mapping only for the bytes that
++ * the first (fault-only) element itself touches, then lets the
++ * remaining elements of the vector body fault normally.  An
++ * implementation that instead probes the whole multi-element access
++ * range as one host operation aborts as soon as that range crosses a
++ * page boundary, even though every page involved is in fact mapped.
 + *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+    .option    norelax
-+    .option    norvc
-+
-+    .macro          RVV_ENABLE
-+    li              t0, 0x6600
-+    csrs            mstatus, t0
-+    csrw            vcsr, zero
-+    .endm
-+
-+    .macro          ASSERT_EQ actual, expected
-+    li              t6, \expected
-+    bne             \actual, t6, fail
-+    .endm
-+
-+    .macro          CASE number
-+    li              s11, \number
-+    .endm
-+
-+    .macro          SEMI_EXIT
-+    lla             a1, semiargs
-+    li              t0, 0x20026
-+    sd              t0, 0(a1)
-+    sd              a0, 8(a1)
-+    li              a0, 0x20
-+    .balign         16
-+    slli            zero, zero, 0x1f
-+    ebreak
-+    srai            zero, zero, 0x7
-+    j    .
-+    .endm
-+
-+    .macro          FAIL
-+fail:
-+    mv              a0, s11
-+    bnez            a0, 1f
-+    li              a0, 1
-+1:
-+    j               exit
-+    .endm
-+
-+    /* Pre-fill selected registers with a sentinel neither data nor 1s. */
-+    .macro          PREFILL vd=, vl=4, sew=e32, value=0x05050505
-+    vsetivli        zero, \vl, \sew, m1, ta, ma
-+    li              t0, \value
-+    .ifb            \vd
-+    vmv.v.x         v2, t0
-+    vmv.v.x         v3, t0
-+    .else
-+    vmv.v.x         \vd, t0
-+    .endif
-+    .endm
-+
-+    /* Set the low mask bits of v0 to \val. */
-+    .macro          SET_MASK val
-+    vsetivli        zero, 1, e8, m1, ta, ma
-+    li              t0, \val
-+    vmv.s.x         v0, t0
-+    .endm
-+
-+    /* Assert element \idx of \vsrc (e32) equals \expected. */
-+    .macro          CHECK_VELEM vsrc, idx, expected
-+    vsetivli        zero, 4, e32, m1, ta, ma
-+    vslidedown.vi   v8, \vsrc, \idx
-+    vmv.x.s         t0, v8
-+    li              t6, \expected
-+    bne             t0, t6, fail
-+    .endm
-+
-+    /* Assert that no trap has been taken since the last check. */
-+    .macro          CHECK_NO_TRAP
-+    bne             s2, s4, fail
-+    .endm
-+
-+    /* Assert that exactly one expected trap has been taken. */
-+    .macro          CHECK_TRAP
-+    addi            s4, s4, 1
-+    bne             s2, s4, fail
-+    li              s0, 0
-+    li              s1, 0
-+    .endm
-diff --git a/tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S b/tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S
-new file mode 100644
-index 00000000000..80b48965625
---- /dev/null
-+++ b/tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S
-@@ -0,0 +1,259 @@
-+/*
-+ * RISC-V vector masked fault-only-first with PMP tests
-+ *
-+ * PMP permissions may change at NA4 (4-byte) granularity inside one
-+ * target page, matching one e32 element exactly. A masked-off body
-+ * element performs no memory access, so a read-denied PMP region under
-+ * a masked-off element must not fault.
-+ *
-+ * Runs with rvv_ta_all_1s=true and rvv_ma_all_1s=true so that with a
-+ * "ta, ma" vtype every masked-off and tail element must read back as
-+ * all-1s, distinct from the 0x05050505 sentinel and the loaded data.
-+ *
-+ * PMP layout (locked entries, lowest number wins; everything outside
-+ * the test page is unmatched and so fully accessible from M-mode):
-+ *   pmp0: NA4   buf_a+4,   L, ---   deny element 1 of buf_a
-+ *   pmp1: NA4   buf_b+0,   L, ---   deny element 0 of buf_b
-+ *   pmp2: NA4   buf_c+8,   L, ---   deny element 2 of buf_c
-+ *   pmp3: NAPOT test page, L, R     lower-priority page allow
++ * Case 1 crosses the page boundary only in the vector body, after the
++ * first element.  Case 2 crosses it inside the first element itself,
++ * so the first-element probe must span both pages it touches.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
@@ -276,238 +182,67 @@ index 00000000000..80b48965625
 +    .global _start
 +_start:
 +    RVV_ENABLE
-+    lla     t0, trap_handler
-+    csrw    mtvec, t0
++    lla             t0, trap_handler
++    csrw            mtvec, t0
 +
 +    /*
-+     * Trap handler protocol:
-+     *   s0: expected mcause (0: no trap expected)
-+     *   s1: expected mtval (-1 accepts any value)
-+     *   s2: traps taken
-+     *   s3: vstart seen at last trap
-+     *   s4: traps expected
-+     *   s5: mtval seen at last trap
-+     */
-+    li      s0, 0
-+    li      s1, 0
-+    li      s2, 0
-+    li      s3, -1
-+    li      s4, 0
-+
-+    /* Program the locked PMP entries; single locking cfg write last. */
-+    lla     t0, buf_a + 4
-+    srli    t0, t0, 2
-+    csrw    pmpaddr0, t0
-+    lla     t0, buf_b
-+    srli    t0, t0, 2
-+    csrw    pmpaddr1, t0
-+    lla     t0, buf_c + 8
-+    srli    t0, t0, 2
-+    csrw    pmpaddr2, t0
-+    lla     t0, pmp_page
-+    srli    t0, t0, 2
-+    ori     t0, t0, 0x1ff
-+    csrw    pmpaddr3, t0
-+    li      t0, 0x99909090
-+    csrw    pmpcfg0, t0
-+
-+    /*
-+     * Case 1: sanity: the NA4 deny is in effect for a scalar load.
++     * Case 1: the body crosses the page boundary; the first element does not.
 +     */
 +    CASE    1
-+    li              s0, 5
-+    li              s1, -1
-+    lla             t1, buf_a
-+    lw              t0, 4(t1)
-+    CHECK_TRAP
-+
-+    /*
-+     * Case 2: denied bytes lie only under masked-off element 1: no trap.
-+     * QEMU retains vl at 3 for this successful access.
-+     */
-+    CASE    2
-+    PREFILL
-+    SET_MASK        0b101
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_a
-+    vle32ff.v       v2, (a0), v0.t
-+    CHECK_NO_TRAP
++    li              t0, 3
++    vsetvli         t1, t0, e8, m1, tu, mu
++    lla             a0, cross_segment
++    vlseg2e8ff.v    v2, (a0)
 +    csrr            t0, vl
 +    ASSERT_EQ       t0, 3
 +    csrr            t0, vstart
-+    bnez            t0, fail
-+    CHECK_VELEM     v2, 0, 0x00aa0000
-+    CHECK_VELEM     v2, 1, -1
-+    CHECK_VELEM     v2, 2, 0x00aa0002
-+    CHECK_VELEM     v2, 3, -1
++    ASSERT_EQ       t0, 0
++    lla             a0, output
++    vsseg2e8.v      v2, (a0)
++    lbu             t0, 5(a0)
++    ASSERT_EQ       t0, 0x66
 +
 +    /*
-+     * Case 3: active element 0 denied: trap, vstart 0.
++     * Case 2: the first segment element itself straddles the page boundary.
 +     */
-+    CASE    3
-+    PREFILL
-+    li              s0, 5
-+    li              s1, -1
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_b
-+    vle32ff.v       v2, (a0)
-+    CHECK_TRAP
-+    bnez            s3, fail
-+
-+    /*
-+     * Case 4: masked-off element 0 over denied bytes: no trap.
-+     * retains vl at 3 and loads elements 1 and 2.
-+     */
-+    CASE    4
-+    PREFILL
-+    SET_MASK        0b110
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_b
-+    vle32ff.v       v2, (a0), v0.t
-+    CHECK_NO_TRAP
++    CASE    2
++    li              t0, 3
++    vsetvli         t1, t0, e8, m1, tu, mu
++    lla             a0, straddle_segment
++    vlseg2e8ff.v    v2, (a0)
 +    csrr            t0, vl
 +    ASSERT_EQ       t0, 3
-+    CHECK_VELEM     v2, 0, -1
-+    CHECK_VELEM     v2, 1, 0x00bb0001
-+    CHECK_VELEM     v2, 2, 0x00bb0002
-+    CHECK_VELEM     v2, 3, -1
-+
-+    /*
-+     * Case 5: active element 2 denied, unmasked: no trap, vl 2.
-+     */
-+    CASE    5
-+    PREFILL
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_c
-+    vle32ff.v       v2, (a0)
-+    CHECK_NO_TRAP
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 2
-+    CHECK_VELEM     v2, 0, 0x00cc0000
-+    CHECK_VELEM     v2, 1, 0x00cc0001
-+    CHECK_VELEM     v2, 2, -1
-+    CHECK_VELEM     v2, 3, -1
-+
-+    /*
-+     * Case 6: masked-off element 0, active element 2 denied: vl 2.
-+     */
-+    CASE    6
-+    PREFILL
-+    SET_MASK        0b110
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_c
-+    vle32ff.v       v2, (a0), v0.t
-+    CHECK_NO_TRAP
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 2
-+    CHECK_VELEM     v2, 0, -1
-+    CHECK_VELEM     v2, 1, 0x00cc0001
-+    CHECK_VELEM     v2, 2, -1
-+    CHECK_VELEM     v2, 3, -1
-+
-+    /*
-+     * Case 7: nf=2 segments, masked-off segment 0 covers the denied bytes at
-+     * buf_b: no trap. retains vl at 3 and loads segments 1 and 2.
-+     */
-+    CASE    7
-+    PREFILL
-+    SET_MASK        0b110
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_b
-+    vlseg2e32ff.v   v2, (a0), v0.t
-+    CHECK_NO_TRAP
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 3
-+    CHECK_VELEM     v2, 0, -1
-+    CHECK_VELEM     v3, 0, -1
-+    CHECK_VELEM     v2, 1, 0x00bb0002
-+    CHECK_VELEM     v3, 1, 0x00bb0003
-+    CHECK_VELEM     v2, 2, 0x00bb0004
-+    CHECK_VELEM     v3, 2, 0x00bb0005
-+    CHECK_VELEM     v2, 3, -1
-+    CHECK_VELEM     v3, 3, -1
-+
-+    /*
-+     * Case 8: nf=2 segments, unmasked, field 0 of segment 1 denied
-+     * at buf_c+8: no trap, vl truncates to 1, segment 0 loaded.
-+     */
-+    CASE    8
-+    PREFILL
-+    vsetivli        zero, 3, e32, m1, ta, ma
-+    lla             a0, buf_c
-+    vlseg2e32ff.v   v2, (a0)
-+    CHECK_NO_TRAP
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 1
-+    CHECK_VELEM     v2, 0, 0x00cc0000
-+    CHECK_VELEM     v3, 0, 0x00cc0001
-+    CHECK_VELEM     v2, 1, -1
-+    CHECK_VELEM     v3, 1, -1
-+    CHECK_VELEM     v2, 2, -1
-+    CHECK_VELEM     v3, 2, -1
-+    CHECK_VELEM     v2, 3, -1
-+    CHECK_VELEM     v3, 3, -1
-+
-+    /*
-+     * Case 9: the denied masked-off element is the last element of the
-+     * accessed range, so a range probe cannot miss it as an interior
-+     * region: no trap. retains vl at 2.
-+     */
-+    CASE    9
-+    PREFILL
-+    SET_MASK        0b01
-+    vsetivli        zero, 2, e32, m1, ta, ma
-+    lla             a0, buf_a
-+    vle32ff.v       v2, (a0), v0.t
-+    CHECK_NO_TRAP
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 2
-+    CHECK_VELEM     v2, 0, 0x00aa0000
-+    CHECK_VELEM     v2, 1, -1
-+    CHECK_VELEM     v2, 2, -1
-+    CHECK_VELEM     v2, 3, -1
-+
-+    li    a0, 0
++    csrr            t0, vstart
++    ASSERT_EQ       t0, 0
++    lla             a0, output
++    vsseg2e8.v      v2, (a0)
++    lbu             t0, 5(a0)
++    ASSERT_EQ       t0, 0xf6
++    li              a0, 0
 +exit:
 +    SEMI_EXIT
 +    FAIL
 +
-+    .balign    4
++    /*
++     * No trap is expected: a spurious fault from the page-crossing probe
++     * is the very thing under test.  Report the case number rather than
++     * vectoring to the reset value of mtvec and hanging until the
++     * harness timeout.
++     */
++    .balign 4
 +trap_handler:
-+    csrr   t5, mcause
-+    bne    t5, s0, fail
-+    csrr   s5, mtval
-+    li     t5, -1
-+    beq    s1, t5, 1f
-+    bne    s5, s1, fail
-+1:
-+    csrr    s3, vstart
-+    addi    s2, s2, 1
-+    csrw    vstart, zero
-+    csrr    t5, mepc
-+    addi    t5, t5, 4
-+    csrw    mepc, t5
-+    mret
++    j               fail
 +
 +    .data
-+    .balign    16
++    .balign 16
 +semiargs: .space 16
-+
-+    /* One dedicated page; the locked NAPOT entry grants R only. */
-+    .balign    4096
-+pmp_page:
-+buf_a:
-+    .word    0x00aa0000, 0x00aa0001, 0x00aa0002, 0x00aa0003
-+    .word    0x00aa0004, 0x00aa0005
-+    .skip    40
-+buf_b:
-+    .word    0x00bb0000, 0x00bb0001, 0x00bb0002, 0x00bb0003
-+    .word    0x00bb0004, 0x00bb0005
-+    .skip    40
-+buf_c:
-+    .word    0x00cc0000, 0x00cc0001, 0x00cc0002, 0x00cc0003
-+    .word    0x00cc0004, 0x00cc0005
-+    .skip    3944
++    .balign 4096
++    .space 4094
++cross_segment: .byte 0x11, 0x22, 0x33, 0x44, 0x55, 0x66
++output: .space 6
++    .balign 4096
++    .space 4095
++straddle_segment: .byte 0xa1, 0xb2, 0xc3, 0xd4, 0xe5, 0xf6
 -- 
 2.43.0
 
