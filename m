@@ -4,113 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9484CC79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 17:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C22C79FBD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 17:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4MUT-0007aQ-Nj; Wed, 09 Sep 2026 13:53:45 -0400
+	id 1x4MXo-00012R-KT; Wed, 09 Sep 2026 13:57:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1x4MUR-0007ZJ-Ap; Wed, 09 Sep 2026 13:53:43 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x4MXl-00012F-Gw
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 13:57:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1x4MUP-000441-H1; Wed, 09 Sep 2026 13:53:43 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 689HVZJT458820; Wed, 9 Sep 2026 17:53:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0tBjhK
- eHxcQrO8ZzknMj/BTfmqLxBaWVca2Au3R8rgg=; b=pRPnwwDedWC+xxcmQmnOlC
- avYPHWvuhhMI8iGECNCPqmXa/aJVhDlyP/RCtj9JPCg8ZcOzRrllwYRRpASBT0Fs
- ByTCrNDS/3v6n2lsdc4WmE55HdYUKB2IOLWQFoB6mL2t8RqwyVY1HTtr6bLwbzn7
- loIA9W1klGbmHQL7vUu/Dlo1SE2MlXgC9T5T16K1/dvDHamtoVQ4JFIRcOK9pozu
- 0SJN4G8cz1QYHBKtqHvTeXWPkF8lde8WutM/yIf0vaHCba2U2mbM4wOV0/BUGeEv
- r8C3OzeSlJCqg1noR1jnlAgMuo15JRW5oVkPi2oUaI3c3WNCcAkvF7BGXdaZkDBA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbf47k7f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Sep 2026 17:53:37 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 689HfEC0026674;
- Wed, 9 Sep 2026 17:53:36 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggxdk3qy1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Sep 2026 17:53:36 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 689HrZLI24576540
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 9 Sep 2026 17:53:35 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43E5658055;
- Wed,  9 Sep 2026 17:53:35 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DDF0458059;
- Wed,  9 Sep 2026 17:53:33 +0000 (GMT)
-Received: from [9.61.48.189] (unknown [9.61.48.189])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  9 Sep 2026 17:53:33 +0000 (GMT)
-Message-ID: <8cef8453-3c25-4e4f-a92e-2dc1c23d5c19@linux.ibm.com>
-Date: Wed, 9 Sep 2026 08:49:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x4MXj-0004bp-0d
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 13:57:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788976625;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=W3w2pKCbPLWShyizraPWSFoupql/anbu/mS/0Jc1Iuw=;
+ b=JB/4i6zwBOneCdxXrmIoDE9SiYq/FUWAtIEP8SPsOkJ8u0aXOPWX49AdMQdKXUvpd/J/uN
+ h3wgjL4z0aBbeSljc0Swok5y+HFMYkC6Zcu8po1b6GPDyjeHE3hxDY8HhofJmQFzFZudbe
+ fBOlOAv1QZTHZJGJrhpRGKj+VYOt73o=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-WCEZwCy5PbaXB0xwOSQHqg-1; Wed,
+ 09 Sep 2026 13:57:02 -0400
+X-MC-Unique: WCEZwCy5PbaXB0xwOSQHqg-1
+X-Mimecast-MFC-AGG-ID: WCEZwCy5PbaXB0xwOSQHqg_1788976621
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB4AD1954231; Wed,  9 Sep 2026 17:57:00 +0000 (UTC)
+Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0FE67195608C; Wed,  9 Sep 2026 17:56:57 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 00/14] Encode object type security status in code
+Date: Wed,  9 Sep 2026 18:56:42 +0100
+Message-ID: <20260909175656.1572689-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] pc-bios/s390-ccw: Move CCW net setup to virtio-ccw
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- jdaley@linux.ibm.com, pbonzini@redhat.com
-References: <20260903162449.2588271-1-zycai@linux.ibm.com>
- <20260903162449.2588271-2-zycai@linux.ibm.com>
-Content-Language: en-US
-From: "Jason J. Herne" <jjherne@linux.ibm.com>
-In-Reply-To: <20260903162449.2588271-2-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: tNinnhJ9mbt8RxM1eQJt1_d6x_QainzO
-X-Proofpoint-GUID: tNinnhJ9mbt8RxM1eQJt1_d6x_QainzO
-X-Authority-Analysis: v=2.4 cv=DbEnbPtW c=1 sm=1 tr=0 ts=6aa19d22 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=_q_ucG0t3VmhI-TeMEQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE5NSBTYWx0ZWRfX+CQfEst9tRxP
- Dou+E2U8gaTOYqadBxhS+DN4rXZ5g6BnLhP3btMLB/GA2TkXi9/85IIP/O4v4D6nI5bZDahO+Lc
- mR7FigiAbNiwPjy70ok6u9cpFpokH1Pp4CZkEig+Vvc41Kz1AOU3zYnhp5PgxWPFceQ+Ceyd9+2
- butum/mTemJOx4Ig2Q3FVibsdVZCEEN2YBcKDxx/HbylATBp2M63+p2ERbIybNRfHgajIAFqGaU
- fG/CB0g/VOeDun9woLKsVZL/kD9X9NjNTL/eigljTOIuCQ7tvfZFdqiEKV+XpB5soxrQKd9uuep
- s+YkhxNiGMV9S6IbjT3IuP8/iOF4/P0F/3nDrbAfXqmZPpXSreONcGkD/6r0TPZ7AgFF/B23mCC
- b8lkggVdpIgEw2cCDVfVmm9dcbdt/op9vqz3MXbFLqBothyIBOfA0EG4p5j2J1BHuQ5LYmEdcNq
- 4IiA8xagub4t9bTpsXA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE5NSBTYWx0ZWRfXysgoIdBpEpl2
- O0H2Ed1Yt8IysCv6NEAHnyVPC9zaanc/pBfBb3GR3CCyQOrj6CvtdQ9vtmoYT1RQE6lm2fz8tgQ
- JrVrixgfRnFrROocUATOXku9haYy3t8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0
- clxscore=1015 suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090195
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,19 +89,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 12:24 PM, Zhuoying Cai wrote:
-> Move CCW-specific virtio_setup() and find_net_dev() to virtio-ccw.c
-> to decouple the generic net boot logic from the CCW transport.
-> Also update the error message on failure to specify "ccw net device".
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/netmain.c    | 67 ++---------------------------------
->   pc-bios/s390-ccw/virtio-ccw.c | 62 ++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/virtio-ccw.h |  1 +
->   3 files changed, 66 insertions(+), 64 deletions(-)
-> 
-LGTM
+Our docs/system/security.rst file loosely classifies code into that
+applicable for 'virtualization' vs 'non-virtualization' use cases.
+Only code relevant to the former group is eligible for security
+bug handling. It is difficult for any contributors to know what
+devices are in scope for 'virtualization' when reporting bugs,
+and even maintainers can have a hard time agreeing.
 
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+It is well overdue to declare this information the code and present
+it to end users at runtime. This series starts the effort by defining
+the internal infrastructure, command line args and QMP extensions to
+handle the security status recording and reporting.
+
+A previous posting included classifications for many devices. That
+is dropped this v3 series so we can focus on getting the core infra
+included. Device classifications will follow afterwards in a separate
+series.
+
+The base concept is that the QOM  TypeInfo struct gains a new field
+"bool secure". This enables querying any ObjectClass to ask whether
+or not it is declared secure.
+
+By only using a single boolean flag, at runtime we are unable to
+distinguish between "marked insecure" and "no decision, implicitly
+insecure". As such, all our existing code is initially considered
+insecure, once this series is applied. Code we want to provide a
+security boundary for will explicitly opt-in with '.secure = true'.
+
+Previously it was intended to add '.secure = false' to each file
+too as it gets evaluated, however, this is now considered to be
+overkill. It is easy enough to build a list of everything that
+should be treated as secure by perusing "-device help" output.
+
+Classification for non-user creatable types can be left to a 2nd
+phase of work.
+
+In terms of user interface, the "-compat" argument gains a new
+parameter
+
+  * insecure-types=accept|reject|warn
+
+    The default 'accept' preserves historical behaviour of
+    anything being permissible. The other two options both
+    identify use of types that are not explicitly marked
+    as secure.
+
+The code annotations are useful immediately, but the -compat
+-compat switch is unusable unless a minimum viable set of
+secure devices are defined in a follow series. Some conceptual
+examples though...
+
+Example: TCG is explicitly insecure, KVM is explicitly secure:
+
+  $ qemu-system-x86_64 -display none -compat insecure-types=reject -accel tcg
+  qemu-system-x86_64: -accel tcg: Type 'tcg-accel' does not provide a security boundary to protect against untrusted workloads
+  $ qemu-system-x86_64 -display none -compat insecure-types=reject -accel kvm
+  ^C
+
+Example: isapc machine type is explicitly insecure
+
+  $ qemu-system-x86_64 -display none -compat insecure-types=reject -machine isapc
+  qemu-system-x86_64: Type 'isapc-machine' does not provide a security boundary to protect against untrusted workloads
+
+Example: checks also apply in HMP, ne2k_pci is insecure
+
+  $ ./build/qemu-system-x86_64 -display none -compat insecure-types=reject -monitor stdio -accel kvm
+  QEMU 10.1.50 monitor - type 'help' for more information
+  (qemu) device_add ne2k_pci
+  Error: Type 'ne2k_pci' does not provide a security boundary to protect against untrusted workloads
+
+Example: checks also apply in QMP:
+
+  $ ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 -display none -compat insecure-types=reject -accel kvm
+  Welcome to the QMP low-level shell!
+  Connected
+  (QEMU) device_add driver=ne2k_oci
+  {"error": {"class": "GenericError", "desc": "Type 'ne2k_pci' does not provide a security boundary to protect against untrusted workloads"}}
+  (QEMU) device_add driver=virtio-net
+  {"return": {}}
+
+This series is available at
+
+  https://gitlab.com/berrange/qemu/-/commits/docs-security-status
+
+The WIP patches that add tagging of devices (which I will post separately
+in future) are at
+
+  https://gitlab.com/berrange/qemu/-/commits/docs-security-devices
+
+Changes in v3:
+
+ * Dropped all device classification, to be re-posted as
+   a separate series
+ * Reworded the docs based on previous feedback
+ * Improved commit messages
+ * Reformatted QAPI docs per feedback
+ * Split commit adding QMP device list filtering
+   into two
+ * Make CompatPolicy parameters 'const'
+ * Add helper APIs in QOM for querying security
+   status to reduce duplicate code pattern
+ * Fix placement of security check for accelerator
+   types
+
+Changes in v2:
+
+ * Report security status in qom-list-types
+ * Allow qom-list-types to filter on secure types
+ * Remove 'bool insecure' on TypeInfo, assume that no specified
+   data is equivalent to '.secure = false'
+ * Annotate a massive number of object types
+
+Daniel P. Berrangé (14):
+  qom: add tracking of security state of object types
+  qapi: add 'insecure-types' option for -compat argument
+  qom: add helper APIs for checking object security policy compliance
+  system: check security for accelerator types
+  system: report acclerator security status in help output
+  system: check security for machine types
+  system: report machine security status in help output
+  system: check security of device types
+  system: report device security status in help output
+  hw/core: report security status in query-machines
+  qom: refactor data passing for QOM list filtering
+  qom: report & filter on security status in qom-list-types
+  docs: expand security docs with info about security status
+  machine: add helpers for declaring secure/insecure machine types
+
+ docs/system/security.rst     | 36 +++++++++++++++++++++++++++++++++
+ hw/arm/bananapi_m2u.c        |  2 +-
+ hw/arm/cubieboard.c          |  2 +-
+ hw/arm/imx8mm-evk.c          |  2 +-
+ hw/arm/integratorcp.c        |  2 +-
+ hw/arm/mcimx7d-sabre.c       |  2 +-
+ hw/arm/orangepi.c            |  2 +-
+ hw/core/machine-qmp-cmds.c   |  1 +
+ hw/ppc/pegasos.c             |  3 ++-
+ include/hw/core/boards.h     | 25 ++++++++++++++++++-----
+ include/hw/i386/pc.h         | 11 +++++++++-
+ include/qapi/compat-policy.h |  5 +++++
+ include/qom/object.h         | 39 ++++++++++++++++++++++++++++++++++++
+ qapi/compat.json             | 23 ++++++++++++++++++++-
+ qapi/machine.json            |  8 +++++++-
+ qapi/qapi-util.c             | 30 +++++++++++++++++++++++++++
+ qapi/qom.json                | 13 ++++++++++--
+ qom/object.c                 | 22 ++++++++++++++++++++
+ qom/qom-qmp-cmds.c           | 30 +++++++++++++++++++++------
+ system/qdev-monitor.c        |  7 +++++++
+ system/vl.c                  | 30 ++++++++++++++++++++++-----
+ 21 files changed, 267 insertions(+), 28 deletions(-)
+
+-- 
+2.55.0
+
 
