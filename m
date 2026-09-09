@@ -4,110 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DCD4C79FB9
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42927C79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4GNy-0000AN-HJ; Wed, 09 Sep 2026 07:22:38 -0400
+	id 1x4GbV-0002D0-De; Wed, 09 Sep 2026 07:36:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1x4GNv-00009N-OK
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:22:35 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1x4GNt-0001Wb-Kn
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:22:35 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c20ce3c118aso965968166b.0
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 04:22:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788952952; cv=none;
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x4GbU-0002Cs-0z
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:36:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x4GbR-0004YA-Th
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:36:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788953792;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vJrcWKTJ7s7JFPM1zwCHjQsySI9aXH4P8aoeyahpxHo=;
+ b=VZbF+Nj08zZKCWgu/MeqGlZE3MM52n2jPdPfpH1qYPBmclg/egcXpOrzB+Nu54fnhdHKys
+ tHxgi2los1nilf5YX4bbl4E1Zh6z7auSOZgVzAwkKzI29dc5otwVYBGRm6AykaJ+4dIVun
+ lMjUDiQ5RLy4TmZy+yx9raPnN0AIZG0=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-467-PIrQqQhIPmy8BcCiz1rxPA-1; Wed, 09 Sep 2026 07:36:29 -0400
+X-MC-Unique: PIrQqQhIPmy8BcCiz1rxPA-1
+X-Mimecast-MFC-AGG-ID: PIrQqQhIPmy8BcCiz1rxPA_1788953788
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cc4922b7c31so1955086a12.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 04:36:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788953788; cv=none;
  d=google.com; s=arc-20260327;
- b=i2tAyz4+FZlk2hEAhMBEDsr/4XGN3q/3VKZw+lxv9+WxyREmPJJWrJ3uOtI8A0Ijhz
- ftXhL4NzaOXpkTZDWHRemg9Jw7RZ6AoFuWF/d1qxZoAzLx8P8SLJwV+Z8X6/v5WzAUvJ
- 0hxoEfo4DYWZGMfKuTFauONMF5JVDYQ9EBEX2KP8LnsKCsMcDZGlQCW5rKlnNdIqI31h
- QLEz6f3wtzQXahDpcIVOa7m1nrInd/fNFdIK7qYOdIXgU2WTd/qRgfOtrW0GRMz6QJU8
- vw1693BQH7cZts6nuYgdXI/wqGcrcXZOgSdU4te48B0mQ9EAOpJev6TCYcVSZE6pIu55
- 5AFw==
+ b=emQrDQK/j6JJG9fFqL7xniISSCeVBV9zofBSn4WJtTGXhI2RNhRG8t7ayVNyvnb+7G
+ xUPnvwPZuwGmrYselTieiEQK/wINf0RceJJHFVZt12bs4uhnxkK8Oo69K/T8nhBMVYwV
+ EwAUsIL7V7Dg+rehSPJTS4DQ4eFJn1ea6sc+4AQ5diooioEcSZyqPaE+UC0d26jVB9Hj
+ YkSpuZlqSXZWKdVIEJ1JSB9MT8YDMTZQpwkZeJN9qV1BxwwZT2h+JMIWanJsIA+xVNm8
+ 03as7R+GFz6p5m1RBXDlPwkhu4jVJicOF+hi9zYqTj/vJcIUFwjxaU4t1VQMHPSh5sFi
+ GKQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=8ffSjZ5Zuoa4MDyHYWKeH5cD5VyjvpFyap2w9ogDKsU=;
- fh=QIdIwkjOEVAhudi9ghQLIyGxlRSaA+Em0viZsaX5lbU=;
- b=XpoDjMplgb2U2S/u6hCPSmsitHVW/eZiCAQfNOl+KZsw1aYO8h44oPs8Ukva4QyOaq
- 7fFavt9emdcGYjW9GFOvjzlT0hBBKpOQ6g8BVKFBHI5nccx3vzeJOzxDt1EPWbbsfSjd
- YeUrOmcz71ltjnstLc1iYmLLNeBkyk9QVQ5l0cjjFGRAJ01wMWpSQ9u/yS2FQ0+3zRfw
- lQKooXCFvWNPZ/fwG4LzK5doG1gfpxD4whJx71kpPFcIZvMcligKtrjU+oBqKW/6sPTT
- tlaSIsYAowu/bsTPAYT3yr9Ox9M9+PStRwjPMkBwnu0cCIsBdMHxCTF/un/YjNZUhtGj
- VstQ==; darn=nongnu.org
+ bh=vJrcWKTJ7s7JFPM1zwCHjQsySI9aXH4P8aoeyahpxHo=;
+ fh=MSgXJWkfX6drgHhltmY4z9M9KmIuQLD56TEjfqsrTC8=;
+ b=PRdRyNsmOrCHP8uDIxWPz1GXXHsqa9M+d6ExbZpn/3H91rzJwh4xZ07jJ8MG85XxvV
+ VXIJU9Gkjo+PTWN0NR9wCogLnLlyqy4RRjtImlm4N+cwsFSDFDtgW3RjifLKBhBX1q7g
+ EkbC2fCRimmVw0uGiVgad1YXIIf7C1cY/HtGtXXmhprmxFqXbAHvJaVc0EbU545XJN3L
+ ms51DTK3sJXoCwGb1iu/0c72qtlJIYFteuiuqDg2Cg4+//T872JZF6OCyOEvW+ysqaNg
+ S34V1SvJxhubMRp63E1QccrCDULKlcj5si/Tw5Za1ZsWB9fhyUkii/2fe9/V05YiifWu
+ sIaA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1788952952; x=1789557752; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788953788; x=1789558588; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=8ffSjZ5Zuoa4MDyHYWKeH5cD5VyjvpFyap2w9ogDKsU=;
- b=NYRKH6dYLq7PAsmUaJ5o8FdGmsMWH2JuPkKR2JnD3l3jLc53ESHbKgb178lVjv4kmh
- 6vjJDGGnaYrwDnrKiSS7Gd4cPai5eRYIYDPzE+lsee1joBkiAEzep2KXhl1bAS2th3hR
- KKhkxLiN+yRpodIx1vKZOQ9YTaXJXaPiXhoNw=
+ bh=vJrcWKTJ7s7JFPM1zwCHjQsySI9aXH4P8aoeyahpxHo=;
+ b=S2A7rb5bpoPiaqSLeHRwLc0wANDg2YgQCKQzt9+G9T2mgYtAwhCyKP0xnJXdiUgMiI
+ GsViAeLxsqhb7MoKYSUyCVoFHczyPU8+Xmrb9NuF9yvCKeRYV9MceQsShoNM/XvA8RpZ
+ EZgbx/lZPRDcDBkwu2ZfN3yZsdEAAPTlTM9z69VsmKYoO+eYHihJOdqH6bmgz2GtjaUR
+ fnh9TkB4mKSDS+7clge7JsbFVhXfzH6xWnqQ94Q1ARw+sDP5HB+nPkWVv6ObwnYnhro6
+ NIiodNjph/mJbcLBJTIW3yvGC2leTkWgSgH4a/ROwd1ODfJdq3DlhtQQp1wcd6MUr80v
+ VboQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788952952; x=1789557752;
+ d=1e100.net; s=20251104; t=1788953788; x=1789558588;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8ffSjZ5Zuoa4MDyHYWKeH5cD5VyjvpFyap2w9ogDKsU=;
- b=C1KZmxiaOyIez52ZOCwK/M5Geugry6v4TZ8iswivi0qK+crvqDxTUjwsxTOgdT8enT
- piY2NDpHVfIoEM+ShXp2dSD7CP4hlYlFaRztDY+uGoapFIqyyUPgYFMRDSLMQaHmQfTp
- brZCXMaLmqWr2pomvjQGRUgrvr3Z1WCf4q3cApagqRv/mictrfNL+JoyYx2GWU1qlUEs
- Q8KjFygLTNdAiKj1RwkzW6kIHvDu+EbTpVQsFMHtQzJsN6vC00O5K3YbrLrokjq7pWMv
- JJ5jWY5zGrm2Q6EBXRlMuKaT0FRRPpJtgFCCAZNeWAAdUclvqWzwhtOinxxNQXGNju0f
- QF6A==
-X-Gm-Message-State: AFuF++ndiatcc3Wm/C/cdRJ2SfHKWuSsy+dpCrJRXNwZ0SJ72t5jUmOh
- RZyna3wz7v8uJN7EiXADbXbkglVHmrbQ0Kb2vM90E4Wm3RMGqQG5R4guerKoGaD9dRdLAUBLsee
- wfTLYEvCch3PJsUGEdJvnpjkf0IcnuTCAdbZ0pMAlSQ==
-X-Gm-Gg: AYBFou2zRMiAwtpCP3IVv1wuZQy2VJRo/48BSqFZxD0/1nvOXs4C69U5hhGSYyktzPh
- zcpLdtXLApFso6nYIzR2E9Af7rEYriLk3FIaPQ+MgynkPnXvOBfm7cVawV0bsGJcrIOWqDjRbam
- d1TTsZqOkVinEaaQabzc6EXCkfAOadhd8qZyBNaeqwlsudD6GXT7gu+pwgZToopobmsguBs84Zg
- FvJGP6hX4CfYuR9XOWdVlf6/I+DFQs/ppxlguHa9bdIZ0OkEJ+FjNPj3aChIBGw8BczS3JDknhL
- jIWEWEHuB7fX2v9upg0awyBFnqMktCDw8wccQ1lxe15IV8e8ucpZnDg+sgoDYLf4S5fyNidfLZU
- w7vwDkB5i+dk=
-X-Received: by 2002:a17:907:9810:b0:c25:c787:43c with SMTP id
- a640c23a62f3a-c25f01f0adcmr1818273766b.14.1788952951847; Wed, 09 Sep 2026
- 04:22:31 -0700 (PDT)
+ bh=vJrcWKTJ7s7JFPM1zwCHjQsySI9aXH4P8aoeyahpxHo=;
+ b=bvj5VvXwckZuwmqhb2DmOJWM8JzHvEWauh/Gt84DW/oqIPbSxJRYbTIJEduuOaJedx
+ +ANHZVTKqRK9wOiInoVD3YLKcl+96NQYiIhww2ls0ffpx7lKCzDvRlaL/GIhL/Lsvk/X
+ 2UIMWHYIGn9pmbm1oNYW/FetW4ZkWv0+Jk29fkhHPtD/7r3DXzLmEekc+VHKykxgTQE6
+ UIDy14MtQx+klCC+5+7Ez9RapkGxUGfMXMB3yBsUI9eSKyZvJHA3UbKWwp2BIBBRapUa
+ qUF68m/aYFAfOdTouLEUfzjtMINC7p5MzCWu9HetNUxwHxfzYOAEe/iipZvCc4tU3obz
+ R/tQ==
+X-Gm-Message-State: AFuF++nE0r/3BwV986ek1NOfvF3Kw3d6BEWX+bGpektyhE6K0fVtm6tq
+ mPR7mGpWaS1+p2wcUt5tqvpIy9uHfqhq5ifdqrRwAMhd6A8Y57JpsjoIB6JRorLMJ0TR8DZN2Wx
+ Sh/GavvgHIoq9EEUWI7ZJliYohDT2J6F2bwq/xFIP7+xqRHDfXihsmTfS5o3aL7xxRGgNot+33n
+ Lwd4B8Hinbw+7kRT8fVFATIbw8srNpoXs=
+X-Gm-Gg: AYBFou0OsT4xh4S9Ei+NjVA9q37JRBRN/+FvkLPmszZVc35qnAoy5RemrehynaILFaB
+ oP398XiBouUR1wwsCue6JQAQ2FGBs4/51E5F8RviZ+hduqd6WPbEMeJDgVOT82mDSdLeSzCOLmu
+ wj1zZ/GzuYjO2wCgHlxDwN8YxY+ZEVcOBuovmAvDCZKy+Kd5x4Li92ZC/OISOpb+NrHqX87d/Mw
+ NLF197vnLx1I+XAjFnXGBSpcS+rZ6S8BUfBSyUa5/yAjE0oFxHG97w1ss2VVOP7miVgNKXUnJsC
+ 4w==
+X-Received: by 2002:a17:90b:5485:b0:398:9be6:f999 with SMTP id
+ 98e67ed59e1d1-39d70c2f16emr336044a91.24.1788953788285; 
+ Wed, 09 Sep 2026 04:36:28 -0700 (PDT)
+X-Received: by 2002:a17:90b:5485:b0:398:9be6:f999 with SMTP id
+ 98e67ed59e1d1-39d70c2f16emr335959a91.24.1788953787750; Wed, 09 Sep 2026
+ 04:36:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260803081159.91981-1-alexander@mihalicyn.com>
- <CAJqdLrri+kRORx_8cHFhi6cuoVZ1ENup+fprm3XHaVavteHRpQ@mail.gmail.com>
- <CAAjaMXZ80o20S-o7=QbrP+wNKqo==w-9Cc3BfeZGG9DazMTnPA@mail.gmail.com>
- <CAJqdLrqi12b4LdhdBywr9JZ0H=dmEJUy8_-JCV7YRU5UmsiRrQ@mail.gmail.com>
- <tl36cd.2tad1k4jeakw8@linaro.org>
-In-Reply-To: <tl36cd.2tad1k4jeakw8@linaro.org>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Wed, 9 Sep 2026 13:22:19 +0200
-X-Gm-Features: AcwNN1VNgGwU99DKMscfeP1HrT4ssrnbjfqkbmNnt6_ae6cpAD1cbfklRhc-qMc
-Message-ID: <CAJqdLrpqOt8Og+smdt4e-WzW_3WP0k-pi6pFwQxYxQPuhRF8PA@mail.gmail.com>
-Subject: Re: [PATCH v5 00/10] hw/audio/virtio-sound: basic migration support
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
+ <20260904-qom-qapi-v4-1-a985f168e938@redhat.com> <87v78en3s2.fsf@pond.sub.org>
+In-Reply-To: <87v78en3s2.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 9 Sep 2026 15:36:16 +0400
+X-Gm-Features: AcwNN1WsKG8coBuyTaVQqSSB-vqPKJAtPZOiT1pRbIAwqAZm_XPip7g7YRUi6O0
+Message-ID: <CAMxuvayxNe1E4RRDZEhw6jbPqUMUPfbtia5gUtG8JUNU652Jbg@mail.gmail.com>
+Subject: Re: [PATCH v4 01/75] qapi: add QAPITypeInfo struct definition
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,164 +141,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mi., 9. Sept. 2026 um 09:33 Uhr schrieb Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org>:
->
-> On Mon, 31 Aug 2026 10:43, Alexander Mikhalitsyn <alexander@mihalicyn.com=
+Hi
+
+On Wed, Sep 9, 2026 at 2:00=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
 > wrote:
-> >Am Mo., 31. Aug. 2026 um 09:41 Uhr schrieb Manos Pitsidianakis
-> ><manos.pitsidianakis@linaro.org>:
-> >>
+>
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>
+> > Introduce a minimal struct that pairs a QAPI type's internal name with
+> > its "masked" introspection name. Generated constants of this type will
+> > let QOM property registration carry a reliable reference to the QAPI
+> > schema and possibly other associated data.
 > >
-> >Dear Manos,
+> > The fields are populated in following commits.
 > >
-> >> Hi Alexander, so sorry for the massive delay but I'm on PTO for a big
-> >> part of August and some of September. Your series is on my priorities
-> >> as soon as I return.
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  include/qapi/qapi-type-info.h | 32 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 32 insertions(+)
 > >
-> >ah, then sorry for bothering you during PTO ;-)
-> >Have a good time!
-> >
-> >Kind regards,
-> >Alex
+> > diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-inf=
+o.h
+> > new file mode 100644
+> > index 000000000000..97eb1d7bf490
+> > --- /dev/null
+> > +++ b/include/qapi/qapi-type-info.h
+> > @@ -0,0 +1,32 @@
+> > +/*
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#ifndef QAPI_TYPE_INFO_H
+> > +#define QAPI_TYPE_INFO_H
+> > +
+> > +#include "qapi/util.h"
+> > +
+> > +/**
+> > + * QAPITypeInfo - QAPI type metadata
+> > + *
+> > + * @name: QAPI type name (e.g. "str", "OnOffAuto", "int32List").
+> > + *        QOM uses this as the property type string.
+> > + * @masked_name: Name of the type in the QAPI introspection schema, as=
+signed by
+> > + *        scripts/qapi code generator (e.g. "368").
+> > + *        NULL for implicit types.
+>
+> I believe the last sentence is inaccurate.  I can't see any QAPITypeInfo
+> for implicit types, nor can I see any where .masked_name is null.
+
+Only QType, but since it has no use we can drop it from generation for now.
+
+>
+> We discussed this in review of v2.  You asked whether I think it should
+> be mandatory, but I neglected to answer (my apologies), so you didn't
+> change anything for now.  Fair.
+>
+> If we really want to permit null, we need a more accurate comment.  If
+> we don't, we can simply drop the sentence.
+>
+> I guess the remaining motivation to permit null here comes from QOM
+> introspection [PATCH 08].  There, you add optional member @qapi-type to
+> ObjectPropertyInfo, documented to be absent if the type does not occur
+> in the output of query-qmp-schema.
+>
+> @qapi-type is optional so we can QAPIfy QOM properties one by one.
+> Three cases:
+>
+> 1. Not QAPIfied: the property's ObjectPropertyInfo has no QAPITypeInfo
+>    (member .qapi_type is null).  @qapi-type is absent.
+>
+> 2. Fully QAPIfied: it has a QAPITypeInfo, and its .masked_name is
+>    non-null.  @qapi-type is .masked_name.
+>
+> 3. Badly QAPIfied: it has a QAPITypeInfo, but it's useless: .masked_name
+>    is null.  @qapi-type is absent.
+>
+> The code to compute @qapi-type is written the obvious way, and the
+> obvious way just works for all three cases.  Regardless, I don't think
+> case 3 has a right to exist :)  Why would we bother to tack a
+> QAPITypeInfo to ObjectPropertyInfo when it's useless?
+
+ok, let's make masked_name mandatory
+
+> The only reason I can imagine is QAPIfication in two steps where the
+> first one tacks on the QAPITypeInfo, and the second one adds its
+> .masked_name.  We go to case 2 via case 3.  But why would we do step one
+> without step 2?  And if we do both, why not swap their order?
+>
+> Am I missing something?
+
+No, any other review in the series before I send a new revision? :)
+thanks
+
+>
+> > + * @lookup: QEnumLookup for this type, or NULL for non-enum types.
+> > + *        visit_type_enum(), qapi_enum_parse(), and qapi_enum_lookup()
+> > + *        all rely on it.
+> > + * @list: The list-type counterpart, or NULL if none exists.
+> > + *        str_type_info.list points to strList_type_info.  qdev array
+> > + *        properties follow this to find the list type for their eleme=
+nt.
+> > + */
+> > +typedef struct QAPITypeInfo {
+> > +    const char *name;
+> > +    const char *masked_name;
+> > +    const QEnumLookup *lookup;
+> > +    const struct QAPITypeInfo *list;
+> > +} QAPITypeInfo;
+> > +
+> > +#endif /* QAPI_TYPE_INFO_H */
 >
 
-Dear Manos,
-
-> I think this series is now fully reviewed, I will rebase against master
-> and send a pull request.
-
-Thank you very much for all the input and reviews!
-
-Kind regards,
-Alex
-
->
-> Thanks!
->
-> >
-> >>
-> >> On Mon, Aug 31, 2026 at 10:27=E2=80=AFAM Alexander Mikhalitsyn
-> >> <alexander@mihalicyn.com> wrote:
-> >> >
-> >> > Am Mo., 3. Aug. 2026 um 10:12 Uhr schrieb Alexander Mikhalitsyn
-> >> > <alexander@mihalicyn.com>:
-> >> > >
-> >> > > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >> > >
-> >> > > Dear friends,
-> >> > >
-> >> > > This patchset is aimed to support virtio-sound live migration and =
-based on
-> >> > > pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [=
-1]. I tried
-> >> > > to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a471=
-6f53b8a335fc53569.camel@mihalicyn.com/)
-> >> > > if Volker is going to continue his work on this, but received no r=
-eply so I
-> >> > > just decided to go forward: take his patches, rebase and resend. O=
-f course,
-> >> > > I kept all authorship/tags so I hope that it is fine.
-> >> > >
-> >> > > Testing.
-> >> > >
-> >> > > I manually validated this with Ubuntu 24.04 Desktop VM and found n=
-o issues.
-> >> > > Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/=
--/pipelines/2626702088).
-> >> > >
-> >> > > Original patchset:
-> >> > > https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd77=
-68c0e@t-online.de [1]
-> >> > >
-> >> > > Git tree:
-> >> > > https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
-> >> > >
-> >> > > Changelog for version 5:
-> >> > > - rebased
-> >> > > - added RWB tags
-> >> > >
-> >> > > Changelog for version 4:
-> >> > > - addressed review feedback from Marc-Andr=C3=A9 Lureau
-> >> > > - and from Manos Pitsidianakis
-> >> > > *there is a detailed changelog under each commit message*
-> >> > >
-> >> > > Changelog for version 3:
-> >> > > - addressed review feedback from Marc-Andr=C3=A9 Lureau:
-> >> > >         - drop VirtIOSoundPCMStream's id field (unused)
-> >> > >         - resurrected error_report(..) in virtio_snd_pcm_start_sto=
-p()
-> >> > >         - fixes in "hw/audio/virtio-sound: add stream state variab=
-le"
-> >> > >           [ please, look in commit message for details ]
-> >> > >         - added "hw/audio/virtio-sound: remove channel positions f=
-ield
-> >> > >           from VirtIOSoundPCMStream"
-> >> > >         - fixes in "hw/audio/virtio-sound: add missing vmstate fie=
-lds"
-> >> > >           [ details in commit message ]
-> >> > >
-> >> > > Changelog for version 2:
-> >> > > - no code changes (only commit messages)
-> >> > >   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Danie=
-l!)
-> >> > >   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
-> >> > >   and added some extra details about what I did with the original
-> >> > >   patches during rebase (for some of them it was simpler and less =
-error
-> >> > >   prone to just drop changes and reimplement them by following the=
- idea
-> >> > >   of the patch, cause base code has changed significantly).
-> >> > >
-> >> > > Changelog relative to the original Volker R=C3=BCmelin's submissio=
-n:
-> >> > > - rebased:
-> >> > >         - "hw/audio/virtio-sound: return correct command response =
-size"
-> >> > >                 was dropped as it was already merged
-> >> > >         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx =
-xfer handler"
-> >> > >                 was dropped as it seems to be replaced with anothe=
-r fix
-> >> > >                 https://github.com/qemu/qemu/commit/731655f87f319f=
-d06f27282c6cafbc2467ac8045
-> >> > >         - I had to drop all pre-existing Reviewed-by tags cause it=
- was 2 years since
-> >> > >           this patchset was sent and reviewed and I did a quite si=
-gnificant code changes
-> >> > >           during rebase
-> >> > >
-> >> > > Kind regards,
-> >> > > Alex
-> >> > >
-> >> > > Alexander Mikhalitsyn (2):
-> >> > >   hw/audio/virtio-sound: remove channel positions field from
-> >> > >     VirtIOSoundPCMStream
-> >> > >   hw/audio/virtio-sound: drop unused struct
-> >> > >     VirtIOSoundPCMStream.flushing field
-> >> > >
-> >> > > Volker R=C3=BCmelin (8):
-> >> > >   hw/audio/virtio-sound: remove command and stream mutexes
-> >> > >   hw/audio/virtio-sound: allocate an array of streams
-> >> > >   hw/audio/virtio-sound: free all stream buffers on reset
-> >> > >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-> >> > >   hw/audio/virtio-sound: add stream state variable
-> >> > >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-> >> > >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
-> >> > >   hw/audio/virtio-sound: add missing vmstate fields
-> >> > >
-> >> > >  hw/audio/virtio-snd.c         | 696 ++++++++++++++++++++---------=
------
-> >> > >  include/hw/audio/virtio-snd.h |  26 +-
-> >> > >  2 files changed, 414 insertions(+), 308 deletions(-)
-> >> > >
-> >> > > --
-> >> > > 2.47.3
-> >> > >
-> >> >
-> >> > Gentle ping.
-> >>
-> >> --
-> >> Manos Pitsidianakis
-> >> Emulation and Virtualization Engineer at Linaro Ltd
 
