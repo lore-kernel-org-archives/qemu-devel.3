@@ -4,73 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E55C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C533C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Df0-0005Od-Jv; Wed, 09 Sep 2026 04:28:02 -0400
+	id 1x4DtB-0008Dr-QO; Wed, 09 Sep 2026 04:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4Dew-0005OG-Ne; Wed, 09 Sep 2026 04:27:58 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4Det-0001ml-Ah; Wed, 09 Sep 2026 04:27:58 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6898QtSV043268
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 17:26:55 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=VPL8g6uLD1yPL2YmofawdaPYaSFwuyZbuSjzi9oSH/w=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788942415; v=1;
- b=ZH2RaJ7vZQCqdV5WbzB8Vnbji508XEzzAHyBH/VeK2TZFn4P1kzv6lVKRRimwl+W
- CP58IVl9MCPqU2114OVE56G8sjB1X1ml6NehVYuQECOrYoUnmukinRdtlKmmyyAZ
- t1XN7bo84A45WSy+Sufj4GmX7CygSY4bUI8znVrIpqWUmgPoP70+GheiL9s/vrgk
- lm22c13Z+Y8akTgiJoYfePTz9X/C+Y6hUA7d6hK3ZT5o7O5GLJG+HMjUOlfmhqE/
- vFxDtPRBoiAu6nLlif3pOkQ7Cfc1zChE7GZqnW+aIJzH+D+W3wxOtxcNYKGwNt9E
- eKpRB9u8oN9/RL7Sz4M6lw==
-Message-ID: <9740a849-8c34-4465-a1af-48a7fedd12e7@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 17:26:54 +0900
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1x4DtA-0008Da-An
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:40 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1x4Dt8-0003I6-Ov
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:40 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2d91ded8174so45570675ad.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 01:42:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1788943357; x=1789548157; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BOfIqWgA7pka2B6DQz96MF5Lg2ukOaH404VNm1FKDGA=;
+ b=NxUvi3KxqGP/qk/25AGxAGahEO1X1imdQbLhFGV5BCsD5MDg7Pg5S8wJVjijEv+JeQ
+ eO0Uqen9xguN8cnNoVDZw8xoSFVNEgOiCQzZ3EoQgpPnzVicQzaGa3CzaGGwYOmc6QHj
+ ihF3m8R28fVjUa/rp0NiZsBJcJTA2s5QXX6yvehkLzSrC1o6cn10+9/bVruZT6uJOg8t
+ rNIiXkoecWvSuWmjOJBYkh6IzOU7DwzSWuCDljPtRljIpeQvXpaaM2+BveqIpVao3GrX
+ NoOH4Qd6b9rOmDaipxecNG64vFIuvNXUC0Nk2DjA0wDB4Qstn6Z6qu4P3FrNaqVqQDfR
+ 45Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788943357; x=1789548157;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BOfIqWgA7pka2B6DQz96MF5Lg2ukOaH404VNm1FKDGA=;
+ b=AOThBJVQReG9W832Bw1RGk9ZUI2CKx20e+Sr9Pz3u4KXq/+1b1cpW3q4H8wzOaQSvH
+ /4SPwmhiiuCgU/7JsJNJvsNoVwcSaxyqIdDsQXiZ5saCDODYsmDqTq1yes7Rz/hLyVSq
+ 3F47SqA3ERbFTlk087mjoZvzwdjn6CQyE3TPFNeQ9NgP0IMsWSlaEaI5wBE4yeBC3Iyk
+ lLwvDDUHAxeEYr/o3+J+ApbZLy6ZiMQwSPQCxZvrNCCNk7BfawvSqeh/aWUsX21bSM9U
+ JkiElc2GljSWz0fDecoGJtG4Gin8S9rbuZPtNt4FNZT3IoGpfQOQKjS3Kyh9805cyomv
+ Hzbg==
+X-Gm-Message-State: AFuF++mqcNinbaH8Bwgg7+VdFdCyowZhRYFoAgE79MPuUAdqUnOjOc0K
+ 5LwQnPBijJFstJplZHFW6q3fwTcT5n/E57pqqw0mRJmHBz6KgAwJhfqoYpIfq65wHvfbRhGnLAx
+ dUXpeGRnxgKTYw9ljvqDls2QHVfZ/E2z8QH9syYJvHUb4+vk80G4zCReW/Wzv+bb3m+ftjut5TU
+ 99EEcOYJvpKrzU0iuNtA3Nv9+UxlwxS8RHYFhM9XlYdg==
+X-Gm-Gg: AYBFou0gCmaRHfAgCatVZiDlvtp2+gdv5xdsTSSrwVmbvxVy0uVltUKB7Zx1Z4AqKBL
+ WkvXgjMXKbjHQ8SdZEnqDvYeG1hr442CYGYnT5kDehqBo+fdJTeTMxKJDM8IfqB/C44Nq98Rhe3
+ i3+IdgQ3wuRJenmMDxuSjpHUjqhYnWHYJi3g4UFLRxzeWh4s7xmzbtfpg5aMy9QdIGRPn6RMtLX
+ fjVPB5/X/Nc8g7K/9ZZGJSYP6nuAapzmxehK0RtW1hBcSGbEcQdKxnRPB+CJ1qiX4beC5oWz4qO
+ L2glVN3x3Z84EEdXe+2fLAmnpacSZEyBUN8cr69fI7Tf48TCluJswpntato5FzfecNNCfZNOHYq
+ qRkvHa3ABBKKgh+llfZyoqABb4ovSXsX9jSNSKlRCYHCjiueeEkhNfPtFFoBvq/4rgrilKnRLpR
+ zWEA8IRvR8eBR73jMihBR2WgdkmZ8zz6EImtdgKcYjq+T46OYS4e6T4NcgMXF8kWxaLmY2nnLvq
+ 7BjfDGCfFJJRjHQ2FrE0i+uX8v2Ow1Jre3+UE1yenDzS5iABeeWFJhM4HKdlbShns7mUHIbyg==
+X-Received: by 2002:a17:903:3848:b0:2d9:56dd:f804 with SMTP id
+ d9443c01a7336-2db125f00c7mr505328805ad.13.1788943356430; 
+ Wed, 09 Sep 2026 01:42:36 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2db56c2a1f1sm38328225ad.78.2026.09.09.01.42.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Sep 2026 01:42:35 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, richard.henderson@linaro.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH 0/6] tests/tcg/riscv64: Add system mode rvv ld/st tests
+Date: Wed,  9 Sep 2026 16:41:47 +0800
+Message-ID: <20260909084154.223529-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] hw/display/virtio-gpu: Fix fenced blob unmapping
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- David Hildenbrand <david@kernel.org>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-block@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
- <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1C+QiHZ3Pp3Q_Dy=KCzR=UCWpYAosdQxVaqgLTnQudkVeg@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1C+QiHZ3Pp3Q_Dy=KCzR=UCWpYAosdQxVaqgLTnQudkVeg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,161 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/08 19:27, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Sep 8, 2026 at 10:14 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> Blob unmapping may be suspended because of remaining uses of the
->> mapping. virtio_gpu_process_cmdq() uses the following condition to
->> detect a suspended command:
->>
->>      !cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)
->>
->> However, the guest may set VIRTIO_GPU_FLAG_FENCE for a command that
->> performs blob unmapping. Such a command will be incorrectly assumed
->> as not being suspended. Add a dedicated flag for the suspended state
->> to avoid overloading VIRTIO_GPU_FLAG_FENCE.
->>
->> Fixes: 640f9149c3dc ("virtio-gpu: Support suspension of commands processing")
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   include/hw/virtio/virtio-gpu.h |  1 +
->>   hw/display/virtio-gpu-virgl.c  | 17 +++++++----------
->>   hw/display/virtio-gpu.c        |  5 ++---
->>   3 files changed, 10 insertions(+), 13 deletions(-)
->>
->> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
->> index 9404e488208a..3eccc4bc39c3 100644
->> --- a/include/hw/virtio/virtio-gpu.h
->> +++ b/include/hw/virtio/virtio-gpu.h
->> @@ -141,6 +141,7 @@ struct virtio_gpu_ctrl_command {
->>       struct virtio_gpu_ctrl_hdr cmd_hdr;
->>       uint32_t error;
->>       bool finished;
->> +    bool suspended;
-> 
->>       QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
->>   };
->>
->> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->> index 9bda572426b2..c37df91e3ed1 100644
->> --- a/hw/display/virtio-gpu-virgl.c
->> +++ b/hw/display/virtio-gpu-virgl.c
->> @@ -440,8 +440,7 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
->>   }
->>
->>   static void virgl_cmd_resource_unref(VirtIOGPU *g,
->> -                                     struct virtio_gpu_ctrl_command *cmd,
->> -                                     bool *cmd_suspended)
->> +                                     struct virtio_gpu_ctrl_command *cmd)
->>   {
->>       struct virtio_gpu_resource_unref unref;
->>       struct virtio_gpu_virgl_resource *res;
->> @@ -457,7 +456,7 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
->>           return;
->>       }
->>
->> -    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
->> +    virtio_gpu_virgl_resource_unref(g, res, &cmd->suspended);
->>   }
->>
->>   void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
->> @@ -946,8 +945,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
->>   }
->>
->>   static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
->> -                                          struct virtio_gpu_ctrl_command *cmd,
->> -                                          bool *cmd_suspended)
->> +                                          struct virtio_gpu_ctrl_command *cmd)
->>   {
->>       struct virtio_gpu_resource_unmap_blob ublob;
->>       struct virtio_gpu_virgl_resource *res;
->> @@ -964,7 +962,7 @@ static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
->>           return;
->>       }
->>
->> -    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
->> +    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, &cmd->suspended);
->>       if (ret) {
->>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->>           return;
->> @@ -1036,7 +1034,6 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
->>   void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->>                                         struct virtio_gpu_ctrl_command *cmd)
->>   {
->> -    bool cmd_suspended = false;
->>       int ret;
->>
->>       VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
->> @@ -1080,7 +1077,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->>           virgl_cmd_resource_flush(g, cmd);
->>           break;
->>       case VIRTIO_GPU_CMD_RESOURCE_UNREF:
->> -        virgl_cmd_resource_unref(g, cmd, &cmd_suspended);
->> +        virgl_cmd_resource_unref(g, cmd);
->>           break;
->>       case VIRTIO_GPU_CMD_CTX_ATTACH_RESOURCE:
->>           /* TODO add security */
->> @@ -1110,7 +1107,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->>           virgl_cmd_resource_map_blob(g, cmd);
->>           break;
->>       case VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB:
->> -        virgl_cmd_resource_unmap_blob(g, cmd, &cmd_suspended);
->> +        virgl_cmd_resource_unmap_blob(g, cmd);
->>           break;
->>       case VIRTIO_GPU_CMD_SET_SCANOUT_BLOB:
->>           virgl_cmd_set_scanout_blob(g, cmd);
->> @@ -1121,7 +1118,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->>           break;
->>       }
->>
->> -    if (cmd_suspended || cmd->finished) {
->> +    if (cmd->suspended || cmd->finished) {
->>           return;
->>       }
->>       if (cmd->error) {
->> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->> index d520f69e6453..dd6c09d1ddcf 100644
->> --- a/hw/display/virtio-gpu.c
->> +++ b/hw/display/virtio-gpu.c
->> @@ -1193,11 +1193,10 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
->>               break;
->>           }
->>
->> -        /* process command */
->> +        cmd->suspended = false;
-> 
-> The field could be initialized after virtqueue_pop(), otherwise it has
-> a random allocation value. Then perhaps, drop this assignment?
+Hi Richard,
 
-The assignment is needed before every processing attempt, including
-retries. A suspended command stays at the head of cmdq and is processed
-again when unmapping can complete. The unmap helper sets suspended to
-true when waiting, but does not clear it on completion. Initializing it
-only after virtqueue_pop() would leave it true on retry, preventing the
-command from completing and blocking subsequent commands.
+This patchset adds several rvv load/store tests with PMP permission
+settings, as we discussed during your v1 submission.
 
-The field is uninitialized immediately after allocation, but nothing
-reads it before this assignment, so there is no uninitialized read.
+While building the tests, I noticed that pmp_hart_has_privs has a scope
+issue that yields unexpected results. This affects both the vector
+fault-only-first load and vector unit-stride ld/st instructions.
+I therefore attempted to correct pmp_hart_has_privs and
+vext_ldst_us_notail, adding matching tests.
 
-Regards,
-Akihiko Odaki
+Hope these system mode tests and fixes can help you.
 
-> 
->>           vgc->process_cmd(g, cmd);
->>
->> -        /* command suspended */
->> -        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
->> +        if (cmd->suspended) {
->>               trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
->>               break;
->>           }
->>
->> --
->> 2.55.0
->>
->>
+PS: I tried applying v2
+<20260821040404.268123-1-richard.henderson@linaro.org> to the master and
+riscv-to-apply.next branches, but both conflicted.
+
+Thanks,
+rnax
+
+Based-on: <20260821040404.268123-1-richard.henderson@linaro.org>
+
+Max Chou (6):
+  target/riscv: Match PMP entries lying inside the checked range
+  target/riscv: rvv: Probe unit-stride accesses by the first element
+  tests/tcg/riscv64: Add vector masked fault-only-first PMP test
+  tests/tcg/riscv64: Add vector unit-stride PMP test
+  tests/tcg/riscv64: Add vector fault-only-first page probe test
+  tests/tcg/riscv64: Add vector segment PMP region spanning test
+
+ target/riscv/tcg/pmp.c                    |  31 +--
+ target/riscv/tcg/vector_helper.c          |  45 +++-
+ tests/tcg/riscv64/Makefile.softmmu-target |  38 +++
+ tests/tcg/riscv64/rvv-ldst.inc            |  91 +++++++
+ tests/tcg/riscv64/test-rvv-ldst-ff-page.S |  83 +++++++
+ tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S  | 259 ++++++++++++++++++++
+ tests/tcg/riscv64/test-rvv-ldst-seg-pmp.S | 141 +++++++++++
+ tests/tcg/riscv64/test-rvv-ldst-us-pmp.S  | 281 ++++++++++++++++++++++
+ 8 files changed, 943 insertions(+), 26 deletions(-)
+ create mode 100644 tests/tcg/riscv64/rvv-ldst.inc
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst-ff-page.S
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst-ff-pmp.S
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst-seg-pmp.S
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst-us-pmp.S
+
+-- 
+2.43.0
 
 
