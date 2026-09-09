@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0011C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 10:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7A4C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 10:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4FjS-0001VO-3j; Wed, 09 Sep 2026 06:40:46 -0400
+	id 1x4FkR-0001qp-Hu; Wed, 09 Sep 2026 06:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4FjQ-0001VF-Fa
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 06:40:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4FkQ-0001qO-2U
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 06:41:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4FjO-0002Ff-IG
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 06:40:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4FkO-0002Rl-Iz
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 06:41:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788950440;
+ s=mimecast20190719; t=1788950503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zSLTexni7kwekvkmDZtHGJ6KKF4CFvsHSGrrfyC0Wv8=;
- b=Ic21HD+K3ImHbm1NrHt5ITbFL9FhrmLWEkv6BAMJtE6c1srwPs/EXEXr1wsoHHhPkP94YF
- H65UOzJhI7U+eL/+Wv9HZTr4SIfsR0IqYsIpIs8EbJPi2NKiWgbjYmBA3l3y0P6DkDNkeK
- qEDngtbjFCRQVqTxA9EHKP7swrg/r6E=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=8zaOUwy1a6as5Flcg2yEZa5MseELqYhBAEHnIpjVOMQ=;
+ b=HuCBGnTGEBrReEN0mJM+HUgWMI5AJP+oMN9wcPyT2jLXJ8u8SvKD0KDoa3X3OOnkdIJSSk
+ CFSO9exztxdcdrNqPA3y+jUSGaXZlgb/C0iWikBnRbZYUHOyc0LNlT5YwwhqVhuW+yfoiP
+ QInYBQ0QmSHfZMlL5Ob85VCVWdDL87A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-8AnZ7JrLPRece0QnIRE7eA-1; Wed,
- 09 Sep 2026 06:40:39 -0400
-X-MC-Unique: 8AnZ7JrLPRece0QnIRE7eA-1
-X-Mimecast-MFC-AGG-ID: 8AnZ7JrLPRece0QnIRE7eA_1788950438
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-NoKrpFgCMtiGfQv35-N4Xw-1; Wed,
+ 09 Sep 2026 06:41:42 -0400
+X-MC-Unique: NoKrpFgCMtiGfQv35-N4Xw-1
+X-Mimecast-MFC-AGG-ID: NoKrpFgCMtiGfQv35-N4Xw_1788950501
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 476711800762; Wed,  9 Sep 2026 10:40:38 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFB551955E7B; Wed,  9 Sep 2026 10:41:40 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF7471955D84; Wed,  9 Sep 2026 10:40:37 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 890A130001BB; Wed,  9 Sep 2026 10:41:40 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5E12E21E6A04; Wed, 09 Sep 2026 12:40:35 +0200 (CEST)
+ id 4493621E6A04; Wed, 09 Sep 2026 12:41:38 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Zhang Chen <zhangckid@gmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,  Eric Blake <eblake@redhat.com>,
@@ -54,29 +54,31 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,  Eric Blake <eblake@redhat.com>,
  <stefanha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P .
  =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Jason Wang
  <jasowangio@gmail.com>
-Subject: Re: [PATCH V15 05/14] monitor: track IOThread users with QOM paths
-In-Reply-To: <CAK3tnvKfeJK-p8POfzDoG2NLt=NWgKnF_WcmAWAHWXnuQdCWTw@mail.gmail.com>
- (Zhang Chen's message of "Wed, 9 Sep 2026 15:57:02 +0800")
+Subject: Re: [PATCH V15 13/14] iothread: make legacy AioContext getter
+ explicitly unsafe
+In-Reply-To: <CAK3tnvJALU_i6OzrCb-t20un=AALTySuRamkmyqrbS8Zumk2Tg@mail.gmail.com>
+ (Zhang Chen's message of "Wed, 9 Sep 2026 14:24:03 +0800")
 References: <20260907063725.626685-1-zhangckid@gmail.com>
- <20260907063725.626685-6-zhangckid@gmail.com>
- <874ig1xmbi.fsf@pond.sub.org>
- <CAK3tnvKfeJK-p8POfzDoG2NLt=NWgKnF_WcmAWAHWXnuQdCWTw@mail.gmail.com>
-Date: Wed, 09 Sep 2026 12:40:35 +0200
-Message-ID: <87fqzin1wc.fsf@pond.sub.org>
+ <20260907063725.626685-14-zhangckid@gmail.com>
+ <87zextw78o.fsf@pond.sub.org>
+ <CAK3tnvJALU_i6OzrCb-t20un=AALTySuRamkmyqrbS8Zumk2Tg@mail.gmail.com>
+Date: Wed, 09 Sep 2026 12:41:38 +0200
+Message-ID: <87bja6n1ul.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 127.0.0.2
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,96 +96,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Zhang Chen <zhangckid@gmail.com> writes:
 
-> On Mon, Sep 7, 2026 at 8:44=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
+> On Mon, Sep 7, 2026 at 8:55=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
 om> wrote:
 >>
 >> Zhang Chen <zhangckid@gmail.com> writes:
 >>
->> > Monitors that require an IOThread share the internal mon_iothread.
->> > Account for each monitor explicitly in IOThread holder tracking, using
->> > the monitor's canonical QOM path to distinguish holders.
+>> > Now that holder-aware callers have been converted, rename
+>> > iothread_get_aio_context() to iothread_unsafe_get_aio_context() and
+>> > update qmp_x_blockdev_set_iothread(). This avoids adding a duplicate
+>> > accessor only to remove the old one later.
+>>
+>> The last sentence appears to justify the change since v14.  If that's
+>> the intent, drop it, please.  If not, what is the intent?
+>
+> Thanks. Yes, that sentence was about the changes since v14; I'll
+> drop it from the commit message.
+>
+>>
+>> > The block graph retains only the AioContext, while detachment happens
+>> > outside qmp_x_blockdev_set_iothread(), so this call site cannot provide
+>> > a matching holder lifecycle. The new name makes its existing lifetime
+>> > assumption explicit.
+>>
+>> Suggest to start like "The only remaining user is
+>> qmp_x_blockdev_set_iothread()" and then explain why this caller cannot
+>> use iothread_ref_and_get_aio_context().
+>>
+>> > New code should use iothread_ref_and_get_aio_context().
 >> >
->> > Acquire the shared monitor IOThread AioContext once and store the
->> > IOThread and canonical QOM path so the holder can be released after the
->> > monitor has been removed from the QOM tree. Reuse the stored context f=
-or
->> > later operations.
->> >
->> > Release the holder from monitor_finalize(), after resources associated
->> > with the AioContext have been destroyed. This pairs the reference taken
->> > in complete() with instance finalization and keeps the IOThread alive
->> > throughout monitor teardown.
->> >
->> > The internal mon_iothread remains hidden from query-iothreads, as befo=
-re.
->> > Management applications therefore cannot use it to determine which
->> > monitors are using the IOThread. Nevertheless, track the monitor
->> > holders so that they follow the same explicit holder and
->> > IOThread reference lifecycle as other AioContext users.
->> >
+>> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 >> > ---
->> >  monitor/monitor-internal.h |  5 +++++
->> >  monitor/monitor.c          | 26 +++++++++++++++++++++-----
->> >  monitor/qmp.c              |  5 +++--
->> >  3 files changed, 29 insertions(+), 7 deletions(-)
+>> >  blockdev.c                |  7 ++++++-
+>> >  include/system/iothread.h | 11 ++++++++++-
+>> >  iothread.c                |  2 +-
+>> >  3 files changed, 17 insertions(+), 3 deletions(-)
 >> >
->> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
->> > index 822a66d06d..1d5aeae5e6 100644
->> > --- a/monitor/monitor-internal.h
->> > +++ b/monitor/monitor-internal.h
->> > @@ -77,6 +77,11 @@ struct Monitor {
->> >      GString *outbuf;
->> >      guint out_watch;
->> >      int mux_out;
->> > +
->> > +    /* iothread context and holder identity */
->> > +    IOThread *iothread;
->> > +    char *iothread_qom_path;
->> > +    AioContext *ctx;
->> >  };
+>> > diff --git a/blockdev.c b/blockdev.c
+>> > index 6e86c6262f..97d161079a 100644
+>> > --- a/blockdev.c
+>> > +++ b/blockdev.c
+>> > @@ -3683,7 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *no=
+de_name, StrOrNull *iothread,
+>> >              goto out;
+>> >          }
 >> >
->> >  struct MonitorQMPClass {
->> > diff --git a/monitor/monitor.c b/monitor/monitor.c
->> > index 2654b81890..cc7f6785b5 100644
->> > --- a/monitor/monitor.c
->> > +++ b/monitor/monitor.c
->> > @@ -93,6 +93,16 @@ static void monitor_finalize(Object *obj)
->> >      qemu_chr_fe_deinit(&mon->chr, false);
->> >      g_string_free(mon->outbuf, true);
->> >      qemu_mutex_destroy(&mon->mon_lock);
->> > +
->> > +    if (mon->iothread) {
+>> > -        new_context =3D iothread_get_aio_context(obj);
+>> > +        /*
+>> > +         * The block graph retains only the AioContext, not the IOThr=
+ead.
+>> > +         * Context detachment happens outside this command, so there =
+is no
+>> > +         * point here where a matching IOThread holder can be release=
+d.
+>> > +         */
 >>
->> As we'll see in monitor_complete() below, mon->iothread is mon_iothread
->> if monitor_requires_iothread(mon), else null.  Which means
->> mon->mon_iothread is non-null if and only if
->> monitor_requires_iothread(mon).
+>> This is fine for readers who already know what this is about: why we
+>> can't use iothread_ref_and_get_aio_context() /
+>> iothread_unsafe_get_aio_context() here.  Others will lack context.
 >>
->> Here, you check whether mon->mon_iothread is non-null to find out
->> whether @mon uses the monitor I/O thread, and you read the monitor I/O
->> thread from mon->mon_iothread.
+>> Suggest to start like
 >>
->> Elsewhere in this file, we check monitor_requires_iothread(mon) and you
->> read mon_iothread, e.g. in monitor_cancel_out_watch()
+>>            /*
+>>             * We cannot use iothread_ref_and_get_aio_context() /
+>>             * iothread_unref_and_put_aio_context() here.
 >>
->>            if (monitor_requires_iothread(mon)) {
->>                ctx =3D iothread_get_g_main_context(mon_iothread);
->>            }
->>
->> I don't like this inconsistency.  Two ways to avoid it:
->>
->> 1. Always use monitor_requires_iothread(mon) to check and mon_iothread
->> to read.  Drop struct Monitor member iothread.
->>
->> 2. Always use mon_iothread, except where we initialize it in
->> monitor_complete().
+>> then explain why.
 >
-> Just to clarify: by option 2, do you mean using mon->iothread
-> consistently for per-monitor checks and accesses, except in
-> monitor_complete(), where monitor_requires_iothread() determines
-> whether to initialize it?
+> OK, will change it  to:
+> /*
+>  * We cannot use iothread_ref_and_get_aio_context() /
+>  * iothread_unref_and_put_aio_context() here. The block graph stores
+>  * the AioContext but not the IOThread, and continues using the
+>  * context after this command returns. A matching put would need
+>  * to be tied to the block graph's context lifecycle.
+>  */
 
-Yes.  I meant to write 2. Always use mon->iothread, but mistyped.
+Works for me, thanks!
 
 
