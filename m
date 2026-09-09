@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B3FC79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41366C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4EWW-0005FQ-HC; Wed, 09 Sep 2026 05:23:20 -0400
+	id 1x4EXC-0005dK-SU; Wed, 09 Sep 2026 05:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EWU-0005F7-Pa
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:23:18 -0400
+ id 1x4EX9-0005bV-Ec
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:23:59 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EWT-0000ps-0H
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:23:18 -0400
+ id 1x4EX7-0000rY-Ro
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:23:59 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899NAvF065697
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899No1P065923
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:23:10 +0900 (JST)
+ Wed, 9 Sep 2026 18:23:50 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YhBHpu1GgJZn+17EEqWfhexFk7lXk90aXlRUn4+vveY=; 
+DKIM-Signature: a=rsa-sha256; bh=SfHxqWv0+Pq4iQyloEvB59V5p47+eEHa8uILulglR3U=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788945790; v=1;
- b=X9bBupSLxOSKWk7B5yc8M7e8JFT2HFJYYOfATeB3MDMbIpQ1AcT5Da6z+mpMLJSQ
- DEXD8eYTzN1b0xAGtdOeZ+nRaeqEfcS61wKqtfn6+TPjaoh5Jg78oe30/UBFQYtf
- Rl/b9kESAnlrh0rczQ6deCAG99Mxhpaa3vkirehNsd2dfpIm2nQn8kysBhAcHpPc
- tFQi0S8HK7WXUBgxriTIhJxeo5opKTyW3AnnYopPm9slmZhEU/W96mifh8ZYsuQR
- 9K8l8kMafuNKYkoqGoSxv58RMCwlGVeUHqOne8Lrc/6dpSRxZ7DSDCEVLt9+3H4d
- G3oXcQ6GZXcaX+ZeB0APug==
-Message-ID: <b8f725e2-354e-43b5-bcf9-ce74a109713b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:23:10 +0900
+ s=rs20250326; t=1788945830; v=1;
+ b=hPLPdnO82l2IaAZsLjx97WvWkN/QcqDGgKa6FcshgR8hZHaCZyQtq7weR2Efl0Pa
+ MLBR1vhCJS2f4X7hISH7pyuomVbSrPp+/LUXDdpqjUmGDhryV5amc8Fz3K6w9yyg
+ Zqr+O5ciDx1+Uk86GETDDQIJvyIj1aSgvEOz0vM0mCOW4ziGaQ2klb3RxvhXjnx8
+ 0SEndOgYnf5ABKsWYLfYqOO8ucD78oWfOIkhWwWVDoc2Dji9qZG/jC0bld5vzi3z
+ XrnuPojBVjN2A7N885dR53euTsS7N86RHIv3KhT9uibmNKgWzTcIYRf0fln4bKgd
+ HBJ0E4CxeC7hPpVgMXlT8w==
+Message-ID: <d454916a-a27b-4805-a1cc-bfb52c0388a7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:23:50 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/25] virtio-gpu: drop scanout_bitmask bookkeeping
+Subject: Re: [PATCH v2 18/25] virtio-gpu: release dmabuf when switching to a
+ surface
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +50,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-17-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-18-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-17-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-18-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,11 +80,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> The per-resource scanout_bitmask is a reverse index of which
-> scanouts reference a given resource. The information is already
-> available from scanout->resource_id. Performance impact should be
-> negligible.
+> A scanout may hold an active QemuDmaBuf when a SET_SCANOUT switches to
+> CPU-backed display data. Force surface recreation and release the old
+> buffer in this case.
 > 
+> Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
