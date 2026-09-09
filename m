@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12198C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E90CC79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4G76-0007LQ-SU; Wed, 09 Sep 2026 07:05:12 -0400
+	id 1x4G75-0007FH-UP; Wed, 09 Sep 2026 07:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4G6o-0006iU-RL
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:04:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x4G6x-0006z0-2B
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:05:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4G6m-0005NL-ES
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:04:53 -0400
+ id 1x4G6v-0005PJ-MO
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788951891;
+ s=mimecast20190719; t=1788951901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1QzWw/3YpuNlpbbtK3De1nZgXPTUKbTQhhI4hImd84U=;
- b=bnKrbzJxjopSJEUG+Ccj/j75JDhcv94EgynhJgf/mDd4PGoYWm0cWjRZfTprPyg07XO8ZG
- 5EJFwZj6oRU0dNE25zacZ5IKIw9pN47XCt7waaP7dkhQkHgYmhpHnEm+LX8NOsiWMYjRjC
- 46blsErXx5GhVIVecyDm8mHc3DOp+N4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=/Wj5VzWeDqCex6YztU5VwVvg7TaKkgsfcJttpxYa4aU=;
+ b=DDWuu+By5vceDIJdzhh2Vw6mm5nzE+QsbdmX2SgEQfseiaq3yspZ4bvlkhMRIT0/jOWksG
+ BHib3x1D78bEUrVNHha9WrCqO/p1hiKh9u+IRo1oAhgtq/Br2Wljm98wU943T0lFbw5iCj
+ VFoClKBDTNZSflI57oJQWCqX6TvArL4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-KG6ZqEUiOvmlDEKIz5ZAsw-1; Wed,
- 09 Sep 2026 07:04:48 -0400
-X-MC-Unique: KG6ZqEUiOvmlDEKIz5ZAsw-1
-X-Mimecast-MFC-AGG-ID: KG6ZqEUiOvmlDEKIz5ZAsw_1788951887
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-62w4L1z-OI-J3Kd_XRdXZg-1; Wed,
+ 09 Sep 2026 07:04:59 -0400
+X-MC-Unique: 62w4L1z-OI-J3Kd_XRdXZg-1
+X-Mimecast-MFC-AGG-ID: 62w4L1z-OI-J3Kd_XRdXZg_1788951898
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99D9118005BA; Wed,  9 Sep 2026 11:04:47 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B00AC195608E; Wed,  9 Sep 2026 11:04:58 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CB11E1955F19; Wed,  9 Sep 2026 11:04:46 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5EFD11956088; Wed,  9 Sep 2026 11:04:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 09 Sep 2026 15:03:26 +0400
-Subject: [PATCH v3 21/24] virtio-gpu: minor refactoring
+Date: Wed, 09 Sep 2026 15:03:29 +0400
+Subject: [PATCH v3 24/24] contrib/vhost-user-gpu: disable scanouts on
+ resource unref
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260909-virtio-gpu-cleanup-v3-21-99266590e79d@redhat.com>
+Message-Id: <20260909-virtio-gpu-cleanup-v3-24-99266590e79d@redhat.com>
 References: <20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com>
 In-Reply-To: <20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,34 +67,35 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alex Williamson <alex@shazbot.org>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4171;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1543;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=36qNtf5VJCj4Rho3xGqwfp3/DDQJNjPDldw5TS9Jilw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoTzzqatNIWCuYCfv6puHdF1X6tv4zO/LwV2/J
- EUPKdRlkOmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqE88wAKCRDa6OEJdZac
- 5Q5WEACPq0jzrwpTboBX6PyCaQ9Zk+JjeoptNL1gttG/ytOGAG2YHs0a1798qPEJmrwq4YN8z/Z
- pBlLoJhqq6kitO7ocLO999M1LHOnm0jbu2tSgYDqqIuNns3LjZ57817oZ1J2WHOtc5px+VUXQ9M
- pelRgxslyYcJQV8kkiJfmHX8wvC6g0jAzQr4BdQVEhBNVKV/AwRZxkPJ5C03H5TGqj08DYyhDB5
- uUmMFWVqSXd34lxU6+VD4fnYWzvgjUddZj41ugIDQMMn26KMlBSA26AkOO7JClVpV1UCRqmKkqk
- DclD3ezL4mSdMRodxxQ2JeNkgUfPSeyD1AX3w2tTcjy6ZI53UJEg3otp42EyaabpAOaJ+ksTiMq
- KWSnDI9Ev62IwvS7v3kin2jmTKER9JinkVtTKKm7xHoj1GDedM9OHTTGICd79U85bhkWjOCTfPM
- 8ybsUyIX1BZfUQelIaDCWuhxbVFzxCthJcsEmMHUV4R0mUbLAvuITO7QF3QjjUdyOggB1L4PpBZ
- Ii8DWOZOc3F0B5RXM63264kKyTHa91jVgjlpecwGVaOKUA88djWzU38Qc49MgH0MlOlpNQKyHa2
- F2Le7NPZymBb4b00Qa5eztUuWZ+TyFHtcwMQkHPS35K9fmAc9BTHeOAyfhFymULQaaaaZHGVJZs
- F/e2LuPKw77wgKQ==
+ bh=iZ+oUugkx5oY5Po2y4/QVsUJmAP+CsizW5ruoANWJxA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoTzzjbbK2bgu+rUYVeCOeDUWKbJKGzRkwiWJt
+ aYiCQwIv6KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqE88wAKCRDa6OEJdZac
+ 5Ro+D/4xLm8Wpq/vKiTGvv6cud627PJz+G1Ql6Vnl+BWvPqU+mPlPdiD0QnRFvx7+tEFEaZnSTr
+ lxkLQiHNg5OTK0eklQtNJmDzYNZIx0TK20aSKvUqH4h1/ltrjRFresbAEge6/uEWdwg6uiB0DUm
+ /xlavT04YIXN8bh+A9VPfrkHuwk4HZD6cxoTFsG/PbB7m5V3Vgf0TBKRcBUMnJ0j/J7QP3+EebE
+ vJaVNVwNyiuIfKmn40CIasWk7+XnoLICwJKlcFeL+gzrFOEOwUhdBCTG5V27eZ2jr0jKsoMNVVC
+ ojRRdsg3uL2RuaINHkq74XA59qYgwZeg9dECzt9tJKOWfbTDQlxfbWUaiv4DsBo+q7ise5EfQ43
+ wzZIoo2ZtXpvQB6GxsXLhb8PFh1lnxv24miTTkO/BVjT9fHU4xbMCAa87pxRfflPBcUzNwsvQyP
+ 0jhHTjgMOGVgGqjcUnwD+dKCnWaQQobn3x0oHlEIkQxg2nqzQ1xlqboXYCKD71v/iQ2iV710BhQ
+ kNXzLqomK4T9pckkN4rQvS91Cr8Gfi3px+ui1/TL7DCtEqged5uRW3UGrY0wgRfoVwvBZYq9NXi
+ 9DnXV0pvcm4JFU0TLEyzxZpEuA+nGJhX03n6W+zOdAljWYkWKFOxfMcpn/kH2gegOjDExH8zH70
+ og7RjVDko9E4QxQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 127.0.0.2
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,110 +111,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move disable_scanout() branch earlier, return early.
-(scanout->resource_id is cleared there)
+virgl_cmd_resource_unref() destroys the virgl renderer resource without
+first disabling any scanouts that reference it. The QEMU frontend then
+holds a stale DMA-BUF until another DMABUF_SCANOUT message arrives.
+
+Send a DMABUF_SCANOUT disable message (fd=-1) for each affected scanout
+before destroying the resource.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: d52c454aadcd ("contrib: add vhost-user-gpu")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu-virgl.c | 71 ++++++++++++++++++++++---------------------
- 1 file changed, 36 insertions(+), 35 deletions(-)
+ contrib/vhost-user-gpu/virgl.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 87d1fc3d5f65..118419171ff0 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -565,6 +565,8 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-                                   struct virtio_gpu_ctrl_command *cmd)
- {
-     struct virtio_gpu_set_scanout ss;
-+    struct virgl_renderer_resource_info info;
-+    void *d3d_tex2d = NULL;
-     int ret;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 20bae57d0fe4..5a5f9f14c80c 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -113,6 +113,18 @@ virgl_cmd_resource_unref(VuGpu *g,
  
-     VIRTIO_GPU_FILL_CMD(ss);
-@@ -579,47 +581,46 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-     }
-     g->parent_obj.enable = 1;
+     VUGPU_FILL_CMD(unref);
  
--    if (ss.resource_id) {
--        struct virgl_renderer_resource_info info;
--        void *d3d_tex2d = NULL;
-+    if (!ss.resource_id) {
-+        virtio_gpu_disable_scanout(g, ss.scanout_id);
-+        return;
-+    }
- 
- #if VIRGL_VERSION_MAJOR >= 1
--        struct virgl_renderer_resource_info_ext ext;
--        memset(&ext, 0, sizeof(ext));
--        ret = virgl_renderer_resource_get_info_ext(ss.resource_id, &ext);
--        info = ext.base;
--        d3d_tex2d = ext.d3d_tex2d;
-+    struct virgl_renderer_resource_info_ext ext;
-+    memset(&ext, 0, sizeof(ext));
-+    ret = virgl_renderer_resource_get_info_ext(ss.resource_id, &ext);
-+    info = ext.base;
-+    d3d_tex2d = ext.d3d_tex2d;
- #else
--        memset(&info, 0, sizeof(info));
--        ret = virgl_renderer_resource_get_info(ss.resource_id, &info);
-+    memset(&info, 0, sizeof(info));
-+    ret = virgl_renderer_resource_get_info(ss.resource_id, &info);
- #endif
--        if (ret) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "%s: illegal resource specified %d\n",
--                          __func__, ss.resource_id);
--            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
--            return;
--        }
--        if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
--                                             info.width, info.height, &ss.r,
--                                             &cmd->error)) {
--            return;
--        }
- 
--        virtio_gpu_release_scanout_dmabuf(g, ss.scanout_id);
--
--        qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
--                            ss.r.width, ss.r.height);
--        virgl_renderer_force_ctx_0();
--        qemu_console_gl_scanout_texture(
--            g->parent_obj.scanout[ss.scanout_id].con, info.tex_id,
--            info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
--            info.width, info.height,
--            ss.r.x, ss.r.y, ss.r.width, ss.r.height,
--            d3d_tex2d);
--    } else {
--        virtio_gpu_disable_scanout(g, ss.scanout_id);
-+    if (ret) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: illegal resource specified %d\n",
-+                      __func__, ss.resource_id);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-+        return;
-     }
-+    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
-+                                         info.width, info.height, &ss.r,
-+                                         &cmd->error)) {
-+        return;
++    for (int i = 0; i < VIRTIO_GPU_MAX_SCANOUTS; i++) {
++        if (g->scanout[i].resource_id == unref.resource_id) {
++            VhostUserGpuMsg msg = {
++                .request = VHOST_USER_GPU_DMABUF_SCANOUT,
++                .size = sizeof(VhostUserGpuDMABUFScanout),
++                .payload.dmabuf_scanout.scanout_id = i,
++            };
++            vg_send_msg(g, &msg, -1);
++            g->scanout[i].resource_id = 0;
++        }
 +    }
 +
-+    virtio_gpu_release_scanout_dmabuf(g, ss.scanout_id);
-+
-+    qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
-+                        ss.r.width, ss.r.height);
-+    virgl_renderer_force_ctx_0();
-+    qemu_console_gl_scanout_texture(
-+        g->parent_obj.scanout[ss.scanout_id].con, info.tex_id,
-+        info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
-+        info.width, info.height,
-+        ss.r.x, ss.r.y, ss.r.width, ss.r.height,
-+        d3d_tex2d);
-     g->parent_obj.scanout[ss.scanout_id].resource_id = ss.resource_id;
- }
- 
+     virgl_renderer_resource_detach_iov(unref.resource_id,
+                                        &res_iovs,
+                                        &num_iovs);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
