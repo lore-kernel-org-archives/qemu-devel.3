@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C22C79FBD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 17:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59694C79FBD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 17:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4MXo-00012R-KT; Wed, 09 Sep 2026 13:57:12 -0400
+	id 1x4MXq-00012x-AT; Wed, 09 Sep 2026 13:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x4MXl-00012F-Gw
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 13:57:10 -0400
+ id 1x4MXp-00012U-2H
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 13:57:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x4MXj-0004bp-0d
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 13:57:09 -0400
+ id 1x4MXm-0004c0-Uo
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 13:57:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788976625;
+ s=mimecast20190719; t=1788976629;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W3w2pKCbPLWShyizraPWSFoupql/anbu/mS/0Jc1Iuw=;
- b=JB/4i6zwBOneCdxXrmIoDE9SiYq/FUWAtIEP8SPsOkJ8u0aXOPWX49AdMQdKXUvpd/J/uN
- h3wgjL4z0aBbeSljc0Swok5y+HFMYkC6Zcu8po1b6GPDyjeHE3hxDY8HhofJmQFzFZudbe
- fBOlOAv1QZTHZJGJrhpRGKj+VYOt73o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l5PmZE87TKCiubYIjrJI+9woBAy+nceE2Hd0ZDVFfZ8=;
+ b=Ezw+qfHfjROrK/YKhlDJARoruwWvgLXJ07yrkHcujGrAeDhuiuzlKbzpnKlLOZsfFg/YIr
+ jNoGtR12OtW3KqkP4pDHESblYBIydC99R2sbw/7UX9V/ewhwYE9FdB/sWkAhaY1IRFJlBq
+ dRAzno0EPGovi7PmYBCCKMveypDVLzs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-WCEZwCy5PbaXB0xwOSQHqg-1; Wed,
- 09 Sep 2026 13:57:02 -0400
-X-MC-Unique: WCEZwCy5PbaXB0xwOSQHqg-1
-X-Mimecast-MFC-AGG-ID: WCEZwCy5PbaXB0xwOSQHqg_1788976621
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606--1XUBZtINpeXlnuur3GDSw-1; Wed,
+ 09 Sep 2026 13:57:05 -0400
+X-MC-Unique: -1XUBZtINpeXlnuur3GDSw-1
+X-Mimecast-MFC-AGG-ID: -1XUBZtINpeXlnuur3GDSw_1788976624
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB4AD1954231; Wed,  9 Sep 2026 17:57:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C821A1800678; Wed,  9 Sep 2026 17:57:03 +0000 (UTC)
 Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0FE67195608C; Wed,  9 Sep 2026 17:56:57 +0000 (UTC)
+ id 3B76D195608C; Wed,  9 Sep 2026 17:57:00 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -57,23 +58,24 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 00/14] Encode object type security status in code
-Date: Wed,  9 Sep 2026 18:56:42 +0100
-Message-ID: <20260909175656.1572689-1-berrange@redhat.com>
+Subject: [PATCH 01/14] qom: add tracking of security state of object types
+Date: Wed,  9 Sep 2026 18:56:43 +0100
+Message-ID: <20260909175656.1572689-2-berrange@redhat.com>
+In-Reply-To: <20260909175656.1572689-1-berrange@redhat.com>
+References: <20260909175656.1572689-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,156 +91,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our docs/system/security.rst file loosely classifies code into that
-applicable for 'virtualization' vs 'non-virtualization' use cases.
-Only code relevant to the former group is eligible for security
-bug handling. It is difficult for any contributors to know what
-devices are in scope for 'virtualization' when reporting bugs,
-and even maintainers can have a hard time agreeing.
+This introduces a new flag "secure" against the Type/TypeInfo
+structs, and helpers to check this against the ObjectClass
+struct.
 
-It is well overdue to declare this information the code and present
-it to end users at runtime. This series starts the effort by defining
-the internal infrastructure, command line args and QMP extensions to
-handle the security status recording and reporting.
+If an object is considered to provide a security boundary to
+protect against untrusted code, the "secure" flag must be
+explicitly set to true.
 
-A previous posting included classifications for many devices. That
-is dropped this v3 series so we can focus on getting the core infra
-included. Device classifications will follow afterwards in a separate
-series.
+If it is set to false, or left unset, this indicates that
+the object does not intend to provide a security boundary.
+Bugs related to this object class will be ineligible for
+CVE assignment.
 
-The base concept is that the QOM  TypeInfo struct gains a new field
-"bool secure". This enables querying any ObjectClass to ask whether
-or not it is declared secure.
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qom/object.h | 13 +++++++++++++
+ qom/object.c         |  7 +++++++
+ 2 files changed, 20 insertions(+)
 
-By only using a single boolean flag, at runtime we are unable to
-distinguish between "marked insecure" and "no decision, implicitly
-insecure". As such, all our existing code is initially considered
-insecure, once this series is applied. Code we want to provide a
-security boundary for will explicitly opt-in with '.secure = true'.
-
-Previously it was intended to add '.secure = false' to each file
-too as it gets evaluated, however, this is now considered to be
-overkill. It is easy enough to build a list of everything that
-should be treated as secure by perusing "-device help" output.
-
-Classification for non-user creatable types can be left to a 2nd
-phase of work.
-
-In terms of user interface, the "-compat" argument gains a new
-parameter
-
-  * insecure-types=accept|reject|warn
-
-    The default 'accept' preserves historical behaviour of
-    anything being permissible. The other two options both
-    identify use of types that are not explicitly marked
-    as secure.
-
-The code annotations are useful immediately, but the -compat
--compat switch is unusable unless a minimum viable set of
-secure devices are defined in a follow series. Some conceptual
-examples though...
-
-Example: TCG is explicitly insecure, KVM is explicitly secure:
-
-  $ qemu-system-x86_64 -display none -compat insecure-types=reject -accel tcg
-  qemu-system-x86_64: -accel tcg: Type 'tcg-accel' does not provide a security boundary to protect against untrusted workloads
-  $ qemu-system-x86_64 -display none -compat insecure-types=reject -accel kvm
-  ^C
-
-Example: isapc machine type is explicitly insecure
-
-  $ qemu-system-x86_64 -display none -compat insecure-types=reject -machine isapc
-  qemu-system-x86_64: Type 'isapc-machine' does not provide a security boundary to protect against untrusted workloads
-
-Example: checks also apply in HMP, ne2k_pci is insecure
-
-  $ ./build/qemu-system-x86_64 -display none -compat insecure-types=reject -monitor stdio -accel kvm
-  QEMU 10.1.50 monitor - type 'help' for more information
-  (qemu) device_add ne2k_pci
-  Error: Type 'ne2k_pci' does not provide a security boundary to protect against untrusted workloads
-
-Example: checks also apply in QMP:
-
-  $ ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 -display none -compat insecure-types=reject -accel kvm
-  Welcome to the QMP low-level shell!
-  Connected
-  (QEMU) device_add driver=ne2k_oci
-  {"error": {"class": "GenericError", "desc": "Type 'ne2k_pci' does not provide a security boundary to protect against untrusted workloads"}}
-  (QEMU) device_add driver=virtio-net
-  {"return": {}}
-
-This series is available at
-
-  https://gitlab.com/berrange/qemu/-/commits/docs-security-status
-
-The WIP patches that add tagging of devices (which I will post separately
-in future) are at
-
-  https://gitlab.com/berrange/qemu/-/commits/docs-security-devices
-
-Changes in v3:
-
- * Dropped all device classification, to be re-posted as
-   a separate series
- * Reworded the docs based on previous feedback
- * Improved commit messages
- * Reformatted QAPI docs per feedback
- * Split commit adding QMP device list filtering
-   into two
- * Make CompatPolicy parameters 'const'
- * Add helper APIs in QOM for querying security
-   status to reduce duplicate code pattern
- * Fix placement of security check for accelerator
-   types
-
-Changes in v2:
-
- * Report security status in qom-list-types
- * Allow qom-list-types to filter on secure types
- * Remove 'bool insecure' on TypeInfo, assume that no specified
-   data is equivalent to '.secure = false'
- * Annotate a massive number of object types
-
-Daniel P. Berrangé (14):
-  qom: add tracking of security state of object types
-  qapi: add 'insecure-types' option for -compat argument
-  qom: add helper APIs for checking object security policy compliance
-  system: check security for accelerator types
-  system: report acclerator security status in help output
-  system: check security for machine types
-  system: report machine security status in help output
-  system: check security of device types
-  system: report device security status in help output
-  hw/core: report security status in query-machines
-  qom: refactor data passing for QOM list filtering
-  qom: report & filter on security status in qom-list-types
-  docs: expand security docs with info about security status
-  machine: add helpers for declaring secure/insecure machine types
-
- docs/system/security.rst     | 36 +++++++++++++++++++++++++++++++++
- hw/arm/bananapi_m2u.c        |  2 +-
- hw/arm/cubieboard.c          |  2 +-
- hw/arm/imx8mm-evk.c          |  2 +-
- hw/arm/integratorcp.c        |  2 +-
- hw/arm/mcimx7d-sabre.c       |  2 +-
- hw/arm/orangepi.c            |  2 +-
- hw/core/machine-qmp-cmds.c   |  1 +
- hw/ppc/pegasos.c             |  3 ++-
- include/hw/core/boards.h     | 25 ++++++++++++++++++-----
- include/hw/i386/pc.h         | 11 +++++++++-
- include/qapi/compat-policy.h |  5 +++++
- include/qom/object.h         | 39 ++++++++++++++++++++++++++++++++++++
- qapi/compat.json             | 23 ++++++++++++++++++++-
- qapi/machine.json            |  8 +++++++-
- qapi/qapi-util.c             | 30 +++++++++++++++++++++++++++
- qapi/qom.json                | 13 ++++++++++--
- qom/object.c                 | 22 ++++++++++++++++++++
- qom/qom-qmp-cmds.c           | 30 +++++++++++++++++++++------
- system/qdev-monitor.c        |  7 +++++++
- system/vl.c                  | 30 ++++++++++++++++++++++-----
- 21 files changed, 267 insertions(+), 28 deletions(-)
-
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 7ecd0f210f..687ceb6bba 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -453,6 +453,10 @@ struct Object
+  *   function.
+  * @abstract: If this field is true, then the class is considered abstract and
+  *   cannot be directly instantiated.
++ * @secure: If this field is initialized to true, then the class is considered
++ *   to provide a security boundary. If initialized to false, the class does
++ *   not provide a security boundary. If uninitialized (and thus implicitly
++ *   false) its status is not yet defined.
+  * @class_size: The size of the class object (derivative of #ObjectClass)
+  *   for this object.  If @class_size is 0, then the size of the class will be
+  *   assumed to be the size of the parent class.  This allows a type to avoid
+@@ -487,6 +491,7 @@ struct TypeInfo
+     void (*instance_finalize)(Object *obj);
+ 
+     bool abstract;
++    bool secure;
+     size_t class_size;
+ 
+     void (*class_init)(ObjectClass *klass, const void *data);
+@@ -1074,6 +1079,14 @@ const char *object_class_get_name(ObjectClass *klass);
+  */
+ bool object_class_is_abstract(ObjectClass *klass);
+ 
++/**
++ * object_class_is_secure:
++ * @klass: The class to check security of
++ *
++ * Returns: %true if @klass is declared to be secure, %false if not declared
++ */
++bool object_class_is_secure(ObjectClass *klass);
++
+ /**
+  * object_class_by_name:
+  * @typename: The QOM typename to obtain the class for.
+diff --git a/qom/object.c b/qom/object.c
+index b1834a57cc..32736a0111 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -67,6 +67,7 @@ struct TypeImpl
+     void (*instance_finalize)(Object *obj);
+ 
+     bool abstract;
++    bool secure;
+ 
+     const char *parent;
+     TypeImpl *parent_type;
+@@ -122,6 +123,7 @@ static TypeImpl *type_new(const TypeInfo *info)
+     ti->instance_finalize = info->instance_finalize;
+ 
+     ti->abstract = info->abstract;
++    ti->secure = info->secure;
+ 
+     for (i = 0; info->interfaces && info->interfaces[i].type; i++) {
+         ti->interfaces[i].typename = g_strdup(info->interfaces[i].type);
+@@ -1144,6 +1146,11 @@ bool object_class_is_abstract(ObjectClass *klass)
+     return klass->type->abstract;
+ }
+ 
++bool object_class_is_secure(ObjectClass *klass)
++{
++    return klass->type->secure;
++}
++
+ const char *object_class_get_name(ObjectClass *klass)
+ {
+     return klass->type->name;
 -- 
 2.55.0
 
