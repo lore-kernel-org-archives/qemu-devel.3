@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394EAC79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83016C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4EV0-0004Lp-CH; Wed, 09 Sep 2026 05:21:46 -0400
+	id 1x4EVn-0004rM-1C; Wed, 09 Sep 2026 05:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EUy-0004Lc-V3
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:21:44 -0400
+ id 1x4EVl-0004rA-RL
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:22:33 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EUx-0000hc-8N
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:21:44 -0400
+ id 1x4EVk-0000n2-2M
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:22:33 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899Lamm065140
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899MNmX065409
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:21:36 +0900 (JST)
+ Wed, 9 Sep 2026 18:22:23 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YhBHpu1GgJZn+17EEqWfhexFk7lXk90aXlRUn4+vveY=; 
+DKIM-Signature: a=rsa-sha256; bh=Ennd+Qn4cOrQEWkwHRT2njp0liBH/mNWy50PpJRIsxc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788945696; v=1;
- b=FkxqR91MjiAGQT8EW/2t+a5+wCclILxX/pXJoUQc8xz2MEqqsEDyS9vagPd48vWp
- 0KAJDC8zFJoBOUwUsmeDzNq8ZSgjzPb+Oc7siERwov/EXCQIyuVGTWjFl9PmmkGu
- pYNrdL0AxYrwnX9B17ub/yA0XWmm+oyoNAcP903majeAgfZrhRCfXVKQU/ghiSMr
- bNq8ZWBa5y4LoeCwH6LmZ7iIDtfaKwBZQLg0dpawpKDmcND3/SKk+NLcoa0JdCbV
- dJhCX4OGE2bMYyNMQzFvEBvWZSr12hiOT1DcSMN/MTibghfxR+ueH3lGDOTEIsWt
- jyi5sBg0QjQTpSimKVN8Hw==
-Message-ID: <f5b7a18b-3e5c-4662-adc1-8048f6d1b5f5@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:21:36 +0900
+ s=rs20250326; t=1788945743; v=1;
+ b=sJy6mvHOi9Kj0DiLl6u5p3iTqHSZQ0uw+wRRTVULBGramL0aS3JPnAfp/eIqGMrv
+ lJH0CsQZim1dhzXve1z5PqZvZ2iFWxbRWDaqAb3aU/Y6aYQ2ZJKu2JfPiQZUMJwd
+ /exKnSmQofQ3Z//qlfRH17gcZqYFbXgbKxkINGlCKFTEq1cIxYOicwutFpG+zNuc
+ F/EiwIHXq278cEMPC8g597OhJ4mwSFcTT+vEaXz3HTLGOyFoZoYjOHi6TlkJ/GDW
+ 77mg2TTqHLphWEPuyV8BAJOL5nrPZspzR6XQuaIx9E2lgwUVqAvrdAS5j2lVVL9W
+ TccqJv92Vq1UMqR2TVRYAA==
+Message-ID: <eda353bd-d019-4c39-b022-6f06ddceceeb@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:22:23 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/25] contrib/vhost-user-gpu: drop scanout_bitmask
- bookkeeping
+Subject: Re: [PATCH v2 16/25] virtio-gpu-rutabaga: fix scanout handling
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -50,10 +49,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-15-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-16-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-15-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-16-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,11 +79,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> The per-resource scanout_bitmask is a reverse index of which
-> scanouts reference a given resource. The information is already
-> available from scanout->resource_id. Performance impact should be
-> negligible.
+> The rutabaga backend was misusing the scanout_bitmask field as a
+> plain scanout ID instead of a bitmask.
 > 
+> Fix the scanout lookup to use scanout->resource_id directly. Also
+> fix the missing resource_id clear when disabling a scanout, and
+> flush all matching scanouts instead of just the first one.
+> 
+> Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
