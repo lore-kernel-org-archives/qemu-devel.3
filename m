@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739A7C79FBB
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 21:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB898C79FBB
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 21:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Q7C-0000cX-Ab; Wed, 09 Sep 2026 17:45:58 -0400
+	id 1x4Q6x-0000X0-JX; Wed, 09 Sep 2026 17:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q7A-0000bF-Gk
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:56 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q6w-0000Wd-IX
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:42 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q78-0005RB-4T
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:56 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q6v-0005OP-2y
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:42 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B12371FCC4;
- Wed,  9 Sep 2026 21:45:44 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 996E11FCD5;
+ Wed,  9 Sep 2026 21:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788990348; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788990335; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bw+m8KeOaZv93ExV8S82Z3OlqKiAwvoFqTWW5YOszXU=;
- b=2FwqGAzdR0cs0Mb4nX57vnY5BJeZECnM/2onwQ+v/DRRwRbKAcTe7uoZSJ99TrTZYhOKqE
- kE/1lT6KJn52OqtNhAVY6GeKmaOxft9JHaP1NzmBf0Wah9g5xh9SPsU3FjkOsz8s6Aoy5U
- g+op/3uju2NU4rDax948H51qcFzR5RY=
+ bh=iGLcOKZE5wRlQQ/6HuuL7e18y/nZOv74SaavIEtGgiI=;
+ b=a2wblv6fMmK1cGBKEZjwIHtNhymg6MoJF5QUgAA5aErCNPINiqRqYmu8uPLrLLW973uQ8h
+ oHc/8UpiEIMlw/pJgNd5IGX4qv4kYLVJSf/p5f5AHmNO+OGN1d4GwLZrLNETGYtStPxcaf
+ UDoLyFN4rY817ZNvBHB7vca0fwDcHlQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788990348;
+ s=susede2_ed25519; t=1788990335;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bw+m8KeOaZv93ExV8S82Z3OlqKiAwvoFqTWW5YOszXU=;
- b=iMKPif7H23ou4c3H/tc9mT1YAhiJNwVjMcDSZdq7DMIB0lB9/zXiFSXQ0VgQwL3pJl6vpC
- uXQ1kxv9HFvQaODQ==
+ bh=iGLcOKZE5wRlQQ/6HuuL7e18y/nZOv74SaavIEtGgiI=;
+ b=3wrMKpKqJ2jpT6y2i1uWUhDSUzJSiR+4HBSUMnllw66lnmCXkVF7BRTYgljkiuw8gLPgAW
+ MKVy8eSF025ssyAw==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788990344; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788990331; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bw+m8KeOaZv93ExV8S82Z3OlqKiAwvoFqTWW5YOszXU=;
- b=kS6YwW73xnBn84aSAjx3tGpr+DspmfimnQX5NmEzIFh0ERMWYSZzUCif2b4Ez8iq493jwY
- IuI9dKr6dfIywZIhKafxIFZSeGzl3Xni7U43oXeZLGXPCPDIjzUKsX+imWwSf+wQr7L0Sa
- vxfP62vDF7zxXq7LnUXMFH4GyOR8NSU=
+ bh=iGLcOKZE5wRlQQ/6HuuL7e18y/nZOv74SaavIEtGgiI=;
+ b=0zutnGni65AqwN1d36i4IIxmnEqy9EhwBAmUpr1IaRUsRVrLOjTvFlBPBzra8pK3q+76Xv
+ +uejuVbkFGDTANDDWQBweOrHuxOLQ5kkVFpbr1YuHjZGnJGJuDZXP2V9oF5HPGnFKvCD6w
+ 00nvJ9T/8Pk6gCeFnoZkdLBMFk3i3A8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788990344;
+ s=susede2_ed25519; t=1788990331;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bw+m8KeOaZv93ExV8S82Z3OlqKiAwvoFqTWW5YOszXU=;
- b=fTMZZq5eSQUd+qWYAmS+pul22isTWHZx78uOs9+YFshagK7IkceaQA0rLsqTMQx/Yo6eMY
- mk1JT9KkDkXq2YAw==
+ bh=iGLcOKZE5wRlQQ/6HuuL7e18y/nZOv74SaavIEtGgiI=;
+ b=OvyCL4Z2uxOFImjXzKDGglaatGAsjDUCb+CFMBB7oAM8dG4qO5qNTH9BA07GR5dMBue0Lk
+ 8xKVDq/e0vxE36Bg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 581AD1376E;
- Wed,  9 Sep 2026 21:45:43 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E8DD1376E;
+ Wed,  9 Sep 2026 21:45:30 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yOTWCIfToWqzawAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 09 Sep 2026 21:45:43 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iIgZA3rToWqzawAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 09 Sep 2026 21:45:30 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 14/18] migration: Use output visitor in info command
-Date: Wed,  9 Sep 2026 18:45:04 -0300
-Message-ID: <20260909214509.237309-15-farosas@suse.de>
+Subject: [PATCH v2 08/18] migration: Use migrate_params_free during finalize
+Date: Wed,  9 Sep 2026 18:44:58 -0300
+Message-ID: <20260909214509.237309-9-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260909214509.237309-1-farosas@suse.de>
 References: <20260909214509.237309-1-farosas@suse.de>
@@ -116,323 +116,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hmp_info_migrate_parameters function currently open-codes the
-mon_printf calls for each migration parameter. As with the set command
-in the last patch, this should not be necessary as the QAPI
-infrastructure already has generated code that takes type and struct
-member names into account, including converting _ from C into the '-'
-character as part of parameter names strings.
+Use the recently introduced migrate_params_free routine at
+migration_instance_finalize() so that newly added pointers are already
+freed by default.
 
-The current code is also quite painful to rebase if a series has been
-carried for a long time while parameters have been added in master.
+Special case: The TLS options are currently the only pointers that
+also have a qdev property implementation, so they will be freed by
+qdev using the .release method. Update the method so that a second
+invocation of qapi_free_StrOrNull doesn't assert.
 
-Replace all of this with a conversion from MigrationParameters to
-QDict using an output visitor and a loop over the QDict that prints
-per-QAPI-type formatted strings.
-
-Modelled after block/qapi.c:dump_qobject, but with some changes to
-keep the migration command output formatting.
-
-Note that this was not a for-free improvement, the HMP command format
-output was changed incompatibly in a previous patch. It doesn't output
-units anymore.
-
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration-hmp-cmds.c | 238 ++++++++++++---------------------
- migration/options.c            |   2 +-
- migration/options.h            |   1 +
- 3 files changed, 86 insertions(+), 155 deletions(-)
+ migration/migration.c | 3 +--
+ migration/options.c   | 7 ++++---
+ migration/options.h   | 1 +
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 0d93d38b05..5dfbb69390 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -26,7 +26,12 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
- #include "qapi/qobject-input-visitor.h"
-+#include "qapi/qobject-output-visitor.h"
-+#include "qobject/qbool.h"
- #include "qobject/qdict.h"
-+#include "qobject/qjson.h"
-+#include "qobject/qlist.h"
-+#include "qobject/qnum.h"
- #include "qobject/qstring.h"
- #include "qapi/string-input-visitor.h"
- #include "qapi/string-output-visitor.h"
-@@ -317,170 +322,95 @@ void hmp_info_migrate_capabilities(MonitorHMP *hmp, const QDict *qdict)
-     qapi_free_MigrationCapabilityStatusList(caps);
- }
- 
--static void monitor_print_cpr_exec_command(MonitorHMP *hmp, strList *args)
-+static void hmp_migrate_print_qobject(MonitorHMP *hmp, const char *label,
-+                                      QObject *obj)
+diff --git a/migration/migration.c b/migration/migration.c
+index b413d28622..dab282dd2f 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -4039,8 +4039,7 @@ static void migration_instance_finalize(Object *obj)
  {
--    monitor_hmp_printf(hmp, "%s:",
--        MigrationParameter_str(MIGRATION_PARAMETER_CPR_EXEC_COMMAND));
-+    const char *sep;
+     MigrationState *ms = MIGRATION(obj);
  
--    while (args) {
--        monitor_hmp_printf(hmp, " %s", args->value);
--        args = args->next;
-+    if (!obj) {
-+        return;
-+    }
-+
-+    /*
-+     * Put a space after labels
-+     * foo: bar
-+     *     ^
-+     */
-+    if (label && label[0] && label[strlen(label) - 1] == ':') {
-+        sep = " ";
-+    } else {
-+        sep = "";
-+    }
-+
-+    switch (qobject_type(obj)) {
-+    case QTYPE_QNUM: {
-+        g_autofree char *str = qnum_to_string(qobject_to(QNum, obj));
-+
-+        monitor_hmp_printf(hmp, "%s%s%s", label, sep, str);
-+        break;
-+    }
-+    case QTYPE_QSTRING:
-+        monitor_hmp_printf(hmp, "%s%s%s", label, sep,
-+                           qstring_get_str(qobject_to(QString, obj)));
-+        break;
-+    case QTYPE_QDICT: {
-+        QDict *d = qobject_to(QDict, obj);
-+        const QDictEntry *e;
-+        int i = 0;
-+
-+        for (e = qdict_first(d); e; e = qdict_next(d, e), i++) {
-+            g_autofree char *l = g_strdup_printf("%s:", qdict_entry_key(e));
-+            if (i) {
-+                monitor_hmp_printf(hmp, " ");
-+            }
-+            hmp_migrate_print_qobject(hmp, l, qdict_entry_value(e));
-+        }
-+        break;
-+    }
-+    case QTYPE_QLIST: {
-+        const QListEntry *e;
-+
-+        monitor_hmp_printf(hmp, "%s", label);
-+
-+        for (e = qlist_first(qobject_to(QList, obj)); e; e = qlist_next(e)) {
-+            /*
-+             * In the first iteration, this is the space after the
-+             * colon, otherwise it's the space between list
-+             * elements.
-+             */
-+            monitor_hmp_printf(hmp, " ");
-+            hmp_migrate_print_qobject(hmp, "", e->value);
-+        }
-+
-+        break;
-+    }
-+    case QTYPE_QBOOL:
-+        monitor_hmp_printf(hmp, "%s%s%s", label, sep,
-+                           qbool_get_bool(qobject_to(QBool, obj)) ?
-+                           "on" : "off");
-+        break;
-+    case QTYPE_NONE:
-+    case QTYPE_QNULL:
-+    default:
-+        g_assert_not_reached();
-+        break;
-     }
--    monitor_hmp_printf(hmp, "\n");
- }
- 
- void hmp_info_migrate_parameters(MonitorHMP *hmp, const QDict *qdict)
- {
--    MigrationParameters *params;
--    MigrationState *s = migrate_get_current();
-+    MigrationParameters *params = qmp_query_migrate_parameters(NULL);
-+    g_autoptr(QDict) d;
-+    const QDictEntry *e;
- 
--    params = qmp_query_migrate_parameters(NULL);
-+    assert(params);
- 
--    if (params) {
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_INITIAL),
--            params->announce_initial);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_MAX),
--            params->announce_max);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_ROUNDS),
--            params->announce_rounds);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_STEP),
--            params->announce_step);
--        assert(params->has_throttle_trigger_threshold);
--        monitor_hmp_printf(hmp, "%s: %u\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_THROTTLE_TRIGGER_THRESHOLD),
--            params->throttle_trigger_threshold);
--        assert(params->has_cpu_throttle_initial);
--        monitor_hmp_printf(hmp, "%s: %u\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_INITIAL),
--            params->cpu_throttle_initial);
--        assert(params->has_cpu_throttle_increment);
--        monitor_hmp_printf(hmp, "%s: %u\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_INCREMENT),
--            params->cpu_throttle_increment);
--        assert(params->has_cpu_throttle_tailslow);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_TAILSLOW),
--            params->cpu_throttle_tailslow ? "on" : "off");
--        assert(params->has_max_cpu_throttle);
--        monitor_hmp_printf(hmp, "%s: %u\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
--            params->max_cpu_throttle);
--        assert(params->tls_creds);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_TLS_CREDS),
--                       params->tls_creds->u.s);
--        assert(params->tls_hostname);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
--                       params->tls_hostname->u.s);
--        assert(params->tls_authz);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
--                       params->tls_authz->u.s);
--        assert(params->has_max_bandwidth);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
--            params->max_bandwidth);
--        assert(params->has_avail_switchover_bandwidth);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_AVAIL_SWITCHOVER_BANDWIDTH),
--            params->avail_switchover_bandwidth);
--        assert(params->has_max_postcopy_bandwidth);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH),
--            params->max_postcopy_bandwidth);
--        assert(params->has_downtime_limit);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_DOWNTIME_LIMIT),
--            params->downtime_limit);
--        assert(params->has_x_checkpoint_delay);
--        monitor_hmp_printf(hmp, "%s: %u\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_X_CHECKPOINT_DELAY),
--            params->x_checkpoint_delay);
--        monitor_hmp_printf(hmp, "%s: %u\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_CHANNELS),
--            params->multifd_channels);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_COMPRESSION),
--            MultiFDCompression_str(params->multifd_compression));
--        assert(params->has_zero_page_detection);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_ZERO_PAGE_DETECTION),
--            qapi_enum_lookup(&ZeroPageDetection_lookup,
--                params->zero_page_detection));
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_XBZRLE_CACHE_SIZE),
--            params->xbzrle_cache_size);
-+    d = migrate_params_to_dict(params, NULL);
-+    for (e = qdict_first(d); e; e = qdict_next(d, e)) {
-+        g_autofree char *label = g_strdup_printf("%s:", qdict_entry_key(e));
- 
--        if (s->has_block_bitmap_mapping) {
--            BitmapMigrationNodeAliasList *nal;
--            BitmapMigrationNodeAlias *na;
--            BitmapMigrationBitmapAliasList *bal;
--            BitmapMigrationBitmapAlias *ba;
--            BitmapMigrationBitmapAliasTransform *bat;
--
--            monitor_hmp_printf(hmp, "%s:",
--                           MigrationParameter_str(
--                               MIGRATION_PARAMETER_BLOCK_BITMAP_MAPPING));
--
--            for (nal = params->block_bitmap_mapping; nal; nal = nal->next)
--            {
--                na = nal->value;
--                monitor_hmp_printf(hmp, " bitmaps:");
--                for (bal = na->bitmaps; bal; bal = bal->next) {
--                    ba = bal->value;
--                    bat = ba->transform;
--
--                    monitor_hmp_printf(hmp, " name: %s", ba->name);
--                    if (bat && bat->has_persistent) {
--                        if (bat->persistent) {
--                            monitor_hmp_printf(hmp, " persistent: on");
--                        } else {
--                            monitor_hmp_printf(hmp, " persistent: off");
--                        }
--                    }
--                    monitor_hmp_printf(hmp, " alias: %s", ba->alias);
--                }
--                monitor_hmp_printf(hmp, " node-name: %s alias: %s",
--                               na->node_name, na->alias);
--            }
--
--            monitor_hmp_printf(hmp, "\n");
--        }
--
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--        MigrationParameter_str(MIGRATION_PARAMETER_X_VCPU_DIRTY_LIMIT_PERIOD),
--        params->x_vcpu_dirty_limit_period);
--
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_VCPU_DIRTY_LIMIT),
--            params->vcpu_dirty_limit);
--
--        assert(params->has_mode);
--        monitor_hmp_printf(hmp, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_MODE),
--            qapi_enum_lookup(&MigMode_lookup, params->mode));
--
--        if (params->has_direct_io) {
--            monitor_hmp_printf(hmp, "%s: %s\n",
--                               MigrationParameter_str(
--                                   MIGRATION_PARAMETER_DIRECT_IO),
--                               params->direct_io ? "on" : "off");
--        }
--
--        if (params->has_x_rdma_chunk_size) {
--            monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
--                           MigrationParameter_str(
--                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
--                           params->x_rdma_chunk_size);
--        }
--
--        assert(params->has_cpr_exec_command);
--        monitor_print_cpr_exec_command(hmp, params->cpr_exec_command);
-+        hmp_migrate_print_qobject(hmp, label, qdict_entry_value(e));
-+        monitor_hmp_printf(hmp, "\n");
-     }
- 
-     qapi_free_MigrationParameters(params);
+-    qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
+-    qapi_free_strList(ms->parameters.cpr_exec_command);
++    migrate_params_free(&ms->parameters, NULL);
+     qemu_mutex_destroy(&ms->error_mutex);
+     qemu_mutex_destroy(&ms->qemu_file_lock);
+     qemu_sem_destroy(&ms->wait_unplug_sem);
 diff --git a/migration/options.c b/migration/options.c
-index 990fcd6867..188c4ad20b 100644
+index f0774fc50b..990fcd6867 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -1089,7 +1089,7 @@ static void tls_opt_to_str(StrOrNull *opt)
-     opt->u.s = g_strdup("");
+@@ -271,8 +271,9 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
+ 
+ static void release_StrOrNull(Object *obj, const char *name, void *opaque)
+ {
+-    const Property *prop = opaque;
+-    qapi_free_StrOrNull(*(StrOrNull **)object_field_prop_ptr(obj, prop));
++    StrOrNull **ptr = object_field_prop_ptr(obj, opaque);
++
++    g_clear_pointer(ptr, qapi_free_StrOrNull);
  }
  
--static QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp)
-+QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp)
+ static void set_default_value_tls_opt(ObjectProperty *op, const Property *prop)
+@@ -1059,7 +1060,7 @@ AnnounceParameters *migrate_announce_params(void)
+     return &ap;
+ }
+ 
+-static bool migrate_params_free(MigrationParameters *params, Error **errp)
++bool migrate_params_free(MigrationParameters *params, Error **errp)
  {
-     QObject *obj = NULL;
-     Visitor *v = qobject_output_visitor_new(&obj);
+     Visitor *v = qapi_dealloc_visitor_new();
+     bool ret;
 diff --git a/migration/options.h b/migration/options.h
-index c7da2d0b5b..0d9f88c11e 100644
+index c272eb6208..c7da2d0b5b 100644
 --- a/migration/options.h
 +++ b/migration/options.h
-@@ -94,4 +94,5 @@ uint64_t migrate_rdma_chunk_size(void);
+@@ -93,4 +93,5 @@ uint64_t migrate_rdma_chunk_size(void);
+ 
  bool migrate_params_check(MigrationParameters *params, Error **errp);
  void migrate_params_init(MigrationParameters *params);
- bool migrate_params_free(MigrationParameters *params, Error **errp);
-+QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp);
++bool migrate_params_free(MigrationParameters *params, Error **errp);
  #endif
 -- 
 2.53.0
