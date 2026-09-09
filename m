@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F0DC79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A745C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4E6v-0005Y4-5g; Wed, 09 Sep 2026 04:56:53 -0400
+	id 1x4E8T-0006Dq-Mw; Wed, 09 Sep 2026 04:58:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4E6s-0005Xc-JE
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:56:50 -0400
+ id 1x4E8S-0006Di-Kl
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:58:28 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4E6p-00061J-Q7
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:56:50 -0400
+ id 1x4E8Q-0006BP-Ro
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:58:28 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6898ucTT055518
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6898wJoC056077
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 17:56:39 +0900 (JST)
+ Wed, 9 Sep 2026 17:58:19 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=II4yslz4J6QVBTlHnYR5n8PsXNErvstJEBQD2vpm6ho=; 
+DKIM-Signature: a=rsa-sha256; bh=H8pDqeWgN/FSr8BepXPbgT21Kj1WWDMeItYuVz94U+c=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788944199; v=1;
- b=fZ2eCL5EPXiXj+jqChKhkFmFZ4PZ+9NdASjPxbtMf6aQIVzhYF8RXlczWRwhL9UE
- aAy3iD+Nk7qCdNGDrinyqesOFOcKDobYkWnnHQD7Ha4ZvuF4yVaCU+toHqPQYeSv
- zbbGc3U23zOEZ4Jh1R8HJgFJrEIK7o7ANV0B38sNVyvJdT4PcLA2Kvnts2khOD8B
- T14+VGS4lijYOyw/ay9iZpEBWeCzXxHIu0CKQ1nhzF+OYTkN7Jqii9JQChtg+Ydd
- pdS3SbXvHWhTyfb+0QEVOVBJ+WP1LrNkItUgHqhyFtKO9BHQZJATQDYoCKjqcWY9
- Ey1lIs2fjyZlIllg5VSC/Q==
-Message-ID: <8e30d182-15eb-492d-a30e-be3490c8af63@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 17:56:38 +0900
+ s=rs20250326; t=1788944299; v=1;
+ b=NkQP6zvLexOAOy7BrGRBJpQpCfY7LKkJngnO2f/Q+5SpKrdPYkB+yrmsDDm4glYC
+ qFBKb4pEAvvjU8DtYW/slVoQDvrNYuvjznh+EtJHYtgkQsXOeDK7F15StoDWtJoe
+ qKkY5DWsPlRx74q6hH+g2rutl4WsTB2jREx6LFYWz5c2UojJwDrlfOZ4GGjjFtzs
+ wrKmitCi0VGSBpx0XhUtYLA5OhtCH3VtxQeVWf4Xo+zsfc//YmFQjpHI6wAZsVv4
+ bYZ8Z/woIve3CqcJUudmxrDPRo0f6f8Q6xwiMatND2gwYsz3tyMXPrpusqlB4gna
+ /z851/N/LuzVWGsx9KclJg==
+Message-ID: <ae89c37d-c8d3-48b0-84f1-a056f307f123@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 17:58:19 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/25] virtio-gpu: disable blob scanouts on mapping
- cleanup
+Subject: Re: [PATCH v2 03/25] hw/display/virtio-gpu: introduce
+ virtio_gpu_{simple,virgl}_resource_new()
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -50,10 +50,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-1-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-3-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-1-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-3-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,14 +80,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> When a blob resource backing is cleaned up (for ex via detach_backing),
-> any scanouts referencing it must be disabled first to prevent the
-> dmabuf from outliving its backing memory.
+> All allocation sites used g_new0() which zero-initializes fields.
+> However share_handle must be SHAREABLE_NONE (-1 on Unix, NULL on
+> Windows) and dmabuf_fd must be -1, not 0. Centralize allocation and
+> field initialization in new constructors fix this and reduce code
+> duplication.
 > 
-> Fixes: CVE-2026-66020
-> Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-> Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> This fixes -display dbus with virtio-gpu blob resources. The other
+> end is currently receiving qemu fd 0.
+> 
+> Fixes: 5f899c34af1d (“virtio-gpu: allocate shareable 2d resources on !win32”)
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
