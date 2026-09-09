@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5C2C79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E564DC79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4G5l-0002FS-9I; Wed, 09 Sep 2026 07:03:49 -0400
+	id 1x4G5h-0002Eo-SX; Wed, 09 Sep 2026 07:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4G5j-0002F9-Rr
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:47 -0400
+ id 1x4G5g-0002EU-I4
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4G5i-0005Ep-Hn
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:47 -0400
+ id 1x4G5e-0005Ec-HX
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788951826;
+ s=mimecast20190719; t=1788951822;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wjrug66JF7sj2Em1iOXDLtWW+CYxXnfe2H2hXOKSaUU=;
- b=Rdmu+L8HghkXqRUVHqzUnLUSZxGGyo7TXmaLSaYRclfdu3ylZFFO20Bm0nsVgce6K5u1kJ
- UCqLgqF/VB0sqhQzuay9O+/nT9VhXvYAosXF70v7+ye8cPv0Pg1eSzwkR6+mb0KDsq8/mM
- aYCgZgfnFNY2iqvVZvfQfQ2WJRLwoeE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0ngT2cCLD1QZ+H2eW9Nvud+V6k97Yyz3vx5HyUPP+dw=;
+ b=HfUQGFAUfBAXSLiz1PpI8co1OciZeN0hspq6CTuL7lcQ7wKP23dwUbDIMM338i4YzaslGx
+ iVNcRF2VhM6QzXuMXQ8rF7zYW23jXIqKF6dNi+XHMm0PgmuAstuFZ7Z8JcD+ooKZgd16L2
+ JaquBxKC7C27Ov7HSwJuG/fRW8nq1EM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-ALxAPdPEOMmZJNnPxNecAA-1; Wed,
- 09 Sep 2026 07:03:42 -0400
-X-MC-Unique: ALxAPdPEOMmZJNnPxNecAA-1
-X-Mimecast-MFC-AGG-ID: ALxAPdPEOMmZJNnPxNecAA_1788951821
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-umZxSPvaOBa_Rdd84PC_qg-1; Wed,
+ 09 Sep 2026 07:03:38 -0400
+X-MC-Unique: umZxSPvaOBa_Rdd84PC_qg-1
+X-Mimecast-MFC-AGG-ID: umZxSPvaOBa_Rdd84PC_qg_1788951817
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F1971954AD7; Wed,  9 Sep 2026 11:03:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 165EC1956095; Wed,  9 Sep 2026 11:03:37 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D022F1800446; Wed,  9 Sep 2026 11:03:39 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8D1E81955F19; Wed,  9 Sep 2026 11:03:35 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 09 Sep 2026 15:03:09 +0400
-Subject: [PATCH v3 04/24] virtio-gpu/virgl: free BHs and timers on renderer
- reset
+Date: Wed, 09 Sep 2026 15:03:08 +0400
+Subject: [PATCH v3 03/24] hw/display/virtio-gpu: introduce
+ virtio_gpu_{simple,virgl}_resource_new()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260909-virtio-gpu-cleanup-v3-4-99266590e79d@redhat.com>
+Message-Id: <20260909-virtio-gpu-cleanup-v3-3-99266590e79d@redhat.com>
 References: <20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com>
 In-Reply-To: <20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alex Williamson <alex@shazbot.org>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1353;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10567;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=pjazvMH3OTm4G/gkcv4HVSFx91Q4hZxlcUF0x0N0LS8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoTzyIR3lBujTDdAJiESTnLtTn89BfrKWbWifz
- OGzIM0g3QCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqE88gAKCRDa6OEJdZac
- 5WHED/4x+Vss34gpEbL+xvbaMOKL8zy1QmXcnQC8654Lq6GuPL/uGHxediEMyjZqXkn7av95rn3
- 8XwN2mJCCtV2I2rTITDNmv+21wvrUacb6cEXhuRIHotDP7SelmOK0DoeKgNumlLBSXII+iS/QqQ
- oSOs+xTqyXIVmSte0Z10s+WdzkBWx/Wgy5DvDiyzr8ouhw2NjG+kXuMqL341l5/AMhPzGggfMO1
- kMJX9dmfoL8OuuJpXqpiSodkneQ5TrtQvuXpJk7gTfy7uENE69i6HeKihIUhzx/aQIzLk93FfA0
- WkQuhnfJ/t9G6vvbGMTo6ZDz1i4nQvws5tWn8hj6nQLWajmCcqyTsV8tOxgjXU8GRR5y8yXdBtY
- HtkF6rJS/wZV4pLPhXc/PpJua3/cBdnBW1T3BTTxEbpoQlxqqgUpV9zXGDqWcYEp+1/l6Ap7X2z
- lqSlEqENPwtGq/FmwcMjGw7QSbZKIc+8a4AGvjAvJkFSPHWCi1+bhOk2T78dmGOzuZLPHGsxn0y
- ATbIWi+l3IUwFgjfmt584RTsPeECdVdCSE6yVQNr52137Rm41cY5lpB3W7mUgT97YnHH1Zh+gze
- eBFRIvmWWSbTN7IFuHm8OWwDlR3Jg2MDWh7EVAA5AZctYTUHOHLmnv5xthR8SaaJrLnIYQf4FsW
- EwTzBUcFJ2jZDdA==
+ bh=w3w7Q50Jg6Ng9Xo0v3C94n/99pxWsT7TSnCepItsbx4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoTzyr0j7xAITq4NjP22t/qEVqqiFEcnVWKuc/
+ dRNv74LHTaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqE88gAKCRDa6OEJdZac
+ 5eO2EACs2Vavq6JOtXZOs5XcOqJLyWbBpAdvwR9qU3qLtw0zuYRbNKQre52D7p1xOVd7b04Wp0z
+ CE9aPmwDFxOBrHMP9r4YrRqWtwXJLy8vs26daxlc7UDx/i0sThJXY9cmumW3BgsUNzbS/SvLaN9
+ nsV+H1WzIcRfi6R5eb5QAk5fpOREFHPCO3zciPi1RyFuaNWlUpzmQeMR8w1QK5542UQ7lmW//eY
+ qkVggve6vCgbxgn/oOWZ5/J6r7NGnapv1AR5Pi7Gdbo5ehVPcnCfATHPtlEC4uSLkf6asnrobqV
+ M27t2TBwYRDIxv+FxQFUbgJVDQiI6LzmDu0t+m84ZnkdjxAlXHCchy06aPnblVZnycAn+tZRFtO
+ 6UraTyCdYEnQ1DpxqtP+dpabg+DWnEcyrqL4HlbvvmttRkdGTIzbA2a9I+tzfcKFOyGsNmXayh+
+ xXMfZHXbaB5WKhPk+eJNRi6mhiW4F2e46qg+VzWyNX3ZIXsigu7KzE6sima4oYymZ7+WzFOzvea
+ 59ff8SzvUMeio3/Efvfj8UnCMYg1Nf1BbFVGh0FcCpOGfAJKHaxnAtRF92MOdbbdUArkdFbpMf1
+ bo5N37SQuEc6VOU5xQPYZPe70E/OkDTS5q5AfzCi40Yxa1wMtB0Q1jHXQRdgWjMQgjy4zRVV1SC
+ 6dSaJHvpbCSsWCg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 127.0.0.2
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,42 +111,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_gpu_virgl_reset() does not free the bottom halves or timers
-allocated by the previous virtio_gpu_virgl_init() call. A subsequent
-virtio_gpu_virgl_init() overwrites the old pointers, leaking the
-previous allocations.
+All allocation sites used g_new0() which zero-initializes fields.
+However share_handle must be SHAREABLE_NONE (-1 on Unix, NULL on
+Windows) and dmabuf_fd must be -1, not 0. Centralize allocation and
+field initialization in new constructors fix this and reduce code
+duplication.
 
-Fixes: 7e688d1bf515 ("virtio-gpu: Handle virtio_gpu_virgl_init() failure")
+This fixes -display dbus with virtio-gpu blob resources. The other
+end is currently receiving qemu fd 0.
+
+Fixes: 5f899c34af1d (“virtio-gpu: allocate shareable 2d resources on !win32”)
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu-virgl.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/display/virtio-gpu-rutabaga.c | 21 +++----------
+ hw/display/virtio-gpu-virgl.c    | 48 +++++++++++++++++++----------
+ hw/display/virtio-gpu.c          | 66 +++++++++++++++++++++++++++++-----------
+ include/hw/virtio/virtio-gpu.h   | 11 +++++++
+ 4 files changed, 97 insertions(+), 49 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 742d9dde4a32..7f1d1e0c3276 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -1430,6 +1430,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index 041216a10d04..b8f8a2068d0b 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -100,12 +100,8 @@ rutabaga_cmd_create_resource_2d(VirtIOGPU *g,
+     result = rutabaga_resource_create_3d(vr->rutabaga, c2d.resource_id, &rc_3d);
+     CHECK(!result, cmd);
  
- static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
- {
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
-     struct virtio_gpu_simple_resource *res, *tmp;
- 
-     /*
-@@ -1448,6 +1449,11 @@ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
- 
-     virtio_gpu_virgl_reset_async_fences(g);
- 
-+    g_clear_pointer(&gl->cmdq_resume_bh, qemu_bh_delete);
-+    g_clear_pointer(&gl->async_fence_bh, qemu_bh_delete);
-+    g_clear_pointer(&gl->print_stats, timer_free);
-+    g_clear_pointer(&gl->fence_poll, timer_free);
-+
-     return true;
+-    res = g_new0(struct virtio_gpu_simple_resource, 1);
+-    res->width = c2d.width;
+-    res->height = c2d.height;
+-    res->format = c2d.format;
+-    res->resource_id = c2d.resource_id;
+-
++    res = virtio_gpu_simple_resource_new(c2d.resource_id, c2d.width,
++                                         c2d.height, c2d.format);
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
  }
  
+@@ -139,12 +135,8 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
+     result = rutabaga_resource_create_3d(vr->rutabaga, c3d.resource_id, &rc_3d);
+     CHECK(!result, cmd);
+ 
+-    res = g_new0(struct virtio_gpu_simple_resource, 1);
+-    res->width = c3d.width;
+-    res->height = c3d.height;
+-    res->format = c3d.format;
+-    res->resource_id = c3d.resource_id;
+-
++    res = virtio_gpu_simple_resource_new(c3d.resource_id, c3d.width,
++                                         c3d.height, c3d.format);
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ }
+ 
+@@ -634,10 +626,7 @@ rutabaga_cmd_resource_create_blob(VirtIOGPU *g,
+ 
+     CHECK(cblob.resource_id != 0, cmd);
+ 
+-    res = g_new0(struct virtio_gpu_simple_resource, 1);
+-
+-    res->resource_id = cblob.resource_id;
+-    res->blob_size = cblob.size;
++    res = virtio_gpu_simple_resource_new_blob(cblob.resource_id, cblob.size);
+ 
+     if (cblob.blob_mem != VIRTIO_GPU_BLOB_MEM_HOST3D) {
+         result = virtio_gpu_create_mapping_iov(g, cblob.nr_entries,
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 9bda572426b2..742d9dde4a32 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -309,6 +309,33 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+ }
+ #endif
+ 
++static struct virtio_gpu_virgl_resource *
++virtio_gpu_virgl_resource_new(uint32_t resource_id, uint32_t width,
++                              uint32_t height, uint32_t format)
++{
++    struct virtio_gpu_virgl_resource *res;
++
++    res = g_new0(struct virtio_gpu_virgl_resource, 1);
++    virtio_gpu_simple_resource_init(&res->base, resource_id);
++    res->base.width = width;
++    res->base.height = height;
++    res->base.format = format;
++
++    return res;
++}
++
++static struct virtio_gpu_virgl_resource *
++virtio_gpu_virgl_resource_new_blob(uint32_t resource_id, uint64_t blob_size)
++{
++    struct virtio_gpu_virgl_resource *res;
++
++    res = g_new0(struct virtio_gpu_virgl_resource, 1);
++    virtio_gpu_simple_resource_init(&res->base, resource_id);
++    res->base.blob_size = blob_size;
++
++    return res;
++}
++
+ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+                                          struct virtio_gpu_ctrl_command *cmd)
+ {
+@@ -335,12 +362,8 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res = g_new0(struct virtio_gpu_virgl_resource, 1);
+-    res->base.width = c2d.width;
+-    res->base.height = c2d.height;
+-    res->base.format = c2d.format;
+-    res->base.resource_id = c2d.resource_id;
+-    res->base.dmabuf_fd = -1;
++    res = virtio_gpu_virgl_resource_new(c2d.resource_id, c2d.width,
++                                        c2d.height, c2d.format);
+     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+ 
+     args.handle = c2d.resource_id;
+@@ -383,12 +406,8 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res = g_new0(struct virtio_gpu_virgl_resource, 1);
+-    res->base.width = c3d.width;
+-    res->base.height = c3d.height;
+-    res->base.format = c3d.format;
+-    res->base.resource_id = c3d.resource_id;
+-    res->base.dmabuf_fd = -1;
++    res = virtio_gpu_virgl_resource_new(c3d.resource_id, c3d.width,
++                                        c3d.height, c3d.format);
+     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+ 
+     args.handle = c3d.resource_id;
+@@ -853,10 +872,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res = g_new0(struct virtio_gpu_virgl_resource, 1);
+-    res->base.resource_id = cblob.resource_id;
+-    res->base.blob_size = cblob.size;
+-    res->base.dmabuf_fd = -1;
++    res = virtio_gpu_virgl_resource_new_blob(cblob.resource_id, cblob.size);
+ 
+     if (cblob.blob_mem != VIRTIO_GPU_BLOB_MEM_HOST3D) {
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 3c3539e337fb..cb45360e769e 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -41,6 +41,42 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+ 
+ static void virtio_gpu_reset_bh(void *opaque);
+ 
++void
++virtio_gpu_simple_resource_init(struct virtio_gpu_simple_resource *res,
++                               uint32_t resource_id)
++{
++    res->share_handle = SHAREABLE_NONE;
++    res->dmabuf_fd = -1;
++    res->resource_id = resource_id;
++}
++
++struct virtio_gpu_simple_resource *
++virtio_gpu_simple_resource_new(uint32_t resource_id, uint32_t width,
++                               uint32_t height, uint32_t format)
++{
++    struct virtio_gpu_simple_resource *res;
++
++    res = g_new0(struct virtio_gpu_simple_resource, 1);
++    virtio_gpu_simple_resource_init(res, resource_id);
++    res->width = width;
++    res->height = height;
++    res->format = format;
++
++    return res;
++}
++
++struct virtio_gpu_simple_resource *
++virtio_gpu_simple_resource_new_blob(uint32_t resource_id, uint64_t blob_size)
++{
++    struct virtio_gpu_simple_resource *res;
++
++    res = g_new0(struct virtio_gpu_simple_resource, 1);
++    virtio_gpu_simple_resource_init(res, resource_id);
++    res->blob_size = blob_size;
++
++    return res;
++}
++
+ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+                                    struct virtio_gpu_scanout *s,
+                                    uint32_t resource_id)
+@@ -267,12 +303,8 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res = g_new0(struct virtio_gpu_simple_resource, 1);
+-
+-    res->width = c2d.width;
+-    res->height = c2d.height;
+-    res->format = c2d.format;
+-    res->resource_id = c2d.resource_id;
++    res = virtio_gpu_simple_resource_new(c2d.resource_id, c2d.width,
++                                         c2d.height, c2d.format);
+ 
+     pformat = virtio_gpu_get_pixman_format(c2d.format);
+     if (!pformat) {
+@@ -353,9 +385,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res = g_new0(struct virtio_gpu_simple_resource, 1);
+-    res->resource_id = cblob.resource_id;
+-    res->blob_size = cblob.size;
++    res = virtio_gpu_simple_resource_new_blob(cblob.resource_id, cblob.size);
+ 
+     if (cblob.nr_entries) {
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+@@ -1455,16 +1485,17 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+ 
+     resource_id = qemu_get_be32(f);
+     while (resource_id != 0) {
++        uint32_t width, height, format;
++
+         res = virtio_gpu_find_resource(g, resource_id);
+         if (res) {
+             return -EINVAL;
+         }
+ 
+-        res = g_new0(struct virtio_gpu_simple_resource, 1);
+-        res->resource_id = resource_id;
+-        res->width = qemu_get_be32(f);
+-        res->height = qemu_get_be32(f);
+-        res->format = qemu_get_be32(f);
++        width = qemu_get_be32(f);
++        height = qemu_get_be32(f);
++        format = qemu_get_be32(f);
++        res = virtio_gpu_simple_resource_new(resource_id, width, height, format);
+         res->iov_cnt = qemu_get_be32(f);
+ 
+         /* allocate */
+@@ -1568,14 +1599,15 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+ 
+     resource_id = qemu_get_be32(f);
+     while (resource_id != 0) {
++        uint32_t blob_size;
++
+         res = virtio_gpu_find_resource(g, resource_id);
+         if (res) {
+             return -EINVAL;
+         }
+ 
+-        res = g_new0(struct virtio_gpu_simple_resource, 1);
+-        res->resource_id = resource_id;
+-        res->blob_size = qemu_get_be32(f);
++        blob_size = qemu_get_be32(f);
++        res = virtio_gpu_simple_resource_new_blob(resource_id, blob_size);
+         res->iov_cnt = qemu_get_be32(f);
+ 
+         if (res->iov_cnt) {
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 69b5ee2e382f..8c0df60b3b7e 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -64,6 +64,17 @@ struct virtio_gpu_simple_resource {
+     QTAILQ_ENTRY(virtio_gpu_simple_resource) next;
+ };
+ 
++void
++virtio_gpu_simple_resource_init(struct virtio_gpu_simple_resource *res,
++                               uint32_t resource_id);
++
++struct virtio_gpu_simple_resource *
++virtio_gpu_simple_resource_new(uint32_t resource_id, uint32_t width,
++                               uint32_t height, uint32_t format);
++
++struct virtio_gpu_simple_resource *
++virtio_gpu_simple_resource_new_blob(uint32_t resource_id, uint64_t blob_size);
++
+ struct virtio_gpu_framebuffer {
+     pixman_format_code_t format;
+     uint32_t width, height;
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
