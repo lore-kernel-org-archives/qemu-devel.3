@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E45EC79FB7
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 18:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B096C79FB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 18:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4NBp-000677-MO; Wed, 09 Sep 2026 14:38:33 -0400
+	id 1x4NCi-0006Tr-E2; Wed, 09 Sep 2026 14:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1x4NBn-00063H-J5; Wed, 09 Sep 2026 14:38:31 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x4NBx-0006AB-Rx; Wed, 09 Sep 2026 14:38:42 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1x4NBk-000718-O4; Wed, 09 Sep 2026 14:38:31 -0400
+ id 1x4NBv-000741-94; Wed, 09 Sep 2026 14:38:41 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 87F90601EF;
- Wed,  9 Sep 2026 18:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDD21F000FF;
- Wed,  9 Sep 2026 18:38:20 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 578FA40A43;
+ Wed,  9 Sep 2026 18:38:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAE91F000FF;
+ Wed,  9 Sep 2026 18:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788979103;
- bh=ZvJ6FrMPjn+U502lyxNDEH47T7MEXntaAjN59mhs29w=;
+ s=k20260515; t=1788979117;
+ bh=INPL6GjU3It09px70eSyFlscorg/ibGtabVxCQM6X0k=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=T7yXkwe4QI8TDt0+AcJjkO4eHsClFO3JnsI+Nog9ZNgWikoMsIKkdpjIVoPqaCRg4
- mhTUdMlAZoUaGLCb5eYiONWgdR+lNfH/B24tU3uz/iiiMQsL7NkYZjcF3w0jP75FaX
- CuqSkaSNC/sT4+A0tYbDKZFZ67171i9OPGMvKWwSOBfRh0xjHVrv7Odc/h4kBXCikq
- dVFYSo5HrsU0jTTKaHZ7qnHc6YSJEFsOg6UwfYVaLk+jweIP2B29rZ5aFQaP1m6Lc3
- YvhV0OmjkzVfFepZsjrR9CWOErv/v8TvK+KF7Kl6kgSAYy0uQ5lhB+7ZxeD9Z+Rty6
- HdYCSlPr+R81A==
+ b=DmBXRgsXfna6UbgBC1+RU73gkl24xex5f+aDQ5C5+kvXVaNNKTmKWLyZjp7MJsrWB
+ DrOP0aYZMm7pGksBWGAPEOoh9rX2wuhKI4dktb2Jzv33JiCX4uuTFvSM8Ll6qaCoRx
+ CxQz2PNcsVCXzxm+GzwqvO370dKyrY6vp6g7gVvzfzDxQERog9wS9VJwpgYL0Z8pEM
+ TI52aV0B5NjZZA0GVRQcIdrN0g0gY0nWZoJDJZbmrQF/W6+WhnEpcOC6M+rauySwwf
+ zQHvm44lkAf1gyzTy2YSkauo2RGU2Wy0nS6gRw/wjribQDFRFY73kniyZJUpZ1awOn
+ CA1sqMPibdqbA==
 From: Daniel Gomez <da.gomez@kernel.org>
-Date: Wed, 09 Sep 2026 20:36:50 +0200
-Subject: [PATCH v3 1/7] dma-helpers: fix unaligned discard_back
+Date: Wed, 09 Sep 2026 20:36:55 +0200
+Subject: [PATCH v3 6/7] hw/nvme: drop DMA-path IOV_MAX guard
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260909-align-nvme-mdts-with-linux-v3-1-1cee970cc8c8@samsung.com>
+Message-Id: <20260909-align-nvme-mdts-with-linux-v3-6-1cee970cc8c8@samsung.com>
 References: <20260909-align-nvme-mdts-with-linux-v3-0-1cee970cc8c8@samsung.com>
 In-Reply-To: <20260909-align-nvme-mdts-with-linux-v3-0-1cee970cc8c8@samsung.com>
 To: qemu-devel@nongnu.org
@@ -50,15 +50,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  qemu-block@nongnu.org, Daniel Gomez <da.gomez@kernel.org>, 
  Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788979097; l=1169;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788979097; l=860;
  i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=/LOqtu087vIHIonGTB284w0mpWeAIrIfgwUoZzf8bA4=;
- b=f0d5QoO0I7psSSI0PfaE1mehGMG/c8Glbbque1/INBz0PLaC2FiHVJXVa4JMpaG32pvPanCBw
- 7ci309NE2bYA71exd2iPp4Dd5XHPLwhnfhfAGhxZ08EsfsMW1m4WfLP
+ bh=mJPV5DYqQ9EMwh9VaXYQAglb51wnFe8RlqnU1YjGlcs=;
+ b=vjSRHMZhl3NcsH1zm2kZylOvj2H+gwYf0zcEWV7sH0mtj4KOlnUpPR/gASJMml4KSyZ8R1xuf
+ HSDsq2EN3CSA69/jc5i/5OwjaP8TgA2/Zl6B91oKcdLxc+iodIl2N8Q
 X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
  pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=da.gomez@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=da.gomez@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -82,33 +82,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Gomez <da.gomez@samsung.com>
 
-Commit 99868af3d0 ("dma-helpers: explicitly pass alignment into DMA
-helpers") replaced the sub-sector remainder with the aligned size as the
-amount passed to qemu_iovec_discard_back(), effectively discarding the
-wrong chunk. Go back to discarding the tail bytes of unaligned IO.
+dma_blk_cb() now chunks at IOV_MAX, so the per-mapping cap on sg->qsg
+in nvme_map_addr() is redundant. Drop it.
 
-Fixes: 99868af3d0 ("dma-helpers: explicitly pass alignment into DMA helpers")
-Acked-by: Jesper Wendel Devantier <foss@defmacro.it>
+Suggested-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 Reviewed-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 ---
- system/dma-helpers.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-index 0d592f64680..8ee83ce9e75 100644
---- a/system/dma-helpers.c
-+++ b/system/dma-helpers.c
-@@ -174,8 +174,7 @@ static void dma_blk_cb(void *opaque, int ret)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index a24a674a4c5..7861d8f2521 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -872,10 +872,6 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *sg, hwaddr addr, size_t len)
+         return NVME_INVALID_USE_OF_CMB | NVME_DNR;
      }
  
-     if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
--        qemu_iovec_discard_back(&dbs->iov,
--                                QEMU_ALIGN_DOWN(dbs->iov.size, dbs->align));
-+        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size % dbs->align);
-     }
+-    if (sg->qsg.nsg + 1 > IOV_MAX) {
+-        goto max_mappings_exceeded;
+-    }
+-
+     qemu_sglist_add(&sg->qsg, addr, len);
  
-     dbs->acb = dbs->io_func(dbs->offset, &dbs->iov,
+     return NVME_SUCCESS;
 
 -- 
 2.55.0
