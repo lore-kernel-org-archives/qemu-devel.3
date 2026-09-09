@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A46F0C79F8C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE90C79FAA
 	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Ck2-0004JN-TL; Wed, 09 Sep 2026 03:29:10 -0400
+	id 1x4Ck6-0004KN-EQ; Wed, 09 Sep 2026 03:29:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Ck1-0004Iy-9H; Wed, 09 Sep 2026 03:29:09 -0400
+ id 1x4Ck4-0004Jn-Ug
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:12 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Cjz-0003ls-EU; Wed, 09 Sep 2026 03:29:09 -0400
+ id 1x4Ck2-0003ls-OA
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788938947; x=1820474947;
+ t=1788938950; x=1820474950;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=OucGWCVo+X/LVhcLOj4TWixmbqTdQPq14mXzEslg2e0=;
- b=AfaCB8YEWbhG2ZBWeaSeQD8Rrqes0c8k8GneCmSwAV8F/E1utjfIzUY3
- calHlmUjVaZRsRXSFQajmHwzC3+ApYGoHO7CXgvj3RiolI9FKCepBLi5g
- sHHkIMrCYTmQwOrPyrwcrncMGrh4IA/wsK9R+VQ2sdzvlAHIVCR209tot
- neurLq6B32XhWS7APlNYVd4jzL+AzQXaXuZfnH9VJdD1pLfiPOne4IMMF
- 5SVVDj3IQ1n1MCavcd8uc14+vg6BrhRdMutW3SKv9pkI963sMpoUjBgfQ
- b1ke8FaDqIj4EtlqMpkcoOp8ETH55pnjECXhZ078d41l4B+G3dkXT1Nip A==;
-X-CSE-ConnectionGUID: e1YRjeepTYWu931hcIRXWw==
-X-CSE-MsgGUID: rH8o8BM/Q9ueIFF5cg3RBg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723303"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723303"
+ bh=lUm1uw8P+Cji67ewgEEty0RIECootjL1b8S8wQyDm5Q=;
+ b=IKGj/AzH0OPMUZFP6EqTaWCqTjqbD3ZK6H9c39XQ8lTs5rLULwNK50Pv
+ 1+Jwb240/49HqWy7tVd2ZVwWs3PrkqAosNWjUpCpMNxx9pHH3B1TYRkCk
+ 12RBadhmDJs7t5stNI21OTvbeK2fJ+BFiL/R3zxSxCeKoDWf5kkr1AL/0
+ tkmjC/bj0m2Wy5Hmm+VUpWNNVGM7so41o6AaAAOgnUpkG4jHMTSrlreLA
+ QGqmKv2uEdRebqe+z1aM2rgzeGvA5B6WKPLgSVSwNiF1QZwu6l1ikE0Xq
+ h6Kbu6fpsZnoSdv0N2xOfualv0sxfjuIWDCw6M5w6TEknMVat1DlYuLlQ A==;
+X-CSE-ConnectionGUID: 8vEIL61oR0KKpwnZHK1++A==
+X-CSE-MsgGUID: sDGxlBntRb6nm/sUOqN03g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723312"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723312"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:29:06 -0700
-X-CSE-ConnectionGUID: 1dgVA4u2TtWtWQIJ6G4Beg==
-X-CSE-MsgGUID: INVf8Pd7RK6CS8767DlJ5g==
+ 09 Sep 2026 00:29:10 -0700
+X-CSE-ConnectionGUID: nN8zU3EORzOsGhY/N5+yVg==
+X-CSE-MsgGUID: 7qB4EEujTkmc19I2ZNxE4w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982427"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982444"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:29:02 -0700
+ 09 Sep 2026 00:29:06 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -51,11 +53,11 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Xudong Hao <xudong.hao@intel.com>, qemu-arm@nongnu.org
-Subject: [PATCH v6 3/6] backends/iommufd: Extend iommufd_backend_alloc_hwpt()
- with fault_id
-Date: Wed,  9 Sep 2026 15:28:34 +0800
-Message-ID: <20260909072837.3183154-4-zhenzhong.duan@intel.com>
+ Xudong Hao <xudong.hao@intel.com>
+Subject: [PATCH v6 4/6] intel_iommu_accel: Add PRQ injection for passthrough
+ device
+Date: Wed,  9 Sep 2026 15:28:35 +0800
+Message-ID: <20260909072837.3183154-5-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
 References: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
@@ -85,135 +87,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We should set flags IOMMU_HWPT_FAULT_ID_VALID when pass in a fault
-object id in the caller.
+When the guest enables the PRQ in vIOMMU, allocate a FAULTQ object so that
+host-side recoverable fault events can be received and propagated back to
+the guest.
+
+Install an event handler on the FAULTQ fd to read and propagate host
+generated recoverable fault events to the guest.
+
+The handler runs in QEMU's main loop, using a non-blocking fd registered
+via qemu_set_fd_handler().
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- include/system/iommufd.h    | 4 ++--
- backends/iommufd.c          | 7 ++++---
- hw/arm/smmuv3-accel.c       | 6 +++---
- hw/i386/intel_iommu_accel.c | 2 +-
- hw/vfio/iommufd.c           | 2 +-
- backends/trace-events       | 2 +-
- 6 files changed, 12 insertions(+), 11 deletions(-)
+ hw/i386/intel_iommu_accel.h    |   2 +
+ hw/i386/intel_iommu_internal.h |   3 +
+ hw/i386/intel_iommu.c          |  14 ++-
+ hw/i386/intel_iommu_accel.c    | 162 +++++++++++++++++++++++++++++++--
+ hw/i386/trace-events           |   1 +
+ 5 files changed, 171 insertions(+), 11 deletions(-)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 36b34b4899..79b8dabfb6 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -90,8 +90,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
- bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
-                                 uint32_t pt_id, uint32_t flags,
-                                 uint32_t data_type, uint32_t data_len,
--                                void *data_ptr, uint32_t *out_hwpt,
--                                Error **errp);
-+                                void *data_ptr, uint32_t fault_id,
-+                                uint32_t *out_hwpt, Error **errp);
- bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
-                                   uint32_t viommu_type, uint32_t hwpt_id,
-                                   void *data_ptr, uint32_t data_len,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 2775eef741..f46b3bfa7e 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -315,8 +315,8 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
- bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
-                                 uint32_t pt_id, uint32_t flags,
-                                 uint32_t data_type, uint32_t data_len,
--                                void *data_ptr, uint32_t *out_hwpt,
--                                Error **errp)
-+                                void *data_ptr, uint32_t fault_id,
-+                                uint32_t *out_hwpt, Error **errp)
+diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
+index 46c1a29409..e0319749a5 100644
+--- a/hw/i386/intel_iommu_accel.h
++++ b/hw/i386/intel_iommu_accel.h
+@@ -18,6 +18,8 @@ typedef struct VTDAccelPASIDCacheEntry {
+     VTDPASIDEntry pasid_entry;
+     uint32_t pasid;
+     uint32_t fs_hwpt_id;
++    uint32_t fault_id;
++    int fault_fd;
+     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
+ } VTDAccelPASIDCacheEntry;
+ 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 924e91cb8a..5ebc204e9a 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -786,4 +786,7 @@ int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+ VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid);
+ int vtd_dev_get_pe_from_pasid(IntelIOMMUState *s, PCIBus *bus, uint8_t devfn,
+                               uint32_t pasid, VTDPASIDEntry *pe);
++int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn, uint32_t pasid,
++                         bool priv_req, bool exec_req, hwaddr addr, bool lpig,
++                         uint16_t prgi, bool is_read, bool is_write);
+ #endif
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 82c3c3b2c3..022923a058 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -5369,11 +5369,15 @@ static int vtd_pri_perform_implicit_invalidation(VTDAddressSpace *vtd_as,
+     return ret;
+ }
+ 
+-/* Page Request Descriptor : 7.4.1.1 */
+-static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
+-                                uint32_t pasid, bool priv_req, bool exec_req,
+-                                hwaddr addr, bool lpig, uint16_t prgi,
+-                                bool is_read, bool is_write)
++/*
++ * Page Request Descriptor : 7.4.1.1
++ *
++ * Because it is facing the emulated device models, so this should be PCI
++ * PASID instead of the pasids used within vIOMMU.
++ */
++int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn, uint32_t pasid,
++                         bool priv_req, bool exec_req, hwaddr addr, bool lpig,
++                         uint16_t prgi, bool is_read, bool is_write)
  {
-     int ret, fd = be->fd;
-     struct iommu_hwpt_alloc alloc_hwpt = {
-@@ -327,11 +327,12 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
-         .data_type = data_type,
-         .data_len = data_len,
-         .data_uptr = (uintptr_t)data_ptr,
-+        .fault_id = fault_id,
-     };
- 
-     ret = ioctl(fd, IOMMU_HWPT_ALLOC, &alloc_hwpt);
-     trace_iommufd_backend_alloc_hwpt(fd, dev_id, pt_id, flags, data_type,
--                                     data_len, (uintptr_t)data_ptr,
-+                                     data_len, (uintptr_t)data_ptr, fault_id,
-                                      alloc_hwpt.out_hwpt_id, ret);
-     if (ret) {
-         error_setg_errno(errp, errno, "Failed to allocate hwpt");
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 91aca1aa14..66e6a5011a 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -268,7 +268,7 @@ smmuv3_accel_dev_alloc_translate(SMMUv3AccelDevice *accel_dev, STE *ste,
-                                     accel->viommu->viommu_id, flags,
-                                     IOMMU_HWPT_DATA_ARM_SMMUV3,
-                                     sizeof(nested_data), &nested_data,
--                                    &hwpt_id, errp)) {
-+                                    0, &hwpt_id, errp)) {
-             return NULL;
-     }
- 
-@@ -632,14 +632,14 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
-     if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
-                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
-                                     sizeof(abort_data), &abort_data,
--                                    &accel->abort_hwpt_id, errp)) {
-+                                    0, &accel->abort_hwpt_id, errp)) {
-         goto free_viommu;
-     }
- 
-     if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
-                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
-                                     sizeof(bypass_data), &bypass_data,
--                                    &accel->bypass_hwpt_id, errp)) {
-+                                    0, &accel->bypass_hwpt_id, errp)) {
-         goto free_abort_hwpt;
-     }
- 
+     IntelIOMMUState *s = opaque;
+     VTDAddressSpace *vtd_as;
 diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index c03435f8a2..d2f41f18f1 100644
+index d2f41f18f1..c0bd249c4a 100644
 --- a/hw/i386/intel_iommu_accel.c
 +++ b/hw/i386/intel_iommu_accel.c
-@@ -94,7 +94,7 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "system/iommufd.h"
+ #include "intel_iommu_internal.h"
+ #include "intel_iommu_accel.h"
+@@ -77,14 +78,140 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+     return NULL;
+ }
+ 
+-static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+-                               VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
+-                               Error **errp)
++static void vtd_propagate_recoverable_fault(VTDAccelPASIDCacheEntry *vtd_pce,
++                                            struct iommu_hwpt_pgfault *fault,
++                                            unsigned cnt)
++{
++    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
++    uint32_t pasid =
++        vtd_pce->pasid == IOMMU_NO_PASID ? PCI_NO_PASID : vtd_pce->pasid;
++
++    for (; cnt--; fault++) {
++        bool last_page = fault->flags & IOMMU_PGFAULT_FLAGS_LAST_PAGE;
++
++        vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
++                             vtd_hiod->devfn, pasid,
++                             fault->perm & IOMMU_PGFAULT_PERM_PRIV,
++                             fault->perm & IOMMU_PGFAULT_PERM_EXEC,
++                             fault->addr, last_page, fault->grpid,
++                             fault->perm & IOMMU_PGFAULT_PERM_READ,
++                             fault->perm & IOMMU_PGFAULT_PERM_WRITE);
++    }
++}
++
++/* Batch size per read(); remaining faults trigger another callback */
++#define FAULTQ_BUF_SIZE 2048
++
++static void vtd_read_fs_faultq(void *opaque)
++{
++    VTDAccelPASIDCacheEntry *vtd_pce = opaque;
++    struct iommu_hwpt_pgfault fault[FAULTQ_BUF_SIZE];
++    uint32_t id = vtd_pce->fault_id;
++    int fd = vtd_pce->fault_fd;
++    ssize_t bytes, last_bytes;
++
++    bytes = read(fd, fault, sizeof(fault));
++    trace_vtd_read_fs_faultq(id, fd, bytes);
++    if (bytes < 0) {
++        if (errno != EAGAIN && errno != EINTR) {
++            error_report_once("FAULTQ(id %u): read failed (%m)", id);
++        }
++        return;
++    } else if (!bytes) {
++        error_report_once("FAULTQ(id %u): fault group empty unexpectedly", id);
++        return;
++    }
++
++    last_bytes = bytes % sizeof(fault[0]);
++    if (last_bytes) {
++        error_report_once("FAULTQ(id %u): discard partial fault data: %zd/%zu",
++                          id, last_bytes, sizeof(fault));
++    }
++
++    vtd_propagate_recoverable_fault(vtd_pce, fault, bytes / sizeof(fault[0]));
++}
++
++static void vtd_destroy_fs_faultq(VTDHostIOMMUDevice *vtd_hiod,
++                                  uint32_t fault_id, int fault_fd)
++{
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++
++    if (fault_fd < 0) {
++        return;
++    }
++
++    close(fault_fd);
++    iommufd_backend_free_id(hiodi->iommufd, fault_id);
++}
++
++static bool vtd_create_fs_faultq(VTDHostIOMMUDevice *vtd_hiod,
++                                 uint32_t *fault_id_p, int *fault_fd_p,
++                                 Error **errp)
++{
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++    uint32_t fault_id, fault_fd;
++    int flags;
++
++    if (!iommufd_backend_alloc_faultq(hiodi->iommufd, &fault_id, &fault_fd,
++                                      errp)) {
++        return false;
++    }
++
++    flags = fcntl(fault_fd, F_GETFL);
++    if (flags < 0) {
++        error_setg_errno(errp, errno, "Failed to get flags for FAULTQ fd");
++        goto free_faultq;
++    }
++
++    if (fcntl(fault_fd, F_SETFL, flags | O_NONBLOCK) < 0) {
++        error_setg_errno(errp, errno, "Failed to set O_NONBLOCK on FAULTQ fd");
++        goto free_faultq;
++    }
++
++    *fault_id_p = fault_id;
++    *fault_fd_p = fault_fd;
++    return true;
++
++free_faultq:
++    vtd_destroy_fs_faultq(vtd_hiod, fault_id, fault_fd);
++    return false;
++}
++
++static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
++{
++    if (vtd_pce->fault_fd < 0) {
++        return;
++    }
++
++    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
++    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
++                          vtd_pce->fault_fd);
++    vtd_pce->fault_id = 0;
++    vtd_pce->fault_fd = -1;
++}
++
++static void vtd_setup_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
++                                uint32_t fault_id, int fault_fd)
++{
++    if (fault_fd < 0) {
++        return;
++    }
++
++    vtd_pce->fault_id = fault_id;
++    vtd_pce->fault_fd = fault_fd;
++    qemu_set_fd_handler(fault_fd, vtd_read_fs_faultq, NULL, vtd_pce);
++}
++
++static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod, VTDPASIDEntry *pe,
++                               bool has_fault_id, uint32_t fault_id,
++                               uint32_t *fs_hwpt_id, Error **errp)
+ {
+     HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     struct iommu_hwpt_vtd_s1 vtd = {};
+     uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
+ 
++    flags |= has_fault_id ? IOMMU_HWPT_FAULT_ID_VALID : 0;
++
+     vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
+                 (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
+                 (VTD_SM_PASID_ENTRY_EAFE(pe) ? IOMMU_VTD_S1_EAFE : 0);
+@@ -94,7 +221,7 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
      return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
                                        hiodi->hwpt_id, flags,
                                        IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
--                                      fs_hwpt_id, errp);
-+                                      0, fs_hwpt_id, errp);
+-                                      0, fs_hwpt_id, errp);
++                                      fault_id, fs_hwpt_id, errp);
  }
  
  static void vtd_destroy_old_fs_hwpt(VTDAccelPASIDCacheEntry *vtd_pce)
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 242644aa00..74a5d77dcc 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -476,7 +476,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-     if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
-                                     container->ioas_id, flags,
-                                     IOMMU_HWPT_DATA_NONE, 0, NULL,
--                                    &hwpt_id, errp)) {
-+                                    0, &hwpt_id, errp)) {
-         return false;
+@@ -115,7 +242,8 @@ static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
+     VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
+     HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     VTDPASIDEntry *pe = &vtd_pce->pasid_entry;
+-    uint32_t hwpt_id = hiodi->hwpt_id, pasid = vtd_pce->pasid;
++    uint32_t hwpt_id = hiodi->hwpt_id, pasid = vtd_pce->pasid, fault_id = 0;
++    int fault_fd = -1;
+     bool ret;
+ 
+     /*
+@@ -130,7 +258,24 @@ static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
      }
  
-diff --git a/backends/trace-events b/backends/trace-events
-index b1c1d89dd8..2f242feb78 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -16,7 +16,7 @@ iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t
- iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
--iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
-+iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t fault_id, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" fault_id=%u out_hwpt=%u (%d)"
- iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+     if (vtd_pe_pgtt_is_fst(pe)) {
+-        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
++        IntelIOMMUState *s = vtd_hiod->iommu_state;
++        VTDContextEntry ce;
++        uint8_t bus_n = pci_bus_num(vtd_hiod->bus);
++        bool is_pre = false;
++
++        if (s->svm &&
++            !vtd_dev_to_context_entry(s, bus_n, vtd_hiod->devfn, &ce)) {
++            is_pre = !!VTD_CE_GET_PRE(&ce);
++
++            if (is_pre &&
++                !vtd_create_fs_faultq(vtd_hiod, &fault_id, &fault_fd, errp)) {
++                return false;
++            }
++        }
++
++        if (!vtd_create_fs_hwpt(vtd_hiod, pe, is_pre, fault_id, &hwpt_id,
++                                errp)) {
++            vtd_destroy_fs_faultq(vtd_hiod, fault_id, fault_fd);
+             return false;
+         }
+     }
+@@ -140,11 +285,14 @@ static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
+     if (ret) {
+         /* Destroy old fs_hwpt if it's a replacement */
+         vtd_destroy_old_fs_hwpt(vtd_pce);
++        vtd_destroy_old_fs_faultq(vtd_pce);
+         if (vtd_pe_pgtt_is_fst(pe)) {
+             vtd_pce->fs_hwpt_id = hwpt_id;
++            vtd_setup_fs_faultq(vtd_pce, fault_id, fault_fd);
+         }
+     } else if (vtd_pe_pgtt_is_fst(pe)) {
+         iommufd_backend_free_id(hiodi->iommufd, hwpt_id);
++        vtd_destroy_fs_faultq(vtd_hiod, fault_id, fault_fd);
+     }
+ 
+     return ret;
+@@ -177,6 +325,7 @@ static bool vtd_device_detach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
+ 
+     if (ret) {
+         vtd_destroy_old_fs_hwpt(vtd_pce);
++        vtd_destroy_old_fs_faultq(vtd_pce);
+     }
+ 
+     return ret;
+@@ -276,6 +425,7 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
+     vtd_pce->vtd_hiod = vtd_hiod;
+     vtd_pce->pasid = pasid;
+     vtd_pce->pasid_entry = *pe;
++    vtd_pce->fault_fd = -1;
+     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
+ 
+     if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index a1a50d0910..fcd3f33f0a 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -77,6 +77,7 @@ vtd_reset_exit(void) ""
+ vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
+ vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
+ vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
++vtd_read_fs_faultq(uint32_t fault_id, uint32_t fault_fd, ssize_t bytes) "fault_id %d fault_fd %d ret: %zd"
+ 
+ # amd_iommu.c
+ amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
 -- 
 2.52.0
 
