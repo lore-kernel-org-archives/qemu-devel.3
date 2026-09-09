@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7516C79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:11:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33A8C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4EL6-0001Jz-4p; Wed, 09 Sep 2026 05:11:32 -0400
+	id 1x4ENS-0001jh-4K; Wed, 09 Sep 2026 05:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EL4-0001Jc-Vt
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:11:31 -0400
+ id 1x4ENQ-0001jC-E8
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:13:56 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EL3-0007qb-Bg
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:11:30 -0400
+ id 1x4ENO-0007zn-Mx
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:13:56 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899BJZQ061377
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899DlYW062336
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:11:19 +0900 (JST)
+ Wed, 9 Sep 2026 18:13:47 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=xhz7Z7UKtu6w9LebGQ2cIMSEcwSXFccd9HVi0Jv7xMw=; 
+DKIM-Signature: a=rsa-sha256; bh=R7q++/HO79oGRNI3jvaZMqSnX1u6+xJS3AhDs/Q/F+A=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788945079; v=1;
- b=E6j2rKODyr+K7EjEI309eBuLNytC6nFF7v1s22souPiSziIquKoY/gvXtXT4vaPy
- hx6IucMhbCiRRNXTQCkHT97Dth0L4XAdB39EIM8Gj9/2dR7PyH4ki+GtJXupCDHb
- Si7IFZT7FsenKNMY3tmOU5EPwzT7y2sdICGbpX+w8UlCL0Sf2TvZIIFaa3cdKYX1
- xsUqyns+mwZiNMM3VK8VrfwG1lEtAMpUn7mZRhNktYbdlzImkmOFTaJWmmXDkT4h
- qdjcbzYAV2ZLqkppdv16egD0T0cem1LbMxrpr+pS/nKEV2qFVeBGstGeV4wrZmvI
- P34JsPl3LmUlEh9F0UPbJQ==
-Message-ID: <6dc8162d-2bc6-4939-831d-0a7bb18f2df6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:11:19 +0900
+ s=rs20250326; t=1788945227; v=1;
+ b=UMKcbVnSN4x+B+66915ud3RtKmdybBZYHlcj1N3v5wG9AV8IGJktzh/k/oANmDp7
+ +1tytfpqo04JLbe5AH3gKLQSQjOMxbd86HheJTATYaAoEt1wf+mV9OBuaJYpKp2m
+ s7L2CCCoPyOVB0rTsFgYT+OFAucIRj6aucQHzpq2ifTedKzEsprShNYh0LVrIY4x
+ VgCcmLBOSSvGcDEqhH0hzFUp9SMRjyarOrm6V5W6/Zk6RkE9G0d05e2ptUPnKYEb
+ eGbJCoP47BjJVziyQ/v0i55UBiiEiTOsZuZZA/R957hGd2FJ6s64UQtdFpSwKGrS
+ pczQlxqooI0p1yZkaOi5KQ==
+Message-ID: <488fdad6-7a01-4632-bce7-be770866bfd1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:13:47 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/25] virtio-gpu: store the scanout DMABUF in
- virtio_gpu_scanout
+Subject: Re: [PATCH v2 10/25] ui/console: disable GL scanout when dmabuf is
+ the active one
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -50,10 +50,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-9-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-10-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-9-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-10-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,17 +80,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> VirtIOGPU tracks presented dmabufs both through a per-scanout primary
-> pointer and a device-wide list of VGPUDMABuf wrappers. Only the current
-> DMA-BUF for a scanout can ever be presented, so the list and the wrapper
-> struct are redundant bookkeeping.
+> Disable the GL scanout when the actively-displayed dmabuf is released,
+> so the console does not retain a stale reference.
 > 
-> Store the QemuDmaBuf directly in virtio_gpu_scanout and drop VGPUDMABuf
-> and the device-wide list. The wrapper only carried the buffer and its
-> scanout id; the id is now implicit in the owning scanout.
+> The VFIO commit changes to call qemu_console_gl_release_dmabuf() before
+> qemu_graphic_console_close(), which dereferences the active scanout.
 > 
-> No functional change intended.
-> 
+> Fixes: 239b7c5705a4 ("vfio/pci: close display console during unrealize, not finalize")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
