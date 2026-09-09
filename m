@@ -4,103 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44910C79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9D7C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Bjh-0000n5-5Y; Wed, 09 Sep 2026 02:24:45 -0400
+	id 1x4Bnc-0001l7-B5; Wed, 09 Sep 2026 02:28:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x4Bjf-0000mV-KB
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:24:43 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <vgarhw@gmail.com>) id 1x4Agj-0002bh-Si
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 01:17:37 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x4Bje-0004RB-0r
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:24:43 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c28eef361f0so502306866b.2
- for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 23:24:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788935080; cv=none;
- d=google.com; s=arc-20260327;
- b=BrWDAW/vNFkvRcQARmU7ZrPm9hxYi3R2S9xAJg/6WEkx4KD5FGyPdJ+GeMHpkatXyu
- Ss/Vw/Ec1i17m9Sde+6ByBq6QE0Fy3VyZ9c8JnreDJnxtJPV/HyVCzI2aR4Y3q0C1aQp
- hbiNYK3szG2diJiTmibBfkBppluqYEEiJoyv+AxZEbNA+lNDKMPtYRHocoq70n4AI3ji
- BywFtRoJGUU9I4khu/mqwUBV7qoMjqCnG2EnE3VTW4LMJ0RaaL30FHz0LiUgAjV+NUWM
- PVYYE6XoCJFyp3ZKkimmBM5GWomidZjRqrhryjUr8EUN8zWZBdQZVJIyZZnDeS5VE0o9
- VGXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Jp2JOmSdU/n48YRUr+LMqcwd+AV8sXHBTVZRe6AJ21U=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=KVUXo6yGSsxPQlk6o0/fz04R0R5mX/rhzIBqK3Y9WYf8ksFUvon5BuCfa7mIx/TmPI
- xciBr6FGkGr6vBrUuN27pSbnJQaTnIkU8vXM2lrEshP7KjTC7AkKgXZkfQ++ZDmX9QUL
- XVC1YqA9bIwREFTVWpzRVuC5ivEb2+NE8s44vNk508Z1FY1V8eUrPdrFOqZmdYsOmY6X
- NtukQ7DTOK0zhK7t8Nw+ooSZVUT+8Rm6xe0Ec6KqKhREIa18F8ibCz8usC9Qg1rMC11q
- gR7x2OqBDfBymBfahEIHi7/b9yMiAqZ+B8CI5W7/Tfz/tFY0vk8E7tNzn+YfUv1kIL9v
- OEig==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <vgarhw@gmail.com>) id 1x4Agh-0005M5-GH
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 01:17:36 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-868b3248b2cso283125b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Sep 2026 22:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788935080; x=1789539880; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Jp2JOmSdU/n48YRUr+LMqcwd+AV8sXHBTVZRe6AJ21U=;
- b=HZL6dhNq5f3+dcwBJbII4bhpxa6JtLldlPCND2blkHyP/EaMNEu6b4ddoK6e8R3w6w
- F7L8ysv/4DmFvSkNxxQ1f/2UP72bBtGaPb0ijW1fVSskDFFPL+MfYRHtmT1hfqY3nWTX
- 3xm5Kid9hp8/yOw0VBlXlwDEcVZ0MlbcTWD7v1A300A9ElcqynpE0O+hH7ttfhd/JKo0
- +PmLH9PRR2dQYcfyRZqUC6enrlg2Ms2kUirZW2sMamDkhwp2mRgsmNXUunP3nKV8vTjd
- XbEinO/81moL7sJpR58o+ggRj728iSLGf0BntFpW0NtKYzPrR7O6iPZQFZ5mS/B6tzmw
- Z06w==
+ d=gmail.com; s=20251104; t=1788931053; x=1789535853; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lH21qSRjt/8Q/AD8g78BmCGIWoDOBkBsX6AcoNnGDi8=;
+ b=JQNWIJbdyA4U7KQTwQhtKbJihAaWEjx/T+sebTMBqIMPYh2/9G6rfpYutYLY7rdu0E
+ 1QezxSmfyhiWQakThw2K7m/xG2hta0X1B4+2WUxcL0zaltmp4SCguld7NSlQSLx+rbpz
+ 2llsrEiyfRPjZ6eNRy2AQhtxE1a/QAa0GDsEnfVoAPW2UAL4F81jFTZps2fj/5Vo8GFH
+ /y/GO+Uwg62Nm41J/fpF3y0XNVhvPsCyBYEo7tdJidxwkmdgmcyJ1A1SwWtFaIfYGkWW
+ 5HOzQ8LOrSYidaR+MJmr2VMPAtXDE26Ze+r8qxgTi6sJkZ0L6eIdv1LY+C9FJsJhvd57
+ 75Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788935080; x=1789539880;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Jp2JOmSdU/n48YRUr+LMqcwd+AV8sXHBTVZRe6AJ21U=;
- b=jDAzBnQRonBAxY3URPDYWyvsQgySb25b78K0X539lOeQw3NGNv3flKQj70vrAmN8y2
- jp/dcIxLvuspivin6umPiD6FJ6MVGbede5At7XFmhmOMfVDiYCIvPZbf672yFCbFumIx
- 1DMuPMQuOd6kc/PRrxunaio/mI6P0pgVOvZmnR76qiV0I66gXiZ5XfdxoeC5kpUklgqI
- G0AH5tVFAKoPDjDuFd4tz9BDxWtAue2htnnyZ9I/PYt1pnmjcWZPgtnEoXDmzyoids5V
- zvIfvt+R98fZW3QsOZcmrf4+HdhTVsKB+WihkpfO4LW2BngKea9bVYg6SmC0q7ykhq8m
- DfLQ==
-X-Gm-Message-State: AFuF++n+i02C88LhKTsO62x763fKgIoegjwzBNeT1sv8LNH6WceG5EXc
- eTkKcNDgjCVxspEs9S9cIY5r4sfGIw6ACn2ixpTZ3sNLgIJABErAYZ1RpE25LajncQtiU5zIaGm
- G8KpJxR51OQJdPUxb9COugQa/LA5RSDA=
-X-Gm-Gg: AYBFou3ONtcced0dwFn5yVXBlr6vuvNEC3mEmS7OyV1Vd1tmH6cZn59tVDqkjOy2jGG
- fcBZlbf2ENT4NpWJ9Gi/l6HconxUCRgkPkCN42jcwaL0mMBB/193oNYTKc4lA2FP1xhHTGsMN+N
- 2h7zf3wnpDIYv8hlZbx6ijvfLvaH3fnwlWJHbamnKhpwSmmFmLhmYYhHdlNpYNDW5Fi6o32KCfU
- FwFrJTD7MWSLo1alNrD9bjUUK1QTAJLP0ZKG+v7ZZEnVP4HOOiljU8K+plgi5CCkL7uY9MPL/kO
- 0XmQ3zcF3n7GbZMyd/wD4EZhundHnB93bq/sNOGTaXEkY7N8EjywUeh2/cMz+4OF
-X-Received: by 2002:a17:907:3f8b:b0:c28:e01d:1d10 with SMTP id
- a640c23a62f3a-c28e01d2ae8mr862971966b.49.1788935079768; Tue, 08 Sep 2026
- 23:24:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788931053; x=1789535853;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lH21qSRjt/8Q/AD8g78BmCGIWoDOBkBsX6AcoNnGDi8=;
+ b=Z/iPzf/tU8HcfKH+EJ9iYNeCUnJ5CPaPRAQ29U4PI6BNw75FtDfEk7SjKHY2hBI8LD
+ 2dgsnHD3CJ9QQEErHmp1+3V3gOHrlPro59PGzZektW58qc8b+fT/D8RbE2edGAbtaQ52
+ o4cyQwCgB8V/CQat1MVUYHHkq3qQXgbxNqXwT/cJxu3vazaZJVxayXxBzJxC7L1SAJbR
+ pb0NSBSljA6TBlyUoVLpnGCdnSWjX6YiU0uRsYhY+Il9d/A3mp2W+WlIk1owUQ5bNcUz
+ XPWQIx7atxtKwHYXfsU7wbINQeg/gjqkbm6rFZXvbdX28T9UhJPELvzlUzlmw0c+Naoy
+ kd9Q==
+X-Gm-Message-State: AFuF++k/QV+jmxp2s90A/+l0jDrsrbFqWjpqtQzHvcss6Tk5jjPLsj66
+ MZUGzsFbz6QXnTrzRApfwJbVOyNTCZ/S+WgNsre/2g81MoH1lFva+fNiuMN9NQQPCUjOoA==
+X-Gm-Gg: AYBFou032BZK4RwoBTGP17gzlehanLUJXzSixmiN0hoimN4F3ykkCmC6nuk0EitqC0v
+ /R5RUweU7uFUVsXIYFrDYyhcA/0DkY2TpzpmEewQnSIoBZvfDO6ePGmB+teD9IfW8H1Xgpqj1VD
+ LewgWeAHqAJc8tA80JQxj28wo0QUtCkMfWuhGCYYphARF+LbdLU9FPqOgJa6ZKgWmgBamPdf4Lm
+ Qh2kQkyobpHwN9Qi2J+aDZMY38EaJ+owIqUF2/6Ca4bA8+uTcCZQSJ5b4xyjxRW2OHcs6H1J5JU
+ 51o1MU4YVy54w5Ev1cbJsYoPIoL9E1/Mk8yHzaYzmpvfg2e/r4Kcv5eDaFvQjMGB3xmmAiATzc9
+ BqmPgr6CTwsiYhcb4X3tZCd++fVBVVPPPbokuA9gdNWaWlHJMAG42pyVI0lmthO4zbIODjjAaNu
+ yMghE535e9MjDggrIeyPIIgQ/aGcecYqpBqLmbZiTzhKgiZPDrwsGm8Cv8lwszHtPt/0MoyAUPp
+ ICY4S84HCGKqN5k5RN6XL3w
+X-Received: by 2002:a05:6a21:3cc2:b0:3d7:7b6d:4997 with SMTP id
+ adf61e73a8af0-3da3a16bfd5mr52504644637.27.1788931053107; 
+ Tue, 08 Sep 2026 22:17:33 -0700 (PDT)
+Received: from mac.lan (c-73-241-3-198.hsd1.ca.comcast.net. [73.241.3.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-338f7bad290sm11130409eec.14.2026.09.08.22.17.32
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 08 Sep 2026 22:17:32 -0700 (PDT)
+From: Vikram Garhwal <vgarhw@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: francisco.iglesias@amd.com,
+	vgarhw@gmail.com
+Subject: [PATCH] MAINTAINERS: Update email address for Vikram Garhwal
+Date: Tue,  8 Sep 2026 22:17:17 -0700
+Message-Id: <20260909051717.19647-1-vgarhw@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 MIME-Version: 1.0
-References: <20260907063725.626685-1-zhangckid@gmail.com>
- <20260907063725.626685-14-zhangckid@gmail.com>
- <87zextw78o.fsf@pond.sub.org>
-In-Reply-To: <87zextw78o.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 9 Sep 2026 14:24:03 +0800
-X-Gm-Features: AcwNN1VD0LpDc5XKO426fzqaKH3RRTrcvxKy7RZKALleoMTYGwFYPaLTrKKqDho
-Message-ID: <CAK3tnvJALU_i6OzrCb-t20un=AALTySuRamkmyqrbS8Zumk2Tg@mail.gmail.com>
-Subject: Re: [PATCH V15 13/14] iothread: make legacy AioContext getter
- explicitly unsafe
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=vgarhw@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,6 +82,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 09 Sep 2026 02:28:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,91 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 7, 2026 at 8:55=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > Now that holder-aware callers have been converted, rename
-> > iothread_get_aio_context() to iothread_unsafe_get_aio_context() and
-> > update qmp_x_blockdev_set_iothread(). This avoids adding a duplicate
-> > accessor only to remove the old one later.
->
-> The last sentence appears to justify the change since v14.  If that's
-> the intent, drop it, please.  If not, what is the intent?
+Signed-off-by: Vikram Garhwal <vgarhw@gmail.com>
+---
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks. Yes, that sentence was about the changes since v14; I'll
-drop it from the commit message.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7183babd6a..f001bf0d67 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2178,7 +2178,7 @@ F: tests/qtest/fuzz-sb16-test.c
+ 
+ Xilinx CAN
+ M: Francisco Iglesias <francisco.iglesias@amd.com>
+-M: Vikram Garhwal <vikram.garhwal@bytedance.com>
++M: Vikram Garhwal <vgarhw@gmail.com>
+ S: Maintained
+ F: hw/net/can/xlnx-*
+ F: include/hw/net/xlnx-*
+@@ -3042,7 +3042,7 @@ F: include/hw/rx/
+ CAN bus subsystem and hardware
+ M: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+ M: Francisco Iglesias <francisco.iglesias@amd.com>
+-M: Vikram Garhwal <vikram.garhwal@bytedance.com>
++M: Vikram Garhwal <vgarhw@gmail.com>
+ S: Maintained
+ W: https://canbus.pages.fel.cvut.cz/
+ F: net/can/*
+-- 
+2.39.3 (Apple Git-145)
 
->
-> > The block graph retains only the AioContext, while detachment happens
-> > outside qmp_x_blockdev_set_iothread(), so this call site cannot provide
-> > a matching holder lifecycle. The new name makes its existing lifetime
-> > assumption explicit.
->
-> Suggest to start like "The only remaining user is
-> qmp_x_blockdev_set_iothread()" and then explain why this caller cannot
-> use iothread_ref_and_get_aio_context().
->
-> > New code should use iothread_ref_and_get_aio_context().
-> >
-> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  blockdev.c                |  7 ++++++-
-> >  include/system/iothread.h | 11 ++++++++++-
-> >  iothread.c                |  2 +-
-> >  3 files changed, 17 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/blockdev.c b/blockdev.c
-> > index 6e86c6262f..97d161079a 100644
-> > --- a/blockdev.c
-> > +++ b/blockdev.c
-> > @@ -3683,7 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *nod=
-e_name, StrOrNull *iothread,
-> >              goto out;
-> >          }
-> >
-> > -        new_context =3D iothread_get_aio_context(obj);
-> > +        /*
-> > +         * The block graph retains only the AioContext, not the IOThre=
-ad.
-> > +         * Context detachment happens outside this command, so there i=
-s no
-> > +         * point here where a matching IOThread holder can be released=
-.
-> > +         */
->
-> This is fine for readers who already know what this is about: why we
-> can't use iothread_ref_and_get_aio_context() /
-> iothread_unsafe_get_aio_context() here.  Others will lack context.
->
-> Suggest to start like
->
->            /*
->             * We cannot use iothread_ref_and_get_aio_context() /
->             * iothread_unref_and_put_aio_context() here.
->
-> then explain why.
-
-OK, will change it  to:
-/*
- * We cannot use iothread_ref_and_get_aio_context() /
- * iothread_unref_and_put_aio_context() here. The block graph stores
- * the AioContext but not the IOThread, and continues using the
- * context after this command returns. A matching put would need
- * to be tied to the block graph's context lifecycle.
- */
-
-Thanks
-Chen
-
->
-> > +        new_context =3D iothread_unsafe_get_aio_context(obj);
-> >      } else {
-> >          new_context =3D qemu_get_aio_context();
-> >      }
->
-> [...]
->
 
