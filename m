@@ -4,74 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344BFC79FBB
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC218C79FAA
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 07:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4CkA-0004L3-9j; Wed, 09 Sep 2026 03:29:18 -0400
+	id 1x4Coe-0007hc-SH; Wed, 09 Sep 2026 03:33:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Ck8-0004Kt-Sb
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:16 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x4Ck6-0003ls-Sc
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:29:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788938955; x=1820474955;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=WFGdxoeyVXxRXdVHSwMZTvPtzQeaM33mQ018tnnGsr4=;
- b=CTjBL/G8MQkAVvJQUTev8LvC8cvxzHeYSUozfFazvdO5erQImQuLM/6S
- +S9O4mtju0gpP28lgIL8zkqmy8AH7UjV47+lUtRt/chUBqv4UB6BHaFgU
- AccVv+lOtpWbt3cvONNr4nc5K5qjxZyST4N490y5lxINJzaAJr4G+Ihs7
- 1MntGfkqCwA9Cvu/Nw6n4JvMDI1Z7eTlFPI4iktowmwKmCFZqkPebKnfV
- Fxr4cneMpjamYdtpEcZkZ4UyMwIju1csY219V9OuD+Wm0WMgFDYANvLia
- y5+67Ge7fuOK768GV/8n5TrfmJogoxRwGLUEjtx5KcN1wiN/a/RjBf4Gi Q==;
-X-CSE-ConnectionGUID: iGAIeZGrSLSbfMrMRUlYvw==
-X-CSE-MsgGUID: ltOSDs7OTiOga3GmVm063g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106723321"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="106723321"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:29:14 -0700
-X-CSE-ConnectionGUID: WGaxHLduREyDa3rLOztPJw==
-X-CSE-MsgGUID: uVsY/FxxSPK/kjIaLsh4wA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="267982471"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2026 00:29:10 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowangio@gmail.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v6 5/6] intel_iommu_accel: Accept PRQ response for passthrough
- device
-Date: Wed,  9 Sep 2026 15:28:36 +0800
-Message-ID: <20260909072837.3183154-6-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
-References: <20260909072837.3183154-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x4Coc-0007hJ-OA
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:33:54 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x4Coa-0004SB-S3
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 03:33:54 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4858303de5dso6699582f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 00:33:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788939231; x=1789544031; darn=nongnu.org;
+ h=content-type:content-transfer-encoding:mime-version:message-id
+ :in-reply-to:references:user-agent:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=+Mf04GEji7A/HhsNoBHAi26FGyzSd8Imukxgq0j2pE4=;
+ b=Y/HKzuI1aTQaPAc767Moy76Z6AWQxdbq/y8RrO5hW8KafcKcbr20ts34TN6qYU5dYp
+ VMn73ylvD3wDrYfNxsoUBCOgrUOxWfY8xVIqr0vkE+fJkt5KK/tKAtyf17BzXg8DeegN
+ MLjpN+UZU3BMRsKvyB6DvoPdpI2l9sRIjlJzmcvYOTSagTSV45KHVe7X75a8utXSbg9b
+ BzB7465GgKaWBv3Bxmp+NJamLbn3BX+Px3RGVUu45wYoWpdZ0D8vGQRqgM6+4AZz6zUt
+ yrDsSLNervE+M2FvPX+dQ0D+Ouit/ofKslJBmcaBQrwqTaisW8JDvfxgtaH+RilZm7tL
+ j81w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788939231; x=1789544031;
+ h=content-type:content-transfer-encoding:mime-version:message-id
+ :in-reply-to:references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+Mf04GEji7A/HhsNoBHAi26FGyzSd8Imukxgq0j2pE4=;
+ b=JYEfwlrQ72Qv2qADnRSMIPjmqP16ftBnZZGZ5Nwupf7xufgpgM1R/1AQb2gtH3KFhQ
+ Ur/7yb9eg31mL/NfomELRtiZjWuWyR7ofqaNHD+M88l62EJVoxO53eHdl4KAxsPGktMd
+ IRqvYoqkWLQwGNx5YNtiyil0KpFsUPdiLOoDI9Cnd3NvOp3GV3i2wMuNaPO+bAV9s2eL
+ lqG2k4R+jOY71R0WtqmkWqTCEhSj2qo4Sh6Z/oQgCjqqwAl9TtWZnDjSJtfMH0tDadly
+ kwRSb76zjc0cIsqa7ol9LvFkES0pp44EOR8rcBTCFfH9XK/Ip1nu48i2TCC/p5IlOC1k
+ Eorg==
+X-Gm-Message-State: AFuF++mHQyvdjQYr+VN5tHKDulTERF3MvaEt1sylKG+sOXoRaszIGTeg
+ TLPaxFMRadfOmldGRNF2UpZgRySCIHT0ccfpGtLWtDeA70aPrcVIO8i2nb9xVDsA548=
+X-Gm-Gg: AYBFou1SLUqWnwRc+FqUych/MG+syEwm3NQgUuMfoKuoq31YRwpb0DRMQUBxqsNq9ts
+ LWZUu2u11vz+zc75AaGpTNdJ+bKU0SYVNTKvl5TyKWARqgk95zPy1/CHYK/nJ7mFnsalgtfd73K
+ GjJvIaj1Pg3jUwy90V7zlWnraOFa+SOB9yWfHrFPFWdBXXM5uqC7OYtHdzekvDWtJCa9SAdSfAy
+ s7MQYSQiVf6kd7JM0yRf/XQRo66pEmgFq/4GlCCrv+Cg59RKi9N5MXhJhiznZWNVwnEjfZrNfhE
+ NUrXkPc4gXuQtsDqV7gz3JdB9HkMeHk0nf61R0onK4bM5ItC+Stkdbb6lO0mKgVU36MeJbCnuwP
+ DVzu7l6En7HHWN/Sjlkq8KOJE4iITFlrIduLOfFUCqxqIgJvle8eQR+cvO/sDYdw5XqZIevF4Iq
+ r9lDD2uEhuJ5flbkIPX6+1BRCOv2urlenqpg9TmF45uDeP4mCwosIaEcWkN/Tv2vvAjVPThtXwH
+ aVQEbIeTEYmNHsLwlEsZOjwaVvP7kA58xyN4zE6VBLtwb/ZiX0nra2WKLXNO0s9Te/frAIBAzXz
+ UuFHSK6ORLP+qQR1moIWbUlXL9MAAmB9oELob7vWaPgA5SG4dvMeyr7U17Nioc9IPXGeDQCv5/k
+ uFnLZo8wOrVJZUUeB5qIZpcrUruO4aPJYV6tG
+X-Received: by 2002:a05:600c:620e:b0:49c:fc6c:be19 with SMTP id
+ 5b1f17b1804b1-49cff2078b8mr312130285e9.31.1788939231027; 
+ Wed, 09 Sep 2026 00:33:51 -0700 (PDT)
+Received: from meli-email.org (athedsl-116222.home.otenet.gr. [85.75.29.157])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cee5d476esm588714585e9.1.2026.09.09.00.33.50
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 09 Sep 2026 00:33:50 -0700 (PDT)
+Date: Wed, 09 Sep 2026 10:31:37 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Volker R=?UTF-8?B?w7xtZWxpbg==?= <vr_qemu@t-online.de>,
+ Marc-Andr=?UTF-8?B?w6k=?= Lureau <marcandre.lureau@redhat.com>,
+ "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ St=?UTF-8?B?w6lwaGFuZQ==?= Graber <stgraber@stgraber.org>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v5 00/10] hw/audio/virtio-sound: basic migration support
+User-Agent: meli/0.8.13
+References: <20260803081159.91981-1-alexander@mihalicyn.com>
+ <CAJqdLrri+kRORx_8cHFhi6cuoVZ1ENup+fprm3XHaVavteHRpQ@mail.gmail.com>
+ <CAAjaMXZ80o20S-o7=QbrP+wNKqo==w-9Cc3BfeZGG9DazMTnPA@mail.gmail.com>
+ <CAJqdLrqi12b4LdhdBywr9JZ0H=dmEJUy8_-JCV7YRU5UmsiRrQ@mail.gmail.com>
+In-Reply-To: <CAJqdLrqi12b4LdhdBywr9JZ0H=dmEJUy8_-JCV7YRU5UmsiRrQ@mail.gmail.com>
+Message-ID: <tl36cd.2tad1k4jeakw8@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,233 +113,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Propagate guest's PRQ response to host by writing to fault_fd.
-Create a new VTDPRQEntry to cache cookie for each fault group,
-this cookie is used to mark the fault group on host side.
+On Mon, 31 Aug 2026 10:43, Alexander Mikhalitsyn <alexander@mihalicyn.com> wrote:
+>Am Mo., 31. Aug. 2026 um 09:41 Uhr schrieb Manos Pitsidianakis
+><manos.pitsidianakis@linaro.org>:
+>>
+>
+>Dear Manos,
+>
+>> Hi Alexander, so sorry for the massive delay but I'm on PTO for a big
+>> part of August and some of September. Your series is on my priorities
+>> as soon as I return.
+>
+>ah, then sorry for bothering you during PTO ;-)
+>Have a good time!
+>
+>Kind regards,
+>Alex
 
-If there is either PRQ overflow or full error condition, propagate
-a success response to host for LPIG request with the PRQ requests
-dropped. For other error conditions, propagate response of invalid
-request.
+I think this series is now fully reviewed, I will rebase against master 
+and send a pull request.
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
----
- hw/i386/intel_iommu_accel.h   | 12 +++++
- include/hw/i386/intel_iommu.h |  6 +++
- hw/i386/intel_iommu.c         |  4 ++
- hw/i386/intel_iommu_accel.c   | 99 ++++++++++++++++++++++++++++++++---
- hw/i386/trace-events          |  1 +
- 5 files changed, 115 insertions(+), 7 deletions(-)
+Thanks!
 
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-index e0319749a5..0cc22b2cbb 100644
---- a/hw/i386/intel_iommu_accel.h
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -20,6 +20,7 @@ typedef struct VTDAccelPASIDCacheEntry {
-     uint32_t fs_hwpt_id;
-     uint32_t fault_id;
-     int fault_fd;
-+    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
-     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
- } VTDAccelPASIDCacheEntry;
- 
-@@ -31,6 +32,9 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-                                       uint64_t npages, bool ih);
- void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
- void vtd_accel_pasid_cache_reset(IntelIOMMUState *s);
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response);
- void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
- #else
- static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
-@@ -69,6 +73,14 @@ static inline void vtd_accel_pasid_cache_reset(IntelIOMMUState *s)
- {
- }
- 
-+static inline
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response)
-+{
-+    return false;
-+}
-+
- static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
- {
- }
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 1842ba5840..5d44eac0ed 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -100,6 +100,12 @@ typedef struct VTDPASIDCacheEntry {
-     bool valid;
- } VTDPASIDCacheEntry;
- 
-+typedef struct VTDPRQEntry {
-+    uint32_t grpid;
-+    uint32_t cookie;
-+    QLIST_ENTRY(VTDPRQEntry) next;
-+} VTDPRQEntry;
-+
- struct VTDAddressSpace {
-     PCIBus *bus;
-     uint8_t devfn;
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 022923a058..4dfa2dd9a6 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3380,6 +3380,10 @@ static bool vtd_process_page_group_response_desc(IntelIOMMUState *s,
-         response.response_code = IOMMU_PRI_RESP_FAILURE;
-     }
- 
-+    if (vtd_accel_propagate_page_group_response(s, rid, pasid, &response)) {
-+        return true;
-+    }
-+
-     if (vtd_dev_as->pri_notifier) {
-         vtd_dev_as->pri_notifier->notify(vtd_dev_as->pri_notifier, &response);
-     }
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index c0bd249c4a..903c74bad1 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -78,6 +78,62 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-     return NULL;
- }
- 
-+static void vtd_write_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                uint32_t cookie, uint32_t code)
-+{
-+    struct iommu_hwpt_page_response resp = {cookie, code};
-+    uint32_t id = vtd_pce->fault_id;
-+    int fd = vtd_pce->fault_fd;
-+    ssize_t bytes;
-+
-+    bytes = write(fd, &resp, sizeof(resp));
-+    trace_vtd_write_fs_faultq(id, fd, cookie, code, bytes);
-+    if (bytes < 0) {
-+        error_report_once("FAULTQ(id %u): write failed "
-+                          "[cookie 0x%x code 0x%x] (%m)", id, cookie, code);
-+    }
-+}
-+
-+static void vtd_prq_handle_pasid_response(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                          IOMMUPRIResponse *response)
-+{
-+    VTDPRQEntry *prqe, *tmp;
-+
-+    QLIST_FOREACH_SAFE(prqe, &vtd_pce->vtd_prq_list, next, tmp) {
-+        if (prqe->grpid != response->prgi) {
-+            continue;
-+        }
-+
-+        vtd_write_fs_faultq(vtd_pce, prqe->cookie, response->response_code);
-+
-+        QLIST_REMOVE(prqe, next);
-+        g_free(prqe);
-+        break;
-+    }
-+}
-+
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response)
-+{
-+    VTDAddressSpace *vtd_as = vtd_get_as_by_sid(s, rid);
-+    VTDAccelPASIDCacheEntry *vtd_pce;
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
-+
-+    if (!vtd_hiod) {
-+        return false;
-+    }
-+
-+    QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-+        if (vtd_pce->pasid == pasid) {
-+            vtd_prq_handle_pasid_response(vtd_pce, response);
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- static void vtd_propagate_recoverable_fault(VTDAccelPASIDCacheEntry *vtd_pce,
-                                             struct iommu_hwpt_pgfault *fault,
-                                             unsigned cnt)
-@@ -88,14 +144,42 @@ static void vtd_propagate_recoverable_fault(VTDAccelPASIDCacheEntry *vtd_pce,
- 
-     for (; cnt--; fault++) {
-         bool last_page = fault->flags & IOMMU_PGFAULT_FLAGS_LAST_PAGE;
-+        int ret;
-+
-+        ret = vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
-+                                   vtd_hiod->devfn, pasid,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_PRIV,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_EXEC,
-+                                   fault->addr, last_page, fault->grpid,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_READ,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-+        if (!last_page) {
-+            continue;
-+        }
-+
-+        if (!ret) {
-+            VTDPRQEntry *prqe = g_malloc0(sizeof(*prqe));
-+
-+            prqe->grpid = fault->grpid;
-+            prqe->cookie = fault->cookie;
-+            QLIST_INSERT_HEAD(&vtd_pce->vtd_prq_list, prqe, next);
-+            continue;
-+        }
- 
--        vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
--                             vtd_hiod->devfn, pasid,
--                             fault->perm & IOMMU_PGFAULT_PERM_PRIV,
--                             fault->perm & IOMMU_PGFAULT_PERM_EXEC,
--                             fault->addr, last_page, fault->grpid,
--                             fault->perm & IOMMU_PGFAULT_PERM_READ,
--                             fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-+        /*
-+         * vt-d spec 7.4.1:
-+         *
-+         * Hardware generates page group response with code of success for
-+         * PRQ overflow and PRQ full, with code of invalid request for
-+         * other error conditions.
-+         */
-+        if (ret == -ENOSPC) {
-+            vtd_write_fs_faultq(vtd_pce, fault->cookie,
-+                                IOMMUFD_PAGE_RESP_SUCCESS);
-+        } else {
-+            vtd_write_fs_faultq(vtd_pce, fault->cookie,
-+                                IOMMUFD_PAGE_RESP_INVALID);
-+        }
-     }
- }
- 
-@@ -426,6 +510,7 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-     vtd_pce->pasid = pasid;
-     vtd_pce->pasid_entry = *pe;
-     vtd_pce->fault_fd = -1;
-+    QLIST_INIT(&vtd_pce->vtd_prq_list);
-     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
- 
-     if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index fcd3f33f0a..2b2baeb408 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -78,6 +78,7 @@ vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int re
- vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
- vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
- vtd_read_fs_faultq(uint32_t fault_id, uint32_t fault_fd, ssize_t bytes) "fault_id %d fault_fd %d ret: %zd"
-+vtd_write_fs_faultq(uint32_t fault_id, uint32_t fault_fd, uint32_t cookie, uint32_t code, ssize_t bytes) "fault_id %d fault_fd %d cookie %d code %d ret: %zd"
- 
- # amd_iommu.c
- amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
--- 
-2.52.0
-
+>
+>>
+>> On Mon, Aug 31, 2026 at 10:27 AM Alexander Mikhalitsyn
+>> <alexander@mihalicyn.com> wrote:
+>> >
+>> > Am Mo., 3. Aug. 2026 um 10:12 Uhr schrieb Alexander Mikhalitsyn
+>> > <alexander@mihalicyn.com>:
+>> > >
+>> > > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>> > >
+>> > > Dear friends,
+>> > >
+>> > > This patchset is aimed to support virtio-sound live migration and based on
+>> > > pre-existing Volker Rümelin's patches from qemu-devel lists [1]. I tried
+>> > > to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a335fc53569.camel@mihalicyn.com/)
+>> > > if Volker is going to continue his work on this, but received no reply so I
+>> > > just decided to go forward: take his patches, rebase and resend. Of course,
+>> > > I kept all authorship/tags so I hope that it is fine.
+>> > >
+>> > > Testing.
+>> > >
+>> > > I manually validated this with Ubuntu 24.04 Desktop VM and found no issues.
+>> > > Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pipelines/2626702088).
+>> > >
+>> > > Original patchset:
+>> > > https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de [1]
+>> > >
+>> > > Git tree:
+>> > > https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
+>> > >
+>> > > Changelog for version 5:
+>> > > - rebased
+>> > > - added RWB tags
+>> > >
+>> > > Changelog for version 4:
+>> > > - addressed review feedback from Marc-André Lureau
+>> > > - and from Manos Pitsidianakis
+>> > > *there is a detailed changelog under each commit message*
+>> > >
+>> > > Changelog for version 3:
+>> > > - addressed review feedback from Marc-André Lureau:
+>> > >         - drop VirtIOSoundPCMStream's id field (unused)
+>> > >         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
+>> > >         - fixes in "hw/audio/virtio-sound: add stream state variable"
+>> > >           [ please, look in commit message for details ]
+>> > >         - added "hw/audio/virtio-sound: remove channel positions field
+>> > >           from VirtIOSoundPCMStream"
+>> > >         - fixes in "hw/audio/virtio-sound: add missing vmstate fields"
+>> > >           [ details in commit message ]
+>> > >
+>> > > Changelog for version 2:
+>> > > - no code changes (only commit messages)
+>> > >   followed suggestions from Daniel P. Berrangé (thanks, Daniel!)
+>> > >   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
+>> > >   and added some extra details about what I did with the original
+>> > >   patches during rebase (for some of them it was simpler and less error
+>> > >   prone to just drop changes and reimplement them by following the idea
+>> > >   of the patch, cause base code has changed significantly).
+>> > >
+>> > > Changelog relative to the original Volker Rümelin's submission:
+>> > > - rebased:
+>> > >         - "hw/audio/virtio-sound: return correct command response size"
+>> > >                 was dropped as it was already merged
+>> > >         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer handler"
+>> > >                 was dropped as it seems to be replaced with another fix
+>> > >                 https://github.com/qemu/qemu/commit/731655f87f319fd06f27282c6cafbc2467ac8045
+>> > >         - I had to drop all pre-existing Reviewed-by tags cause it was 2 years since
+>> > >           this patchset was sent and reviewed and I did a quite significant code changes
+>> > >           during rebase
+>> > >
+>> > > Kind regards,
+>> > > Alex
+>> > >
+>> > > Alexander Mikhalitsyn (2):
+>> > >   hw/audio/virtio-sound: remove channel positions field from
+>> > >     VirtIOSoundPCMStream
+>> > >   hw/audio/virtio-sound: drop unused struct
+>> > >     VirtIOSoundPCMStream.flushing field
+>> > >
+>> > > Volker Rümelin (8):
+>> > >   hw/audio/virtio-sound: remove command and stream mutexes
+>> > >   hw/audio/virtio-sound: allocate an array of streams
+>> > >   hw/audio/virtio-sound: free all stream buffers on reset
+>> > >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+>> > >   hw/audio/virtio-sound: add stream state variable
+>> > >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+>> > >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
+>> > >   hw/audio/virtio-sound: add missing vmstate fields
+>> > >
+>> > >  hw/audio/virtio-snd.c         | 696 ++++++++++++++++++++--------------
+>> > >  include/hw/audio/virtio-snd.h |  26 +-
+>> > >  2 files changed, 414 insertions(+), 308 deletions(-)
+>> > >
+>> > > --
+>> > > 2.47.3
+>> > >
+>> >
+>> > Gentle ping.
+>>
+>> --
+>> Manos Pitsidianakis
+>> Emulation and Virtualization Engineer at Linaro Ltd
 
