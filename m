@@ -4,106 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B439AC79FBB
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 21:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDC0C79FB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 21:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Q6w-0000Ws-U7; Wed, 09 Sep 2026 17:45:42 -0400
+	id 1x4Q6r-0000Um-9S; Wed, 09 Sep 2026 17:45:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q6u-0000WK-TK
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:40 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q6p-0000Tj-2K
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:35 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q6t-0005O5-AG
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:40 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4Q6m-0005L0-6T
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 17:45:34 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DB83821C87;
- Wed,  9 Sep 2026 21:45:29 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 443FB21C86;
+ Wed,  9 Sep 2026 21:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788990334; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788990323; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FU1jhkEgMVS2sNbypPm5zXMDEp/wDQLX/KNQGfBpgBc=;
- b=GatcDFdjB53CkmD24HikZpA4IUeatfU66CBGRh+lQ6tuEeZ0+IwcVzAKLGGzPZ+IUAexYl
- LfGaqbKSKLcocOofyal8ixATf6c4LLWqCiLQLRQ3Ncnt8WmOMcttFAshmBQWDafIHgY9u/
- hnVmJx5mG0xtaojOAZtcbtLNJg3ObgY=
+ bh=i0xypdlguFgZqf9pf4kZeAPVThtLBKBKIFhZdXB6v4k=;
+ b=vSBZbAaFCReVaeIFizOmSzqALwt5qazQZCtF+1CX/Ol9eHiJJA3GIldgxQXvDQLa7K7CSe
+ aVe1NqdgKZlTtVOz8F0Kg+4LA0pRsZpYIcW8LcfNmNKrt8yR+7rkLVY/Oq3AITQQjE6FMH
+ csT/cgpEG5jCfrJ/9R7I7DlO5kZ3Bjs=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788990334;
+ s=susede2_ed25519; t=1788990323;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FU1jhkEgMVS2sNbypPm5zXMDEp/wDQLX/KNQGfBpgBc=;
- b=JpOnkOQDnzYWk1G1AYr5LXBOTV9pnhzMB0hmBWmV7PPiW/8ulzCvQcNUkO7FCAD+x7b0qe
- SRD2S1OyTzFetKDQ==
+ bh=i0xypdlguFgZqf9pf4kZeAPVThtLBKBKIFhZdXB6v4k=;
+ b=ldBq1TNCB6r1uAcKqloH1nKzuExFoZR9YH8LgJH4KVlbFY6FXXAT6UAucyq0BDtxusbz91
+ Spa3vAK7sWlOvuAg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tg5zsd2n;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jE5aepu8
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=xlpZm5VJ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sKJb0szh
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788990329; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788990319; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FU1jhkEgMVS2sNbypPm5zXMDEp/wDQLX/KNQGfBpgBc=;
- b=tg5zsd2nlrM2AfSs2edkaW3bkADnkMTK+8WX4etyxsRhOe+mJi9PEgwGRQYXzqYP2xcadJ
- aRsyYysEr95we06gHXBy5R3gWEuwuh8FlVqSg0coatA36f/nmEAewMsyx20zJBTwyInM6E
- qHxk4fXQDDnz7Q79UTqG0N9O9UeRCJY=
+ bh=i0xypdlguFgZqf9pf4kZeAPVThtLBKBKIFhZdXB6v4k=;
+ b=xlpZm5VJDsfSGPUg9M5gamPysFLeVUhIb25cz2cnR4KODpemGa39jJkY17pbRqMt1p1XAi
+ i2yg3UHAjdbWmCfintzTSb2ajFMTd/h02iBBcwiubnUZZ8erOBLSpWiqzRJtEPEqXa8XWi
+ Z7zlLBZxeWPCp4UvRYRKlm8w82/w6AE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788990329;
+ s=susede2_ed25519; t=1788990319;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FU1jhkEgMVS2sNbypPm5zXMDEp/wDQLX/KNQGfBpgBc=;
- b=jE5aepu89MKB6P/3H7W7wXm3KgMceCccpUjVh+ewPVcryDsuYz7oUmXUxRU6nAN/5b0KjT
- /r2SAXFdfNJu1BBA==
+ bh=i0xypdlguFgZqf9pf4kZeAPVThtLBKBKIFhZdXB6v4k=;
+ b=sKJb0szhtOBveQ8A5CK3gbOQQqZK6RQxZ3ctkQ+tRgCdIqwmobn+ObkNkCcmigxz8qqzdQ
+ ED7FCBOiFjRZxjAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7E42B136ED;
- Wed,  9 Sep 2026 21:45:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8C716136ED;
+ Wed,  9 Sep 2026 21:45:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uEpFEnjToWqzawAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 09 Sep 2026 21:45:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YK9xFW3ToWqzawAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 09 Sep 2026 21:45:17 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 07/18] migration: Stop freeing s->parameters members
- individually
-Date: Wed,  9 Sep 2026 18:44:57 -0300
-Message-ID: <20260909214509.237309-8-farosas@suse.de>
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Chao Liu <chao.liu@processmission.com>
+Subject: [PATCH v2 01/18] checkpatch: Fix checking of newlines in error
+ messages
+Date: Wed,  9 Sep 2026 18:44:51 -0300
+Message-ID: <20260909214509.237309-2-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260909214509.237309-1-farosas@suse.de>
 References: <20260909214509.237309-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 443FB21C86
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: DB83821C87
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
  DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_TRACE(0.00)[suse.de:+]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
@@ -130,67 +129,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expecting every pointer member from s->parameters to be freed
-individually is prone to leave some fields forgotten when the code is
-eventually updated. Use a dealloc visitor to free them all at once.
+Using newlines in error messages is not allowed as per qapi/error.h
+documentation.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Checkpatch has been enforcing this for the error.h API, but also for
+g_test_message() which doesn't fall under the qapi/error.h
+prescription. Using newlines in that function's format string is fine
+and can help with readability of test code when formatting test
+results. Note that g_test_message() automatically adds the '#'
+required by the TAP protocol to the start of each line.
+
+Relax the regex for this function, but still forbid a trailing newline
+because it's added automatically and usually not what the user wants.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ scripts/checkpatch.pl | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 24799eba96..f0774fc50b 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -16,6 +16,7 @@
- #include "qemu/units.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
-+#include "qapi/dealloc-visitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
-@@ -1058,11 +1059,21 @@ AnnounceParameters *migrate_announce_params(void)
-     return &ap;
- }
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 03f35e7501..8fd38868c5 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -3303,13 +3303,20 @@ sub process {
+ 					 info_vreport|
+ 					 error_report|
+ 					 warn_report|
+-					 info_report|
+-					 g_test_message}x;
++					 info_report}x;
  
--static void migrate_tls_opts_free(MigrationParameters *params)
-+static bool migrate_params_free(MigrationParameters *params, Error **errp)
- {
--    qapi_free_StrOrNull(params->tls_creds);
--    qapi_free_StrOrNull(params->tls_hostname);
--    qapi_free_StrOrNull(params->tls_authz);
-+    Visitor *v = qapi_dealloc_visitor_new();
-+    bool ret;
+ 		if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
+ 			ERROR("Error messages should not contain newlines\n" . $herecurr);
+ 		}
+ 
++		# No newlines at the end
++		my $trail_newline_error_funcs = qr{g_test_message}x;
 +
-+    /*
-+     * qapi_free_MigrationParameters can't be used here because
-+     * MigrationParameters is embedded in MigrationState due to qdev
-+     * needing to access the offset of the migration properties inside
-+     * the migration object.
-+     */
-+    ret = visit_type_MigrationParameters_members(v, params, errp);
-+    visit_free(v);
++		if ($rawline =~ /\b(?:$trail_newline_error_funcs)\s*\(.*\".*\\n\"/) {
++		    ERROR("Error messages should not contain trailing " .
++			  "newlines\n" . $herecurr);
++		}
 +
-+    return ret;
- }
- 
- /* normalize QTYPE_QNULL to QTYPE_QSTRING "" */
-@@ -1411,9 +1422,9 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
-         return;
-     }
- 
--    migrate_tls_opts_free(cur);
--    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
--    qapi_free_strList(cur->cpr_exec_command);
-+    if (!migrate_params_free(cur, errp)) {
-+        return;
-+    }
- 
-     QAPI_CLONE_MEMBERS(MigrationParameters, cur, new);
- 
+ 		# Continue checking for error messages that contains newlines.
+ 		# This check handles cases where string literals are spread
+ 		# over multiple lines.
 -- 
 2.53.0
 
