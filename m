@@ -4,111 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA12C79FB7
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 14:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 724B6C79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 14:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4JW5-0000GO-Cr; Wed, 09 Sep 2026 10:43:13 -0400
+	id 1x4JWQ-0000Jd-Q6; Wed, 09 Sep 2026 10:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1x4JW4-0000FT-0P
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:43:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sid.manning@oss.qualcomm.com>)
+ id 1x4JWE-0000Ii-MO
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:43:22 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1x4JW2-0005fW-3h
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:43:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788964989;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NplcCtalrr4KaNtkMcW82lPswZ8AtudoDtbDep02z7I=;
- b=OBE2QcJI5yLYnz3Y/75MUfyaGQchsDrUrNpY5Ww8tPCaBVGjEwvsUi/kflaUBx3el+MDs8
- pqfSC0gFsefnWnk+rra4H/VE+fjFsR6qfuYjq0bHt/wscN6M7AHW56oPfiqv4ZoAMDBu8f
- 0dnzr6H8wFhpEoP4W22e3Seox8PJcnQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-30-X3D1KIMAPKKQYO0hAUJQ9g-1; Wed, 09 Sep 2026 10:42:02 -0400
-X-MC-Unique: X3D1KIMAPKKQYO0hAUJQ9g-1
-X-Mimecast-MFC-AGG-ID: X3D1KIMAPKKQYO0hAUJQ9g_1788964921
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f6e8b5996so5115972f8f.2
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 07:42:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sid.manning@oss.qualcomm.com>)
+ id 1x4JWC-0005iI-Gc
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:43:22 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 689BU2RQ2019093
+ for <qemu-devel@nongnu.org>; Wed, 9 Sep 2026 14:43:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=sCd7XnMT08YIUhK4dxF9NyGh
+ gBRMF1Qjo21OJX/YEBM=; b=Gtvhyrk7bbDTOed6vr46fjfVv+IlzTy4l57f7iZ3
+ oMQX4VzxHYcrf+9jsm0fG+ez5YT7jK0GJHdhK5Ct2HRDcZ8mRG/8hnw9yJcZB+Nn
+ zoqLE8dU8sp24RJxP+TnUoHe7rxzka0cLHGyr4+IS74Lyp5+5m4MnZMByfwk0OE+
+ aD8ZZVLDttbqJPBAXac2QEm0XH4DoTwZqppYNK2s2o3FmA6CbWhYcPIMEMI31SkB
+ TayqBcMyGnPu/emW8aCmgapSjtHMo+FIttgvb448X4kVcIh9P+y1H6yJCIVQYrE5
+ wGQ39Y6KSDbYiUqHTmYdS9bYe1g/gNcrJM1/7fXEEisbZw==
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gk62x8wq7-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 14:43:15 +0000 (GMT)
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-7f5b54da461so115842167b3.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 07:43:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788964995; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fTbPcOi+Gco33G9Zfm23bK9pXgoXBGwK+9iq0g6TlBqNXOm5miElrz8HlXY4G1vGtG
+ 5mffbbJ7YzWgYSIcug+k12gbVMktf7Skp9Khxtw1aM+ogYI091XV2PWeLi3gg+a94ep6
+ TRgISId0mSWzL4mP6x1U7z+snpy4fUcwodYBTMME6VcvMDjuAzdsUo2RY52VrhPnc0+u
+ WNeeuqmKckNuj8lQSDPsENeLsISXUPPC1ulRjMMdDZpc4vJzoFxq+i71VmzNal6QF1jB
+ dyE+Nlus0+KZYUK+NMvpc9krTuxM+vQeUqep6BCK+SGW0PcWYyPOFfQk0MvsEc/Ft5hj
+ yrOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=sCd7XnMT08YIUhK4dxF9NyGhgBRMF1Qjo21OJX/YEBM=;
+ fh=+NGiuCaJkBcMFhTaOsG/B5aXYeWujaYLuYLP/6yolpU=;
+ b=N1r7asGmiUOupcw0jx1OSC2R8+LTBIDrbXQ2qoCX40TUk1qxKSzZ8wBuQEWBuyC6ZE
+ 7JjtXsiSf1Qyiqp8TFub3hTHWA0OCUPyvnPo2DdAa0FC6WEIG60adJyUK3HvuKYgYqxW
+ NYBkgE5B8VhQq/oduwlY0BLcz3nvy7Kd4bxYVIjGeH37FegI199H5r9JbTrGcDBtEGZs
+ fIJOGNqsMMu6sixSMBCpgC1OBk2qj2VB1SQj+VAquFiHH0BA9hNN9SQjWThRAUgOFZAb
+ sEuo4sIQdOrhAZMNzopKYT6W48ycY722n9VLM8SZiP8ZnYAbXdK/b+hdaSl2mXeEB4Wd
+ GyYQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788964921; x=1789569721; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=NplcCtalrr4KaNtkMcW82lPswZ8AtudoDtbDep02z7I=;
- b=oOz5VdDC0gliX8RaLFgzfb6JbBsROxYeDSn4Bqm1tAozd/EUFqS9XosDngUDaH+9wg
- oqkdP3Mp2oMkVJ4IugFdxgExLGEtgsqcUy0cCQ/6+i/ZC7reFg0w8dxlf+Qu7o3Bzgn+
- BV/YkwZ1mnTgPVnTD2/8BhBpikTBY0wcwz2w0wGJGKzEn5q4AXUJFv5n2Z2aMVeXeceo
- jewLE+FT4inVB9qjYY96OZuz5wfQMZfWC2pDwnd1nzhEipTueamU5ecVXVeKKt+qzIuD
- rhT980gP+ZW8QgrdTLymQPPMoCHapYxA0+dQK8B0qaMb7NQegJeCZ5GuvD86kf3bNjir
- crow==
+ d=oss.qualcomm.com; s=google; t=1788964995; x=1789569795; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=sCd7XnMT08YIUhK4dxF9NyGhgBRMF1Qjo21OJX/YEBM=;
+ b=RIxXshkYTbpTwIra3iYUaGnK3q9cJBrmtCboaQZsNl9A6DILSL0IsVoyeLtoXwNgmB
+ +KInBcDPFHVGwGOxBJJxl125wmZmdiGYs+LgMOuQNSt/BGqvTUS1xqkl/TSCcEvddIJI
+ iGnG0mDkB9zh6tb2EwG9tz2ECZtyeVlHDzs/1lMa+tXOoUVvuPTlBis1ZbRK2Ryy0F8L
+ Tw5zvOOR1uVVAwxoc7GeluFkz2C3XmS2pmTEVoy0IxO0V0DfkBDP4puYnYE08DRj2w3V
+ 1GIFKb+fkb/gdguCJi1HTESi7CD3Kf/h9hgFpWeFwm3YSNjGR+LJJc+bEX0+ldge6xLy
+ XeWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788964921; x=1789569721;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NplcCtalrr4KaNtkMcW82lPswZ8AtudoDtbDep02z7I=;
- b=XrpCdIm3e2hJAhvrWq3bRWx6kPJ7KNrVXS03cG08tZLK5ZJ6VObn1ile2RzivYfCB5
- uG/bQtxqptO2DAoiWfXUAuOHkAdWgWPTfKy60IJxV7acD6zxhCAAvEjpKTe78Ep15v8C
- g33teSeFN6S74K46mV29aseSgmimdZM6koNc2TxW1ssOQDeVz/6mPWdQSimJtwmlLiN1
- SzohE4dyFUQccMJTzSY90faxPKl2u/pPl07OhP5ta8phjbEPooaZE3fzmfk4patjGKoy
- wdG3WFWyjjfxCo2abi4vJuyvyX++WSIVmDoVAr45a0awh6yU4iRpZ5DJmYBJssOEJ6u7
- bZ4Q==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwNn9XB07qtXR5jCl5sN6YWqzg+m+Jk7dLjLHJCSaZrYKfJQanfH/2/LTYBucnaW4117atABlFSoIcj@nongnu.org
-X-Gm-Message-State: AFuF++nR7MES5cnlaeKBpjvuQEMSz0xw8W9/EoaB0JojgnfUDA8bhcXl
- 13MEYSGGMiLYwX8yfokU3Q+K3Fz4OR7/rMXWKEra88S+Q5r3eej98Sqq4K/dM/tQHjw99D0KFiL
- K0xzVQwbKWm0kkdwQa8lCMIehzvO6VbzpWEcPtbK6ZAsvfICL2BFmRQJ2
-X-Gm-Gg: AYBFou32gM0re1xFasnG/Q1H7cz768OUvuI4Fcm9h9sKmdxCE/ZcpGxkkHGrsIh/uq6
- o/q4V6ZSqogKUk9z3SJG44zrMSSxNrQcaXK3ULyEsFbN+zWxHeGaVeylcLx+PYbO4GiRO7/CWgp
- j6XFLEA+9H4efIuDaq1DGge2YD0OggzGA/L4tfEUFs79J4PgChnHnqshTaIjQziubceQcg3sw3G
- m+U/4U20HXm4qM7Gy/AcRSh7HYar3WDUfo13dHMVR8crp3a+7msgiyGzgRlx3J9pshvuquFS9wl
- xOeuGMobEGfgZEe+UPSZq/FtOz8f4f4DbaajUidI+x5Y386lwZwzKk6cR1JoysZ4Fl2h2yTThGd
- ordyNsw7bAu5Pv2jamQFgqOAsbpFU8jU2bsHRbsahingaPpEdv0ru23be69BPHLnoiA==
-X-Received: by 2002:a05:6000:985:b0:485:8b95:706f with SMTP id
- ffacd0b85a97d-4858b9570c4mr31588714f8f.13.1788964920886; 
- Wed, 09 Sep 2026 07:42:00 -0700 (PDT)
-X-Received: by 2002:a05:6000:985:b0:485:8b95:706f with SMTP id
- ffacd0b85a97d-4858b9570c4mr31588672f8f.13.1788964920455; 
- Wed, 09 Sep 2026 07:42:00 -0700 (PDT)
-Received: from rh.redhat.corp
- (p200300f6af0e1b00fa6b14698c8a91c3.dip0.t-ipconnect.de.
- [2003:f6:af0e:1b00:fa6b:1469:8c8a:91c3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485958f1493sm32933395f8f.37.2026.09.09.07.41.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2026 07:41:59 -0700 (PDT)
-From: Sebastian Ott <sebott@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eauger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, khushit.shah@nutanix.com
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>
-Subject: [PATCH v5 1/3] arm: handle demuxed ID registers
-Date: Wed,  9 Sep 2026 16:41:49 +0200
-Message-ID: <20260909144151.26803-2-sebott@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260909144151.26803-1-sebott@redhat.com>
-References: <20260909144151.26803-1-sebott@redhat.com>
+ d=1e100.net; s=20251104; t=1788964995; x=1789569795;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=sCd7XnMT08YIUhK4dxF9NyGhgBRMF1Qjo21OJX/YEBM=;
+ b=ENvKmVHHzed7+2V5speaaScCPC046q7jvU+6EJc03LJBMRwZRg8/BFcIFT3yZmQzYz
+ qHzRqP3EzWTploiD0xSmJoWYoHYYDCt2plKEzopPmfwzEMxe71NZAKuAcdZR03PQLSkm
+ qZgynkhLvgZrOITO5IYO1tEDuTV/UjalN878Rec2JGm3s/5OfrStpHRAAtnI35sfEjGc
+ FZF8B8t9XD2kmHr69ihQ8YwqAv2meWGCvnvlYr2D/vHHSrK3xbaT8afl7pgrM0fXoebk
+ oo81YbG4JIpJgFge/Z/xGPeC8BLD2N/4g+LWYV80Gj+ULdo2kbgZcK/E7m7io91UlHRP
+ 4uhw==
+X-Gm-Message-State: AFuF++mRhWnEqlPSBa6VCculLiiFp7Z+2zo6mpEF/EyZc618T0uRWgkr
+ CYqbj6R5AbhXqJGyVHaWp8IcQABu/lKLoEDJdx1qdEjFPOgO5MioQ8+EfooZS608vGimjqhisle
+ 0akSp+7AjqIqeRgwuTaK7dXosAW/Mauvq800pN6jelOkwTZNfDjX5lVq8YQEoK9feP177jUsXk8
+ ifnAbA6NJwTHNy/ZYUsLoNnan1LnZkLsbW
+X-Gm-Gg: AYBFou14ZkbVizY3Rr/7V3f57+LLTXnQ8VcdGmE5WTcykGemybih6tvE0ph1B4xKHbi
+ +Zgx0M8qO//qrds4uT70DhEZOTHXJApZyrvOmtcmcC6z7vOx+Lkb1QFP1wAcIZYjo/HFz3Im7VH
+ WZo7k4zBt1qC1I9SQmzv/9NLRwDSajtuG07BL8Y6wRb2SzuRILRJTlrJq7Tqw=
+X-Received: by 2002:a05:690c:dc4:b0:820:15ad:522c with SMTP id
+ 00721157ae682-8771acca965mr80478397b3.11.1788964994990; 
+ Wed, 09 Sep 2026 07:43:14 -0700 (PDT)
+X-Received: by 2002:a05:690c:dc4:b0:820:15ad:522c with SMTP id
+ 00721157ae682-8771acca965mr80478007b3.11.1788964994394; Wed, 09 Sep 2026
+ 07:43:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260905180949.1852673-1-brian.cain@oss.qualcomm.com>
+ <20260905180949.1852673-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260905180949.1852673-3-brian.cain@oss.qualcomm.com>
+From: Sid Manning <sid.manning@oss.qualcomm.com>
+Date: Wed, 9 Sep 2026 09:43:03 -0500
+X-Gm-Features: AcwNN1WhRqR-UsB3ZCd4GFheG-VQixw4Lsl0ZmkI4C_prNvYPZwI7KIwrEHzp5k
+Message-ID: <CAJpW4SVzmDUqHXK6rh11aDRRGe4oABFgA9=znJotVOo8OhXfWg@mail.gmail.com>
+Subject: Re: [PATCH 02/17] tests/tcg/hexagon: fix undefined signed left shift
+ in brev.c
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: multipart/alternative; boundary="00000000000001bf96065b0ddf3e"
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE2NCBTYWx0ZWRfX8cwobOcDU7xt
+ M0xaJZJPPMLo27tJDYBP+vSHJpvhvb/X42nZhFuxJAzqHi2ws8RAVS5MjVGshhDIwBUQblTaXbJ
+ d1rMnkaXYGLgAFAjQ2WDo9uw4c/aPQw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE2NCBTYWx0ZWRfX9T9UZSK0uy+V
+ y1r6kJJOE/e7pCzdAqzSz8ZN27hGAZvSOXSb6tDXfaE9z3ytdaGnc4lPi54gu6WokTvSu9JjWNy
+ oiWs+EhNqBI9+rLX3w6GYBCk+AEHlx5f/dmIUYIQTw5L+XMMRYfUhqbRHZ/mreNjKhHucZd1Ngo
+ /L78omcBuukTy7kF+vP/gYrkVV4jzqGHVM1tEcq9f8kOwnQar8tXjfouF/Un2WdNP123QaW5Ixn
+ vYv/UuCkIBWnoEN1WQDIUT7EK3c3qeoxGFd4krvsQICoBVBthL1oV60JQMoNouVQ4hxX7YHkYox
+ 1Cvk5hE0WnsC+Fl6ldpuR3wx9f1r9eTG/dNje7D4LXgCp1D3iFUP8c1HTvCBv+ryx0W+0O0BzTd
+ ihx+zMUZduusl1e3yezZxaIYzWn4v/kldzRVjRH1N31mF4PmbProx32ba+4tPPTTUNYOaHfMct2
+ 5m8s6X1WNNbFhmV9Cbw==
+X-Authority-Analysis: v=2.4 cv=UeFhjqSN c=1 sm=1 tr=0 ts=6aa17083 cx=c_pps
+ a=72HoHk1woDtn7btP4rdmlg==:117 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=k3Zke_hgPCLTMCfRxzAA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+ a=opBqxjFusBnFnvBfOIMA:9 a=E6gFIum0B_P9BOX3:21 a=lqcHg5cX4UMA:10
+ a=kA6IBgd4cpdPkAWqgNAz:22
+X-Proofpoint-ORIG-GUID: 5X7oN3k-XiPbP5Oo1IZr1Ya_334as_V1
+X-Proofpoint-GUID: 5X7oN3k-XiPbP5Oo1IZr1Ya_334as_V1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-08_03,2026-09-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090164
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=sid.manning@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,119 +164,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+--00000000000001bf96065b0ddf3e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-For some registers, we do not have a single ID register, but actually
-an array of values (e.g. CCSIDR_EL1, where the actual value is
-determined by whatever CSSELR_EL1 points to.) If we want to avoid
-using a different way to handle registers like that for every
-instance, we should provide some kind of infrastructure. Therefore,
-add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
-we already use for regular ID registers.
+LGTM
+Reviewed-by:Sid Manning sid.manning@oss.qualcomm.com
 
-Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
----
- target/arm/cpu-sysregs.h |  9 +++++++++
- target/arm/cpu.h         | 12 ++++++++++++
- target/arm/cpu64.c       |  8 ++++++++
- 3 files changed, 29 insertions(+)
 
-diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-index 7877a3b06a..a4b9621a7e 100644
---- a/target/arm/cpu-sysregs.h
-+++ b/target/arm/cpu-sysregs.h
-@@ -20,20 +20,29 @@
- 
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) NAME##_IDX,
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    NAME##_IDX,                                         \
-+    NAME##_IDX_LAST = NAME##_IDX + NUM - 1,
-+
- typedef enum ARMIDRegisterIdx {
- #include "cpu-sysregs.h.inc"
-     NUM_ID_IDX,
- } ARMIDRegisterIdx;
- 
- #undef DEF
-+#undef DEF_MUX
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- typedef enum ARMSysRegs {
- #include "cpu-sysregs.h.inc"
- } ARMSysRegs;
- 
- #undef DEF
-+#undef DEF_MUX
- 
- extern const uint32_t id_register_sysreg[NUM_ID_IDX];
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index e3f931dba2..9652f8b0bf 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -919,6 +919,18 @@ typedef struct {
-         i_->idregs[REG ## _EL1_IDX];                                    \
-     })
- 
-+#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs[REG ## _IDX + INDEX] = VALUE;                        \
-+    })
-+
-+#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs[REG ## _IDX + INDEX];                                \
-+    })
-+
- /**
-  * ARMCPU:
-  * @env: #CPUARMState
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 4e8c472530..c11ab2da21 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -42,14 +42,21 @@
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
-     [NAME##_IDX] = SYS_##NAME,
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- const uint32_t id_register_sysreg[NUM_ID_IDX] = {
- #include "cpu-sysregs.h.inc"
- };
- 
- #undef DEF
-+#undef DEF_MUX
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     case SYS_##NAME: return NAME##_IDX;
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- int get_sysreg_idx(ARMSysRegs sysreg)
- {
-     switch (sysreg) {
-@@ -59,6 +66,7 @@ int get_sysreg_idx(ARMSysRegs sysreg)
- }
- 
- #undef DEF
-+#undef DEF_MUX
- 
- void aarch64_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
- {
--- 
-2.55.0
+On Sat, Sep 5, 2026 at 1:09=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm.=
+com>
+wrote:
 
+> Cast to uint32_t before left-shifting in sext8() to avoid undefined
+> behavior when shifting a negative value. The subsequent arithmetic
+> right shift on the int32_t cast correctly sign-extends the result.
+> Found with UBSan.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/brev.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tests/tcg/hexagon/brev.c b/tests/tcg/hexagon/brev.c
+> index 6c7b1340849..1473e309ee0 100644
+> --- a/tests/tcg/hexagon/brev.c
+> +++ b/tests/tcg/hexagon/brev.c
+> @@ -106,7 +106,7 @@ uint32_t bitreverse(uint32_t x)
+>
+>  int32_t sext8(int32_t x)
+>  {
+> -    return (x << 24) >> 24;
+> +    return (int32_t)((uint32_t)x << 24) >> 24;
+>  }
+>
+>  #define TEST_BREV_LOAD(SZ, TYPE, BUF, SHIFT, EXP) \
+> --
+> 2.34.1
+>
+>
+
+--00000000000001bf96065b0ddf3e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>LGTM</div>Reviewed-by:Sid Manning <a href=3D"mailto:s=
+id.manning@oss.qualcomm.com">sid.manning@oss.qualcomm.com</a><br>=C2=A0 =C2=
+=A0</div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"l=
+tr" class=3D"gmail_attr">On Sat, Sep 5, 2026 at 1:09=E2=80=AFPM Brian Cain =
+&lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com">brian.cain@oss.qualcomm.=
+com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">Cast to uint32_t before left-shifting in sext8() to avoid undefined<br>
+behavior when shifting a negative value. The subsequent arithmetic<br>
+right shift on the int32_t cast correctly sign-extends the result.<br>
+Found with UBSan.<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0tests/tcg/hexagon/brev.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/tests/tcg/hexagon/brev.c b/tests/tcg/hexagon/brev.c<br>
+index 6c7b1340849..1473e309ee0 100644<br>
+--- a/tests/tcg/hexagon/brev.c<br>
++++ b/tests/tcg/hexagon/brev.c<br>
+@@ -106,7 +106,7 @@ uint32_t bitreverse(uint32_t x)<br>
+<br>
+=C2=A0int32_t sext8(int32_t x)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 return (x &lt;&lt; 24) &gt;&gt; 24;<br>
++=C2=A0 =C2=A0 return (int32_t)((uint32_t)x &lt;&lt; 24) &gt;&gt; 24;<br>
+=C2=A0}<br>
+<br>
+=C2=A0#define TEST_BREV_LOAD(SZ, TYPE, BUF, SHIFT, EXP) \<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div>
+
+--00000000000001bf96065b0ddf3e--
 
