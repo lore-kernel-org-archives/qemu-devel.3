@@ -4,76 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470F6C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2FEC79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 06:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Bfw-0007Uh-Cw; Wed, 09 Sep 2026 02:20:52 -0400
+	id 1x4BgI-0007XK-6z; Wed, 09 Sep 2026 02:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4Bfu-0007U7-Gt
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:20:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1x4BgG-0007Wy-9h; Wed, 09 Sep 2026 02:21:12 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4Bfs-0003jE-Et
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 02:20:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788934846;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=y6r5aoobcqd9F4eMSuFquKXONNVH+X/rcsYMSKawr+0=;
- b=gigKPfiZE6mndcsGvng7emBXwZ3a67vopyfeRS1FDZ+3Mof4cfggB+XjhUtqgiN+G4ZPAI
- r6+ozugC5MZBUD7ib7d/VyrS+MlAtkZyhLZBpXAfQiH4Ia4KHdXkKB0ToY8e5bM8L1Nu9v
- O6o0sk47Nv3K42q/XPVIGCyudA7MUn8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-tooLIFfbOJCgtj55566jAA-1; Wed,
- 09 Sep 2026 02:20:41 -0400
-X-MC-Unique: tooLIFfbOJCgtj55566jAA-1
-X-Mimecast-MFC-AGG-ID: tooLIFfbOJCgtj55566jAA_1788934839
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9AB81955DDD; Wed,  9 Sep 2026 06:20:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB8B0195608C; Wed,  9 Sep 2026 06:20:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7FEA121E6A04; Wed, 09 Sep 2026 08:20:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <kvm@vger.kernel.org>,  <pbonzini@redhat.com>,
- <berrange@redhat.com>,  <pankaj.gupta@amd.com>,
- <isaku.yamahata@intel.com>,  <xiaoyao.li@intel.com>,
- <chao.p.peng@linux.intel.com>,  <david@kernel.org>,
- <ashish.kalra@amd.com>,  <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: Re: [PATCH v2 07/19] accel/kvm: Add CGS option to control in-place
- conversion support
-In-Reply-To: <20260908205236.838281-8-michael.roth@amd.com> (Michael Roth's
- message of "Tue, 8 Sep 2026 15:48:27 -0500")
-References: <20260908205236.838281-1-michael.roth@amd.com>
- <20260908205236.838281-8-michael.roth@amd.com>
-Date: Wed, 09 Sep 2026 08:20:36 +0200
-Message-ID: <878q5bosi3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1x4BgE-0003jd-LK; Wed, 09 Sep 2026 02:21:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1788934870; x=1820470870;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=AoxD8+udGj6N32YfwbJkN/STpHhwRxFzHVVa/mjWwf4=;
+ b=fgM31njCkZSDxLogTdyPb/GKyzonR7zQT6QjjhpG77tbJw3VnT19rOua
+ J//yQLQ0pZMTB/lnY3Lz5H24tGXx5jJagmKwSvmmf3eQIlcYe9pce9d90
+ AdZNWibgz5ommxRRPk6yvBPqyM4bpbscmkczyPu96UBQKSkWC/gf5eHh8
+ o+4p6Lr5NWP24Ee7idI4uBiwNRe+vihN/B8Wss/TiqTidyQy3Yr3FlGQn
+ P7NigD8ui27TOiAeYvMlaExAPSQDNk5Q+16ZveCOhS4n3krMC6YNvsb93
+ gNlaOESsOjMVl0HvTBBpRU3+W4/0C5wgOpZ6bsUaGyJHVc6ly6+lnOxHN w==;
+X-CSE-ConnectionGUID: 9MShSGyySDGg25lnbHfMOQ==
+X-CSE-MsgGUID: TXnI60XmRCe4vNJEp28Rqw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="88285488"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="88285488"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Sep 2026 23:21:03 -0700
+X-CSE-ConnectionGUID: o9RJxYSRTz2tvwlJhG8HTw==
+X-CSE-MsgGUID: hw7kgETDQICFAz9RAaM/hw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; d="scan'208";a="269881416"
+Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
+ by orviesa010.jf.intel.com with ESMTP; 08 Sep 2026 23:21:01 -0700
+Date: Wed, 9 Sep 2026 14:21:00 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] rust: bindings: disable more clippy warnings
+Message-ID: <aqD6zIDPORAamvKu@intel.com>
+References: <20260908173826.867616-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260908173826.867616-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,78 +79,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Roth <michael.roth@amd.com> writes:
+On Tue, Sep 08, 2026 at 07:38:26PM +0200, Paolo Bonzini wrote:
+> Date: Tue,  8 Sep 2026 19:38:26 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH] rust: bindings: disable more clippy warnings
+> X-Mailer: git-send-email 2.55.0
+> 
+> The clippy::complexity category includes manual_div_ceil, which triggers
+> with e.g. bindgen 0.73.2.  It is not really relevant to automatically
+> generated code so drop it from all bindgen crates, but keep it
+> enabled on purpose for other code.
+> 
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  Cargo.toml                         | 1 +
+>  rust/bindings/chardev-sys/lib.rs   | 1 +
+>  rust/bindings/hwcore-sys/lib.rs    | 1 +
+>  rust/bindings/migration-sys/lib.rs | 1 +
+>  rust/bindings/qom-sys/lib.rs       | 1 +
+>  rust/bindings/system-sys/lib.rs    | 1 +
+>  rust/bindings/util-sys/lib.rs      | 1 +
+>  7 files changed, 7 insertions(+)
 
-> For confidential guests, guest_memfd is currently used only for private
-> guest memory, and normal guest memory comes from the configured memory
-> backend just as it does for a non-confidential guest. It is now possible
-> to use the same physical memory to back a particular GPA regardless of
-> whether it is in a shared or private state. This avoids the need to
-> rely on discarding memory between shared/private conversions (to avoid
-> doubled memory usage), and is intended to be the primary mode of using
-> guest_memfd for confidential guests moving forward, and future features
-> like hugepage support will likely require it.
->
-> Add an option to enable this support. Since ConfidentialGuestSupport is
-> already used to track some guest_memfd-related functionality (e.g.
-> whether it is required for the configured machine), similarly introduce
-> this option as a property of ConfidentialGuestSupport.
->
-> Also add the KVM-specific checks to enable this support, but leave the
-> option disabled until other required changes are implemented for
-> CGS variants that intend to make use of KVM's in-place conversion
-> support.
->
-> While technically the convert-in-place option could be introduced as an
-> SEV-specific option, it is a given that TDX will also be introducing
-> in-place conversion support based on the same guest_memfd kernel
-> infrastructure, so introduce it via a new
-> ConfidentialGuestSupportProperties base class that other confidential VM
-> implementations can utilized for common options.
->
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-
-[...]
-
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 909add4299..20d6fefb04 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1005,6 +1005,21 @@
->    'if': 'CONFIG_IGVM',
->    'data': { 'file': 'str' } }
->  
-> +##
-> +# @ConfidentialGuestSupportProperties:
-> +#
-> +# Properties for ConfidentialGuestSupport base class.
-> +#
-> +# @convert-in-place: If true, the same physical pages are reused
-> +#     when memory is converted between shared and private states.
-> +#     If false (default), separate allocations are used depending
-> +#     on whether the page is private or shared.
-
-Any guidance on when to enable @convert-in-place?
-
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'ConfidentialGuestSupportProperties',
-> +  'data': { '*convert-in-place': 'bool' } }
-> +
->  ##
->  # @SevCommonProperties:
->  #
-> @@ -1033,6 +1048,7 @@
->  # Since: 9.1
->  ##
->  { 'struct': 'SevCommonProperties',
-> +  'base': 'ConfidentialGuestSupportProperties',
->    'data': { '*sev-device': 'str',
->              '*cbitpos': 'uint32',
->              'reduced-phys-bits': 'uint32',
-
-Can you explain why you put @convert-in-place into a new base type
-instead of right here?
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
