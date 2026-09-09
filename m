@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CD0C79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:03:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5C2C79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 11:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4G5a-00029V-TQ; Wed, 09 Sep 2026 07:03:39 -0400
+	id 1x4G5l-0002FS-9I; Wed, 09 Sep 2026 07:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4G5X-00028o-EL
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:36 -0400
+ id 1x4G5j-0002F9-Rr
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4G5V-0005CO-Qb
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:35 -0400
+ id 1x4G5i-0005Ep-Hn
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 07:03:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788951813;
+ s=mimecast20190719; t=1788951826;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b+HQTuN6Q4eCJXLMuX75gYL+WGKDMaLS7r6L7oKslj8=;
- b=QVWS51FdRYrhzQu3wbZAGJOuJMkuErYyxl4yy0+jZJ9I/SpBk1EkXEf4qkfPhMR6IJrFKe
- zAg1MvkB/jjjnpB2McCSoTDmAwiufiEx+gWQNCJWlEn2p4hntfdDajmcwbE3BOYT9yx7qw
- PzokF6lNz+8QO0w99XiOP6MfF8bjiGA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=wjrug66JF7sj2Em1iOXDLtWW+CYxXnfe2H2hXOKSaUU=;
+ b=Rdmu+L8HghkXqRUVHqzUnLUSZxGGyo7TXmaLSaYRclfdu3ylZFFO20Bm0nsVgce6K5u1kJ
+ UCqLgqF/VB0sqhQzuay9O+/nT9VhXvYAosXF70v7+ye8cPv0Pg1eSzwkR6+mb0KDsq8/mM
+ aYCgZgfnFNY2iqvVZvfQfQ2WJRLwoeE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-CS1XQ6mlPsahk7DXfouHQg-1; Wed,
- 09 Sep 2026 07:03:29 -0400
-X-MC-Unique: CS1XQ6mlPsahk7DXfouHQg-1
-X-Mimecast-MFC-AGG-ID: CS1XQ6mlPsahk7DXfouHQg_1788951808
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-ALxAPdPEOMmZJNnPxNecAA-1; Wed,
+ 09 Sep 2026 07:03:42 -0400
+X-MC-Unique: ALxAPdPEOMmZJNnPxNecAA-1
+X-Mimecast-MFC-AGG-ID: ALxAPdPEOMmZJNnPxNecAA_1788951821
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4584518007F6; Wed,  9 Sep 2026 11:03:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F1971954AD7; Wed,  9 Sep 2026 11:03:41 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 137D130002DB; Wed,  9 Sep 2026 11:03:22 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D022F1800446; Wed,  9 Sep 2026 11:03:39 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 09 Sep 2026 15:03:06 +0400
-Subject: [PATCH v3 01/24] virtio-gpu: disable blob scanouts on mapping cleanup
+Date: Wed, 09 Sep 2026 15:03:09 +0400
+Subject: [PATCH v3 04/24] virtio-gpu/virgl: free BHs and timers on renderer
+ reset
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260909-virtio-gpu-cleanup-v3-1-99266590e79d@redhat.com>
+Message-Id: <20260909-virtio-gpu-cleanup-v3-4-99266590e79d@redhat.com>
 References: <20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com>
 In-Reply-To: <20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,34 +67,35 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alex Williamson <alex@shazbot.org>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1360;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1353;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=R9p5LQIIzRohkvwfRNtuO/PatWCNeFmPWXK+hMXTuqM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoTzytK6kjQ25VQUWY2cRA1L47LoKrPhjyaa6c
- 0oleP8UwMCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqE88gAKCRDa6OEJdZac
- 5Ye8D/9JeN1DVdDDz5O1EAJhub9Vwlqwz0WesNp7M/o2cCEsvEvrHSmhoBtlVwaqG2xTNrdA1F/
- c3PfzKoiPDI1x0nyAX5Px4xRsUlK9NptedO5vvUQVdOOmUk3ccOHZmu0SYOYLxXD9Ic+WDlxT7q
- GpkmFK0+ySIo3x9+dP8mjOwhfD1vRyyl75QmBpPyjY6V6Tkba2MwsBTQFyBR5RjOcuZTetURI9v
- D7D9/bmiTx65MQ54INkgmPKiXJ3Ok2JuFPQANJ3XA3OFCqQwpZnBw6lj1YfbqW13rJ86cylASJJ
- S2dGK5sCLhkB+e/U3GEs1xuI57SkoINBbjTaq8EVNoPHWDj0fsjzv+NJjvUTr20FJljp4zwbnwA
- TgtGQ/ClDJp+ACSd30z73ZDgs9YE4enTsMrk1w7WEyyTcQdiWFgw2oPibaO1zw/w4pVTGgqz/tS
- KDRSNRNYOY844Y1jbBI/CcEH+Bll1Y9rTk6ZbIdJzdfaQ7GR3s/tyfZJBFSrUwK/3FAXgJvUlj6
- FcJX+P9ULZqnaMuB56xuAfckpr6obiblcE6ulUlTNV5jZWkUymhYn1EhWTYiKAr9DtfZbl6DUHF
- Rp6nxoC9oMC490EbGsuvmwNfqtMVITWCPGcNwqiAf6W8leIfdNhZOD0HA3lo7hU0S6uCh7Uguwo
- cF/coCEq8St16EA==
+ bh=pjazvMH3OTm4G/gkcv4HVSFx91Q4hZxlcUF0x0N0LS8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqoTzyIR3lBujTDdAJiESTnLtTn89BfrKWbWifz
+ OGzIM0g3QCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqE88gAKCRDa6OEJdZac
+ 5WHED/4x+Vss34gpEbL+xvbaMOKL8zy1QmXcnQC8654Lq6GuPL/uGHxediEMyjZqXkn7av95rn3
+ 8XwN2mJCCtV2I2rTITDNmv+21wvrUacb6cEXhuRIHotDP7SelmOK0DoeKgNumlLBSXII+iS/QqQ
+ oSOs+xTqyXIVmSte0Z10s+WdzkBWx/Wgy5DvDiyzr8ouhw2NjG+kXuMqL341l5/AMhPzGggfMO1
+ kMJX9dmfoL8OuuJpXqpiSodkneQ5TrtQvuXpJk7gTfy7uENE69i6HeKihIUhzx/aQIzLk93FfA0
+ WkQuhnfJ/t9G6vvbGMTo6ZDz1i4nQvws5tWn8hj6nQLWajmCcqyTsV8tOxgjXU8GRR5y8yXdBtY
+ HtkF6rJS/wZV4pLPhXc/PpJua3/cBdnBW1T3BTTxEbpoQlxqqgUpV9zXGDqWcYEp+1/l6Ap7X2z
+ lqSlEqENPwtGq/FmwcMjGw7QSbZKIc+8a4AGvjAvJkFSPHWCi1+bhOk2T78dmGOzuZLPHGsxn0y
+ ATbIWi+l3IUwFgjfmt584RTsPeECdVdCSE6yVQNr52137Rm41cY5lpB3W7mUgT97YnHH1Zh+gze
+ eBFRIvmWWSbTN7IFuHm8OWwDlR3Jg2MDWh7EVAA5AZctYTUHOHLmnv5xthR8SaaJrLnIYQf4FsW
+ EwTzBUcFJ2jZDdA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,40 +111,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a blob resource backing is cleaned up (for ex via detach_backing),
-any scanouts referencing it must be disabled first to prevent the
-dmabuf from outliving its backing memory.
+virtio_gpu_virgl_reset() does not free the bottom halves or timers
+allocated by the previous virtio_gpu_virgl_init() call. A subsequent
+virtio_gpu_virgl_init() overwrites the old pointers, leaking the
+previous allocations.
 
-Fixes: CVE-2026-66020
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: 7e688d1bf515 ("virtio-gpu: Handle virtio_gpu_virgl_init() failure")
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/display/virtio-gpu-virgl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 55a1c7f80fb8..5b63a292933a 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1022,6 +1022,16 @@ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
- void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
-                                 struct virtio_gpu_simple_resource *res)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 742d9dde4a32..7f1d1e0c3276 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1430,6 +1430,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+ 
+ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
  {
-+    if (res->blob) {
-+        int i, max_outputs = g->parent_obj.conf.max_outputs;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+     struct virtio_gpu_simple_resource *res, *tmp;
+ 
+     /*
+@@ -1448,6 +1449,11 @@ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+ 
+     virtio_gpu_virgl_reset_async_fences(g);
+ 
++    g_clear_pointer(&gl->cmdq_resume_bh, qemu_bh_delete);
++    g_clear_pointer(&gl->async_fence_bh, qemu_bh_delete);
++    g_clear_pointer(&gl->print_stats, timer_free);
++    g_clear_pointer(&gl->fence_poll, timer_free);
 +
-+        for (i = 0; i < max_outputs; i++) {
-+            if (g->parent_obj.scanout[i].resource_id == res->resource_id) {
-+                virtio_gpu_disable_scanout(g, i);
-+            }
-+        }
-+    }
-+
-     virtio_gpu_cleanup_mapping_iov(g, res->iov, res->iov_cnt);
-     res->iov = NULL;
-     res->iov_cnt = 0;
+     return true;
+ }
+ 
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
