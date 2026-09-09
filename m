@@ -4,150 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA474C79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 14:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5305FC79FB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 14:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Jds-0006FF-Nb; Wed, 09 Sep 2026 10:51:16 -0400
+	id 1x4Je9-0006lC-Lv; Wed, 09 Sep 2026 10:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sid.manning@oss.qualcomm.com>)
- id 1x4Jdr-0006F0-Go
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:51:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x4Je6-0006ip-0O; Wed, 09 Sep 2026 10:51:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sid.manning@oss.qualcomm.com>)
- id 1x4Jdp-0007oE-TZ
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:51:15 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 689BU2mD1810036
- for <qemu-devel@nongnu.org>; Wed, 9 Sep 2026 14:51:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=Lr+z//p5UOygINpjcW03t5En
- jnhz8XXws60AE1p4HGo=; b=LawyGNufzcq8ROhgFgahK0+X5sPRcbMn0+2mZL4P
- Z14VV4Z4zP6eC78AuX+EGVJ5/s39DuAVYLS9VLAXNXpH1CR4LV+Q8eyYWTST/ZPB
- yygGmIHwgLLyT4vlzT6ewCFTYDn+c+mwgosE2SzdUsA24+CHTLxC08tGGecmniYF
- M//bAdemNFoj4yq6sWdiGwwDYq7QwVHY636i+7w0QdlOoTKZxqvIBfokUvzJ48L3
- d+kT6qY+8zwjNwwlrPdVb4B1BWWw3M4GgXCnWp8IvkmH+Vis1/RZp9eOpOQI7CPQ
- O8w3oIDN9sq7sYGI0NgQlY/geueLUZ3zwFr+qN1DOEapkg==
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gk4xj18gf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 14:51:12 +0000 (GMT)
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-8563c2a53dbso116137867b3.2
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 07:51:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788965472; cv=none;
- d=google.com; s=arc-20260327;
- b=Cpsl0MlfGDwwRk6FSGm21vGDOiKJ510AD4UwJCzeZPhG6a78wAECnigKqk4nSpo/jN
- ZIs+wUzUHprBc8uKwZ+sGvOeHYfbpHEeywzG1+8DDNrpQWIGEGQKtxpHAj1Hk+kz2xn1
- r/Ioho6gLVijqkfWeC9ExmLJ0MiyUV5Z9NU9kVCaWyh9RC/sf1iax0s2qRG3UkAFQc2E
- a4wu8KiSM6qePTSf4IIETJBTxvsDd7DnsaGzCXlcmXduj6POfS367cHnYc/F20hZLLJf
- Jta9ILyBnlgC7O1li+J7/XIQHViXW4vSzFrmmoWL9PucTtC+eOU03fQPBpAPDxoBn1gP
- 2ZLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Lr+z//p5UOygINpjcW03t5Enjnhz8XXws60AE1p4HGo=;
- fh=+NGiuCaJkBcMFhTaOsG/B5aXYeWujaYLuYLP/6yolpU=;
- b=GpSxx2NTnPfcrsf/FrEjz8cj0slE1mikUGSF09g4i72iWUyuowbnOnpUdJQ6PedtQj
- JzslJuMBQbNau9B9dMQ51jbc8q6zZigZgBm7YgXULykbFGEsV/2NA772+EVxDcg+/EEI
- 83vINpJkS9TT606wvcMFCc9zYdwSDsYcqY/71D3COHubzqUMqjM6qBOKrNnGkumuUEHE
- NYq/Y4VTwUn9guLRdIbuYbBgr2X0W8LqEW7/qFSrI/1eTnLyBIdQZ+iLcpeyqE6p4Cmw
- 8ChDwKWkmEcLxMfWh5Qr2FZt3Mp+EzcAfzN8pv6iUeEsLLfYcUGfzZgsozMLP0ocw938
- k0UQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788965472; x=1789570272; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Lr+z//p5UOygINpjcW03t5Enjnhz8XXws60AE1p4HGo=;
- b=LOgz0rOKnFd83oFo4wJWVnmMEb2fq7fpzmHcDWfaxyqwgkbQ5PvNDrtFrNwhthjO+I
- JjOnOEMCZrC8GDcUTuIkDbQChiiykvPlTvM8771XJUE9ZVYGaY7GJ1u+pHift1IvsJO5
- dhXWj54GFTy/gOpBwG5dFvp9TaB4gZE60eNCM0JPhix+YoSoZe5SSrHv31eiBUyga3bo
- wK/qcnbBaPxrheGGRWlzBTotpeayyrr4jbpHDQ1uMpgPt78AQjO8ieRYGI/U9W2yulJy
- 4KXkzFSDca1azOyqBfY3YZ4mEIDxj1JEUJtDya9rO+W8KIdwR8ZOfX5/KlaXXjaxEuWs
- 0Y2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788965472; x=1789570272;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Lr+z//p5UOygINpjcW03t5Enjnhz8XXws60AE1p4HGo=;
- b=kRIfay29pngTZcbZJjuKrx+pTUPgemawE0cC9Y5xOj4Jqmnabl6rWqaGNG+Is1E+9h
- cxnM01UpjHMPhZeVTpD9Rie4b/A1/0dco/f/L8H8vwoICwbQTtN33CL0GoxG/HsdRQuX
- URH6VeGUE6PdtVArzzh83iRTtbYvPKp4/+T8rI6aT6WjsgtJjt0t1eB8rgu0moo7Mmz1
- uNODBWgpcEDoC5d7WDM7U/1Hx6J2JPFiqJq+NOiQDvqB9Ft0wqrqx5CJlSrmBEegXm++
- ++c6RIe2E/nc1mo9cvc29H0Q8lJOAEudIbORPVoycHYKYvatOaumBJMwWDl/xMoHAi5D
- OiNA==
-X-Gm-Message-State: AFuF++lzMgqIXFwZt1q/IN60OvRhaLJZmBs124gd5SZIYIkVjI60ageU
- jYtOj7HtEzeUl4BhqDxOX/mzpDr221L+FC28vROVs9A05+aYbjKO+clrf4YPkLkZA5TH1IHO9HG
- v6gktIdac9jCRm6ca2NERxRbptG/HXf7W8qXCzR3iuMpYFmdFGyu8qBhfZr+KrlUp5tWqzB8QVy
- 2Dfw75/Dp8EKP6OC7TYrMx7+Swe1nXSEBz
-X-Gm-Gg: AYBFou1wpKaGgW+C/YLUZzFSTthFZ2UXzzENrkAj4ix3MiZFlOqTiaSDmdSJOSYvV03
- wSJSrQfqLrta8nfedpWlwfkekL7XynhcI/Xa6SEw8P+bOX72D7xJRJA5BLWWbcWOemCjmnXZGcy
- RkagLuZdTFqTjnU/PbZ7eJSUxa9DH0HHKjAGnI8UpWST/A4zENJ//ZM2xUcFw=
-X-Received: by 2002:a05:690c:620f:b0:841:773e:8d86 with SMTP id
- 00721157ae682-871232363dfmr142170407b3.15.1788965472083; 
- Wed, 09 Sep 2026 07:51:12 -0700 (PDT)
-X-Received: by 2002:a05:690c:620f:b0:841:773e:8d86 with SMTP id
- 00721157ae682-871232363dfmr142169937b3.15.1788965471680; Wed, 09 Sep 2026
- 07:51:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x4Je3-0007pt-Ff; Wed, 09 Sep 2026 10:51:29 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 689B22Bl2666620; Wed, 9 Sep 2026 14:51:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=c/KSQe
+ Vsm9tw7xAdmieJQp1gE0EzPAoRxrXEHQuewUE=; b=dVzrTyKHeMNA+sO4440uKw
+ M3kpn/sDXk/60SZ0paHNmrayQoDwxXODdJVR9gfpSEl21WlGN/3UP3bDo79U/QhB
+ AObXMU0jDsPc3DckToMeQZOwmzioU0wEDKDUm7iFiay03EKbGRZT7HGU/Ts5XbEE
+ encSRirSr+27HG7C+jdOjvO81q8X9vXcqS267+y1o8SkyFUZnhouzOqVRsKR+x5v
+ 0by6dtknxN8o/NDo7x1kJpxJBJ8K0t4vpq2EdUnziclpHGZ6i41JqmwBvNg6iUwa
+ dbKVPz74Oa1DEy2XFS2IrPm5FnI+uPFQ/E3TZsDoIsXbjqWPcJuRcC8mYZ8ecNjw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbjrx6t7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Sep 2026 14:51:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 689EfEDu017063;
+ Wed, 9 Sep 2026 14:51:22 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ggwdqk00x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Sep 2026 14:51:22 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 689EpK9O63635906
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 9 Sep 2026 14:51:21 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AD77C5806A;
+ Wed,  9 Sep 2026 14:51:20 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5607358064;
+ Wed,  9 Sep 2026 14:51:19 +0000 (GMT)
+Received: from [9.61.97.36] (unknown [9.61.97.36])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  9 Sep 2026 14:51:19 +0000 (GMT)
+Message-ID: <cf1a40d2-5c8a-4b31-8bf4-aecbae966c79@linux.ibm.com>
+Date: Wed, 9 Sep 2026 10:51:18 -0400
 MIME-Version: 1.0
-References: <20260905180949.1852673-1-brian.cain@oss.qualcomm.com>
- <20260905180949.1852673-5-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260905180949.1852673-5-brian.cain@oss.qualcomm.com>
-From: Sid Manning <sid.manning@oss.qualcomm.com>
-Date: Wed, 9 Sep 2026 09:51:00 -0500
-X-Gm-Features: AcwNN1U6zu3dI6yCDk5T3KGfTUzVbueTpG6U4Z_AfTT4huCaJ8c1EjtHIIj7_AY
-Message-ID: <CAJpW4SW3mi3K92t60nXTz5xrig6AM4ZgNF0R72Wc5yc55jn=Vw@mail.gmail.com>
-Subject: Re: [PATCH 04/17] tests/tcg/hexagon: fix undefined integer overflow
- in v69_hvx.c
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000074a189065b0dfbeb"
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE2NSBTYWx0ZWRfX0dBNg7o8Cbng
- Wd4MWFSTYqLtuf9aseN4aIba4mnnrLh3InxGdFoaxFJAO/fQ2blhm/8A9y8HHF07BYgFXgnWwZp
- 9AOdepGwHvI9RxMFmWiWbWbj5lr3BtQ=
-X-Authority-Analysis: v=2.4 cv=J52aKgnS c=1 sm=1 tr=0 ts=6aa17260 cx=c_pps
- a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=ZGBiPB4t8C5t0fS2DQkA:9 a=QEXdDO2ut3YA:10
- a=MqPuF_3yjRpNE565w7IA:9 a=BSoMhGkt5RHfF3Dn:21 a=lqcHg5cX4UMA:10
- a=kLokIza1BN8a-hAJ3hfR:22
-X-Proofpoint-ORIG-GUID: KKTWA9pzf7hqWUWqBMSLJG_P42saAbcP
-X-Proofpoint-GUID: KKTWA9pzf7hqWUWqBMSLJG_P42saAbcP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE2NSBTYWx0ZWRfX0qBaPsk5P4tp
- Y7UrspV7OQg8g9P0gnxmYpYrUKgrzyLPjJKdvedHuLOeUE5iZgUfd3Cb/00Qw/0l9ycBkHJ9jNP
- 8RhUKR/lA6oFe644GApSaucdUHvw9/kpmabKGPK6XJxQp9vsZ8iba22tRXHf+fwqlclCNOqucbe
- X7cioRIviiaNE7ZDuDf8Xntjttr2CLQzJGQKQewqgeltQrVkmysUTgqBwB5RoxFFFyxqJdexZiy
- N07qglu73E+5HKJ1Hr0VFxqf7mNiFRinpaxVFeF7vHDriDRBiiLlkAr+I7cTZCdJKjh3FY/Md2W
- z1lnHIX5u9MVhxINz4dc1n/SjOm5WckXutYgDZIN1kqouggErMMXCyCpbZlAqZX2cSMzS9YnQ+/
- f3b2MOs8VzYQBBECIyf7jRNe+ey2hc0ruMsu3GmZnj84pU7qbaUHozI3hP1zbgf9ZfHvQo5nnzj
- DNW21zkg8dT3zVQYZ8w==
+User-Agent: Mozilla Thunderbird
+From: Eric Farman <farman@linux.ibm.com>
+Subject: Re: [PATCH v16 00/20] Extend qemu CPACF support
+To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
+ iii@linux.ibm.com, david@kernel.org, thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com,
+ fcallies@linux.ibm.com, cohuck@redhat.com
+References: <20260824083204.40877-1-freude@linux.ibm.com>
+Content-Language: en-US
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260824083204.40877-1-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E7T9Y6dl c=1 sm=1 tr=0 ts=6aa1726b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=U2OuJsLZ6soAiM3D-lAA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDE2MiBTYWx0ZWRfX9X669PAtBbDV
+ 3KUrX8xq0LbVc94RvAULUv0qsLalxMwyCRFbjKi6wj/78zHJDxbINScVi1/rM+2a32qP0d7TD+M
+ 02Hv/JGxhrjVnBNLN8xqMrao9PVo8ww=
+X-Proofpoint-ORIG-GUID: 5ZRUPo76ckUJqMVogkRUUNzGsKBZiDS3
+X-Proofpoint-GUID: 5ZRUPo76ckUJqMVogkRUUNzGsKBZiDS3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDE2MiBTYWx0ZWRfX3agVrXcwxUqB
+ qWRCEMqh79Sv9Lcj8qRMGPsl1QMl3UYotr8qZsCkhg03uh2x9L5dE7GQPuiXglWE58swT5iGVN6
+ 4knlKKGc4RyfXcl4mMHgMfnUNauL1RxK/AzGo+Xa9W3ijfCJLUxIEngr9c6NDgQkkFNB5rzntF3
+ CrOJQYmJc8fOupJepCbsyZA5xBgRAQ7N56uymSvJ38KkeEKCRfHJQjekCQtTxxJGjyg2Oy9KBIb
+ 0gDguzpvqSGhca4fG05ygqSqe9jC5JOT2/cqt0jLAque315DXH8AxiulxhtmBz9VnVsn98VTsFM
+ 3IeaHSQNRLeXB7IB0fVLtZEj83bW79YqlNJwPCJgBeNxtbxOAPFd1wIExMXVyqzgUwVbR5MwtWy
+ pELQNM77qR+C0qIMnSgofoYU9sl5ZGrevv3eXuVSsgv4accaEkidoOpFMtXrjUXQ30OXMybhJe7
+ 9Vw73tMmKh+DLZ8pWhg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-08_03,2026-09-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
- suspectscore=0 impostorscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090165
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=sid.manning@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090162
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,91 +169,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000074a189065b0dfbeb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-LGTM
-Reviewed-by:Sid Manning sid.manning@oss.qualcomm.com
 
-On Sat, Sep 5, 2026 at 1:10=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm.=
-com>
-wrote:
+On 8/24/26 4:31 AM, Harald Freudenberger wrote:
+> This patch series extends the s390 qemu CPACF support to be able to
+> run a subset of the CPACF instruction cross platform. There have been
+> requests on the kernel crypto mailing list about a way to test
+> s390 specific crypto implementations. For example a way to test
+> s390 CPACF exploitation code like the s390_aes.ko kernel module.
+> 
+> So here now is a set of patches verified on x86 and s390 which
+> over (slow but working) support for a subset of the subfunctions of
+> some of the CPACF instructions.
+> 
+> Test: There are some very basic tests included with this patch series
+> suitable for some CI run. Better test coverage can be done by running
+> a full blown Linux and use for example the in-kernel crypto modules.
+> The 'usual' in-kernel crpyto modules will be automatically loaded
+> which run a bunch of test cases. So there is now support for these
+> kernel modules:
+> * sha256_s390x (autoloaded, sha256)
+> * sha512_s390x (autoloaded, sha512)
+> * aes_s390x (autoloaded, clear key aes ecb, cbc, ctr, xts)
+> * pkey_pckmo (autoloaded, derive AES protected key from clear key)
+> * paes_s390x (not autoloaded, protected key aes ecb, cbc, ctr, xts)
+> All these modules run selftests if configured by the kernel (which is
+> enabled by default). Failures are reported via syslog. Additionally
+> the aes testcases from libica can be run either inside such an qemu
+> environment or with a static build executed with the qemu tcg
+> application qemu-s390x --cpu max <static-build-libica-test>.
 
-> Cast to uint32_t before multiplying uint16_t values to prevent
-> signed integer overflow. Without the cast, the uint16_t operands
-> are promoted to int, and the product can overflow the int range.
-> Found with UBSan.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  tests/tcg/hexagon/v69_hvx.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/tests/tcg/hexagon/v69_hvx.c b/tests/tcg/hexagon/v69_hvx.c
-> index a0d567d142f..eff936064a0 100644
-> --- a/tests/tcg/hexagon/v69_hvx.c
-> +++ b/tests/tcg/hexagon/v69_hvx.c
-> @@ -292,7 +292,8 @@ static void test_vmpyuhvs(void)
->          pout +=3D sizeof(MMVector);
->
->          for (int j =3D 0; j < MAX_VEC_SIZE_BYTES / 2; j++) {
-> -            expect[i].uh[j] =3D (buffer0[i].uh[j] * buffer1[i].uh[j]) >>=
- 16;
-> +            expect[i].uh[j] =3D
-> +                ((uint32_t)buffer0[i].uh[j] * buffer1[i].uh[j]) >> 16;
->          }
->      }
->
+Applied for 11.2. Thank you!
+
+> 
+> Changelog:
+> v1: Initial version with
+>      - Related code restructured
+>      - Support KIMD SHA512 and thus SHA256
+>      - Support KMC AES-128, AES-192 and AES-256 and thus have basic AES
+>        support (ECB mode) enabled.
+>      - Support PCC Compute-XTS-Parameter-AES-128 and
+>        Compute-XTS-Parameter-AES-256 but only for block sequence number
+>        0. This is a requirement for the next step:
+>      - Support KM XTS-AES-128 and KM XTS-AES-256. Together with the
+>        minimal PCC support this enables AES-XTS CPACF acceleration.
+> v2: - Basic PCKMO support to be able to 'derive' an AES protected key
+>        from clear key. See header details.
+>      - Support protected key AES-ECB.
+>      - Support protected key AES-CBC.
+>      - Minimal protected key AES-XTS support for CPACF PCC.
+>      - Support protected key AES-XTS.
+>      - Support AES-CTR.
+>      - Support protected key AES-CTR.
+> v3: - Reordered patches as suggested by Finn.
+>      - One small bug fix in CPACF_aes.c related to address translation.
+> v4: - Rename of the parameters based on feedback from Janosch to
+>        make clear these are registers or ptrs to registers.
+>        Added Tested by from Holger. Fixed typo "face" -> "fake".
+> v5: - Add documentation file docs/system/s390x/cpacf.rst which
+>        describes the state of the CPACF instructions and which
+>        functions are covered when this series is applied.
+>        First version sent to public mailing list qemu-s390x.
+> v6: - Rebase/rework to build on current qemu head.
+>      - Add docs/system/s390x/cpacf.rst to target-s390x.rst
+>      - New file crypto/aes-helpers.c with some simple
+>        functions to support AES modes CBC, CTR and XTS.
+>      - Slight rewrite of the s390x CPACF implementations to
+>        use these generic AES mode implementations.
+> v7: - Update on docs/system/s390x/cpacf.rst to mention
+>        the zArchicteture Principles of Operation document
+>        which describes all these CPACF instructions.
+> v8: - Add a fix which deals with incorrect address handling
+>        in the sha512 implementation related to fetch and push
+>        data from/to memory.
+>      - Slight rework around the capcf function implementation and
+>        exception generation.
+>      - Added some more details to the new cpacf.rst file.
+>      - Fixed some typos and added some suggestions from Finn.
+>      - Fixed cc handling on return of PCKMO (must not update cc).
+>      Missing: simple test cases to verify that the implemented and not
+>      implemented cpacf functions and subfunctions work as expected. But
+>      see the statement about tests at the header.
+> v9: - Add simple tests for all the implemented CPACF instructions but
+>        pckmo (which is a privileged instruction).
+>      - Reworked the Fix for wrong address to call the wrap function
+>        inline; rephrased commit header.
+>      - Improve the header file cpacf.h to hold defines for all the
+>        cpacf instruction functions and use them in the code.
+>      - one new commit comprising the base protected key support with
+>        exposing the xor pattern and wkvp and en/decrypt key functions
+>        via cpacf.h. So the testcases can use this header file.
+>      - one new commit which reworks the fetch memory and store memory
+>        from and to guest (suggested by Ilya Leoshkevich).
+> v10: - Fixed v9 patch 3 (cpacf_sha512.c was missing)
+>       Please note that patch #10 "target/s390x: Base support for cpacf
+>       protected keys" produces a build warning ("unused function"). As
+>       by default the qemu build has warnings=errors enabled, this one
+>       patch does not build on it's own. If this is not acceptable, the
+>       hunk introducing the two functions may be moved to the next
+>       commit; another solution would be to merge with patch #11.
+> v11: Fixed nearly all checkpatch findings - only the warnings about
+>       Maintainers may need update is still there.
+> v12: - Very first patch is integrated in master and thus removed from
+>         this series.
+>       - New header file include/crypto/aes-headers.h as suggested by
+>         Daniel. Moved the patch which introduces the aes helpers before
+>         the actual AES cpacf implementations and reworked all the code
+>         to use these helpers.
+>       - Merged together "Base support for cpacf protected keys" and
+>         "Support pckmo encrypt AES subfunctions" to fix the broken
+>         build caused by unused functions.
+>       - Merged the changes from patch "Improve fetch and store mem from
+>         and to guest" directly into the code where it is introduced.
+> v13: - reworked the helper functions to copy memory from and to
+>         guest. These are now inline functions located in
+>         target/s390x/tcg/crypto_helper.h and have been renamed and
+>         extended for u32 and u64 as well. Also the both sha
+>         implementations have been reworked to use these helper
+>         functions. See patch #4 for details.
+>       - fixed the wrong list of parameters docu in patch #5
+>       - added some Reviewed-by tags.
+>       - reworked the testcases to run (more or less) on real s390
+>         hardware. However this does not and can not work with protected
+>         keys.
+>       - rebased to current master head.
+> v14: - fixed one wrong constant in target/s390x/tcg/cpacf.h
+>       - added 1 patch (patch #1) which fixes the missing privileged
+>         flag with the PCKMO instruction.
+>       - added a simple testcase for the PCKMO instruction (see
+>         tests/s390x/tcg/cpacf-pckmo.c for details).
+> v15: - rebased to current master
+>       - new patch reworking the addressing mode check in the both
+>         sha256 and sha512 implementations. Also added early bail out.
+>       - In a similar way rework the checking for addressing mode in
+>         cpacf_aes.c (comes in with each algo implementation).
+>       - bail out early on length zero for the cpacf aes algs.
+>       - As suggested by Ilya splitted the cpacf.h into two header
+>         files cpacf-arch.h and cpacf.h.
+> v16: - Fixed some places with wrong indentation.
+>       - Fix regression introduced with v15: sha256 and sha512 must bail
+>         out for KIMD only, but not for KLMD.
+>       - AI screening: PCKMO still clobbered CC. So fixed this.
+>       - AI screening: KDSA lacked the r2 even/nonzero check - fixed.
+>       - Updated cpacf docu to clearly state for KMA, KMF, KMO and KDSA
+>         which exception happens on which condition.
+> 
+> Harald Freudenberger (20):
+>    target/s390x: Fix missing privileged flag at PCKMO instruction
+>    target/s390x: Rework s390 cpacf implementations
+>    target/s390x: Move cpacf sha512 code into a new file
+>    target/s390x: Support cpacf sha256
+>    target/s390x: Add helper functions for copy memory to and from guest
+>    target/s390x: Adjust addressing mode checks for sha512 and sha256
+>    crypto: Add aes-helpers file to support some AES modes
+>    target/s390x: Support AES ECB for cpacf km instruction
+>    target/s390x: Support AES CBC for cpacf kmc instruction
+>    target/s390x: Support AES CTR for cpacf kmctr instruction
+>    target/s390x: Minimal AES XTS support for cpacf pcc instruction
+>    target/s390x: Support AES XTS for cpacf km instruction
+>    target/s390x: Base support for cpacf protected keys and pckmo
+>    target/s390x: Support protected key AES ECB for cpacf km instruction
+>    target/s390x: Support protected key AES CBC for cpacf kmc instruction
+>    target/s390x: Support protected key AES CTR for cpacf kmctr
+>      instruction
+>    target/s390x: Minimal protected key AES XTS support for cpacf pcc
+>      instruction
+>    target/s390x: Support protected key AES XTS for cpacf km instruction
+>    docs/s390: Document CPACF instructions support
+>    tests/tcg/s390x: Add tests for CPACF instructions
+> 
+>   crypto/aes-helpers.c             | 106 ++++
+>   crypto/meson.build               |   1 +
+>   docs/system/s390x/cpacf.rst      | 143 +++++
+>   docs/system/target-s390x.rst     |   1 +
+>   include/crypto/aes-helpers.h     | 109 ++++
+>   target/s390x/gen-features.c      |  31 +
+>   target/s390x/tcg/cpacf-arch.h    | 251 ++++++++
+>   target/s390x/tcg/cpacf.h         |  63 ++
+>   target/s390x/tcg/cpacf_aes.c     | 986 +++++++++++++++++++++++++++++++
+>   target/s390x/tcg/cpacf_sha256.c  | 197 ++++++
+>   target/s390x/tcg/cpacf_sha512.c  | 211 +++++++
+>   target/s390x/tcg/crypto_helper.c | 445 +++++++-------
+>   target/s390x/tcg/crypto_helper.h | 100 ++++
+>   target/s390x/tcg/insn-data.h.inc |   3 +-
+>   target/s390x/tcg/meson.build     |   3 +
+>   target/s390x/tcg/translate.c     |  16 +-
+>   tests/tcg/s390x/Makefile.target  |  10 +
+>   tests/tcg/s390x/cpacf-kdsa.c     |  58 ++
+>   tests/tcg/s390x/cpacf-kimd.c     | 166 ++++++
+>   tests/tcg/s390x/cpacf-klmd.c     | 206 +++++++
+>   tests/tcg/s390x/cpacf-km.c       | 590 ++++++++++++++++++
+>   tests/tcg/s390x/cpacf-kmac.c     |  58 ++
+>   tests/tcg/s390x/cpacf-kmc.c      | 351 +++++++++++
+>   tests/tcg/s390x/cpacf-kmctr.c    | 360 +++++++++++
+>   tests/tcg/s390x/cpacf-pcc.c      | 245 ++++++++
+>   tests/tcg/s390x/cpacf-pckmo.c    |  45 ++
+>   tests/tcg/s390x/cpacf-prno.c     | 131 ++++
+>   tests/tcg/s390x/cpacf.h          | 570 ++++++++++++++++++
+>   28 files changed, 5230 insertions(+), 226 deletions(-)
+>   create mode 100644 crypto/aes-helpers.c
+>   create mode 100644 docs/system/s390x/cpacf.rst
+>   create mode 100644 include/crypto/aes-helpers.h
+>   create mode 100644 target/s390x/tcg/cpacf-arch.h
+>   create mode 100644 target/s390x/tcg/cpacf.h
+>   create mode 100644 target/s390x/tcg/cpacf_aes.c
+>   create mode 100644 target/s390x/tcg/cpacf_sha256.c
+>   create mode 100644 target/s390x/tcg/cpacf_sha512.c
+>   create mode 100644 target/s390x/tcg/crypto_helper.h
+>   create mode 100644 tests/tcg/s390x/cpacf-kdsa.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kimd.c
+>   create mode 100644 tests/tcg/s390x/cpacf-klmd.c
+>   create mode 100644 tests/tcg/s390x/cpacf-km.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmac.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmc.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmctr.c
+>   create mode 100644 tests/tcg/s390x/cpacf-pcc.c
+>   create mode 100644 tests/tcg/s390x/cpacf-pckmo.c
+>   create mode 100644 tests/tcg/s390x/cpacf-prno.c
+>   create mode 100644 tests/tcg/s390x/cpacf.h
+> 
+> 
+> base-commit: 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa
 > --
-> 2.34.1
->
->
+> 2.43.0
+> 
+> 
 
---00000000000074a189065b0dfbeb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>LGTM</div>Reviewed-by:Sid Manning=C2=A0<a href=3D"mai=
-lto:sid.manning@oss.qualcomm.com" target=3D"_blank">sid.manning@oss.qualcom=
-m.com</a></div><br><div class=3D"gmail_quote gmail_quote_container"><div di=
-r=3D"ltr" class=3D"gmail_attr">On Sat, Sep 5, 2026 at 1:10=E2=80=AFPM Brian=
- Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com">brian.cain@oss.qua=
-lcomm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Cast to uint32_t before multiplying uint16_t values to prevent<b=
-r>
-signed integer overflow. Without the cast, the uint16_t operands<br>
-are promoted to int, and the product can overflow the int range.<br>
-Found with UBSan.<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0tests/tcg/hexagon/v69_hvx.c | 3 ++-<br>
-=C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
-<br>
-diff --git a/tests/tcg/hexagon/v69_hvx.c b/tests/tcg/hexagon/v69_hvx.c<br>
-index a0d567d142f..eff936064a0 100644<br>
---- a/tests/tcg/hexagon/v69_hvx.c<br>
-+++ b/tests/tcg/hexagon/v69_hvx.c<br>
-@@ -292,7 +292,8 @@ static void test_vmpyuhvs(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pout +=3D sizeof(MMVector);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (int j =3D 0; j &lt; MAX_VEC_SIZE_BYT=
-ES / 2; j++) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expect[i].uh[j] =3D (buffer0[i].=
-uh[j] * buffer1[i].uh[j]) &gt;&gt; 16;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expect[i].uh[j] =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((uint32_t)buffer0=
-[i].uh[j] * buffer1[i].uh[j]) &gt;&gt; 16;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.34.1<br>
-<br>
-</blockquote></div>
-
---00000000000074a189065b0dfbeb--
 
