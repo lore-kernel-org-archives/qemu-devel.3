@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F590C79FB5
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 04:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1998AC79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 04:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x49kV-0004dO-AO; Wed, 09 Sep 2026 00:17:27 -0400
+	id 1x49kf-0004fI-Nx; Wed, 09 Sep 2026 00:17:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x49kT-0004cH-71
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 00:17:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x49ka-0004eL-AJ
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 00:17:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x49kR-0006GQ-Kn
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 00:17:24 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x49kW-0006HB-Hh
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 00:17:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788927442;
+ s=mimecast20190719; t=1788927447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Jejtr3gY5u2jkllDzpEBmv62g3OyMsBGD9D9SzjMFW0=;
- b=fvTIVWx8axKJCeavblIxw8TMaB275lwhNxjWLa8/cdcjX4GwU2AjTDwTL6Ryppz76jqNb0
- eECOog0mWL1xfdsY7DjcdRH0mfxPYi+mg5ePWxu3Y7CBjqIy0qgFHt8zsLufHi8JhJblsc
- /AGYLpmIhfVn3sayM5Z2Hax2BeMCPFE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RcT4JxcKAptQJDXwIObxS9B3ZXX76p2BU0n37WuyVP0=;
+ b=ctUrYbVyG+lbPBsnGUSXvRUTpI0AEqtyekv1OIld4ySR9LDVhEnpgt8P7c5bQ23odocvCw
+ zofrrLDjEok2hkALV090q0MI5juOoUuTHGo0Rj4dsJO1gQt0jXxbsPlZU7deR1iWUc+A8S
+ KLDhDmroS4U6OwuGrzi03oTxA/4UxS0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517--T184KdeOjGooTp3o61M8A-1; Wed,
- 09 Sep 2026 00:17:19 -0400
-X-MC-Unique: -T184KdeOjGooTp3o61M8A-1
-X-Mimecast-MFC-AGG-ID: -T184KdeOjGooTp3o61M8A_1788927437
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-VGnsDxYCPX6rIuWZ7LgTaw-1; Wed,
+ 09 Sep 2026 00:17:22 -0400
+X-MC-Unique: VGnsDxYCPX6rIuWZ7LgTaw-1
+X-Mimecast-MFC-AGG-ID: VGnsDxYCPX6rIuWZ7LgTaw_1788927441
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5931B1944B03; Wed,  9 Sep 2026 04:17:17 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E07F81955F3B; Wed,  9 Sep 2026 04:17:20 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.38])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 860E81800473; Wed,  9 Sep 2026 04:17:13 +0000 (UTC)
+ id 8EDB51800473; Wed,  9 Sep 2026 04:17:17 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -58,9 +58,9 @@ Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Hanna Reitz <hreitz@redhat.com>,
  linux-cxl@vger.kernel.org, Kevin Wolf <kwolf@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 08/10] qapi: convert simple enum intros for migration.json
-Date: Wed,  9 Sep 2026 00:16:38 -0400
-Message-ID: <20260909041640.69080-9-jsnow@redhat.com>
+Subject: [PATCH 09/10] qapi: convert simple enum intros for machine.json
+Date: Wed,  9 Sep 2026 00:16:39 -0400
+Message-ID: <20260909041640.69080-10-jsnow@redhat.com>
 In-Reply-To: <20260909041640.69080-1-jsnow@redhat.com>
 References: <20260909041640.69080-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -92,37 +92,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/migration.json | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ qapi/machine.json | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 5fbd604f995..8096ef64682 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -788,9 +788,8 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index cf905afd4f1..942d35d7275 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -15,12 +15,11 @@
  
  ##
- # @MigrationParameter:
+ # @SysEmuTarget:
 -#
--# Migration parameters enumeration.  The enumeration values mirror the
--# members of @MigrationParameters.
-+#     Migration parameters enumeration.  The enumeration values mirror
-+#     the members of @MigrationParameters.
+-# The comprehensive enumeration of QEMU system emulation ("softmmu")
+-# targets.  Run "./configure --help" in the project root directory,
+-# and look for the \*-softmmu targets near the "--target-list" option.
+-# The individual target constants are not documented here, for the
+-# time being.
++#     The comprehensive enumeration of QEMU system emulation
++#     ("softmmu") targets.  Run "./configure --help" in the project
++#     root directory, and look for the \*-softmmu targets near the
++#     "--target-list" option.  The individual target constants are not
++#     documented here, for the time being.
  #
- # Features:
+ # @rx: since 5.0
  #
-@@ -1756,9 +1755,8 @@
+@@ -382,9 +381,8 @@
  
  ##
- # @DirtyRateMeasureMode:
+ # @LostTickPolicy:
 -#
--# Method used to measure dirty page rate.  Differences between
--# available methods are explained in `calc-dirty-rate`.
-+#     Method used to measure dirty page rate.  Differences between
-+#     available methods are explained in `calc-dirty-rate`.
+-# Policy for handling lost ticks in timer devices.  Ticks end up
+-# getting lost when, for example, the guest is paused.
++#     Policy for handling lost ticks in timer devices.  Ticks end up
++#     getting lost when, for example, the guest is paused.
  #
- # @page-sampling: use page sampling
+ # @discard: throw away the missed ticks and continue with future
+ #     injection normally.  The guest OS will see the timer jump ahead
+@@ -1926,9 +1924,8 @@
+ 
+ ##
+ # @CpuModelCompareResult:
+-#
+-# An enumeration of CPU model comparison results.  The result is
+-# usually calculated using e.g. CPU features or CPU generations.
++#     An enumeration of CPU model comparison results.  The result is
++#     usually calculated using e.g. CPU features or CPU generations.
  #
+ # @incompatible: If model A is incompatible to model B, model A is not
+ #     guaranteed to run where model B runs and the other way around.
 -- 
 2.55.0
 
