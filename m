@@ -4,46 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4413C79FB9
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 12:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48021C79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 13:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Hcu-0004Ni-Vg; Wed, 09 Sep 2026 08:42:10 -0400
+	id 1x4HwC-0007Qg-6J; Wed, 09 Sep 2026 09:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1x4Hcp-0004NG-P0; Wed, 09 Sep 2026 08:42:04 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4Hw6-0007Q9-0r
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 09:01:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1x4Hcn-0005UZ-7K; Wed, 09 Sep 2026 08:42:03 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 8D477435F4;
- Wed, 09 Sep 2026 14:41:48 +0200 (CEST)
-Message-ID: <135a0f56-5fe0-4c8b-9970-256d88b52fe2@proxmox.com>
-Date: Wed, 9 Sep 2026 14:41:43 +0200
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4Hw4-0000v2-At
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 09:01:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788958915;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FLU976XtxMmtdQprxvUsabce6scBP2ndW/rNnXnhyZo=;
+ b=AENrAkmS7Xzbzy3Jn9aaOPPVBH2MCPoy+dywRR1TTT4QQm49nI5MgEGfsae0kMfBt28+kT
+ EjiV+nyowOKLtfDl9qt3YGmq1je263o/e32ZnkU+kb7gFsBuY/UGgy0z9mLOXq1wwRD9DE
+ /HFeLg8C25oR6tMg0Bj2x5vT78cRqM4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-671-kHJ5kGixPsGNmgg1EhopEw-1; Wed, 09 Sep 2026 09:01:51 -0400
+X-MC-Unique: kHJ5kGixPsGNmgg1EhopEw-1
+X-Mimecast-MFC-AGG-ID: kHJ5kGixPsGNmgg1EhopEw_1788958910
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c2580a59d0dso509576066b.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 06:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788958910; x=1789563710; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=FLU976XtxMmtdQprxvUsabce6scBP2ndW/rNnXnhyZo=;
+ b=oMiBw3LsgTwNBv/n3XK/EMrLS3rr0xWXN42tprmm3HyZvGjXr2cOs4L5eCyFW8t6NR
+ UnYSqmJxK2gRoUYHSPzbqYPB5xum3mknKQWRVllq55iSLtJHts7eSRk6LMKeqBayekQM
+ bLw/04xBDaASti9ADzJyf9FQYZaOXFLyotdvyBAG+ePkiFOl4Z7AHWOskB6IAx0Bv/Bv
+ aWwwr8brFnS85Roa822EPcBQbRH4Rd4BVTZGA7hYsS5GPDTyISdarLBoG2I3XFYZefuS
+ KvdatyWtkcDL6Q3BpDuzYk/x/ddALRIXGdByeT3RkTxznKL3LuuQ/PakrCZt18o81dVB
+ VWnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788958910; x=1789563710;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=FLU976XtxMmtdQprxvUsabce6scBP2ndW/rNnXnhyZo=;
+ b=Pv0GMVawY6dGF/DGGrobzr6dL3ZhnMZb+ixRhfD9jlU/+rCoSvhyWiUGkma6qXzu+4
+ EEAdhU8xhrRJiQfMvju1tJAyhY/AN78b6Duz0pxR8wTkHvrvIc+AUFMmVThPoPzUHf8n
+ YlTxiqG7t+RvGJQ8bMfY2whuNeTUanHryd/dcgcu10sUaN+I8WhniWvaarxTyzqLhS1b
+ iW/80UZT3Hhd5xLQxmHk9E1llsksftisoi1B15Zp9atV2i07Q60W6puQ08gbR+M4czke
+ eg2KhqkF5h8RddrffaIjMWjf2QJj1gkkr+ipCBmmxlQSr1d1n/fWH6d6tpbdkAg/PG85
+ L/qQ==
+X-Gm-Message-State: AFuF++m+MfQ5Ah2aj7SBUtHFQ165X3wYAym/Ko0oBRs8B+4pjbS4/69H
+ d9HFnCyTWP84eCk+Q4DLMIVGhEUpZuopypnPN4lfgO8kyyOVJjv5GyeZSUvu3HJ57fmdH05nUEC
+ 522J0H5FvcUfAE34nkUN5pps4oIA/BJXoIbmWpR9Stl6kAlx9qIVYE2HK
+X-Gm-Gg: AYBFou350qQA680MOYosxVwPiEj47AHdk8WgG784mzk0uCTj/1lGoU/58JCIAgqS6fc
+ nsXkWFSMAIpLvHjNTABblPzPnjylGgILEPwvlpUg+YfFb/M89odjFGGqIMZ3wgYd6hcHmgNJ/fA
+ 4u47pZWd9l+PA8rPf2Fn5zBMoJKNxjKQlmJXVD3FgxTOrW6VpDdDGyKn3fNzfkd7QcdAqDWTICZ
+ y1xVA5g+rte7pa9BxsRLe2Ba7tdjeQRlNrojw/e5eZd49QoUMI9DW6pWsRV+N4ND48JUvSr6/Xq
+ 2tu5Z623ENwwL8HkobtlDL9GKRnA4QKtje97kQLm9HmlX/4FH5zwNctd4ISI/uBK7N1xtktQ/Ez
+ MOroC+sYmx9Y5U+cVc9OHeVk=
+X-Received: by 2002:a17:906:628b:b0:c29:349e:7c1d with SMTP id
+ a640c23a62f3a-c29349e8809mr143101266b.49.1788958910225; 
+ Wed, 09 Sep 2026 06:01:50 -0700 (PDT)
+X-Received: by 2002:a17:906:628b:b0:c29:349e:7c1d with SMTP id
+ a640c23a62f3a-c29349e8809mr143094066b.49.1788958909507; 
+ Wed, 09 Sep 2026 06:01:49 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c260d5768c2sm750298166b.39.2026.09.09.06.01.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Sep 2026 06:01:46 -0700 (PDT)
+Date: Wed, 9 Sep 2026 09:01:43 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alex Fishman <afishman@redhat.com>
+Cc: qemu-devel@nongnu.org, sgarzare@redhat.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com
+Subject: Re: [PATCH v1 0/2] vhost: Handle vrings crossing virtio-mem slots
+Message-ID: <20260909090119-mutt-send-email-mst@kernel.org>
+References: <20260909125923.75340-1-afishman@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: Zero block driver state before reopening
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: gerben@altlinux.org, qemu-devel@nongnu.org,
- Hanna Czenczek <hreitz@redhat.com>
-References: <20250310104858.28221-1-kwolf@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20250310104858.28221-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1788957698950
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260909125923.75340-1-afishman@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,110 +117,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kevin,
+On Wed, Sep 09, 2026 at 03:59:21PM +0300, Alex Fishman wrote:
+> Virtio-mem dynamic memslots are intentionally exposed as separate memory
+> regions. If a guest places a vring part across two adjacent slots, a later
+> memory update fails vhost ring verification because the complete ring part
+> is not contained in one vhost memory region.
 
-Am 10.03.25 um 11:48 AM schrieb Kevin Wolf:
-> Block drivers assume in their .bdrv_open() implementation that their
-> state in bs->opaque has been zeroed; it is initially allocated with
-> g_malloc0() in bdrv_open_driver().
+when does this happen?
+
+> Coalesce coherent adjacent sections only when a descriptor table,
+> available ring, or used ring crosses their boundary. Unrelated
+> unmergeable sections remain separate so they can still be updated
+> independently.
 > 
-> bdrv_snapshot_goto() needs to make sure that it is zeroed again before
-> calling drv->bdrv_open() to avoid that block drivers use stale values.
+> Patch 2 adds an end-to-end qtest reproducer using a fake vhost-user
+> backend and virtio-mem dynamic memslots. It also verifies that a newly
+> activated slot is not folded into the merge required by the crossing
+> vring.
 > 
-> One symptom of this bug is VMDK running into a double free when the user
-> tries to apply an internal snapshot like 'qemu-img snapshot -a test
-> test.vmdk'. This should be a graceful error because VMDK doesn't support
-> internal snapshots.
+> Tested with the vhost-user/mem-slots/boundary qtest.
 > 
-> ==25507== Invalid free() / delete / delete[] / realloc()
-> ==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
-> ==25507==    by 0x54B592A: g_realloc (gmem.c:171)
-> ==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
-> ==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
-> ==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
-> ==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
-> ==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-> ==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
-> ==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
-> ==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
-> ==25507==    by 0x54AEAC4: g_free (gmem.c:208)
-> ==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
-> ==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
-> ==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-> ==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
+> Buglink: https://redhat.atlassian.net/browse/RHEL-146583
 > 
-> This error was discovered by fuzzing qemu-img.
+> Alex Fishman (2):
+>   vhost: coalesce unmergeable sections across vring boundaries
+>   tests/qtest: Add vhost-user memslot boundary test
 > 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Denis Rastyogin <gerben@altlinux.org>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  block/snapshot.c | 1 +
->  1 file changed, 1 insertion(+)
+>  hw/virtio/vhost.c             |  72 ++++++-
+>  tests/qtest/vhost-user-test.c | 395 +++++++++++++++++++++++++++++++++-
+>  2 files changed, 452 insertions(+), 15 deletions(-)
 > 
-> diff --git a/block/snapshot.c b/block/snapshot.c
-> index 9c44780e96..22567f1fb9 100644
-> --- a/block/snapshot.c
-> +++ b/block/snapshot.c
-> @@ -296,6 +296,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
->          bdrv_graph_wrunlock();
->  
->          ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
-> +        memset(bs->opaque, 0, drv->instance_size);
->          open_ret = drv->bdrv_open(bs, options, bs->open_flags, &local_err);
->          qobject_unref(options);
->          if (open_ret < 0) {
-
-this unfortunately causes a regression when loading a snapshot when a
-throttle driver is present:
-
-> qemu-system-x86_64: ../block/throttle.c:231: void throttle_drain_end(BlockDriverState *): Assertion `tgm->io_limits_disabled' failed.
 > 
-> Thread 1 "qemu-system-x86" received signal SIGABRT, Aborted.
-> __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
-> warning: 44	./nptl/pthread_kill.c: No such file or directory
-> (gdb) bt
-> #0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
-> #1  0x00007ffff57639ff in __pthread_kill_internal (threadid=<optimized out>, signo=6) at ./nptl/pthread_kill.c:89
-> #2  0x00007ffff570ecc2 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-> #3  0x00007ffff56f74ac in __GI_abort () at ./stdlib/abort.c:77
-> #4  0x00007ffff56f7420 in __assert_fail_base (fmt=<optimized out>, assertion=<optimized out>, file=<optimized out>, line=231, 
->     function=<optimized out>) at ./assert/assert.c:118
-> #5  0x00005555560f40b3 in throttle_drain_end (bs=0x5555579da850) at ../block/throttle.c:231
-> #6  0x00005555560a5075 in bdrv_do_drained_end (bs=0x5555579da850, parent=0x0) at ../block/io.c:417
-> #7  0x00005555560a4f6b in bdrv_drained_end (bs=0x5555579da850) at ../block/io.c:426
-> #8  0x000055555605cda1 in bdrv_child_cb_drained_end (child=0x5555579ebff0) at ../block.c:1219
-> #9  0x00005555560a422e in bdrv_parent_drained_end_single (c=0x5555579ebff0) at ../block/io.c:76
-> #10 0x00005555560ad0fa in bdrv_parent_drained_end (bs=0x5555579deb60, ignore=0x0) at ../block/io.c:91
-> #11 0x00005555560a5082 in bdrv_do_drained_end (bs=0x5555579deb60, parent=0x0) at ../block/io.c:419
-> #12 0x00005555560a4f6b in bdrv_drained_end (bs=0x5555579deb60) at ../block/io.c:426
-> #13 0x000055555605cda1 in bdrv_child_cb_drained_end (child=0x5555579ebe10) at ../block.c:1219
-> #14 0x00005555560a422e in bdrv_parent_drained_end_single (c=0x5555579ebe10) at ../block/io.c:76
-> #15 0x00005555560ad0fa in bdrv_parent_drained_end (bs=0x5555579e6460, ignore=0x0) at ../block/io.c:91
-> #16 0x00005555560a5082 in bdrv_do_drained_end (bs=0x5555579e6460, parent=0x0) at ../block/io.c:419
-> #17 0x00005555560a5890 in bdrv_drain_all_end () at ../block/io.c:563
-> #18 0x00005555559ae5d8 in load_snapshot (name=0x7fffffffed4f "snap0", vmstate=0x0, has_devices=false, devices=0x0, 
->     errp=0x5555576033d0 <error_fatal>) at ../migration/savevm.c:3562
-> #19 0x0000555555dd34a9 in qmp_x_exit_preconfig (errp=0x5555576033d0 <error_fatal>) at ../system/vl.c:2828
-> #20 0x0000555555dd5ecc in qemu_init (argc=70, argv=0x7fffffffdec8) at ../system/vl.c:3866
-> #21 0x000055555617e12f in main (argc=70, argv=0x7fffffffdec8) at ../system/main.c:71
-
-
-The bdrv_snapshot_goto() call happens in a drained section, and for the
-throttle driver, the opaque object is the ThrottleGroupMember, so the
-io_limits_disabled member gets set from 1 to 0 by the memset. And later,
-when the drain ends, the assertion triggers.
-
-I'm not sure how to best resolve this. Should there be a method like
-bdrv_reset_opaque_after_snapshot_goto() where the throttle driver keeps
-the io_limits_disabled number unaffected?
-
-Or is there a safe way to temporarily end and later resume the drain
-before/after the close/memset/open?
-
-Or use some other approach?
-
-Best Regards,
-Fiona
+> base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+> -- 
+> 2.52.0
 
 
