@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 493B4C79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3099FC79FB8
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 08:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4DtP-0008IJ-VW; Wed, 09 Sep 2026 04:42:55 -0400
+	id 1x4DtG-0008FV-Ki; Wed, 09 Sep 2026 04:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x4DtO-0008Hq-JH
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:54 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1x4DtF-0008FJ-PT
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:45 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x4DtM-0003K3-QX
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:54 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2d944747d41so61006025ad.0
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 01:42:52 -0700 (PDT)
+ id 1x4DtE-0003Ik-6e
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 04:42:45 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2d91ff7d9acso48058765ad.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 01:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1788943371; x=1789548171; darn=nongnu.org;
+ d=sifive.com; s=google; t=1788943363; x=1789548163; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=3/JSEN4yZJQug9AgbAgWw+4fekDHImfUc2lZDl80p84=;
- b=DQ9dL677NoWmHBzHOeiHaD0vc2xMax+B0qvdsoPJGTlZNKGAQUrigGhB7TpverFhl8
- 5ykiqrpHrfyT0X/b3CyYL/D6DxeWkfKtfINEeVBTG7y+zs2lrlQKiR5pwJIo1PnRGkY2
- xdrCWJdDxd09vwEBjcpoLSFvNF4J2Iogu4S4l+p0wDobKySY4cfnTQWtUNYT3TToa0UJ
- 35TM0AOfCHFTHE4Mbx5uoDC97ewwXxEquU8bKAIszgpmzUBH21OuQMKAN0Y2QV/Ehy/I
- y4HJiR+unPNghYajoIpib4RMWAM2HM3e/agIkiGF8mvX4H8lmw0nGkvWsLKemDtaGBeY
- ltXg==
+ bh=JmH3bJrn2KxIguqbsDJoQtnz4vzZycqSDA0K9jBnEPs=;
+ b=E/3Izq2Jk1JReOQ6Yp/wvKzoQWfH0JDCj1DjQzAqlACBB7MKhj0p10CfiUdvse+q3k
+ ZNouQK1I7xvggx3BGf9h7QgnBt73cBrfR6ozeluTDQ5BGfc35CHJfjQx09uNB1NT4im1
+ fXT/LnWP4CCVzR3p+ElDYdLFjry1q34nyW6vnNshnr3a0xmrfAnP8XcdM8E2qwsfMi8I
+ w874SQ8gfOMvmqGlFf5ZdK9uT7TbiSYhJc9TFcrCeaYoEtczbWdQJuoqQobWCEpCEyaK
+ CguU1gu9mVUSan7taqLNnEfBxoDL6ImwChPBnFyQkRuUI4DMT06L7Y30X+YtH9Q60m1Y
+ a7XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788943371; x=1789548171;
+ d=1e100.net; s=20251104; t=1788943363; x=1789548163;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3/JSEN4yZJQug9AgbAgWw+4fekDHImfUc2lZDl80p84=;
- b=I9yIZJF3obYcAT02ERvQQADq4dKle4wfxuBmV0C7Tt8cAnCFUlU5M6GDefKfxgU+q5
- Lvu4zEVPoB/4Zzqa5v/SpcUJcW6KxYnn8QqW70ghyuKrxvT2X399UXGJ4NlgnzidNT+u
- VryWV8rklmp/sYIgcQvf5WfzqeP9uBzozWWygA0SWK2bq3HgeeEttuqIbYV4ta/hXdSn
- HLq5AulX/Ncr54qzkr10Fif8oJP5cDrJWn5i3TzL9YwnbC5O9YofGc5zaj7vHaexb0PW
- 27ToAOea86zJuq6dqhkCHy1hMZfGJaqgHYsRfLVUFidAOZW+qmTlb8WvmvoDePHnP7uu
- 2Fmw==
-X-Gm-Message-State: AFuF++k0dHTynhcAFrG3+Jj9xWyiG15FBbhfVAAzbH2a8TvSbpDBXsNG
- Jk4jHepmf9sADx7x5w5IBQp4CvuJzRfKz/52cam/zVVqNTe7pbBeRnGxSK9mE0E9GwgVD4GsPWw
- dccFFYZn8NYgS3Ro10ADrv2wSbMSkvWu0nxrK6pVoKR1wW5I45Iy/grsa2xNEF6i8WOgm4+pidz
- Hv6brsFFM3CTDltwNJeG1BNUMXOgNQUcn1zi4276PpFA==
-X-Gm-Gg: AYBFou2+TciKwCA3ixMcSS0cfaj0TRvbqoJJaGIYuLO7TffMG1AItfoflLcn8YdqFRt
- iNy6s0fEztuR6GTM9ezG1CA1hkm6INgjnZM5zp7amcneuX8uVOk1osb+6S6G5hvcQWyKiay17S9
- lriXFKzrl8N53sa3VGjbkmd7H8pK00S0xOUa37sQRgtOl9veDGajUiVO4NweaV8iV9r0GvgD8eH
- iap48YRdedoI+J7aID2IrY/GOPaNOtA3YEJJA99HS/VauJEHghsmSl1Wx34Gba5Ea+/snJl5oYv
- dimcxPXmRkrX2VF/SEfG4YAx+GkwzIVV4f88n6GTiqjVf1VzHqcNm2fQVM5BdDs7LbIW2CeoBP5
- zCW00GRFcl4dqADioW0EqtbDnENIlkUF0wpr+jCZP7FUegDsFcrlln1U5KGcI8Up5EZBxvRawWG
- fTGmm1V+COUiJ8egnpGAAzDFGoHo8rBRpJGbmXwC0A+HH2d2Z3WXvcCpqg3nPrPjQ4EBXiVkNcI
- shtJx2l6oOLIz+IY8AiwaTdKm7bNKYFlpiynxCI3i2xdKKdDfTNNxgFkcrINSESiafvb3ZVMex8
- CBR/i4Wk
-X-Received: by 2002:a17:902:930a:b0:2d6:e074:9cad with SMTP id
- d9443c01a7336-2db1236f4femr349937195ad.6.1788943371077; 
- Wed, 09 Sep 2026 01:42:51 -0700 (PDT)
+ bh=JmH3bJrn2KxIguqbsDJoQtnz4vzZycqSDA0K9jBnEPs=;
+ b=o+sP43CuXMkFzj6ezLcGw6eY5zpPo2qCJNdS7V4O+9u7/gYbRdhRGjnNCZYNVKmpSR
+ mRNf4LgQQan05tMb0yHymmjpxUnHvuv3+v1odrrbdA8ooeWvFf1CAS9IdIf02IQ4+qUX
+ pvucjuE/bP8+SrwJftRtMCFE9Vl+e4mhiRG4IRn8ecofM40rJFOTOkg6lvhsIKl2Nmg/
+ 1nkkpox++Hk3mzjyQx4s9dJp7geYBLfIRFqgf3EyUpUrqjVyqDXbAcB238wQ3Fjvqm5r
+ 74tqOIGCR+1nQZlJrAlRorkNDrhctJudMB+6pIdWgNbiISQgkzB8egKdM0Kbe0zZPLrN
+ tGtQ==
+X-Gm-Message-State: AFuF++mupK1E9SyhaJKu9RYmJLTGlM+y0xS3T4tdPHiP7gd4lR1edqSH
+ cKiHH+ydRetcHHXN5ZRfSgPs9pA3SMnSNnN1TTfB1O7+dpheMJqoi3c/sIJUKr0Oi1rmTLgISES
+ 7U7sHiFuepv7BoY72ICWmDrZhYzUmiJRqWIGMvDth5VyqgU7FufFkPxweyNUF/pQpeWrV74Trqd
+ 8E4vzq+dY2/a616zRR+xI738KvpuYsem74pL/apf2mtA==
+X-Gm-Gg: AYBFou0Nltw2ID+/fXQanL1pXmM5UteADIkUx0lCIXRVAloZ3rXmObUrFnIR68ANqVy
+ 63x25HRyevphAynvBZxV0AY/adLpALy1RIf+aZJQzV3bWd1Z+Mh/BY7nDCcyMldlzn3FVI1zDiR
+ DAdMiaOk/9Z85JUCs5NKG5YMAT0s6thhgPx2TE7h2QLe7D88CmpFuchF8PF8LxvVX7bDEt9+025
+ bqfGhLKn8eqqLgOhS9k7bk63a/dsMB0+EPUzadKkUt0Cr3DHJx3kuiv2qbrSBxn98nyK9wA7/Yr
+ YD8wbxmgLhRyLtcDBUgkelQPFpzSCoBcudx1noviocxBacmTLyKwNvtgWpmfT5xCcfwxkx2uG2g
+ v7uSufqzElyOIkKLCRebIQpKG1Ty7guV66Co2dXm6rIrYCBq2RmT/mjqqmoc6/TdXIy+Jr7uZJu
+ IYL79JPQaysEKL9GctvGQwtJmZKJUMdb94/IKjE1a7/ZnagTTAABLCQZqVyCpsKPaki2wwqMiQS
+ HI+qYqmSbqc5C9vRiMr95lkYdE+oFqa3oOg640P8JJCoeUKjW1sZJ9Z0eUwbs5Bx+OhEsFkXg==
+X-Received: by 2002:a17:903:40c9:b0:2d6:f6ba:263d with SMTP id
+ d9443c01a7336-2db124b451cmr471899745ad.7.1788943362496; 
+ Wed, 09 Sep 2026 01:42:42 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2db56c2a1f1sm38328225ad.78.2026.09.09.01.42.48
+ d9443c01a7336-2db56c2a1f1sm38328225ad.78.2026.09.09.01.42.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2026 01:42:50 -0700 (PDT)
+ Wed, 09 Sep 2026 01:42:41 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, richard.henderson@linaro.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -76,17 +75,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 5/6] tests/tcg/riscv64: Add vector fault-only-first page probe
- test
-Date: Wed,  9 Sep 2026 16:41:52 +0800
-Message-ID: <20260909084154.223529-6-max.chou@sifive.com>
+Subject: [PATCH 2/6] target/riscv: rvv: Probe unit-stride accesses by the
+ first element
+Date: Wed,  9 Sep 2026 16:41:49 +0800
+Message-ID: <20260909084154.223529-3-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260909084154.223529-1-max.chou@sifive.com>
 References: <20260909084154.223529-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,140 +108,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a bare-metal test for vector fault-only-first loads whose
-first-element probe crosses a page boundary. The test covers a body
-access that crosses the boundary after the first element, and a first
-element that itself straddles the boundary, checking that both cases
-report a full vl and vstart of 0 rather than faulting on a mapped page.
+Probe only the first access of the range with probe_access_full and
+inspect the resulting lg_page_size: when the page is subdivided, fall
+back to the per-element TLB path. Pages with uniform permissions keep
+the direct host fast path.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- tests/tcg/riscv64/Makefile.softmmu-target |  9 ++-
- tests/tcg/riscv64/test-rvv-ldst-ff-page.S | 83 +++++++++++++++++++++++
- 2 files changed, 90 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-rvv-ldst-ff-page.S
+ target/riscv/tcg/vector_helper.c | 45 ++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 5 deletions(-)
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 9e0e0490753..93c4e58e0c2 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -86,14 +86,16 @@ run-test-vle32ff: test-vle32ff
- test-vle32ff: CFLAGS += -march=rv64gcv
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index efe10156daa..569da995482 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -406,6 +406,41 @@ static void vext_test_alignment(CPURISCVState *env, vaddr addr, uint32_t esz,
+     }
+ }
  
- RVV_LDST_MARCH = -march=rv64gcv
--RVV_LDST_TESTS = test-rvv-ldst-ff-pmp test-rvv-ldst-us-pmp
-+RVV_LDST_TESTS = test-rvv-ldst-ff-pmp test-rvv-ldst-us-pmp \
-+	test-rvv-ldst-ff-page
- CLEANFILES += $(RVV_LDST_TESTS)
++static void *vext_probe_host_page(CPURISCVState *env, target_ulong addr,
++                                  target_ulong probe_bytes, uint32_t msize,
++                                  MMUAccessType access_type, int mmu_index,
++                                  uintptr_t ra)
++{
++#ifdef CONFIG_USER_ONLY
++    return probe_access(env, addr, probe_bytes, access_type, mmu_index, ra);
++#else
++    CPUTLBEntryFull *full;
++    void *host;
++    int flags;
++
++    flags = probe_access_full(env, addr, MIN(msize, probe_bytes),
++                              access_type, mmu_index, false, &host, &full, ra);
++    if (flags || full->lg_page_size < TARGET_PAGE_BITS) {
++        return NULL;
++    }
++
++    if (access_type == MMU_DATA_STORE) {
++        /*
++         * The permissions are uniform across the page, so probing the
++         * first access has validated the whole range. It has only
++         * marked MIN(msize, probe_bytes) bytes as dirty, though, while
++         * the caller writes probe_bytes through the returned host
++         * pointer. Probe the whole range as well, so that
++         * notdirty_write invalidates every translation block that it
++         * overlaps and the migration dirty bitmap covers all of it.
++         */
++        return probe_access(env, addr, probe_bytes, access_type,
++                            mmu_index, ra);
++    }
++    return host;
++#endif
++}
++
+ static void
+ vext_ldst_us_notail(void *vd, target_ulong base, CPURISCVState *env,
+                     uint32_t log2_esz, uint32_t nf, uint32_t evl,
+@@ -448,9 +483,9 @@ vext_ldst_us_notail(void *vd, target_ulong base, CPURISCVState *env,
+     page_split = -(addr | TARGET_PAGE_MASK);
  
- $(RVV_LDST_TESTS): %: %.S rvv-ldst.inc $(LINK_SCRIPT)
- 	$(CC) $(CFLAGS) $(RVV_LDST_MARCH) $< -Wa,--noexecstack -c -o $@.o
- 	$(LD) $(LDFLAGS) $@.o -o $@
+     /* Validate the first page is accessible. */
+-    host = probe_access(env, adjust_addr(env, addr),
+-                        MIN(last, last_in_page) - addr + 1,
+-                        access_type, mmu_index, ra);
++    host = vext_probe_host_page(env, adjust_addr(env, addr),
++                                MIN(last, last_in_page) - addr + 1,
++                                msize, access_type, mmu_index, ra);
  
--EXTRA_RUNS += run-test-rvv-ldst-ff-pmp run-test-rvv-ldst-us-pmp
-+EXTRA_RUNS += run-test-rvv-ldst-ff-pmp run-test-rvv-ldst-us-pmp \
-+	run-test-rvv-ldst-ff-page
+     /* Get number of complete elements in the first page. */
+     elems = MIN(page_split / msize, evl - i);
+@@ -490,8 +525,8 @@ vext_ldst_us_notail(void *vd, target_ulong base, CPURISCVState *env,
+     /* Validate the second page is accessible. */
+     assert(i < evl);
+     elems = evl - i;
+-    host = probe_access(env, adjust_addr(env, addr), elems * msize,
+-                        access_type, mmu_index, ra);
++    host = vext_probe_host_page(env, adjust_addr(env, addr), elems * msize,
++                                msize, access_type, mmu_index, ra);
  
- run-test-rvv-ldst-ff-pmp: test-rvv-ldst-ff-pmp
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0$(comma)rvv_ta_all_1s=true$(comma)rvv_ma_all_1s=true $(QEMU_OPTS)$<)
-@@ -101,5 +103,8 @@ run-test-rvv-ldst-ff-pmp: test-rvv-ldst-ff-pmp
- run-test-rvv-ldst-us-pmp: test-rvv-ldst-us-pmp
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0$(comma)rvv_ta_all_1s=true$(comma)rvv_ma_all_1s=true $(QEMU_OPTS)$<)
- 
-+run-test-rvv-ldst-ff-page: test-rvv-ldst-ff-page
-+	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)vlen=128$(comma)elen=64$(comma)vext_spec=v1.0 $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-rvv-ldst-ff-page.S b/tests/tcg/riscv64/test-rvv-ldst-ff-page.S
-new file mode 100644
-index 00000000000..63b1e0ac8a8
---- /dev/null
-+++ b/tests/tcg/riscv64/test-rvv-ldst-ff-page.S
-@@ -0,0 +1,83 @@
-+/*
-+ * RISC-V vector fault-only-first probe page-crossing tests
-+ *
-+ * A first-element probe validates the mapping only for the bytes that
-+ * the first (fault-only) element itself touches, then lets the
-+ * remaining elements of the vector body fault normally.  An
-+ * implementation that instead probes the whole multi-element access
-+ * range as one host operation aborts as soon as that range crosses a
-+ * page boundary, even though every page involved is in fact mapped.
-+ *
-+ * Case 1 crosses the page boundary only in the vector body, after the
-+ * first element.  Case 2 crosses it inside the first element itself,
-+ * so the first-element probe must span both pages it touches.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+    #include "rvv-ldst.inc"
-+
-+    .text
-+    .global _start
-+_start:
-+    RVV_ENABLE
-+    lla             t0, trap_handler
-+    csrw            mtvec, t0
-+
-+    /*
-+     * Case 1: the body crosses the page boundary; the first element does not.
-+     */
-+    CASE    1
-+    li              t0, 3
-+    vsetvli         t1, t0, e8, m1, tu, mu
-+    lla             a0, cross_segment
-+    vlseg2e8ff.v    v2, (a0)
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 3
-+    csrr            t0, vstart
-+    ASSERT_EQ       t0, 0
-+    lla             a0, output
-+    vsseg2e8.v      v2, (a0)
-+    lbu             t0, 5(a0)
-+    ASSERT_EQ       t0, 0x66
-+
-+    /*
-+     * Case 2: the first segment element itself straddles the page boundary.
-+     */
-+    CASE    2
-+    li              t0, 3
-+    vsetvli         t1, t0, e8, m1, tu, mu
-+    lla             a0, straddle_segment
-+    vlseg2e8ff.v    v2, (a0)
-+    csrr            t0, vl
-+    ASSERT_EQ       t0, 3
-+    csrr            t0, vstart
-+    ASSERT_EQ       t0, 0
-+    lla             a0, output
-+    vsseg2e8.v      v2, (a0)
-+    lbu             t0, 5(a0)
-+    ASSERT_EQ       t0, 0xf6
-+    li              a0, 0
-+exit:
-+    SEMI_EXIT
-+    FAIL
-+
-+    /*
-+     * No trap is expected: a spurious fault from the page-crossing probe
-+     * is the very thing under test.  Report the case number rather than
-+     * vectoring to the reset value of mtvec and hanging until the
-+     * harness timeout.
-+     */
-+    .balign 4
-+trap_handler:
-+    j               fail
-+
-+    .data
-+    .balign 16
-+semiargs: .space 16
-+    .balign 4096
-+    .space 4094
-+cross_segment: .byte 0x11, 0x22, 0x33, 0x44, 0x55, 0x66
-+output: .space 6
-+    .balign 4096
-+    .space 4095
-+straddle_segment: .byte 0xa1, 0xb2, 0xc3, 0xd4, 0xe5, 0xf6
+     if (host) {
+         vext_page_ldst_us_host(vd, host, i, evl, nf, log2_esz,
 -- 
 2.43.0
 
