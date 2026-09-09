@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D258C79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7F6C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ETC-00039N-At; Wed, 09 Sep 2026 05:19:54 -0400
+	id 1x4EUD-000401-OL; Wed, 09 Sep 2026 05:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4ETA-00038h-NL
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:19:52 -0400
+ id 1x4EUC-0003zX-00
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:20:56 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4ET9-0000NE-08
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:19:52 -0400
+ id 1x4EUA-0000eF-CI
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:20:55 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899JhaV064323
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899Kkjw064650
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:19:43 +0900 (JST)
+ Wed, 9 Sep 2026 18:20:47 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=x0SU/u+frfJ6WNWXqqO7vnhrvjaWvZ8Bznhk61qd5zA=; 
+DKIM-Signature: a=rsa-sha256; bh=eC/hI7hW7dzXXuY1Z4zqFzOXM/pQ5vxW2tDSGp4icdU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788945583; v=1;
- b=MGleea9lYkfToK6dLuFr/SgRSkBJyikryuNwTSwGWrk/XRKiNOLSJw5G92Gff775
- NV4cKGq5SzHzUDRJ0APauiL9uHm1uBJa3NnDHwd3F1stSrZT3xZXid6SCmvk5EI7
- eqZqvh+qBCijn0bczrU02oOydypgJsIZKhFRKBRnJF2HU316q020AtyH0viuCz7s
- CDOdbOVGZhH8ZyUqbagkO66vPrWMRkk5TsMpQ43EnlvPH2BROTcqEtXTQX4XTiHr
- E62r9T0i4fBTaIkaQMYzHj/4BIZTSKnP7e4UWu6WrxrohfQ63fWtWIlR+k2BoO6l
- UbtpcqcjGZQh02iRPyT4Rw==
-Message-ID: <4f7e0fa2-5120-4b80-8047-84c76d3dec73@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:19:43 +0900
+ s=rs20250326; t=1788945647; v=1;
+ b=CWG8M09ds47l1wTrSoBH4pYzAKUJHbTMC2lwMRrYLM5yD6eozBR+golPE0VzYYJq
+ bCOLdWlmQOU8MqnTqzcVmCXWu8CRwJ0d1IitvgvemLfbESpG0+mrTbexr65YnVqE
+ tociVRHJZYFubTU2Gwgw8joqbKlt8LVSr8GLZ7TLDkMkJC5gWCA8aSPZMIOOBP6K
+ CLQkyQd/ytqMsu0VOQmFud7aZk+X4aqbht5VSi9oNuTqy/pU34j1/jGi25lgqpMt
+ hclzQS0V/a8fK67pjGlbaUY/lbE/J22Q6OosDX7EOCTrdsd2L+od+9BnPpd29ZdD
+ A/f539Cknod4l19Ey03LLA==
+Message-ID: <2f26c2ce-45b0-4670-bd22-deedc1c27502@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:20:46 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/25] ui: make GL context current before releasing
- DMA-BUF textures
+Subject: Re: [PATCH v2 14/25] virtio-gpu: release the dmabuf when a scanout is
+ disabled
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -50,10 +50,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-13-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-14-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-13-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-14-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,28 +80,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> The dpy_gl_release_dmabuf callbacks in the GTK, SDL, egl-headless,
-> and spice backends call egl_dmabuf_release_texture(), which calls
-> glDeleteTextures(), without first making the owning GL context
-> current. This is reachable after another console's surface update
-> leaves EGL_NO_CONTEXT current (e.g. gd_egl_update clears the context
-> on return). The deletion then silently fails, leaking the GL texture
-> and its backing storage. With an unshared context current, a
-> coincident texture name could even be deleted from the wrong context.
-> 
-> Fix by making the appropriate GL context current in each backend's
-> release callback before calling egl_dmabuf_release_texture():
-> 
-> - GTK EGL: eglMakeCurrent with the VC's EGL context
-> - GTK GL Area: gtk_gl_area_make_current
-> - SDL: SDL_GL_MakeCurrent with the console's window context
-> - egl-headless: eglMakeCurrent with the render-node context
-> - spice: eglMakeCurrent with the render-node context
-> 
-> For GTK, the previously shared gd_gl_release_dmabuf is split into
-> backend-specific gd_egl_release_dmabuf and gd_gl_area_release_dmabuf,
-> matching the existing pattern where each backend manages its own
-> context.
+> Rather than waiting for the next set_scanout()/update_dmabuf() to
+> replace it.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
