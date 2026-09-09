@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C27C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D258C79F8C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4EPQ-0002dm-CV; Wed, 09 Sep 2026 05:16:00 -0400
+	id 1x4ETC-00039N-At; Wed, 09 Sep 2026 05:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EPK-0002dA-Vw
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:15:58 -0400
+ id 1x4ETA-00038h-NL
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:19:52 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4EPJ-0008Oj-2C
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:15:54 -0400
+ id 1x4ET9-0000NE-08
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:19:52 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899FjE6063050
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899JhaV064323
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:15:45 +0900 (JST)
+ Wed, 9 Sep 2026 18:19:43 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=XnCmuYMrc5KYfTwbrhnKfwd4VvaDewbk5Mfn4i4zpEU=; 
+DKIM-Signature: a=rsa-sha256; bh=x0SU/u+frfJ6WNWXqqO7vnhrvjaWvZ8Bznhk61qd5zA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788945345; v=1;
- b=WaWUtaa1QkQXfX8MHMrCE6azw4jGFV6SWzl2KtDPYFuq1nEseY+/9J6cmOIfRSNJ
- jKRUBjdmJBoAT1fLvwksA08Sd0nFkoRSVzRG6v6bqvXY4pM35VFQ8KFcKRFbJVzK
- rLuq4xbA0OPSE5NEbVzzGlpl6G/EPXImSFC2Nc5f/Cgw4uswFxpoZv1H8ah9vmgx
- 3vdYLIU5rTwFhqYN+uOfmorg7895EOYI6rnvG0IqfsCsl5VueQYCoXMQ7p4wVU46
- PqXZOaL3iZMZx3MKWWas5xQsyRcjJM+QoM5lKAASw758lF9I5Fy1yQ0rj9sp3NN4
- mjgAoWrxUXqwgW9lOV2z4w==
-Message-ID: <f881e33e-7989-41da-ac09-6978bf3093a0@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:15:45 +0900
+ s=rs20250326; t=1788945583; v=1;
+ b=MGleea9lYkfToK6dLuFr/SgRSkBJyikryuNwTSwGWrk/XRKiNOLSJw5G92Gff775
+ NV4cKGq5SzHzUDRJ0APauiL9uHm1uBJa3NnDHwd3F1stSrZT3xZXid6SCmvk5EI7
+ eqZqvh+qBCijn0bczrU02oOydypgJsIZKhFRKBRnJF2HU316q020AtyH0viuCz7s
+ CDOdbOVGZhH8ZyUqbagkO66vPrWMRkk5TsMpQ43EnlvPH2BROTcqEtXTQX4XTiHr
+ E62r9T0i4fBTaIkaQMYzHj/4BIZTSKnP7e4UWu6WrxrohfQ63fWtWIlR+k2BoO6l
+ UbtpcqcjGZQh02iRPyT4Rw==
+Message-ID: <4f7e0fa2-5120-4b80-8047-84c76d3dec73@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:19:43 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/25] ui/dmabuf: own and close fds on free
+Subject: Re: [PATCH v2 13/25] ui: make GL context current before releasing
+ DMA-BUF textures
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +50,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-12-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-13-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-12-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-13-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,13 +80,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> Make qemu_dmabuf_free() call qemu_dmabuf_close(), so the dmabuf always
-> owns and closes its fds. This removes the need for callers to
-> explicitly close fds before freeing and simplify the code.
+> The dpy_gl_release_dmabuf callbacks in the GTK, SDL, egl-headless,
+> and spice backends call egl_dmabuf_release_texture(), which calls
+> glDeleteTextures(), without first making the owning GL context
+> current. This is reachable after another console's surface update
+> leaves EGL_NO_CONTEXT current (e.g. gd_egl_update clears the context
+> on return). The deletion then silently fails, leaking the GL texture
+> and its backing storage. With an unshared context current, a
+> coincident texture name could even be deleted from the wrong context.
 > 
-> To support this, virtio_gpu_create_dmabuf() now dup()s the resource fd
-> so each QemuDmaBuf has an independent copy. The scanout-matching loop
-> in virtio_gpu_fini_udmabuf() is no longer needed and is removed.
+> Fix by making the appropriate GL context current in each backend's
+> release callback before calling egl_dmabuf_release_texture():
+> 
+> - GTK EGL: eglMakeCurrent with the VC's EGL context
+> - GTK GL Area: gtk_gl_area_make_current
+> - SDL: SDL_GL_MakeCurrent with the console's window context
+> - egl-headless: eglMakeCurrent with the render-node context
+> - spice: eglMakeCurrent with the render-node context
+> 
+> For GTK, the previously shared gd_gl_release_dmabuf is split into
+> backend-specific gd_egl_release_dmabuf and gd_gl_area_release_dmabuf,
+> matching the existing pattern where each backend manages its own
+> context.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
