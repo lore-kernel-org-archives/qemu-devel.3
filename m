@@ -4,181 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7304EC79F8C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714C5C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4F2T-00033E-98; Wed, 09 Sep 2026 05:56:21 -0400
+	id 1x4F4t-0003RG-DV; Wed, 09 Sep 2026 05:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x4F2Q-00032y-RF
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:56:18 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x4F4s-0003R1-T4
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:58:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x4F2O-0005BT-PW
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:56:18 -0400
-Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688MeVun227163; Wed, 9 Sep 2026 02:56:10 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=wShaH796amoE54kbl+m7mgLAd4xsKai0Yg/T3YlNI
- IA=; b=X8iQlQqXm7gmxzoQNSpzZ3B0yiiTxWXKTDIU+3f0Lfumn8PyHmDgVjMBJ
- OM6H/I5wTLPQ1RVMY0kimorm2TetEi6zioQFhd0rY/+mfcahb5XApNy6zCd9VqjQ
- /px6jMUU579qTNtwY1gPCDQufMw6rieinjOaCxnCPH4wg79UDQUHYYYuLkWawY1L
- gXGhyzC3xrpOwAKQ8UDCA8gFkt2PlZ4UjlU1uj6SrHPXsCaZcIM3UaJB1tG2c6kR
- jxPKKhfAawOmMz6HmhCesEQW6mskV31kEsHpKTL1MykSe22E5GWAKMuFPeLLP/Al
- LJhgJYg+pwdkMEy/KiOZM+Q+uL1Mg==
-Received: from dm1pr04cu001.outbound.protection.outlook.com
- (mail-centralusazon11020084.outbound.protection.outlook.com [52.101.61.84])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4gjp7ma2ev-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 09 Sep 2026 02:56:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HtoycAobP5OCgHstkK8T6BiWXLChSXDIr/mW0qAkBojuiHoxKu6Coix1pBx8oNuE9T3M6DvKLlcPt+CkjzhZw0l0qx6C1fpqrgtioX8rZ6TeKXcSf2auNd3CQmpircigx89fuOzjlhTITdi/gDid3PiVvcn74F9lvU+IQ7MzUguLBEd8LkC6BKXI2sBpzF5ZZdTNHvVePet0SDBX5bdTj2Si8iPq9j6bDkCV/YALA0X7sTqqOR1ro61MWnikioNv5W5L9CpbuM6diGesgbN2kelzle4Z7+KIcU0heQ9UysNo1pHyckBlHXdZN7qOlYknFmuhhNFEe9t5EkgS6wZ14Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wShaH796amoE54kbl+m7mgLAd4xsKai0Yg/T3YlNIIA=;
- b=bv0zz1vEsRB/jrxbo3XIT/tVNtlxYLpsvUYrOrrJAkucdQ3j4EZ3aDin/3V3z6XONJ4a02DI1kVk3I8Ku5E5svPBnbatk62Gg7yKt2EVHSznOm79TcObsbsLWUosJAuY8zjZYDWi2ADik184RfaQrI3CaTajFbYGgLREyxz4GbHzML5UH8f6bC60vmLRLwQzO6sd2pMHKuG+GWh9KbSnGLnQR77eDMlqVeDFBtkTcZlC+iUipS6lvJMSseD/kUH5y5CoeKumPanInevijJwip7/kwbiA1PF1G7LhEaudt0uiGPWIkDMjvE+e5CxvWahUWuedFo3zdOLLTP2aXnQONA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wShaH796amoE54kbl+m7mgLAd4xsKai0Yg/T3YlNIIA=;
- b=lXbRzCksxiqNQeJwYTzbv1L1aV9BtbHqNgTd8jWlesriC5Wz0frev2RIKtnpcpB+Bbw1JW7W4wJrpgq3894hisGaGfNa90g2dKCVVgaGmXP7hUMGx/68zTTx3I85M3DGu8YQxdRGpHdXBbm/0ry3EyNR0c2i4VKHEAz+7x+hHqLeyQC2m2onH0iF0Xj1XrrveED05/ScF2B5OdeCliM3MTWtIWpKhC+CjbbEZN04RVTIFQ9e7rLvdXV581uxj9O9JBdcNXmHcTOtuTpY9zRQe7EtcfCELH+Jf0X0VP8IpzB0a9H/ngcBxUbkauoOcoTvGVoGWdv+h3YBA4nND++pZg==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by IA0PR02MB9899.namprd02.prod.outlook.com (2603:10b6:208:480::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 9 Sep
- 2026 09:56:05 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0406.007; Wed, 9 Sep 2026
- 09:56:05 +0000
-Message-ID: <762d160e-974a-47d4-8f0a-6cd7f6a4c0b5@nutanix.com>
-Date: Wed, 9 Sep 2026 10:56:00 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: bump sphinx_rtd_theme pin to fix --enable-docs build
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260906222926.3714852-1-brian.cain@oss.qualcomm.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20260906222926.3714852-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0114.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2c3::18) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x4F4q-0005FI-IE
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:58:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788947926;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
+ b=VGUnSq+w8yJMI4lbKdW+fnFRlAGl+xWg08WRgVxR+n79vXcZTaMzRdDI9DpcaXIZzegnBx
+ PaeNqz/F5cFdl+/yng+kwqvvjSLnf+Ne7AJYhE2VaTx9thlxYPKjDRekEKBjVPSic61U3K
+ L7TRU2wIfTko4/qQ3AwP66jb/9+91l4=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-307-zMSa0iTDPiC_Gnz5CD1bYg-1; Wed, 09 Sep 2026 05:58:45 -0400
+X-MC-Unique: zMSa0iTDPiC_Gnz5CD1bYg-1
+X-Mimecast-MFC-AGG-ID: zMSa0iTDPiC_Gnz5CD1bYg_1788947924
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38dbf293831so11746318a91.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 02:58:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788947924; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Y2jppTTDpngybo3fbUDuraSRLNkk8KBVOyY+YuOSAQi3oVwR+j13j4ESBXGEccOHrG
+ 92pY/lUbMaFr9SrotliRWr0eUArraAnyLEsTinL1g3mYwSImNGqx553CT7XqlWMSdH0G
+ /Lid/+GPCrIJOsm+rNcE5pqgSUUZTZgL1CdzifTrLNX/57pUIio1EACb2oBCYJ4J3Q7M
+ 561xPYIhyITO2xbRylgrpatd4/nqA+zUe4ZRPFeDhDAN+VmVNb2pC4Ru+J0KBoA5f27p
+ ltg0+GqotTxMFmLJ2ScXJnXlWo+TLlwfbPJyS0Aj4Jw2u8/dU3pvukKUyJjm3SIkbSW8
+ YIwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
+ fh=qselUejVXDvP5pnXhKG7u8hdCcrrqPK9JJS1C6fp4Dg=;
+ b=aTXEFr9aPvhHjNHvaIXCtCuLWJHb2V97bJ7WGxpoFsDi6R+7C3Kug0vZmWe1YpZbnZ
+ H65hbWw+JBy5n/wdssocoRP4EZHEwO4IDIkIlwbllR/tOCTiYf/xnCPqVf3hKOEkBHFZ
+ SHtHsNsReNGwTG6rFbAcBMD13mybf2R+22ooEx+B6VvMJkxSa0D/qJqOdH1F7KT/DEMN
+ 5xxRqdW41RydHHwSS/ZLPru4GKuTc3Y5swTKXSyOixDfDFDCLC7kJBR793OhqrfgnsAL
+ 0Wlld1EERhn3AV/akwvho5MQ9b6UgUIooODeUpmYhOeQUAY6DL8ReWmBZN1+5p1c8fWE
+ VUQQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788947924; x=1789552724; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
+ b=RUnFOXugsQYi6MqBypmy1rluFZ0Q7+sMbVZSqVzEzPm7c0Ic2JxC2RGJOd+bBtDNnx
+ 9sJICA/EVSE44yW847qNFklKqLpO/YJTWvcNm9ocl9Zq3HimjPTkkhWBM0lhjFbhg+Yi
+ N+O9rp4mGI1uWv38macWwIAXAS1QEYUyO6UbylguZOdkzlgbZUs7ZO1IJu5EVn7XDi4o
+ bWzuiOwguohxK+j5Oa/ms5vIucAfMia8UVRE/Hj5WZUS75dNi01+IVdThDjm+jJvg4gP
+ NUtUS5168guSHaZRAKbFCGMZfzI3DtfPTjPjfVezRcb/raNgrx2QgtsOmg6p/sMBeLlW
+ aGxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788947924; x=1789552724;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nQAvGu3eM3tGUeSDdTcHkVCnk9PemB1Xeb8RkMRRefY=;
+ b=ss9hCcuvVBrOM9ppaS7nF+ecSe4yUy2Y8ilUMqi9j9Oc1f8RV7PwV53wAAGFhzF0DS
+ e0XKc+219dlZKr3WoPwb9CGhoGt8ouAFNKeD5zVKKnhgzmbJmU8fWTc8gRFvVY6rViIP
+ zrIJBM21p3DMaEOChL7MA+LjwS40vPX/Xpct/HMirrrGv+rz86Ktr6J84zPg06iFHWUp
+ BtSsRfFBE9MrKQEvxG+Xyfb0H9bd5keEZWtcidzMTZfkg47YiKc07PhRyPP4vVk1OUqx
+ 1g8XPGRDXTdIxv+GeGZLXSpykRJoDbJHZ/FGJ/PHoJtRKQosMad53o8kPexdgs91NMwY
+ JRug==
+X-Gm-Message-State: AFuF++mlIrHQvrfWp5OzENFDNgpIFP4MYJC8x6ho1wXN589GKcZbIEeW
+ Mig1+OnrvffNI9vG5zDubUIA+tn+Gr7GLAdRJgB9mO2jqh3gyF/znoU+ucEkx/0qRQKuqYJ3aye
+ gs8HPWbpouPn/SgVHRTWtqRSGPDmu3xPfAqf3fZXtewht5+1VgawSwWCPDK1Ll/dL1txQu+creI
+ 5IILg8elIP9Il4hzf5JnCbXInjKwBjdt8=
+X-Gm-Gg: AYBFou3jg8TF1XYVoTjO1YuT+hKldLJ7t/VZzuh9zsKQ8e9NAownHD1/g/ZPMxS6u2g
+ +DKi2+O77IDBAqGgXnijZQMEE7SewSt9j+y2CkkDhFi/1ItJhVXzak4osPNZJfa3P+yzlB8SGza
+ QEa8Zim/e1ygvPenWT20VVk9mtPzeQBLkyWdwE3iZqJYvevyMfWtjUnZ6klePm0/XQiJmeWOo3c
+ swDWOFXXbZX9E3r49farN2zlEQBA8AEv86uBheZnE+0DJJjeVs/rGr1dD2S7InFyqFPCD6BtLW3
+ aw==
+X-Received: by 2002:a17:90b:440e:b0:380:fead:448d with SMTP id
+ 98e67ed59e1d1-39b261e1011mr48099963a91.13.1788947923977; 
+ Wed, 09 Sep 2026 02:58:43 -0700 (PDT)
+X-Received: by 2002:a17:90b:440e:b0:380:fead:448d with SMTP id
+ 98e67ed59e1d1-39b261e1011mr48099924a91.13.1788947923472; Wed, 09 Sep 2026
+ 02:58:43 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|IA0PR02MB9899:EE_
-X-MS-Office365-Filtering-Correlation-Id: d9776c66-297f-4b43-ed15-08df0e589051
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|376014|1800799024|10067099003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: LfSqvg+GcoXkIOEiO48uhXtrdqh9xvSqb1nIe7sCDE0v8vvyjqmfmoSyOap71/Jr6IrIfzzaZRdLAKofD1SFNxStLDaffNsAtfVyZLA5v8pTse52tHyKlEUUfiL36O7x9jXAYrKeucKn7OPRPlwui7H5PUz/L5ae6sa2aZPmdj/OV4v78WH26KHTvTZak3Wl2dFmpucppKZerPgAUY1SRqHRvGG1o6sQ6TSkgeTsESY63l4Usw64KXZDZ4EtXQBVbfuQbDnNfUURuLOisHI1SfmRAtWbN/iq+jHp4l6UxzeMOiHDFkLSKItpatRPFRq1PDeTFLfFnhy8m0B8iCecX59Ra1VwwiZy4LFRevZFGonT/Ry0pTzUvENAxrrF2vc0uNsNC761hNxWxDtOctotWTO242k+0UmwITctfmvPHZygrWvgVbllIfUrly0eDWvW7W+scmgd7CEMuvbSthvC21ay5k+TVu9TCsbvFYyEUb54Rl5Q6ir+f+fvZauk/ZXmvlQ7VfJ9mPfy6IOee43SSOp7VCo0qLU87b03oOn/bwJxqN/YGkbUS6AnzCjodkrM6dMkcC8f2AmnsDGPGT+4gn1UWpn74fhPKo61vya5dRAxcklviodzqy56HhbG7HHQQ0ymXzeeQZIxabZMORQBvoEDDXMCSirbhUIzPFyGGyc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(10067099003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?em5HTlMybnpnMUtJOXkyNGp1M1BKbXJ4T0xhaW5rSUQ3S01Gc09pTjg0NmZW?=
- =?utf-8?B?aFN1OFBHSkluV29JUWcxS0dOT3hsLzlmdzl2K1ZDaUE5bnRzWmhxOUlaQ2Iz?=
- =?utf-8?B?REUxdHZSZzJTclViM3JCVzFLQTBBQ3o2Y01jWEk2djZtdCtTdjhkVmlVaEFo?=
- =?utf-8?B?ZnZIYzBxSEpUeGxMa2VGZ29lckUrYVM2VUdJZk80aThhNWZPTWpFRmN3QlNx?=
- =?utf-8?B?TzJUWm1aclFWaFluTm9KQnFnNGNzZEZQWlpwRUYyTlJ4b2ZQNmxHcWtEVndH?=
- =?utf-8?B?Tlhrak0xaGNPbkFWR0NwYWVyOExXYUd3MVZudmhManVBcUVuRlNEd0Y0cjNC?=
- =?utf-8?B?UjlmUFg4YTNMaEtQR0txK21EV21nTm4zYitiTnNoS3NlN1hybFNSa3BjY1VI?=
- =?utf-8?B?WXMxQm9QZ2lTY2ZHOW5OcHYxVkZCT0h4Y2ZqL2FYdERiTHFwOTBoSStyM09a?=
- =?utf-8?B?M2dpMU02RHVDMFo0dHVWVGt4VDNlYWJjNVFycC8wWjBXUXhiUVlaV2dHY2Jp?=
- =?utf-8?B?VXAyRXNSa2xzMHN4c3FGV2wvU3VaTDI4c2xBUnYzTDFpeGdJZjFNS254cEpx?=
- =?utf-8?B?ak5oenBNdHJkWktsQUZGdk9hREVSL01va1NYdVBSSkV2UWVUOXZ1MFhBa29n?=
- =?utf-8?B?SzZvWVVRVFNZNkJhdG1YL2x1MDVaZ0M3Mm4xeUR5SUFla29QQlAyeG12b09v?=
- =?utf-8?B?bVJiUXExODlyTHBSOWlvNU5NWVUzWnF5QmlYUFF4VHc2OTc0V0pScm15OHl5?=
- =?utf-8?B?YXZJZjZzTHQvbnkwVHVDWW9HQkgzYWpNMHpCTW5SWnpjNjE1Zm5zdUNXTEh2?=
- =?utf-8?B?TTVNd1Fic1FReS9hSTdhMlFZSXJjclZWVDdMMGtjeXhYR3kyVHpzMDBzeXI4?=
- =?utf-8?B?TEZhRythNUFJUitoT094SUhyQmlja2o3SncrRUVvU1ZYNVNYcEhPMGM2REp2?=
- =?utf-8?B?dE5ydXVvSFU4Q21jM3R0YVowQU1TcVBSWVorQjMwZm8zNys5ZkowdG13clBZ?=
- =?utf-8?B?SFBmU3ZBWWVKN21sMFFSRDJYRFZZcktGUFJUU1pCR2hNdWdLMC9Wc0J4dzY0?=
- =?utf-8?B?NU5tQnRHSGV0QWZ3SkFFUStIeFlYZ1pmRVVSMzdZM2hiVmhiSlR3UVN3MTlZ?=
- =?utf-8?B?ejBiQVlMK2oxTHFrcXZreHM0TC9MdHE5REFiRnlxNW9OdE05cC9TdnRKTGgr?=
- =?utf-8?B?ekk4REVnRlFBdHM0aG9BeTdQT2VXSHdIWFZNdGpMTTBXTkFSYVZGQVQ3T1I4?=
- =?utf-8?B?MEllWjQ4NGMwY0RxenNZMUhrZ29hUVBIWktnZ09xTDBBay80WGVTWXd0TUlI?=
- =?utf-8?B?akYrQkVrRVBVVjk4VG1RRkkzQ251b1J0MVJ0S3dJVlgvMXNBNXFwcUFCRm44?=
- =?utf-8?B?VnNJUWUwaGFDVUhuTkpGWEZvMHFubDZCcmlzL25PTVFQRU1oTUEwYkc1VUxW?=
- =?utf-8?B?NTM4VTdMeDdLc1RqRnJWQWdwdndNWFV5cTY4TlRuSzRtNXJlaDdjMmlXK3pU?=
- =?utf-8?B?ZFlVdyt0YzlXTmIydHNwa3BRNUp1b0NoV0pJQmJDaEdkMVJiYktLcmRuZ1o2?=
- =?utf-8?B?WjhLeDU0R3F5MXpHR2hjQXgyeXdZVk5GUFJLVGV6d3lRcHFvbUNieGxZSkJa?=
- =?utf-8?B?dnVYWUtTcURrVzUybUc0eXhxcGVVR2UvVmEwSXVER2luWHgzUTJHNkRlNnln?=
- =?utf-8?B?QWNBSkxZQWd1Q0xRUWh2RXJLeEMvaUJucmZQTjQxUTAyZWlya0RzL0dZcmRr?=
- =?utf-8?B?SFBxQUUxbWpsYkF5NndhVTdZUC9TVDBIYzdzUmR3MnpzYUxZdnQzQmNUNWZC?=
- =?utf-8?B?ckRmR2ZBeGJpRUQrQ2FER09QUHFBdzdrVDl6Mlo4eWRDbFdGdUs3c1FmZ0wr?=
- =?utf-8?B?bnBEK2plb1FvcXR2aFlabks5QzhaODJoUWlIOUx5Unk5VFY5aHVka290cERN?=
- =?utf-8?B?Vjd5UUtYazhyOEJvWGYzVUpEZEVQTUg0dzB3ZHljczJFY1hVWElRbnVsaWhY?=
- =?utf-8?B?OWU2V1VJeGVKOEpQQlFOdGhzQXhORGNyYmpWckp1bi9zMUZyRDlLM2U2MWRh?=
- =?utf-8?B?d1BxOFphQ2dBVDdJQis2UWRLZUJyRDNZVFBBUXlMc0srZlI0ZjRDQ2d5OE5v?=
- =?utf-8?B?TVMxTnJTVGpEVjhhUS9zS3ZxdXl3VG5UK2ZZNmV5YTFvK1VYai80dlpsRDNB?=
- =?utf-8?B?SVUyc3JmbE5KSGdUOUhjWkRZWitLdUJ0Qko5TjEyYWdzRlFvVFVEeWRQN2hP?=
- =?utf-8?B?MXVacWp1dUlXVmpBcE82OGdBZGVRYVh1YzFINE5hMnBYVTJqMnF0MytWQVUr?=
- =?utf-8?B?RzlBbDV0a1JHeTd1VklXNjhWRjJMK0tHbkNqelVLejc5UDRPWlpBUVNTQStW?=
- =?utf-8?Q?fzE7bfNg5aH5j27Y=3D?=
-X-Exchange-RoutingPolicyChecked: kyQvINN9hyPbmwx9hMetEpZewou54R2QAnVbN3aAfU/2coohzKtn7OYUxt8WDk4mTjETUvT5ZfQXtfyWwwNVxoKLpQwn0jEgYwtnUtROLz4kBNWav25xSXJLPYt0K8Y1v2pJ9csETi4a9AyVk50mNkR9Bf0+d1B12TFRZtRm82Wlniwtz2Ajl38fLL16D3O2uqp+PNt3L9PluR3peQ/VBayFjU1ocDU5hmXNMmnRwelsw6dRiap+B9N648Z8JjO42jz5o3cF2Sb7M5pPGPhTWJ1lLVNM0NaK7TJjFrqGTEws3nVHeQMLDIwSnV2YOyYzANd4wCm9v0+rBczsT1bszQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9776c66-297f-4b43-ed15-08df0e589051
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 09:56:05.3461 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dcFRlZ+StOzJzGC06RU8x3haeDYqB3e/zs5azaaZ/IZ5/KbetB5U0O/yylcRUlCrUR7nLYeyY/vJdJ4E2Dnd4mrFMIDACWQch+hwbn9Vc30=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR02MB9899
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDExMCBTYWx0ZWRfX3fUT7EjGAOeR
- gj8rzI6oYHzYajL3gR1C6NMYwm+rXwV2vOV59vmPYHcbVJqx1hwG7GcIlVuxf70z8XzSeXDSjD8
- GJPYG2dMv/OyQUmVoONnOHsML84/J1HKHvfj8ei71KoDygwD2U/54AlDcd6x6gKjOwUOUMN7RK6
- VBh/o9HI8z0/crgHW/Wf8Ncc1OcwZ+sgK4sQMSAziaO1h00tf1VT7C12Z2lSsh1tsUGVv3avpMn
- nGNUcl/+jGdNryCsiUZinpb+jfE7Fe7OtXetNoB1VIeUu0k6MQhgTExCdtbBD9qYFAAzB7lXwk1
- dejG2fiqkYyxq5+mIhGcQIB7zSgq2GCl5MqMTTG1rmlIYSH6wIYY0txOx1QnMo9J4DPwUo0YiFS
- AZTQCKnweUh4gWhx7FhSGtDpnrn7zT7SkzavEJLY6NxFmuXWSecCCLO2Bx5mT7s/Sq7I3kXUQyg
- KprzWXxq2ZZVDeZlTig==
-X-Authority-Analysis: v=2.4 cv=d7fFDxjE c=1 sm=1 tr=0 ts=6aa12d3a cx=c_pps
- a=n/INy9n90Tzyn9GwErGIDg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22
- a=EUspDBNiAAAA:8 a=64Cc0HZtAAAA:8 a=btCSBqAgc3IY1lVz_GsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: XiKjPVVhFNsBSfvYihjvtU_S4yJ06ghE
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDExMCBTYWx0ZWRfX5TcjXxdcloU/
- e3C5I0jLwDb1I2YIO2tEifTseSNEL6L/M4gQ9AZm7rQnKFsWBGsnhgYhTt0ESIvuXg9VM7PVuXD
- trkvzGn98dB/LcwUQtI1db/R7QRIBr8=
-X-Proofpoint-GUID: XiKjPVVhFNsBSfvYihjvtU_S4yJ06ghE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-08_03,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+ <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260908-gpu-v3-6-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 9 Sep 2026 13:58:31 +0400
+X-Gm-Features: AcwNN1U6mXPq1TmvHlImsoTWBjtVfSyfX_p4apJjFptTdnhfZ3MBOVH1kfTHxbA
+Message-ID: <CAMxuvazGXs9d-32LFP8MYhipzqPvGskwMk7hmgJMA87QJ4fX1A@mail.gmail.com>
+Subject: Re: [PATCH v3 6/9] hw/display/virtio-gpu: Fix fenced blob unmapping
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Greg Kurz <groug@kaod.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ David Hildenbrand <david@kernel.org>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-block@nongnu.org, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,57 +152,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/09/2026 23:29, Brian Cain wrote:
+On Tue, Sep 8, 2026 at 10:13=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> Blob unmapping may be suspended because of remaining uses of the
+> mapping. virtio_gpu_process_cmdq() uses the following condition to
+> detect a suspended command:
+>
+>     !cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)
+>
+> However, the guest may set VIRTIO_GPU_FLAG_FENCE for a command that
+> performs blob unmapping. Such a command will be incorrectly assumed
+> as not being suspended. Add a dedicated flag for the suspended state
+> to avoid overloading VIRTIO_GPU_FLAG_FENCE.
+>
+> Fixes: 640f9149c3dc ("virtio-gpu: Support suspension of commands processi=
+ng")
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-> pythondeps.toml and docs/requirements.txt pin sphinx==7.2.6 alongside
-> sphinx_rtd_theme==1.2.2, but 1.2.2 requires sphinx<7 on PyPI.
-> 
-> A fresh install of the docs group silently downgrades Sphinx to 6.2.1 to
-> satisfy that cap, which then fails Sphinx's own >=7.2.6 runtime check
-> in docs/meson.build.
-> 
-> sphinx_rtd_theme==2.0.0 is the first release that drops the sphinx<7 cap
-> and resolves cleanly against sphinx==7.2.6.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
 > ---
->   docs/requirements.txt | 2 +-
->   pythondeps.toml       | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/requirements.txt b/docs/requirements.txt
-> index c10c4cf7c91..509d56bd1e8 100644
-> --- a/docs/requirements.txt
-> +++ b/docs/requirements.txt
-> @@ -2,4 +2,4 @@
->   # Should be in sync with the "installed" key of pythondeps.toml
->   
->   sphinx==7.2.6
-> -sphinx_rtd_theme==1.2.2
-> +sphinx_rtd_theme==2.0.0
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index e4c10d4a9f7..afb1364dd28 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -29,7 +29,7 @@ meson = { accepted = ">=1.12.0", installed = "1.12.0", canary = "meson" }
->   [docs]
->   # Please keep the installed versions in sync with docs/requirements.txt
->   sphinx = { accepted = ">=7.2.6", installed = "7.2.6", canary = "sphinx-build" }
-> -sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "1.2.2" }
-> +sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "2.0.0" }
->   
->   # This test group is for dependencies required to run various tooling
->   # and tests that should always be installed at configure time. It should
-
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-
-It would be good to get this queued to master soon as my local 
-development setup is currently broken (particularly as I'm working on 
-series that include documentation changes).
-
-
-ATB,
-
-Mark.
+>  include/hw/virtio/virtio-gpu.h |  1 +
+>  hw/display/virtio-gpu-virgl.c  | 17 +++++++----------
+>  hw/display/virtio-gpu.c        |  5 ++---
+>  3 files changed, 10 insertions(+), 13 deletions(-)
+>
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index 9404e488208a..3eccc4bc39c3 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -141,6 +141,7 @@ struct virtio_gpu_ctrl_command {
+>      struct virtio_gpu_ctrl_hdr cmd_hdr;
+>      uint32_t error;
+>      bool finished;
+> +    bool suspended;
+>      QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
+>  };
+>
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+> index 9bda572426b2..c37df91e3ed1 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -440,8 +440,7 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+>  }
+>
+>  static void virgl_cmd_resource_unref(VirtIOGPU *g,
+> -                                     struct virtio_gpu_ctrl_command *cmd=
+,
+> -                                     bool *cmd_suspended)
+> +                                     struct virtio_gpu_ctrl_command *cmd=
+)
+>  {
+>      struct virtio_gpu_resource_unref unref;
+>      struct virtio_gpu_virgl_resource *res;
+> @@ -457,7 +456,7 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>          return;
+>      }
+>
+> -    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
+> +    virtio_gpu_virgl_resource_unref(g, res, &cmd->suspended);
+>  }
+>
+>  void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> @@ -946,8 +945,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+>  }
+>
+>  static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
+> -                                          struct virtio_gpu_ctrl_command=
+ *cmd,
+> -                                          bool *cmd_suspended)
+> +                                          struct virtio_gpu_ctrl_command=
+ *cmd)
+>  {
+>      struct virtio_gpu_resource_unmap_blob ublob;
+>      struct virtio_gpu_virgl_resource *res;
+> @@ -964,7 +962,7 @@ static void virgl_cmd_resource_unmap_blob(VirtIOGPU *=
+g,
+>          return;
+>      }
+>
+> -    ret =3D virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
+> +    ret =3D virtio_gpu_virgl_unmap_resource_blob(g, res, &cmd->suspended=
+);
+>      if (ret) {
+>          cmd->error =3D VIRTIO_GPU_RESP_ERR_UNSPEC;
+>          return;
+> @@ -1036,7 +1034,6 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g=
+,
+>  void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cm=
+d)
+>  {
+> -    bool cmd_suspended =3D false;
+>      int ret;
+>
+>      VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+> @@ -1080,7 +1077,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>          virgl_cmd_resource_flush(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_RESOURCE_UNREF:
+> -        virgl_cmd_resource_unref(g, cmd, &cmd_suspended);
+> +        virgl_cmd_resource_unref(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_CTX_ATTACH_RESOURCE:
+>          /* TODO add security */
+> @@ -1110,7 +1107,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>          virgl_cmd_resource_map_blob(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB:
+> -        virgl_cmd_resource_unmap_blob(g, cmd, &cmd_suspended);
+> +        virgl_cmd_resource_unmap_blob(g, cmd);
+>          break;
+>      case VIRTIO_GPU_CMD_SET_SCANOUT_BLOB:
+>          virgl_cmd_set_scanout_blob(g, cmd);
+> @@ -1121,7 +1118,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>          break;
+>      }
+>
+> -    if (cmd_suspended || cmd->finished) {
+> +    if (cmd->suspended || cmd->finished) {
+>          return;
+>      }
+>      if (cmd->error) {
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index d520f69e6453..dd6c09d1ddcf 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -1193,11 +1193,10 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+>              break;
+>          }
+>
+> -        /* process command */
+> +        cmd->suspended =3D false;
+>          vgc->process_cmd(g, cmd);
+>
+> -        /* command suspended */
+> -        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FEN=
+CE)) {
+> +        if (cmd->suspended) {
+>              trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
+>              break;
+>          }
+>
+> --
+> 2.55.0
+>
 
 
