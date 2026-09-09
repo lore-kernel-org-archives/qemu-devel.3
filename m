@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F73CC79FA1
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 00:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E753C79F82
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 01:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x45mv-0003Nv-0y; Tue, 08 Sep 2026 20:03:41 -0400
+	id 1x46fh-0005Vs-EC; Tue, 08 Sep 2026 21:00:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x45mt-0003Mt-39; Tue, 08 Sep 2026 20:03:39 -0400
+ id 1x46fe-0005Uv-Rt; Tue, 08 Sep 2026 21:00:14 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x45mr-0000GL-CR; Tue, 08 Sep 2026 20:03:38 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1x46fc-0006VO-Rv; Tue, 08 Sep 2026 21:00:14 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 688N1XjP2272051; Wed, 9 Sep 2026 00:03:30 GMT
+ 688N1RD9385313; Wed, 9 Sep 2026 01:00:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=IyUF9p
- Z4woqrOIOFwA9tkmzBvnrtM2kspHMaH0YzsMI=; b=qqRdCPKZal5HwKttlzF75J
- aEIk0+E9Q1oI9atA5IpO/gBxq5gg/mTGh71si5iBRVeovsSkHV0mdbcirVDnnki2
- zxM5J8bqrDscPmBp8pQHx+hOdu2VYqjJoPh+HmvFV9EIU5i5H0CFkJnJlactM1Je
- RIZhWwPzz2mEvRQy3zCKpsrwQRIB/1Om7COXjU/m3NLMKcnkWH3NYJywxAhbJ9dH
- 9fVk/dt/iACCrOvnhGZAJruq3YtL3c+dFE2tPXlQnEyBvzExpDNti/C+XOZakJaW
- 7bSS7/cw7OsjLy2ffJPGfoiI+azqCz82Bg3jxufM3yov4EMjXb5tXTORJVJeDZTw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=orIACF
+ qqDEtn9K77zatF+wtELNLV251wD5bHNekjrck=; b=Azm16Fy/aElcBgSp7JBKUX
+ kyagklIf74CPUU7Z7ixwkJEw+Wm2ZmuBLCecowNRwfTUd5nwDPW4YIJDgsYgi9pP
+ iq7C/fVx4+uZKwBxb9I2qF0lYEgVDcR7Z/jJO2usOfECsz+NhfKmw1JLIVr/OZ85
+ oCm2A3+Qm10iWQrFc53tWrHg/ByG8TkoahiYa4qik+0W4LhipRl/DU77k/xiFFeM
+ /RvdOShzQz5BKnoSuWFyNQjVRUb1abvkP4iK8ItbiA7BstytOhLighdLHBvNY+8P
+ JomoRoKoe5X0ZFdufglTs9kXh3Jcs9T3+zLhU9Fxi+DScSqrqwuOK8qjxDLOnt5Q
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbf42kny-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ggbqk2qvn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Sep 2026 00:03:30 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 688NuGU7011776;
- Wed, 9 Sep 2026 00:03:29 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ggxdjy4rh-1
+ Wed, 09 Sep 2026 01:00:09 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6890uK2n004159;
+ Wed, 9 Sep 2026 01:00:08 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ggwdqffw5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Sep 2026 00:03:29 +0000 (GMT)
+ Wed, 09 Sep 2026 01:00:08 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
  [10.39.53.228])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68903Rfb57213268
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 689106cM15729214
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 9 Sep 2026 00:03:28 GMT
+ Wed, 9 Sep 2026 01:00:06 GMT
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 96FFC58080;
- Wed,  9 Sep 2026 00:03:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E5E19580C5;
+ Wed,  9 Sep 2026 01:00:05 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5AC875807F;
- Wed,  9 Sep 2026 00:03:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E0B21580BD;
+ Wed,  9 Sep 2026 01:00:04 +0000 (GMT)
 Received: from [9.61.27.191] (unknown [9.61.27.191])
  by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  9 Sep 2026 00:03:24 +0000 (GMT)
-Message-ID: <94afad6a-7d75-4e57-9e35-11215a730eed@linux.ibm.com>
-Date: Tue, 8 Sep 2026 20:03:23 -0400
+ Wed,  9 Sep 2026 01:00:04 +0000 (GMT)
+Message-ID: <c6879b65-92e1-4730-9ab2-4f27dc405c4d@linux.ibm.com>
+Date: Tue, 8 Sep 2026 21:00:04 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] hw/s390x/ipl: fix short SCSI loadparm buffer over-read
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org
-References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
- <20260906-nohmp-next-v1-9-2b21e63974f3@redhat.com>
+Subject: Re: [PATCH v16 20/20] tests/tcg/s390x: Add tests for CPACF
+ instructions
+To: Harald Freudenberger <freude@linux.ibm.com>, iii@linux.ibm.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org
+References: <20260824083204.40877-1-freude@linux.ibm.com>
+ <20260824083204.40877-21-freude@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -130,36 +115,36 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260906-nohmp-next-v1-9-2b21e63974f3@redhat.com>
+In-Reply-To: <20260824083204.40877-21-freude@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: lcSwmoLHYEkKKHLyHm6Yu1PCCvcsb3E-
-X-Proofpoint-GUID: lcSwmoLHYEkKKHLyHm6Yu1PCCvcsb3E-
-X-Authority-Analysis: v=2.4 cv=DbEnbPtW c=1 sm=1 tr=0 ts=6aa0a252 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-ORIG-GUID: r2k0FKLf9fkk676C6m9kWAkhqROeWWc2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDAwNSBTYWx0ZWRfX++V0RW9sDyep
+ wZIFJ1ACS/dmeBrcd/5k0E8OZ/0fYPf93WURYXag817kfRQO7ozl4rEdNErlyEbWO7KAev+83S7
+ wnMoUI1KiIfsifknHzfegtM/mfnwe2A=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDAwNSBTYWx0ZWRfX9AU8lXDgh3F2
+ 9Bo5rq3gdvbNkhO15x/e/oXJYnQpic9nkGsBEnBVYX/YE1SPF2tjecOm8OSmz7MW7ROo9FSorM3
+ UZjMK7rKFWYbbd5qzB5AN17Gv+xfQEqDuQug9Bq9+UDmZtJEcxLngaQKG1g1Lp9MgSZgR6h+qdL
+ JYfjIdRSh90wcvryhGlbXfLxL7tqYeCuq8664GSLQN0Nsf0CBF3O4BHf0Oe66SkWKPgxvEH1yuX
+ Uu8iHldhgHWD84fyEYRMl4577AXkIxpJehOI3I30kW9JhBwWqpwd0jhJ7Qy4AYXHFXv7QHYh1Gv
+ MmA4CP7aQfiQ6DkWhHQdYcPEvYYHcVM9NgNlOuFjnnwsqqVp/Cwe2mqccny0iu3cq1SIWvULMbl
+ LGC4LNRmLZmwv5lrEM5VfUn3cFrMKg9+cEzoxIYajWiqIDIY/HNx5csOuqtsQuqyL3MVCPIwZPh
+ aH6lzloQWsXguQVFVyA==
+X-Authority-Analysis: v=2.4 cv=JaKMa0KV c=1 sm=1 tr=0 ts=6aa0af99 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=x3EoS32ElI0h4Z5mJwgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA4MDI2NCBTYWx0ZWRfX65X5OLaNf5bF
- vS76gZvMr9awMrSYk6dch0gqnMBWzgCAJIxmX+rUGY4uyFYEiSdm8BTwfwSw/dCMFLUSNSjji7E
- jdDEodx2CnulEXBTDxkfM26IcP2qQ5Zydy1KvGvYqF7XS6ozvhcMMDeyrAmj91IR25An3LkqEd9
- sGGVGwtgN3Lv3gSuamsAu164bfZJf5gc7Mb43NlgEXErumrWg4R8VJZ0US2etObynEtKovQEDQu
- uoRzDOq7zX3ENfvCvGwh3z0W2mRDFhbdLqV6lJWaOZfz/zgj671SEeNjeE+lQQx9FYFPNLPOjNl
- UjRJ0G3YUMMNZH3j2ZKqdgTJHh3yVJWQbCPkVByi3T7R6/mOCDWT6gxHr82oW5UKT/FIA6v1PAn
- lMQnCp37dowLkhE0kGMFVU0W+iXg9Oe99/jZAC/SNWhZU8f6xRzCfI625UWIFti0tA1BwbrmA1z
- HfnRfFjzIntvCFWbp0w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA4MDI2NCBTYWx0ZWRfX482q1yXYZzSf
- GNLKZQ1Uyi/RMjWNvaCradswGWyyALBkid+xZ4JXMLO9q0bmmpvE4dq1mt3wsQp3y2my4ulSks+
- p8CDidbWREdoCWaA7fUpBBt9e1D6dkE=
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=3HeB2vlOXt6ItbSgpAMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: r2k0FKLf9fkk676C6m9kWAkhqROeWWc2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-08_03,2026-09-08_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0
- clxscore=1011 suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609080264
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609090005
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -186,23 +171,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/6/26 4:53 AM, Marc-André Lureau wrote:
-> s390_build_iplb() initially points lp at the eight-byte CCW loadparm
-> array. For SCSI devices, it can replace lp with a variable-length string
-> returned by object_property_get_str().
+On 8/24/26 4:32 AM, Harald Freudenberger wrote:
+> Add simple tests for the CPACF instructions implemented:
+> - kdsa - minimal as only query is implemented
+> - kimd - query, sha256, sha512
+> - klmd - query, sha256, sha512
+> - km - query, aes 128, 192, 256 with clear and prot key
+> - kmac - minimal as only query is implemented
+> - kmc - query, aes 128, 192, 256 with clear and prot key
+> - kmctr - query, aes 128, 192, 256 with clear and prot key
+> - pcc - query, xts aes 128, 256 and prot key xts aes 128, 256
+> - pckmo - run query and check for SIGILL
+> - prno - query, trng
+> No test for kma, kmf, kmo as these instructions are currently
+> not implemented at all.
 > 
-> The following memcmp() still reads eight bytes. ASan reports
-> buffer-overflow on value "3", when running test_scsi_loadparm
-> func-s390x-boot_4k test.
-> 
-> Check the fixed-size CCW loadparm for the 8-zero before the SCSI
-> property can replace lp.
-> 
-> Fixes: 429442e52d94 ("hw: Add "loadparm" property to scsi disk devices for booting on s390x")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->   hw/s390x/ipl.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+>   tests/tcg/s390x/Makefile.target |  10 +
+>   tests/tcg/s390x/cpacf-kdsa.c    |  58 ++++
+>   tests/tcg/s390x/cpacf-kimd.c    | 166 +++++++++
+>   tests/tcg/s390x/cpacf-klmd.c    | 206 +++++++++++
+>   tests/tcg/s390x/cpacf-km.c      | 590 ++++++++++++++++++++++++++++++++
+>   tests/tcg/s390x/cpacf-kmac.c    |  58 ++++
+>   tests/tcg/s390x/cpacf-kmc.c     | 351 +++++++++++++++++++
+>   tests/tcg/s390x/cpacf-kmctr.c   | 360 +++++++++++++++++++
+>   tests/tcg/s390x/cpacf-pcc.c     | 245 +++++++++++++
+>   tests/tcg/s390x/cpacf-pckmo.c   |  45 +++
+>   tests/tcg/s390x/cpacf-prno.c    | 131 +++++++
+>   tests/tcg/s390x/cpacf.h         | 570 ++++++++++++++++++++++++++++++
+>   12 files changed, 2790 insertions(+)
+>   create mode 100644 tests/tcg/s390x/cpacf-kdsa.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kimd.c
+>   create mode 100644 tests/tcg/s390x/cpacf-klmd.c
+>   create mode 100644 tests/tcg/s390x/cpacf-km.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmac.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmc.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmctr.c
+>   create mode 100644 tests/tcg/s390x/cpacf-pcc.c
+>   create mode 100644 tests/tcg/s390x/cpacf-pckmo.c
+>   create mode 100644 tests/tcg/s390x/cpacf-prno.c
+>   create mode 100644 tests/tcg/s390x/cpacf.h
+> 
+> diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+> index 97c0f02190..be8504497a 100644
+> --- a/tests/tcg/s390x/Makefile.target
+> +++ b/tests/tcg/s390x/Makefile.target
+> @@ -51,6 +51,16 @@ TESTS+=ts
+>   TESTS+=ex-smc
+>   TESTS+=divide-to-integer
+>   TESTS+=stckf
+> +TESTS+=cpacf-kdsa
+> +TESTS+=cpacf-kimd
+> +TESTS+=cpacf-klmd
+> +TESTS+=cpacf-km
+> +TESTS+=cpacf-kmac
+> +TESTS+=cpacf-kmc
+> +TESTS+=cpacf-kmctr
+> +TESTS+=cpacf-pcc
+> +TESTS+=cpacf-pckmo
+> +TESTS+=cpacf-prno
+>   
+>   cdsg: CFLAGS+=-pthread
+>   cdsg: LDFLAGS+=-pthread
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Hi Harald,
+
+This hunk no longer applies, since commit 4851d25f0e ("tests/tcg/s390x: 
+user tests") converted the Makefile to meson.
+
+It's a mechanical change, so I'm going to replace it with the following 
+when picking up the series, rather than asking you to respin a new version.
+
+Thanks,
+Eric
+
+diff --git a/tests/tcg/s390x/meson.build b/tests/tcg/s390x/meson.build
+index dc6271c7c7..9721c365ba 100644
+--- a/tests/tcg/s390x/meson.build
++++ b/tests/tcg/s390x/meson.build
+@@ -73,6 +73,16 @@ tests += {
+    'stckf.c': {},
+    'ts.c': {},
+    'ex-smc.c': {'cflags': ['-Wl,--no-warn-rwx-segments']},
++  'cpacf-kdsa.c': {},
++  'cpacf-kimd.c': {},
++  'cpacf-klmd.c': {},
++  'cpacf-km.c': {},
++  'cpacf-kmac.c': {},
++  'cpacf-kmc.c': {},
++  'cpacf-kmctr.c': {},
++  'cpacf-pcc.c': {},
++  'cpacf-pckmo.c': {},
++  'cpacf-prno.c': {},
+  }
+
+  foreach src: tests_s390x_pgm
 
