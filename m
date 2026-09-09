@@ -4,62 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22CAAC79FB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 15:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17AEC79FB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 15:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4KRF-0007q5-8N; Wed, 09 Sep 2026 11:42:17 -0400
+	id 1x4KZw-0000Zp-Ob; Wed, 09 Sep 2026 11:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x4KRC-0007pl-3R; Wed, 09 Sep 2026 11:42:14 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x4KR8-0000F2-5K; Wed, 09 Sep 2026 11:42:13 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwDXfaxJfqFqHhoFAA--.6498S2;
- Wed, 09 Sep 2026 23:42:01 +0800 (CST)
-Received: from [192.168.2.9] (unknown [113.246.116.243])
- by mail (Coremail) with SMTP id AQAAf8Dwe3VIfqFqPgjSAA--.29569S2;
- Wed, 09 Sep 2026 23:42:00 +0800 (CST)
-Message-ID: <3b027cd7-c200-40f3-b6da-5c52a9823ecb@phytium.com.cn>
-Date: Wed, 9 Sep 2026 23:41:59 +0800
+ (Exim 4.90_1)
+ (envelope-from <prvs=md17063E5F9E=lizhaoxin04@baidu.com>)
+ id 1x4KZs-0000ZQ-Cg
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 11:51:13 -0400
+Received: from mx14.baidu.com ([220.181.3.101] helo=outbound.baidu.com)
+ by eggs.gnu.org with smtp (Exim 4.90_1)
+ (envelope-from <prvs=md17063E5F9E=lizhaoxin04@baidu.com>)
+ id 1x4KZm-00022u-N2
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 11:51:12 -0400
+X-MD-Sfrom: lizhaoxin04@baidu.com
+X-MD-SrcIP: 172.31.4.16
+From: Li Zhaoxin <lizhaoxin04@baidu.com>
+To: <qemu-devel@nongnu.org>
+CC: "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Longpeng <longpeng2@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, Li
+ Zhaoxin <lizhaoxin04@baidu.com>
+Subject: [PATCH] vdpa-dev: implement guest_notifier_mask/pending
+Date: Wed, 9 Sep 2026 23:50:42 +0800
+Message-ID: <20260909155042.34186-1-lizhaoxin04@baidu.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 21/28] hw/arm/smmuv3: Implement SMMU_S_INIT register
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162624.2809349-1-tangtao1634@phytium.com.cn>
- <5d280603-e2f9-4d24-a31b-19f908a30c55@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <5d280603-e2f9-4d24-a31b-19f908a30c55@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Dwe3VIfqFqPgjSAA--.29569S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWqgYksHPwAHsV
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxZF17WF45CF17ArWxZry5Arb_yoWrGw43pr
- yUG3W5KFs8AF1xZr13Kw4xZF13u397Kr1UCrZxK3Z0ka4qvry8ta1vgr4YgFZrZrnxJw47
- tw429FZ7uw1YyaDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain
+X-Originating-IP: [10.127.73.8]
+X-ClientProxiedBy: bjhj-exc12.internal.baidu.com (172.31.3.22) To
+ bjhj-exc18.internal.baidu.com (172.31.4.16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
+ s=selector1; t=1788969052;
+ bh=eTFcnfnl7oo4atRZW4Qg9NDLjIulJhUCHUVi67e1pF0=;
+ h=From:To:CC:Subject:Date:Message-ID:Content-Type;
+ b=P/e5mkvrdQw6wdieF10rNNTvUrch+Q+I5Anb186JjEecIX1bHa8lLvfMVvsGE1bx7
+ nvmSV+Mamx7V9dXwmeaZ5058Kammg+rYwHSBA4G2ts9gqMaq3Yhj9oNqs6+6Mf/GmK
+ hfPzBtNaObKdoUav7jacXbK7lP1LL/TeE5oc9305ri4wFY5KEd15i3eSoKQO2Ux5O5
+ XZcChY3cWb16fnIAnUAlyJRHG1MQsJlWxNyiGd+WLJ3mD/06HpKCevkZMExKcP1L3b
+ FY/3xDDRXwgZK0JIv8yiaWVcoj0GF0IwRo3KYcd9sN49HJnT/I/YOnE6M9DTs6uVRU
+ M2YQD+ZaOydqQ==
+Received-SPF: pass client-ip=220.181.3.101;
+ envelope-from=prvs=md17063E5F9E=lizhaoxin04@baidu.com; helo=outbound.baidu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,117 +71,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Forward guest notifier masking to the vhost layer via
+VHOST_SET_VRING_CALL, so the KVM irqfd stays installed across
+MSI-X mask/unmask cycles instead of being torn down and re-added
+each time.
 
-On 8/31/2026 1:23 PM, Eric Auger wrote:
-> Hi Tao,
->
-> On 8/13/26 6:26 PM, Tao Tang wrote:
->> Implement read/write handlers for the SMMU_S_INIT secure-only register.
->>
->> Writing INV_ALL provides a mechanism for software to perform a global
->> invalidation of ALL caches within the SMMU, including IOTLBs and
->> configuration caches across all security states.
->>
->> The MMIO dispatcher decodes the target register bank from the offset and
->> normalizes Secure-window offsets by subtracting SMMU_SECURE_REG_START
->> before switching on the bank-local offset. S_INIT is a Secure-only
->> register and its A_S_INIT constant is an absolute Secure-window offset,
->> so the handler matches it using A_S_INIT - SMMU_SECURE_REG_START and
->> rejects accesses through Non-secure banks.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/smmuv3.c     | 43 +++++++++++++++++++++++++++++++++++++++++++
->>   hw/arm/trace-events |  1 +
->>   2 files changed, 44 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index d69fc0898af..dc3fa618883 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -393,6 +393,21 @@ static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
->>   
->>   }
->>   
->> +static void smmuv3_invalidate_all_caches(SMMUv3State *s)
->> +{
->> +    SMMUState *bs = &s->smmu_state;
->> +    trace_smmuv3_invalidate_all_caches();
->> +
->> +    /* Clear all cached configs including STE and CD */
->> +    if (bs->configs) {
->> +        g_hash_table_remove_all(bs->configs);
->> +    }
->> +
->> +    /* Invalidate all SMMU IOTLB entries */
->> +    smmu_inv_notifiers_all(&s->smmu_state);
->> +    smmu_iotlb_inv_all(bs);
->> +}
->> +
->>   static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->>                                                    SMMUTransCfg *cfg,
->>                                                    SMMUEventInfo *event,
->> @@ -2206,7 +2221,29 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->>   
->>           bank->eventq_irq_cfg2 = data;
->>           break;
->> +    case A_S_INIT - SMMU_SECURE_REG_START:
->> +        if (reg_sec_sid != SMMU_SEC_SID_S) {
->> +            goto unhandled;
->> +        }
->> +        if (data & R_S_INIT_INV_ALL_MASK) {
->> +            /*
->> +             * If SMMU_ROOT_CR0.GPCEN == 0, a write of 1 to INV_ALL when any
->> +             * SMMU_(*_)CR0.SMMUEN == 1, .... , is CONSTRAINED UNPREDICTABLE
->> +             * according to (IHI 0070G.b) 6.3.62 SMMU_S_INIT, Page 465.
->> +             */
->> +            if (!smmuv3_smmu_disabled_stable(s, SMMU_SEC_SID_NS) ||
->> +                !smmuv3_smmu_disabled_stable(s, SMMU_SEC_SID_S)) {
->> +                /* CONSTRAINED UNPREDICTABLE behavior: Ignore this write */
->> +                qemu_log_mask(LOG_GUEST_ERROR, "S_INIT write ignored: "
->> +                              "(S_)CR0.SMMUEN or (S_)CR0ACK.SMMUEN is set\n");
->> +                return MEMTX_OK;
->> +            }
-> shall we really bother: I read:
-> "
-> If SMMU_ROOT_CR0.GPCEN == 0, a write of 1 to INV_ALL when any
-> SMMU_(*_)CR0.SMMUEN == 1,
-> or an Update of any SMMUEN to 1 is in progress, or
-> SMMU_ROOT_CR0.ACCESSEN == 1, or an Update of
-> ACCESSEN to 1 is in progress, is CONSTRAINED UNPREDICTABLE and has one
-> of the following behaviors:
-> • The write is IGNORED.
-> • The invalidation operation occurs and completes, with INV_ALL reset to
-> 0 on completion.
-> "
-> So the second behavior would let us simplify the code, no?
+Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+---
+ hw/virtio/vdpa-dev.c | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-Hi Eric,
-
-Yes, the second permitted behavior lets us remove the SMMUEN checks and 
-complete the invalidation synchronously. I'll simplify this in v6.
-
->
-> By the way where is GPCEN checked?
-
-GPCEN is not currently checked because this SMMU model does not 
-implement the Root programming interface or granule protection checks. 
-I'll clarify that limitation. When that support is added, INV_ALL must 
-have no effect while GPCEN is set.
-
-
-Best regards
-
-Tao
-
->
-> Eric
->> +            smmuv3_invalidate_all_caches(s);
->> +        }
->> +        /* Synchronous emulation: invalidation completed instantly. */
->> +        break;
->>       default:
->>
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 6dc684ab09..1b75f6afdd 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -267,11 +267,7 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
+     }
+     s->started = true;
+ 
+-    /*
+-     * guest_notifier_mask/pending not used yet, so just unmask
+-     * everything here. virtio-pci will do the right thing by
+-     * enabling/disabling irqfd.
+-     */
++    /* Point every vring call fd at its guest notifier. */
+     for (i = 0; i < s->dev.nvqs; i++) {
+         vhost_virtqueue_mask(&s->dev, vdev, i, false);
+     }
+@@ -285,6 +281,28 @@ err_host_notifiers:
+     return ret;
+ }
+ 
++static void vhost_vdpa_device_guest_notifier_mask(VirtIODevice *vdev, int idx,
++                                                   bool mask)
++{
++    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
++
++    if (idx == VIRTIO_CONFIG_IRQ_IDX) {
++        return;
++    }
++    vhost_virtqueue_mask(&s->dev, vdev, idx, mask);
++}
++
++static bool vhost_vdpa_device_guest_notifier_pending(VirtIODevice *vdev,
++                                                    int idx)
++{
++    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
++
++    if (idx == VIRTIO_CONFIG_IRQ_IDX) {
++        return false;
++    }
++    return vhost_virtqueue_pending(&s->dev, idx);
++}
++
+ static void vhost_vdpa_device_stop(VirtIODevice *vdev)
+ {
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
+@@ -376,6 +394,8 @@ static void vhost_vdpa_device_class_init(ObjectClass *klass, const void *data)
+     vdc->get_features = vhost_vdpa_device_get_features;
+     vdc->set_status = vhost_vdpa_device_set_status;
+     vdc->get_vhost = vhost_vdpa_device_get_vhost;
++    vdc->guest_notifier_mask = vhost_vdpa_device_guest_notifier_mask;
++    vdc->guest_notifier_pending = vhost_vdpa_device_guest_notifier_pending;
+ }
+ 
+ static void vhost_vdpa_device_instance_init(Object *obj)
+-- 
+2.43.0
 
 
