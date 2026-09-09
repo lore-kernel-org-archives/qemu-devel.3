@@ -4,63 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEDBC79FB7
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 14:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B13C79FB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 14:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4J9P-0004PN-Sa; Wed, 09 Sep 2026 10:19:49 -0400
+	id 1x4JDk-0005dD-7b; Wed, 09 Sep 2026 10:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x4J9C-0004OP-F8; Wed, 09 Sep 2026 10:19:35 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x4J92-0006p5-Ts; Wed, 09 Sep 2026 10:19:30 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwA3P4flaqFqB_kEAA--.6145S2;
- Wed, 09 Sep 2026 22:19:17 +0800 (CST)
-Received: from [192.168.2.9] (unknown [113.246.116.243])
- by mail (Coremail) with SMTP id AQAAf8DwjHXjaqFqYQTSAA--.26877S2;
- Wed, 09 Sep 2026 22:19:15 +0800 (CST)
-Message-ID: <4c80d8aa-8eaf-4154-8b1a-a7e85e73872d@phytium.com.cn>
-Date: Wed, 9 Sep 2026 22:19:14 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4JDi-0005cx-FI
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:24:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4JDg-0008O4-6V
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 10:24:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788963850;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3qmxDW4GgIOBSdanZwGsuGi3aBDJYBhUGWyF5KEvLcY=;
+ b=K3R/MQ2rIGjaf8LgX12sTQtckQsT2hw6RGs1Cw7ifeyZdrZlV4GkmXbzAlgPWKWL5TLETW
+ DT5+Tn8+pmrq3AuXUcQk6e/KBPa9/dv7FQaDSZVvWFXXYsI9tj9YjUIf2MaWrvSQjjd6WO
+ vew8/W6hHrw+pdMP0GXCMmf5yhPC1xs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-z5W2DxJvNNq9OmBhZjEoYQ-1; Wed,
+ 09 Sep 2026 10:24:04 -0400
+X-MC-Unique: z5W2DxJvNNq9OmBhZjEoYQ-1
+X-Mimecast-MFC-AGG-ID: z5W2DxJvNNq9OmBhZjEoYQ_1788963843
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70C4A180063C; Wed,  9 Sep 2026 14:24:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0DD413000225; Wed,  9 Sep 2026 14:24:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 990F721E6A04; Wed, 09 Sep 2026 16:24:00 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v4 04/75] qapi: register all introspectable types, not
+ just QMP-reachable ones
+In-Reply-To: <20260904-qom-qapi-v4-4-a985f168e938@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Fri, 04 Sep 2026 23:57:47 +0400")
+References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
+ <20260904-qom-qapi-v4-4-a985f168e938@redhat.com>
+Date: Wed, 09 Sep 2026 16:24:00 +0200
+Message-ID: <87h5jyjyf3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 26/28] hw/arm/smmuv3: Initialize the secure register bank
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162624.2809349-5-tangtao1634@phytium.com.cn>
- <b4c5b401-ddf4-48db-bb4b-310baa0405e5@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <b4c5b401-ddf4-48db-bb4b-310baa0405e5@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8DwjHXjaqFqYQTSAA--.26877S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWqgYksHPwAAsS
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7Ary5tr15WFWrKw4ftr4Dtwb_yoW8Kw1fpF
- srCFs8KanrKrnxXF4avw48CFnxZrs3KrnrCrZrGF15Zw15urykJr1DGr1F9F9a9rn5Ca1I
- qF4Iga45uw45ArJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,73 +92,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-On 8/31/2026 4:37 PM, Eric Auger wrote:
+> Rename QAPISchemaUsedTypes to QAPISchemaTypeAnalysis and broaden type
+> collection: instead of discovering types transitively from commands and
+> events, register every non-implicit type upfront in visit_needed() and
+> let visit_end() resolve their dependencies.
+
+So, we now discover types transitively from commands, events, and
+non-implicit types.  Correct?
+
+> This is needed so that QOM property types that are defined in the QAPI
+> schema but not referenced by any command or event still appear in
+> query-qmp-schema output, making them introspectable by management tools.
+
+It's the stupidest solution that could possibly work.  I respect that.
+
+> Commands and events still register their (often implicit) argument and
+> return types, which visit_needed() intentionally skips.
 >
-> On 8/13/26 6:26 PM, Tao Tang wrote:
->> Initialize the secure register bank (SMMU_SEC_SID_S) with sane default
->> values during the SMMU's reset sequence.
->>
->> This change ensures that key fields, such as the secure ID registers,
->> GBPA reset value, and queue entry sizes, are set to a known-good state.
->> The SECURE_IMPL attribute of the S_IDR1 register will be introduced
->> later via device properties.
-> what about SEL2 then? Do you eventually target this in this series?
+> This makes the x86-64 schema grow from 244K to 265K.
 
-Hi Eric,
+You mean the output of query-qmp-schema, don't you?
 
-We won't implement SEL2 in this series as mentioned in previous mail. 
-The last patch is only a temporary one for Hafnium bring-up.
+I see it grow like you wrote modulo a KiB or two.  Tolerable, I guess.
 
+The QAPI schema has some 1400 definitions.
 
->> This is a necessary step to prevent undefined behavior when secure SMMU
->> features are subsequently enabled and used by software.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/smmuv3.c | 29 ++++++++++++++++++++++++++++-
->>   1 file changed, 28 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 2375b7a17a0..7e7376c65e2 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -293,6 +293,7 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
->>   static void smmuv3_init_id_regs(SMMUv3State *s)
->>   {
->>       SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
->> +    SMMUv3RegBank *sbank = smmuv3_bank(s, SMMU_SEC_SID_S);
->>   
->>       /* Based on sys property, the stages supported in smmu will be advertised.*/
->>       if (s->stage && !strcmp("2", s->stage)) {
->> @@ -339,7 +340,14 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
->>       bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, GRAN4K, 1);
->>       bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, GRAN16K, 1);
->>       bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, GRAN64K, 1);
->> -    s->aidr = 0x1;
->> +
->> +    /* Initialize Secure bank */
->> +    memset(sbank->idr, 0, sizeof(sbank->idr));
->> +    /* No stall */
->> +    sbank->idr[0] = FIELD_DP32(sbank->idr[0], S_IDR0, STALL_MODEL, 1);
->> +
->> +    sbank->idr[1] = FIELD_DP32(sbank->idr[1], S_IDR1, S_SIDSIZE,
-> what about S_IDR3.SAMS?
+Before the patch, query-qmp-schema shows some 1250 of them (89%).
+Afterwards, it's just under 1350 (96%).
 
+I didn't check how many of the additional types are actually used for
+QOM properties at the end of the series.  The ones that aren't are and
+thus dead weight in query-qmp-schema output.  I'm sure we could come up
+with a way to cut them out, but would it be worth our while?  Even if
+most of them are dead weight, most of a small number is still a small
+number.
 
-SAMS is already 0 through the memset. Since it is RES0 when ATS is not 
-advertised, could we leave it as is in that configuration?
+Still elided are 38 implicit union base types and the builtin integer
+types we don't expose in introspection (9 total), and their lists
+(another 9).
 
+Computing reachability to elide these is kinda ridiculous :)
 
-Best regards,
+Thoughts?
 
-Tao
-
->> +                               SMMU_IDR1_SIDSIZE);
->>       smmuv3_accel_idr_override(s);
->>   }
->>   
->>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 
