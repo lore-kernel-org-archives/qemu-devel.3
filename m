@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80460C79FAD
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C27C79FAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Sep 2026 09:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ENw-00021C-KS; Wed, 09 Sep 2026 05:14:28 -0400
+	id 1x4EPQ-0002dm-CV; Wed, 09 Sep 2026 05:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4ENv-000212-14
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:14:27 -0400
+ id 1x4EPK-0002dA-Vw
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:15:58 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4ENt-00080K-A7
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:14:26 -0400
+ id 1x4EPJ-0008Oj-2C
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 05:15:54 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899EITM062503
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6899FjE6063050
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 9 Sep 2026 18:14:18 +0900 (JST)
+ Wed, 9 Sep 2026 18:15:45 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=msHTTwgATxTlsDeyYGSW5vv5sVBrzKhYM49I5A3mw64=; 
+DKIM-Signature: a=rsa-sha256; bh=XnCmuYMrc5KYfTwbrhnKfwd4VvaDewbk5Mfn4i4zpEU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788945258; v=1;
- b=InmiPjj6osTS/L6CxYEp1hHCdm4QtvFYPhnL6cJKaS7SSG+1IBl6aCPSCntdnbZ9
- PN/y2hGrr6T+IdlojyQNo4zCqmcxPU1jK1+MQ4Te+8Ioc7yemlpDhmyy/Po1EWVO
- 0jgbv52Pw/hspW7hNTkakjnEeJWzk1M//r4SI2lZluU6RyJl3/HOiaDqNzMlsXXx
- xrlORw/+Ap9J6ZLDbZpCEyJ5h5Tvz11kelY8IXV25PgWpHPKQ9+HGNeZEm7FVNmN
- R6i5Ou6MhZjYmiopBGzrWs7XHUPbJvqp7Wc8eQDzZVkgzoewORdLwdW02ZfByC85
- uafSa2wY6LFgaAhee8kfXA==
-Message-ID: <cda6ead4-0e67-4bc4-b466-73dcca5063d1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 9 Sep 2026 18:14:17 +0900
+ s=rs20250326; t=1788945345; v=1;
+ b=WaWUtaa1QkQXfX8MHMrCE6azw4jGFV6SWzl2KtDPYFuq1nEseY+/9J6cmOIfRSNJ
+ jKRUBjdmJBoAT1fLvwksA08Sd0nFkoRSVzRG6v6bqvXY4pM35VFQ8KFcKRFbJVzK
+ rLuq4xbA0OPSE5NEbVzzGlpl6G/EPXImSFC2Nc5f/Cgw4uswFxpoZv1H8ah9vmgx
+ 3vdYLIU5rTwFhqYN+uOfmorg7895EOYI6rnvG0IqfsCsl5VueQYCoXMQ7p4wVU46
+ PqXZOaL3iZMZx3MKWWas5xQsyRcjJM+QoM5lKAASw758lF9I5Fy1yQ0rj9sp3NN4
+ mjgAoWrxUXqwgW9lOV2z4w==
+Message-ID: <f881e33e-7989-41da-ac09-6978bf3093a0@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 9 Sep 2026 18:15:45 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/25] ui/sdl2: clear guest_fb.dmabuf on release
+Subject: Re: [PATCH v2 12/25] ui/dmabuf: own and close fds on free
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +49,10 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
  <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
- <20260904-virtio-gpu-cleanup-v2-11-15b5ae6b0023@redhat.com>
+ <20260904-virtio-gpu-cleanup-v2-12-15b5ae6b0023@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260904-virtio-gpu-cleanup-v2-11-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-12-15b5ae6b0023@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,11 +79,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/04 22:10, Marc-André Lureau wrote:
-> sdl2_gl_release_dmabuf() releases the texture but leaves the
-> guest_fb.dmabuf pointer dangling. Clear it to prevent stale
-> references after the dmabuf is freed.
+> Make qemu_dmabuf_free() call qemu_dmabuf_close(), so the dmabuf always
+> owns and closes its fds. This removes the need for callers to
+> explicitly close fds before freeing and simplify the code.
 > 
-> Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
+> To support this, virtio_gpu_create_dmabuf() now dup()s the resource fd
+> so each QemuDmaBuf has an independent copy. The scanout-matching loop
+> in virtio_gpu_fini_udmabuf() is no longer needed and is removed.
+> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
