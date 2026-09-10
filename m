@@ -4,59 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EABEC88E42
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 11:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801B8C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 11:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4dDu-0003M0-0H; Thu, 10 Sep 2026 07:45:46 -0400
+	id 1x4dFj-0006RB-Mf; Thu, 10 Sep 2026 07:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1x4dDs-0003Ks-2Z
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:45:44 -0400
-Received: from mout01.posteo.de ([185.67.36.65])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1x4dDq-0000QS-F5
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:45:43 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id 0F3B6240029
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:45:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
- s=1984.8680eb; t=1789040740;
- bh=Q746dd0StghLEbGririTRZgWrzTNJ5HqC0nLAX4uouo=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
- Content-Transfer-Encoding:From;
- b=e1+drc/mtX/fWH3GE+Yxwrv9iNYEFRbawvrLeXpebgSZ5fn73xr39wCW1CqdBRmt9
- pprqRz/R9+PiYNcJBGZI8VRDtx3PMZKbKSmeVYq0kvk/Tss7maQEpVlfFdvE5cHKFa
- XIxM/t0fn5oClKFikAEbvI9QNTFiVzvjYFQdasSfOmffuN/FY8kJfRrNQA9q9r0WH+
- MRwRPmp1FG9i6gVa7ah4NuOFPQOQu9xk/ChXaEEMWoaxP0YLv6Sm1P3eNrdOaqptMo
- GhqYfcOM3PFjgo7a7LhZTMLGLTQYOp9KAhL9dxPGt6pui7QW7kcjOOoh0CVKrT2Img
- PpdBG4SfcKsOA==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4hgbTZ6kN1z6v2J;
- Thu, 10 Sep 2026 13:45:38 +0200 (CEST)
-From: Thomas Huth <th.huth@posteo.eu>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 4/7] scripts/clean_functional_cache: Remove also .stamp files
-Date: Thu, 10 Sep 2026 11:45:39 +0000
-Message-ID: <20260910114522.396396-5-th.huth@posteo.eu>
-In-Reply-To: <20260910114522.396396-1-th.huth@posteo.eu>
-References: <20260910114522.396396-1-th.huth@posteo.eu>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x4dFf-0006R2-5J
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:47:35 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x4dFd-0000yR-Ky
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:47:34 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49d05d51553so44505035e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 04:47:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789040852; x=1789645652; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Cu6kAUUrVGAjGbqzCbom5/mk/6/e4zh3ikX0viPTpQM=;
+ b=UME0mZeHESX+odzoJBgjf4M/jnt7Bz6BWV/sb4E1fw1JoOmvWFtWRL7N7jgxzconub
+ eOqSThVw/DToONCptYGeOCqmC/eEpdprxWF0LHV0Q9DYoFVoxxRIMex2JGIQs06+FuRU
+ rxFfE1VNJj3Co8kW6jhEvy3d8BgTucXlW1aSC/MUTwq3772ycXn92c1GRGyNq0i0K0kv
+ HYWmoBNmfnUnRJgoYb7ytW4dZofzwobuFMUiUzSOECYn10BRywPn/SnZxqgZ9DXiDVI4
+ fRj8UqND7wy+QyjoEsNdXnbaLuuNXf6lgrtprTY1GpbHz89VAl9YHKod0rElnPo944Hn
+ 4DUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789040852; x=1789645652;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Cu6kAUUrVGAjGbqzCbom5/mk/6/e4zh3ikX0viPTpQM=;
+ b=R4zo9uqZhxlBYnO3io+/hD/QM0pjJmsUPRG4R6n5s94Xz+LV9RGumb8/cLaf0A5xu4
+ Rnt7Joi6DEbQGDLLtySjfFwzug7bNT/ASQXiHqx8iV7MA+BmZ0YKpjV3QECHIZqviXxs
+ ikwYch+yPz+MXYgnIog5H9dw5SC0wKyYZhGwzI5qzRXPbdplwPnUXN4eqA6imJEIKdVD
+ 3d+A8loVY2ZUxkunj2OD8XsiIcnxPN4eW/SJhbU4iqUZ2zFde+X78JafR1qsFB066BpM
+ Uz+4tNvZH+l/xolNa65kCncuAFI7CMztStVh1yzZibM3x0hcbMPjz59iItwdsTm/bhbR
+ thUA==
+X-Gm-Message-State: AFuF++mojSQsw8xS2yx3aTaJfTK32WFjP4+Ud0zRMayD1V4rMgcT9Uep
+ QWjTuP5WgW4JsIix9b8E9d6P1/eZ7Yzen8Co1+TAU0Ihi+OzHadeIzVcl818W5BXvzLrSUf5YCn
+ pljhdyeU=
+X-Gm-Gg: AYBFou0dzS+NeZivEKcg9kB9DRTuFsNdon/Wa4jllxukXEcQiJ0b4QX9xQzzfjF3oFn
+ 6Ng3kon7RX5zKQD4QBMWmrRvKcFRNuGFONq3TZrKl7nQszrUfRl6kjCc0/WFULuOoW2hZDjaQgH
+ MyYqJCesOvDOZEWpko8A98YegWbohjubzRJTMf8rWaEynK0rXy0drBJIjtoeNw3hW2aTbLjyPgR
+ nrsYlGr3PsMcdYSf8Iouic19lH6zyw+sn2semRzI8iI2Ap28IJjJz0zGTHGwnFcgV+e/E4wrhsK
+ 92hY/Absd+QpIrx1Rc2TPknw9uqGstxG6rLV18HPcBOii4L+OH2UYYgi30GWFWb5jyKoOQ+pcAN
+ ASkhcAcR0XkfAChxWsLVl7Y7GIcQxUYMKEdfrqw7H0MPAMR+xaXyzy1v0XcO3UDq5QibUmhXPA/
+ oCyXb2aO1LFCncd8SPZhFcvWPsJN0xFg2aMwg4IqDAsOqTDYTy6VwwEi+wiPjUWRaeBluTW98=
+X-Received: by 2002:a05:600c:4e87:b0:49d:1df8:156d with SMTP id
+ 5b1f17b1804b1-49d1df815bdmr138491775e9.18.1789040851383; 
+ Thu, 10 Sep 2026 04:47:31 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-485885bfdf6sm50692136f8f.34.2026.09.10.04.47.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 04:47:30 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 732645F8F3;
+ Thu, 10 Sep 2026 12:47:29 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] tests/tcg: improve check for working cross compilers
+In-Reply-To: <20260910100120.2076092-1-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 10 Sep 2026 11:01:20
+ +0100")
+References: <20260910100120.2076092-1-berrange@redhat.com>
+User-Agent: mu4e 1.14.4-pre2; emacs 30.1
+Date: Thu, 10 Sep 2026 12:47:29 +0100
+Message-ID: <8733vh9vla.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.eu;
- helo=mout01.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,38 +108,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The cache cleanup script already successfully removes the assets
-that are unused since more than 6 months, but it forgot to delete
-the corresponding timestamp files, too.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260814122643.312129-1-thuth@redhat.com>
-Signed-off-by: Thomas Huth <th.huth@posteo.eu>
----
- scripts/clean_functional_cache.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> When it finds a cross compiler, tests/tcg/meson.build tries
+> building test_cc.c to validate that the compiler works. This
+> includes "stdint.h" as a witness for working C library, however,
+> that is not a good choice as it can be provided by the toolchain
+> alone:
+>
+>   $ rpm -ql gcc-s390x-linux-gnu  | grep /stdint.h
+>   /usr/lib/gcc/s390x-linux-gnu/16/include/stdint.h
 
-diff --git a/scripts/clean_functional_cache.py b/scripts/clean_functional_cache.py
-index c3370ffbb8..1ff98c7606 100755
---- a/scripts/clean_functional_cache.py
-+++ b/scripts/clean_functional_cache.py
-@@ -28,8 +28,9 @@
-     if len(file.name) != 64:
-         continue
- 
-+    stampfile = file.with_suffix(".stamp")
-     try:
--        timestamp = int(file.with_suffix(".stamp").read_text())
-+        timestamp = int(stampfile.read_text())
-     except FileNotFoundError:
-         # Assume it's an old file that was already in the cache before we
-         # added the code for evicting stale assets. Use the release date
-@@ -43,3 +44,4 @@
-         print(f"Removing {cache_dir}/{file.name}.")
-         file.chmod(stat.S_IWRITE)
-         file.unlink()
-+        stampfile.unlink()
--- 
-2.55.0
+Queued to testing/next, thanks.
+<snip>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
