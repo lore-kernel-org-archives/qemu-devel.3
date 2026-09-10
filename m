@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE94C88E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2578DC88E41
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4pb8-0005ev-O4; Thu, 10 Sep 2026 20:58:44 -0400
+	id 1x4pb8-0005ew-Oy; Thu, 10 Sep 2026 20:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0001k4-2x
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPd-0001hj-FR
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:54 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPv-0007Dj-6f
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:01 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-49ccfbe062eso4078515e9.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPa-0007AR-1b
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:37 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49b912e2406so1543325e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083761; x=1789688561; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083752; x=1789688552; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RXDsLBu8joIphrEfoyGx6K2aDXa33qspSB71iT/LF3I=;
- b=ZTR88fsmzTMZfpNE88CWg2WISArM1zyPSC/+F1evVizQv/ZWq6vROqejSMABbCqCYi
- 3hSyKL/s69LSVMkbri40aGyOLHUY1RqIM7kjshhn9us2d6oFhsWWxAlqN2EOs/aPItay
- pLxZgMzzgeyI8bKq+8yef0qZMr7wRfFNL+EyFJ+6SlER/PqtGsPNsPiK6CPuhqwkv5Ht
- BGUlRs9rAnSFrLnLzY/PlQwJjruLqK01PcHTGrIdWR7gg9SU3gszN/xmytaPoJfqCry0
- lKi3Oh+lXDPXlxOWzPBTYp8k2X2LeFYKG1M0aGHsH32w94V9eInJs3Gi9PPn3Mqtz9t7
- 7EnA==
+ bh=sS82x9gVdySNfwG4lS1OAUl+9Ll5vTkrbexOf8WD9EQ=;
+ b=c59TwasX7Vy6TwPrNRcRm3oPW+zN1xC/t6ZHQaATtXqQ7a5heGNyS3k6pcG9zVPlPU
+ BlLSTKr0h8YlYi0zxQsEzzKVSPTqZnZziGUvuLFSJdTrr8O8vQwsKb1uzjCyYJQ7fQVq
+ 6FpFKxJnbjPlUsH8PeRpywksW2YW9sMFoWCuTt+z5duskRsWuxjotaVLKcTVSr3IZo/U
+ kAszx38Yl2LXzPCgrWHlQUb6OLkdLSZpVldsCL6MEoPCf58lSXWSEQCvpBloyLKFv+V4
+ odt53KbQb6/wXpaZHZXHI3CH0oajJ+4ZeITscT57kmr+JVHIEeYIj0gy1iLLAKrZp/+t
+ pzMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083761; x=1789688561;
+ d=1e100.net; s=20251104; t=1789083752; x=1789688552;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RXDsLBu8joIphrEfoyGx6K2aDXa33qspSB71iT/LF3I=;
- b=SRIbL3IuQAkVOgtN93cH9VyJz+xTnsa9HsOFYSsf/9UC6fO6Q51Y3f3M/tSGFse8Bc
- EQeroIydVnuEO2UrSv46kORuK/XEDjtosGVuyVnmeoOcyPNtCy53/0/GQJ3UyjXoGN0Z
- s0F5qgsRjZoHN2RI0f51CsCiulhrhiFFzxdsbnIYgXmRhjnzBRLQZt+uNbcyBvn+Qihj
- YsiJiYp3IaNX1C79/s9goPnlU6KZX9WIeqLT6fYtOETo85Sf19cVFyRPTc3NmQTd0xWE
- 7fPfGdGJj1ccp/1CYIns7XOZ1Fn83XvqjLmsfS5HCZLnu0kRq3Dh3L3R321owJhWanmt
- oyvQ==
-X-Gm-Message-State: AFuF++kM9kzeOhuyPMCCSaszLZov2x8HbAxt9S30wKDEI0UVgOFz6QuX
- iW4Vi+F45Ef7kwwq1aiDgyxuysCEZFEP6dOoIXTYLfE8KzYWo27dFh1FhqgilacUvFQ=
-X-Gm-Gg: AYBFou1vEbOJb6aYPFSGG14TqSEGFCoWPS58XH3pvCP5461hXxP2hZ69tKrxswoAiL1
- 8fgjvhmsPhR5iLwZ/Sg6gqXx1EGr/V/3JQtPgXL2G5iI2ZmfsYLvZrSb/s04jXG6w5a/+NFOIWx
- gy6VtztGl1mRYaV1RkMcBherub1+i0sx4ooM3ebLXmOGX2nH1z7PQeNA/Qcy7xwbWQkTfvBiD47
- 9kmc4mUWUoRqpH7F1PJ1RMfpzlYWl1a6BiO5/W14rvNIDqJbjT8oxvOYBZc6shYiPCV4CUC0fKT
- iuRy4vaC7NbNbxAZDSEjkiLD7EyLjEUQP32abjCXvsgPXHUt/gvKGQNP25aHJabQwrKxE+Nh1E4
- 2kbcrTfxB93cMzXZwlpmXg0PrWrsFABWFANe2ezN84X41ph6A6zo4boRoWnzybNF/Ds3pEXNtc2
- AWdsO17qWRej5ylEb/KBnn9UWzjQHHx1QA9/kpqlD65jEWEbVFBlsZhwUAPF5MDKV32DZQ
-X-Received: by 2002:a05:600c:540e:b0:49c:e1b5:b2bf with SMTP id
- 5b1f17b1804b1-49e61645616mr16022175e9.0.1789083761320; 
- Thu, 10 Sep 2026 16:42:41 -0700 (PDT)
+ bh=sS82x9gVdySNfwG4lS1OAUl+9Ll5vTkrbexOf8WD9EQ=;
+ b=ZBzgYH2IbjATjHUXlPYWhLncQALye0O4bnba5MIFxrBBoMO59lK8OAD3ZMl1nzIzZ0
+ XAP7isyQgJMHYglHZvjJm7Jq9tB3Cvgzw+B8HmGz1IWe3veGrh14zYFUP/G2O+VxI9IH
+ nKXRQK+kRWE/hoXVz43QfIrdee37hFHxWDYiRSzn2LW8dPRke0EUGRKOlcLg/DmB5t2x
+ dagosPvYp5EiSgMKUxOwC5cVsZ6bI8ARatmfnSX+W86kz1aJ1iGmhcho3UlsJluOQhoT
+ tMeyPJJCXL4tK3Wrwg6AJuh2zrY+e53xUJeBL4Kt2iQE6Vn9V/vfgo0hrfjMHvSPcEWl
+ 9kWA==
+X-Gm-Message-State: AFuF++k6ZP6Uxly8DTXBvCo1Sp4sfFBk3eHG6tRxlOGvUPEzeOPOwgDt
+ t8fIj9cScsq0EADh99RC6lN9Ri6c7am3dd1QTeeeYAZNB2Eq5QPCafxRPmHOUpLsACpWceT+A2z
+ QdrJY
+X-Gm-Gg: AYBFou3idM7RzZPYZnO8WdceuXyV007FFuhgrY3HZ12Hzrh+dcYdX0/JjnrgTJa0AsI
+ AORZ4h7glOryOGLplKub1oNCetU+z4K9HZSJ9ehHcgsarFZWqC1cq3pISR3gPBSCY5xANkL4OK1
+ PUGuDFS3PeD/VdhH7Z9TPcLBG5E4qTKEiNFgolrkITe3F9DVFE02M7vBkSDeqLpDO0/GCuIxqLY
+ hXX3zz0zXGEXLXWllQAWQuphO6BaXPjueq53gxzcKlSV7ul1VClMENW/G6R9xFRJ066cRlob63f
+ 7PTR5uCIEtFdWl2NEoAbXQvBiCuT5lwPJcz9S6XxOBKHUGIhdi/soKGJJZmCjyI8htZUYfoYnJM
+ sg6/rasUjBIOL4e2D8vWG9HLf+pec6GDtyc83W7G+tTdB0If3KKe2EMTIVzDxMy1A0o6L5RQwH9
+ WU05bL0quejeyDtWw4hBr9WQ3sljhJk+/hc7fg9wlEmQ0p2fV92g5zo/wxEJaRlHSzAvTg
+X-Received: by 2002:a05:600c:4f53:b0:49e:620b:918c with SMTP id
+ 5b1f17b1804b1-49e620b9490mr8643315e9.5.1789083752401; 
+ Thu, 10 Sep 2026 16:42:32 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.39
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:40 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:32 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 13/29] parallels: Move host clusters allocation to a separate
- function
-Date: Fri, 11 Sep 2026 01:42:06 +0200
-Message-ID: <20260910234222.3039975-14-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 07/29] iotests: cover the Parallels format extension parser
+Date: Fri, 11 Sep 2026 01:42:00 +0200
+Message-ID: <20260910234222.3039975-8-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=den@openvz.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,355 +101,269 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-For parallels images extensions we need to allocate host clusters
-without any connection to BAT. Move host clusters allocation code to
-parallels_allocate_host_clusters().
+Extend the existing test with hand crafted extension clusters, built
+in the test rather than shipped as samples. Each corruption case is
+one qemu-img info run which either opens the image or reports why it
+was rejected: extension magic and checksum, feature magic and flags,
+payloads running past the cluster, bitmap granularity, an L1 entry
+which overflows when converted to an offset, and a cluster_size larger
+than the image file. Two more cases load a bitmap spanning two L1
+entries.
 
-This function can be called not only from coroutines so all the
-*_co_* functions were replaced by corresponding wrappers.
-
-Add parallels_mark_unused(), the helper releasing an area in the used
-bitmap, as the new function needs it to undo an allocation.
-
-The size of the request and the size of the area preallocated for it
-live in two variables here, where the code being moved kept them in
-one. The used bitmap has to grow by the latter, as it is what tells
-the allocator how far the image reaches: counting only the requested
-clusters hides the preallocated tail, so the next allocation starts
-over at the end it knows about and preallocates the very same space
-again.
-
-data_end has to grow past an allocation which lands in the space
-preallocated by an earlier one as well, not only past one which appends
-to the image. The field marks the end of the payload for the truncation
-on inactivation, so an allocation which leaves it behind is cut off the
-image the moment the node is closed, and the data written into it is
-lost.
-
-Based on the original work from Alexander Ivanov.
+Termination by a signal is not covered by check=False, so it is caught
+and logged to keep the remaining cases running.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c                             | 145 +++++++++++-------
- block/parallels.h                             |   5 +
- tests/qemu-iotests/tests/parallels-checks     |  34 ++++
- tests/qemu-iotests/tests/parallels-checks.out |  17 ++
- 4 files changed, 145 insertions(+), 56 deletions(-)
+ .../qemu-iotests/tests/parallels-read-bitmap  | 180 +++++++++++++++++-
+ .../tests/parallels-read-bitmap.out           |  33 ++++
+ 2 files changed, 212 insertions(+), 1 deletion(-)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index d537b0bb53..c96bed5ed3 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -206,6 +206,25 @@ int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-     return 0;
- }
+diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-read-bitmap
+index 38ab5fa5b2..5cbef25018 100755
+--- a/tests/qemu-iotests/tests/parallels-read-bitmap
++++ b/tests/qemu-iotests/tests/parallels-read-bitmap
+@@ -18,14 +18,22 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
  
-+int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
-+                          uint32_t bitmap_size, int64_t off, uint32_t count)
-+{
-+    BDRVParallelsState *s = bs->opaque;
-+    uint32_t cluster_index = host_cluster_index(s, off);
-+    uint64_t cluster_end = (uint64_t)cluster_index + count;
-+    unsigned long next_unused;
++import hashlib
++import struct
++import uuid
 +
-+    if (cluster_end > bitmap_size) {
-+        return -E2BIG;
-+    }
-+    next_unused = find_next_zero_bit(bitmap, cluster_end, cluster_index);
-+    if (next_unused < cluster_end) {
-+        return -EINVAL;
-+    }
-+    bitmap_clear(bitmap, cluster_index, count);
-+    return 0;
-+}
++from qemu.utils import VerboseProcessError
 +
- /*
-  * Collect used bitmap. The image can contain errors, we should fill the
-  * bitmap anyway, as much as we can. This information will be used for
-@@ -260,42 +279,21 @@ static void parallels_free_used_bitmap(BlockDriverState *bs)
-     s->used_bmap = NULL;
- }
+ import iotests
+-from iotests import qemu_nbd_popen, qemu_img_map, log, file_path
++from iotests import qemu_nbd_popen, qemu_img, qemu_img_map, log, file_path
  
--static int64_t coroutine_fn GRAPH_RDLOCK
--allocate_clusters(BlockDriverState *bs, int64_t sector_num,
--                  int nb_sectors, int *pnum)
-+int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
-+                                                      int64_t *clusters)
- {
--    int ret = 0;
-     BDRVParallelsState *s = bs->opaque;
--    int64_t i, pos, idx, to_allocate, first_free, host_off;
--
--    pos = block_status(s, sector_num, nb_sectors, pnum);
--    if (pos > 0) {
--        return pos;
--    }
--
--    idx = sector_num / s->tracks;
--    to_allocate = DIV_ROUND_UP(sector_num + *pnum, s->tracks) - idx;
--
--    /*
--     * This function is called only by parallels_co_writev(), which will never
--     * pass a sector_num at or beyond the end of the image (because the block
--     * layer never passes such a sector_num to that function). Therefore, idx
--     * is always below s->bat_size.
--     * block_status() will limit *pnum so that sector_num + *pnum will not
--     * exceed the image end. Therefore, idx + to_allocate cannot exceed
--     * s->bat_size.
--     * Note that s->bat_size is an unsigned int, therefore idx + to_allocate
--     * will always fit into a uint32_t.
--     */
--    assert(idx < s->bat_size && idx + to_allocate <= s->bat_size);
-+    int64_t first_free, next_used, host_off, prealloc_clusters;
-+    int64_t bytes, prealloc_bytes;
-+    uint32_t new_usedsize;
-+    int ret = 0;
+ iotests.script_initialize(supported_fmts=['parallels'])
  
-     first_free = find_first_zero_bit(s->used_bmap, s->used_bmap_size);
-     if (first_free == s->used_bmap_size) {
--        uint32_t new_usedsize;
--        int64_t bytes = to_allocate * s->cluster_size;
--        bytes += s->prealloc_size * BDRV_SECTOR_SIZE;
--
-         host_off = s->data_end * BDRV_SECTOR_SIZE;
-+        prealloc_clusters = *clusters + s->prealloc_size / s->tracks;
-+        bytes = *clusters * s->cluster_size;
-+        prealloc_bytes = prealloc_clusters * s->cluster_size;
+ nbd_sock = file_path('nbd-sock', base_dir=iotests.sock_dir)
++nbd_sock2 = file_path('nbd-sock2', base_dir=iotests.sock_dir)
+ disk = iotests.file_path('disk')
+ bitmap = 'e4f2eed0-37fe-4539-b50b-85d2e7fd235f'
++MULTI_L1_UUID = '5f2e1c00-0000-4000-8000-0123456789ab'
+ nbd_opts = f'driver=nbd,server.type=unix,server.path={nbd_sock}' \
+         f',x-dirty-bitmap=qemu:dirty-bitmap:{bitmap}'
  
-         /*
-          * We require the expanded size to read back as zero. If the
-@@ -303,33 +301,29 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-          * force the safer-but-slower fallocate.
-          */
-         if (s->prealloc_mode == PRL_PREALLOC_MODE_TRUNCATE) {
--            ret = bdrv_co_truncate(bs->file, host_off + bytes,
--                                   false, PREALLOC_MODE_OFF,
--                                   BDRV_REQ_ZERO_WRITE, NULL);
-+            ret = bdrv_truncate(bs->file, host_off + prealloc_bytes, false,
-+                                PREALLOC_MODE_OFF, BDRV_REQ_ZERO_WRITE, NULL);
-             if (ret == -ENOTSUP) {
-                 s->prealloc_mode = PRL_PREALLOC_MODE_FALLOCATE;
-             }
-         }
-         if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE) {
--            ret = bdrv_co_pwrite_zeroes(bs->file, host_off, bytes, 0);
-+            ret = bdrv_pwrite_zeroes(bs->file, host_off, prealloc_bytes, 0);
-         }
-         if (ret < 0) {
-             return ret;
-         }
- 
--        new_usedsize = s->used_bmap_size + bytes / s->cluster_size;
-+        new_usedsize = s->used_bmap_size + prealloc_bytes / s->cluster_size;
-         s->used_bmap = bitmap_zero_extend(s->used_bmap, s->used_bmap_size,
-                                           new_usedsize);
-         s->used_bmap_size = new_usedsize;
-     } else {
--        int64_t next_used;
-         next_used = find_next_bit(s->used_bmap, s->used_bmap_size, first_free);
- 
-         /* Not enough continuous clusters in the middle, adjust the size */
--        if (next_used - first_free < to_allocate) {
--            to_allocate = next_used - first_free;
--            *pnum = (idx + to_allocate) * s->tracks - sector_num;
--        }
-+        *clusters = MIN(*clusters, next_used - first_free);
-+        bytes = *clusters * s->cluster_size;
- 
-         host_off = s->data_start * BDRV_SECTOR_SIZE;
-         host_off += first_free * s->cluster_size;
-@@ -341,14 +335,63 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-          */
-         if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE &&
-                 host_off < s->data_end * BDRV_SECTOR_SIZE) {
--            ret = bdrv_co_pwrite_zeroes(bs->file, host_off,
--                                        s->cluster_size * to_allocate, 0);
-+            ret = bdrv_pwrite_zeroes(bs->file, host_off, bytes, 0);
-             if (ret < 0) {
-                 return ret;
-             }
-         }
-     }
- 
-+    if (host_off + bytes > s->data_end * BDRV_SECTOR_SIZE) {
-+        s->data_end = (host_off + bytes) / BDRV_SECTOR_SIZE;
-+    }
+@@ -51,3 +59,173 @@ with qemu_nbd_popen('--read-only', f'--socket={nbd_sock}',
+             log(f'{a}-{b-1}')
+         else:
+             log(a)
 +
-+    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
-+                              host_off, *clusters);
-+    if (ret < 0) {
-+        /* Image consistency is broken. Alarm! */
-+        return ret;
-+    }
 +
-+    return host_off;
-+}
++# Hand crafted Format Extension clusters.
 +
-+static int64_t coroutine_fn GRAPH_RDLOCK
-+allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-+                  int nb_sectors, int *pnum)
-+{
-+    int ret = 0;
-+    BDRVParallelsState *s = bs->opaque;
-+    int64_t i, pos, idx, to_allocate, host_off;
++EXT_MAGIC = 0xAB234CEF23DCEA87
++BITMAP_MAGIC = 0x20385FAE252CB34A
 +
-+    pos = block_status(s, sector_num, nb_sectors, pnum);
-+    if (pos > 0) {
-+        return pos;
-+    }
++CLUSTER = 512           # one sector per track
++SECTORS = 8             # 4 KiB disk
++EXT_SECTOR = 1          # the extension cluster follows the header
++EH_SIZE = 24            # ParallelsFormatExtensionHeader
++FH_SIZE = 24            # ParallelsFeatureHeader
++BF_SIZE = 32            # ParallelsDirtyBitmapFeature
 +
-+    idx = sector_num / s->tracks;
-+    to_allocate = DIV_ROUND_UP(sector_num + *pnum, s->tracks) - idx;
++crafted = file_path('crafted')
 +
-+    /*
-+     * This function is called only by parallels_co_writev(), which will never
-+     * pass a sector_num at or beyond the end of the image (because the block
-+     * layer never passes such a sector_num to that function). Therefore, idx
-+     * is always below s->bat_size.
-+     * block_status() will limit *pnum so that sector_num + *pnum will not
-+     * exceed the image end. Therefore, idx + to_allocate cannot exceed
-+     * s->bat_size.
-+     * Note that s->bat_size is an unsigned int, therefore idx + to_allocate
-+     * will always fit into a uint32_t.
-+     */
-+    assert(idx < s->bat_size && idx + to_allocate <= s->bat_size);
 +
-+    host_off = parallels_allocate_host_clusters(bs, &to_allocate);
-+    if (host_off < 0) {
-+        return host_off;
-+    }
++def feature(magic, data_size, flags=0):
++    return struct.pack('<QQII', magic, flags, data_size, 0)
 +
-+    *pnum = MIN(*pnum, (idx + to_allocate) * s->tracks - sector_num);
 +
-     /*
-      * Try to read from backing to fill empty clusters
-      * FIXME: 1. previous write_zeroes may be redundant
-@@ -365,33 +408,23 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
- 
-         ret = bdrv_co_pread(bs->backing, idx * s->tracks * BDRV_SECTOR_SIZE,
-                             nb_cow_bytes, buf, 0);
--        if (ret < 0) {
--            qemu_vfree(buf);
--            return ret;
-+        if (ret == 0) {
-+            ret = bdrv_co_pwrite(bs->file, host_off, nb_cow_bytes, buf, 0);
-         }
- 
--        ret = bdrv_co_pwrite(bs->file, s->data_end * BDRV_SECTOR_SIZE,
--                             nb_cow_bytes, buf, 0);
-         qemu_vfree(buf);
-         if (ret < 0) {
-+            parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
-+                                  host_off, to_allocate);
-             return ret;
-         }
-     }
- 
--    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
--                              host_off, to_allocate);
--    if (ret < 0) {
--        /* Image consistency is broken. Alarm! */
--        return ret;
--    }
-     for (i = 0; i < to_allocate; i++) {
-         parallels_set_bat_entry(s, idx + i,
-                 host_off / BDRV_SECTOR_SIZE / s->off_multiplier);
-         host_off += s->cluster_size;
-     }
--    if (host_off > s->data_end * BDRV_SECTOR_SIZE) {
--        s->data_end = host_off / BDRV_SECTOR_SIZE;
--    }
- 
-     return bat2sect(s, idx) + sector_num % s->tracks;
- }
-diff --git a/block/parallels.h b/block/parallels.h
-index 68077416b1..493c89e976 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -92,6 +92,11 @@ typedef struct BDRVParallelsState {
- 
- int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-                         uint32_t bitmap_size, int64_t off, uint32_t count);
-+int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
-+                          uint32_t bitmap_size, int64_t off, uint32_t count);
++def bitmap_feature(l1, granularity=1, nb_sectors=SECTORS, bid=None):
++    """ParallelsDirtyBitmapFeature followed by its L1 table"""
++    bid = uuid.UUID(bid).bytes if bid else uuid.uuid4().bytes
++    return (struct.pack('<Q16sII', nb_sectors, bid, granularity, len(l1))
++            + b''.join(struct.pack('<Q', entry) for entry in l1))
 +
-+int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
-+                                                      int64_t *clusters);
- 
- int GRAPH_RDLOCK
- parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index d2a08049d9..99af4c5f52 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -301,6 +301,40 @@ echo "$(peek_file_le "$TEST_IMG" $VICTIM_OFFSET 4)"
- echo "== data reads back correctly =="
- { $QEMU_IO -r -c "read -P 0x88 0 $SMALL_CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
- 
-+# Clear image
-+_make_test_img $((64 * 1024 * 1024))
 +
-+echo "== TEST REUSE OF PREALLOCATED SPACE =="
++def extension(body, magic=EXT_MAGIC, checksum=True):
++    body = body.ljust(CLUSTER - EH_SIZE, b'\0')
++    csum = hashlib.md5(body).digest() if checksum else bytes(16)
++    return struct.pack('<Q16s', magic, csum) + body
 +
-+echo "== write 16 clusters, preallocating 16 of them at a time =="
-+opts=(--image-opts "driver=$IMGFMT,file.filename=$TEST_IMG,prealloc-size=16M")
-+for i in $(seq 0 15); do
-+    opts+=(-c "write -P 0x11 $(($i * $CLUSTER_SIZE)) $CLUSTER_SIZE")
-+done
-+# Die before close(), which would truncate the preallocated tail away
-+opts+=(-c "sigraise $(kill -l KILL)")
-+orig_io_options=$QEMU_IO_OPTIONS
-+QEMU_IO_OPTIONS=$QEMU_IO_OPTIONS_NO_FMT
-+echo "clusters written: `$QEMU_IO "${opts[@]}" 2>&1 | grep -c '^wrote'`"
-+QEMU_IO_OPTIONS=$orig_io_options
 +
-+echo "== the space preallocated first must have been handed out since =="
-+file_size=`stat --printf="%s" "$TEST_IMG"`
-+echo "clusters behind the header: $(($file_size / $CLUSTER_SIZE - 1))"
++def parallels_header(tracks, bat_entries, nb_sectors, ext_sector):
++    return struct.pack('<16sIIIIIQIIIQ', b'WithouFreSpacExt', 2, 16, 0,
++                       tracks, bat_entries, nb_sectors, 0, 1, 0, ext_sector)
 +
-+# Clear image
-+_make_test_img $SIZE
 +
-+echo "== the second cluster comes from the space preallocated for the first =="
-+{ $QEMU_IO -c "write -P 0x11 0 $CLUSTER_SIZE" \
-+           -c "write -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+           "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++def write_sparse_image(body, tracks, nb_sectors, bat_entries, ext_sector):
++    """Image whose extension cluster is the given body, zero padded."""
++    cluster_size = tracks * 512
++    md5 = hashlib.md5()
++    md5.update(body)
++    md5.update(bytes(cluster_size - EH_SIZE - len(body)))
 +
-+echo "== both of them survive the close =="
-+{ $QEMU_IO -r -c "read -P 0x11 0 $CLUSTER_SIZE" \
-+              -c "read -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+              "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++    with open(crafted, 'wb') as f:
++        f.write(parallels_header(tracks, bat_entries, nb_sectors, ext_sector))
++        f.write(bytes(ext_sector * 512 - 64))            # BAT, unallocated
++        f.write(struct.pack('<Q16s', EXT_MAGIC, md5.digest()) + body)
++        f.truncate(ext_sector * 512 + cluster_size)      # sparse zero tail
 +
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index c33f3852a8..51eb3f1ef1 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -182,4 +182,21 @@ wrote 512/512 bytes at offset 0
- == data reads back correctly ==
- read 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
-+== TEST REUSE OF PREALLOCATED SPACE ==
-+== write 16 clusters, preallocating 16 of them at a time ==
-+clusters written: 16
-+== the space preallocated first must have been handed out since ==
-+clusters behind the header: 17
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== the second cluster comes from the space preallocated for the first ==
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== both of them survive the close ==
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- *** done
++
++def report(name):
++    log(f'--- {name}')
++    try:
++        res = qemu_img('info', '-f', iotests.imgfmt, crafted, check=False)
++    except VerboseProcessError as exc:
++        # check=False does not cover termination by a signal
++        log(f'qemu-img died with signal {-exc.returncode}')
++        return
++
++    log('image opened' if res.returncode == 0
++        else iotests.filter_testfiles(res.stdout).strip())
++
++
++def check(name, ext, tracks=1):
++    header = parallels_header(tracks, SECTORS, SECTORS, EXT_SECTOR)
++    with open(crafted, 'wb') as f:
++        f.write(header)
++        f.write(bytes(EXT_SECTOR * 512 - len(header)))   # BAT, unallocated
++        f.write(ext)
++
++    report(name)
++
++
++log('')
++
++# Control case, must keep working.
++good = bitmap_feature([0])
++check('well-formed extension',
++      extension(feature(BITMAP_MAGIC, len(good)) + good + feature(0, 0)))
++
++check('wrong extension magic',
++      extension(feature(0, 0), magic=EXT_MAGIC ^ 1))
++
++check('wrong extension checksum',
++      extension(feature(0, 0), checksum=False))
++
++check('unknown feature', extension(feature(BITMAP_MAGIC ^ 1, 0)))
++
++check('feature flags set', extension(feature(0, 0, flags=1)))
++
++check('feature data_size beyond the cluster',
++      extension(feature(BITMAP_MAGIC, CLUSTER)))
++
++payload = CLUSTER - EH_SIZE - FH_SIZE
++check('feature payload consumes the cluster',
++      extension(feature(BITMAP_MAGIC, payload)
++                + good.ljust(payload, b'\0')))
++
++# bf.size must match the disk size or the compiler elides the OOB loads.
++data1 = CLUSTER - 40 - EH_SIZE - FH_SIZE
++check('second feature payload beyond the cluster',
++      extension(feature(BITMAP_MAGIC, data1) + good.ljust(data1, b'\0')
++                + feature(BITMAP_MAGIC, BF_SIZE + 8)
++                + struct.pack('<Q', SECTORS)))
++
++# Zero, not a power of two, and wrapping when shifted: all three assert.
++for gran in (0, 3, 1 << 23):
++    bf = bitmap_feature([0], granularity=gran)
++    check(f'bitmap granularity {gran}',
++          extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)))
++
++# entry << BDRV_SECTOR_BITS must not wrap into a negative offset.
++bf = bitmap_feature([0xffffffffffffffff])
++check('bitmap L1 entry overflows',
++      extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)))
++
++# Largest cluster_size parallels_open() accepts, about 2 GiB.
++check('cluster_size beyond the file size',
++      extension(feature(0, 0)), tracks=0x7fffffff // 513)
++
++
++def check_big_cluster():
++    """Reaches the serialization coverage overflow, costs about 550 MiB."""
++    tracks = 1 << 19                    # cluster_size = 2^28
++    nb_sectors = 1 << 32                # 2 TiB, needs two L1 entries
++    ext_sector = 256                    # past the BAT
++    l1 = [0, 1]                         # entry 1 deserializes as all ones
++
++    bmap = bitmap_feature(l1, nb_sectors=nb_sectors)
++    body = feature(BITMAP_MAGIC, len(bmap)) + bmap + feature(0, 0)
++
++    write_sparse_image(body, tracks, nb_sectors, nb_sectors // tracks,
++                       ext_sector)
++    report('bitmap serialization coverage overflow')
++
++
++check_big_cluster()
++
++
++def check_multi_l1():
++    """Bitmap spanning two L1 entries with an ordinary 64 KiB cluster."""
++    tracks = 128                        # cluster_size = 64 KiB
++    nb_sectors = 1 << 27                # 64 GiB, needs two L1 entries
++    gran_sectors = 128                  # 64 KiB, as in the sample image
++    bat_entries = nb_sectors // tracks
++    ext_sector = (64 + 4 * bat_entries) // 512 + 8   # past the BAT
++    l1 = [0, 1]                         # first half clean, second all ones
++
++    bmap = bitmap_feature(l1, gran_sectors, nb_sectors, MULTI_L1_UUID)
++    body = feature(BITMAP_MAGIC, len(bmap)) + bmap + feature(0, 0)
++
++    write_sparse_image(body, tracks, nb_sectors, bat_entries, ext_sector)
++
++    log('--- bitmap spanning two L1 entries')
++    opts = f'driver=nbd,server.type=unix,server.path={nbd_sock2}' \
++           f',x-dirty-bitmap=qemu:dirty-bitmap:{MULTI_L1_UUID}'
++    with qemu_nbd_popen('--read-only', f'--socket={nbd_sock2}',
++                        f'--bitmap={MULTI_L1_UUID}', '-f', iotests.imgfmt,
++                        crafted):
++        for chunk in qemu_img_map('--image-opts', opts):
++            if not chunk['data']:
++                first = chunk['start'] >> 30
++                last = (chunk['start'] + chunk['length']) >> 30
++                log(f'dirty {first}-{last} GiB')
++
++
++check_multi_l1()
+diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-read-bitmap.out
+index e8f6bc9e96..3b3f90c8de 100644
+--- a/tests/qemu-iotests/tests/parallels-read-bitmap.out
++++ b/tests/qemu-iotests/tests/parallels-read-bitmap.out
+@@ -4,3 +4,36 @@ dirty clusters (cluster size is 64K):
+ 10-12
+ 30
+ Kill NBD server
++
++--- well-formed extension
++image opened
++--- wrong extension magic
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong parallels Format Extension magic: 0xab234cef23dcea86, expected: 0xab234cef23dcea87
++--- wrong extension checksum
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong checksum in Format Extension header. Format extension is corrupted.
++--- unknown feature
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Unknown feature: 0x20385fae252cb34b
++--- feature flags set
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Flags for extension feature are unsupported
++--- feature data_size beyond the cluster
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Feature data_size exceedes Format Extension cluster
++--- feature payload consumes the cluster
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Can not read feature header, as remaining bytes (0) in Format Extension is less than Feature header size (24)
++--- second feature payload beyond the cluster
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Feature data_size exceedes Format Extension cluster
++--- bitmap granularity 0
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 0, expected a power of two of at least 512 bytes
++--- bitmap granularity 3
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 1536, expected a power of two of at least 512 bytes
++--- bitmap granularity 8388608
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 4294967296, expected a power of two of at least 512 bytes
++--- bitmap L1 entry overflows
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Failed to read bitmap data cluster: Input/output error
++--- cluster_size beyond the file size
++qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid image: Format Extension is outside the image file
++--- bitmap serialization coverage overflow
++image opened
++--- bitmap spanning two L1 entries
++Start NBD server
++dirty 32-64 GiB
++Kill NBD server
 -- 
 2.53.0
 
