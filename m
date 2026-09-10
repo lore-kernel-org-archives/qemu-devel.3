@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052AFC88E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B205C88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4pkn-00053P-EP; Thu, 10 Sep 2026 21:08:42 -0400
+	id 1x4pmK-0005lP-Ei; Thu, 10 Sep 2026 21:10:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPX-0001g1-4i
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:43 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0001kA-4C
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:13 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPU-00078h-TL
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:30 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-499ac87c92bso4412705e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPv-0007GX-6t
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:00 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-482ea739de2so192106f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083747; x=1789688547; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083773; x=1789688573; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=W3Bx8pnT2sDuexNJA7DxABZ4LqKNGDa3976jN1luce0=;
- b=mK7Z1ZYD99A+ad+/VKzVnnmZ9xTLrHlXxJitM42UyJ8dV55kWuxFTh4Q+2mWND9rbK
- 8man9jDCti/zAEHxsi7V3dozSn+Q1YrYp5AqW8N4RWSUm8Ks8yAsy7frV02yYENjv63z
- sNnC+QgPicqC5V0f51UL7TJ6BmBKyqG85aaV6e/elHORQffT6lQSX1NSvmFBkOHRQu5u
- iPAFoQ31ZDwTx2aSlYUh6eKbAABlEpEPUuYgnFKP2ESpAyCbOlWDstdiu7FlMajw65Da
- SpVEXsevlqE+1aISFnX9E/buikIoQ0mCDJRLEH8PjvIl2lSu+A7cQn7iEQ2d8DTRijrk
- DQlQ==
+ bh=9jfZ0sib9Q6CuIrjV7feNJ39M8KHkevHDagQkapzRWc=;
+ b=cUVwSazRTi9UTqONOjXiXqK1cEHTdXcRuCvE319qNJmAiXpm6l4cpyQYpsK6Oc4og/
+ 8yl4PuFDag3lLIybyj+7JtfnC73MOWEnDot0blCHQAQAcumKzNnMMZVvHLkRVZmKQl5W
+ NrR2O8Z4OkYFVrQi077VEp/4S0F8tGVZTWlroePwsRlWFCGgyIIOK4z7VP91fr9FVl1c
+ EsQhCkmslSkTqtJkmS1J1HtY0+dAp7K9uEelXdon0aDxtqUtrqspwIgcPz2hM9Ddk6+F
+ rkUYOOkjFFdbwZzhXSak0UwuOGeTKZrpkarXPdgnojlIh4eNYAAYKNzbSE72xYuBkDNG
+ gpVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083747; x=1789688547;
+ d=1e100.net; s=20251104; t=1789083773; x=1789688573;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=W3Bx8pnT2sDuexNJA7DxABZ4LqKNGDa3976jN1luce0=;
- b=lGMIQQKmzmZ4BYZQuJnuNCDEO5sZK8fc53cGWiTOamji0LllEDxCxv1NA0iPHr3cPg
- 4oHZzSsNmOM/9FNvgAuQpamvv2bM6k6r1sH1e8RthaKi4+k287vzT2Lne1dVu3oi4WYt
- 8zvF/FvHrXoM3ZRxTzZbhJyBehSmtWQJMe1bLuE+L37uN6GWkszQT02FPpEFkhqeveI0
- uHB1doZeQW5xXzXminQSldxcf/PPJ5EahU9HcvoQH2+WgrbETj26iTxe8OvO6mvFQkwd
- biJ7OR57VTpGRe1Rj/yrbNoQI5v80Wfauj+lsz4ShdDpCFjAU49smkQ+zKzGG6c5WO++
- bvsA==
-X-Gm-Message-State: AFuF++nQE2SPDzfAkCE02oAtonvUIw/TYnLn5Jwg/od89Bv1uxXTj6mr
- XWyFiPGr+AOg5H+8zjaBOu7FovLgGZDWIp2jy9au5Gvegrc4fcPz731F8nJFJcuiBbI=
-X-Gm-Gg: AYBFou1jZiZqkFd1h3iKqGIbsEZ2LVZVUccv8/ScQVT3xhwAGtLTHWIpk/Dye9bIt0Q
- C4wDGQSIKL7buzN6dg//iesYF/XYV+kxKUdlzU7eePjHGYk5mMZ6EyB88njMq0exwGpWFhhbAqH
- z1GwpMt3uagimoiXxYxu5C1Ku6IXOiB7oRJ1Cps4+UypaU0r6FbRfJRviI3vyKlSV3De94AlPkF
- yndmwZXlP9tqr8WdfvIrxCL9cO7CunJSKeO3LKLGY4I9pt891xfryAbfc0apDcyk04poxoAteFW
- Vs1X6pXuhxF4ekh33pPwktwYT25PutEt/p0UP2muBYLyrpJMxvziOEfmg8fAh6YUZZIq0O60GBg
- XAZV/RkT7U8JHEnrwc5EBPTQBC3hx+EAByXbis61CM3kwEsQn+MNbMpYXMYmxoEToM0N2F/YZoe
- Tvh3R9l5gplHh421U/ojAQ1wyj8HgT14svagDwQUaaerzeOH4Mj/ZrAphjxLcSwenRUqzs
-X-Received: by 2002:a05:600c:3b90:b0:49d:16df:8521 with SMTP id
- 5b1f17b1804b1-49e619805f1mr14921895e9.4.1789083747197; 
- Thu, 10 Sep 2026 16:42:27 -0700 (PDT)
+ bh=9jfZ0sib9Q6CuIrjV7feNJ39M8KHkevHDagQkapzRWc=;
+ b=gs4WnJUn+pC7rYJBeIBprQ8phvd7UeULmbeblmtm9sXeMo6veAMjqDUCR1K6RuyJ+P
+ yA1N+DBeXZNe6gUNOf4Cyes0e0S/W23+Bkt2xVbQwZ+Ft343bxyATYzGo/mMiZ4TUwzt
+ kv10BLbvx/YDxYeQph+u8q5iDqaNzMmzg778LcHacT4edFfFTwgn6EYipIMl5EDavUqr
+ x/czIjqWzO9AMTvYbV0qE/yTEJBFImcY+aCxttIkj4/wl2Rl0JhInWJBWyJmoQk58kom
+ wCacmkltQFBODLHkR2/WhDJZ9l6vPixXXgVbdQV6TlcmT+d+IZtT9TSDYqtyn/HwPx/k
+ yYSw==
+X-Gm-Message-State: AFuF++mYJ7aT0cURkYPlkQA+9ipLafK+P5b2EOcveAtokRahHpitmWoM
+ 8XvmnyvaVqUzRaQbvkLAQovlvKN688no+Y7UVt8CvxB+yYDpLnH7thZy1sS0o1qB2YskvxszC2O
+ YF+S6
+X-Gm-Gg: AYBFou0zrvjKM2cyxGnIIZjaU2cVYJnPwCZPII943trg7I+pK0OvAV9nuKqeeBTGDrH
+ L2hK33Ju+FYFYcIjBdsAWScVE9ySB7gHm/ronR1im8hbCkq8rR5Ul+UpdfmeDaeP3BANWFQhCg/
+ 4n4hS/7qT9JqWUMFnUmHguYp4JrfzpEAA2KdBaKuPFcTGQ8yjZBhghPqAcr3fNEJ+aLr5vEKu65
+ 6VGJByH0Q9DtWUYTYw3ErFuTMXpLGq8b+zhnqijoBjF3HKiqsLBwY+lwMzjDnf8NW9sfIcaqEMj
+ AVfTCfwjBOmOdvXef1XfFVT4CfZkPJtbRVDCMfXqoN0a4k2tuBl7ImCREuqrhqgRvDjWNptkXpN
+ 0M5SPw+ryevtpX2lyJOu8DKIsJsARmjdh+FPivENenZemOHcCCOgIdDk12wj/uKD8J+oc/joruu
+ 9eNRSd9ykE8u8XsW8VjnJBRqKxO5GHEBt6W72zeo7YxI45naGPA7i3Va/fNW6DEPi55h3bmdnRW
+ zXoc/Q=
+X-Received: by 2002:a05:600c:1385:b0:49c:fc6e:a3d5 with SMTP id
+ 5b1f17b1804b1-49e619bfebcmr12244635e9.20.1789083773299; 
+ Thu, 10 Sep 2026 16:42:53 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.26
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:26 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:52 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 02/29] parallels: validate dirty bitmap granularity
-Date: Fri, 11 Sep 2026 01:41:55 +0200
-Message-ID: <20260910234222.3039975-3-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 22/29] iotests: run the persistent dirty bitmap test on
+ parallels
+Date: Fri, 11 Sep 2026 01:42:15 +0200
+Message-ID: <20260910234222.3039975-23-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,80 +103,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-bf.granularity comes from the image and is passed to
-bdrv_create_dirty_bitmap(), which asserts on it. An otherwise valid
-image thus aborts qemu-img for a granularity of zero or one which is
-not a power of two. The shift by BDRV_SECTOR_BITS is done on a
-uint32_t as well, so 1 << 23 sectors and above wrap to zero and hit
-the same assertion.
+parallels stores persistent dirty bitmaps now, so test 165 applies to it
+as well. The bitmap name is the only format specific bit: parallels
+keeps it as the UUID identifying the bitmap in the image, so a name like
+'bitmap0' is rejected on store.
 
-Compute the granularity in 64 bits and reject what
-bdrv_create_dirty_bitmap() cannot accept.
+test_reopen_rw is skipped, as parallels has no bdrv_reopen_prepare() and
+blockdev-reopen fails with "does not support reopening files". Skipped
+cases do not show up in the reference output, so 165.out stays as it is.
 
-Fixes: baefd977002e ("parallels: support bitmap extension for read-only mode")
+test_persistent covers what the series adds: it dirties the bitmap,
+records its hash, restarts the VM twice and compares the hash again,
+which passes only if the bitmap survives both the store on inactivation
+and the load on open.
+
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels-ext.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ tests/qemu-iotests/165 | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index baee86a159..830ac78a11 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -31,6 +31,7 @@
- #include "parallels.h"
- #include "crypto/hash.h"
- #include "qemu/bswap.h"
-+#include "qemu/host-utils.h"
- #include "qemu/uuid.h"
- #include "qemu/memalign.h"
+diff --git a/tests/qemu-iotests/165 b/tests/qemu-iotests/165
+index 8fc79daae1..13b784fcc6 100755
+--- a/tests/qemu-iotests/165
++++ b/tests/qemu-iotests/165
+@@ -27,6 +27,12 @@ from iotests import qemu_img
+ disk = os.path.join(iotests.test_dir, 'disk')
+ disk_size = 0x40000000 # 1G
  
-@@ -122,7 +123,7 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
-     BdrvDirtyBitmap *bitmap;
-     QemuUUID uuid;
-     char uuidstr[UUID_STR_LEN];
--    uint64_t bm_size, tab_size;
-+    uint64_t bm_size, tab_size, granularity;
-     int i;
- 
-     if (data_size < sizeof(bf)) {
-@@ -133,7 +134,7 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
-     }
-     memcpy(&bf, data, sizeof(bf));
-     bf.size = le64_to_cpu(bf.size);
--    bf.granularity = le32_to_cpu(bf.granularity) << BDRV_SECTOR_BITS;
-+    bf.granularity = le32_to_cpu(bf.granularity);
-     bf.l1_size = le32_to_cpu(bf.l1_size);
-     data += sizeof(bf);
-     data_size -= sizeof(bf);
-@@ -144,6 +145,16 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
-         return NULL;
-     }
- 
-+    /* bdrv_create_dirty_bitmap() asserts on an unusable granularity */
-+    granularity = (uint64_t)bf.granularity << BDRV_SECTOR_BITS;
-+    if (granularity < BDRV_SECTOR_SIZE || granularity > UINT32_MAX ||
-+        !is_power_of_2(granularity)) {
-+        error_setg(errp, "Invalid bitmap granularity %" PRIu64 ", expected a "
-+                   "power of two of at least %" PRIu64 " bytes", granularity,
-+                   (uint64_t)BDRV_SECTOR_SIZE);
-+        return NULL;
-+    }
++# parallels stores a bitmap name as the UUID identifying it in the image
++if iotests.imgfmt == 'parallels':
++    bitmap_name = 'b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45'
++else:
++    bitmap_name = 'bitmap0'
 +
-     if (bf.l1_size * sizeof(uint64_t) > data_size) {
-         error_setg(errp, "Bitmaps feature corrupted: l1 table exceeds "
-                    "extension data_size");
-@@ -152,7 +163,7 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
+ # regions for qemu_io: (start, count) in bytes
+ regions1 = ((0x0fff00, 0x10000),
+             (0x200000, 0x100000))
+@@ -50,12 +56,12 @@ class TestPersistentDirtyBitmap(iotests.QMPTestCase):
  
-     memcpy(&uuid, bf.id, sizeof(uuid));
-     qemu_uuid_unparse(&uuid, uuidstr);
--    bitmap = bdrv_create_dirty_bitmap(bs, bf.granularity, uuidstr, errp);
-+    bitmap = bdrv_create_dirty_bitmap(bs, granularity, uuidstr, errp);
-     if (!bitmap) {
-         return NULL;
-     }
+     def getSha256(self):
+         result = self.vm.qmp('x-debug-block-dirty-bitmap-sha256',
+-                             node='drive0', name='bitmap0')
++                             node='drive0', name=bitmap_name)
+         return result['return']['sha256']
+ 
+     def checkBitmap(self, sha256):
+         result = self.vm.qmp('x-debug-block-dirty-bitmap-sha256',
+-                             node='drive0', name='bitmap0')
++                             node='drive0', name=bitmap_name)
+         self.assert_qmp(result, 'return/sha256', sha256);
+ 
+     def writeRegions(self, regions):
+@@ -65,7 +71,7 @@ class TestPersistentDirtyBitmap(iotests.QMPTestCase):
+ 
+     def qmpAddBitmap(self):
+         self.vm.qmp('block-dirty-bitmap-add', node='drive0',
+-                    name='bitmap0', persistent=True)
++                    name=bitmap_name, persistent=True)
+ 
+     def test_persistent(self):
+         self.vm = self.mkVm()
+@@ -100,6 +106,8 @@ class TestPersistentDirtyBitmap(iotests.QMPTestCase):
+ 
+         self.vm.shutdown()
+ 
++    # parallels has no bdrv_reopen_prepare() yet
++    @iotests.skip_for_formats(('parallels',))
+     def test_reopen_rw(self):
+         self.vm = self.mkVm()
+         self.vm.launch()
+@@ -115,7 +123,7 @@ class TestPersistentDirtyBitmap(iotests.QMPTestCase):
+         assert sha256_1 != sha256_2 # Otherwise, it's not very interesting.
+ 
+         self.vm.cmd('block-dirty-bitmap-clear', node='drive0',
+-                    name='bitmap0')
++                    name=bitmap_name)
+ 
+         # Start with regions1
+ 
+@@ -152,7 +160,7 @@ class TestPersistentDirtyBitmap(iotests.QMPTestCase):
+ 
+ 
+ if __name__ == '__main__':
+-    iotests.main(supported_fmts=['qcow2'],
++    iotests.main(supported_fmts=['qcow2', 'parallels'],
+                  supported_protocols=['file'],
+                  unsupported_imgopts=['compat'],
+                  require_hmp=True)
 -- 
 2.53.0
 
