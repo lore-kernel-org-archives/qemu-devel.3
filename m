@@ -4,109 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF36C88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3721C88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ot5-0001RI-OL; Thu, 10 Sep 2026 20:13:09 -0400
+	id 1x4p87-0006tv-Sr; Thu, 10 Sep 2026 20:28:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4ljt-0001gR-Mf
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:51:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4ljn-0006RD-P8
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:51:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789073471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4mys-0001pl-O8
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 18:11:22 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4myi-0003qq-Jm
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 18:10:50 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 15AA121CC0;
+ Thu, 10 Sep 2026 22:10:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789078233; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4QZ/6VEOC+lNsRJAeXv7eh5vh8Fz3+qeKO3RjOtexo4=;
- b=cz7YQzQh/AKYEUrhTwxeRllVeWt9vqUc+AbdiZ1UxqUSUET1lX8LW+/xzPLvnUzxpopBhf
- 5oCQXrczyQ87fmi+E+kM7GN/qHgpILlTXHn2sp8GjEMTSOHUE5GXx+MsLLNPBAe8bD9z22
- Bh/9BW73OaoNC3oC3Adm5gPHzuck2Ps=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-K_7fcvUQNrCoVx0nOmM74w-1; Thu, 10 Sep 2026 16:12:58 -0400
-X-MC-Unique: K_7fcvUQNrCoVx0nOmM74w-1
-X-Mimecast-MFC-AGG-ID: K_7fcvUQNrCoVx0nOmM74w_1789071177
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48437090e74so60883f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071177; x=1789675977; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4QZ/6VEOC+lNsRJAeXv7eh5vh8Fz3+qeKO3RjOtexo4=;
- b=mgX2vOFuYcnc/O1I29dUYTSx8fO317lq1+dQ9ReijE+omc/v02TKSNTWIDSRhlfebh
- iNypOFyBz4NTpXSYhKlD6Ca4UnZ/T2EW4/jDiQ1kPtJxCt3ARSLB84HEDYjYU7rxE5kD
- fsp+xbB1o2iTAQ7Ok2Q9z8m7bucm7u0HqqZBjUxrRLUfNdYspAiWg/FedLHcId2bIHaI
- Mt423EvKVhQSzzj9IEL2HwtzUESpYvgOkpxlQtzsAGxFzRDmzcpCisU8eQ+JhL36pq5X
- 1rq6bqAz/SoCWR+m5TDsKQHsvOw62SeN4ngO1jxr8NOXxUV35GnGBAnX6xjJiqlNW09Y
- X3Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071177; x=1789675977;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=4QZ/6VEOC+lNsRJAeXv7eh5vh8Fz3+qeKO3RjOtexo4=;
- b=Bp9CBD+NVumF7IL64TLqVS+oLJoFCtn0nabRWltXSxFfrdWza/Q5S99HqWSkP+VdqX
- BSBikrjo6U2wF37O9I2bZRFrkXoNDDv30YbE61EZfll+oCkLyos6JfavmBii3aidPydx
- P2m/Is+DnIvvvjtMK1aI/zS1Es+YlmhWKPEchph8joFqInB8pj3nyLCvLNGDFtU3Qkzs
- Ay1yAR+BdkbiQrdSe8uNRqPAE4j+gA5BPKVsusvauF3mnNgU3bqpYZG35k8V9FZryca9
- 1mWgZgVEvxABeL52VL+3v0K+IlrPmmo4bEs4rh/NCCzTMRCPF1XZtcR15yA2D4L4PJ/G
- m9nA==
-X-Gm-Message-State: AFuF++lQNttzu23Rmoi+uSqpYvDZKbGxaZ0Ylr1wzI/vocoPPRMas9Ig
- 8rvl5rX3Ew8oOyw8PwFAAVZ3Rw00Q0C+wr8/DUeZfbaeuSRn8svWiKftYEOiVmM5l1kpFfdzH6W
- kdhhtJIVyFhUFcA+VbBv2hfAlcEPl8IWBkfQWUC0/9E6J5V9Z6eXM7AhN2/QOSPtJ09qvnNLZCI
- LnLQ40M88eyaGMJNWlbDjvV+yjUHQJ1q5HDw==
-X-Gm-Gg: AYBFou0eLGfpBPMTyZofFq+vifjiPBHgBZJKi87azWO87s+4QMduEL77SMIfuYnJIs8
- VLh8kyLRmpYOSJXbfOYcXFa5B6BuiqflDQQQJiKkPXPBhDsR3TYJxC0orHwIoJXNe4Rx0B8vaNb
- 8KO/VPe506mj4E9eMAOdp8dxc+w/9d5UZY40faHfFTLBiYQGTfH2nou/nZEb22NCXq0bOIWUloy
- 5hEXqAuAsVW/Am0p+AQSslXenrfQD5QcS/TGYnRLWuDaM4NcKHzON2IPZO4YEwJ6R6QpKA9cT+2
- VPMyMmmehKcvYjD6rIQYOl3fIeVBTotzRFgBi4QiLuAUybSEw0rS8hnFTbW5HrUvDCcOx7g9gWl
- 9vkqtt0IA8gKCn8yp2bt8pPE=
-X-Received: by 2002:a5d:5f4f:0:b0:484:4769:18a4 with SMTP id
- ffacd0b85a97d-486eb2fa4fcmr675569f8f.14.1789071176874; 
- Thu, 10 Sep 2026 13:12:56 -0700 (PDT)
-X-Received: by 2002:a5d:5f4f:0:b0:484:4769:18a4 with SMTP id
- ffacd0b85a97d-486eb2fa4fcmr675523f8f.14.1789071176310; 
- Thu, 10 Sep 2026 13:12:56 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb357288sm789158f8f.29.2026.09.10.13.12.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:12:55 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:12:54 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- admin@fluentlogic.org, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 35/90] vhost-user-gpu: validate command buffer size in submit_3d
-Message-ID: <67f10fb88d3c75da3ba7fa5a37f7d6bcfcf3ce9e.1789071042.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+ bh=SYbMBbn39ctniS3W7Q0rcVwcJZQ9EvuTTKtfxXTjs38=;
+ b=EEJC74pBC6DrW/lScX/iWI8c4U3Jbt2vXeBj6guNfcN75ZRr4z66aDQ4ZPn9FOLf32+8zI
+ pSh35LtYWHNk+rfcBcYn9dexN4E2JO/LfNCjrUz0yFhigeYxjLEqyd21fdDzh8c3U4iDce
+ m+Htzf/iijohyRi4e2DQp4XWmNpbE60=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789078233;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=SYbMBbn39ctniS3W7Q0rcVwcJZQ9EvuTTKtfxXTjs38=;
+ b=cRuyEbVD70niz8BmsVzkzUuTgLragp7RTj4LAI8z3aZvkjtBh/UC83n0sQcGLGJGBItyBq
+ kT6lVqtW1iAMwNDA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789078229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=SYbMBbn39ctniS3W7Q0rcVwcJZQ9EvuTTKtfxXTjs38=;
+ b=0W3PaZCADo88YkquP1DCy2vWugGziFpV7bJ9OM/v+R98TWWauRIeThzyOBliKNjHmkK4DC
+ Dr4Gq1pqMXJQ6nHBuZGE46dgF/zh+Lxk5g9tXp7GD/Bxny2K+FbYB6mnfvCAberLXGHsgE
+ W3h/XkxfKi0TCj+rdkEN1bc933X8KCM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789078229;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=SYbMBbn39ctniS3W7Q0rcVwcJZQ9EvuTTKtfxXTjs38=;
+ b=rbRPVnh4M4pNMYEdR0k/uPEwSo90k8SKj64SsYpnTxNOLKfePp09SNRubG+m0zaMYSrwoi
+ nno2NwPJlsrjSpDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 677561326D;
+ Thu, 10 Sep 2026 22:10:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id T6ZCDtQqo2pyIgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 22:10:28 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, "Dr . David Alan
+ Gilbert" <dave@treblig.org>, Laurent Vivier <lvivier@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 13/18] migration: Use keyval input visitor in HMP set
+ command
+In-Reply-To: <87qzj1tcpl.fsf@suse.de>
+References: <20260909214509.237309-1-farosas@suse.de>
+ <20260909214509.237309-14-farosas@suse.de> <87qzj1e563.fsf@pond.sub.org>
+ <87qzj1tcpl.fsf@suse.de>
+Date: Thu, 10 Sep 2026 19:10:22 -0300
+Message-ID: <87h5jwu59t.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,62 +118,447 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fabiano Rosas <farosas@suse.de> writes:
 
-virgl_cmd_submit_3d() passes the guest-controlled cs.size directly to
-g_malloc() without any bounds check. A malicious guest can set this
-field to an arbitrarily large value (up to 4GB), causing an OOM abort
-that crashes the vhost-user-gpu daemon.
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>>> Change the hmp_migrate_set_parameter command to use a keyval input
+>>> visitor.
+>>>
+>>> Currently a string visitor is used and due to limitations of that
+>>> particular visitor's implementation it's necessary to consult the QAPI
+>>> type enum (MigrationParameter_lookup) and call each visit_type_*
+>>> function individually. Which makes using a visitor pointless.
+>>
+>> Also, the less the string visitors are used, the happier I am.
+>>
+>>> Since there are other visitors implemented properly and generated code
+>>> to iterate the QAPI object, prefer using one of those. The keyval
+>>> input visitor is adequate because HMP provides basically one key and
+>>> one value for each migrate_set_parameter command.
+>>>
+>>> To switch from string_input_visitor to keyval_input_visitor simply put
+>>> the parameter name and value into a dict and invoke
+>>> visit_type_MigrationParameters().
+>>
+>> This works for scalar types: the value is a QString, and the QObject
+>> keyval input visitor automatically converts to the C type the visitor
+>> expects.  It doesn't work for non-scalar types; see cpr-exec-command
+>> below.
+>>
+>>> Note that it's not necessary to go through any of the keyval_* code
+>>> because due to the nature of HMP, there's no parsing to do (no '=', no
+>>> ',', etc).
+>>
+>> migrate_set_parameter syntax isn't keyval, only val is, i.e. its value
+>> argument is in keyval value syntax (more or less).
+>>
+>> "More or less" is my hedge against differences between the string input
+>> visitor and the QObject keyval input visitor.  Did you check?
+>>
+>
+> They ultimately use the same functions to do the conversion
+> (qemu_strtou64, qemu_strtod_finite, etc). The differences are in
+> slightly different wording of error messages and the fact that the
+> string input visitor has a different message for -ERANGE while the
+> qobject input visitor has a TODO for that case.
+>
+> I think those differences are of no consequence. The error messages that
+> we really care about are the ones resulting from the migration code
+> validation (because they're informative to the user). The API level
+> messages are too generic anyway.
+>
+>> Aside: we could create migrate_set_parameters with keyval syntax if we
+>> cared.
+>>
+>>> With this the migrate_set_parameters HMP commands will be
+>>> automatically updated anytime a new migration parameter is added.
+>>>
+>>> One parameter, "cpr-exec-command", takes the strList type which needs
+>>> to be built manually. This moves to a "legacy" suffixed function.
+>>
+>> When visit_type_MigrationParameters() visits "cpr-exec-command", it
+>> calls visit_type_strList().  With the QObject keyval input visitor, this
+>> expects a QList, not a QString.
+>>
+>> Thus, hmp_migrate_set_parameter() needs to parse the value argument into
+>> a list at least.  That's why it needs to be a special case.
+>>
+>
+> I'm having some difficulty understanding why isn't that the job of the
+> visit function.
+>
+> I think what you're saying is that we can convert QAPI's strList into
+> QObject's QList of QString, but cannot convert the HMP string directly
+> into QList even though we know that string represents a strList. I feel
+> like there's code missing somewhere...
+>
+> ... although it wouldn't help with cpr-exec-command because of the
+> "shell parsing" semantics. But that's another issue.
+>
+>> It parses it with g_shell_parse_argv().  GLib docs "specify" this to
+>> parse "a command line [...] in much the same way the shell would, but
+>> without many of the expansions the shell would perform (variable
+>> expansion, globs, operators, filename expansion, etc. are not
+>> supported)."  Ugh!  But I digress.
+>>
+>
+> One side-effect of having code that handles parameters genericly is that
+> there is less room for inventing custom parsing when new parameters are
+> introduced.
+>
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>  migration/migration-hmp-cmds.c     | 195 +++++++----------------------
+>>>  tests/qtest/migration/misc-tests.c |   2 +-
+>>>  2 files changed, 49 insertions(+), 148 deletions(-)
+>>>
+>>> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>>> index 5d754414c4..0d93d38b05 100644
+>>> --- a/migration/migration-hmp-cmds.c
+>>> +++ b/migration/migration-hmp-cmds.c
+>>> @@ -25,7 +25,9 @@
+>>>  #include "qapi/error.h"
+>>>  #include "qapi/qapi-commands-migration.h"
+>>>  #include "qapi/qapi-visit-migration.h"
+>>> +#include "qapi/qobject-input-visitor.h"
+>>>  #include "qobject/qdict.h"
+>>> +#include "qobject/qstring.h"
+>>>  #include "qapi/string-input-visitor.h"
+>>>  #include "qapi/string-output-visitor.h"
+>>>  #include "qemu/cutils.h"
+>>> @@ -600,154 +602,14 @@ end:
+>>>      hmp_handle_error(hmp, err);
+>>>  }
+>>>  
+>>> -void hmp_migrate_set_parameter(MonitorHMP *hmp, const QDict *qdict)
+>>> +static void hmp_migrate_set_parameter_legacy(MonitorHMP *hmp, const QDict *qdict)
+>>>  {
+>>>      const char *param = qdict_get_str(qdict, "parameter");
+>>>      const char *valuestr = qdict_get_str(qdict, "value");
+>>> -    Visitor *v = string_input_visitor_new(valuestr);
+>>>      MigrationParameters *p = g_new0(MigrationParameters, 1);
+>>> -    uint64_t cache_size;
+>>>      Error *err = NULL;
+>>> -    int val;
+>>>  
+>>> -    val = qapi_enum_parse(&MigrationParameter_lookup, param, -1, &err);
+>>> -    if (val < 0) {
+>>> -        goto cleanup;
+>>> -    }
+>>> -
+>>> -    switch (val) {
+>>> -    case MIGRATION_PARAMETER_THROTTLE_TRIGGER_THRESHOLD:
+>>> -        p->has_throttle_trigger_threshold = true;
+>>> -        visit_type_uint8(v, param, &p->throttle_trigger_threshold, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_CPU_THROTTLE_INITIAL:
+>>> -        p->has_cpu_throttle_initial = true;
+>>> -        visit_type_uint8(v, param, &p->cpu_throttle_initial, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_CPU_THROTTLE_INCREMENT:
+>>> -        p->has_cpu_throttle_increment = true;
+>>> -        visit_type_uint8(v, param, &p->cpu_throttle_increment, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_CPU_THROTTLE_TAILSLOW:
+>>> -        p->has_cpu_throttle_tailslow = true;
+>>> -        visit_type_bool(v, param, &p->cpu_throttle_tailslow, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MAX_CPU_THROTTLE:
+>>> -        p->has_max_cpu_throttle = true;
+>>> -        visit_type_uint8(v, param, &p->max_cpu_throttle, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_TLS_CREDS:
+>>> -        p->tls_creds = g_new0(StrOrNull, 1);
+>>> -        p->tls_creds->type = QTYPE_QSTRING;
+>>> -        visit_type_str(v, param, &p->tls_creds->u.s, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_TLS_HOSTNAME:
+>>> -        p->tls_hostname = g_new0(StrOrNull, 1);
+>>> -        p->tls_hostname->type = QTYPE_QSTRING;
+>>> -        visit_type_str(v, param, &p->tls_hostname->u.s, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_TLS_AUTHZ:
+>>> -        p->tls_authz = g_new0(StrOrNull, 1);
+>>> -        p->tls_authz->type = QTYPE_QSTRING;
+>>> -        visit_type_str(v, param, &p->tls_authz->u.s, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MAX_BANDWIDTH:
+>>> -        p->has_max_bandwidth = true;
+>>> -        visit_type_size(v, param, &p->max_bandwidth, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_AVAIL_SWITCHOVER_BANDWIDTH:
+>>> -        p->has_avail_switchover_bandwidth = true;
+>>> -        visit_type_size(v, param, &p->avail_switchover_bandwidth, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_DOWNTIME_LIMIT:
+>>> -        p->has_downtime_limit = true;
+>>> -        visit_type_size(v, param, &p->downtime_limit, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_X_CHECKPOINT_DELAY:
+>>> -        p->has_x_checkpoint_delay = true;
+>>> -        visit_type_uint32(v, param, &p->x_checkpoint_delay, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MULTIFD_CHANNELS:
+>>> -        p->has_multifd_channels = true;
+>>> -        visit_type_uint8(v, param, &p->multifd_channels, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MULTIFD_COMPRESSION:
+>>> -        p->has_multifd_compression = true;
+>>> -        visit_type_MultiFDCompression(v, param, &p->multifd_compression,
+>>> -                                      &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MULTIFD_ZLIB_LEVEL:
+>>> -        p->has_multifd_zlib_level = true;
+>>> -        visit_type_uint8(v, param, &p->multifd_zlib_level, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MULTIFD_QATZIP_LEVEL:
+>>> -        p->has_multifd_qatzip_level = true;
+>>> -        visit_type_uint8(v, param, &p->multifd_qatzip_level, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MULTIFD_ZSTD_LEVEL:
+>>> -        p->has_multifd_zstd_level = true;
+>>> -        visit_type_uint8(v, param, &p->multifd_zstd_level, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_ZERO_PAGE_DETECTION:
+>>> -        p->has_zero_page_detection = true;
+>>> -        visit_type_ZeroPageDetection(v, param, &p->zero_page_detection, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_XBZRLE_CACHE_SIZE:
+>>> -        p->has_xbzrle_cache_size = true;
+>>> -        if (!visit_type_size(v, param, &cache_size, &err)) {
+>>> -            break;
+>>> -        }
+>>> -        if (cache_size > INT64_MAX || (size_t)cache_size != cache_size) {
+>>> -            error_setg(&err, "Invalid size %s", valuestr);
+>>> -            break;
+>>> -        }
+>>> -        p->xbzrle_cache_size = cache_size;
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH:
+>>> -        p->has_max_postcopy_bandwidth = true;
+>>> -        visit_type_size(v, param, &p->max_postcopy_bandwidth, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_ANNOUNCE_INITIAL:
+>>> -        p->has_announce_initial = true;
+>>> -        visit_type_size(v, param, &p->announce_initial, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_ANNOUNCE_MAX:
+>>> -        p->has_announce_max = true;
+>>> -        visit_type_size(v, param, &p->announce_max, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_ANNOUNCE_ROUNDS:
+>>> -        p->has_announce_rounds = true;
+>>> -        visit_type_size(v, param, &p->announce_rounds, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_ANNOUNCE_STEP:
+>>> -        p->has_announce_step = true;
+>>> -        visit_type_size(v, param, &p->announce_step, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_BLOCK_BITMAP_MAPPING:
+>>> -        error_setg(&err, "The block-bitmap-mapping parameter can only be set "
+>>> -                   "through QMP");
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_X_VCPU_DIRTY_LIMIT_PERIOD:
+>>> -        p->has_x_vcpu_dirty_limit_period = true;
+>>> -        visit_type_size(v, param, &p->x_vcpu_dirty_limit_period, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_VCPU_DIRTY_LIMIT:
+>>> -        p->has_vcpu_dirty_limit = true;
+>>> -        visit_type_size(v, param, &p->vcpu_dirty_limit, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_MODE:
+>>> -        p->has_mode = true;
+>>> -        visit_type_MigMode(v, param, &p->mode, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_DIRECT_IO:
+>>> -        p->has_direct_io = true;
+>>> -        visit_type_bool(v, param, &p->direct_io, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
+>>> -        p->has_x_rdma_chunk_size = true;
+>>> -        visit_type_size(v, param, &p->x_rdma_chunk_size, &err);
+>>> -        break;
+>>> -    case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
+>>> +    if (g_str_equal(param, "cpr-exec-command")) {
+>>>          /*
+>>>           * NOTE: g_autofree will only auto g_free() the strv array when
+>>>           * needed, it will not free the strings within the array. It's
+>>> @@ -760,15 +622,14 @@ void hmp_migrate_set_parameter(MonitorHMP *hmp, const QDict *qdict)
+>>>  
+>>>          if (!g_shell_parse_argv(valuestr, NULL, &strv, &gerr)) {
+>>>              error_setg(&err, "%s", gerr->message);
+>>> -            break;
+>>> +            goto cleanup;
+>>>          }
+>>>          for (int i = 0; strv[i]; i++) {
+>>>              QAPI_LIST_APPEND(tail, strv[i]);
+>>>          }
+>>>          p->has_cpr_exec_command = true;
+>>> -        break;
+>>> -    }
+>>> -    default:
+>>> +
+>>> +    } else {
+>>>          g_assert_not_reached();
+>>>      }
+>>>  
+>>> @@ -778,12 +639,52 @@ void hmp_migrate_set_parameter(MonitorHMP *hmp, const QDict *qdict)
+>>>  
+>>>      qmp_migrate_set_parameters(p, &err);
+>>>  
+>>> - cleanup:
+>>> +cleanup:
+>>>      qapi_free_MigrationParameters(p);
+>>> +    hmp_handle_error(hmp, err);
+>>> +}
+>>> +
+>>> +static void hmp_migrate_set_parameter_qapi(MonitorHMP *hmp, const QDict *qdict)
+>>> +{
+>>> +    const char *param = qdict_get_str(qdict, "parameter");
+>>> +    const char *valuestr = qdict_get_str(qdict, "value");
+>>> +    g_autoptr(QDict) input = qdict_new();
+>>> +    g_autoptr(MigrationParameters) p = NULL;
+>>> +    Visitor *v;
+>>> +    Error *err = NULL;
+>>> +
+>>> +    /* the same as keyval_parse(), but here there's no need to parse */
+>>> +    qdict_put_obj(input, param, QOBJECT(qstring_from_str(valuestr)));
+>>> +
+>>> +    v = qobject_input_visitor_new_keyval(QOBJECT(input));
+>>> +    if (visit_type_MigrationParameters(v, NULL, &p, &err)) {
+>>> +        qmp_migrate_set_parameters(p, &err);
+>>> +    }
+>>> +
+>>>      visit_free(v);
+>>>      hmp_handle_error(hmp, err);
+>>>  }
+>>>  
+>>> +void hmp_migrate_set_parameter(MonitorHMP *hmp, const QDict *qdict)
+>>> +{
+>>> +    const char *param = qdict_get_str(qdict, "parameter");
+>>> +
+>>> +    if (g_str_equal(param, "block-bitmap-mapping")) {
+>>> +        Error *err = NULL;
+>>> +
+>>> +        error_setg(&err, "The %s parameter can only be set through QMP", param);
+>>> +        hmp_handle_error(hmp, err);
+>>
+>> I think a hmp_report_error(MonitorHMP *hmp, const char *fmt, ...) would
+>> be nice to have.
+>>
+>
+> I'll look into it.
+>
 
-Validate cs.size against the actual descriptor payload size before
-allocating, rejecting values that exceed what the virtqueue entry
-can carry.
+I see that hmp_handle_error() takes an hmp argument that's unused and
+also that callers often do the redundant:
 
-Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-Reported-by: admin@fluentlogic.org
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260713125431.107278-1-marcandre.lureau@redhat.com>
----
- contrib/vhost-user-gpu/virgl.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+   if (err) {
+      hmp_handle_error(err);
+   }
 
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 20bae57d0f..c95c4afc5c 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -197,20 +197,24 @@ virgl_cmd_submit_3d(VuGpu *g,
-                     struct virtio_gpu_ctrl_command *cmd)
- {
-     struct virtio_gpu_cmd_submit cs;
-+    size_t iov_len;
-     void *buf;
-     size_t s;
- 
-     VUGPU_FILL_CMD(cs);
- 
--    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
--        g_critical("%s: command buffer too large (%u)",
--                   __func__, cs.size);
-+    iov_len = iov_size(cmd->elem.out_sg, cmd->elem.out_num);
-+    if (cs.size == 0 || iov_len < sizeof(cs) ||
-+        cs.size > iov_len - sizeof(cs) ||
-+        cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        g_critical("%s: size out of range (%u/%zu)",
-+                   __func__, cs.size, iov_len);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-         return;
-     }
- 
-     buf = g_try_malloc(cs.size);
--    if (!buf && cs.size) {
-+    if (!buf) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-         return;
-     }
--- 
-MST
+But aside from those I don't see other improvements to be made, many
+callsites of hmp_handle_error() re-use the Error for other calls,
+e.g. block/monitor/block-hmp-cmds.c:
 
+    Error *err = NULL;
+    ...
+    if (!qdict_get_try_str(qdict, "node-name")) {
+        qobject_unref(qdict);
+        error_setg(&err, "'node-name' needs to be specified");
+        goto out;
+    }
+
+    BlockDriverState *bs = bds_tree_init(qdict, &err);
+    if (!bs) {
+        goto out;
+    }
+
+    bdrv_set_monitor_owned(bs);
+ out:
+    qemu_opts_del(opts);
+    hmp_handle_error(err);
+
+So having another helper I think would just create confusion as
+error_setg() is already a standard way of creating an error.
+
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    /* this has a non-standard setter */
+>>> +    if (g_str_equal(param, "cpr-exec-command")) {
+>>
+>> We check for "cpr-exec-command" in two places, here and in
+>> hmp_migrate_set_parameter().  A bit awkward.
+>>
+>>> +        return hmp_migrate_set_parameter_legacy(hmp, qdict);
+>>> +    }
+>>> +
+>>> +    hmp_migrate_set_parameter_qapi(hmp, qdict);
+>>> +}
+>>
+>> I think I'd do this differently.
+>>
+>> Recall how we normally parse text into a C object:
+>>
+>> 1. Parse the string into a QObject.
+>>
+>> 2. Wrap it in the appropriate visitor.
+>>
+>> 3. Convert it into a C object with visit_type_TYPE().
+>>
+>> For QMP, step 1 uses json_message_parser_init() & friends, and step 2
+>> is qobject_input_visitor_new().
+>>
+>> For the command line, step 1 and 2 are commonly
+>> qobject_input_visitor_new_str(), which either uses qobject_from_json()
+>> and qobject_input_visitor_new(), or keyval_parse() and
+>> qobject_input_visitor_new_keyval().
+>>
+>> hmp_migrate_set_parameter() could do step 1 and 2 like this:
+>>
+>>     // step 1
+>>     if param == "block-bitmap-mapping"
+>>         report error and return
+>>     if param == "cpr-exec-command"
+>>         value = string parsed into QList
+>>     else // scalars
+>>         value = string
+>>     input = {param: value}
+>>     // step 2
+>>     v = qobject_input_visitor_new_keyval(input)
+>>
+>
+> Makes sense, let me try it.
+>
+
+Works like a charm, thanks!
+
+>>> +
+>>>  void hmp_migrate_start_postcopy(MonitorHMP *hmp, const QDict *qdict)
+>>>  {
+>>>      Error *err = NULL;
+>>> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+>>> index 2261ae7c89..4ac2f42a5a 100644
+>>> --- a/tests/qtest/migration/misc-tests.c
+>>> +++ b/tests/qtest/migration/misc-tests.c
+>>> @@ -50,7 +50,7 @@ typedef struct HMPTestData {
+>>>  HMPTestData test_cases[] = {
+>>>      TEST("", "", "migrate_set_parameter: string expected"),
+>>>      TEST("foo", "", "migrate_set_parameter: string expected"),
+>>> -    TEST("foo", "on", "Error: invalid parameter value: foo"),
+>>> +    TEST("foo", "on", "Error: Parameter 'foo' is unexpected"),
+>>
+>> This appears to be an improvement.  Where does it come from?
+>>
+>
+> Old code went through the enum lookup whereas now the QObject visitor's
+> qobject_input_check_struct flags the struct member name.
+>
+>>>  
+>>>      /* bool */
+>>>      TEST("cpu-throttle-tailslow", "on", "on"),
 
