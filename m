@@ -4,92 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BE8C88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8F5C88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4lgi-0000Zm-Fk; Thu, 10 Sep 2026 16:48:14 -0400
+	id 1x4ljw-0001cV-Lf; Thu, 10 Sep 2026 16:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lG6-0000wp-J7
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lGn-0001AP-JE
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:21:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFn-00083j-EZ
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lGH-000842-LR
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1789071601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
- b=Z2oSYus1MVK4pulRwhxr9XQryWS7L2IRU2pftw4C0tlg8vJ0V+IGbX0mFj7QKxiwLbLjmW
- KjLJlUGRnzRBUU26oRSMymmxJvSvzPoLPbtlfe/tehMZ2pif5dUhMzBiqbshBiNDSr0pGZ
- tp9lNN7tPNZryVez0kqJklfTyuPf7GI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bX21n48672hBN8Zfk6zuZxrqxEgRNXLThdAmJPdhE1E=;
+ b=ea0I7HgLrDLUM5tOPd1lY196LYYZ/h6o6ASyIrhTZgkX95Mp2adm/9wWtf4WEC/dJmDrnc
+ J6s8r5StIKwi2oAUx9ibxw07rowMdU1uhyS4wIVu7HVR3QKF1S4YXtkXG6NxMfdufL0WTr
+ jo7MbCgzg/N2TK2UmurQ1msREaip72g=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-YGlGfXhRNOKFa9Wj1Ii24Q-1; Thu, 10 Sep 2026 16:13:22 -0400
-X-MC-Unique: YGlGfXhRNOKFa9Wj1Ii24Q-1
-X-Mimecast-MFC-AGG-ID: YGlGfXhRNOKFa9Wj1Ii24Q_1789071201
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47d81cf0c4cso68759f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:21 -0700 (PDT)
+ us-mta-257-4ucjWdRfOUGObBTlRlQq5g-1; Thu, 10 Sep 2026 16:13:15 -0400
+X-MC-Unique: 4ucjWdRfOUGObBTlRlQq5g-1
+X-Mimecast-MFC-AGG-ID: 4ucjWdRfOUGObBTlRlQq5g_1789071194
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-485afdd5079so100703f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071201; x=1789676001; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071194; x=1789675994; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
- b=LJ2Z6W5UCXv/fEJUMoiC0FP7b/89nQwFuhBKgV7leLxA4vWgsZhH6HIP7vCpKwaKi9
- uvNTViB9PTuWK6cOjPCR4NTu7urFm+v35/REEhGdN5d/QQw3oLKaQiWbH73F6kpt8ZPT
- DFa/la7V1I4kBaJ90c4S/knd9SogWTyqJcwwKkI9ktV1pK/Wa/QLp3E27G0D4Dv3NLdH
- PL34Q1v2n3HJWQWBCQLZ8JVdGtdtj6WnJG2/AW8vQkWHScmV2dz4L3O71mtoRuXwNbr9
- xxRRBxSdc/hBM4VdZ8YSN1vOk/X8/qOh1wVmrXNbcxPqMjQqC/3zsjF6Oe7wuhN6Y4zq
- UUyQ==
+ bh=bX21n48672hBN8Zfk6zuZxrqxEgRNXLThdAmJPdhE1E=;
+ b=pfGQ5+h22DgOpecAL1j5KYRoo85mgZ2KTUtbJwvawSA2rdDs3iPRkBDJVBB+gAYOvS
+ hvCNIJ7Jrw76RamDnD37M0HnhJBSUTjpcIzZ2EQFM+yxZWcX1IAPJcJsRAcdM0cRjQqq
+ Yyt9fDwq+T4iz0wDwMw2/xG7dDhM0dRUQDZdJgMrTK2g9JUxcNpbs/Gzt0emgS1ENN+n
+ oMBK58AjS+ouHShV0K8GSvfUnknCNeYcnljT88/j5TsTiLI3e5JEwAN6I0cnFIlGvH0C
+ TemMkpgKN0ivh2Zpa8ZdIg004eo+9mLSXCwl+F3m9GrRkmM0ltAxYKFqsyQIsolj0lFG
+ LIgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071201; x=1789676001;
+ d=1e100.net; s=20251104; t=1789071194; x=1789675994;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
- b=japSN24y02CnwWTQIPAaOeCag3z/0ETcY2Y08e2sFYPfUvnlD5Gi934xdo2wSgq3pq
- zYttAQAyX0y9C0I9DNUmSFpiLiy8965rC2WA/jSID/m4AjATihmiIqQJ6/GIE7Bxrreh
- XGnFLUrGdXcqQ+kvstiWzpYkAhsibF2/R3h6gkOdDMHn49hoV0d9jyA7wKs/JE/FhXRp
- UrOk3r3DKtRz7j2BrfB7uMObQy82YPTrNo6+/XasQ7xnusUz5HxPeE2WJN1haHuEjfni
- fX/JtITmr+RBkr/nv6HyvlQGZOo7i6I2y4WnswZBbnvCMiYM4x5mHfbyLExTUl6/Ah+A
- qf2w==
-X-Gm-Message-State: AFuF++mSN/Taz3XaXYZj6mOo5KhrWiGh2jjUYdk3npAiuZK91BoZM3YN
- m6q2w0n5JpYnPrK/YxrrcGARg/5w4l5LxC6XG7W4Eow+PXWgu9yzr9/5lijYcdCefnB+b+CqOVW
- y1maMQ3ZV7lPdq+/Vfcy4UMXyLftSxpnNJS0QHPhw2akvhlREHg41TO9Xj0NwQH8g5eabY0q9Q3
- wFV01+YEVxjx3TP5OBkCFJofjaMYHkg6zIsg==
-X-Gm-Gg: AYBFou2gbR2Y2Klw/yxrGWQGQMI0roq0iuh2sxuSR3+TEAImkXUgxH7//VAHhEIRQxo
- 4ciqbOEElpA1nZA3sfAP/CdJEdYMa0Mo+uynGj76TtpuUK+Xr91CM7eDCUH0MzAtgeVSASN7GLy
- 2YQkUCTWkP9nEE+RYgc01iF+LaHp4kogo/5B6dl5a+Ba8PnztWsY/2oEhUnfE+Qq1shaIWbfPVk
- 6uSMDcHd5ZA+Q/+Mg+pVPjet7yeJmNffEo8/iAE6TnD5o17JLyw/5ENorenQVRv7VUz4LC9cvE6
- 2Hyt/CvWq8H14khUI3BFtxLDPytiNjQxtTwA9oBs9zMBncKnTS6snh8Lm6USmpSqil/zcmAOtuM
- dftFwqEqfi6Pt/jGpN/9uyq8=
-X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
- 5b1f17b1804b1-49e619acc89mr19429425e9.10.1789071200722; 
- Thu, 10 Sep 2026 13:13:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
- 5b1f17b1804b1-49e619acc89mr19428465e9.10.1789071200238; 
- Thu, 10 Sep 2026 13:13:20 -0700 (PDT)
+ bh=bX21n48672hBN8Zfk6zuZxrqxEgRNXLThdAmJPdhE1E=;
+ b=nzxoV5u5pcSj6zEF0YKuR5zn5VczZqGdcLnnfcKTOmxcE102b6CeoE4jIh6nfYfoME
+ 5/s70oFRo7PDCHFOW9XPtgyBpTFlC3OP+Gk2ItvVOBSeqDSdTY8XdLELz40jfpL4vqQt
+ FEMm4UaNlPBcI5/TvhYtUhncSPU9O35zeKVLre5NQZD4nDRaLLNJ414wGr2ugBVJi1kx
+ hb7WR/yUq5iX0AzP3HzLmzmqEe/XKwKuAJSDCL3qN2Ag/hqPZG+LpU/mvoMyTtbIUECD
+ sIkpDdkT+37YE9p8jEUTSm6vBwRIesigtqxcAzD14bMWJloMYNLvuPndXHQaJfHGtn86
+ bsfg==
+X-Gm-Message-State: AFuF++nLL2rJJyqyohRULHYnN2GV1oDsZcXtdm7j1IKrSZyyeTE1Z56s
+ k88g70H5a1qW3otHC6bzbkeO3FyG3VJNDeI9gNgffL8PlxretrEstEofoQ5BE9lBSwDCpxDPvu2
+ jhuP+CvDZIvP8fKkvfAt3WaeznHf144qxi0WZazO3KoL5tWXHcFawHNqVzesn6VnpxZCWlTXLJL
+ iFkwth4tgXqg6r+L0pyVmLtOHJgYRbfXJ3Yw==
+X-Gm-Gg: AYBFou3T8HNdkEkYFE16pp6grJqEPa5cBxrJIxvdbCuU91ho2bM8XR+tRQSDelAXiQb
+ oQzg47slT6Y4Vu3Qxove6lxTlndTvOOqL0Nl0w8OEjmNVJnCFv+TahRjJF8/hhxFY0E30xA34oe
+ g1+UXheoufrYSA8fWUQqwbfSpq3xxsUOVczvJYkvx9yGlRkRO0HtAGtt61RCRPucyF63x/m6AnA
+ oUzmGZIiXeKDE+6Pf41gSHGIirlr9sxQeaDjI53gWtPU1V3cIF8tomkh/K6spekUbC878UOEeIz
+ l8HC1kdrwi100blNtqFGfAXpKjT1lNvgLA9p3rSB7CRTRKTXA82nd23FIAkQ91pnoFlXXoAEtab
+ QoAsBmpXQQLqeLioh929hnQ8=
+X-Received: by 2002:adf:f30b:0:b0:485:8c16:a33d with SMTP id
+ ffacd0b85a97d-486eb34a466mr436148f8f.50.1789071194154; 
+ Thu, 10 Sep 2026 13:13:14 -0700 (PDT)
+X-Received: by 2002:adf:f30b:0:b0:485:8c16:a33d with SMTP id
+ ffacd0b85a97d-486eb34a466mr436106f8f.50.1789071193517; 
+ Thu, 10 Sep 2026 13:13:13 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e60946249sm21236135e9.0.2026.09.10.13.13.19
+ ffacd0b85a97d-486eb33ea60sm779458f8f.17.2026.09.10.13.13.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:19 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:13:18 -0400
+ Thu, 10 Sep 2026 13:13:13 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:13:10 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 45/90] hw/virtio-blk: Account discard operations
-Message-ID: <b9c513000f50cd5e67a32303a193997e7e775f7b.1789071043.git.mst@redhat.com>
+ Davidlohr Bueso <dave@stgolabs.net>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@intel.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, linux-cxl@vger.kernel.org
+Subject: [PULL 42/90] hw/cxl: Add configurable CXL Fixed Memory Window
+ restriction flags
+Message-ID: <1eace36d009bae786bb89399055b55de932b2ac8.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,7 +112,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,111 +128,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-The acct_failed argument to virtio_blk_handle_rw_error() tells whether
-there is accounting for this operation or not.  The only operation for
-which there is none is discarding, which seems to be because at the time
-of the introducing commit 37b06f8d46f ("virtio-blk: add DISCARD and
-WRITE_ZEROES features"), BlockAcctType did not yet have a
-BLOCK_ACCT_UNMAP variant.
+Expose the CFMWS "Window Restrictions" (CXL r4.0 9.18.1.3) as named
+per-window machine properties -- device-coherent, host-only, volatile,
+persistent, fixed-config and back-invalidate -- so the advertised
+restrictions can be configured per window rather than left at the
+default.
 
-It does have that now, though, so we may as well track those discard
-operations with it, and can thus remove the acct_failed parameter.
+No changes in default options.  HDM-D and HDM-H are advertised by default;
+disabling one (device-coherent=off or host-only=off) narrows the window to
+the other.  back-invalidate implies device-coherent (HDM-DB) and suppresses
+the host-only default.  host-only coherent combined with back-invalidate is
+rejected as undefined behavior per the spec.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724152315.234183-2-hreitz@redhat.com>
+Message-ID: <20260720233242.901544-5-dave@stgolabs.net>
 ---
- hw/block/virtio-blk.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ docs/system/devices/cxl.rst | 25 ++++++++++++--------
+ qapi/machine.json           | 28 ++++++++++++++++++++++
+ include/hw/cxl/cxl.h        | 12 ++++++++++
+ hw/acpi/cxl.c               |  2 +-
+ hw/cxl/cxl-host.c           | 46 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 102 insertions(+), 11 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index cb6a276a82..4110380392 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -69,7 +69,7 @@ void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
- }
+diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+index 9d0771cdfd..6bee339cea 100644
+--- a/docs/system/devices/cxl.rst
++++ b/docs/system/devices/cxl.rst
+@@ -384,8 +384,13 @@ An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
+   -device cxl-type3,bus=swport3,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem3,sn=0x4 \
+   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
  
- static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
--    bool is_read, bool acct_failed)
-+                                      bool is_read)
- {
-     VirtIOBlock *s = req->dev;
-     BlockErrorAction action = blk_get_error_action(s->blk, is_read, error);
-@@ -85,9 +85,7 @@ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
-         }
-     } else if (action == BLOCK_ERROR_ACTION_REPORT) {
-         virtio_blk_req_complete(req, VIRTIO_BLK_S_IOERR);
--        if (acct_failed) {
--            block_acct_failed(blk_get_stats(s->blk), &req->acct);
--        }
-+        block_acct_failed(blk_get_stats(s->blk), &req->acct);
-         g_free(req);
-     }
+-An example of 4 type3 devices with volatile memory below a switch. Two of the devices
+-use HDM-DB for coherence, which requires operating in Flit mode::
++An example of a mixed configuration across two host bridges, each with its
++own CXL window. Below cxl.1, two type3 volatile devices behind a switch use
++HDM-DB for coherence, which requires operating in Flit mode and a window
++that permits the device-coherent Back-Invalidate model. Below cxl.2, two
++plain host-only devices are directly attached and use the default window.
++Because a window targets a host bridge, giving each coherency model its own
++bridge keeps the window-to-device mapping explicit::
  
-@@ -124,7 +122,7 @@ static void virtio_blk_rw_complete(void *opaque, int ret)
-              * the memory until the request is completed (which will
-              * happen on the other side of the migration).
-              */
--            if (virtio_blk_handle_rw_error(req, -ret, is_read, true)) {
-+            if (virtio_blk_handle_rw_error(req, -ret, is_read)) {
-                 continue;
-             }
-         }
-@@ -140,7 +138,7 @@ static void virtio_blk_flush_complete(void *opaque, int ret)
-     VirtIOBlockReq *req = opaque;
-     VirtIOBlock *s = req->dev;
+   qemu-system-x86_64 -M q35,cxl=on -m 4G,maxmem=8G,slots=8 -smp 4 \
+   ...
+@@ -395,17 +400,17 @@ use HDM-DB for coherence, which requires operating in Flit mode::
+   -object memory-backend-ram,id=cxl-mem3,share=on,size=256M \
+   -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+   -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
+-  -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
+   -device cxl-upstream,bus=root_port0,id=us0,x-256b-flit=on \
+   -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+-  -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-mem0,sn=0x1,x-256b-flit=on,hdm-db=on \
++  -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-vmem0,sn=0x1,x-256b-flit=on,hdm-db=on \
+   -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+-  -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-mem1,sn=0x2,x-256b-flit=on,hdm-db=on \
+-  -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
+-  -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-mem2,sn=0x3 \
+-  -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
+-  -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-mem3,sn=0x4 \
+-  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
++  -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-vmem1,sn=0x2,x-256b-flit=on,hdm-db=on \
++  -device pxb-cxl,bus_nr=222,bus=pcie.0,id=cxl.2 \
++  -device cxl-rp,port=0,bus=cxl.2,id=root_port1,chassis=0,slot=6 \
++  -device cxl-type3,bus=root_port1,volatile-memdev=cxl-mem2,id=cxl-vmem2,sn=0x3 \
++  -device cxl-rp,port=1,bus=cxl.2,id=root_port2,chassis=0,slot=7 \
++  -device cxl-type3,bus=root_port2,volatile-memdev=cxl-mem3,id=cxl-vmem3,sn=0x4 \
++  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k,cxl-fmw.0.back-invalidate=on,cxl-fmw.1.targets.0=cxl.2,cxl-fmw.1.size=4G,cxl-fmw.1.interleave-granularity=4k
  
--    if (ret && virtio_blk_handle_rw_error(req, -ret, 0, true)) {
-+    if (ret && virtio_blk_handle_rw_error(req, -ret, 0)) {
-         return;
-     }
+ A simple arm/virt example featuring a single direct connected CXL Type 3
+ Volatile Memory device::
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 2d63c1bac3..de6460f091 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -552,15 +552,43 @@
+ #     accesses will go to a given interleave target.  Accepted values
+ #     [256, 512, 1k, 2k, 4k, 8k, 16k]
+ #
++# @device-coherent: Window permits device-coherent (minimally HDM-D)
++#     accesses.  (since 11.1)
++#
++# @host-only: Window permits host-only coherent (HDM-H) accesses.
++#     (since 11.1)
++#
++# @volatile: Window permits volatile memory.  (since 11.1)
++#
++# @persistent: Window permits persistent memory.  (since 11.1)
++#
++# @fixed-config: Window has a fixed device configuration.  Advertised
++#     in the CEDT only; not otherwise emulated.  (since 11.1)
++#
++# @back-invalidate: Window permits Back-Invalidate (HDM-DB).  Implies
++#     @device-coherent.  (since 11.1)
++#
+ # @targets: Target root bridge IDs from -device ...,id=<ID> for each
+ #     root bridge.
+ #
++# Coherency defaults to both device-coherent and host-only; disabling
++# one (host-only=off or device-coherent=off) narrows to the other.
++# @back-invalidate implies device-coherent and is not host-only.
++# @volatile and @persistent default on.  host-only coherent combined
++# with @back-invalidate is rejected as undefined behavior.
++#
+ # Since: 7.1
+ ##
+ { 'struct': 'CXLFixedMemoryWindowOptions',
+   'data': {
+       'size': 'size',
+       '*interleave-granularity': 'size',
++      '*device-coherent': 'bool',
++      '*host-only': 'bool',
++      '*volatile': 'bool',
++      '*persistent': 'bool',
++      '*fixed-config': 'bool',
++      '*back-invalidate': 'bool',
+       'targets': ['str'] }}
  
-@@ -153,17 +151,13 @@ static void virtio_blk_discard_write_zeroes_complete(void *opaque, int ret)
- {
-     VirtIOBlockReq *req = opaque;
-     VirtIOBlock *s = req->dev;
--    bool is_write_zeroes = (virtio_ldl_p(VIRTIO_DEVICE(s), &req->out.type) &
--                            ~VIRTIO_BLK_T_BARRIER) == VIRTIO_BLK_T_WRITE_ZEROES;
+ ##
+diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
+index d8cd8359d2..7cf3dc622c 100644
+--- a/include/hw/cxl/cxl.h
++++ b/include/hw/cxl/cxl.h
+@@ -27,6 +27,17 @@
  
--    if (ret && virtio_blk_handle_rw_error(req, -ret, false, is_write_zeroes)) {
-+    if (ret && virtio_blk_handle_rw_error(req, -ret, false)) {
-         return;
-     }
+ typedef struct PXBCXLDev PXBCXLDev;
  
-     virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
--    if (is_write_zeroes) {
--        block_acct_done(blk_get_stats(s->blk), &req->acct);
--    }
-+    block_acct_done(blk_get_stats(s->blk), &req->acct);
-     g_free(req);
- }
- 
-@@ -443,6 +437,9 @@ static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
-             goto err;
-         }
- 
-+        block_acct_start(blk_get_stats(s->blk), &req->acct, bytes,
-+                         BLOCK_ACCT_UNMAP);
++/*
++ * CEDT CFMWS "Window Restrictions" bits (CXL r4.0 9.18.1.3), advertising
++ * which capabilities the host bridges below this window support.
++ */
++#define CXL_FMW_DEVICE_COHERENT (1 << 0) /* HDM-D */
++#define CXL_FMW_HOST_ONLY       (1 << 1) /* HDM-H */
++#define CXL_FMW_VOLATILE        (1 << 2)
++#define CXL_FMW_PERSISTENT      (1 << 3)
++#define CXL_FMW_FIXED_CONFIG    (1 << 4)
++#define CXL_FMW_BI              (1 << 5) /* HDM-DB, Back-Invalidate */
 +
-         blk_aio_pdiscard(s->blk, sector << BDRV_SECTOR_BITS, bytes,
-                          virtio_blk_discard_write_zeroes_complete, req);
+ typedef struct CXLFixedWindow {
+     SysBusDevice parent_obj;
+     int index;
+@@ -36,6 +47,7 @@ typedef struct CXLFixedWindow {
+     uint8_t num_targets;
+     uint8_t enc_int_ways;
+     uint8_t enc_int_gran;
++    uint16_t restrictions;
+     /* Todo: XOR based interleaving */
+     MemoryRegion mr;
+     hwaddr base;
+diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
+index 75edb2c0a6..77c1db6561 100644
+--- a/hw/acpi/cxl.c
++++ b/hw/acpi/cxl.c
+@@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
+     build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
+ 
+     /* Window Restrictions */
+-    build_append_int_noprefix(table_data, 0x0f, 2);
++    build_append_int_noprefix(table_data, fw->restrictions, 2);
+ 
+     /* QTG ID */
+     build_append_int_noprefix(table_data, 0, 2);
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index 369a985f9b..e279ce5fe3 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -61,6 +61,52 @@ static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
+         fw->enc_int_gran = 0;
      }
-@@ -450,9 +447,8 @@ static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
-     return VIRTIO_BLK_S_OK;
  
- err:
--    if (is_write_zeroes) {
--        block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
--    }
-+    block_acct_invalid(blk_get_stats(s->blk),
-+                       is_write_zeroes ? BLOCK_ACCT_WRITE : BLOCK_ACCT_UNMAP);
-     return err_status;
- }
- 
++    /*
++     * HDM-D and HDM-H are advertised by default; disabling one
++     * (host-only=off or device-coherent=off) narrows the window to the
++     * other.
++     */
++    if (!object->has_device_coherent || object->device_coherent) {
++        fw->restrictions |= CXL_FMW_DEVICE_COHERENT;
++    }
++    if (object->has_host_only ? object->host_only : !object->back_invalidate) {
++        fw->restrictions |= CXL_FMW_HOST_ONLY;
++    }
++    if (object->back_invalidate) {
++        fw->restrictions |= CXL_FMW_DEVICE_COHERENT | CXL_FMW_BI;
++    }
++
++    if (!(fw->restrictions & (CXL_FMW_DEVICE_COHERENT | CXL_FMW_HOST_ONLY))) {
++        error_setg(errp, "CFMW coherency model required");
++        return;
++    }
++
++    if (object->fixed_config) {
++        fw->restrictions |= CXL_FMW_FIXED_CONFIG; /* no-op */
++    }
++
++    /* Volatile and persistent are permitted unless explicitly disabled. */
++    if (!object->has_q_volatile || object->q_volatile) {
++        fw->restrictions |= CXL_FMW_VOLATILE;
++    }
++    if (!object->has_persistent || object->persistent) {
++        fw->restrictions |= CXL_FMW_PERSISTENT;
++    }
++    if (!(fw->restrictions & (CXL_FMW_VOLATILE | CXL_FMW_PERSISTENT))) {
++        error_setg(errp, "CFMW volatile and/or persistent memory required");
++        return;
++    }
++
++    /*
++     * Reject the undefined and conflicting coherency combinations,
++     * per CXL r4.0 9.18.1.3.
++     */
++    if ((fw->restrictions & CXL_FMW_HOST_ONLY) &&
++        (fw->restrictions & CXL_FMW_BI)) {
++        error_setg(errp, "CFMW host-only coherency + BI is undefined behavior");
++        return;
++    }
++
+     fw->targets = g_malloc0_n(fw->num_targets, sizeof(*fw->targets));
+     for (i = 0, target = object->targets; target; i++, target = target->next) {
+         /* This link cannot be resolved yet, so stash the name for now */
 -- 
 MST
 
