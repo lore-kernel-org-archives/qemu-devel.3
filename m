@@ -4,85 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9334C88E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:00:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE6BC88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:00:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4pcZ-0006Gq-37; Thu, 10 Sep 2026 21:00:06 -0400
+	id 1x4pcZ-0006Gu-3x; Thu, 10 Sep 2026 21:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0001k2-38
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPw-0007Fd-Ok
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:02 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49b392ccaacso5556465e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083769; x=1789688569; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Cf1yI1aREIxDxkefBceSwViRa1AdWX44R35eLRi8QFs=;
- b=K3TvOgrhe8XO1Tcj8YaU+f41aO+qeqGDCRLRIVZ75csFyVBUIXctjJ3HieUDnHc01p
- IxfZ3R3cfJex4GAP8tadKt0Z0JrxaF/5mA4ag9GlzKNTIqHppHz54ZUhRCdfGLwMDhMi
- FaY77DcJru6wF6etL6N7sSK6cb8TaPHvjWhoIZuACqT6RFIzH0lOoDrBfTkND/mJAVmB
- uSuFacphnlWVjAHGsMGdczz8GTgRTPaFdUk4K7cvbNFkZIO45xLd3FANyK0+xNhvycZN
- FaP6YSehC+a/1owliLZspNCKVG0oc+qwaXm357SS9AOXN7mE+V4DW5R209zsXOCxsPnP
- hhGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083769; x=1789688569;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Cf1yI1aREIxDxkefBceSwViRa1AdWX44R35eLRi8QFs=;
- b=hVmKuAkbQ+XgMQ3LF3+8CPrDY9fhegbd2cHxmuoiox0N0cASyEj1aFL38DvbNQAK7o
- EywrzYZ4LgU9jtlloIb/6J6n2HBQFw5dSyDMT1o3U+LXB7nk058qcZNPM4G4HbhSQKM3
- 3jDsSq1j9jIION/3hD1AaY1ooygXXho+MFQ3aMF7u7Teyzo1VFfx6rMI0DihTvZ7inXS
- Oyw7lopZfiIvOj1lhQmW1mpiTfHCE28ENJjsYhG+WYl6+hncyBiFXObdjOO6uKlvcDmY
- 6aB//Bg3mXVnKPhwlt2agtL4MnMUemD0OEiz1x/VdPXHystdhrcZqBoeu9GfkXtI4TJA
- zjFg==
-X-Gm-Message-State: AFuF++ko3OdaJliG5t+i4eZ6lpJeuJG3pECXwHeEqYL3ZuJhzux55iDR
- xLxiChMCq4ao7gwinTDqd9J15rRBWWmK2O2PewjNzzz6MiQOMu+VY92GtyblQi5J7Zo=
-X-Gm-Gg: AYBFou0X2VtzciLNBxnis1sN/TNEssHAckeI/YkIRdFK/tBfS1aLMIM6UU8UnDojO7d
- bX3Dffsi+TXB7S1NLoVvl7ZyOkzXG3KLhmpRZZL/yAVrBLXclzbuwAUdp31rKDN6/5ku47TBhMv
- OrJhlIuVcm51p+QMhy2/reqr85/9yWuoCrsSka3eWc4bhCsMA+eKOsQRDYY3e132IiWeMzaPXF/
- efmIGv+woNiu45YpvNqo3WrSckPRQadQykmWanMwOVs7GuAt3/UjdN3Vc4W1CKeXNgXyev9za24
- EmnW1o4TA2oho0O83wEObBR6PUsy5m03pga7QfKhmnLRZezrA/EExvQYAMljCg8wdZTvxOP5pyC
- YLBdeSnEGBu0RH2A46wxykn84lVfJ4Dc+3bW8DpzsyXlsUCwfsrQfv1KIiF7tZFN4TPVxqrKeaK
- 7uc0vxjRq+MV5rli2h7ZNkWTPiJwsXVvohDXk3wusQe1ucvx8FREt/56E1SMWIIaffdsRSh/DmX
- 5pwKBk=
-X-Received: by 2002:a05:600c:860b:b0:49c:fa21:1c87 with SMTP id
- 5b1f17b1804b1-49e619d1bddmr12783925e9.28.1789083769037; 
- Thu, 10 Sep 2026 16:42:49 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:48 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 18/29] parallels: Add dirty bitmaps saving
-Date: Fri, 11 Sep 2026 01:42:11 +0200
-Message-ID: <20260910234222.3039975-19-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
-References: <20260910234222.3039975-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x4nyq-00020A-Ud
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:15:08 -0400
+Received: from mail-westus3azon11010056.outbound.protection.outlook.com
+ ([52.101.201.56] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x4nyg-0007pJ-Kt
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:14:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VoEurEHR+nNSs13sFnBtAFqo+3gLunuzMRrfIHDu586+A751dnKxSpu7j1mZSVxS3GieAddtafXO8IrUWSunO5cLLsCMqxeLH8M2iudbulx3eKek8VNMc9nZ5VP9WHAQOG8aSxM9XEs5V13SY4g0LCISRBfr9mVFNRLsEUFAW6PUATXAeSUaXnjCnQWerpuPdN4HWMDQcD9RUZ1tgl30BSFkzO0zTgPJoCqZPNlvZmNF403lIKm7TdIf9fKIvOwvTud/GiyX6mlbJnNcLCN0V9YL4y12OSyZ+G5AmRUKEYa3nSlOGaEikKAsIU41l/EBc21GBMbtO6+wETEtXUYVxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=H7rbPZVHm0BCCH5kbIqXx7ETi5+3PFSCD0vYMCc72Hg=;
+ b=XhYI/9EHuYcgLAz+vpIeTBEajSyC4Lr214saa8OpQU/YYI5xs9rWhMP0X+OUGoFREOx/rf3WqF4Mb67ZwXAM/XAH/tMVzga07qhwc0Qxxq+9fHC4+I7R0xxe3YrXDjykgtJF+w6aHsDju0cM9Zw2eo8hAjPBZf+wPn1kV8QdeIB0veUJjLg2zKlfPkpU+rXw+JmniVvwuTJox4Mbbs8qE3hYZ18See3I5fPEkzTqNzUDPA95ahpXgHm1+vsCmAmlLG96hu3z8YxytdPllRwGjOPlejs5GDhntJqsEn15lRBUgHSAQ+ItkLEWsbZe3iHGevTjKTGUwFd6Qwk4qCb+pA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H7rbPZVHm0BCCH5kbIqXx7ETi5+3PFSCD0vYMCc72Hg=;
+ b=uQn8h7RPAuT+t3Y0FAQbyV1tjH0fHw0KpeK1iSxUVLxmNkt8tQXXGgOu1C+GDb6W1hGjKa38wSfhWAdH/iTeId851b4QkpiO86G2hRo6caHEdYNeyfWOXYSve+Ze8NhOeEU9foiMFDLcJ9SC0SYcOcBcvO60i3PnWEoX9hNtYCs=
+Received: from SCYP152CA0106.LAMP152.PROD.OUTLOOK.COM (2603:10d6:300:144::19)
+ by DS0PR12MB7928.namprd12.prod.outlook.com (2603:10b6:8:14c::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Thu, 10 Sep
+ 2026 23:09:25 +0000
+Received: from SJ1PEPF000037A8.namprd03.prod.outlook.com
+ (2603:10d6:300:144:cafe::8f) by SCYP152CA0106.outlook.office365.com
+ (2603:10d6:300:144::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.9 via Frontend Transport; Thu, 10
+ Sep 2026 23:09:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF000037A8.mail.protection.outlook.com (10.167.244.181) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.406.5 via Frontend Transport; Thu, 10 Sep 2026 23:09:22 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 10 Sep
+ 2026 18:09:22 -0500
+Date: Thu, 10 Sep 2026 17:58:56 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Markus Armbruster <armbru@redhat.com>
+CC: <qemu-devel@nongnu.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
+ <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>, <xiaoyao.li@intel.com>,
+ <chao.p.peng@linux.intel.com>, <david@kernel.org>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v5 08/12] hostmem: Support fully shared guest memfd to
+ back a VM
+Message-ID: <wli5vbctw6wxsqlxs6e5ojarvxq3xj3xv6ottjfenios2ndxld@etwnuqkbvmzf>
+References: <20260908133151.836685-1-michael.roth@amd.com>
+ <20260908133151.836685-9-michael.roth@amd.com>
+ <87ecf3rgb3.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <87ecf3rgb3.fsf@pond.sub.org>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000037A8:EE_|DS0PR12MB7928:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6b5aaf5e-cf05-43b0-b638-08df0f908d50
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|36860700016|23010399003|82310400026|6133799003|3023799007|10067099003|4143699003|11063799006|56012099006|22082099003|18002099003|27256017;
+X-Microsoft-Antispam-Message-Info: 3rwZcnrl3o8TdDw53ikaqT7kJ8bTldLWhmc565upgHG+VUZC5bjlhiRksSm2IQdzLpxbx/i4YBTtSvoRCO95qPnKSc5mLBt0xlTuWcIkxuxpya3oQjy8oAv5mV8lbEjGi1+iNtwtAjbmWyJjUB09RkLR3UFcZbbVNtG+xDUctR4F+Y7D7lpAh5dJfbLHimurogjB9qN9FHV31/QM5ibaeuEyAR59IyTpWgH/nw0GnJ210Xtw4LSmwWeLVv9+0RanqK3jcQHtSk7OePoz4jp9fJMf2RP39GeFUiLoMWdAj1GUGkq8HwU6LCzCxKBwSmGjD90CXOkZLLRRFyPb89QO9X4eBhsO6YiuPlRiBlGX2bLq/7cf2lXgyvDzuDob65ah22B5ZtFeGBPEourWrydU46pp3A5sfmvUkioyg51JHadUU1ANjssbxh3x8PUax2c6lVFopYLRKXqFFpm0xx3yDtHIGuXbVysmikp0g2Rng8IaurVtoMEQamgpRJelx1QwUiABakl00qLrHFtrCIBRDPDm69+PpEiJNoAH96aLPWxVp4m750ZOgsbRmI4khhjpyqtkSS4DUW2vZYatbVcHNvfei5eUSOHcmDQLLvAcWeMCt1EdwdK8NLTHKzFjWo/eaQYQ5wNOr9jzt+iTUC1lysotdg6OFA3D4KZwTiYLAd2ZIkubszawfO69V+EQmnOry36xJL3KwkJiYyCgYHPPJKtyZ8cwDue8iJnKsOLODF4IEyro/DaRYPcCImDNJdbyh8W3+9V7+uuMwRp45tMy6Q==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(36860700016)(23010399003)(82310400026)(6133799003)(3023799007)(10067099003)(4143699003)(11063799006)(56012099006)(22082099003)(18002099003)(27256017);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: aMQzCdS9nbiBp+GfLkwdeXCdYJO9UF+jSrnr9/LkQEpeUprarThLT/4vTmBmy1WlnkDdge/zI2hFw4Hnbpels1COJg+6LnBfBsuyZtzwM2D14Aeai6z6bF9NNIFgNt0QdZEFEXcVlIqLfmYTDu4XH8OpS6hVmS0v4ZZnY4nmeRAg8xuPmaoDm+zX1QjKebAlDSzz5IbSUjHbNMDynR+rWfdx2cJQf7kKihAxr7Q/SAA8SA9x5L01wBCja2OtxvaJSFGTBUJVy9ZpZCNjMRqgU9ZwNuAcLbtuNV7oDe6WJaqCrlckdLnKqB2rcW8zjeWuZFOkEkUnDR5oKiXgvLPYdDinj9zl/tuFoe9euvTB9++kHqn5GBqMHULqsDGLM8GVNYqNKyjDadQ2ryRSnmUXWc8l0ai15/UUEFwFTGVmpzMF8wfiOjUl0KMM9tQwu0Q6
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2026 23:09:22.9496 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6b5aaf5e-cf05-43b0-b638-08df0f908d50
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000037A8.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7928
+Received-SPF: permerror client-ip=52.101.201.56;
+ envelope-from=Michael.Roth@amd.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,445 +130,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+On Tue, Sep 08, 2026 at 04:03:28PM +0200, Markus Armbruster wrote:
+> Michael Roth <michael.roth@amd.com> writes:
+> 
+> > From: Peter Xu <peterx@redhat.com>
+> >
+> > Host backends supports guest-memfd now by detecting whether it's a
+> > confidential VM.  There's no way to choose it yet from the memory level to
+> > use it fully shared.  If we use guest-memfd, it so far always implies we
+> > need two layers of memory backends, while the guest-memfd only provides the
+> > private set of pages.
+> >
+> > This patch introduces a way so that QEMU can consume guest memfd as the
+> > only source of memory to back the object (aka, fully shared).
+> >
+> > To use the fully shared guest-memfd, one can add a memfd object with:
+> >
+> >   -object memory-backend-memfd,guest-memfd=on,share=on
+> >
+> > Note that share=on is required with fully shared guest_memfd.
+> >
+> > PS: there's a trivial touch-up on fd<0 check, because the stub to create
+> > guest-memfd may return negative but not -1.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> 
+> [...]
+> 
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index 4a9b7f9088..909add4299 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -771,13 +771,17 @@
+> >  # @seal: if true, create a sealed-file, which will block further
+> >  #     resizing of the memory (default: true)
+> >  #
+> > +# @guest-memfd: if true, use guest-memfd to back the memory region.
+> > +#     (default: false, since: 11.2)
+> 
+> What's guest-memfd and why would I want to use it?
 
-Dirty bitmaps can be loaded now, but there is no way to save them. Add
-code for dirty bitmap storage.
+I'm planning to squash the below documentation patch into this commit so
+it can be referenced in the schema documentation for the @guest-memfd
+option.
 
-A bitmap which can not be stored is refused when it is created, by
-parallels_co_can_store_new_dirty_bitmap(), as at store time there is
-nowhere left to report it to: it would be dropped while the command
-which asked to persist it still succeeded. The format identifies a
-bitmap by a UUID, so a name which does not parse as one is refused, and
-so is one whose L1 table does not fit the Format Extension cluster next
-to the feature headers of the bitmaps already stored and the end of
-features marker. The hook and the store path share the size arithmetic.
+I think it explains the "what", but the "why" is a bit awkward at this
+stage because we anticipate a lot of use-cases, and potentially it
+becoming the general default for backing guest memory that doesn't
+specifically need any functionality provided by the other
+memory-backend-* implementations, but admittedly at this stage it would
+be primarily for experimentation and getting infrastructure in place
+because there are feature gaps like hugepage/THP support that would
+prevent it from being a drop in replacement for memfd users.
 
-Losing a bitmap on an I/O error is still possible, and it used to be
-silent. Report it through errp and answer -EINVAL from
-parallels_inactivate(), the way qcow2_inactivate() does, giving up
-before the in use flag is cleared: the inactivation failed, the node
-stays writable, and the next open must not be told that the image was
-closed correctly.
+The first 'real' use-case will come when either one of the features
+mentioned in the documentation below (or something else) goes upstream,
+or (more likely at this point) the in-place conversion patches land and
+the @guest-memfd=on functionality becomes a requirement for Confidential
+VMs that want to run in that mode (which does have immediately tangible
+benefits like not needing to reallocate memory after every
+shared<->private conversion and will likely deprecate the existing
+out-of-place conversion mode currently used by SNP/TDX fairly quickly)).
+I plan to add that use-case to the document as well, but it seems more
+appropriate to do so in the context of the in-place conversion series
+where I can talk about it in a non-theoretical context.
 
-The extension is rebuilt as a whole and written to freshly allocated
-clusters on every store, and its clusters are deliberately absent from
-used_bmap, which is what lets the space of the copy read at open time
-be reused. parallels_check_unused_clusters() derives the end of the
-payload from used_bmap alone, though, so it would report the extension
-as a leak and 'qemu-img check -r leaks' would truncate it away while
-the header still points at it. Remember where the extension ends in
-s->ext_end and use it as a lower bound for the end of the payload.
+But hopefully the below documentation is enough to at least let people
+know who should/shouldn't care about this option in the context of this
+series though. If that seems acceptable I can it into this patch for v6
+to compliment the schema documentation.
 
-Based on the original work from Alexander Ivanov.
+Thanks,
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+Mike
+
+
+From: Michael Roth <michael.roth@amd.com>
+Date: Thu, 10 Sep 2026 17:03:20 -0500
+Subject: [PATCH] docs/system: Add documentation on support for guest_memfd
+
+Document how guest_memfd is used in QEMU for both Confidential VMs as
+well as normal VMs.
+
+Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- block/parallels-ext.c | 295 +++++++++++++++++++++++++++++++++++++++++-
- block/parallels.c     |  12 ++
- block/parallels.h     |   7 +
- 3 files changed, 312 insertions(+), 2 deletions(-)
+ docs/system/guest-memfd.rst | 49 +++++++++++++++++++++++++++++++++++++
+ docs/system/index.rst       |  1 +
+ 2 files changed, 50 insertions(+)
+ create mode 100644 docs/system/guest-memfd.rst
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 21f54e4e3e..a0e2be395f 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "block/block-io.h"
- #include "block/block_int.h"
-@@ -96,8 +97,9 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
-         if (entry == 1) {
-             bdrv_dirty_bitmap_deserialize_ones(bitmap, offset, count, false);
-         } else {
--            ret = bdrv_pread(bs->file, entry << BDRV_SECTOR_BITS,
--                             s->cluster_size, buf, 0);
-+            int64_t host_off = entry << BDRV_SECTOR_BITS;
+diff --git a/docs/system/guest-memfd.rst b/docs/system/guest-memfd.rst
+new file mode 100644
+index 0000000000..9fc4ffb015
+--- /dev/null
++++ b/docs/system/guest-memfd.rst
+@@ -0,0 +1,49 @@
++.. _guest-memfd:
 +
-+            ret = bdrv_pread(bs->file, host_off, s->cluster_size, buf, 0);
-             if (ret < 0) {
-                 error_setg_errno(errp, -ret,
-                                  "Failed to read bitmap data cluster");
-@@ -105,6 +107,7 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
-             }
-             bdrv_dirty_bitmap_deserialize_part(bitmap, buf, offset, count,
-                                                false);
-+            s->ext_end = MAX(s->ext_end, host_off + s->cluster_size);
-         }
-     }
-     ret = 0;
-@@ -328,6 +331,8 @@ int parallels_read_format_extension(BlockDriverState *bs,
- 
-     assert(ext_off > 0);
- 
-+    s->ext_end = ext_off + s->cluster_size;
++guest-memfd support
++===================
 +
-     ext_cluster = qemu_try_blockalign(bs->file->bs, s->cluster_size);
-     if (!ext_cluster) {
-         error_setg(errp, "Failed to allocate the Format Extension cluster");
-@@ -347,3 +352,289 @@ out:
- 
-     return ret;
- }
++Recent kernels allow for the creation of a guest-memfd file descriptor, which
++can be used to back VMs in a similar manner as a memfd file descriptor, but is
++intended specifically for this purpose and allows for closer coordination
++between KVM and the management of this memory to enable more
++advanced/VM-specific use-cases.
 +
-+static uint64_t parallels_bitmap_l1_size(uint32_t cluster_size, uint64_t bytes,
-+                                         uint32_t granularity)
-+{
-+    uint64_t granules = DIV_ROUND_UP(bytes, granularity);
++Initially this additional functionality centered around providing a
++common/centralized place for managing kernel-side memory handing requirements
++for various Confidential Computing architectures, but it has since evolved to
++become a more general-purpose way to allocate/manage guest memory and
++potentially allow for things like providing additional memory isolation within
++the kernel[1] and support for persisting a VM's state across kexec to allow for
++live-updating the host kernel with minimal VM downtime[2].
 +
-+    return DIV_ROUND_UP(granules, (uint64_t)cluster_size * 8);
-+}
++Usage
++-----
 +
-+static uint64_t parallels_bitmap_feature_size(uint64_t l1_size)
-+{
-+    return l1_size * sizeof(uint64_t) + sizeof(ParallelsFeatureHeader) +
-+           sizeof(ParallelsDirtyBitmapFeature);
-+}
++For Confidential VMs, guest-memfd is currently utilized internally by QEMU to
++handle private guest memory, independently of whatever memory backend the user
++has configured for normal/non-private/shared guest memory. To avoid doubling
++memory, QEMU discards memory in response to the guest converting GPA ranges
++between shared/private. (e.g. if GPA X is converted from private to shared, the
++guest-memfd FD offset corresponding to GPA x will be truncated since the memory
++will be provided by the memory backend the user configured for shared memory,
++and vice-versa). This is handled automatically/internally for Confidential VMs
++that rely on this handling and is not directly exposed by QEMU command-line
++options.
 +
-+static int GRAPH_RDLOCK parallels_save_bitmap(BlockDriverState *bs,
-+                                              BdrvDirtyBitmap *bitmap,
-+                                              uint8_t **buf, int *buf_size,
-+                                              GArray *clusters, Error **errp)
-+{
-+    BDRVParallelsState *s = bs->opaque;
-+    ParallelsFeatureHeader *fh;
-+    ParallelsDirtyBitmapFeature *bh;
-+    uint64_t *l1_table, l1_size, granularity, limit, idx;
-+    int64_t bm_size, ser_size, offset, buf_used;
-+    int64_t alloc_size = 1;
-+    const char *name;
-+    uint8_t *bm_buf;
-+    QemuUUID uuid;
-+    int ret = 0;
++For non-Confidential VMs, guest-memfd can be used in a manner that is somewhat
++interchangeable with a normal memfd. Currently, this is handled by using the
++same memory-backend implementation as memfd, but with an additional
++'guest-memfd=on' option. E.g.::
 +
-+    if (!bdrv_dirty_bitmap_get_persistence(bitmap) ||
-+        bdrv_dirty_bitmap_inconsistent(bitmap)) {
-+        return 0;
-+    }
++    qemu ... \
++      -object memory-backend-memfd,id=ID,size=SIZE,share=on,guest-memfd=on
 +
-+    name = bdrv_dirty_bitmap_name(bitmap);
-+    ret = qemu_uuid_parse(name, &uuid);
-+    if (ret < 0) {
-+        error_setg(errp, "Can't save dirty bitmap: ID parsing error: '%s'",
-+                   name);
-+        return ret;
-+    }
++(Note that the share=on option is required for guest-memfd, since it does not
++support anonymous memory allocations or COW-like semantics.)
 +
-+    bm_size = bdrv_dirty_bitmap_size(bitmap);
-+    granularity = bdrv_dirty_bitmap_granularity(bitmap);
-+    limit = bdrv_dirty_bitmap_serialization_coverage(s->cluster_size, bitmap);
-+    ser_size = bdrv_dirty_bitmap_serialization_size(bitmap, 0, bm_size);
-+    l1_size = DIV_ROUND_UP(ser_size, s->cluster_size);
++References
++----------
 +
-+    /* The end of features marker has to fit behind the feature as well */
-+    buf_used = parallels_bitmap_feature_size(l1_size);
-+    if (buf_used + (int64_t)sizeof(*fh) > *buf_size) {
-+        error_setg(errp, "Can't save dirty bitmap %s: it needs %" PRId64
-+                   " bytes of the Format Extension cluster, %d bytes are left",
-+                   name, buf_used, *buf_size);
-+        return -ENOSPC;
-+    }
-+
-+    fh = (ParallelsFeatureHeader *)*buf;
-+    bh = (ParallelsDirtyBitmapFeature *)(*buf + sizeof(*fh));
-+    l1_table = (uint64_t *)((uint8_t *)bh + sizeof(*bh));
-+
-+    fh->magic = cpu_to_le64(PARALLELS_DIRTY_BITMAP_FEATURE_MAGIC);
-+    fh->data_size = cpu_to_le32(l1_size * 8 + sizeof(*bh));
-+
-+    bh->l1_size = cpu_to_le32(l1_size);
-+    bh->size = cpu_to_le64(bm_size >> BDRV_SECTOR_BITS);
-+    bh->granularity = cpu_to_le32(granularity >> BDRV_SECTOR_BITS);
-+    memcpy(bh->id, &uuid, sizeof(uuid));
-+
-+    bm_buf = qemu_try_blockalign(bs->file->bs, s->cluster_size);
-+    if (!bm_buf) {
-+        error_setg(errp, "Can't save dirty bitmap %s: allocation error", name);
-+        ret = -ENOMEM;
-+        goto fail;
-+    }
-+
-+    offset = 0;
-+    while ((offset = bdrv_dirty_bitmap_next_dirty(bitmap, offset,
-+                                                  bm_size)) >= 0) {
-+        int64_t cluster_off, end, write_size;
-+
-+        idx = offset / limit;
-+
-+        offset = QEMU_ALIGN_DOWN(offset, limit);
-+        end = MIN(bm_size, offset + limit);
-+        write_size = bdrv_dirty_bitmap_serialization_size(bitmap, offset,
-+                                                          end - offset);
-+        assert(write_size <= s->cluster_size);
-+
-+        bdrv_dirty_bitmap_serialize_part(bitmap, bm_buf, offset, end - offset);
-+        if (write_size < s->cluster_size) {
-+            memset(bm_buf + write_size, 0, s->cluster_size - write_size);
-+        }
-+
-+        cluster_off = parallels_allocate_host_clusters(bs, &alloc_size);
-+        if (cluster_off <= 0) {
-+            ret = cluster_off < 0 ? cluster_off : -ENOSPC;
-+            error_setg_errno(errp, -ret, "Can't save dirty bitmap %s: cluster "
-+                             "allocation error", name);
-+            goto fail;
-+        }
-+
-+        ret = bdrv_pwrite(bs->file, cluster_off, s->cluster_size, bm_buf, 0);
-+        if (ret < 0) {
-+            parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
-+                                  cluster_off, 1);
-+            error_setg_errno(errp, -ret, "Can't save dirty bitmap %s: IO error",
-+                             name);
-+            goto fail;
-+        }
-+
-+        l1_table[idx] = cpu_to_le64(cluster_off >> BDRV_SECTOR_BITS);
-+        s->ext_end = MAX(s->ext_end, cluster_off + s->cluster_size);
-+        g_array_append_val(clusters, cluster_off);
-+        offset = end;
-+    }
-+
-+    *buf_size -= buf_used;
-+    *buf += buf_used;
-+    qemu_vfree(bm_buf);
-+    return 0;
-+
-+fail:
-+    /* Hand the clusters of the half written bitmap back to the allocator */
-+    for (idx = 0; idx < l1_size; idx++) {
-+        uint64_t entry = le64_to_cpu(l1_table[idx]);
-+
-+        if (entry > 1) {
-+            parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
-+                                  entry << BDRV_SECTOR_BITS, 1);
-+        }
-+    }
-+
-+    /* Leave nothing behind a reader could take for a complete feature */
-+    memset(fh, 0, buf_used);
-+    qemu_vfree(bm_buf);
-+    return ret;
-+}
-+
-+void GRAPH_RDLOCK
-+parallels_store_persistent_dirty_bitmaps(BlockDriverState *bs, Error **errp)
-+{
-+    BDRVParallelsState *s = bs->opaque;
-+    BdrvDirtyBitmap *bitmap;
-+    ParallelsFormatExtensionHeader *eh;
-+    int remaining = s->cluster_size - sizeof(*eh);
-+    uint8_t *buf, *pos;
-+    int64_t header_off, alloc_size = 1;
-+    g_autoptr(GArray) clusters = g_array_new(false, false, sizeof(int64_t));
-+    g_autofree uint8_t *hash = NULL;
-+    Error *bitmap_err = NULL;
-+    size_t hash_len = 0;
-+    int ret;
-+    guint i;
-+
-+    s->header->ext_off = 0;
-+    s->ext_end = 0;
-+
-+    if (!bdrv_has_named_bitmaps(bs)) {
-+        return;
-+    }
-+
-+    buf = qemu_try_blockalign0(bs->file->bs, s->cluster_size);
-+    if (!buf) {
-+        error_setg(errp, "Can't save dirty bitmaps: allocation error");
-+        return;
-+    }
-+
-+    eh = (ParallelsFormatExtensionHeader *)buf;
-+    pos = buf + sizeof(*eh);
-+
-+    eh->magic = cpu_to_le64(PARALLELS_FORMAT_EXTENSION_MAGIC);
-+
-+    FOR_EACH_DIRTY_BITMAP(bs, bitmap) {
-+        Error *local_err = NULL;
-+
-+        /*
-+         * The extension is written as a whole, so a bitmap which does not
-+         * make it must not take with it the ones which did.
-+         */
-+        if (parallels_save_bitmap(bs, bitmap, &pos, &remaining, clusters,
-+                                  &local_err) < 0) {
-+            error_propagate(&bitmap_err, local_err);
-+        }
-+    }
-+
-+    if (pos == buf + sizeof(*eh)) {
-+        /* Not a single bitmap made it, so there is nothing to point at */
-+        goto end;
-+    }
-+
-+    header_off = parallels_allocate_host_clusters(bs, &alloc_size);
-+    if (header_off <= 0) {
-+        ret = header_off < 0 ? header_off : -ENOSPC;
-+        error_setg_errno(errp, -ret,
-+                         "Can't save dirty bitmaps: cluster allocation error");
-+        goto end;
-+    }
-+    g_array_append_val(clusters, header_off);
-+
-+    ret = qcrypto_hash_bytes(QCRYPTO_HASH_ALGO_MD5,
-+                             (const char *)(buf + sizeof(*eh)),
-+                             s->cluster_size - sizeof(*eh),
-+                             &hash, &hash_len, NULL);
-+    if (ret < 0 || hash_len != sizeof(eh->check_sum)) {
-+        error_setg(errp, "Can't save dirty bitmaps: hash error");
-+        goto end;
-+    }
-+    memcpy(eh->check_sum, hash, hash_len);
-+
-+    ret = bdrv_pwrite(bs->file, header_off, s->cluster_size, buf, 0);
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Can't save dirty bitmaps: IO error");
-+        goto end;
-+    }
-+
-+    s->header->ext_off = cpu_to_le64(header_off / BDRV_SECTOR_SIZE);
-+    s->ext_end = MAX(s->ext_end, header_off + s->cluster_size);
-+end:
-+    for (i = 0; i < clusters->len; i++) {
-+        parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
-+                              g_array_index(clusters, int64_t, i), 1);
-+    }
-+
-+    /* A bitmap which was dropped only matters if the rest went through */
-+    error_propagate(errp, bitmap_err);
-+    qemu_vfree(buf);
-+}
-+
-+bool coroutine_fn parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs,
-+                                                          const char *name,
-+                                                          uint32_t granularity,
-+                                                          Error **errp)
-+{
-+    BDRVParallelsState *s = bs->opaque;
-+    BdrvDirtyBitmap *bitmap;
-+    uint64_t needed, available;
-+    QemuUUID uuid;
-+
-+    if (bdrv_find_dirty_bitmap(bs, name)) {
-+        error_setg(errp, "Bitmap already exists: %s", name);
-+        return false;
-+    }
-+
-+    if (qemu_uuid_parse(name, &uuid) < 0) {
-+        error_setg(errp, "Bitmap name must be a UUID to be stored in a "
-+                   "parallels image: %s", name);
-+        return false;
-+    }
-+
-+    /*
-+     * One L1 entry covers a cluster worth of serialized bits, and every
-+     * bitmap of the image shares the Format Extension cluster with the
-+     * feature headers and the end of features marker.
-+     */
-+    needed = parallels_bitmap_feature_size(
-+        parallels_bitmap_l1_size(s->cluster_size,
-+                                 bs->total_sectors << BDRV_SECTOR_BITS,
-+                                 granularity));
-+
-+    FOR_EACH_DIRTY_BITMAP(bs, bitmap) {
-+        if (!bdrv_dirty_bitmap_get_persistence(bitmap)) {
-+            continue;
-+        }
-+
-+        needed += parallels_bitmap_feature_size(
-+            parallels_bitmap_l1_size(s->cluster_size,
-+                                     bdrv_dirty_bitmap_size(bitmap),
-+                                     bdrv_dirty_bitmap_granularity(bitmap)));
-+    }
-+
-+    needed += sizeof(ParallelsFeatureHeader);
-+
-+    available = s->cluster_size - sizeof(ParallelsFormatExtensionHeader);
-+    if (needed > available) {
-+        error_setg(errp, "Bitmap %s with granularity %" PRIu32 " does not fit "
-+                   "into the Format Extension cluster: every bitmap of the "
-+                   "image would need %" PRIu64 " bytes of it, %" PRIu64 " are "
-+                   "available", name, granularity, needed, available);
-+        return false;
-+    }
-+
-+    return true;
-+}
-diff --git a/block/parallels.c b/block/parallels.c
-index ace79ad968..a9464d5352 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -802,6 +802,7 @@ parallels_check_unused_clusters(BlockDriverState *bs, bool truncate)
-     }
- 
-     end_off += s->data_start * BDRV_SECTOR_SIZE;
-+    end_off = MAX(end_off, s->ext_end);
- 
-     /*
-      * A cluster in use behind the end of the file is corruption which
-@@ -1555,12 +1556,21 @@ fail:
- static int GRAPH_RDLOCK parallels_inactivate(BlockDriverState *bs)
- {
-     BDRVParallelsState *s = bs->opaque;
-+    Error *err = NULL;
-     int64_t leak;
- 
-     if (!(bs->open_flags & BDRV_O_RDWR) || (bs->open_flags & BDRV_O_INACTIVE)) {
-         return 0;
-     }
- 
-+    parallels_store_persistent_dirty_bitmaps(bs, &err);
-+    if (err != NULL) {
-+        error_reportf_err(err, "Lost persistent bitmaps during "
-+                          "inactivation of node '%s': ",
-+                          bdrv_get_device_or_node_name(bs));
-+        return -EINVAL;
-+    }
-+
-     leak = parallels_check_unused_clusters(bs, true);
-     if (leak < 0) {
-         error_report("Failed to truncate image: %s", strerror(-leak));
-@@ -1634,6 +1644,8 @@ static BlockDriver bdrv_parallels = {
-     .bdrv_co_pwrite_zeroes      = parallels_co_pwrite_zeroes,
-     .bdrv_co_invalidate_cache   = parallels_co_invalidate_cache,
-     .bdrv_inactivate            = parallels_inactivate,
-+    .bdrv_co_can_store_new_dirty_bitmap =
-+                                  parallels_co_can_store_new_dirty_bitmap,
- };
- 
- static void bdrv_parallels_init(void)
-diff --git a/block/parallels.h b/block/parallels.h
-index eb90aeea81..4684ba2890 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -79,6 +79,8 @@ typedef struct BDRVParallelsState {
-     unsigned int bat_size;
- 
-     int64_t  data_start;
-+    /* Exclusive end of the Format Extension, which is absent from used_bmap */
-+    int64_t  ext_end;
-     uint64_t prealloc_size;
-     ParallelsPreallocMode prealloc_mode;
- 
-@@ -100,5 +102,10 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
- int GRAPH_RDLOCK
- parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
-                                 Error **errp);
-+void GRAPH_RDLOCK
-+parallels_store_persistent_dirty_bitmaps(BlockDriverState *bs, Error **errp);
-+bool coroutine_fn GRAPH_RDLOCK
-+parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs, const char *name,
-+                                        uint32_t granularity, Error **errp);
- 
- #endif
--- 
-2.53.0
-
++- `[1] directmap removal <https://lore.kernel.org/kvm/20260317141031.514-1-kalyazin@amazon.com/>`__
++- `[2] LUO <https://lore.kernel.org/kvm/20260728121138.1103610-1-tarunsahu@google.com/>`__
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index 4509630fa4..060850a739 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -44,3 +44,4 @@ or Hypervisor.Framework.
+    vm-templating
+    sriov
+    qemu-colo
++   guest-memfd
 
