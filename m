@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24850C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1885C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4o3M-0003MZ-5Z; Thu, 10 Sep 2026 19:19:43 -0400
+	id 1x4o5A-00043y-SC; Thu, 10 Sep 2026 19:21:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVh-0006PK-Rt
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lW3-0006SV-2y
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVV-0004V9-2I
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVh-0004hg-Fs
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072509;
+ s=mimecast20190719; t=1789072563;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=duT8sfy/1vmAKnbU6GKLoZk3/IV53fEkN7T7OylyeSg=;
- b=S1qSnFHW5/Z5n3cj34nTdqqxbLo2Lhyqd0nEniGoXl4zVQV/cl/RVrBi3p/r+gSlb3yRYD
- ZZq1GnV71DnV0gTBVJxGSQ4/4GWK/j6i9/jzlYlLtZl83E6h8BNer9Km/jKj8u8UMf4KMC
- PmjSB1DJ9n5GmeqeEx7Tkl0LOfZ66vU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pzQMAUIV8a8b91Vm/oUOdfGDZskrETDwBh/Nv2MWtB8=;
+ b=U/e4hcTTkpym+2k5X/3fRId2p40noSu3WKiTC0BU9G+WbpfLD/DMnBllHqtS2K8SR+6eZr
+ wg6jMLDyOsbXsKLNcsmV6vECRQ/D92/sqg733hrSUHkrd8J8MjWJ/sXsa/Wmyzbja40+oE
+ 9VSKLusPyCLQn6Rvvormd2xO3HGuCTY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-BHsiNiuwN5SANcj84uYzxw-1; Thu, 10 Sep 2026 16:11:35 -0400
-X-MC-Unique: BHsiNiuwN5SANcj84uYzxw-1
-X-Mimecast-MFC-AGG-ID: BHsiNiuwN5SANcj84uYzxw_1789071094
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-485f6788029so99764f8f.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:11:34 -0700 (PDT)
+ us-mta-80-8-MuRIUwOuKcG3ZLw_3mbQ-1; Thu, 10 Sep 2026 16:12:19 -0400
+X-MC-Unique: 8-MuRIUwOuKcG3ZLw_3mbQ-1
+X-Mimecast-MFC-AGG-ID: 8-MuRIUwOuKcG3ZLw_3mbQ_1789071138
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-486e9338393so71576f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071094; x=1789675894; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071138; x=1789675938; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=duT8sfy/1vmAKnbU6GKLoZk3/IV53fEkN7T7OylyeSg=;
- b=QOSFWrES8I3JCObd9bhSm4Ll4YvdlzQLEPv1VIYfwD0Hj91jy2yrsRyiOTU0Md1RAR
- cHAIiwZkpjXUmeSa2euEaanTXhT7xl4yNgcOqD+JtLN8LHQCjHvS1BqVsSsMZDxYca0j
- JJjIlSa8blWBLTAmXl8JRFEpdkZ49ELWGQcOHrF3NscADXcfcLDWGrcWCYxN888Q2iqm
- bonKc2Eu1wEYsyZdgShUQqzkN2uPmZkEPUK85UxZcVTeTtu0pmIsPla6hUbj1+wX5Euc
- ZB6ckbTwUnUuApNCnjfyVfbLuCIFBv7lhPv2IxfjuKqrUEbE4hqBIOHl6Cj3NTxgIT6F
- rCqw==
+ bh=pzQMAUIV8a8b91Vm/oUOdfGDZskrETDwBh/Nv2MWtB8=;
+ b=Cq90e/vtKNZ97AnecRxqGClTWWH0lUrP1Aeg4y8cVmNE4iLdoZxVFZhpqK2jNil7Il
+ WpIsrd5eMBGdaGBtaVD6CEs4XaAzyrnnj+AVRQbljODbaoW0SNKjqxYAWSNlrVDvOLNg
+ 1Zs38NWEksU3rOiCAxa2X8wn3YQQzUIpiRzd3wIvdvQiiQA17dRTfaTJIqhRTDYjyr4W
+ LuUjFRuEspBHj8sAv4iV8U/E8qmIOHZictquclGnY5ajjBe8nrqQfBPahp74ZEQ1mfDt
+ EcioIPMXnab3rhoyTWV8yHc+cDoEAi9AY1qbTuEUZCH8X6hYjnamGkzQq4hsTBiaBhEE
+ asNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071094; x=1789675894;
+ d=1e100.net; s=20251104; t=1789071138; x=1789675938;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=duT8sfy/1vmAKnbU6GKLoZk3/IV53fEkN7T7OylyeSg=;
- b=pT/jM1dJr/eaGeuZ4b+eQSM/Ew+F4dIsm9pTwUeKMXl6u8lWY/WL9oCpBtt6YSpUVO
- jZLMqWeRfvx9pm0VW6Er2Ylb6UKjeFCeXyhIxAc25FLsbi7R+ezAZDNxBneOny9KYNoa
- ZxHO8CqAmjpD2+MxW4jYbv9AhEnDJ8eOf3Vb/DTdaw9Ie1hQShVV/9K/7XiJ8l4zcmIe
- 8ikl7NPBQEuJm77l063W5hHaYKYU4oz7BD6a+Oq3UJQU31IqF71oBKF6TZ6daujFKZvm
- UNA09GZOUsv9TCCmqSo7PNsTZP+py+JWjKfH7s5GOnTI16rouBlBOXJimnE7AaRLyIiG
- HWLg==
-X-Gm-Message-State: AFuF++lQ6RnM1BfcsGuWn/7mPQicpywY61quAyr+LJu2Bm31wSGDJsR2
- qNb38vs1mRgeMuZNtLbC3IlUZ8ZXgnuYs+7V3r70dBylc4u8sg8a7JCh8FrQqgHypY/N2+rUOjN
- QjMDqu92IN/pT4iBIb8SPIA9rbhyYmpAG4AZf+nFVEo1mOpvlal6+1rE9F6CP++x/viQHmUOWI0
- Ub3Yji2FDYAWlewQq/JAVy1rn5cpAcmgGCsg==
-X-Gm-Gg: AYBFou1qljtzsTMWvqDBsQv21S8OGHfuXTitcj2XemLNkoDBu5vE7lV/S0TgA6wzRvt
- rrtGMFQRE4LFGLKPUkZE7PnVUIFAEwmcfu7ljHZehFwVBhJli00rMx+Dit93/cucgplDgyV6v6+
- p2j7WhlxKIOCumbhYR345i7h1a8xkfbDVkugh8CxMX9x0aWvjPJt2rVrMDiYmupXKLCYeuHDebi
- vhRMpnxkrGqgMooPjHFnFKGHMD+SmumVMrm9NhcWIajNjIFDQj+LKgtbY8T/MOTrs92OLftHvTu
- pFtMeScJ+UStNEvoCymJyJ/yNcOKFfiDqMO0ITHI1G6LVclf7Hi4aNm9GliQuVE0LX9nzNq1Nh5
- +8V/3affRjn8xt7cD/dYHrCo=
-X-Received: by 2002:a05:6000:4541:b0:47f:9254:d453 with SMTP id
- ffacd0b85a97d-486eb2db733mr1044069f8f.8.1789071093723; 
- Thu, 10 Sep 2026 13:11:33 -0700 (PDT)
-X-Received: by 2002:a05:6000:4541:b0:47f:9254:d453 with SMTP id
- ffacd0b85a97d-486eb2db733mr1044003f8f.8.1789071093177; 
- Thu, 10 Sep 2026 13:11:33 -0700 (PDT)
+ bh=pzQMAUIV8a8b91Vm/oUOdfGDZskrETDwBh/Nv2MWtB8=;
+ b=HFtKnHqDt/76rXroSbudf7dQa/G4caQSH2JryGQMyy6UK5+s0MEOaz6M5DBRmp/ayY
+ NlAq+4ycuVb5Sb2GflhlwB1xZEzfwl8ihGGKPCVZFrndyxxHUqCx9C2xvNk4I77qMcVg
+ BCWYwQQPox3va14LT1+krnwqmmVnzSnIguaYHkltVyLC6pnH4jWfMjG0xj+32HiltUV+
+ IoZ4DcXE5uRrtc7cGBNx2q6yCm2k9ftftKrQusYclLEudnxkhcXQPJkM3vFave2gXdE1
+ NZpsEB1degPZoS6IE9jW+BGk6PJujwH7qg1oEZspV8b4jHRSdXYoLfSYoDH4oE2D5Maa
+ fNHQ==
+X-Gm-Message-State: AFuF++lkXskuB/c9t+L9JgSt0u3Y3wGgEqJFdWZlfHfyTy90XLxZfBR/
+ qCEx+cdthiwuuT1KyFqa68k5NoI64lcpoRn5h/XvkEWLWN8EN1pVNk3NnkQ+ORGEluIetLGW1I0
+ Q3jrqM/+ue2H6OshtP8SjQcxHR3nGzsfZgjuHlfN06Ze/7sN7L5LB49O2nyvPEoRt+eeAMrVPPm
+ MEidaM2hNl0jBscMrzgDf7HiIgs+ZAzpubmA==
+X-Gm-Gg: AYBFou1LwLsxrjrqFTzgR3FQ27LgQyOdH1P/jyXnM6qUIkJQ0fOCOuGhfQgk87eS6eK
+ /TcHaj5BfsORkf+G0DgFqwF9vyqIBlvWg9com+If8ADjES2mNCLuXIQv7DSNmECYj7n5fnpjxRb
+ psrtlD/k1VE2kxWKhP3YkPTRrpTEUJPCtxyUK2if3toOVtVP0InQgqCJHGazyRSey42ePJT6ETx
+ s75hMsO/z++1b0IPu17aRo2XuGuFHRvRaNVPBLmwmMTToaOsCd74nwWCETc9YZQmg8I7656stan
+ ImKIbMwG29SSfEGfNurM3IJTIFz/OQ4eMEx9aMaPpqZh6KAhwhZRsHGoWrf4vphB2Jpwkhwq98B
+ eQ6AYS/+HQvrOEaiUSkeXWTo=
+X-Received: by 2002:a05:6000:1cc9:b0:485:8a46:b3c6 with SMTP id
+ ffacd0b85a97d-486eb3395e0mr480895f8f.46.1789071137755; 
+ Thu, 10 Sep 2026 13:12:17 -0700 (PDT)
+X-Received: by 2002:a05:6000:1cc9:b0:485:8a46:b3c6 with SMTP id
+ ffacd0b85a97d-486eb3395e0mr480857f8f.46.1789071137168; 
+ Thu, 10 Sep 2026 13:12:17 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32e7f5sm839873f8f.9.2026.09.10.13.11.31
+ ffacd0b85a97d-486eb32e7f5sm843320f8f.9.2026.09.10.13.12.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:11:32 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:11:30 -0400
+ Thu, 10 Sep 2026 13:12:16 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:12:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>, qemu-stable@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org
-Subject: [PULL 04/90] hw/cxl: Fix guest-triggerable QEMU exit on reserved
- interleave ways
-Message-ID: <713e7e85a2b43e9d4e58d91643aef230d2c30b07.1789071042.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowangio@gmail.com>
+Subject: [PULL 22/90] net/tap: move vhost-net open() calls to
+ tap_parse_vhost_fds()
+Message-ID: <b5ee1ede952d139595e519e14a706319684950dd.1789071042.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -106,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,70 +122,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-A buggy or malicious guest can program a committed HDM decoder with a
-reserved Interleave Ways encoding (e.g. 0x5-0x7, 0xb-0xf).  Two call
-sites pass &error_fatal to cxl_interleave_ways_dec(), which calls
-exit(1) on the reserved encoding before the subsequent decoded_iw == 0
-guards can run:
+1. Simplify code path: get vhostfds for all cases in one function.
 
-  - cxl-host.c update_non_interleaved(): called at commit time from
-    hdm_decoder_commit() via cfmws_update_non_interleaved(), so a guest
-    writing COMMIT with a reserved IW terminates QEMU immediately.  This
-    is the primary trigger on the current tree.
+2. Prepare for further tap-fd-migraton feature, when we'll need to
+postpone vhost initialization up to post-load stage.
 
-  - cxl_type3.c cxl_type3_dpa(): called on memory access while iterating
-    past committed decoders to accumulate dpa_base.  Once the commit-time
-    exit is removed, the decoder stays committed with the reserved
-    encoding, so a later guest access outside that decoder's range would
-    otherwise hit this second &error_fatal; both are fixed here.
-
-Pass NULL instead of &error_fatal at both sites so that the reserved
-encoding returns zero and the existing guards handle it gracefully.
-
-This can be reproduced by writing the HDM Decoder 0 Control register
-with a reserved IW encoding and the COMMIT bit set (e.g. IW=0x5,
-COMMIT=1).
-
-Cc: qemu-stable@nongnu.org
-Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
-Fixes: 48461825af1b ("hw/mem/cxl_type3: Fix potential divide by zero reported by coverity")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260618104316.557306-1-junjie.cao@intel.com>
+Message-ID: <20260819180201.1970193-5-vsementsov@yandex-team.ru>
 ---
- hw/cxl/cxl-host.c  | 2 +-
- hw/mem/cxl_type3.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/tap.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index eba13c9e7c..369a985f9b 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -442,7 +442,7 @@ static int update_non_interleaved(Object *obj, void *opaque)
-             }
+diff --git a/net/tap.c b/net/tap.c
+index f4051e8d4b..bec2cd48fd 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -756,8 +756,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
          }
+     }
  
--        interleave_ways_dec = cxl_interleave_ways_dec(iw, &error_fatal);
-+        interleave_ways_dec = cxl_interleave_ways_dec(iw, NULL);
-         if (interleave_ways_dec == 0) {
-             return 0;
-         }
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 28f41fa623..6f44770db6 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1200,7 +1200,7 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-         }
-         if (((uint64_t)host_addr < decoder_base) ||
-             (hpa_offset >= decoder_size)) {
--            int decoded_iw = cxl_interleave_ways_dec(iw, &error_fatal);
-+            int decoded_iw = cxl_interleave_ways_dec(iw, NULL);
+-    if (tap->has_vhost ? tap->vhost :
+-        (vhostfd != -1) || (tap->has_vhostforce && tap->vhostforce)) {
++    if (vhostfd != -1) {
+         VhostNetOptions options;
  
-             if (decoded_iw == 0) {
-                 return false;
+         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+@@ -767,17 +766,6 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         } else {
+             options.busyloop_timeout = 0;
+         }
+-
+-        if (vhostfd == -1) {
+-            vhostfd = open("/dev/vhost-net", O_RDWR);
+-            if (vhostfd < 0) {
+-                error_setg_file_open(errp, errno, "/dev/vhost-net");
+-                goto failed;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                goto failed;
+-            }
+-        }
+         options.opaque = (void *)(uintptr_t)vhostfd;
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
+@@ -863,14 +851,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
+ static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
+                                 int queues, Error **errp)
+ {
+-    if (!(tap->vhostfd || tap->vhostfds)) {
++    bool need_vhost = tap->has_vhost ? tap->vhost :
++        ((tap->vhostfd || tap->vhostfds) ||
++         (tap->has_vhostforce && tap->vhostforce));
++
++    if (!need_vhost) {
+         *vhost_fds = NULL;
+         return true;
+     }
+ 
+-    if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
+-                      vhost_fds, queues, errp) < 0) {
+-        return false;
++    if (tap->vhostfd || tap->vhostfds) {
++        if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
++                          vhost_fds, queues, errp) < 0) {
++            return false;
++        }
++    } else {
++        *vhost_fds = g_new(int, queues);
++        for (int i = 0; i < queues; i++) {
++            int vhostfd = open("/dev/vhost-net", O_RDWR);
++            if (vhostfd < 0) {
++                error_setg_file_open(errp, errno, "/dev/vhost-net");
++                net_free_fds(*vhost_fds, i);
++                return false;
++            }
++            (*vhost_fds)[i] = vhostfd;
++        }
+     }
+ 
+     if (!unblock_fds(*vhost_fds, queues, errp)) {
 -- 
 MST
 
