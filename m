@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A850C79FB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 12:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC7FC79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 12:33:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4dsw-0008DY-Sl; Thu, 10 Sep 2026 08:28:10 -0400
+	id 1x4dxI-00012y-Au; Thu, 10 Sep 2026 08:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4dsv-0008DQ-KX
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 08:28:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4dsu-0000QW-34
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 08:28:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789043286;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1x4dxG-00012Z-UK; Thu, 10 Sep 2026 08:32:38 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1x4dxF-000171-By; Thu, 10 Sep 2026 08:32:38 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2484F1FCBA;
+ Thu, 10 Sep 2026 12:32:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789043551; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RlF9kn+HyNUEyx3z6d/XHzzDdZuEjKJCbcnRpLip9jM=;
- b=i+2CQyBtrPLAbWPQqj4IysQ81wMUpRrEKH260+VbDSyP+ShmFgMxzKeDO0FtP16U+mSReP
- R5cHeO6o4BYupk3aNIxSnpjfa/yu1epSaHeIWAJmguGeZODJRlwd9AsSaBpYNbQ2iIw7BI
- bxZmdHW0c8AiSyQxoMnLL0Ngd5ZTaik=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-XZDjqqfXM1-egmy6O4hNtw-1; Thu, 10 Sep 2026 08:28:05 -0400
-X-MC-Unique: XZDjqqfXM1-egmy6O4hNtw-1
-X-Mimecast-MFC-AGG-ID: XZDjqqfXM1-egmy6O4hNtw_1789043285
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9394ad7f64aso1094835285a.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 05:28:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789043285; x=1789648085; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=RlF9kn+HyNUEyx3z6d/XHzzDdZuEjKJCbcnRpLip9jM=;
- b=SIEJ+cgMsIyrkiuTtLBiBzx9+svJz8YdkOHIO1VfMEy6iEtcGlz+rwfHBSmVYNvsMR
- qe3xwyJqhI3Axbdk3HH/710JEqkpTdAS4GTfsjeeKOOcCg0AobMTF7XNY/yOgP+LdUvI
- TPZgq68JDfqlTYlK0GWxuRy7cvsDuG5pxCftre7U6rLx0ZUzM08fDSUkb9CQ2NLivt74
- sgN7Qm4ywYIf+X3OPAvDKHsdu9Lp0LIm+x2OP8RIpnkaoTJYIDuZrdjnrGF/NFAJwd1O
- SDdC7kHNGJnmEarTyEDXyab4qlh3Bij5nNk2xAS/mnAZyczAGaQcR/2JwsPOqyUOzoAO
- t+Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789043285; x=1789648085;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=RlF9kn+HyNUEyx3z6d/XHzzDdZuEjKJCbcnRpLip9jM=;
- b=A6F/AohZ3LxmZonqdB2qDdXPNVKWRyeKMPfMhZj1WO2LYPkcaPCFT6aFRsD1PwbsfX
- 3hfWDR7x42EJdDZjVlLjuupcjQNgpnKcs3IiShp6N0YsHLyBNWQeIBGpkYOH/2TuT6Nv
- wl4Xq2G+Is3aEbambohXPW8ScMhwFfH7aNt62rAsL3ztOcLOUR3Zcs49DwZBJwsH/N59
- WzXlZxDGlr8ZV8LTTncgb4nyW71qyxH/cympNpKv/f58S7nDuW50q/myIgdDv3rmPFa7
- 4AFAJqZQ5+oYQyeg89nHSrbkQrsmbunfSHXfpMlQWPcE5/kbK4munQv1HmGyXtRQLWKt
- XmMA==
-X-Gm-Message-State: AFuF++kcH0Bf6Hjjj3/VHxj18D8jzbvl90luYa3uGQj4FCV9Zk/B0xW4
- hXlmoVOMI8hfHayX9T3mn/z65JWGvUWYKuWC7TN7nqieWm3iQ7lDCKgDHHSPnScbAk0zRbgeA2c
- yXuoQlTUCy/TsBxEYk4DooemSV6wSSk31gqu2zKTseR6Q12pyxSJC8DL+
-X-Gm-Gg: AYBFou09Bgj4gjSXnu4QxRNNF9kIa59XOQ+V1QbraNKy9WsVDMO3u/+KRo3g8Vvs+UC
- p/1LCAK6Jvcc1UpWIWQJIBXi7N1gNxojsoZHCvrkkKNmiiMI2roNUOFqkmOSJGM/ECgQtOimHyR
- Qi39EHaBQxVoFNDdLYZshchAVpVip99UOrarRLNhzhlJrdC3YnsBp8ycheCwVy0d0DcWr0d//Qb
- CoFrTwG0BjI2lhTHCcTcwX/fpzRC77rTx3KtVsEtaJp9X/5Rvf4uU5C89FrPsFlqHSSfAOBVM1c
- lrH8PWEfomPr3n8V6UMXKKLV8aYfjXuxyKjasYtncqgb+0gsgXGDzknlUloaAo1Kc/mVkULatHW
- ZeslphS6wEfyrlPwaRAdH2xhsg5ajhe59TtM0JMtDPkbtYSPXyWYE6hlecqI=
-X-Received: by 2002:a05:620a:3941:b0:92e:4927:2002 with SMTP id
- af79cd13be357-939d4a8ebb0mr1062755985a.39.1789043284615; 
- Thu, 10 Sep 2026 05:28:04 -0700 (PDT)
-X-Received: by 2002:a05:620a:3941:b0:92e:4927:2002 with SMTP id
- af79cd13be357-939d4a8ebb0mr1062749185a.39.1789043283995; 
- Thu, 10 Sep 2026 05:28:03 -0700 (PDT)
-Received: from localhost
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9397f9f0734sm1698669485a.4.2026.09.10.05.28.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 05:28:02 -0700 (PDT)
-Date: Thu, 10 Sep 2026 08:28:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v2 05/18] migration: Merge parameter structs instead of
- assigning one by one
-Message-ID: <aqKiUJTvI_I8F2td@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260909214509.237309-1-farosas@suse.de>
- <20260909214509.237309-6-farosas@suse.de>
+ bh=ZQVGQlF8rQ4sg9rOVG5qovdMdx4uhpBfVXoGIh4QTSU=;
+ b=n/oEKnP103ia5jtcvgntNQxfWY9WWiqm+J/qCQ9Ns7yYmg9tRFvkBD2xSJiP5xybRuTCCB
+ 8WbPjcd8LG/Ith61tNgcVE90nF2vmBqzXV2dJC3D80NjT2JO5uaPBgI16yBW+YfyvL7OmM
+ PhYsk16LKl90qcdzhQSchESkjWzgM8g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789043551;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQVGQlF8rQ4sg9rOVG5qovdMdx4uhpBfVXoGIh4QTSU=;
+ b=zzrvcB7NketC518PZ6+rKakec8ws/2XnKfUb719/t1xM6bicKnbHiQo8MH1cnNKL9sKhxJ
+ qiGfWSmT1rI+MaCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789043547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQVGQlF8rQ4sg9rOVG5qovdMdx4uhpBfVXoGIh4QTSU=;
+ b=VxI5uUP+l72d8+dROXCwvNt0T2IM9ywR983nx5PrA2Q4u4ClTT0P77vnejbFj7FuBIZt7k
+ cXVKVqFEJLBZbNsqkIArKd4dZNMzSUeji/oLmDE3GznfJtO0U930jybCcVLu2PmHQl0taN
+ 2ehRUR4cjmTLb8xxomXqaazIYAEDU5c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789043547;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQVGQlF8rQ4sg9rOVG5qovdMdx4uhpBfVXoGIh4QTSU=;
+ b=slNa4yrz/vBhzb4LStxR9hkwGwkcUL72dxL2ErlulgGp9icB5mrmeqV4vLy7Xm7IkfENAp
+ eAvFHejZGH/VA0Bg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 70EA313955;
+ Thu, 10 Sep 2026 12:32:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id D4y9EFqjomqzUwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 12:32:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org
+Subject: Re: [PATCH 1/1] tests/qtest/ahci: fix a racy deadlock in the engine
+ stop test
+In-Reply-To: <9adc681f-f20c-4ef7-8e04-2da290827a28@virtuozzo.com>
+References: <20260830183534.104435-1-den@openvz.org> <87fqzi6nxz.fsf@suse.de>
+ <9adc681f-f20c-4ef7-8e04-2da290827a28@virtuozzo.com>
+Date: Thu, 10 Sep 2026 09:32:20 -0300
+Message-ID: <874ifxuw17.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260909214509.237309-6-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,49 +122,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 09, 2026 at 06:44:55PM -0300, Fabiano Rosas wrote:
-> Convert the code in migrate_params_test_apply() from an open-coded
-> copy of every migration parameter to a merge operation using QAPI
-> visitors and QDict.
-> 
-> The purpose of that routine is to update a temporary structure
-> (pre-populated with the current migration parameters), with the values
-> received from the user via QAPI. As a result, the temporary structure
-> will then contain the "to be applied" parameters and it's validated
-> before being used to overwrite the parameters currently in use.
-> 
-> The update is currently done as follows:
-> 
-> where 'params' is the user input from QAPI,
-> for each parameter:
-> 
->   a) check if the option is present
->      params->has_<name> == true
->      params-><name> != NULL // for strings
-> 
->   b) if the parameter is a pointer, free the to-be-assigned member and
->      allocate memory for the copy from params
-> 
->   c) assign the user provided value to the temporary structure.
-> 
-> Step (a) is the same in principle as what the QAPI visitors do at
-> visit_type_MigrationParameters_members().
-> 
-> Steps (b) and (c) are roughly the same as what the QDict
-> implementation does when qdict_del() and qdict_put_obj() are combined.
-> 
-> Therefore, replace the open-coded function with
-> migrate_params_merge(), which achieves the same goal, but uses
-> visitors and QDict. This hides the details of QAPI (has_*) from the
-> migration code and avoids the need to update
-> migrate_params_test_apply() every time a new migration parameter is
-> added.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+"Denis V. Lunev" <den@virtuozzo.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> On 9/10/26 00:48, Fabiano Rosas wrote:
+>> "Denis V. Lunev" <den@openvz.org> writes:
+>>
+>>> From: Denis V. Lunev <den@openvz.org>
+>>>
+>>> test_write_engine_stop_in_flight() resumes the suspended backend write
+>>> and goes straight on to restart the command engine and read the second
+>>> sector back. Whether the write has retired by then is a race. While it
+>>> is still outstanding the drive is busy, and handle_cmd() drops a
+>>> command that arrives in that state instead of queueing it. Nothing
+>>> retries the drop, so the PxCI slot stays set and no D2H FIS is posted.
+>>> ahci_command_wait() polls both with no timeout, so the test deadlocks
+>>> until the harness kills it.
+>>>
+>>> Drain the port before issuing the read, so the abandoned write has
+>>> retired and the engine is idle. Host load stretches the gap between the
+>>> resume and the write completing, which is why the deadlock only shows
+>>> up on a loaded machine.
+>>>
+>>> Fixes: d05ae87e7a6a ("tests/qtest/ahci: regression test for a PIO write=
+ vs. engine stop")
+>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>> ---
+>>>  tests/qtest/ahci-test.c | 6 ++++++
+>>>  1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+>>> index b143862ce7..2552fa39f1 100644
+>>> --- a/tests/qtest/ahci-test.c
+>>> +++ b/tests/qtest/ahci-test.c
+>>> @@ -1914,6 +1914,12 @@ static void test_write_engine_stop_in_flight(voi=
+d)
+>>>=20=20
+>>>      g_free(qtest_hmp(ahci->parent->qts, "qemu-io drive0 \"resume wr\""=
+));
+>>>=20=20
+>>> +    /*
+>>> +     * Retire the abandoned write. handle_cmd() drops a command that a=
+rrives
+>>> +     * while the drive is still busy and nothing retries it.
+>>> +     */
+>>> +    g_free(qtest_hmp(ahci->parent->qts, "qemu-io drive0 \"aio_flush\""=
+));
+>>> +
+>>>      /* Round-trip through the device to confirm qemu is still alive. */
+>>>      ahci_px_rreg(ahci, port, AHCI_PX_TFD);
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Hi, Fabiano!
+>
+> Would you mind to get this patch through test tree?
+> I do not have enough IDE material except this patch
+> for now.
+>
+> Thank you in advance,
+> =C2=A0 =C2=A0 Den
 
--- 
-Peter Xu
-
+Yep, no worries. I'm just waiting for my leak fixes series to be ready
+and I'll send a PR.
 
