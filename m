@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE89C88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D63C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4nxi-0001MJ-N5; Thu, 10 Sep 2026 19:14:18 -0400
+	id 1x4nQ5-0000Y1-Dz; Thu, 10 Sep 2026 18:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lj1-0001Qy-V2
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:50:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lK0-0002Py-7S
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4liq-0006NS-34
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:50:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lJp-0008FW-Qv
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789073414;
+ s=mimecast20190719; t=1789071666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6kSbe3EQQwukUniN5j1YO+Sdv0dG67Pln7DjT7x+CNQ=;
- b=IBCPaEw0D1E17zKr4JIMsK5J84F51LkS3yEeEFlGuVytI0uVuizFg9JU3saADzLCHM0Y5y
- 9iJQqoFb2gQauQkpN1PjzC/67wv7/uRR4pl2KQRit0l0kt4EkSLpTAFSkQOG2M+EGHPZYD
- rWmrnvQbxd4DuWvoFJMGxigRNjk/Dwo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EbHgYTTTglQemO80px4rrB2L4uzTAs06wcqbum2Jp9A=;
+ b=Dv5W6LdE0SEB4XAKAyyBWvfmyhfLS/NUde4FJm4+xmWRPIqvdLnd9rd0KgEKGqPBZbYzXj
+ i8MWN43Oo0F/E+F/qPM97VAuGybWnNn+IGQngEdiGq8iNa5wjSpovqexsEZNf87pGIxbhJ
+ p96FUZeEsTHTQRbxKbpwrMy/NLmv9g0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-aP7WvBgFM1qYbFA-9iT1yg-1; Thu, 10 Sep 2026 16:11:37 -0400
-X-MC-Unique: aP7WvBgFM1qYbFA-9iT1yg-1
-X-Mimecast-MFC-AGG-ID: aP7WvBgFM1qYbFA-9iT1yg_1789071096
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-486e8fb7d75so35323f8f.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:11:36 -0700 (PDT)
+ us-mta-325-r4eOxOBAMCun2FCdGBIgzA-1; Thu, 10 Sep 2026 16:14:05 -0400
+X-MC-Unique: r4eOxOBAMCun2FCdGBIgzA-1
+X-Mimecast-MFC-AGG-ID: r4eOxOBAMCun2FCdGBIgzA_1789071244
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49cced8309bso2003015e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071096; x=1789675896; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071244; x=1789676044; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=6kSbe3EQQwukUniN5j1YO+Sdv0dG67Pln7DjT7x+CNQ=;
- b=IGkzX0nxQLJfSUKzVtjOf8tIl9B1B7Rw2il3uyZNrrNICFuYg/vsM4AZOT0p8OZ59F
- ufARGPrkLAZe+qJtpzlLX2RDR4RbplJdxpTr5FjqGvv605z/gSgA87LPmyIqc+yMXfZL
- JAWAwxmhOK2+DfASI1rbQNVhxjWklZkeTnM3SxuuYySZgU5vdIaEL2hNE7gnAvsFb8rM
- hg6dxWKTXJkJr7n6hQi/dK+Gg5OkxxLNIkXqA2sAIUwbj1aR5vDBj2ZC/EnMZkjhYE2M
- pelH3tqQUuFr737LKZa/8KEk9ebkf+A9QZclXbqYwqR86xBotugau8E8LlGme8SiTw2E
- PhkA==
+ bh=EbHgYTTTglQemO80px4rrB2L4uzTAs06wcqbum2Jp9A=;
+ b=DJlTlvgfLm0hq7Z4cRAfHQGA0Qxin0gn6T7sF8QS/wUteUsdLA+twZcxF8gG/U2tZm
+ AQYt4ncHwi8ZD+68OFuJYjIsiGp4YGndszO+pJKUbKPbm8J4j0oPwQ2uk9eV8FvKbq3H
+ OU5LkTwyn7BOcbjT97N7gEfmPQxLfCEWcUPk63ZYEKjQjNdsQqV5/r9VxGH3M6xIyfGS
+ aczNTHcvz0ZFJlE/91DkwaxDbpVm7Mu29sQsB+sUZ7Hg8VSdl735WEY2qgu9BS/jockM
+ wv6SuunkiUyGCPt6zxjHSDS7Xe6bBstWOqLD61r6l+wQp3brsTS+LeFEgKY3wnUxwM5s
+ bn8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071096; x=1789675896;
+ d=1e100.net; s=20251104; t=1789071244; x=1789676044;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=6kSbe3EQQwukUniN5j1YO+Sdv0dG67Pln7DjT7x+CNQ=;
- b=ZgRTKWrGWX4dAbOJZ1D3TgQSooPojkRx3cotcu3wjB2DDLO78Sv/M28cyl4MfdDKRa
- 7TUtTTueTIFeXFELp8/UHP9TYv3nK70MtQphi7mDPURbATJSh8DUH9GmjLRrb4PmN31w
- MJ07DzBlGqsT0RfdHS/ZXUKgs6OFC0inIDunUGgadq+CTB1r7KDWWxwOrZ2yjTD4kYi5
- Kq4ccPgUFKOrlKmRpzm2qhW5gJoeplYTUGATpTj7mWHm7jhV/s1frX/wX5zN1rg7U4X1
- 6nRbJwSx5W0OmlwOMlZtNUnkYZ7JLLaoRBwNe2zdyXsbbO81yOcp8LXBlUn/enRdPdwh
- k4Xg==
-X-Gm-Message-State: AFuF++mQeAURM57N3lOr3Gzj0KZcn/yjwdtd+EwxSIEeuF/QBn+UA/Wf
- ni/CMUt3iFvuCNknnH+wuFRQiM908bKkp0eNe6mtV030i7FQ2FHQaRhk2epJkT3xR0blxTTUJYs
- VUmu0CvdfN8McJWAmPdFBM8JlmnP8CpnBmFmymvx95y4qAwVkTKnh5MbClxkcdm/Omm3dpzCZoI
- N6/mmkU42Ur3Ehwj2Cvo8fUKVygwVEU7WCGw==
-X-Gm-Gg: AYBFou0n6As3MLfCItLS5NxgD4pdYrBoq9CVGws/oqlr3BkqkQgNxWIAPm+LUlDEfwX
- eh6g8ca3a8YGYId7OVqlkm9ZFLx+Z5erWwMkxXZmtFY48ZkLGKS78NL1w8/Ua4mkpoZU0EwOb0q
- WP+rxFKvqf4zUhfA1leGCuQFqRQfVR72h5awWciNkvA34BE0PdGYOLCNr2TfyyhjuO+pZ8SdclS
- R5+RUCiA/zqjX1SNY44oIoCLPIbWWE59ue/W4n6vFWnpaYVpGoeTYTs2M6nFYk0VcmYoMoXsdtn
- B8yfUO1GYgAsp9lM5yqy+QuwU3Ya/qazwDUxlzTi5/c/usH9vQ+4/E6DoNpf/6kX0+BNCjTfZHS
- nQKQZFhJd8Fb9GP9+Gs2STaQ=
-X-Received: by 2002:a5d:630b:0:b0:484:3311:3176 with SMTP id
- ffacd0b85a97d-486eb2feb3cmr485934f8f.23.1789071095824; 
- Thu, 10 Sep 2026 13:11:35 -0700 (PDT)
-X-Received: by 2002:a5d:630b:0:b0:484:3311:3176 with SMTP id
- ffacd0b85a97d-486eb2feb3cmr485903f8f.23.1789071095246; 
- Thu, 10 Sep 2026 13:11:35 -0700 (PDT)
+ bh=EbHgYTTTglQemO80px4rrB2L4uzTAs06wcqbum2Jp9A=;
+ b=kxSWL9VNGFUYkwaYetYFn0TKl/6BpHzqGk8aAS857G3NY5TuJ0igwkI6LgVll/KqfE
+ rn2FcnUhR0yR6nPagbQHh2ZHJx1N9bjvOWvzFNOJA47lc0hlsw8GT0z5WngZxW4VICWO
+ XVoDmHwF7Lt3pvNFqizKsUOY7Pya0g6Vq1fcCmrLVep4M9sosiL2dAHRr5SGjh/EGPBe
+ ckolZIPeA5AJ6VUwnOv34J/34ICkZImkGX9aNMjR/98yVsRQ97OxmHJioxmVYn9fwnXv
+ w8oPa9AModj64t5kdvSTmd9WTvqu9zsVAhvTKrAUErK2hvqUy0DqZBnyLMvSKFaVuNMf
+ OiEg==
+X-Gm-Message-State: AFuF++m5ofKsniJbWPKnxikJYzJkQp+TOUx9cj4Kkaj3i9DshaYzBk5O
+ DafzYxtsmiEBTfLQUhuAP4tMsPk4Ldtowk/zfAWXjk3MehdS+gCotU9eiPwAA24ID65qHvEUYUz
+ 92DslPUQ77EGK7pmGYjwItVRrQ6XhKNl5qqZIc6EWmezHyecC/4M9lm6hf0cYJV4/3niTDgzN46
+ iU5bQ3CMRjnU8XmmX3st5lboMXozlXOI2c7w==
+X-Gm-Gg: AYBFou2Ua5kMNF9xziDbMxnmbmFWowVNpZ4s2oMMaY3DFkhDLw//5sxUzERwNNbNBwQ
+ U8fd3LqdiM6WiF4b7Po305opaePUivWJFcD+on26YXoB8hVFGGqo67KT/BJFOJIgrw5cWkCF7qz
+ kOic5qkyr+RTFY3HV3eTG9je2J9P5sd7YldB5ztr3aLTBBxWhyaM4qotUErnA2Z2P6iQ7p7IVSW
+ 7uw6y+1+458howFnOldTzqPiOJ+c9Fu+zkKH81LPbV3YfIE774517IYK+VMfCTa/DUHkMG6uqoD
+ bqM2M53XHQ6zO8g/QyCCIHGhch31usG4KxAUEUo6tD6IblMRTCyG4ENJfQSLAxYFztoe3cAolHM
+ Q74cS1QXEoOwgQHug2OAQVlQ=
+X-Received: by 2002:a05:600c:8b23:b0:49b:9202:6f80 with SMTP id
+ 5b1f17b1804b1-49e619805b5mr7385395e9.6.1789071243841; 
+ Thu, 10 Sep 2026 13:14:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b23:b0:49b:9202:6f80 with SMTP id
+ 5b1f17b1804b1-49e619805b5mr7385165e9.6.1789071243384; 
+ Thu, 10 Sep 2026 13:14:03 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32e7d4sm904984f8f.8.2026.09.10.13.11.34
+ 5b1f17b1804b1-49e62121747sm1938275e9.2.2026.09.10.13.14.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:11:34 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:11:33 -0400
+ Thu, 10 Sep 2026 13:14:03 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:01 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 05/90] vhost-vsock: block CPR migration modes
-Message-ID: <506207fc2f814c2b4aa72d44977d10f4b4ea1285.1789071042.git.mst@redhat.com>
+ Sairaj Kodilkar <sarunkod@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 61/90] amd_iommu: acpi-build: update PA, GVA and VA size macros
+Message-ID: <5aea68d8f088795d1a65ed0d50731d45e72965a7.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,119 +124,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-CPR migration with a vhost-vsock device currently crashes the target
-QEMU.  The device ownership is not handed over, so while the source
-QEMU still holds the guest CID hashed in the kernel, the target's freshly
-opened vhost-vsock device fails to set the same CID in realize():
+Current implementation supports up to 64 bit IOVA and up to 52 bit PA.
+Modify related macros so that guest can see right size.
 
-  qemu-system-x86_64: -device vhost-vsock-pci,id=vsock0,guest-cid=3:
-  vhost-vsock: unable to set guest cid: Address already in use
+Also, use these macros to build the IVINFO field in the IVRS.
 
-Add an unconditional migration blocker for the CPR modes, so that such
-a migration fails early and gracefully instead.  The following patches
-implement the actual vhost-vsock CPR support, and the blocker is lifted
-once it's fully working.
-
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260820113955.509478-2-andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260807061250.27739-4-sarunkod@amd.com>
 ---
- include/hw/virtio/vhost-vsock.h |  1 +
- hw/virtio/vhost-vsock.c         | 27 +++++++++++++++++++++++----
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ hw/i386/amd_iommu.h  | 11 ++++++++---
+ hw/i386/acpi-build.c |  4 +++-
+ hw/i386/amd_iommu.c  |  2 +-
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
-index 84f4e727c7..a964d57e1b 100644
---- a/include/hw/virtio/vhost-vsock.h
-+++ b/include/hw/virtio/vhost-vsock.h
-@@ -29,6 +29,7 @@ struct VHostVSock {
-     /*< private >*/
-     VHostVSockCommon parent;
-     VHostVSockConf conf;
-+    Error *migration_blocker;   /* CPR migration is not supported */
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 687691ec1c..d01f9b41df 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -243,9 +243,14 @@
+ #define AMDVI_PAGE_SHIFT_4K 12
+ #define AMDVI_PAGE_MASK_4K      GENMASK64(63, 12)
  
-     /*< public >*/
- };
-diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index da244eb165..503d248a61 100644
---- a/hw/virtio/vhost-vsock.c
-+++ b/hw/virtio/vhost-vsock.c
-@@ -20,6 +20,8 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/virtio/vhost-vsock.h"
- #include "monitor/monitor.h"
-+#include "migration/blocker.h"
-+#include "migration/misc.h"
+-#define AMDVI_MAX_GVA_ADDR      (2UL << 5)
+-#define AMDVI_MAX_PH_ADDR       (40UL << 8)
+-#define AMDVI_MAX_VA_ADDR       (48UL << 15)
++/*
++ * IOMMU Capability Offset 10h: Miscellaneous Information Register 0.
++ * VAsize[21:15], PAsize[14:8], and GVAsize[7:5].
++ * These fields use the same layout in the IVRS IVinfo Field.
++ */
++#define AMDVI_VA_SIZE_64        (64UL << 15)
++#define AMDVI_PA_SIZE_52        (52UL << 8)
++#define AMDVI_GVA_SIZE_48       (2UL << 5)
  
- static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
- {
-@@ -140,25 +142,38 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /*
-+     * CPR migration of a vhost-vsock device is not supported yet: the
-+     * device ownership is not handed over, so the target fails to set
-+     * up its device.  Fail the migration early and gracefully instead.
-+     */
-+    error_setg(&vsock->migration_blocker,
-+               "vhost-vsock: CPR migration is not supported");
-+    if (migrate_add_blocker_modes(&vsock->migration_blocker,
-+                                  BIT(MIG_MODE_CPR_TRANSFER) |
-+                                  BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
-+        return;
-+    }
-+
-     if (vsock->conf.vhostfd) {
-         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
-         if (vhostfd == -1) {
-             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
--            return;
-+            goto err_blocker;
-         }
- 
-         if (!qemu_set_blocking(vhostfd, false, errp)) {
--            return;
-+            goto err_blocker;
-         }
-     } else {
-         vhostfd = open("/dev/vhost-vsock", O_RDWR);
-         if (vhostfd < 0) {
-             error_setg_file_open(errp, errno, "/dev/vhost-vsock");
--            return;
-+            goto err_blocker;
-         }
- 
-         if (!qemu_set_blocking(vhostfd, false, errp)) {
--            return;
-+            goto err_blocker;
-         }
-     }
- 
-@@ -187,16 +202,20 @@ err_vhost_dev:
-     vhost_dev_cleanup(&vvc->vhost_dev);
- err_virtio:
-     vhost_vsock_common_unrealize(vdev);
-+err_blocker:
-+    migrate_del_blocker(&vsock->migration_blocker);
+ /* Completion Wait data size */
+ #define AMDVI_COMPLETION_DATA_SIZE    8
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 1696821048..05b68d05a8 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1858,7 +1858,9 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+      */
+     build_append_int_noprefix(table_data,
+                              (1UL << 0) | /* EFRSup */
+-                             (40UL << 8), /* PASize */
++                             AMDVI_GVA_SIZE_48 | /* GVASize:     010b = 48 bits */
++                             AMDVI_PA_SIZE_52 |  /* PASize: 011_0100b = 52 bits */
++                             AMDVI_VA_SIZE_64,   /* VASize: 100_0000b = 64 bits */
+                              4);
+     /* reserved */
+     build_append_int_noprefix(table_data, 0, 8);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 578c27ccbe..56e7815412 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -2595,7 +2595,7 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
+                  0xff000000);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_MISC,
+-            AMDVI_MAX_PH_ADDR | AMDVI_MAX_GVA_ADDR | AMDVI_MAX_VA_ADDR);
++            AMDVI_PA_SIZE_52 | AMDVI_GVA_SIZE_48 | AMDVI_VA_SIZE_64);
  }
  
- static void vhost_vsock_device_unrealize(DeviceState *dev)
- {
-     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    VHostVSock *vsock = VHOST_VSOCK(dev);
- 
-     /* This will stop vhost backend if appropriate. */
-     vhost_vsock_set_status(vdev, 0);
- 
-+    migrate_del_blocker(&vsock->migration_blocker);
-     vhost_dev_cleanup(&vvc->vhost_dev);
-     vhost_vsock_common_unrealize(vdev);
- }
+ static void amdvi_sysbus_reset(DeviceState *dev)
 -- 
 MST
 
