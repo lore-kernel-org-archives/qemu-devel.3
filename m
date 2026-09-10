@@ -4,108 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83757C88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C109C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4mel-0005Fd-66; Thu, 10 Sep 2026 17:50:22 -0400
+	id 1x4mhD-00063y-46; Thu, 10 Sep 2026 17:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lM2-00036B-JI
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:26:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lLl-0000SG-LF
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:26:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071781;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lN8-0003Nc-0N
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:28:11 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lMw-00016g-Gn
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:27:47 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B41E121E64;
+ Thu, 10 Sep 2026 20:26:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789071977; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
- b=Xm6JJe8jZACKZildy3sfVvlAL/ANL3nu7YkoVHZkU0lHXKeyVVOWtg0EtGZUDAmi/etr8F
- VheapQ2RzOgiWPabZw6dyRlRSrUoQL6GKI+G1qcxyk3uCVOg2We31igsn2cykeD0Po94h/
- JFUykhdcxrTWomQTDjx+BzXi88RGz4E=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-1kID34PRPESxyiRWuhoV7w-1; Thu, 10 Sep 2026 16:15:36 -0400
-X-MC-Unique: 1kID34PRPESxyiRWuhoV7w-1
-X-Mimecast-MFC-AGG-ID: 1kID34PRPESxyiRWuhoV7w_1789071335
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49991beee7aso1750805e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071335; x=1789676135; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
- b=oRWE6o4Bpw70KIvVcA2DSimBJz6gYOeaT1musq707vIoK/KCPjcn01mD9vs3/2OlFo
- tbkCUSv3jcBvblyMFKAapjy7UvK92rV5TglQy6JfMk4XjrpDjlSnlgLa29rjv1bRY1hG
- OIyw1r4839EhqcP+jdG6ntcNPqvzPMHe31MFwoX/8dFsC5apw9HLnfeuMWYeEMRBbk1d
- ZIVCQidJCKbhwzXNUzfGp1KghVEfI9E8d8EpBFiTFcIgK6gPKeedYVdolEypGFP8VYW9
- 2pfdrcw0Z9TQFIBYZXMQPbO63gDzdKaIxprwiOM4ZLkoolQnvV0vjyFukl1vkHZu8es0
- FIEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071335; x=1789676135;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
- b=YQfA91ITSXs4Bol6il6hRSOuDD0EQLCVfjq7/zsLBBus6Szru1aK9hxnwjwodPI3I5
- Evfr9hAMyh+yxfLbiXqd7iB51Q9QHZJmNFeqzppspBaxcfhFPI6Ch3L27jp8EsgZMSzq
- +jG+cl0EnQ5u4CX3vS8jeJlZJnc1Q6I0soVos1MwH7zze/Ab2P6i8Rt2JYhmPdPZ64b1
- g21rDllQUzvLVy48cPeXhzpZ4yl3v9DrNjJvOZIROEqaFE6n8qcFU7V1pO06RM7bfngi
- q+rvOKFAKxV20WGH6Voqe8in3kp7sdG0i4hge7S78PSS/iByK2xLy8wcSYsnrzBa+O08
- Zbrg==
-X-Gm-Message-State: AFuF++k7WWGbJB8BTNnIv7c0seBXjmxEvaCUgdS5QmYEDmqYWC/QMKR+
- T6j7AEopfCTTfcj9LwQIPlwb3UXc98fXvfMZDwKV8sDpJWB8mqY8n4deKlfjCHK3TufEShXz81r
- d1tH75Twga9lG0FsHf21/7RdbF5vZYcZXzFTfH63LhdVgQqRPl851HD/n1UXVGQgy7ge7oUBS7n
- n8gblIs2Gti5lM1HR9Z/8zvuDlChhthHhhBQ==
-X-Gm-Gg: AYBFou10YgX/fTO5WFdpQU4fwbjRhHEyHhFOAc8Q9lKT00pk3RokHpO7nTDYKCkZF2Y
- v3yhjJUvW7maRMcur01h7ZYYLnL8VfXVjeWpJc0w6z/o85lmrP910EX4WUrw5AkPX9BBHyL6cyW
- M7mCPq68TpVuO32PRRccb7BDs18WKz+FswLnsR/KCKFHxlo/c4G+CWzaF7CN/DL2/VKMORs1Bwb
- jRwWmuk/GJ4pBGXLE+axMdZary1cavkJ3L95bOPSE1EnV6oP1xN8T/OsA59qyTO5vsRUWNRXgLg
- v12Hm1dCxRPifPwmAY1ANH3UOXQ8nvswiGrwAZkKHb6woyl2G1y7UD9U0n5hXpmdY298yLcZnPm
- D+Auy/E8S1aFynwtfeVcuC4U=
-X-Received: by 2002:a05:600c:19c8:b0:499:b65e:49c9 with SMTP id
- 5b1f17b1804b1-49e619f3ae1mr12235575e9.10.1789071334908; 
- Thu, 10 Sep 2026 13:15:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:19c8:b0:499:b65e:49c9 with SMTP id
- 5b1f17b1804b1-49e619f3ae1mr12234815e9.10.1789071334417; 
- Thu, 10 Sep 2026 13:15:34 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb35f3d9sm687758f8f.35.2026.09.10.13.15.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:15:33 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:15:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ bh=fHOUSNPgHp+ou5TCOsUhOhq0vr6Hn9TKw3iNsrm+f10=;
+ b=sd0TsHydb25gLHrCBJh296ZVF505wXimyL7J6VXTUAnPOPDaMXR51/R26qKTLkHMNsuagf
+ WuRQmkyBxEvl/xkxMpc4DQ2qCayuQqqa6EfaYinAcD2QhDuYctJ0hnWkV5Ynpd+4Bsp2aa
+ WXSXSVLsO0UnYh/ni1mLnR0f3SeR9Tw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789071977;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fHOUSNPgHp+ou5TCOsUhOhq0vr6Hn9TKw3iNsrm+f10=;
+ b=aWHL341hyaXBGdVQB926jiPS0QOY6LNLnVbGS3L0UoC2yoSmvxC83iN+wJkw7mt5n+gtHf
+ xnjXYVnjwcY8YeBQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mXeSFvom;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bppyYIvV
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789071971; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fHOUSNPgHp+ou5TCOsUhOhq0vr6Hn9TKw3iNsrm+f10=;
+ b=mXeSFvomQswIXp2dPKXlN0QeyObLBbEOqHa8L7vWPmRhWg/XvFaSMJfiVEKXq4ASJLvMQZ
+ iSt+98jcqtccusVVW+4r+pP4AHvRNnNFYBY/8dey+NvX68rv/Jzsu1CnNChoqZbxgobuQ/
+ rWmXx61V2aRt//2WvstejQGyEPJhPcw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789071971;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fHOUSNPgHp+ou5TCOsUhOhq0vr6Hn9TKw3iNsrm+f10=;
+ b=bppyYIvVCP7BDkYRvVLcMeA89dHoKCXsODxezVHb+GwvbVUmVwbhCD5GLh+le3DiTW6qu0
+ DAnUfuoPEFeUmDAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7CD1213A5A;
+ Thu, 10 Sep 2026 20:26:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +MmsE2ESo2pJPQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 20:26:09 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>
-Subject: [PULL 82/90] virtio-net: validate IHL in
- virtio_net_rsc_extract_unit4 before use
-Message-ID: <58a9bdd9c75642568bcf364114b3bc704b6fbc99.1789071043.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+Cc: Christian Quante <christian@quante.one>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 3/7] tests/qtest/fdc-test: check that READ ID answers for the
+ drive it names
+Date: Thu, 10 Sep 2026 17:25:55 -0300
+Message-ID: <20260910202559.916866-4-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260910202559.916866-1-farosas@suse.de>
+References: <20260910202559.916866-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: B41E121E64
+X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,quante.one:email,st1.ma:url];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,49 +130,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_net_rsc_extract_unit4() uses the IPv4 IHL nibble from the
-wire to compute the TCP header offset, but the caller's length
-check only guarantees space for a minimum 20-byte IP header. A
-crafted IHL of 15 causes a read 32 bytes past a 66-byte buffer
-when the frame was parked in net/queue.c's exact-size allocation.
+From: Christian Quante <christian@quante.one>
 
-virtio_net_rsc_sanity_check4() rejects IHL != 5 on the next line,
-but runs after the OOB read already happened.
+Commit d00567f7fb ("hw/block/fdc: select the drive named by the READ ID
+command") added the missing SET_CUR_DRV() to fdctrl_handle_readid(), but
+nothing keeps it there: the suite runs a machine with a single floppy
+drive, where answering for the wrong drive cannot be told from answering
+for the right one.  Removing the call again leaves every existing test
+case green.
 
-Validate IHL before using it as an offset. Since
-virtio_net_rsc_sanity_check4() only accepts IHL == 5 anyway, reject
-anything else early and let the caller fall through to the bypass
-path.
+Add a test case on a machine with two drives.  Drive 0 holds a medium and
+is selected by a SEEK, the way a driver spinning up the motor would select
+it; drive 1 is empty.  READ ID is then issued for drive 1, and two
+independent properties of the answer have to hold: fdctrl_stop_transfer()
+reports the drive in ST0, and an empty drive terminates abnormally with
+ST1.MA.  Without the fix the controller answers for drive 0, which
+terminates normally with ST0 = 0x00.
 
-Fixes: 2974e916df ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Yuri Benditovich <yuri.benditovich@daynix.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4166
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Test cases carry their own command line, so that a test can ask for
+something other than the default single drive.  Both command lines name
+the pc machine, so the check added by the previous patch still covers
+every test case.
+
+Signed-off-by: Christian Quante <christian@quante.one>
+Tested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/net/virtio-net.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tests/qtest/fdc-test.c | 81 ++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 66 insertions(+), 15 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 986ceff514..19f453fb7d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2104,6 +2104,14 @@ static void virtio_net_rsc_extract_unit4(VirtioNetRscChain *chain,
-     unit->ip = (void *)ip;
-     ip_hdrlen = (ip->ip_ver_len & 0xF) << 2;
-     unit->ip_plen = &ip->ip_len;
+diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
+index f480f4ba09..33d1b83aeb 100644
+--- a/tests/qtest/fdc-test.c
++++ b/tests/qtest/fdc-test.c
+@@ -67,6 +67,7 @@ enum {
+ enum {
+     ST0_IC_MASK  = 0xc0,    /* interrupt code */
+     ST0_IC_ABNTERM = 0x40,  /* abnormal termination */
++    ST0_DS_MASK  = 0x03,    /* drive the answer is about */
+ 
+     ST1_MA       = 0x01,    /* missing address mark */
+ };
+@@ -545,6 +546,47 @@ static void test_read_id_no_media(void)
+     g_assert_cmpint(st1 & ST1_MA, ==, ST1_MA);
+ }
+ 
++/*
++ * READ ID carries the drive number in its command byte and has to latch it.
++ * A controller that fails to do so answers for whichever drive was selected
++ * last.  Here drive 0 holds a medium and is selected by the SEEK; drive 1 is
++ * empty, so answering for the wrong drive terminates normally (ST0 = 0x00)
++ * where the command has to fail, and names drive 0 rather than drive 1.
++ */
++static void test_read_id_other_drive(void)
++{
++    uint8_t drive = 1;
++    uint8_t head = 0;
++    uint8_t st0, st1;
 +
-+    if (ip_hdrlen != sizeof(struct ip_header)) {
-+        unit->tcp = NULL;
-+        unit->tcp_hdrlen = 0;
-+        unit->payload = 0;
-+        return;
++    media_insert();
++
++    /* SEEK latches drive 0, the way a driver spinning up the motor would */
++    send_seek(0);
++
++    floppy_send(CMD_READ_ID);
++    g_assert(!get_irq(FLOPPY_IRQ));
++    floppy_send(head << 2 | drive);
++
++    while (!get_irq(FLOPPY_IRQ)) {
++        clock_step(1000000000LL / 50);
 +    }
 +
-     unit->tcp = (struct tcp_header *)(((uint8_t *)unit->ip) + ip_hdrlen);
-     unit->tcp_hdrlen = (htons(unit->tcp->th_offset_flags) & 0xF000) >> 10;
-     unit->payload = read_unit_ip_len(unit) - ip_hdrlen - unit->tcp_hdrlen;
++    st0 = floppy_recv();
++    st1 = floppy_recv();
++    floppy_recv();                  /* ST2 */
++    floppy_recv();                  /* cylinder */
++    floppy_recv();                  /* head */
++    floppy_recv();                  /* sector */
++    g_assert(get_irq(FLOPPY_IRQ));
++    floppy_recv();                  /* sector size */
++    g_assert(!get_irq(FLOPPY_IRQ));
++
++    g_assert_cmpint(st0 & ST0_DS_MASK, ==, drive);
++    g_assert_cmpint(st0 & ST0_IC_MASK, ==, ST0_IC_ABNTERM);
++    g_assert_cmpint(st1 & ST1_MA, ==, ST1_MA);
++}
++
+ static void test_read_no_dma_1(void)
+ {
+     uint8_t ret;
+@@ -656,6 +698,11 @@ static void test_cve_2021_3507(void)
+     qtest_quit(s);
+ }
+ 
++#define MACHINE_ONE_DRIVE "-machine pc -device floppy,id=floppy0"
++#define MACHINE_TWO_DRIVES \
++    "-machine pc -device floppy,id=floppy0,unit=0" \
++    " -device floppy,id=floppy1,unit=1"
++
+ /*
+  * Each test gets its own QEMU instance, so that none of them depends on the
+  * state another one left behind.  Without this, several tests only pass in
+@@ -667,35 +714,39 @@ static void test_cve_2021_3507(void)
+ typedef struct {
+     const char *path;
+     void (*fn)(void);
++    const char *args;
+ } FDCTest;
+ 
+ static const FDCTest fdc_tests[] = {
+-    { "/fdc/cmos",              test_cmos },
+-    { "/fdc/no_media_on_start", test_no_media_on_start },
+-    { "/fdc/read_without_media", test_read_without_media },
+-    { "/fdc/media_change",      test_media_change },
+-    { "/fdc/sense_interrupt",   test_sense_interrupt },
+-    { "/fdc/relative_seek",     test_relative_seek },
+-    { "/fdc/read_id",           test_read_id },
+-    { "/fdc/read_id_no_media",  test_read_id_no_media },
+-    { "/fdc/verify",            test_verify },
+-    { "/fdc/media_insert",      test_media_insert },
+-    { "/fdc/read_no_dma_1",     test_read_no_dma_1 },
+-    { "/fdc/read_no_dma_18",    test_read_no_dma_18 },
+-    { "/fdc/read_no_dma_19",    test_read_no_dma_19 },
+-    { "/fdc/fuzz-registers",    fuzz_registers },
++    { "/fdc/cmos",              test_cmos,              MACHINE_ONE_DRIVE },
++    { "/fdc/no_media_on_start", test_no_media_on_start, MACHINE_ONE_DRIVE },
++    { "/fdc/read_without_media", test_read_without_media, MACHINE_ONE_DRIVE },
++    { "/fdc/media_change",      test_media_change,      MACHINE_ONE_DRIVE },
++    { "/fdc/sense_interrupt",   test_sense_interrupt,   MACHINE_ONE_DRIVE },
++    { "/fdc/relative_seek",     test_relative_seek,     MACHINE_ONE_DRIVE },
++    { "/fdc/read_id",           test_read_id,           MACHINE_ONE_DRIVE },
++    { "/fdc/read_id_no_media",  test_read_id_no_media,  MACHINE_ONE_DRIVE },
++    { "/fdc/read_id_other_drive", test_read_id_other_drive,
++                                                        MACHINE_TWO_DRIVES },
++    { "/fdc/verify",            test_verify,            MACHINE_ONE_DRIVE },
++    { "/fdc/media_insert",      test_media_insert,      MACHINE_ONE_DRIVE },
++    { "/fdc/read_no_dma_1",     test_read_no_dma_1,     MACHINE_ONE_DRIVE },
++    { "/fdc/read_no_dma_18",    test_read_no_dma_18,    MACHINE_ONE_DRIVE },
++    { "/fdc/read_no_dma_19",    test_read_no_dma_19,    MACHINE_ONE_DRIVE },
++    { "/fdc/fuzz-registers",    fuzz_registers,         MACHINE_ONE_DRIVE },
+ };
+ 
+ static void run_isolated(const void *data)
+ {
+     const FDCTest *test = data;
+ 
++    /* Every command line in fdc_tests[] names the pc machine */
+     if (!qtest_has_machine("pc")) {
+         g_test_skip("Machine 'pc' is not available");
+         return;
+     }
+ 
+-    qtest_start("-machine pc -device floppy,id=floppy0");
++    qtest_start(test->args);
+     qtest_irq_intercept_in(global_qtest, "ioapic");
+ 
+     test->fn();
 -- 
-MST
+2.53.0
 
 
