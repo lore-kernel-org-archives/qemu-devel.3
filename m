@@ -4,129 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA5B3C88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 04:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBC8C88E42
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 05:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4t8B-0001Q6-If; Fri, 11 Sep 2026 00:44:55 -0400
+	id 1x4tQ2-0006I1-O3; Fri, 11 Sep 2026 01:03:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1x4t89-0001Pu-Ug; Fri, 11 Sep 2026 00:44:53 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1x4t87-00059K-8v; Fri, 11 Sep 2026 00:44:53 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s9a1MVQWXs579jn5lyKPUzLKQICp8ivqDGOZLxU/4C2FHh6GKliNyXNsjzlOaqGktRDkzt656F/GlET/JdfP0AGxSLX1xGkBfQu3l/jMNmDOgi4jaRR7Up8haVo2q8Nz8OVPf8MB6XKcSq9c9Abvrd7oSFyCbwS1gqel15V4GU6S1wE3ELuGdaB9XInPf80ILdtjz6iCeIE4D2VRIsh50b5VXOHXBLFamKFeo/YuZvUetezdTXWrtE2ydxvq0+/xrUeMur2/fgTCv9tOp5h9FxDY+tgDT230l02my+u5CvzfsY3a9Cmasf2EniRebeAqLnvE4+wrXgPsp/idWXekow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CPMaZyxn66NanZam7WVD+eGYJncttcFLzeIYaRsUck8=;
- b=Z2lg+hvnURBEgz+Ia/GfuDeRFMR20H7GH7YZl2VRY7cX9CjnAQmajGBpFj/97Y37L7nGmxMEKoJ4SDugHAEbP+Q9lNz+LeR6LNlaNDn9RhhxG/a9xkK+oAIujIavZSpH0r67wI9YlAGRcPZxednfTf08DGj+JkqQJYFxCYApsAFfDlFskcBGbVRy+/QzSc5utwNlHvVPFz0e1geP6rlPiIZh8XcFjxJxl7flMos0xC2oPw73giuslguXMh3R92CLd2aL4t6InhVEh/eaadOTBWNef0pjkNbjww2yDgkBQ3ZWbbLK8f6XQH9efNFxSp7XSEUflWJySh4VbzUZTkJYAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CPMaZyxn66NanZam7WVD+eGYJncttcFLzeIYaRsUck8=;
- b=DUgGntrmZdEC4GsfUB/ZvMzaWeo41c5mD5htWgoMDn0B/i996ZNnWAIcntkry9rNWU6bJ5lc1SDjLvr+pd3OFCl6fcLVb/z2DzrsshtK3LqpPqXTat+l6dkgujddkt6IGdSZIOdcpSlaC7Mb0/0XsdXejvXZa6X04QMb8DmJCqwY9uOKT29ru68X7Khqnm5Fx67j41mTJ1fYzC7F5ThFnmnSC5qXcj15rZilqPWQJP6eS9VYkAB4BXSrfAU7VtecJDPh56qRq8xyiTNmqe4TwXeES149kAnODA7CJuf8enG48Cy21TrMgl20tbB3SadWkiBxgHsOUp32Qpyr3JKMfw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SEZPR02MB7871.apcprd02.prod.outlook.com (2603:1096:101:216::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
- 2026 04:44:42 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0406.007; Fri, 11 Sep 2026
- 04:44:42 +0000
-Date: Fri, 11 Sep 2026 12:44:37 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Zephyr Li <fritchleybohrer@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-stable@nongnu.org, 
- pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
- pierrick.bouvier@oss.qualcomm.com, alex.bennee@linaro.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v2] target/riscv: fix RV32 fixed counter accesses
-Message-ID: <aqOHF2QVtK0UWM-e@MacBook-Pro-4.local>
-References: <20260909072356.42784-1-fritchleybohrer@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260909072356.42784-1-fritchleybohrer@gmail.com>
-X-ClientProxiedBy: PH8P221CA0063.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:349::15) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <oss.patchbox@gmail.com>)
+ id 1x4mQq-00025M-TF
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 17:38:32 -0400
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <oss.patchbox@gmail.com>)
+ id 1x4mQl-0005qW-Hp
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 17:35:42 -0400
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-92edb12cdf2so13395185a.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 14:35:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789076136; x=1789680936; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fYkt7DD91S7eXg1jKSZt1wKCwqOy7up5oCafkVxbKYQ=;
+ b=JI+L03iVoQipQFJk6ZdcIDLVR17ZhBTWH61NAia7ro0AU7TRAStNXns8Mu8+JegkDj
+ 7Y7SHrdxDRR4/7VuYEK2QNyXCYk09C94mgkG4VUpaEA13v/rn1ng5kobXlAgSeM5CDfE
+ MjJoap5nkxkmFWh9Fq4BH6PKRUxS2hTdZT68wg15PKbo9m3MWC3/wQOpAiHxMcu86+6A
+ hVJubB68kU9psbA6TBOdMQ/03sPC+kouxMfpM8HDuVpkMsBFDD3DyYBn6AReFUPCXGGI
+ WYaMynpzkHlXPxiDOfiWYkUDL09av4HU71D+BUydln7E1taAEGzEr1LJ6lizGzt2wsM7
+ eCgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789076136; x=1789680936;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fYkt7DD91S7eXg1jKSZt1wKCwqOy7up5oCafkVxbKYQ=;
+ b=lFR9MWc3S+OuebM+O5ldgggyOFALph5SPtp6eTot9HJC75ff+jG7N41i+geIH1AFJ9
+ iFWuB0dvpPPKeoRBEPKS96eJdu/EcpNap4Uir2XoRcK07DPteXwODpLIoDS/an4XqpVl
+ Sc+916SvXQrLPgDTZ2zXkzGvYYElC2Q2gN5c2mUNyCOYZMSnLh9PbjpI8DZGk/OuhHv+
+ zqhf8NpEEYGE82lUvQ5UVlgz6B+B+ew7Dn8w9dhsd1hT01Tu48o0rCMyKA+K9Y9W3kfv
+ VzfvXj98jj9UDrC2fwdOum/twEyuUafUYC+CCiJF0SrTS33Gevo8k8K46Db3qViJfIcU
+ CLPg==
+X-Gm-Message-State: AFuF++mdbNb68dBfIOUxy77Ls5nkw+7l66myYX2oosXuWz4aWUXbCaJ7
+ 5Ofe0N3vZQBig5CLewlaXRPokPJVepwYawLsUJ5KOOsswJYMJcccCAso2+pWXLwxkjU=
+X-Gm-Gg: AYBFou1XlJ9OYAkEMFTOfe/tDi36IPnVXS26ZrXR1cCxiYYwvjnSl2pxGi8cFqHwbTV
+ WuJ/yKIsBQhQetlKhvOlzv1/zeiWE6wpW4dMth7sbNuMH5mrJFhBV1XVpWgAKaCMDyOqrTrInc9
+ v2So03dXkceXRoBSL6Wqa2ZgK/8BAxnRjtZ2mh0r4Dobb86gaUvW8Zos+qw3tPFXrv6ANjtIdQe
+ S31ROJwvCap7dO8ZAxlfmbkopHandzyAIl2Lmztm9KYyIjREJw96QvYJ3WtxxKqY4qTNsR3Dgno
+ dnveOMTUPLSpDRAtWxU76JEN0qSnsBEhU45yelYw+/ryYyM4ug5Ag9dy0Exep21xBgoon3bd0T+
+ MrROr/lMV7jGCCXsrXVdNlylO5IGPMirokxsjbeMNvC1arCIXMns3YGLle2FIT+oRge9oQQ13sr
+ 2kLg4oPcg2ugpNKg198bqV9HrBRzvD7JKWcBm0ic+uIeStqjeMjGGVknWdXE0Bx04XUfDpJoTXW
+ A==
+X-Received: by 2002:a05:620a:390f:b0:939:cb1a:2c59 with SMTP id
+ af79cd13be357-939ea149d34mr134313785a.22.1789076135344; 
+ Thu, 10 Sep 2026 14:35:35 -0700 (PDT)
+Received: from i4-gl-tmk5904.ad.psu.edu ([130.203.156.186])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-939e80471a3sm79432185a.22.2026.09.10.14.35.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 14:35:34 -0700 (PDT)
+From: Yuho Choi <oss.patchbox@gmail.com>
+X-Google-Original-From: Yuho Choi <dbgh9129@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: john.levon@nutanix.com, thanos.makatos@nutanix.com, clg@redhat.com,
+ qemu-stable@nongnu.org, Yuho Choi <oss.patchbox@gmail.com>
+Subject: [PATCH v1] vfio-user: propagate DMA map/unmap request errors
+Date: Thu, 10 Sep 2026 17:35:26 -0400
+Message-ID: <20260910213526.1472467-1-dbgh9129@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEZPR02MB7871:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4f9401d-a84a-4186-b895-08df0fbf6575
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|23010399003|1800799024|18002099003|5023799004|10067099003|56012099006|3023799007|22082099003;
-X-Microsoft-Antispam-Message-Info: sJ+JCZYmcNES41LbDMeLkWbylU1gPl1MahZpC2/3JyiCK6nu4cbUlVxeKHD1tq/AJAiHGdKLLroIF4S4JsSUcyYDML3vxGjqLAKJVHu8Fwlaa6Cs0n+OMI7+1fGyoCjlCgnFe5eh8WUSRM9DLzKAFkr2vpIKKgAzZdaP1hU0UQdVjOMcj1QUb3xBfV/QaBx17dp2Mp13jBLsVLkNTMVm83j5eU0vTkY0zjOB28uERSK5EBzD9vuCcHmPjX0efq2jdcc0A+kFrOF4YHGiTD225uIrOilPxU9hbMdKTuYCjvPbNXs9qJr9YF7lx8jWYkSnLwfoHOx2hbesqOfyrJLhqQKmIFPSxMEDaS9m4j8IW5lYXkCuZWMOb3HaYHgOWGxJ3bSyNvwRCPbKpE4r4tUW2ad7hjHxO++R6Ez6MJ9ixGMc1I+vrF41K2BYBSmFIqUywg1w9fPFxe4GYyxIDuiI5tgU9+ILrvAwwbR9gmhm1u8XpBp7vONSX3coQKwG6YOsewGyRi2oIdGgY29IUtrwy1ZqrsI6/yfmTyqJxJUuUvibj/8HYG8KzOoFbnKJyyP/62nSbCdHclyWlY2cyaeK/VLwPDtlkd23QAZMsHy5EOxL9Q3suMO/eX8guYj1a5NJ+jm4rmy36zXasZnSNDAhSuGw5sPlNti73HBLMcUaWpo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(23010399003)(1800799024)(18002099003)(5023799004)(10067099003)(56012099006)(3023799007)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LTUsQkPKcMAigO9Yg9f9A0+zaXwhXysZQJW4MRs7TJ+Ved4POEm9IsEtjmye?=
- =?us-ascii?Q?ZQTjqjJBnaNYOzJanmw5+ciekYMFy26bY/1p+kve4mlbi9eYIIc8JM8TxfI6?=
- =?us-ascii?Q?q/b/tsAvY5Hhlwrtt4Zu8OIStCYmoTQa1epUXAvdH/E76V/omJWE+m0DHNku?=
- =?us-ascii?Q?YqNf7XsdRvfxT2BkoeMZ231SL1BVwyYhbXhHViE0/Tkfyn7ZFDHhNJ6iB+MH?=
- =?us-ascii?Q?CuOcEM08Y5EZX1SSI8AIfoIX6xoI6RnXfTQZmbnUv3vlb877W5Rk7pNW9NXt?=
- =?us-ascii?Q?l3EudOXtqcoNTbLJyRl2qtsmexcERvyGtnxADprmK4eOV11WfVddFB6o8VMa?=
- =?us-ascii?Q?Y+R1+5vm87+6iX/Bkko+ePAd/S1BnFE9VM5dC2kNyIlMwcpnVbRWXRXnnkcH?=
- =?us-ascii?Q?1Xfhhqw6NkQNnKM6nzU+P7+DKzFGIIvtECnidynfc6PVPqGi8Jhhk5o2BSfY?=
- =?us-ascii?Q?Ft3FZam8uZl4vOPy9yy0d++RyNOG9bbg/F5HsaqsSTOMJ64CRGVvI5GieAot?=
- =?us-ascii?Q?JnH7Q/UZ7XBJmH3ivMa5TtOoYvYmLqAQmhqN9hnWWI072GC4jo/QVddVeMUe?=
- =?us-ascii?Q?jUvyDlxGf4B09lNuQIN2E1+OIdBbPG9LNdAGKWMS5/qSCT873ncixEhrIWu/?=
- =?us-ascii?Q?i7Fs4379c7CHDthoCnGNLF+QcOemL3Z4QM/piw/eJD/zrmmxXeWy3aPIoEcD?=
- =?us-ascii?Q?5wpSpzhiZGEXsI10g182tKp5WngNHOuqDsnshKLcjVu/9txPaowzmZQhcW4C?=
- =?us-ascii?Q?vtzu2RAyrOplqEg4Dpu3YWvEAEmfTuIYhV8Ipx7LJ+PLXHtxDBdDzReFGTzZ?=
- =?us-ascii?Q?aFKbDtpvFbABc5pjHDtl0dMn/5dKCypF7O7t6OWmVw7S4ttaUBrr0LrH5+A9?=
- =?us-ascii?Q?VTjMRRfpOa5d67Fw0gsvnWokXr0L3uHJrSbBuRZujXo9ORNqlFB4gut0+bK6?=
- =?us-ascii?Q?MiU1d6QwlSuuwSurx6CFvHDhCw2WGUm9FxZeAPuZglu20ZNaT7D12ZthEtrS?=
- =?us-ascii?Q?lQ9CxrbdhBcJByNNwqnYze87dj4tGrplxAgnO4+bHS1Oh8MFIpzaxbmcm+Sq?=
- =?us-ascii?Q?7sPLdfJqRsA132Yk4wUpsP1kiwNNjPoWBqVEJdKaKQWsFCdGTVulaDmUJv8v?=
- =?us-ascii?Q?GI9WQl3Fe8OQQkgzb2siC2vDoD17NbzeIn19UdM5/9XDsSMiwm2rOpUkfN3g?=
- =?us-ascii?Q?MgnNX/R+RHuzbwhnBxLPfArqngFns4tqqJ+vnYBCoHlDkEU4HeZPhwGFCqj/?=
- =?us-ascii?Q?J9IdDbvF3O45ekFwLNctIUiZ42YJXmGXDePfc5pEGCK1kDI9RRFd6oJYJjGr?=
- =?us-ascii?Q?8XvxnaGRHjeq85YdnBzTWdPqVJONWwb/nS50/B/ARDs7dHK4DeYAbxaoyY7A?=
- =?us-ascii?Q?3AVnd5IuTlBA7fl+IF9EKo87rniiciIk+NH3EnBsHdpvzi3fjheQE8izLZUi?=
- =?us-ascii?Q?KprylHB7CkYftYml41hxQuup59nY7IrF7PPWrxaoPvUWhKz2HTP6iE5nTfnN?=
- =?us-ascii?Q?h9H0ZdFBtu2rAaxQrGMcdFcLPm7Tt5J0+c2+jiQMHDc1W4fumNkYk2j4uJ+q?=
- =?us-ascii?Q?tHw8nKs8vQSMVa+RaHPgxC9qrHLHaBhRx1WlFmP7kCdSrVAMMgUINBtyx2L2?=
- =?us-ascii?Q?4a2D5Nj+RXQ7bFhQei1qXvBDLyb6QTxDYciFG0A0LpKQs9zPZvlj8YN9U225?=
- =?us-ascii?Q?VH8JRz5XhPslXSYWQtnshYj2fMXKFu720iKeBEbfvtIzAgXV9Tdaom9RdZ4r?=
- =?us-ascii?Q?L2necZ2HgyOMeQ45nKix4EMPLwdmShk=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4f9401d-a84a-4186-b895-08df0fbf6575
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 04:44:42.7366 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qrP0q7M2vHA+wHMVJGH9cQgYJYX9yqO0sChFf1N00X32mFrnXOY5bHKTttuGfkVJa0oVq5jcrlkZBekOG+TG38lWr0IlzEKhhVHfWFwPeKc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7871
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=chao.liu@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=oss.patchbox@gmail.com; helo=mail-qk1-x733.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 11 Sep 2026 01:03:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,308 +100,533 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 09, 2026 at 03:23:55PM +0800, Zephyr Li wrote:
-> Since commit cfc96df65e01, riscv_pmu_ctr_get_fixed_counters_val()
-> returns the complete 64-bit fixed-counter value. The RV32 counter
-> access paths, however, still perform parts of the offset calculation
-> on separately extracted 32-bit halves.
-> 
-> In particular, riscv_pmu_write_ctrh() deposits the low 32 bits of the
-> complete fixed-counter value into the high half of mhpmcounter_prev.
-> riscv_pmu_read_ctr() also subtracts a 32-bit half of the previous value
-> from the complete 64-bit fixed-counter value. Consequently, writes to
-> mcycleh can be lost and carries between the low and high halves are not
-> handled correctly.
-> 
-> Keep the fixed-counter offset calculation entirely in 64 bits. Before
-> a running counter is partially written, materialize its current
-> architectural value and reset the fixed-counter baseline. On reads,
-> calculate the complete 64-bit counter value before extracting the half
-> requested by RV32.
-> 
-> Register RV32 system TCG tests with the Meson build. Add a test for
-> high-half writes, low-to-high carry, and preserving the carried high
-> half across a subsequent low-half write.
-> 
-> Fixes: cfc96df65e01 ("target/riscv: Remove upper_half from riscv_pmu_ctr_get_fixed_counters_val")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4219
-> Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-Thanks,
-Chao
+vfio_user_wait_reqs() uses the youngest nowait request as an ordering
+fence, but error replies for older requests are logged and recycled. An
+error reply or timeout for the youngest request is also only logged. The
+memory listener therefore commits even when QEMU and the server may
+disagree about DMA mappings.
 
-> 
-> ---
-> Changes in v2:
-> - Move the test to a new tests/tcg/riscv32 directory.
-> - Convert the test registration to the Meson TCG test framework.
-> - Add RV32 TCG cross-compiler options and cover the test directory in
->   MAINTAINERS.
-> - Add a riscv32-local semihosting linker script.
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7183babd6a..5f75b2684f 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -377,6 +377,7 @@ F: include/hw/riscv/
->  F: common-user/host/riscv*
->  F: tests/functional/riscv32
->  F: tests/functional/riscv64
-> +F: tests/tcg/riscv32/
->  F: tests/tcg/riscv64/
->  F: tests/qtest/iommu-riscv-test.c
->  
-> diff --git a/meson_options.txt b/meson_options.txt
-> index 292625af08..2ceebe7a44 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -452,6 +452,10 @@ option('tcg_tests_cross_cc_ppc64le', type: 'string',
->         description: 'cc for ppc64le tcg tests')
->  option('tcg_tests_cross_cflags_ppc64le', type: 'string',
->         description: 'cflags for ppc64le tcg tests')
-> +option('tcg_tests_cross_cc_riscv32', type: 'string',
-> +       description: 'cc for riscv32 tcg tests')
-> +option('tcg_tests_cross_cflags_riscv32', type: 'string',
-> +       description: 'cflags for riscv32 tcg tests')
->  option('tcg_tests_cross_cc_riscv64', type: 'string',
->         description: 'cc for riscv64 tcg tests')
->  option('tcg_tests_cross_cflags_riscv64', type: 'string',
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index bd4b6dc114..65985efb22 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -1337,23 +1337,23 @@ static RISCVException riscv_pmu_write_ctr(CPURISCVState *env, target_ulong val,
->      int deposit_size = rv32 ? 32 : 64;
->      uint64_t ctr;
->  
-> -    counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-> -                                         0, deposit_size, val);
-> -
->      if (!get_field(env->mcountinhibit, BIT(ctr_idx)) &&
->          (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
->           riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
->          ctr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
-> -        counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
-> -                                              0, deposit_size, ctr);
-> +        counter->mhpmcounter_val += ctr - counter->mhpmcounter_prev;
-> +        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-> +                                             0, deposit_size, val);
-> +        counter->mhpmcounter_prev = ctr;
->          if (ctr_idx > 2) {
->              riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
->          }
->       } else {
-> +        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-> +                                             0, deposit_size, val);
->          /* Other counters can keep incrementing from the given value */
->          counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
->                                                0, deposit_size, val);
-> -
->      }
->  
->      return RISCV_EXCP_NONE;
-> @@ -1363,20 +1363,22 @@ static RISCVException riscv_pmu_write_ctrh(CPURISCVState *env, target_ulong val,
->                                            uint32_t ctr_idx)
->  {
->      PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-> -    uint64_t ctrh;
-> +    uint64_t ctr;
->  
-> -    counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-> -                                         32, 32, val);
->      if (!get_field(env->mcountinhibit, BIT(ctr_idx)) &&
->          (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
->           riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
-> -        ctrh = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
-> -        counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
-> -                                              32, 32, ctrh);
-> +        ctr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
-> +        counter->mhpmcounter_val += ctr - counter->mhpmcounter_prev;
-> +        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-> +                                             32, 32, val);
-> +        counter->mhpmcounter_prev = ctr;
->          if (ctr_idx > 2) {
->              riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
->          }
->      } else {
-> +        counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-> +                                             32, 32, val);
->          counter->mhpmcounter_prev = deposit64(counter->mhpmcounter_prev,
->                                                32, 32, val);
->      }
-> @@ -1407,12 +1409,11 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
->      bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
->      int start = upper_half ? 32 : 0;
->      int length = rv32 ? 32 : 64;
-> -    uint64_t ctr_prev, ctr_val;
-> +    uint64_t ctr_val;
->  
->      /* Ensure upper_half is only set for XLEN == 32 */
->      g_assert(rv32 || !upper_half);
->  
-> -    ctr_prev = extract64(counter->mhpmcounter_prev, start, length);
->      ctr_val  = extract64(counter->mhpmcounter_val, start, length);
->  
->      if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
-> @@ -1431,7 +1432,8 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
->      if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
->          riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
->          uint64_t cntr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
-> -                                                             ctr_prev + ctr_val;
-> +                        counter->mhpmcounter_prev +
-> +                        counter->mhpmcounter_val;
->          *val = extract64(cntr, start, length);
->      } else {
->          *val = ctr_val;
-> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-> index d41a228fb3..60b5ce2529 100644
-> --- a/tests/tcg/meson.build
-> +++ b/tests/tcg/meson.build
-> @@ -169,6 +169,7 @@ subdir('mips64el')
->  subdir('or1k')
->  subdir('ppc64')
->  subdir('ppc64le')
-> +subdir('riscv32')
->  subdir('riscv64')
->  subdir('s390x')
->  subdir('sh4')
-> diff --git a/tests/tcg/riscv32/meson.build b/tests/tcg/riscv32/meson.build
-> new file mode 100644
-> index 0000000000..c08dfd772d
-> --- /dev/null
-> +++ b/tests/tcg/riscv32/meson.build
-> @@ -0,0 +1,7 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +cc = 'riscv64-linux-gnu-gcc'
-> +cc_dockerfile = 'debian-all-test-cross'
-> +cc_docker_host_arch = ['aarch64', 'x86_64']
-> +
-> +subdir('system')
-> diff --git a/tests/tcg/riscv32/semihost.ld b/tests/tcg/riscv32/semihost.ld
-> new file mode 100644
-> index 0000000000..874838a865
-> --- /dev/null
-> +++ b/tests/tcg/riscv32/semihost.ld
-> @@ -0,0 +1,23 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +ENTRY(_start)
-> +
-> +SECTIONS
-> +{
-> +    /* virt machine, RAM starts at 2gb */
-> +    . = 0x80000000;
-> +    .text : {
-> +        *(.text)
-> +    }
-> +    .rodata : {
-> +        *(.rodata)
-> +    }
-> +    /* align r/w section to next 2mb */
-> +    . = ALIGN(1 << 21);
-> +    .data : {
-> +        *(.data)
-> +    }
-> +    .bss : {
-> +        *(.bss)
-> +    }
-> +}
-> diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
-> new file mode 100644
-> index 0000000000..16f9a06c94
-> --- /dev/null
-> +++ b/tests/tcg/riscv32/system/meson.build
-> @@ -0,0 +1,37 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +tests = []
-> +
-> +link_script = files('../semihost.ld')[0]
-> +cflags = ['-march=rv32im_zicsr',
-> +          '-mabi=ilp32',
-> +          '-nostdlib',
-> +          '-ffreestanding',
-> +          '-Wa,--noexecstack',
-> +          '-Wl,-T', link_script]
-> +qemu_args = ['-M', 'virt',
-> +             '-display', 'none',
-> +             '-serial', 'stdio',
-> +             '-semihosting',
-> +             '-bios']
-> +
-> +tests += {
-> +  'test-mcycle.S': {
-> +    'cflags': cflags,
-> +    'qemu_args': ['-icount', 'shift=1', qemu_args],
-> +  },
-> +}
-> +
-> +if 'qemu-system-riscv32' in emulators
-> +  tcg_tests += {
-> +    'riscv32-softmmu': {
-> +      'cc': cc,
-> +      'cc_dockerfile': cc_dockerfile,
-> +      'cc_docker_host_arch': cc_docker_host_arch,
-> +      'folder': 'riscv32',
-> +      'gdb_arch': 'riscv32',
-> +      'qemu': emulators['qemu-system-riscv32'],
-> +      'tests': tests,
-> +    }
-> +  }
-> +endif
-> diff --git a/tests/tcg/riscv32/test-mcycle.S b/tests/tcg/riscv32/test-mcycle.S
-> new file mode 100644
-> index 0000000000..189d1e13a2
-> --- /dev/null
-> +++ b/tests/tcg/riscv32/test-mcycle.S
-> @@ -0,0 +1,45 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +	.option	norvc
-> +
-> +	.text
-> +	.global	_start
-> +_start:
-> +	/* Exercise writes while mcycle is running. */
-> +	csrw	mcountinhibit, zero
-> +	csrw	mcycle, zero
-> +
-> +	/* A write to the high half must be immediately observable. */
-> +	li	s0, 0x1234ffff
-> +	csrw	mcycleh, s0
-> +	csrr	t0, mcycleh
-> +	bne	t0, s0, fail
-> +
-> +	/* Check carry from the low half into the high half. */
-> +	li	s0, 0x12345678
-> +	csrw	mcycleh, s0
-> +	li	t0, 0xfffffff0
-> +	csrw	mcycle, t0
-> +	.rept	32
-> +	nop
-> +	.endr
-> +	csrr	t0, mcycleh
-> +	addi	s0, s0, 1
-> +	bne	t0, s0, fail
-> +
-> +	/* A low-half write must preserve the carried high half. */
-> +	li	t0, 0x22222222
-> +	csrw	mcycle, t0
-> +	csrr	t0, mcycleh
-> +	bne	t0, s0, fail
-> +
-> +	li	t0, 0x100000
-> +	li	t1, 0x5555	/* FINISHER_PASS */
-> +	sw	t1, 0(t0)
-> +	j	.
-> +
-> +fail:
-> +	li	t0, 0x100000
-> +	li	t1, 0x13333	/* status = FINISHER_FAIL, code = 1 */
-> +	sw	t1, 0(t0)
-> +	j	.
-> -- 
-> 2.43.0
+Preserve the first error from each nowait batch and return it to the
+listener commit callback. Propagate failures during listener registration
+so device realization fails cleanly. After initialization, report the
+error and stop with hw_error(), matching the existing VFIO DMA mapping
+failure policy.
+
+The memory listener commit callback cannot roll back a FlatView that has
+already advanced. Treat listener teardown the same way: until the proxy is
+disconnected, a failed unmap leaves the server's DMA access unconfirmed.
+Stopping QEMU avoids continued execution with inconsistent DMA state.
+
+Add unit coverage for an older failed request followed by a successful
+youngest fence, a timeout, and an all-success batch.
+
+Fixes: 18e899e63dd9 ("vfio-user: implement VFIO_USER_DMA_MAP/UNMAP")
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+---
+ MAINTAINERS                       |   1 +
+ hw/vfio-user/container.c          |  18 ++-
+ hw/vfio-user/proxy.c              |  89 +++++++++---
+ hw/vfio-user/proxy.h              |   3 +-
+ tests/unit/meson.build            |   8 ++
+ tests/unit/test-vfio-user-proxy.c | 222 ++++++++++++++++++++++++++++++
+ 6 files changed, 320 insertions(+), 21 deletions(-)
+ create mode 100644 tests/unit/test-vfio-user-proxy.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7183babd6aa..10516ee4213 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4582,6 +4582,7 @@ F: docs/system/devices/vfio-user.rst
+ F: hw/vfio-user/*
+ F: subprojects/libvfio-user.wrap
+ F: tests/functional/x86_64/test_vfio_user_client.py
++F: tests/unit/test-vfio-user-proxy.c
+ 
+ EBPF
+ M: Jason Wang <jasowangio@gmail.com>
+diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
+index dc23b06eebf..95f0e922d65 100644
+--- a/hw/vfio-user/container.c
++++ b/hw/vfio-user/container.c
+@@ -10,6 +10,7 @@
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+ 
++#include "hw/core/hw-error.h"
+ #include "hw/vfio-user/container.h"
+ #include "hw/vfio-user/device.h"
+ #include "hw/vfio-user/trace.h"
+@@ -33,10 +34,25 @@ static void vfio_user_listener_begin(VFIOContainer *bcontainer)
+ static void vfio_user_listener_commit(VFIOContainer *bcontainer)
+ {
+     VFIOUserContainer *container = VFIO_IOMMU_USER(bcontainer);
++    Error *local_err = NULL;
+ 
+     /* wait here for any async requests sent during the transaction */
+     container->proxy->async_ops = false;
+-    vfio_user_wait_reqs(container->proxy);
++    if (vfio_user_wait_reqs(container->proxy, &local_err)) {
++        return;
++    }
++
++    error_prepend(&local_err, "vfio-user DMA mapping transaction failed: ");
++    if (!bcontainer->initialized) {
++        if (!bcontainer->error) {
++            error_propagate(&bcontainer->error, local_err);
++        } else {
++            error_free(local_err);
++        }
++    } else {
++        error_report_err(local_err);
++        hw_error("vfio-user: DMA mapping failed, unable to continue");
++    }
+ }
+ 
+ static int vfio_user_dma_unmap(const VFIOContainer *bcontainer,
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 197aee07bf7..d43ddde7a0b 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -52,6 +52,26 @@ static void vfio_user_shutdown(VFIOUserProxy *proxy)
+                                    proxy->ctx, NULL, NULL);
+ }
+ 
++static void vfio_user_record_nowait_error(VFIOUserProxy *proxy,
++                                           const Error *err)
++{
++    if (proxy->nowait_error == NULL) {
++        proxy->nowait_error = error_copy(err);
++    }
++}
++
++static void vfio_user_record_nowait_reply_error(VFIOUserProxy *proxy,
++                                                 const VFIOUserMsg *msg)
++{
++    if (proxy->nowait_error == NULL) {
++        int error = msg->hdr->error_reply ?: EIO;
++
++        error_setg_errno(&proxy->nowait_error, error,
++                         "vfio-user command 0x%x failed",
++                         msg->hdr->command);
++    }
++}
++
+ /*
+  * Same return values as qio_channel_writev_full():
+  *
+@@ -162,10 +182,14 @@ static void vfio_user_process(VFIOUserProxy *proxy, VFIOUserMsg *msg)
+             qemu_cond_signal(&msg->cv);
+         } else {
+             if (msg->hdr->flags & VFIO_USER_ERROR) {
+-                error_printf("vfio_user_process: error reply on async ");
+-                error_printf("request command %x error %s\n",
+-                             msg->hdr->command,
+-                             strerror(msg->hdr->error_reply));
++                if (msg->type == VFIO_MSG_NOWAIT) {
++                    vfio_user_record_nowait_reply_error(proxy, msg);
++                } else {
++                    error_printf("vfio_user_process: error reply on async ");
++                    error_printf("request command %x error %s\n",
++                                 msg->hdr->command,
++                                 strerror(msg->hdr->error_reply));
++                }
+             }
+             /* youngest nowait msg has been ack'd */
+             if (proxy->last_nowait == msg) {
+@@ -426,7 +450,15 @@ err:
+              */
+             vfio_user_set_error(msg->hdr, EINVAL);
+             msg->complete = true;
+-            qemu_cond_signal(&msg->cv);
++            if (msg->type == VFIO_MSG_NOWAIT) {
++                vfio_user_record_nowait_reply_error(proxy, msg);
++                if (proxy->last_nowait == msg) {
++                    proxy->last_nowait = NULL;
++                }
++                vfio_user_recycle(proxy, msg);
++            } else {
++                qemu_cond_signal(&msg->cv);
++            }
+         }
+     }
+     return -1;
+@@ -669,6 +701,7 @@ static bool vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg,
+ bool vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                            VFIOUserFDs *fds, int rsize, Error **errp)
+ {
++    Error *local_err = NULL;
+     VFIOUserMsg *msg;
+ 
+     QEMU_LOCK_GUARD(&proxy->lock);
+@@ -679,12 +712,17 @@ bool vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+     msg->type = VFIO_MSG_NOWAIT;
+ 
+     if (hdr->flags & VFIO_USER_NO_REPLY) {
+-        error_setg_errno(errp, EINVAL, "%s on NO_REPLY message", __func__);
++        error_setg_errno(&local_err, EINVAL,
++                         "%s on NO_REPLY message", __func__);
++        vfio_user_record_nowait_error(proxy, local_err);
++        error_propagate(errp, local_err);
+         vfio_user_recycle(proxy, msg);
+         return false;
+     }
+ 
+-    if (!vfio_user_send_queued(proxy, msg, errp)) {
++    if (!vfio_user_send_queued(proxy, msg, &local_err)) {
++        vfio_user_record_nowait_error(proxy, local_err);
++        error_propagate(errp, local_err);
+         vfio_user_recycle(proxy, msg);
+         return false;
+     }
+@@ -777,21 +815,24 @@ bool vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+     return true;
+ }
+ 
+-void vfio_user_wait_reqs(VFIOUserProxy *proxy)
++/*
++ * Wait for completion of the current nowait batch.  DMA map/unmap requests
++ * sent during a memory transaction are nowait requests.  The server processes
++ * commands in receive order, so the youngest reply is a completion fence for
++ * all older requests.  Errors from older replies are saved until the fence is
++ * reached.
++ */
++bool vfio_user_wait_reqs(VFIOUserProxy *proxy, Error **errp)
+ {
+-    VFIOUserMsg *msg;
++    bool success = true;
+ 
+-    /*
+-     * Any DMA map/unmap requests sent in the middle
+-     * of a memory region transaction were sent nowait.
+-     * Wait for them here.
+-     */
+     qemu_mutex_lock(&proxy->lock);
+     if (proxy->last_nowait != NULL) {
++        VFIOUserMsg *msg = proxy->last_nowait;
++
+         /*
+          * Change type to WAIT to wait for reply
+          */
+-        msg = proxy->last_nowait;
+         msg->type = VFIO_MSG_WAIT;
+         proxy->last_nowait = NULL;
+         while (!msg->complete) {
+@@ -801,15 +842,16 @@ void vfio_user_wait_reqs(VFIOUserProxy *proxy)
+ 
+                 list = msg->pending ? &proxy->pending : &proxy->outgoing;
+                 QTAILQ_REMOVE(list, msg, next);
+-                error_printf("vfio_wait_reqs - timed out\n");
++                if (proxy->nowait_error == NULL) {
++                    error_setg_errno(&proxy->nowait_error, ETIMEDOUT,
++                                     "timed out waiting for vfio-user reply");
++                }
+                 break;
+             }
+         }
+ 
+         if (msg->hdr->flags & VFIO_USER_ERROR) {
+-            error_printf("vfio_user_wait_reqs - error reply on async ");
+-            error_printf("request: command %x error %s\n", msg->hdr->command,
+-                         strerror(msg->hdr->error_reply));
++            vfio_user_record_nowait_reply_error(proxy, msg);
+         }
+ 
+         /*
+@@ -819,7 +861,15 @@ void vfio_user_wait_reqs(VFIOUserProxy *proxy)
+         vfio_user_recycle(proxy, msg);
+     }
+ 
++    if (proxy->nowait_error != NULL) {
++        error_propagate(errp, proxy->nowait_error);
++        proxy->nowait_error = NULL;
++        success = false;
++    }
++
+     qemu_mutex_unlock(&proxy->lock);
++
++    return success;
+ }
+ 
+ /*
+@@ -1018,6 +1068,7 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+ 
+     /* we now hold the only ref to proxy */
+     qemu_mutex_unlock(&proxy->lock);
++    error_free(proxy->nowait_error);
+     qemu_cond_destroy(&proxy->close_cv);
+     qemu_mutex_destroy(&proxy->lock);
+ 
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+index 7b97460cc50..e8021c9f952 100644
+--- a/hw/vfio-user/proxy.h
++++ b/hw/vfio-user/proxy.h
+@@ -83,6 +83,7 @@ typedef struct VFIOUserProxy {
+     VFIOUserMsgQ incoming;
+     VFIOUserMsgQ outgoing;
+     VFIOUserMsg *last_nowait;
++    Error *nowait_error;
+     VFIOUserMsg *part_recv;
+     size_t recv_left;
+     VFIOUserWRMulti *wr_multi;
+@@ -116,7 +117,7 @@ void vfio_user_disable_posted_writes(VFIOUserProxy *proxy);
+ 
+ void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
+                            uint32_t size, uint32_t flags);
+-void vfio_user_wait_reqs(VFIOUserProxy *proxy);
++bool vfio_user_wait_reqs(VFIOUserProxy *proxy, Error **errp);
+ bool vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                          VFIOUserFDs *fds, int rsize, Error **errp);
+ bool vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index e47bc7225ab..146ab38a923 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -148,6 +148,14 @@ if have_system
+       genh, qemuutil, qom
+     ],
+   }
++  if host_os == 'linux'
++    tests += {
++      'test-vfio-user-proxy': [
++        'iothread.c', io,
++        meson.project_source_root() / 'hw/vfio-user/proxy.c',
++      ],
++    }
++  endif
+   if config_host_data.get('CONFIG_INOTIFY1')
+     tests += {'test-util-filemonitor': []}
+   endif
+diff --git a/tests/unit/test-vfio-user-proxy.c b/tests/unit/test-vfio-user-proxy.c
+new file mode 100644
+index 00000000000..c46025e974e
+--- /dev/null
++++ b/tests/unit/test-vfio-user-proxy.c
+@@ -0,0 +1,222 @@
++/*
++ * vfio-user proxy tests
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include <glib/gstdio.h>
++#include <sys/socket.h>
++#include <sys/un.h>
++
++#include "hw/vfio/vfio-device.h"
++#include "hw/vfio-user/proxy.h"
++#include "qapi/error.h"
++#include "qemu/cutils.h"
++#include "qemu/main-loop.h"
++#include "qemu/module.h"
++#include "qemu/sockets.h"
++#include "system/iothread.h"
++#include "iothread.h"
++
++typedef enum TestReplyMode {
++    TEST_REPLY_SUCCESS,
++    TEST_REPLY_PRIOR_ERROR,
++    TEST_REPLY_TIMEOUT,
++} TestReplyMode;
++
++typedef struct TestServer {
++    char *tmpdir;
++    char *path;
++    int listen_fd;
++    TestReplyMode reply_mode;
++    GThread *thread;
++} TestServer;
++
++IOThread *iothread_create(const char *id, Error **errp)
++{
++    (void)id;
++    (void)errp;
++    return iothread_new();
++}
++
++void iothread_destroy(IOThread *iothread)
++{
++    iothread_join(iothread);
++}
++
++static void read_all(int fd, void *buf, size_t len)
++{
++    char *p = buf;
++
++    while (len) {
++        ssize_t ret = read(fd, p, len);
++
++        if (ret < 0 && errno == EINTR) {
++            continue;
++        }
++        g_assert_cmpint(ret, >, 0);
++        p += ret;
++        len -= ret;
++    }
++}
++
++static void write_all(int fd, const void *buf, size_t len)
++{
++    const char *p = buf;
++
++    while (len) {
++        ssize_t ret = write(fd, p, len);
++
++        if (ret < 0 && errno == EINTR) {
++            continue;
++        }
++        g_assert_cmpint(ret, >, 0);
++        p += ret;
++        len -= ret;
++    }
++}
++
++static gpointer test_server_thread(gpointer opaque)
++{
++    TestServer *server = opaque;
++    int conn_fd;
++    int i;
++
++    do {
++        conn_fd = accept(server->listen_fd, NULL, NULL);
++    } while (conn_fd < 0 && errno == EINTR);
++    g_assert_cmpint(conn_fd, >=, 0);
++
++    for (i = 0; i < 2; i++) {
++        VFIOUserHdr request;
++        VFIOUserHdr reply;
++
++        read_all(conn_fd, &request, sizeof(request));
++        g_assert_cmpuint(request.size, ==, sizeof(request));
++
++        reply = request;
++        reply.size = sizeof(reply);
++        reply.flags = VFIO_USER_REPLY;
++        reply.error_reply = 0;
++        if (i == 0 && server->reply_mode == TEST_REPLY_PRIOR_ERROR) {
++            reply.flags |= VFIO_USER_ERROR;
++            reply.error_reply = EIO;
++        }
++        if (server->reply_mode != TEST_REPLY_TIMEOUT) {
++            write_all(conn_fd, &reply, sizeof(reply));
++        }
++    }
++
++    while (read(conn_fd, &i, sizeof(i)) < 0 && errno == EINTR) {
++        ;
++    }
++
++    close(conn_fd);
++    return NULL;
++}
++
++static void test_server_start(TestServer *server, TestReplyMode reply_mode)
++{
++    struct sockaddr_un addr = { .sun_family = AF_UNIX };
++
++    server->tmpdir = g_dir_make_tmp("qemu-test-vfio-user.XXXXXX", NULL);
++    g_assert_nonnull(server->tmpdir);
++    server->path = g_build_filename(server->tmpdir, "socket", NULL);
++    g_assert_cmpuint(strlen(server->path), <, sizeof(addr.sun_path));
++    pstrcpy(addr.sun_path, sizeof(addr.sun_path), server->path);
++
++    server->listen_fd = socket(AF_UNIX, SOCK_STREAM, 0);
++    g_assert_cmpint(server->listen_fd, >=, 0);
++    g_assert_no_errno(bind(server->listen_fd, (struct sockaddr *)&addr,
++                           sizeof(addr)));
++    g_assert_no_errno(listen(server->listen_fd, 1));
++
++    server->reply_mode = reply_mode;
++    server->thread = g_thread_new("vfio-user-test-server",
++                                  test_server_thread, server);
++}
++
++static void test_server_stop(TestServer *server)
++{
++    g_thread_join(server->thread);
++    close(server->listen_fd);
++    g_assert_cmpint(g_unlink(server->path), ==, 0);
++    g_assert_cmpint(g_rmdir(server->tmpdir), ==, 0);
++    g_free(server->path);
++    g_free(server->tmpdir);
++}
++
++static void unexpected_request(void *opaque, VFIOUserMsg *msg)
++{
++    (void)opaque;
++    (void)msg;
++    g_assert_not_reached();
++}
++
++static void send_nowait(VFIOUserProxy *proxy)
++{
++    VFIOUserHdr *hdr = g_new0(VFIOUserHdr, 1);
++
++    vfio_user_request_msg(hdr, VFIO_USER_DMA_UNMAP, sizeof(*hdr), 0);
++    g_assert_true(vfio_user_send_nowait(proxy, hdr, NULL, 0, &error_abort));
++}
++
++static void test_nowait_replies(gconstpointer opaque)
++{
++    TestReplyMode reply_mode = GPOINTER_TO_INT(opaque);
++    TestServer server = { 0 };
++    SocketAddress addr = { .type = SOCKET_ADDRESS_TYPE_UNIX };
++    VFIOUserProxy *proxy;
++    VFIODevice vbasedev = { 0 };
++    Error *err = NULL;
++
++    test_server_start(&server, reply_mode);
++    addr.u.q_unix.path = server.path;
++
++    proxy = vfio_user_connect_dev(&addr, &error_abort);
++    proxy->wait_time = reply_mode == TEST_REPLY_TIMEOUT ? 50 : 5000;
++    vbasedev.proxy = proxy;
++    vfio_user_set_handler(&vbasedev, unexpected_request, NULL);
++
++    send_nowait(proxy);
++    send_nowait(proxy);
++
++    if (reply_mode == TEST_REPLY_PRIOR_ERROR) {
++        g_assert_false(vfio_user_wait_reqs(proxy, &err));
++        g_assert_nonnull(err);
++        g_assert_nonnull(strstr(error_get_pretty(err), strerror(EIO)));
++        error_free(err);
++    } else if (reply_mode == TEST_REPLY_TIMEOUT) {
++        g_assert_false(vfio_user_wait_reqs(proxy, &err));
++        g_assert_nonnull(err);
++        g_assert_nonnull(strstr(error_get_pretty(err), "timed out"));
++        error_free(err);
++    } else {
++        g_assert_true(vfio_user_wait_reqs(proxy, &err));
++        g_assert_null(err);
++    }
++
++    vfio_user_disconnect(proxy);
++    test_server_stop(&server);
++}
++
++int main(int argc, char **argv)
++{
++    module_call_init(MODULE_INIT_QOM);
++    qemu_init_main_loop(&error_abort);
++    socket_init();
++    g_test_init(&argc, &argv, NULL);
++
++    g_test_add_data_func("/vfio-user/proxy/nowait/prior-error",
++                         GINT_TO_POINTER(TEST_REPLY_PRIOR_ERROR),
++                         test_nowait_replies);
++    g_test_add_data_func("/vfio-user/proxy/nowait/timeout",
++                         GINT_TO_POINTER(TEST_REPLY_TIMEOUT),
++                         test_nowait_replies);
++    g_test_add_data_func("/vfio-user/proxy/nowait/success",
++                         GINT_TO_POINTER(TEST_REPLY_SUCCESS),
++                         test_nowait_replies);
++
++    return g_test_run();
++}
+-- 
+2.43.0
+
 
