@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFD7C79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 11:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D99BC79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 11:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4dDr-0003KR-Ki; Thu, 10 Sep 2026 07:45:43 -0400
+	id 1x4dDt-0003Lv-UT; Thu, 10 Sep 2026 07:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1x4dDp-0003Je-Sh
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:45:41 -0400
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1x4dDs-0003LE-Nx
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:45:44 -0400
 Received: from mout01.posteo.de ([185.67.36.65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1x4dDn-0000Ps-J4
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:45:41 -0400
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1x4dDq-0000R7-Sq
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:45:44 -0400
 Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id 2F342240027
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:45:35 +0200 (CEST)
+ by mout01.posteo.de (Postfix) with ESMTPS id B330524002E
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:45:41 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
- s=1984.8680eb; t=1789040735;
- bh=xWf1GqlHwGn0uSSqMRE8p8KiI9bNqdlz+v8cdZSzrik=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+ s=1984.8680eb; t=1789040741;
+ bh=bP93P09dipTAme7gl+KiC3xZoCNRlCh3u1i9YX+BJUE=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
  Content-Transfer-Encoding:From;
- b=aeQ1gY90Gu0Od8KwHwkX37PrWCMMlihVwdELvKqNZxWJTgnzYJY2a7MtH2ygZPI4H
- hO5IS+VPPOOE4iRYLRmbHALksqlQdK0l59gI2cBvhwpfoMBUeSxscgnXv+9CQkRXOI
- AOKM6bqf91iH7vGXc8hLZhT8vozYxG2nK5bhkRG2JEntHJaerZZuAFOayOd1itERNC
- dbjuWguxKk3zBdoLmpc+UYRHjT8AVfI9E2Kqrs1ge35heOaMcH71V0FILJ2cd+IqWK
- lkpgYwp8R238ZgHae8+hFhoDNrMnEn9tDA0pglDxlvjXIxjsUdChvey/vUIk49nL5N
- o/xJKl9GLvOgQ==
+ b=OgG/HHd2on7c6G7dOyH8M7gwyGYOSi+FNjDWbIuaOJCO/Rx+uHQWHK8ur1fD2PPZU
+ tac8pzXvolZpucN47q0SoOZob+X5wjtYkXDfS1IxWqtGbw92hjR/m0XMK6fncNKOOD
+ y57zVFutftTui8Y5P6YCRmsS+/Ko2m6iGX1OnIBt7uVbRgTmmov5mYOpLV4bPLugn7
+ W0RsMOrbTzZ2a8sjBqvfO+VXlzs0MBvZfXE9q3mKrGa32eHHUH0zONYf1Z7X+GG3RZ
+ WXi/Ns3bRYhzlaOn51ZTp20o9S5t6V9VMYHW74FTlWP8XeQumLyGeQ3lEeymdMKo/k
+ 7kJLpclm+uAsw==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4hgbTV2T7dz6txv;
- Thu, 10 Sep 2026 13:45:34 +0200 (CEST)
+ by submission (posteo.de) with ESMTPSA id 4hgbTc5Jjvz6v21;
+ Thu, 10 Sep 2026 13:45:40 +0200 (CEST)
 From: Thomas Huth <th.huth@posteo.eu>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 0/7] next-cube and test patches
-Date: Thu, 10 Sep 2026 11:45:34 +0000
-Message-ID: <20260910114522.396396-1-th.huth@posteo.eu>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Florian Schmidt <flosch@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 6/7] Add option to disable building tests
+Date: Thu, 10 Sep 2026 11:45:41 +0000
+Message-ID: <20260910114522.396396-7-th.huth@posteo.eu>
+In-Reply-To: <20260910114522.396396-1-th.huth@posteo.eu>
+References: <20260910114522.396396-1-th.huth@posteo.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.eu;
  helo=mout01.posteo.de
@@ -69,51 +72,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi!
+From: Florian Schmidt <flosch@nutanix.com>
 
-The following changes since commit 1df256f5968e9f7c3c4533a1383b071c044a36d6:
+There are situations in which you might want to build QEMU without
+building the full test suite, which in some configurations can take a
+considerable amount of time to build. This is especially true when using
+LTO with clang. For example:
 
-  Merge tag 'qom-qapi-pr-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-09-08 18:35:31 +0100)
+$ ../configure --cc=clang '--extra-ldflags=-flto=thin -ffat-lto-objects' '--extra-cflags=-flto=thin -ffat-lto-objects' --target-list=x86_64-softmmu
+[...]
+$ time make -j8
+[...]
+[3078/3078] Linking target tests/qtest/qos-test
+real    6m43.250s
+user    101m15.967s
+sys     4m3.813s
 
-are available in the Git repository at:
+$ ../configure --cc=clang '--extra-ldflags=-flto=thin -ffat-lto-objects' '--extra-cflags=-flto=thin -ffat-lto-objects' --target-list=x86_64-softmmu --disable-tests
+[...]
+$ time make -j8
+[...]
+[2024/2024] Linking target qemu-system-x86_64
 
-  https://gitlab.com/huth/qemu.git tags/pull-request-2026-09-10
+real    3m14.277s
+user    33m13.174s
+sys     1m36.642s
 
-for you to fetch changes up to 72a02f711d11c78b88869dc00db392ef08504940:
+Add a toggle to optionally disable building tests.
 
-  hw/usb/host-libusb: keep autoscan enabled for bus+addr selector (2026-09-10 13:34:51 +0200)
+Signed-off-by: Florian Schmidt <flosch@nutanix.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260724135413.1716872-1-flosch@nutanix.com>
+Signed-off-by: Thomas Huth <th.huth@posteo.eu>
+---
+ meson.build                   | 2 +-
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 3 +++
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-----------------------------------------------------------------
-- Fix minor issues in next-cube machine and mark it as deprecated
-- Add a configure option to disable tests
-- Remove stamp files when deleting assets from the functional cache
-- Make sure that pyling version is not too old
-- Keep USB autoscan enabled for bus+addr selector
+diff --git a/meson.build b/meson.build
+index ec9b05414a..2a12071cf0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4611,7 +4611,7 @@ subdir('pyvenv')
+ # Tests are disabled on emscripten because they rely on host features that aren't
+ # supported by emscripten (e.g. fork and unix socket).
+ tcg_tests_summary = {}
+-if host_os != 'emscripten'
++if get_option('tests').allowed() and host_os != 'emscripten'
+   subdir('tests')
+ endif
+ if gtk.found()
+diff --git a/meson_options.txt b/meson_options.txt
+index 292625af08..e3570a418a 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -43,6 +43,8 @@ option('gdb', type: 'string',
+ # on the configure script command line.  After adding an option
+ # here make sure to run "make update-buildoptions".
+ 
++option('tests', type: 'feature', value: 'auto',
++       description: 'Build the test suite')
+ option('docs', type : 'feature', value : 'auto',
+        description: 'Documentations build support')
+ option('fuzzing', type : 'boolean', value: false,
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 5a67e59a16..ba3c9de216 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -195,6 +195,7 @@ meson_options_help() {
+   printf "%s\n" '  spice-protocol  Spice protocol support'
+   printf "%s\n" '  stack-protector compiler-provided stack protection'
+   printf "%s\n" '  tcg             TCG support'
++  printf "%s\n" '  tests           build test suite'
+   printf "%s\n" '  tools           build support utilities that come with QEMU'
+   printf "%s\n" '  tpm             TPM support'
+   printf "%s\n" '  u2f             U2F emulation support'
+@@ -518,6 +519,8 @@ _meson_option_parse() {
+     --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=true ;;
+     --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=false ;;
+     --tls-priority=*) quote_sh "-Dtls_priority=$2" ;;
++    --enable-tests) printf "%s" -Dtests=enabled ;;
++    --disable-tests) printf "%s" -Dtests=disabled ;;
+     --enable-tools) printf "%s" -Dtools=enabled ;;
+     --disable-tools) printf "%s" -Dtools=disabled ;;
+     --enable-tpm) printf "%s" -Dtpm=enabled ;;
+-- 
+2.55.0
 
-----------------------------------------------------------------
-Brian Cain (1):
-      tests: install pylint for functional linters
-
-Florian Schmidt (1):
-      Add option to disable building tests
-
-Thomas Huth (4):
-      hw/m68k/next-cube: Replace assert()s and abort()s with logging functions
-      docs/about: Deprecate the 'next-cube' m68k machine
-      MAINTAINERS: Mark the next-cube machine as "Orphan"
-      scripts/clean_functional_cache: Remove also .stamp files
-
-Timo Teräs (1):
-      hw/usb/host-libusb: keep autoscan enabled for bus+addr selector
-
- MAINTAINERS                       |  3 +--
- docs/about/deprecated.rst         |  8 ++++++++
- hw/m68k/next-cube.c               | 12 +++++++-----
- hw/usb/host-libusb.c              | 14 ++++----------
- meson.build                       |  2 +-
- meson_options.txt                 |  2 ++
- pythondeps.toml                   |  1 +
- scripts/clean_functional_cache.py |  4 +++-
- scripts/meson-buildoptions.sh     |  3 +++
- 9 files changed, 30 insertions(+), 19 deletions(-)
 
