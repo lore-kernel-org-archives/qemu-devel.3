@@ -4,104 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097E8C79FB6
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 02:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE99C79FB6
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 02:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4UTN-0007Ki-Dq; Wed, 09 Sep 2026 22:25:09 -0400
+	id 1x4UvA-0004yi-QE; Wed, 09 Sep 2026 22:53:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x4UTL-0007K6-V9
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 22:25:07 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x4Uv8-0004xp-GJ
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 22:53:50 -0400
+Received: from mail-pj2-x0b.google.com ([2607:f8b0:4864:39::b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x4UTK-0000k0-6f
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 22:25:07 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-6a68279dd86so8246753a12.3
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 19:25:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789007104; cv=none;
- d=google.com; s=arc-20260327;
- b=ctWfXDiRvT2IM90r4vmOzoBdZ76U21eOgRrjM0MYeP9SvlK7j2gt9rlaxKZLYc9lrb
- 5yfWqlsDx2Xq2SmgRL3Ru2mNL8n+VpKK8eaSlKgg0KN76SOBtXNBprtNQiqhwCjP2B9i
- mGXf8Euhq0lQRBpsUMLRV7Kp6EJ2qauXYfzP27tDr+Q9yE1J5o7wAIxDltyGYtiBKFSB
- dQavHxmgYGaHAtaqQxG0akOWUX/6tiXmfitQUm1ymYoEki2oWha7i/n+0FLbC76j42PI
- wpAlEw2jQsFiyf6JTnngS8fRBT50YO+2uuG5IhDgwbSjh3opbnGaEHRy5nNKHg2rpYNQ
- E9gw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=th/OVyjsr7yqaKZFoKz9c7hwzbrGgWEuRq7tX7IsOss=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=TPpsQlwSwS7miMno9HwrpO5ic62GKNOVIBzfYg63qqycd3XTrjdWgOKBuy0e8gap/u
- i3hqbaL0ErIoMmH/GyTS/bGyQaWEj08oveTqyH+KbI0RVaUEsiRdm49Lig+JU1nKgcy+
- opLyypCk45wI89v9e7gZHQ9Qk8xkX+0Q1H930G+9VExkoGdKQa08ZVW9gnbIqGmTFVLt
- hN6dQEVa4zKb+INNsErGDbgO1jP4gzewp4ylxbt7cDlZ7onoivol+JuPxUB1vk76rZEy
- breFOiTVtXg0Q+3ICpx1DpjhzveHaraKBk/+dALQPEAdd9WHmRB5GQDxqITIuBnGjJ/q
- KK5Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x4Uv6-0004sA-Is
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 22:53:50 -0400
+Received: by mail-pj2-x0b.google.com with SMTP id
+ 98e67ed59e1d1-398a384b5f7so3322255a91.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 19:53:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789007104; x=1789611904; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=th/OVyjsr7yqaKZFoKz9c7hwzbrGgWEuRq7tX7IsOss=;
- b=nnU2eUcBCuRhQ9bIFn9EYVtVG+g1TmafiL/S7xwfTajueNu+fogoOjwsRc4Ck/Ws+x
- OaGJwqKJoHS3a9IRsfg8GimtjsojShmslme2Q9TLmUSfoAPvzpelPIEJZpOEzOxkWrdQ
- ILjUCVUNjFqs2zdl3cG9XaUIGKupLKBceyy3L1iEvj9P4Oc2sxgViJcCcYcTZ7UJVZWC
- o8m1Bvk8lR/htt87+USUL0+tz3qKYGhrzwv+ybiPUeo/zJXawmMJFZRdphUrS7zwXasM
- RjqHhROR4UanQm5drXSFgV1Y3A4OVLgKx9meSlCcMB/lL4zsvs6b1sNjdoTQB+t/+Sgq
- uhvw==
+ d=gmail.com; s=20251104; t=1789008827; x=1789613627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AEVGhYqwGrzulJMUlmWgmgfud7e3dtHN+uPsiqNA/mk=;
+ b=S4OBJYjC/4pS4tuIki+fMstELDSGI76oBeKGA6y6ZBjqlIONXFmAEfSSfMQdhS97Dq
+ lWXNoy1eKCdIlwmGeljlDkTujrXXYFrrQ4ko5WR6eulsvVLzw9nXU0JzLMRh/l4Q19Hc
+ tqyJzl0t8ndXjwKpAQRYivQpnDzNTumXOEScaNkiLNWd1J+ifoCfqZyJQ2uLyclEfWW4
+ cG3Ve33rHe5Ac8PLFSWuSKej6SqDWvzFlHUI606SPRtSj3t48Cb9ryociRoa9mAkXtDS
+ nqqBLWxHgxiiS00ub1XZRGv8fBGPQp549KH0HrKMPsEYMTv6rbFUVBTuRbN/+AKPeQID
+ 14Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789007104; x=1789611904;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=th/OVyjsr7yqaKZFoKz9c7hwzbrGgWEuRq7tX7IsOss=;
- b=qKER9iJKYMnik6j74/G/ap9ahHghCPVZVdORuXqEL1eBRPlxRfEwxBfBrzbksI3/Qa
- SrJ/n1jDgNmVormnpCPWqMZdLo2l/NDCW/jgAC+8G6wEPDydl5zA116OKPR0KpySnvuc
- yTz7JPxJmZl9dc6FPcFHqxNAQyn3lx9FxwF7OfVIGwnQ/K2dlEF10dynHDFl/lN30jVK
- qfnR6B3wPxk0tkA0lxhvE5j8A/u1U1FtIwLCVM36SPE2CPdn7VWjY2PDfV4v6xcZMJLK
- C9DI4pYpd1c45spUQdKhvejCpcVyhHS02Dil4189pupPSi9fKtYE6vdqwSaC6dYjz7WP
- gCJg==
-X-Gm-Message-State: AFuF++l20aZ7eJDl1YwY3mIzEY11W1S6LP7vBoVblYvb6b2boqclRH1B
- xaeWatRPxEpo8r/dJU2cyiDm5pb8FF3R4dWoOJYNcOyD/ycvgMwu0qoXognMjpLSzW98ArJJAfg
- bgZvqTqqbLNbXpOPv1IXzfSeLiSB+Bmk=
-X-Gm-Gg: AYBFou2SpZq1hgeZdkod0MNwmVqZM3kZQbI7SV6F2yfuRubwvn1bNW9sRbjk9hgXlT2
- CcoSwMnb4dJ6j3dqA6Z3gbGmak/SXQHEiWJid+2vC24H9hxKGyNVTbyodePmaGfYKt9IeKB5adD
- ZvIVSLcnyfAc/W3TN5ihKUDqpjJd4j7J/xJKUMx+/RH15qACYTmLjzPWNAjAZLKqfRN5sF2G8u+
- AKqyDSitA8L3KeqMz97NoRfKpWeiOFPsG8KRVYqTpVtLYFkRUNve7Bps4WKzRGGDi1vzviCA2km
- ytwDG/1VH3gWEmVdzvgyuDOAnZBgmx1OWxpzhIHfZfHj4Ji/hiKYWFJ1
-X-Received: by 2002:a05:6402:3982:b0:6a9:9c47:771f with SMTP id
- 4fb4d7f45d1cf-6a99c477882mr1976519a12.37.1789007103487; Wed, 09 Sep 2026
- 19:25:03 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789008827; x=1789613627;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AEVGhYqwGrzulJMUlmWgmgfud7e3dtHN+uPsiqNA/mk=;
+ b=XX2uOOFxKDHBLYu8M7cvgIb8CeUY9pOrwzBETf84uoNWo3vaIwMkrfkYpcILJt/H6Z
+ 0ZiY45nnD2RclUKf3tJ5sGcg+YKxlW0CMkDtdgBbRNFFzQHOLqcB+HHgkCr+5vSPoHyk
+ AUHGKD/82wm23LbrjwaImbmTuPA5CZVac/iP5X/2UtMhppPmeHvz+zVw/S5aewmL8q/A
+ upTp7JycYf/PxqoVxC1mtM6a8MgrOhIcuIEd9jasyU35Bc3/Wpxp5ZGQ+YsL9hG3AJ53
+ sBz8mmm6kQlQR1Z3DC9T1eL1dHe/BB9EFpDpj0hAsoqz6Vt7t/oreOp3DcVTFJfN8CF3
+ 0NWQ==
+X-Gm-Message-State: AFuF++nkdHVY47o2rSplgSdnkugslVWGttR0egj5M8Qt1jP8WA3hOozg
+ b5WmtZCtbkQR5l15fswOureKV10kpdoy2oCrTwdnn9h5vc3xTBZlTvh+QtCRqRMA
+X-Gm-Gg: AYBFou1QIIkw5ZKwMR9Arst7bVlDQbuR95f3Zy/B6cYN8YyqBk6o+ihW9w8FNFDEhu7
+ fmTDpwyXYj3EmylhEeVMRJOc6u3EhmsH6wPWwxJ46b2aS4XcAMutb2dbnZbm95O8xlHKH7s0ek4
+ kdFPgTfvYqYKRvJUurK8nhdTybOZLigvZR1bBUcyksWGEYPdzRMyVss1v/X88CvPSn6JdfcGYHx
+ dcSa4ZxK/IJydOMXci0d1oRnXJEvdOKhg4P/rPuDLddjDowKEL6Ng/QPVXDnr0Fo4ocODYOrq91
+ zRRjZoXj3fLxmkNCHfQicBRkiTk2e+i5kdXp+LL9pG7QBQ4bSNRVDxbM8q9dNLlFEJU4lUUXoGm
+ frMi++SxmUEQjf0RResn2pzonBtGNn3TXzcfP6h3jZkssJtsNc0qgSqucZv3fDvhrQCivwsWAPG
+ lRt2RRWdadw9FFomwz9mDpP+Ze0le2shTBVY7YLozIyFA06CbtkzQ86LFy1mY+lnJa34Q8kxXOw
+ MeNzYNpfJI1YmL7EvhQZ+Attncul73qIrJhs0U=
+X-Received: by 2002:a17:90a:d005:b0:398:a2ed:7b5c with SMTP id
+ 98e67ed59e1d1-39bac4571c4mr15355321a91.24.1789008826096; 
+ Wed, 09 Sep 2026 19:53:46 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([103.190.179.27])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39d84fdbae4sm30186a91.14.2026.09.09.19.53.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Sep 2026 19:53:45 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH v2] target/riscv: stop translating after WFI
+Date: Thu, 10 Sep 2026 10:53:24 +0800
+Message-ID: <20260910025324.54990-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260907063725.626685-1-zhangckid@gmail.com>
- <20260907063725.626685-6-zhangckid@gmail.com>
- <874ig1xmbi.fsf@pond.sub.org>
- <CAK3tnvKfeJK-p8POfzDoG2NLt=NWgKnF_WcmAWAHWXnuQdCWTw@mail.gmail.com>
- <87fqzin1wc.fsf@pond.sub.org>
-In-Reply-To: <87fqzin1wc.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 10 Sep 2026 10:24:24 +0800
-X-Gm-Features: AcwNN1V-_F6NPqBeubSx7HR8-dBvEKIrEUtj-7FHlfVaPWVBfxIHm5EI6zeLd2M
-Message-ID: <CAK3tnvKo5LAR+YBsChTeS=BBpG32QsFQD=1SjL+dpuLRefLewg@mail.gmail.com>
-Subject: Re: [PATCH V15 05/14] monitor: track IOThread users with QOM paths
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::b;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x0b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,119 +100,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 9, 2026 at 6:40=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Mon, Sep 7, 2026 at 8:44=E2=80=AFPM Markus Armbruster <armbru@redhat=
-.com> wrote:
-> >>
-> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >>
-> >> > Monitors that require an IOThread share the internal mon_iothread.
-> >> > Account for each monitor explicitly in IOThread holder tracking, usi=
-ng
-> >> > the monitor's canonical QOM path to distinguish holders.
-> >> >
-> >> > Acquire the shared monitor IOThread AioContext once and store the
-> >> > IOThread and canonical QOM path so the holder can be released after =
-the
-> >> > monitor has been removed from the QOM tree. Reuse the stored context=
- for
-> >> > later operations.
-> >> >
-> >> > Release the holder from monitor_finalize(), after resources associat=
-ed
-> >> > with the AioContext have been destroyed. This pairs the reference ta=
-ken
-> >> > in complete() with instance finalization and keeps the IOThread aliv=
-e
-> >> > throughout monitor teardown.
-> >> >
-> >> > The internal mon_iothread remains hidden from query-iothreads, as be=
-fore.
-> >> > Management applications therefore cannot use it to determine which
-> >> > monitors are using the IOThread. Nevertheless, track the monitor
-> >> > holders so that they follow the same explicit holder and
-> >> > IOThread reference lifecycle as other AioContext users.
-> >> >
-> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> >> > ---
-> >> >  monitor/monitor-internal.h |  5 +++++
-> >> >  monitor/monitor.c          | 26 +++++++++++++++++++++-----
-> >> >  monitor/qmp.c              |  5 +++--
-> >> >  3 files changed, 29 insertions(+), 7 deletions(-)
-> >> >
-> >> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> >> > index 822a66d06d..1d5aeae5e6 100644
-> >> > --- a/monitor/monitor-internal.h
-> >> > +++ b/monitor/monitor-internal.h
-> >> > @@ -77,6 +77,11 @@ struct Monitor {
-> >> >      GString *outbuf;
-> >> >      guint out_watch;
-> >> >      int mux_out;
-> >> > +
-> >> > +    /* iothread context and holder identity */
-> >> > +    IOThread *iothread;
-> >> > +    char *iothread_qom_path;
-> >> > +    AioContext *ctx;
-> >> >  };
-> >> >
-> >> >  struct MonitorQMPClass {
-> >> > diff --git a/monitor/monitor.c b/monitor/monitor.c
-> >> > index 2654b81890..cc7f6785b5 100644
-> >> > --- a/monitor/monitor.c
-> >> > +++ b/monitor/monitor.c
-> >> > @@ -93,6 +93,16 @@ static void monitor_finalize(Object *obj)
-> >> >      qemu_chr_fe_deinit(&mon->chr, false);
-> >> >      g_string_free(mon->outbuf, true);
-> >> >      qemu_mutex_destroy(&mon->mon_lock);
-> >> > +
-> >> > +    if (mon->iothread) {
-> >>
-> >> As we'll see in monitor_complete() below, mon->iothread is mon_iothrea=
-d
-> >> if monitor_requires_iothread(mon), else null.  Which means
-> >> mon->mon_iothread is non-null if and only if
-> >> monitor_requires_iothread(mon).
-> >>
-> >> Here, you check whether mon->mon_iothread is non-null to find out
-> >> whether @mon uses the monitor I/O thread, and you read the monitor I/O
-> >> thread from mon->mon_iothread.
-> >>
-> >> Elsewhere in this file, we check monitor_requires_iothread(mon) and yo=
-u
-> >> read mon_iothread, e.g. in monitor_cancel_out_watch()
-> >>
-> >>            if (monitor_requires_iothread(mon)) {
-> >>                ctx =3D iothread_get_g_main_context(mon_iothread);
-> >>            }
-> >>
-> >> I don't like this inconsistency.  Two ways to avoid it:
-> >>
-> >> 1. Always use monitor_requires_iothread(mon) to check and mon_iothread
-> >> to read.  Drop struct Monitor member iothread.
-> >>
-> >> 2. Always use mon_iothread, except where we initialize it in
-> >> monitor_complete().
-> >
-> > Just to clarify: by option 2, do you mean using mon->iothread
-> > consistently for per-monitor checks and accesses, except in
-> > monitor_complete(), where monitor_requires_iothread() determines
-> > whether to initialize it?
->
-> Yes.  I meant to write 2. Always use mon->iothread, but mistyped.
->
+helper_wfi() never returns to translated code: it either raises an
+exception or exits the CPU loop after marking the CPU as halted. However,
+trans_wfi() leaves the translation state as DISAS_NEXT, so instructions
+following WFI can be included in the same TB.
 
+With icount enabled, this makes the following instruction part of the TB's
+instruction count when WFI exits, causing minstret to be incremented once
+too many. Set DISAS_NORETURN after emitting the helper.
 
-Thanks for clarifying. I'll use mon->iothread consistently for
-per-monitor checks and accesses after initialization, keeping
-monitor_requires_iothread() for the decision in monitor_complete()
-and the global mon_iothread for shared thread creation and cleanup.
+Add a TCG test for both reported cases: WFI waking for a locally enabled
+pending interrupt with mstatus.MIE clear, and WFI taking a timer interrupt.
 
-By the way, any comments for other patches in this series?
+Fixes: 55c2a12cbcd3 ("RISC-V TCG Code Generation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4230
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
 
-Thanks
-Chen
+---
+Changes in v2:
+- Register test-minstret-wfi.S with the Meson TCG test framework so
+  check-tcg executes it.
+
+diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+index a8eaccef67..ebbbb01179 100644
+--- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+@@ -145,6 +145,7 @@ static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
+     decode_save_opc(ctx, 0);
+     gen_update_pc(ctx, ctx->cur_insn_len);
+     gen_helper_wfi(tcg_env);
++    ctx->base.is_jmp = DISAS_NORETURN;
+     return true;
+ #else
+     return false;
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 8604c2a45a..2aca68e078 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -23,6 +23,7 @@ tests += {
+   'test-mepc-masking.S': setup,
+   'test-crc32.S': setup + {'qemu_args': ['-cpu', 'rv64,xlrbr=true', qemu_args]},
+   'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
++  'test-minstret-wfi.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
+   'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
+ }
+ 
+diff --git a/tests/tcg/riscv64/test-minstret-wfi.S b/tests/tcg/riscv64/test-minstret-wfi.S
+new file mode 100644
+index 0000000000..0fd0158d5b
+--- /dev/null
++++ b/tests/tcg/riscv64/test-minstret-wfi.S
+@@ -0,0 +1,100 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++
++	.text
++	.global	_start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++	li	s3, 0
++
++	/*
++	 * A pending, locally enabled interrupt wakes WFI even with MIE
++	 * clear.
++	 */
++	li	t0, 0x8		/* MIE_MSIE */
++	csrw	mie, t0
++	csrci	mstatus, 0x8	/* MSTATUS_MIE */
++	li	t0, 0x2000000	/* MSIP0 */
++	li	t1, 1
++	sw	t1, 0(t0)
++
++	/*
++	 * The first CSR read and WFI retire before the second read obtains s1,
++	 * so the expected difference is two.
++	 */
++	csrr	s0, minstret
++	wfi
++	csrr	s1, minstret
++	sub	s1, s1, s0
++	li	t1, 2
++	beq	s1, t1, 1f
++	ori	s3, s3, 1
++1:
++
++	/* Clear the software interrupt before testing the trap path. */
++	sw	zero, 0(t0)
++	csrw	mie, zero
++
++	/* Schedule a timer interrupt far enough ahead to reach WFI first. */
++	li	t0, 0x200bff8	/* MTIME */
++	ld	t1, 0(t0)
++	addi	t1, t1, 100
++	li	t0, 0x2004000	/* MTIMECMP0 */
++	sd	t1, 0(t0)
++	li	t0, 0x80		/* MIE_MTIE */
++	csrw	mie, t0
++	csrsi	mstatus, 0x8	/* MSTATUS_MIE */
++
++	/*
++	 * The first CSR read and WFI retire before the trap handler obtains s1,
++	 * so the expected difference is again two.
++	 */
++	li	s2, 1
++	csrr	s0, minstret
++	wfi
++	beqz	s2, 1f
++	ori	s3, s3, 2
++1:
++	bnez	s3, fail
++	li	a0, 0
++	j	_exit
++
++fail:
++	mv	a0, s3
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.balign	4
++trap:
++	/* Read minstret before retiring an instruction in the handler. */
++	csrr	s1, minstret
++	sub	s1, s1, s0
++	addi	s1, s1, -2
++	snez	s2, s1
++
++	/* Disable the timer interrupt before returning past WFI. */
++	li	t0, 0x2004000	/* MTIMECMP0 */
++	li	t1, -1
++	sd	t1, 0(t0)
++	li	t0, 0x80		/* MIE_MTIE */
++	csrc	mie, t0
++	mret
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+-- 
+2.43.0
 
