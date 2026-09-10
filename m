@@ -4,158 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDD8C88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF36C88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4p2w-0004p9-Hl; Thu, 10 Sep 2026 20:23:30 -0400
+	id 1x4ot5-0001RI-OL; Thu, 10 Sep 2026 20:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1x4maO-0004XI-1J
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 17:45:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4ljt-0001gR-Mf
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:51:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1x4maM-0007wQ-1W
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 17:45:35 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68ALTTV52995842
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 21:45:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qnask+VF0BNKn823HDX1GHCs1wlxhSX0R8TyhgoBlo4=; b=bTP1smm7W9tM7e8i
- hFmlcQCGJlBfQv+gH6Ej5CHcKxRLXYXsksu77Rnao2B2vocXDSxLoU/I2S7nMhnV
- tUdB76D4dimkLKRiTnUKo2qyRmk/cGfoRL1ZmY/eaotCos05jWySSfgMez3qg/30
- PSPWq0TSvOHxvCNXgzf5j/B5hwLn/4lBIpWfOVgL+sUJq3Z06Amv/lup+zn4+viS
- QdLV3AgsIjVJau/jUeDYPyKn/1xZTrtkclgrekaP0c2FsWZTM43l+e8rOemJUA0a
- ByNK0YSkZaiAyVc4rqXIma5mY6lnNsN2HekcB/yDvNLtD2vf1vI2DvbIGdlkj2xx
- F38flw==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gkxd8supu-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 21:45:28 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-4b28d9206f8so203423b6e.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 14:45:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789076728; cv=none;
- d=google.com; s=arc-20260327;
- b=CmLbmANrK9boNhPDhQLw4Uj2gbivcCvTyJsRgM1iSAQEb8kWB4m6e+CtT5IC//yAnq
- CRFaBhpSM2+5mUWg5YIvNEvudZdmFDynZ4BSOpL2MqARLIo6e8i+8HdwWrMqlSyRMdCf
- XY00ix+xlDunN/lmIPk7kVFYvs73ORYC2WI8BOsHzSj2xn2GlBqao1JtACfPYchUv8+g
- oNT+UOL5HeWltOwuRpIUctD9W2kX0tg2vw2KemK/4G8gn/78EYXKDTj5qgwhMoKhfKBW
- CviAOkyIX0ma744SWOdba2fxr2LOwjxnHUvuD6oLFZYj6IeOznU1EtEhox4iVjzzsWqb
- XIDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=qnask+VF0BNKn823HDX1GHCs1wlxhSX0R8TyhgoBlo4=;
- fh=qg98UZd52pNVEuj/ZQwsxHLtQgNBn3+BQsxmg45i5+I=;
- b=Kg8oRGmx7ZiBy/BDjAle/VKSQ9nTZJBVpnByQNelGrMN/9WPg5UzLBG5NlPui7Gx5P
- tyg5fmI+h3KXHFMb4ILFvbANfNoJ2k8FspjuVZVk5Jm7zwENvWEwLqABpQ3gdEhaaUj9
- TALdgr9vBpEHjen041PvX4c/JYnWJOlZwWwkkRjgfMYKlgxNgaOBAXghSuvUL+gSYH8a
- DmeaYIdKOt2D9nAlX7KJrhdd7c4XughXjWWOIk5LNXshGg5nJu/2dZSwU17fL4eSwKa6
- 0ydQVxFkegEoOCy+FUEkedTzHr2nJyxFR3fNNZma7PPTemHc1UXwCDgjkZttJlPjpFTx
- vmsQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4ljn-0006RD-P8
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:51:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789073471;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4QZ/6VEOC+lNsRJAeXv7eh5vh8Fz3+qeKO3RjOtexo4=;
+ b=cz7YQzQh/AKYEUrhTwxeRllVeWt9vqUc+AbdiZ1UxqUSUET1lX8LW+/xzPLvnUzxpopBhf
+ 5oCQXrczyQ87fmi+E+kM7GN/qHgpILlTXHn2sp8GjEMTSOHUE5GXx+MsLLNPBAe8bD9z22
+ Bh/9BW73OaoNC3oC3Adm5gPHzuck2Ps=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-530-K_7fcvUQNrCoVx0nOmM74w-1; Thu, 10 Sep 2026 16:12:58 -0400
+X-MC-Unique: K_7fcvUQNrCoVx0nOmM74w-1
+X-Mimecast-MFC-AGG-ID: K_7fcvUQNrCoVx0nOmM74w_1789071177
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48437090e74so60883f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789076728; x=1789681528; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qnask+VF0BNKn823HDX1GHCs1wlxhSX0R8TyhgoBlo4=;
- b=WYSXzNt8DqZwSnC9DtrVcnvwLa1XC78i2j9vkwj1MDC24WMIvV+uBlwsgpOSStw9Tm
- MpQXaFNibVp8n79WpINIBrebZlBEh0NKG+GIO7ecSEm+k4j7PSjRmC9R33Vn0wYEQTR9
- Wx66JT4qoQ6xtGxsI4NaviISU5ONCKIXemfB4D8fqLggKjsDeogaekT8JabCpPWdvo62
- JxnfnQRg6hu0XDOtI3lv6nQTiaffr53V/uAzx/rhP3CbF2jXxBR+PeKaxPRdb1+j/JOY
- td5uISY5XHndtvyzW0SCrvzYAuJe/6qjDFbMsIN7PnqR42ZviwgmRhbeDIc+TtTVNFVg
- aAXA==
+ d=redhat.com; s=google; t=1789071177; x=1789675977; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4QZ/6VEOC+lNsRJAeXv7eh5vh8Fz3+qeKO3RjOtexo4=;
+ b=mgX2vOFuYcnc/O1I29dUYTSx8fO317lq1+dQ9ReijE+omc/v02TKSNTWIDSRhlfebh
+ iNypOFyBz4NTpXSYhKlD6Ca4UnZ/T2EW4/jDiQ1kPtJxCt3ARSLB84HEDYjYU7rxE5kD
+ fsp+xbB1o2iTAQ7Ok2Q9z8m7bucm7u0HqqZBjUxrRLUfNdYspAiWg/FedLHcId2bIHaI
+ Mt423EvKVhQSzzj9IEL2HwtzUESpYvgOkpxlQtzsAGxFzRDmzcpCisU8eQ+JhL36pq5X
+ 1rq6bqAz/SoCWR+m5TDsKQHsvOw62SeN4ngO1jxr8NOXxUV35GnGBAnX6xjJiqlNW09Y
+ X3Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789076728; x=1789681528;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qnask+VF0BNKn823HDX1GHCs1wlxhSX0R8TyhgoBlo4=;
- b=mUudE0Uz1Ay0KHbLzF+1XvPydtgEr5bxvFEh78KTQRKm9AbHSTGPhaZMwljtxQy8zA
- FGj8hTkB15X1sP32TMvuV02mS5U3mbDFnMVorYiSBj1JlxCUlXfqwtkP6U8hQpz46q8X
- 5QfYGB/FDJHNwjVGotPNwklYIJNcqGsbRwRjR8DizLDDy1C4N7OknwOR1vZ8T0FTCe5k
- Hs+KH+h/Ul7pbhqm2LZffyaxsKjWJUwBuHFP4QHXUWM8ZVYWp+RKyZYdI6icsSWWp/z8
- lY6caakDQqj3lu5RtwrteHzh2BprAs8uJoZl8ZnAZ4m38dmN0sCHeOY5OLH40OFDYRsf
- 9BTQ==
-X-Gm-Message-State: AFuF++no7EHTvnh6NL/SlNIKIdF/3O9ve+q4jUtHNLYpc5EtZLjCrO2p
- VBlTKGe0abwGu3Ibx4Ps9vWzI+HSf4OmpazpCwyJTDo7a5pJ1rk+AYElsI8vnVN/Mme7np7j7X9
- qhEEdaZmcBKVukWcSK2g3QHsIIirhAm9ZlssNP+HQbOUulOr2tzq9sZIFgdfPd2AjU6Gabgyit7
- Xz/fhKUptGhdgQ8DDdf+GNIke3S72LDVIo
-X-Gm-Gg: AYBFou3yfjefpJ2qHjW7qUPZnpurkZexzc5IoQYtDM3p8+DvFf9mkW+d/UXAlcwcFZ5
- MAzIBvDkHOesFKh9RJSvJYnTL/WoxamOlxXyIfgkrzV2f6EEspc9XNi7PFuzZSCKnzHErE+cTpX
- gZZokiexUzkrbsebVOmxkyJeq8ZEYdCmBfCPOcT87pfTVQdAW/LRs2UIoUGHjt+yTX3T+T2i2Im
- g14o4IEqTFpP2Rxlw==
-X-Received: by 2002:a05:6820:4dcc:b0:6b7:8396:f3e0 with SMTP id
- 006d021491bc7-6c0bd87b7ddmr585210eaf.66.1789076727993; 
- Thu, 10 Sep 2026 14:45:27 -0700 (PDT)
-X-Received: by 2002:a05:6820:4dcc:b0:6b7:8396:f3e0 with SMTP id
- 006d021491bc7-6c0bd87b7ddmr585188eaf.66.1789076727454; Thu, 10 Sep 2026
- 14:45:27 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789071177; x=1789675977;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=4QZ/6VEOC+lNsRJAeXv7eh5vh8Fz3+qeKO3RjOtexo4=;
+ b=Bp9CBD+NVumF7IL64TLqVS+oLJoFCtn0nabRWltXSxFfrdWza/Q5S99HqWSkP+VdqX
+ BSBikrjo6U2wF37O9I2bZRFrkXoNDDv30YbE61EZfll+oCkLyos6JfavmBii3aidPydx
+ P2m/Is+DnIvvvjtMK1aI/zS1Es+YlmhWKPEchph8joFqInB8pj3nyLCvLNGDFtU3Qkzs
+ Ay1yAR+BdkbiQrdSe8uNRqPAE4j+gA5BPKVsusvauF3mnNgU3bqpYZG35k8V9FZryca9
+ 1mWgZgVEvxABeL52VL+3v0K+IlrPmmo4bEs4rh/NCCzTMRCPF1XZtcR15yA2D4L4PJ/G
+ m9nA==
+X-Gm-Message-State: AFuF++lQNttzu23Rmoi+uSqpYvDZKbGxaZ0Ylr1wzI/vocoPPRMas9Ig
+ 8rvl5rX3Ew8oOyw8PwFAAVZ3Rw00Q0C+wr8/DUeZfbaeuSRn8svWiKftYEOiVmM5l1kpFfdzH6W
+ kdhhtJIVyFhUFcA+VbBv2hfAlcEPl8IWBkfQWUC0/9E6J5V9Z6eXM7AhN2/QOSPtJ09qvnNLZCI
+ LnLQ40M88eyaGMJNWlbDjvV+yjUHQJ1q5HDw==
+X-Gm-Gg: AYBFou0eLGfpBPMTyZofFq+vifjiPBHgBZJKi87azWO87s+4QMduEL77SMIfuYnJIs8
+ VLh8kyLRmpYOSJXbfOYcXFa5B6BuiqflDQQQJiKkPXPBhDsR3TYJxC0orHwIoJXNe4Rx0B8vaNb
+ 8KO/VPe506mj4E9eMAOdp8dxc+w/9d5UZY40faHfFTLBiYQGTfH2nou/nZEb22NCXq0bOIWUloy
+ 5hEXqAuAsVW/Am0p+AQSslXenrfQD5QcS/TGYnRLWuDaM4NcKHzON2IPZO4YEwJ6R6QpKA9cT+2
+ VPMyMmmehKcvYjD6rIQYOl3fIeVBTotzRFgBi4QiLuAUybSEw0rS8hnFTbW5HrUvDCcOx7g9gWl
+ 9vkqtt0IA8gKCn8yp2bt8pPE=
+X-Received: by 2002:a5d:5f4f:0:b0:484:4769:18a4 with SMTP id
+ ffacd0b85a97d-486eb2fa4fcmr675569f8f.14.1789071176874; 
+ Thu, 10 Sep 2026 13:12:56 -0700 (PDT)
+X-Received: by 2002:a5d:5f4f:0:b0:484:4769:18a4 with SMTP id
+ ffacd0b85a97d-486eb2fa4fcmr675523f8f.14.1789071176310; 
+ Thu, 10 Sep 2026 13:12:56 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-486eb357288sm789158f8f.29.2026.09.10.13.12.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 13:12:55 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:12:54 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ admin@fluentlogic.org, Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 35/90] vhost-user-gpu: validate command buffer size in submit_3d
+Message-ID: <67f10fb88d3c75da3ba7fa5a37f7d6bcfcf3ce9e.1789071042.git.mst@redhat.com>
+References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
-References: <20260910153221.1674285-1-brian.cain@oss.qualcomm.com>
- <20260910153221.1674285-5-brian.cain@oss.qualcomm.com>
- <CAJ+KCYPB8-coR8irYHZ3f9HqzH1EYyG_8ASSperhPkkj-g9zAQ@mail.gmail.com>
- <cfb663ec-1a7b-47db-9c95-069e724b3476@oss.qualcomm.com>
-In-Reply-To: <cfb663ec-1a7b-47db-9c95-069e724b3476@oss.qualcomm.com>
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Thu, 10 Sep 2026 16:45:16 -0500
-X-Gm-Features: AcwNN1W7kzYWiZjnzJ8hdQBIPTWDsBqASrIq-DY05BuzYQhOKLF1kjWNnZSJc1w
-Message-ID: <CAJ+KCYNnBLzXEOn+_NJBaQ+ujG-xN98TMLKM60RkgAyhxdkAyA@mail.gmail.com>
-Subject: Re: [PATCH 4/9] target/hexagon: raise an exception for HVX with
- SSR:XE clear
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: 5ZQzQoYUhipoiSTmwUDiBtTkV4gsgq9m
-X-Proofpoint-GUID: 5ZQzQoYUhipoiSTmwUDiBtTkV4gsgq9m
-X-Authority-Analysis: v=2.4 cv=PchqFShd c=1 sm=1 tr=0 ts=6aa324f8 cx=c_pps
- a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8 a=5Jhoi1_dSe9dIxniScsA:9
- a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=pF_qn-MSjDawc0seGVz6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDI3MCBTYWx0ZWRfX+uUixpjek3wf
- uDLm3Z8eTv1tgaP1FtV/6K80EUP0PwaRb6qAIzWufYf8HSp4NfZbTaFhWA3uTHQ5Jn2sj6XMFW5
- wk180DFQFVqvfo3647sjEf29EgSvN2WNvc3QpEesKTONTQyEpskdJataEotQXCSMRUbn7Vb3sOa
- +MosvtjER1vT0brTqs06RL8DpFNGoeOtdbdUgrnshXSTjTfJU6feD/MWZh3SFL+tdCgN8IwgwZh
- 6fjv0PkSwhkxe+Kyxkm9Gd4XpWoxZZamrJSBKy6/aCcRwV5hfpK7XgCsvREtiBeX1CZPrIngIDs
- vE6aPINHePLk6TF1Cab3ulG37AMoQJphaNQqyMXyRwV6OvulC5n4KsrlgzGBkncBJqKmVfdV7uJ
- AfjUNEfp41+dobNoISgWbOYn99m4RzjZgAqN20ieKstvElZfp7B4VF3zwtk06tJTqrNZQIhml3Q
- Ln+pk7cq+cZG4b0nETA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEwMDI3MCBTYWx0ZWRfX757WpqwaLGQF
- l+VtRQSfK0SPd2Ukc69X1KvYBxHsb8PVesBvGSlzQ3e5lXUI5fpsjjoq0hlmk6KzctR1Z7OHWOk
- BV9R9VY3YSxtqpaHNZpSmlHk0HWIH5I=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-10_07,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 spamscore=0 adultscore=0 impostorscore=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609100270
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1789071042.git.mst@redhat.com>
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -172,23 +123,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 10, 2026 at 10:32=E2=80=AFAM Brian Cain <brian.cain@oss.qualcom=
-m.com> wrote:
->
-> SSR:XE gates access to the HVX coprocessor: executing an HVX instruction
-> while it is clear must raise a precise exception with cause 0x16,
-> NO_COPROC_ENABLE.
->
-> Carry SSR:XE in a TB flag and emit the exception for the
-> first HVX packet of a TB when the coprocessor is disabled.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu.h       |  1 +
->  target/hexagon/translate.h |  2 ++
->  target/hexagon/cpu.c       |  2 ++
->  target/hexagon/translate.c | 11 +++++++++++
->  4 files changed, 16 insertions(+)
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+virgl_cmd_submit_3d() passes the guest-controlled cs.size directly to
+g_malloc() without any bounds check. A malicious guest can set this
+field to an arbitrarily large value (up to 4GB), causing an OOM abort
+that crashes the vhost-user-gpu daemon.
+
+Validate cs.size against the actual descriptor payload size before
+allocating, rejecting values that exceed what the virtqueue entry
+can carry.
+
+Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
+Reported-by: admin@fluentlogic.org
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260713125431.107278-1-marcandre.lureau@redhat.com>
+---
+ contrib/vhost-user-gpu/virgl.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 20bae57d0f..c95c4afc5c 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -197,20 +197,24 @@ virgl_cmd_submit_3d(VuGpu *g,
+                     struct virtio_gpu_ctrl_command *cmd)
+ {
+     struct virtio_gpu_cmd_submit cs;
++    size_t iov_len;
+     void *buf;
+     size_t s;
+ 
+     VUGPU_FILL_CMD(cs);
+ 
+-    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
+-        g_critical("%s: command buffer too large (%u)",
+-                   __func__, cs.size);
++    iov_len = iov_size(cmd->elem.out_sg, cmd->elem.out_num);
++    if (cs.size == 0 || iov_len < sizeof(cs) ||
++        cs.size > iov_len - sizeof(cs) ||
++        cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
++        g_critical("%s: size out of range (%u/%zu)",
++                   __func__, cs.size, iov_len);
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+         return;
+     }
+ 
+     buf = g_try_malloc(cs.size);
+-    if (!buf && cs.size) {
++    if (!buf) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+         return;
+     }
+-- 
+MST
+
 
