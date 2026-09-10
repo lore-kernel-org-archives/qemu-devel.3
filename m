@@ -4,158 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C753EC79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98223C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4kYJ-0004su-Rd; Thu, 10 Sep 2026 15:35:27 -0400
+	id 1x4kaH-0005s4-54; Thu, 10 Sep 2026 15:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQy-0002Mo-GB
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:47 -0400
-Received: from mout.gmx.net ([212.227.15.18])
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1x4kTf-0003Pk-6E
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:30:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQc-0004dl-PH
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1789068350; x=1789673150; i=deller@gmx.de;
- bh=aeQ/ZW9NWOqgtCtNPQnKo79I1qD484PyIRQ8qxVAa1E=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Transfer-Encoding:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=dC73PeBeMgPDbCvEIxlqrC0oIIkfLJVOXTL9XQE55IrSKDuhoICU+PVOFtBWVVLv
- SEebVBKhjSFr0+i0QJCDVQHbLBtiofwWeY3Z1jRazlWHXK1mes+SURMoWPgAAFrVl
- 2kURGgwA575E6BMUMm/JMLqbroX7zhu68bpwWZsjytZah+p3OTE47K02neIzdDfE3
- expGEHJ9VHGvjSSK0quH7dmvbdgk00zr1hfDB2YIQA6iSJF87pdvQ1jW//ZgZkjhh
- y9rPC8h4hV0eEpXRfUkT/KNTCviIbw3+VbAdS9jUwrpv45u4h/JQ8/Af7o1+DYEeI
- VOUk60q3fQRm7frtxw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrQEn-1wRc5J0inf-00qlbP; Thu, 10
- Sep 2026 21:25:50 +0200
-From: Helge Deller <deller@gmx.de>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Zhao Liu <zhao1.liu@intel.com>,
- Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 4/7] linux-user: Fix target_madvise() to always return
- TARGET_xxx error codes
-Date: Thu, 10 Sep 2026 21:25:41 +0200
-Message-ID: <20260910192545.768850-5-deller@gmx.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260910192545.768850-1-deller@gmx.de>
-References: <20260910192545.768850-1-deller@gmx.de>
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1x4kT4-0005B2-GS
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:30:04 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68AIRFjH2890549
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 19:29:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /RJyGWrKePlp0LwcE/4T0PDsYt031vCPaFda19iRLwI=; b=EtetcRzWpb+MmU2a
+ tJuRgNlF4LrnmwuZ6EV5xy+JjaRpVXzFQ6S9PfIPN88nRyAQs3i8zGj+DD1GOODN
+ zgHdxG8COp6a1KdzSCpZevc8JIg1/TQ+iMcdzjEvQaJ8x6b9wD3SCZ3reDfFNK1h
+ N59cabTkfXx9mAgj0a80dq2mq4Ic5NnWVnBsjoZpELPmZQbNh3OSHs3qEWIh2nq3
+ US0PjWTW0UEQ8XXSwtbhMeeVUzFYdw4vUdKKfH9yxJiGIh+rhrmIAhmYY2NLLHVw
+ aqwID8Bt8pIBZttq+66Tm8mJnExrElWjI4WItZoo33uG1059FV0mWEcD8vyYxsJu
+ ECWymA==
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gkxnv9abr-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 19:29:23 +0000 (GMT)
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-4c307941971so270161b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 12:29:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789068563; cv=none;
+ d=google.com; s=arc-20260327;
+ b=WIeOMUywRQIIsuawKmZnyykESu/4t+eBtaLENm0ONMbnt0xlTDDYmpwNLDggX3VNTg
+ NmL5FxTO6IY+p01GWGnUHiShrEBbdXHntCsEhc+0+FVMb6eexAxoDs4oJV9FtxJMqtQe
+ RmTBXNxXJPR9e+gV2uZHbePPxwi9F+7ndvyk9Lf/KxQVweQDgtvWuuFqOqwRT1RxEZh5
+ fn2kV3l14Kcv/jnbDyi+8TMVTa6MiRBqMaDtngsTfCGX+oFGJ3sx43Lp6KvTV/UOG3ad
+ HydB68n8wtLFf/1V78NKnLnXY4bQQNBSvsKGDLkwbzHmA44lWAueqPxRgrhJuxGLxMBr
+ GQpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/RJyGWrKePlp0LwcE/4T0PDsYt031vCPaFda19iRLwI=;
+ fh=qg98UZd52pNVEuj/ZQwsxHLtQgNBn3+BQsxmg45i5+I=;
+ b=Fzrr1JQSe0h1TRC+hosXGid/Elc/wO3FWNp0J+eBylqZGScufTQPc5dC3oofVzy3jY
+ d1USmgoiU6K7P3DabwMaobKX9sBAxspyqTdIUMl2X+91MB8DvNaBuLdCx9v7HLwnSRC5
+ 5pVoj/yUYSRrUyfHEUkdy3TraRlEXymD6JbxnVXB89Z65kNrFRzUX2j4p4KYpMd2OG67
+ ZBEd/VIf9niUnkykoyfEsjonC4ZUjtvyGEjKYkpOXujQG/gD7oV6fffZlyMHqw4cGLL/
+ F9DEWutNWGiSOkN+Dwp0lGA6uwZ5TzsXeIV6/yt0B2oZni/qYO1todid1EIcMVjWQbjx
+ NdgA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789068563; x=1789673363; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=/RJyGWrKePlp0LwcE/4T0PDsYt031vCPaFda19iRLwI=;
+ b=d87lcQqCLLTy+07H4/81jK7z+Xf5J2G5dIslBOlfACz8iHVfe4GtipJ0mDatCWeMF/
+ 224ZrVGRJ0KyxK23Bn6fXYX1Of9V2LrVQBE9ViB4C3ZXOMeAIHLr8ly1xy0/gv6cO+C9
+ Dg8xjF1sdWyTdmpaFU1eseAQX0MeD0xSeK33NajmtzF0v2zVMZHe86zW8MhOVm1gJ2TW
+ hpqW99tJUI4dYBMHOqiRpGCAwNJYv0WJJsR6VO/VmKOUXx3C8u6WCbho2S/EBGU4VAjH
+ RN+SrjBmOss9mdwtTsohew+X6GKJGePnUs7aW3C/NvAwHdKoxYPxmOlT7l/0qzq09a9G
+ r1pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789068563; x=1789673363;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=/RJyGWrKePlp0LwcE/4T0PDsYt031vCPaFda19iRLwI=;
+ b=LX1zZ4FAw0iTKpz39K/n/E3ekGr0yXy2Qd84jvArup3GVRk6KmfNfA6jOHP+pe94WU
+ yNqKmxm25G1X9HIpq8fAgN3sfrtBlEdwYAQrt5qkupRhxyJrhbZMBoh/kQ3hyBz3wn7e
+ n0RWZGaxqoaDBrm86aHFX9AuXyvgzOARYpnVwzZEXDyQXxEIRSe512z6SZNc86ZkGPWa
+ Sz/4Sdy5ezwGyI30jjlcPbFiCGu6P1mu7GCjAKMuVBdtMRCHepHxhrM4/ZyXGCQoY8K0
+ yi4RQ+qZ37OunPRnKFNhgzq8dsjIgxcQSf50nmEQs6CrGi0/bgwRon1b1YxdTiDCI2at
+ SUMQ==
+X-Gm-Message-State: AFuF++l+43xOwwAXzVPs+pHsoV4RPuKExK5yvI+ffbPh46A8nuxWxx57
+ TZZ799BgW/0/V+d/Y/MSEZ0iFxMHAoHEOJwTWrbNKIg6DRVwV/RjV791bzWLM9g7FQeYPMIF6QI
+ mWsBOUKcOQU6Ze5y0zOMGQTAP/pukcqgzsUmaRIAwtltxTx5ce2zqLuBHrKaI/s5bQp9Fb6s19c
+ b34+EOcekXqzcmSwrJTXgFLrUIK1Ak9gZg
+X-Gm-Gg: AYBFou1on4qc38Ae+znfw4cuuqNb/AviATx78HhM/iYfPp2U14/zz4jAxp/fhcF7ItM
+ B+YKjyt1EvQ1WsK4i7KDj5m5fE1Sd2zYI1UPM+7hzaj7NVNlqZ/fO24r0OxjX109XLFgZbQLaz3
+ bdUuN7nXvzUv9yh+Y4CconW/BPzMuegIhmU1ktP7ho9Xv02nkVvv+EZUlYHSY=
+X-Received: by 2002:a05:6820:806:b0:6a1:4507:3544 with SMTP id
+ 006d021491bc7-6c0bb3fd453mr363797eaf.28.1789068562900; 
+ Thu, 10 Sep 2026 12:29:22 -0700 (PDT)
+X-Received: by 2002:a05:6820:806:b0:6a1:4507:3544 with SMTP id
+ 006d021491bc7-6c0bb3fd453mr363779eaf.28.1789068562457; Thu, 10 Sep 2026
+ 12:29:22 -0700 (PDT)
 MIME-Version: 1.0
+References: <20260910153221.1674285-1-brian.cain@oss.qualcomm.com>
+ <20260910153221.1674285-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260910153221.1674285-3-brian.cain@oss.qualcomm.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Thu, 10 Sep 2026 14:29:11 -0500
+X-Gm-Features: AcwNN1VMbkm2qUQgFITPV7k7MsAw-VcrxF_hE0ylaNH0LuwV8BxRvH0e4QLMXZI
+Message-ID: <CAJ+KCYOxi4G2GEF9Lm6o3CvMxV36NWFPnv9QnB-ok9p6VBzjDQ@mail.gmail.com>
+Subject: Re: [PATCH 2/9] tcg: add base arguments to the gvec 2s, dup_i32 and
+ cmp expanders
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4FWFwK3xC8JKy4fiFp5oLpXgfp1qBg6/S3UhLuR9Jtgo6e/+L1g
- 2kwx4In5vZWxgacr4krYoBg+CIY9rOFGMWVmDf3KQWGSRWdo1VtQazHZqL/C4XRRpQuqb/d
- BgISCIMQqlMuY4fczFqJXb0RziCKp1YYP3af2pxegotDxGEK1UmVMlePcKdKeo+6jWioqrd
- ZLAIB061nosGm3Zw3PBbw==
-UI-OutboundReport: notjunk:1;M01:P0:xtsN3tI710Q=;o4d8yTBu5en4yM7Y5KfoTsVNSrU
- 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
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDI0MCBTYWx0ZWRfXxYs19pactOn+
+ CeaFRZzvCuziQne9s94fmSKyKIh1R/7rqChEMMqaH0mVP4kYDEBMkZt60hl6VEqmFH3Tm1IfdO9
+ CrusLlpdUMVYg4PEvowi/zdCcz54qSnlxotE0kwfkYmutwNFwO0ahQm8JNH7Y2LC3WCKI618MTl
+ b9h8M8pPvBlSmQO64diANXNhF66lnbquah+3JAYzn95cFxkl+TcSo7sbiZrVl8IWvIChz0o+XFd
+ xT1G31N2IIfQBzM157ILASSd668xdCJwlhe2ZwpVUdUgXNtFui0HMT5guxemP3vCNV+XUGRZzPN
+ 6BX3aM8ZQbr+FYH4r3hPfu6ADZwAnWI/yHS1lJoFFw9XTnJhg0xIaXl4DvMN3qBOQ7cRF0gHEmO
+ buVeCgBNx2PSLDJ1oeIQzGhwz/ZQ1PHL+gu5E02Ewwqr7vlua8XLOisGl5LiIHuEi5MfNpgJ46k
+ MiB8F6dbOMLpDnGrZCA==
+X-Authority-Analysis: v=2.4 cv=RsxQvymK c=1 sm=1 tr=0 ts=6aa30513 cx=c_pps
+ a=4ztaESFFfuz8Af0l9swBwA==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8 a=vwp-26ZQ3WPr8MkEgdAA:9
+ a=QEXdDO2ut3YA:10 a=TPnrazJqx2CeVZ-ItzZ-:22
+X-Proofpoint-GUID: WpD7ei9cLH3MPJ6Je-9UGnZMezs_-nZE
+X-Proofpoint-ORIG-GUID: WpD7ei9cLH3MPJ6Je-9UGnZMezs_-nZE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEwMDI0MCBTYWx0ZWRfXxmnfi2myIozr
+ l3mAumWaDUEA4YOsK868WPQ1BHO+Lm8Co1fnbRPulkNvOhHgK4U4i5fEwEjzi4CIlt6QTS1dWU+
+ kr0GJ555nlSYAXCyyjkbjhtNqDWGI7k=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-10_06,2026-09-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609100240
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -172,55 +169,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code currently mixes host and guest return codes. Fix it up.
+On Thu, Sep 10, 2026 at 10:32=E2=80=AFAM Brian Cain <brian.cain@oss.qualcom=
+m.com> wrote:
+>
+> These three families still name tcg_env directly, so they cannot be
+> reached from a _var entry point.  Thread a TCGv_ptr base per operand
+> through expand_2s_{i32,i64,vec}, expand_2sh_vec, expand_cmp_{i32,i64,vec}
+> and do_gvec_shifts, and split expand_2i_ool out of tcg_gen_gvec_2i_ool
+> the way expand_2_ool already is, so the out-of-line fallback is reachable
+> too.
+>
+> Add tcg_gen_gvec_{2s,shls,shrs,sars,dup_i32,cmp}_var; the existing entry
+> points become wrappers passing tcg_env and generate identical code.
+>
+> Note that the operand swap in tcg_gen_gvec_cmp_var, used when a condition
+> has no helper, now has to swap the bases along with the offsets.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  include/tcg/tcg-op-gvec-common.h |  21 +++
+>  tcg/tcg-op-gvec.c                | 256 +++++++++++++++++++++----------
+>  2 files changed, 192 insertions(+), 85 deletions(-)
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-=2D--
- linux-user/mmap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 4066072ff4..dd957db55a 100644
-=2D-- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1329,7 +1329,7 @@ abi_long target_madvise(abi_ulong start, abi_ulong l=
-en_in, int advice)
-         ret =3D 0; /* OK */
-         break;
-     case MADV_REMOVE:
--        ret =3D -EOPNOTSUPP;
-+        ret =3D -TARGET_EOPNOTSUPP;
-         break;
-     case MADV_DONTDUMP:
-         page_set_flags(start, start + len - 1, PAGE_DONTDUMP, 0);
-@@ -1339,7 +1339,7 @@ abi_long target_madvise(abi_ulong start, abi_ulong l=
-en_in, int advice)
-         break;
-     case MADV_WIPEONFORK:
-     case MADV_KEEPONFORK:
--        ret =3D -EINVAL;
-+        ret =3D -TARGET_EINVAL;
-         /* fall through */
-     case MADV_DONTNEED:
-         if (page_check_range(start, len, PAGE_PASSTHROUGH)) {
-@@ -1361,11 +1361,11 @@ abi_long target_madvise(abi_ulong start, abi_ulong=
- len_in, int advice)
-     case MADV_COLLAPSE:
- #endif
-     case -1:    /* BoringSSL uses -1 to check if the environment is broke=
-n */
--        ret =3D -EINVAL;
-+        ret =3D -TARGET_EINVAL;
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unhandled madvise(%d) call.\n", advice)=
-;
--        ret =3D -EINVAL; /* not yet known advise */
-+        ret =3D -TARGET_EINVAL; /* not yet known advise */
-         break;
-     }
-=20
-=2D-=20
-2.55.0
-
+Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 
