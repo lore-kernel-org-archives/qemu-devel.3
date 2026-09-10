@@ -4,128 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946B9C79FBF
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 18:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A7BC88E40
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4jmA-0005Sy-Dr; Thu, 10 Sep 2026 14:45:34 -0400
+	id 1x4k3g-0007Jb-9c; Thu, 10 Sep 2026 15:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x4jm9-0005SS-0r; Thu, 10 Sep 2026 14:45:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x4jm7-0005TN-2e; Thu, 10 Sep 2026 14:45:32 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68AIVZsN2548424; Thu, 10 Sep 2026 18:45:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=yZ0OSc
- WZg8qXgoi8BMBXkIwWPyCO99YxHLvxZOAhZKs=; b=JZwV3XoZAqURM0cQL4rdVq
- u2hSVF0HhWf9q/5uwuTZtEqZrmUXF5nylsXqWwuFQw/ZhHGGhvVkkzy7bF1mKnLw
- JVi4PCJQ8Mzw1ELAPkSpXzUN4MF9TO7M089vEHJ6uTOazsfxdEgH4r5MfGzGZ1sq
- hk5AskBOeqAOW+QopfSkoQLfgmXdwo5Fns461zV0Fqi63z5cmeGAu5Fnxk7diTlh
- ygTv/BNKir8u/1yU9sCsBpHnqmbCG3ltYlM4fZIJLtVTjlATJMQLIwfYNoZBgQ20
- gZB/VmYXzwz+Cy+IA7za/YRpXEdtlzFKWhI0ckerEK8/z8/FkIKHzEFBv04906Jw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8q6q7c-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 10 Sep 2026 18:45:24 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68AIZBk5447279; Thu, 10 Sep 2026 18:45:23 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvtf9tv4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Sep 2026 18:45:23 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68AIjJd545613322
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Sep 2026 18:45:19 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1CB02004F;
- Thu, 10 Sep 2026 18:45:19 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BD6F20040;
- Thu, 10 Sep 2026 18:45:17 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 10 Sep 2026 18:45:17 +0000 (GMT)
-Date: Fri, 11 Sep 2026 00:23:02 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v4 30/75] ppc/spapr-caps: convert to QAPI-aware property
- registration
-Message-ID: <20260911000458.a11b142b-df-amachhiw@linux.ibm.com>
-Mail-Followup-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
- <20260904-qom-qapi-v4-30-a985f168e938@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x4k3c-0007Iz-U5
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:03:36 -0400
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x4k3Z-0000PO-K8
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:03:34 -0400
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-90cd4631090so1249186d6.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 12:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789067012; x=1789671812; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UzMypnwj851tykAnD7KYpstHaBktoBEhep7rnfObKgg=;
+ b=J3Jnvmv5reHDBqyRCqgljEtfXS1uAfLxeOn6efHotjiaNk2+BpDPILZ1BKNfRZewj+
+ irestzXxAtyIwhSp/upxn3XlxbgtGoDWcXciu1BDdBVi9XnwSIT9dd8gJPP5Pwt+SJU3
+ afW4A6ZBUV0Mfu+oU9UW+SSnLlzLcUcjLCggaWBzDOPLe7uH95OG5UKLCu+eg2mqhlS2
+ OiD06BGCko3YlhfRfvCzA0fgAPRdEfNv5M8UwS6gLaQKZrkpU/9XduGUyIbhQPF2+C0Z
+ vCnUF5o+1+cTh41eQ5Uz6+WCpJB2UDT5eJG7ES171FUsjc0YqMZMeGvgYn06NyCPV9B2
+ NCGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789067012; x=1789671812;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UzMypnwj851tykAnD7KYpstHaBktoBEhep7rnfObKgg=;
+ b=cYEV61UQHXCjFqmOEFVm8zS/3Dsz2kE4Fggw6cRjVpWkszCt3f4c2fVpQq097CDetA
+ OgercdlDop5tahp7NQy/IofeBcw3V8p7yd7uoqcAvl235oZ1WiIneqlFTCEsse6S3Sn3
+ zHCIfJOZKKUZwjBrD/VkQTjo/QrQijxsCf7ozHrX3EUXpIgpDku8oS9LZArcm5uoJ2Lo
+ HPmdJ+1TIehDEDidxhX8mMi21vwGQkNZT62A/h62UAhrFOQgmA0IyznqPpgLjB9x0xBC
+ JKAQEXLqe4dIgXqsBVS9fAUVj1RRBtK7Co7zhzKNkOYve+ldYI8jsSzUJOLG0gGin8wl
+ JlhA==
+X-Gm-Message-State: AFuF++mrjdWMhQlBN30GpR7MRG45EdEeqL0a/f3RyU8XpTTMvtnO4xWL
+ Gl/fwzmSMIZ+DunlABwXeO9C8O+x4uxv0MryPv7YxVgPTRK4OX1g0v4wGZiQwa+McayxPYJbfaC
+ 1oS56
+X-Gm-Gg: AYBFou1qI9pdQVX679GxfSEypjPkfoXdpRb/aNeJfqFxxbO7qC4FHeX6rvrbnay8n13
+ yW+ZuJLhP8WkAFgIfZiVyLWn0G4hyFuf6sQDVFs6UXSgXruQTrsvD7j1LYYQWNZ1B6upQiSbHOg
+ aVQ36OyeSXIG5vGlV0BUdPLC6j8Me1l3aDFba8PyL0xMKOn26ppQxDbjYEHUauhFA81F/0tXhdU
+ 7l6ATcjFxlJM3c0IrShBRNgvYzLL8lcMxNg+UDQhA4fRyyOokfJauN4nFT4j1N4+DLe6mWdtUQ7
+ ehNqbnkUpw2eDY270RwWo2syWOMTQYuz0JjyBrbReaV0rkrgs8WNnMnppYsP+IfWgW2bdtYHG1k
+ 1jfmOnBLPdbhjT2jIf00vTuqlnr+7o2z3nNgewBUoaZfhEbq/FaoYImWse/e/cTAC/PQglvwMT9
+ 7zbiNXLx0+dJcTTKBYSspXnRjgcTt9L6EvdrSi/eGfijuvvwUCcdhppbR2+Hkl1jfKRZcSf8uqO
+ 9CQC9qtOFcP+asT49xjCPXvLRc=
+X-Received: by 2002:a17:90b:2685:b0:395:c3f7:2895 with SMTP id
+ 98e67ed59e1d1-39d7791458cmr7310175a91.7.1789066304689; 
+ Thu, 10 Sep 2026 11:51:44 -0700 (PDT)
+Received: from [10.171.0.227] ([98.155.112.169])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-14365b97994sm889912c88.12.2026.09.10.11.51.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Sep 2026 11:51:44 -0700 (PDT)
+Message-ID: <b596fc04-3df6-40e7-b7d4-b87207df1741@linaro.org>
+Date: Thu, 10 Sep 2026 08:51:40 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: Proposed QEMU 11.2 release schedule
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: QEMU <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>
+References: <CAJ+F1CLTUd1HxdZQ=Ot2eMKcHTiP52f2V-=mehfOcFzN0UtXsg@mail.gmail.com>
+ <CAFEAcA-Z1_=NSi2xvpYcac6t1vP8aHWxaebrHD5CdnRt0p2gMg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-Z1_=NSi2xvpYcac6t1vP8aHWxaebrHD5CdnRt0p2gMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260904-qom-qapi-v4-30-a985f168e938@redhat.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: VceWiG9R5P7rDzK6pk0skopLG9RokiaN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEwMDIyOSBTYWx0ZWRfX0ymxZoJj0TdN
- Z5su+eN5/Nh8vL0lU+2aDbtZ/qpRcnUqGIbxZF24DZLz8L5cQh7zRHyr6z7EXsdmWCHHL9qoqf+
- 8xa8Ua/OI4CDgVQ4UM9OmIwnD4ZayXg=
-X-Authority-Analysis: v=2.4 cv=E/dYNqdl c=1 sm=1 tr=0 ts=6aa2fac4 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=8nJEP1OIZ-IA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=20KFwNOVAAAA:8
- a=bn9aj2a_gXV3IQsBOqkA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDIyOSBTYWx0ZWRfXzG1Vu566dYHr
- +zQOUIXnSZijJetDhsvjFB4z2o0tcnVw7d67598kN47PaVwJKnmPS6TDCKlWFeHGTDL3xcZ6Gkz
- 1EqKunGk7lcxQrPwQxPk6iCE5zPZ7tMjElfQHi2o1ENb9Y+XxUoN8IPOrWOuJk6hdjm9MIcF73m
- +cDso45N+RT48f87fRUbVKJRNmqlwuFPouD955VXfSf81Abw+d0xdBleNH5WfENn2u4ZaypmuCQ
- VN+RS1vAuL8qkkBgkTQUExC/QLC0yLbsmLlGYQZW+r53QCvf2Ibh97oLF9hCfs+GBVBVkxZzZjs
- 0BmS4YWBR+uZG0HlhN5eZ9T22tsiy8PBq795xRYNCywXG3Ox8lOWlVfQj/zor1QGB1LXWq69nDM
- fNO3/fc/cU2Odvchh1Ijuy/FAdRQdjmlkXUXw1SkKyX3f6hlIzhbQtIojpl2dsNj+Bit2Wf+N+N
- fiOVt2UTnPX1/cgiTrw==
-X-Proofpoint-GUID: 30f0tYH9bRAYRQBS8Mgp_Ao1pidsWSu1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-10_06,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1011
- impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609100229
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,206 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/04 11:58 PM, Marc-André Lureau wrote:
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-The patch itself looks correct, but the commit message is missing a body.  At
-minimum, it should describe what is being converted and why.
-
-One thing worth calling out explicitly is `SPAPR_CAP_HPT_MAXPAGESIZE`.  This is
-not a purely mechanical conversion: the old property type string was `"int"`,
-while `spapr_cap_get_pagesize()` and `spapr_cap_set_pagesize()` use
-`visit_type_size()`.  Thus, the property has effectively had size semantics
-despite the old `"int"` type string.
-
-Switching this to `&size_type_info` therefore also fixes a pre-existing mismatch
-between the property's declared type and the visitor used by its getter/setter.
-This seems worth documenting in the commit message so that future readers
-understand that the change is intentional.
-
-The conversion itself, including the switch to
-`object_class_property_add_qapi()` in `spapr_caps_add_properties()`, looks
-correct to me.
-
-Thanks,
-Amit
-
-> ---
->  hw/ppc/spapr_caps.c | 39 ++++++++++++++++++++-------------------
->  1 file changed, 20 insertions(+), 19 deletions(-)
+On 9/8/26 03:02, Peter Maydell wrote:
+> On Tue, 8 Sept 2026 at 12:16, Marc-AndrÃ© Lureau
+> <marcandre.lureau@gmail.com> wrote:
+>>
+>> Hi Stefan & all,
+>>
+>> Would that be a suitable release schedule? It's a bit earlier than
+>> last year (https://wiki.qemu.org/Planning/10.2 release date 12-23)
+>>
+>> 2026-08-12 Beginning of development phase
+>> 2026-11-09 Soft feature freeze. Only bug fixes after this point. All
+>> feature changes must be already in a sub maintainer tree and all pull
+>> requests from submaintainers must have been sent to the list by this
+>> date.
+>> 2026-11-16 Hard feature freeze. Tag rc0
+>> 2026-11-23 Tag rc1
+>> 2026-11-30 Tag rc2
+>> 2026-12-07 Tag rc3
+>> 2026-12-14 Release, or tag rc4 if needed
+>> 2026-12-21 Release, if we needed an rc4
 > 
-> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-> index 0d659e9b0251..e622c79eb52a 100644
-> --- a/hw/ppc/spapr_caps.c
-> +++ b/hw/ppc/spapr_caps.c
-> @@ -24,6 +24,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
-> +#include "qapi/qapi-builtin-type-infos.h"
->  #include "qapi/error.h"
->  #include "qapi/visitor.h"
->  #include "system/hw_accel.h"
-> @@ -59,7 +60,7 @@ typedef struct SpaprCapabilityInfo {
->      /* Getter and Setter Function Pointers */
->      ObjectPropertyAccessor *get;
->      ObjectPropertyAccessor *set;
-> -    const char *type;
-> +    const QAPITypeInfo *type;
->      /* Possible values if this is a custom string type */
->      SpaprCapPossible *possible;
->      /* Make sure the virtual hardware can support this capability */
-> @@ -725,7 +726,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_HTM,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_htm_apply,
->      },
->      [SPAPR_CAP_VSX] = {
-> @@ -734,7 +735,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_VSX,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_vsx_apply,
->      },
->      [SPAPR_CAP_DFP] = {
-> @@ -743,7 +744,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_DFP,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_dfp_apply,
->      },
->      [SPAPR_CAP_CFPC] = {
-> @@ -752,7 +753,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_CFPC,
->          .get = spapr_cap_get_string,
->          .set = spapr_cap_set_string,
-> -        .type = "string",
-> +        .type = &str_type_info,
->          .possible = &cap_cfpc_possible,
->          .apply = cap_safe_cache_apply,
->      },
-> @@ -762,7 +763,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_SBBC,
->          .get = spapr_cap_get_string,
->          .set = spapr_cap_set_string,
-> -        .type = "string",
-> +        .type = &str_type_info,
->          .possible = &cap_sbbc_possible,
->          .apply = cap_safe_bounds_check_apply,
->      },
-> @@ -774,7 +775,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_IBS,
->          .get = spapr_cap_get_string,
->          .set = spapr_cap_set_string,
-> -        .type = "string",
-> +        .type = &str_type_info,
->          .possible = &cap_ibs_possible,
->          .apply = cap_safe_indirect_branch_apply,
->      },
-> @@ -784,7 +785,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_HPT_MAXPAGESIZE,
->          .get = spapr_cap_get_pagesize,
->          .set = spapr_cap_set_pagesize,
-> -        .type = "int",
-> +        .type = &size_type_info,
->          .apply = cap_hpt_maxpagesize_apply,
->          .cpu_apply = cap_hpt_maxpagesize_cpu_apply,
->      },
-> @@ -794,7 +795,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_NESTED_KVM_HV,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_nested_kvm_hv_apply,
->      },
->      [SPAPR_CAP_NESTED_PAPR] = {
-> @@ -803,7 +804,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_NESTED_PAPR,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_nested_papr_apply,
->      },
->      [SPAPR_CAP_LARGE_DECREMENTER] = {
-> @@ -812,7 +813,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_LARGE_DECREMENTER,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_large_decr_apply,
->          .cpu_apply = cap_large_decr_cpu_apply,
->      },
-> @@ -822,7 +823,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_CCF_ASSIST,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_ccf_assist_apply,
->      },
->      [SPAPR_CAP_FWNMI] = {
-> @@ -831,7 +832,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_FWNMI,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_fwnmi_apply,
->      },
->      [SPAPR_CAP_RPT_INVALIDATE] = {
-> @@ -840,7 +841,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_RPT_INVALIDATE,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_rpt_invalidate_apply,
->      },
->      [SPAPR_CAP_AIL_MODE_3] = {
-> @@ -849,7 +850,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_AIL_MODE_3,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_ail_mode_3_apply,
->      },
->      [SPAPR_CAP_DAWR1] = {
-> @@ -858,7 +859,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_DAWR1,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_dawr1_apply,
->      },
->  };
-> @@ -1069,9 +1070,9 @@ void spapr_caps_add_properties(SpaprMachineClass *smc)
->          g_autofree char *name = g_strdup_printf("cap-%s", cap->name);
->          g_autofree char *desc = g_strdup(cap->description);
->  
-> -        object_class_property_add(klass, name, cap->type,
-> -                                  cap->get, cap->set,
-> -                                  NULL, cap);
-> +        object_class_property_add_qapi(klass, name, cap->type,
-> +                                       cap->get, cap->set,
-> +                                       NULL, cap);
->  
->          object_class_property_set_description(klass, name, desc);
->      }
-> 
-> -- 
-> 2.55.0.543.g5ebe2ebe4ea8
-> 
-> 
+> Richard is running the release this cycle, so up to him, but
+> I would suggest that this is too close to Christmas and would
+> move it a week earlier.
+Yes, I think one week earlier.  That also ties in well with having hard 
+freeze just before KVM forum, which starts 2026-11-12.
+
+Thanks for bringing this up; I'm not sure why I missed doing it myself.
+
+r~
 
