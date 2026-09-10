@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE81C79FB7
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 01:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42405C79FB7
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 01:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Tgg-0003Jp-Aq; Wed, 09 Sep 2026 21:34:50 -0400
+	id 1x4Tgo-0003L2-8B; Wed, 09 Sep 2026 21:34:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x4Tgf-0003JR-23
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:49 -0400
+ id 1x4Tgm-0003Kb-FA
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:56 -0400
 Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x4Tgd-00022t-H7
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:48 -0400
+ id 1x4Tgk-00023d-VP
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:56 -0400
 Received: by mail-yx2-x10.google.com with SMTP id
- 956f58d0204a3-66e4ab19127so1128041d50.1
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 18:34:47 -0700 (PDT)
+ 956f58d0204a3-66e56a1b327so1743242d50.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 18:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789004086; x=1789608886; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789004094; x=1789608894; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=g8ERa42Os9aVokkYe4ss/840Zsv/ImM2me3tQ7NsMxQ=;
- b=YRHd6XZMz4f4ptmeK9pgRJOiAAy4nawDYlLluu0UgXdxHAQbmxhhTTRg5o5ZzQu1YO
- LTDuu4F0MKA44QmcRzMVCXXw4LkLMBieKvD9PDrsR5bkrB0ErDj3zMUksRzjKe/Em5G6
- HSSK1rgoOKKhR/PodYyWiS8NA+56MD/HGCm2Fxqpqt3A9y9ZmZ3FYmBKXNWQoyggPNyV
- J2FKf6ZCsSzPhLVh66y/PCpEhUM+XzF5ty6a1DZFUyT2AotDw273ILPkm0TJZjhRoevY
- QRAOlDPkudINz2mv4TJWC50rnZksHannsmZJjuqBVI6HFe8GNFYs8s3KTvvVf6z3Kxbb
- RgYg==
+ bh=EepW7BVjwaHm6f3geK9JiE92QCiwBl/wJ9Adx9HIkQU=;
+ b=o+4BjxCCUlHPEAkFB+5l/Mg3HmRD1qP5CBoeIkxXOt4kn8cENCuEbrWdxog0QeY1v0
+ +5060gHmTFMrr5D4yj8b7mCgpg4eg9Cudi+eKccmCjf0JPdfcPKXrjqvCAvxpRCj2Ha0
+ 7UYLTvoOQ8CE/h01eZYcra4sSEBhE/Bl8X3O9AMz5ls9HRDIhauINp7rjTtDuDDGY82X
+ rszutDC/+ZWCI+M7/5bjvw8Nr4njvYqoNiSgw6GN0FyaGA98oBf5vqRdrmeXj9F2GHRM
+ lFl3q3JKtKP7VY7MXvzjfzr0vMqSkB1nYoW21Q8IyYT4q06m5lZFHz7XEUipyDYcPSJN
+ H4AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789004086; x=1789608886;
+ d=1e100.net; s=20251104; t=1789004094; x=1789608894;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=g8ERa42Os9aVokkYe4ss/840Zsv/ImM2me3tQ7NsMxQ=;
- b=esQZxfsfbF5iNpqRRFWNCV89R0wN0dNsFwXWQEPiZNFuUzZZHxGVGXilrYyl1WICQI
- FkE3v7gMOIOBBlU4q9Wg4CMg5uzXBcC6J24SqVMxk99NaQ3FIxGMpQP8ji8K9LA9dAIM
- vXg24n7GgJ4Op2FKQhfe4VLfdnPiP7VfV7em9KBfIoeOPJ5R875qUTAIf0nkTJ7mQpf2
- Qf3Cflz6qKdBuDlSw469cI+Uy7ZkkCKcUps1B2lA0OwW2jcAsb2lxf5ZUtZI/8YOLiYd
- gjwesH9PrjaFqywdP+tARdoE0+X1p29QwPmE0S70pf08riGzwXuckrTFpOn43KRG0Lt1
- rrDw==
-X-Gm-Message-State: AFuF++nGXd8JEYSjST8TjPv9YMWDBlxEHceW30UApc49FURbhlEJFJDW
- Btv97AROFmrV6YhZmr+tXzJncppLXpV88qzV/Vid65pQ9nXTYjOLeMlzrtZ3DPd4
-X-Gm-Gg: AYBFou2eF4olbk38jqcoc14/MyrRWDCGTJWsBTYSdWq3PvO+5Gn6KPFfiABOgg65yW+
- sj5WOo46idpFwKOiXba2PWoXtJtXz3ez1ujemQ7vyDAuRVebuniHGCrP1P9XUzfqxmuUlgi3ckM
- SbwQYQFnVolk6C2lfT2ARg9D9qaotwvz2sn5dnn26FlRVkRFKCM6/WjkW7p6gPqUElsDSjL2cP5
- 95Vx+4Ze00tfQBSUj7LbTQrZ3dSIpfKy9NjFGT7U6IH4oN3tLmRkTPhAhh5Hjne51soNBVp0YIx
- agOrPBQwxtp3sW9YSIlOHnPhLmhWbyWsyBQpsEDnOtbPPi6CovrhiZNlkEPS/o7ILg2RejozfxD
- 32T8dfW70OA6WkLwtLapGwJNKeA1YKa3PfZ56VMRIfw072HjbQVIYB0VrSXyZyg0jh2Atjw7v1+
- cuh+OWGjX1AFnQc7lTcwD90qxvB304b0c7NgJoaAM6PIBKWLJ8Ad12OC25lnkQUipBIpv22Bk=
-X-Received: by 2002:a05:690e:4188:b0:66e:ac6f:cdf with SMTP id
- 956f58d0204a3-6710feec5eamr1586879d50.5.1789004086251; 
- Wed, 09 Sep 2026 18:34:46 -0700 (PDT)
+ bh=EepW7BVjwaHm6f3geK9JiE92QCiwBl/wJ9Adx9HIkQU=;
+ b=mjPA1RniUZnDlLzhYq4Ohi0Lq/LlrsDAPK2z206gTmdPzd0v0oWvvecOAyVaixcZKt
+ nO44NhvxRZH/jdQbEDSyF2Fk4JjShbua9Vsw8ZvrGPX4AINgnog9NTu7cueYAO6Gq64L
+ //dL1wwGrWOFcP9/k7l50Vzh4CvN/JPFCZktGZ2OHmXi2XxRFKzxywe99IAdn86hWJ6b
+ Y+fGWEtgsEIuTdmD8jhBvM0Aez3OFaKFvDWAkEygqCOkLoAEmMhSYqWVHFsIC04ywxSp
+ VqQwvOf2ZVmZ34FjZcrUOR9BJzPF7KH7u3zQlfRZrrreyGS3WQXkWNuPqYp7E48Qo9c3
+ 99nw==
+X-Gm-Message-State: AFuF++nXNtLKEQFec88+yCkj2bV7SNkN6DXQbT+If7b68AEc8nnDArKO
+ TfGWRPf9Vc2ojpY82mj2NHmaoVOwImWxLO6PB9D5fcEMlw+6fhGyXH7QITDY0ZDQ
+X-Gm-Gg: AYBFou32LnT+KS5rLjmdaKTuhR1RDoLtjCGqBkuBcl5Fv5ltyL2RGU3E/kYz82ORcFn
+ zpQV43XtHiqZBiqQCMXlhDMZyutDDYohL4/0zfAWt2vUmQYmfLuyezt0LWIVtY+CcmyioD4lOdw
+ 0YpPALkEf/c94U3aMWgjvnrCYCo/SUmwBWxQEOkRA8pbKuZSdC9Bh8wOCEQDAI/AMQkaaHXnFZR
+ 0c7O69L+wdeP1vu2/cXqta8X6jJWOlghYueAS8Jzv0Qm7NWKW+t0hmPdJP+LjoNWD5krCpZuQkg
+ 0TbN8W0lhnXjTmqWcDo7Vdrgo+aRsxvgVJf5v5jhldaYw7lENnD5Ito4+tVg4UuPY/unl2JhZpF
+ lB0hFinNCcXTRxOdJ/gzbx6vlA/0uavxy6ZQSGME4LEk1VpEkjYAquvWOmAqtPTEQXqmBFXtBwQ
+ s3A+IdyKE9d3L53Zj5cQhbOWUsoNcfS3TYqg5ANNZjEhwer4SuIkW3043kw6oJy5exTpKnm/xJ4
+ zPz3Uu/tg==
+X-Received: by 2002:a05:690e:1247:b0:66f:da5b:b87c with SMTP id
+ 956f58d0204a3-6710371d934mr3071151d50.41.1789004089224; 
+ Wed, 09 Sep 2026 18:34:49 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66fc939d4edsm9727304d50.4.2026.09.09.18.34.45
+ 956f58d0204a3-66fb48b374bsm13226841d50.3.2026.09.09.18.34.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2026 18:34:45 -0700 (PDT)
+ Wed, 09 Sep 2026 18:34:48 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
@@ -71,9 +72,10 @@ Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 1/3] target/i386: split the FNINIT out of do_fsave()
-Date: Wed,  9 Sep 2026 21:34:40 -0400
-Message-ID: <20260910013442.1517793-2-mattst88@gmail.com>
+Subject: [PATCH 3/3] linux-user/x86_64: write the floating-point registers to
+ a core dump
+Date: Wed,  9 Sep 2026 21:34:42 -0400
+Message-ID: <20260910013442.1517793-4-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260910013442.1517793-1-mattst88@gmail.com>
 References: <20260910013442.1517793-1-mattst88@gmail.com>
@@ -104,80 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-do_fsave() ends with an FNINIT, which is what the FSAVE instruction and
-the signal frame setup both want, but it makes the helper unusable for a
-caller that only wants to read the state out: recording the registers
-would destroy them.
+A guest core carried only the general-purpose registers, so a debugger
+opening one reported the x87 stack and every SSE register as
+unavailable.
 
-Move the FNINIT into helper_fsave() and cpu_x86_fsave(), and expose the
-store alone as cpu_x86_fsave_noinit(). No functional change; the next
-patch uses the new entry point to write the x87 registers to a guest
-core dump.
+Implement HAVE_ELF_CORE_FPREGS for x86_64: define target_elf_fpregset_t
+to match the kernel's elf_fpregset_t, i.e. struct user_i387_struct from
+arch/x86/include/asm/user_64.h, which is the 512 byte FXSAVE image, and
+fill it with the existing cpu_x86_fxsave(). As on the signal path, the
+helper writes in target byte order, so there is nothing to swap.
+
+QEMU's FXSAVE writes zero for the instruction and operand pointers and
+never writes the opcode field, as it does everywhere else, so those
+three fields are not recovered from a core.
+
+Checked with gdb on a core from a program that faults with live values
+on the x87 stack and in xmm0 and xmm1: "info float" reads back the stack
+and the tag word, and the xmm registers and $mxcsr read correctly.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- target/i386/cpu.h            |  2 ++
- target/i386/tcg/fpu_helper.c | 13 +++++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ linux-user/x86_64/elfload.c    | 11 +++++++++++
+ linux-user/x86_64/target_elf.h | 20 ++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-diff --git ./target/i386/cpu.h ./target/i386/cpu.h
-index 9ce8ca0038..2a543ee808 100644
---- ./target/i386/cpu.h
-+++ ./target/i386/cpu.h
-@@ -2717,6 +2717,8 @@ int cpu_x86_get_descr_debug(CPUX86State *env, unsigned int selector,
-  */
- void cpu_x86_load_seg(CPUX86State *s, X86Seg seg_reg, int selector);
- void cpu_x86_fsave(CPUX86State *s, void *host, size_t len);
-+/* As cpu_x86_fsave(), but leaving the FPU state undisturbed. */
-+void cpu_x86_fsave_noinit(CPUX86State *s, void *host, size_t len);
- void cpu_x86_frstor(CPUX86State *s, void *host, size_t len);
- void cpu_x86_fxsave(CPUX86State *s, void *host, size_t len);
- void cpu_x86_fxrstor(CPUX86State *s, void *host, size_t len);
-diff --git ./target/i386/tcg/fpu_helper.c ./target/i386/tcg/fpu_helper.c
-index b812125efa..f7cf4220ff 100644
---- ./target/i386/tcg/fpu_helper.c
-+++ ./target/i386/tcg/fpu_helper.c
-@@ -2536,6 +2536,10 @@ void helper_fldenv(CPUX86State *env, target_ulong ptr, int data32)
-     do_fldenv(&ac, ptr, data32);
+diff --git ./linux-user/x86_64/elfload.c ./linux-user/x86_64/elfload.c
+index 121a8167ac..4560106faf 100644
+--- ./linux-user/x86_64/elfload.c
++++ ./linux-user/x86_64/elfload.c
+@@ -42,6 +42,17 @@ bool init_guest_commpage(void)
+     return true;
  }
  
-+/*
-+ * Store the environment and the register stack, as FSAVE does, but
-+ * without the FNINIT that FSAVE performs afterward.
-+ */
- static void do_fsave(X86Access *ac, target_ulong ptr, int data32)
- {
-     CPUX86State *env = ac->env;
-@@ -2548,8 +2552,6 @@ static void do_fsave(X86Access *ac, target_ulong ptr, int data32)
-         do_fstt(ac, ptr, tmp);
-         ptr += 10;
-     }
--
--    do_fninit(env);
- }
- 
- void helper_fsave(CPUX86State *env, target_ulong ptr, int data32)
-@@ -2559,6 +2561,7 @@ void helper_fsave(CPUX86State *env, target_ulong ptr, int data32)
- 
-     access_prepare(&ac, env, ptr, size, MMU_DATA_STORE, GETPC());
-     do_fsave(&ac, ptr, data32);
-+    do_fninit(env);
- }
- 
- static void do_frstor(X86Access *ac, target_ulong ptr, int data32)
-@@ -3085,6 +3088,12 @@ void helper_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm)
- 
- #if defined(CONFIG_USER_ONLY)
- void cpu_x86_fsave(CPUX86State *env, void *host, size_t len)
++void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUX86State *env)
 +{
-+    cpu_x86_fsave_noinit(env, host, len);
-+    do_fninit(env);
++    QEMU_BUILD_BUG_ON(sizeof(*r) != sizeof(X86LegacyXSaveArea));
++    /*
++     * The helper stores the image in target byte order.  cpu_x86_fxsave()
++     * folds the softfloat exception flags back into env->mxcsr, so the
++     * const has to go.
++     */
++    cpu_x86_fxsave((CPUX86State *)env, r, sizeof(*r));
 +}
 +
-+void cpu_x86_fsave_noinit(CPUX86State *env, void *host, size_t len)
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
  {
-     X86Access ac = {
-         .haddr1 = host,
+     r->pt.r15 = tswapal(env->regs[15]);
+diff --git ./linux-user/x86_64/target_elf.h ./linux-user/x86_64/target_elf.h
+index 840bddf5ec..23f84f6a91 100644
+--- ./linux-user/x86_64/target_elf.h
++++ ./linux-user/x86_64/target_elf.h
+@@ -27,4 +27,24 @@ typedef struct target_elf_gregset_t {
+     struct target_user_regs_struct pt;
+ } target_elf_gregset_t;
+ 
++/*
++ * Matches the kernel's elf_fpregset_t, i.e. struct user_i387_struct from
++ * arch/x86/include/asm/user_64.h, which is the 512 byte FXSAVE image.
++ */
++#define HAVE_ELF_CORE_FPREGS    1
++
++typedef struct target_elf_fpregset_t {
++    uint16_t cwd;             /* FPU control word                   */
++    uint16_t swd;             /* FPU status word                    */
++    uint16_t twd;             /* abridged tag word, not the x87 one */
++    uint16_t fop;             /* last instruction opcode            */
++    uint64_t rip;             /* instruction pointer                */
++    uint64_t rdp;             /* data pointer                       */
++    uint32_t mxcsr;
++    uint32_t mxcsr_mask;
++    uint32_t st_space[32];    /*  8 * 16 bytes for st0-st7          */
++    uint32_t xmm_space[64];   /* 16 * 16 bytes for xmm0-xmm15       */
++    uint32_t padding[24];
++} target_elf_fpregset_t;
++
+ #endif
 -- 
 2.54.0
 
