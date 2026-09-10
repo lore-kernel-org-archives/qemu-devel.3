@@ -4,126 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE33C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB41FC79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4llR-0001iH-Gu; Thu, 10 Sep 2026 16:53:18 -0400
+	id 1x4lnh-00027q-CI; Thu, 10 Sep 2026 16:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1x4l1j-0006fR-EZ; Thu, 10 Sep 2026 16:06:08 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1x4l1S-0004gC-Vb; Thu, 10 Sep 2026 16:05:31 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CE00321EB2;
- Thu, 10 Sep 2026 20:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789070640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lGn-0001AO-J9
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:21:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lGD-00083R-0N
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789071601;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
- b=PLynM9jIYTtkk3UYKIEcWs7bjhrrTzg0wlunAfXhSmaumgqtAO0KVNsmeWxDJVc04XkOYY
- 4SNA3YBWDnGrggDax6zj9XetgrwEMns2mbgV7zMA42Vg/SrM1wGpkLPc57RvEMWLRIzZtv
- jmPLzyyEFe7XXOfkQVJcPzeuq6wYXBA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789070640;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
- b=RtDq2yiZ6Jq7IClThxQyP5Sw8sPTMyPVqQUmGZvn6vyLRFDa9HHxb4Jcw96ZUCJVtqqzKt
- iLgMw3ZeIU0J3XBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=srN2GjWr;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Z4/dac2u"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789070635; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
- b=srN2GjWr2JAo/too763dxndVQsajbdJnUd57oIJHPCu4I/3Bd/VVsPtNoF5fuhUd+Y4Tiw
- 45cvObms1fes57EMaeMrk+ARyqAXJJpyAiTJ0yBzE200JMVl/M78BZyBO9z2ITNA7jlIXd
- LSnON/ygXB8keytRjx2JE2bWF4g8I2Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789070635;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
- b=Z4/dac2uGiRUg9XnQjl99wQnJ24jd0p3PGyhbLD2I/0FTJ86y8/oS2OfX3eTgk/kdPSMhR
- J1JBu1Fxtihq4hAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2050A1326D;
- Thu, 10 Sep 2026 20:03:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6raNNyoNo2poKAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 20:03:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Brad Smith <brad@comstyle.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Song Gao <gaosong@loongson.cn>, Warner Losh <imp@bsdimp.com>, =?utf-8?Q?D?=
- =?utf-8?Q?aniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, John Snow <jsnow@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Thomas Huth <th.huth+qemu@posteo.eu>, Brian Cain
- <brian.cain@oss.qualcomm.com>, qemu-arm@nongnu.org, =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Kyle Evans <kevans@freebsd.org>, Richard
- Henderson <richard.henderson@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Cleber Rosa <crosa@redhat.com>
-Subject: Re: [PATCH 1/9] scripts/meson-buildoptions.sh: update missing options
-In-Reply-To: <20260910181504.1010916-2-alex.bennee@linaro.org>
-References: <20260910181504.1010916-1-alex.bennee@linaro.org>
- <20260910181504.1010916-2-alex.bennee@linaro.org>
-Date: Thu, 10 Sep 2026 17:03:44 -0300
-Message-ID: <87jyosub4v.fsf@suse.de>
+ bh=6dS2LV10xW58XQBK2n8n0ndzTRRlQmRu7LpDRVGCeMs=;
+ b=fkab8dWxcPtVNYrj3imFOAK4+G9EjXMmhbEESN9itc4WqduSZeSEwu124IpBI/QqciAYcr
+ 5zzR8GK/GlWjriYmpKw7pXaUGA1dK77CKNVbpoL4mC7lh1WAeTiGB4Qr1gF7id165PKs0t
+ /ZnsyIjNoYY5iCUVVuAVZujv0AicrWI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-nkx2V4-COWqwJlkDkDkk7g-1; Thu, 10 Sep 2026 16:13:43 -0400
+X-MC-Unique: nkx2V4-COWqwJlkDkDkk7g-1
+X-Mimecast-MFC-AGG-ID: nkx2V4-COWqwJlkDkDkk7g_1789071222
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4858f06e142so98480f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789071222; x=1789676022; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=6dS2LV10xW58XQBK2n8n0ndzTRRlQmRu7LpDRVGCeMs=;
+ b=mq+Bs6HuLgMB/Te2e4F/rfxF6oZ1x2UIwPXAT6jiXX3iPnFJsWA8odAVRCuLVdnHXa
+ Rue6XFb23FoZqGfF5C3C/wYkaO5pqGYCdJ7L4NBfQPho5XxJdW/ZQYUQ4AbbiFpJcOBt
+ psjqWNKclW040hnUo37v0pil4fpy7ik1G3jdhgA2jTr9jsQKL59qJH5n82AFq0T5inbr
+ fo9sWWdz7wzyQebvItCFuzvIqZdHRn5k9V1H5hjCmKDYf5WrOjyD6kybDnvNIS9KysxW
+ g0fx1gIasWL9L0l3BCJkExOX0Wm7mWZewv6hngxxc2LFclne89a21+urLX4QOGM6U0nf
+ P/jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789071222; x=1789676022;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6dS2LV10xW58XQBK2n8n0ndzTRRlQmRu7LpDRVGCeMs=;
+ b=pgdHpa3AnigRuF/Vp6nAoyk/576v3o3xTpUOKGpRJqoHdVhZyegjE2k23uAsn1ZffS
+ n14IC+hccRINtrHS/f3jvNT1AfC2gzrNbFpYh55RLKM2rh8D+e2u0kTMGBIgLnd8yeo9
+ mmLdNacYmo2UUziDPzqueVxtDvSMkiGZ6RH8n7jNwyh1X+bXnCuMTALhc43YcBDYXqnz
+ C1K2j7JJe06qCnrB0qbO2PV8CivulaFdVGoq07L2xsR9mb5/l+0CWIlBGbJ8II0SM3vJ
+ vpaEMim822iTmDMtFUapGkJpGLpLCnW5kMBy0mYv1SQaT54IAttoYtUk8R3kB64mPs3M
+ AOEg==
+X-Gm-Message-State: AFuF++nhiBnShH8ADnibz8gBds8mTgz+kh7sqQavjhSJd3DVxmbaE/oR
+ FS5cVyDYvRGGxFW2m8Chv/LgVS7ZUedidpDlugCYpJ2oCTsZhaum5PZ8Xv4T4APczNlWG3H8NxF
+ c91JaVO221Ymv47GRIkmeJFfZF4f+mB3fIejg75N2FKAjO6uLN79vL7JxUk0OgN5iOj5bmvJZnq
+ UoVGgRvjhbf68CBaS3gN7b3SG1ByUfXPk+Wg==
+X-Gm-Gg: AYBFou2XJkY3Zpb0n1SeeHXi1GF3bEmKNrJjXwfsX7OrJrr7y89cav/fhxIzUbsoLfq
+ fgoV4uB3+ROZMfWckuMYe0JJkHyl/rYqy1VYiYfh9cchfujdt63bwiIMa7UGs6t4H83pSLHrtC/
+ A76qH5kU/6q8bHuk0wKbdgIa0JLCHx9Vk8TgXbREnfjTsipIA+FfGvjIyXk/NXfijzFsgeveG+z
+ HHRcwbz1tTKUODMjn4cVgY0peIhcWAcFsFwRBcuCQ+g4jd+qEGzMrwnI5Rj0JeVWxAvJS+Nyb2f
+ mZgQtAQmwEtaDL+0LZETZxjH56FdxboOJ7dZAObLFQH2ETy938RwZjCavXTN4XGwsnjW1Eluaz0
+ iZ5In00onPMy+H303sZfJCKE=
+X-Received: by 2002:adf:f792:0:b0:484:3310:f39b with SMTP id
+ ffacd0b85a97d-486eb31e1a3mr559325f8f.28.1789071222098; 
+ Thu, 10 Sep 2026 13:13:42 -0700 (PDT)
+X-Received: by 2002:adf:f792:0:b0:484:3310:f39b with SMTP id
+ ffacd0b85a97d-486eb31e1a3mr559291f8f.28.1789071221596; 
+ Thu, 10 Sep 2026 13:13:41 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-486eb35f3d9sm679751f8f.35.2026.09.10.13.13.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 13:13:40 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:13:38 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: [PULL 53/90] virtio-crypto: clean up every data queue
+Message-ID: <d67d6972c4d34d9b5f07be32afed1b1e4d770b0c.1789071043.git.mst@redhat.com>
+References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: CE00321EB2
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TAGGED_RCPT(0.00)[qemu]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[21]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email,suse.de:dkim,suse.de:mid,gitlab.com:url];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1789071042.git.mst@redhat.com>
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,256 +121,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-> This should have been updated when the meson check-tcg changes where
-> made. Include it now.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+realize() creates max_queues data queues and one BH for each of them.
+unrealize() decides how many to tear down from multiqueue, but nothing ever
+sets that field, so it only deletes the first queue and BH.
 
-There's this previous change by Daniel doing this already:
+It does not matter how many queues the guest used here.  unrealize() must
+undo all the allocations made by realize(), so loop over max_queues.
 
-https://lore.kernel.org/r/20260908074016.2143292-1-berrange@redhat.com
+Fixes: 20cb2ffd5ff3 ("virtio-crypto: using bh to handle dataq's requests")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260728111217.573046-1-zhaoguohan@kylinos.cn>
+---
+ hw/virtio/virtio-crypto.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-> ---
->  scripts/meson-buildoptions.sh | 142 ++++++++++++++++++++++++++++++++++
->  1 file changed, 142 insertions(+)
->
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index 5a67e59a167..67c5e33b011 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -10,7 +10,13 @@ meson_options_help() {
->    printf "%s\n" '  --block-drv-rw-whitelist=3DVALUE'
->    printf "%s\n" '                           set block driver read-write =
-whitelist (by default'
->    printf "%s\n" '                           affects only QEMU, not tools=
- like qemu-img)'
-> +  printf "%s\n" '  --container-command=3DVALUE'
-> +  printf "%s\n" '                           command to build/run contain=
-ers'
-> +  printf "%s\n" '  --container-registry=3DVALUE'
-> +  printf "%s\n" '                           container registry to cache =
-from'
-> +  printf "%s\n" '                           [registry.gitlab.com/qemu-pr=
-oject/qemu]'
->    printf "%s\n" '  --datadir=3DVALUE          Data file directory [share=
-]'
-> +  printf "%s\n" '  --disable-containers     use containers to cross comp=
-ile tcg tests'
->    printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better p=
-erformance)'
->    printf "%s\n" '  --disable-debug-info     Enable debug symbols and oth=
-er information'
->    printf "%s\n" '  --disable-hexagon-idef-parser'
-> @@ -77,6 +83,94 @@ meson_options_help() {
->    printf "%s\n" '  --rtsig-map=3DVALUE        default value of QEMU_RTSI=
-G_MAP [NULL]'
->    printf "%s\n" '  --smbd=3DVALUE             Path to smbd for slirp net=
-working'
->    printf "%s\n" '  --sysconfdir=3DVALUE       Sysconf data directory [et=
-c]'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64=3DVALUE'
-> +  printf "%s\n" '                           cc for aarch64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64-be=3DVALUE'
-> +  printf "%s\n" '                           cc for aarch64_be tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-alpha=3DVALUE'
-> +  printf "%s\n" '                           cc for alpha tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-arm=3DVALUE'
-> +  printf "%s\n" '                           cc for arm tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-hexagon=3DVALUE'
-> +  printf "%s\n" '                           cc for hexagon tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-hppa=3DVALUE'
-> +  printf "%s\n" '                           cc for hppa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-i386=3DVALUE'
-> +  printf "%s\n" '                           cc for i386 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-loongarch64=3DVALUE'
-> +  printf "%s\n" '                           cc for loongarch64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-m68k=3DVALUE'
-> +  printf "%s\n" '                           cc for m68k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-mips=3DVALUE'
-> +  printf "%s\n" '                           cc for mips tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64=3DVALUE'
-> +  printf "%s\n" '                           cc for mips64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64el=3DVALUE'
-> +  printf "%s\n" '                           cc for mips64el tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-or1k=3DVALUE'
-> +  printf "%s\n" '                           cc for or1k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64=3DVALUE'
-> +  printf "%s\n" '                           cc for ppc64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64le=3DVALUE'
-> +  printf "%s\n" '                           cc for ppc64le tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-riscv64=3DVALUE'
-> +  printf "%s\n" '                           cc for riscv64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-s390x=3DVALUE'
-> +  printf "%s\n" '                           cc for s390x tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-sh4=3DVALUE'
-> +  printf "%s\n" '                           cc for sh4 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-tricore=3DVALUE'
-> +  printf "%s\n" '                           cc for tricore tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-x86-64=3DVALUE'
-> +  printf "%s\n" '                           cc for x86_64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensa=3DVALUE'
-> +  printf "%s\n" '                           cc for xtensa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensaeb=3DVALUE'
-> +  printf "%s\n" '                           cc for xtensaeb tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64=3DVALUE'
-> +  printf "%s\n" '                           cflags for aarch64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64-be=3DVALUE'
-> +  printf "%s\n" '                           cflags for aarch64_be tcg te=
-sts'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-alpha=3DVALUE'
-> +  printf "%s\n" '                           cflags for alpha tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-arm=3DVALUE'
-> +  printf "%s\n" '                           cflags for arm tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-hexagon=3DVALUE'
-> +  printf "%s\n" '                           cflags for hexagon tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-hppa=3DVALUE'
-> +  printf "%s\n" '                           cflags for hppa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-i386=3DVALUE'
-> +  printf "%s\n" '                           cflags for i386 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-loongarch64=3DVALUE'
-> +  printf "%s\n" '                           cflags for loongarch64 tcg t=
-ests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-m68k=3DVALUE'
-> +  printf "%s\n" '                           cflags for m68k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips=3DVALUE'
-> +  printf "%s\n" '                           cflags for mips tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64=3DVALUE'
-> +  printf "%s\n" '                           cflags for mips64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64el=3DVALUE'
-> +  printf "%s\n" '                           cflags for mips64el tcg test=
-s'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-or1k=3DVALUE'
-> +  printf "%s\n" '                           cflags for or1k tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64=3DVALUE'
-> +  printf "%s\n" '                           cflags for ppc64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64le=3DVALUE'
-> +  printf "%s\n" '                           cflags for ppc64le tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-riscv64=3DVALUE'
-> +  printf "%s\n" '                           cflags for riscv64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-s390x=3DVALUE'
-> +  printf "%s\n" '                           cflags for s390x tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-sh4=3DVALUE'
-> +  printf "%s\n" '                           cflags for sh4 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-tricore=3DVALUE'
-> +  printf "%s\n" '                           cflags for tricore tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-x86-64=3DVALUE'
-> +  printf "%s\n" '                           cflags for x86_64 tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensa=3DVALUE'
-> +  printf "%s\n" '                           cflags for xtensa tcg tests'
-> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensaeb=3DVALUE'
-> +  printf "%s\n" '                           cflags for xtensaeb tcg test=
-s'
->    printf "%s\n" '  --tls-priority=3DVALUE     Default TLS protocol/ciphe=
-r priority string'
->    printf "%s\n" '                           [NORMAL]'
->    printf "%s\n" '  --with-coroutine=3DCHOICE  coroutine backend to use (=
-choices:'
-> @@ -281,6 +375,10 @@ _meson_option_parse() {
->      --disable-cocoa) printf "%s" -Dcocoa=3Ddisabled ;;
->      --enable-colo-proxy) printf "%s" -Dcolo_proxy=3Denabled ;;
->      --disable-colo-proxy) printf "%s" -Dcolo_proxy=3Ddisabled ;;
-> +    --container-command=3D*) quote_sh "-Dcontainer_command=3D$2" ;;
-> +    --container-registry=3D*) quote_sh "-Dcontainer_registry=3D$2" ;;
-> +    --enable-containers) printf "%s" -Dcontainers=3Dtrue ;;
-> +    --disable-containers) printf "%s" -Dcontainers=3Dfalse ;;
->      --enable-coreaudio) printf "%s" -Dcoreaudio=3Denabled ;;
->      --disable-coreaudio) printf "%s" -Dcoreaudio=3Ddisabled ;;
->      --with-coroutine=3D*) quote_sh "-Dcoroutine_backend=3D$2" ;;
-> @@ -517,6 +615,50 @@ _meson_option_parse() {
->      --disable-tcg) printf "%s" -Dtcg=3Ddisabled ;;
->      --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dtrue ;;
->      --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dfalse ;;
-> +    --tcg-tests-cross-cc-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cc_aar=
-ch64=3D$2" ;;
-> +    --tcg-tests-cross-cc-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross_cc_=
-aarch64_be=3D$2" ;;
-> +    --tcg-tests-cross-cc-alpha=3D*) quote_sh "-Dtcg_tests_cross_cc_alpha=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-arm=3D*) quote_sh "-Dtcg_tests_cross_cc_arm=3D$=
-2" ;;
-> +    --tcg-tests-cross-cc-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cc_hex=
-agon=3D$2" ;;
-> +    --tcg-tests-cross-cc-hppa=3D*) quote_sh "-Dtcg_tests_cross_cc_hppa=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-i386=3D*) quote_sh "-Dtcg_tests_cross_cc_i386=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-loongarch64=3D*) quote_sh "-Dtcg_tests_cross_cc=
-_loongarch64=3D$2" ;;
-> +    --tcg-tests-cross-cc-m68k=3D*) quote_sh "-Dtcg_tests_cross_cc_m68k=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-mips=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-mips64=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
-64=3D$2" ;;
-> +    --tcg-tests-cross-cc-mips64el=3D*) quote_sh "-Dtcg_tests_cross_cc_mi=
-ps64el=3D$2" ;;
-> +    --tcg-tests-cross-cc-or1k=3D*) quote_sh "-Dtcg_tests_cross_cc_or1k=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc64=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc=
-64le=3D$2" ;;
-> +    --tcg-tests-cross-cc-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cc_ris=
-cv64=3D$2" ;;
-> +    --tcg-tests-cross-cc-s390x=3D*) quote_sh "-Dtcg_tests_cross_cc_s390x=
-=3D$2" ;;
-> +    --tcg-tests-cross-cc-sh4=3D*) quote_sh "-Dtcg_tests_cross_cc_sh4=3D$=
-2" ;;
-> +    --tcg-tests-cross-cc-tricore=3D*) quote_sh "-Dtcg_tests_cross_cc_tri=
-core=3D$2" ;;
-> +    --tcg-tests-cross-cc-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cc_x86_=
-64=3D$2" ;;
-> +    --tcg-tests-cross-cc-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cc_xten=
-sa=3D$2" ;;
-> +    --tcg-tests-cross-cc-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_cc_xt=
-ensaeb=3D$2" ;;
-> +    --tcg-tests-cross-cflags-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_aarch64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross=
-_cflags_aarch64_be=3D$2" ;;
-> +    --tcg-tests-cross-cflags-alpha=3D*) quote_sh "-Dtcg_tests_cross_cfla=
-gs_alpha=3D$2" ;;
-> +    --tcg-tests-cross-cflags-arm=3D*) quote_sh "-Dtcg_tests_cross_cflags=
-_arm=3D$2" ;;
-> +    --tcg-tests-cross-cflags-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_hexagon=3D$2" ;;
-> +    --tcg-tests-cross-cflags-hppa=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_hppa=3D$2" ;;
-> +    --tcg-tests-cross-cflags-i386=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_i386=3D$2" ;;
-> +    --tcg-tests-cross-cflags-loongarch64=3D*) quote_sh "-Dtcg_tests_cros=
-s_cflags_loongarch64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-m68k=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_m68k=3D$2" ;;
-> +    --tcg-tests-cross-cflags-mips=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_mips=3D$2" ;;
-> +    --tcg-tests-cross-cflags-mips64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
-ags_mips64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-mips64el=3D*) quote_sh "-Dtcg_tests_cross_c=
-flags_mips64el=3D$2" ;;
-> +    --tcg-tests-cross-cflags-or1k=3D*) quote_sh "-Dtcg_tests_cross_cflag=
-s_or1k=3D$2" ;;
-> +    --tcg-tests-cross-cflags-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cfla=
-gs_ppc64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_ppc64le=3D$2" ;;
-> +    --tcg-tests-cross-cflags-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_riscv64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-s390x=3D*) quote_sh "-Dtcg_tests_cross_cfla=
-gs_s390x=3D$2" ;;
-> +    --tcg-tests-cross-cflags-sh4=3D*) quote_sh "-Dtcg_tests_cross_cflags=
-_sh4=3D$2" ;;
-> +    --tcg-tests-cross-cflags-tricore=3D*) quote_sh "-Dtcg_tests_cross_cf=
-lags_tricore=3D$2" ;;
-> +    --tcg-tests-cross-cflags-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
-ags_x86_64=3D$2" ;;
-> +    --tcg-tests-cross-cflags-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cfl=
-ags_xtensa=3D$2" ;;
-> +    --tcg-tests-cross-cflags-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_c=
-flags_xtensaeb=3D$2" ;;
->      --tls-priority=3D*) quote_sh "-Dtls_priority=3D$2" ;;
->      --enable-tools) printf "%s" -Dtools=3Denabled ;;
->      --disable-tools) printf "%s" -Dtools=3Ddisabled ;;
+diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
+index 79e2acb56c..85c7279aae 100644
+--- a/hw/virtio/virtio-crypto.c
++++ b/hw/virtio/virtio-crypto.c
+@@ -1114,10 +1114,9 @@ static void virtio_crypto_device_unrealize(DeviceState *dev)
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIOCrypto *vcrypto = VIRTIO_CRYPTO(dev);
+     VirtIOCryptoQueue *q;
+-    int i, max_queues;
++    int i;
+ 
+-    max_queues = vcrypto->multiqueue ? vcrypto->max_queues : 1;
+-    for (i = 0; i < max_queues; i++) {
++    for (i = 0; i < vcrypto->max_queues; i++) {
+         virtio_delete_queue(vcrypto->vqs[i].dataq);
+         q = &vcrypto->vqs[i];
+         qemu_bh_delete(q->dataq_bh);
+-- 
+MST
+
 
