@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB0FC88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BE8C88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4leS-0008Ij-Sy; Thu, 10 Sep 2026 16:46:09 -0400
+	id 1x4lgi-0000Zm-Fk; Thu, 10 Sep 2026 16:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lGW-00016T-QG
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:21:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lG6-0000wp-J7
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lG9-0007uy-4P
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFn-00083j-EZ
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071558;
+ s=mimecast20190719; t=1789071601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mkq+2WPt2mey0qAVGmB0E6fFgehzww9kQ8e4JC/K6q4=;
- b=D9OGcfJkqhmtZw49eCTDV01NmzCdqdkd5HHYNijLBSa2S5BMvygZpjOLi7+3IV3vc29cl3
- eHbixVkPeqwy2aItoZIid0lrWeg0T2/RWRCR5FgCPy5ls6W55LVAIIcspRZjf93b/4sU1j
- MkvfjBj+ZXwVE3yh7x2HeiXkW/mf25Q=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
+ b=Z2oSYus1MVK4pulRwhxr9XQryWS7L2IRU2pftw4C0tlg8vJ0V+IGbX0mFj7QKxiwLbLjmW
+ KjLJlUGRnzRBUU26oRSMymmxJvSvzPoLPbtlfe/tehMZ2pif5dUhMzBiqbshBiNDSr0pGZ
+ tp9lNN7tPNZryVez0kqJklfTyuPf7GI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-yl0y02OMOJ6-cV-pyfbLYQ-1; Thu, 10 Sep 2026 16:13:12 -0400
-X-MC-Unique: yl0y02OMOJ6-cV-pyfbLYQ-1
-X-Mimecast-MFC-AGG-ID: yl0y02OMOJ6-cV-pyfbLYQ_1789071192
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49991beee7aso1734105e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:12 -0700 (PDT)
+ us-mta-635-YGlGfXhRNOKFa9Wj1Ii24Q-1; Thu, 10 Sep 2026 16:13:22 -0400
+X-MC-Unique: YGlGfXhRNOKFa9Wj1Ii24Q-1
+X-Mimecast-MFC-AGG-ID: YGlGfXhRNOKFa9Wj1Ii24Q_1789071201
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso68759f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071191; x=1789675991; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071201; x=1789676001; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=mkq+2WPt2mey0qAVGmB0E6fFgehzww9kQ8e4JC/K6q4=;
- b=OQG6JbxmYUkHuMmNAsYrN6WIHo3okb/wu86fYon0ty9IGGAb4Cv06pQqo2aoGlbntA
- S1KuDzP6IflC0ioPcyG+oH9NQANoVJMj1Bt6h2YSS8qxUy+Ix2AMbeIyu2uzWElwdsNP
- qBcHt0gATWbLdSdoE+8kzjupmlYb8gRG6c3z6x22t49+ohX+NT1zyO1FiKiwdoEUfMfO
- 0gmLOVaof/bT/zh7afZEpCPBy+2/Hh1Q3BwyHohsmsBgaCP3Ms43QJLlAeV/zeAG6H8E
- aEpDJMqHnUKMwEqpADzD5dkT9eDBIMzphqnFZRDVax0ukZPXcRtMxAWmXw+rMMse+kd9
- KSJQ==
+ bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
+ b=LJ2Z6W5UCXv/fEJUMoiC0FP7b/89nQwFuhBKgV7leLxA4vWgsZhH6HIP7vCpKwaKi9
+ uvNTViB9PTuWK6cOjPCR4NTu7urFm+v35/REEhGdN5d/QQw3oLKaQiWbH73F6kpt8ZPT
+ DFa/la7V1I4kBaJ90c4S/knd9SogWTyqJcwwKkI9ktV1pK/Wa/QLp3E27G0D4Dv3NLdH
+ PL34Q1v2n3HJWQWBCQLZ8JVdGtdtj6WnJG2/AW8vQkWHScmV2dz4L3O71mtoRuXwNbr9
+ xxRRBxSdc/hBM4VdZ8YSN1vOk/X8/qOh1wVmrXNbcxPqMjQqC/3zsjF6Oe7wuhN6Y4zq
+ UUyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071191; x=1789675991;
+ d=1e100.net; s=20251104; t=1789071201; x=1789676001;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mkq+2WPt2mey0qAVGmB0E6fFgehzww9kQ8e4JC/K6q4=;
- b=NAHCw5cRkEaYGaG9iT9+VA+M8APKXLiRYxlkvUUSQKWMj1/GlMJLks3vQPRgxJRYcf
- bmw7l64MIwImPLdnQlvaO/vm6eAkf0BqmWmJRyVE9/RyovfGAR+x+vbdGvIb/Ue5j7IU
- 4uJosDjCZgcRGIBRGJ7+9YGFAWqDlFIQHUrbrfk0UttlmT+af4S9Jc7LWIDwGVM1Nigi
- hZ33Vl0CS8AyE443t0TApBxXYv3sxRs3YT/WDtpJfAYmRx6eNTgqPjglHl2GVRexGv3Z
- is7f5VvAfaGnQRumRpJTbvnsg6WO/pZTJi7WNynb77xfkgZgQ9dzhFHI7qrl6QpDni3H
- wAqg==
-X-Gm-Message-State: AFuF++lgvQCOryrCeQymmkz7q3FdykmbNvWBFaNVEPtkLffc7KOripH7
- 5dpdG7DyKZlIuylgC8ziPFppPLvHdb6ytla8wBCNNEzE/kvJN6Rhz1aoHMePk/vIOLEIiN10njt
- ovrIsvMbZPmPvEV5QCTwvsXTxCAinZCAXN92kD/Fqf2uR1borjHjXsxWTNYBfEtjor6mzW+KTSf
- eIyBMBlju4lZDLbwWyLPWx0OFbEFn0h8Obwg==
-X-Gm-Gg: AYBFou11ZkCQS0eSwpdQakoXQJ133EY6jr4C5PbAlbU9PcF2esv0r7TVZibZvbuVyMW
- JmILeoDk811jJ6+csiz5qzozmVrlZXtGhkXmuGLHmwBrXpT9y7TQSBlpAQ8R8mUaNW4+e+T5UTF
- fENjZMza2it7VzwouDjoxkAUMlXe59lthsSpVARebvuwRVMcvynuc32kusg5PcgESWsNLBgysIe
- NTK9mdfcQ7tvti51X2adlVSZXkjSpHH27gKY1p/EDqs9X7f6gQ0RNxtcZo2HsOIN5TH79y+QJtn
- 2eQ4ZapRC/qiu0wjiEGq3NiUuw6h7xamg9dYSmI4RnGPiT528OEauMNI9KcWuRpTKB5SPh3GziV
- TuejbCY72HEV+8tB4ZmQh5Ag=
-X-Received: by 2002:a05:600c:3b11:b0:49c:f617:7cf with SMTP id
- 5b1f17b1804b1-49e61645c2fmr13901405e9.0.1789071191363; 
- Thu, 10 Sep 2026 13:13:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b11:b0:49c:f617:7cf with SMTP id
- 5b1f17b1804b1-49e61645c2fmr13900805e9.0.1789071190809; 
- Thu, 10 Sep 2026 13:13:10 -0700 (PDT)
+ bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
+ b=japSN24y02CnwWTQIPAaOeCag3z/0ETcY2Y08e2sFYPfUvnlD5Gi934xdo2wSgq3pq
+ zYttAQAyX0y9C0I9DNUmSFpiLiy8965rC2WA/jSID/m4AjATihmiIqQJ6/GIE7Bxrreh
+ XGnFLUrGdXcqQ+kvstiWzpYkAhsibF2/R3h6gkOdDMHn49hoV0d9jyA7wKs/JE/FhXRp
+ UrOk3r3DKtRz7j2BrfB7uMObQy82YPTrNo6+/XasQ7xnusUz5HxPeE2WJN1haHuEjfni
+ fX/JtITmr+RBkr/nv6HyvlQGZOo7i6I2y4WnswZBbnvCMiYM4x5mHfbyLExTUl6/Ah+A
+ qf2w==
+X-Gm-Message-State: AFuF++mSN/Taz3XaXYZj6mOo5KhrWiGh2jjUYdk3npAiuZK91BoZM3YN
+ m6q2w0n5JpYnPrK/YxrrcGARg/5w4l5LxC6XG7W4Eow+PXWgu9yzr9/5lijYcdCefnB+b+CqOVW
+ y1maMQ3ZV7lPdq+/Vfcy4UMXyLftSxpnNJS0QHPhw2akvhlREHg41TO9Xj0NwQH8g5eabY0q9Q3
+ wFV01+YEVxjx3TP5OBkCFJofjaMYHkg6zIsg==
+X-Gm-Gg: AYBFou2gbR2Y2Klw/yxrGWQGQMI0roq0iuh2sxuSR3+TEAImkXUgxH7//VAHhEIRQxo
+ 4ciqbOEElpA1nZA3sfAP/CdJEdYMa0Mo+uynGj76TtpuUK+Xr91CM7eDCUH0MzAtgeVSASN7GLy
+ 2YQkUCTWkP9nEE+RYgc01iF+LaHp4kogo/5B6dl5a+Ba8PnztWsY/2oEhUnfE+Qq1shaIWbfPVk
+ 6uSMDcHd5ZA+Q/+Mg+pVPjet7yeJmNffEo8/iAE6TnD5o17JLyw/5ENorenQVRv7VUz4LC9cvE6
+ 2Hyt/CvWq8H14khUI3BFtxLDPytiNjQxtTwA9oBs9zMBncKnTS6snh8Lm6USmpSqil/zcmAOtuM
+ dftFwqEqfi6Pt/jGpN/9uyq8=
+X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
+ 5b1f17b1804b1-49e619acc89mr19429425e9.10.1789071200722; 
+ Thu, 10 Sep 2026 13:13:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
+ 5b1f17b1804b1-49e619acc89mr19428465e9.10.1789071200238; 
+ Thu, 10 Sep 2026 13:13:20 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26be3e35sm94063665e9.2.2026.09.10.13.13.09
+ 5b1f17b1804b1-49e60946249sm21236135e9.0.2026.09.10.13.13.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:10 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:13:08 -0400
+ Thu, 10 Sep 2026 13:13:19 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:13:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Davidlohr Bueso <dave@stgolabs.net>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 41/90] tests/acpi/cxl: Update CEDT.cxl for the default CFMW
- restrictions
-Message-ID: <2591d8008c932c507f076b635d4071c58e723f5d.1789071043.git.mst@redhat.com>
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Subject: [PULL 45/90] hw/virtio-blk: Account discard operations
+Message-ID: <b9c513000f50cd5e67a32303a193997e7e775f7b.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,15 +97,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789071042.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,51 +121,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-With the default CXL Fixed Memory Window restrictions changed to drop
-Back-Invalidate (keeping device-coherent and host-only), update the
-expected CEDT to advertise 0x0f instead of 0x2f.
+The acct_failed argument to virtio_blk_handle_rw_error() tells whether
+there is accounting for this operation or not.  The only operation for
+which there is none is discarding, which seems to be because at the time
+of the introducing commit 37b06f8d46f ("virtio-blk: add DISCARD and
+WRITE_ZEROES features"), BlockAcctType did not yet have a
+BLOCK_ACCT_UNMAP variant.
 
-[064h 0100 001h]               Subtable Type : 01 [CXL Fixed Memory Window Structure]
-[065h 0101 001h]                    Reserved : 00
-[066h 0102 002h]                      Length : 0028
-[068h 0104 004h]                    Reserved : 00000000
-[06Ch 0108 008h]         Window base address : 0000000110000000
-[074h 0116 008h]                 Window size : 0000000100000000
-[07Ch 0124 001h]          Interleave Members : 00
-[07Dh 0125 001h]       Interleave Arithmetic : 00
-[07Eh 0126 002h]                    Reserved : 0000
-[080h 0128 004h]                 Granularity : 00000005
-[084h 0132 002h]                Restrictions : 000F
-[086h 0134 002h]                       QtgId : 0000
-[088h 0136 004h]                First Target : 0000000C
+It does have that now, though, so we may as well track those discard
+operations with it, and can thus remove the acct_failed parameter.
 
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260720233242.901544-4-dave@stgolabs.net>
+Message-ID: <20260724152315.234183-2-hreitz@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/x86/q35/CEDT.cxl            | Bin 184 -> 184 bytes
- 2 files changed, 1 deletion(-)
+ hw/block/virtio-blk.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index b4646b5b31..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/x86/q35/CEDT.cxl",
-diff --git a/tests/data/acpi/x86/q35/CEDT.cxl b/tests/data/acpi/x86/q35/CEDT.cxl
-index c35f3882eee67aa5613af427234d1ccd196aa249..ff8203af070241bd23dd0eb8a51460692bb7d229 100644
-GIT binary patch
-delta 36
-scmdnNxPy_)+0`Xv2Ll5G<Hw0yRgC--Th)2^85kIN7#JAtF)%Oy0IW3!t^fc4
-
-delta 36
-scmdnNxPy_)+0`Xv2Ll5G<Hm_xRgC%*Th)2=85kIN7#JAtF)%Oy0IF37t^fc4
-
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index cb6a276a82..4110380392 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -69,7 +69,7 @@ void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
+ }
+ 
+ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+-    bool is_read, bool acct_failed)
++                                      bool is_read)
+ {
+     VirtIOBlock *s = req->dev;
+     BlockErrorAction action = blk_get_error_action(s->blk, is_read, error);
+@@ -85,9 +85,7 @@ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+         }
+     } else if (action == BLOCK_ERROR_ACTION_REPORT) {
+         virtio_blk_req_complete(req, VIRTIO_BLK_S_IOERR);
+-        if (acct_failed) {
+-            block_acct_failed(blk_get_stats(s->blk), &req->acct);
+-        }
++        block_acct_failed(blk_get_stats(s->blk), &req->acct);
+         g_free(req);
+     }
+ 
+@@ -124,7 +122,7 @@ static void virtio_blk_rw_complete(void *opaque, int ret)
+              * the memory until the request is completed (which will
+              * happen on the other side of the migration).
+              */
+-            if (virtio_blk_handle_rw_error(req, -ret, is_read, true)) {
++            if (virtio_blk_handle_rw_error(req, -ret, is_read)) {
+                 continue;
+             }
+         }
+@@ -140,7 +138,7 @@ static void virtio_blk_flush_complete(void *opaque, int ret)
+     VirtIOBlockReq *req = opaque;
+     VirtIOBlock *s = req->dev;
+ 
+-    if (ret && virtio_blk_handle_rw_error(req, -ret, 0, true)) {
++    if (ret && virtio_blk_handle_rw_error(req, -ret, 0)) {
+         return;
+     }
+ 
+@@ -153,17 +151,13 @@ static void virtio_blk_discard_write_zeroes_complete(void *opaque, int ret)
+ {
+     VirtIOBlockReq *req = opaque;
+     VirtIOBlock *s = req->dev;
+-    bool is_write_zeroes = (virtio_ldl_p(VIRTIO_DEVICE(s), &req->out.type) &
+-                            ~VIRTIO_BLK_T_BARRIER) == VIRTIO_BLK_T_WRITE_ZEROES;
+ 
+-    if (ret && virtio_blk_handle_rw_error(req, -ret, false, is_write_zeroes)) {
++    if (ret && virtio_blk_handle_rw_error(req, -ret, false)) {
+         return;
+     }
+ 
+     virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
+-    if (is_write_zeroes) {
+-        block_acct_done(blk_get_stats(s->blk), &req->acct);
+-    }
++    block_acct_done(blk_get_stats(s->blk), &req->acct);
+     g_free(req);
+ }
+ 
+@@ -443,6 +437,9 @@ static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
+             goto err;
+         }
+ 
++        block_acct_start(blk_get_stats(s->blk), &req->acct, bytes,
++                         BLOCK_ACCT_UNMAP);
++
+         blk_aio_pdiscard(s->blk, sector << BDRV_SECTOR_BITS, bytes,
+                          virtio_blk_discard_write_zeroes_complete, req);
+     }
+@@ -450,9 +447,8 @@ static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
+     return VIRTIO_BLK_S_OK;
+ 
+ err:
+-    if (is_write_zeroes) {
+-        block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
+-    }
++    block_acct_invalid(blk_get_stats(s->blk),
++                       is_write_zeroes ? BLOCK_ACCT_WRITE : BLOCK_ACCT_UNMAP);
+     return err_status;
+ }
+ 
 -- 
 MST
 
