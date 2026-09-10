@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947CAC88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5445BC88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4piq-0003Lx-Pl; Thu, 10 Sep 2026 21:06:45 -0400
+	id 1x4pjV-0003r3-3v; Thu, 10 Sep 2026 21:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPX-0001fz-3u
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:40 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0001k5-37
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPT-000782-DO
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:29 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-48441a2ba1bso195059f8f.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPv-0007Fr-6T
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:02 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49d1fb0cf5eso2906595e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083745; x=1789688545; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=WCtL81X0uEHdmpCjJ7DEK9oFi6EGro1MFiHuPeEFIS4=;
- b=IAORI5DB7qiQXEIYQTkD6uW9EKV0d9/6tl3HrqewMU6kv4nJu3JJkoRIrCXXyO6Hw9
- ag4y0zTJmXhN+Sk3axcejCrxUiWayC5Ru8ntvh02a/wuDVlzNEpzDeucNTUFTrbCuVFq
- QEtA1PD4ed6AsLNoi1mxd+DeHah4oSNcBZky/NpqPtOKa9ax7ZglE8luCkbw7Y/nFzGR
- y8moOwrDbhArW/1FS5wiVilWfQR3DI4z6REi1ONvfCy+ZnEhYpbHJXSzeS571qiSZsT7
- ds9sLnt5yY/3QyBhS489iE9u3clibnzRAXLE9NcRAvfoFgHZMBp31LN9ZdLhi4IRwyW6
- yNXw==
+ d=openvz.org; s=google; t=1789083770; x=1789688570; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=oMU0rRkqJ/vpKM9oem0Tv9koaS7lHqSrp/84fAD5rYg=;
+ b=XKcIojqunHly4mg/GvetaIYYmapsAea+9pfTDj/6OK44fi3ysvmSkC8/W8C+BMaVg0
+ DsKtmewlvTByzAHw0X7NvnmQfpdypl8a+H6wz8kv/xFr/aMkTAkjkHAH7vxZtefDhwf0
+ YC6ZhGSh+MEf+ykID2ZR8fNMWBBhpWQXlSOUG+PVJ1jhb0sQrBylMj0J3bwevPrH68q1
+ UN9BaTN2TjKcINN8JoZOM3Ur66MjavRxVX59tW9vtMqKtZ5MbyKTOSt65lTEA8LdSOET
+ NY7vknTeC9l/rqq4O6oR6lZBTJIr19n8JhbEI9OuhPDdv3MHnlmddivN39YthkrfUMXi
+ NwYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083745; x=1789688545;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=WCtL81X0uEHdmpCjJ7DEK9oFi6EGro1MFiHuPeEFIS4=;
- b=EYr1WHNu0BVez+JJg/bqelbKl6XHTLdWPpp2zGvApvoJVI9Z+R7kgEXHmGyOS75BlO
- 8WWhDJJ9UrCsBB55ythx15l7Glr15Am8b5rzuQtvtvOqmiePF4OkhQ7aTgfICeKSK2vT
- PEpB4NIkZJncdx9xpwgrnCvvi6LOR/DbC7wXFWYbf8DrhnPJFXvmfOzwmSVb03Qd7Bci
- RR0CtsbM+lQRnfzzNMWP7pFyLC1i0bGyI+Mnb4y9h5YsscA2rqUOMU2lQtdY55wVmz2I
- 3pr/Hq01KS6t0kiw5AmlS3dwU73OgTAileWadvi7zVPnbc7kiqMf9ruDmJLg04zyBumL
- mFyg==
-X-Gm-Message-State: AFuF++nWsAk7NPUUqaKkkM5l1nEcWQyqJeBUFPaCkxuYJ8/9Ht9wMVo5
- wDnAT4/rCT5TzIa+CwnoAUSoaWYu9243BRGOgXdETVCttB1U/5rxPNGNGBsqVOW4grc=
-X-Gm-Gg: AYBFou3XrEM+qrrfmK/BQvf2GITQ/9gyuYq8spZ8/9g8uziL+4wNGwPkebpmQ4MJqQn
- XQEhtWPgho+nHVPvdbP4FadjfNXz0FNt1hdcRkOiyQaEL0trj50cDrbsmW4P0hrNpQaCFc1DhKw
- rE5Bnx7WByoaWw1BaGWpF0XDnr2/P9DklpqYnCcGjcwX0SlPMbGUGx6+7wMcSa9JGrD465MFfcP
- yhB70L+GRBsFW75aE3hPy2PRF5MY6TA3VafFFPzkr0PsyWKstdZ8o6VOPcOs457h+NdA01EKrXx
- Ox/ftBtuNU4xIspJC0isPRT7pkGwLPJslhuaTzlgC0iey+CCOqq5VBZ/vaTxxM6n3/RbszyRmD5
- rZtLugCbYMk9jXD09hTSb6Wpq0TaengbfWEHQ1nWYxXRMQgLCd3PPOlU4Ff7+hZf8xdBkxjVAW9
- MO5xEYAQMEqegz2AXlj4HSZR//EKWM/OGBb3n8knQb7WTUVxRus5kDw8PKOlGAd1RKpGXDzQCGE
- MItUyk=
-X-Received: by 2002:a05:600c:c3cc:10b0:499:da8b:1476 with SMTP id
- 5b1f17b1804b1-49e6198d752mr10946045e9.14.1789083744744; 
- Thu, 10 Sep 2026 16:42:24 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789083770; x=1789688570;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=oMU0rRkqJ/vpKM9oem0Tv9koaS7lHqSrp/84fAD5rYg=;
+ b=pEBm9V0rsWqnOn6Qw61aTz8QXpKS//bXAwtl7EJPr22LeiaxH3jIq6PNn1Qb6wo5Gi
+ 71kP3ChGq2A5xnCXU1TVeiFxeSZ+ZLZMQuqfpOzGpL79O3G7OTzqCvyLYfl0xRdVplc8
+ v5U/lsmOvLbeeck3/CKT2nsTlsveklZ9CmR39EvxaQMRVcvBfGgEPBtweVzh2PBUqfm5
+ d74KRs2lgO98tO9m1o9gQMTVW0FhVh3qYyYb+6C4MSeM3253v0xCarwaySgij8r+zLuf
+ FdoUIiARTCdEB70CLm956MnZzJnaN0Pya5N1hSWoHeZElr2Lwwl0iDiMHXMGTeHWLg+P
+ O+bw==
+X-Gm-Message-State: AFuF++lEzyhgth1NHly96kzId3X58iwQ92eyliH22AuX2HIvG1cf4rAP
+ BRWWbwcapX7u+YjRpg8C8HHm0pvR8HJPnsy2YU+BAgAIfvhw8W659o1i0tnK1B3e/MI=
+X-Gm-Gg: AYBFou2gxScOrKgUgtSJRiHsjmM955HGVOKync62cuootLJHF4QmadzyOJbREMsfAK5
+ FevkKIEawNUSUiOHEkFSVLVJ4ck0lZyzNlSvSqMGhaN6IILFdPzy7xEe+sj4aZsaaSOKsjhwB0X
+ bE/jnWRarT3vQo8dFNm4lxrlyR2UP97tvo5tCKaOVPNBbmDxc0STzSe9cLwWKF4Y5+0k3L87JWh
+ +4EVmBdYKHxXZlpHMBZ7QJVl2mw6jIfNhMa7NiLUvOzbbPbfaRPg/Hm9Xb/4z09EdpUWkmX9aki
+ pBarzOZ3S33lIybD7tFJ61kk8ecDOsZbUKHG+BvURWotCLK8w+4sf4zXgO54ccvCJGYyezVVDVO
+ jng50pdZowbfdTCrbxAgjAvaCirig25oNNxctLVXJ220Uas/9CTDSMYDExIji+h7HcT9GABYPHM
+ 7R8nHVucEtabdYwBibn8pgYBtP6iVwpMWzdOnYHDXoK7eHttSj3QLH3oAt5oSI4jcmRMqEmXwAM
+ 9YBJXc=
+X-Received: by 2002:a05:600c:8411:b0:49d:1e09:694a with SMTP id
+ 5b1f17b1804b1-49e619f5049mr31651455e9.11.1789083769898; 
+ Thu, 10 Sep 2026 16:42:49 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.23
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:24 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:49 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 00/29] parallels: persistent dirty bitmaps and Format Extension
- hardening
-Date: Fri, 11 Sep 2026 01:41:53 +0200
-Message-ID: <20260910234222.3039975-1-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 19/29] parallels: Let image extensions work in RW mode
+Date: Fri, 11 Sep 2026 01:42:12 +0200
+Message-ID: <20260910234222.3039975-20-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
+References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=den@openvz.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,91 +99,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013fb7:
+From: Denis V. Lunev <den@openvz.org>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-09-10 11:08:04 +0100)
+Saving extensions is supported now, so we can let them work in
+read-write mode as well.
 
-are available in the Git repository at:
+The bounds check rejecting a Format Extension outside the image file
+used to sit in the read-only branch of the condition. Perform it
+unconditionally, as the extension is now read in both modes.
 
-  https://gitlab.com/dlunev/qemu.git tags/pull-parallels-2026-09-11
+A loaded bitmap was marked read-only unconditionally, guarded by an
+assert that the image is not writable. Mark it so for a read-only node
+only, as qcow2_load_dirty_bitmaps() does, or the next inactivation
+fails with "No write access". The condition is read-only alone rather
+than the full write access qcow2 asks about, as an inactive node can
+become writable later and parallels has no path which would clear the
+flag again. Mark the bitmap persistent as well, or it disappears from
+the image the first time it is written out.
 
-for you to fetch changes up to 94336eedb1c98792d595f729c7a284e9e91e6158:
+An unreadable extension must not keep the image shut. Its clusters are
+deliberately left free for reuse, so a guest write may have landed on
+them, and every qemu up to this one ignores the extension in read-write
+mode and truncates the file to the end of the payload on close, leaving
+ext_off pointing past the end of the file. Both refuse an image whose
+payload is perfectly fine, in either mode, with no way back through
+qemu-img check or convert. So do not ask the in use flag, ask whether
+what the header points at is an extension at all: an offset outside the
+file, a wrong magic or a wrong checksum all say that it is not, whoever
+left it behind, so drop it with a warning and forget where it ended,
+which lets the leak check reclaim the space.
 
-  tests: Add parallels format support to image-fleecing (2026-09-11 00:54:38 +0200)
+Behind the checksum the extension says what its writer meant it to say,
+so a feature this driver does not implement, or a bitmap it can not
+parse, keeps the image shut as before. Only an image which was not
+closed correctly gives up its extension there, as its bitmaps predate
+every write which followed the last inactivation.
 
-----------------------------------------------------------------
-parallels patches
+Reading a bitmap allocates a cluster sized buffer with the aborting
+qemu_blockalign(), and parallels_open() lets a cluster reach almost
+2 GiB. That is reachable through every open now, so allocate it the way
+the storing side does and align it to bs->file.
 
-- harden the Format Extension parser against a crafted image
-- add persistent dirty bitmap support: store, remove and report them
-- let image extensions be updated in read-write mode
-- make qemu-img check report the damage it is meant to report
-  instead of dying on it
-- drop the unused clusters at the end of the image
-- cover the new behaviour in the parallels iotests, and run more of
-  the generic ones on parallels
+Based on the original work from Alexander Ivanov.
 
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ block/parallels-ext.c                         | 24 ++++++++-----
+ block/parallels.c                             | 35 +++++++++++--------
+ .../qemu-iotests/tests/parallels-read-bitmap  | 18 ++++++++--
+ .../tests/parallels-read-bitmap.out           | 12 +++++--
+ 4 files changed, 60 insertions(+), 29 deletions(-)
 
-----------------------------------------------------------------
-Alexander Ivanov (4):
-      parallels: Set s->used_bmap to NULL in parallels_free_used_bitmap()
-      parallels: Make mark_used() a global function
-      parallels: Create used bitmap even if checks needed
-      tests: Turned on 256, 299, 304 and block-status-cache for parallels format
-
-Denis V. Lunev (25):
-      parallels: fix out-of-bounds read in format extension parsing
-      parallels: validate dirty bitmap granularity
-      parallels: bound the bitmap L1 table against the bitmap size
-      parallels: reject a Format Extension outside the image file
-      parallels: allocate the Format Extension cluster gracefully
-      parallels: fix GSList leak on the format extension success path
-      iotests: cover the Parallels format extension parser
-      parallels: split inactivation out and add the activation counterpart
-      iotests: cover inactivating a read-only node
-      parallels: Limit search in parallels_mark_used to the last marked cluster
-      parallels: Move host clusters allocation to a separate function
-      parallels: do not let the check die on what it is meant to report
-      parallels: Drop unused clusters at the end of the image
-      parallels: Remove unnecessary data_end field
-      parallels: Add dirty bitmaps saving
-      parallels: Let image extensions work in RW mode
-      parallels: Handle L1 entries equal to one
-      iotests: cover the Format Extension against the leak check
-      iotests: run the persistent dirty bitmap test on parallels
-      parallels: reject a bitmap L1 entry outside the data area
-      parallels: do not trust the bitmaps of an image which was not closed
-      parallels: implement removing a stored dirty bitmap
-      iotests: rename parallels-read-bitmap to parallels-bitmap
-      iotests: cover a broken Format Extension and a combined repair
-      tests: Add parallels format support to image-fleecing
-
- block/parallels-ext.c                              | 457 ++++++++++++++++++++-
- block/parallels.c                                  | 432 ++++++++++++-------
- block/parallels.h                                  |  20 +-
- tests/qemu-iotests/165                             |  18 +-
- tests/qemu-iotests/256                             |   2 +-
- tests/qemu-iotests/299                             |   2 +-
- tests/qemu-iotests/304                             |   2 +-
- tests/qemu-iotests/tests/block-status-cache        |   2 +-
- tests/qemu-iotests/tests/image-fleecing            |  14 +-
- tests/qemu-iotests/tests/inactive-node-nbd         |  14 +
- tests/qemu-iotests/tests/inactive-node-nbd.out     |   8 +
- tests/qemu-iotests/tests/parallels-bitmap          | 260 ++++++++++++
- tests/qemu-iotests/tests/parallels-bitmap.out      |  49 +++
- tests/qemu-iotests/tests/parallels-checks          | 229 +++++++++++
- tests/qemu-iotests/tests/parallels-checks.out      | 174 ++++++++
- tests/qemu-iotests/tests/parallels-read-bitmap     |  53 ---
- tests/qemu-iotests/tests/parallels-read-bitmap.out |   6 -
- 17 files changed, 1498 insertions(+), 244 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/parallels-bitmap
- create mode 100644 tests/qemu-iotests/tests/parallels-bitmap.out
- delete mode 100755 tests/qemu-iotests/tests/parallels-read-bitmap
- delete mode 100644 tests/qemu-iotests/tests/parallels-read-bitmap.out
-
+diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+index a0e2be395f..e89c489730 100644
+--- a/block/parallels-ext.c
++++ b/block/parallels-ext.c
+@@ -74,7 +74,11 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
+     uint8_t *buf = NULL;
+     uint64_t i;
+ 
+-    buf = qemu_blockalign(bs, s->cluster_size);
++    buf = qemu_try_blockalign(bs->file->bs, s->cluster_size);
++    if (!buf) {
++        error_setg(errp, "Failed to allocate a bitmap data cluster");
++        return -ENOMEM;
++    }
+     limit = bdrv_dirty_bitmap_serialization_coverage(s->cluster_size, bitmap);
+     for (i = 0, offset = 0; i < l1_size; ++i, offset += limit) {
+         uint64_t count, entry;
+@@ -210,9 +214,9 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
+         }
+     }
+ 
+-    /* We support format extension only for RO parallels images. */
+-    assert(!(bs->open_flags & BDRV_O_RDWR));
+-    bdrv_dirty_bitmap_set_readonly(bitmap, true);
++    if (!(bs->open_flags & BDRV_O_RDWR)) {
++        bdrv_dirty_bitmap_set_readonly(bitmap, true);
++    }
+ 
+     return bitmap;
+ 
+@@ -226,7 +230,7 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
+                                  Error **errp)
+ {
+     BDRVParallelsState *s = bs->opaque;
+-    int ret;
++    int ret = -EINVAL;
+     int remaining = s->cluster_size;
+     uint8_t *pos = ext_cluster;
+     ParallelsFormatExtensionHeader eh;
+@@ -243,12 +247,12 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
+         error_setg(errp, "Wrong parallels Format Extension magic: 0x%" PRIx64
+                    ", expected: 0x%llx", eh.magic,
+                    PARALLELS_FORMAT_EXTENSION_MAGIC);
++        ret = -ENOENT;
+         goto fail;
+     }
+ 
+-    ret = qcrypto_hash_bytes(QCRYPTO_HASH_ALGO_MD5, (char *)pos, remaining,
+-                             &hash, &hash_len, errp);
+-    if (ret < 0) {
++    if (qcrypto_hash_bytes(QCRYPTO_HASH_ALGO_MD5, (char *)pos, remaining,
++                           &hash, &hash_len, errp) < 0) {
+         goto fail;
+     }
+ 
+@@ -256,6 +260,7 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
+         memcmp(hash, eh.check_sum, sizeof(eh.check_sum)) != 0) {
+         error_setg(errp, "Wrong checksum in Format Extension header. Format "
+                    "extension is corrupted.");
++        ret = -ENOENT;
+         goto fail;
+     }
+ 
+@@ -301,6 +306,7 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
+             if (!bitmap) {
+                 goto fail;
+             }
++            bdrv_dirty_bitmap_set_persistence(bitmap, true);
+             bitmaps = g_slist_append(bitmaps, bitmap);
+             break;
+ 
+@@ -319,7 +325,7 @@ fail:
+     }
+     g_slist_free(bitmaps);
+ 
+-    return -EINVAL;
++    return ret;
+ }
+ 
+ int parallels_read_format_extension(BlockDriverState *bs,
+diff --git a/block/parallels.c b/block/parallels.c
+index a9464d5352..90b7f7c8de 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -1454,25 +1454,30 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
+ 
+     if (ph.ext_off) {
+         int64_t ext_off = le64_to_cpu(ph.ext_off);
++        Error *ext_err = NULL;
+ 
+-        if (flags & BDRV_O_RDWR) {
+-            /*
+-             * It's unsafe to open image RW if there is an extension (as we
+-             * don't support it). But parallels driver in QEMU historically
+-             * ignores the extension, so print warning and don't care.
+-             */
+-            warn_report("Format Extension ignored in RW mode");
+-        } else if (ext_off + s->tracks > file_nb_sectors) {
+-            error_setg(errp, "Invalid image: Format Extension is outside the "
+-                       "image file");
+-            ret = -EINVAL;
+-            goto fail;
++        if (ext_off + s->tracks > file_nb_sectors) {
++            ret = -ENOENT;
++            error_setg(&ext_err, "Format Extension is outside the image file");
+         } else {
+-            ret = parallels_read_format_extension(
+-                    bs, ext_off << BDRV_SECTOR_BITS, errp);
+-            if (ret < 0) {
++            ret = parallels_read_format_extension(bs,
++                                                  ext_off << BDRV_SECTOR_BITS,
++                                                  &ext_err);
++        }
++        if (ret == -ENOENT) {
++            s->ext_end = 0;
++            warn_reportf_err(ext_err, "Dropping the Format Extension of node "
++                             "'%s', which does not look like one: ",
++                             bdrv_get_device_or_node_name(bs));
++        } else if (ret < 0) {
++            if (!s->header_unclean) {
++                error_propagate(errp, ext_err);
+                 goto fail;
+             }
++            s->ext_end = 0;
++            warn_reportf_err(ext_err, "Dropping the Format Extension of node "
++                             "'%s', which was not closed correctly: ",
++                             bdrv_get_device_or_node_name(bs));
+         }
+     }
+ 
+diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-read-bitmap
+index 5cbef25018..6990926d60 100755
+--- a/tests/qemu-iotests/tests/parallels-read-bitmap
++++ b/tests/qemu-iotests/tests/parallels-read-bitmap
+@@ -121,8 +121,16 @@ def report(name):
+         log(f'qemu-img died with signal {-exc.returncode}')
+         return
+ 
+-    log('image opened' if res.returncode == 0
+-        else iotests.filter_testfiles(res.stdout).strip())
++    out = iotests.filter_generated_node_ids(
++        iotests.filter_testfiles(res.stdout))
++    if res.returncode != 0:
++        log(out.strip())
++        return
++
++    log('image opened')
++    for line in out.splitlines():
++        if 'warning' in line:
++            log(line.strip())
+ 
+ 
+ def check(name, ext, tracks=1):
+@@ -148,6 +156,12 @@ check('wrong extension magic',
+ check('wrong extension checksum',
+       extension(feature(0, 0), checksum=False))
+ 
++# An older qemu truncates the extension cluster away on close.
++with open(crafted, 'wb') as img:
++    img.write(parallels_header(1, SECTORS, SECTORS, EXT_SECTOR))
++    img.truncate(EXT_SECTOR * 512)
++report('extension cut off the end of the file')
++
+ check('unknown feature', extension(feature(BITMAP_MAGIC ^ 1, 0)))
+ 
+ check('feature flags set', extension(feature(0, 0, flags=1)))
+diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-read-bitmap.out
+index 3b3f90c8de..13b10af5a4 100644
+--- a/tests/qemu-iotests/tests/parallels-read-bitmap.out
++++ b/tests/qemu-iotests/tests/parallels-read-bitmap.out
+@@ -8,9 +8,14 @@ Kill NBD server
+ --- well-formed extension
+ image opened
+ --- wrong extension magic
+-qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong parallels Format Extension magic: 0xab234cef23dcea86, expected: 0xab234cef23dcea87
++image opened
++qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Wrong parallels Format Extension magic: 0xab234cef23dcea86, expected: 0xab234cef23dcea87
+ --- wrong extension checksum
+-qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong checksum in Format Extension header. Format extension is corrupted.
++image opened
++qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Wrong checksum in Format Extension header. Format extension is corrupted.
++--- extension cut off the end of the file
++image opened
++qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Format Extension is outside the image file
+ --- unknown feature
+ qemu-img: Could not open 'TEST_DIR/PID-crafted': Unknown feature: 0x20385fae252cb34b
+ --- feature flags set
+@@ -30,7 +35,8 @@ qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 4294
+ --- bitmap L1 entry overflows
+ qemu-img: Could not open 'TEST_DIR/PID-crafted': Failed to read bitmap data cluster: Input/output error
+ --- cluster_size beyond the file size
+-qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid image: Format Extension is outside the image file
++image opened
++qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Format Extension is outside the image file
+ --- bitmap serialization coverage overflow
+ image opened
+ --- bitmap spanning two L1 entries
 -- 
 2.53.0
 
