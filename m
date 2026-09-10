@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E01C79FB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 09:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE196C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 09:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4bC5-0007xM-C5; Thu, 10 Sep 2026 05:35:45 -0400
+	id 1x4bNp-0000oH-1m; Thu, 10 Sep 2026 05:47:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x4bC3-0007x4-QH
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 05:35:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x4bNn-0000o7-On
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 05:47:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x4bC1-0007Vq-Ad
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 05:35:43 -0400
+ id 1x4bNV-0002HE-QR
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 05:47:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789032939;
+ s=mimecast20190719; t=1789033648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WX8zjQhoellC02REAikwQGwN2XVGhconckvs5aFntbo=;
- b=dxgtuzVUyCU7zsqjKF0b9nr5Knl1cmXzd6NGGhAYNcFGyfT+ROZPO/kBioy4/Jy5U7+nEd
- 8IolmxXnR8c6N1ZqrvrvqOxJhJSxzLFnSAR2aHjcVJhc6IllBQ1s7+VFubQykeUia811kj
- RdNDiOon1AKCsuPoFdH5uumytbV6T5Q=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zww92fCfMJm1fTuOl2wfKGN6o1ZFW0rWYMPvlUQmrCw=;
+ b=aVi+mLLfRPXK3tfdY01WEU4AluuWo3rb6Q1s1vqiAOLsWZ5/i3aYdyQxmxMvd651gOQ6r3
+ A7K1iStsCdQg45u1sTDjxaLrSxvy6FihRa96K4UOV1awuriaH+tfrj1P0GeschKHAOerqG
+ U/hwIoZ6iAf2iRRjMTPQdOwDVSlo0nc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-TbNAebqaOyiDpmuTFeC4tw-1; Thu, 10 Sep 2026 05:35:37 -0400
-X-MC-Unique: TbNAebqaOyiDpmuTFeC4tw-1
-X-Mimecast-MFC-AGG-ID: TbNAebqaOyiDpmuTFeC4tw_1789032937
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48597bbd963so4795223f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 02:35:37 -0700 (PDT)
+ us-mta-91-loqJz82yN523j3ltupry9g-1; Thu, 10 Sep 2026 05:47:22 -0400
+X-MC-Unique: loqJz82yN523j3ltupry9g-1
+X-Mimecast-MFC-AGG-ID: loqJz82yN523j3ltupry9g_1789033641
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49d0ae342b9so36502815e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 02:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789032936; x=1789637736; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789033641; x=1789638441; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=WX8zjQhoellC02REAikwQGwN2XVGhconckvs5aFntbo=;
- b=kPOwRl7xP2AhGYtGoI0OtsoFjixkN3ccyrD9DwUoV72B2vEQUGjGz/DAHBjVWqCR67
- 8U9FomNDDNurd1pYVb0sO490HSQUeebi8cfHGmqrxY6MrSsUmC/Vyc10NVJsGfVujltl
- 3CLYk7Y+ru1N2Mw/cxwc8hsXvoygGhB/Z8npW47TNN8mZTQOsLoM0oXxYgGJ4npgHJEq
- euTd372XUVxLDnDtcxqDtJsfFoudGH2jSqZbdm7NxloaJMllqDfMEpJCRtVJYprf6ZjD
- H9WvAHGmVKZQH9WrtQPjwyeOMuKR1j8hghpZuHGbUR8i4ulTO6HTDLcTdQ/Ec9g4jYSR
- ld8g==
+ bh=zww92fCfMJm1fTuOl2wfKGN6o1ZFW0rWYMPvlUQmrCw=;
+ b=Yddb2JNtweO0KAVILarYRR4LyuziqK38NavpsmPropP3cl3XTeJMNpUOg8fdnYL+gd
+ pL9lh5sQTh8RG62McXdLCH3QCMNTYqYDqdjDkrH5PrIdUgHF8Pmv1RyJSSu+31MSdFlJ
+ SUJr/uSlJ0vKuNL0ciugSEGQuohbQnazQ7jZtLvlaRi+rUyLR0a2aoNUs4quQo1ytN8Y
+ JwXgu1gS2ud6yolgWiCFlwY4ktHvfe3zcBkG/RPkZEDDPNEtt9gEXEfeRlR5XyiBV3u7
+ tZmE6qQBCtWzeJiimnGFByJTUfV/F3+ZtXFFGNlsojBF7wUApaE702Ha5GlzIRC9jaWZ
+ JVlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789032936; x=1789637736;
+ d=1e100.net; s=20251104; t=1789033641; x=1789638441;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WX8zjQhoellC02REAikwQGwN2XVGhconckvs5aFntbo=;
- b=iYPuDkjuMMAatJzM9meGWruoAlw+9AyNkQUC1V855q5JypKw8Swo++JDffY3sfxg+a
- oOXydTUHeg5hZ896PR1cjynaULnupo7yjnqNOL8HhXpX5ptR1YVG4Eqcgth/1WOE/HB5
- i5lmXgVRJ/0Ju6P9kBCcJnmYGnI3j8chg60U+s/JhEyya+nOTUaLzUe2XzTRuQ/cC7rg
- w8Nq/uNu6BQgWipBnXvwVksHf/HRVrGGU55jvVG8H/fkzCj25yfmrSZIKOFo1M+fU07o
- IZrBI26pzG891MfRo63NMERRz6k/ZSTHU8fAH8ItQPCa39doCi9hZbP+vwcHok252wqs
- JvCw==
-X-Gm-Message-State: AFuF++kUD3RrgTN+JqifITKo2Y6KA+mWJ9b0foWhEWhive4MM5MlgCMh
- 5zuwT8EuRkIddIUaZx7Y6oVTFi04ASxJPZiWbLYM72i/31OviKGu2W7TrjT5UUeSyGd5SfgdfDI
- Nt3ZiG0HB1QYzUeKwbsHu33cENNpKikoHLL09yCOkzdPXj7PVmCyruFTB
-X-Gm-Gg: AYBFou2zbTi5UhkJ4Yt9hNYlA6iaz4RtWCV3mop4gUxfVl12FwuI59tM8E2DBjMFu1m
- vQWjJX5PMTdMj5ypKPooZp0KuSjXfOlZFngNek1z12LobmhyqtdQKJxK2R7r1sWrYcTcUaCf5FP
- wPDEqiE+qMWcEnl1YrWQ9ZteyC/Y9fn7OqTyE/l2JoIDipggjS+rg0yS4zYz6jHo27irM9OkZY/
- mc5pKnUi8kb+FqfEngK9tjWSpKlah61OTNHDKLgumB1Zj8tNeMBFFDzZY/wR/GeJCg4RQnwdpfE
- pXWjVVU4ToxUV7zyTQsh2yxtv0ixzD/2fkjfEzAKwtSGrhjs71uzRQtj72pchTFk/Hh8jFrUxAG
- q2uHRmZEncBCg1VGPfttpsQa7XTyPSd6Bvw9nEXTCw99yzw==
-X-Received: by 2002:a05:6000:2dc5:b0:485:afd8:3e42 with SMTP id
- ffacd0b85a97d-485c23ec07cmr12977188f8f.22.1789032936484; 
- Thu, 10 Sep 2026 02:35:36 -0700 (PDT)
-X-Received: by 2002:a05:6000:2dc5:b0:485:afd8:3e42 with SMTP id
- ffacd0b85a97d-485c23ec07cmr12977083f8f.22.1789032935977; 
- Thu, 10 Sep 2026 02:35:35 -0700 (PDT)
+ bh=zww92fCfMJm1fTuOl2wfKGN6o1ZFW0rWYMPvlUQmrCw=;
+ b=rhz1S1BbJ+P2iNppQtJaNZRJ/6sQ3rCkxkWPZT2YqUxTpSHLuE3RtPcnInCrXOidKX
+ WeC4F0NE6vcc4QIZ5SIkaBVJg5yOoOJYq/5Deo9jUOKfjyJJCsFyRL4DO7qCwvWU81ww
+ SU2NhTs2Yc3yrditBBxpG1fanBRHlZ5hWQ1wBYzQULTcvSycebIY9FUFMV20vmP4OG0/
+ XyLbZ62X5uacBq7d100o3f7wohb/QDiy2dZ5tQgGMJJpIV97837vCSoJxqRKIdVBqIzy
+ /6B/F4lBCN/sfRdu8ceanFj5PEIzC8/6sJyIXbip3+7lLLCh3Nuo2OSCiO3Lj0ZpwTTW
+ 4yrA==
+X-Gm-Message-State: AFuF++k08AHo8tWGUjTF5JLrJs6J7IQzBuEZRYhBzSOsTckdf9bh2Q3P
+ fAHVC3CptmXWl5SSUxRRcH2yFOkgaZP5vngpHdKb8F+6TFkvTl0xsQHauwCQMG2LaPROqSAOCxK
+ ZOOvDc4WUf6xoruKLcBekeIvdAheh9A7+c+7MefTedP7idnz1lu51lRAn
+X-Gm-Gg: AYBFou3cZ3b82f5oHUIzb+2SSuhLcmvTEdzd8eh4Wpwv5Eb7afXl5wF9R8m7g7LwT38
+ iWjoakxv52W11cFjoi9yzS3WbdRTyh4QNdn/CQjhFtF/0JXxT9m+Qd+nQVlfM5V077cH6JHscAE
+ sUhA3XA52Xs/MWvtU0nrN1dT6DpZEmZhTANZv6qreKuDCReUNEeIKVRTB0YvJAvHf/dTkysBGHU
+ xdtmVgHaeHN7yxO80quqfhj3mbV7hFKMg9hsajoWIoqt47R3JpyNLpXpDLQBlztukVDfRyxw6eH
+ +WpDYHByfdaXUzpNC5O61twdVspEMvCdnqeMkuZ2akNPLK4EKEXcgxagZvkO8GNaKFGN9nVqwUt
+ kKmvfL5urx7RmF5DkKeKf69mnHzt+tSHIAlviB9hbChDNxQ==
+X-Received: by 2002:a05:600c:1f91:b0:49d:e0c:e560 with SMTP id
+ 5b1f17b1804b1-49d0e0ce65emr246123045e9.4.1789033641332; 
+ Thu, 10 Sep 2026 02:47:21 -0700 (PDT)
+X-Received: by 2002:a05:600c:1f91:b0:49d:e0c:e560 with SMTP id
+ 5b1f17b1804b1-49d0e0ce65emr246122325e9.4.1789033640692; 
+ Thu, 10 Sep 2026 02:47:20 -0700 (PDT)
 Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
  [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885b7bfasm50112572f8f.29.2026.09.10.02.35.34
+ 5b1f17b1804b1-49d26bdbb02sm55005455e9.3.2026.09.10.02.47.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 02:35:35 -0700 (PDT)
-Date: Thu, 10 Sep 2026 11:35:30 +0200
+ Thu, 10 Sep 2026 02:47:20 -0700 (PDT)
+Date: Thu, 10 Sep 2026 11:47:15 +0200
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: Luigi Leonardi <leonardi@redhat.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Zhao Liu <zhao1.liu@intel.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 1/2] igvm: validate byte_offset before using it in
- parameter directives
-Message-ID: <aqJ3PFF1a8yexOAz@sgarzare-redhat>
+Subject: Re: [PATCH v3 2/2] igvm: honor byte_offset when writing memory map,
+ MADT and device tree
+Message-ID: <aqJ617wlQByzCRcI@sgarzare-redhat>
 References: <20260907-fix_offset-v3-0-bcffcefc0985@redhat.com>
- <20260907-fix_offset-v3-1-bcffcefc0985@redhat.com>
+ <20260907-fix_offset-v3-2-bcffcefc0985@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260907-fix_offset-v3-1-bcffcefc0985@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+In-Reply-To: <20260907-fix_offset-v3-2-bcffcefc0985@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,176 +122,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 07, 2026 at 04:58:55PM +0200, Luigi Leonardi wrote:
->None of the directive handlers that place data at a byte_offset within
->a parameter area validated that byte_offset actually falls within the
->parameter area's size. A malformed IGVM file with byte_offset > size would
->underflow the "size - byte_offset" computation used to determine
->remaining space, wrapping to a huge value and defeating the size
->check, then write out of bounds through param_entry->data +
->byte_offset.
+On Mon, Sep 07, 2026 at 04:58:56PM +0200, Luigi Leonardi wrote:
+>qigvm_directive_memory_map(), qigvm_directive_madt() and
+>qigvm_directive_device_tree() all wrote their data unconditionally at
+>the start of the parameter area's buffer, ignoring param->byte_offset
+>from the IGVM_VHS_PARAMETER header. This is harmless when a
+>directive's offset happens to be 0, but breaks for IGVM files that pack
+>multiple parameters into a single shared parameter area at different
+>offsets: a later directive would overwrite the data written by an earlier
+>one at the start of the buffer, corrupting it.
 >
->Add qigvm_get_param_data(), which looks up the parameter area,
->checks byte_offset against its size, and returns the offset-adjusted
->data pointer directly (NULL on failure), with the remaining space
->returned via an output parameter, instead of the raw
->QIgvmParameterData entry. This keeps the byte_offset arithmetic in
->one place instead of repeating param_entry->data + byte_offset and
->param_entry->size - byte_offset at every call site.
+>Switch these handlers to qigvm_get_param_data(), introduced in
+>the previous patch, and use the offset-adjusted data pointer it
+>returns and the remaining size it sets instead of writing at
+>param_entry->data and sizing checks against param_entry->size
+>directly. This both honors byte_offset and validates it against the
+>parameter area size before it is used.
 >
->Use it in the vp-count and environment-info handlers, adding an
->explicit check that the fixed-size write fits in the remaining space.
->
+>Fixes: c1d466d267 ("backends/igvm: Add IGVM loader and configuration")
 
-Should we add a Fixes tag?
+IIUC this one should be also in the first patch, right?
 
+That said, since that commit introduced qigvm_directive_memory_map() 
+should we move changes to it in the first patch of this series?
+
+Or just squash everything in a single patch.
+
+>Fixes: dea1f68a5c ("igvm: Fill MADT IGVM parameter field on x86_64")
+>Fixes: 1c4bd8f13c ("igvm: add device tree parameter support")
 >Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 >---
-> backends/igvm.c                | 70 +++++++++++++++++++++++++++++++++++-------
-> include/system/igvm-internal.h |  6 ++++
-> 2 files changed, 65 insertions(+), 11 deletions(-)
+> backends/igvm.c    | 26 ++++++++++++++------------
+> target/i386/igvm.c | 13 +++++++------
+> 2 files changed, 21 insertions(+), 18 deletions(-)
 >
 >diff --git a/backends/igvm.c b/backends/igvm.c
->index 7b7bdc72b7..a8340d7d55 100644
+>index a8340d7d55..b3ff6cba4a 100644
 >--- a/backends/igvm.c
 >+++ b/backends/igvm.c
->@@ -101,6 +101,39 @@ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
->     return NULL;
-> }
->
->+/*
->+ * Look up a parameter area and check that param->byte_offset falls within
->+ * it, in one step. On success, returns the offset-adjusted write location
->+ * within the parameter area and sets *param_size to the remaining space
->+ * there, so callers never need to touch param->byte_offset themselves.
->+ * Returns NULL on failure.
->+ */
-
-How about something a little more concise and straight to the point?
-
-/*
-  * Get parameter area data at byte_offset with bounds validation.
-  * On success, returns offset-adjusted data pointer and sets param_size
-  * to remaining space.
-  * Returns NULL on failure.
-  */
-
->+uint8_t *
->+qigvm_get_param_data(QIgvm *igvm, uint32_t parameter_area_index,
-
-IIUC all callers are just passing param->parameter_area_index, since we 
-have `param`, can we avoid passsing `parameter_area_index` as parameter?
-
->+                     const IGVM_VHS_PARAMETER *param,
->+                     uint32_t *param_size,
->+                     Error **errp)
->+{
->+    QIgvmParameterData *param_entry;
->+
->+    assert(param_size);
->+
->+    param_entry = qigvm_find_param_entry(igvm, parameter_area_index, errp);
->+    if (!param_entry) {
->+        return NULL;
->+    }
->+
->+    if (param->byte_offset > param_entry->size) {
->+        error_setg(errp,
->+                   "IGVM: byte_offset 0x%x exceeds parameter area size 0x%x",
->+                   param->byte_offset, param_entry->size);
->+        return NULL;
->+    }
->+
->+    *param_size = param_entry->size - param->byte_offset;
->+    return param_entry->data + param->byte_offset;
->+}
->+
-> static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
->                                      Error **errp);
-> static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
->@@ -682,17 +715,25 @@ static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
->                                     Error **errp)
-> {
+>@@ -638,7 +638,8 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
 >     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
+>                              Error **errp) = NULL;
 >-    QIgvmParameterData *param_entry;
 >+    uint8_t *param_data;
 >+    uint32_t param_size;
->     uint32_t *vp_count;
->     CPUState *cpu;
->
->-    param_entry = qigvm_find_param_entry(ctx,
->-                                         param->parameter_area_index, errp);
->-    if (param_entry == NULL) {
->+    param_data = qigvm_get_param_data(ctx, param->parameter_area_index,
-
-Can we avoid `param_data` at all and assing it directly to `vp_count` ?
-
->+                                       param, &param_size, errp);
->+    if (!param_data) {
->         return -1;
+>     int max_entry_count;
+>     int entry = 0;
+>     IGVM_VHS_MEMORY_MAP_ENTRY *mm_entry;
+>@@ -659,14 +660,14 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
 >     }
 >
->-    vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
->+    if (sizeof(*vp_count) > param_size) {
->+        error_setg(errp,
->+                   "IGVM: vp-count parameter exceeds parameter area "
->+                   "defined in IGVM file");
->+        return -1;
->+    }
->+
->+    vp_count = (uint32_t *)param_data;
->     *vp_count = 0;
->     CPU_FOREACH(cpu)
->     {
->@@ -707,17 +748,24 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
->                                             Error **errp)
-> {
->     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
->-    QIgvmParameterData *param_entry;
->+    uint8_t *param_data;
->+    uint32_t param_size;
->     IgvmEnvironmentInfo *environmental_state;
->
+>     /* Find the parameter area that should hold the memory map */
 >-    param_entry = qigvm_find_param_entry(ctx,
 >-                                         param->parameter_area_index, errp);
 >-    if (param_entry == NULL) {
 >+    param_data = qigvm_get_param_data(ctx, param->parameter_area_index,
 >+                                       param, &param_size, errp);
 
-Ditto.
+Ditto, why not assigning it to mm_entry ?
+
+The rest LGTM.
+
+Thanks,
+Stefano
 
 >+    if (!param_data) {
->+        return -1;
->+    }
->+
->+    if (sizeof(*environmental_state) > param_size) {
->+        error_setg(errp,
->+                   "IGVM: environment-info parameter exceeds parameter area "
->+                   "defined in IGVM file");
 >         return -1;
 >     }
 >
->-    environmental_state =
->-        (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
->+    environmental_state = (IgvmEnvironmentInfo *)param_data;
->     environmental_state->memory_is_shared = 1;
+>-    max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>-    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
+>+    max_entry_count = param_size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>+    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_data;
+>
+>     retval = get_mem_map_entry(entry, &cgmm_entry, errp);
+>     while (retval == 0) {
+>@@ -862,12 +863,13 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+> {
+>     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>     g_autofree void *fdt_packed = NULL;
+>-    QIgvmParameterData *param_entry;
+>+    uint8_t *param_data;
+>+    uint32_t param_size;
+>     uint32_t fdt_size;
+>
+>-    param_entry = qigvm_find_param_entry(ctx,
+>-                                         param->parameter_area_index, errp);
+>-    if (param_entry == NULL) {
+>+    param_data = qigvm_get_param_data(ctx, param->parameter_area_index,
+>+                                       param, &param_size, errp);
+>+    if (!param_data) {
+>         return -1;
+>     }
+>
+>@@ -885,14 +887,14 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+>     }
+>
+>     fdt_size = fdt_totalsize(fdt_packed);
+>-    if (fdt_size > param_entry->size) {
+>+    if (fdt_size > param_size) {
+>         error_setg(errp,
+>                    "IGVM: device tree size exceeds parameter area"
+>                    " defined in IGVM file");
+>         return -1;
+>     }
+>
+>-    memcpy(param_entry->data, fdt_packed, fdt_size);
+>+    memcpy(param_data, fdt_packed, fdt_size);
 >
 >     return 0;
->diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
->index 9e9fa1d9af..f5ee2d5b1b 100644
->--- a/include/system/igvm-internal.h
->+++ b/include/system/igvm-internal.h
->@@ -81,4 +81,10 @@ QIgvmParameterData*
-> qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
->                        Error **errp);
+> }
+>diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+>index ad9bf87761..6ae662b033 100644
+>--- a/target/i386/igvm.c
+>+++ b/target/i386/igvm.c
+>@@ -187,20 +187,21 @@ void qigvm_x86_bsp_reset(CPUX86State *env)
+> int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+> {
+>     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>-    QIgvmParameterData *param_entry;
+>+    uint8_t *param_data;
+>+    uint32_t param_size;
+>     int result = 0;
 >
->+uint8_t *
->+qigvm_get_param_data(QIgvm *igvm, uint32_t parameter_area_index,
->+                     const IGVM_VHS_PARAMETER *param,
->+                     uint32_t *param_size,
->+                     Error **errp);
->+
-> #endif
+>     /* Find the parameter area that should hold the MADT data */
+>-    param_entry = qigvm_find_param_entry(ctx,
+>-                                         param->parameter_area_index, errp);
+>-    if (param_entry == NULL) {
+>+    param_data = qigvm_get_param_data(ctx, param->parameter_area_index,
+>+                                       param, &param_size, errp);
+>+    if (!param_data) {
+>         return -1;
+>     }
+>
+>     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
+>
+>-    if (madt->len <= param_entry->size) {
+>-        memcpy(param_entry->data, madt->data, madt->len);
+>+    if (madt->len <= param_size) {
+>+        memcpy(param_data, madt->data, madt->len);
+>     } else {
+>         error_setg(
+>             errp,
 >
 >-- 
 >2.55.0
