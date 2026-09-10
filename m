@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096BDC88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AA02C88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4py5-0005NX-9R; Thu, 10 Sep 2026 21:22:17 -0400
+	id 1x4pzp-0006iL-8U; Thu, 10 Sep 2026 21:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ9-0001m7-1g
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:18 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQD-0001o5-R1
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:30 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPz-0007Hs-Cc
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:07 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49e625d5a2fso750245e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ4-0007GL-Ln
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:09 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-4843cedd129so168981f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083778; x=1789688578; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083772; x=1789688572; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lQw6tClcEuh8wmhjZmi7xrA9dHVcRR/JsHSDd6qTuHg=;
- b=XvkbJ+6UZce+Y2U5p7yL5OXZ778dT5M47tZMtmN0AJuK9Eews1rMKMWPMeyjtSSwRn
- KHk8o/Ivm8ZDhA6tT2boT4Sz0/dQZM5oJ2H65nX222ko2tfl6oL0eQ4RKzVKp03vl1AV
- 5+Sh0h5PfPQYfl6lAo7MTq0yEscA+e6Ws8Rq/gZSnzwdCmOJ/+vkinXhjwMOB5e7DFZt
- G5wdxjwSYXjoCG8U5NE2+4OWnf7FuvphQzAZ8hdAUKtfdvQmsiKkdMmg2ZFewQgMfr1S
- +HXmAFn5TlYdESpKievJ054q93nSxr9sSQm0oZzQOo8bHE7eXtUn9nKn7Yd6zep9QztP
- L+HA==
+ bh=mGHyHtBjiaIzmCNt57RsevzZuH4XsgPjyN0SdYM+JtQ=;
+ b=glpyB4DxsS8ZWN5aIRdsqhP/0DLwU+xj9L5Ah6WnlWLgweVezaysk8qmjljDhhVY0R
+ Tw8UcKBTHX1r6Qfd1haaduTZSUBsFfhSUX+/uKc7SprjVptMXgB+R3fSa9M6BYNtw/xd
+ 0hZEUt1Resff9JfWQuU9mtt/ZakjTYIOm/qkW+Dv9Rn3fCICPjKLdVG1zs0Kd4bnlm/F
+ +/aHJyTub7PTR3gpehZYbevDMu4xphhzq4ayBZYDXVynaSWc+ydRSoggAIKdgFJrYHr0
+ biuibFiJhWOIXNmQxUx34nb5nOqbbHGWXpKe87ftma8uGzNvwCPhyQMZy1wtiBJqGy65
+ HJog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083778; x=1789688578;
+ d=1e100.net; s=20251104; t=1789083772; x=1789688572;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lQw6tClcEuh8wmhjZmi7xrA9dHVcRR/JsHSDd6qTuHg=;
- b=Q4dFvCyYCAkAUSznNVEjrOECcf07ySh6uBeKtJPE9k2Idl8Q3Rm9GDxygoSrQDbHHB
- khTzh62HpMTSBYoG/MEH93RzQxmU3WZKj956Bfi73ewPIcj7TeieDsNlReiYAb/t3/Lm
- eQN3y1pxz8Th746SPNpFuDPGpku9euRDDTTSX+/83YJhDNa1jutOxmlRS8xcqMqin2wO
- VR0NF/0XZR4+uCjr/u2W6XLEynzsvlE4wpBBmti0hV/ZB+3Q7wX/vQ5UHtX78FMSFpNb
- /Et62F5VWCCL/bJQ6S88sxEceseb00kV3V+TfO1zqDAIGxV4kNbgdiYto4mb4r5CBNmo
- QAEg==
-X-Gm-Message-State: AFuF++lto1M3O+Uyhenys1nwT636/8FCwGif1aiafMi0sCJp0PdLkYPy
- xAOIfGd3Je/XxPKCtCdyLi65JPJ9wzVkxiHjgsT2aFRSlkMqcupMSpWbh8MSdgkKO7g=
-X-Gm-Gg: AYBFou0WFfYgapluol7d7M/QTeyWxo99t3vFERjd2ekYX8OvrFv665laxVbkuR1ZJ7u
- 9Q9AQJj/0Pg/oo77E4Ah5DVqVXUCn8mlp/GNVnULN0Zm2nENbzFfVODMCDDwZkxmHI1Z5yGG/QN
- pLItVEFi5StJyYpoJltUWVMQOq2bCi0ZAypMfumc+PehGP7H9ApC92IIJYO0qfSBSNxcj70YWo0
- HF0t+U5myl8Qihi9QbDAqWa0pP3p4438LjxArTnIFAHOKYt9AE/aurHWPg2VfqwigTGXAT4JZag
- 2PsNpzSdlmpzuCVZ/qhIqhCnGIOD2hfjKhlBfQz8Khpf9kIWdpkxtZ+FsI13CeZUWh8Bh80hlEW
- mBDEmTcXPLvSSgzgp03+JW7Xq8Apx7e15ytJwEsqwwOrEBvf9wEY0KjW+26lxY7K59PBOhCvsHZ
- Ny/7aV1KYf/OJBW1wVbOJqmUoGlogeSKpgny2qTA8QW+VGFSkTPD3YDDebY0jALIjrmdIzEw==
-X-Received: by 2002:a05:600c:6309:b0:49c:ff3c:973f with SMTP id
- 5b1f17b1804b1-49e619c45f9mr13340125e9.24.1789083777646; 
- Thu, 10 Sep 2026 16:42:57 -0700 (PDT)
+ bh=mGHyHtBjiaIzmCNt57RsevzZuH4XsgPjyN0SdYM+JtQ=;
+ b=Yh1kFi1r/bkt6F6M9OZeZnSIwX/ryfTfzN6UTRApj2NJr0CuxHq39dQL/YSZUzIo1w
+ UIjE1FcU/QiVwjmvdy68I7nqMM1R+YOyIUh382ditugzCzNCWypbpMbWkGw9O3W0vJ8b
+ Ih5iml9iFTk0DlPiLwMJfg+CyDvEWmr0YxC5NTsWEyswvXAOd6Tqs7+CodptPFSFxFMq
+ bUNOpW3Ko9LINp1FQZdf5yCeIHpbAsXSaKH6/kPpTHe9pNnHxR6w+splUhKilQX1YVOd
+ pvLInTIGDBkdENo0zA5nllIa8qcxdiw4iZS6Tid9l49Jn+dz56hGQQTZJs9xlmU0p3EE
+ 1AjA==
+X-Gm-Message-State: AFuF++lmE+rp6wUzpB/OSle0vmk6Hpy1ZbgKkJHdEjKhIBiY7IIz0FgE
+ VvJtY+89D0GyhdGr/w2Mvg8N1gUHvyzDqdGnXqVVxmbsacGRlqhSrSRWI6yM8HSysls=
+X-Gm-Gg: AYBFou3Da7ap9XM4PQsTtBy+8p+qtLFThNIloYh8cN437CHeBvfUdhJy7WJMfixiiRQ
+ az7/cXDKe/wRjlWC/G6RGNRHDqG0jJenwsXrbCVD8cKxJuNYm+0CFqzBYBV4wYZIraNx1eXScvc
+ eIevVHHJ7ziEvF0IGN/sxwvElfKvcWhvd4c4aT5McKMX2256K2clTgyYQ3jS+p8NcBBiCOQLY8S
+ X4qD60Z9D57ZYNawSNzbJhkc7lp7CJduU0laemZLBQkVxObsaefqyu6qERLDgTp9NB1fBiErFpO
+ ogt4Ae2gY8FItfozPs9FTItjtfhZjq/pMYuRtF8RF5pRmq9O4hXw4fGjy/Em/Rm/1Mw9Dyb3x9p
+ +tA4teLyY9ZPmSoBCK8Mh9hGY3+XBAutF17rTt8SywWkH+8We4BRLmm2CyZ87NnqnTRA+BC/F6D
+ hQNI4HazeQt0DcnXQeUbh3uQWgLmseD4O+IGERv+95zDvZGqmjzTYAJ3JmfVLW9m5S5CKxhw==
+X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
+ 5b1f17b1804b1-49e619acc89mr36624775e9.10.1789083772457; 
+ Thu, 10 Sep 2026 16:42:52 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.56
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:57 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:52 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 26/29] iotests: rename parallels-read-bitmap to parallels-bitmap
-Date: Fri, 11 Sep 2026 01:42:19 +0200
-Message-ID: <20260910234222.3039975-27-den@openvz.org>
+Subject: [PULL 21/29] iotests: cover the Format Extension against the leak
+ check
+Date: Fri, 11 Sep 2026 01:42:14 +0200
+Message-ID: <20260910234222.3039975-22-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,38 +101,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-The test is about to cover storing a bitmap as well, so its name stops
-being accurate. Rename it on its own, as the patch which changes what a
-test does should not be the one which moves it.
+The Format Extension and the bitmap data clusters it points to are
+absent from used_bmap, so the leak check has to be told about them
+through s->ext_end or it reports the space they occupy as leaked and
+'qemu-img check -r leaks' truncates it away while the header still
+points at it.
+
+The leak coverage in parallels-checks grows a persistent bitmap, dirtied
+one granule at a time so that parallels_save_bitmap() stores a bitmap
+data cluster rather than the all ones L1 entry and the extension spans
+two clusters. It asserts that neither is a leak, that a genuine leak
+appended after them is still reported and repaired, that the bitmap and
+the guest data survive the repair, and that dropping the bitmap makes
+the space reclaimable. Without s->ext_end the check reports two leaked
+clusters where there should be none.
+
+A name which is not a UUID is covered there too, as the refusal belongs
+to the same command.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- .../tests/{parallels-read-bitmap => parallels-bitmap}           | 2 +-
- .../tests/{parallels-read-bitmap.out => parallels-bitmap.out}   | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename tests/qemu-iotests/tests/{parallels-read-bitmap => parallels-bitmap} (99%)
- rename tests/qemu-iotests/tests/{parallels-read-bitmap.out => parallels-bitmap.out} (100%)
+ tests/qemu-iotests/tests/parallels-checks     | 48 +++++++++++++++++++
+ tests/qemu-iotests/tests/parallels-checks.out | 35 ++++++++++++++
+ 2 files changed, 83 insertions(+)
 
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-bitmap
-similarity index 99%
-rename from tests/qemu-iotests/tests/parallels-read-bitmap
-rename to tests/qemu-iotests/tests/parallels-bitmap
-index f5a1f33907..814b56b32c 100755
---- a/tests/qemu-iotests/tests/parallels-read-bitmap
-+++ b/tests/qemu-iotests/tests/parallels-bitmap
-@@ -1,6 +1,6 @@
- #!/usr/bin/env python3
- #
--# Test parallels load bitmap
-+# Test parallels dirty bitmaps
- #
- # Copyright (c) 2021 Virtuozzo International GmbH.
- #
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-bitmap.out
-similarity index 100%
-rename from tests/qemu-iotests/tests/parallels-read-bitmap.out
-rename to tests/qemu-iotests/tests/parallels-bitmap.out
+diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
+index c9dcd715ac..6f60fda62b 100755
+--- a/tests/qemu-iotests/tests/parallels-checks
++++ b/tests/qemu-iotests/tests/parallels-checks
+@@ -362,6 +362,54 @@ echo "file size: `stat --printf="%s" "$TEST_IMG"`"
+ 
+ echo "== the first cluster survived =="
+ { $QEMU_IO -c "read -P 0x11 0 $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++_make_test_img $SIZE
++
++echo "== TEST FORMAT EXTENSION IS NOT LEAKED SPACE =="
++
++BITMAP=b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
++
++echo "== a name which is not a UUID can not be stored, so refuse it =="
++$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" bitmap0 2>&1 | _filter_testdir
++
++echo "== add a persistent dirty bitmap =="
++$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
++
++# A dirty run shorter than a cluster is stored as a bitmap data cluster
++# instead of the all-ones L1 entry, so the extension spans two clusters.
++echo "== dirty a single granule of the bitmap =="
++{ $QEMU_IO -c "write -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
++file_size=`stat --printf="%s" "$TEST_IMG"`
++echo "file size: $file_size"
++
++echo "== the extension and its bitmap data are not a leak =="
++_check_test_img
++
++echo "== extend image by 1 cluster =="
++fallocate -xl $((file_size + CLUSTER_SIZE)) "$TEST_IMG"
++
++echo "== a real leak is still reported =="
++_check_test_img
++
++echo "== repair reclaims the leak only =="
++_check_test_img -r leaks
++
++file_size=`stat --printf="%s" "$TEST_IMG"`
++echo "file size: $file_size"
++
++echo "== the bitmap survived the repair =="
++$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
++
++echo "== data survived the repair =="
++{ $QEMU_IO -r -c "read -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
++echo "== dropping the bitmap makes the space reclaimable again =="
++$QEMU_IMG bitmap --remove -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
++
++file_size=`stat --printf="%s" "$TEST_IMG"`
++echo "file size: $file_size"
++
++_check_test_img
+ 
+ # Clear image
+ _make_test_img $SIZE
+diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
+index 6699848996..d40f865868 100644
+--- a/tests/qemu-iotests/tests/parallels-checks.out
++++ b/tests/qemu-iotests/tests/parallels-checks.out
+@@ -233,6 +233,41 @@ file size: 2097152
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
++== TEST FORMAT EXTENSION IS NOT LEAKED SPACE ==
++== a name which is not a UUID can not be stored, so refuse it ==
++qemu-img: Operation add on bitmap bitmap0 failed: Bitmap name must be a UUID to be stored in a parallels image: bitmap0
++== add a persistent dirty bitmap ==
++== dirty a single granule of the bitmap ==
++wrote 65536/65536 bytes at offset 0
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++file size: 4194304
++== the extension and its bitmap data are not a leak ==
++No errors were found on the image.
++== extend image by 1 cluster ==
++== a real leak is still reported ==
++ERROR space leaked at the end of the image 1048576
++
++1 leaked clusters were found on the image.
++This means waste of disk space, but no harm to data.
++== repair reclaims the leak only ==
++Repairing space leaked at the end of the image 1048576
++The following inconsistencies were found and repaired:
++
++    1 leaked clusters
++    0 corruptions
++
++Double checking the fixed image now...
++No errors were found on the image.
++file size: 4194304
++== the bitmap survived the repair ==
++qemu-img: Operation add on bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45 failed: Bitmap already exists: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
++== data survived the repair ==
++read 65536/65536 bytes at offset 0
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++== dropping the bitmap makes the space reclaimable again ==
++file size: 2097152
++No errors were found on the image.
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
+ == TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
+ == write two clusters ==
+ wrote 1048576/1048576 bytes at offset 0
 -- 
 2.53.0
 
