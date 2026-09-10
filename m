@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F963C88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E855C88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4pa5-0004Y9-IL; Thu, 10 Sep 2026 20:57:31 -0400
+	id 1x4paT-00053B-4m; Thu, 10 Sep 2026 20:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPa-0001gG-K6
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:44 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPv-0001jT-Ej
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPW-00079K-RW
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:34 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-49cca4ffdcfso3168825e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPl-0007DL-1V
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:49 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49cd77e0f95so2888955e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083749; x=1789688549; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083759; x=1789688559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xmIJ/DJJkGNWUN3aFg+eKBZQoYpsUnERuZvgRZchJco=;
- b=gLYyHjiIZ4wZqM4Od8W0Sxt19z1TY9pyw+6Ud5n1VrKZs3NFY71jEZH+j9y9LtZVz2
- YxFbrJMlw8tNJiV0b67Hdq2zm+r0w2CxxW6Ch0EdcSQauMxHujtqAiLwhMMLE9VreMeI
- jWakfQEr4HMwHYsgmhhVlKlgmQhiKQPYCXgV8reG8Ym42ZOXTKrvAsvlbQnilU+yP3DT
- CWd393TtBZptoRWN2cSrWvdzBD2zbdzvrAyD8l6MrS1DScEUVa5VVE6C7K1cJY7aEkUe
- jfWVbgPXpaeBJHaOM3WrDrz74dhCbB120dTgu2ZUQ5z2EEqr4DVKej3bLtLk6H8wgMl4
- IiFQ==
+ bh=gOCgb/8qYTx3Tvjv6qT01WmwOcfq9B2Xk9PXWdyz6VY=;
+ b=VXz5gZXqjEpUPGNfI6zA2zw29nzzWaHhJSlnSagtklA17j7qYLo1mWrh3WurhkTt0a
+ Slzu5C7CZt0bNXHQSGWmPEO/beOb2pu1a4CnIhVjMl3oHBl9iLdXw2HDI7qeZwlkhQK7
+ jph/invF8HDIARIuu3ek+r1XCbX642MKiO32gl5aDXMpQJdb16Yn4aPdqCPptVS/gykz
+ +9xGVOgrxtGYQ/FWGrzuvSH1rE8g86dgJPGLuYSORLWL2ktXu8zEumqwNFH/1Irt/qmd
+ gN67XcA32N6XagQHLvLsd/+5v2P2yhmpnmLM20EthWb9o3/aBbF9GRX8YZ66GhEqCChV
+ kY8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083749; x=1789688549;
+ d=1e100.net; s=20251104; t=1789083759; x=1789688559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xmIJ/DJJkGNWUN3aFg+eKBZQoYpsUnERuZvgRZchJco=;
- b=sOpGiYLTdkPEbzKGABgCXyLncLubQ0qGN09Osc0/M8mEEOrydIdIgk9o6Lf0dOUdiJ
- edM8+cDFkhE7xLnMSwXdUP44/PreYa/8SKRVt6BknlSb7txvXEBTA/GgK60pEVwUybru
- QyWUu6EwzI6rB/7zpyWC+L8rdw/PzQBaNvIcEx3hdFz6FicvZyfJv07gdYtzaLvf+Jgq
- 4BUDe9SJBzD3stvXRddPM/Z4wVD8NLUJ6k+YcDfrglEVV+/jD7dq+FWfj4pYvZlqtQaN
- 31HkdL+nRIhBCeDieK3vS/GFGZ83q0+mx+pVrUPR4DUInGDoEmgwHjKxqrFnY9vW7wn3
- rIQg==
-X-Gm-Message-State: AFuF++mDM7XiILGz/8qosNoU22DVW3PfYLeE0uRG1V3Cai4ur57ieNX2
- PX4vj1T+IRgKWLmQqQ+7z2I+fSASob2vc/w0QKs93Bk+8y/R12SnOGZWx/ETQq3Ke3k=
-X-Gm-Gg: AYBFou3mYLgCnAyDUTPOQTcCvpLGt4YtiD9jMJcKGIG9GCw0Kpw683TY1B+YW7nzOa/
- 8lF4NCUWCDuW1evmnZHqcTy9n9yyduv3zHUL0/DyliO6dmxSYBWnKD9DO3/zx4Rvm5EO1uDSxQs
- 2lXugSW4r1PVVriNVNVlP7B1cyMy8LejVOEfafoiAS41JG5xCXTWBAu/6rlY6V2uTvbuse5iGLE
- pZ31f0XtiN49BA1dVUM6XRBK3uSPSksA8UyoYzYiQ2ft+kjmGK96kHnPpsWpvzAKNqhdmKF/VDh
- R8SvjowlajCmGrxOkeSDdJc49T1+aiit7qBOE0mk5iF8hZobzGJhcUaR4dZ7leDpIIniZ15BSdt
- htGjZvkC4FU/nHclI9/1uiWqwcnBbxYs/9HzLyPxfW46E3/vCwxkrSn9J89sojisQtvD4tx7hSm
- kg2r2W8/o76puLjRY7fLyM/rcogVPAlSPqULB9MEK1W0B7DE107dynIgsDjr7m4SHDEuu7
-X-Received: by 2002:a05:600c:8a1a:10b0:49c:ee22:364c with SMTP id
- 5b1f17b1804b1-49e6198d0a6mr10919025e9.9.1789083749047; 
- Thu, 10 Sep 2026 16:42:29 -0700 (PDT)
+ bh=gOCgb/8qYTx3Tvjv6qT01WmwOcfq9B2Xk9PXWdyz6VY=;
+ b=hbg8ac1pm7Gjhc3fKYkv9J48fUuJ7EJ/5GgWWPf+vmQ0onfc4e35D2DAeZbIsY9vwJ
+ hPZiHrLTgbZZa33fcu3ZfLt0ZkEYlbRIOJZzCZ/4DfVlf5GzbvJunmj4F8YEGa3vPtjc
+ KyMWiFsMK9O84FqFZrah+2Jfo+95w55F2lhr5SH854XbO+fKR7Y0sYcJoAg2UNprIjBU
+ aMpx3amOQ+NJqZrc32u5VtPtBInKRRvVEUXDBgpqyh4qx46zwNQDiAlpqy2HrW2AGepc
+ QPuDf1eQBCKJULflUb87T+6tVX3O4+YiOcG6Mhu3bD0BDeNhLRREv3L+CUyMutsiME+v
+ QodQ==
+X-Gm-Message-State: AFuF++nCwFQLFrTebp0M2Gb3VXFEGTn9m+WajjXjpv+sJlSoEobB6i7j
+ v4nXT0uxSUTHnsnezJT53P2lEUrv9WuV4DzATodgWoWshh2dM3BYio8owSt9auOnfRDs8IoHx5O
+ Yzls1
+X-Gm-Gg: AYBFou1zofUL9VbUZ8v8AHaqgBH9j76riBvlEqXo4c0OrtqK8VwsWa/ooEigx5DNko5
+ PjEIxdjQy0/rKgH8IPcjwMAqMVdSX43nvNLcqZ6q2LqLOSF1VMyt5FJSzUG85JRZg5BOdjvd+4Q
+ 3aYWtIxbjEYz9nvK3KEuASXJw8CqqLaCEMCIWWK0I8xrfcoesMUqDhuKApDAXpVpJOuVU1DHJRw
+ Zb4OuhKJwi6mNo/ZbcSUKXl94N3M718ehyNSlpxfn0ZtAsLJdmrUjDkghWIOmgNenz3pCRUuOu7
+ DMZgbLB0G/Gre+FTuYNYELDne9nMXZzf4kPuwKuLhRHbIUQ/2etxdGvKsvENv0VA5IA/Ou7Bb+3
+ kz2LeCC6Q1g5r30DigshEq2Gs8CR9yJd/AA3UC+9Vq9njVcbUTm/j7XVpMzMBeFvqSSv5KsZf60
+ GBAmbWX+3geEhM4BuxheEOhvZFfJh38toEQfTHQE4egdDC06a3jLSX+9moffkxhoETCZKWuA==
+X-Received: by 2002:a05:600c:46cc:b0:49c:fc6e:a3d9 with SMTP id
+ 5b1f17b1804b1-49e619cc71bmr14037445e9.24.1789083758810; 
+ Thu, 10 Sep 2026 16:42:38 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.28
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:28 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:38 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 04/29] parallels: reject a Format Extension outside the image
- file
-Date: Fri, 11 Sep 2026 01:41:57 +0200
-Message-ID: <20260910234222.3039975-5-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Subject: [PULL 11/29] parallels: Make mark_used() a global function
+Date: Fri, 11 Sep 2026 01:42:04 +0200
+Message-ID: <20260910234222.3039975-12-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=den@openvz.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,49 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
-The Format Extension offset and the cluster size both come from the
-image header and neither is checked against the image file. Reject the
-image rather than reading a cluster which is not there.
+We will need this function and a function for marking unused clusters (will
+be added in the next patch) in parallels-ext.c too. Let it be a global
+function parallels_mark_used().
 
-Fixes: baefd977002e ("parallels: support bitmap extension for read-only mode")
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ block/parallels.c | 14 ++++++++------
+ block/parallels.h |  3 +++
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/block/parallels.c b/block/parallels.c
-index 93b5fa9dcd..50748d1415 100644
+index f02ad7a0be..6f7a9911d7 100644
 --- a/block/parallels.c
 +++ b/block/parallels.c
-@@ -1375,6 +1375,8 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
+@@ -187,8 +187,8 @@ static void parallels_set_bat_entry(BDRVParallelsState *s,
+     bitmap_set(s->bat_dirty_bmap, bat_entry_off(index) / s->bat_dirty_block, 1);
+ }
+ 
+-static int mark_used(BlockDriverState *bs, unsigned long *bitmap,
+-                     uint32_t bitmap_size, int64_t off, uint32_t count)
++int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
++                        uint32_t bitmap_size, int64_t off, uint32_t count)
+ {
+     BDRVParallelsState *s = bs->opaque;
+     uint32_t cluster_index = host_cluster_index(s, off);
+@@ -241,7 +241,8 @@ static int GRAPH_RDLOCK parallels_fill_used_bitmap(BlockDriverState *bs)
+             continue;
+         }
+ 
+-        err2 = mark_used(bs, s->used_bmap, s->used_bmap_size, host_off, 1);
++        err2 = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
++                                   host_off, 1);
+         if (err2 < 0 && err == 0) {
+             err = err2;
+         }
+@@ -375,7 +376,8 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
+         }
      }
  
-     if (ph.ext_off) {
-+        int64_t ext_off = le64_to_cpu(ph.ext_off);
+-    ret = mark_used(bs, s->used_bmap, s->used_bmap_size, host_off, to_allocate);
++    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
++                              host_off, to_allocate);
+     if (ret < 0) {
+         /* Image consistency is broken. Alarm! */
+         return ret;
+@@ -840,7 +842,7 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
+             continue;
+         }
+ 
+-        ret = mark_used(bs, bitmap, bitmap_size, host_off, 1);
++        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
+         assert(ret != -E2BIG);
+         if (ret == 0) {
+             continue;
+@@ -900,7 +902,7 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
+          * considered, and the bitmap size doesn't change. This specifically
+          * means that -E2BIG is OK.
+          */
+-        ret = mark_used(bs, bitmap, bitmap_size, host_off, 1);
++        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
+         if (ret == -EBUSY) {
+             res->check_errors++;
+             goto out_repair_bat;
+diff --git a/block/parallels.h b/block/parallels.h
+index 423b2ad727..68077416b1 100644
+--- a/block/parallels.h
++++ b/block/parallels.h
+@@ -90,6 +90,9 @@ typedef struct BDRVParallelsState {
+     Error *migration_blocker;
+ } BDRVParallelsState;
+ 
++int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
++                        uint32_t bitmap_size, int64_t off, uint32_t count);
 +
-         if (flags & BDRV_O_RDWR) {
-             /*
-              * It's unsafe to open image RW if there is an extension (as we
-@@ -1382,9 +1384,14 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
-              * ignores the extension, so print warning and don't care.
-              */
-             warn_report("Format Extension ignored in RW mode");
-+        } else if (ext_off + s->tracks > file_nb_sectors) {
-+            error_setg(errp, "Invalid image: Format Extension is outside the "
-+                       "image file");
-+            ret = -EINVAL;
-+            goto fail;
-         } else {
-             ret = parallels_read_format_extension(
--                    bs, le64_to_cpu(ph.ext_off) << BDRV_SECTOR_BITS, errp);
-+                    bs, ext_off << BDRV_SECTOR_BITS, errp);
-             if (ret < 0) {
-                 goto fail;
-             }
+ int GRAPH_RDLOCK
+ parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
+                                 Error **errp);
 -- 
 2.53.0
 
