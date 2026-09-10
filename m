@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E35C79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 10:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF45C79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 11:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4cU3-0003QU-AX; Thu, 10 Sep 2026 06:58:23 -0400
+	id 1x4cZw-0004kO-6m; Thu, 10 Sep 2026 07:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4cU1-0003QC-7Y
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 06:58:21 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4cTy-00055t-Bd
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 06:58:20 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68AAw7Rh062451
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 10 Sep 2026 19:58:07 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4lKdh/uYan68FOBQszFLTVxuEAMJLHpDGqXO/mdCO1c=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1789037888; v=1;
- b=CTMD3GZH+jHcVKoF55Plxz4gb4lGIe5mXXmm95l+fyFlI2cpgV46+JnG3GZBUg2+
- ih3uTV3QByEx8KVTgHircG8vFz49GgHzr0ltuk0a2XcsqCB2T0s2IkFBx9iA0k/r
- cJ0G3D9yFEPXjW3WV3ytAKRDqeDGRHiW5yQ3ID3JKXD+VtK8CD+V5YzXSc0QPiWU
- fzN5T/H/mVk9Za4K0h/KHPHx9mGXU/NHHN64rFAlmDuCkDM9K7EoimSsfq/VQb+A
- x4oeW08Iv0Y6v3d/c+L8HiQxNcXqdYmIPWjeerh3d3g32u8eESh4E3xcHEwNzG6v
- 1Xu4B9TGgZVfyLtHv3UC9A==
-Message-ID: <5ca6e8f2-2134-4a33-8542-f8c12765191b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 10 Sep 2026 19:58:06 +0900
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x4cZu-0004k7-RF
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:04:26 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x4cZt-0006KH-3b
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 07:04:26 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-87005a0e052so84300137b3.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 04:04:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789038263; cv=none;
+ d=google.com; s=arc-20260327;
+ b=U2UPKy7DX5sP2GhYQtFOfBGLzLEISJKMF9NAeMhmNnM1eA3+jDU4xM2XB7z69Cbxps
+ /fVQ/IsT0TLljPSn/vjDA6e4IBBZvXt4SAPb5W2nFuv/rFxYEZWpmEm6Sctnt2zyBRAu
+ /kUJQ8CVpUwQ/zub8plYOSVSGQ09jLMlEMMnHScH/eRRR3NyRoEv7AngCGfwcPHiS9WE
+ c/WcCkJdHvtcy/gnWehWcNIE+7ZnlBdTIGRXz1qDK/ycwFw1M3w7cwMv2sf9ENZhv6qk
+ HhFajilRY4iS1J3nNasH4F3e3JF6GnGiotMuU+DsbIfD6bj1PlXwtO2ZJ9j6Ah7PpCoj
+ LoKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=y1DpiDcwcVxZnJupti1cSNma3xCB7QBpmm/Z0yCi9Fk=;
+ fh=fVPfpHMeJX2gxPKYTBQCzQO60hB2p26ro2vRuUEPsJ4=;
+ b=VDkjGiojdSrX3wNz/ajDNhuROraClFOXQXWVf5pnLk1GsRiF+IXsUKzg5htuzwP3vL
+ cwxqh7Wrfq1hSzs9IyCUrRB13E5XRBSMLmnl8UvHctOS+YGYeMbYUrP0n3yp4GqglzYG
+ UcrlQUhHHcOouX45NrRmyu0xk2zdznhoQA8yYrkLIB4H4M9iM2XcGNblWNv1UMDEKzOp
+ wTg8vogyPpFEeqhYL5bbYrS2oVozupqg3QgGLcWHBzlg75mwz4Rw7nUqkCqxI3mwnHY1
+ fldsbes38Mt6PySJZNYxT6r2QR/yf/MR33Wjd5//mfhrKGt7TTqKqCcY6arfQS7facJv
+ g97g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789038263; x=1789643063; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=y1DpiDcwcVxZnJupti1cSNma3xCB7QBpmm/Z0yCi9Fk=;
+ b=FeUycHCp6HW5oEHFByJog5+W0+h7P+oguTvSDOJ8dWG7wH5HJddwpstCKly8xuSq78
+ xiEBfiNWZl8PIVWtUdrdUXN3OtuFxRnY4SMGvNomH25eW+cfhGWCcU6SxmDd98VX65Ne
+ VruciKkK56biTgIKwaKEPDhRAKxuYWsGi2bacSxij1Va7yenS66XuLiQKOYORQRIP7eB
+ ZuYu79zixcnjxDj6VzfpaoaXa1Mb+7kLtcuIJus6CfVglL2ila/jJW6oShF1lBHV8brn
+ mg60wCTsNTOj5Fz9ipumyk1W46ofxomLO3RvY2qvN4+K9v3hdIc1NTVAPXXGC42QO/bN
+ DJaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789038263; x=1789643063;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=y1DpiDcwcVxZnJupti1cSNma3xCB7QBpmm/Z0yCi9Fk=;
+ b=Ey5qNZ0DuDK+PwRriCqixI4pqLLFAUVY5k9I+B6opAvW1M/P4xey22iNfnRnyRHNDM
+ pVYU3fxTAU4McO/6ZN4GWEmuC6l8+I43HesWAZyXCicMwaSmf/PXaNIfzz3F6sKgSAYV
+ btLg2276Js3VB002p1LXtPgVjpfgFRyNsz9QAavHOrJAuBmUMiWwpUmU6k7sx7r3J0sD
+ AHf/rKvfFu7N6N1YlCBTgUUZI+hOmtYBl3u+gxL2g4N8SNwo2xEV/hHQGJUvtUwwc/tI
+ n49ns3yU2EaKY8wqYxOXgpCJ36HmGDamBZuUmC7WQNcjJjrxWnf1XGHvvqPxgXlpaQT9
+ BJ0Q==
+X-Gm-Message-State: AFuF++mYVTaZxLFEnbhgZgYNTV+qoBI9ohrjlEV41uULDhkM43+OS3lQ
+ ei/pkRUogvGgHLIQsJ7lztqIQJtPmqwFhamHY/oiKBcSRJiWYw1XCzPXIfyW6E01CH5FFJYbi5l
+ nMKeVynDbK7zPL7j5DL+n8jApDXjxLqT79DxKYxxx3w==
+X-Gm-Gg: AYBFou0xc2WoAHKz2VoMrUaQQOSx6jdKUFLu8ZlcpZQLi7+Sm86gCPUhht7btpNCkbj
+ 4d4Eoy7mDHgQ85S2jKdOGinjIA07dAZ+jaJ1YKiTmLgtwLpR8eCDkfpog/qX0Ubt2OSsDcuf7K8
+ 34R55rJFQbDtAzYD+JWjUbljNG+hDRqrON1PDJz1JPM/9UbejK3HG4MSQo7QDlkPDj0b3NOvULj
+ FCSwPIQM5Lq6XQ/Cjsf57qxh5LMgcwx906ywkmDUcmrl7/5D4G3f/RSjjVnZtYle6mt3umdqgeA
+ Cr6B5zOHdYiafHPjBDM5mrZkOGYN9hG1Gqpt6nbz7uq8QPy8a+h9rcYUv7XJd3Mw/H60OSeSA1T
+ qerZRin3RZgJXQAa75RlSlynV0kENs8gD25RieL0=
+X-Received: by 2002:a05:690c:31a:b0:871:8a81:a2c9 with SMTP id
+ 00721157ae682-8718a81b972mr182038267b3.22.1789038263341; Thu, 10 Sep 2026
+ 04:04:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 20/24] virtio-gpu: consolidate disabling scanout
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
- <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260910-virtio-gpu-cleanup-v4-0-7d623714bd71@redhat.com>
- <20260910-virtio-gpu-cleanup-v4-20-7d623714bd71@redhat.com>
- <c37e85c9-94f1-422c-b73d-0051a5d35743@rsg.ci.i.u-tokyo.ac.jp>
- <CAMxuvaxsG_V31EvSXA_YY7C-Mg1W7PVgQR9-17_GsgnPmCVrQA@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAMxuvaxsG_V31EvSXA_YY7C-Mg1W7PVgQR9-17_GsgnPmCVrQA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
+In-Reply-To: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 10 Sep 2026 12:04:11 +0100
+X-Gm-Features: AcwNN1X6r3KOwglgBeJamxNql1SDCtWiEXPICRghG26PE3e-JWxzX8pzMuqBB6w
+Message-ID: <CAFEAcA8s4UXp=hp9R=Pq1mMP6VvB8ergnsm7Yq1xooOGgTPsCg@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 00/36] arm: add Raspberry Pi Pico/RP2040 machine
+To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,99 +114,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/10 19:36, Marc-André Lureau wrote:
-> Hi
-> 
-> On Thu, Sep 10, 2026 at 2:28 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/09/10 17:17, Marc-André Lureau wrote:
->>> Use the common virtio_gpu_disable_scanout() to reset the scanout state,
->>> including GL state if any.
->>>
->>> Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>    hw/display/virtio-gpu-rutabaga.c | 4 +---
->>>    hw/display/virtio-gpu-virgl.c    | 6 ++----
->>>    hw/display/virtio-gpu.c          | 6 ++++--
->>>    3 files changed, 7 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
->>> index 8a82e96b7461..8697dd6936ba 100644
->>> --- a/hw/display/virtio-gpu-rutabaga.c
->>> +++ b/hw/display/virtio-gpu-rutabaga.c
->>> @@ -312,9 +312,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
->>>        scanout = &vb->scanout[ss.scanout_id];
->>>
->>>        if (ss.resource_id == 0) {
->>> -        scanout->resource_id = 0;
->>> -        qemu_console_set_surface(scanout->con, NULL);
->>> -        qemu_console_gl_scanout_disable(scanout->con);
->>> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
->>>            return;
->>>        }
->>>
->>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->>> index 07349c5c5502..9ca7b946ac65 100644
->>> --- a/hw/display/virtio-gpu-virgl.c
->>> +++ b/hw/display/virtio-gpu-virgl.c
->>> @@ -618,8 +618,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
->>>                ss.r.x, ss.r.y, ss.r.width, ss.r.height,
->>>                d3d_tex2d);
->>>        } else {
->>> -        qemu_console_set_surface(g->parent_obj.scanout[ss.scanout_id].con, NULL);
->>> -        qemu_console_gl_scanout_disable(g->parent_obj.scanout[ss.scanout_id].con);
->>> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
->>>        }
->>>        g->parent_obj.scanout[ss.scanout_id].resource_id = ss.resource_id;
->>>    }
->>> @@ -1430,8 +1429,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->>>        int i;
->>>
->>>        for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
->>> -        qemu_console_set_surface(g->parent_obj.scanout[i].con, NULL);
->>> -        qemu_console_gl_scanout_disable(g->parent_obj.scanout[i].con);
->>> +        virtio_gpu_disable_scanout(g, i);
->>>        }
->>>    }
->>>
->>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->>> index f9083e9577c3..dc5b2da9a43f 100644
->>> --- a/hw/display/virtio-gpu.c
->>> +++ b/hw/display/virtio-gpu.c
->>> @@ -435,8 +435,10 @@ void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
->>>    {
->>>        struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
->>>
->>> -    virtio_gpu_release_scanout_dmabuf(g, scanout_id);
->>> -
->>> +    if (scanout->dmabuf) {
->>> +        virtio_gpu_release_scanout_dmabuf(g, scanout_id);
->>> +    }
->>
->> I'm not sure why adding an if branch here. It looks simpler without one.
-> 
-> yep, let's drop it.
-> ack with that change?
+On Sun, 6 Sept 2026 at 20:44, Gilles Grimaud
+<gilles.grimaud@univ-lille.fr> wrote:
+>
+> This RFC adds a Raspberry Pi Pico / RP2040 machine to QEMU.
+>
+> The work continues the RP2040/Pico RFC posted by Alex Bennee in 2022:
+>
+>   https://patchew.org/QEMU/20220110175104.2908956-1-alex.bennee%40linaro.org/
+>
+> The target is intended primarily for debugging bare-metal Pico firmware and
+> for running firmware tests in CI without physical hardware. It provides a
+> functional, test-oriented model rather than a cycle-accurate RP2040 model.
 
-Yes, with it dropped you can have:
+Something odd seems to have happened with the way you sent this
+patchset. Instead of the expected structure where all the patch
+emails are replies to the cover letter, instead, what we got was
+that patches 18-30 are replies to patch 17, and patches 32-36 are
+replies to patch 31. You can see this in the "thread overview" in
+the mailing list archive:
+https://lore.kernel.org/qemu-devel/20260906194438.93046-1-gilles.grimaud@univ-lille.fr/
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The result is that automated tooling like patchew doesn't see the
+whole series:
+https://patchew.org/QEMU/20260906194438.93046-1-gilles.grimaud@univ-lille.fr/
+(it thinks only 18 patches arrived).
 
-Regards,
-Akihiko Odaki
+If you could have a look at what went wrong there for your next
+revision of the patchset that would be helpful.
 
-> 
->> Regards,
->> Akihiko Odaki
->>
->>> +    qemu_console_gl_scanout_disable(scanout->con);
->>>        qemu_console_set_surface(scanout->con, NULL);
->>>        scanout->resource_id = 0;
->>>        scanout->ds = NULL;
->>>
->>
-> 
-
+thanks
+-- PMM
 
