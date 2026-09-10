@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BBCCC79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4144EC79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:51:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4aUP-0000m5-Up; Thu, 10 Sep 2026 04:50:37 -0400
+	id 1x4aUj-00012L-E2; Thu, 10 Sep 2026 04:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aUN-0000lr-W4
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:50:36 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aUi-0000yF-DW
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:50:56 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aUM-0008Fu-HA
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:50:35 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aUg-0008J8-Kf
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:50:56 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 7CEC8429F7;
- Thu, 10 Sep 2026 08:50:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86DD1F000FF;
- Thu, 10 Sep 2026 08:50:30 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 8D97040C48;
+ Thu, 10 Sep 2026 08:50:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0D91F000FF;
+ Thu, 10 Sep 2026 08:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789030233;
- bh=Ve9ehCy83moIAk2apJME5DpZMln8LcY79rbWi1b15KA=;
+ s=k20260515; t=1789030253;
+ bh=VyF8zarVjPDTv8g8jmkm3dFzHTyLwkwmGjW0S4NpmLY=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=UrK0dGBJ3uqFG293E9aBTOP5aCkF03sAUD5cohtISsHykJOKlE4kkAwPJ5sPuL5KA
- 0CzpaYIE+FA9WrRk6PvmiVYMXT3MULi+dwZsBuUCAwXGOHG0dFx9pakP6yJd1pXQQh
- 2p8+qQC6l8+LRPgimZsGeQNci+qoglgY2KH2gkE1ob2QR4GDzJxpLCL1JMjkeRG3ce
- Y1K5AGJdakqzeSJL/DjInAK+ir9TBmE8Gh++WxtYCYEOLA2IJxgspQHrtoOjx1u+6Z
- A8C+cLqlMKpdyCeiXJbJWmC3TV54YEJn9INheAlcKZbKaKER9/CbbNvwb/egUF2ZlM
- tcQ7ls+I0TuVQ==
-Message-ID: <6b309cc5-6525-497a-af5d-74adb5fbaf69@kernel.org>
-Date: Thu, 10 Sep 2026 10:50:27 +0200
+ b=Pq7W8lxg4PE6zrxHApkOYdFTODAPviRJM9WrseVMHbvohpZeGUFCyGXB+LWny8pdu
+ LZVmd/fcPZTjh/o2ysrRklkNx5NQUbzwbWCw0MjHkhfdE0naFRYQnhcua/iBkKU0pO
+ a1oFcbuzETgUWvSc0MQtI2AdrGJ0q0jWobiK/LCn2amgg/0h+RTk/jd6irGOSk92Ij
+ JoDb7pmJGFSGGWVHXnWze6XeTD12Jr+31PBv9kzOEtagbtTsoRpdDby/GjKnwwbP45
+ 43UJrqLhBwQVi5IZYYiKIyg466MVQuylrtZN3xqvubKZVz9KrgvDuAaBEZeJXwx5jE
+ b7rIvhTIiA4Ew==
+Message-ID: <ec28ddd7-e761-47b5-9f95-4bc58996da2d@kernel.org>
+Date: Thu, 10 Sep 2026 10:50:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/12] memory: Rename RAM_GUEST_MEMFD to
- RAM_GUEST_MEMFD_PRIVATE
+Subject: Re: [PATCH v5 06/12] memory: Rename memory_region_has_guest_memfd()
+ to *_private()
 To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, berrange@redhat.com, armbru@redhat.com,
  pankaj.gupta@amd.com, isaku.yamahata@intel.com, xiaoyao.li@intel.com,
  chao.p.peng@linux.intel.com, Peter Xu <peterx@redhat.com>
 References: <20260908133151.836685-1-michael.roth@amd.com>
- <20260908133151.836685-6-michael.roth@amd.com>
+ <20260908133151.836685-7-michael.roth@amd.com>
 From: David Hildenbrand <david@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260908133151.836685-6-michael.roth@amd.com>
+In-Reply-To: <20260908133151.836685-7-michael.roth@amd.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=david@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,15 +76,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 9/8/26 15:30, Michael Roth wrote:
 > From: Peter Xu <peterx@redhat.com>
 > 
-> This name is too generic, and can conflict with support for using
-> guest-memfd for shared memory. Add a _PRIVATE suffix to show what it
-> really means: it is using guest_memfd specifically for private memory;
-> whether or not guest_memfd is being used for shared memory is something
-> to be configured/determined separately.
-> 
-> This also paves way for in-place guest-memfd, which means we can have a
-> ramblock that allocates pages completely from guest-memfd (private or
-> shared).
+> Rename the function with "_private" suffix, to show that it returns true
+> only if it has an internal guest-memfd to back private pages (rather than
+> fully shared guest-memfd).
 > 
 > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
