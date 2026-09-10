@@ -4,111 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E49C79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 13:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531B6C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 13:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4eWi-0006Wp-3q; Thu, 10 Sep 2026 09:09:16 -0400
+	id 1x4ehO-0008Ok-P6; Thu, 10 Sep 2026 09:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4eWh-0006Wf-0i
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 09:09:15 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4eWf-0008Gz-Gv
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 09:09:14 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 878DC21C6C;
- Thu, 10 Sep 2026 13:09:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789045747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rbl8Yaneie1mfhvv7Ou7hL61EPC6PkfekCFc9t7pXAA=;
- b=zGTpm6/Qum03XvO3n+N15JTQsBiyalE46FGLiFRyUq+3PcX94SvPCEgLZY3y3jD0AvRmAX
- CVRvQrCYlpXYHrtjx8rrmW1ahPCH5Aa6Qnbk3CN9n8LUt69CMfpOdwmoT7ngTlGSqG5hry
- Pqqh6cwZ8ZvwNJGjuUDBhMxQtFXvqtU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789045747;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rbl8Yaneie1mfhvv7Ou7hL61EPC6PkfekCFc9t7pXAA=;
- b=e8G7j9CLYJT2HPE7uS00B0mSVafLGgVdNK/1WyWEqFVJLElg3Lf4ssvG9CUqKl4B4EPpVo
- NCw5QhnuE8BlSVAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=E76LyXgF;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jYZfVkog
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789045743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rbl8Yaneie1mfhvv7Ou7hL61EPC6PkfekCFc9t7pXAA=;
- b=E76LyXgFPDaBCxPecUWGEPbVcZvtUtHcHgjfy+PQ0ywwpWoadbWDLg1jfpa9L8ZBYMyIF+
- EWo1FWNdX2wgZyHtLpgeWWZxxd8/PZSCuBwbB02EtogdglggwwP+Qm2V5K6QEGoDOAf1eH
- z3MteOe9+2IRkYgbsb3LoTzdRzuGmxA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789045743;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rbl8Yaneie1mfhvv7Ou7hL61EPC6PkfekCFc9t7pXAA=;
- b=jYZfVkognDQKWOOyAMXuddCVei7aUO2mld2LHjV8SD0TAI2KvS6yv+14588dshWM9J5liC
- BzEe3SY+V9ulXwBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 078031326D;
- Thu, 10 Sep 2026 13:09:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id /JONMu6rompYegAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 13:09:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1x4ehM-0008KU-Cw
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 09:20:16 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1x4ehK-00025g-Hy
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 09:20:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=Q8Ul6Aun7zHcGKR06RWsx1C33ItDmDpABDEU+Mfeo3c=; b=p2BtHyBPcbNK2v7u
+ xD7jE5hI9DmYpyKTKX73MFRI88aqqgPnulgbsgGKrxMFLfmoW59Bw7JDPfJkFaqibeoNdpljzLv/Z
+ mz3OTBwqlou6tovTs6PoBIyLJjFCdS4dA7/ctVvJL06Bn2S5yRRABRlXkzDzziOFimLwxFFDcliRH
+ GEmPXFrxshZQS0s7t5ZGllGx/AG07Wh/CD54M9Y3O75BTWW+iFvZ0aJKFsha0qYAObgkR+dWyLBL1
+ yRZXcw3IdGqiehTcdjWdHmeg+rbKAyLGy3BVDWRiL18Zm+XifZvm5hlspiCPpVQsy0n4pFn7qKJ+y
+ m/AmriyvMnKP0Gfx/w==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1x4ehG-00000003vRG-1Ema;
+ Thu, 10 Sep 2026 13:20:10 +0000
+Date: Thu, 10 Sep 2026 13:20:10 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, "Dr . David Alan
- Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v2 15/18] migration: Rewrite
- migrate_set_parameter_completion using QDict
-In-Reply-To: <878q59e4nt.fsf@pond.sub.org>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 11/18] migration: HMP: Fix bandwidth parameters
+Message-ID: <aqKuikOZY9HFcNWe@gallifrey>
 References: <20260909214509.237309-1-farosas@suse.de>
- <20260909214509.237309-16-farosas@suse.de> <878q59e4nt.fsf@pond.sub.org>
-Date: Thu, 10 Sep 2026 10:09:00 -0300
-Message-ID: <87tsnxtfrn.fsf@suse.de>
+ <20260909214509.237309-12-farosas@suse.de>
+ <875x0dhc9u.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 878DC21C6C
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <875x0dhc9u.fsf@pond.sub.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.107+deb13-amd64 (x86_64)
+X-Uptime: 13:18:56 up 11 days, 14:40,  2 users,  load average: 0.01, 0.02, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,34 +72,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
-
+* Markus Armbruster (armbru@redhat.com) wrote:
 > Fabiano Rosas <farosas@suse.de> writes:
->
->> The migrate_set_parameter_completion function is the last user of the
->> MigrationParameter enum.
->
-> Not true, there's still the assertion in
-> migrate_mark_all_params_present(), and hmp_completion_single() in
-> tests/qtest/migration/misc-tests.c.
->
-> The assertion is unclean: it uses MIGRATION_PARAMETER__MAX for number of
-> MigrationParameters members, which tacitly assumes MigrationParameter
-> matches MigrationParameters.
->
+> 
+> > The max-bandwidth and avail-switchover-bandwidth parameters are
+> > declared as bytes/second in migration.json and interpreted as such
+> > throughout the code, except in HMP where they're expected to be
+> > provided as mebibytes.
+> >
+> > Fix the HMP code to parse the values as bytes.
+> 
+> I wouldn't call this a fix.  The choice of unit was clearly intentional.
+> Doesn't mean we must not change it now.  David, what do you think?
 
-I'm not sure I understand what you mean here. The usefulness of
-MigrationParameter is quite diminished if it doesn't always match the
-members of MigrationParameters.
+Meh I wouldn't worry about whether we call it a 'fix' or not!
+The real benefit here is that by making this number consistent
+the units in the next patch aren't needed since everyone uses
+the same unit.
 
-In fact... could we code-generate the enum from MigrationParameters
-without the need for explicitly declaring MigrationParameter? That way
-we keep the usefulness of having a lookup function and a "max" and do
-away with the task of updating MigrationParameter to match
-MigrationParameters.
+Dave
 
->>                          Write the code using an output visitor and
->> QDict instead so we can remove the enum in a future patch.
->>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
