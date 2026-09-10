@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F40C79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41259C79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4aKG-0006El-1P; Thu, 10 Sep 2026 04:40:08 -0400
+	id 1x4aPw-0007Wb-Vz; Thu, 10 Sep 2026 04:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aKD-0006DX-FF
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:40:05 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aPt-0007WI-NK
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:45:58 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aKB-0006gm-Pv
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:40:05 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aPq-0007n1-IA
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:45:56 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 81769432E3;
- Thu, 10 Sep 2026 08:39:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF94F1F000FF;
- Thu, 10 Sep 2026 08:39:50 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0493D600C8;
+ Thu, 10 Sep 2026 08:45:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BC01F000FF;
+ Thu, 10 Sep 2026 08:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789029594;
- bh=8ZzvbcSxNRDsf3l7+pjIOoJyVM0AyIUAO0RULKJ/ouc=;
+ s=k20260515; t=1789029952;
+ bh=avXl/fF9+VQkQxYHgUzeZRR/WjdBCfavQZlBA8CAv6c=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=NFBGJ04I6z2tEmHNTB/l/FJRV3+pb3bM/kzsdFT0I700dyu8Nd9gd37cmsZp5nm4x
- HX4VJzJmbXe107/lmeNDWw6Hp9KrY1dMrKRuRSQnNviFrCQek10GNVS0UzznIRy283
- tJPR1c5yyazek5DU6S8bOGS6kfUI0P1lOLy1SJ2YfJtmiCT6RT4YI44Ymn7Mt2DkFw
- JtbhjK4f75+rPH0jOe1nXxpdTiHm10AAzV8IqH0+W6ysvFbYwcmUcl96CFIfnMt4P/
- j37CS+8MixCsCgCiWDjozc+aQaASp2/0C7iGMGffyegibx5fYqFmyLTjfraVDPBKc+
- gmzelTWBTpL1g==
-Message-ID: <391885b2-6464-4656-9cda-8d05891849a8@kernel.org>
-Date: Thu, 10 Sep 2026 10:39:48 +0200
+ b=oCi3WtTUou6cmVBcAG29Cfk36Qg95GsYNLacYP5HHi6mSSm+bxbfD1SdJmOl/TPvi
+ Rc9iyslXM3L+PKw7FEezlaFKQOzTtlNba33+5mIY3IzGZIHMfNGlMmH0nMdewOBSPP
+ oXeZUBzDfrdVCnPgcAr9bbCk9tJyYyLmeGY3BwoDyY5NhQ2uCWfchcWDQ1r0tNfYEy
+ BFjKm+2fnuKhLGsoDbPmHvRqdr546idN+Zr5PSfMjKbACIxt2bAyAjYTsjUdCtNXiX
+ 5lDcLvcQsegMA/0eY40xsIE0B5E5YcCnXuvxi72AITDxO5f9h8XaA31N5p53L5ktwW
+ /oQ9RW2G0MYRQ==
+Message-ID: <9cebada1-bda8-4e70-bfcc-7776e202420c@kernel.org>
+Date: Thu, 10 Sep 2026 10:45:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/19] system/memory: Re-use memory-backend-guest-memfd
- inode for private memory
+Subject: Re: [PATCH v5 00/12] KVM/hostmem: Support init-shared guest-memfd as
+ VM backends
 To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, pbonzini@redhat.com, berrange@redhat.com,
- armbru@redhat.com, pankaj.gupta@amd.com, isaku.yamahata@intel.com,
- xiaoyao.li@intel.com, chao.p.peng@linux.intel.com, ashish.kalra@amd.com,
- ackerleytng@google.com, lpieralisi@kernel.org
-References: <20260908205236.838281-1-michael.roth@amd.com>
- <20260908205236.838281-9-michael.roth@amd.com>
+Cc: pbonzini@redhat.com, berrange@redhat.com, armbru@redhat.com,
+ pankaj.gupta@amd.com, isaku.yamahata@intel.com, xiaoyao.li@intel.com,
+ chao.p.peng@linux.intel.com
+References: <20260908133151.836685-1-michael.roth@amd.com>
 From: David Hildenbrand <david@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260908205236.838281-9-michael.roth@amd.com>
+In-Reply-To: <20260908133151.836685-1-michael.roth@amd.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=david@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,52 +72,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/8/26 22:48, Michael Roth wrote:
-> When convert-in-place=true, the guest_memfd instance created by
-> memory-backend-memfd (when guest-memfd=on option is specified) should
-> also be used internally for private memory.
+On 9/8/26 15:30, Michael Roth wrote:
+> v1: https://lore.kernel.org/r/20251023185913.2923322-1-peterx@redhat.com
+> v2: https://lore.kernel.org/r/20251119172913.577392-1-peterx@redhat.com
+> v3: https://lore.kernel.org/r/20251215205203.1185099-1-peterx@redhat.com/
+> v4: https://lore.kernel.org/qemu-devel/20260812201938.198915-1-michael.roth@amd.com/
+> v5:
+> - Fix error handling for 'hugetlb' when guest-memfd=on (Daniel, Peter)
+> - Default to 'seal' option being allowed/on for guest-memfd=on since
+>   it already satisfies the documented semantics (Peter)
+> - Don't explicitly set a placeholder URI for qtest/migration-test
+>   as the code now relies on NULL for this path (Peter)
+> - Clarify rationale for checking for kvm_enabled() in 
+>   kvm_create_guest_memfd() (Philippe, Peter)
 > 
-> Do this by dup()'ing the guest_memfd FD provided by the backend so the
-> separate cleanup paths for shared vs. private FDs can be managed in the
-> same way they are currently for convert-in-place=false (where shared
-> memory must come from something other than guest_memfd).
+> This patchset is also available at:
 > 
-> Introduce a new RAM_GUEST_MEMFD_SHARED flag that can be used to
-> limit this dup()'ing to specific backend types like
-> memory-backend-memfd.
+>   https://github.com/amdese/qemu/commits/gmem-shared-mem-v5
 > 
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> ---
->  backends/hostmem-memfd.c |  1 +
->  include/system/memory.h  |  3 +++
->  system/physmem.c         | 48 +++++++++++++++++++++++++++++++++++++---
->  3 files changed, 49 insertions(+), 3 deletions(-)
+> and is based on top of qemu master (99e54ab5e7)
 > 
-> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> index 6576331441..a9759e682b 100644
-> --- a/backends/hostmem-memfd.c
-> +++ b/backends/hostmem-memfd.c
-> @@ -89,6 +89,7 @@ have_fd:
->      backend->aligned = true;
->      ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
->      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> +    ram_flags |= RAM_GUEST_MEMFD_SHARED;
->      ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
->      return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
->                                            backend->size, ram_flags, fd, 0, errp);
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 027ca81bd2..81616bfe39 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -274,6 +274,9 @@ typedef struct IOMMUTLBEvent {
->   */
->  #define RAM_PRIVATE (1 << 13)
->  
-> +/* RAM can be shared that has kvm guest memfd backend */
-> +#define RAM_GUEST_MEMFD_SHARED   (1 << 14)
+> 
+> OVERVIEW
+> ========
+> 
+> (cover letter shamelessly adapted from Peter's prior postings)
+> 
+> Recent kernels allow guest_memfd to be initialized with an 'init-shared'
+> flag that will default to allocating normal/non-private memory that can be
+> used to back non-confidential VMs.
+> 
+> This allows QEMU to make use of these init-shared guest_memfd instances via
+> a common memory backend that's usable for either provide a common memory
+> backend.
+> 
+> On the QEMU side, before this series, guest_memfd was only used for private
+> guest memory (and thus only applied to confidential VMs), and the guest_memfd
+> FDs would be created implicitly whenever a confidential environment was
+> detected/specified.
+> 
+> With this series, users can now explicitly configure QEMU to use guest_memfd
+> for non-private memory; thus, it can be used for non-confidential
+> VMs. It also has implications for confidential VMs, since with this series an
+> init-shared guest_memfd instance can now be specified for the shared memory
+> while the internally-allocated guest_memfd continues to be used for private
+> memory. This same infrastructure will also be used as the base for enabling
+> in-place conversion for confidential VMs, where these separate shared/private
+> paths will be modified to act on the same underlying guest_memfd instance and
+> use a unified pool of shared/private memory.
+> 
+> 
+> IMPLEMENTATION
+> ==============
+> 
+> In the current patchset, I reused the memory-backend-memfd object, rather
+> than creating a new type of object.  After all, guest-memfd (at least from
+> userspace POV) works similarly like a memfd, except that it was tailored
+> for VM's use case. While there is potential that new guest_memfd features
+> may eventually necessitate introducing a dedicated guest_memfd memory
+> backend object, for now the memory-backend-memfd object is a good fit for
+> the current feature set.
+> 
+> This will also make it easier when in-place conversion comes around, since
+> confidential VMs typically already use memory-backend-memfd for their shared
+> memory, so by also making using that approach to specify the guest_memfd
+> backend for in-place conversion the command-line syntax remains similar, and
+> even allow choosing between memfd vs. guest_memfd to be handled automatically
+> based on whether or not we're dealing with a Confidential VM with in-place
+> conversion enabled.
+> 
+> Now, instead of using a normal memfd backend using:
+> 
+>   -object memory-backend-memfd,id=ID,size=SIZE,share=on
+> 
+> One can also boot a VM with guest-memfd:
+> 
+>   -object memory-backend-memfd,id=ID,size=SIZE,share=on,guest-memfd=on
+> 
+> The init-shared guest-memfd relies on a recent kernel (6.18+). When run it on
+> an older qemu, you'll see errors like:
+> 
+>   qemu-system-x86_64: KVM does not support guest_memfd
+> 
+> One thing to mention is live migration is by default supported, however
+> postcopy is still currently not supported.  The postcopy support will have
+> some kernel dependency work to be merged in Linux first.
 
-Trying to understand the semantics, should that be SHAREABLE ?
-
+All makes sense to me!
 -- 
 Cheers,
 
