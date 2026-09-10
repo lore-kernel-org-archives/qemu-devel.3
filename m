@@ -4,96 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6816DC88E45
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645BEC79FBB
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4nHJ-0006WI-3a; Thu, 10 Sep 2026 18:30:07 -0400
+	id 1x4nJJ-00079P-99; Thu, 10 Sep 2026 18:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4lNv-0003bA-1v
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:28:50 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lOx-0003vQ-Sf
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:30:01 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4lNf-0000fF-Rj
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:28:30 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-398b3d66515so208230a91.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:24:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789071865; x=1789676665; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=roY7InVnKLtcFtdiGuYzbujDolfoQqbOpkrZybN/QJI=;
- b=oSaxCjkcbtbZJ8zeNIBYlD4NBYgVexERphdr4AVz+HF8RHrqHQSfh9GIi75qBEng0k
- a8Ra9X7Rw1BQJXNNz+Jt6rnKjnOLNL1uBEzfRrjpaevBu3bheg/VbIhlJk7oGMKr6Yj4
- QIQB01K/kmSWqLDY3M2hVOawO3VRKoZoLOMldO83m5jgSGEyaR34RVN0Q4nbbcgdAC7S
- mpyFSYnBNx0qzmXIIf6DKks5s388CVdbpBGy0QV9wmAsbqnl19lKQPGBk1lAhWESWcE/
- AmdN2e7RREp+cj/YSPXMvWZat41yJ8Y55zsvUFCKgdC6gtfdlvZL2k/iR5PGNRmDp/1w
- o/WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071865; x=1789676665;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=roY7InVnKLtcFtdiGuYzbujDolfoQqbOpkrZybN/QJI=;
- b=sBQJZWUATeC0okX9TTU86sxHTJN8KlA2ix9DG63ApdkKWyUHUXBcIRbLSt6ybXE1Nk
- BDTrorJB5Asi0zfFBM5u4h95rT8ODvBlHmXsVpJEgAlzOJVc+Wqe1g4P8GU/Wx0liEya
- uKfeFSUfn0UlXIoEnCIn+o62sSWRFtLRQf0l4ZgRYdgo9aMcJFJTbEatxbEB9k8KgmG6
- GhpBIhYIoFUdIb7xWeOJO2wsFLfocStsvdXZnBC10SUeuqQr2irHyNJoX5aDhfRqOTl5
- gVgpKTBOXa3KMeiobZ8JoLJKvZxhvQ0SZksDI7rQjOpOfALuYOWnP0MVOt8IcLzXtlkD
- HhiA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwxrM0IfcSrtO3iA5unjJwMiBqQIbx69DS3+nsYhyPLtSWrf5yd7G7XiuOz2tuINbFGbUck/Omb3O4d@nongnu.org
-X-Gm-Message-State: AFuF++n8vFaUPpuxhv06XLOm5nmdmauFVO5KiS5/b/3eklc/laveuMmv
- +Sn74wnxVNmXjA2xqJlltbVEoLreMfop4g2Sqonmw8OYClQHaYKe0FCyEQO4n+TKilaEjvguRNG
- CHje9ZgA=
-X-Gm-Gg: AYBFou1kXUGjDutrFh0DKGC2QHwtXOigUcYeY0aNyF/JgEjMTDDe4fR2xrUu8sySCEG
- Gk0MoTGSPwJClSgDadL4fqZEfOxvIgnZv53AW8CPUMmVgFcTM/TyjuwUsJNq6ITaomIviTNM1EJ
- Qc5cJRUaNfdqgOG5c2G+V1cjkaZcS9p8Pr5EQ5xxiS3Wqdeg6v3ahFyRT6p6IGb28IryEQJLdLs
- Ec+eX9YAZFWtw2e0r+/rFxDDbqdWSHbDEurQDTGHPvpK56vxgZGfmaTW7PuMxnmuKYl3kkmjcAW
- 9dcUG1dWyCS5vrNuKE0Uqsv+Ae5PdZbfD/XFUWo2X4FJz8TdHPfWt9J4SLcwa548LCMdTunya/4
- FzL2YIjSnpo0cvqNRPnwR9YGutmPortBICp3JW1s6ti6GE6Gd433ri3/gk5C6ylZ9KWfUS1MrHU
- wgUrc8U5wsfyAC++tG4SuPnQpfJ0NyGPywl+K3HoMsYb3PDA46Sanbcog7OXfwMwWHI60e1FVeq
- d+eHTrb1ppfMXc=
-X-Received: by 2002:a17:90b:57ce:b0:396:65dd:4093 with SMTP id
- 98e67ed59e1d1-39d9c212c05mr562930a91.14.1789071131902; 
- Thu, 10 Sep 2026 13:12:11 -0700 (PDT)
-Received: from [10.171.0.227] ([98.155.112.169])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4ed295esm447242eec.15.2026.09.10.13.12.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Sep 2026 13:12:11 -0700 (PDT)
-Message-ID: <27678d57-3b8b-45a3-9a27-08d96675ef8d@linaro.org>
-Date: Thu, 10 Sep 2026 10:12:07 -1000
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lOM-00016V-Ab
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:29:12 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C78A021EC8;
+ Thu, 10 Sep 2026 20:26:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789071975; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=Jyxpc3qf7+2vN451rIZ1waVTqTmZkZwOvwegpj5WUp278QSAokf5e7vvEIxLSeF020tebw
+ Qaqyscj+SBD1JvP0NeBMfY9BkyqPx6cFpqK+gtuIhkAvIk3XHuY/mOlTjlTpcgNVD91q87
+ RwqX4FAI/16vWMEagtaHOG9GjslzYNQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789071975;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=gqbzGKBtXKYq8F6X+OyQdbg0C5QJ8gxa6O7wk56+kTb5GY2ez+R8/sgKjkymUtU/wh42q1
+ d+tJNaWvkWSsMHAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FEmXpC2B;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=d5q+UNo1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789071971; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=FEmXpC2BIqXYKXJ3MlrizlT9jo6IqLOI1A1YCEITUD28ATf/okPjVTpJdi0UIzLfNDs3RD
+ ZJJTNwIULvzBs6WyYAhydfCONcvOhRKTriKKQPGvU5Bw/qTesrls0VlRQ0YzGj9JbWuG9G
+ wERb7n7DSumAqCUFqnQ81H3aAFAz+as=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789071971;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GQ9VeugiW+rPuTWWJ01AvhVzMaKeZUhNf2XmHpNRQyQ=;
+ b=d5q+UNo1UiYan0l2x1Y5+xCTRQEMkID8XVye82eBZZeQ2ZNk/aqMLOqLRNge4mcJpUNxGs
+ oEMGcRHqPzoe72BQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C362E13A5C;
+ Thu, 10 Sep 2026 20:26:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MN3hJGISo2pJPQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 20:26:10 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: "Denis V. Lunev" <den@openvz.org>
+Subject: [PULL 4/7] ahci: Fix leak of IRQState
+Date: Thu, 10 Sep 2026 17:25:56 -0300
+Message-ID: <20260910202559.916866-5-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260910202559.916866-1-farosas@suse.de>
+References: <20260910202559.916866-1-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/mips: Use tcg_gen_lea() for [D]LSA and MXU S32LD*V
- opcodes
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
-References: <20260831062630.58771-1-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260831062630.58771-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: C78A021EC8
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,openvz.org:email,suse.de:dkim,suse.de:email,suse.de:mid];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,18 +125,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/26 20:26, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
-> Based-on:<20260828224451.1564072-1-richard.henderson@linaro.org>
-> ---
->   target/mips/tcg/mxu_translate.c        | 3 +--
->   target/mips/tcg/translate_addr_const.c | 6 ++----
->   2 files changed, 3 insertions(+), 6 deletions(-)
+ASAN spotted an indirect leak in ahci-test:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Indirect leak of 576 byte(s) in 6 object(s) allocated from:
+    #0 0x556112a08ca0 in malloc
+    #1 0x7f21591e595d in g_malloc
+    #2 0x7f21591ffe38 in g_slice_alloc
+    #3 0x7f21591c988d in g_hash_table_new_full
+    #4 0x556114d756f1 in object_initialize_with_type ../qom/object.c:506:23
+    #5 0x556114d77590 in object_new_with_type ../qom/object.c:706:5
+    #6 0x556114d777e8 in object_new ../qom/object.c:722:12
+    #7 0x556114d6d2be in qemu_allocate_irq ../hw/core/irq.c:94:25
+    #8 0x556114d6d1bc in qemu_extend_irqs ../hw/core/irq.c:82:16
+    #9 0x556114d6d329 in qemu_allocate_irqs ../hw/core/irq.c:89:12
+    #10 0x5561135da9bd in ahci_realize ../hw/ide/ahci.c:1644:12
+    #11 0x55611360156a in pci_ich9_ahci_realize ../hw/ide/ich.c:132:5
 
-Thanks, I've queued this with the rest of the lea patch set.
+Although ahci_realize() frees the return of qemu_allocate_irqs() right
+away, the individual IRQStates are still left around.
 
-r~
+Issue qemu_free_irq() at ahci_uninit().
+
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ hw/ide/ahci.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 6b04762c4a..86f6297dc9 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -1688,6 +1688,7 @@ void ahci_uninit(AHCIState *s)
+             }
+             ide_exit(ide_state);
+         }
++        qemu_free_irq(ad->port.irq);
+         object_unparent(OBJECT(&ad->port));
+     }
+ 
+-- 
+2.53.0
+
 
