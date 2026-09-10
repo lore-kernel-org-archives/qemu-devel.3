@@ -4,90 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A263C79FBF
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 16:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D620C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 17:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4hF1-0004Vg-8b; Thu, 10 Sep 2026 12:03:15 -0400
+	id 1x4i7g-0005Di-Df; Thu, 10 Sep 2026 12:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4hEI-0004Fx-Kr
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 12:02:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1x4i7f-0005DZ-Da
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 12:59:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4hED-0003lb-7C
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 12:02:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789056138;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NotSW32JrainzY7i82xNaKIM19HMzdP0dArUGsMAsjE=;
- b=PDgKgNkV5LF4kU8AjhZfI8R+w0h6V8kVt/M7ALZOqjsvnb/Jub4AWP3QXOlrl8UzATGdha
- iRBI0QNFhMOwuOON2KXg3JpVHyLHCDqtBiWAXwGoJcc8MOrLBeFeOpaZM9SXDJ5E4VhTIn
- 8s+F/YSsEIdNynNwR0X6Fvh+lvvEA6g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-g41Ev5lEOfSYpK39sQiwDA-1; Thu,
- 10 Sep 2026 12:02:15 -0400
-X-MC-Unique: g41Ev5lEOfSYpK39sQiwDA-1
-X-Mimecast-MFC-AGG-ID: g41Ev5lEOfSYpK39sQiwDA_1789056134
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79F8C1954204; Thu, 10 Sep 2026 16:02:14 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A8AFB418; Thu, 10 Sep 2026 16:02:13 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [GIT PULL v2 00/24] Various virtio-gpu/dmabuf related fixes
-Date: Thu, 10 Sep 2026 20:02:11 +0400
-Message-ID: <20260910-virtio-gpu-cleanup-v2-0-82555d04f70c@redhat.com>
-In-Reply-To: <20260910-virtio-gpu-cleanup-v1-0-ccb8927a671e@redhat.com>
-References: <20260910-virtio-gpu-cleanup-v1-0-ccb8927a671e@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4156;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=jRI6D0P6ODCicYBtEHr9Y7GcVaaFvcAYgcR8YgjTGS4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqotPxcSzh9w6KkYJKZ0LbpNLl608luAx+h2x/6
- tBq5rpaqLyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqLT8QAKCRDa6OEJdZac
- 5RDBEAC2smVUGH8YAL3xGw/eJv0KLqKwaKt04yqrsAQ3sQDYbuV5MP4s0EdeLxpC1rPiVXsOCSE
- GgmlBUlgDuFsNo/byoxclwU4T3YHX2aHQUYD9g5Li5yGACXqyPvsScKmJHYiLGlTR1z5JTqX8/E
- +gnQ2JuR/vFuX/e7Mvm9oLX0mnNoB187UcPCGYzMJOeHUO/GmdojjmzBy26IM2Q3zf1b6oplvdr
- T9ktS8+SnkbDbiLCuGaqrfHwdIb26y6aubwHLFxnPc+JYJzS0XnB855RskJVET9UUZ6qMpjtupX
- fd9Y5QgI/PGh+5LO8KN78Hcun9kuYzcKq2tdDNIHs7THjMHeQVMAcTCp6LIGTdsQab/FfTHVeOJ
- h0dD2SK9+XgkaLbt+TAWr4ImmUz1uZSNQTu17Awb8/9xtDPP8NA3lkL+1DKVH7kXQfd84bO4nwK
- R7TJx1ppG7FS0J+28PZVqmA3G8ZVahetS05dtpFy7tnKkKZe5h/MPT6AyHbVp2tPhthgT7o7f8K
- oGqiWrbpEY+1qZyazc3OAyKantgGFBu+F5W+4h2e7MIXYRbet1h+FZb63UBPb2MKNn4/49zf2w3
- gi9IJx56/0UsuSSBuVh9ObNLfgNpsKv1/3h9RqQaydFk0hQGSAr13WNsH7KH94MtVto00icufJm v
- 59R7x3AeTOnuzQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1x4i7d-0007cn-L1
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 12:59:39 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68AFD3lK3280461; Thu, 10 Sep 2026 16:59:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=mYDaT1Z4Ay5bQKavjE/RCxGG+sHX2QCFIWeJ7wcRr4A=; b=DaGn8AClGd7r
+ dkB2MaKjwfsAVOnd1y6MP/UiF9zPrci0XrDUo2XgtgSEwotVZNYOvoOKt62dELdh
+ 2jqRnsvMmzmOJDRurUHK4KNdLcQIuedCXPBV0O04KFBwJjomarRgPD6zfriXI8Kc
+ 9j6ZxYaNDN53Yi2zhEjpPL0o8EfWFTsGJ/MPNw20lXwGZmzS5+rLI+6/tLA4P44G
+ fJgjz3lDONeSlxQGMQmN5dU0OoUMSog271uYRtQSFjZOff+CCdioTerYZhPS97Tt
+ yaq3ZLGVUgCfAsHP2jn0s29HNypOeDFHOsJ6kMrTSVocNv49AOSAPQAQ7RlZRDjo
+ 7yYUs+D7LA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8sx50f-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 10 Sep 2026 16:59:30 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68AF7ed0168826; Thu, 10 Sep 2026 16:59:30 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvvr9ama-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Sep 2026 16:59:30 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68AGxUvu26542666
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Sep 2026 16:59:30 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 03FAB58059;
+ Thu, 10 Sep 2026 16:59:30 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2FF2D58058;
+ Thu, 10 Sep 2026 16:59:29 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Sep 2026 16:59:29 +0000 (GMT)
+Message-ID: <7f4620558ac861573fc83d6569189432de77493b.camel@linux.ibm.com>
+Subject: Re: [Qemu-devel] [PATCH v8 0/7] qmp: add pmemload command
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Simon Ruderich <simon@ruderich.org>, qemu-devel@nongnu.org
+Cc: David Alan Gilbert <dgilbert@redhat.com>, Peter Crosthwaite
+ <crosthwaitepeter@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <rth@twiddle.net>, Markus Armbruster <armbru@redhat.com>, Eric
+ Blake <eblake@redhat.com>, Caleb Schlossin <calebs@linux.ibm.com>
+Date: Thu, 10 Sep 2026 11:59:28 -0500
+In-Reply-To: <cover.1542290622.git.simon@ruderich.org>
+References: <cover.1542290622.git.simon@ruderich.org>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEwMDIwMSBTYWx0ZWRfX9uj/m2Qd4gVW
+ li29OwWT+XCxRM3P1mVf4urVHUbl1jfTOh1xPExjh6HTyHEGkktpGfMsFmFODmv+YIiKlJRIQo1
+ d4ys3bobz+4qaJiv5l0OlGLjiFSoG1g=
+X-Proofpoint-ORIG-GUID: 6Q0hEh1E_2JUL6W-PV3QcXqM7VD2zxZF
+X-Proofpoint-GUID: vSwgkX4Z9Iax7KGhKyNJXNdvaulN9_nW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDIwMSBTYWx0ZWRfX4ntwvd74O8VH
+ 5jiWvLqgpcOC2UPGIChSwAcjpCl5WWaA0Qk+dQMQLIvUfUpyZM6AobS7FMJwtewitPgjnSOQlog
+ Ts7G1TY8mgVZASWpIfJv2pW0MgNVuP5ZWDf+6x+a/RKNJqbPfK7EPO7H6Mhku9RrnlbSHp3YIgu
+ OwY/4+TwNWVXLW6YndWCn0822n9kvqEItRppm27mZX8Ew1BYm6RyaIzaw9qsBvVLyOrwvM+xe4I
+ SZZQEKkKd+jkrICKG8uNjo2mvtbwrFsg/CBARyF6+jEp6ou4vDgDBX2SUFDBN5Cv8jAuj79fcF3
+ oU0rhmu+N8lZgzf4BtXY9BCyD+Sb3xhKmH+2k1gJ0hDaQhmZcuHGsIBTdW3lwwdclMO5cJ8XB0z
+ 9RCpBefv2meZf8FMvSjLObCOUSCh7YLxmtEEKfzFdyGAt7iT+/RiOEhTn/QV/uYiDbxCJV+evVc
+ X4K3hOZU0U1VaksA0Aw==
+X-Authority-Analysis: v=2.4 cv=PIGaavqC c=1 sm=1 tr=0 ts=6aa2e1f3 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=YDZNUCDIDsX5OQHn9esA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-10_05,2026-09-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609100201
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,90 +125,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hello,
 
-The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013fb7:
+It seems that this patch set stalled several years ago for no apparent
+reason.  Does anybody know why?
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-09-10 11:08:04 +0100)
+I find myself needing the functionality of a command like `pmemload`. 
+Our user needs to be able to load a binary file into a physical address
+of their VM and it would need to be done every time they start the VM
+(not just for debug or experimentation). It also needs to be done at
+some point after the VM has already started.  I understand that the gdb
+stub could possibly be used, but we don't want to prevent the user from
+being able to use GDB themselves.  The pmemload command uses QMP, so it
+seems that it would be the perfect solution for us.
 
-are available in the Git repository at:
+Thanks,
 
-  https://gitlab.com/marcandre.lureau/qemu.git tags/virtio-gpu-pr-v2
+Glenn
 
-for you to fetch changes up to d6e516555805b95a7a935c3fd74568dabf7796f2:
-
-  contrib/vhost-user-gpu: disable scanouts on resource unref (2026-09-10 19:59:43 +0400)
-
-----------------------------------------------------------------
-Various virtio-gpu/dmabuf related fixes
-
-While working on CVE-2026-66020 (which had a few revision on list), I
-kept finding several places where virtio-gpu scanout and dmabuf
-ownership was unclear.
-
-The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
-unmapped its memory. Following that path also found stale dmabuf
-references, duplicated scanout bookkeeping, and inconsistent cleanup
-between display backends.
-
-Those changes touch a lot of area and I have done basic testing with the
-various backends. I would not recommend backporting them all to stable.
-The first 2 patches address CVE-2026-66020 in the general case and
-should be safe to backport.
-
-----------------------------------------------------------------
-Marc-André Lureau (24):
-      virtio-gpu: disable blob scanouts on mapping cleanup
-      virtio-gpu: clear res->blob on mapping cleanup
-      hw/display/virtio-gpu: introduce virtio_gpu_{simple,virgl}_resource_new()
-      virtio-gpu/virgl: free BHs and timers on renderer reset
-      hw/display/virtio-gpu: set share_handle for udmabuf blob resources
-      ui/gtk: move GL fence tracking from QemuDmaBuf to VirtualGfxConsole
-      ui/gtk: move draw_submitted from QemuDmaBuf to VirtualGfxConsole
-      ui/dbus: disable scanout iff dmabuf is current
-      virtio-gpu: store the scanout DMABUF in virtio_gpu_scanout
-      ui/console: disable GL scanout when dmabuf is the active one
-      ui/sdl2: clear guest_fb.dmabuf on release
-      ui/dmabuf: own and close fds on free
-      ui: make GL context current in display backend callbacks
-      virtio-gpu: release the dmabuf when a scanout is disabled
-      contrib/vhost-user-gpu: drop scanout_bitmask bookkeeping
-      virtio-gpu-rutabaga: fix scanout handling
-      virtio-gpu: drop scanout_bitmask bookkeeping
-      virtio-gpu: release dmabuf when switching to a surface
-      virtio-gpu/virgl: release dmabuf when a texture replaces a scanout
-      virtio-gpu: consolidate disabling scanout
-      virtio-gpu: minor refactoring
-      virtio-gpu/virgl: disable scanouts on resource unref
-      virtio-gpu: extract virtio_gpu_disable_scanout_for_resource helper
-      contrib/vhost-user-gpu: disable scanouts on resource unref
-
- contrib/vhost-user-gpu/vhost-user-gpu.c |  28 ++----
- contrib/vhost-user-gpu/virgl.c          |  12 +++
- hw/display/vhost-user-gpu.c             |   1 -
- hw/display/virtio-gpu-rutabaga.c        |  38 ++++----
- hw/display/virtio-gpu-udmabuf-stubs.c   |   2 +-
- hw/display/virtio-gpu-udmabuf.c         |  89 +++++++------------
- hw/display/virtio-gpu-virgl.c           | 135 ++++++++++++++++++-----------
- hw/display/virtio-gpu.c                 | 148 +++++++++++++++++++++-----------
- hw/vfio/display.c                       |   1 -
- include/hw/virtio/virtio-gpu.h          |  31 ++++---
- include/ui/dmabuf.h                     |   7 --
- include/ui/egl-helpers.h                |   4 +-
- include/ui/gtk.h                        |  14 ++-
- ui/console.c                            |   3 +
- ui/dbus-listener.c                      |  69 ++++++++++-----
- ui/dmabuf.c                             |  65 ++------------
- ui/egl-headless.c                       |  17 ++++
- ui/egl-helpers.c                        |  15 ++--
- ui/gtk-egl.c                            |  55 +++++++-----
- ui/gtk-gl-area.c                        |  33 ++++---
- ui/gtk.c                                |  43 ++++++----
- ui/sdl2-gl.c                            |   7 ++
- ui/spice-display.c                      |   2 +
- 23 files changed, 450 insertions(+), 369 deletions(-)
+On Thu, 2018-11-15 at 15:07 +0100, Simon Ruderich wrote:
+> Hello,
+> 
+> This time as a new thread to help patchew. The only change is to use the
+> correct next version.
+> 
+> Regards
+> Simon Ruderich
+> 
+> Simon Ruderich (7):
+>   cpus: correct coding style in qmp_memsave/qmp_pmemsave
+>   cpus: convert qmp_memsave/qmp_pmemsave to use qemu_open
+>   cpus: use size_t in qmp_memsave/qmp_pmemsave
+>   hmp: use l for size argument in memsave/pmemsave
+>   hmp: use F for filename arguments in memsave/pmemsave
+>   qmp: add pmemload command
+>   hmp: add pmemload command
+> 
+>  cpus.c          | 85 +++++++++++++++++++++++++++++++++++++++++--------
+>  hmp-commands.hx | 18 +++++++++--
+>  hmp.c           | 16 ++++++++--
+>  hmp.h           |  1 +
+>  qapi/misc.json  | 20 ++++++++++++
+>  5 files changed, 122 insertions(+), 18 deletions(-)
+> 
+> Diff between v7 and v8:
+> 
+>     diff --git a/qapi/misc.json b/qapi/misc.json
+>     index 39f5e7dd38..e4f39e31e5 100644
+>     --- a/qapi/misc.json
+>     +++ b/qapi/misc.json
+>     @@ -1201,7 +1201,7 @@
+>     #
+>     # Returns: Nothing on success
+>     #
+>     -# Since: 3.2
+>     +# Since: 4.0
+>     ##
+>     { 'command': 'pmemload',
+>     'data': {'val': 'int', 'filename': 'str', '*size': 'int', '*offset': 'int'} }
+> 
 
 
