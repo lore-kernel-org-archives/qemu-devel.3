@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62061C79FBF
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 17:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE1C5C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 18:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4j2x-00088n-Am; Thu, 10 Sep 2026 13:58:51 -0400
+	id 1x4j72-0000VP-L3; Thu, 10 Sep 2026 14:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x4j2v-00088U-Pe; Thu, 10 Sep 2026 13:58:50 -0400
+ id 1x4j71-0000VC-Fj; Thu, 10 Sep 2026 14:03:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x4j2t-00020p-1t; Thu, 10 Sep 2026 13:58:49 -0400
+ id 1x4j6z-0003Zp-RC; Thu, 10 Sep 2026 14:03:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789063092; bh=8ISu6uli5v8O+wr8bwEltVIqySHYrcpo+LjeEnqLdJc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=oaZldUwGZGXrQBHXlfIaXrDcJdyvTwPwY/rJrU44DNHw1ZDA3wYKwFWPGdF+s+Sev
- s605nP4UDQJ/BOuwG+HouUQKJ/ETbOAV4DBhuLpLNeX3/Dj+a9Ny7NuzMpz4Hh/Goa
- 7kveC8AhMvltOirUVGdQiMMjOI18+HYk7+I/fHj7O26PDB4j2+BEjmdQJ8xyvjwNIx
- bYQkSeS6Pep0fX/xdFJIqAhEVXdqPG5Jjo/D5W5XVsQgKr3LcRBn9mm9ipk+2YqmX5
- 3jmSrWfzX1cz8N6LVrQB5lOHKYD5jeSrSaZ0c+Or/k5a+Xv+pKlhat58GS1DN1+iDt
- cUIHVzMl8/XeA==
+ t=1789063347; bh=Ves5aQZLP6DlksNwPlCZWs2nfAn0+EPatg+jSlhjxDQ=;
+ h=Date:Subject:To:References:Cc:From:In-Reply-To;
+ b=o9Ap0JXRytT03xEpsp/USgCKEVQPuL4C21KQAkRpSuh9TjDG/UIQV0VRoIwxrHyLT
+ ZpOZIlqO15rVia2ShGmW7oxKi0NpmzNmSByLaprrh7ItMvBM/mVq6BrgsUsEvo1rf4
+ 03EslFjh0AKpx0nBUXY+C1RBSdZYUXD/o0J47HF0Ja/Cpc9c3Prpf5v00BwnpBuX5M
+ /PlZ64008CelQ9N5OpjQYgVV/aFPo2hzqjrYHUb8i3+PIu+C7VRsaZYvVdZgFIC4cp
+ xs4pZJ9hkKifAS1MpgpOuhwtTqhIxun3cFuRPz9gSfZWMiQcym5aIt+Rv23Ods7MYa
+ lG/SgcHbQzaYw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 42EA11D3890;
- Thu, 10 Sep 2026 20:58:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EE7161D389A;
+ Thu, 10 Sep 2026 21:02:27 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 29CBA4258AF;
- Thu, 10 Sep 2026 20:58:43 +0300 (MSK)
-Message-ID: <560e3a61-373a-4947-8aae-9d9a160ce27a@tls.msk.ru>
-Date: Thu, 10 Sep 2026 20:58:43 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4B06C4258B7;
+ Thu, 10 Sep 2026 21:02:59 +0300 (MSK)
+Message-ID: <ab12c39c-5d5d-4c4a-8486-3072f85c25f6@tls.msk.ru>
+Date: Thu, 10 Sep 2026 21:02:59 +0300
 MIME-Version: 1.0
 User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH] target/i386: Fix FXCH to unconditionally clear C1
-To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260902085424.148650-1-scherer.simon89@gmail.com>
+Subject: Re: [PULL 00/12] Misc patches for 2026-09-09
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260909155624.1082893-1-pbonzini@redhat.com>
 Content-Language: en-US, ru-RU
+Cc: Simon Scherer <scherer.simon89@gmail.com>,
+ Andrey Polivoda <apolivodaa433@gmail.com>,
+ QEMU Stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20260902085424.148650-1-scherer.simon89@gmail.com>
+In-Reply-To: <20260909155624.1082893-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,44 +71,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/26 11:54, Simon Scherer wrote:
-> Per the SDM, FXCH unconditionally clears the FPU status word's C1
-> flag. QEMU's helper_fxchg_ST0_STN swaps ST(0) and ST(i) but never
-> touches fpus, so C1 is left untouched from whatever prior instruction
-> set it.
-> 
-> This patch clears C1 after the exchange matching the SDM.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4399
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> ---
-> See also my earlier patch (20260828082235.128360-1-scherer.simon89@gmail.com)
-> to unconditionally clear C1 for the x87 compare instructions.
+On 9/9/26 18:56, Paolo Bonzini wrote:
+...> Andrey Polivoda (1):
+>        target/i386: Mark MOVNTI as not valid with prefixes 0x66, 0xF2, 0xF3
 
-Hi!
+> Simon Scherer (5):
+>        target/i386: Fix FXCH to unconditionally clear C1
+>        target/i386: clear C1 for all x87 compare instructions
+>        target/i386: Update FPU tag word for FXTRACT's old ST(0)
+>        target/i386: Update FPU tag word for FSTP
+>        target/i386: Update FPU tag word for FXCH
 
-Is this a qemu-stable material?
+Actually, it looks like this whole lot should be picked up for qemu stable,
+is it not?
 
 Thanks,
 
 /mjt
-
->   target/i386/tcg/fpu_helper.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-> index b812125efa..32af8b79f4 100644
-> --- a/target/i386/tcg/fpu_helper.c
-> +++ b/target/i386/tcg/fpu_helper.c
-> @@ -519,6 +519,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
->       tmp = ST(st_index);
->       ST(st_index) = ST0;
->       ST0 = tmp;
-> +
-> +    /* C1 is unconditionally cleared to 0 */
-> +    env->fpus &= ~0x0200;
->   }
->   
->   /* FPU operations */
-
 
