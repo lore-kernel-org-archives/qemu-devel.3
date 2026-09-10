@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2578DC88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9334C88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4pb8-0005ew-Oy; Thu, 10 Sep 2026 20:58:44 -0400
+	id 1x4pcZ-0006Gq-37; Thu, 10 Sep 2026 21:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPd-0001hj-FR
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:54 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0001k2-38
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPa-0007AR-1b
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:37 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912e2406so1543325e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPw-0007Fd-Ok
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:02 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-49b392ccaacso5556465e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083752; x=1789688552; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083769; x=1789688569; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=sS82x9gVdySNfwG4lS1OAUl+9Ll5vTkrbexOf8WD9EQ=;
- b=c59TwasX7Vy6TwPrNRcRm3oPW+zN1xC/t6ZHQaATtXqQ7a5heGNyS3k6pcG9zVPlPU
- BlLSTKr0h8YlYi0zxQsEzzKVSPTqZnZziGUvuLFSJdTrr8O8vQwsKb1uzjCyYJQ7fQVq
- 6FpFKxJnbjPlUsH8PeRpywksW2YW9sMFoWCuTt+z5duskRsWuxjotaVLKcTVSr3IZo/U
- kAszx38Yl2LXzPCgrWHlQUb6OLkdLSZpVldsCL6MEoPCf58lSXWSEQCvpBloyLKFv+V4
- odt53KbQb6/wXpaZHZXHI3CH0oajJ+4ZeITscT57kmr+JVHIEeYIj0gy1iLLAKrZp/+t
- pzMw==
+ bh=Cf1yI1aREIxDxkefBceSwViRa1AdWX44R35eLRi8QFs=;
+ b=K3TvOgrhe8XO1Tcj8YaU+f41aO+qeqGDCRLRIVZ75csFyVBUIXctjJ3HieUDnHc01p
+ IxfZ3R3cfJex4GAP8tadKt0Z0JrxaF/5mA4ag9GlzKNTIqHppHz54ZUhRCdfGLwMDhMi
+ FaY77DcJru6wF6etL6N7sSK6cb8TaPHvjWhoIZuACqT6RFIzH0lOoDrBfTkND/mJAVmB
+ uSuFacphnlWVjAHGsMGdczz8GTgRTPaFdUk4K7cvbNFkZIO45xLd3FANyK0+xNhvycZN
+ FaP6YSehC+a/1owliLZspNCKVG0oc+qwaXm357SS9AOXN7mE+V4DW5R209zsXOCxsPnP
+ hhGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083752; x=1789688552;
+ d=1e100.net; s=20251104; t=1789083769; x=1789688569;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sS82x9gVdySNfwG4lS1OAUl+9Ll5vTkrbexOf8WD9EQ=;
- b=ZBzgYH2IbjATjHUXlPYWhLncQALye0O4bnba5MIFxrBBoMO59lK8OAD3ZMl1nzIzZ0
- XAP7isyQgJMHYglHZvjJm7Jq9tB3Cvgzw+B8HmGz1IWe3veGrh14zYFUP/G2O+VxI9IH
- nKXRQK+kRWE/hoXVz43QfIrdee37hFHxWDYiRSzn2LW8dPRke0EUGRKOlcLg/DmB5t2x
- dagosPvYp5EiSgMKUxOwC5cVsZ6bI8ARatmfnSX+W86kz1aJ1iGmhcho3UlsJluOQhoT
- tMeyPJJCXL4tK3Wrwg6AJuh2zrY+e53xUJeBL4Kt2iQE6Vn9V/vfgo0hrfjMHvSPcEWl
- 9kWA==
-X-Gm-Message-State: AFuF++k6ZP6Uxly8DTXBvCo1Sp4sfFBk3eHG6tRxlOGvUPEzeOPOwgDt
- t8fIj9cScsq0EADh99RC6lN9Ri6c7am3dd1QTeeeYAZNB2Eq5QPCafxRPmHOUpLsACpWceT+A2z
- QdrJY
-X-Gm-Gg: AYBFou3idM7RzZPYZnO8WdceuXyV007FFuhgrY3HZ12Hzrh+dcYdX0/JjnrgTJa0AsI
- AORZ4h7glOryOGLplKub1oNCetU+z4K9HZSJ9ehHcgsarFZWqC1cq3pISR3gPBSCY5xANkL4OK1
- PUGuDFS3PeD/VdhH7Z9TPcLBG5E4qTKEiNFgolrkITe3F9DVFE02M7vBkSDeqLpDO0/GCuIxqLY
- hXX3zz0zXGEXLXWllQAWQuphO6BaXPjueq53gxzcKlSV7ul1VClMENW/G6R9xFRJ066cRlob63f
- 7PTR5uCIEtFdWl2NEoAbXQvBiCuT5lwPJcz9S6XxOBKHUGIhdi/soKGJJZmCjyI8htZUYfoYnJM
- sg6/rasUjBIOL4e2D8vWG9HLf+pec6GDtyc83W7G+tTdB0If3KKe2EMTIVzDxMy1A0o6L5RQwH9
- WU05bL0quejeyDtWw4hBr9WQ3sljhJk+/hc7fg9wlEmQ0p2fV92g5zo/wxEJaRlHSzAvTg
-X-Received: by 2002:a05:600c:4f53:b0:49e:620b:918c with SMTP id
- 5b1f17b1804b1-49e620b9490mr8643315e9.5.1789083752401; 
- Thu, 10 Sep 2026 16:42:32 -0700 (PDT)
+ bh=Cf1yI1aREIxDxkefBceSwViRa1AdWX44R35eLRi8QFs=;
+ b=hVmKuAkbQ+XgMQ3LF3+8CPrDY9fhegbd2cHxmuoiox0N0cASyEj1aFL38DvbNQAK7o
+ EywrzYZ4LgU9jtlloIb/6J6n2HBQFw5dSyDMT1o3U+LXB7nk058qcZNPM4G4HbhSQKM3
+ 3jDsSq1j9jIION/3hD1AaY1ooygXXho+MFQ3aMF7u7Teyzo1VFfx6rMI0DihTvZ7inXS
+ Oyw7lopZfiIvOj1lhQmW1mpiTfHCE28ENJjsYhG+WYl6+hncyBiFXObdjOO6uKlvcDmY
+ 6aB//Bg3mXVnKPhwlt2agtL4MnMUemD0OEiz1x/VdPXHystdhrcZqBoeu9GfkXtI4TJA
+ zjFg==
+X-Gm-Message-State: AFuF++ko3OdaJliG5t+i4eZ6lpJeuJG3pECXwHeEqYL3ZuJhzux55iDR
+ xLxiChMCq4ao7gwinTDqd9J15rRBWWmK2O2PewjNzzz6MiQOMu+VY92GtyblQi5J7Zo=
+X-Gm-Gg: AYBFou0X2VtzciLNBxnis1sN/TNEssHAckeI/YkIRdFK/tBfS1aLMIM6UU8UnDojO7d
+ bX3Dffsi+TXB7S1NLoVvl7ZyOkzXG3KLhmpRZZL/yAVrBLXclzbuwAUdp31rKDN6/5ku47TBhMv
+ OrJhlIuVcm51p+QMhy2/reqr85/9yWuoCrsSka3eWc4bhCsMA+eKOsQRDYY3e132IiWeMzaPXF/
+ efmIGv+woNiu45YpvNqo3WrSckPRQadQykmWanMwOVs7GuAt3/UjdN3Vc4W1CKeXNgXyev9za24
+ EmnW1o4TA2oho0O83wEObBR6PUsy5m03pga7QfKhmnLRZezrA/EExvQYAMljCg8wdZTvxOP5pyC
+ YLBdeSnEGBu0RH2A46wxykn84lVfJ4Dc+3bW8DpzsyXlsUCwfsrQfv1KIiF7tZFN4TPVxqrKeaK
+ 7uc0vxjRq+MV5rli2h7ZNkWTPiJwsXVvohDXk3wusQe1ucvx8FREt/56E1SMWIIaffdsRSh/DmX
+ 5pwKBk=
+X-Received: by 2002:a05:600c:860b:b0:49c:fa21:1c87 with SMTP id
+ 5b1f17b1804b1-49e619d1bddmr12783925e9.28.1789083769037; 
+ Thu, 10 Sep 2026 16:42:49 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.31
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:32 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:48 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 07/29] iotests: cover the Parallels format extension parser
-Date: Fri, 11 Sep 2026 01:42:00 +0200
-Message-ID: <20260910234222.3039975-8-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 18/29] parallels: Add dirty bitmaps saving
+Date: Fri, 11 Sep 2026 01:42:11 +0200
+Message-ID: <20260910234222.3039975-19-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,269 +101,442 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Extend the existing test with hand crafted extension clusters, built
-in the test rather than shipped as samples. Each corruption case is
-one qemu-img info run which either opens the image or reports why it
-was rejected: extension magic and checksum, feature magic and flags,
-payloads running past the cluster, bitmap granularity, an L1 entry
-which overflows when converted to an offset, and a cluster_size larger
-than the image file. Two more cases load a bitmap spanning two L1
-entries.
+Dirty bitmaps can be loaded now, but there is no way to save them. Add
+code for dirty bitmap storage.
 
-Termination by a signal is not covered by check=False, so it is caught
-and logged to keep the remaining cases running.
+A bitmap which can not be stored is refused when it is created, by
+parallels_co_can_store_new_dirty_bitmap(), as at store time there is
+nowhere left to report it to: it would be dropped while the command
+which asked to persist it still succeeded. The format identifies a
+bitmap by a UUID, so a name which does not parse as one is refused, and
+so is one whose L1 table does not fit the Format Extension cluster next
+to the feature headers of the bitmaps already stored and the end of
+features marker. The hook and the store path share the size arithmetic.
+
+Losing a bitmap on an I/O error is still possible, and it used to be
+silent. Report it through errp and answer -EINVAL from
+parallels_inactivate(), the way qcow2_inactivate() does, giving up
+before the in use flag is cleared: the inactivation failed, the node
+stays writable, and the next open must not be told that the image was
+closed correctly.
+
+The extension is rebuilt as a whole and written to freshly allocated
+clusters on every store, and its clusters are deliberately absent from
+used_bmap, which is what lets the space of the copy read at open time
+be reused. parallels_check_unused_clusters() derives the end of the
+payload from used_bmap alone, though, so it would report the extension
+as a leak and 'qemu-img check -r leaks' would truncate it away while
+the header still points at it. Remember where the extension ends in
+s->ext_end and use it as a lower bound for the end of the payload.
+
+Based on the original work from Alexander Ivanov.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- .../qemu-iotests/tests/parallels-read-bitmap  | 180 +++++++++++++++++-
- .../tests/parallels-read-bitmap.out           |  33 ++++
- 2 files changed, 212 insertions(+), 1 deletion(-)
+ block/parallels-ext.c | 295 +++++++++++++++++++++++++++++++++++++++++-
+ block/parallels.c     |  12 ++
+ block/parallels.h     |   7 +
+ 3 files changed, 312 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-read-bitmap
-index 38ab5fa5b2..5cbef25018 100755
---- a/tests/qemu-iotests/tests/parallels-read-bitmap
-+++ b/tests/qemu-iotests/tests/parallels-read-bitmap
-@@ -18,14 +18,22 @@
- # along with this program.  If not, see <http://www.gnu.org/licenses/>.
- #
+diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+index 21f54e4e3e..a0e2be395f 100644
+--- a/block/parallels-ext.c
++++ b/block/parallels-ext.c
+@@ -24,6 +24,7 @@
+  */
  
-+import hashlib
-+import struct
-+import uuid
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "block/block-io.h"
+ #include "block/block_int.h"
+@@ -96,8 +97,9 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
+         if (entry == 1) {
+             bdrv_dirty_bitmap_deserialize_ones(bitmap, offset, count, false);
+         } else {
+-            ret = bdrv_pread(bs->file, entry << BDRV_SECTOR_BITS,
+-                             s->cluster_size, buf, 0);
++            int64_t host_off = entry << BDRV_SECTOR_BITS;
 +
-+from qemu.utils import VerboseProcessError
-+
- import iotests
--from iotests import qemu_nbd_popen, qemu_img_map, log, file_path
-+from iotests import qemu_nbd_popen, qemu_img, qemu_img_map, log, file_path
++            ret = bdrv_pread(bs->file, host_off, s->cluster_size, buf, 0);
+             if (ret < 0) {
+                 error_setg_errno(errp, -ret,
+                                  "Failed to read bitmap data cluster");
+@@ -105,6 +107,7 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
+             }
+             bdrv_dirty_bitmap_deserialize_part(bitmap, buf, offset, count,
+                                                false);
++            s->ext_end = MAX(s->ext_end, host_off + s->cluster_size);
+         }
+     }
+     ret = 0;
+@@ -328,6 +331,8 @@ int parallels_read_format_extension(BlockDriverState *bs,
  
- iotests.script_initialize(supported_fmts=['parallels'])
+     assert(ext_off > 0);
  
- nbd_sock = file_path('nbd-sock', base_dir=iotests.sock_dir)
-+nbd_sock2 = file_path('nbd-sock2', base_dir=iotests.sock_dir)
- disk = iotests.file_path('disk')
- bitmap = 'e4f2eed0-37fe-4539-b50b-85d2e7fd235f'
-+MULTI_L1_UUID = '5f2e1c00-0000-4000-8000-0123456789ab'
- nbd_opts = f'driver=nbd,server.type=unix,server.path={nbd_sock}' \
-         f',x-dirty-bitmap=qemu:dirty-bitmap:{bitmap}'
++    s->ext_end = ext_off + s->cluster_size;
++
+     ext_cluster = qemu_try_blockalign(bs->file->bs, s->cluster_size);
+     if (!ext_cluster) {
+         error_setg(errp, "Failed to allocate the Format Extension cluster");
+@@ -347,3 +352,289 @@ out:
  
-@@ -51,3 +59,173 @@ with qemu_nbd_popen('--read-only', f'--socket={nbd_sock}',
-             log(f'{a}-{b-1}')
-         else:
-             log(a)
+     return ret;
+ }
 +
++static uint64_t parallels_bitmap_l1_size(uint32_t cluster_size, uint64_t bytes,
++                                         uint32_t granularity)
++{
++    uint64_t granules = DIV_ROUND_UP(bytes, granularity);
 +
-+# Hand crafted Format Extension clusters.
++    return DIV_ROUND_UP(granules, (uint64_t)cluster_size * 8);
++}
 +
-+EXT_MAGIC = 0xAB234CEF23DCEA87
-+BITMAP_MAGIC = 0x20385FAE252CB34A
++static uint64_t parallels_bitmap_feature_size(uint64_t l1_size)
++{
++    return l1_size * sizeof(uint64_t) + sizeof(ParallelsFeatureHeader) +
++           sizeof(ParallelsDirtyBitmapFeature);
++}
 +
-+CLUSTER = 512           # one sector per track
-+SECTORS = 8             # 4 KiB disk
-+EXT_SECTOR = 1          # the extension cluster follows the header
-+EH_SIZE = 24            # ParallelsFormatExtensionHeader
-+FH_SIZE = 24            # ParallelsFeatureHeader
-+BF_SIZE = 32            # ParallelsDirtyBitmapFeature
++static int GRAPH_RDLOCK parallels_save_bitmap(BlockDriverState *bs,
++                                              BdrvDirtyBitmap *bitmap,
++                                              uint8_t **buf, int *buf_size,
++                                              GArray *clusters, Error **errp)
++{
++    BDRVParallelsState *s = bs->opaque;
++    ParallelsFeatureHeader *fh;
++    ParallelsDirtyBitmapFeature *bh;
++    uint64_t *l1_table, l1_size, granularity, limit, idx;
++    int64_t bm_size, ser_size, offset, buf_used;
++    int64_t alloc_size = 1;
++    const char *name;
++    uint8_t *bm_buf;
++    QemuUUID uuid;
++    int ret = 0;
 +
-+crafted = file_path('crafted')
++    if (!bdrv_dirty_bitmap_get_persistence(bitmap) ||
++        bdrv_dirty_bitmap_inconsistent(bitmap)) {
++        return 0;
++    }
 +
++    name = bdrv_dirty_bitmap_name(bitmap);
++    ret = qemu_uuid_parse(name, &uuid);
++    if (ret < 0) {
++        error_setg(errp, "Can't save dirty bitmap: ID parsing error: '%s'",
++                   name);
++        return ret;
++    }
 +
-+def feature(magic, data_size, flags=0):
-+    return struct.pack('<QQII', magic, flags, data_size, 0)
++    bm_size = bdrv_dirty_bitmap_size(bitmap);
++    granularity = bdrv_dirty_bitmap_granularity(bitmap);
++    limit = bdrv_dirty_bitmap_serialization_coverage(s->cluster_size, bitmap);
++    ser_size = bdrv_dirty_bitmap_serialization_size(bitmap, 0, bm_size);
++    l1_size = DIV_ROUND_UP(ser_size, s->cluster_size);
 +
++    /* The end of features marker has to fit behind the feature as well */
++    buf_used = parallels_bitmap_feature_size(l1_size);
++    if (buf_used + (int64_t)sizeof(*fh) > *buf_size) {
++        error_setg(errp, "Can't save dirty bitmap %s: it needs %" PRId64
++                   " bytes of the Format Extension cluster, %d bytes are left",
++                   name, buf_used, *buf_size);
++        return -ENOSPC;
++    }
 +
-+def bitmap_feature(l1, granularity=1, nb_sectors=SECTORS, bid=None):
-+    """ParallelsDirtyBitmapFeature followed by its L1 table"""
-+    bid = uuid.UUID(bid).bytes if bid else uuid.uuid4().bytes
-+    return (struct.pack('<Q16sII', nb_sectors, bid, granularity, len(l1))
-+            + b''.join(struct.pack('<Q', entry) for entry in l1))
++    fh = (ParallelsFeatureHeader *)*buf;
++    bh = (ParallelsDirtyBitmapFeature *)(*buf + sizeof(*fh));
++    l1_table = (uint64_t *)((uint8_t *)bh + sizeof(*bh));
 +
++    fh->magic = cpu_to_le64(PARALLELS_DIRTY_BITMAP_FEATURE_MAGIC);
++    fh->data_size = cpu_to_le32(l1_size * 8 + sizeof(*bh));
 +
-+def extension(body, magic=EXT_MAGIC, checksum=True):
-+    body = body.ljust(CLUSTER - EH_SIZE, b'\0')
-+    csum = hashlib.md5(body).digest() if checksum else bytes(16)
-+    return struct.pack('<Q16s', magic, csum) + body
++    bh->l1_size = cpu_to_le32(l1_size);
++    bh->size = cpu_to_le64(bm_size >> BDRV_SECTOR_BITS);
++    bh->granularity = cpu_to_le32(granularity >> BDRV_SECTOR_BITS);
++    memcpy(bh->id, &uuid, sizeof(uuid));
 +
++    bm_buf = qemu_try_blockalign(bs->file->bs, s->cluster_size);
++    if (!bm_buf) {
++        error_setg(errp, "Can't save dirty bitmap %s: allocation error", name);
++        ret = -ENOMEM;
++        goto fail;
++    }
 +
-+def parallels_header(tracks, bat_entries, nb_sectors, ext_sector):
-+    return struct.pack('<16sIIIIIQIIIQ', b'WithouFreSpacExt', 2, 16, 0,
-+                       tracks, bat_entries, nb_sectors, 0, 1, 0, ext_sector)
++    offset = 0;
++    while ((offset = bdrv_dirty_bitmap_next_dirty(bitmap, offset,
++                                                  bm_size)) >= 0) {
++        int64_t cluster_off, end, write_size;
 +
++        idx = offset / limit;
 +
-+def write_sparse_image(body, tracks, nb_sectors, bat_entries, ext_sector):
-+    """Image whose extension cluster is the given body, zero padded."""
-+    cluster_size = tracks * 512
-+    md5 = hashlib.md5()
-+    md5.update(body)
-+    md5.update(bytes(cluster_size - EH_SIZE - len(body)))
++        offset = QEMU_ALIGN_DOWN(offset, limit);
++        end = MIN(bm_size, offset + limit);
++        write_size = bdrv_dirty_bitmap_serialization_size(bitmap, offset,
++                                                          end - offset);
++        assert(write_size <= s->cluster_size);
 +
-+    with open(crafted, 'wb') as f:
-+        f.write(parallels_header(tracks, bat_entries, nb_sectors, ext_sector))
-+        f.write(bytes(ext_sector * 512 - 64))            # BAT, unallocated
-+        f.write(struct.pack('<Q16s', EXT_MAGIC, md5.digest()) + body)
-+        f.truncate(ext_sector * 512 + cluster_size)      # sparse zero tail
++        bdrv_dirty_bitmap_serialize_part(bitmap, bm_buf, offset, end - offset);
++        if (write_size < s->cluster_size) {
++            memset(bm_buf + write_size, 0, s->cluster_size - write_size);
++        }
 +
++        cluster_off = parallels_allocate_host_clusters(bs, &alloc_size);
++        if (cluster_off <= 0) {
++            ret = cluster_off < 0 ? cluster_off : -ENOSPC;
++            error_setg_errno(errp, -ret, "Can't save dirty bitmap %s: cluster "
++                             "allocation error", name);
++            goto fail;
++        }
 +
-+def report(name):
-+    log(f'--- {name}')
-+    try:
-+        res = qemu_img('info', '-f', iotests.imgfmt, crafted, check=False)
-+    except VerboseProcessError as exc:
-+        # check=False does not cover termination by a signal
-+        log(f'qemu-img died with signal {-exc.returncode}')
-+        return
++        ret = bdrv_pwrite(bs->file, cluster_off, s->cluster_size, bm_buf, 0);
++        if (ret < 0) {
++            parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
++                                  cluster_off, 1);
++            error_setg_errno(errp, -ret, "Can't save dirty bitmap %s: IO error",
++                             name);
++            goto fail;
++        }
 +
-+    log('image opened' if res.returncode == 0
-+        else iotests.filter_testfiles(res.stdout).strip())
++        l1_table[idx] = cpu_to_le64(cluster_off >> BDRV_SECTOR_BITS);
++        s->ext_end = MAX(s->ext_end, cluster_off + s->cluster_size);
++        g_array_append_val(clusters, cluster_off);
++        offset = end;
++    }
 +
++    *buf_size -= buf_used;
++    *buf += buf_used;
++    qemu_vfree(bm_buf);
++    return 0;
 +
-+def check(name, ext, tracks=1):
-+    header = parallels_header(tracks, SECTORS, SECTORS, EXT_SECTOR)
-+    with open(crafted, 'wb') as f:
-+        f.write(header)
-+        f.write(bytes(EXT_SECTOR * 512 - len(header)))   # BAT, unallocated
-+        f.write(ext)
++fail:
++    /* Hand the clusters of the half written bitmap back to the allocator */
++    for (idx = 0; idx < l1_size; idx++) {
++        uint64_t entry = le64_to_cpu(l1_table[idx]);
 +
-+    report(name)
++        if (entry > 1) {
++            parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
++                                  entry << BDRV_SECTOR_BITS, 1);
++        }
++    }
 +
++    /* Leave nothing behind a reader could take for a complete feature */
++    memset(fh, 0, buf_used);
++    qemu_vfree(bm_buf);
++    return ret;
++}
 +
-+log('')
++void GRAPH_RDLOCK
++parallels_store_persistent_dirty_bitmaps(BlockDriverState *bs, Error **errp)
++{
++    BDRVParallelsState *s = bs->opaque;
++    BdrvDirtyBitmap *bitmap;
++    ParallelsFormatExtensionHeader *eh;
++    int remaining = s->cluster_size - sizeof(*eh);
++    uint8_t *buf, *pos;
++    int64_t header_off, alloc_size = 1;
++    g_autoptr(GArray) clusters = g_array_new(false, false, sizeof(int64_t));
++    g_autofree uint8_t *hash = NULL;
++    Error *bitmap_err = NULL;
++    size_t hash_len = 0;
++    int ret;
++    guint i;
 +
-+# Control case, must keep working.
-+good = bitmap_feature([0])
-+check('well-formed extension',
-+      extension(feature(BITMAP_MAGIC, len(good)) + good + feature(0, 0)))
++    s->header->ext_off = 0;
++    s->ext_end = 0;
 +
-+check('wrong extension magic',
-+      extension(feature(0, 0), magic=EXT_MAGIC ^ 1))
++    if (!bdrv_has_named_bitmaps(bs)) {
++        return;
++    }
 +
-+check('wrong extension checksum',
-+      extension(feature(0, 0), checksum=False))
++    buf = qemu_try_blockalign0(bs->file->bs, s->cluster_size);
++    if (!buf) {
++        error_setg(errp, "Can't save dirty bitmaps: allocation error");
++        return;
++    }
 +
-+check('unknown feature', extension(feature(BITMAP_MAGIC ^ 1, 0)))
++    eh = (ParallelsFormatExtensionHeader *)buf;
++    pos = buf + sizeof(*eh);
 +
-+check('feature flags set', extension(feature(0, 0, flags=1)))
++    eh->magic = cpu_to_le64(PARALLELS_FORMAT_EXTENSION_MAGIC);
 +
-+check('feature data_size beyond the cluster',
-+      extension(feature(BITMAP_MAGIC, CLUSTER)))
++    FOR_EACH_DIRTY_BITMAP(bs, bitmap) {
++        Error *local_err = NULL;
 +
-+payload = CLUSTER - EH_SIZE - FH_SIZE
-+check('feature payload consumes the cluster',
-+      extension(feature(BITMAP_MAGIC, payload)
-+                + good.ljust(payload, b'\0')))
++        /*
++         * The extension is written as a whole, so a bitmap which does not
++         * make it must not take with it the ones which did.
++         */
++        if (parallels_save_bitmap(bs, bitmap, &pos, &remaining, clusters,
++                                  &local_err) < 0) {
++            error_propagate(&bitmap_err, local_err);
++        }
++    }
 +
-+# bf.size must match the disk size or the compiler elides the OOB loads.
-+data1 = CLUSTER - 40 - EH_SIZE - FH_SIZE
-+check('second feature payload beyond the cluster',
-+      extension(feature(BITMAP_MAGIC, data1) + good.ljust(data1, b'\0')
-+                + feature(BITMAP_MAGIC, BF_SIZE + 8)
-+                + struct.pack('<Q', SECTORS)))
++    if (pos == buf + sizeof(*eh)) {
++        /* Not a single bitmap made it, so there is nothing to point at */
++        goto end;
++    }
 +
-+# Zero, not a power of two, and wrapping when shifted: all three assert.
-+for gran in (0, 3, 1 << 23):
-+    bf = bitmap_feature([0], granularity=gran)
-+    check(f'bitmap granularity {gran}',
-+          extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)))
++    header_off = parallels_allocate_host_clusters(bs, &alloc_size);
++    if (header_off <= 0) {
++        ret = header_off < 0 ? header_off : -ENOSPC;
++        error_setg_errno(errp, -ret,
++                         "Can't save dirty bitmaps: cluster allocation error");
++        goto end;
++    }
++    g_array_append_val(clusters, header_off);
 +
-+# entry << BDRV_SECTOR_BITS must not wrap into a negative offset.
-+bf = bitmap_feature([0xffffffffffffffff])
-+check('bitmap L1 entry overflows',
-+      extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)))
++    ret = qcrypto_hash_bytes(QCRYPTO_HASH_ALGO_MD5,
++                             (const char *)(buf + sizeof(*eh)),
++                             s->cluster_size - sizeof(*eh),
++                             &hash, &hash_len, NULL);
++    if (ret < 0 || hash_len != sizeof(eh->check_sum)) {
++        error_setg(errp, "Can't save dirty bitmaps: hash error");
++        goto end;
++    }
++    memcpy(eh->check_sum, hash, hash_len);
 +
-+# Largest cluster_size parallels_open() accepts, about 2 GiB.
-+check('cluster_size beyond the file size',
-+      extension(feature(0, 0)), tracks=0x7fffffff // 513)
++    ret = bdrv_pwrite(bs->file, header_off, s->cluster_size, buf, 0);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret, "Can't save dirty bitmaps: IO error");
++        goto end;
++    }
 +
++    s->header->ext_off = cpu_to_le64(header_off / BDRV_SECTOR_SIZE);
++    s->ext_end = MAX(s->ext_end, header_off + s->cluster_size);
++end:
++    for (i = 0; i < clusters->len; i++) {
++        parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
++                              g_array_index(clusters, int64_t, i), 1);
++    }
 +
-+def check_big_cluster():
-+    """Reaches the serialization coverage overflow, costs about 550 MiB."""
-+    tracks = 1 << 19                    # cluster_size = 2^28
-+    nb_sectors = 1 << 32                # 2 TiB, needs two L1 entries
-+    ext_sector = 256                    # past the BAT
-+    l1 = [0, 1]                         # entry 1 deserializes as all ones
++    /* A bitmap which was dropped only matters if the rest went through */
++    error_propagate(errp, bitmap_err);
++    qemu_vfree(buf);
++}
 +
-+    bmap = bitmap_feature(l1, nb_sectors=nb_sectors)
-+    body = feature(BITMAP_MAGIC, len(bmap)) + bmap + feature(0, 0)
++bool coroutine_fn parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs,
++                                                          const char *name,
++                                                          uint32_t granularity,
++                                                          Error **errp)
++{
++    BDRVParallelsState *s = bs->opaque;
++    BdrvDirtyBitmap *bitmap;
++    uint64_t needed, available;
++    QemuUUID uuid;
 +
-+    write_sparse_image(body, tracks, nb_sectors, nb_sectors // tracks,
-+                       ext_sector)
-+    report('bitmap serialization coverage overflow')
++    if (bdrv_find_dirty_bitmap(bs, name)) {
++        error_setg(errp, "Bitmap already exists: %s", name);
++        return false;
++    }
 +
++    if (qemu_uuid_parse(name, &uuid) < 0) {
++        error_setg(errp, "Bitmap name must be a UUID to be stored in a "
++                   "parallels image: %s", name);
++        return false;
++    }
 +
-+check_big_cluster()
++    /*
++     * One L1 entry covers a cluster worth of serialized bits, and every
++     * bitmap of the image shares the Format Extension cluster with the
++     * feature headers and the end of features marker.
++     */
++    needed = parallels_bitmap_feature_size(
++        parallels_bitmap_l1_size(s->cluster_size,
++                                 bs->total_sectors << BDRV_SECTOR_BITS,
++                                 granularity));
 +
++    FOR_EACH_DIRTY_BITMAP(bs, bitmap) {
++        if (!bdrv_dirty_bitmap_get_persistence(bitmap)) {
++            continue;
++        }
 +
-+def check_multi_l1():
-+    """Bitmap spanning two L1 entries with an ordinary 64 KiB cluster."""
-+    tracks = 128                        # cluster_size = 64 KiB
-+    nb_sectors = 1 << 27                # 64 GiB, needs two L1 entries
-+    gran_sectors = 128                  # 64 KiB, as in the sample image
-+    bat_entries = nb_sectors // tracks
-+    ext_sector = (64 + 4 * bat_entries) // 512 + 8   # past the BAT
-+    l1 = [0, 1]                         # first half clean, second all ones
++        needed += parallels_bitmap_feature_size(
++            parallels_bitmap_l1_size(s->cluster_size,
++                                     bdrv_dirty_bitmap_size(bitmap),
++                                     bdrv_dirty_bitmap_granularity(bitmap)));
++    }
 +
-+    bmap = bitmap_feature(l1, gran_sectors, nb_sectors, MULTI_L1_UUID)
-+    body = feature(BITMAP_MAGIC, len(bmap)) + bmap + feature(0, 0)
++    needed += sizeof(ParallelsFeatureHeader);
 +
-+    write_sparse_image(body, tracks, nb_sectors, bat_entries, ext_sector)
++    available = s->cluster_size - sizeof(ParallelsFormatExtensionHeader);
++    if (needed > available) {
++        error_setg(errp, "Bitmap %s with granularity %" PRIu32 " does not fit "
++                   "into the Format Extension cluster: every bitmap of the "
++                   "image would need %" PRIu64 " bytes of it, %" PRIu64 " are "
++                   "available", name, granularity, needed, available);
++        return false;
++    }
 +
-+    log('--- bitmap spanning two L1 entries')
-+    opts = f'driver=nbd,server.type=unix,server.path={nbd_sock2}' \
-+           f',x-dirty-bitmap=qemu:dirty-bitmap:{MULTI_L1_UUID}'
-+    with qemu_nbd_popen('--read-only', f'--socket={nbd_sock2}',
-+                        f'--bitmap={MULTI_L1_UUID}', '-f', iotests.imgfmt,
-+                        crafted):
-+        for chunk in qemu_img_map('--image-opts', opts):
-+            if not chunk['data']:
-+                first = chunk['start'] >> 30
-+                last = (chunk['start'] + chunk['length']) >> 30
-+                log(f'dirty {first}-{last} GiB')
++    return true;
++}
+diff --git a/block/parallels.c b/block/parallels.c
+index ace79ad968..a9464d5352 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -802,6 +802,7 @@ parallels_check_unused_clusters(BlockDriverState *bs, bool truncate)
+     }
+ 
+     end_off += s->data_start * BDRV_SECTOR_SIZE;
++    end_off = MAX(end_off, s->ext_end);
+ 
+     /*
+      * A cluster in use behind the end of the file is corruption which
+@@ -1555,12 +1556,21 @@ fail:
+ static int GRAPH_RDLOCK parallels_inactivate(BlockDriverState *bs)
+ {
+     BDRVParallelsState *s = bs->opaque;
++    Error *err = NULL;
+     int64_t leak;
+ 
+     if (!(bs->open_flags & BDRV_O_RDWR) || (bs->open_flags & BDRV_O_INACTIVE)) {
+         return 0;
+     }
+ 
++    parallels_store_persistent_dirty_bitmaps(bs, &err);
++    if (err != NULL) {
++        error_reportf_err(err, "Lost persistent bitmaps during "
++                          "inactivation of node '%s': ",
++                          bdrv_get_device_or_node_name(bs));
++        return -EINVAL;
++    }
 +
-+
-+check_multi_l1()
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-read-bitmap.out
-index e8f6bc9e96..3b3f90c8de 100644
---- a/tests/qemu-iotests/tests/parallels-read-bitmap.out
-+++ b/tests/qemu-iotests/tests/parallels-read-bitmap.out
-@@ -4,3 +4,36 @@ dirty clusters (cluster size is 64K):
- 10-12
- 30
- Kill NBD server
-+
-+--- well-formed extension
-+image opened
-+--- wrong extension magic
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong parallels Format Extension magic: 0xab234cef23dcea86, expected: 0xab234cef23dcea87
-+--- wrong extension checksum
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong checksum in Format Extension header. Format extension is corrupted.
-+--- unknown feature
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Unknown feature: 0x20385fae252cb34b
-+--- feature flags set
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Flags for extension feature are unsupported
-+--- feature data_size beyond the cluster
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Feature data_size exceedes Format Extension cluster
-+--- feature payload consumes the cluster
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Can not read feature header, as remaining bytes (0) in Format Extension is less than Feature header size (24)
-+--- second feature payload beyond the cluster
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Feature data_size exceedes Format Extension cluster
-+--- bitmap granularity 0
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 0, expected a power of two of at least 512 bytes
-+--- bitmap granularity 3
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 1536, expected a power of two of at least 512 bytes
-+--- bitmap granularity 8388608
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 4294967296, expected a power of two of at least 512 bytes
-+--- bitmap L1 entry overflows
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Failed to read bitmap data cluster: Input/output error
-+--- cluster_size beyond the file size
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid image: Format Extension is outside the image file
-+--- bitmap serialization coverage overflow
-+image opened
-+--- bitmap spanning two L1 entries
-+Start NBD server
-+dirty 32-64 GiB
-+Kill NBD server
+     leak = parallels_check_unused_clusters(bs, true);
+     if (leak < 0) {
+         error_report("Failed to truncate image: %s", strerror(-leak));
+@@ -1634,6 +1644,8 @@ static BlockDriver bdrv_parallels = {
+     .bdrv_co_pwrite_zeroes      = parallels_co_pwrite_zeroes,
+     .bdrv_co_invalidate_cache   = parallels_co_invalidate_cache,
+     .bdrv_inactivate            = parallels_inactivate,
++    .bdrv_co_can_store_new_dirty_bitmap =
++                                  parallels_co_can_store_new_dirty_bitmap,
+ };
+ 
+ static void bdrv_parallels_init(void)
+diff --git a/block/parallels.h b/block/parallels.h
+index eb90aeea81..4684ba2890 100644
+--- a/block/parallels.h
++++ b/block/parallels.h
+@@ -79,6 +79,8 @@ typedef struct BDRVParallelsState {
+     unsigned int bat_size;
+ 
+     int64_t  data_start;
++    /* Exclusive end of the Format Extension, which is absent from used_bmap */
++    int64_t  ext_end;
+     uint64_t prealloc_size;
+     ParallelsPreallocMode prealloc_mode;
+ 
+@@ -100,5 +102,10 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
+ int GRAPH_RDLOCK
+ parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
+                                 Error **errp);
++void GRAPH_RDLOCK
++parallels_store_persistent_dirty_bitmaps(BlockDriverState *bs, Error **errp);
++bool coroutine_fn GRAPH_RDLOCK
++parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs, const char *name,
++                                        uint32_t granularity, Error **errp);
+ 
+ #endif
 -- 
 2.53.0
 
