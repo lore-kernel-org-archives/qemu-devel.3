@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6AD2C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AC9C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:33:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4kUm-0003aD-I2; Thu, 10 Sep 2026 15:31:54 -0400
+	id 1x4kWG-000488-33; Thu, 10 Sep 2026 15:33:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQl-0002Le-7P
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:32 -0400
-Received: from mout.gmx.net ([212.227.15.18])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQs-0002MC-2v
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:40 -0400
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQQ-0004d4-Lu
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:20 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQV-0004d3-PG
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1789068348; x=1789673148; i=deller@gmx.de;
- bh=ptcJhfomH/bRpx9QW4fglW83w+d1nMh9Cml7QzkflFY=;
+ s=s31663417; t=1789068352; x=1789673152; i=deller@gmx.de;
+ bh=K/zEFSxTT6/UgrMjGsDD6x6RufJlD9LGlrVxVYgOtUI=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
  References:MIME-Version:Content-Transfer-Encoding:cc:
  content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=Fl5OHRs4Gmv2cVEBqsEPJLjqvdrtaLzTq6qh2H0Jnf5CL8kObyawEvJDouzlOJ/Z
- JyosDzaWc8h9uMKUeEi+O7luuaYpP64CeySjaphpsx+lTDUdSL4k6JQHWK5gOxZhj
- JSCzxZ1GQOfKvxuade0PEn+ohdmQ/64Mu6rvfhSv0/0fxgAe6fomSHrWZVkUM9CNT
- hK/TTJdIsl04El8WPttzTWrX/Npw5frZEdUJ728V7Jy9/i9xbeeTUdeR+01YZu6Xh
- 4XlF5Y4ta5fNleECUJ7hUBXIncKrKIv36vPwpSfOOSkZPIzH2RT3wJpAnnofmcdH6
- Atlx/bd9qqz7AJlRtA==
+ b=gc7JxO6OWOE9sAnYzbtatbUhdCdvIkCSd1MpdXUBCeqH+mUUjsAF0F+pwQrXH8Jc
+ 0Frk9dzrIm9UGx0/KKpXqUnWtg21AH+k1ywARdlVL5ImAyLq3xrECcSqmDA3oY0XB
+ C5/hO/YuV/Bt+aZnsIgrtsBCV5hkVSZVLGdpGctXkT+E57/cmhc93kf7NG3Z4T9Lg
+ QpQRjuhQqTw6/6eTavv7jdOy/IpKtq3hAZdHnv/A/e9TKI7WgSAqrfPagdhneNGNp
+ rhNVF6reH3jBuIS2B7qfcot5n87zPbrao9yQt2m5tERSl8ur5LLKNomossLAalOhF
+ vEnJ9Y/aY/UpxfqrSA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1wdPOa2jrY-00euxM; Thu, 10
- Sep 2026 21:25:48 +0200
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnJlW-1wO1Bj2DlU-00lYoC; Thu, 10
+ Sep 2026 21:25:51 +0200
 From: Helge Deller <deller@gmx.de>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Zhao Liu <zhao1.liu@intel.com>,
@@ -44,117 +44,117 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Zhao Liu <zhao1.liu@intel.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 2/7] linux-user/hexagon: Add HWCAP support
-Date: Thu, 10 Sep 2026 21:25:39 +0200
-Message-ID: <20260910192545.768850-3-deller@gmx.de>
+Subject: [PULL 5/7] target/i386: split the FNINIT out of do_fsave()
+Date: Thu, 10 Sep 2026 21:25:42 +0200
+Message-ID: <20260910192545.768850-6-deller@gmx.de>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260910192545.768850-1-deller@gmx.de>
 References: <20260910192545.768850-1-deller@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:J6pOsmrqDrQYay1K9/+1zOb+Sua7gi8ZIgkkj4mM3zaYrKqLhlD
- E+aClL1HRregri9Z/PY3U6krMkbwZxfcUiiQ0WDr+D3uHhiFsikllSnahvdyIPcUCpXRkzW
- mj9GXKmusa1fpO89WbG9NYHbx9z4o8YBVZoGp4e0nVVj/YFl8PYjBSY3X7oOYykz9mUN0Ji
- G55BNbnC7wvCyUHuxohFw==
-UI-OutboundReport: notjunk:1;M01:P0:fWV9WWCMq4M=;vEmdGptIzfHVWWwEOd5uN88d0iJ
- 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
- TPi3Azn7kmmcJ7iECW6w7aAOaVAd2Y7Y5wQ==
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:iGxU4wesxqRU0tPfN4e8gRULYRQ/mawXO+zIkZcm+8YwRGij/dz
+ 6Ec/Wp9E2EDF+JZxTm2ObYC7PuXDJZv0VqT0dEHaV4cz1UdqIBS7mMm78vFrNtcLzy1G7WF
+ YB+iFmqnDvmUwppAKUPKYV2YiwUEfIzENCoguTJXSvjTIfrw00T7p1LiGkWwvNKMdioTb6K
+ dwsxR/C+rWa5XFEt//2RA==
+UI-OutboundReport: notjunk:1;M01:P0:zpnQ3YWbUn8=;uj+Dg+fBDsSG5sFmG/OYw4GyYvj
+ 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
+ E059AWkTp/uet
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,132 +170,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Link: https://lore.kernel.org/linux-hexagon/20260910003346.596593-1-brian.=
-cain@oss.qualcomm.com/
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+do_fsave() ends with an FNINIT, which is what the FSAVE instruction and
+the signal frame setup both want, but it makes the helper unusable for a
+caller that only wants to read the state out: recording the registers
+would destroy them.
+
+Move the FNINIT into helper_fsave() and cpu_x86_fsave(), and expose the
+store alone as cpu_x86_fsave_noinit(). No functional change; the next
+patch uses the new entry point to write the x87 registers to a guest
+core dump.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 =2D--
- linux-user/hexagon/elfload.c    | 61 +++++++++++++++++++++++++++++++++
- linux-user/hexagon/target_elf.h | 30 ++++++++++++++++
- 2 files changed, 91 insertions(+)
+ target/i386/cpu.h            |  2 ++
+ target/i386/tcg/fpu_helper.c | 13 +++++++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/hexagon/elfload.c b/linux-user/hexagon/elfload.c
-index 39b0201814..3d19a711f8 100644
-=2D-- a/linux-user/hexagon/elfload.c
-+++ b/linux-user/hexagon/elfload.c
-@@ -3,8 +3,69 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
-+#include "target/hexagon/cpu.h"
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e61ccc9e68..786957fadd 100644
+=2D-- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2727,6 +2727,8 @@ int cpu_x86_get_descr_debug(CPUX86State *env, unsign=
+ed int selector,
+  */
+ void cpu_x86_load_seg(CPUX86State *s, X86Seg seg_reg, int selector);
+ void cpu_x86_fsave(CPUX86State *s, void *host, size_t len);
++/* As cpu_x86_fsave(), but leaving the FPU state undisturbed. */
++void cpu_x86_fsave_noinit(CPUX86State *s, void *host, size_t len);
+ void cpu_x86_frstor(CPUX86State *s, void *host, size_t len);
+ void cpu_x86_fxsave(CPUX86State *s, void *host, size_t len);
+ void cpu_x86_fxrstor(CPUX86State *s, void *host, size_t len);
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index b812125efa..f7cf4220ff 100644
+=2D-- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -2536,6 +2536,10 @@ void helper_fldenv(CPUX86State *env, target_ulong p=
+tr, int data32)
+     do_fldenv(&ac, ptr, data32);
+ }
 =20
++/*
++ * Store the environment and the register stack, as FSAVE does, but
++ * without the FNINIT that FSAVE performs afterward.
++ */
+ static void do_fsave(X86Access *ac, target_ulong ptr, int data32)
+ {
+     CPUX86State *env =3D ac->env;
+@@ -2548,8 +2552,6 @@ static void do_fsave(X86Access *ac, target_ulong ptr=
+, int data32)
+         do_fstt(ac, ptr, tmp);
+         ptr +=3D 10;
+     }
+-
+-    do_fninit(env);
+ }
 =20
-+abi_ulong get_elf_hwcap(CPUState *cs)
+ void helper_fsave(CPUX86State *env, target_ulong ptr, int data32)
+@@ -2559,6 +2561,7 @@ void helper_fsave(CPUX86State *env, target_ulong ptr=
+, int data32)
+=20
+     access_prepare(&ac, env, ptr, size, MMU_DATA_STORE, GETPC());
+     do_fsave(&ac, ptr, data32);
++    do_fninit(env);
+ }
+=20
+ static void do_frstor(X86Access *ac, target_ulong ptr, int data32)
+@@ -3085,6 +3088,12 @@ void helper_xrstor(CPUX86State *env, target_ulong p=
+tr, uint64_t rfbm)
+=20
+ #if defined(CONFIG_USER_ONLY)
+ void cpu_x86_fsave(CPUX86State *env, void *host, size_t len)
 +{
-+    HexagonCPUClass *mcc =3D HEXAGON_CPU_GET_CLASS(cs);
-+    abi_ulong hwcaps;
-+    uint32_t hex_ver;
-+
-+    if (!mcc->hex_def) {
-+        return 0;
-+    }
-+
-+    hex_ver =3D mcc->hex_def->hex_version;
-+    switch (hex_ver) {
-+    case HEX_VER_V5:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V5;
-+        break;
-+    case HEX_VER_V55:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V55;
-+        break;
-+    case HEX_VER_V60:
-+    case HEX_VER_V61:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V60;
-+        break;
-+    case HEX_VER_V62:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V62;
-+        break;
-+    case HEX_VER_V65:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V65;
-+        break;
-+    case HEX_VER_V66:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V66;
-+        break;
-+    case HEX_VER_V67:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V67;
-+        break;
-+    case HEX_VER_V68:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V68;
-+        break;
-+    case HEX_VER_V69:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V69;
-+        break;
-+    case HEX_VER_V71:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V71;
-+        break;
-+    case HEX_VER_V73:
-+        hwcaps =3D HWCAP_HEXAGON_ISA_V73;
-+        break;
-+    default:
-+        return 0;
-+    }
-+
-+    hwcaps |=3D HWCAP_HEXAGON_HVX;
-+    hwcaps |=3D HWCAP_HEXAGON_HVX_LENGTH_128B;
-+    if (hex_ver >=3D HEX_VER_V68) {
-+        hwcaps |=3D HWCAP_HEXAGON_HVX_IEEE_FP;
-+    }
-+
-+    return hwcaps;
++    cpu_x86_fsave_noinit(env, host, len);
++    do_fninit(env);
 +}
 +
- const char *get_elf_cpu_model(uint32_t eflags)
++void cpu_x86_fsave_noinit(CPUX86State *env, void *host, size_t len)
  {
-     static char buf[32];
-diff --git a/linux-user/hexagon/target_elf.h b/linux-user/hexagon/target_e=
-lf.h
-index f81ae3895a..90e5032d5a 100644
-=2D-- a/linux-user/hexagon/target_elf.h
-+++ b/linux-user/hexagon/target_elf.h
-@@ -21,4 +21,34 @@
- #define ELF_CLASS               ELFCLASS32
- #define ELF_MACHINE             EM_HEXAGON
-=20
-+#define HAVE_ELF_HWCAP          1
-+
-+enum {
-+    HWCAP_HEXAGON_ISA_MASK          =3D 0x7F,
-+    HWCAP_HEXAGON_ISA_V2            =3D 1,
-+    HWCAP_HEXAGON_ISA_V3            =3D 2,
-+    HWCAP_HEXAGON_ISA_V4            =3D 3,
-+    HWCAP_HEXAGON_ISA_V5            =3D 4,
-+    HWCAP_HEXAGON_ISA_V55           =3D 5,
-+    HWCAP_HEXAGON_ISA_V60           =3D 6,
-+    HWCAP_HEXAGON_ISA_V62           =3D 7,
-+    HWCAP_HEXAGON_ISA_V65           =3D 8,
-+    HWCAP_HEXAGON_ISA_V66           =3D 9,
-+    HWCAP_HEXAGON_ISA_V67           =3D 10,
-+    HWCAP_HEXAGON_ISA_V68           =3D 11,
-+    HWCAP_HEXAGON_ISA_V69           =3D 12,
-+    HWCAP_HEXAGON_ISA_V71           =3D 13,
-+    HWCAP_HEXAGON_ISA_V73           =3D 14,
-+    HWCAP_HEXAGON_ISA_V75           =3D 15,
-+    HWCAP_HEXAGON_ISA_V77           =3D 16,
-+    HWCAP_HEXAGON_ISA_V79           =3D 17,
-+    HWCAP_HEXAGON_ISA_V81           =3D 18,
-+    HWCAP_HEXAGON_HVX               =3D 1 << 7,
-+    HWCAP_HEXAGON_CABAC             =3D 1 << 8,
-+    HWCAP_HEXAGON_HVX_LENGTH_128B   =3D 1 << 9,
-+    HWCAP_HEXAGON_HVX_IEEE_FP       =3D 1 << 10,
-+    HWCAP_HEXAGON_AUDIO             =3D 1 << 11,
-+    HWCAP_HEXAGON_HMX               =3D 1 << 12,
-+};
-+
- #endif
+     X86Access ac =3D {
+         .haddr1 =3D host,
 =2D-=20
 2.55.0
 
