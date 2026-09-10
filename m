@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5C5C88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162E0C88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4oko-0007Vs-13; Thu, 10 Sep 2026 20:04:47 -0400
+	id 1x4ooE-0008NL-IE; Thu, 10 Sep 2026 20:08:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lTV-0005rE-24
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lSK-0005VF-2l
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:33:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lTJ-0002Yr-Hf
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lS9-0002Z5-Hz
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:33:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1789072269;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8nca6ab6j9DpnVime3jEZyKCaQ7UUnAbl2LkixdkLlA=;
- b=HvB0saZyf4KvXb3zRJ6SsYZWWxcsex1Z0ffp5DZzq1GvyPel9Mysn8dgfVY6glrmDQLgcV
- kxI6gJJUrrDVYmMRYUgnd0k5D6+rutBzYi/tSXZ1zTrA5+cS7HIaR8zPUuh4bC8fKSh/Vt
- NKDjAQffC+T0fLilJLe2lh7lHfOBA9o=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zoVg9FbJe5Igrwha4XGcOTDxhYoC4yK3OmKWb/Idxgg=;
+ b=S/b3QfwzZTSSub4ENHinRNZ40ez10r+iuRXWw9SAFsmh2p+x9nVihqmwuQefMMpFfO7lwh
+ ZQ9816P8aoeyrfE4r+52aHuDEicuWQ2chcnkuyTffm/iSQynpr8Cw3IgXjPoOtKslEHXrB
+ UmlF7q9ZO/AnBYHoLNXhQJHgBk4F6cE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-110-f74Zrb17OJmiu_No0YgU7g-1; Thu, 10 Sep 2026 16:11:40 -0400
-X-MC-Unique: f74Zrb17OJmiu_No0YgU7g-1
-X-Mimecast-MFC-AGG-ID: f74Zrb17OJmiu_No0YgU7g_1789071099
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48437090e74so60116f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:11:40 -0700 (PDT)
+ us-mta-150-hb40dHQDNMGga25vpvvo1A-1; Thu, 10 Sep 2026 16:15:50 -0400
+X-MC-Unique: hb40dHQDNMGga25vpvvo1A-1
+X-Mimecast-MFC-AGG-ID: hb40dHQDNMGga25vpvvo1A_1789071350
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so1594955e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071099; x=1789675899; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071350; x=1789676150; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=8nca6ab6j9DpnVime3jEZyKCaQ7UUnAbl2LkixdkLlA=;
- b=Vo33G8S8xnE5731NGwWikEHf4PyN+wgwGc01xUiYr8Fga9eManNVY9h7rGsZ5HfPaG
- uqbx6rEO9odGbJK6EzPaJ5C45O3COnb2+XZl+51Vx6YZRAU1nXYf6OG5UIxIlqG+mY+o
- EvTaz+r058NHd8dTh0ZW5ZlKhQuP2UlokZv1OiNIhgZftR8GQ9iJVt/ii+lNpVPjDbVo
- rH8SOWd+B+HFx3+Jnnwc17s/P16tVyWuqUmDjMZDBnwwIeRN3gmkQUfNtdigSVIFciC2
- RAS+uFn5Mu1ELAFKaHmJDv9cIaFw0i42JzXL2kGgianrIW0E6cm1Zskbs+CaeUKJol0w
- FzxQ==
+ bh=zoVg9FbJe5Igrwha4XGcOTDxhYoC4yK3OmKWb/Idxgg=;
+ b=c/8Z1D8YPcd2HnO5gC8iki0ItQN9gaDbV3ughoSsRWufMYin4GU0JTjyBs7C/s4k4u
+ FY2VWTXH0iUXpcCi3D2GIxVVelUZTuZuGuv68TrvcfnBmpqgT0zbjhY1yZsEzUkOr/Tf
+ LT+Ig3y6ZbygTnBKxVrZ5iwaKCwwLugu5KBIddEXWzlLtIiLiXKWOVAu4yUFBgomOtjK
+ rtrKeuECbzeGpJEXuz6LjWs9AhiD+8umozZsBNqVxj7+/XdZf/zquIePx1uY4MLTGAom
+ 5oZKi0o0LY4yEK5enpGitadOJrtOdvoVTxhO32rHtpHL6DKibDV47aP7Tn1yWR2d2CjQ
+ atfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071099; x=1789675899;
+ d=1e100.net; s=20251104; t=1789071350; x=1789676150;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8nca6ab6j9DpnVime3jEZyKCaQ7UUnAbl2LkixdkLlA=;
- b=AalO5QJzrZ+D8wCs1WYTFT2N5LEnDGVZnDEdY8eMosFOE3I1E2uF/NgpLByanb+gOn
- sNR0Ca89Ao/JplW9Vpt3nGFSLqDXvGHB/PB08q1C3Opv9fht6YdoN01xU6VAh9l8u+Lb
- ChInIXa8aKO0jbkrGVOm4zBRlgpuxPdtdzW/mxv23+hRISckvJC8utzwhKveqjd9qigs
- NCAddV4mLR33CbUjEg6+DvZoGYvlfRKPUhZ6amyMqGwofI0+qi2Ku20oj9xOKP9oOeIj
- sFN0SP22zeANRIJH+HdTwH7P0MI6/Sy83wq7kRE8WZe3UIQu5PYm766xhXZ3KxPbprNb
- sSsQ==
-X-Gm-Message-State: AFuF++ljhmu7XBWWLhTS5RytDevbdkar1LnJMgeuJF2EtE3yfzFgntYZ
- /PBi9YjymyMdjSQCCKAe+Fp5rqhvyJ5VmLouyUh3I8rulE51wVVm1yUl9yRFCmsgSh/NJPT/+Kf
- tZR+GKEaU7g56bZjaJmD9fkk1C/in1sH5Z3o5KjQbOHDVZUkXMG4vqpYlbRaCgZF6Dgj13ohXQA
- qpLBM7SLof52thX99FLyb9mpWyUIfUL1Thgg==
-X-Gm-Gg: AYBFou2+Mqp1kynj5jJoXqVooNZQSZwTIMeE+4BiQodnfb61L0kLK45XoyAfF84MtYj
- +v0YP3OgKq9aU4AVApuOmjTGM7JG6raOWilA6nIzSekzIeFIIxrpCJWH/Ig469j4PZkW5EHS85F
- Gabh6kDvHY4oYrVn6ZzqlaIs4dk+RsFkB1E349+N5xWgq6YCaggVJzMM1nNa8OYCaB+DfQ+LU+Q
- LE4rIdovOwtIQbNfo4/b877tH1rmxf3IqkCSc7caNAwjN/dKxzJFSoHD5i1ZnzkXAlIAuMYZC4m
- w0VYqcrlF7nB+gcjU88LBhkrGSDz3623ZJjUPU5mzfp7gAqz4fKtimZfhq1TOas2Ik67RukeXb0
- bb5dmNf41B3udVJXVDnCib7Y=
-X-Received: by 2002:a5d:64cc:0:b0:485:7cb9:4ec4 with SMTP id
- ffacd0b85a97d-486eb2ec226mr897160f8f.5.1789071099053; 
- Thu, 10 Sep 2026 13:11:39 -0700 (PDT)
-X-Received: by 2002:a5d:64cc:0:b0:485:7cb9:4ec4 with SMTP id
- ffacd0b85a97d-486eb2ec226mr897098f8f.5.1789071098378; 
- Thu, 10 Sep 2026 13:11:38 -0700 (PDT)
+ bh=zoVg9FbJe5Igrwha4XGcOTDxhYoC4yK3OmKWb/Idxgg=;
+ b=SoDD3inl4deFNaSYL3KSkJNcIAgPHbRvZozp9ANcnrLfqxU+g1GvKUZt8nMIeltoOd
+ 83M0umz8GjnXvOAANRmhBkdVXhX7DsGKd2qdmRTP8h6EZFvsMxukXzq6RlPRB5dyNNPL
+ +4ZJLG04BFoRYi11igq0I53pYL6OWIvBf/E2jeyc+3FaImyLtEEySeCnrwC3boLw4sW4
+ McxnQa1flJJ/sS6xANpSONvpJMh6OwkIww8IzxIewfIw7ulFYRV9fquNQ2iRbiCutvLK
+ GIW09HI+HzO2Q7+Wo/YrXTk0V4G33YFIUnKYo1xZ1fYwHs27Iw9jWQW1zpz72/d+9vxi
+ yu9Q==
+X-Gm-Message-State: AFuF++nJyDY82TjdKKJ/jvE8Y9W/hLlrrf+UL6JuxZk8NtYIQjdMOJFb
+ YhEXUS5cW6CnitX+i8fV7goDwt1ZWCHcsRNfpyq24SXehIg+ZvQKsELsFJ1l16g6DR/aN/Bk+ZN
+ W1TCP4shM96YaKzA80qowxvKc+ny4gWu1LzqYbZb3ZgckhwkUZFc/rnL5kWCjxl887nvb+Zjy+V
+ IEbQweCh3F0uN0fBd5y96SPeHY4uC8wc5pDw==
+X-Gm-Gg: AYBFou02bn4tghxVUSTA3wSzRoAriveTweeP40nIKEd+Bhn66y54HymNjUoa2K1G76L
+ 2JOifDv1sLPM6xHupy/synvLnFchfLKQacZWWCBCwK8uEF+ss2vJwfoodqgYPtjs3lSXL2h4t9s
+ 7guVVVpnt3TZ2/ivZEWeSS4q0guzs7gYWY68CUYDG2e3tVpuOq2DQdGGoIIDwDyHx1OwcaNu1Iu
+ b3ZTrvc6dGWv01DkHmZ8Q+7WMJmeArGd1Q9MSzzTyysLF/ns8vAEPlg7yI1milwdfUpJnxNZOn1
+ Sf1XV769+iV6IclvNNCzNfCUJ01vhNGl8RZp6odifHSsFvxc9PVNdFO1ikxw5MkBRnNs1DkT8qG
+ XrznmtZhzQBdok7WzBuOKW24=
+X-Received: by 2002:a05:600c:8b41:b0:49d:15b9:2a2a with SMTP id
+ 5b1f17b1804b1-49e6198c0e6mr10037635e9.10.1789071349607; 
+ Thu, 10 Sep 2026 13:15:49 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b41:b0:49d:15b9:2a2a with SMTP id
+ 5b1f17b1804b1-49e6198c0e6mr10036995e9.10.1789071349179; 
+ Thu, 10 Sep 2026 13:15:49 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32d5f1sm904567f8f.12.2026.09.10.13.11.36
+ 5b1f17b1804b1-49e60946249sm21378645e9.0.2026.09.10.13.15.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:11:37 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:11:35 -0400
+ Thu, 10 Sep 2026 13:15:47 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:15:46 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Mark Kanda <mark.kanda@oracle.com>,
- Steve Sistare <steven.sistare@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 06/90] vhost: add vhost_reset_owner op
-Message-ID: <afe60e95f0a39c369e91efab884b66f48725cb54.1789071042.git.mst@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL 87/90] vhost-user-blk: make inflight-migration prop mutable on
+ running vm
+Message-ID: <82511c320b6b03c91d578a033a9c1cd59b6b85a8.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -100,15 +101,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789071042.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,62 +125,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-Add a VhostOps callback issuing VHOST_RESET_OWNER, wired up for the kernel
-backend.  The CPR (checkpoint-restore) path uses it to release device
-ownership on the source so the destination can reclaim it later with
-VHOST_SET_OWNER.
+The inflight-migration property currently can only be set before the
+device is realized. This makes it impossible to disable inflight
+migration at runtime without restarting the VM.
 
-Originally-by: Mark Kanda <mark.kanda@oracle.com>
-Originally-by: Steve Sistare <steven.sistare@oracle.com>
-Originally-by: Ben Chaney <bchaney@akamai.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Make the property mutable, but only while the VM is running. Blocking
+changes when the VM is not running ensures that the value at stop time
+reliably reflects the intent set on a live VM, which allows
+vhost_user_blk_stop() to use skip_drain unconditionally based on the
+property value without inspecting migration runstate.
+
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260820113955.509478-3-andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260803072853.2920007-5-dtalexundeer@yandex-team.ru>
 ---
- include/hw/virtio/vhost-backend.h | 1 +
- hw/virtio/vhost-kernel.c          | 6 ++++++
- 2 files changed, 7 insertions(+)
+ hw/block/vhost-user-blk.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index d878d7b733..6c949e6a38 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -204,6 +204,7 @@ typedef struct VhostOps {
-     vhost_get_features_op vhost_get_features;
-     vhost_set_backend_cap_op vhost_set_backend_cap;
-     vhost_set_owner_op vhost_set_owner;
-+    vhost_set_owner_op vhost_reset_owner;
-     vhost_reset_device_op vhost_reset_device;
-     vhost_get_vq_index_op vhost_get_vq_index;
-     vhost_set_vring_enable_op vhost_set_vring_enable;
-diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
-index 3390b48c6f..55d316b88e 100644
---- a/hw/virtio/vhost-kernel.c
-+++ b/hw/virtio/vhost-kernel.c
-@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
-     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
- }
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index c3e3c37f8c..501de30796 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -629,6 +629,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+     }
+ };
  
-+static int vhost_kernel_reset_owner(struct vhost_dev *dev)
++static PropertyInfo vhost_user_blk_inflight_migration_prop;
++
+ static const Property vhost_user_blk_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
+     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+@@ -644,8 +646,9 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
+     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+                      skip_get_vring_base_on_force_shutdown, false),
+-    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
+-                     inflight_migration, false),
++    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
++                vhost_user_blk_inflight_migration_prop, bool,
++                .set_default = true, .defval.u = false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+@@ -675,8 +678,29 @@ static const TypeInfo vhost_user_blk_info = {
+     .class_init = vhost_user_blk_class_init,
+ };
+ 
++static void vhost_user_blk_set_inflight_migration(Object *obj, Visitor *v,
++                                                  const char *name,
++                                                  void *opaque, Error **errp)
 +{
-+    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
++    DeviceState *dev = DEVICE(obj);
++
++    if (dev->realized && !runstate_is_running()) {
++        error_setg(errp, "Property '%s' cannot be changed "
++                         "while VM is not running", name);
++        return;
++    }
++
++    qdev_prop_bool.set(obj, v, name, opaque, errp);
 +}
 +
- static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
++
+ static void virtio_register_types(void)
  {
-     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
-         .vhost_get_features_ex = vhost_kernel_get_features,
-         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
-         .vhost_set_owner = vhost_kernel_set_owner,
-+        .vhost_reset_owner = vhost_kernel_reset_owner,
-         .vhost_get_vq_index = vhost_kernel_get_vq_index,
-         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
-         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
++    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
++    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
++    vhost_user_blk_inflight_migration_prop.set =
++        vhost_user_blk_set_inflight_migration;
++
+     type_register_static(&vhost_user_blk_info);
+ }
+ 
 -- 
 MST
 
