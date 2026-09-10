@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB244C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D52BC88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4lbL-0007RS-Eg; Thu, 10 Sep 2026 16:42:38 -0400
+	id 1x4lbL-0007RR-F4; Thu, 10 Sep 2026 16:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFl-0000go-SH
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lEl-0000Nh-G6
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFV-00080Z-Es
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lEU-0007Dv-VV
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071586;
+ s=mimecast20190719; t=1789071378;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sbPme7j4pWLTyo9RI68qo6cFhFds/zr08zUNXOqMtd4=;
- b=ffuSQsn1RNAfUZZ6Dbj6i2Xg/31Y0ultIyitT02upSdVmYclhvvecPVMhAo3eAvs2m/LrN
- ghjAi2hsPTPENlMTfXPdy/cqEdh93cdcFdl69r83b7/rQYs+uvzgx5qN5IE8lcbmDR4uKJ
- xV88j0pARTkhwBMNBzrvZDFeOGr0ctc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
+ b=gQlalLo5RoKDirYY8HWG1umvOutKoBgNHbOmlxHGJWR1xNHRJbisQ39kMYc2PEZ+ofI6KN
+ YVR/DHUlAPBcOvdjILrg70AKmiznDnT0JRTQM4SJUvVhg1dxwS+PBMIFmnSjqS8GqZaMGa
+ HwtxzjGlu9iBUAJJsdEigT3mN+WEQF8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-eKcmbK5TOgqMmV_CaZfQ5w-1; Thu, 10 Sep 2026 16:13:40 -0400
-X-MC-Unique: eKcmbK5TOgqMmV_CaZfQ5w-1
-X-Mimecast-MFC-AGG-ID: eKcmbK5TOgqMmV_CaZfQ5w_1789071219
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49d156c917cso8584045e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:40 -0700 (PDT)
+ us-mta-695-uSB1YJqHM7iiEfc8BB5xZw-1; Thu, 10 Sep 2026 16:15:14 -0400
+X-MC-Unique: uSB1YJqHM7iiEfc8BB5xZw-1
+X-Mimecast-MFC-AGG-ID: uSB1YJqHM7iiEfc8BB5xZw_1789071313
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4855e47d062so61590f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071219; x=1789676019; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071313; x=1789676113; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=sbPme7j4pWLTyo9RI68qo6cFhFds/zr08zUNXOqMtd4=;
- b=AcEZSoW6PJgwNfrIAqa6XWqb3l5kwkZ1ui4QYf8jt8mdwpq2xU5hEoPJbdWaPev7Y3
- WIVYtGwk1LLwRjyGvLQBTL97e7ekbW4h6mC9vAIcs4OkNBXs/Xy9kc0RZxpEpc60efwV
- euQ95Od6+vV3/BVgbDKKzmHBqfdE0aSxObT9m9jJ4p5xJWhoUWeooOMqSYQ2eQUJuZCB
- ZrN703zEgOVi310eQe6fndlbiokat57iecDNDeu9gp18NotxvaCgxn/OS1CsuNE6EtJR
- BYkdGFbzpDxvLhCZx9/MIY40JSKDbx6yb5jQ9n0EsW6/qnJtiB/3EcvVCY4yd3ahlKh9
- cLPg==
+ bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
+ b=ISW4dHJ6f8FkGgqunxev/T7CrcqA2fA8mlEnVED3fbJ/t3MFRODhR1oEb1KhSyfQz1
+ 7Y48Sz+IaBYpgReFOX5BbXl7iaHTeCT9R1XWLt3+Iw1YwkM8ZPdA9UpkJ+cARR5ZWixS
+ Cr1W8tEZb0lKvBhdFBFYM4YoiHGZ+dq4kbvuNySB0zJ0Z+8/BJw2kw+LpFW4sv/ohVY7
+ tHbQXtVOCMgzIMxraGqx59CMPlpXwylTLDpkCOBeqQ1HsW91CLnG6DrcqckerMc1wbYj
+ XSA55eJJkalrzPtJKRHOAgNeRTBvMbGyhb9oj9Uh9dY7CYUD/R0+9c5pE3ADT94uEPji
+ BTwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071219; x=1789676019;
+ d=1e100.net; s=20251104; t=1789071313; x=1789676113;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=sbPme7j4pWLTyo9RI68qo6cFhFds/zr08zUNXOqMtd4=;
- b=pcEeJdA1fP4EA8riDE/rKeW7cfchIq8v8JELJAkt6l7wEgnHGnmZDK9Z3ngEepM7ha
- Ys1qYE9fxvqSbB3i8hyYIjmJpMNv5OIPeNfXyvPOLoPH2kzjNgr5iz1yjHUsV+3A3UcB
- gyhpChPJ6Kb+JrO+VoSfRBipf2qXUBKRBPp5AKXdyXQxmHgDU+j9yhsDUBwEQdMdEmlx
- Kox9fGGFIH4pyd39FkfEPVRFH7OcPtpaJddb/BGiogFP8etNSxiL3knk/fypTR1IjOBp
- O4lik2XxA6+qBwnE67CqfTE3QPBU6wa70Mawrp9VdDwzwaB6Fb2JErjPbK/1IijiwFrH
- yBhQ==
-X-Gm-Message-State: AFuF++mC9EpLTHKLW6en9Q3JNng+sbj6rdvYc4gCsapQgqJghpr1vukW
- WbaECnGi+DK3H2sQHfLtr0bHdcQ3zGwSXYBXZgM1bqQKx+nBM01njSJnmYmitoHa7nA3RKAMz5u
- m7jOa6fgKGD1zLjLHUVi5t5iXGMcJ6EpbCjr+l28GILue8evjBUWwC7i0wpceShcuQHzCrWC3Hh
- HkOesV07YqzXssKff4FvEfFtSlELNUXmMVKw==
-X-Gm-Gg: AYBFou1IM1QJe80E4riqIiSyUv898jzYI23k4/Mnm2okkSgIHKUDlLNybWxUvHLMNgY
- lNVlNYQUlyuUemVpgu3yEA+VqhPGKBTbmCSz4X31d/SZU2CnI0Cl9hXHSa7f7cNmIhlClHD9m7B
- w65LJhdQq96Dt1EYvL2H6FlHLQqmfuCYtuv7XOa4kjQoyo8wmdscV55BPr3TL+j3xBLk788do23
- RyZK7fa1+MQ/ZkB9eF8BLBJUK5O/U3zoI3frR513FrjeZMHCDrlvuTE8RBqImwjDwkq9ghLP8AY
- kgg8rr2VDNoHz2mAWCOYDy2v259ASEn8dnIBn7wXsjmNRc/MhR8XYcEY8Qw9//RKUiw/KVYUFHO
- EmoUOjeCEJ1Di21rVYrqMToQ=
-X-Received: by 2002:a05:600d:8444:20b0:49d:27ee:79c9 with SMTP id
- 5b1f17b1804b1-49d27ee7af0mr55871665e9.8.1789071219219; 
- Thu, 10 Sep 2026 13:13:39 -0700 (PDT)
-X-Received: by 2002:a05:600d:8444:20b0:49d:27ee:79c9 with SMTP id
- 5b1f17b1804b1-49d27ee7af0mr55871305e9.8.1789071218624; 
- Thu, 10 Sep 2026 13:13:38 -0700 (PDT)
+ bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
+ b=NdTuUjNk6JQeZjIuRB1vJonyM1dxiFO4wEAQ3HlrkJ57v7PeyFfvQ4yrIl0YS/Yr2e
+ LztaqYeLF1WVxqCk7zQBpbPoAwsQwc5UnTSMoXByPNGJ+85MCqaIVfX3UofFuBD1vSOB
+ HQkqec7BJ0WhAASMy42QqHE1d+yAL4AwI5G1IuOvyvUNcnKXW68YgOOhOFy4Y3moyZdY
+ 94swut6wN/xqyY6ijYKARUpwfxxAuv9WUd6nupFGUS3iQuC3K2YbZWB9P0egEdrbUnHM
+ +68j+LE4KT5OU9LWdOKDSVc61I30IVV5Uxi/6Qmtoe9E4j7+6ToLk0vVg6RMLa6WBu9u
+ zHHg==
+X-Gm-Message-State: AFuF++lzfcjxlghLsSWIkg311+xB/xT21u02sDLq6J1u9zHxFRGY59O0
+ erg60KBfjP7daXIanrI5/98iXJ8tyBUXqjGog++H/rAyUhWLnrfujibjmVqxTgQgg3B6PD/J+I2
+ kviRo3dMVfDaFP0CAbmMbBXAVoCwHYCZYqFyXP3mpmwIpy/qOmuL5jxp2blhguKyitYqP6C70Nt
+ 7qF7qoKKHukeenE1tHVQeWl8uQ04UYJfWL/Q==
+X-Gm-Gg: AYBFou2R0d1JUqjZEZBZkMEPqh3yFSa+vYAvod8PaNiAlMk37T2uwkvW6zHMdERtUfh
+ fQ+lDWTk41yspFuAiJYVvFNT1sh8qEvCcc+T9tLCPRLClORJ+wh0nMPp3Z5BR2eeCvFav5dxsWI
+ 2kzpI5T0HYA6S1rFBBG4lFJfzy1YfbABAcSQzl7YiDlHyhJE475g1Prfp6X03GKO1OpnUIZiVlD
+ rjDcDUa4NF5tFKnYqZ/xPQZg6Tm0sYwSsk1cTYMk4NzH/pAPeEsM2rnjRT0eTrAUVihamIspP2s
+ ZMgfTQyam3f0rnz+JqfxiKtUIKoT1SrjmJpVST6wtMkZy6vmx6MsukxiA5v/4THtqBUnTioQP+m
+ Tc+73b0PQjfJqCoMSf5S90pw=
+X-Received: by 2002:a05:6000:608:b0:486:414:e3d5 with SMTP id
+ ffacd0b85a97d-486eb2d9912mr779047f8f.8.1789071312933; 
+ Thu, 10 Sep 2026 13:15:12 -0700 (PDT)
+X-Received: by 2002:a05:6000:608:b0:486:414:e3d5 with SMTP id
+ ffacd0b85a97d-486eb2d9912mr779006f8f.8.1789071312345; 
+ Thu, 10 Sep 2026 13:15:12 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb34f1f7sm765644f8f.24.2026.09.10.13.13.36
+ ffacd0b85a97d-486eb34e74esm793113f8f.25.2026.09.10.13.14.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:37 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:13:35 -0400
+ Thu, 10 Sep 2026 13:14:40 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org,
- Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 52/90] hw/net/virtio-net: strip trailing padding when caching
- RSC segment
-Message-ID: <e242d9e64d9788fbe4b570eb4f5e675c9f1d4fea.1789071043.git.mst@redhat.com>
+ "Denis V. Lunev" <den@openvz.org>, "Denis V. Lunev" <den@virtuozzo.com>
+Subject: [PULL 76/90] pci: load a device's config inside one memory transaction
+Message-ID: <fbd92ad9a0028937ac5081efa2662eb2030ffa10.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -123,72 +120,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-When an RSC candidate packet has trailing padding bytes beyond the
-declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
-size into the coalescing buffer and sets seg->size to that value.
-The bounds check in virtio_net_rsc_coalesce_data() uses the IP
-length field (o_ip_len) which does not include the padding, so the
-check can pass while the subsequent memmove() overflows the buffer.
+Restoring config space remaps the BARs, updates the bridge windows when
+the device is a bridge, and toggles the bus master region. Each of those
+commits a transaction of its own, so one device costs several flatview
+rebuilds where one would do, and the cost of a rebuild grows with the
+number of regions in the machine.
 
-Fix this by computing the actual IP packet size from the IP header
-and using it for both the memcpy and seg->size, so that seg->size
-stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
-guarantees that ip_size <= size.
+Nothing between them touches an address space, so the three can share a
+transaction. The saving scales with the number of PCI devices.
 
-Fixes: CVE-2026-66900
-Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
-Cc: qemu-stable@nongnu.org
-Cc: Yuri Benditovich <ybendito@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
-Reported-by: Sven <bestswngs@gmail.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+CC: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
+Message-ID: <20260903184542.2629976-3-den@openvz.org>
 ---
- hw/net/virtio-net.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ hw/pci/pci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index f3f375e1b2..23c26aa08c 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2200,13 +2200,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
- {
-     uint16_t hdr_len;
-     VirtioNetRscSeg *seg;
-+    size_t ip_size;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 14c78e3c62..0efb4eb4bb 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -840,6 +840,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
+     }
+     memcpy(s->config, config, size);
  
-     hdr_len = chain->n->guest_hdr_len;
++    memory_region_transaction_begin();
 +
-+    /*
-+     * Strip any trailing padding beyond the IP payload so that seg->size
-+     * stays in sync with the IP length field used by the bounds check in
-+     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
-+     * guarantees that ip_size <= size.
-+     */
-+    ip_size = hdr_len + sizeof(struct eth_header);
-+    if (chain->proto == ETH_P_IP) {
-+        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
-+        ip_size += htons(ip->ip_len);
-+    } else {
-+        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
-+        ip_size += sizeof(struct ip6_header)
-+                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
-+    }
+     pci_update_mappings(s);
+     if (IS_PCI_BRIDGE(s)) {
+         pci_bridge_update_mappings(PCI_BRIDGE(s));
+@@ -848,6 +850,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
+     pci_set_master(s, pci_get_word(s->config + PCI_COMMAND)
+                       & PCI_COMMAND_MASTER);
+ 
++    memory_region_transaction_commit();
 +
-     seg = g_new(VirtioNetRscSeg, 1);
-     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
-         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
--    memcpy(seg->buf, buf, size);
--    seg->size = size;
-+    memcpy(seg->buf, buf, ip_size);
-+    seg->size = ip_size;
-     seg->packets = 1;
-     seg->dup_ack = 0;
-     seg->is_coalesced = 0;
+     g_free(config);
+     return 0;
+ }
 -- 
 MST
 
