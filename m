@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83159C88E4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94CA2C88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4oay-0004tZ-9C; Thu, 10 Sep 2026 19:54:27 -0400
+	id 1x4oeQ-0005gO-TA; Thu, 10 Sep 2026 19:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lWl-0006ax-G5
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lX0-0006dY-RZ
  for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:38:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lWR-0004mn-RS
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lWh-0004Rp-Od
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072581;
+ s=mimecast20190719; t=1789072503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YYj6Zo8VlXl2zP5B4qr6Yw7Ml5uWH4dbodIZUAM6V0A=;
- b=Mg4ZDaYoRKfBeqdm21MpmmfPowQO2nXPK38qJryFDByCLxa8Gw97X4J2SOvKBM9KnYDJZ/
- dLQaqUl4zXUsSoXxsSq2CcQNbAc3NZw+IfYpzerG79MqW+whyTBH8slTSyv7Sls5ug/TQy
- 5GSBkmUiU+49Oft0r08JVmE0A+c+mwY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P/dt9G1EklZEpM1Y9s4cFZiMEKzuwD4r1pjdVZY4uXc=;
+ b=D7O9GGQGMWUmnABpNt1Thng0A71krWYM7y5Lxf/o4cxbIn/2iEq0fjGR41S8hudZvA7J51
+ 6XtDTPrtc3tLxD39i9Nz/eszziLN46qVaNLUxQGJAgiiItG5/V+HKQyZFEwiqqjpuEOTAW
+ mY7kO6eONbHH+DLubjVrhhGdlaOdaOk=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-9PpT0C_fMbGwFBa_aix4fg-1; Thu, 10 Sep 2026 16:13:10 -0400
-X-MC-Unique: 9PpT0C_fMbGwFBa_aix4fg-1
-X-Mimecast-MFC-AGG-ID: 9PpT0C_fMbGwFBa_aix4fg_1789071189
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47d81cf0c4cso68667f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:10 -0700 (PDT)
+ us-mta-572-UEXuqf0fNRKEs0cwut_nHA-1; Thu, 10 Sep 2026 16:11:30 -0400
+X-MC-Unique: UEXuqf0fNRKEs0cwut_nHA-1
+X-Mimecast-MFC-AGG-ID: UEXuqf0fNRKEs0cwut_nHA_1789071089
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-5b667b38b04so303881e87.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071189; x=1789675989; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071089; x=1789675889; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=YYj6Zo8VlXl2zP5B4qr6Yw7Ml5uWH4dbodIZUAM6V0A=;
- b=ZNkf8VBBzkMEiUQ9vW0pCmB8Ws3XcYx4LkcC8kBsDp+g0jFeXUWW995qZkYw5ggtT/
- OHJvHTu5aRIr5EYWHMW3hWPvzYBuHmPtB2iJyhaqWZB+29L3BuNAAQ0uYPvtTx9xFwLW
- lCn80i+xi80CFabvAQZlvHZs2h3rVzQsDJRvw00Q3laitFwGlZ6QqqLlTma0il9dNGgo
- 3K/kX8lfS9P0lLVo97xANJFYbdHCY3IA4VXTNtkC15FDejBemuaSfNukBt7KijKfztMn
- gqAeNxIKVCqItm1MgrdhtgkkKi2P4jks3w9u9WV9sNXV61HQSc1toRZrF6L9wFxXNgeS
- f0Cw==
+ bh=P/dt9G1EklZEpM1Y9s4cFZiMEKzuwD4r1pjdVZY4uXc=;
+ b=VfoR9VIoTcVahXoA/YVfZXHipLMgEZHwVfp2irdfKS0ff+wcsVnxPUAxAR5iHX7FOV
+ UKTYQQX5W1CdWnxhc0lAreAuVGtLsU2ASCOVpc+CFR9EPySmOH9TQidK/uv+vFCv+W/u
+ Jhc0OwOcEeCsuCftxP52inO5ZR6Atm8llz8cmxepYIPQSOZu1gFYvB6FKWglzGMdefwz
+ GSwQAHISFAhoHRX1YW2c3Ccfmks9jqX3h15dAkloVJku0iwxRA+6fyNmvsVWvC8oURRq
+ H8kDRhtNU8mKMtfddZYxCLaRdDh+GfY+hNA7JBSF+XDzQUqq0MXJS8QzE8fhP3sCD751
+ Z9gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071189; x=1789675989;
+ d=1e100.net; s=20251104; t=1789071089; x=1789675889;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=YYj6Zo8VlXl2zP5B4qr6Yw7Ml5uWH4dbodIZUAM6V0A=;
- b=diqODQi5OvghKXtnEjG4Uz9/xmekJc1RtIxYQaa8E7w3MfDuVejR95R1yQ5SP6Xk9a
- /Efy0GfsGTKykzAY0Puyb4VMH3mwPu5KfW6bIoNLCSZ8oUQiSWNyamVIZ/TCw8eo8HmU
- klnOBCMZL7yrCZvpUcche9QA3N/CWulTF2vc/vR+IQtge2kMnSn0GLJFTe3uzoZvG0XY
- NMnfvSD1dEsQ5VeUHqAfa/8vMp+Okkgg4PWMoOQPGNlF9ocRvPCqC0wOxUjL7l2QBp2F
- w4PRZAyTbpNxqM1VcAez0BxsMYKe+IstwyFR0bzlF11RzvDzaDqFOn9fq8LV2HJ5PEaQ
- Bpiw==
-X-Gm-Message-State: AFuF++mWS6WFZlQ4KYCsq+BRHqEj+ou0Qh61oXeN4AtEEwlM3iAsjLks
- qJog2xUe1WsKNDB4GqyqkjE+Di9hOIJ7n5YKQMdzTsddT5vi8cW+HsG9T2+urSQmGrfuIhsMQJA
- tgZMxRZLm+HWS2GgjDfCQmn4favJQfk5P+aYGFu1Mg934KulRH34GeS/swhajqDVi9OfbItR/q5
- 9r5bHGbzjol3jOhh/dHaOk0VS3DlOhtaV2Nw==
-X-Gm-Gg: AYBFou003GYzCEcMi9lR3jTd6F8+8zMqML1Jb/Jlm67yA+DSHbb/4eoy81xbvb7tRoc
- Dt7iguQE5kZx+Ts+aEneI7gRfKAc9qP4X71HK+nAjTDJV/pu4Eib10XQQtQxoWV0ESLsy7R4qBO
- ZT6Gw/PouS/gsg8KYGgfG2jaBBeTmRJuQonC5ZqTi0A6aA00EpH9PYtn3RRsJpDd0pRMQBfp8uw
- T3uEVXaXPVjDqkMtoff8ShSAoKzsfzZFn05NPEWb3yL2kLUZK5T7XO+unhQnIT+iwzQM2doYmU9
- hkxR88ppATQqzWrwtv6iE0ZHaQ022+Ql0ke2fgOJy0aeHbToYS7FDSA82wIXe07D5PgVl0Ygm8W
- PbWQHSu5153zIkTw2Z0S2leg=
-X-Received: by 2002:a5d:4483:0:b0:482:dac8:cd0d with SMTP id
- ffacd0b85a97d-486eb33ec05mr1074724f8f.21.1789071189221; 
- Thu, 10 Sep 2026 13:13:09 -0700 (PDT)
-X-Received: by 2002:a5d:4483:0:b0:482:dac8:cd0d with SMTP id
- ffacd0b85a97d-486eb33ec05mr1074669f8f.21.1789071188697; 
- Thu, 10 Sep 2026 13:13:08 -0700 (PDT)
+ bh=P/dt9G1EklZEpM1Y9s4cFZiMEKzuwD4r1pjdVZY4uXc=;
+ b=DQo6sSQSgNnZLVHMn3zR+yMsBCYAqvDR2/3/P4riL+GZ4FPs7DKZBO8gchuCu0VFRR
+ pf/wnZ79g+xt4qmDAwv10ZJlotlV5bpq96QJU0LRTyAEsr6w2BPCEUL/VcgCzYaMv4ZC
+ LwF9KGpbRFgrIaaHGo5srHmxLEDsKVCZpzEVe27a7Dkn3MwSfJ0LCwtyu8U8P35768Eh
+ HtzsLNbS1sIS6CM/UarGEq3A7cgD9cC+rUfYJWb6uYl7nuvfCv8H8v83x/i39ab/4iEz
+ 3Fgwp26iV7qWEs0NmJroNgtibCpy5XKKYRS31wcgj/C1R28Ja4kfKXKhz/67JZN5FXns
+ 2QGA==
+X-Gm-Message-State: AFuF++kgcOV5PnGh2elrLbXn0R0aIB/ixsj91DxOmTKflPeILHx5qqP2
+ E7hEkOJtX5SnSNmrV8p/NvVcElfN/SqSdx9+7EmIWdxYx+Ta/0Hf+WPOhsgGI3Dfx5TZ/3zlC7J
+ fwWa3zQ66T7kcmR3m9nsOrR4H3bIDYDRMwmaiz/ABnRS64JMrzC+qn84BjL13dUSesW0Xb46Fpz
+ v3jJ1OHqSjI7W8LshSOxHwm9CrsDBg2frLgQ==
+X-Gm-Gg: AYBFou13T6Ew7Q1ng/NnaNuZ+IBsPhELPZZP53VBlCbaGu8Mq7EEQzTk4hF0fnCtQdT
+ E/tV94e1xHqDrpAqIz+GtemZiB5+ZK9eHFUGvrecNLwRhkAg738/J65K8RTfd+HchZ80qBmtC1z
+ ASzFBb9YFTyaHNKfTbX2oyRBWOYoGMH4Q1Gw4BXhqLfiSesHBAn+NDlRhMiMYvNJqua9G/tpD/l
+ wzfg6Mt2HNpdECpzyJzss3GhOKQCszonK2SwAIId6DhHOLR1CvHE3c2Mam5JXDTKabbFdJ/6fJm
+ mOSVQNSYpcjKAb3p0AXV4mZbm7jdfByZ6iHR8RBVX9j1+FWUYxH5o6w5XgfriWTCgNW0MLQPPBj
+ o4tijR04OAwtNub2FJjxH+x4=
+X-Received: by 2002:a05:6512:1296:b0:5b6:183c:5ca2 with SMTP id
+ 2adb3069b0e04-5b8a032db71mr187416e87.64.1789071088633; 
+ Thu, 10 Sep 2026 13:11:28 -0700 (PDT)
+X-Received: by 2002:a05:6512:1296:b0:5b6:183c:5ca2 with SMTP id
+ 2adb3069b0e04-5b8a032db71mr187405e87.64.1789071088087; 
+ Thu, 10 Sep 2026 13:11:28 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb350686sm758979f8f.27.2026.09.10.13.13.07
+ 2adb3069b0e04-5b8a03a76a6sm115004e87.9.2026.09.10.13.11.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:08 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:13:06 -0400
+ Thu, 10 Sep 2026 13:11:27 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:11:25 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Davidlohr Bueso <dave@stgolabs.net>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 40/90] hw/cxl: Drop Back-Invalidate from default CFMW window
- restrictions
-Message-ID: <a29c67749651a166be31f21b5b7cf8b26f4b7e87.1789071043.git.mst@redhat.com>
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>
+Subject: [PULL 02/90] virtio: fix config_len DoS in migration restore path
+Message-ID: <2b35ded9c235145cfb31a8553b29e6faf65899fb.1789071042.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,15 +96,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789071042.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,36 +120,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+virtio_load() reads config_len from the migration stream into a local
+int32_t variable and then, if the incoming length exceeds the device's
+own config size, skips the surplus one byte at a time in a loop.  Two
+defects in this loop allow a malicious or truncated migration stream to
+cause a prolonged CPU spin on the destination QEMU.
 
-The default CXL Fixed Memory Window restrictions advertised host-only
-coherent together with Back-Invalidate.  A window advertising both
-simultaneously is undefined behavior per CXL r4.0 9.18.1.3.
+First, the local variable is int32_t while vdev->config_len is size_t.
+The C standard converts the signed operand to the unsigned type for the
+comparison, so any value with the high bit set becomes a very large
+size_t that exceeds the device config length.  The loop then counts the
+signed counter down through all negative values and back around,
+effectively running for up to 2^32 iterations.
 
-Drop Back-Invalidate from the default, leaving device-coherent +
-host-only + volatile + persistent.
+Second, once the file stream reaches EOF, qemu_get_byte() returns 0
+without advancing the read position.  Without a check for file errors,
+the loop spins until the counter reaches the device config length.  An
+attacker who sends a large config_len and then closes the stream can
+hold the destination QEMU busy for attacker-controlled time.
 
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Change the local config_len to uint32_t so that the comparison with
+size_t is unsigned and values with the high bit set are treated as
+large-but-finite skip counts.  In addition, check qemu_file_get_error()
+after each byte read and return failure immediately when the stream
+signals EOF or an I/O error.
+
+Fixes: 2f5732e964 ("Allow mismatched virtio config-len")
+Cc: Dr. David Alan Gilbert <dgilbert@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3891
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260720233242.901544-3-dave@stgolabs.net>
 ---
- hw/acpi/cxl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/virtio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
-index f92f7fa3d5..75edb2c0a6 100644
---- a/hw/acpi/cxl.c
-+++ b/hw/acpi/cxl.c
-@@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
-     build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 34f1df260b..848fe8539e 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3584,6 +3584,9 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+             return -1;
+         }
+         qemu_get_byte(f);
++        if (qemu_file_get_error(f)) {
++            return -1;
++        }
+         config_len--;
+     }
  
-     /* Window Restrictions */
--    build_append_int_noprefix(table_data, 0x2f, 2);
-+    build_append_int_noprefix(table_data, 0x0f, 2);
- 
-     /* QTG ID */
-     build_append_int_noprefix(table_data, 0, 2);
 -- 
 MST
 
