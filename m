@@ -4,96 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C58C88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121BEC79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4mKP-0001CH-ST; Thu, 10 Sep 2026 17:29:28 -0400
+	id 1x4mVo-0002pU-25; Thu, 10 Sep 2026 17:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lK2-0002QM-L1
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lKB-0002RI-M1
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lJp-0000TF-OH
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lJz-0008Ek-Vu
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071783;
+ s=mimecast20190719; t=1789071661;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RmU1ZVuK0eWJ8g7D4bDyVxoI5VfvIMF1jU9CZuz+FqI=;
- b=Hjq1RdKZ0eA+LrdCMDEEf6/DIqabDWRaiXSvrWEjG+hwxjSkh6IX8dNkC7ApRQrVfjv95m
- mN4vPiiXfo40xQrMIjxo2kQi0pTxbOsR4QHtjfGX2ItZefY3nTZzFgNeBh81iB6GGTkChn
- 4fm6iKUPcU54fMRw+/M/wxuj62Waiag=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qEQqbP05s+OSlyzjNTsgrx4dobovQAA0LQxrJHMbWCc=;
+ b=dCFFFjlPU7moV9julJ40XkIao+mIpHiTn+ENrAT7W2oCnmlRdUo1DiEVMPLIehkk0HwEy5
+ BbT2CTjWCOPQHfhYZYat7p4JI7hB5Qkrsd+NK5lRcv5WwTz+wIzcRedy0h+EDyTcCrIvzw
+ 2b5dCQAF0FDVf+aNSDEj1iWGmC5+L1k=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-pNwfoZnEPnS0VcfjxdLsMA-1; Thu, 10 Sep 2026 16:12:30 -0400
-X-MC-Unique: pNwfoZnEPnS0VcfjxdLsMA-1
-X-Mimecast-MFC-AGG-ID: pNwfoZnEPnS0VcfjxdLsMA_1789071149
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49cf5bd2f12so2190855e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:30 -0700 (PDT)
+ us-mta-685-x72-GnfyP5GPTHlJztLtGg-1; Thu, 10 Sep 2026 16:14:31 -0400
+X-MC-Unique: x72-GnfyP5GPTHlJztLtGg-1
+X-Mimecast-MFC-AGG-ID: x72-GnfyP5GPTHlJztLtGg_1789071270
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4994aebe932so2236565e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071149; x=1789675949; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=RmU1ZVuK0eWJ8g7D4bDyVxoI5VfvIMF1jU9CZuz+FqI=;
- b=S30Ft62Y8fsesBugWok85KY8OHvlNV2KPegyaV2S49Yxt70F9YejYLxBwqLHxgn0Zn
- abkrj0ISqzo1d+15dzSnFAmc9/lCia00t7uFmqj0490HArdIrYw02ik+xPu6XvqW2KH8
- fknAiN1Qmmrb9NEGeigl3X6ojweZekIOSBxWLBY5Bf5eMwoaWe/wo6PMyGCVAztCYJVU
- cFdRQRl0IALP4yE9kcfYsCBFd/g5tGjHn5d85ta48R9U/xJ//5yIpgum2IMTjcAcdzIh
- EWi7cDgMfIeC9A01juIuB//wral05tg2AocNgmHgrJ74vLgQcQjoPBvd1oaS8+J8YslB
- DTOw==
+ d=redhat.com; s=google; t=1789071270; x=1789676070; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qEQqbP05s+OSlyzjNTsgrx4dobovQAA0LQxrJHMbWCc=;
+ b=sC6xDDYkaJULit/SusMrX+goF1Z5rhUk5jYPsLIYl98kKKSY3fs6dcr/nZzaTnhVzr
+ 7SWAAlarNCFaq8Jd6R2/JEl4NirzS5qgEx0R1W6DJQ2Ev6strlL3f386etuKZvtIHRjP
+ SiFjnqhgx3F6gCHK1A9c4R+c8/m2HML19kRc9VNcWUiqLFBMmTq6l2mfnsrTefWOccC5
+ YWPuZmcEvr5iYTyGWAAOqLZsy6CApK/CCmvLGPwbky24jeGshYXfAYTFAoH3lKaHHcbq
+ Atkb68bwdWLGgHbklLGGU5aHuUk4wmEWsjH2lXX6+F7tBqT7KTIMLJ6mohfAqa4zqqUN
+ X13Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071149; x=1789675949;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=RmU1ZVuK0eWJ8g7D4bDyVxoI5VfvIMF1jU9CZuz+FqI=;
- b=JSBbTiIBElcTruTYBlfFJRadnePlYYYw+Z6XFWi3rLIRdgjMawBlVwbp+MPOQD1o1z
- rLi2Cc/a+x1TOAYEWnDQ069dRqRxGKInAr+9uZAfOy8mXPBW4YdFdhn5UUrHk6WOvYzB
- P7kohIj/HOu0yf4PJ1ijBxuJ7XNpqu6uNfQZMYiEkdUvjM/rCvJrjbbq/8vvNkh/j/qH
- wVeLdoU0VvN4IwW2smiGoXYAGYc5cgruEO6PIO6cPWpEGDpsSf5fBXtYc/vbrifSblcT
- 9L5QSILEsLMqkYeXe3cazLo/Q9HyYcMCWtgycuKP55w31WC3hnFEzdBDEdsncRJZ9MFT
- WvmA==
-X-Gm-Message-State: AFuF++lyxfHvAcIpsyi3ujmfX5X2wI0xC+J4hpc0RQ+TXLcR4/p9nbZQ
- GP8yqx4z3v1MXuNDs4Jqwpmrvd32U1ymI1azaT5cin+V0Tr82WcMtg+bQ4PnM4JComV1bHUcoYX
- MjtPO2ghRIyTSJP69wHBGnsXdfCSw5pyuaYgX9aRNI5j5o01VuPMWVRqMgZxRRQDm4Rbh89S2c1
- h9uiP2vo//wd8f0xAUgpxEws8NsA4zjKWWiQ==
-X-Gm-Gg: AYBFou3NsQCFwhaDxh2DLOE1l9f9kQmaGcYXzgH3y7dpszkUiyIdrg3o8peDUv3rAqS
- PV8+Yyg/ct5kTRhjp3ByP+NlfaP1T+9LXDdKOzRbMhqx/IOXV9N704HWJkV7GhePFn+UpNYifnD
- 8Q/BM62GsEkiel4VeUMIXRB+l6CCH6B/76TbeW+XYCWQkOv1MkRsjZeTZs36uyweNTD/lpxxAmg
- SRNyxME4vew6rdpsiYows66vliIrJrWAgpH8COk3FHJpzwTvJxy9lv4Mtg0zrSBd944kxNhqXVr
- QHVZXeqeDLJvbeoQVSy6qW18j7iCo/CS6qhbEY2jpFPBM2y5WJwhPNe1TiL8Rmi8fcqcQ08g7h6
- 7EAyYvS2JSidcfG0f5UWsjG0=
-X-Received: by 2002:a05:600c:b96:b0:49c:dada:30b7 with SMTP id
- 5b1f17b1804b1-49e618898eamr7003625e9.2.1789071148924; 
- Thu, 10 Sep 2026 13:12:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:b96:b0:49c:dada:30b7 with SMTP id
- 5b1f17b1804b1-49e618898eamr7003165e9.2.1789071148362; 
- Thu, 10 Sep 2026 13:12:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789071270; x=1789676070;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=qEQqbP05s+OSlyzjNTsgrx4dobovQAA0LQxrJHMbWCc=;
+ b=sqfxpUmplICP8Z41h1PNdQXWQwoQ6nKLVUo85I9suhu+czOzRDwcxH7NHMh6zR2fqP
+ wn3FW08yJug151VpDpNGlBnIniuwg1+lFprrIJ1AvHK3zrLOjL49d60kojXuu6VlKWan
+ GPgS5XhJQo0Aknrh5DDaB8zQfpKLpxIN3zRxg9vXot9MTZmNUEeY/+QxfvU9TK1z0rcF
+ jADaiTMETLa7VayZyOJ/6M/3DqP10to6sO+aJExpCm+liAHkO5CGBiEJt0Lf/5kYBZS7
+ 9iHxnwmRuEVR0HPBm/N/iTB5/Decw/RVuNSfiCTR5DfinGxA2Z/f4dmzd74YT3mY2rOB
+ 8Law==
+X-Gm-Message-State: AFuF++lqmgosm6QIXC1SOLOMoSX3NoXqfKS1TSuT4AdVsh1IgjycqbzQ
+ E4sezvIhMfKpE9VOEu/xT/mynCGARly8s8KPMGyhgV1N0uFfNKw6VVlKnetGlDIBPErjPOi4ZXX
+ 0K9rMmFPLKmAcZuEXWi6y2b372fHx7PoOs4j/SaZPCOrylEeQ+sP6bvnBMhNp8rJPZxxKsPCuN0
+ I6R09dXh05jvPaSTqKB/YAz6Ksrf7NyusOsw==
+X-Gm-Gg: AYBFou0m0NEv8bPv21YvFrmfbM1Ex8Gx2BtISav3twxaNUnbL1JkSfsoJ83AKgSnQ6K
+ gIeyI2g2x/LgaDc13CTfzgRtxjUijcN2i18YIZoedJO8hanLktpqMuWKhw6pr1Vq4O0ExWmngfF
+ tAMtA+++LmHtV/qa+dSEoYWwYJYad+XfGN67Uo9oUQ1x8YqRtxzBrPgQbilqUeg2nH7EalciBRg
+ DDFiUPkz8/9r+2ICZ/h9qhJyxfZxNJWQfdwc/BvrSkr8J7O3cW4QZ5vWoOqjRC/MlbBjq8Mz9Yw
+ 2g1UHSlX9zAfqeDOtZLTdt0oYMzY/6gayfsKtAonAF3JJaeswNtIFPSBxL4ti/hqoalKxSQozur
+ XwZ5tuBZIBLPHl5TFWdcIxKg=
+X-Received: by 2002:a05:600c:b99:b0:499:a277:e8b5 with SMTP id
+ 5b1f17b1804b1-49e619a1c6amr16333035e9.3.1789071270187; 
+ Thu, 10 Sep 2026 13:14:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:b99:b0:499:a277:e8b5 with SMTP id
+ 5b1f17b1804b1-49e619a1c6amr16332145e9.3.1789071269627; 
+ Thu, 10 Sep 2026 13:14:29 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26c494basm87343805e9.12.2026.09.10.13.12.27
+ ffacd0b85a97d-486eb35bed0sm740246f8f.32.2026.09.10.13.14.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:12:27 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:12:26 -0400
+ Thu, 10 Sep 2026 13:14:29 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:27 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 26/90] net/tap: add TYPE_VMSTATE_IF interface
-Message-ID: <fc7964b03080b10fa32a9ed435d4ddb6399b14cc.1789071042.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
+ Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 72/90] intel_iommu: Support concurrent page fault handling
+ with PRI
+Message-ID: <0597be6f01e3c23263233f57e36cb02be55d0556.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789071042.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -121,143 +126,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
 
-We'll need it to implement TAP backend live migration.
+PRQ slot allocation must be thread safe to avoid posting multiple
+commands in the same slot so we take a lock in vtd_pri_request_page.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
+This allows multiple devices to call the page request interface
+of the same iommu instance.
+
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819180201.1970193-9-vsementsov@yandex-team.ru>
+Message-ID: <20260903145044.2245609-1-clement.mathieu--drif@bull.com>
 ---
- net/tap.c | 43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ hw/i386/intel_iommu.c | 103 ++++++++++++++++++++++++++----------------
+ 1 file changed, 63 insertions(+), 40 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index 7392344200..dd0d134875 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -43,7 +43,6 @@
- #include "qemu/main-loop.h"
- #include "qemu/sockets.h"
- #include "hw/virtio/vhost.h"
--#include "qom/object.h"
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 82c3c3b2c3..7c442a86ca 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3627,15 +3627,26 @@ static void vtd_handle_iectl_write(IntelIOMMUState *s)
  
- #include "net/tap.h"
- #include "net/util.h"
-@@ -91,6 +90,8 @@ struct TAPState {
-     VHostNetState *vhost_net;
-     unsigned host_vnet_hdr_len;
-     Notifier exit;
-+
-+    int queue_index;
- };
- 
- static void launch_script(const char *setup_script, const char *ifname,
-@@ -419,10 +420,29 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
- }
- 
- 
-+static char *tap_vmstate_if_get_id(VMStateIf *obj)
-+{
-+    TAPState *s = TAP_NETDEV(obj);
-+    char *res = g_strdup_printf("%s/%d", s->nc.name, s->queue_index);
-+    return res;
-+}
-+
-+static void tap_class_init(ObjectClass *klass, const void *data)
-+{
-+    VMStateIfClass *vc = VMSTATE_IF_CLASS(klass);
-+
-+    vc->get_id = tap_vmstate_if_get_id;
-+}
-+
- static const TypeInfo tap_netdev_info = {
-     .name = TYPE_TAP_NETDEV,
-     .parent = TYPE_OBJECT,
-     .instance_size = sizeof(TAPState),
-+    .class_init = tap_class_init,
-+    .interfaces = (const InterfaceInfo[]) {
-+        { TYPE_VMSTATE_IF },
-+        { }
-+    },
- };
- 
- static void tap_net_client_destructor(NetClientState *nc)
-@@ -455,13 +475,16 @@ static NetClientInfo net_tap_info = {
- 
- static TAPState *new_tap(NetClientState *peer,
-                          const char *model,
--                         const char *name)
-+                         const char *name,
-+                         int queue_index)
+ static void vtd_handle_prs_write(IntelIOMMUState *s)
  {
-     TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
- 
-     qemu_net_client_setup(&s->nc, &net_tap_info, peer, model, name,
-                           tap_net_client_destructor, true);
- 
-+    s->queue_index = queue_index;
+-    uint32_t prs = vtd_get_long_raw(s, DMAR_PRS_REG);
++    uint32_t prs;
 +
-     return s;
- }
- 
-@@ -469,10 +492,11 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
-                                  const char *model,
-                                  const char *name,
-                                  int fd,
--                                 int vnet_hdr)
-+                                 int vnet_hdr,
-+                                 int queue_index)
- {
-     NetOffloads ol = {};
--    TAPState *s = new_tap(peer, model, name);
-+    TAPState *s = new_tap(peer, model, name, queue_index);
- 
-     s->fd = fd;
-     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
-@@ -709,7 +733,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
-         close(fd);
-         return -1;
++    vtd_iommu_lock(s);
++
++    prs = vtd_get_long_raw(s, DMAR_PRS_REG);
+     if (!(prs & VTD_PR_STATUS_PPR) && !(prs & VTD_PR_STATUS_PRO)) {
+         vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
      }
--    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr);
-+    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0);
++
++    vtd_iommu_unlock(s);
+ }
  
-     qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
- 
-@@ -785,10 +809,11 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-                              const char *downscript, int vhostfd,
--                             int vnet_hdr, int fd, Error **errp)
-+                             int vnet_hdr, int fd, int queue_index,
-+                             Error **errp)
+ static void vtd_handle_pectl_write(IntelIOMMUState *s)
  {
-     TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
--                                  name, fd, vnet_hdr);
-+                                  name, fd, vnet_hdr, queue_index);
-     bool sndbuf_required = tap->has_sndbuf;
-     int sndbuf =
-         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
-@@ -989,7 +1014,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             if (!net_init_tap_one(tap, peer, name, ifname,
-                                   NULL, NULL,
-                                   vhost_fds ? vhost_fds[i] : -1,
--                                  vnet_hdr, fds[i], errp)) {
-+                                  vnet_hdr, fds[i], i, errp)) {
-                 goto fail;
-             }
-         }
-@@ -1024,7 +1049,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-                                   i >= 1 ? NULL : script,
-                                   i >= 1 ? NULL : downscript,
-                                   vhost_fds ? vhost_fds[i] : -1,
--                                  vnet_hdr, fd, errp)) {
-+                                  vnet_hdr, fd, i, errp)) {
-                 goto fail;
-             }
-         }
+-    uint32_t pectl = vtd_get_long_raw(s, DMAR_PECTL_REG);
++    uint32_t pectl;
++
++    vtd_iommu_lock(s);
++
++    pectl = vtd_get_long_raw(s, DMAR_PECTL_REG);
++
+     if ((pectl & VTD_PR_PECTL_IP) && !(pectl & VTD_PR_PECTL_IM)) {
+         /*
+          * If IP field was 1 when software clears the IM field,
+@@ -3644,6 +3655,8 @@ static void vtd_handle_pectl_write(IntelIOMMUState *s)
+         vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
+         vtd_generate_interrupt(s, DMAR_PEADDR_REG, DMAR_PEDATA_REG);
+     }
++
++    vtd_iommu_unlock(s);
+ }
+ 
+ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+@@ -5377,19 +5390,18 @@ static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
+ {
+     IntelIOMMUState *s = opaque;
+     VTDAddressSpace *vtd_as;
++    uint64_t queue_addr_reg;
++    uint64_t queue_tail_offset_reg;
++    uint64_t new_queue_tail_offset;
++    uint64_t queue_head_offset_reg;
++    hwaddr queue_tail;
++    uint32_t old_pr_status;
++    uint16_t sid;
++    VTDPRDesc desc;
++    int ret = 0;
+ 
+     vtd_as = vtd_find_add_as(s, bus, devfn, pasid);
+-
+-    uint64_t queue_addr_reg = vtd_get_quad(s, DMAR_PQA_REG);
+-    uint64_t queue_tail_offset_reg = vtd_get_quad(s, DMAR_PQT_REG);
+-    uint64_t new_queue_tail_offset = (
+-                                (queue_tail_offset_reg + VTD_PQA_ENTRY_SIZE) %
+-                                (vtd_prq_size(s) * VTD_PQA_ENTRY_SIZE));
+-    uint64_t queue_head_offset_reg = vtd_get_quad(s, DMAR_PQH_REG);
+-    hwaddr queue_tail = (queue_addr_reg & VTD_PQA_ADDR) + queue_tail_offset_reg;
+-    uint32_t old_pr_status = vtd_get_long(s, DMAR_PRS_REG);
+-    uint16_t sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
+-    VTDPRDesc desc;
++    sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
+ 
+     if (!(s->ecap & VTD_ECAP_PRS)) {
+         return -EPERM;
+@@ -5413,25 +5425,7 @@ static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
+         return -EPERM;
+     }
+ 
+-    if (old_pr_status & VTD_PR_STATUS_PRO) {
+-        /*
+-         * No action is taken by hardware to report a fault
+-         * or generate an event
+-         */
+-        return -ENOSPC;
+-    }
+-
+-    /* Check for overflow */
+-    if (new_queue_tail_offset == queue_head_offset_reg) {
+-        vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PRO);
+-        vtd_generate_page_request_event(s, old_pr_status);
+-        return -ENOSPC;
+-    }
+-
+-    if (vtd_pri_perform_implicit_invalidation(vtd_as, addr)) {
+-        return -EINVAL;
+-    }
+-
++    /* Prepare the descriptor */
+     desc.lo = VTD_PRD_TYPE | VTD_PRD_PP(true) | VTD_PRD_RID(sid) |
+               VTD_PRD_PASID(vtd_as->pasid) | VTD_PRD_PMR(priv_req);
+     desc.hi = VTD_PRD_RDR(is_read) | VTD_PRD_WRR(is_write) |
+@@ -5439,26 +5433,55 @@ static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
+ 
+     desc.lo = cpu_to_le64(desc.lo);
+     desc.hi = cpu_to_le64(desc.hi);
++
++    if (vtd_pri_perform_implicit_invalidation(vtd_as, addr)) {
++        return -EINVAL;
++    }
++
++    vtd_iommu_lock(s);
++
++    queue_addr_reg = vtd_get_quad(s, DMAR_PQA_REG);
++    queue_tail_offset_reg = vtd_get_quad(s, DMAR_PQT_REG);
++    new_queue_tail_offset = ((queue_tail_offset_reg + VTD_PQA_ENTRY_SIZE) %
++                            (vtd_prq_size(s) * VTD_PQA_ENTRY_SIZE));
++    queue_head_offset_reg = vtd_get_quad(s, DMAR_PQH_REG);
++    queue_tail = (queue_addr_reg & VTD_PQA_ADDR) + queue_tail_offset_reg;
++    old_pr_status = vtd_get_long(s, DMAR_PRS_REG);
++
++    if (old_pr_status & VTD_PR_STATUS_PRO) {
++        /*
++         * No action is taken by hardware to report a fault
++         * or generate an event
++         */
++        ret = -ENOSPC;
++        goto out;
++    }
++
++    /* Check for overflow */
++    if (new_queue_tail_offset == queue_head_offset_reg) {
++        vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PRO);
++        vtd_generate_page_request_event(s, old_pr_status);
++        ret = -ENOSPC;
++        goto out;
++    }
++
+     if (dma_memory_write(&address_space_memory, queue_tail, &desc, sizeof(desc),
+                          MEMTXATTRS_UNSPECIFIED)) {
+         error_report_once("IO error, the PQ tail cannot be updated");
+-        return -EIO;
++        ret = -EIO;
++        goto out;
+     }
+ 
+     /* increment the tail register and set the pending request bit */
+     vtd_set_quad(s, DMAR_PQT_REG, new_queue_tail_offset);
+-    /*
+-     * read status again so that the kernel does not miss a request.
+-     * in some cases, we can trigger an unecessary interrupt but this strategy
+-     * drastically improves performance as we don't need to take a lock.
+-     */
+-    old_pr_status = vtd_get_long(s, DMAR_PRS_REG);
+     if (!(old_pr_status & VTD_PR_STATUS_PPR)) {
+         vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PPR);
+         vtd_generate_page_request_event(s, old_pr_status);
+     }
+ 
+-    return 0;
++out:
++    vtd_iommu_unlock(s);
++    return ret;
+ }
+ 
+ static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
 -- 
 MST
 
