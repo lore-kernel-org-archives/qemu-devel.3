@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738F9C88E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701BDC79FBB
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ngN-0004l3-Gd; Thu, 10 Sep 2026 18:56:07 -0400
+	id 1x4nnj-0006ik-Gg; Thu, 10 Sep 2026 19:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lMD-00037d-CA
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:27:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lPT-0004IU-7q
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:30:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lM2-0000SX-Bf
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:26:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lOM-0001OP-Un
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:29:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071782;
+ s=mimecast20190719; t=1789072084;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=UIh1PwEycfZASKTI05iblD1tmogo/rlgL3ovx7Py+Kg=;
- b=QB1JfPVbj6xkusTXi94NBzLh6ONztUZcFOPWgJYKN4uYUITlgdqMJ7Ic41q6M+qKsFwRkJ
- 04fMu4Ifs6iJwVlVHr2Z3oRjFXaKksG45/3k2MMt9stdxkAp+8pays18s5CfzNcYMEKbRB
- ij7itHdT63t4c63HKFIpGl40SZqPra4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wnxtJwJv6yUaxvWZxIjniMMKZkL70PYqB4D9wt2Y1j8=;
+ b=OIMNGTwZF63l4ZtaKra18IlwsDGZC58zdth8iAewv2VvMIqm0+ny+atCvrIO8TYK4S6zmT
+ ldR2vR+gnLQbcfUT7glNzMLg2YmEUDWCLDqCyDICigVeG0FgitarpuYtSSNn3u8pa3v5hM
+ h68pcMsl9mCVrvKPfTVbORvRHvZrUPg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-2U1ANRveO4-xnfPjwOsFbA-1; Thu, 10 Sep 2026 16:12:08 -0400
-X-MC-Unique: 2U1ANRveO4-xnfPjwOsFbA-1
-X-Mimecast-MFC-AGG-ID: 2U1ANRveO4-xnfPjwOsFbA_1789071128
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-485866e0066so41758f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:08 -0700 (PDT)
+ us-mta-616-pw0JO46NNDGiX9GwiPj1ww-1; Thu, 10 Sep 2026 16:13:34 -0400
+X-MC-Unique: pw0JO46NNDGiX9GwiPj1ww-1
+X-Mimecast-MFC-AGG-ID: pw0JO46NNDGiX9GwiPj1ww_1789071213
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-495474a5fbcso2083445e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071127; x=1789675927; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071213; x=1789676013; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=UIh1PwEycfZASKTI05iblD1tmogo/rlgL3ovx7Py+Kg=;
- b=sB7WJBAHm95m5T3A71gOTjFojMwDXEHYailmOnJfcZbVtBIyZ0Cfe+eRnRKopNo7rs
- x2/9J4dBdf2KtgldBZMfzQVayvX2wi3F37ZSACnr7rKIOl/xxmhtud//ZEVoQBqM5j7n
- vbZkjxfdTX6wHh4WEVGsGTKK57v+7tHqSQsWYOLFYmFv/z7QX7GdIIanh0g6rt5mnSKq
- zCU1ygQ6ocwC2EpSEkPrKM4QFDt+WnzcNHRGVH6dE/C89v0w5n27cd6nQTmpVWOReJh+
- 6RGUqAjMUkcxd/CNwgoU1Fc6L4lRZDgm3w/tOaLGsVWbSNKEmfcglkFbOSaKBhV4Llqh
- I+Rg==
+ bh=wnxtJwJv6yUaxvWZxIjniMMKZkL70PYqB4D9wt2Y1j8=;
+ b=eaEONQ7+AUtUhH+vgIfJpClq5hvTOfMaM6qO/i/Bza36eMhLzKbfqh/L/B6wmB7LbP
+ xIoQ5MAdzOvuJaD9iu0uz6ez8fAYlagMMo5N/dsuQxVBo1374kSSR8ZRq11GjanE0GNY
+ Jh9xuLC2wfa0wTP5d0qdQ7Pa5+kJNcII+vfuL+NpVQ7BkkjEBvVwTpdoA0oL6XIgocu1
+ WZgPKgAIl0uD55gTzQFcdxbUb5TAKJcGfO54cIRNEqVCopoAVM/AXDbuX49jDkFhwfgl
+ 2/LQ/IlNaObJ7IG6GNtUYKKEw0nxm/HP/1/DKJaV5SdVq3uudj21EDhW+0+ZC5AIYDcU
+ qsNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071127; x=1789675927;
+ d=1e100.net; s=20251104; t=1789071213; x=1789676013;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=UIh1PwEycfZASKTI05iblD1tmogo/rlgL3ovx7Py+Kg=;
- b=O/Q45B++RXGppvs3Mbb88cJxVTaij2WXevK/owpvelD7VlaATMHD6Ndh3I9taJJgJI
- X+WnKS38lP7OV3JdHZNVQHtyfMk0pg6ixIgla4yjPS0ydJktmk6fwwBf60YGT3YmteLu
- 4AIxrlvqDJOr0by4JNIO/f++ka1sU4I2KeZS76aqS6lR3CkuMOxN6l1sDw6aj1l+X7uT
- bMO+yce4w4YhGpoaicVPm8Ahh/WL7Uy0cUArLpVLKMZPbnWf6bEjAZOrLyh/FdDpHFHC
- 5rWIq70nCiVX/eF73a9nOnSB5qKj2sh7DDcdq/MvQi73WBNZ1eMx+rmF33mS/0otK4Vi
- 8Mog==
-X-Gm-Message-State: AFuF++lPD+4eRRRYOYWABPjI24hUF2RSZldbqL4iK6qlhBsn/B7BiMPJ
- td+2FPVs14FnylNVZzaKvvliNciA1CoI7MORkizss1ZH0Qqa0CU9OmljoSwTIgJTswjlmNw+Xd/
- XkLLHtbXYLWWqtrnaFUJvUHNI0p6Wc/1DRTeaUFDyXOd9k5OL8aaG3ucyXOYlcS54mIkij83fiw
- JeltFPJqV40C0i7qyJrrqrckc7QRMatRYG8g==
-X-Gm-Gg: AYBFou3XKqX5t+pENzeHgJ21OeUZZng8Y7yo7kjtiliE2/125+zt88TJmMKsPYvh2vt
- URDWl21yOLMvn+CBUq9GZfgXD9Kr74VOIJwJmZ5rFJTLZiUk9caShC3Zn7ce3yTQdHwYrrxkk9O
- bpEnzz0L5UpkwQujpPT3yxoONAaWa+iG5/xqqUoAMRHSMK95IEfEyvrGji0DbSbF2jit5rXbTwy
- ne0FSx6o/kuSaUVY+WbhsGWWrHulKntaHiqDZGtIDa1s4qXLq9UvX9RImtwYV2G6Zgq1jrOyDxY
- nfnUwqPqzLhREYOSPD9p9Ez8P6UDijly4jI7hVFATDRLnG1lNXhir8hvMDhNkP1m/QMyl4TU1wk
- wZj72EUkOJNrO0p0pdfykPCc=
-X-Received: by 2002:a05:600c:540e:b0:49c:e1b5:b2bf with SMTP id
- 5b1f17b1804b1-49e61645616mr8756885e9.0.1789071127477; 
- Thu, 10 Sep 2026 13:12:07 -0700 (PDT)
-X-Received: by 2002:a05:600c:540e:b0:49c:e1b5:b2bf with SMTP id
- 5b1f17b1804b1-49e61645616mr8756405e9.0.1789071126559; 
- Thu, 10 Sep 2026 13:12:06 -0700 (PDT)
+ bh=wnxtJwJv6yUaxvWZxIjniMMKZkL70PYqB4D9wt2Y1j8=;
+ b=HA4FQyFVw8ylN/oWYibjcXC86YjrjBpfG9y6KMJIjtZ8Ttm3qeL22hThLBpMm19ac0
+ RQ7GXZ5j4Wx6nrCp47BM4C+EAPi0zBvCbzMJd/dI00+vPAAoMyjH/pm3mh40T2PraDqp
+ Ei3cWLJXVbRjsac8ut7XqGSuR8sAP95/6dxtwNbrQBGQK4M2xAikrDu9ij0q4qsXYSM/
+ vjjOT1KANKInnvXQoj5aYSdBVyGus2IxM2g63vRtzrpyv45at05DWUAAxBF8Mjx7yoTB
+ hNecixjhAzl05+OL1LKFS2SPcUEdpo32jGt4394lGy4TdBcFLSqKDxDNUAvV48eXOnwH
+ OmwQ==
+X-Gm-Message-State: AFuF++k094/U7Kh3VvVzMbEos2JaLlJHuChl4IIYe6DnpP3B6abvXmrl
+ JytgrxrjLJNSi+pR3AfYYT52rctGw6/v0YPjV6YM7RjoWwNNLCs06zkEVTxT624HaV2MI8yJCMl
+ 8DeJ+tZK7CHJFnDF9VVGIPvNoFyHjpbY7D5cmUO4n0bwJoA8TRzOMsUEYqzlzswq5E9IVL//4ge
+ xbye9fTh80BG7s7/EhqapBxBb2k/c2KAnDDQ==
+X-Gm-Gg: AYBFou1njtzTe32Y7fj93ExedkJoKKymst9vk+x16G3m1sE6JTktWB4yotpQUUzkyuz
+ IW4IlE+qiwZxzrSWMWnBBIupapMG4bxuzZTBf0ycr7yVc3sLIgv8TqEwqkR6LddI5m+rclAQVKm
+ 9jHA+rrbmp+O8zraa7Qtc6rTN1UH3LN7JLEsINLmpr/h0tNmv1OXaPYWQTO3/7Av66283conReC
+ /hLm6dDl9LLRtgr1+Jzefo++bIb6Mn4Op/UPjilTW/Rbv9wVDrIrG1xUihb/PZk7yK1hwe+HDYm
+ w4yhugoRplNwh5vDb1ddGdRX/4Cx25Acgb0YjCFiU2x3+hjmy0NSdNlHlahQJ4+DOPeBfcPGg1M
+ PnK/BukpQwGh7Pmw7mDVEiKQ=
+X-Received: by 2002:a05:600c:1c16:b0:49d:1a02:4797 with SMTP id
+ 5b1f17b1804b1-49e619bb9bfmr9928855e9.17.1789071213275; 
+ Thu, 10 Sep 2026 13:13:33 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c16:b0:49d:1a02:4797 with SMTP id
+ 5b1f17b1804b1-49e619bb9bfmr9928405e9.17.1789071212794; 
+ Thu, 10 Sep 2026 13:13:32 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62217965sm1078175e9.2.2026.09.10.13.12.04
+ 5b1f17b1804b1-49e60ac4397sm19161225e9.7.2026.09.10.13.13.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:12:05 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:12:03 -0400
+ Thu, 10 Sep 2026 13:13:32 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:13:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jia Jia <physicalmtea@gmail.com>
-Subject: [PULL 18/90] virtio: reduce code duplication for split ring
-Message-ID: <47c8210827a7ba1b85c3779c252b0260312dab0d.1789071042.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PULL 50/90] hw/scsi-disk: Fix accounting for IGNORE, ret > 0
+Message-ID: <bdf35f1c8aafe4215dc7cb216f98ebbd71c3ac91.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -119,74 +121,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-virtio_queue_empty_rcu duplicates virtqueue_num_heads
-for no good reason, let's not do it. As a nice side effect,
-we gain better handling for misbehaving guests.
+When encountering SCSI error status (ret > 0), accounting is left to
+scsi_handle_rw_error(), but the BLOCK_ERROR_ACTION_IGNORE path in turn
+leaves accounting (block_acct_done()) to the caller, so neither side
+does it.  Fix this by unconditionally calling block_acct_done() in the
+IGNORE path.  Yes, this will often result in it being called twice, but
+that is a no-op, as block_acct_done() resets the cookie type to
+BLOCK_ACCT_NONE, and will only do accounting if the type is not
+BLOCK_ACCT_NONE.
 
-The virtio_device_disabled() check in virtio_queue_empty_rcu
-is redundant because virtqueue_split_pop() is only called through
-virtqueue_pop(), which already performs the check.
+(And given that the conditions on who does what accounting are quite
+confusing in scsi-disk, for me at least, I prefer this unconditional
+call rather than guard it with a condition that has no obvious reason.)
 
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260726012857.1580646-1-physicalmtea@gmail.com>
+Message-ID: <20260724152315.234183-7-hreitz@redhat.com>
 ---
- hw/virtio/virtio.c | 30 ++++++------------------------
- 1 file changed, 6 insertions(+), 24 deletions(-)
+ hw/scsi/scsi-disk.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 0b2fbbed3f..c9f9e5b511 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -717,26 +717,6 @@ static inline bool is_desc_avail(uint16_t flags, bool wrap_counter)
-     return (avail != used) && (avail == wrap_counter);
- }
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index a42f7d8e77..deb33ac1dd 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -318,6 +318,13 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
+         return true;
  
--/* Fetch avail_idx from VQ memory only when we really need to know if
-- * guest has added some buffers.
-- * Called within rcu_read_lock().  */
--static int virtio_queue_empty_rcu(VirtQueue *vq)
--{
--    if (virtio_device_disabled(vq->vdev)) {
--        return 1;
--    }
--
--    if (unlikely(!vq->vring.avail)) {
--        return 1;
--    }
--
--    if (vq->shadow_avail_idx != vq->last_avail_idx) {
--        return 0;
--    }
--
--    return vring_avail_idx(vq) == vq->last_avail_idx;
--}
--
- static int virtio_queue_split_empty(VirtQueue *vq)
- {
-     bool empty;
-@@ -1773,12 +1753,14 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
-     address_space_cache_init_empty(&indirect_desc_cache);
+     case BLOCK_ERROR_ACTION_IGNORE:
++        /*
++         * The caller may have already finalized the accounting cookie
++         * (e.g. scsi_dma_complete() for ret < 0), but calling
++         * block_acct_done() afterwards is fine (just a no-op).  Just
++         * make sure all cookies are indeed accounted at some point.
++         */
++        block_acct_done(blk_get_stats(s->qdev.conf.blk), &r->acct);
+         return false;
  
-     RCU_READ_LOCK_GUARD();
--    if (virtio_queue_empty_rcu(vq)) {
-+    if (unlikely(!vq->vring.avail)) {
-+        goto done;
-+    }
-+
-+    rc = virtqueue_num_heads(vq, vq->last_avail_idx);
-+    if (rc <= 0) {
-         goto done;
-     }
--    /* Needed after virtio_queue_empty(), see comment in
--     * virtqueue_num_heads(). */
--    smp_rmb();
- 
-     /* When we start there are none of either input nor output. */
-     out_num = in_num = elem_entries = 0;
+     case BLOCK_ERROR_ACTION_STOP:
 -- 
 MST
 
