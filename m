@@ -4,109 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47831C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B7AC88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:45:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4nRZ-0000xc-55; Thu, 10 Sep 2026 18:40:48 -0400
+	id 1x4nTr-0001sL-0Q; Thu, 10 Sep 2026 18:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lS8-0005It-6S
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:33:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lRl-0002Z2-7Y
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:32:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072269;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lMk-0003KK-VS
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:27:44 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lMb-00018C-HU
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:27:24 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 5B0E41FEE6;
+ Thu, 10 Sep 2026 20:26:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789071979; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QfzBMW08YXqJdiZb7Qe3vTI1hQNhNiXNaPJ5pmcJCyY=;
- b=BZ6Xol4EpO05k48wA+7ZnICwjnFJiONLx6LDgn6xXg9jG4VTA+9nAF99D2FoIGiQ/AjtkO
- auVWDkwf3Ag/hXBXoHpQJYynptiLExZVp8wrQiuoG/FVQnfBJz+TWYna969vsDweVVn3M9
- NYEklIAJpPOHb99R1F4iSQthXDtZsNw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-ILrrqYEsMiWZXPA8OJzhLw-1; Thu, 10 Sep 2026 16:15:47 -0400
-X-MC-Unique: ILrrqYEsMiWZXPA8OJzhLw-1
-X-Mimecast-MFC-AGG-ID: ILrrqYEsMiWZXPA8OJzhLw_1789071347
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4994aebe932so2245745e9.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071346; x=1789676146; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QfzBMW08YXqJdiZb7Qe3vTI1hQNhNiXNaPJ5pmcJCyY=;
- b=XGTkpMy0hW3P5tfm2uz5INLVc6C8MCk/6/IByNVeHYvrvvF6R0tMyCk6APZuZucwoM
- QrolNmxd+xfsgfSYZB2hyZsV09Cr71JQA40hGhMcL7RWt2PPX6OSFtbQbMtn/DMhZapk
- n4ejgOkr0GKQnhvpwoZ/TSs97Z1LnIBC6dXXQP9ifHXIOmRUkNeeLzr+DBjIFhQ7ZObK
- L9wCqWLtO81F4mxeX1Zht4m44Xt+WGr/t9t78NJp6BzpDqizei35NhSfAV+AeRc4CLn3
- 8epKl+menRKAbX/Tq60HXuazhSPM3SBmC/IpjYmAdXVUL4w4UzJtZ/2tvCWyKIdr0CpR
- Ep4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071346; x=1789676146;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QfzBMW08YXqJdiZb7Qe3vTI1hQNhNiXNaPJ5pmcJCyY=;
- b=omfEVgCgodj1tQx3fMs4fbjMyUXdcPKeLjrzp/EyZe58LNoUbZtdB08oWnEzbXfBQ/
- 3/WGEHousQ8EZ26PgsKhNe2IAlJ1CE1zL6M6q55NHMntcL8FqiXUPuf1+qru9uqJ/7YC
- c9oSnD/zMTfBIxoDqc1ZBaHK43svHO36bk0FLwyUJjGIp9jYbKbmVcaw2ccLapbzjM9G
- zJkCRxIBlWQkl0MRq6KF4wm3742t+5HEUqzWwkB0B4NaNPAhFV56/wnVdloJbypwqs6q
- PK2tmRVky0tdPecaSvbGlleb8+AufimqAYt5q+836BHnh/XJsnkJcnxffoiof0xGV1qq
- nS7A==
-X-Gm-Message-State: AFuF++l3tvL+iB6ai62S5e7VCGWN8MqEpF18BaUjJeT3G36pzGi+aYId
- bJ6dgAoR45Mx+wLw0TE5WtuXxGkxqzwdo0Bn9+uam4OFkdWe6YTC1Qj/IxUr6/c2C2aso5bw0p9
- QTBPHR2RU/MXSQ8eGaXY+N58wrsjsTa6rndmfAJ8mD1uv3iEbwDAuOJa9tzc6ES/IGoi6Riz+KN
- y1lOBHYXarAQg/wk64eHGTE24w+X9xPp5WjQ==
-X-Gm-Gg: AYBFou3QIQ3e3oztuwhGp1KWjo5cl1rtfAkc/ItMqo83YAzHh+HgnPWFq7V1T5EVdh8
- vQF+YiJ1D6siCThNsrpLToWeLvRDiE57cepmCLqdu6P/q4A2JZNAez/V0rATZwTGdL7fAM+JcYe
- fL4pWJsSlYz/zi4EmYIyQzggtrGYWn6qj6VckYii9J5Lq8a+8xSojXysc799YOQ0Q0e/a0C2ElH
- soELTNNPzk9d+BNy1st/zHtnIyS4xaZEBM+jvP+/+Yn5tWO4W4XN+HxSSL/GSFV6AUfoTlMoINq
- fbPYDVRiXt4wYqG96viOimUItRGm6FRv3HAcdBlfn7p37qhT9aJiuV5JgVrMOJ5A4QgKV/UJMZE
- eO2pH35RjoM6wUNRP/eMhQts=
-X-Received: by 2002:a05:600c:3b90:b0:49c:d52e:d0ea with SMTP id
- 5b1f17b1804b1-49e619b397emr13912845e9.4.1789071346499; 
- Thu, 10 Sep 2026 13:15:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b90:b0:49c:d52e:d0ea with SMTP id
- 5b1f17b1804b1-49e619b397emr13911915e9.4.1789071345908; 
- Thu, 10 Sep 2026 13:15:45 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62230e72sm871435e9.4.2026.09.10.13.15.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:15:44 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:15:42 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
+ b=W4X0EdgxMDHW+cuq3ZLN4J10UQ9RJZr0K/5xkuttOtRkFGy8oWnLkXOgunBLf630dsTD4Z
+ +PxJAatnhPX44GEMzlXxTTmCpaq4HB6xjVIFeXYLkmzjf+VUKEd4eD8v+Eje0qHgjPcqn7
+ VUcrak2o2WDaLeMp8QlngJOjuwqzusY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789071979;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
+ b=885n9/h+w7jcyrdJ41eSiOal6Z9G+kZddG3y21NawzLqIdCGTs9VwuKf/+ZmroL/IAABFY
+ 9Ij5Ho3zyXIxI2DQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789071975; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
+ b=DeWyp0SUwE5yT5tgfc7u80vaKVK6wYiZiDes6jOeXAm2JPhnngyYagHgcSrZRgb9g05ciZ
+ OaL+3Wj3i1hcpy6I5o4CZkwKp4VQTYrSQTrIvaYc0Mj66UfFX3+i7JSJ0kUg9KXHwSt71f
+ bRffh1PO1VVlvnemMmp4DeWq+nOvYsc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789071975;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i81n+GnYIxgR2D7wkfxfD6rDpyiLWPJwk+0xmQ4/zbo=;
+ b=ttgprqApxsP2WhkEI/YFZAG74ANI/Ftr9omKNaB5R8ddq+MrVVsMSufnNJxY/YtG0wo4ds
+ U0CACmrLG6QPThDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DACA813A5D;
+ Thu, 10 Sep 2026 20:26:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eESWKmMSo2pJPQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 20:26:11 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 86/90] vhost-user: use skip_drain with
- GET_VRING_BASE_SKIP_DRAIN message
-Message-ID: <7dd0f53d0b10c19ec83adf369801cc1104b1b56f.1789071043.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Subject: [PULL 5/7] migration: Drop iochannel reference during snapshot setup
+Date: Thu, 10 Sep 2026 17:25:57 -0300
+Message-ID: <20260910202559.916866-6-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260910202559.916866-1-farosas@suse.de>
+References: <20260910202559.916866-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,39 +118,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+During migration there are usually two references to the iochannel,
+one from the channel creation itself and another from the ownership
+transfer into QEMUFile.
 
-Wire up the skip_drain parameter introduced in the previous commit to
-the new GET_VRING_BASE_SKIP_DRAIN message. When skip_drain is set,
-send GET_VRING_BASE_SKIP_DRAIN instead of GET_VRING_BASE, instructing
-the back-end to suspend in-flight I/O immediately.
+- The reference from the QEMUFile is decremented at qemu_fclose.
 
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260803072853.2920007-4-dtalexundeer@yandex-team.ru>
+- The original reference is decremented at migration_connect_outgoing()
+for regular migration and not at all for snapshots.
+
+The ide-test has recently added migration support and ASAN has
+flagged:
+
+Indirect leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0x55ca12aac0b9 in realloc
+    #1 0x7fd97d7e5a05 in g_realloc
+    #3 0x7fd97d7c98c6 in g_hash_table_new_full
+    #4 0x55ca14e186f1 in object_initialize_with_type ../qom/object.c:506:23
+    #5 0x55ca14e1a590 in object_new_with_type ../qom/object.c:706:5
+    #6 0x55ca14e1a7e8 in object_new ../qom/object.c:722:12
+    #7 0x55ca12de896f in qio_channel_block_new ../migration/channel-block.c:32:29
+    #8 0x55ca12ec8f2d in qemu_fopen_bdrv ../migration/savevm.c:172:49
+    #9 0x55ca12ec8b42 in save_snapshot ../migration/savevm.c:3375:9
+    #10 0x55ca12ee18e3 in hmp_savevm ../migration/migration-hmp-cmds.c:497:5
+
+Change qemu_fopen_bdrv() to drop the original reference once the
+QEMUFile has taken over the object. The xen code already does the
+same.
+
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/virtio/vhost.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ migration/savevm.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 27c78ffabf..68827dc731 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1531,7 +1531,11 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
-     }
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 5b0e89ca7c..8d4bdc28ab 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -168,11 +168,16 @@ static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
  
-     if (!force) {
--        r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
-+        if (!skip_drain) {
-+            r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
-+        } else {
-+            r = dev->vhost_ops->vhost_get_vring_base_skip_drain(dev, &state);
-+        }
-         if (r < 0) {
-             VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
-         }
+ static QEMUFile *qemu_fopen_bdrv(BlockDriverState *bs, int is_writable)
+ {
++    QIOChannel *ioc = QIO_CHANNEL(qio_channel_block_new(bs));
++    QEMUFile *f;
++
+     if (is_writable) {
+-        return qemu_file_new_output(QIO_CHANNEL(qio_channel_block_new(bs)));
++        f = qemu_file_new_output(ioc);
+     } else {
+-        return qemu_file_new_input(QIO_CHANNEL(qio_channel_block_new(bs)));
++        f = qemu_file_new_input(ioc);
+     }
++    object_unref(ioc);
++    return f;
+ }
+ 
+ 
 -- 
-MST
+2.53.0
 
 
