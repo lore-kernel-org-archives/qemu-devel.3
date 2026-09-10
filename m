@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9ADFC79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F5DC88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4lsv-0003Zs-Rr; Thu, 10 Sep 2026 17:00:55 -0400
+	id 1x4lwz-0004ie-5M; Thu, 10 Sep 2026 17:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lF1-0000Td-8n
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFY-0000YX-2X
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lEu-00079c-F1
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFN-0007J2-Hh
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071342;
+ s=mimecast20190719; t=1789071447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
- b=E0Knp96H5ECHfEKEl/DKfMMSnXknYpoiv0hFDiVerIVigvznsiHP76/A+bAgWDMH6EGiza
- e22YD+XiU6wDKyiNQjfPZcyl2ySEAR2unPOgjmILcOB6IcyVC5EsaSkIUsM5kGc5yBy2pe
- 2bQX51lyBB8h/CDz6JlBfvg4URc+M/g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hZQoGnwsXrICqagpiwSzGmzqnz5JLACVM0aRzU+Os8Y=;
+ b=JnUYXMiuTTRToQMS6Lc7Uy8SMfDpUikNyvZqGFSNxbzwpuGAry6QBcxTU4Rdr6N/czOosG
+ T/RqHVZ1WUqmF3NAVeL0Pl4VEvWQ6BjEym+jE7ccIjJDZT/TrAG5uSpnHStCHF9a0E3MXh
+ 3VfA1sAMYpbR7ZotSKkJMTRdu1DVeLw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-454-SSBe9grrPPmrL0wtm6cZ5Q-1; Thu, 10 Sep 2026 16:14:39 -0400
-X-MC-Unique: SSBe9grrPPmrL0wtm6cZ5Q-1
-X-Mimecast-MFC-AGG-ID: SSBe9grrPPmrL0wtm6cZ5Q_1789071278
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4994cf6cdb9so1579775e9.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:39 -0700 (PDT)
+ us-mta-557-uLCNIWTwP3i7H-OUr3ZmcQ-1; Thu, 10 Sep 2026 16:12:22 -0400
+X-MC-Unique: uLCNIWTwP3i7H-OUr3ZmcQ-1
+X-Mimecast-MFC-AGG-ID: uLCNIWTwP3i7H-OUr3ZmcQ_1789071141
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-484362cb000so118971f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071278; x=1789676078; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071141; x=1789675941; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
- b=r4ZtCwRyk0Jy/wAn+qNowFu4bDq4kHILiigEHEx5PlbvLjXWJU+O6HpD4sp13jQSCm
- wnv3lxs/j2odot4SlLpCGVSZed9qO794IO49qo2krs2vGq7z81mWyKCXGlEMeN54oRYY
- A/kASRU+gYnVpByz7t7xqT2JCy2xJNxKsFudWie7QZ1sqO3/MmJ14p7JlCb5qdlcEc78
- op6RPyz59xLF94di7Ca1+EbFl66I5AV7//GCJj/t3n45A9YBcW7qZxfXtAdg8OjG+tcf
- Oc5pyxvGmfcIkW8A3aggO1w3YhNVtK3YqUQbRp1O/wg3w8ACOeLup8Z17B14XOakYDaS
- jhvg==
+ bh=hZQoGnwsXrICqagpiwSzGmzqnz5JLACVM0aRzU+Os8Y=;
+ b=gWy5ml5Odz1nGvLURfrJzVpZaaWpqaLMs+l5xNVPvpMHf0mW9ZA2S87vywsqu083ui
+ NYiY5pzm2qJglv1C0cZeuNshpRFPS9DRJGU0fMC48sMWonqb34SC79SbdHiOiUShdwKC
+ 0mutoNezYiO4vOFBb97pntU/W7q5oE5gTw5NuRVwX6CuqZ/gzq1g8Df3G/7QAJlXHccG
+ FTkHlyyRNxHZXEg0cidJpq9BZfSpOGwrYuq6pJDZ5vIwFnlece907pKzS8qkdRbKQtdb
+ n8FuKoIGWJdH2Ts31m6oO3aMqZy57LQP431NAs5ffQXq736czdBbofsgOXOC2OrIJoJe
+ J0NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071278; x=1789676078;
+ d=1e100.net; s=20251104; t=1789071141; x=1789675941;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
- b=cQlfuQxv6EsXnq0VN9BCBJ6HEAih9wLv1BowASGjYzM58TiQk+VJ1Jx7wKmkv2jVeg
- +ncmykJtDDXJBtbGdWj6QxgafeBoohOzpFDY4kc0swz7j6KbHEs35YrZF/+7025OOwim
- VLK9hczVorMWrv2pEqOXU+B1b0ActOWHNk753B4ETo9vzjdSodG8dtZrnlhwqsTDSdXZ
- CM+TZtrySiUshdFrHMmyBOCwd+/FkQHBpku+J1NyYqA+ZL2fV+cERW4Be0jO+BAkP9/0
- Cdq6zjzw7xnqvI5eHI4VCc7BxWXlXDt4r0pIpxxw0XpUL2/UIN/jhFG0rMbqXX/kAuNd
- fVXA==
-X-Gm-Message-State: AFuF++kyKZoA2gjcYe9h54XzHnAMwgym2ZQk1674jdo8GOc66EJIzj9b
- jwUrp6Sis3wFO15RV0J8rIGgVfiGvglRgxoeZajzxYrAalNNrBDxNCmX3cv1UqUT3Z5i8BBSD0/
- 9QArN3nWuGe1NistAIuiarevHbxYYkKVyZqLM95rPW46JZdp+HxSYagv9CsRpWj4v8r0PgFsR0n
- bIWDsosc76AVfz3FZ9GyIwooQcu/fKYqO3OQ==
-X-Gm-Gg: AYBFou0gMAb0BdCxPhP1JaBmdSvzTXoesI6K22hdJw8vzT/58x34WGti6Cbi8PcDyYb
- 9KOzuG5RbBuC4CPmGrq2SpmSsABAqvWtb+XvMyzkgLvK4XySXHjm07DZKNxlk+1vFgJa997qDAB
- UoHDSR68Y+tOgfFsOyZ7Roih2HVwHSJtpCoy4Z7QWgF8QX01Z2NLAUZEB6nJTEAreBMINJUInKl
- bYyO6MRvJr8ODau4mfOUFBCO5DWebS4ua8J8OafHSsdTHYDcVv5YpaC1tQ6Ktx0xVh82rE7rpbW
- uM+Ab4QBF3CyhZELO663v6ocYgOsjGwInrRggCoUPFjKyNnaI5JQKL21YsXniwY3aLKPR/wJy6l
- wLsq8vqC8MVaJmCw3m/PczhU=
-X-Received: by 2002:a05:600c:3ba2:b0:49d:99:1d98 with SMTP id
- 5b1f17b1804b1-49e619881e3mr10082575e9.9.1789071278066; 
- Thu, 10 Sep 2026 13:14:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:3ba2:b0:49d:99:1d98 with SMTP id
- 5b1f17b1804b1-49e619881e3mr10082045e9.9.1789071277549; 
- Thu, 10 Sep 2026 13:14:37 -0700 (PDT)
+ bh=hZQoGnwsXrICqagpiwSzGmzqnz5JLACVM0aRzU+Os8Y=;
+ b=ZQ8SxlgNXUKNo7x7pc4DdhMCf2XhgcGyZAm4AxU7/CsDCckeuWAT0vtH+lahUaI+18
+ npQesGMsINq99KBrR4tPuvCp//0k3wO2uCnHvlHSIrER7HVgYKpWuEbkbo0s2Xu/Ijrr
+ 4FpU8xN+FisObryYSNWsLMgI1GuepPFvuMuLZXBOgDBukbfQjtLYITnORY173bGeRc5i
+ ASwRH3lhPPRVQkZVO+n8FRFW+6L8u48hDY80zgW3iPxunaZzz+wDuBzZjyeiAxfVYpVs
+ NvjpvcJfZ7IzMQaS97vas125vrDrwbRmVuCXLaKpm+ltt4/ZK3TRZlEYiGWtCSx91rC/
+ QMhg==
+X-Gm-Message-State: AFuF++nsJfwAMfBFcXnZhxEak9asQHvIf0LmcFvO8fjgkftfnbaPbLX+
+ ssQqkLVKip+5dWLGJzfaw/i4StyPhW4fpPK+DZ3RKFi8yKEZZ/EDD6KZaYimtYYAotkXl5e6Btf
+ pTwScOLhu6uPdBD8eiS4bfzeD5XuqTxuUue4NwL5ceu0Yn7vl2LtDg3Vvr6JAznhPbIhQsfX6sR
+ 9KZZOgEmfW57KlpF2RFHbIXiiPPOXmZgE3FQ==
+X-Gm-Gg: AYBFou0IDLw0gDh4kAN/y21TJk7s2b+01KKJTM4bHkMkj8Q2EROB4VrbjTlT6EaTtEH
+ vNsxhmg4sbbAet68wQyKJCxagtWejsoi5VGDgoDJBouVs9/sz9P3UIzfH643u+7yJkIZ7OycoMW
+ 1Iui3DybEInQkYfoLwWBaATA8rdA7LP9eb4dWRfZ9GUM/F/LRR0fTg/fMT1xNviAupX4us8uGZ+
+ oY0DqIbPSCuUbFiVv++63ZwVvV2GAHRVmlZpn1WqhV8Pb79AI3x+44SMxMV+r+JExXt842HBTPw
+ A+2PXxEewp9Jhl4ZMlEy9u8Gc9q8hiV5hDX++aTXVHwJMpAJx/jYPoN/+/e1qp+3Mn5ip61f11l
+ pFXRxJlAlrmZ+2BQT3gdm/xY=
+X-Received: by 2002:a05:6000:2082:b0:484:482d:dce4 with SMTP id
+ ffacd0b85a97d-486e91e4c97mr1443183f8f.0.1789071141436; 
+ Thu, 10 Sep 2026 13:12:21 -0700 (PDT)
+X-Received: by 2002:a05:6000:2082:b0:484:482d:dce4 with SMTP id
+ ffacd0b85a97d-486e91e4c97mr1443142f8f.0.1789071140901; 
+ Thu, 10 Sep 2026 13:12:20 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e61a81943sm6043655e9.1.2026.09.10.13.14.35
+ ffacd0b85a97d-486eb32d3c7sm753668f8f.10.2026.09.10.13.12.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:14:37 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:14:35 -0400
+ Thu, 10 Sep 2026 13:12:18 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:12:17 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Denis V. Lunev" <den@openvz.org>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PULL 75/90] pci: batch BAR remapping into one memory transaction
-Message-ID: <bfe98905f8152d81eb3993c6756c3881dc9ab193.1789071043.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowangio@gmail.com>
+Subject: [PULL 23/90] net/tap: move vhost initialization to tap_setup_vhost()
+Message-ID: <e0b150d65e80c3f836e4c7669cc0f1b32dc92d5d.1789071042.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,47 +121,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-pci_update_mappings() deletes and re-adds a subregion for each BAR
-whose address changed, and both of those commit their own transaction,
-so one BAR move costs two full flatview rebuilds.
+Make a new helper function in a way it can be reused later for
+TAP fd-migration feature: we'll need to initialize vhost in a later
+point when we doesn't have access to QAPI parameters.
 
-Nothing between the delete and the add touches an address space, so
-the walk can run inside a single transaction. pci_bridge_update_mappings()
-already does this for the bridge windows.
-
-CC: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
+Based-on: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903184542.2629976-2-den@openvz.org>
+Message-ID: <20260819180201.1970193-6-vsementsov@yandex-team.ru>
 ---
- hw/pci/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/tap.c | 62 ++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 38 insertions(+), 24 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index c15f2b9f08..14c78e3c62 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1742,6 +1742,8 @@ static void pci_update_mappings(PCIDevice *d)
-     int i;
-     pcibus_t new_addr;
- 
-+    memory_region_transaction_begin();
-+
-     for(i = 0; i < PCI_NUM_REGIONS; i++) {
-         r = &d->io_regions[i];
- 
-@@ -1778,6 +1780,8 @@ static void pci_update_mappings(PCIDevice *d)
-     }
- 
-     pci_update_vga(d);
-+
-+    memory_region_transaction_commit();
+diff --git a/net/tap.c b/net/tap.c
+index bec2cd48fd..f2b571dd11 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -71,6 +71,8 @@ static const int kernel_feature_bits[] = {
+ typedef struct TAPState {
+     NetClientState nc;
+     int fd;
++    int vhostfd;
++    uint32_t vhost_busyloop_timeout;
+     char down_script[1024];
+     char down_script_arg[128];
+     uint8_t buf[NET_BUFSIZE];
+@@ -722,6 +724,38 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+     return fd;
  }
  
- int pci_irq_disabled(PCIDevice *d)
++static bool tap_setup_vhost(TAPState *s, Error **errp)
++{
++    VhostNetOptions options;
++
++    if (s->vhostfd == -1) {
++        return true;
++    }
++
++    options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
++    options.net_backend = &s->nc;
++    options.busyloop_timeout = s->vhost_busyloop_timeout;
++    options.opaque = (void *)(uintptr_t)s->vhostfd;
++    options.nvqs = 2;
++    options.feature_bits = kernel_feature_bits;
++    options.get_acked_features = NULL;
++    options.save_acked_features = NULL;
++    options.max_tx_queue_size = 0;
++    options.is_vhost_user = false;
++
++    s->vhost_net = vhost_net_init(&options);
++    if (!s->vhost_net) {
++        error_setg(errp,
++                   "vhost-net requested but could not be initialized");
++        return false;
++    }
++
++    /* vhostfd ownership is passed to s->vhost_net */
++    s->vhostfd = -1;
++
++    return true;
++}
++
+ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              const char *name,
+                              const char *ifname, const char *script,
+@@ -756,30 +790,10 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+     }
+ 
+-    if (vhostfd != -1) {
+-        VhostNetOptions options;
+-
+-        options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+-        options.net_backend = &s->nc;
+-        if (tap->has_poll_us) {
+-            options.busyloop_timeout = tap->poll_us;
+-        } else {
+-            options.busyloop_timeout = 0;
+-        }
+-        options.opaque = (void *)(uintptr_t)vhostfd;
+-        options.nvqs = 2;
+-        options.feature_bits = kernel_feature_bits;
+-        options.get_acked_features = NULL;
+-        options.save_acked_features = NULL;
+-        options.max_tx_queue_size = 0;
+-        options.is_vhost_user = false;
+-
+-        s->vhost_net = vhost_net_init(&options);
+-        if (!s->vhost_net) {
+-            error_setg(errp,
+-                       "vhost-net requested but could not be initialized");
+-            goto failed;
+-        }
++    s->vhostfd = vhostfd;
++    s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++    if (!tap_setup_vhost(s, errp)) {
++        return false;
+     }
+ 
+     return true;
 -- 
 MST
 
