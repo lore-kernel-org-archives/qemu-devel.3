@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449ADC88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2613C88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ppO-0007cX-GK; Thu, 10 Sep 2026 21:13:27 -0400
+	id 1x4pqT-0008HH-1I; Thu, 10 Sep 2026 21:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQD-0001ny-PS
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:30 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0001k6-3j
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ7-0007It-7K
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:10 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49b0d78a801so3505265e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:43:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPv-0007G8-6a
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:59 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49d1fb0cf5eso2906695e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083781; x=1789688581; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083771; x=1789688571; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WH4NtQS27vnM9CBskaa8A4wfHHtgS6Dz+fFxVJqp21Q=;
- b=lVrmdp1LMxvSVaWL4msmkJ5uOa0oIgh89MiCTtGHZkhz8gh1kPtDRNnb3F3l3tNY6U
- hzGtjyO7k46+4F+epLRzP8+3LELcrsm4/3XlVUQ70dS2ezjn/iVBrYrIElgNRRSxPM3c
- TsyfNjp7XFLUJP4iDLQe61E0IiYVADwCc19SWtuqG2v+93jEBCQNbp3tP37o+4/babna
- Zy/Edc0QX6i+RG7DRP+5XCoePr/0DTAkpCGby+nvunolrlgcJU66ibYbHg8G1q/4okUR
- aQavHbugPY9USpCew5myGg/hZ8AE21o+b7j17e3P89n6hpPyMKvIGtUnhrySwv3K8HzT
- mj0A==
+ bh=vF+6ndrGLXKQZTWxC6EFwxN5nkIplvn1xYCLbrS7Iiw=;
+ b=hE2AsHPO7iItjPaK2FRzPWMpgBufMch0IVmmicilTvjMfHJBfkAM4HJMWEERiuL8GK
+ OA5GlViTFJSoe6+/DCVzQQac6eDaYLzNUCw9nn+XCDhNavBOL72H+ATd5RcAn87L5Pny
+ Kb84/yG0gv1jhKmMENTwgJ+6vvXTbtzK0iA+RBhGirMsiXZTh+q08BKCmFloKvmL+eam
+ Z968NvAkRrr2cQ3Q5NuTW+IBOTEYF7k4VVzVq/LqFV+2SC6gLnVhZAcM3iFRhn44xzTL
+ hhaTw/iPf6lt8pMQ2zdSisutk/+5nHhR+yz9cpxdmKMkYtWFo5FfNp9LftrVnaoaJ4+D
+ femQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083781; x=1789688581;
+ d=1e100.net; s=20251104; t=1789083771; x=1789688571;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=WH4NtQS27vnM9CBskaa8A4wfHHtgS6Dz+fFxVJqp21Q=;
- b=JmCAUhnHHOv3PWRhCkoLzCG6/xMiPEbtjTPsA9bmR3KieoYCGwx7E9STQhOoRjHtmO
- u1H6P2uKHvtxDAALPRwek+SvLDdlTB6AH2FI/LR4M5KFEfhkrVdy1UCpdOt1aJ4+t2eI
- i2kSnph2cgg/4RtiY84nAHT7N3o1FWssiCtnpXUhAP6dfl6Z9it5Q4DYBWrdk/FjQkFo
- iLfD92RZBlv1CAZR01eyEMuMWkiRhYHeWXO1wownbX4aDyrnKBbKc3FUsbPqe0QTAiJ5
- dCY7vV9omxwVK1Z8D/yZnmD+SVB8vTaOCk8EAzzGc1pqSqLRa2pB/Ekwrr/zgfDLh+aJ
- hVlg==
-X-Gm-Message-State: AFuF++npNmejEzzPdgfyyUQMWmunb6aWAoeLSubheyTTnv6JCTOFh7Pp
- f9zeUqKOUvFoCOmLpOKlKNxaxU65YtTH22GpTi3edQrUbrY/fBa3eduz4JwaNItgBIY=
-X-Gm-Gg: AYBFou3xnYP9OpUQziLj4DhTW7SYS459IskDfJ62PPCDYK9MdTKFY3yTjyLDeU84HFK
- 4dMTDNk6yu9kpMyeLovahE85p46EZDrQB9I2gleYkhIWib8pf3GxsWHG5XQ/h6A3YFZWFaK5f6L
- OhZIxX1scWCZQJ9GzGaX5GUCH4YI8PwjuvH8pWIJqq8Jmvt2DNEJrQx86OCdhaLwLN0QbBaFQVl
- E/QkPBWXttBMLSHPgHvquD71gXeoEUb+L8/7XD+5YS+ifVqvRNuFbB/76ajsP2mLg7xICMW17eH
- KBG1DZgTTcTI72MWdofoH7bqL46oNsMsBZlavs71uCnbDKrihm6SzUT8fDDjft2B/nnGz5ob11C
- wECuLg3cyrtqDeC2Po9Ya/9mmz+YwIcqzuRK8ouWMq6Gw+bm/048WpJn5aZ17Oshh+08dYH6Qhd
- DaNkGo55WyS4AYe5t8mPfOXKx3VZZcmvjegvTUFUHihkfB+O4/3hhEsEb87AplHY04IRx+
-X-Received: by 2002:a05:600c:3b1f:b0:49c:cee2:1697 with SMTP id
- 5b1f17b1804b1-49e619e0f85mr14174575e9.16.1789083781264; 
- Thu, 10 Sep 2026 16:43:01 -0700 (PDT)
+ bh=vF+6ndrGLXKQZTWxC6EFwxN5nkIplvn1xYCLbrS7Iiw=;
+ b=b5cweRpP9ou11NLBZjcFneZHuEHcDLLbt5+fosesud8QVWRrAEf4GRJ7HtrHtW1i7Y
+ Z35r26r2BY7laJW3mo5Yi+adAILnukYEZ+gNRFk+nSug0eOGvaQB5O12fNT1hceT0HkD
+ XW1x9e3aCvPPJlAYakADh1htSNMAHGDlNAwqqkvXBfGddkO8Gm7horaNeXpcgSpdiHAE
+ gbEvCQfgqA8CgSUbZbLMoco9dyNdNKQgpxbyHPRkmgjIEdxDR9GtG7w98WjbyHU0Mp3d
+ YbIAXFQIJF7y6kDD0gdMizTCFFj64CGyAgfrFKx5K6j+M4d7Ia7ncbJWUdMy+XJtlwYO
+ It1Q==
+X-Gm-Message-State: AFuF++kMCsaEslf8HMoUeZSPMd4xIOlFNdhWwdQNbpwKV2CZoIqDIFiC
+ 2i9m0cvgDETdFqXeDJie1TwRc5/x7NgHT4TP9dMA1+XCkVpo9RtRiwsEJ7E2yMTi26k=
+X-Gm-Gg: AYBFou3JkxepMaVacI/PpKu8zuWGe5LjQPgCL9x52u3KVjxKRI/By6QjL5ev5gEeKs7
+ RGsf4VSKK83E1zsKVfdKsO33MuxmVUk1OJhB+TBBdhDf+G5Sbhtx+p/53SWfNnOObDyuuvk8pu6
+ NkS0jiLTXGpsqvEtNtP4aDvgElMr3tlEhZF6sbVQeyP7rbbp9RR79A3mPGjrEXRZgKYJXE+6KVz
+ O9LZuoe+bMUuWK4IWMy2pBYBX+H+Uoaj6ei+0jYLl4//qSb8GMF53WoC0m82y84tS9uGVvzsXzV
+ ig1eqdLiHc7X04/Wy7uJ6Aj14YVVj/szfbYtRIIN6n8pdwcu0aRir5S6F1yT9Pp+WVrWrTM24VD
+ DL2L/tFnTT2sbro0cnpse3Ccfft+d7MFS3vTu53DIoxTG9i/XWYLo5jIxKAZe2bwTslUnPAYb8N
+ d4ztFoqPjCnU1N3ZhqLDYavSHi8lwEXTHc9xJbGy17ZIgc8k1zCJWkZYvk+OBxWZlHfjB9
+X-Received: by 2002:a05:600c:3b11:b0:49c:f617:7cf with SMTP id
+ 5b1f17b1804b1-49e61645c2fmr26511985e9.0.1789083771563; 
+ Thu, 10 Sep 2026 16:42:51 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.59
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:43:00 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:50 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Subject: [PULL 28/29] tests: Turned on 256, 299,
- 304 and block-status-cache for parallels format
-Date: Fri, 11 Sep 2026 01:42:21 +0200
-Message-ID: <20260910234222.3039975-29-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 20/29] parallels: Handle L1 entries equal to one
+Date: Fri, 11 Sep 2026 01:42:13 +0200
+Message-ID: <20260910234222.3039975-21-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,71 +98,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+From: Denis V. Lunev <den@openvz.org>
 
-These tests pass with parallels format. Add parallels to supporting
-formats for these tests.
+If all the bits in a dirty bitmap cluster are ones, the cluster shouldn't
+be written. Instead the corresponding L1 entry should be set to 1.
+
+Ask bdrv_dirty_bitmap_next_zero() for a clean bit in the range the entry
+covers, and store the marker when there is none. Two things have to
+match the region rather than the cluster which serializes it: the search
+is bounded by the end of the region, as a count and not as an offset, and
+a missing clean bit is the answer we are looking for rather than a reason
+to give up. A dirty run is not a substitute for either. Its length says
+nothing about the region it lies in, so comparing it to the cluster size
+marks a chunk as all ones when only a cluster worth of it is dirty, and
+treating "no clean bit at all" as a failure leaves the entry at zero,
+which says the whole chunk is clean.
+
+Both directions are silent: a full disk overwrite comes back as a
+completely clean bitmap, and a single dirty cluster comes back as
+everything the entry covers being dirty. An incremental backup driven by
+the first one copies nothing.
+
+The marker goes through cpu_to_le64() like the cluster offsets below it,
+as the loading side reads the table with ldq_le_p(). The serialization
+moved behind the check, as there is nothing to write when the marker is
+stored.
+
+Based on the original work from Alexander Ivanov.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qemu-iotests/256                      | 2 +-
- tests/qemu-iotests/299                      | 2 +-
- tests/qemu-iotests/304                      | 2 +-
- tests/qemu-iotests/tests/block-status-cache | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ block/parallels-ext.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qemu-iotests/256 b/tests/qemu-iotests/256
-index f34af6cef7..1a4c9c6885 100755
---- a/tests/qemu-iotests/256
-+++ b/tests/qemu-iotests/256
-@@ -26,7 +26,7 @@ from iotests import log
+diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+index e89c489730..6a889d86fa 100644
+--- a/block/parallels-ext.c
++++ b/block/parallels-ext.c
+@@ -439,12 +439,20 @@ static int GRAPH_RDLOCK parallels_save_bitmap(BlockDriverState *bs,
+     offset = 0;
+     while ((offset = bdrv_dirty_bitmap_next_dirty(bitmap, offset,
+                                                   bm_size)) >= 0) {
+-        int64_t cluster_off, end, write_size;
++        int64_t cluster_off, end, write_size, first_zero;
  
- iotests.verify_virtio_scsi_pci_or_ccw()
+         idx = offset / limit;
  
--iotests.script_initialize(supported_fmts=['qcow2'])
-+iotests.script_initialize(supported_fmts=['qcow2', 'parallels'])
- size = 64 * 1024 * 1024
- 
- with iotests.FilePath('img0') as img0_path, \
-diff --git a/tests/qemu-iotests/299 b/tests/qemu-iotests/299
-index a7122941fd..d8c4399446 100755
---- a/tests/qemu-iotests/299
-+++ b/tests/qemu-iotests/299
-@@ -23,7 +23,7 @@ import iotests
- 
- # The test is unrelated to formats, restrict it to qcow2 to avoid extra runs
- iotests.script_initialize(
--    supported_fmts=['qcow2'],
-+    supported_fmts=['qcow2', 'parallels'],
- )
- 
- nbd_sock = iotests.file_path('nbd.sock', base_dir=iotests.sock_dir)
-diff --git a/tests/qemu-iotests/304 b/tests/qemu-iotests/304
-index d465a519a9..03c7c1cbe3 100755
---- a/tests/qemu-iotests/304
-+++ b/tests/qemu-iotests/304
-@@ -23,7 +23,7 @@
- import iotests
- from iotests import qemu_img_create, qemu_img_log, file_path
- 
--iotests.script_initialize(supported_fmts=['qcow2'],
-+iotests.script_initialize(supported_fmts=['qcow2', 'parallels'],
-                           supported_protocols=['file'],
-                           require_hmp=True)
- 
-diff --git a/tests/qemu-iotests/tests/block-status-cache b/tests/qemu-iotests/tests/block-status-cache
-index 5a7bc2c149..ade3d5b169 100755
---- a/tests/qemu-iotests/tests/block-status-cache
-+++ b/tests/qemu-iotests/tests/block-status-cache
-@@ -131,5 +131,5 @@ class TestBscWithNbd(iotests.QMPTestCase):
- if __name__ == '__main__':
-     # The block-status cache only works on the protocol layer, so to test it,
-     # we can only use the raw format
--    iotests.main(supported_fmts=['raw'],
-+    iotests.main(supported_fmts=['raw', 'parallels'],
-                  supported_protocols=['file'])
+         offset = QEMU_ALIGN_DOWN(offset, limit);
+         end = MIN(bm_size, offset + limit);
++
++        first_zero = bdrv_dirty_bitmap_next_zero(bitmap, offset, end - offset);
++        if (first_zero < 0) {
++            l1_table[idx] = cpu_to_le64(1);
++            offset = end;
++            continue;
++        }
++
+         write_size = bdrv_dirty_bitmap_serialization_size(bitmap, offset,
+                                                           end - offset);
+         assert(write_size <= s->cluster_size);
 -- 
 2.53.0
 
