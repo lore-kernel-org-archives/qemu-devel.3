@@ -4,96 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA46BC79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA10EC79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Zzq-0004GF-G2; Thu, 10 Sep 2026 04:19:02 -0400
+	id 1x4a8n-0004sz-FM; Thu, 10 Sep 2026 04:28:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4Zzo-00041i-Of
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:19:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1x4a8h-0004sg-01; Thu, 10 Sep 2026 04:28:12 -0400
+Received: from [115.124.30.98] (helo=out30-98.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x4Zzm-0004wK-U8
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:19:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789028338;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TYeXAmDf1Odc7i8PeL79UpH2Py/hNhTm0ExEtDUltCQ=;
- b=T8IOIYLcY65LPpv3gAg9wjIRm/lAY64cZMiEl8Rx1Txdf/1ziBwErTQPIvyt9d9FBq+NlB
- 43HiooqFF2hyoR8UEhQWn7kT/43RVIGTImWfNqgJjr/raXP13MOJq2TIVuOIA7//2F/6ej
- fx7hqBGAhSJ1ikkVeQcYtpGYWgcjykA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-pZTF5j6lOlmyFLp8lNEmCA-1; Thu,
- 10 Sep 2026 04:18:54 -0400
-X-MC-Unique: pZTF5j6lOlmyFLp8lNEmCA-1
-X-Mimecast-MFC-AGG-ID: pZTF5j6lOlmyFLp8lNEmCA_1789028333
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A58B918005A3; Thu, 10 Sep 2026 08:18:53 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D6908433; Thu, 10 Sep 2026 08:18:52 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 10 Sep 2026 12:17:45 +0400
-Subject: [PATCH v4 17/24] virtio-gpu: drop scanout_bitmask bookkeeping
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1x4a8c-0005rs-OY; Thu, 10 Sep 2026 04:28:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1789028862; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=rkSnx/GQeg9APdNHHwL1adq+4nP9SbNAwBngF2KyBUA=;
+ b=SVRccIqlKaTvylpClouBiNO8mo8SrsOLCHbDqcSwxOu/2XL+OkKKQcijKzf5R6KLgxCT6QzCfDuymsDKo4oDebI+DpSt8yZnhCCmP2lw/WRj14TpfceYHa7u2r99gArGAb7qhdyjALoWHdtWTiKU9c2jvqt/8GYnSeWdIjpZZRU=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=12; SR=0;
+ TI=SMTPD_---0XAgyfkU_1789028860; 
+Received: from 30.166.81.91(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0XAgyfkU_1789028860 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 10 Sep 2026 16:27:41 +0800
+Message-ID: <8c49bd27-39e6-4441-8391-e6952220e802@linux.alibaba.com>
+Date: Thu, 10 Sep 2026 16:27:40 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/14] RISC-V TCG PMU correctness fixes
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
+ <083828b1-5847-4fb7-8872-725dac0c2f1a@oss.qualcomm.com>
+From: TianCheng TANG <lyndra@linux.alibaba.com>
+In-Reply-To: <083828b1-5847-4fb7-8872-725dac0c2f1a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260910-virtio-gpu-cleanup-v4-17-7d623714bd71@redhat.com>
-References: <20260910-virtio-gpu-cleanup-v4-0-7d623714bd71@redhat.com>
-In-Reply-To: <20260910-virtio-gpu-cleanup-v4-0-7d623714bd71@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- Alex Williamson <alex@shazbot.org>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3592;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7Xe5PKyYiFdYI1lfnr9DrXWRq+TC3ng9j+1LCsQI3Lo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqomeoho4FI3GA51hWPtPaqBewz2poMJv/YHD6A
- FZb97kDrM6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqJnqAAKCRDa6OEJdZac
- 5a/hD/4r4zuZFcmKWU3ufnOV73KOdm0Z5fcQ5G80uZWF/94URAy8kYKD/HvtT/h7nSmmNMpSZSX
- inBhLtmbjTqN9CrQZBFRTO0kSMgxc+CXkAR9gSs5UPRTdEptAwBnW0SZHmlA/cvFan9fhvHBNvZ
- 4erayay820OYTa3rs+ILqzZ/x1AsuS/4OTqlBeXqP+vxLIhCmYUUsUUjvvmLL4b+oMOrWlNHFdj
- 3Yw1ZC6ZZaiepri8AcFG/1I5YA7xgGV+bRuPq9QE84mMaXE+f6HPePxkzgLmgg1OwsZeaGREHzp
- lgm5PFo+l2KgOCJN8/JlDkMCyDeJLL6vWr4K9TgHHlaB8w05paGxu004MpP4R2jva+giaCIgKaW
- K/FsmJ4GJrVqZ7m6fb4Ig8S0DzoKsBRjLXLTT86tDPhbhHXDbnr+Do7A4shzNaQcDNLHn7WKLDr
- C3IZ+Bzvm/0xqq8caJ7sOmBsf8ikFsYwEI4pXZ1zgV9EPxPJGVgyDyre05G+2bai08cMKBAidly
- 0/VOosc8KSvB7EtiJVGI4fyEqezm+THAw93nEmF2/qc+bj001Un1bkRZRmkWkb1FOiZbeEnDhUT
- Jplti/mNjVrzNlOpKLRpFDZSevR5Kgpga/Y5i/B9KefD0z5dFjGecnayaXtOxj5fcQwI5k8A1pC
- YR9O0ekXa3jyGbA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.98 (deferred)
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RDNS_NONE=0.793,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,102 +77,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The per-resource scanout_bitmask is a reverse index of which
-scanouts reference a given resource. The information is already
-available from scanout->resource_id. Performance impact should be
-negligible.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/display/virtio-gpu.c        | 26 +++++---------------------
- include/hw/virtio/virtio-gpu.h |  1 -
- 2 files changed, 5 insertions(+), 22 deletions(-)
+在 2026/9/10 04:49, Daniel Henrique Barboza 写道:
+> Hi Tang,
+>
+>
+> I took a look in all patches and they all look LGTM code-wise. But seems
+> like we need a new version of all patches rebased on top of a recent
+> master, using a new meson framework instead of Makefile, otherwise 
+> check-tcg
+> won't be able to run them.  In theory is as simple as adding entries in
+> tests/tcg/riscv32/system/meson.build and 
+> tests/tcg/riscv64/system/meson.build
+> instead of Makefile.softmmu-target.
+>
+> Given that the series is based on the v1 of "target/riscv: fix RV32 
+> fixed counter
+> accesses"  I believe you can re-send v2 based on the new version 
+> Zephyr Li
+> sent:
+>
+> [PATCH v2] target/riscv: fix RV32 fixed counter accesses
+>
+> This v2 has additional scaffolding for meson tcg tests for riscv32.  
+> Might as well
+> use it to rebase this work.
+>
+Hi Daniel,
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index bcde65b50349..6e021b78b890 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -434,12 +434,6 @@ static void virtio_gpu_release_scanout_dmabuf(VirtIOGPU *g, int scanout_id)
- void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
- {
-     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
--    struct virtio_gpu_simple_resource *res;
--
--    res = virtio_gpu_find_resource(g, scanout->resource_id);
--    if (res) {
--        res->scanout_bitmask &= ~(1 << scanout_id);
--    }
- 
-     virtio_gpu_release_scanout_dmabuf(g, scanout_id);
- 
-@@ -456,11 +450,9 @@ static void virtio_gpu_resource_destroy(VirtIOGPU *g,
- {
-     int i;
- 
--    if (res->scanout_bitmask) {
--        for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
--            if (res->scanout_bitmask & (1 << i)) {
--                virtio_gpu_disable_scanout(g, i);
--            }
-+    for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-+        if (g->parent_obj.scanout[i].resource_id == res->resource_id) {
-+            virtio_gpu_disable_scanout(g, i);
-         }
-     }
- 
-@@ -639,10 +631,10 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-         QemuRect rect;
- 
--        if (!(res->scanout_bitmask & (1 << i))) {
-+        scanout = &g->parent_obj.scanout[i];
-+        if (scanout->resource_id != res->resource_id) {
-             continue;
-         }
--        scanout = &g->parent_obj.scanout[i];
- 
-         qemu_rect_init(&rect, scanout->x, scanout->y,
-                        scanout->width, scanout->height);
-@@ -667,16 +659,9 @@ void virtio_gpu_update_scanout(VirtIOGPU *g,
-                                struct virtio_gpu_framebuffer *fb,
-                                struct virtio_gpu_rect *r)
- {
--    struct virtio_gpu_simple_resource *ores;
-     struct virtio_gpu_scanout *scanout;
- 
-     scanout = &g->parent_obj.scanout[scanout_id];
--    ores = virtio_gpu_find_resource(g, scanout->resource_id);
--    if (ores) {
--        ores->scanout_bitmask &= ~(1 << scanout_id);
--    }
--
--    res->scanout_bitmask |= (1 << scanout_id);
-     scanout->resource_id = res->resource_id;
-     scanout->x = r->x;
-     scanout->y = r->y;
-@@ -1707,7 +1692,6 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-         if (scanout->cursor.resource_id) {
-             update_cursor(g, &scanout->cursor);
-         }
--        res->scanout_bitmask |= (1 << i);
-     }
- 
-     return 0;
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index c2018b41056f..071cbbb6113e 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -51,7 +51,6 @@ struct virtio_gpu_simple_resource {
-     uint64_t *addrs;
-     struct iovec *iov;
-     unsigned int iov_cnt;
--    uint32_t scanout_bitmask;
-     pixman_image_t *image;
-     qemu_pixman_shareable share_handle;
-     uint64_t hostmem;
+Thanks for reviewing the series.
+I'll send v2 based on current master and Zephyr's v2, with the tests 
+converted to Meson.
 
--- 
-2.55.0.543.g5ebe2ebe4ea8
 
+Thanks,
+Tiancheng Tang
+
+>
+> Thanks,
+> Daniel
+>
+>
+> On 9/6/2026 1:37 PM, TANG Tiancheng wrote:
+>> This series fixes RISC-V TCG PMU accounting, overflow notification, and
+>> migration. It is based on Zephyr Li's "target/riscv: fix RV32 fixed
+>> counter accesses" [1], which is a prerequisite and is not included here.
+>>
+>> The patches allow multiple HPM counters to select the same event and
+>> preserve counts across selector, privilege-filter, and inhibit writes.
+>> They use consistent cycle/instruction sources and compute the shared
+>> overflow deadline from all eligible counters. Timer callbacks queue
+>> checks on the owner vCPU instead of racing MTTCG execution.
+>>
+>> Migration saves counter values including pending increments and restores
+>> destination-local source baselines, event mappings, and overflow
+>> scheduling. A new cpu/pmu-fixed subsection carries mcyclecfg/minstretcfg
+>> and identifies this format. All TCG CPUs require the subsection; loading
+>> older TCG streams without it is rejected. Source and destination still
+>> need compatible CPU configurations. KVM PMU migration is unchanged.
+>>
+>> The reset changes preserve the final counts in the old privilege/V mode
+>> before entering M-mode with V=0.
+>>
+>> TCG tests cover RV32/RV64 counter accesses, delegated registers, 
+>> selector
+>> and filter changes, multiple counters per event, overflow notification
+>> with and without Sscofpmf, instruction exceptions, and reset. The RV32
+>> HPM tests also cover full-width accesses through the shared counter 
+>> path.
+>>
+>> [1] 
+>> https://lore.kernel.org/qemu-devel/20260905092810.660-1-fritchleybohrer@gmail.com/
+>> Based-on: <20260905092810.660-1-fritchleybohrer@gmail.com>
+>>
+>> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+>> ---
+>> TANG Tiancheng (14):
+>>        target/riscv: Preserve PMU state across event selector writes
+>>        target/riscv: Support multiple counters per PMU event
+>>        target/riscv: Use VM-elapsed sources for fixed PMU events
+>>        target/riscv: Preserve MINH on delegated config reads
+>>        target/riscv: Preserve minstretcfgh on RV32 minstretcfg writes
+>>        target/riscv: Fix RV32 accesses to delegated PMU registers
+>>        target/riscv: Preserve fixed counters across PMU state changes
+>>        target/riscv: Require Sscofpmf for non-fixed event overflow
+>>        target/riscv: Rebuild fixed-event PMU overflow deadlines
+>>        target/riscv: Apply minstret exception accounting to HPM counters
+>>        target/riscv: Process PMU timer expiry on the owner vCPU
+>>        target/riscv: Migrate fixed PMU counter state
+>>        target/riscv: Clear virtualization mode on reset
+>>        target/riscv: Preserve fixed PMU state across reset
+>>
+>>   system/cpu-timers.c                         |   4 +-
+>>   system/cpus.c                               |   6 +-
+>>   target/riscv/cpu.c                          |  17 +
+>>   target/riscv/cpu.h                          |  14 +-
+>>   target/riscv/machine.c                      |  92 +++-
+>>   target/riscv/tcg/cpu_helper.c               |   2 +
+>>   target/riscv/tcg/csr.c                      | 281 +++-------
+>>   target/riscv/tcg/pmu.c                      | 793 
+>> +++++++++++++++++++---------
+>>   target/riscv/tcg/pmu.h                      |  29 +-
+>>   target/riscv/tcg/tcg-cpu.c                  |  10 +
+>>   tests/tcg/riscv32/Makefile.softmmu-target   |  42 ++
+>>   tests/tcg/riscv32/pmu-fixed-rv32.S          |  90 ++++
+>>   tests/tcg/riscv32/pmu-minstretcfg-rv32.S    |  48 ++
+>>   tests/tcg/riscv32/smcdeleg-counter-rv32.S   |  84 +++
+>>   tests/tcg/riscv32/smcdeleg-event-rv32.S     |  69 +++
+>>   tests/tcg/riscv32/smcdeleg-minh-rv32.S      |  70 +++
+>>   tests/tcg/riscv32/sscofpmf-event-rv32.S     |  91 ++++
+>>   tests/tcg/riscv64/Makefile.softmmu-target   |  63 ++-
+>>   tests/tcg/riscv64/pmu-cycle-controls.S      | 104 ++++
+>>   tests/tcg/riscv64/pmu-lpad.S                |  69 +++
+>>   tests/tcg/riscv64/pmu-reset-vs.S            | 102 ++++
+>>   tests/tcg/riscv64/smcdeleg-minh.S           |  70 +++
+>>   tests/tcg/riscv64/smcdeleg-sxl32.S          | 219 ++++++++
+>>   tests/tcg/riscv64/sscofpmf-cycle-overflow.S |  58 ++
+>>   tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++
+>>   tests/tcg/riscv64/sscofpmf-overflow.S       | 134 +++++
+>>   tests/tcg/riscv64/test-minstret-ecall.S     |  26 +
+>>   27 files changed, 2223 insertions(+), 467 deletions(-)
+>> ---
+>> base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
+>> change-id: 20260827-riscv-pmu-correctness-fa880fd9c48d
+>> prerequisite-message-id: 
+>> <20260905092810.660-1-fritchleybohrer@gmail.com>
+>> prerequisite-patch-id: 3dfb379e910f47acaa9e94ac5766045f86e76799
+>>
+>> Best regards,
 
