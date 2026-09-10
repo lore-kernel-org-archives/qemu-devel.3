@@ -4,110 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E9AC88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EF2C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4oUc-0002t6-4M; Thu, 10 Sep 2026 19:48:04 -0400
+	id 1x4o1M-0002oz-TT; Thu, 10 Sep 2026 19:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lTj-0005uF-7G
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:35:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVJ-0006JO-2M
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lTR-0003BG-6e
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lV5-0003jW-2f
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072383;
+ s=mimecast20190719; t=1789072452;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SgB+S9u3GSAcq8/Uuupwqbwj/4AB+NAz4BxPvnZlGUs=;
- b=epF8NG8hzj0WKDkMmAUlq5SzA2QDx8W3pI+XFKlXzOuOghQJZb1uzpvizoyQiq38j3DJKf
- P3aOeK33fLcmowftEVnD7+dlYL9HtO2XaNv2uCTG3tps1FAXjoMwbUv8jn4LYlMzaA9Qzt
- 8sL7V2srVmOfFcPYRs12RYivtWPjnbM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ztrp18hGYXHuUYyUKf9DJwGmlf0B2MNBYEJ6m3HjUYc=;
+ b=CjhrmFo0Ai2ckOl998ZOMpy+aXrG1zp1moH7RTZ5NaRiimLZmwURj7B8O6OUYSuSOU0P+/
+ TdPlGY48t7ZA4KtSamZXKuPETRP1RLDVSCCFOmsrNhHfRai+M1D7xvO6pI3Tzhj5sOvVNM
+ aJSuyNx+KxWBgB8NmF6FtcKOWPTmqs8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-Pd7bbjUNNFKgWGgudRia1A-1; Thu, 10 Sep 2026 16:13:03 -0400
-X-MC-Unique: Pd7bbjUNNFKgWGgudRia1A-1
-X-Mimecast-MFC-AGG-ID: Pd7bbjUNNFKgWGgudRia1A_1789071182
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-482f763db88so47200f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:03 -0700 (PDT)
+ us-mta-156-8LlQ_Tc8N_SORNqVk7769g-1; Thu, 10 Sep 2026 16:14:36 -0400
+X-MC-Unique: 8LlQ_Tc8N_SORNqVk7769g-1
+X-Mimecast-MFC-AGG-ID: 8LlQ_Tc8N_SORNqVk7769g_1789071275
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49d2951089fso1566465e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071182; x=1789675982; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=SgB+S9u3GSAcq8/Uuupwqbwj/4AB+NAz4BxPvnZlGUs=;
- b=dfaqVToegu2f9z5DT1dtsJcK7NzzeDoQEIhws0R9u5RLZI2O/08q20JRdo0RoIfHZh
- zTMuwZcRFd+kddpAqTnj0wLOXHTct8RmI+NwO5SEKrgGIW8yVmsX3HY2I8mFv2q9RxYC
- EJC6IDiI4R33Xi5Yj7exyUlSPSHqrY8gAxII9hq+ClPfSWB0ctNrSXaGowd8O5F3drEP
- upGK/v5TYKunVWWo+kLsS6djkb0T99/A4MhMkymuIog7xVCt+zomccIWoSA+Ao6EPn0o
- +giAHfDuPkfl7mI9V2o9CTmwQu/bToDIqrp2t6RxeX61E6/DFZGqgLnLxb/ENKpBkezW
- KVKw==
+ d=redhat.com; s=google; t=1789071275; x=1789676075; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ztrp18hGYXHuUYyUKf9DJwGmlf0B2MNBYEJ6m3HjUYc=;
+ b=IeAsOWhypvBD2ZyyZAWGMYUbyiK+ILaBlg3h2E5jm1ivj8kaiqc/a5u6lYxPPty2ro
+ HOJYbD8vbsZkaTWgneoz6Uex5v4aAc+KgYwsozpP3tM9hDz0LQ79nnz5XTI59DLqm2cv
+ 01qlv63RSXk/mZyA6aVGjUfKrzzdrEFAK1/h650CWTsShuMuoTfzUI4U+r2uwZvAcqK5
+ g05kTs79mIHkTaB7vZAe+jGZ0uIJ5W7W8hs6Q5V/MxV+JPmw245Af31A2pZGT/1eDApq
+ zqMoZx/H5UEjHKw0i6Z5gQQQ9swx6CoTn5KhawRj2WRPm2TU7MObkpBKesSpk/fzXYWD
+ cDpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071182; x=1789675982;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=SgB+S9u3GSAcq8/Uuupwqbwj/4AB+NAz4BxPvnZlGUs=;
- b=i/aoZZ+roGVqZtyOm5JdrAg46JNfW7LX9qYg1oUbjzLS+QHIQ/sgDhK0uCceYGq90k
- VXB3YPP3TKyjZ7lw55JrqQSZQe821INETYw2PoMHrnPYoARtGtKPTBUz3AFvDiMH9M1d
- uIQiyw4CX8evTllqGfzhuvcYozfKGeUl9feN0oPtb2JFaQ5TFYuymkVRSymvKi6GBegx
- b/L+8rtQh/8UH4tvAO4drvmEAtzIz8WNRfmCXhobhGkkshkGXbgPg/Wzj9y/nvWVc4bE
- lw7/9r77KRm5Dfq5JSZMOCy2kfcVBK6K50OfKmD+f55p2t6ru5m+sne5zu6gXotZc8FN
- Bp/w==
-X-Gm-Message-State: AFuF++l3MhP47B/9+JCsYicx0ybxcRr+g4pV15F7zMCt4v1IQSTrnnh3
- RPAh4sUmDjw7hyipIG2jFrWYTNu3+UTaRdL4u/zEYixWX/P2uBoCn0iuUIUW9ZEKqTHCTOkHK9M
- vLh54TK3lidjR/+5uiNFpEaOhFYyzyUqkI48G2nOlNr2Fczt7dtzjlaX+Pi0cvSacnnfGP8u+RM
- HIB3/aGPs2WYLeBMvoQMdALT8zEEJ7Ag9hxQ==
-X-Gm-Gg: AYBFou0P0+5/gpZ9FPqFaa4NPD6CqlzS8bpvHngrCtpByBkd85XQXjMQ8EgQ1LtM5c+
- 0Epk2R+YsxiLpZ+x93MopuLHgvwUEq9YCVZKMbU1lghOHumDOXfQDGVcU6+YqqXCIul0FS6eyDn
- ikXvM0j+AK+WvAbNqZrLRkr4FEipvImRsT39tVsJzUOgeq5+Yljbctz0Sz+KKgzS606KKzv2yNT
- MB9hpNx0Va8t+0M4YVryIQyKyYDoNYTbT2fJxM3v6ycspnaTcfRj6dwzHpXWHP6MtaqCpmAYGnt
- HWx2mDKhAC2PtpwNPEGOnk7EulSM1sdrb1VdSl9GZ6aJl8iLwMZbmMe8/ujHp0dw8PnzlCNYUrR
- wqP4BmtxbmWts9RvPy/H8W4A=
-X-Received: by 2002:a05:6000:384:b0:482:e124:836f with SMTP id
- ffacd0b85a97d-486eb1d99afmr639097f8f.3.1789071182054; 
- Thu, 10 Sep 2026 13:13:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:384:b0:482:e124:836f with SMTP id
- ffacd0b85a97d-486eb1d99afmr639058f8f.3.1789071181564; 
- Thu, 10 Sep 2026 13:13:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789071275; x=1789676075;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Ztrp18hGYXHuUYyUKf9DJwGmlf0B2MNBYEJ6m3HjUYc=;
+ b=oJ+Uj1MACi4Irv4oD0XSpxHHfTw7bB6pHdLbvodru406wb5VP/sJfclFOSxofzrBY7
+ iZRwXOgQ4q6UB7vTzUwPsWtHYz/uOSQjtSAppo7E4Pmlv310wOyQAzeuHUWrA1Li8+oK
+ vfiR/jNiGWIjCdf3wA4qU8mCIeeS+0U6W7cED5zuoXz4DcShy09ofUo3CjGxarmqubiu
+ vmK4z4QWYRKIrJbBkR1O9esha/qufKS9J69ICq7vbgy7/oxqitIUWKNCUk4pxjF/QXuc
+ 2Obiwq67nKR5Eog5TF/mit6/Xs644eeEe8uTOgAyw+bGBia0b82mSspaxCbrut0x9AUK
+ D5XQ==
+X-Gm-Message-State: AFuF++kIJyGXRg9dP4lfE5mLed5gHdi7smM37gJ9tJdiN3befW6my+XO
+ oPYNeuITeMrbJI+oQ00oim+L2FUYlqknBpFtALQAW3R61w7enfslRYcysN2Chr5beDrtqZfAGEa
+ SvV3s8Z/EkBSMfA+eBdj3vCAlgenI53Vjlq8nSfnFeM7IhVf0GSWF/4cGJ+Xp3U/iAcea54YD5K
+ qiyWmSU52ahETishLN31nPj5NevZjNxdzAVA==
+X-Gm-Gg: AYBFou275BV2za19gMmtsoWvINJdHl4y2vYIraURuRuDQ8oGxiY3LBuY6GSLdbCZIKq
+ NZzdzizwNUdn4L3QEEQ3ERqrmIQzEddPgqY88yn8jFDp3+uEdZSDH5iRTkSumjFeeTCbTP7fVc3
+ 4o+Z0f8bKkNApOTaChyU7c/wCdL6+7d+d5Ea+5iNOWfoyrkp9dMZeQwtI6CdA3rjUgh9QcRoTzI
+ V4tR/KUcHZMxeaZK8RbdwoSBHRYCgG9dyqJK4S/X07l0YhppFOhlq/kU72QvNphVXRqWky15ypr
+ QCgpUNy1YaTHZEjlClBB8sssrmL/v0HPZHbIT7CKtM4wPZLoaK5FjHGGuxD3zk+5aBDVIJib/rd
+ kN+LX+WU7330dlx00gU/Yxi4=
+X-Received: by 2002:a05:600c:1385:b0:49c:fa21:1c89 with SMTP id
+ 5b1f17b1804b1-49e619d1daamr6300725e9.30.1789071275443; 
+ Thu, 10 Sep 2026 13:14:35 -0700 (PDT)
+X-Received: by 2002:a05:600c:1385:b0:49c:fa21:1c89 with SMTP id
+ 5b1f17b1804b1-49e619d1daamr6300255e9.30.1789071274795; 
+ Thu, 10 Sep 2026 13:14:34 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb33ee5csm805192f8f.20.2026.09.10.13.13.00
+ 5b1f17b1804b1-49e62121747sm1969385e9.2.2026.09.10.13.14.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:01 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:12:59 -0400
+ Thu, 10 Sep 2026 13:14:34 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Matej Hrica <mhrica@redhat.com>, Albert Esteve <aesteve@redhat.com>,
- Dorinda Bassey <dbassey@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 37/90] vhost-user-gpu: Add shared memory region support
-Message-ID: <ad817502026a0013e2347d606770a5bddfec37dc.1789071042.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
+ Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 74/90] intel_iommu: Always write all the flags passed to
+ vtd_set_flag_in_pte
+Message-ID: <e5b0ad7c0ea8e6b4f35ea344f50a9e3e5cb7a052.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789071042.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,56 +126,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matej Hrica <mhrica@redhat.com>
+From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
 
-Add a 'hostmem' property to the vhost-user-gpu which enables the shared
-memory in the parent object.
+This function was initially designed to write a single flag in a pte.
+The current implementation expects it to set several flags.
 
-Register a container MR in the shmem_list for SHMEM_MAP/UNMAP
-operations. A container MR is used so that SHMEM_MAP FD-backed
-subregions each get their own KVM memory slot with the correct
-backing fd.
-
-Suggested-by: Albert Esteve <aesteve@redhat.com>
-Reviewed-by: Albert Esteve <aesteve@redhat.com>
-Signed-off-by: Matej Hrica <mhrica@redhat.com>
-Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+Fixes: 65c4f0999991 ("intel_iommu: Set accessed and dirty bits during stage-1 translation")
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260717134920.265128-3-dbassey@redhat.com>
+Message-ID: <20260903150649.2281104-3-clement.mathieu--drif@bull.com>
 ---
- hw/display/vhost-user-gpu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/i386/intel_iommu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index cd684d6363..80ab6b773e 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -687,6 +687,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index eccb16346c..91ab549dbf 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -1964,13 +1964,13 @@ static bool vtd_iova_fs_check_canonical(IntelIOMMUState *s, uint64_t iova,
      }
- 
-     g->vhost_gpu_fd = -1;
-+
-+    /*
-+     * If shared memory is enabled, register the hostmem region for
-+     * SHMEM_MAP/UNMAP operations.
-+     */
-+    if (virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-+        VirtioSharedMemory *shmem = virtio_new_shmem_region(
-+            vdev, VIRTIO_GPU_SHM_ID_HOST_VISIBLE, g->parent_obj.conf.hostmem);
-+        memory_region_add_subregion(&g->parent_obj.hostmem, 0, &shmem->mr);
-+    }
  }
  
- static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
-@@ -697,6 +707,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+-static MemTxResult vtd_set_flag_in_pte(dma_addr_t base_addr, uint32_t index,
+-                                       uint64_t pte, uint64_t flag)
++static MemTxResult vtd_set_flags_in_pte(dma_addr_t base_addr, uint32_t index,
++                                       uint64_t pte, uint64_t flags)
+ {
+-    if (pte & flag) {
++    if ((pte & flags) == flags) {
+         return MEMTX_OK;
+     }
+-    pte |= flag;
++    pte |= flags;
+     pte = cpu_to_le64(pte);
+     return dma_memory_write(&address_space_memory,
+                             base_addr + index * sizeof(pte),
+@@ -2043,7 +2043,7 @@ static int vtd_iova_to_fspte(IntelIOMMUState *s, VTDContextEntry *ce,
+             flag_ad |= VTD_FS_D;
+         }
  
- static const Property vhost_user_gpu_properties[] = {
-     VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
-+    DEFINE_PROP_SIZE("hostmem", VhostUserGPU, parent_obj.conf.hostmem, 0),
- };
+-        if (vtd_set_flag_in_pte(addr, offset, fspte, flag_ad) != MEMTX_OK) {
++        if (vtd_set_flags_in_pte(addr, offset, fspte, flag_ad) != MEMTX_OK) {
+             return -VTD_FR_FS_BIT_UPDATE_FAILED;
+         }
  
- static void
 -- 
 MST
 
