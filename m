@@ -4,112 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE489C88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6921C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4nEv-0005yx-4F; Thu, 10 Sep 2026 18:27:41 -0400
+	id 1x4nEx-00060J-ND; Thu, 10 Sep 2026 18:27:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lL5-0002sL-Tk
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:26:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x4lYj-0006vY-Bs
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:40:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lKl-0000Hz-7t
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:25:36 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x4lYd-0005Bo-RF
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:39:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071721;
+ s=mimecast20190719; t=1789072783;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QEbTpBGXkapN3DVQGc/Z0YGHeJnV/+deXbNBxtlR344=;
- b=KX+WKR4RHZRPMN0aGiXmK5YHfdj3HNBvPxnT7gydNB+0F3b09vfwACDU282pXCvcEco9EQ
- KYrDT94GM+M1ltwhUMAM/DS8L6dWtaKCaeCSrDVV1qnOTkU0ldEgAnN50HM/nuQLO+Mzyl
- Svkqik7XWZn9NM424CJHHXGu0/fbreQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-Gq03KTE9PLCd0p480LB_IQ-1; Thu, 10 Sep 2026 16:13:19 -0400
-X-MC-Unique: Gq03KTE9PLCd0p480LB_IQ-1
-X-Mimecast-MFC-AGG-ID: Gq03KTE9PLCd0p480LB_IQ_1789071198
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49b7c1dc61eso981045e9.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071198; x=1789675998; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QEbTpBGXkapN3DVQGc/Z0YGHeJnV/+deXbNBxtlR344=;
- b=F2Y6wmDBh70pxYT8g3A8+hwo5OrPOFQoOg1p4v8tbo6Nb37ZnNissi2M9GtB3OO7Dp
- 1G274lqSX9ve6sE4RzE7Q5hrAdPWSxsUGkf3femOHlUafrukiFqlCvI6ShQTGSESkFtW
- BD7m0eGTanMCGhLpTjazfCgCemJ0UgmCAvDPpmcZ2P0pFjGjE9x8Lr+ARpU5GdFcnHxS
- oCqg/N38oaQvboxkGBmdTJpCZtVjHGL5s+tukmGPzA+CpVbMmrJlv6DxGZNoI75eJQhT
- 8Agi5g7JR2MKa/vRAB7x5Bh/vJsxgHmLUd0tNS5S8eSvbQvSSIz4fjuskt8obbOjpYdt
- xW1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071198; x=1789675998;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=QEbTpBGXkapN3DVQGc/Z0YGHeJnV/+deXbNBxtlR344=;
- b=BWhoGE8DPWnexQ4UkygkPDmA22aNthYrx21AOdCgXXmgp+/XzYf/WyMkjPEP7rBsbP
- AeZAntnGD15618BPh6dktiIxcKLTJU5HhBrETdfZtSW6Cm2V0J6wjCfVRAKD7jJ3Hh6B
- hiTYAhgNEMQatIYpfHbuJaot2qir3pjpXrcgUaj0sPpHLFlpjvUYHveQViVKBBqvoDCz
- CiqQYbVzmL3BlqbCUdRJMiEt3ziJQjQ+6DxPBd0/orVNqrPW7BNLfjIurR2FMj2srOze
- m225Q6Ks26cdODlB2tI0nkck9tJOgU2loACyw9MCCaRwJ9G4ul3NbRbNW+kEda2rXXdq
- 4i3g==
-X-Gm-Message-State: AFuF++m8AFYS5HvgCvbo1DRSgSTcEae7JmUSp7anbSm2MNwk+SUO54+X
- mKlNZ5zGBKDRldwadaIu8w6IQO5Tbhq8vAZd/hwKIbbRgGhc84dFs7AzZdUW5ANlJNeMaoVHANK
- ODA8n8YCOWO2Fgs7KXyIlgRQ/DZXSi7+KFNOiA/fxLNUahkamyr3ttvKqkGY3WWJyCsK+cY79KX
- xBw9PF/89xbKFHOJSbflyT1q+NDVxqPwpllQ==
-X-Gm-Gg: AYBFou0dO4ErjcNAPbvoAVge22E/NHGxd2A+/M9J3V7iwartyAJ/zsUmxRnNAebHzlR
- EE/aiaBdH6r7YVacESNmCWXxcZJw3uhOF6RgXzSCkWnWTk62FE9L13iQzeSQam4XfBErHQqbzQ5
- u7FJSmlmgOHlzdDa3bvWdwd66ncI0GpKktT1FVUyuip6BWlgJXsCc+wdYLBtk4g7avWgtYx/7vA
- BI2//svMj7VakKyPVPdwDENyLsATYHLLGcoNTkpM/UT9sHDsQMA2ZS8TY3F50UMrfRWcG4xewYM
- Jr4Y7bjgqKWK2qU+GldPXeuKomckyAblwgSNSzksgnAjwkmCnJQYnViDuksckyJ4NHawf0Y2np7
- b+O1ivdXAG7SRiLhgYlptjWA=
-X-Received: by 2002:a05:600d:4446:20b0:498:952:e276 with SMTP id
- 5b1f17b1804b1-49e6198bd8dmr5980035e9.8.1789071198458; 
- Thu, 10 Sep 2026 13:13:18 -0700 (PDT)
-X-Received: by 2002:a05:600d:4446:20b0:498:952:e276 with SMTP id
- 5b1f17b1804b1-49e6198bd8dmr5979805e9.8.1789071198005; 
- Thu, 10 Sep 2026 13:13:18 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e60ac4397sm19145115e9.7.2026.09.10.13.13.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:17 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:13:15 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ bh=b+6vOvXgswz2L9Ze3Uf1dz+X4Fype2lplTzI0Oj4goY=;
+ b=Kc5XGvRlz5SBmvXvHcnX7Y/YJCn3y308Z1OvBEmrdYDUFJFxtKieFDYEmQeGg6hZ4hOxQF
+ pEE8AtMcmfd7xKs4weMojN0HyHvpXJej/MZAVUBFQWElrob1+3tA4o+pt4ChAeEzTn91yF
+ iVg51+/CJ7AH4DzFuOggbyd3iQDuRmA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-140-C81ozPSzP5yrp8OW1JpNww-1; Thu,
+ 10 Sep 2026 16:39:39 -0400
+X-MC-Unique: C81ozPSzP5yrp8OW1JpNww-1
+X-Mimecast-MFC-AGG-ID: C81ozPSzP5yrp8OW1JpNww_1789072778
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56EF61956040; Thu, 10 Sep 2026 20:39:38 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.67])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4844C46E; Thu, 10 Sep 2026 20:39:34 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 44/90] hw/net/virtio-net: check packet size before VLAN tag
- access in receive_filter()
-Message-ID: <c60ea9e80eab1073d0bd7d573d8b4d7477740ff9.1789071043.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-cxl@vger.kernel.org,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Markus Armbruster <armbru@redhat.com>, Jonathan Cameron <jic23@kernel.org>,
+ qemu-block@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: [PATCH 08/10] qapi: convert simple data struct intros for machine.json
+Date: Thu, 10 Sep 2026 16:38:54 -0400
+Message-ID: <20260910203856.99003-9-jsnow@redhat.com>
+In-Reply-To: <20260910203856.99003-1-jsnow@redhat.com>
+References: <20260910203856.99003-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,51 +88,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
-
-receive_filter() reads ptr[14..15] to extract the VLAN ID without
-checking the packet is large enough. A short frame with VLAN TPID
-at bytes 12-13 but no VLAN TCI causes a 2-byte out-of-bounds read.
-
-Add size checks before accessing the Ethernet header and the VLAN
-tag fields.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3788
-Fixes: f21c0ed97c97 ("qemu:virtio-net: Add VLAN filtering (Alex Williamson)")
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260722115008.1570510-1-lvivier@redhat.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- hw/net/virtio-net.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ qapi/machine.json | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 274fbcb0d6..f3f375e1b2 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1751,12 +1751,16 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
-     }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 942d35d7275..0516112f8e8 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -468,8 +468,7 @@
  
-     ptr += n->host_hdr_len;
-+    size -= n->host_hdr_len;
-+
-+    if (size < sizeof(struct eth_header)) {
-+        return 0;
-+    }
+ ##
+ # @NumaNodeOptions:
+-#
+-# Create a guest NUMA node.  (for OptsVisitor)
++#     Create a guest NUMA node.  (for OptsVisitor)
+ #
+ # @nodeid: NUMA node ID (increase by 1 from 0 if omitted)
+ #
+@@ -596,11 +595,10 @@
  
-     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
-         int vid;
- 
--        /* Truncated vlan packet */
--        if (size < n->host_hdr_len + 16) {
-+        if (size < 16) {
-             return 0;
-         }
-         vid = lduw_be_p(ptr + 14) & 0xfff;
+ ##
+ # @NumaCpuOptions:
+-#
+-# Option "-numa cpu" overrides default cpu to node mapping.  It
+-# accepts the same set of cpu properties as returned by
+-# `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`, where
+-# node-id could be used to override default node mapping.
++#     Option "-numa cpu" overrides default cpu to node mapping.  It
++#     accepts the same set of cpu properties as returned by
++#     `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`,
++#     where node-id could be used to override default node mapping.
+ #
+ # Since: 2.10
+ ##
 -- 
-MST
+2.55.0
 
 
