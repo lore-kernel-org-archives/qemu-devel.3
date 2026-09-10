@@ -4,107 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7184C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 974DFC79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4mHl-0000nW-3k; Thu, 10 Sep 2026 17:26:39 -0400
+	id 1x4mTX-0001o1-Tr; Thu, 10 Sep 2026 17:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lTh-0005uE-Vn
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:35:00 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x4lTR-0002cy-5P
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:29 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6871621EB5;
- Thu, 10 Sep 2026 20:26:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789071973; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lUB-000604-CI
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:35:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lTi-0003jH-VX
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789072449;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lCKcpItZ3rarcJaUARK6pl3h137OPzjExEVzJ/bAK0c=;
- b=zMF/tLeEO06+xtpPkp9y5+mZVd1Cqufrg/NpW6yyiA8de7dD7XPhO1N472ESX0rI+wShOk
- YxpenbpA0PJbX9EeGlGK/DFxqP7ufW/zrHzCO0U2IlHUuJKCYHYeSeqWh24LzOzCdsUmJP
- jqMR3kv1C0WSTKslqV7w9TeJGbQ+l9c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789071973;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lCKcpItZ3rarcJaUARK6pl3h137OPzjExEVzJ/bAK0c=;
- b=gOmpEVZ2Q8txOLrq5Xb3ZtCE+yMhO1jyODPI8PAmQHlTGZ6LyJ9mdltdW5HMKD0T/fEUzl
- JtiHYE6g+QlePgBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789071969; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lCKcpItZ3rarcJaUARK6pl3h137OPzjExEVzJ/bAK0c=;
- b=hzesXkTKeY+yt+7cYkUX5ll5GKbcL4VqbLA0g3AoEof7UGOPekYWA9pK1W0BKI3V885vY8
- fc06p+eulugJGR9xmcAowRXdyiLFMsh3/eIXC5wDfROMPhzf6uW+9nacNXsjX410PE+fnO
- nlHih3dpH69rTsw8UCaZaZmloW0a7kA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789071969;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lCKcpItZ3rarcJaUARK6pl3h137OPzjExEVzJ/bAK0c=;
- b=Yubk7ixzsax5JSExV/vdt+W3OuwMmIAYS+xTKij4aBdBVfmyR2UoCqNmM/5UXIZJylJWpk
- ynzkIvJZhnACQ1BA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3933913955;
- Thu, 10 Sep 2026 20:26:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sFEoA2ASo2pJPQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 20:26:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ bh=4xO9Jj7yHXJpXhsIddL9LHeTxBWYycN9Rwv/iB+IGEU=;
+ b=ghnB/iJZJLXciHyGrGDJ97lHwO9hNXyZ1+8XecIA3xZmU6AgjYcS8isT1Fj1c8yiroaJdy
+ UztfJ+MayQ52en7/IK8aZeBnU0SCESclkJskhTPGkwQwVoiEHKRbsJmC5gpEpyvIKGRiXC
+ ETzFN/rYOjmcg0k3MhY8E4M5R0laEOo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-JM-nPsnmNnOz7WNf_fkoLA-1; Thu, 10 Sep 2026 16:14:13 -0400
+X-MC-Unique: JM-nPsnmNnOz7WNf_fkoLA-1
+X-Mimecast-MFC-AGG-ID: JM-nPsnmNnOz7WNf_fkoLA_1789071252
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-485835753caso82824f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789071252; x=1789676052; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=4xO9Jj7yHXJpXhsIddL9LHeTxBWYycN9Rwv/iB+IGEU=;
+ b=dp1pncu2WhpwP7D7l+4t7zMSxIq3mKmmcIk0ajW9QxLl6uNlJOjKpS8fvVQIk/2ASj
+ b6R0fM6rsi2HmN0NUNWEDUwtgOp1G0WSLHdgATUQN2ObFImR+fAHOUz8x5LVIHCmEi+i
+ WULsWJQd1n9eNH0E1TtNMc3aHtPZw1wnxWkvqehzoDtp3AUFAELpC1l2PnonbLNnX2Yi
+ ZZG2V5ytx96Rvo2WyLAu7rpBRDVbrLVX1zxKw1FalZeweMA1rT4rba440ScH6tVxoQLf
+ 7RJFebz6Nv7LaTUxubyX/XPEvwUt4d2I9qpFjeNDmG+raEg1fW1fUWh2IoauxkWdjt0S
+ kOLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789071252; x=1789676052;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=4xO9Jj7yHXJpXhsIddL9LHeTxBWYycN9Rwv/iB+IGEU=;
+ b=p3OycSEwh0HdbgdMMB1kS58PyJjzNBQ8fD3M1hMbaIitJZ+EUGX3Wlzp5ZRw/k3oj2
+ KezH/W/mAdoFQn8Uh6hFcX3I8RPNbNAK2OpFNxGbjoX0JF0y/nJXftm9oDuW8iYg47qy
+ aGYu5Xb/R3mD2vOnfxa+4Y0HWloTOYopillR16IBw/prnDg2bXove3HTpZ02m2XUN7zp
+ oL19rLg9qJBIKj/AfHxmJr4ZS2ERLsF7wkLz6d1kfBxzTDLbQaA/cdM/6vVCnbim+EsH
+ feFumqXpG9pyQHNSQaqPIIdUpbLp5jXUliOzPXA933zVI8xX/3rMmgcYUil8oI/QuKzh
+ 7K3Q==
+X-Gm-Message-State: AFuF++lV5EIJDOuw4SVxwb+s2nzjETirsLWK+A09XxOXMTSCqDgZgPyz
+ 0Ij7azlrm9vi9R1NbHq6Fi8W+6E2pgtUxb4rOG/3TtHdNPXZNvsVGeAyj8NcrGopHD2OC/IJ8Yp
+ eVZpo+YnqlR6rELqGr+Tm+zqpy2OllH9UAgky+MatgeUPxZPL3yqkvvZsxzjmntvEOYww0inCfE
+ xCqHcDcYE6rqMpXC0R81VeP4+ioV20LXhqPg==
+X-Gm-Gg: AYBFou0ibHHWG36LJvSJOIwhgeyqQ5YLQfWbyuPoCexyjMh1KyHF4trGhwcFN6qJ0QI
+ Pl/jqZIaR/Eq59tQ0vUdBPjHhETjVMW3oV+yVfY5w0FFaCQak1lifyufD8OKNM39k9U0T0wTpNy
+ ThnDuyKKhsLYNkXwe8eEA7TvGgVoLFY6JAEZ7YiY1t/j7fPLPIhD3zC2/JgzXUZOZoWJ0oG2vyB
+ DPvkW0fJABv29fg8y1MlENVO+G71cVzDq8lzGlHhAW/rlCUtVGnyfbYunfj1VPVthkfGB6hja51
+ PlgTzpa31PHb8n5AI6xbTF5oCJgBMZ2Sri05YV9BwzgodFPBnzz8Ka5SnvXBaTNPPVb26m0dEMY
+ NkfBZQUNp9zU7J3JWwVj0pB8=
+X-Received: by 2002:a05:6000:46c5:b0:486:e0f0:f2e9 with SMTP id
+ ffacd0b85a97d-486eb2e3d82mr515397f8f.8.1789071251723; 
+ Thu, 10 Sep 2026 13:14:11 -0700 (PDT)
+X-Received: by 2002:a05:6000:46c5:b0:486:e0f0:f2e9 with SMTP id
+ ffacd0b85a97d-486eb2e3d82mr515354f8f.8.1789071251220; 
+ Thu, 10 Sep 2026 13:14:11 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-486eb35bed0sm737699f8f.32.2026.09.10.13.14.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 13:14:10 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:08 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Christian Quante <christian@quante.one>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 2/7] tests/qtest/fdc-test: skip test cases when the 'pc'
- machine is missing
-Date: Thu, 10 Sep 2026 17:25:54 -0300
-Message-ID: <20260910202559.916866-3-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260910202559.916866-1-farosas@suse.de>
-References: <20260910202559.916866-1-farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Subject: [PULL 64/90] amd_iommu: acpi-build: Remove unsupported PPR and HE
+ feature
+Message-ID: <32adc52ecb7cfca74279c993a22959677bf6f306.1789071043.git.mst@redhat.com>
+References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, quante.one:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1789071042.git.mst@redhat.com>
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,46 +124,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Quante <christian@quante.one>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-run_isolated() starts every test case in fdc_tests[] with "-machine pc".
-A QEMU built without the i440fx/pc machine fails them with "unsupported
-machine type 'pc'" rather than skipping them.
+AMD IOMMU does not support ppr and hardware error registers. Hence do not
+publish these features to guest through extended feature MMIO register
+and IVHD 10h flags field.
 
-Check for the machine in run_isolated() and skip there.  The previous
-patch routed every table entry through that one function, so one check
-covers all of them; 4e37f749dd ("tests/qtest/drive_del-test: skip pc
-tests when 'pc' machine is unavailable") needed the same three lines
-four times over.
-
-The two CVE test cases are left alone.  They start QEMU without
--machine and so ask for the default machine, which is a separate
-question from the one this patch answers.
-
-Signed-off-by: Christian Quante <christian@quante.one>
-Tested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260807061250.27739-7-sarunkod@amd.com>
 ---
- tests/qtest/fdc-test.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/i386/amd_iommu.h  | 5 ++---
+ hw/i386/acpi-build.c | 3 +--
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-index fd38475bf7..f480f4ba09 100644
---- a/tests/qtest/fdc-test.c
-+++ b/tests/qtest/fdc-test.c
-@@ -690,6 +690,11 @@ static void run_isolated(const void *data)
- {
-     const FDCTest *test = data;
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 319db18618..c5b346cc35 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -227,9 +227,8 @@
  
-+    if (!qtest_has_machine("pc")) {
-+        g_test_skip("Machine 'pc' is not available");
-+        return;
-+    }
-+
-     qtest_start("-machine pc -device floppy,id=floppy0");
-     qtest_irq_intercept_in(global_qtest, "ioapic");
+ /* default extended feature */
+ #define AMDVI_DEFAULT_EXT_FEATURES \
+-        (AMDVI_FEATURE_PREFETCH | AMDVI_FEATURE_PPR | \
+-        AMDVI_FEATURE_IA | AMDVI_FEATURE_GT | AMDVI_FEATURE_HE | \
+-        AMDVI_GATS_MODE | AMDVI_HATS_MODE | AMDVI_FEATURE_GA)
++        (AMDVI_FEATURE_PREFETCH | AMDVI_FEATURE_IA | AMDVI_FEATURE_GT | \
++         AMDVI_GATS_MODE | AMDVI_HATS_MODE | AMDVI_FEATURE_GA)
  
+ /* capabilities header */
+ #define AMDVI_CAPAB_FEATURES (AMDVI_CAPAB_FLAT_EXT | \
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 7bf3858b63..6d7308b4e4 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1938,8 +1938,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     build_append_int_noprefix(table_data,
+                              (1UL << 0) | /* HtTunEn      */
+                              (1UL << 4) | /* iotblSup     */
+-                             (1UL << 6) | /* PrefSup      */
+-                             (1UL << 7),  /* PPRSup       */
++                             (1UL << 6),  /* PrefSup      */
+                              1);
+ 
+     /* IVHD length */
 -- 
-2.53.0
+MST
 
 
