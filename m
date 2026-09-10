@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784F3C88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC56C88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4phc-0002dt-Vw; Thu, 10 Sep 2026 21:05:19 -0400
+	id 1x4ph4-0002MP-Fv; Thu, 10 Sep 2026 21:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPc-0001gJ-D2
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:54 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPY-00079X-QV
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:35 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49b8ce9b733so3083095e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083750; x=1789688550; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=QKVJvx37U1Ou4yt08ZBZeRtwXNpu+2B01rGqZNKxlUU=;
- b=lRbh29nR9zh7GL9sRPwJUsfIESeXgVlBfr5Bw/nSclo/jAKCuNARxWslVFRvYdb9Ly
- R2sL0xpomi5QS+t2n88V1a7qSbu4gUkZ2DQKrgwG25qnLsMGmhDhyJj9D/35eKHe1aky
- Rjg69LYe/XOFHegnNFnwjiTX0do7oSBviLua+LI8d/ZMvrE8rBWENXfsF+QppW1PK31q
- uMmc+v+IE0SpuGCeJC6g1uiBw9NnUpJB29BNA5RywQ1GV2m8EFC+jZ2qWdl1P2ysqxSh
- J3hqbQmMAdzOI99k/q4rMTdstAz6/UypConLcXv+AYaHbqND0SCLXnRSwrvMSu8mSg6K
- FlQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083750; x=1789688550;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=QKVJvx37U1Ou4yt08ZBZeRtwXNpu+2B01rGqZNKxlUU=;
- b=DjizTymnpe/+GYWoua0qPD+T0QQ4HK/oIrZ/+apYCLvSSqDqw+emUcXFg8hY4/LmXM
- Q4ShqN2Y4xdkwyDGpiVNYvaC5ZPyrRcl2VenPQMGDXw3UYWJlO26Fzk2sfqSX/auUSRV
- Xy1W7o734JPCiXj3wV2QHLSEyycnkKfeqQv4AWiOi5p0tKi69olnl7PtbmmC0ouUIaXF
- /eTlmYLPfRxyZWGZnbE+T5EvRuoM8+63Us4y24QjHY0X8BrdK1zzBPQxgsDxdWnB1WyG
- QssmO2P779wbZ17AfqzFsEODSEFnutFAojVpi8sxPus3jquOHwDA8KZfoUINqBSRJDt6
- quOg==
-X-Gm-Message-State: AFuF++k5fEH4V0O4vVNnaHKB2XAdNaInv5rzMad8TNty5UCbmHgRByyB
- Lr8g31kreNTbKH0TsiGeYRB/t+NXlQNjzrcTTWGkNwskv61WLoBYvMRlybonM/Q7S0o=
-X-Gm-Gg: AYBFou3utxEu6A8lYS5YrBgg/KAgzV8neTk+Rm8PiYngGvhaEIuAF8iWnwVHCoT1CeE
- z8Bzkmg6cK7/yQMyJJWLSQgo9nrJvMqzubvS6Qnra36xIGjhmLCDty8Iqv4LjRMoDGZ7f/ZNrtS
- /J1wQOg/kz/8LhY1Rngx4ZUjiKsoQTKb1+Vs7nyyRaLOSP36OghS3fS9R/Or5yUpTHhxMmXGzKD
- I2Q+EEllMpBlgGI2vJsc8TVnPiK1BKsLpW6guhSTHrDT0QVnfFkUfX1p+xtqm7DHBl7xxsYDsbo
- 1+erVcagaoD+urN7hajbWkjwWxKS4UqicxM3i4UjXRzYOmdQQEEUjGe6D22CynDpR/fMEVISkka
- 45LlplOARP5tzZtfy3ZtaY7Qzv2nHR7VbN+OlCegM/kvXivv7dmvw7YKxM8KysBvaodWRscxK68
- 9U2KHs6ssb6ynfEji5ziiNswGF5Op/TRK1XSEAUDcxHBVolENU0DDNSBuRjmQ8tPMDPOmc
-X-Received: by 2002:a05:600c:8b23:b0:49c:fa20:cc0a with SMTP id
- 5b1f17b1804b1-49e619e6849mr13858245e9.33.1789083749880; 
- Thu, 10 Sep 2026 16:42:29 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:29 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 05/29] parallels: allocate the Format Extension cluster
- gracefully
-Date: Fri, 11 Sep 2026 01:41:58 +0200
-Message-ID: <20260910234222.3039975-6-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
-References: <20260910234222.3039975-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x4lYl-0006vo-UX
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:40:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x4lYj-0005CL-5C
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:39:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789072787;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L1ILG/43iGdLfltvWdkkiXj2gLIAVEJqveoYs9xtFPY=;
+ b=LcVwE2RymeHhWEg74Q7T5EsS5jAaOwfMi0wmIgEMUDqzi9IIg3cZJgqx2O15aUK7KslySV
+ a7XWhi1vUWuSyYbVkhvPmeztnJg95kDF8GwTVLxshSnbaFkXrJzlVuTGOez9RWld9rwPvQ
+ xW/F7kypFk0EoO0Bk2iqnPGBsDbr3LE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-OPv73Z_LNVCQfFaAy4ycJA-1; Thu,
+ 10 Sep 2026 16:39:45 -0400
+X-MC-Unique: OPv73Z_LNVCQfFaAy4ycJA-1
+X-Mimecast-MFC-AGG-ID: OPv73Z_LNVCQfFaAy4ycJA_1789072784
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 077701800BD7; Thu, 10 Sep 2026 20:39:44 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.67])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C077641B; Thu, 10 Sep 2026 20:39:38 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-cxl@vger.kernel.org,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Markus Armbruster <armbru@redhat.com>, Jonathan Cameron <jic23@kernel.org>,
+ qemu-block@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: [PATCH 09/10] qapi: convert simple data struct intros for
+ block-core.json
+Date: Thu, 10 Sep 2026 16:38:55 -0400
+Message-ID: <20260910203856.99003-10-jsnow@redhat.com>
+In-Reply-To: <20260910203856.99003-1-jsnow@redhat.com>
+References: <20260910203856.99003-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,49 +88,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
-
-s->cluster_size comes from the image and qemu_blockalign() aborts when
-the allocation cannot be satisfied, so use the try variant and report
-the failure instead.
-
-The two are not interchangeable: qemu_try_blockalign() asserts that the
-alignment is non zero, while qemu_blockalign() reaches
-qemu_try_memalign(), which quietly raises a zero alignment to
-sizeof(void *). bs->bl is only filled in once .bdrv_open() returns, so
-the alignment has to come from bs->file, which is the node the cluster
-is read through anyway and what parallels_open() uses for the header.
-
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- block/parallels-ext.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ qapi/block-core.json | 37 ++++++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 63fe4d5b1e..89fab36039 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -323,10 +323,16 @@ int parallels_read_format_extension(BlockDriverState *bs,
- {
-     BDRVParallelsState *s = bs->opaque;
-     int ret;
--    uint8_t *ext_cluster = qemu_blockalign(bs, s->cluster_size);
-+    uint8_t *ext_cluster;
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 5b1eaa8e786..1ca147285e7 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -417,10 +417,9 @@
  
-     assert(ext_off > 0);
+ ##
+ # @BlockGraphInfo:
+-#
+-# Information about all nodes in a block (sub)graph in the form of
+-# `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains the
+-# information for the (sub)graph's root node.
++#     Information about all nodes in a block (sub)graph in the form of
++#     `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains
++#     the information for the (sub)graph's root node.
+ #
+ # @children: Array of links to this node's child nodes' information
+ #
+@@ -768,9 +767,8 @@
  
-+    ext_cluster = qemu_try_blockalign(bs->file->bs, s->cluster_size);
-+    if (!ext_cluster) {
-+        error_setg(errp, "Failed to allocate the Format Extension cluster");
-+        return -ENOMEM;
-+    }
-+
-     ret = bdrv_pread(bs->file, ext_off, s->cluster_size, ext_cluster, 0);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Failed to read Format Extension cluster");
+ ##
+ # @BlockInfo:
+-#
+-# Block device information.  This structure describes a virtual device
+-# and the backing device associated with it.
++#     Block device information.  This structure describes a virtual
++#     device and the backing device associated with it.
+ #
+ # @device: The device name associated with the virtual device.
+ #
+@@ -1607,9 +1605,8 @@
+ 
+ ##
+ # @BackupPerf:
+-#
+-# Optional parameters for backup.  These parameters don't affect
+-# functionality, but may significantly affect performance.
++#     Optional parameters for backup.  These parameters don't affect
++#     functionality, but may significantly affect performance.
+ #
+ # @use-copy-range: Use copy offloading.  Default false.
+ #
+@@ -2705,11 +2702,10 @@
+ 
+ ##
+ # @ThrottleLimits:
+-#
+-# Limit parameters for throttling.  Since some limit combinations are
+-# illegal, limits should always be set in one transaction.  All fields
+-# are optional.  When setting limits, if a field is missing the
+-# current value is not changed.
++#     Limit parameters for throttling.  Since some limit combinations
++#     are illegal, limits should always be set in one transaction.
++#     All fields are optional.  When setting limits, if a field is
++#     missing the current value is not changed.
+ #
+ # @iops-total: limit total I/O operations per second
+ #
+@@ -3492,12 +3488,11 @@
+ 
+ ##
+ # @Qcow2OverlapCheckFlags:
+-#
+-# Structure of flags for each metadata structure.  Setting a field to
+-# 'true' makes QEMU guard that Qcow2 format structure against
+-# unintended overwriting.  See Qcow2 format specification for detailed
+-# information on these structures.  The default value is chosen
+-# according to the template given.
++#     Structure of flags for each metadata structure.  Setting a field
++#     to 'true' makes QEMU guard that Qcow2 format structure against
++#     unintended overwriting.  See Qcow2 format specification for
++#     detailed information on these structures.  The default value is
++#     chosen according to the template given.
+ #
+ # @template: Specifies a template mode which can be adjusted using the
+ #     other flags, defaults to 'cached'
 -- 
-2.53.0
+2.55.0
 
 
