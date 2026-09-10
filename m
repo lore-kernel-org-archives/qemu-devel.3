@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C76BDC79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 862DAC88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4moi-00081d-2C; Thu, 10 Sep 2026 18:01:18 -0400
+	id 1x4my9-0001PW-5v; Thu, 10 Sep 2026 18:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lWk-0006al-1t
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:38:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVZ-0006ND-If
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lWQ-0004he-97
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVC-0003gm-6J
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072563;
+ s=mimecast20190719; t=1789072442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wZrDckEuRqXcdJQtcRSJZ7IayS+V6IuygbIlsWDcXKU=;
- b=WDa3FiQFxTA5tlYUA/gKsmQYqQ7jzp1URPjiX6zqKcYjA6JOzSBuRnwSm9yUbg/QPabCUI
- c4bW0pD2YlkMTXBWJDbempuhy5GfaBR2IIeKtkJOitWPTuGm9mu/yTIU1TYNBCbCWANNlR
- Bo21tiKf/PU6WFRFWYyr+34m39jnm6A=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hsEZfCYpQa9toaMH2oc+Rwd2XMpw3IccFW5x9qsdK3I=;
+ b=bBjFkbtxVo54O/IulXiWRfx+YgZGGN2oG4NY69sQ+L+6/MF6BN9gdTzIpzrol8cViWEqUJ
+ kvD9C07pF6z4tC8oyNe6B/joK8pR7aKTNKZwORjmqSI2Uy8YUiqw531hnEcNSOjZ3R0m4f
+ YTUsnbzhC9uYYtIb6DPyBDnd9oDhdGk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-204-lF8ZaUVZPk68mUIj_gV0HQ-1; Thu, 10 Sep 2026 16:11:55 -0400
-X-MC-Unique: lF8ZaUVZPk68mUIj_gV0HQ-1
-X-Mimecast-MFC-AGG-ID: lF8ZaUVZPk68mUIj_gV0HQ_1789071114
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49d28ac5735so2319675e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:11:55 -0700 (PDT)
+ us-mta-122-x9w56P0JPBu3KpXsAqM09A-1; Thu, 10 Sep 2026 16:13:57 -0400
+X-MC-Unique: x9w56P0JPBu3KpXsAqM09A-1
+X-Mimecast-MFC-AGG-ID: x9w56P0JPBu3KpXsAqM09A_1789071236
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48589603501so62907f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071114; x=1789675914; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071236; x=1789676036; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=wZrDckEuRqXcdJQtcRSJZ7IayS+V6IuygbIlsWDcXKU=;
- b=EateLUatgA7aO1trNMQmEnfNpdL5mjBWg2f+NpExbWyooko7bBdpAkUDp/OXeLHtYt
- csOoENjlP++pGHkpUN7/8FXX6fUUc7qYHI8dIy7DJJPO1jsA4d+iRV31zMeOcnFqy+6E
- n+iLfxreNa4LxWW1U2LXRyqPgSRo91G6cXhi9PhE++0UV7e0M0rwmMpuQGkiuLMymXVm
- bfzfeQl+XwfmFkOHKYVQToIezoTYMpGbyPo84eZmPjHYzbVFvc4ybzmsY7bLFh+cGVYf
- ig4b2qmuw0oMlL/kzHMiKamhTjKrT/0Gl4QDa6sryWLF17tyoxqrAgvltxbEKAGNcDCW
- rd6A==
+ bh=hsEZfCYpQa9toaMH2oc+Rwd2XMpw3IccFW5x9qsdK3I=;
+ b=LAPqKFY33ldOq3JelBgdHhv95MZTPu4uhQA3h3p6G8RHsBiWsVKNVeNAiGyfoEDVRh
+ 8PEemk7poeHZ/a/9qmAGOJgJjCn43yk2SXreZNSKc5Tvw9UylDlrcqrf7BV0LQoVLeaP
+ lmlrqMo6Tr2f6LF+KDJmfNEQzLnRrcpwEI5q+2kTE9p0H7y/RF9tgk5wFfN4kB3zytcZ
+ ZrmfzXbPQalLTMBQMLasPrdEtc7gRd1q8C/LuMf+smVZUyigZx2tzsd9YMqjkIRulqgQ
+ iwW0L30u/ORHEWBS5V7XNCulRgQ43JheFp4T4TmPqwB1r8nihZCuCLswMYpkvoB6wzgC
+ M1yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071114; x=1789675914;
+ d=1e100.net; s=20251104; t=1789071236; x=1789676036;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=wZrDckEuRqXcdJQtcRSJZ7IayS+V6IuygbIlsWDcXKU=;
- b=b1v+Vw9XTT+iCe5R2ItyOa+Rims5jf6s7MOcC7rMbKyKPggCTtUqyQ91wtszzTf1O5
- UWifpxh9PlJkqL8PZW37y3KMw4lQ8wLntJNoyAA9YSbaArW1ZCZGFb2fEFRc0a3J8J9v
- z3lJNRk6wbOz1Y0fqlqqxYiFxpr1ZF/JNKXmn9vSCRyo+fr+0wohiyUioY1to5I3Jbg/
- oHFnTI6qI7iUzuwfArW/ADBXMThiv0DaQpzJtOFhc9yDPSIIa5NY+sJfz8vGlRHG9/ZK
- A1GoX5xaeCHsN2XpPYA47D6oNVvUOSlLeLEfVA7HkiwCFrhFNOmtiBMmhC1dBpzm2G+Y
- xL1A==
-X-Gm-Message-State: AFuF++nMY8j6R2A58B8iKAHx7ELQwN5DqpO+Gs7rlqxs6/qsSOQdDp+V
- rR+qPqpZHBAk+Az9XfcZoymyWjYBGFec/kIEcXr5Z/0efbyboLq25BV6cBHcWiRT1fl5VFs2uTR
- Aao+mkjqHngWp54Vv/TbHcwuszuJfSDt2VD2GKMR1eS6evnjRuG62Ixl05lhcgaEs7G74Trb9b1
- 82Oz4wnGH6PpTdS8UMIXrwd5dVtU8lbyxPBQ==
-X-Gm-Gg: AYBFou2NmjPP9r/PG8i1Tf1KyAw8CJeo88oEuCwpSrmApiO3N1+Z03IOi/OyCVfHGe/
- n7vi+AaClPpVktgqjYtsN+BfK9oxFgATzg6ZuEyMmRDG1Gt/JX5hJJgCxdWazZLABov5C961/ZO
- 6GrsKn3lOnaYr4LVkCYjQWf+2sdkEbiiVYSkzlqoF3AxuPaasPsWEZToh6/QOgo6+mI9iAuuyrI
- 588TBgCYzxL7ndRtBM1V1TW78KcKSNHicmDYxZ8OCXtHfYzB98XV/BG5GgMX4l5Gesp+J6DmWrX
- AkVhAKe3+X3yisYat4kruqm2Fj2LkUU7izVKpEWKIbgZEwbeETPcVk73rLfAsQkkwN3EC9GQlUE
- FgQFj69MR+Oi4xs33YyUZsV8=
-X-Received: by 2002:a05:600c:3b27:b0:49d:10d6:fd55 with SMTP id
- 5b1f17b1804b1-49e619805dbmr7481885e9.1.1789071114105; 
- Thu, 10 Sep 2026 13:11:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b27:b0:49d:10d6:fd55 with SMTP id
- 5b1f17b1804b1-49e619805dbmr7481445e9.1.1789071113520; 
- Thu, 10 Sep 2026 13:11:53 -0700 (PDT)
+ bh=hsEZfCYpQa9toaMH2oc+Rwd2XMpw3IccFW5x9qsdK3I=;
+ b=HuiLqisZTHX7ZHUgvI1DnVYjmSOict30R3U3e2Q51dIxa4yXLBdf73njmIIyNvcrEx
+ sY67nndYrB+T11Dqri8XMFLhWebMMpAucR/WUE590t0EPwe9h+fmVxyrXLj9b7xikCsw
+ pW4cDiZkN8Dj8GzgRjaDOl3cjAxKTTS/eTF0ubputW4bo/0aEnIJgvNxb/GK7hGzBzXf
+ JSJbfrGJdh2rXAgAd7nXOScu18tq50whCkevQYagjrDs+2i35SLVhJ6KBScFHzq5b0w2
+ 6oh1iZEa9YNTEKCACYbnWoe0xmRddWa0NvVOZF/5/WVgUnzMatwqFA///KdPl1Y9MwuA
+ VqXQ==
+X-Gm-Message-State: AFuF++k8tKDIQQ7MNAZxpdT9ypvbH7ezxIVfGMdjyMcAyewUwUOnIaO7
+ qKFzBwLIhVkc8qrr1L5QE2ZCXNiHZtRry6OqATrBNjYLeWqm4+YoDiCkB25WJcuczxMxlV6OBmQ
+ A8sxKCZcKLzJrONiarz8KY8hvdwMIpd5GYgpWDkb9zisJ0NSrNc6tXNxPrOCROab1F0dBCyWFs0
+ 1zqSLJaGkDMbzKC8USH7AV8Nn+HuRxNfcBQQ==
+X-Gm-Gg: AYBFou2M75cb5lV7SURwrjOyjJaM/u6Bkw7QCwCpMKB9yAsljjga8ecirNYhCMB4NuJ
+ wIi6spq5J2ne5ikNZRSb6CsdsuYp7jNW4xwATOWbPui5n7ORJ5qTjVugDBtDC206qPWeR9nGQiA
+ 2tQATewnxn0HOrncAUVJ/vQfD3T4TROhIWh67PTszctv1F1PGIzv7YqznYgWsYfD6zHf820vb2i
+ P7jVbhGclLKyvQl6jiPOLUGrP+V6rdnED/ch5aKfseegXnl5Utr38uUQ46xNHJ2CeVBSALm3Ut1
+ oNZSNiezCMJ9N4u0xdbzG2xF0WiZ5vPmNAygVrkqMM7XHdGlQbLr9KpQWq9eV/76o+hgx0hhLRY
+ 3jAkniE6DdEAXb/gdxUyARvY=
+X-Received: by 2002:a05:6000:4717:b0:485:8c16:a357 with SMTP id
+ ffacd0b85a97d-486eb358c5dmr606786f8f.47.1789071235738; 
+ Thu, 10 Sep 2026 13:13:55 -0700 (PDT)
+X-Received: by 2002:a05:6000:4717:b0:485:8c16:a357 with SMTP id
+ ffacd0b85a97d-486eb358c5dmr606744f8f.47.1789071235238; 
+ Thu, 10 Sep 2026 13:13:55 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eaccaa1asm1180583f8f.0.2026.09.10.13.11.52
+ ffacd0b85a97d-486eb34f353sm768655f8f.26.2026.09.10.13.13.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:11:53 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:11:51 -0400
+ Thu, 10 Sep 2026 13:13:54 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:13:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Xiong Weimin <xiongweimin@kylinos.cn>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 13/90] vhost: add vhost_dev_is_initialized() helper
-Message-ID: <66d0d51d79266778f2ac0cf8801fc18ad1aa9e32.1789071042.git.mst@redhat.com>
+Subject: [PULL 58/90] hw/virtio: Propagate vhost_virtqueue_mask errors
+Message-ID: <22ffc542a1ab7ad898e3efacc0ce16c68ae85c73.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,72 +121,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-The upcoming CPR support for vhost-vsock defers the full vhost_dev_init()
-to .post_load(). On an incoming CPR .realize() only sets up the backend,
-so we need a way to tell a fully initialized vhost device from a partially
-initialized one.
+vhost_virtqueue_mask() currently reports failures from
+vhost_set_vring_call() but always returns void, so callers cannot
+react.  In particular, vhost_virtqueue_start() has a TODO next to the
+unmask call when !use_guest_notifier_mask.
 
-Add an explicit 'bool initialized' field, set once vhost_dev_init()
-succeeds, and cleared only in vhost_dev_cleanup() (by memset(0)). Also add
-a public vhost_dev_is_initialized() helper.
+Make vhost_virtqueue_mask() return the underlying errno, and on failure
+in vhost_virtqueue_start() jump to the existing fail path which unmaps
+the vring and propagates the error to the device start caller.  Other
+call sites keep today's behavior by ignoring the return value.
 
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260820113955.509478-10-andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260807024359.2157914-1-xiongweimin@kylinos.cn>
 ---
- include/hw/virtio/vhost.h | 14 ++++++++++++++
- hw/virtio/vhost.c         |  2 ++
- 2 files changed, 16 insertions(+)
+ include/hw/virtio/vhost.h |  9 ++++++---
+ hw/virtio/vhost.c         | 10 +++++++---
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 44e65968d9..7c4f032996 100644
+index 7c4f032996..cd012b99a2 100644
 --- a/include/hw/virtio/vhost.h
 +++ b/include/hw/virtio/vhost.h
-@@ -109,6 +109,8 @@ struct vhost_dev {
-     uint64_t backend_cap;
-     /* @started: is the vhost device started? */
-     bool started;
-+    /* @initialized: has the full vhost_dev_init() completed? */
-+    bool initialized;
-     bool log_enabled;
-     uint64_t log_size;
-     Error *migration_blocker;
-@@ -236,6 +238,18 @@ static inline bool vhost_dev_is_started(struct vhost_dev *hdev)
-     return hdev->started;
- }
+@@ -359,10 +359,13 @@ void vhost_dev_set_config_notifier(struct vhost_dev *dev,
+  */
+ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n);
  
+-/* Mask/unmask events from this vq.
 +/**
-+ * vhost_dev_is_initialized() - report init status of vhost device
-+ * @hdev: common vhost_dev structure
++ * vhost_virtqueue_mask(): mask/unmask events from this vq.
 + *
-+ * Return true if the full vhost_dev_init() has completed successfully
-+ * (and vhost_dev_cleanup() has not run since).
-+ */
-+static inline bool vhost_dev_is_initialized(struct vhost_dev *hdev)
-+{
-+    return hdev->initialized;
-+}
-+
- static inline int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
- {
-     if (!hdev->vhost_ops->vhost_set_vring_enable) {
++ * Returns: 0 on success, a negative errno on failure.
+  */
+-void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+-                          bool mask);
++int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
++                         bool mask);
+ 
+ /**
+  * vhost_get_features_ex() - sanitize the extended features set
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index ea17bf0108..a81cd94f90 100644
+index 838b1da739..6c2612a1dd 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -1821,6 +1821,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-         goto fail;
+@@ -1481,8 +1481,10 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+      * will do it later.
+      */
+     if (!vdev->use_guest_notifier_mask) {
+-        /* TODO: check and handle errors. */
+-        vhost_virtqueue_mask(dev, vdev, idx, false);
++        r = vhost_virtqueue_mask(dev, vdev, idx, false);
++        if (r < 0) {
++            goto fail;
++        }
      }
  
-+    hdev->initialized = true;
-+
-     trace_vhost_dev_init_out(hdev);
+     if (k->query_guest_notifiers &&
+@@ -1962,7 +1964,7 @@ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n)
+ }
  
-     return 0;
+ /* Mask/unmask events from this vq. */
+-void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
++int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+                          bool mask)
+ {
+     struct VirtQueue *vvq = virtio_get_queue(vdev, n);
+@@ -1983,7 +1985,9 @@ void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+     r = hdev->vhost_ops->vhost_set_vring_call(hdev, &file);
+     if (r < 0) {
+         error_report("vhost_set_vring_call failed %d", -r);
++        return r;
+     }
++    return 0;
+ }
+ 
+ bool vhost_config_pending(struct vhost_dev *hdev)
 -- 
 MST
 
