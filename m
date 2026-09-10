@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82ADCC79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83A8FC79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 22:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4nPS-0000X9-Fb; Thu, 10 Sep 2026 18:38:41 -0400
+	id 1x4nU9-0001wd-So; Thu, 10 Sep 2026 18:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lQ1-0004T4-Ps
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:31:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lKx-0002qO-0e
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:25:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lPl-0001tX-0n
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:30:38 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lKe-0000Hx-6x
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:25:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072143;
+ s=mimecast20190719; t=1789071721;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=swaVK7hHvfhctLSwvjj1/ywE8ntA6Euz0DduNvrigAM=;
- b=Jq3ntEieeSye+JA8iH5wIMAxqaFULz+lfImFLyEx99ajK+uIqtWaI56DDpY5ZZEAvFrj0N
- wpslRFSUnfopSAo1OxKqpHv4JAAXEKiGlbbIw+JKk4zEqej14TUMbzfHLndU3HZ34rPKkH
- UIArdAdfKuc8ctfrytn230rS8sprVm8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OCozH6Xs5QSeR+YEhmbXShw4rBZnSCVZ1vH0Ur9vXBU=;
+ b=Z5fKU3hoIhW4SFOoy37OlDW3OVGiXcHOXPRDvFtTIa2yjgpTzAXlIOR3A/8u/AFeyxVevI
+ lmKlPjabROnuq6YsCqoCm5ppV2B3eNkTXy9AAiDhVq0vjnA6ot0tjb2Zb0zddv5i5BGEtq
+ TkGY6JqIH6mk2ELgvWZ6icMNNiDKxcM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-S1E6HD3INu6fmcFrn08U1w-1; Thu, 10 Sep 2026 16:14:27 -0400
-X-MC-Unique: S1E6HD3INu6fmcFrn08U1w-1
-X-Mimecast-MFC-AGG-ID: S1E6HD3INu6fmcFrn08U1w_1789071266
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49564d4b849so501405e9.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:26 -0700 (PDT)
+ us-mta-570-nx-jA5J-MiOJdgy6-JIWsA-1; Thu, 10 Sep 2026 16:14:20 -0400
+X-MC-Unique: nx-jA5J-MiOJdgy6-JIWsA-1
+X-Mimecast-MFC-AGG-ID: nx-jA5J-MiOJdgy6-JIWsA_1789071260
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso69244f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071266; x=1789676066; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071259; x=1789676059; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=swaVK7hHvfhctLSwvjj1/ywE8ntA6Euz0DduNvrigAM=;
- b=fZR1zv1WH48dFQNtsRCEuIXcIGCE2FvwJvpPGiez6JYkltpvjIEl6+W/xvQS4jRkAT
- Pqr6Lye62LwsyViopaZ5PZoeuAmSWCm3F/vgYcjtOjWHrkEyxm1zkzNYNX1hLjCWAdIB
- ObIj5HMmraCSjdt8W+uyr3GlvXFzRK24kuY103QLpyRxEoWFKTp/NfcWkM1GNA3cp3aF
- 7OnzLgfYCfeWrbmOTZ/CG/KbEaUkawl1cDgunOlgS7B8ohkh5N5u1Wna61GHnBBid5s7
- FnHBnB1DCmCVBlx9PssC2omrtPvBO7lRSPdicPvtWenIcJ2V5PWiea2lC9tv5imT2fsE
- tCWg==
+ bh=OCozH6Xs5QSeR+YEhmbXShw4rBZnSCVZ1vH0Ur9vXBU=;
+ b=QN1mSOT86a95xOiBirrQi8BOO2M+SpZEZrq00XgSDg4/f0AN/idQVewRcVlyX0gOaZ
+ Svg3xIw96NXDvg/zq42I713X8kLcUhVnsgrHL3mj+7FeEMi1+EEIgcvW4cA/xwdnMsob
+ x6POr+A8bKDBkybonMa3mGu0FxI8S0dgEHlKzX9qbnyf8W088hnKaLVe/JJNfGqgA9es
+ F17wgiMhMqgXJApJ4hkr+XoXxvO1hKu/sr6zInz/HuVB7ll5QK3DAU9DcSn1egk+K5zV
+ FscxpAwfL+RZVcqp3srRJeqDxOYTxFYO9B95CnGQN2wbhBETE0KXrfVJfK8jVIXhlS8i
+ 93/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071266; x=1789676066;
+ d=1e100.net; s=20251104; t=1789071259; x=1789676059;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=swaVK7hHvfhctLSwvjj1/ywE8ntA6Euz0DduNvrigAM=;
- b=MI0tsK+ZlnUmahaoHuYvM9ZL01NArIBwJ+1zbW5X4ePFA9PuFkODIMuThO/sTfPymr
- 1A5rMGSakedJ7o9LvI44jN4o6NEm7QjxgsDhQatEaHCU9HlZsRXS1xIQXi5tMEK94Loy
- 5mpOx1I3qa8cj/p09qttu85M07+Jq2IpVvoer4bZ5Lj0YCYVH0nDBekjUAzE8xrRzKbA
- GY9MiKJ+rJYFKjR24iBwxg6yq0dmn4G4SsRnwB7mdDEvu0N0ZKlEfo+7snioW9EGqd1A
- gum4TH0Irg1U+ucpDlpNTHy1DkuzZHmrjuo6fsCH+DRdxwZ/46OlWrSM08PmrQfpWIuE
- IzeQ==
-X-Gm-Message-State: AFuF++m3vu2sAgVBjd64JNs+HkkIkHqEZAShhRC1EeEEPGYDmZljOwi/
- ICjof9AY50wExDIm/6Vy8jTsIbJ/1Fihir8xFAHnTE8pWLgES7MD110HgZUwIURv6Wuz5/CoMBU
- 76IQ7Dql+GEcPqwUC61DQ7rLPKnd0uI4ZJnpSxYnE5yt0lb7yJM83CUQcpR/Un17PB5qkw/N9K/
- 1QsJN+6pwqaKi4+0qhsXHZn2B4C80IAu2/uQ==
-X-Gm-Gg: AYBFou35N+C7YOrWWcIjTqxF86i7BARxHFoJiCCGcTCj8OTq2/plkLst/m4wJ2JwPAh
- fAaZAA9iuvM90yecNzCtjMl+HNiEflj1bH/RFooBSsMr4SQPK9qa/MaBnXR35BjwiQWvCFB0/Sb
- 9ml1tlVd43G+gI8V7cJDnMMtFkDAy13x3Pu2eaeBv3ZKi7ymV0Z40tUbt0+WBsACFTDpHxYs6fB
- Dbxk/fUKRansE9QYhgwbfIewl2jFth9Dfx5D6+s92S3Wr/VqBGkN3Ik6B+WqVW5K+MqI0ImiGgR
- YcaLmWNT+6jnApdYrP9bb2QRn4/zIKcR6BHecYagc+xxVb7it8QvzghPZeo0JBLJjZH9yX2K3y8
- iSIf4Unm3U4tr4p7LqK/xcEc=
-X-Received: by 2002:a05:600c:8a1a:10b0:49c:ee22:364c with SMTP id
- 5b1f17b1804b1-49e6198d0a6mr6071305e9.9.1789071265730; 
- Thu, 10 Sep 2026 13:14:25 -0700 (PDT)
-X-Received: by 2002:a05:600c:8a1a:10b0:49c:ee22:364c with SMTP id
- 5b1f17b1804b1-49e6198d0a6mr6070975e9.9.1789071265196; 
- Thu, 10 Sep 2026 13:14:25 -0700 (PDT)
+ bh=OCozH6Xs5QSeR+YEhmbXShw4rBZnSCVZ1vH0Ur9vXBU=;
+ b=JmepbKmnTySbE8baHs7SbHhjz8frBMtouk8VDgTPiiQVi2wgF4wouoIHaiIJasTS7z
+ 5SAPGgkpJJ/aSEFflSYrPR6JMA0YMQPQfjcD+kRJMiuLbJo6h9yYzjCaJna2+EZGxu4W
+ ZoetXANFVPFy3Z75LJEJZXwVm+pk5OeF09hL3er9mwsQ3twqGs9u9Soll22OkSm7ekSw
+ ovj1DtREN5F+v+1Fi+DE5nC6kUSHfU4MwHnHtNxeKlak+am7jygQB7ZjrUsMkaMkrlgi
+ 7Zgk/HQFKcRu1js2ntQO/TGWxzBzXXd5PVf+JoTQb/IlCZzwArTLjzoOdiGvkFQcYmj4
+ rwJw==
+X-Gm-Message-State: AFuF++n7XKcoZzi8WemY31QPPHe6dIAGUfTKr1bB5vihCBDze7AsWjTf
+ kzbR0ysXJXVV2BfR4Ff7UG7kjafzaTj9/HZsyLJdsu496vzaAJp1kKFqewrJG958Z55DFQSfIW9
+ x7rCTT/5SP815e3TZzHL5QA8CqkRhZMpu/1xQ10gjbnphpn+8yO2HpXBY0nKMhceevQbY+URxPw
+ 12CVUtGOYLL6Snax8oE78LzLU9jM3OjsD7UA==
+X-Gm-Gg: AYBFou2YPCNECIH7EtqBxvJ62chHhkB7zoh8q51B0zlzUBtubX+lTymB37XEwy6Kqkz
+ zXrJzuAuWL9lOuAq4EViY2EaXLXJ1p63Tpmsg/hO54Qp9L/TYoB0pScjyBwlLSNg9ovfwgbHdrP
+ DFHadG7OpemlTPSGgLpm0yv0SucZQlfhy+3gt64K0JisWuaCWnNK9TEOs5nKgwHPqQab1ECzS31
+ 7FcTgPBkG051ys+tjux+OtNGVZdgDckF9wEGyKzJM63aAzMfnNqJuejlDuA/J84lioQfSIW3UdO
+ R6ZQgPBvmpEezjL5O2q8j1YmaelbNy45tS6q02GnZgSWA42qqTuQlXHMf1kuFqKj5fJTyfNU0R1
+ hX02Xv92bEn7E1BRsv5cHg2k=
+X-Received: by 2002:a5d:64cf:0:b0:482:f0ee:1390 with SMTP id
+ ffacd0b85a97d-486eb34107emr1488279f8f.22.1789071259302; 
+ Thu, 10 Sep 2026 13:14:19 -0700 (PDT)
+X-Received: by 2002:a5d:64cf:0:b0:482:f0ee:1390 with SMTP id
+ ffacd0b85a97d-486eb34107emr1488176f8f.22.1789071258673; 
+ Thu, 10 Sep 2026 13:14:18 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26d4e3f3sm104182515e9.15.2026.09.10.13.14.24
+ ffacd0b85a97d-486eb35bd1esm767200f8f.31.2026.09.10.13.14.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:14:24 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:14:23 -0400
+ Thu, 10 Sep 2026 13:14:18 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:16 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org
-Subject: [PULL 70/90] hw/cxl: fix the CDAT DOE overlapping the Flex Bus DVSEC
- when sn= is set
-Message-ID: <aec100794247860605cf259effc085eac43d0e8e.1789071043.git.mst@redhat.com>
+ Bin Guo <guobin@linux.alibaba.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 67/90] libvhost-user: return the backend mapping address for
+ added regions
+Message-ID: <793d2895ef2f1b4fc971d40cb0cdd6a6f62b4b25.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,48 +122,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-ct3_realize() adds the CDAT DOE at a fixed 0x190.  Since 8700ee15de the
-four DVSECs take 0x90 bytes, which from 0x100 ends exactly at 0x190.
-With sn= the Device Serial Number capability pushes the block to
-0x10c..0x19c, and the DOE, added later, overwrites the last 12 bytes of
-the Flex Bus Port DVSEC: Capability2, Control2 and Status2.  Nothing
-catches this -- pcie_add_capability() checks bounds, not overlap, and
-the chain still walks because the DVSEC's next pointer becomes 0x190,
-inside its own body.  Most cxl-type3 examples in
-docs/system/devices/cxl.rst set sn=.
+In postcopy mode the backend must tell QEMU where it mapped a region, so
+that QEMU can translate the backend's fault addresses back into a RAMBlock
+and offset.  vu_add_mem_reg() works on a copy of the region and lets
+_vu_add_mem_reg() fill the mapping address into that copy, but never writes
+it back into the reply payload.  QEMU then stores its own address as the
+postcopy client base, so fault resolution fails:
 
-Derive the offset from the DVSEC block instead, as cxl_upstream.c
-already does.  Without sn= the layout is unchanged byte for byte; with
-sn= the DOE moves to 0x19c, below the AER capability at 0x200.  The
-type 3 device has no VMStateDescription, so its config space never
-reaches the migration stream.
+  vhost_user_postcopy_fault_handler: Failed to find region for fault ...
 
-Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+The VHOST_USER_SET_MEM_TABLE path is unaffected, it fills the payload
+directly.  Put the updated region back into the payload before replying; a
+pointer into the payload cannot be used instead, as VhostUserMsg is packed.
+
+Fixes: ec94c8e621 ("Support adding individual regions in libvhost-user")
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260831022302.406740-1-junjie.cao@intel.com>
+Message-ID: <20260813095501.20282-3-guobin@linux.alibaba.com>
 ---
- hw/mem/cxl_type3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 6f44770db6..a04dc74ecc 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -936,8 +936,8 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     }
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 248550aae1..2fed792e85 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -989,7 +989,13 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+     close(vmsg->fds[0]);
  
-     /* DOE Initialization */
--    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
--                  CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
-+    pcie_doe_init(pci_dev, &ct3d->doe_cdat, cxl_cstate->dvsec_offset,
-+                  doe_cdat_prot, true, CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
- 
-     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
-     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+     if (dev->postcopy_listening) {
+-        /* Send the message back to qemu with the addresses filled in. */
++        /*
++         * Send the message back to qemu with the addresses filled in.
++         * _vu_add_mem_reg() worked on our copy of the region, so it has to be
++         * put back into the message payload.  A pointer into the payload
++         * cannot be handed out instead, VhostUserMsg is packed.
++         */
++        vmsg->payload.memreg.region = m;
+         vmsg->fd_num = 0;
+         DPRINT("Successfully added new region in postcopy\n");
+         return true;
 -- 
 MST
 
