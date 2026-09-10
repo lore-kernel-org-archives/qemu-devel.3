@@ -4,94 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC8DC79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFF4C88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4l4P-0007Bw-MM; Thu, 10 Sep 2026 16:08:34 -0400
+	id 1x4lEu-0000Ig-A9; Thu, 10 Sep 2026 16:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4kmb-0001WK-7X
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:50:27 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4klw-0000SC-8H
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:49:28 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-39647184c73so1184682a91.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 12:49:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4kpt-0002Xs-9K
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:53:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4kpY-0001Lq-Em
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:53:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789069926;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=73L37DsJrLyfH85BQAp+z43/Bi6wd6yPjxK31q/ynRc=;
+ b=YPFn3o0msdDoQGBFbo1YbUgmReH+4MhiMGPmjUyREXAmJCU5cdWXqSydiwiHt973FU8mhU
+ XhEaPruVReRVJ78VlPVydnn9IkdXNq9g331FpXGjfzEUS+1vpkBB/aJWbJBiF+nIXS0JVi
+ jtSNK7hS/GoqaSgqS2hRUA/bySlVQvo=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-205-jDsORh6OOSy3_F7Yk-WD3Q-1; Thu, 10 Sep 2026 15:52:05 -0400
+X-MC-Unique: jDsORh6OOSy3_F7Yk-WD3Q-1
+X-Mimecast-MFC-AGG-ID: jDsORh6OOSy3_F7Yk-WD3Q_1789069925
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9399b66e0e7so14037185a.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 12:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789069748; x=1789674548; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=iO9q3rw3PPPF9C2Mz990QyKjTwyDIonNCxmCiTY691g=;
- b=HKXV7OkElNAVx602C05Nl4KGU5LLCI4hTcpLu0gPYdpbJQgMGjPBX/wl1yOfJur785
- 0Fhz52rylgtgEqyQcnSYpdvLH9G3wv9R4cv9CNSHPc4ZNdaHU6ZiIEoxyTjshB5DSJd2
- thTiTfs7A6geGJRTuJICLdWuoYX2YL/62OmbEOj7+M3ZFG/5aqDxI7Ia3Edq62Rowwof
- WzYtyBKvtFLWwBMrmzS2kEsWV2UcQdrSrxCqcGypMko8+KH0YoydNCarc0ZVwn3d8D+5
- 09WrOGRXeumS6dN0NHsnd6+IrjEZgmiutFhFFcSwloqRCnpE7nITJvHh2y8r9UijRaU+
- GIOg==
+ d=redhat.com; s=google; t=1789069925; x=1789674725; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=73L37DsJrLyfH85BQAp+z43/Bi6wd6yPjxK31q/ynRc=;
+ b=fOddZ2KURBqwYYkQQf8Vbq4J5AKfwBQ/PHMFxuL2Vz6WZcHGWBjMl6eqSqH0BG5X1j
+ W7Oq2nTwvDZo8dizV5hohbMmke7Gm+5V6diH2nLmxQnN08I+woKlRH8JCefRvDPeds9O
+ bJncWXD/SFi1LplVscpizSaF3hZr8JNPt0eNacvZH2ReztYESZLj5iLh+Z3jt9Ya06mH
+ hHBzsXuoMwg8cZJyibtrv86RjTuoz9tHRim77JvZrfbIjfPu8CC8mJBAgk2W5QOq5zfM
+ g62VTYp7YzdIh+uSt+CjvW6Xrs/j2Es7Mznndmc0Hw5PjlTf8TWLtJSLju2pP3aZM9IU
+ rDNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789069748; x=1789674548;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=iO9q3rw3PPPF9C2Mz990QyKjTwyDIonNCxmCiTY691g=;
- b=PEPkVg0IFzoMdGe1Tf+tzOtLbnn2KwYCE1C6Ho0mVtRuiRH7ITlEjMkzeByy/FF4xU
- O32oi4AVq2UIbqs3qBdwZLmEsFFqm3xi3D/q2qeR8TxsqGCE2USddf6WRQ07tLP9E7JH
- AQIViWqzdnawk4tm5OHeD9CbnzcjNoNRh5vhHQdiTtcMD6ZWKjqLTixXZ7AULBG1DeY6
- SP0QsWWCrlAL3fnMD9VjpIrvMGlBo+i6H1gnOmIVjtf4Ffgtby+4GbSvKCUd/Z/mqCNR
- DoZ6Us03KFAxZSQbDUUd1ecnwKgvLbV0Pd+AmK5HQlH2X1AWfnKuf/e8HF2GIED+avOt
- D9fg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx3Ae9t3v+hY3CuTFG+PqRTd5aM52phiMDnHgubmBkZ4xCn/lYLl7yjzTGEbAQsORiYfmbwMInZMS9j@nongnu.org
-X-Gm-Message-State: AFuF++nRCEY0qZYApHOkX/EJU/5D9Ju6De1gw2RUUNBU6DhQx4xQn8DJ
- g8fiDTjWCHG7Matqvo/mP5qw8h+MfJ7+xaVvmJEyh1Ix6i/w39sBZ25KTFKUtdk0fYN7wKHUiiN
- OpLCktDU=
-X-Gm-Gg: AYBFou0t29lureZQD/cKT94ATrs4U2LpCFC0WiCbzMGwWKR0O3bafboMIGFyF5h/4Eg
- PO4u+nYWak84m7Iy26fqziY4KY2mpTch/9eA2lW/8fQF1lxkgRBoaDhz/jghESF+X5F+X4fJnNK
- WYoVbstPe/VQdwW3ccrq7WFYKyCyypbALmyJMLyvSAyLNee8tPOF7MTMV3/DItQdAamf1J8GLUj
- 7EnbbPgkRbvsrv+AlyqBQQidLi56GmKo+GDQCsrZfZ5GyDhrkUF4XfrzE3Whiohreu//Y/N07Ck
- OrEAPopBNbNf6CMg6CcAl64byk8u2oBkUM60Dre0zyBCf5FahQlc2IDZPI0mUJ3Sv03ylCLg3+A
- LZg9C9E/XewY6w8G7pWkykS+Bu7oFsL0uKiZki+ry7gEY5OpIMxfqbmQ9xAU7v5Xn3x244T1koX
- zi1qXntRXABpbQveMwuFhja8Yxby0xdd/lUgFFEFu0IP+8UH6mflGcJM5J6dCteY/t+KGJ11x7K
- vkxBK5k2JPlbFU=
-X-Received: by 2002:a17:90b:3c8b:b0:398:9beb:a2b6 with SMTP id
- 98e67ed59e1d1-39d77b7b11bmr7986695a91.24.1789069747745; 
- Thu, 10 Sep 2026 12:49:07 -0700 (PDT)
-Received: from [10.171.0.227] ([98.155.112.169])
+ d=1e100.net; s=20251104; t=1789069925; x=1789674725;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=73L37DsJrLyfH85BQAp+z43/Bi6wd6yPjxK31q/ynRc=;
+ b=kTnrHucF6ev3DvUMn8I+2xbJVgX9IXHKuSSSVZZhO6h5W0h5u06fz+2eEgd74p5rUH
+ qANxZAXQSFOdLUHsN3cH1aXXts6Yc3abn/y9mFKqf3LSWqAYdo3nwSGr+f29q9uQGp/E
+ ca8cb0DlOf5Bsk/3Q1pN8Ew2ekr+HXdAlxp+rQ0jF8sRm+FDCfPRyc4eIpkmFnYPBbe3
+ sq70VLZv9M4zqq/WdH2vFhbF0oHJ238Scs5b/g6Ne6fUxp04c8q18N9bDau4wjVLxdfs
+ qRyatzODrfg8weTnwnZXUBhY//+8jiEPEbb1tTw6QjUXk/sajkucDUsYA69Esiv0YU26
+ vcqQ==
+X-Gm-Message-State: AFuF++nljzYtmSZfGhZuaE5SC4kXmFuIqt0OP+mdJIjUlX84tbySbS6Y
+ 7QIiKHb/jzukfo8xBN9xnZJF3KGzZyxK2c4wgjui5PWL9GR5xFSbOPQOb41wquPvBSqjJIs8leJ
+ H4qIK6FoYbYunP06vUxmyRY7AcwpPkaTYFB3qqledxeY3nthAIYonk0H8
+X-Gm-Gg: AYBFou2DGV1MOYgswQPZo8//6FJlrtYQR19jEtV/Tb5DMyuC9bFmvAWOvigARvIXP1q
+ LWsnnyZ6iInhfvO4s8+UcJrnq4ljgFwgMm4xVTEuA65chO2Uk+zSCPQ6AFOePGDvqJZVIAc//oV
+ GERpxt+JPg4rU/436spUihk5FXy3+8QBizWL+wpPsbzCg4qyBXHsoaLhb7I3FVmF27vx2xsPfq0
+ Zxnt2Bh5yn2RQvPH9DtdG6w8bA5AI5FtETOpsB9wqe1bpGIbo0i4Tk+ZD+DtROFIxRT8AIgjc/h
+ C5vvCJ8pntHEWxIAAsdJdncl4zi/BUKpS7y2cTmv1+kbJtF2VUZsugHgtS94hKOgGJ1XAfyUcQT
+ OqHDU/i4KfHlEZHVDypHPWj9T6aVI7aS/np6PRcocPwLHrF9ZOK37BR/vZuc=
+X-Received: by 2002:a05:620a:708a:b0:937:50b6:4a5b with SMTP id
+ af79cd13be357-939ea0b15fcmr61604985a.23.1789069924928; 
+ Thu, 10 Sep 2026 12:52:04 -0700 (PDT)
+X-Received: by 2002:a05:620a:708a:b0:937:50b6:4a5b with SMTP id
+ af79cd13be357-939ea0b15fcmr61594285a.23.1789069923907; 
+ Thu, 10 Sep 2026 12:52:03 -0700 (PDT)
+Received: from localhost
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4cf72dbsm445807eec.3.2026.09.10.12.49.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Sep 2026 12:49:07 -0700 (PDT)
-Message-ID: <44486b8d-c1ed-411c-890b-89720996ba77@linaro.org>
-Date: Thu, 10 Sep 2026 09:49:03 -1000
+ 6a1803df08f44-9120f4d35a9sm3566296d6.41.2026.09.10.12.52.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 12:52:02 -0700 (PDT)
+Date: Thu, 10 Sep 2026 15:51:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yanfei Xu <yanfei.xu@bytedance.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
+ jinpu.wang@cloud.ionos.com, isyanfei.xu@gmail.com
+Subject: Re: [PATCH v2 1/4] migration/ram: Add RAM round synchronization
+ notifiers
+Message-ID: <aqMKXKsG_arqpiSR@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
+ <20260830012750.1567524-2-yanfei.xu@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/21] accel/tcg: Constify @cpu in cpu_mmu_index() and
- TCGCPUOps handlers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-References: <20260901095229.72018-1-philmd@oss.qualcomm.com>
- <20260901095229.72018-22-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260901095229.72018-22-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260830012750.1567524-2-yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,43 +120,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/31/26 23:52, Philippe Mathieu-Daudé wrote:
-> All functions called by cpu_mmu_index() take a const
-> @cpu argument. Propagate the constness to the caller
-> (CPU state should not mutate when resolving the MMU
-> index of the current translation regime).
+On Sun, Aug 30, 2026 at 09:27:47AM +0800, Yanfei Xu wrote:
+> find_dirty_block() directly invokes multifd's per-round synchronization
+> when the RAM scan wraps.  Other transports need the same boundary to
+> order page versions.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
->   include/accel/tcg/cpu-mmu-index.h | 2 +-
->   include/accel/tcg/cpu-ops.h       | 2 +-
->   target/alpha/cpu.h                | 2 +-
->   target/arm/internals.h            | 4 ++--
->   target/i386/tcg/tcg-cpu.h         | 2 +-
->   target/ppc/cpu.h                  | 2 +-
->   target/s390x/cpu.h                | 2 +-
->   target/alpha/cpu.c                | 2 +-
->   target/arm/cpu.c                  | 2 +-
->   target/avr/cpu.c                  | 2 +-
->   target/hexagon/cpu.c              | 6 +++---
->   target/hppa/cpu.c                 | 4 ++--
->   target/i386/tcg/tcg-cpu.c         | 6 +++---
->   target/loongarch/tcg/tcg_cpu.c    | 4 ++--
->   target/m68k/cpu.c                 | 2 +-
->   target/microblaze/cpu.c           | 6 +++---
->   target/mips/cpu.c                 | 2 +-
->   target/or1k/cpu.c                 | 4 ++--
->   target/ppc/cpu_init.c             | 2 +-
->   target/riscv/tcg/tcg-cpu.c        | 2 +-
->   target/rx/cpu.c                   | 2 +-
->   target/s390x/cpu.c                | 2 +-
->   target/sh4/cpu.c                  | 4 ++--
->   target/sparc/cpu.c                | 4 ++--
->   target/tricore/cpu.c              | 2 +-
->   target/xtensa/cpu.c               | 2 +-
->   26 files changed, 38 insertions(+), 38 deletions(-)
+> Add a return-valued notifier for RAM round completion and register
+> multifd's existing synchronization through it.  This keeps the current
+> behavior while allowing other transports to synchronize at the same
+> boundary.
+> 
+> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-r~
+One nitpick only,
+
+[...]
+
+> @@ -95,6 +96,17 @@ void ram_handle_zero(void *host, uint64_t size);
+>  void ram_transferred_add(uint64_t bytes);
+>  void ram_release_page(const char *rbname, uint64_t offset);
+>  
+> +/*
+> + * Round notifiers must complete writes from the previous RAM scan before
+> + * returning, so a newer version of a page cannot overtake an older version.
+
+This is fine, but IMHO the better way to describe this notifier is as
+simple as:
+
+  The RAM round notifier kicks off whenever the migration RAM core finishes
+  scanning one full round of guest memories.
+
+We can further provide examples of multifd/rdma use case of it to use it as
+a hook to flush old pages, but just to say maybe it can be used for other
+things in the future, hence we can make the document more generic.
+
+> + */
+> +typedef struct RAMRoundNotifyData {
+> +    QEMUFile *file;
+> +} RAMRoundNotifyData;
+> +
+> +void ram_round_add_notifier(NotifierWithReturn *n);
+> +void ram_round_remove_notifier(NotifierWithReturn *n);
+> +
+>  int ramblock_recv_bitmap_test(RAMBlock *rb, void *host_addr);
+>  bool ramblock_recv_bitmap_test_byte_offset(RAMBlock *rb, uint64_t byte_offset);
+>  void ramblock_recv_bitmap_set(RAMBlock *rb, void *host_addr);
+> -- 
+> 2.20.1
+> 
+
+-- 
+Peter Xu
+
 
