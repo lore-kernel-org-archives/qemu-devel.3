@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C35C79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD017C79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4fxN-0003Eq-GH; Thu, 10 Sep 2026 10:40:53 -0400
+	id 1x4fww-00037m-I8; Thu, 10 Sep 2026 10:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwq-00035M-AF; Thu, 10 Sep 2026 10:40:20 -0400
-Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
+ id 1x4fwl-0002z4-T0; Thu, 10 Sep 2026 10:40:15 -0400
+Received: from [115.124.30.133] (helo=out30-133.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwg-0003Qe-P0; Thu, 10 Sep 2026 10:40:20 -0400
+ id 1x4fwd-0003QC-6b; Thu, 10 Sep 2026 10:40:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1789051200; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=ksc6jpcXXgLeXQNaH+DYLymXmDnFTGRTvna+17U5yjo=;
- b=BFHZqBNaeJI06FTUaaDNqkgQhZpxxmjB8xxuXvoU+hSQFYBHWCqRlRSvN0YNoWdijZS/bW9Io+wsKWludaYDltnOOlE1aT/7Cp5rvJvoya7T0NxFW8qLOTHyNT8W5+BF5m7mRhNtjOjDD/IELrJpPpYV/eSOzQZ6M/Jq1+9pSeo=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ t=1789051196; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=XwubZOvEjhTYhvByzzTPT8P0ioUSpe8HeQObvsAmSFs=;
+ b=C+2BYHgNVVo3KDj8O0Ua07tFZqQIfEMNEbd9EsCToLY80/k91/cirWLLd/LMo6yp61IdV3kjWMEbtjTJkJzJI0krrDphPyNwxofaeD32T3A1pBuVImWFJ8gZaSwKpe6vxuQjuZAFNl0QnetHXk+pSVI+PnzvPnEVqFw1/Jeu/Ds=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R951e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XAhkcGy_1789051199; 
+ TI=SMTPD_---0XAhkcEo_1789051193; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XAhkcGy_1789051199 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 10 Sep 2026 22:39:59 +0800
+ fp:SMTPD_---0XAhkcEo_1789051193 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 10 Sep 2026 22:39:54 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 10 Sep 2026 22:39:48 +0800
-Subject: [PATCH v2 11/14] target/riscv: Process PMU timer expiry on the
- owner vCPU
+Date: Thu, 10 Sep 2026 22:39:40 +0800
+Subject: [PATCH v2 03/14] target/riscv: Use VM-elapsed sources for fixed
+ PMU events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-riscv-pmu-correctness-v2-11-5da5159a0c64@linux.alibaba.com>
+Message-Id: <20260910-riscv-pmu-correctness-v2-3-5da5159a0c64@linux.alibaba.com>
 References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 In-Reply-To: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -53,23 +53,24 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=2433;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=9390;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=xGqFDfh9IR3JQbU7GQ/PgD80X6pKA6c3w5l7P5xkpoI=;
- b=mtvd38LI4/2WcQQmcSp4/AxAPLVOkvDZmWYg7g0KSNr32X/IEnGHkPLD6Bs0n02H8VEKL48Tl
- jh1cNKVUjMqCTjJuvSrsag7vvUjeK+O/d/rnxtZB+7u+/0Qpj+iN2xw
+ bh=C2KDb2d9B1QZspfrUnp4+H0SBe79mu/SYPKyRyCJwsQ=;
+ b=DhT/khXIVyb2Yt0oTUq/hjjpd+2TvDRVIKp5UlFCHNQRWQO1/+Yvy19h5SGlzifSRNkAL/6cz
+ 4Cf6oCbRVWRDu5GnkmUDU7MFqJIsinEdfJojdWgjpFwM6QvH+uj9++E
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
-Received-SPF: pass client-ip=115.124.30.99;
- envelope-from=lyndra@linux.alibaba.com; helo=out30-99.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.133 (deferred)
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
 X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
  USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,69 +87,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PMU timer callback can race MTTCG execution and CSR writes while
-reading the event map and updating counters, OF and MIP.
+Raw host ticks keep advancing while the VM is stopped. Use
+cpus_get_elapsed_ticks() for cycles and non-icount instruction counting,
+and retain icount_get_raw() for instructions under icount. Document that
+cpu_get_ticks() returns its stored value while VM ticks are disabled.
 
-Queue counter checks on the owning vCPU. The callback atomically sets
-pmu_timer_work_pending and queues work only if it was previously false.
-The vCPU clears the flag before checking counters and rebuilding the
-timer. Earlier expiries are covered by that check; the first later expiry
-queues another check.
+Under icount, cycles are already virtual nanoseconds. Convert only raw
+instruction counts when scheduling overflow, avoiding a second scaling
+of cycle distances. Add a cycle-overflow regression with icount shift=3.
 
+Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg00668.html
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- target/riscv/cpu.h     |  1 +
- target/riscv/tcg/pmu.c | 18 ++++++++++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ system/cpu-timers.c                         |  4 +-
+ system/cpus.c                               |  6 +--
+ target/riscv/tcg/csr.c                      |  8 +---
+ target/riscv/tcg/pmu.c                      | 52 +++++++++++++++-----------
+ target/riscv/tcg/pmu.h                      |  1 +
+ tests/tcg/riscv64/sscofpmf-cycle-overflow.S | 58 +++++++++++++++++++++++++++++
+ tests/tcg/riscv64/system/meson.build        |  7 ++++
+ 7 files changed, 103 insertions(+), 33 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 17b9929785f668487d2ec851b736d588e025fd91..a4d33f55c4e5cb6052cea6bee4c0afa46372b5c5 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -583,6 +583,7 @@ struct ArchCPU {
-     QEMUTimer *pmu_timer;
-     uint64_t pmu_timer_instret_snapshot;
-     bool pmu_timer_stalled;
-+    bool pmu_timer_work_pending;
-     /* A bitmask of Available programmable counters */
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
+diff --git a/system/cpu-timers.c b/system/cpu-timers.c
+index 9919b46230f1caf8be1a1b6ef00acd94678437ce..0415636aff3f774f0de61fdac3969f5b45ae6993 100644
+--- a/system/cpu-timers.c
++++ b/system/cpu-timers.c
+@@ -118,8 +118,8 @@ void cpu_enable_ticks(void)
+ }
+ 
+ /*
+- * disable cpu_get_ticks() : the clock is stopped. You must not call
+- * cpu_get_ticks() after that.
++ * Freeze VM ticks. While disabled, cpu_get_ticks() returns the stored tick
++ * value instead of sampling the advancing host counter.
+  * Caller must hold BQL which serves as mutex for vm_clock_seqlock.
+  */
+ void cpu_disable_ticks(void)
+diff --git a/system/cpus.c b/system/cpus.c
+index e11a5aab6a696962d94ad30ac38acd8867b1bf88..f61639ae78277fd90cbddb0b9f75b134e3cc1a17 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -237,9 +237,9 @@ void cpus_set_virtual_clock(int64_t new_time)
+ }
+ 
+ /*
+- * return the time elapsed in VM between vm_start and vm_stop.  Unless
+- * icount is active, cpus_get_elapsed_ticks() uses units of the host CPU cycle
+- * counter.
++ * Return VM-elapsed ticks. While VM ticks are disabled, passage of host time
++ * does not advance the returned value. Unless icount is active, the units are
++ * those of the host CPU cycle counter.
+  */
+ int64_t cpus_get_elapsed_ticks(void)
+ {
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index d15a2d096cb6e13cd123ff9ae82ee7c643c2a961..60caee32dc0cf5b6a8492e0cf8ff15f71acc2087 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1327,13 +1327,7 @@ static uint64_t riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+     }
+ 
+     if (!cfg_val) {
+-        if (icount_enabled()) {
+-                curr_val = inst ? icount_get_raw() : icount_get();
+-        } else {
+-            curr_val = cpu_get_host_ticks();
+-        }
+-
+-        return curr_val;
++        return riscv_pmu_read_fixed_source(env, inst);
+     }
+ 
+     /* Update counter before reading. */
 diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 08298010b6d06f5792fa14ff81fe2f7a28c6476f..6286552a4ebf614df0252f84ddfadbc25d8d2258 100644
+index f19f417e90e33a94d00007ef132ef4e154175b19..ea0ffe41258d4dbef9dc952655e6301c14ba1d23 100644
 --- a/target/riscv/tcg/pmu.c
 +++ b/target/riscv/tcg/pmu.c
-@@ -663,15 +663,29 @@ void riscv_pmu_rebuild_timer(CPURISCVState *env)
-     riscv_pmu_rebuild_timer_internal(env, false);
+@@ -24,8 +24,14 @@
+ #include "pmu.h"
+ #include "exec/icount.h"
+ #include "system/device_tree.h"
++#include "system/cpu-timers.h"
+ 
+-#define RISCV_TIMEBASE_FREQ 1000000000 /* 1Ghz */
++/*
++ * cpu_get_ticks() does not expose the host tick frequency.  Use a 1 GHz
++ * approximation only when scheduling non-icount overflow checks; fixed
++ * counter values remain in host-tick units.
++ */
++#define RISCV_PMU_HOST_TICK_HZ_ASSUMED 1000000000
+ 
+ static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
+ {
+@@ -75,6 +81,19 @@ static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
+             (cfg & MHPMEVENT_BIT_UINH));
  }
  
-+static void riscv_pmu_timer_work(CPUState *cs, run_on_cpu_data data)
++/*
++ * VM-elapsed ticks stop advancing while VM ticks are disabled.  Under
++ * icount, instruction events retain raw instruction-count units.
++ */
++uint64_t riscv_pmu_read_fixed_source(CPURISCVState *env, bool instret)
 +{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
++    if (instret && icount_enabled()) {
++        return icount_get_raw();
++    }
 +
-+    /*
-+     * An expiry before this exchange is covered by the following counter
-+     * check. The first expiry after it sets pmu_timer_work_pending and queues
-+     * another check.
-+     */
-+    qatomic_xchg(&cpu->pmu_timer_work_pending, false);
-+    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
++    return cpus_get_elapsed_ticks();
 +}
 +
- /* Timer callback for instret and cycle counter overflow */
- void riscv_pmu_timer_cb(void *priv)
- {
-     RISCVCPU *cpu = priv;
+ /*
+  * Information needed to update counters:
+  *  new_priv, new_virt: To correctly save starting snapshot for the newly
+@@ -96,11 +115,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+     uint64_t *counter_arr;
+     uint64_t delta;
  
--    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
-+    if (!qatomic_xchg(&cpu->pmu_timer_work_pending, true)) {
-+        async_run_on_cpu(CPU(cpu), riscv_pmu_timer_work, RUN_ON_CPU_NULL);
-+    }
+-    if (icount_enabled()) {
+-        current_icount = icount_get_raw();
+-    } else {
+-        current_icount = cpu_get_host_ticks();
+-    }
++    current_icount = riscv_pmu_read_fixed_source(env, true);
+ 
+     if (env->virt_enabled) {
+         g_assert(env->priv <= PRV_S);
+@@ -137,11 +152,7 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
+     uint64_t *counter_arr;
+     uint64_t delta;
+ 
+-    if (icount_enabled()) {
+-        current_ticks = icount_get();
+-    } else {
+-        current_ticks = cpu_get_host_ticks();
+-    }
++    current_ticks = riscv_pmu_read_fixed_source(env, false);
+ 
+     if (env->virt_enabled) {
+         g_assert(env->priv <= PRV_S);
+@@ -286,17 +297,15 @@ static bool riscv_pmu_event_supported(uint32_t event_idx)
+     }
  }
  
--
- void riscv_pmu_init(RISCVCPU *cpu, Error **errp)
+-static int64_t pmu_icount_ticks_to_ns(int64_t value)
++static int64_t pmu_ticks_to_ns(CPURISCVState *env, uint32_t ctr_idx,
++                               int64_t value)
  {
-     if (cpu->cfg.pmu_mask & (COUNTEREN_CY | COUNTEREN_TM | COUNTEREN_IR)) {
+-    int64_t ret = 0;
+-
+-    if (icount_enabled()) {
+-        ret = icount_to_ns(value);
+-    } else {
+-        ret = (NANOSECONDS_PER_SECOND / RISCV_TIMEBASE_FREQ) * value;
++    if (icount_enabled() &&
++        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
++        return icount_to_ns(value);
+     }
+ 
+-    return ret;
++    return (NANOSECONDS_PER_SECOND / RISCV_PMU_HOST_TICK_HZ_ASSUMED) * value;
+ }
+ 
+ void riscv_pmu_rebuild_event_map(CPURISCVState *env)
+@@ -448,8 +457,9 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
+ 
+     if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+         riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        overflow_ns = pmu_icount_ticks_to_ns((int64_t)overflow_delta);
+-        overflow_left = pmu_icount_ticks_to_ns(overflow_left) ;
++        overflow_ns = pmu_ticks_to_ns(env, ctr_idx,
++                                      (int64_t)overflow_delta);
++        overflow_left = pmu_ticks_to_ns(env, ctr_idx, overflow_left);
+     } else {
+         return -1;
+     }
+diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
+index 910091690290cac9f77855f479bb9d90b2762efe..339a4b3ac09c4a91cddd9250824284203b16b4fa 100644
+--- a/target/riscv/tcg/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -26,6 +26,7 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
+                                         uint32_t target_ctr);
+ bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env,
+                                   uint32_t target_ctr);
++uint64_t riscv_pmu_read_fixed_source(CPURISCVState *env, bool instret);
+ void riscv_pmu_timer_cb(void *priv);
+ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+ void riscv_pmu_rebuild_event_map(CPURISCVState *env);
+diff --git a/tests/tcg/riscv64/sscofpmf-cycle-overflow.S b/tests/tcg/riscv64/sscofpmf-cycle-overflow.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..846d4651c4ee8f06df83bed85512ab9794552c28
+--- /dev/null
++++ b/tests/tcg/riscv64/sscofpmf-cycle-overflow.S
+@@ -0,0 +1,58 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++	.option	norelax
++
++	.text
++	.global _start
++_start:
++	/* UINT64_MAX - 4095 leaves 4096 cycle increments until overflow. */
++	csrw	mhpmevent3, zero
++	li	t0, -4096
++	csrw	mhpmcounter3, t0
++	li	t0, 1
++	csrw	mhpmevent3, t0		/* mhpmevent3: cycles */
++	csrr	t1, mcycle
++
++1:
++	csrr	t0, mhpmevent3
++	beqz	t0, fail
++	li	t2, 1
++	slli	t2, t2, 63
++	and	t0, t0, t2
++	bnez	t0, pass
++
++	/*
++	 * Allow 16384 cycles for OF to become visible. With shift=3, scaling
++	 * the 4096-cycle distance twice would delay it to about 32768 cycles.
++	 */
++	csrr	t0, mcycle
++	sub	t0, t0, t1
++	li	t2, 16384
++	bltu	t0, t2, 1b
++
++fail:
++	li	a0, 1
++	j	exit
++
++pass:
++	li	a0, 0
++
++exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index ebe78200fd551b42d3c99ae19ca03803797f803d..668a9a76070b6f16087b08ea84683d883312e951 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -68,6 +68,13 @@ tests += {
+   },
+ }
+ 
++tests += {
++  'sscofpmf-cycle-overflow.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'max', '-icount', 'shift=3', qemu_args],
++  },
++}
++
+ if 'qemu-system-riscv64' in emulators
+   tcg_tests += {
+     'riscv64-softmmu': {
 
 -- 
 2.43.0
