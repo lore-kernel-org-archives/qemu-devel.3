@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98F8C79FB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6251BC79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 08:50:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4aSo-0008H8-N4; Thu, 10 Sep 2026 04:48:58 -0400
+	id 1x4aTY-0000FN-8k; Thu, 10 Sep 2026 04:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aSn-0008Gs-7B
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:48:57 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aTX-0000F7-3X
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:49:43 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aSl-000808-ML
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:48:56 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4aTV-000818-MN
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 04:49:42 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 13B3E419D8;
- Thu, 10 Sep 2026 08:48:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1C41F000FF;
- Thu, 10 Sep 2026 08:48:51 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0F2BB600C8;
+ Thu, 10 Sep 2026 08:49:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541121F000FF;
+ Thu, 10 Sep 2026 08:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789030134;
- bh=XFAPhwROlzPr08hhF85NQT+D07mkiDaK67hqe7hr9I4=;
+ s=k20260515; t=1789030180;
+ bh=gf9TPAr8r4rL1DipDW4gjlVrefNEg0Ux0vmCwWe++YA=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=RlF1IuZRFrrLuOLIxECDiGRaqQi9gwF0jUbjgBLMl6VA1ZYaAAyB3T4kRNaETL3Kk
- v4QpkQmwfUzExLOJtwDWPKlSqwwRhr6C3LKJpP6/+SqsfjvflbKengDjv0Oqv8JUUF
- oa1blGazLDEBFZV1YmeNCg98lRyMNiM2PLWAS0SPERPXjhW9458IAo16fq9xhJox5P
- ujnv8qL4Pmffu0h7MM/60XEDyrre4WpJcF6CT6rsioraC3R57D+aOv66dayzDzBUpe
- uzn4rIZ0C4xypOQE/RhnmWjXBDN1gh94CLCjuqnE2b1EiEdYzwHCytzsBdjnxy6Yxa
- HVRkLdAUnjHZA==
-Message-ID: <354a3d65-38df-49fd-b54d-d9255cdeac1c@kernel.org>
-Date: Thu, 10 Sep 2026 10:48:48 +0200
+ b=CvVo1joFPykD64rzxOSh0Ra3UatBRa1PRBDOfS0+l89xZYj4WtwhsfIWCMm8mBuXl
+ Nipc70hYcGJUncMfelvobNr/SXkY9pExut49CS0BTi91aY9gJ2gddAbqzgsNHVz7aq
+ Oqzm25Zz3JypN1DquVyEKVyytBqXZ59phk+Rqh+G6DiAFsC8Z+NkVYUWNfLbzQxLGh
+ LJ8Em8oled9D/XKy9O6/yPmn0vvXfBW/vxi3lS7AgR2y+AfEmf87NDun/lFjQ5FrSB
+ Psx/mec8uj8V9oLa+ZVNAsGF64Hpa02bz2Ec82HDhSjHffIuXO75aDwhCcmQVmHUjT
+ 7nPVOG++C3rTQ==
+Message-ID: <4da336c9-bff9-4d84-8ad9-f2ffdcf3bc54@kernel.org>
+Date: Thu, 10 Sep 2026 10:49:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/12] kvm: Provide explicit error for
- kvm_create_guest_memfd()
+Subject: Re: [PATCH v5 04/12] ramblock: Rename guest_memfd to
+ guest_memfd_private
 To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, berrange@redhat.com, armbru@redhat.com,
  pankaj.gupta@amd.com, isaku.yamahata@intel.com, xiaoyao.li@intel.com,
- chao.p.peng@linux.intel.com, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
+ chao.p.peng@linux.intel.com, Peter Xu <peterx@redhat.com>
 References: <20260908133151.836685-1-michael.roth@amd.com>
- <20260908133151.836685-4-michael.roth@amd.com>
+ <20260908133151.836685-5-michael.roth@amd.com>
 From: David Hildenbrand <david@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260908133151.836685-4-michael.roth@amd.com>
+In-Reply-To: <20260908133151.836685-5-michael.roth@amd.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=david@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=david@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -77,12 +76,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 9/8/26 15:30, Michael Roth wrote:
 > From: Peter Xu <peterx@redhat.com>
 > 
-> So that there will be a verbal string returned when kvm not enabled, or
-> kvm not compiled.
+> Rename the field to reflect the fact that the guest_memfd in this case only
+> backs private portion of the ramblock rather than all of it.
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
 > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > Reviewed-by: Michael Roth <michael.roth@amd.com>
 > Signed-off-by: Michael Roth <michael.roth@amd.com>
 > ---
