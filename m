@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC8DC88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9ADFC79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 21:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4lph-0002mj-1n; Thu, 10 Sep 2026 16:57:41 -0400
+	id 1x4lsv-0003Zs-Rr; Thu, 10 Sep 2026 17:00:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lJp-0002Nl-NZ
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lF1-0000Td-8n
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lJc-0008F7-UD
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:24:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lEu-00079c-F1
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071663;
+ s=mimecast20190719; t=1789071342;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=n9ZmjCxLo+pq7wNUdqZBErRHKHAn5SxcOItc3qcLCnY=;
- b=g28hXxEVkrWemqki2ydL0W8dH8N8YAwJjFXDnRD0vcxxi4Z7oYhjcp9tUowYOEbIHnHVHn
- 5x8gb98cIU8/YIBj3s20PbUt82aMctLg9PKzgqvqngGzj9HNNUHXinmMEmCRElzFYmYxoG
- eWDXKh0uz+0W9o6gjTl330ZV5Jachec=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
+ b=E0Knp96H5ECHfEKEl/DKfMMSnXknYpoiv0hFDiVerIVigvznsiHP76/A+bAgWDMH6EGiza
+ e22YD+XiU6wDKyiNQjfPZcyl2ySEAR2unPOgjmILcOB6IcyVC5EsaSkIUsM5kGc5yBy2pe
+ 2bQX51lyBB8h/CDz6JlBfvg4URc+M/g=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-ICpaDwDqNzaan2RtauthBQ-1; Thu, 10 Sep 2026 16:14:18 -0400
-X-MC-Unique: ICpaDwDqNzaan2RtauthBQ-1
-X-Mimecast-MFC-AGG-ID: ICpaDwDqNzaan2RtauthBQ_1789071257
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-482e05af072so99899f8f.3
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:18 -0700 (PDT)
+ us-mta-454-SSBe9grrPPmrL0wtm6cZ5Q-1; Thu, 10 Sep 2026 16:14:39 -0400
+X-MC-Unique: SSBe9grrPPmrL0wtm6cZ5Q-1
+X-Mimecast-MFC-AGG-ID: SSBe9grrPPmrL0wtm6cZ5Q_1789071278
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4994cf6cdb9so1579775e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071257; x=1789676057; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071278; x=1789676078; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=n9ZmjCxLo+pq7wNUdqZBErRHKHAn5SxcOItc3qcLCnY=;
- b=nNb12Ud/YdVbK+ZBsgAh8UODPTE0239Rs0t5yNAt78c6I0PRc053V5gmZsmDBMSAoy
- YY/kEqYUjaNwAA573KqFnUR8I3iAHMVScwVOmZ5bfOQdFirvowMVJi2FVJ+26Dk6C/hm
- CK9Ldkaohw6b9oWKqhIY4w2zWQQyYV8N24mGLJrrA9qzBU8r9LZC+CjkSO9ZdwXRFVIK
- mihn0nkO4XsyETCPU+gwOrvAwI2n6nb5W3tnV+mMgwIEO1/xmb647gwnDIczi+CRfTBS
- C2nZ9npYh4rXFVNo9yesG9GcLcZxVMLQ5woTD7sIsLlBjVwkvNZCA/9pNvGCPDJP2SWq
- bRHg==
+ bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
+ b=r4ZtCwRyk0Jy/wAn+qNowFu4bDq4kHILiigEHEx5PlbvLjXWJU+O6HpD4sp13jQSCm
+ wnv3lxs/j2odot4SlLpCGVSZed9qO794IO49qo2krs2vGq7z81mWyKCXGlEMeN54oRYY
+ A/kASRU+gYnVpByz7t7xqT2JCy2xJNxKsFudWie7QZ1sqO3/MmJ14p7JlCb5qdlcEc78
+ op6RPyz59xLF94di7Ca1+EbFl66I5AV7//GCJj/t3n45A9YBcW7qZxfXtAdg8OjG+tcf
+ Oc5pyxvGmfcIkW8A3aggO1w3YhNVtK3YqUQbRp1O/wg3w8ACOeLup8Z17B14XOakYDaS
+ jhvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071257; x=1789676057;
+ d=1e100.net; s=20251104; t=1789071278; x=1789676078;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=n9ZmjCxLo+pq7wNUdqZBErRHKHAn5SxcOItc3qcLCnY=;
- b=nrV3vaBLGaSM2lx/nzLVMQfR1iN7cosB2P0icLe0oWEtGh2XZ98PuGJ6x4TLIdvKip
- z1SIuRSV3ejxe5Gy0itiHEUiMSWDxeHmonlgxzqCj9HXUOZ/hM9fgEmUc9lcbLg2ePny
- U21rRJOCO8dsn6r8CEg0nsNP84rj/ULpSOuAVM2+fICma78l2C8APOuA/BrzAAr0LtGz
- 3X2fnyqlJcorMMKRTMxa5xG1HYLP0IfIKuEYP1Qsx3FrVnufGFAIHiy5AJeqqT+1rwzz
- rELpqiKj/yQ9yRfO8p7WtbLuGv6i/4tIN4lipsitqlSGGmFqhaDuVaU5hdBXyPmTENGr
- Ipcw==
-X-Gm-Message-State: AFuF++nTa2tNz6u0VZFlI4Fn7CQoJ6uAnt2/OA0e+kkfmOw9G4xRo7hw
- HaPnti9YxwyUTNVzMpxNs/P3jaeoGLMYxaxluP3OUI0vrR0WtyxGPFdkyjh6eyWhk+AxyUOvJLF
- bXReey51WGEE4l4e6rohjeGZ4r1t5CYnlL5X2nu5DXQ0W/VUdgG1kDiIHztgIgdxlwTpk2fkHwH
- mKDcd4xu97Mv7/dV7Tum9jhGK5PrAvy4QBYA==
-X-Gm-Gg: AYBFou1bW5CSeD8DfTAD8SVUOjWukksXwoq6/9UfPjfrjQV/0oHa86Wo8wz0uyL795n
- uwmsD82uBzjPd2zJaetGUprat3r510kwkYeCgbiV8KZ25Ds+kVIibqKDaP7dYhdFpVyuLLFRTPk
- iUhVfpztWvcs/VBhLpA/7zdEzp99mvITCLjgqkKum1R3L81eUNxywiBGTDBkenTq0Dut8XvSuxj
- o09rRjZ56CseYFliY8tC5MoU4lI9vHWpgv5HpkljuK6ttXL8oRfaAHcPJKkvWApU3RSaYHQR/7O
- BNea4ttTKjK+ZemviEmiwOXGafQOi7CY8J1E4hQmTbkdNOmrLpf+udERtUHvrpXYcXwrW0M4Ww5
- nh7tzsreU2cQhl7tiCSfmQmQ=
-X-Received: by 2002:a05:6000:46c4:b0:485:8c17:976b with SMTP id
- ffacd0b85a97d-486eb3164bdmr336811f8f.45.1789071257145; 
- Thu, 10 Sep 2026 13:14:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:46c4:b0:485:8c17:976b with SMTP id
- ffacd0b85a97d-486eb3164bdmr336785f8f.45.1789071256588; 
- Thu, 10 Sep 2026 13:14:16 -0700 (PDT)
+ bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
+ b=cQlfuQxv6EsXnq0VN9BCBJ6HEAih9wLv1BowASGjYzM58TiQk+VJ1Jx7wKmkv2jVeg
+ +ncmykJtDDXJBtbGdWj6QxgafeBoohOzpFDY4kc0swz7j6KbHEs35YrZF/+7025OOwim
+ VLK9hczVorMWrv2pEqOXU+B1b0ActOWHNk753B4ETo9vzjdSodG8dtZrnlhwqsTDSdXZ
+ CM+TZtrySiUshdFrHMmyBOCwd+/FkQHBpku+J1NyYqA+ZL2fV+cERW4Be0jO+BAkP9/0
+ Cdq6zjzw7xnqvI5eHI4VCc7BxWXlXDt4r0pIpxxw0XpUL2/UIN/jhFG0rMbqXX/kAuNd
+ fVXA==
+X-Gm-Message-State: AFuF++kyKZoA2gjcYe9h54XzHnAMwgym2ZQk1674jdo8GOc66EJIzj9b
+ jwUrp6Sis3wFO15RV0J8rIGgVfiGvglRgxoeZajzxYrAalNNrBDxNCmX3cv1UqUT3Z5i8BBSD0/
+ 9QArN3nWuGe1NistAIuiarevHbxYYkKVyZqLM95rPW46JZdp+HxSYagv9CsRpWj4v8r0PgFsR0n
+ bIWDsosc76AVfz3FZ9GyIwooQcu/fKYqO3OQ==
+X-Gm-Gg: AYBFou0gMAb0BdCxPhP1JaBmdSvzTXoesI6K22hdJw8vzT/58x34WGti6Cbi8PcDyYb
+ 9KOzuG5RbBuC4CPmGrq2SpmSsABAqvWtb+XvMyzkgLvK4XySXHjm07DZKNxlk+1vFgJa997qDAB
+ UoHDSR68Y+tOgfFsOyZ7Roih2HVwHSJtpCoy4Z7QWgF8QX01Z2NLAUZEB6nJTEAreBMINJUInKl
+ bYyO6MRvJr8ODau4mfOUFBCO5DWebS4ua8J8OafHSsdTHYDcVv5YpaC1tQ6Ktx0xVh82rE7rpbW
+ uM+Ab4QBF3CyhZELO663v6ocYgOsjGwInrRggCoUPFjKyNnaI5JQKL21YsXniwY3aLKPR/wJy6l
+ wLsq8vqC8MVaJmCw3m/PczhU=
+X-Received: by 2002:a05:600c:3ba2:b0:49d:99:1d98 with SMTP id
+ 5b1f17b1804b1-49e619881e3mr10082575e9.9.1789071278066; 
+ Thu, 10 Sep 2026 13:14:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:3ba2:b0:49d:99:1d98 with SMTP id
+ 5b1f17b1804b1-49e619881e3mr10082045e9.9.1789071277549; 
+ Thu, 10 Sep 2026 13:14:37 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32e6f1sm816155f8f.6.2026.09.10.13.14.14
+ 5b1f17b1804b1-49e61a81943sm6043655e9.1.2026.09.10.13.14.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:14:16 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:14:13 -0400
+ Thu, 10 Sep 2026 13:14:37 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:14:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Bin Guo <guobin@linux.alibaba.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 66/90] libvhost-user: accept the postcopy client base ack in
- vu_add_mem_reg()
-Message-ID: <dfc67f6de3d10cd313dcd6c317fcd905ca62ddb0.1789071043.git.mst@redhat.com>
+ "Denis V. Lunev" <den@openvz.org>, "Denis V. Lunev" <den@virtuozzo.com>
+Subject: [PULL 75/90] pci: batch BAR remapping into one memory transaction
+Message-ID: <bfe98905f8152d81eb3993c6756c3881dc9ab193.1789071043.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,76 +120,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-In postcopy mode QEMU signals that it has collected all the postcopy client
-bases by sending a VHOST_USER_ADD_MEM_REG message with a u64 payload of 0
-and no file descriptor (see vhost_user_add_remove_regions()).
-vu_add_mem_reg() has a case for that message, but only reaches it after
-validating the fd count of a regular region, so the ack is rejected first:
+pci_update_mappings() deletes and re-adds a subregion for each BAR
+whose address changed, and both of those commit their own transaction,
+so one BAR move costs two full flatview rebuilds.
 
-  VHOST_USER_ADD_MEM_REG received 0 fds - only 1 fd should be sent for
-  this message type
+Nothing between the delete and the add touches an address space, so
+the walk can run inside a single transaction. pci_bridge_update_mappings()
+already does this for the bridge windows.
 
-This kills the backend during memory table setup, making postcopy unusable
-for any libvhost-user backend that negotiates
-VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS.
-
-Recognise the ack before validating the fd count.
-
-Fixes: 9f4e63491b ("libvhost-user: Add vu_add_mem_reg input validation")
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+CC: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260813095501.20282-2-guobin@linux.alibaba.com>
+Message-ID: <20260903184542.2629976-2-den@openvz.org>
 ---
- subprojects/libvhost-user/libvhost-user.c | 26 ++++++++++++-----------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ hw/pci/pci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a74d814bb4..248550aae1 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -948,6 +948,20 @@ static bool
- vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
-     VhostUserMemoryRegion m = vmsg->payload.memreg.region, *msg_region = &m;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index c15f2b9f08..14c78e3c62 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1742,6 +1742,8 @@ static void pci_update_mappings(PCIDevice *d)
+     int i;
+     pcibus_t new_addr;
  
-+    /*
-+     * If we are in postcopy mode and we receive a u64 payload with a 0 value
-+     * we know all the postcopy client bases have been received, and we
-+     * should start generating faults.  This message carries no file
-+     * descriptor, so it has to be recognised before the fd count of a real
-+     * region is validated below.
-+     */
-+    if (dev->postcopy_listening &&
-+        vmsg->size == sizeof(vmsg->payload.u64) &&
-+        vmsg->payload.u64 == 0) {
-+        (void)generate_faults(dev);
-+        return false;
-+    }
++    memory_region_transaction_begin();
 +
-     if (vmsg->fd_num != 1) {
-         vmsg_close_fds(vmsg);
-         vu_panic(dev, "VHOST_USER_ADD_MEM_REG received %d fds - only 1 fd "
-@@ -971,18 +985,6 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
-         return false;
+     for(i = 0; i < PCI_NUM_REGIONS; i++) {
+         r = &d->io_regions[i];
+ 
+@@ -1778,6 +1780,8 @@ static void pci_update_mappings(PCIDevice *d)
      }
  
--    /*
--     * If we are in postcopy mode and we receive a u64 payload with a 0 value
--     * we know all the postcopy client bases have been received, and we
--     * should start generating faults.
--     */
--    if (dev->postcopy_listening &&
--        vmsg->size == sizeof(vmsg->payload.u64) &&
--        vmsg->payload.u64 == 0) {
--        (void)generate_faults(dev);
--        return false;
--    }
--
-     _vu_add_mem_reg(dev, msg_region, vmsg->fds[0]);
-     close(vmsg->fds[0]);
+     pci_update_vga(d);
++
++    memory_region_transaction_commit();
+ }
  
+ int pci_irq_disabled(PCIDevice *d)
 -- 
 MST
 
