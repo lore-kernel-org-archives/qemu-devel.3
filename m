@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27812C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450A7C79FBF
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4koE-0001iL-FU; Thu, 10 Sep 2026 15:52:00 -0400
+	id 1x4ku8-0003rX-3T; Thu, 10 Sep 2026 15:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4kix-0000ah-Ec
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:46:33 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1x4kiI-0000Sh-D3
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:45:50 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4kir-0000AV-1H
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:46:16 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-39b31b4281eso113675a91.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 12:46:04 -0700 (PDT)
+ id 1x4khv-0008LI-GP
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:45:24 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-ca7c1176317so212281a12.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 12:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789069563; x=1789674363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789069482; x=1789674282; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qPjGqh7QnLkA+QIiyw56KkV6COKMVipXPRepfXjAIPM=;
- b=hUQyj9VFRsupFGX2l2j8gi53f3HLzTd8gHOEGv9os6F4EuEaV4MUmgOKRZj4KfL6Xn
- 8U/SvDmA7nMKjrtZ8eFcGCnpVffN9ppbMUP0xZSIWJwnZI2zXOIavRga3PT0glV0QLuk
- p9OdWd1DBWbOxALiZVf4rFL4q86MyY6d9UE4bpwNQbdcggrs4smmL6iSqZtbsuoIfGZK
- m+Sf5ikeWLpQ2lc8ThYuLYB5YcgJOH+i412nB8/pr0szLudUAxP9ulWgQKbfeQlTrmdL
- OqHBtU0xUpeOFA+5UilXAmpTzFw9lHyzVcU8zrNtD8KXn0m0XgjtNIUC79arSlFx0Yv+
- yQ0g==
+ bh=8zETsqRvX4XGj+oOnGQ4sYZWQHFp84w9PP72l0AJz8U=;
+ b=eYgdz2cYC/Wmm3ooFKr3I+SfTDBpBCoVehyyDSt0AzHldens2a3yoR+uUIdPefRr8+
+ R3jb9CLuySzk1lf86ltUW7jYmn/BoS+tu3rUSIipAT+r9HS7NVvxpUrpM2fTSkFKFUNL
+ vErE7w4Bj/TUiNHLBFeq8HBSsK9kZ5lTGGtZ0drdGmOYJwoh319v+9kpRx5i9Qpvhmxb
+ HW2uHa45/nFz79SBfqzW1NZK3zl8pscVJoFMQ1qA6fxzcScCRzUBLQI2Eib3f5zObLDT
+ jnzdkAI718G7Ns0MPw+2702Vi3Y3VFhKazEnrtRxl7h1iIg8N+ZNN6C1E7bIDgqMftLp
+ 7dTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789069563; x=1789674363;
+ d=1e100.net; s=20251104; t=1789069482; x=1789674282;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qPjGqh7QnLkA+QIiyw56KkV6COKMVipXPRepfXjAIPM=;
- b=f3hX+W8LftBQuKFWDq2jjnaXIVuZT6XQb9waB5+XGbCD/glpH8z+bOXGggJqRSD1zU
- cwQneZ+asJN6zNiPDCubf5t96mOSAX7eyJr3NPRNHLQul3gsurlJG8f1C0zEPc4Uz3dJ
- AP5hoBOWiBrPwTSPJi9GLDCoeQAaKqUaWWR2N89EfqedBYK6+Z9oEdaS0LJiJQZHJAq2
- 8JiNvS/najcfQe/PQzk4D/nkMg+3rZpQGjwUUeFpy4nO42MX54VH/MAINUtz3DqivSK+
- Pu+OkEqfSRTgstT5ooM+G5VliF2D5iKWUHf+ECrIanxEQ4i+KIch9n58YOHRss52ulce
- SdIg==
+ bh=8zETsqRvX4XGj+oOnGQ4sYZWQHFp84w9PP72l0AJz8U=;
+ b=dYEqIF143V/8tpSwtTJP2yFi5Gcru8mdrAsDgLGil+77Jky9m8+9e1Nwkv2MitBeFY
+ pZn1MRUjoU+KEaidqmQDYxnt55nnEn230OsIDiqai8bEilMFiuUWGXn4HyzAexkgcXE5
+ wwWPjX5ZbbmMZdLklaT0oTBz+68ZrCAlrVrBo2pOkUUay8ODiUhXjjJSUS76oPSITtFN
+ feYVj6rS8lMo8kzoiIKi9qNn8Cm8LmUlrSSTqq1VFjCl+e9iXXtipWFmjvj7fo7eJXxP
+ cGG1XMR41tfkmD650vHx/1sGSLj/RxAJ1xVGBw3YQXdqHXNQAtx+clcxk45Jd8z6KTWZ
+ PfwA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzjahijVqmgPwMhjZ+6ZfYDGSiBKai9Z87mKhV9/LzZQPQpOyqJii55ALMaMFS4JQ/rzVg6Sup/inHt@nongnu.org
-X-Gm-Message-State: AFuF++lz0Truh0dE5n49xjaCIYRAY70suY0uFr0Ain/YUy01mQKHhocu
- UEGHDGjD59HFzKkwjkPlp0s1BYqr2iS7Jsbe/20i4+GYsF4aRxdJEtfaU8FmEzN/du8=
-X-Gm-Gg: AYBFou148tOaPSZfQ6Iv4bwZ2HMIHV1n0OaWXLmet3/TL5PmRp3ggwYbaj9cZxFJ+1d
- yUeQ1fjigTxsEzaBhmT9PD6ntyRCcxbc7zGHQ07ZH/lyxYBADmbVAmrTG55tmRj4GX5O3urle9w
- EmSzgvdoULxzQVIqxq5yx6flqFgiXsbTAxsXcAkoplNZrg8gvi7HLeQ3RiZPL8DDVovlXDztjyn
- lWejdm0+42A72631eTtAlpWK3rmPe/r8QH+NgiLpRl0Wthy9zRUZpNzkArpUjDwwptQFjHO+Fq4
- e5/p7T2bjgq5HNeFGfdZlqQfZxFIFGU188xyREj4E9yMuuNffmwqVlrhq/XVWiDe17OaigD0e2z
- RJtybSXC0VTHXjrF7idrdPbxRNtuIHyTtKJ/j932J8Gqy5cKJ5r2Fh1iVCoLNv0XIlvf+wUGPlp
- THYP369kc5bqqN97eu+G4z4elHxXoyBN9XnvDEyTCHkgwFfYRfDNUpJfDn9MtwfeEtWceoOAlmY
- m/dDMYuZGAaNSM=
-X-Received: by 2002:a17:90b:3dcd:b0:399:ea1:5a82 with SMTP id
- 98e67ed59e1d1-39d9bc66ab9mr546457a91.3.1789069562822; 
- Thu, 10 Sep 2026 12:46:02 -0700 (PDT)
+ AKwUvBxNHBKA0v0IsTLcK947ckQqPT5ArRzo9hIEBOjA6G7icLBGma5eNsvI7/daJnWsrD/e1fm1PxW6qwJX@nongnu.org
+X-Gm-Message-State: AFuF++kSstdlT4mKKPQTGI2pmkhpqgappdmjrz5d2AF7zTPYtTaGWZ/B
+ xO9GH/wR23mZEe4yja36dGNhrDI36yDEhW/nGkxxHTuoUjsl6qiGSGJZZvp6wNRg7h8=
+X-Gm-Gg: AYBFou3xsU3CfQkgRk55vcfegR/7i/3M+GvcgbvrE5ejFUmriBokFQz8E+i8sjvYPeD
+ 4QRH9zDqRxgmU7qvNKkMnN6stl82TtT9i2cdbWPu9AankV3jXBd9xeMAU3xiCjTF5Szkl0uT7wM
+ cadxtS9zncxyhq53sotBHWkkDnkN2kaxdnKvo2mHdKRg/14IEj9BaVmxcnV7NlQ+wS7JhkgvyrR
+ xXmTy0N/EAIJ6JvT+8yr+Nd4VHmFU+l5wO0z768avBS1yjIi/Tk4OgOaEutF9a928MEOlekFAGJ
+ RS31de86wBdMUDj2IO7mWQ7J7ehU3dzE/4CnBM/N76IQild7/myRJ+lpKCDobBPcHuwcAC3Kgub
+ 2zW1vWaLX96+8AppvnD9u9IgCzd0QIFtia8U7IqA3OKrk+xOSB5Uc31rBvY+UY15RDyjA8Zx6Im
+ ZKDatag0MM9mHGwPjnN6Aaph75Mi2R6UolwvrBiuWU/ruwAb+dAmc5TFeaqyauX275dfoWsEd1f
+ bwob0kXM69jqRE=
+X-Received: by 2002:a05:6a21:6f88:b0:3da:755f:a031 with SMTP id
+ adf61e73a8af0-3daed20b238mr923398637.12.1789069481818; 
+ Thu, 10 Sep 2026 12:44:41 -0700 (PDT)
 Received: from [10.171.0.227] ([98.155.112.169])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4ed295esm311367eec.15.2026.09.10.12.46.00
+ 5a478bee46e88-33ba4e9a8a9sm287837eec.13.2026.09.10.12.44.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Sep 2026 12:46:02 -0700 (PDT)
-Message-ID: <4a0b16c5-862a-44d0-9ce9-248bd7eb1ffc@linaro.org>
-Date: Thu, 10 Sep 2026 09:45:58 -1000
+ Thu, 10 Sep 2026 12:44:41 -0700 (PDT)
+Message-ID: <714d9088-2a70-414c-9b41-a86966a1e8d9@linaro.org>
+Date: Thu, 10 Sep 2026 09:44:36 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/21] target/mips: Constify CPUMIPSState for various
+Subject: Re: [PATCH v5 07/21] target/avr: Constify CPUAVRState for some
  cpu_*() getters
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
+ Michael Rolnik <mrolnik@gmail.com>
 References: <20260901095229.72018-1-philmd@oss.qualcomm.com>
- <20260901095229.72018-14-philmd@oss.qualcomm.com>
+ <20260901095229.72018-8-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260901095229.72018-14-philmd@oss.qualcomm.com>
+In-Reply-To: <20260901095229.72018-8-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,15 +112,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/31/26 23:52, Philippe Mathieu-Daudé wrote:
-> Add the const qualifier to CPUMIPSState when
-> the argument is accessed without modification.
+> Add the const qualifier to CPUAVRState when the
+> argument is accessed without modification.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 > ---
->   target/mips/cpu.h      |  8 ++++----
->   target/mips/internal.h | 10 +++++-----
->   2 files changed, 9 insertions(+), 9 deletions(-)
+>   target/avr/cpu.h | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
