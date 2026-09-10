@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887BDC79FB7
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 01:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9BBC79FBF
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 01:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Tqq-0005Uy-Lp; Wed, 09 Sep 2026 21:45:20 -0400
+	id 1x4Tqa-0005J3-Mu; Wed, 09 Sep 2026 21:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x4Tqg-0005QP-76; Wed, 09 Sep 2026 21:45:10 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1x4TqV-0005Gw-Er; Wed, 09 Sep 2026 21:45:01 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x4Tqe-0004BU-Gx; Wed, 09 Sep 2026 21:45:09 -0400
+ id 1x4TqS-0004B8-8k; Wed, 09 Sep 2026 21:44:59 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pfVdiErfiTKvOPQV4MEiuVhPnnMXKOkkP0fBf9/XLubgCeZzhz6sMAIx9AbYo0UjIuEOAQr2RN22MxT3Xnqcg5PTdiejlZAoRlo2EkdDJ60avmVq1Q6UAQU9GOmDbC3FaPhFYlcNXLEylT5v/2PeGxyuO8sc2IvpEKQBnBQ4ECIeUTUis/6du3Prx/lSbmaEe11kP3P5xeg9Ks0aZVOBTtWH5UpYgAn8vS4i2WTv7dUjWSKYtg1HUCGW/ONOWpq7PyEasbUHJfh4U989EvKW32eszc4gtBJlggj41gDveVw6BzbV6rhvYVUPlZlrzBj20VeY+cu5KBG4APXWEcxFWg==
+ b=IsicZoNJG7by6XH0X2vtnccE2lU3yn9osEFNo51MRXZxauBPn95REL8d670TuI66fVuiv/nxC76kvuIY8QkFSSIDcF/Rewn9QgV0yKjHW3aZlTwm5d35dNFZUFFklL8jsoEwmrZhZ3r6deVqT2ShddJN5NS2KEt7/Pq4Is4oyDp3hQOKC8WFgpOOm1K5rWtkEjK+KALyqYnPTYXuhVTisMpvm+/nLdER44jASHqAgBiWYWcyPyl9ExmSCmQHykEqGHy29iCqlZI7mVumTTxFfhFXIRGxHXQQ1BM7EajqxePqR1dNY0YGcQPz2mk5PM/Q1fuV6armknamEl3rXwzJzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pAsaKbEcunvWuo5wSwV0RR29y2iDU96EA6RdZBfDK4I=;
- b=AgKkq6qUYrmrs30mIvGTr3LX1U7ZoX4EFhh/NqfJiABAJPTjCwrd5Wo8nJHg7xN2/EyN/HvcR6WUTKuRT123efaRlafwVawBVUV5rtSp6jolobUeoz4DOfLjHlsJaxhu8j2LmlETeb7CJiiVZpqjbuJqJesJOB2RV9iyMrbgNRTG4Ptt8fYXoJMt8B1QAAyM8TCoyT/buBuei0onf+JN55Nmx1fK+Ce45viX7jU39xxcT1lsCHlC2qwah8aeUnKk3ODuzgfJJlOm4LSCdXojpYzeM2vtou4B2Icr0uouJIdp8L9SxWZB2rggZ2g30kycYlgAR0RVC1AtLRYHdjhZcQ==
+ bh=6/UlxvwtsJiAeeZ6plX4LkuNWvrhjF1nZ70tq4RtXjM=;
+ b=g28gsHJTN/HjZei+b/tTr/lLOVpl2YUGp4AR7ddNp1j8MyDXt3z3nw9hDESz4TiyZXibG8wZcLURc6wYusydCdGpFIrDAJI+H/mnA7KMmdR8cfpnPFuZXK52yytqr/XLwuFoCwX/RJSVY99i1Jf5QysJ03eXefaVgHBoghGEpEWXbkHY1KL60S8/1nIkcaihgTAA4v9sVC8mq31AyKBmAcjNe4GVXtYZachBiW7hv1OByM+h5PiOZye2UPvnoteDU4EsOOdoNPmtCLIaHDWFVBgrJc2LGVC/+1MsudDbEdPhvIELfYEy6ZgYzpooC3k09ExJn7X7MSgrIMtdh00TTQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pAsaKbEcunvWuo5wSwV0RR29y2iDU96EA6RdZBfDK4I=;
- b=qrOJFny7YAr6uQRuju2Jo01kSIoeRLrPVuxaS+s+ax/MQpD8oWOIzmPHG0hi7togHaL58gH3vVsNc7qMPKsy8O0GIKS7nYBQyGrZ7zwdnBKUtPgseR//sRl6RAxwLaNNgIYARF0oD52VLi7gT3Uo9qQeVSo6v5X4FDBuEItgkCL515kuNfsnHHyp6hnDvxXobWjFrDbMA1LvD0mwowPypmKYGErNXlnFEAy0J+tQpvrAyqZGDJ7VH7p/nzf2wM/WD45NcVHvS9gZ3d/6FjwMrc3mUb5TSD5bCHTC2T7RusZNkBrR2TCXE28VKdd5H9tgXaejewOaG38Kpw9+jQInIA==
+ bh=6/UlxvwtsJiAeeZ6plX4LkuNWvrhjF1nZ70tq4RtXjM=;
+ b=EpdzmUB6aqV4xvrh2709+Yb+hQy9e8PpJZj8q/LJ+R9h/SwVlWCkSyT2P/1meBwBGuHjIu2ZLcET8tAhp9L+MfDRprDw8G9FQ5hDPrvySHCuajZuf88jTGw/LVQT+uTyOy1Dc1DTp66D63pYm+N/IHfUGWXO9cPBkAFyImsTDIn/t0LH7IoybALye//Ptaetzb/68RaevgsAi4puYe0z4q29jEXdk8+T4sj/lycwDRwvBOBJt+vPzHF32F5ebD08OC7Hz1MSLm/7dqm+09G3iNVY930l+F6ERXAlVksX38eZEAQkWWw0fP13oNk7ot9P/ybc9tsCbYr6pywHwym7Rg==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by SEYPR06MB6829.apcprd06.prod.outlook.com (2603:1096:101:1a7::5)
+ by SE2PPF06C2A6398.apcprd06.prod.outlook.com (2603:1096:108:1::7c4)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Thu, 10 Sep
- 2026 01:44:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.8; Thu, 10 Sep
+ 2026 01:44:48 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0406.007; Thu, 10 Sep 2026
- 01:44:55 +0000
+ 01:44:47 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -53,15 +53,11 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 6/6] docs/system/arm/aspeed: Document the VGA display
- controller
-Thread-Topic: [PATCH v2 6/6] docs/system/arm/aspeed: Document the VGA display
- controller
-Thread-Index: AQHdQMX64aSGzQwhjkaMwt2EbOAkVw==
-Date: Thu, 10 Sep 2026 01:44:54 +0000
-Message-ID: <20260910014447.4110781-7-jamin_lin@aspeedtech.com>
-References: <20260910014447.4110781-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260910014447.4110781-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 0/6] Add ASPEED VGA PCI device support
+Thread-Topic: [PATCH v2 0/6] Add ASPEED VGA PCI device support
+Thread-Index: AQHdQMX280JuUOLBxEi/1XUaqs7ZBA==
+Date: Thu, 10 Sep 2026 01:44:47 +0000
+Message-ID: <20260910014447.4110781-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -69,72 +65,71 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SEYPR06MB6829:EE_
-x-ms-office365-filtering-correlation-id: e9742dcb-cb0e-4168-4172-08df0edd1d51
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SE2PPF06C2A6398:EE_
+x-ms-office365-filtering-correlation-id: 35607a15-2434-48e0-614e-08df0edd18f6
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|23010399003|366016|1800799024|38070700021|921020|10067099003|56012099006|22082099003|18002099003|3023799007;
-x-microsoft-antispam-message-info: B+j5MESJ/6/us8gWampJNYMN9wflBMAE+zS8sewzFdzqSnGej4vRYgdt4aOjtEBmIHMT6473R98froscnZ4L7x4VKevsPrrLYbvnM7mfmRUBGoECSugm1Y+k3juf2m+HzGpaGR3BJhhP+kybNQIhkK+9QqzwRUmfsEbNxdIGf339RibfNk/u2KKfZa4Z0Gy8pqCBmEKlM4S7ipimGEeDuFdg9fh7ben27gJ65RRpvUOIcqY57eDj2IIwArccIlbSlX+cb6OZSL3vICvZLwkuU3dDm8VZ7XJohazPbQp12m6Ab97ZNrwP6koT9ZHyorWN5AfzDNb+M97uEzbWHqD1sBPN64bP/jbYQqQ+druMqBj6NP/tmgoIlz0x7bq6rMVeg3K6OJgEu2wsxA7JykStIsljLKAc7z/DYlnvDnm7k7d9vQ/KOPyTpDLKgOEjnNbBWgSRH0kvZ56Bnf+8Go3DZkh4c1+9LMKMmX5QU2K+On+UMxSBQCemKMXVUj6c+54BT6nECrcVvcWfewozqhP0W9LUcVLfDgqS4wg7Mq15fQefRs+RYEq4GmYjt6/JfWOyoZk0d3f/+Kdw9/hqrL55WZOcJgWgZox21nWGHAGpSBr8eSk+jEuhqZJZvBp79F+1UYRZsVuTAfvuSnc9h7w/uJJZBgYL894pdg0OlxZ8csR3lu4UWO7MzBmkqSgWLTR1
+ ARA:13230040|366016|7416014|376014|1800799024|23010399003|38070700021|921020|5023799004|10067099003|56012099006|18002099003|3023799007;
+x-microsoft-antispam-message-info: YvU2chWowoOI9Ke2DrnzIDkUG/6g9Sk0JixZP6FFN3rkWEqm6f+Yo/CyOvOr4ZhutwSr8Ur9mPEYgKmkISgBzpo6poqmdR0/qZqJKaHnNaq6sXZvTpfgBWMkN+coNwV4tM4FqvtyCNsk+5FB72ZDiU/206sIVXQPttT/jryFxsDhrbM5r6BVpIBFVxXaDf1Nm813wHpjJXXEvau1XgED73iqPKrRaqJhtXmiqm8CUF6UaghArUr8y3lCjH/mkJhFazfbuLiG92LA7Gd4mz9MpuCTi0JcUKqa3zmyVt9eHva83eFXnm3/CYgcMw8OxjG7w8r7VxQRHDnOAv96kwT3WGV0jf7rLz+ieyT12rNgsOaQ6L7N9vsOdbCb8MiPQ2wG/kn0nbbf9Vbv7QOzJhX20xNRKV2pMx2Y/8aRVGvI1h7WigYzaScNi55lCWnM9mdfAA8b+Gz1O1yll4K1/l7nkeZV98ChZwwc7IOyrFibd8nQz993CkDp71NIT4nWEndSTMy1Gpk8zcaVjU86cnfanbLsc63dRHfy3BSD1O0p0BLR8ZOCRl41HHU5voxgqDPAoai8rZn9yMq6V6mR/XiBEAMSgJHc/VpIwXBnTQTtoj0R5T0LOxUlXLhyZ/tZ7u1AkSOFJ+s4QtjWt+m0D8Yj7d1RPx+bGXvkKgJ6oCF87lLTqrOVCkMfuG+KPa25M9Af
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(23010399003)(366016)(1800799024)(38070700021)(921020)(10067099003)(56012099006)(22082099003)(18002099003)(3023799007);
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024)(23010399003)(38070700021)(921020)(5023799004)(10067099003)(56012099006)(18002099003)(3023799007);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?CEahHDEoqooe4RLbCh0cw4wTKDWChb4jZSuk9VatTC2+JbXqMS/BP9opfH?=
- =?iso-8859-1?Q?uFJLgv8FXz9F5TnN0crS0Virn+Gk1yEqvTb2P6nsVIAu4JSCbGim2OPln+?=
- =?iso-8859-1?Q?NbfV6EYqiWctw9J8T8LHINuE3pjmBg+/f7yb4Ge7f7e5IsL4QeC4443fPK?=
- =?iso-8859-1?Q?+hgtg5pAoBaVcLq8HAOwoFOiHo62OJ+nIHknZxHiUYaX7ztD13al6DTj6g?=
- =?iso-8859-1?Q?7aszlt3s9gkPxAyznziz2JdwTmHYBMPtX7oMvxg9H2lKNXoL3N/QkKp6iC?=
- =?iso-8859-1?Q?NKFwuGcZj3JBEylhuOMoWJf1xylo1feGsxuAeOGJxf6Gvdev11vkIeX4VZ?=
- =?iso-8859-1?Q?gJLKDM6+fb0MsNDa3HN6h/e+lhUSIWpMhYpOgI2VQebTUNy6WPB7Pm0PE9?=
- =?iso-8859-1?Q?+lSZTHoAozLO2x04M441RcHEETqLqgSvhZ2e4AQOVX6HSlj/kTZyZPbWtv?=
- =?iso-8859-1?Q?IelUj0RwTztmpw27CmdHrjMFGy8BE8npopxXPdpzOpRgEwn49d6icTXOJt?=
- =?iso-8859-1?Q?dnLZN+RW7argNRTNrwUKrxDoZTIYcx5SRudMWGBU8r1ZNCCsMT0A+RzmHV?=
- =?iso-8859-1?Q?1Pxy6v8ewHL0iDdYp0EEogE+VBYzWNtrpx7n/5F7g/jtdXAyLCjkKSWvYu?=
- =?iso-8859-1?Q?E4RXyaOEVcgpdkyfBsFJD4EQxD+YrvS3+KQ9pUfJH0WdftWmXhBR3h1gj/?=
- =?iso-8859-1?Q?+59UtxI8RmXpx87HCNeUHHRCFeVpB2CyMOyhFnsdZMos49i7S4uvDl6JIg?=
- =?iso-8859-1?Q?3iTzTV9RZ4GMhvVJYQUcHS11tGMleqn55yZCaHqlX2GRJWOx+J79Ylteo2?=
- =?iso-8859-1?Q?MG4pmlDDGmlpmpu/zG17rtMC8Wrc91wD9nVd64Yb856TY/cWvU9X8k/EzZ?=
- =?iso-8859-1?Q?Q7XvDVBtH4Kmg/1PTacTnSjNSZ7Gp/yFtGWuUiCF/NWBtjHYYPqJEuosen?=
- =?iso-8859-1?Q?5dCcstmSW8n9DRhXJxvDXkBBxEgNnQPyDTfeng9aaZekiIMKz12AKHYewX?=
- =?iso-8859-1?Q?uJbz1vn01BR5FyFZFIvq4T7q337/o8p4ijDU+N+qjFuK1Zhi8w6d+CY8z3?=
- =?iso-8859-1?Q?18LorX7+v+zUPC+IlkotvI8fYh+W2tFPiHYr2VQEnpdIJofoEizrxw3Eme?=
- =?iso-8859-1?Q?eTzLsNEzenT8bGyv7PR2lCHLJdPQVP7htfoUvn4hXmw6pVBNQac0NdHwWu?=
- =?iso-8859-1?Q?uxAxvoB5o1Mt5wINXBRMYTR2v3xdf0G0jeQw5arf5JKglaQrExygjrd492?=
- =?iso-8859-1?Q?vvIHWEbB+2HjCLXcw0cTcaE08vh7aQ3oaz1Ve9bVFHEAPAMaRAaNLZwizz?=
- =?iso-8859-1?Q?ckKvKtm7rcBUSfm6TDN4CrmqAAzJ+mHeNZIKhEWKAwLn1tjAk1RNht3fEp?=
- =?iso-8859-1?Q?jwTWaiRSnEE0ZEmfJst2+XjVy65lWs54PeQ05exSAFaqTz+OPnBmZzydfa?=
- =?iso-8859-1?Q?CiKdN+k/lTldXcNJ6Nn50T0rTIAXTtt3Te6YaAF9iEbjymeo79eIlIH2/I?=
- =?iso-8859-1?Q?gSdLI1tPjojacvz7egHdFkqrZikNXndXadCi6cC0kxRrb03mxXobCXOpd2?=
- =?iso-8859-1?Q?4QUBY4eGNVvLOkdMtPqmqo3gkItfs7orwuy680GarLEThvvclGk9KvShc2?=
- =?iso-8859-1?Q?RDWi68knOyPi/nH9xEm8oGc9+fPl9VTf7fev93gU6es+xUQrl9JSUa8/p8?=
- =?iso-8859-1?Q?AaTscoQ8G+vStw41smt4vLKL9G+/vs2fGQtnxfxKiXwBK13PQtDfSJ7cvD?=
- =?iso-8859-1?Q?bH/8MnvT3HTE4V/tSLhTZwsPxx2cEY1ssvdUgnUo1NkpOJLAmNaMZOE561?=
- =?iso-8859-1?Q?L4za5zwHbg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?9MHteluQ33eOgkQemCBXc7TiXUWt3GnhjTw/oWiSr28TJ+KoEOJM8NgMKp?=
+ =?iso-8859-1?Q?UA1plOCBIerwP3yoPv+DAo47i96xe7U1m/4IHmuLC4svk7V02P1q00Mx77?=
+ =?iso-8859-1?Q?eioBbDDSfaFU9bBJUreX2Mv6ofFcpV2T//jFrviit9KiYl1suzdq80mZ15?=
+ =?iso-8859-1?Q?c1zleJEwG5+g36KoXBch/bKmlqgDO9MckOydqXjWVL/juCtah1VGa8qYw8?=
+ =?iso-8859-1?Q?ZpoU+8gjY8u81EqKwMqugWuuQpy3eNJerwk4fe8C6IPOwrr1myJvOaGYkd?=
+ =?iso-8859-1?Q?KrJRWSDxBrMntrwfsZL9o6cvsUuHrEWdZ731KrSDi0BqMPfqCZnsKHfR0Q?=
+ =?iso-8859-1?Q?LBb25n9eqbyaCScbGClfq1hFe9QiX2erJR7+B1Yf+M0qcHbXZ4TIK90fGu?=
+ =?iso-8859-1?Q?5Q38AFw0KCaFFLPd/lnMNUm9xqK8k+nwmqKvfx+cICQGhKHVqW10uVCfUW?=
+ =?iso-8859-1?Q?sczf/Ohkolf2xH6/eeUUuletmtMJmqy0BO7yzFZgbSClb5nGqk9bNI68og?=
+ =?iso-8859-1?Q?C273LDlUyoLIYHDH0rgoeZzCqFFq/1a3ea5L5vIPxhd3pyLwlR+2UOXI1z?=
+ =?iso-8859-1?Q?K3Ku/UKBDCsh4KymDf7v4LwzQjXYMwhZu2EAeEg4SiyuA8hpuMzS3qyZxL?=
+ =?iso-8859-1?Q?JU0JglwEHHHapQCi/qUr4Ki9nCCgUVR/kDf9FLvHuKV6Yh3pdKijMiqJPA?=
+ =?iso-8859-1?Q?g6D1ASTlja28iD7fS0bMgHqZmhhK8Aajto7iXilwEquL12yu9qmUyU7Ghq?=
+ =?iso-8859-1?Q?Hg+LSJcPNa9ASj6M7fhB/TKEaiHEFI5WiUaJlQxWEWTwE9xAqsdAWwZW1j?=
+ =?iso-8859-1?Q?Hhnw+AbDu2hZy7xhNkdpCTkxDV/SxpTfTsGXqHkeISk9WjxJ/5M0deJsjv?=
+ =?iso-8859-1?Q?U/GSB+LkzwLx2rW2SiQ8CwBVPAkDCd+w07SrTtLCW6ABFggsoZLbJ2ml1l?=
+ =?iso-8859-1?Q?ZjYHB4Nv2ulq8E3UG013tYqWuFNrQhjKLTlP+KGPMMbAxSzegA0+vph5ga?=
+ =?iso-8859-1?Q?AG66Lzs5F+hDd0fUOcLZLIWeTr4DMw4miONuS4+Az4RdcQYez2v5nkGaKz?=
+ =?iso-8859-1?Q?8SNDuR6RFA0nA4PGc670zaG3xt7AxGYGre5OAxa8p8n1zGXeAKFqz3TCvx?=
+ =?iso-8859-1?Q?x44je67F69aUnPsKCV0dC5SYS+OrFxomLEInKhVp3r38qDeSmxUdfJ3u0x?=
+ =?iso-8859-1?Q?3Hp2mm0E7cO4h5UqSYYdkxMXuesAJI0I6DQWMPTpt1Xr5e5sFxoLJAv80w?=
+ =?iso-8859-1?Q?D0YJRkti5Gg/CtRRKDOeWBk5XUzgJB21UiBbHD+pjxN04UYt602vxCSjjA?=
+ =?iso-8859-1?Q?RZRcgMXzTJ4mdWxv126jiSt+RShcO6rRvkJrSPlyTKdb5YkNNZG3nDRhY0?=
+ =?iso-8859-1?Q?mtTxx5ohWPsBMan2tA453RnCVQ5+3RU/9U1mFqL2zT2Fe8qNbQmXgdipyh?=
+ =?iso-8859-1?Q?6smVQ8Xuu4pNbigOsFiZehBwryDz6EEze6zidSBupMBcnG7cAbJkr40q1y?=
+ =?iso-8859-1?Q?mL1m2zPLHoftTIKi4fVmmG0Xj5LaSQuXxgU9lgwndxGq7ZyWOvK6mkSZS4?=
+ =?iso-8859-1?Q?UeC8I3T1+fvIqUJ7DbanwUbDcIXtqllzVo0VRK5kiPIotQDR0L3EH+CCYF?=
+ =?iso-8859-1?Q?pQI4fXsrDtxLvCdhsTpxnrAqbLb6noLRBgjGA3nB2iR1WzNa+y27yqvX5M?=
+ =?iso-8859-1?Q?mrrUeI//nmVTHBvexjDG9DmL5VUYMP66h1xupRVh680Gtej2g4Cr2EOMIG?=
+ =?iso-8859-1?Q?D6IV7fIGULCb92dr38O1lIqFqTnamX3hD/9A/ElYkSzTnDIuEeah+hNUBR?=
+ =?iso-8859-1?Q?FS8TB0PjoQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: 2sTEyUJ0YwFR82pqosjj6lzoQF+pOYPEu0VtqfDhVS9xxpKYroeYfHA39mQCVsgYAl0bWhTbSOatsfidIUync6b7yApd23lHhj+7zA3AhQB3lJzZITlJ/SxaBEKvirYVilciPQsGMnDyxzIPslsv1hY4qZgkOQcGToPE7v0HAWKklPmb0Vbv7wE3KJsFean1wpcted8c7HaiscrBeQ6xS/iX81KiCdLoVDaWbLdeGzwcoRw/rIX2SeH6rYiD5ctKV8FyLZBOWq/zxY052TGd6SnSl4HYysCq4R5mW4mk9xNQFQAsZPQIdT3Cm3oHgq4Ef5qt62pCmZzIiRNIelqcQw==
+X-Exchange-RoutingPolicyChecked: GO1e/9oJb1d/H8wLGaescZX2uyK5G1Xja6TDq8F665rpbgLtu9fUjgrf3IUBgE3AshNQM1zONs7Atu7n99m2fJo2MnPfXvxZyGC79nwNJnhU62vKi3D48gknPb9QYVKM9pHW7IKRsItC29KEnL+t0XcMz4Pj1vsr5CaJ73lusCuAr1cfWUWQpBdZ0EqJz9KQvus+n2y0GktnX5kPdy5DknyTB1ywSsm5V1t/4o1QCACIUIC5rz7rW+69st6k5jF2QRf5aPSzHgDEYbysmgnEPYTiZmrK35kY+6QvLQm0Ut7dxYLHo9RJ8j6R19MuDx1jg+rd9iFvAGWDrQNVouGy6w==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9742dcb-cb0e-4168-4172-08df0edd1d51
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Sep 2026 01:44:54.8923 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35607a15-2434-48e0-614e-08df0edd18f6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Sep 2026 01:44:47.8998 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Ku6rG7Bo0H8ECBDV2PeXiOqda9nzGa6WIzeXYCTTLV1Mvu/f/IkVpzHGQBqyNCq56ah8IoKvMvK9V/vN3uOlM+og9AYunbvdNQgMu/nQvns=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6829
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+X-MS-Exchange-CrossTenant-userprincipalname: EoV0ldcQ8BVIC4HwgIPC/B9aw1ixWosk0XFcEgJfaFwi1bOjmm9YTYM8PcbZlhIVl/A0F/jj1MJNYcLfN9+dCQ2bMYqf0Qg6+rEVa4DxmSU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE2PPF06C2A6398
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,85 +146,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The display controller was listed as missing, which it no longer is. It=0A=
-does not belong with the rest of the machines' devices though: the host=0A=
-reaches it as a PCI VGA endpoint, so it is plugged into whichever machine=
+This series adds support for the ASPEED VGA PCI device found on AST2600=0A=
+and AST2700 platforms.=0A=
 =0A=
-stands in for the host rather than being part of the BMC machine.=0A=
+The longer-term goal is to support the video path used by BMC KVM=0A=
+applications. The planned implementation consists of three stages:=0A=
 =0A=
-Describe it that way, with the two flavours, the property that sizes the=0A=
-framebuffer aperture, the option ROM, and how to reach the screen.=0A=
+1. Add an ASPEED VGA PCI device so that a host system running in QEMU can=
 =0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- docs/system/arm/aspeed.rst | 37 +++++++++++++++++++++++++++++++++++--=0A=
- 1 file changed, 35 insertions(+), 2 deletions(-)=0A=
+use the ASPEED VGA device as its display adapter. This series=0A=
+implements this stage.=0A=
 =0A=
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst=0A=
-index 2d51ceeb84..0900b4202d 100644=0A=
---- a/docs/system/arm/aspeed.rst=0A=
-+++ b/docs/system/arm/aspeed.rst=0A=
-@@ -75,7 +75,6 @@ Missing devices=0A=
-  * Slave GPIO Controller=0A=
-  * Super I/O Controller=0A=
-  * PCI-Express 1 Controller=0A=
-- * Graphic Display Controller=0A=
-  * MCTP Controller=0A=
-  * Mailbox Controller=0A=
-  * Virtual UART=0A=
-@@ -319,7 +318,6 @@ Missing devices=0A=
-  * Slave GPIO Controller=0A=
-  * Super I/O Controller=0A=
-  * PCI-Express 1 Controller=0A=
-- * Graphic Display Controller=0A=
-  * MCTP Controller=0A=
-  * Mailbox Controller=0A=
-  * Virtual UART=0A=
-@@ -512,3 +510,38 @@ To boot a kernel directly from a Zephyr build tree:=0A=
+2. Back the VGA framebuffer with shared memory, for example using a QEMU=0A=
+memory backend backed by /dev/shm/vram. This allows the framebuffer=0A=
+contents produced by the host QEMU instance to be accessed by another=0A=
+QEMU instance emulating the BMC.=0A=
+=0A=
+3. Add an ASPEED Video Engine model to the AST2600/AST2700 BMC machine.=0A=
+The model will read the shared VGA framebuffer and emulate the video=0A=
+capture and JPEG compression path used by the BMC.=0A=
+=0A=
+The intended setup runs two QEMU instances on the same host machine:=0A=
++-------------------------------------------------------------------+=0A=
+|                         Host Machine                              |=0A=
+|                                                                   |=0A=
+|  +---------------------------+                                    |=0A=
+|  | QEMU 1: VMM / Host Guest  |                                    |=0A=
+|  |                           |                                    |=0A=
+|  |  +---------------------+  |                                    |=0A=
+|  |  | ASPEED VGA PCI      |  |                                    |=0A=
+|  |  | device              |  |                                    |=0A=
+|  |  +----------+----------+  |                                    |=0A=
+|  |             |             |                                    |=0A=
+|  |             v             |                                    |=0A=
+|  |  +---------------------+  |                                    |=0A=
+|  |  | VGA VRAM            |  |                                    |=0A=
+|  |  +----------+----------+  |                                    |=0A=
+|  +-------------|-------------+                                    |=0A=
+|                |                                                  |=0A=
+|                | memory-backend-file                              |=0A=
+|                v                                                  |=0A=
+|        +-----------------------+                                  |=0A=
+|        | /dev/shm/vram         |                                  |=0A=
+|        | Shared VRAM file      |                                  |=0A=
+|        +-----------+-----------+                                  |=0A=
+|                    |                                              |=0A=
+|                    | read by                                      |=0A=
+|                    v                                              |=0A=
+|  +---------------------------+                                    |=0A=
+|  | QEMU 2: BMC               |                                    |=0A=
+|  | AST2600 / AST2700         |                                    |=0A=
+|  |                           |                                    |=0A=
+|  |  +---------------------+  |                                    |=0A=
+|  |  | ASPEED Video Engine |  |                                    |=0A=
+|  |  |                     |  |                                    |=0A=
+|  |  | - Read VRAM         |  |                                    |=0A=
+|  |  | - Capture frame     |  |                                    |=0A=
+|  |  | - Compress video    |  |                                    |=0A=
+|  |  +----------+----------+  |                                    |=0A=
+|  +-------------|-------------+                                    |=0A=
+|                |                                                  |=0A=
++----------------|--------------------------------------------------+=0A=
+                 =0A=
+   =0A=
+=0A=
+With the complete implementation, users will be able to view the display=0A=
+output of the emulated host through the OpenBMC KVM web interface.=0A=
+=0A=
+This series adds the following devices:=0A=
+=0A=
+- ``ast2600-vga``          Aspeed AST2600 VGA=0A=
+- ``ast2700-vga``          Aspeed AST2700 VGA=0A=
+=0A=
+The size of the framebuffer aperture is set with ``vgamem_mb``, 32 MiB by=
+=0A=
+default. The device comes up with the standard VGA BIOS; pass ``romfile``=
+=0A=
+to use Aspeed's own option ROM instead, which can be downloaded from=0A=
+=0A=
+https://www.aspeedtech.com/support_driver/=0A=
+=0A=
+For example, the AST2700 VGA device can be used with an `aarch64=0A=
+virt` machine as follows:=0A=
+=0A=
+  $ qemu-system-aarch64 \=0A=
+        -M virt \=0A=
+        -cpu neoverse-n1 -smp 8 -m 4G \=0A=
+        -bios edk2-aarch64-code.fd \=0A=
+        -device ast2700-vga,vgamem_mb=3D32,romfile=3Duefi_arm_2700_vga.rom =
+\=0A=
+        -drive file=3Dnoble-server-cloudimg-arm64.img,format=3Dqcow2 \=0A=
+        -device qemu-xhci,id=3Dxhci \=0A=
+        -device usb-kbd,bus=3Dxhci.0 \=0A=
+        -device usb-tablet,bus=3Dxhci.0 \=0A=
+        -display vnc=3D0.0.0.0:0=0A=
+=0A=
+The disk image is an Ubuntu cloud image from=0A=
+https://cloud-images.ubuntu.com/. =0A=
+=0A=
+The output goes to the VNC backend on display 0, which listens on TCP port =
+5900,=0A=
+so point a VNC viewer at that port to see the screen.=0A=
+=0A=
+=0A=
+v1:=0A=
+ 1. Add ASPEED VGA display controller=0A=
+ 2. Add the hardware overlay cursor=0A=
+ 3. Add the 2D graphics engine=0A=
  =0A=
-   $ qemu-system-arm -M ast1030-evb -nographic \=0A=
-         -kernel zephyr.bin=0A=
-+=0A=
-+VGA display controller=0A=
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=0A=
-+=0A=
-+The display controller of the Aspeed SoCs is reached by the host as a PCI=
+v2:=0A=
+  1. Drop "Add the ASPEED VGA device id" patch=0A=
 =0A=
-+VGA endpoint, so it is modelled as a device to be plugged into whichever=
+Jamin Lin (6):=0A=
+  hw/display/vga: Allow a device to report vendor specific blanking=0A=
+  hw/display/vga: Move VGA_HPEL_NEUTRAL to vga_int.h=0A=
+  hw/display/aspeed-vga: Add ASPEED VGA display controller=0A=
+  hw/display/aspeed-vga: Add the hardware overlay cursor=0A=
+  hw/display/aspeed-vga: Add the 2D graphics engine=0A=
+  docs/system/arm/aspeed: Document the VGA display controller=0A=
 =0A=
-+machine plays that host rather than as part of the BMC machines above:=0A=
-+=0A=
-+- ``ast2600-vga``          Aspeed AST2600 VGA=0A=
-+- ``ast2700-vga``          Aspeed AST2700 VGA=0A=
-+=0A=
-+The size of the framebuffer aperture is set with ``vgamem_mb``, 32 MiB by=
+ docs/system/arm/aspeed.rst |  37 +-=0A=
+ hw/display/aspeed-vga.h    |  61 +++=0A=
+ hw/display/vga_int.h       |   9 +=0A=
+ hw/display/aspeed-vga.c    | 945 +++++++++++++++++++++++++++++++++++++=0A=
+ hw/display/vga.c           |  11 +-=0A=
+ hw/display/Kconfig         |   6 +=0A=
+ hw/display/meson.build     |   1 +=0A=
+ hw/display/trace-events    |   7 +=0A=
+ 8 files changed, 1066 insertions(+), 11 deletions(-)=0A=
+ create mode 100644 hw/display/aspeed-vga.h=0A=
+ create mode 100644 hw/display/aspeed-vga.c=0A=
 =0A=
-+default. The device comes up with the standard VGA BIOS; pass ``romfile``=
-=0A=
-+to use Aspeed's own option ROM instead, which can be downloaded from=0A=
-+https://www.aspeedtech.com/support_driver/=0A=
-+=0A=
-+To plug one into an ``aarch64`` guest standing in for the host:=0A=
-+=0A=
-+.. code-block:: bash=0A=
-+=0A=
-+  $ qemu-system-aarch64 \=0A=
-+        -M virt \=0A=
-+        -cpu neoverse-n1 -smp 8 -m 4G \=0A=
-+        -bios edk2-aarch64-code.fd \=0A=
-+        -device ast2700-vga,vgamem_mb=3D32,romfile=3Duefi_arm_2700_vga.rom=
- \=0A=
-+        -drive file=3Dnoble-server-cloudimg-arm64.img,format=3Dqcow2 \=0A=
-+        -device qemu-xhci,id=3Dxhci \=0A=
-+        -device usb-kbd,bus=3Dxhci.0 \=0A=
-+        -device usb-tablet,bus=3Dxhci.0 \=0A=
-+        -display vnc=3D0.0.0.0:0=0A=
-+=0A=
-+The disk image is an Ubuntu cloud image from=0A=
-+https://cloud-images.ubuntu.com/. The output goes to the VNC backend on=0A=
-+display 0, which listens on TCP port 5900, so point a VNC viewer at that=
-=0A=
-+port to see the screen.=0A=
 -- =0A=
 2.53.0=0A=
 
