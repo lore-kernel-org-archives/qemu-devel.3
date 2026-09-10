@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4462C79FB6
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 01:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F15C79FB7
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 01:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4Tgh-0003KG-RM; Wed, 09 Sep 2026 21:34:51 -0400
+	id 1x4Tgf-0003JX-9b; Wed, 09 Sep 2026 21:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x4Tgg-0003Jr-EY
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:50 -0400
+ id 1x4Tge-0003JF-2N
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:48 -0400
 Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x4Tge-00023B-Ur
- for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:50 -0400
+ id 1x4Tgc-00022d-JI
+ for qemu-devel@nongnu.org; Wed, 09 Sep 2026 21:34:47 -0400
 Received: by mail-yx2-x10.google.com with SMTP id
- 00721157ae682-85d4e39e3d8so16992907b3.0
- for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 18:34:48 -0700 (PDT)
+ 956f58d0204a3-66e4ab201ecso1103507d50.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Sep 2026 18:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789004088; x=1789608888; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=N9dg2+CuYt9vAgXpGp5lrRa4+Jkl2SCWzcl0cPhTvZg=;
- b=hHvqcRW3cW+aq6BTEED2E204oGflO8rNmMQDxqFRQzUjxpaLuL7fbkeqc0VB+/R7oY
- Fw3IzON5HNyjTlbMMO5sBFbdB3fijiJqXqIbKX8tm44Dd5RHhfszawOrK6n35GnnFygy
- 3foHiCQDV0KeiE/HxAJG7wNUFRru8T3y2LqZIDQHjBurlqSdJk9wAgfeukodUdX7vtTz
- BlAnjgIblhsMdriBOhby7AK0xgQeHZt4q6APcRQi0WU3UaCiKOhZ+IcHPxSsbSPd9hcT
- FVseOp631iEp8e/Zyf09UcXac2N+a4JUwNTFJvmP2N25pr5KOfXz/7mpmfNPTth7/h8P
- JlIA==
+ d=gmail.com; s=20251104; t=1789004085; x=1789608885; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mNG+iEtOq5yLs4fQjwc1YyMg0x2e8vA3tAQ5a1gJh4Y=;
+ b=IYkPa/ju4W5N5r/FShsg6YasjtUo5ogEj1JGpfF7zkc85epbgSVaKGUjqOQN8MFHal
+ zih+4EGEV3YJEO2+X/qaWYeuBVcQz2IKewSPHC6o55n3MGCvTa9HSTo4Nc+Z/BFNC7s8
+ U1ZrXitpK4AXGbtj62RHkuMgA0Kz5WWRAO0r4/JUWUO4QBbe6rd7rZis7vT9Ao28imjo
+ maW0m6knTVPQViCBNpZDGQgEnprXC+N2DEAr3n/FNIU/iamtfSkAXiqQF0x9koq5IdPH
+ oZlLqbi80jAX+ZWsej0fMpCULxA3/Wms67w0UzNx4dbqGLtQbHuvd1ZKqrWm2ICpMunW
+ yg6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789004088; x=1789608888;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=N9dg2+CuYt9vAgXpGp5lrRa4+Jkl2SCWzcl0cPhTvZg=;
- b=oa2MLmfXGS/FTUbcGtn8UW2bLVAalzScDoSSh9TjkZvpyw9mnoijITHWC3uFfFFOnX
- WuDJg3GN3qWfPPdWO5C+grCFYTQvMLxpUz5vIEnOCSOrI/TRhzORQ3uRBEHkJioX6zxW
- WJ6dZ0NNKlSvSKoJlYLih9bhGaALiDVEJFgCCFyCJ6mV+0FDsbZoC43P41zX6NRO8CII
- UVaL9bLuGBP7JtWFYFv6hiRD3+TSJYayPj22UG7UepfiQGv5My/1r6oJcHNcR/orMvWh
- JU6b06xwI50paYeG17gEWh/R3KipVZL+bUo5XrT2LDlqXdXLBqZRHy4G4DwerjwnQ/OO
- qIuQ==
-X-Gm-Message-State: AFuF++ni5fak4LBYPWQcPL9AHxGazw+eRRCca2df6ieUCJIGF7eWWxuE
- CAAHY3POCckYFcGCLKexbx7NKzkSgjHWwHKkKKW3o9zuDDd15GgWJXWwhkeOXqRT
-X-Gm-Gg: AYBFou2p9XvN8g6cE0RferC3cA+G9uP8p0C3EqNegg4ZA507/R54WXdaF1bZePm7RrC
- h88hVarmahALnvaY0Q9dZovWB7IPMcG/tohwEvHiiecoMpEv7BIy7oxk2F+Tm77eI8X0sSt4ZnO
- iIJ0keihxXeoiLhqFOEEVde9n9VIGtXTGaaUjVYX+BviZS0vvl+r3Inr1OD4xj3WriFjhF+zNma
- H5FdN080YWd29/xI9oC4vvYqW6XGCpw337+QmgTIOL74fjI5C+QY7h8XAA2mOQZEGRAe/PyKpbg
- ZLleoWI2UdDLczSJehTaSYHNNBudZMuZ8v+bDJGEWsJyZY/haE7Z0xqtCI87qcFjWAbICindDw+
- ZsbZBVIICk3UFWrtkexDseUx8o1kI/T88m+MD5+SQ1l8Mo8L0Q9P2Uz19uPpX/scZIdLa+8JRIU
- IGnzeBILdToGYd6AOk3WEYNptvUlUUClgMvSjSWyX5J1Su/eMyGeCkGdxIG4bFIH/4BuQVE7k=
-X-Received: by 2002:a05:690c:e3e5:b0:873:5c6b:a319 with SMTP id
- 00721157ae682-88203ba7b53mr7230627b3.19.1789004087770; 
- Wed, 09 Sep 2026 18:34:47 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789004085; x=1789608885;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mNG+iEtOq5yLs4fQjwc1YyMg0x2e8vA3tAQ5a1gJh4Y=;
+ b=nRDmHpzciTMaXntTiAsddqMcQuMt5MfTcLemjfMFEMyJzXs1Zm6puMsLjEUC3b4yph
+ N5lipXQa4/v6EhguS/B45pcqhyZKeblmzdCW0DPJ0n3g5xcoYsdT78vIt7oNqCTyL24E
+ 4ptn82WaIpr282HoAdyObjaJGvKiO9A1/J/q3GNXlZ0wO221F1kJjSjn0WcB4CtSqGJd
+ tdj5zsQ9mRcDmIN88SvxQFKlMq+8qFWbGcK+XIlNDGk3hPCZ6PWI9jYQNdgOayuZnIXb
+ uH84jcPycEE16KoyhDk9yxlXtoWM4L9cKg+l+eOQ4j3BN+Go14xUwxBOyVtLvnXBVbDj
+ /1Cw==
+X-Gm-Message-State: AFuF++kI4mMPQybBVMRkDtVgeSviD4gEt0UCn2jB+LJUBrpWMiigusMZ
+ CBf66fbd3Yk/H2yqkTjQgdU8UCfQOlekfmr+AKV62GRuW8zhtYthy3FkQpEB/KTb
+X-Gm-Gg: AYBFou3/Bct2ocsFjJJAKQkvfFcpv/fnTRnVDEuFCeTC+Tn2IjBstg7UQiMMN8SvqyP
+ qViEhcyuvJIYsqbF7nB3u4EfGRV18OKMGDAa7Ab5b1VMvNCuRLtPFsotZGoYhKozOS2AtBMDmOj
+ IrriI+YfO4YHkFHhxqdcPRpeldxJgJKX2LWy7YrFoqzP759ATkx1fjIYNseFIRo5/4xkBZAWDI8
+ dyX77CtCYpFJ55P4fLyozkxpcnZ+gMRy9hKkfix6+HMTk3+D6RH3v7+UETpyjQr0yVg1hiHhzyP
+ YwWBTPurc6u03ejhzCzc4iryX0Mmqua1zGVMqsqwjxddU7KbqTPWn32FZjpEze4DXjVDG/5C0wx
+ OZu08touX0EF3t3i/b/DEYjR7zDhvzUHGP+KC1KdWwwuf0SYIH4QUQssI7W7o85zs6jWPRr9A6C
+ XveDGSRAmQ+F2tnMuAaC+AEv7cUHcKytKrWFw9LrgB69FvCeJYC9vGP6Vg3ldFaDKzCALa7HY=
+X-Received: by 2002:a05:690e:43c2:b0:66f:b4c3:154f with SMTP id
+ 956f58d0204a3-6710fe437f6mr1820444d50.4.1789004084581; 
+ Wed, 09 Sep 2026 18:34:44 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8714bb0f0b6sm119288007b3.44.2026.09.09.18.34.46
+ 956f58d0204a3-66fb4939b30sm13257905d50.15.2026.09.09.18.34.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2026 18:34:47 -0700 (PDT)
+ Wed, 09 Sep 2026 18:34:43 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
@@ -71,13 +70,11 @@ Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 2/3] linux-user/i386: write the floating-point registers to a
+Subject: [PATCH 0/3] linux-user: write the x86 floating-point registers to a
  core dump
-Date: Wed,  9 Sep 2026 21:34:41 -0400
-Message-ID: <20260910013442.1517793-3-mattst88@gmail.com>
+Date: Wed,  9 Sep 2026 21:34:39 -0400
+Message-ID: <20260910013442.1517793-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260910013442.1517793-1-mattst88@gmail.com>
-References: <20260910013442.1517793-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
@@ -105,76 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest core carried only the general-purpose registers, so a debugger
-opening one reported the x87 stack as unavailable.
+Guest cores for i386 and x86_64 carried only the general-purpose
+registers, so a debugger opening one reported the x87 stack, and on
+x86_64 the SSE registers too, as unavailable.
 
-Implement HAVE_ELF_CORE_FPREGS for i386: define target_elf_fpregset_t to
-match the kernel's elf_fpregset_t, i.e. struct user_i387_struct from
-arch/x86/include/asm/user_32.h, which is the legacy FSAVE image without
-the trailing software status word that FSAVE does not write either.
-cpu_x86_fsave_noinit() produces exactly that, already in target byte
-order.
+These add HAVE_ELF_CORE_FPREGS for both, following the same shape as the
+recent alpha, mips, riscv and sh4 conversions.  x86_64 can reuse
+cpu_x86_fxsave() as-is; i386 needs the FSAVE image without the FNINIT
+that FSAVE performs afterward, so the first patch splits that out.
 
-The SSE registers are still absent: the kernel dumps those in a separate
-NT_PRXFPREG note, which the generic core dump code has no support for.
+The SSE registers are still missing from an i386 core: the kernel puts
+those in a separate NT_PRXFPREG note, which the generic core dump code
+has no support for.
 
-Checked with gdb on a core from a program that faults with 1.5 and 2.25
-live on the x87 stack: "info float" reads both back, along with the tag
-word and the instruction and operand pointers.
+Matt Turner (3):
+  target/i386: split the FNINIT out of do_fsave()
+  linux-user/i386: write the floating-point registers to a core dump
+  linux-user/x86_64: write the floating-point registers to a core dump
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
----
- linux-user/i386/elfload.c    |  7 +++++++
- linux-user/i386/target_elf.h | 18 ++++++++++++++++++
- 2 files changed, 25 insertions(+)
+ linux-user/i386/elfload.c      |  7 +++++++
+ linux-user/i386/target_elf.h   | 18 ++++++++++++++++++
+ linux-user/x86_64/elfload.c    | 11 +++++++++++
+ linux-user/x86_64/target_elf.h | 20 ++++++++++++++++++++
+ target/i386/cpu.h              |  2 ++
+ target/i386/tcg/fpu_helper.c   | 13 +++++++++++--
+ 6 files changed, 69 insertions(+), 2 deletions(-)
 
-diff --git ./linux-user/i386/elfload.c ./linux-user/i386/elfload.c
-index 2e10f38a41..3c8a65e35c 100644
---- ./linux-user/i386/elfload.c
-+++ ./linux-user/i386/elfload.c
-@@ -25,6 +25,13 @@ const char *get_elf_platform(CPUState *cs)
-     return elf_platform[family - 3];
- }
- 
-+void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUX86State *env)
-+{
-+    /* The FSAVE image exactly, stored in target byte order. */
-+    QEMU_BUILD_BUG_ON(sizeof(*r) != 4 * 7 + 8 * 10);
-+    cpu_x86_fsave_noinit((CPUX86State *)env, r, sizeof(*r));
-+}
-+
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
- {
-     r->pt.bx = tswapal(env->regs[R_EBX]);
-diff --git ./linux-user/i386/target_elf.h ./linux-user/i386/target_elf.h
-index eafac8f382..931ea23ffa 100644
---- ./linux-user/i386/target_elf.h
-+++ ./linux-user/i386/target_elf.h
-@@ -27,6 +27,24 @@ typedef struct target_elf_gregset_t {
-     struct target_user_regs_struct pt;
- } target_elf_gregset_t;
- 
-+/*
-+ * Matches the kernel's elf_fpregset_t, i.e. struct user_i387_struct from
-+ * arch/x86/include/asm/user_32.h.  This is the legacy FSAVE image without
-+ * the trailing software status word, which FSAVE does not write either.
-+ */
-+#define HAVE_ELF_CORE_FPREGS    1
-+
-+typedef struct target_elf_fpregset_t {
-+    uint32_t cwd;             /* FPU control word                 */
-+    uint32_t swd;             /* FPU status word                  */
-+    uint32_t twd;             /* FPU tag word                     */
-+    uint32_t fip;             /* FPU IP offset                    */
-+    uint32_t fcs;             /* FPU IP selector                  */
-+    uint32_t foo;             /* FPU operand pointer offset       */
-+    uint32_t fos;             /* FPU operand pointer selector     */
-+    uint32_t st_space[20];    /* 8 * 10 bytes for st0-st7         */
-+} target_elf_fpregset_t;
-+
- /*
-  * This is used to ensure we don't load something for the wrong architecture.
-  */
 -- 
 2.54.0
 
