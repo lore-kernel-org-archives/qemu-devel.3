@@ -4,108 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1885C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99ACC88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4o5A-00043y-SC; Thu, 10 Sep 2026 19:21:35 -0400
+	id 1x4oaM-0004ls-DZ; Thu, 10 Sep 2026 19:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lW3-0006SV-2y
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lVh-0004hg-Fs
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:36:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072563;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pzQMAUIV8a8b91Vm/oUOdfGDZskrETDwBh/Nv2MWtB8=;
- b=U/e4hcTTkpym+2k5X/3fRId2p40noSu3WKiTC0BU9G+WbpfLD/DMnBllHqtS2K8SR+6eZr
- wg6jMLDyOsbXsKLNcsmV6vECRQ/D92/sqg733hrSUHkrd8J8MjWJ/sXsa/Wmyzbja40+oE
- 9VSKLusPyCLQn6Rvvormd2xO3HGuCTY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-8-MuRIUwOuKcG3ZLw_3mbQ-1; Thu, 10 Sep 2026 16:12:19 -0400
-X-MC-Unique: 8-MuRIUwOuKcG3ZLw_3mbQ-1
-X-Mimecast-MFC-AGG-ID: 8-MuRIUwOuKcG3ZLw_3mbQ_1789071138
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-486e9338393so71576f8f.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x4n4u-0003W4-RQ
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 18:17:14 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x4n4r-0004qS-Sc
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 18:17:08 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49d097b4939so1553795e9.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 15:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071138; x=1789675938; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=pzQMAUIV8a8b91Vm/oUOdfGDZskrETDwBh/Nv2MWtB8=;
- b=Cq90e/vtKNZ97AnecRxqGClTWWH0lUrP1Aeg4y8cVmNE4iLdoZxVFZhpqK2jNil7Il
- WpIsrd5eMBGdaGBtaVD6CEs4XaAzyrnnj+AVRQbljODbaoW0SNKjqxYAWSNlrVDvOLNg
- 1Zs38NWEksU3rOiCAxa2X8wn3YQQzUIpiRzd3wIvdvQiiQA17dRTfaTJIqhRTDYjyr4W
- LuUjFRuEspBHj8sAv4iV8U/E8qmIOHZictquclGnY5ajjBe8nrqQfBPahp74ZEQ1mfDt
- EcioIPMXnab3rhoyTWV8yHc+cDoEAi9AY1qbTuEUZCH8X6hYjnamGkzQq4hsTBiaBhEE
- asNQ==
+ d=linaro.org; s=google; t=1789078623; x=1789683423; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=4J3Q9psQA5aXO9idDePlIthqcvOsCf7HP12XT335C94=;
+ b=t2rrn/L9O2ConpRSxOGwaE03j2kX+5iZiAlt1Yf+6bLeZcMPZ1pOUlYZ/hNArPkLiB
+ KF1laZ60v/vLzutGDFgp6Vi7j+zcSWKAFNPZ0YB/clhV+MfXJ17bTkuvAdZR68u9F9FG
+ THhNUiUAbRgzXQ3IHBHCrnkjawdL3QbffEGMRBq126pWmLXKH5w2+bYCHM9hrI3piyvT
+ 43b75qgL/nAcab3t7T2s0hRAwLdpEI7jCQbp3y8tAk/HNIJIko2I+l3ITTLYXIaZQAmS
+ cvpMvacomN9Ur/EWSU0jGpNdHdXZJyZ8zAHl+2veaV5m4sYARmTo2GeE2TWo3zIWr9sE
+ UhrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071138; x=1789675938;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1789078623; x=1789683423;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pzQMAUIV8a8b91Vm/oUOdfGDZskrETDwBh/Nv2MWtB8=;
- b=HFtKnHqDt/76rXroSbudf7dQa/G4caQSH2JryGQMyy6UK5+s0MEOaz6M5DBRmp/ayY
- NlAq+4ycuVb5Sb2GflhlwB1xZEzfwl8ihGGKPCVZFrndyxxHUqCx9C2xvNk4I77qMcVg
- BCWYwQQPox3va14LT1+krnwqmmVnzSnIguaYHkltVyLC6pnH4jWfMjG0xj+32HiltUV+
- IoZ4DcXE5uRrtc7cGBNx2q6yCm2k9ftftKrQusYclLEudnxkhcXQPJkM3vFave2gXdE1
- NZpsEB1degPZoS6IE9jW+BGk6PJujwH7qg1oEZspV8b4jHRSdXYoLfSYoDH4oE2D5Maa
- fNHQ==
-X-Gm-Message-State: AFuF++lkXskuB/c9t+L9JgSt0u3Y3wGgEqJFdWZlfHfyTy90XLxZfBR/
- qCEx+cdthiwuuT1KyFqa68k5NoI64lcpoRn5h/XvkEWLWN8EN1pVNk3NnkQ+ORGEluIetLGW1I0
- Q3jrqM/+ue2H6OshtP8SjQcxHR3nGzsfZgjuHlfN06Ze/7sN7L5LB49O2nyvPEoRt+eeAMrVPPm
- MEidaM2hNl0jBscMrzgDf7HiIgs+ZAzpubmA==
-X-Gm-Gg: AYBFou1LwLsxrjrqFTzgR3FQ27LgQyOdH1P/jyXnM6qUIkJQ0fOCOuGhfQgk87eS6eK
- /TcHaj5BfsORkf+G0DgFqwF9vyqIBlvWg9com+If8ADjES2mNCLuXIQv7DSNmECYj7n5fnpjxRb
- psrtlD/k1VE2kxWKhP3YkPTRrpTEUJPCtxyUK2if3toOVtVP0InQgqCJHGazyRSey42ePJT6ETx
- s75hMsO/z++1b0IPu17aRo2XuGuFHRvRaNVPBLmwmMTToaOsCd74nwWCETc9YZQmg8I7656stan
- ImKIbMwG29SSfEGfNurM3IJTIFz/OQ4eMEx9aMaPpqZh6KAhwhZRsHGoWrf4vphB2Jpwkhwq98B
- eQ6AYS/+HQvrOEaiUSkeXWTo=
-X-Received: by 2002:a05:6000:1cc9:b0:485:8a46:b3c6 with SMTP id
- ffacd0b85a97d-486eb3395e0mr480895f8f.46.1789071137755; 
- Thu, 10 Sep 2026 13:12:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:1cc9:b0:485:8a46:b3c6 with SMTP id
- ffacd0b85a97d-486eb3395e0mr480857f8f.46.1789071137168; 
- Thu, 10 Sep 2026 13:12:17 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32e7f5sm843320f8f.9.2026.09.10.13.12.16
+ bh=4J3Q9psQA5aXO9idDePlIthqcvOsCf7HP12XT335C94=;
+ b=nCebh5CJ4KvxqTZ4uxlMntO2c1jHLZYBXgcpVxCMzXeJ2prpnPorHjXMAP8vJR8evJ
+ 2laj5t9gg1qUFRJ3BXFinhn//IwTI9DcDNN/dDKn87g6fhb+f+zeoqGfoIfoGk55SLy1
+ TkvbT9Vx9CPxjx18LOHkD5j4Hl7wNSIJcvCfWlYFIayt0cQHX/AbH3ORVN5EUk84frK5
+ ZYqAsusepCzO19+bzKQXfPhhkk7iObCt9QBe+LWtGyo5MwLjXpJqRonNRoyHB33LPJda
+ /woy4xHl8ny81VaciKzKXozx5D/f6FbGv759Vawv0plyrmDvKOXlJ72VoH3I0Spu2dAe
+ EMww==
+X-Gm-Message-State: AFuF++n3rvrOeQ3JBqHSbl/pqvqzdZkORrkxn/UA5yHVw/hOwS15pK97
+ dBYshdNY8O7aVKdtd7lXHZozijRlaRln6ynGfx8e+4iVwoixmMKvwh5F1Zsw4pUanbXKEsPPMM0
+ gFG7QD+E=
+X-Gm-Gg: AYBFou3uxOu+UdseEIc0Xb3M/Ks8hmudCLk+m+blTeRgGDCKv1aU7ukhbSF0m97YV4F
+ UvuXoRCVU1c3+2HxuIMVbQa2GfOIfuqK2DrKoCZkt2vbHRYPqv11GNEMCXLymEYbtUkkJMHy2YI
+ ldLznZqIZvujApQV8upJ6WtW9PXcew3sVF+jreolqN8IX3EK6xfOfwNLl2TsAfkO+Wr732LbwzZ
+ UTE7xTMpV/gyAzqHr5d9HUAZeVvM43LB89rKTqr5aKA3qwi3wSo0mY4e4js40lo7Hwru9sLPb6l
+ QJmVo2eCy9HkN2H8Yv4zTlFQCqB0o+EhDCmeBn94qaNiA4YwArlb6u8UN6C+4fUqjaFiCts+/Cz
+ bYeos5KWoL/aygDIP7ifs7MvrGFYxKfNRwx2M+bO45GISJJrOlsRj16vU36gvRESwDMuKMpPWg5
+ tznfTZXDvdutgFmNOGG1ApD9f39YAtn6MXLIguuzFEe8xE1XMuuchEOFN1XBIwlZF/j67pyE4=
+X-Received: by 2002:a05:600c:3ba9:b0:49c:fa21:e73e with SMTP id
+ 5b1f17b1804b1-49e619c0558mr13581515e9.20.1789078622617; 
+ Thu, 10 Sep 2026 15:17:02 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-486eb32d3c7sm1299263f8f.10.2026.09.10.15.17.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:12:16 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:12:15 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 22/90] net/tap: move vhost-net open() calls to
- tap_parse_vhost_fds()
-Message-ID: <b5ee1ede952d139595e519e14a706319684950dd.1789071042.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+ Thu, 10 Sep 2026 15:17:01 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 282EA5F834;
+ Thu, 10 Sep 2026 23:17:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Brad Smith <brad@comstyle.com>,  Jiaxun Yang
+ <jiaxun.yang@flygoat.com>,  Song Gao <gaosong@loongson.cn>,  Warner Losh
+ <imp@bsdimp.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Cornelia Huck <cohuck@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  John Snow
+ <jsnow@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Thomas Huth
+ <th.huth+qemu@posteo.eu>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,  qemu-arm@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Kyle
+ Evans
+ <kevans@freebsd.org>,  Richard Henderson <richard.henderson@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [PATCH 1/9] scripts/meson-buildoptions.sh: update missing options
+In-Reply-To: <87jyosub4v.fsf@suse.de> (Fabiano Rosas's message of "Thu, 10 Sep
+ 2026 17:03:44 -0300")
+References: <20260910181504.1010916-1-alex.bennee@linaro.org>
+ <20260910181504.1010916-2-alex.bennee@linaro.org>
+ <87jyosub4v.fsf@suse.de>
+User-Agent: mu4e 1.14.4-pre2; emacs 30.1
+Date: Thu, 10 Sep 2026 23:17:01 +0100
+Message-ID: <87qzj092g2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,92 +120,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Fabiano Rosas <farosas@suse.de> writes:
 
-1. Simplify code path: get vhostfds for all cases in one function.
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>
+>> This should have been updated when the meson check-tcg changes where
+>> made. Include it now.
+>>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> There's this previous change by Daniel doing this already:
+>
+> https://lore.kernel.org/r/20260908074016.2143292-1-berrange@redhat.com
 
-2. Prepare for further tap-fd-migraton feature, when we'll need to
-postpone vhost initialization up to post-load stage.
+I've grabbed that (and noticed this update has extra bits from later in it)
+>
+>> ---
+>>  scripts/meson-buildoptions.sh | 142 ++++++++++++++++++++++++++++++++++
+>>  1 file changed, 142 insertions(+)
+>>
+>> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.=
+sh
+>> index 5a67e59a167..67c5e33b011 100644
+>> --- a/scripts/meson-buildoptions.sh
+>> +++ b/scripts/meson-buildoptions.sh
+>> @@ -10,7 +10,13 @@ meson_options_help() {
+>>    printf "%s\n" '  --block-drv-rw-whitelist=3DVALUE'
+>>    printf "%s\n" '                           set block driver read-write=
+ whitelist (by default'
+>>    printf "%s\n" '                           affects only QEMU, not tool=
+s like qemu-img)'
+>> +  printf "%s\n" '  --container-command=3DVALUE'
+>> +  printf "%s\n" '                           command to build/run contai=
+ners'
+>> +  printf "%s\n" '  --container-registry=3DVALUE'
+>> +  printf "%s\n" '                           container registry to cache=
+ from'
+>> +  printf "%s\n" '                           [registry.gitlab.com/qemu-p=
+roject/qemu]'
+>>    printf "%s\n" '  --datadir=3DVALUE          Data file directory [shar=
+e]'
+>> +  printf "%s\n" '  --disable-containers     use containers to cross com=
+pile tcg tests'
+>>    printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better =
+performance)'
+>>    printf "%s\n" '  --disable-debug-info     Enable debug symbols and ot=
+her information'
+>>    printf "%s\n" '  --disable-hexagon-idef-parser'
+>> @@ -77,6 +83,94 @@ meson_options_help() {
+>>    printf "%s\n" '  --rtsig-map=3DVALUE        default value of QEMU_RTS=
+IG_MAP [NULL]'
+>>    printf "%s\n" '  --smbd=3DVALUE             Path to smbd for slirp ne=
+tworking'
+>>    printf "%s\n" '  --sysconfdir=3DVALUE       Sysconf data directory [e=
+tc]'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64=3DVALUE'
+>> +  printf "%s\n" '                           cc for aarch64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64-be=3DVALUE'
+>> +  printf "%s\n" '                           cc for aarch64_be tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-alpha=3DVALUE'
+>> +  printf "%s\n" '                           cc for alpha tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-arm=3DVALUE'
+>> +  printf "%s\n" '                           cc for arm tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-hexagon=3DVALUE'
+>> +  printf "%s\n" '                           cc for hexagon tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-hppa=3DVALUE'
+>> +  printf "%s\n" '                           cc for hppa tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-i386=3DVALUE'
+>> +  printf "%s\n" '                           cc for i386 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-loongarch64=3DVALUE'
+>> +  printf "%s\n" '                           cc for loongarch64 tcg test=
+s'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-m68k=3DVALUE'
+>> +  printf "%s\n" '                           cc for m68k tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-mips=3DVALUE'
+>> +  printf "%s\n" '                           cc for mips tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64=3DVALUE'
+>> +  printf "%s\n" '                           cc for mips64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64el=3DVALUE'
+>> +  printf "%s\n" '                           cc for mips64el tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-or1k=3DVALUE'
+>> +  printf "%s\n" '                           cc for or1k tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64=3DVALUE'
+>> +  printf "%s\n" '                           cc for ppc64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64le=3DVALUE'
+>> +  printf "%s\n" '                           cc for ppc64le tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-riscv64=3DVALUE'
+>> +  printf "%s\n" '                           cc for riscv64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-s390x=3DVALUE'
+>> +  printf "%s\n" '                           cc for s390x tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-sh4=3DVALUE'
+>> +  printf "%s\n" '                           cc for sh4 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-tricore=3DVALUE'
+>> +  printf "%s\n" '                           cc for tricore tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-x86-64=3DVALUE'
+>> +  printf "%s\n" '                           cc for x86_64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensa=3DVALUE'
+>> +  printf "%s\n" '                           cc for xtensa tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensaeb=3DVALUE'
+>> +  printf "%s\n" '                           cc for xtensaeb tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64=3DVALUE'
+>> +  printf "%s\n" '                           cflags for aarch64 tcg test=
+s'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64-be=3DVALUE'
+>> +  printf "%s\n" '                           cflags for aarch64_be tcg t=
+ests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-alpha=3DVALUE'
+>> +  printf "%s\n" '                           cflags for alpha tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-arm=3DVALUE'
+>> +  printf "%s\n" '                           cflags for arm tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-hexagon=3DVALUE'
+>> +  printf "%s\n" '                           cflags for hexagon tcg test=
+s'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-hppa=3DVALUE'
+>> +  printf "%s\n" '                           cflags for hppa tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-i386=3DVALUE'
+>> +  printf "%s\n" '                           cflags for i386 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-loongarch64=3DVALUE'
+>> +  printf "%s\n" '                           cflags for loongarch64 tcg =
+tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-m68k=3DVALUE'
+>> +  printf "%s\n" '                           cflags for m68k tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips=3DVALUE'
+>> +  printf "%s\n" '                           cflags for mips tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64=3DVALUE'
+>> +  printf "%s\n" '                           cflags for mips64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64el=3DVALUE'
+>> +  printf "%s\n" '                           cflags for mips64el tcg tes=
+ts'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-or1k=3DVALUE'
+>> +  printf "%s\n" '                           cflags for or1k tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64=3DVALUE'
+>> +  printf "%s\n" '                           cflags for ppc64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64le=3DVALUE'
+>> +  printf "%s\n" '                           cflags for ppc64le tcg test=
+s'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-riscv64=3DVALUE'
+>> +  printf "%s\n" '                           cflags for riscv64 tcg test=
+s'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-s390x=3DVALUE'
+>> +  printf "%s\n" '                           cflags for s390x tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-sh4=3DVALUE'
+>> +  printf "%s\n" '                           cflags for sh4 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-tricore=3DVALUE'
+>> +  printf "%s\n" '                           cflags for tricore tcg test=
+s'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-x86-64=3DVALUE'
+>> +  printf "%s\n" '                           cflags for x86_64 tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensa=3DVALUE'
+>> +  printf "%s\n" '                           cflags for xtensa tcg tests'
+>> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensaeb=3DVALUE'
+>> +  printf "%s\n" '                           cflags for xtensaeb tcg tes=
+ts'
+>>    printf "%s\n" '  --tls-priority=3DVALUE     Default TLS protocol/ciph=
+er priority string'
+>>    printf "%s\n" '                           [NORMAL]'
+>>    printf "%s\n" '  --with-coroutine=3DCHOICE  coroutine backend to use =
+(choices:'
+>> @@ -281,6 +375,10 @@ _meson_option_parse() {
+>>      --disable-cocoa) printf "%s" -Dcocoa=3Ddisabled ;;
+>>      --enable-colo-proxy) printf "%s" -Dcolo_proxy=3Denabled ;;
+>>      --disable-colo-proxy) printf "%s" -Dcolo_proxy=3Ddisabled ;;
+>> +    --container-command=3D*) quote_sh "-Dcontainer_command=3D$2" ;;
+>> +    --container-registry=3D*) quote_sh "-Dcontainer_registry=3D$2" ;;
+>> +    --enable-containers) printf "%s" -Dcontainers=3Dtrue ;;
+>> +    --disable-containers) printf "%s" -Dcontainers=3Dfalse ;;
+>>      --enable-coreaudio) printf "%s" -Dcoreaudio=3Denabled ;;
+>>      --disable-coreaudio) printf "%s" -Dcoreaudio=3Ddisabled ;;
+>>      --with-coroutine=3D*) quote_sh "-Dcoroutine_backend=3D$2" ;;
+>> @@ -517,6 +615,50 @@ _meson_option_parse() {
+>>      --disable-tcg) printf "%s" -Dtcg=3Ddisabled ;;
+>>      --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dtrue ;;
+>>      --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dfalse ;;
+>> +    --tcg-tests-cross-cc-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cc_aa=
+rch64=3D$2" ;;
+>> +    --tcg-tests-cross-cc-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross_cc=
+_aarch64_be=3D$2" ;;
+>> +    --tcg-tests-cross-cc-alpha=3D*) quote_sh "-Dtcg_tests_cross_cc_alph=
+a=3D$2" ;;
+>> +    --tcg-tests-cross-cc-arm=3D*) quote_sh "-Dtcg_tests_cross_cc_arm=3D=
+$2" ;;
+>> +    --tcg-tests-cross-cc-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cc_he=
+xagon=3D$2" ;;
+>> +    --tcg-tests-cross-cc-hppa=3D*) quote_sh "-Dtcg_tests_cross_cc_hppa=
+=3D$2" ;;
+>> +    --tcg-tests-cross-cc-i386=3D*) quote_sh "-Dtcg_tests_cross_cc_i386=
+=3D$2" ;;
+>> +    --tcg-tests-cross-cc-loongarch64=3D*) quote_sh "-Dtcg_tests_cross_c=
+c_loongarch64=3D$2" ;;
+>> +    --tcg-tests-cross-cc-m68k=3D*) quote_sh "-Dtcg_tests_cross_cc_m68k=
+=3D$2" ;;
+>> +    --tcg-tests-cross-cc-mips=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
+=3D$2" ;;
+>> +    --tcg-tests-cross-cc-mips64=3D*) quote_sh "-Dtcg_tests_cross_cc_mip=
+s64=3D$2" ;;
+>> +    --tcg-tests-cross-cc-mips64el=3D*) quote_sh "-Dtcg_tests_cross_cc_m=
+ips64el=3D$2" ;;
+>> +    --tcg-tests-cross-cc-or1k=3D*) quote_sh "-Dtcg_tests_cross_cc_or1k=
+=3D$2" ;;
+>> +    --tcg-tests-cross-cc-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc6=
+4=3D$2" ;;
+>> +    --tcg-tests-cross-cc-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cc_pp=
+c64le=3D$2" ;;
+>> +    --tcg-tests-cross-cc-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cc_ri=
+scv64=3D$2" ;;
+>> +    --tcg-tests-cross-cc-s390x=3D*) quote_sh "-Dtcg_tests_cross_cc_s390=
+x=3D$2" ;;
+>> +    --tcg-tests-cross-cc-sh4=3D*) quote_sh "-Dtcg_tests_cross_cc_sh4=3D=
+$2" ;;
+>> +    --tcg-tests-cross-cc-tricore=3D*) quote_sh "-Dtcg_tests_cross_cc_tr=
+icore=3D$2" ;;
+>> +    --tcg-tests-cross-cc-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cc_x86=
+_64=3D$2" ;;
+>> +    --tcg-tests-cross-cc-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cc_xte=
+nsa=3D$2" ;;
+>> +    --tcg-tests-cross-cc-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_cc_x=
+tensaeb=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-aarch64=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_aarch64=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-aarch64-be=3D*) quote_sh "-Dtcg_tests_cros=
+s_cflags_aarch64_be=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-alpha=3D*) quote_sh "-Dtcg_tests_cross_cfl=
+ags_alpha=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-arm=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_arm=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-hexagon=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_hexagon=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-hppa=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_hppa=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-i386=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_i386=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-loongarch64=3D*) quote_sh "-Dtcg_tests_cro=
+ss_cflags_loongarch64=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-m68k=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_m68k=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-mips=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_mips=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-mips64=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_mips64=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-mips64el=3D*) quote_sh "-Dtcg_tests_cross_=
+cflags_mips64el=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-or1k=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_or1k=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
+ags_ppc64=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_ppc64le=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-riscv64=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_riscv64=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-s390x=3D*) quote_sh "-Dtcg_tests_cross_cfl=
+ags_s390x=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-sh4=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_sh4=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-tricore=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_tricore=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_x86_64=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_xtensa=3D$2" ;;
+>> +    --tcg-tests-cross-cflags-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_=
+cflags_xtensaeb=3D$2" ;;
+>>      --tls-priority=3D*) quote_sh "-Dtls_priority=3D$2" ;;
+>>      --enable-tools) printf "%s" -Dtools=3Denabled ;;
+>>      --disable-tools) printf "%s" -Dtools=3Ddisabled ;;
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819180201.1970193-5-vsementsov@yandex-team.ru>
----
- net/tap.c | 39 ++++++++++++++++++++++-----------------
- 1 file changed, 22 insertions(+), 17 deletions(-)
-
-diff --git a/net/tap.c b/net/tap.c
-index f4051e8d4b..bec2cd48fd 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -756,8 +756,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         }
-     }
- 
--    if (tap->has_vhost ? tap->vhost :
--        (vhostfd != -1) || (tap->has_vhostforce && tap->vhostforce)) {
-+    if (vhostfd != -1) {
-         VhostNetOptions options;
- 
-         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
-@@ -767,17 +766,6 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         } else {
-             options.busyloop_timeout = 0;
-         }
--
--        if (vhostfd == -1) {
--            vhostfd = open("/dev/vhost-net", O_RDWR);
--            if (vhostfd < 0) {
--                error_setg_file_open(errp, errno, "/dev/vhost-net");
--                goto failed;
--            }
--            if (!qemu_set_blocking(vhostfd, false, errp)) {
--                goto failed;
--            }
--        }
-         options.opaque = (void *)(uintptr_t)vhostfd;
-         options.nvqs = 2;
-         options.feature_bits = kernel_feature_bits;
-@@ -863,14 +851,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
- static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
-                                 int queues, Error **errp)
- {
--    if (!(tap->vhostfd || tap->vhostfds)) {
-+    bool need_vhost = tap->has_vhost ? tap->vhost :
-+        ((tap->vhostfd || tap->vhostfds) ||
-+         (tap->has_vhostforce && tap->vhostforce));
-+
-+    if (!need_vhost) {
-         *vhost_fds = NULL;
-         return true;
-     }
- 
--    if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
--                      vhost_fds, queues, errp) < 0) {
--        return false;
-+    if (tap->vhostfd || tap->vhostfds) {
-+        if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
-+                          vhost_fds, queues, errp) < 0) {
-+            return false;
-+        }
-+    } else {
-+        *vhost_fds = g_new(int, queues);
-+        for (int i = 0; i < queues; i++) {
-+            int vhostfd = open("/dev/vhost-net", O_RDWR);
-+            if (vhostfd < 0) {
-+                error_setg_file_open(errp, errno, "/dev/vhost-net");
-+                net_free_fds(*vhost_fds, i);
-+                return false;
-+            }
-+            (*vhost_fds)[i] = vhostfd;
-+        }
-     }
- 
-     if (!unblock_fds(*vhost_fds, queues, errp)) {
--- 
-MST
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
