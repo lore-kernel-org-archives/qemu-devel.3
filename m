@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B6EC88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB244C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4laP-0007DC-EG; Thu, 10 Sep 2026 16:41:47 -0400
+	id 1x4lbL-0007RS-Eg; Thu, 10 Sep 2026 16:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4kzx-0006Au-2w
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:04:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFl-0000go-SH
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4kzq-0004Uu-Iv
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:03:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lFV-00080Z-Es
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:20:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789070608;
+ s=mimecast20190719; t=1789071586;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=aWeFI26qjMCROMRcRbwQ0ONsbOjUeQUfKduvVYHqPSc=;
- b=ZNHP5owUU2USYfnj5TFV/he33R51fQAGJtGZtdI2kUPpcMd82mQYKYcmhjx9KqkwjHDTrk
- 5fshDvnMJ6CF+zu3VeMtP9fwzTEf5thzyDaTukFhVw8FFf+emQ7c0Hd5FH9GvJcVcTEdx/
- CWPTE/jOQ0rWZwOZEIxiaL8n3onAv5Q=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sbPme7j4pWLTyo9RI68qo6cFhFds/zr08zUNXOqMtd4=;
+ b=ffuSQsn1RNAfUZZ6Dbj6i2Xg/31Y0ultIyitT02upSdVmYclhvvecPVMhAo3eAvs2m/LrN
+ ghjAi2hsPTPENlMTfXPdy/cqEdh93cdcFdl69r83b7/rQYs+uvzgx5qN5IE8lcbmDR4uKJ
+ xV88j0pARTkhwBMNBzrvZDFeOGr0ctc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-yyEScfd5PtSWbE-PRYawWQ-1; Thu, 10 Sep 2026 16:03:27 -0400
-X-MC-Unique: yyEScfd5PtSWbE-PRYawWQ-1
-X-Mimecast-MFC-AGG-ID: yyEScfd5PtSWbE-PRYawWQ_1789070607
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-66faff68c0bso236752d50.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:03:27 -0700 (PDT)
+ us-mta-496-eKcmbK5TOgqMmV_CaZfQ5w-1; Thu, 10 Sep 2026 16:13:40 -0400
+X-MC-Unique: eKcmbK5TOgqMmV_CaZfQ5w-1
+X-Mimecast-MFC-AGG-ID: eKcmbK5TOgqMmV_CaZfQ5w_1789071219
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49d156c917cso8584045e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:13:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789070607; x=1789675407; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071219; x=1789676019; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=aWeFI26qjMCROMRcRbwQ0ONsbOjUeQUfKduvVYHqPSc=;
- b=HeHLvFSd3kUDpRebYjKMyRWzL7OmugwM1LhiHLG8pAp4tmqFTqAP9qIq7ut46zWaLC
- a7IpoMJ44gJSpxj80OXucc1UwHUtFMa//NjutYmL3zVwIvxHaly9KPCwnw8VUWvBEwmp
- CeuQVZC99XhDAnIy2+8WZflJOmVDBTUGpjdLOaimqqT23T4vEOoQbzcLsgqCJsl+4N7T
- WCJNbiF0Ll03zgFVd7D2/wSJj+V3UxN/xcDndx7ECKuaWGo8UmSnSKJWKRWmHRy6I0qW
- JaZ7gbTBAxYkhymIsO5/njRSG7s5p3tSBHzApd1ZRETjJP+Ql7k4tqBCPByuyk+re3Ba
- BX8w==
+ bh=sbPme7j4pWLTyo9RI68qo6cFhFds/zr08zUNXOqMtd4=;
+ b=AcEZSoW6PJgwNfrIAqa6XWqb3l5kwkZ1ui4QYf8jt8mdwpq2xU5hEoPJbdWaPev7Y3
+ WIVYtGwk1LLwRjyGvLQBTL97e7ekbW4h6mC9vAIcs4OkNBXs/Xy9kc0RZxpEpc60efwV
+ euQ95Od6+vV3/BVgbDKKzmHBqfdE0aSxObT9m9jJ4p5xJWhoUWeooOMqSYQ2eQUJuZCB
+ ZrN703zEgOVi310eQe6fndlbiokat57iecDNDeu9gp18NotxvaCgxn/OS1CsuNE6EtJR
+ BYkdGFbzpDxvLhCZx9/MIY40JSKDbx6yb5jQ9n0EsW6/qnJtiB/3EcvVCY4yd3ahlKh9
+ cLPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789070607; x=1789675407;
+ d=1e100.net; s=20251104; t=1789071219; x=1789676019;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=aWeFI26qjMCROMRcRbwQ0ONsbOjUeQUfKduvVYHqPSc=;
- b=oH8p4mgv0ciUWdXJSg/gAXWgj3+WZ09Ax9vXKQixRXIUs2cNsR+Ganb9FVu+P8l5ji
- 01kBRiYRwROnv5hM/7cTe/LC2z7tqcHdxbUG2Y/nrBainBtZiSKgyVFLJOybvIFDjC8V
- 7YA8w0AgUMtQJzzSVpIOaz3SlhUGFxvzZCK+8gaxLsN00lM/w161DCA8pC8y4VGYcbRt
- RxzEjBLu1of1e9D958K/kPddTd4hOk2U/KzAIUDQiUozpvMpp7mr/DbuZWsDo4OHjoXK
- JlSuSGOCJ1hcrAzIDNslhXeFP780C2aT8gpNLNQYiZSmFi+zPRj2yscCmRFZSwRwWP0P
- 1hew==
-X-Gm-Message-State: AFuF++kUlnVzwq6qWLmzM35ycW5E5LuxRfodgyzmPsafzOd3bdJlxGvP
- bSHJougHE7DcLNtPDBjSWMO9uq6RFJ+MC77BmhOQhJ94ye9G22U8GmEwVJsIR04I/Q9paG01UZD
- bDe033twyoCigZZJ+YJXPBpW1K9bc2YHRWG1wxnzp0a3ITUK6XoXJP44A
-X-Gm-Gg: AYBFou3lxTQnGVHrq37dzuBr/Ed7E6rArp8L0ETltAAPWIy4A+/bksdOMNT4GH/SFfF
- +AzA5+t3IAoY9nMVlC59Jwe2z8c3lbqS9sgXaQfSoEofk9H+EzDFfdzl0jgFqiGomn2vCVkS4fu
- G3Af1WoBFuNe7Lyl3mbxFpQp1BBBV1BPqA6Vv6QCzH39g8BjL6fB86PdkVsXq7n/bqR0P04Cvhp
- UPl8mV4h+pzB2VCgflQVlFYx8NnDioYhrhjsb6k8cyukmufz1gbfWfsMgR87QaqiZuZSqLAzWtA
- BJLz4geqkaxoIalCcTHHBH/DU2Dw+jfWcvN9PTnGTY4VoVYKynzm6Oj5Fq3Z6BTTAjO7l5FenEM
- xWQcVsMMjywoZR4NVY8a/1QUa5DYl5zWqcuRf3gvX7onDVoVK8vluuM8lT9E=
-X-Received: by 2002:a05:690e:138d:b0:66f:c1be:a649 with SMTP id
- 956f58d0204a3-671246c2833mr465870d50.59.1789070606729; 
- Thu, 10 Sep 2026 13:03:26 -0700 (PDT)
-X-Received: by 2002:a05:690e:138d:b0:66f:c1be:a649 with SMTP id
- 956f58d0204a3-671246c2833mr465814d50.59.1789070606046; 
- Thu, 10 Sep 2026 13:03:26 -0700 (PDT)
-Received: from localhost
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ bh=sbPme7j4pWLTyo9RI68qo6cFhFds/zr08zUNXOqMtd4=;
+ b=pcEeJdA1fP4EA8riDE/rKeW7cfchIq8v8JELJAkt6l7wEgnHGnmZDK9Z3ngEepM7ha
+ Ys1qYE9fxvqSbB3i8hyYIjmJpMNv5OIPeNfXyvPOLoPH2kzjNgr5iz1yjHUsV+3A3UcB
+ gyhpChPJ6Kb+JrO+VoSfRBipf2qXUBKRBPp5AKXdyXQxmHgDU+j9yhsDUBwEQdMdEmlx
+ Kox9fGGFIH4pyd39FkfEPVRFH7OcPtpaJddb/BGiogFP8etNSxiL3knk/fypTR1IjOBp
+ O4lik2XxA6+qBwnE67CqfTE3QPBU6wa70Mawrp9VdDwzwaB6Fb2JErjPbK/1IijiwFrH
+ yBhQ==
+X-Gm-Message-State: AFuF++mC9EpLTHKLW6en9Q3JNng+sbj6rdvYc4gCsapQgqJghpr1vukW
+ WbaECnGi+DK3H2sQHfLtr0bHdcQ3zGwSXYBXZgM1bqQKx+nBM01njSJnmYmitoHa7nA3RKAMz5u
+ m7jOa6fgKGD1zLjLHUVi5t5iXGMcJ6EpbCjr+l28GILue8evjBUWwC7i0wpceShcuQHzCrWC3Hh
+ HkOesV07YqzXssKff4FvEfFtSlELNUXmMVKw==
+X-Gm-Gg: AYBFou1IM1QJe80E4riqIiSyUv898jzYI23k4/Mnm2okkSgIHKUDlLNybWxUvHLMNgY
+ lNVlNYQUlyuUemVpgu3yEA+VqhPGKBTbmCSz4X31d/SZU2CnI0Cl9hXHSa7f7cNmIhlClHD9m7B
+ w65LJhdQq96Dt1EYvL2H6FlHLQqmfuCYtuv7XOa4kjQoyo8wmdscV55BPr3TL+j3xBLk788do23
+ RyZK7fa1+MQ/ZkB9eF8BLBJUK5O/U3zoI3frR513FrjeZMHCDrlvuTE8RBqImwjDwkq9ghLP8AY
+ kgg8rr2VDNoHz2mAWCOYDy2v259ASEn8dnIBn7wXsjmNRc/MhR8XYcEY8Qw9//RKUiw/KVYUFHO
+ EmoUOjeCEJ1Di21rVYrqMToQ=
+X-Received: by 2002:a05:600d:8444:20b0:49d:27ee:79c9 with SMTP id
+ 5b1f17b1804b1-49d27ee7af0mr55871665e9.8.1789071219219; 
+ Thu, 10 Sep 2026 13:13:39 -0700 (PDT)
+X-Received: by 2002:a05:600d:8444:20b0:49d:27ee:79c9 with SMTP id
+ 5b1f17b1804b1-49d27ee7af0mr55871305e9.8.1789071218624; 
+ Thu, 10 Sep 2026 13:13:38 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-9120f47a239sm3894186d6.26.2026.09.10.13.03.25
+ ffacd0b85a97d-486eb34f1f7sm765644f8f.24.2026.09.10.13.13.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:03:25 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:03:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <yanfei.xu@bytedance.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
- jinpu.wang@cloud.ionos.com, isyanfei.xu@gmail.com
-Subject: Re: [PATCH v2 4/4] migration/rdma: Remove unused transit bitmap
-Message-ID: <aqMNDDpowk_5yVmI@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
- <20260830012750.1567524-5-yanfei.xu@bytedance.com>
+ Thu, 10 Sep 2026 13:13:37 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:13:35 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org,
+ Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PULL 52/90] hw/net/virtio-net: strip trailing padding when caching
+ RSC segment
+Message-ID: <e242d9e64d9788fbe4b570eb4f5e675c9f1d4fea.1789071043.git.mst@redhat.com>
+References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260830012750.1567524-5-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <cover.1789071042.git.mst@redhat.com>
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -119,18 +123,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 30, 2026 at 09:27:50AM +0800, Yanfei Xu wrote:
-> After the per-chunk write wait is removed, transit_bitmap is no longer
-> read.  The remaining set and clear operations only maintain unused
-> state.
-> 
-> Remove the bitmap and simplify the block lifecycle tracepoints.
-> 
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+When an RSC candidate packet has trailing padding bytes beyond the
+declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
+size into the coalescing buffer and sets seg->size to that value.
+The bounds check in virtio_net_rsc_coalesce_data() uses the IP
+length field (o_ip_len) which does not include the padding, so the
+check can pass while the subsequent memmove() overflows the buffer.
 
+Fix this by computing the actual IP packet size from the IP header
+and using it for both the memcpy and seg->size, so that seg->size
+stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
+guarantees that ip_size <= size.
+
+Fixes: CVE-2026-66900
+Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
+Cc: qemu-stable@nongnu.org
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
+Reported-by: Sven <bestswngs@gmail.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
+---
+ hw/net/virtio-net.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index f3f375e1b2..23c26aa08c 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2200,13 +2200,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
+ {
+     uint16_t hdr_len;
+     VirtioNetRscSeg *seg;
++    size_t ip_size;
+ 
+     hdr_len = chain->n->guest_hdr_len;
++
++    /*
++     * Strip any trailing padding beyond the IP payload so that seg->size
++     * stays in sync with the IP length field used by the bounds check in
++     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
++     * guarantees that ip_size <= size.
++     */
++    ip_size = hdr_len + sizeof(struct eth_header);
++    if (chain->proto == ETH_P_IP) {
++        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
++        ip_size += htons(ip->ip_len);
++    } else {
++        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
++        ip_size += sizeof(struct ip6_header)
++                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
++    }
++
+     seg = g_new(VirtioNetRscSeg, 1);
+     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
+         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
+-    memcpy(seg->buf, buf, size);
+-    seg->size = size;
++    memcpy(seg->buf, buf, ip_size);
++    seg->size = ip_size;
+     seg->packets = 1;
+     seg->dup_ack = 0;
+     seg->is_coalesced = 0;
 -- 
-Peter Xu
+MST
 
 
