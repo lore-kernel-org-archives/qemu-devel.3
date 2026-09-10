@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 773EDC88E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98CBC88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4q15-0007hF-Jj; Thu, 10 Sep 2026 21:25:37 -0400
+	id 1x4q2b-0008EF-Rs; Thu, 10 Sep 2026 21:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQD-0001nw-Mi
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQD-0001o3-QC
  for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:30 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ3-0007F0-Mj
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:08 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oQ5-0007Ec-Fi
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:43:09 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-49b0d8bc2aaso4491535e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:48 -0700 (PDT)
+ 5b1f17b1804b1-49cf4f81d86so2710605e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789083767; x=1789688567; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789083765; x=1789688565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kJQhdOKNjR/0ShebFeeadPAu9Q3JSbfvQxQRJTWAOqo=;
- b=sFmmZshpQgqMj/WnnA7ry6gQhaCpFkF2Q2ZhXm5uDo/EovCJaEONK4yuDCrIkIKzzB
- GxdQWTrFiYEdhVG/GK7JbdsFfkEZpA9FxpwX4ZMM4Nz9KjTTmjfjPeTnBR+OhuuZOpar
- vlr7QsqlgcrQ4QqdOdgLepUz8WzIWrWewZXZyYvQAOknLwYAQbURkbZ109IlPRb+/8ZC
- +IwtK4YdWJ4qRi18D84mTjuF1pIQvINPoyc7DQ+AO6O7MT6d7vLvZe+K3rG6aCcZ3ZdF
- Nmo0pY/VfjrIb/ie+RMRzldd9G3TwK7BvrQLaKF6UTJdOFJjMM4sB17n3vvmz6Q/QNqd
- r6iw==
+ bh=sLKHeTr+qaxkryYy6sSzyAc/KU6ezMFM//A19UpNHH4=;
+ b=TK9gu0fFqSLvXUpNkI0IB4fw/OoZul+0HXh6mE7OhoJIHqz7D/zrYw5nzNkdFqF2CR
+ VPQTBwICnF8KfiYYbn43nwwMu0inbqVhQTdvtHAStrCkog1+/6ot9GZPYMCLdbfOakh1
+ 0+qnxOsPj9QaY8h+3/1DZ2LM324QoqIWp+bhZpqYMH3Mm3WJP25JIIJOmuYm0btix3Ex
+ h6uCvpBuYlJI6RnRNX6odnBA3RXBIyCIRAGLrplHgqNmZZcfysZD9IDuHw7k1p7h+WKR
+ q0i5K5h/IDD0jDwLVUWZkd1Bpf3HV4P/kBVSA/xh7c1atWBr3/nOYNXjfmPF1jNnLUYW
+ xUSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789083767; x=1789688567;
+ d=1e100.net; s=20251104; t=1789083765; x=1789688565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kJQhdOKNjR/0ShebFeeadPAu9Q3JSbfvQxQRJTWAOqo=;
- b=KLbrY1VjzqNPyJLy8nfL7uxz76B9o0OWgUKgGsouMg3s3ho2iOl0OKggZiaIq2cfVB
- rvdZspi7mSY3/TRRZRew/Y2Trp15UPasrVdXkz7tNHcEBw5Xp4EU7vBqd68o1hxBDYpf
- AvdFByk+gPoQsd0w2Do5qiqhJiIyYytay+KeT5nKDYwOfTEHSoPpbLMZWRnwT6Og/rEZ
- nUulVidM6aEuZ3HiB9RJ11qdRmCTBhUO5lG/0TyZHGB6vsCcLX6StVvvdPA4GmYVTPYu
- SYerZSL2EjloY5BSEab5Dkz+J+TPLbReNl6u6AOfmGW8uCE0BscHcmUX0aCMflk+K0ih
- IZPA==
-X-Gm-Message-State: AFuF++leLJ2BbcDC6bgB5354j4aT49/hCPQWAk7WiQcCiq2h8M82rKaz
- SgYtImaJ3rGG74biq09Ia1b36Hm2ZeD2zGGtXGA762QWNflx3e3jGveq97AbdUdvfoc=
-X-Gm-Gg: AYBFou3W4tHxXVN4zedD7UR3Uhvi53/FG4EjTCF36ZxSU4zPWQO/m2uYdw8QiMoAfsl
- cgd1P2035NHNMyViuVWnv2NXjdnRpuWxjj2x7vzLYCLy+0WpD1lNAjj60Fq+vWU2JDkcxeMVUBT
- 4gqXRpsBnX0snJ4ira81lkGyUKvYoIh8IB+iWLjGJ34DamHm/Qp1q+eiBXo/jNN9I7bDYlXyQQ/
- NQGbKmLx4GiF5o+Y89SDzA82HDWDbZHkjheuWrXkgCqFWnUAJ5zum6WoESuHYGcqkpCXlhnHcQX
- y7T20p4yP2m652+ccLbktOdAzvAOSPPiWnSJ5wlt6W6o2w6bR0oqLJgum/4hmpwZC9tRNZJQeYa
- yF8SmfeIvDuiqTvneeYHXngDsEx+tBbMmejFcxaGSpalBhi6w6AgYQAoQm93q9XhmGCDD4EFM27
- y2Bn7s96xkIq/ykzP+iOdwO+ciy0Qm+itCR6Vx8LSKVhTYbwKqjKeFtyhsOvA3xjT6JLw4
-X-Received: by 2002:a05:600c:5254:b0:49d:5ff:f404 with SMTP id
- 5b1f17b1804b1-49e6197f57emr16034515e9.1.1789083767185; 
- Thu, 10 Sep 2026 16:42:47 -0700 (PDT)
+ bh=sLKHeTr+qaxkryYy6sSzyAc/KU6ezMFM//A19UpNHH4=;
+ b=Evri82oXUSkeHT5vwqRy4CZCAPF/cbZ+xBJZHH/xfnp/VrRGKAjDBrlqyCnXVFFISR
+ T7hSLTyA5/uQetN8PSZ8RA6xUVEo+GLB/MfCpkSymknLDHQP3Gfgw02Za/amij4Cifta
+ hte5dCJ0XaCQkR2qijbowxkKNswmR7PEho9rm49NBx41LDz8PBp37h7lwixfkuMcS6VE
+ UlVyiPNfpCg4QnYt+mCoAIS/+Sn3+pXu/DZeVk9GalkT5UUeWOvaRefSgn2o30tK7FKe
+ +AfFCu3rGn6eOqw5S/ONDwdhvllknYoGX1iAZ2NBlRtT1xAqXRNuXKm33c7opLVyJ5H4
+ RBcQ==
+X-Gm-Message-State: AFuF++mWNqNPXLvln9YJXicEiO2q7f9t3UYUTTDFmo8lzjojBbza44Km
+ 0GYHveXG5DDXgSWeklMYOq5rKxdfnpoFzP6BzvjfsbExXyLSrs0f3Jbgj7aZjOTfW24=
+X-Gm-Gg: AYBFou2vH1f4KZJO4DaO1DYPMo7TSRVDQrrGTE2X1+nv3pujW+FdeBRtUz2gmdaOL/i
+ H+Y5wEkiS2hk/nxh7D4NBFtoA+Ulnwc8uJYZ30/N3WSm5rRqlqm9Hn3S5tx+2zZvrhhkU8umm0u
+ R9OjUwdQBM1ckyBdiFjsWFaZN5xGSocFTEk2etta+p3nrptcbF6J26Rc7qq2erNUQ2PJFq694rG
+ gmN7KYBLgH6EWU9yTHqE9UxXigSdPS36RAoq5wV5cO5eAC4i+TH0D9vH3naiaRIwSrAgJ4UBMcX
+ QoUdBAnI72n3NgOHASqvasS9VBs1ySQoWPKbQmCTYXwgt3oPZGKmg37rmcGVIhrsq9kyw6rKeZ/
+ +Unih9EsO17kFdhrTiEhij9tOMqF3EmExj9Y1Fqf3g6/PdhJtxtkPI+sf0DpgtAdEL77orE73NU
+ xvB9s+Oo5AictxcpgEZZxhThIB4TUVz/0jouY30sXHl5/wVwPS8NtjBgXr1iVIcD6zJQhOBFaw6
+ STx0tg=
+X-Received: by 2002:a05:600c:8b5b:b0:49c:fc6c:be1b with SMTP id
+ 5b1f17b1804b1-49e619d5301mr16388265e9.33.1789083765561; 
+ Thu, 10 Sep 2026 16:42:45 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.45
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 16:42:46 -0700 (PDT)
+ Thu, 10 Sep 2026 16:42:45 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 17/29] parallels: Remove unnecessary data_end field
-Date: Fri, 11 Sep 2026 01:42:10 +0200
-Message-ID: <20260910234222.3039975-18-den@openvz.org>
+Subject: [PULL 16/29] parallels: Drop unused clusters at the end of the image
+Date: Fri, 11 Sep 2026 01:42:09 +0200
+Message-ID: <20260910234222.3039975-17-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260910234222.3039975-1-den@openvz.org>
 References: <20260910234222.3039975-1-den@openvz.org>
@@ -100,201 +101,306 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Since we have used bitmap, field data_end in BDRVParallelsState is
-redundant and can be removed.
+On an image closing there can be unused clusters in the end of the
+image. Since we have used bitmap, they can be found without a leak
+check, so parallels_check_unused_clusters() answers both questions:
+inactivation asks it to truncate them away, and the leak check asks it
+how much there is.
 
-Add parallels_data_end() helper and remove data_end handling.
+A repairing leak check truncates the file, so the used bitmap is
+recreated afterwards, as it would no longer comply to it.
 
-The two are not equivalent, which is why this comes before the Format
-Extension is stored. data_end is the highest extent seen in the BAT,
-while the helper derives the end of the payload from the image file. A
-cluster which belongs to the image without being referenced by the BAT,
-as the Format Extension and its bitmap data clusters are, stays
-invisible to the field: parallels_allocate_host_clusters() appends at
-data_end, so it would hand out an offset which is already occupied and
-parallels_mark_used() would refuse it with -EBUSY, failing the guest
-write.
+The helper answers with the size of the leak, which is a byte count and
+does not belong in an int. parallels_inactivate() keeps it in an int64_t
+and reports only a failure, as a leak of 2 GiB or more would otherwise
+look like one and fail the inactivation of an image which was truncated
+just fine.
 
-seek_to_sector() validates a BAT entry against data_end, so it becomes
-a user of the new helper, which suits that check better as well: a
-cluster has to live inside the image file, while the field could grow
-to whatever extent a corrupted BAT entry claimed.
+A BAT entry pointing at a cluster which does not fit the file makes the
+used bitmap reach further than the file does, and that difference is
+not a leak of negative size. parallels_check_outside_image() reports it
+as corruption on its own, so answer with no leak at all rather than
+-EINVAL, which would fail the whole check before the duplicate check
+and the statistics ever run.
 
-The BAT scan in parallels_open() no longer tracks the maximum extent,
-but it keeps rejecting entries below data_start or beyond the end of the
-file, so need_check is still set when an entry is out of bounds. Nothing
-is accumulated any more, so the scan stops at the first such entry.
-high_off in parallels_check_outside_image() only fed the
-image_end_offset which the helper now provides, so it goes away with
-the field.
+Repairing such an entry clears it from the BAT, and the used bitmap has
+to follow the way parallels_check_data_off() already makes it follow a
+repaired data_off. Otherwise it keeps a bit for a cluster the image no
+longer has, and 'qemu-img check -r all' leaves the space behind it
+untouched instead of truncating it away.
 
-The bdrv_pwrite_zeroes() of the branch which reuses a hole goes as well.
-It was guarded by data_end, and it is redundant: the space was already
-fallocated when the image grew over it. The 'bytes' variable goes with
-it, as the used bitmap grows by the preallocated size rather than the
-requested one.
+Rebuilding the used bitmap after the truncation fails with -EBUSY or
+-E2BIG on a BAT which points a cluster twice or out of the image.
+parallels_open() calls those correctable and repairs them, so they must
+not abort the check that is meant to do the repairing.
 
 Based on the original work from Alexander Ivanov.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c | 57 +++++++++++++----------------------------------
- block/parallels.h |  1 -
- 2 files changed, 15 insertions(+), 43 deletions(-)
+ block/parallels.c                             | 131 +++++++++++++-----
+ tests/qemu-iotests/tests/parallels-checks     |  11 ++
+ tests/qemu-iotests/tests/parallels-checks.out |  22 ++-
+ 3 files changed, 126 insertions(+), 38 deletions(-)
 
 diff --git a/block/parallels.c b/block/parallels.c
-index 2be7c20338..ace79ad968 100644
+index 307e90ec71..2be7c20338 100644
 --- a/block/parallels.c
 +++ b/block/parallels.c
-@@ -116,6 +116,13 @@ static uint32_t bat_entry_off(uint32_t idx)
-     return sizeof(ParallelsHeader) + sizeof(uint32_t) * idx;
- }
- 
-+static int64_t parallels_data_end(BDRVParallelsState *s)
-+{
-+    int64_t data_end = s->data_start * BDRV_SECTOR_SIZE;
-+    data_end += s->used_bmap_size * s->cluster_size;
-+    return data_end;
-+}
-+
- static int64_t seek_to_sector(BDRVParallelsState *s, int64_t sector_num)
- {
-     uint32_t index, offset;
-@@ -130,7 +137,8 @@ static int64_t seek_to_sector(BDRVParallelsState *s, int64_t sector_num)
-     }
- 
-     cluster_off = bat2sect(s, index);
--    if (cluster_off < s->data_start || cluster_off + s->tracks > s->data_end) {
-+    if (cluster_off < s->data_start ||
-+        cluster_off + s->tracks > parallels_data_end(s) >> BDRV_SECTOR_BITS) {
-         /* Cluster is outside of the image file or overlaps the header. */
-         return -1;
-     }
-@@ -284,15 +292,14 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
- {
-     BDRVParallelsState *s = bs->opaque;
-     int64_t first_free, next_used, host_off, prealloc_clusters;
--    int64_t bytes, prealloc_bytes;
-+    int64_t prealloc_bytes;
-     uint32_t new_usedsize;
-     int ret = 0;
- 
-     first_free = find_first_zero_bit(s->used_bmap, s->used_bmap_size);
-     if (first_free == s->used_bmap_size) {
--        host_off = s->data_end * BDRV_SECTOR_SIZE;
-+        host_off = parallels_data_end(s);
-         prealloc_clusters = *clusters + s->prealloc_size / s->tracks;
--        bytes = *clusters * s->cluster_size;
-         prealloc_bytes = prealloc_clusters * s->cluster_size;
- 
-         /*
-@@ -323,27 +330,9 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
- 
-         /* Not enough continuous clusters in the middle, adjust the size */
-         *clusters = MIN(*clusters, next_used - first_free);
--        bytes = *clusters * s->cluster_size;
- 
-         host_off = s->data_start * BDRV_SECTOR_SIZE;
-         host_off += first_free * s->cluster_size;
--
--        /*
--         * No need to preallocate if we are using tail area from the above
--         * branch. In the other case we are likely re-using hole. Preallocate
--         * the space if required by the prealloc_mode.
--         */
--        if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE &&
--                host_off < s->data_end * BDRV_SECTOR_SIZE) {
--            ret = bdrv_pwrite_zeroes(bs->file, host_off, bytes, 0);
--            if (ret < 0) {
--                return ret;
--            }
--        }
--    }
--
--    if (host_off + bytes > s->data_end * BDRV_SECTOR_SIZE) {
--        s->data_end = (host_off + bytes) / BDRV_SECTOR_SIZE;
-     }
- 
-     ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
-@@ -749,7 +738,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
- {
+@@ -750,6 +750,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
      BDRVParallelsState *s = bs->opaque;
      uint32_t i;
--    int64_t off, high_off, size, data_start_off;
-+    int64_t off, size, data_start_off;
-     bool fixed = false;
+     int64_t off, high_off, size, data_start_off;
++    bool fixed = false;
  
      size = bdrv_co_getlength(bs->file->bs);
-@@ -759,7 +748,6 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
-     }
-     data_start_off = s->data_start << BDRV_SECTOR_BITS;
- 
--    high_off = 0;
-     for (i = 0; i < s->bat_size; i++) {
-         off = bat2sect(s, i) << BDRV_SECTOR_BITS;
-         if (off == 0) {
-@@ -774,10 +762,6 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+     if (size < 0) {
+@@ -771,6 +772,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+             if (fix & BDRV_FIX_ERRORS) {
+                 parallels_set_bat_entry(s, i, 0);
                  res->corruptions_fixed++;
-                 fixed = true;
++                fixed = true;
              }
--            continue;
--        }
--        if (high_off < off) {
--            high_off = off;
+             continue;
+         }
+@@ -779,6 +781,17 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
          }
      }
  
-@@ -792,14 +776,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
-         }
++    if (fixed) {
++        int err;
++
++        parallels_free_used_bitmap(bs);
++        err = parallels_fill_used_bitmap(bs);
++        if (err == -ENOMEM) {
++            res->check_errors++;
++            return err;
++        }
++    }
++
+     if (high_off == 0) {
+         res->image_end_offset = s->data_end << BDRV_SECTOR_BITS;
+     } else {
+@@ -786,51 +799,96 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+         s->data_end = res->image_end_offset >> BDRV_SECTOR_BITS;
      }
  
--    if (high_off == 0) {
--        res->image_end_offset = s->data_end << BDRV_SECTOR_BITS;
--    } else {
--        res->image_end_offset = high_off + s->cluster_size;
--        s->data_end = res->image_end_offset >> BDRV_SECTOR_BITS;
--    }
--
--
-+    res->image_end_offset = parallels_data_end(s);
++
      return 0;
  }
  
-@@ -1466,8 +1443,7 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
-     }
++static int64_t GRAPH_RDLOCK
++parallels_check_unused_clusters(BlockDriverState *bs, bool truncate)
++{
++    BDRVParallelsState *s = bs->opaque;
++    int64_t leak, file_size, end_off = 0;
++    int ret;
++
++    file_size = bdrv_getlength(bs->file->bs);
++    if (file_size < 0) {
++        return file_size;
++    }
++
++    if (s->used_bmap_size > 0) {
++        end_off = find_last_bit(s->used_bmap, s->used_bmap_size);
++        if (end_off == s->used_bmap_size) {
++            end_off = 0;
++        } else {
++            end_off = (end_off + 1) * s->cluster_size;
++        }
++    }
++
++    end_off += s->data_start * BDRV_SECTOR_SIZE;
++
++    /*
++     * A cluster in use behind the end of the file is corruption which
++     * parallels_check_outside_image() reports on its own. There is no
++     * leaked space to reclaim behind it, and nothing to truncate.
++     */
++    if (end_off >= file_size) {
++        return 0;
++    }
++
++    leak = file_size - end_off;
++    if (!truncate) {
++        return leak;
++    }
++
++    ret = bdrv_truncate(bs->file, end_off, true, PREALLOC_MODE_OFF, 0, NULL);
++    if (ret) {
++        return ret;
++    }
++
++    parallels_free_used_bitmap(bs);
++    ret = parallels_fill_used_bitmap(bs);
++    if (ret == -ENOMEM) {
++        return ret;
++    }
++
++    return leak;
++}
++
+ static int coroutine_fn GRAPH_RDLOCK
+ parallels_check_leak(BlockDriverState *bs, BdrvCheckResult *res,
+                      BdrvCheckMode fix, bool explicit)
+ {
+     BDRVParallelsState *s = bs->opaque;
+-    int64_t size;
+-    int ret;
++    int64_t leak, count, size;
++
++    leak = parallels_check_unused_clusters(bs, fix & BDRV_FIX_LEAKS);
++    if (leak < 0) {
++        res->check_errors++;
++        return leak;
++    }
++    if (leak == 0) {
++        return 0;
++    }
  
-     s->data_start = data_start;
--    s->data_end = s->data_start;
--    if (s->data_end < (s->header_size >> BDRV_SECTOR_BITS)) {
-+    if (s->data_start < (s->header_size >> BDRV_SECTOR_BITS)) {
-         /*
-          * There is not enough unused space to fit to block align between BAT
-          * and actual data. We can't avoid read-modify-write...
-@@ -1530,10 +1506,7 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
-         if (sector < data_start || sector + s->tracks > file_nb_sectors) {
-             /* Cluster is outside of the image file or overlaps the header. */
-             need_check = true;
--            continue;
+     size = bdrv_co_getlength(bs->file->bs);
+     if (size < 0) {
+         res->check_errors++;
+         return size;
+     }
++    res->image_end_offset = size;
+ 
+-    if (size > res->image_end_offset) {
+-        int64_t count;
+-        count = DIV_ROUND_UP(size - res->image_end_offset, s->cluster_size);
+-        if (explicit) {
+-            fprintf(stderr,
+-                    "%s space leaked at the end of the image %" PRId64 "\n",
+-                    fix & BDRV_FIX_LEAKS ? "Repairing" : "ERROR",
+-                    size - res->image_end_offset);
+-            res->leaks += count;
 -        }
--        if (sector + s->tracks > s->data_end) {
--            s->data_end = sector + s->tracks;
-+            break;
-         }
+-        if (fix & BDRV_FIX_LEAKS) {
+-            Error *local_err = NULL;
++    if (!explicit) {
++        return 0;
++    }
+ 
+-            /*
+-             * In order to really repair the image, we must shrink it.
+-             * That means we have to pass exact=true.
+-             */
+-            ret = bdrv_co_truncate(bs->file, res->image_end_offset, true,
+-                                   PREALLOC_MODE_OFF, 0, &local_err);
+-            if (ret < 0) {
+-                error_report_err(local_err);
+-                res->check_errors++;
+-                return ret;
+-            }
+-            if (explicit) {
+-                res->leaks_fixed += count;
+-            }
+-        }
++    count = DIV_ROUND_UP(leak, s->cluster_size);
++    fprintf(stderr,
++            "%s space leaked at the end of the image %" PRId64 "\n",
++            fix & BDRV_FIX_LEAKS ? "Repairing" : "ERROR", leak);
++    res->leaks += count;
++
++    if (fix & BDRV_FIX_LEAKS) {
++        res->leaks_fixed += count;
      }
  
-diff --git a/block/parallels.h b/block/parallels.h
-index 493c89e976..eb90aeea81 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -79,7 +79,6 @@ typedef struct BDRVParallelsState {
-     unsigned int bat_size;
+     return 0;
+@@ -849,7 +907,10 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
+     bool fixed = false;
  
-     int64_t  data_start;
--    int64_t  data_end;
-     uint64_t prealloc_size;
-     ParallelsPreallocMode prealloc_mode;
+     /*
+-     * Create a bitmap of used clusters.
++     * Create a bitmap of used clusters. Please note that this bitmap is not
++     * related to used_bmap field in BDRVParallelsState and is created only for
++     * local usage.
++     *
+      * If a bit is set, there is a BAT entry pointing to this cluster.
+      * Loop through the BAT entries, check bits relevant to an entry offset.
+      * If bit is set, this entry is duplicated. Otherwise set the bit.
+@@ -1521,16 +1582,16 @@ fail:
+ static int GRAPH_RDLOCK parallels_inactivate(BlockDriverState *bs)
+ {
+     BDRVParallelsState *s = bs->opaque;
+-    int ret;
++    int64_t leak;
  
+     if (!(bs->open_flags & BDRV_O_RDWR) || (bs->open_flags & BDRV_O_INACTIVE)) {
+         return 0;
+     }
+ 
+-    ret = bdrv_truncate(bs->file, s->data_end << BDRV_SECTOR_BITS, true,
+-                        PREALLOC_MODE_OFF, 0, NULL);
+-    if (ret < 0) {
+-        return ret;
++    leak = parallels_check_unused_clusters(bs, true);
++    if (leak < 0) {
++        error_report("Failed to truncate image: %s", strerror(-leak));
++        return leak;
+     }
+ 
+     s->header->inuse = 0;
+diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
+index cf90eaf152..c9dcd715ac 100755
+--- a/tests/qemu-iotests/tests/parallels-checks
++++ b/tests/qemu-iotests/tests/parallels-checks
+@@ -352,6 +352,17 @@ truncate -s $((file_size - CLUSTER_SIZE / 2)) "$TEST_IMG"
+ echo "== the check completes and reports the cluster =="
+ _check_test_img
+ 
++echo "== nothing can be reclaimed behind it =="
++_check_test_img -r leaks
++echo "file size: `stat --printf="%s" "$TEST_IMG"`"
++
++echo "== a full repair drops the entry and truncates the image =="
++_check_test_img -r all
++echo "file size: `stat --printf="%s" "$TEST_IMG"`"
++
++echo "== the first cluster survived =="
++{ $QEMU_IO -c "read -P 0x11 0 $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
+ # Clear image
+ _make_test_img $SIZE
+ 
+diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
+index 645c4b3679..6699848996 100644
+--- a/tests/qemu-iotests/tests/parallels-checks.out
++++ b/tests/qemu-iotests/tests/parallels-checks.out
+@@ -209,13 +209,29 @@ wrote 1048576/1048576 bytes at offset 1048576
+ == cut the second one in half ==
+ == the check completes and reports the cluster ==
+ ERROR cluster 1 is outside image
+-ERROR space leaked at the end of the image 524288
+ 
+ 1 errors were found on the image.
+ Data may be corrupted, or further writes to the image may corrupt it.
++== nothing can be reclaimed behind it ==
++ERROR cluster 1 is outside image
+ 
+-1 leaked clusters were found on the image.
+-This means waste of disk space, but no harm to data.
++1 errors were found on the image.
++Data may be corrupted, or further writes to the image may corrupt it.
++file size: 2621440
++== a full repair drops the entry and truncates the image ==
++Repairing cluster 1 is outside image
++Repairing space leaked at the end of the image 524288
++The following inconsistencies were found and repaired:
++
++    1 leaked clusters
++    1 corruptions
++
++Double checking the fixed image now...
++No errors were found on the image.
++file size: 2097152
++== the first cluster survived ==
++read 1048576/1048576 bytes at offset 0
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
+ == TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
+ == write two clusters ==
 -- 
 2.53.0
 
