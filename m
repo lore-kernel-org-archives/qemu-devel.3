@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3BFDC79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C35C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4fxI-0003D0-VG; Thu, 10 Sep 2026 10:40:49 -0400
+	id 1x4fxN-0003Eq-GH; Thu, 10 Sep 2026 10:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwp-00034o-GG; Thu, 10 Sep 2026 10:40:19 -0400
-Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ id 1x4fwq-00035M-AF; Thu, 10 Sep 2026 10:40:20 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwg-0003QL-7z; Thu, 10 Sep 2026 10:40:19 -0400
+ id 1x4fwg-0003Qe-P0; Thu, 10 Sep 2026 10:40:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1789051198; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=HM21a6bosXp+KwDhVqxsBiUDMMHT+R5ngxsKHhXJgMQ=;
- b=a6DS6dsyJWv1lF5iJqxRlcZhU48mPWrpDX4InNe3RlrF/sLST4T7KBZ46F86/nufRVqc1034Yw/fqyqCM0oKf72pX19y17NMyAafHA5J3ds9qkTTXEIZwUigTnnp4sjUqavMCxOs9WTo7G8QnUeKo7nI/GGxVpmTCSJAjEXY414=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R381e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ t=1789051200; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=ksc6jpcXXgLeXQNaH+DYLymXmDnFTGRTvna+17U5yjo=;
+ b=BFHZqBNaeJI06FTUaaDNqkgQhZpxxmjB8xxuXvoU+hSQFYBHWCqRlRSvN0YNoWdijZS/bW9Io+wsKWludaYDltnOOlE1aT/7Cp5rvJvoya7T0NxFW8qLOTHyNT8W5+BF5m7mRhNtjOjDD/IELrJpPpYV/eSOzQZ6M/Jq1+9pSeo=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XAhkcGH_1789051197; 
+ TI=SMTPD_---0XAhkcGy_1789051199; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XAhkcGH_1789051197 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 10 Sep 2026 22:39:57 +0800
+ fp:SMTPD_---0XAhkcGy_1789051199 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 10 Sep 2026 22:39:59 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 10 Sep 2026 22:39:45 +0800
-Subject: [PATCH v2 08/14] target/riscv: Require Sscofpmf for non-fixed
- event overflow
+Date: Thu, 10 Sep 2026 22:39:48 +0800
+Subject: [PATCH v2 11/14] target/riscv: Process PMU timer expiry on the
+ owner vCPU
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-riscv-pmu-correctness-v2-8-5da5159a0c64@linux.alibaba.com>
+Message-Id: <20260910-riscv-pmu-correctness-v2-11-5da5159a0c64@linux.alibaba.com>
 References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 In-Reply-To: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -53,17 +53,16 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=4670;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=2433;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=maXzNpkusa2hiI/1bOl8aNF0iv/858OtVWbYnCCB6MM=;
- b=qOGOcPD79xxJOsZleD7ccwnRoWc/ADTJAufCAjgmQJAL+A6uD2UTpc81zvIr4SIZLEeNFsAXW
- kfc7od10zxQDS2fgARUu/eknLhPa36zkjurE5NB7JxcjKMxVzG/Z2U0
+ bh=xGqFDfh9IR3JQbU7GQ/PgD80X6pKA6c3w5l7P5xkpoI=;
+ b=mtvd38LI4/2WcQQmcSp4/AxAPLVOkvDZmWYg7g0KSNr32X/IEnGHkPLD6Bs0n02H8VEKL48Tl
+ jh1cNKVUjMqCTjJuvSrsag7vvUjeK+O/d/rnxtZB+7u+/0Qpj+iN2xw
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
-Received-SPF: pass client-ip=115.124.30.111;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -87,173 +86,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_pmu_incr_ctr() sets OF and LCOFIP on wrap even when Sscofpmf is
-disabled. Use the shared overflow helper to require Sscofpmf and suppress
-notifications while OF is set without stopping the counter.
+The PMU timer callback can race MTTCG execution and CSR writes while
+reading the event map and updating counters, OF and MIP.
 
-Test DTLB overflow with Sscofpmf enabled and disabled, including
-notification suppression and continued counting.
+Queue counter checks on the owning vCPU. The callback atomically sets
+pmu_timer_work_pending and queues work only if it was previously false.
+The vCPU clears the flag before checking counters and rebuilding the
+timer. Earlier expiries are covered by that check; the first later expiry
+queues another check.
 
-Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/tcg/pmu.c                      |   6 +-
- tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++++++++++++++++++++++++++
- tests/tcg/riscv64/system/meson.build        |  15 ++++
- 3 files changed, 119 insertions(+), 5 deletions(-)
+ target/riscv/cpu.h     |  1 +
+ target/riscv/tcg/pmu.c | 18 ++++++++++++++++--
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 17b9929785f668487d2ec851b736d588e025fd91..a4d33f55c4e5cb6052cea6bee4c0afa46372b5c5 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -583,6 +583,7 @@ struct ArchCPU {
+     QEMUTimer *pmu_timer;
+     uint64_t pmu_timer_instret_snapshot;
+     bool pmu_timer_stalled;
++    bool pmu_timer_work_pending;
+     /* A bitmask of Available programmable counters */
+     uint32_t pmu_avail_ctrs;
+     /* Mapping of events to counters */
 diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 16942e53489cd5a2d2dd055fdffef07d04d59465..2f600c5a0fc2d7ba380ef34f89af6366e3e27884 100644
+index 08298010b6d06f5792fa14ff81fe2f7a28c6476f..6286552a4ebf614df0252f84ddfadbc25d8d2258 100644
 --- a/target/riscv/tcg/pmu.c
 +++ b/target/riscv/tcg/pmu.c
-@@ -448,11 +448,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-         counter = &env->pmu_ctrs[ctr_idx];
-         if (counter->mhpmcounter_val == max_val) {
-             counter->mhpmcounter_val = 0;
--            /* Generate interrupt only if OF bit is clear */
--            if (!(env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_OF)) {
--                env->mhpmevent_val[ctr_idx] |= MHPMEVENT_BIT_OF;
--                riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
--            }
-+            riscv_pmu_set_overflow(env, ctr_idx);
-         } else {
-             counter->mhpmcounter_val++;
-         }
-diff --git a/tests/tcg/riscv64/sscofpmf-event-overflow.S b/tests/tcg/riscv64/sscofpmf-event-overflow.S
-new file mode 100644
-index 0000000000000000000000000000000000000000..cce06da10f9c7c20c18c7863b58b6dd724c45182
---- /dev/null
-+++ b/tests/tcg/riscv64/sscofpmf-event-overflow.S
-@@ -0,0 +1,103 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+/* Non-fixed event overflow with and without Sscofpmf. */
-+
-+#ifndef EXPECT_SSCOFPMF
-+#define EXPECT_SSCOFPMF 1
-+#endif
-+
-+	.option	norvc
-+	.option	norelax
-+
-+	.text
-+	.global _start
-+_start:
-+	/* Unexpected exceptions report the current check number. */
-+	li	t4, 1
-+	lla	t0, exit
-+	csrw	mtvec, t0
-+	csrw	mie, zero
-+	csrw	mip, zero
-+	csrw	mcountinhibit, zero
-+	csrw	mhpmevent3, zero
-+	li	t0, -1
-+	csrw	mhpmcounter3, t0
-+	li	t0, 0x10019		/* DTLB read miss */
-+	csrw	mhpmevent3, t0
-+
-+	/* One load after flushing the TLB must wrap the counter to zero. */
-+	sfence.vma
-+	lla	t0, first_page
-+	lw	t1, 0(t0)
-+	csrr	t0, mhpmcounter3
-+	bnez	t0, exit
-+
-+	/* Only Sscofpmf turns that wrap into OF and LCOFIP. */
-+	li	t4, 2
-+	csrr	t0, mhpmevent3
-+	srli	t0, t0, 63
-+	li	t1, EXPECT_SSCOFPMF
-+	bne	t0, t1, exit
-+	li	t4, 3
-+	csrr	t0, mip
-+	srli	t0, t0, 13
-+	andi	t0, t0, 1
-+	bne	t0, t1, exit
-+
-+	/* Clearing LCOFIP alone must not re-enable overflow notification. */
-+	li	t0, 1 << 13
-+	csrc	mip, t0
-+	li	t0, -1
-+	csrw	mhpmcounter3, t0
-+	sfence.vma
-+	lla	t0, second_page
-+	lw	t1, 0(t0)
-+	li	t4, 4
-+	csrr	t0, mhpmcounter3
-+	bnez	t0, exit
-+	li	t4, 5
-+	csrr	t0, mhpmevent3
-+	srli	t0, t0, 63
-+	li	t1, EXPECT_SSCOFPMF
-+	bne	t0, t1, exit
-+	li	t4, 6
-+	csrr	t0, mip
-+	li	t1, 1 << 13
-+	and	t0, t0, t1
-+	bnez	t0, exit
-+
-+	/* Overflow notification must not stop event counting. */
-+	sfence.vma
-+	lla	t0, third_page
-+	lw	t1, 0(t0)
-+	li	t4, 7
-+	csrr	t0, mhpmcounter3
-+	li	t1, 1
-+	bne	t0, t1, exit
-+	li	t4, 0
-+
-+exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	t4, 8(a1)
-+	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	4096
-+first_page:
-+	.word	0
-+	.balign	4096
-+second_page:
-+	.word	0
-+	.balign	4096
-+third_page:
-+	.word	0
-+	.balign	16
-+semiargs:
-+	.space	16
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 1dd0402631036d0d377bb90d7cb1da2bae34ead4..13ee7954ef4f09559a02a3730fb017ccf2cfd882 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -99,6 +99,21 @@ tests += {
-   },
+@@ -663,15 +663,29 @@ void riscv_pmu_rebuild_timer(CPURISCVState *env)
+     riscv_pmu_rebuild_timer_internal(env, false);
  }
  
-+tests += {
-+  'sscofpmf-event-overflow.S': {
-+    'cflags': cflags,
-+    'qemu_args': ['-cpu', 'max', qemu_args],
-+  },
++static void riscv_pmu_timer_work(CPUState *cs, run_on_cpu_data data)
++{
++    RISCVCPU *cpu = RISCV_CPU(cs);
++
++    /*
++     * An expiry before this exchange is covered by the following counter
++     * check. The first expiry after it sets pmu_timer_work_pending and queues
++     * another check.
++     */
++    qatomic_xchg(&cpu->pmu_timer_work_pending, false);
++    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
 +}
 +
-+tests += {
-+  'sscofpmf-event-overflow.S': {
-+    'exe_name': 'sscofpmf-event-overflow-off',
-+    'cflags': cflags + ['-DEXPECT_SSCOFPMF=0'],
-+    'qemu_args': ['-cpu', 'max,sscofpmf=false', qemu_args],
-+  },
-+}
-+
- tests += {
-   'sscofpmf-cycle-overflow.S': {
-     'cflags': cflags,
+ /* Timer callback for instret and cycle counter overflow */
+ void riscv_pmu_timer_cb(void *priv)
+ {
+     RISCVCPU *cpu = priv;
+ 
+-    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
++    if (!qatomic_xchg(&cpu->pmu_timer_work_pending, true)) {
++        async_run_on_cpu(CPU(cpu), riscv_pmu_timer_work, RUN_ON_CPU_NULL);
++    }
+ }
+ 
+-
+ void riscv_pmu_init(RISCVCPU *cpu, Error **errp)
+ {
+     if (cpu->cfg.pmu_mask & (COUNTEREN_CY | COUNTEREN_TM | COUNTEREN_IR)) {
 
 -- 
 2.43.0
