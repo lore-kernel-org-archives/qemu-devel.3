@@ -4,74 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4A1C88E40
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C495EC79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4fxO-0003F9-2Y; Thu, 10 Sep 2026 10:40:54 -0400
+	id 1x4g1k-0001EH-Af; Thu, 10 Sep 2026 10:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwr-00035a-5Y; Thu, 10 Sep 2026 10:40:21 -0400
-Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwg-0003QQ-Io; Thu, 10 Sep 2026 10:40:20 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x4g1e-0001Dg-Mk
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 10:45:20 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x4g1b-0004ZV-8T
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 10:45:16 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8565d77c277so99410347b3.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 07:45:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789051514; cv=none;
+ d=google.com; s=arc-20260327;
+ b=qU4YsWoBmj6g695i2dRWjKBEwXXJY6VD5QpSAtopibInc9vu6boTLTSHUdB33vUSrb
+ 7xnDuy0qUiTRKinie+bM9YE+goz35DaNJpv/WxfCyT5wZtCstAq4R7I3TTUrVQUnvPUX
+ bZQWVgEIp/y9bCVjXITH+tzHDh2WVp/RrPY04Yxudpum2mJxC+gf+fW1twhoz9zVq4B+
+ TO2RdSlZlEJIUCGDmds0GiFUNmj/9j8G0xSUds8vm6Na3HGLzv23jS/Dswe/VJi4E1Tg
+ wsyhIvNcTiNVGNuPZcR/DA1VVLAL7EqnYVPrW4GMDoJuh8D5vmaubL+fhJws1HmIW614
+ sm4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3wEWA+naB4Xk3UWBjGGWlFCL2JDAUCZN8RPErsVops4=;
+ fh=anZl6Td6NaKjHGFM8y4oK3yu8UEI3L8plTd5OD+C2Mo=;
+ b=cN6QtI/Ek5HqP7A16KvdqbJi1qrYClPrAgFvezh54SwRbXGxUbE4zBrVtFFY/t5rrD
+ L80L8OKUsuOD2k/8xV+Ai68k3sSDOzT5lzhF13p1zsasJmY6pspN8zVBhRRjQWxUgAcT
+ XFSO0hCZuN9L0vpqh8fWpsU6vBiKrLnjNMAMuBVr3gdJFyYYTT0YWIjrKx+SUvzHYRc6
+ Eapj+Rp1I5PlYZNQhlhuYHfNLobVw+2xRCjH1wBjFKkhV1XS3wvnw44FC8auzBJjY/ow
+ N1GcbHFYr6vv9Ac5NuMm2vzI9tiaJVFiGCPlmSqdkj62dSYdj9bFq22vDfnMxgxy+ha2
+ tYhA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1789051199; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=avKIryUkCle6rG2xxyoi/YBRXErQNkoEhUu85f54lL4=;
- b=AM/sH11UIkeJpsK17xPoW0DEY9Q3Fxi8stLJSGusfukuBByTWVZq8BsYD9uSeb29iLG5UQLL2aXDpVBzSR+ODrdbz1007dYhhNrJpTbuToePw/Il8LuCaeqnupc2TvwqzL0PqUtXy8L858G5Uq/fB34dqj0WwQGgPUbrdU+NT+Y=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XAhkcGf_1789051198; 
-Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XAhkcGf_1789051198 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 10 Sep 2026 22:39:58 +0800
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 10 Sep 2026 22:39:47 +0800
-Subject: [PATCH v2 10/14] target/riscv: Apply minstret exception accounting
- to HPM counters
+ d=linaro.org; s=google; t=1789051514; x=1789656314; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3wEWA+naB4Xk3UWBjGGWlFCL2JDAUCZN8RPErsVops4=;
+ b=IyVEFbjm+9F+bYx4tPd9a6xRLrWuDQ7yTQ5IE/QBLo+S1gpVwseks9YTIDUjtO0bPF
+ AsUs2UPY8p2eA7mkn1mZrlC3NsUaRbSV9hFSMkdboaoORUwUyVhg1RpMFZ2FFcsRXci4
+ F5pjjVG2QIAQ8+RY1P0jL4l2OypC24wIEGNXtjM/M9gkAJ7P283qDKEg6C9Vin+dU+15
+ KNM6rXm7WHR1ZkF99Nj5CuZVifqqQ40y3CLLvgDkwuHToBlGiYlEca84+X1rkm51LdRy
+ TNZxZz1lHRLpO4Z4/u+iLX6PGmE2tqKFqzl2GTulQmlyAITt630QUocYVRgIAs7/C7xK
+ u5mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789051514; x=1789656314;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3wEWA+naB4Xk3UWBjGGWlFCL2JDAUCZN8RPErsVops4=;
+ b=sxEhSi29lLvoCKywrkCMT5BK2+xhrrxhd/TGEr8d1pKdjD8J+FlwcyjfjDolx+IYe1
+ U277tgcutzVbbh9aD6/SX7RzcWMAqEJaoVFSBoUDaOiYWElblXvPra/qGW+3OzETRHs5
+ ixuY5t1AY7+ovQHbtHssO/lDcjxJbmgU+c2GdVqSmcKVLDq6tyMscrTcU98lpiJua8+3
+ v4EeQcJbMYljI6Qd4uA72aF/3VNiIscl5W8Ak3yDFqgxXEqm0dKPXoaKBXLHiagqArn7
+ gdQ7U+FVtTTCYtBzwbcNqf3XVzPBIcmbT/VT2PMl6O02ltsPaLQVZekOp2OP2SXkJRQ1
+ 5MGw==
+X-Gm-Message-State: AFuF++kbkiLLEHDecfcKrQJrgw7i+ABAOma5GMHvEQYob8bcOnD59+7z
+ sqisRZpnJXw208rJMLmtyEQZ48QmflEu2n/yGVsXdgfiEU3/Vv0M4fp7/auQPDGmVS8C5NLL0/l
+ By72kdi95kKoJp4a0F8+M5ICjhYZpeMuKbTMtObhnR9iCpUbqWaC4LUA=
+X-Gm-Gg: AYBFou3mpTzh5dCMUZX+3ksxKz6DQ7e5SSBCpkyuL083UrHDup7gDXq8zutv/HRTEPf
+ lXVUvssr6I6Kw1XwR80fYRXXlnNK5xX24GOapj/zIij3osO17LPYI0VJeR0kXFig/uU+VDidWzR
+ 9KzVtXKFLVRAbM1HNSJqA6rnLir5342T/EBdVHZ7yjKNWwnLT5c9YDaanJFSbPrOzBPpTe+ghgz
+ AAkZpXdMKs+wNSFNZ8Sr3FCoJkj8hLNJR13FnZZ0iL89e+lrwBLsBd3ocsqDgXedus6cXbSxLiS
+ dyeJ2JYVXyWu/A5OsVy/Wj0vXgnQZTylN6gOpWK4Wcj2emryulT5Ub7UYZJXiSLiOhrEcsRABpt
+ SX++8jnqvciN5Ay2whmIxPe4gLo/gH9x2cYaprGmY4kZU8O/AoA==
+X-Received: by 2002:a05:690c:c:b0:873:5c6b:a2f8 with SMTP id
+ 00721157ae682-8735c6ba5e3mr136804347b3.38.1789051508667; Thu, 10 Sep 2026
+ 07:45:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-riscv-pmu-correctness-v2-10-5da5159a0c64@linux.alibaba.com>
-References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
-In-Reply-To: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- TANG Tiancheng <lyndra@linux.alibaba.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=6491;
- i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=Dec5fXS+l6zzZVr99/10WAgd/MsnKh87Iw6WbQXKeR0=;
- b=S4MHlhe1hwNbJJSaM2+pcoTcbQ1wRodVq4xED/k2zSRnUcfQzOmKcWSDpd7NXSJhWSfXOXlTh
- iYB/zJdma00AidxmeaeSev6WDxteencYx2ucE+evE2wzwDE/q0foW9H
-X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
- pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
-Received-SPF: pass client-ip=115.124.30.130;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+References: <20260910-virtio-gpu-cleanup-v1-0-ccb8927a671e@redhat.com>
+In-Reply-To: <20260910-virtio-gpu-cleanup-v1-0-ccb8927a671e@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 10 Sep 2026 15:44:56 +0100
+X-Gm-Features: AcwNN1VCO2GLJj9N0bpJb_wnNZjBakHIeRe8QHYMtSJ73CE4DHfh0sRNrGOexz0
+Message-ID: <CAFEAcA8hD2+8uupWy5jZbKYLLUPwkvX9LdCEGrdVL20L1f7mpw@mail.gmail.com>
+Subject: Re: [GIT PULL 00/24] Various virtio-gpu/dmabuf related fixes
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,217 +117,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With icount, helper_raise_exception() excludes faulting instructions from
-minstret but not HPM counters selecting HW_INSTRUCTIONS.
+On Thu, 10 Sept 2026 at 14:30, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013f=
+b7:
+>
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into stagin=
+g (2026-09-10 11:08:04 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/virtio-gpu-pr-v1
+>
+> for you to fetch changes up to d26343c12d84227263b8d2fc89bac7632a98e00d:
+>
+>   contrib/vhost-user-gpu: disable scanouts on resource unref (2026-09-10 =
+17:29:47 +0400)
+>
+> ----------------------------------------------------------------
+> Various virtio-gpu/dmabuf related fixes
+>
+> Hi,
+>
+> While working on CVE-2026-66020 (which had a few revision on list), I
+> kept finding several places where virtio-gpu scanout and dmabuf
+> ownership was unclear.
+>
+> The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
+> unmapped its memory. Following that path also found stale dmabuf
+> references, duplicated scanout bookkeeping, and inconsistent cleanup
+> between display backends.
+>
+> Those changes touch a lot of area and I have done basic testing with the
+> various backends. I would not recommend backporting them all to stable.
+> The first 2 patches address CVE-2026-66020 in the general case and
+> should be safe to backport.
+>
+> thanks
+>
+> To: qemu-devel@nongnu.org
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Stefano Garzarella <sgarzare@redhat.com>
+> Cc: Alex Williamson <alex@shazbot.org>
+> Cc: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> ---
+> Changes in v5:
+> - EDITME: describe what is new in this series revision.
+> - EDITME: use bulletpoints and terse descriptions.
+> - Link to v4: https://lore.kernel.org/qemu-devel/20260910-virtio-gpu-clea=
+nup-v4-0-7d623714bd71@redhat.com
 
-Adjust the baseline of every running instruction counter that counts the
-current privilege mode. Do not read icount here: the helper can run inside
-a TB. Keep the existing timer, since excluding an instruction can only
-postpone overflow and expiry checks for an actual wrap.
+So is this different from the v4 on list? Please don't send pull
+requests as if they were new revisions of individual patch series.
+This is not the mechanism the project uses: pull requests should
+be an accumulation of whatever patches the maintainer of a
+subsystem has. Sometimes that will happen to be a single
+patchset, but usually not.
 
-Extend the ECALL regression to compare both counters and add an LPAD
-fault test covering an exception inside a multi-instruction TB.
-
-Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
----
- target/riscv/tcg/pmu.c                  | 35 ++++++++++++----
- tests/tcg/riscv64/pmu-lpad.S            | 72 +++++++++++++++++++++++++++++++++
- tests/tcg/riscv64/system/meson.build    |  7 ++++
- tests/tcg/riscv64/test-minstret-ecall.S | 26 ++++++++++++
- 4 files changed, 133 insertions(+), 7 deletions(-)
-
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index f88f6ae671d877ed874d22c9d4b840edb6f433a5..08298010b6d06f5792fa14ff81fe2f7a28c6476f 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -387,18 +387,39 @@ void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value)
- 
- void riscv_pmu_decr_instret(CPURISCVState *env)
- {
--    if (!icount_enabled() ||
--        (env->mcountinhibit & COUNTEREN_IR) ||
--        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
-+    RISCVCPU *cpu = env_archcpu(env);
-+    uint32_t ctr_mask;
-+
-+    if (!icount_enabled()) {
-         return;
-     }
- 
-     /*
--     * minstret is derived from icount, which includes the current
--     * instruction.  Move the baseline forward to exclude an instruction
--     * that raises an exception and therefore does not retire.
-+     * Fixed instruction events are derived from icount, which includes the
-+     * current instruction.  Move the baseline of each running
-+     * instruction-source counter that counts the current privilege mode to
-+     * exclude an instruction that raises an exception and does not retire.
-+     *
-+     * Do not read icount here: this helper can run in the middle of a TB.
-+     * Excluding an instruction only postpones overflow, so keep the current
-+     * timer deadline. The expiry handler checks for an actual counter wrap.
-      */
--    env->pmu_ctrs[2].mhpmcounter_prev++;
-+    ctr_mask = COUNTEREN_IR |
-+               riscv_pmu_event_counter_mask(
-+                   cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
-+    while (ctr_mask) {
-+        uint32_t ctr_idx = ctz32(ctr_mask);
-+        uint64_t cfg = ctr_idx == 2 ? env->minstretcfg :
-+                                      env->mhpmevent_val[ctr_idx];
-+
-+        ctr_mask &= ~BIT(ctr_idx);
-+        if (!riscv_pmu_fixed_ctr_running(env, ctr_idx) ||
-+            riscv_pmu_counter_filtered(env, cfg)) {
-+            continue;
-+        }
-+
-+        env->pmu_ctrs[ctr_idx].mhpmcounter_prev++;
-+    }
- }
- 
- int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-diff --git a/tests/tcg/riscv64/pmu-lpad.S b/tests/tcg/riscv64/pmu-lpad.S
-new file mode 100644
-index 0000000000000000000000000000000000000000..40a6b34b7c2b71dd42e78b6873d72df4d508289d
---- /dev/null
-+++ b/tests/tcg/riscv64/pmu-lpad.S
-@@ -0,0 +1,72 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+/* CSR number for older assemblers. */
-+#define CSR_MSECCFG          0x747
-+
-+/* An LPAD fault must be deliverable with HPM instruction counting enabled. */
-+
-+	.option	norvc
-+	.option	norelax
-+
-+	.text
-+	.global	_start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+	li	t0, 2		/* HW_INSTRUCTIONS */
-+	csrw	mhpmevent3, t0
-+	li	t0, 1 << 10	/* mseccfg.MLPE */
-+	csrs	CSR_MSECCFG, t0
-+
-+	/* x7[31:12] = 0 does not match the nonzero LPAD label. */
-+	li	t2, 0
-+	lla	a0, target
-+	jalr	ra, a0, 0
-+	j	fail
-+
-+	.balign	4
-+target:
-+	.word	0x00001017	/* lpad 1 */
-+	/*
-+	 * Keep the LPAD check inside a multi-instruction TB. Its exception
-+	 * helper must not read icount before leaving generated code.
-+	 */
-+	.rept	16
-+	nop
-+	.endr
-+	j	fail
-+
-+trap:
-+	csrr	t0, mcause
-+	li	t1, 18		/* Software-check exception */
-+	bne	t0, t1, fail
-+	csrr	t0, mtval
-+	li	t1, 2		/* Landing-pad fault */
-+	bne	t0, t1, fail
-+	csrr	t0, mepc
-+	lla	t1, target
-+	bne	t0, t1, fail
-+	li	a0, 0
-+	j	exit
-+
-+fail:
-+	li	a0, 1
-+
-+exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence. */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 13ee7954ef4f09559a02a3730fb017ccf2cfd882..d2355090121ba7a7d0046c1fc1824d6a89c1267f 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -61,6 +61,13 @@ tests += {
-   }
- }
- 
-+tests += {
-+  'pmu-lpad.S': {
-+    'cflags': cflags,
-+    'qemu_args': ['-cpu', 'max', '-icount', 'shift=0', qemu_args],
-+  },
-+}
-+
- # Exercise RV32 CSRs with the RV64 emulator's 64-bit target_ulong.
- tests += {
-   '../riscv32/smcdeleg-rv32.S': {
-diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
-index ab268f7f22985820f19bde353215385608643f3a..b1857543d488df984b923ad1c135edb35cb948c7 100644
---- a/tests/tcg/riscv64/test-minstret-ecall.S
-+++ b/tests/tcg/riscv64/test-minstret-ecall.S
-@@ -18,11 +18,37 @@ _start:
- 	li	t1, 1
- 	bne	t0, t1, fail
- 
-+	/*
-+	 * minstret and a counter selecting HW_INSTRUCTIONS must both exclude
-+	 * ECALL, so they must contain the same number of retired instructions.
-+	 */
-+	li	t0, 12		/* mcountinhibit.IR | mcountinhibit.HPM3 */
-+	csrs	mcountinhibit, t0
-+	csrw	minstret, zero
-+	csrw	mhpmcounter3, zero
-+	li	t0, 2		/* RISCV_PMU_EVENT_HW_INSTRUCTIONS */
-+	csrw	mhpmevent3, t0
-+	lla	t0, trap_hpm
-+	csrw	mtvec, t0
-+	li	t0, 12
-+	csrc	mcountinhibit, t0
-+	ecall
-+	bne	s3, s4, fail
-+
- 	li	a0, 0
- 	j	_exit
- 
- trap:
- 	csrr	s1, minstret
-+	j	trap_check
-+
-+trap_hpm:
-+	li	t0, 12
-+	csrs	mcountinhibit, t0
-+	csrr	s3, minstret
-+	csrr	s4, mhpmcounter3
-+
-+trap_check:
- 	csrr	t0, mcause
- 	li	t1, 11		/* Environment call from M-mode */
- 	bne	t0, t1, fail
-
--- 
-2.43.0
-
+thanks
+-- PMM
 
