@@ -4,63 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8F7C88E42
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 07:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5F7C79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 07:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ZT1-00059i-Kx; Thu, 10 Sep 2026 03:45:07 -0400
+	id 1x4ZVS-00078A-DA; Thu, 10 Sep 2026 03:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x4ZSy-00057p-SW
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 03:45:04 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x4ZSv-00072d-OX
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 03:45:04 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxjdL3X6Jq63cKAA--.30002S3;
- Thu, 10 Sep 2026 15:44:55 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBx5cz1X6JqCW0eAA--.38445S5;
- Thu, 10 Sep 2026 15:44:54 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 3/3] target/loongarch: Add CPUTimerState structure
-Date: Thu, 10 Sep 2026 15:46:13 +0800
-Message-ID: <20260910074613.3486127-4-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260910074613.3486127-1-maobibo@loongson.cn>
-References: <20260910074613.3486127-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1x4ZVQ-00077R-KY
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 03:47:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1x4ZVO-0007jP-3j
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 03:47:36 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68A5H4AY3656080
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 07:47:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=9QzctfesIz2/8zhFNiFvmwFJ
+ McrNV/icdBW7FZZCuP4=; b=ZGsq2WJb/JNbKZth+H73r5eQi8BmAZgYGQf+gg2a
+ SI3RNkFIfxRqSuvbqAaigm6mR94uCw7d4L1QYJuu6eVrZiCVE/KmrRCCiZwkfPv1
+ IKLsJQiBOwZJfJauUfNW6I+ohP9JvYWRGSgQS8A7GJiDhHk5mxxfrMwnScQ8SFhG
+ TiOgz2bfI7nWezsTL2MJg88dWVvVCMkO2oOxQgczOu1opHsPiO9yu2B1Nn3O5wVh
+ 7GCHswG5xHzXVR1V/cgUbCxxlcfkaMgB2Jmvn8on0g0cMsPgBsoD1ASRa06jOwcS
+ NCYmQUU6e5biB97QVWGlItCcf+lfzgQwsQN0dZqEvWSPvw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gkcydtps1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 07:47:30 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-939c30aa9a0so251403185a.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 00:47:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789026450; x=1789631250; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9QzctfesIz2/8zhFNiFvmwFJMcrNV/icdBW7FZZCuP4=;
+ b=ETUxiEifn1QviTetChwocDpNVM490T9BwZQyU3pLofyxP3BZtAmn8dL8XMwS/z2lmf
+ XKZMI5LBHg8i5rOAzJ2uHASuXXz9904/o/zIp4SbPwuz5p9l3Pf3cCl7UE+R/czTNVyR
+ XSZ52Ny09Xgfh1IqY4lj+UyXCQocN6g+v25R3pT+P8KC7eV3TpJcLp1X2YSO+dkHtGFx
+ /rsz+KTz7kIPm6WL/Mgb9omhlzhRriZuRyfW24EhnpXJF+3jt+i+nTnbj5eghwsKaT3c
+ LEkI8Tv75ZJA2ncLGCJ4Lz8/ZYZxlDdgZo+ZaO6RMaacPNFwefrWDOSdVDv2CkmFJ7IX
+ Nr9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789026450; x=1789631250;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9QzctfesIz2/8zhFNiFvmwFJMcrNV/icdBW7FZZCuP4=;
+ b=Nl5Ggfa/w9XL7niIY8MoVJvJdCDZ5AUQzd7/yGmZSBSWQV7dxqEAyCBBEJVSzQ1ECQ
+ QbbY1luGJLgGcIt7yajU58YXnYw4Kh4m4OEd/XTSnpkvcxHqpOA1pj+bTXKHSyJ6MX5j
+ ufwyUvYtBJUlRVXUbxB/Ke7HDtfxMtTPbVtCTb12lyXrEVlBKZiUcgWKBv0Lw7ntDCJ1
+ pI9B6ruzlWD8Hq3ybLXcm5YYOT2YR8D6P9QoybB/xWkIi6Nqzczp3W0V/kMeTWwPn+MH
+ uWdVqZBqJ3DgOnqdBnDu4SQyTslJFntr+apDNMb3DOR56r7SAzshuYCb51fbDTyrjKel
+ 8CAg==
+X-Gm-Message-State: AFuF++mBnfOAkKzKOX2L5qkeRSsmLH4Nf7KribFB/wGFsQMkYdEaW1LU
+ P9G5m1xNXrNqwYf+i6355z26ebmTGRvD+ityUse3LGQDKSY5JeYURdEFjuQHbc+IeSMX5AdL4mP
+ L/xIWFLwKolhJw3ej01ZqkdH6xHN5ZSvY83xnhChiyzwasX6O43+G8o94nQ==
+X-Gm-Gg: AYBFou3mD9iXpPnAKT4qDdlHkV8oKVLGgL1NjyWWgrxV79NkYnCaeNQyHTf8nzc1aiJ
+ ytdbeOf066i6ynCwGglTaX3W5mfQG7IrHW0JnEWtdiEXWULDboj2+koKesftnBfn1zdsQ/Hq/lR
+ n/jZXMlm7g/VIOE+WyFbc7FlRttbSoSOWx7iRgrqNaxDCEU5zYTt5Sd+H/5yI/wA4g2kMeJYapj
+ HcJSwtgWH440WQlXRV6ugDf/dyxowq3p7ZLwPtKXXPHRMsS4TZesE86N4LcIrkiAZk1upEEOf0i
+ 8E7le2ugYabbxTGFaLMDD6Ci56eD7CgyjG5JxKhcKKXSsRNu/u0bZ4fcxTcFxOhOLFddq+JNVnz
+ MVOa0Te8J6rxypLI11Y85Asur6NTO+rLyP4dj/Q==
+X-Received: by 2002:a05:620a:4806:b0:939:6de7:8767 with SMTP id
+ af79cd13be357-93980574f84mr4351845585a.46.1789026449980; 
+ Thu, 10 Sep 2026 00:47:29 -0700 (PDT)
+X-Received: by 2002:a05:620a:4806:b0:939:6de7:8767 with SMTP id
+ af79cd13be357-93980574f84mr4351842085a.46.1789026449472; 
+ Thu, 10 Sep 2026 00:47:29 -0700 (PDT)
+Received: from localhost (ip-86-49-245-11.bb.vodafone.cz. [86.49.245.11])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a9a20c31b0sm1096551a12.6.2026.09.10.00.47.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 00:47:28 -0700 (PDT)
+Date: Thu, 10 Sep 2026 09:47:27 +0200
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, Icenowy Zheng <uwu@icenowy.me>,
+ Matheus Ferst <matheus.ferst@eldorado.org.br>,
+ Sunil V L <sunilvl@oss.qualcomm.com>, Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v11 2/5] target/riscv: add riscv-server-ref CPU
+Message-ID: <7jkwao2hlaqtkdi44zkvgfe6rij7rpz6dd7qqwm6gw7xmta6vp@biexkhgtrofw>
+References: <20260909210756.1767711-1-daniel.barboza@oss.qualcomm.com>
+ <20260909210756.1767711-3-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx5cz1X6JqCW0eAA--.38445S5
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxKFWUJrykuw4xur45ur4UGFX_yoWfGw1Dpr
- W2kry7Kr18JrZrJwn7ta98WF1DXr17Ww129a1SyrWIkan7Jr48ua4kt39FgFWUu3yrWrWa
- qFn5Aa15XFW7XacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8wNVDUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260909210756.1767711-3-daniel.barboza@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=IfsSymqa c=1 sm=1 tr=0 ts=6aa26093 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4CXLxsOAgPM/krjtHEZQyA==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=PXcuKL70AAAA:8
+ a=FRSEYCzRAAAA:8 a=DdpuajOAZS452ExD0-8A:9 a=CjuIK1q_8ugA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=xVlTc564ipvMDusKsbsT:22 a=1qLaeP4TCVy2vqIEy19U:22
+ a=H4N_Y-AU75W7NKDNhZlT:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: TivMfv0Kd9hn8STdNwX_PPD5Fk1qO6sw
+X-Proofpoint-ORIG-GUID: TivMfv0Kd9hn8STdNwX_PPD5Fk1qO6sw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEwMDA4NSBTYWx0ZWRfX10UA/tbjw9yx
+ 57AEDhMHy1e7omKNeSmGT92XG5uHiXbH3Ss9heVCMCS3mXzHOY+r/WgM/dVqjeMbyQJ03bZqGVO
+ 4IUgxtLV/O9FfAa7vpLConJGUED+3zY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDA4NSBTYWx0ZWRfXz+GsrwKByiGb
+ VfyfAma5d8E+buyDawiR6m18ttO0YUlOiyZGxuFSoionN4lAW3dmEfLrxs9o7MCH1sL6xZxCWRV
+ kkOYC3nimeYXiRnyOvZy/cOCebZ1wA2E/wq8QXMccI/K8LY/oamodmhCIEiTuRtEA69N/ZKG8bs
+ FDwiZhQU/5edSRwZ0SRZ5HXsvTCSNxRQTsH9QiKzTrt9ktPnOunGSbvQCF9O+SFqvh6X4vPpphx
+ IakAGt0x6NXyX3T2BUiUY+kUc81OjrzDHX2Klk6HFwOjFCxF1UAM5D9RME1OwtaxTsvyCQCX7Ub
+ 5iAX5BVtXqte9gWwaaC8CfkhvDghDDr7C88IoFf1PpOjde1ocPpWhM3KSJ/lvH+PflyTjWoJ/ec
+ g0JFI6APvJtuMsciRxQyqmovLgJYPPWcAqBZpy9aolN0z9bSE7YD3GEXvchE7eER2SpzHspicXt
+ o5u5fjyhv5gVas5HqHA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-10_02,2026-09-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 spamscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609100085
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,255 +156,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Structure CPUTimerState is added in structure CPUSysState, QEMUTimer
-and IRQ number is included, so it is easy to add another separate
-timer if LVZ feature is supported.
+On Wed, Sep 09, 2026 at 06:07:52PM -0300, Daniel Henrique Barboza wrote:
+> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+> profile support and others.
+> 
+> We're going for a profile-based implementation, instead of a regular CPU
+> that can inherit RVA23, to allow future CPUs to use it internally as a
+> starting base for their own extension sets.  There's also a new
+> 'rvserver-ref-1.0' flag that can be used to set the extensions in the
+> command line for other CPUs, which can be used for testing/debugging
+> purposes.
+> 
+> Note that for all intents and purposes "riscv-server-ref" is a regular
+> CPU and no, we're not trying to set a precedent of calling the riscv
+> server platform spec a profile.
+> 
+> [1] defines in rule SEE_020 that we must support at least 11 debug
+> triggers (4 for insn address, 4 for insn load/store, 1 for icount,
+> one for int, one for excp).  We're going for the minimum.  If more
+> triggers are needed users can set any trigger amount with:
+> 
+> -cpu riscv-server-ref,trigger-count=N
+> 
+> Note that N must be <= 128.
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+> 
+> Suggested-by: Icenowy Zheng <uwu@icenowy.me>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Reviewed-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
+> Reviewed-by: Chao Liu <chao.liu@processmission.com>
+> Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+> ---
+>  target/riscv/cpu-qom.h |  1 +
+>  target/riscv/cpu.c     | 32 ++++++++++++++++++++++++++++++++
+>  2 files changed, 33 insertions(+)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 1a28f1369c..61234842e3 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -42,6 +42,7 @@
+>  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+>  #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+> +#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
+>  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+>  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>  #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 773aeba8da..0b0b8e0a99 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2424,11 +2424,36 @@ static RISCVCPUProfile RVA23S64 = {
+>      }
+>  };
+>  
+> +/*
+> + * This riscv-server-ref entry isn't a profile per se but its
+> + * CPU definition can be modelled as a profile that extends
+> + * RVA23, with additional things on top of it, and allowing
+> + * future CPUs to derive from it via
+> + * ".profile = &RVServerRef1_0;".
+> + */
+> +static RISCVCPUProfile RVServerRef1_0 = {
+> +    .s_parent = &RVA23S64,
+> +    .name = "riscv-server-ref-1.0",
+> +    .satp_mode = VM_1_10_SV48,
+> +    .ext_offsets = {
+> +        CPU_CFG_OFFSET(ext_zkr),
+> +        CPU_CFG_OFFSET(ext_sdext),
+> +        CPU_CFG_OFFSET(ext_sdtrig),
+> +        CPU_CFG_OFFSET(ext_ssaia),
+> +        CPU_CFG_OFFSET(ext_ssccfg),
+> +        /* ssstrict is always enabled for PRIV_VER_1_12 */
+> +
+> +        RISCV_PROFILE_EXT_LIST_END
+> +    }
+> +};
+> +
+> +
+>  RISCVCPUProfile *riscv_profiles[] = {
+>      &RVA22U64,
+>      &RVA22S64,
+>      &RVA23U64,
+>      &RVA23S64,
+> +    &RVServerRef1_0,
+>      NULL,
+>  };
+>  
+> @@ -3766,6 +3791,13 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>  #endif
+>      ),
+>  
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
+> +        .profile = &RVServerRef1_0,
+> +        .misa_mxl_max = MXL_RV64,
+> +        .cfg.max_satp_mode = VM_1_10_SV57,
+> +        .num_triggers = 11,
+> +    ),
+> +
+>  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+>          .cfg.max_satp_mode = VM_1_10_SV57,
+> -- 
+> 2.43.0
+> 
+>
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.c            | 12 ++++++++++--
- target/loongarch/cpu.h            | 15 ++++++++++++++-
- target/loongarch/internals.h      |  6 +++---
- target/loongarch/tcg/csr_helper.c | 14 ++++++--------
- target/loongarch/tcg/op_helper.c  |  6 +++---
- target/loongarch/tcg/timer.c      | 27 ++++++++++++---------------
- 6 files changed, 48 insertions(+), 32 deletions(-)
-
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index eb143800e0..81dacbbaec 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -720,11 +720,19 @@ static void loongarch_cpu_init(Object *obj)
- {
- #ifndef CONFIG_USER_ONLY
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+#ifdef CONFIG_TCG
-+    CPULoongArchState *env = &cpu->env;
-+    CPUTimerState *timer;
-+#endif
-+
- 
-     qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, N_IRQS);
- #ifdef CONFIG_TCG
--    timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
--                  &cpu_loongarch_timer_cb, cpu);
-+    timer = env_timer(env);
-+    timer->irq = IRQ_TIMER;
-+    timer->cs  = CPU(obj);
-+    timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
-+                  &cpu_loongarch_timer_cb, timer);
- #endif
- #endif
- }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index d83dcef6f8..c592f69885 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -315,6 +315,12 @@ typedef struct  LoongArchBT {
-     uint32_t ftop;
- } lbt_t;
- 
-+typedef struct CPUTimerState {
-+    QEMUTimer timer;
-+    int irq;
-+    CPUState *cs;
-+} CPUTimerState;
-+
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
- #define CPU_MODEL_1C101       "1C101"
-@@ -384,6 +390,9 @@ typedef struct CPUSysState {
-     uint64_t CSR_PRCFG1;
-     uint64_t CSR_PRCFG2;
-     uint64_t CSR_PRCFG3;
-+#ifdef CONFIG_TCG
-+    CPUTimerState timer_state;
-+#endif
- } CPUSysState;
- 
- typedef struct CPUArchState {
-@@ -446,7 +455,6 @@ struct ArchCPU {
-     CPUState parent_obj;
- 
-     CPULoongArchState env;
--    QEMUTimer timer;
-     uint32_t  phy_id;
-     OnOffAuto lbt;
-     OnOffAuto pmu;
-@@ -504,6 +512,11 @@ static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
-     env->sys_state = sys;
- }
- 
-+static inline CPUTimerState *env_timer(CPULoongArchState *env)
-+{
-+    return &env->sys_states[0].timer_state;
-+}
-+
- static inline bool is_la64(CPULoongArchState *env)
- {
-     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 8c5f095782..f9a0680fe0 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -35,9 +35,9 @@ void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
- 
- void cpu_loongarch_timer_cb(void *opaque);
--uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu);
--uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu);
--void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value);
-+uint64_t cpu_loongarch_get_timer_counter(CPUTimerState *timer);
-+uint64_t cpu_loongarch_get_timer_ticks(CPUTimerState *timer);
-+void cpu_loongarch_set_timer_config(CPUTimerState *timer, uint64_t value);
- bool loongarch_cpu_has_work(CPUState *cs);
- bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
- #endif /* !CONFIG_USER_ONLY */
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index b1a0b005e9..88656b5344 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -72,9 +72,7 @@ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
- 
- target_ulong helper_csrrd_tval(CPULoongArchState *env)
- {
--    LoongArchCPU *cpu = env_archcpu(env);
--
--    return cpu_loongarch_get_timer_ticks(cpu);
-+    return cpu_loongarch_get_timer_ticks(env_timer(env));
- }
- 
- target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-@@ -135,23 +133,23 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
- 
- target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
- {
--    LoongArchCPU *cpu = env_archcpu(env);
--    CPUSysState *sys = env_sys(env);
-+    CPUTimerState *timer = env_timer(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     int64_t old_v = sys->CSR_TCFG;
- 
--    cpu_loongarch_set_timer_config(cpu, val);
-+    cpu_loongarch_set_timer_config(timer, val);
- 
-     return old_v;
- }
- 
- target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
- {
--    LoongArchCPU *cpu = env_archcpu(env);
-+    CPUTimerState *timer = env_timer(env);
-     int64_t old_v = 0;
- 
-     if (val & 0x1) {
-         bql_lock();
--        loongarch_cpu_set_irq(cpu, IRQ_TIMER, 0);
-+        loongarch_cpu_set_irq(LOONGARCH_CPU(timer->cs), timer->irq, 0);
-         bql_unlock();
-     }
-     return old_v;
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index c090d5b12e..f98fe4d4a1 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -73,15 +73,15 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
-     return cpu_get_host_ticks();
- #else
-     uint64_t plv;
--    LoongArchCPU *cpu = env_archcpu(env);
--    CPUSysState *sys = env_sys(env);
-+    CPUTimerState *timer = env_timer(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
- 
-     plv = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
-     if (extract64(sys->CSR_MISC, R_CSR_MISC_DRDTL_SHIFT + plv, 1)) {
-         do_raise_exception(env, EXCCODE_IPE, GETPC());
-     }
- 
--    return cpu_loongarch_get_timer_counter(cpu);
-+    return cpu_loongarch_get_timer_counter(timer);
- #endif
- }
- 
-diff --git a/target/loongarch/tcg/timer.c b/target/loongarch/tcg/timer.c
-index a25312b9ab..6a96dfd429 100644
---- a/target/loongarch/tcg/timer.c
-+++ b/target/loongarch/tcg/timer.c
-@@ -15,60 +15,57 @@
- #define CONSTANT_TIMER_TICK_MASK    0xfffffffffffcUL
- #define CONSTANT_TIMER_ENABLE       0x1UL
- 
--uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_timer_counter(CPUTimerState *timer)
- {
-     return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / TIMER_PERIOD;
- }
- 
--uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_timer_ticks(CPUTimerState *timer)
- {
--    CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     uint64_t now, expire;
- 
-     if ((sys->CSR_TCFG & CONSTANT_TIMER_ENABLE) &&
-         (sys->CSR_TVAL < sys->CSR_TCFG)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        expire = timer_expire_time_ns(&cpu->timer);
-+        expire = timer_expire_time_ns(&timer->timer);
-         sys->CSR_TVAL = (expire - now) / TIMER_PERIOD;
-     }
- 
-     return sys->CSR_TVAL;
- }
- 
--void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value)
-+void cpu_loongarch_set_timer_config(CPUTimerState *timer, uint64_t value)
- {
--    CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     uint64_t now, next;
- 
-     sys->CSR_TCFG = value;
-     if (value & CONSTANT_TIMER_ENABLE) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (value & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
--        timer_mod(&cpu->timer, next);
-+        timer_mod(&timer->timer, next);
-         sys->CSR_TVAL = sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK;
-     } else {
--        timer_del(&cpu->timer);
-+        timer_del(&timer->timer);
-         sys->CSR_TVAL = 0;
-     }
- }
- 
- void cpu_loongarch_timer_cb(void *opaque)
- {
--    LoongArchCPU *cpu  = opaque;
--    CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUTimerState *timer = opaque;
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     uint64_t now, next;
- 
-     if (FIELD_EX64(sys->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
--        timer_mod(&cpu->timer, next);
-+        timer_mod(&timer->timer, next);
-         sys->CSR_TVAL = sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK;
-     } else {
-         sys->CSR_TVAL = CONSTANT_TIMER_TICK_MASK;
-     }
- 
--    loongarch_cpu_set_irq(opaque, IRQ_TIMER, 1);
-+    loongarch_cpu_set_irq(LOONGARCH_CPU(timer->cs), timer->irq, 1);
- }
--- 
-2.54.0
-
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
