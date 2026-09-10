@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC56C88E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947CAC88E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 01:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ph4-0002MP-Fv; Thu, 10 Sep 2026 21:04:48 -0400
+	id 1x4piq-0003Lx-Pl; Thu, 10 Sep 2026 21:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x4lYl-0006vo-UX
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:40:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x4lYj-0005CL-5C
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:39:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072787;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=L1ILG/43iGdLfltvWdkkiXj2gLIAVEJqveoYs9xtFPY=;
- b=LcVwE2RymeHhWEg74Q7T5EsS5jAaOwfMi0wmIgEMUDqzi9IIg3cZJgqx2O15aUK7KslySV
- a7XWhi1vUWuSyYbVkhvPmeztnJg95kDF8GwTVLxshSnbaFkXrJzlVuTGOez9RWld9rwPvQ
- xW/F7kypFk0EoO0Bk2iqnPGBsDbr3LE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-OPv73Z_LNVCQfFaAy4ycJA-1; Thu,
- 10 Sep 2026 16:39:45 -0400
-X-MC-Unique: OPv73Z_LNVCQfFaAy4ycJA-1
-X-Mimecast-MFC-AGG-ID: OPv73Z_LNVCQfFaAy4ycJA_1789072784
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 077701800BD7; Thu, 10 Sep 2026 20:39:44 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.67])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C077641B; Thu, 10 Sep 2026 20:39:38 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Igor Mammedov <imammedo@redhat.com>, linux-cxl@vger.kernel.org,
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
- Markus Armbruster <armbru@redhat.com>, Jonathan Cameron <jic23@kernel.org>,
- qemu-block@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 09/10] qapi: convert simple data struct intros for
- block-core.json
-Date: Thu, 10 Sep 2026 16:38:55 -0400
-Message-ID: <20260910203856.99003-10-jsnow@redhat.com>
-In-Reply-To: <20260910203856.99003-1-jsnow@redhat.com>
-References: <20260910203856.99003-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPX-0001fz-3u
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:40 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x4oPT-000782-DO
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 19:42:29 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-48441a2ba1bso195059f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 16:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1789083745; x=1789688545; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=WCtL81X0uEHdmpCjJ7DEK9oFi6EGro1MFiHuPeEFIS4=;
+ b=IAORI5DB7qiQXEIYQTkD6uW9EKV0d9/6tl3HrqewMU6kv4nJu3JJkoRIrCXXyO6Hw9
+ ag4y0zTJmXhN+Sk3axcejCrxUiWayC5Ru8ntvh02a/wuDVlzNEpzDeucNTUFTrbCuVFq
+ QEtA1PD4ed6AsLNoi1mxd+DeHah4oSNcBZky/NpqPtOKa9ax7ZglE8luCkbw7Y/nFzGR
+ y8moOwrDbhArW/1FS5wiVilWfQR3DI4z6REi1ONvfCy+ZnEhYpbHJXSzeS571qiSZsT7
+ ds9sLnt5yY/3QyBhS489iE9u3clibnzRAXLE9NcRAvfoFgHZMBp31LN9ZdLhi4IRwyW6
+ yNXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789083745; x=1789688545;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=WCtL81X0uEHdmpCjJ7DEK9oFi6EGro1MFiHuPeEFIS4=;
+ b=EYr1WHNu0BVez+JJg/bqelbKl6XHTLdWPpp2zGvApvoJVI9Z+R7kgEXHmGyOS75BlO
+ 8WWhDJJ9UrCsBB55ythx15l7Glr15Am8b5rzuQtvtvOqmiePF4OkhQ7aTgfICeKSK2vT
+ PEpB4NIkZJncdx9xpwgrnCvvi6LOR/DbC7wXFWYbf8DrhnPJFXvmfOzwmSVb03Qd7Bci
+ RR0CtsbM+lQRnfzzNMWP7pFyLC1i0bGyI+Mnb4y9h5YsscA2rqUOMU2lQtdY55wVmz2I
+ 3pr/Hq01KS6t0kiw5AmlS3dwU73OgTAileWadvi7zVPnbc7kiqMf9ruDmJLg04zyBumL
+ mFyg==
+X-Gm-Message-State: AFuF++nWsAk7NPUUqaKkkM5l1nEcWQyqJeBUFPaCkxuYJ8/9Ht9wMVo5
+ wDnAT4/rCT5TzIa+CwnoAUSoaWYu9243BRGOgXdETVCttB1U/5rxPNGNGBsqVOW4grc=
+X-Gm-Gg: AYBFou3XrEM+qrrfmK/BQvf2GITQ/9gyuYq8spZ8/9g8uziL+4wNGwPkebpmQ4MJqQn
+ XQEhtWPgho+nHVPvdbP4FadjfNXz0FNt1hdcRkOiyQaEL0trj50cDrbsmW4P0hrNpQaCFc1DhKw
+ rE5Bnx7WByoaWw1BaGWpF0XDnr2/P9DklpqYnCcGjcwX0SlPMbGUGx6+7wMcSa9JGrD465MFfcP
+ yhB70L+GRBsFW75aE3hPy2PRF5MY6TA3VafFFPzkr0PsyWKstdZ8o6VOPcOs457h+NdA01EKrXx
+ Ox/ftBtuNU4xIspJC0isPRT7pkGwLPJslhuaTzlgC0iey+CCOqq5VBZ/vaTxxM6n3/RbszyRmD5
+ rZtLugCbYMk9jXD09hTSb6Wpq0TaengbfWEHQ1nWYxXRMQgLCd3PPOlU4Ff7+hZf8xdBkxjVAW9
+ MO5xEYAQMEqegz2AXlj4HSZR//EKWM/OGBb3n8knQb7WTUVxRus5kDw8PKOlGAd1RKpGXDzQCGE
+ MItUyk=
+X-Received: by 2002:a05:600c:c3cc:10b0:499:da8b:1476 with SMTP id
+ 5b1f17b1804b1-49e6198d752mr10946045e9.14.1789083744744; 
+ Thu, 10 Sep 2026 16:42:24 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:54f3:cc87:964b:3604])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e62231360sm7726775e9.4.2026.09.10.16.42.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Sep 2026 16:42:24 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PULL 00/29] parallels: persistent dirty bitmaps and Format Extension
+ hardening
+Date: Fri, 11 Sep 2026 01:41:53 +0200
+Message-ID: <20260910234222.3039975-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=den@openvz.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,88 +99,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/block-core.json | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013fb7:
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 5b1eaa8e786..1ca147285e7 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -417,10 +417,9 @@
- 
- ##
- # @BlockGraphInfo:
--#
--# Information about all nodes in a block (sub)graph in the form of
--# `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains the
--# information for the (sub)graph's root node.
-+#     Information about all nodes in a block (sub)graph in the form of
-+#     `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains
-+#     the information for the (sub)graph's root node.
- #
- # @children: Array of links to this node's child nodes' information
- #
-@@ -768,9 +767,8 @@
- 
- ##
- # @BlockInfo:
--#
--# Block device information.  This structure describes a virtual device
--# and the backing device associated with it.
-+#     Block device information.  This structure describes a virtual
-+#     device and the backing device associated with it.
- #
- # @device: The device name associated with the virtual device.
- #
-@@ -1607,9 +1605,8 @@
- 
- ##
- # @BackupPerf:
--#
--# Optional parameters for backup.  These parameters don't affect
--# functionality, but may significantly affect performance.
-+#     Optional parameters for backup.  These parameters don't affect
-+#     functionality, but may significantly affect performance.
- #
- # @use-copy-range: Use copy offloading.  Default false.
- #
-@@ -2705,11 +2702,10 @@
- 
- ##
- # @ThrottleLimits:
--#
--# Limit parameters for throttling.  Since some limit combinations are
--# illegal, limits should always be set in one transaction.  All fields
--# are optional.  When setting limits, if a field is missing the
--# current value is not changed.
-+#     Limit parameters for throttling.  Since some limit combinations
-+#     are illegal, limits should always be set in one transaction.
-+#     All fields are optional.  When setting limits, if a field is
-+#     missing the current value is not changed.
- #
- # @iops-total: limit total I/O operations per second
- #
-@@ -3492,12 +3488,11 @@
- 
- ##
- # @Qcow2OverlapCheckFlags:
--#
--# Structure of flags for each metadata structure.  Setting a field to
--# 'true' makes QEMU guard that Qcow2 format structure against
--# unintended overwriting.  See Qcow2 format specification for detailed
--# information on these structures.  The default value is chosen
--# according to the template given.
-+#     Structure of flags for each metadata structure.  Setting a field
-+#     to 'true' makes QEMU guard that Qcow2 format structure against
-+#     unintended overwriting.  See Qcow2 format specification for
-+#     detailed information on these structures.  The default value is
-+#     chosen according to the template given.
- #
- # @template: Specifies a template mode which can be adjusted using the
- #     other flags, defaults to 'cached'
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-09-10 11:08:04 +0100)
+
+are available in the Git repository at:
+
+  https://gitlab.com/dlunev/qemu.git tags/pull-parallels-2026-09-11
+
+for you to fetch changes up to 94336eedb1c98792d595f729c7a284e9e91e6158:
+
+  tests: Add parallels format support to image-fleecing (2026-09-11 00:54:38 +0200)
+
+----------------------------------------------------------------
+parallels patches
+
+- harden the Format Extension parser against a crafted image
+- add persistent dirty bitmap support: store, remove and report them
+- let image extensions be updated in read-write mode
+- make qemu-img check report the damage it is meant to report
+  instead of dying on it
+- drop the unused clusters at the end of the image
+- cover the new behaviour in the parallels iotests, and run more of
+  the generic ones on parallels
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+----------------------------------------------------------------
+Alexander Ivanov (4):
+      parallels: Set s->used_bmap to NULL in parallels_free_used_bitmap()
+      parallels: Make mark_used() a global function
+      parallels: Create used bitmap even if checks needed
+      tests: Turned on 256, 299, 304 and block-status-cache for parallels format
+
+Denis V. Lunev (25):
+      parallels: fix out-of-bounds read in format extension parsing
+      parallels: validate dirty bitmap granularity
+      parallels: bound the bitmap L1 table against the bitmap size
+      parallels: reject a Format Extension outside the image file
+      parallels: allocate the Format Extension cluster gracefully
+      parallels: fix GSList leak on the format extension success path
+      iotests: cover the Parallels format extension parser
+      parallels: split inactivation out and add the activation counterpart
+      iotests: cover inactivating a read-only node
+      parallels: Limit search in parallels_mark_used to the last marked cluster
+      parallels: Move host clusters allocation to a separate function
+      parallels: do not let the check die on what it is meant to report
+      parallels: Drop unused clusters at the end of the image
+      parallels: Remove unnecessary data_end field
+      parallels: Add dirty bitmaps saving
+      parallels: Let image extensions work in RW mode
+      parallels: Handle L1 entries equal to one
+      iotests: cover the Format Extension against the leak check
+      iotests: run the persistent dirty bitmap test on parallels
+      parallels: reject a bitmap L1 entry outside the data area
+      parallels: do not trust the bitmaps of an image which was not closed
+      parallels: implement removing a stored dirty bitmap
+      iotests: rename parallels-read-bitmap to parallels-bitmap
+      iotests: cover a broken Format Extension and a combined repair
+      tests: Add parallels format support to image-fleecing
+
+ block/parallels-ext.c                              | 457 ++++++++++++++++++++-
+ block/parallels.c                                  | 432 ++++++++++++-------
+ block/parallels.h                                  |  20 +-
+ tests/qemu-iotests/165                             |  18 +-
+ tests/qemu-iotests/256                             |   2 +-
+ tests/qemu-iotests/299                             |   2 +-
+ tests/qemu-iotests/304                             |   2 +-
+ tests/qemu-iotests/tests/block-status-cache        |   2 +-
+ tests/qemu-iotests/tests/image-fleecing            |  14 +-
+ tests/qemu-iotests/tests/inactive-node-nbd         |  14 +
+ tests/qemu-iotests/tests/inactive-node-nbd.out     |   8 +
+ tests/qemu-iotests/tests/parallels-bitmap          | 260 ++++++++++++
+ tests/qemu-iotests/tests/parallels-bitmap.out      |  49 +++
+ tests/qemu-iotests/tests/parallels-checks          | 229 +++++++++++
+ tests/qemu-iotests/tests/parallels-checks.out      | 174 ++++++++
+ tests/qemu-iotests/tests/parallels-read-bitmap     |  53 ---
+ tests/qemu-iotests/tests/parallels-read-bitmap.out |   6 -
+ 17 files changed, 1498 insertions(+), 244 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/parallels-bitmap
+ create mode 100644 tests/qemu-iotests/tests/parallels-bitmap.out
+ delete mode 100755 tests/qemu-iotests/tests/parallels-read-bitmap
+ delete mode 100644 tests/qemu-iotests/tests/parallels-read-bitmap.out
+
 -- 
-2.55.0
+2.53.0
 
 
