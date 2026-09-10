@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57351C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738F9C88E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 23:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ntl-00009A-WD; Thu, 10 Sep 2026 19:09:49 -0400
+	id 1x4ngN-0004l3-Gd; Thu, 10 Sep 2026 18:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lTR-0005qF-GJ
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lMD-00037d-CA
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:27:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lT4-0003BI-OX
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:34:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lM2-0000SX-Bf
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:26:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072383;
+ s=mimecast20190719; t=1789071782;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=e6oAhYiiIn3xpeHIgSvH0lgBJsq4uFVnZ7OcjCH2hOg=;
- b=A9JpJBBfATQsYi/UAM2pk7l82hjy6OIwiK8wl/y7N+HYXjjmKsdMFlJghNuxfTT7P9D9Aa
- ek6YUIWHgNEr5YXQ+BAiXpiPjPXycDfEvD5aDmrZ5tC9JDk0f5T5Rw8Ovk9J5osXWdx/JR
- JxT4z30vi5F/aZw/xg3w6yGwnJCpDeo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UIh1PwEycfZASKTI05iblD1tmogo/rlgL3ovx7Py+Kg=;
+ b=QB1JfPVbj6xkusTXi94NBzLh6ONztUZcFOPWgJYKN4uYUITlgdqMJ7Ic41q6M+qKsFwRkJ
+ 04fMu4Ifs6iJwVlVHr2Z3oRjFXaKksG45/3k2MMt9stdxkAp+8pays18s5CfzNcYMEKbRB
+ ij7itHdT63t4c63HKFIpGl40SZqPra4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-4MBw1wCnOPW5En48PaM3Pg-1; Thu, 10 Sep 2026 16:13:01 -0400
-X-MC-Unique: 4MBw1wCnOPW5En48PaM3Pg-1
-X-Mimecast-MFC-AGG-ID: 4MBw1wCnOPW5En48PaM3Pg_1789071173
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49b8c651ac0so2919035e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:58 -0700 (PDT)
+ us-mta-599-2U1ANRveO4-xnfPjwOsFbA-1; Thu, 10 Sep 2026 16:12:08 -0400
+X-MC-Unique: 2U1ANRveO4-xnfPjwOsFbA-1
+X-Mimecast-MFC-AGG-ID: 2U1ANRveO4-xnfPjwOsFbA_1789071128
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-485866e0066so41758f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071170; x=1789675970; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071127; x=1789675927; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=e6oAhYiiIn3xpeHIgSvH0lgBJsq4uFVnZ7OcjCH2hOg=;
- b=NEQMoBJCxjwObK7vqluwdy/S9QK3h40MJshXyBvWmjYN3Utbm6QHvMaL1wijBeSP2+
- Jfqy6NMzd9O+oEB2DqJ/vNp6E4BM+miroR6fypABIw5VaGKC8L+x//PM2pZVmB6Hs+G3
- NqnmzrnOpx+CgqK8yTlGEYo8R1cFdS3f5mSezQDTFtApetyPhUKhwsoeQu/NHi+AL+/k
- Y2P/1HRKFF75+amXSkUnJELdMrGnwQPMZHEyOwE7AZzBhIrLty0yUsa+yFnpc4uipAUL
- Bdmkb9Pp8TNCPVWVG6uE7Mwbu5uc0ypYHCfM6ZvE1Sh9Y1BL+DUU+83npOZ84/9+lXyF
- 5+Yg==
+ bh=UIh1PwEycfZASKTI05iblD1tmogo/rlgL3ovx7Py+Kg=;
+ b=sB7WJBAHm95m5T3A71gOTjFojMwDXEHYailmOnJfcZbVtBIyZ0Cfe+eRnRKopNo7rs
+ x2/9J4dBdf2KtgldBZMfzQVayvX2wi3F37ZSACnr7rKIOl/xxmhtud//ZEVoQBqM5j7n
+ vbZkjxfdTX6wHh4WEVGsGTKK57v+7tHqSQsWYOLFYmFv/z7QX7GdIIanh0g6rt5mnSKq
+ zCU1ygQ6ocwC2EpSEkPrKM4QFDt+WnzcNHRGVH6dE/C89v0w5n27cd6nQTmpVWOReJh+
+ 6RGUqAjMUkcxd/CNwgoU1Fc6L4lRZDgm3w/tOaLGsVWbSNKEmfcglkFbOSaKBhV4Llqh
+ I+Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071170; x=1789675970;
+ d=1e100.net; s=20251104; t=1789071127; x=1789675927;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=e6oAhYiiIn3xpeHIgSvH0lgBJsq4uFVnZ7OcjCH2hOg=;
- b=sSHK+DffVDUo4TmDaqzL/zOS8z8d4Zj/BuPSH+zzSZbMp9js4CwDECvCw/o74xEgA4
- Cff5ecKjhWhMRIpqu7v1j6zckOtetc6TwPB9kn8I1FX3bG1+rUtzAKiFVnkdE/jOuqO8
- vaSCyoeNYkbtXz++PZgJnN4fZk0+evnmbbTvaq1fgem/80VmqISqV5QkGCEW9yzltNfq
- Ozss+9BmzZzZG6aoyHfuWSb7aHP4lBbh32YtEaXKtvLeQkaUDi4SLO1pooEFQc2Z6TSF
- qR2fv3u36CdM8NROIcZghUWYR5j5RWKzOD0Gc0u1IGCBIka8sl4w5Yaumzk6PicL2BvN
- W+FA==
-X-Gm-Message-State: AFuF++mP633yHAaOhAjJDJxJGYYhYnwNoavNazmbmkjafxKvYDctr36h
- kPYbUlT8kEsMzGTis/KVEaSih3w+0mweFOjRj+IJy/ZsUXqLk5KkQK7jo8dlKHlOEh1MN9pvtwR
- JVgTICJ29zQiGVjR+e8IfaV88XIecw7eBERBQbZPjcdJWcGbRopeozdOU3wOCMnBaJV4O9qWziu
- HVgUJwOZeZs1jkTEKvPis1SrUdrSstqGz70g==
-X-Gm-Gg: AYBFou2Ppo7NGQ7Iu9nb+CFeJFc31wibThqxnXtyNm29S2l0XDjfHgXmNPjaHRJim++
- ZLnWTARFPoj43Vh7QLhTHph+cY89l5Ss0nnjqhDkC3FQNBx2IVW2yPvhiLuOTAieH/CSd+epYEn
- BMeMIQY2Wp9XX5DK23U5BiDnJ5oqSe4m8ffqjBPYh8kVw2A6I6FeacWZpCrDPVYIPGdnpCNxErg
- Pmv2aHE2AWN1avHAAf8KpSdOnRuWiAJyfTPQJj7LfMWFCOGKfb3lHxiz7w6OKkGhmyF8b6kRvYI
- 4RRCg5DpD4t6bm31qdGwSfmUdY3b7YNjKuo0RaBAzv0OPjUtqbY87FRwfV/C/qxl+oXTKpr8Gk4
- et3/uS63YeWPt1Vck9oIeJCU=
-X-Received: by 2002:a05:600c:3115:b0:495:4d88:e630 with SMTP id
- 5b1f17b1804b1-49e61989e79mr7907555e9.10.1789071169713; 
- Thu, 10 Sep 2026 13:12:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:3115:b0:495:4d88:e630 with SMTP id
- 5b1f17b1804b1-49e61989e79mr7907245e9.10.1789071169172; 
- Thu, 10 Sep 2026 13:12:49 -0700 (PDT)
+ bh=UIh1PwEycfZASKTI05iblD1tmogo/rlgL3ovx7Py+Kg=;
+ b=O/Q45B++RXGppvs3Mbb88cJxVTaij2WXevK/owpvelD7VlaATMHD6Ndh3I9taJJgJI
+ X+WnKS38lP7OV3JdHZNVQHtyfMk0pg6ixIgla4yjPS0ydJktmk6fwwBf60YGT3YmteLu
+ 4AIxrlvqDJOr0by4JNIO/f++ka1sU4I2KeZS76aqS6lR3CkuMOxN6l1sDw6aj1l+X7uT
+ bMO+yce4w4YhGpoaicVPm8Ahh/WL7Uy0cUArLpVLKMZPbnWf6bEjAZOrLyh/FdDpHFHC
+ 5rWIq70nCiVX/eF73a9nOnSB5qKj2sh7DDcdq/MvQi73WBNZ1eMx+rmF33mS/0otK4Vi
+ 8Mog==
+X-Gm-Message-State: AFuF++lPD+4eRRRYOYWABPjI24hUF2RSZldbqL4iK6qlhBsn/B7BiMPJ
+ td+2FPVs14FnylNVZzaKvvliNciA1CoI7MORkizss1ZH0Qqa0CU9OmljoSwTIgJTswjlmNw+Xd/
+ XkLLHtbXYLWWqtrnaFUJvUHNI0p6Wc/1DRTeaUFDyXOd9k5OL8aaG3ucyXOYlcS54mIkij83fiw
+ JeltFPJqV40C0i7qyJrrqrckc7QRMatRYG8g==
+X-Gm-Gg: AYBFou3XKqX5t+pENzeHgJ21OeUZZng8Y7yo7kjtiliE2/125+zt88TJmMKsPYvh2vt
+ URDWl21yOLMvn+CBUq9GZfgXD9Kr74VOIJwJmZ5rFJTLZiUk9caShC3Zn7ce3yTQdHwYrrxkk9O
+ bpEnzz0L5UpkwQujpPT3yxoONAaWa+iG5/xqqUoAMRHSMK95IEfEyvrGji0DbSbF2jit5rXbTwy
+ ne0FSx6o/kuSaUVY+WbhsGWWrHulKntaHiqDZGtIDa1s4qXLq9UvX9RImtwYV2G6Zgq1jrOyDxY
+ nfnUwqPqzLhREYOSPD9p9Ez8P6UDijly4jI7hVFATDRLnG1lNXhir8hvMDhNkP1m/QMyl4TU1wk
+ wZj72EUkOJNrO0p0pdfykPCc=
+X-Received: by 2002:a05:600c:540e:b0:49c:e1b5:b2bf with SMTP id
+ 5b1f17b1804b1-49e61645616mr8756885e9.0.1789071127477; 
+ Thu, 10 Sep 2026 13:12:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:540e:b0:49c:e1b5:b2bf with SMTP id
+ 5b1f17b1804b1-49e61645616mr8756405e9.0.1789071126559; 
+ Thu, 10 Sep 2026 13:12:06 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26c1bc5fsm95244475e9.3.2026.09.10.13.12.48
+ 5b1f17b1804b1-49e62217965sm1078175e9.2.2026.09.10.13.12.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:12:48 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:12:47 -0400
+ Thu, 10 Sep 2026 13:12:05 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:12:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 32/90] net/tap: disable read polling for stopped VM
-Message-ID: <1b08604011ee67bfb180503acfe0c70df8c8099f.1789071042.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jia Jia <physicalmtea@gmail.com>
+Subject: [PULL 18/90] virtio: reduce code duplication for split ring
+Message-ID: <47c8210827a7ba1b85c3779c252b0260312dab0d.1789071042.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -97,15 +95,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789071042.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,101 +119,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Jia Jia <physicalmtea@gmail.com>
 
-Polling when VM is stopped doesn't make real sense, as stopped VM can't
-handle incoming traffic anyway.
+virtio_queue_empty_rcu duplicates virtqueue_num_heads
+for no good reason, let's not do it. As a nice side effect,
+we gain better handling for misbehaving guests.
 
-And it's critical for introduction of local TAP migration
-feature in the next commit: the TAP device will be transferred
-to the target (open fd will be passed through migration channel),
-and if we continue polling on source, we may get a package, which
-we'll never handle on source (already stopped), it will be lost.
-Better is save this package for target VM to handle.
+The virtio_device_disabled() check in virtio_queue_empty_rcu
+is redundant because virtqueue_split_pop() is only called through
+virtqueue_pop(), which already performs the check.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819180201.1970193-15-vsementsov@yandex-team.ru>
+Message-ID: <20260726012857.1580646-1-physicalmtea@gmail.com>
 ---
- net/tap.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/virtio/virtio.c | 30 ++++++------------------------
+ 1 file changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index dd0d134875..51d028d956 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -36,6 +36,7 @@
- #include "net/net.h"
- #include "clients.h"
- #include "monitor/monitor.h"
-+#include "system/runstate.h"
- #include "system/system.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
-@@ -92,6 +93,8 @@ struct TAPState {
-     Notifier exit;
- 
-     int queue_index;
-+    bool enable_poll_on_resume;
-+    VMChangeStateEntry *vmstate;
- };
- 
- static void launch_script(const char *setup_script, const char *ifname,
-@@ -145,10 +148,31 @@ static void tap_update_fd_handler(TAPState *s)
- 
- static void tap_read_poll(TAPState *s, bool enable)
- {
-+    if (enable && runstate_check(RUN_STATE_FINISH_MIGRATE)) {
-+        s->enable_poll_on_resume = true;
-+        return;
-+    }
-     s->read_poll = enable;
-     tap_update_fd_handler(s);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 0b2fbbed3f..c9f9e5b511 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -717,26 +717,6 @@ static inline bool is_desc_avail(uint16_t flags, bool wrap_counter)
+     return (avail != used) && (avail == wrap_counter);
  }
  
-+static void tap_vm_state_change(void *opaque, bool running, RunState state)
-+{
-+    TAPState *s = opaque;
-+
-+    if (running) {
-+        if (s->enable_poll_on_resume) {
-+            tap_read_poll(s, true);
-+            s->enable_poll_on_resume = false;
-+        }
-+    } else if (state == RUN_STATE_FINISH_MIGRATE) {
-+        if (s->read_poll) {
-+            s->enable_poll_on_resume = true;
-+            tap_read_poll(s, false);
-+        }
-+    }
-+}
-+
- static void tap_write_poll(TAPState *s, bool enable)
+-/* Fetch avail_idx from VQ memory only when we really need to know if
+- * guest has added some buffers.
+- * Called within rcu_read_lock().  */
+-static int virtio_queue_empty_rcu(VirtQueue *vq)
+-{
+-    if (virtio_device_disabled(vq->vdev)) {
+-        return 1;
+-    }
+-
+-    if (unlikely(!vq->vring.avail)) {
+-        return 1;
+-    }
+-
+-    if (vq->shadow_avail_idx != vq->last_avail_idx) {
+-        return 0;
+-    }
+-
+-    return vring_avail_idx(vq) == vq->last_avail_idx;
+-}
+-
+ static int virtio_queue_split_empty(VirtQueue *vq)
  {
-     s->write_poll = enable;
-@@ -379,6 +403,11 @@ static void tap_cleanup(NetClientState *nc)
-         s->exit.notify = NULL;
-     }
+     bool empty;
+@@ -1773,12 +1753,14 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+     address_space_cache_init_empty(&indirect_desc_cache);
  
-+    if (s->vmstate) {
-+        qemu_del_vm_change_state_handler(s->vmstate);
-+        s->vmstate = NULL;
+     RCU_READ_LOCK_GUARD();
+-    if (virtio_queue_empty_rcu(vq)) {
++    if (unlikely(!vq->vring.avail)) {
++        goto done;
 +    }
 +
-     tap_read_poll(s, false);
-     tap_write_poll(s, false);
-     close(s->fd);
-@@ -818,6 +847,9 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-     int sndbuf =
-         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
++    rc = virtqueue_num_heads(vq, vq->last_avail_idx);
++    if (rc <= 0) {
+         goto done;
+     }
+-    /* Needed after virtio_queue_empty(), see comment in
+-     * virtqueue_num_heads(). */
+-    smp_rmb();
  
-+    s->enable_poll_on_resume = false;
-+    s->vmstate = qemu_add_vm_change_state_handler(tap_vm_state_change, s);
-+
-     if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
-         sndbuf_required) {
-         goto failed;
+     /* When we start there are none of either input nor output. */
+     out_num = in_num = elem_entries = 0;
 -- 
 MST
 
