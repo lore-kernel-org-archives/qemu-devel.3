@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D30DBC79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF40CC79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 19:28:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4kR5-0002Lq-0r; Thu, 10 Sep 2026 15:27:53 -0400
+	id 1x4kRa-0002Wi-59; Thu, 10 Sep 2026 15:28:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQ5-0002F0-QI
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:26:55 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kQH-0002Gh-UN
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:27:09 -0400
 Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kPP-0004cn-4D
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:26:17 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4kPW-0004d7-G8
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 15:26:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1789068349; x=1789673149; i=deller@gmx.de;
- bh=yteRSq6bAtmx6S1tlzA8jfXoADGFrIcOO03+cDxnMiY=;
+ s=s31663417; t=1789068348; x=1789673148; i=deller@gmx.de;
+ bh=oskPBWWiY60hLX22naFd0lGb37DJ3UAou3Lt6En4Zn4=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+ References:MIME-Version:Content-Transfer-Encoding:cc:
  content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=YTfN17xwQJzXq1ajs9wMbddU4oDj51SdFZwqseT2iKMx4dMCfEGlhr8+voLgH7H4
- +s/zSITcYsiusFM6LZt2KsIecShoEm+lFP7IZujVwispZ2DS74JRO9BiaVySlanXb
- JeitjCL3wCY7CTz3lz5J7F2Y9VvuAHvoLf+QANdIha4sugRpdcMjQOm4rz+xIEdga
- XJRt2AFvX14gmXMR3hoBXHbX3RuX8GAieY2N/5i4psmqhWZuWbyLH2Io3Fz5CY7Yk
- 2VAnomci6Rgrvn4jKEVfRXDCR5230SGmCxHQ278a3NWCpBH/cq98ALSD8O0wE59H7
- GZ7JnBfJ6vF2Fck3lw==
+ b=fBBMdef+RY0dYwlKFhWZR1Kf/EqcvpYM3OI/NhDPX/zfZ99cDnIxnYv6BLTGdmYS
+ I/1e0JXESsY09fYu7nL/vrMy+4k5ZPHE0hyMGd05TNGQNqUf1Xc9OMXOyDhjf4V+o
+ OJ+eNnddvEEUKn3XMrzzDKYiQdLE1FG+OGvmsTcomYfJNtCypnx4bVE+WL6RLMa0E
+ fMu8H/hgUlRrDuCd+FJVv8/0f+Mt9rwScgtmTCUFCHIKlUxSdbQL76Zbt0gRAB2uy
+ xD1H88/N5xZjXL8f65JHOqirUYM8gZKAoWhJEf+4hdQliK+Xhq6ZoBnhQLC6Qu7M9
+ Eax48mu81QZmQ3Cndw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHoRA-1x0wln2bmI-00H9je; Thu, 10
- Sep 2026 21:25:49 +0200
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M26rD-1x6gLK418r-000N9B; Thu, 10
+ Sep 2026 21:25:48 +0200
 From: Helge Deller <deller@gmx.de>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Zhao Liu <zhao1.liu@intel.com>,
@@ -44,111 +44,109 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Zhao Liu <zhao1.liu@intel.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 3/7] linux-user: madvise() on unmapped ranges should return
- ENOMEM
-Date: Thu, 10 Sep 2026 21:25:40 +0200
-Message-ID: <20260910192545.768850-4-deller@gmx.de>
+Subject: [PULL 1/7] linux-user/i386: report the real trap number in
+ sigcontext.trapno
+Date: Thu, 10 Sep 2026 21:25:38 +0200
+Message-ID: <20260910192545.768850-2-deller@gmx.de>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260910192545.768850-1-deller@gmx.de>
 References: <20260910192545.768850-1-deller@gmx.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:W1vRnlzHP9BbvFt4H3/UmSmAowRgs2W3s3SnhclGXZAE6GVXwME
- /gk27e8EJPM5FDVIciYG58rqtXLqgZKgryVyjXPdr0zHARmoRbuFAW7ZkOTTP85UAzLD2yK
- fz5TF9Ho8Ol/gar99cK3KoWbcoIeI5eEA5BCe9WqQNUCgzy97QcXWd0Q7DBf/wHGygm4sDk
- i4BgEKUU4KgF2CLKSJMaw==
-UI-OutboundReport: notjunk:1;M01:P0:nDXGP+8A1OM=;CR5DoA2itjlQPAVhgIYwxgVRrcI
- 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
- Vh1/
+X-Provags-ID: V03:K1:7GDjWX7fMpI6XPiezdpQ70zzwlSB3Bkv7RKbTJS6kiYdjUS1xzv
+ pKzi4qnLSs9nd3TH0blabUvLzjCjfwPG0hAy525JpLesoWKuvqCUcrtdvmW1Kjiz8uqlbR1
+ vKImjIzRh5XHyO787yqH6M5fDUwlPUnFTOWPmp7h40rUHu9qSMgzlix2uuy+O0yGdAqw1Gz
+ CIYnrJ2bjX69FVuppxHAQ==
+UI-OutboundReport: notjunk:1;M01:P0:3YBLMx4UAws=;1a2qMepbNMmFeRcgX+dqznChfs4
+ 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
 Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -173,100 +171,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+From: Nat Brown <natbro@gmail.com>
 
-Per madvise(2) and the Linux kernel implementation (madvise_walk_vmas),
-madvise() must validate that the requested range is currently mapped
-and return -ENOMEM if any page in the range is unmapped.
+setup_sigcontext() fills sigcontext.trapno from CPUState::exception_index,=
+ but
+by the time a signal frame is built that field has already been reset to -=
+1:
+cpu_exec() copies the exception number into its return value and clears
+exception_index before returning to cpu_loop(), which is where the signal =
+is
+queued.  Guests therefore see trapno =3D=3D -1 for every cpu exception.
 
-Add a page_check_range(start, len, PAGE_VALID) check for valid advice
-values before proceeding with the advice actions. In addition, extend the
-tcg multiarch test linux-madvise.c to test this behaviour.
+  #include <signal.h>
+  #include <stdio.h>
+  #include <ucontext.h>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4382
-AI-used-for: importing and validating test case
-Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+  static void h(int sig, siginfo_t *si, void *uc_)
+  {
+      ucontext_t *uc =3D uc_;
+      printf("sig=3D%d trapno=3D%d err=3D%#x\n", sig,
+             (int)uc->uc_mcontext.gregs[REG_TRAPNO],
+             (unsigned)uc->uc_mcontext.gregs[REG_ERR]);
+      fflush(stdout);
+      _exit(0);
+  }
+
+  int main(void)
+  {
+      struct sigaction sa =3D { .sa_sigaction =3D h, .sa_flags =3D SA_SIGI=
+NFO };
+      sigaction(SIGSEGV, &sa, 0);
+      *(volatile int *)0 =3D 1;
+  }
+
+Natively this prints trapno=3D14 err=3D0x6; under qemu it prints trapno=3D=
+-1 err=3D0x6.
+A SIGILL likewise reports -1 instead of 6, and SIGFPE -1 instead of 0.  Bo=
+th
+qemu-i386 and qemu-x86_64 are affected, and both report the expected 14/6/=
+0
+with this patch applied.  Only trapno is wrong; error_code lives in
+CPUX86State and survives.
+
+x86_cpu_record_sigsegv() already notes the coupling, observing that we can=
+not
+let the caller clobber exception_index "short of inventing a new place to =
+store
+the trapno".  Invent it: record the exception in env->trap_nr, mirroring l=
+inux's
+thread.trap_nr, which is exactly what the kernel reports in sigcontext.tra=
+pno
+and which likewise persists beyond the exception that set it.  Only hardwa=
+re
+vectors are recorded; the EXCP_* values at 0x100 and above are emulation
+internals and never appear in a signal frame.
+
+This matters to wine, whose segv_handler() dispatches on the trap number a=
+nd
+cannot service a fault it sees as -1, so 32-bit module loading fails under
+qemu-i386.  The equivalent 64-bit handler dispatches the same way, so the =
+same
+failure is expected under qemu-x86_64.  Discussed at
+https://gitlab.winehq.org/wine/wine/-/merge_requests/11737 , where the
+suggestion was that qemu is the right place to fix this.
+
+Signed-off-by: Nat Brown <natbro@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Helge Deller <deller@gmx.de>
 =2D--
- linux-user/mmap.c                         | 12 ++++++++++++
- tests/tcg/multiarch/linux/linux-madvise.c | 20 ++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ linux-user/i386/cpu_loop.c         |  9 +++++++++
+ linux-user/i386/signal.c           |  6 ++----
+ target/i386/cpu.h                  | 10 ++++++++++
+ target/i386/tcg/user/excp_helper.c |  8 ++++----
+ 4 files changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index cc0c2ee6c2..4066072ff4 100644
-=2D-- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1307,6 +1307,16 @@ abi_long target_madvise(abi_ulong start, abi_ulong =
-len_in, int advice)
-      * though.
-      */
-     mmap_lock();
-+
-+    /*
-+     * Whatever advice if the pages are not currently mapped, or are
-+     * outside the address space of the process.
-+     */
-+    if (!page_check_range(start, len, PAGE_VALID)) {
-+        ret =3D -TARGET_ENOMEM;
-+        goto unlock;
-+    }
-+
-     switch (advice) {
-     case MADV_NORMAL:
-     case MADV_RANDOM:
-@@ -1358,6 +1368,8 @@ abi_long target_madvise(abi_ulong start, abi_ulong l=
-en_in, int advice)
-         ret =3D -EINVAL; /* not yet known advise */
-         break;
-     }
-+
-+ unlock:
-     mmap_unlock();
+diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
+index 2f733b0b47..049bae7bc6 100644
+=2D-- a/linux-user/i386/cpu_loop.c
++++ b/linux-user/i386/cpu_loop.c
+@@ -218,6 +218,15 @@ void cpu_loop(CPUX86State *env)
+         cpu_exec_end(cs);
+         qemu_process_cpu_events(cs);
 =20
-     return ret;
-diff --git a/tests/tcg/multiarch/linux/linux-madvise.c b/tests/tcg/multiar=
-ch/linux/linux-madvise.c
-index 539fb3b772..ebb9666c91 100644
-=2D-- a/tests/tcg/multiarch/linux/linux-madvise.c
-+++ b/tests/tcg/multiarch/linux/linux-madvise.c
-@@ -1,4 +1,5 @@
- #include <assert.h>
-+#include <errno.h>
- #include <stdlib.h>
- #include <sys/mman.h>
- #include <unistd.h>
-@@ -63,10 +64,29 @@ static void test_file(void)
-     assert(ret =3D=3D 0);
- }
-=20
-+static void test_unmapped(void)
-+{
-+    int pagesize =3D getpagesize();
-+    void *page;
-+    int ret;
++        /*
++         * Remember the exception for sigcontext.trapno, as linux does in
++         * thread.trap_nr.  Only hardware exception vectors qualify; the
++         * EXCP_* values at 0x100 and above are emulation internals.
++         */
++        if (trapnr >=3D EXCP00_DIVZ && trapnr <=3D EXCP12_MCHK) {
++            env->trap_nr =3D trapnr;
++        }
 +
-+    page =3D mmap(NULL, pagesize, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE,=
- -1, 0);
-+    assert(page !=3D MAP_FAILED);
-+
-+    ret =3D munmap(page, pagesize);
-+    assert(ret =3D=3D 0);
-+
-+    errno =3D 0;
-+    ret =3D madvise(page, pagesize, MADV_NORMAL);
-+    assert(ret =3D=3D -1);
-+    assert(errno =3D=3D ENOMEM);
-+}
-+
- int main(void)
+         switch(trapnr) {
+         case 0x80:
+ #ifndef TARGET_X86_64
+diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
+index b646fde431..9650fac940 100644
+=2D-- a/linux-user/i386/signal.c
++++ b/linux-user/i386/signal.c
+@@ -367,8 +367,6 @@ static void setup_sigcontext(CPUX86State *env,
+                              abi_ptr fxstate_addr,
+                              abi_ptr fpend_addr)
  {
-     test_anonymous();
-     test_file();
-+    test_unmapped();
+-    CPUState *cs =3D env_cpu(env);
+-
+ #ifndef TARGET_X86_64
+     uint16_t magic;
 =20
-     return EXIT_SUCCESS;
- }
+@@ -385,7 +383,7 @@ static void setup_sigcontext(CPUX86State *env,
+     __put_user(env->regs[R_EDX], &sc->edx);
+     __put_user(env->regs[R_ECX], &sc->ecx);
+     __put_user(env->regs[R_EAX], &sc->eax);
+-    __put_user(cs->exception_index, &sc->trapno);
++    __put_user(env->trap_nr, &sc->trapno);
+     __put_user(env->error_code, &sc->err);
+     __put_user(env->eip, &sc->eip);
+     __put_user(env->segs[R_CS].selector, (uint32_t *)&sc->cs);
+@@ -416,7 +414,7 @@ static void setup_sigcontext(CPUX86State *env,
+     __put_user(env->regs[14], &sc->r14);
+     __put_user(env->regs[15], &sc->r15);
+=20
+-    __put_user(cs->exception_index, &sc->trapno);
++    __put_user(env->trap_nr, &sc->trapno);
+     __put_user(env->error_code, &sc->err);
+     __put_user(env->eip, &sc->rip);
+=20
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 9ce8ca0038..e61ccc9e68 100644
+=2D-- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2188,6 +2188,16 @@ typedef struct CPUArchState {
+=20
+     /* exception/interrupt handling */
+     int error_code;
++#ifdef CONFIG_USER_ONLY
++    /*
++     * The number of the last cpu exception taken by this thread, mirrori=
+ng
++     * linux's thread.trap_nr, which is what the kernel reports in
++     * sigcontext.trapno.  CPUState::exception_index cannot be used for t=
+his:
++     * cpu_exec() resets it before returning, long before the signal fram=
+e is
++     * built during delivery.
++     */
++    int trap_nr;
++#endif
+     int exception_is_int;
+     target_ulong exception_next_eip;
+     target_ulong dr[8]; /* debug registers; note dr4 and dr5 are unused *=
+/
+diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/exc=
+p_helper.c
+index 0957ad2e9e..26a4c0ef92 100644
+=2D-- a/target/i386/tcg/user/excp_helper.c
++++ b/target/i386/tcg/user/excp_helper.c
+@@ -31,10 +31,10 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+=20
+     /*
+      * The error_code that hw reports as part of the exception frame
+-     * is copied to linux sigcontext.err.  The exception_index is
+-     * copied to linux sigcontext.trapno.  Short of inventing a new
+-     * place to store the trapno, we cannot let our caller raise the
+-     * signal and set exception_index to EXCP_INTERRUPT.
++     * is copied to linux sigcontext.err.  The trapno reported in
++     * linux sigcontext.trapno is recorded separately in env->trap_nr
++     * by cpu_loop(), since cpu_exec() clears exception_index before
++     * the signal frame is built.
+      */
+     env->cr[2] =3D addr;
+     env->error_code =3D (maperr ? 0 : PG_ERROR_P_MASK)
 =2D-=20
 2.55.0
 
