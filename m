@@ -4,111 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F190C79FBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE33C79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4llA-0001hm-U2; Thu, 10 Sep 2026 16:52:56 -0400
+	id 1x4llR-0001iH-Gu; Thu, 10 Sep 2026 16:53:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lIe-0001rk-GF
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:23:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lII-000890-MV
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:22:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071621;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1x4l1j-0006fR-EZ; Thu, 10 Sep 2026 16:06:08 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1x4l1S-0004gC-Vb; Thu, 10 Sep 2026 16:05:31 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CE00321EB2;
+ Thu, 10 Sep 2026 20:03:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789070640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PWQxLCtaF9Z/qhP7GNgCPFbg0LbmSSJO7NpN+DpDut8=;
- b=GwjCDscONKMc5aKs4UQsDi7Kpv5axuoybTRBwmtoKYXckMto2T/Ykx7I8OAWgoWI2G+UX4
- gHHha2OT133FydC/18jsHdjUrow2hxBFeUnL6VLfzhPYXZmJlLKNZOEhBq9YbYtdXLPKID
- j0iLNkClvvkuDq9+GrWH/ftV2ozyG8g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-77-Bq5qd6onN1-ZRavNgSo8tQ-1; Thu, 10 Sep 2026 16:14:10 -0400
-X-MC-Unique: Bq5qd6onN1-ZRavNgSo8tQ-1
-X-Mimecast-MFC-AGG-ID: Bq5qd6onN1-ZRavNgSo8tQ_1789071249
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-495689bfcc8so1329365e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071249; x=1789676049; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=PWQxLCtaF9Z/qhP7GNgCPFbg0LbmSSJO7NpN+DpDut8=;
- b=exvgHzp9GM8gGXEsbzkzlf+u+KTIPMaLXSuD/qP7Re4vkIQoFPCg5/y0zpTFktuWjc
- v/ujrWGjsfxLdHK1s0E55W45sojQ4C+LjUU0ecvXCzpJwbx3S0rKhR+66Q3sYcP+Cyc5
- cXiySu6lG3V14NgWH5GfiBaG+9FG51i/W600ldcfXEdlnspEyL1mHnCNoejVA9+YLvax
- CInIkXzQHsTu9SmqrNEEgtQb/vuTqA/a9juLjQqQSVM8C+WLKRsha1ehr+4c/a9fjPAT
- doVbJInSFr04Mu8uOBxjgAnw1P81nUKPB6GuK61zQdpwMZkBt7+JtUBsnLpi+vBiUoUn
- Bfow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071249; x=1789676049;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PWQxLCtaF9Z/qhP7GNgCPFbg0LbmSSJO7NpN+DpDut8=;
- b=fpEAPw1U+mHM9Bdcc06pOIpKDM5e5h3VBE9GSeshjaYUYMZL9N7kAcIP1vSC+aCHap
- tEszG+GFQeqDmeNNmBS3mQHRPXk32uCJsKBHzytIjDK3iX9XBfEoF4w4cHBahYkh+0bu
- 6Hkp2fDo/fKc+qmPT/+YfgSJkc+5jPatBr4fU5GxllEhbup1nrcmqKwOH3/ytZLmw/TF
- oVYSouZeL/7aMQ1WKZA7xWWkHXhnFh5eUtLMcmufHv5HxrgYum1pLomJUBNcf0nd8Ayq
- 98KnAShtBAUTW3/aX8zHFpio2Q5nAdYfCDkzV0+mxvvf06emB01NZa1nMXhCleUpb+iy
- MbSQ==
-X-Gm-Message-State: AFuF++k48SG55SHxR5D3Qfcch3o5kpTrvt+l5V32ZFguyI+SHmMHOPAf
- 1pvCkLXwcXCaBY2aqV/xn+IT6d0iW134ZNoilpJ7E5eC+MAbBCtmUxLAdnCwybz46LFuyiLZJ9s
- VrVtg8CwKGD5tQqJTdQ/6CY/NDYxJ7+AZHvCyNUNtKdpJEJL9Io67I92PNGDzExhVvg94cSjo/X
- bXmVQD3YuwXGKi4/sTFY+6H3Wr3ksvmcnkoA==
-X-Gm-Gg: AYBFou3OtIgnv4tq1pYf1PTQKdHWtrbQ+cca95poXfJidbx4DtOoYQUalSjxYzwVKH3
- 9tqJPxLDlwV6rsG9A+0nGZVhRJoEkd5iqWi8dsg43RTs39X1YOyhiLsHuufpWEhClMpGVbTkyhn
- U0xHq7Mn4IqScKaro/ue42u1k3zhA60BLLgLw5ZZJQhFIKwwmuqaIp4NyGzXZMIZ0kds1H6Gi+k
- l/d/cdrdq9KxtrP9Z5XeoJsygLbtJUtO1uJg8fcuFSmydWU79TeB5CGa39+4v2b/NrMYQyncAnE
- V3hT/42X8lxgrPN9uqj5SlZfgoCsnHbZyJJxILRmBDfhPDKv9Gu3qvVCXZSv9JT6S1sMV6f8+A/
- 9pz63ekNHOe1BI4V8yco8v/g=
-X-Received: by 2002:a05:600c:4e8e:b0:49c:fa21:e744 with SMTP id
- 5b1f17b1804b1-49e619ce914mr8604755e9.26.1789071248629; 
- Thu, 10 Sep 2026 13:14:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e8e:b0:49c:fa21:e744 with SMTP id
- 5b1f17b1804b1-49e619ce914mr8604185e9.26.1789071248204; 
- Thu, 10 Sep 2026 13:14:08 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49db038401fsm74660505e9.13.2026.09.10.13.14.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:14:07 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:14:05 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Subject: [PULL 63/90] acpi_build: Build IVRS feature report using extended
- feature register
-Message-ID: <e1bccaa1e8093a21300fdea14d79bde6c3b13f97.1789071043.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+ bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
+ b=PLynM9jIYTtkk3UYKIEcWs7bjhrrTzg0wlunAfXhSmaumgqtAO0KVNsmeWxDJVc04XkOYY
+ 4SNA3YBWDnGrggDax6zj9XetgrwEMns2mbgV7zMA42Vg/SrM1wGpkLPc57RvEMWLRIzZtv
+ jmPLzyyEFe7XXOfkQVJcPzeuq6wYXBA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789070640;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
+ b=RtDq2yiZ6Jq7IClThxQyP5Sw8sPTMyPVqQUmGZvn6vyLRFDa9HHxb4Jcw96ZUCJVtqqzKt
+ iLgMw3ZeIU0J3XBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=srN2GjWr;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Z4/dac2u"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789070635; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
+ b=srN2GjWr2JAo/too763dxndVQsajbdJnUd57oIJHPCu4I/3Bd/VVsPtNoF5fuhUd+Y4Tiw
+ 45cvObms1fes57EMaeMrk+ARyqAXJJpyAiTJ0yBzE200JMVl/M78BZyBO9z2ITNA7jlIXd
+ LSnON/ygXB8keytRjx2JE2bWF4g8I2Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789070635;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=af4+pug7jZrQ4eJQasgXRuxDAbUDR/tumtPiVNiRvRk=;
+ b=Z4/dac2uGiRUg9XnQjl99wQnJ24jd0p3PGyhbLD2I/0FTJ86y8/oS2OfX3eTgk/kdPSMhR
+ J1JBu1Fxtihq4hAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2050A1326D;
+ Thu, 10 Sep 2026 20:03:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6raNNyoNo2poKAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Sep 2026 20:03:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Brad Smith <brad@comstyle.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Song Gao <gaosong@loongson.cn>, Warner Losh <imp@bsdimp.com>, =?utf-8?Q?D?=
+ =?utf-8?Q?aniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, John Snow <jsnow@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Thomas Huth <th.huth+qemu@posteo.eu>, Brian Cain
+ <brian.cain@oss.qualcomm.com>, qemu-arm@nongnu.org, =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Kyle Evans <kevans@freebsd.org>, Richard
+ Henderson <richard.henderson@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Cleber Rosa <crosa@redhat.com>
+Subject: Re: [PATCH 1/9] scripts/meson-buildoptions.sh: update missing options
+In-Reply-To: <20260910181504.1010916-2-alex.bennee@linaro.org>
+References: <20260910181504.1010916-1-alex.bennee@linaro.org>
+ <20260910181504.1010916-2-alex.bennee@linaro.org>
+Date: Thu, 10 Sep 2026 17:03:44 -0300
+Message-ID: <87jyosub4v.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: CE00321EB2
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TAGGED_RCPT(0.00)[qemu]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[21]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email,suse.de:dkim,suse.de:mid,gitlab.com:url];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,134 +140,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Currently IVRS feature report values are hardcoded, this is difficult to
-maintain as any updates to extended feature must be synced. Along with
-it, current feature report does not have GATS and HATS set. Hence use
-the extended feature registers to build the IVRS feature report.
+> This should have been updated when the meson check-tcg changes where
+> made. Include it now.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807061250.27739-6-sarunkod@amd.com>
----
- hw/i386/amd_iommu.h  | 11 ++++++++++
- hw/i386/acpi-build.c | 48 +++++++++++++++++++++++++++++++++-----------
- 2 files changed, 47 insertions(+), 12 deletions(-)
+There's this previous change by Daniel doing this already:
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index d01f9b41df..319db18618 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -174,7 +174,11 @@
- #define AMDVI_DTE_QUAD3_RESERVED        (GENMASK64(14, 0) | GENMASK64(53, 48))
- 
- /* AMDVI paging mode */
-+#define AMDVI_GATS_MODE_SHIFT           (12)
-+#define AMDVI_GATS_MODE_MASK            (3ULL <<  12)
- #define AMDVI_GATS_MODE                 (2ULL <<  12)
-+#define AMDVI_HATS_MODE_SHIFT           (10)
-+#define AMDVI_HATS_MODE_MASK            (3ULL <<  10)
- #define AMDVI_HATS_MODE                 (2ULL <<  10)
- #define AMDVI_HATS_MODE_RESERVED        (3ULL <<  10)
- 
-@@ -296,6 +300,13 @@
- #define AMDVI_DEV_LINT0_PASS_MASK       (1ULL << 62)
- #define AMDVI_DEV_LINT1_PASS_MASK       (1ULL << 63)
- 
-+#define AMDVI_IVHD_FEATURE_REPORT_HATS_SHIFT        (30)
-+#define AMDVI_IVHD_FEATURE_REPORT_GATS_SHIFT        (28)
-+#define AMDVI_IVHD_FEATURE_REPORT_GA_SUP_SHIFT      (6)
-+#define AMDVI_IVHD_FEATURE_REPORT_IA_SUP_SHIFT      (5)
-+#define AMDVI_IVHD_FEATURE_REPORT_GT_SUP_SHIFT      (2)
-+#define AMDVI_IVHD_FEATURE_REPORT_XT_SUP_SHIFT      (0)
-+
- #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
- OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
- 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index a28bb2ec63..7bf3858b63 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1842,6 +1842,37 @@ ivrs_host_bridges(Object *obj, void *opaque)
-     return 0;
- }
- 
-+/*
-+ * IVHD type 0x10 reports features using Feature Reporting field, which has
-+ * different format than extended feature register (EFR) in the IOMMU MMIO
-+ * space.
-+ *
-+ * Convert the EFR format to feature reporting format.
-+ */
-+static uint32_t
-+get_amd_ivhd_feature_report(uint64_t extended_feature)
-+{
-+    uint32_t feature_report;
-+    uint64_t hats_mode = (extended_feature & AMDVI_HATS_MODE_MASK) >>
-+                         AMDVI_HATS_MODE_SHIFT;
-+    uint64_t gats_mode = (extended_feature & AMDVI_GATS_MODE_MASK) >>
-+                         AMDVI_GATS_MODE_SHIFT;
-+    uint32_t is_ia = !!(extended_feature & AMDVI_FEATURE_IA);
-+    uint32_t is_ga = !!(extended_feature & AMDVI_FEATURE_GA);
-+    uint32_t is_gt = !!(extended_feature & AMDVI_FEATURE_GT);
-+    uint32_t is_xt = !!(extended_feature & AMDVI_FEATURE_XT);
-+
-+    feature_report =
-+        hats_mode << AMDVI_IVHD_FEATURE_REPORT_HATS_SHIFT |  /* HATS[31:30] */
-+        gats_mode << AMDVI_IVHD_FEATURE_REPORT_GATS_SHIFT |  /* GATS[29:28] */
-+        is_ia << AMDVI_IVHD_FEATURE_REPORT_IA_SUP_SHIFT |    /* IASup[5]    */
-+        is_ga << AMDVI_IVHD_FEATURE_REPORT_GA_SUP_SHIFT |    /* GASup[6]    */
-+        is_gt << AMDVI_IVHD_FEATURE_REPORT_GT_SUP_SHIFT |    /* GTSup[2]    */
-+        is_xt << AMDVI_IVHD_FEATURE_REPORT_XT_SUP_SHIFT;     /* XTSup[0]    */
-+
-+    return feature_report;
-+}
-+
- static void
- build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-                 const char *oem_table_id)
-@@ -1850,8 +1881,8 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-     GArray *ivhd_blob = g_array_new(false, true, 1);
-     AcpiTable table = { .sig = "IVRS", .rev = 1, .oem_id = oem_id,
-                         .oem_table_id = oem_table_id };
--    uint64_t feature_report;
-     uint16_t iommu_devid = pci_get_bdf(&s->pci->dev);
-+    uint64_t extended_feature = amdvi_extended_feature_register(s);
- 
-     acpi_table_begin(&table, table_data);
-     /* IVinfo - IO virtualization information common to all
-@@ -1924,14 +1955,9 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-     /* IOMMU info */
-     build_append_int_noprefix(table_data, 0, 2);
-     /* IOMMU Feature Reporting */
--    feature_report = (48UL << 30) | /* HATS   */
--                     (48UL << 28) | /* GATS   */
--                     (1UL << 2)   | /* GTSup  */
--                     (1UL << 6);    /* GASup  */
--    if (s->xtsup) {
--        feature_report |= (1UL << 0); /* XTSup */
--    }
--    build_append_int_noprefix(table_data, feature_report, 4);
-+    build_append_int_noprefix(table_data,
-+                              get_amd_ivhd_feature_report(extended_feature),
-+                              4);
- 
-     /* IVHD entries as found above */
-     g_array_append_vals(table_data, ivhd_blob->data, ivhd_blob->len);
-@@ -1964,9 +1990,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-         build_append_int_noprefix(table_data, 0, 4);
-     }
-     /* EFR Register Image */
--    build_append_int_noprefix(table_data,
--                              amdvi_extended_feature_register(s),
--                              8);
-+    build_append_int_noprefix(table_data, extended_feature, 8);
-     /* EFR Register Image 2 */
-     build_append_int_noprefix(table_data, 0, 8);
- 
--- 
-MST
+https://lore.kernel.org/r/20260908074016.2143292-1-berrange@redhat.com
 
+> ---
+>  scripts/meson-buildoptions.sh | 142 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 142 insertions(+)
+>
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index 5a67e59a167..67c5e33b011 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -10,7 +10,13 @@ meson_options_help() {
+>    printf "%s\n" '  --block-drv-rw-whitelist=3DVALUE'
+>    printf "%s\n" '                           set block driver read-write =
+whitelist (by default'
+>    printf "%s\n" '                           affects only QEMU, not tools=
+ like qemu-img)'
+> +  printf "%s\n" '  --container-command=3DVALUE'
+> +  printf "%s\n" '                           command to build/run contain=
+ers'
+> +  printf "%s\n" '  --container-registry=3DVALUE'
+> +  printf "%s\n" '                           container registry to cache =
+from'
+> +  printf "%s\n" '                           [registry.gitlab.com/qemu-pr=
+oject/qemu]'
+>    printf "%s\n" '  --datadir=3DVALUE          Data file directory [share=
+]'
+> +  printf "%s\n" '  --disable-containers     use containers to cross comp=
+ile tcg tests'
+>    printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better p=
+erformance)'
+>    printf "%s\n" '  --disable-debug-info     Enable debug symbols and oth=
+er information'
+>    printf "%s\n" '  --disable-hexagon-idef-parser'
+> @@ -77,6 +83,94 @@ meson_options_help() {
+>    printf "%s\n" '  --rtsig-map=3DVALUE        default value of QEMU_RTSI=
+G_MAP [NULL]'
+>    printf "%s\n" '  --smbd=3DVALUE             Path to smbd for slirp net=
+working'
+>    printf "%s\n" '  --sysconfdir=3DVALUE       Sysconf data directory [et=
+c]'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64=3DVALUE'
+> +  printf "%s\n" '                           cc for aarch64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-aarch64-be=3DVALUE'
+> +  printf "%s\n" '                           cc for aarch64_be tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-alpha=3DVALUE'
+> +  printf "%s\n" '                           cc for alpha tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-arm=3DVALUE'
+> +  printf "%s\n" '                           cc for arm tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-hexagon=3DVALUE'
+> +  printf "%s\n" '                           cc for hexagon tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-hppa=3DVALUE'
+> +  printf "%s\n" '                           cc for hppa tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-i386=3DVALUE'
+> +  printf "%s\n" '                           cc for i386 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-loongarch64=3DVALUE'
+> +  printf "%s\n" '                           cc for loongarch64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-m68k=3DVALUE'
+> +  printf "%s\n" '                           cc for m68k tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-mips=3DVALUE'
+> +  printf "%s\n" '                           cc for mips tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64=3DVALUE'
+> +  printf "%s\n" '                           cc for mips64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-mips64el=3DVALUE'
+> +  printf "%s\n" '                           cc for mips64el tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-or1k=3DVALUE'
+> +  printf "%s\n" '                           cc for or1k tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64=3DVALUE'
+> +  printf "%s\n" '                           cc for ppc64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-ppc64le=3DVALUE'
+> +  printf "%s\n" '                           cc for ppc64le tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-riscv64=3DVALUE'
+> +  printf "%s\n" '                           cc for riscv64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-s390x=3DVALUE'
+> +  printf "%s\n" '                           cc for s390x tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-sh4=3DVALUE'
+> +  printf "%s\n" '                           cc for sh4 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-tricore=3DVALUE'
+> +  printf "%s\n" '                           cc for tricore tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-x86-64=3DVALUE'
+> +  printf "%s\n" '                           cc for x86_64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensa=3DVALUE'
+> +  printf "%s\n" '                           cc for xtensa tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cc-xtensaeb=3DVALUE'
+> +  printf "%s\n" '                           cc for xtensaeb tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64=3DVALUE'
+> +  printf "%s\n" '                           cflags for aarch64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-aarch64-be=3DVALUE'
+> +  printf "%s\n" '                           cflags for aarch64_be tcg te=
+sts'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-alpha=3DVALUE'
+> +  printf "%s\n" '                           cflags for alpha tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-arm=3DVALUE'
+> +  printf "%s\n" '                           cflags for arm tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-hexagon=3DVALUE'
+> +  printf "%s\n" '                           cflags for hexagon tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-hppa=3DVALUE'
+> +  printf "%s\n" '                           cflags for hppa tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-i386=3DVALUE'
+> +  printf "%s\n" '                           cflags for i386 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-loongarch64=3DVALUE'
+> +  printf "%s\n" '                           cflags for loongarch64 tcg t=
+ests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-m68k=3DVALUE'
+> +  printf "%s\n" '                           cflags for m68k tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips=3DVALUE'
+> +  printf "%s\n" '                           cflags for mips tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64=3DVALUE'
+> +  printf "%s\n" '                           cflags for mips64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-mips64el=3DVALUE'
+> +  printf "%s\n" '                           cflags for mips64el tcg test=
+s'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-or1k=3DVALUE'
+> +  printf "%s\n" '                           cflags for or1k tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64=3DVALUE'
+> +  printf "%s\n" '                           cflags for ppc64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-ppc64le=3DVALUE'
+> +  printf "%s\n" '                           cflags for ppc64le tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-riscv64=3DVALUE'
+> +  printf "%s\n" '                           cflags for riscv64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-s390x=3DVALUE'
+> +  printf "%s\n" '                           cflags for s390x tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-sh4=3DVALUE'
+> +  printf "%s\n" '                           cflags for sh4 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-tricore=3DVALUE'
+> +  printf "%s\n" '                           cflags for tricore tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-x86-64=3DVALUE'
+> +  printf "%s\n" '                           cflags for x86_64 tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensa=3DVALUE'
+> +  printf "%s\n" '                           cflags for xtensa tcg tests'
+> +  printf "%s\n" '  --tcg-tests-cross-cflags-xtensaeb=3DVALUE'
+> +  printf "%s\n" '                           cflags for xtensaeb tcg test=
+s'
+>    printf "%s\n" '  --tls-priority=3DVALUE     Default TLS protocol/ciphe=
+r priority string'
+>    printf "%s\n" '                           [NORMAL]'
+>    printf "%s\n" '  --with-coroutine=3DCHOICE  coroutine backend to use (=
+choices:'
+> @@ -281,6 +375,10 @@ _meson_option_parse() {
+>      --disable-cocoa) printf "%s" -Dcocoa=3Ddisabled ;;
+>      --enable-colo-proxy) printf "%s" -Dcolo_proxy=3Denabled ;;
+>      --disable-colo-proxy) printf "%s" -Dcolo_proxy=3Ddisabled ;;
+> +    --container-command=3D*) quote_sh "-Dcontainer_command=3D$2" ;;
+> +    --container-registry=3D*) quote_sh "-Dcontainer_registry=3D$2" ;;
+> +    --enable-containers) printf "%s" -Dcontainers=3Dtrue ;;
+> +    --disable-containers) printf "%s" -Dcontainers=3Dfalse ;;
+>      --enable-coreaudio) printf "%s" -Dcoreaudio=3Denabled ;;
+>      --disable-coreaudio) printf "%s" -Dcoreaudio=3Ddisabled ;;
+>      --with-coroutine=3D*) quote_sh "-Dcoroutine_backend=3D$2" ;;
+> @@ -517,6 +615,50 @@ _meson_option_parse() {
+>      --disable-tcg) printf "%s" -Dtcg=3Ddisabled ;;
+>      --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dtrue ;;
+>      --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=3Dfalse ;;
+> +    --tcg-tests-cross-cc-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cc_aar=
+ch64=3D$2" ;;
+> +    --tcg-tests-cross-cc-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross_cc_=
+aarch64_be=3D$2" ;;
+> +    --tcg-tests-cross-cc-alpha=3D*) quote_sh "-Dtcg_tests_cross_cc_alpha=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-arm=3D*) quote_sh "-Dtcg_tests_cross_cc_arm=3D$=
+2" ;;
+> +    --tcg-tests-cross-cc-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cc_hex=
+agon=3D$2" ;;
+> +    --tcg-tests-cross-cc-hppa=3D*) quote_sh "-Dtcg_tests_cross_cc_hppa=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-i386=3D*) quote_sh "-Dtcg_tests_cross_cc_i386=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-loongarch64=3D*) quote_sh "-Dtcg_tests_cross_cc=
+_loongarch64=3D$2" ;;
+> +    --tcg-tests-cross-cc-m68k=3D*) quote_sh "-Dtcg_tests_cross_cc_m68k=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-mips=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-mips64=3D*) quote_sh "-Dtcg_tests_cross_cc_mips=
+64=3D$2" ;;
+> +    --tcg-tests-cross-cc-mips64el=3D*) quote_sh "-Dtcg_tests_cross_cc_mi=
+ps64el=3D$2" ;;
+> +    --tcg-tests-cross-cc-or1k=3D*) quote_sh "-Dtcg_tests_cross_cc_or1k=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc64=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cc_ppc=
+64le=3D$2" ;;
+> +    --tcg-tests-cross-cc-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cc_ris=
+cv64=3D$2" ;;
+> +    --tcg-tests-cross-cc-s390x=3D*) quote_sh "-Dtcg_tests_cross_cc_s390x=
+=3D$2" ;;
+> +    --tcg-tests-cross-cc-sh4=3D*) quote_sh "-Dtcg_tests_cross_cc_sh4=3D$=
+2" ;;
+> +    --tcg-tests-cross-cc-tricore=3D*) quote_sh "-Dtcg_tests_cross_cc_tri=
+core=3D$2" ;;
+> +    --tcg-tests-cross-cc-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cc_x86_=
+64=3D$2" ;;
+> +    --tcg-tests-cross-cc-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cc_xten=
+sa=3D$2" ;;
+> +    --tcg-tests-cross-cc-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_cc_xt=
+ensaeb=3D$2" ;;
+> +    --tcg-tests-cross-cflags-aarch64=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_aarch64=3D$2" ;;
+> +    --tcg-tests-cross-cflags-aarch64-be=3D*) quote_sh "-Dtcg_tests_cross=
+_cflags_aarch64_be=3D$2" ;;
+> +    --tcg-tests-cross-cflags-alpha=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_alpha=3D$2" ;;
+> +    --tcg-tests-cross-cflags-arm=3D*) quote_sh "-Dtcg_tests_cross_cflags=
+_arm=3D$2" ;;
+> +    --tcg-tests-cross-cflags-hexagon=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_hexagon=3D$2" ;;
+> +    --tcg-tests-cross-cflags-hppa=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_hppa=3D$2" ;;
+> +    --tcg-tests-cross-cflags-i386=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_i386=3D$2" ;;
+> +    --tcg-tests-cross-cflags-loongarch64=3D*) quote_sh "-Dtcg_tests_cros=
+s_cflags_loongarch64=3D$2" ;;
+> +    --tcg-tests-cross-cflags-m68k=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_m68k=3D$2" ;;
+> +    --tcg-tests-cross-cflags-mips=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_mips=3D$2" ;;
+> +    --tcg-tests-cross-cflags-mips64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
+ags_mips64=3D$2" ;;
+> +    --tcg-tests-cross-cflags-mips64el=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_mips64el=3D$2" ;;
+> +    --tcg-tests-cross-cflags-or1k=3D*) quote_sh "-Dtcg_tests_cross_cflag=
+s_or1k=3D$2" ;;
+> +    --tcg-tests-cross-cflags-ppc64=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_ppc64=3D$2" ;;
+> +    --tcg-tests-cross-cflags-ppc64le=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_ppc64le=3D$2" ;;
+> +    --tcg-tests-cross-cflags-riscv64=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_riscv64=3D$2" ;;
+> +    --tcg-tests-cross-cflags-s390x=3D*) quote_sh "-Dtcg_tests_cross_cfla=
+gs_s390x=3D$2" ;;
+> +    --tcg-tests-cross-cflags-sh4=3D*) quote_sh "-Dtcg_tests_cross_cflags=
+_sh4=3D$2" ;;
+> +    --tcg-tests-cross-cflags-tricore=3D*) quote_sh "-Dtcg_tests_cross_cf=
+lags_tricore=3D$2" ;;
+> +    --tcg-tests-cross-cflags-x86-64=3D*) quote_sh "-Dtcg_tests_cross_cfl=
+ags_x86_64=3D$2" ;;
+> +    --tcg-tests-cross-cflags-xtensa=3D*) quote_sh "-Dtcg_tests_cross_cfl=
+ags_xtensa=3D$2" ;;
+> +    --tcg-tests-cross-cflags-xtensaeb=3D*) quote_sh "-Dtcg_tests_cross_c=
+flags_xtensaeb=3D$2" ;;
+>      --tls-priority=3D*) quote_sh "-Dtls_priority=3D$2" ;;
+>      --enable-tools) printf "%s" -Dtools=3Denabled ;;
+>      --disable-tools) printf "%s" -Dtools=3Ddisabled ;;
 
