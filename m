@@ -4,200 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2492CC79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 10:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A8ADC79FB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 10:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4bij-00052j-QL; Thu, 10 Sep 2026 06:09:29 -0400
+	id 1x4bpS-0005zm-Rl; Thu, 10 Sep 2026 06:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4bii-00052N-CV
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 06:09:28 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1x4bpR-0005zb-IS
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 06:16:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x4big-0000e4-A9
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 06:09:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1789034964; x=1789639764; i=deller@gmx.de;
- bh=kZ9ESHzuNYwd0wu4Daz72OYfJqRb8EOje2HcN5iUtKs=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
- Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
- cc:content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=c8sx1+sfsHQk5CRLQP7OihIaw9/DuudWNrV1Q8II7eKQU1m8c7UEQH6wOcRz5Lll
- I97me2LQ+7Qq0ptE8aFfBFV4zng6EiLBjk7PlNW2mwTpoOSG2kYp/sD3e4kf7CdlA
- 2xiBLg3gAtVsjgJMU19FgSwhKpE1LPptH/dkWbJM7bSettq0snnBBGmyHG7G4ureu
- t+YQSx5aW6Q6L2FNe6vfr5FQRRjMEbul2eHAwh4oGyQY5Bn/Bf7nrnxKFXi8QU85v
- E5oqpOSPCFGXVNJWIzg+lpBLuh6kuxQ8ALp99OIXenWKnJJ28vAvrByg/1UL6/OKb
- 3avJJX4cax1E3GzG3Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mkpex-1wPXsi40Fj-00mOea; Thu, 10
- Sep 2026 12:09:24 +0200
-Message-ID: <00a3daad-5a92-41b3-a525-6115f0ff038c@gmx.de>
-Date: Thu, 10 Sep 2026 12:09:16 +0200
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1x4bpO-0002B3-AF
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 06:16:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789035380;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hmyw4vOhsUCDg9QpnLP7xItMQNGL07PaVfBjoTB1eKI=;
+ b=AZxH7SSTmBL/57NtbHw/McC2oNVqpEWKpfZdFaS37x0gwv8DbCpHbs9gZYWg8uWrlBfOY3
+ YFUZa8yppCrN2Lr47XPHGyqxrmFelqFUnpk/yp9PLsk6WRF37JQfA7K5M0lidYbxkTIWI0
+ +uN7OMPF3BhURn4xyt9wWvlyNFl76Kc=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-267-GbHlt8mANOKCtdQH5WDcbQ-1; Thu, 10 Sep 2026 06:16:18 -0400
+X-MC-Unique: GbHlt8mANOKCtdQH5WDcbQ-1
+X-Mimecast-MFC-AGG-ID: GbHlt8mANOKCtdQH5WDcbQ_1789035378
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-836cfb589a3so132127167b3.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 03:16:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789035378; cv=none;
+ d=google.com; s=arc-20260327;
+ b=tDVIS5fJ7oFViKIBf27xfemxYH86Gu/4eZ5Qr/fDVRyFjas/9qDnpk7R7DBBGmtRQZ
+ CEvRHDN79167Of578sOnG9PlILYZ0INrQRwJ6Ak6gMtcni/wQSfSr9ElARTCvg2likWC
+ SAK/iy8lAb/PeNvPa8Qp7riUGmR8gCmDcsp4Omr42nO4a2W5ZyyefSmO3U2mLf4lEtI0
+ Mq/4Fxk7swnw57297xKL+GFKCYOXQjZWNY3SiYd5YTisBX+hFdnfo1v5L8MCKjouat+K
+ ofLcJAbMcWVHkCRajpleuAXUjeJKe6SH2iaKb36ub2dyCvBRS2f/d+7C153B3udgkwHH
+ M6zQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=hmyw4vOhsUCDg9QpnLP7xItMQNGL07PaVfBjoTB1eKI=;
+ fh=RDYgKVmhpeeeWFaDEIxNf+zd9KhuLddsy1pIv/K03X8=;
+ b=hoqPsgU19V5AIDpeBs5mAiSxanwQBv1WjYv5TeD4xk7abH0KPqJG2ENkb1dy7yMlc6
+ SaCJQpkxGFzly/QC+iAnXJuxDyfsuUHK0ilBw0DiNZ3iMJIWc5PGRhpBvyxDxehA44Ki
+ /wZxXmn3T+5fwWE2WzM+WaxqnIpNM9bqttn8QeNs8DtjVMYj8YyzrbNVksqasSfiazD/
+ JYLQ1G1VPmm2DaAGRLZ6hiu2lR4biw85S52zxOoFECIgMrLa6+8JOzVqEWuHqoavT/8v
+ 33OLzJC72WzeKOS+dkDdo1o3xPsandFzUQl/A+VlYCfjOGfsPgq0dPN+dxFsqQ4tSOdL
+ RjBg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789035378; x=1789640178; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hmyw4vOhsUCDg9QpnLP7xItMQNGL07PaVfBjoTB1eKI=;
+ b=OwHJkqLCQ0HRqVAyDpByp327o0RT4cb8+0CPo+QT4QDOEq6CzpnMWotVUxybQkfaqv
+ yjflw5OhXjBboVogJDD5B8BTHTaD7DHKAkXF1dFiB/ZMM5ppexkK3AUUYGM5HaQ9as85
+ 0juc+6WAEKr5kELEWcOYPdl0U1ytlVQ4xvozSuvHW+9ErJowxU1ZBF5J1ocSazhuq12U
+ AjP6J6S+tLQXIF062xPipNV2OHq8XVQDpbTGy0FAHv+m4XnTJNostRW3sshogzyQXzEA
+ r/RciF7IOD+1OStjCxJHxEr4dy9/xHKeVj0NNF8f0EKyiZw9VVh7qJjXbwOemnd2tDJ6
+ pZXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789035378; x=1789640178;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hmyw4vOhsUCDg9QpnLP7xItMQNGL07PaVfBjoTB1eKI=;
+ b=J3NDYETRdfq0tKirzsGj7+ZERPlHdqskSm1c0tS8H34bmLVF0zoRqeI3iLqT9fBiyT
+ 933gmmaK01PRlTCClyZp148vJcfS5CvZxqVUlldAM7/bYK3RaGyhndkDxA53FAKDv0Jr
+ 7c+wB4m0je34o63lG4FFI8FQk1U0xUhSGIlxIhAr9B1IyJlSZRegZJypWRJeg+XISC3d
+ RPA8jGfwNNOrni7GNBRrL6ViAmoxqo1KBN1sTST+ND8gTv5o6Uya5jf9z15WeAzEJeSM
+ +liZGgKAp8PLhsVlYfXg+suvrslLuQuT2M72qlONfvc3+A+1UhbEOLLFcwkTTqybC9Lk
+ pVgA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByQTQ1FJG9HT/BO0kIDkVcGWF0x7XtxEMtB2Smb6s2dj6yJJOde9Xccb0cZqw/KB9EJTLu72j9n8m3M@nongnu.org
+X-Gm-Message-State: AFuF++lnxh/1Y6AI1kbxrAL1Kmcf1QT/wfRb8kvCW8fCnSvNZd7o56TG
+ LvIq+JWJFLf3j2V4EKCEl2jXefO5csUD1SvwxxZ8gPQuSNn0Gpsvh1wQhp4AThf0HPwLkpd8flx
+ hkD57RoJUmDvu7q2bafd4cXOFexXZD+fWJNpZ9Ovkm1Nlb2d8GWx+dP2Cz/vVGc7ZdvByAImuMN
+ N+CKQl41kd8JxcWDkWFPsiyolaysaY2XM=
+X-Gm-Gg: AYBFou0VbM4d+pULkY+SBcF6mvcWp9nV+d8QGQd5uoaJ75K6r6QfXmprj+0SgBIR3bR
+ +dYPtz5l7ZnZyNUT6HYESmePbjtnePcn3ebqO0TQBQE1wAR+fkjzMn4aY57mI+99rK7dUykmskL
+ SS6fB8YTJdLGsay0JDQsewfN2my1kVMAcJ8W3HLPxL42lpqrpvwOg5Jjv1H5oa1ShEwrtAYx5m8
+ bRJXiXZx72QPAhd/QXIQhYrR1KAgbwNMyedtgHXUlGQ2G3Y4dk2dgO6bhk=
+X-Received: by 2002:a05:690c:f06:b0:87f:244c:7aaf with SMTP id
+ 00721157ae682-88157cc1356mr30512437b3.47.1789035378120; 
+ Thu, 10 Sep 2026 03:16:18 -0700 (PDT)
+X-Received: by 2002:a05:690c:f06:b0:87f:244c:7aaf with SMTP id
+ 00721157ae682-88157cc1356mr30512277b3.47.1789035377551; Thu, 10 Sep 2026
+ 03:16:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] linux-user: madvise() on unmapped ranges should
- return ENOMEM
-From: Helge Deller <deller@gmx.de>
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260903142720.1467316-1-alex.bennee@linaro.org>
- <4238afee-7706-47de-9cd0-effe503a9f5d@gmx.de>
-Content-Language: en-US
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <4238afee-7706-47de-9cd0-effe503a9f5d@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20260716134421.3765533-1-kdutta@redhat.com>
+ <20260716134421.3765533-3-kdutta@redhat.com>
+ <20260910034751-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260910034751-mutt-send-email-mst@kernel.org>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 10 Sep 2026 12:15:40 +0200
+X-Gm-Features: AcwNN1VIZUXTZtsFido9-NAf7kfmLa-eF8Cj9Wo6piBL_ZfUsEEiRG1TF6PFURk
+Message-ID: <CAJaqyWdX5pTvW+-FFjLJmjNz6QFaPQHsbFh_vQ-=GK6UmWGJiA@mail.gmail.com>
+Subject: Re: [PATCH v10 2/2] [PATCH 2/2] Implement VirtIO Network Notification
+ Coalescing (VIRTIO_NET_F_NOTF_COAL). This allows guests to reduce
+ interrupt
+ overhead by configuring coalescing parameters via ethtool -C for both RX and
+ TX paths.
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Koushik Dutta <kdutta@redhat.com>, qemu-devel@nongnu.org, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:88lR02GFZLV83B92JkPSxyhC2OrdLGarmMZSlLmxpN14LGgAzXE
- iQ1sfpAdeKZJVw4q5uv5rem4aqBsf+oU10l7qKRjY5cwkt0/LVe5YyNK4SzVI4jSaMuMsgF
- rlhzGiuU0MfThc6OCbi++kEE1EXvCm/LdOR0gF6d+0NmbpdMZ0edpb6wDKQTVEZeP5HaN3x
- 0vVHh8NLdsCqWSYXCyA6g==
-UI-OutboundReport: notjunk:1;M01:P0:ZrqvcpzQmqk=;68Tz1y3vNpBUW+PvnayVE/hdrHO
- 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
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -213,46 +146,484 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/26 23:17, Helge Deller wrote:
-> Hi Alex,
->=20
-> On 9/3/26 16:27, Alex Benn=C3=A9e wrote:
->> Per madvise(2) and the Linux kernel implementation (madvise_walk_vmas),
->> madvise() must validate that the requested range is currently mapped
->> and return -ENOMEM if any page in the range is unmapped.
->>
->> Add a page_check_range(start, len, PAGE_VALID) check for valid advice
->> values before proceeding with the advice actions. In addition, extend t=
-he
->> tcg multiarch test linux-madvise.c to test this behaviour.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4382
->> AI-used-for: importing and validating test case
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>
->> ---
->> NOTE
->> =C2=A0=C2=A0 - again testing the minimal agents which did stop and say:
->>
->> *(Note: Per user policy, git commits are never executed automatically b=
-y the agent. Please review the diff with `git diff` and commit the changes=
- if you are satisfied.)*
->>
->> =C2=A0=C2=A0 but non-the-less imported the test and wrote a crap patch =
-which I
->> =C2=A0=C2=A0 have re-done dropping a load of unneeded verbosity.
->=20
->=20
-> Did you test this patch?
-> If yes, did it work for you?
-> I'm asking, because I tried the testcase from the bug report, and
-> in qemu I still get 0 (success).
-Oh, this was a misconfiguration on my side.
-The patch works ok!
+On Thu, Sep 10, 2026 at 9:52=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> subject is unreasonably long here
+>
+>
+> On Thu, Jul 16, 2026 at 07:14:21PM +0530, Koushik Dutta wrote:
+> > The feature supports two coalescing modes:
+> > - Time-based: delay notifications up to N microseconds
+> > - Count-based: delay until N packets are processed
+> >
+> > Implementation details:
+> > - Added VIRTIO_NET_CTRL_NOTF_COAL class handling in control virtqueue
+> > - RX path: batches notifications based on packet count or timeout
+> > - TX path: leverages the unified dispatcher to dynamically enable
+> >   timer-based coalescing when guest configures it via ethtool
+> > - Coalescing parameters persist across live migration
+> >
+> > Note: When tx=3Dtimer is configured at VM launch, the coalescing featur=
+e
+> > is automatically disabled because tx=3Dtimer already introduces a fixed
+> > 150=E7=9B=9C delay for packet batching, making notification coalescing =
+redundant.
+> >
+> > Adds the `x-vq_notf_coal=3Don` device parameter to dynamically enable
+> > virtqueue notification coalescing at VM startup.
+>
+>
+> we really do not want to train users to use x- properties.
+>
+> > Performance metrics (Moderate Coalescing vs Without Coalescing):
+> > - RX parameters: 1000=E7=9B=9C, 10 frames
+> > - TX parameters: 2000=E7=9B=9C, 20 frames
+> > - Results: 20% drop in CPU overhead and a 30% reduction in interrupts.
+> >
+> > Signed-off-by: Koushik Dutta <kdutta@redhat.com>
+> > ---
+> >  hw/net/virtio-net.c            | 203 ++++++++++++++++++++++++++++++++-
+> >  include/hw/virtio/virtio-net.h |  10 ++
+> >  net/passt.c                    |   1 +
+> >  net/tap.c                      |   1 +
+> >  net/vhost-user.c               |   1 +
+> >  net/vhost-vdpa.c               |   1 +
+> >  6 files changed, 213 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > index e7f05956a5..fac1013d47 100644
+> > --- a/hw/net/virtio-net.c
+> > +++ b/hw/net/virtio-net.c
+> > @@ -157,6 +157,16 @@ static void flush_or_purge_queued_packets(NetClien=
+tState *nc)
+> >   * - we could suppress RX interrupt if we were so inclined.
+> >   */
+> >
+> > +static void virtio_net_rx_notify(void *opaque)
+> > +{
+> > +    VirtIONetQueue *q =3D opaque;
+> > +    VirtIONet *n =3D q->n;
+> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
+> > +
+> > +    q->rx_coal.pkt_cnt =3D 0;
+> > +    virtio_notify(vdev, q->rx_vq);
+> > +}
+> > +
+> >  static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
+> >  {
+> >      VirtIONet *n =3D VIRTIO_NET(vdev);
+> > @@ -1002,6 +1012,87 @@ static void virtio_net_set_features(VirtIODevice=
+ *vdev,
+> >      }
+> >  }
+> >
+> > +static void virtio_net_tx_notification_timer(void *opaque)
+> > +{
+> > +    VirtIONetQueue *q =3D opaque;
+> > +    VirtIONet *n =3D q->n;
+> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
+> > +
+> > +    q->tx_coal.pkt_cnt =3D 0;
+> > +    virtio_notify(vdev, q->tx_vq);
+> > +}
+> > +
+> > +static bool virtio_net_tx_should_notify(VirtIONetQueue *q)
+> > +{
+> > +    if (q->tx_coal.usecs =3D=3D 0 || !q->tx_coal.timer) {
+> > +        return true;
+> > +    }
+> > +
+> > +    q->tx_coal.pkt_cnt++;
+> > +
+> > +    if (q->tx_coal.packets > 0 && q->tx_coal.pkt_cnt >=3D q->tx_coal.p=
+ackets) {
+> > +        q->tx_coal.pkt_cnt =3D 0;
+> > +        timer_del(q->tx_coal.timer);
+> > +        return true;
+> > +    }
+> > +
+> > +    if (!timer_pending(q->tx_coal.timer)) {
+> > +        timer_mod(q->tx_coal.timer,
+> > +                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+> > +                  q->tx_coal.usecs * 1000); /* Converted to ns */
+> > +    }
+> > +
+> > +    return false;
+> > +}
+> > +
+> > +static int virtio_net_handle_coal(VirtIONet *n, uint8_t cmd,
+> > +                                  struct iovec *iov, unsigned int iov_=
+cnt)
+> > +{
+> > +    struct virtio_net_ctrl_coal coal;
+> > +    VirtIONetQueue *q;
+> > +    size_t s;
+> > +    int i;
+> > +
+> > +    s =3D iov_to_buf(iov, iov_cnt, 0, &coal, sizeof(coal));
+> > +    if (s !=3D sizeof(coal)) {
+> > +        return VIRTIO_NET_ERR;
+> > +    }
+> > +
+> > +    if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_RX_SET) {
+> > +        for (i =3D 0; i < n->max_queue_pairs; i++) {
+> > +            q =3D &n->vqs[i];
+> > +            q->rx_coal.usecs =3D le32_to_cpu(coal.max_usecs);
+> > +            q->rx_coal.packets =3D le32_to_cpu(coal.max_packets);
+> > +            q->rx_coal.pkt_cnt =3D 0;
+> > +            if (q->rx_coal.usecs > 0) {
+> > +                /* Delete old timer if exists, then create new one */
+> > +                g_clear_pointer(&q->rx_coal.timer, timer_free);
+> > +                q->rx_coal.timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> > +                                                virtio_net_rx_notify,
+> > +                                                q);
+> > +            } else {
+> > +                g_clear_pointer(&q->rx_coal.timer, timer_free);
+> > +            }
+> > +        }
+> > +    } else if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_TX_SET) {
+> > +        for (i =3D 0; i < n->max_queue_pairs; i++) {
+> > +            q =3D &n->vqs[i];
+> > +            q->tx_coal.usecs =3D le32_to_cpu(coal.max_usecs);
+> > +            q->tx_coal.packets =3D le32_to_cpu(coal.max_packets);
+> > +            q->tx_coal.pkt_cnt =3D 0;
+> > +            if (q->tx_coal.usecs > 0) {
+> > +                g_clear_pointer(&q->tx_coal.timer, timer_free);
+> > +                q->tx_coal.timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> > +                                                virtio_net_tx_notifica=
+tion_timer,
+> > +                                                q);
+> > +            } else {
+> > +                g_clear_pointer(&q->tx_coal.timer, timer_free);
+> > +            }
+> > +        }
+> > +    }
+> > +    return VIRTIO_NET_OK;
+> > +}
+> > +
+> >  static int virtio_net_handle_rx_mode(VirtIONet *n, uint8_t cmd,
+> >                                       struct iovec *iov, unsigned int i=
+ov_cnt)
+> >  {
+> > @@ -1581,6 +1672,8 @@ size_t virtio_net_handle_ctrl_iov(VirtIODevice *v=
+dev,
+> >          status =3D virtio_net_handle_mq(n, ctrl.cmd, iov, out_num);
+> >      } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_GUEST_OFFLOADS) {
+> >          status =3D virtio_net_handle_offloads(n, ctrl.cmd, iov, out_nu=
+m);
+> > +    } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_NOTF_COAL) {
+> > +        status =3D virtio_net_handle_coal(n, ctrl.cmd, iov, out_num);
+> >      }
+> >
+> >      s =3D iov_from_buf(in_sg, in_num, 0, &status, sizeof(status));
+> > @@ -2040,7 +2133,23 @@ static ssize_t virtio_net_receive_rcu(NetClientS=
+tate *nc, const uint8_t *buf,
+> >      }
+> >
+> >      virtqueue_flush(q->rx_vq, i);
+> > -    virtio_notify(vdev, q->rx_vq);
+> > +
+> > +    /* rx coalescing */
+> > +    q->rx_coal.pkt_cnt +=3D i;
+> > +    if (q->rx_coal.usecs =3D=3D 0 || q->rx_coal.pkt_cnt >=3D q->rx_coa=
+l.packets) {
+> > +        if (q->rx_coal.timer) {
+> > +            timer_del(q->rx_coal.timer);
+> > +        }
+> > +        virtio_net_rx_notify(q);
+> > +    } else {
+> > +        if (q->rx_coal.timer) {
+> > +            if (!timer_pending(q->rx_coal.timer)) {
+> > +                timer_mod(q->rx_coal.timer,
+> > +                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+> > +                          q->rx_coal.usecs * 1000); /* Converted to ns=
+ */
+> > +            }
+> > +        }
+> > +    }
+> >
+> >      return size;
+> >
+> > @@ -2690,7 +2799,9 @@ static void virtio_net_tx_complete(NetClientState=
+ *nc, ssize_t len)
+> >      int ret;
+> >
+> >      virtqueue_push(q->tx_vq, q->async_tx.elem, 0);
+> > -    virtio_notify(vdev, q->tx_vq);
+> > +    if (virtio_net_tx_should_notify(q)) {
+> > +        virtio_notify(vdev, q->tx_vq);
+> > +    }
+> >
+> >      g_free(q->async_tx.elem);
+> >      q->async_tx.elem =3D NULL;
+> > @@ -2802,7 +2913,10 @@ static int32_t virtio_net_flush_tx(VirtIONetQueu=
+e *q)
+> >
+> >  drop:
+> >          virtqueue_push(q->tx_vq, elem, 0);
+> > -        virtio_notify(vdev, q->tx_vq);
+> > +        if (virtio_net_tx_should_notify(q)) {
+> > +            virtio_notify(vdev, q->tx_vq);
+> > +        }
+> > +
+> >          g_free(elem);
+> >
+> >          if (++num_packets >=3D n->tx_burst) {
+> > @@ -2899,6 +3013,7 @@ static void virtio_net_tx_timer(void *opaque)
+> >      if (ret =3D=3D -EBUSY || ret =3D=3D -EINVAL) {
+> >          return;
+> >      }
+> > +
+> >      /*
+> >       * If we flush a full burst of packets, assume there are
+> >       * more coming and immediately rearm
+> > @@ -3005,6 +3120,12 @@ static void virtio_net_add_queue(VirtIONet *n, i=
+nt index)
+> >                              &DEVICE(vdev)->mem_reentrancy_guard);
+> >
+> >      n->vqs[index].tx_waiting =3D 0;
+> > +    n->vqs[index].rx_coal.pkt_cnt =3D 0;
+> > +    n->vqs[index].tx_coal.pkt_cnt =3D 0;
+> > +    n->vqs[index].rx_coal.usecs =3D 0;
+> > +    n->vqs[index].tx_coal.usecs =3D 0;
+> > +    n->vqs[index].rx_coal.packets =3D 0;
+> > +    n->vqs[index].tx_coal.packets =3D 0;
+> >      n->vqs[index].n =3D n;
+> >  }
+> >
+> > @@ -3017,6 +3138,11 @@ static void virtio_net_del_queue(VirtIONet *n, i=
+nt index)
+> >      qemu_purge_queued_packets(nc);
+> >
+> >      virtio_del_queue(vdev, index * 2);
+> > +
+> > +    /* Cleanup coalescing timers */
+> > +    g_clear_pointer(&q->rx_coal.timer, timer_free);
+> > +    g_clear_pointer(&q->tx_coal.timer, timer_free);
+> > +
+> >      if (q->tx_timer) {
+> >          timer_free(q->tx_timer);
+> >          q->tx_timer =3D NULL;
+> > @@ -3097,6 +3223,13 @@ static void virtio_net_get_features(VirtIODevice=
+ *vdev, uint64_t *features,
+> >      virtio_features_or(features, features, n->host_features_ex);
+> >
+> >      virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
+> > +    if (n->tx_timer_activate) {
+> > +        virtio_clear_feature_ex(features, VIRTIO_NET_F_NOTF_COAL);
+> > +    } else {
+> > +        if (!virtio_has_feature(*features, VIRTIO_NET_F_NOTF_COAL)) {
+> > +            *features &=3D ~(1ULL << VIRTIO_NET_F_NOTF_COAL);
+> > +        }
+> > +    }
+> >
+> >      if (!peer_has_vnet_hdr(n)) {
+> >          virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
+> > @@ -3251,6 +3384,26 @@ static int virtio_net_post_load_device(void *opa=
+que, int version_id)
+> >      }
+> >
+> >      virtio_net_commit_rss_config(n);
+> > +
+> > +    for (i =3D 0; i < n->max_queue_pairs; i++) {
+> > +        VirtIONetQueue *q =3D &n->vqs[i];
+> > +        if (q->rx_coal.usecs > 0) {
+> > +            if (!q->rx_coal.timer) {
+> > +                q->rx_coal.timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> > +                                                virtio_net_rx_notify,
+> > +                                                q);
+> > +            }
+> > +        }
+> > +
+> > +        if (q->tx_coal.usecs > 0) {
+> > +            if (!q->tx_coal.timer) {
+> > +                q->tx_coal.timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> > +                                                virtio_net_tx_notifica=
+tion_timer,
+> > +                                                q);
+> > +            }
+> > +        }
+> > +    }
+> > +
+>
+>
+> Not QEMU_CLOCK_VIRTUAL_RT?
+>
+> >      return 0;
+> >  }
+> >
+> > @@ -3270,13 +3423,49 @@ static int virtio_net_post_load_virtio(VirtIODe=
+vice *vdev)
+> >      return 0;
+> >  }
+> >
+> > +static const VMStateDescription vmstate_virtio_net_coal =3D {
+> > +    .name =3D "virtio-net-coal",
+> > +    .version_id =3D 1,
+> > +    .minimum_version_id =3D 1,
+> > +    .fields =3D (const VMStateField[]) {
+> > +        VMSTATE_UINT32(usecs, VirtIONetCoal),
+> > +        VMSTATE_UINT32(packets, VirtIONetCoal),
+> > +        VMSTATE_UINT32(pkt_cnt, VirtIONetCoal),
+> > +        VMSTATE_END_OF_LIST()
+> > +    },
+> > +};
+> > +
+> > +static bool virtio_net_queue_notf_coal_needed(void *opaque)
+> > +{
+> > +    VirtIONetQueue *q =3D opaque;
+> > +    return q->rx_coal.usecs > 0 || q->tx_coal.usecs > 0;
+> > +}
+> > +
+> > +static const VMStateDescription vmstate_virtio_net_queue_notf_coal =3D=
+ {
+> > +    .name =3D "virtio-net-queue-tx_waiting/notf-coal",
+> > +    .version_id =3D 1,
+> > +    .minimum_version_id =3D 1,
+> > +    .needed =3D virtio_net_queue_notf_coal_needed,
+> > +    .fields =3D (const VMStateField[]) {
+> > +        VMSTATE_STRUCT(rx_coal, VirtIONetQueue, 0,
+> > +                       vmstate_virtio_net_coal, VirtIONetCoal),
+> > +        VMSTATE_STRUCT(tx_coal, VirtIONetQueue, 0,
+> > +                       vmstate_virtio_net_coal, VirtIONetCoal),
+> > +        VMSTATE_END_OF_LIST()
+> > +    },
+> > +};
+> > +
+> >  /* tx_waiting field of a VirtIONetQueue */
+> >  static const VMStateDescription vmstate_virtio_net_queue_tx_waiting =
+=3D {
+> >      .name =3D "virtio-net-queue-tx_waiting",
+> >      .fields =3D (const VMStateField[]) {
+> >          VMSTATE_UINT32(tx_waiting, VirtIONetQueue),
+> >          VMSTATE_END_OF_LIST()
+> > -   },
+> > +    },
+> > +    .subsections =3D (const VMStateDescription * const []) {
+> > +        &vmstate_virtio_net_queue_notf_coal,
+> > +        NULL
+> > +    }
+> >  };
+> >
+> >  static bool max_queue_pairs_gt_1(void *opaque, int version_id)
+> > @@ -3981,6 +4170,10 @@ static void virtio_net_device_realize(DeviceStat=
+e *dev, Error **errp)
+> >
+> >      if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer") =3D=3D 0) {
+> >          n->tx_timer_activate =3D true;
+> > +        if (n->host_features & (1ULL << VIRTIO_NET_F_NOTF_COAL)) {
+> > +            warn_report("virtio-net: 'vq_notf_coal' is incompatible wi=
+th 'tx=3Dtimer',"
+> > +                        "disabling notification coalescing");
+> > +        }
+> >      }
+> >
+> >      n->net_conf.tx_queue_size =3D MIN(virtio_net_max_tx_queue_size(n),
+> > @@ -4271,6 +4464,8 @@ static const Property virtio_net_properties[] =3D=
+ {
+> >                        VIRTIO_NET_F_GUEST_USO6, true),
+> >      DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
+> >                        VIRTIO_NET_F_HOST_USO, true),
+> > +    DEFINE_PROP_BIT64("x-vq_notf_coal", VirtIONet, host_features,
+> > +                      VIRTIO_NET_F_NOTF_COAL, false),
+> >      DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
+> >                                    rss_data.specified_hash_types,
+> >                                    VIRTIO_NET_HASH_REPORT_IPv4 - 1,
+> > diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-=
+net.h
+> > index a4eb3f407e..244c8a0224 100644
+> > --- a/include/hw/virtio/virtio-net.h
+> > +++ b/include/hw/virtio/virtio-net.h
+> > @@ -155,6 +155,14 @@ typedef struct VirtioNetRssData {
+> >      uint16_t default_queue;
+> >  } VirtioNetRssData;
+> >
+> > +/* Interrupt notification coalescing parameters */
+> > +typedef struct VirtIONetCoal {
+> > +    uint32_t usecs;    /* Timeout in microseconds */
+> > +    uint32_t packets;  /* Packet count threshold */
+> > +    uint32_t pkt_cnt;  /* Current packet count since last notification=
+ */
+> > +    QEMUTimer *timer;  /* Coalescing timer */
+> > +} VirtIONetCoal;
+> > +
+> >  typedef struct VirtIONetQueue {
+> >      VirtQueue *rx_vq;
+> >      VirtQueue *tx_vq;
+> > @@ -165,6 +173,8 @@ typedef struct VirtIONetQueue {
+> >          VirtQueueElement *elem;
+> >      } async_tx;
+> >      struct VirtIONet *n;
+> > +    VirtIONetCoal rx_coal;
+> > +    VirtIONetCoal tx_coal;
+> >  } VirtIONetQueue;
+> >
+> >  struct VirtIONet {
+> > diff --git a/net/passt.c b/net/passt.c
+> > index 45440c399b..43b36ed8c5 100644
+> > --- a/net/passt.c
+> > +++ b/net/passt.c
+> > @@ -52,6 +52,7 @@ static const int user_feature_bits[] =3D {
+> >      VIRTIO_NET_F_GUEST_USO4,
+> >      VIRTIO_NET_F_GUEST_USO6,
+> >      VIRTIO_NET_F_HOST_USO,
+> > +    VIRTIO_NET_F_NOTF_COAL,
+> >
+> >      /* This bit implies RARP isn't sent by QEMU out of band */
+> >      VIRTIO_NET_F_GUEST_ANNOUNCE,
+> > diff --git a/net/tap.c b/net/tap.c
+> > index 57ffb09885..e6ddbc1eb1 100644
+> > --- a/net/tap.c
+> > +++ b/net/tap.c
+> > @@ -63,6 +63,7 @@ static const int kernel_feature_bits[] =3D {
+> >      VIRTIO_F_NOTIFICATION_DATA,
+> >      VIRTIO_NET_F_RSC_EXT,
+> >      VIRTIO_NET_F_HASH_REPORT,
+> > +    VIRTIO_NET_F_NOTF_COAL,
+> >      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
+> >      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+> >      VHOST_INVALID_FEATURE_BIT
+> > diff --git a/net/vhost-user.c b/net/vhost-user.c
+> > index 2d0fc49b4d..f1e9b7a038 100644
+> > --- a/net/vhost-user.c
+> > +++ b/net/vhost-user.c
+> > @@ -54,6 +54,7 @@ static const int user_feature_bits[] =3D {
+> >      VIRTIO_NET_F_GUEST_USO4,
+> >      VIRTIO_NET_F_GUEST_USO6,
+> >      VIRTIO_NET_F_HOST_USO,
+> > +    VIRTIO_NET_F_NOTF_COAL,
+> >
+> >      /* This bit implies RARP isn't sent by QEMU out of band */
+> >      VIRTIO_NET_F_GUEST_ANNOUNCE,
+> > diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> > index f1523697e2..0dcd6fb9f1 100644
+> > --- a/net/vhost-vdpa.c
+> > +++ b/net/vhost-vdpa.c
+> > @@ -70,6 +70,7 @@ static const int vdpa_feature_bits[] =3D {
+> >      VIRTIO_NET_F_CTRL_RX,
+> >      VIRTIO_NET_F_CTRL_RX_EXTRA,
+> >      VIRTIO_NET_F_CTRL_VLAN,
+> > +    VIRTIO_NET_F_NOTF_COAL,
+> >      VIRTIO_NET_F_CTRL_VQ,
+> >      VIRTIO_NET_F_GSO,
+> >      VIRTIO_NET_F_GUEST_CSUM,
+> > --
+> > 2.53.0
+>
+>
+>
+> please do not add these bits until someone actually implements this.
+>
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
+If we don't add them to this list, QEMU enables the feature bit for
+the device even if the backend doesn't offer it. This enables the
+guest to send the CVQ command and the device will receive it without
+knowing how to process it.
 
-Thanks!
-Helge
+This can be tested with nested virtualization, by wrapping an emulated
+virtio-net device in vp_vdpa and then connecting it through vhost_vdpa
+to a nested QEMU. I didn't test it by myself though, so I may be
+missing something.
+
 
