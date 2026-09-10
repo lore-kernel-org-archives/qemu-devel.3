@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1361C79F9F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5DFC79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4fwx-00039p-O7; Thu, 10 Sep 2026 10:40:27 -0400
+	id 1x4fxP-0003Fw-7u; Thu, 10 Sep 2026 10:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwn-000320-PT; Thu, 10 Sep 2026 10:40:17 -0400
-Received: from [115.124.30.132] (helo=out30-132.freemail.mail.aliyun.com)
+ id 1x4fws-00036K-FS; Thu, 10 Sep 2026 10:40:24 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwc-0003Q2-Uj; Thu, 10 Sep 2026 10:40:17 -0400
+ id 1x4fwi-0003R1-1R; Thu, 10 Sep 2026 10:40:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1789051195; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=3cIrX8vvphZfU+2tkgq7BXATXV6vv2BRT69Mz08tqJ4=;
- b=v9gm5rPLE8F+v9ra2159KXgS0OTI+DXRJF8rA2sBAVxeXP4g0QHD9G/Pgcud7WOmeNg877xvOxvYNWRqL2wAIgMelh2z3b5JISBID03CqD1h/PUzR5elUZv920ZOtYdDd6H+8T8S7sQzkxIfpEtA2AAaJv1JXR5kRGqL+cCJf9E=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ t=1789051201; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=prU1vIljHIuCcyNxs+cb2Q556z1F1WlgGCP5PmTg2bM=;
+ b=fJtpGXBzmOTbVGO87ydKl2LYo5NnBlyED+nwPRVOEpkF3Z0nFRqUDSC7rIrbpeWaM7odIMJLRElc+i/XLCp50eBQrN99zN6h/epMyXkbyExaZrm6CnrtuJDa4xhFXmTTjnN2Ci/JdqmnzNQYo0N2aiSoBZ0tkIQW5KjCtbuSoOY=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XAhkcF0_1789051194; 
+ TI=SMTPD_---0XAhkcHx_1789051200; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XAhkcF0_1789051194 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 10 Sep 2026 22:39:54 +0800
+ fp:SMTPD_---0XAhkcHx_1789051200 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 10 Sep 2026 22:40:00 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 10 Sep 2026 22:39:41 +0800
-Subject: [PATCH v2 04/14] target/riscv: Preserve MINH on delegated config reads
+Date: Thu, 10 Sep 2026 22:39:50 +0800
+Subject: [PATCH v2 13/14] target/riscv: Clear virtualization mode on reset
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-riscv-pmu-correctness-v2-4-5da5159a0c64@linux.alibaba.com>
+Message-Id: <20260910-riscv-pmu-correctness-v2-13-5da5159a0c64@linux.alibaba.com>
 References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 In-Reply-To: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -52,17 +52,16 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=7924;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=837;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=i8/tbCt+1+qC76L/RPpROlwyD4V+t52qb1hqpeRSKkY=;
- b=8Tk5vwxK06E2wuAXHIyqsdmc4eax3RIEibcEleFhiaOUNPc2C3IT+9fdzg58PrG3GStauPK7G
- dO59kIgIoDLDb7xtwaOtvl4JSicOfpIjVXoSIb4TY0LPj6jodAsuRcH
+ bh=ZyphTnL/CVDxPUXOM56WWu8fcG2E/OzLwuAl1SIjstU=;
+ b=qfjk4V/aSALNIx/2z8Mm6lhnYaFLsoy0ryj76TCB9RAxHlKT78AXLfdPTgXkhsLoDnXtbxGuA
+ 7LRS1X1MjAACw7xXJj7H64dt+gUMt4X6MzRHn0J9kECUbkvHoJey2zA
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.132 (deferred)
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -86,267 +85,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Smcdeleg requires MINH to read as zero through sireg*. The RV64 callback
-masks it by modifying the machine register; the RV32 high-half callback
-does not mask it.
+Reset enters M-mode without clearing virt_enabled, leaving an invalid
+M-mode, V=1 state after a reset from virtual mode. Clear virt_enabled
+alongside the privilege reset.
 
-Return a masked copy without changing mcyclecfg or minstretcfg. Test both
-configuration registers on RV32 and RV64.
-
-Fixes: d9fa41e10156 ("target/riscv: Bugfix make bit 62 read-only 0 for sireg* cfg CSR read")
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/tcg/csr.c                 |  8 ++--
- tests/tcg/riscv32/smcdeleg-minh-rv32.S | 78 ++++++++++++++++++++++++++++++++++
- tests/tcg/riscv32/system/meson.build   |  7 +++
- tests/tcg/riscv64/smcdeleg-minh.S      | 78 ++++++++++++++++++++++++++++++++++
- tests/tcg/riscv64/system/meson.build   |  7 +++
- 5 files changed, 174 insertions(+), 4 deletions(-)
+ target/riscv/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 60caee32dc0cf5b6a8492e0cf8ff15f71acc2087..57030724f85a897e21e5082b9857411b50f932ac 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -1607,7 +1607,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
-             wr_mask &= ~MCYCLECFG_BIT_MINH;
-             env->mcyclecfg = (new_val & wr_mask) | (env->mcyclecfg & ~wr_mask);
-         } else {
--            *val = env->mcyclecfg &= ~MHPMEVENT_BIT_MINH;
-+            *val = env->mcyclecfg & ~MCYCLECFG_BIT_MINH;
-         }
-         break;
-     case 2:             /* INSTRETCFG */
-@@ -1616,7 +1616,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
-             env->minstretcfg = (new_val & wr_mask) |
-                                (env->minstretcfg & ~wr_mask);
-         } else {
--            *val = env->minstretcfg &= ~MHPMEVENT_BIT_MINH;
-+            *val = env->minstretcfg & ~MINSTRETCFG_BIT_MINH;
-         }
-         break;
-     default:
-@@ -1642,7 +1642,7 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
-             cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-             env->mcyclecfg = deposit64(env->mcyclecfg, 32, 32, cfgh);
-         } else {
--            *val = cfgh;
-+            *val = cfgh & ~MCYCLECFGH_BIT_MINH;
-         }
-         break;
-     case 2:          /* INSTRETCFGH */
-@@ -1652,7 +1652,7 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
-             cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-             env->minstretcfg = deposit64(env->minstretcfg, 32, 32, cfgh);
-         } else {
--            *val = cfgh;
-+            *val = cfgh & ~MINSTRETCFGH_BIT_MINH;
-         }
-         break;
-     default:
-diff --git a/tests/tcg/riscv32/smcdeleg-minh-rv32.S b/tests/tcg/riscv32/smcdeleg-minh-rv32.S
-new file mode 100644
-index 0000000000000000000000000000000000000000..db467b95cf1441e3440f59097401cf6956d294d3
---- /dev/null
-+++ b/tests/tcg/riscv32/smcdeleg-minh-rv32.S
-@@ -0,0 +1,78 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+/* CSR numbers for older assemblers. */
-+#define CSR_SISELECT         0x150
-+#define CSR_SIREG5           0x156
-+#define CSR_MENVCFGH         0x31a
-+#define CSR_MCYCLECFGH       0x721
-+#define CSR_MINSTRETCFGH     0x722
-+
-+	.option	norvc
-+	.option	norelax
-+
-+	.text
-+	.global	_start
-+_start:
-+	/*
-+	 * Failure bits:
-+	 * 0: delegated cyclecfgh exposes MINH
-+	 * 1: reading delegated cyclecfgh clears mcyclecfgh.MINH
-+	 * 2: delegated instretcfgh exposes MINH
-+	 * 3: reading delegated instretcfgh clears minstretcfgh.MINH
-+	 */
-+	li	t4, 0
-+	li	t0, 1
-+	slli	t0, t0, 30		/* MINH in the high half */
-+	csrw	CSR_MCYCLECFGH, t0
-+	csrw	CSR_MINSTRETCFGH, t0
-+	li	t1, 1
-+	slli	t1, t1, 28		/* menvcfgh.CDE */
-+	csrw	CSR_MENVCFGH, t1
-+	li	t1, 5			/* Delegate cycle and instret. */
-+	csrw	mcounteren, t1
-+
-+	/* Check the delegated view, then the underlying machine register. */
-+	li	t1, 0x40		/* siselect: cycle */
-+	csrw	CSR_SISELECT, t1
-+	csrr	t1, CSR_SIREG5
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	or	t4, t4, t1
-+	csrr	t1, CSR_MCYCLECFGH
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	xori	t1, t1, 1
-+	slli	t1, t1, 1
-+	or	t4, t4, t1
-+
-+	li	t1, 0x42		/* siselect: instret */
-+	csrw	CSR_SISELECT, t1
-+	csrr	t1, CSR_SIREG5
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	slli	t1, t1, 2
-+	or	t4, t4, t1
-+	csrr	t1, CSR_MINSTRETCFGH
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	xori	t1, t1, 1
-+	slli	t1, t1, 3
-+	or	t4, t4, t1
-+
-+	lla	a1, semiargs
-+	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
-+	sw	t0, 0(a1)
-+	sw	t4, 4(a1)
-+	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence. */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	8
-diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
-index 16f9a06c9485ed75b3d127d6b9d090f5eaad4486..cfe2d854b729a8dfdbce2373e73b91b470db6b4e 100644
---- a/tests/tcg/riscv32/system/meson.build
-+++ b/tests/tcg/riscv32/system/meson.build
-@@ -22,6 +22,13 @@ tests += {
-   },
- }
- 
-+tests += {
-+  'smcdeleg-minh-rv32.S': {
-+    'cflags': cflags,
-+    'qemu_args': ['-cpu', 'max', qemu_args],
-+  },
-+}
-+
- if 'qemu-system-riscv32' in emulators
-   tcg_tests += {
-     'riscv32-softmmu': {
-diff --git a/tests/tcg/riscv64/smcdeleg-minh.S b/tests/tcg/riscv64/smcdeleg-minh.S
-new file mode 100644
-index 0000000000000000000000000000000000000000..38d3c30f0afaa416a46322f2b892e5969172a60f
---- /dev/null
-+++ b/tests/tcg/riscv64/smcdeleg-minh.S
-@@ -0,0 +1,78 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+/* CSR numbers for older assemblers. */
-+#define CSR_SISELECT         0x150
-+#define CSR_SIREG2           0x152
-+#define CSR_MENVCFG          0x30a
-+#define CSR_MCYCLECFG        0x321
-+#define CSR_MINSTRETCFG      0x322
-+
-+	.option	norvc
-+	.option	norelax
-+
-+	.text
-+	.global	_start
-+_start:
-+	/*
-+	 * Failure bits:
-+	 * 0: delegated cyclecfg exposes MINH
-+	 * 1: reading delegated cyclecfg clears mcyclecfg.MINH
-+	 * 2: delegated instretcfg exposes MINH
-+	 * 3: reading delegated instretcfg clears minstretcfg.MINH
-+	 */
-+	li	t4, 0
-+	li	t0, 1
-+	slli	t0, t0, 62		/* MINH */
-+	csrw	CSR_MCYCLECFG, t0
-+	csrw	CSR_MINSTRETCFG, t0
-+	li	t1, 1
-+	slli	t1, t1, 60		/* menvcfg.CDE */
-+	csrw	CSR_MENVCFG, t1
-+	li	t1, 5			/* Delegate cycle and instret. */
-+	csrw	mcounteren, t1
-+
-+	/* Check the delegated view, then the underlying machine register. */
-+	li	t1, 0x40		/* siselect: cycle */
-+	csrw	CSR_SISELECT, t1
-+	csrr	t1, CSR_SIREG2
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	or	t4, t4, t1
-+	csrr	t1, CSR_MCYCLECFG
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	xori	t1, t1, 1
-+	slli	t1, t1, 1
-+	or	t4, t4, t1
-+
-+	li	t1, 0x42		/* siselect: instret */
-+	csrw	CSR_SISELECT, t1
-+	csrr	t1, CSR_SIREG2
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	slli	t1, t1, 2
-+	or	t4, t4, t1
-+	csrr	t1, CSR_MINSTRETCFG
-+	and	t1, t1, t0
-+	sltu	t1, zero, t1
-+	xori	t1, t1, 1
-+	slli	t1, t1, 3
-+	or	t4, t4, t1
-+
-+	lla	a1, semiargs
-+	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	t4, 8(a1)
-+	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence. */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 668a9a76070b6f16087b08ea84683d883312e951..5d91381c62d77ae7e37c129112d6367f692df660 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -75,6 +75,13 @@ tests += {
-   },
- }
- 
-+tests += {
-+  'smcdeleg-minh.S': {
-+    'cflags': cflags,
-+    'qemu_args': ['-cpu', 'max', qemu_args],
-+  },
-+}
-+
- if 'qemu-system-riscv64' in emulators
-   tcg_tests += {
-     'riscv64-softmmu': {
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5fff9d745e9b36d9cbd30f166ec91b5165e5f497..f60d7cca1e2f0008b09b1055c5cdeed3ec4ad1d3 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -980,6 +980,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+ #ifndef CONFIG_USER_ONLY
+     env->misa_mxl = mcc->def->misa_mxl_max;
+     env->priv = PRV_M;
++    env->virt_enabled = false;
+     env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+     if (env->misa_mxl > MXL_RV32) {
+         /*
 
 -- 
 2.43.0
