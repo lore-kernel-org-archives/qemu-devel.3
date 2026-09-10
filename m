@@ -4,45 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E54C79FB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55827C79F9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 14:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4fwm-0002z9-MR; Thu, 10 Sep 2026 10:40:16 -0400
+	id 1x4fwp-000341-1r; Thu, 10 Sep 2026 10:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwk-0002yS-EJ; Thu, 10 Sep 2026 10:40:14 -0400
-Received: from [115.124.30.118] (helo=out30-118.freemail.mail.aliyun.com)
+ id 1x4fwk-0002yZ-Lb; Thu, 10 Sep 2026 10:40:14 -0400
+Received: from [115.124.30.133] (helo=out30-133.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x4fwd-0003Pv-1H; Thu, 10 Sep 2026 10:40:14 -0400
+ id 1x4fwc-0003Pq-EY; Thu, 10 Sep 2026 10:40:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1789051193; h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To;
- bh=u7N3eGlGkyBhbccUTQf2di4Utk6axCBqdoBb8i9P2hg=;
- b=hcGYMJDEmAAyt63V07fVHi9yPJaG4eP+kXjpC2xLEwGlj0l0p1HTTkiGIe/63ghxOBhqRy/V8hdDym0SDgPQRfJYhDWOnC1QkGJghM5KxSdRDIFuuj2LTM69JO0nZbB8JEa31UhOo7bHK/CJITB+ZI6xTUk/IvqGkcQz/12r6Xw=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ t=1789051193; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=6QB9Wg5wul/4ejfuCicWnHoFeUOCpvMI7cTCZbtZ1nE=;
+ b=xqr3ORg1mdrSG7nICcodryEFaGaGspRifSvKFVhivzmJsnRH6kmZcKgzwMB1eQah8ICW30xxjMEmCjVCMRL0EE0FNeVt+LLGjslb/Y8zZF4vAepTMj8GeKGd41X+DI+M4MiK9Bm7p5UbGM7hSGeR7YGHsq4ed/hQzdrZ614s6Y8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XAhkcDH_1789051190; 
+ TI=SMTPD_---0XAhkcDz_1789051192; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XAhkcDH_1789051190 cluster:ay36) by smtp.aliyun-inc.com;
+ fp:SMTPD_---0XAhkcDz_1789051192 cluster:ay36) by smtp.aliyun-inc.com;
  Thu, 10 Sep 2026 22:39:52 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Subject: [PATCH v2 00/14] RISC-V TCG PMU correctness fixes
-Date: Thu, 10 Sep 2026 22:39:37 +0800
-Message-Id: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
+Date: Thu, 10 Sep 2026 22:39:38 +0800
+Subject: [PATCH v2 01/14] target/riscv: Preserve PMU state across event
+ selector writes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACnBomoC/3WPy26DMBBFfwV5XSO/sVFV5T+qLIyxw0gYUhtQo
- oh/ryHdVrO6I825Z14o+wQ+o7Z6oeQ3yDBPJbCPCrnBTjePoS8ZMcIU0azBCbLb8D2u2M0pebd
- MPmccrNYk9MYJ3aNye08+wOPkfl/fOfmfteCX9xJ1NvuCiBGWtqJ9YFIFaZT2JjSOOyE5t5Rr3
- pGGOiKE5apXBzqWPnt6tdXnqWXKNIxLVQvWaIEpDgkWN4z+2c1Dab7cooWxLm1f6LAZIC9zep5
- Pb/TU+QP9999GMcEy0CCokNpocxlhWh+1HaGznT3Q6Lrv+y/tX042UAEAAA==
-X-Change-ID: 20260827-riscv-pmu-correctness-fa880fd9c48d
+Message-Id: <20260910-riscv-pmu-correctness-v2-1-5da5159a0c64@linux.alibaba.com>
+References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
+In-Reply-To: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
  Palmer Dabbelt <palmer@dabbelt.com>, 
@@ -56,17 +53,17 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=4911;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789051191; l=10059;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=JFBDUVqoNBZTCeJsBG5s2ldPNHMqtcpp901usypkVM0=;
- b=qU3fX0JQFVWsisbsZzA1Lx1tL0Ki1rvuMslAMl6ZsyXeClPjGJv5JtrAaVApJ7svnobVFbGeD
- J+RgFLawaZcA847m+/utGlNimAQvbF4KwptNFpnVYI+A80qEe1ekEmR
+ bh=1GxQCcZMwvXqgh+qyLGeY2NR8CuEqs1kzB9vVtjD8tA=;
+ b=7ZYdeuAvOT1RxSSMg3mkR7AzvdRum+wQqpnuQTbvYpIqnWxI4Jcn2KzK2pUILfQDvmIYAWtPW
+ MPn7d+w2FpGBKOgtUZhZx9RuZxHdSPfcM27etZP1T21aBDQP3V7afXJ
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.118 (deferred)
-Received-SPF: pass client-ip=115.124.30.118;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.133 (deferred)
+Received-SPF: pass client-ip=115.124.30.133;
  envelope-from=lyndra@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -90,98 +87,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes RISC-V TCG PMU accounting, overflow notification, and
-migration. It is based on v2 of Zephyr Li's "target/riscv: fix RV32
-fixed counter accesses" [1], which is not included here.
+Changing mhpmevent can lose pending cycle/instruction counts or leave a
+new fixed source without a baseline and overflow timer.
 
-The patches allow multiple HPM counters to select the same event and
-preserve counts across selector, privilege-filter, and inhibit writes.
-They use consistent cycle/instruction sources and compute the shared
-overflow deadline from all eligible counters. Timer callbacks queue
-checks on the owner vCPU instead of racing MTTCG execution.
+Account for the old source before replacing the selector, then establish
+the enabled counter's new baseline and timer. Apply this to direct and
+indirect writes.
 
-Migration saves counter values including pending increments and restores
-destination-local source baselines, event mappings, and overflow
-scheduling. A new cpu/pmu-fixed subsection carries mcyclecfg/minstretcfg
-and identifies this format. All TCG CPUs require the subsection; loading
-older TCG streams without it is rejected. Source and destination still
-need compatible CPU configurations. KVM PMU migration is unchanged.
+Test overflow after initializing a counter with event zero and then
+selecting instructions.
 
-The reset changes preserve the final counts in the old privilege/V mode
-before entering M-mode with V=0.
-
-TCG tests cover RV32/RV64 counter accesses, delegated registers, selector
-and filter changes, multiple counters per event, overflow notification
-with and without Sscofpmf, instruction exceptions, and reset. The RV32
-HPM tests also cover full-width accesses through the shared counter path.
-
-[1] https://lore.kernel.org/qemu-devel/20260909072356.42784-1-fritchleybohrer@gmail.com/
-Based-on: <20260909072356.42784-1-fritchleybohrer@gmail.com>
-
+Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
-Changes in v2:
-- Rebase on current master and Zephyr Li's RV32 fix v2.
-- Register the system TCG tests with Meson and use -bios loading.
-- Merge smcdeleg-counter-rv32.S and smcdeleg-event-rv32.S into
-  smcdeleg-rv32.S (patch 6).
-- Use CSR names or local CSR-number macros in tests.
-- Use UINT32_MAX for delegated high-half write-mask checks (patch 6).
-  The caller already requires XLEN=32.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com
+ target/riscv/tcg/csr.c                | 73 +++++++++++++++++++++++++----------
+ tests/tcg/riscv64/sscofpmf-overflow.S | 60 ++++++++++++++++++++++++++++
+ tests/tcg/riscv64/system/meson.build  |  7 ++++
+ 3 files changed, 119 insertions(+), 21 deletions(-)
 
----
-TANG Tiancheng (14):
-      target/riscv: Preserve PMU state across event selector writes
-      target/riscv: Support multiple counters per PMU event
-      target/riscv: Use VM-elapsed sources for fixed PMU events
-      target/riscv: Preserve MINH on delegated config reads
-      target/riscv: Preserve minstretcfgh on RV32 minstretcfg writes
-      target/riscv: Fix RV32 accesses to delegated PMU registers
-      target/riscv: Preserve fixed counters across PMU state changes
-      target/riscv: Require Sscofpmf for non-fixed event overflow
-      target/riscv: Rebuild fixed-event PMU overflow deadlines
-      target/riscv: Apply minstret exception accounting to HPM counters
-      target/riscv: Process PMU timer expiry on the owner vCPU
-      target/riscv: Migrate fixed PMU counter state
-      target/riscv: Clear virtualization mode on reset
-      target/riscv: Preserve fixed PMU state across reset
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 65985efb220c80023cfd9d08e1878a19342aa879..52664a26f5a97a5dc8ff37abf99b4d10927fb120 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1209,23 +1209,58 @@ static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
+ static RISCVException read_mhpmevent(CPURISCVState *env, int csrno,
+                                      target_ulong *val)
+ {
+-    int evt_index = csrno - CSR_MCOUNTINHIBIT;
++    int ctr_idx = csrno - CSR_MCOUNTINHIBIT;
+     bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
+ 
+-    *val = extract64(env->mhpmevent_val[evt_index], 0, rv32 ? 32 : 64);
++    *val = extract64(env->mhpmevent_val[ctr_idx], 0, rv32 ? 32 : 64);
+ 
+     return RISCV_EXCP_NONE;
+ }
+ 
++static uint64_t riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
++                                                     int counter_idx);
++
++static void riscv_pmu_write_mhpmevent(CPURISCVState *env,
++                                      uint32_t ctr_idx, uint64_t value)
++{
++    PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
++    bool enabled = !get_field(env->mcountinhibit, BIT(ctr_idx));
++
++    /*
++     * A programmable counter backed by a fixed source uses mhpmcounter_val
++     * as its base and mhpmcounter_prev as the source snapshot.  Preserve the
++     * visible value before changing the source or its privilege filters.
++     */
++    if (enabled &&
++        (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
++         riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
++        uint64_t source = riscv_pmu_ctr_get_fixed_counters_val(env,
++                                                               ctr_idx);
++
++        counter->mhpmcounter_val += source - counter->mhpmcounter_prev;
++    }
++
++    env->mhpmevent_val[ctr_idx] = value;
++    riscv_pmu_update_event_map(env, value, ctr_idx);
++
++    if (enabled &&
++        (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
++         riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
++        counter->mhpmcounter_prev =
++            riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx);
++        riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
++    }
++}
++
+ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
+                                       target_ulong val, uintptr_t ra)
+ {
+-    int evt_index = csrno - CSR_MCOUNTINHIBIT;
++    int ctr_idx = csrno - CSR_MCOUNTINHIBIT;
+     uint64_t mhpmevt_val;
+     uint64_t inh_avail_mask;
+ 
+     if (riscv_cpu_mxl(env) == MXL_RV32) {
+-        mhpmevt_val = deposit64(env->mhpmevent_val[evt_index], 0, 32, val);
++        mhpmevt_val = deposit64(env->mhpmevent_val[ctr_idx], 0, 32, val);
+     } else {
+         inh_avail_mask = ~MHPMEVENT_FILTER_MASK | MHPMEVENT_BIT_MINH;
+         inh_avail_mask |= riscv_has_ext(env, RVU) ? MHPMEVENT_BIT_UINH : 0;
+@@ -1237,8 +1272,7 @@ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
+         mhpmevt_val = val & inh_avail_mask;
+     }
+ 
+-    env->mhpmevent_val[evt_index] = mhpmevt_val;
+-    riscv_pmu_update_event_map(env, mhpmevt_val, evt_index);
++    riscv_pmu_write_mhpmevent(env, ctr_idx, mhpmevt_val);
+ 
+     return RISCV_EXCP_NONE;
+ }
+@@ -1246,9 +1280,9 @@ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
+ static RISCVException read_mhpmeventh(CPURISCVState *env, int csrno,
+                                       target_ulong *val)
+ {
+-    int evt_index = csrno - CSR_MHPMEVENT3H + 3;
++    int ctr_idx = csrno - CSR_MHPMEVENT3H + 3;
+ 
+-    *val = extract64(env->mhpmevent_val[evt_index], 32, 32);
++    *val = extract64(env->mhpmevent_val[ctr_idx], 32, 32);
+ 
+     return RISCV_EXCP_NONE;
+ }
+@@ -1256,7 +1290,7 @@ static RISCVException read_mhpmeventh(CPURISCVState *env, int csrno,
+ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
+                                        target_ulong val, uintptr_t ra)
+ {
+-    int evt_index = csrno - CSR_MHPMEVENT3H + 3;
++    int ctr_idx = csrno - CSR_MHPMEVENT3H + 3;
+     target_ulong inh_avail_mask = (target_ulong)(~MHPMEVENTH_FILTER_MASK |
+                                                   MHPMEVENTH_BIT_MINH);
+ 
+@@ -1267,10 +1301,9 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
+     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
+                        riscv_has_ext(env, RVS)) ? MHPMEVENTH_BIT_VSINH : 0;
+ 
+-    env->mhpmevent_val[evt_index] = deposit64(env->mhpmevent_val[evt_index],
+-                                              32, 32, val & inh_avail_mask);
+-
+-    riscv_pmu_update_event_map(env, env->mhpmevent_val[evt_index], evt_index);
++    riscv_pmu_write_mhpmevent(env, ctr_idx,
++                              deposit64(env->mhpmevent_val[ctr_idx], 32, 32,
++                                        val & inh_avail_mask));
+ 
+     return RISCV_EXCP_NONE;
+ }
+@@ -1512,11 +1545,11 @@ static int rmw_cd_mhpmcounterh(CPURISCVState *env, int ctr_idx,
+     return 0;
+ }
+ 
+-static int rmw_cd_mhpmevent(CPURISCVState *env, int evt_index,
++static int rmw_cd_mhpmevent(CPURISCVState *env, int ctr_idx,
+                             target_ulong *val, target_ulong new_val,
+                             uint64_t wr_mask)
+ {
+-    uint64_t mhpmevt_val = env->mhpmevent_val[evt_index];
++    uint64_t mhpmevt_val = env->mhpmevent_val[ctr_idx];
+ 
+     if (wr_mask != 0 && wr_mask != -1) {
+         return -EINVAL;
+@@ -1531,8 +1564,7 @@ static int rmw_cd_mhpmevent(CPURISCVState *env, int evt_index,
+         wr_mask &= ~MHPMEVENT_BIT_MINH;
+         /* wr_mask is 64-bit so upper 32 bits of mhpmevt_val are retained */
+         mhpmevt_val = (new_val & wr_mask) | (mhpmevt_val & ~wr_mask);
+-        env->mhpmevent_val[evt_index] = mhpmevt_val;
+-        riscv_pmu_update_event_map(env, mhpmevt_val, evt_index);
++        riscv_pmu_write_mhpmevent(env, ctr_idx, mhpmevt_val);
+     } else {
+         return -EINVAL;
+     }
+@@ -1540,11 +1572,11 @@ static int rmw_cd_mhpmevent(CPURISCVState *env, int evt_index,
+     return 0;
+ }
+ 
+-static int rmw_cd_mhpmeventh(CPURISCVState *env, int evt_index,
++static int rmw_cd_mhpmeventh(CPURISCVState *env, int ctr_idx,
+                              target_ulong *val, target_ulong new_val,
+                              target_ulong wr_mask)
+ {
+-    uint64_t mhpmevt_val = env->mhpmevent_val[evt_index];
++    uint64_t mhpmevt_val = env->mhpmevent_val[ctr_idx];
+     uint32_t mhpmevth_val = extract64(mhpmevt_val, 32, 32);
+ 
+     if (wr_mask != 0 && wr_mask != -1) {
+@@ -1560,8 +1592,7 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, int evt_index,
+         wr_mask &= ~MHPMEVENTH_BIT_MINH;
+         mhpmevth_val = (new_val & wr_mask) | (mhpmevth_val & ~wr_mask);
+         mhpmevt_val = deposit64(mhpmevt_val, 32, 32, mhpmevth_val);
+-        env->mhpmevent_val[evt_index] = mhpmevt_val;
+-        riscv_pmu_update_event_map(env, mhpmevt_val, evt_index);
++        riscv_pmu_write_mhpmevent(env, ctr_idx, mhpmevt_val);
+     } else {
+         return -EINVAL;
+     }
+diff --git a/tests/tcg/riscv64/sscofpmf-overflow.S b/tests/tcg/riscv64/sscofpmf-overflow.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..97f03037bbfdd44f2288b257afb91499e4534f13
+--- /dev/null
++++ b/tests/tcg/riscv64/sscofpmf-overflow.S
+@@ -0,0 +1,60 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++	.option	norelax
++
++	.text
++	.global _start
++_start:
++	/* Program hpmcounter3 while no event is selected. */
++	csrw	mhpmevent3, zero
++	li	t0, -256
++	csrw	mhpmcounter3, t0
++
++	/* Start counting retired instructions with overflow enabled. */
++	li	t0, 2
++	csrw	mhpmevent3, t0
++
++	/* Cross the 64-bit unsigned overflow boundary. */
++	.rept	1024
++	nop
++	.endr
++
++	/* OF must be sticky and LCOFIP must pend even with LCOFIE clear. */
++	li	t4, 0
++	csrr	t0, mhpmevent3
++	srli	t1, t0, 63
++	xori	t1, t1, 1
++	or	t4, t4, t1
++
++	csrr	t0, mip
++	li	t1, 1 << 13
++	and	t0, t0, t1
++	sltu	t0, zero, t0
++	xori	t0, t0, 1
++	or	t4, t4, t0
++
++	/* The counter wraps and continues counting after overflow. */
++	csrr	t0, mhpmcounter3
++	li	t1, -256
++	sltu	t0, t0, t1
++	xori	t0, t0, 1
++	or	t4, t4, t0
++
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	t4, 8(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 8604c2a45a9ad6bf8589f90d5b0d8fd1b2736db4..ebe78200fd551b42d3c99ae19ca03803797f803d 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -61,6 +61,13 @@ tests += {
+   }
+ }
+ 
++tests += {
++  'sscofpmf-overflow.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'max', '-icount', 'shift=0', qemu_args],
++  },
++}
++
+ if 'qemu-system-riscv64' in emulators
+   tcg_tests += {
+     'riscv64-softmmu': {
 
- system/cpu-timers.c                         |   4 +-
- system/cpus.c                               |   6 +-
- target/riscv/cpu.c                          |  17 +
- target/riscv/cpu.h                          |  14 +-
- target/riscv/machine.c                      |  92 +++-
- target/riscv/tcg/cpu_helper.c               |   2 +
- target/riscv/tcg/csr.c                      | 278 +++-------
- target/riscv/tcg/pmu.c                      | 793 +++++++++++++++++++---------
- target/riscv/tcg/pmu.h                      |  29 +-
- target/riscv/tcg/tcg-cpu.c                  |  10 +
- tests/tcg/riscv32/pmu-fixed-rv32.S          |  90 ++++
- tests/tcg/riscv32/pmu-minstretcfg-rv32.S    |  52 ++
- tests/tcg/riscv32/smcdeleg-minh-rv32.S      |  78 +++
- tests/tcg/riscv32/smcdeleg-rv32.S           | 115 ++++
- tests/tcg/riscv32/sscofpmf-event-rv32.S     |  99 ++++
- tests/tcg/riscv32/system/meson.build        |  35 ++
- tests/tcg/riscv64/pmu-cycle-controls.S      | 107 ++++
- tests/tcg/riscv64/pmu-lpad.S                |  72 +++
- tests/tcg/riscv64/pmu-reset-vs.S            | 105 ++++
- tests/tcg/riscv64/smcdeleg-minh.S           |  78 +++
- tests/tcg/riscv64/smcdeleg-sxl32.S          | 233 ++++++++
- tests/tcg/riscv64/sscofpmf-cycle-overflow.S |  58 ++
- tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++
- tests/tcg/riscv64/sscofpmf-overflow.S       | 134 +++++
- tests/tcg/riscv64/system/meson.build        |  88 +++
- tests/tcg/riscv64/test-minstret-ecall.S     |  26 +
- 26 files changed, 2252 insertions(+), 466 deletions(-)
----
-base-commit: 1df256f5968e9f7c3c4533a1383b071c044a36d6
-change-id: 20260827-riscv-pmu-correctness-fa880fd9c48d
-prerequisite-message-id: <20260909072356.42784-1-fritchleybohrer@gmail.com>
-prerequisite-patch-id: f7a8b2a8cc67f360d6abb1adf002b000e7b2eb4d
-
-Best regards,
 -- 
-TANG Tiancheng <lyndra@linux.alibaba.com>
+2.43.0
 
 
