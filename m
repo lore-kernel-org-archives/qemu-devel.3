@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D52BC88E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D01CC79FBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 20:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4lbL-0007RR-F4; Thu, 10 Sep 2026 16:42:38 -0400
+	id 1x4lcX-0007gj-FY; Thu, 10 Sep 2026 16:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lEl-0000Nh-G6
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4l0b-0006JT-Kr
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:04:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lEU-0007Dv-VV
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:19:02 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x4l0P-0004Sx-KD
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:04:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789071378;
+ s=mimecast20190719; t=1789070600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
- b=gQlalLo5RoKDirYY8HWG1umvOutKoBgNHbOmlxHGJWR1xNHRJbisQ39kMYc2PEZ+ofI6KN
- YVR/DHUlAPBcOvdjILrg70AKmiznDnT0JRTQM4SJUvVhg1dxwS+PBMIFmnSjqS8GqZaMGa
- HwtxzjGlu9iBUAJJsdEigT3mN+WEQF8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/9QGs76Zr22lDoxGVCyVcF2VMfnm6aN2RLaHW4UT2aI=;
+ b=Sj03eKD0eXHSlyCJbvFxUv53by1QYRqmt6h5hpgIdqOhBAWiQTEAqTHltfbZ3e1LQrXLDm
+ tidQwIHJla/+pCtGGaTtBJoZcv0pdcHgUNwXMDGTJ1IsO6Sz03l5OwYlEI2foRKhaoD3ug
+ zPKx/PfKe8IhEX9sBKbBQS9tnCHqYRo=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-uSB1YJqHM7iiEfc8BB5xZw-1; Thu, 10 Sep 2026 16:15:14 -0400
-X-MC-Unique: uSB1YJqHM7iiEfc8BB5xZw-1
-X-Mimecast-MFC-AGG-ID: uSB1YJqHM7iiEfc8BB5xZw_1789071313
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4855e47d062so61590f8f.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:15:14 -0700 (PDT)
+ us-mta-48-VMnVvGi7O9WBgZkRZY6kXA-1; Thu, 10 Sep 2026 16:03:19 -0400
+X-MC-Unique: VMnVvGi7O9WBgZkRZY6kXA-1
+X-Mimecast-MFC-AGG-ID: VMnVvGi7O9WBgZkRZY6kXA_1789070598
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-879b1d03d5fso1471447b3.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:03:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071313; x=1789676113; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789070598; x=1789675398; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
- b=ISW4dHJ6f8FkGgqunxev/T7CrcqA2fA8mlEnVED3fbJ/t3MFRODhR1oEb1KhSyfQz1
- 7Y48Sz+IaBYpgReFOX5BbXl7iaHTeCT9R1XWLt3+Iw1YwkM8ZPdA9UpkJ+cARR5ZWixS
- Cr1W8tEZb0lKvBhdFBFYM4YoiHGZ+dq4kbvuNySB0zJ0Z+8/BJw2kw+LpFW4sv/ohVY7
- tHbQXtVOCMgzIMxraGqx59CMPlpXwylTLDpkCOBeqQ1HsW91CLnG6DrcqckerMc1wbYj
- XSA55eJJkalrzPtJKRHOAgNeRTBvMbGyhb9oj9Uh9dY7CYUD/R0+9c5pE3ADT94uEPji
- BTwg==
+ bh=/9QGs76Zr22lDoxGVCyVcF2VMfnm6aN2RLaHW4UT2aI=;
+ b=ZbDXuW2yCFg7fueTL8nPaUlCiB/k4dseW2gQ/HW+LZwrrnpZxcX5zVPnpXkpZqzk6+
+ 0z+ba9gAtcg1L5ZWvOI7z6yAflHzu6e1mwxM1WaKo4An2oBBRBWt7EOp9kaOEM1cln/c
+ sEO6YwnCS/WeVufLLt0imJgVGd+SnJ47Vr2OWgEkDZy+cZ7TJPL+DssjydeeD/HxD03o
+ x5HSvOlVQ54Bxd1772HB8cyxM5DHDOKlLKeaGsBvS46efFlWbLSKWimnxGs9G4eaQZ4v
+ qERsB20kIR35KUSUb1MPZVt2LGR7OQj1wd3MbOtrNL+/1kY07B4jMmvY6OQcglxxYPu+
+ 5jVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071313; x=1789676113;
+ d=1e100.net; s=20251104; t=1789070598; x=1789675398;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
- b=NdTuUjNk6JQeZjIuRB1vJonyM1dxiFO4wEAQ3HlrkJ57v7PeyFfvQ4yrIl0YS/Yr2e
- LztaqYeLF1WVxqCk7zQBpbPoAwsQwc5UnTSMoXByPNGJ+85MCqaIVfX3UofFuBD1vSOB
- HQkqec7BJ0WhAASMy42QqHE1d+yAL4AwI5G1IuOvyvUNcnKXW68YgOOhOFy4Y3moyZdY
- 94swut6wN/xqyY6ijYKARUpwfxxAuv9WUd6nupFGUS3iQuC3K2YbZWB9P0egEdrbUnHM
- +68j+LE4KT5OU9LWdOKDSVc61I30IVV5Uxi/6Qmtoe9E4j7+6ToLk0vVg6RMLa6WBu9u
- zHHg==
-X-Gm-Message-State: AFuF++lzfcjxlghLsSWIkg311+xB/xT21u02sDLq6J1u9zHxFRGY59O0
- erg60KBfjP7daXIanrI5/98iXJ8tyBUXqjGog++H/rAyUhWLnrfujibjmVqxTgQgg3B6PD/J+I2
- kviRo3dMVfDaFP0CAbmMbBXAVoCwHYCZYqFyXP3mpmwIpy/qOmuL5jxp2blhguKyitYqP6C70Nt
- 7qF7qoKKHukeenE1tHVQeWl8uQ04UYJfWL/Q==
-X-Gm-Gg: AYBFou2R0d1JUqjZEZBZkMEPqh3yFSa+vYAvod8PaNiAlMk37T2uwkvW6zHMdERtUfh
- fQ+lDWTk41yspFuAiJYVvFNT1sh8qEvCcc+T9tLCPRLClORJ+wh0nMPp3Z5BR2eeCvFav5dxsWI
- 2kzpI5T0HYA6S1rFBBG4lFJfzy1YfbABAcSQzl7YiDlHyhJE475g1Prfp6X03GKO1OpnUIZiVlD
- rjDcDUa4NF5tFKnYqZ/xPQZg6Tm0sYwSsk1cTYMk4NzH/pAPeEsM2rnjRT0eTrAUVihamIspP2s
- ZMgfTQyam3f0rnz+JqfxiKtUIKoT1SrjmJpVST6wtMkZy6vmx6MsukxiA5v/4THtqBUnTioQP+m
- Tc+73b0PQjfJqCoMSf5S90pw=
-X-Received: by 2002:a05:6000:608:b0:486:414:e3d5 with SMTP id
- ffacd0b85a97d-486eb2d9912mr779047f8f.8.1789071312933; 
- Thu, 10 Sep 2026 13:15:12 -0700 (PDT)
-X-Received: by 2002:a05:6000:608:b0:486:414:e3d5 with SMTP id
- ffacd0b85a97d-486eb2d9912mr779006f8f.8.1789071312345; 
- Thu, 10 Sep 2026 13:15:12 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ bh=/9QGs76Zr22lDoxGVCyVcF2VMfnm6aN2RLaHW4UT2aI=;
+ b=M32jcufzyy1VNqBPm/9BFrXK666p1wc9bnCt3pVF8YiIg2Nmi9yHEn17AWjYtLtz6D
+ 9rf575ZgvULpN/yppuJYzMqViAOXBBotJjF1Pa8uvBmvAYvPHtxgH06gItmcI/rmOhxc
+ d8S5nqNLVobHvBpVH4cR46h11kAxdOX1o3cQRrx8KhSDQ4cl9xCuM4baM+RsklFA54Di
+ n+t1l6+MJ8jszIMAwPAB5Q5gkr6Wnv8kAERhEB77Mv5iN2LhQNNxTxMX9ld/DfekLdA3
+ zsdT+2xozI7vgiRTcN0FIiH7MA9xmLNIBcli13Q38HZHA0a3qyaaQXFkzV9ey3bOX6bM
+ O1TQ==
+X-Gm-Message-State: AFuF++lJamnblobaR5ZqNtjNTUUGbAfU0dxbaxvWxHA6XbbYqz96cQ6J
+ mi9mVC4j8HZSEjFZXxn3oJd5Kk8BBIw/aNz4hqsSyr+WiBXCdOSQbWzWy7dpfQe36qU3/yap9RJ
+ pgmVmpLh4p1YWW7bZ+94HMHoi9AqXyKEDVoaWFZ0bw8N2tnK1tjjWbs77
+X-Gm-Gg: AYBFou2psm3qaG2hdCrCmzZnoUpXi6WrdzYCsYRW8Tdndm82apOSCUoC3Yy7u2WjtS1
+ dFb/WnIsek7I8WAP0WzazseFCnkOZmqmx/K23OzoWWtcIajF6tPWB52zpYnyUPcLnBfPEmaFyAx
+ qIVsDU3j7OcAvFZk8qavWFCpmXLNVS3i4HoNufe+y8MgUozyCPMblx5Z2MPLTzMgVdbeEYVagdx
+ +c8AU2cLBx7RZbV1Te0MkkI8xqLqEZ/BNYyNp3h2g/9msg/w0MNvUSqXogW3Jt5F1D+L5PjKrWR
+ 79uZAHYVcUupUrdZSxMXnWjwM7xrHs8FcdiANCDSAdyeP4f5KqgMXBIXuAeqsgvyLY2J/pbQ82A
+ DxWqGGtM9vxUe7bIA/K8qM2LYRYLuiiz6BnRGXesIIWbEyy4UhfNxn1R5y3U=
+X-Received: by 2002:a05:690c:e21b:10b0:81d:a225:ecc0 with SMTP id
+ 00721157ae682-884ae9ab0famr4400587b3.27.1789070598197; 
+ Thu, 10 Sep 2026 13:03:18 -0700 (PDT)
+X-Received: by 2002:a05:690c:e21b:10b0:81d:a225:ecc0 with SMTP id
+ 00721157ae682-884ae9ab0famr4399847b3.27.1789070597466; 
+ Thu, 10 Sep 2026 13:03:17 -0700 (PDT)
+Received: from localhost
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb34e74esm793113f8f.25.2026.09.10.13.14.38
+ af79cd13be357-939e809fd0bsm60850285a.33.2026.09.10.13.03.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:14:40 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:14:37 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Denis V. Lunev" <den@openvz.org>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PULL 76/90] pci: load a device's config inside one memory transaction
-Message-ID: <fbd92ad9a0028937ac5081efa2662eb2030ffa10.1789071043.git.mst@redhat.com>
-References: <cover.1789071042.git.mst@redhat.com>
+ Thu, 10 Sep 2026 13:03:15 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:03:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yanfei Xu <yanfei.xu@bytedance.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
+ jinpu.wang@cloud.ionos.com, isyanfei.xu@gmail.com
+Subject: Re: [PATCH v2 3/4] migration/rdma: Allow multiple in-flight writes
+ per chunk
+Message-ID: <aqMNASWj2baFILy7@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
+ <20260830012750.1567524-4-yanfei.xu@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1789071042.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20260830012750.1567524-4-yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -120,49 +120,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+On Sun, Aug 30, 2026 at 09:27:49AM +0800, Yanfei Xu wrote:
+> qemu_rdma_write_one() waits for an earlier write that shares the same
+> registration chunk, even when the dirty ranges do not overlap.  This
+> serializes sparse writes and leaves send queue capacity unused.
+> 
+> RAM round notifiers now provide the completion barrier before a newer
+> page version can be sent, and the obsolete unregister path no longer
+> requires per-chunk serialization.  Remove the wait.  The global nb_sent
+> count continues to manage CQ and send queue resources.
+> 
+> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
 
-Restoring config space remaps the BARs, updates the bridge windows when
-the device is a bridge, and toggles the bus master region. Each of those
-commits a transaction of its own, so one device costs several flatview
-rebuilds where one would do, and the cost of a rebuild grows with the
-number of regions in the machine.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Nothing between them touches an address space, so the three can share a
-transaction. The saving scales with the number of PCI devices.
-
-CC: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903184542.2629976-3-den@openvz.org>
----
- hw/pci/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 14c78e3c62..0efb4eb4bb 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -840,6 +840,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
-     }
-     memcpy(s->config, config, size);
- 
-+    memory_region_transaction_begin();
-+
-     pci_update_mappings(s);
-     if (IS_PCI_BRIDGE(s)) {
-         pci_bridge_update_mappings(PCI_BRIDGE(s));
-@@ -848,6 +850,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
-     pci_set_master(s, pci_get_word(s->config + PCI_COMMAND)
-                       & PCI_COMMAND_MASTER);
- 
-+    memory_region_transaction_commit();
-+
-     g_free(config);
-     return 0;
- }
 -- 
-MST
+Peter Xu
 
 
