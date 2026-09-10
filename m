@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18C1C88E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EADCC88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 00:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4oqu-0000QT-BW; Thu, 10 Sep 2026 20:11:09 -0400
+	id 1x4owe-0002Xt-M7; Thu, 10 Sep 2026 20:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lWL-0006Uw-Ka
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4ljL-0001bP-RZ
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:51:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4lW9-0003ga-5o
- for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:37:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4liz-0006Nt-D5
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 16:50:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789072441;
+ s=mimecast20190719; t=1789073418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mBiB/jOHXjADUICu4zFhNVY6emnuWrVA0Kv/cK2oUiY=;
- b=Wk2YTbEemqFfjj/txNXYH4nEb2GhFwJ6lkdF2Z/JRDpAwJyYQB7mqGfSzIbigItv3NlJ1f
- SBeFTz+kEp9LQfSDrMcPE11c+WsvT06+JATG+JYXbelfK2ja47K2XgkWKc399nizWlRAFo
- tdkrlGPO41r1IH17/KxgZGseUoR9B7w=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YJvWkUnb4lzQW4cMMtlq1toGA8UHfGJGyMh5sRRga0g=;
+ b=br9+eI4RkW+9CLer6Z7cRtkDp2/4NkLAh0hB/6WNf+l9OGBfJnkY+ECWeRPWIHRmLT+eWs
+ vli6uViDVNqEOcO8DZc0LWrKnGUqrtiWuEJdHhRq1TzAon+3pxtiqf1Zy1aHnsKjKFUDf8
+ XFxLfaCtC6q2wdM4SfFWgweb+ovX/lo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-CkEdhRMZNACH-fgFurVxnA-1; Thu, 10 Sep 2026 16:14:02 -0400
-X-MC-Unique: CkEdhRMZNACH-fgFurVxnA-1
-X-Mimecast-MFC-AGG-ID: CkEdhRMZNACH-fgFurVxnA_1789071242
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-495569acf8dso878525e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:14:02 -0700 (PDT)
+ us-mta-115-HORBhjSrN1Ob8gv5N1uWIA-1; Thu, 10 Sep 2026 16:11:42 -0400
+X-MC-Unique: HORBhjSrN1Ob8gv5N1uWIA-1
+X-Mimecast-MFC-AGG-ID: HORBhjSrN1Ob8gv5N1uWIA_1789071101
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49d2951089fso1540855e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 13:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789071241; x=1789676041; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789071101; x=1789675901; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=mBiB/jOHXjADUICu4zFhNVY6emnuWrVA0Kv/cK2oUiY=;
- b=rdjWUnKB9dzXEHuDOm9oOL/u2tHy6FqzJdIT1LUJRkPS07oN1S5fY918ydvO4c79jC
- ivgzGTTjKZEOginxMISesIH2fTRDIZh43OyUYYQw+QM64jEoS4F6aGSUJfXp1WP9q7k3
- /A+XyBj02wDEvW+UPylVKX9866GEzPQLY1QDP0CYWVvlQ6G8UjCGLluRGZrAfO1gCNFc
- h7i0mEfGIKEJkWulxfyZmG8xpf7/k8R4ZrWXjXnoaa6UhTZh0O7dhvGjD8d4y61Xmo7v
- grQhspksQgJuMYKk/YnyAnbM/4cA4gLZo0TmpR9TFRf8TvpD3UyKkDEZPatoJyk70mWE
- Hthw==
+ bh=YJvWkUnb4lzQW4cMMtlq1toGA8UHfGJGyMh5sRRga0g=;
+ b=sLAc4pRwhlOOkauIbEHcruimtkVejRcVZumYJa5brS0xS2dhMgus6tUQCergItlvFC
+ ytSrJSVRcSG0chIN+A2Vm2nSK3kDdEkrAVqe1FfckNiozdgAnXeN+90EuL7V3b+LBehk
+ 7/a4GoDaJpUOtRMPLiy61afZjC4SMJdfl9AdoBUwlny8VOuDWA4uxs+9f6BwSVBRp8Lp
+ pYFzZrKyi79w9+ZkvE2ULx2ZXZe3gqH6113LAmiduhAYNdh8XZftDmPAr5VP2roih61B
+ eLwdTl9RlOLtCajplLeb+biLIPtj6v7w08Tm0E5OUJ+R+/nJBdJyhtjH6m+NWkzmKO1h
+ 7LJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789071241; x=1789676041;
+ d=1e100.net; s=20251104; t=1789071101; x=1789675901;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mBiB/jOHXjADUICu4zFhNVY6emnuWrVA0Kv/cK2oUiY=;
- b=M4THvBJOALTwjSk4gYMpJMwMiMP4NlpvEZlpuVenlE+XEDrNFW+3amBHVHhZtHpdwA
- 6J4a8NsaiToogUJAKjT2lKSY9MSTZ6UID3H8nkE8419z36lPfFuZUts4Is4Yf9G6Jx72
- c9Kncmc2oijFabzvX0edO3ZifaRevNiMJM0f/QpwBAqzBL97fcAhfKAxJNCt8hpWTLm6
- wyFJ28N3pT4wf1Fyb5FvJ9erZiCkYluktceve/vAb06UVqVxjwuHwt4lA3Rwmut7Tm/6
- H48qM22E7fJpkSzNFKyQZ+FKzRt/cUotlCegZyGJ95EIYwo49H56fHBnmSUilUKo8Dly
- l+4g==
-X-Gm-Message-State: AFuF++mX9YbTHrHUn6jXLLg84KSebl5+Rl75sh+h29myuQ2qn5DImt8e
- vVp7ihnxHU8RdkFglPAKEAIoJxThfbcXEoybaf4DjSJ6L13oAy20ypYuct58nDNtwxUsT/4Qu0W
- 4VHAIDYSE5FOi82txSnSMgj9IpX3bWhZBMDSoS4V038Ccxr9mYLtXAByt1eYZu2ozmmNZXoC8ux
- iqxDRLo80Tbk92fZI+Xm0MP5eNZyB1AA1pKg==
-X-Gm-Gg: AYBFou1YFNWcIORSkPjfbiqqsZgaFqQoA6JkUg0dGVCeUh7v2SIumlNS5FguAv+5AsU
- zgPkYZ2kOu3nnfAO7vK25TPau5TUuhQhMhvxTNonQtKIKIIgESca09B9H9Q26hfdZawSIbX5ma5
- nvJyCq7fJ8pj199qWss8WOub1V8WVe6Es0WpjS8bH0qMv3EmYSV7ryzLFTDBlMpo+2l81pb4KMZ
- JthgcQv5HMzb+/+sbY+Pu8AW2qsBYCMgpatQGevY7LAMOnDmZ1bL904wMGbwILGlFH/h9QdGg+G
- 2UdZM88q2kLEys0Qt/u9+sTeGFq+0hq0tfHugZLIOdJxYRfIFSageBfB6KsILiKRuEhDywYoO40
- ktK6qjswGk57OxudJKBefsIg=
-X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
- 5b1f17b1804b1-49e619acc89mr19498725e9.10.1789071241547; 
- Thu, 10 Sep 2026 13:14:01 -0700 (PDT)
-X-Received: by 2002:a05:600c:8518:b0:49c:edfe:d525 with SMTP id
- 5b1f17b1804b1-49e619acc89mr19497875e9.10.1789071241044; 
- Thu, 10 Sep 2026 13:14:01 -0700 (PDT)
+ bh=YJvWkUnb4lzQW4cMMtlq1toGA8UHfGJGyMh5sRRga0g=;
+ b=AaD7AT7Qn76nBzgxmPjku/KHyTItpo8uRNNHQhExw65GM97du0o3EAOHG9i0CJpmTb
+ RmDsoG3VK4FvZ50u52cOIuQBimV+SeSwASZdlLSC6BfHbdAsl86uEj12vX/JIvAWSALT
+ cKZIg0gHaJiZPjBQB18ukHm96FhvhTei9uqyZGeIhvhy8DzfseI3JT6aLxYBfAh7O2bc
+ R5NFPgSXwJugMFjZQnufHu1aYcrAP2CtdX2mg1wuGKUER9EZ+34XoNuk6iDiUN0SbYWb
+ F0V+9ZpAc97aQWinCY0sWxstZ1+rvZj1+QHFLN1ohW5rk4EekNiQa0Ubi+Nj1PmzzZmq
+ b0mw==
+X-Gm-Message-State: AFuF++nQfotso/3NEYqfbmOoMjKHjVLoMvP18oThan8N18wzPrdM/t9+
+ 6foNUS1YR8Kvw05UTL7X/8S9MDpyvk0Md6MojAHx55ruIyNBuXiWXON0umav2yJOxGTRhA9tZ8V
+ 3xt4erOJGYBVGmupgB/2HO0EANdhar7hHOZHB5kHYt0WBG3Pce3U9Sq7lE7XXTsDQA+z/A5ERaP
+ 9LlTrIt6faR+oL9ZEJJPheBD0pwBphyupYAg==
+X-Gm-Gg: AYBFou0UqgiDeBJ11gglcJkspThlSoMPYfsmlQZUzolI7weZ69UuwwJf/PDTgawCf88
+ j1DiUx8D2NVZcxOOKviwpHdboNyJ5fzjS6aK5KBb3CuDTIs+ZJY6AZaUHg4DODp6O5gyRvFVgug
+ Q2r+JQuGiNxbQgB0ESOsbStGV34Imr9VB0l0tjSRP4E4MPw7RE5CdvV4Hm6YhSVkqL2kMJhgYCN
+ YqWHJ5RboCv4BX5CC9kgerI9Dmsxggqo1DtssN4LTCOvrcuJ/mFu4pNjSc3WGm2My3YbI35ARqD
+ CSCnAtvDl6dOOowJ9SewQ2Tjf82f8nM3HY/Q+AzepAT1YexYmMHxiTN2cSe5gr/L9DNbdYaZXRl
+ bu2agG61v70OD7JRZv7KGYoc=
+X-Received: by 2002:a05:600c:3104:b0:499:621a:2ec2 with SMTP id
+ 5b1f17b1804b1-49e6188899fmr8133935e9.3.1789071101023; 
+ Thu, 10 Sep 2026 13:11:41 -0700 (PDT)
+X-Received: by 2002:a05:600c:3104:b0:499:621a:2ec2 with SMTP id
+ 5b1f17b1804b1-49e6188899fmr8133655e9.3.1789071100400; 
+ Thu, 10 Sep 2026 13:11:40 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26c1bfb5sm104235585e9.5.2026.09.10.13.13.59
+ 5b1f17b1804b1-49d26c2985dsm162559465e9.6.2026.09.10.13.11.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2026 13:13:59 -0700 (PDT)
-Date: Thu, 10 Sep 2026 16:13:58 -0400
+ Thu, 10 Sep 2026 13:11:39 -0700 (PDT)
+Date: Thu, 10 Sep 2026 16:11:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 60/90] tests/acpi: x86: Allow IVRS acpi table changes
-Message-ID: <5c5d6a0fdf2527a64f5ae5997d9ae59aa6d5f0be.1789071043.git.mst@redhat.com>
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 07/90] vhost-vsock: don't reset connections during CPR
+Message-ID: <ed7128713ea04b1684705069dab8c8c5f2ad365d.1789071042.git.mst@redhat.com>
 References: <cover.1789071042.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,23 +121,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Migration target with a vhost-vsock device in the .post_load() hook issues
+VIRTIO_VSOCK_EVENT_TRANSPORT_RESET event to the guest.  This results into
+the guest tearing down all its vsock connections.  That reset exists
+because after a normal migration the cid may change.
+
+However it's not true for CPR-style migration.  In this case cid remains
+the same, and we want the connections to persist.  Thus, let's customize
+the .post_load() hook to skip the common transport reset part in this case.
+
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807061250.27739-3-sarunkod@amd.com>
+Message-ID: <20260820113955.509478-4-andrey.drobyshev@virtuozzo.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+ hw/virtio/vhost-vsock.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..33e9981655 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+tests/data/acpi/x86/q35/IVRS.ivrs
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index 503d248a61..c582ac9fcc 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -20,6 +20,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "hw/virtio/vhost-vsock.h"
+ #include "monitor/monitor.h"
++#include "migration/cpr.h"
+ #include "migration/blocker.h"
+ #include "migration/misc.h"
+ 
+@@ -110,6 +111,20 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
+     return vhost_vsock_common_get_features(vdev, requested_features, errp);
+ }
+ 
++static int vhost_vsock_post_load(void *opaque, int version_id)
++{
++    /*
++     * Only reset vsock connections for non-CPR migration.  For CPR the
++     * guest cid is unchanged, and the cid-change reset would otherwise
++     * tear the vsock connections down.
++     */
++    if (!cpr_is_incoming()) {
++        return vhost_vsock_common_post_load(opaque, version_id);
++    }
++
++    return 0;
++}
++
+ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+     .name = "virtio-vhost_vsock",
+     .minimum_version_id = VHOST_VSOCK_SAVEVM_VERSION,
+@@ -119,7 +134,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+         VMSTATE_END_OF_LIST()
+     },
+     .pre_save = vhost_vsock_common_pre_save,
+-    .post_load = vhost_vsock_common_post_load,
++    .post_load = vhost_vsock_post_load,
+ };
+ 
+ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
 -- 
 MST
 
