@@ -4,105 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38963C79FBF
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 13:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A36C88E40
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Sep 2026 13:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4eoq-0001Pd-Tx; Thu, 10 Sep 2026 09:28:00 -0400
+	id 1x4er8-0001s9-0o; Thu, 10 Sep 2026 09:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1x4eoo-0001Ob-Gi; Thu, 10 Sep 2026 09:27:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x4er6-0001rz-LE
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 09:30:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1x4eom-0002yU-Ow; Thu, 10 Sep 2026 09:27:58 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68ACVUiP1017614; Thu, 10 Sep 2026 13:27:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=ZJfLxj1pht2kz1mYb8nn6icgteY8n9vb72O1GUrji
- 4Q=; b=oFv9FVuzEJoelxfrKlWGNBYwHD4xEeFkMBqAY0+TKhWPZym/NPSMLHqgb
- l4nCg0leWza5P9bVr6smuOUs9U6VI5B4+xd/mM+mzhThPZXHS79oggJUTZfEO5La
- fTRIkQSwPUxtuc5+opyFu8OWK2KD8UsEcDOJ2j5YhGQok3JXjpq84YdSVzWsiX8E
- baTaGltV/Z8LKzcrB7ZpT2/Iz9tOfl/bM0uph08yFAarmVwXK5ddY1EHTjIHZQmc
- HwBwTimVW8Z9yxX61PV2A/eQ3uOLmHxDIAxcyvOJwWw0vIaAIQBOM6dKYvqXCgcC
- emcvDlvcUnW4M8LuC0UWrGsksRbqQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8n4swx-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 10 Sep 2026 13:27:53 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68ADAObY064951; Thu, 10 Sep 2026 13:27:53 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gkvq2r7bf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Sep 2026 13:27:53 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68ADRp5u9896478
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Sep 2026 13:27:51 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C40B5805F;
- Thu, 10 Sep 2026 13:27:51 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2BBDF5805B;
- Thu, 10 Sep 2026 13:27:50 +0000 (GMT)
-Received: from Mac.ibm.com (unknown [9.61.244.81])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 10 Sep 2026 13:27:50 +0000 (GMT)
-From: Omar Elghoul <oelghoul@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- cohuck@redhat.com, qemu-stable@nongnu.org
-Subject: [PATCH v1] s390x/pci: fix DMA slot leak on I/O TLB entry replacement
-Date: Thu, 10 Sep 2026 09:24:08 -0400
-Message-ID: <20260910132408.12707-1-oelghoul@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x4er3-0003a7-Un
+ for qemu-devel@nongnu.org; Thu, 10 Sep 2026 09:30:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789047016;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=I0SXExc26Odte8Sr8ekZBMCR88D97UmwyudeOzckHb0=;
+ b=BdMQZ4Nl9TbfCp3vHDHdAab4FhUgB+s+XcCFBYmGAW+B1JEZ/6pnWmx2X75LFUsJzawLu9
+ nROg7cT48flCcMdxxp3asjrLggkHubwVjr/2U9DiYbl9JMYIg/FfIsvGzmuWrHrU5rfm2D
+ 9HEfgcA8407cXgqCVcsnO/ay4CFR3pU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-XAfFQyVYOl28nK8P2Vg6CQ-1; Thu,
+ 10 Sep 2026 09:30:13 -0400
+X-MC-Unique: XAfFQyVYOl28nK8P2Vg6CQ-1
+X-Mimecast-MFC-AGG-ID: XAfFQyVYOl28nK8P2Vg6CQ_1789047012
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 245DE1955F73; Thu, 10 Sep 2026 13:30:12 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 59AA0418; Thu, 10 Sep 2026 13:30:09 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=NMVAaE6g c=1 sm=1 tr=0 ts=6aa2b059 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=LIsPFFd6MgQa4MQ-8P8A:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: Nt656pUpSkqvXXdq81Dfk5JTEtNSdVa4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDE1NiBTYWx0ZWRfX8TyGQYX6xMy6
- qGpC0glaX/kxWlDSS5uLA8zsurpTKYxTV1XTfAkGkzLvEmgpK+oXLsecQJVk1ULdoUSfSE3exw4
- hHoqsEkPtHz0vh8cADTWk9Xgaxy0RcCDm/YqbRnkRGUAqLTK0ErwNRg10Yhx0hU4Qv99E3rzYGF
- yHeMLn9VxECT4cU+jbaxhAMZbeW2BaNAmX2cN+bkZpWqGSsLT1K6MbqymI/Ez4XzxJvfUOCcy16
- OYe0ZTI2ik+bSGxcN9Wfjal54OAOg0nBm0mzmYHPjFC3BLK7NYFegFm5Qu6LngWaoBij8JQA5Ur
- p4/fZNJgvG1YDqE7sbpoNzqMlyzmWTOI/KpHIXJwom6JI7OpSz9+VW4IP7pJzsAQJiCbcJMT6uC
- wN3st5cou8AieboCudIjaAIZOTZwRdCvGpjRdA+6K8UoqWAlKWxMN5DrXtFDuA4K7w8DEU1uxdS
- mE3aysMt4GjZvyoHOsQ==
-X-Proofpoint-ORIG-GUID: Nt656pUpSkqvXXdq81Dfk5JTEtNSdVa4
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEwMDE1NiBTYWx0ZWRfX5uQSXw+y5kvj
- ylGqt/51nErVLTS/SzNkVCakahMe/qzArvEoZFd5Rf0Al+rqYd1hjLu1iAQ5ONRXUF8Xc84k20D
- W0WD4qbgWuk/Ca7TObBezBos6AaCHsQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-10_04,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 clxscore=1011 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609100156
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=oelghoul@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: [GIT PULL 00/24] Various virtio-gpu/dmabuf related fixes
+Message-Id: <20260910-virtio-gpu-cleanup-v1-0-ccb8927a671e@redhat.com>
+Date: Thu, 10 Sep 2026 17:29:55 +0400
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6073;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=w8A8pTsG9/fX0Gt3R4Uf+pa3YhV3etR2RgL4x3v+7bM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqorDbpoNEAbbXt8X57kjHrmVgyLMLl7XTYwntP
+ F/N6tg/M52JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqKw2wAKCRDa6OEJdZac
+ 5YFGD/9nDIh9Bn35zd0ij9f0RehEKeaxIa999ZSIdGDfi9pUHU9QIxNeRiWzFenBZkYfpwgoV/0
+ H3cuUYRWqx/OTBtq2H13zv1jbDSysNGvopKtxfPG6yEcyvo2TtL4NFBAPC0I3vh4XV17+uGP3ty
+ U8WPEvTXzuq4uW3S1rotvF1G0IGlLWWJkawJzhXUL0N/OGXTF4HgvkJt+49E1DseOPGitohP0bL
+ L655lqGuXCuHzdSzaCHzBL+g8Lt2jB5rlbnQitTuxj1zc5N9vM6nybhwMR1K4082hPx2UT7/YJs
+ NLX+GGSZoJOV7kZ5dD5eQQ2GtIBYYKPSpbqH9ejVWmSEAlbkQMAzYAAVzi4qAgQZNpWSJ7ye/Dc
+ QF+77SeLYJYdv3wxdsJTvxgvegvmaCDST5Luz88EmARrddZEOc7mu2zWUNhS1nTBxlYf+ScPxmr
+ LnvfiA5tZvvIfPVr3wuFAVbrpd5Xxqrl38thFShYhuaKlkYKFS1QypzS5rVz1rVmttfIVUD5pRc
+ K4DeCMg4Q1tNmvfE/RiudkafqAHjG19vFs4rjkmQOmzbaZdrR7saG+PQZL3nVpd9mshsjAnK9Pz
+ c2lOD7D5Jn9ap7MRR2p1Ox+pft5owQNY4U3s4IRpLnEvTTvVvllw2ImK2ZYzdFnvkgH+e+pDP8w
+ dGKhwtmIDTGG/OQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,48 +100,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When s390_pci_update_iotlb() does a mapping update for an IOVA that has
-an already-existing TLB entry with different permissions or translated
-address, it unmaps then remaps it. However, at the end of the map path,
-it unconditionally decrements the available DMA slot counter without a
-corresponding increment in the intermediate unmap branch.
+The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013fb7:
 
-This causes the DMA slot count to be decremented on every remapping of
-an active IOVA, leading to a permanent DMA slot leak. This remapping
-without a prior invalidation and sync is not seen today in well-behaved
-guests but is allowed by the architecture. Fix it by only decrementing
-available DMA slots when inserting a brand new mapping.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-09-10 11:08:04 +0100)
 
-Cc: qemu-stable@nongnu.org
-Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
-Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
+are available in the Git repository at:
+
+  https://gitlab.com/marcandre.lureau/qemu.git tags/virtio-gpu-pr-v1
+
+for you to fetch changes up to d26343c12d84227263b8d2fc89bac7632a98e00d:
+
+  contrib/vhost-user-gpu: disable scanouts on resource unref (2026-09-10 17:29:47 +0400)
+
+----------------------------------------------------------------
+Various virtio-gpu/dmabuf related fixes
+
+Hi,
+
+While working on CVE-2026-66020 (which had a few revision on list), I
+kept finding several places where virtio-gpu scanout and dmabuf
+ownership was unclear.
+
+The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
+unmapped its memory. Following that path also found stale dmabuf
+references, duplicated scanout bookkeeping, and inconsistent cleanup
+between display backends.
+
+Those changes touch a lot of area and I have done basic testing with the
+various backends. I would not recommend backporting them all to stable.
+The first 2 patches address CVE-2026-66020 in the general case and
+should be safe to backport.
+
+thanks
+
+To: qemu-devel@nongnu.org
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
 ---
- hw/s390x/s390-pci-inst.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Changes in v5:
+- EDITME: describe what is new in this series revision.
+- EDITME: use bulletpoints and terse descriptions.
+- Link to v4: https://lore.kernel.org/qemu-devel/20260910-virtio-gpu-cleanup-v4-0-7d623714bd71@redhat.com
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index b7de23c7d2..5840675aba 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -665,6 +665,9 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-             memory_region_notify_iommu(&iommu->iommu_mr, 0, event);
-             event.type = IOMMU_NOTIFIER_MAP;
-             event.entry.perm = entry->perm;
-+        } else {
-+            /* only new mappings consume DMA slots */
-+            dec_dma_avail(iommu);
-         }
- 
-         cache = g_new(S390IOTLBEntry, 1);
-@@ -673,7 +676,6 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-         cache->len = TARGET_PAGE_SIZE;
-         cache->perm = entry->perm;
-         g_hash_table_replace(iommu->iotlb, &cache->iova, cache);
--        dec_dma_avail(iommu);
-     }
- 
-     /*
--- 
-2.55.0
+Changes in v4:
+- replaced "ui: make GL context current before releasing DMA-BUF
+  textures" with more complete "ui: make GL context current in display
+  backend callbacks"
+- rebase, drop eof line leftover, collect rb trailer
+- Link to v3: https://lore.kernel.org/qemu-devel/20260909-virtio-gpu-cleanup-v3-0-99266590e79d@redhat.com
+
+Changes in v3:
+- updated "virtio-gpu: fix use-after-free on blob cursor", now "clear res->blob on mapping cleanup"
+- always disable GL when clearning scanout in "virtio-gpu: consolidate disabling scanout"
+- drop "vhost-user-gpu: release DMA-BUFs on scanout disable" for now
+- rebased, collect rb trailers
+- Link to v2: https://lore.kernel.org/qemu-devel/20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com
+
+Changes in v2: addresses Akihiko review
+- reorder to have CVE fix first, easily back-portable (but also more
+  limited fix)
+- include virtio_gpu_{simple,virgl}_resource_new() patch, and other sent
+  separately
+- move draw_submitted from QemuDmaBuf to VirtualGfxConsole
+- contrib/vhost-user-gpu: disable scanouts on resource unref
+- drop rfc, collect rb, adjust commit messages
+- Link to v1: https://lore.kernel.org/qemu-devel/20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com
+
+----------------------------------------------------------------
+Marc-André Lureau (24):
+      virtio-gpu: disable blob scanouts on mapping cleanup
+      virtio-gpu: clear res->blob on mapping cleanup
+      hw/display/virtio-gpu: introduce virtio_gpu_{simple,virgl}_resource_new()
+      virtio-gpu/virgl: free BHs and timers on renderer reset
+      hw/display/virtio-gpu: set share_handle for udmabuf blob resources
+      ui/gtk: move GL fence tracking from QemuDmaBuf to VirtualGfxConsole
+      ui/gtk: move draw_submitted from QemuDmaBuf to VirtualGfxConsole
+      ui/dbus: disable scanout iff dmabuf is current
+      virtio-gpu: store the scanout DMABUF in virtio_gpu_scanout
+      ui/console: disable GL scanout when dmabuf is the active one
+      ui/sdl2: clear guest_fb.dmabuf on release
+      ui/dmabuf: own and close fds on free
+      ui: make GL context current in display backend callbacks
+      virtio-gpu: release the dmabuf when a scanout is disabled
+      contrib/vhost-user-gpu: drop scanout_bitmask bookkeeping
+      virtio-gpu-rutabaga: fix scanout handling
+      virtio-gpu: drop scanout_bitmask bookkeeping
+      virtio-gpu: release dmabuf when switching to a surface
+      virtio-gpu/virgl: release dmabuf when a texture replaces a scanout
+      virtio-gpu: consolidate disabling scanout
+      virtio-gpu: minor refactoring
+      virtio-gpu/virgl: disable scanouts on resource unref
+      virtio-gpu: extract virtio_gpu_disable_scanout_for_resource helper
+      contrib/vhost-user-gpu: disable scanouts on resource unref
+
+ contrib/vhost-user-gpu/vhost-user-gpu.c |  28 ++----
+ contrib/vhost-user-gpu/virgl.c          |  12 +++
+ hw/display/vhost-user-gpu.c             |   1 -
+ hw/display/virtio-gpu-rutabaga.c        |  38 ++++----
+ hw/display/virtio-gpu-udmabuf-stubs.c   |   2 +-
+ hw/display/virtio-gpu-udmabuf.c         |  89 +++++++------------
+ hw/display/virtio-gpu-virgl.c           | 135 ++++++++++++++++++-----------
+ hw/display/virtio-gpu.c                 | 148 +++++++++++++++++++++-----------
+ hw/vfio/display.c                       |   1 -
+ include/hw/virtio/virtio-gpu.h          |  31 ++++---
+ include/ui/dmabuf.h                     |   7 --
+ include/ui/egl-helpers.h                |   4 +-
+ include/ui/gtk.h                        |  14 ++-
+ ui/console.c                            |   3 +
+ ui/dbus-listener.c                      |  69 ++++++++++-----
+ ui/dmabuf.c                             |  65 ++------------
+ ui/egl-headless.c                       |  17 ++++
+ ui/egl-helpers.c                        |  15 ++--
+ ui/gtk-egl.c                            |  55 +++++++-----
+ ui/gtk-gl-area.c                        |  33 ++++---
+ ui/gtk.c                                |  43 ++++++----
+ ui/sdl2-gl.c                            |   7 ++
+ ui/spice-display.c                      |   2 +
+ 23 files changed, 450 insertions(+), 369 deletions(-)
 
 
