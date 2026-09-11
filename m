@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE88C88E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E85C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54HH-0002aI-Et; Fri, 11 Sep 2026 12:39:03 -0400
+	id 1x54HW-0003Y8-H9; Fri, 11 Sep 2026 12:39:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54HE-0002Kl-Fd
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x54HU-0003S0-Nn
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54HC-0006aJ-QI
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:00 -0400
+ id 1x54HS-0006cq-Qj
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144738;
+ s=mimecast20190719; t=1789144754;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NqfpP6+T+mMqhutT80shj/MSxHjc1FnuwFPkDl4SbWs=;
- b=TveH4Dx6RA9Ht7zLuHMIqGCYUUwgBaNv/ri/azDzsJ2P+BZFHVLWq1ygMKjMS/GzA2C9Fn
- DOemleQcmXzpdPtdRSHlpcvJUSuGh8Eoss5TLWtxe/G0k6gOMIp3KM3igErg7C7BzjM07P
- 3hcRAD2YpwVyfiksUThKDGe+u2frgjA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=sPgRadxNMCR6rJBX+OgeUWY7AcJNlaEQ9KAIrEOu/Xk=;
+ b=R3iZTg125XrDn7gyS2aQBoDvTD6a4JC6kd6UgYc7lly3+CWGSGNZa+khmy05h+kXwdi8gZ
+ LYS3rPVwdoE1KcE64qjadHFjnHZvpooX9rLAZHXbaRfDIglQ/UzUqi9636a03+P8gZv4YY
+ 7obF8Uerw3hEU/14BndbI/pNSqwrY5M=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-iP7Vm8FNPC-OCwbaPiHKBw-1; Fri,
- 11 Sep 2026 12:38:53 -0400
-X-MC-Unique: iP7Vm8FNPC-OCwbaPiHKBw-1
-X-Mimecast-MFC-AGG-ID: iP7Vm8FNPC-OCwbaPiHKBw_1789144732
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-646-E1D5NRi0OnmyJEdJbCeMwg-1; Fri,
+ 11 Sep 2026 12:39:09 -0400
+X-MC-Unique: E1D5NRi0OnmyJEdJbCeMwg-1
+X-Mimecast-MFC-AGG-ID: E1D5NRi0OnmyJEdJbCeMwg_1789144747
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1B03195396B; Fri, 11 Sep 2026 16:38:51 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 64D271953940; Fri, 11 Sep 2026 16:39:07 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8AAE11956095; Fri, 11 Sep 2026 16:38:50 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D16D3433; Fri, 11 Sep 2026 16:39:05 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:34:57 +0400
-Subject: [PATCH v5 23/62] loongarch/virt: convert OnOffAuto properties to
+Date: Fri, 11 Sep 2026 20:35:01 +0400
+Subject: [PATCH v5 27/62] whpx: convert OnOffAuto arch properties to
  QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-23-7732a55b7760@redhat.com>
+Message-Id: <20260911-qom-qapi-v5-27-7732a55b7760@redhat.com>
 References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,27 +66,27 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>, 
- Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5919;
+ Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6648;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=nfckD088YpF8IH5Vqc/iq59Hc1wNBUsrHYJUB8Qf1+k=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC24jNgYCKhMUtO+EMnKhfeD2V9co8Y2J0av+
- TP3ki42GliJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuAAKCRDa6OEJdZac
- 5QI/D/93/+NMO/i04NthpVKKmBW55t8g9xJOU3ignumNiQ05inMBFKsi0OYgZwdfnMxqlFG+wVg
- rpUscN/dc2PDnPrYYjtd2uV/ftgz1o834AD1Y65IbSdpEfbGMprMGoVu4G9oRpeobvyDoUigMmL
- i0o6nWd1S+/uRdzEq7EqyzGfwCJCCxL0hU1rkMAxkrPopZp2sDw4yAnsnd0+tRxeDm9zwH3G4CQ
- U+AjdGmq6/sRKxiAWsKZPkoFvN+bMBX58Xr2MF7JY4yuckjGR1uGMhzrvbWjlt9mXjDmnlmTEMx
- jbilb7dsMijmpXET6xppPHefQU9cIFBwPJudbksyOjJxYxIauDLHi5+sQ2RHQy2DV2gBAYu8TNI
- QPGqH9CqmoEIZaVu+kovw3heQKp2AgdfhRaxm/radd1QKbm61RHHspZrzKxKsQMof2/bOzdCSre
- WO/1WI6xGMoMjeptn4uNgtpzWCfadgMwM0sisnVweuVhJv4Ws4F65WSYpxh5zofw3mJGFuilHeb
- Y3ohCvdTQ9CLx9C32JoWi9NTj7uxeJ5moW6e7GLJa1e2ySyD2IdNjpHr4LRTu/QlOTEAYGSg3Px
- 1Ntj+BsLW+hnBSVgf9v4tkR4I4GW1yREvkwgVxs6ZQ3G0Al4bmlBhl9f6OkmDVOoq3djlMCeUsO
- HkKge4n69p9+CKw==
+ bh=N+U0XEJTrcuE1wu4Sw7QHz4tc0v3EhcfKlq5/Zejm8c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC254rTu+gBvR6f9ycu1/BFQYAioKUdzr3zrz
+ MjWlN5OskSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuQAKCRDa6OEJdZac
+ 5ZnZEACUdPnr28Xr22uycK5YdGaxXbBM+PnmJJPyc2YytqdTXLLSjXjxZNckunyNa1bMtKnnWhx
+ rYFqozSFHUugBdMgTBS569XJsl5yXCCOm4zCbAgSCOSWNDiRYFMCMHCf1+J54jk/mHgvYuHhzRs
+ uQ7TQ5RLnzOHimy5QVppTs83BHv4xm1p/ElIanAMp6ebVkznA19gbJRfRZpaMlAhXVVDDDyDqMe
+ 20lqeZievaHfLVFAdUdYVUMcCUIulWBYtfpvBZL2HakOeHiqlZiPImYVkirZORAqHoKXAcExHu4
+ 2dp+eUQXZgVrEJW3Dk/hlvrzUclJ6THBHDmQglvwg/VOVFAETkOY8RIK8BMi+sJDHha38H/RxJv
+ jJk1Uw+n8zycu49Gl3bWmp99NnBj/9koHTG3x4kK1C0iTB0BkTr01NDXXMpEGudjCxH79gBTKL2
+ I13vYleUb7GvX6xxTd9PYqY1CR501CZ4b1Fts+RkQ/mFIr2/ia0pfWk9/lRTXczKyVILEe5F08D
+ //rmvRw9ZrxbsMqqWd+RrNzPs/96J0Uh1CXT0m/ivXLirSdPEz6wkq9wvQPh2v8NwF4z2T5+/+p
+ Vc4X91f1cXBUDJq7prwiUkUobDmEl1PtKWJWu+HevFwHmtZyxCGlumFQke2klsu8yZbc/bqZUDk
+ Zpj7SkPgHZ7YJ8w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -94,8 +94,9 @@ X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,158 +112,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the acpi, v-eiointc, and dmsi OnOffAuto properties from
-manual visitor-based callbacks to property_add_qapi_enum().
+Convert the ignore-unknown-msr, intercept-msr-gp, and ssd OnOffAuto
+properties from manual visitor-based callbacks to
+property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/loongarch/virt.c | 85 +++++++++++++++++++++++++----------------------------
- 1 file changed, 40 insertions(+), 45 deletions(-)
+ target/i386/whpx/whpx-all.c | 101 +++++++++++++++-----------------------------
+ 1 file changed, 34 insertions(+), 67 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 9cc79929a8ab..750ce2dbe5fc 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -36,7 +36,8 @@
- #include "target/loongarch/cpu.h"
- #include "target/loongarch/cpu-mmu.h"
- #include "hw/firmware/smbios.h"
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 113f79afb9ab..64fa389a2f93 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -30,7 +30,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-types-common.h"
 -#include "qapi/qapi-visit-common.h"
 +#include "qapi/qapi-type-infos-common.h"
-+#include "qapi/visitor.h"
- #include "hw/acpi/generic_event_device.h"
- #include "hw/mem/nvdimm.h"
- #include "hw/core/platform-bus.h"
-@@ -51,26 +52,21 @@
- #include "qemu/log.h"
- #include "kvm/kvm_loongarch.h"
- 
--static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
--                             void *opaque, Error **errp)
-+static int virt_get_dmsi(Object *obj, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--    OnOffAuto dmsi = lvms->dmsi;
--
--    visit_type_OnOffAuto(v, name, &dmsi, errp);
--
-+    return lvms->dmsi;
- }
--static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
-+
-+static void virt_set_dmsi(Object *obj, int value, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-+    lvms->dmsi = value;
- 
--    visit_type_OnOffAuto(v, name, &lvms->dmsi, errp);
--
--    if (lvms->dmsi == ON_OFF_AUTO_OFF) {
-+    if (value == ON_OFF_AUTO_OFF) {
-         lvms->misc_feature &= ~BIT(IOCSRF_DMSI);
-         lvms->misc_status &= ~BIT_ULL(IOCSRM_DMSI_EN);
--    } else if (lvms->dmsi == ON_OFF_AUTO_ON) {
-+    } else if (value == ON_OFF_AUTO_ON) {
-         lvms->misc_feature = BIT(IOCSRF_DMSI);
+ #include "migration/blocker.h"
+ #include "host-cpu.h"
+ #include "accel/accel-cpu-target.h"
+@@ -1875,6 +1875,7 @@ void whpx_apply_breakpoints(
      }
  }
-@@ -78,21 +74,16 @@ static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
- #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 64
- #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
  
--static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
-+static int virt_get_veiointc(Object *obj, Error **errp)
++
+ void whpx_arch_destroy_vcpu(CPUState *cpu)
  {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--    OnOffAuto veiointc = lvms->veiointc;
--
--    visit_type_OnOffAuto(v, name, &veiointc, errp);
-+    return lvms->veiointc;
+     X86CPU *x86cpu = X86_CPU(cpu);
+@@ -1955,7 +1956,7 @@ static int whpx_handle_hyperv_guestidle(CPUState *cpu)
+     return whpx_handle_halt(cpu);
  }
  
--static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
-+static void virt_set_veiointc(Object *obj, int value, Error **errp)
+-static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
++static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu)
  {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
-+    lvms->veiointc = value;
- }
+     WHV_REGISTER_VALUE reg;
+     whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
+@@ -2059,7 +2060,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+                 .Vector = irq,
+             };
+             reg_count += 1;
+-            /* 
++            /*
+              * When the Hyper-V APIC is enabled, to get out of HLT we
+              * either have to request an interrupt or manually get it away
+              * from HLT.
+@@ -2359,7 +2360,7 @@ int whpx_vcpu_run(CPUState *cpu)
+             WHV_REGISTER_VALUE reg_values[3] = {0};
+             WHV_REGISTER_NAME reg_names[3];
+             UINT32 reg_count;
+-            bool is_known_msr = 0; 
++            bool is_known_msr = 0;
+             bool raises_gpf = false;
+             uint64_t val;
  
- static bool virt_get_highmem_mmio(Object *obj, Error **errp)
-@@ -1025,21 +1016,16 @@ static void virt_init(MachineState *machine)
-     loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
- }
+@@ -2911,120 +2912,86 @@ void whpx_cpu_instance_init(CPUState *cs)
+  * Partition support
+  */
  
--static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
--                          void *opaque, Error **errp)
-+static int virt_get_acpi(Object *obj, Error **errp)
+-static void whpx_set_unknown_msr(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_unknown_msr(Object *obj, int value, Error **errp)
  {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--    OnOffAuto acpi = lvms->acpi;
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
+ 
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
 -
--    visit_type_OnOffAuto(v, name, &acpi, errp);
-+    return lvms->acpi;
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->ignore_unknown_msr = true;
+         break;
+-
+     case ON_OFF_AUTO_OFF:
+         whpx->ignore_unknown_msr = false;
+         break;
+-
+     case ON_OFF_AUTO_AUTO:
+         whpx->ignore_unknown_msr = true;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
  }
  
--static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static void virt_set_acpi(Object *obj, int value, Error **errp)
+-static void whpx_set_intercept_msr_gp(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_intercept_msr_gp(Object *obj, int value, Error **errp)
  {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
+ 
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
 -
--    visit_type_OnOffAuto(v, name, &lvms->acpi, errp);
-+    lvms->acpi = value;
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->intercept_msr_gp = true;
+         break;
+-
+     case ON_OFF_AUTO_OFF:
+         whpx->intercept_msr_gp = false;
+         break;
+-
+     case ON_OFF_AUTO_AUTO:
+         whpx->intercept_msr_gp = false;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
  }
  
- static char *virt_get_oem_id(Object *obj, Error **errp)
-@@ -1483,20 +1469,29 @@ static void virt_class_init(ObjectClass *oc, const void *data)
-     hc->unplug_request = virt_device_unplug_request;
-     hc->unplug = virt_device_unplug;
+-static void whpx_set_ssd(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_ssd(Object *obj, int value, Error **errp)
+ {
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
  
--    object_class_property_add(oc, "acpi", "OnOffAuto",
--        virt_get_acpi, virt_set_acpi,
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
+-
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->separate_security_domain = true;
+         break;
+-
+     case ON_OFF_AUTO_OFF:
+         whpx->separate_security_domain = false;
+         break;
+-
+     case ON_OFF_AUTO_AUTO:
+         whpx->separate_security_domain = true;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
+ }
+ 
+ 
+ void whpx_arch_accel_class_init(ObjectClass *oc)
+ {
+-    object_class_property_add(oc, "ignore-unknown-msr", "OnOffAuto",
+-        NULL, whpx_set_unknown_msr,
 -        NULL, NULL);
--    object_class_property_set_description(oc, "acpi",
--        "Enable ACPI");
--    object_class_property_add(oc, "v-eiointc", "OnOffAuto",
--        virt_get_veiointc, virt_set_veiointc,
+-    object_class_property_set_description(oc, "ignore-unknown-msr",
+-        "Configure unknown MSR behavior");
+-    object_class_property_add(oc, "intercept-msr-gp", "OnOffAuto",
+-        NULL, whpx_set_intercept_msr_gp,
 -        NULL, NULL);
--    object_class_property_set_description(oc, "v-eiointc",
--                            "Enable Virt Extend I/O Interrupt Controller.");
--    object_class_property_add(oc, "dmsi", "OnOffAuto",
--        virt_get_dmsi, virt_set_dmsi, NULL, NULL);
--    object_class_property_set_description(oc, "dmsi",
--                            "Enable direct Message-interrupts Controller.");
+-    object_class_property_set_description(oc, "intercept-msr-gp",
+-        "Intercept #GP to log erroring MSR accesses.");
+-    object_class_property_add(oc, "ssd", "OnOffAuto",
+-        NULL, whpx_set_ssd,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "ssd",
+-        "Separate security domain");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "acpi",
-+        .description = "Enable ACPI",
++        .name = "ignore-unknown-msr",
++        .description = "Configure unknown MSR behavior",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_acpi,
-+        .set = virt_set_acpi,
++        .set = whpx_set_unknown_msr,
 +    ));
 +
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "v-eiointc",
-+        .description = "Enable Virt Extend I/O Interrupt Controller.",
++        .name = "intercept-msr-gp",
++        .description = "Intercept #GP to log erroring MSR accesses.",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_veiointc,
-+        .set = virt_set_veiointc,
++        .set = whpx_set_intercept_msr_gp,
 +    ));
 +
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "dmsi",
-+        .description = "Enable direct Message-interrupts Controller.",
++        .name = "ssd",
++        .description = "Separate security domain",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_dmsi,
-+        .set = virt_set_dmsi,
++        .set = whpx_set_ssd,
 +    ));
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
- #ifdef CONFIG_TPM
+ }
+ 
+ int whpx_accel_init(AccelState *as, MachineState *ms)
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
