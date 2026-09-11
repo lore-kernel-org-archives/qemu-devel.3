@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9EEEC88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FA3C88E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xBD-0007IB-Dq; Fri, 11 Sep 2026 05:04:19 -0400
+	id 1x4xAj-0004aP-Cy; Fri, 11 Sep 2026 05:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAi-0004Ye-1A
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA8-0003yi-Q5
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAd-0008Lf-Au
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA5-0008Gr-Sl
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117422;
+ s=mimecast20190719; t=1789117388;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ztrp18hGYXHuUYyUKf9DJwGmlf0B2MNBYEJ6m3HjUYc=;
- b=K5TOptzF8xfjd/1pvTECgU5JBMAW5mYsO0Qyog7DWUSYbMKvMJNFVZYha5lx/j2Yrry/JG
- Y2zN+XkKe8V0r6TIEj8/SXPXELZXVdeX1SKcmHwvAGIMrHLh1DTQwv3sTVdxUNG3E4o6uQ
- gCqhMXogmo3qyStUDPXKb5Sx5FYS4aQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+sod/F5ZJD19JAbUugoGre+d4N7kWAhYD4EQjfTMC7Q=;
+ b=Nv2eG2cRH5KsuS/WWn8Whuih/nBW9yKQaE86LegCGImnitsLzRovB7kh4Yplmiow2LUN3a
+ oenSaDLSrRunelg88Kl2nSI9BW3dABC0etFlDq9Z1W4Z6guwLAPJyAt1sajlRc0doQT93O
+ EVcYU3gZsUILMUcBsf/jAvTUhm5jj4A=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-UQCYyze0PkWGAZCQoPq5YA-1; Fri, 11 Sep 2026 05:03:41 -0400
-X-MC-Unique: UQCYyze0PkWGAZCQoPq5YA-1
-X-Mimecast-MFC-AGG-ID: UQCYyze0PkWGAZCQoPq5YA_1789117420
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49e6683d48fso1182315e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:41 -0700 (PDT)
+ us-mta-82-Vp6hFUcZPH-H2O-C5fmDDQ-1; Fri, 11 Sep 2026 05:03:07 -0400
+X-MC-Unique: Vp6hFUcZPH-H2O-C5fmDDQ-1
+X-Mimecast-MFC-AGG-ID: Vp6hFUcZPH-H2O-C5fmDDQ_1789117386
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-486f1eee015so121917f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117420; x=1789722220; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Ztrp18hGYXHuUYyUKf9DJwGmlf0B2MNBYEJ6m3HjUYc=;
- b=HgqKQn/E6SXkO1dGT/UTqZ6wUAUrlG8OvQephdbvnEkuHeQVqrPUBibWOXO4s01VqA
- nUPoqXrwW2idvNIDnu6SU5bbvjHdq93P/sW7jSyIEpBF8VNMXw6wMiPG9AYi5y6FFm94
- Z95y4kKFX1/ocLwmt2ZDioD89DkNfsA3T8xyLsAzzMNKWHCoT1wSj/N2irDFGb5ti2Ny
- JdXA/SnDvWBWLqljJEAW5N3zlO/CZPZZbFvlqbs+NSZkGD+zjyTmIyFZJyY37tOAARsc
- 6h9NVMujVESG9KksPPhloADOWvl6x+0XNFk1R9qVyNcFN5A4sDZw6ISpnZXwy+wQz8Iz
- aiCA==
+ d=redhat.com; s=google; t=1789117386; x=1789722186; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+sod/F5ZJD19JAbUugoGre+d4N7kWAhYD4EQjfTMC7Q=;
+ b=L2YI4hzdTgM8OrxejdgvPpmSyyh0ZI7sAOCKPdDwwvDy4rOQQA2PeO4LqUGuRz0fGx
+ sEcYCe+6yKAtQF3c4coR59HDCUIYoNT9cDESEthd5cNApg2oZR5BOUt5AIof4fErlOqQ
+ u41PDw5pNFK4wHdIU+1pumd49S4dkg41ZZUSillf7xE7Zy1U5ohOk1Bohl0R2HQBAiZU
+ CY8t5PJTnJ1KhtmTyp6XWKAwFiMmi1Y/nBeoVkurcA8U9jLBNh/Dawo5GOeCYQyxQ42Q
+ p1u4K+auO1KJO5Hn6rkYZtEO4MtLXTtL7mXYCbf1u5w/a8ZidyFRhQ3FzY1a7rwdXyJ6
+ lg1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117420; x=1789722220;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Ztrp18hGYXHuUYyUKf9DJwGmlf0B2MNBYEJ6m3HjUYc=;
- b=BRZZfW+z4ov/LFs0+komL4P812Y/LqGX/fpMNpxARY5/wLiezYx5dnx0juslAOpUug
- 0959zsRjHjKw674MObkwB1VgjC1QrnvZfLP50A9hB5zHOBr2vsfvWv5O7auweoEg8XZ9
- LlMGZ7i3mFAXkii/Mo2ye6h415FwJr6llPSOPZtA+7VsemiyWdlF7HgwPqJF13tVLVDE
- WSrvfNb5ZzAkQhPb7fV/qx7uC1boSx1tzKSvtb0n21NeQKaT3hP7PGN62IqcNU7As9sp
- qfNoQ1czlh/rtSgRLoLAJ4DDHvfvxO7JXw49OM7fkd6zV04fZ8SigsqAJt59n4jYbW+t
- xXFg==
-X-Gm-Message-State: AFuF++kUlqP6W/nqnV8nI6/GU/e5mYQugkVDeUVMMf/D/g4SyX5YtaWt
- Opr5s1kfsi4lTiAtWnfgC26n8QYwTsMMCpYqq6FW43UNPi/gHmmGMdCLlrPiyCdSivGd1yLIoJa
- MKlZJrFWct7xFbr8GXYTd4QTi9AeRZRyHUvtyeAAgRdfkdDE83v0b8Gm5thjNfz8x/wQBE2V6tv
- jelNBrASCmiuNOFnlbVmZl8ggwNl5hoTJPaA==
-X-Gm-Gg: AYBFou0TClHiv2kiuCj8QeyTY8KPzmC6yczFfVaVMOSjhJbztsFa3hRAMqkWKcqWc11
- QUeyMXEJVIRhhv/f9LXyOwRAZ1ptteI4+LkBZJk3+KDpnHLaHSMXCSDjZczNWIMLhMR09aua5q/
- Rku+qOo8cpTXF/SfzZGy6JrH4Q2E5fuWmDyLltyqRCs2aVLjYxASOwuvjUiGPZRvU92wtpdU0lM
- /6xVfoIduj9ORShF6bE1sjTAX+6DeV6dDrrtg/H5DiJAzUKyHQghhcy3r7uCUyd9BFxmv7Q0ZmE
- gK4ygDrZMXjI/TDlX5gLjUbkgeEi9zNd5wJvE+Rlpl4XolkbucYouSmxnP6lqysWtT7K4xAxoEh
- vJYi0pRccsPmR2Ihbdqt7oE4=
-X-Received: by 2002:a05:600d:8445:10b0:49c:cf18:494e with SMTP id
- 5b1f17b1804b1-49e6198a3b2mr25032055e9.12.1789117420111; 
- Fri, 11 Sep 2026 02:03:40 -0700 (PDT)
-X-Received: by 2002:a05:600d:8445:10b0:49c:cf18:494e with SMTP id
- 5b1f17b1804b1-49e6198a3b2mr25031285e9.12.1789117419514; 
- Fri, 11 Sep 2026 02:03:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789117386; x=1789722186;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+sod/F5ZJD19JAbUugoGre+d4N7kWAhYD4EQjfTMC7Q=;
+ b=cjw0sbGd+wPLvg+hoU9LgnwCdtZiC3xMWyaBsTv7g+7P2hAk+WKiWWxhvun1DmLsXi
+ jfD7hW5lnQEIZ088ajmfnP0D5jTpJSOQJ9wX27ZBMqTTDwOPZVapl4PjKHa6nMnxEyb5
+ XegIkd0adjWG87j9gBBNeKI8BGpYC2Y+pY3rcyv69QyhRHLV8pXfjp+GQLQq9/GGPjzz
+ PEKKtYNT7DBk/FjcFde3RLqVOUjzEbBCSalReorrXmVu7Tyl1GFjHVwlDIdp1nF6756T
+ ti97n6sjDsXQq9TVhDD9mZjQQWqrw3Notj+EgZpb5NexZoNkNAccG29JMn4omKFdATfJ
+ 5bNw==
+X-Gm-Message-State: AFuF++mUFupViEApZaR0kXcvIjqcYZmy/mXHa9QxwSur2KX0KFQTMpa4
+ MZLoSMV1xe47IlVVvy62cVQMH6DnWq/0M8rtfNllpBqaRBzySfCW5tapOkP/OEJuBTsfK/Xcbek
+ 9VdYWGY5Ptx1OL8FbQAahtO8NuuHF8Ky9qA4VpvHMSkzw/A65uNPt3p8w9dOd09I2D4VBmXvYBc
+ N5QkKzqk/eIB3xSQ2Rcf35TWrlHFppXM0ylg==
+X-Gm-Gg: AYBFou2KOWOnAREwSkqu3EnvNh7vP39OaSJ6BY5mC4p2UE+dHvQjNjEZufDniK0HYf+
+ 3j6F70YyuPSgv1T1ilpdCxOk9KUUmKGDZ0h5anYEmKia/BtTClrd074+pxImTivcWjEAaYMi1WV
+ ykfKwtN2L6NfDj8v+hq/FrqtJ52XNkzsN23QW5LU05j4C6J1vUTlyUtTxCjSL1qBPe2RRPy4pku
+ IobDWDwM3/xeUqczAASW3pKDzk9l4sod6ISMzMyagsfpIb8p1hD0KvrNrvTIIPaBrUdne62Aa0F
+ XOlgxS5BG0h7Gm/LXXKdNquNuuUh+2mTwNya1GXi5Y6im/C67DGcJuH/eIIrqCCYaJV0VjfH61n
+ 0o1tSC/Mzmb3BgGrVDNtwzZ8=
+X-Received: by 2002:a5d:5e82:0:b0:485:8101:dc40 with SMTP id
+ ffacd0b85a97d-486eb2d8278mr8393074f8f.9.1789117385592; 
+ Fri, 11 Sep 2026 02:03:05 -0700 (PDT)
+X-Received: by 2002:a5d:5e82:0:b0:485:8101:dc40 with SMTP id
+ ffacd0b85a97d-486eb2d8278mr8392907f8f.9.1789117384948; 
+ Fri, 11 Sep 2026 02:03:04 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e60a8a89esm59342745e9.1.2026.09.11.02.03.38
+ ffacd0b85a97d-486eb35c071sm4601237f8f.33.2026.09.11.02.03.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:39 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:37 -0400
+ Fri, 11 Sep 2026 02:03:04 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:03:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
- Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 59/75] intel_iommu: Always write all the flags passed to
- vtd_set_flag_in_pte
-Message-ID: <79ce20146054de5a120f550b195ef236e6f02bf8.1789117222.git.mst@redhat.com>
+Subject: [PULL v2 44/75] amd_iommu: Return empty efr for stub call
+Message-ID: <85e4587c2b3000c1dd2626664741f1f27e297773.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -126,53 +123,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-This function was initially designed to write a single flag in a pte.
-The current implementation expects it to set several flags.
+The stub call should not return normal EFR as it is used as place holder
+when actual AMD IOMMU calls are not available. Hence return 0.
 
-Fixes: 65c4f0999991 ("intel_iommu: Set accessed and dirty bits during stage-1 translation")
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903150649.2281104-3-clement.mathieu--drif@bull.com>
+Message-ID: <20260807061250.27739-2-sarunkod@amd.com>
 ---
- hw/i386/intel_iommu.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ hw/i386/amd_iommu-stub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index eccb16346c..91ab549dbf 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1964,13 +1964,13 @@ static bool vtd_iova_fs_check_canonical(IntelIOMMUState *s, uint64_t iova,
-     }
- }
+diff --git a/hw/i386/amd_iommu-stub.c b/hw/i386/amd_iommu-stub.c
+index d62a3732e6..fb36dee903 100644
+--- a/hw/i386/amd_iommu-stub.c
++++ b/hw/i386/amd_iommu-stub.c
+@@ -22,5 +22,5 @@
  
--static MemTxResult vtd_set_flag_in_pte(dma_addr_t base_addr, uint32_t index,
--                                       uint64_t pte, uint64_t flag)
-+static MemTxResult vtd_set_flags_in_pte(dma_addr_t base_addr, uint32_t index,
-+                                       uint64_t pte, uint64_t flags)
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
  {
--    if (pte & flag) {
-+    if ((pte & flags) == flags) {
-         return MEMTX_OK;
-     }
--    pte |= flag;
-+    pte |= flags;
-     pte = cpu_to_le64(pte);
-     return dma_memory_write(&address_space_memory,
-                             base_addr + index * sizeof(pte),
-@@ -2043,7 +2043,7 @@ static int vtd_iova_to_fspte(IntelIOMMUState *s, VTDContextEntry *ce,
-             flag_ad |= VTD_FS_D;
-         }
- 
--        if (vtd_set_flag_in_pte(addr, offset, fspte, flag_ad) != MEMTX_OK) {
-+        if (vtd_set_flags_in_pte(addr, offset, fspte, flag_ad) != MEMTX_OK) {
-             return -VTD_FR_FS_BIT_UPDATE_FAILED;
-         }
- 
+-    return AMDVI_DEFAULT_EXT_FEATURES;
++    return 0;
+ }
 -- 
 MST
 
