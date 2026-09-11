@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9551C88E54
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A3EC88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x8j-0001ju-Va; Fri, 11 Sep 2026 05:01:46 -0400
+	id 1x4x9P-0002aQ-Ml; Fri, 11 Sep 2026 05:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8a-0001cg-Iz
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9C-0002KK-D6
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8X-00081E-T6
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9A-00087y-TW
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117293;
+ s=mimecast20190719; t=1789117330;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=duT8sfy/1vmAKnbU6GKLoZk3/IV53fEkN7T7OylyeSg=;
- b=fahyY/lvZ8FptJTsZw7hnl8pslfmZmY+iDk6FQPFRHXaXJ22EJYshEnU5+7aR6409turam
- M3R168HyuRDWWDdSK6XXYvhpO28uO+yZBtZZ1JQ+ye0v4geLwII3crRnBLUI7Hvy3CkCtx
- iG2QGutk4ak1dwDWEFxnAReY1s5W38g=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=f254NehgLbY8bvUcUnlxHVuzEfFRxr1y8JaeM6VB6uw=;
+ b=SxnhtHK7E36RlO0IOVgb26GDx/wmc+j41pecSmvVfSLqPYkgFzAZ01nAuOqTFoESdGu8ng
+ oE7wX+q/d5XOXutVKrOPqRXqWQhEN1o1B5m+X3v16q82e8e/RQ8vjEL7FtJGYfB1/W86a+
+ sVYd9CDpSSj8AM6qVV4q/NTGJHdmsM8=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649--RBpQmrMO--kpXcMl9R-sA-1; Fri, 11 Sep 2026 05:01:29 -0400
-X-MC-Unique: -RBpQmrMO--kpXcMl9R-sA-1
-X-Mimecast-MFC-AGG-ID: -RBpQmrMO--kpXcMl9R-sA_1789117288
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490a767b782so5946025e9.2
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:29 -0700 (PDT)
+ us-mta-183-1i56fiqTOUC8hKBAfrsRgw-1; Fri, 11 Sep 2026 05:02:09 -0400
+X-MC-Unique: 1i56fiqTOUC8hKBAfrsRgw-1
+X-Mimecast-MFC-AGG-ID: 1i56fiqTOUC8hKBAfrsRgw_1789117328
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c2939e341f7so82902666b.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117288; x=1789722088; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117328; x=1789722128; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=duT8sfy/1vmAKnbU6GKLoZk3/IV53fEkN7T7OylyeSg=;
- b=BUZ3yhLBFMwK6LqnZVdCzVMvnbe5bs2kwatZyPCZOT2Itz4XdzlXjAazZ5NihXdJGZ
- ZHU+vzIdwaRgUJoyrSdJBqS3OPxS3EOLBPtyzcDcUdUo5jKeyxOYNkb8piUN4NN/VlJU
- oY7qGblHrn/dYsBKJr/5glpiaSz+VWw+XPfQ5+J02p8MQqXAncQhOmcljsfl5K7htPEx
- 8gNdG3dGUbBnt2rF9mgqbu/RU4cxXR9MTSwj8IH78RpWifkyOlFquivB8dfKcQ31L0Mw
- vqv/iEbliVjcsSpOGg9gUajBd87vvUoRSrDPXWu4xjIWWwkrZdZ1zQuuWX/SZBwWsVTl
- 4OPA==
+ bh=f254NehgLbY8bvUcUnlxHVuzEfFRxr1y8JaeM6VB6uw=;
+ b=AEyixg4UKx+8gntK449twoxPvawcg61mzuLbtGrZHmK3BWT52k7zXiALq9RrkhhvuF
+ W/4e4oqHFBClp1RTV741hOTgrFSh+6/ifFL9PE29XvE3NTkidF8VpSeQk/fpBUNS3qEX
+ 4ZcGKgZE9c9cOMWzq4qKnvSYGHPn2Fza/NiCIzjRyhRq/dwVzkcYlaogf/n4MzDpe8Dz
+ 8GRJZGOGwuo9YnpJJ9jSQWeO0NNSl6eo7AfB1IqmqGSEXxRuy8YzmOQIKLGp3VxE2kqT
+ aWYbtRtX8LnFTP3Rd3bugkUR+mvotGTv+FQCp8UBWUQAONtbp6vXF0TnWxRejWblQEMk
+ aTHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117288; x=1789722088;
+ d=1e100.net; s=20251104; t=1789117328; x=1789722128;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=duT8sfy/1vmAKnbU6GKLoZk3/IV53fEkN7T7OylyeSg=;
- b=nv6YZqCylKd/dX8wSSa+zvK2H2x+zZFTprm691Lhtgvu/jl8VbUY/BylptSk27Dfas
- EY23xFlp9aIYVelVLGQnJYBr/LqHzbhL5MBI4b/XTHjlb379W8t0wjYrRJzsT1/z9Mn/
- quuyGSckUNp2aFSbC318lD1Cf/1m+PotTnu8v+R1wD1gk8fDYFb09nEwbd63Ao3+8z5K
- DQ+kSnwJ/Ik3nS+gO9K4gj06LOCNRakml8/3TQA1WHgEsJ5kKN27zKNHceJ54kg8kIgX
- xLNEDBfzk0oz2qR4CLLsjDw+Pw5JWuHYseC5/uCGiJ+Nf/E9fdWoprKJuU5abM8DHEsl
- dJdg==
-X-Gm-Message-State: AFuF++kcjF2KQW21i8ojdXr0GjcsW+G2nXcvm2PqCIemm5Y8YbPcC/W/
- SarRUizVuV/OQswO2CCVfJRz/1HBNymbh56vdChddTpbbT5CGg1RqTXki5VZCJeIVod+rO/YzwH
- 6OumPBpo/0EvtOj/AIlOVivWRVr6Z0tnGpo2LNCXmss0UlMnXFPxHGm1Aw/zOFCL3xRvTWERPKV
- xRWI6JVRR7JuG6iXn7fm4ToqDx2LAG3m9mSw==
-X-Gm-Gg: AYBFou1m3pGs4zPQMvPx0CHlEx7Xp64wnNYmX0Md0r3IfIS8ptLZsAcKqAb4z9wthKT
- C3CzZ9rAnAaX+65W8bt3VnYvzNX7T1lX4QzA3zauaU0sKMoT5JqlZDmAsdDDQAhIw9ib1McLvHL
- SqH4n0T8FnvvQhbrumowRt2PaqIhEmEG90e05cw9fpmpOwbr3kdACdXJeOeer1zq7RjT94nmRKz
- 5Jsu4vZiRqdmolfl9d8SO7E6B4bUJkckgZTiJSJGb84BBmjiih1lsVlAtHX96mq95IY3Ekq7/3f
- CHZLLTQnAAZzVNRh4E5z4j8rMJSPMBicIW5oZx/CT2NKp3oUlh0p4blgWwDy6yqJglu8USbP2em
- m17+wSMDD4RjfMvDTdkQTbzk=
-X-Received: by 2002:a05:600d:8490:20b0:49d:e0c:e560 with SMTP id
- 5b1f17b1804b1-49e61983771mr26335675e9.4.1789117288135; 
- Fri, 11 Sep 2026 02:01:28 -0700 (PDT)
-X-Received: by 2002:a05:600d:8490:20b0:49d:e0c:e560 with SMTP id
- 5b1f17b1804b1-49e61983771mr26334855e9.4.1789117287535; 
- Fri, 11 Sep 2026 02:01:27 -0700 (PDT)
+ bh=f254NehgLbY8bvUcUnlxHVuzEfFRxr1y8JaeM6VB6uw=;
+ b=ooQBUvPiTLnjq8wGT9l98LDfpNpJmVlK0tns674v7//wSahcBfa7L7dpc5LU9NTUDg
+ 0CsmOK1zMpUoQw+ijCit0jWBg9PW7Ygz+lynSMvQySPnfpE9AOef01y3lO9XcLKgOkiw
+ Vq9iHOs8f80jLOCQc/cZzbyvd9M8YfnqEYMK4qw2O+z6epy7ZgHE7B5I0dut5EHSSpvY
+ cDgttdCcYJWx3OewWAdTFD+8LA/DBGWkf/x+vzd7XPANWb4jA1swjwZ2TNWxzvNH2sPE
+ sTmNFpaF2eaTCR3bri7Ya+Hekwrm6c13otII1SE6XDX6W5ARl4LNPNyvV06W2grSI3cX
+ rX7g==
+X-Gm-Message-State: AFuF++liucr9yHdcnInoCZVuMyTNBHKFTWPGk01xlOh2QxVO3rBumSHg
+ V+DK4Jm/27Z7f6bC7EQEkJT7Ss1px8ros/noNX9s2S70JG9Oc7sdV9m2H//Gu0ERzYd05FK6Fel
+ XCr+3FNKGreqBlTMHa5Fcl3aJFTjPRpSkdN7I++kWpCf56M4hnkhLbzSJzecs60aPDPRQocjWEg
+ c8HBkysBE7lYJkgIKFtRyN/jH+flK7EVyNfQ==
+X-Gm-Gg: AYBFou2agT3/IBh5MTu4w8jP/rJB/MOiI8Zl9ysIL4v10zc7YctOPEDZsQKqDTD2P+W
+ /B4KESKGCPhQ2wlYqMw6y9iQ1AI8WjiWLeGcDXi9G4lTpDaPwYMx9k2nVF7/96wEMbodgRnekDr
+ KOVfGkzgk7TO1aDLY1fajHby3YOLDgs2NYd3CCeBRETp2DN7rmMeTFrC1phx2eiIwvxGAmF8ZRv
+ H+caVY/gUK5fujyY1U0pC2o27b1sooMMRDTFgh/uUIC4Y1BdcsJITl8n2LlyaoSWgZZdKu9lRRi
+ Wh8mRNyB7/VxUZrpnySvGv3tGNVgZ7qdogWX6LIp9ig8ehgIaJOiBs+8tY8YjvvJcR8OChY5s5m
+ xniwkDm18VkL61VWTycxnzMk=
+X-Received: by 2002:a17:907:c48d:b0:c26:19de:9133 with SMTP id
+ a640c23a62f3a-c2966729628mr135538566b.38.1789117328026; 
+ Fri, 11 Sep 2026 02:02:08 -0700 (PDT)
+X-Received: by 2002:a17:907:c48d:b0:c26:19de:9133 with SMTP id
+ a640c23a62f3a-c2966729628mr135534466b.38.1789117327365; 
+ Fri, 11 Sep 2026 02:02:07 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e6576122bsm36196675e9.2.2026.09.11.02.01.26
+ ffacd0b85a97d-486eb35bd1esm4525977f8f.31.2026.09.11.02.02.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:01:27 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:01:25 -0400
+ Fri, 11 Sep 2026 02:02:06 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:02:05 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>, qemu-stable@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org
-Subject: [PULL v2 04/75] hw/cxl: Fix guest-triggerable QEMU exit on reserved
- interleave ways
-Message-ID: <713e7e85a2b43e9d4e58d91643aef230d2c30b07.1789117222.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PULL v2 20/75] migration: check that transfer is UNIX socket when
+ "local" set
+Message-ID: <f6e309e025515cb0710124b3d6e85b8b20ea2f86.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -106,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,70 +122,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-A buggy or malicious guest can program a committed HDM decoder with a
-reserved Interleave Ways encoding (e.g. 0x5-0x7, 0xb-0xf).  Two call
-sites pass &error_fatal to cxl_interleave_ways_dec(), which calls
-exit(1) on the reserved encoding before the subsequent decoded_iw == 0
-guards can run:
+As documented, for "local", the migration channel must be direct UNIX
+socket connection from source to target (except for CPR_EXEC mode). We
+can't check for it being "direct", but let's at least check that we deal
+with UNIX socket.
 
-  - cxl-host.c update_non_interleaved(): called at commit time from
-    hdm_decoder_commit() via cfmws_update_non_interleaved(), so a guest
-    writing COMMIT with a reserved IW terminates QEMU immediately.  This
-    is the primary trigger on the current tree.
-
-  - cxl_type3.c cxl_type3_dpa(): called on memory access while iterating
-    past committed decoders to accumulate dpa_base.  Once the commit-time
-    exit is removed, the decoder stays committed with the reserved
-    encoding, so a later guest access outside that decoder's range would
-    otherwise hit this second &error_fatal; both are fixed here.
-
-Pass NULL instead of &error_fatal at both sites so that the reserved
-encoding returns zero and the existing guards handle it gracefully.
-
-This can be reproduced by writing the HDM Decoder 0 Control register
-with a reserved IW encoding and the COMMIT bit set (e.g. IW=0x5,
-COMMIT=1).
-
-Cc: qemu-stable@nongnu.org
-Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
-Fixes: 48461825af1b ("hw/mem/cxl_type3: Fix potential divide by zero reported by coverity")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260618104316.557306-1-junjie.cao@intel.com>
+Message-ID: <20260819180201.1970193-13-vsementsov@yandex-team.ru>
 ---
- hw/cxl/cxl-host.c  | 2 +-
- hw/mem/cxl_type3.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ migration/fd.c        | 14 ++++++++++++++
+ migration/migration.c | 13 +++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index eba13c9e7c..369a985f9b 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -442,7 +442,7 @@ static int update_non_interleaved(Object *obj, void *opaque)
-             }
-         }
+diff --git a/migration/fd.c b/migration/fd.c
+index 78a27caca2..4a891e814a 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -39,6 +39,20 @@ static bool fd_is_pipe(int fd)
  
--        interleave_ways_dec = cxl_interleave_ways_dec(iw, &error_fatal);
-+        interleave_ways_dec = cxl_interleave_ways_dec(iw, NULL);
-         if (interleave_ways_dec == 0) {
-             return 0;
-         }
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 28f41fa623..6f44770db6 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1200,7 +1200,7 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-         }
-         if (((uint64_t)host_addr < decoder_base) ||
-             (hpa_offset >= decoder_size)) {
--            int decoded_iw = cxl_interleave_ways_dec(iw, &error_fatal);
-+            int decoded_iw = cxl_interleave_ways_dec(iw, NULL);
+ static bool migration_fd_valid(int fd, Error **errp)
+ {
++    if (migrate_local() && migrate_mode() != MIG_MODE_CPR_EXEC) {
++        struct sockaddr_storage ss;
++        socklen_t sslen = sizeof(ss);
++
++        if (getsockname(fd, (struct sockaddr *)&ss, &sslen) < 0 ||
++            ss.ss_family != AF_UNIX) {
++            error_setg(errp,
++                       "local migration requires a UNIX domain socket channel");
++            return false;
++        }
++
++        return true;
++    }
++
+     if (fd_is_socket(fd) || fd_is_pipe(fd)) {
+         return true;
+     }
+diff --git a/migration/migration.c b/migration/migration.c
+index b413d28622..d8418e4582 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -260,6 +260,19 @@ migration_capabilities_and_transport_compatible(MigrationAddress *addr,
+                                        errp);
+     }
  
-             if (decoded_iw == 0) {
-                 return false;
++    if (migrate_local() && migrate_mode() != MIG_MODE_CPR_EXEC &&
++        (addr->transport != MIGRATION_ADDRESS_TYPE_SOCKET ||
++         (addr->u.socket.type != SOCKET_ADDRESS_TYPE_UNIX &&
++          addr->u.socket.type != SOCKET_ADDRESS_TYPE_FD))) {
++        /*
++         * For SOCKET_ADDRESS_TYPE_FD we do check the fd itself later
++         * in migration_fd_valid().
++         */
++        error_setg(errp,
++                   "local migration requires a UNIX domain socket channel");
++        return false;
++    }
++
+     return true;
+ }
+ 
 -- 
 MST
 
