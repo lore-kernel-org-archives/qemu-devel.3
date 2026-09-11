@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E53C88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55689C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54JD-0006wM-3e; Fri, 11 Sep 2026 12:41:03 -0400
+	id 1x54Jc-0007Z8-RU; Fri, 11 Sep 2026 12:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54J2-0006g3-Pl
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:40:54 -0400
+ id 1x54JR-0007Og-Sy
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:41:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54Iz-0007Ba-Mr
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:40:52 -0400
+ id 1x54JQ-0007LR-3m
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:41:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144849;
+ s=mimecast20190719; t=1789144875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vBTBnSyuQPYSZpchDeQQc5FbGR6kuvSqPTrEOao+1J0=;
- b=Z9SC8Nsp+xO0hw+UFLeeg884j4EzhZg53KqJgP8VNZ9EUF51dSzbC/ZaWuoxL9L6n1Y7ge
- Ve9bmZtU2cR8e4HxL1b32h0lOvQmcjhoUyMQedEU8O96rpEh4LGBRGbwtSiKMwoj4hBmYH
- dopvhzSUu7ANE7kBAO/SCOPmRNdwhBk=
+ bh=tVEqcWm0qmGrTdYv0ut5E0TOgGLwGMf0sJ5a2m4C7G0=;
+ b=P8wDOWkGr63OWiL4oxQ2Mt6GM5C5V2PclJzty2WLY+zipH55qdzk1hNgKpaIuEIVsOUvc1
+ 56FhT6XN93ZOFLoKC4C8bXt24u+hTbsH28Xf2d2QxLZfWHngPWtkU7tC53+cdn12NK+zOk
+ c8XiTagdxQ2Q3OrXvPyetDXyBqyyctM=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-szxMgmCwOqe21UMdqrSM8A-1; Fri,
- 11 Sep 2026 12:40:46 -0400
-X-MC-Unique: szxMgmCwOqe21UMdqrSM8A-1
-X-Mimecast-MFC-AGG-ID: szxMgmCwOqe21UMdqrSM8A_1789144844
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-INhKPXwdPBGB4uQFuRCIYA-1; Fri,
+ 11 Sep 2026 12:41:12 -0400
+X-MC-Unique: INhKPXwdPBGB4uQFuRCIYA-1
+X-Mimecast-MFC-AGG-ID: INhKPXwdPBGB4uQFuRCIYA_1789144871
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77D99195C264; Fri, 11 Sep 2026 16:40:44 +0000 (UTC)
+ id 044211955F14; Fri, 11 Sep 2026 16:41:11 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 721A1180034C; Fri, 11 Sep 2026 16:40:43 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 09EDF180029C; Fri, 11 Sep 2026 16:41:09 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:35:27 +0400
-Subject: [PATCH v5 53/62] target/riscv: convert PropertyInfo definitions to
- use qapi_type
+Date: Fri, 11 Sep 2026 20:35:34 +0400
+Subject: [PATCH v5 60/62] qapi: expose integer signedness and width in
+ introspection
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-53-7732a55b7760@redhat.com>
+Message-Id: <20260911-qom-qapi-v5-60-7732a55b7760@redhat.com>
 References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,30 +66,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5376;
+ Eric Blake <eblake@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7727;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=UYW3hUyeBwLg4dJw36eUfutz6eBE4Q9tKSHlZKf5fhQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC28CjTvwGW4P+4/Uwi5p70Qn3j7B6OHo6hTf
- nelgQmu7uKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtvAAKCRDa6OEJdZac
- 5QsoD/9bDkhhtfnBbtiUOg6zJD0SqQfNVXKBkDDCcN57bQKoSmlIarpGU8UeGmN0NzICCyG73fz
- tOaifObZYn0Z7FnF/tT+4iyL5KXx/1gngzmIkfV45xaibfbKMQ67oRSw5IUF6do6QK7ODaSh754
- CojoQn0aOzH06vEoyhxD0birTQGsUAez6NrriWsFSfoXA0nhwknCV/XbNl6pAifJmmmyxWd0sVr
- ZmHA5UGYLJIwY3EGGuUi81e2aQ+XSU/FESYmZ9KnukHcU3oct02aaEOPSA4U+vl+7q2rg6g+xEY
- kR5qRJH3mADJRNF15+mDNJ4TDdLtGbRra5hWeaVjBdfxw95QsxFyFAdb1ezFtByYobdk3Mf8ZJu
- K4UpJidETcMqPPvvpzsyr8OC5AaJtc5C5QO8M3VCfcV7I9Kg+ApjWKNGT2VydHzaBpdSZLn7Rni
- dXxbAC9sfhMNHt3/puGw01W8yb49XiGqo1dy74lcb2+GsVF8/7SDYT2GCn0gkq/7V0VGJOkgftj
- yQW6jntqK/DhlQ+ggJb8j08W3I/A4aQHLTkL1vNxK6+sTQaMk+2lI4ajah+tal4E94c5m09XBjK
- NrezLbUxXwmA136mfdi5TvuiakWkSqwDbGo9MuLkomRAwpNujVAzrqiYk8YjjeaXpem82i+lTiF
- uutqTXURd5bpVCg==
+ bh=2KmQlYMMKRf4yfohcWO2babcLQFJDLHQ8w1XzeZyyow=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC28kMTPdDd/NGgefpN204noC9h7Alevt6ub8
+ Wzd/sI/EXuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtvAAKCRDa6OEJdZac
+ 5dBXEACdTSUFbw2xx4zlgRd5/iP+juSXdFlUpIeyx41QX4UTI7VJASTrtjAEQIF1ecDH61w8bgz
+ AIk17qkb/yk0kHqKwHTzpJ4q/w0Jyj8JuHbqk1/WHLGHiFN6G4PZvf9xsrCqJr8N0WYfX36g2yy
+ DCBwfF7dHU30qhX9Im8dtHV42gJyICqXerLtLdmg7mrYQFwfbH0kVMdUT05KcG+nC6is+PV1eKW
+ IAwX4poNsSJ8kiNzL5u5t1P4PRSUTbVT689ggWOmbAqutblmNlFt4AED/NBe9LLiV7vqpeCPmj5
+ M+pVdZPQtjbQPouWxkwqt6VtEp+JCDSiqMwxxxHh/mu5u8RdPFkzNfn/eJR3jPaVv2SrFyk1iyI
+ +DXS3+2a3UyxeGuFJRS+gpeW2dyduGmEi8vWWQ2PjUDYEec9OMlbPOxbPLwY6QAB/W47WtU151Q
+ CDbMT2VutGv0+PTVR+RMoh6W+B2w93ScDzP1O/Cfnzd2ScxvyU2y2ukg5Rd0ZfM32U/wn8O+GQn
+ Mc9dglf6DW+wB/0emUuiOHY6CNql0/x9gl4YGYnHxnZnD4xq2sL1Hq/llPybcsyumDXgcdJwOx6
+ hUsydCRhOJkNcmqwjK2DG6mu3H9Yv7LsKRZ1SvR12Cw96rZB78Tut6FDXX8jdmu8mFeD46nE9kC
+ W2jtf5I7O7c8wWA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -116,162 +111,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mechanical conversion of all local PropertyInfo definitions in
-target/riscv/cpu.c
+Integer built-in types are currently canonicalized to "int" in
+query-qmp-schema. Consequently, clients cannot distinguish types such
+as int8, uint64, and size, even though they accept different ranges.
+
+Preserve the individual integer types during schema analysis and add an
+optional "integer" member to SchemaInfoBuiltin. It reports whether the
+type is signed and its width in bits. This also preserves the actual
+element type for arrays of integers.
+
+Teach the introspection generator to emit integer values and update the
+documentation to describe the extended schema information.
+
+For example for introspection, for all kind of int, before:
+{"name": "int", "json-type": "int", "meta-type": "builtin"}
+
+After, there are various int types such as:
+{"name": "int64", "integer": {"bits": 64, "signed": true}, "json-type":
+"int", "meta-type": "builtin"}
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/cpu.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ docs/devel/qapi-code-gen.rst    | 17 +++++++++++------
+ qapi/introspect.json            | 20 +++++++++++++++++++-
+ scripts/qapi/introspect.py      | 29 ++++++++++++++++++++++++++---
+ scripts/qapi/schema_analysis.py | 16 ----------------
+ 4 files changed, 56 insertions(+), 26 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index bd3fa786ee40..2f1c12408470 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1688,7 +1688,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
- }
+diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+index 69d5c4af9874..512a885f75f8 100644
+--- a/docs/devel/qapi-code-gen.rst
++++ b/docs/devel/qapi-code-gen.rst
+@@ -1404,14 +1404,19 @@ Example: the SchemaInfo for str ::
  
- static const PropertyInfo prop_pmu_num = {
--    .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "pmu-num",
-     .get = prop_pmu_num_get,
-     .set = prop_pmu_num_set,
-@@ -1730,7 +1730,7 @@ static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
- }
+     { "name": "str", "meta-type": "builtin", "json-type": "string" }
  
- static const PropertyInfo prop_pmu_mask = {
--    .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "pmu-mask",
-     .get = prop_pmu_mask_get,
-     .set = prop_pmu_mask_set,
-@@ -1762,7 +1762,7 @@ static void prop_mmu_get(Object *obj, Visitor *v, const char *name,
- }
+-The QAPI schema supports a number of integer types that only differ in
+-how they map to C.  They are identical as far as SchemaInfo is
+-concerned.  Therefore, they get all mapped to a single type "int" in
+-SchemaInfo.
++The QAPI schema supports a number of integer types with different widths
++and signedness.  Each has its own SchemaInfo with "json-type" "int" and
++variant member "integer" specifying its "signed" flag and width in
++"bits".
++
++Example: the SchemaInfo for uint8 ::
++
++    { "name": "uint8", "meta-type": "builtin", "json-type": "int",
++      "integer": { "signed": false, "bits": 8 } }
  
- static const PropertyInfo prop_mmu = {
--    .type = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "mmu",
-     .get = prop_mmu_get,
-     .set = prop_mmu_set,
-@@ -1795,7 +1795,7 @@ static void prop_pmp_get(Object *obj, Visitor *v, const char *name,
- }
+ As explained above, type names are not part of the wire ABI.  Not even
+-the names of built-in types.  Clients should examine member
+-"json-type" instead of hard-coding names of built-in types.
++the names of built-in types.  Clients should examine members "json-type"
++and "integer" instead of hard-coding names of built-in types.
  
- static const PropertyInfo prop_pmp = {
--    .type = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "pmp",
-     .get = prop_pmp_get,
-     .set = prop_pmp_set,
-@@ -1835,7 +1835,7 @@ static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
- }
  
- static const PropertyInfo prop_num_pmp_regions = {
--    .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "num-pmp-regions",
-     .get = prop_num_pmp_regions_get,
-     .set = prop_num_pmp_regions_set,
-@@ -1873,7 +1873,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
- }
+ Compatibility considerations
+diff --git a/qapi/introspect.json b/qapi/introspect.json
+index c8432c8ed8ec..8b5848862c4e 100644
+--- a/qapi/introspect.json
++++ b/qapi/introspect.json
+@@ -117,10 +117,28 @@
+ #
+ # @json-type: the JSON type used for this type on the wire.
+ #
++# @integer: the integer type's representation.  Present exactly when
++#     @json-type is 'int'.  (since 11.2)
++#
+ # Since: 2.5
+ ##
+ { 'struct': 'SchemaInfoBuiltin',
+-  'data': { 'json-type': 'JSONType' } }
++  'data': { 'json-type': 'JSONType',
++            '*integer': 'SchemaInfoBuiltinInteger' } }
++
++##
++# @SchemaInfoBuiltinInteger:
++#
++# Representation of an integer built-in type.
++#
++# @signed: whether the integer is signed.
++#
++# @bits: the integer's width in bits.
++#
++# Since: 11.2
++##
++{ 'struct': 'SchemaInfoBuiltinInteger',
++  'data': { 'signed': 'bool', 'bits': 'int' } }
  
- static const PropertyInfo prop_pmp_granularity = {
--    .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "pmp-granularity",
-     .get = prop_pmp_granularity_get,
-     .set = prop_pmp_granularity_set,
-@@ -1949,7 +1949,7 @@ static void prop_priv_spec_get(Object *obj, Visitor *v, const char *name,
- }
+ ##
+ # @JSONType:
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index ce37ce787567..e3749d38ced5 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -49,7 +49,7 @@
+ # A complexity over JSON is that our values may or may not be annotated.
+ #
+ # Un-annotated values may be:
+-#     Scalar: str, bool, None.
++#     Scalar: str, bool, int, None.
+ #     Non-scalar: List, Dict
+ # _value = Union[str, bool, None, Dict[str, JSONValue], List[JSONValue]]
+ #
+@@ -59,11 +59,25 @@
+ # Sadly, mypy does not support recursive types; so the _Stub alias is used to
+ # mark the imprecision in the type model where we'd otherwise use JSONValue.
+ _Stub = Any  # pylint: disable=invalid-name
+-_Scalar = Union[str, bool, None]
++_Scalar = Union[str, bool, int, None]
+ _NonScalar = Union[Dict[str, _Stub], List[_Stub]]
+ _Value = Union[_Scalar, _NonScalar]
+ JSONValue = Union[_Value, 'Annotated[_Value]']
  
- static const PropertyInfo prop_priv_spec = {
--    .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "priv_spec",
-     /* FIXME enum? */
-     .get = prop_priv_spec_get,
-@@ -1982,7 +1982,7 @@ static void prop_vext_spec_get(Object *obj, Visitor *v, const char *name,
- }
++
++_INTEGER_TYPE_INFO = {
++    'int': (True, 64),
++    'int8': (True, 8),
++    'int16': (True, 16),
++    'int32': (True, 32),
++    'int64': (True, 64),
++    'uint8': (False, 8),
++    'uint16': (False, 16),
++    'uint32': (False, 32),
++    'uint64': (False, 64),
++    'size': (False, 64),
++}
++
+ # These types are based on structures defined in QEMU's schema, so we
+ # lack precise types for them here. Python 3.6 does not offer
+ # TypedDict constructs, so they are broadly typed here as simple
+@@ -135,6 +149,8 @@ def indent(level: int) -> str:
+         ret += f"QLIT_QSTR({to_c_string(obj)})"
+     elif isinstance(obj, bool):
+         ret += f"QLIT_QBOOL({str(obj).lower()})"
++    elif isinstance(obj, int):
++        ret += f"QLIT_QNUM({obj})"
  
- static const PropertyInfo prop_vext_spec = {
--    .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "vext_spec",
-     /* FIXME enum? */
-     .get = prop_vext_spec_get,
-@@ -2025,7 +2025,7 @@ static void prop_vlen_get(Object *obj, Visitor *v, const char *name,
- }
+     # Non-scalars:
+     elif isinstance(obj, list):
+@@ -271,7 +287,14 @@ def _gen_variant(self, variant: QAPISchemaVariant
  
- static const PropertyInfo prop_vlen = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "vlen",
-     .get = prop_vlen_get,
-     .set = prop_vlen_set,
-@@ -2066,7 +2066,7 @@ static void prop_elen_get(Object *obj, Visitor *v, const char *name,
- }
+     def visit_builtin_type(self, name: str, info: Optional[QAPISourceInfo],
+                            json_type: str) -> None:
+-        self._gen_tree(name, 'builtin', {'json-type': json_type})
++        obj: Dict[str, object] = {'json-type': json_type}
++        if json_type == 'int':
++            signed, bits = _INTEGER_TYPE_INFO[name]
++            obj['integer'] = {
++                'signed': signed,
++                'bits': bits,
++            }
++        self._gen_tree(name, 'builtin', obj)
  
- static const PropertyInfo prop_elen = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "elen",
-     .get = prop_elen_get,
-     .set = prop_elen_set,
-@@ -2102,7 +2102,7 @@ static void prop_cbom_blksize_get(Object *obj, Visitor *v, const char *name,
- }
+     def visit_enum_type(self, name: str, info: Optional[QAPISourceInfo],
+                         ifcond: QAPISchemaIfCond,
+diff --git a/scripts/qapi/schema_analysis.py b/scripts/qapi/schema_analysis.py
+index 1d12306f61e2..1aad2dc80380 100644
+--- a/scripts/qapi/schema_analysis.py
++++ b/scripts/qapi/schema_analysis.py
+@@ -123,27 +123,12 @@ def visit_alternate_type(
  
- static const PropertyInfo prop_cbom_blksize = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cbom_blocksize",
-     .get = prop_cbom_blksize_get,
-     .set = prop_cbom_blksize_set,
-@@ -2138,7 +2138,7 @@ static void prop_cbop_blksize_get(Object *obj, Visitor *v, const char *name,
- }
+     def _register_type(self, typ: QAPISchemaType) -> None:
+         """Record a type for introspection (idempotent)."""
+-        typ = self._canonicalize_type(typ)
+         if typ not in self._types_set:
+             self._types.append(typ)
+             self._types_set.add(typ)
+             if isinstance(typ, QAPISchemaArrayType):
+                 self._register_type(typ.element_type)
  
- static const PropertyInfo prop_cbop_blksize = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cbop_blocksize",
-     .get = prop_cbop_blksize_get,
-     .set = prop_cbop_blksize_set,
-@@ -2174,7 +2174,7 @@ static void prop_cboz_blksize_get(Object *obj, Visitor *v, const char *name,
- }
+-    def _canonicalize_type(self, typ: QAPISchemaType) -> QAPISchemaType:
+-        """Canonicalize integer types to plain int."""
+-        assert self._schema is not None
+-        if typ.json_type() == 'int':
+-            type_int = self._schema.lookup_type('int')
+-            assert type_int
+-            return type_int
+-        if (isinstance(typ, QAPISchemaArrayType) and
+-                typ.element_type.json_type() == 'int'):
+-            type_intlist = self._schema.lookup_type('intList')
+-            assert type_intlist
+-            return type_intlist
+-        return typ
+-
+     def masked_name(self, name: str) -> str:
+         """Return the masked name for a non-builtin, non-array type."""
+         assert name in self._name_map, \
+@@ -152,7 +137,6 @@ def masked_name(self, name: str) -> str:
  
- static const PropertyInfo prop_cboz_blksize = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cboz_blocksize",
-     .get = prop_cboz_blksize_get,
-     .set = prop_cboz_blksize_set,
-@@ -2210,7 +2210,7 @@ static void prop_mvendorid_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_mvendorid = {
--    .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "mvendorid",
-     .get = prop_mvendorid_get,
-     .set = prop_mvendorid_set,
-@@ -2246,7 +2246,7 @@ static void prop_mimpid_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_mimpid = {
--    .type = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .description = "mimpid",
-     .get = prop_mimpid_get,
-     .set = prop_mimpid_set,
-@@ -2303,7 +2303,7 @@ static void prop_marchid_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_marchid = {
--    .type = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .description = "marchid",
-     .get = prop_marchid_get,
-     .set = prop_marchid_set,
+     def introspection_name(self, typ: QAPISchemaType) -> str:
+         """Return the introspection name for a type."""
+-        typ = self._canonicalize_type(typ)
+         if isinstance(typ, QAPISchemaBuiltinType):
+             return typ.name
+         if isinstance(typ, QAPISchemaArrayType):
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
