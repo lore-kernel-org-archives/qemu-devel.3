@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A09C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC402C88E54
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xBe-0000QJ-KN; Fri, 11 Sep 2026 05:04:46 -0400
+	id 1x4xB3-0006bK-Tn; Fri, 11 Sep 2026 05:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAm-0004v9-8E
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAj-0004ei-Ai
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAf-0008M0-T7
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAh-0008MO-QW
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117425;
+ s=mimecast20190719; t=1789117427;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
- b=X2dU40H8W+UjCiJl+QDzNJF6VUEYuNtZxby8B20Z336syfjRVMl3eQy9HWaOHxv6rx+22T
- to/4/wK+egy6EwRUNncQr6Evej5OMSBHCtPk4BqUtp/D2YF2zdEwvc4J8ft/raMrFSJ3DY
- ZR3/9xzXDgTGWciSNoMvHUxiqrqGghs=
+ bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
+ b=LdeO+wk4RTpJo3/q3ggtPFtLjj/Ki5zW8ou+xfxofOrAPMGx4fDR9Tu0KYqLKg/kfyOGmI
+ LF//HasPbN61Ve4UD1q0NZnHBe0s7YWMg4DmaJnLkDG1AR3tcQ2b/O56wDqTHBa0SeD6aG
+ GF9KM8N1DanGRI5yVIHSI3ciz8DOXz4=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-GOTgL5sHMTaszy2k7YxY2w-1; Fri, 11 Sep 2026 05:03:43 -0400
-X-MC-Unique: GOTgL5sHMTaszy2k7YxY2w-1
-X-Mimecast-MFC-AGG-ID: GOTgL5sHMTaszy2k7YxY2w_1789117422
+ us-mta-684-KjsOjIxmPbC1nwHNeZ9l5A-1; Fri, 11 Sep 2026 05:03:46 -0400
+X-MC-Unique: KjsOjIxmPbC1nwHNeZ9l5A-1
+X-Mimecast-MFC-AGG-ID: KjsOjIxmPbC1nwHNeZ9l5A_1789117425
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49cd55ee2f7so6056655e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:43 -0700 (PDT)
+ 5b1f17b1804b1-490a767c7dcso5386945e9.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117422; x=1789722222; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117425; x=1789722225; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
- b=fwFxkGnudnCEfS6HV0RRqQPyHqlW6Xl3BRbdrfNJUwHGhzYDA3NpcarDvh1dLeKX7t
- uK3Zr7gUxhe2dhA0VyQ8eh+k0KTvusiYobJd7SplLbcbMOKe1yuCc0ZRzo4z0eAlv5g4
- AOJB+8d87NSiS6gqYsO0yEKxp68mEbolDdNp8WbUw4pxoJUMHxDdXxBERXh1J1VcPEd1
- 3TqxZ+khXBw1N6ExZWvmP7rff/cDRzmbGgWMvjzTv6JG4NS4r5alyC5o/ry6ye5M3yVJ
- uGJVDvvggxcnjYmsfaecLg4PT5RLjVo+5hvMiJrNpw5VVwEf7+MhqTKbLUVyLfXnWWIF
- yHHg==
+ bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
+ b=R7iqxbSvIpiTpdOoNYCGRVvlErUgUWvFoA3R5ZFC68rGssHRPMlAQs1xhhq94PcZeG
+ 7lbuhLynP05Wt1MNkBxvxcfWFvUZcyIg8VUfTD6DE/pSz/l8sW41v2eTo0+wVQqAvaLP
+ JaXn9uEMq3iRvy/UxWm5kHB6i36gb/q3ckFo0b+ftcNwHNaiMmEinV1j4SmAxUbHXyCb
+ SsIFxgz9NpQnAYiSjikjHpPLrGL8yfAmkdY4D8eTZfYcZR4SNz/jXvfJ+fx8FYjCuZcH
+ mLCQYVy+rn6HAxC5k3dsIPmEkY5TX35Q/LJedfGumz1orVeFmaSyQWdP3HDUd6YuVg71
+ iNAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117422; x=1789722222;
+ d=1e100.net; s=20251104; t=1789117425; x=1789722225;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=2hNz4/jqFz0hJ0OYLcWq6vFd56S2mjD9cbtRudNy4aw=;
- b=pzTksIkrJ8BDP9TPP/isXo7DlHWNlcQLxAkb3MAaxcKIwaOVE4ewkkDF14D+X1w53n
- z8EYhrxLW3CZIUjQtxN8HHV0HjjpINja+OYbae2M3g5VH4QvkBjv/5evQHwonD0qVWhN
- E4KqT3Xbw9f4VgPTpVI8mtJcvN4kSzakbP2XT+p/hmg+0yqHjRWA6QFBedqLR9hXKEEw
- pG40PRB/r74LpjWI3d8UJWWtwjesOncUqF52uSDliHpQzQnpriX9AElnJv1rTSSDAAUQ
- fSqTYxP55Ol99FwBlIgy7Xtpe6eQqFtEYw/ST6FeMvj228Vn0oLGLxcMdHnCgbGTNrBr
- TXpA==
-X-Gm-Message-State: AFuF++mmxWuKwYwr71o4Nhf/qsMmhq2O899jAnJLvAwiefs95ETkmyQg
- +ZrVCrDOYuykhCddxc00rzv9L3AfuJZsh1419dUZX1R8mkLimrJVDvC4TvtHBBbvAxx/uSsgirI
- Y0rnS9nZD0/lEIOHDY0E4PiJUXzj13eRPkH0IFjezpI0/Q4eyXM6omcISb12PCHgvaQ06JwMuHJ
- Sdc0iAbQs26eRjYXM0VHDS2ajD9hT6av79xQ==
-X-Gm-Gg: AYBFou3fdJabbyyY1r3kXS0tI1LDBvtphpqNH/xGhMarkZ/EaNgmPvGZWNXt2uYZNkI
- CNrvL3cbsmtO7RrgHqpYXZPrr7m0rY1MnsFajr0vJdzUoFaNeJNuHHuzXDEQxFPZ5rqhR+gqPrg
- tl1752GxTzc2xZiMaHvfNefCisIT/MV1h5xPDY/m6WDG3ycsckvsaP/LUAIcSsdYXI+XN1+Ckhl
- UjjU6kSJx/q385N4Gcyd/HkjHK7yMVA4ar4Q4P+e4TJaND8jvh9t5gBlT1cBENw4dWzzG66GV2R
- 0gH8rn+E6UwdoW4huqb9qdfzHg9slUaF4CjN12jr8qyDxnEWgtfQ4p/YhrblOQm8uIC3Wer7V35
- SlCF1a58y7wIiLm5b8D8gK2o=
-X-Received: by 2002:a05:600c:5391:b0:49c:fa21:1c7e with SMTP id
- 5b1f17b1804b1-49e619bb6b3mr36033735e9.19.1789117422269; 
- Fri, 11 Sep 2026 02:03:42 -0700 (PDT)
-X-Received: by 2002:a05:600c:5391:b0:49c:fa21:1c7e with SMTP id
- 5b1f17b1804b1-49e619bb6b3mr36032975e9.19.1789117421625; 
- Fri, 11 Sep 2026 02:03:41 -0700 (PDT)
+ bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
+ b=IfvyphmX3BZkyNrcOYpPkHpOG43mrsX8uaP1YM8jL/XlLf6S4GJzyI0LGg7xTwgUek
+ 6czJEzF/Too4VSB+eEaAq4Xf0Dx2mkId1H3cvKKuQ01lbQLGS2X+a8NgAII2vm17cScC
+ PETgBBa6RTLENXjueSMiVT8YzpaZNszuBIsthLCSQUJIwKywLlz1Xafs3r63m7VTACNw
+ uuhroOCGndqmEXlLBcXLl4e9vkKjIZgYLBGiannLD/ZVR1jlZIGLasbjTWhT/8thqXnx
+ PdHFXis5ZZgtBXlEeaXJ3fZs7x536kV9H7QeMHoHQ8fBDkKZ8Wz3DqbEJvX+Gy1hjaD7
+ FS2w==
+X-Gm-Message-State: AFuF++n0S/97Jw0HcfljXhFYRDpZYoQ5HO3/NTzMUYwdROU19tSJBsvt
+ GjQgkoJjkOHpb9f/EzOHMvLUozHbVrhI4lbxxp5V6A0JtEVGLVbsVrd5D6BftSraSQRz7shGym9
+ /zJxPLWJFqW2XYKsnr1BEIbKw6P7Qp/x88+1nKAxevKH3kh+GIHOeKfZHLrcVgmd9H1ZXoddnCP
+ BWuudaOOwQzCw8qs+LRZJZGZu7POPb+PgVUQ==
+X-Gm-Gg: AYBFou3FDbQqBgH9M8o0FEhrJvO4/LPEFG7nipgOvz4cCuN9qH1hl6uD7kfnPA3Jqg/
+ /BQ8W2B/hVX0HVlOHJfzPDIl3Dk1qFg+3ALr6iMJQDRxxxDwEVd3xRIWPF1hX7Ftnk1Tsb5upLn
+ w9YpaNNHyOTC/t68rBcxCxqxuIXtzIjnoZHW/rXn3QbE5SsO7yecezDkR1rhJIJc9pUjOnZUphi
+ rfKY9Oqu3dpNxSUZXfByBuT2jpR1VQ6TvNtI8H4S9DDlkbTC3vKnsWwnMREzcD41PJV7lP4cp+X
+ bEBhtmbkUlOpOr7/1O200xcVnlVYdCWYQR1/Qt/zhjEZEdu4aj2yOkTeQbDQ8bHR7eQuHudbh7K
+ z4W2qgGsfFB+wkEEZ9DBuK0I=
+X-Received: by 2002:a05:600c:3d96:b0:49d:72d:9ba3 with SMTP id
+ 5b1f17b1804b1-49e619b5dddmr30878335e9.14.1789117424440; 
+ Fri, 11 Sep 2026 02:03:44 -0700 (PDT)
+X-Received: by 2002:a05:600c:3d96:b0:49d:72d:9ba3 with SMTP id
+ 5b1f17b1804b1-49e619b5dddmr30877635e9.14.1789117423926; 
+ Fri, 11 Sep 2026 02:03:43 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62121747sm37594735e9.2.2026.09.11.02.03.40
+ 5b1f17b1804b1-49e62231360sm29818345e9.4.2026.09.11.02.03.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:41 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:39 -0400
+ Fri, 11 Sep 2026 02:03:43 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:03:41 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  "Denis V. Lunev" <den@openvz.org>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PULL v2 60/75] pci: batch BAR remapping into one memory transaction
-Message-ID: <6bda4e6abaafa3e6f49c4ca51d5a0f55337855fa.1789117222.git.mst@redhat.com>
+Subject: [PULL v2 61/75] pci: load a device's config inside one memory
+ transaction
+Message-ID: <c0aa1ba2193ac288f6710900b90ffb19c914d791.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,45 +123,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-pci_update_mappings() deletes and re-adds a subregion for each BAR
-whose address changed, and both of those commit their own transaction,
-so one BAR move costs two full flatview rebuilds.
+Restoring config space remaps the BARs, updates the bridge windows when
+the device is a bridge, and toggles the bus master region. Each of those
+commits a transaction of its own, so one device costs several flatview
+rebuilds where one would do, and the cost of a rebuild grows with the
+number of regions in the machine.
 
-Nothing between the delete and the add touches an address space, so
-the walk can run inside a single transaction. pci_bridge_update_mappings()
-already does this for the bridge windows.
+Nothing between them touches an address space, so the three can share a
+transaction. The saving scales with the number of PCI devices.
 
 CC: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903184542.2629976-2-den@openvz.org>
+Message-ID: <20260903184542.2629976-3-den@openvz.org>
 ---
  hw/pci/pci.c | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index c15f2b9f08..14c78e3c62 100644
+index 14c78e3c62..0efb4eb4bb 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
-@@ -1742,6 +1742,8 @@ static void pci_update_mappings(PCIDevice *d)
-     int i;
-     pcibus_t new_addr;
+@@ -840,6 +840,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
+     }
+     memcpy(s->config, config, size);
  
 +    memory_region_transaction_begin();
 +
-     for(i = 0; i < PCI_NUM_REGIONS; i++) {
-         r = &d->io_regions[i];
+     pci_update_mappings(s);
+     if (IS_PCI_BRIDGE(s)) {
+         pci_bridge_update_mappings(PCI_BRIDGE(s));
+@@ -848,6 +850,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
+     pci_set_master(s, pci_get_word(s->config + PCI_COMMAND)
+                       & PCI_COMMAND_MASTER);
  
-@@ -1778,6 +1780,8 @@ static void pci_update_mappings(PCIDevice *d)
-     }
- 
-     pci_update_vga(d);
-+
 +    memory_region_transaction_commit();
++
+     g_free(config);
+     return 0;
  }
- 
- int pci_irq_disabled(PCIDevice *d)
 -- 
 MST
 
