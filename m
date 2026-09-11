@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32754C88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D33C88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xAY-0004Kg-2a; Fri, 11 Sep 2026 05:03:40 -0400
+	id 1x4xBV-0008SR-SJ; Fri, 11 Sep 2026 05:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9j-0003Yk-Nr
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xB7-0006z7-Sb
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9i-0008Dx-5e
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xB2-0008S9-4V
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117365;
+ s=mimecast20190719; t=1789117447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JyVf7JBB2VSLc3TqglYtvlBBQTxI0eqQCJH5aubruxE=;
- b=PzgUFEL1osVdJ/MH3VY56Qxyw1qXQmE95NKR5n2BUbQ91JT3ncfU3n8zxjZ5yf2UPFaDg7
- sCPfVJaGlcTgvLf/B4bXRDvQoyW4qWAsbehOeJ9TW3asVxcuLqGsuEwV/gCEI8lDW/SGRx
- FZay7hJxEcU5AhNVmG2Q13oH5/9HLzM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
+ b=KSbnWpUvkE84TrlbzRLL+SpkWaj6YEg+XcDn9SCXOq2FucutYc3cfKtJKsf72Kq3B/SV7X
+ F9KlTg6hF/qj32CFAdt/rl85IEU11fX+vBnIL17WGJutUw8FIBjsi/wDgKQvH3ygB5qrtP
+ uGF2xiMjo/gcL7uGR2L7CCJofMdbdCA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-3qbwktSHP_aaAa2Y9ZzaTQ-1; Fri, 11 Sep 2026 05:02:44 -0400
-X-MC-Unique: 3qbwktSHP_aaAa2Y9ZzaTQ-1
-X-Mimecast-MFC-AGG-ID: 3qbwktSHP_aaAa2Y9ZzaTQ_1789117363
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4839f9edb08so340091f8f.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:02:44 -0700 (PDT)
+ us-mta-85-BBQeC5pzOy2N6e3MKmY8HQ-1; Fri, 11 Sep 2026 05:04:05 -0400
+X-MC-Unique: BBQeC5pzOy2N6e3MKmY8HQ-1
+X-Mimecast-MFC-AGG-ID: BBQeC5pzOy2N6e3MKmY8HQ_1789117444
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49cd83ca361so6764805e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117363; x=1789722163; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JyVf7JBB2VSLc3TqglYtvlBBQTxI0eqQCJH5aubruxE=;
- b=qqk9MlebkAR6TRyG4GCibRxVOJha/Ei1KdS1+NVQLVbaVGKB7JYWUXo6ivP4LNyyxa
- 90BscyMrKhMrSL5kWuZTg/M4TFTVX+li1DKK0k0g4X/8vzBhnvz1ozyLAVkFjF8hhNNx
- hH0LRTR9jhSMobmzhylu3b2RHn4nsTqM08vuYB/x6KVQBRfqGDbmaDryQxCIzzqLstvF
- US4HB4okePSALM6ielXT3ttjc8rk4TjuVH8EUAOcYeuJs1mIeDW4IAH5gEwAQ1/9wCkp
- IWKgWIP2xLG7x/zcu3JPuRaXCCRnLIslCmbpfURdASrPnVg5GaNiqrzRUfUXYQMef8Nv
- rwUQ==
+ d=redhat.com; s=google; t=1789117444; x=1789722244; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
+ b=s2YppWhfpKIgyoxauYNkqOxRXj+c29fKWUUTCqu+qtPZXKylGPqBXSOXD/8xAQqfUd
+ FfDnh5/KNwVH193w7tNDNrRUuxR4uj6xcK0VEwv3cSX7YgCRxXVvZz2VQWONg3m90XcL
+ J5iSiLFLmMxjUtjZW3G+A02mutVurvyD6eeXw8p2U4QdCHuU/6nYwq7hJZKEL33QtjPn
+ WoXkUDBtQ2grngAVF2Qf2eqnQWpZsl7ZKvipqBpBKBucjm5uYyyn4PY7QmfBs7ERDz66
+ 0iL+Skfief8sNHfdYz4Jt0tbmLCzbF/YKM8Rq9RSNjcFedSJJndMJyac+nn9GQLy6tUQ
+ dz5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117363; x=1789722163;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=JyVf7JBB2VSLc3TqglYtvlBBQTxI0eqQCJH5aubruxE=;
- b=De4sYECyG4Qq72ToItmgrkN1Yc9PDiuejlsjDskoqMCWILPQHa4h4v3suK6jOqK8fL
- RHK6jkF3deYIkaf0bOM6rLt1dvLDGfwuQF9zqzNebgR8sg7U10sdYkZtwZihJ81eM3HN
- S0+kiLbc8BpMfTrBhhLyuSkL/JYNh4fp6zZRDLz1vXoW2/ogy+/c5ROoOGBLg2fT4iN/
- 9wKWJYqi1LIiiBqfzv6ttBOKHmjEU7PC+1TaiWNll0/laYWZVVY2JPfNTogKAI3V2+FS
- xWXMKZExYlg3dGRgUShENkgdEV4EkccgMVf2w/X2BRE9mtcQMFafVD6s00mf1Ko3tNoP
- Dxsg==
-X-Gm-Message-State: AFuF++lTHaG+tc46DCjJe82BhIRqBrWR6ESmqHh7WMvXawoBYvCULmrq
- MShqtoVTO85hPEgv7Fc/3E+qsyaHPKWGusuWcApvwtfeCAZgtNFZy5Q4w6bOzxyAbQzqHs5/HMr
- NdxBp2FUPUe/M4NK1QiLaKJkO2WJzqRXdbkPsIsObinBuqyqao8HdDHmysqUAiqRLvE+2k/9aGu
- 6htvpzth6lFY+z/1NMl1sMjjb388U8XG5ZBQ==
-X-Gm-Gg: AYBFou3RBfF3gp3RWHXz+8wt89rCG6KeFwY4ObaJCrEpc+fyykkJajOCAs5CjcDgdoj
- 6hMPkJGGtaQiIPV4jcRcqRZB5zeOJEVx902y/v6lx7BGJBgsQ8HX+AmhX2xDfSWD8UZCYDik3XG
- uCYIYduTekRFZm5Gr5pJkyEAW0Vc0pFY/NoCxeo3iqjPSYUTfW0j0fI0VOUq6wX9T96y/YGj1fx
- K9l9l2iZPDVFz/2Uk4BA2uPMVjebm5bG2RayNgwHFnwsx6IAntzbyrXhW4fknTW0kRIIZDhU929
- XFPpGzQW7nuaVJZ1VpVQochCFU+SkkySKE5rTDz91nTeeRlshz9hVbljuYuteIk5g/V4ajUtFe7
- ztvyJ/25CJ0PUwKn9sJsfoUY=
-X-Received: by 2002:a05:6000:2912:b0:486:e708:2e5d with SMTP id
- ffacd0b85a97d-486eb1d5c5fmr3799934f8f.18.1789117362790; 
- Fri, 11 Sep 2026 02:02:42 -0700 (PDT)
-X-Received: by 2002:a05:6000:2912:b0:486:e708:2e5d with SMTP id
- ffacd0b85a97d-486eb1d5c5fmr3799847f8f.18.1789117362090; 
- Fri, 11 Sep 2026 02:02:42 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789117444; x=1789722244;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
+ b=K+8VpKobV+ism0t1SFOMQlc5V6e7u/5ruKxzgHWHBRaW0LbbnJZNAnlHyfxHtJcjTT
+ nstX8o9RmcTd1dzt/kbz1omE0nPbVooLVfZdrgxF7YvAPzeepqc5etcP3EUgvl6GJgMc
+ hMA/Rtq9ihQlAD8WKtoBqt7oIhyMCpeg3cm9anmRyIy6WJVGbXfZ7qucVZkpenJoiY4K
+ 5eA1wyges54jUi6fctZ+8WV+DOZD2pXuqXgaKH+vGOWGxdMNcwIFpTb5txwoCCO8FmaI
+ wFNCLeTAQBW9m5B9R46Ne35wSRpbX7o2Nshe4jg0s9iada1L/uwS1qsyP9ZAPnGAWFHX
+ 4Ihw==
+X-Gm-Message-State: AFuF++kVGFBjEnQdBQR2BaTWUI8wMXF86UhciNSPC2NmgPQ9QAqVIneA
+ pafW4eUJEOLmH2ynnKNtFdABkzexGoavAip/NYCA29B+wdBBXP+jx+xkKdnGISLaGNbfx6uwcre
+ xrK1kGfStFYxGqCZZUxlEfEZntWzx73hOavk+yOX+IW1bsThUxVIxWe9Ph/rm00DN7FWR47aoX2
+ gOCJ00X0OwKtSxNBCiFPwQG7YsbAfTa8w4xQ==
+X-Gm-Gg: AYBFou0VuQ5jbnC5/ayOtlPYi1LlGIdf1kEvek0SA8/6b6SN1mwWD/7rwPcsf3qsGxw
+ hxbfQthuSuEijAEk91iJXRecA+LM7qyhCpyIyMEY9aXRIrP3F0CiSa5TQsM4qC9YOdzn5lhA+q7
+ t3LGDaag3QC0GvV/bVBkc7AmuMx5bmYF8NBG09OdWpMgV1oBmDdm0t4lYVQZ0qTLfwgMEcVKyOx
+ yNrKIzsy+jhBUJv16fQv2WqsvVSBkeAYy7vX7z+AVdji6dxd9cQ3AMk7XbUDShWqwaW9ssDhLy3
+ Hn45ShRpES0LdQGx/991SIoyW14HhO2Ek2JDbq7l50kH/kQ1PdxhwMdL11lH3n4ThjqaYMXA3hy
+ U/uM3tx/J9b93J4XPeB3MOKQ=
+X-Received: by 2002:a05:600c:8b41:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49e6198865dmr42375245e9.8.1789117443825; 
+ Fri, 11 Sep 2026 02:04:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b41:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49e6198865dmr42374315e9.8.1789117443205; 
+ Fri, 11 Sep 2026 02:04:03 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32e8d1sm4440197f8f.11.2026.09.11.02.02.40
+ 5b1f17b1804b1-49d26be3e35sm134916805e9.2.2026.09.11.02.04.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:02:41 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:02:39 -0400
+ Fri, 11 Sep 2026 02:04:02 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:04:01 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hanna Czenczek <hreitz@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Klaus Jensen <k.jensen@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL v2 34/75] hw/nvme: Fix block accounting for compare
-Message-ID: <bfc1ed231786f1d0617f80d7860d8311e69d6213.1789117222.git.mst@redhat.com>
+ Jason Wang <jasowangio@gmail.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>
+Subject: [PULL v2 67/75] virtio-net: validate IHL in
+ virtio_net_rsc_extract_unit4 before use
+Message-ID: <8649730874bde0412e3c531e5fad43dde96bab08.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -110,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,79 +122,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+virtio_net_rsc_extract_unit4() uses the IPv4 IHL nibble from the
+wire to compute the TCP header offset, but the caller's length
+check only guarantees space for a minimum 20-byte IP header. A
+crafted IHL of 15 causes a read 32 bytes past a 66-byte buffer
+when the frame was parked in net/queue.c's exact-size allocation.
 
-nvme_compare() starts block accounting for the operation, but
-nvme_compare_data_cb() (and nvme_compare_mdata_cb()) do not always
-finalize the cookie.  Specifically, there are a lot of error paths that
-do not call block_acct_failed().
+virtio_net_rsc_sanity_check4() rejects IHL != 5 on the next line,
+but runs after the OOB read already happened.
 
-Fix this by putting block_acct_done()/block_acct_failed() under the
-`out` labels of nvme_compare_data_cb() and nvme_compare_mdata_cb().
+Validate IHL before using it as an offset. Since
+virtio_net_rsc_sanity_check4() only accepts IHL == 5 anyway, reject
+anything else early and let the caller fall through to the bypass
+path.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Fixes: 2974e916df ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
+Cc: Jason Wang <jasowangio@gmail.com>
+Cc: Yuri Benditovich <yuri.benditovich@daynix.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4166
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724152315.234183-5-hreitz@redhat.com>
 ---
- hw/nvme/ctrl.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ hw/net/virtio-net.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index c56725947a..7478f0b33a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -2389,7 +2389,6 @@ static void nvme_compare_mdata_cb(void *opaque, int ret)
-     trace_pci_nvme_compare_mdata_cb(nvme_cid(req));
- 
-     if (ret) {
--        block_acct_failed(stats, acct);
-         req->status = NVME_UNRECOVERED_READ;
- 
-         trace_pci_nvme_err_aio(nvme_cid(req), strerror(-ret), req->status);
-@@ -2444,9 +2443,14 @@ static void nvme_compare_mdata_cb(void *opaque, int ret)
-         goto out;
-     }
- 
--    block_acct_done(stats, acct);
- 
- out:
-+    if (req->status == NVME_SUCCESS) {
-+        block_acct_done(stats, acct);
-+    } else {
-+        block_acct_failed(stats, acct);
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 986ceff514..19f453fb7d 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2104,6 +2104,14 @@ static void virtio_net_rsc_extract_unit4(VirtioNetRscChain *chain,
+     unit->ip = (void *)ip;
+     ip_hdrlen = (ip->ip_ver_len & 0xF) << 2;
+     unit->ip_plen = &ip->ip_len;
++
++    if (ip_hdrlen != sizeof(struct ip_header)) {
++        unit->tcp = NULL;
++        unit->tcp_hdrlen = 0;
++        unit->payload = 0;
++        return;
 +    }
 +
-     qemu_iovec_destroy(&ctx->data.iov);
-     g_free(ctx->data.bounce);
- 
-@@ -2474,7 +2478,6 @@ static void nvme_compare_data_cb(void *opaque, int ret)
-     trace_pci_nvme_compare_data_cb(nvme_cid(req));
- 
-     if (ret) {
--        block_acct_failed(stats, acct);
-         req->status = NVME_UNRECOVERED_READ;
- 
-         trace_pci_nvme_err_aio(nvme_cid(req), strerror(-ret), req->status);
-@@ -2513,9 +2516,13 @@ static void nvme_compare_data_cb(void *opaque, int ret)
-         return;
-     }
- 
--    block_acct_done(stats, acct);
--
- out:
-+    if (req->status == NVME_SUCCESS) {
-+        block_acct_done(stats, acct);
-+    } else {
-+        block_acct_failed(stats, acct);
-+    }
-+
-     qemu_iovec_destroy(&ctx->data.iov);
-     g_free(ctx->data.bounce);
-     g_free(ctx);
+     unit->tcp = (struct tcp_header *)(((uint8_t *)unit->ip) + ip_hdrlen);
+     unit->tcp_hdrlen = (htons(unit->tcp->th_offset_flags) & 0xF000) >> 10;
+     unit->payload = read_unit_ip_len(unit) - ip_hdrlen - unit->tcp_hdrlen;
 -- 
 MST
 
