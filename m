@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D464DC88E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE7EC88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:57:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ysN-000304-Cz; Fri, 11 Sep 2026 06:52:59 -0400
+	id 1x4yw9-0004Z7-9u; Fri, 11 Sep 2026 06:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1x4ysL-0002zk-Ev; Fri, 11 Sep 2026 06:52:57 -0400
-Received: from fanzine2.igalia.com ([213.97.179.56])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x4yvx-0004WE-0O; Fri, 11 Sep 2026 06:56:41 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1x4ysJ-0001jK-A3; Fri, 11 Sep 2026 06:52:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
- s=20170329;
- h=Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:
- From:Reply-To; bh=vUacKBIksIh7vKNrhaLkEvFsF3e5tm/UIhGN4fzVIbk=; b=AGQatNP8EE3
- UHKElVvBRa+EylM1zJtb3HDk9/LqCnrDLrpigc/GtZa4cmaYAuZ8OY0Txa4BfFQrhH4S0fUyxgHpp
- ceuESYZCqN8SlMAkvIKgmBn5VOeLZM28iUjrBJeaN1WyXaBChtctt20ZmWtvM6jcrMxMWOeV6Q9+r
- xj3hgDOQxXws3YrYkYw4pkKuv/bAZwH3mUl0F5T0Hqwj0nEbqaxunanIENXSFrlmnRRgI81BsUELm
- sjt2m0l4ewxj3paFJPrI+JP17y+Dp7uBcCP2xfUTtjnEaD+YHqcOw9xBuy8LeedtuhxeGsPdePFt7
- EgS1dFGgRpD4632ZVWwcZ6w==;
-Received: from maestria.local.igalia.com ([192.168.10.14] helo=mail.igalia.com)
- by fanzine2.igalia.com with esmtps 
- (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1x4ysA-000dPd-AN; Fri, 11 Sep 2026 12:52:46 +0200
-Received: from gate.service.igalia.com ([192.168.21.52])
- by mail.igalia.com with esmtp (Exim)
- id 1x4ys9-001yys-8I; Fri, 11 Sep 2026 12:52:45 +0200
-Received: from berto by gate.service.igalia.com with local (Exim 4.96)
- (envelope-from <berto@igalia.com>) id 1x4ys9-000zCt-0H;
- Fri, 11 Sep 2026 10:52:45 +0000
-From: Alberto Garcia <berto@igalia.com>
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, "Denis V. Lunev"
- <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH] block/throttle-groups: fix crash when enabling I/O
- limits on a busy disk
-In-Reply-To: <20260908145554.3215221-2-den@openvz.org>
-References: <20260908145554.3215221-1-den@openvz.org>
- <20260908145554.3215221-2-den@openvz.org>
-Date: Fri, 11 Sep 2026 12:52:45 +0200
-Message-ID: <w51se3ggiv6.fsf@igalia.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x4yvu-0003CT-JV; Fri, 11 Sep 2026 06:56:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1789124162; bh=WA+3nlkepq+aZOxTW85cJBlOrW3GGvA+ikUW6COdVzc=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=PaL1GgG3QL6t4BXcv+0yL7h2rovPxS8zm7okWhXAij2d6DF89jyilZKclmzaIfDFO
+ uyIlBD+AuYs5whVzhHmqmxDsYMwlghRM+Z2ihD+1ciAV9xZ0PUu1KuHark3xrUdKZj
+ gl3jh770wwg87HOQo3wt0l04SwWElFneN1Lb4+pKEAYPG6NBHmDUtkleNY3eKk9IOt
+ P+PMVgSqsfl0b3cSOdLfPU8V2K/ge2IJ0oxoJjdvdZLFP/fFNnbMuJjVqTQfuZeF+e
+ P4tp7gUIVnMQSmfTfusnLoafUKWsmjG1Oovb8ufAk5QHiY0w8DKG+5qqXGLy017brm
+ jmKxz6PKLCV7g==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id EE1D81D3B83;
+ Fri, 11 Sep 2026 13:56:02 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B73E9425DFA;
+ Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id A4EBE40F0B; Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Rohitashv Kumar <roohiit@amazon.de>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 1/4] qapi/net: gate user/vde/netmap netdev backends behind
+ their CONFIG symbols
+Date: Fri, 11 Sep 2026 13:56:29 +0300
+Message-ID: <20260911105635.955937-2-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260911105635.955937-1-mjt@tls.msk.ru>
+References: <20260911105635.955937-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=213.97.179.56; envelope-from=berto@igalia.com;
- helo=fanzine2.igalia.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,15 +71,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue 08 Sep 2026 04:55:53 PM +02, Denis V. Lunev wrote:
-> throttle_group_register_tgm() stores tgm->throttle_state before it takes
-> tg->lock, so the I/O path can see a member whose group still has NULL
-> tokens[] and an empty member list. A request in an iothread then reaches
-> throttle_group_co_io_limits_intercept(), wins tg->lock ahead of the
-> registering thread, and next_throttle_token() passes the NULL token to
-> throttle_group_next_tgm(), which dereferences it:
+From: Rohitashv Kumar <roohiit@amazon.de>
 
-Acked-by: Alberto Garcia <berto@igalia.com>
+Their NetClientDriver enum members and Netdev union branches were
+unconditional, so query-qmp-schema advertised them even when built without
+CONFIG_SLIRP/CONFIG_VDE/CONFIG_NETMAP. Gate them, and guard the matching
+NET_CLIENT_DRIVER_USER/_VDE case labels in net/hub.c.
 
-Berto
+Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ net/hub.c     |  4 ++++
+ qapi/net.json | 19 +++++++++++++------
+ 2 files changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/net/hub.c b/net/hub.c
+index b53a4cc872c..1d1710a198b 100644
+--- a/net/hub.c
++++ b/net/hub.c
+@@ -299,12 +299,16 @@ void net_hub_check_clients(void)
+ #ifdef CONFIG_PASST
+             case NET_CLIENT_DRIVER_PASST:
+ #endif
++#ifdef CONFIG_SLIRP
+             case NET_CLIENT_DRIVER_USER:
++#endif
+             case NET_CLIENT_DRIVER_TAP:
+             case NET_CLIENT_DRIVER_SOCKET:
+             case NET_CLIENT_DRIVER_STREAM:
+             case NET_CLIENT_DRIVER_DGRAM:
++#ifdef CONFIG_VDE
+             case NET_CLIENT_DRIVER_VDE:
++#endif
+             case NET_CLIENT_DRIVER_VHOST_USER:
+                 has_host_dev = 1;
+                 break;
+diff --git a/qapi/net.json b/qapi/net.json
+index 85c78710fe8..bb626005a82 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -922,9 +922,13 @@
+ # Since: 2.7
+ ##
+ { 'enum': 'NetClientDriver',
+-  'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
+-            'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
+-            'vhost-vdpa',
++  'data': [ 'none', 'nic',
++            { 'name': 'user', 'if': 'CONFIG_SLIRP' },
++            'tap', 'l2tpv3', 'socket', 'stream', 'dgram',
++            { 'name': 'vde', 'if': 'CONFIG_VDE' },
++            'bridge', 'hubport',
++            { 'name': 'netmap', 'if': 'CONFIG_NETMAP' },
++            'vhost-user', 'vhost-vdpa',
+             { 'name': 'passt', 'if': 'CONFIG_PASST' },
+             { 'name': 'af-xdp', 'if': 'CONFIG_AF_XDP' },
+             { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
+@@ -949,16 +953,19 @@
+     'nic':      'NetLegacyNicOptions',
+     'passt':    { 'type': 'NetdevPasstOptions',
+                   'if': 'CONFIG_PASST' },
+-    'user':     'NetdevUserOptions',
++    'user':     { 'type': 'NetdevUserOptions',
++                  'if': 'CONFIG_SLIRP' },
+     'tap':      'NetdevTapOptions',
+     'l2tpv3':   'NetdevL2TPv3Options',
+     'socket':   'NetdevSocketOptions',
+     'stream':   'NetdevStreamOptions',
+     'dgram':    'NetdevDgramOptions',
+-    'vde':      'NetdevVdeOptions',
++    'vde':      { 'type': 'NetdevVdeOptions',
++                  'if': 'CONFIG_VDE' },
+     'bridge':   'NetdevBridgeOptions',
+     'hubport':  'NetdevHubPortOptions',
+-    'netmap':   'NetdevNetmapOptions',
++    'netmap':   { 'type': 'NetdevNetmapOptions',
++                  'if': 'CONFIG_NETMAP' },
+     'af-xdp':   { 'type': 'NetdevAFXDPOptions',
+                   'if': 'CONFIG_AF_XDP' },
+     'vhost-user': 'NetdevVhostUserOptions',
+-- 
+2.47.3
+
 
