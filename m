@@ -4,108 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CE9C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7948C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x50m6-0000Jx-4s; Fri, 11 Sep 2026 08:54:38 -0400
+	id 1x50mb-0000R9-Sf; Fri, 11 Sep 2026 08:55:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x50m2-0000JW-Uo
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:54:35 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x50ma-0000OO-CN
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:55:08 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x50lx-0001uQ-S8
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:54:34 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a6056be4d2so708969a12.1
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 05:54:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789131267; cv=none;
- d=google.com; s=arc-20260327;
- b=QQTwaRWEDapm6Non33Fn6w6lkf7xK23beuwmQ0geFTNdPJMxCdY31ekRdwQ+eL4Ufo
- Jw3L80QfwbzWxRPTghwEC3V5gblc+6NyvUdN5jUbhSur9nZIkaT3FRIvW9eai7iFpjxl
- TP9AVXSSIyUoFMb3/E/D6f8B75KjlqNHiLNKNEyP/Y/W0stao0GzcXxLun4iE0JuprfL
- 5A90OECtFiXZZSscxkMG3x0H3Nb3BB+zSO/cnHH0QvXJBVaLCYNVSZxl2mE0ST5Y5pHL
- gR5PXY1KerWu+B2gH33qsvtn4Eqqv05pqswYy25+8PX81jJTA8Jvdrs77psDgr2vPQ+W
- VF+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RQJNBN7xXsWdn00WVqHCo4xdtCx4SHmad6GkyAortV4=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=aHtH5QLX2uu1+mvFb+qRsy3qdpwmqB4n8/v/1BJuycMIBhYd5kIs/TfsDOJxkri9pK
- UJNFdsTgCLagd4DQns41G7lC+wXwA2tL0qjUm7JLM149WMjokm34u611ZFZ6OzZRCQHv
- bYtffAtNGDKQzNRsa9h6AjPgl2bSZ9PFmNA2V0RlrwZ/1164boWmKAUYPqL5b+RybJS2
- z/isDSH8JZTdnizlwwkg7LgtoWGjiNm8rf7rXDaIZ+ht/rdhdVr7kbLXs0KkjyE7Rr9m
- WK5T24wXEV/bRDJOBgAAJH6VISaGON0VkKXhJ1J7sBPMSQJxQxeCneNHMQ0vd/B3AlQe
- FH9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789131267; x=1789736067; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=RQJNBN7xXsWdn00WVqHCo4xdtCx4SHmad6GkyAortV4=;
- b=XKcUtzSQ8wZQNxGvWQgovmnZGxeLQPD+45sUfUqM9qNiISz8tIPZDpSUVFdByJnNnX
- PV29/D0u69Gn4zL/gIaCsnq72YDPHS7yFXGJr2Q4zF/PYajsjPqUEyBcfby6aIoBxQhR
- TkVD7en5kXxgJmNXhTO89KBWkh4bsK8caf8HmsGHHctgPngRD9sk5lNIE+FoUHm178b+
- +7LwQDAp2gnwAgTxbKnBh8XVAPFsIhpykzaAdZ21HJ1NOZ8QTQ5Z0ShqmV/7Uyqemyyi
- bDQ2EpWcMSYTSuv5/rhd6fxyz6UM+TYeyjZXtQc5EbvSeXeajAER1T26RcA711K3m8YL
- vPeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789131267; x=1789736067;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=RQJNBN7xXsWdn00WVqHCo4xdtCx4SHmad6GkyAortV4=;
- b=YmU+WNNhW2rYe6jUNUldcYLvr5rYdN8wPVxMtoPvmGvGp6cBKcWzUlVUNMCV9N10xW
- Nqezm0z9B2neMUEPciPrX22sJX9wFqoxKJSHvw+viSVLAx030JCC44i+/ld0XdGv4mP3
- icPQ3xVORNF7nIylEWGCTpp2xi+nVsqooDuIuMH5ZPBLj1KeSVbcuHdsgMerj5hzTBxu
- j9gjdKc0dhN3OhffBLAPQW4c/Fgd/LKp2P9q4dPHOeuVhXPH5NbTjJhksqwZVL+Rq1Gm
- racbaYYZ9OKC/3Gipup3b+x/FNnOt8LltqeJvl67yJDuH+ZO4MIG2Wxs+NxERx3XDy0/
- giZQ==
-X-Gm-Message-State: AFuF++lMEkCL64C3cD8KFtHYGkCXcxvRhiuRYQrSk7ajHw3hjFXoB5Q5
- mv7mUsPLzpnKaIs4ke81xMrAkHPc1wedcLWqndpQZb4UOSxk2X87dxIgkBllMVyRT8NwLJ5gTvG
- nJ7V8BGSxPHycYywMx/tgUv+Mqb7cCxI=
-X-Gm-Gg: AYBFou1AIFdinJiHMaPzW5CYTsxObkym9o7jPcSewAe6ER9/y0ispMaJC1yzqOkgTjn
- QVdKoyWHedes3UXf/M8nlNbGWQo6B0mp6teehlxYbu0xvVumHZIu4sNtBgjTDOCSJLU/wOZC1QW
- xZip6E2zDNP65OYWGYCxvdaAFnOCXpNpsPUwdoucn5WdxquXLLD8wb+kGNHJQ7OC8TvyX3V81LC
- VjN0QB6IO38m4Rk5GGk7bulkW92MnObkQsMZbOWVs++H8WFHancoqB4pEmTJ4DCeF3yZzo091Ra
- Ub/UUb4cx43FKxd2CqtPYe8hcEZxXhdbnjLsDDdfrGTJnbdWInIluhc=
-X-Received: by 2002:a05:6402:450e:b0:6a6:b2b9:61fb with SMTP id
- 4fb4d7f45d1cf-6a9b50b1b62mr2007254a12.15.1789131267139; Fri, 11 Sep 2026
- 05:54:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260911100709.726366-1-zhangckid@gmail.com>
- <87wlss6owr.fsf@pond.sub.org>
-In-Reply-To: <87wlss6owr.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 11 Sep 2026 20:53:50 +0800
-X-Gm-Features: AcwNN1W7GFt2UplD1lcrKmzlfA514WRQ6znx0e64O1flkH2M1aAO9WKfv1FVVTs
-Message-ID: <CAK3tnvKXv+HdK4d5KXXNagUCODj68A1XRuP7VTpZNyUFoMTQnw@mail.gmail.com>
-Subject: Re: [PATCH V16 00/13] iothread: Support tracking and querying
- IOThread holder
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x50mA-00022k-Hy
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:55:07 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9055E1FF01;
+ Fri, 11 Sep 2026 12:54:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789131274; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b/iHV+Y4en9401T/dzBCxDXXr8CyF7fSiDFptGtwPjg=;
+ b=Sa5IpZmrdcOW51z0906KNrOJWkWV1MbJ/Ewk84GYdaBk3t+O2bwt1G2XE8LQ/dFTdk2Uf5
+ vMuk9G8keho6QY0FaqqtxmWrVPtlqVhgtFfd5i3RoxKrz7L0AwHHJDZf/z6gXMRek1WtwZ
+ AgDkPBe+U3oCFw98aFVOZV7OaNQ3yBg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789131274;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b/iHV+Y4en9401T/dzBCxDXXr8CyF7fSiDFptGtwPjg=;
+ b=xSIDb5WqyvVGZ/RkYsKRiRuynUjaDvVsG0HZx2LX+HavrOXCnd3v6l5OAvYRp0JwriL1ao
+ SaY7J5xYvMNgYbCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789131270; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b/iHV+Y4en9401T/dzBCxDXXr8CyF7fSiDFptGtwPjg=;
+ b=WlS/RtmYDm5eSxdFpDtSJH/yLbTYXylZLKK8X8LfnhZVFCCNhqNr4meQFk7s0t5vEIPpH9
+ mdP1AbRuFpylZbmsKGB2ypkVgnYWNFx6XcYPjyaOx8HrIL8y+wDGXWQZ8dfnF10qvY4agA
+ ohSGflpQFi8X2L6N+2O9u2A+ywA1ilw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789131270;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b/iHV+Y4en9401T/dzBCxDXXr8CyF7fSiDFptGtwPjg=;
+ b=TmbGYvyNAkCunwdqkAUMoM0zQOcPav0v95O3QKlCv6DQKzuQNU1n5lh3XP/xDsa5SttZRi
+ N04+kItHfu9VAFCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 126D2136ED;
+ Fri, 11 Sep 2026 12:54:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id d5taNQX6o2rzGQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 11 Sep 2026 12:54:29 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=zhangckid@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, "Dr . David Alan
+ Gilbert" <dave@treblig.org>, Laurent Vivier <lvivier@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 13/18] migration: Use keyval input visitor in HMP set
+ command
+In-Reply-To: <87y0d89oyv.fsf@pond.sub.org>
+References: <20260909214509.237309-1-farosas@suse.de>
+ <20260909214509.237309-14-farosas@suse.de> <87qzj1e563.fsf@pond.sub.org>
+ <87qzj1tcpl.fsf@suse.de> <87h5jwu59t.fsf@suse.de>
+ <87y0d89oyv.fsf@pond.sub.org>
+Date: Fri, 11 Sep 2026 09:54:27 -0300
+Message-ID: <87ecf0t0cc.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,23 +120,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 11, 2026 at 6:52=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Fabiano Rosas <farosas@suse.de> writes:
 >
-> Doesn't apply to current master.
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>>> Markus Armbruster <armbru@redhat.com> writes:
 >
-> https://patchew.org/QEMU/20260911100709.726366-1-zhangckid@gmail.com/
-
-This issue caused by the dropped patch 1 from V15.
-https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg02947.html
-
-I assume that patch will be merged before this series.
-I forgot to mention this earlier, I double confirmed no other problem here.
-please continue reviewing.=EF=BC=9A=EF=BC=89
-
-Thanks
-Chen
-
-
+> [...]
 >
+>>>> I think a hmp_report_error(MonitorHMP *hmp, const char *fmt, ...) would
+>>>> be nice to have.
+>>>>
+>>>
+>>> I'll look into it.
+>>>
+>>
+>> I see that hmp_handle_error() takes an hmp argument that's unused and
+>
+> Unused since commit 193227f9e5 (error: Use error_report_err() instead of
+> monitor_printf(), 2015-12-18).
+>
+> I doubt it's worth removing.
+>
+>> also that callers often do the redundant:
+>>
+>>    if (err) {
+>>       hmp_handle_error(err);
+>>    }
+>
+> Would be nice to clean this up.
+>
+
+Yep, I've a patch for it.
+
+>> But aside from those I don't see other improvements to be made, many
+>> callsites of hmp_handle_error() re-use the Error for other calls,
+>> e.g. block/monitor/block-hmp-cmds.c:
+>>
+>>     Error *err = NULL;
+>>     ...
+>>     if (!qdict_get_try_str(qdict, "node-name")) {
+>>         qobject_unref(qdict);
+>>         error_setg(&err, "'node-name' needs to be specified");
+>>         goto out;
+>>     }
+>>
+>>     BlockDriverState *bs = bds_tree_init(qdict, &err);
+>>     if (!bs) {
+>>         goto out;
+>>     }
+>>
+>>     bdrv_set_monitor_owned(bs);
+>>  out:
+>>     qemu_opts_del(opts);
+>>     hmp_handle_error(err);
+>>
+>> So having another helper I think would just create confusion as
+>> error_setg() is already a standard way of creating an error.
+>
+> We have both error_report() and error_report_err(), and it doesn't lead
+> to confusion as far as I can tell.
+>
+
+They're not analogous, hmp_handle_error() it's more versatile than
+error_report_err() because it can cope with err=NULL:
+
+// this uses only one helper for the error
+pseudo1() {
+    err = NULL;
+    
+    ret = afunc();
+    if (ret < 0) {
+        error_setg(&err, "fail");
+        goto out;
+    }
+    
+    another_func(&err);
+    if (hmp_handle_error(err)) {
+        return;
+    }
+    
+    yet_another_func(&err);
+out:
+    hmp_handle_error(err);
+}
+
+vs.
+
+// this needs two different helpers
+pseudo2() {
+    err = NULL;
+    
+    ret = afunc();
+    if (ret < 0) {
+        hmp_error_report("fail");
+        return;
+    }
+    
+    another_func(&err);
+    if (hmp_handle_error(err)) {
+        return;
+    }
+    
+    yet_another_func(&err);
+    hmp_handle_error(err);
+}
+
+> Whether doing the same for HMP error reporting would be an improvement
+> is not obvious.  Let's move on.
+>
+
+Sure
+
+> [...]
 
