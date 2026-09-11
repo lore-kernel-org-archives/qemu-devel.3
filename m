@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE15C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C00AC88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x8o-0001nX-2u; Fri, 11 Sep 2026 05:01:50 -0400
+	id 1x4xAF-00049w-O4; Fri, 11 Sep 2026 05:03:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8V-0001aC-EJ
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9b-0003Kf-Pr
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8T-00080k-VB
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9Z-0008Bz-F2
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117289;
+ s=mimecast20190719; t=1789117356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cztzzK3RRsXNvSO1Mj0DbxdXP/qmCz45hPp6THADzZ0=;
- b=GVuRLuHU4uMiW+Df9ZqF/59+sWio9wSrVJSOvtzPRp4F6tkCRTBYX/ZFG2MjSy7A0L0scf
- NTLxXnxd2LyrU4m9XGIE1n74MfxMq6LePrEGetOzgtZ28xr4nGXPFQuXQvtuYKQiSVMAt2
- 8mFbvcm+o8QQgJjxMDuo1j0Tc5kHVAY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
+ b=fCT7073teAyPe6FIZiFhudKTQ8argIN7Pbm8UWRIQP+ZcbMHsPmdPgzn9UZvFrItH9KwIK
+ eKGhbXpvLbBpgln3Kpj7qocHXg6d849VxZI9AjFVC/aJTAFAD3zJ6v4ZpX2oU0TXEYf7Oe
+ cZ2slyHrWwFg0sHjTUAdtHJwhrptjDs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-7daRJ0bvOQi_Ufi6DnhEiA-1; Fri, 11 Sep 2026 05:01:27 -0400
-X-MC-Unique: 7daRJ0bvOQi_Ufi6DnhEiA-1
-X-Mimecast-MFC-AGG-ID: 7daRJ0bvOQi_Ufi6DnhEiA_1789117287
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c29466736e3so77959266b.2
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:27 -0700 (PDT)
+ us-mta-595-QHM21EYcN12msoCCvjcrBg-1; Fri, 11 Sep 2026 05:02:35 -0400
+X-MC-Unique: QHM21EYcN12msoCCvjcrBg-1
+X-Mimecast-MFC-AGG-ID: QHM21EYcN12msoCCvjcrBg_1789117354
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49cdc4080ddso3439675e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117286; x=1789722086; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117354; x=1789722154; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cztzzK3RRsXNvSO1Mj0DbxdXP/qmCz45hPp6THADzZ0=;
- b=KcYkn9xqDRVhhmeeFpcAr9a6r+3schAihduhMPM5A5jHNjyHQHqs3fRksxSfrKdEqj
- fvOUOGJQVscGufm+yr/ZuS7WV6EXYvpZhNxyV130HOXdQwLoHtTP7NwG1zIgcJE7l4Wc
- f3DZuMuqKQGnh5TRP7zrtIG/P6zINWZxFcc8thdehH5X4Hi+tXT7lHnfBwGA8uMyNjPo
- R0Vlx5AAaZ1AnG57f+hiP5oYyqxz4wZay1YcH0uFIucsS4nPRK+6uQ7Yd1R7o8QwDIas
- 9bTpmLQcY257F80Ew2vNqbv0nJlG6FNDSKsdrA9JlsLEZYLRwVYxQ4IBuPdq46sOLYcV
- kzbg==
+ bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
+ b=EycpQigLoyPocedAodlmw+O2JMBcRNgrJsWffHPFCRP/HmGhRl/Ks9I6TLhyT1fF8C
+ UTPjIrr7zl/S0zybi5YbP563iDCkZ6NB8OiBhul0BZ9FtVi/gh2zVzNwLDHcL8rnQ3s8
+ Mb9I7730g8ePxSw/scAft3sITNgumm4Co0Rv4WlDIR3Hn01+I/EaYFCklYcliwdRa1Oe
+ kRIELh257/DaFVwNxFvsYjLDHxKX2kSHGnX2iWv9QqSXk0CVbTXCZtTUo4uXKjsmMgS1
+ JYlRFCqb/jOeCTX9DeWxbHJzZiaYg6a4RyH54+lN03jXe3ocfp+FnOjbku7EP6XVtOBD
+ Ex2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117286; x=1789722086;
+ d=1e100.net; s=20251104; t=1789117354; x=1789722154;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cztzzK3RRsXNvSO1Mj0DbxdXP/qmCz45hPp6THADzZ0=;
- b=eISa98iRmJDBCOjzAwe/zjU1OsMP2Hic3kMdaytJrMuj2szAglRC+aj9RN9mZ1sh9W
- CG9JjaHuAXYlFX79hEgDIRLVXzdoJwKSMnGiPtBwDKDVCeNFN5iSTxlZR61tQZNbEYQu
- 4qFASQ3XH58rN8YRWZ2FXyk0aTPE2/tkUKEBJoT6XbopKhRRrK6vpPlXpR7MlFWIEp0O
- 4jC2O65FrBTytqYUkJLBbZwrkzqY9SEuz0Nl9/OzCd3DDAncg8MuHAdlClLHdxXeXkMQ
- wkaALWaUqAY42p+HpXfur7wuLMA0MRMZ9VvuUlivmZBLVzkN84N0TW6tPquEg7O5ydQW
- 5UJA==
-X-Gm-Message-State: AFuF++nCAElY+uL414yFVXI5Qcf2BgC/LC4JL/hKFr9dpmJU6/ai34uX
- 6BbL7RMoqgf18Ah/OKHd2xB/pD5hfH8KgnnBHsX4M+hyMhwN3tFoKS6sKh8wS9WordWRKMZPmeM
- dxktilbkJu0dAsCL3u9ZK/YUCfVKbw+/H6MeX3MCTvRmwfFa6tNghwWhZy2wJO1uRn0Po1WreWM
- S24T2cYfEU/ALqicCgGKGXPrVcxqyUJLaYGg==
-X-Gm-Gg: AYBFou0U2V5C2Nz4rvwVNiz1y4xjm5ezqmpQgOPIu9JMz4riI90mCkr2IJCSzb2uS6M
- yJgMoh0XfNqX0VSZLn8DwRlH3zNQkdqNTDglyGx9bKrQvYrHDiuWv5MCM+D7WXyX+bQB/epPYOx
- Y5mnaiZVP6PyI2qVhbL8wv2zkolwWIGlxFtBLHoV9o8H0S0uvyuVr6coqpu5fHNyrtlmmR+KG+I
- c3wyqAuq/3V/SbNS6cR/gS88vAXd7nkMGLnd90o0tzt9k5S5CDLGDZVdk0P6Ly4Ia3my2qdqHVa
- lZZ5OLWe0R/+4P000uPxlEihiLiDbEY3/AIupy0clzPJqpI5eF5yWUu5asvpfMCe8FTbdoRanMX
- eviECUwGVCgnF56gWGLAyQfM=
-X-Received: by 2002:a17:907:a396:b0:c25:4b9c:5ed1 with SMTP id
- a640c23a62f3a-c29665502efmr119484566b.12.1789117286150; 
- Fri, 11 Sep 2026 02:01:26 -0700 (PDT)
-X-Received: by 2002:a17:907:a396:b0:c25:4b9c:5ed1 with SMTP id
- a640c23a62f3a-c29665502efmr119477966b.12.1789117285116; 
- Fri, 11 Sep 2026 02:01:25 -0700 (PDT)
+ bh=YVWgcLlJ6W5VVT8H262UfAJpSjM0Zse4ulGjykHY0SY=;
+ b=qDrm5oX1DhLOaVmUtif7oN3inRba9RmRkLWBOvjT36IezFGNm6zcEsQV+7wnRY8xW5
+ YIqT247K/uQv+9eRBYofZtufn/4hO5Wn+KcDkzuKuRWN0viAu645+Icp/EdvdLVGj2WA
+ zXEYUl5ym/Z5G1xoyjjlYulBLN9RPiUC0LMsU1OhI1+damXABo2y0nEJtvEbXOdZS6BO
+ kTQwlr5sbHySEvJKT4XywY9FJaMMIIRdQW7bbaha5czuiYFZ0Wq+Gahp+rIggpjRj8nr
+ Us8y2tZuY6TLLv4kjO8idrjRiTGuTlF4yVUPf9RS5lgSeQ87/eS/bo/Z73IOILKxMRG6
+ 3FXw==
+X-Gm-Message-State: AFuF++mkvfERbCdcumCx+PKoXCuoFxJhRbmmFz8U5nXGGQ9A67v8d2wQ
+ MZtb7gvQnBiGRxwpeT/PWLPsBhfE4CY5TPAFaclpx6aizthq7OFZ8WZ7kvlnbQd4B+fljY/AqRi
+ YAHJPYxH4ke1NI5ydPuvyLnJ2EtkmThxgh3xUu3rzbni7diqTR8XfUC8ec/erARpgf73xIJLOfX
+ lvwU6Mw/tzYpGUuDzwTIIl12rR5jN7OjQh4w==
+X-Gm-Gg: AYBFou1qO0sRXpWx1roD/PS8OYpvSKWq3BX1PVgNykuvQLlifMuud+/At3vI4StUGXu
+ X9S9rem2xSrBekodLpcCDuOmbrlyeqmRD6jla6+Saqu2Odnk/jd12sQlhIWq2a3yrDEI1ScS17w
+ QG13r40tlcG1n0BUPbihk80uM51VgNyUaT8G8/t1tEhX3vg+ha69Vb9PJ3I59hYMP73E1DvKxr5
+ lu55uGJHPwRVf7rLmpk4TU3MJ/09/r+o3r0CCePGAZI8/6p5tAtcffvnuamfakD3HLh2ShKcw/+
+ Cr15Sk0fx0onf/LlDC3Sod2XKULLZRnIc4VYkplXvBou8uzEF6lF1YeNfTaCJ5pY9OKDpv4jgde
+ eTE9msr5jxVvlcIS2vGBnOks=
+X-Received: by 2002:a05:600c:628f:b0:49d:2705:7030 with SMTP id
+ 5b1f17b1804b1-49e60f71698mr40227875e9.7.1789117353893; 
+ Fri, 11 Sep 2026 02:02:33 -0700 (PDT)
+X-Received: by 2002:a05:600c:628f:b0:49d:2705:7030 with SMTP id
+ 5b1f17b1804b1-49e60f71698mr40227065e9.7.1789117353210; 
+ Fri, 11 Sep 2026 02:02:33 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c296608dc91sm56569066b.39.2026.09.11.02.01.24
+ 5b1f17b1804b1-49d26be3e0asm147534515e9.1.2026.09.11.02.02.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:01:24 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:01:23 -0400
+ Fri, 11 Sep 2026 02:02:32 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:02:31 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Kangjie Xu <kangjie.xu@linux.alibaba.com>
-Subject: [PULL v2 03/75] virtio-pci: reject Q_ENABLE write on already-enabled
- queue
-Message-ID: <62976e8a2ea7fcc8c635754739fbaf2c499dc754.1789117222.git.mst@redhat.com>
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Subject: [PULL v2 31/75] hw/virtio-blk: Account discard operations
+Message-ID: <efac4c99d1f44aae69ddc6c0168f2083ff674aff.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,54 +121,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the guest writes 1 to the VIRTIO_PCI_COMMON_Q_ENABLE field of a
-queue that is already enabled, QEMU re-applies the ring geometry stored
-in the PCI proxy shadow registers by calling virtio_queue_set_num() and
-virtio_queue_set_rings().  Those functions update the vring descriptor,
-available, and used addresses and the region cache, but they do not
-touch the host-side progress fields - last_avail_idx, shadow_avail_idx,
-used_idx, inuse, and the packed-ring wrap counters - which are only
-zeroed by __virtio_queue_reset().
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Because the progress indices are stale while the ring layout is new, the
-host can treat the new ring as though there are up to 65535 pending
-descriptors already waiting, causing virtqueue_pop() to iterate far
-beyond what the guest actually posted.  On virtio-iommu this translates
-into a stream of ATTACH/DETACH/MAP/UNMAP commands, driving the QEMU
-process toward OOM from guest-controlled BAR writes.
+The acct_failed argument to virtio_blk_handle_rw_error() tells whether
+there is accounting for this operation or not.  The only operation for
+which there is none is discarding, which seems to be because at the time
+of the introducing commit 37b06f8d46f ("virtio-blk: add DISCARD and
+WRITE_ZEROES features"), BlockAcctType did not yet have a
+BLOCK_ACCT_UNMAP variant.
 
-The virtio specification requires the driver to complete a full queue
-reset cycle before re-enabling a queue.  Fix this by checking the
-proxy's per-queue enabled flag before processing the write.  If the
-queue is already enabled, log the violation as a guest error and ignore
-the write.
+It does have that now, though, so we may as well track those discard
+operations with it, and can thus remove the acct_failed parameter.
 
-Fixes: d1060e3dc5 ("virtio-pci: support queue enable")
-Cc: Kangjie Xu <kangjie.xu@linux.alibaba.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260724152315.234183-2-hreitz@redhat.com>
 ---
- hw/virtio/virtio-pci.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/block/virtio-blk.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 6f5db5fc42..c73f1f546c 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1692,6 +1692,13 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
-         break;
-     case VIRTIO_PCI_COMMON_Q_ENABLE:
-         if (val == 1) {
-+            if (proxy->vqs[vdev->queue_sel].enabled) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: queue %d already enabled - "
-+                              "reset queue before re-enabling\n",
-+                              __func__, vdev->queue_sel);
-+                break;
-+            }
-             virtio_queue_set_num(vdev, vdev->queue_sel,
-                                  proxy->vqs[vdev->queue_sel].num);
-             virtio_queue_set_rings(vdev, vdev->queue_sel,
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index cb6a276a82..4110380392 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -69,7 +69,7 @@ void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
+ }
+ 
+ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+-    bool is_read, bool acct_failed)
++                                      bool is_read)
+ {
+     VirtIOBlock *s = req->dev;
+     BlockErrorAction action = blk_get_error_action(s->blk, is_read, error);
+@@ -85,9 +85,7 @@ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+         }
+     } else if (action == BLOCK_ERROR_ACTION_REPORT) {
+         virtio_blk_req_complete(req, VIRTIO_BLK_S_IOERR);
+-        if (acct_failed) {
+-            block_acct_failed(blk_get_stats(s->blk), &req->acct);
+-        }
++        block_acct_failed(blk_get_stats(s->blk), &req->acct);
+         g_free(req);
+     }
+ 
+@@ -124,7 +122,7 @@ static void virtio_blk_rw_complete(void *opaque, int ret)
+              * the memory until the request is completed (which will
+              * happen on the other side of the migration).
+              */
+-            if (virtio_blk_handle_rw_error(req, -ret, is_read, true)) {
++            if (virtio_blk_handle_rw_error(req, -ret, is_read)) {
+                 continue;
+             }
+         }
+@@ -140,7 +138,7 @@ static void virtio_blk_flush_complete(void *opaque, int ret)
+     VirtIOBlockReq *req = opaque;
+     VirtIOBlock *s = req->dev;
+ 
+-    if (ret && virtio_blk_handle_rw_error(req, -ret, 0, true)) {
++    if (ret && virtio_blk_handle_rw_error(req, -ret, 0)) {
+         return;
+     }
+ 
+@@ -153,17 +151,13 @@ static void virtio_blk_discard_write_zeroes_complete(void *opaque, int ret)
+ {
+     VirtIOBlockReq *req = opaque;
+     VirtIOBlock *s = req->dev;
+-    bool is_write_zeroes = (virtio_ldl_p(VIRTIO_DEVICE(s), &req->out.type) &
+-                            ~VIRTIO_BLK_T_BARRIER) == VIRTIO_BLK_T_WRITE_ZEROES;
+ 
+-    if (ret && virtio_blk_handle_rw_error(req, -ret, false, is_write_zeroes)) {
++    if (ret && virtio_blk_handle_rw_error(req, -ret, false)) {
+         return;
+     }
+ 
+     virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
+-    if (is_write_zeroes) {
+-        block_acct_done(blk_get_stats(s->blk), &req->acct);
+-    }
++    block_acct_done(blk_get_stats(s->blk), &req->acct);
+     g_free(req);
+ }
+ 
+@@ -443,6 +437,9 @@ static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
+             goto err;
+         }
+ 
++        block_acct_start(blk_get_stats(s->blk), &req->acct, bytes,
++                         BLOCK_ACCT_UNMAP);
++
+         blk_aio_pdiscard(s->blk, sector << BDRV_SECTOR_BITS, bytes,
+                          virtio_blk_discard_write_zeroes_complete, req);
+     }
+@@ -450,9 +447,8 @@ static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
+     return VIRTIO_BLK_S_OK;
+ 
+ err:
+-    if (is_write_zeroes) {
+-        block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
+-    }
++    block_acct_invalid(blk_get_stats(s->blk),
++                       is_write_zeroes ? BLOCK_ACCT_WRITE : BLOCK_ACCT_UNMAP);
+     return err_status;
+ }
+ 
 -- 
 MST
 
