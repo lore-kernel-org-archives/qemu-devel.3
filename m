@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B267C88E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A2EC88E5A
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 17:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54x8-0000y3-2l; Fri, 11 Sep 2026 13:22:18 -0400
+	id 1x54xJ-00011j-19; Fri, 11 Sep 2026 13:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54x6-0000xR-5E
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:16 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54xH-00011L-HR
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54x4-0004Zl-3L
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:15 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54xF-0004cz-Qk
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789147332;
+ s=mimecast20190719; t=1789147345;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=VX3LBbdCHruHp2JvUSdnHMjg0VI+F4f4ybEIY73jeOE=;
- b=JaLTfUZRMJLo+SY/t1yfYG3EmLVLkTbFfQMh2Ah4tXPeYbykMHUs4MN+PdGLI8K/s9cX36
- Ock2QzfSqf3VlerOMOnOtK2UbSlpAImScW/Oezb/6Sd9N3q32jgxOApYZ/Mc/9Wd/lvTiF
- 9qh/RcWZIlXqDdeQcBFvz3jUpnufMDA=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rBLyZXbXlsOC8SLLzAeTtyZ5ri1ynYIY6/I844l2vDU=;
+ b=G+ktjByNjK3VSvupYNrR+BUca3Bpu/CrfRVX6LVFoS80N5L6ZOFJRXcBo9xpSD3lp7owJT
+ IF4rO7HOmi+ITqyJmtOqKpUwCMnaAhvbU9DgeCdG1UwVfFg+i4gUS+e7SI6gcE81ykMJqT
+ 0GL34HViVl3vvhDIAd5vWIWalN4QtRM=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-nqM11wMaMm6e4AF5bMBGSQ-1; Fri,
- 11 Sep 2026 13:22:08 -0400
-X-MC-Unique: nqM11wMaMm6e4AF5bMBGSQ-1
-X-Mimecast-MFC-AGG-ID: nqM11wMaMm6e4AF5bMBGSQ_1789147326
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-nuqhVkaoOMOtL6xFiEWfOQ-1; Fri,
+ 11 Sep 2026 13:22:22 -0400
+X-MC-Unique: nuqhVkaoOMOtL6xFiEWfOQ-1
+X-Mimecast-MFC-AGG-ID: nuqhVkaoOMOtL6xFiEWfOQ_1789147340
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 86A491801375; Fri, 11 Sep 2026 17:22:05 +0000 (UTC)
+ id 6355018011F5; Fri, 11 Sep 2026 17:22:20 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.222])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D04B0195608F; Fri, 11 Sep 2026 17:22:01 +0000 (UTC)
+ id 601A41956095; Fri, 11 Sep 2026 17:22:17 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
@@ -54,12 +55,13 @@ Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Peter Xu <peterx@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 0/6] qapi: convert remaining "simple" intro sections
-Date: Fri, 11 Sep 2026 13:21:54 -0400
-Message-ID: <20260911172200.227914-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 4/6] qapi: convert remaining simple intros for block-core.json
+Date: Fri, 11 Sep 2026 13:21:58 -0400
+Message-ID: <20260911172200.227914-5-jsnow@redhat.com>
+In-Reply-To: <20260911172200.227914-1-jsnow@redhat.com>
+References: <20260911172200.227914-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -85,58 +87,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, this work converts the remaining "simple" intro sections in the=0D
-QAPI schema to use the new syntax. This is part of our ongoing effort=0D
-to add the mythical "inliner" to our generated QMP documentation.=0D
-=0D
-This batch covers structures that *are* likely to be inlined, and thus=0D
-have introductory paragraphs that are quite likely to be omitted when=0D
-the member documentation is copied into other contexts (e.g. as=0D
-arguments for command documentation, or as members of a branch for=0D
-commands that accept union arguments.)=0D
-=0D
-"simple" here is a non-technical distinction that means a single=0D
-paragraph of text followed by an existing section boundary that=0D
-naturally already delineates what comprises the intro.=0D
-=0D
-If you are a non-QAPI maintainer who has been CC'd on this series, you=0D
-may wish to review what information is being codified as the "intro"=0D
-(The indented paragraph) and keep in mind that in the future, this=0D
-text may not be visible to the end-user reading our QMP documentation=0D
-if this structure is utilized as the 'base' for another struct, used=0D
-as the arguments for a command or event, or used as branch of a=0D
-union. This series keeps it pretty simple, and every conversion herein=0D
-is being codified as "the intro", i.e. "not crucial to understanding=0D
-the behavior of the members of this struct".=0D
-=0D
-This is the last of the brain-dead, simple conversions apart from any=0D
-new cases that may have been merged during the development of this=0D
-series. The remaining patches all convert or split longer paragraphs=0D
-and require more scrutiny.=0D
-=0D
-We're almost back to reviewing actual code! Hang in there, everybody.=0D
-=0D
-John Snow (6):=0D
-  qapi: convert remaining simple intros for block-export.json=0D
-  qapi: convert remaining simple intros for cxl.json=0D
-  qapi: convert remaining simple intros for machine.json=0D
-  qapi: convert remaining simple intros for block-core.json=0D
-  qapi: convert intro sections with "TODO" markers=0D
-  qapi: convert intro sections followed by notes/examples=0D
-=0D
- qapi/block-core.json   | 45 ++++++++++++++++++------------------------=0D
- qapi/block-export.json | 19 ++++++++----------=0D
- qapi/cxl.json          | 14 +++++--------=0D
- qapi/machine.json      | 15 +++++---------=0D
- qapi/migration.json    | 25 +++++++++--------------=0D
- qapi/misc.json         |  3 +--=0D
- qapi/net.json          |  9 +++------=0D
- qapi/run-state.json    |  7 +++----=0D
- qapi/yank.json         |  5 +----=0D
- 9 files changed, 54 insertions(+), 88 deletions(-)=0D
-=0D
--- =0D
-2.55.0=0D
-=0D
+These are either structs or unions that are used in an inlinable
+context: i.e. the generated documentation is likely to feature a
+version of this documentation block that does not include the intro in
+context of another command, event, or structure.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ qapi/block-core.json | 45 +++++++++++++++++++-------------------------
+ 1 file changed, 19 insertions(+), 26 deletions(-)
+
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 1ca147285e7..88218e38d02 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -4462,9 +4462,8 @@
+ 
+ ##
+ # @BlockdevOptionsCurlHttp:
+-#
+-# Driver specific block device options for HTTP connections over the
+-# curl backend.  URLs must start with "http://".
++#     Driver specific block device options for HTTP connections over
++#     the curl backend.  URLs must start with "http://".
+ #
+ # @cookie: List of cookies to set; format is "name1=content1;
+ #     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
+@@ -4488,9 +4487,8 @@
+ 
+ ##
+ # @BlockdevOptionsCurlHttps:
+-#
+-# Driver specific block device options for HTTPS connections over the
+-# curl backend.  URLs must start with "https://".
++#     Driver specific block device options for HTTPS connections over
++#     the curl backend.  URLs must start with "https://".
+ #
+ # @sslverify: Whether to verify the SSL certificate's validity
+ #     (defaults to true)
+@@ -4503,9 +4501,8 @@
+ 
+ ##
+ # @BlockdevOptionsCurlFtp:
+-#
+-# Driver specific block device options for FTP connections over the
+-# curl backend.  URLs must start with "ftp://".
++#     Driver specific block device options for FTP connections over
++#     the curl backend.  URLs must start with "ftp://".
+ #
+ # Since: 2.9
+ ##
+@@ -4515,9 +4512,8 @@
+ 
+ ##
+ # @BlockdevOptionsCurlFtps:
+-#
+-# Driver specific block device options for FTPS connections over the
+-# curl backend.  URLs must start with "ftps://".
++#     Driver specific block device options for FTPS connections over
++#     the curl backend.  URLs must start with "ftps://".
+ #
+ # @sslverify: Whether to verify the SSL certificate's validity
+ #     (defaults to true)
+@@ -4643,14 +4639,13 @@
+ 
+ ##
+ # @BlockdevOptionsCbw:
+-#
+-# Driver specific block device options for the copy-before-write
+-# driver, which does so called copy-before-write operations: when data
+-# is written to the filter, the filter first reads corresponding
+-# blocks from its file child and copies them to @target child.  After
+-# successfully copying, the write request is propagated to file child.
+-# If copying fails, the original write request is failed too and no
+-# data is written to file child.
++#     Driver specific block device options for the copy-before-write
++#     driver, which does so called copy-before-write operations: when
++#     data is written to the filter, the filter first reads
++#     corresponding blocks from its file child and copies them to
++#     @target child.  After successfully copying, the write request is
++#     propagated to file child.  If copying fails, the original write
++#     request is failed too and no data is written to file child.
+ #
+ # @target: The target for copy-before-write operations.
+ #
+@@ -4686,9 +4681,8 @@
+ 
+ ##
+ # @BlockdevOptions:
+-#
+-# Options for creating a block device.  Many options are available for
+-# all block devices, independent of the block driver:
++#     Options for creating a block device.  Many options are available
++#     for all block devices, independent of the block driver:
+ #
+ # @driver: block driver name
+ #
+@@ -5473,9 +5467,8 @@
+ 
+ ##
+ # @BlockdevAmendOptionsQcow2:
+-#
+-# Driver specific image amend options for qcow2.  For now, only
+-# encryption options can be amended
++#     Driver specific image amend options for qcow2.  For now, only
++#     encryption options can be amended
+ #
+ # @encrypt: Encryption options to be amended
+ #
+-- 
+2.55.0
 
 
