@@ -4,56 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A770BC88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 20:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED7CC88E56
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 20:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x57cz-0006od-G0; Fri, 11 Sep 2026 16:13:41 -0400
+	id 1x57tR-0001K7-LQ; Fri, 11 Sep 2026 16:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
- id 1x57cw-0006oH-83; Fri, 11 Sep 2026 16:13:39 -0400
-Received: from mail-24417.protonmail.ch ([109.224.244.17])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x57t7-0001Ir-8V
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:30:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
- id 1x57ct-0001Rb-8R; Fri, 11 Sep 2026 16:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1789157611; x=1789416811;
- bh=ygLk4mQYviBL1ABOohRv1Cq6Bv0lRpTOSuZLxqtxTwE=;
- h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=B1VPQ/oCQACaonughD9VJbs0Y9N0tUidjTUvI0TUItGIeF953F8/YiEqmMhcPB+0O
- EWiPFRTp8/FzBb3zbTyfaXsx7XmpEEWA5TvKKOjHia8YxFqbaJRLb9jcSolQvEAdTX
- yjQ9QX1rmnI5r3qjXtBDSecGL8vfz0LvvurzJheVff6OZ2wggURp5QHUgm/Te5eF1P
- bTuzw+dJyU1yzn5kzjM1S4Wn2whBQ2ywxjZETEwc7RzK+EcpefS0wN+hkfMxUFYaBY
- 5e/GPYZQ9Y5nEPZD3lF2jO78vEHcRvpMipqvm1FViSOHy20SFTcF+g2TPTGh2nCB7P
- JvIX/Fa61/gsA==
-Date: Fri, 11 Sep 2026 20:13:27 +0000
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-From: "Christian S. Lima" <christianslima@proton.me>
-Subject: [PATCH v3] target/riscv/tcg: svinval instructions raise virtual
- instruction
-Message-ID: <20260911201323.37757-1-christianslima@proton.me>
-Feedback-ID: 169431447:user:proton
-X-Pm-Message-ID: 7c7b52f5ff78c5931057fe7fdc5ef31ac9dcac68
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x57t3-000536-5I
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:30:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789158615;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=/s/xpATFq9wq1tWXIjSVgZ0DSXchPc5xRfHHA7grfeE=;
+ b=cQSZt9n6hXNwxmsNTp8Iu2m2t9YXtu6Xwub4PP5/ycweX5MSU71d7nE/pNzt6us5sPeU9E
+ hVX51lpAvQVYBnSbZeFIUHe5ZS2pqwMEycKi3duDPg7rYfdVBY+fmJWArAGcF1FO+y79U5
+ Gf9lyuo8JaOrFbooz24on2Df95BtKM4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-IPo6NDagM5SaWBBjus5VPg-1; Fri,
+ 11 Sep 2026 16:30:11 -0400
+X-MC-Unique: IPo6NDagM5SaWBBjus5VPg-1
+X-Mimecast-MFC-AGG-ID: IPo6NDagM5SaWBBjus5VPg_1789158610
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 273721953958; Fri, 11 Sep 2026 20:30:09 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D70A041B; Fri, 11 Sep 2026 20:30:03 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH 0/9] qapi: convert/split remaining QAPI/QMP intro sections
+Date: Fri, 11 Sep 2026 16:29:53 -0400
+Message-ID: <20260911203002.305316-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=109.224.244.17;
- envelope-from=christianslima@proton.me; helo=mail-24417.protonmail.ch
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,67 +90,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The risc v privileged specification requires hinval.vvma, hinval.gvma,
-sfence.w.inval and sfence.inval.ir should raise a virtual instruction
-exception when executed in the vu-mode. This patch add the check to
-raise the virtual instruction exception when is in the vu-mode.
-
-changes in v3:
-- Add missing semicolon
-
-changes in v2:
-- Remove the wrong `return true;` from macro
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3621
-
-Signed-off-by: Christian S. Lima <christianslima@proton.me>
----
- target/riscv/tcg/insn_trans/trans_svinval.c.inc |  3 +++
- target/riscv/tcg/insn_trans/trans_xthead.c.inc  | 12 +++++++-----
- 2 files changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/target/riscv/tcg/insn_trans/trans_svinval.c.inc b/target/riscv=
-/tcg/insn_trans/trans_svinval.c.inc
-index 4614c1489c..1341beba2f 100644
---- a/target/riscv/tcg/insn_trans/trans_svinval.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_svinval.c.inc
-@@ -25,6 +25,9 @@
- /* Test if priv level is M or S. */
- #define REQUIRE_PRIV_MS(ctx) do {          \
-     if (ctx->priv =3D=3D PRV_U) {              \
-+        if (ctx->virt_enabled) {           \
-+            ctx->virt_inst_excp =3D true;    \
-+        }                                  \
-         return false;                      \
-     }                                      \
- } while (0)
-diff --git a/target/riscv/tcg/insn_trans/trans_xthead.c.inc b/target/riscv/=
-tcg/insn_trans/trans_xthead.c.inc
-index f4e3051000..ea4b169422 100644
---- a/target/riscv/tcg/insn_trans/trans_xthead.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
-@@ -267,11 +267,13 @@ static bool trans_th_tst(DisasContext *ctx, arg_th_ts=
-t *a)
- #define REQUIRE_PRIV_MSU(ctx)
-=20
- /* Test if priv level is M or S. */
--#define REQUIRE_PRIV_MS(ctx)                                    \
--do {                                                            \
--    if (ctx->priv =3D=3D PRV_U) {                                   \
--        return false;                                           \
--    }                                                           \
-+#define REQUIRE_PRIV_MS(ctx) do {          \
-+    if (ctx->priv =3D=3D PRV_U) {              \
-+        if (ctx->virt_enabled) {           \
-+            ctx->virt_inst_excp =3D true;    \
-+        }                                  \
-+        return false;                      \
-+    }                                      \
- } while (0)
-=20
- #define NOP_PRIVCHECK(insn, extcheck, privcheck)                \
---=20
-2.55.0
-
+Give or take any that snuck in during this conversion marathon, this=0D
+should be the rest - and the trickiest ones that involve multiple=0D
+paragraphs and decisions over where exactly to place the=0D
+split. Currently there are no prose rewrites, but it is not out of the=0D
+question that we will require some after review.=0D
+=0D
+If you are a non-QAPI maintainer, the TL:DR here is:=0D
+    Take a look at what is being indented here and what is=0D
+    not. Anything that gets indented is text that is not eligible for=0D
+    inlining: that is, the intro text is not copied into command/event=0D
+    documentation to replace "The members of ..." placeholders in our=0D
+    generated documentation.=0D
+=0D
+    If any text that you believe is important for end users to=0D
+    understand is in the indented section after these patches, please=0D
+    review and propose a different prose split.=0D
+=0D
+    (More info: The intro text is not guaranteed to be dropped from=0D
+    generated docs. For example, if a struct is used as a type for an=0D
+    argument in its own right, it is guaranteed to be included in the=0D
+    generated documentation. It is also always included for commands,=0D
+    events, and enums. It is only for structs which are *only* ever=0D
+    used as command/event arguments or as a branch type where this=0D
+    text is at risk of not being reproduced at all in the output=0D
+    documentation.)=0D
+=0D
+John Snow (9):=0D
+  qapi: convert remaining simple intros for block-export.json=0D
+  qapi: convert multi-paragraph intros (commands)=0D
+  qapi: convert multi-paragraph intros (enums)=0D
+  qapi: convert multi-paragraph intros (structs)=0D
+  qapi: split intro sections for commands=0D
+  qapi: split intro sections for events=0D
+  qapi: split intro sections for enums=0D
+  qapi: split intro sections for data structs=0D
+  qapi: split intro sections for inlinable structs=0D
+=0D
+ qapi/acpi.json          |   3 +-=0D
+ qapi/block-core.json    | 130 ++++++++++++++++++----------------------=0D
+ qapi/block-export.json  |  27 ++++-----=0D
+ qapi/block.json         |  71 +++++++++++-----------=0D
+ qapi/compat.json        |   3 +-=0D
+ qapi/control.json       |   3 +-=0D
+ qapi/crypto.json        |   3 +-=0D
+ qapi/introspect.json    |  16 ++---=0D
+ qapi/job.json           |  43 ++++++-------=0D
+ qapi/machine-s390x.json |   3 +-=0D
+ qapi/machine.json       |  98 +++++++++++++++---------------=0D
+ qapi/migration.json     |  18 +++---=0D
+ qapi/misc-arm.json      |   9 ++-=0D
+ qapi/misc-i386.json     |  22 +++----=0D
+ qapi/misc.json          |  18 +++---=0D
+ qapi/net.json           |  37 +++++-------=0D
+ qapi/qdev.json          |  14 ++---=0D
+ qapi/qom.json           |  27 ++++-----=0D
+ qapi/stats.json         |   5 +-=0D
+ qapi/transaction.json   |   6 +-=0D
+ qapi/ui.json            |   8 +--=0D
+ 21 files changed, 253 insertions(+), 311 deletions(-)=0D
+=0D
+-- =0D
+2.55.0=0D
+=0D
 
 
