@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C900C88E4C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C93AC88E50
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x8r-0001rF-37; Fri, 11 Sep 2026 05:01:53 -0400
+	id 1x4x8t-0001v3-Uv; Fri, 11 Sep 2026 05:01:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8j-0001jI-4D
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8m-0001nT-15
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8h-00082v-Iy
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8k-00083d-3i
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117302;
+ s=mimecast20190719; t=1789117305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=hrTN7OVSCNm9vbc/NCEC/WvGaVnoOJUhrqiC5Yh7fcA=;
- b=ZDSz2EJbfWChx8MaHu4Z4R83pAuBd28TF7By9q7G4yBpQgUKXeR/rZsU7a5zsX6UXJAJqQ
- 8W/8abiraNKYAS7MjKV7K993aJGFdohwaERizXi1EEbBciIWvXcLCTdFycFQeYBZe7+vAw
- wsNTV4D1jLjUFONfIt2gp59RTJIgZtg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gBSHhMDPj1wNd+THvAUfp3LvU17AmLFoV6OMcA35G6I=;
+ b=hMSKRwpS/McfX6GxLfXYQMD5Vj01Pj6qLvoOhLA/r36jS9lagFPTbDOKUwZ3omYGp8Lt0S
+ nn6ENzLG7Ujdd1Z5hdUVKzDcf/zUfqBRzT0rJNOTraCMdkh1o0WMSaBM5LMWbYRzew4gRt
+ 0+978IFx8w/rWXWhacNUWHx9BJWDSWY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-WoB3_NbnNV6CbdH1I7cShw-1; Fri, 11 Sep 2026 05:01:41 -0400
-X-MC-Unique: WoB3_NbnNV6CbdH1I7cShw-1
-X-Mimecast-MFC-AGG-ID: WoB3_NbnNV6CbdH1I7cShw_1789117300
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49ccfad90f1so3707835e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:41 -0700 (PDT)
+ us-mta-479-l61MYQPuPCC8GHcH9i0SXA-1; Fri, 11 Sep 2026 05:01:44 -0400
+X-MC-Unique: l61MYQPuPCC8GHcH9i0SXA-1
+X-Mimecast-MFC-AGG-ID: l61MYQPuPCC8GHcH9i0SXA_1789117303
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4858f06e142so498972f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117300; x=1789722100; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117303; x=1789722103; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=hrTN7OVSCNm9vbc/NCEC/WvGaVnoOJUhrqiC5Yh7fcA=;
- b=oH2Dt51rHWFKRkYmKfp13btVrhhYp8t9u1pxehDbdLjHPxIO5ukyIB1z9DzvQowy2E
- 1nNs3sKsIuVaNhh65MnrHtRgThCfc1SgCA788mPRVMAxn+paem3/5dxn5k9R+U73NPEv
- YjH1QIJ//wj5e+7jQrEDwiGYNJXuFzIFRZCXAsI2JoAqkrh311v7Z7SQiyJ2FyAaM35l
- miYKbORXWRu8yX2Thm8YwJNASv6U++9qpafeUAb0dQLkuEENLs5M1VBX4hRcZyavR0YE
- J0lWui8p5IvNnaJyWOg4WXEB12AfHzG4aYWnH38XWEzHNBnxd1+aSHR81rdjEdhePfux
- ITlg==
+ bh=gBSHhMDPj1wNd+THvAUfp3LvU17AmLFoV6OMcA35G6I=;
+ b=a7yniP5E4RduKG2fAqOy7wq2tdBsj9cok+t0PIpU+uesRCFIoQRUQ5aHP6IS2lGN2H
+ pkqlT35MHtqazfIEbiGj6e0LfO2FOmfHeYFodxxYzV4YIuWr3lxsIFaR4rnA4hiyRagk
+ Zx6oFgsiZnUlmIaza4a8C+3y1XmqSGVkQvf2iSLnF7+G0PvH5yOnSrNAG8jhGpZr0PZd
+ uLOIgg8t3nQd43cMMY/3Br0R1NO0rIotRaBgjYFhFkBDkK7npD+LQlBIMdhSDbp0qeQs
+ eGjQ1OVlZdoXdYov7l52d7+Y78JgbWz01R9PVVbkIrAOvwbbK2iTL0Cv4baNSYZFcjHP
+ Nd/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117300; x=1789722100;
+ d=1e100.net; s=20251104; t=1789117303; x=1789722103;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hrTN7OVSCNm9vbc/NCEC/WvGaVnoOJUhrqiC5Yh7fcA=;
- b=MDikhgtr8DJyRqVAqV+YFpAGEIE7upcwYfHLWAPSqiqGffXhItj3iWUrLZaVxJZxk+
- +3C/ca3/Zr39zcCBcwQQlIMyaZmHartoJ1sQ+FWJQdwP07QL7B7FUsMRInLqkiNz63un
- UVRLyWyy+LyHpkQ3EBBCRSfEBIZz1+/Ysz4wGl+PEkA9Q5QrbrR4jO37rVYXSksElqgn
- QuU4Eg452E9sLsDPKTOduZVFIJWaloyX7sPBEIFlMfG751vuxWxqGLtk6mQcTUMPlyDP
- lgubhrUUbwAIlTc1Q9Qp3YjtU/SC0DI7J8/0AP+wXAnRzHYEdmxf4Rs7peCHOJvuX9um
- ugVQ==
-X-Gm-Message-State: AFuF++l2A7xNhkgmal3qwbYXKB1h6LMHcyCKGmQ4AjcZHHzHsdTow9Bf
- nz2YS+379BWL5mUvHl7UbieUZafO8+7tY7MzNrl+Uk/RCUxZAW3EVLB6sTZQPKbyFGVSYY540KS
- yam4BQ7fFBItfAf8lU8pcIv6KT57W6kx2Y1IVKoxrje77anOzhcYIPFH7y0A1YM+LAc/9SSJ25X
- yoaXW5sMbSStCTiUNb7dbbA/9spZ063uIwUA==
-X-Gm-Gg: AYBFou1dbkQ6je6Yoha3LJeQvfBRphhVkrK5OiHOYtRzo+W7i1WLi7G/8McMgqQUpMY
- AS1ChiomL4i0pnsC3wFvYZlrpj+85fLhPzfbWCbIbkOlDBdGaqtRm4S82UGJqC3T1XVOK787a5U
- MtwigjQj8EsZdTyb5hMBMwz/Pgzk3tTzWMcAgo1nmDkr8uuTlze8OWV2WVDIBOQJEb1sQC3iLrh
- uQA4DOLLLquRVTKF8TnDzvuI6eU8P6oASB+D7BaWovOObIHQGGHZnuCy7+42cW/JmgMAysTTboq
- UiIi+3kG12xuP8z/JAO+gtW/JW8TLRkh8ypXvlmeh/ZxOQ4WVBDWA5wjdDRkfepBU7BiYviPA9V
- aycJYDPL7OV00VEcF4+6Oxo4=
-X-Received: by 2002:a05:600c:c490:b0:49c:fc6c:bdfa with SMTP id
- 5b1f17b1804b1-49e619e1cf0mr31421755e9.17.1789117300326; 
- Fri, 11 Sep 2026 02:01:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:c490:b0:49c:fc6c:bdfa with SMTP id
- 5b1f17b1804b1-49e619e1cf0mr31420675e9.17.1789117299211; 
- Fri, 11 Sep 2026 02:01:39 -0700 (PDT)
+ bh=gBSHhMDPj1wNd+THvAUfp3LvU17AmLFoV6OMcA35G6I=;
+ b=R7dsvU0USN4vYDnTqAiAhcFvDeN8FP0ZE0syj+mXw1osceHD0H7Qxo2AsPHwPcLB26
+ Qj+ierqFczFBOS1muTBvAXA5zr3n5E7gabguNB0RAlYWydQovrDGcVlkbu0ipKCEvVIJ
+ K/1em59bWQ4a3dWB6cQkHU/HVBR2gbZeJ0v3Wv0exLBFOKJl0maHx1qMZ67IjwaVknv8
+ 1cG8p6NnlKLx5RgbsRJcdsu0bh8YNANcpout1wPQHHym67jtjPNRZwt5FRwy8ny2irj7
+ RP4szYfRV7W1haj4vXR/oiul+8hHgUTfiH7YhyuJ5TOT2/HjKDJS86M2tT/09r52yFv2
+ 7L9g==
+X-Gm-Message-State: AFuF++n4AOJ+vcNWXrcMmsk2cY8zavxgFIpqfFXBlmWZU6bs9U5ubSNu
+ 6QnTOX2ky1UPX6Tq5JxKR393pnzwIOgjzBiPHIFBHq8GZSKhj758XzHeyB1xjJgoSWklM6HsfgL
+ 8dZnuJ0iGSnYjpkwo5bF25dg5JC4wTZZT9eZ8o9GunM/VL+QtDmaf/YEjUmlOihzbHAlC2gbcun
+ kEjgKBsTcGJpXYUnb2V4oSlBNpGHrMOOBmFQ==
+X-Gm-Gg: AYBFou081sKCaWtI4nbOwSGVyZfhlpCryefL4IR1dRWqoaOfDKxK0OvhWS55QrdLTru
+ SVyZnIcWRz15jiHSHSvr3Dtap/uFPXZ9QegXR1yQX8zv2TdAQOPH2Sfvxyg3tdAcc4XUZVcAnVa
+ vvvE2qj92OZganYoKYZsFH4kjl9v2YRzBSUWg0BCTOnVKV7VXnBBCXuQ/3vkkEMcHmGFwaYU0K9
+ jkkhA1EJRcTDR43vWp23uwdVvgb2xbU8l2/VG4SaxhiAXJw+aj+3MZgDO2Q/hXy+bh0CnudMvC3
+ VKFu+zML8PD4OFn2tF0fzRziyKxukbxag2r+VRkEHsdK+lBgKqZ0r/t4oVgql20eVHeaT3fzAxi
+ mhvcWTiYocnKQCl2FdmMngQQ=
+X-Received: by 2002:a05:6000:646:b0:485:8ca8:caa with SMTP id
+ ffacd0b85a97d-486eb34c229mr2627882f8f.52.1789117302587; 
+ Fri, 11 Sep 2026 02:01:42 -0700 (PDT)
+X-Received: by 2002:a05:6000:646:b0:485:8ca8:caa with SMTP id
+ ffacd0b85a97d-486eb34c229mr2627810f8f.52.1789117301580; 
+ Fri, 11 Sep 2026 02:01:41 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e61a7a686sm40644845e9.1.2026.09.11.02.01.37
+ ffacd0b85a97d-486eb2ecfc3sm4359780f8f.4.2026.09.11.02.01.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:01:38 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:01:37 -0400
+ Fri, 11 Sep 2026 02:01:41 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:01:39 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Ben Chaney <bchaney@akamai.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL v2 09/75] net/tap: rework tap_parse_script
-Message-ID: <a225c01f02fa7648dbe3c23fd9a46b2c171b239c.1789117222.git.mst@redhat.com>
+ Markus Armbruster <armbru@redhat.com>,
+ Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: [PULL v2 10/75] net/tap: improve script/downscript options
+ documentation
+Message-ID: <add167b90b8eaa9aa04a5ab68aba1e0d1a6d4fd9.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -124,70 +126,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Factor out tap_is_explicit_no_script() helper, to simplify
-further changes.
-
-Avoid extra copying by simpler code flow: first check for
-NULL / empty / "no" cases, then get default or do copying
-respectively.
+Properly document defaults and special values of "" and "no".
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819180201.1970193-2-vsementsov@yandex-team.ru>
+Message-ID: <20260819180201.1970193-3-vsementsov@yandex-team.ru>
 ---
- net/tap.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ qapi/net.json   | 10 ++++++++--
+ qemu-options.hx |  9 +++++----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index 57ffb09885..2076f5b780 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -92,19 +92,35 @@ static void launch_script(const char *setup_script, const char *ifname,
- static void tap_send(void *opaque);
- static void tap_writable(void *opaque);
+diff --git a/qapi/net.json b/qapi/net.json
+index 85c78710fe..ab8ed9c086 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -399,9 +399,15 @@
+ # @fds: multiple file descriptors of already opened multiqueue capable
+ #     tap
+ #
+-# @script: script to initialize the interface
++# @script: script to initialize the interface.  An empty string or
++#     "no" disables script execution.  Defaults to
++#     ``<sysconfdir>/qemu-ifup``, where ``<sysconfdir>`` is the
++#     system configuration directory at build time (typically /etc).
+ #
+-# @downscript: script to shut down the interface
++# @downscript: script to shut down the interface.  An empty string or
++#     "no" disables script execution.  Defaults to
++#     ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the
++#     system configuration directory at build time (typically /etc).
+ #
+ # @br: bridge name (since 2.8)
+ #
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 6c1713ed61..16ef7d5455 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3022,7 +3022,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                use network scripts 'file' (default=" DEFAULT_NETWORK_SCRIPT ")\n"
+     "                to configure it and 'dfile' (default=" DEFAULT_NETWORK_DOWN_SCRIPT ")\n"
+     "                to deconfigure it\n"
+-    "                use '[down]script=no' to disable script execution\n"
++    "                use '[down]script=no' or '[down]script=' to disable script execution\n"
+     "                use network helper 'helper' (default=" DEFAULT_BRIDGE_HELPER ") to\n"
+     "                configure it\n"
+     "                use 'fd=h' to connect to an already opened TAP interface\n"
+@@ -3558,9 +3558,10 @@ SRST
+     Use the network script file to configure it and the network script
+     dfile to deconfigure it. If name is not provided, the OS
+     automatically provides one. The default network configure script is
+-    ``/etc/qemu-ifup`` and the default network deconfigure script is
+-    ``/etc/qemu-ifdown``. Use ``script=no`` or ``downscript=no`` to
+-    disable script execution.
++    ``<sysconfdir>/qemu-ifup`` and the default network deconfigure script is
++    ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the system
++    configuration directory at build time (typically ``/etc``).
++    Use ``[down]script=no`` or ``[down]script=`` to disable script execution.
  
--static char *tap_parse_script(const char *script_arg, const char *default_path)
-+static bool tap_is_explicit_no_script(const char *script_arg_value)
- {
--    g_autofree char *res = g_strdup(script_arg);
--
--    if (!res) {
--        res = get_relocated_path(default_path);
-+    if (!script_arg_value) {
-+        return false;
-     }
- 
--    if (res[0] == '\0' || strcmp(res, "no") == 0) {
-+    if (script_arg_value[0] == '\0') {
-+        return true;
-+    }
-+
-+    if (strcmp(script_arg_value, "no") == 0) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static char *tap_parse_script(const char *script_arg_value,
-+                              const char *default_path)
-+{
-+    if (tap_is_explicit_no_script(script_arg_value)) {
-         return NULL;
-     }
- 
--    return g_steal_pointer(&res);
-+    if (!script_arg_value) {
-+        return get_relocated_path(default_path);
-+    }
-+
-+    return g_strdup(script_arg_value);
- }
- 
- static void tap_update_fd_handler(TAPState *s)
+     If running QEMU as an unprivileged user, use the network helper
+     to configure the TAP interface and attach it to the bridge.
 -- 
 MST
 
