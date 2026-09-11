@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41531C88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2FB5C88E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54HZ-0003iJ-6g; Fri, 11 Sep 2026 12:39:21 -0400
+	id 1x54HJ-0002nR-TO; Fri, 11 Sep 2026 12:39:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54HV-0003Wx-JF
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:17 -0400
+ id 1x54HH-0002X8-1k
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54HU-0006d8-2z
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:17 -0400
+ id 1x54HF-0006ag-Fj
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144755;
+ s=mimecast20190719; t=1789144740;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QDNDYwMd+sicJrNeQLwCkPpcMo5x0mg7HS77Hu2tB3c=;
- b=KCoxxAUQRh8VSB+gAZvtstwwfGP2Q81axQZm0jaL+ruxRpg0LAYEBPd3HZgp57I129tW/P
- tzwxObEBo2FFSNeCyBR/po9ZeXmadZwwMjKUbSdmz2jBUGUdJ0mlbxIWZP86xtXq+lHx1B
- fOZ5ZsAD2RZY/EAikcLkZCCIuPDpRP4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Hf0XO4+R3gQa5sXkL7jGB/4v7ZvBVWznyOSE409p7Sg=;
+ b=Ccf8FdAB0Q023qm4uZ/9HX0xf/RtJUAbGO1hQV3f8rBEoIZKIDH1sY4EgVESnGJnY1Bmgz
+ XjH+fTIVo2b3gD1CXM1spNlbqQ6XMooQ3k3bS4OEd/lBGbxUZ8HBwas7M3T2eT4FLLcHb4
+ s26a37Rkw21knFlyDAAOPMJ7lCqyunI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-9De6hxvcP7-d4kD-hUwgTA-1; Fri,
- 11 Sep 2026 12:39:12 -0400
-X-MC-Unique: 9De6hxvcP7-d4kD-hUwgTA-1
-X-Mimecast-MFC-AGG-ID: 9De6hxvcP7-d4kD-hUwgTA_1789144751
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-a91hesuRNQaQTtdQgbK1fQ-1; Fri,
+ 11 Sep 2026 12:38:57 -0400
+X-MC-Unique: a91hesuRNQaQTtdQgbK1fQ-1
+X-Mimecast-MFC-AGG-ID: a91hesuRNQaQTtdQgbK1fQ_1789144736
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E517C19539B2; Fri, 11 Sep 2026 16:39:10 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FE561953967; Fri, 11 Sep 2026 16:38:56 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1925B180034C; Fri, 11 Sep 2026 16:39:09 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 61B3A1956042; Fri, 11 Sep 2026 16:38:53 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:35:02 +0400
-Subject: [PATCH v5 28/62] accel/kvm: convert OnOffSplit property to
+Date: Fri, 11 Sep 2026 20:34:58 +0400
+Subject: [PATCH v5 24/62] hostmem-file: convert OnOffAuto rom property to
  QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-28-7732a55b7760@redhat.com>
+Message-Id: <20260911-qom-qapi-v5-24-7732a55b7760@redhat.com>
 References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,25 +66,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- kvm@vger.kernel.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2729;
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2963;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=zjd5b/7UtrJcexJ7ZEgc0BXA9ixM3XyWJFnBq9YLcUU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC25CxJ4xEHJLvxJhaHYnIycAp0qraAcc6cI3
- Xcpn82CiXKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuQAKCRDa6OEJdZac
- 5RH0EACf1M4aVMk9P2eEktkHlLqlaQdRuqWYVtFHmfbNFnL1vO/wZ2M4Aba/4ygc+MBbDEOJdds
- 3/28LzWiL+AMdOazOalSYfBFnEWvDFBQEx+K2pQIgjsRA2q1nTXzgWZT1MfKWDbHX9wYmpUpuYx
- 38AHMRr59mtrGBIAeB/IQa42bRW3nDghRn50xJ1HjLkJwA/R4juIexRubqEUUcl6GVWRTHaI5NX
- WgNwYZisHed93SC4IO+o7Hl2m6coThM8I4qOoZH8S/+jlJ4n3KnBnh0BMlHTepQVqG7BsVWfG1d
- 1TLJ4lZjru+DQslA1k9KBJa8UVPTwaocKK1RqtbbxI911470wG0+L8byw1MprPgiTTjX1I9Ngjh
- mmg9aYhmOTi8F4cOVTIkdsh/TXc0rQXqb3ZvjdG75i7qCmAk/FuQhrRwtVzXj2APTom9eF3qtvG
- e4emnnftnFg84kywvXDqGkynVylv/0TEuoBQgA9VUyIMj1KKNZl6sE6n+vD9A4F7HzNjqaTwV2K
- 5OBrC81Ad69hAAKRtIzSMKF2VFty8K6rs+6ojxLHdRTOP5mB6dNHpBx8mALrSqeAc1/wBNC9Ix9
- mTsyxhtmTRg9pqoFf2B6dlyihKa9vVpZIr1N6m7+GJxQs7NByEKclIiHCJJXt4zUT52+tH1BPJw
- 3eV2vav+zPpw8xw==
+ bh=B3mRoWkvytxDScscm5YFItkwCjWimSwDclMREfby+x8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC24vmn1kI5syyK9SP8y7mQRjhtfRgLDFleha
+ TSNzMqPeZWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuAAKCRDa6OEJdZac
+ 5c/VD/9q+xca90nG+SIhIWDmf72s99sVQYYSN1uc7Z/y/1jNGdN48GrGMcfqONZ8HDpSHNfEwhS
+ BA1GsdYOL39n9N1dMYmLCpjEwTgO8pG3WMMCZpE9wT9UFAbC3vRa6OkbuJWumV0SFExy1LHT/sW
+ tmFOwABRt+AWuoXnoWdYUS8/4h1caYrzfC/jWYGo8EE/xANURrITf6hBRSPkQuTBIfSvzNn86Iz
+ YnlPXWwP2VkrKCdzfnSpvIsP97iaSlPRDo43b6zQltEabToKZ0BgyetrZjK5s22VZe9RPJWkUhN
+ pmcHpmp8MwLXniLJe/auFtGd3sSnA9+0ul68RI1qn2SUfeueQGLckAHKaM8FbwG+Yq7ePFH4ZJp
+ /VQHqeJ9H4ynrRPopQED1Kv3gsS5K3PQD+SdcCuDupxPGwS139sQha5jhBAyyGOOwjG32pEkLHu
+ XBXDSHe04foYYeHt/w7ItsaIQsNsTRqBA1eqyA6fgwbOb+d+Ks3YVlMpaeWbB9CUMPcKsQxVByQ
+ FKKYaZDyM4rYHBCFJIJMuW6x00/sZSTEeJn4QOgq9Qib+cdpO3fMXPivQAGDm1F4pZsIEVrVgA5
+ KPTBSuQD/AL03NUml+VIWHg/1YlD1I2YZbmhjiBQFetPrZ3Bs7j+MQ2NnhjU3vLnrqoUKjqyx3V
+ PGofm5fVDRAb9IA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,81 +111,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the OnOffSplit property from manual visitor-based
+Convert the rom OnOffAuto property from manual visitor-based
 callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- accel/kvm/kvm-all.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ backends/hostmem-file.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 83cbd120a847..e2cfbcf44046 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -46,6 +46,7 @@
+diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
+index 8cf27ad67e13..9c7e0183d480 100644
+--- a/backends/hostmem-file.c
++++ b/backends/hostmem-file.c
+@@ -19,7 +19,7 @@
+ #include "qom/object_interfaces.h"
+ #include "qom/object.h"
  #include "qapi/visitor.h"
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-visit-common.h"
+-#include "qapi/qapi-visit-common.h"
 +#include "qapi/qapi-type-infos-common.h"
- #include "system/reset.h"
- #include "qemu/guest-random.h"
- #include "system/hw_accel.h"
-@@ -4126,22 +4127,17 @@ static void kvm_set_kvm_shadow_mem(Object *obj, Visitor *v,
-     s->kvm_shadow_mem = value;
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendFile, MEMORY_BACKEND_FILE)
+ 
+@@ -230,30 +230,24 @@ static void file_memory_backend_set_readonly(Object *obj, bool value,
+     fb->readonly = value;
  }
  
--static void kvm_set_kernel_irqchip(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
-+static void kvm_set_kernel_irqchip(Object *obj, int value,
-                                    Error **errp)
+-static void file_memory_backend_get_rom(Object *obj, Visitor *v,
+-                                        const char *name, void *opaque,
+-                                        Error **errp)
++static int file_memory_backend_get_rom(Object *obj, Error **errp)
  {
-     KVMState *s = KVM_STATE(obj);
--    OnOffSplit mode;
+     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
+-    OnOffAuto rom = fb->rom;
+-
+-    visit_type_OnOffAuto(v, name, &rom, errp);
++    return fb->rom;
+ }
  
-     if (s->fd != -1) {
-         error_setg(errp, "Cannot set properties after the accelerator has been initialized");
+-static void file_memory_backend_set_rom(Object *obj, Visitor *v,
+-                                        const char *name, void *opaque,
+-                                        Error **errp)
++static void file_memory_backend_set_rom(Object *obj, int value, Error **errp)
+ {
+     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
+     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
+ 
+     if (host_memory_backend_mr_inited(backend)) {
+-        error_setg(errp, "cannot change property '%s' of %s.", name,
++        error_setg(errp, "cannot change property 'rom' of %s.",
+                    object_get_typename(obj));
          return;
      }
  
--    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
--        return;
--    }
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_SPLIT_ON:
-         s->kernel_irqchip_allowed = true;
-         s->kernel_irqchip_required = true;
-@@ -4158,10 +4154,7 @@ static void kvm_set_kernel_irqchip(Object *obj, Visitor *v,
-         s->kernel_irqchip_split = ON_OFF_AUTO_ON;
-         break;
-     default:
--        /* The value was checked in visit_type_OnOffSplit() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
+-    visit_type_OnOffAuto(v, name, &fb->rom, errp);
++    fb->rom = value;
  }
  
-@@ -4278,11 +4271,12 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
-     ac->has_memory = kvm_accel_has_memory;
-     ac->allowed = &kvm_allowed;
- 
--    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
--        NULL, kvm_set_kernel_irqchip,
--        NULL, NULL);
--    object_class_property_set_description(oc, "kernel-irqchip",
--        "Configure KVM in-kernel irqchip");
+ static void file_backend_unparent(Object *obj)
+@@ -298,10 +292,13 @@ file_backend_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_bool(oc, "readonly",
+         file_memory_backend_get_readonly,
+         file_memory_backend_set_readonly);
+-    object_class_property_add(oc, "rom", "OnOffAuto",
+-        file_memory_backend_get_rom, file_memory_backend_set_rom, NULL, NULL);
+-    object_class_property_set_description(oc, "rom",
+-        "Whether to create Read Only Memory (ROM)");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "kernel-irqchip",
-+        .qapi_type = &OnOffSplit_type_info,
-+        .set = kvm_set_kernel_irqchip,
-+        .description = "Configure KVM in-kernel irqchip",
++        .name = "rom",
++        .description = "Whether to create Read Only Memory (ROM)",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = file_memory_backend_get_rom,
++        .set = file_memory_backend_set_rom,
 +    ));
+ }
  
-     object_class_property_add(oc, "kvm-shadow-mem", "int",
-         kvm_get_kvm_shadow_mem, kvm_set_kvm_shadow_mem,
+ static void file_backend_instance_finalize(Object *o)
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
