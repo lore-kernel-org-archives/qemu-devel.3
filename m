@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06261C79FA1
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 06:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD50C79FA1
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 07:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4vDe-0004rt-NT; Fri, 11 Sep 2026 02:58:42 -0400
+	id 1x4vUb-0006zK-OY; Fri, 11 Sep 2026 03:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4vDZ-0004rZ-Jq
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 02:58:38 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x4vDV-0003aD-O6
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 02:58:37 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-853f8c34ba4so722625b3a.0
- for <qemu-devel@nongnu.org>; Thu, 10 Sep 2026 23:58:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789109901; x=1789714701; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QeLTQVQeTEdSXgCqiJKGDVVrRiQG2d1wUOpne7KW/VI=;
- b=qqo+8ffJZThDRpxxfjNkeYitlH1GXBG1FlaFLyUAwnUX9N4kzCz8WYCXynJHBBSV4E
- SjyXFoVvKM1ml1ENGAKfIyUXN8SgFdrLQt18V1xBiP9veQXD+K9wHaAI9s02sIaXIjKv
- gEu325AfppO26WN8i86DWPKuW05Ot5rqLjaLSZNckbUuJt3PG1bhw/1mMPXrvYaz+0YH
- vUcSEem4pmElcfbTM2HvTpEoylPe2bF82vEQ5wB06BS5xW+NguZQvVGz/+CX+bH3kwvt
- hATXulWtpm1zUKvScFOF7R2DiDSM+4CMD76/I/hCG1BrNh9bgLqGkc+cmSZuGgql9qzG
- oXPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789109901; x=1789714701;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=QeLTQVQeTEdSXgCqiJKGDVVrRiQG2d1wUOpne7KW/VI=;
- b=gN5VZxRAgluryGh5zMWtLMsovfgb/tWR81JPloLCUvHMijpkcuxiWO7MvYyjbNzU6Q
- KVEwl87WxxlmELQDtbgTns/wBlvRKyAKFoCINbpCCy+CxNj1NBe0vh+h87F5mP7aILTQ
- yTRn1qtpKmYbuQkehSugQsSfze7YazBBoOEL8lmJ49FZFEvZduIgcD+1Hkl/64uCyUMx
- 9R+/HlWwXwaZzrQhdC8vssAysm7T5tcWOfg48rMScdkViRpjIcr0CAMi/WVGzMLHUYsY
- Y2i4clWfEVjKgXy1im74a7FbH6Eu7eDRlEwd8quf89Nj8ySp4MAzrq3T5xbFuGEbAMR0
- g0lw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxXUH8gVjavS1XhRD6EvfxXdP00PDoDg4EqGNYIz9/d9yLT0oamIjY00fMkZwN56PwVnPogRrToPcP6@nongnu.org
-X-Gm-Message-State: AFuF++mU4C6KOxNwOF6smvS9zcMSejgC+JT8u0M94sNgzgPgukXHxY/P
- AND4wDCmXJzk3T+KAq4teupDrq4iKBnlu8mTfFzM4yGDsiAbagLuJ3gF/hZ9mFOSsvQ=
-X-Gm-Gg: AYBFou19Z1aBUyGvkQcT1By3Mf7yozVnHodTnJyu1IeGW6+AN4eLpztjZf+AKXQECtm
- l/U87zhd/cKs2r88S9CmDlZfOaPkx3jwX2dtWwYf4SF1K3OUHx5HoG4haVQfX+DdD8XzdnhkXlh
- LXH6k9mvbuyHmqrTPsYCklBdpklRxDJnLXypo/i54J63g8hZaFFvjCjytLZYE1463AoDmdMPCu1
- YjvM9mthUXYHiKQTtwBwPlvtUdULCfcIoqCfFoW4CbZCZaLCisBoj4aWGKomH0wyXi/EIMISmBi
- qc5FpE51K/KIAxIDiIDHSwAmppSa8Agas2p5XEC1sGXiCFKc5Kh3OaGpSJZYcxFflbaIZXSB9St
- VKnDfr7nlqHREWp+5mEpyIjQOqEKe+czYTXaxz6IhF8R1s9/lh98PAdzeW73LpidNP5ZDcIKwTl
- 0nYzyWofBQgBGEqfvjImdWsrDNoMRv7rNYOaj8QPPrblSE0+utHRkxrXpLzMhFi5tsL6rxS2EvL
- x1Yho1VmkEF9ahQMNp9D5whVvg729+CZd06suKdx90S36XGOc9XPHR5GH0=
-X-Received: by 2002:a05:6a20:9f95:b0:3c4:1916:9d40 with SMTP id
- adf61e73a8af0-3daed5cffe2mr5260256637.12.1789109900491; 
- Thu, 10 Sep 2026 23:58:20 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:20b:7d3e:6a30:1f63?
- ([2603:800c:7900:ed00:20b:7d3e:6a30:1f63])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14365ba729dsm5671449c88.14.2026.09.10.23.58.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Sep 2026 23:58:19 -0700 (PDT)
-Message-ID: <c71d8539-92e1-4a30-b705-468e653ccc0d@linaro.org>
-Date: Thu, 10 Sep 2026 20:58:16 -1000
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4vUZ-0006yv-4f
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 03:16:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4vUW-0007RN-5V
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 03:16:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789110965;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=INckx3OwI8lE8tTok0gYVN3xQnfljz2rzNHdoEGIx24=;
+ b=WfDu76ZYueyf1aMgLW5U2fT8NL6DmDUu3prVzXxPXut+d7+VMsGSWuThXQa6vKfWFYF/3F
+ pLsRQ1DAcAUV+8ox1moo0BRIbD51J8Jthdk8F/Necib0p7zVywGQ+dBhwncOqKW4Q1qEag
+ BiIGd3cSSF8o2KsxPTqmQtclA6bo2PM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-tRXhUDrGM-C9On4xyA8-Lw-1; Fri,
+ 11 Sep 2026 03:16:02 -0400
+X-MC-Unique: tRXhUDrGM-C9On4xyA8-Lw-1
+X-Mimecast-MFC-AGG-ID: tRXhUDrGM-C9On4xyA8-Lw_1789110961
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AC3A195422A; Fri, 11 Sep 2026 07:16:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B73561955D84; Fri, 11 Sep 2026 07:16:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1F39221E6A04; Fri, 11 Sep 2026 09:15:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  "Dr . David Alan
+ Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v2 15/18] migration: Rewrite
+ migrate_set_parameter_completion using QDict
+In-Reply-To: <87tsnxtfrn.fsf@suse.de> (Fabiano Rosas's message of "Thu, 10 Sep
+ 2026 10:09:00 -0300")
+References: <20260909214509.237309-1-farosas@suse.de>
+ <20260909214509.237309-16-farosas@suse.de>
+ <878q59e4nt.fsf@pond.sub.org> <87tsnxtfrn.fsf@suse.de>
+Date: Fri, 11 Sep 2026 09:15:58 +0200
+Message-ID: <878q58b6mp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL v2 00/24] Various virtio-gpu/dmabuf related fixes
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20260910-virtio-gpu-cleanup-v1-0-ccb8927a671e@redhat.com>
- <20260910-virtio-gpu-cleanup-v2-0-82555d04f70c@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260910-virtio-gpu-cleanup-v2-0-82555d04f70c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,39 +87,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/26 06:02, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau<marcandre.lureau@redhat.com>
-> 
-> The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013fb7:
-> 
->    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2026-09-10 11:08:04 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/marcandre.lureau/qemu.git tags/virtio-gpu-pr-v2
-> 
-> for you to fetch changes up to d6e516555805b95a7a935c3fd74568dabf7796f2:
-> 
->    contrib/vhost-user-gpu: disable scanouts on resource unref (2026-09-10 19:59:43 +0400)
-> 
-> ----------------------------------------------------------------
-> Various virtio-gpu/dmabuf related fixes
-> 
-> While working on CVE-2026-66020 (which had a few revision on list), I
-> kept finding several places where virtio-gpu scanout and dmabuf
-> ownership was unclear.
-> 
-> The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
-> unmapped its memory. Following that path also found stale dmabuf
-> references, duplicated scanout bookkeeping, and inconsistent cleanup
-> between display backends.
-> 
-> Those changes touch a lot of area and I have done basic testing with the
-> various backends. I would not recommend backporting them all to stable.
-> The first 2 patches address CVE-2026-66020 in the general case and
-> should be safe to backport.
+Fabiano Rosas <farosas@suse.de> writes:
 
-Applied, thanks.
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>>> The migrate_set_parameter_completion function is the last user of the
+>>> MigrationParameter enum.
+>>
+>> Not true, there's still the assertion in
+>> migrate_mark_all_params_present(), and hmp_completion_single() in
+>> tests/qtest/migration/misc-tests.c.
+>>
+>> The assertion is unclean: it uses MIGRATION_PARAMETER__MAX for number of
+>> MigrationParameters members, which tacitly assumes MigrationParameter
+>> matches MigrationParameters.
+>>
+>
+> I'm not sure I understand what you mean here. The usefulness of
+> MigrationParameter is quite diminished if it doesn't always match the
+> members of MigrationParameters.
 
-r~
+What we want to assert is "has_fields[] covers all the optional members
+of MigrationParameters *p.
+
+That's hard, so we settle for "has_fields[] covers the exact right
+number of bool pointers".  Works as long as all elements of has_fields[]
+point into @p, and there are no duplicates.
+
+Note that "exact right number" is necessary but not sufficient for the
+"covers all".  In other words, we're settling for a weaker assertion we
+can actually check.  That's okay.
+
+But that's still hard, so we assert "has_fields[] covers as many bool
+pointers as there are MigrationParameter values" instead.  Works as long
+as MigrationParameter matches MigrationParameters.
+
+This isn't settling for a weaker assertion, it's asserting something
+else!  It tacitly relies on "MigrationParameter matches
+MigrationParameters", which is not locally obvious, and not ensured by
+code, only by patch review.  I consider that unclean.  Doesn't mean it's
+worthless, does mean it needs a comment.
+
+> In fact... could we code-generate the enum from MigrationParameters
+> without the need for explicitly declaring MigrationParameter? That way
+> we keep the usefulness of having a lookup function and a "max" and do
+> away with the task of updating MigrationParameter to match
+> MigrationParameters.
+
+Yes, we could, but it would be too much QAPI generator and documentation
+complexity for just one use case.
+
+The existing tool to introspect QAPI types from C is visitors.  Could it
+work?  A bit of a bother, I'm afraid, but less complex than messing with
+the QAPI generator.
+
+>>>                          Write the code using an output visitor and
+>>> QDict instead so we can remove the enum in a future patch.
+>>>
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+
 
