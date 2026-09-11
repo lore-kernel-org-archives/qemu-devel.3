@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798EBC88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20447C88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x8h-0001hB-LS; Fri, 11 Sep 2026 05:01:43 -0400
+	id 1x4x8l-0001m7-DJ; Fri, 11 Sep 2026 05:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8T-0001Wu-3o
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8a-0001cf-FI
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8R-00080I-02
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:28 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8Y-00081R-KW
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117285;
+ s=mimecast20190719; t=1789117294;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cY4K5hEbqA2jAPtmBdYZErh868yrTmlvKXQA8mwMwzI=;
- b=J0Hc8pUk4BxRfU9QK82Ox/IkVuKFcTNfRVOjTOCffwZF85/ZE1StLvQVbZPHGBSvYU8w3e
- TnQEr5Hhc7IDD3gbF2bkm4/v0vFLwUTAoTmc631KibqfBtO14bgtZ+YcxrObqMhZAQ/5oX
- YRLq8TXq+zyrwEpWktPkw7REjyoD+uI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cK0jKLb9Y25sWTW+STMCp41/svnDlrpZe9udpBmpYJc=;
+ b=JuOLgIVG4d/gZbEdK/Zrkk6+9EmY+B75yqDYhEPy4ZjxidyKD5EEEW7MU1iPd4TOYjbLEt
+ IfBL5uliwnofkFm1mqKmAA1murfMM1bXxkuaaepJeMhf84l+I1tzAITxY/PU16/NuuCxyn
+ qkfiaDInWZC4ot9N/EYqeiOLcNanU2Y=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-YEVAvbGLNEmJHnoK9AY-jg-1; Fri, 11 Sep 2026 05:01:22 -0400
-X-MC-Unique: YEVAvbGLNEmJHnoK9AY-jg-1
-X-Mimecast-MFC-AGG-ID: YEVAvbGLNEmJHnoK9AY-jg_1789117281
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49e64b80b94so2852425e9.3
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:21 -0700 (PDT)
+ us-mta-100-p0CVLyvtNeupMD86e1zGdQ-1; Fri, 11 Sep 2026 05:01:32 -0400
+X-MC-Unique: p0CVLyvtNeupMD86e1zGdQ-1
+X-Mimecast-MFC-AGG-ID: p0CVLyvtNeupMD86e1zGdQ_1789117291
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-6a98570af94so1915015a12.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117281; x=1789722081; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117291; x=1789722091; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cY4K5hEbqA2jAPtmBdYZErh868yrTmlvKXQA8mwMwzI=;
- b=VfEq2RRGApK9w49Pc5X3vNlq+DLbib81h7pzKUCn4MrAsnXh3mHcIOUoxdJmJOcWsu
- oiphGifuAmptyEa7xuR/rhnuOis94tooJkHwWpqevfM+ptSJmrgXgr/fjnJOC5VdXvQE
- BCqhQvHDJ6vWbJCukxqj1Si0u/tVGLTJ6bnC6g4mVt9wO9LdVn3Dss5fECiQSUkUpE/B
- +9Nl6ZZkUSMOTSfgb4//M+183UbbkHngJYJdzk2EXLw3v9t15ad82pjcHrUplIxS/uUn
- Emgw7dGYa42eR1xBV5wqbNW5NYgAUUFKGSAzEFIXeXNLUFcC8S2VUKxnvgZvLHWmIoG5
- ZD0A==
+ bh=cK0jKLb9Y25sWTW+STMCp41/svnDlrpZe9udpBmpYJc=;
+ b=PPTmO4Av2682/TAuMzMcCarLOLQZeVzyASfBibJn5FEcdi17C5WUNUG8llmOHY7JNn
+ 1VQXjMdGmNhk9jzRfr10FdmhGZiuZJ76K/gL8bgxCR5lR+vIPA/UH6kNhit5Vs/MABFM
+ DvGF7XINZxncnLn5n/FZVSaiBIwLmGY9B1JINHJULqU04LktWCRZ3H9U0+YAtpif9syN
+ ovgcrN7T2ZNSXf7mgDuVMdeObEtWlPOTpHxNxnDTaj7v85zihHWbu+YSmkGITaGXF0B3
+ AvsCEP1c7hH/xj/+Lf1D+T8tJAyIqv3LvOfhose1ppYNZ5Ez/tvtl/SrKCZsDSSrbkie
+ z3cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117281; x=1789722081;
+ d=1e100.net; s=20251104; t=1789117291; x=1789722091;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cY4K5hEbqA2jAPtmBdYZErh868yrTmlvKXQA8mwMwzI=;
- b=mBAll5e5dRed0eSAKSVNKX3CI+LetIWHkwMvKxaQVBPjLPxZ3lCqroxSsUT6q1LQXA
- 7TU0+gJNpqVWAVbko8aSflgaWZ3aYEWGINWZ4f3dTNCvQpGmaw1mVs7W9JlAWyx/6y5S
- BfpdME8lZgeqTFuTgWyUtwguyZ9/gQ/ROMHU2t6QOc06rlL6McIltcIPk8EC0YAdh5hK
- tss1HVMO1I6WS9USTbfpE3Z3eOybYgNBI5F3hKp8vOq9EKQJrd2F/5/cqIywWH9rNinT
- vFlAtCu1zFOFA4acg0WXJlDmNBBNnSB8q5owPRBXHZqerk68MfftdWpxUrULOn3dTFuE
- z0TA==
-X-Gm-Message-State: AFuF++n1VAlVnLYfmVQaDHDcSGIR9NHCTPlvCqiTDeFMaT7ABVa8750B
- U67Yrx/gzQcb46xaz7xTRGXKAMg/e/BmAxTRanwJXFfMXzyMa4jhLnhaJiLgbdmsfFo4cqDPv7N
- UYnipAbiG5a0wFR44Nb+Sm3odx1cryN6bykyrmOE5+T7JO73zs4sodOSK8kgZ5AYQAC7HbZ1Ozm
- e8z5rogHoTj748omdjVoWJQDLC7Q6uvmjLRQ==
-X-Gm-Gg: AYBFou1g2kA2BTHCpFwKTK+bbzn0VU31yxCNpiAWqVFXF35VIHO5qvimjY3RO19yyU9
- tIAZ1vDPRXcIyh4GT6G+P2HoNDDJFfSCAdWXi19H5Gwux0qnEi8VYQEB1mU5YJSU/9zBCS7P4Xt
- WxNI/eORYQ7ZuRhHi2ZTLecBQgxsEaz8yjLOPZ22yRgvH4RId+i2mlrp8CReg9wqmgJ/l4Arm4L
- 7cdlqYdbGLQ9XXysuOcOqwONGlCmpN4hBhokCdhSsIdMKeAH4gqseTUeY3MNCcEk3ZiQp9/KrrL
- QRenWYpYq2z0Wg1q0RmrZYATQMFINVIbVu/eFlAp3iyMAXcGXUia9yNkwO07pF+gxfO1dm4gJUI
- ohZ0XTmTkecotuskAozC8zp4=
-X-Received: by 2002:a05:600c:b99:b0:49c:dca4:94c with SMTP id
- 5b1f17b1804b1-49e619b9d57mr70274255e9.13.1789117280827; 
- Fri, 11 Sep 2026 02:01:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:b99:b0:49c:dca4:94c with SMTP id
- 5b1f17b1804b1-49e619b9d57mr70272475e9.13.1789117280084; 
- Fri, 11 Sep 2026 02:01:20 -0700 (PDT)
+ bh=cK0jKLb9Y25sWTW+STMCp41/svnDlrpZe9udpBmpYJc=;
+ b=DbtZsshwNjmjqnRYbsyKf0Qeg4hMJXx+uPU1tiEabqunQRVDepmhzSY9K+e9DRlQKk
+ Gt9dzTMMzzaXo0qfAHY18AHNvSrVt6PVupwvEnovjmYkgeLTDpOgEEyikm5W2u1L6mJV
+ fVZae2gtCP1Pzfr5i9h2FYjes4lnzrcPoWP/AZqi/8BkVX2uW+7PtfsZUdn0FLCcJGai
+ DdSgGMzLfgGT/e+RkDACAHDppKOZw9bH+p61hmWlBOJy48WyDXXNPGPa4t3+IyhvkFw9
+ 9Mu1D2x/d7z+WvQQcs9ZA09zdSz/NTSmPW6uRn0TodqhEDoK8jrbs1CP6TwV1SEOFKqG
+ wztg==
+X-Gm-Message-State: AFuF++nTTAODtgPYkTy03w6gkUgiXs2bOo3y+w4uuLY8DUQoI6xhqCJs
+ vvHthYhGvs7ocn7fkER0SgMnrLUsROorFs8GkCQqovgRXUFW0jwhQkJIwdArh88+NXfW6JMyXl5
+ ckOHhirrp3w9Uz374zdpP74Oe8SnQ1gBBR9615rq42AzVo31TiuotcHVMgr04volXyncFqwuAcV
+ yEuI18Yq5tGC9tKI3lD6BKSW3MYJFgqArS0g==
+X-Gm-Gg: AYBFou2n+XCH0ZKyujX/BaoCwCKMclc1lxfuZqZ+M8SlWH+eiWJ4xQi92ovITiOEaU0
+ yzVlatFrEbV36VB7ESoappwSg4w2W4NVTZIRTtyN6sENycIJvFuSrVSuwaOGUNK3HhnKjy/+np3
+ GYihmSf4z9YSH8tUG8u9E/RW3qB/weiUNOF3UPVwUH2SFClfjZaGdFqx6CVgzSXW8Vtp06lhz0y
+ fuacF62iVF76hSu5k8YkKEgMUaanKAGJM0OQ7wed6IYkGgIOxvPjn/zsk2y4uFHbX2JXJWCjka9
+ DQfTgqTcwIjT3KEZt4DLdJvpweb1YA6gN4q19kVQSAQ9ouBS5WNyPGIgydL0YbLP4MS7XN99OQi
+ SMw6BTuEEU+DWPdZwImuQvhs=
+X-Received: by 2002:a17:907:3e0f:b0:c25:5159:6a25 with SMTP id
+ a640c23a62f3a-c2945db2ce7mr402583366b.6.1789117290812; 
+ Fri, 11 Sep 2026 02:01:30 -0700 (PDT)
+X-Received: by 2002:a17:907:3e0f:b0:c25:5159:6a25 with SMTP id
+ a640c23a62f3a-c2945db2ce7mr402578366b.6.1789117289954; 
+ Fri, 11 Sep 2026 02:01:29 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26c2985dsm238995795e9.6.2026.09.11.02.01.18
+ a640c23a62f3a-c2966021d0dsm58249166b.10.2026.09.11.02.01.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:01:19 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:01:17 -0400
+ Fri, 11 Sep 2026 02:01:29 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:01:27 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org
-Subject: [PULL v2 01/75] virtio: fix exit(1) on DMA mapping failure during
- migration restore
-Message-ID: <5ec2a0b21fe5b8e1419a94a753636088d6b0409b.1789117222.git.mst@redhat.com>
+ Albert Esteve <aesteve@redhat.com>, Dorinda Bassey <dbassey@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v2 05/75] linux-headers: add VIRTIO_ID_MEDIA
+Message-ID: <90cb8b107339ae32360e954bd26357ea6e5fe3de.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -126,180 +121,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU restores pending virtio requests from a migration stream, it
-calls qemu_get_virtqueue_element(), which calls virtqueue_map() and
-virtqueue_map_iovec() to re-map the saved DMA fragment addresses into
-the destination address space.  If the addresses in the migration stream
-are corrupted, and as a result dma_memory_map() returns NULL or a
-shorter-than-expected length, virtqueue_map_iovec() calls exit(1),
-terminating the destination QEMU process instead of failing the
-migration cleanly.
+From: Albert Esteve <aesteve@redhat.com>
 
-Convert virtqueue_map_iovec() and virtqueue_map() from void to bool.
-On failure, virtqueue_map_iovec() unmaps any entries it has already
-mapped and returns false; virtqueue_map() similarly cleans up the in_sg
-entries if out_sg mapping fails.  qemu_get_virtqueue_element() now
-checks the return value, frees the element and returns NULL on failure,
-allowing the migration restore path to propagate a clean error.  The
-callers in virtio-blk, virtio-serial-bus and virtio-scsi that invoke
-qemu_get_virtqueue_element() during load are updated to check for NULL
-and return an error code.
+The ID was added in Linux commit 2187be212179 ("virtio: Add ID for
+virtio media") and is included in v7.3-rc1.
 
-Fixes: 3b3b062821 ("virtio: slim down allocation of VirtQueueElements")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3888
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Dorinda Bassey <dbassey@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260901-virtio-media-v2-1-bd3cc9347ab9@redhat.com>
 ---
- include/hw/virtio/virtio.h  |  2 +-
- hw/block/virtio-blk.c       |  4 +++
- hw/char/virtio-serial-bus.c |  4 +++
- hw/scsi/virtio-scsi.c       |  4 +++
- hw/virtio/virtio.c          | 49 +++++++++++++++++++++++++++----------
- 5 files changed, 49 insertions(+), 14 deletions(-)
+ include/standard-headers/linux/virtio_ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index c99cb19d88..27c5fe3a6b 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -320,7 +320,7 @@ bool virtqueue_rewind(VirtQueue *vq, unsigned int num);
- void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
-                     unsigned int len, unsigned int idx);
+diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
+index 6c12db16fa..f9056af0c6 100644
+--- a/include/standard-headers/linux/virtio_ids.h
++++ b/include/standard-headers/linux/virtio_ids.h
+@@ -69,6 +69,7 @@
+ #define VIRTIO_ID_BT			40 /* virtio bluetooth */
+ #define VIRTIO_ID_GPIO			41 /* virtio gpio */
+ #define VIRTIO_ID_SPI			45 /* virtio spi */
++#define VIRTIO_ID_MEDIA			48 /* virtio media */
  
--void virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem);
-+bool virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem);
- void *virtqueue_pop(VirtQueue *vq, size_t sz);
- unsigned int virtqueue_drop_all(VirtQueue *vq);
- void *qemu_get_virtqueue_element(VirtIODevice *vdev, QEMUFile *f, size_t sz);
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 6b92066aff..cb6a276a82 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1384,6 +1384,10 @@ static int virtio_blk_load_device(VirtIODevice *vdev, QEMUFile *f,
-         }
- 
-         req = qemu_get_virtqueue_element(vdev, f, sizeof(VirtIOBlockReq));
-+        if (!req) {
-+            error_report("Failed to restore virtio-blk request");
-+            return -EINVAL;
-+        }
-         virtio_blk_init_request(s, virtio_get_queue(vdev, vq_idx), req);
- 
-         WITH_QEMU_LOCK_GUARD(&s->rq_lock) {
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index 83a033ce85..81db0bdc91 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -764,6 +764,10 @@ static int fetch_active_ports_list(QEMUFile *f,
- 
-             port->elem =
-                 qemu_get_virtqueue_element(vdev, f, sizeof(VirtQueueElement));
-+            if (!port->elem) {
-+                error_report("Failed to restore virtio-serial element");
-+                return -EINVAL;
-+            }
- 
-             /*
-              *  Port was throttled on source machine.  Let's
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index bf64d1231a..132f833226 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -274,6 +274,10 @@ static void *virtio_scsi_load_request(QEMUFile *f, SCSIRequest *sreq)
-     assert(n < vs->conf.num_queues);
-     req = qemu_get_virtqueue_element(vdev, f,
-                                      sizeof(VirtIOSCSIReq) + vs->cdb_size);
-+    if (!req) {
-+        error_report("Failed to restore virtio-scsi request");
-+        return NULL;
-+    }
-     virtio_scsi_init_req(s, vs->cmd_vqs[n], req);
- 
-     if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + vs->cdb_size,
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index daa5607338..34f1df260b 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1680,36 +1680,56 @@ static void virtqueue_undo_map_desc(AddressSpace *as,
-     }
- }
- 
--static void virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
-+static bool virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
-                                 hwaddr *addr, unsigned int num_sg,
-                                 bool is_write)
- {
-     unsigned int i;
-     hwaddr len;
-+    DMADirection dir = is_write ? DMA_DIRECTION_FROM_DEVICE :
-+                                 DMA_DIRECTION_TO_DEVICE;
- 
-     for (i = 0; i < num_sg; i++) {
-         len = sg[i].iov_len;
--        sg[i].iov_base = dma_memory_map(vdev->dma_as,
--                                        addr[i], &len, is_write ?
--                                        DMA_DIRECTION_FROM_DEVICE :
--                                        DMA_DIRECTION_TO_DEVICE,
--                                        MEMTXATTRS_UNSPECIFIED);
-+        sg[i].iov_base = dma_memory_map(vdev->dma_as, addr[i], &len,
-+                                        dir, MEMTXATTRS_UNSPECIFIED);
-         if (!sg[i].iov_base) {
-             error_report("virtio: error trying to map MMIO memory");
--            exit(1);
-+            goto err_undo_map;
-         }
-         if (len != sg[i].iov_len) {
-             error_report("virtio: unexpected memory split");
--            exit(1);
-+            dma_memory_unmap(vdev->dma_as, sg[i].iov_base, len, dir, 0);
-+            goto err_undo_map;
-         }
-     }
-+    return true;
-+
-+err_undo_map:
-+    while (i-- > 0) {
-+        dma_memory_unmap(vdev->dma_as, sg[i].iov_base, sg[i].iov_len,
-+                         dir, 0);
-+    }
-+    return false;
- }
- 
--void virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem)
-+bool virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem)
- {
--    virtqueue_map_iovec(vdev, elem->in_sg, elem->in_addr, elem->in_num, true);
--    virtqueue_map_iovec(vdev, elem->out_sg, elem->out_addr, elem->out_num,
--                                                                        false);
-+    if (!virtqueue_map_iovec(vdev, elem->in_sg, elem->in_addr,
-+                             elem->in_num, true)) {
-+        return false;
-+    }
-+    if (!virtqueue_map_iovec(vdev, elem->out_sg, elem->out_addr,
-+                             elem->out_num, false)) {
-+        unsigned int i;
-+        for (i = 0; i < elem->in_num; i++) {
-+            dma_memory_unmap(vdev->dma_as, elem->in_sg[i].iov_base,
-+                             elem->in_sg[i].iov_len,
-+                             DMA_DIRECTION_FROM_DEVICE, 0);
-+        }
-+        return false;
-+    }
-+    return true;
- }
- 
- static void *virtqueue_alloc_element(size_t sz, unsigned out_num, unsigned in_num)
-@@ -2206,7 +2226,10 @@ void *qemu_get_virtqueue_element(VirtIODevice *vdev, QEMUFile *f, size_t sz)
-         qemu_get_be32s(f, &elem->ndescs);
-     }
- 
--    virtqueue_map(vdev, elem);
-+    if (!virtqueue_map(vdev, elem)) {
-+        g_free(elem);
-+        return NULL;
-+    }
-     return elem;
- }
- 
+ /*
+  * Virtio Transitional IDs
 -- 
 MST
 
