@@ -4,102 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A987C88E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2B5C88E53
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x8p-0001oz-2R; Fri, 11 Sep 2026 05:01:51 -0400
+	id 1x4x9K-0002RK-PC; Fri, 11 Sep 2026 05:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8f-0001fb-D1
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4x98-0002HT-Un
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8d-000822-Ir
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4x97-00087Z-DI
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117299;
+ s=mimecast20190719; t=1789117328;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HW5dHu/luwrYtl1kcOiBVGsiXZR8UnfoA5Cn0Bb40EU=;
- b=VbOnRUSONPTQMeeprNRvcpe39VzQbMnssePFUDfQZm2CaiVqraWk46BkkzNN3FGXfefdRh
- tIxbMzFS3PhfoIVKeIcuBAMFTOnJWJyZ1GbXhtYKO1JKEVndk2dR547mpPguYhST4GbVTK
- GY9jnreyuBM56zESq4YH0kUGBAcRkOo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-1rP5fKtgPT6D0NV4i9DHVg-1; Fri, 11 Sep 2026 05:01:37 -0400
-X-MC-Unique: 1rP5fKtgPT6D0NV4i9DHVg-1
-X-Mimecast-MFC-AGG-ID: 1rP5fKtgPT6D0NV4i9DHVg_1789117296
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4955e865174so2881855e9.3
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117296; x=1789722096; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=HW5dHu/luwrYtl1kcOiBVGsiXZR8UnfoA5Cn0Bb40EU=;
- b=VxmN/9KEMtxYLSaMgX/WHS0gsUzihW6YsBW8/tTsJFopRIdjc9XZX65RQLMRNMXTgE
- 1htf+Pe++zp1bkcpyz1DCVsZ2FC3L3+mLzOfDG8m7vJLWOz97OqN7AJ1I8AIyOYU1/tG
- ixwyNtrJzJ+g5Gg/Fxu1PmnSCQFijmomvzJ3zF/q03hNasjqyy3DzwZPPuHM/Mw0NBFi
- YKu7Ys1uRhFmJgEPpKkK0geouP+TGbJ6e02PleRBLxSrtfNhrJDHwtsuP/jy4DceNs67
- wayhG21yKcrX8lJiSXflov0Ad+fl6VqKJe7mmPOASiP/FQfeH4IzXYcp895lfHcB4IFq
- hjcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117296; x=1789722096;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=HW5dHu/luwrYtl1kcOiBVGsiXZR8UnfoA5Cn0Bb40EU=;
- b=N5DSMaOsN1CPZ4fFgLn6J3PDHU8Y8LuKOjTVTXXBxD7/0PB/7qxoQR06v2dRggyvax
- RRCax3knNB/lDjgRYQGcOyr3wxeOEGIBjzuZ52FUHRawKgWg4DXqJP5Dhe2RvV5eeRo0
- tJY9ubvY28dtvTV9TuqXokP42dJMwzLJPgVRkOOFeGoZNee7y9CbHC+JQXdRrziL+Lwg
- ACcHxF1AXQ6xvfHZDFgVqnaK943UEtLApst7qga2XlyLSJ6QAsnEIpalTKO2jbctAKpF
- 6AmLyjBwWvJIgZbA2iAcKxpmgn8ANqunf6LsjaqXsZ5bwaOOoD9cJRuv0G4DhKH3PyuD
- 8VKQ==
-X-Gm-Message-State: AFuF++k5CYyjzZjD+bIRKt/2KnAyJZx28WvJ5AK+frxFV53skLV6C8EU
- eUnqjzyA2WojrRNoeGqXN5C+YYx6wXE9NNnH0QUWA87GGptCs/onNfkTUj3Rrskvj6oID+3cYEy
- Ojp7PJjELJX+FIiY+ESHgzmkvdVYuHMue3WVPx0lbhj/Kl905Rg34h1FGzUMYl0ksTPBpGK2Aee
- BYfoYj3TiMbBfIKutdd3wGastREMtuPWi1Xw==
-X-Gm-Gg: AYBFou1J6/CiSfB7KGDbvv4cCOdyOeuY1MABDOLdW7xLvvRH88NAHAEJ9go1Oyx0orL
- 9djbqIHYQ18Eaps8WjiEEuAgXhaBn4lmj1IDQZnyoUSMr6pJecSE85CGJ1eN1sVoToBCPcImkGy
- DgGcFznaoIT0yCA3lvGJpSRvGY3+70SCsVge5y9A/cBg1SN0KMAZN9V2ZvFcdGFG3CPvFYX0Ar3
- LtGUc+vgl0arho4tcEfwX9YzYMVw1R3f5fhtRPJQqWOQPRzP0350gdr/DOdDtR/T6K/zAYKxpRs
- ux9Un1NeNe5yeI0xAfRHp40sgtkHa+DXQZRbEE8yDgDXBv5G3UqFshPkP+MwscA+Z8Bj2efdHlU
- tCGUpGqkFmLDsoUCPDNeDL/s=
-X-Received: by 2002:a05:600c:c4a8:b0:49d:1df6:2592 with SMTP id
- 5b1f17b1804b1-49e619e0f7amr31508935e9.21.1789117295828; 
- Fri, 11 Sep 2026 02:01:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:c4a8:b0:49d:1df6:2592 with SMTP id
- 5b1f17b1804b1-49e619e0f7amr31508015e9.21.1789117294803; 
- Fri, 11 Sep 2026 02:01:34 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26be3e0asm147459325e9.1.2026.09.11.02.01.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:01:34 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:01:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>, Dorinda Bassey <dbassey@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL v2 07/75] hw/display/vhost-user-media: add shared memory
- region BAR
-Message-ID: <6439ee6195d23d7bfdb366986bfdd24f7cdb19d6.1789117222.git.mst@redhat.com>
-References: <cover.1789117222.git.mst@redhat.com>
+ bh=9MJBu7fue3ktY+Ym4o58URFtWuH4NUmP3N+rZtbuGq4=;
+ b=GDkmHH9f2Zf2G/AJk1gPA+Rj7UyZBO1Cve70OjPdTbNfL515Ut2E9yJZeZIWMT/AVF2VyP
+ crIhglFTWaAPo/csYewLdcICNhXbY8ArK/JrCaNChAin5KbiDHJY0lt1QVdbbpINg0Sbwj
+ cRUvO30K/dPjqpBOWUsxYich8qhMaHY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-3r8QaFn9NM-2495BwnmkiA-1; Fri,
+ 11 Sep 2026 05:01:59 -0400
+X-MC-Unique: 3r8QaFn9NM-2495BwnmkiA-1
+X-Mimecast-MFC-AGG-ID: 3r8QaFn9NM-2495BwnmkiA_1789117318
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35E721800613; Fri, 11 Sep 2026 09:01:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7BE11955D89; Fri, 11 Sep 2026 09:01:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5A60021E6A04; Fri, 11 Sep 2026 11:01:55 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Eric
+ Blake <eblake@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Igor Mammedov <imammedo@redhat.com>,  linux-cxl@vger.kernel.org,  Zhao
+ Liu <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>,  Lukas Straub <lukasstraub2@web.de>,  Jonathan
+ Cameron <jic23@kernel.org>,  qemu-block@nongnu.org,  Ani Sinha
+ <anisinha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 03/10] qapi: convert simple data struct intros for
+ acpi.json
+In-Reply-To: <20260910203856.99003-4-jsnow@redhat.com> (John Snow's message of
+ "Thu, 10 Sep 2026 16:38:49 -0400")
+References: <20260910203856.99003-1-jsnow@redhat.com>
+ <20260910203856.99003-4-jsnow@redhat.com>
+Date: Fri, 11 Sep 2026 11:01:55 +0200
+Message-ID: <87zexo88l8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1789117222.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -123,171 +92,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+John Snow <jsnow@redhat.com> writes:
 
-Expose virtio-media shared memory region 0 (spec 5.22.6.1.6) as a
-prefetchable 64-bit PCI BAR (BAR 2) with a VirtIO shm capability.
-The size is obtained through GET_SHMEM_CONFIG and requires at least
-one shared region. The guest maps host-provisioned MMAP buffers into
-this window; QEMU creates a container region on realize, not a
-full-sized RAM allocation.
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  qapi/acpi.json | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/qapi/acpi.json b/qapi/acpi.json
+> index d2c59df30b2..291a04a7ea4 100644
+> --- a/qapi/acpi.json
+> +++ b/qapi/acpi.json
+> @@ -81,10 +81,9 @@
+>  
+>  ##
+>  # @ACPIOSTInfo:
+> -#
+> -# OSPM Status Indication for a device.  For description of possible
+> -# values of @source and @status fields see "_OST (OSPM Status
+> -# Indication)" chapter of ACPI5.0 spec.
+> +#     OSPM Status Indication for a device.  For description
+> +#     of possible values of @source and @status fields see "_OST (OSPM
+> +#     Status Indication)" chapter of ACPI5.0 spec.
+>  #
+>  # @device: device ID associated with slot
+>  #
 
-modern-pio-notify is rejected because it claims BAR 2.
-
-vhost-user still needs shareable guest RAM, e.g.:
-
-    -object memory-backend-memfd,id=mem,size=4G,share=on \
-    -numa node,memdev=mem
-
-Tested-by: Dorinda Bassey <dbassey@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901-virtio-media-v2-3-bd3cc9347ab9@redhat.com>
----
- hw/display/vhost-user-media-pci.c | 35 ++++++++++++++++++++++++++
- hw/display/vhost-user-media.c     | 42 ++++++++++++++++++++++++++++++-
- 2 files changed, 76 insertions(+), 1 deletion(-)
-
-diff --git a/hw/display/vhost-user-media-pci.c b/hw/display/vhost-user-media-pci.c
-index 3e09fcfdd0..7681f7505d 100644
---- a/hw/display/vhost-user-media-pci.c
-+++ b/hw/display/vhost-user-media-pci.c
-@@ -13,12 +13,18 @@
- #include "hw/virtio/vhost-user-media.h"
- #include "hw/virtio/virtio-pci.h"
- 
-+/* BAR 2 is used for the shared memory region exposed to the guest */
-+#define VIRTIO_MEDIA_PCI_SHM_BAR 2
-+
-+#define VIRTIO_MEDIA_PCI_SHMCAP_ID_SHM 0
-+
- #define TYPE_VHOST_USER_MEDIA_PCI "vhost-user-media-pci-base"
- OBJECT_DECLARE_SIMPLE_TYPE(VHostUserMEDIAPCI, VHOST_USER_MEDIA_PCI)
- 
- struct VHostUserMEDIAPCI {
-     VirtIOPCIProxy parent_obj;
-     VHostUserMEDIA vdev;
-+    MemoryRegion shmbar;
- };
- 
- static const Property vumedia_pci_properties[] = {
-@@ -32,14 +38,43 @@ static void vumedia_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
-     VHostUserMEDIAPCI *dev = VHOST_USER_MEDIA_PCI(vpci_dev);
-     DeviceState *dev_state = DEVICE(&dev->vdev);
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
-+    VirtioSharedMemory *shmem;
-+    uint64_t shm_size;
- 
-     if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
-         vpci_dev->nvectors = 1;
-     }
- 
-+    if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
-+        error_setg(errp, "modern-pio-notify is not supported due to PCI BAR "
-+                         "layout limitations");
-+        return;
-+    }
-+
-     if (!qdev_realize(dev_state, BUS(&vpci_dev->bus), errp)) {
-         return;
-     }
-+
-+    shmem = virtio_find_shmem_region(vdev, VIRTIO_MEDIA_PCI_SHMCAP_ID_SHM);
-+    if (!shmem) {
-+        error_setg(errp, "vhost-user-media: missing shared memory region");
-+        return;
-+    }
-+    shm_size = memory_region_size(&shmem->mr);
-+
-+    memory_region_init(&dev->shmbar, OBJECT(vpci_dev),
-+                       "vhost-media-pci-shmbar", shm_size);
-+    memory_region_add_subregion(&dev->shmbar, 0, &shmem->mr);
-+    virtio_pci_add_shm_cap(vpci_dev, VIRTIO_MEDIA_PCI_SHM_BAR, 0,
-+                           shm_size, VIRTIO_MEDIA_PCI_SHMCAP_ID_SHM);
-+
-+    /* After 'realized' so the memory region exists */
-+    pci_register_bar(&vpci_dev->pci_dev, VIRTIO_MEDIA_PCI_SHM_BAR,
-+                     PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                     PCI_BASE_ADDRESS_MEM_PREFETCH |
-+                     PCI_BASE_ADDRESS_MEM_TYPE_64,
-+                     &dev->shmbar);
- }
- 
- static void vumedia_pci_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/vhost-user-media.c b/hw/display/vhost-user-media.c
-index 14edc7c668..eaf99dc6a2 100644
---- a/hw/display/vhost-user-media.c
-+++ b/hw/display/vhost-user-media.c
-@@ -19,6 +19,7 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/vhost-user-media.h"
-+#include "migration/blocker.h"
- 
- static const int feature_bits[] = {
-     VIRTIO_F_VERSION_1,
-@@ -259,8 +260,9 @@ static void vu_media_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostUserMEDIA *media = VHOST_USER_MEDIA(dev);
-+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-     struct vhost_virtqueue *vhost_vqs;
--    int ret;
-+    int ret, nregions;
- 
-     if (!media->conf.chardev.chr) {
-         error_setg(errp, "vhost-user-media: chardev is mandatory");
-@@ -290,9 +292,47 @@ static void vu_media_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    ret = media->vhost_dev.vhost_ops->vhost_get_shmem_config(&media->vhost_dev,
-+                                                             &nregions,
-+                                                             memory_sizes,
-+                                                             errp);
-+    if (ret < 0) {
-+        goto q_fail;
-+    }
-+
-+    if (!nregions || !memory_sizes[0]) {
-+        error_setg(errp, "vhost-user-media: backend did not provide "
-+                         "shared memory region 0");
-+        goto q_fail;
-+    }
-+
-+    if (memory_sizes[0] % qemu_real_host_page_size() != 0) {
-+        error_setg(errp, "shared memory region 0 size must be a multiple "
-+                         "of the host page size");
-+        goto q_fail;
-+    }
-+
-+    if (media->vhost_dev.migration_blocker == NULL) {
-+        error_setg(&media->vhost_dev.migration_blocker,
-+                   "Migration disabled: devices with VIRTIO Shared Memory "
-+                   "Regions do not support migration yet.");
-+        ret = migrate_add_blocker_normal(&media->vhost_dev.migration_blocker,
-+                                         errp);
-+        if (ret < 0) {
-+            goto q_fail;
-+        }
-+    }
-+
-+    virtio_new_shmem_region(vdev, 0, memory_sizes[0]);
-+
-     qemu_chr_fe_set_handlers(&media->conf.chardev, NULL,
-                              NULL, vu_media_event,
-                              NULL, (void *)dev, NULL, true);
-+    return;
-+
-+q_fail:
-+    vhost_dev_cleanup(&media->vhost_dev);
-+    do_vhost_user_cleanup(vdev, media, vhost_vqs);
- }
- 
- static void vu_media_device_unrealize(DeviceState *dev)
--- 
-MST
+Another instance of "text that refers to arguments should probably go
+below the argument descriptions", and again leaving for later.
 
 
