@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9172CC88E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCA6C88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xBO-00082U-PG; Fri, 11 Sep 2026 05:04:30 -0400
+	id 1x4xAo-00055L-OZ; Fri, 11 Sep 2026 05:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xB1-0006XI-Mv
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA1-0003nB-I8
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAz-0008R6-Fv
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA0-0008GO-4p
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117444;
+ s=mimecast20190719; t=1789117383;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=KaGnA6790D1crogtaW20lAmdvIS1bCL1ahQfy0qBOJg=;
- b=Uuzk8cdtI92OvL3RUbfRdDFw+n0nNEBXyh2JLTo3SfYLUztM4nNNcmGJ/Jk4nxy/eF2H04
- 1nBKGOchW2T1yXWCJyvPQx56UbNknNOstRWPmZGWvikB0XhUDqvILifK2YWAf/BBVAHDR6
- b9Chbkg7dccYmHDKdvUD/76j4r7z8uI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XBW41WApnawDSx9a8mqXcCXFaaQqc3qyywi8ob8BaOU=;
+ b=N7lUkNnra/ZTSZenYg36zh7m1qE8dl/sgxz37nTSXkm1PkRb9z/MIck4KNIwJtoTpCB+mg
+ WAmRFFL52vnV7BFhZ/eL1xPQPchG52+Xsy/bQhknci7u2jdOsm8Exre+IpOupa1PHH4Ozj
+ wqCJaFNSqPmJJ94rSGmL4sKWh2SpqMo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-g_YeLaZLPeyZopd9ZPgA2g-1; Fri, 11 Sep 2026 05:04:03 -0400
-X-MC-Unique: g_YeLaZLPeyZopd9ZPgA2g-1
-X-Mimecast-MFC-AGG-ID: g_YeLaZLPeyZopd9ZPgA2g_1789117442
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e6683d48fso1187505e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:04:02 -0700 (PDT)
+ us-mta-261-qCfWmE33NN-iZfBPu0Vchw-1; Fri, 11 Sep 2026 05:03:02 -0400
+X-MC-Unique: qCfWmE33NN-iZfBPu0Vchw-1
+X-Mimecast-MFC-AGG-ID: qCfWmE33NN-iZfBPu0Vchw_1789117381
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49d0ae342b9so5183735e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117442; x=1789722242; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117381; x=1789722181; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=KaGnA6790D1crogtaW20lAmdvIS1bCL1ahQfy0qBOJg=;
- b=VYrjE0rb8SwIFu6dUg/aAL2scZWSr9XB2MG1IWupXGUATZlvrA8awtBrOhP0akqkBm
- NthD0XpIsvmKIT0uA9zcq1a5YlrwjpQPK69zvNlSjnKhUuu9t0FSE6/UxUpepCHupW3/
- IX0XG0xq2MNkVisoDzUa/mfsf1+zXxy7A8QI3uvHFzii8BbfRXu6XjzfU+UFW2LhLxt0
- +w6wVUHP1SAye3m+WOnO+kz06e5NVgCnahinmdedDt/viB4HpXFFXM3maOx8ojuUlOzn
- yGun98CGLKAvdTX0jvM1rnCiH6wwej2G+49pGbbyREsJL+Sp+DRjuCbOB+v41p7r/ux7
- XTxA==
+ bh=XBW41WApnawDSx9a8mqXcCXFaaQqc3qyywi8ob8BaOU=;
+ b=B5JDkwdHBoAWGEPlc6hITbIDsFgXR+oyIguuELk77Lb8VjFLz9vT51xIPk4A3Me6px
+ J+la4FyyAh/udLm3rdaDhNfS41vBbk/yfP8ZY5/6DpZXX2xgWhNUtnEmC4zlzFE5if6X
+ WLqTVeUyWfIvIf3koEwaM6I3BU0Epzvozw27km0S/dBBVjU9SA0KO+Zd7slRw/KvsTPd
+ EwLs8bfdU3YSzMqS+Z/6N8DFcPoSJK81WIHu6GELdB4PYjLOtaD/MMPoxCXchnMYwCMo
+ IWj5o6D92nAAlff+bekSVoaRHatL/v1pfkuAekz65+lVAziPcqOVVp6cx1G6iBi/kFxk
+ gk6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117442; x=1789722242;
+ d=1e100.net; s=20251104; t=1789117381; x=1789722181;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=KaGnA6790D1crogtaW20lAmdvIS1bCL1ahQfy0qBOJg=;
- b=HqS9ouotDja4Hb48nFeeHhKsRRZk9F48PGC9n/iYHXYjT/liZhC6/y6xSAMv26qtS1
- EnsZLlzvmqWU8hOffeXkbne0VNdI+9xRF0Sn1JxxxaEhL6rbbM7ZsuxCcbuWuDkccyYh
- 7+gR7J/K2foeBomqSdgDxZxEzPExuABr1NhQmQFiuq4vnvbeciGOEKxiuN1T8cw8VgW5
- /7DZ9ojtEpg01Jd+vf7Yza5bwpVtyAwCEdaZvmNnsMG55EdGz7kL5+nZpjBRYaq2spW/
- mSvQESccf3xjZ+Pi2sIESgJYHziiGYAAiItxjF738Bnq84Gg840uA1wBtOMzcKoY1jDQ
- /acw==
-X-Gm-Message-State: AFuF++mv4eSky67RCzbvsD1/hkuOGOSAMP7w83+5crVgD3yk/IorMDi6
- RwPiTIT18DT7vLlEAm/n5+Xb19huTmGf2oGAJPtmtu6a30b+kBxkPm23U5sZMKBZ+LAbS+ZyNQ8
- sN4NLVXsX/Ly1hyU0/hVv1NsXdXZBWdK29z+p0gJL+wXGQK8dVT+OamIEBU6uWEKH1sfA7ndEoW
- iM/xVjQGz9XSpFitwW+nueo4ex3RPHCzPwjQ==
-X-Gm-Gg: AYBFou2SUV0VrLiBSnsGsVqSNE7JiPDHt4383FvOD1ILpi0gAC+qIt+m8fEXanNAjPj
- sYLjAe+prtRJb4450MDoBtPuYcmY7ahylxT9M2dZFs1CAsXt4/KoW5ipJrdSeIhbV+SWnaamVgj
- BlzBURa8cizTO2MQKJdmbrHaev6exJIXm1QLNYYAsOLyfivxQ7enxeMPs0iyTmCZjdlEPTpYJlR
- zcskmgC2dQstsRg6CMlieo6c5T0hIRBr5xnOKFpXT6Fs8HtSvYn329mnORHpP6rfl5FR33cnacZ
- 8dboUZf2XFDgLCTYvTjjF6Nq8AjLcL+DsltbkbQFO+74DQNpmLktGIqHr4elGgMpVlgUT3k91JJ
- roGh3Q7DCoKIYF3zSupKxqcU=
-X-Received: by 2002:a05:600c:3145:b0:49c:fc6e:8cae with SMTP id
- 5b1f17b1804b1-49e619bbca8mr32818185e9.18.1789117441734; 
- Fri, 11 Sep 2026 02:04:01 -0700 (PDT)
-X-Received: by 2002:a05:600c:3145:b0:49c:fc6e:8cae with SMTP id
- 5b1f17b1804b1-49e619bbca8mr32817485e9.18.1789117441165; 
- Fri, 11 Sep 2026 02:04:01 -0700 (PDT)
+ bh=XBW41WApnawDSx9a8mqXcCXFaaQqc3qyywi8ob8BaOU=;
+ b=BI1/rKIEbyf0YgMEpoLsyHc9AzeXJEXp0Xx2aYaECq0yPjTTuY0KRCPdEvWLEFudir
+ fdFIknqHE4CMw7AB6uKfarh3zaQq0Fu/zy2JpL/NysEWDQbnUZcg+/TAc2GRv1OwtAAf
+ z1u7CfOkqUiv6o+u9ONpd1jhq36MoNDe62zArOGTNFxLWaesFGv0prRkHkzhsXd/DNyk
+ PprF27c1MqKoqfVA85JL+1fmsOktrnQklF6pR1mDsdc0oZdxm7lMlAcCftJ26VBBy9PI
+ 8PBgAf+Ru5OW5lQ9LmoTtI+sEvtGfiKf41VKgo/SDiAmBy7uZJJYtoMGn+exdlUvygtc
+ Ny4A==
+X-Gm-Message-State: AFuF++kwu9Ql2+tYJuFSS/q4RTZMx9MS7rGhaR4pS8lAmAeLNr2YDID3
+ biH/lh9WplYphFDS60WBaLX4GQGfYa3tBEPea3XOkISbwOoUGJgvpyvUtTXhlCSHvB/j22KQvB/
+ NQqK1wd+9C2CdyLdzlgA0Z4F/Ga52fGYBTY4o3b2cZ7vVf7JcE7JjHPp/BzKCEkUZk6VTkI37Di
+ LOedi/VeHcFNPwMYGbe7keN2+BiGSntXkkIQ==
+X-Gm-Gg: AYBFou3yWf9ZyAwmRZ5aenfJ32JJ9DfBDzSvH98IGvoKq0HapGrm/CEYoG/Oueu9Vo0
+ 8zM5DwkF0pON7Pw26a3krSy311FdPOdYwXpR4ceQWBGPLU/e42e5jOPCl3IxDOEeWV+smbKIDEQ
+ BJNo7NLyZmxqIjecxqg2m6gW1UdgwtxY83jx80wL4dUTuvKWscMbgb4LWZAMK0e+S8quFl/794/
+ PVMrseh4rbi6v9wK5ur1u+GL9hJRK5dAi7ebupxBFb76ZMc4WDeW+oeNQGUb08gK+PPXcsuvOxZ
+ qhJatcOd3qQiMregzYK4O6EsKAE//lsYKE+MMg6BTm7gcntx0rrtJCdl3Tnd51KmyFs3HAtVJCi
+ IMdn/1fyRe0m7CgW9cHO2ux8=
+X-Received: by 2002:a05:600c:4703:b0:49c:fc6e:a3d7 with SMTP id
+ 5b1f17b1804b1-49e619bfdd3mr31900385e9.22.1789117380724; 
+ Fri, 11 Sep 2026 02:03:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:4703:b0:49c:fc6e:a3d7 with SMTP id
+ 5b1f17b1804b1-49e619bfdd3mr31899625e9.22.1789117380148; 
+ Fri, 11 Sep 2026 02:03:00 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e6221963dsm30230865e9.2.2026.09.11.02.04.00
+ 5b1f17b1804b1-49e636f7fa2sm38792325e9.15.2026.09.11.02.02.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:04:00 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:59 -0400
+ Fri, 11 Sep 2026 02:02:59 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:02:58 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Weimin Xiong <xiongwm2026@163.com>, Jason Wang <jasowangio@gmail.com>
-Subject: [PULL v2 66/75] net/tap-solaris: Fix resource leaks on error paths
-Message-ID: <44345a8a5f03f459ce6ff81b14ece81afd9c90d5.1789117222.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Alyssa Ross <hi@alyssa.is>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL v2 42/75] vhost-user.rst: fix typo
+Message-ID: <1a166f44eef46b9ca46f5950526c2ee79f1e019d.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,153 +123,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Weimin Xiong <xiongwm2026@163.com>
+From: Alyssa Ross <hi@alyssa.is>
+
+The protocol feature is named SHMEM.  SHMEM_MAP is one of the
+requests.
+
+Fixes: 588acb45c2 ("vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec")
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260804121000.444745-3-hi@alyssa.is>
 ---
- net/tap-solaris.c | 69 ++++++++++++++++++++++++++++++++---------------
- 1 file changed, 48 insertions(+), 21 deletions(-)
+ docs/interop/vhost-user.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-index 8704b1084b..2c6c7af15e 100644
---- a/net/tap-solaris.c
-+++ b/net/tap-solaris.c
-@@ -60,8 +60,6 @@ ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen)
-  */
- static int tap_alloc(char *dev, size_t dev_size, Error **errp)
- {
--    /* FIXME leaks like a sieve on error paths */
--    /* FIXME suspicious: many errors are reported, then ignored */
-     int tap_fd, if_fd, ppa = -1;
-     static int ip_fd = 0;
-     char *ptr;
-@@ -102,45 +100,61 @@ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
-     strioc_ppa.ic_timout = 0;
-     strioc_ppa.ic_len = sizeof(ppa);
-     strioc_ppa.ic_dp = (char *)&ppa;
--    if ((ppa = ioctl (tap_fd, I_STR, &strioc_ppa)) < 0)
-+    if ((ppa = ioctl (tap_fd, I_STR, &strioc_ppa)) < 0) {
-         error_report("Can't assign new interface");
-+        goto fail_tap_fd;
-+    }
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index ae8c7ed995..fbfb9d01c6 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -1158,7 +1158,7 @@ Protocol features
+   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
+   #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
+   #define VHOST_USER_PROTOCOL_F_GPA_ADDRESSES           21
+-  #define VHOST_USER_PROTOCOL_F_SHMEM_MAP               22
++  #define VHOST_USER_PROTOCOL_F_SHMEM                   22
  
-     if_fd = RETRY_ON_EINTR(open("/dev/tap", O_RDWR, 0));
-     if (if_fd < 0) {
-         error_setg_file_open(errp, errno, "/dev/tap");
--        return -1;
-+        goto fail_tap_fd;
-     }
-     if(ioctl(if_fd, I_PUSH, "ip") < 0){
-         error_setg(errp, "Can't push IP module");
--        return -1;
-+        goto fail_if_fd;
-     }
- 
--    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0)
-+    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0) {
-         error_report("Can't get flags");
-+        goto fail_if_fd;
-+    }
- 
--    snprintf (actual_name, 32, "tap%d", ppa);
-+    snprintf(actual_name, 32, "tap%d", ppa);
-     pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
- 
-     ifr.lifr_ppa = ppa;
--    /* Assign ppa according to the unit number returned by tun device */
--
--    if (ioctl (if_fd, SIOCSLIFNAME, &ifr) < 0)
-+    if (ioctl(if_fd, SIOCSLIFNAME, &ifr) < 0) {
-         error_report("Can't set PPA %d", ppa);
--    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) <0)
-+        goto fail_if_fd;
-+    }
-+
-+    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0) {
-         error_report("Can't get flags");
-+        goto fail_if_fd;
-+    }
-+
-     /* Push arp module to if_fd */
--    if (ioctl (if_fd, I_PUSH, "arp") < 0)
-+    if (ioctl(if_fd, I_PUSH, "arp") < 0) {
-         error_report("Can't push ARP module (2)");
-+        goto fail_if_fd;
-+    }
- 
-     /* Push arp module to ip_fd */
--    if (ioctl (ip_fd, I_POP, NULL) < 0)
-+    if (ioctl(ip_fd, I_POP, NULL) < 0) {
-         error_report("I_POP failed");
--    if (ioctl (ip_fd, I_PUSH, "arp") < 0)
-+        goto fail_if_fd;
-+    }
-+    if (ioctl(ip_fd, I_PUSH, "arp") < 0) {
-         error_report("Can't push ARP module (3)");
-+        goto fail_if_fd;
-+    }
-     /* Open arp_fd */
-     arp_fd = RETRY_ON_EINTR(open("/dev/tap", O_RDWR, 0));
--    if (arp_fd < 0)
-+    if (arp_fd < 0) {
-         error_report("Can't open %s", "/dev/tap");
-+        goto fail_if_fd;
-+    }
- 
-     /* Set ifname to arp */
-     strioc_if.ic_cmd = SIOCSLIFNAME;
-@@ -149,32 +163,45 @@ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
-     strioc_if.ic_dp = (char *)&ifr;
-     if (ioctl(arp_fd, I_STR, &strioc_if) < 0){
-         error_report("Can't set ifname to arp");
-+        goto fail_arp_fd;
-     }
- 
-     if((ip_muxid = ioctl(ip_fd, I_LINK, if_fd)) < 0){
-         error_setg(errp, "Can't link TAP device to IP");
--        return -1;
-+        goto fail_arp_fd;
-     }
- 
--    if ((arp_muxid = ioctl (ip_fd, link_type, arp_fd)) < 0)
-+    if ((arp_muxid = ioctl(ip_fd, link_type, arp_fd)) < 0) {
-         error_report("Can't link TAP device to ARP");
-+        goto fail_ip_muxid;
-+    }
- 
--    close (if_fd);
-+    close(if_fd);
- 
-     memset(&ifr, 0x0, sizeof(ifr));
-     pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
-     ifr.lifr_ip_muxid  = ip_muxid;
-     ifr.lifr_arp_muxid = arp_muxid;
- 
--    if (ioctl (ip_fd, SIOCSLIFMUXID, &ifr) < 0)
-+    if (ioctl(ip_fd, SIOCSLIFMUXID, &ifr) < 0)
-     {
--      ioctl (ip_fd, I_PUNLINK , arp_muxid);
--      ioctl (ip_fd, I_PUNLINK, ip_muxid);
-+      ioctl(ip_fd, I_PUNLINK, arp_muxid);
-+      ioctl(ip_fd, I_PUNLINK, ip_muxid);
-       error_report("Can't set multiplexor id");
-     }
- 
-     snprintf(dev, dev_size, "tap%d", ppa);
-     return tap_fd;
-+
-+fail_ip_muxid:
-+    ioctl(ip_fd, I_PUNLINK, ip_muxid);
-+fail_arp_fd:
-+    close(arp_fd);
-+fail_if_fd:
-+    close(if_fd);
-+fail_tap_fd:
-+    close(tap_fd);
-+    return -1;
- }
- 
- int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+ Front-end message types
+ -----------------------
 -- 
 MST
 
