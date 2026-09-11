@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B112C88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBF3C88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xAs-0005XP-5Z; Fri, 11 Sep 2026 05:03:58 -0400
+	id 1x4xAv-0005qj-9K; Fri, 11 Sep 2026 05:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA7-0003v8-I9
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAI-0004I3-NV
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA4-0008Go-IY
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAG-0008IH-K6
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117387;
+ s=mimecast20190719; t=1789117399;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DD7zxYroH7IaX3wIfwdVw0uNvZf16+MQiMTQFIYE/+w=;
- b=T0lvbqzZlj7AZFYWl/iiXS9sOU5PbhZm1W98Bjl74vV/yYZ6srWLYvZDefgDYmIOZ0Wwg4
- qA6U9hsmM+4HVvmgzQqbzn/iL4H5ZH6OAWYYgD5uSgIjZ0gosvt7wVOCIbkDxGB66q2XVc
- Tz8OQMY8/t2wZzpNpsbVO56+4jEt2Ck=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PWQxLCtaF9Z/qhP7GNgCPFbg0LbmSSJO7NpN+DpDut8=;
+ b=S7rYXnPBvvGsMLWdGNRhKO/Dr2nZ5AWVfi5nbUhw6f1LM8hkAw0cg17P7lALybX5akWmSd
+ 3DQH4D/khEEAsucGHIBlRCZEETGC+g/uXbHlq8n0TGVsF3JNYYWahD7QHiZQazV/sJMJPn
+ oxeK1d6EBP5p4YSSswa8QzSX8+HA6hY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-e35dekjcPl-CPvn32NUsdA-1; Fri, 11 Sep 2026 05:03:04 -0400
-X-MC-Unique: e35dekjcPl-CPvn32NUsdA-1
-X-Mimecast-MFC-AGG-ID: e35dekjcPl-CPvn32NUsdA_1789117383
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e6683d48fso1174505e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:04 -0700 (PDT)
+ us-mta-227-k2vySDC3OZulp23l022kQw-1; Fri, 11 Sep 2026 05:03:18 -0400
+X-MC-Unique: k2vySDC3OZulp23l022kQw-1
+X-Mimecast-MFC-AGG-ID: k2vySDC3OZulp23l022kQw_1789117397
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so5965195e9.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117383; x=1789722183; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117397; x=1789722197; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=DD7zxYroH7IaX3wIfwdVw0uNvZf16+MQiMTQFIYE/+w=;
- b=dKOnENMJeikD1qTfJSLdsri/bhh9ryEW6hA+4vbQ7M0EbbW+Vh54dCqjv6EbaMvqZ2
- br55h//PXELY0V42+sTgzkeNGVMxEUgYv8TmLsc+qx1nRTiB9+q8Awr/g7pfudxeatvw
- apuYjE0KGy7Pbyj6uzZRpIMnqVHt1UO6cCQEHbLHxk3gM5053FfcASZp+RLxHRMdpm3w
- Iliov40Tn+qKvDaXHPKZ6GiqR7Zn/GoekbchVvqT8Vvu/JqC7Vidb4s9X2kETWIDW7G0
- rjh3hFpq/l+88xr/D93pwfzXVjfEOR6MKAixAn/LixJliGdTqnCS3oiRT4e/4PeVCE0H
- vUxQ==
+ bh=PWQxLCtaF9Z/qhP7GNgCPFbg0LbmSSJO7NpN+DpDut8=;
+ b=h9AWcvLVnEJHKJitR2dVAZlSwliADp89SH0FFYmhpSny5q8aLv2M2jDaiuFyJkIhJJ
+ BQEUck7lTys3tg9CieQ5jA+bi7jGTrEqufzl5ZSJxUuCMOoY8kFjv7j2swcEPbUKZS6Z
+ Zrn9fu+fcrODilQ+t8PGDOq0Iqj1daJMyKGNxepC7nyrByn3oBfm1oKiGIs6uo9QIZJU
+ Nk19/dqq7nDa+OIwWt6N/kP/nypUZhnxZQ0adlaPqvezS2hdR54QHLoJzd23XmlW7aP2
+ ljaKyFvabWd0ayD741DyCoceEhmU2nCvMeBs/CYc7nWlcKQnMbX/2Yz8U3Ki2jjcPFUm
+ 7qZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117383; x=1789722183;
+ d=1e100.net; s=20251104; t=1789117397; x=1789722197;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DD7zxYroH7IaX3wIfwdVw0uNvZf16+MQiMTQFIYE/+w=;
- b=k7wPo0dNcsj31GJs7OoIgTTKx/pdGY37QvI2SAtDkEITgarRbyol+/S16OObtlhh/U
- dbnMi31jDB+Piw1ximMMmiICvOp7ofP9l9vp5ZOSY0JVjkG1ZO54bU3WXpt6aWQ72yvo
- ccgwZ+3mJcnruGuQONeJCZcCuVU6MvVSDz5H0m5UYJrdCh9SBRlJyHfcd4N2gk4M874v
- 7mVzXPJvz8CF7E+4sqEGPo+g7DEg5Jpwf+vwBRwP1QglXP8j8cdX5XqUzuGZh/zp73L8
- 4Oddn/y7VygQY59A+QoT3olTQhHg1VGlX4CL+Gmh38xdyaBwWYuCqmxIhGsvAN8iB4Nc
- TPcg==
-X-Gm-Message-State: AFuF++m42z0DYXuI2w+I4PWkGBIcBBmUnyED02m1Qch7mf+wwXDPRG5p
- FjKXbFKYeGHtGOjp2sWzS9CwM3ulmz9ipiRO7kmfBzsm0/yuxjP6tw0zkoZbiLfYDnge8h7hZ4W
- HUhhnxhIv/9M02Ut1cT3zBqjihmEiT0qoB0K9TNOd2Tdgb8k75eBbPNrqYkwawK+jI4KaXFOOge
- tyLvWYTpNJ3qjd+tLgOhXLaMFFMTfTivTpZQ==
-X-Gm-Gg: AYBFou3JUdndLhb6KZC1JLK3FT5OxX4t8OwVQbgKLpog/Nb7O9ONLnxT4y8IA6w/Abx
- ygaaNzupq2cI4g5H8QEblyseTI+gOKybUHoN5uFDT092Y5riiroJCDo+Ijc+xs+dCdXGZfKvAig
- D0fa8ICYzU+inUwNGGmeCkVus/6BWdzNUMitZ4SlyRyUoy8594LolT01KQJWv+pyN7fApy8IYod
- 2KMZbMkB/y/PEiZIQq8GaCVKLl9L2B6oeJRlW1WPTkDXOKe/42vA9Z5erEx2FLV8HrERaMnGAo/
- uTnlj+caiRRb6jYhJfj6O6+4z+iD04+zQCJkLnZTi5BqsS/ZgVYoaBWN8o8kbuFwuP+lY+6rxza
- UmKGoTGfNShSgSW6fQEHSc5Y=
-X-Received: by 2002:a05:600c:3b90:b0:49d:16df:8521 with SMTP id
- 5b1f17b1804b1-49e619805f1mr34603305e9.4.1789117383072; 
- Fri, 11 Sep 2026 02:03:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b90:b0:49d:16df:8521 with SMTP id
- 5b1f17b1804b1-49e619805f1mr34602545e9.4.1789117382371; 
- Fri, 11 Sep 2026 02:03:02 -0700 (PDT)
+ bh=PWQxLCtaF9Z/qhP7GNgCPFbg0LbmSSJO7NpN+DpDut8=;
+ b=MSGxohPWsPn9DQJbzp2r3rVFnumtkwynIl+kRg56EBtAZzaeDTWoODth7aCTm+YAPE
+ ba5SPvuq+Hq0KjgTioPvzbDLPd12DvNVkCj31E2+qHaLpfJk1NiLLEkjmMngLnzXf0hk
+ r+RUipr+RHFVmpgsj86NGAfeszObb5uCBGNRDnD8BycF7lO7atmVpKG1r0cT/XwH2xcn
+ wXDLlIccw+tOxVi3wVznF3NEsx37yC5iQT74wPVAhVVyer/eLKbCYaudINHb1xY9SXNg
+ vYUqv49GLf4GCuK7ooJdHD50z3P2FuRgZM2neXhYsCIpKuPXJ/wTyuqL3U/tMdbLY+ve
+ LvHg==
+X-Gm-Message-State: AFuF++k5Ozrzeej5A0N40r6g5vtAfopwTiZtS5ajjsk3VgB0WFREzQY9
+ +OE2mubYVUd6X9x/oFYrLsPzBMbCIgKHNqiv3lXuuXm+04gfPCVEJLYlto+Ce5CuTXGIk+QPWWs
+ 9P4HiSDnshUMIFmQQemYQy+eMGrGjdEihe50sStkTPw0WqdGuH6pqIARbR87LddGt9+FiyNzSMM
+ 438PE+d7mQG6DcweD2V1PsF2ls7w==
+X-Gm-Gg: AYBFou3+yjpZagDGD+QoisPe+QpuyFoNvF+/vP5aOIeodLebTZIf8lSHgGmMB6hRhnO
+ NjYwn76adIv/kzDzv32tadAeW3Ho46E8UEP3KR3mMMnpo099hZMFLV3s+7cp3wh9M6vDp2P9ebq
+ WjuZRnbpdiULmag2q0V5gR3RpJ2QZ22xCAFp/ZFWtMxVackKcAUvyhaVQhiFE4lWnnXWZBuIiID
+ AXNirEU3LDRzo0/VNNrrO0Fpc2OnS9hbAr5ha7sH+zCGw8XbEpvjQUUxX+JcB1hvg23IVJMCowy
+ H41FgKd5LZlQWyEPF239XX8Xr+u+pk7HeBGF3rbyIu5/aRhP257IlBRa2SEDPxNO
+X-Received: by 2002:a05:600c:6296:b0:49d:191b:88be with SMTP id
+ 5b1f17b1804b1-49e6164a26dmr34354095e9.0.1789117395134; 
+ Fri, 11 Sep 2026 02:03:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:6296:b0:49d:191b:88be with SMTP id
+ 5b1f17b1804b1-49e6164a26dmr34353445e9.0.1789117394459; 
+ Fri, 11 Sep 2026 02:03:14 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e60946249sm69492385e9.0.2026.09.11.02.03.01
+ 5b1f17b1804b1-49d26be3e35sm134873165e9.2.2026.09.11.02.03.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:01 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:00 -0400
+ Fri, 11 Sep 2026 02:03:14 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:03:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Xiong Weimin <xiongweimin@kylinos.cn>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL v2 43/75] hw/virtio: Propagate vhost_virtqueue_mask errors
-Message-ID: <4692630d1859603ad16ba46c9994d85f259adc12.1789117222.git.mst@redhat.com>
+ Sairaj Kodilkar <sarunkod@amd.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Subject: [PULL v2 48/75] acpi_build: Build IVRS feature report using extended
+ feature register
+Message-ID: <7dbb1e91e35020245c24e5d911e00cce2a7bac1c.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,84 +123,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiong Weimin <xiongweimin@kylinos.cn>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-vhost_virtqueue_mask() currently reports failures from
-vhost_set_vring_call() but always returns void, so callers cannot
-react.  In particular, vhost_virtqueue_start() has a TODO next to the
-unmask call when !use_guest_notifier_mask.
+Currently IVRS feature report values are hardcoded, this is difficult to
+maintain as any updates to extended feature must be synced. Along with
+it, current feature report does not have GATS and HATS set. Hence use
+the extended feature registers to build the IVRS feature report.
 
-Make vhost_virtqueue_mask() return the underlying errno, and on failure
-in vhost_virtqueue_start() jump to the existing fail path which unmaps
-the vring and propagates the error to the device start caller.  Other
-call sites keep today's behavior by ignoring the return value.
-
-Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807024359.2157914-1-xiongweimin@kylinos.cn>
+Message-ID: <20260807061250.27739-6-sarunkod@amd.com>
 ---
- include/hw/virtio/vhost.h |  9 ++++++---
- hw/virtio/vhost.c         | 10 +++++++---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ hw/i386/amd_iommu.h  | 11 ++++++++++
+ hw/i386/acpi-build.c | 48 +++++++++++++++++++++++++++++++++-----------
+ 2 files changed, 47 insertions(+), 12 deletions(-)
 
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 684bafcaad..3db56433b6 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -310,10 +310,13 @@ void vhost_dev_set_config_notifier(struct vhost_dev *dev,
-  */
- bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index d01f9b41df..319db18618 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -174,7 +174,11 @@
+ #define AMDVI_DTE_QUAD3_RESERVED        (GENMASK64(14, 0) | GENMASK64(53, 48))
  
--/* Mask/unmask events from this vq.
-+/**
-+ * vhost_virtqueue_mask(): mask/unmask events from this vq.
+ /* AMDVI paging mode */
++#define AMDVI_GATS_MODE_SHIFT           (12)
++#define AMDVI_GATS_MODE_MASK            (3ULL <<  12)
+ #define AMDVI_GATS_MODE                 (2ULL <<  12)
++#define AMDVI_HATS_MODE_SHIFT           (10)
++#define AMDVI_HATS_MODE_MASK            (3ULL <<  10)
+ #define AMDVI_HATS_MODE                 (2ULL <<  10)
+ #define AMDVI_HATS_MODE_RESERVED        (3ULL <<  10)
+ 
+@@ -296,6 +300,13 @@
+ #define AMDVI_DEV_LINT0_PASS_MASK       (1ULL << 62)
+ #define AMDVI_DEV_LINT1_PASS_MASK       (1ULL << 63)
+ 
++#define AMDVI_IVHD_FEATURE_REPORT_HATS_SHIFT        (30)
++#define AMDVI_IVHD_FEATURE_REPORT_GATS_SHIFT        (28)
++#define AMDVI_IVHD_FEATURE_REPORT_GA_SUP_SHIFT      (6)
++#define AMDVI_IVHD_FEATURE_REPORT_IA_SUP_SHIFT      (5)
++#define AMDVI_IVHD_FEATURE_REPORT_GT_SUP_SHIFT      (2)
++#define AMDVI_IVHD_FEATURE_REPORT_XT_SUP_SHIFT      (0)
++
+ #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
+ OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
+ 
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index a28bb2ec63..7bf3858b63 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1842,6 +1842,37 @@ ivrs_host_bridges(Object *obj, void *opaque)
+     return 0;
+ }
+ 
++/*
++ * IVHD type 0x10 reports features using Feature Reporting field, which has
++ * different format than extended feature register (EFR) in the IOMMU MMIO
++ * space.
 + *
-+ * Returns: 0 on success, a negative errno on failure.
-  */
--void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
--                          bool mask);
-+int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
-+                         bool mask);
++ * Convert the EFR format to feature reporting format.
++ */
++static uint32_t
++get_amd_ivhd_feature_report(uint64_t extended_feature)
++{
++    uint32_t feature_report;
++    uint64_t hats_mode = (extended_feature & AMDVI_HATS_MODE_MASK) >>
++                         AMDVI_HATS_MODE_SHIFT;
++    uint64_t gats_mode = (extended_feature & AMDVI_GATS_MODE_MASK) >>
++                         AMDVI_GATS_MODE_SHIFT;
++    uint32_t is_ia = !!(extended_feature & AMDVI_FEATURE_IA);
++    uint32_t is_ga = !!(extended_feature & AMDVI_FEATURE_GA);
++    uint32_t is_gt = !!(extended_feature & AMDVI_FEATURE_GT);
++    uint32_t is_xt = !!(extended_feature & AMDVI_FEATURE_XT);
++
++    feature_report =
++        hats_mode << AMDVI_IVHD_FEATURE_REPORT_HATS_SHIFT |  /* HATS[31:30] */
++        gats_mode << AMDVI_IVHD_FEATURE_REPORT_GATS_SHIFT |  /* GATS[29:28] */
++        is_ia << AMDVI_IVHD_FEATURE_REPORT_IA_SUP_SHIFT |    /* IASup[5]    */
++        is_ga << AMDVI_IVHD_FEATURE_REPORT_GA_SUP_SHIFT |    /* GASup[6]    */
++        is_gt << AMDVI_IVHD_FEATURE_REPORT_GT_SUP_SHIFT |    /* GTSup[2]    */
++        is_xt << AMDVI_IVHD_FEATURE_REPORT_XT_SUP_SHIFT;     /* XTSup[0]    */
++
++    return feature_report;
++}
++
+ static void
+ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+                 const char *oem_table_id)
+@@ -1850,8 +1881,8 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     GArray *ivhd_blob = g_array_new(false, true, 1);
+     AcpiTable table = { .sig = "IVRS", .rev = 1, .oem_id = oem_id,
+                         .oem_table_id = oem_table_id };
+-    uint64_t feature_report;
+     uint16_t iommu_devid = pci_get_bdf(&s->pci->dev);
++    uint64_t extended_feature = amdvi_extended_feature_register(s);
  
- /**
-  * vhost_get_features_ex() - sanitize the extended features set
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 371dca17dd..52ea142bd4 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1471,8 +1471,10 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-      * will do it later.
-      */
-     if (!vdev->use_guest_notifier_mask) {
--        /* TODO: check and handle errors. */
--        vhost_virtqueue_mask(dev, vdev, idx, false);
-+        r = vhost_virtqueue_mask(dev, vdev, idx, false);
-+        if (r < 0) {
-+            goto fail;
-+        }
+     acpi_table_begin(&table, table_data);
+     /* IVinfo - IO virtualization information common to all
+@@ -1924,14 +1955,9 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     /* IOMMU info */
+     build_append_int_noprefix(table_data, 0, 2);
+     /* IOMMU Feature Reporting */
+-    feature_report = (48UL << 30) | /* HATS   */
+-                     (48UL << 28) | /* GATS   */
+-                     (1UL << 2)   | /* GTSup  */
+-                     (1UL << 6);    /* GASup  */
+-    if (s->xtsup) {
+-        feature_report |= (1UL << 0); /* XTSup */
+-    }
+-    build_append_int_noprefix(table_data, feature_report, 4);
++    build_append_int_noprefix(table_data,
++                              get_amd_ivhd_feature_report(extended_feature),
++                              4);
+ 
+     /* IVHD entries as found above */
+     g_array_append_vals(table_data, ivhd_blob->data, ivhd_blob->len);
+@@ -1964,9 +1990,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+         build_append_int_noprefix(table_data, 0, 4);
      }
+     /* EFR Register Image */
+-    build_append_int_noprefix(table_data,
+-                              amdvi_extended_feature_register(s),
+-                              8);
++    build_append_int_noprefix(table_data, extended_feature, 8);
+     /* EFR Register Image 2 */
+     build_append_int_noprefix(table_data, 0, 8);
  
-     if (k->query_guest_notifiers &&
-@@ -1919,7 +1921,7 @@ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n)
- }
- 
- /* Mask/unmask events from this vq. */
--void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
-+int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
-                          bool mask)
- {
-     struct VirtQueue *vvq = virtio_get_queue(vdev, n);
-@@ -1940,7 +1942,9 @@ void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
-     r = hdev->vhost_ops->vhost_set_vring_call(hdev, &file);
-     if (r < 0) {
-         error_report("vhost_set_vring_call failed %d", -r);
-+        return r;
-     }
-+    return 0;
- }
- 
- bool vhost_config_pending(struct vhost_dev *hdev)
 -- 
 MST
 
