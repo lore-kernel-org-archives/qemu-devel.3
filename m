@@ -4,131 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8358C88E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 08:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7FCC79FA1
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 08:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4wNf-00043O-J9; Fri, 11 Sep 2026 04:13:08 -0400
+	id 1x4wTb-00070V-25; Fri, 11 Sep 2026 04:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1x4wNc-00041X-Rr
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:13:04 -0400
-Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
- ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x4wTV-0006wP-GS
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:19:09 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1x4wNb-0006fb-7q
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:13:04 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LCosyYKlNo0w67qNduzd0C4bLGkIRolXjzDz9vweq71hTTgqas8NN+y20tKnOOPzbQ0TKZvAnHvPUwfsgpDiLRReUKxcVQRCKNyGH7A8KbMx9elXr/uEQq+cAvOoLbhCnyeqLdAMNjlTG+xzk6EiGMZAaj1X3Q9HJSbkuKqQb6GJAlrTawyRROvVR44YG9QoqMkcJLYshI/ObACoIMIytFd6+RgQpjRQnqC/Ufpkt4mowj7YsjIzPeCULJlAjpM7J3lRxLqOugledQW5yiUE6vCv9o6/anDNAhPTCgO/2XWm6Oicwi9jjgdA0yuhuJzN2iMobWKPjTegCWIm/53gHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cmjADAzOLyU4l1Jgb/x0+ghg8oaLdpB9qi4tMIknWec=;
- b=wkl1Zfy6+sRMqEcai9fSpno+k3Tk2yyB/qTCT4suGZ3OqmA+0a9SgwsBShzq4uQxxv1wP86LDDYa4w8IYbtNUIOraHZWmH7Od2j2c8TlMq1+72VeryXZJgN1t783Q6vTml+tNRz3zRvdXOhd0WFnoueyd4DkJIYM8tUY+ervoY4YRUkYJZRnjLS3pf+12iZgGngExmdm1fXt1kQsiWTTXbxT17SOHfrac7An4TY/XPX8bkDk63m7QZfa1dfQ15rRQBIkL5Mo1BNa8RAc5RIm/Qmi+yYZA1/1LHbqDT5xb7P95jHEx/zTrjW1rpiQPaJ2UMZ9nB9DBPahLVzt8NKwBA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cmjADAzOLyU4l1Jgb/x0+ghg8oaLdpB9qi4tMIknWec=;
- b=MaVbvkW8lFC2XhT1SJca2xvdKzNMyjT7Gfap20F0R5YxT92J63gWuqJ1tUkkacdycPNeGd8JdwirprqIoe++ZdRPqhhVQ7Iz6OJxTzNc1/seM8BSEc+3J4NXoAC9ul5WKD7KW2llm0G9tAU5x/aGTDXXnbizxW/YZ0kmld40S2UURfU+sHIILuobTntja7WJWRh1hqWJsv/+4wPGapOpP6zEwUoLesAbkFoLtqwVYhKct3uIBTVnYktCtRISElsgCaQs8yVj+vDfFJQ90r3F7hNetTB0+D02Ek8k5jgWLsPct2To/AzdHLDnYjM17nuHIGXp9AQEhX917pIFY0GD3Q==
-Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
- by SJ2PR12MB8806.namprd12.prod.outlook.com (2603:10b6:a03:4d0::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
- 2026 08:12:57 +0000
-Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
- ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
- ([fe80::fe0a:6e6a:fe60:a43b%5]) with mapi id 15.21.0406.005; Fri, 11 Sep 2026
- 08:12:57 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Tushar Dave <tdave@nvidia.com>, "alex@shazbot.org" <alex@shazbot.org>,
- "clg@redhat.com" <clg@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: Jason Gunthorpe <jgg@nvidia.com>
-Subject: RE: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
-Thread-Topic: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
-Thread-Index: AQHdP6wq/k4Ssk17ZUOb6vIv4wYnNbbJC0FA
-Date: Fri, 11 Sep 2026 08:12:57 +0000
-Message-ID: <SJ0PR12MB86146CCB19E1BE23172667DCABBE2@SJ0PR12MB8614.namprd12.prod.outlook.com>
-References: <20260908160731.1658621-1-tdave@nvidia.com>
-In-Reply-To: <20260908160731.1658621-1-tdave@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|SJ2PR12MB8806:EE_
-x-ms-office365-filtering-correlation-id: 61b14407-c9b6-4696-6adf-08df0fdc7d33
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|1800799024|18002099003|22082099003|38070700021|11063799006|56012099006|10067099003;
-x-microsoft-antispam-message-info: WPCwzaJwNhwYDmfe4k3ga/G42HMO//9SRjbBFAGCNTyJmWnKmCcagGcw3/RDfNbrqdj2xIGEO9G5IZYrGSNCe63AZjOiAib2SIwrbpWhhozyyp5EcA3PcAqGucv3tgmpjIQU+Jed6QX019FUyZqYiVqbVDQ6BcdrCf0wo4f4ksciOJrVUEgiFKP6KcpWaI+84276gMvO/2bWp4nb8UhqryitbxR0k2tZhRHHqauDFFbKEywQU/DNW4JX3Twg40WjCUqg51NDuFoYe351tEGukezEI3KTAcC4MGlgwd109Faznkle5YIkZqDa9cOQHAL7LWtdtl8pQ6gTgvAP+UftLxKdE5ea+DelikKpB4uiWmUyQfmFRIKlMEUcfozoV/WcgB3uTwu4wBom/pESC9MSvzHrZ3QNeG9El/RACKgPwO8IYpBNiGxy6pMUs5oy+RBkrHuoBkS4shlwT/nrz1/EqhAe6R9CWzXdQTM7jLtaXxnSSoS4dYz7BZiQr+0ry7QCvitaR8IGHFBUBBQf/OoZv1JZanszAHh5kh0IrCbZwu60FuOB6PKsTNDjRsFGHqDVIjhp7509rLRdLg8u1rDcXHh233RkrPHCpfbdA4Av6QwYMIKjy9rsxuCM2V8+41zkA+zFkMfht/SEIBttNNqV/Hn8EtiSwNumRwwnaz1p0n3boJjLQSEfVmi+AzL2FMmQEhlI1+osAznl3Xyz8RaGKGea9jLEEB+Td2Nqp6aMKuI=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(18002099003)(22082099003)(38070700021)(11063799006)(56012099006)(10067099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?pYG34disD1QgflnGBykhwzICr1p638Az9tuy1epI7NMY8IGZBfBm0Cs3XQLG?=
- =?us-ascii?Q?zfZX7hVguW0kcEiRNTDhmBD51Z2CTEkD4BCBCwyTJ5bKZWENWWMLmITeGeCY?=
- =?us-ascii?Q?NnCaqN/KRXvqtJ4x0vmk5EaB2DL8JqQfDSR3WAecaAPAe3T/GK5cDphgwI4B?=
- =?us-ascii?Q?obHv2SjOaarp1pWGr3XHELe+NGTEGTHt67CUT3NzTkUXTZOSWJgiyZvz5kYF?=
- =?us-ascii?Q?+Ibhl4a288NlC8PT4vCdl5Bf93hHmYk01PQ+c7BZ6da478Ge8WQnp7n5SWV+?=
- =?us-ascii?Q?qKQ0JPnX6ypVtUgu/79OQVIzfzwNYQlsiuJqSsfNAzbCpgAhA3MDsPgPUwou?=
- =?us-ascii?Q?ulEViA9gyZAE0gwXHadQFITuwKfvATonYh9LlK5NX/P9ZsyO1mfHlx0StFOt?=
- =?us-ascii?Q?ZexLAh9w9gtlTKmaGmwKLFAljhhPjkRWmdr8ldZHiVOTN9pqWibsDpJbxWeJ?=
- =?us-ascii?Q?36IGdTsHgcupOYfmSUk95ufkAlUTUyirZTSPUJV09NfTAynnwPBUaf8InkeR?=
- =?us-ascii?Q?dyliCTSBkH46jM9Fr0xpnzQrViyVdXl0tTWwJgNZjOLTwd7A7Q4letPXnXwU?=
- =?us-ascii?Q?mHePQLsBnp4eHE7LeJnlSr4O8pTgQiGDHITZ2PJMjDJyDANudiI/KItxNWwe?=
- =?us-ascii?Q?97GVAHiaOTOW7N4wgEHcsc4YHOIxqlSOnfv/Rp3EbpPlveK0NNpjJTOuqTbi?=
- =?us-ascii?Q?Ir+hMlPtLrjv6P6WCgxB0YBkW6QItxTf1C5Bf3+QHSBo/wo14cUdjfUu4aSZ?=
- =?us-ascii?Q?jAL7Fiv5H4aRk845N/FyfGiGj6y57b7TWDYueBnTOWNYx+osqmNOU351DZdh?=
- =?us-ascii?Q?/iADJQbeg5tZAtVFvh6fZ0SDtByTOnPR2myMGMN9Dpf5ogNb8QLKh4B/INXt?=
- =?us-ascii?Q?6eLbDHmWxlHf4rxIUrl49PpM3cdlQXWFAs0iv73CFlXCf7u8GTzsTZh0YDXr?=
- =?us-ascii?Q?zTxzp8kA3mRpbhUmYcYIiv65eaZhQnEkUBlteHslsaQwyaSe8suYoYE6NNbi?=
- =?us-ascii?Q?ymZEMTCqPVBG612NJONHKBqvc2YL14pzVoEeZdr/4P+Z3swl7wRVpf1XMwyH?=
- =?us-ascii?Q?0/WCWdBuzGerMy9yExNvHuMTA/BVkytKk3EMys2P/ppsFTHoEV9BXFDpPx6j?=
- =?us-ascii?Q?g2iyMu0WOq/Afo4a5CMsuwwATbogWN/04aJrK1h4xxTYemKcSPFk/e77NyG5?=
- =?us-ascii?Q?CERmd+CC39fRKSg1z+9KC8h4bfO8Z2fjxMY+A9UD3pD2DJspLinyQ7FU9Ffu?=
- =?us-ascii?Q?z+Sa/uGs8EV+pDMO6vH8n9ylRFY0pFZUE4EqrFv1v/CNzzeVFB/zoHiaSdBt?=
- =?us-ascii?Q?hSXj5xVxxMip/RrppIJPL1RKdJu8JODPDieuMdZ+LVZG+ICiAGxoGU3LOMyx?=
- =?us-ascii?Q?P1w5aG6dyPlzWNPxt1Q6izzUa+OiHTUtPr+HeDdY9rOATjOMF/xR/4PXhLlC?=
- =?us-ascii?Q?bG+wo/q3DW46OLn0Na2j6KRM739bO7BNMYRXU8k0/FLxI8LuUUtuhWKksWla?=
- =?us-ascii?Q?DGuGAd6HQKOwra7NX31Ozyfl/JRxcTXtZSEp/lJR7MUx55Lf1q8WrJARxiup?=
- =?us-ascii?Q?oOv8/KWN/bfQEEX0QIGTE5QFJfDCp5ySqoibym4UYYrAf9GcfubcDe74CArd?=
- =?us-ascii?Q?1/4eyzP5Z9j7eBrGRb1JXt48gTsXSoAn5MM3NkskgcAKrICwQ8jh+oNeFto2?=
- =?us-ascii?Q?Nkqt7dzbOl+W+iYBCg0wDbbIBAuNDFoQpOlJc6CpARZoj1UWls40dc1kS6fS?=
- =?us-ascii?Q?GwSjzkHAww=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x4wTQ-0008EE-GH
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:19:09 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:2219:0:640:5d89:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 88F3D8079A;
+ Fri, 11 Sep 2026 11:18:57 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:4d::1:17] (unknown [2a02:6bf:8080:4d::1:17])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id tILW3DBf94Y0-4z3B5OYF; Fri, 11 Sep 2026 11:18:57 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1789114737;
+ bh=UETXf7l7aaEzMO9kYOsfG8kmGSDgFJmKjM7H5hoGnJM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=SJIKoo+axJTBKEnwIUmiPHNtlDReOaOOLx29cOHC+AQhgzSbSnFTT22bvvKwflJia
+ jZ7Ro+FF0z97gUnmlSyZLesDt8sEZCguRL819ErCLk6k5sODHcthz6va4LrJjnLbl4
+ fGJ79wehzeOZX6T5NOYbMTVb4/eRmUBDfGQ58kfs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <791fcee1-2bdd-4bbe-a5bc-d755b2e457e8@yandex-team.ru>
+Date: Fri, 11 Sep 2026 11:18:55 +0300
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 61b14407-c9b6-4696-6adf-08df0fdc7d33
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2026 08:12:57.7217 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kx8v5VsARPQT7VoCYwkP7wRn4BwD4OMlwTt8vVpLJoAFL7Q9IcrJJipH4hlWDLbAtQo5FM2n0dL6mmdYm4/v/Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8806
-Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] runstate: make runstate actions private
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, pbonzini@redhat.com
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ alejandro.j.jimenez@oracle.com
+References: <20260904205749.510493-1-vsementsov@yandex-team.ru>
+ <20260904205749.510493-7-vsementsov@yandex-team.ru>
+ <2f415ee0-373f-4879-b472-336540b7b7af@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <2f415ee0-373f-4879-b472-336540b7b7af@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,69 +80,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 08.09.26 10:28, Akihiko Odaki wrote:
+> On 2026/09/05 5:57, Vladimir Sementsov-Ogievskiy wrote:
+>> The action variables are now used only within system/runstate.c.
+>> Move them and qmp_set_action() there, make the variables static,
+>> and remove runstate-action.c and its header.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   MAINTAINERS                      |  1 -
+>>   include/system/runstate-action.h | 19 -------------
+>>   monitor/qmp-cmds.c               |  1 -
+>>   system/meson.build               |  1 -
+>>   system/runstate-action.c         | 46 --------------------------------
+>>   system/runstate.c                | 34 ++++++++++++++++++++++-
+>>   system/vl.c                      |  2 +-
+>>   ui/cocoa.m                       |  1 -
+>>   ui/sdl2.c                        |  1 -
+>>   9 files changed, 34 insertions(+), 72 deletions(-)
+>>   delete mode 100644 include/system/runstate-action.h
+>>   delete mode 100644 system/runstate-action.c
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 7183babd6aa..2cee4c71b7a 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -3514,7 +3514,6 @@ M: Paolo Bonzini <pbonzini@redhat.com>
+>>   S: Maintained
+>>   F: include/qemu/main-loop.h
+>>   F: include/system/runstate.h
+>> -F: include/system/runstate-action.h
+>>   F: util/main-loop.c
+>>   F: util/qemu-timer*.c
+>>   F: system/vl.c
+>> diff --git a/include/system/runstate-action.h b/include/system/runstate-action.h
+>> deleted file mode 100644
+>> index db4e3099ae5..00000000000
+>> --- a/include/system/runstate-action.h
+>> +++ /dev/null
+>> @@ -1,19 +0,0 @@
+>> -/*
+>> - * Copyright (c) 2020 Oracle and/or its affiliates.
+>> - *
+>> - * This work is licensed under the terms of the GNU GPL, version 2.
+>> - * See the COPYING file in the top-level directory.
+>> - *
+>> - */
+>> -
+>> -#ifndef RUNSTATE_ACTION_H
+>> -#define RUNSTATE_ACTION_H
+>> -
+>> -#include "qapi/qapi-commands-run-state.h"
+>> -
+>> -/* in system/runstate-action.c */
+>> -extern RebootAction reboot_action;
+>> -extern ShutdownAction shutdown_action;
+>> -extern PanicAction panic_action;
+>> -
+>> -#endif /* RUNSTATE_ACTION_H */
+>> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+>> index 6d0ba75ff16..f89237eb238 100644
+>> --- a/monitor/qmp-cmds.c
+>> +++ b/monitor/qmp-cmds.c
+>> @@ -22,7 +22,6 @@
+>>   #include "system/system.h"
+>>   #include "system/kvm.h"
+>>   #include "system/runstate.h"
+>> -#include "system/runstate-action.h"
+>>   #include "system/block-backend.h"
+>>   #include "qapi/error.h"
+>>   #include "qapi/qapi-init-commands.h"
+>> diff --git a/system/meson.build b/system/meson.build
+>> index 41e2e4a292d..dd4622ae08c 100644
+>> --- a/system/meson.build
+>> +++ b/system/meson.build
+>> @@ -22,7 +22,6 @@ system_ss.add(files(
+>>     'qdev-monitor.c',
+>>     'qtest.c',
+>>     'rtc.c',
+>> -  'runstate-action.c',
+>>     'runstate.c',
+>>     'watchpoint.c',
+>>   ))
+>> diff --git a/system/runstate-action.c b/system/runstate-action.c
+>> deleted file mode 100644
+>> index f912bc837f2..00000000000
+>> --- a/system/runstate-action.c
+>> +++ /dev/null
+>> @@ -1,46 +0,0 @@
+>> -/*
+>> - * Copyright (c) 2020 Oracle and/or its affiliates.
+>> - *
+>> - * This work is licensed under the terms of the GNU GPL, version 2.
+>> - * See the COPYING file in the top-level directory.
+>> - *
+>> - */
+>> -
+>> -#include "qemu/osdep.h"
+>> -#include "system/runstate-action.h"
+>> -#include "system/watchdog.h"
+>> -#include "qemu/config-file.h"
+>> -#include "qapi/error.h"
+>> -#include "qemu/option_int.h"
+>> -
+>> -RebootAction reboot_action = REBOOT_ACTION_RESET;
+>> -ShutdownAction shutdown_action = SHUTDOWN_ACTION_POWEROFF;
+>> -PanicAction panic_action = PANIC_ACTION_SHUTDOWN;
+>> -
+>> -/*
+>> - * Receives actions to be applied for specific guest events
+>> - * and sets the internal state as requested.
+>> - */
+>> -void qmp_set_action(bool has_reboot, RebootAction reboot,
+>> -                    bool has_shutdown, ShutdownAction shutdown,
+>> -                    bool has_panic, PanicAction panic,
+>> -                    bool has_watchdog, WatchdogAction watchdog,
+>> -                    Error **errp)
+>> -{
+>> -    if (has_reboot) {
+>> -        reboot_action = reboot;
+>> -    }
+>> -
+>> -    if (has_panic) {
+>> -        panic_action = panic;
+>> -    }
+>> -
+>> -    if (has_watchdog) {
+>> -        qmp_watchdog_set_action(watchdog, errp);
+>> -    }
+>> -
+>> -    /* Process shutdown last, in case the panic action needs to be altered */
+>> -    if (has_shutdown) {
+>> -        shutdown_action = shutdown;
+>> -    }
+>> -}
+>> diff --git a/system/runstate.c b/system/runstate.c
+>> index 5d10ff0df99..a5f16da975e 100644
+>> --- a/system/runstate.c
+>> +++ b/system/runstate.c
+>> @@ -2,6 +2,7 @@
+>>    * QEMU main system emulation loop
+>>    *
+>>    * Copyright (c) 2003-2020 QEMU contributors
+>> + * Copyright (c) 2020 Oracle and/or its affiliates.
+> 
+> The deleted runstate-action.c explicitly licensed qmp_set_action() under GPLv2. The move retains only Oracle’s copyright line under the destination’s MIT header. I guess noting that this file is licensed under GPLv2 is the right thing to do here.
 
 
-> -----Original Message-----
-> From: Tushar Dave <tdave@nvidia.com>
-> Sent: 08 September 2026 17:08
-> To: alex@shazbot.org; clg@redhat.com; qemu-devel@nongnu.org; Shameer
-> Kolothum Thodi <skolothumtho@nvidia.com>
-> Cc: Jason Gunthorpe <jgg@nvidia.com>
-> Subject: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
->=20
-> A VF fails to bind through the iommufd/cdev backend when its PF is
-> bound to vfio-pci and requires a matching VF token.
->=20
-> QEMU currently initializes struct vfio_device_bind_iommufd without
-> the token flag or token UUID.
->=20
-> Pass the existing vf-token device property to the IOMMUFD bind ioctl
-> for PCI devices.
->=20
-> Signed-off-by: Tushar Dave <tdave@nvidia.com>
+Hmm.. Funny thing.
 
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+To move qmp_set_action() we need an ack from Oracle. Alejandro could you ack it?
 
-Thanks,
-Shameer
+To move the whole system/runstate.c into GPLv2, we need and ack from "Copyright (c) 2003-2020 QEMU contributors", which is a lot more difficult.
 
-> ---
->  hw/vfio/iommufd.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->=20
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 242644aa00..de482128bf 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -155,6 +155,7 @@ static void
-> iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
->=20
->  static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error
-> **errp)
->  {
-> +    VFIOPCIDevice *vdev =3D vfio_pci_from_vfio_device(vbasedev);
->      IOMMUFDBackend *iommufd =3D vbasedev->iommufd;
->      struct vfio_device_bind_iommufd bind =3D {
->          .argsz =3D sizeof(bind),
-> @@ -180,6 +181,15 @@ static bool
-> iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
->=20
->      /* Bind device to iommufd */
->      bind.iommufd =3D iommufd->fd;
-> +
-> +    /*
-> +     * Pass the VF token when binding a PCI device.
-> +     */
-> +    if (vdev && !qemu_uuid_is_null(&vdev->vf_token)) {
-> +        bind.flags |=3D VFIO_DEVICE_BIND_FLAG_TOKEN;
-> +        bind.token_uuid_ptr =3D (uintptr_t)&vdev->vf_token;
-> +    }
-> +
->      if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
->          error_setg_errno(errp, errno, "error bind device fd=3D%d to iomm=
-ufd=3D%d",
->                           vbasedev->fd, bind.iommufd);
-> --
-> 2.34.1
+To be honest, I don't believe, that qmp_set_action() worth worrying. It's a small simple function. I think, we often move functions from one license to another, and don't even look at them. This patch is noticeable because it removes the whole file, and license is visible in the diff.
 
+Any opinions?
+
+-- 
+Best regards,
+Vladimir
 
