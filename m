@@ -4,85 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43539C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 14:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4095BC88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 14:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x52Uu-0005Pb-Tc; Fri, 11 Sep 2026 10:45:07 -0400
+	id 1x52bT-00037F-Uv; Fri, 11 Sep 2026 10:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oss.patchbox@gmail.com>)
- id 1x52Q5-00049Q-FR
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:40:03 -0400
-Received: from mail-qk2-x10.google.com ([2607:f8b0:4864:34::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oss.patchbox@gmail.com>)
- id 1x52Q4-0000LQ-35
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:40:01 -0400
-Received: by mail-qk2-x10.google.com with SMTP id
- d75a77b69052e-530de452c33so2888141cf.1
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 07:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789137599; x=1789742399; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Gen85KNvmlBU17q+o2lsJIIITZCkVOcB09/l+2DpFIU=;
- b=kaWzpDJSS+BiMmZhI2hnMMocAizI6ZH/iJ6qArXEIu3QWewftG067eF72bvOkU4mX1
- gidI3seBlyIFBZKe2jpA2yDbfuu0oqKi1PIsE00eCQzzjenkk8eChEd+gMBV/vdVOGmH
- ZuCJDoI0ln3Isq1Zfd4HVa8ih27SdfJ9a6/dexsX7wCspd/nQ2SAjEYc3rymsXkKKqoN
- gzcwsSnz1N2R7FHLCPU6lvGt8yIgZofBQ5D8ozldwEhRQKyJ7Ygjg89cTTGTRZUYQxyv
- IPPEr40Jmiq7tU1PczDPIr72vph3OYFJDDxG4bIDd7lJd4vqnID0H4WS5YVCWzaru9v9
- S4QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789137599; x=1789742399;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Gen85KNvmlBU17q+o2lsJIIITZCkVOcB09/l+2DpFIU=;
- b=bcBAJsp3+3Q/zsPT8iWSMp6NMI4nt42rhyyjSlpPgtLWO9LB5FhcprFb7MkuolPknL
- xq3cSfgBT9E3V48uALLGIilO9M0PxuBXwCqNT8pB4JEnJ+E6GsD022dUCvGgAGDlvH8N
- tT7lF6VK9Nsve8sm8sa76TmheHbxt/g8xAYjZtrJYrIIPyZq3Hs/ay8bi0oA/1J2oFtK
- KnD2FBBajhGz/r7VOnbPX3XBDROqrzRikwBTNT+v9iRaOzz/yYNY9mTcbG67shd8b5w4
- ZWT7TIqS6mfgeCQGVWDGrTjstGXL5tI8rGP7dKWdTKqRIOcwwNX4hTk3eiMhG3T12vgf
- yvIg==
-X-Gm-Message-State: AFuF++nhADFhKZeqsEzaO53LoSu0mSnWDPlHIc+oC6kjIKV8v0hWXXgA
- 12pQDtAu+UsZy3f20G4FI4B9SzdXLATgZiiFS1rMa3thGvgiPH4N4xyg4GC1iSRi
-X-Gm-Gg: AYBFou39BNGcduQPKZdlymAt5g8VEP+/w5O//PwZNUI+COtIfmuX/R+b5AnxJ9sYhDq
- axXQxm0LTegsVJKhVG8VQ6bwgdC/20ptNSZA8E65XV3SmSr9hvqDHp1dOkJ1IpjgJF9e8pl1JUF
- vUkgfZS1OoSspNqqp+9/svJG8U7R5LTqm4pClt9ZgxRj+m9+3I4unKbOUYVILPNifwI9+oqnSGZ
- t3TbdFVeiPUp2PbYNSeupLG6wwPuT318wvuqUEhVvwn7W2gO6VJBGBoO3Buu9C6KZapnnpqFFbv
- U0eYsrLEvXXXzQ9gbTAX9sVzdx9Ghnc79Nb/GAgBbdcz99qPf4y/IODTvSj8GMP+jEUKayxVSBE
- K2JZqSd87/UFn16zzjcFg5wr/cuzzoEx7E8PIjipcJUf3N9FF6v0Rv3KjlHyQooMLzmaWVuB5I/
- OeRYvC4W7FSfujdw7vX5587/GUXhXXtZol6uWiRlmJI1LG6x+wrCdM4S4WXzJ2aoHjQ9PDM4raY
- tAiOTnbwnPVYOAKjw==
-X-Received: by 2002:ac8:6106:0:b0:530:596:f70d with SMTP id
- d75a77b69052e-530c870ff91mr74788711cf.34.1789137598968; 
- Fri, 11 Sep 2026 07:39:58 -0700 (PDT)
-Received: from i4-gl-tmk5904.ad.psu.edu ([130.203.156.186])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-530ca30855csm21596321cf.1.2026.09.11.07.39.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 07:39:58 -0700 (PDT)
-From: Yuho Choi <oss.patchbox@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Cindy Lu <lulu@redhat.com>,
-	Yuho Choi <oss.patchbox@gmail.com>
-Subject: [PATCH v1] vhost-vdpa: Avoid unbalanced IOMMU region unref
-Date: Fri, 11 Sep 2026 10:39:55 -0400
-Message-ID: <20260911143955.1601850-1-oss.patchbox@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1x52Tp-0002Gu-6c
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:43:53 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1x52Tl-0001IH-45
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:43:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1789137793; bh=7qMCWn8GUpGlDk89PGZVv1CxL3YbHVROsZr8nAfm5p4=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=lS0Ub94z73k/1J6eirulwwp6vavLJWzERqdP5L9CjiS3OYHdOoMenFH8thUzcpmhG
+ GRkmX3Wm/0jQC2yQ1oDwxs27C3qkp69rUSDQPKHwDshCDkDrzl9wMLpRACFLj2rpcw
+ HJTV4nxXxD7R+/5H3DifpcQHvHWm6/UV/Zp1G9Zzo+iF1aKXaJUh78GEFAbLObmNPJ
+ 5HPy9AS3EB6cR3GtWwlW4RGz1ekkTk8VCbrpELND/oQDQ+A3G/Mia/hALqBRLXu/ZT
+ XWOhoatUee3oThIjMGgKziYtmYHhW2Lo0unpofJy5P0p3xi1yO/Ctse9UP/kKz8q/U
+ rghVKYymz9DgQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2FC4E1D3D05;
+ Fri, 11 Sep 2026 17:43:13 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 230BA425F83;
+ Fri, 11 Sep 2026 17:43:46 +0300 (MSK)
+Message-ID: <67241f9a-395a-453d-a08e-881d7f6644dc@tls.msk.ru>
+Date: Fri, 11 Sep 2026 17:43:46 +0300
 MIME-Version: 1.0
+User-Agent: Betterbird (Linux)
+Subject: Re: [PATCH] virtio-gpu-virgl: guard new_blob with
+ VIRGL_VERSION_MAJORS>=1
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260911140645.56094-1-marcandre.lureau@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20260911140645.56094-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:34::10;
- envelope-from=oss.patchbox@gmail.com; helo=mail-qk2-x10.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +69,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vhost_vdpa_listener_region_add() handles IOMMU regions separately and
-returns without calling memory_region_ref(). Its delete counterpart
-removes the IOMMU notifier, continues through the shared DMA unmap path,
-and then unconditionally drops an owner reference that was never acquired.
+On 9/11/26 17:06, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> virtio_gpu_virgl_resource_new_blob() is only called from
+> virgl_cmd_resource_create_blob(), which is guarded by
+> VIRGL_VERSION_MAJOR >= 1.
+> 
+> Fixes: d814b44636d0 ("hw/display/virtio-gpu: introduce virtio_gpu_{simple,virgl}_resource_new()")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/display/virtio-gpu-virgl.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 1c9380e2a6d2..f45571060fea 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -324,6 +324,7 @@ virtio_gpu_virgl_resource_new(uint32_t resource_id, uint32_t width,
+>       return res;
+>   }
+>   
+> +#if VIRGL_VERSION_MAJOR >= 1
+>   static struct virtio_gpu_virgl_resource *
+>   virtio_gpu_virgl_resource_new_blob(uint32_t resource_id, uint64_t blob_size)
+>   {
+> @@ -335,6 +336,7 @@ virtio_gpu_virgl_resource_new_blob(uint32_t resource_id, uint64_t blob_size)
+>   
+>       return res;
+>   }
+> +#endif
+>   
+>   static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+>                                            struct virtio_gpu_ctrl_command *cmd)
 
-Limit memory_region_unref() to non-IOMMU regions. This keeps the existing
-full-range DMA unmap for IOMMU teardown while balancing the references
-acquired for RAM sections.
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Fixes: bc7b0cac7bf4 ("vhost-vdpa: Add support for vIOMMU.")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
----
- hw/virtio/vhost-vdpa.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+What's the reason to move it into a separate function, when
+there's just one user of this code?
 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 9e1aa4860a8..2a067afd0a5 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -487,7 +487,9 @@ static void vhost_vdpa_listener_region_del(MemoryListener *listener,
-                      s, iova, int128_get64(llsize), ret);
-     }
- 
--    memory_region_unref(section->mr);
-+    if (!memory_region_is_iommu(section->mr)) {
-+        memory_region_unref(section->mr);
-+    }
- }
- /*
-  * IOTLB API is used by vhost-vdpa which requires incremental updating
--- 
-2.43.0
+Thanks,
 
+/mjt
 
