@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23FDC88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 22:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 019CAC88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 22:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5A1C-0002Ak-9H; Fri, 11 Sep 2026 18:46:50 -0400
+	id 1x5A22-0002We-CH; Fri, 11 Sep 2026 18:47:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5A17-0002AX-Jg
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 18:46:45 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1x5A1z-0002WT-TY
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 18:47:40 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5A16-0006t8-0j
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 18:46:45 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-398e9698a70so1617472a91.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 15:46:43 -0700 (PDT)
+ id 1x5A1y-0006xQ-Gf
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 18:47:39 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-38dfe7eb825so1402866a91.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 15:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789166802; x=1789771602; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789166857; x=1789771657; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SzxwgvJp+FhZL7mIrBBgfUIoGMsjcFHKZlNZrXmcGr4=;
- b=AkerV1Jsx10wGjwo1GarseZV4kXvqeM/50GzZstCb+FL5aM5K53pn814XtG2LaJ2dL
- IYPjWPyesZLQnwO6b5djFwHNL0tUHSkrrWNIoHWPVQZUsHzptgZwYA1Ucw81dBbxjvmx
- lK5CF3T8lP4cQMX24q+gkOI5qvmHxEi2IFq+FU5x818yMn8F5A+jc47X6v6xgl0547da
- 9FWpxUjLXY7hFkOPQTHhsLsw8E2VEc5e6FhYZfHKh0GgYrRl9HTgcmBLSvVmfvsThaKj
- FbHzyFdJcAVYSVYX9BWUEYg99beug4PzeJc+taZ+ajk8iQS35jvTL+V0hznbeFuQyNtk
- lqBg==
+ bh=y2o2igT44f2T+6oxP5t0FyBwSzaHcFIpxhSYzs+NKEE=;
+ b=wlvL8t4Lwa5LxM2ynCjwZAOaGeqd+zUxxsttGoabykQy2YC5jPMlVsy/vjT/mVrAcD
+ fYrfAdfsZ+VR45Dr+U2KUrJJ9/em5FovrfLIhONaIyVym0SjFviRpsaZnsogNHOcnd/b
+ eVd7moQqTw8Hpc1gTpCCXOfDI/sBh4tDOU8fHcBI2XZLm6kANaj6x00aRWb3mlzR30r6
+ OFFpY3f3aMm221X52NfZKxu5RxyCYCY2lpAu8iD7hprit0T5suofiqXFUwWTXG4OgAMG
+ Kdv/ENiLw3RQhNUn3qvAHPsg9Q3DQ6N0idFW+j7yTfYnQUjkO/aHU143YTYLadmXZQhL
+ SvUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789166802; x=1789771602;
+ d=1e100.net; s=20251104; t=1789166857; x=1789771657;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SzxwgvJp+FhZL7mIrBBgfUIoGMsjcFHKZlNZrXmcGr4=;
- b=tRvJgba5FvsIEg+JRo7raU63olihn1mXZCgzZ5TK80vO1SoZPqDp/CUcYB1RMmU+kT
- a41rClXRK82LEuzFRZ1iMMxXRfK9sugz2bOyIdn2TFt5U/leCCQcsKqj5Kvqpm9tpOm4
- GeLOCWqYWuXoJqekFQqC4XldvjkZssvxsquW//Yv3fdF4V3wrlsiypjniNtVgzlWChqs
- 2ERQg12QQqKKFfn8Li43lXj0sIlvIAYeJRwNLwItZxXpSVsXbUTGd+7gVrq52KNysr4U
- KsBKp8FWlKoL+1qwFPmP0r0aMaLAtIwmjiJaf+dDtaC1WolLsW+Lmc1JGN4FY5XSQJkG
- vElg==
+ bh=y2o2igT44f2T+6oxP5t0FyBwSzaHcFIpxhSYzs+NKEE=;
+ b=hqPPPlNjbm/atGPNNdyTVl9JbAOYOVSafIl92t1AITnUuXiLZ5dvGAgjy//rHpl7hL
+ Tyf5E0Xz47hWHxSrJTFJ+0hQkbXcGzujGXWFA2RJO62clsr6/VCvquG0N8F/+rQTC5hq
+ ZQeQhT9M/wc9hNpxwmgiKNC8iRnkHIO4ZwlC3N+L5YSP7AobeQLPQilO4keoyI+liClB
+ StBtYA173t/QGKN/DLgBKK7bMv0+v7SDsLzC++mFhhsvcgK4WGoFnhK/Sv44RhYFIj4G
+ AsoizMEsEIBsbwsLWqxAHnj4/W84FrBm3ENBxqg1WZ9um7KwjRge6qYA9WjRRcC49YH1
+ 9TTQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvByI9EOtNapGTixoDqC2FM5UkShfUnrhV35r+1vR35H2TIpOc5YSSThpvm/5gDcp8SLu/CMdUtkEZpcr@nongnu.org
-X-Gm-Message-State: AFuF++nC9y7JvUq4jaWi61WNszVdVyvChK4JHw0EY/bB2H9JfsRLIl+1
- A7clnOb/E0R7B2nXRaYsv+uHMW411690Vd0uxxJZ59iSSGQHagPC4EEtBIMDkmEQyws=
-X-Gm-Gg: AYBFou0W+7gq8eNJ0iRF0XwyuOO6S/O/24CPF2wEX24ATiOuVYlK3dqHVL0906yFGkr
- xnILAZ7/lc61RncmEOAYZPIHTzjchssl7WKPKNKUgMymgDAK56auBlJGiTox1B4Dzcv5S4FmUSH
- L9xuMkOBVRgIcATv6i92/n10VtQR048DNzcDXbFxCSNdzQa9j+nEnhNG50pnALfIYrvYc/8p1mE
- IYCsZMr8k1tzPYWQZ3N+MrkfLgZeDUbM3WMqB6utd/N/dKMnKPiiBSoTM1ypSkdZXBubCFQR6sW
- fAeMF4fuxYocZmzNTsBfTIT4QN19yr0eKwshgOc69vmTyyT0h7qmorEo9eoKPxPu8ENxOiOWmUX
- QDn/WkgynGYdZt+qi+ypKMd+io9fqB9tttvL4y5kTj4roojlwTr1qPh4dwziCx+aBN77JBR/6Cd
- NJCCDZnR33rDGGqi1cKhXB/B/xX0na8fTTCf2WpvvOKqOCMYGuSBaToW2PR7xPI+0dHnqmef0wo
- x3uTWcUAMX0o8Sie2brMdvgTFQ2rumizR+Q52Z+94+qpF24B97fReAVxTg=
-X-Received: by 2002:a17:90b:4cce:b0:38e:7168:281 with SMTP id
- 98e67ed59e1d1-39d9bec4d91mr10698935a91.10.1789166802322; 
- Fri, 11 Sep 2026 15:46:42 -0700 (PDT)
+ AKwUvBx3ATK8lHfL9ea0m8aiGbw5uQgS/ZXVYtdrFwM7eHQPo9pl2egO/PYLsahq/4Q0WJzbyqbKUNuRH+ee@nongnu.org
+X-Gm-Message-State: AFuF++mjgIV5ccfYmlsTJgWq3D+EsboL+9fH696yWzvn3PEbBDECsbT+
+ Hu+eG3U1f2UbVAtT0UCRHqY02RUsgTyNs0wnrgpXRbjMp22ifkWoruChHsk5sSUOnkQ=
+X-Gm-Gg: AYBFou0J1YL/YYIdaiPJLSxfgMketV8Lv9TrY+IFGnRI5RL/vUZkqkeOpAd+C+60Ns0
+ +5/CSrtwf18JhC8zmnPJxphheqTGISaCqgCP7wp48kdMj9fXmei33g1UVjQBNmftJMiys+C7H/y
+ mVCWdZsJgJU4P/lQgIz1LveyX6z0IisS+UhOl5JHLXsNGac4YuxQJQ0nMEqRcs7HDKFFE5Mi+2X
+ FdUXsf9gBd13P7aI/HIN4MdvWx2cRlak2WMmiPOAvXB7isMs5ArD7dg37UJGC711ybtFrrsxqOP
+ 0NlHKu4WpRu0inGHH+9b8e2r4i5YRq739OT+iFLjsehadxKL4hb/XWQv31f+86zvmXsOYIp693w
+ jtrNSyLcU1L+OijlGk0y/qZ3d+/Yrr+sfWsB3sSrvLlxl3S5zFtsl19EbmToeG1T45mi9b2Oa1m
+ 8Dqm7LSytTuNMgAOumHcSfyP5A68S5APr+PO0j/tLHKEcW6nEcdRei9Dk6KSKRtIR9s4ExrfZ8K
+ sh7wALMlOiPh2uIJaJFboLNltsVmQp5/7P4hHMhnyCj0MG1/o/VLWwWmQE=
+X-Received: by 2002:a17:90b:4c11:b0:38e:6a44:671b with SMTP id
+ 98e67ed59e1d1-39d9b96848amr10185486a91.0.1789166856852; 
+ Fri, 11 Sep 2026 15:47:36 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:20b:7d3e:6a30:1f63?
  ([2603:800c:7900:ed00:20b:7d3e:6a30:1f63])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4fa50efsm10241975eec.28.2026.09.11.15.46.41
+ 5a478bee46e88-33ba4f55735sm9844658eec.24.2026.09.11.15.47.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Sep 2026 15:46:41 -0700 (PDT)
-Message-ID: <2c2a7188-d95d-4ed9-a026-f505ab8b14c8@linaro.org>
-Date: Fri, 11 Sep 2026 12:46:39 -1000
+ Fri, 11 Sep 2026 15:47:36 -0700 (PDT)
+Message-ID: <d4156be3-be92-45b8-b401-972d76e08683@linaro.org>
+Date: Fri, 11 Sep 2026 12:47:33 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] tcg: add base arguments to the gvec 2s, dup_i32
- and cmp expanders
+Subject: Re: [PATCH v2 3/6] tcg: split out _var forms of gvec
+ saturating/mul/shift-immediate ops
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -82,14 +82,14 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  marco.liebel@oss.qualcomm.com
 References: <20260911204334.1264922-1-brian.cain@oss.qualcomm.com>
- <20260911204334.1264922-3-brian.cain@oss.qualcomm.com>
+ <20260911204334.1264922-4-brian.cain@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260911204334.1264922-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260911204334.1264922-4-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,25 +113,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/11/26 10:43, Brian Cain wrote:
-> These three families still name tcg_env directly, so they cannot be
-> reached from a _var entry point.  Thread a TCGv_ptr base per operand
-> through expand_2s_{i32,i64,vec}, expand_2sh_vec, expand_cmp_{i32,i64,vec}
-> and do_gvec_shifts, and split expand_2i_ool out of tcg_gen_gvec_2i_ool
-> the way expand_2_ool already is, so the out-of-line fallback is reachable
-> too.
+> target/hexagon is about to address its HVX register file through a
+> runtime base pointer rather than a constant offset from env, in order to
+> share one register file between several vCPUs.  Split the other
+> gvec op families it needs like tcg_gen_gvec_{add,sub,mov,and,etc}.
 > 
-> Add tcg_gen_gvec_{2s,shls,shrs,sars,dup_i32,cmp}_var; the existing entry
-> points become wrappers passing tcg_env and generate identical code.
-> 
-> Note that the operand swap in tcg_gen_gvec_cmp_var, used when a condition
-> has no helper, now has to swap the bases along with the offsets.
+> Add tcg_gen_gvec_{ssadd,sssub,usadd,ussub,mul}_var and
+> tcg_gen_gvec_{shri,sari}_var, plus the tcg_gen_gvec_2i_var plumbing the
+> immediate-shift forms are built on.
 > 
 > Reviewed-by: Marco Liebel<marco.liebel@oss.qualcomm.com>
 > Signed-off-by: Brian Cain<brian.cain@oss.qualcomm.com>
 > ---
->   include/tcg/tcg-op-gvec-common.h |  21 +++
->   tcg/tcg-op-gvec.c                | 256 +++++++++++++++++++++----------
->   2 files changed, 192 insertions(+), 85 deletions(-)
+>   include/tcg/tcg-op-gvec-common.h |  31 ++++++
+>   tcg/tcg-op-gvec.c                | 177 ++++++++++++++++++++++---------
+>   2 files changed, 160 insertions(+), 48 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
