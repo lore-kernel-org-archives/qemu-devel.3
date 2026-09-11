@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF79C88E50
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A58EBC88E4C
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x9x-0003i2-8m; Fri, 11 Sep 2026 05:03:03 -0400
+	id 1x4x90-00023F-Ca; Fri, 11 Sep 2026 05:02:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9e-0003SP-VZ
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8y-0001yv-Ce
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9c-0008Cb-Pn
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8w-000867-6l
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117360;
+ s=mimecast20190719; t=1789117317;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3G43obeGkrZrvaSbMOJK2K6rTqOeLtl6zfRvJGCm6co=;
- b=YL5/kR0fhljGVBNkPiiDfsdYRU0rNam0Y6OEiyacVPsM2ThKNLVZ0NAyxriPge6STmv4yz
- iFxy9ZyFUZxn7P2KD5qlSJ/XvTaHby/CTK+C2kn0T8CsHtrAuPyDfIFbBRzvby9Agd+JT1
- 4IDgrnpnCN5Qj7m6e03LvHhZ7J+Yppw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AWRhi/FGrwhxDDpXDBZ1js0/6fDRqICz+xroCDFuHEc=;
+ b=FqS4v9Xk8K8XZ8Qt4aLxjnWcCCNxAwi/ILQPju75FtIqSpvpWE+rkiMCo+qPjTHcNmGWM3
+ kYYWxpYdhU10lrkCshbqQTqafDn5hwSXSRFqfXF7TFhXwbgAq8KrjTVZBPSHia2K1lHbR7
+ SHZlqzgmrcvZ90zmwBtvdZ4Wg1e+u3M=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-AJngWoTdO1uy5ENCssypNw-1; Fri, 11 Sep 2026 05:02:38 -0400
-X-MC-Unique: AJngWoTdO1uy5ENCssypNw-1
-X-Mimecast-MFC-AGG-ID: AJngWoTdO1uy5ENCssypNw_1789117358
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-482e05af072so558522f8f.3
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:02:38 -0700 (PDT)
+ us-mta-553-qGiCWp0ZPZ--uwhDSCuVtQ-1; Fri, 11 Sep 2026 05:01:55 -0400
+X-MC-Unique: qGiCWp0ZPZ--uwhDSCuVtQ-1
+X-Mimecast-MFC-AGG-ID: qGiCWp0ZPZ--uwhDSCuVtQ_1789117315
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-499b99a8a10so14503795e9.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117358; x=1789722158; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117315; x=1789722115; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=3G43obeGkrZrvaSbMOJK2K6rTqOeLtl6zfRvJGCm6co=;
- b=Gpa9t7DK4ARUMwovIqLnoPZQoiR+3H3LCJvvVSYR58vXWmWBelhzdYdrbEsvTrnRGu
- Xpahq/4djeMWQWLc1VdPXsBpmb9nsLtFovllCpacCLNj1J5aJ/3uF4mHhYeUd+kQtavp
- cemRW9SzEZqFAvKoqoyDYuX0nEklVH9yX1gY4bLhrH6kB0oAo8rnqcILi3LbynO1NXnk
- DTtoukEO6aJhdlHUqLaC5bGkY+tv21H0c5K4NjBdG/mO8D9a1ExnVUdUyIdevUbqZMNj
- zCBYV6uunRmvZ/ACLfmdCY/DXnEgMt9HPB7W4V6ADJ/LGebypEvi3RbtldS4CeDcLTcI
- PsqQ==
+ bh=AWRhi/FGrwhxDDpXDBZ1js0/6fDRqICz+xroCDFuHEc=;
+ b=el4ECAi3wleNb15aogRfP4zNqCmT2ao/tSALd6zyhKaASOJJ7hzl6cVgPb4tfkgvH4
+ 9rzj9IzL8wa4Z5H6MzMS8L/5mawg8VBRAeciPXVXgSn5+SqcV569i+i5f5fxbLAC6vzB
+ 1lHWh0mjZ4dcHs+MZiQ10FH8L5cPaX3FyTZjCXFtP6/77ECYg5sQwZcuFEC/R+xqf2RN
+ MZ9ShXqyGIazGpnZ8DNHq+8N+JszhPR6rky9iDo8HtWJyJSMr0pwm7201SIScz1SeKrB
+ 0PVQQ4o+lNuiTptg4YlLwonmEufl4XtJuEtEAEjnb82B3vAx18BfVE1Aey68BurpPsWP
+ hO5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117358; x=1789722158;
+ d=1e100.net; s=20251104; t=1789117315; x=1789722115;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=3G43obeGkrZrvaSbMOJK2K6rTqOeLtl6zfRvJGCm6co=;
- b=VHCWAWF3BOTB/IIHdkin/idUZNqSWaRNdky6TG/LbRS2HjTV2hw36PKaKkzc2WtOCC
- svLbIY3PhG/+olg0PB4SU3cKCoy86XydXey2kdf8a2P+rOVtXEU81ULm/9nc1L8q9EZR
- RqDzAIk/1KO5a2wrip68pNqds2DaAPaxoitOQTaaTAuBsP+XVSLocHqs5AAionLkMYtE
- Vqykn9S7yNwTx8J01BGBnhwldsR2p71uT/pMcbtFcCs6OE+FE6Rfah7ZcHaOhhRIjvRr
- HACu3RRbIaC7EZS6PHDSp3Lc5AYpvWgf3h+sit1v/qWvg1BtW3XoJSUkBbiPmhxFn7NE
- UIkQ==
-X-Gm-Message-State: AFuF++nXjIiRTIiF8fyElLrOqkr0Xi8U+dVKON7OnW5FDstsgF3cCNjT
- e4fJSAvoIhI66+Q9b6jHtNaRLW4DlSa67dVMmnz1QG/xZqPUUYE6yc8cUVBrdUz20G3MXUz7+N2
- sgbLIMrdbzCJY3YmpX0xLFTJqzS1N3VjviYIohQ/G2OfeLVLSdhSjBQc5QVx70TBwBnO6WketD1
- FSN2oqoDdd9UJ7WrbdHTofthq2+5GbYxG92Q==
-X-Gm-Gg: AYBFou0TNV4Xugw5uuaTfI58uJ1aBjL/z8n2H/kYEXlYxJjv2o/attDugW9F0uREbAR
- PNusYt4LCQCxcVQt54sqlkl1mB/wjCdF8fR9SUUmI2Fm0qv6pMgpZZwYmLidGOw6TB4xcIIE2Fz
- z8uPRPuvcv2naRbmHCxrRvJQtblUjdpJpg0T5mMaiYoy3AUyN2cMEC1fEw5LGaOqaBkUsl0AJWV
- sdEPtX5u6O2EZ1782bJSQK6ZnfDSrDtSKgB1EDStkHOqTBLZeduMeXrmz6BZK/kDofvKb2+oclQ
- a9kBY7sQOTqyZPpx2k6H3mTET3Rw4gy/Nr7thJryGnYY1iOto/4dKTI5lkznoZqAgTRAJKYU03H
- EGzCOh73ReLA01ua/Z67qrm0=
-X-Received: by 2002:a05:6000:400d:b0:486:e1a0:4451 with SMTP id
- ffacd0b85a97d-486eb1d9caamr3521144f8f.24.1789117357522; 
- Fri, 11 Sep 2026 02:02:37 -0700 (PDT)
-X-Received: by 2002:a05:6000:400d:b0:486:e1a0:4451 with SMTP id
- ffacd0b85a97d-486eb1d9caamr3521083f8f.24.1789117356899; 
- Fri, 11 Sep 2026 02:02:36 -0700 (PDT)
+ bh=AWRhi/FGrwhxDDpXDBZ1js0/6fDRqICz+xroCDFuHEc=;
+ b=n3hIlWQwbiwe0UPYbgjnJ44aQhMyz/GkIVY7oqcDHxDCOQcukLeiS6ZmW5TGS1sZ2l
+ z6YPgYvd04JUBNnu/9c8AFfhhYumt7MCPZpIUYifl/kknQ56NTWvAmBUu/k2FswKJrMA
+ uLdLXea9OBz6X+Vsxj76IVqadyaBmJtzudxbbRunwDw/9SbObyvVlcH+Ld4Od4bux9DJ
+ syTRgrLhtd6HSIq3rKIr7OQXOdcKNs2uT9KzOqPxJRUc1CTtoKgGTY3ZZNMg2rbjHPXj
+ LW4u+D/FotnCC5KE7/u7UDiZtKP+pKBC47KX6zNPdo0TTlErBIxXFgcko+JivdBLP8Pc
+ Z1hg==
+X-Gm-Message-State: AFuF++lmsYSJPAeMuhQYeygyz3d0cB+opETygOXs4jNEwxqtWRMuW16k
+ nPP1VqBYnqUk1YAgn0DKZbcaiolOfHwoXktafB2vVLa2HIZjcDpHKoRUSMnR50Vtqom73SembcM
+ KwXwLRXh3Ip4Jz4UmglkhGttgeMVPugK4o7w06gaGVmxPdas/gXjtEwr3GBmu5A3rT+8pH/+LMp
+ fupUb4kvli+y6CgrToR9TnakUAK6cj/rrVAA==
+X-Gm-Gg: AYBFou1VFZN7utWxC/eHTdQhjI1F/EomY6qSFpi5/7CHsJlX+3CQiEYbZC3FjPA49fA
+ mD0cvWTl/YZ9+1bIM0xKhfgZZIDrtpAMEp03uQ5sTwM69y5Ot68xwwi3uBYK04eZXbwuEsFqwya
+ K6k8BwkX5jwX2CYPLDv248sM40a7wXyvR1Toj7egTM6RhFimjbcv9aCvmBt+EJDiRVEk7ASDFrO
+ sF9eTSgOcXH3QYLouMIpdhtz4B1J6rMNuZwQk7RfIi+1W+rLUsT00hUIRj1xwcuEWheiyL+bo51
+ fVBHABdLxdH9h638bkZWA2Wpn05hRATqolJm67SN0LYmaT6ur3fStaPCPcT+zbTzYjtffUxin4C
+ g+fEpeZBzIuQEUERR0EgID6M=
+X-Received: by 2002:a05:600c:e547:20b0:49e:63cc:6324 with SMTP id
+ 5b1f17b1804b1-49e63cc640dmr14197015e9.6.1789117314527; 
+ Fri, 11 Sep 2026 02:01:54 -0700 (PDT)
+X-Received: by 2002:a05:600c:e547:20b0:49e:63cc:6324 with SMTP id
+ 5b1f17b1804b1-49e63cc640dmr14196235e9.6.1789117313851; 
+ Fri, 11 Sep 2026 02:01:53 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb35bed0sm4412415f8f.32.2026.09.11.02.02.35
+ 5b1f17b1804b1-49db038401fsm128642625e9.13.2026.09.11.02.01.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:02:36 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:02:33 -0400
+ Fri, 11 Sep 2026 02:01:53 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:01:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL v2 32/75] hw/virtio-blk: Complete zone-append cookies
-Message-ID: <0e9e4f715aee501c7f87bf821a73a020c24c8640.1789117222.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowangio@gmail.com>
+Subject: [PULL v2 14/75] net/tap: use container_of instead of DO_UPCAST
+Message-ID: <e0b1678562f300403ce1c2e667b3a0d94ac4a513.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,46 +121,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-virtio_blk_handle_zone_append() starts accounting via
-block_acct_start(), but this is actually never completed.  Do so.
+We are going to QOMify tap backend, which includes deriving TAPState
+from Object. So "NetClientState nc" will not be a first member.
+Let's parepare for this change, and use container_of(), which will
+work regardless position of "nc" field.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724152315.234183-3-hreitz@redhat.com>
+Message-ID: <20260819180201.1970193-7-vsementsov@yandex-team.ru>
 ---
- hw/block/virtio-blk.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/tap.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 4110380392..61c341ce2c 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -755,7 +755,8 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
+diff --git a/net/tap.c b/net/tap.c
+index f2b571dd11..bfed74717e 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -175,7 +175,7 @@ static ssize_t tap_write_packet(TAPState *s, const struct iovec *iov, int iovcnt
+ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
+                                int iovcnt)
  {
-     ZoneCmdData *data = opaque;
-     VirtIOBlockReq *req = data->req;
--    VirtIODevice *vdev = VIRTIO_DEVICE(req->dev);
-+    VirtIOBlock *s = req->dev;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     int64_t append_sector, n;
-     uint8_t err_status = VIRTIO_BLK_S_OK;
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     const struct iovec *iovp = iov;
+     g_autofree struct iovec *iov_copy = NULL;
+     struct virtio_net_hdr hdr = { };
+@@ -211,7 +211,7 @@ ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen)
  
-@@ -778,6 +779,11 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
- 
- out:
-     virtio_blk_req_complete(req, err_status);
-+    if (err_status == VIRTIO_BLK_S_OK) {
-+        block_acct_done(blk_get_stats(s->blk), &req->acct);
-+    } else {
-+        block_acct_failed(blk_get_stats(s->blk), &req->acct);
-+    }
-     g_free(req);
-     g_free(data);
+ static void tap_send_completed(NetClientState *nc, ssize_t len)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     tap_read_poll(s, true);
  }
+ 
+@@ -271,7 +271,7 @@ static void tap_send(void *opaque)
+ 
+ static bool tap_has_ufo(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -280,7 +280,7 @@ static bool tap_has_ufo(NetClientState *nc)
+ 
+ static bool tap_has_uso(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -289,7 +289,7 @@ static bool tap_has_uso(NetClientState *nc)
+ 
+ static bool tap_has_tunnel(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->has_tunnel;
+@@ -297,7 +297,7 @@ static bool tap_has_tunnel(NetClientState *nc)
+ 
+ static bool tap_has_vnet_hdr(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -311,7 +311,7 @@ static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
+ 
+ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -322,21 +322,21 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+ 
+ static int tap_set_vnet_le(NetClientState *nc, bool is_le)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     return tap_fd_set_vnet_le(s->fd, is_le);
+ }
+ 
+ static int tap_set_vnet_be(NetClientState *nc, bool is_be)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     return tap_fd_set_vnet_be(s->fd, is_be);
+ }
+ 
+ static void tap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     if (s->fd < 0) {
+         return;
+     }
+@@ -357,7 +357,7 @@ static void tap_exit_notify(Notifier *notifier, void *data)
+ 
+ static void tap_cleanup(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     if (s->vhost_net) {
+         vhost_net_cleanup(s->vhost_net);
+@@ -381,14 +381,14 @@ static void tap_cleanup(NetClientState *nc)
+ 
+ static void tap_poll(NetClientState *nc, bool enable)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     tap_read_poll(s, enable);
+     tap_write_poll(s, enable);
+ }
+ 
+ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+     return tap_fd_set_steering_ebpf(s->fd, prog_fd) == 0;
+@@ -396,7 +396,7 @@ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ 
+ int tap_get_fd(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->fd;
+ }
+@@ -408,7 +408,7 @@ int tap_get_fd(NetClientState *nc)
+  */
+ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->vhost_net;
+ }
+@@ -447,7 +447,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+ 
+     nc = qemu_new_net_client(&net_tap_info, peer, model, name);
+ 
+-    s = DO_UPCAST(TAPState, nc, nc);
++    s = container_of(nc, TAPState, nc);
+ 
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+@@ -1016,7 +1016,7 @@ fail:
+ 
+ int tap_enable(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     int ret;
+ 
+     if (s->enabled) {
+@@ -1033,7 +1033,7 @@ int tap_enable(NetClientState *nc)
+ 
+ int tap_disable(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     int ret;
+ 
+     if (s->enabled == 0) {
 -- 
 MST
 
