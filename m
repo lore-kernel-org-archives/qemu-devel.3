@@ -4,98 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FA3C88E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2300BC88E53
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xAj-0004aP-Cy; Fri, 11 Sep 2026 05:03:49 -0400
+	id 1x4xB8-0006y4-Pc; Fri, 11 Sep 2026 05:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA8-0003yi-Q5
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAd-0004SM-Fn
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xA5-0008Gr-Sl
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAb-0008LE-1H
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117388;
+ s=mimecast20190719; t=1789117420;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+sod/F5ZJD19JAbUugoGre+d4N7kWAhYD4EQjfTMC7Q=;
- b=Nv2eG2cRH5KsuS/WWn8Whuih/nBW9yKQaE86LegCGImnitsLzRovB7kh4Yplmiow2LUN3a
- oenSaDLSrRunelg88Kl2nSI9BW3dABC0etFlDq9Z1W4Z6guwLAPJyAt1sajlRc0doQT93O
- EVcYU3gZsUILMUcBsf/jAvTUhm5jj4A=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mDN0pKO3NI28SBsIJ08S3mFqoBiJB+cbySC7sAon6z4=;
+ b=TVT2cqUXUcy2niCiGJ9qzO/ZgJh8xvmPegxlvQvtfyRtAT+Bnt21X9s943MV9tPRhhurxc
+ 7yRgguLw23UMoXe5Lpekw0nAeWLyQg1gxp+Gg92/FCS3k/p1QW1T+QaHthIvpSqc1PcaLP
+ 7SoHzSTummIpZFzr/doD62/7J43kN8Y=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-Vp6hFUcZPH-H2O-C5fmDDQ-1; Fri, 11 Sep 2026 05:03:07 -0400
-X-MC-Unique: Vp6hFUcZPH-H2O-C5fmDDQ-1
-X-Mimecast-MFC-AGG-ID: Vp6hFUcZPH-H2O-C5fmDDQ_1789117386
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-486f1eee015so121917f8f.1
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:06 -0700 (PDT)
+ us-mta-382-H4ZKI3e6N_CVIKBW0x-lsQ-1; Fri, 11 Sep 2026 05:03:39 -0400
+X-MC-Unique: H4ZKI3e6N_CVIKBW0x-lsQ-1
+X-Mimecast-MFC-AGG-ID: H4ZKI3e6N_CVIKBW0x-lsQ_1789117418
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so5968715e9.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117386; x=1789722186; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+sod/F5ZJD19JAbUugoGre+d4N7kWAhYD4EQjfTMC7Q=;
- b=L2YI4hzdTgM8OrxejdgvPpmSyyh0ZI7sAOCKPdDwwvDy4rOQQA2PeO4LqUGuRz0fGx
- sEcYCe+6yKAtQF3c4coR59HDCUIYoNT9cDESEthd5cNApg2oZR5BOUt5AIof4fErlOqQ
- u41PDw5pNFK4wHdIU+1pumd49S4dkg41ZZUSillf7xE7Zy1U5ohOk1Bohl0R2HQBAiZU
- CY8t5PJTnJ1KhtmTyp6XWKAwFiMmi1Y/nBeoVkurcA8U9jLBNh/Dawo5GOeCYQyxQ42Q
- p1u4K+auO1KJO5Hn6rkYZtEO4MtLXTtL7mXYCbf1u5w/a8ZidyFRhQ3FzY1a7rwdXyJ6
- lg1A==
+ d=redhat.com; s=google; t=1789117418; x=1789722218; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mDN0pKO3NI28SBsIJ08S3mFqoBiJB+cbySC7sAon6z4=;
+ b=Cg615xuICHM+PCQxPdYjvttLbnes2E7kOZ28k0s591zzFNKPGlpPfJS4V9MysZ81kF
+ ZSqBCU4x9zceAdkY8z8e853l4RDKQFEV8azPznNLmksS02XXiO9uIJuYu4REacwE2Zbl
+ Iyeav7xXigc9bhINlPZBQgNaqyyQbLewPxTbIqNxTjcTiQ82n229xszlOOOhKbEGpW+7
+ Jtfkt7C/VIO5UIzQoL/HIfSPIr0U2PoU0Agz6vk5DcKEwYTDrRN1TOn49/HFDkgiHLu1
+ 4+W7gW/9YWBr8UB0lbGbuGd23Qrv6tPIYVxLMasgL9JW9Xf6ypo7HXnWoOR85pxXVG92
+ haIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117386; x=1789722186;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+sod/F5ZJD19JAbUugoGre+d4N7kWAhYD4EQjfTMC7Q=;
- b=cjw0sbGd+wPLvg+hoU9LgnwCdtZiC3xMWyaBsTv7g+7P2hAk+WKiWWxhvun1DmLsXi
- jfD7hW5lnQEIZ088ajmfnP0D5jTpJSOQJ9wX27ZBMqTTDwOPZVapl4PjKHa6nMnxEyb5
- XegIkd0adjWG87j9gBBNeKI8BGpYC2Y+pY3rcyv69QyhRHLV8pXfjp+GQLQq9/GGPjzz
- PEKKtYNT7DBk/FjcFde3RLqVOUjzEbBCSalReorrXmVu7Tyl1GFjHVwlDIdp1nF6756T
- ti97n6sjDsXQq9TVhDD9mZjQQWqrw3Notj+EgZpb5NexZoNkNAccG29JMn4omKFdATfJ
- 5bNw==
-X-Gm-Message-State: AFuF++mUFupViEApZaR0kXcvIjqcYZmy/mXHa9QxwSur2KX0KFQTMpa4
- MZLoSMV1xe47IlVVvy62cVQMH6DnWq/0M8rtfNllpBqaRBzySfCW5tapOkP/OEJuBTsfK/Xcbek
- 9VdYWGY5Ptx1OL8FbQAahtO8NuuHF8Ky9qA4VpvHMSkzw/A65uNPt3p8w9dOd09I2D4VBmXvYBc
- N5QkKzqk/eIB3xSQ2Rcf35TWrlHFppXM0ylg==
-X-Gm-Gg: AYBFou2KOWOnAREwSkqu3EnvNh7vP39OaSJ6BY5mC4p2UE+dHvQjNjEZufDniK0HYf+
- 3j6F70YyuPSgv1T1ilpdCxOk9KUUmKGDZ0h5anYEmKia/BtTClrd074+pxImTivcWjEAaYMi1WV
- ykfKwtN2L6NfDj8v+hq/FrqtJ52XNkzsN23QW5LU05j4C6J1vUTlyUtTxCjSL1qBPe2RRPy4pku
- IobDWDwM3/xeUqczAASW3pKDzk9l4sod6ISMzMyagsfpIb8p1hD0KvrNrvTIIPaBrUdne62Aa0F
- XOlgxS5BG0h7Gm/LXXKdNquNuuUh+2mTwNya1GXi5Y6im/C67DGcJuH/eIIrqCCYaJV0VjfH61n
- 0o1tSC/Mzmb3BgGrVDNtwzZ8=
-X-Received: by 2002:a5d:5e82:0:b0:485:8101:dc40 with SMTP id
- ffacd0b85a97d-486eb2d8278mr8393074f8f.9.1789117385592; 
- Fri, 11 Sep 2026 02:03:05 -0700 (PDT)
-X-Received: by 2002:a5d:5e82:0:b0:485:8101:dc40 with SMTP id
- ffacd0b85a97d-486eb2d8278mr8392907f8f.9.1789117384948; 
- Fri, 11 Sep 2026 02:03:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789117418; x=1789722218;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=mDN0pKO3NI28SBsIJ08S3mFqoBiJB+cbySC7sAon6z4=;
+ b=YKOpRw6zJoytbkeIcaHhwt0tbDtRy6b3fJ9SCaLmbBbt6vH8E/scnCKP5V05iJEG4j
+ 2AiMw080gg5pR3SFYnx494myw/EtB7ligoKtFtVpw82hcwTJqEtpTaJ3MTPHbOpb+ifu
+ NUk0Tr1Mm0Lc+TuW7MimC5SIx/CRfeJcOUmrbzfDHW2b0UnmCEKLxGVy3Vc21N5MNiyI
+ nSgFHTxyrkHEjyvQQ+IkMo6VPuuV0Oi0T0hZj/LPKzM3GA9rZB0CbdD+r6GBb4NhGLB+
+ 1x0VHJeWBetb94RAnnX5YwYjBX1H731U06izZohh8Un30G8w01yZNUmNuhHAzmxq72bt
+ a0Ig==
+X-Gm-Message-State: AFuF++kjg8FwdmOOkNP6MDqW88V5w3tNwlBku+vkcjN/WwZ8TanVHamt
+ 5kt/KCIZK7FMTMQW8M7Wrbo9DcPQ5ArlUADpjWhGhSTF/xm1i8AaWve77RTvSNb/VbsfEUNYWjw
+ xtdn2lkWlvL4gLVaxuLHqUAiqEfeXue23TUaqiQDhjSPdF6+aPjrhnekMp0rKAfCiZ6/ciA4JcO
+ tUORpS7n/tBwoNoDWXDteM2mvapuExvoIL9w==
+X-Gm-Gg: AYBFou1ytALWyVLqn2v9//u6LwwkMyAyxXR1vtfJr3dxkbcAzNyCvyuJhdwcQEJ7LWt
+ lJY3i9IwIQvtDr5maUzJ7mg//QvQfAE+C2/3Kq0wSwdFhQhMRi58LbUBoOPMd3SlhP//3e99AS8
+ j0FzydHqt8iCk8dPEeMdYu7m5KicJeqYtT7RI6K9fIhs/Xoq8dMuc7KQusQkUqKnY2pgW7kDLWB
+ D/aBn2AZpg+jaI9WK0sni0+jy9KRH8IHYBI/DJrXfURgZgzJiAlA1DxaRSxeuZB5zV1TFf7CO1M
+ EWgX8mZDqmDNnht9Iw2w8k3X9SuDhqSI/nB6ca9z0HBxYuS82zann5nAj9ryF+6TXpZsq7Ftdjd
+ I2kkXFmkGNvkmYzQk+O+7bsU=
+X-Received: by 2002:a05:6000:430a:b0:482:fb60:2f0 with SMTP id
+ ffacd0b85a97d-486eb2ec2dfmr3661518f8f.8.1789117417810; 
+ Fri, 11 Sep 2026 02:03:37 -0700 (PDT)
+X-Received: by 2002:a05:6000:430a:b0:482:fb60:2f0 with SMTP id
+ ffacd0b85a97d-486eb2ec2dfmr3661452f8f.8.1789117417091; 
+ Fri, 11 Sep 2026 02:03:37 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb35c071sm4601237f8f.33.2026.09.11.02.03.03
+ ffacd0b85a97d-486eb32e7f5sm4641204f8f.9.2026.09.11.02.03.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:04 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:02 -0400
+ Fri, 11 Sep 2026 02:03:36 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:03:34 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
+ Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 44/75] amd_iommu: Return empty efr for stub call
-Message-ID: <85e4587c2b3000c1dd2626664741f1f27e297773.1789117222.git.mst@redhat.com>
+Subject: [PULL v2 58/75] intel_iommu: Only set dirty bit when PTE exposes
+ write permission
+Message-ID: <c52b99d58b88922718df52a0c4da56f9f2660e13.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -123,31 +126,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
 
-The stub call should not return normal EFR as it is used as place holder
-when actual AMD IOMMU calls are not available. Hence return 0.
+Setting the dirty bit without the write bit in vIOMMU creates a spoofed
+shadow stack PTE that misleads the guest OS. This results in infinite
+PRI requests from the device, as no actual write permission is ever
+granted - the guest OS treats the PTE as a legitimate shadow stack entry
+and considers the permissions already correct.
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Fixes: 65c4f0999991 ("intel_iommu: Set accessed and dirty bits during stage-1 translation")
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807061250.27739-2-sarunkod@amd.com>
+Message-ID: <20260903150649.2281104-2-clement.mathieu--drif@bull.com>
 ---
- hw/i386/amd_iommu-stub.c | 2 +-
+ hw/i386/intel_iommu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i386/amd_iommu-stub.c b/hw/i386/amd_iommu-stub.c
-index d62a3732e6..fb36dee903 100644
---- a/hw/i386/amd_iommu-stub.c
-+++ b/hw/i386/amd_iommu-stub.c
-@@ -22,5 +22,5 @@
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 7c442a86ca..eccb16346c 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -2039,7 +2039,7 @@ static int vtd_iova_to_fspte(IntelIOMMUState *s, VTDContextEntry *ce,
+             return -VTD_FR_FS_PAGING_ENTRY_RSVD;
+         }
  
- uint64_t amdvi_extended_feature_register(AMDVIState *s)
- {
--    return AMDVI_DEFAULT_EXT_FEATURES;
-+    return 0;
- }
+-        if (vtd_is_last_pte(fspte, *fspte_level) && is_write) {
++        if (vtd_is_last_pte(fspte, *fspte_level) && *writes && is_write) {
+             flag_ad |= VTD_FS_D;
+         }
+ 
 -- 
 MST
 
