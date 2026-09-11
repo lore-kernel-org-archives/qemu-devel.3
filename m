@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5B2C88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5005DC88E56
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x50MY-0007jP-7K; Fri, 11 Sep 2026 08:28:14 -0400
+	id 1x50MH-0007P8-J7; Fri, 11 Sep 2026 08:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x50MV-0007fF-RE
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:28:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x50MF-0007Ko-J9
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:27:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x50MU-00077K-Ai
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:28:11 -0400
+ id 1x50MD-00070f-Nh
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:27:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789129689;
+ s=mimecast20190719; t=1789129673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R654KBPGUvh+oIEaBe90/0D2bgbO+xK4JzNc+JEMxNw=;
- b=FMoAoz5QeRsJM5jTSGuREsAX4MX1S/r8SiwvmA23drco3mVIYKa5xF3P8AidCpeF1c6shu
- 976tUgP7/G+KmzKIfPEWjsu7bRzUHrCSrTv7VNU4AgNRyjvO1eCjChXU9DaXUDmcz4U+KB
- 3uopPvmiarln/OAqgZGo8P2hc+5bdKg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=HqWC4E/c16S9/+MLB6SLnQfOu+B+Hw2yLwBbSSQj1Gc=;
+ b=PDKv5OlRiKtWQnGm0FfEXov2AuZE9Wcuo16XXlrctB5jsyg2zA8XeUpftljPBFvLnLALzT
+ 4Xa4TkExSyEmZpjT0iOs7NhownjT1ruFaGInU8ADY75kzu7Ij/6Y/FWEpQDjCtjBye0PVp
+ at2hS694+IjhkY8QCb+bWCUOoYIVW2w=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-HHVhrSFWMlKQUgwcz3XV1g-1; Fri,
- 11 Sep 2026 08:28:07 -0400
-X-MC-Unique: HHVhrSFWMlKQUgwcz3XV1g-1
-X-Mimecast-MFC-AGG-ID: HHVhrSFWMlKQUgwcz3XV1g_1789129684
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-7nTTvDciMZaSbB4ISdZxIA-1; Fri,
+ 11 Sep 2026 08:27:49 -0400
+X-MC-Unique: 7nTTvDciMZaSbB4ISdZxIA-1
+X-Mimecast-MFC-AGG-ID: 7nTTvDciMZaSbB4ISdZxIA_1789129666
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B6491800598; Fri, 11 Sep 2026 12:28:04 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0EBFD19540DB; Fri, 11 Sep 2026 12:27:46 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23DC73000229; Fri, 11 Sep 2026 12:28:02 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E038A1956042; Fri, 11 Sep 2026 12:27:43 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 16:27:31 +0400
-Subject: [PATCH 08/10] target/riscv: bypass smstateen check in debugger
- mode
+Date: Fri, 11 Sep 2026 16:27:26 +0400
+Subject: [PATCH 03/10] gdbstub: set feature->base_reg for dynamic features
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-query-reg-v1-8-0c04f0c02cf3@redhat.com>
+Message-Id: <20260911-query-reg-v1-3-0c04f0c02cf3@redhat.com>
 References: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
 In-Reply-To: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
 To: qemu-devel@nongnu.org
@@ -79,34 +78,34 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=773;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1027;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=LMrjJTVTVpO2R0XX7vgTv//RHImMSQWNJTx8uS10AB0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqo/OvQ16YWYZ57x+2HOU3K6EmSbrY109lK5myr
- 95vNB0h1MCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqPzrwAKCRDa6OEJdZac
- 5QTzD/oCsf37URwa3TSnmZOnWsq92c/+qvcBVl3Qd3wHnFHLkALTL0WNNBAYB++IYWAKtaqfXjB
- nRy4e+rOdJ4I6v9qj1jp6R26mqxr+dGeQ6wJMwQcisK5FdE0Exga7cpdi+ly9D+6fciYOGjsgrs
- ttmCSTmlvm3hy433P0CvuXt4FOYbIuD5AW4AFtpRTdoyL8eAzJvOKxPrzLV69Wqsh6ltRp/zWBc
- xOPPLrZe/Gc9HfXKOrl8bBJ64xXrR0w+bf0KdyBxCK4XmNah4TbwO+jAH+PVxL+2CIzylic/6BP
- BKxIlnwM9Lttyb/eCsCJwL7EGhhBJ0QoifkvFRHdxH985VKVmA6ezdj22A4tTi4BoASVdsXIpg4
- BgGTtE7O01PG4qlN3ZBMFnpLdA7vJVSdoXQd4ntCAMIKsEUUD6me1N18Pt+iML9OChBCOhRXkKc
- cTKxhHO32ysCBGi26TwSButCTucJwy2kMv+ATX9h5X/vteqcVuF9a1RVodkEaq1VJcPYzjIwneC
- DfGILKR8CL6IxXEENNl/BDcVYuZ5fElHVKvpgvmGwyh9UW5HRthu5BYjw2jRHdwriyaKDudsNCr
- cSe/klj/Lw9BBTe+euWPoolpDO9OJONZc/2NyJ9te+mShEmsObXeQejTmCS8nVjhULAkeoG+PBl
- 1vQjIoI2Q8a5JOA==
+ bh=kqhJAQgP0IhPa8w0kge5ZBoIAHiwJHN65r8HJVeY8Fs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqo/OuB+pKOjc3VULyffQ2RAnuYKhnJ2OL5zwL3
+ EenlVOGCLuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqPzrgAKCRDa6OEJdZac
+ 5QgHD/0V+UQQCOBslFtXfVDt88sirmYbd7ZM5TrCV+rnU37FX1LdFWaGl5G/50R5WrxbruoYoV2
+ xLM7Jcwxl06nIjW0TR1KEZ0ZqDZR3VGS9y2Bp6ls6arfAY4rIgdw2oF0YRaTXhXYlE9UvCNyR3E
+ SV6Tq7hMvWaUy2GrlE37YPDOh2DI3bUY69sJmFfH79R+ESlufQnV+uUJBPGQyXamvOhdQtz5dl7
+ DVuE2MXeH54ujTNzEUFzXOE0SGU+E0N2DV9GmNe3KxJHXA8isMZrsrm70dP+P3L6Vxj9//wWbrn
+ WztAeVmV/62fFqly6opmE0HFYzOrp704+EhTEqzkG+9DVHlHd3Hn6S1qHvz+4D9SsmwFcEUBkIA
+ enWR8P1BWq5AzDfBMX9XCAnLpYu8B2zULg93s0lyqsmt3M7Wsrj5U4xWaFefhz3QJhX1nqXe9Ge
+ 6gVHmP9Vn3sCjl2KxpkwgZgrWacZ/KlnTSwu9FPhp+1eUyLtarEs4AGTLtOV4we435BamJi+LQJ
+ N4EmGqDWuOSwk9LZUrj1Bk8emGlAIaXEgzBMulM1KOgvUF+q2feYWGqlfza0fWs4Xa9bz4LuJBy
+ UXFSbMTP+bza3DD3Pacy2kz5jueNi+NV+hv0ctImTnl95IkUHz6ATN1IA4PSzrsZZmvwlkpDvvK
+ T+o23qHpjqLBoyQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,27 +121,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow to read CSRs gated by Smstateen extension when env->debugger.
+gdb_feature_builder_end() never propagated builder->base_reg into
+feature->base_reg, leaving it at 0 for all dynamically-built features.
+This made the trace log at gdb_get_register_list() report an incorrect
+base_reg for dynamic features.
+
+GDBRegisterState::base_reg was correctly set, so this doesn't fix
+an actual issue.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/tcg/csr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ gdbstub/gdbstub.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index bd4b6dc114bc..93a7f419f29f 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -53,7 +53,8 @@ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit)
- {
-     bool virt = env->virt_enabled;
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 0ce871d74929..912e31b66744 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -476,6 +476,7 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder)
  
--    if (env->priv == PRV_M || !riscv_cpu_cfg(env)->ext_smstateen) {
-+    if (env->debugger || env->priv == PRV_M ||
-+        !riscv_cpu_cfg(env)->ext_smstateen) {
-         return RISCV_EXCP_NONE;
-     }
+     g_ptr_array_free(builder->xml, TRUE);
  
++    builder->feature->base_reg = builder->base_reg;
+     builder->feature->num_regs = builder->regs->len;
+     builder->feature->regs = (void *)g_ptr_array_free(builder->regs, FALSE);
+     trace_gdbxml_feature_builder_header(builder->feature->name,
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
