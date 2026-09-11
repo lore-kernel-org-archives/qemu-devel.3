@@ -4,70 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF81FC88E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 14:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3423FC88E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 14:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x52KG-00013Y-TS; Fri, 11 Sep 2026 10:34:01 -0400
+	id 1x52Om-0003Sv-TT; Fri, 11 Sep 2026 10:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x52Id-0000e3-RF
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:32:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+01a8612c2d92d3fbdbce+8419+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1x52Le-00020h-Pv
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:35:30 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x52IZ-0006jx-8g
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:32:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789137134;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=FgcxXaX7vV4QKY5AmHCuTifN6aisrzplu/ekuc9/1QQ=;
- b=FWdaLovsynpqnzfEmETFrGaL8iwsNRswSE/GQK1bLpjf979HjU6EhSO2nGgAsxtYsrfz7r
- O9VNkUnF9s1c3X9pkKf4+TkqnHgMMkffX1moM2fl9LptUYF3Vm6JuCWYwUBfN6uaNyLndo
- 0VaA/9dG4HKBmjZcW01fuQWLHaYO5gY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-kouePLKLNBuFsDVFxTXoEg-1; Fri,
- 11 Sep 2026 10:32:10 -0400
-X-MC-Unique: kouePLKLNBuFsDVFxTXoEg-1
-X-Mimecast-MFC-AGG-ID: kouePLKLNBuFsDVFxTXoEg_1789137129
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B1131801352; Fri, 11 Sep 2026 14:32:09 +0000 (UTC)
-Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E12F718002B7; Fri, 11 Sep 2026 14:32:06 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 00/29] Mark user creatable devices for secure for virt use case
-Date: Fri, 11 Sep 2026 15:31:36 +0100
-Message-ID: <20260911143205.2736968-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+01a8612c2d92d3fbdbce+8419+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1x52Lb-0007UI-At
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:35:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=y9s8/Kik1U8QjhqokdGCkODUnnZo8ko0NcIifZopjfs=; b=sZo3AeTSjpMDaTKMBBdBafSt4F
+ 6M6kmkiAxcmo/4S00fTfKo0wa7y3Bx2oobpHwZSPcDTJN01wMkkzfQ8QJ9tT7ER2edSgewEzxumgi
+ bO7AgXH602Hj3LDhcEEeYizr3+Ep1LKlkGUKKmO79K4uIF0C+xalkzrEmV/y314smHyf/2nwNCqug
+ NPoGe0gzWoEA/CweAwBwDUjHY93IMw0EGvYixJKQLaxlYxKbyoljHW0xabUgZ2RW0Gh6gnLKtIzJO
+ 9mwKpdIiMMYzCmMkuDVCR3DVYJDXPOp2I73tHoZlBvakoBS8pS1KKwpB/TcVd34It7l1YIF8/PvUZ
+ 7g+AU3GQ==;
+Received: from [2001:8b0:10b:5:94db:d427:30c1:83c2]
+ (helo=u09cd745991455d.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+ id 1x52LR-0000000Cm1f-0mIv; Fri, 11 Sep 2026 14:35:13 +0000
+Message-ID: <c9a719c9a67c9a32ad566a0255d24722e760a622.camel@infradead.org>
+Subject: Re: [BUG] hw/xen: features published after InitWait since 240cc11369fc
+From: David Woodhouse <dwmw2@infradead.org>
+To: mark.syms@citrix.com
+Cc: qemu-devel@nongnu.org, xen-devel@lists.xenproject.org, 
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org, 
+ edgar.iglesias@gmail.com
+Date: Fri, 11 Sep 2026 15:34:44 +0100
+In-Reply-To: <30ec634b6072ac23c38a6a05bf3f90de4b383632.camel@infradead.org>
+References: <30ec634b6072ac23c38a6a05bf3f90de4b383632.camel@infradead.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-CbTczZlqA3kFBM/rEx4P"
+User-Agent: Evolution 3.60.3-0ubuntu1~ppa10~24.04 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+01a8612c2d92d3fbdbce+8419+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,305 +78,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This (largish) series undertakes the task of marking devices
-secure, if they are intended to be used a virtualization
-use case.
 
-NB, the maintainer CC list was way too huge to include every
-individual, so I've trimmed to just the mailing list CCs.
+--=-CbTczZlqA3kFBM/rEx4P
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The approach taken was iterative as follows
+On Fri, 2026-09-11 at 13:31 +0100, David Woodhouse wrote:
+>=20
+> =C2=A0- While testing hot-plug of xen-net-device we hit an unrelated,
+> =C2=A0=C2=A0 pre-existing heap corruption ("double free or corruption (!p=
+rev)")
+> =C2=A0=C2=A0 on qemu exit after hot-plugging a xen-net-device, present on
+> =C2=A0=C2=A0 current master both with and without the fix. It looks like =
+the
+> =C2=A0=C2=A0 same class of exit-notifier-vs-net_cleanup() teardown orderi=
+ng
+> =C2=A0=C2=A0 issue as commit 9000666052 ("xen-block: fix segv on unrealiz=
+e")
+> =C2=A0=C2=A0 was for xen-block. That will be chased separately.
 
- * Machines listed in
+It has a fix for that too now, FWIW, but I don't have the bandwidth
+right now to reimplement it with meat fingers so I might just file the
+bug instead.
 
-    https://www.qemu.org/docs/master/system/security.html#virtualization-use-case
+I wasn't *actually* setting out to comment on the AI policy today  =E2=80=
+=94 in
+fact I didn't really have a strong opinion on it. I spend enough of my
+life tilting at windmills *intentionally*; this wasn't meant to be one
+of them.
 
- * All virtio/vhost/vfio/xen related devices
+Letting the tool reply in its own voice and pretending I was held
+hostage was mostly meant as a joke, as *well* as being the only way I
+was going to look at that bug today (it would have taken me a *long*
+time to do all that testing of old and new failure modes, finding the
+net device path that *does* reproduce it locally, fixing the other
+problem with that, and finally confirming that it all works).
 
- * Most PCI related devices/controllers/bridges
+But our policies should be based on actual data and the holistic
+outcomes they achieve, and this is just data which we can take into
+account on one side of the balance, even if the other side remains more
+compelling.
 
-I then used the RHEL builds of QEMU as an approximation for
-what should be considered "virtualization use case", since
-they cut out a huge pile of devices from the build. IOW,
-more or less everything that RHEL builds for x86_64, ppc64,
-aarch64, s390x gets included. Notably since RHEL does not
-yet ship riscv or loongarch, I've possibly missed some
-devices that ought to be in scope.
+--=-CbTczZlqA3kFBM/rEx4P
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-Devices are marked secure *regardless* of their maintainer
-status, if they are relevant to virt. Notably all the USB
-stuff is included despite USB being orphaned. An exception
-is CXL which is arguably relevant to virt, but maintainers
-agreed it is too immature to include so far.
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
+ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
+MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
+AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
+DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
+q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
+S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
+Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
+72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
+CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
+mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
+h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
+CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
+GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
+v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
+CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
+b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
+Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
+A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
+vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
+0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
+jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
+FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
+HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
+IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
+MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
+MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
+sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
+tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
+EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
+6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
+ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
+bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
+Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
+02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
+sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
+ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
+JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
+LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
+BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
+LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
+hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
+SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
+c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
+AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
+EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
+ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
++3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
++icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
+McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
+LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
+nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
+gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
+Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
+CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
+QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
+Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
+YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
+kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
+pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
+v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
+vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
+PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
+REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
+lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
+aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
+D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
+bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
+MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
+oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
+TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
+BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
+MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
+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
+QEKjkqzfWxsdpEWRevDkrtUAAAAAAAA=
 
-IOW, the "secure" flag as set in this series mostly avoids
-saying anything about the support status of the object types.
 
-Over the long term, IMHO, the set of devices we declare as
-providing a security boundary needs to be stable. We should
-not declare a device out of scope for the virt use case simply
-because a maintainer steps aside. The device doesn't become
-instantly less secure. It does mean bug fixes may not be
-timely enough, and rely on the goodwill of other contributors
-or maintainers to step up and fix.
-
-Or to put it another way. "secure = true" does not guarantee
-that the device is secure, but it states our intent that we
-*want* it to be secure, as opposed to "secure = false" which
-indicates we just don't care either way.
-
-The intersection of (secure, orphaned) highlights to QEMU
-contributors or corporate sponsors, where they might step
-up their effort / investment.
-
-Finally this is just user creatable devices. Use of these
-devices implies use of many more non-user creatable devices.
-
-I don't have a good way to enumerate those yet, and while
-the end user doesn't care at runtime, as maintainers we
-want to be clear if all devices are in scope for CVE
-handling or not.
-
-Based-on: <20260910103628.2326622-1-berrange@redhat.com>
-
-Daniel P. Berrangé (29):
-  hw: mark secure machines for x86, s390, ppc, arm, loonarch, riscv
-  accel: mark kvm and xen accelerators as secure
-  hw: mark all virtio PCI devices as secure
-  hw: mark all virtio CCW devices as secure
-  hw: mark all vhost devices a secure
-  hw: mark all remaining virtio object types as secure
-  hw/vfio: mark all VFIO object classes as secure
-  hw/xen: mark all Xen related object types as being secure
-  hw/net: mark e1000, e1000e, IGB, rtl8139 & sPAPR VLAN as secure
-  hw/usb: mark commonly used USB devices/hosts as secure
-  hw/watchdog: mark some watchdog devices as secure
-  hw/scsi: mark spapr and vmware SCSI controllers as secure
-  hw/scsi: mark SCSI disk endpoint devices as secure
-  hw/ide: mark ICH9 and ide-hd/ide-cd as secure
-  hw: define most common PCI types as secure
-  hw/pci-host: mark common x86, ppc, arm and s390 PCI hosts as secure
-  hw/display: mark bochs, cirrus, qxl, VGA, ramfb as secure
-  hw/tpm: mark all TPM implementations as secure
-  hw/misc: mark pvpanic, vmcoreinfo as secure
-  hw/audio: mark Intel HDA devices & codecs as secure
-  hw/char: mark common serial / console devicess a secure
-  hw/mem: mark nvdimm, pc-dimm & spapr-nvdimm devices as secure
-  hw/uefi: mark the EFI vars service as secure
-  hw/acpi: mark erst, vmclock and vmgenid devices as secure
-  hw: mark KVM clock and RTC devices as secure
-  hw: device AMD, Intel and ARM IOMMUs as secure
-  hw/input: mark PS/2 and PC Keyboard devices as secure
-  hw/i386: mark vmmouse / vmport as secure
-  tests/tcg: improve check for working cross compilers
-
- accel/accel-common.c                 | 2 ++
- accel/accel-system.c                 | 1 +
- accel/kvm/kvm-accel-ops.c            | 1 +
- accel/kvm/kvm-all.c                  | 1 +
- accel/xen/xen-all.c                  | 2 ++
- hw/9pfs/virtio-9p-device.c           | 1 +
- hw/acpi/erst.c                       | 1 +
- hw/acpi/vmclock.c                    | 1 +
- hw/acpi/vmgenid.c                    | 1 +
- hw/arm/smmu-common.c                 | 1 +
- hw/arm/smmuv3.c                      | 2 ++
- hw/arm/virt.c                        | 1 +
- hw/arm/xen-pvh.c                     | 1 +
- hw/audio/hda-codec.c                 | 4 ++++
- hw/audio/intel-hda.c                 | 5 +++++
- hw/audio/virtio-snd.c                | 1 +
- hw/block/vhost-user-blk.c            | 1 +
- hw/block/virtio-blk.c                | 1 +
- hw/block/xen-block.c                 | 3 +++
- hw/char/debugcon.c                   | 1 +
- hw/char/sclpconsole-lm.c             | 1 +
- hw/char/sclpconsole.c                | 1 +
- hw/char/serial-isa.c                 | 1 +
- hw/char/serial-pci.c                 | 1 +
- hw/char/serial.c                     | 1 +
- hw/char/spapr_vty.c                  | 1 +
- hw/char/virtio-console.c             | 2 ++
- hw/char/virtio-serial-bus.c          | 3 +++
- hw/char/xen_console.c                | 1 +
- hw/display/bochs-display.c           | 1 +
- hw/display/cirrus_vga.c              | 1 +
- hw/display/qxl.c                     | 3 +++
- hw/display/ramfb-standalone.c        | 1 +
- hw/display/vga-mmio.c                | 1 +
- hw/display/vga-pci.c                 | 3 +++
- hw/display/vhost-user-gpu.c          | 1 +
- hw/display/virtio-gpu-base.c         | 3 ++-
- hw/display/virtio-gpu-gl.c           | 1 +
- hw/display/virtio-gpu-pci-rutabaga.c | 1 +
- hw/display/virtio-gpu-pci.c          | 3 ++-
- hw/display/virtio-gpu-rutabaga.c     | 1 +
- hw/display/virtio-gpu.c              | 1 +
- hw/i386/amd_iommu.c                  | 4 +++-
- hw/i386/intel_iommu.c                | 1 +
- hw/i386/kvm/clock.c                  | 1 +
- hw/i386/microvm.c                    | 1 +
- hw/i386/pc_piix.c                    | 4 ++--
- hw/i386/vmmouse.c                    | 1 +
- hw/i386/vmport.c                     | 1 +
- hw/i386/xen/xen-pvh.c                | 1 +
- hw/i386/xen/xen_platform.c           | 1 +
- hw/i386/xen/xen_pvdevice.c           | 1 +
- hw/ide/ich.c                         | 1 +
- hw/ide/ide-dev.c                     | 3 +++
- hw/ide/piix.c                        | 2 ++
- hw/input/pckbd.c                     | 3 ++-
- hw/input/ps2.c                       | 9 ++++++---
- hw/input/virtio-input-hid.c          | 5 +++++
- hw/input/virtio-input-host.c         | 1 +
- hw/input/virtio-input.c              | 1 +
- hw/loongarch/virt.c                  | 2 ++
- hw/mem/nvdimm.c                      | 1 +
- hw/mem/pc-dimm.c                     | 1 +
- hw/misc/pvpanic-isa.c                | 1 +
- hw/misc/pvpanic-mmio.c               | 1 +
- hw/misc/pvpanic-pci.c                | 1 +
- hw/misc/vmcoreinfo.c                 | 1 +
- hw/net/e1000.c                       | 1 +
- hw/net/e1000e.c                      | 1 +
- hw/net/igb.c                         | 1 +
- hw/net/rtl8139.c                     | 1 +
- hw/net/spapr_llan.c                  | 1 +
- hw/net/virtio-net.c                  | 1 +
- hw/net/xen_nic.c                     | 1 +
- hw/pci-bridge/gen_pcie_root_port.c   | 1 +
- hw/pci-bridge/i82801b11.c            | 1 +
- hw/pci-bridge/ioh3420.c              | 1 +
- hw/pci-bridge/pci_bridge_dev.c       | 2 ++
- hw/pci-bridge/pci_expander_bridge.c  | 8 ++++++++
- hw/pci-bridge/pcie_pci_bridge.c      | 1 +
- hw/pci-bridge/pcie_root_port.c       | 1 +
- hw/pci-bridge/xio3130_downstream.c   | 1 +
- hw/pci-bridge/xio3130_upstream.c     | 1 +
- hw/pci-host/gpex.c                   | 2 ++
- hw/pci-host/i440fx.c                 | 2 ++
- hw/pci-host/pnv_phb.c                | 2 ++
- hw/pci-host/pnv_phb3.c               | 3 +++
- hw/pci-host/pnv_phb3_msi.c           | 1 +
- hw/pci-host/pnv_phb3_pbcq.c          | 1 +
- hw/pci-host/pnv_phb4.c               | 4 +++-
- hw/pci-host/pnv_phb4_pec.c           | 1 +
- hw/pci-host/q35.c                    | 2 ++
- hw/pci-host/remote.c                 | 1 +
- hw/pci-host/xen_igd_pt.c             | 1 +
- hw/pci/pci.c                         | 7 +++++++
- hw/pci/pci_bridge.c                  | 1 +
- hw/pci/pci_host.c                    | 1 +
- hw/pci/pcie_host.c                   | 1 +
- hw/pci/pcie_port.c                   | 1 +
- hw/ppc/spapr.c                       | 1 +
- hw/ppc/spapr_nvdimm.c                | 1 +
- hw/ppc/spapr_pci.c                   | 1 +
- hw/ppc/spapr_tpm_proxy.c             | 1 +
- hw/riscv/virt.c                      | 1 +
- hw/rtc/mc146818rtc.c                 | 1 +
- hw/s390x/s390-pci-bus.c              | 4 ++++
- hw/s390x/s390-virtio-ccw.c           | 1 +
- hw/s390x/vhost-scsi-ccw.c            | 1 +
- hw/s390x/vhost-user-fs-ccw.c         | 1 +
- hw/s390x/vhost-vsock-ccw.c           | 1 +
- hw/s390x/virtio-ccw-9p.c             | 1 +
- hw/s390x/virtio-ccw-balloon.c        | 1 +
- hw/s390x/virtio-ccw-blk.c            | 1 +
- hw/s390x/virtio-ccw-crypto.c         | 1 +
- hw/s390x/virtio-ccw-gpu.c            | 1 +
- hw/s390x/virtio-ccw-input.c          | 5 +++++
- hw/s390x/virtio-ccw-md.c             | 1 +
- hw/s390x/virtio-ccw-mem.c            | 1 +
- hw/s390x/virtio-ccw-net.c            | 1 +
- hw/s390x/virtio-ccw-rng.c            | 1 +
- hw/s390x/virtio-ccw-scsi.c           | 1 +
- hw/s390x/virtio-ccw-serial.c         | 1 +
- hw/s390x/virtio-ccw.c                | 1 +
- hw/scsi/scsi-disk.c                  | 4 ++++
- hw/scsi/scsi-generic.c               | 1 +
- hw/scsi/spapr_vscsi.c                | 1 +
- hw/scsi/vhost-scsi-common.c          | 1 +
- hw/scsi/vhost-scsi.c                 | 1 +
- hw/scsi/vhost-user-scsi.c            | 1 +
- hw/scsi/virtio-scsi.c                | 2 ++
- hw/scsi/vmw_pvscsi.c                 | 1 +
- hw/tpm/tpm_crb.c                     | 1 +
- hw/tpm/tpm_spapr.c                   | 1 +
- hw/tpm/tpm_tis_i2c.c                 | 1 +
- hw/tpm/tpm_tis_isa.c                 | 1 +
- hw/tpm/tpm_tis_sysbus.c              | 1 +
- hw/uefi/var-service-sysbus.c         | 2 ++
- hw/usb/ccid-card-emulated.c          | 1 +
- hw/usb/ccid-card-passthru.c          | 1 +
- hw/usb/dev-hid.c                     | 4 ++++
- hw/usb/dev-hub.c                     | 1 +
- hw/usb/dev-smartcard-reader.c        | 3 +++
- hw/usb/dev-storage-bot.c             | 1 +
- hw/usb/dev-storage-classic.c         | 1 +
- hw/usb/dev-storage.c                 | 1 +
- hw/usb/hcd-ehci-pci.c                | 2 ++
- hw/usb/hcd-ehci-sysbus.c             | 8 ++++++++
- hw/usb/hcd-ohci-pci.c                | 1 +
- hw/usb/hcd-ohci-sysbus.c             | 1 +
- hw/usb/hcd-uhci.c                    | 2 ++
- hw/usb/hcd-xhci-nec.c                | 1 +
- hw/usb/hcd-xhci-pci.c                | 2 ++
- hw/usb/hcd-xhci-sysbus.c             | 3 ++-
- hw/usb/hcd-xhci.c                    | 1 +
- hw/usb/host-libusb.c                 | 1 +
- hw/usb/redirect.c                    | 1 +
- hw/vfio-user/pci.c                   | 1 +
- hw/vfio/ap.c                         | 1 +
- hw/vfio/ccw.c                        | 1 +
- hw/vfio/container.c                  | 1 +
- hw/vfio/igd.c                        | 1 +
- hw/vfio/iommufd.c                    | 2 ++
- hw/vfio/pci.c                        | 3 +++
- hw/vfio/spapr.c                      | 1 +
- hw/virtio/vdpa-dev.c                 | 1 +
- hw/virtio/vhost-user-base.c          | 3 ++-
- hw/virtio/vhost-user-fs.c            | 1 +
- hw/virtio/vhost-user-gpio.c          | 1 +
- hw/virtio/vhost-user-i2c.c           | 1 +
- hw/virtio/vhost-user-input.c         | 1 +
- hw/virtio/vhost-user-rng.c           | 1 +
- hw/virtio/vhost-user-rtc.c           | 1 +
- hw/virtio/vhost-user-scmi.c          | 1 +
- hw/virtio/vhost-user-snd.c           | 1 +
- hw/virtio/vhost-user-spi.c           | 1 +
- hw/virtio/vhost-user-test-device.c   | 1 +
- hw/virtio/vhost-user-vsock.c         | 1 +
- hw/virtio/vhost-vsock-common.c       | 1 +
- hw/virtio/vhost-vsock.c              | 1 +
- hw/virtio/virtio-balloon.c           | 1 +
- hw/virtio/virtio-bus.c               | 1 +
- hw/virtio/virtio-crypto.c            | 1 +
- hw/virtio/virtio-input-pci.c         | 2 ++
- hw/virtio/virtio-iommu.c             | 2 ++
- hw/virtio/virtio-md-pci.c            | 1 +
- hw/virtio/virtio-mem.c               | 1 +
- hw/virtio/virtio-mmio.c              | 2 ++
- hw/virtio/virtio-nsm.c               | 1 +
- hw/virtio/virtio-pci.c               | 3 +++
- hw/virtio/virtio-pmem.c              | 1 +
- hw/virtio/virtio-rng.c               | 1 +
- hw/virtio/virtio-rtc.c               | 1 +
- hw/watchdog/sbsa_gwdt.c              | 1 +
- hw/watchdog/spapr_watchdog.c         | 1 +
- hw/watchdog/wdt_diag288.c            | 1 +
- hw/watchdog/wdt_i6300esb.c           | 1 +
- hw/watchdog/wdt_ib700.c              | 1 +
- hw/xen/xen-bus.c                     | 3 +++
- hw/xen/xen-legacy-backend.c          | 3 +++
- hw/xen/xen-pvh-common.c              | 1 +
- hw/xen/xen_pt.c                      | 1 +
- hw/xenpv/xen_machine_pv.c            | 2 +-
- include/hw/i386/pc.h                 | 1 +
- tests/tcg/test_cc.c                  | 6 +++++-
- 204 files changed, 309 insertions(+), 14 deletions(-)
-
--- 
-2.55.0
-
+--=-CbTczZlqA3kFBM/rEx4P--
 
