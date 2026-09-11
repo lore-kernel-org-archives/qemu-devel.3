@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F488C88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 19:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16254C88E53
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 19:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x56kw-0005Ed-Kz; Fri, 11 Sep 2026 15:17:50 -0400
+	id 1x56lH-0005Ik-RX; Fri, 11 Sep 2026 15:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x56ku-0005ES-VX
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:17:48 -0400
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ id 1x56lG-0005IU-Io
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:18:10 -0400
+Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x56ks-0003U6-8b
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:17:48 -0400
+ id 1x56lE-0003Z0-NO
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:18:10 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iSABUnoABtiykGIVuRuwox53P5YPKGfrWBTbxFhj/uHfbIraYm3a1e/qnp8a7bkcCRzCN/gkcwRuftDGNLVhO+mUQ3idHRLIFmLt/mTWcFprivbfJO9zTmkABWb87qwIo4LpJ0ypR+r80QV0JEqVR/OnN4PsxdDxS3mT7m5xYp7IQgUdfi3mg2EuHFgF1Oji3mr0SR691BMV8Ypu0vVQ42DZOkzHZHsLCnON98UZV/8oGKAWA1tW1lWnQkzK2OIUs1hotvX+DHrROL8wBC4MrUKCTFd3O4Kqc3pDd9M+Q45VgpGcBxJri4tlEUuhuY+EjwM35atBN2gI3UzFFrLa2Q==
+ b=HrCRF61xqV9nPIsy2ob7aPT0FisRoJSSeY5ZGEjTNH58dDi7h9Rc2yd4zZFlhILmFRULXFPLERxGtKsUbO6dCk3TYoAll543HJGz4TUrLTQwlR3L7HZTxNfX41maK01PnJCHD2Um5QVTCF5OmMCWohu2VSOyhNoAyfFHUmRl2OGK0kd0IZqPMZ0/LXDlgUHIzDkQ6S+IVYglO8lM7mz4dYTfqV9U5Uh3yTsIuRw60URz4lexXjq2iVrER340bPn8Ez/NhheAKErXnTozp2d/WAW3iL36nyvDO0w/qBPc1q/sXEFKHbA7grBeu2VS4tuG5PQyHEYBePLJM4Jn/4LGdA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nbnRWoY7R8FnA1K/ZO7vdRogpsjk1M7pMklfLRUu7cA=;
- b=RHKmKeGsuV4Niwki1W06CYGCgH6SXXvgdS1bKAjbMGuz4BHC1bqeflk9DDsxY5mTSrbCXSbQhZVQ5KVWFMq1YkmKdSAHon8DlSfA/e2b/uTe1p5OmGA59tAG6EtBspBCAy6SXwQ2cw8N73fZjn4jMGWZAPKOyo5CYO7eYEs0NHRWTkGvJrE5slfuOgoWHAb83pL0zYlQAn4FKkmpLULCHeP4ujkpKTXnZfQjjBGlbDTJo6bk9+m3/za+c4royvcp70KkxUp+HN3o3gd+sJr+LrEaJlhE7eWGfFTmqVvaIAkbvPvkBYEdTcvAqwLYGXErZuCz8gKnyfWBFiAIBTNFlg==
+ bh=Yp5duncyBPdx6BAIt2E0m6c91i9iqDTphcHUsTiaro8=;
+ b=qCsl3yswGdxLn1D7oH3tKuwlsEmMOaW8z8M3qgHjPKRc5URk2Muc49JxWFsOU8VYRVSjjF4UVN4B7quJdXGw2uXElEVAtnknN/EO29QxUTv2AHszuoDVVYx2N1/kYjEi3FlOFMPmrdSEYln+9eEzPEk/KL6ahBFWaX7MS7hP95aREC2MzFs16gmd3X4jmhhBHrk7EXq3eNIdmMcktgUwuYaJ3Y8iyLBWnZZoXAZmdJ+26EKkz1HX6i3EwyQ5hvfGEXfE8VoXp/1VsTN4nB3vQkS9CE3XNP4637GZO08FOBtEeE4h3ioWFmXaz33VOLFqN+FNeU2wkLwdc/EcVLmIkQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nbnRWoY7R8FnA1K/ZO7vdRogpsjk1M7pMklfLRUu7cA=;
- b=ktj7IyJRtphVhELYCE+/QCoMc4luMIhh6S0jMM1sXw2f0xqirPa/k+NKsjgVDyNZg5iPBUT2LFfSlHiUWztjeuIRaopcHHooBesgTjcQnM+GUnXJyI+yqNlC3mDoU/FcA71Clp5aGwMqb8tsPyAguKwLmOk8PmX1y+CSXeW5zZU=
-Received: from BN9PR03CA0620.namprd03.prod.outlook.com (2603:10b6:408:106::25)
- by DS0PR12MB8295.namprd12.prod.outlook.com (2603:10b6:8:f6::21) with
+ bh=Yp5duncyBPdx6BAIt2E0m6c91i9iqDTphcHUsTiaro8=;
+ b=k99UwYohLZWknpKBCnDdSbFPtR8BKESGkTNaF/cZUnbPBEHJrByzzWm6bpfJ88CMKVMAenKI/HWxTH+fpsMYD5+aVNXurWXSZLhaLYlZwJcZg1k79QQP0tNpQPoJjMMsnkb0MhJkE895uNjHYh7vaQYo9gbxYNvdCLnFg3NaG9o=
+Received: from BLAP220CA0016.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:32c::21)
+ by DM3PR12MB9287.namprd12.prod.outlook.com (2603:10b6:8:1ac::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
- 2026 19:17:38 +0000
-Received: from LV8PEPF0000005C.namprd02.prod.outlook.com
- (2603:10b6:408:106:cafe::64) by BN9PR03CA0620.outlook.office365.com
- (2603:10b6:408:106::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.10 via Frontend Transport; Fri,
- 11 Sep 2026 19:17:37 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.10; Fri, 11 Sep
+ 2026 19:17:58 +0000
+Received: from LV8PEPF0000005E.namprd02.prod.outlook.com
+ (2603:10b6:208:32c:cafe::9a) by BLAP220CA0016.outlook.office365.com
+ (2603:10b6:208:32c::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.9 via Frontend Transport; Fri, 11
+ Sep 2026 19:17:58 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,69 +53,67 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- LV8PEPF0000005C.mail.protection.outlook.com (10.167.245.132) with Microsoft
+ LV8PEPF0000005E.mail.protection.outlook.com (10.167.245.138) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.5 via Frontend Transport; Fri, 11 Sep 2026 19:17:37 +0000
+ 15.21.406.5 via Frontend Transport; Fri, 11 Sep 2026 19:17:58 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 11 Sep
- 2026 14:17:37 -0500
-Date: Fri, 11 Sep 2026 14:07:22 -0500
+ 2026 14:17:57 -0500
+Date: Fri, 11 Sep 2026 14:16:41 -0500
 From: Michael Roth <michael.roth@amd.com>
-To: David Hildenbrand <david@kernel.org>
+To: Markus Armbruster <armbru@redhat.com>
 CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
- <berrange@redhat.com>, <armbru@redhat.com>, <pankaj.gupta@amd.com>,
- <isaku.yamahata@intel.com>, <xiaoyao.li@intel.com>,
- <chao.p.peng@linux.intel.com>, <ashish.kalra@amd.com>,
- <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: Re: [PATCH v2 08/19] system/memory: Re-use
- memory-backend-guest-memfd inode for private memory
-Message-ID: <k5xe5tazooquucs7yrogib2yn32yfosxxtkaxwja26ch2f5bhh@zx6ihjcya2gt>
+ <berrange@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
+ <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
+ <ashish.kalra@amd.com>, <ackerleytng@google.com>, <lpieralisi@kernel.org>
+Subject: Re: [PATCH v2 19/19] hostmem: Automatically select set
+ guest-memfd=on for in-place conversion
+Message-ID: <nk7ba26g7klayyzttksanzdbwrbbke4o7uusof3a4hgwd3cq2i@ngk52svj7vhd>
 References: <20260908205236.838281-1-michael.roth@amd.com>
- <20260908205236.838281-9-michael.roth@amd.com>
- <391885b2-6464-4656-9cda-8d05891849a8@kernel.org>
+ <20260908205236.838281-20-michael.roth@amd.com>
+ <874ifzos2a.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <391885b2-6464-4656-9cda-8d05891849a8@kernel.org>
+In-Reply-To: <874ifzos2a.fsf@pond.sub.org>
 X-Originating-IP: [10.180.168.240]
 X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PEPF0000005C:EE_|DS0PR12MB8295:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8fae44db-5eea-443a-9277-08df10395774
+X-MS-TrafficTypeDiagnostic: LV8PEPF0000005E:EE_|DM3PR12MB9287:EE_
+X-MS-Office365-Filtering-Correlation-Id: 642e281b-fb11-4de2-c8d1-08df103963d9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|376014|23010399003|36860700016|7416014|18002099003|22082099003|10067099003|56012099006|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info: lf6p8LqrPBI3GaTr0DzJN34OTaTeGYmZ5oMn2NyeOGrzFcgNt9J5KRGN13I91zBC8a/e/YR0hUL8ydsid/4UdTbfIL+4rtsrS/xjt7wZHWAIq8V4GVXPV0/ZeQDDuDKrThuM5dZ/9Z+THngbsqnhi2KSmr4IaIMbU5OAoyLtc1SeZw15FBt0RHSQl0xLPViWeNWhwUmBe8h5a6fGYqphntf4g4DguYt3m/sRbNFlqQTsW23JEsIgqd59NODC97PSxh0/AvlAsb7KWOFqonXDxoyC39kuStHQc3Ybk5FGa8f3oomL3sAKCfU4ojqg6ndGal4OCkfSxSwSTxa+jXCRRXUJFMGmLXRdEjsM+phUFC1SS5IDg3AtoFUOJHJ+ipBA4Sg2ICteoTWnJZWbm6o4UT8kIWRIhMqowGAFZjwSHebKf/homp3t6SfIIidAbS3BGdnaCaBFVFbMfUbV9larvMER8DfONvwPSpsu1oaETNSgZFNddSGtHIUQF4bpR6T1wRvr5GkYkqx7eYkdz/X4Yo1C7d9/TVQmBxhMKGfQgtE8QUbJWhNlfmWVgtuqE5njF+IawylO5uFuIKkI60GVeDDBBAhHv7aKW75R2A+Bk5ZwhynQqVdyzZsQcbnWFfl6L2TyKj8TpfhXqgUkvF4TW1NRXah+fwms0Tusmxbla002EmfBMYYWkvao+lOD2UCd6gZf8Zinur/PoU8aXMOI/A==
+ ARA:13230040|23010399003|1800799024|36860700016|376014|7416014|82310400026|6133799003|10067099003|4143699003|11063799006|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: NMjzbIyK9IEXEtIG/z4eteOh3qPZ/iMc83CL/+1EXiOUyl1yuIrp3UWNyaI7AyETZj2PmUm7ocpfWW3XGlCEZ5xvSNx6r4FbKREtM6CRj+RgC1WCh6OB7q9R+ibbB5KIiR/HJEOtiXBQprqvOvVRxxORz+XSx8PQZ612cT0mPNlVrdQqLyT5qKCfPhHOL2BFjYLezIl3fjtChF2pwUA9ogfMEOcbrZLF+pmu0SIV0XyOeHxuj0ghiR4bRLpY+0+UuKsN55KvwODAOBXkJS9whi7vF6PlJmK6ctKL7Me7EaQpCi+IkVW7i20NcR2rR42j6T+ay0oZ3KftAVM94yIwpPEq5XsihdDlqG/8u+7lp+pP4o0SxU3zwNfiiidRArzqDZYlRwKY+zfZMAqd3wkVMHQmc5SxJyfmVyFONdhM4Qk+yKN0mwBtYBKRr39bbPz5hUnyGn8+FEvzA/ut5t+Cxy/VUlAjrcGz7SXHGdFgH0xHD3RzURCWDszBQP81R7VTDptX0J485uC77quUpJYL2pIwbpzpyDBFTlNzmplaMy8KXqyMBffxEvzk4FUF8BNDF1G3XhvqNK+yGWSd7cBKiITnx5y05J0go4Vm+W6FHU/OhtBkiwCvGCEopMQemR/bP2fhHh7JvhCTLUOJQafCoUEQb06sFl2Y9btU/LRZkjxCv0m+YTBMi6EHQEQwkkfnCV1dinS0Mjj5WqL+MgF7Fg==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(376014)(23010399003)(36860700016)(7416014)(18002099003)(22082099003)(10067099003)(56012099006)(11063799006)(4143699003);
+ SFS:(13230040)(23010399003)(1800799024)(36860700016)(376014)(7416014)(82310400026)(6133799003)(10067099003)(4143699003)(11063799006)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: afRUXFE2QD4AUY1zVRF2f38EFgw3pdhA+jroZpfaVIW/TOU6geKo4BWMCRfZrIj9hZ4a8oWrK0Ynu1yVm15X32nd8znT8lfoUSiUB7m8BPjsTQHyuwQf6TfGD6esXYKQgJUcjvDYy3X0rkfR0nvw+WdomabAebNArhzQ4277RgQQnlcJL3se3iSliZ5raHQ5Gh6u1fEhSJc9A1GeSnCkSht7iIdJt6Td0iutw8fzwHvF+CsNAWhQobXx2aJFTpOT0ipcDtPaG59ns7q2a+vW9nWd0TGaweD5E8eSQj9u/LEGLL6LqPBwjRPOwULvfkuiK/gwJVfoWhtMVD5+I6o0Mw7S0mKzNQJCWsTO1G7KZyzeR9VdcMv7B73+5HOh1Lr/NA5dWzDv1LtxpcQXkoZqdkJV/MGgWnVyE82WH+ocwp1QcWEgZQ1I9eomnbFkYTX2
+X-MS-Exchange-AntiSpam-MessageData-0: j+S6v8YgJHP61esjlL34OyssxA71qkH4e0VbcX0N3tvYd9AMmxyxUtgCvD/ucqCH0ZY7QPnWfKmM3uFi7TltcBtT7CA+SSsmS98RkZ0o3zS+WLUuh3ed02QVdhnjJgsml620gSmYwAyAxF6uI30uQDoe5yhJTaOPbTGcFVpUukqsXBcevVvsPfDb//TMkmdv3fXueTuyBqvaQdFyd6cTwtDm9GvKj6Y5eFOyGUtcsLbP6v9386EGBZu0019vf97axdJKfx21lyPcz8ou309ZfTE6mqs8DK7S5RDPpDJg+Z8jpgxSh56WkgaZLnKmh3qVYotha1Y7fxvbh52UIS40wU1DGl2GLy9yrGlH07pUvEO+EbUZ2gv0nnhAR6YRrxXeryDRYSDsLIotUZ1Z9ik2aIsLoaEjaXRf09fRfTr5jNW82JzYE+xvN6HlkIpcg22z
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 19:17:37.5903 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fae44db-5eea-443a-9277-08df10395774
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 19:17:58.3854 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 642e281b-fb11-4de2-c8d1-08df103963d9
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: LV8PEPF0000005C.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: LV8PEPF0000005E.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8295
-Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9287
+Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
  envelope-from=Michael.Roth@amd.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
+ helo=BN8PR05CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,65 +129,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 10, 2026 at 10:39:48AM +0200, David Hildenbrand wrote:
-> On 9/8/26 22:48, Michael Roth wrote:
-> > When convert-in-place=true, the guest_memfd instance created by
-> > memory-backend-memfd (when guest-memfd=on option is specified) should
-> > also be used internally for private memory.
-> > 
-> > Do this by dup()'ing the guest_memfd FD provided by the backend so the
-> > separate cleanup paths for shared vs. private FDs can be managed in the
-> > same way they are currently for convert-in-place=false (where shared
-> > memory must come from something other than guest_memfd).
-> > 
-> > Introduce a new RAM_GUEST_MEMFD_SHARED flag that can be used to
-> > limit this dup()'ing to specific backend types like
-> > memory-backend-memfd.
-> > 
-> > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> > ---
-> >  backends/hostmem-memfd.c |  1 +
-> >  include/system/memory.h  |  3 +++
-> >  system/physmem.c         | 48 +++++++++++++++++++++++++++++++++++++---
-> >  3 files changed, 49 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> > index 6576331441..a9759e682b 100644
-> > --- a/backends/hostmem-memfd.c
-> > +++ b/backends/hostmem-memfd.c
-> > @@ -89,6 +89,7 @@ have_fd:
-> >      backend->aligned = true;
-> >      ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-> >      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> > +    ram_flags |= RAM_GUEST_MEMFD_SHARED;
-> >      ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
-> >      return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-> >                                            backend->size, ram_flags, fd, 0, errp);
-> > diff --git a/include/system/memory.h b/include/system/memory.h
-> > index 027ca81bd2..81616bfe39 100644
-> > --- a/include/system/memory.h
-> > +++ b/include/system/memory.h
-> > @@ -274,6 +274,9 @@ typedef struct IOMMUTLBEvent {
-> >   */
-> >  #define RAM_PRIVATE (1 << 13)
-> >  
-> > +/* RAM can be shared that has kvm guest memfd backend */
-> > +#define RAM_GUEST_MEMFD_SHARED   (1 << 14)
+On Wed, Sep 09, 2026 at 08:30:05AM +0200, Markus Armbruster wrote:
+> Michael Roth <michael.roth@amd.com> writes:
 > 
-> Trying to understand the semantics, should that be SHAREABLE ?
+> > When in-place conversion is enabled, both the shared memory and private
+> > memory must come from the same guest_memfd instance. Thus, the
+> > memory-backend-memfd options must in turn correspond to a guest_memfd
+> > instance, e.g. guest-memfd=on must be specified. Since there is no
+> > use-case for enabling in-place conversion without setting
+> > guest-memfd=on, just set it automatically if in-place conversion is
+> > enabled.
+> >
+> > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> 
+> [...]
+> 
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index 20d6fefb04..32df7cb794 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -772,7 +772,8 @@
+> >  #     resizing of the memory (default: true)
+> >  #
+> >  # @guest-memfd: if true, use guest-memfd to back the memory region.
+> > -#     (default: false, since: 11.2)
+> > +#     (default: true for Confidential VMs with in-place conversion,
+> > +#     false otherwise, since: 11.2)
+> 
+> What does "Confidential VMs with in-place conversion" mean exactly?
+> Which configuration settings need to be set how?
 
-Yes... I was trying a little too hard to make it jive with the naming of the
-*_PRIVATE flag, but I think SHAREABLE captures the intended semantics better
-so I'll switch to that.
+Will make sure these gets covered in guest-memfd.rst as well so it can be
+referenced here.
+
+> 
+> >  #
+> >  # Since: 2.12
+> >  ##
+> > @@ -781,7 +782,7 @@
+> >    'data': { '*hugetlb': 'bool',
+> >              '*hugetlbsize': 'size',
+> >              '*seal': 'bool',
+> > -            '*guest-memfd': 'bool' },
+> > +            '*guest-memfd': 'OnOffAuto' },
+> 
+> Valid values change from JSON true and false to JSON "on", "off", and
+> "auto".
+> 
+> If @guest-memfd was already in a release, this would be a compatibility
+> break, i.e. a hard "don't".  But it isn't, it's in the series this is
+> one based on.  So it's merely a "either avoid or justify in the commit
+> message, and avoiding feels easier to me."
+
+Sorry, didn't mean for there to be potential ABI breakage here, I was somehow
+under the impression that OnOffAuto accepted 'true'/'false' as a backward
+compatibility mechanism, but that's clearly not the case.
+
+I'll plan to switch to OnOffAuto in Peter's series so it's defined that
+way from the start.
 
 Thanks,
 
 Mike
 
 > 
-> -- 
-> Cheers,
+> The doc comment still uses true and false.
 > 
-> David
+> >    'if': 'CONFIG_LINUX' }
+> >  
+> >  ##
 > 
 
