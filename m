@@ -4,60 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D80EC88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 18:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671A3C88E53
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 19:00:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x56Rx-000097-EM; Fri, 11 Sep 2026 14:58:13 -0400
+	id 1x56UB-0000rX-L0; Fri, 11 Sep 2026 15:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x56Rv-00008y-UC
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 14:58:11 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x56Tv-0000qp-0u
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:00:16 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x56Rs-0006P8-KS
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 14:58:11 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 14A54C0B51;
- Fri, 11 Sep 2026 21:58:03 +0300 (MSK)
-Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:641::1:4])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id 1wVPtaTWSiE0-vUkR6pCf; Fri, 11 Sep 2026 21:58:02 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1789153082;
- bh=qhdigUM6yJeKxzGWYHMipS5joVCDQ44KzVFqhA7O5XU=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=vgxVNQi+8nRa3do+L/nq48migRZ4JmcWNF+Rj9R+AYR6sv121XwwYj2vXdDWYhxlw
- AEtarWZNvczyEepibFGqSI+idjUySla1arGmKKudAmibapqv7wb5f+WN0a0ue8aZQm
- /nzSac5KLX9BvJZSt2luyI+jxdi3kwCwZOFqIVL8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org, eperezma@redhat.com, sgarzare@redhat.com,
- mst@redhat.com, jag.raman@oracle.com, elena.ufimtseva@oracle.com,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v2] util/event_notifier: more strict API
-Date: Fri, 11 Sep 2026 21:58:00 +0300
-Message-ID: <20260911185800.134135-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x56Tr-0007Nx-61
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:00:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u6o4rdKySVvj/gwHujam10Lh6WN8vfeNRzo8qhVzwwQdMFYlm/4dClbQ+ggjmruuzQH5eQ+3nnHKUdPEpRgjUkoo5y8tjPxq6mp/WnP/1wdkZ4l1MnA9cl/98fPtBwMkiHtcbKxngTqXVEzl+9dokFu8Kix9DR2398gk8VwhA0NK1lyDQT2uVHGYIL79Zjb+QONqxpoFDksW2u2GNdIzk6DPO63p944a49A4NSGeJfjyM1bScHBu6obS4fs39jETjZP2pRxtA4rmqVIN7Wwsh4/6CSZzHUQGfObcvR+boifyf9+7vjD/KgLtSbJ0OtuP7/BIEGCl7wg/g/oPyRwPtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rNKY9Y+tGOOu5KQJWPsbz+UlBJFQ1yGZORQfwA/Igc4=;
+ b=lp1nM/QsB+vOR+dHcp2OAqrMoyrw5p0O4Y8yxCCncvob7gQB1cxaWsANnRptVdWjYIlzDR4BdZqug3PjOgmYMwnUAD+T6HfnPS89Le1q9i8Kgu9ArXjxAnPvnZ0SMsndltMJqdcq/uh3TP1QXjfJGyc9+f5qEt+3PhpEK8cKOWUFKbVF9EGCHDszvor1xTcGPnIRfmSMAQ6KAAwcv6lnooSuMtdAY4sXsmNRAZpFnqF0iWV0Vo9DX9KvJ81DyvxCZfw7f1SjlRWQwwuivyVJsWQWRqaOSBOeJGXratSJncoVTS6g58Nfkd64sUXWnBp07P4FNARBGJoV4zqIYiHusA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rNKY9Y+tGOOu5KQJWPsbz+UlBJFQ1yGZORQfwA/Igc4=;
+ b=vYMJ+ejRRz0w6qy9yZ4ANDEPrtKmwCihMIEQXTE0LOZGIH1X8BMy1SIMn3Ojn3svUiR0pmCDQJUXlyA5ftd6be5MgvpH4dDLkud9nbhyS1InYg4pQ7Kql9WxtA7zNbjnN7he+Qu7HJvKolt2RpFSOrVUm8+iU9W4OyejnWk8D1k=
+Received: from SJ0PR03CA0158.namprd03.prod.outlook.com (2603:10b6:a03:338::13)
+ by BN3PR12MB9596.namprd12.prod.outlook.com (2603:10b6:408:2cb::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
+ 2026 19:00:00 +0000
+Received: from SJ5PEPF00000203.namprd05.prod.outlook.com
+ (2603:10b6:a03:338:cafe::6e) by SJ0PR03CA0158.outlook.office365.com
+ (2603:10b6:a03:338::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.15 via Frontend Transport; Fri,
+ 11 Sep 2026 18:59:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ5PEPF00000203.mail.protection.outlook.com (10.167.244.36) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.406.5 via Frontend Transport; Fri, 11 Sep 2026 18:59:59 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 11 Sep
+ 2026 13:59:58 -0500
+Date: Fri, 11 Sep 2026 12:22:45 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Markus Armbruster <armbru@redhat.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
+ <berrange@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
+ <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
+ <ashish.kalra@amd.com>, <ackerleytng@google.com>, <lpieralisi@kernel.org>
+Subject: Re: [PATCH v2 07/19] accel/kvm: Add CGS option to control in-place
+ conversion support
+Message-ID: <sudqwq5bnygtkqc2cio6rq5khrfi252jcs6jq6i3uzblgtvgq7@3upjx5k5bp7s>
+References: <20260908205236.838281-1-michael.roth@amd.com>
+ <20260908205236.838281-8-michael.roth@amd.com>
+ <878q5bosi3.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <878q5bosi3.fsf@pond.sub.org>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000203:EE_|BN3PR12MB9596:EE_
+X-MS-Office365-Filtering-Correlation-Id: c672ce8d-0cdf-47a6-a56a-08df1036e0a3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|82310400026|23010399003|36860700016|6133799003|10067099003|56012099006|11063799006|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: TCz/LvHlbyPU8+ozo9KTzCdMxK4nsgNlPyon2GC9cMYO562vt8QlM0Yp1NB7AGaq+ej/YGSahyWq4Lo5u8da2fASkqqR7fHPpv5+vJu7I84Xdig/IAS0ypMkn532uDALEsG38yxGSoemeSODljdaDzuRiSDtrFDkMxhF8+QHqfVfzuFex2YgTvBKVGBuCo2ViEZUKErsV3d3HnFQDLU41M4Q5UVb4BK1gOkrDLpEuwmLuvb9QZXetKPvmsDaWqaTUO1fLFJjKojx9tvBWGg6Yv0vyNBbFXvbN+eR+dLLE00HeVcQATEsZ9lG0bkr0HJb7KWTcBDZbWjPPfdDIV6vMt+YQEb0uJ5km9pjJZZqfmCjROwIf648MqS4dZ3+GmxyrNl0zNbKZl8NbUahgO4uUMVM0jBB1hLBxKb4dmWDsH87NvGMFBuPCJ+LxveHPEVz+PU+r8O2N/N/o+AO72WIhPdr5iKA93v6T29mCybk+nBlUUPmRc2SSneZp0iJZ744Mw5QKEKEOcb5FXMObog38vunPWphRT94R65oZHeYXvshdIPkj9jPpcbC1vXH2azTQwdKSHD7y67WtlnXK80K/oV8j+PcTESd1quVf9L8zRinN1go7tbmbddoaOflO5oKzS3xydmyuE+Je8RyGU/uI0G1gFv5EzY2s/H6KDvrZqL3Xp1RELGaQitrcEC5bJTYqPnFFOUGUZdIAcyFZOQXEQ==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(23010399003)(36860700016)(6133799003)(10067099003)(56012099006)(11063799006)(4143699003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: xmSKXmlX3rRxHmZncnTewPL6A+8jpu/HQsfA4Iy9lg1qmifL4Lifna1zPLWoW76jT0CzD07sSe0X/B2ZNIfit+L81M3Y+2aWTTb4tG5bDaKcdN5TisN/okXiiu7rL89WkP+QA0tFmu1i8HDmpQpZiz6IxS4KQVTg0C5N8oUS2LToSEqQm3fcBPM6zksu1esde4rDPHE4mJAhiXtKXMYuH+mIZaHSM8S+qPOoVPC0B0nYmFEDKmrqwJfLrev0EMhr9e807sxfRo2YQsLRj6nPwXbq6Me80OMpevdagvDZz/YoHD5sAsLzGHzO/y8u6DAXzsqts4xEFx2QM3+srl+r97m106NO0NlanRqRp9S/3HEGzYdn3ANACMDMypRGCz4MN0W8ULRFyl2e27OdBZI5waLmRnmbkuGdh9knQd7UhyLAV1ww/yuHos9x8xJBZJ6n
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 18:59:59.1647 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c672ce8d-0cdf-47a6-a56a-08df1036e0a3
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000203.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3PR12MB9596
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=Michael.Roth@amd.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,188 +130,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have .initialized in EventNotifier to track was it actually
-initialized, and we have a comment that @fd passed to
-event_notifier_init_fd() must be an eventfd object.
+On Wed, Sep 09, 2026 at 08:20:36AM +0200, Markus Armbruster wrote:
+> Michael Roth <michael.roth@amd.com> writes:
+> 
+> > For confidential guests, guest_memfd is currently used only for private
+> > guest memory, and normal guest memory comes from the configured memory
+> > backend just as it does for a non-confidential guest. It is now possible
+> > to use the same physical memory to back a particular GPA regardless of
+> > whether it is in a shared or private state. This avoids the need to
+> > rely on discarding memory between shared/private conversions (to avoid
+> > doubled memory usage), and is intended to be the primary mode of using
+> > guest_memfd for confidential guests moving forward, and future features
+> > like hugepage support will likely require it.
+> >
+> > Add an option to enable this support. Since ConfidentialGuestSupport is
+> > already used to track some guest_memfd-related functionality (e.g.
+> > whether it is required for the configured machine), similarly introduce
+> > this option as a property of ConfidentialGuestSupport.
+> >
+> > Also add the KVM-specific checks to enable this support, but leave the
+> > option disabled until other required changes are implemented for
+> > CGS variants that intend to make use of KVM's in-place conversion
+> > support.
+> >
+> > While technically the convert-in-place option could be introduced as an
+> > SEV-specific option, it is a given that TDX will also be introducing
+> > in-place conversion support based on the same guest_memfd kernel
+> > infrastructure, so introduce it via a new
+> > ConfidentialGuestSupportProperties base class that other confidential VM
+> > implementations can utilized for common options.
+> >
+> > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> 
+> [...]
+> 
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index 909add4299..20d6fefb04 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -1005,6 +1005,21 @@
+> >    'if': 'CONFIG_IGVM',
+> >    'data': { 'file': 'str' } }
+> >  
+> > +##
+> > +# @ConfidentialGuestSupportProperties:
+> > +#
+> > +# Properties for ConfidentialGuestSupport base class.
+> > +#
+> > +# @convert-in-place: If true, the same physical pages are reused
+> > +#     when memory is converted between shared and private states.
+> > +#     If false (default), separate allocations are used depending
+> > +#     on whether the page is private or shared.
+> 
+> Any guidance on when to enable @convert-in-place?
 
-Still, there are two specific users, which ignore these things,
-and use -1 as specific value storing in notifier, to mark it
-"uninitialized".
+A lot of it boils down to more Confidential Compute architectures
+now requiring it for new features (hugepage support and SEV-TIO will
+require it for instance). convert-in-place=true maps more closely to
+a normal VM, and not having more complicated memory management
+requirements avoids additional complications up the stack (like
+accounting for instances where memory usage might balloon passed
+expected resource limits due to needing to management multiple
+memory allocations for a given GPA range).
 
-Let's make strict API:
+convert-in-place=false will likely become a legacy path unless other
+use-case arise, but they'd probably need to be super-duper useful
+to warrant enabling new things on top of it going forward.
 
-- store only valid FDs in initialized notifier
-- _set() asserts that passed fd is valid
-- _get() asserts that notifier is initialized (actually, except
-  the two specific cases we rework, all other callers are not
-  prepared to notifier being uninitialized when _get() is called.
-  In this case _get() returns 0 (which is a valid fd), and caller
-  will mistakenly use it, which is worse than abort())
-- for two specific cases, implement additional getter for .initialized
-  field itself
-- zeroed notifier is uninitialized(.initialized is false)
+I'll try to work something along that line into the guest-memfd.rst
+I proposed for Peter's series and add/reference that as part of this
+patch.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+> 
+> > +#
+> > +# Since: 11.2
+> > +##
+> > +{ 'struct': 'ConfidentialGuestSupportProperties',
+> > +  'data': { '*convert-in-place': 'bool' } }
+> > +
+> >  ##
+> >  # @SevCommonProperties:
+> >  #
+> > @@ -1033,6 +1048,7 @@
+> >  # Since: 9.1
+> >  ##
+> >  { 'struct': 'SevCommonProperties',
+> > +  'base': 'ConfidentialGuestSupportProperties',
+> >    'data': { '*sev-device': 'str',
+> >              '*cbitpos': 'uint32',
+> >              'reduced-phys-bits': 'uint32',
+> 
+> Can you explain why you put @convert-in-place into a new base type
+> instead of right here?
+> 
 
-v2: - rework to even stricter API
-    - merge into one commit (seems simpler to see the whole picture,
-      not too much changes here)
+I tried to touch on this as part of the commit message, but I don't think I
+explained the rationale very well and I'm now second-guessing myself.
 
- hw/remote/iohub.c                  | 11 +++++-----
- hw/virtio/vhost-shadow-virtqueue.c | 32 +++++++++++++++++-------------
- include/qemu/event_notifier.h      |  1 +
- util/event_notifier-posix.c        | 10 ++++++++++
- 4 files changed, 35 insertions(+), 19 deletions(-)
+As part of this patch, a 'allow_convert_in_place' field is added to
+ConfidentialGuestSupport, which is similar to the 'require_guest_memfd'
+ConfidentialGuestSupport member in that it's configuring policy around the
+usage of guest_memfd for Confidential machine instances. They also both
+need to be ordered soon enough that they initialized in time for the related
+KVM capability checks in kvm_init(), so another reason to place it there.
 
-diff --git a/hw/remote/iohub.c b/hw/remote/iohub.c
-index 988d3285ccc..ab698d9f03d 100644
---- a/hw/remote/iohub.c
-+++ b/hw/remote/iohub.c
-@@ -28,8 +28,6 @@ void remote_iohub_init(RemoteIOHubState *iohub)
-     for (pirq = 0; pirq < REMOTE_IOHUB_NB_PIRQS; pirq++) {
-         qemu_mutex_init(&iohub->irq_level_lock[pirq]);
-         iohub->irq_level[pirq] = 0;
--        event_notifier_init_fd(&iohub->irqfds[pirq], -1);
--        event_notifier_init_fd(&iohub->resamplefds[pirq], -1);
-     }
- }
- 
-@@ -85,9 +83,12 @@ void process_set_irqfd_msg(PCIDevice *pci_dev, MPQemuMsg *msg)
- 
-     pirq = remote_iohub_map_irq(pci_dev, intx);
- 
--    if (event_notifier_get_fd(&iohub->irqfds[pirq]) != -1) {
--        qemu_set_fd_handler(event_notifier_get_fd(&iohub->resamplefds[pirq]),
--                            NULL, NULL, NULL);
-+    if (event_notifier_initialized(&iohub->irqfds[pirq])) {
-+        if (event_notifier_initialized(&iohub->resamplefds[pirq])) {
-+            qemu_set_fd_handler(
-+                event_notifier_get_fd(&iohub->resamplefds[pirq]),
-+                NULL, NULL, NULL);
-+        }
-         event_notifier_cleanup(&iohub->irqfds[pirq]);
-         event_notifier_cleanup(&iohub->resamplefds[pirq]);
-         memset(&iohub->token[pirq], 0, sizeof(ResampleToken));
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index bcb7f2ffc79..53481109d40 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -745,6 +745,15 @@ static void vhost_svq_handle_call(EventNotifier *n)
-     vhost_svq_flush(svq, true);
- }
- 
-+static void event_notifier_set_or_zero(EventNotifier *e, int fd)
-+{
-+    if (fd == VHOST_FILE_UNBIND) {
-+        memset(e, 0, sizeof(*e));
-+    } else {
-+        event_notifier_init_fd(e, fd);
-+    }
-+}
-+
- /**
-  * Set the call notifier for the SVQ to call the guest
-  *
-@@ -755,17 +764,13 @@ static void vhost_svq_handle_call(EventNotifier *n)
-  */
- void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd)
- {
--    if (call_fd == VHOST_FILE_UNBIND) {
--        /*
--         * Fail event_notifier_set if called handling device call.
--         *
--         * SVQ still needs device notifications, since it needs to keep
--         * forwarding used buffers even with the unbind.
--         */
--        memset(&svq->svq_call, 0, sizeof(svq->svq_call));
--    } else {
--        event_notifier_init_fd(&svq->svq_call, call_fd);
--    }
-+    /*
-+     * Fail event_notifier_set if called handling device call.
-+     *
-+     * SVQ still needs device notifications, since it needs to keep
-+     * forwarding used buffers even with the unbind.
-+     */
-+    event_notifier_set_or_zero(&svq->svq_call, call_fd);
- }
- 
- /**
-@@ -808,14 +813,14 @@ size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq)
- void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int svq_kick_fd)
- {
-     EventNotifier *svq_kick = &svq->svq_kick;
--    bool poll_stop = VHOST_FILE_UNBIND != event_notifier_get_fd(svq_kick);
-+    bool poll_stop = event_notifier_initialized(svq_kick);
-     bool poll_start = svq_kick_fd != VHOST_FILE_UNBIND;
- 
-     if (poll_stop) {
-         event_notifier_set_handler(svq_kick, NULL);
-     }
- 
--    event_notifier_init_fd(svq_kick, svq_kick_fd);
-+    event_notifier_set_or_zero(&svq->svq_kick, svq_kick_fd);
-     /*
-      * event_notifier_set_handler already checks for guest's notifications if
-      * they arrive at the new file descriptor in the switch, so there is no
-@@ -922,7 +927,6 @@ VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
- {
-     VhostShadowVirtqueue *svq = g_new0(VhostShadowVirtqueue, 1);
- 
--    event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
-     svq->ops = ops;
-     svq->ops_opaque = ops_opaque;
-     return svq;
-diff --git a/include/qemu/event_notifier.h b/include/qemu/event_notifier.h
-index 8a4ff308e19..820efe77229 100644
---- a/include/qemu/event_notifier.h
-+++ b/include/qemu/event_notifier.h
-@@ -39,6 +39,7 @@ int event_notifier_test_and_clear(EventNotifier *);
- void event_notifier_init_fd(EventNotifier *, int fd);
- int event_notifier_get_fd(const EventNotifier *);
- int event_notifier_get_wfd(const EventNotifier *);
-+bool event_notifier_initialized(const EventNotifier *e);
- #else
- HANDLE event_notifier_get_handle(EventNotifier *);
- #endif
-diff --git a/util/event_notifier-posix.c b/util/event_notifier-posix.c
-index 83fdbb96bbc..f595945af74 100644
---- a/util/event_notifier-posix.c
-+++ b/util/event_notifier-posix.c
-@@ -27,6 +27,7 @@
-  */
- void event_notifier_init_fd(EventNotifier *e, int fd)
- {
-+    assert(fd >= 0);
-     e->rfd = fd;
-     e->wfd = fd;
-     e->initialized = true;
-@@ -96,14 +97,23 @@ void event_notifier_cleanup(EventNotifier *e)
- 
- int event_notifier_get_fd(const EventNotifier *e)
- {
-+    assert(e->initialized);
-+    assert(e->rfd >= 0);
-     return e->rfd;
- }
- 
- int event_notifier_get_wfd(const EventNotifier *e)
- {
-+    assert(e->initialized);
-+    assert(e->wfd >= 0);
-     return e->wfd;
- }
- 
-+bool event_notifier_initialized(const EventNotifier *e)
-+{
-+    return e->initialized;
-+}
-+
- int event_notifier_set(EventNotifier *e)
- {
-     static const uint64_t value = 1;
--- 
-2.43.0
+From there my thinking was that the 'convert-in-place' property exposed on the
+command-line would basically just set true/false based on whether the
+'allow_convert_in_place' CGS value is set, and that that pattern would be the
+same for TDX, who AFAIK are fully onboard with switching over to
+convert-in-place=true as well, so I added the common base properties where other
+archs could just subclass it expose the same feature.
 
+But thinking more on some discoverability thing Daniel mentioned, that makes it
+potentially problematic if more common features get added, and *then* another
+CGS implementation wants to subclass the common QOM properties for 1
+option/feature (e.g. @convert_in_place) but not some other option/features
+that's since been added.
+
+So keeping it as an architecture-defined property is probably the better call.
+It's only a trivial amount of code duplication and some archs will just have it
+always on anyway where it doesn't even make sense to expose it.
+
+So I'll plan to take that approach for the next spin.
+
+Thanks,
+
+Mike
 
