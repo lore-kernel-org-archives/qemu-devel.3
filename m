@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4988FC88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B54C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54H1-0001B5-KP; Fri, 11 Sep 2026 12:38:47 -0400
+	id 1x54H7-0001g4-HX; Fri, 11 Sep 2026 12:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54Gz-0000rz-6w
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:38:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x54H5-0001Uc-7t
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:38:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54Gt-0006TY-6T
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:38:44 -0400
+ id 1x54H3-0006Xq-Md
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:38:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144718;
+ s=mimecast20190719; t=1789144729;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mtwSICJg9+cDAEasG3vzdTmKCwdrbuwjVE9MBQQeXTA=;
- b=CXKfp0ewVE6SMAcQufLtQuqdxicAFaC/USd0KpdnDN67KKhQnCrwTcdwXs+8uOauj4trXt
- nf98bnHResgEQRSS0fvvt8ebUksV2gqmYwx7r6bhUs4l3TjGo9fSQnboVCYmlea8+KM9CH
- PaOaux7ruY2UdKV+o4Aj/jPNov419cA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=3lpC35gmliS0QhA1JkmfqWaHkZxlzKVeH5o0OEMIMN4=;
+ b=YQUkmIbwQuxBr9+icPZtPuSw/EAnRS+Zo+LYojFkTfsjnEFiMLhvIoX6GBjeyG9fxjdio6
+ Q6LGZav2hwTSDhEzmiGxW1wO6VG2ThgR4iLxJ2S3LXfDLou4usLV/l7etxQ9u1I0NYJYRG
+ ynGAD0wukVuo5uCHUSpN33asS+Z+p+8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-chq4FmQJM22kX0IIjtzvmw-1; Fri,
- 11 Sep 2026 12:38:33 -0400
-X-MC-Unique: chq4FmQJM22kX0IIjtzvmw-1
-X-Mimecast-MFC-AGG-ID: chq4FmQJM22kX0IIjtzvmw_1789144709
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-tA0paACZNHGTUu7cEE-MrQ-1; Fri,
+ 11 Sep 2026 12:38:45 -0400
+X-MC-Unique: tA0paACZNHGTUu7cEE-MrQ-1
+X-Mimecast-MFC-AGG-ID: tA0paACZNHGTUu7cEE-MrQ_1789144724
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76EBE1801370; Fri, 11 Sep 2026 16:38:29 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 858EA195E912; Fri, 11 Sep 2026 16:38:44 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 743F1195608F; Fri, 11 Sep 2026 16:38:27 +0000 (UTC)
+ id 8A625195608F; Fri, 11 Sep 2026 16:38:43 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:34:51 +0400
-Subject: [PATCH v5 17/62] qom: convert struct properties to QAPI-aware
- registration
+Date: Fri, 11 Sep 2026 20:34:55 +0400
+Subject: [PATCH v5 21/62] arm/virt: convert OnOffAuto acpi property to
+ QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-17-7732a55b7760@redhat.com>
+Message-Id: <20260911-qom-qapi-v5-21-7732a55b7760@redhat.com>
 References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,49 +66,35 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron <jic23@kernel.org>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, 
- John Levon <john.levon@nutanix.com>, 
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, 
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-block@nongnu.org, 
- linux-cxl@vger.kernel.org, kvm@vger.kernel.org, qemu-s390x@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12033;
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2389;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=zDs3mYA1CjjAKW6DXXZ4BUSALxYOReSAAgRmYspCM9U=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC234H9LEM68cOkj8j3h0ZtizEeGZuEJOUO+C
- cF/qcAjFrCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQttwAKCRDa6OEJdZac
- 5T0AD/9pRcXSt22YICNBu9hG9zHDpB62cFFSpLG+v4D5NnIiWAxyUXHCFpus4WhwEgxfonbsTJI
- M8tnT4RWe2kd8rfZRJmznrju+QKNufOhrh1v1VnjH9YlmwOhrP+JuIQnsmFw2F/KhVvbmPb7Wjp
- RXaMN7kKL4FmTHSc/2St+TzMND2qabiIz4sgdGrbu1kj4p5mZTyWSc57wfkI2Mn6H7seFnN/Njb
- xRUKiETvbuGndzQC10eKbvfdBivak5+A/QWIV9F8SMvZhddiMi91yfG68wnJg6DJwWWEtg3ioo1
- s7XB71+JlXk7XrCf6KajCRbDSCsyydXmcJGCgGqVRd19Aa1u3G6mZXzXj2UQbHqLpB4HceC284q
- P5lQq7e7+H6KJ9F4y/0XygEgZ2w6ujilRCb208/Wd/tHNh5OaUK+E/Mv9l9Qcf/qb+XLDipEfTg
- dy4zGxYIoe9LMGAwO/Ea6KfaIT0hjDnkAn51ACbGBVsZqQgHFsikd9hSUoGCBVb+X5mACTOxwcS
- rBuWuyU4bhfUhie9JRBQZ1HevC4gVyMaO5sMBa0UgVrK7lr+CQZUu//GmuJzn+4MkXeRwkl0v0j
- fZJn4QHlFefZBbfats+zp0KUgKgkjjJ2rXahu9B0/d6ET+u9fQhLoEJpdxNJfEy659xB95AFbhi
- 1xwPf35vhDrj6lg==
+ bh=VEvZEB5tSbvTYsPJm20+OtQi7DOxjCPx8lu+wm1r8Ps=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC24UsnAuXMKLk9QqxMhFfDZx6P7EDZ2q31rJ
+ YpiU4FS9ACJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuAAKCRDa6OEJdZac
+ 5e1mEAC0JDvHGC4iKIE2gEKffiCT+w/oGHcOeoR0nAmPMkzBVH8mrHBDsdjGYds0LqnUQahr2SP
+ ZySlmdjhpr93sTz3lVi7hdaiHbcnYZGyJjxOMP8i5ztapvZj/7OJ3ralgxZZVsLY5sEYrhHftyt
+ 5RI3M+wZ1sdId94jVa5jc9CSgxiATt6e0nqGt9td8sFUMPbqBDWx0RRpCGzK4J2VEXkbwVunSaQ
+ 7X+Tknuw+2+FgosXSpKZQVRosmj2aZnYyIM5+EFwRWwTOSYwyinwS1CKujuphIh6Hk7YpDklPwM
+ C212Up8eNyJa71YRq2MjLdGBkGVoUGcGuCenULFsr3DUkKlZmtkDzzZ5RLpB/CPOXbrk+bJTppJ
+ eccS90oyOlrKB8McAzZv5NNlEABYeTbpMZwN0RvycfV55uX0nXH/1kK+oCF/nnL9sNqTfXNaYGn
+ jdS5jGALkOyyJRE34cvSlnBYj5eryG6QUZaK94lJRMLK570wXKkhSY/P3w0QJslCt+sTh54gl7s
+ LVYMB4+mTQ4FiCTkvJaRb1XRV21OCOvfyFv+n798VSe/N8ram3wh2TS6Fce/CRaCRjnLMFcu2aa
+ 5SCXEnqMVBrqHdNwzYLjOxSE0YOeuw9wrpSC8UPH07wzwXinmny7/BsdZSVVx3c9eGRDqQYNZ2g
+ OoyMHrtGLnouABw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,286 +110,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert all callers of object_property_add() and
-object_class_property_add() that register struct-typed properties with
-QAPI visitor-based getters/setters to use object_property_add_qapi() and
-object_class_property_add_qapi() instead.
-
-This replaces the manual string type name with a reference to the
-generated QAPITypeInfo constant, enabling QMP introspection to report
-accurate QAPI type information for struct properties. Existing
-getters/setters are preserved unchanged.
-
-The cxl-fmw property type is corrected from "CXLFixedMemoryWindow"
-(not a real QAPI type) to "CXLFixedMemoryWindowOptions".
+Convert the acpi OnOffAuto property from manual visitor-based
+callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- authz/list.c              |  2 +-
- block/throttle-groups.c   |  5 +++--
- chardev/char-socket.c     |  3 ++-
- hw/core/machine.c         | 11 +++++++----
- hw/cxl/cxl-host.c         |  4 +++-
- hw/remote/vfio-user-obj.c |  5 +++--
- hw/vfio-user/pci.c        |  5 +++--
- target/i386/cpu.c         | 11 ++++++++---
- target/i386/kvm/tdx.c     |  4 +++-
- target/s390x/cpu-system.c |  4 +++-
- 10 files changed, 36 insertions(+), 18 deletions(-)
+ hw/arm/virt.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/authz/list.c b/authz/list.c
-index 363b2ee12c98..ed3d346004c2 100644
---- a/authz/list.c
-+++ b/authz/list.c
-@@ -128,7 +128,7 @@ qauthz_list_class_init(ObjectClass *oc, const void *data)
-         .set = qauthz_list_prop_set_policy,
-     ));
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0871a35e11f7..872920b6482b 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -73,7 +73,7 @@
+ #include "whpx_arm.h"
+ #include "hw/firmware/smbios.h"
+ #include "qapi/visitor.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "qobject/qlist.h"
+ #include "standard-headers/linux/input.h"
+ #include "hw/arm/smmuv3.h"
+@@ -3567,21 +3567,16 @@ bool virt_is_acpi_enabled(const VirtMachineState *vms)
+     return true;
+ }
  
--    object_class_property_add(oc, "rules", "QAuthZListRule",
-+    object_class_property_add_qapi(oc, "rules", &QAuthZListRule_type_info,
-                               qauthz_list_prop_get_rules,
-                               qauthz_list_prop_set_rules,
-                               NULL, NULL);
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 2dfd9d62aacd..6312157802da 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -31,6 +31,7 @@
- #include "qemu/thread.h"
- #include "system/qtest.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-block-core.h"
- #include "qapi/qapi-visit-block-core.h"
- #include "qom/object.h"
- #include "qom/object_interfaces.h"
-@@ -991,8 +992,8 @@ static void throttle_group_obj_class_init(ObjectClass *klass,
-     }
+-static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static int virt_get_acpi(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+-    OnOffAuto acpi = vms->acpi;
+-
+-    visit_type_OnOffAuto(v, name, &acpi, errp);
++    return vms->acpi;
+ }
  
-     /* ThrottleLimits */
--    object_class_property_add(klass,
--                              "limits", "ThrottleLimits",
-+    object_class_property_add_qapi(klass,
-+                              "limits", &ThrottleLimits_type_info,
-                               throttle_group_get_limits,
-                               throttle_group_set_limits,
-                               NULL, NULL);
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 81bac42a1587..8e0e5d4343aa 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -31,6 +31,7 @@
- #include "qemu/option.h"
- #include "qapi/error.h"
- #include "qapi/clone-visitor.h"
-+#include "qapi/qapi-type-infos-sockets.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qemu/yank.h"
- #include "trace.h"
-@@ -1568,7 +1569,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
-     cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
-     cc->chr_get_filename = tcp_chr_get_filename;
+-static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static void virt_set_acpi(Object *obj, int value, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &vms->acpi, errp);
++    vms->acpi = value;
+ }
  
--    object_class_property_add(oc, "addr", "SocketAddress",
-+    object_class_property_add_qapi(oc, "addr", &SocketAddress_type_info,
-                               char_socket_get_addr, NULL,
-                               NULL, NULL);
+ static bool virt_get_ras(Object *obj, Error **errp)
+@@ -4208,11 +4203,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_id = "mach-virt.ram";
+     mc->default_nic = "virtio-net-pci";
  
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 8939ae16666c..530fbaeb0b28 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -18,6 +18,7 @@
- #include "hw/core/loader.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-machine.h"
- #include "qapi/qapi-visit-machine.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qemu/madvise.h"
-@@ -1114,19 +1115,20 @@ static void machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "dumpdtb",
-         "Dump current dtb to a file and quit");
- 
--    object_class_property_add(oc, "boot", "BootConfiguration",
-+    object_class_property_add_qapi(oc, "boot", &BootConfiguration_type_info,
-         machine_get_boot, machine_set_boot,
-         NULL, NULL);
-     object_class_property_set_description(oc, "boot",
-         "Boot configuration");
- 
--    object_class_property_add(oc, "smp", "SMPConfiguration",
-+    object_class_property_add_qapi(oc, "smp", &SMPConfiguration_type_info,
-         machine_get_smp, machine_set_smp,
-         NULL, NULL);
-     object_class_property_set_description(oc, "smp",
-         "CPU topology");
- 
--    object_class_property_add(oc, "smp-cache", "SmpCachePropertiesWrapper",
-+    object_class_property_add_qapi(oc, "smp-cache",
-+        &SmpCachePropertiesWrapper_type_info,
-         machine_get_smp_cache, machine_set_smp_cache, NULL, NULL);
-     object_class_property_set_description(oc, "smp-cache",
-         "Cache properties list for SMP machine");
-@@ -1208,7 +1210,8 @@ static void machine_class_init(ObjectClass *oc, const void *data)
-                                           "Set RAM backend"
-                                           "Valid value is ID of hostmem based backend");
- 
--    object_class_property_add(oc, "memory", "MemorySizeConfiguration",
-+    object_class_property_add_qapi(oc, "memory",
-+        &MemorySizeConfiguration_type_info,
-         machine_get_mem, machine_set_mem,
-         NULL, NULL);
-     object_class_property_set_description(oc, "memory",
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index eba13c9e7cba..7592c4ac6c7b 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -13,6 +13,7 @@
- #include "system/qtest.h"
- #include "hw/core/boards.h"
- 
-+#include "qapi/qapi-type-infos-machine.h"
- #include "qapi/qapi-visit-machine.h"
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_host.h"
-@@ -570,7 +571,8 @@ void cxl_machine_init(Object *obj, CXLState *state)
-                                     "Set on/off to enable/disable "
-                                     "CXL instantiation");
- 
--    object_property_add(obj, "cxl-fmw", "CXLFixedMemoryWindow",
-+    object_property_add_qapi(obj, "cxl-fmw",
-+                        &CXLFixedMemoryWindowOptions_type_info,
-                         machine_get_cfmw, machine_set_cfmw,
-                         NULL, state);
-     object_property_set_description(obj, "cxl-fmw",
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index a0498d218faf..7e6819f670b5 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -47,6 +47,7 @@
- #include "hw/core/boards.h"
- #include "hw/remote/machine.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-sockets.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qapi/qapi-events-misc.h"
- #include "qemu/notify.h"
-@@ -931,8 +932,8 @@ static void vfu_object_class_init(ObjectClass *klass, const void *data)
- 
-     k->nr_devs = 0;
- 
--    object_class_property_add(klass, "socket", "SocketAddress", NULL,
--                              vfu_object_set_socket, NULL, NULL);
-+    object_class_property_add_qapi(klass, "socket", &SocketAddress_type_info,
-+                              NULL, vfu_object_set_socket, NULL, NULL);
-     object_class_property_set_description(klass, "socket",
-                                           "SocketAddress "
-                                           "(ex: type=unix,path=/tmp/sock). "
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index e7573d4a9f08..246bd5a90925 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -8,6 +8,7 @@
- 
- #include "qemu/osdep.h"
- #include <sys/ioctl.h>
-+#include "qapi/qapi-type-infos-sockets.h"
- #include "qapi-visit-sockets.h"
- #include "qemu/error-report.h"
- 
-@@ -466,8 +467,8 @@ static void vfio_user_pci_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, vfio_user_pci_reset);
-     device_class_set_props(dc, vfio_user_pci_properties);
- 
--    object_class_property_add(klass, "socket", "SocketAddress", NULL,
--                              vfio_user_pci_set_socket, NULL, NULL);
-+    object_class_property_add_qapi(klass, "socket", &SocketAddress_type_info,
-+                              NULL, vfio_user_pci_set_socket, NULL, NULL);
-     object_class_property_set_description(klass, "socket",
-                                           "SocketAddress (UNIX sockets only)");
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b97f144aea5a..8650ff6caecc 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -35,6 +35,8 @@
- #include "sev.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qapi/qapi-type-infos-machine.h"
-+#include "qapi/qapi-type-infos-run-state.h"
- #include "qapi/qapi-visit-machine.h"
- #include "standard-headers/asm-x86/kvm_para.h"
- #include "hw/core/qdev-properties.h"
-@@ -10514,10 +10516,12 @@ static void x86_cpu_initfn(Object *obj)
- 
-     x86_cpu_init_default_topo(cpu);
- 
--    object_property_add(obj, "feature-words", "X86CPUFeatureWordInfo",
-+    object_property_add_qapi(obj, "feature-words",
-+                        &X86CPUFeatureWordInfo_type_info,
-                         x86_cpu_get_feature_words,
-                         NULL, NULL, (void *)env->features);
--    object_property_add(obj, "filtered-features", "X86CPUFeatureWordInfo",
-+    object_property_add_qapi(obj, "filtered-features",
-+                        &X86CPUFeatureWordInfo_type_info,
-                         x86_cpu_get_feature_words,
-                         NULL, NULL, (void *)cpu->filtered_features);
- 
-@@ -10980,7 +10984,8 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
-                               NULL, NULL);
- 
- #if !defined(CONFIG_USER_ONLY)
--    object_class_property_add(oc, "crash-information", "GuestPanicInformation",
-+    object_class_property_add_qapi(oc, "crash-information",
-+                              &GuestPanicInformation_type_info,
-                               x86_cpu_get_crash_info_qom, NULL, NULL, NULL);
- #endif
- 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 8294dbde3aa8..81c5ba3a1b54 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -14,6 +14,7 @@
- #include "qemu/base64.h"
- #include "qemu/mmap-alloc.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-sockets.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qom/object_interfaces.h"
- #include "crypto/hash.h"
-@@ -1586,7 +1587,8 @@ static void tdx_guest_init(Object *obj)
-                             tdx_guest_get_mrownerconfig,
-                             tdx_guest_set_mrownerconfig);
- 
--    object_property_add(obj, "quote-generation-socket", "SocketAddress",
-+    object_property_add_qapi(obj, "quote-generation-socket",
-+                            &SocketAddress_type_info,
-                             tdx_guest_get_qgs,
-                             tdx_guest_set_qgs,
-                             NULL, NULL);
-diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
-index cc9685221ae8..4c2a91d0ff51 100644
---- a/target/s390x/cpu-system.c
-+++ b/target/s390x/cpu-system.c
-@@ -30,6 +30,7 @@
- #include "system/reset.h"
- #include "qemu/timer.h"
- #include "trace.h"
-+#include "qapi/qapi-type-infos-run-state.h"
- #include "qapi/qapi-visit-run-state.h"
- #include "system/hw_accel.h"
- 
-@@ -130,7 +131,8 @@ void s390_cpu_system_init(Object *obj)
-     S390CPU *cpu = S390_CPU(obj);
- 
-     cs->start_powered_off = true;
--    object_property_add(obj, "crash-information", "GuestPanicInformation",
-+    object_property_add_qapi(obj, "crash-information",
-+                        &GuestPanicInformation_type_info,
-                         s390_cpu_get_crash_info_qom, NULL, NULL, NULL);
-     cpu->env.tod_timer =
-         timer_new_ns(QEMU_CLOCK_VIRTUAL, s390x_tod_timer, cpu);
+-    object_class_property_add(oc, "acpi", "OnOffAuto",
+-        virt_get_acpi, virt_set_acpi,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "acpi",
+-        "Enable ACPI");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = "acpi",
++        .description = "Enable ACPI",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = virt_get_acpi,
++        .set = virt_set_acpi,
++    ));
+     object_class_property_add_bool(oc, "secure", virt_get_secure,
+                                    virt_set_secure);
+     object_class_property_set_description(oc, "secure",
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
