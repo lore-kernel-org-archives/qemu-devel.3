@@ -4,75 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6ACBC79FA1
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 08:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8358C88E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 08:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4wNG-00040Q-Dn; Fri, 11 Sep 2026 04:12:42 -0400
+	id 1x4wNf-00043O-J9; Fri, 11 Sep 2026 04:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4wNE-000406-9R
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:12:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1x4wNc-00041X-Rr
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:13:04 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x4wNB-0006dx-Qw
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:12:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789114356;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9ukMzkwgViU2fi5Os7PRjjIMzSEkzlAVHygo4kxgwRE=;
- b=b1a3EsjF23Zqa7UuOdXyjhTDIG/ScLJWhw3e6Q5YPOTEG/6GBlG0lRkCAbiQtythD1MEsl
- ZvijMN0jpI8VRxANCrUt21ntVT9x3MhYDx4KjPdVP5JPFnxfuMZfX4csCIOrRwK53S2xIi
- /7zyQR5ao1MiCubP2NbkVevhqUxFeN0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-5--4jZ7s-LPkOldS-4pV_vwg-1; Fri,
- 11 Sep 2026 04:12:30 -0400
-X-MC-Unique: -4jZ7s-LPkOldS-4pV_vwg-1
-X-Mimecast-MFC-AGG-ID: -4jZ7s-LPkOldS-4pV_vwg_1789114349
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 082CE195423B; Fri, 11 Sep 2026 08:12:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D1C030001A2; Fri, 11 Sep 2026 08:12:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BDFE721E6A04; Fri, 11 Sep 2026 10:12:25 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  "Dr . David Alan
- Gilbert" <dave@treblig.org>,  Laurent Vivier <lvivier@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 13/18] migration: Use keyval input visitor in HMP set
- command
-In-Reply-To: <87qzj1tcpl.fsf@suse.de> (Fabiano Rosas's message of "Thu, 10 Sep
- 2026 11:15:02 -0300")
-References: <20260909214509.237309-1-farosas@suse.de>
- <20260909214509.237309-14-farosas@suse.de>
- <87qzj1e563.fsf@pond.sub.org> <87qzj1tcpl.fsf@suse.de>
-Date: Fri, 11 Sep 2026 10:12:25 +0200
-Message-ID: <8733vgb40m.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1x4wNb-0006fb-7q
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 04:13:04 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LCosyYKlNo0w67qNduzd0C4bLGkIRolXjzDz9vweq71hTTgqas8NN+y20tKnOOPzbQ0TKZvAnHvPUwfsgpDiLRReUKxcVQRCKNyGH7A8KbMx9elXr/uEQq+cAvOoLbhCnyeqLdAMNjlTG+xzk6EiGMZAaj1X3Q9HJSbkuKqQb6GJAlrTawyRROvVR44YG9QoqMkcJLYshI/ObACoIMIytFd6+RgQpjRQnqC/Ufpkt4mowj7YsjIzPeCULJlAjpM7J3lRxLqOugledQW5yiUE6vCv9o6/anDNAhPTCgO/2XWm6Oicwi9jjgdA0yuhuJzN2iMobWKPjTegCWIm/53gHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cmjADAzOLyU4l1Jgb/x0+ghg8oaLdpB9qi4tMIknWec=;
+ b=wkl1Zfy6+sRMqEcai9fSpno+k3Tk2yyB/qTCT4suGZ3OqmA+0a9SgwsBShzq4uQxxv1wP86LDDYa4w8IYbtNUIOraHZWmH7Od2j2c8TlMq1+72VeryXZJgN1t783Q6vTml+tNRz3zRvdXOhd0WFnoueyd4DkJIYM8tUY+ervoY4YRUkYJZRnjLS3pf+12iZgGngExmdm1fXt1kQsiWTTXbxT17SOHfrac7An4TY/XPX8bkDk63m7QZfa1dfQ15rRQBIkL5Mo1BNa8RAc5RIm/Qmi+yYZA1/1LHbqDT5xb7P95jHEx/zTrjW1rpiQPaJ2UMZ9nB9DBPahLVzt8NKwBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cmjADAzOLyU4l1Jgb/x0+ghg8oaLdpB9qi4tMIknWec=;
+ b=MaVbvkW8lFC2XhT1SJca2xvdKzNMyjT7Gfap20F0R5YxT92J63gWuqJ1tUkkacdycPNeGd8JdwirprqIoe++ZdRPqhhVQ7Iz6OJxTzNc1/seM8BSEc+3J4NXoAC9ul5WKD7KW2llm0G9tAU5x/aGTDXXnbizxW/YZ0kmld40S2UURfU+sHIILuobTntja7WJWRh1hqWJsv/+4wPGapOpP6zEwUoLesAbkFoLtqwVYhKct3uIBTVnYktCtRISElsgCaQs8yVj+vDfFJQ90r3F7hNetTB0+D02Ek8k5jgWLsPct2To/AzdHLDnYjM17nuHIGXp9AQEhX917pIFY0GD3Q==
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
+ by SJ2PR12MB8806.namprd12.prod.outlook.com (2603:10b6:a03:4d0::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
+ 2026 08:12:57 +0000
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b%5]) with mapi id 15.21.0406.005; Fri, 11 Sep 2026
+ 08:12:57 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Tushar Dave <tdave@nvidia.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ "clg@redhat.com" <clg@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Jason Gunthorpe <jgg@nvidia.com>
+Subject: RE: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
+Thread-Topic: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
+Thread-Index: AQHdP6wq/k4Ssk17ZUOb6vIv4wYnNbbJC0FA
+Date: Fri, 11 Sep 2026 08:12:57 +0000
+Message-ID: <SJ0PR12MB86146CCB19E1BE23172667DCABBE2@SJ0PR12MB8614.namprd12.prod.outlook.com>
+References: <20260908160731.1658621-1-tdave@nvidia.com>
+In-Reply-To: <20260908160731.1658621-1-tdave@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|SJ2PR12MB8806:EE_
+x-ms-office365-filtering-correlation-id: 61b14407-c9b6-4696-6adf-08df0fdc7d33
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|23010399003|376014|1800799024|18002099003|22082099003|38070700021|11063799006|56012099006|10067099003;
+x-microsoft-antispam-message-info: WPCwzaJwNhwYDmfe4k3ga/G42HMO//9SRjbBFAGCNTyJmWnKmCcagGcw3/RDfNbrqdj2xIGEO9G5IZYrGSNCe63AZjOiAib2SIwrbpWhhozyyp5EcA3PcAqGucv3tgmpjIQU+Jed6QX019FUyZqYiVqbVDQ6BcdrCf0wo4f4ksciOJrVUEgiFKP6KcpWaI+84276gMvO/2bWp4nb8UhqryitbxR0k2tZhRHHqauDFFbKEywQU/DNW4JX3Twg40WjCUqg51NDuFoYe351tEGukezEI3KTAcC4MGlgwd109Faznkle5YIkZqDa9cOQHAL7LWtdtl8pQ6gTgvAP+UftLxKdE5ea+DelikKpB4uiWmUyQfmFRIKlMEUcfozoV/WcgB3uTwu4wBom/pESC9MSvzHrZ3QNeG9El/RACKgPwO8IYpBNiGxy6pMUs5oy+RBkrHuoBkS4shlwT/nrz1/EqhAe6R9CWzXdQTM7jLtaXxnSSoS4dYz7BZiQr+0ry7QCvitaR8IGHFBUBBQf/OoZv1JZanszAHh5kh0IrCbZwu60FuOB6PKsTNDjRsFGHqDVIjhp7509rLRdLg8u1rDcXHh233RkrPHCpfbdA4Av6QwYMIKjy9rsxuCM2V8+41zkA+zFkMfht/SEIBttNNqV/Hn8EtiSwNumRwwnaz1p0n3boJjLQSEfVmi+AzL2FMmQEhlI1+osAznl3Xyz8RaGKGea9jLEEB+Td2Nqp6aMKuI=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(18002099003)(22082099003)(38070700021)(11063799006)(56012099006)(10067099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?pYG34disD1QgflnGBykhwzICr1p638Az9tuy1epI7NMY8IGZBfBm0Cs3XQLG?=
+ =?us-ascii?Q?zfZX7hVguW0kcEiRNTDhmBD51Z2CTEkD4BCBCwyTJ5bKZWENWWMLmITeGeCY?=
+ =?us-ascii?Q?NnCaqN/KRXvqtJ4x0vmk5EaB2DL8JqQfDSR3WAecaAPAe3T/GK5cDphgwI4B?=
+ =?us-ascii?Q?obHv2SjOaarp1pWGr3XHELe+NGTEGTHt67CUT3NzTkUXTZOSWJgiyZvz5kYF?=
+ =?us-ascii?Q?+Ibhl4a288NlC8PT4vCdl5Bf93hHmYk01PQ+c7BZ6da478Ge8WQnp7n5SWV+?=
+ =?us-ascii?Q?qKQ0JPnX6ypVtUgu/79OQVIzfzwNYQlsiuJqSsfNAzbCpgAhA3MDsPgPUwou?=
+ =?us-ascii?Q?ulEViA9gyZAE0gwXHadQFITuwKfvATonYh9LlK5NX/P9ZsyO1mfHlx0StFOt?=
+ =?us-ascii?Q?ZexLAh9w9gtlTKmaGmwKLFAljhhPjkRWmdr8ldZHiVOTN9pqWibsDpJbxWeJ?=
+ =?us-ascii?Q?36IGdTsHgcupOYfmSUk95ufkAlUTUyirZTSPUJV09NfTAynnwPBUaf8InkeR?=
+ =?us-ascii?Q?dyliCTSBkH46jM9Fr0xpnzQrViyVdXl0tTWwJgNZjOLTwd7A7Q4letPXnXwU?=
+ =?us-ascii?Q?mHePQLsBnp4eHE7LeJnlSr4O8pTgQiGDHITZ2PJMjDJyDANudiI/KItxNWwe?=
+ =?us-ascii?Q?97GVAHiaOTOW7N4wgEHcsc4YHOIxqlSOnfv/Rp3EbpPlveK0NNpjJTOuqTbi?=
+ =?us-ascii?Q?Ir+hMlPtLrjv6P6WCgxB0YBkW6QItxTf1C5Bf3+QHSBo/wo14cUdjfUu4aSZ?=
+ =?us-ascii?Q?jAL7Fiv5H4aRk845N/FyfGiGj6y57b7TWDYueBnTOWNYx+osqmNOU351DZdh?=
+ =?us-ascii?Q?/iADJQbeg5tZAtVFvh6fZ0SDtByTOnPR2myMGMN9Dpf5ogNb8QLKh4B/INXt?=
+ =?us-ascii?Q?6eLbDHmWxlHf4rxIUrl49PpM3cdlQXWFAs0iv73CFlXCf7u8GTzsTZh0YDXr?=
+ =?us-ascii?Q?zTxzp8kA3mRpbhUmYcYIiv65eaZhQnEkUBlteHslsaQwyaSe8suYoYE6NNbi?=
+ =?us-ascii?Q?ymZEMTCqPVBG612NJONHKBqvc2YL14pzVoEeZdr/4P+Z3swl7wRVpf1XMwyH?=
+ =?us-ascii?Q?0/WCWdBuzGerMy9yExNvHuMTA/BVkytKk3EMys2P/ppsFTHoEV9BXFDpPx6j?=
+ =?us-ascii?Q?g2iyMu0WOq/Afo4a5CMsuwwATbogWN/04aJrK1h4xxTYemKcSPFk/e77NyG5?=
+ =?us-ascii?Q?CERmd+CC39fRKSg1z+9KC8h4bfO8Z2fjxMY+A9UD3pD2DJspLinyQ7FU9Ffu?=
+ =?us-ascii?Q?z+Sa/uGs8EV+pDMO6vH8n9ylRFY0pFZUE4EqrFv1v/CNzzeVFB/zoHiaSdBt?=
+ =?us-ascii?Q?hSXj5xVxxMip/RrppIJPL1RKdJu8JODPDieuMdZ+LVZG+ICiAGxoGU3LOMyx?=
+ =?us-ascii?Q?P1w5aG6dyPlzWNPxt1Q6izzUa+OiHTUtPr+HeDdY9rOATjOMF/xR/4PXhLlC?=
+ =?us-ascii?Q?bG+wo/q3DW46OLn0Na2j6KRM739bO7BNMYRXU8k0/FLxI8LuUUtuhWKksWla?=
+ =?us-ascii?Q?DGuGAd6HQKOwra7NX31Ozyfl/JRxcTXtZSEp/lJR7MUx55Lf1q8WrJARxiup?=
+ =?us-ascii?Q?oOv8/KWN/bfQEEX0QIGTE5QFJfDCp5ySqoibym4UYYrAf9GcfubcDe74CArd?=
+ =?us-ascii?Q?1/4eyzP5Z9j7eBrGRb1JXt48gTsXSoAn5MM3NkskgcAKrICwQ8jh+oNeFto2?=
+ =?us-ascii?Q?Nkqt7dzbOl+W+iYBCg0wDbbIBAuNDFoQpOlJc6CpARZoj1UWls40dc1kS6fS?=
+ =?us-ascii?Q?GwSjzkHAww=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 61b14407-c9b6-4696-6adf-08df0fdc7d33
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2026 08:12:57.7217 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kx8v5VsARPQT7VoCYwkP7wRn4BwD4OMlwTt8vVpLJoAFL7Q9IcrJJipH4hlWDLbAtQo5FM2n0dL6mmdYm4/v/Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8806
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,163 +144,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
 
-> Markus Armbruster <armbru@redhat.com> writes:
->
->> Fabiano Rosas <farosas@suse.de> writes:
->>
->>> Change the hmp_migrate_set_parameter command to use a keyval input
->>> visitor.
->>>
->>> Currently a string visitor is used and due to limitations of that
->>> particular visitor's implementation it's necessary to consult the QAPI
->>> type enum (MigrationParameter_lookup) and call each visit_type_*
->>> function individually. Which makes using a visitor pointless.
->>
->> Also, the less the string visitors are used, the happier I am.
->>
->>> Since there are other visitors implemented properly and generated code
->>> to iterate the QAPI object, prefer using one of those. The keyval
->>> input visitor is adequate because HMP provides basically one key and
->>> one value for each migrate_set_parameter command.
->>>
->>> To switch from string_input_visitor to keyval_input_visitor simply put
->>> the parameter name and value into a dict and invoke
->>> visit_type_MigrationParameters().
->>
->> This works for scalar types: the value is a QString, and the QObject
->> keyval input visitor automatically converts to the C type the visitor
->> expects.  It doesn't work for non-scalar types; see cpr-exec-command
->> below.
->>
->>> Note that it's not necessary to go through any of the keyval_* code
->>> because due to the nature of HMP, there's no parsing to do (no '=', no
->>> ',', etc).
->>
->> migrate_set_parameter syntax isn't keyval, only val is, i.e. its value
->> argument is in keyval value syntax (more or less).
->>
->> "More or less" is my hedge against differences between the string input
->> visitor and the QObject keyval input visitor.  Did you check?
->>
->
-> They ultimately use the same functions to do the conversion
-> (qemu_strtou64, qemu_strtod_finite, etc). The differences are in
-> slightly different wording of error messages and the fact that the
-> string input visitor has a different message for -ERANGE while the
-> qobject input visitor has a TODO for that case.
->
-> I think those differences are of no consequence. The error messages that
-> we really care about are the ones resulting from the migration code
-> validation (because they're informative to the user). The API level
-> messages are too generic anyway.
 
-Should the commit message make this argument?
+> -----Original Message-----
+> From: Tushar Dave <tdave@nvidia.com>
+> Sent: 08 September 2026 17:08
+> To: alex@shazbot.org; clg@redhat.com; qemu-devel@nongnu.org; Shameer
+> Kolothum Thodi <skolothumtho@nvidia.com>
+> Cc: Jason Gunthorpe <jgg@nvidia.com>
+> Subject: [PATCH 1/1] hw/vfio: thread vf-token through iommufd bind
+>=20
+> A VF fails to bind through the iommufd/cdev backend when its PF is
+> bound to vfio-pci and requires a matching VF token.
+>=20
+> QEMU currently initializes struct vfio_device_bind_iommufd without
+> the token flag or token UUID.
+>=20
+> Pass the existing vf-token device property to the IOMMUFD bind ioctl
+> for PCI devices.
+>=20
+> Signed-off-by: Tushar Dave <tdave@nvidia.com>
 
->> Aside: we could create migrate_set_parameters with keyval syntax if we
->> cared.
->>
->>> With this the migrate_set_parameters HMP commands will be
->>> automatically updated anytime a new migration parameter is added.
->>>
->>> One parameter, "cpr-exec-command", takes the strList type which needs
->>> to be built manually. This moves to a "legacy" suffixed function.
->>
->> When visit_type_MigrationParameters() visits "cpr-exec-command", it
->> calls visit_type_strList().  With the QObject keyval input visitor, this
->> expects a QList, not a QString.
->>
->> Thus, hmp_migrate_set_parameter() needs to parse the value argument into
->> a list at least.  That's why it needs to be a special case.
->>
->
-> I'm having some difficulty understanding why isn't that the job of the
-> visit function.
->
-> I think what you're saying is that we can convert QAPI's strList into
-> QObject's QList of QString, but cannot convert the HMP string directly
-> into QList even though we know that string represents a strList. I feel
-> like there's code missing somewhere...
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-This is due to separation of concerns in the design of the visitor
-pipelines.  Example:
+Thanks,
+Shameer
 
-         JSON         input
-        parser       visitor
-    JSON ---> QObject ---> QAPI-generated C type
-
-         JSON         output
-       formatter     visitor
-    JSON <--- QObject <--- QAPI-generated C type
-
-Parser/formatter deal with JSON.  All they know about QAPI is QObject.
-
-Visitors deal with QAPI-generated C types.  All they know about JSON is
-QObject.
-
-Keyval came much later, and we had to accept a weaker separation for it.
-In JSON, the type of scalars is explicit in the syntax.  In keyval, it
-is not.  So scalar values are always strings in the parser's output, and
-the QObject keyval visitor needs to parse these strings.  This leads to
-restrictions discussed in keyval.c's big comment.
-
-But this applies *only* to scalars!  The separation still holds for
-objects and arrays.
-
-> ... although it wouldn't help with cpr-exec-command because of the
-> "shell parsing" semantics. But that's another issue.
-
-Yes.
-
->> It parses it with g_shell_parse_argv().  GLib docs "specify" this to
->> parse "a command line [...] in much the same way the shell would, but
->> without many of the expansions the shell would perform (variable
->> expansion, globs, operators, filename expansion, etc. are not
->> supported)."  Ugh!  But I digress.
->
-> One side-effect of having code that handles parameters genericly is that
-> there is less room for inventing custom parsing when new parameters are
-> introduced.
-
-We use g_shell_parse_argv() for cpr-exec-command and nothing else, which
-effectively makes it custom syntax.  At least it's custom syntax we
-didn't design and implement, but still.  Too.  Much.  Syntax.  Too.
-Many.  Parsers.
-
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-[...]
-
->>> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
->>> index 2261ae7c89..4ac2f42a5a 100644
->>> --- a/tests/qtest/migration/misc-tests.c
->>> +++ b/tests/qtest/migration/misc-tests.c
->>> @@ -50,7 +50,7 @@ typedef struct HMPTestData {
->>>  HMPTestData test_cases[] = {
->>>      TEST("", "", "migrate_set_parameter: string expected"),
->>>      TEST("foo", "", "migrate_set_parameter: string expected"),
->>> -    TEST("foo", "on", "Error: invalid parameter value: foo"),
->>> +    TEST("foo", "on", "Error: Parameter 'foo' is unexpected"),
->>
->> This appears to be an improvement.  Where does it come from?
->>
->
-> Old code went through the enum lookup whereas now the QObject visitor's
-> qobject_input_check_struct flags the struct member name.
-
-hmp_migrate_set_parameter() takes a parameter argument that names a
-member of MigrationParameters.  Trick: it parses it as a member of
-related type MigrationParameter, with qapi_enum_parse().  Since the
-members of MigrationParameter are *values*, qapi_enum_parse() reasonably
-reports "invalid parameter value".
-
-Trickery breed bad error messages, film at eleven.
-
-Suggest to mention the improvement in the commit message.
-
->>>  
->>>      /* bool */
->>>      TEST("cpu-throttle-tailslow", "on", "on"),
+> ---
+>  hw/vfio/iommufd.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>=20
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 242644aa00..de482128bf 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -155,6 +155,7 @@ static void
+> iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
+>=20
+>  static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error
+> **errp)
+>  {
+> +    VFIOPCIDevice *vdev =3D vfio_pci_from_vfio_device(vbasedev);
+>      IOMMUFDBackend *iommufd =3D vbasedev->iommufd;
+>      struct vfio_device_bind_iommufd bind =3D {
+>          .argsz =3D sizeof(bind),
+> @@ -180,6 +181,15 @@ static bool
+> iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+>=20
+>      /* Bind device to iommufd */
+>      bind.iommufd =3D iommufd->fd;
+> +
+> +    /*
+> +     * Pass the VF token when binding a PCI device.
+> +     */
+> +    if (vdev && !qemu_uuid_is_null(&vdev->vf_token)) {
+> +        bind.flags |=3D VFIO_DEVICE_BIND_FLAG_TOKEN;
+> +        bind.token_uuid_ptr =3D (uintptr_t)&vdev->vf_token;
+> +    }
+> +
+>      if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
+>          error_setg_errno(errp, errno, "error bind device fd=3D%d to iomm=
+ufd=3D%d",
+>                           vbasedev->fd, bind.iommufd);
+> --
+> 2.34.1
 
 
