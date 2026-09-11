@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D10C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 15:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24149C88E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 15:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x53Bu-0008D3-Ip; Fri, 11 Sep 2026 11:29:26 -0400
+	id 1x53C3-0008Kh-Ln; Fri, 11 Sep 2026 11:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1x53Bt-0008Ce-7m; Fri, 11 Sep 2026 11:29:25 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ id 1x53C2-0008K4-Ha; Fri, 11 Sep 2026 11:29:34 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1x53Br-0007FB-NR; Fri, 11 Sep 2026 11:29:25 -0400
+ id 1x53C0-0007GG-9q; Fri, 11 Sep 2026 11:29:34 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XNgWBhb4oBW3COPhdICL8nKAYP7Bars5Q5xy4LqCyq6EXlZ/13XP9BUZlRI/NTVX/pc2h7OO00ArtMiRY6qANxjNIlcwVV5ebNCV6tvOfp09CvRdyzwvbw+Kw3kbABBgXLEt6Rkad4P+JOBekInmNxdTzNWvrQePtMtoEVAgRK5de74Pi8XW090mSEzQf8xjUQ6Pr0HtFky8wr+20szWcfsaJAwuqcUuy9ktoTAlf483/gHtbuNa7Jd6pl5SyAS9aQOUWBii3EAWQNE7jWKhNxqkyqXgz66Vb8GX79/arB1Y68aNd3n8Q7xtH/+eYEfnMWZ6ZyIv7NOr2EGx1Hk2yQ==
+ b=Cd6PsSvfkjCY6LYD30kkgzIjCfx51Dj94FPwJBZUlP61t/FR0MR1fVSnFm6DKV1r5/Ji5JGTQehN3BIJUAraJb1pCAjGy5dkGQip6UkWlewNCNovoNnK/rGL1tgxoVhuO+wogCl2efMigUhzs9LUVsILY0aLtjKTdpy8AH4GsQX0hCrMB1AHTimFUHVYwARzLgug/iruvFYQcZGNHOYW89W+HPrrZZ5cw+tta6CVY11ivVHBiGKjzOP9mIZbdgHHf4BHv2Ftxtz7gAq+I+9X6LmnUCUzPTXjCgXAZGX+SfNjV0lAAte9JVSnc5C5vbMgtA7SVr030wF2hy0/ZzduoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JkpeyUjwIleydYDKUCQmZXlD1B/OVgbJDkME/++juuM=;
- b=ET0A8EUDp4uyCxaVFUrX28stFvSZwWDLH+OvgvfBhzkCPdsTkewXfTQNmANh37HVzraulWfObfB02UFg4l6P9ahbWkpEHzjtZ7XBR2F0AxadQnoLNTQfy1z3pAJ60ZUTANQJxITM1lkZDV/skg5MQ1XKM0hWvvxCrpfmDa64R/5JCazpYVHp1L2iKVWU9vDh2Tc3AJbHoEqXFQ8uQwLr+8IMMZWQkwBeeymZXagcVPygX6COMnfvcdPRWQvfHaiI2RF9ZCHvi/xok4pk03BFItPuDbCaHcdE/J5ALdOMJgI7aBqrUfQNWbHZi/LixcyN7Txy8Tv0Y4ADStN+Whl+7g==
+ bh=lbZZQSEilcG66n6kx6vk0RI0RbpH2oGGDd+PxBlvbc8=;
+ b=AAwSMraZkzDOH0ILUYrfNTBF0bJuzaFZQOW70H9m+PILetxH6olxKjvOC3uw0QV1pWif79MQRLgyQRMHy/51DfMb2LtKINOA0pieiAOndUjURYQTsxEj0GH/Gh34+tzKlO8u9n4Fd53fcT4CCk6nI5oU4Wq1SdBBGQIPzfeWIi1+tT5eU5WfXNq9UOh75WDIIr+LSSrMheEUOMsFPDNZ9H4fnkU6QHt/uUDC0LZ4X3TMU10dipqfKxgXZHwlhYUZw5lKSaC6uiyGJQzVtPqdihFaWsoCZmSQRsp9RVGXVp3sDRrAoYIhD2205HVSAJ0uPMMCpMDQ7O2jsq/0CLu5jg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JkpeyUjwIleydYDKUCQmZXlD1B/OVgbJDkME/++juuM=;
- b=cyz0u67v6ZHw3xHCFqZM4BWTYxsN/5nuud+TsX4flHCvDec3NxUP1QuMemu8rzEitFL/zgZWByzdgkGoo8hmmuAoQmWRIz3J0xDFfmZptxn94k55ZGgJEEMJsePZq3LyrAX/SyuL8bHMRcGyBv2HncD4nx3ikE6dLjHLOo1OA+AYwjUOguZfqJI0e6AaDBoqwGY8zTIrQJtBK/bT1DNs1fFGM+82ssVGRlQLCeke6wgWukTHgdps6CV3nmirqVcDjjnv+kZQO8ISp5k6YKZ0QBjtdFjiF6muD/9Zujm2fVVbO2BQcgLlrWKpuJlLkqh5GHlBrQ0QZ+NLGXNCQWWVrA==
-Received: from MW4PR04CA0163.namprd04.prod.outlook.com (2603:10b6:303:85::18)
- by LV2PR12MB541025.namprd12.prod.outlook.com (2603:10b6:408:3a5::15)
+ bh=lbZZQSEilcG66n6kx6vk0RI0RbpH2oGGDd+PxBlvbc8=;
+ b=E9nkOaYgJEDufmFT9BvQ9exJLK/IfzfR1R1AsiUb/Gjeam9fkOUDsRpE1dDMTvjJ8ggKHW3/Ud9IZCmHiQPkqasc81MFkKbfU+xcf4Quh27/RGMCIcy6JRjAsPhUqOYagoS9DCSHQEqB1Tpun8H/5KPi3MHgF7zph+vtLYI3tM7bxcwor3MWIC7KUWbdY4aY6gWjAJACHGOOjjJY70qvHDA1wM60WYkx1Wfw+njqmRw+XaEB7UH0Fhg+/a659sGv0Q0JlZ07S7Ih6iZKJivTDsr43uJOpFKaf1J9WoD/4DwFcAmToP4k876W9LCF+BLouF8xQTaQCSKZVnnDcWc1gQ==
+Received: from SN7PR04CA0026.namprd04.prod.outlook.com (2603:10b6:806:f2::31)
+ by BY5PR12MB4163.namprd12.prod.outlook.com (2603:10b6:a03:202::18)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.10; Fri, 11 Sep
- 2026 15:29:19 +0000
-Received: from MW1PEPF0001615B.namprd21.prod.outlook.com
- (2603:10b6:303:85:cafe::53) by MW4PR04CA0163.outlook.office365.com
- (2603:10b6:303:85::18) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.10 via Frontend Transport; Fri,
- 11 Sep 2026 15:29:19 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ 2026 15:29:25 +0000
+Received: from SA2PEPF00003F62.namprd04.prod.outlook.com
+ (2603:10b6:806:f2:cafe::80) by SN7PR04CA0026.outlook.office365.com
+ (2603:10b6:806:f2::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.9 via Frontend Transport; Fri, 11
+ Sep 2026 15:29:24 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MW1PEPF0001615B.mail.protection.outlook.com (10.167.249.86) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SA2PEPF00003F62.mail.protection.outlook.com (10.167.248.37) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.1 via Frontend Transport; Fri, 11 Sep 2026 15:29:17 +0000
+ 15.21.406.5 via Frontend Transport; Fri, 11 Sep 2026 15:29:23 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 11 Sep
- 2026 08:28:50 -0700
+ 2026 08:28:55 -0700
 Received: from NV-2Y5XW94.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 11 Sep
- 2026 08:28:47 -0700
+ 2026 08:28:52 -0700
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <cohuck@redhat.com>, <sebott@redhat.com>,
@@ -71,9 +71,10 @@ CC: <eric.auger@redhat.com>, <cohuck@redhat.com>, <sebott@redhat.com>,
  <khushit.shah@nutanix.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
  <jan@nvidia.com>, <wangzhou1@hisilicon.com>, <maz@kernel.org>,
  <oliver.upton@linux.dev>, <skolothumtho@nvidia.com>
-Subject: [RFC PATCH v2 3/5] target/arm/kvm: Add QAPI struct ArmTargetImplCPU
-Date: Fri, 11 Sep 2026 16:27:52 +0100
-Message-ID: <20260911152754.706518-4-skolothumtho@nvidia.com>
+Subject: [RFC PATCH v2 4/5] target/arm/kvm: Handle KVM Target Imp CPU
+ hypercalls
+Date: Fri, 11 Sep 2026 16:27:53 +0100
+Message-ID: <20260911152754.706518-5-skolothumtho@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260911152754.706518-1-skolothumtho@nvidia.com>
 References: <20260911152754.706518-1-skolothumtho@nvidia.com>
@@ -85,32 +86,32 @@ X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW1PEPF0001615B:EE_|LV2PR12MB541025:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1b0701a3-0b15-492c-2f3b-08df101971c4
+X-MS-TrafficTypeDiagnostic: SA2PEPF00003F62:EE_|BY5PR12MB4163:EE_
+X-MS-Office365-Filtering-Correlation-Id: 681c94a9-b38e-4a64-b332-08df10197557
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|36860700016|82310400026|23010399003|1800799024|10067099003|6133799003|3023799007|18002099003|22082099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: 9kq3fnYv3vFYN5fPkJSKxyif9CiJPWujnfeevK5tow3qseP4H2f3hFIz25S+pRxdpblI37bDfLceTIDnBFR6Ijufs2dLlX/ZaK55NetAE9UJVfjRb9pfNgRNQ3LdOwX+nbmIktprd5rprWk/cZu3iLyJCzndHQGzQg3l01Gl0UzIyilD/vuC4GzwSKTqEDU/4A4hzAPJYainasbtuS7m5WtWT6wV6hsDNBqZC+sVZD/zMIh9otdtWufZ+REiEk6AA1hwcPH4reZrDS8xvj+1jDNz9saZtZvt6eXfEae3Bn/AD/pC0sO4vqXVgqxw/krhZ7RLLiupkxAxc6iyBtsCv5I5n+obwKmD89w69YT80jivSpgqf1DAsWOmJrXGXKbsUV0XZQwCeLERjCrcAyci7dJRRJ0disGsCmrt9+u9yrlzdiEr8O+e9C9Jt7SnFOvHz736GbJC10f8bgwY5hOoEnJ7I0q2iT55sFsmEXMvUoRqn9hX/MiPcs5tjkjBlwnWCZwBZjW66uYea8ed1tkzg5vECX/AYTx/Yw0knxwq3uwgFqzzu6lHJ+QXBcTwPrkeHBVuMdrcMiqnMFdViU/hPbGlLNtBnAfN4Cd1yML3ldTBikDfAsTHwhAdkxteEXZSl+/5GA+Im8YMVgEcRdaXg98tFIs6ase4QuNOr5ZFazdTmuh2OcVGfQMRCiVyiozE1ox01cLMiZx2rjop4G966A==
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(36860700016)(82310400026)(23010399003)(1800799024)(10067099003)(6133799003)(3023799007)(18002099003)(22082099003)(56012099006)(11063799006);
+ ARA:13230040|82310400026|376014|7416014|1800799024|23010399003|36860700016|10067099003|56012099006|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: p1LliI100mbdaC3OKa/vhbn/MpAyy0W25IsQNmS5X/RIJXi+op0BmvvWpOeO6Zho1Suax9MUluqGGjH4xqoaCymW0y/q3+5ZP4pSDxRz3Rj7up2J5S+N8P9dG5fPbrLohledxPXvyXS+TOESyEW144NitZzNTUN/p7NnUgNZO0EYqKMz0lU0EWgOKykN7ijjyXn0J8JEGeVeONk08EIB7sAbYf5blb5VUHLALc358RhmAK63WTc1x6VafULG30KXbSbRMK8P8FWBD/1DyyjqP5ECJux5EyEO3hQWlcp0jSjkdJbf7Ue/cvjvL542MhKcJA01Qtjb914rh9OyvEgtce93YmBAKMPzArDBxCyFORyuWvmgDHvtwp3erQJBoRzctAlgz5Mqng/1pSm/kH0bqd9aY8PCnS7hArdAvcx4w/8JaqR73UbtECXdcT/et2Q30h0t3RfR5reb5lyk3WfNKp54sgcAsvZ2Dp5mtrfaZBp334l6gmNPBnr20v02Cllx/deB8R4wiResi7yj25SDiyqrzfHrAdAsrU+Fo/3IXrJLEARX/7Ft/nwFQs3qu+yeuT1e8+lldnsMxCTvvLmKuXSQaokalVVIyBS8vLUJmseVkCNsrw9sM/Hjqu/3S4JiDMGhSl2KOta4qdUTn8DHumpEgcTZaRn6CN4m0Tt0sKzGM4dSBcL9A3bsKwoQoqQL8t0L3TbhGbq/bMH6R3RdJg==
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(7416014)(1800799024)(23010399003)(36860700016)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: J3YfxpIsTwbC/XSNs6BPz1Mjfea5C9km8OZgtAh1WaTv0AOIZsBYUlciD/m4XfLhoX8FhCDyZG6MgVGJuLS5oTgfT0X8JevLc0iBnQhhwaUz3qHv7yR3HPzIvjV5ibRIiNfYp3yFoJ0q2y+eIlDoYlFvTZjGjKfWAsEGFhuRI/R5gBk192NlFJw8eKQnx8KW0enPawXFqr6jLeRs7DuWmjZ0zyFHMv+TZMrxzAGfa//l88KGpM465jiMV2HuYLmVxWiVv6PK40/pKwWzVHQz9gwoJEtHCMMCXZKDwjaVbbQq3qbx6R0CIpBCMjPP1Bt2ZlVsYM97uC3iLOz414b3gDpqPXi1E61BXXejs0FcUL1z4bOGLtmJ3vj7IdLlR5o8lZ05VyteruoPdeHzCNTzAsZKZsQWheo1LDqKSX66XouWcD97TCEZqdmNuI39A9Hs
+X-MS-Exchange-AntiSpam-MessageData-0: Ji/hjSs00a2e4sFI8jx2sjUJJ+g617cH9sAHquWeyry+4O6U5JzhrlG4VcX2mVA3XnSHq6NA2z0cw0RS8sZZxRxO2YIEcUXijP3OxaPhlfL7eF2ZnIUktR0PFoxUMdEU5jgWS2Fv6rLsCcTMCnJDaCx8UmewFsrt5TFrA9Dv+jRWjW1eb5YPUtyxOC5NU9Xr4FQVFA4wReKoebx1ncIeX+MG8dt8SYgLdbSH0an+yjwnRujDkEoqZ6VdAMuTZ1RwyTMgB+r+QeVNcdTp9ElnOgCDd3SjRHi7Ok3CPHIaLEWWdpzjE1TjByHtMlRPnRg/KCy2WgKZ9ZDViK2Hm7dMGmjmu3qIW4NEcwG+vkczTBbfNJtQdkQg5XJ3vIjrsBOug0AbL8Zf8Agg2Cyq0Rtv5FtvTNCdIbFBCjA1Vmwmw3YEyK4g8TRz8j/MI21WLDGT
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 15:29:17.7273 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b0701a3-0b15-492c-2f3b-08df101971c4
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 15:29:23.7493 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 681c94a9-b38e-4a64-b332-08df10197557
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MW1PEPF0001615B.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003F62.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB541025
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4163
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
  envelope-from=skolothumtho@nvidia.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
+ helo=CO1PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -133,143 +134,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a QAPI-defined struct (and its array) for target implementation
-CPUs. This enables specifying target implementation CPU parameters
-via -machine, for example:
-
--M virt, \
-  impl-cpu.0.midr=1,impl-cpu.0.revidr=1,impl-cpu.0.aidr=1, \
-  impl-cpu.1.midr=2,impl-cpu.1.revidr=2,impl-cpu.1.aidr=0
-
-Subsequent patch will make use of this by using object_property_add(),
-allowing users to configure each target CPU's midr, revidr, and aidr
-fields directly from the command line.
-
-While at it, also provide a helper function to set the target CPUs.
+When target implementation CPUs are set, handle the related hyper calls
+correctly by returning the information requested.
 
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 ---
- qapi/misc-arm.json    | 36 ++++++++++++++++++++++++++++++++++++
- target/arm/kvm_arm.h  | 11 +++++++++++
- target/arm/kvm-stub.c |  5 +++++
- target/arm/kvm.c      | 20 ++++++++++++++++++++
- 4 files changed, 72 insertions(+)
+ target/arm/kvm.c | 105 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
 
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-index 4dc66d00e5..8dbfb98fe5 100644
---- a/qapi/misc-arm.json
-+++ b/qapi/misc-arm.json
-@@ -89,3 +89,39 @@
- ##
- { 'enum': 'OasMode',
-   'data': [ 'auto', '32', '36', '40', '42', '44', '48', '52', '56' ] }
-+
-+##
-+# @ArmTargetImplCPU:
-+#
-+# Info for a single target implementation CPU.
-+#
-+# @midr: MIDR value
-+#
-+# @revidr: REVIDR value
-+#
-+# @aidr: AIDR value
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'ArmTargetImplCPU',
-+  'data': {
-+    'midr': 'uint64',
-+    'revidr': 'uint64',
-+    'aidr': 'uint64'
-+  }
-+}
-+
-+##
-+# @ArmTargetImplCPUs:
-+#
-+# List of target implementation CPUs.
-+#
-+# @target-cpus: List of ArmTargetImplCPU entries.
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'ArmTargetImplCPUs',
-+  'data': {
-+    'target-cpus': ['ArmTargetImplCPU']
-+  }
-+}
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 8cd770c7c3..4dc59779bb 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -281,4 +281,15 @@ char *kvm_print_register_name(uint64_t regidx);
- bool kvm_idreg_write_scratch_vcpu(int cpufd, Visitor *v, const char *name,
-                                   void *opaque, Error **errp);
- 
-+/**
-+ * kvm_arm_set_target_impl_cpus:
-+ * @cpus: list of target implementation CPU descriptions
-+ *
-+ * Record the target implementation CPUs to be reported to the guest via
-+ * the KVM vendor hypercalls. May only be called once.
-+ *
-+ * Returns: true on success, false if the target CPUs were already set.
-+ */
-+bool kvm_arm_set_target_impl_cpus(ArmTargetImplCPUList *cpus);
-+
- #endif
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index a0aed2fd84..9f835787f1 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -47,6 +47,11 @@ bool kvm_arm_target_impl_cpus_supported(void)
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 68c22a6cde..48eb3e51a5 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1903,6 +1903,77 @@ static bool kvm_arm_handle_debug(ARMCPU *cpu,
      return false;
  }
  
-+bool kvm_arm_set_target_impl_cpus(ArmTargetImplCPUList *cpus)
++/* Only supports HYP_KVM_DISCOVER_IMPL_XXX hypercalls */
++static void arm_handle_smccc_kvm_vendor_hypercall(ARMCPU *cpu)
 +{
-+    return false;
-+}
-+
- /*
-  * These functions should never actually be called without KVM support.
-  */
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index ee4b2e72e8..68c22a6cde 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -69,6 +69,9 @@ typedef struct ARMHostCPUFeatures {
- 
- static ARMHostCPUFeatures arm_host_cpu_features;
- 
-+static uint64_t target_impl_cpus_num;
-+static ArmTargetImplCPUList *target_impl_cpus;
-+
- /**
-  * kvm_arm_vcpu_init:
-  * @cpu: ARMCPU
-@@ -3061,3 +3064,20 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
- 
-     kvm_arm_destroy_scratch_host_vcpu(fdarray);
- }
-+
-+bool kvm_arm_set_target_impl_cpus(ArmTargetImplCPUList *cpus)
-+{
++    CPUARMState *env = &cpu->env;
 +    ArmTargetImplCPUList *iter;
++    uint64_t param[4] = { };
++    uint64_t idx;
 +
-+    if (target_impl_cpus_num) {
-+        return false;
++    if (!is_a64(env)) {
++        env->regs[0] = SMCCC_RET_NOT_SUPPORTED;
++        return;
 +    }
 +
-+    for (iter = cpus; iter; iter = iter->next) {
-+        target_impl_cpus_num++;
++    memcpy(param, env->xregs, sizeof(param));
++
++    switch (param[0]) {
++    case ARM_SMCCC_VENDOR_HYP_KVM_DISCOVER_IMPL_VER_FUNC_ID:
++        if (!target_impl_cpus_num) {
++            env->xregs[0] = SMCCC_RET_NOT_SUPPORTED;
++            return;
++        }
++        env->xregs[0] = SMCCC_RET_SUCCESS;
++        env->xregs[1] = PSCI_VERSION(1, 0);
++        env->xregs[2] = target_impl_cpus_num;
++        break;
++    case ARM_SMCCC_VENDOR_HYP_KVM_DISCOVER_IMPL_CPUS_FUNC_ID:
++        idx = param[1];
++
++        if (!target_impl_cpus_num || idx >= target_impl_cpus_num) {
++            env->xregs[0] = SMCCC_RET_INVALID_PARAMETER;
++            return;
++        }
++
++        iter = target_impl_cpus;
++        for (uint64_t i = 0; i < idx; i++) {
++            iter = iter->next;
++        }
++
++        env->xregs[0] = SMCCC_RET_SUCCESS;
++        env->xregs[1] = iter->value->midr;
++        env->xregs[2] = iter->value->revidr;
++        env->xregs[3] = iter->value->aidr;
++        break;
++    default:
++        env->xregs[0] = SMCCC_RET_NOT_SUPPORTED;
 +    }
-+
-+    target_impl_cpus = cpus;
-+
-+    return true;
 +}
++
++static int kvm_arm_handle_hypercall(CPUState *cs, struct kvm_run *run)
++{
++    ARMCPU *cpu = ARM_CPU(cs);
++    CPUARMState *env = &cpu->env;
++
++    kvm_cpu_synchronize_state(cs);
++
++    if (run->hypercall.flags == KVM_HYPERCALL_EXIT_SMC) {
++        cs->exception_index = EXCP_SMC;
++        env->exception.syndrome = syn_aa64_smc(0);
++    } else {
++        cs->exception_index = EXCP_HVC;
++        env->exception.syndrome = syn_aa64_hvc(0);
++    }
++    env->exception.target_el = 1;
++
++    bql_lock();
++    arm_handle_smccc_kvm_vendor_hypercall(cpu);
++    bql_unlock();
++
++    return EXCP_INTERRUPT;
++}
++
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -1919,6 +1990,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+         ret = kvm_arm_handle_dabt_nisv(cpu, run->arm_nisv.esr_iss,
+                                        run->arm_nisv.fault_ipa);
+         break;
++    case KVM_EXIT_HYPERCALL:
++        ret = kvm_arm_handle_hypercall(cs, run);
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
+                       __func__, run->exit_reason);
+@@ -2379,6 +2453,29 @@ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
+     return kvm_set_one_reg(CPU(cpu), KVM_REG_ARM64_SVE_VLS, &vls[0]);
+ }
+ 
++/*
++ * Supported Target Implementation CPU hypercalls:
++ *   KVM_REG_ARM_VENDOR_HYP_BIT_DISCOVER_IMPL_VER   = 0,
++ *   KVM_REG_ARM_VENDOR_HYP_BIT_DISCOVER_IMPL_CPUS  = 1
++ *
++ * Setting these bits advertises the availability of the corresponding
++ * Target Implementation CPU hypercalls to the guest.
++ */
++#define BMAP_2_DISCOVER_IMPL_BITS 0x3ULL
++static int kvm_arm_target_impl_cpus_set_hyp_bmap2(ARMCPU *cpu)
++{
++    uint64_t bmap2;
++    int ret;
++
++    ret = kvm_get_one_reg(CPU(cpu), KVM_REG_ARM_VENDOR_HYP_BMAP_2, &bmap2);
++    if (ret) {
++        return ret;
++    }
++
++    bmap2 |= BMAP_2_DISCOVER_IMPL_BITS;
++    return kvm_set_one_reg(CPU(cpu), KVM_REG_ARM_VENDOR_HYP_BMAP_2, &bmap2);
++}
++
+ #define ARM_CPU_ID_MPIDR       3, 0, 0, 0, 5
+ 
+ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+@@ -2482,6 +2579,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     }
+     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
+ 
++    /* Set KVM_REG_ARM_VENDOR_HYP_BMAP_2 if target impl CPUs are required */
++    if (target_impl_cpus_num) {
++        ret = kvm_arm_target_impl_cpus_set_hyp_bmap2(cpu);
++        if (ret) {
++            return ret;
++        }
++    }
++
+     ret = kvm_arm_init_cpreg_list(cpu);
+     if (ret) {
+         return ret;
 -- 
 2.43.0
 
