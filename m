@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8E5C88E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 07:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E57C88E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 07:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4vdU-0008B2-V6; Fri, 11 Sep 2026 03:25:24 -0400
+	id 1x4vdB-0007sa-3m; Fri, 11 Sep 2026 03:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1x4vdM-00088y-1e
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 03:25:16 -0400
-Received: from sonic304-23.consmr.mail.gq1.yahoo.com ([98.137.68.204])
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1x4vd9-0007rm-BQ
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 03:25:03 -0400
+Received: from sonic302-20.consmr.mail.gq1.yahoo.com ([98.137.68.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1x4vdJ-0008CM-N4
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 03:25:15 -0400
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1x4vd7-0007yV-2E
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 03:25:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1789111511; bh=/3QUpHGBKJbXOgu22YsrlVzjiLJDOg/MMxR0FeGG6pI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To;
- b=QzLynmg1rRqy0YClCOWLrr8VWVC6sWeJSBGxWL6YF6ByqXU4gz3UFrDSBn7pY7HyldKC8tF24T1ERoXKLQsPTB0RNpWn+TwECHyowTJjRRLU6+Dax1G8FtcEd7Kwbhp2kG5k2icMHwbs2zwanyYHazp5LNqj668XirOZ7gxIn1FWwcm4L4DwDqgUpaw9xs1FlETWVJzvnw/cYCIPxBR4XuNNtHGcFyr2rRtDjxlAltEC7KZcvX79YCbwUzuIgPzymlsBdSOL6pM3yWfjwOdPhP+ywLdwHyl3Cw5Fo6DSYxy7aJg/9vwNB4OcWAgXkS4AYsB8/o/9xAvzqyd6yVNF3A==
+ t=1789111497; bh=en0biDtErIDPX8Wy4OEtT0eKAnvLP1ybw8oQxmME/08=;
+ h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To;
+ b=laak+G0vWbOik+u36BuweJGPG0wcd4JF4bJPee99r9l/nDc5lEPnNL8m5qSuh6+lQ5v7p3xubs+Ncz+weeFAmkdVHg5rLHDp9M1Qg8Zb89NXr2xYbcVQs1ToDeOiuvXKrN6ZByU7Mw/NE8ZL4gHjSkrfGtAjB6EkBNuK2Cuq5wU8ToXCLR6Sulg/k7HZmBikYEyLA6Vwmnf4Nd/4H5tFLuJyzKnlMPjwhKDmUZrBceX/+CivCrJHbFDFJN4MgOwAlFc1d/lXCblFmKY73fe6PW+vFUIvYIl7pBU6ASk9Ao/E85EmD26/HYAbuRpaArKMYl3JXNEEOrzL8dNfE4rupg==
 X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1789111511; bh=I/ssSFpkQARF6S3fHwCeJAKASsjOH/PQdGIY+FxDhMt=;
+ t=1789111497; bh=m/ERkDdEk+T4YnfpCna6g0mZv+xiWufY6rwsf2afODF=;
  h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
- b=fGeWUDeT/Dl0luu+OzhPIKUY2cctSYE2PH0khHZp3jKrzF2MITJLQd12UiAOwzFE7G7GOLufQaoeYBSJrbKcHdl+MZhHPOfiCpoSrl4UdT+bNVC0vGmV2CVxbjunxe5mR5kXM9BtDOhk3OFZ7PB4ovLbH1TK7Jb7VbZt8FIOJUyJ4fWroJpFHN6CxcYiZpnbH2WkLm0JzSYVJoburY1jkT3FKfOnh72EzDjWLyv6rx+z9n8RX1HyI+GYi8KOj8KXtvb4hHoLzqfhi/XNeOLYYIxgrVZ6etHo1Ek3HYpWZR7Vrcoz9x1dPNae9nxoBQlQLicW6nR7/99j5AktpLLeHA==
-X-YMail-OSG: 3ceA1NIVM1lx65qhP6Zop48W1CPeK8he9I_xCzv.80GxYfw0Dfz_nsufQwxudhy
- zTEZi9MkHkbiBFnXI3fOl2tw_GVcCO3uJTOKSEylFd8XGL8fXmyvJSvcknA.kvy_sm6Ghfvj54Nx
- zpo68YIzYaSwxcxPpLxai4kcgJwHRvspGgdoffPz5fLwSFRB_axL9c2.neIjoDyKgx7GY4praZi0
- jG.4ZD0JChGLGYwGAc8Bax3vX79SblGLoDX49wenKNqfOxV8DRNKBRZ7NpxRw_F7MCFAQ30tPhc.
- OTA.In6HLCUfRve5Rpom5fQjsr6z3ZWnp_E59pIctu8rPn1pAQDWHq.FHeH3jVI7aZl4rc9FObVx
- yYRoUDRlUza32VlGgHvnzuDh9ATM1DAf5LLbak50OtrAcjSpnWpB1QVu6UF5ikVFHqK03KL5Aur0
- Gm79tSZ9Uuai1tDPnCTTDku8f9ehJW6H_5rro0qPZrBg8kPOJwABhEBLlG9Tgjfyc_Bi8v_YWOhN
- ggBG.NEGjNT3QSpzD4oO2.ztqe4.CRy1j.N7j5gJt8h3bJ06cezAVS.ILZ56iphLih3lXySGGtSe
- zeHTZYbP4ItkUUavstg_yZ.KJLN318LCouSNb0_BFqnbdgB5I4bAC5nVrbOHm9TKkGyVgkeYEkll
- pKysm.4dFGwqZvW.t.d07az5iUyw8xHyc99rXCrSM3w0uN4ZScmSNM4e24WFLwWy5ReBTiaPiFgO
- sWqg799kqxwXIWEC7aBA.aYTNhv._pKXMr1gHDFcWUXF01Ec95JAuHqtN5mYWHf780BHjtbao0ix
- tXfQlGEani0_XJSO5ifj1O4wvtFgIYgKkiDKTEDB8Qc7N3.3RLRyNoDyNevDvSavVVoP0qLiZNf3
- MXQKTTzyII0pW9UwAKvcVFFJRjz8A0TB325ov0czg3DCYh7.sIz9REEFuEXSS5dFJ4rcsVv6irMQ
- eJwvwDhbIaSMtotqA5I0JlruX6rouxo_PAiYbk.Sldn4GsJCgG2FbbYgBy6bcBRmZAO9yC0lseUX
- pvPZSBU7GU7e1aUUBGrUu6Y0x_znGTczo5PlhAlVsHz9w_B4jHzspxR8CmJsf_bqrej3Amwa3DMV
- AKD2apFGZaS8JCH16slc7Awsh9KYiIedQajsWmHkpvl.tuYeg6fNxsHAEn7TifDYlFnHfvNPd4yN
- DNyQmA85icJjAfETk.Y5uTKqimnfa0cydm4G1OBoZwyuwfIIBFUKM.OiJCAF0cfsYVEcH6aya0Am
- .advDQbWEI41RYP8LFCUw0.pTcFJpd4oczm5qc_HqFBb7PdsDjB3D1bbew4I2kDLy0zyJbi1SHaw
- Bp8MPNUT08HYGW.r4zWSUIzon.2xjnlCEsBkOTiGsH6D_oVLvbFiu4a9J0GX5uSb4mpid.LDLexs
- 9r9AOvB3F5C.7RHpGmlfXqNo4KcAlY14wsYA1Oc2gjWWM1k8fk6jt3012uulM.Wlt7iQOEsRvQvu
- ffEPxHGt5peIDve_Ngn4XPJ22AgUaBSFSiDvaHHcdNW_Ls_Epfx9dJP22RzGAtKTjO289hNWWfSj
- jXATt5Zx9VWnnPkpBzOEsuB1ThkySY4DLfofOh9pDBNMlxQCBelddd5AJwfPV1D.ogUEauarhvbz
- ZUr0R_QjX6EAoEaJ9o5mZJsP4j7WglWvxi7byKLJ1_APzEOC7kcamaoShdi.NaM7Y9yDxR6yv7Fi
- HpFQoa6YU6AjDf7UlCb81gkLLOECXL.VWXcK699HH98uMkdwhIYwHUw04OSRJcuqNS47KwPbDhVA
- rUcND9SS9YKR9jpzcLRjVdjHfiq8J13rd9BCq0OwoU8kwSpnpp9ZMT5y5EWmikAOq97CBZGSt9jM
- _FpFF5SXIPZ57U74UZ4PsPAGDaFPZmo5E6eYkscFnf6c0qZ4cOwpsypR3WYbWbQzsnnkPCawjNwc
- ckZC6Qhv_k3L5o9v8hW6I_mKOLcGqE94o3w9pFsH1R04OrbYhL2E4nZvTyxzvh6SOS7SWTpyR9Lb
- e_fd36IK.ICTB8XxPRhZI_aO3klCqffAbmvw1MtspGD7HPAURRTdIC1Ymrzig8FFZqlQeysiUex6
- NAO17PvGdsPm9ZdDw_N5x33.ay63SipsSCmt7kQ4btMb83HnggaR.1yd31vjKmKOXNfAIj_yPvwf
- M5VPQ19qF8fqwJrOiFKAZhzj.OAlUYU86.ndcP5QYkIL2yUpbww1D2T8EunkDkBCLUe6ClOjioYa
- s4UnnCDsC2GNsHdAneIkjmFSNYFTxP.Z6PEx4aA--
+ b=IgEnuBz0CV9X3w9UNvXidtV0ZwXWZ26E4Q/UMDTPLfzlC4qJwK15uFxk50ln/WcLstkXZ7KGACkHUQlEJJCkhoEcDSa9e+gwyJczTOvkB9TntgTyIaTcwfaf83zmBOFANOc8fBLjPiC/1HTzV57DEt+8opigivEptEmGwKNZm1x7rCaOi4LBbDPFqGyYdC5itZbVpm2rMUC6e05HyX9IUcQYJM9GeB6D3D5e/RprRlE5l+7oZ5+mim+V1KtAupmz0HV8eFp/i9CCSMYeKmLo3dAo6udgWIRd/bGzwGnaby36mMf6SM2iAmxJZj5JM38dXj9OIHNVLXalutCRmVDchw==
+X-YMail-OSG: 0EFgvdUVM1nTA_43UU_dkhx.RMQF9.A4zr8vZPXj1UprNjjQRWLMTFDc8Qfkbzi
+ jj7oxWgOFXKqbrX6rfdz_YcuG9KNRtg8Wo7NSUkaPE.MTcR4H8JMnYc_il85gVA_0I4HZWvObdg6
+ kz6t4TgtE69jkQsh1ITX1eI1kZ8qB.5WP9Aa5XeHHeXc7WHMBacjuXqhQbMeEt1R0xPnQP0f3LXx
+ .ULAn.918HWdNr3eajcx0p7xgn1FoR.HUbiA3mN8Hz8lZODi_OKPO9HOOCmGGKmyZSokF2LHQmGw
+ I82Q4z.4vTGVR0ZVHLlMQs2NVoVBvsTkfdZD1Mh2pLBh22Q7Yb_ZZTkuerGlV4bexWdrggUVVzBb
+ MEOxCplRixUEXAwO96UIv7HDuoYaOPnPPs6faTTralBDWQ0GDwa0Y7yCNITyo.S4vuDr26ZHipW4
+ GFW2lS8Jzf7wPs1mLGV._UWZGvWGOhHfmtyI.6xerzuP.dXj1p5_Ra_sVNANBdSirJIwWBL7M0Zw
+ uFjoCWuMzE7rF.Z8Cmwf3.VehGn302OQAfbxgsReAL4zgXCI6CUnE55Vwsh7tn5yu2Rzt2myjW.k
+ k8u83hyt_1x52jwaipYtmpNS5AXxx9eAFP8g4SxUMnZkxrscrgwYjvxFOfRLuOUheuwtqxqPLgbc
+ Ny.WBiFLfCEDGPjWCGM3AkG0IF8WyEA8C1PTRlcACwDItC3mjwMZwExVampamYzITnI7Jd2hrrGN
+ tqgHbwIfivGtpuLh7dASJU8thNdvVY7cODg4p0Wc.6sz2UdwhOSAguxlmW91asoUx1LP8dEMDLnC
+ KZy9Iz9GEs7UnPVMSypKHSjLof7B7QAKGMlprPT5t_TPL7rVDltifQNeCElRSCVyTP.Vz2caZjMK
+ 3lcKt6FrOarImMjdecde51UclYbLxfDutRjvk2b_.0suEONhdF6zdG3oHpmJflzQnOWuHWi8_tN1
+ sevN2axosa3erbYz1F..UnQOLH0OYD2DmRA0mPGS1O_K6OMfuEVncxmEzynfiazCBz1etNwU7E_Y
+ NiFaLQsVQARMsZY6.mxS2bsN6Z3faU2XdjHRy_nlpydUEh00V2IJ6V8Fx2r1Gi8hwIWB1HzU6gg3
+ PrpOZidJLEv0HfycnFMwU.2TpF9FN7Bd00aFyqktD1F0JOgm5Pu3r08QmkegQTc6VV2eTOccfDgM
+ 38TJeBFfCTfqAAmRKMh7UKHhnKtXCNsjvu8zJyF3WnwV8KOFmLR9TGwBd1T8i1V1DohC8oK4veaO
+ g4nihugWtY6Lt7F.EmczJSMr8_lxa3BVvddMVmf22cJr7mfcrJqcMKiGhFey83vIOsYoGtveaBva
+ _1bdaJk5KBZTPX590bTjaLCGVLrY4XKLYu9G4wi4C.OzzeKtQyNptUedDzfoLQCdIxLz2.Vq4AhR
+ mCQbgOFP.L9W_bAbRc1P5FGSFucCwFsKA27zovnLS5o.YKeBGY_yYEXWNteJtAoAxW3GfKBiagwT
+ iTuoLk7WvJejLOOeoJClKXWbtKUvtJsZ4imBSjJxYXKVW8JJ8B4NSbpEpqfQoAxcZmgp1hzfYcP4
+ inBelBoyeuReNp6iKXlXuOO19iVsIc9tGREQybAa0xXkSQ4YkFlsQKRpeVVm33nn.aRiRjwRickW
+ d_OGwd1pXRDjErSfTiJbGH78u.547GL3C2Sqqve8P4TabaZF5vKPNVafZ3bPkeTm6Ttw9DLuYiwO
+ PlWLPt.8J_PQsYWv1oDt5f0dDKaePBdVUW_GGj84BjXm5b5lDFKcnM4He5w7ABAr7vHr8CqrdC7v
+ reNbIQqAZ5aLi.tgY_MS7pF1y2c3EmTDCabGsYik7yXka7mOZHh1gjzUtpvSFv5azsuXx8x0Sx1P
+ 4d7FHevzwWezqjdbGtXg_FRl5nLmKXhpJeT7f.jdGUAl4f_yRQeDZM3jmLABURfmCSFA5UWOZE1v
+ Z8lUjeV2z1bKCkw5GdI10C7ZIftqrGaJg35db2zdMhInb6ACvpaBwze2bSzftWIlKnjC2Eiwzs17
+ MIifqbx0vstvzbarTBsU2XWw.Q1dRe9yHYrn7SOuP2NTVnQnNAcECmMAOz.xlqAX6_G5Xi9XafVh
+ luPD1aZC7uDyjYZVRnDaSui.R7srO_YgdCYdqfj0pbcgItB7kjEsLa0OTdZMtEwnsoI4ggnA3EO_
+ L7oFk.cuoQh__56gnu8sO3KOEsXTJx.Unk2MUnrFN12fxLDlvcdWUSFf3c1Ka_IDiyvd6UxzSQji
+ 3wVc3biZg9Es1j33FN8C9cltc
 X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: 325b1927-76c2-4939-b9b7-27b409399d56
+X-Sonic-ID: d05bd7e6-d197-4edf-9dd5-7cb81c3707fe
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic304.consmr.mail.gq1.yahoo.com with HTTP; Fri, 11 Sep 2026 07:25:11 +0000
+ sonic302.consmr.mail.gq1.yahoo.com with HTTP; Fri, 11 Sep 2026 07:24:57 +0000
 Received: by hermes--production-bf1-54b5569bdc-fv65m (Yahoo Inc. Hermes SMTP
  Server) with ESMTPA ID c4451c0cd4386c4b1051306e68eb9ea1; 
- Fri, 11 Sep 2026 07:25:07 +0000 (UTC)
+ Fri, 11 Sep 2026 07:24:55 +0000 (UTC)
 From: Chuck Zmudzinski <brchuckz@aol.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
@@ -71,16 +71,15 @@ Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v6 7/7] xen/igd: use custom option ROM if provided
-Date: Fri, 11 Sep 2026 03:24:53 -0400
-Message-ID: <20260911072453.46256-8-brchuckz@aol.com>
+Subject: [PATCH v6 0/7] xen/igd: fixes for Intel IGD passthrough
+Date: Fri, 11 Sep 2026 03:24:46 -0400
+Message-ID: <20260911072453.46256-1-brchuckz@aol.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260911072453.46256-1-brchuckz@aol.com>
-References: <20260911072453.46256-1-brchuckz@aol.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=98.137.68.204; envelope-from=brchuckz@aol.com;
- helo=sonic304-23.consmr.mail.gq1.yahoo.com
+References: <20260911072453.46256-1-brchuckz.ref@aol.com>
+Received-SPF: pass client-ip=98.137.68.146; envelope-from=brchuckz@aol.com;
+ helo=sonic302-20.consmr.mail.gq1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,222 +102,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since in some cases the option ROM is not readable from sysfs
-on the host, provide the option to use a custom option ROM file
-instead that, for example, could be extracted from BIOS or UEFI
-firmware and modified as needed for use with a particular Intel
-IGD device.
+Please note that Patch 6 of this series requires a patch to hvmloader of
+Xen for the new support to take effect. Also please note that earlier
+versions of the patch to hvmloader are not compatible with this version
+of Patch 6. Please look for v3 of the "tools/hvmloader: implement Intel IGD
+extended VBT support" patch that will be posted shortly to both the xen-devel
+and qemu-devel mailing lists.
 
-The file must be named "igd.rom" and be located in a directory
-configured at build time as a Qemu firmware directory and its
-size should be a power of two, and it must be compatible with
-the particular Intel IGD device being passed through.
+This patch series aims to fix long-standing bugs that need to be backported
+to all currently supported stable versions in order to support passthrough of
+both older and modern Intel IGD devices to Xen HVM guests. This patch series
+also provides a patch (Patch 6) that adds support for newer devices that have
+an extended video bios table (VBT).
 
-If provided, the "igd.rom" file will be used as the option ROM
-instead of the option ROM file epxosed in the host sysfs.
+These patches fix several bugs that cause problems
+ranging from a dark screen in the guest until the guest OS
+graphics are loaded to an assert failure or other failures
+in newer devices that in many cases prevent guest creation
+from succeeding or cause other problems such as code 43
+errors in Windows guests.
 
-If no "igd.rom" file is provided, this patch has no effect.
+To test the the third patch and verify it fixes the bug of
+no video output from Seabios, it is necessary to test
+with older Intel IGD devices that have support for legacy
+VGA bios (Seabios) because the newer devices, as far as I
+can tell, are not compatible with legacy VGA BIOS.
 
-Signed-off-by: Chuck Zmudzinski <brchuckz@aol.com>
----
+The first three patches have been tested using Xen 4.21 and
+Seabios 1.17 on Fedora 44 using an older Intel NUC7i5BNK with
+an i5-7260U processor and have been verified to fix the bugs
+described in the individual patches. This device is compatible
+with legacy VGA BIOS and Seabios.
+
+With the fourth through seventh patches applied, it is possible to
+use/test with newer devices since, with those patches applied, the
+bugs that prevent guest creation from succeeding with many newer
+devices are fixed. All seven patches have been tested on both the
+older Intel NUC7i5BNK mentioned above and a newer 14th Gen i5-14500
+Raptor Lake processor in an ASRock board that, as far as I can
+tell, is not compatible with legacy VGA BIOS and Seabios, which
+means that, although one can successfully create a guest with
+Seabios for the guest with the newer device, there will be no
+graphics output from the guest until the guest OS loads the
+graphics drivers when using the newer device with Seabios.
+
+The seventh patch is provided for use with newer devices that require
+an EFI graphics output protocol (GOP) driver for graphics output
+during early boot. For more details, read the commit message and
+the accompanying notes in Patch 7.
+
+Two hints to help configuring Xen HVM guests with Intel IGD passthrough:
+
+  - Increase the value of mmio_hole from its default value of
+    256 to at least 512 using the mmio_hole setting in the guest
+    config. The value of 512 works well when the stolen memory is
+    256 MiB. If more stolen memory is used, the mmio_hole may need
+    to be increased even more.
+
+  - If there are rdm conflicts, lower the rdm_mem_boundary setting
+    in the guest config from its default value of 2048 to a
+    value at which all rdm conflicts are resolved. I have discovered
+    that lowering it in 128 MiB increments works well. With the older
+    device I needed to lower it to 1792 and with the newer one I
+    needed to lower it to 1664. See the description of the rdm_mem_boundary
+    setting in the xl.cfg(5) man page for more details.
+
 Changes in v6:
-  - Added a link to Tomita's edk2 patches for the OvmfX64 platform
-    for KVM/VFIO guests in this additional notes section
+  - Added Patch 5 to make better use of the xen_igd.h header file
+  - Patch 6 (Patch 5 in v5) has been totally re-worked after considering
+    comments made on v2 of the companion patch to hvmloader. See Patch 6
+    for more details.
+  - With the addition of Patch 5, Patch 6 in v5 is bumped to Patch 7 in v6
 
 Changes in v5:
-  - Fix wrong whitespace in three places in a conditional block
+  - fix style problems reported by checkpatch (see each patch for details)
+  - update the link to the companion patch for Xen hvmloader
 
- Changes in v4:
-  - v4 is the first version of the series that has this patch
+Changes in v4:
+  - add three patches to provide support for newer Intel IGD devices
+  - edit the commit messages for better consistency of style
+  - use 12 digits instead of 7 when referencing commit hashes
+  - re-write xen_pt_get_host_pch_info() in patch 1 using the
+    functions declared in xen-host-pci-device.h
+  - handle errors in patch 1 that in previous versions of that
+    patch were not handled
+  - add a Fixes tag to the third patch
+  - add two hints in the cover letter to help those who are trying
+    to configure Xen HVM guests with an Intel IGD passed through
 
-Sorry for the length of these notes but there are many things
-to say about this patch that are not obvious to persons without
-some experience of actually trying to use the option ROM of an
-Intel IGD when it is passed through to a Xen HVM guest.
+Changes in v3:
+  - whitespace fix in first patch
+  - fix Cc address for qemu-stable
 
-This patch is primarily for providing a way to add Intel IGD
-support for the OvmfXen platform to get graphics output during
-early boot from modern Intel IGD devices that are only compatible
-with UEFI for graphics output during early boot.
+Changes in v2:
+  - close open files before setting errp
+  - improvements to readability and style
+  - small corrections to the commit messages
+  - add stable to Cc list
 
-Note this patch is not necessary for successful operation of the
-Intel IGD in the guest once the guest OS drivers have loaded. It
-is only needed as part of the patchset necessary to provide
-graphics output from the Intel IGD in the guest during early
-boot when using newer devices that are only compatible with UEFI
-for graphics output during early boot. Most older devices that are
-compatible with legacy VGA BIOS will work with Seabios without
-this patch, but they will need Patch 3 of this patchset to work
-with Seabios.
+Chuck Zmudzinski (7):
+  xen/igd: get PCH info from host sysfs
+  xen/igd: don't register rom bar twice
+  xen/igd: fixup device id before registering rom
+  xen/igd: enable guest creation when ROM read fails
+  xen/igd: use igd header for IGD related definitions
+  xen/igd: implement support for extended VBT
+  xen/igd: use custom option ROM if provided
 
-Some notes on adding Intel IGD support for the OvmfXen platform:
+ hw/xen/xen_pt.c             |  13 +-
+ hw/xen/xen_pt.h             |   9 -
+ hw/xen/xen_pt_config_init.c |   8 +-
+ hw/xen/xen_pt_graphics.c    | 323 ++++++++++++++++++++++++++++++++++--
+ hw/xen/xen_pt_load_rom.c    |  64 ++++---
+ include/hw/xen/xen_igd.h    |  19 ++-
+ 6 files changed, 380 insertions(+), 56 deletions(-)
 
-It is necessary to provide an EFI graphics output protocol (GOP)
-driver to the guest to get output from the Intel IGD before the
-guest OS loads the graphics drivers when the guest uses UEFI.
-This GOP driver is essentially the replacement of the VBIOS
-driver that applied to older devices that use legacy bios, as
-described here:
-
-https://www.intel.com/content/www/us/en/support/articles/000005749/graphics.html
-
-Unfortunately, with modern Intel IGD devices, the EFI GOP driver
-is not provided to the guest in the usual way of providing firmware
-for a PCI device in the option ROM of the real PCI device. So I
-included this patch in this patchset to provide a way to expose
-the EFI GOP driver to the guest. I was able to extract the
-GOP driver for my device using the UEFI bios update file from
-the motherboard manufacturer and the UEFITool available here:
-
-https://github.com/longsoft/uefitool
-
-That EFI driver can be wrapped into an option ROM using the
-EfiRom bin wrapper that is part of the edk2 project:
-
-https://github.com/tianocore/edk2/blob/master/BaseTools/BinWrappers/PosixLike/EfiRom
-
-I tried setting the 'romfile' member of the PCIDevice struct that
-is used by KVM/VFIO Qemu devices and emulated Qemu PCI devices, but
-that did not work with Xen PCI passthrough devices. Neither Seabios
-nor the OvmfXen platform could detect the option ROM in the guest
-with that method of exposing an option ROM to the guest. So I
-implemented this approach of substituting the 'rom' file exposed by
-sysfs with an administrator-provided file instead of using 'romfile'.
-
-In the commit message I mentioned the size of the rom file "should"
-be a power of two. I mentioned this because the code in pci.c that
-handles the 'romfile' setting for PCI devices enforces this
-requirement strictly on the romfile that Qemu emulated or VFIO
-devices use. However, I do not know for sure whether or not the rom 
-file is strictly required to have a size of a power of two, so that
-is why I say it should be a power of two. In my testing, I zero pad
-the "igd.rom" file so it has a size of a power of two. I will accept
-the suggestions of experts on this question about the appropriate size
-of the option ROM file (I am not such an expert!).
-
-As mentioned in the message accompanying Patch 4 of this patchset,
-the official edk2 project does not provide support for the Intel
-IGD, but some OVMF patches for Intel IGD support are available
-online for KVM/VFIO guests, such as at the links below (they apply
-to the OvmfPkgX64 platform):
-
-https://github.com/tomitamoeko/VfioIgdPkg
-https://github.com/cmd2001/build-edk2-gvtd
-https://eci.intel.com/docs/3.3/components/kvm-hypervisor.html#build-ovmf-fd-for-kvm
-https://github.com/LongQT-sea/intel-igpu-passthru
-
-With such patches it is reported that the passed through Intel
-IGD device lights up the display during early boot from OVMF
-and the guest bootloader in KVM/VFIO guests provided that the
-administrator provides the correct ROM file via the 'romfile'
-setting for the passed thorugh Intel iGD device and applies
-appropriate patches to the OvmfPkgX64 platform.
-
-It should also be possible to add Intel IGD support for the OvmfXen
-platform also but I have not seen any such patches online for OvmfXen
-and if anyone knows of such patches online I would be interested to
-be informed about them. I am also working on my own patches to
-add Intel IGD support to the OvmfXen platform, in private for now.
-If anyone is interested, I can make the work I have done so far
-toward this goal avalable online.
-
-hw/xen/xen_pt_load_rom.c | 47 +++++++++++++++++++++++++++-------------
- 1 file changed, 32 insertions(+), 15 deletions(-)
-
-diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
-index f136f13..ab448f4 100644
---- a/hw/xen/xen_pt_load_rom.c
-+++ b/hw/xen/xen_pt_load_rom.c
-@@ -2,6 +2,7 @@
-  * This is splited from hw/i386/kvm/pci-assign.c
-  */
- #include "qemu/osdep.h"
-+#include "qemu/datadir.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/pci/pci.h"
-@@ -13,9 +14,9 @@
-  * need to be modified.
-  *
-  * For such cases, use this function to get a pointer to the option ROM
-- * from sysfs. Caller has the responsibility to edit the option ROM as
-- * needed, call pci_register_bar to register the modified option ROM,
-- * and set has_rom to true for the PCI device.
-+ * from a user provided romfile or sysfs. Caller has the responsibility
-+ * to edit the option ROM as needed, call pci_register_bar to register
-+ * the modified option ROM, and set has_rom to true for the PCI device.
-  *
-  * This function must be called before xen_pt_register_regions is called
-  * because if xen_pt_register_regions is called first, it will register
-@@ -32,17 +33,27 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     struct stat st;
-     void *ptr = NULL;
-     Object *owner = OBJECT(dev);
-+    g_autofree const char *fname = g_strdup("igd.rom");
-+    g_autofree const char *path = qemu_find_file(QEMU_FILE_TYPE_BIOS, fname);
-+    bool sysfs = false;
- 
-     /* If loading ROM from file, pci handles it */
-     if (dev->romfile || !dev->rom_bar) {
-         return NULL;
-     }
- 
--    snprintf(rom_file, sizeof(rom_file),
--             "/sys/bus/pci/devices/%04x:%02x:%02x.%01x/rom",
--             domain, bus, slot, function);
-+    if (path) {
-+        snprintf(rom_file, sizeof(rom_file), "%s", path);
-+        XEN_PT_LOG(dev, "Using Intel IGD romfile %s "
-+                   "(administratior provided)\n", path);
-+    } else {
-+        snprintf(rom_file, sizeof(rom_file),
-+                 "/sys/bus/pci/devices/%04x:%02x:%02x.%01x/rom",
-+                 domain, bus, slot, function);
-+        sysfs = true;
-+        XEN_PT_LOG(dev, "Using Intel IGD romfile from host sysfs\n");
-+    }
- 
--    /* Write "1" to the ROM file to enable it */
-     fp = fopen(rom_file, "r+");
-     if (fp == NULL) {
-         if (errno != ENOENT) {
-@@ -55,10 +66,14 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-         goto close_rom;
-     }
- 
--    val = 1;
--    if (fwrite(&val, 1, 1, fp) != 1) {
--        goto close_rom;
-+    /* Write "1" to the ROM file to enable it if using ROM from sysfs */
-+    if (sysfs) {
-+        val = 1;
-+        if (fwrite(&val, 1, 1, fp) != 1) {
-+            goto close_rom;
-+       }
-     }
-+
-     fseek(fp, 0, SEEK_SET);
- 
-     if (dev->romsize != UINT_MAX) {
-@@ -83,11 +98,13 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
- 
-     *size = st.st_size;
- close_rom:
--    /* Write "0" to disable ROM */
--    fseek(fp, 0, SEEK_SET);
--    val = 0;
--    if (!fwrite(&val, 1, 1, fp)) {
--        XEN_PT_WARN(dev, "%s\n", "Failed to disable pci-sysfs rom file");
-+    /* Write "0" to disable ROM if using ROM from sysfs */
-+    if (sysfs) {
-+        fseek(fp, 0, SEEK_SET);
-+        val = 0;
-+        if (!fwrite(&val, 1, 1, fp)) {
-+            XEN_PT_WARN(dev, "%s\n", "Failed to disable pci-sysfs rom file");
-+        }
-     }
-     fclose(fp);
- 
 -- 
 2.52.0
 
