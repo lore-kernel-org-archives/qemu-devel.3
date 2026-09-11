@@ -4,73 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81995C79FA1
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 05:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE35BC79FA1
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 05:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4tSk-0007Ln-2w; Fri, 11 Sep 2026 01:06:10 -0400
+	id 1x4tck-0000FI-1T; Fri, 11 Sep 2026 01:16:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4tSX-0007LJ-IM; Fri, 11 Sep 2026 01:05:58 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1x4tc0-00008C-8O; Fri, 11 Sep 2026 01:15:44 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x4tST-0003Fo-RD; Fri, 11 Sep 2026 01:05:57 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68B4xiQP001380
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 11 Sep 2026 13:59:44 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2dmIj5zDei57a+b9Z6b5kEqdDT2UlK8aZ7vL73B0VdQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1789102784; v=1;
- b=qinhNnMCmOcTzioZKQzTfd4JK4zXAYMcjJ7KLK0eE4qUNvs1CCVYIyDTZkn4PmlP
- 8+1W+/D60i6RxdIbYv+1twz0i0uJGAgCv+lOadWkA7KhWQUWGuqFtBtHyBEDE+Nh
- hQ98VizioKf3DZKCEHDIzPngSNd2RHHR5JrkISFu7PEAVvJmKWMGugyhiAzaDTvG
- m73Ar7+5NHVz1y3f84jM60/ibnHr4ClvbFNRDu3+wcRH9c7Jh71xCInldLjBXTOp
- WeR++i8kY8lwKmI3S4sh1vXA11gJvrpoLl5LwolrkfdaOCAL6FJdVBA1WOfHPCZR
- KVrAkAIEOypDxeHASa9D8A==
-Message-ID: <910f5170-0f30-4ae9-b047-373434f1d41e@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 11 Sep 2026 13:59:43 +0900
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1x4tby-0005iY-C5; Fri, 11 Sep 2026 01:15:43 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=a9UgnO0wWaA+m8CEeriAfsdtcKn9Jz8i56wMdqkPGDZYaQbBw88dC06jWThFL5RxFiAtmEJML7hpvoXB5N3pvuZjuU/BaunyKw0alBNVo8l00uodTDx6K9fmBf6qOTi3zYws4oby/Fh4t/9dwjT8kfNCqsVPfxfEJ7kAaENMeXQfsgZSvbBL17WjoqYWf9gh3JCHmO2c74xsEjwFjnQs1QK7N1RkGsXAwowKStQFHQAuPtYo38R+ew3sk9iJucH4F07iqjbc1r86yIP9mPkW9aTVXvnCWrlco5tYR8UiYJp13ViiHTBq4p+RmgPYM/mff7neo+MK5KygXzjTeAiLnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l1XHDLr2lCk/6Qr2x9Y8T5yZojzHQNkfXzh9bZlTCyA=;
+ b=QZgN5OwdUIt9QDUopQzLLlnqYLdXSBabulCVpkOUcjzG5MlnjWSPShvkFetytm2BkpW+8akyo08vLL8tAc9QZDrCKm+KXoSjDCUDtKOpkIQjU9yQJj2WDclJPNsbGUx7mJu4nuS66eM4DciGPiNvDc3BTQei6ZBzNAau/KurUOl9yYPSkSPG4KSzdebMM2sLj3DonfFPc6xUTzwYH3u6zA9KvjbvVj5S5a/OYxEekYdDeQHV4P81DRdQ92OwGzCxGeB6pAWYVMlLrsK/x7Bt++wbYiM8FiAlfXoBwWkSQExzRGbILuO73Dyl/butY9pMhfo5qLMF5azxW9sdf1Q/YA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l1XHDLr2lCk/6Qr2x9Y8T5yZojzHQNkfXzh9bZlTCyA=;
+ b=nVgcU9emR1tcPIZ+BqVXX/GuhEsOTynEC2fmQDfenaWcpetFbX6g15jAvr8O1LkwQ7kmbFuLnoc9jIluxhWxZYzA8uSChnTt6mxQZNEUefXviInxDzVHuN2Xhq73rioj+E+RHlhlB20UbNNaXqRllaQPD79RAno53rUlJQx4wvqlpvF+VlJIYJ10o0vrAJfthKJiLS/+eLBr+grZ0X4DPgM/aDptJ14qU1aAkZMmVpIJXbVeljL3ipbZGZjbMZXdo352o7OUHyumTk71nFarjzMRvmLAq6kgHDCIu5XlAvNbjTz//EwH1tsS4kKzHT8+CZJCv6ESehOzdSwo6aAyCQ==
+Received: from MW4PR03CA0046.namprd03.prod.outlook.com (2603:10b6:303:8e::21)
+ by IA6PR18MB927500.namprd18.prod.outlook.com (2603:10b6:208:5de::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
+ 2026 05:15:36 +0000
+Received: from CO1PEPF00012E7F.namprd03.prod.outlook.com
+ (2603:10b6:303:8e:cafe::4d) by MW4PR03CA0046.outlook.office365.com
+ (2603:10b6:303:8e::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.9 via Frontend Transport; Fri, 11
+ Sep 2026 05:15:36 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ CO1PEPF00012E7F.mail.protection.outlook.com (10.167.249.54) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.5
+ via Frontend Transport; Fri, 11 Sep 2026 05:15:36 +0000
+Received: from axiado.com (unknown [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 531C540BFE12;
+ Thu, 10 Sep 2026 22:15:35 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: mark.caveayland@nutanix.com, philmd@oss.qualcomm.com,
+ 163wangjack@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v7 08/13] hw/arm/ax3000-boards: Remove redundant pointer from
+ struct
+Date: Thu, 10 Sep 2026 22:15:27 -0700
+Message-Id: <20260911051532.2378501-9-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260911051532.2378501-1-kchiu@axiado.com>
+References: <20260911051532.2378501-1-kchiu@axiado.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v3 0/9] virtio-gpu: Do not wait for the main thread during
- reset
-To: Gurchetan Singh <gurchetansingh@chromium.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- David Hildenbrand <david@kernel.org>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-block@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp>
- <CAAfnVBm7vcBE7ZfsxDyiDPq2+uGOzN-1PN+gQ9Y-TwuXbm72KA@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAAfnVBm7vcBE7ZfsxDyiDPq2+uGOzN-1PN+gQ9Y-TwuXbm72KA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF00012E7F:EE_|IA6PR18MB927500:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 9a0a29ee-d8f9-4fca-3651-08df0fc3b666
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|23010399003|82310400026|1800799024|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: baWAURiJF6Y9368kgotsXoGQTwCa4DTockORM59N1AJ1EBaOMZj0PWNEzEW7CUQtOcvyOmuw2WHW2hmPFwlMH+Gu1eHfSnpfSrOCXpojqrtonvQGQCt4daGx2HeuexZQ4ZesJHhUez+GYhc8dgxS/bAhn9WaYlXSglLZtfzGqckMG5gMBTqNJmk21afyDAOQE73zj1A2RMAN4lAY3d4b3mclKNinBNmUpg5ZyzOW7P9bEnsvRvXjBjXl0j6I2zJtzAqfMYXilX+TArsP0HpudOT8OHhSDt/8WRKDIxXsrUskK4yprsK5ATaFfFdXiY5mbpcdBD6pU117cyCgM9wWMqAt/iUF21116Ie2gJ10dAYoUtsjlrzcNx3MqnzputPQng/KsryRWhJv1Mpimq2BLHkXYop6n3ScIVoKOiR/Ui7yap3mXdfRnpjH1F12EsAPv5W/fhh3Q+sCm5TbZWQGBpA+a1kkttILFc//lgkF/w9iWiFwL4FVC7X8HmMww3sFVh+AizyinWhsM6HNpRhDcG8XhDqKmA5iMH/0r/HR8u1EAOb50neUoVlO+/1KNEz1h+qtJF1fagsp/hpvLwlGa7tkhG/hlKsMGxh+Tq5x6myAtApyT1KP+LfTmCwBm4sYvO5+p7NCm8kvJZTXFnkFT++Qi1zQzmdMU/777RG7w4PNfVJnV2chKQQ8Mis5SPSXpvGG/yl1LvUCzkQyABjBvw==
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(23010399003)(82310400026)(1800799024)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: o3r4s3EEywSAeiQrtS7txZyigxMvw/t+Acz8rGkiTUZufpzeN1eyORT2aA2ZxfBSWkhNVFhGe1Mm0KY7/f1Q6WV8IJbu2T6cfhR+1N27VG1a+Z+F2SLhPyfATC+3KIPN7gQ3x03RSfg6Y0ZBiaFRGuYbHOYjfpNFqLclbWKULs0Vwn0prKxmGYdHuNIxMY4UG+BacUBajRv9edsutibj0fLA4u2reH4SmKDgCtfAMBCPITCxUUHUtSeo94crLHMAup5PynqeIcHuiGBQnX1mRDGKsiXaYZGSK+3+2TyyRkUG3h1rwBWC0MnQP+amCOHAYPfr/TU+W1ePcNgiSsZ8+s88YbbcKeUTzx1iqqaybcxrMtDUJkOYv9/BC3EDXPixJIYTJ4dpmK9aD1xsCkvZGLL45pkse1dFuQqB8/Xr/iI/1kJImCidiQHyQ59h4U1d
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 05:15:36.2214 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a0a29ee-d8f9-4fca-3651-08df0fc3b666
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E7F.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA6PR18MB927500
+Received-SPF: pass client-ip=2a01:111:f403:c112::7;
+ envelope-from=kchiu@axiado.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,242 +123,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/11 7:43, Gurchetan Singh wrote:
-> 
-> 
-> 
-> 
-> On Mon, Sep 7, 2026 at 11:13 PM Akihiko Odaki <odaki@rsg.ci.i.u- 
-> tokyo.ac.jp <mailto:odaki@rsg.ci.i.u-tokyo.ac.jp>> wrote:
-> 
->     Compatibility note: This series makes virtio-gpu-rutabaga-device
->     incompatible with virtio-mmio-bus, as there is no straightforward way to
->     fix reset for this combination. I believe nobody uses it, but please let
->     me know if anyone relies on it.
-> 
->     Gurchetan, please confirm if this impacts the use case behind your
->     original virtio-gpu-rutabaga contribution.
-> 
-> 
-> Yes, deleting the MMIO is fine, but I curious what aspect of the API 
-> makes it difficult say in comparison to virglrenderer/gfxstream?  They 
-> all use guest memory blobs occasionally.  Or is the thread model?
+Since ax3000-boards is bound with Ax3000 SoC, we don't need to have a
+pointer in struct for SoC type
 
-Thanks for confirmation.
+This patch remove pointer soc from Ax3000MachineState and create instance
+in init() directly
 
-It's true that virglrenderer also uses guest memory blobs, and we apply 
-the same thread model for virglrenderer and Rutabaga.
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/arm/ax3000-boards.c         | 10 +++++-----
+ include/hw/arm/axiado-boards.h |  1 -
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-The difference is that Rutabaga has a feature that clearly requires 
-waiting for proper reset completion: cross-domain. QEMU invokes both 
-APIs from the main-loop thread, but cross-domain also has a worker that 
-writes responses directly into guest backing. Stopping QEMU's command 
-processing does not stop that worker. We therefore need to tear down the 
-old Rutabaga instance and join its worker before reporting reset 
-completion. Rutabaga requires that teardown to run on the thread that 
-initialized it.
-
-The reset timing implemented for virglrenderer looks like as follows:
-1. The driver requests reset.
-2. The device synchronously notifies reset completion, though actual
-    reset is still pending. It makes the device compatible with
-    virtio-mmio-bus, which requires synchronous reset completion.
-3. The device asynchronously completes actual reset.
-
-The assumption here is that the device may read blobs after notifying 
-reset completion to the driver but may not write. Perhaps reading blobs 
-after notifying reset completion may cause displaying garbage, but it's 
-much better than deadlocks and potential use-after-free we currently have.
-
-cross-domain breaks this assumption. With cross-domain, the following 
-may happen:
-1. The driver requests reset.
-2. The device synchronously notifies reset completion.
-3. The driver reuses the blob memory for something else.
-4. The device writes to the blob memory, corrupting its content.
-5. The device asynchronously completes actual reset.
-
-So we cannot let the device synchronously notify reset completion with 
-Rutabaga to make it compatible with virtio-mmio-bus.
-
-Regards,
-Akihiko Odaki
-
-> 
-> 
->     =======================================================================
-> 
->     This series fixes a deadlock I previously observed with the test in [1].
->     It also fixes a command-ordering race exposed by the same BQL handoff,
->     along with command and fence lifetime and accounting issues found while
->     auditing device and virtqueue reset. Reset now drains command and fence
->     queues without dropping the BQL, while resource destruction and surface
->     replacement are deferred to the next control or cursor BH. Scanout state
->     needed for migration is cleared synchronously before that deferred
->     cleanup. The remaining patches detach popped queue elements before
->     freeing commands, track suspension independently of fencing, balance
->     inflight accounting, handle control-queue reset for the non-renderer
->     backend, and stop advertising queue reset for virtio-gpu-gl,
->     virtio-gpu-rutabaga, and vhost-user-gpu, whose current backend
->     interfaces cannot quiesce a single queue.
-> 
->     Finally, the virtio core changes split reset initiation from completion
->     so device reset handlers can choose when reset is complete. An error
->     during reset leaves the device broken and prevents its status from being
->     cleared. Rutabaga's same-thread API requires whole-device reset to
->     finish in the main-loop GPU BH, where the old backend is torn down and
->     reinitialized before completion is reported.
-> 
-> 
->     Note on the deadlock: I can no longer reproduce the issue reliably with
->     the test in [1], so I used Codex, a coding agent, to write a more
->     reliable local test case, shown below. I applied to Codex for Open
->     Source to get access. The test case is not intended for merge: current
->     policy prohibits that, and it is probably not worth carrying anyway
->     because race-condition tests are inherently fragile. The remaining
->     patches were written by me.
-> 
->     [1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-
->     alex.bennee@linaro.org/ <https://lore.kernel.org/qemu-
->     devel/20251014111234.3190346-9-alex.bennee@linaro.org/>
-> 
->     Below is the Codex-written test case:
-> 
->     diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/
->     functional/aarch64/test_gpu_blob.py
->     index a913d3b29c84..52627b4541f9 100755
->     --- a/tests/functional/aarch64/test_gpu_blob.py
->     +++ b/tests/functional/aarch64/test_gpu_blob.py
->     @@ -13,7 +13,9 @@
->       #
->       # SPDX-License-Identifier: GPL-2.0-or-later
-> 
->     -from qemu.machine.machine import VMLaunchFailure
->     +import subprocess
->     +
->     +from qemu.machine.machine import AbnormalShutdown, VMLaunchFailure
-> 
->       from qemu_test import Asset
->       from qemu_test import wait_for_console_pattern
->     @@ -25,8 +27,7 @@ class Aarch64VirtBlobTest(LinuxKernelTest):
->                              'download?path=%2Fblob-
->     test&files=qemu-880.bin',
->                             
->     '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
-> 
->     -    def test_virtio_gpu_blob(self):
->     -
->     +    def launch_blob_test(self):
->               self.set_machine('virt')
->               self.require_accelerator("tcg")
-> 
->     @@ -65,9 +66,27 @@ def test_virtio_gpu_blob(self):
->     self.log.info <http://self.log.info>("unhandled launch failure: %s",
->     excp.output)
->                       raise excp
-> 
->     +    def test_virtio_gpu_blob(self):
->     +        self.launch_blob_test()
->     +
->               self.wait_for_console_pattern('[INFO] virtio-gpu test
->     finished')
->               # the test should cleanly exit
-> 
->     +    def test_virtio_gpu_blob_shutdown_race(self):
->     +        self.launch_blob_test()
->     +
->     +        self.wait_for_console_pattern('[INFO] unmapping blob object
->     resource')
->     +
->     +        try:
->     +            self.vm.shutdown(timeout=10)
->     +        except AbnormalShutdown as excp:
->     +            if isinstance(excp.__cause__, subprocess.TimeoutExpired):
->     +                raise AssertionError(
->     +                    "QEMU failed to exit while virtio-gpu reset was
->     racing "
->     +                    "with shutdown") from excp
->     + self.log.info <http://self.log.info>("QEMU exited before the
->     shutdown request completed: %s",
->     +                          excp)
->     +
-> 
->       if __name__ == '__main__':
->           LinuxKernelTest.main()
-> 
->     Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp
->     <mailto:odaki@rsg.ci.i.u-tokyo.ac.jp>>
->     ---
->     Changes in v3:
->     - Rebased.
->     - Dropped the patch "virtio-gpu: Run reset cleanup in the same BH" and
->        reworked reset cleanup to preserve control and cursor queue ordering
->        and migration-visible state without dropping the BQL.
->     - Detached popped virtqueue elements before freeing reset commands.
->     - Added fixes for fenced blob unmapping and inflight counter accounting.
->     - Added control-queue reset handling for the non-renderer backend.
->     - Disabled queue reset for virtio-gpu-gl, virtio-gpu-rutabaga, and
->        vhost-user-gpu, whose current backend interfaces cannot quiesce a
->        single queue.
->     - Split virtio reset initiation from completion, moved completion into
->        device reset handlers, and preserved errors raised during reset.
->     - Added Rutabaga teardown and reinitialization in the main-loop GPU BH
->        before reporting whole-device reset completion.
->     - Link to v2: https://lore.kernel.org/qemu-devel/20260424-gpu-
->     v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp <https://lore.kernel.org/
->     qemu-devel/20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
-> 
->     Changes in v2:
->     - Added the patch "virtio-gpu: Run reset cleanup in the same BH".
->     - My assumption about the ordering was incorrect, so I changed the patch
->        to follow the approach used by virtio-gpu-gl.
->     - Link to v1: https://lore.kernel.org/qemu-devel/20251029-gpu-v1-1-
->     e3e3c7eebc9e@rsg.ci.i.u-tokyo.ac.jp <https://lore.kernel.org/qemu-
->     devel/20251029-gpu-v1-1-e3e3c7eebc9e@rsg.ci.i.u-tokyo.ac.jp>
-> 
->     ---
->     Akihiko Odaki (9):
->            virtio: Introduce virtio_complete_reset()
->            virtio: Move the virtio_complete_reset() call
->            virtio: Preserve an error during reset
->            hw/display/virtio-gpu-rutabaga: Reset Rutabaga
->            virtio-gpu: Do not wait for the main thread during reset
->            hw/display/virtio-gpu: Fix fenced blob unmapping
->            hw/display/virtio-gpu: Balance inflight counter changes
->            hw/display/virtio-gpu: Reject queue_reset when unsupported
->            hw/display/virtio-gpu: Handle virtqueue reset
-> 
->       include/hw/virtio/virtio-gpu.h   |   7 +-
->       include/hw/virtio/virtio.h       |   1 +
->       hw/9pfs/virtio-9p-device.c       |   1 +
->       hw/audio/virtio-snd.c            |   2 +
->       hw/block/vhost-user-blk.c        |   1 +
->       hw/block/virtio-blk.c            |   1 +
->       hw/char/virtio-serial-bus.c      |   1 +
->       hw/display/vhost-user-gpu.c      |  10 ++-
->       hw/display/virtio-gpu-base.c     |   2 +
->       hw/display/virtio-gpu-gl.c       |  12 +++
->       hw/display/virtio-gpu-rutabaga.c |  29 +++++++
->       hw/display/virtio-gpu-virgl.c    |  25 +++---
->       hw/display/virtio-gpu.c          | 174 ++++++++++++++++++++++++
->     +--------------
->       hw/input/virtio-input.c          |   2 +
->       hw/net/virtio-net.c              |   1 +
->       hw/scsi/vhost-user-scsi.c        |   1 +
->       hw/scsi/virtio-scsi.c            |   2 +
->       hw/virtio/virtio-balloon.c       |   1 +
->       hw/virtio/virtio-crypto.c        |   2 +
->       hw/virtio/virtio.c               |  25 ++++--
->       system/qdev-monitor.c            |   2 -
->       21 files changed, 210 insertions(+), 92 deletions(-)
->     ---
->     base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
->     change-id: 20251029-gpu-c3f45747f7ba
-> 
->     Best regards,
->     -- 
->     Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp
->     <mailto:odaki@rsg.ci.i.u-tokyo.ac.jp>>
-> 
+diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
+index 75e0aedb4d..3ca4a6f93a 100644
+--- a/hw/arm/ax3000-boards.c
++++ b/hw/arm/ax3000-boards.c
+@@ -68,7 +68,7 @@ static struct arm_boot_info ax3000_binfo = {
+ 
+ static void ax3000_machine_init(MachineState *machine)
+ {
+-    Ax3000MachineState *ams = AX3000_MACHINE(machine);
++    Ax3000SoCState *s;
+ 
+     if (machine->ram_size != AX3000_DRAM_SIZE) {
+         g_autofree char *size_str = size_to_str(AX3000_DRAM_SIZE);
+@@ -77,12 +77,12 @@ static void ax3000_machine_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
++    s = AX3000_SOC(object_new_with_props(TYPE_AX3000_SOC, OBJECT(machine),
++                                         "soc", &error_fatal, NULL));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+     ax3000_binfo.ram_size = machine->ram_size;
+-    arm_load_kernel(&ams->soc->cpu[0], machine, &ax3000_binfo);
++    arm_load_kernel(&s->cpu[0], machine, &ax3000_binfo);
+ }
+ 
+ static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/axiado-boards.h b/include/hw/arm/axiado-boards.h
+index 4a632661e1..566f22cd96 100644
+--- a/include/hw/arm/axiado-boards.h
++++ b/include/hw/arm/axiado-boards.h
+@@ -18,7 +18,6 @@ OBJECT_DECLARE_TYPE(Ax3000MachineState, Ax3000MachineClass, AX3000_MACHINE)
+ typedef struct Ax3000MachineState {
+     MachineState parent;
+ 
+-    Ax3000SoCState *soc;
+ } Ax3000MachineState;
+ 
+ typedef struct Ax3000MachineClass {
+-- 
+2.34.1
 
 
