@@ -4,57 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4814C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21581C88E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4ywM-0004im-2g; Fri, 11 Sep 2026 06:57:06 -0400
+	id 1x4yxf-0006nM-Me; Fri, 11 Sep 2026 06:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x4yw1-0004XC-1F; Fri, 11 Sep 2026 06:56:45 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x4yvz-0003DD-IU; Fri, 11 Sep 2026 06:56:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789124163; bh=hLcmD1nmUPBX5BQlN8Z5O1fvPMOSUinE+2Mp1l7qTuM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bvuKDQkTvCZ8JuDjdGd3/UM/MkKNlmoXwn49E6j4wi/XZwpEJ5Ufb3xHn9O+x7JE2
- WEssdlL90sG2GiwV6teSlJSNBNwNxDSmtBxHl+l4bKPhM/5GSPQ7cN2TPCLFTKBk2Z
- JOrW9S4Tivrx17Y9uoylDIDY1wxJiaCg9eItMnO8+J/YcrHmbPK1FI2aBErsGZa+TD
- nTrgVq+5h56zM2TXPktbz0bq4jvmVx0WVnv9I/sHzZ5s3JFRsicYJB9HQLbHwYhpeL
- bil1wdSHjrBfF7r+j9coQZswBxd2AIAaEyxf0O0AS1J79Z/3tw30x8wy6DsX49TuLG
- ULxiBJ0xHmuPg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 06F211D3B85;
- Fri, 11 Sep 2026 13:56:03 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BBFC2425DFB;
- Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A6F2C40F0D; Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1x4yxd-0006mi-GZ
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 06:58:25 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1x4yxb-0003fp-NG
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 06:58:25 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-49ccfbe062eso8905525e9.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 03:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789124302; x=1789729102; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=sWcE/Q7YLshEZzUifo4KMPSZOk2BdxGAGVgwp4m9NEo=;
+ b=JrhExyi/Hxa9tHuqswHr+diibnYuVdvpKjtHx6LllI/nMO4f8xpKSZjtcrjcM/A7i8
+ Lz0cNGSE/k53PjQ5Ac2M4XcmWQUBeo8OUCW9r+yrn/lG1VAp2z/osr65MWIrsp2OTpQq
+ UoxP1Chg8qMlHgssQ11E4tf7eA73SaUNbnNOCYzgxWMTJEcRErMtks40dJMhtyyc+dJL
+ MdEG2SF+nCr5U9w1HLzoY3Eh21/EOXgNJjNjA6IUdCbQ0ocsmDJeBxbO3gH2jCUymtz/
+ 81LIKLYf7l/Qy/yxi6D7tX+DnD+wyU8M9/JDR8jjSZvdcUAKYyHgm9iMPZ2LN1gcPDha
+ dwxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789124302; x=1789729102;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=sWcE/Q7YLshEZzUifo4KMPSZOk2BdxGAGVgwp4m9NEo=;
+ b=KAEZdl69mKOM8beLNXbiCq41CCAb8S1d4hkBa3NIQ5ocIiD/b6prJEslI5HJ8pVZiE
+ 0u4H93F6SIip/cl2N/QjjDqwxf/NqvNqH7f4LhM6OVRNHHgFyacUV81LcCxOw9piBINA
+ yfkQFClgQq1WuONKe3+vI7iiGiwmG3bAucekPCPV38tVw5RAgHfC65b/jrpo619s0eYW
+ uqi8HRDs6ZWnfjadQ4vYCCkGDbibI3WcMJWpNUt0PCcSQxLjbPlkPsk6H+3ftzQFa57R
+ 0hZ5nFTS/mvOq2bzILNGFHW2KJhz1YXJrKZ5VhgIFQpl6sGiSs6/2Jv7aFX457+enIkI
+ hU4A==
+X-Gm-Message-State: AFuF++mH61L3l/xJ3v7oGRqHxrZV9NGkkQxdt46zDnQoKxEd5wmRkvQ6
+ W3jWxAC3FmwkJxxj0Xg/ya+KmX+sRJWqRr9OqijXOtUMnNgpf4/xLpCcreT9pqfYavTCUA==
+X-Gm-Gg: AYBFou3ybKbdGqUtS1039QPx1pO3597gky5OCn1N0enG85O1VJzqkRKj+ox3Nf72S7b
+ Keb5JBX492bteXgJgUweVJSQLtj8dA+Cy81bhtleyk1n+5xFuHD8dqjCNwiuk57KnOyFXK0DQhO
+ 5P+g1yAT58nNFhD9c0lzxTzycniABdcao5YrK8SJ4IcnHzRiEtyr/zWCtWwrhi58csoJpvnqiqx
+ I/tKSsTrFVii60VZrXwZZR03WSd8nQdl+xuY34HcU5ibtreHCt9VwJ9inaTye/BtESNpLW7ZivE
+ w5p3zsMhRzkuBvGRB3Yqu64xZEF9q3Aduz7B/AOn7XmDyIr9nqAPrn+7SzywaE8w8CyXaSP4H6C
+ 7MkPoebpB7aQghDcCc1S6eknZRGFt+GqS37wjcUpZtyd1ZWwhzC/xRShP6XA+6++/1M2TQ4dWia
+ ffwCxLXpW4aIzd2FzjMvXp3VP2He1/j7cOk9cTqmLa8FXiHUNoa6VJ5Xbm5obnUftL3T87rWd+2
+ ppJ5UBmCTazRDt8Uuk7tk2Gy/81K1hbvgw0ZZ/4mUOVQqXcmpvOOIY34BgbJiCHT1oJFJklvxxE
+ Dg==
+X-Received: by 2002:a05:600c:8b5b:b0:49c:fa20:cc04 with SMTP id
+ 5b1f17b1804b1-49e619d8827mr45148215e9.27.1789124301413; 
+ Fri, 11 Sep 2026 03:58:21 -0700 (PDT)
+Received: from simon-macbookpro ([2001:4bc9:c05d:1d06:76a9:c4a3:4ae9:6253])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e6221963dsm35039455e9.2.2026.09.11.03.58.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Sep 2026 03:58:21 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Zhang Chen <zhangckid@gmail.com>, qemu-trivial@nongnu.org,
- qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 2/4] qapi/misc: Fix missed query-iothreads items
-Date: Fri, 11 Sep 2026 13:56:30 +0300
-Message-ID: <20260911105635.955937-3-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260911105635.955937-1-mjt@tls.msk.ru>
-References: <20260911105635.955937-1-mjt@tls.msk.ru>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, qemu-stable@nongnu.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH] target/i386: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
+Date: Fri, 11 Sep 2026 12:58:11 +0200
+Message-ID: <20260911105811.16854-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,50 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhang Chen <zhangckid@gmail.com>
+Commit 6802a4b23919 ("target/i386: clear C1 for all x87 compare
+instructions") added an unconditional C1 clear to helper_fcomi_ST0_FT0()
+and helper_fucomi_ST0_FT0(), based on the SDM listing "C1 Set to 0" under
+FPU Flags Affected for FCOMI/FCOMIP/FUCOMI/FUCOMIP.
 
-The example is incomplete: it misses members @poll-max-ns, @poll-grow,
-@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
-(monitor: add poll-* properties into query-iothreads result) and
-commit 1793ad0247c (iothread: add aio-max-batch parameter).
+Testing on real x86-64 Intel and AMD hardware shows these instructions leave
+C1 unchanged, unlike FCOM/FUCOM/FICOM. The SDM text appears to have been
+carried over from the FCOM/FUCOM description.
 
-CC: qemu-stable@nongnu.org
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Revert that part of the commit. The FCOM/FUCOM/FICOM changes are kept.
+
+Fixes: 6802a4b23919 ("target/i386: clear C1 for all x87 compare instructions")
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
 ---
- qapi/misc.json | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+This was caught before 6802a4b23919 landed. V3 [1] dropped the
+fcomi/fucomi changes, but v2 was the version applied
 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index a21ba61b96e..baa50cc8449 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -123,11 +123,19 @@
- #     <- { "return": [
- #              {
- #                 "id":"iothread0",
--#                 "thread-id":3134
-+#                 "thread-id":3134,
-+#                 "poll-max-ns":32768,
-+#                 "poll-grow":0,
-+#                 "poll-shrink":0,
-+#                 "aio-max-batch":0
- #              },
- #              {
- #                 "id":"iothread1",
--#                 "thread-id":3135
-+#                 "thread-id":3135,
-+#                 "poll-max-ns":32768,
-+#                 "poll-grow":0,
-+#                 "poll-shrink":0,
-+#                 "aio-max-batch":0
- #              }
- #           ]
- #        }
+[1] https://patchew.org/QEMU/20260902135705.261863-1-scherer.simon89@gmail.com/
+
+ target/i386/tcg/fpu_helper.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 54ff4fe31313..56d093da8c9a 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -565,8 +565,6 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
+     /* OF, SF, and AF are unconditionally cleared to 0 */
+     CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+-    /* C1 is unconditionally cleared to 0 */
+-    env->fpus &= ~0x0200;
+     merge_exception_flags(env, old_flags);
+ }
+ 
+@@ -579,8 +577,6 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
+     /* OF, SF, and AF are unconditionally cleared to 0 */
+     CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+-    /* C1 is unconditionally cleared to 0 */
+-    env->fpus &= ~0x0200;
+     merge_exception_flags(env, old_flags);
+ }
+ 
 -- 
-2.47.3
+2.53.0
 
 
