@@ -4,103 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2865C79FA1
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 05:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96C0C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 05:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4tcm-0000Fs-2L; Fri, 11 Sep 2026 01:16:32 -0400
+	id 1x4tiy-0006ND-PL; Fri, 11 Sep 2026 01:22:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1x4tc2-00008F-02; Fri, 11 Sep 2026 01:15:46 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1x4tit-0006Mq-7m; Fri, 11 Sep 2026 01:22:52 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1x4tbz-0005j0-6Y; Fri, 11 Sep 2026 01:15:45 -0400
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1x4til-0007cH-3H; Fri, 11 Sep 2026 01:22:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=saXCXZ69u9BcvO+rztOu4P7DfTF3/YJ1UojogmNHoRbP1SSN+Ln+Bj6OaViaDXJ6Kr4wJVNYtsZ1ihrpgG1UZxz3OBCMbqUbPivbcTxp3mdtgQw6F8VILb/e6h5kFD4lXbk1W7iKrco+1TBrKnMGK63sd5JqrPvW+zdWmY1bM8D0wPMb89Rsce5LAEZQgG35YCwzIXgrTZF3OQxjdcL1hkt+99k83WpJsClzZ4jCzb+fJeAG9aofqLuRJ7BTNj1aCRCYlfpwJ2Lu/JWDcybj9PdpFgdoEyw0xBc09q1sh6BK3hoD5FWR/bcqzrG8dJ40b77QJhD/+hm9hJgy7igOuA==
+ b=WXmgupDIkxrxMJ8PYmwg+5DVTytAdqYyibYj+vqhIwZ0ZVuAo/lMD2YOG0JuBBEeWs7Q09ntiZvNwCiDaMYtAiE0nacxKqzuvUpwu0c3Z2xwqO0VC5ROkQao4ODePi1/JN1pC23FTZ7lWBcl3IPy3ts5amtjyO0dkkfxmvsDOoP/qD9SMmz37gPfxKJZoZkRjVuGuiOkpVoiVoBhIvIGluyAmrqAVTnC3u93iUnsclwKpnG3ME60eqWEJp+tZhleMO/nOQSXqS22VWd+aEhOgz3pQsRXmVmX7dvn0YdAi3QNAcI8OFvSbzbmvzoEWyhXnIL4tvLYa5TZzUyt8+GoaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OSkBbC6n7ucuTwJwHCHPMcJYIzG2om3MUS9qW59ZBV8=;
- b=nGUlnMDPZZRZXAgFGYfwZOfpf3WVnmKkmE55lzZKqBcil11uJuUUOdTXzXKuEJEO6JZDiG4jjY8qE8H1jbROEv458QQnA30pmZQep50QHbLMSiLNKD15eECdlrPDb7WEA3tsPjyh5urHJ/2/TADuty9T1F2R8WIkNmKTV8/bu2tzj4b6XOupnwVmBgl5zuUuHSn2xXrmMob853uURT2+pA2cLfiifL9RrgLjcFli5RZKLoiiUnBR5UMlMRJMchWhIxcN6GOKeVeY5H1S4SSiEZ0vFFv/k12sxfEz/7laew+j/+VhgauzfH0+P9R0SRl5g1biAGu2MiDEUdGc55meRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
- dmarc=none action=none header.from=axiado.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ bh=vKl9UD/jJMUPmWMg6ph36r7ATMbRiMXMHuyX75rC4EI=;
+ b=LyB5U7npoZCrd3SdazcuahAcIl7Z8pE0KiJFsOQsSkJ1nTDqekT1fQLTuHx24MeWMKnVZl3Xe8p27Kp7R13xFFhXF6wrF0jEjYGiwbZPQ6MZx05Bas8SFQ7xSy5t3GRt89vMsURmdNgeAYJdAWne3CdtNY2i0ewDESSzTSxDwxw7Fl3pGOpoJCcISiXk+UISrxtsCq7OEChOj2B70Ce81lbkdY87zgTcc0el+3yOOY+MdsXn7GESnbzP5BsHKq5KHhkhqrHLtTgScbzuJ/hp/vkAelB+1gbDwMJweDYw4N88OqOr2Q0P5pqMQraw1/Op452ESebs+wjwvyl8NAps5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OSkBbC6n7ucuTwJwHCHPMcJYIzG2om3MUS9qW59ZBV8=;
- b=XZK2lQnsbPjETMQGTBPBiRKFUA1Z78QXsH8ZM775TILqmDid/xVwyxYOURTWAww1m8+eou6KMHnUvnPaO8B2YZSQHvwFykbF+MKo2OLxEiEoPOttdTGOO2o1ArjeojgMavCiogqE/InRw64WH2wSnSEjl40DB+0gDPHlwbiDqvwR9krQ8pq174uVNRX65KApy5kZYXhv5dJ/WTZDNPGZLIo5BMklMZZ4ENO98lt78SpZ76cazv70ZZu1rBpA55d380rbhpJTtNbJU9TxZY1ujQOXsiESaQ03fqcsQ6SsjJEK5PtFPAmlihg9ineiCLIxvEVOepyxjexl+W6p+NX/BA==
-Received: from BN0PR04CA0208.namprd04.prod.outlook.com (2603:10b6:408:e9::33)
- by IA1PR18MB5539.namprd18.prod.outlook.com (2603:10b6:208:452::6)
+ bh=vKl9UD/jJMUPmWMg6ph36r7ATMbRiMXMHuyX75rC4EI=;
+ b=v9bhrxXbujY96ofTnc+9Ft4nyLQ+0mQPDo98g/npn8jBxWgNhMWXwoGqfkAk8X3u85r4Up9ySxydm1Ih4wtHvrP2Wjztrpsf4leUQkFcDNwH0yplvjpd733txvtapbSTaIFAO1i2r3GORHc4EKlpccsU9cozMMVG0xp424R2NpZfO7A02o8qPwMMhh9WLvQ/cOK6PtHj0Y6/K01soCjLpvb+Mtq2g2/MOoO+/0a1GvUrft/Ophfu4XrTYOp7yZ6rbKYuOhET7TYPF2keRWEuibRXZbTIME4cr+pHP1eHcCus5l8XE0iLLWCUgyhz1xRo1fM3n3nnIQlr3paBB13cIg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by TY1PPF25A2BC0BA.apcprd02.prod.outlook.com (2603:1096:408::94e)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
- 2026 05:15:37 +0000
-Received: from BN1PEPF0001806F.namprd04.prod.outlook.com
- (2603:10b6:408:e9:cafe::4) by BN0PR04CA0208.outlook.office365.com
- (2603:10b6:408:e9::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.10 via Frontend Transport; Fri,
- 11 Sep 2026 05:15:37 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
- smtp.mailfrom=axiado.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
- designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
- client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
-Received: from smtp.corp.axiado.com (64.62.143.114) by
- BN1PEPF0001806F.mail.protection.outlook.com (10.167.245.197) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.5
- via Frontend Transport; Fri, 11 Sep 2026 05:15:35 +0000
-Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id 7D51D40BFE05;
- Thu, 10 Sep 2026 22:15:34 -0700 (PDT)
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-To: mark.caveayland@nutanix.com, philmd@oss.qualcomm.com,
- 163wangjack@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v7 03/13] hw/arm/ax3000-soc: Enable BXRS support of CADENCE
- UART
-Date: Thu, 10 Sep 2026 22:15:22 -0700
-Message-Id: <20260911051532.2378501-4-kchiu@axiado.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260911051532.2378501-1-kchiu@axiado.com>
-References: <20260911051532.2378501-1-kchiu@axiado.com>
-MIME-Version: 1.0
+ 2026 05:22:36 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0406.007; Fri, 11 Sep 2026
+ 05:22:35 +0000
+Date: Fri, 11 Sep 2026 13:22:29 +0800
+From: Chao Liu <chao.liu@processmission.com>
+To: wangyang <wangyang25@otcaix.iscas.ac.cn>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v3 2/5] target/riscv: mask RV32 XTheadBb th.srri shift
+ amount
+Message-ID: <aqOKQ0WfB0vTTFMG@MacBook-Pro-4.local>
+References: <20260908124755-v3-0-wangyang25@otcaix.iscas.ac.cn>
+ <20260908124755-v3-2-wangyang25@otcaix.iscas.ac.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
+In-Reply-To: <20260908124755-v3-2-wangyang25@otcaix.iscas.ac.cn>
+X-ClientProxiedBy: PH8P220CA0034.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:348::17) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
+MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF0001806F:EE_|IA1PR18MB5539:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 478c057a-c7a4-43f9-43ee-08df0fc3b5e1
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TY1PPF25A2BC0BA:EE_
+X-MS-Office365-Filtering-Correlation-Id: d2a12f69-9b52-4391-5c1e-08df0fc4b05d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|36860700016|82310400026|23010399003|3023799007|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: cy1meSZeX+UV9uIkKAx9hLeobMVS7Dc97z4qFqncegMJHWas6KMSwwPaZ3wQ4k9R+RZKu24XN1qMEcZv4+Wa9TaJaUcQHEkdl4bo1DE5MV47VS7mlnEisJg/vysQUl5Riryw2HvaM/EFYMLd3is4Sa3UuOettNO0iVR5LhlLWdw5M0iOXok8UUW4snTGimDZd3NZSrsZ+dKIwcC63HohEEMvLhrLH++Ta0HWoPqEY9z2UFMrheA1E3W8jntLyIaQUefJYUlmrxahIF8lC3uSz3wN610vuGbweAm4LjyKHEpTgngDLhotsic45/g2QsVQl8rzhvOfod7UtNFq/Eq9BjoPURE7n/gmUOET+cP0hl3OTmOk5Z98ElWnKk++CGWVBmzk1N76uVxEHfLZZvsSSlq/tfuCRgn/6fCYkOkEe3qTW9APX6VDi+hkbDnxfO0UN4RkygnbZOM/xitAzKALO0DJLOLsFI4TszHBi7aqJERPn30pao5Cr3oqvZujDrhrKSGpBLe4zK94H0mXwHK/AtcmCZBdhTnpmndV2PdzpFtPa9iAE9eciIJO1aItFEx36sQXrCmbogKN79SjOFhbIat9KkQv0QBZXTAomDgsMRfpfgtpxvw9Ik4jdHQu8fxyJYEm+SNXVRrHIfsKb2aX/DNNvLf6JRuk5IdamdYgRCxZAApNBDTvJFO9uyenC9m0cVuF396n3Jp3gZ1Khvn9UA==
-X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(36860700016)(82310400026)(23010399003)(3023799007)(10067099003)(56012099006)(22082099003)(18002099003);
+ ARA:13230040|366016|376014|23010399003|1800799024|3023799007|10067099003|56012099006|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: qMf/7vwALPpww3XPgDaZXpnMyuKMw9r0RihLPKk+SQCMinRV8Y/2fdQH8aXvQa35TEn2t/Mle2IwFdv2nJDNrAXicIQMqmHqjQE617VmygcWe/u10QDvCdbU7kPdH9L7udkHepiGcrlfwFX5Hjm8y/fRBkpwP+QNQcVg2cqVnI//x5uSKqW7jFHS93dZeGr6wCo2iEPMQYNxukWK446E9qvGXD1dV9MCcUhOQeAfwQQ8S4uY+G5Rwl3ra6LwhdHSqyHSY0TrRTfnCVGlVdE2MBhbJ5LJBXWBU3v1v9p8UtC20kwmgriDt7rGr0sp43qWq+QvEiIxMGuK2dorRhF57NtoAAX5t6isvXz+aaL/Hef9RIJ7x2Voc6IGikCTe6784BnFtCGDcfAhXDxop/aK7G9sEqXuv4fA6ymWyRYqOPS8t2jW7KpTHeb08kmZ2Yw3cakT4x9GGn4N/Iv+hL8Qph2f8eenJhsFElwjyGc+JrqEQvIW8yw/BATQEhn6vac8Ds4e5pmbaqzq/pYAlojDyYRqiC4MVjQCMpzQv4IrtR+Se+wtB3/W16uh2OIU2wgeJ80IF6ubr0yUKB3p7K/dmYpqwY2lp3Z3A0Kd+Roj0BYrTTU3R0gdhnxm4c5VFwyqXXEM3e7gYyvnNbd72++LyMiys6RCLpJNxccXH/2PoPs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(3023799007)(10067099003)(56012099006)(4143699003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: CR1ztmkXxDyA6kTv5XSDkzX0xse9gf/j4MUVb6rcB/JLqxIBKJ2yWFb6CvM1m2opuRdjTzGafK6vJWaXzErUEgniPCAg4ksuwGxk80zwDR1+GHr1+h1N3XTqOmsNeSnGgCM174bOS4VXWpxrJHw+Xfv6ssZbTv/Zba7v21CURSN7DUANv1CBZXvT4nldzoaBqUfiY5LYe8UGgXrs5x0XHIZv+1PzqBKMIdTUT0aecmLAUOY6uzU0yZSpCxX4KkZCALeMHtvDHBJGSU0oBvYh3YGean9J0spLZVjiQnO+eKkZ7KrTpVyfKRDRiuddSAKWB49aknZA+GLq6F5F2NPPXooXDgjKTfZZhcGGNCeoTv3cc7rzyqUgnlyIksOQ/58h0p5W4MlAGCzt5DLWZeSafpyEGM9X+Li8hqeZSTN0cnMuuvHPwtaO+8DdHpW+grch
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 05:15:35.2705 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 478c057a-c7a4-43f9-43ee-08df0fc3b5e1
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
- Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0001806F.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR18MB5539
-Received-SPF: pass client-ip=2a01:111:f403:c105::7;
- envelope-from=kchiu@axiado.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bk1aVjVaaTk3TmFYeTBFV2ZlbEdrVEo4b3lJbTV3ajZRMVV5NVBtbWFRVC8v?=
+ =?utf-8?B?S1NPYjROamJENFZGcEFybGZneHRWVkVHL2x0Zm82TlRlZWxJaVRVS3ZzaG5y?=
+ =?utf-8?B?UGtmOGIzUWpGcG9SeTQxK2ZCdWdGaTdacmEyRE4yVzhLNnBvZjlkYThLQVFy?=
+ =?utf-8?B?RW9oSEtueFJZWGpDVWVtNVpzRDFyOHFWOHRWeXdFZ2tZVTBkYjNCY0toY24z?=
+ =?utf-8?B?azZaeHUwOW85QlNVK2h5RGtxMEZJMGw2TjhxbjBLUFdrUTJFNVA1WjU2bVNv?=
+ =?utf-8?B?ajlsT2R5WWEyMGZ1SVJVVE1OaUlGZHIrTlhHSkNwTVRKYTB2TVVaRUlqdFJH?=
+ =?utf-8?B?ZW90S09QUHNMcWpzS05PTFViOXZQN0J0TjZ6VERFNHdjZi9hVnZxRnVHM3JH?=
+ =?utf-8?B?czVzdDZIb1daSzF4K0FNU0EwVmRFbUVkZGFkQ1djNjQ2VGE2UmN3VDE1NWhU?=
+ =?utf-8?B?RVBpbEE2VG5OYVBKNUFVNktxRTl6dGoxeDA4N3J2bmxncTdpYlVoakI0d1VQ?=
+ =?utf-8?B?Wi8wM3VjcnB3N2drRWdET3lRVUdmYTQwNExFMWw0alJWTkxnZlgyZDJnM3FB?=
+ =?utf-8?B?QjVPak0yWVpxWFM4a0JpR2tqWlhPWEozL3JBak42bHJ0L0lBbWcvbWxXQkNR?=
+ =?utf-8?B?VCtiQWtHOXhqdU9FVG11U2NRWDBFL1V4b2lLWmk1SzRtRHFxZ3V5eFNUeWdn?=
+ =?utf-8?B?U0FoYVdCOXp0YnVLNklHT2R6MjlSU3JDaXBFeHlBQm5GZ3YxeDE1bkNqTys5?=
+ =?utf-8?B?ZENmMVo4aFhuWU5Na3ljd05CdU9kL3owenVBYk5QMzFHNXlUQm9xRlIrLysz?=
+ =?utf-8?B?RGlCZTg1QkRkeVpVYmg2L0hYSzhHYnV2cFJ0aWttd2tIYzdqcXJhb3FVY2FQ?=
+ =?utf-8?B?b3JuS1Q0N2FoYzRVSmwreUh1YklscllQOVNFN3dEYThhVTd4S05Vd1VzTkVQ?=
+ =?utf-8?B?UWE2QUpmTlVqYlJGUXhNb3hNOHZhVUtoc3ltSitBMFVVcHU0eFJKZWdkdVRn?=
+ =?utf-8?B?TXF6QjdCQ0FoUEo5WXhIOVRjUWZZY2pNaGpWcTlSOXRjOTQ4RG1HemtOMzlY?=
+ =?utf-8?B?bUc2L2EyVlY4T2JOYkl3dzhNT25rS0VubDlXeEZtOE9NVHIvSmkvT3VOd2t2?=
+ =?utf-8?B?WmZITEdmdytlbVJBSjA0QW5GMzc0Q0JVdnFWOW9jZUpxMm9EcXR4WVhkUVBh?=
+ =?utf-8?B?UFptSzEyUURIUnBWR29CYzZzQTJ3NTNuQ2liMlZXS1RuMms2VmlMQmZsd2Vt?=
+ =?utf-8?B?WmpzQ1QwK3JNNkxTM0U0TnVIckRSR2IyalpxVFkzc2JtWWNkcjhZOTcvUDAx?=
+ =?utf-8?B?SnE0TExGUENmaktuRVRWRzhVNkh3UTZCMXVodklXNDNkYnVKS3Q4V2JUeklh?=
+ =?utf-8?B?NSt1dEdocDZNSjVncTRCQitCSUEzZ1U4aFRkUWJ5bEFMT1l2WWVwazlTY29j?=
+ =?utf-8?B?KzNxMTI0UzVPcHVJKzRXWSs4cFpRdzVodm1vM1dyb3o1TytDeUszV0JEMkpr?=
+ =?utf-8?B?ZUpmQTVJWXZWYTg4WHd2aVJOeGFjdXIzQnRxKy9CYmZYMmFmUGZDRzRlRVpo?=
+ =?utf-8?B?azQwZk93V1N1WUMrT3Z2QVlZV2pObVM0OWU4a2JnMGRvOWNHN2tkZmhWaENN?=
+ =?utf-8?B?WUNTNjI2SkV4eUVuUHg1L0ZlSlVVN1BMUTcxY2lwcC90V1dLN2haK214Z2xa?=
+ =?utf-8?B?ci9lZHBGR0R1MDZMYnhkY1NPdTFqT0taZkZvUVV0Q0tEQ1ZHQ3c1dmQ0YmQ4?=
+ =?utf-8?B?bjlxMElQRytkSVBvTGUzYVBXSXhtRTM3UHhXeWVWVkNJN3hCNjBreG1uL0Z3?=
+ =?utf-8?B?VWVPZEFPaVBHUm52M25lTVBpWjA3V3ArSXFsZ0NBcXZjTDI3RGZWVUNyV1ZL?=
+ =?utf-8?B?enE4ZzJOVU51ZFdETHFIR01ISHVIL2ZVc0xSd3YxSUJJc0xWWVdBY2tRa3NZ?=
+ =?utf-8?B?K1ZkTU0vUWgwaVJZS3JVeU9lcjc4Q3A0WUNPeW9HcWYyZVdLVEZ5ZGsyN01y?=
+ =?utf-8?B?TjczK0p2ZnBPdndscldGRHo2cXlRR3FQUms1WnhleE1hY3IwdHd4NUt3MnNV?=
+ =?utf-8?B?cW5mR0VQNVdBejF2aldhMDgvSmFhb2liZnpJWGNNaVgyTWgwaElXR1RkS3Az?=
+ =?utf-8?B?V3g4dk51bkZkN2pzZjgrSkZTMmprVjZ4N0psNmFHVDc4d0JYOUlpUkF3cElt?=
+ =?utf-8?B?QVBqVjlNMmptUnVQS2FUMVdnRFRlY3dSUlduK21aWXVSTnRSU3RjSjVkaUUw?=
+ =?utf-8?B?MDl2aGczQ1AxbVNacTFEaE5Fc1lSM21uYlFkVGszR0JkK1pLeWErcURScmFk?=
+ =?utf-8?B?WTUzTTJDVnNoSW9WQ1BEaUNoSmxVTVFIVUw0OTI4WkJDZG5DcWtVN0JSQnRy?=
+ =?utf-8?Q?ViKgaZZWUFOXRKio=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d2a12f69-9b52-4391-5c1e-08df0fc4b05d
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 05:22:35.7447 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: b6wdae7jkn/U91Ny+Iet6sTgtl1rmKIiFcJs5QlxZUCy8/qOlVKc51dmRdHO004ZQZZbOCzIuSsSRsTuBT97r3LyrwIk6X+P+AOSo+C86M8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPF25A2BC0BA
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=chao.liu@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,27 +154,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to access BXRS (RX FIFO Byte Status) register at runtime, set
-property brk-support of CADENCE UART to true
+On Tue, Sep 08, 2026 at 12:47:55PM +0800, wangyang wrote:
+> The XTheadBb th.srri instruction uses the low log2(XLEN) bits of
+> imm6. The generic shift helper rejects values greater than or equal to
+> XLEN, which incorrectly rejects imm6 values 32 through 63 on RV32.
+> Normalize the operand before calling the helper.
+> 
+> Tested: RV32 imm6 0, 31, 32, and 63 witnesses with XTheadBb
+> enabled and disabled.
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4413
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> 
+> Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+> ---
+>  target/riscv/tcg/insn_trans/trans_xthead.c.inc | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/riscv/tcg/insn_trans/trans_xthead.c.inc b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+> index 681f70e5bc..34226b1be5 100644
+> --- a/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+> @@ -141,6 +141,7 @@ GEN_TRANS_TH_ADDSL(3)
+>  static bool trans_th_srri(DisasContext *ctx, arg_th_srri * a)
+>  {
+>      REQUIRE_XTHEADBB(ctx);
+> +    a->shamt &= get_olen(ctx) - 1;
+Looks right, but usually we handle this in decodetree. We don't
+normally modify the decoded arguments directly, so could you move
+the normalization into decodetree instead—e.g. a dedicated RV32
+pattern/trans like zext_h_32/pack?
 
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
----
- hw/arm/ax3000-soc.c | 1 +
- 1 file changed, 1 insertion(+)
+just like:
 
-diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
-index ebe174fb97..7b96466860 100644
---- a/hw/arm/ax3000-soc.c
-+++ b/hw/arm/ax3000-soc.c
-@@ -155,6 +155,7 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
- 
-     for (int i = 0; i < AX3000_NUM_UARTS; i++) {
-         qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
-+        qdev_prop_set_bit(DEVICE(&s->uart[i]), "brk-support", true);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
-             return;
-         }
--- 
-2.34.1
+{
+  th_srri_rv32  000100 -..... ..... 001 ..... 0001011 @sh5
+  th_srri       000100 ...... ..... 001 ..... 0001011 @sh6
+}
 
+Thanks,
+Chao
+>      return gen_shift_imm_fn_per_ol(ctx, a, EXT_NONE,
+>                                     tcg_gen_rotri_tl, gen_roriw, NULL);
+>  }
+> -- 
+> 2.55.0.windows.2
+> 
 
