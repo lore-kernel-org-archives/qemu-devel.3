@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5005DC88E56
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915A6C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x50MH-0007P8-J7; Fri, 11 Sep 2026 08:27:57 -0400
+	id 1x50MQ-0007Za-Bp; Fri, 11 Sep 2026 08:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x50MF-0007Ko-J9
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:27:55 -0400
+ id 1x50MO-0007YB-1R
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:28:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x50MD-00070f-Nh
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:27:54 -0400
+ id 1x50MM-00073X-2K
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789129673;
+ s=mimecast20190719; t=1789129681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HqWC4E/c16S9/+MLB6SLnQfOu+B+Hw2yLwBbSSQj1Gc=;
- b=PDKv5OlRiKtWQnGm0FfEXov2AuZE9Wcuo16XXlrctB5jsyg2zA8XeUpftljPBFvLnLALzT
- 4Xa4TkExSyEmZpjT0iOs7NhownjT1ruFaGInU8ADY75kzu7Ij/6Y/FWEpQDjCtjBye0PVp
- at2hS694+IjhkY8QCb+bWCUOoYIVW2w=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1CZHbQQpgwP/HwF1mEYmyVjFVQko/FHk7cdnH9VJKcI=;
+ b=cxLHJvO+ddEd0DmsI3XSFTzaAScBMTsXdh9VEKYuR+rHv02tZli9mIhSnsEUS5iCOT2lxJ
+ NhcYqCcbk0SkLDHJgeiWb6TzVmLwDbCvo6wR2h/hCwrgddtnnetIVdG8YD8XC0Bv27LiEN
+ 2x/P/fQ981Wpxw3b6VcyUZ2s9QTFchg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-7nTTvDciMZaSbB4ISdZxIA-1; Fri,
- 11 Sep 2026 08:27:49 -0400
-X-MC-Unique: 7nTTvDciMZaSbB4ISdZxIA-1
-X-Mimecast-MFC-AGG-ID: 7nTTvDciMZaSbB4ISdZxIA_1789129666
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-pS6Rxd8RPe-AcSNA7Nkosw-1; Fri,
+ 11 Sep 2026 08:27:56 -0400
+X-MC-Unique: pS6Rxd8RPe-AcSNA7Nkosw-1
+X-Mimecast-MFC-AGG-ID: pS6Rxd8RPe-AcSNA7Nkosw_1789129673
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0EBFD19540DB; Fri, 11 Sep 2026 12:27:46 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 346C51955D4A; Fri, 11 Sep 2026 12:27:53 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E038A1956042; Fri, 11 Sep 2026 12:27:43 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2B9221800576; Fri, 11 Sep 2026 12:27:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 16:27:26 +0400
-Subject: [PATCH 03/10] gdbstub: set feature->base_reg for dynamic features
+Date: Fri, 11 Sep 2026 16:27:28 +0400
+Subject: [PATCH 05/10] monitor/hmp: add CPUClass::get_pc fallback for HMP $pc
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-query-reg-v1-3-0c04f0c02cf3@redhat.com>
+Message-Id: <20260911-query-reg-v1-5-0c04f0c02cf3@redhat.com>
 References: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
 In-Reply-To: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +78,24 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1027;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1813;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=kqhJAQgP0IhPa8w0kge5ZBoIAHiwJHN65r8HJVeY8Fs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqo/OuB+pKOjc3VULyffQ2RAnuYKhnJ2OL5zwL3
- EenlVOGCLuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqPzrgAKCRDa6OEJdZac
- 5QgHD/0V+UQQCOBslFtXfVDt88sirmYbd7ZM5TrCV+rnU37FX1LdFWaGl5G/50R5WrxbruoYoV2
- xLM7Jcwxl06nIjW0TR1KEZ0ZqDZR3VGS9y2Bp6ls6arfAY4rIgdw2oF0YRaTXhXYlE9UvCNyR3E
- SV6Tq7hMvWaUy2GrlE37YPDOh2DI3bUY69sJmFfH79R+ESlufQnV+uUJBPGQyXamvOhdQtz5dl7
- DVuE2MXeH54ujTNzEUFzXOE0SGU+E0N2DV9GmNe3KxJHXA8isMZrsrm70dP+P3L6Vxj9//wWbrn
- WztAeVmV/62fFqly6opmE0HFYzOrp704+EhTEqzkG+9DVHlHd3Hn6S1qHvz+4D9SsmwFcEUBkIA
- enWR8P1BWq5AzDfBMX9XCAnLpYu8B2zULg93s0lyqsmt3M7Wsrj5U4xWaFefhz3QJhX1nqXe9Ge
- 6gVHmP9Vn3sCjl2KxpkwgZgrWacZ/KlnTSwu9FPhp+1eUyLtarEs4AGTLtOV4we435BamJi+LQJ
- N4EmGqDWuOSwk9LZUrj1Bk8emGlAIaXEgzBMulM1KOgvUF+q2feYWGqlfza0fWs4Xa9bz4LuJBy
- UXFSbMTP+bza3DD3Pacy2kz5jueNi+NV+hv0ctImTnl95IkUHz6ATN1IA4PSzrsZZmvwlkpDvvK
- T+o23qHpjqLBoyQ==
+ bh=RS+4i3/UYY6V3Q/42QSB1RzVR7D3DOiMpDER38yecsI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqo/Ovt5zb6bfoTDvNPIM/H2X7ZCTXjQu76LKJf
+ Asc8M0OtqeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqPzrwAKCRDa6OEJdZac
+ 5a78D/0Ty2LH/fZUKAvEwyDmKIAM3s5jXh5wLTJBl1NYcN0XpGcsEnnQbyppkcNQzv630q6qNms
+ Xsfo4Xl60+NFuzUvBRSuDcXjLBjR/3tbFwb3MO+KlBS6plOHtUkMQzjl+CVm5qv1RvsdojMQ95k
+ pYYKjzWyRLGKhasPHJh5KBxj7EMmHUvv85nYtOpsEzZnYTRmyanDiuCtYiIpDpPf43xIYD9jKO9
+ uzflwhYVReZ2XdYHVadX66jDYtqsr5PHJ/O6NI52KTEwDObaLN0tN2HSp9b14j2vew+xAycMJzB
+ isHUYjtdaqPWraTlenJ1BcueV2bMV+cw26gij9MOcQr2BICwUprTdI1Ai0K0YKlEctlUwd9zeJl
+ MAiWzhP5acgJH4bnj5LKFVWb2Bf2sT41LrhpTKQU5/xnFy5GnbV8X4I9AOQ5wDYRpMM8m5INp4e
+ EnMnFjFlOauobMoTqyo53XICUqZNsdjloXdvZFYOtb9tJ2VZiQn70//OEEs+LYeqCyXLIvU5rdI
+ zGV/SFw2yLPsydXwdrIKaIFu7lsZMMCJsJFNTTfy6/b5h32A+741DI5bxokUlHC0FqZH/e7qzMw
+ 5kvModbVTgusOG05DMTvHiBfynFBWoKskMiCPp5YU3JgppiCtiE9bGCYLN5gxava+zXK/7QMtg9
+ QaGjz/nzkc2stXw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -121,31 +121,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gdb_feature_builder_end() never propagated builder->base_reg into
-feature->base_reg, leaving it at 0 for all dynamically-built features.
-This made the trace log at gdb_get_register_list() report an incorrect
-base_reg for dynamic features.
+Some targets, including x86, have no GDB register named "pc" (x86
+uses eip/rip). When the GDB register lookup fails for "$pc" in
+HMP expressions, fall back to CPUClass::get_pc so that "p $pc",
+"x $pc" etc. work without relying on the legacy MonitorDef table.
 
-GDBRegisterState::base_reg was correctly set, so this doesn't fix
-an actual issue.
+This prepares for the eventual removal of MonitorDef while making
+$pc available immediately for all targets that implement get_pc.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- gdbstub/gdbstub.c | 1 +
- 1 file changed, 1 insertion(+)
+ monitor/hmp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 0ce871d74929..912e31b66744 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -476,6 +476,7 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder)
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 10e19e417aba..0a74247ca66a 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -402,7 +402,7 @@ void hmp_help_cmd(MonitorHMP *mon, const char *name)
+  * Set @pval to the value in the register identified by @name.
+  * return %true if the register is found, %false otherwise.
+  */
+-static bool gdb_get_register(MonitorHMP *hmp, int64_t *pval, const char *name)
++static bool get_register(MonitorHMP *hmp, int64_t *pval, const char *name)
+ {
+     g_autoptr(GArray) regs = NULL;
+     CPUState *cs = monitor_hmp_get_cpu(hmp);
+@@ -435,6 +435,10 @@ static bool gdb_get_register(MonitorHMP *hmp, int64_t *pval, const char *name)
+         }
+         return true;
+     }
++    if (!strcmp(name, "pc") && cs->cc->get_pc) {
++        *pval = cs->cc->get_pc(cs);
++        return true;
++    }
+     return false;
+ }
  
-     g_ptr_array_free(builder->xml, TRUE);
- 
-+    builder->feature->base_reg = builder->base_reg;
-     builder->feature->num_regs = builder->regs->len;
-     builder->feature->regs = (void *)g_ptr_array_free(builder->regs, FALSE);
-     trace_gdbxml_feature_builder_header(builder->feature->name,
+@@ -526,7 +530,7 @@ static int64_t expr_unary(MonitorHMP *mon)
+                 pch++;
+             }
+             *q = 0;
+-            if (!gdb_get_register(mon, &reg, buf)
++            if (!get_register(mon, &reg, buf)
+                 && get_monitor_def(mon, &reg, buf) < 0) {
+                 expr_error(mon, "unknown register");
+             }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
