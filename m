@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A2EC88E5A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E8EC88E59
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 17:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54xJ-00011j-19; Fri, 11 Sep 2026 13:22:29 -0400
+	id 1x54xF-00010I-Fg; Fri, 11 Sep 2026 13:22:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54xH-00011L-HR
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:27 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54xE-0000zl-E3
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54xF-0004cz-Qk
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:27 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x54xC-0004c4-QP
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 13:22:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789147345;
+ s=mimecast20190719; t=1789147342;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rBLyZXbXlsOC8SLLzAeTtyZ5ri1ynYIY6/I844l2vDU=;
- b=G+ktjByNjK3VSvupYNrR+BUca3Bpu/CrfRVX6LVFoS80N5L6ZOFJRXcBo9xpSD3lp7owJT
- IF4rO7HOmi+ITqyJmtOqKpUwCMnaAhvbU9DgeCdG1UwVfFg+i4gUS+e7SI6gcE81ykMJqT
- 0GL34HViVl3vvhDIAd5vWIWalN4QtRM=
+ bh=kqnCn6G38OWUssJgOIyQiwhSLKRNKgZZBvo5dTe58DE=;
+ b=ATwHrANVl1kd9IFQ34QbHM4BkhtG8C33GOP3kzNi3TSPJqlZBPZ+WhZeIm9Xkdq+Qcphjq
+ 2x7EnP93WjtsxLkg24LwAl8c1avCX3pd6a3pb10THmUUk9qBGB2OJWWS6KYXiWygKC8TBi
+ 5Jao7vPv7hoHRIW28hHldalhtq7uzro=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-nuqhVkaoOMOtL6xFiEWfOQ-1; Fri,
- 11 Sep 2026 13:22:22 -0400
-X-MC-Unique: nuqhVkaoOMOtL6xFiEWfOQ-1
-X-Mimecast-MFC-AGG-ID: nuqhVkaoOMOtL6xFiEWfOQ_1789147340
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-1SOw62vbNAGvNNb27isq2w-1; Fri,
+ 11 Sep 2026 13:22:19 -0400
+X-MC-Unique: 1SOw62vbNAGvNNb27isq2w-1
+X-Mimecast-MFC-AGG-ID: 1SOw62vbNAGvNNb27isq2w_1789147337
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6355018011F5; Fri, 11 Sep 2026 17:22:20 +0000 (UTC)
+ id 02B14180134B; Fri, 11 Sep 2026 17:22:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.222])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 601A41956095; Fri, 11 Sep 2026 17:22:17 +0000 (UTC)
+ id B1ABF195608F; Fri, 11 Sep 2026 17:22:13 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
@@ -55,9 +55,9 @@ Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Peter Xu <peterx@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 4/6] qapi: convert remaining simple intros for block-core.json
-Date: Fri, 11 Sep 2026 13:21:58 -0400
-Message-ID: <20260911172200.227914-5-jsnow@redhat.com>
+Subject: [PATCH 3/6] qapi: convert remaining simple intros for machine.json
+Date: Fri, 11 Sep 2026 13:21:57 -0400
+Message-ID: <20260911172200.227914-4-jsnow@redhat.com>
 In-Reply-To: <20260911172200.227914-1-jsnow@redhat.com>
 References: <20260911172200.227914-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -94,106 +94,22 @@ context of another command, event, or structure.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block-core.json | 45 +++++++++++++++++++-------------------------
- 1 file changed, 19 insertions(+), 26 deletions(-)
+ qapi/machine.json | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1ca147285e7..88218e38d02 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4462,9 +4462,8 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 0516112f8e8..13875fc4642 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -449,8 +449,7 @@
  
  ##
- # @BlockdevOptionsCurlHttp:
+ # @NumaOptions:
 -#
--# Driver specific block device options for HTTP connections over the
--# curl backend.  URLs must start with "http://".
-+#     Driver specific block device options for HTTP connections over
-+#     the curl backend.  URLs must start with "http://".
+-# A discriminated record of NUMA options.  (for OptsVisitor)
++#     A discriminated record of NUMA options.  (for OptsVisitor)
  #
- # @cookie: List of cookies to set; format is "name1=content1;
- #     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
-@@ -4488,9 +4487,8 @@
- 
- ##
- # @BlockdevOptionsCurlHttps:
--#
--# Driver specific block device options for HTTPS connections over the
--# curl backend.  URLs must start with "https://".
-+#     Driver specific block device options for HTTPS connections over
-+#     the curl backend.  URLs must start with "https://".
- #
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
-@@ -4503,9 +4501,8 @@
- 
- ##
- # @BlockdevOptionsCurlFtp:
--#
--# Driver specific block device options for FTP connections over the
--# curl backend.  URLs must start with "ftp://".
-+#     Driver specific block device options for FTP connections over
-+#     the curl backend.  URLs must start with "ftp://".
- #
- # Since: 2.9
- ##
-@@ -4515,9 +4512,8 @@
- 
- ##
- # @BlockdevOptionsCurlFtps:
--#
--# Driver specific block device options for FTPS connections over the
--# curl backend.  URLs must start with "ftps://".
-+#     Driver specific block device options for FTPS connections over
-+#     the curl backend.  URLs must start with "ftps://".
- #
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
-@@ -4643,14 +4639,13 @@
- 
- ##
- # @BlockdevOptionsCbw:
--#
--# Driver specific block device options for the copy-before-write
--# driver, which does so called copy-before-write operations: when data
--# is written to the filter, the filter first reads corresponding
--# blocks from its file child and copies them to @target child.  After
--# successfully copying, the write request is propagated to file child.
--# If copying fails, the original write request is failed too and no
--# data is written to file child.
-+#     Driver specific block device options for the copy-before-write
-+#     driver, which does so called copy-before-write operations: when
-+#     data is written to the filter, the filter first reads
-+#     corresponding blocks from its file child and copies them to
-+#     @target child.  After successfully copying, the write request is
-+#     propagated to file child.  If copying fails, the original write
-+#     request is failed too and no data is written to file child.
- #
- # @target: The target for copy-before-write operations.
- #
-@@ -4686,9 +4681,8 @@
- 
- ##
- # @BlockdevOptions:
--#
--# Options for creating a block device.  Many options are available for
--# all block devices, independent of the block driver:
-+#     Options for creating a block device.  Many options are available
-+#     for all block devices, independent of the block driver:
- #
- # @driver: block driver name
- #
-@@ -5473,9 +5467,8 @@
- 
- ##
- # @BlockdevAmendOptionsQcow2:
--#
--# Driver specific image amend options for qcow2.  For now, only
--# encryption options can be amended
-+#     Driver specific image amend options for qcow2.  For now, only
-+#     encryption options can be amended
- #
- # @encrypt: Encryption options to be amended
+ # @type: NUMA option type
  #
 -- 
 2.55.0
