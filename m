@@ -4,106 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59FCC88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC387C88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xBP-00086w-Ox; Fri, 11 Sep 2026 05:04:31 -0400
+	id 1x4xBi-0000bB-Rz; Fri, 11 Sep 2026 05:04:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAp-0005Ft-S4
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xBD-0007Ni-R4
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAo-0008O5-5M
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xBC-0008Ua-26
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117433;
+ s=mimecast20190719; t=1789117457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4CnyxDCKVe7u1Oo/VtDfYPCe5Gbe0/d1270GUGGe0eo=;
- b=XytJIMWSzpfyVmY13W96kgMk42Tq11Sm8MUTeiQzkQvS+gbQrU5/IYciFlFM4Zg/g4/7NF
- XpDejQ1irATLSuLQrnieb8zh1BB9wFOjpm2UIahuxxWpzR6UzE8pzX7cT6T0FJMWBJH46X
- EAYdCacbAmueCZQN5T4qvN+Tddu4hAg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HnLpK+N89F2XPAWPb6Tl/ZpnNhALrwGevG6SaIgN5js=;
+ b=IJVO5GctvLCRiDaxYTflBMsknTBjPUiS0KQR7qDeKOay5Xl1VQKTBI+HvlRyra5pj6CgaZ
+ hBAd71BSX7w8rmWahqjHHF+L9WUXnq9789OUpwe7rRTzSBUt266Y276lwzL0sEWDz/Fn8h
+ WF4HLRPX7+kdxX4hLQ/y/AUmgf3a01E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-436-OM2LBvbDMeWDrLXS5ZkvSA-1; Fri, 11 Sep 2026 05:03:51 -0400
-X-MC-Unique: OM2LBvbDMeWDrLXS5ZkvSA-1
-X-Mimecast-MFC-AGG-ID: OM2LBvbDMeWDrLXS5ZkvSA_1789117431
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4994aebe932so8090965e9.3
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:51 -0700 (PDT)
+ us-mta-610-IpZtiYwXM1ykJIqCmAqnpw-1; Fri, 11 Sep 2026 05:04:16 -0400
+X-MC-Unique: IpZtiYwXM1ykJIqCmAqnpw-1
+X-Mimecast-MFC-AGG-ID: IpZtiYwXM1ykJIqCmAqnpw_1789117455
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49cd83ca361so6766945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117430; x=1789722230; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4CnyxDCKVe7u1Oo/VtDfYPCe5Gbe0/d1270GUGGe0eo=;
- b=FQqQ/knHTVjt6FeYIcqZ3WoqdUCCXjZq027spnDQ9c0prBHov2p7rhO8YE/uqAeWuo
- uaSD5DkTurK1N/dIb78ipX4DxPkJaTGH9wKK1G/YOcv+8xPCXO6QicK1YOLBwTvdYPhY
- Um4+K2b1aSlF9Q5NHi8hNtfq6tPwSv+v0tr9GQl/C8cAXPnp5dG8GCum2FaWMwpvR4ew
- f/WoZl9z5IeEBvMPAP0H0u7wGTKBbLi3WRWk0xjsN1AlqdBJlFo+WzAbdk0T0rrgV2EE
- qUhShl4zqHD6AEbBNfIofw3wFIdA9vcmd2u4+iKmrDLOK8P62VEquU47QKR7bXBVRxGV
- GLUA==
+ d=redhat.com; s=google; t=1789117455; x=1789722255; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HnLpK+N89F2XPAWPb6Tl/ZpnNhALrwGevG6SaIgN5js=;
+ b=FeUlAqlTV0fCTCfk2nwfIODi/aZ5UhNMiadWh1Up6DaiK7t+dnaTmrLTe0ryMvJm8z
+ pd/HJ6tWut4m5d11aADTNPNubflQzMO4qEKsV+TIX5us5Dt5hcpqjqu74DDXAW1sQ+dV
+ ndPJJf4tYPsrHwrfWe9BSKW8C0uk3NksfXOmLrqJAXB82qqc9TW+9ywtKLHbZR6LVnlt
+ YWl5El8t019vc9XU5/ggDqEaxybmC0gGuJ+bY9tjnKIs+BJGDLMF3VsEDapY+p6B6E0I
+ kNfGtH5SbV+h/FI66BAtrodFFmXDZWS7/spHm+q9Ix4ZhpnkB6JznqH+L+5aym/SES1F
+ DUyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117430; x=1789722230;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=4CnyxDCKVe7u1Oo/VtDfYPCe5Gbe0/d1270GUGGe0eo=;
- b=JEO4Y+ilDAEQ3+8LB9V8JmtzEdxVutoHVhQ4Cg1JlHtPhbKSg8LJ0I0FTD4MWgHzXq
- g2f9X97Zuqawf4sdtoyN2p/M1ZL+DJHXf8rAKo0ZwkeDPOUf747iNV4HgIMi9h0zLfLB
- Pn0b5dLxskadx5zfROqQkxmJ0UhXZXscP3Sq5PtE8wR4InrVHmoaewCCOIhpQclhoEYa
- 2qSS3LEDhAXo91xWHAoNPHMgbMQhuAiYoTHJPe8WRX0nrNsbTO1VxONNAKpnsEDCjqNi
- 4PtH8+TVWSkStIe/sR2r/Xlj+nEo3WBejF1UGZWm4unrFRqlvpyaWRJipLpE6eHOfx+c
- U6xA==
-X-Gm-Message-State: AFuF++kzRlHiHvwidurQSlzOK1ULJplK5xnZyf6NQj0HSrsoTH35C0jL
- 073suu/OJTQ+GCofMng/zFsvkSISAP61+Cbq5eIqhDQ32egpwADdRIYVOhiPfDyhc8zVpjxD8gz
- dTf+/Rb9ZC10GeiRxK/cDzH7rGLoElOvX68jjqWQX3rk4LEFWzI/z3tXQO2m15XItR5u2a4pUHk
- hixGf9yZehxv4vPRlw8qrtYLNjgz4KUsQs6A==
-X-Gm-Gg: AYBFou04HBdL1zd/1yGy8mE9WoqJZx1zspT+gc9+EHU5MfhiPlulmY6OW5x2ZCtxJcF
- C2H2WT20RULA+HgltW8PemxDyZIOTjue1BDY6x7FWkejxhvsSaCNVVlJjV62p/zMpb4ED/vhpMg
- MtKjJmLwZc128dH0RoK1/pgq8L3KZccGrrBO0fKGGdXdSZGWdNAfGOW9YkM2XtAdzKIk0G6ixGT
- MvZdi9XdUDauYx89iq/n9MBbj661+DO5oADEFVOjTZV7+jNnFTgGJIuszA7LMh6nMrHcNjRAEol
- jDjRR1BY/UxAhF0WONWGvx+7VbC0+EKStnp66+kpHb0hPgmP2yo77EYZKWtsSkJ/BJ5M41ubgVD
- f7W5Ghb3w8ZbxZU1Jqw/RTto=
-X-Received: by 2002:a05:600c:19c8:b0:499:b65e:49c9 with SMTP id
- 5b1f17b1804b1-49e619f3ae1mr61272745e9.10.1789117430214; 
- Fri, 11 Sep 2026 02:03:50 -0700 (PDT)
-X-Received: by 2002:a05:600c:19c8:b0:499:b65e:49c9 with SMTP id
- 5b1f17b1804b1-49e619f3ae1mr61271225e9.10.1789117429657; 
- Fri, 11 Sep 2026 02:03:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789117455; x=1789722255;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HnLpK+N89F2XPAWPb6Tl/ZpnNhALrwGevG6SaIgN5js=;
+ b=Jc7sJ+Q0nSFIqVgNHIVpJCuMkqaecIzMUhpWrWEv9z5v4qQjnJsoaauKMg9yDG+4Td
+ lgS3bsRvFynvD+VA2baA5BLmYftp+lWcVQLW8ANmCWBQEICNCHr4wVrJSdDyEL8xGaPT
+ lKhX6IGmuxjvUP8OiWb2kLQd0+y4smBK3zz+Irz9Rv2bG2DOtcB77sbtskhCpixTwFwL
+ 55nlxpBdwS07uBrewSxKZpsf4WAZvWsb7iURX6U/+FP3ESAdSKQ9b3KkL6V8/x3CL6dP
+ ZVqdCQ3DY8oY9c/R10uApiC0mW/I0RIMnFnD3T0CKrlDYgYNCVE7xA78WC9lLubxZqOG
+ dlhQ==
+X-Gm-Message-State: AFuF++k3PKXhhqC3kD9wWH0Vi0UYl2+tBB9TyPFOzJZ+us0xgvtwIz7t
+ HfggRVPud0fmFBIr4pOhPZ6mkZMVRoQn8ttdugWYIzjItoeo350XryWVUl657fecRWnsAd9xqfM
+ pFpkqJgSw5Hs6A+r1WuqKgl2683srEdcPx9W+DKZHa6hjgXo1gcwy2xNP4pc6S1PQ3GYv0lwDxd
+ o7a0n/3ypf7+ASM/b8INQ3N5BwERy1NZ88XQ==
+X-Gm-Gg: AYBFou3mNCCQ1cZybo3k94Kyk0F8cK+gqKqBeKTsKv+acidmORY6ryqsrOQpfkep1NC
+ QD7g4U5cjposAL2IW8mts7u7EV6dU8s8/DEO5sFBB2dBxaNJ3kgv+C8BGeN3UbiMSDrIGzrurMz
+ m3F+avUo3JepMss5xF6BesNi/r5rRF47q6RryTF1CLVb1DuGklFU/fjlri39VTbTDYw7ch3gHqG
+ cXCxL3HAL5wF8b2qCv4pQwbmCrtpk4BUQ5vOVOYjrYgljR/xZ3YwNvH8VC0e9grWHIfeWgeSTJy
+ sILsMf9fCCJel615+y2Nj6g2ucBOpqCawfda6/SnV8eMnsGsbQf7DLJ0xNWi0xCeyrKlsCfaDk0
+ NpyKt9L3hZ394u6A/07F69t0=
+X-Received: by 2002:a05:600d:6414:10b0:49c:fc6c:be16 with SMTP id
+ 5b1f17b1804b1-49e619c64cfmr24063085e9.28.1789117454756; 
+ Fri, 11 Sep 2026 02:04:14 -0700 (PDT)
+X-Received: by 2002:a05:600d:6414:10b0:49c:fc6c:be16 with SMTP id
+ 5b1f17b1804b1-49e619c64cfmr24062605e9.28.1789117454200; 
+ Fri, 11 Sep 2026 02:04:14 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32d3c7sm4344189f8f.10.2026.09.11.02.03.47
+ 5b1f17b1804b1-49e62227071sm31429585e9.3.2026.09.11.02.04.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:48 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:46 -0400
+ Fri, 11 Sep 2026 02:04:13 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:04:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- David Hildenbrand <david@kernel.org>, Cornelia Huck <cohuck@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- qemu-s390x@nongnu.org
-Subject: [PULL v2 63/75] hw/hotplug: Mark various HotplugHandlerClass
- variables as const
-Message-ID: <f4348d359cce7b84c1a755c3ff49f8ebd5fcaf79.1789117222.git.mst@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL v2 71/75] vhost-user: use skip_drain with
+ GET_VRING_BASE_SKIP_DRAIN message
+Message-ID: <226544a5fd4b4c40a45a318942cb998e1fa39e19.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -115,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,114 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-The HotplugHandlerClass pointers are only dereferenced, not updated.
+Wire up the skip_drain parameter introduced in the previous commit to
+the new GET_VRING_BASE_SKIP_DRAIN message. When skip_drain is set,
+send GET_VRING_BASE_SKIP_DRAIN instead of GET_VRING_BASE, instructing
+the back-end to suspend in-flight I/O immediately.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903230245.65601-3-philmd@oss.qualcomm.com>
+Message-ID: <20260803072853.2920007-4-dtalexundeer@yandex-team.ru>
 ---
- include/hw/core/qdev.h    | 2 +-
- hw/core/hotplug.c         | 8 ++++----
- hw/s390x/virtio-ccw-md.c  | 2 +-
- hw/virtio/virtio-md-pci.c | 2 +-
- system/qdev-monitor.c     | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ hw/virtio/vhost.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index f054a214fc..e4cb027ab3 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -1069,7 +1069,7 @@ static inline bool qbus_is_hotpluggable(BusState *bus)
-     bool ret = !!plug_handler;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 7294d3c42a..68a8e40481 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1521,7 +1521,11 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+     }
  
-     if (plug_handler) {
--        HotplugHandlerClass *hdc;
-+        const HotplugHandlerClass *hdc;
- 
-         hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
-         if (hdc->is_hotpluggable_bus) {
-diff --git a/hw/core/hotplug.c b/hw/core/hotplug.c
-index 68aabad8ae..00e80a67c8 100644
---- a/hw/core/hotplug.c
-+++ b/hw/core/hotplug.c
-@@ -17,7 +17,7 @@ void hotplug_handler_pre_plug(HotplugHandler *plug_handler,
-                               DeviceState *plugged_dev,
-                               Error **errp)
- {
--    HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
-+    const HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
- 
-     if (hdc->pre_plug) {
-         hdc->pre_plug(plug_handler, plugged_dev, errp);
-@@ -28,7 +28,7 @@ void hotplug_handler_plug(HotplugHandler *plug_handler,
-                           DeviceState *plugged_dev,
-                           Error **errp)
- {
--    HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
-+    const HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
- 
-     if (hdc->plug) {
-         hdc->plug(plug_handler, plugged_dev, errp);
-@@ -39,7 +39,7 @@ void hotplug_handler_unplug_request(HotplugHandler *plug_handler,
-                                     DeviceState *plugged_dev,
-                                     Error **errp)
- {
--    HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
-+    const HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
- 
-     if (hdc->unplug_request) {
-         hdc->unplug_request(plug_handler, plugged_dev, errp);
-@@ -50,7 +50,7 @@ void hotplug_handler_unplug(HotplugHandler *plug_handler,
-                             DeviceState *plugged_dev,
-                             Error **errp)
- {
--    HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
-+    const HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
- 
-     if (hdc->unplug) {
-         hdc->unplug(plug_handler, plugged_dev, errp);
-diff --git a/hw/s390x/virtio-ccw-md.c b/hw/s390x/virtio-ccw-md.c
-index 0370f58450..0b18b49bc4 100644
---- a/hw/s390x/virtio-ccw-md.c
-+++ b/hw/s390x/virtio-ccw-md.c
-@@ -73,7 +73,7 @@ void virtio_ccw_md_unplug_request(VirtIOMDCcw *vmd, MachineState *ms,
-     VirtIOMDCcwClass *vmdc = VIRTIO_MD_CCW_GET_CLASS(vmd);
-     DeviceState *dev = DEVICE(vmd);
-     HotplugHandler *bus_handler = qdev_get_bus_hotplug_handler(dev);
--    HotplugHandlerClass *hdc;
-+    const HotplugHandlerClass *hdc;
-     Error *local_err = NULL;
- 
-     if (!vmdc->unplug_request_check) {
-diff --git a/hw/virtio/virtio-md-pci.c b/hw/virtio/virtio-md-pci.c
-index 9278b32cf8..aa5b11c0f6 100644
---- a/hw/virtio/virtio-md-pci.c
-+++ b/hw/virtio/virtio-md-pci.c
-@@ -72,7 +72,7 @@ void virtio_md_pci_unplug_request(VirtIOMDPCI *vmd, MachineState *ms,
-     VirtIOMDPCIClass *vmdc = VIRTIO_MD_PCI_GET_CLASS(vmd);
-     DeviceState *dev = DEVICE(vmd);
-     HotplugHandler *bus_handler = qdev_get_bus_hotplug_handler(dev);
--    HotplugHandlerClass *hdc;
-+    const HotplugHandlerClass *hdc;
-     Error *local_err = NULL;
- 
-     if (!vmdc->unplug_request_check) {
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 5c87fda509..0c5502d45b 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -918,7 +918,7 @@ static DeviceState *find_device_state(const char *id, bool use_generic_error,
- void qdev_unplug(DeviceState *dev, Error **errp)
- {
-     HotplugHandler *hotplug_ctrl;
--    HotplugHandlerClass *hdc;
-+    const HotplugHandlerClass *hdc;
-     Error *local_err = NULL;
- 
-     if (!qdev_hotunplug_allowed(dev, errp)) {
+     if (!force) {
+-        r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
++        if (!skip_drain) {
++            r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
++        } else {
++            r = dev->vhost_ops->vhost_get_vring_base_skip_drain(dev, &state);
++        }
+         if (r < 0) {
+             VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
+         }
 -- 
 MST
 
