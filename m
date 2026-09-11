@@ -4,144 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F2AC88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 20:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306C2C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 20:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x586K-00079O-6e; Fri, 11 Sep 2026 16:44:00 -0400
+	id 1x58Dq-0002Cv-Oy; Fri, 11 Sep 2026 16:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x586I-000792-4N
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:43:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <paul@galbraiths.ca>)
+ id 1x58Do-0002Bq-O1
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:51:44 -0400
+Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x586G-000771-LN
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:43:57 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68BHWlwc1461965
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 20:43:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- bA6M78DnphziI4wrL2CbrdMurP2BD8Ikcl/OMT8KQ7I=; b=l4lWyV8c5ybjpsRP
- P2NZ298ziJng0Pf/I4uO6Idf6hkzFpNXlS9onMqCLBab5O7LLSR5r1tGgLRqW9j/
- mEXmMZVk6BXKcBVLK5cXA/FXNndeZJKmrq0gmDsG47EvaoeYxQN4iB/wPCT1Bfgi
- tlN4wrayHPbHvPenpQinViZ3r0lfT1sxBntF3EwbmQeen0stjEh8iqpFnCDpXLjf
- Zbi2gXaf1wND2oW5t6n+bWrXMTpW4XFJGc7ArlwbLRZkEd9kO2SESuuCEbKlXipT
- MjNXUkO+n/Pi1LG0BKD/jeyWTAZbRvRzIMRNyhQLz4zk4Os4mE2rqwRAiocjItbB
- Q9HkTQ==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gmp0dgpta-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 20:43:55 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-8633c0d7353so1720908b3a.3
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 13:43:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789159435; x=1789764235; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bA6M78DnphziI4wrL2CbrdMurP2BD8Ikcl/OMT8KQ7I=;
- b=Ire/N/2rvkWG3VmK6McJayZy77OVyjoAgMCspGRgLYsMpRLO14KMAYdYSVOtsfuyVq
- r1oQySTU8+IwVeYIjanamPMxHqEw/Wa6th1Bdbn/hXay4xZRc9uezFGVuqWREsyQcsG7
- MjEZbwyFk6dlClFo7LRh2hPPc4zhFLj5nlvNdkvBNQotEUMUK6TI7oABvcC7MMdzOivo
- HtByBDNgoR5xwdZQJtk+YHitsr5m6XUQ8/9i0T0fvhMo8UptESAnmiExgEn4iM7F+qUM
- 9hIy/G6oB0h8IhHoGB31PhjL4Da0Zd+omlMFDNg083tdQxNokgFGYq/HQQ8wuQCtSn7C
- Ed/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789159435; x=1789764235;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bA6M78DnphziI4wrL2CbrdMurP2BD8Ikcl/OMT8KQ7I=;
- b=hEkMjCz91lrnJhnd/LiT/emKhhzqwO2Rq+yqxTaAfaFImwK5n8XLGSVByIZVWPDn+N
- +Qnjc0rmT9rWffBog/QonVF6TYWZR9tMEf82ojTQoktvnXsEzkw4tj6Nqt2hyulIP7ym
- LFNauBz7y31BzU/D0dmVhVntxOB+2Dh3+GdHPpmUMo4kaaBEiU95nCbfpHl8dHSiwhfo
- 7altxfgBltfjkVKPddilYPCGu5Mwtu4bF0U9Jxf3QC/WoCc56r924QXw3wnANUhZjjaI
- aE6Za9rB8uvEkcj9O2ffTxyvlWDPoKp/7ZGLVbS22e+r1szCr1YQIVWKt0nwkCiGjT7m
- IV7w==
-X-Gm-Message-State: AFuF++l9wuAEf8soGBV1Gt9Iyoy/mlpM7+sqjyplznQuHLWZb0niJLXw
- dYO29W1GKrl3rKL0SyHw0WiQdBH8tk5AUYVHSBx66/51Y5iP7OWinozjFSsNxDISNW2JtLX1UdA
- Jknp2eiG2+jn+BzWncrew6d3XnCDKSK+BiA6hJmMFdBDlnMrlIyzPkEoODNVai6Udaw==
-X-Gm-Gg: AYBFou2ieSziyGTCdE45sNN41S1sRsonUcEcGydfcKaUKw3Jdldys1yBRG7YT3LGiMK
- 6pKDcZZyNOLTATpOwWde3grrRTE8XysUFXLCO6+86++4DYW1NFD/TOCc0fg0IARCvi+EyTb+cI3
- 56QPEjMEUthsl5Rs2KOSaXmA1EM6sOUcShg5xtc5B3fMMQw9ewDqw+dtYsY4TSFFfZcLussrfUs
- eGT5Y3fMFOgUWynUZuzl02f3T07pl809oE6r9/Y7A+NB+VhMWuU6O5TNP1REhWAvTdL9hEzt6wV
- 1OgGQPTZL4j7HCDH1eKBIK53BFmrUSJf/Cn13Oq8I9NsEs2wlkTi2Nwl6yeCky0ftygeOQ4MZCv
- rmlp8UWDQvBJK8gOtraQGMtprGiqBBFM+EiObCrf3342FLJFo
-X-Received: by 2002:a05:6a21:3a94:b0:3d3:ae1f:d7f4 with SMTP id
- adf61e73a8af0-3daed616ac5mr10748765637.20.1789159434625; 
- Fri, 11 Sep 2026 13:43:54 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3a94:b0:3d3:ae1f:d7f4 with SMTP id
- adf61e73a8af0-3daed616ac5mr10748737637.20.1789159434167; 
- Fri, 11 Sep 2026 13:43:54 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4fa50efsm9735743eec.28.2026.09.11.13.43.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 13:43:53 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- marco.liebel@oss.qualcomm.com
-Subject: [PATCH v2 6/6] tests/functional/hexagon: add test_hvx_context arch
- test
-Date: Fri, 11 Sep 2026 13:43:34 -0700
-Message-Id: <20260911204334.1264922-7-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260911204334.1264922-1-brian.cain@oss.qualcomm.com>
-References: <20260911204334.1264922-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <paul@galbraiths.ca>)
+ id 1x58Dl-0008Oc-OF
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:51:44 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id 5E734EC00C5;
+ Fri, 11 Sep 2026 15:02:36 -0400 (EDT)
+Received: from phl-imap-06 ([10.202.2.83])
+ by phl-compute-05.internal (MEProxy); Fri, 11 Sep 2026 15:02:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=galbraiths.ca;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1789153356; x=1789239756; bh=Mtmn5trbF41sWc5TxKdyhIVssohrwaIG
+ YPYFBr1WPII=; b=bIJAca9XWBJIn3Izuw0iJU2kOGRzefGthQBdUeGimpqU6/Ta
+ MsA8BinX2DAfQvDltnkypU5ZHiF+layyJw2kfjgU5LuznBsX/PE1zyjQm4h2ki1f
+ aKIbOj84M/lEQE+FpbEDq0hGnJZlJwS6CDQyLFzDxUjjf5ILT1sHtX1ew04A8kvj
+ VrtSLJsdBDI3QeBCqsIemJquU69UyXAATz7uv5aWS+5iD/PoLvmotjTPxkoP5yCS
+ sUPvJWFBryTNXz+3cDEbepJ4vL8MRRa8ST2TFUb8VTcax5I9LTYFjpJFIt5+fYfa
+ uhxPrwvWz8W3a3TQ1luYa7hxc9807R7QAZmB9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789153356; x=
+ 1789239756; bh=Mtmn5trbF41sWc5TxKdyhIVssohrwaIGYPYFBr1WPII=; b=V
+ b+6qIW+iLcw2DOMGX6/EdBT/8JWmCXU5tug6O94Yi4JOWubUJ+A/4zNSkwfZKRzg
+ j6fD4cIddJPmBiGCZ9jijxuCd+ZN7dHb9EPDystMGJXhEnPK6wQXce77Oav1Ksb5
+ jLrrILm5FlLrO8KWw7WwJ3U/s2YpdMz+oYOX3jcmovfMXEgBXLSOqcXM2bDys+tW
+ ZyjaE/8JbVq5M6pwNx8SZQqOHptO/ueVLHUfOAmdEhQDrk5U1qVY7Iyjhqs+fVu7
+ vJn6475y55bT05N+AtYJ1AuQdNKMP3ud5Xz7nFne1aVUWBuIi3EmNnNkMM5ahwh1
+ /qn1LK8CwMJ+B51uG2xcw==
+X-ME-Sender: <xms:TFCkajImQ-6tkDzb_teqLtXeIRp940JZ54tRkkLr26ODYCkv0aagfw>
+ <xme:TFCkah8DjzQ0ma82yTuMift1qlMxLSmIE5-YFPc0AptdDiKJCPNM4vCGf7R1A3D4D
+ fTMWAxRcCPfajkse9laLoebdZzlv_ysH3bZGi8dUcdaLZ1Crqw1NWXi>
+X-ME-Proxy-Cause: dmFkZTFCXhTt1S6uVXg9Li4WnGM1Gnz39/1VUNiDr2Ism1ZTFqBt3ZaIl+a4unjxVlpQU+
+ GGZGrLXcJEV8zRj4s8t8AAwwxVkqE5Syi33ijui92Ir9y03VAms90kpDApkfrAVkuIwO+d
+ YH6Zs3mrGG1bw7ydv6huAK3lutEowZtFEN+w/9gH+S8krzpK4k9v5Uf4CBO2xYHCB1+USk
+ jzZReJOi6jnijad4D3UFQTv58556GIKpsY0pNOV6n1jd6SDFhw39uA6lyBBBLaC7F81nAI
+ jli0TlBB8RmVWDe9X88oiAclh13OkhnCG0zRmXF3zlcOyp/Gsn95wumtQDJ4hcUXv45pid
+ OTV9rvzBKQzvD9n+PWYCeVVLcj2MeIIn/9LWrEmxPalG+YvJRq9CYAIu5jrRXiXKaImTzt
+ wfEma14s32THk8NcoaFASEClj2B6WcoyR9HTAPjcgY74kjmhrTu4WiI5e7XfnaKBF0ubNv
+ GWg3RWKQQ6FpxHCXHgQR9obsRP8z6TRRp3TPEA7PF7W/usqJQUbjj/Oqm+2/94edY6Pzfv
+ 303p96N0+b2dWq96pnRK0JafgCH1q/eUZLBG53AVlqMrZ0EJ8ZUjze1pxw+LCE8rI4TLEo
+ jNQ25i5nZ4MheLKb32B0mG7KWRaYBNvY0RlD36cQYg+kZRMN6OX53mFbVGQw
+X-ME-Proxy: <xmx:TFCkatrwbywkIfcpq2aprByYHYTgvI0Q8t0t3hFrvGf9Xo9yVrnR8w>
+ <xmx:TFCkanFg10RsjCbSF5EAz_Tpo1qUwPbI66DayRYt2_qc5aUlF3gdsw>
+ <xmx:TFCkanmeA-vd3BfRyVCtfY0kd7UxNEFgvp8vZCje_8ywOvc_Y1fAWQ>
+ <xmx:TFCkaimzQT_a6bTZRxm6PN-B6vay44OU9WtF-JpU9dQmnWY246CEag>
+ <xmx:TFCkapDp4qcpa2XC24Z05e2IcUZvNMgaWAtkW_60o12qeE2_RwFdMyNN>
+Feedback-ID: i00314697:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 2C0C4240009A; Fri, 11 Sep 2026 15:02:36 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Authority-Analysis: v=2.4 cv=U7EHnuru c=1 sm=1 tr=0 ts=6aa4680b cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=bgrJZOaH1VlBtLBOFfcA:9 a=QEXdDO2ut3YA:10
- a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: ybRPZD3gDepdDXONVgVoLttCzI5U5He_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDI5MiBTYWx0ZWRfXzlJWshaKVpDz
- xHXu67vzMUxV97GorkQxko9KvkYl5Qjy0rlJZdp+ZJN4B4MaJ+wmRzvnVlwoz6z35fmv5oTt06V
- cB3fJHK0yqRGMVuhEJneNjn6LP06af4=
-X-Proofpoint-GUID: ybRPZD3gDepdDXONVgVoLttCzI5U5He_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDI5MiBTYWx0ZWRfX70E9Ziq6xO3P
- 9mXsujqDH42TFRT4LbaljcXXV4Z3HoVIYMZXM8S89eoYRqrixT443gDRl2fhoYIBt58zFDngQ4Q
- rvOiOriZbQ8mXDy5G75nx2qYstwm9erxSYL7OyaTcckDhgvitRIRahhhHVDAKxCmhsKbdUQSzZ+
- ERsYo2ZY9DJUsyrrcr+A46UIhYL9QuXnH5PhGxJf2LbJfPdvvee0guUKrKAlihqJmjhUYBHovJR
- QPgrOTwhcAd8YA2DxMi7o/wUJ9vYt8eWpqCYQ7mbG6irNyQlEkadhdU/FsPHw5QGWxwGpo0DLtD
- BUsTPsKyyzBTrRvnf0qnyRFFVBH7XIxMiDxShRgyg2yjcKGwC2ndn0Qqeuz+kr3ezq8zPsk3BgF
- O1niTlGGW/nzr2h1N1cYbWyFIrnSUfyLCLiF4Klyet6qFTuW/AIZUIziB8WQrxGZSsz52jCzJjj
- ZHOAgzRdBP72q5/rE2A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-11_06,2026-09-11_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0 bulkscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609110292
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Date: Fri, 11 Sep 2026 15:02:15 -0400
+From: "Paul Galbraith" <paul@galbraiths.ca>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org
+Message-Id: <4251704f-a202-44d1-890d-f7a2fe89ebb1@app.fastmail.com>
+In-Reply-To: <b22ce8dc-023b-4de2-b821-0624deb120bd@app.fastmail.com>
+References: <6c5fca8e-b9f4-48a0-a070-42f10d1f942b@app.fastmail.com>
+ <b22ce8dc-023b-4de2-b821-0624deb120bd@app.fastmail.com>
+Subject: Re: [PATCH] target/i386/tcg: fix EIP truncation for wrapping 16-bit
+ near branches
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.145; envelope-from=paul@galbraiths.ca;
+ helo=fout-a2-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,22 +108,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UGFzc2VzIG5vdyB0aGF0IEhWWCByYWlzZXMgTk9fQ09QUk9DX0VOQUJMRSB3aGVuIFNTUjpYRSBp
-cyBjbGVhci4KClJldmlld2VkLWJ5OiBNYXJjbyBMaWViZWwgPG1hcmNvLmxpZWJlbEBvc3MucXVh
-bGNvbW0uY29tPgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFs
-Y29tbS5jb20+Ci0tLQogdGVzdHMvZnVuY3Rpb25hbC9oZXhhZ29uL3Rlc3RfYXJjaF90ZXN0cy5w
-eSB8IDcgKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdp
-dCBhL3Rlc3RzL2Z1bmN0aW9uYWwvaGV4YWdvbi90ZXN0X2FyY2hfdGVzdHMucHkgYi90ZXN0cy9m
-dW5jdGlvbmFsL2hleGFnb24vdGVzdF9hcmNoX3Rlc3RzLnB5CmluZGV4IDVkN2NlNDg3NDM2Li5m
-NzNjMWY0MmJmMCAxMDA3NTUKLS0tIGEvdGVzdHMvZnVuY3Rpb25hbC9oZXhhZ29uL3Rlc3RfYXJj
-aF90ZXN0cy5weQorKysgYi90ZXN0cy9mdW5jdGlvbmFsL2hleGFnb24vdGVzdF9hcmNoX3Rlc3Rz
-LnB5CkBAIC05OCw2ICs5OCwxMyBAQCBkZWYgdGVzdF91c2VyX21vZGUoc2VsZikgLT4gTm9uZToK
-ICAgICAgICAgIiIiCiAgICAgICAgIHNlbGYucnVuX3VhcnRfdGVzdCgidGVzdF91c2VyX21vZGUi
-KQogCisgICAgZGVmIHRlc3RfaHZ4X2NvbnRleHQoc2VsZikgLT4gTm9uZToKKyAgICAgICAgIiIi
-VGVzdHMgdGhlIEhWWCBjb3Byb2Nlc3NvciBjb250ZXh0OiBTU1IgWEEgY29udGV4dCBzZWxlY3Rp
-b24KKyAgICAgICAgYW5kIGlzb2xhdGlvbiwgdnNwbGF0L3N0b3JlLCBhbmQgdGhlIE5PX0NPUFJP
-Q19FTkFCTEUgZXhjZXB0aW9uCisgICAgICAgIHJhaXNlZCB3aGVuIFNTUjpYRSBpcyBjbGVhci4K
-KyAgICAgICAgIiIiCisgICAgICAgIHNlbGYucnVuX3VhcnRfdGVzdCgidGVzdF9odnhfY29udGV4
-dCIpCisKIAogaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgICBRZW11U3lzdGVtVGVzdC5t
-YWluKCkKLS0gCjIuMzQuMQoK
+v2 is out, now a two-patch series with the regression test split out:
+
+https://lore.kernel.org/qemu-devel/20260910180517.97-1-paul@galbraiths.ca/
+
+Paul
+
+On Thu, 10 Sep 2026, at 13:13, Paul Galbraith wrote:
+> Ping on this one.
+> 
+> Short version: in a 16-bit code segment, a near CALL or JMP rel16 that only
+> reaches its target by wrapping EIP through 0xFFFF runs with EIP left
+> untruncated. The SDM has the 16-bit form truncate EIP to 16 bits, so in my
+> test the branch should land at CS:0x0020, and instead execution carries on at
+> EIP 0x10020.
+> 
+> It's fiddly to hit. You need all four of these at once:
+> 
+>   - a 16-bit code segment, D/B clear, so it really is a rel16 and EIP really
+>     is masked to 16 bits
+> 
+>   - a cs_base that isn't page aligned. If it is aligned, the wrap always
+>     crosses a page boundary in the linear address too, and the existing
+>     same-page test happens to give the right answer
+> 
+>   - the untruncated linear target landing in the same guest page as the start
+>     of the TB, which is what makes gen_jmp_rel() skip the masking
+> 
+>   - a CF_PCREL translation. It goes away under -d nochain and under
+>     -accel tcg,one-insn-per-tb=on, both of which set CF_NO_GOTO_TB and force
+>     the masking back on
+> 
+> One thing I got wrong in v1: it dropped the data16-in-code32 guard on the
+> assumption that the new condition subsumed it. It doesn't. That guard is
+> there for a different case, EIP starting out above the mask, so v1 would have
+> swapped one problem for another. v2 does something narrower and leaves the
+> guard where it is.
+> 
+> The test is the same test with the same geometry, just split out into its own
+> patch and wired into tests/tcg/i386/system/meson.build now that the tcg tests
+> meson rework has landed.
+> 
+> I'll send v2 as a new thread shortly and link it back here.
+> 
+> Paul
+> 
 
