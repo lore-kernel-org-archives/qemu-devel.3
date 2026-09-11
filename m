@@ -4,65 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5202C88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3200C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 12:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x50Kr-0004Ek-LC; Fri, 11 Sep 2026 08:26:29 -0400
+	id 1x50MA-0007E6-2y; Fri, 11 Sep 2026 08:27:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x50Kn-000462-UF; Fri, 11 Sep 2026 08:26:26 -0400
-Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x50Ki-0006Cn-Qy; Fri, 11 Sep 2026 08:26:25 -0400
-Received: from [172.21.96.1] (unknown [124.16.137.194])
- by APP-05 (Coremail) with SMTP id zQCowABHtD5k86NqyHDqBw--.17498S5;
- Fri, 11 Sep 2026 20:26:13 +0800 (CST)
-Message-ID: <53f8aa792aebae30eb18e018e8ad514c9ad59bed.1789125266.git.wangyang25@otcaix.iscas.ac.cn>
-In-Reply-To: <cover.1789125266.git.wangyang25@otcaix.iscas.ac.cn>
-References: <cover.1789125266.git.wangyang25@otcaix.iscas.ac.cn>
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Date: Fri, 4 Sep 2026 21:49:11 +0800
-Subject: [PATCH v4 3/5] target/riscv: require read permission for HLVX accesses
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x50M6-0007Cd-L8
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:27:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x50M4-0006wd-0t
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 08:27:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789129663;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=XlcARgbn1CiQcB0o0fK9M5BER6hULT+d1L0vclP963s=;
+ b=W9wB/zAHHJm8MPsFNrqYIvJ/NHXGh9weFaon4S/6SzjeHV9BwC7w3q/+AEVlAhFkPkuvkb
+ P01JOGN0XXaLwDrsjVjXiynI8MUSKGNZnvVo0VMLjraC8yw0Sfi/+DgfXbUTr+KMvAY8DH
+ ni8mz2d1hjN1W8evtuhpg5HoWDp+//Y=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-4N8g1GnDMfSfJmkRMA1i1Q-1; Fri,
+ 11 Sep 2026 08:27:37 -0400
+X-MC-Unique: 4N8g1GnDMfSfJmkRMA1i1Q-1
+X-Mimecast-MFC-AGG-ID: 4N8g1GnDMfSfJmkRMA1i1Q_1789129654
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BAB3C180135D; Fri, 11 Sep 2026 12:27:32 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 43D0C1800351; Fri, 11 Sep 2026 12:27:29 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 00/10] monitor/hmp: replace MonitorDef with GDB registers
+Date: Fri, 11 Sep 2026 16:27:23 +0400
+Message-Id: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMSQ5AQBBA0atIrXVSxHwVsaAVysJQrYWIu2ssX
+ /LzLzAkTAYK7wKhnQ3Pk0Pge6CHeupJcesMIYYJ5gGq1ZKcSqhXGeo2znUXpZiC6xehjo/vVVa
+ /jW1G0ts7gPt+AN9B1yRtAAAA
+X-Change-ID: 20260910-query-reg-80cd59cf4707
 To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>, qemu-riscv@nongnu.org
-X-CM-TRANSID: zQCowABHtD5k86NqyHDqBw--.17498S5
-X-Coremail-Antispam: 1UD129KBjvJXoW3Jw4fCrWxZr13uw47Aw1xuFg_yoW7Zr1Upr
- WrCrZIkw4kKFZrXayxtF1jyF15CF43GFWjg3Z7WwsY93Wav3yru3WkKa42gFs8GFWkWw1j
- ga1qyF1jk3WjqFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUQab7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M280x2IEY4vE77IFxV
- WkZVCq3wA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2x26xkF7I0E14v26ryj6s0D
- M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr
- 0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8
- JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJwAac4AC62xK8xCEY4vEwIxC4w
- AS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IY
- x2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4
- x0Y48IcVAKI48JMxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW5JwCF04k20xvY0x0E
- wIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E74
- 80Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0
- I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04
- k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7Cj
- xVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07bwcTdUUUUU=
-X-Originating-IP: [124.16.137.194]
-X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.25;
- envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3574;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=qZ1dqLcShsISlQD6dN9cGrh8hDoFhe6+5Lj9o/mxndc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqo/OuSy80S0Y21xiCfmuEtTgG8xJteL7Fkvzyj
+ XDvO6gA9WuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqPzrgAKCRDa6OEJdZac
+ 5SziD/4vfwHftLDD/YED8meT5f9DLnXNcgw6YvDfWPuEJQPPJPgMAaZ8UfrDIIgbbp1PEo1u7K3
+ pr+RRBWYRviAmH+jCMbR/tGT8R7B/6X7irM5p7nsgOeYQrdHo64X6NMnkgM5/morjtrJO0RbuMS
+ 9JyvCL0lt5jHVdvCzb1VtbGMoxbMscr2DjNOPuixoCMimcou/qSoS3IyBL40gCxLgFpuN59YJso
+ eiHegUzMyZwhyZulJUQRY2yxIHtbglZF6hUzvYOZ+GMyDlQNCmFJST0yblwymoVabK5cvTzLcV5
+ 8aepoKb+k4zmGMr9Bm/tCWmnH2f5Zuunt0n0VqmT/av4HHaKe7YsoNBHCJZ2dLbtYNHjghPfulO
+ e46o7qgXbH3MbnYlG9/0SGtpLefjtBAnOPUsPhiWt8DEDV+jECOCPPbfoKpk3f3nEynaQ8iW7Ux
+ lhh9/SZtMpCQV/M9ykdJ+5EGyo+Tcg2JqSrdWjUZQWy1REgBYKyOszrda1yvxr8Szr/ZCedTUBD
+ GgNacrp203vnxhTKJqNNCh0W/6UHvuod34f9z0VEfC/JnGpvdDVWnF5fqrmILv5pXqMMxfkop02
+ vlcQqAT0A9fxTGh8gtXDMp/RAae86Udf+0UTS1OasuN0BLEWTM+4wBHzi9hGWuJcR5E1sSJMbSc
+ kf8W976wJwLZO1A==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,152 +122,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HLVX address translation uses execute permission, but the final PMP
-check on the supervisor physical address must also require read
-permission. Carry the HLVX operation through the MMU index and include
-PMP_READ in the final check so execute-only pages fault.
+Hi,
 
-Tested: RV32 system-mode RWX, HLV, HLVX.HU, and HLVX.WU PMP
-test cases.
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4414
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+HMP monitor supports printing $register expression. The lookup
+was done via GDB stub registers, and supplementary MonitorDef
+HMP-specific tables.
+
+Migrate HMP registers to use the GDB infrastructure and remove the
+legacy HMP MonitorDef. Use a "qemu-debug" register group, as they are
+aliases or synthetic registers, but gdb doesn't seem to care.
+
+Known behavioural changes on RISC-V: CSR lookup is now case-sensitive
+and vector registers now report "unkown register" instead of a
+target-specific message ("Unable to print the value of vector vreg 'v0'
+from this API")
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/internals.h      |  6 ++++++
- target/riscv/tcg/cpu_helper.c | 24 ++++++++++++++++--------
- target/riscv/tcg/op_helper.c  | 11 +++++------
- 3 files changed, 27 insertions(+), 14 deletions(-)
+Marc-André Lureau (10):
+      hmp: don't crash on invalid register
+      gdbstub: fix next register base after register gaps
+      gdbstub: set feature->base_reg for dynamic features
+      target/i386: expose segment limits via GDB
+      monitor/hmp: add CPUClass::get_pc fallback for HMP $pc
+      target/m68k: expose system registers via GDB
+      target/sparc64: expose system registers via GDB
+      target/riscv: bypass smstateen check in debugger mode
+      target/riscv: expose register aliases via GDB
+      monitor/hmp: remove legacy MonitorDef infrastructure
 
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 5d84e4de96..832c6406bc 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -42,6 +42,7 @@
- #define MMUIdx_M            3
- #define MMU_2STAGE_BIT      (1 << 2)
- #define MMU_IDX_SS_WRITE    (1 << 3)
-+#define MMU_IDX_HLVX        (1 << 4)
- 
- static inline privilege_mode_t mmuidx_priv(int mmu_idx)
- {
-@@ -62,6 +63,11 @@ static inline bool mmuidx_2stage(int mmu_idx)
-     return mmu_idx & MMU_2STAGE_BIT;
- }
- 
-+static inline bool mmuidx_hlvx(int mmu_idx)
-+{
-+    return mmu_idx & MMU_IDX_HLVX;
-+}
-+
- /*
-  * Return the endianness for the current privilege
-  * level, based on the MSTATUS MBE/SBE/UBE bits.
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..ad41de9d06 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -905,6 +905,7 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
-  */
- static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-                                     int size, MMUAccessType access_type,
-+                                    pmp_priv_t extra_privs,
-                                     privilege_mode_t mode)
- {
-     pmp_priv_t pmp_priv;
-@@ -915,7 +916,8 @@ static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-         return TRANSLATE_SUCCESS;
-     }
- 
--    pmp_has_privs = pmp_hart_has_privs(env, addr, size, 1 << access_type,
-+    pmp_has_privs = pmp_hart_has_privs(env, addr, size,
-+                                       (1 << access_type) | extra_privs,
-                                        &pmp_priv, mode);
-     if (!pmp_has_privs) {
-         *prot = 0;
-@@ -1177,7 +1179,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         int pmp_prot;
-         int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-                                                sxlen_bytes,
--                                               MMU_DATA_LOAD, PRV_S);
-+                                               MMU_DATA_LOAD, 0, PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-         }
-@@ -1425,7 +1427,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         }
- 
-         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
--                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+                                           sxlen_bytes, MMU_DATA_STORE, 0,
-+                                           PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-         }
-@@ -1711,7 +1714,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-             if (ret == TRANSLATE_SUCCESS) {
-                 ret = get_physical_address_pmp(env, &prot_pmp, pa,
--                                               size, access_type, mode);
-+                                               size, access_type,
-+                                               mmuidx_hlvx(mmu_idx) ?
-+                                               PMP_READ : 0, mode);
-                 tlb_size = pmp_get_tlb_size(env, pa);
- 
-                 qemu_log_mask(CPU_LOG_MMU,
-@@ -1746,7 +1751,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-         if (ret == TRANSLATE_SUCCESS) {
-             ret = get_physical_address_pmp(env, &prot_pmp, pa,
--                                           size, access_type, mode);
-+                                           size, access_type,
-+                                           mmuidx_hlvx(mmu_idx) ?
-+                                           PMP_READ : 0, mode);
-             tlb_size = pmp_get_tlb_size(env, pa);
- 
-             qemu_log_mask(CPU_LOG_MMU,
-@@ -1786,9 +1793,10 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-                              wp_access, retaddr);
- 
--        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
--                            first_stage_error, two_stage_lookup,
--                            two_stage_indirect_error);
-+        raise_mmu_exception(env, address,
-+                            mmuidx_hlvx(mmu_idx) ? MMU_DATA_LOAD : access_type,
-+                            pmp_pma_violation, first_stage_error,
-+                            two_stage_lookup, two_stage_indirect_error);
-         cpu_loop_exit_restore(cs, retaddr);
-     }
- 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 3e94005d2b..060d97ee9c 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -650,7 +650,7 @@ static int check_access_hlsv(CPURISCVState *env, bool x, uintptr_t ra)
-     if (!x && mode == PRV_S && get_field(env->vsstatus, MSTATUS_SUM)) {
-         mode = MMUIdx_S_SUM;
-     }
--    return mode | MMU_2STAGE_BIT;
-+    return mode | MMU_2STAGE_BIT | (x ? MMU_IDX_HLVX : 0);
- }
- 
- target_ulong helper_hyp_hlv_bu(CPURISCVState *env, target_ulong addr)
-@@ -726,11 +726,10 @@ void helper_hyp_hsv_d(CPURISCVState *env, target_ulong addr, target_ulong val)
- }
- 
- /*
-- * TODO: These implementations are not quite correct.  They perform the
-- * access using execute permission just fine, but the final PMP check
-- * is supposed to have read permission as well.  Without replicating
-- * a fair fraction of cputlb.c, fixing this requires adding new mmu_idx
-- * which would imply that exact check in tlb_fill.
-+ * HLVX accesses are translated with execute permission (first stage),
-+ * but the final PMP check on the supervisor physical address must
-+ * require read permission as well.  The MMU_IDX_HLVX mmu_idx bit set
-+ * by check_access_hlsv() makes riscv_cpu_tlb_fill() enforce this.
-  */
- target_ulong helper_hyp_hlvx_hu(CPURISCVState *env, target_ulong addr)
- {
--- 
-2.55.0.windows.2
+ configs/targets/i386-softmmu.mak          |   2 +-
+ configs/targets/m68k-softmmu.mak          |   2 +-
+ configs/targets/riscv32-linux-user.mak    |   2 +-
+ configs/targets/riscv32-softmmu.mak       |   2 +-
+ configs/targets/riscv64-bsd-user.mak      |   2 +-
+ configs/targets/riscv64-linux-user.mak    |   2 +-
+ configs/targets/riscv64-softmmu.mak       |   2 +-
+ configs/targets/sparc64-softmmu.mak       |   2 +-
+ configs/targets/x86_64-softmmu.mak        |   2 +-
+ gdbstub/gdb-xml/i386-segments.xml         |  14 +++
+ gdbstub/gdb-xml/m68k-system.xml           |  32 +++++++
+ gdbstub/gdb-xml/riscv-32bit-alias.xml     | 105 ++++++++++++++++++++++
+ gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml |  40 +++++++++
+ gdbstub/gdb-xml/riscv-64bit-alias.xml     | 105 ++++++++++++++++++++++
+ gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml |  46 ++++++++++
+ gdbstub/gdb-xml/sparc64-system.xml        |  22 +++++
+ gdbstub/gdbstub.c                         |  14 +--
+ include/hw/core/cpu.h                     |   2 +-
+ include/hw/core/sysemu-cpu-ops.h          |  16 ----
+ include/monitor/hmp.h                     |   6 --
+ include/qemu/typedefs.h                   |   1 -
+ monitor/hmp.c                             |  52 ++---------
+ target/arm/gdbstub.c                      |   8 +-
+ target/arm/gdbstub64.c                    |  10 ++-
+ target/i386/cpu.c                         |  32 -------
+ target/i386/gdbstub.c                     |  24 +++++
+ target/m68k/cpu.c                         |  22 -----
+ target/m68k/helper.c                      |  47 ++++++++++
+ target/ppc/gdbstub.c                      |   2 +-
+ target/riscv/cpu.c                        |   1 -
+ target/riscv/gdbstub.c                    |  52 ++++++++++-
+ target/riscv/internals.h                  |   3 -
+ target/riscv/monitor.c                    | 140 ------------------------------
+ target/riscv/tcg/csr.c                    |   3 +-
+ target/sparc/cpu.c                        |  19 ----
+ target/sparc/gdbstub.c                    |  38 ++++++++
+ target/xtensa/cpu.c                       |   2 +-
+ 37 files changed, 562 insertions(+), 314 deletions(-)
+---
+base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
+change-id: 20260910-query-reg-80cd59cf4707
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
