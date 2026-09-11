@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED7CC88E56
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE53C88E53
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 20:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x57tR-0001K7-LQ; Fri, 11 Sep 2026 16:30:41 -0400
+	id 1x57tX-0001M9-Fk; Fri, 11 Sep 2026 16:30:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x57t7-0001Ir-8V
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:30:26 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x57tR-0001Ka-Kt
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:30:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x57t3-000536-5I
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:30:19 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x57tE-000556-Q8
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 16:30:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789158615;
+ s=mimecast20190719; t=1789158627;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/s/xpATFq9wq1tWXIjSVgZ0DSXchPc5xRfHHA7grfeE=;
- b=cQSZt9n6hXNwxmsNTp8Iu2m2t9YXtu6Xwub4PP5/ycweX5MSU71d7nE/pNzt6us5sPeU9E
- hVX51lpAvQVYBnSbZeFIUHe5ZS2pqwMEycKi3duDPg7rYfdVBY+fmJWArAGcF1FO+y79U5
- Gf9lyuo8JaOrFbooz24on2Df95BtKM4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zmDWgqMA466KBmRXKNBu7VpdocFww0XxxuHkKsNs8Aw=;
+ b=Aqc3vpbWI9dhS9N/rBxiFBEm3kySygw63kQyohpNj00l+2S8cDcw7HoELZ1zpjcwDdmPk4
+ 9KjCeEBe47/c2gCv80gbtJ1YAvdBvilSCwRbf2uR3kYrJ6ItLe9Zxq/QOls7MyKm9LK1sT
+ pKFvOeIpUNgP9bjLAxYlRCXVuZ0onA4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-IPo6NDagM5SaWBBjus5VPg-1; Fri,
- 11 Sep 2026 16:30:11 -0400
-X-MC-Unique: IPo6NDagM5SaWBBjus5VPg-1
-X-Mimecast-MFC-AGG-ID: IPo6NDagM5SaWBBjus5VPg_1789158610
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-uttjgL19NS-MIlTSVF1B5w-1; Fri,
+ 11 Sep 2026 16:30:23 -0400
+X-MC-Unique: uttjgL19NS-MIlTSVF1B5w-1
+X-Mimecast-MFC-AGG-ID: uttjgL19NS-MIlTSVF1B5w_1789158622
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 273721953958; Fri, 11 Sep 2026 20:30:09 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8109E1954AC8; Fri, 11 Sep 2026 20:30:21 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D70A041B; Fri, 11 Sep 2026 20:30:03 +0000 (UTC)
+ id 3CCDD41B; Fri, 11 Sep 2026 20:30:16 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
@@ -58,12 +59,13 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH 0/9] qapi: convert/split remaining QAPI/QMP intro sections
-Date: Fri, 11 Sep 2026 16:29:53 -0400
-Message-ID: <20260911203002.305316-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 2/9] qapi: convert multi-paragraph intros (commands)
+Date: Fri, 11 Sep 2026 16:29:55 -0400
+Message-ID: <20260911203002.305316-3-jsnow@redhat.com>
+In-Reply-To: <20260911203002.305316-1-jsnow@redhat.com>
+References: <20260911203002.305316-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,68 +92,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Give or take any that snuck in during this conversion marathon, this=0D
-should be the rest - and the trickiest ones that involve multiple=0D
-paragraphs and decisions over where exactly to place the=0D
-split. Currently there are no prose rewrites, but it is not out of the=0D
-question that we will require some after review.=0D
-=0D
-If you are a non-QAPI maintainer, the TL:DR here is:=0D
-    Take a look at what is being indented here and what is=0D
-    not. Anything that gets indented is text that is not eligible for=0D
-    inlining: that is, the intro text is not copied into command/event=0D
-    documentation to replace "The members of ..." placeholders in our=0D
-    generated documentation.=0D
-=0D
-    If any text that you believe is important for end users to=0D
-    understand is in the indented section after these patches, please=0D
-    review and propose a different prose split.=0D
-=0D
-    (More info: The intro text is not guaranteed to be dropped from=0D
-    generated docs. For example, if a struct is used as a type for an=0D
-    argument in its own right, it is guaranteed to be included in the=0D
-    generated documentation. It is also always included for commands,=0D
-    events, and enums. It is only for structs which are *only* ever=0D
-    used as command/event arguments or as a branch type where this=0D
-    text is at risk of not being reproduced at all in the output=0D
-    documentation.)=0D
-=0D
-John Snow (9):=0D
-  qapi: convert remaining simple intros for block-export.json=0D
-  qapi: convert multi-paragraph intros (commands)=0D
-  qapi: convert multi-paragraph intros (enums)=0D
-  qapi: convert multi-paragraph intros (structs)=0D
-  qapi: split intro sections for commands=0D
-  qapi: split intro sections for events=0D
-  qapi: split intro sections for enums=0D
-  qapi: split intro sections for data structs=0D
-  qapi: split intro sections for inlinable structs=0D
-=0D
- qapi/acpi.json          |   3 +-=0D
- qapi/block-core.json    | 130 ++++++++++++++++++----------------------=0D
- qapi/block-export.json  |  27 ++++-----=0D
- qapi/block.json         |  71 +++++++++++-----------=0D
- qapi/compat.json        |   3 +-=0D
- qapi/control.json       |   3 +-=0D
- qapi/crypto.json        |   3 +-=0D
- qapi/introspect.json    |  16 ++---=0D
- qapi/job.json           |  43 ++++++-------=0D
- qapi/machine-s390x.json |   3 +-=0D
- qapi/machine.json       |  98 +++++++++++++++---------------=0D
- qapi/migration.json     |  18 +++---=0D
- qapi/misc-arm.json      |   9 ++-=0D
- qapi/misc-i386.json     |  22 +++----=0D
- qapi/misc.json          |  18 +++---=0D
- qapi/net.json           |  37 +++++-------=0D
- qapi/qdev.json          |  14 ++---=0D
- qapi/qom.json           |  27 ++++-----=0D
- qapi/stats.json         |   5 +-=0D
- qapi/transaction.json   |   6 +-=0D
- qapi/ui.json            |   8 +--=0D
- 21 files changed, 253 insertions(+), 311 deletions(-)=0D
-=0D
--- =0D
-2.55.0=0D
-=0D
+This patch converts some slightly-non-trivial intros with more than
+one paragraph, but doesn't create any new intro/details splits.
+
+Review notes: Some of these possibly could be split, but as they are commands
+(not eligible as an inlining source) and the additional information in
+the intro is not terribly long, I opted to leave them alone instead of
+laboring on prose rewrites.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ qapi/block-core.json | 49 +++++++++++++++++++++-----------------------
+ qapi/block.json      | 29 +++++++++++++-------------
+ qapi/migration.json  |  9 ++++----
+ qapi/misc-arm.json   |  9 ++++----
+ qapi/misc.json       | 13 ++++++------
+ qapi/qdev.json       | 14 ++++++-------
+ 6 files changed, 58 insertions(+), 65 deletions(-)
+
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 1ca147285e7..c505369aeb2 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -1772,13 +1772,12 @@
+ 
+ ##
+ # @blockdev-snapshot:
++#     Takes a snapshot of a block device.
+ #
+-# Takes a snapshot of a block device.
+-#
+-# Take a snapshot, by installing 'node' as the backing image of
+-# 'overlay'.  Additionally, if 'node' is associated with a block
+-# device, the block device changes to using 'overlay' as its new
+-# active image.
++#     Take a snapshot, by installing 'node' as the backing image of
++#     'overlay'.  Additionally, if 'node' is associated with a block
++#     device, the block device changes to using 'overlay' as its new
++#     active image.
+ #
+ # Features:
+ #
+@@ -2471,15 +2470,15 @@
+ ##
+ # @block-dirty-bitmap-merge:
+ #
+-# Merge dirty bitmaps listed in @bitmaps to the @target dirty bitmap.
+-# Dirty bitmaps in @bitmaps will be unchanged, except if it also
+-# appears as the @target bitmap.  Any bits already set in @target will
+-# still be set after the merge, i.e., this operation does not clear
+-# the target.  On error, @target is unchanged.
++#     Merge dirty bitmaps listed in @bitmaps to the @target dirty
++#     bitmap.  Dirty bitmaps in @bitmaps will be unchanged, except if
++#     it also appears as the @target bitmap.  Any bits already set in
++#     @target will still be set after the merge, i.e., this operation
++#     does not clear the target.  On error, @target is unchanged.
+ #
+-# The resulting bitmap will count as dirty any clusters that were
+-# dirty in any of the source bitmaps.  This can be used to achieve
+-# backup checkpoints, or in simpler usages, to copy bitmaps.
++#     The resulting bitmap will count as dirty any clusters that were
++#     dirty in any of the source bitmaps.  This can be used to achieve
++#     backup checkpoints, or in simpler usages, to copy bitmaps.
+ #
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+@@ -5848,15 +5847,14 @@
+ 
+ ##
+ # @block-set-write-threshold:
++#     Change the write threshold for a block drive.  An event will be
++#     delivered if a write to this block drive crosses the configured
++#     threshold.  The threshold is an offset, thus must be
++#     non-negative.  Default is no write threshold.  Setting the
++#     threshold to zero disables it.
+ #
+-# Change the write threshold for a block drive.  An event will be
+-# delivered if a write to this block drive crosses the configured
+-# threshold.  The threshold is an offset, thus must be non-negative.
+-# Default is no write threshold.  Setting the threshold to zero
+-# disables it.
+-#
+-# This is useful to transparently resize thin-provisioned drives
+-# without the guest OS noticing.
++#     This is useful to transparently resize thin-provisioned drives
++#     without the guest OS noticing.
+ #
+ # @node-name: graph node name on which the threshold must be set.
+ #
+@@ -5938,11 +5936,10 @@
+ 
+ ##
+ # @x-blockdev-set-iothread:
++#     Move @node and its children into the @iothread.  If @iothread is
++#     null then move @node and its children into the main loop.
+ #
+-# Move @node and its children into the @iothread.  If @iothread is
+-# null then move @node and its children into the main loop.
+-#
+-# The node must not be attached to a BlockBackend.
++#     The node must not be attached to a BlockBackend.
+ #
+ # @node-name: the name of the block driver node
+ #
+diff --git a/qapi/block.json b/qapi/block.json
+index e47592d5500..15f08372564 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -181,12 +181,13 @@
+ 
+ ##
+ # @blockdev-close-tray:
++#     Closes a block device's tray.
+ #
+-# Closes a block device's tray.  If there is a block driver state tree
+-# associated with the block device (which is currently ejected), that
+-# tree will be loaded as the medium.
++#     If there is a block driver state tree associated with the block
++#     device (which is currently ejected), that tree will be loaded as
++#     the medium.
+ #
+-# If the tray was already closed before, this will be a no-op.
++#     If the tray was already closed before, this will be a no-op.
+ #
+ # @device: Block device name
+ #
+@@ -218,13 +219,12 @@
+ 
+ ##
+ # @blockdev-remove-medium:
++#     Removes a medium (a block driver state tree) from a block
++#     device.  That block device's tray must currently be open
++#     (unless there is no attached guest device).
+ #
+-# Removes a medium (a block driver state tree) from a block device.
+-# That block device's tray must currently be open (unless there is no
+-# attached guest device).
+-#
+-# If the tray is open and there is no medium inserted, this will be a
+-# no-op.
++#     If the tray is open and there is no medium inserted, this will
++#     be a no-op.
+ #
+ # @id: The name or QOM path of the guest device
+ #
+@@ -504,12 +504,11 @@
+ 
+ ##
+ # @block-latency-histogram-set:
++#     Manage read, write and flush latency histograms for the device.
+ #
+-# Manage read, write and flush latency histograms for the device.
+-#
+-# If only @id parameter is specified, remove all present latency
+-# histograms for the device.  Otherwise, add/reset some of (or all)
+-# latency histograms.
++#     If only @id parameter is specified, remove all present latency
++#     histograms for the device.  Otherwise, add/reset some of (or
++#     all) latency histograms.
+ #
+ # @id: The name or QOM path of the guest device.
+ #
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8096ef64682..13c446b922f 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1965,12 +1965,11 @@
+ 
+ ##
+ # @cancel-vcpu-dirty-limit:
++#     Cancel the upper limit of dirty page rate for virtual CPUs.
+ #
+-# Cancel the upper limit of dirty page rate for virtual CPUs.
+-#
+-# Cancel the dirty page limit for the vCPU which has been set with
+-# `set-vcpu-dirty-limit` command.  Note that this command requires
+-# support from dirty ring, same as the `set-vcpu-dirty-limit`.
++#     Cancel the dirty page limit for the vCPU which has been set with
++#     `set-vcpu-dirty-limit` command.  Note that this command requires
++#     support from dirty ring, same as the `set-vcpu-dirty-limit`.
+ #
+ # @cpu-index: index of a virtual CPU, default is all.
+ #
+diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+index 8cb2ea77951..64059b5688d 100644
+--- a/qapi/misc-arm.json
++++ b/qapi/misc-arm.json
+@@ -28,12 +28,11 @@
+ 
+ ##
+ # @query-gic-capabilities:
++#     It will return a list of `GICCapability` objects that describe
++#     its capability bits.
+ #
+-# It will return a list of `GICCapability` objects that describe its
+-# capability bits.
+-#
+-# On non-ARM targets this command will report an error as the GIC
+-# technology is not applicable.
++#     On non-ARM targets this command will report an error as the GIC
++#     technology is not applicable.
+ #
+ # Since: 2.6
+ #
+diff --git a/qapi/misc.json b/qapi/misc.json
+index b3c2a1421f3..374711ac6c7 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -178,14 +178,13 @@
+ 
+ ##
+ # @x-exit-preconfig:
++#     Exit from "preconfig" state
+ #
+-# Exit from "preconfig" state
+-#
+-# This command makes QEMU exit the preconfig state and proceed with VM
+-# initialization using configuration data provided on the command line
+-# and via the QMP monitor during the preconfig state.  The command is
+-# only available during the preconfig state (i.e. when the --preconfig
+-# command line option was in use).
++#     This command makes QEMU exit the preconfig state and proceed
++#     with VM initialization using configuration data provided on the
++#     command line and via the QMP monitor during the preconfig state.
++#     The command is only available during the preconfig state
++#     (i.e. when the --preconfig command line option was in use).
+ #
+ # Features:
+ #
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index a35321d2fd1..e19a92a44e8 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -163,14 +163,14 @@
+ ##
+ # @device-sync-config:
+ #
+-# Synchronize device configuration from host to guest part.  First,
+-# copy the configuration from the host part (backend) to the guest
+-# part (frontend).  Then notify guest software that device
+-# configuration changed.
++#     Synchronize device configuration from host to guest part.
++#     First, copy the configuration from the host part (backend) to
++#     the guest part (frontend).  Then notify guest software that
++#     device configuration changed.
+ #
+-# The command may be used to notify the guest about block device
+-# capacity change.  Currently only vhost-user-blk device supports
+-# this.
++#     The command may be used to notify the guest about block device
++#     capacity change.  Currently only vhost-user-blk device supports
++#     this.
+ #
+ # @id: the device's ID or QOM path
+ #
+-- 
+2.55.0
 
 
