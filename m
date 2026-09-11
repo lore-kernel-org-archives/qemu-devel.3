@@ -4,101 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32950C88E50
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE156C88E53
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xBA-000742-21; Fri, 11 Sep 2026 05:04:16 -0400
+	id 1x4xBW-000059-M2; Fri, 11 Sep 2026 05:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAc-0004SB-DP
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xBG-0007WG-3h
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAa-0008L3-IA
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xBE-0008Ux-IS
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117418;
+ s=mimecast20190719; t=1789117459;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qEQqbP05s+OSlyzjNTsgrx4dobovQAA0LQxrJHMbWCc=;
- b=i5npJEVJghjF09AWm7AHDypW+EVCze+Oemlse54K/hMW5Y5FzRI3pfT3HNpSsTyXl2FqNI
- 9HJJVbxVJtpEEmgS/PyX7SsNqYLwCEPggQhLT6Yj3VmCl6YkxocQNT2fEltm9StvPch/xz
- 3ipcy/gRTdLMziV5W3/3Mn8Sk/GdttU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zoVg9FbJe5Igrwha4XGcOTDxhYoC4yK3OmKWb/Idxgg=;
+ b=O1aZWVb5r8WlJbyI1icSm2rdHZ/w6VXOK2xYlYZkMHdFVUgpnvF/EOZqcaEegSiJuYfcj+
+ hsoILe2Dk28KhTq3+BZhRJmVxq2xnisJOl6F/RcD9l1ICnhP3MqXKz/9dkDH+jhF5swjQf
+ D0OPeRvXiNi1PQL6mVggbU7XEYHD9g8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-77--r4YUZxUNiq-DeoDgvb2VA-1; Fri, 11 Sep 2026 05:03:37 -0400
-X-MC-Unique: -r4YUZxUNiq-DeoDgvb2VA-1
-X-Mimecast-MFC-AGG-ID: -r4YUZxUNiq-DeoDgvb2VA_1789117416
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49b8c651ac0so9067165e9.2
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:37 -0700 (PDT)
+ us-mta-501-u1GYSw7NNvC9iqSrfb7xnw-1; Fri, 11 Sep 2026 05:04:18 -0400
+X-MC-Unique: u1GYSw7NNvC9iqSrfb7xnw-1
+X-Mimecast-MFC-AGG-ID: u1GYSw7NNvC9iqSrfb7xnw_1789117457
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49cd55ee2f7so6062745e9.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:04:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117416; x=1789722216; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qEQqbP05s+OSlyzjNTsgrx4dobovQAA0LQxrJHMbWCc=;
- b=FbkGF9kqoCzRV8meIXHInXeoKbz5gRr56NJJ4kHMAAoySJ1vagpPafGFtcINdc5w4K
- voNp/GhpZADyklfCSO9+Bs0CsobRRdTyUQIQUB9PyjDoNdJX70JLDCy0g4J5Q1ZlqN38
- J7MLmO8UyfIti1N3DF8JPVVqeYvqFXBYC6GOEqBmwPf3gcq4Le3eH1UMF5V0yXDUlMFy
- 06kJXnXJSOEEPpTsyOx8H9frplNefwMLYhcenYrWm9VQaUhHlPaH9DHYim7OatLmAYwv
- b3URyy16sYx3DNxSH0yD9bUfp++/QrJM8XIKN1SK44WZC5Yoz6fyP27EpbXV1Ua3O0Q2
- mxWQ==
+ d=redhat.com; s=google; t=1789117457; x=1789722257; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=zoVg9FbJe5Igrwha4XGcOTDxhYoC4yK3OmKWb/Idxgg=;
+ b=WyGnRMnEYJN1ue3aGGikSyOkMuaDdiziMrilZNM1iQw3vxl0RxTSxatcHpxCg1/6UJ
+ YGwqNcCG6ozH57+T05haXjjHsy98K3pSNL8eIlSUHnkdtxCrj8BS79EuzTfQENKZCEOI
+ JNMlKzGiKaXGjM/NSaweiYfy7mtk1AIoVfDP1q9bWZ1F0nZ8A/st86Pd8/BHKE5SZrPR
+ Y/o86frrTVJLYTugtiDsZt9vCGvU+bPlcwNHxWZ4mHq6Y1u6UpHFD5JmfKhIVQwgy1Jq
+ W/0/91TtYKf93EuVfFwEH8y4SARkye6Y3NOPsG9HJwxRCEe+CpBPMGidL6L4GgTNmMyH
+ diIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117416; x=1789722216;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=qEQqbP05s+OSlyzjNTsgrx4dobovQAA0LQxrJHMbWCc=;
- b=CRU+QzC7jrrNQD8jlR3W2VjeUXw28ZYOlLwBRtwpJyWoundPgGlxjsYnN2mwYmd991
- RbS7mjZMNfDIfiJQOFCaU64lfLkX9+W7qE5ytCQkNVzgIELxO7ULuoDpzAalakJiDw6V
- dsUxWDB4ik0sZGanYRb+wH1wC44TCjAYaY6V/AZ1oTS5iiS7vAkHCoGSgJf48N52tUVO
- AeYVV1xBnRuKp2aFvGgagCBW08i5twWRo4AGpFrDBe83cq7Umf2IxA94fyq3ozlxnbZB
- +bcI/WgS2/vd+9NkSghGNb4OLMQq4iE8+eGe0TqEwbMx+kvcV3l1Xyo92IESzKdt569u
- u/pw==
-X-Gm-Message-State: AFuF++lb1ua5zonjstvzOh8dAdEiZhkeMaXSjZ6BaCWvp4mw2BCyZYIT
- jXuWrc6Hh96oI7b1ukTDVaoXndn6Ub6p+UMKGeAs9KoywixZpDp1JplLoLxE7oP0mF3aNR0Y60+
- HLDbDkQNWqX5t46WLobiNg68QyXw7ZfLth2dNTYTnENXidwrLDY9ptETT4IGlgHLgWVKca3tOa4
- JwUaChOlfHrSKhTPr+l0jJ0P2+H9cgPD82tw==
-X-Gm-Gg: AYBFou09ug4tq72x8NwW8vB5+rYuUqZWO2LzIwpv9Z/+VRdincNyilfeN/kZzmmL7Ik
- NIdD26DKgK4S3vYDv/A4fPIdPmVdUwbgthY1HFs3OsOr8/1R9sklA+D5H0y8PS7iPYorkkdtMLh
- StEEE3klyXeTUTuUjBVYPXx559TQCs6RGxqDD4/Q/BU5/51+nPhb5v2oU+RhuYLWt2WMoKlaVMt
- eBHO4QmI60stvkMUpg6rgadxmUR7L4v4zxoCSHlvO/HHv6kKfQZNKScmjE21H2oZYu7t3ThWgVs
- ybxOBWpLQjybFLmTvtSxzqL2qtK0ioSRNkZEykxCOWxtAqxOtCx/jrRKUORpv5sMzg8CCgt+mww
- wZ8XTbCtlzLSddNkZlradx78=
-X-Received: by 2002:a05:600c:3b90:b0:49d:16df:8521 with SMTP id
- 5b1f17b1804b1-49e619805f1mr34637905e9.4.1789117415567; 
- Fri, 11 Sep 2026 02:03:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b90:b0:49d:16df:8521 with SMTP id
- 5b1f17b1804b1-49e619805f1mr34636975e9.4.1789117414728; 
- Fri, 11 Sep 2026 02:03:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789117457; x=1789722257;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zoVg9FbJe5Igrwha4XGcOTDxhYoC4yK3OmKWb/Idxgg=;
+ b=Zk2+oGaM48HfBZHHlPa560zobqmf4+GHsUGG0yqRQ9M2NnLeuEYGIZWJa6CeulPolb
+ S2m3M6qTUMEmstXWmQD4hXMLOe/7Im/7pBfhtRsYL5gcV84aNeLeA6agpKSm761EJeaG
+ KlekwJeDQwcHNic3EoBV77pRnUHCUXJXFV1guSKUYazV6qq+L1HLgf6NIE/VMV6fjfNa
+ atQvCeUDBvxFG6uw9byRmCM0VnQKiaKj+M4aJYG9XM2GvbnWtdBpsbqN+Txy1tMsiWoW
+ EYEMccOQ3iTb4DOHnuKw8NCSC3uW8smPHUpCnSl2N2bwHnUWXo3ENIwL2KeBqtGW94e5
+ PA2w==
+X-Gm-Message-State: AFuF++k8g8oj0e+R4wP+i/BVjogojRe257ZN9G43XVP5hj9dyMgzzACW
+ 2fTTuZBe4WNPAWIb2ty4+g9TBpK8+PR5wUt6mqrztrz6XWNaVdFCQ/stGwmD93vGRC1ugiyIqs5
+ 6dM2rY9X53aMwiNh/sIGL8lQuLQ5phcsMHCyV5sMtayMBQmS5b4FYBQ6WaY4Xh96qWDSlFhDjRl
+ 3vNynXLpgZPTUpkNgM0lqxFWSZnBF34p3M0A==
+X-Gm-Gg: AYBFou2knF93UmHjncEIOCknAlSXG3/3FxYocSSFvnm/gJ9TUovWPugbYK8vdUqgOOR
+ 13v57Pt1wYRRs6AazYq1nj/KT5UwUIhk4+urHYhAPkKECjUOx8WY5/GfA7Zl3PLqYqaAFeEHPey
+ 7gzHKj9pW97mGO/vO8+OLFBr7CSUkap7Ci1ZxUqI9ULc8F9t1fBAEtFBSA+WYq6IsD1aATv79I5
+ sEqYTdbPZU0jdcMqU8XcGaQnI6HOp3mHtrUGOiUBj7Dw/ruPbXAlq5VY/HPv4dNlCyZX6D1J/eG
+ Yctv8l/2DBy/lMUb/g0Eu7foqtWU2kQ/W8OfbxQav+90BwHhHtU+vW0noDwJV8lM9RdkAJ5Max6
+ sghyXp8/mMKjDDZWpXvyfL7E=
+X-Received: by 2002:a05:600c:6309:b0:49c:ff3c:973f with SMTP id
+ 5b1f17b1804b1-49e619c45f9mr31554085e9.24.1789117457092; 
+ Fri, 11 Sep 2026 02:04:17 -0700 (PDT)
+X-Received: by 2002:a05:600c:6309:b0:49c:ff3c:973f with SMTP id
+ 5b1f17b1804b1-49e619c45f9mr31553495e9.24.1789117456531; 
+ Fri, 11 Sep 2026 02:04:16 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb350686sm4714981f8f.27.2026.09.11.02.03.33
+ 5b1f17b1804b1-49e62225628sm33347155e9.3.2026.09.11.02.04.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:34 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:32 -0400
+ Fri, 11 Sep 2026 02:04:16 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:04:14 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
- Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 57/75] intel_iommu: Support concurrent page fault handling
- with PRI
-Message-ID: <f19df1b13d1a0b5601b4b58067b8c2e91ae76ef3.1789117222.git.mst@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL v2 72/75] vhost-user-blk: make inflight-migration prop mutable
+ on running vm
+Message-ID: <dac9beb861fe178a42508f535e59d0f3eccd0ccb.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -110,7 +109,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,185 +125,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-PRQ slot allocation must be thread safe to avoid posting multiple
-commands in the same slot so we take a lock in vtd_pri_request_page.
+The inflight-migration property currently can only be set before the
+device is realized. This makes it impossible to disable inflight
+migration at runtime without restarting the VM.
 
-This allows multiple devices to call the page request interface
-of the same iommu instance.
+Make the property mutable, but only while the VM is running. Blocking
+changes when the VM is not running ensures that the value at stop time
+reliably reflects the intent set on a live VM, which allows
+vhost_user_blk_stop() to use skip_drain unconditionally based on the
+property value without inspecting migration runstate.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903145044.2245609-1-clement.mathieu--drif@bull.com>
+Message-ID: <20260803072853.2920007-5-dtalexundeer@yandex-team.ru>
 ---
- hw/i386/intel_iommu.c | 103 ++++++++++++++++++++++++++----------------
- 1 file changed, 63 insertions(+), 40 deletions(-)
+ hw/block/vhost-user-blk.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 82c3c3b2c3..7c442a86ca 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3627,15 +3627,26 @@ static void vtd_handle_iectl_write(IntelIOMMUState *s)
- 
- static void vtd_handle_prs_write(IntelIOMMUState *s)
- {
--    uint32_t prs = vtd_get_long_raw(s, DMAR_PRS_REG);
-+    uint32_t prs;
-+
-+    vtd_iommu_lock(s);
-+
-+    prs = vtd_get_long_raw(s, DMAR_PRS_REG);
-     if (!(prs & VTD_PR_STATUS_PPR) && !(prs & VTD_PR_STATUS_PRO)) {
-         vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index c3e3c37f8c..501de30796 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -629,6 +629,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
      }
-+
-+    vtd_iommu_unlock(s);
- }
+ };
  
- static void vtd_handle_pectl_write(IntelIOMMUState *s)
- {
--    uint32_t pectl = vtd_get_long_raw(s, DMAR_PECTL_REG);
-+    uint32_t pectl;
++static PropertyInfo vhost_user_blk_inflight_migration_prop;
 +
-+    vtd_iommu_lock(s);
+ static const Property vhost_user_blk_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
+     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+@@ -644,8 +646,9 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
+     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+                      skip_get_vring_base_on_force_shutdown, false),
+-    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
+-                     inflight_migration, false),
++    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
++                vhost_user_blk_inflight_migration_prop, bool,
++                .set_default = true, .defval.u = false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+@@ -675,8 +678,29 @@ static const TypeInfo vhost_user_blk_info = {
+     .class_init = vhost_user_blk_class_init,
+ };
+ 
++static void vhost_user_blk_set_inflight_migration(Object *obj, Visitor *v,
++                                                  const char *name,
++                                                  void *opaque, Error **errp)
++{
++    DeviceState *dev = DEVICE(obj);
 +
-+    pectl = vtd_get_long_raw(s, DMAR_PECTL_REG);
-+
-     if ((pectl & VTD_PR_PECTL_IP) && !(pectl & VTD_PR_PECTL_IM)) {
-         /*
-          * If IP field was 1 when software clears the IM field,
-@@ -3644,6 +3655,8 @@ static void vtd_handle_pectl_write(IntelIOMMUState *s)
-         vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
-         vtd_generate_interrupt(s, DMAR_PEADDR_REG, DMAR_PEDATA_REG);
-     }
-+
-+    vtd_iommu_unlock(s);
- }
- 
- static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
-@@ -5377,19 +5390,18 @@ static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
- {
-     IntelIOMMUState *s = opaque;
-     VTDAddressSpace *vtd_as;
-+    uint64_t queue_addr_reg;
-+    uint64_t queue_tail_offset_reg;
-+    uint64_t new_queue_tail_offset;
-+    uint64_t queue_head_offset_reg;
-+    hwaddr queue_tail;
-+    uint32_t old_pr_status;
-+    uint16_t sid;
-+    VTDPRDesc desc;
-+    int ret = 0;
- 
-     vtd_as = vtd_find_add_as(s, bus, devfn, pasid);
--
--    uint64_t queue_addr_reg = vtd_get_quad(s, DMAR_PQA_REG);
--    uint64_t queue_tail_offset_reg = vtd_get_quad(s, DMAR_PQT_REG);
--    uint64_t new_queue_tail_offset = (
--                                (queue_tail_offset_reg + VTD_PQA_ENTRY_SIZE) %
--                                (vtd_prq_size(s) * VTD_PQA_ENTRY_SIZE));
--    uint64_t queue_head_offset_reg = vtd_get_quad(s, DMAR_PQH_REG);
--    hwaddr queue_tail = (queue_addr_reg & VTD_PQA_ADDR) + queue_tail_offset_reg;
--    uint32_t old_pr_status = vtd_get_long(s, DMAR_PRS_REG);
--    uint16_t sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
--    VTDPRDesc desc;
-+    sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
- 
-     if (!(s->ecap & VTD_ECAP_PRS)) {
-         return -EPERM;
-@@ -5413,25 +5425,7 @@ static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
-         return -EPERM;
-     }
- 
--    if (old_pr_status & VTD_PR_STATUS_PRO) {
--        /*
--         * No action is taken by hardware to report a fault
--         * or generate an event
--         */
--        return -ENOSPC;
--    }
--
--    /* Check for overflow */
--    if (new_queue_tail_offset == queue_head_offset_reg) {
--        vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PRO);
--        vtd_generate_page_request_event(s, old_pr_status);
--        return -ENOSPC;
--    }
--
--    if (vtd_pri_perform_implicit_invalidation(vtd_as, addr)) {
--        return -EINVAL;
--    }
--
-+    /* Prepare the descriptor */
-     desc.lo = VTD_PRD_TYPE | VTD_PRD_PP(true) | VTD_PRD_RID(sid) |
-               VTD_PRD_PASID(vtd_as->pasid) | VTD_PRD_PMR(priv_req);
-     desc.hi = VTD_PRD_RDR(is_read) | VTD_PRD_WRR(is_write) |
-@@ -5439,26 +5433,55 @@ static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
- 
-     desc.lo = cpu_to_le64(desc.lo);
-     desc.hi = cpu_to_le64(desc.hi);
-+
-+    if (vtd_pri_perform_implicit_invalidation(vtd_as, addr)) {
-+        return -EINVAL;
++    if (dev->realized && !runstate_is_running()) {
++        error_setg(errp, "Property '%s' cannot be changed "
++                         "while VM is not running", name);
++        return;
 +    }
 +
-+    vtd_iommu_lock(s);
++    qdev_prop_bool.set(obj, v, name, opaque, errp);
++}
 +
-+    queue_addr_reg = vtd_get_quad(s, DMAR_PQA_REG);
-+    queue_tail_offset_reg = vtd_get_quad(s, DMAR_PQT_REG);
-+    new_queue_tail_offset = ((queue_tail_offset_reg + VTD_PQA_ENTRY_SIZE) %
-+                            (vtd_prq_size(s) * VTD_PQA_ENTRY_SIZE));
-+    queue_head_offset_reg = vtd_get_quad(s, DMAR_PQH_REG);
-+    queue_tail = (queue_addr_reg & VTD_PQA_ADDR) + queue_tail_offset_reg;
-+    old_pr_status = vtd_get_long(s, DMAR_PRS_REG);
 +
-+    if (old_pr_status & VTD_PR_STATUS_PRO) {
-+        /*
-+         * No action is taken by hardware to report a fault
-+         * or generate an event
-+         */
-+        ret = -ENOSPC;
-+        goto out;
-+    }
+ static void virtio_register_types(void)
+ {
++    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
++    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
++    vhost_user_blk_inflight_migration_prop.set =
++        vhost_user_blk_set_inflight_migration;
 +
-+    /* Check for overflow */
-+    if (new_queue_tail_offset == queue_head_offset_reg) {
-+        vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PRO);
-+        vtd_generate_page_request_event(s, old_pr_status);
-+        ret = -ENOSPC;
-+        goto out;
-+    }
-+
-     if (dma_memory_write(&address_space_memory, queue_tail, &desc, sizeof(desc),
-                          MEMTXATTRS_UNSPECIFIED)) {
-         error_report_once("IO error, the PQ tail cannot be updated");
--        return -EIO;
-+        ret = -EIO;
-+        goto out;
-     }
- 
-     /* increment the tail register and set the pending request bit */
-     vtd_set_quad(s, DMAR_PQT_REG, new_queue_tail_offset);
--    /*
--     * read status again so that the kernel does not miss a request.
--     * in some cases, we can trigger an unecessary interrupt but this strategy
--     * drastically improves performance as we don't need to take a lock.
--     */
--    old_pr_status = vtd_get_long(s, DMAR_PRS_REG);
-     if (!(old_pr_status & VTD_PR_STATUS_PPR)) {
-         vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PPR);
-         vtd_generate_page_request_event(s, old_pr_status);
-     }
- 
--    return 0;
-+out:
-+    vtd_iommu_unlock(s);
-+    return ret;
+     type_register_static(&vhost_user_blk_info);
  }
  
- static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
 -- 
 MST
 
