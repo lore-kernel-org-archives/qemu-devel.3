@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24209C88E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4537EC88E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54Ic-0006Er-A4; Fri, 11 Sep 2026 12:40:26 -0400
+	id 1x54Jh-0007pw-8A; Fri, 11 Sep 2026 12:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54Ia-0006Af-Ch
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:40:24 -0400
+ id 1x54JV-0007Sh-AH
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:41:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54IW-00076Q-N9
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:40:22 -0400
+ id 1x54JT-0007MA-Qb
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:41:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144820;
+ s=mimecast20190719; t=1789144879;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oPypAJmHalIuZO8Qh6uXAHLk6oL+F+SAlk4t9kCAeHs=;
- b=UZTB03JL9roaSRq+rY4btnLKVFFbCPiw4U8r4pVt5yYSyxqsLnUMh4UtukSEaSW/XQ8JT9
- gezgd5OqEBsZZNptbC+wkox6CbTPWM3lzmyAJ1UEewKp/r9sIJlz/3SVd46QYjZJ3mHcx9
- LR/jAFa32w9hPgiltQtjVhdAOi1Za5w=
+ bh=lNt+NcdfdrXTDAde4gaKYFts/kwAUEfykTyytEmPajw=;
+ b=dJnSntP4qG7KHJEe0QNPHKm1aYbamlpSTcjDs7Upj/GKRCjLc0EYnql9hM5PqX/9Tr5hdl
+ n+1b1rY2pj6jjmrmUw20WujU5mBK+r91zO8pc7ZCIjv4K1EkZiPJQZ0GJ0Ey9qkIZEcvKY
+ Swjh7+kdAwCULLlAXG4dAbevUmq3syo=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-450-F79_-1BnPfueYsb-lUAPEg-1; Fri,
- 11 Sep 2026 12:40:16 -0400
-X-MC-Unique: F79_-1BnPfueYsb-lUAPEg-1
-X-Mimecast-MFC-AGG-ID: F79_-1BnPfueYsb-lUAPEg_1789144815
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-mS_ymASiOxG4TozqyYTo9w-1; Fri,
+ 11 Sep 2026 12:41:15 -0400
+X-MC-Unique: mS_ymASiOxG4TozqyYTo9w-1
+X-Mimecast-MFC-AGG-ID: mS_ymASiOxG4TozqyYTo9w_1789144874
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02EAE1954B1C; Fri, 11 Sep 2026 16:40:15 +0000 (UTC)
+ id 829A21954B1D; Fri, 11 Sep 2026 16:41:14 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 02533300022B; Fri, 11 Sep 2026 16:40:13 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5AB321956095; Fri, 11 Sep 2026 16:41:12 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:35:19 +0400
-Subject: [PATCH v5 45/62] include: add QEMU_REPEAT helper macro
+Date: Fri, 11 Sep 2026 20:35:35 +0400
+Subject: [PATCH v5 61/62] tests/qmp-cmd-test: assert qapi-type resolves in
+ query-qmp-schema
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-45-7732a55b7760@redhat.com>
+Message-Id: <20260911-qom-qapi-v5-61-7732a55b7760@redhat.com>
 References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,29 +66,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, 
- Jonathan Cameron <jic23@kernel.org>, qemu-arm@nongnu.org, 
- linux-cxl@vger.kernel.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5015;
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3468;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=EAQeZe1XEuAWHJARuU6IDW2Xx2TnIuJB2OqRLsbMlaA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC27e1GZ9h+t8HjfLlru0PtcsL2oxGUkDdXLw
- sXsc1WkU92JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuwAKCRDa6OEJdZac
- 5SL/D/9Di4Hwl5aWMkxJtvYwk2A0TNhNdL/qDxWUmTEaa0r0EM7lBKICiTEGybKGLZAKxRsGA3i
- DD5G+JKYC2mu2p8LIAuuPQlPiybwo92BxvpW0GfZbRsRiPzu+w1NU0yjSxtlbprBMPXSxor2bhZ
- IgDf0kPbeVZoSU+h3fZx5QOxViLVZylOsWv7hOnMmaqNb2QNdn1WAVA1fsKSScgpi8sZrd4jj0+
- P8fNnsW+vcNDfAbQsWRlH2EUlzLS1C6dRPJOEuv/y0+MwpFtfNiup+QXq91Puq7YkQS/4joRQOi
- 50ZY3pimp5+1hXQTBpS7oGNwUt1QEsTUgytvvEpetOVddrezRKwjr6v+QjnBMNeuuoZpkdOpsI/
- 2bfAf7VYui0b7oSnP6ELjlvREUn+GXwOTKml/qFOPVDSSbYr+uJPrHGBfDCf4dpG2Oy96n/Et1k
- BBaLK4rmzCPwe+IinPPE5LIRrbyF8sUstGoLJTlcI/Pt59Vho6wY/QuHM/zUGY8VMLS7M+UBxpz
- qTye+RKZ3I7YqSMBV9Wq8leb3KnhpKNpkagD067AZIh/u2aGB2Mk6ViVqIudqluvVPKh9kRxD+C
- 2ptqEv+8waQ9gIwUWAguD/z0eEAMjY66UTv7LFTjfHoYJpc9IQX7OfYkIUGAi3MJhCB9pwfGDbA
- aXtgKN7qt0b8N+g==
+ bh=Mt67E9MU0ECVhSiFdrQC3amyYOINAVoLsnaOA5PKLXU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC290ksNehAvUIb0yu2n0PORNwr9iKo5JGHO0
+ 6wvVXKm/rGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtvQAKCRDa6OEJdZac
+ 5RoDD/4qn5abF2P4cfEX2NoZhxPC6npkfqLqAwUKqZ3OQWgGNgR5rztWDyTscEjf+ToIl2Ro+We
+ VV02RAa9djGnTGw577SJBo8ZDs2RiaY1HJTn/fkUunF/Kd7jaCoMdUTrhnuSq+4MF5Nb+aBqIdz
+ TgcAXDlOdKMG4PPo9hoquAHi2+T0utWkMALFNSHo9O93hY37bTP8KeCfpVrf9uMvol/06Eu/j0a
+ JShvckY6xzciLe5on7ZUCHQRYCq9JjvO7klaNACD4ZTFE/hVtfFUAEav9Xq9BI7UuZNMqusgM2P
+ MfFnZiUNO+sw69qFiLkdADb9Q7l26AbEi5KET0XBgFBbwV+doJx22eKIz8fCZ+KXlnY34W/uGzu
+ KmMA5bBX/WxoErl6ud0/VnInIN/LFfbortlNKwexinXTmpDnwCog6tBDAkq8UGGr7aQi9Q5RZ0+
+ oV7H6u/FGxi9t71fzRB35abGWRf7wV9ZmdRKD5NvvcCazqq9ge6PcJo5jbH74KRz+bYx8/B19wa
+ 1++bKDJoQBvhGOpCPM/lYsq0Lj25h/bG6cKtVKJXIhaFRfsEeGBIrQHG999Jq5f40yhrxyJCMie
+ xO0GiWHS2lGSw5LaQ29YxFj1bAdSLVitkuJLbuFQyIJ/zmSg7GaXt0gd4hTJ7yp4c76I9xmLwCa
+ 3QgNlvpVp+v37cA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -114,140 +111,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a macro used in following commit, and convert a few existing
-candidates. Inspired by a similar macro in Linux kernel/trace/bpf_trace.c
+For every QOM type returned by qom-list-types, call qom-list-properties
+and verify that each property's qapi-type value (when present) maps to
+a valid entry in the query-qmp-schema introspection output.
+
+The test is gated behind g_test_slow() since it iterates all registered
+QOM types.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/misc/tz-ppc.c               | 19 ++-----------------
- hw/remote/vfio-user-obj.c      | 17 +++--------------
- include/hw/cxl/cxl_component.h |  5 +----
- include/qemu/osdep.h           | 33 +++++++++++++++++++++++++++++++++
- 4 files changed, 39 insertions(+), 35 deletions(-)
+ tests/qtest/qmp-cmd-test.c | 55 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/tz-ppc.c b/hw/misc/tz-ppc.c
-index 6f820430eed8..5f09ce164c19 100644
---- a/hw/misc/tz-ppc.c
-+++ b/hw/misc/tz-ppc.c
-@@ -303,26 +303,11 @@ static const VMStateDescription tz_ppc_vmstate = {
+diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+index 279a8f5614e9..acb7b0dd6a9f 100644
+--- a/tests/qtest/qmp-cmd-test.c
++++ b/tests/qtest/qmp-cmd-test.c
+@@ -15,6 +15,7 @@
+ #include "qapi/error.h"
+ #include "qapi/qapi-visit-introspect.h"
+ #include "qobject/qdict.h"
++#include "qobject/qlist.h"
+ #include "qapi/qobject-input-visitor.h"
  
- #define DEFINE_PORT(N)                                          \
-     DEFINE_PROP_LINK("port[" #N "]", TZPPC, port[N].downstream, \
--                     TYPE_MEMORY_REGION, MemoryRegion *)
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
+ const char common_args[] = "-nodefaults -machine none";
+@@ -131,6 +132,8 @@ typedef struct {
+     GHashTable *hash;
+ } QmpSchema;
  
- static const Property tz_ppc_properties[] = {
-     DEFINE_PROP_UINT32("NONSEC_MASK", TZPPC, nonsec_mask, 0),
--    DEFINE_PORT(0),
--    DEFINE_PORT(1),
--    DEFINE_PORT(2),
--    DEFINE_PORT(3),
--    DEFINE_PORT(4),
--    DEFINE_PORT(5),
--    DEFINE_PORT(6),
--    DEFINE_PORT(7),
--    DEFINE_PORT(8),
--    DEFINE_PORT(9),
--    DEFINE_PORT(10),
--    DEFINE_PORT(11),
--    DEFINE_PORT(12),
--    DEFINE_PORT(13),
--    DEFINE_PORT(14),
--    DEFINE_PORT(15),
-+    QEMU_REPEAT(TZ_NUM_PORTS, DEFINE_PORT)
- };
- 
- static void tz_ppc_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index 7e6819f670b5..84c3ff05cfb8 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -496,22 +496,11 @@ static size_t vfu_object_bar_rw(PCIDevice *pci_dev, int pci_bar,
-                                  buf, count, is_write);                        \
-     }                                                                          \
- 
--VFU_OBJECT_BAR_HANDLER(0)
--VFU_OBJECT_BAR_HANDLER(1)
--VFU_OBJECT_BAR_HANDLER(2)
--VFU_OBJECT_BAR_HANDLER(3)
--VFU_OBJECT_BAR_HANDLER(4)
--VFU_OBJECT_BAR_HANDLER(5)
--VFU_OBJECT_BAR_HANDLER(6)
-+QEMU_REPEAT(PCI_NUM_REGIONS, VFU_OBJECT_BAR_HANDLER)
- 
-+#define VFU_OBJECT_BAR_HANDLER_PTR(BAR_NO) vfu_object_bar##BAR_NO##_handler,
- static vfu_region_access_cb_t *vfu_object_bar_handlers[PCI_NUM_REGIONS] = {
--    &vfu_object_bar0_handler,
--    &vfu_object_bar1_handler,
--    &vfu_object_bar2_handler,
--    &vfu_object_bar3_handler,
--    &vfu_object_bar4_handler,
--    &vfu_object_bar5_handler,
--    &vfu_object_bar6_handler,
-+    QEMU_REPEAT(PCI_NUM_REGIONS, VFU_OBJECT_BAR_HANDLER_PTR)
- };
- 
- /**
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index ffc82202206c..fca8b7055ccd 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -186,10 +186,7 @@ REG32(CXL_HDM_DECODER_GLOBAL_CONTROL, CXL_HDM_REGISTERS_OFFSET + 4)
- /* Support 4 decoders at all levels of topology */
- #define CXL_HDM_DECODER_COUNT 4
- 
--HDM_DECODER_INIT(0);
--HDM_DECODER_INIT(1);
--HDM_DECODER_INIT(2);
--HDM_DECODER_INIT(3);
-+QEMU_REPEAT(CXL_HDM_DECODER_COUNT, HDM_DECODER_INIT)
- 
- /*
-  * CXL r3.1 Section 8.2.4.21: CXL Extended Security Capability Structure
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 1ec5b42230be..a5e7ff99cb89 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -191,6 +191,39 @@ extern "C" {
- 
- #include "qemu/typedefs.h"
- 
-+/*
-+ * QEMU_REPEAT(n, m) - invoke m(0) m(1) ... m(n-1)
-+ *
-+ * Expands to n invocations of m, each with a literal integer argument.
-+ * n must be a compile-time constant in 0..16.
-+ *
-+ * Example - generate 4 per-index function definitions:
-+ *
-+ *   #define DEFINE_GETTER(i) \
-+ *   static int get_##i(void) { return values[i]; }
-+ *
-+ *   QEMU_REPEAT(4, DEFINE_GETTER)
-+ */
-+#define QEMU_REPEAT_0(m)
-+#define QEMU_REPEAT_1(m)   QEMU_REPEAT_0(m)   m(0)
-+#define QEMU_REPEAT_2(m)   QEMU_REPEAT_1(m)   m(1)
-+#define QEMU_REPEAT_3(m)   QEMU_REPEAT_2(m)   m(2)
-+#define QEMU_REPEAT_4(m)   QEMU_REPEAT_3(m)   m(3)
-+#define QEMU_REPEAT_5(m)   QEMU_REPEAT_4(m)   m(4)
-+#define QEMU_REPEAT_6(m)   QEMU_REPEAT_5(m)   m(5)
-+#define QEMU_REPEAT_7(m)   QEMU_REPEAT_6(m)   m(6)
-+#define QEMU_REPEAT_8(m)   QEMU_REPEAT_7(m)   m(7)
-+#define QEMU_REPEAT_9(m)   QEMU_REPEAT_8(m)   m(8)
-+#define QEMU_REPEAT_10(m)  QEMU_REPEAT_9(m)   m(9)
-+#define QEMU_REPEAT_11(m)  QEMU_REPEAT_10(m)  m(10)
-+#define QEMU_REPEAT_12(m)  QEMU_REPEAT_11(m)  m(11)
-+#define QEMU_REPEAT_13(m)  QEMU_REPEAT_12(m)  m(12)
-+#define QEMU_REPEAT_14(m)  QEMU_REPEAT_13(m)  m(13)
-+#define QEMU_REPEAT_15(m)  QEMU_REPEAT_14(m)  m(14)
-+#define QEMU_REPEAT_16(m)  QEMU_REPEAT_15(m)  m(15)
-+#define QEMU_REPEAT_(n, m) QEMU_REPEAT_##n(m)
-+#define QEMU_REPEAT(n, m)  QEMU_REPEAT_(n, m)
++static QmpSchema schema;
 +
- /**
-  * Mark a function that executes in coroutine context
-  *
+ static void qmp_schema_init(QmpSchema *schema)
+ {
+     QDict *resp;
+@@ -343,9 +346,56 @@ static void test_object_add_failure_modes(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_qapi_type(void)
++{
++    QTestState *qts;
++    g_autoptr(QDict) resp = NULL;
++    QList *types;
++    QListEntry *type_entry, *prop_entry;
++
++    qts = qtest_init(common_args);
++
++    resp = qtest_qmp(qts,
++                     "{ 'execute': 'qom-list-types',"
++                     "  'arguments': { 'abstract': true } }");
++    g_assert(qdict_haskey(resp, "return"));
++    types = qdict_get_qlist(resp, "return");
++
++    QLIST_FOREACH_ENTRY(types, type_entry) {
++        QDict *type = qobject_to(QDict, qlist_entry_obj(type_entry));
++        const char *name = qdict_get_str(type, "name");
++        g_autoptr(QDict) props_resp = NULL;
++        QList *props;
++
++        props_resp = qtest_qmp(qts,
++                               "{ 'execute': 'qom-list-properties',"
++                               "  'arguments': { 'typename': %s } }",
++                               name);
++        if (!qdict_haskey(props_resp, "return")) {
++            continue;
++        }
++        props = qdict_get_qlist(props_resp, "return");
++
++        QLIST_FOREACH_ENTRY(props, prop_entry) {
++            QDict *prop = qobject_to(QDict, qlist_entry_obj(prop_entry));
++            const char *qapi_type = qdict_get_try_str(prop, "qapi-type");
++            const char *propname = qdict_get_str(prop, "name");
++            const char *ty = qdict_get_str(prop, "type");
++
++            if (qapi_type) {
++                g_assert_nonnull(qmp_schema_lookup(&schema, qapi_type));
++            } else if (!g_str_has_prefix(ty, "child<") &&
++                       !g_str_has_prefix(ty, "link<")) {
++                g_test_message("%s.%s %s has no associated qapi-type",
++                               name, propname, ty);
++            }
++        }
++    }
++    qtest_quit(qts);
++}
++
+ int main(int argc, char *argv[])
+ {
+-    QmpSchema schema;
+     int ret;
+ 
+     g_test_init(&argc, &argv, NULL);
+@@ -355,6 +405,9 @@ int main(int argc, char *argv[])
+ 
+     qtest_add_func("qmp/object-add-failure-modes",
+                    test_object_add_failure_modes);
++    if (g_test_slow()) {
++        qtest_add_func("qmp/qapi-type", test_qapi_type);
++    }
+ 
+     ret = g_test_run();
+ 
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
