@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0647DC88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3284CC88E50
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xAo-000558-GN; Fri, 11 Sep 2026 05:03:54 -0400
+	id 1x4x9x-0003g5-4c; Fri, 11 Sep 2026 05:03:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAS-0004PI-5o
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9W-00032O-Na
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAL-0008Io-Ex
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9U-0008BK-W3
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117404;
+ s=mimecast20190719; t=1789117352;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=s25v9MuORRs6iYLVe6PGLtMBi7BEybbRfKrSYsEB5hA=;
- b=aZEJ3ZblGs7K6WWM0SfwMONlR9StFkFnsty0S9pKmzreMkvwYpJXeg4H3XiH4DJjsAsXd3
- 7aii3Wzy/N7vod+VMzIadbj0vd0WwL2KL6wcrzJKV1TipcZM3rphgsyzMY7NujgEKCmbg7
- +IqYbZhbQWcyxNAi9XXb/mHhrysGBng=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SMrXl840QxHcg/H4ML9GgiuvmC8Z3gLSM3n2uW6G38c=;
+ b=cdKpWQ4t49pVDzRKldLqlvbd2anSCn7bBBVjFogT0arrlwCB4BdQWKE8y0D8/MPhWiIYr7
+ b+hCejr6HnlfCrv8CbW5XdhuNoeUUNkpFlVTzV0/3tNei3MCU45QMxxyMzFfhPw1MP77in
+ PWWI/SFYjetp7IQfJDMBzWU3gC6HR9I=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-5s_-HDuDMqCSPDhhzWlGTw-1; Fri, 11 Sep 2026 05:03:23 -0400
-X-MC-Unique: 5s_-HDuDMqCSPDhhzWlGTw-1
-X-Mimecast-MFC-AGG-ID: 5s_-HDuDMqCSPDhhzWlGTw_1789117402
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e65f2f1baso1787065e9.3
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:23 -0700 (PDT)
+ us-mta-567-I6gXuegCNemilfOyE-VivA-1; Fri, 11 Sep 2026 05:02:30 -0400
+X-MC-Unique: I6gXuegCNemilfOyE-VivA-1
+X-Mimecast-MFC-AGG-ID: I6gXuegCNemilfOyE-VivA_1789117350
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49cf5bd2f12so7325265e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117402; x=1789722202; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117349; x=1789722149; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=s25v9MuORRs6iYLVe6PGLtMBi7BEybbRfKrSYsEB5hA=;
- b=ctWSu0mj/bHOnvVUPPUp3g8HZAvQnps/o+D8a2qS6y6DJryBund4+NCkIrAV8m/BsB
- W7PV1fZ1DQQVaM4yo+3nUpycUcDPm/luwKQjEQ9GX98x/UDwcjy+zEH6bC2O1zizZsu3
- Y8RFGJmBNlCviCUikxdnrTxXY9Tcve+wQeHK3On6cKeN4b5+2qwCzOJ7PSEm0FRc7CtI
- uQhHR5FbtPpUDvlG6En406C45SFHAb/9TJLbEN1ENVAFkroGVAesj8BLQlysFD0Y7ga/
- WubLgmZrxe94jiPiJdJ/98liH2EroVx99NNgxo6fTtbc01V/dbLUN2zBD+c5Jdz35snl
- DKCw==
+ bh=SMrXl840QxHcg/H4ML9GgiuvmC8Z3gLSM3n2uW6G38c=;
+ b=Ezrs0JxcOxUWEvyAJs8AuQcU1Gklw1O4Qn30HhITrxL9XKLkptLcAn0Q2Ikm4IrW72
+ RGGpjLAkEEWs+DS9WWxRYMh2n8/hCkqXUqgx9j7UumCmDJpMxv1RV0mdyjsbmfAspEe5
+ VejRplCi9vXCs2CKfbq7LrkaWywMtkdiI1M9vXYxtU4vuQbLx9oAL97XaT0dtLXPIFyl
+ KLDqh3jl8seg2/rRdH/De1vvYV7xBzYOY03d+vxOm0SdviT8LqlLTZImMd7zViB9IZ2O
+ kvZXh3d7FsQ++AHfXx1D4XxgfRQMOOCq/xdYP1eZjuO0IWjQJDyfqipLH6AJO5JDxAMg
+ Ay3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117402; x=1789722202;
+ d=1e100.net; s=20251104; t=1789117349; x=1789722149;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=s25v9MuORRs6iYLVe6PGLtMBi7BEybbRfKrSYsEB5hA=;
- b=IB2Dp71z5XQBOoXEgf/YXVbj+u/CZz33fE3aF4uCDTzD9H3kLEk6b0FXRBnr9jj02P
- qhM7XowUNVE4edNcKRjv7Aipf8SYm2sjj4xr/t/Xtj2fkKlqJqPELs03Dt1aiXF/Axks
- Rq9x9MLooBHwO2cHB8px4j+i+lSMRWkOIqdbCVhsbXr4znJWxQplVPhzFdNs5pDL19qp
- rR75wEd/6yBBlek3pSRCHLJB4PyRUE1ipvJzQSqb+tWx28XbwpneEf/NCiSiqaZtAN5A
- JFyfugWs0okY3jVQ119EjzXj7IcOqn18xn+baGDEWUTZasMbExVmVFWvlqfR0/SIFvr2
- dFbQ==
-X-Gm-Message-State: AFuF++kgETkUFlggUn83rbb5WRV+32i6v9WRcvwTI6DwY8uWGzdMlZq7
- Xc7Hr0Dq9bzs+yjAuV+mLlMwCyWdQBvPSUSoLi/89r98AFVPlCKIUnIPcL3F6fZ02VAi2PJ3SCQ
- TfD5sysNirFkbTDN8I159MdG4NmU1z0AcJec9rKtIv2+i7vvc0lDux+C3R0n/C5iMJZX5qgU3oE
- n0vNhlkE+dinIMeUuEp2gWzuD/9eCDrC9/sQ==
-X-Gm-Gg: AYBFou2IDuWaqCjyOwpx4WNkET6cO2S50UpmbNXAK6unuTyLf/3EkCXG4RGP9EZnNug
- GdgtPLlihf7A4rl8wuxKP8+0ipxBZR+OLE8MsCCd7ouTHWAY1hzFRh1FC3JdmYqb8xbs/JGkjfS
- PL8xH/vYv37rKjOEXy9UlW++0XO13vGnpfCB7BVuQB/7LRH0tDyDnKXnLAHrPvIM+ak+V2jRexi
- QWhTR6uDKq1KBmBCFZ66MUwgqAof5M51gZDkzA0Z6gvYDsbqCy4FLjGx4aH8YdF5uVmCjKlAogi
- P24Z7s779yERH5Xd17IxtUzLm3HSEA8oc2WSe4+vZ9ivtfwHXBpDmkwFQtRI7NXfDcyvjaWcz7l
- KNZoGYmCCO7Keg/t5FxrQens=
-X-Received: by 2002:a05:600c:3acb:b0:49c:dcec:bd27 with SMTP id
- 5b1f17b1804b1-49e61987ecfmr34418735e9.8.1789117400688; 
- Fri, 11 Sep 2026 02:03:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:3acb:b0:49c:dcec:bd27 with SMTP id
- 5b1f17b1804b1-49e61987ecfmr34416985e9.8.1789117398927; 
- Fri, 11 Sep 2026 02:03:18 -0700 (PDT)
+ bh=SMrXl840QxHcg/H4ML9GgiuvmC8Z3gLSM3n2uW6G38c=;
+ b=ag5hPuKKOZxU9XdBI59O2b2YgweAV0pbkuATnIUq0ZRpQhbbpEK++mLvCY9aRDBMFx
+ 9SwEQqVCAzKbs/hGJe3TKI2Vw9fzlwn6vB3c2dc3ZH2e8bkQ9FQ0wV38mkP+UMV2zuZI
+ wspOdA9C1lbFKXz8+2VaqpTH0584FYF5CKC7zEVNHFYcENEswGMem07QeQySkRFvWFP5
+ IZf4sfT3ToFuhvr08NVBkbMDQnUVwqNxTIPJlx6Q/6RqcJPA56yVAKt8jwpWvQvG4BeO
+ 35gD7aYhfJwcC/U7BPBut77y/biJSicnlRFM6UHSr9I+Y2BVFdCYKX836ZVPAqj7+suj
+ u16w==
+X-Gm-Message-State: AFuF++m0Mn0oxqaJSJW3JNSV/QpNgiY5WI6Td0Y6Ey8ZKYymVrUAWz95
+ 1Pg1hpdQEgWfyvT+bapL9lxc0DNc2/QjtUuIv2zvsEnbNtaUOP3HZW6KLDI1AV6p/qpUwMeFu6Y
+ 1zGg5WGPeGFDrjqbkYjO8nfVRVDxe0lQGTff3tgkpYl+uMENbLup7V/aOsGL8azmPuJGs6qiGDS
+ ahAf3vSay5T6mmGYt0UGKr0b6zBIolVTNzqQ==
+X-Gm-Gg: AYBFou3Dzxq81rFAEMdzhskRnubGaefCAEu/OpTdriunFDv3VR4S9d6fwWBicBB0d65
+ U6sHw2KyjqHFLZFmJ/UDzDUoVblVeOdpTRi6oMLUzMG7b4Y0grQk0lH4A1SEf1JCpopJgwAVufu
+ jH9tVdxUHCTQVCsS4OUj2eH/I1DFIBpz1QuvAPgP1vKlbrjnrlJlEancmPFd/waMIROInvwmijx
+ hIqSio+P4wrbJr2k1dF2w+Z+YnKXelpJqseRg7RJO6Jw/Y8vElnto0qeq+wOOjXl/lwzdhAP1ZK
+ QqfwsrhB8RAZytZ6N3fx/zc9u8TGc8EUmnpuY9YoIRk1vOvDZQjuG2i6Khl84xPZOO9llzIIDs3
+ 0gLDvc0Ox8lG3XMduN8bb1ZU=
+X-Received: by 2002:a05:600c:3b1f:b0:49d:25b0:cc60 with SMTP id
+ 5b1f17b1804b1-49e619d1d24mr37106075e9.29.1789117349288; 
+ Fri, 11 Sep 2026 02:02:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b1f:b0:49d:25b0:cc60 with SMTP id
+ 5b1f17b1804b1-49e619d1d24mr37105265e9.29.1789117348635; 
+ Fri, 11 Sep 2026 02:02:28 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26be3e35sm134877635e9.2.2026.09.11.02.03.17
+ 5b1f17b1804b1-49e60946249sm69455245e9.0.2026.09.11.02.02.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:18 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:16 -0400
+ Fri, 11 Sep 2026 02:02:28 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:02:26 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v2 50/75] tests/acpi: x86: update golden masters for IVRS
-Message-ID: <51bb6779c0d0b106ef1f283acacb6d9a4d8d0374.1789117222.git.mst@redhat.com>
+ Davidlohr Bueso <dave@stgolabs.net>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v2 29/75] tests/qtest/cxl: Add CXL Fixed Memory Window
+ restriction flag tests
+Message-ID: <c8d19a018b5abcb436ba7f8f9993981b8f288290.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,143 +122,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-Differences between disassembled ASL files for IVRS:
+Add a /pci/cxl/cfmw group exercising the configurable CFMWS Window
+Restrictions.
 
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/x86/q35/IVRS.ivrs, Mon May 11 11:21:47 2026
-+ * Disassembly of /tmp/aml-NGQ9O3, Mon May 11 11:21:47 2026
-  *
-  * ACPI Data Table [IVRS]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
-
- [000h 0000   4]                    Signature : "IVRS"    [I/O Virtualization Reporting Structure]
- [004h 0004   4]                 Table Length : 000000B0
- [008h 0008   1]                     Revision : 01
--[009h 0009   1]                     Checksum : 74
-+[009h 0009   1]                     Checksum : CB
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
-
--[024h 0036   4]          Virtualization Info : 00002801
-+[024h 0036   4]          Virtualization Info : 00203441
- [028h 0040   8]                     Reserved : 0000000000000000
-
- [030h 0048   1]                Subtable Type : 10 [Hardware Definition Block]
--[031h 0049   1]                        Flags : D1
-+[031h 0049   1]                        Flags : 51
- [032h 0050   2]                       Length : 0038
- [034h 0052   2]                     DeviceId : 0010
-
- [036h 0054   2]            Capability Offset : 0040
- [038h 0056   8]                 Base Address : 00000000FED80000
- [040h 0064   2]            PCI Segment Group : 0000
- [042h 0066   2]          Virtualization Info : 0000
--[044h 0068   4]            Feature Reporting : 00000044
-+[044h 0068   4]            Feature Reporting : A0000064
-
- [048h 0072   1]                   Entry Type : 02
- [049h 0073   2]                    Device ID : 0000
- [04Bh 0075   1]                 Data Setting : 00
-
- [04Ch 0076   1]                   Entry Type : 02
- [04Dh 0077   2]                    Device ID : 0008
- [04Fh 0079   1]                 Data Setting : 00
-
- [050h 0080   1]                   Entry Type : 02
- [051h 0081   2]                    Device ID : 0010
- [053h 0083   1]                 Data Setting : 00
-
- [054h 0084   1]                   Entry Type : 02
- [055h 0085   2]                    Device ID : 00F8
- [057h 0087   1]                 Data Setting : 00
-@@ -62,33 +62,33 @@
- [061h 0097   2]                    Device ID : 0000
- [063h 0099   1]                 Data Setting : 00
- [064h 0100   1]                       Handle : 00
- [065h 0101   2]        Source Used Device ID : 00A0
- [067h 0103   1]                      Variety : 01
-
- [068h 0104   1]                Subtable Type : 11 [Hardware Definition Block]
- [069h 0105   1]                        Flags : 11
- [06Ah 0106   2]                       Length : 0048
- [06Ch 0108   2]                     DeviceId : 0010
-
- [06Eh 0110   2]            Capability Offset : 0040
- [070h 0112   8]                 Base Address : 00000000FED80000
- [078h 0120   2]            PCI Segment Group : 0000
- [07Ah 0122   2]          Virtualization Info : 0000
- [07Ch 0124   4]                   Attributes : 00000000
--[080h 0128   8]                    EFR Image : 00000000000029D3
-+[080h 0128   8]                    EFR Image : 00000000000028D1
- [088h 0136   8]                     Reserved : 0000000000000000
-
- [090h 0144   1]                   Entry Type : 02
- [091h 0145   2]                    Device ID : 0000
- [093h 0147   1]                 Data Setting : 00
-
- [094h 0148   1]                   Entry Type : 02
- [095h 0149   2]                    Device ID : 0008
- [097h 0151   1]                 Data Setting : 00
-
- [098h 0152   1]                   Entry Type : 02
- [099h 0153   2]                    Device ID : 0010
- [09Bh 0155   1]                 Data Setting : 00
-
- [09Ch 0156   1]                   Entry Type : 02
- [09Dh 0157   2]                    Device ID : 00F8
-@@ -98,27 +98,27 @@
- [0A1h 0161   2]                    Device ID : 00FA
- [0A3h 0163   1]                 Data Setting : 00
-
- [0A4h 0164   1]                   Entry Type : 02
- [0A5h 0165   2]                    Device ID : 00FB
- [0A7h 0167   1]                 Data Setting : 00
-
- [0A8h 0168   1]                   Entry Type : 48
- [0A9h 0169   2]                    Device ID : 0000
- [0ABh 0171   1]                 Data Setting : 00
- [0ACh 0172   1]                       Handle : 00
- [0ADh 0173   2]        Source Used Device ID : 00A0
- [0AFh 0175   1]                      Variety : 01
-
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807061250.27739-8-sarunkod@amd.com>
+Message-ID: <20260720233242.901544-6-dave@stgolabs.net>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/x86/q35/IVRS.ivrs           | Bin 176 -> 176 bytes
- 2 files changed, 1 deletion(-)
+ tests/qtest/cxl-test.c | 95 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 95 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 33e9981655..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--tests/data/acpi/x86/q35/IVRS.ivrs
-diff --git a/tests/data/acpi/x86/q35/IVRS.ivrs b/tests/data/acpi/x86/q35/IVRS.ivrs
-index 7f9e91aabc0b7777a7efc9f219587a4f91f0edb1..b3b809c65f026fde0a49a2243a3216e7b8c87502 100644
-GIT binary patch
-delta 67
-zcmdnMxPg(&Gb|{00|NsC<LQZ9QYwxn3JfqH5NN?5z~I2Zz;NRqOe}?gVZp=+3KKIV
-Lm@aBeY|;Y&z19uv
-
-delta 64
-zcmdnMxPg(&Gb|{00|NsCW64A=DMdyN1~?G7Xu%-B;K0DZaN{3L&}Cw;^27`YrpuZW
-GoAdyMuMFt`
-
+diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+index 8fb7e58d4f..49d820cde1 100644
+--- a/tests/qtest/cxl-test.c
++++ b/tests/qtest/cxl-test.c
+@@ -81,6 +81,13 @@
+     "-object memory-backend-file,id=lsa3,mem-path=%s,size=256M " \
+     "-device cxl-type3,bus=rp3,persistent-memdev=cxl-mem3,lsa=lsa3,id=pmem3 "
+ 
++/* Single pxb + volatile type3 + one window; base for the CFMW tests. */
++#define QEMU_CFMW \
++    "-machine q35,cxl=on " \
++    "-device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 " \
++    QEMU_RP QEMU_T3D_VMEM \
++    "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G"
++
+ static void cxl_basic_hb(void)
+ {
+     qtest_start("-machine q35,cxl=on");
+@@ -117,6 +124,81 @@ static void cxl_2root_port(void)
+     qtest_end();
+ }
+ 
++/*
++ * CFMWS "Window Restrictions" (CXL r4.0 9.18.1.3) are configurable per
++ * window; check that valid restriction sets are accepted.
++ */
++static void cxl_cfmw_default(void)
++{
++    /* No coherency flag advertises both HDM-D and HDM-H. */
++    qtest_start(QEMU_CFMW);
++    qtest_end();
++}
++
++static void cxl_cfmw_host_only_off(void)
++{
++    /* Disabling host-only leaves device-coherent (HDM-D). */
++    qtest_start(QEMU_CFMW ",cxl-fmw.0.host-only=off");
++    qtest_end();
++}
++
++static void cxl_cfmw_device_coherent_off(void)
++{
++    /* Disabling device-coherent leaves host-only (HDM-H). */
++    qtest_start(QEMU_CFMW ",cxl-fmw.0.device-coherent=off");
++    qtest_end();
++}
++
++static void cxl_cfmw_back_invalidate(void)
++{
++    /* Back-Invalidate implies device-coherent (HDM-DB). */
++    qtest_start(QEMU_CFMW ",cxl-fmw.0.back-invalidate=on");
++    qtest_end();
++}
++
++static void cxl_cfmw_fixed_config(void)
++{
++    qtest_start(QEMU_CFMW ",cxl-fmw.0.fixed-config=on");
++    qtest_end();
++}
++
++static void cxl_cfmw_device_and_host(void)
++{
++    /*
++     * device-coherent and host-only may both be advertised (the spec
++     * permits multiple bits set); this must be accepted -- a regression
++     * guard against reinstating a device/host-only mutual exclusion.
++     */
++    qtest_start(QEMU_CFMW
++                ",cxl-fmw.0.device-coherent=on,cxl-fmw.0.host-only=on");
++    qtest_end();
++}
++
++static void cxl_cfmw_volatile_only(void)
++{
++    qtest_start(QEMU_CFMW ",cxl-fmw.0.persistent=off");
++    qtest_end();
++}
++
++static void cxl_cfmw_persistent_only(void)
++{
++    qtest_start(QEMU_CFMW ",cxl-fmw.0.volatile=off");
++    qtest_end();
++}
++
++/* Two windows in one VM: a Back-Invalidate window and a host-only window. */
++static void cxl_cfmw_two_windows(void)
++{
++    qtest_start("-machine q35,cxl=on "
++                "-device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 "
++                "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 "
++                QEMU_RP QEMU_T3D_VMEM
++                "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G,"
++                "cxl-fmw.0.back-invalidate=on,"
++                "cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=4G");
++    qtest_end();
++}
++
+ #ifdef CONFIG_POSIX
+ static void cxl_t3d_deprecated(void)
+ {
+@@ -233,6 +315,19 @@ int main(int argc, char **argv)
+         qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_window);
+         qtest_add_func("/pci/cxl/rp", cxl_root_port);
+         qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
++        qtest_add_func("/pci/cxl/cfmw/default", cxl_cfmw_default);
++        qtest_add_func("/pci/cxl/cfmw/host_only_off", cxl_cfmw_host_only_off);
++        qtest_add_func("/pci/cxl/cfmw/device_coherent_off",
++                       cxl_cfmw_device_coherent_off);
++        qtest_add_func("/pci/cxl/cfmw/back_invalidate",
++                       cxl_cfmw_back_invalidate);
++        qtest_add_func("/pci/cxl/cfmw/fixed_config", cxl_cfmw_fixed_config);
++        qtest_add_func("/pci/cxl/cfmw/device_and_host",
++                       cxl_cfmw_device_and_host);
++        qtest_add_func("/pci/cxl/cfmw/volatile_only", cxl_cfmw_volatile_only);
++        qtest_add_func("/pci/cxl/cfmw/persistent_only",
++                       cxl_cfmw_persistent_only);
++        qtest_add_func("/pci/cxl/cfmw/two_windows", cxl_cfmw_two_windows);
+ #ifdef CONFIG_POSIX
+         qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+         qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
 -- 
 MST
 
