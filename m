@@ -4,115 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BE2C88E45
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 15:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0841AC88E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 15:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x53JS-0004Ts-Aw; Fri, 11 Sep 2026 11:37:14 -0400
+	id 1x53PV-0006C7-94; Fri, 11 Sep 2026 11:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x53JO-0004TO-2R; Fri, 11 Sep 2026 11:37:11 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x53PS-000683-6e
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 11:43:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x53JL-0001IZ-Dz; Fri, 11 Sep 2026 11:37:09 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68BF1WoS2143612; Fri, 11 Sep 2026 15:37:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=esfT4z
- d7fNL8YSXk8r9UKtK3mhLZs6rJQkSvPtgye4w=; b=RhAmsPqk7CNPJOnlfq1lP9
- MxBE5wRK5chl5Tdx90OLM+MuqTcmBQXNzOpgbpSOD7l9C3LHwKURd4SLT9nWadSG
- fTWfJc9mtW2/s/A9OeifSBFmuYJCMDCycMmhIin880W8z2m5JUZlbTpRu0HUEEv3
- U9wJE+KGejnxsal3WqQw/mG366qWZuu8CsTkHUb/Pb4XseiuX2GpJ/HYUt4bTMUA
- 8cikdBRcsDcNEFoSZW5LYwInnDp4HXNHrVCJL5rBoOjaF6O/elNlbDU+89vA/Zwm
- PU/cqhPilEi2AgqD8EzMbww75+V2kYFiSBB8+uyjSmdTpz1tndsd1CapWUMDLNcg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gkd8t4afu-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 11 Sep 2026 15:37:03 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68BEoCjY1817586; Fri, 11 Sep 2026 15:37:03 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gkvnrq4qs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Sep 2026 15:37:03 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68BFb1A32622104
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Sep 2026 15:37:02 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BDBF758052;
- Fri, 11 Sep 2026 15:37:01 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5893958045;
- Fri, 11 Sep 2026 15:37:00 +0000 (GMT)
-Received: from [9.61.96.29] (unknown [9.61.96.29])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Sep 2026 15:37:00 +0000 (GMT)
-Message-ID: <85cbd068-dfcc-4a43-a4ba-abe83273565b@linux.ibm.com>
-Date: Fri, 11 Sep 2026 11:36:59 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x53PP-0002BZ-MH
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 11:43:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789141396;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9cHZKywM/PAXFaWgVDfjM1O3FfYQJZ27esAI8XiyWLo=;
+ b=hpuODZIVC+r6IAdAkP1vyRTrhYSC/rFdiRJr9Rj1CjY7kk6bAvtdqaCiQ0q4M7Ywa0+sey
+ Qi7vqX33bm2tCSqNhLnmk/BjeKZ87H9/0XbqlY6gOfLx+1k1Su6v7L/K2h5B03kcJYK62L
+ WaFvQBlH6pM/fJoNuo6fNv1uU+JOq9E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-915dPdZUOhy4Jle1Metp-g-1; Fri,
+ 11 Sep 2026 11:42:52 -0400
+X-MC-Unique: 915dPdZUOhy4Jle1Metp-g-1
+X-Mimecast-MFC-AGG-ID: 915dPdZUOhy4Jle1Metp-g_1789141359
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F37B819540D3; Fri, 11 Sep 2026 15:42:38 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F2A3030002C7; Fri, 11 Sep 2026 15:42:37 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] tests: add SELinux label to container volume mounts
+Date: Fri, 11 Sep 2026 19:42:35 +0400
+Message-ID: <20260911154235.448312-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] tests/qtest: Add s390x virtio net PCI test to
- pxe-test.c
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
- jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- jdaley@linux.ibm.com, pbonzini@redhat.com
-References: <20260903162449.2588271-1-zycai@linux.ibm.com>
- <20260903162449.2588271-7-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260903162449.2588271-7-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDIxNyBTYWx0ZWRfX/qUDtPzrnkBQ
- Awh+fCHM1VN3NjeFm5kCDb3qkogvNseWfqZWxUf30/R/YrEoRyCvFFALq14EzOfH1BGq3DErk+R
- HESrN1kqVQpBql6dosutmfeLyu24/YQ=
-X-Proofpoint-ORIG-GUID: 8hDJBuz1PE7NoDPH5h4e7QzzVxyzWFG-
-X-Proofpoint-GUID: 8hDJBuz1PE7NoDPH5h4e7QzzVxyzWFG-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDIxNyBTYWx0ZWRfXzGdSCZBs7hdh
- KMiH2skL4NFNV8NK0fSHUactwFWEfmWZ2mgeOeu4VO9nD9DXJOfGq7iD4+a+6IHszfGnd7UUTQD
- iv4nrjjNYXbt5UleVnYNvEwlohTZg/zsbH0e9e4laU8Rzr9NVJmK1N0hm9GoLOvBkHzNUzrMz1W
- k2Pm/Up5OUYaUqK5qL8qf6Sa/kAMPH9ps9s22cc/loL1HpNxXHrye9hEMIwBymNDtue8XaXG8TG
- 3HgjAbqsdpY2FVi8IbYvWtEcZ+ozdECwWVU965bszWj4jER3Kl6skmcLCxFcc8d2hRcrC2DIuwU
- OYTvbV4Y6UaT4/k91RLOFdFai2W0Oopx/cAHCe/o7X3kmv3UyeWStmwagcoozbhev+HJjghnBIK
- bJo8rQJ9+wyFCGbD5bcMuZrpUHxh5t69gwomOgIXCuNNkd7oyfMqHn4T5GKEjMmZLaXfUnCDkLP
- wJgRsWygCx6Mg2+dwEg==
-X-Authority-Analysis: v=2.4 cv=PIGaavqC c=1 sm=1 tr=0 ts=6aa4201f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=hNTO0ZySSFXKkZstvnIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-11_05,2026-09-11_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110217
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,64 +84,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 12:24 PM, Zhuoying Cai wrote:
-> Add test coverage for virtio-net-pci network booting on s390x by
-> including it in the PXE test suite. The test verifies that PXE
-> network booting works correctly with virtio-net-pci devices.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Realized I shared some findings off-list, but never included them here.
+The cross-compilation container mounts lack the :z SELinux label.
+On Fedora with SELinux enforcing, container_t is denied read
+access to user_home_t files, failing the build.
 
-> ---
->  tests/qtest/meson.build | 1 +
->  tests/qtest/pxe-test.c  | 1 +
->  2 files changed, 2 insertions(+)
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 50a1a5272f..654e145fbe 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -289,6 +289,7 @@ qtests_aarch64 = \
->     'migration-test']
->  
->  qtests_s390x = \
-> +  (slirp.found() ? ['pxe-test'] : []) + \
+Add :z to volume mounts in docker.py CompilerRecipe and in the
+TCG meson.build, matching the existing extra source paths.
 
-AFAICT this patch not only adds pci testing, but re-enables pxe-test for
-virtio-net-ccw.  Sounds like this got accidentally removed along the way?
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ tests/docker/docker.py | 2 +-
+ tests/tcg/meson.build  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-If that's the case I think this should be its own fix patch.
-
-Alternatively, at least mention it in the commit subject/message.
-
->    qtests_filter + \
->    ['boot-serial-test',
->     'drive_del-test',
-> diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
-> index e85dec5a4e..bfa3b98cad 100644
-> --- a/tests/qtest/pxe-test.c
-> +++ b/tests/qtest/pxe-test.c
-> @@ -60,6 +60,7 @@ static testdef_t ppc64_tests_slow[] = {
->  
->  static testdef_t s390x_tests[] = {
->      { "s390-ccw-virtio", "virtio-net-ccw" },
-> +    { "s390-ccw-virtio", "virtio-net-pci" },
-
-I noticed that if I attempt to run this test using a bios that is not
-built with this series included, the virtio-net-pci test does not fail
-gracefully.
-
-Joy investigated, turns out instead of detecting the condition (no
-suitable device found) the tests simply get killed by timeout; would be
-good to detect this condition for s390x if possible.
-
-Thanks,
-Matt
-
->      { NULL },
->  };
->  
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index 315fa2ff848f..bdfea380339d 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -626,7 +626,7 @@ def run(self, args, argv):
+             argv = argv[1:]
+         cwd = os.getcwd()
+         cmd = ["-w", cwd,
+-               "-v", "%s:%s:rw" % (cwd, cwd)]
++               "-v", "%s:%s:rw,z" % (cwd, cwd)]
+         if args.paths:
+             for p in args.paths:
+                 cmd += ["-v", "%s:%s:ro,z" % (p, p)]
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index d41a228fb3df..221c277dd09a 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -266,7 +266,7 @@ foreach target, plan: tcg_tests
+       build_test_depends += image_targets[cc_dockerfile]
+       build_test_depend_files += dockerfile
+       mount = meson.project_source_root()
+-      mount = mount + ':' + mount
++      mount = mount + ':' + mount + ':z'
+       here = meson.project_build_root()
+       cc = [docker_wrapper, 'run', '--run-as-current-user',
+             '-w', here, '-v', mount,
+-- 
+2.55.0.543.g5ebe2ebe4ea8
 
 
