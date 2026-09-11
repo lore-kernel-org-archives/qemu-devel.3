@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC402C88E54
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C03CEC88E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:13:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xB3-0006bK-Tn; Fri, 11 Sep 2026 05:04:10 -0400
+	id 1x4x9U-0002wr-Fr; Fri, 11 Sep 2026 05:02:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAj-0004ei-Ai
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9F-0002Oz-MH
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAh-0008MO-QW
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x9D-00088q-Sf
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:02:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117427;
+ s=mimecast20190719; t=1789117335;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
- b=LdeO+wk4RTpJo3/q3ggtPFtLjj/Ki5zW8ou+xfxofOrAPMGx4fDR9Tu0KYqLKg/kfyOGmI
- LF//HasPbN61Ve4UD1q0NZnHBe0s7YWMg4DmaJnLkDG1AR3tcQ2b/O56wDqTHBa0SeD6aG
- GF9KM8N1DanGRI5yVIHSI3ciz8DOXz4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e6oAhYiiIn3xpeHIgSvH0lgBJsq4uFVnZ7OcjCH2hOg=;
+ b=dLeDFAreUQeS9tRWb7wVgw5SasjSH4HwC9T+7fNMJwMdd1g19feuBPqmqk9i4VWDqFmjY3
+ qVO4pv0YT9yGzxZhI17tP2zRpUJ8oKD2iwFoOSq6j4m0zfBx2c5ZciMYxa9i12E5DT13TI
+ xKGXsnysfeWhUD31DOdgLH5RrUgQvlg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-KjsOjIxmPbC1nwHNeZ9l5A-1; Fri, 11 Sep 2026 05:03:46 -0400
-X-MC-Unique: KjsOjIxmPbC1nwHNeZ9l5A-1
-X-Mimecast-MFC-AGG-ID: KjsOjIxmPbC1nwHNeZ9l5A_1789117425
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490a767c7dcso5386945e9.2
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:45 -0700 (PDT)
+ us-mta-139-dnktDI60MTmIy3aUTcnwFQ-1; Fri, 11 Sep 2026 05:02:14 -0400
+X-MC-Unique: dnktDI60MTmIy3aUTcnwFQ-1
+X-Mimecast-MFC-AGG-ID: dnktDI60MTmIy3aUTcnwFQ_1789117333
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-485afdd5079so544505f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117425; x=1789722225; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117333; x=1789722133; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
- b=R7iqxbSvIpiTpdOoNYCGRVvlErUgUWvFoA3R5ZFC68rGssHRPMlAQs1xhhq94PcZeG
- 7lbuhLynP05Wt1MNkBxvxcfWFvUZcyIg8VUfTD6DE/pSz/l8sW41v2eTo0+wVQqAvaLP
- JaXn9uEMq3iRvy/UxWm5kHB6i36gb/q3ckFo0b+ftcNwHNaiMmEinV1j4SmAxUbHXyCb
- SsIFxgz9NpQnAYiSjikjHpPLrGL8yfAmkdY4D8eTZfYcZR4SNz/jXvfJ+fx8FYjCuZcH
- mLCQYVy+rn6HAxC5k3dsIPmEkY5TX35Q/LJedfGumz1orVeFmaSyQWdP3HDUd6YuVg71
- iNAQ==
+ bh=e6oAhYiiIn3xpeHIgSvH0lgBJsq4uFVnZ7OcjCH2hOg=;
+ b=b8QjTJBXicdBasexbnMNUCFNwRF1j0h83D87ezk7nOuF7Z2hrHiWU6pi6/YCX+zGkO
+ ct600bQjvFrP6xUdWjq4fPbp/FLhne5mzvDJRdE5FjM9rhCNO4zD9aMLccEwMV/vQpyl
+ K919bEf4UOxcjg4IPGeo4bqHVXU9yEZZ2RzpX3+s2vx8vCzIuh1mCHRy6ouflzDsPdCt
+ 0fYqlgh+bea5jH31xcoO15WKqU+e6NrGYkDbirCch3HKqRAzKXN5vFIxQmrg5NSOW0xv
+ lQXZP9fDUOuGVm3oechf0qtDrQPug7wfkTlpp+MqoYBY94t3ZPYnBfTyDKXmxNU3OYq6
+ wv5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117425; x=1789722225;
+ d=1e100.net; s=20251104; t=1789117333; x=1789722133;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=c093DEqy/fkrW/Lhh1nhHFo8QJoMiHWxFZZ8F2Ne0/E=;
- b=IfvyphmX3BZkyNrcOYpPkHpOG43mrsX8uaP1YM8jL/XlLf6S4GJzyI0LGg7xTwgUek
- 6czJEzF/Too4VSB+eEaAq4Xf0Dx2mkId1H3cvKKuQ01lbQLGS2X+a8NgAII2vm17cScC
- PETgBBa6RTLENXjueSMiVT8YzpaZNszuBIsthLCSQUJIwKywLlz1Xafs3r63m7VTACNw
- uuhroOCGndqmEXlLBcXLl4e9vkKjIZgYLBGiannLD/ZVR1jlZIGLasbjTWhT/8thqXnx
- PdHFXis5ZZgtBXlEeaXJ3fZs7x536kV9H7QeMHoHQ8fBDkKZ8Wz3DqbEJvX+Gy1hjaD7
- FS2w==
-X-Gm-Message-State: AFuF++n0S/97Jw0HcfljXhFYRDpZYoQ5HO3/NTzMUYwdROU19tSJBsvt
- GjQgkoJjkOHpb9f/EzOHMvLUozHbVrhI4lbxxp5V6A0JtEVGLVbsVrd5D6BftSraSQRz7shGym9
- /zJxPLWJFqW2XYKsnr1BEIbKw6P7Qp/x88+1nKAxevKH3kh+GIHOeKfZHLrcVgmd9H1ZXoddnCP
- BWuudaOOwQzCw8qs+LRZJZGZu7POPb+PgVUQ==
-X-Gm-Gg: AYBFou3FDbQqBgH9M8o0FEhrJvO4/LPEFG7nipgOvz4cCuN9qH1hl6uD7kfnPA3Jqg/
- /BQ8W2B/hVX0HVlOHJfzPDIl3Dk1qFg+3ALr6iMJQDRxxxDwEVd3xRIWPF1hX7Ftnk1Tsb5upLn
- w9YpaNNHyOTC/t68rBcxCxqxuIXtzIjnoZHW/rXn3QbE5SsO7yecezDkR1rhJIJc9pUjOnZUphi
- rfKY9Oqu3dpNxSUZXfByBuT2jpR1VQ6TvNtI8H4S9DDlkbTC3vKnsWwnMREzcD41PJV7lP4cp+X
- bEBhtmbkUlOpOr7/1O200xcVnlVYdCWYQR1/Qt/zhjEZEdu4aj2yOkTeQbDQ8bHR7eQuHudbh7K
- z4W2qgGsfFB+wkEEZ9DBuK0I=
-X-Received: by 2002:a05:600c:3d96:b0:49d:72d:9ba3 with SMTP id
- 5b1f17b1804b1-49e619b5dddmr30878335e9.14.1789117424440; 
- Fri, 11 Sep 2026 02:03:44 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d96:b0:49d:72d:9ba3 with SMTP id
- 5b1f17b1804b1-49e619b5dddmr30877635e9.14.1789117423926; 
- Fri, 11 Sep 2026 02:03:43 -0700 (PDT)
+ bh=e6oAhYiiIn3xpeHIgSvH0lgBJsq4uFVnZ7OcjCH2hOg=;
+ b=mT6EwaiRxGXbXwG3E9UJhxe8xmNcoaWjmkPI3RdmB1M6Z6aojDlgvWLQFPOzF5mMxr
+ L04G2O+yyQ380iHCLNFA205T2vuOjAvmQmQemhp6jGoBkFQOETXsrDAi1jVAGdgr6X0M
+ v0FeLx7ElbGNpzexhSDagyFVLnpLHivRPyI+rpufdE8+qH2vkm/TGj9Ln370yLEjoA+x
+ yvJVD/cRE7b78ptTL+0jD6osr8GTfPNk6x4G0sete14W9u/imySnkNyWhiCNcE93KvQU
+ xbBMG0xKsmuEVWITorUtfC5UHr3muTnuuA6TteROY60/UdojeT6ObNlJG0keeRFWXwLW
+ xQLw==
+X-Gm-Message-State: AFuF++kQJOfoGzzfvUQjH8EOFxc1/nGcxPZ5YmDEow0rsOnfpi/As/Bs
+ f9tgX/IHAC9dmxsXLRqN4vLsbLUTeF+zAqNwsc+pZc8XNzKJ1rY9Jgi/cai/vbQDfBZpEBg/ud5
+ Og7/sMR/sdlF+Lp28Y+wycVmaIXp5eaURcfnb1xmln/AB+HHCwaovv1reXvRN1lDnnu+jUAtjF+
+ Q4HWLRvHPc/b6t4zmr2aUGxouMJwllLaLzjQ==
+X-Gm-Gg: AYBFou3Sg2j5KKq/BLjvIdnHqWsFV0SdOoc6YxmnDfqPhgA30X4v0I8pN+Vfu/iVBhZ
+ RNhplmNuib6Al4bayemFOmdnpDGPI5aNIkY0KiIDoyqvudSRAoNvWCjQvQcFqIZ76Q+tic1KOYg
+ Cw/bcFNWIHkhGonjOjjVYNiWmrFnYdC/ky7eLxwANd7YUULvfwyMQB3PHsNBFkMBMzaxPlnkOQ0
+ A+0lLGilEGIJuP+ji6FtKfs4ugHja2GYOX6sV1yXl9Yac9Bfdmtc1qZUQL5gxXIJ88VXn9GSp2W
+ xwY8gN8SqFTf6H0Uud+/ePpit2ZFaSxMBvcws4krR2NwfG03MZx6/FOp1HQcKlfYzylYgdmPCxo
+ Ppfhxsd5NJuihJdrZfFNPOF4=
+X-Received: by 2002:a05:6000:70c:b0:486:ed36:ba6 with SMTP id
+ ffacd0b85a97d-486ed360cc2mr3114357f8f.56.1789117332442; 
+ Fri, 11 Sep 2026 02:02:12 -0700 (PDT)
+X-Received: by 2002:a05:6000:70c:b0:486:ed36:ba6 with SMTP id
+ ffacd0b85a97d-486ed360cc2mr3114294f8f.56.1789117331791; 
+ Fri, 11 Sep 2026 02:02:11 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e62231360sm29818345e9.4.2026.09.11.02.03.42
+ ffacd0b85a97d-486eb34fdd2sm4477488f8f.28.2026.09.11.02.02.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:03:43 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:03:41 -0400
+ Fri, 11 Sep 2026 02:02:11 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:02:09 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Denis V. Lunev" <den@openvz.org>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PULL v2 61/75] pci: load a device's config inside one memory
- transaction
-Message-ID: <c0aa1ba2193ac288f6710900b90ffb19c914d791.1789117222.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PULL v2 22/75] net/tap: disable read polling for stopped VM
+Message-ID: <98a0c21270709cbd1c8624618a4fd72e5e2fed99.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -97,15 +97,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,48 +121,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Restoring config space remaps the BARs, updates the bridge windows when
-the device is a bridge, and toggles the bus master region. Each of those
-commits a transaction of its own, so one device costs several flatview
-rebuilds where one would do, and the cost of a rebuild grows with the
-number of regions in the machine.
+Polling when VM is stopped doesn't make real sense, as stopped VM can't
+handle incoming traffic anyway.
 
-Nothing between them touches an address space, so the three can share a
-transaction. The saving scales with the number of PCI devices.
+And it's critical for introduction of local TAP migration
+feature in the next commit: the TAP device will be transferred
+to the target (open fd will be passed through migration channel),
+and if we continue polling on source, we may get a package, which
+we'll never handle on source (already stopped), it will be lost.
+Better is save this package for target VM to handle.
 
-CC: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260903184542.2629976-3-den@openvz.org>
+Message-ID: <20260819180201.1970193-15-vsementsov@yandex-team.ru>
 ---
- hw/pci/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/tap.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 14c78e3c62..0efb4eb4bb 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -840,6 +840,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
-     }
-     memcpy(s->config, config, size);
+diff --git a/net/tap.c b/net/tap.c
+index dd0d134875..51d028d956 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -36,6 +36,7 @@
+ #include "net/net.h"
+ #include "clients.h"
+ #include "monitor/monitor.h"
++#include "system/runstate.h"
+ #include "system/system.h"
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+@@ -92,6 +93,8 @@ struct TAPState {
+     Notifier exit;
  
-+    memory_region_transaction_begin();
-+
-     pci_update_mappings(s);
-     if (IS_PCI_BRIDGE(s)) {
-         pci_bridge_update_mappings(PCI_BRIDGE(s));
-@@ -848,6 +850,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
-     pci_set_master(s, pci_get_word(s->config + PCI_COMMAND)
-                       & PCI_COMMAND_MASTER);
+     int queue_index;
++    bool enable_poll_on_resume;
++    VMChangeStateEntry *vmstate;
+ };
  
-+    memory_region_transaction_commit();
-+
-     g_free(config);
-     return 0;
+ static void launch_script(const char *setup_script, const char *ifname,
+@@ -145,10 +148,31 @@ static void tap_update_fd_handler(TAPState *s)
+ 
+ static void tap_read_poll(TAPState *s, bool enable)
+ {
++    if (enable && runstate_check(RUN_STATE_FINISH_MIGRATE)) {
++        s->enable_poll_on_resume = true;
++        return;
++    }
+     s->read_poll = enable;
+     tap_update_fd_handler(s);
  }
+ 
++static void tap_vm_state_change(void *opaque, bool running, RunState state)
++{
++    TAPState *s = opaque;
++
++    if (running) {
++        if (s->enable_poll_on_resume) {
++            tap_read_poll(s, true);
++            s->enable_poll_on_resume = false;
++        }
++    } else if (state == RUN_STATE_FINISH_MIGRATE) {
++        if (s->read_poll) {
++            s->enable_poll_on_resume = true;
++            tap_read_poll(s, false);
++        }
++    }
++}
++
+ static void tap_write_poll(TAPState *s, bool enable)
+ {
+     s->write_poll = enable;
+@@ -379,6 +403,11 @@ static void tap_cleanup(NetClientState *nc)
+         s->exit.notify = NULL;
+     }
+ 
++    if (s->vmstate) {
++        qemu_del_vm_change_state_handler(s->vmstate);
++        s->vmstate = NULL;
++    }
++
+     tap_read_poll(s, false);
+     tap_write_poll(s, false);
+     close(s->fd);
+@@ -818,6 +847,9 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+     int sndbuf =
+         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+ 
++    s->enable_poll_on_resume = false;
++    s->vmstate = qemu_add_vm_change_state_handler(tap_vm_state_change, s);
++
+     if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
+         sndbuf_required) {
+         goto failed;
 -- 
 MST
 
