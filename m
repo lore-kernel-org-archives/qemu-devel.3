@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20447C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C900C88E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4x8l-0001m7-DJ; Fri, 11 Sep 2026 05:01:47 -0400
+	id 1x4x8r-0001rF-37; Fri, 11 Sep 2026 05:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8a-0001cf-FI
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8j-0001jI-4D
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8Y-00081R-KW
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4x8h-00082v-Iy
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:01:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117294;
+ s=mimecast20190719; t=1789117302;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cK0jKLb9Y25sWTW+STMCp41/svnDlrpZe9udpBmpYJc=;
- b=JuOLgIVG4d/gZbEdK/Zrkk6+9EmY+B75yqDYhEPy4ZjxidyKD5EEEW7MU1iPd4TOYjbLEt
- IfBL5uliwnofkFm1mqKmAA1murfMM1bXxkuaaepJeMhf84l+I1tzAITxY/PU16/NuuCxyn
- qkfiaDInWZC4ot9N/EYqeiOLcNanU2Y=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hrTN7OVSCNm9vbc/NCEC/WvGaVnoOJUhrqiC5Yh7fcA=;
+ b=ZDSz2EJbfWChx8MaHu4Z4R83pAuBd28TF7By9q7G4yBpQgUKXeR/rZsU7a5zsX6UXJAJqQ
+ 8W/8abiraNKYAS7MjKV7K993aJGFdohwaERizXi1EEbBciIWvXcLCTdFycFQeYBZe7+vAw
+ wsNTV4D1jLjUFONfIt2gp59RTJIgZtg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-100-p0CVLyvtNeupMD86e1zGdQ-1; Fri, 11 Sep 2026 05:01:32 -0400
-X-MC-Unique: p0CVLyvtNeupMD86e1zGdQ-1
-X-Mimecast-MFC-AGG-ID: p0CVLyvtNeupMD86e1zGdQ_1789117291
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-6a98570af94so1915015a12.1
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:32 -0700 (PDT)
+ us-mta-31-WoB3_NbnNV6CbdH1I7cShw-1; Fri, 11 Sep 2026 05:01:41 -0400
+X-MC-Unique: WoB3_NbnNV6CbdH1I7cShw-1
+X-Mimecast-MFC-AGG-ID: WoB3_NbnNV6CbdH1I7cShw_1789117300
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49ccfad90f1so3707835e9.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117291; x=1789722091; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117300; x=1789722100; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cK0jKLb9Y25sWTW+STMCp41/svnDlrpZe9udpBmpYJc=;
- b=PPTmO4Av2682/TAuMzMcCarLOLQZeVzyASfBibJn5FEcdi17C5WUNUG8llmOHY7JNn
- 1VQXjMdGmNhk9jzRfr10FdmhGZiuZJ76K/gL8bgxCR5lR+vIPA/UH6kNhit5Vs/MABFM
- DvGF7XINZxncnLn5n/FZVSaiBIwLmGY9B1JINHJULqU04LktWCRZ3H9U0+YAtpif9syN
- ovgcrN7T2ZNSXf7mgDuVMdeObEtWlPOTpHxNxnDTaj7v85zihHWbu+YSmkGITaGXF0B3
- AvsCEP1c7hH/xj/+Lf1D+T8tJAyIqv3LvOfhose1ppYNZ5Ez/tvtl/SrKCZsDSSrbkie
- z3cg==
+ bh=hrTN7OVSCNm9vbc/NCEC/WvGaVnoOJUhrqiC5Yh7fcA=;
+ b=oH2Dt51rHWFKRkYmKfp13btVrhhYp8t9u1pxehDbdLjHPxIO5ukyIB1z9DzvQowy2E
+ 1nNs3sKsIuVaNhh65MnrHtRgThCfc1SgCA788mPRVMAxn+paem3/5dxn5k9R+U73NPEv
+ YjH1QIJ//wj5e+7jQrEDwiGYNJXuFzIFRZCXAsI2JoAqkrh311v7Z7SQiyJ2FyAaM35l
+ miYKbORXWRu8yX2Thm8YwJNASv6U++9qpafeUAb0dQLkuEENLs5M1VBX4hRcZyavR0YE
+ J0lWui8p5IvNnaJyWOg4WXEB12AfHzG4aYWnH38XWEzHNBnxd1+aSHR81rdjEdhePfux
+ ITlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117291; x=1789722091;
+ d=1e100.net; s=20251104; t=1789117300; x=1789722100;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cK0jKLb9Y25sWTW+STMCp41/svnDlrpZe9udpBmpYJc=;
- b=DbtZsshwNjmjqnRYbsyKf0Qeg4hMJXx+uPU1tiEabqunQRVDepmhzSY9K+e9DRlQKk
- Gt9dzTMMzzaXo0qfAHY18AHNvSrVt6PVupwvEnovjmYkgeLTDpOgEEyikm5W2u1L6mJV
- fVZae2gtCP1Pzfr5i9h2FYjes4lnzrcPoWP/AZqi/8BkVX2uW+7PtfsZUdn0FLCcJGai
- DdSgGMzLfgGT/e+RkDACAHDppKOZw9bH+p61hmWlBOJy48WyDXXNPGPa4t3+IyhvkFw9
- 9Mu1D2x/d7z+WvQQcs9ZA09zdSz/NTSmPW6uRn0TodqhEDoK8jrbs1CP6TwV1SEOFKqG
- wztg==
-X-Gm-Message-State: AFuF++nTTAODtgPYkTy03w6gkUgiXs2bOo3y+w4uuLY8DUQoI6xhqCJs
- vvHthYhGvs7ocn7fkER0SgMnrLUsROorFs8GkCQqovgRXUFW0jwhQkJIwdArh88+NXfW6JMyXl5
- ckOHhirrp3w9Uz374zdpP74Oe8SnQ1gBBR9615rq42AzVo31TiuotcHVMgr04volXyncFqwuAcV
- yEuI18Yq5tGC9tKI3lD6BKSW3MYJFgqArS0g==
-X-Gm-Gg: AYBFou2n+XCH0ZKyujX/BaoCwCKMclc1lxfuZqZ+M8SlWH+eiWJ4xQi92ovITiOEaU0
- yzVlatFrEbV36VB7ESoappwSg4w2W4NVTZIRTtyN6sENycIJvFuSrVSuwaOGUNK3HhnKjy/+np3
- GYihmSf4z9YSH8tUG8u9E/RW3qB/weiUNOF3UPVwUH2SFClfjZaGdFqx6CVgzSXW8Vtp06lhz0y
- fuacF62iVF76hSu5k8YkKEgMUaanKAGJM0OQ7wed6IYkGgIOxvPjn/zsk2y4uFHbX2JXJWCjka9
- DQfTgqTcwIjT3KEZt4DLdJvpweb1YA6gN4q19kVQSAQ9ouBS5WNyPGIgydL0YbLP4MS7XN99OQi
- SMw6BTuEEU+DWPdZwImuQvhs=
-X-Received: by 2002:a17:907:3e0f:b0:c25:5159:6a25 with SMTP id
- a640c23a62f3a-c2945db2ce7mr402583366b.6.1789117290812; 
- Fri, 11 Sep 2026 02:01:30 -0700 (PDT)
-X-Received: by 2002:a17:907:3e0f:b0:c25:5159:6a25 with SMTP id
- a640c23a62f3a-c2945db2ce7mr402578366b.6.1789117289954; 
- Fri, 11 Sep 2026 02:01:29 -0700 (PDT)
+ bh=hrTN7OVSCNm9vbc/NCEC/WvGaVnoOJUhrqiC5Yh7fcA=;
+ b=MDikhgtr8DJyRqVAqV+YFpAGEIE7upcwYfHLWAPSqiqGffXhItj3iWUrLZaVxJZxk+
+ +3C/ca3/Zr39zcCBcwQQlIMyaZmHartoJ1sQ+FWJQdwP07QL7B7FUsMRInLqkiNz63un
+ UVRLyWyy+LyHpkQ3EBBCRSfEBIZz1+/Ysz4wGl+PEkA9Q5QrbrR4jO37rVYXSksElqgn
+ QuU4Eg452E9sLsDPKTOduZVFIJWaloyX7sPBEIFlMfG751vuxWxqGLtk6mQcTUMPlyDP
+ lgubhrUUbwAIlTc1Q9Qp3YjtU/SC0DI7J8/0AP+wXAnRzHYEdmxf4Rs7peCHOJvuX9um
+ ugVQ==
+X-Gm-Message-State: AFuF++l2A7xNhkgmal3qwbYXKB1h6LMHcyCKGmQ4AjcZHHzHsdTow9Bf
+ nz2YS+379BWL5mUvHl7UbieUZafO8+7tY7MzNrl+Uk/RCUxZAW3EVLB6sTZQPKbyFGVSYY540KS
+ yam4BQ7fFBItfAf8lU8pcIv6KT57W6kx2Y1IVKoxrje77anOzhcYIPFH7y0A1YM+LAc/9SSJ25X
+ yoaXW5sMbSStCTiUNb7dbbA/9spZ063uIwUA==
+X-Gm-Gg: AYBFou1dbkQ6je6Yoha3LJeQvfBRphhVkrK5OiHOYtRzo+W7i1WLi7G/8McMgqQUpMY
+ AS1ChiomL4i0pnsC3wFvYZlrpj+85fLhPzfbWCbIbkOlDBdGaqtRm4S82UGJqC3T1XVOK787a5U
+ MtwigjQj8EsZdTyb5hMBMwz/Pgzk3tTzWMcAgo1nmDkr8uuTlze8OWV2WVDIBOQJEb1sQC3iLrh
+ uQA4DOLLLquRVTKF8TnDzvuI6eU8P6oASB+D7BaWovOObIHQGGHZnuCy7+42cW/JmgMAysTTboq
+ UiIi+3kG12xuP8z/JAO+gtW/JW8TLRkh8ypXvlmeh/ZxOQ4WVBDWA5wjdDRkfepBU7BiYviPA9V
+ aycJYDPL7OV00VEcF4+6Oxo4=
+X-Received: by 2002:a05:600c:c490:b0:49c:fc6c:bdfa with SMTP id
+ 5b1f17b1804b1-49e619e1cf0mr31421755e9.17.1789117300326; 
+ Fri, 11 Sep 2026 02:01:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:c490:b0:49c:fc6c:bdfa with SMTP id
+ 5b1f17b1804b1-49e619e1cf0mr31420675e9.17.1789117299211; 
+ Fri, 11 Sep 2026 02:01:39 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2966021d0dsm58249166b.10.2026.09.11.02.01.28
+ 5b1f17b1804b1-49e61a7a686sm40644845e9.1.2026.09.11.02.01.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:01:29 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:01:27 -0400
+ Fri, 11 Sep 2026 02:01:38 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:01:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>, Dorinda Bassey <dbassey@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v2 05/75] linux-headers: add VIRTIO_ID_MEDIA
-Message-ID: <90cb8b107339ae32360e954bd26357ea6e5fe3de.1789117222.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Ben Chaney <bchaney@akamai.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PULL v2 09/75] net/tap: rework tap_parse_script
+Message-ID: <a225c01f02fa7648dbe3c23fd9a46b2c171b239c.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -97,15 +98,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,32 +122,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-The ID was added in Linux commit 2187be212179 ("virtio: Add ID for
-virtio media") and is included in v7.3-rc1.
+Factor out tap_is_explicit_no_script() helper, to simplify
+further changes.
 
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Avoid extra copying by simpler code flow: first check for
+NULL / empty / "no" cases, then get default or do copying
+respectively.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Dorinda Bassey <dbassey@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901-virtio-media-v2-1-bd3cc9347ab9@redhat.com>
+Message-ID: <20260819180201.1970193-2-vsementsov@yandex-team.ru>
 ---
- include/standard-headers/linux/virtio_ids.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/tap.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
-index 6c12db16fa..f9056af0c6 100644
---- a/include/standard-headers/linux/virtio_ids.h
-+++ b/include/standard-headers/linux/virtio_ids.h
-@@ -69,6 +69,7 @@
- #define VIRTIO_ID_BT			40 /* virtio bluetooth */
- #define VIRTIO_ID_GPIO			41 /* virtio gpio */
- #define VIRTIO_ID_SPI			45 /* virtio spi */
-+#define VIRTIO_ID_MEDIA			48 /* virtio media */
+diff --git a/net/tap.c b/net/tap.c
+index 57ffb09885..2076f5b780 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -92,19 +92,35 @@ static void launch_script(const char *setup_script, const char *ifname,
+ static void tap_send(void *opaque);
+ static void tap_writable(void *opaque);
  
- /*
-  * Virtio Transitional IDs
+-static char *tap_parse_script(const char *script_arg, const char *default_path)
++static bool tap_is_explicit_no_script(const char *script_arg_value)
+ {
+-    g_autofree char *res = g_strdup(script_arg);
+-
+-    if (!res) {
+-        res = get_relocated_path(default_path);
++    if (!script_arg_value) {
++        return false;
+     }
+ 
+-    if (res[0] == '\0' || strcmp(res, "no") == 0) {
++    if (script_arg_value[0] == '\0') {
++        return true;
++    }
++
++    if (strcmp(script_arg_value, "no") == 0) {
++        return true;
++    }
++
++    return false;
++}
++
++static char *tap_parse_script(const char *script_arg_value,
++                              const char *default_path)
++{
++    if (tap_is_explicit_no_script(script_arg_value)) {
+         return NULL;
+     }
+ 
+-    return g_steal_pointer(&res);
++    if (!script_arg_value) {
++        return get_relocated_path(default_path);
++    }
++
++    return g_strdup(script_arg_value);
+ }
+ 
+ static void tap_update_fd_handler(TAPState *s)
 -- 
 MST
 
