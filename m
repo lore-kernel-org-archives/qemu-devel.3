@@ -4,117 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671A3C88E53
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 19:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B638C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 19:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x56UB-0000rX-L0; Fri, 11 Sep 2026 15:00:31 -0400
+	id 1x56YG-0001w2-PO; Fri, 11 Sep 2026 15:04:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x56Tv-0000qp-0u
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:00:16 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mochs@nvidia.com>)
+ id 1x56YF-0001vk-60; Fri, 11 Sep 2026 15:04:43 -0400
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x56Tr-0007Nx-61
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 15:00:13 -0400
+ (Exim 4.90_1) (envelope-from <mochs@nvidia.com>)
+ id 1x56YC-0000GZ-Q8; Fri, 11 Sep 2026 15:04:42 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=u6o4rdKySVvj/gwHujam10Lh6WN8vfeNRzo8qhVzwwQdMFYlm/4dClbQ+ggjmruuzQH5eQ+3nnHKUdPEpRgjUkoo5y8tjPxq6mp/WnP/1wdkZ4l1MnA9cl/98fPtBwMkiHtcbKxngTqXVEzl+9dokFu8Kix9DR2398gk8VwhA0NK1lyDQT2uVHGYIL79Zjb+QONqxpoFDksW2u2GNdIzk6DPO63p944a49A4NSGeJfjyM1bScHBu6obS4fs39jETjZP2pRxtA4rmqVIN7Wwsh4/6CSZzHUQGfObcvR+boifyf9+7vjD/KgLtSbJ0OtuP7/BIEGCl7wg/g/oPyRwPtQ==
+ b=TebVGxfq+X/n7GLNDCBFqN1Aa0bKJyHuPnCAh74z9pH0qnaHlVBmlVWTBMwFAWXsp6uhvfja50Lllgpp12g6zBf/vt90tikEUsZFPzSRUm+6IsNp7QcncYCkRKxQcW1b4iyQEzhjjjbR24vgqEZvOw/JPaA51rpe/qOtsfsTo2IM0UwDDoW4H/w5NEKShIKJB95Eqx9EQzncDyXttonyYyCMsnxX9x38d23DZ773iFEaAl3brN/rhu/bIL4MDqGnJpETt85VCqi3dmVtpe07Kq50hnpXA9dz/79/rx0hrz5UX5yzqKo0fVgYv8Hlfgikg4BU94QAiNgQt8EvjtLp1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rNKY9Y+tGOOu5KQJWPsbz+UlBJFQ1yGZORQfwA/Igc4=;
- b=lp1nM/QsB+vOR+dHcp2OAqrMoyrw5p0O4Y8yxCCncvob7gQB1cxaWsANnRptVdWjYIlzDR4BdZqug3PjOgmYMwnUAD+T6HfnPS89Le1q9i8Kgu9ArXjxAnPvnZ0SMsndltMJqdcq/uh3TP1QXjfJGyc9+f5qEt+3PhpEK8cKOWUFKbVF9EGCHDszvor1xTcGPnIRfmSMAQ6KAAwcv6lnooSuMtdAY4sXsmNRAZpFnqF0iWV0Vo9DX9KvJ81DyvxCZfw7f1SjlRWQwwuivyVJsWQWRqaOSBOeJGXratSJncoVTS6g58Nfkd64sUXWnBp07P4FNARBGJoV4zqIYiHusA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ bh=ldiOvfta6n5e1/xGJnkIh7Lz+355jFZQy8DbdaTLpaA=;
+ b=MWaX8ShXevRyOo9+i2GKM/NZZkAVYskod9xfcw7SPpBCwtwX2nBtIYcu3T0Q7yWi1aR9uuGUQtIjls6xcbukF/IrkKr3/lBKeIaW5IUorsP7CUKtpJ0eDPTCtcZAFFxIFyni13Sh8gjkK+wYCf3Lth8voSJQpBUN0oFcyd42/7Yyxk6EcKYEI0bCfvuVd+ARGLkNGm0e6Tm0tZE5zodSlw9cBmRiNRUfID5WM+b3QtCkKPu/bOzeVbSOyA4YwLHgRPrqeeyh3l3PmSd8J+wo5XsjthGsAgOa4ho04jvWGMiFjYDxnKiFR3UEe10FmV9bQrlqzPmmuLzJeWHYVTQUvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rNKY9Y+tGOOu5KQJWPsbz+UlBJFQ1yGZORQfwA/Igc4=;
- b=vYMJ+ejRRz0w6qy9yZ4ANDEPrtKmwCihMIEQXTE0LOZGIH1X8BMy1SIMn3Ojn3svUiR0pmCDQJUXlyA5ftd6be5MgvpH4dDLkud9nbhyS1InYg4pQ7Kql9WxtA7zNbjnN7he+Qu7HJvKolt2RpFSOrVUm8+iU9W4OyejnWk8D1k=
-Received: from SJ0PR03CA0158.namprd03.prod.outlook.com (2603:10b6:a03:338::13)
- by BN3PR12MB9596.namprd12.prod.outlook.com (2603:10b6:408:2cb::12)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=ldiOvfta6n5e1/xGJnkIh7Lz+355jFZQy8DbdaTLpaA=;
+ b=OpuOfhWDACPCMRPGJjUcJ9QZQEb7JS3gj/Tyy9nDdsMFxlWrFbKHwTON05MhqXQNUAqIkklT7QUdrkH/6vqyvdRZrOMHJY5UyX/q3qQSEnNyRpbuWVDU3kv9Liwd7X/kUvfU4LdahEQFkFSEQKVgbUqHZgYLK6GlM3hOrxeSR/U70gLmcOR5amDVxNg3eRdDORKN4U8ps5CD5lFMvgc6ufzDpOpsaV6h+0Lo01koE4zIAByWbHtidPm7RcusnVKDGBG42r5DsnFYppWcSf7H41eolVFmHSshNYcKcglwDrfj0nCRcwwmvzp7B6FrPE43mL74qv+Kf2jjCgZkdF3kAA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS0PR12MB8442.namprd12.prod.outlook.com (2603:10b6:8:125::12)
+ by SA1PR12MB8947.namprd12.prod.outlook.com (2603:10b6:806:386::7) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Fri, 11 Sep
- 2026 19:00:00 +0000
-Received: from SJ5PEPF00000203.namprd05.prod.outlook.com
- (2603:10b6:a03:338:cafe::6e) by SJ0PR03CA0158.outlook.office365.com
- (2603:10b6:a03:338::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.15 via Frontend Transport; Fri,
- 11 Sep 2026 18:59:59 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF00000203.mail.protection.outlook.com (10.167.244.36) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.5 via Frontend Transport; Fri, 11 Sep 2026 18:59:59 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 11 Sep
- 2026 13:59:58 -0500
-Date: Fri, 11 Sep 2026 12:22:45 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Markus Armbruster <armbru@redhat.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
- <berrange@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
- <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
- <ashish.kalra@amd.com>, <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: Re: [PATCH v2 07/19] accel/kvm: Add CGS option to control in-place
- conversion support
-Message-ID: <sudqwq5bnygtkqc2cio6rq5khrfi252jcs6jq6i3uzblgtvgq7@3upjx5k5bp7s>
-References: <20260908205236.838281-1-michael.roth@amd.com>
- <20260908205236.838281-8-michael.roth@amd.com>
- <878q5bosi3.fsf@pond.sub.org>
+ 2026 19:04:32 +0000
+Received: from DS0PR12MB8442.namprd12.prod.outlook.com
+ ([fe80::c4df:b439:571:4591]) by DS0PR12MB8442.namprd12.prod.outlook.com
+ ([fe80::c4df:b439:571:4591%4]) with mapi id 15.21.0406.007; Fri, 11 Sep 2026
+ 19:04:32 +0000
+From: "Matthew R. Ochs" <mochs@nvidia.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>, qemu-stable@nongnu.org
+Subject: [PATCH v2] hw/arm/tegra241-cmdqv: Keep VINTF page0 region alive
+Date: Fri, 11 Sep 2026 12:04:31 -0700
+Message-ID: <20260911190431.4085464-1-mochs@nvidia.com>
+X-Mailer: git-send-email 2.50.1
+X-NVConfidentiality: public
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SJ2P220CA0010.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:5da::7) To DS0PR12MB8442.namprd12.prod.outlook.com
+ (2603:10b6:8:125::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <878q5bosi3.fsf@pond.sub.org>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000203:EE_|BN3PR12MB9596:EE_
-X-MS-Office365-Filtering-Correlation-Id: c672ce8d-0cdf-47a6-a56a-08df1036e0a3
+X-MS-TrafficTypeDiagnostic: DS0PR12MB8442:EE_|SA1PR12MB8947:EE_
+X-MS-Office365-Filtering-Correlation-Id: de4832ba-9b51-4984-8ce4-08df1037838b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|82310400026|23010399003|36860700016|6133799003|10067099003|56012099006|11063799006|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: TCz/LvHlbyPU8+ozo9KTzCdMxK4nsgNlPyon2GC9cMYO562vt8QlM0Yp1NB7AGaq+ej/YGSahyWq4Lo5u8da2fASkqqR7fHPpv5+vJu7I84Xdig/IAS0ypMkn532uDALEsG38yxGSoemeSODljdaDzuRiSDtrFDkMxhF8+QHqfVfzuFex2YgTvBKVGBuCo2ViEZUKErsV3d3HnFQDLU41M4Q5UVb4BK1gOkrDLpEuwmLuvb9QZXetKPvmsDaWqaTUO1fLFJjKojx9tvBWGg6Yv0vyNBbFXvbN+eR+dLLE00HeVcQATEsZ9lG0bkr0HJb7KWTcBDZbWjPPfdDIV6vMt+YQEb0uJ5km9pjJZZqfmCjROwIf648MqS4dZ3+GmxyrNl0zNbKZl8NbUahgO4uUMVM0jBB1hLBxKb4dmWDsH87NvGMFBuPCJ+LxveHPEVz+PU+r8O2N/N/o+AO72WIhPdr5iKA93v6T29mCybk+nBlUUPmRc2SSneZp0iJZ744Mw5QKEKEOcb5FXMObog38vunPWphRT94R65oZHeYXvshdIPkj9jPpcbC1vXH2azTQwdKSHD7y67WtlnXK80K/oV8j+PcTESd1quVf9L8zRinN1go7tbmbddoaOflO5oKzS3xydmyuE+Je8RyGU/uI0G1gFv5EzY2s/H6KDvrZqL3Xp1RELGaQitrcEC5bJTYqPnFFOUGUZdIAcyFZOQXEQ==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(23010399003)(36860700016)(6133799003)(10067099003)(56012099006)(11063799006)(4143699003)(22082099003)(18002099003);
+ ARA:13230040|376014|366016|23010399003|1800799024|6133799003|10067099003|56012099006|5023799004|18002099003|11063799006;
+X-Microsoft-Antispam-Message-Info: wBqykaaPcExpJd1XU+ghuhMrxqqkM1Et4ceChhXCjcRHXZ/0E+qLo9KOonJw1nB8hRIoKmi21bRrUz3m1RoWWuJfKJzW2v5gPH0bUdPaj/IkOQ9EMkkPb9xgJDbTL3pt1SCIj+7RYD4qy5RGTcdg+Mrva6HSv3N24FwL4LbV3ILmzaPMjmSzi5Uq7KN+FDYKZR4oAs2JO1ejC3zym+j9Ypq4TGUJAwXTEYg0R3U0duzDzRCNnRaBW+xqScrYtcZ3xRpQTMfiCnHulcM1PZghaAq5gh/YVYdPTTlHfQOLglIgHUK6apLVIXKW0XS2eCXnuKTX/4TfN92HuWWlfWAaZbpDPy3BHR4zCUJgt722mTM0EJ1XtOEN5N28wYk+DlPeGu9wGmdQIJuVmiEkxsdRyOJo9bEsCqyMl/UldH6+VR3Xb1BhNVUuB05yoIR8obNFwnToz/ZvMCaHdoO4CQ5FGnd6Xsyvd6c6Un4oeZ54Ne0tEjTXQOhm9urQ772SNv1AbTg/BqR/rukyMC3mjlt+b6g4uoMRJUJHp8Vhw+US9HPP41sfVzquAVb/BHxw7Ki9UoAmOzdbYi/aMe5lGr3svsCwYMSUrh6Y/LQ4HtSy+VjWkB4XUbpFw731VcFZ7dXogytLn5rVQOIfwYA/fkf0ZfJ2D4HoYK4segXkTRmKzJE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS0PR12MB8442.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(6133799003)(10067099003)(56012099006)(5023799004)(18002099003)(11063799006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: xmSKXmlX3rRxHmZncnTewPL6A+8jpu/HQsfA4Iy9lg1qmifL4Lifna1zPLWoW76jT0CzD07sSe0X/B2ZNIfit+L81M3Y+2aWTTb4tG5bDaKcdN5TisN/okXiiu7rL89WkP+QA0tFmu1i8HDmpQpZiz6IxS4KQVTg0C5N8oUS2LToSEqQm3fcBPM6zksu1esde4rDPHE4mJAhiXtKXMYuH+mIZaHSM8S+qPOoVPC0B0nYmFEDKmrqwJfLrev0EMhr9e807sxfRo2YQsLRj6nPwXbq6Me80OMpevdagvDZz/YoHD5sAsLzGHzO/y8u6DAXzsqts4xEFx2QM3+srl+r97m106NO0NlanRqRp9S/3HEGzYdn3ANACMDMypRGCz4MN0W8ULRFyl2e27OdBZI5waLmRnmbkuGdh9knQd7UhyLAV1ww/yuHos9x8xJBZJ6n
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 18:59:59.1647 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c672ce8d-0cdf-47a6-a56a-08df1036e0a3
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000203.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3PR12MB9596
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
- envelope-from=Michael.Roth@amd.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vUCNArxDrynJinMQtbT/j51MPJPiumXkHWv7FJ4zgGL0e13zyw5L2kDhXXUv?=
+ =?us-ascii?Q?4LwYkHmPesbsNxUKfEOp3qKc6Cs3BC7bi+YMH7+s5FtpuJGnr/w6het/fKr3?=
+ =?us-ascii?Q?O/sFmV+7t+0nTr4FacLnmo9a/LaMEOB1UWsmnufcoeVMyf78GwRqoIJ6Ham7?=
+ =?us-ascii?Q?uA4os2/jj7QXrrjUp8iqE75clfeGhfcjXX9dm2FAUS8Z50O/rA0JGLAJ2+X3?=
+ =?us-ascii?Q?dy5oC3g2hzogxsnbWFGvw8nf55JvTJwIpflhA0Khy+tV9vDm3FjUMHnMXLOr?=
+ =?us-ascii?Q?J8kd7WrPZHmf4U/h/U1DZVnmHR599vEmbHPUnxFkfpF44w5Ca6+vV5bB8L2d?=
+ =?us-ascii?Q?ZlyhTr4oJjzMJ1FRNLm/LfwagIrkDEBZDC6OkAwA/SD0bnWhQkzL9wJ+KO5n?=
+ =?us-ascii?Q?Ct7Lhuh0LhTvk9IJlIf5SNpmfpWc1MRs1f9rvsaa3JwXLG1clQyQsPE4ySs2?=
+ =?us-ascii?Q?3GkqDEPO2pl9O6K0rkCAxEkd0cstKPWxz+ZG3KR8/lx7bPlXvRDDWzmAObvR?=
+ =?us-ascii?Q?L0CGX5aRPK9h6pIVqL4bDzxMdPPe08vL5bKOU3VHxE46eWCuJrzBTjN1mUTJ?=
+ =?us-ascii?Q?CY86g/+42N0Zv/okg0v+51cuvZTbhhVdg2Xux22st7foiAzhTcQRpnmT1gNW?=
+ =?us-ascii?Q?siJjnpIWoiTMEuvm2WOuHd5ULUVQGlsE+OXmUKYPj6QILiKED6qT83rLHR3F?=
+ =?us-ascii?Q?Sr5zCUUNARZPparwAY6FfhWdy6avjrc8LnlCXEgLuH0M+PqDbE822mcOVx3z?=
+ =?us-ascii?Q?9USVgJGrKVrEVO5b0h+T1MnyfyfWuWIkwwWOZ00xtb041fblU6CQlVNsJkdc?=
+ =?us-ascii?Q?snej9nWcos9XyE3Du/zdkzADWuRoNgQ/Zn8Mw7kXVH5p4NBmY5+EoeCCeA2r?=
+ =?us-ascii?Q?lzj7r8kOUNH5ExVUhGi7uY9y5TXi3ihvRVK1snnk7bqaTK+pqKmO2kn7x3AI?=
+ =?us-ascii?Q?DZj8xrM4qcgob4FB+PHGI67iAyDA6CnYvIjYg4TAT1oEIo9SMy+UlGtN+aDE?=
+ =?us-ascii?Q?4tdROggKpUGdPvuojaH4acVfW4kpVBc420lvV6lOz9tM4zyld5drWgIPDBxj?=
+ =?us-ascii?Q?C0qbAe37I1UmjC3Dy9Ypz0k9SjqPngyx2QhNJiwllhZMmePA26t6CKJpwACZ?=
+ =?us-ascii?Q?WCNTkJY+urvwDBjvDad3BOr4jpyZp1az1CA3+ZDdzW3sRfHoBKGPg/CjRQhD?=
+ =?us-ascii?Q?M9fOz5hP2HPKvk1jHKngmFXCwZZI9dUb8KHJrkJ4kk+u8h+R2+7mYUxy71e9?=
+ =?us-ascii?Q?ck8aXJkX0/ljV/SR+3GtbUwpaqdJiS/GCxTW8HHl0xnIW9FBJiKPg/mNSk9I?=
+ =?us-ascii?Q?6Epxw/S/HcepHYnrdj9DI0+gVSytLbzQVyZ0dwMuk7fRzvV4JzuGuGZcOHsX?=
+ =?us-ascii?Q?sLmhgLcRJw3tN3V2cyB+TmDFogSG0nilF2hPaC3HOZX44QSScFkw9C8esspB?=
+ =?us-ascii?Q?xAosZR+TJ65vfY4qb7csHVC9HOs05Ism/r0zi4Ek32+5AimzXI2JHBvZFkFL?=
+ =?us-ascii?Q?kwDW6xCEvskywk4Snp5NCsrnF03ifNk3C8GJfKiEt9TuiwbU/epNXfAVp7A3?=
+ =?us-ascii?Q?kZC9za92zm0SlwXSjVJIgeH6Sd7LNejXLvVgqN8oEBxD2EMha9cI+an2Sz9A?=
+ =?us-ascii?Q?aMbOgduSWB+G10vHrRU8VvndB3/nIaGlGBLWaDVY5ZRAUfDj/FKKO7Jx6QFD?=
+ =?us-ascii?Q?kkcQNwZeyXv/5hnpdVpJ6LHQNSH4DoffcUfNaQxhhd/5O7DyxYTme6QqO3GX?=
+ =?us-ascii?Q?W4cg5wntSw=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de4832ba-9b51-4984-8ce4-08df1037838b
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB8442.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 19:04:32.7379 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6qNLJOaWVsAbmi2nckX28mNeLkVipYH4y7OE709hYqCxLVeWN9CMOu4blgu0yDmOGHnv0sHjhu+EALkUzedC2g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8947
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
+ envelope-from=mochs@nvidia.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,130 +139,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 09, 2026 at 08:20:36AM +0200, Markus Armbruster wrote:
-> Michael Roth <michael.roth@amd.com> writes:
-> 
-> > For confidential guests, guest_memfd is currently used only for private
-> > guest memory, and normal guest memory comes from the configured memory
-> > backend just as it does for a non-confidential guest. It is now possible
-> > to use the same physical memory to back a particular GPA regardless of
-> > whether it is in a shared or private state. This avoids the need to
-> > rely on discarding memory between shared/private conversions (to avoid
-> > doubled memory usage), and is intended to be the primary mode of using
-> > guest_memfd for confidential guests moving forward, and future features
-> > like hugepage support will likely require it.
-> >
-> > Add an option to enable this support. Since ConfidentialGuestSupport is
-> > already used to track some guest_memfd-related functionality (e.g.
-> > whether it is required for the configured machine), similarly introduce
-> > this option as a property of ConfidentialGuestSupport.
-> >
-> > Also add the KVM-specific checks to enable this support, but leave the
-> > option disabled until other required changes are implemented for
-> > CGS variants that intend to make use of KVM's in-place conversion
-> > support.
-> >
-> > While technically the convert-in-place option could be introduced as an
-> > SEV-specific option, it is a given that TDX will also be introducing
-> > in-place conversion support based on the same guest_memfd kernel
-> > infrastructure, so introduce it via a new
-> > ConfidentialGuestSupportProperties base class that other confidential VM
-> > implementations can utilized for common options.
-> >
-> > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> 
-> [...]
-> 
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index 909add4299..20d6fefb04 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -1005,6 +1005,21 @@
-> >    'if': 'CONFIG_IGVM',
-> >    'data': { 'file': 'str' } }
-> >  
-> > +##
-> > +# @ConfidentialGuestSupportProperties:
-> > +#
-> > +# Properties for ConfidentialGuestSupport base class.
-> > +#
-> > +# @convert-in-place: If true, the same physical pages are reused
-> > +#     when memory is converted between shared and private states.
-> > +#     If false (default), separate allocations are used depending
-> > +#     on whether the page is private or shared.
-> 
-> Any guidance on when to enable @convert-in-place?
+With CMDQV enabled, resetting a guest after it enables VINTF invokes
+the VINTF page0 unmap path. The resulting crash is intermittent and
+has been observed on the RCU reclaim thread as:
 
-A lot of it boils down to more Confidential Compute architectures
-now requiring it for new features (hugepage support and SEV-TIO will
-require it for instance). convert-in-place=true maps more closely to
-a normal VM, and not having more complicated memory management
-requirements avoids additional complications up the stack (like
-accounting for instances where memory usage might balloon passed
-expected resource limits due to needing to management multiple
-memory allocations for a given GPA range).
+  reboot: Restarting system
+  double free or corruption (!prev)
+  ...
+  #5 address_space_dispatch_free
+  #6 flatview_destroy
+  #7 call_rcu_thread
 
-convert-in-place=false will likely become a legacy path unless other
-use-case arise, but they'd probably need to be super-duper useful
-to warrant enabling new things on top of it going forward.
+FlatViews retain raw MemoryRegion pointers and release their references
+asynchronously through RCU. The VINTF page0 unmap path removes the
+subregion and immediately unparents and frees it. An old FlatView can
+then access the freed region during teardown, resulting in a
+use-after-free and heap corruption.
 
-I'll try to work something along that line into the guest-memfd.rst
-I proposed for Peter's series and add/reference that as part of this
-patch.
+Embed the VINTF page0 MemoryRegion in Tegra241CMDQV and add it only
+once. Use memory_region_set_enabled() as the guest enables and disables
+VINTF. New FlatViews omit the disabled region, while old views continue
+to reference valid storage.
 
-> 
-> > +#
-> > +# Since: 11.2
-> > +##
-> > +{ 'struct': 'ConfidentialGuestSupportProperties',
-> > +  'data': { '*convert-in-place': 'bool' } }
-> > +
-> >  ##
-> >  # @SevCommonProperties:
-> >  #
-> > @@ -1033,6 +1048,7 @@
-> >  # Since: 9.1
-> >  ##
-> >  { 'struct': 'SevCommonProperties',
-> > +  'base': 'ConfidentialGuestSupportProperties',
-> >    'data': { '*sev-device': 'str',
-> >              '*cbitpos': 'uint32',
-> >              'reduced-phys-bits': 'uint32',
-> 
-> Can you explain why you put @convert-in-place into a new base type
-> instead of right here?
-> 
+Keeping the region initialized across VINTF disable and reset is safe
+because the vIOMMU association and its VINTF page0 mmap remain stable
+once the guest CMDQ has been initialized. QEMU blocks hot-unplug of the
+device that established the association, so later hot-adds reuse it
+instead of associating the initialized guest CMDQ with a different host
+SMMUv3. The CMDQV free_viommu path is therefore only invoked while
+unwinding initial allocation, before guest CMDQ initialization.
 
-I tried to touch on this as part of the commit message, but I don't think I
-explained the rationale very well and I'm now second-guessing myself.
+Fixes: 5965b81ce283 ("hw/arm/tegra241-cmdqv: Use mmap'd host VINTF page0 for virtual VINTF page0")
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
+---
+v2:
+- Use memory_region_is_mapped() instead of an explicit initialization
+  flag, as suggested by Shameer.
+- Link to v1: https://lore.kernel.org/all/20260903184710.2052780-1-mochs@nvidia.com/
 
-As part of this patch, a 'allow_convert_in_place' field is added to
-ConfidentialGuestSupport, which is similar to the 'require_guest_memfd'
-ConfidentialGuestSupport member in that it's configuring policy around the
-usage of guest_memfd for Confidential machine instances. They also both
-need to be ordered soon enough that they initialized in time for the related
-KVM capability checks in kvm_init(), so another reason to place it there.
+Reproducer:
 
-From there my thinking was that the 'convert-in-place' property exposed on the
-command-line would basically just set true/false based on whether the
-'allow_convert_in_place' CGS value is set, and that that pattern would be the
-same for TDX, who AFAIK are fully onboard with switching over to
-convert-in-place=true as well, so I added the common base properties where other
-archs could just subclass it expose the same feature.
+Start an Arm virt guest with one passed-through device behind an
+accelerated SMMUv3 configured with cmdqv=on. Add an HMP monitor socket:
 
-But thinking more on some discoverability thing Daniel mentioned, that makes it
-potentially problematic if more common features get added, and *then* another
-CGS implementation wants to subclass the common QOM properties for 1
-option/feature (e.g. @convert_in_place) but not some other option/features
-that's since been added.
+  -monitor unix:/tmp/qmon.sock,server,nowait
 
-So keeping it as an architecture-defined property is probably the better call.
-It's only a trivial amount of code duplication and some archs will just have it
-always on anyway where it doesn't even make sense to expose it.
+The failure can be made reliable without an ASan build by starting QEMU
+with glibc freed-memory poisoning enabled:
 
-So I'll plan to take that approach for the next spin.
+  GLIBC_TUNABLES=glibc.malloc.tcache_count=0 \
+  MALLOC_PERTURB_=165 \
+  MALLOC_CHECK_=3 \
+  qemu-system-aarch64 <options>
 
-Thanks,
+Wait until "info mtree" shows the VINTF page0 region, then reset the
+guest through the monitor:
 
-Mike
+  printf 'system_reset\n' | timeout 5 nc -N -U /tmp/qmon.sock
+
+With the unpatched binary, QEMU crashed on the first reset with SIGSEGV.
+The core showed object_unref() called from address_space_dispatch_free()
+with the object pointer set to 0xa5a5a5a5a5a5a5a5.
+
+Testing:
+
+  Unpatched, one CMDQV instance: SIGSEGV on first reset
+  Patched, one CMDQV instance:   100/100 resets completed successfully
+  Patched, four CMDQV instances: 100/100 resets completed successfully
+
+ hw/arm/tegra241-cmdqv.c | 21 +++++++++++----------
+ hw/arm/tegra241-cmdqv.h |  2 +-
+ 2 files changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+index 273633e62937..51357885b5c4 100644
+--- a/hw/arm/tegra241-cmdqv.c
++++ b/hw/arm/tegra241-cmdqv.c
+@@ -131,35 +131,36 @@ static void tegra241_cmdqv_reset_vcmdq_cache(Tegra241CMDQV *cmdqv, int index)
+ 
+ static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV *cmdqv)
+ {
+-    if (!cmdqv->mr_vintf_page0) {
++    if (!memory_region_is_mapped(&cmdqv->mr_vintf_page0)) {
+         return;
+     }
+ 
+-    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv->mr_vintf_page0);
+-    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
+-    g_free(cmdqv->mr_vintf_page0);
+-    cmdqv->mr_vintf_page0 = NULL;
++    /*
++     * Keep the region parented: old FlatViews can retain a pointer to it
++     * until their RCU callbacks have run.
++     */
++    memory_region_set_enabled(&cmdqv->mr_vintf_page0, false);
+ }
+ 
+ static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV *cmdqv)
+ {
+     char *name;
+ 
+-    if (cmdqv->mr_vintf_page0) {
++    if (memory_region_is_mapped(&cmdqv->mr_vintf_page0)) {
++        memory_region_set_enabled(&cmdqv->mr_vintf_page0, true);
+         return;
+     }
+ 
+     name = g_strdup_printf("%s vintf-page0",
+                            memory_region_name(&cmdqv->mmio_cmdqv));
+-    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
+-    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
++    memory_region_init_ram_device_ptr(&cmdqv->mr_vintf_page0,
+                                       memory_region_owner(&cmdqv->mmio_cmdqv),
+                                       name, VINTF_PAGE_SIZE,
+                                       cmdqv->vintf_page0);
+-    memory_region_set_skip_iommu_map(cmdqv->mr_vintf_page0, true);
++    memory_region_set_skip_iommu_map(&cmdqv->mr_vintf_page0, true);
+     memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
+                                         CMDQV_VINTF_PAGE0_BASE,
+-                                        cmdqv->mr_vintf_page0, 1);
++                                        &cmdqv->mr_vintf_page0, 1);
+     g_free(name);
+ }
+ 
+diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+index de4c1e53358f..bba985099e3b 100644
+--- a/hw/arm/tegra241-cmdqv.h
++++ b/hw/arm/tegra241-cmdqv.h
+@@ -49,7 +49,7 @@ typedef struct Tegra241CMDQV {
+     IOMMUFDVeventq *veventq;
+     IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
+     void *vintf_page0;
+-    MemoryRegion *mr_vintf_page0;
++    MemoryRegion mr_vintf_page0;
+ 
+     /* CMDQ-V Config page register cache */
+     uint32_t config;
+-- 
+2.50.1
 
