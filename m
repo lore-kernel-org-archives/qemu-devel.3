@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0ECC88E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721B3C88E59
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54E5-0004CO-6o; Fri, 11 Sep 2026 12:35:45 -0400
+	id 1x54E4-0004C2-Ub; Fri, 11 Sep 2026 12:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54Dp-0004AD-Nm
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:35:33 -0400
+ id 1x54Dl-00049O-Iq
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:35:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54Dn-0005N6-51
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:35:29 -0400
+ id 1x54Di-0005Hv-T4
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:35:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144526;
+ s=mimecast20190719; t=1789144519;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uq6APq6t/1d9rTIg3lVBOJODUS1h8CQ0Sr2s8CDld4w=;
- b=Dw/zeZ2IT7F10AcKASZr3+1sr3Ej7frM/pNFdNE11IdK9MesOmB8Sh3ztcL3bKaLrTawZN
- d3NVtWrWCYdYIo9pIRU/hRR1lGjK+zL8ckjA74sJUXhVkcC8MuEi/Um67xhHJ6JMDncVgh
- iV4fWnA8YkmcLFY0cY39J6SwZCrOooE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OXCtOGsXa7/I9U9Yjy/eqVd52LLalPpnK3/eiftQEn8=;
+ b=Z6yLiNeyW89xCiTe/p6VyEDn6rGaT4uDUYx+uLNNfyPvbUm81ahqO3E5DiEzknOp9vuvMJ
+ VUx8MyV+klvx3bo5rlpI5A/Fd7PGDZXLFUEvdKUVscn6i3xSbmKI3BTITw5JOVL2voTLDm
+ ra+FaT1xWDB0DRSybwJvZlJNU6TLB7o=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-PHeW-hXyOiaZ3CLMWEbkkw-1; Fri,
- 11 Sep 2026 12:35:25 -0400
-X-MC-Unique: PHeW-hXyOiaZ3CLMWEbkkw-1
-X-Mimecast-MFC-AGG-ID: PHeW-hXyOiaZ3CLMWEbkkw_1789144524
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-bgIoxevLNIiu843xPtkHjQ-1; Fri,
+ 11 Sep 2026 12:35:18 -0400
+X-MC-Unique: bgIoxevLNIiu843xPtkHjQ-1
+X-Mimecast-MFC-AGG-ID: bgIoxevLNIiu843xPtkHjQ_1789144516
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D88091953965; Fri, 11 Sep 2026 16:35:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF8F0195DE13; Fri, 11 Sep 2026 16:35:12 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD004195608F; Fri, 11 Sep 2026 16:35:22 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ABD251956042; Fri, 11 Sep 2026 16:35:11 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:34:37 +0400
-Subject: [PATCH v5 03/62] qapi: factor out QAPISchemaUsedTypes from
- introspect visitor
+Subject: [PATCH v5 00/62] qom/qdev: associate properties with QAPI schema types
+Date: Fri, 11 Sep 2026 20:34:34 +0400
+Message-Id: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-3-7732a55b7760@redhat.com>
-References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
-In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23NzW7CMBAE4FdBPteV139a98R7oB5sZ01cCQJ2i
+ FqhvHsdekgQPY4038ydVSqZKvvY3VmhKdc8nFswbzsWe38+Es9dy0wKaYUBwa/DiV/9JfMUSCQ
+ jrIgqsVa/FEr5+zF1+PzL9Ra+KI6LXxp9ruNQfh5fEyy9f2Yn4IJrDN568JC82Rfqej++x+HEl
+ t1JrtKC3UjZZIxOORtcBIwvUq0SATdSNSl1wBACqQ7ti9SrdEJvpG7SOzQJLJJT+CTnef4F3QH
+ NPWEBAAA=
+X-Change-ID: 20260510-qom-qapi-fbe0f5060c3f
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
@@ -65,25 +67,28 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=17542;
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=17676;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=kwKugzupKyie3BZKBeFbOihTnwXtq0u3W4I9cusN/iM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC22eKMegJtlUklR5BhmcFqtJ6XYirM6Hf/lE
- Hh+KcIEbOOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQttgAKCRDa6OEJdZac
- 5biSEACGgmc4k32b8/7+lwBj1R1ymri08Fl3ubG60fTgKkhF/iGTx7P7MlY3vzSpeRBAkotVApA
- pJBFoYDTRSIUhTldigisXNb/1umL2xRJr7NBhDLsihPXIhtbsR532GbyiXvi7w5yZK4BJuJ5h2g
- XEq3fnoAQCjt3AJMT/18imhDzlMZYjjZN6tbTFezZsvZFbz73W0lnuvfE6QSHv4dMd+4PVdM4HG
- RQZFKEbXr40GEruHIjmagwDDyzyuyrxvaHOwoSQL9g41VudU6nOWzAG1Lyfn3BqJ1Pj/r1XfgOL
- rRtiBXAdEH8yyTCR6iGdI6jvJdeQmw2BF3XkLONq0goKSGiR4pWxT0rw5D3NIOhXWdj75goz4bt
- cWTchCWr+fbebpHkp2QT05VdVpI+BIxPpAwhMHwI3TZ9txCbF+l//sNu1MYmXFX1lzpd5sk17bD
- VakD/hOQiQ1vfSokt94JVpw0xpfnMhHXN3+MxW6jNrJ5o4aXg5uW2eO5wtfwG3hPVQqBfLYKTf5
- Ka2GN8WR6oL4pDhxLS4hsHUwV64WetexW0RdMUOFKrfZaND8cucHoZ8h0L97Rv/fn3fPlUPXGkj
- RAP9QuaOaJqRKLvDIt9CWdv4KAHQjW1Xk/rb3bvO14A3Pll6aQZQUuiFlpwwkR7ElmXeWgxcBB0
- jAi1bs0kgzKEHnQ==
+ bh=3wVUGcuXWZK6JZ+b6LPEDlN5Xjq0MedXxHfqD3QBC60=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC216+svYIfd3C44wuIxWCyX1QE6Ji/4XuNET
+ r1DT5vjj2uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQttQAKCRDa6OEJdZac
+ 5RsKD/sEBeezV7jKFdz69ldeKwi3qEsGZl3hOaCNhCsGDWuV8PIWF20jbAGokbHjrwLa1EQDFP5
+ K1rWsHYpP6ODW8JzFBUhMuTSiFfAcLbdv1NTBuFZnxRVIJtNWZDMfV0xIU/s7duoOxx+216mo/A
+ EcFHBdIapRDhXL8oN5z8PFJqPJKHDSNLIfHzP91P3HS5BzQM3ckpIWglGFx5xYMOkwWgCMSW0zU
+ cNfhK/F/gvIu2AxXhyOh8WTG4gD4mWpCZo/ISDa4ZLv6FEL24cg4o6odxDaQE6CLSBMJlQPM4SK
+ mKHSGBIgtyOC2l/RdVYjeEoE95JjlMJxsiVX9+032AqwoPhLsaR91gfg+wJEqDU4CQw8iBVgvWB
+ 6cLNtzqVaoOPcLqnenv+P8VptNbSAq4xIbENv3Q1lWcK1Q/qlQDcBQukl/aduoVO6HSNDUaYtDG
+ slELMiJOMtWAD+9gw7nj0XMlRLaKep7/H5/MJrMi+w36IS2FjSthRXYzXZZaK0//LeVuB5RLff3
+ kabZoPD3KWkUIQGe/anWFa9/gDgtoseH4mCq/YfGyH73V6xguGEgRZtltOFoQuGXs+YQGwLg+u/
+ 9vDHr1q9xKRfNvLzkKcbK1/t68A+YPxIV3hZGVchtNezfMADVUaTOScNdVPPvZszBlzlz0+xFqZ
+ Ip3AKtFnLfr1+zw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -109,419 +114,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move QMP-reachable type tracking and name masking out of the introspect
-visitor into a standalone QAPISchemaUsedTypes visitor in a new
-schema_analysis module. Run the analysis pass in QAPICBackend.generate()
-in preparation for other generators.
+Hi,
 
-While at it, refactor a bit the code to make it easier to read, and
-optimize using _used_type_set for O(1) lookups.
+This series connects QOM and qdev properties to the QAPI type system, so
+that management tools can discover the QAPI schema type of each object
+property.
+
+Today, QOM properties carry a free-form "type" string ("bool", "uint32",
+"OnOffAuto", ..) that has no formal link to the QAPI schema exposed by
+query-qmp-schema. Management tools must maintain ad-hoc mappings or rely
+on naming conventions to figure out how to interpret property values.
+
+This series adds:
+  - A new QAPITypeInfo struct that pairs a property with its QAPI schema
+    type name, enum lookup table, and list-element type.
+
+  - A QAPI code generator (qapi-type-infos) that emits a QAPITypeInfo
+    instance for every schema-defined type, including the mapping
+    between internal C names and the schema name visible to clients.
+
+  - A "qapi-type" field in the ObjectPropertyInfo and
+    ObjectPropertyValue QMP structs, populated from the QAPITypeInfo
+    when present giving clients a cross-reference into query-qmp-schema
+    output.
+
+  - Conversion of all PropertyInfo definitions from the old
+    .type/.enum_table strings to the new .qapi_type pointer.
+
+  - Replacement of the generic qdev_prop_array with typed per-element
+    array PropertyInfos, removing the arrayinfo/arrayfieldsize
+    indirection from struct Property.
+
+  - Removal of the deprecated PropertyInfo.type and .enum_table fields,
+    and of the old object_property_add_enum/add_tm APIs.
+
+Along the way, a few pre-existing type mismatches in property
+definitions are fixed, the "struct tm" RTC property is replaced with a
+proper QAPI StructTm type etc. Introducing more specific types or a
+"typedef" to QAPI could help provide better associated type informations
+than plain "str" in many cases, for example.
+
+Comments welcome!
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- meson.build                     |   1 +
- scripts/qapi/backend.py         |   7 +-
- scripts/qapi/introspect.py      |  78 +++++--------------
- scripts/qapi/schema_analysis.py | 164 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 191 insertions(+), 59 deletions(-)
+Changes in v5:
+- make "masked_name" mandatory, skip QType QAPITypeInfo generation
+- added/split "hw/ppc/spapr_caps: fix property type name" patch
+- added "qapi: select introspectable types directly", simplifying type discovery
+- fixed an include path
+- doc adjustments
+- rebased, collect r-b trailers
+- Link to v4: https://lore.kernel.org/qemu-devel/20260904-qom-qapi-v4-0-a985f168e938@redhat.com
 
-diff --git a/meson.build b/meson.build
-index 2a12071cf08f..96df1ce81eaf 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3504,6 +3504,7 @@ qapi_gen_depends = [ meson.current_source_dir() / 'scripts/qapi/__init__.py',
-                      meson.current_source_dir() / 'scripts/qapi/main.py',
-                      meson.current_source_dir() / 'scripts/qapi/parser.py',
-                      meson.current_source_dir() / 'scripts/qapi/schema.py',
-+                     meson.current_source_dir() / 'scripts/qapi/schema_analysis.py',
-                      meson.current_source_dir() / 'scripts/qapi/source.py',
-                      meson.current_source_dir() / 'scripts/qapi/types.py',
-                      meson.current_source_dir() / 'scripts/qapi/visit.py',
-diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-index 49ae6ecdd33e..59329965890f 100644
---- a/scripts/qapi/backend.py
-+++ b/scripts/qapi/backend.py
-@@ -8,6 +8,7 @@
- from .features import gen_features
- from .introspect import gen_introspect
- from .schema import QAPISchema
-+from .schema_analysis import QAPISchemaUsedTypes
- from .types import gen_types
- from .visit import gen_visit
- 
-@@ -49,7 +50,7 @@ def generate(self,
-         """
-         Generate C code for the given schema into the target directory.
- 
--        :param schema_file: The primary QAPI schema file.
-+        :param schema: The primary QAPI schema file.
-         :param output_dir: The output directory to store generated code.
-         :param prefix: Optional C-code prefix for symbol names.
-         :param unmask: Expose non-ABI names through introspection?
-@@ -57,9 +58,11 @@ def generate(self,
- 
-         :raise QAPIError: On failures.
-         """
-+        schema_types = QAPISchemaUsedTypes(unmask)
-+        schema.visit(schema_types)
-         gen_types(schema, output_dir, prefix, builtins)
-         gen_features(schema, output_dir, prefix)
-         gen_visit(schema, output_dir, prefix, builtins)
-         gen_commands(schema, output_dir, prefix, gen_tracing)
-         gen_events(schema, output_dir, prefix)
--        gen_introspect(schema, output_dir, prefix, unmask)
-+        gen_introspect(schema, output_dir, prefix, schema_types)
-diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-index 7e28de2279ad..9e76e3aa38a9 100644
---- a/scripts/qapi/introspect.py
-+++ b/scripts/qapi/introspect.py
-@@ -28,9 +28,7 @@
- from .schema import (
-     QAPISchema,
-     QAPISchemaAlternatives,
--    QAPISchemaArrayType,
-     QAPISchemaBranches,
--    QAPISchemaBuiltinType,
-     QAPISchemaEntity,
-     QAPISchemaEnumMember,
-     QAPISchemaFeature,
-@@ -40,6 +38,7 @@
-     QAPISchemaType,
-     QAPISchemaVariant,
- )
-+from .schema_analysis import QAPISchemaUsedTypes
- from .source import QAPISourceInfo
- 
- 
-@@ -169,15 +168,13 @@ def to_c_string(string: str) -> str:
- 
- class QAPISchemaGenIntrospectVisitor(QAPISchemaMonolithicCVisitor):
- 
--    def __init__(self, prefix: str, unmask: bool):
-+    def __init__(self, prefix: str, schema_types: QAPISchemaUsedTypes):
-         super().__init__(
-             prefix, 'qapi-introspect',
-             ' * QAPI/QMP schema introspection', __doc__)
--        self._unmask = unmask
-+        self._schema_types = schema_types
-         self._schema: Optional[QAPISchema] = None
-         self._trees: List[Annotated[SchemaInfo]] = []
--        self._used_types: List[QAPISchemaType] = []
--        self._name_map: Dict[str, str] = {}
-         self._genc.add(mcgen('''
- #include "qemu/osdep.h"
- #include "%(prefix)sqapi-introspect.h"
-@@ -190,7 +187,7 @@ def visit_begin(self, schema: QAPISchema) -> None:
- 
-     def visit_end(self) -> None:
-         # visit the types that are actually used
--        for typ in self._used_types:
-+        for typ in self._schema_types.used_types():
-             typ.visit(self)
-         # generate C
-         name = c_name(self._prefix, protect=False) + 'qmp_schema_qlit'
-@@ -207,45 +204,11 @@ def visit_end(self) -> None:
-                              c_string=_tree_to_qlit(self._trees)))
-         self._schema = None
-         self._trees = []
--        self._used_types = []
--        self._name_map = {}
- 
-     def visit_needed(self, entity: QAPISchemaEntity) -> bool:
-         # Ignore types on first pass; visit_end() will pick up used types
-         return not isinstance(entity, QAPISchemaType)
- 
--    def _name(self, name: str) -> str:
--        if self._unmask:
--            return name
--        if name not in self._name_map:
--            self._name_map[name] = '%d' % len(self._name_map)
--        return self._name_map[name]
--
--    def _use_type(self, typ: QAPISchemaType) -> str:
--        assert self._schema is not None
--
--        # Map the various integer types to plain int
--        if typ.json_type() == 'int':
--            type_int = self._schema.lookup_type('int')
--            assert type_int
--            typ = type_int
--        elif (isinstance(typ, QAPISchemaArrayType) and
--              typ.element_type.json_type() == 'int'):
--            type_intlist = self._schema.lookup_type('intList')
--            assert type_intlist
--            typ = type_intlist
--        # Add type to work queue if new
--        if typ not in self._used_types:
--            self._used_types.append(typ)
--        # Clients should examine commands and events, not types.  Hide
--        # type names as integers to reduce the temptation.  Also, it
--        # saves a few characters on the wire.
--        if isinstance(typ, QAPISchemaBuiltinType):
--            return typ.name
--        if isinstance(typ, QAPISchemaArrayType):
--            return '[' + self._use_type(typ.element_type) + ']'
--        return self._name(typ.name)
--
-     @staticmethod
-     def _gen_features(features: Sequence[QAPISchemaFeature]
-                       ) -> List[Annotated[str]]:
-@@ -267,11 +230,10 @@ def _gen_tree(self, name: str, mtype: str, obj: Dict[str, object],
-         """
-         comment: Optional[str] = None
-         if mtype not in ('command', 'event', 'builtin', 'array'):
--            if not self._unmask:
--                # Output a comment to make it easy to map masked names
--                # back to the source when reading the generated output.
--                comment = f'"{self._name(name)}" = {name}'
--            name = self._name(name)
-+            masked = self._schema_types.masked_name(name)
-+            if masked != name:
-+                comment = f'"{masked}" = {name}'
-+            name = masked
-         obj['name'] = name
-         obj['meta-type'] = mtype
-         if features:
-@@ -291,7 +253,7 @@ def _gen_object_member(self, member: QAPISchemaObjectTypeMember
-                            ) -> Annotated[SchemaInfoObjectMember]:
-         obj: SchemaInfoObjectMember = {
-             'name': member.name,
--            'type': self._use_type(member.type)
-+            'type': self._schema_types.introspection_name(member.type)
-         }
-         if member.optional:
-             obj['default'] = None
-@@ -303,7 +265,7 @@ def _gen_variant(self, variant: QAPISchemaVariant
-                      ) -> Annotated[SchemaInfoObjectVariant]:
-         obj: SchemaInfoObjectVariant = {
-             'case': variant.name,
--            'type': self._use_type(variant.type)
-+            'type': self._schema_types.introspection_name(variant.type)
-         }
-         return Annotated(obj, variant.ifcond)
- 
-@@ -326,7 +288,7 @@ def visit_enum_type(self, name: str, info: Optional[QAPISourceInfo],
-     def visit_array_type(self, name: str, info: Optional[QAPISourceInfo],
-                          ifcond: QAPISchemaIfCond,
-                          element_type: QAPISchemaType) -> None:
--        element = self._use_type(element_type)
-+        element = self._schema_types.introspection_name(element_type)
-         self._gen_tree('[' + element + ']', 'array', {'element-type': element},
-                        ifcond)
- 
-@@ -349,8 +311,9 @@ def visit_alternate_type(self, name: str, info: Optional[QAPISourceInfo],
-                              alternatives: QAPISchemaAlternatives) -> None:
-         self._gen_tree(
-             name, 'alternate',
--            {'members': [Annotated({'type': self._use_type(m.type)},
--                                   m.ifcond)
-+            {'members': [Annotated({
-+                'type': self._schema_types.introspection_name(m.type)
-+            }, m.ifcond)
-                          for m in alternatives.variants]},
-             ifcond, features
-         )
-@@ -367,8 +330,8 @@ def visit_command(self, name: str, info: Optional[QAPISourceInfo],
-         arg_type = arg_type or self._schema.the_empty_object_type
-         ret_type = ret_type or self._schema.the_empty_object_type
-         obj: SchemaInfoCommand = {
--            'arg-type': self._use_type(arg_type),
--            'ret-type': self._use_type(ret_type)
-+            'arg-type': self._schema_types.introspection_name(arg_type),
-+            'ret-type': self._schema_types.introspection_name(ret_type)
-         }
-         if allow_oob:
-             obj['allow-oob'] = allow_oob
-@@ -382,12 +345,13 @@ def visit_event(self, name: str, info: Optional[QAPISourceInfo],
-         assert self._schema is not None
- 
-         arg_type = arg_type or self._schema.the_empty_object_type
--        self._gen_tree(name, 'event', {'arg-type': self._use_type(arg_type)},
--                       ifcond, features)
-+        self._gen_tree(name, 'event', {
-+            'arg-type': self._schema_types.introspection_name(arg_type)
-+        }, ifcond, features)
- 
- 
- def gen_introspect(schema: QAPISchema, output_dir: str, prefix: str,
--                   opt_unmask: bool) -> None:
--    vis = QAPISchemaGenIntrospectVisitor(prefix, opt_unmask)
-+                   schema_types: QAPISchemaUsedTypes) -> None:
-+    vis = QAPISchemaGenIntrospectVisitor(prefix, schema_types)
-     schema.visit(vis)
-     vis.write(output_dir)
-diff --git a/scripts/qapi/schema_analysis.py b/scripts/qapi/schema_analysis.py
-new file mode 100644
-index 000000000000..7e42abbc14e1
---- /dev/null
-+++ b/scripts/qapi/schema_analysis.py
-@@ -0,0 +1,164 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+Collect introspectable types from a QAPI schema and assign masked names.
-+
-+Copyright (C) 2015-2026 Red Hat, Inc.
-+
-+Authors:
-+ Markus Armbruster <armbru@redhat.com>
-+ John Snow <jsnow@redhat.com>
-+ Marc-André Lureau <marcandre.lureau@redhat.com>
-+"""
-+
-+from typing import (
-+    Dict,
-+    List,
-+    Optional,
-+    Sequence,
-+    Set,
-+)
-+
-+from .schema import (
-+    QAPISchema,
-+    QAPISchemaAlternatives,
-+    QAPISchemaArrayType,
-+    QAPISchemaBranches,
-+    QAPISchemaBuiltinType,
-+    QAPISchemaEntity,
-+    QAPISchemaFeature,
-+    QAPISchemaIfCond,
-+    QAPISchemaObjectType,
-+    QAPISchemaObjectTypeMember,
-+    QAPISchemaType,
-+    QAPISchemaVisitor,
-+)
-+from .source import QAPISourceInfo
-+
-+
-+class QAPISchemaUsedTypes(QAPISchemaVisitor):
-+    """Collect the set of QMP-reachable types from a schema.
-+
-+    Types are discovered transitively starting from commands and events.
-+    Each type is also given a masked introspection name (an integer
-+    string).
-+    """
-+
-+    def __init__(self, unmask: bool):
-+        self._unmask = unmask
-+        self._schema: Optional[QAPISchema] = None
-+        # Ordered list + set: insert during iteration + O(1) check
-+        self._used_types: List[QAPISchemaType] = []
-+        self._used_types_set: Set[QAPISchemaType] = set()
-+        self._name_map: Dict[str, str] = {}
-+
-+    def visit_begin(self, schema: QAPISchema) -> None:
-+        self._schema = schema
-+        self._used_types = []
-+        self._used_types_set = set()
-+        self._name_map = {}
-+
-+    def visit_end(self) -> None:
-+        assert self._schema is not None
-+        # Discover transitively-used types; the list grows as
-+        # visiting each type registers the types it references.
-+        for typ in self._used_types:
-+            typ.visit(self)
-+        # Assign stable masked names now that all types are known
-+        counter = 0
-+        for typ in self._used_types:
-+            if isinstance(typ, (QAPISchemaBuiltinType, QAPISchemaArrayType)):
-+                continue
-+            self._name_map[typ.name] = (
-+                typ.name if self._unmask else str(counter))
-+            counter += 1
-+
-+    def visit_needed(self, entity: QAPISchemaEntity) -> bool:
-+        # Skip types during main traversal; visit_end() handles them
-+        return not isinstance(entity, QAPISchemaType)
-+
-+    def visit_command(self, name: str, info: Optional[QAPISourceInfo],
-+                      ifcond: QAPISchemaIfCond,
-+                      features: List[QAPISchemaFeature],
-+                      arg_type: Optional[QAPISchemaObjectType],
-+                      ret_type: Optional[QAPISchemaType], gen: bool,
-+                      success_response: bool, boxed: bool, allow_oob: bool,
-+                      allow_preconfig: bool, coroutine: bool) -> None:
-+        assert self._schema is not None
-+        self._register_type(arg_type or self._schema.the_empty_object_type)
-+        self._register_type(ret_type or self._schema.the_empty_object_type)
-+
-+    def visit_event(self, name: str, info: Optional[QAPISourceInfo],
-+                    ifcond: QAPISchemaIfCond,
-+                    features: List[QAPISchemaFeature],
-+                    arg_type: Optional[QAPISchemaObjectType],
-+                    boxed: bool) -> None:
-+        assert self._schema is not None
-+        self._register_type(arg_type or self._schema.the_empty_object_type)
-+
-+    def visit_object_type_flat(
-+            self, name: str, info: Optional[QAPISourceInfo],
-+            ifcond: QAPISchemaIfCond,
-+            features: List[QAPISchemaFeature],
-+            members: List[QAPISchemaObjectTypeMember],
-+            branches: Optional[QAPISchemaBranches]) -> None:
-+        for m in members:
-+            self._register_type(m.type)
-+        if branches:
-+            for v in branches.variants:
-+                self._register_type(v.type)
-+
-+    def visit_array_type(self, name: str, info: Optional[QAPISourceInfo],
-+                         ifcond: QAPISchemaIfCond,
-+                         element_type: QAPISchemaType) -> None:
-+        self._register_type(element_type)
-+
-+    def visit_alternate_type(
-+            self, name: str, info: Optional[QAPISourceInfo],
-+            ifcond: QAPISchemaIfCond,
-+            features: List[QAPISchemaFeature],
-+            alternatives: QAPISchemaAlternatives) -> None:
-+        for m in alternatives.variants:
-+            self._register_type(m.type)
-+
-+    def _register_type(self, typ: QAPISchemaType) -> None:
-+        """Record a type as QMP-reachable (idempotent)."""
-+        typ = self._canonicalize_type(typ)
-+        if typ not in self._used_types_set:
-+            self._used_types.append(typ)
-+            self._used_types_set.add(typ)
-+            if isinstance(typ, QAPISchemaArrayType):
-+                self._register_type(typ.element_type)
-+
-+    def _canonicalize_type(self, typ: QAPISchemaType) -> QAPISchemaType:
-+        """Canonicalize integer types to plain int."""
-+        assert self._schema is not None
-+        if typ.json_type() == 'int':
-+            type_int = self._schema.lookup_type('int')
-+            assert type_int
-+            return type_int
-+        if (isinstance(typ, QAPISchemaArrayType) and
-+                typ.element_type.json_type() == 'int'):
-+            type_intlist = self._schema.lookup_type('intList')
-+            assert type_intlist
-+            return type_intlist
-+        return typ
-+
-+    def masked_name(self, name: str) -> str:
-+        """Return the masked name for a non-builtin, non-array type."""
-+        assert name in self._name_map, \
-+            f"type '{name}' was not registered or is builtin/array"
-+        return self._name_map[name]
-+
-+    def introspection_name(self, typ: QAPISchemaType) -> str:
-+        """Return the introspection name for a type."""
-+        typ = self._canonicalize_type(typ)
-+        if isinstance(typ, QAPISchemaBuiltinType):
-+            return typ.name
-+        if isinstance(typ, QAPISchemaArrayType):
-+            return '[' + self.introspection_name(typ.element_type) + ']'
-+        assert typ in self._used_types_set
-+        return self.masked_name(typ.name)
-+
-+    def used_types(self) -> Sequence[QAPISchemaType]:
-+        """Return the types to include in QAPI introspection."""
-+        return self._used_types
+Changes in v4:
+- new patch "qom/qmp: populate description & default-value"
+- added gtk-doc comments for class_property_add_qapi*()
+- correct some property types to reflect the visitor
+- collected rb, rebased
+- Link to v3: https://lore.kernel.org/qemu-devel/20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com
 
--- 
-2.55.0.543.g5ebe2ebe4ea8
+Changes in v3:
+- QAPI analysis redesign (replacing the old "expose name map" from
+introspect)
+- all non-implicit QAPI types are now introspectable, including QOM-only
+types
+- QAPITypeInfo.schema_name -> masked_name
+- exposes integer signedness and width through query-qmp-schema
+- various extra property fixes
+- rebase, some patch split or merge
+
+- Link to v2: https://lore.kernel.org/qemu-devel/20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com
+
+Changes in v2:
+
+- Added kernel-doc documentation for the QAPITypeInfo struct fields.
+- Dropped "qom: drop free-form property typename registration", it's
+  still needed for array of links to provide useful type names.
+- Added qdev_prop_link_list for array-of-links properties, with a
+  create function that generates "link<TYPE>List" type names matching the
+  existing "link<TYPE>" convention.
+- qdev_prop_link now uses &str_type_info instead of "link" (the full
+  "link<TYPE>" type name is set at property-add time)
+- Simplified DEFINE_PROP_LINK_ARRAY to use qdev_prop_link_list, dropping
+  the now-unnecessary _arraytype parameter.
+- rebased
+- Link to v1: https://lore.kernel.org/qemu-devel/20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com
+
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+
+---
+Marc-André Lureau (62):
+      qapi: add QAPITypeInfo struct definition
+      qapi/gen: fix _module_basename for multi-dash 'what' parameters
+      qapi: factor out QAPISchemaUsedTypes from introspect visitor
+      qapi: register all introspectable types, not just QMP-reachable ones
+      qapi: add type-infos generator
+      meson: add qapi-type-infos-*.c/h to build
+      qom: add qapi_type field to ObjectProperty
+      qapi/qom: add qapi-type field to ObjectPropertyInfo
+      qom/qmp: populate qapi-type in QMP handlers
+      qom/qmp: populate description & default-value in qom_property_info()
+      qom: add object_property_set_default_enum()
+      qom: add object_{class_}property_add_qapi
+      qom: add object_{class_}property_add_qapi_enum
+      tests: update check-qom-proplist for QAPI-aware property registration
+      qom: convert enum properties to QAPI-aware registration
+      qom: remove old enum property registration API
+      qom: convert struct properties to QAPI-aware registration
+      x86: convert OnOffAuto properties to QAPI-aware registration
+      microvm: convert OnOffAuto properties to QAPI-aware registration
+      pc: convert OnOffAuto vmport property to QAPI-aware registration
+      arm/virt: convert OnOffAuto acpi property to QAPI-aware registration
+      riscv/virt: convert OnOffAuto properties to QAPI-aware registration
+      loongarch/virt: convert OnOffAuto properties to QAPI-aware registration
+      hostmem-file: convert OnOffAuto rom property to QAPI-aware registration
+      sev: convert OnOffAuto legacy-vm-type property to QAPI-aware registration
+      whpx: convert OnOffAuto hyperv property to QAPI-aware registration
+      whpx: convert OnOffAuto arch properties to QAPI-aware registration
+      accel/kvm: convert OnOffSplit property to QAPI-aware registration
+      whpx: convert OnOffSplit property to QAPI-aware registration
+      hw/ppc/spapr_caps: fix property type name
+      ppc/spapr-caps: convert to QAPI-aware property registration
+      net/colo-compare: fix compare_timeout setter visitor type
+      net/colo-compare: fix max_queue_size setter visitor type
+      hw/misc/xlnx-versal-trng: add missing getter for fips-fault-events
+      qom: convert scalar properties to QAPI-aware registration
+      i386/cpu: convert strList property to QAPI-aware registration
+      accel/hvf: convert OnOffSplit property to QAPI-aware registration
+      i386/x86: convert SgxEPCList property to QAPI-aware registration
+      virtio-balloon: convert guest-stats property to QAPI type
+      qom: replace object_property_add_tm with StructTm QAPI type
+      hw/nvdimm: convert UUID property to QAPI-aware registration
+      hw/s390-virtio-ccw: convert loadparm property to QAPI-aware registration
+      hw/ppc/spapr_drc: convert fdt property to QAPI-aware registration
+      hw/gpio/pca955x: use QAPI enums for led and pin properties
+      include: add QEMU_REPEAT helper macro
+      hw/gpio/pca955x: convert pin/led property to QAPI-aware enum
+      hw/pci: change the busnr type to uint8
+      qdev: add qapi_type field to PropertyInfo with fallback registration
+      qdev: convert core PropertyInfo definitions to use qapi_type
+      qdev: adjust PciDevfn declared type
+      qdev: convert system PropertyInfo definitions to use qapi_type
+      hw: convert device-local PropertyInfo definitions to use qapi_type
+      target/riscv: convert PropertyInfo definitions to use qapi_type
+      qdev: convert PropertyInfo definitions to use qapi_type
+      qdev: introduce typed array PropertyInfos
+      qdev: simplify DEFINE_PROP_ARRAY and remove generic array PropertyInfo
+      qdev: remove deprecated PropertyInfo.type and .enum_table fields
+      hw/i386: convert PCSouthBridgeOption to QAPI enum
+      qom: use QAPITypeInfo in object_property_get_enum
+      qapi: expose integer signedness and width in introspection
+      tests/qmp-cmd-test: assert qapi-type resolves in query-qmp-schema
+      qapi: select introspectable types directly
+
+ accel/hvf/hvf-all.c                      |  29 ++--
+ accel/kvm/kvm-all.c                      |  31 ++--
+ accel/nitro/nitro-accel.c                |   3 +-
+ accel/tcg/tcg-all.c                      |   3 +-
+ accel/whpx/whpx-common.c                 |  58 +++----
+ authz/list.c                             |  14 +-
+ backends/cryptodev.c                     |   7 +-
+ backends/hostmem-file.c                  |  33 ++--
+ backends/hostmem-memfd.c                 |   3 +-
+ backends/hostmem.c                       |  20 +--
+ backends/spdm-socket.c                   |   4 +-
+ backends/tpm/tpm_util.c                  |   3 +-
+ block/throttle-groups.c                  |  10 +-
+ chardev/char-socket.c                    |   3 +-
+ crypto/secret_common.c                   |  12 +-
+ crypto/secret_keyring.c                  |   9 +-
+ crypto/tlscreds.c                        |  12 +-
+ docs/devel/qapi-code-gen.rst             | 112 ++++++++++++-
+ docs/interop/virtio-balloon-stats.rst    |  22 +--
+ event-loop-base.c                        |   7 +-
+ hw/acpi/ich9.c                           |   1 +
+ hw/acpi/pci.c                            |   7 +-
+ hw/arm/virt.c                            |  31 ++--
+ hw/block/xen-block.c                     |   3 +-
+ hw/core/clock.c                          |   3 +-
+ hw/core/machine-qmp-cmds.c               |   3 +-
+ hw/core/machine.c                        |  13 +-
+ hw/core/qdev-prop-internal.h             |  20 +++
+ hw/core/qdev-properties-system.c         |  97 ++++++------
+ hw/core/qdev-properties.c                | 180 ++++++++++++++-------
+ hw/cpu/core.c                            |  10 +-
+ hw/cxl/cxl-host.c                        |   6 +-
+ hw/display/apple-gfx-mmio.m              |   2 +-
+ hw/display/apple-gfx-pci.m               |   2 +-
+ hw/display/apple-gfx.h                   |   1 +
+ hw/display/apple-gfx.m                   |   7 +-
+ hw/gpio/aspeed_gpio.c                    |   5 +-
+ hw/gpio/aspeed_sgpio.c                   |   3 +-
+ hw/gpio/pca9552.c                        | 261 ++++++++++++-------------------
+ hw/gpio/pca9554.c                        | 157 +++++++------------
+ hw/gpio/stm32l4x5_gpio.c                 |   5 +-
+ hw/i386/microvm.c                        |  80 ++++------
+ hw/i386/pc.c                             |  32 ++--
+ hw/i386/pc_piix.c                        |  61 +++-----
+ hw/i386/sgx-epc.c                        |   3 +-
+ hw/i386/x86.c                            | 113 ++++++-------
+ hw/ide/ide-dev.c                         |   3 +-
+ hw/input/stellaris_gamepad.c             |   2 +-
+ hw/intc/apic_common.c                    |   3 +-
+ hw/intc/arm_gicv3_common.c               |   2 +-
+ hw/intc/arm_gicv5_common.c               |   4 +-
+ hw/intc/rx_icu.c                         |   4 +-
+ hw/loongarch/virt.c                      |  87 +++++------
+ hw/mem/nvdimm.c                          |  11 +-
+ hw/mem/pc-dimm.c                         |   3 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c |  19 ++-
+ hw/misc/arm_sysctl.c                     |   4 +-
+ hw/misc/aspeed_lpc.c                     |  73 ++++++---
+ hw/misc/aspeed_sdmc.c                    |   3 +-
+ hw/misc/mps2-scc.c                       |   2 +-
+ hw/misc/npcm7xx_mft.c                    |   3 +-
+ hw/misc/tz-ppc.c                         |  19 +--
+ hw/misc/xlnx-versal-trng.c               |  15 +-
+ hw/net/ne2000-isa.c                      |   3 +-
+ hw/net/rocker/rocker.c                   |   2 +-
+ hw/net/virtio-net.c                      |   2 +-
+ hw/nvme/ctrl.c                           |   3 +-
+ hw/nvme/nguid.c                          |   3 +-
+ hw/nvram/xlnx-bbram.c                    |   3 +-
+ hw/nvram/xlnx-efuse.c                    |   5 +-
+ hw/nvram/xlnx-versal-efuse-ctrl.c        |   2 +-
+ hw/pci-bridge/pci_expander_bridge.c      |   3 +-
+ hw/pci-host/i440fx.c                     |  29 ++--
+ hw/pci-host/pnv_phb3.c                   |   5 +-
+ hw/pci-host/pnv_phb4.c                   |   5 +-
+ hw/pci-host/q35.c                        |   9 +-
+ hw/pci/pci.c                             |   3 +-
+ hw/ppc/spapr_caps.c                      |  39 ++---
+ hw/ppc/spapr_drc.c                       |   5 +-
+ hw/ppc/spapr_rtc.c                       |  18 ++-
+ hw/remote/vfio-user-obj.c                |  22 +--
+ hw/riscv/microchip_pfsoc.c               |   3 +-
+ hw/riscv/riscv_hart.c                    |   6 +-
+ hw/riscv/virt.c                          |  52 +++---
+ hw/rtc/mc146818rtc.c                     |  16 +-
+ hw/s390x/ccw-device.c                    |   3 +-
+ hw/s390x/css.c                           |   5 +-
+ hw/s390x/s390-pci-bus.c                  |   3 +-
+ hw/s390x/s390-virtio-ccw.c               |   4 +-
+ hw/s390x/sclpcpi.c                       |   8 +-
+ hw/s390x/virtio-ccw-mem.c                |   3 +-
+ hw/sensor/adc128d818.c                   |  16 +-
+ hw/sensor/adm1266.c                      |   3 +-
+ hw/sensor/adm1272.c                      |   9 +-
+ hw/sensor/emc141x.c                      |   9 +-
+ hw/sensor/isl_pmbus_vr.c                 |  19 +--
+ hw/sensor/lsm303dlhc_mag.c               |   9 +-
+ hw/sensor/max34451.c                     |   5 +-
+ hw/sensor/tmp105.c                       |   3 +-
+ hw/sensor/tmp421.c                       |   9 +-
+ hw/usb/dev-storage-classic.c             |   3 +-
+ hw/vfio-user/pci.c                       |   5 +-
+ hw/vfio/pci-quirks.c                     |   3 +-
+ hw/virtio/virtio-balloon.c               |  87 ++++-------
+ hw/virtio/virtio-iommu-pci.c             |   2 +-
+ hw/virtio/virtio-mem-pci.c               |   3 +-
+ hw/virtio/virtio-mem.c                   |  18 ++-
+ hw/xen/xen-pvh-common.c                  |   9 +-
+ include/chardev/char.h                   |   8 -
+ include/hw/block/block.h                 |   2 +-
+ include/hw/core/qdev-properties-system.h |   2 +
+ include/hw/core/qdev-properties.h        |  40 +++--
+ include/hw/cxl/cxl_component.h           |   5 +-
+ include/hw/i386/pc.h                     |   4 +-
+ include/qapi/qapi-type-info.h            |  31 ++++
+ include/qemu/osdep.h                     |  33 ++++
+ include/qemu/uuid.h                      |   4 +
+ include/qom/object.h                     | 185 +++++++++++++++-------
+ iothread.c                               |   9 +-
+ meson.build                              |   2 +
+ migration/options.c                      |   4 +-
+ monitor/qmp.c                            |  12 +-
+ net/colo-compare.c                       |  15 +-
+ net/dump.c                               |   6 +-
+ net/filter-buffer.c                      |   3 +-
+ net/filter.c                             |  10 +-
+ qapi/common.json                         |  28 ++++
+ qapi/introspect.json                     |  20 ++-
+ qapi/machine.json                        | 152 ++++++++++++++++++
+ qapi/meson.build                         |   4 +
+ qapi/pragma.json                         |   1 +
+ qapi/qom.json                            |  10 ++
+ qga/meson.build                          |   2 +
+ qom/object.c                             | 236 +++++++++++++---------------
+ qom/qom-qmp-cmds.c                       |  47 +++---
+ scripts/qapi/backend.py                  |   9 +-
+ scripts/qapi/gen.py                      |   2 +-
+ scripts/qapi/introspect.py               | 111 ++++++-------
+ scripts/qapi/schema.py                   |  16 +-
+ scripts/qapi/schema_analysis.py          |  69 ++++++++
+ scripts/qapi/type_infos.py               | 175 +++++++++++++++++++++
+ system/bootdevice.c                      |   3 +-
+ system/memory.c                          |   5 +-
+ target/arm/cpu64.c                       |  11 +-
+ target/arm/kvm.c                         |   3 +-
+ target/arm/tcg/cpu64.c                   |  11 +-
+ target/i386/cpu.c                        |  26 +--
+ target/i386/kvm/kvm.c                    |  38 +++--
+ target/i386/kvm/tdx.c                    |   4 +-
+ target/i386/sev.c                        |  31 ++--
+ target/i386/whpx/whpx-all.c              | 101 ++++--------
+ target/ppc/compat.c                      |   3 +-
+ target/riscv/cpu.c                       |  47 +++---
+ target/riscv/kvm/kvm-cpu.c               |   7 +-
+ target/riscv/tcg/tcg-cpu.c               |  13 +-
+ target/s390x/cpu-system.c                |   4 +-
+ target/s390x/cpu_models.c                |   5 +-
+ target/sparc/cpu.c                       |   3 +-
+ tests/include/meson.build                |   2 +
+ tests/meson.build                        |   6 +
+ tests/qapi-schema/meson.build            |   1 +
+ tests/qtest/qmp-cmd-test.c               |  55 ++++++-
+ tests/unit/check-qom-proplist.c          |  99 +++++++++---
+ tests/unit/test-qdev-global-props.c      |  11 +-
+ tests/unit/test-qdev.c                   |   2 +-
+ ui/console-vc.c                          |   8 +-
+ ui/console.c                             |   3 +-
+ ui/dbus.c                                |  18 ++-
+ ui/input-linux.c                         |  11 +-
+ util/thread-context.c                    |   7 +-
+ util/uuid.c                              |   5 +
+ 171 files changed, 2402 insertions(+), 1632 deletions(-)
+---
+base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
+change-id: 20260510-qom-qapi-fbe0f5060c3f
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
