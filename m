@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 019CAC88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 22:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0367BC88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 23:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5A22-0002We-CH; Fri, 11 Sep 2026 18:47:42 -0400
+	id 1x5Atn-0000AA-2J; Fri, 11 Sep 2026 19:43:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5A1z-0002WT-TY
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 18:47:40 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1x5Atl-00009g-MT
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 19:43:13 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5A1y-0006xQ-Gf
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 18:47:39 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-38dfe7eb825so1402866a91.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 15:47:38 -0700 (PDT)
+ id 1x5Atk-0000TQ-1B
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 19:43:13 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ d9443c01a7336-2d747eb79f6so2817045ad.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 16:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789166857; x=1789771657; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789170190; x=1789774990; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=y2o2igT44f2T+6oxP5t0FyBwSzaHcFIpxhSYzs+NKEE=;
- b=wlvL8t4Lwa5LxM2ynCjwZAOaGeqd+zUxxsttGoabykQy2YC5jPMlVsy/vjT/mVrAcD
- fYrfAdfsZ+VR45Dr+U2KUrJJ9/em5FovrfLIhONaIyVym0SjFviRpsaZnsogNHOcnd/b
- eVd7moQqTw8Hpc1gTpCCXOfDI/sBh4tDOU8fHcBI2XZLm6kANaj6x00aRWb3mlzR30r6
- OFFpY3f3aMm221X52NfZKxu5RxyCYCY2lpAu8iD7hprit0T5suofiqXFUwWTXG4OgAMG
- Kdv/ENiLw3RQhNUn3qvAHPsg9Q3DQ6N0idFW+j7yTfYnQUjkO/aHU143YTYLadmXZQhL
- SvUQ==
+ bh=doaGtjQVIbDg8Jdfardvb/NVcrTuNt304Zj+H+pqEvg=;
+ b=jPD4ZRD+TdeADOJY6amE/WTxQnhuJV/n40NNwu/noDAlnXcPviGciIrICdQiaYRIm4
+ nkY2fyLUAAYRxgb7f88HWn2QB5gcwLdzHbZAWVz2DPzlVmhdwvD1PC1VdbR1JMZrVJ9i
+ pWwVQbRteSs2prKEOqWBC1x9Whl2nDhTpI+HzVlaoFdEFR7bYquR4YFKUwhilCgQOOHo
+ +xN/2N4W3q/yfFu/rgOe3DZ6ZxALAdKOONZCJMbRQpNaf9IgnjBbMN1gS9427jxm7tBN
+ 96siiIQReHQNIF8qkxZ8h8j+YHlmgWTZcLUItGk3jfLbBgbMJOTSwVv0Rtn6fuPNqmZa
+ pMcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789166857; x=1789771657;
+ d=1e100.net; s=20251104; t=1789170190; x=1789774990;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=y2o2igT44f2T+6oxP5t0FyBwSzaHcFIpxhSYzs+NKEE=;
- b=hqPPPlNjbm/atGPNNdyTVl9JbAOYOVSafIl92t1AITnUuXiLZ5dvGAgjy//rHpl7hL
- Tyf5E0Xz47hWHxSrJTFJ+0hQkbXcGzujGXWFA2RJO62clsr6/VCvquG0N8F/+rQTC5hq
- ZQeQhT9M/wc9hNpxwmgiKNC8iRnkHIO4ZwlC3N+L5YSP7AobeQLPQilO4keoyI+liClB
- StBtYA173t/QGKN/DLgBKK7bMv0+v7SDsLzC++mFhhsvcgK4WGoFnhK/Sv44RhYFIj4G
- AsoizMEsEIBsbwsLWqxAHnj4/W84FrBm3ENBxqg1WZ9um7KwjRge6qYA9WjRRcC49YH1
- 9TTQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx3ATK8lHfL9ea0m8aiGbw5uQgS/ZXVYtdrFwM7eHQPo9pl2egO/PYLsahq/4Q0WJzbyqbKUNuRH+ee@nongnu.org
-X-Gm-Message-State: AFuF++mjgIV5ccfYmlsTJgWq3D+EsboL+9fH696yWzvn3PEbBDECsbT+
- Hu+eG3U1f2UbVAtT0UCRHqY02RUsgTyNs0wnrgpXRbjMp22ifkWoruChHsk5sSUOnkQ=
-X-Gm-Gg: AYBFou0J1YL/YYIdaiPJLSxfgMketV8Lv9TrY+IFGnRI5RL/vUZkqkeOpAd+C+60Ns0
- +5/CSrtwf18JhC8zmnPJxphheqTGISaCqgCP7wp48kdMj9fXmei33g1UVjQBNmftJMiys+C7H/y
- mVCWdZsJgJU4P/lQgIz1LveyX6z0IisS+UhOl5JHLXsNGac4YuxQJQ0nMEqRcs7HDKFFE5Mi+2X
- FdUXsf9gBd13P7aI/HIN4MdvWx2cRlak2WMmiPOAvXB7isMs5ArD7dg37UJGC711ybtFrrsxqOP
- 0NlHKu4WpRu0inGHH+9b8e2r4i5YRq739OT+iFLjsehadxKL4hb/XWQv31f+86zvmXsOYIp693w
- jtrNSyLcU1L+OijlGk0y/qZ3d+/Yrr+sfWsB3sSrvLlxl3S5zFtsl19EbmToeG1T45mi9b2Oa1m
- 8Dqm7LSytTuNMgAOumHcSfyP5A68S5APr+PO0j/tLHKEcW6nEcdRei9Dk6KSKRtIR9s4ExrfZ8K
- sh7wALMlOiPh2uIJaJFboLNltsVmQp5/7P4hHMhnyCj0MG1/o/VLWwWmQE=
-X-Received: by 2002:a17:90b:4c11:b0:38e:6a44:671b with SMTP id
- 98e67ed59e1d1-39d9b96848amr10185486a91.0.1789166856852; 
- Fri, 11 Sep 2026 15:47:36 -0700 (PDT)
+ bh=doaGtjQVIbDg8Jdfardvb/NVcrTuNt304Zj+H+pqEvg=;
+ b=jB2LaQxbdVLqHX2qP8OujM/vXUkcXtWKhk9ZyEJ8Zz91r4k5cdpjiFfB+ieEmYtnVi
+ rBGbAyTAOF5I6BuhrZhPg+b6sgzYqOhIxJmgfs0nvPKuLnCmAyhezZA9UaBa+4WuquCa
+ ugHPXrnQNxZJ0xPoF+tIOmq4DFVRp3MD0KRURvy9KSePsOWgup/1X3CPgh4FJJWdtw3m
+ ZsXsmE3JpsdwEWMBht420vXAySLmrlBdQtMzraE6ciHcd68z754c2MV+XRbj8sZsydXC
+ z/IfYSVOBfEGW3wjNs0XsJLv8fJzbi7jIkQS3kcs4IY2AJxcqHVXhEtUn/1cSjntblis
+ SDAA==
+X-Gm-Message-State: AFuF++krAaapsl94RU6TDIRaECGIvan3KnhGFQ+BzRmsL+bUYdnqnr5S
+ eRSYTZpfDKu4dCwrVDN8xgoomY3sBqGsGrPX2MkuW6sboTVjIWd9zvTF5NV7Obrgmak=
+X-Gm-Gg: AYBFou2bxbpuMiKwPMuAnTOXt/2EmizFQK2qG81GPrn9Xv7sEY2bbP2MuBg/KtsFtvk
+ nYGoioySD6OqJvyDf6xm9Zv1f1LYVUdioGUv9mxiZBvFrHS1ucjSM4aGLuXgC+tyMFENwKWmpSS
+ JV7rJXHX6kBiSoTsW4OiOXBgFulZF1FkT+wQeYuDuGtL0l5HnSpc/Q5zcO7fUb56aCjmd91O3RR
+ 0lKNhc3iUbQakSfSkcKd3lj5Z2EIKAL9TpR3V2QUPaHFentjHpl06clrP8ABaXt/GYEa7zMQfqD
+ VPRscHQpbWcR4GbryHbkyatt61Amqf2P8ZW1nuremfkvHRpGN8rZEObJ6bWN7w7hNwwgTpDXOwd
+ QDwTO4QDpiCt4nF/vqGD2dlBJDwGo7Pkf6WKS6g1kFJcBdvrs0mRRwzHHwlfZ50laU7Sz1BZxfI
+ CPxtT74bdF3ToQc5dgnxxhlAFdVC4/h89+xlILwD9VCda1oNfgA9xq0BVi8fyZeIAqSlOKXqwgW
+ 6odVu3sin2R+lXtpARD9u3Y08Ceeo8riTMaRjpDTAxFcEJmd647kyDU8Ok=
+X-Received: by 2002:a17:902:e74d:b0:2d6:fec3:bd57 with SMTP id
+ d9443c01a7336-2dd2a34b154mr114124535ad.14.1789170189931; 
+ Fri, 11 Sep 2026 16:43:09 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:20b:7d3e:6a30:1f63?
  ([2603:800c:7900:ed00:20b:7d3e:6a30:1f63])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4f55735sm9844658eec.24.2026.09.11.15.47.35
+ 5a478bee46e88-33ba4e4fb3esm9670029eec.7.2026.09.11.16.43.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Sep 2026 15:47:36 -0700 (PDT)
-Message-ID: <d4156be3-be92-45b8-b401-972d76e08683@linaro.org>
-Date: Fri, 11 Sep 2026 12:47:33 -1000
+ Fri, 11 Sep 2026 16:43:09 -0700 (PDT)
+Message-ID: <165943ab-40d3-4059-8957-171197835fad@linaro.org>
+Date: Fri, 11 Sep 2026 13:43:07 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] tcg: split out _var forms of gvec
- saturating/mul/shift-immediate ops
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- marco.liebel@oss.qualcomm.com
-References: <20260911204334.1264922-1-brian.cain@oss.qualcomm.com>
- <20260911204334.1264922-4-brian.cain@oss.qualcomm.com>
+Subject: Re: [PULL v2 00/75] pci, vhost, virtio, iommu, apci: features, fixes
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <cover.1789117222.git.mst@redhat.com>
+ <6134ac71-f451-4caf-88df-af001641a05f@linaro.org>
+ <20260911155428-mutt-send-email-mst@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260911204334.1264922-4-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260911155428-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,24 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/26 10:43, Brian Cain wrote:
-> target/hexagon is about to address its HVX register file through a
-> runtime base pointer rather than a constant offset from env, in order to
-> share one register file between several vCPUs.  Split the other
-> gvec op families it needs like tcg_gen_gvec_{add,sub,mov,and,etc}.
+On 9/11/26 10:00, Michael S. Tsirkin wrote:
+> On Fri, Sep 11, 2026 at 09:06:26AM -1000, Richard Henderson wrote:
+>> On 9/10/26 23:01, Michael S. Tsirkin wrote:
+>>> The following changes since commit 1df256f5968e9f7c3c4533a1383b071c044a36d6:
+>>>
+>>>     Merge tag 'qom-qapi-pr-pr-v1' ofhttps://gitlab.com/marcandre.lureau/qemu into staging (2026-09-08 18:35:31 +0100)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>     https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+>>>
+>>> for you to fetch changes up to 2f8991c0b9c400f55897849a538580039b61865a:
+>>>
+>>>     MAINTAINERS: add Junjie Cao as CXL reviewer (2026-09-11 04:59:15 -0400)
+...
+> That's the new test. I dropped that.
 > 
-> Add tcg_gen_gvec_{ssadd,sssub,usadd,ussub,mul}_var and
-> tcg_gen_gvec_{shri,sari}_var, plus the tcg_gen_gvec_2i_var plumbing the
-> immediate-shift forms are built on.
 > 
-> Reviewed-by: Marco Liebel<marco.liebel@oss.qualcomm.com>
-> Signed-off-by: Brian Cain<brian.cain@oss.qualcomm.com>
-> ---
->   include/tcg/tcg-op-gvec-common.h |  31 ++++++
->   tcg/tcg-op-gvec.c                | 177 ++++++++++++++++++++++---------
->   2 files changed, 160 insertions(+), 48 deletions(-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> The func-rx-vnc is due to the test using a fixed port which is
+> always a bad idea, making the test flaky.
+> 
+> Pushed to same tag, could you try again pls?
+Applied, thanks.
 
 r~
 
