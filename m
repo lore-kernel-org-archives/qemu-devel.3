@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FC6C88E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC18CC88E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4yo1-0000e8-Pi; Fri, 11 Sep 2026 06:48:29 -0400
+	id 1x4yqz-0001lK-9G; Fri, 11 Sep 2026 06:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4ynz-0000dz-Vv
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 06:48:28 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x4ynx-0000V0-RR
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 06:48:27 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id D5A7E6024D;
- Fri, 11 Sep 2026 10:48:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D9E1F00893;
- Fri, 11 Sep 2026 10:48:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789123696;
- bh=gvaM5crAFQKHquGcbphMPU6lDnDdVA0c5l8jeIce1uo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=kTcJ9p2M/RtVSuhkDo5kZM/ywmXyt5GWxGpJZ6Na6fj69UKdcWkXIlRzng0VGcFQB
- j3/bCzSZBM5JkabfTALbLNjCJ5hPfrhQERW+3/qZ2hxfBD1wWuq8K4JSPVVhBrP3j8
- XRJHS7JKo1Zeb9BsWKi4qsh7II0aZSxwhLKOsRSdHrZjfDOjpGZcBr+XRAxG6lFmMS
- 3OEGULgHSzYqiFiRjtMLxmfDxLzvlNKZ1rhiewWNgsBNvbKSmDLr01YTrIK6CROVyp
- ht35503UUWYA7cnfRNNBI0MFYeX30xxnCy3kauMqVWoI0JoPZO+W2o3KH/IUFjLEqG
- WFG8N1zLnI1yw==
-Message-ID: <f4f6f4a2-df26-4905-9900-ff1ef62201db@kernel.org>
-Date: Fri, 11 Sep 2026 12:48:10 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x4yqw-0001k9-KJ
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 06:51:30 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x4yqs-0001O6-QA
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 06:51:30 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccc02279so745720a91.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 03:51:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789123885; x=1789728685; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yeYwL6Yng/g4bmLIbyzt+iRDyW61rZSKyC+iiBoG0tk=;
+ b=a8OeaGo9TjgkcLW/FL+IaqFMg2nyX3dmYpQO1aIwn2Bc/v434lKcRU3vFwsgf0p4p6
+ iuyhvpXfficDnyoK2u31mJ8GCNtmqolHZskG+YCiRwdvdkcTBNqk1WrjIl25rBP8jaOs
+ 9SGahpMr4Z6VT3AyeBaUYHbEg707NWPVn1gh3z1div00LF5Mil8Y+1As7XuUR0BGDILX
+ Uis4ABWO81w6gq1AuGyJWWx1LLQ4BryVOi9QUwJidFi3Ctlv6R8HpL4FX0KEqq6xnm74
+ 38c1Mm9fruCWIapkIZnLZ+qokghPazXcmKPLvK9wxRPykdM96xoYAWLL3rrZWIhzH6I4
+ L0hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789123885; x=1789728685;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=yeYwL6Yng/g4bmLIbyzt+iRDyW61rZSKyC+iiBoG0tk=;
+ b=qX47Zf9FHlxG0miCCWbDnfqN0V0ouuod0nECsLYl+e5PkLjG7gRVB7sZmj86IWDWpZ
+ OsUHYZjPDbXRipiISNnnB4ngoAkreRw8XoODNNiaPWooF/meTv8CTcM1eWhcqj4oGpou
+ ZlMUbDE7CwkAWSuGPafes/M3HKDQhbv4IIS75Snvs50D2gT7AqZ6gEWsmWIM4A/Upzdc
+ qN0RNm5g1Exj/UU9lSerIuW9qnobA6n/QOcYsG3J/MWXXX3Z2Gt818fBCSulAm2IkH2j
+ ndPcQWeXgTykeBRQiDzKI/KWVgRaTNn+zTyztBvM8iw83YiB3Kj9HYIPMmVyP7WpxBB2
+ 2ckg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzaEWO68N7IgXMGY7MJVvbyovDfib9t38LcEgqAhKkoRSxGkyDn+C6h/1du5T016k19xvsV/lEsMy3n@nongnu.org
+X-Gm-Message-State: AFuF++n/XqUcossm/pas7A3qhN32XmgFdUTJXpKFoQvvHVb1V40B21W7
+ nyJybcmJT5hKgzi4Zs+RpCr42inKG6qQoXj3Q2rX+1T5TB9rHdkwU3NYYJVxmhIz8MM=
+X-Gm-Gg: AYBFou2UqxAnFWruDq8rSmZeteiFV2VwiZdYHxBUvuOddBoMVbnTOPuM2kpTOW+WD53
+ MQAAE4Vb7jRCeT65eKgBWeMpeqSnH5XUsi4iDK+XDkN9k4UdfMXRSsfgI8Fxt21W0hlka2ByKBj
+ pPVsp7LaNeLilQcPHAh56JiIAuzv0p72kvTAk+kRqJ74N214iKmcTq3QuIZX2FQMx1fHCezKrtc
+ 8ddyXQS4BX+xBLJtZOIe+nmUcgcsEEOyXMmqGSY4ZRih9NzIzuR3vXRq6jp1gf4OdgxkATWBl2v
+ lnnj4SgK4gvsO6rXAdhdiOQxDnpFBhH7cOfBQJ5zIYeGYXy1p8rdaBT8kuAPM3GoSadfPL3LMGO
+ MAX+KvfD37Q3ueq/JN/Zwbil4kKZcb4/MLYHuZqcwpkavq9/Fyb6GoQ5OoK/0x1NstAMcz4UzdW
+ iOTxAM5zQa+u89E0pIw2GJenWeyW78vmekOrv1a2He9lxq72Xp7z2Xq6vUv9LFd3GD2/zyonvx5
+ xHvqfvAqGNpxTmPV926qgHldCatNl+wJLwLbHAmaon8P/HBvgi2AVyx6yk=
+X-Received: by 2002:a17:90b:3dcd:b0:399:ea1:5a82 with SMTP id
+ 98e67ed59e1d1-39d9bc66ab9mr6503365a91.3.1789123884999; 
+ Fri, 11 Sep 2026 03:51:24 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:20b:7d3e:6a30:1f63?
+ ([2603:800c:7900:ed00:20b:7d3e:6a30:1f63])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33ba4cf31c1sm5747284eec.1.2026.09.11.03.51.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Sep 2026 03:51:24 -0700 (PDT)
+Message-ID: <5ef36fa1-3b60-4534-a346-ba2c9b089655@linaro.org>
+Date: Fri, 11 Sep 2026 00:51:22 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/12] machine: Rename machine_require_guest_memfd() to
- *_private()
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com,
- armbru@redhat.com, pankaj.gupta@amd.com, isaku.yamahata@intel.com,
- xiaoyao.li@intel.com, chao.p.peng@linux.intel.com,
- Peter Xu <peterx@redhat.com>
-References: <20260908133151.836685-1-michael.roth@amd.com>
- <20260908133151.836685-10-michael.roth@amd.com>
- <e4a6efac-c241-417c-85d7-16415348378b@kernel.org>
- <742iw72k4pc5bigmbyx6rls3n2nm34x4duvo34ylgamhnwrjpg@vzoi4ozrpied>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
+Subject: Re: [PULL 0/7] Qtest patches for 2026-09-10
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+References: <20260910202559.916866-1-farosas@suse.de>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <742iw72k4pc5bigmbyx6rls3n2nm34x4duvo34ylgamhnwrjpg@vzoi4ozrpied>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260910202559.916866-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,22 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/26 01:08, Michael Roth wrote:
-> On Thu, Sep 10, 2026 at 10:55:09AM +0200, David Hildenbrand wrote:
->> On 9/8/26 15:30, Michael Roth wrote:
->>> From: Peter Xu <peterx@redhat.com>
->>>
->>> Differenciate it from fully shared guest-memfd use cases.
->>
->> s/Differenciate/Differentiate/
+On 9/10/26 10:25, Fabiano Rosas wrote:
+> The following changes since commit 257bf4f160c50ca8c4ebd603f519f5c786013fb7:
 > 
-> I prefer the other spelling, but I guess the ship has sailed on that
-> discussion :)
+>    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2026-09-10 11:08:04 +0100)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/farosas/qemu.git tags/qtest-20260910-pull-request
+> 
+> for you to fetch changes up to bc4f7b451e1f38578427e5df186aa1327d739ee2:
+> 
+>    tests/qtest/ahci: fix a racy deadlock in the engine stop test (2026-09-10 17:22:02 -0300)
+> 
+> ----------------------------------------------------------------
+> QTest pull request
+> 
+> - Improvements to fdc-test execution ordering
+> - Fix to a deadlock in ahci-test under host load
+> - Leak fixes to migration and IDE
 
-Heh, my spellcheck flags it (and it looks odd). If it's valid, please keep it :)
+Applied, thanks.
 
--- 
-Cheers,
-
-David
+r~
 
