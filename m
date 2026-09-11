@@ -4,67 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B648CC88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 13:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85B5C88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 13:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x518S-0005Ad-Tm; Fri, 11 Sep 2026 09:17:46 -0400
+	id 1x51Gf-0006VL-J3; Fri, 11 Sep 2026 09:26:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+01a8612c2d92d3fbdbce+8419+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1x5185-00050h-Qy
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 09:17:25 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x51Gd-0006Uy-W1
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 09:26:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+01a8612c2d92d3fbdbce+8419+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1x517y-0001pE-SO
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 09:17:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=NGWYeR4JzuNTEnXOGwGUn9aVIclf+oa607LBYI/GsrA=; b=ogUzkjiPHrM/o0Jq5IUF/TOQce
- JF4ocnvus3utQGgwtz6hQ1+82P9io14hgVLu3ofSqdI7hbImyMp/iKmDKgIEvDo6mjd2W1LrLw7GQ
- 1UsFKYkVYZCdCHSGLnSHX+fZNpKmQhpf7Bbj8VBy+1grK0MJ0Qt7El1vJ0d5hovA5W+pMVWYFe5FN
- Sbl1cZeMKKLDLqEKgf1QoAbTL8xMjPkro3OEfFDBkz1FA+HfUJVvoGnChxJqHNktOHWZRl4fsQkQX
- 1s9spAlSGJwn3KYzjuXYgRf04X/Yq5VOqwRdYm7NXLCwuV02xEjNQs8dpn2C6NEafF5k/eDEhM9An
- eFxQhYQw==;
-Received: from [2001:8b0:10b:5:94db:d427:30c1:83c2]
- (helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
- id 1x517s-0000000CC6l-3IFW; Fri, 11 Sep 2026 13:17:09 +0000
-Message-ID: <a6796682095104ec1629dacdb343e060a54d1213.camel@infradead.org>
-Subject: Re: [BUG] hw/xen: features published after InitWait since 240cc11369fc
-From: David Woodhouse <dwmw2@infradead.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: mark.syms@citrix.com, qemu-devel@nongnu.org,
- xen-devel@lists.xenproject.org, 	sstabellini@kernel.org,
- anthony@xenproject.org, paul@xen.org, 	edgar.iglesias@gmail.com
-Date: Fri, 11 Sep 2026 14:16:40 +0100
-In-Reply-To: <CAFEAcA_b-C8uA2YE8c7JFDqTYUyHJ+qW3wjp4B3wOvwXTd9jrg@mail.gmail.com>
-References: <178912129220.24041.799369954881004447@citrix.com>
- <30ec634b6072ac23c38a6a05bf3f90de4b383632.camel@infradead.org>
- <CAFEAcA_b-C8uA2YE8c7JFDqTYUyHJ+qW3wjp4B3wOvwXTd9jrg@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-kz2avUIosl2i8tNm3TA7"
-User-Agent: Evolution 3.60.3-0ubuntu1~ppa10~24.04 
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x51Ga-00057n-Nn
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 09:26:11 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68BCjA7n4141125
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 13:26:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ E+V50z1PgQVkqv+VGmuVZQZgaKAqwzksoIknc6P9Bw0=; b=QwGkgAPW28FbMcpG
+ GSxjjepQDuHHjjWwCe9QNePC07oO/WuLYcNp6Ln8HyhiHedk7eOKLOr3JXCnbiOV
+ e3aO3r5H36FgJ3oOE7kJTsxBC7Qlf3ImjpfuUyvJd78KZe0/kWW4iD0MoqBVc9aV
+ AZUr3Ta+e7+rllUoASuglzSxl5acPDofQkJmrsrWjyvgAL4jY088SD34a7G9JXvJ
+ 9fWQEMNcQgzXkO5F5/xSIUtWpDV9Xk5npB6GujM1SFNSQMrQyNtavPz1TeGKl5Gb
+ W/N9wS4mp+d/9phlGgAlA5Qo3QeVVIgdOchWoSvH8TnVhsH7tTUnex3RIuiIeYcq
+ WmNswQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gmbdr9wu3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 13:26:05 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-936aa34873bso143235585a.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 06:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789133164; x=1789737964; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=E+V50z1PgQVkqv+VGmuVZQZgaKAqwzksoIknc6P9Bw0=;
+ b=D1rfd3yTEeGdCuLvSL+tdfp0d6x0BfIxMEbqmITKZjE83zVQTniafiLxwoxM/YHJR8
+ jopU4Mjmy029K5SjuNvZTDJSaeY7vneVntznJdHXcFBPD++e3J+7S1/ek3gy9GW+H2R/
+ Avh0ynfEKOAMrGAWasgjTGKwu+I0kD4fHfsaQNwJu98oD1ktp3q3k1vjKqwWBaOULRUI
+ gBxXeEExstqpWTRR1SE01MJt1M7BAq7thzg4Y50c/jFJOUfpJXHbwtJto2mXHwHKx3OU
+ H0DTqUapecHTEt3x885PhZbucYlEsy4JxaSj8Qta9shulri1CeS32MHbi63yOAYCRDQy
+ 760w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789133164; x=1789737964;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=E+V50z1PgQVkqv+VGmuVZQZgaKAqwzksoIknc6P9Bw0=;
+ b=kD5c3reIN4urb/NXp+bwz4g3ONgKeagpAurZftIP4sU4stKFBCyQ/swIDoeKDTQbU2
+ Ye5sgnR1AYiJugjGz8+n2p5Jhx7DxZF32+1lg/6Fs02DVMMSZRCkpsiqcQY/f0lM0fpx
+ 8rg8+RyRh4vdx2I/PNy2L4e4oZzjBf6l4wBg4mWxZwewDexfWHigJNYkztE0NCJSIZ2g
+ RJSfKj6Nfwwv43vR/nUCAlzMXFu45Df5xbqsKx5MshORK9Xd3aB3SbPEgY7GwltHengL
+ Y6mLvOK+hzZmGmjKo7dvAfFRkakp7EdjXmypB5pWo+Zuf2KolHmvj7AuPIivQmVzmbHy
+ h8vg==
+X-Gm-Message-State: AFuF++m4XxBTIuw5Nkrs2TydvEJHU9GKXzT+YO6ZCnH5cvmbst0p9QwV
+ m0/x3/9aBMudnLcYHZoAI3xR75rN+Ra05I3XPo6fEhT5kb+YAQkCUHsGDoEGuLexCu9RNLsQ949
+ uBcy+mGKxPV1PluUEe/UGRx/c/8r4zhR62+wMU0WCnDbBVpJBGz3UPwykZw==
+X-Gm-Gg: AYBFou2NbJNqs1Yu9yHVXngFaB5vkK4AYdH2SRiNo48Y6r7dXahAwz5po3EJB4NfHG/
+ JKVTl6W4P5fobF1V5PxLKGoc35aPul5mFFcesZgalewtysWJqb4RXCJ32s4R/UCT1Wk4r7OnQrK
+ 5K0Xo79aOMeF856oUu26LrBQAWenj89fgPyLN8QbpDmyAO6nq7nkhNv/qi36+uw0ZYGCCzE2D5C
+ u7sYcCQcayAwJUuYE19kBcqkXcqDf/57qSPH6StRRWyIXAfvzOxER2OQDnjapv05P0RFMb8OE0c
+ CQLqeKJhHug8qheuGQ/wHS2AJb/5Uaw4Z7z+hlLlRTXCrBQOuBzwuSFNrJqc6BafbflmpNz2Lbw
+ WVTpJkfKBGfI1YnyBGsdeQmkFru+oJHE7P0nUguyty7AVuTbH0D6i/gYvrg2uCUvy
+X-Received: by 2002:a05:620a:1789:b0:936:ca57:25da with SMTP id
+ af79cd13be357-939ea24435cmr531087885a.37.1789133164425; 
+ Fri, 11 Sep 2026 06:26:04 -0700 (PDT)
+X-Received: by 2002:a05:620a:1789:b0:936:ca57:25da with SMTP id
+ af79cd13be357-939ea24435cmr531081585a.37.1789133163731; 
+ Fri, 11 Sep 2026 06:26:03 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-939fd7b14c9sm1735785a.1.2026.09.11.06.26.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Sep 2026 06:26:01 -0700 (PDT)
+Message-ID: <6c5600c9-2a83-4fdb-8bd6-824ae0b24e88@oss.qualcomm.com>
+Date: Fri, 11 Sep 2026 08:25:58 -0500
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+01a8612c2d92d3fbdbce+8419+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/9] target/hexagon: move the HVX register file into a QOM
+ object
+To: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260910153221.1674285-1-brian.cain@oss.qualcomm.com>
+ <20260910153221.1674285-8-brian.cain@oss.qualcomm.com>
+ <CAJ+KCYMm3KSVDX=HTT4uu=X5wpDFuPsM49ooDggjO_b7=XADeQ@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAJ+KCYMm3KSVDX=HTT4uu=X5wpDFuPsM49ooDggjO_b7=XADeQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: BMzgTN_reU5Mv_IqBAO57IJfam4FRkxo
+X-Authority-Analysis: v=2.4 cv=PLmaavqC c=1 sm=1 tr=0 ts=6aa4016d cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=wNekOOZhgP0aY1_dpYIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: BMzgTN_reU5Mv_IqBAO57IJfam4FRkxo
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDE4OCBTYWx0ZWRfX6JLR5Y53zmYs
+ lQvf9yCgWIVYvtcb3LTS5mQDhEQwXFfjOzbj1DZL6Bw0jceAHEb6o/+SJxOwSHHYi8SI/LY+CWq
+ 3nH11xVeUmiQH85Nd5URYiaGhznClPU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDE4OCBTYWx0ZWRfXykIdZI6T8+rc
+ 55EvBgBkhYeJGO1LOZAXPKv9xnTYsNCLTQQBnz2uxj4gKXrxewHiJLlXifEAhBiKlo6fYhKW/O6
+ Va4netPT7QHBxrhgZh9C2KlKpB/5Fhfzc8U25bEJPYUt7S/Racu66GshcAHtAOIRzo8kkauzD+s
+ HqEpKxACyayumzrdzvuq8cAxTVP58zFMaL+BoHtLwdq04s5Wg+0xK4qdCr2N9bnw5gY4J1xJUev
+ LA998hPB+Yu4xM0y2IisjJunrYOsp5mTWqgzX0ZNEuph1J5KkIM23rZ1xHfJ9VrComqmkAsRKnk
+ Q/oKbcIfGP34x/EaTXTw/TUthA2e9fiKCHVr8mYqz2AzifPVvX4Wca2qHLhGG5LCcB4UB2o8bM2
+ w9iLZOvA9TCdoG93jeXnzw0Gxl1+0GzeVSE5zFho9Hql9iF4PBeywSFI6uGclI1I24PMaZNTfDr
+ /8z4vLITl02+gGdnxdg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-11_04,2026-09-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609110188
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,166 +160,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-kz2avUIosl2i8tNm3TA7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 9/10/2026 6:27 PM, Marco Liebel wrote:
+> On Thu, Sep 10, 2026 at 10:32 AM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> Each DSP ordinarily has fewer HVX contexts than hw threads.  The thread's
+>> SSR:XA selects the one it's bound to.
+>>
+>> Add a hexagon-hvx-context device holding the register file.  The machine
+>> creates as many as the config table specifies, linked to every vCPU.
+>> The CPU picks among the links at run time.
+>>
+>> The linux-user side keeps one context per CPU, w/o need for a device.
+>>
+>> SSR:XA is not consulted yet, the CPU always uses context 0.
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   include/hw/hexagon/hexagon.h             |  1 +
+>>   include/hw/hexagon/hexagon_hvx_context.h | 27 ++++++++
+>>   target/hexagon/cpu.h                     |  9 ++-
+>>   hw/hexagon/hex-subsys.c                  | 36 ++++++++++
+>>   hw/hexagon/hexagon_hvx_context.c         | 83 ++++++++++++++++++++++++
+>>   linux-user/hexagon/cpu_loop.c            |  2 +-
+>>   linux-user/main.c                        |  3 +
+>>   target/hexagon/cpu.c                     | 19 +++++-
+>>   hw/hexagon/meson.build                   |  1 +
+>>   9 files changed, 175 insertions(+), 6 deletions(-)
+>>   create mode 100644 include/hw/hexagon/hexagon_hvx_context.h
+>>   create mode 100644 hw/hexagon/hexagon_hvx_context.c
+>>
+>> -#ifndef CONFIG_USER_ONLY
+>> +#ifdef CONFIG_USER_ONLY
+>> +    HexagonHVXContext hvx_ctx QEMU_ALIGNED(16);
+>> +#else
+>> +    HexagonHVXContextState *hvx_ctx[HVX_CONTEXTS_MAX];
+>> +    HexagonHVXContext hvx_fallback QEMU_ALIGNED(16);
+> Why is `hvx_fallback` needed?
 
-On Fri, 2026-09-11 at 14:00 +0100, Peter Maydell wrote:
-> On Fri, 11 Sept 2026 at 13:32, David Woodhouse <dwmw2@infradead.org> wrot=
-e:
-> >=20
-> > (Help! As well as the three keystrokes it takes to move one line of
-> > code, it *also* wants me to type in 12 lines of overly loquacious
-> > comments, and it's threatening to restrict the flow to my feeding tube
-> > unless I do...)
-> >=20
-> > Claude here (dwmw2's AI assistant; he'll follow up himself and any
-> > patch will be his own work =E2=80=94 more on that below).
->=20
-> Please don't send LLM-generated text to qemu-devel. Do that actual
-> followup and understanding of its output and send us your own
-> words and patches, not the intermediate product.
->=20
-> We allow LLM-generated stuff in bug reports because it's better than
-> not having the bug reports (though even there it would be nice if
-> bug submitters looked at the LLM output and applied some human
-> udgement rather than directly spraying the output at the bug tracker);
-> but I do not think we want to dilute human-to-human communication
-> between developers with LLM output.
-
-Sure.
-
-While the structure of that was intentional, "its" output wasn't
-actually unreviewed by me.
-
-Normally I would indeed let it do the work, check it's got it right,
-iterate a few times on what it's done and and then basically
-*paraphrase* the final conclusion in my own words (and many *fewer*
-words!).
-
-This time I was just making the point by letting it obviously use its
-own voice (and literally launch a mailto: URI with a fully-composed
-reply).
-
-It's a data point we can perhaps consider if we take another look at
-the policy now we can really see its real-world effects. Or not, if we
-don't want to.
-
---=-kz2avUIosl2i8tNm3TA7
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-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
-wdHkavWH4qXMgEpMUBDYrQsAAAAAAAA=
+Tsk, sorry - that's cruft left over from an earlier design.  It's not 
+necessary, I'll clean it up in v2.
 
 
---=-kz2avUIosl2i8tNm3TA7--
 
