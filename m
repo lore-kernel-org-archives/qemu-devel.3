@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C388C88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C3EC88E4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x54IM-0005gE-W9; Fri, 11 Sep 2026 12:40:11 -0400
+	id 1x54Ht-0004y9-2U; Fri, 11 Sep 2026 12:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54IJ-0005UU-Nm
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:40:07 -0400
+ id 1x54Hr-0004uK-5v
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x54II-00071F-1f
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:40:07 -0400
+ id 1x54Hp-0006il-SA
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:39:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789144805;
+ s=mimecast20190719; t=1789144777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q1pBm4JIf/lwRiA1/QfhUtOlQUt1nuvI50NpLc2soGA=;
- b=Wol0klMPH754k/mxKGyM0D7ct/RVrPtWTNG16KUlfGyGHWN3tJxRTfIymEmx4ixxWKwbOP
- 8kzWhjPBI6Y4NvtGSrsDsasW3TwuoNDduHqZvWVinPXfcU6gUsKz6KESIynqOXJ+QRIK/O
- tD9cXUgBNZctp9i1POCKY3lu71V3u0Q=
+ bh=zrBI6APmfni1eZ8vuc+OAu7+inaV3ylbVMAHuz3FiqY=;
+ b=L788nWeu/GKetBaDRwi49ncjeQQs40wMFMatW0gmB5zYHyf17s8SLdJF7WRiM6429H46DV
+ lntrOe8X58PlDQAAwrOd4NVc5m34LKkknOBfw50S62Ssfq8drRanVMmc6FmT2IF8lATr8E
+ ziBL9ZlDoB8pH1udH2dF8RLsAsBWkwM=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-chgpMnD9Pl-s8axk8vd-Sg-1; Fri,
- 11 Sep 2026 12:40:02 -0400
-X-MC-Unique: chgpMnD9Pl-s8axk8vd-Sg-1
-X-Mimecast-MFC-AGG-ID: chgpMnD9Pl-s8axk8vd-Sg_1789144800
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-FlClNALdOyqGC2yZOnh_sg-1; Fri,
+ 11 Sep 2026 12:39:34 -0400
+X-MC-Unique: FlClNALdOyqGC2yZOnh_sg-1
+X-Mimecast-MFC-AGG-ID: FlClNALdOyqGC2yZOnh_sg_1789144772
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF05C18011E7; Fri, 11 Sep 2026 16:40:00 +0000 (UTC)
+ id 87674180135F; Fri, 11 Sep 2026 16:39:32 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5CFD180034C; Fri, 11 Sep 2026 16:39:59 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7DED95C0; Fri, 11 Sep 2026 16:39:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 11 Sep 2026 20:35:15 +0400
-Subject: [PATCH v5 41/62] hw/nvdimm: convert UUID property to QAPI-aware
- registration
+Date: Fri, 11 Sep 2026 20:35:08 +0400
+Subject: [PATCH v5 34/62] hw/misc/xlnx-versal-trng: add missing getter for
+ fips-fault-events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260911-qom-qapi-v5-41-7732a55b7760@redhat.com>
+Message-Id: <20260911-qom-qapi-v5-34-7732a55b7760@redhat.com>
 References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 In-Reply-To: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,26 +66,27 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>, 
- FangSheng Huang <FangSheng.Huang@amd.com>, Fam Zheng <fam@euphon.net>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2344;
+ Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1168;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wdkmnzVqdE+H1nVJim++EcOuJVmDwXZEbt7GE3F4KZ8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC27eu+LbvGum5hSXTSauztivm8X4ySQjE9VJ
- Qt3pVCUA9iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtuwAKCRDa6OEJdZac
- 5QvdD/wOvr0i2+yGzDHcEkTWXSuRHCMTCU1k2J9CHttsvnDei1XXGyAoC91WMjDpDYlMhWy0ndY
- eMOB5O/Lj0+f0EXztsAwQqS5bA7OYt9CX/a0VbC0a6lUKveXcjFxCSroVuQbfam/zAv8Py4SZF2
- zOo01cKIr8jIMOtRhioRrTgpeiy0OUZLvMuWh/Ht5eEQ0L+E4EaoURvkKxcb2UyZ8I0MzeNWUof
- kqdZ5FIW0i06ar0DMAA1uxcsGT7WmFlFPl6IcEpQ6Pfl7zqLm6V52OBdnI8SOTD8guNAezbHV2j
- QQRG5l0FLugrKPXPovdGkY4o3SzcNVjEApo/dpScU09TXr9C6/IyPeciCMXACPlcurX1+1xG++z
- rjzbNtS9h8+++SAp91PM4ILxve68Bn/DDjsQaelkGjeSuAmX5w4zf4jFmrIsoM5PWCt7BlhsMwq
- vX+vT3+2BGRJL70LbyBoWID3i/eHT3h7btrGh/GmV/D/M7umXVn63uin+m6Qhvi6jwnqUo0PcNL
- YOrGufUCyRU7PwXwAavQyNnll0BkOHi1tb8QX2YorAo/nLr3aJZfEEJs5lqJkmJzJ7daNkDr87R
- 4Hbg4Mnt0knFy3uxgvVQLIsY3Z2hmpOfDr3ktojBVDkgEe1OpoCvtQt3Od3R5Ha9p7xdtQJAZOA
- qTmcDiWIF9Q1TxQ==
+ bh=tocXDybXXj46+RW2LpIpFFkqPlAIhRzMx+5fSJL7tHQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpC26iuXU+8dpyebeBWhkMFvUYcrSSy95htSun
+ vSuDgJvHVqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqQtugAKCRDa6OEJdZac
+ 5cE+EACEr/KHyu0wRYB/qOYWIh/N3I0AhGelhxdougLKq80F79/mwFMslmH8NiTZSJReb+nW6a+
+ ndkHimVHt4UNDLL40qoZe+TfVDUumbnU2RoniTO/QfdKdQibdB5Z7L7fN3dj02O0fqcuFh6ElYr
+ 4nOYrt0ZjL8eMnJfZkfjloKKboH0H7Txfv34mKKh1tgbnxZQuvez29JLrRKERwCK1kDYPFsDnSc
+ 4RKS6ba2nh+i/yokXVarPR7UcR+GpdXEyVTelxT7nLMx2tLAUo2yVtWpsqmnSwQSBn+oW+S9P1Q
+ xLUphurwgCqPxreq0KaU8+fDODq2CRwMSxF8PpyStLE5ASTGj/iuG0/kZq+lL+69ZE3Bjkg8FtV
+ oOqvfIfSia6+evQIyXnQRYGELlMdW6HiUQ7loh+3nTgvA7ZEV7pTmaEN5u+QFxPCOlyOYnYMkSk
+ r+R1zxyR7Ok36G5VXd9aHCSitUzIyQl42LLyT8Yzqu3naZ4vK6hy8xs/D/1T/faOmZzzJdTFvsW
+ X9s9sXXM5yUZaUf8OHlr9Ou7uHvhKA7SXvLx2BIdcHI2kwm08KedrZXfm+WN4rZOWTJEDo9p4X+
+ 3AUe8nEi0iO1lhAwIO3I/dQXsfTMBMQB+WHpjqki7GvXrnwKa1bwjeIM+NHjrD/djwYMvBE1rA4
+ JgsjPiawxaswOfQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,77 +112,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a QemuUUID_type_info and use object_property_add_qapi() instead of
-object_property_add() for the nvdimm UUID property.
-
-The type info is defined manually in uuid.c rather than generated,
-since QAPI does not yet support string typedefs. An alternative would
-be to extend the QAPI schema language with a 'typedef' construct
-(e.g. { 'typedef': 'UUID', 'data': 'str' }), which would let the
-generator produce the type info, C typedef, and introspection entry
-automatically.
-
-Alternatively, the exposed type being a string, we could change the
-property to be str_type_info.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/mem/nvdimm.c     | 4 ++--
- include/qemu/uuid.h | 4 ++++
- util/uuid.c         | 5 +++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ hw/misc/xlnx-versal-trng.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/mem/nvdimm.c b/hw/mem/nvdimm.c
-index 123ddc938546..b7ccb5c93678 100644
---- a/hw/mem/nvdimm.c
-+++ b/hw/mem/nvdimm.c
-@@ -104,8 +104,8 @@ static void nvdimm_init(Object *obj)
-                              nvdimm_get_label_size, nvdimm_set_label_size, NULL,
-                              NULL);
- 
--    object_property_add(obj, NVDIMM_UUID_PROP, "QemuUUID", nvdimm_get_uuid,
--                        nvdimm_set_uuid, NULL, NULL);
-+    object_property_add_qapi(obj, NVDIMM_UUID_PROP, &QemuUUID_type_info,
-+                             nvdimm_get_uuid, nvdimm_set_uuid, NULL, NULL);
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index aa1d65de7b70..0584ee089e3c 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -650,10 +650,22 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
+     trng_fault_event_set(XLNX_VERSAL_TRNG(obj), *events);
  }
  
- static void nvdimm_finalize(Object *obj)
-diff --git a/include/qemu/uuid.h b/include/qemu/uuid.h
-index 869f84af09dd..ed0c62327d4d 100644
---- a/include/qemu/uuid.h
-+++ b/include/qemu/uuid.h
-@@ -16,6 +16,8 @@
- #ifndef QEMU_UUID_H
- #define QEMU_UUID_H
- 
-+#include "qapi/qapi-type-info.h"
++static void trng_prop_fault_event_get(Object *obj, Visitor *v,
++                                      const char *name,
++                                      void *opaque,
++                                      Error **errp)
++{
++    const Property *prop = opaque;
++    uint32_t *events = object_field_prop_ptr(obj, prop);
 +
- 
- /* Version 4 UUID (pseudo random numbers), RFC4122 4.4. */
- 
-@@ -99,4 +101,6 @@ QemuUUID qemu_uuid_bswap(QemuUUID uuid);
- 
- uint32_t qemu_uuid_hash(const void *uuid);
- 
-+extern const QAPITypeInfo QemuUUID_type_info;
++    visit_type_uint32(v, name, events, errp);
++}
 +
- #endif
-diff --git a/util/uuid.c b/util/uuid.c
-index 234619dd5e69..363a03051aba 100644
---- a/util/uuid.c
-+++ b/util/uuid.c
-@@ -17,6 +17,11 @@
- #include "qemu/uuid.h"
- #include "qemu/bswap.h"
+ static const PropertyInfo trng_prop_fault_events = {
+     .type = "uint32",
+     .description = "Set to trigger TRNG fault events",
+     .set = trng_prop_fault_event_set,
++    .get = trng_prop_fault_event_get,
+     .realized_set_allowed = true,
+ };
  
-+const QAPITypeInfo QemuUUID_type_info = {
-+    .name = "QemuUUID",
-+    .masked_name = "str",
-+};
-+
- void qemu_uuid_generate(QemuUUID *uuid)
- {
-     int i;
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
