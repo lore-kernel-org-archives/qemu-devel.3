@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A18DC88E4D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68BB3C88E4C
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 10:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4yw2-0004Ws-4n; Fri, 11 Sep 2026 06:56:47 -0400
+	id 1x4ywE-0004dL-WB; Fri, 11 Sep 2026 06:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x4yvx-0004WF-1D; Fri, 11 Sep 2026 06:56:41 -0400
+ id 1x4yw3-0004Xb-PC; Fri, 11 Sep 2026 06:56:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x4yvu-0003CQ-GB; Fri, 11 Sep 2026 06:56:40 -0400
+ id 1x4yw2-0003EB-6D; Fri, 11 Sep 2026 06:56:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789124162; bh=sdQbg1pybtRiBzcyoybmSAK48IbZ8KnOhWIb4Cul5lw=;
- h=From:To:Cc:Subject:Date;
- b=fmox/ODFlEo6E5fCLfNUz2DWgahNBqRBeUrcoFsHCWf36vXEmGXEa5J8GIHmforjw
- Z8H/Ei1wAMzJc7PQTM75rP+yqgdMBAl6jaCsLcnGb/uA5rRimJXoKV+F7khxOddttd
- 1RmeRqbVW6wE3FpK0XmJP/q0yhOKX4Ee20vik7nYj2tqWb+iuaviHoT1u34N05px09
- vrYrd7Ct5/lnolIVBYgVENl2PT0kI57h+j/1JTAo/SsI78iBS/2Pb13i3Jo8aLjckS
- s+6wxFgvJ3B0352Wh7nEzXFIPT/FaT9zQoRC6NBXD/tz3ZEu0jWYFWbbzcvDRfhEDq
- FxEwEJdBE9JyA==
+ t=1789124163; bh=Xl5CqXqwDmrK0Vxv+IS0O+njx9A89LCKWKuO1tRaWrM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=yLdgSMeK2IOLkv6JAycagxQtJURhWVNbdh+z8QrEd2mQjSsC/TdajjPI+tiBa/+Zn
+ SvfTth2NoiMse9p3XMgW0UXKRHOC8+yI+cW1/DqiAWTqF3P+hLAqT69geWgVdXyaz1
+ bzoC/ZjGaiHaUtaD0Jfy5cwd5jNDA/cGd//nwZPFSBSJakY9ax+bhr9AuAnmZTDzpJ
+ uy94lIN0VWt7dGHMbKQkqWDWA+T3jNqwOsYu78imrEFNw3fg4vnVlCDJn/W3vS82dE
+ uk2Bv8jGIsylG7Lg6ZIwjac17kIMBXaqs3EwxJ+hq8zvSoSHmiKAYioU/qx1OmPFoD
+ TTPpPetKSqmTQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E8A851D3B82;
- Fri, 11 Sep 2026 13:56:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 079A61D3B86;
+ Fri, 11 Sep 2026 13:56:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AF26A425DF9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C4F61425DFD;
  Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A388C40F09; Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
+ id AB59F40F11; Fri, 11 Sep 2026 13:56:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 0/4] Trivial patches for 2026-09-11
-Date: Fri, 11 Sep 2026 13:56:28 +0300
-Message-ID: <20260911105635.955937-1-mjt@tls.msk.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 4/4] hw/ppc/vof: Use qemu_tolower() instead of tolower()
+Date: Fri, 11 Sep 2026 13:56:32 +0300
+Message-ID: <20260911105635.955937-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260911105635.955937-1-mjt@tls.msk.ru>
+References: <20260911105635.955937-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,38 +71,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 92c82d0d2e71ab6e39fd799b035bae98b375bfd5:
+From: Thomas Huth <thuth@redhat.com>
 
-  Merge tag 'linux-user-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-09-10 20:59:05 -1000)
+When building QEMU for NetBSD ("make vm-build-netbsd"), the compiler
+complains:
 
-are available in the Git repository at:
+  In file included from /usr/include/ctype.h:100,
+                 from ../src/include/qemu/osdep.h:123,
+                 from ../src/hw/ppc/vof.c:12:
+  ../src/hw/ppc/vof.c: In function 'path_offset':
+  ../src/hw/ppc/vof.c:150:31: warning: array subscript has type 'char' [-Wchar-subscripts]
+  150 |                 *at = tolower(*at);
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+tolower() should not be used with plain "char" variables since these
+can be signed and tolower() could be implemented as a macro that uses
+its parameter to index into an array. Use our wrapper qemu_tolower()
+to fix this problem.
 
-for you to fetch changes up to 4b93253f6d15642c934e33fbd96bf761a2f0efd9:
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ hw/ppc/vof.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-  hw/ppc/vof: Use qemu_tolower() instead of tolower() (2026-09-11 12:07:44 +0300)
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index fa7b73159a0..873e967f1e4 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -10,6 +10,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/ctype.h"
+ #include "qemu/timer.h"
+ #include "qemu/range.h"
+ #include "qemu/units.h"
+@@ -147,7 +148,7 @@ static int path_offset(const void *fdt, const char *path)
+             if (*at == '/') {
+                 at = strchr(at, '@');
+             } else {
+-                *at = tolower(*at);
++                *at = qemu_tolower(*at);
+                 ++at;
+             }
+     }
+-- 
+2.47.3
 
-----------------------------------------------------------------
-trivial patches for 2026-09-11
-
-Just 4 small changes, the rest went through other trees.
-
-----------------------------------------------------------------
-Rohitashv Kumar (1):
-      qapi/net: gate user/vde/netmap netdev backends behind their CONFIG symbols
-
-Thomas Huth (2):
-      util/cutils: Use qemu_isdigit() instead of isdigit()
-      hw/ppc/vof: Use qemu_tolower() instead of tolower()
-
-Zhang Chen (1):
-      qapi/misc: Fix missed query-iothreads items
-
- hw/ppc/vof.c   |  3 ++-
- net/hub.c      |  4 ++++
- qapi/misc.json | 12 ++++++++++--
- qapi/net.json  | 19 +++++++++++++------
- util/cutils.c  |  2 +-
- 5 files changed, 30 insertions(+), 10 deletions(-)
 
