@@ -4,79 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E2DC88E4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 15:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3738FC88E53
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 16:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x53aE-00009N-Eq; Fri, 11 Sep 2026 11:54:34 -0400
+	id 1x53h0-0001lF-LJ; Fri, 11 Sep 2026 12:01:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x53a9-00009B-KN
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 11:54:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x53gZ-0001bn-MN
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:01:13 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x53a7-000429-8g
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 11:54:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789142059;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PqFdjDZDSL4KFrLZvXicREIlIhrSfJCxxjgHKaNpYvg=;
- b=Sv9XnEhAGbPpCAHrFS+IFc3SdPYUfiDqBEzhHvvyImkcFkZOK1GRfJqgVScGdXRNH7TSGY
- WVB1KuUAc1/dZidWLAeGq1F2R2WaMe1TDl2G15ZY6qcw3rq9TFgRBJO0IFEnu3uhMIjY6+
- /JYOYgRJ5hSB4ZbgyHVOK7JgSy7cNyI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-dk6J6WxINLu-Ma5BynTPmg-1; Fri,
- 11 Sep 2026 11:54:17 -0400
-X-MC-Unique: dk6J6WxINLu-Ma5BynTPmg-1
-X-Mimecast-MFC-AGG-ID: dk6J6WxINLu-Ma5BynTPmg_1789142056
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F05818009E2; Fri, 11 Sep 2026 15:54:15 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44965195608F; Fri, 11 Sep 2026 15:54:12 +0000 (UTC)
-Date: Fri, 11 Sep 2026 16:54:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: David Woodhouse <dwmw2@infradead.org>, mark.syms@citrix.com,
- qemu-devel@nongnu.org, xen-devel@lists.xenproject.org,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com
-Subject: Re: [BUG] hw/xen: features published after InitWait since 240cc11369fc
-Message-ID: <aqQkIa-l0MyAoUmt@redhat.com>
-References: <30ec634b6072ac23c38a6a05bf3f90de4b383632.camel@infradead.org>
- <c9a719c9a67c9a32ad566a0255d24722e760a622.camel@infradead.org>
- <CAFEAcA9WAARKjyim9HkYWQA9L45L27NNhxvCVw6CkH5d9pgiYw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1x53gX-0006RI-Bk
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 12:01:07 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 4C50B41767;
+ Fri, 11 Sep 2026 16:01:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5778B1F000FF;
+ Fri, 11 Sep 2026 16:00:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1789142462;
+ bh=l7vRwotPibZR4LJ8O22moZNG54W0TPohdxC+Q7VvvMw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=a6vMfPnwUz2Q5vm0lUd6gzhAAI2ryNOrG2Eo5TJRVZyEXZyGrCG2Jj2siWVGeZYwq
+ bXQBqtfUN1X23Y0+SHbPBTvEkolKrdxQIE42A3WRHryFxqixeTMTktVglqXQ1Kvo/s
+ T6WBF7HfePMDVrYomK52VTBb97G+PmgKIkodB1f+MUfL/0lXIxcWsWNd7EopdpfT/G
+ C69aQU0TpfniDOxu2wUkvbMwqf75qMjdeW0nV4DNG1PaQj3ZmtuVjkaIgwz50aBbjW
+ PNfAWcSGm78Q0+um40a2IAcHTrArbuBDd1Iw0hK5bHTyxhsVzQPnbZqdRlSTDaJWpT
+ nk5c1Rm67lntw==
+Message-ID: <26dd141c-fed3-4f7e-81db-315e975cdcd7@kernel.org>
+Date: Fri, 11 Sep 2026 18:00:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA9WAARKjyim9HkYWQA9L45L27NNhxvCVw6CkH5d9pgiYw@mail.gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 08/12] hostmem: Support fully shared guest memfd to
+ back a VM
+To: Peter Xu <peterx@redhat.com>, Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com,
+ armbru@redhat.com, pankaj.gupta@amd.com, isaku.yamahata@intel.com,
+ xiaoyao.li@intel.com, chao.p.peng@linux.intel.com,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260908133151.836685-1-michael.roth@amd.com>
+ <20260908133151.836685-9-michael.roth@amd.com>
+ <eee90083-3962-4bf4-a7be-2e06e02e4e94@kernel.org>
+ <g3iq3ku62byofbc4c7m5tzmpcpqrlb4ark7pwvg3fm2jvcbvhg@qi5nnpnulsuk>
+ <aqPusIvLVQv9gmPP@zhexu-thinkpadt14gen5.rmtcaon.csb>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <aqPusIvLVQv9gmPP@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=david@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,51 +118,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 11, 2026 at 03:56:22PM +0100, Peter Maydell wrote:
-> On Fri, 11 Sept 2026 at 15:39, David Woodhouse <dwmw2@infradead.org> wrote:
-> > I wasn't *actually* setting out to comment on the AI policy today  — in
-> > fact I didn't really have a strong opinion on it. I spend enough of my
-> > life tilting at windmills *intentionally*; this wasn't meant to be one
-> > of them.
+On 9/11/26 14:06, Peter Xu wrote:
+> On Thu, Sep 10, 2026 at 06:00:11PM -0500, Michael Roth wrote:
+>> On Thu, Sep 10, 2026 at 10:54:09AM +0200, David Hildenbrand wrote:
+>>>
+>>> [...]
+>>>
+>>>
+>>> There is a lot of uncertainty how guest_memfd would consume huge pages. So best
+>>> to drop the "yet" that implies how it would be consumed (and that it would be
+>>> called "hugetlb").
+>>
+>> Makes sense, will change this as suggested for v6
+> 
+> I'm just curious, any more info on this part?  Any link to existing work
+> would help.
 
-snip
+Ackerley has been mostly busy doing the in-place conversion, the hugetlb-related
+patches he sent are a bit dated.
 
-> Yes. I view that email as pretty strong data for 'even a policy
-> shift which says "we're OK with accepting some kinds of AI
-> generated code" should still be pretty strong on "text intended
-> for humans to read (docs, commit messages, mailing list posts, etc)
-> should be written by humans"'. I think that review commentary on
-> Paolo's RFC about a less strict policy tended to be in that direction,
-> so I don't think I'm completely out on a limb here.
+He's been recently looking into how to abstract memory providers for
+guest_memfd, I think there were some upstream discussions related to that in
+related context:
 
-The latest proposed policy explicitly forbids sending AI text
-to people:
+https://lore.kernel.org/r/CAEvNRgHbfx470HUBJhEUVKPKqsV0LnhX+wkD1TE-61fZy3jjUw@mail.gmail.com
 
-  https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg00260.html
 
-[quote]
-### No AI-written text must reach maintainers
+> 
+> At least from our side, we look for hugetlb-alike support on gmem.  I want
+> to make sure what I understand still is valid, and it is still open to
+> solve the postcopy problem.
 
-These rules apply when publishing AI-assisted work to GitLab or the mailing 
-list:
+Right, something like that will come. And I am not saying that we won't model it
+as "guest memfd hugetlb" support in QEMU, but I wouldn't start documenting that
+it will be modeled like that.
 
-- **AI-written cover letters and commit messages are banned**.  These are
-  easy to recognize and waste reviewers' time.
-- **AI-generated responses to reviewer comments are banned**. This undermines
-  the human-to-human interaction fundamental to code review.
-- **AI-written issue ("work item") descriptions or comments are banned**. These
-  are verbose and waste triagers' time.
-[/quote]
+hugetlb will initially be used as a memory provider for hugetlb to allocate
+larger pages, and guest_memfd will essentially strip these pages from hugetlb
+details, turning them into simple large guest_memfd pages.
 
-With regards,
-Daniel
+One idea is to support other pools, where also hugetlb could take pages from
+these pools.
+
+So it's just a matter of "we don't know how we will model it, and we don't know
+whether it will be called hugetlb".
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Cheers,
 
+David
 
