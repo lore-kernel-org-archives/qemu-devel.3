@@ -4,107 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E85C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 14:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4F5EC88E45
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 14:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x52DQ-0005wh-FD; Fri, 11 Sep 2026 10:26:56 -0400
+	id 1x52DQ-0005wU-5S; Fri, 11 Sep 2026 10:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x52DE-0005qm-Ku
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:26:49 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x52DB-0005dX-Ha
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:26:44 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a60591ae45so1739434a12.2
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 07:26:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789136800; cv=none;
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x52Cl-0005mb-R6
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:26:25 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x52Cj-0005b6-Ua
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 10:26:15 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68BCiYEC3505473
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 14:26:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rPJ4UXaG/TCGGikDQau9VeUk6K75f35QxLYdIXu38vw=; b=NS2Zr0C2Q1iLqsWY
+ rUBEbBt+tQ+mSEGCmuzJEd7uohAyEdJKctFhoXMzBcOMdiN6TLaK5G3JHphp7hax
+ 6b3RLqG7eDswGXy6MN5snGarwBKA/IAepBYW/O9wkRmXdznsDS080JzHV1ycnkKs
+ NPPCKNbTcuHBs++NKwCZbBDw+66vnDHCOpNfu5X9lUnGZo/T+nO3OPfZ100zjXwn
+ Ip1HPKaxk/ovfAzuk1nXqKNeJ+8jwgAk0x7V4JKxXF7G++TaGPf5sppOuvh2SjYz
+ s0ceROybxHZGdaXs7dtu1vB4L94uc3uSIlKuOzurylRTxvFT+IZNDvnVmslH8oGk
+ ALZPHg==
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gmcgfhwaa-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 14:26:10 +0000 (GMT)
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-6b1afdfb685so786277eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 07:26:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789136770; cv=none;
  d=google.com; s=arc-20260327;
- b=Ge6cVKkbMEUc5NyORMB0QSqEFDp6dGrVVrA2+9W/gY1eToeELN6bX9Z45aEv5Ekvpp
- Op7EyMEIVzDtSzeZvdKk6O60tPBNUjj8nyfypk8cdsi9CId3wYIjJjDCs7aBUo17EOvl
- GrzR805mBLY3Qjb4/1dlqGQp/hv8X87mlX7U43woH8lKHXnBJC76Hi8VkGwiEDxGKz4R
- QROSECacAqffKfvsi0rx5bD0Wmqo8Zpt7mGmcbDRX/B/wIuScno3mGYw7371h5UrJnPT
- 0POkGca0r4t3FVRAnnw2UgU8hGKa2/AghIADwJ2Hu3rc0kJOXNkVCe0AjR81cWmhyula
- UJGw==
+ b=f49ruJqiWUiNwww0W0z+WtITRDhSSo00S43LF1SwCsbkdVw7o9Q2dKMsKh7S2sTgbX
+ ryOUnqOpc5IGnniOuhHjiZlgJUjzNoiLbbW2uyhTOdrrNcSumuYv3lhrFup59l5T+Nk5
+ 66gxlcPRiOMl0KTgVPsjqiGxIKpI+oXepYyKjDzBVtuad1vCsYASuKoU6r8RtvmJi57r
+ /eZecxg5TebAd4KMpM5+eUd8VprZt0uM7oQ37wUFbcVY41eCAEG6Vz0HzvxexfP3D9A0
+ GCAB5R5+Wh1ctr8IRyP1I+03EG2i1WzLXUOYzrv48z44G7X1ErQ8a1UbSn4VFITRuW+Q
+ Jp2g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=CqBv25/VszJVeXdRqa7kmIcL9iM3rsBAHAyVNsn8xhw=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=VcYF+NaRrK5CYq4HXsA64YGgDWmre/juTmR4Iq4fFls65k5vVgqCoQNXVXsdFnzTVe
- TC80bbLkh4F/P5/w2ktftucx43Q83XIUetwT4yK/SAuGr1+0Jp8JfXnrOPpimU3bmFP+
- mRANdwPwjxw9uo3n4ygCkDGCHwtVQ7u36ECF80c5dbsPDerxn/gpKBnr0INEZV4lt7G8
- qzmIcVyBi5mWL274Mb43yfScTDvZ07TDHMvRB5yf4gLxVyZyE0IJ74Mk0flBi3BcZpFY
- tWyzdVaYBS56JSFyVGr/qIdIoezPurEOzO02pIul9BIwLRylclGPMXouQbc4uWeSGihg
- MSgg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rPJ4UXaG/TCGGikDQau9VeUk6K75f35QxLYdIXu38vw=;
+ fh=uKfw/aTr54ViMc4JemaZWU8rXWScmtNvEvZW3Qmnv1A=;
+ b=Ch7Tzr1HUb7hP3ZdZDWurphwa6CMy1bgesZtWVsDZt+7j/glZaewudpP49rYPegJME
+ k9iw8vTaeynHMbqRT+Iv73jZTJ6a0b0Qn/6YcdjUNEPARZmSqQ/PPjFtNtJt7joTIOrD
+ k8tRTs2q0FEhj5A8rn6lr6hHj1pKKBu1243shpBYSE6FZssbdP+f1VzLCAc9jTV69c4z
+ eSHOeyu/z6IfjDqLJfXNRnqkd6kKTZKtn6H54qC5Ni/73jHtrDM7c0dvdTbKh/xvvivc
+ jeAKXJJQKBp4Jntbmoy//LmsOxbgVyq3aAGsgrsz/AtpXWsBn8WWUnHZJOC+bOc3+4t4
+ rnjQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789136800; x=1789741600; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=CqBv25/VszJVeXdRqa7kmIcL9iM3rsBAHAyVNsn8xhw=;
- b=Tk3rBGr+idTpzek4Kn8Q7wvOYplHMrvDpkszAPL/3R4W9MLNPmbOS7FuEqPxPXiZBD
- uZOmufmkJgzBfQNJj5S7WBih/X5nQPCtC8B0cbsP81D9AYEqSER+71a2gAWzAGvH05i6
- KNH/wruIkFwBojRK/bfWC2k5tgGdSrtj+VUbiBrsW1ieiuVvqoM3VQPgp+wMaFQl9Dqo
- 65l0Hv41HTAkG3ooZ3H96W17pPW6TCadYXN6VE9eSPj7cJanTNgXwWc+5JUOE+ut4xf5
- 3GHXsLVWPV6ItP8Dluct/hNfQBldQ3SlsPEAnaOLLVt8o8JPoIW9B/iMJ1DFYogWAYq7
- ncKg==
+ d=oss.qualcomm.com; s=google; t=1789136770; x=1789741570; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rPJ4UXaG/TCGGikDQau9VeUk6K75f35QxLYdIXu38vw=;
+ b=Jmw1HMPz0O1RAcwINV5hv1Zflp0+dGYMU2NPk/2txnBI3jNao3rTv1cE6LZ0OF8Qwv
+ w5U5RZ+ojYUx+yq/LyLKeRqoPKdR4KFrwlCr4np6fNdrFVo2a37ykEYCqw8dcgwWIkQn
+ 2PpbRU29E+gg7tvT7pt8jXe7Wjf9nfNszxjTLamZfMRxnnrZlq7iebJnIUnRLMsYuwd0
+ YmBe0MAe8KCpmgZFq7BguAJLeaydERdshIbYJvsDufSBXTCapj59FVeInYM0jrjnedWM
+ wn0Bf56DDGICtRAfpiSLcER0eAtXkmTA1K1A+L/srRfnK5g1SQM/w5FaXOp1/DCWbD+h
+ Bl7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789136800; x=1789741600;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=CqBv25/VszJVeXdRqa7kmIcL9iM3rsBAHAyVNsn8xhw=;
- b=F3xLwhVn0RDnkML436dmZoHaxfUqD5JjAWblZSdI34p0hKoYZ5ymu3VObrxQDLerG9
- EagNQZ75s9Ddhswac79QHyI4ZLrRPnyVXabYFqQCZE9is+NQrycAOzD2ck9IkT4xB6nb
- 3KNOi52EsAKF6+IO78G5NwVcvfIGSk/+E93tjQXTFf+H+KZfuc/HT5PLebc6NbO3rQiE
- TD+P6hn0XB618LaKqeIE/kO0YYweQVjfZGhJg7H3CKGBQWpJrd4dQTyf2arDGXfgd6g3
- uA1RN0+sILnOSKmv+ofGh7CI7vpa6lLzLNdpMIl4PJB+fCTYadksSrQQ4cl8+wyvk5Uh
- ++Pw==
-X-Gm-Message-State: AFuF++lCgMznaXxiB1EBiF10inbQDeauFptITdc5ryzjTTTb0q1pDIbY
- vOKIvbsBbrHYXnF+oNM87lmZeLdWtqL+y8zAMa6illsibYnJnqm/n4ZDllCdA1zjx+LV9eRm+se
- zEd2C3I0Ho6OPeGH2U5FxwnNTWaj+OT8=
-X-Gm-Gg: AYBFou2ADKTrdsNFvobfnozDrWJ5oM/oBPEH8P/Q2jcKj0jMQ7S9KCFI96k0FdbW1Wt
- oI8SZWkPzqlTYccVW5h5Td1RLgPXCA9iuOR5qDgnT7pvkTSBaakedn5CXrQgcCsYJezpGoKFR60
- TXWtQaSk0rroKjv1u1Tnhpa1U09neVUkl5oo3QndLVbHzsycnwZ+A9kZo68vO4BM8qO/Bb2s3Dx
- M8OnPkyTtQgT2asYnSFQAYMnvnD9aMXSlInl4iRTC2idoxUOoc8a5eQJOrPfoUAuStVyOdxc4Mc
- +SKUU8Vz1dpKm8b0rsRtctyPV4q8vZ20q74Ks/hhRZTt8pz/oFNX3sc=
-X-Received: by 2002:a05:6402:3604:b0:6a5:f44e:a009 with SMTP id
- 4fb4d7f45d1cf-6a9b5640367mr4207496a12.7.1789136799548; Fri, 11 Sep 2026
- 07:26:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789136770; x=1789741570;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rPJ4UXaG/TCGGikDQau9VeUk6K75f35QxLYdIXu38vw=;
+ b=f4KaMbbf4XPjCf1BNvJRooKC58DsjGWFg/PUhN8rua58Ls3RDDb6U/HyFNIx4iVfBN
+ wD87+ijN1e6i7EUq1R39+drrURj+/F/XxYEu6ZAUGcFHoqsgCbDXu0JG9orjV/JuvXAL
+ CAmJzJctIU7K4aerVN7kPKfg3uKUyjSM72PZ2wiMjKte2swNULDMYCkQypIMLZBGwTGL
+ Vu/uDXY0W62f5as8GE/O5Zsx9VfOkNI3QbsD73Cfgvtq7hAz/BEbVWnEIxJcXggVrPnB
+ /8LLNjwNqNtfqkEeuci0V7W0YDJ+hJ1QxFZtrwhzyZzspCZHGvIhzdyS3kPRt2F6P7a7
+ F+Mg==
+X-Gm-Message-State: AFuF++mjXlO5v8IfJoMSImUpcfWgklm78UqrxZ0FNqs5/T87O0kwTPYR
+ qD+i8Grg0e0jC26NRGhU2j7IXkwEh/PrCDU089UgLBEt48S6E7Hvu8TU7wTPkLoIi+FxRKsc2AC
+ RKHun/i3K9IjS8cHzEWFECeTgOyhnai+7myuQKcR4VTTeurXG/li1NveI43IDrx7Kf2aaKo3v9r
+ bKO/tnyUW+srzrokarmssLnGOlrw5Dp+8M
+X-Gm-Gg: AYBFou3DyQIRK903S8NkgP7gz1/qn8PLPJ49lcCfWmdqUpAy0fjr8CAFv92Y/xktOFx
+ e7Ds3/NjYfkOZAe1YcnQtCz1JN6fQd5Hh+h/R5QoMafYDQsAsdeISBDEOepvkdLnEnBSIN1u2kX
+ fbI0efSKPZCLS/exR5gBVOk+2GjRWuq9ydyTh/rwTD0vaaKxfdz2ab6qkT9Q==
+X-Received: by 2002:a05:6820:16a1:b0:6c1:177:c7b1 with SMTP id
+ 006d021491bc7-6c10177cd2bmr2457061eaf.62.1789136769673; 
+ Fri, 11 Sep 2026 07:26:09 -0700 (PDT)
+X-Received: by 2002:a05:6820:16a1:b0:6c1:177:c7b1 with SMTP id
+ 006d021491bc7-6c10177cd2bmr2457029eaf.62.1789136769227; Fri, 11 Sep 2026
+ 07:26:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260911100709.726366-1-zhangckid@gmail.com>
- <87wlss6owr.fsf@pond.sub.org>
- <CAK3tnvKXv+HdK4d5KXXNagUCODj68A1XRuP7VTpZNyUFoMTQnw@mail.gmail.com>
- <87fqzf6har.fsf@pond.sub.org>
-In-Reply-To: <87fqzf6har.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 11 Sep 2026 22:26:27 +0800
-X-Gm-Features: AcwNN1UHF2Wh4MHw1bTn4caHxo1i5xMMTJLk19YNSTnTWs1XB8CEPKmYVQFlbog
-Message-ID: <CAK3tnvKgEXGDiieBgRb6+oh594jYvb-a+19wbRh9CNmRLKEM8g@mail.gmail.com>
-Subject: Re: [PATCH V16 00/13] iothread: Support tracking and querying
- IOThread holder
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000644807065b35df39"
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=zhangckid@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260911140645.56094-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260911140645.56094-1-marcandre.lureau@redhat.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Fri, 11 Sep 2026 09:25:52 -0500
+X-Gm-Features: AcwNN1V4iRal1eTb02Zq6L4f_S1LUh_N6z0jo9tiScnjqfA9pznmeW-euf4WKzM
+Message-ID: <CAEqNhNYuyodX0kJOcLZE_s53ikH5Ym9wmGpc8UYGYTORR178Vg@mail.gmail.com>
+Subject: Re: [PATCH] virtio-gpu-virgl: guard new_blob with
+ VIRGL_VERSION_MAJORS>=1
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTExMDIwMiBTYWx0ZWRfX66Z1n65zRBN2
+ 4f8mX1wBQ3plMx37PR0Xz8xmnMdX1ePrr+SeSwij6bL6zwxV5414sS0Z8S/wJaiBlMxoPGo8PKy
+ 7288n5tZoMYjxXrMV844xbMXwYcWh/AJNoJa/J793eUPfznzJeSACNYTKTc0pP9/Ivugiulg+Rh
+ 0HemPACoAu7KHxeJC4fwEmEFgggcODSU3N09zELAowY0tdHRM5uq6g94gJrNFgpAQyARpOOzied
+ Q7hXtLf7qIbZb8joJ7RLChPEeMLNdHsENp1seQ/MboNQZl+Rd+LdPZP8ZvE6hM5QftrUHGlguwO
+ tGMiKZwdggGumlG63RERkBg/b+eDwzyx1jRLAwfCZPeeHwqaZ2YfEaXAVtVuBJZIOmKUgYPpeDP
+ AoZcg+WwxvWB0qRXKbH1Lg4lPpZuZD8YEVqTdBjSYzsMw08sjWDSxRCYo5DNvZu9tYsCA3ar8rg
+ qNx1LXHiNu6AXDeL+Mw==
+X-Proofpoint-GUID: _fiMJXX7MDM-BGOlUJTjXJcLSSmB2fPw
+X-Proofpoint-ORIG-GUID: _fiMJXX7MDM-BGOlUJTjXJcLSSmB2fPw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTExMDIwMiBTYWx0ZWRfX/TG7whVgxT2V
+ 7D0YI0Ott2i17QXM1b3iJlfW7YU/gYq0lBuUJhAyI7vSsJ7YcVEkuUKDu67PeTXgmsLBtsYRhVS
+ clbvt4fHzjibOJSbofIdC3T3ptlzkGk=
+X-Authority-Analysis: v=2.4 cv=ULtIjyfy c=1 sm=1 tr=0 ts=6aa40f82 cx=c_pps
+ a=wURt19dY5n+H4uQbQt9s7g==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=yx91gb_oNiZeI1HMLzn7:22 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
+ a=6G3tjBsMHsZMpl1mHSYA:9 a=QEXdDO2ut3YA:10 a=-UhsvdU3ccFDOXFxFb4l:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-11_04,2026-09-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609110202
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,95 +164,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000644807065b35df39
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Sep 11, 2026, 9:36=E2=80=AFPM Markus Armbruster <armbru@redhat.com>=
- wrote:
-
-> Zhang Chen <zhangckid@gmail.com> writes:
+On Fri, Sep 11, 2026 at 9:07=E2=80=AFAM <marcandre.lureau@redhat.com> wrote=
+:
 >
-> > On Fri, Sep 11, 2026 at 6:52=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com>
-> wrote:
-> >>
-> >> Doesn't apply to current master.
-> >>
-> >> https://patchew.org/QEMU/20260911100709.726366-1-zhangckid@gmail.com/
-> >
-> > This issue caused by the dropped patch 1 from V15.
-> > https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg02947.html
-> >
-> > I assume that patch will be merged before this series.
-> > I forgot to mention this earlier, I double confirmed no other problem
-> here.
-> > please continue reviewing.=EF=BC=9A=EF=BC=89
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
-> The machine-readable way to mention this is
+> virtio_gpu_virgl_resource_new_blob() is only called from
+> virgl_cmd_resource_create_blob(), which is guarded by
+> VIRGL_VERSION_MAJOR >=3D 1.
 >
-> Based-on: <20260907063725.626685-2-zhangckid@gmail.com>
+> Fixes: d814b44636d0 ("hw/display/virtio-gpu: introduce virtio_gpu_{simple=
+,virgl}_resource_new()")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+
+>  hw/display/virtio-gpu-virgl.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> Next time :)
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+> index 1c9380e2a6d2..f45571060fea 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -324,6 +324,7 @@ virtio_gpu_virgl_resource_new(uint32_t resource_id, u=
+int32_t width,
+>      return res;
+>  }
 >
-
-Acquire a new skill like AI~
-
-
-Thanks
-
-Chen
-
-
-
+> +#if VIRGL_VERSION_MAJOR >=3D 1
+>  static struct virtio_gpu_virgl_resource *
+>  virtio_gpu_virgl_resource_new_blob(uint32_t resource_id, uint64_t blob_s=
+ize)
+>  {
+> @@ -335,6 +336,7 @@ virtio_gpu_virgl_resource_new_blob(uint32_t resource_=
+id, uint64_t blob_size)
 >
-
---000000000000644807065b35df39
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 11, 2026, 9:36=E2=80=
-=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Zhang Chen &=
-lt;<a href=3D"mailto:zhangckid@gmail.com" target=3D"_blank" rel=3D"noreferr=
-er">zhangckid@gmail.com</a>&gt; writes:<br>
-<br>
-&gt; On Fri, Sep 11, 2026 at 6:52=E2=80=AFPM Markus Armbruster &lt;<a href=
-=3D"mailto:armbru@redhat.com" target=3D"_blank" rel=3D"noreferrer">armbru@r=
-edhat.com</a>&gt; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; Doesn&#39;t apply to current master.<br>
-&gt;&gt;<br>
-&gt;&gt; <a href=3D"https://patchew.org/QEMU/20260911100709.726366-1-zhangc=
-kid@gmail.com/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://pat=
-chew.org/QEMU/20260911100709.726366-1-zhangckid@gmail.com/</a><br>
-&gt;<br>
-&gt; This issue caused by the dropped patch 1 from V15.<br>
-&gt; <a href=3D"https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg02=
-947.html" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lists.gnu=
-.org/archive/html/qemu-devel/2026-09/msg02947.html</a><br>
-&gt;<br>
-&gt; I assume that patch will be merged before this series.<br>
-&gt; I forgot to mention this earlier, I double confirmed no other problem =
-here.<br>
-&gt; please continue reviewing.=EF=BC=9A=EF=BC=89<br>
-<br>
-The machine-readable way to mention this is<br>
-<br>
-Based-on: &lt;<a href=3D"mailto:20260907063725.626685-2-zhangckid@gmail.com=
-" target=3D"_blank" rel=3D"noreferrer">20260907063725.626685-2-zhangckid@gm=
-ail.com</a>&gt;<br>
-<br>
-Next time :)<br></blockquote></div></div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto"><p dir=3D"ltr">Acquire a new skill like AI~</p><p dir=3D"ltr"><=
-br></p><p dir=3D"ltr">Thanks</p><p dir=3D"ltr">Chen</p></div><div dir=3D"au=
-to"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"g=
-mail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-</blockquote></div></div></div>
-
---000000000000644807065b35df39--
+>      return res;
+>  }
+> +#endif
+>
+>  static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+>                                           struct virtio_gpu_ctrl_command =
+*cmd)
+> --
+> 2.55.0.543.g5ebe2ebe4ea8
+>
+>
 
