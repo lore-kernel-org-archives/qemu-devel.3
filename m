@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D33C88E50
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE07C88E4C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Sep 2026 09:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x4xBV-0008SR-SJ; Fri, 11 Sep 2026 05:04:38 -0400
+	id 1x4xAt-0005hP-M2; Fri, 11 Sep 2026 05:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xB7-0006z7-Sb
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAE-00049x-IJ
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xB2-0008S9-4V
- for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:04:13 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x4xAC-0008Hg-SF
+ for qemu-devel@nongnu.org; Fri, 11 Sep 2026 05:03:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789117447;
+ s=mimecast20190719; t=1789117395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
- b=KSbnWpUvkE84TrlbzRLL+SpkWaj6YEg+XcDn9SCXOq2FucutYc3cfKtJKsf72Kq3B/SV7X
- F9KlTg6hF/qj32CFAdt/rl85IEU11fX+vBnIL17WGJutUw8FIBjsi/wDgKQvH3ygB5qrtP
- uGF2xiMjo/gcL7uGR2L7CCJofMdbdCA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Moug1WmXO2CB2DYm8PmKZYdWRJM7GGO9/h6JXojQGEQ=;
+ b=C7Ug589ABENeDLY602ihwO8CCG2bjtl/9tFleuVCPSx+HaivoYBYUxYnlYRuy5JVC9vz/U
+ 14hQR0XRg/0waAAH5ZGswfy7d/eDO2r34qBoQxT6VPDzbd3+kahnpJ3dl+ib7fbzy7bhGL
+ EmGZnZ1HA3YTH2WJjndnuYkEEibZM2M=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-BBQeC5pzOy2N6e3MKmY8HQ-1; Fri, 11 Sep 2026 05:04:05 -0400
-X-MC-Unique: BBQeC5pzOy2N6e3MKmY8HQ-1
-X-Mimecast-MFC-AGG-ID: BBQeC5pzOy2N6e3MKmY8HQ_1789117444
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49cd83ca361so6764805e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:04:05 -0700 (PDT)
+ us-mta-256-KlY7Ve_JMpa1YDEI3BxlVA-1; Fri, 11 Sep 2026 05:03:14 -0400
+X-MC-Unique: KlY7Ve_JMpa1YDEI3BxlVA-1
+X-Mimecast-MFC-AGG-ID: KlY7Ve_JMpa1YDEI3BxlVA_1789117393
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49e635a6002so4482475e9.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 02:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789117444; x=1789722244; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789117393; x=1789722193; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
- b=s2YppWhfpKIgyoxauYNkqOxRXj+c29fKWUUTCqu+qtPZXKylGPqBXSOXD/8xAQqfUd
- FfDnh5/KNwVH193w7tNDNrRUuxR4uj6xcK0VEwv3cSX7YgCRxXVvZz2VQWONg3m90XcL
- J5iSiLFLmMxjUtjZW3G+A02mutVurvyD6eeXw8p2U4QdCHuU/6nYwq7hJZKEL33QtjPn
- WoXkUDBtQ2grngAVF2Qf2eqnQWpZsl7ZKvipqBpBKBucjm5uYyyn4PY7QmfBs7ERDz66
- 0iL+Skfief8sNHfdYz4Jt0tbmLCzbF/YKM8Rq9RSNjcFedSJJndMJyac+nn9GQLy6tUQ
- dz5w==
+ bh=Moug1WmXO2CB2DYm8PmKZYdWRJM7GGO9/h6JXojQGEQ=;
+ b=YT5L48t+DXawpf/tzLLA/Cx+1hl6rLxEaJ8xLYSNTOgR7NK8f1N6Rrybn3OxPk8aTX
+ 34hFlqFQnVItwczMnGHz8D758vNliGz6uUbdI2CltAkvSFLDPiu+zBKejxeWFQaAWWlG
+ ICKDv7bhS9SyYyI6PNyyqffubJNagrOlIbvKvYAx4P3voEI34iVbMUaDGndqNNHhYnTq
+ OvPuP6bmH7WkTfx+37XZr4pPljSEEmB9bRpMsiuLbsjb2hoav0enbBrMAhxyE0hDPX8p
+ AT51PAhqXQNSrTYJrIXS+jRTNzxEnz+DiQtqbQ+iuJhWqfkLfj6mECcxoBfp1k21tNtt
+ FyAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789117444; x=1789722244;
+ d=1e100.net; s=20251104; t=1789117393; x=1789722193;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hzJidFmu3cCZ/gNI5oejlvZ2j1X9hxYd2KmntrLLK2Q=;
- b=K+8VpKobV+ism0t1SFOMQlc5V6e7u/5ruKxzgHWHBRaW0LbbnJZNAnlHyfxHtJcjTT
- nstX8o9RmcTd1dzt/kbz1omE0nPbVooLVfZdrgxF7YvAPzeepqc5etcP3EUgvl6GJgMc
- hMA/Rtq9ihQlAD8WKtoBqt7oIhyMCpeg3cm9anmRyIy6WJVGbXfZ7qucVZkpenJoiY4K
- 5eA1wyges54jUi6fctZ+8WV+DOZD2pXuqXgaKH+vGOWGxdMNcwIFpTb5txwoCCO8FmaI
- wFNCLeTAQBW9m5B9R46Ne35wSRpbX7o2Nshe4jg0s9iada1L/uwS1qsyP9ZAPnGAWFHX
- 4Ihw==
-X-Gm-Message-State: AFuF++kVGFBjEnQdBQR2BaTWUI8wMXF86UhciNSPC2NmgPQ9QAqVIneA
- pafW4eUJEOLmH2ynnKNtFdABkzexGoavAip/NYCA29B+wdBBXP+jx+xkKdnGISLaGNbfx6uwcre
- xrK1kGfStFYxGqCZZUxlEfEZntWzx73hOavk+yOX+IW1bsThUxVIxWe9Ph/rm00DN7FWR47aoX2
- gOCJ00X0OwKtSxNBCiFPwQG7YsbAfTa8w4xQ==
-X-Gm-Gg: AYBFou0VuQ5jbnC5/ayOtlPYi1LlGIdf1kEvek0SA8/6b6SN1mwWD/7rwPcsf3qsGxw
- hxbfQthuSuEijAEk91iJXRecA+LM7qyhCpyIyMEY9aXRIrP3F0CiSa5TQsM4qC9YOdzn5lhA+q7
- t3LGDaag3QC0GvV/bVBkc7AmuMx5bmYF8NBG09OdWpMgV1oBmDdm0t4lYVQZ0qTLfwgMEcVKyOx
- yNrKIzsy+jhBUJv16fQv2WqsvVSBkeAYy7vX7z+AVdji6dxd9cQ3AMk7XbUDShWqwaW9ssDhLy3
- Hn45ShRpES0LdQGx/991SIoyW14HhO2Ek2JDbq7l50kH/kQ1PdxhwMdL11lH3n4ThjqaYMXA3hy
- U/uM3tx/J9b93J4XPeB3MOKQ=
-X-Received: by 2002:a05:600c:8b41:b0:49b:d45:703e with SMTP id
- 5b1f17b1804b1-49e6198865dmr42375245e9.8.1789117443825; 
- Fri, 11 Sep 2026 02:04:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b41:b0:49b:d45:703e with SMTP id
- 5b1f17b1804b1-49e6198865dmr42374315e9.8.1789117443205; 
- Fri, 11 Sep 2026 02:04:03 -0700 (PDT)
+ bh=Moug1WmXO2CB2DYm8PmKZYdWRJM7GGO9/h6JXojQGEQ=;
+ b=LfzZ86wJkbs0NJIn76WYBGvP16xkuSohXo3rjsrFZulCfz4pOWFVvsMe5iIi8D84/i
+ ho5zlj09dD1PqRzuqi7FWx4voc8a3IM/gY+vzeJnDuhZzeTr2X+U+kmCj6SAR0VQFtmG
+ XwTPLG66lnlkrZDmRoY9v+Y2vGKC8FqFhWUKa838TL2eaYiy6X7YjCq7a7WuSQzl6cuR
+ 2WiNe4qsNHEomO8QCjRamjgekuUFhUmWhDtDb/C3J7z0GTf0B2xgiyzXhCJDFGBllrdb
+ 9o44EMuOYhbKiLvvMP32eCBuqPFSXi09gi7BRlhvX9ooXGomhI3fcJIXkzocMqaeeOt/
+ Hhqw==
+X-Gm-Message-State: AFuF++leZc2YE0G6Bs8Mi7fLQ7agvc4oBsz/8HeculIOyimCAyTbdIIi
+ Ve37dJCysR2RwtylNzHNp057IiERGeuVhOCtHcDMrtPmkriiWOGUyS5d6fsLdphLUSnpNaDsBCG
+ a+SfC1rWHfEu5cS4Xe4aCEyOP72FmLF4xllYqUWFdKfDnHq/Pqm6mu91TSG2+5jlHRQmLjBKeD9
+ 7z7bU1ewfZrI5eEz1MjhX5GTVvRvqmuRynOw==
+X-Gm-Gg: AYBFou2gsAMI2+y9rypJWwiBksVVZCbNO62Gf2oQ0rARuLgpXB+52Nyand2BGDobd81
+ l6l0h1DJ/aZckrKjusH5adM5vsVA/UpPjWQbTYZRDIlkV1OruWNHBPAKrLret3M+M5ILR2NbuFD
+ SGSm9ySO0RJ+MtLNdaeN2dGEaon057Ly9n+MKRH9Dy+IzKxi2bhJ05UjuBOMqV4b8EZ9X1TdUcW
+ G5KoofbcViTonB8xRtGTNy1SPretzrGscDU63eH89Uhw6zmGLAs52q0kzN8Y7L7z/LwmH/c+wQI
+ IOv0RRk/8td0cD2Z5viEpho4KMQahkMv+UxARCb1zbmmYWWtSgC6Xc9R0QBTW5KWwd37LYK6g+a
+ PGJC6djEuqTBjTj6Z3BbaW8c=
+X-Received: by 2002:a05:600d:6501:20b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-49e61988e73mr24438595e9.11.1789117392817; 
+ Fri, 11 Sep 2026 02:03:12 -0700 (PDT)
+X-Received: by 2002:a05:600d:6501:20b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-49e61988e73mr24437855e9.11.1789117392136; 
+ Fri, 11 Sep 2026 02:03:12 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26be3e35sm134916805e9.2.2026.09.11.02.04.02
+ 5b1f17b1804b1-49d26c2a419sm152277935e9.7.2026.09.11.02.03.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Sep 2026 02:04:02 -0700 (PDT)
-Date: Fri, 11 Sep 2026 05:04:01 -0400
+ Fri, 11 Sep 2026 02:03:11 -0700 (PDT)
+Date: Fri, 11 Sep 2026 05:03:09 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>
-Subject: [PULL v2 67/75] virtio-net: validate IHL in
- virtio_net_rsc_extract_unit4 before use
-Message-ID: <8649730874bde0412e3c531e5fad43dde96bab08.1789117222.git.mst@redhat.com>
+ Sairaj Kodilkar <sarunkod@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL v2 47/75] acpi_build: Use IOMMU pci device to build IOMMU
+ DeviceID
+Message-ID: <e97792e397bfd70e7c503fe3ce006bf119afc2dd.1789117222.git.mst@redhat.com>
 References: <cover.1789117222.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,15 +101,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1789117222.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,48 +125,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_net_rsc_extract_unit4() uses the IPv4 IHL nibble from the
-wire to compute the TCP header offset, but the caller's length
-check only guarantees space for a minimum 20-byte IP header. A
-crafted IHL of 15 causes a read 32 bytes past a 66-byte buffer
-when the frame was parked in net/queue.c's exact-size allocation.
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-virtio_net_rsc_sanity_check4() rejects IHL != 5 on the next line,
-but runs after the OOB read already happened.
+Currently, build_amd_iommu() uses "addr" property to build the DeviceID for
+IOMMU device and advertise it through IVRS. But this property does not encode
+IOMMU bus number, only the device and function number. This creates an
+incorrect DeviceID when the IOMMU is attached to a bus other than the
+default one with bus number 0.
 
-Validate IHL before using it as an offset. Since
-virtio_net_rsc_sanity_check4() only accepts IHL == 5 anyway, reject
-anything else early and let the caller fall through to the bypass
-path.
-
-Fixes: 2974e916df ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Yuri Benditovich <yuri.benditovich@daynix.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4166
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260807061250.27739-5-sarunkod@amd.com>
 ---
- hw/net/virtio-net.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/i386/acpi-build.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 986ceff514..19f453fb7d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2104,6 +2104,14 @@ static void virtio_net_rsc_extract_unit4(VirtioNetRscChain *chain,
-     unit->ip = (void *)ip;
-     ip_hdrlen = (ip->ip_ver_len & 0xF) << 2;
-     unit->ip_plen = &ip->ip_len;
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 05b68d05a8..a28bb2ec63 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1851,6 +1851,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     AcpiTable table = { .sig = "IVRS", .rev = 1, .oem_id = oem_id,
+                         .oem_table_id = oem_table_id };
+     uint64_t feature_report;
++    uint16_t iommu_devid = pci_get_bdf(&s->pci->dev);
+ 
+     acpi_table_begin(&table, table_data);
+     /* IVinfo - IO virtualization information common to all
+@@ -1913,9 +1914,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     /* IVHD length */
+     build_append_int_noprefix(table_data, ivhd_blob->len + 24, 2);
+     /* DeviceID */
+-    build_append_int_noprefix(table_data,
+-                              object_property_get_int(OBJECT(s->pci), "addr",
+-                                                      &error_abort), 2);
++    build_append_int_noprefix(table_data, iommu_devid, 2);
+     /* Capability offset */
+     build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+     /* IOMMU base address */
+@@ -1947,10 +1946,9 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+ 
+     /* IVHD length */
+     build_append_int_noprefix(table_data, ivhd_blob->len + 40, 2);
 +
-+    if (ip_hdrlen != sizeof(struct ip_header)) {
-+        unit->tcp = NULL;
-+        unit->tcp_hdrlen = 0;
-+        unit->payload = 0;
-+        return;
-+    }
-+
-     unit->tcp = (struct tcp_header *)(((uint8_t *)unit->ip) + ip_hdrlen);
-     unit->tcp_hdrlen = (htons(unit->tcp->th_offset_flags) & 0xF000) >> 10;
-     unit->payload = read_unit_ip_len(unit) - ip_hdrlen - unit->tcp_hdrlen;
+     /* DeviceID */
+-    build_append_int_noprefix(table_data,
+-                              object_property_get_int(OBJECT(s->pci), "addr",
+-                                                      &error_abort), 2);
++    build_append_int_noprefix(table_data, iommu_devid, 2);
+     /* Capability offset */
+     build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+     /* IOMMU base address */
 -- 
 MST
 
