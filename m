@@ -4,195 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA00C88E53
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 10:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C893FC88E53
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 10:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5KyH-00049d-Lq; Sat, 12 Sep 2026 06:28:33 -0400
+	id 1x5L1I-0004mt-BW; Sat, 12 Sep 2026 06:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x5KyG-00049H-27
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 06:28:32 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x5KyD-0006Z0-Sw
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 06:28:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1789208905; x=1789813705; i=deller@gmx.de;
- bh=HrB+q22BuJTtFblByS1frmlR+89TfJtbfTU/dZe7q38=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=PnMZkJYIevwWmqNSowHIHh1Mqh18pR9hcKphXvVEus2JDkxuIINsVhPLMfaUW5hk
- IYvRo+Z6hz1O5ehAEK+0+RFm9wPyaP4Qzf58SFw1jfDNu+TTJpCT0qncwuA52WNIy
- +Ps/appS49x35KVbTBFFIrEyodaedarmMFoE+J4Fs95jC4Um0F2O8K7PFV7bb34LQ
- Bjh4cq8s42qEJXvfa8IQXhh4E00+OV70uDNOVsbeVKF4asi0+3O1SAzIuwcB3sSYD
- nqGhZ7m0dZ1hvmvKv3bceKsb0A0qGPyvPF5skWg64DLUV7qWXsWIEU1qmEu1JLwzO
- xPB74gHsd8LBvVga3Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MatRT-1wYkEs1Owd-00if86; Sat, 12
- Sep 2026 12:28:25 +0200
-Message-ID: <e3d8379c-34f7-450d-a53a-b0594f4ffdb5@gmx.de>
-Date: Sat, 12 Sep 2026 12:28:24 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5L1B-0004lo-MD
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 06:31:34 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5L19-0007EB-Cb
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 06:31:33 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-396ccda24a3so457709a91.0
+ for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 03:31:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789209089; x=1789813889; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=83QiJLtleLuVFKtWwfOkiieuWjf3v2IFKZgfrveiKVI=;
+ b=MTJYNqf6tJkgrw9jzb2Dx9rwO+/4frLdEioicrrM7pw0mJ34xIXJnhxC/86hZT99/L
+ 5kxq7xiKJ6gqZj9PeFTiJLbAmTZmFbS/pmY2BozqGle1usw3Z4Ws7jov2KZxFaO9cCFV
+ NQ8SJ0Z0SQ1FHQC0XtKWgFJr2y/znDem5qdd8gLQHMXurMcDT7Yu0ad3gMz93+OvhWUB
+ GLA1/+suf2vHeiXEc1VK5LuzcOIjOUqe2X9GMzNW58/h5gqyIPzK8R2fgFZ5J30zVeQS
+ uUhFGK8vmmBnY9QWRK3Oi1XLrefuX3EiHlBNsymS4hp/D3N22bUIRMoDZgKBWuRZjykH
+ vdUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789209089; x=1789813889;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=83QiJLtleLuVFKtWwfOkiieuWjf3v2IFKZgfrveiKVI=;
+ b=D/w1oDeVEPXSme8LZAsCxAbOUOJ4DWgp19FNFahOWUg9B0HE179UsoDu+q7/X08N5q
+ 9Q5ufpTHyPqK8Ff1Rrq8W3QiUIEYNzvGjA4YigIxc3VnpJqHsUJRhrN7XSTYPOrlKTnN
+ 1JtFHIkFtMdFv7Uuvb5FswUBQd53q84o4UnFtQ7TwRVw8np26T4dtwT7BNiPxhmPxMiF
+ /iDU9H2KAILhaDXR73nqoYtWRxbFO5+D4LhbXV/b7/YOOfTrPnTanMKwTmmNSLalNSF1
+ yTD9PsmsSgxwDAMMbUzpwfqwJq+Wtf8ud3T4dhiU1FDoqK993iMcZANp9E9NBGyAReqf
+ Z6Zw==
+X-Gm-Message-State: AFuF++ktjeJ4KuptRE2xSQ8wyjmTSyNkwaDnelBFAazLr1GRe6M3Io9R
+ Mf6o5zO/KagA7m7nlKVMFbkG7ES9PMjHW1R+IjD9mPrwbk5Tv+hdQ1VHL9LdgVhqPU2hcQiTt0R
+ hJKuNMDw=
+X-Gm-Gg: AYBFou3yNZvqapSDQRFCp+xDEjbuEBPKaf3ozQ1uN9koSN66r4cOEB/G0dt0jcJA0vO
+ pP9YNAsL/kk5EmxLE4YhQOp81Vqbbob1ZTj07k8jyAMLlfc3QF/ih8YA81qaZJCRw++De5HY1px
+ zSgmQfrgiizalwWPnryioXHReKJjV/uuFsCrSgrSc/E0+PWQ7BHVcAGmfH6e6Ptp/48w+G+5RTX
+ QJnQwtBL7r8BA3nLzHMdWd92o20AneP6JhJkF98QKKIrVYjQnIpKyyGGd34U9FnK5okk0O/CqRr
+ adojD7Ber/M6ks4RmDNSqQ8j5dzpv8xl9ITqNlKA7iBftvrLd0r5FWSkOeVuwmsaKZDRm3BSiwF
+ LyiCcwGb8dgsfpWRmhOYmIeFju3+ij5hePvsAdbmIvg1VO/luxMnN/J9R4XrAo0SQhHuEqIyNEN
+ M9KNrJOz835+hynCvWkUoO7vv7U1ig+g1cULm+Gorsv2KYK/MSp3w0JNI+kOd/ZjKLhlPSUWTXX
+ EyXJ0RZqtX1nO8UyA==
+X-Received: by 2002:a17:90b:4c85:b0:398:9be6:f997 with SMTP id
+ 98e67ed59e1d1-39d9c3756d7mr12982532a91.22.1789209089169; 
+ Sat, 12 Sep 2026 03:31:29 -0700 (PDT)
+Received: from stoup ([2603:800c:7900:ed00:bf2d:a6f5:e308:cd27])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-14365b8ead8sm12628226c88.10.2026.09.12.03.31.28
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 12 Sep 2026 03:31:28 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 00/82] tcg: Generic expansion of most operations
+Date: Sat, 12 Sep 2026 00:30:04 -1000
+Message-ID: <20260912103126.598030-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sparc: Enable variable page size for user-only
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260912102250.597582-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260912102250.597582-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:XJKNOEQpyhCo5Xi+RP/7hWiLIoAjdRFY5U1shsf7+VwTd0iMlvK
- ZubMGOdx7WQQNtjWEvIqLlNzzWqIB2Eh63yg2CBBRlMN3to6rwKYU01Mfir3571+0P2z/Fm
- MbGmF/DAdppj+p+SRqU3yEW5shpaKdQhzKXvcHGVDmym31BiHteoUqh6TJYU+OU0Cb+3bQm
- /8UGWEGDWrNx/+0TH1qrg==
-UI-OutboundReport: notjunk:1;M01:P0:HlVWReNrLQU=;92XNFhOl3IDAotJZoZ1SYRizD/z
- KkddmBpzPuWytd1pRsedSD5aZqVr2zpUTzH04J0CLeCo68XvouFls8YVzbpNl/sVtBPtTnY3U
- 6YK0RFrmhva+pEyZwYIt72AM2wk0vLvdVWOYLEf/VIY+n22/Ym+//Ktv4/O9NbhThol2y5LBy
- A0iGLCKWZowMSEL6BteSrUBT3AKh11leHo9sr9vnoT7TR1rDsBbqgCOOry1ACNHSQ1wIJAhx4
- oXjRhQaXzuH+TXmS/x179O2bHZNLPJVScE5xc0FXytt8hhCsus4y0SxkwMBgptBA+RJKn7Abw
- DeUJzFaRNAsf0GSmhzj0OLheN937iRBNKCPrsnYET24LxkrtNjqjyv1sxcwf3ckoJdeUaIZey
- OexaHEfJYA9GczWG4EvaPsNOA5mmUZYzwJ30uPKeFD5H8CytIjkrZ7sK0JUuiWTwZrI4ZX3Ju
- 6H8Eq82Gg/nLBMdTL2WaVzVYGtVf0YT71bTzg6+hRiI05BjXSsR7GuIWfjaxo2zMglv2Aof+v
- mmsxRlafhVbiY6I0Ww+wR1W8JsSRlKAgtOUq+/cUxmUgp4wL89bd2b09PpExT9B7/QZqMLBv+
- zEAuqGfg5z7Lsd+ZIpahq5RVCL4YHLO2LJplD0hXR8iMQKXIgtwZkudrPu+IxDHjex/7VygQE
- gBHgnGgxusdsAnJwbPwxgoL/sPA5iDTIT5xasm8UJWYvAU/PS7KgJ0kPWH9nTe2yz8kP+1UVK
- J3xTFY/cXUvecCpaofINimUod4s7pQt/WuB27G0Cpj2ayfUeo8Cz2HDTVDe/TAscun5EDRgok
- /POp67evezjA1lVuYUK8PDX9ZzLMNujHsMpx/t1Pf1nfscIBa4uiA+RXGtyhshffGFS2IeXPp
- hkMHcarlfvnoc2pYZxQ19aFIbthzNCDo5bsl01fqxkOzuGWG35Ub+iTTsBV3lyCrs/CQDa4uH
- rTRbbcq7h5qpRnM/ITX2VxPVA3KcOQLLV84fV/9jqZC+/xCBlE2/OgSULbbBr9LUBqLXacv6K
- fID18vCuT1ZG137gKpAuWONSTs7JOe7Oh4HnHJpuuABEdMslBmVFojikeDQNwPJZJEfWbE+J8
- MRtIDoy9RE8LcHjztkG+5+CvTQgEonC5YPqraCrOh6tk+LkHaiWV4eqC6JVtlavgZ9Fd1w1ri
- R8uPFq3nQQ8KDQB6R9iIvTzkKXZ1px0bktIu0ImF8VEqTZuoJlMxEGu34pzrHR4CFMY/+ZjZ5
- wHj7h+ZWJPba7EnOQSjAiSHILPVEbyZlieB7cmuuTKGDq/tfLZL3NoP7zMfqAa/nL50EdzqoS
- +IwwoAmMJxbXMhC6KZ1zlTt2aGdnZJ6RUSxgAx2liumr1Dpt49jZYbi4ox8BV28G1jAdvlf72
- bCCFJGg3HDViUPEaBYVitp7MIHZUQi5jKflPSoRoVxCB50V/vFTyjsi0/TuPz2AA4/RpNY387
- U4YfgkPDkGXTE2U+SrEn2ERHLuQXp6jRRe/wq4a2f/+SDOmzcLFzHnPqgxjI2me+IkhSlF2lW
- ZxPbaujdubbUTw5alEJPBHtzmLa8c76776C6HE/xMkTQ10703MSf0PLOW+dThpxwztzjznmM8
- Hc7L5Zeyv4GGO6AUznRLhvyAMpNJ4jpJjtXswQvyG1e7rjlm70wL0FfmVcdLW9nlEBI7qtbmT
- 75koKzz0sVe4+3UTcKuPI8XqSkHQI7oSVLpeuOs1wDDlZY6PhDlDm4Ex6S1k0s5t5SaZbIA2s
- 2ZoUVq+wpFz8Oig/CvnvJ0TEF71BM6g7Iown4vqBNgCMxViyG2RnA7qmMKN9mFSW3uYjgEj/p
- Sz+6UEa2CxNcyhdNoysL+um14DgUmz5AHhnGZxX17hwhDzsG1UCF1+HaRkRcjkJlxN+2DaGm2
- jDWUu6QSKi4PFSnqEuZZU/gzumPZNi3wkbDQnO6lo+iF0FJDlx4yRxR2CaRk3WivF5LxNa8jz
- JonN6NVIrKNiGwIFEJ+HzXF0hYK7fWP7K6ozyugjiyCHn64j/92st6BuY9cqsYTglO2v5m3XT
- kDYayhMi5rWuGzntS7YK0IYkYUNLIvIjYpqkZLhZDyd25fvGa0BcVNyTkTE9JFejrV9khsN2I
- im8jMlErQ/vERVtLkPp7sRCA3rnKPJyCIoBeb+CG4wnKS6TfeMcPUfx7WNaLKZ5bcpCZjVClW
- 1y8/hrSEi28oPIWTxRDTvkwVhrYdHlDVUN4AEwnspbIXDaY1PgNOvXMiXXKrnLX+ZQE3djCPO
- Yh2xzULvI1p1ZGfxRsZPTkBwF7PRcBPcTDiOu/bpxvbDvaCkziasptpfobOg5vUsDCJaXjd/S
- HaGSAu9BZdPT4ZhM0vrWth0/b8soydeuooc0bsjVkG2F410Muasx7c9b603qDG2tG4HOFVC5f
- cuzKMsT3Q9XSdMVunE99LikxdmCSRcv5+e8+KnzgSdcYgXA8blCx4P/T3BiSUTmes2cX9yfHt
- WfGEtGmZEwZbCoSnEEDMIZqrMgtLKQ6T2ec1QNDE8w2Z54vRzrEvhRM7iE+TzIpvgApZCdJiC
- JUM8hgmlD9S4USMKCSYbwW+kdc/kq1lDVLczLDrkUpnIvj6a470bDThIFmm1u1z4o4XCw9hSl
- FwpPAcDZOnEvzgl+XeS/zXLq7K3O4CrVW4vJobcwgwpRdFYEZXaTbWWNr+c8renZle34ge98G
- AiezGDmqSSEsdQ1ofwTMppSQkcfHT/hMBU/WDYzR4oU3qtVBlp8bkQrdhaD8/W259L72Vy+m6
- 2rYu+UelCrMvMTHmEvoqbnn4SV3C7LkQBpGaXHv9gO/fWGi5I1GblUFV4/b+laWciaUpnIxHD
- QZmd7mLb/hGS38+EU9eXsj/M6o34FX2NPBoFZbhI8YWyBd+bWsDLEImkobDZuUnL7j3DdQdoy
- 5exWxYnOf5OqMisarPVdG5cWtaEl6ZCnYHAl3LUe7X9NzS4/2GaafOHzZfUe27R5MSfy/qLHt
- nkZZq90+/X/nqMPhIJzAHgf/YlqStsG/eOW5Qj4qokK9bK6RWgQ1n4wJTi7rj24uJXSwDMjoB
- px3BQ3bXmz4lCpWRbzCH/uaIDEf6txAJITIX3Ke+Hmlhgs7xsKSqfryBY6o+bGgLSodzWNS4z
- jppZdZ2eXKyUiQu+atFwPykSTjxCG92hwJLcmZ1gm4QBM6zvQZh8LVarXZEcDldi1QA9VFJWW
- j27J5dWinuNbDiL1ETKbLVSXIScqxbhMZHjD7FM0fBD9TCh7S9JHTYsb+vXqlPA9a4leOwLAV
- +TN6krmpE0mhKSTYoG5Ys7mL7u3zJxDMIXqoMqTCTJyNlFTEk8zIcjhdazcjO44ko+2ZbIK25
- 4liNTQ2wk4eh5l6AWSwDeyo9hfqxXH91oiyjOK0FtxveC3XDcDyrSLL7e4OR445JmmDYZgaPb
- dAy7ONABw6R04F/pAf1IlIYD9YTJegAWLLsdjKiDQHEB43ySNfl+N4KfxX7CzaOQvdmZQzyRZ
- 4fIahDekL+EN4dlayaYU7A+TVhk5GeozJX6NLfjY8uzhZ8xfcGHd4xs4/HCwSNRnnO0Q3jTX8
- N3BKKvjfSGyrgVRSOkJX1dwzhj4viXBrm78SRP8RUCe0wqGC4CmEx/jiYVunB50B0kzn6/K+h
- khqfvpzIv+yv3N9xGrNEi0r13tGBZmsj9cSK7U2bqbGLHyZYcHFJnYCEfVGmPr2iRNV5Vsi53
- qSUMSl+0YKzTA6AoMkBPlazEGz5vAQ3kSvPp3E04EZfVebw5i4G/AW4h6ifcCeuCId66E6/qS
- TXctuN1UoTLy93CCKf1jB/eRYLPQFR4/ASdseFh7wEA/EcqJhyHfmno1rN3ZP8tb+YjymCe3Q
- boncY49Q5PXTWcXVJIbxy2IblOJPcHD42mQGWSHwhZo52G4aLhgKgsygaLBIMEmkBrVjtyU56
- tYYajlshyOEr3ZoypvWQKI3KCXTe0UY/1QRboqrjsnhpmDTWPVZ3MKxDBMK1dcCu/vOnw9M51
- kN/dGqMCu9R2o2SqS4hnpX0vcxJuwhsYKTfKUxGJJkAQaCsAN8QAVNqg2FBtqZqgAgCurucqx
- qmYIe6cBat7Z5cVQIutD8ThcUM4NtX2/0JJI0FreoxUs31rvY/Id4/z5Mh3VU4w+Dy5cxdLVN
- LAcDHDORFmBVigvORD0PyJ64v0Oc65OXONd7fkcPwOHC1Kt4BOXkiqMKbBwqA9+q/yFwnycW7
- /8h6tJuDeMoEjdBaePjE88l8JhOeWoDbDOrcpYJ/Pp6ZcGAH/XpX1Y0LwZHFCgVoendgIy4b7
- thpA41N1MsRj4Bgz3yBVnvwPdsCZr9/jJ26hjkrthR17Uf8fkP2+aZnemd17tSfJKFUoAjH0z
- VZAe28FmfgA0+OHGsgmwQGl0DLvniVNKHOihWCJyiBr2RHYIBnjI9mbt0iXoNPuQHFJdmCd1R
- J6BUINesFwwG0mFbmdYVlPlYYZL49OMm5x9uDnat3GXXpYBd4TCi0TiRgPCsPX4lA5GVe3xLG
- UKE77bQU5vr8KuIJekUyebSfxNu4Fkv73XY/99iz76416Dq7n7sMLE7ZxIntWkTnPXc2s1uja
- 6SaUmln+o5xhjHcF9SoEuIEPNuT8HzEjUHctZbjGOT94wVEO67Mro8dI1WotPV5c4zVKKuBo+
- g1VjGKrOd9XoMu6SFxmqk8yyPaueEubKWUC0IkQhsbg57WSb81kqfkVKk1UC/Tqbfq7C3S1AC
- qeLu4zdpdSquQrn5RnGeFLE1Xpy2ttl10P9eVVZIvyV+3v/A3A8uCBF+1TKOIDIeRTgN8dSt6
- DYpF+zC6nSoz/1Fzi7na+CSr2wJAqhhSYjwdbEDS7MbF/JxtF6OruGsscAX7CyUjVqZJDJbIT
- yinQ0kX4TZQZVwkH5JzQiuFjBJ8xmYIeDSvnHSUTjUzY+4dEvlYQyMOcNpPMe1oAOux3tkrF3
- vbZIttkpkRJNgJzdnP7g5vKmx47nsY80cs5iz271liPjuFzlq2VnQpuD5cgFhDAwngIuEaKk+
- klLFeXTvAeroV27UahOswGqvB/ReAFBs4r1g1ug9E5r5k7nQmF/ORy6tVyYR4zFNCHiMgbgtd
- lFLhehgGVa4oWdpj3yljEWSTKwbsQZXUeRxNzAOvCmH9J11T651JwhGJQqRT1ehalCSjl+A5h
- nzEnBrVHByrMzWzheIh5UklREFLEvue/5wuGejbCc35AdWIfLdxVIIV+VBLue7w2niC/2UXEQ
- Khrhc9Ng8p4xfcM+Hu9dsGIV2xwXpf353q+5wXO06etZt0BztPWfFvcQ3hu5rzOg+ZNmyjqrX
- 5YFJULpu+q+tVudtSF8jzcMH53uT+SkbG3HKNrbm6pQrSFLxAa9+LaILO5AePLkhEL7Gp+xXy
- Lmnr0DFO4lufy9R5ZQQs8jfsQYkGm5IzF4RnEcciRMoyj0BImr1o6e1rQJiQlQtiMsBPu0Rkh
- IJT0+szXS7BB80XYpGsICvoTpXF9nkDrfbjIRsKr1jFpygIMZvZr/iDM0W5U6H8lXtCogF+sw
- 8BWdLN2lEQ8w5JQiQtDShDxAJYhHy711GisYpFArhEono8OyTApWIGQrE2Fyj0++2xWg+gmz1
- iQ3xeFzjFjlxmXEr0XOMH2WAPWt5LV4wgBZqLsp29B5jCI9U2NLnnJY9GOGH1Qhhq4iMhhuZH
- neq0iDE/3BWnsjYkTgy80HQkG9wNUOkQwqfH/EKocdOF27k9bLY2lhZfiw6lzYaeYa3yJ+Hgw
- pvzh7xcWVSxfJx2fNgsyPl2BUpdLMO/+H+Pz3bOux596x4Du87x0AqrWsmmyqgIfbkfSzdVqD
- TVnsBoMEIuBEY59JuBBBycU1JqeJ6Z57MXiWx9ga2YTVo+A2hFLqfwnX0SfmpcXrHjIrdEA26
- 502j7pZjhKYmXCJWQkLOicx1Hiyo1Mx2gYz9Vshv2998EVSkFOHm6lbXXexlwrkSOVjtoGO+Q
- V6M0BsYk8vX9bV9vwbo+X7X6pabtS8WVLB/5MRXy1xiviJ0g91Mw2yOTfnspaAXQYWm7RA6lg
- Fclh7hkdVNB3ifpCrhfhu5zoyv8BfbCTTe3Qetn8J7LIBgn5P89Qyr7bh7LEbTJ4guli2kKKc
- 4tzxsfw3qJefkxO8DLS0zFeyrVy29ameCeIk1HZfxGjZ7wc2L6Pf5fU03Qy8bwrsukeR8mreA
- rZwlEjESP+IbKj6yM3n3pZl1EiZOIES2Y+5LEax61habgtxgGaO+1r1QLheTDZVjH86lA7EMu
- nhbD8RS558ZGyYIQwFz/7Mmk8lEuuEGLMpQdv5IBYEF6UqUSGKyZ+2MULfQPj+jp3bgJkOTUY
- 02ZpUvfd0BGKQi3KnFue2b
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -208,16 +97,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/26 12:22, Richard Henderson wrote:
-> Sparc v8 has 4k pages, while Sparc v9 has 8k pages.  Because of this,
-> userland does not assumed a fixed page size (at least true for glibc
-> and musl).  Allowing the guest to follow the host page size avoids
-> a variety of emulation problems.
+The driver here is the boilerplate I needed to write for the
+recent lea opcode addition.
 
-True!
+This eliminates the majority of the code duplication between
+the _i32 and _i64 expanders.  What remains are those expanders
+that truly differ between the two widths, or that are only
+present for one width.
 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Of course, due to touching most opcode expansion, I noticed a
+few cleanups and improvements in the process.
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+
+r~
+
+
+Richard Henderson (82):
+  include/qemu: Define QEMU_ALIAS
+  tcg: Use QEMU_ALIAS to define most tcg_gen_*_ptr
+  tcg: Generic expansion of tcg_gen_mov_*
+  tcg: Generic expansion of tcg_gen_movi_*
+  tcg: Generic expansion of tcg_gen_discard_*
+  tcg: Generic expansion of tcg_gen_add_*
+  tcg: Generic expansion of tcg_gen_addi_*
+  tcg: Generic expansion of tcg_gen_sub_*
+  tcg: Generic expansion of tcg_gen_subi_*
+  tcg: Generic expansion of tcg_gen_neg_*
+  tcg: Generic expansion of tcg_gen_subfi_*
+  tcg: Generic expansion of tcg_gen_and_*
+  tcg: Generic expansion of tcg_gen_or_*
+  tcg: Generic expansion of tcg_gen_xor_*
+  tcg: Generic expansion of tcg_gen_shl_*
+  tcg: Generic expansion of tcg_gen_shr_*
+  tcg: Generic expansion of tcg_gen_sar_*
+  tcg: Generic expansion of tcg_gen_mul_*
+  tcg: Generic expansion of tcg_gen_shli_*
+  tcg: Generic expansion of tcg_gen_shri_*
+  tcg: Generic expansion of tcg_gen_sari_*
+  tcg: Generic expansion of tcg_gen_andi_*
+  tcg: Generic expansion of tcg_gen_ori_*
+  tcg: Generic expansion of tcg_gen_xori_*
+  tcg: Generic expansion of tcg_gen_muli_*
+  tcg: Generic expansion of tcg_gen_not_*
+  tcg: Drop division helpers
+  tcg: Generic expansion of tcg_gen_div_*
+  tcg: Generic expansion of tcg_gen_rem_*
+  tcg: Generic expansion of tcg_gen_divu_*
+  tcg: Generic expansion of tcg_gen_remu_*
+  tcg: Generic expansion of tcg_gen_andc_*
+  tcg: Generic expansion of tcg_gen_eqv_*
+  tcg: Generic expansion of tcg_gen_nand_*
+  tcg: Generic expansion of tcg_gen_nor_*
+  tcg: Generic expansion of tcg_gen_orc_*
+  tcg: Generic expansion of tcg_gen_brcond_*
+  tcg: Generic expansion of tcg_gen_brcondi_*
+  tcg: Generic expansion of tcg_gen_setcond_*
+  tcg: Generic expansion of tcg_gen_setcondi_*
+  tcg: Generic expansion of tcg_gen_negsetcond_*
+  tcg: Generic expansion of tcg_gen_negsetcondi_*
+  tcg: Generic expansion of tcg_gen_movcond_*
+  tcg: Split out gen_extrl_i64_i32
+  tcg: Split out gen_extu_i32_i64
+  tcg: Split out gen_extrh_i64_i32
+  tcg: Split out gen_ext_i32_i64
+  tcg: Generic expansion of tcg_gen_clz_*
+  tcg: Use signed integer for tcg_gen_{clz,ctz}i_{i32,i64}
+  tcg: Generic expansion of tcg_gen_clzi_*
+  tcg: Generic expansion of tcg_gen_ctpop_*
+  tcg: Generic expansion of tcg_gen_ctz_*
+  tcg: Generic expansion of tcg_gen_ctzi_*
+  tcg: Generic expansion of tcg_gen_clrsb_*
+  tcg: Generic expansion of tcg_gen_rotl_*
+  tcg: Generic expansion of tcg_gen_rotr_*
+  tcg: Generic expansion of tcg_gen_rotri_*
+  tcg: Generic expansion of tcg_gen_rotli_*
+  tcg: Generic expansion of tcg_gen_deposit_*
+  tcg: Generic expansion of tcg_gen_extract_*
+  tcg: Generic expansion of tcg_gen_sextract_*
+  tcg: Generic expansion of tcg_gen_deposit_z_*
+  tcg: Generic expansion of tcg_gen_ext8s_*
+  tcg: Generic expansion of tcg_gen_ext8u_*
+  tcg: Generic expansion of tcg_gen_ext16s_*
+  tcg: Generic expansion of tcg_gen_ext16u_*
+  tcg: Generic expansion of tcg_gen_ext_*
+  tcg: Generic expansion of tcg_gen_smin_*
+  tcg: Generic expansion of tcg_gen_smax_*
+  tcg: Generic expansion of tcg_gen_umin_*
+  tcg: Generic expansion of tcg_gen_umax_*
+  tcg: Generic expansion of tcg_gen_abs_*
+  tcg: Use smax in abs if available
+  tcg: Generic expansion of tcg_gen_ussub_*
+  tcg: Use umax in ussub if available
+  tcg: Generic expansion of tcg_gen_extract2_*
+  tcg: Generic expansion of tcg_gen_addcio_*
+  tcg: Generic expansion of tcg_gen_add2_*
+  tcg: Generic expansion of tcg_gen_sub2_*
+  tcg: Generic expansion of tcg_gen_mulu2_*
+  tcg: Generic expansion of tcg_gen_muls2_*
+  tcg: Expand missing mulu2_i64 during liveness
+
+ accel/tcg/tcg-runtime.h                    |   13 -
+ include/qemu/compiler.h                    |    7 +
+ include/tcg/tcg-op-common.h                |  347 +--
+ include/tcg/tcg-op-def.h.inc               |   29 +
+ include/tcg/tcg-op-def2.h.inc              |   72 +
+ accel/tcg/tcg-runtime.c                    |   58 -
+ tcg/tcg-op-ldst.c                          |   54 -
+ tcg/tcg-op.c                               | 2850 ++++++++------------
+ tcg/tcg.c                                  |  214 +-
+ target/ppc/translate/fixedpoint-impl.c.inc |    4 +-
+ 10 files changed, 1535 insertions(+), 2113 deletions(-)
+ create mode 100644 include/tcg/tcg-op-def.h.inc
+ create mode 100644 include/tcg/tcg-op-def2.h.inc
+
+-- 
+2.53.0
 
 
