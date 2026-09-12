@@ -4,145 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE150C79FB6
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 04:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D337C79FB6
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 04:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5FOa-0004nU-Ba; Sat, 12 Sep 2026 00:31:20 -0400
+	id 1x5FPp-0005Ae-R6; Sat, 12 Sep 2026 00:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x5FOY-0004nI-4y
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 00:31:18 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1x5FPl-0005AP-5n
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 00:32:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x5FOU-0004Rz-TZ
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 00:31:17 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1x5FPi-0004rS-Ok
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 00:32:32 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68C4U4mA1335339
- for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 04:31:12 GMT
+ 68C4V4tX2392375
+ for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 04:32:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tLe3/XFw3UbXsViRn2xKZn9tYDcZseGFQ9IAr76ZP60=; b=n/6FzabAmo60QM3l
- lGsVpiSHgWHlIbPgTeeRsq3T/GYTkXkiwd8Q5XB7LZ8Dl+UejfVbCI+ZzMpZXjm6
- jFnLKdBO4IyxRtQPWDSL9JgaXKBtCD1LTL9x3Snv6qnpsHnJ8uhw7e1nS2XDikYn
- DycpEH6G7/hnh0jreL5bLN/QnNCBX6W1UjNJCSDpU99BPCdXAzgIbonO/Gfio+47
- 3YKGKBrvQjeePl+j4oAVRqO7NOj8MInJfKPoAhf4FtIMPZm+o3dAorwXywRuYSDK
- LBbeeOKd0TkeDIcOdYjvxzXbVpBDuwPVbiBLt8JsmTR9QZVi5eHLuClaG11m7lxy
- lafmBQ==
-Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
- [74.125.224.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gmy9br20y-1
+ /IaODg0roIXu2/m8PyApk4JYXYcgoOEvZQ820czb+tA=; b=l7bQde35X4kUdNRc
+ eeFnDKbmKMYrn1mjEwvEEEgbLI+qKGICD7tMPGFhNDw3R98+mg7+IHo9GPA0C+KD
+ YfWN4g9ErQ1qdX2xpWvbW0rvEdRa6v61HPJW+LUkWFppb9YJqX6+lmkCi0+HtKoy
+ xJITn5vlfA8x5emWVYDe+Vbc6Mxp+6QY1cOFG4pECg8/6IJMyVr+aNBfp2UBz6zs
+ lcAOVa93dxgf10PvtD872uar4RQhvN1r0gGjs6Haj6RNTrYqljSGtSkclCE/lrw1
+ 3Uaz59Nr541VVcOH/xhQHiRkno0tpa4CByfm4NLENu4nwgJQgREzMMd2MDpHcsT2
+ UyGNNA==
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gmy9dg25y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 04:31:12 +0000 (GMT)
-Received: by mail-yx1-f72.google.com with SMTP id
- 956f58d0204a3-671163d46bcso2488862d50.0
- for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 21:31:12 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 04:32:28 +0000 (GMT)
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-81eddfe28b4so30797867b3.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Sep 2026 21:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789187471; x=1789792271; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1789187548; x=1789792348; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=tLe3/XFw3UbXsViRn2xKZn9tYDcZseGFQ9IAr76ZP60=;
- b=AyL3yOJUHWD5pTcUOzbPYNExzW+5chKJ2EngbU5FSL7nW0Gha8TDYeLd0zi+G9zIKQ
- OnkqdSUxj7iZwBYWTNJrY/LHn8xCCPMMcMRlMlZGvsoULs0Xo46OkBOv5ntR7b4+yFP3
- 8fZUcGlf/1ETiG3SqMfAqsAl3CmV5DJ92PX2n7S/NNLjc4OoeZKRjJU6YdN1lgV5KHnv
- ZiJLIYeen//YURoLsfYVgPmL1d8Br+4ZoDGZCgIS6gK9rFOu5rWfhM5O3T79spi3It7F
- ZVc9C3ZKOgupQrBoWIxd3zmiQ5Pm/7cS4nsk3zyY7EA0Ael4MgnQeLSflEMPHsIZequq
- XyAA==
+ :content-type; bh=/IaODg0roIXu2/m8PyApk4JYXYcgoOEvZQ820czb+tA=;
+ b=HkMW3GUfafBYwB74bXh0cqaKBvU1KSQLdZXFYRcmZPfL+EVYyFmiK+WiZB8xydmKTj
+ 1/WlSTIlWAvmrASyE9dJ9PFyMoHU+WDW7wgj89zCKhY2Va/qtahU/waJ7ktrpV3MgZx3
+ WKKITW4so3KdLoiiawkIbhR9Icdz+6gmkCVCx7+cEMpq5b7HMiaSAN4sgxYrR5z/0BRm
+ CrDrxuJENewnCERgD+nPZvn/0agUPHpXr26hlE7BeSi7nT9xKWuan1feH3d2FdLBgpUS
+ ra3h6chB0hJCcpoueQDYHcKpM5HoE0+bR4wAaSbqDJkOvRqaFvWN6toJbPF+c6VwCByb
+ YMNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789187471; x=1789792271;
+ d=1e100.net; s=20251104; t=1789187548; x=1789792348;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=tLe3/XFw3UbXsViRn2xKZn9tYDcZseGFQ9IAr76ZP60=;
- b=JqQDpT/TchRVuqWYq43p95l1+wL7Fem8GZ5kRooOl+oXq0KdHjCQUn+6utP46VFxjB
- 2xCv/dASmJfkiMA1Z7ZgzmitAZprmlSOo93aOTO53w/bAwZ3XvPOXwZ+6DuqIEifwOEz
- jY/XFgpb7buJywpfqs4whVEFQO9MukSI4pP7jKQ4M7UwY287oO6/jV3kwiTOwA79EM39
- xhoeaGMnOH8GF7kLZQQMq3UgMC7HpMlvRomhoF4CU/W/mt/2QEqmX/W95gZMASug54OQ
- kyg0BpHOUhwciAlxLeMnLtXgYBdOMdPk/BdkjuY0U+RGrd27PwEgDJlg7HLvt1USP1Qs
- 3oRg==
+ bh=/IaODg0roIXu2/m8PyApk4JYXYcgoOEvZQ820czb+tA=;
+ b=hbYRPPw/2vlaWuy5OxvPSxrQtHLnDtgGRT1svfIWhbI0JqzH76T/xxo3Nnk8hUtASW
+ Ww3D9yM4AYlxSKCbAuJNkh3hAXMZgLluOXwjY1PtWXrgk2rx3nxhnO62zCP3Et0l7pp4
+ nX8FcaJbLzQ2lJPM2G7LUNFVX0jx3ACgBk5ZcRgkZTg9PTgUbeHvAssisPE08122E51J
+ +DCwdNc+qjc2S04V5Uzk9EPor9i4ZyC/mdBGZJOjn/TqFlifOdtewfV6KcCCDHJaRU1n
+ 3Gb0FavO7dmy5KlQbvBXcR3S69tfsht6h/LR24o/V50SJhP9IgYmZ2IWd+ucUlcUOaHY
+ apxw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwslUX45Q6XCS0lbLZTCIlfDcHjQwgwdSGhDhx45q2BVLiQ9MeV7C9RRSdZnwsq27DdIIeGOwvPRTFw@nongnu.org
-X-Gm-Message-State: AFuF++keGrTOR7RQtku01Xn2fVDHNB958misob3Vwqct7bKDwomtFyVq
- 0UXSHVe/dbXVH3KnJeoUxnA0qfTsjopWPgeX8f6mrnfdzwQcsboUgGjD2logBRe7m+u9TLhNYhg
- dMOvo9imh9r7ugwJb3WxNY8QW2neDO7/GPUE1Tf9hOe4KqefzvuGDIudcNA==
-X-Gm-Gg: AYBFou1GeEDtrrmwd8IJPuWyf/OXCiWP6vkX+UwcNpM94QoZEqajR8F3MDy2te2ON4L
- dSSScTLxh/vrsJy/rb5HnFomOd3jOECtqEumIIKhzes9d0VWvAvyr54Yf70uvq/nTiNXVhatRo1
- ZkbwZP1tNLCw8HNZ7O9f1O/K6wJnFInVh+6FE9qIvTcOV+ByopzMQYIV6XwzBzDNIIIpnL0FdGc
- NpfYaHvpRKKCkShofDGSpGsnGr+DozjmDMP8BaFCjYW2uT8MDvOBGKbAabzTK9phUORd2f4V4VT
- DGqyz4dAu6IdVhaaW/WQssgWBC5S84YdP0iH3mAQzuRGo5m48Iza0hFz9lxm/GUOXHC0Q9y1caT
- vf/1sAVyyjE9QFpKLCPJx8/FeUTUELr0v9iuE6wjA2CSXclNr20w3TYAmrvoG
-X-Received: by 2002:a05:690e:e8b:b0:66f:c1be:84d6 with SMTP id
- 956f58d0204a3-67135a3fe04mr211262d50.68.1789187471296; 
- Fri, 11 Sep 2026 21:31:11 -0700 (PDT)
-X-Received: by 2002:a05:690e:e8b:b0:66f:c1be:84d6 with SMTP id
- 956f58d0204a3-67135a3fe04mr211259d50.68.1789187470808; 
- Fri, 11 Sep 2026 21:31:10 -0700 (PDT)
+ AKwUvBx+UxmEBvte70pqiUnv+OJfxQGhNHStn4Ff4AG+7QkIEgwwXqxhAZT60wA1p9fX91/tX+VcgDIm1OQb@nongnu.org
+X-Gm-Message-State: AFuF++kF7HONHdWkJ0pmJsh2nmuaambfZ4bA0Q3/8nmunUXKHORW5muA
+ ilAJ/2KTOcgSxBOr522CRyJlnZQo97ELSjYfmznH55tVadzpVujteX6m+4ytZGdZgd4EjRWZyQJ
+ 2MYpczOlg0UX6WEqLdt2kgK5GAHIQvPr6zcS1MFVw8Nf55pPb60/EO1ILcw==
+X-Gm-Gg: AYBFou03odnb296TakvxXjFAkcbnoJHggCFS5Tfn+xakQj8DqPuAUNh7BXnsWUgNCPD
+ k+ExU7o3diPXPduuiZrRubxQG/meji38FApwNOqyN8bOlosIrK7XT79OaOcLn/2enNub0FjrRtT
+ ogeoVWXEsfn2viy9aG9UyG/+4xYMBp9Zp+skUagAap9JjsIOC459YVKbwvmFHsA/7h28EtpZw5i
+ INbx1VyxGtr2CS4jvmFPbiAmMhq1TzKzJyEC2qNnT4EOnaMRaYhAEzZGOESTFQyquRKuia4/pSC
+ yvRCDeu/yeItLEis0AfRpYtrG+GwTStLV9W66M7VYZ/+ZMmtXV59pjEaV9hGyZLw7G4V1e7W+R6
+ PfcZiIzMaGnUjuTE8CUbNdIgBmO2+1Rm2MS4uAVk8CkwxmJVwUuzRSPE1ExnS
+X-Received: by 2002:a05:690e:169f:b0:66f:c1bc:402d with SMTP id
+ 956f58d0204a3-67135e3f053mr195756d50.90.1789187548427; 
+ Fri, 11 Sep 2026 21:32:28 -0700 (PDT)
+X-Received: by 2002:a05:690e:169f:b0:66f:c1bc:402d with SMTP id
+ 956f58d0204a3-67135e3f053mr195750d50.90.1789187548055; 
+ Fri, 11 Sep 2026 21:32:28 -0700 (PDT)
 Received: from ?IPV6:2600:1700:1d0:c210:bc8f:aa56:8c4:fb36?
  ([2600:1700:1d0:c210:bc8f:aa56:8c4:fb36])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-67125b8bf2asm1924235d50.1.2026.09.11.21.31.07
+ 956f58d0204a3-67125ea8a35sm1903073d50.19.2026.09.11.21.32.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Sep 2026 21:31:08 -0700 (PDT)
-Message-ID: <edf37742-23fa-41cf-abc5-47eedecaec4b@oss.qualcomm.com>
-Date: Fri, 11 Sep 2026 23:31:06 -0500
+ Fri, 11 Sep 2026 21:32:26 -0700 (PDT)
+Message-ID: <9e5c2555-71a0-47e7-b89c-045115477f8f@oss.qualcomm.com>
+Date: Fri, 11 Sep 2026 23:32:24 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/10] Hexagon (target/hexagon) Remove old way of
- detecting register multiwrites
+Subject: Re: [PATCH v2 03/10] Hexagon (tests/tcg/hexagon) Add tests for
+ multi-destination instructions
 To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
 Cc: matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org,
  philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
 References: <20260911220825.143115-1-ltaylorsimpson@gmail.com>
- <20260911220825.143115-11-ltaylorsimpson@gmail.com>
+ <20260911220825.143115-4-ltaylorsimpson@gmail.com>
 Content-Language: en-US
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260911220825.143115-11-ltaylorsimpson@gmail.com>
+In-Reply-To: <20260911220825.143115-4-ltaylorsimpson@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEyMDA2MSBTYWx0ZWRfX7n+Kkr9l4Xri
- nlKCM9WnWSojYKVuHwmlYqHUQjbZt6CWd98322uXJLn4TI5avAOfKCAbwyRiQSH1uTuQ8yKyQW+
- eSo9q0zbwK/10PrKK1BQWAWstD1hUs1+/4jRwg2Tjhzf4Bf/oqoPZOTC0DlDVbGRcNTl4DCGl3K
- MTX+ADYKuaTKwth/usa2AK68U9E4JzfgUHK9gXF3WnVLhG0gGDjJt2Ttb4yFI8bgBjRy2qQ3PAN
- cOvW+meX4PmBIpm69eEz0SuXd+otI3MIHpAWKhqggQt+Om0UpGA0bpaqh2sWu44EXaahp82pgBg
- tEgZKKLcrId1eTbXt1nRzAH5smMlw0o8vmbxP7aapQwA3E0eJfzDCcsxEo9oEQGstgeVVoNrhK/
- 4qW4QJFXXUQwXoFXXX4O3wSxKh3Kw80ejgiHw+dAzbMjtZbdHQ8R9DdXXVOFfRf324PpA86FfeS
- V7bD3NIK8QwRxJjFG7g==
-X-Proofpoint-ORIG-GUID: FVazhj7UjUCle6SpWDlnSBg0vngHoiG0
-X-Authority-Analysis: v=2.4 cv=R96WitRX c=1 sm=1 tr=0 ts=6aa4d590 cx=c_pps
- a=VEzVgl358Dq0xwHDEbsOzA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEyMDA2MSBTYWx0ZWRfXwGb9y/FrdgSj
+ Bl7MtU5Nm2t+7JKjuT4TnrC0ROamwo/l6HiJAUO5CxzSMEzCPDBFm8e0vi6cEBzfMRwE182QP67
+ Eu5WO7N2rFjN1iTH0zTyWRzIgRQzHVjYtGUA1TBzYZROArfGo9G2MrZE9xCnY8DHBHMvk5qDw6f
+ YrblwlRFubfeOHzvTv9mSA7sY/VR5EsVkO248D6iQQKYuOhjNUOH+eiRC5GIVxtIhsU5Kp6F6pG
+ Q2cMRDn3YkujlYJx5ZnRN7qagMJ4v73SVHOWIbGrqoF3Dq16dzqNo1iZ0eqnzpli2abZ3VLQ/Nm
+ Q+Jvvw9IT07MgYDHm5EDsLTdHeZbeHWUoA+4cBjWzIew2w/2aSDeufWTWraGbHSFtriJKKDw+rC
+ ix3urr6XH1/qcACPtlWvgwi6xD6gUxp+sFx1EyOl2Mrw3B6EODl8jneTzQ6Mg8OyJLWOYw/HLQF
+ lvFXUn1O0F74AfMi3pA==
+X-Proofpoint-ORIG-GUID: e2Z78kt3JJl5ygmEQ-eS998wM2q51Xmt
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEyMDA2MSBTYWx0ZWRfX1gxAOlW9VyuT
+ 9O6CnEmuwdEWD5FlXjeqfXiF/irbsujMJIsaCiw/U3+bSFlWr53ExERaCE1Al81cxzo5AInkAoQ
+ 91zgQIK0UqdFd5OZU+gcnUaDwhJDoBo=
+X-Authority-Analysis: v=2.4 cv=Y6htIReN c=1 sm=1 tr=0 ts=6aa4d5dc cx=c_pps
+ a=0mLRTIufkjop4KoA/9S1MA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=V5pVMqplg12vC-y-oNEA:9 a=QEXdDO2ut3YA:10
- a=uujmmnXaIg8lM0-o0HFK:22
-X-Proofpoint-GUID: FVazhj7UjUCle6SpWDlnSBg0vngHoiG0
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEyMDA2MSBTYWx0ZWRfX7iXpqlHScnmj
- RbpKEsbYxug+1bZ0m3l3TTW6Qc7vVQstDJ5R71/iBNjCo0sonwMMM9Te7QhJaOwUr2Y5wFn/Phs
- yaNu4VdAhAhtKNTqFHX2hlqgxlI2IKM=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=cyo-mCtPde8KWKw_Nn8A:9 a=QEXdDO2ut3YA:10
+ a=WgItmB6HBUc_1uVUp3mg:22
+X-Proofpoint-GUID: e2Z78kt3JJl5ygmEQ-eS998wM2q51Xmt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-12_02,2026-09-11_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0 impostorscore=0
+ bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609120061
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,178 +160,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 9/11/2026 5:08 PM, Taylor Simpson wrote:
-> We now detect register multiwrites in packet analyzis instead of
-> packet decoding
-
-
-typo "analysis"
-
-
+> Instructions such as post-increment loads define multiple destinations
+> These make it harder to detect multi-write conflicts
 >
 > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > ---
 
-
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
 
->   target/hexagon/insn.h             |  4 ---
->   target/hexagon/decode.c           | 54 -------------------------------
->   target/hexagon/translate.c        |  6 ----
->   target/hexagon/gen_trans_funcs.py | 10 ------
->   4 files changed, 74 deletions(-)
+>   tests/tcg/hexagon/multiple-writes.c | 60 +++++++++++++++++++++++++++++
+>   1 file changed, 60 insertions(+)
 >
-> diff --git a/target/hexagon/insn.h b/target/hexagon/insn.h
-> index 835b1c954e..5d59430da9 100644
-> --- a/target/hexagon/insn.h
-> +++ b/target/hexagon/insn.h
-> @@ -41,8 +41,6 @@ struct Instruction {
->       uint32_t new_value_producer_slot:4;
->       int32_t new_read_idx;
->       int32_t dest_idx;
-> -    bool dest_is_pair;
-> -    bool dest_is_gpr;
->       bool has_pred_dest;
->   
->       bool part1;              /*
-> @@ -74,8 +72,6 @@ struct Packet {
->       bool pkt_has_hvx;
->       Insn *vhist_insn;
->   
-> -    bool pkt_has_write_conflict;
-> -
->       Insn insn[INSTRUCTIONS_MAX];
->   };
->   
-> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
-> index b12e91fe6a..89e961331f 100644
-> --- a/target/hexagon/decode.c
-> +++ b/target/hexagon/decode.c
-> @@ -691,55 +691,6 @@ bool opcode_supported(uint16_t opcode, const HexagonCPUDef *hex_def)
->       return true;
+> diff --git a/tests/tcg/hexagon/multiple-writes.c b/tests/tcg/hexagon/multiple-writes.c
+> index 8686317fdc..4305903547 100644
+> --- a/tests/tcg/hexagon/multiple-writes.c
+> +++ b/tests/tcg/hexagon/multiple-writes.c
+> @@ -143,6 +143,62 @@ static int test_zero(void)
+>       return sig;
 >   }
 >   
-> -/*
-> - * Check for GPR write conflicts in the packet.
-> - * A conflict exists when a register is written by more than one instruction
-> - * and at least one of those writes is unconditional.
-> - *
-> - * TODO: handle the more general case of any
-> - * packet w/multiple-register-write operands.
-> - */
-> -static bool pkt_has_write_conflict(Packet *pkt)
-> -{
-> -    DECLARE_BITMAP(all_dest_gprs, 32) = { 0 };
-> -    DECLARE_BITMAP(wreg_mult_gprs, 32) = { 0 };
-> -    DECLARE_BITMAP(uncond_wreg_gprs, 32) = { 0 };
-> -    DECLARE_BITMAP(conflict, 32);
-> -
-> -    for (int i = 0; i < pkt->num_insns; i++) {
-> -        Insn *insn = &pkt->insn[i];
-> -        int dest = insn->dest_idx;
-> -
-> -        if (dest < 0 || !insn->dest_is_gpr) {
-> -            continue;
-> -        }
-> -
-> -        int rnum = insn->regno[dest];
-> -        bool is_uncond = !GET_ATTRIB(insn->opcode, A_CONDEXEC);
-> -
-> -        if (test_bit(rnum, all_dest_gprs)) {
-> -            set_bit(rnum, wreg_mult_gprs);
-> -        }
-> -        set_bit(rnum, all_dest_gprs);
-> -        if (is_uncond) {
-> -            set_bit(rnum, uncond_wreg_gprs);
-> -        }
-> -
-> -        if (insn->dest_is_pair) {
-> -            if (test_bit(rnum + 1, all_dest_gprs)) {
-> -                set_bit(rnum + 1, wreg_mult_gprs);
-> -            }
-> -            set_bit(rnum + 1, all_dest_gprs);
-> -            if (is_uncond) {
-> -                set_bit(rnum + 1, uncond_wreg_gprs);
-> -            }
-> -        }
-> -    }
-> -
-> -    bitmap_and(conflict, wreg_mult_gprs, uncond_wreg_gprs, 32);
-> -    return !bitmap_empty(conflict, 32);
-> -}
-> -
->   /*
->    * decode_packet
->    * Decodes packet with given words
-> @@ -759,10 +710,6 @@ int decode_packet(DisasContext *ctx, int max_words, const uint32_t *words,
+> +/* Test multiple post-increment writes to the same GPR */
+> +static int test_post_increment1(void)
+> +{
+> +    int sig;
+> +
+> +    asm volatile(
+> +        "r0 = #0\n"
+> +        "r1 = ##1f\n"
+> +        "memw(%1) = r1\n"
+> +        ".word 0x9b004021    /* {    r1 = memb(r0++#1)      */\n"
+> +        ".word 0x9b00c022    /*      r2 = memb(r0++#1) }    */\n"
+> +        "1:\n"
+> +        "%0 = r0\n"
+> +        : "=r"(sig)
+> +        : "r"(&resume_pc)
+> +        : "r0", "r1", "memory");
+> +
+> +    return sig;
+> +}
+> +
+> +static int test_post_increment2(void)
+> +{
+> +    int sig;
+> +
+> +    asm volatile(
+> +        "r0 = #0\n"
+> +        "r1 = ##1f\n"
+> +        "memw(%1) = r1\n"
+> +        ".word 0x9b00c020    /* r0 = memb(r0++#1) */\n"
+> +        "1:\n"
+> +        "%0 = r0\n"
+> +        : "=r"(sig)
+> +        : "r"(&resume_pc)
+> +        : "r0", "r1", "memory");
+> +
+> +    return sig;
+> +}
+> +
+> +static int test_post_increment3(void)
+> +{
+> +    int sig;
+> +
+> +    asm volatile(
+> +        "r0 = #0\n"
+> +        "r1 = ##1f\n"
+> +        "memw(%1) = r1\n"
+> +        ".word 0x9bc1c020    /* r1:0 = memd(r1++#8) */\n"
+> +        "1:\n"
+> +        "%0 = r0\n"
+> +        : "=r"(sig)
+> +        : "r"(&resume_pc)
+> +        : "r0", "r1", "memory");
+> +
+> +    return sig;
+> +}
+> +
+>   int main()
+>   {
+>       struct sigaction act;
+> @@ -164,6 +220,10 @@ int main()
+>       /* Illegal: zero encoding = duplex with duplicate dest R0 */
+>       assert(test_zero() == SIGILL);
 >   
->       /* Initialize */
->       memset(pkt, 0, sizeof(*pkt));
-> -    for (i = 0; i < INSTRUCTIONS_MAX; i++) {
-> -        pkt->insn[i].dest_idx = -1;
-> -        pkt->insn[i].new_read_idx = -1;
-> -    }
->       /* Try to build packet */
->       while (!end_of_packet && (words_read < max_words)) {
->           Insn *insn = &pkt->insn[num_insns];
-> @@ -837,7 +784,6 @@ int decode_packet(DisasContext *ctx, int max_words, const uint32_t *words,
->               /* Invalid packet */
->               return 0;
->           }
-> -        pkt->pkt_has_write_conflict = pkt_has_write_conflict(pkt);
->       }
->       decode_fill_newvalue_regno(pkt);
->   
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-> index c40ca86810..ca23cc6d9e 100644
-> --- a/target/hexagon/translate.c
-> +++ b/target/hexagon/translate.c
-> @@ -1247,12 +1247,6 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
->           clear_pkt_ctx(ctx);
->           analyze_packet(ctx);
->   
-> -        /*
-> -         * Check that the new method is a superset of the old methond
-> -         * Remove in a later patch
-> -         */
-> -        g_assert(!ctx->pkt.pkt_has_write_conflict ||
-> -                 pkt_has_write_conflict(ctx));
->           if (pkt_has_write_conflict(ctx)) {
->               gen_exception_decode_fail(ctx, words_read,
->                                         HEX_CAUSE_REG_WRITE_CONFLICT);
-> diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
-> index 19c1f9fdea..45da1b7b5d 100755
-> --- a/target/hexagon/gen_trans_funcs.py
-> +++ b/target/hexagon/gen_trans_funcs.py
-> @@ -91,8 +91,6 @@ def gen_trans_funcs(f):
->           new_read_idx = -1
->           dest_idx = -1
->           dest_idx_reg_id = None
-> -        dest_is_pair = "false"
-> -        dest_is_gpr = "false"
->           has_pred_dest = "false"
->           for regno, (reg_type, reg_id, *_) in enumerate(regs):
->               reg = hex_common.get_register(tag, reg_type, reg_id)
-> @@ -106,12 +104,6 @@ def gen_trans_funcs(f):
->                   if dest_idx_reg_id is None or reg_id < dest_idx_reg_id:
->                       dest_idx = regno
->                       dest_idx_reg_id = reg_id
-> -                    dest_is_pair = ("true"
-> -                                    if isinstance(reg, hex_common.Pair)
-> -                                    else "false")
-> -                    dest_is_gpr = ("true"
-> -                                   if reg_type == "R"
-> -                                   else "false")
->               if reg_type == "P" and reg.is_written() and not reg.is_read():
->                   has_pred_dest = "true"
->   
-> @@ -137,8 +129,6 @@ def gen_trans_funcs(f):
->           f.write(code_fmt(f"""\
->               insn->new_read_idx = {new_read_idx};
->               insn->dest_idx = {dest_idx};
-> -            insn->dest_is_pair = {dest_is_pair};
-> -            insn->dest_is_gpr = {dest_is_gpr};
->               insn->has_pred_dest = {has_pred_dest};
->           """))
->           f.write(textwrap.dedent(f"""\
+> +    assert(test_post_increment1() == SIGILL);
+> +    assert(test_post_increment2() == SIGILL);
+> +    assert(test_post_increment3() == SIGILL);
+> +
+>       puts("PASS");
+>       return EXIT_SUCCESS;
+>   }
 
