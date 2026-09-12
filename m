@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D367C88E45
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 04:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1709BC79FB6
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 05:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5FkZ-0007Yp-Sd; Sat, 12 Sep 2026 00:54:03 -0400
+	id 1x5G8h-0001wM-Pk; Sat, 12 Sep 2026 01:19:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x5FkY-0007Xp-8t
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 00:54:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x5G8W-0001vy-71
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 01:18:49 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x5FkW-0000lw-2A
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 00:54:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789188838;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=7h2NBRW4582MUQn5zVSEPuE3/mdIPQRLvHDQ/MueTbQ=;
- b=eSvbr9qumlV/fIUOCKaDp+bX3Oz6j96EzFtxSuTLsrgGcTZssjEmfHTjDjxTjyZC71dK+Z
- fUxEcvBlx3rKxPc91BAaOkMR+w1W7yfNCT4lGPSkkq5X6GNsRXcFigrqFzQ9aGMqiL+S7t
- s3MFFmK3oFNfSWmeZVq/U5dQD40V8mc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-r1ycrD0rMpGFMVFEb8Cchg-1; Sat,
- 12 Sep 2026 00:53:55 -0400
-X-MC-Unique: r1ycrD0rMpGFMVFEb8Cchg-1
-X-Mimecast-MFC-AGG-ID: r1ycrD0rMpGFMVFEb8Cchg_1789188834
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 658581955BC5; Sat, 12 Sep 2026 04:53:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94F981800352; Sat, 12 Sep 2026 04:53:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 10EDE21E6A04; Sat, 12 Sep 2026 06:53:50 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: vsementsov@yandex-team.ru, peterx@redhat.com, farosas@suse.de,
- eblake@redhat.com
-Subject: [PATCH] qapi/migration: Make migration parameter @local consistently
- unstable
-Date: Sat, 12 Sep 2026 06:53:50 +0200
-Message-ID: <20260912045350.2139416-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x5G8R-0005w1-05
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 01:18:46 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68C5IITE089814
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 12 Sep 2026 14:18:20 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=EePQXosuxsp1n5Nm72vaKGbLwuHIwAdMi95bQ7tiflA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1789190300; v=1;
+ b=WAcQSHpBjHIIbeJbqLuJIlcoKEBZs6FnSFXAlgNOgv+lpdDC+CKSbBPJaMqJ2s2K
+ noqQKT2DN1dpY5ZGWEexD1pnzIR/mHJXI7vRJ1bVxOS8qmdnAbk21GNwXULH3eYp
+ EivaSSJztDZqhxb4t/j//lgwGWEIt6qhnaR9jnz03sBPqhngP7O1Jm40n8Zz1E4p
+ 1B0QoOJP1Muj+7sF0JuGvzVziW9es2D8L2DXpuFpT+NTncfcZoxD7D6X/blydRTL
+ 6Te3TtyIc0haRs/Tq1IGVtowa7i8FHTAN2iMXM9Qc5j6JLBfSti8O6kPuYMGGJDN
+ uJW27PuSS6cGppHNvqu37w==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 12 Sep 2026 14:18:02 +0900
+Subject: [PATCH v2] docs/system: virtio-gpu: Update Rutabaga links
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260912-crosvm-v2-1-11a8c4ecff2f@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/0WNyw6CMBBFf4V0bZu28nTlfxgWMA4wGCnpQCMh/
+ LuAC5cnOffcVTB6Qha3aBUeAzG5YQd7iQR01dCipOfOwmqb6lwbCd5xeMs0ybXNtDFQJ2KXR48
+ Nfc7Qo/wxz3WPMB3rw+iIJ+eX8ymYw/tFi380GGlkEdumzjNIML7ePbcKSJGa5eRei1MVqH4U5
+ bZtX8gFRUO7AAAA
+X-Change-ID: 20260801-crosvm-658027011cb5
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ Gurchetan Singh <gurchetansingh@chromium.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2304;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=8inVG3IkidgxiFtFjcVA5RXX36w1IansFlHrgHki8TQ=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9aSB1N+fPm3jIO1uPTWxKjy2Yt2X9r9w5W5aWWYuJnM9
+ 28sx6ad7ShlYRDjYpAVU2RJKdrNrRFd+6kwIb4FZg4rE8gQBi5OAZhIsSUjw6uFF2xauoraejzf
+ auqZVnW+ZGcT/OYndTep7a/0tb+uVYwMyx896luw6lSfhgzbiw9vqldO1goTbPh3tWH3md3Oord
+ zuAA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,40 +88,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@local is unstable in MigrationParameters, but not in
-MigrationParameter.  Fix the latter.
+Rutabaga was externalized from crosvm:
+https://chromium.googlesource.com/crosvm/crosvm/+/481338d967d5c8b506e17b8e335798f5cb89d7ee
 
-Fixes: c9affb8e9b (qapi: add local migration parameter)
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+The latest code of gfxstream is now hosted on GitHub.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- qapi/migration.json | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Changes in v2:
+- Update the gfxstream link to point to its GitHub repository.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260901-crosvm-v1-1-942fb87c5e43@rsg.ci.i.u-tokyo.ac.jp
+---
+ docs/system/devices/virtio/virtio-gpu.rst | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index f7628b55e9..9a1cc7c4e5 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -804,8 +804,8 @@
- #
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
--#     @x-vcpu-dirty-limit-period are experimental.
-+# @unstable: Members @local, @x-checkpoint-delay, @x-rdma-chunk-size,
-+#     and @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
- ##
-@@ -831,7 +831,7 @@
-            'direct-io',
-            { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-            'cpr-exec-command',
--           'local'] }
-+           { 'name': 'local', 'features': [ 'unstable' ] } ] }
+diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
+index d05f8cb8e3f9..c5e07c60fe1a 100644
+--- a/docs/system/devices/virtio/virtio-gpu.rst
++++ b/docs/system/devices/virtio/virtio-gpu.rst
+@@ -185,8 +185,9 @@ rendering and `Wayland display passthrough`_.  With the gfxstream rendering
+ mode, GLES and Vulkan calls are forwarded to the host with minimal
+ modification.
  
- ##
- # @migrate-set-parameters:
--- 
-2.55.0
+-The crosvm book provides directions on how to build a `gfxstream-enabled
+-rutabaga`_ and launch a `guest Wayland proxy`_.
++rutabaga_gfx's documentation provides directions on how to build a
++`gfxstream-enabled rutabaga`_. The crosvm book provides directions on
++how to launch a `guest Wayland proxy`_.
+ 
+ This device does require host blob support (``hostmem`` field below). The
+ ``hostmem`` field specifies the size of virtio-gpu host memory window.
+@@ -212,9 +213,9 @@ Surfaceless is the default if ``wsi`` is not specified.
+        hostmem=8G,wayland-socket-path=/tmp/nonstandard/mock_wayland.sock,
+        wsi=headless
+ 
+-.. _gfxstream: https://android.googlesource.com/platform/hardware/google/gfxstream/
++.. _gfxstream: https://github.com/google/gfxstream
+ .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
+-.. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
++.. _gfxstream-enabled rutabaga: https://github.com/magma-gpu/rutabaga_gfx#rutabaga-c-api
+ .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
+ 
+ .. list-table:: Linux Host Requirements
+
+---
+base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
+change-id: 20260801-crosvm-658027011cb5
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
