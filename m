@@ -4,119 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A2AC88E59
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 15:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2509C88E53
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 15:10:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5PCL-0002Ni-B2; Sat, 12 Sep 2026 10:59:21 -0400
+	id 1x5PML-00045x-Bl; Sat, 12 Sep 2026 11:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x5PCJ-0002NK-48
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 10:59:19 -0400
-Received: from mail-westus3azon11010032.outbound.protection.outlook.com
- ([52.101.201.32] helo=PH7PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x5PCG-0007px-H7
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 10:59:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vjFkAfrZa2XeR9nOPJVOihooS+mj/Hx7iCOkKJ3nDbiyjn3D0vM1ojtADbymBTtS2IaIiWtsipMjqwCEJ4qDOmKEFfMfNI4U/FzGXFwYs9xYBbZNSsgIPte+R98NxpsobEYMiK+sugPO4GmO8UvUN6YQ4w9qRKBvd3CShALCNQmYUmOZpI553WFEki/qc336XdYZ3WVGHi9EIvILbcz1Miqy1wy+0q41c5MHy6VlvQncTLyNMXfu8cXY3/GDecsmrgNGOFzuzBfYPWPk1N6+FPXiexed/O1EtnjPYCfIMWw6FuhN0NQkSmgytELz3A8OWOwVmsr9nVm7HgnTBVGN7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fKZ8nKlOBn7QGCmr+3S0gVfuAMDFZW7m79d8vr5HX8U=;
- b=GgdMqcvBOteAoWx2/CKwJtLTl6Cw3fhU6mjxMdlN5IZPfxSOdUx2x9XiQr5Qz9BgIXLv+TqKDcIH684ggvrqI9fAI1sS/xp9PSqJorkn2ve7DXwuY42fLlRMqdT3XbDkkK48/moJaVP0yn4/vh4yIN/iHh7C7aRSnYYVU/01krQVYKwYJPPJn+Kd2nwsjApL3izheIkddVqK+7EC88LzEvQJ6KSuNdEExoRnaVQKdTEJI86yFRrAdMCqA5ObMe5DIC1326sHZ3d43Rqx5MYTrWW1oJjysm3lfTc4WhO+0Fko1jBB8NFfWWNY7DCBvk7qYLOB2qVFtwQvwuVRzIqfgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fKZ8nKlOBn7QGCmr+3S0gVfuAMDFZW7m79d8vr5HX8U=;
- b=eUUtsmRQgFsD+8VKKkHnfUUgNuyqCvAbZfudIsfyJl15cBHoLkGwWtjlRrmPRYSsidYmC7ZN2KD/cohN0NhQafI2zLrI9iSGSKYRE0iVBy1uVdUlheTUWpMiJuFDIDQHrlX1npmPn6uxN1ah3wqgmk8i2C7WKn9+ga1Ayxwmitc=
-Received: from SJ0P220CA0007.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:41b::15)
- by IA0PR12MB7578.namprd12.prod.outlook.com (2603:10b6:208:43d::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.11; Sat, 12 Sep
- 2026 14:54:09 +0000
-Received: from CO1PEPF00012E80.namprd03.prod.outlook.com
- (2603:10b6:a03:41b:cafe::61) by SJ0P220CA0007.outlook.office365.com
- (2603:10b6:a03:41b::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.10 via Frontend Transport; Sat,
- 12 Sep 2026 14:54:09 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CO1PEPF00012E80.mail.protection.outlook.com (10.167.249.55) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.428.7 via Frontend Transport; Sat, 12 Sep 2026 14:54:09 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Sat, 12 Sep
- 2026 09:54:08 -0500
-Date: Sat, 12 Sep 2026 09:52:51 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Markus Armbruster <armbru@redhat.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
- <berrange@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
- <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
- <ashish.kalra@amd.com>, <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: Re: [PATCH v2 07/19] accel/kvm: Add CGS option to control in-place
- conversion support
-Message-ID: <rwpsckq6ltabhefmbvuhvxoq5c6j3a6jrctclrqj6nbwja6e5l@mod7xno2q4uv>
-References: <20260908205236.838281-1-michael.roth@amd.com>
- <20260908205236.838281-8-michael.roth@amd.com>
- <878q5bosi3.fsf@pond.sub.org>
- <sudqwq5bnygtkqc2cio6rq5khrfi252jcs6jq6i3uzblgtvgq7@3upjx5k5bp7s>
- <87pkyj3tjo.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1x5PME-00045G-DF
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 11:09:35 -0400
+Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1x5PMB-0001lk-GV
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 11:09:33 -0400
+Received: by mail-ed2-x10.google.com with SMTP id
+ 4fb4d7f45d1cf-6a60591ae45so1752453a12.2
+ for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 08:09:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789225769; cv=none;
+ d=google.com; s=arc-20260327;
+ b=sv5She36XZ+3CdgU6glx+4lufCZ9RpIPxubVyvCVEODo8uwYo3n1Zh3VvOVBRrGvaL
+ WhNEysO5jwm35k0V0paR72UgzUqOqHsUdTLbY+wkQaRbM2rhZwF6MUWX0fH6QsXWYPnL
+ 2LXfNs1vg8etuuRQgoe7i8DQw8fVqoFWKRUdi91O6YS1WF6ehQbHLl0vx72Tb879wR6x
+ ksKWJiSPMuwSW92U8KW1x8OOeAJotI3ri2g2iLF9jyTdAEWGB3dYzu2KT/UOF1SaPnLj
+ jSvXloMcrpJs/dFQV/Pdqyo4+z6tYfgASaxduv6r/508M/R6QUrlBMizoeAIwVTBU+q8
+ 2r3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1iVWz9whZiWJOL8Q1JzdGuk9/4boRCvuNLaLIkeos+0=;
+ fh=eFpQx5bTK/9y3qZWFnouRS4o+ULP32H2/VkiuQ9OOIs=;
+ b=HRNCjLZN4LPfpDrZkwKFv1WxUETu/nCPkE/f1U3dhXY3pgmN/BCwEeiZgdv2JkVFFX
+ oxW+4L1OXSwOonQavgwcifar7pVSwr9dFlRXBuDH0I8jpIKXJE7FNi4EIuvoQBkDBxIR
+ MtFkQGHeJ7d9pJBuOc8z2Uy4BqByAzmO4ssKEnmapktchkmQbTbTBafeTEvO/i2Qiz4o
+ +DBf+BlVwIyAR2mkJR+jxEVL/JTbDzZYKSHZC4aLy/ShJhC6/4+Pv/0xEVu8VDgEPdNc
+ RHwto8oLDe0v8rcnIL3C1m70DfoiL1w/sXDdoEl8Yo6CeMNAK+TJGJsLHqc69LOcQfLf
+ jeXw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789225769; x=1789830569; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=1iVWz9whZiWJOL8Q1JzdGuk9/4boRCvuNLaLIkeos+0=;
+ b=WOrqJoR1YjebEki12EyhksCU9djG1qAAD/5lgDPSqdbq9jlVRRiws+5OhWmUuTGI2s
+ W1K2wPqzoYDnlfViaRQzUoN49Zr37AfSgzuXVykK8tgmQ2vDGmW57auflS92A5lYhlhQ
+ u1bv1cjprfnYGm8y3RkdAHnJV82JqFsGV23ZVTyiFbL+qVILeRIWQrvUhcjaaKbSBDvX
+ JToFIl60ir5dFMpn54VZzFzwG45S3+kCqhtmhkZ84Repj86EQf6wjfMUepATTAE5TQdJ
+ 9mAtAUzFwBlzeqXsGFPUqlt9hX8IUFke8yWhbrMYV56GCUEVcHLFQgKK5Xw+w71nfF8m
+ YXlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789225769; x=1789830569;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=1iVWz9whZiWJOL8Q1JzdGuk9/4boRCvuNLaLIkeos+0=;
+ b=d18djOEt4lllfPQuH+EB0RFdfwKiGuxJc5o5tPRD+9esfnD2HNHBN4UaiY02WVyqBk
+ qNxLw0n/FWZ6EDfIzg1A/I2h6uVdDqK1zZbp69lCzeeSpH+pVP66DswYjFubizJ0nQC/
+ 4EcMEHMm6gGsdqXk0aIJPhOOOMram15M5o4WxHqH31XLmFmHQ/XKcVeXIaV9jyXrAS2a
+ kT1hu1B4hl1mQFR9bdxmetkKkO7PJhBpeS5vUzG+kdqxGmsfub8iQp8YGpHDgp+nj6QG
+ yCT22rVmd9r2BC6HALaYGHaVNtNnwJeCsk6wQcXzGktw1Kwao2VtfQBZDYnLbS55Id2J
+ KYQQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxU3zbgpRmvyzSV3nwhz44NGZLnMPsXwQStI0M/8xs6DvWPhrF5asYwHIRKmYdl7kVEoZK2rpVlFvEL@nongnu.org
+X-Gm-Message-State: AFuF++l4uGac6VarKkBf+Pd8CBHw+IIG2y0IBW8OljBwlO7sx6oxZ/4x
+ T01pMKRS0O9WR8bj8flQ/QlszzgcZxv5pwYyy2pMKmOLG/Cgc+v9KjkQvhnRRQcq7ti0eUl2bP2
+ nXgTw6PazjotjF/8W8rmJNJORtn6m+gk=
+X-Gm-Gg: AYBFou0EfC0AmmE2LaKiUm88JXiqD1vr22ls5eg2O0WCBgv4vC5HC4xKfwIalIHwkkw
+ mDI3PxZv7xqNyZag3HWYvLnrU5tH+G2gODq4XITxAec5Fe8w/Y1xspaweUSd8iiBKDaroy/Xy9X
+ ZU3ej3NPyzhX3b6XbUz+MnYcOh9OyxpgkSbvseNUb/TvQ9XKtir+1k0ZVf4ttVPxeZd50kNzRJr
+ EeZTT4IOkIzcXZXQ0GLW+lAlEPrRr2wlH7kT5dBvMgeH15z/KYg+on+WReoZfgvEVHnjENSJmbK
+ qAxgrc9FfcNBvnWmRg3uErcK+UQXcn+p6Izfu2pDEfhBF96jgf57EX+pSLPIYNLMt+eACZUSxqu
+ IM3oZrHzr+UFc
+X-Received: by 2002:a05:6402:a205:20b0:6a9:c0ec:417a with SMTP id
+ 4fb4d7f45d1cf-6a9c0ec45c0mr5353787a12.18.1789225768539; Sat, 12 Sep 2026
+ 08:09:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <87pkyj3tjo.fsf@pond.sub.org>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E80:EE_|IA0PR12MB7578:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc9d3f53-e564-44c5-05b4-08df10ddb351
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|7416014|376014|1800799024|36860700016|82310400026|13003099007|6133799003|10067099003|4143699003|56012099006|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: ktF/14ZGWnXAuWruNqiE38Z5CWcLpIyE65CMsNEx8kGKKeolbTI3UpyJqCCQuztaTinFyS9fpziWbUzlRLXTfmPAPz+eNs/JG53r8Bk0HU6wLjzSkydusaqq2WQY6BMYyyfllqW+cLaeEQLvqHUnCjSQyX3QykHD1mL3wY92hQbjXCEAUbZuEes19sPua4Qg/9WIb6erb+/46boI06hW9TO71/wi5s2D/QD0ufQ3DfdOP9YUgdUSV0ls+qmm/y8RO51d6mLd0MO3kVFxZNq4x5WxezLXPFLP2HQSCt6pzGknaSaoK7OTUWchHSOp7UFR3aCktrrEYfOJ97Ygb/ilGRS44V0Oj8Tl+8ztI/XyWpojjPPC0InuqWLPYK/ZsDn3CZSqP6+yikO9Rtz6uPRbmEYgC8fiHDbNYsbWQIM5eHAGjY0UnSgMHAInddDuWn4RVXmFWMkbdnkbe8ATNtXjGT4El03pvVEj16q/bhDeMBmobvblyJxSMSA2/h9SDgI7PZzirDgj9o4zdfgVXVn5Qma1DBaSFz7ntb2z3ajT1f8tfiH1c3FTy7FvksvUlRslQ520+SUEHsxNobROPRgJhlAEFtYyTNzRAtFciPVWip1xajfUsZ1uQewWIH/OusDgH5/6fPQ3GKdn8orR7PhKD0h2yyYv5nGGUPXRGuN5lxeaksjC/G/s6ssOJCZlmJo4rcVJt69F6cAeg/nPTLUQ3g==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(36860700016)(82310400026)(13003099007)(6133799003)(10067099003)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: sGCLicx8yjOIWl4NQqAyu3219jpX/vyWrB1B4mg/pUJoYgCkz0DotHxeeCLQV4BxQn8FMZU7yG1oDVlyWc39kNElptIVdVIgMTnysDFl1dHGL4xFaCkdulr+Bad5AEmF2xQ9k70hYs8PBC2qqaXE/vja3js0mIBXvVhTpVGJjSnTwha9l5nDhKhNrlVrKpfednuRsDOVsI9rUeoMVHCxs4vHhLyaFNNZ4JPX/zK78b7Z+d69cL3guy6IOHSsgIbzhe9Ojr/zWGvNmkFFrPloHazrxxtLZfxSZ4Gv9v5k00aM7pSUhHiezdGhXMPmcqeFZzMxTNm09YAdKH9H4lKXU0sNSses3lwsyDhK1ZrrHC/wAmSJyxVK4I6tEC26WDEMNWiujGpWraIxDcIwNQQhzHAObQ1loCZR7AXoUs79c6hFOdgiLnWFUoZkCLXXkfhZ
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2026 14:54:09.0802 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc9d3f53-e564-44c5-05b4-08df10ddb351
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E80.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7578
-Received-SPF: permerror client-ip=52.101.201.32;
- envelope-from=Michael.Roth@amd.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
+References: <20260825154854.263819-1-stefanha@redhat.com>
+ <83065cc3-e299-4b50-9a78-8f7b669daa85@tls.msk.ru>
+In-Reply-To: <83065cc3-e299-4b50-9a78-8f7b669daa85@tls.msk.ru>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sat, 12 Sep 2026 11:09:15 -0400
+X-Gm-Features: AcwNN1UCEliTJ-fxO2IvE2Qcr7njCLJMW9adQglIDKnX2rndI7xP7clpcdVBUHM
+Message-ID: <CAJSP0QVYCG8sTyg6677NAknxT_Gs91zQgt07JkQNU23s7rsWMw@mail.gmail.com>
+Subject: Re: [PATCH] virtio-scsi: set dataplane_started to false upon failure
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Fam Zheng <fam@euphon.net>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ QEMU Stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:33::10;
+ envelope-from=stefanha@gmail.com; helo=mail-ed2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,132 +123,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 12, 2026 at 07:52:43AM +0200, Markus Armbruster wrote:
-> Michael Roth <michael.roth@amd.com> writes:
-> 
-> > On Wed, Sep 09, 2026 at 08:20:36AM +0200, Markus Armbruster wrote:
-> >> Michael Roth <michael.roth@amd.com> writes:
-> >> 
-> >> > For confidential guests, guest_memfd is currently used only for private
-> >> > guest memory, and normal guest memory comes from the configured memory
-> >> > backend just as it does for a non-confidential guest. It is now possible
-> >> > to use the same physical memory to back a particular GPA regardless of
-> >> > whether it is in a shared or private state. This avoids the need to
-> >> > rely on discarding memory between shared/private conversions (to avoid
-> >> > doubled memory usage), and is intended to be the primary mode of using
-> >> > guest_memfd for confidential guests moving forward, and future features
-> >> > like hugepage support will likely require it.
-> >> >
-> >> > Add an option to enable this support. Since ConfidentialGuestSupport is
-> >> > already used to track some guest_memfd-related functionality (e.g.
-> >> > whether it is required for the configured machine), similarly introduce
-> >> > this option as a property of ConfidentialGuestSupport.
-> >> >
-> >> > Also add the KVM-specific checks to enable this support, but leave the
-> >> > option disabled until other required changes are implemented for
-> >> > CGS variants that intend to make use of KVM's in-place conversion
-> >> > support.
-> >> >
-> >> > While technically the convert-in-place option could be introduced as an
-> >> > SEV-specific option, it is a given that TDX will also be introducing
-> >> > in-place conversion support based on the same guest_memfd kernel
-> >> > infrastructure, so introduce it via a new
-> >> > ConfidentialGuestSupportProperties base class that other confidential VM
-> >> > implementations can utilized for common options.
-> >> >
-> >> > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> >> 
-> >> [...]
-> >> 
-> >> > diff --git a/qapi/qom.json b/qapi/qom.json
-> >> > index 909add4299..20d6fefb04 100644
-> >> > --- a/qapi/qom.json
-> >> > +++ b/qapi/qom.json
-> >> > @@ -1005,6 +1005,21 @@
-> >> >    'if': 'CONFIG_IGVM',
-> >> >    'data': { 'file': 'str' } }
-> >> >  
-> >> > +##
-> >> > +# @ConfidentialGuestSupportProperties:
-> >> > +#
-> >> > +# Properties for ConfidentialGuestSupport base class.
-> >> > +#
-> >> > +# @convert-in-place: If true, the same physical pages are reused
-> >> > +#     when memory is converted between shared and private states.
-> >> > +#     If false (default), separate allocations are used depending
-> >> > +#     on whether the page is private or shared.
-> >> 
-> >> Any guidance on when to enable @convert-in-place?
+On Sat, Sep 12, 2026 at 5:14=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> On 8/25/26 18:48, Stefan Hajnoczi wrote:
+> > Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
+> > dataplane_started to true when virtio_scsi_dataplane_start() fails. Thi=
+s
+> > is likely a typo since dataplane is not functional after failure.
 > >
-> > A lot of it boils down to more Confidential Compute architectures
-> > now requiring it for new features (hugepage support and SEV-TIO will
-> > require it for instance). convert-in-place=true maps more closely to
-> > a normal VM, and not having more complicated memory management
-> > requirements avoids additional complications up the stack (like
-> > accounting for instances where memory usage might balloon passed
-> > expected resource limits due to needing to management multiple
-> > memory allocations for a given GPA range).
+> > The non-ioeventfd fallback is broken because dataplane_started is true
+> > after virtio_scsi_dataplane_start() failure. As a result, the following
+> > assertion failure occurs when a virtio-scsi device exceeds the open fil=
+e
+> > descriptor ulimit when setting up notifiers (eventfds):
 > >
-> > convert-in-place=false will likely become a legacy path unless other
-> > use-case arise, but they'd probably need to be super-duper useful
-> > to warrant enabling new things on top of it going forward.
-> 
-> What are the use cases for false *now*?
-> 
-> Can a change from false to true upset a guest?
-
-Yes, since the in-place conversion support is advertised through a
-combination of new KVM capability bits and gmem flags, and those will
-only be available in new kernels, so it would break most existing
-SNP/TDX deployments.
-
-So we'd likely want to keep convert-in-place=false as the default for
-some time, or at least keep it set to false for older machine types that
-support SNP/TDX but predate QEMU in-place conversion support. But even
-for new machine types where we might consider defaulting to
-convert-in-place=true, we'd want some way to switch it off for SNP/TDX so
-they can still run on older kernels, because it's not a deprecated mode
-(yet) and does still enable a few things that won't be available for
-in-place=true for a while (like being able to use THP/hugepages for
-non-private GPA ranges at least). But we also don't want to automatically
-choose between in-place=false vs. in-place=true based on kernel
-capabilities because userspace needs to be aware of which mode it is
-running in due to differences in how memory needs to be accounted/managed
-further up the stack.
-
-So for SNP/TDX I think a knob is needed, but for newer architectures I'd
-imagine they'd just want to enable in-place=true from the start and not
-deal with the legacy support....
-
-Actually...I hadn't even noticed yet, but the ARM Realm/CCA support[1] is
-based on v1 of this series, and it looks like they'd be setting
-convert-in-place=true from the start. So for that series, it would probably
-make sense to not expose the 'convert-in-place' option at all (which should
-be easier when I rework that option for v3 to be implementation-specific
-instead of via a common base type).
-
-Thanks,
-
-Mike
-
-[1] https://lore.kernel.org/qemu-devel/20260903193611.1058589-1-mathieu.poirier@linaro.org/
-
-> 
-> > I'll try to work something along that line into the guest-memfd.rst
-> > I proposed for Peter's series and add/reference that as part of this
-> > patch.
+> >    $ ulimit -n 104 # exact number can vary based on QEMU version
+> >    $ qemu-system-x86_64 -M q35,accel=3Dkvm -m 1G -cpu host -smp 14 \
+> >           --blockdev file,node-name=3Ddrive0,filename=3Dtest.img,cache.=
+direct=3Don,aio=3Dnative \
+> >           --blockdev file,node-name=3Ddrive1,filename=3Ddata01.img,cach=
+e.direct=3Don,aio=3Dnative \
+> >           --device virtio-scsi-pci,id=3Dvirtio-scsi-pci0 \
+> >           --device scsi-hd,drive=3Ddrive0,bus=3Dvirtio-scsi-pci0.0 \
+> >           --device virtio-scsi-pci,id=3Dvirtio-scsi-pci1 \
+> >           --device scsi-hd,drive=3Ddrive1,bus=3Dvirtio-scsi-pci1.0
+> >    qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -acce=
+l kvm is set.
+> >    qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slo=
+wer).
+> >    qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset=
+: Assertion `!s->dataplane_started' failed.
+> >    Aborted                    (core dumped)
 > >
-> >> 
-> >> > +#
-> >> > +# Since: 11.2
-> >> > +##
-> >> > +{ 'struct': 'ConfidentialGuestSupportProperties',
-> >> > +  'data': { '*convert-in-place': 'bool' } }
-> >> > +
-> >> >  ##
-> >> >  # @SevCommonProperties:
-> >> >  #
-> 
-> [...]
-> 
+> > Cc: Paolo Bonzini <pbonzini@redhat.com>
+> > Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
+> > Buglink: https://redhat.atlassian.net/browse/RHEL-193328
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> I'm picking this one for currently active qemu stable series.
+> Please let me know if I shouldn't.  Maybe it's a too specific
+> bug but it's not good to throw assertion failures to the user.
+
+Sounds good.
+
+Stefan
 
