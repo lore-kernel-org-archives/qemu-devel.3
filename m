@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D749CC88E59
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 12:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108E9C79FB6
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Sep 2026 12:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5N2z-0004cX-Vw; Sat, 12 Sep 2026 08:41:34 -0400
+	id 1x5N5h-0005Gs-Q8; Sat, 12 Sep 2026 08:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1x5N2y-0004bu-CY; Sat, 12 Sep 2026 08:41:32 -0400
+ id 1x5N5g-0005Gg-CR; Sat, 12 Sep 2026 08:44:20 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1x5N2w-0002fV-PC; Sat, 12 Sep 2026 08:41:32 -0400
+ id 1x5N5e-00038O-Ni; Sat, 12 Sep 2026 08:44:20 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68CC1iex342052; Sat, 12 Sep 2026 12:41:22 GMT
+ 68CC1d1N341543; Sat, 12 Sep 2026 12:44:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=5pXvg0Bhl+bhfc/6kQdts/eA+36op9
- rr6FJNkM0gwM0=; b=TQO5IF/UFDPJzdI+myl2r8R2gLN3wdk0FW47V+xxpVQeFN
- gDD9ynGsQs7ELARGvLyszZcecpiYv1rcyAwL2+oyjysr8YizdTIS0XeJU4JgzMOT
- +mWTFnv54XW/mhfVB1d86pSZ3BdF5Sum1+3/RFm+/7UE3h1dv+Mjewy+jI6GFABb
- MRSZlp0LoJKRP4YptN8ONnb+ji9KQjzy5FCZFlMXu1RDbK9eHC4IaZ+NyqFH7doN
- GDiF6dhvV46/x8BRuOvGr9mZ6cbjiPLnjPlBoh2G/YUB2jtzX8sgDHIuyi2hfpgM
- KtArMN/XmAS5dKYNP48dXfE6Rij3bgaRXHj2jQQg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmv5h9mq6-1
+ :references:subject:to; s=pp1; bh=vUY2SOGHUCz44owY28ksN46Oqw9IaV
+ xbPbZ4vEm2Kxc=; b=MxjRBqYQNBKMUtdgrNrpDierivVEDBODMu/Us91uxU348d
+ fKEACz01LMmUW23W5ItQ769peK0KLgZFMMO9NyVQkzhJ8JtY7o6EkpZ3DVtYZ5lj
+ Xtvj9OL78lnVllF57QEDCCeX5nUDeBIPaorY/d2hie9kst98fyi7jPK380R7PrWg
+ xYwdaPFsNGqgFdHlxfxlqM0QfHum4Oj7iPXEVH9af7btWnYqNOz+PzGqoHH74QT3
+ 4URld9fjfwpFmu2mknEju59CYWz+lP1DpSmBZMSMtTi/jOZLKDXr1tWkiGHuYhJa
+ GWX3rR2kliBxLMhrT6W5KoSrVvO647SqRZYtwXNw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmv5h9muf-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Sat, 12 Sep 2026 12:41:21 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68CBbHRR3208991; Sat, 12 Sep 2026 12:41:21 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvvrk1uq-1
+ Sat, 12 Sep 2026 12:44:07 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68CBbNuu3229694; Sat, 12 Sep 2026 12:44:06 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gkvwkb3a9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 12 Sep 2026 12:41:21 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68CCfHC433292586
+ Sat, 12 Sep 2026 12:44:06 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68CCi2mE48628050
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 12 Sep 2026 12:41:17 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B4282004B;
- Sat, 12 Sep 2026 12:41:17 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DBF282004D;
- Sat, 12 Sep 2026 12:41:11 +0000 (GMT)
+ Sat, 12 Sep 2026 12:44:02 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 719EE20043;
+ Sat, 12 Sep 2026 12:44:02 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD61F20040;
+ Sat, 12 Sep 2026 12:43:57 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.87.143.209])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sat, 12 Sep 2026 12:41:11 +0000 (GMT)
-Date: Sat, 12 Sep 2026 18:11:09 +0530
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sat, 12 Sep 2026 12:43:57 +0000 (GMT)
+Date: Sat, 12 Sep 2026 18:13:55 +0530
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Saif Abrar <saif.abrar@linux.ibm.com>
 Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
@@ -67,35 +67,33 @@ Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
  thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
  kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
  milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: Re: [PATCH v6 6/9] pnv/phb5: Set link-active status in HPSTAT and
- LMR registers
-Message-ID: <aqVICRVbBpb2nFGg@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Subject: Re: [PATCH v6 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
+Message-ID: <aqVIdRcqvKTxCWsH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 References: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
- <20260831123005.1485518-7-saif.abrar@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260831123005.1485518-7-saif.abrar@linux.ibm.com>
+In-Reply-To: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEyMDE4MSBTYWx0ZWRfX1ya3iUgE4lrQ
- FiDGx9LfXfiLkZ2OVdbricUZhOgocj07ZKv+XfOAgCQuHKBG2Cop47EPmR8Npe4/hhbFHNbHyZ4
- 1wTtqaSqfSXVw4xViwK+LxtJ+EOBFvarhLDkegoooFGsSxOzQxlaFmOie/BWgWz6ulxijRoshX2
- 53h2B961XpiPjOZjzDDNliMqTEr6IwAKqJlTu67KvqDyJXAPwXMwX6ln1rjR0nIUaHKMvwFj2Us
- iw5gcsL5koT49sySUiBz03qZwu2ZS5z0kQh9FOrJA68kWfO6nKrB7l5zxZkH+kuxPRKufhK3aS/
- fyvshJQWmA4duIUvBhNn7KvKmKKij8s7eNAayBj4ZKfxHscbcaLhFodIIV2AGUErNhStHy/tW49
- WTE9bT0lo7mIdnIQg5OyUfxF5TIq3puDzSGn+OSLw9hBFbvmvzUSP8qCgfTqLpQRHxIHCVBEU2O
- GFTrBQpJMjXlzrC1Hyw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEyMDE4MSBTYWx0ZWRfXxZPTw6KI9uRY
- cT34bJcui/AL5qWA5xXIeqVBLzQBT+kV26D3aM3dlBKe+GhWLM0lipHyc/SIztP9Bn2NoMraapm
- 5DrllEcSh4FrYgpy8A6T8+LXPPu67Wg=
-X-Authority-Analysis: v=2.4 cv=Zsx4uN7G c=1 sm=1 tr=0 ts=6aa54872 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEyMDE4MSBTYWx0ZWRfX8elkAmLK/uJT
+ YC1NrQr6h/yyzbcCL2ulOkiC8chfBELsP+fVg18AHowMZm7GHfbKutwDbpJGBfkU28AROod1Qg4
+ g8+WA9fmkjENW0MqEC4DBLuFDf8V3AX9FN6SrrWzDlQu38wS1t7cquQrdiFLUXU1Frh5pdCBFuH
+ s0/FvRbD+0MfeoAMijJLTNS2DuoTGrZnPv6OwojtcbHrAyXMFUJIABadCg2GETtYap+aWdupsnE
+ +bzgJ37PNbXOOui8jk/HVxg9kpo0poy7G7DLmu+zXpKYi/+OhHDog24879SvSPvN9dJAIQGum8D
+ zeBBJeSmSAZZSw0kdiZzUaR3IP6OLEIsipqcHoAOBiCNs59dE+HvnW31I7q/O/JnB/G5JV2ae5a
+ Qu9RHniPwguoVkNzMBjbAX+oB3gwb685ZBtM1GXOvWyrQ++HRvTd4aYjLJNqZUHy7b9RjBwVzxL
+ L4eHfRWfmcfzEm3zwrQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEyMDE4MSBTYWx0ZWRfX2SkKvGh5jBcn
+ JH3x3qRX2TPhzQayVc+1irMSeJe+tUJKQDAMT7z8lMvhZ8qM3oIsMQFwxeA82M/H91R01DvEI+b
+ KyY1onEk/IgTTOCQHshtb0swi5PX+8M=
+X-Authority-Analysis: v=2.4 cv=Zsx4uN7G c=1 sm=1 tr=0 ts=6aa54919 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=9Wmz2YlmeVWVfbCXqH8A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: 93yeuEOQ0IH6PpzyEXxOB5LxomNI73S4
-X-Proofpoint-GUID: 8gFzHlMSezhyWn_Mqyidbo3WVKQfTukA
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=p_D0MeX6N1AXP1W3KKcA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: vIZbxENH6iZJ1SbaOC4yBA4rYCUQW80g
+X-Proofpoint-GUID: TsyAEADYKbIDBat0t2lv1kRTtmea58zp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-12_04,2026-09-11_02,2025-10-01_01
@@ -129,47 +127,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/08/31 07:30AM, Saif Abrar wrote:
-> From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> > <...snip...>
-> --- a/hw/pci-host/pnv_phb4.c
-> +++ b/hw/pci-host/pnv_phb4.c
-> @@ -508,6 +508,34 @@ uint32_t get_exp_offset(PCIDevice *pdev)
->      return rpc->exp_offset;
->  }
->  
-> +/*
-> + * Config-read the link-status register in the PCI-E macro,
-> + * convert to LE and check the link-active bit.
-> + */
-> +static uint32_t is_link_active(PnvPHB4 *phb)
-> +{
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
-> +    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
-> +    uint32_t exp_offset = get_exp_offset(pdev);
-> +
-> +    return (be16_to_cpu(pnv_phb4_rc_config_read(phb,
-> +                        exp_offset + PCI_EXP_LNKSTA, 4)) &
-> +                        PCI_EXP_LNKSTA_DLLLA);
-> +}
-> +
-> +/*
-> + * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
-> + * RC-config space values and masks are LE.
-> + * Method pnv_phb4_rc_config_read() returns BE, hence convert to LE.
-> + * Compute new value in LE domain.
-> + * New value computation using sticky-mask is in LE.
-> + * Convert the computed value from LE to BE before writing back.
-> + */
-> +#define RC_CONFIG_STICKY_RESET(a, v, s) \
-> +    (pci_set_word(conf + (a), be16_to_cpu( \
-> +                     (be16_to_cpu(pci_get_word(conf + (a))) & (s)) | \
-> +                     ((v) & ~(s)))))
+On 26/08/31 07:29AM, Saif Abrar wrote:
+> Hello,
+> This patchset resolves the review comments for v5:
+> https://lore.kernel.org/qemu-devel/20260617095058.652789-1-saif.abrar@linux.ibm.com/
+> 
+> Major updates include the following:
+> - Separate reset and register read/write methods for PHB5.
+> - PHB4 and PHB5 specific reset values.
+> - Read/write logic for registers added and removed in PHB5.
+> - General cleanups.
+> 
+> Tested with 'make check' and 'make check-functional-ppc64'.
 
-this is already defined in a previous patch in pnv_phb4.h
+Thanks for the patchset Saif ! Helps cleanup as well as add phb5
+functionality nicely.
 
-may have somehow gotten added in v6, can remove this
+I was on vacation for past 2 weeks, couldn't review then.
 
+With the minor non-code comments in patch #1, 2 and 6 fixed, the patch
+series looks good to me !
+
+Feel free to retain the rb:
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+
+Thanks,
 - Aditya G
 
 
