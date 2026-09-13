@@ -4,110 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23502C88E40
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 08:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E02C88E56
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 08:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5ftN-000575-UR; Sun, 13 Sep 2026 04:48:54 -0400
+	id 1x5fvv-0005oa-KY; Sun, 13 Sep 2026 04:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x5ftI-00056v-8z
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 04:48:48 -0400
+ id 1x5fvu-0005oR-KF
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 04:51:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x5ftE-00079m-Sg
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 04:48:47 -0400
+ id 1x5fvt-0007V2-0c
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 04:51:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789289321;
+ s=mimecast20190719; t=1789289488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ieE/Mc103rnjbIvEpYdD+zlMVCdIF3XEmz/w0e4ChJg=;
- b=Pv9LGq0kC7j8iKb5WEWcDRFk1OqY9C0HqEZ6rd1eSfP/hTFnQTtu25mG2qiORU6v2ca+gG
- AdlO5DpbwRZheEBt3Ru1+2fHOfuJd+7BwHKJgNGFDJWXqhqYEJLLHpMlbOttys21uiTZly
- wm7WxxpfVNPBYG1l27SRf9HA5esZHuk=
+ bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
+ b=Ahg/3TMnkg6ge7YBpDh07kcIlBApK825wlV17AQbUiGvYDqcfeplXOzrEae0IxINJNoWUf
+ /j2j4HfJ/efJLI9rTkAT78pm2tY6ph8LyyzqGJ2Vqm5rlOccVsOiXVUyKO3iC7cK96851r
+ jtALItWzmI9YvqalpCpzLu4/3w684bM=
 Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
  [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-_lGuArVJNm-IjA_zx4bmUA-1; Sun, 13 Sep 2026 04:48:39 -0400
-X-MC-Unique: _lGuArVJNm-IjA_zx4bmUA-1
-X-Mimecast-MFC-AGG-ID: _lGuArVJNm-IjA_zx4bmUA_1789289319
+ us-mta-554-5UXudFarPh2XfG2TxNjzUA-1; Sun, 13 Sep 2026 04:51:27 -0400
+X-MC-Unique: 5UXudFarPh2XfG2TxNjzUA-1
+X-Mimecast-MFC-AGG-ID: 5UXudFarPh2XfG2TxNjzUA_1789289486
 Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38f97b3f853so4090723a91.3
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 01:48:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789289318; cv=none;
+ 98e67ed59e1d1-38ec0f510a9so5045965a91.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 01:51:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789289486; cv=none;
  d=google.com; s=arc-20260327;
- b=IZidFqHxkjtLOGiEV8VjfkkU7d/KmQQLFQMbycqQ4JsgJ4eODfdGV9ECIxXD0llDkG
- SXEEBtQXkNv6p2S5YlkoBWf2gg/Re46Mt5AODKleIbTBrgU9iO1SL4cpjw0jkt+CsuDL
- /UukobGsITb3frLMRmBnSb6wesljLgfgU0CtUiTRpc7zHNVOd81AebdUv3oLktBoYIcQ
- rztcRxTw/CNjk8Tu2+i/1Wqf8LRby9Urk5LkCdOXfhH5eI4zP5tQWZW73d7iOiWLzdaL
- 47RMS8cEd7KYZ6a+RlLj1kdwWFSYWol//emqRVZlNueYqsLInPnfQQ7LE1G73LK9W92M
- izgA==
+ b=nPGup97xvUfbDv5dd5721CUPhabBLK0qc5hTniiMMF4VvHWbjilr1fN4+j6qa/HrrD
+ IHsQKuMn4iTrsDHo5k604l/d0ImAc4oeVCWEVdgXT6Q9dNm9Ps9G04I2xepg0AgXqmDg
+ 3Zo3fIxkAZ62emqaoSkB6IU4i/vkIlO3ZhPRQ25PsKpz2ZQpmSpSgaq8BpFf7PJNt8jf
+ 3MVh99c916C8SP9JpzWIUFnRaZ2wcCKK8NxwEMYqUyiwg2I8ZFvuuSX2ABYiBLmb4jMG
+ iVt6FQ9GJi+yQnHtu7j0RALUvLtt451ZR79BjHBcWRzld2nMDzaXYsk/S6H+eiNq5yrX
+ bGRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=ieE/Mc103rnjbIvEpYdD+zlMVCdIF3XEmz/w0e4ChJg=;
+ bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
  fh=GIU+FyOM+eiO1tYKbHGSJ9iUu0d9Nn25uUBQaeMGCdg=;
- b=N0o2lvDPz9qBRGZroGx5LEskMm99kjA6FXP3Jgn6xUXGDPP5VWJD8a24ZiwHVeMLhk
- qA1IfNqoERLnEVXE3CkLaKVhuRU+mCm8XJMAz2b6klP2fslwRn/bDFlGRxM62n/WvGTC
- P61EDqVDoL3jWIDR4BgM4FPaRoBkvYbRvo0osxCjyq58PkNKOirXxv7+7o7289FF7xMF
- h8yPxvrlB08J8vm0quxX9W64JNxwIXpweKQ0y5sUuC7I1jC3qIGHByfLjbneSqEBt1C7
- /DK5X2LlwO0HXRr9FGVdOxgf+zSMG6Mh/7YV2YdlmE+XRRnfUVAW7viec+FUvfNW1/D2
- 4cJg==; darn=nongnu.org
+ b=NksEk5CnGz1l503UuozJszWWTOhLXcYbe76T1ZC3ORlPjzG9JgTzZUZ4U9Bo1pOpYP
+ q+NUwjhvDMjiDTupgmJ1zDCzBiUEgLuhdev1uwVFQoVmIvTvrxz47GdvXOe9PscQT3FK
+ 2lvxIu5rI7cCRnleNXNm60hc1zm12tu8E1op0SzU10tL5N4Scq46FT2ADMVQbUfzJfjv
+ ImEmBufHUF8WuuiHcZeDZyHaKJ1nehI7ysEjXI8VGK8rw4wJnJegJaKRJcUaX8kVotQp
+ qben2AAATRkTmAeqIdaqzdPMmx/k4BGqkpwwg2P0e8i7dCwQzrzGaryL+P6xo6SyXrjK
+ NWTg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789289318; x=1789894118; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789289486; x=1789894286; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ieE/Mc103rnjbIvEpYdD+zlMVCdIF3XEmz/w0e4ChJg=;
- b=Dp/5rAUg3xSDMGakRtOk5PPHeqsrbaTwNI+eSq71BUYqTtZMrT5bsLCRoISVDe9eUj
- THa2X0uHEJHoo/tPKDgmSh6Dm518FxqmD7kNIiDA7ntGpdXSZ8EWmg23g6oRBSFqI7Np
- U5GTYySC7yFjFqmy/gQpsOhO7N/IaTo654cd9MLoRAbBOEpltR5y4SGGNYDVJ+TQpMEn
- pGtWD7xpfxdKHF6o1WAu2UzEEmcHoIBKxkXXrpsjQXHBtUCM9FO+OXu8fqg4BGVYfDJF
- XIAu/FTWWJ57CuF65QvUkEnTMeN+uAN3HusG9PHra32YtlzTE+WEW0rGvco0FK27uEqu
- XPig==
+ bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
+ b=WERI9l4wccJUwMxllFAcCZxWghEBmW8GBktexoH8w3ChvBke6nCc6C7dGocAxFccZV
+ C+82V/dygsk/gvhAbdrCQH2NoumiqGmW7gIJop67okeg1VAH3KXlFiGvk3+beMWDYj0Y
+ QKcMfRWrxkF3g1kk9LDmFJnPtB1acVm6wfMq44nIhFlUVgLgl4sOPk7iJN9O5ZRPzJbs
+ n/K0QV6MFRNHpAOXkps6xxRapWKmidS9acENNS4O6G9E9YPMtNGGmCghZFCxtsUsE8Z4
+ j7nhjzPTRZjI0gfwISIOi2FDHjQBTBvUMfTZOko0+2uMH32YUCkvdnHeA67Q90ct2UeY
+ Y6BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789289318; x=1789894118;
+ d=1e100.net; s=20251104; t=1789289486; x=1789894286;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ieE/Mc103rnjbIvEpYdD+zlMVCdIF3XEmz/w0e4ChJg=;
- b=drH67LPTtQy2NqkVwkeMeEIqudFDb0OL2ebGgi+uyxWHrHN7gDl22ZgXvqW31UyXke
- n/dRmcDyMuBKpO+z1IHTCq1CITnb6mYWdSH/GHTkK8RL0UZ5CeFjur6HtiwzRQCw3flu
- bmdZ4FcruTGoQixMruX0yRFuUMRjcUolp5u9nu7KzZun3uCoKARgBrp13sjFcUUUOGNt
- qiTbrV2OzXkMyEB1nV8SJdMwWLE+2qoCmAB/Cr/4EpaeXHAjAhxvELhHHAWutBNMZbx+
- b7uagUE9Bgn9bjPYk/IKO5MrpR6LAGkKacw2iFnktToYOizYFza7+x4XAdD2As/Cu/hy
- f0Dw==
-X-Gm-Message-State: AFuF++mnI8ZAmAXSinmg/mGfvDmTXHOfFaMtn1q9wfkqFqli6h9BruKW
- ujPiMbGMp19PAicNYCslR7tTR8hjUI6wTnULty7LAu7dLLvVVIn0rQGRdpRnhkvmRUuCu3nGnzZ
- r2Cf6170IBpH2/ieMOhDUIM8/n2wC2YNMA4fcEuXPEYGiS1eXZcCI0kD0/BLfgbhFBGKBSi7FiP
- ruYV1csJedsx5OS/qY+Q01zJqtHdZqLdFqt92p4PiPiA==
-X-Gm-Gg: AYBFou2RWtj+mBYfkaon+dxUPbDORdBJT35LCk2FiqcRuoFB7x/BnOjp12cwqpGi9RL
- G8jdUNbLRXuxLQlxgSCcT+DwXEQ7rm1VAt57eDulK0Av/wcT9jAnfFnQSCaLN0eSM0KdGJMWpgw
- l1Z4L1Iuvmuqyb/Pm8UuCwqjudFcbi8o3Ly/QbhYVd/yT9eLX30eKfFF3OFOhMEC6DpwAqvuyqs
- 3uAeuLJcVl2UhQ6ZRRUz3lMfK+LhtApKFwTBr2BC2zMK7ADqSb8OmQiaif3kZuMy6+gKgeuUGLA
- /Q==
-X-Received: by 2002:a17:90b:3c8a:b0:398:e436:370 with SMTP id
- 98e67ed59e1d1-39dbbea2897mr10817216a91.2.1789289318538; 
- Sun, 13 Sep 2026 01:48:38 -0700 (PDT)
-X-Received: by 2002:a17:90b:3c8a:b0:398:e436:370 with SMTP id
- 98e67ed59e1d1-39dbbea2897mr10817174a91.2.1789289317998; Sun, 13 Sep 2026
- 01:48:37 -0700 (PDT)
+ bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
+ b=SMhyjWjp9pE1pfHW5w3G1LlNwO7qdyCv3VhmxytgTlTMZ8SaOBpoDrHQiQqnSsgStE
+ m01YXnVGqva/ZqcZ00NjKW6X6uZcqkBPk8dwCgLk52kJ3UQ8G3DovFeOW5IDzSTKbKb4
+ Td/vUxYYGvWq+YkqvsB/HdL1/Oi2IZmGOzUYg4SBuP5twmORxKgqOa49Punidpg69zQj
+ GWVYWHdtMi0kngW2ZZwlxkXbbqzXqUcgrmkZhdISUrM4iNUpp9reqXd7SlUjH/GX+1R8
+ xBTal7Xk3Nkc6OKElck8eMdNkQsl7YumBicmWE3SCTvadnIGCfyS0ChEw3AXTuNrk9Qd
+ 2pXQ==
+X-Gm-Message-State: AFuF++lngtGaPwHcjFGCnfmpaIkEKt/1kjBFqJBhuPYx/UbfMaLTBKaZ
+ U2i68irNuyMjc5aqHb8VO5WQKdCEFZvC2Xm6bpgDjEBv1N8J2ukL2SICRPd1UCj5uLJ0RoqwISn
+ 0pJ+o5MTSlZ0xus4s0nF3XNOogHF51hOM3+vQB+yBJ/sTDv0kumtQMj0tcMq0BX4fCBCk0SWJAZ
+ fr5xR37j29lrLZZJ913vws8L4mirtGVHnCtXH41anY3A==
+X-Gm-Gg: AYBFou1T2r9WyvF7wG4upcLlHa5SnISbDYFHebKxVP3XCm14QIOkRIb+KFEqmQIVB1D
+ Kjexuhsrx0jqT7SUUvmAqF4n5CgUYEImnB0VaPqoMAH73DhBJJ0tLoRGLaGQMSr8McK9Q6zOdr2
+ LTQJPYQQ/N7pT/c/BDZ3ebViEACp0veQgfGBpE6LCj/2yZvM7DD8PTUY85G7+AyO3doWyZphPqT
+ mcRFsLw2wgbeFT7PDOoF39WkyB16HJBhrAtWrp853QIzJw05j3gVxwlHn5rN5eSydgaKCNAslq1
+ uA==
+X-Received: by 2002:a17:90b:4990:b0:396:4cbf:45a2 with SMTP id
+ 98e67ed59e1d1-39d9c0acc23mr21789154a91.14.1789289485924; 
+ Sun, 13 Sep 2026 01:51:25 -0700 (PDT)
+X-Received: by 2002:a17:90b:4990:b0:396:4cbf:45a2 with SMTP id
+ 98e67ed59e1d1-39d9c0acc23mr21789130a91.14.1789289485479; Sun, 13 Sep 2026
+ 01:51:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260913-flush-v1-1-229efa3f1e53@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260913-flush-v1-1-229efa3f1e53@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260913-gtk-v1-1-3e4ac542e054@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260913-gtk-v1-1-3e4ac542e054@rsg.ci.i.u-tokyo.ac.jp>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sun, 13 Sep 2026 12:48:24 +0400
-X-Gm-Features: AcwNN1VMO7UZMGxaLAwLz9YbWpSV3YYKdScR2se0nJ9vM6EE3SYLunaPvr7A2Yk
-Message-ID: <CAMxuvawb-ya4xMoehX4upa363EyYqKeRpQc+w5Au-6Zbx7cn8w@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Remove glFlush() after eglSwapBuffers()
+Date: Sun, 13 Sep 2026 12:51:13 +0400
+X-Gm-Features: AcwNN1UlfaawQaNGD3AZEGxmcggIlNKHtImD03lbkZU5h-PjWJCuPC2EhnJ2krg
+Message-ID: <CAMxuvawfKaBsigaf1Yfc+xGqrm2Va73tk-CwkwSH4yBx-FwkVQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Work around the gtk-menu-bar-accel leak
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
@@ -136,44 +136,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 13, 2026 at 10:42=E2=80=AFAM Akihiko Odaki
+Hi
+
+On Sun, Sep 13, 2026 at 10:45=E2=80=AFAM Akihiko Odaki
 <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> It is redundant since eglSwapBuffers() implicitly performs glFlush().
+> The implementation of the gtk-menu-bar-accel property had a bug that
+> leaks memory when the set value is an empty string, which was fixed
+> with:
+> https://gitlab.gnome.org/GNOME/gtk/-/commit/44bf10c4a2a0463891884a105fa27=
+cf36b73f119
+>
+> To work around the issue for old GTK versions, replace the empty string
+> with NULL, which has the same meaning for the property.
 >
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
+good catch :)
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 > ---
->  ui/gtk-egl.c | 3 ---
->  1 file changed, 3 deletions(-)
+>  ui/gtk.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> index d595916476d9..0eec06826bdd 100644
-> --- a/ui/gtk-egl.c
-> +++ b/ui/gtk-egl.c
-> @@ -104,7 +104,6 @@ void gd_egl_draw(VirtualConsole *vc)
->                          surface_width(vc->gfx.ds),
->                          surface_height(vc->gfx.ds));
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index c615d35451b6..ae28f1fbb89b 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -2645,7 +2645,7 @@ static void gd_create_menus(GtkDisplayState *s, Dis=
+playOptions *opts)
 >
-> -        glFlush();
->  #ifdef CONFIG_GBM
->          if (dmabuf) {
->              gd_gl_wait_sync(vc, sync);
-> @@ -122,8 +121,6 @@ void gd_egl_draw(VirtualConsole *vc)
->          gd_update_scale(vc, ww, wh,
->                          surface_width(vc->gfx.ds),
->                          surface_height(vc->gfx.ds));
-> -
-> -        glFlush();
->      }
+>      /* Disable the default "F10" menu shortcut. */
+>      settings =3D gtk_widget_get_settings(s->window);
+> -    g_object_set(G_OBJECT(settings), "gtk-menu-bar-accel", "", NULL);
+> +    g_object_set(G_OBJECT(settings), "gtk-menu-bar-accel", NULL, NULL);
 >  }
+>
 >
 >
 > ---
 > base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
-> change-id: 20260913-flush-08715ed9f4f2
+> change-id: 20260912-gtk-2ab3b3ab846e
 >
 > Best regards,
 > --
