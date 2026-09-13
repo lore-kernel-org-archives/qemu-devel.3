@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03224C88E56
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 10:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EE2C88E5A
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 10:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5hfl-0005cE-PZ; Sun, 13 Sep 2026 06:42:57 -0400
+	id 1x5hg5-0005f9-HA; Sun, 13 Sep 2026 06:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x5hfj-0005bZ-Lx
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 06:42:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x5hg4-0005f1-6B
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 06:43:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x5hfi-0008Ab-Bp
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 06:42:55 -0400
+ id 1x5hg2-0008DK-Ll
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 06:43:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789296173;
+ s=mimecast20190719; t=1789296194;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RnuFdKKVpqFKDm4hZnFD0Rhn5+yJEZDo7nKlyDxdy9Q=;
- b=Zz2RDetwHRW6HUspTC9VdJtgqGjuM7zWgZMB+7STCb3+Dei9slFcRCN4OXwbLPN3pzCYwZ
- 7zOD7nnxa6RcSyJRHBkqvi9T03HtMltZGAwymDPNrttgAswRbSWIbWXYtssiZZSm6ngIa3
- 1C6IA9dO76MOGEA4DagCh/ZOluo9gDc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Ffn341LlTJcFicM5YT5PahGe5X1nuMJr/L7/6mA1AFA=;
+ b=eZXEBDOneq/MCUOGHux8Carig9Jk9hejB+jLd7uSPyDQANSQNtqeuhzgIR6tPre10LfPSI
+ cxhITklpHGAneB9HDw3gDziQIC5hyU9p2nlz7sW5k+PJUYLq9JahA0Uvdl9E9CDibXYRlA
+ oHmzXG6y1HOzSRtzr9QiBHQgxgMcXX8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-XNJjXC5SMG-vh56EtB0KIA-1; Sun,
- 13 Sep 2026 06:42:51 -0400
-X-MC-Unique: XNJjXC5SMG-vh56EtB0KIA-1
-X-Mimecast-MFC-AGG-ID: XNJjXC5SMG-vh56EtB0KIA_1789296170
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-H-GH0wFGML-u5N6RMFGRTw-1; Sun,
+ 13 Sep 2026 06:43:12 -0400
+X-MC-Unique: H-GH0wFGML-u5N6RMFGRTw-1
+X-Mimecast-MFC-AGG-ID: H-GH0wFGML-u5N6RMFGRTw_1789296191
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB3BB1944DD2
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 10:42:50 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5EF718011F6
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 10:43:11 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A8F8930001B9; Sun, 13 Sep 2026 10:42:49 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EB8031956087
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 10:43:10 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 13 Sep 2026 14:41:19 +0400
-Subject: [GIT PULL 01/14] ui/dbus: fix cursor race, copy cursor data
+Date: Sun, 13 Sep 2026 14:41:25 +0400
+Subject: [GIT PULL 07/14] hw/display/qxl: validate replayed commands in
+ qxl_post_load
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260913-ui-v1-1-7a8d89d0423a@redhat.com>
+Message-Id: <20260913-ui-v1-7-7a8d89d0423a@redhat.com>
 References: <20260913-ui-v1-0-7a8d89d0423a@redhat.com>
 In-Reply-To: <20260913-ui-v1-0-7a8d89d0423a@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1260;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3425;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=llMUUGzcjuqZBsgOy2Q3nKSAiYWuK9mpFKVJ6lb5KHc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpn4i1ljhUZSHw1zx3L0r8N2MD9TDVY6LWhCHh
- h0cJBPmwViJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqZ+IgAKCRDa6OEJdZac
- 5YoTD/9Nchyttb1XTgKLZTwZuoAuHmkGkTJh7kh7iwqxSG/1YrFBbk7KsOq+SViHotrwfYV4CwI
- RcJIwsrlanOfQgiBEmP+faGGmNxrRvPwMQ3sKF2WR3jMnS9N8xoB2fsgSCfQwVK8GZQB6rgYC5V
- xxxO3Ki2XDZX0HYFFNovoKA3jtWlTtpECHEuxFM9vzNY9nM7J5ZUvr/Px4qPeI6sQgxCyjzTN4I
- KN6Wp2cu0AbF7O0VM7AKOIFIXlqbq3ZXTxuMtqmB+iWlgM7kuJH9UYEcnz9Fjang18sK0CDOfZ8
- ePHLjtoMBgFw3QkGJlspO9jGKrGAxSWQ6ebk0O3LtVzZewKTkPTx11W6puPnunY2jX7xhN0288s
- ZC5Odpnpcua7LCgQ+6XnmECMsZY/L1U2tmHgnfqt8nazbgO+RfcwF/zBiUGZhnWuUmirJQWR5Yw
- qBZ971ddd2N3wigjiGxpOsJ5gsAN8FHue61JuFyFsOdFuoTLdgTGY206HKidaBi77Dj6xC0XS4m
- p+rmPLkkp3BRbo9yqOiIzIT5VCz8Ng5XyuMUtzpAiZfD2p18Toob5X8J03yridgnYhSnaHww6Re
- EHxA8riytmVhJhyYZoqlMi8HG/7msYAOjlmweIccK24GBICxhVTAqTkzDKrNrMBLZUhtXtkm11j
- Hpw+9vl6qNAZ+LA==
+ bh=s1f1LC/Q3DD/HRBujYP/N16KP0NEgC6UYpfjtotJyco=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqpn4iKCVxTJSEQEhN26dmCk+5BH01dQu0lpb3L
+ TqTmVMb/NaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaqZ+IgAKCRDa6OEJdZac
+ 5ejZD/0cwbCKYlDLaU1wuJgjzeon2NATMNsf9Rr6JGrHXYoRAJdAxKXjN8GYT1NWUS/9XcQgCVQ
+ PW5B8zh8dCJ78mgZ+FIt2w9p1ydh0Zu6D1h1yVGn8qBPWrlqr9c2JUFCPFnDlSeMLvc5PVXXqpi
+ E69GZUPbTAFY2JDo+0yQYT//RM5JU0dYQeSypynvp/6PnNhn/XYU37LCMo6vgTEe1HcNkSAvq7F
+ MDh3pemorXseaxrwO2tyztUKCAiCiRkdlj67baFhRD4c3nBLGv4OX1w0Ig+1dmtkkgHq+VVhcGK
+ n9lNIculGUiLGbrfP4yU2HawnSyP5MQRMwrf9d9aFq3D/ssXtzAOPlYdNCJ01B/HCKEehjUsbi1
+ 11EDNLCRMzqGIw6XsQcO8PUmHZgqUvAjS4TEu3EmeAzZ5KmAd1gZrK19eMJ8vES9+dHi9rJndYa
+ 0UxglpCWS5zGBSVexhS9Jf46Xf+ZYApcMZjQdEkEuT8xo7W1YD32/op+6x50WCxvXFcSIYcVKq3
+ M4OqKPrTce9/6aA+xZ3tE04xVLgXGiG0npx7ZYkaKbARH4UWfEKbTcXIsapk3OowBqRKnnHL1Sk
+ 8EUFVh0ugoH26aPe4NMcT0TsgAgfSMEErBYdMeZWGpvsK5Lq/IZ3yYdhtit4v7+i0grNrLlsNNr
+ As48IBmbPJkw3qQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,40 +104,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eliminates the undefined behavior where virtio-gpu's memcpy() overwrites
-the buffer that an in-flight gvariant still references. Fixes the data
-race where the GDBus worker thread calls cursor_unref() concurrently
-with main thread.
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-Fixes: 142ca628a733 ("ui: add a D-Bus display backend")
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260904123020.3108205-1-marcandre.lureau@redhat.com>
+On incoming migration qxl_post_load() replays the tracked cursor and
+surface commands by handing their guest addresses straight to spice,
+without revalidating them. Those addresses were checked when the guest
+submitted them, but the guest may have freed or reused that memory
+before migration, so qxl's tracked pointer can be stale. spice-server
+then re-parses the command from that memory and, for a stale cursor,
+reads a garbage shape pointer -- aborting the target in memslot_get_virt()
+(again, spice-server function) and failing the migration.
+
+Validate each replayed command with qxl_guest_phys2virt(report_bug=false)
+before adding it to the replay list, and for a cursor also validate the
+nested shape pointer. Commands that no longer resolve are skipped rather
+than replayed. report_bug is false so a stale pointer is not mistaken for
+a live guest error, which would needlessly disable a healthy guest's
+display.
+
+Message-ID: <20260825172051.435372-3-andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- ui/dbus-listener.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ hw/display/qxl.c | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index c1e86648384c..624d0fb71d6b 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -926,13 +926,11 @@ static void dbus_cursor_define(DisplayChangeListener *dcl,
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index b6bc182fc2c3..fb77f217b1c6 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2390,6 +2390,37 @@ static void qxl_create_memslots(PCIQXLDevice *d)
+     }
+ }
  
-     ddl_discard_cursor_messages(ddl);
- 
--    v_data = g_variant_new_from_data(
--        G_VARIANT_TYPE("ay"),
-+    v_data = g_variant_new_fixed_array(
-+        G_VARIANT_TYPE_BYTE,
-         c->data,
-         c->width * c->height * 4,
--        TRUE,
--        (GDestroyNotify)cursor_unref,
--        cursor_ref(c));
-+        1);
- 
-     qemu_dbus_display1_listener_call_cursor_define(
-         ddl->proxy,
++/*
++ * Validate a command tracked for loadvm replay before handing its guest
++ * address to spice-server.
++ */
++static bool qxl_loadvm_cmd_valid(PCIQXLDevice *d, QXLPHYSICAL data,
++                                 uint32_t type)
++{
++    switch (type) {
++    case QXL_CMD_SURFACE:
++        return qxl_guest_phys2virt(d, data,
++                                   sizeof(QXLSurfaceCmd), false) != NULL;
++
++    case QXL_CMD_CURSOR: {
++        QXLCursorCmd *cmd = qxl_guest_phys2virt(d, data, sizeof(QXLCursorCmd),
++                                                false);
++
++        if (!cmd) {
++            return false;
++        }
++        if (le32_to_cpu(cmd->type) == QXL_CURSOR_SET) {
++            return qxl_guest_phys2virt(d, le64_to_cpu(cmd->u.set.shape),
++                                       sizeof(QXLCursor), false) != NULL;
++        }
++        return true;
++    }
++
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static int qxl_post_load(void *opaque, int version)
+ {
+     PCIQXLDevice* d = opaque;
+@@ -2428,12 +2459,17 @@ static int qxl_post_load(void *opaque, int version)
+             if (d->guest_surfaces.cmds[in] == 0) {
+                 continue;
+             }
++            if (!qxl_loadvm_cmd_valid(d, d->guest_surfaces.cmds[in],
++                                      QXL_CMD_SURFACE)) {
++                continue;
++            }
+             cmds[out].cmd.data = d->guest_surfaces.cmds[in];
+             cmds[out].cmd.type = QXL_CMD_SURFACE;
+             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
+             out++;
+         }
+-        if (d->guest_cursor) {
++        if (d->guest_cursor &&
++            qxl_loadvm_cmd_valid(d, d->guest_cursor, QXL_CMD_CURSOR)) {
+             cmds[out].cmd.data = d->guest_cursor;
+             cmds[out].cmd.type = QXL_CMD_CURSOR;
+             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
