@@ -4,96 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C84FC88E5C
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 22:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8238C88E5C
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 22:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5sHe-0002Os-Pv; Sun, 13 Sep 2026 18:02:46 -0400
+	id 1x5sfg-0005GH-OM; Sun, 13 Sep 2026 18:27:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5sHd-0002Oc-2e
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 18:02:45 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5sHb-0003BI-Jv
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 18:02:44 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- 98e67ed59e1d1-396ccafb74fso1437512a91.3
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 15:02:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789336962; x=1789941762; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=PxOi6MnfMKOFb+92FpbN1IPkvCi9zOGIRu503Gk9470=;
- b=VEmQtWj2xQ7JMvp6RbD8FOOujtNwlsEwa/AMe5D4K8DNWIeKOrFPZz0Rbnvmj6Pm61
- 1W4muh1cD7dxDVZ3J/6MHZM8jybzL1FqjotSMSf32pzBUpw58jtqemknHQrY3cdXr2PM
- 0rCPZ/ERqEG5XQLy57bg18fuTcdAuUow04CGcYDQMl/nFG9Yxo1qTHibt5WWXrVQ2UjV
- wnCBMwuP3MrmFwkE8URkKDu76s6CkJ6H3MTKmLsWnNZUpX0BrL7V1eqBiCssoWil3gwQ
- qZyMd8GYwgk6M89iPVYSOHAQS5HlqXMYwqvTIxZWISFEMX7n4OgZKd1HWQT/vLqkSNa0
- vcmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789336962; x=1789941762;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PxOi6MnfMKOFb+92FpbN1IPkvCi9zOGIRu503Gk9470=;
- b=Dm2qgUnR+ojDhxiIT1Qyd+kzeM12zJp0MCG5fLHXDJp3DmEv4tAYl5dhk8GnvIDrk9
- ajhvYYs9BVCrIvW4SC0l9GYjB/UQPyVM0DoDWJG2OS0+Eqg5UEWGnh40LB001fAj7/8J
- 47MbrKsAVV066vpy44OlNxbbEu2f1kXSbB1K8UAmwfyK8tb04lsRvomtLQYcOBM2xLq6
- SJu+oxJJKl3DdW3/WeAMzPCx5NLvnBL6VAYpoa2e/peIImT+mMjtX/Xjm3kJROm34BuG
- 4yQ6tbBjXu1GatShguRP7509Qh9qpDsxVUG1vYsmdWUU4LUetKu3g94GkaDmrnDuyXAi
- WuYg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBygLB7Bkda3lCSOhAxQFmN5eGZcnC9zLUG9pUVdzSadhIjIBqykEaXxHzhoKoFZvEm0RpMRHtlUtWP5@nongnu.org
-X-Gm-Message-State: AFuF++kDKljbFw/P9LDabGp3IclpY1FAXhERTBaie38T/JeF0f328B87
- fFa6Cn2p3bD1wPiiS53LuAVRDXtfJBbC4CnOcAsROmKR+uyTmu4JJ+tz7HsZRvQXGuo=
-X-Gm-Gg: AYBFou1qj6ODnaqZk0Gbu9eJqp4VXy/7muaEdRwQgSr8TGx2FJ1PrVQbDMf+xwI9TJx
- D8581OrrvTRR7Xs7iTFrGTWtU6tGyu4rxsGTFc1EjR2ChnlQSIb/2acsjOmOFveC+Qec/4FR9Zl
- xOy/HrtDyO4aBx4ef5SMOpjp8xwpeHj7VC+STkvyjKz5NxVtRxTE74QDrF9uV0KaLnecVFfIqsa
- 0A9m8NU1QPhmR8a8vzBeFyLSCZCk/6bmxfjZBzALxdjf0nCBZbe1f6gOq8wDfgXShF89tQGIKFM
- FrVmBARQMKFsEorJOD6q8Y3RgODxO2sR2u4WGW/JBNYwYJWPJsyWErdBvhnm5p5yMszWDtuSQ0o
- x8VIItKVCxRVMZe5UUhAE6sZwVs2NbjQVxpZJDo8D0r5WXKtsiCYgMm0JHQyLz77f/kUZmO2FMS
- hv2TpSWoo2tTPXqReGD7H7O6wPE1bXT3tEx6z2OZqTd745V1rR1/q9TYGYgXDoYCu1PGkXL4CEG
- F39S9qe/BChUF9VO7nWm7MbsJxy5NzlL16L1NUrEdOcDN/H0qARMuEtgcyy/J8=
-X-Received: by 2002:a17:90b:1f8e:b0:398:b88c:2b7b with SMTP id
- 98e67ed59e1d1-39d9bd9917cmr29348384a91.8.1789336961961; 
- Sun, 13 Sep 2026 15:02:41 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:1665:91c0:9a80:f870?
- ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4f55735sm23250295eec.24.2026.09.13.15.02.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Sep 2026 15:02:41 -0700 (PDT)
-Message-ID: <4c019cf7-5984-449b-815d-44c31807c1e3@linaro.org>
-Date: Sun, 13 Sep 2026 12:02:38 -1000
+ (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
+ id 1x5sff-0005G4-7H; Sun, 13 Sep 2026 18:27:35 -0400
+Received: from www675.your-server.de ([85.10.213.182])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
+ id 1x5sfc-0007f0-RF; Sun, 13 Sep 2026 18:27:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=sayyadumar.com; s=default2511; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=tro7dAwP1PiNoIhRhoap6OJJpok3qbhAMRm4bENb8QU=; b=GqHL2bxEDhwsg0svScQzTHre3y
+ nueQqdsYxdW7Pzc/RPOleXdYEnJxVrTdJre1HLeCV8aYymKa1UyRad7Lps2TWTEpHz+oz056x2cIp
+ IDLIuaCQidhlu08hQKkWKOfwseGMhib+zB3f5OjwIpCqyAIMdFIq3iCjfQnhmmd0cb9ro0crravw8
+ QOrenHKEPO7V3LrMdOuHVhl4EhTw1Rr3uFA7Ac3iTf/S5yw8WvL7zaUdo14RB8BgtjGcFKSgMC9e9
+ J+xXnApiCNxJ68tk+3sarQTZjHUDPY3k/PPjDHfRsdlieMk2JsTIVlYieIM6L7x7DEmSoLt746tUO
+ erKtCCYw==;
+Received: from sslproxy08.your-server.de ([78.47.166.52])
+ by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
+ id 1x5sfX-000Hgg-1L; Mon, 14 Sep 2026 00:27:27 +0200
+Received: from localhost ([127.0.0.1])
+ by sslproxy08.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
+ id 1x5sfE-000MKE-16; Mon, 14 Sep 2026 00:27:08 +0200
+Message-ID: <7dcfa12f-50e5-4f98-a8b2-972ce2331499@sayyadumar.com>
+Date: Mon, 14 Sep 2026 00:27:26 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] target/hexagon: share HVX contexts among CPUs
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- marco.liebel@oss.qualcomm.com, Helge Deller <deller@gmx.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
-References: <20260913155928.365928-1-brian.cain@oss.qualcomm.com>
- <20260913155928.365928-6-brian.cain@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 0/2] target/rx: add RXv2/RXv3 CPU support
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org
+References: <20260913-umar-rx-series-v1-0-5a5841a5d1e9@sayyadumar.com>
+ <7e3a07b7-9ebe-42a2-8561-650ddcfe9026@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260913155928.365928-6-brian.cain@oss.qualcomm.com>
+From: "Umar, Sayyad Mahammad" <contact@sayyadumar.com>
+In-Reply-To: <7e3a07b7-9ebe-42a2-8561-650ddcfe9026@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28122/Sun Sep 13 08:26:25 2026)
+Received-SPF: pass client-ip=85.10.213.182;
+ envelope-from=contact@sayyadumar.com; helo=www675.your-server.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,24 +78,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/13/26 05:59, Brian Cain wrote:
-> +++ b/linux-user/main.c
-> @@ -244,6 +244,9 @@ CPUArchState *cpu_copy(CPUArchState *env)
->   
->       new_cpu->tcg_cflags = cpu->tcg_cflags;
->       memcpy(new_env, env, sizeof(CPUArchState));
-> +#if defined(TARGET_HEXAGON)
-> +    HEXAGON_CPU(new_cpu)->hvx_ctx = HEXAGON_CPU(cpu)->hvx_ctx;
-> +#endif
->   #if defined(TARGET_I386) || defined(TARGET_X86_64)
->       new_env->gdt.base = target_mmap(0, sizeof(uint64_t) * TARGET_GDT_ENTRIES,
->                                       PROT_READ | PROT_WRITE,
+On 9/13/26 23:39, Richard Henderson wrote:
+> On 9/13/26 08:21, Sayyad Mahammad Umar wrote:
+>> This series extends the RX target with RXv2 and RXv3 CPU support,
+>> forming the foundation for the RX65N, RX651, and RX72M machine models.
+>>
+>> The first patch adds the CPU definitions, instruction support, and
+>> translator changes required by the newer RX cores.
+>>
+>> The second patch adds the initial RX machine and peripheral support.
+>>
+>> Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
+>> ---
+>> Sayyad Mahammad Umar (2):
+>>        target/rx: add RXv2 and RXv3 CPU support
+>>        hw/rx: add common RX peripherals
+>>
+>>   MAINTAINERS                           |   20 +
+>>   hw/adc/renesas_s12ad.c                |  324 +++++++++
+>>   hw/dma/renesas_rx_dmac.c              |  317 +++++++++
+>>   hw/dma/renesas_rx_dtc.c               |  169 +++++
+>>   hw/gpio/renesas_rx_gpio.c             |  256 +++++++
+>>   hw/misc/renesas_rx_crc.c              |  219 ++++++
+>>   hw/misc/renesas_rx_fcu.c              |  985 
+>> ++++++++++++++++++++++++++
+>>   hw/misc/renesas_rx_romcache.c         |  139 ++++
+>>   hw/misc/rx65n_sysclk.c                |  190 +++++
+>>   hw/net/renesas_etherc.c               |  955 +++++++++++++++++++++++++
+>>   hw/rtc/renesas_rx_rtc.c               |  330 +++++++++
+>>   hw/ssi/renesas_rspi.c                 |  319 +++++++++
+>>   hw/timer/renesas_mtu3.c               |  509 ++++++++++++++
+>>   hw/watchdog/renesas_rx_wdt.c          |  193 ++++++
+>>   include/hw/adc/renesas_s12ad.h        |   61 ++
+>>   include/hw/dma/renesas_rx_dmac.h      |   57 ++
+>>   include/hw/dma/renesas_rx_dtc.h       |   42 ++
+>>   include/hw/gpio/renesas_rx_gpio.h     |   64 ++
+>>   include/hw/misc/renesas_rx_crc.h      |   30 +
+>>   include/hw/misc/renesas_rx_fcu.h      |  191 +++++
+>>   include/hw/misc/renesas_rx_romcache.h |   30 +
+>>   include/hw/misc/rx65n_sysclk.h        |   37 +
+>>   include/hw/net/renesas_etherc.h       |  109 +++
+>>   include/hw/rtc/renesas_rx_rtc.h       |   52 ++
+>>   include/hw/ssi/renesas_rspi.h         |   61 ++
+>>   include/hw/timer/renesas_mtu3.h       |   73 ++
+>>   include/hw/watchdog/renesas_rx_wdt.h  |   48 ++
+>>   target/rx/cpu-param.h                 |    3 +
+>>   target/rx/cpu-qom.h                   |    2 +
+>>   target/rx/cpu.c                       |   57 +-
+>>   target/rx/cpu.h                       |  124 ++++
+>>   target/rx/disas.c                     |  383 ++++++++++-
+>>   target/rx/gdbstub.c                   |   44 +-
+>>   target/rx/helper.c                    |   56 +-
+>>   target/rx/helper.h                    |   22 +
+>>   target/rx/insns.decode                |  125 +++-
+>>   target/rx/meson.build                 |    6 +-
+>>   target/rx/op_helper.c                 |  357 ++++++++++
+>>   target/rx/translate.c                 | 1225 
+>> ++++++++++++++++++++++++++-------
+>>   39 files changed, 7873 insertions(+), 311 deletions(-)
+> With 7500+ new lines in two patches, no one is going to look at this. 
+> This patch set must be split into many many more patches. For example, 
+> one per new instruction, one per new device, one per logical change to 
+> existing code.
+>
+>
+> r~ 
 
-Why did you put the context in the greater "cpu" structure instead of 
-"env"?  It would have avoided this oddity...
+Hello Mr Henderson,
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks for the comment. You are right this patch is rather large. I will 
+split this into smaller patches and have another go at it.
 
-r~
+Regards,
+
+Umar
+
+
 
