@@ -4,61 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D177BC88E5C
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 18:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2B8C88E63
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 19:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5pFd-0005xA-NB; Sun, 13 Sep 2026 14:48:31 -0400
+	id 1x5qD0-0005MC-FJ; Sun, 13 Sep 2026 15:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x5pFP-0005wP-28; Sun, 13 Sep 2026 14:48:16 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
+ id 1x5oqG-00010W-LR; Sun, 13 Sep 2026 14:22:18 -0400
+Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x5pFN-00080r-6U; Sun, 13 Sep 2026 14:48:14 -0400
-Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hjcjk2Gxvz7y0L;
- Sun, 13 Sep 2026 20:48:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1789325290;
- bh=TcYZXXMb5SilzCQ1pInkeuuKZ1Kb+f6Cdp+aPMJ5rWI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Ie/pxgX993p5gbYNKB8xwqcPnqBxhjsNUNJndK5+yehz7nQdbMtOETrOn5EssnLE5
- qWgoYz26i5+y3oZptOyK5ZWsNh5sJCgyqBM/ISmb9L9FCLoc24uoeNfQQywoFrcTP9
- uQCr8HesE0p2HcbCuJBPt3tZXH/R21Nbp1Gd6KAgssApN97TE1Z5bp+u0yZ5K7LzRB
- X6lHD+zQMtDH52YQ42cuxPSv9aexTkha0ZASyfJewBQiKpwtYPhWiR2jiHr16yNYMx
- psQjxhx6v1TaZnD/hzOMUq10BOf7T9KRbV9Q4G/Z2/Kg4G2bl8PXJtsbQqadHaAPaK
- 3JZLjstIwRWkg==
-Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
- [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hjcjk0Tkdz6tBM;
- Sun, 13 Sep 2026 20:48:10 +0200 (CEST)
-From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gilles Grimaud <gilles.grimaud@univ-lille.fr>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Alex Bennee <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 03/36] target/arm: support Cortex-M0+ MPU
-Date: Sun, 13 Sep 2026 20:48:09 +0200
-Message-ID: <20260913184809.11542-1-gilles.grimaud@univ-lille.fr>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <CAFEAcA_O=k4=9Y1tnmuv0_Bfn8rfAzZ1gdR3br80=obYgObuFg@mail.gmail.com>
-References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
- <20260906194438.93046-4-gilles.grimaud@univ-lille.fr>
- <CAFEAcA_O=k4=9Y1tnmuv0_Bfn8rfAzZ1gdR3br80=obYgObuFg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
+ id 1x5oqE-0003bg-9V; Sun, 13 Sep 2026 14:22:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=sayyadumar.com; s=default2511; h=Cc:To:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Message-Id:Date:Subject:From:Sender:Reply-To:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References;
+ bh=gFS9Xb1WO+z2ZPqHNl0TD1839UvVvx8FCWk1gWi530M=; b=qGAHV0CAUEy+C/a52adGBj1ize
+ eZO6ACfMA8hgAWonpsh3OppZcl0dScFRCIWWVFIVFtIfPaZ+YrRaVunHi6iI8T6QdPxNMXQlFf0I/
+ HCBRP1d0F5b9TuDX85tABL1z/OjTNPLFcX3KVOS+cpvDZXX6j70hywZVOCbGX5ktIVlvvn+z4R1xg
+ wLsW/CKzOR8wXYvCbYPgtK4B2gVlGMxJ8EeovB/63Noin+2x8Foi37XBVi8RsO4oWKrJYdQrWUpFs
+ aO6fqO8mev6RXeYCIvbTbIwQCn+uSoAr8QIzTYowxk5RmQFIDCZ1X5Gqnn263iUbF8UNnpzbiFqtZ
+ 50rlNlOA==;
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+ by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
+ id 1x5oq5-000LWg-1w; Sun, 13 Sep 2026 20:22:05 +0200
+Received: from localhost ([127.0.0.1])
+ by sslproxy07.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
+ id 1x5oq5-000PM1-0b; Sun, 13 Sep 2026 20:22:05 +0200
+From: Sayyad Mahammad Umar <contact@sayyadumar.com>
+Subject: [PATCH 0/2] target/rx: add RXv2/RXv3 CPU support
+Date: Sun, 13 Sep 2026 20:21:04 +0200
+Message-Id: <20260913-umar-rx-series-v1-0-5a5841a5d1e9@sayyadumar.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMyw5AQAxA0V+RrjUZjxB+RSyUDpV4pINIxL8bL
+ M/i3gscq7CDMrhA+RAny+wRhQG0QzP3jNJ5Q2zizBRRgvvUKOqJf4eGLJHljEyego9WZSvnN6z
+ q326nkdvtvcB9P6ICeSpyAAAA
+X-Change-ID: 20260913-umar-rx-series-0bfbbfe6b074
+To: qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>, 
+ qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789323724; l=2862;
+ i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
+ bh=9lk5zmMne3zlIbO22nryvFD35xytV/b00ZAjDNaaGzw=;
+ b=d1PXdbbIBJN3tLiUms6MpmqrLXyD742T2ejcnx7nOB0U+84yGmpYN5qb99M28ux6Vu4Mr/5Nb
+ mv81xQBQ+stAoMB4i6V58duWX2ZhQEYIctp/PlWqUv25UAOUo+UC8W/
+X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
+ pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28122/Sun Sep 13 08:26:25 2026)
+Received-SPF: pass client-ip=85.10.213.182;
+ envelope-from=contact@sayyadumar.com; helo=www675.your-server.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 13 Sep 2026 15:49:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,24 +86,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+This series extends the RX target with RXv2 and RXv3 CPU support,
+forming the foundation for the RX65N, RX651, and RX72M machine models.
 
-Thanks, that split makes sense.
+The first patch adds the CPU definitions, instruction support, and
+translator changes required by the newer RX cores.
 
-For v4 I will replace this patch with four focused changes:
+The second patch adds the initial RX machine and peripheral support.
 
-* gate the RBAR and RASR alias registers on ARM_FEATURE_M_MAIN, using
-  the case layout you suggested so this also covers v8-M Baseline;
-* make the TEX bits RES0 for v6-M;
-* fix the minimum PMSAv7 region size validation for all affected
-  profiles: v7-R, v6-M and v7-M; and
-* enable the existing PMSAv7 state, property, reset, migration and
-  translation paths for non-v8 M-profile CPUs.
+Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
+---
+Sayyad Mahammad Umar (2):
+      target/rx: add RXv2 and RXv3 CPU support
+      hw/rx: add common RX peripherals
 
-The dedicated PMSAv8 path will remain selected first. I will retain the
-other condition changes that you confirmed are correct and add focused
-tests for the register layout and region size behavior.
+ MAINTAINERS                           |   20 +
+ hw/adc/renesas_s12ad.c                |  324 +++++++++
+ hw/dma/renesas_rx_dmac.c              |  317 +++++++++
+ hw/dma/renesas_rx_dtc.c               |  169 +++++
+ hw/gpio/renesas_rx_gpio.c             |  256 +++++++
+ hw/misc/renesas_rx_crc.c              |  219 ++++++
+ hw/misc/renesas_rx_fcu.c              |  985 ++++++++++++++++++++++++++
+ hw/misc/renesas_rx_romcache.c         |  139 ++++
+ hw/misc/rx65n_sysclk.c                |  190 +++++
+ hw/net/renesas_etherc.c               |  955 +++++++++++++++++++++++++
+ hw/rtc/renesas_rx_rtc.c               |  330 +++++++++
+ hw/ssi/renesas_rspi.c                 |  319 +++++++++
+ hw/timer/renesas_mtu3.c               |  509 ++++++++++++++
+ hw/watchdog/renesas_rx_wdt.c          |  193 ++++++
+ include/hw/adc/renesas_s12ad.h        |   61 ++
+ include/hw/dma/renesas_rx_dmac.h      |   57 ++
+ include/hw/dma/renesas_rx_dtc.h       |   42 ++
+ include/hw/gpio/renesas_rx_gpio.h     |   64 ++
+ include/hw/misc/renesas_rx_crc.h      |   30 +
+ include/hw/misc/renesas_rx_fcu.h      |  191 +++++
+ include/hw/misc/renesas_rx_romcache.h |   30 +
+ include/hw/misc/rx65n_sysclk.h        |   37 +
+ include/hw/net/renesas_etherc.h       |  109 +++
+ include/hw/rtc/renesas_rx_rtc.h       |   52 ++
+ include/hw/ssi/renesas_rspi.h         |   61 ++
+ include/hw/timer/renesas_mtu3.h       |   73 ++
+ include/hw/watchdog/renesas_rx_wdt.h  |   48 ++
+ target/rx/cpu-param.h                 |    3 +
+ target/rx/cpu-qom.h                   |    2 +
+ target/rx/cpu.c                       |   57 +-
+ target/rx/cpu.h                       |  124 ++++
+ target/rx/disas.c                     |  383 ++++++++++-
+ target/rx/gdbstub.c                   |   44 +-
+ target/rx/helper.c                    |   56 +-
+ target/rx/helper.h                    |   22 +
+ target/rx/insns.decode                |  125 +++-
+ target/rx/meson.build                 |    6 +-
+ target/rx/op_helper.c                 |  357 ++++++++++
+ target/rx/translate.c                 | 1225 ++++++++++++++++++++++++++-------
+ 39 files changed, 7873 insertions(+), 311 deletions(-)
+---
+base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+change-id: 20260913-umar-rx-series-0bfbbfe6b074
 
-Thanks,
-Gilles
+Best regards,
+--  
+Sayyad Mahammad Umar <contact@sayyadumar.com>
+
 
