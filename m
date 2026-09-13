@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780B3C88E64
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 06:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9162AC88E40
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 06:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5dei-0000My-6D; Sun, 13 Sep 2026 02:25:36 -0400
+	id 1x5dev-0000Oq-9V; Sun, 13 Sep 2026 02:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1x5deg-0000Mk-8O
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:34 -0400
-Received: from va-1-113.ptr.blmpb.com ([209.127.230.113])
+ id 1x5det-0000OT-Em
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:47 -0400
+Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1x5dec-0002bO-87
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:34 -0400
+ id 1x5deq-0002o3-TU
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1789280711; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1789280740; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=upX7UvbmyKfqgcLdufnNMRn5mdDyBclYlYtOJ3o7O9I=;
- b=jOnKbhhv39dehi1t7cuR60M5XVYvSHbPiWlwyKeGGtkTD2d9GAz/ne6CikSvGB77GyejiZ
- 0vuFaE8vnF1sTKPopsJrY9tathKs8cnMvG3TocxlELELEImobfa73Gg69rZGNoGsCD5wGr
- IMuXoIouCO1BsBYXepI+GLc7QLSnP+Z8MxWHgvx14DftP2MeGpHZUFd+pEJcVyUCuFz3Em
- lDmPcmKha4xRKp3v3cMYuAzcjSfzY1ACqRoZ5rb84FjO0RkYjq1FJ2DqDso1PHFJNvbyBY
- cIX+svEYyq66G6c0bEpLSTHXCjHXD5W8hfC5fv0QhqgCVMtuEs2dDg321+3KAQ==
-From: "Yanfei Xu" <yanfei.xu@bytedance.com>
-Date: Sun, 13 Sep 2026 14:24:51 +0800
-X-Lms-Return-Path: <lba+26aa641c5+eb02cc+nongnu.org+yanfei.xu@bytedance.com>
-Content-Transfer-Encoding: 7bit
-X-Mailer: git-send-email 2.20.1
-To: <qemu-devel@nongnu.org>, <peterx@redhat.com>
+ bh=hjUCxRH7owdhiSIR0fePXWNWgjxCC/rztZABGwgn0Wo=;
+ b=pvNJWbWDLFmKw7RjMiNrHP4bdoBRDnW2XUVCyW+MR+V54GlXnSvU8DGVs4KxlxXNAsrnZY
+ rHYZKqj65ZJOFcxBCZIzYtyZeEu12iomBPFNdiu5tGTMUtTU6zUN4FdGosOLOx/4FNltpd
+ 2u2gSMqtV+Ir609RdJsBpeY77khfUloaTWXa3Q5nREp8MmajDxCT5T55ZLIJhDI/TeaNxD
+ Y0vN5zRRDcvuCtqCRzuuyyYIlqPL1VOZ+PGBIz+w2Ih7ayr5J0ikyksSTLSeaAJEBtthYx
+ xkul5bxq7Pt4p5iqifgR+8rz/A/hOk4Oh1tr2eBtsRJp0bdUZF9KxugAn9+fhw==
 Mime-Version: 1.0
-Subject: [PATCH v3 0/4] migration/rdma: Allow multiple writes per chunk
-Message-Id: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+Content-Transfer-Encoding: 7bit
+X-Lms-Return-Path: <lba+26aa641e2+0f31a6+nongnu.org+yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
 X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
+References: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+From: "Yanfei Xu" <yanfei.xu@bytedance.com>
+Subject: [PATCH v3 3/4] migration/rdma: Allow multiple in-flight writes per
+ chunk
+Date: Sun, 13 Sep 2026 14:24:54 +0800
 Content-Type: text/plain; charset=UTF-8
+To: <qemu-devel@nongnu.org>, <peterx@redhat.com>
 Cc: <farosas@suse.de>, <lizhijian@fujitsu.com>, <isyanfei.xu@gmail.com>, 
  <jinpu.wang@cloud.ionos.com>, "Yanfei Xu" <yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=209.127.230.113;
- envelope-from=yanfei.xu@bytedance.com; helo=va-1-113.ptr.blmpb.com
+Message-Id: <20260913062455.940447-4-yanfei.xu@bytedance.com>
+In-Reply-To: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=209.127.230.112;
+ envelope-from=yanfei.xu@bytedance.com; helo=va-1-112.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -66,80 +69,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series improves RDMA migration throughput during iterative precopy
-and the iterable stop-copy phase by allowing multiple writes to be in
-flight for the same registration chunk.
+qemu_rdma_write_one() waits for an earlier write that shares the same
+registration chunk, even when the dirty ranges do not overlap.  This
+serializes sparse writes and leaves send queue capacity unused.
 
-RDMA tracks RAM in registration chunks.  During the final iterable
-transfer, workloads can leave many scattered 4 KiB dirty pages, with
-multiple pages falling into the same chunk.  The current code waits for
-an earlier write to a chunk to complete before posting the next one.
-These serial completion waits can leave send queue capacity unused and
-limit RDMA bandwidth, increasing downtime.
+RAM round notifiers now provide the completion barrier before a newer
+page version can be sent, and the obsolete unregister path no longer
+requires per-chunk serialization.  Remove the wait.  The global nb_sent
+count continues to manage CQ and send queue resources.
 
-A ram_save_iterate() call can stop due to rate limiting before the RAM
-scanner completes a full round.  Therefore, it is not the correct
-boundary for ordering page versions.
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+---
+ migration/rdma.c       | 19 +------------------
+ migration/trace-events |  1 -
+ 2 files changed, 1 insertion(+), 19 deletions(-)
 
-Add a return-valued notifier at the point where the RAM scanner wraps to
-the first RAMBlock.  Convert multifd's existing per-round
-synchronization to use this notifier, and register an RDMA notifier that
-flushes buffered writes and drains outstanding completions at the same
-boundary.
-
-This provides the explicit completion barrier before a newer version of
-a page can be sent.  The per-chunk wait is therefore unnecessary and is
-removed, together with the now-unused transit bitmap.
-
-The test configuration is:
-
-  RDMA chunk size:       32 MiB
-  Guest:                 32 vCPUs, 128 GiB RAM
-  Test runs:             10
-  Maximum HCA bandwidth: 100 Gbps
-  Workload:              idle
-
-
-Average result(pin-all=true)    Before       After
-  pin-all is true
-  Downtime                      396.7 ms     345.7 ms        ~12.9% improve
-  Final iterable bandwidth      9952.0 MiB/s 11639.10 MiB/s  ~17.0% improve
-
-
-Average results(pin-all=false)  Before       After
-  pin-all is false
-  Downtime                      248.7 ms     191.1 ms        ~23.2% improve
-  Final iterable bandwidth      5605.1 MiB/s 9826.0 MiB/s    ~75.3% improve
-
-"Final iterable bandwidth" is the bandwidth measured during
-qemu_savevm_state_complete_precopy_iterable().  Non-iterable data is
-not transferred using RDMA Write.
-
-
-Changes in v3:
-
-  - Optimze comments about RAMRoundNotifyData in patch1
-  - Collect Reviewed-by tags
-
-Changes in v2 (Suggested by Peter):
-
-  - Add a generic RAM round synchronization notifier.
-  - Drain RDMA writes at the RAM scan-round boundary.
-  - Remove the per-chunk wait and the unused transit bitmap.
-
-Yanfei Xu (4):
-  migration/ram: Add RAM round synchronization notifiers
-  migration/rdma: Drain writes at RAM round boundaries
-  migration/rdma: Allow multiple in-flight writes per chunk
-  migration/rdma: Remove unused transit bitmap
-
- migration/multifd-nocomp.c | 24 ++++++++++
- migration/ram.c            | 45 +++++++++++++++---
- migration/ram.h            | 12 +++++
- migration/rdma.c           | 97 ++++++++++++++++++++------------------
- migration/trace-events     |  5 +-
- 5 files changed, 128 insertions(+), 55 deletions(-)
-
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 16e9c6c30e..6f9b474e29 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -1740,7 +1740,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+     struct ibv_sge sge;
+     struct ibv_send_wr send_wr = { 0 };
+     struct ibv_send_wr *bad_wr;
+-    int reg_result_idx, ret, count = 0;
++    int reg_result_idx, ret;
+     uint64_t chunk, chunks;
+     uint64_t chunk_size = migrate_rdma_chunk_size();
+     uint8_t *chunk_start, *chunk_end;
+@@ -1772,23 +1772,6 @@ retry:
+ 
+     chunk_end = ram_chunk_end(block, chunk + chunks);
+ 
+-
+-    while (test_bit(chunk, block->transit_bitmap)) {
+-        (void)count;
+-        trace_rdma_write_one_block(count++, current_index, chunk,
+-                sge.addr, length, rdma->nb_sent, block->nb_chunks);
+-
+-        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+-
+-        if (ret < 0) {
+-            error_setg(errp, "Failed to Wait for previous write to complete "
+-                    "block %d chunk %" PRIu64
+-                    " current %" PRIu64 " len %" PRIu64 " %d",
+-                    current_index, chunk, sge.addr, length, rdma->nb_sent);
+-            return -1;
+-        }
+-    }
+-
+     if (!rdma->pin_all) {
+         if (!block->remote_keys[chunk]) {
+             /*
+diff --git a/migration/trace-events b/migration/trace-events
+index a9b02b3113..70d083f3fe 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -243,7 +243,6 @@ rdma_register_odp_mr(const char *name) "Try to register On-Demand Paging memory
+ rdma_advise_mr(const char *name, uint32_t len, uint64_t addr, const char *res) "Try to advise block %s prefetch at %" PRIu32 "@0x%" PRIx64 ": %s"
+ rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
+ rdma_write_flush(int sent) "sent total: %d"
+-rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
+ rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
+ rdma_write_one_queue_full(void) ""
+ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
 -- 
 2.20.1
 
