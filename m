@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D0ABC88E63
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 18:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2841C88E63
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 18:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5omM-0005kF-VS; Sun, 13 Sep 2026 14:18:15 -0400
+	id 1x5omH-0005jC-NK; Sun, 13 Sep 2026 14:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1x5omF-0005jF-Qp
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 14:18:08 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1x5omB-0005i8-TE
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 14:18:04 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1x5omC-00023X-QN
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 14:18:07 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-3a49a40209dso18314701fa.0
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 11:18:04 -0700 (PDT)
+ id 1x5om8-00022G-B5
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 14:18:03 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-5b4ae0b3308so1849584e87.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 11:17:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789323483; x=1789928283; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789323478; x=1789928278; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:sender:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=037ghbzE2bPvmnmyrmQ1l6ZIMGVWV/tkoAnyS7laa2Q=;
- b=sotV4Q3d4iUIyVAyX7fuTSbzpNK2uQ4qhkLBxTWtCRDou8EM5LkEGENFij40ZNa+CY
- rhrVE/XDAJugnHW/kTUmoTO6yUu4VMAONVWKOvaTHPKQkVpJ0PYts2uGpbTAnJKSilYP
- duVPobKA20DzVMBIG5EbKiin9UXtcUxi0bQ8Nq7B6+8PU9IU3rzD2cZP0gMqcbnghTG8
- qJt0K4r+bhBExObSK8G4tnPSWfFvarQYAdJfMUjoD12tAt7NUbVIx6GCGWQ3NkCmH0bz
- zBZQQfTovefGMn/BWev3vxRIm2eY3/t/Z9Abm05HaF+oiLeSfipeRMxnqUB2oqB6hEGj
- PPew==
+ bh=2ZFJZSmFp9TINvgwHfxhthoVrJnSoW6jxEHSg4X9oaI=;
+ b=IRolUqfAf8JJATzPs0SMAZRIFhgC7RRNwcNAu8ZdCltIMOKR3WzxSqGLEJGUPmBXJs
+ 0YE3WJRbHeCSTuUAIyEnD9Wy0sOPeYdg3nO/UutAXNJr6C7d6hq8EB47ZOdl8mF2kOXj
+ U4eDG6uEWV6PKnsdmAgHvjGkPdUr6NbZECC0Eq6ZjpwkjHu1PeQe4mBfEzzMy6SebOyA
+ DZcyW8K1rYWLHb1hOOrmte1w4vaA2QBIbEAYiTl04aSPIfyc/D0S6bTNrxZGCgLG1Njh
+ CtTPnrTxajw6qEgt+5kLl73y75VQOd4W8Rxh5n6SgfvOrdo8dCaMGNl0yNgt3iBZ65od
+ rqQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789323483; x=1789928283;
+ d=1e100.net; s=20251104; t=1789323478; x=1789928278;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=037ghbzE2bPvmnmyrmQ1l6ZIMGVWV/tkoAnyS7laa2Q=;
- b=Er/Lt1qXmFwBnSzwzI6qTm2sdLqG9zWpXo7FmWP8/dbanZP3irdf8Og0qCL0VG4Tbr
- Z4FinKKmi6MWpyVnu80XTuR+7tAI8A09EbtnTy+uQwW34Hhdbfyv0KXtZemLHsrAP55P
- cuExH5c/Hac6pLfDvRIIhpBcFOVhp1+4mTv3kvVGWMCX/VdAGyQne9XhhKUOpUM+fhJI
- DMf+rexyxSMW1wa4o8Qx4QHEF1kbF+507xHp702TIlefr99lPKxTwASVyWfAV0vrislJ
- ei4XiaF1q2hvpNA/ePZf9pAgXI6SOHSkEb+aN98FmC5/vPZjRzgIjtTtSijBk2HNUqkC
- lO3g==
-X-Gm-Message-State: AFuF++mOwBI5eHVePw5KXicNfYGIEYRDOH5uF78Y4NwDjCjny8NxAC12
- Rr9ntPB781dUcFewB2r570pDeAxMdlW07JWej0QFW7mshGksBNjCWVUKYJqVOabguKU=
-X-Gm-Gg: AYBFou17cuxbHL+AfrNL4LUliOYyfkQfhtnV2RF9bqCDJPXwyVNpK+v+1IGZdmU3WIH
- qgMMxx0/O3ELg8rZgR2bo7BlryPiwfv3r2seIKwue3t/Ec6sNfufm8I4M4wtV1kt+9pk7AtAOSZ
- 1XQkWVv2f5LPdxfT0RCsGAWa01+YY3efzPBy25izPGtN1Q1+aalY0eJNsEJcVTNhtM7wqIHSkQa
- aiYoe+ffZ5KvCO+DorFjZcXNJQU35yn1ChLFgLupcMRJQZFuoXn3zZhavW137jeywYemSVUn/pZ
- SmT5mMeWonJok2lMl9X3sxWl4HieCe/X5ccLrFn+488Dhvts3rqWBKq+PuH2IYbofCyF6ahJ5yd
- rBa1gRyYCy+zYGt8ER9/8Kz1tmublMoKrpvJGMcOFzxvekSPNSxcSQ/VwdjABcGx2UGKGcm7Jd5
- w5FOXJzon/JFIZS7ltkAjiRBolizWd5OR5vPvgMBR0SJLzsqg/UkKF1ygmgeGoFL8M4N0vzyy9P
- sTJIrw3pTADY5njRRVUdQMGOer89Ha8HNL2c4dygzbU2e9S+lA82oSqwwKGEo9CIgeAeA==
-X-Received: by 2002:a2e:bc89:0:b0:3a4:759f:e2c2 with SMTP id
- 38308e7fff4ca-3a5be1098eemr3759511fa.2.1789323482411; 
- Sun, 13 Sep 2026 11:18:02 -0700 (PDT)
+ bh=2ZFJZSmFp9TINvgwHfxhthoVrJnSoW6jxEHSg4X9oaI=;
+ b=p66NwMijjv2F1VdopNTXKzqHcrv1id+faiLqxqJ0Klh+mLEDcu4/ZQeVKOFcSOCa3x
+ N5+P1IJjRz5H9lr7P4vR0i+KCSNWj4vU4YEBmfPrLDm/MhsLgBNQyTf9xoDABiIFEO/k
+ kfDPO/uzPvgeJNLCLmIECWHAh95MNMoCfzaEJHRwtmiLWB+zH3piEQeEJ16K5U8YXeDh
+ dkAgZ7sAtL3MppYLZP22oygOhl2eZXHCVx8ePIO5v0Crreol7Ptn7ebe0HMuagy+Mp/k
+ b5sl+hokiVdbHQzj8T+HqtHFfcPC+JkVfUOD5JCGTo7rEOp3vuT2UkUczpY3vf0lCquu
+ drVg==
+X-Gm-Message-State: AFuF++kzDNbobZmed/8/5c8Uh9NDCsvorDf99BZ1RGt+ZREwvrA9K7Ad
+ 79y1Dxr8Qm862VHh0C4lbbDVKsxOO0Nste5zf2A0/sTxKjSw9bZD41iy7N+nrn44hm8=
+X-Gm-Gg: AYBFou38UXbz4MO95isUolkvNIKxZy0uDl+KZVkA8wKG4VBHpkwezGsLz06CiiQnf9v
+ qMI5mjxUt0/VqyAexhgMgyNONfB7dk9UZ3JbGXhO4Mx59J/rdhC1taz9A6yF12ZHvVgnaTcgd+T
+ 2KUKwaD8m1LyFZW0GMXepGN+2QPxAArsOcljQ6KOVp0PHV+sc2eYtTX8Yzhi4UbuIsyjC01dn5g
+ ZSSpfz4yIctux0lEOEsYiWMnhNlMekLSuLqz57jYGu/Bu/ws2OfMSJXYCw+uYMoX1ifWwl5ZywM
+ LHQJgaHX9VztXQHdy0IbSrNlCha1c/W1JIT/jY22R9cvFG/fxkyQncTJPTtdcKqu4KEwAV/LHkD
+ AriYSnl3QpFQ+9buy+r9WzZy/9oGQw/8i0Sg9FEfNPMp6oK/z1F75yAsLZoq+HtW+v62KQu/kEW
+ 224T7joclzvTYEb/Ta1kZeQbME6LZNMyQh3k3Y3Y7lZNuWWLjJHYtpGDm70XkEU7Va0KtWJhvJ/
+ uqioU7P6A0Aasw+dLLR0Tag6P5gGbCnkGDXhprYtTWKXXEGI3a+aURbzeU=
+X-Received: by 2002:a2e:bc10:0:b0:3a5:a4e4:879a with SMTP id
+ 38308e7fff4ca-3a5a52a720fmr16539571fa.14.1789323477760; 
+ Sun, 13 Sep 2026 11:17:57 -0700 (PDT)
 Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
  [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3a5a3326aecsm21122951fa.19.2026.09.13.11.17.59
+ 38308e7fff4ca-3a5a3326aecsm21122951fa.19.2026.09.13.11.17.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Sep 2026 11:18:00 -0700 (PDT)
+ Sun, 13 Sep 2026 11:17:57 -0700 (PDT)
 From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Date: Sun, 13 Sep 2026 20:17:32 +0200
-Subject: [PATCH v3 3/3] tests/qtest: Allwinner GPIO tests
+Date: Sun, 13 Sep 2026 20:17:30 +0200
+Subject: [PATCH v3 1/3] hw/gpio: Allwinner A10 GPIO emulation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260913-allwinner-gpio-v3-3-a9affa474b3b@gmail.com>
+Message-Id: <20260913-allwinner-gpio-v3-1-a9affa474b3b@gmail.com>
 References: <20260913-allwinner-gpio-v3-0-a9affa474b3b@gmail.com>
 In-Reply-To: <20260913-allwinner-gpio-v3-0-a9affa474b3b@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,8 +83,8 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Jack wang <163wangjack@gmail.com>, 
  Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -107,37 +107,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add Allwinner GPIO set of qtests to validate functionality.
-Tests cover input and output port setting, as well as interrupt
-functionality.
+This patch implements Allwinner A10 GPIO peripheral emulation.
+
+The emulation focuses on input/output and interrupt functionality,
+whereas the drive and pull up/down functionality is not emulated.
 
 Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 ---
- MAINTAINERS                       |   1 +
- tests/qtest/allwinner-gpio-test.c | 535 ++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build           |   3 +-
- 3 files changed, 538 insertions(+), 1 deletion(-)
+ MAINTAINERS                           |   2 +
+ hw/gpio/Kconfig                       |   3 +
+ hw/gpio/allwinner-gpio.c              | 449 ++++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build                   |   1 +
+ hw/gpio/trace-events                  |   6 +
+ include/hw/gpio/allwinner-gpio-regs.h | 227 +++++++++++++++++
+ include/hw/gpio/allwinner-gpio.h      |  41 ++++
+ 7 files changed, 729 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index b453edc820..da6b588eca 100644
+index 5bf895732c..b453edc820 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -749,6 +749,7 @@ F: hw/misc/axp2xx.c
- F: hw/gpio/allwinner-gpio.c
- F: include/hw/gpio/allwinner-gpio*
+@@ -746,6 +746,8 @@ F: include/hw/*/allwinner*
+ F: hw/arm/cubieboard.c
+ F: docs/system/arm/cubieboard.rst
+ F: hw/misc/axp2xx.c
++F: hw/gpio/allwinner-gpio.c
++F: include/hw/gpio/allwinner-gpio*
  F: tests/functional/arm/test_cubieboard.py
-+F: tests/qtest/allwinner-gpio-test.c
  
  Allwinner-h3
- M: Niek Linnenbank <nieklinnenbank@gmail.com>
-diff --git a/tests/qtest/allwinner-gpio-test.c b/tests/qtest/allwinner-gpio-test.c
+diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
+index fcc7c70bd5..ea0fb72b40 100644
+--- a/hw/gpio/Kconfig
++++ b/hw/gpio/Kconfig
+@@ -33,3 +33,6 @@ config ZAURUS_SCOOP
+ 
+ config CADENCE_GPIO
+     bool
++
++config ALLWINNER_GPIO
++    bool
+diff --git a/hw/gpio/allwinner-gpio.c b/hw/gpio/allwinner-gpio.c
 new file mode 100644
-index 0000000000..c048f0f88b
+index 0000000000..2823cf4c19
 --- /dev/null
-+++ b/tests/qtest/allwinner-gpio-test.c
-@@ -0,0 +1,535 @@
++++ b/hw/gpio/allwinner-gpio.c
+@@ -0,0 +1,449 @@
 +/*
-+ *  Allwinner GPIO Tests
++ *  Allwinner GPIO Emulation
 + *
 + *  Copyright (C) 2026 Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 + *
@@ -145,546 +162,749 @@ index 0000000000..c048f0f88b
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "libqtest-single.h"
++#include "hw/gpio/allwinner-gpio.h"
++#include "hw/gpio/allwinner-gpio-regs.h"
++#include "hw/core/irq.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "trace.h"
 +
-+#include "include/hw/gpio/allwinner-gpio-regs.h"
++#define REG_INDEX(offset)         (offset / sizeof(uint32_t))
 +
-+#define AW_A10_GPIO_BASE 0x01c20800
-+#define AW_A10_IRQ_LINE 28
-+
-+/* Port n configure register 0 */
-+#define GPIO_Pn_CFG0_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG0(n))
-+/* Port n configure register 1 */
-+#define GPIO_Pn_CFG1_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG1(n))
-+/* Port n configure register 2 */
-+#define GPIO_Pn_CFG2_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG2(n))
-+/* Port n configure register 3 */
-+#define GPIO_Pn_CFG3_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG3(n))
-+/* Port n data register */
-+#define GPIO_Pn_DAT_ADDR(n)    (AW_A10_GPIO_BASE + GPIO_Pn_DAT(n))
-+/* Port n Multi-driving register 0 */
-+#define GPIO_Pn_DRV0_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_DRV0(n))
-+/* Port n Multi-driving register 1 */
-+#define GPIO_Pn_DRV1_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_DRV1(n))
-+/* Port n Pull register 0 */
-+#define GPIO_Pn_PUL0_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_PUL0(n))
-+/* Port n Pull register 1 */
-+#define GPIO_Pn_PUL1_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_PUL1(n))
-+/* PIO interrupt configure register 0 */
-+#define GPIO_INT_CFG0_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG0)
-+/* PIO interrupt configure register 1 */
-+#define GPIO_INT_CFG1_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG1)
-+/* PIO interrupt configure register 2 */
-+#define GPIO_INT_CFG2_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG2)
-+/* PIO interrupt configure register 3 */
-+#define GPIO_INT_CFG3_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG3)
-+/* PIO interrupt control register */
-+#define GPIO_INT_CTL_ADDR      (AW_A10_GPIO_BASE + GPIO_INT_CTL)
-+/* PIO interrupt status register */
-+#define GPIO_INT_STA_ADDR      (AW_A10_GPIO_BASE + GPIO_INT_STA)
-+/* PIO interrupt debounce register */
-+#define GPIO_INT_DEB_ADDR      (AW_A10_GPIO_BASE + GPIO_INT_DEB)
-+/* SDRAM Pad Multi-driving register */
-+#define SDR_PAD_DRV_ADDR       (AW_A10_GPIO_BASE + SDR_PAD_DRV)
-+/* SDRAM Pad Pull register */
-+#define SDR_PAD_PUL_ADDR       (AW_A10_GPIO_BASE + SDR_PAD_PUL)
-+
-+static inline uint32_t read_cfg_addr(QTestState *s, int port, int pin)
-+{
-+    uint32_t addr = 0;
-+
-+    if (pin >= 24) {
-+        addr = GPIO_Pn_CFG3_ADDR(port);
-+    } else if (pin >= 16) {
-+        addr = GPIO_Pn_CFG2_ADDR(port);
-+    } else if (pin >= 8) {
-+        addr = GPIO_Pn_CFG1_ADDR(port);
-+    } else {
-+        addr = GPIO_Pn_CFG0_ADDR(port);
++#define AW_GPIO_SET(port) \
++    static inline void allwinner_gpio_set_##port(void *opaque, \
++                                                 int line, \
++                                                 int level) { \
++        allwinner_gpio_set(opaque, port, line, level); \
 +    }
-+    return addr;
-+}
 +
-+static inline uint32_t read_int_cfg_addr(QTestState *s, int irq)
++static void allwinner_gpio_set(void *opaque, int port, int line, int level);
++
++AW_GPIO_SET(GPIO_PA);
++AW_GPIO_SET(GPIO_PB);
++AW_GPIO_SET(GPIO_PC);
++AW_GPIO_SET(GPIO_PD);
++AW_GPIO_SET(GPIO_PE);
++AW_GPIO_SET(GPIO_PF);
++AW_GPIO_SET(GPIO_PG);
++AW_GPIO_SET(GPIO_PH);
++AW_GPIO_SET(GPIO_PI);
++
++static void (*AW_GPIO_IN_HANDLER[AW_GPIO_PORTS_NUM]) (void *opaque,
++                                                      int line,
++                                                      int level) = {
++    allwinner_gpio_set_GPIO_PA,
++    allwinner_gpio_set_GPIO_PB,
++    allwinner_gpio_set_GPIO_PC,
++    allwinner_gpio_set_GPIO_PD,
++    allwinner_gpio_set_GPIO_PE,
++    allwinner_gpio_set_GPIO_PF,
++    allwinner_gpio_set_GPIO_PG,
++    allwinner_gpio_set_GPIO_PH,
++    allwinner_gpio_set_GPIO_PI,
++};
++
++static char *allwinner_gpio_get_regname(unsigned offset)
 +{
-+    uint32_t addr = 0;
-+
-+    if (irq >= 24) {
-+        addr = GPIO_INT_CFG3_ADDR;
-+    } else if (irq >= 16) {
-+        addr = GPIO_INT_CFG2_ADDR;
-+    } else if (irq >= 8) {
-+        addr = GPIO_INT_CFG1_ADDR;
-+    } else {
-+        addr = GPIO_INT_CFG0_ADDR;
++    switch (offset) {
++    case 0 ... GPIO_Pn_PUL1(GPIO_PI):
++    {
++        const char *regname = "?";
++        switch (offset % PORT_STRIDE) {
++        case CFG0:
++            regname = "CFG0";
++            break;
++        case CFG1:
++            regname = "CFG1";
++            break;
++        case CFG2:
++            regname = "CFG2";
++            break;
++        case CFG3:
++            regname = "CFG3";
++            break;
++        case DAT:
++            regname = "DAT";
++            break;
++        case DRV0:
++            regname = "DRV0";
++            break;
++        case DRV1:
++            regname = "DRV1";
++            break;
++        case PUL0:
++            regname = "PUL0";
++            break;
++        case PUL1:
++            regname = "PUL1";
++            break;
++        }
++        return g_strdup_printf("%s:%s",
++                               portname(offset / PORT_STRIDE),
++                               regname);
 +    }
-+    return addr;
++    case GPIO_INT_CFG0:
++        return g_strdup("INT_CFG0");
++    case GPIO_INT_CFG1:
++        return g_strdup("INT_CFG1");
++    case GPIO_INT_CFG2:
++        return g_strdup("INT_CFG2");
++    case GPIO_INT_CFG3:
++        return g_strdup("INT_CFG3");
++    case GPIO_INT_CTL:
++        return g_strdup("INT_CTL");
++    case GPIO_INT_STA:
++        return g_strdup("INT_STA");
++    case GPIO_INT_DEB:
++        return g_strdup("INT_DEB");
++    default:
++        return g_strdup("[?]");
++    }
 +}
 +
-+static void update_cfg_reg(QTestState *s, int port, int pin, AWGPIOCfg val)
++static inline bool gpio_is_output(AWPortMap *port, uint32_t pin)
 +{
-+    uint32_t addr = read_cfg_addr(s, port, pin);
-+    uint32_t cfg = qtest_readl(s, addr);
-+    uint32_t offset = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-+
-+    cfg = deposit32(cfg, offset, CFG_PIN_STRIDE - 1, val);
-+    qtest_writel(s, addr, cfg);
++    uint32_t cfg_n = pin / CFG_PINS_PER_REG;
++    uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
++    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
++        CFG_OUTPUT_MASK);
 +}
 +
-+static void assert_cfg_regval(QTestState *s, int port, int pin,
-+                              AWGPIOCfg pin_choice)
++static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
 +{
-+    uint32_t addr = read_cfg_addr(s, port, pin);
-+    uint32_t cfg = qtest_readl(s, addr);
-+    uint32_t offset = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-+
-+    g_assert_cmphex(extract32(cfg,
-+                              offset, CFG_PIN_STRIDE - 1), ==, pin_choice);
++    uint32_t cfg_n = pin / CFG_PINS_PER_REG;
++    uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
++    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
++        CFG_INPUT_MASK);
 +}
 +
-+static void update_data_reg(QTestState *s, int port, int pin, int val)
++static inline int int_ctl_cfg(AWGPIOState *s, int irq_line)
 +{
-+    uint32_t addr = GPIO_Pn_DAT_ADDR(port);
-+    uint32_t data = qtest_readl(s, addr);
-+
-+    data = deposit32(data, pin, 1, val);
-+    qtest_writel(s, addr, data);
++    unsigned int_cfg_n = s->regs[REG_INDEX(GPIO_INT_CFG0) + irq_line / 8];
++    return extract32(int_cfg_n,
++                     (irq_line % INT_CFG_IRQ_PER_REG) * INT_CFG_IRQ_STRIDE,
++                     INT_CFG_IRQ_STRIDE);
 +}
 +
-+static void assert_data_reg(QTestState *s, int port, int pin, int val)
++static inline void allwinner_gpio_update_int(AWGPIOState *s)
 +{
-+    uint32_t addr = GPIO_Pn_DAT_ADDR(port);
-+    uint32_t data = qtest_readl(s, addr);
-+
-+    g_assert_cmphex(extract32(data, pin, 1), ==, val);
++    qemu_set_irq(
++        s->irq,
++        !!(s->regs[REG_INDEX(GPIO_INT_CTL)] & s->regs[REG_INDEX(GPIO_INT_STA)])
++    );
 +}
 +
-+static void update_int_cfg_reg(QTestState *s, int irq, AWGPIOIrqCfg val)
++static void allwinner_gpio_set_int_line(AWGPIOState *s, int port,
++                                        int line, AWGPIOLevel level)
 +{
-+    uint32_t addr = read_int_cfg_addr(s, irq);
-+    uint32_t cfg = qtest_readl(s, addr);
-+    uint32_t offset = (irq % INT_CFG_IRQ_PER_REG) * INT_CFG_IRQ_STRIDE;
++    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
++    int irq_line = irq_nr(port, line);
++    bool raise_irq = false;
++    unsigned input_val;
++    int int_cfg;
 +
-+    cfg = deposit32(cfg, offset, INT_CFG_IRQ_STRIDE - 1, val);
-+    qtest_writel(s, addr, cfg);
++    /* Check if pin can actually trigger an interrupt */
++    if (irq_line == -1) {
++        return;
++    }
++
++    /* if this signal isn't configured as an input signal, nothing to do */
++    if (!gpio_is_input(&o->ports[port], line)) {
++        return;
++    }
++
++    /* Get current input value */
++    input_val = extract32(o->ports[port].dat, line, 1);
++    int_cfg = int_ctl_cfg(s, irq_line);
++
++    switch (int_cfg) {
++    case AW_GPIO_IRQ_CFG_RISING_EDGE:
++        if (!input_val && level) {
++            raise_irq = true;
++        }
++        break;
++    case AW_GPIO_IRQ_CFG_FALLING_EDGE:
++        if (input_val && !level) {
++            raise_irq = true;
++        }
++        break;
++    case AW_GPIO_IRQ_CFG_HIGH_LEVEL:
++        if (level) {
++            raise_irq = true;
++        }
++        break;
++    case AW_GPIO_IRQ_CFG_LOW_LEVEL:
++        if (!level) {
++            raise_irq = true;
++        }
++        break;
++    case AW_GPIO_IRQ_CFG_BOTH_EDGE:
++        if (input_val != level) {
++            raise_irq = true;
++        }
++        break;
++    default:
++        /* Unexpected */
++        break;
++    }
++
++    if (raise_irq) {
++        s->regs[REG_INDEX(GPIO_INT_STA)] |= 1u << irq_line;
++    }
 +}
 +
-+static void assert_int_cfg_regval(QTestState *s, int irq, AWGPIOIrqCfg irq_cfg)
++static void port_set_all_int_lines(AWGPIOState *s, int port)
 +{
-+    uint32_t addr = read_int_cfg_addr(s, irq);
-+    uint32_t cfg = qtest_readl(s, addr);
-+    uint32_t offset = (irq % INT_CFG_IRQ_PER_REG) * INT_CFG_IRQ_STRIDE;
++    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
 +
-+    g_assert_cmphex(extract32(cfg,
-+                              offset, INT_CFG_IRQ_STRIDE - 1), ==, irq_cfg);
++    for (int i = 0; i < AW_PINS_PER_PORT[port]; i++) {
++        AWGPIOLevel aw_level = extract32(o->ports[port].dat, i, 1);
++        allwinner_gpio_set_int_line(s, port, i, aw_level);
++    }
++
++    allwinner_gpio_update_int(s);
 +}
 +
-+static void test_reset_values(void)
++static void allwinner_set_all_int_lines(AWGPIOState *s)
 +{
-+    QTestState *s = qtest_init("-machine cubieboard");
++    for (int i = 0; i < AW_GPIO_PORTS_NUM; i++) {
++        port_set_all_int_lines(s, i);
++    }
++}
++
++static void allwinner_gpio_set(void *opaque, int port, int line, int level)
++{
++    AWGPIOState *s = AW_GPIO(opaque);
++    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
++    AWGPIOLevel aw_level = level ? AW_GPIO_LEVEL_HIGH : AW_GPIO_LEVEL_LOW;
++
++    if (gpio_is_input(&o->ports[port], line)) {
++
++        trace_allwinner_gpio_set(portname(port), line, aw_level);
++
++        allwinner_gpio_set_int_line(s, port, line, aw_level);
++        o->ports[port].dat = deposit32(o->ports[port].dat, line, 1, aw_level);
++    }
++    allwinner_gpio_update_int(s);
++}
++
++
++static inline void port_update_output_lines(AWGPIOState *s, uint32_t port)
++{
++    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
++
++    for (int pin = 0; pin < AW_PINS_PER_PORT[port]; pin++) {
++        if (gpio_is_output(&o->ports[port], pin)) {
++            qemu_set_irq(s->output[port][pin],
++                         !!(o->ports[port].dat & BIT_MASK(pin)));
++            trace_allwinner_gpio_out_pin(
++                portname(port), pin,
++                !!(o->ports[port].dat & BIT_MASK(pin)));
++         }
++        else {
++            qemu_irq_lower(s->output[port][pin]);
++        }
++    }
++}
++
++static inline void allwinner_gpio_update_all_output_lines(AWGPIOState *s)
++{
++    for (int port = 0; port < AW_GPIO_PORTS_NUM; port++) {
++        port_update_output_lines(s, port);
++    }
++}
++
++
++static uint64_t allwinner_gpio_read(void *opaque, hwaddr offset, unsigned size)
++{
++    AWGPIOState *s = AW_GPIO(opaque);
++    uint32_t reg_value = 0;
++    g_autofree char *regname = allwinner_gpio_get_regname(offset);
++
++    switch (offset) {
++    case 0 ... GPIO_Pn_PUL1(GPIO_PI):
++    case GPIO_INT_CFG0:
++    case GPIO_INT_CFG1:
++    case GPIO_INT_CFG2:
++    case GPIO_INT_CFG3:
++    case GPIO_INT_CTL:
++    case GPIO_INT_STA:
++    case GPIO_INT_DEB:
++        reg_value = s->regs[REG_INDEX(offset)];
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
++                      HWADDR_PRIx "\n", TYPE_AW_GPIO, __func__, offset);
++        break;
++    }
++
++    trace_allwinner_gpio_read(regname, reg_value);
++
++    return reg_value;
++}
++
++static void allwinner_port_write(AWGPIOState *s, hwaddr offset, uint64_t value)
++{
++    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
++    uint32_t port = offset / PORT_STRIDE;
++    uint32_t reg = offset % PORT_STRIDE;
++
++    switch (reg) {
++    case CFG0:
++        o->ports[port].cfg[0] =
++            value & GPIO_CFG0_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case CFG1:
++        o->ports[port].cfg[1] =
++            value & GPIO_CFG1_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case CFG2:
++        o->ports[port].cfg[2] =
++            value & GPIO_CFG2_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case CFG3:
++        o->ports[port].cfg[3] =
++            value & GPIO_CFG3_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case DAT:
++        o->ports[port].dat =
++            value & GPIO_DAT_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case DRV0:
++        o->ports[port].drv[0] =
++            value & GPIO_DRV0_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case DRV1:
++        o->ports[port].drv[1] =
++            value & GPIO_DRV1_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case PUL0:
++        o->ports[port].pul[0] =
++            value & GPIO_PUL0_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    case PUL1:
++        o->ports[port].pul[1] =
++            value & GPIO_PUL1_PINS_MASK(AW_PINS_PER_PORT[port]);
++        break;
++    }
++    port_update_output_lines(s, port);
++    port_set_all_int_lines(s, port);
++}
++
++static void allwinner_gpio_write(void *opaque, hwaddr offset, uint64_t value,
++                           unsigned size)
++{
++    AWGPIOState *s = AW_GPIO(opaque);
++    g_autofree char *regname = allwinner_gpio_get_regname(offset);
++
++    trace_allwinner_gpio_write(regname, value);
++
++    switch (offset) {
++    case 0 ... GPIO_Pn_PUL1(GPIO_PI):
++        allwinner_port_write(s, offset, value);
++        break;
++    case GPIO_INT_CFG0:
++    case GPIO_INT_CFG1:
++    case GPIO_INT_CFG2:
++    case GPIO_INT_CFG3:
++    case GPIO_INT_CTL:
++    case GPIO_INT_DEB:
++        s->regs[REG_INDEX(offset)] = value;
++        /* update interrupts */
++        allwinner_set_all_int_lines(s);
++        break;
++    case GPIO_INT_STA:
++        /* W1C */
++        s->regs[REG_INDEX(offset)] &= ~value;
++        allwinner_set_all_int_lines(s);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
++                      HWADDR_PRIx "\n", TYPE_AW_GPIO, __func__, offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps allwinner_gpio_ops = {
++    .read = allwinner_gpio_read,
++    .write = allwinner_gpio_write,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static const VMStateDescription vmstate_allwinner_gpio = {
++    .name = TYPE_AW_GPIO,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, AWGPIOState, AW_GPIO_REGS_NUM),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void allwinner_gpio_reset(DeviceState *dev)
++{
++    AWGPIOState *s = AW_GPIO(dev);
++    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
++
++    memset(s->regs, 0, AW_GPIO_IOSIZE);
 +
 +    for (int port = 0; port < AW_GPIO_PORTS_NUM; port++) {
-+        g_assert_cmphex(qtest_readl(s,
-+                                    GPIO_Pn_DRV0_ADDR(port)), ==,
-+                                    aw_gpio_port_reset[port].drv[0]);
-+        g_assert_cmphex(qtest_readl(s,
-+                                    GPIO_Pn_DRV1_ADDR(port)), ==,
-+                                    aw_gpio_port_reset[port].drv[1]);
-+        g_assert_cmphex(qtest_readl(s,
-+                                    GPIO_Pn_PUL0_ADDR(port)), ==,
-+                                    aw_gpio_port_reset[port].pul[0]);
-+        g_assert_cmphex(qtest_readl(s,
-+                                    GPIO_Pn_PUL1_ADDR(port)), ==,
-+                                    aw_gpio_port_reset[port].pul[1]);
++        o->ports[port].drv[0] = aw_gpio_port_reset[port].drv[0];
++        o->ports[port].drv[1] = aw_gpio_port_reset[port].drv[1];
++        o->ports[port].pul[0] = aw_gpio_port_reset[port].pul[0];
++        o->ports[port].pul[1] = aw_gpio_port_reset[port].pul[1];
 +    }
-+
-+    qtest_quit(s);
 +}
++
++static void allwinner_gpio_realize(DeviceState *dev, Error **errp)
++{
++    AWGPIOState *s = AW_GPIO(dev);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &allwinner_gpio_ops, s,
++                          TYPE_AW_GPIO, AW_GPIO_IOSIZE);
++
++    for (int port = 0; port < AW_GPIO_PORTS_NUM; port++) {
++        g_autofree char *in_name = portname_in(port);
++        g_autofree char *out_name = portname_out(port);
++        qdev_init_gpio_in_named(dev, AW_GPIO_IN_HANDLER[port],
++                                in_name, AW_PINS_PER_PORT[port]);
++        qdev_init_gpio_out_named(dev, s->output[port],
++                                 out_name, AW_PINS_PER_PORT[port]);
++    }
++    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
++}
++
++static void allwinner_gpio_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = allwinner_gpio_realize;
++    device_class_set_legacy_reset(dc, allwinner_gpio_reset);
++    dc->vmsd = &vmstate_allwinner_gpio;
++    dc->desc = "Allwinner GPIO controller";
++}
++
++static const TypeInfo allwinner_gpio_info = {
++    .name = TYPE_AW_GPIO,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(AWGPIOState),
++    .class_init = allwinner_gpio_class_init,
++};
++
++static void allwinner_gpio_register_types(void)
++{
++    type_register_static(&allwinner_gpio_info);
++}
++
++type_init(allwinner_gpio_register_types)
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 0555f44b6a..8ede5e88ae 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -20,3 +20,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
+ system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
+ system_ss.add(when: 'CONFIG_CADENCE_GPIO', if_true: files('cadence_gpio.c'))
++system_ss.add(when: 'CONFIG_ALLWINNER_GPIO', if_true: files('allwinner-gpio.c'))
+diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
+index 80ca783a03..5ef3e0b8fd 100644
+--- a/hw/gpio/trace-events
++++ b/hw/gpio/trace-events
+@@ -51,3 +51,9 @@ stm32l4x5_gpio_pins(char *gpio, uint16_t disconnected, uint16_t high) "GPIO%s di
+ cdns_gpio_read(const char *path, uint64_t offset, uint32_t value) "%s:reg[0x%04" PRIx64 "] -> 0x%" PRIx32
+ cdns_gpio_write(const char *path, uint64_t offset, uint64_t value) "%s:reg[0x%04" PRIx64 "] <- 0x%04" PRIx64
+ cdns_gpio_set(const char *path, int line, int level) "%s:[%d] <- %d"
++
++# allwinner_gpio.c
++allwinner_gpio_set(const char *port, int line, int level) "[%s:%d] <- %d"
++allwinner_gpio_read(const char *reg, uint32_t value) "[%s] -> 0x%" PRIx32
++allwinner_gpio_write(const char *reg, uint32_t value) "[%s] <- 0x%" PRIx32
++allwinner_gpio_out_pin(const char *reg, uint32_t pin, uint32_t value) "[%s.%d] <- 0x%" PRIx32
+diff --git a/include/hw/gpio/allwinner-gpio-regs.h b/include/hw/gpio/allwinner-gpio-regs.h
+new file mode 100644
+index 0000000000..a435b87ec4
+--- /dev/null
++++ b/include/hw/gpio/allwinner-gpio-regs.h
+@@ -0,0 +1,227 @@
++/*
++ *  Allwinner GPIO registers definition
++ *
++ *  Copyright (C) 2026 Strahinja Jankovic. <strahinja.p.jankovic@gmail.com>
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef ALLWINNER_GPIO_REGS_H
++#define ALLWINNER_GPIO_REGS_H
++
++/* GPIO ports index (n) */
++#define GPIO_PA     0
++#define GPIO_PB     1
++#define GPIO_PC     2
++#define GPIO_PD     3
++#define GPIO_PE     4
++#define GPIO_PF     5
++#define GPIO_PG     6
++#define GPIO_PH     7
++#define GPIO_PI     8
++
++#ifndef AW_GPIO_PORTS_NUM
++#define AW_GPIO_PORTS_NUM 9
++#endif
++
++#ifndef AW_GPIO_PIN_COUNT
++#define AW_GPIO_PIN_COUNT 32
++#endif
++
++typedef struct AWPortMap {
++    uint32_t cfg[4];
++    uint32_t dat;
++    uint32_t drv[2];
++    uint32_t pul[2];
++} AWPortMap;
++
++typedef struct AWPortsOverlay {
++    AWPortMap ports[AW_GPIO_PORTS_NUM];
++} AWPortsOverlay;
++
++static const uint32_t AW_PINS_PER_PORT[AW_GPIO_PORTS_NUM] = {
++    18,
++    24,
++    25,
++    28,
++    12,
++    6,
++    12,
++    28,
++    22
++};
 +
 +typedef struct {
-+    int port;
-+    int pin;
-+} PortPinTestParam;
++    uint32_t drv[2];
++    uint32_t pul[2];
++} AWPortResetVals;
 +
-+const PortPinTestParam in_out_test_parameters[] = {
-+    { GPIO_PA, 0 },
-+    { GPIO_PA, 17 },
-+    { GPIO_PB, 19 },
-+    { GPIO_PC, 23 },
-+    { GPIO_PD, 26 },
-+    { GPIO_PE, 11 },
-+    { GPIO_PF, 5 },
-+    { GPIO_PG, 10 },
-+    { GPIO_PH, 16 },
-+    { GPIO_PI, 21 },
++static const AWPortResetVals aw_gpio_port_reset[] = {
++    [GPIO_PA] = { .drv = { 0x55555555, 0x00000005 } },
++    [GPIO_PB] = { .drv = { 0x55555555, 0x00005555 } },
++    [GPIO_PC] = { .drv = { 0x55555555, 0x00015555 },
++                  .pul = { 0x00005140, 0x00004016 } },
++    [GPIO_PD] = { .drv = { 0x55555555, 0x00555555 } },
++    [GPIO_PE] = { .drv = { 0x00555555, 0x0 } },
++    [GPIO_PF] = { .drv = { 0x00000555, 0x0 } },
++    [GPIO_PG] = { .drv = { 0x05555555, 0x0 } },
++    [GPIO_PH] = { .drv = { 0x55555555, 0x00555555 } },
++    [GPIO_PI] = { .drv = { 0x55555555, 0x00000555 } },
 +};
 +
-+const PortPinTestParam irq_test_parameters[] = {
-+    { GPIO_PH, 1 },
-+    { GPIO_PH, 10 },
-+    { GPIO_PH, 21 },
-+    { GPIO_PI, 10 },
-+    { GPIO_PI, 19 },
++#define DEFAULT_CFG_MASK    0x77777777
++#define DEFAULT_DRV_MASK    0xffffffff
++#define DEFAULT_PUL_MASK    0xffffffff
++
++#define CFG_INPUT_MASK      0x0
++#define CFG_OUTPUT_MASK     0x1
++#define CFG_IO_MASK         0x1
++#define CFG_PIN_STRIDE      4
++#define CFG_PINS_PER_REG    (AW_GPIO_PIN_COUNT / CFG_PIN_STRIDE)
++
++#define AW_INT_GPIO_COUNT   32
++#define INT_CFG_IRQ_STRIDE  4
++#define INT_CFG_IRQ_PER_REG (AW_INT_GPIO_COUNT / INT_CFG_IRQ_STRIDE)
++
++/* GPIO masks per number of pins */
++#define GPIO_CFG0_PINS_MASK(pins) \
++    ((pins >= CFG_PINS_PER_REG) ? DEFAULT_CFG_MASK : \
++    ((1 << (pins * CFG_PIN_STRIDE)) - 1) & DEFAULT_CFG_MASK)
++
++#define GPIO_CFG1_PINS_MASK(pins) \
++    ((pins >= 16) ? DEFAULT_CFG_MASK : \
++    ((pins > 8) ? ((1 << ((pins - 8) * 4)) - 1) & DEFAULT_CFG_MASK : 0))
++
++#define GPIO_CFG2_PINS_MASK(pins) \
++    ((pins >= 24) ? DEFAULT_CFG_MASK : \
++    ((pins > 16) ? ((1 << ((pins - 16) * 4)) - 1) & DEFAULT_CFG_MASK : 0))
++
++#define GPIO_CFG3_PINS_MASK(pins) \
++    ((pins > 24) ? ((1 << ((pins - 24) * 4)) - 1) & DEFAULT_CFG_MASK : 0)
++
++#define GPIO_DAT_PINS_MASK(pins)    ((1 << pins) - 1)
++
++#define GPIO_DRV0_PINS_MASK(pins) \
++    ((pins > 16) ? DEFAULT_DRV_MASK : ((1 << (pins * 2)) - 1))
++
++#define GPIO_DRV1_PINS_MASK(pins) \
++    ((pins > 16) ? ((1 << ((pins - 16) * 2)) - 1) : 0)
++
++#define GPIO_PUL0_PINS_MASK(pins) \
++    ((pins > 16) ? DEFAULT_PUL_MASK : ((1 << (pins * 2)) - 1))
++
++#define GPIO_PUL1_PINS_MASK(pins) \
++    ((pins > 16) ? ((1 << ((pins - 16) * 2)) - 1) : 0)
++
++
++#define PORT_STRIDE     0x24
++
++/* Allwinner GPIO memory map */
++#define CFG0    0x00 /* Configure register 0 */
++#define CFG1    0x04 /* Configure register 1 */
++#define CFG2    0x08 /* Configure register 2 */
++#define CFG3    0x0c /* Configure register 3 */
++#define DAT     0x10 /* Data register */
++#define DRV0    0x14 /* Multi-driving register 0 */
++#define DRV1    0x18 /* Multi-driving register 1 */
++#define PUL0    0x1c /* Pull register 0 */
++#define PUL1    0x20 /* Pull register 1 */
++
++/* Port n configure register 0 */
++#define GPIO_Pn_CFG0(n)   (n*PORT_STRIDE + CFG0)
++/* Port n configure register 1 */
++#define GPIO_Pn_CFG1(n)   (n*PORT_STRIDE + CFG1)
++/* Port n configure register 2 */
++#define GPIO_Pn_CFG2(n)   (n*PORT_STRIDE + CFG2)
++/* Port n configure register 3 */
++#define GPIO_Pn_CFG3(n)   (n*PORT_STRIDE + CFG3)
++/* Port n data register */
++#define GPIO_Pn_DAT(n)    (n*PORT_STRIDE + DAT)
++/* Port n Multi-driving register 0 */
++#define GPIO_Pn_DRV0(n)   (n*PORT_STRIDE + DRV0)
++/* Port n Multi-driving register 1 */
++#define GPIO_Pn_DRV1(n)   (n*PORT_STRIDE + DRV1)
++/* Port n Pull register 0 */
++#define GPIO_Pn_PUL0(n)   (n*PORT_STRIDE + PUL0)
++/* Port n Pull register 1 */
++#define GPIO_Pn_PUL1(n)   (n*PORT_STRIDE + PUL1)
++/* PIO interrupt configure register 0 */
++#define GPIO_INT_CFG0       0x200
++/* PIO interrupt configure register 1 */
++#define GPIO_INT_CFG1       0x204
++/* PIO interrupt configure register 2 */
++#define GPIO_INT_CFG2       0x208
++/* PIO interrupt configure register 3 */
++#define GPIO_INT_CFG3       0x20c
++/* PIO interrupt control register */
++#define GPIO_INT_CTL        0x210
++/* PIO interrupt status register */
++#define GPIO_INT_STA        0x214
++/* PIO interrupt debounce register */
++#define GPIO_INT_DEB        0x218
++/* SDRAM Pad Multi-driving register */
++#define SDR_PAD_DRV         0x220
++/* SDRAM Pad Pull register */
++#define SDR_PAD_PUL         0x224
++
++typedef enum AWGPIOLevel {
++    AW_GPIO_LEVEL_LOW = 0,
++    AW_GPIO_LEVEL_HIGH = 1,
++} AWGPIOLevel;
++
++typedef enum AWGPIOCfg {
++    AW_GPIO_CFG_IN = 0,
++    AW_GPIO_CFG_OUT = 1,
++    AW_GPIO_CFG_FUN = 2,
++} AWGPIOCfg;
++
++typedef enum AWGPIOIrqCfg {
++    AW_GPIO_IRQ_CFG_RISING_EDGE = 0,
++    AW_GPIO_IRQ_CFG_FALLING_EDGE = 1,
++    AW_GPIO_IRQ_CFG_HIGH_LEVEL = 2,
++    AW_GPIO_IRQ_CFG_LOW_LEVEL = 3,
++    AW_GPIO_IRQ_CFG_BOTH_EDGE = 4
++} AWGPIOIrqCfg;
++
++static const char *const port_name_table[] = {
++    "PA", "PB", "PC", "PD", "PE", "PF", "PG", "PH", "PI"
 +};
 +
-+/* Set pin to output, check that it propagates */
-+static void test_set_output_pins(const void *data)
++static const char *portname(unsigned index)
 +{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    g_autofree char *out_name = portname_out(param->port);
-+
-+    QTestState *s = qtest_init("-machine cubieboard");
-+    qtest_irq_intercept_out_named(s, "/machine/soc/gpio", out_name);
-+
-+    /* Configure pin as output */
-+    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_OUT);
-+    /* Set value in register */
-+    update_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_HIGH);
-+
-+    /* Check that the output pin is high */
-+    g_assert_true(qtest_get_irq(s, param->pin));
-+
-+    /* Cleanup */
-+    /* Set value in register */
-+    update_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_LOW);
-+    /* Configure pin as input */
-+    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_IN);
-+
-+    qtest_quit(s);
++    return index < AW_GPIO_PORTS_NUM ? port_name_table[index] : "?";
 +}
 +
++static inline char *portname_in(int port)
++{
++    return g_strconcat(portname(port), "_IN", NULL);
++}
++
++static inline char *portname_out(int port)
++{
++    return g_strconcat(portname(port), "_OUT", NULL);
++}
++
++static int irq_nr(int port, int line)
++{
++    int irq = -1;
++
++    switch (port) {
++    case GPIO_PH:
++        if (line <= 21) {
++            irq = line;
++        }
++        break;
++    case GPIO_PI:
++        if ((line >= 10) && (line <= 19)) {
++            irq = line + 12;
++        }
++        break;
++    default:
++        break;
++    }
++    return irq;
++}
++
++
++#endif /* ALLWINNER_GPIO_REGS_H */
+diff --git a/include/hw/gpio/allwinner-gpio.h b/include/hw/gpio/allwinner-gpio.h
+new file mode 100644
+index 0000000000..6568116330
+--- /dev/null
++++ b/include/hw/gpio/allwinner-gpio.h
+@@ -0,0 +1,41 @@
 +/*
-+ * Set pin to input, check that the value is written but it does not propagate
++ *  Allwinner GPIO registers definition
++ *
++ *  Copyright (C) 2026 Strahinja Jankovic. <strahinja.p.jankovic@gmail.com>
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static void test_set_input_pins(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    g_autofree char *out_name = portname_out(param->port);
 +
-+    QTestState *s = qtest_init("-machine cubieboard");
++#ifndef ALLWINNER_GPIO_H
++#define ALLWINNER_GPIO_H
 +
-+    qtest_irq_intercept_out_named(s, "/machine/soc/gpio", out_name);
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
 +
-+    /* Configure pin as input */
-+    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_IN);
-+    /* Set value in register */
-+    update_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_HIGH);
-+    /* Check that the output pin is still low */
-+    g_assert_false(qtest_get_irq(s, param->pin));
++/** Size of register I/O address space used by GPIO device */
++#define AW_GPIO_IOSIZE 0x400
 +
-+    qtest_quit(s);
-+}
++/** Total number of known registers */
++#define AW_GPIO_REGS_NUM    (AW_GPIO_IOSIZE / sizeof(uint32_t))
 +
-+/* Test rising edge interrupt */
-+static void test_irq_pin_rising(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    QTestState *s = qtest_init("-machine cubieboard");
-+    const int gpio_port = param->port;
-+    const int port_pin = param->pin;
-+    g_autofree char *in_name = portname_in(gpio_port);
-+    int irq_pin = irq_nr(gpio_port, port_pin);
-+    unsigned int irq_mask = 1u << irq_pin;
++/** Max number of ports */
++#define AW_GPIO_PORTS_NUM   9
++/** Max number of pins per ports */
++#define AW_GPIO_PIN_COUNT 32
 +
-+    qtest_irq_intercept_in(s, "/machine/soc");
++#define TYPE_AW_GPIO        "allwinner.gpio"
++OBJECT_DECLARE_SIMPLE_TYPE(AWGPIOState, AW_GPIO)
 +
-+    /* Configure as input and set pin low */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
++struct AWGPIOState {
++    /*< private >*/
++    SysBusDevice parent_obj;
 +
-+    /* Enable interrupt */
-+    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_RISING_EDGE);
-+    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_RISING_EDGE);
-+    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
++    /*< public >*/
++    MemoryRegion iomem;
++    qemu_irq irq;
++    qemu_irq output[AW_GPIO_PORTS_NUM][AW_GPIO_PIN_COUNT];
 +
-+    /* Raise interrupt */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+    /* Check that value is written */
-+    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
-+    /* Check interrupt status */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++    uint32_t regs[AW_GPIO_REGS_NUM];
++};
 +
-+    /* Clear interrupt */
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+
-+    /* Check that IRQ line is low */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-+    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    qtest_quit(s);
-+}
-+
-+/* Test falling edge interrupt */
-+static void test_irq_pin_falling(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    QTestState *s = qtest_init("-machine cubieboard");
-+    const int gpio_port = param->port;
-+    const int port_pin = param->pin;
-+    g_autofree char *in_name = portname_in(gpio_port);
-+    int irq_pin = irq_nr(gpio_port, port_pin);
-+    unsigned int irq_mask = 1u << irq_pin;
-+
-+    qtest_irq_intercept_in(s, "/machine/soc");
-+
-+    /* Configure as input and set pin high */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+
-+    /* Enable interrupt */
-+    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_FALLING_EDGE);
-+    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_FALLING_EDGE);
-+    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
-+
-+    /* Raise interrupt */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
-+    /* Check that value is written */
-+    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_LOW);
-+    /* Check interrupt status */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Clear interrupt */
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+
-+    /* Check that IRQ line is low */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-+    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    qtest_quit(s);
-+}
-+
-+/* Test high level interrupt */
-+static void test_irq_pin_high_level(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    QTestState *s = qtest_init("-machine cubieboard");
-+    const int gpio_port = param->port;
-+    const int port_pin = param->pin;
-+    g_autofree char *in_name = portname_in(gpio_port);
-+    int irq_pin = irq_nr(gpio_port, port_pin);
-+    unsigned int irq_mask = 1u << irq_pin;
-+
-+    qtest_irq_intercept_in(s, "/machine/soc");
-+
-+    /* Configure as input and set pin low */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
-+
-+    /* Enable interrupt */
-+    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_HIGH_LEVEL);
-+    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_HIGH_LEVEL);
-+    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
-+
-+    /* Raise interrupt */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+    /* Check that value is written */
-+    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
-+    /* Check interrupt status */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Try clearing interrupt, it should still be asserted */
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Set line low and clear interrupt, it should be cleared now */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+
-+    /* Check that IRQ line is low */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-+    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    qtest_quit(s);
-+}
-+
-+/* Test low level interrupt */
-+static void test_irq_pin_low_level(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    QTestState *s = qtest_init("-machine cubieboard");
-+    const int gpio_port = param->port;
-+    const int port_pin = param->pin;
-+    g_autofree char *in_name = portname_in(gpio_port);
-+    int irq_pin = irq_nr(gpio_port, port_pin);
-+    unsigned int irq_mask = 1u << irq_pin;
-+
-+    qtest_irq_intercept_in(s, "/machine/soc");
-+
-+    /* Configure as input and set pin high */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+
-+    /* Enable interrupt */
-+    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_LOW_LEVEL);
-+    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_LOW_LEVEL);
-+    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
-+
-+    /* Raise interrupt */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
-+    /* Check that value is written */
-+    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_LOW);
-+    /* Check interrupt status */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Try clearing interrupt, it should still be asserted */
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Set line high and clear interrupt, it should be cleared now */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+
-+    /* Check that IRQ line is low */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-+    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    qtest_quit(s);
-+}
-+
-+/* Test both edge interrupt */
-+static void test_irq_pin_both_edge(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    QTestState *s = qtest_init("-machine cubieboard");
-+    const int gpio_port = param->port;
-+    const int port_pin = param->pin;
-+    g_autofree char *in_name = portname_in(gpio_port);
-+    int irq_pin = irq_nr(gpio_port, port_pin);
-+    unsigned int irq_mask = 1u << irq_pin;
-+
-+    qtest_irq_intercept_in(s, "/machine/soc");
-+
-+    /* Configure as input and set pin low */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
-+
-+    /* Enable interrupt */
-+    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_BOTH_EDGE);
-+    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_BOTH_EDGE);
-+    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
-+
-+    /* Raise interrupt - rising edge */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+    /* Check that value is written */
-+    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
-+    /* Check interrupt status */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Clear interrupt */
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+
-+    /* Check that IRQ line is low */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-+    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Raise interrupt - falling edge */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, port_pin,
-+                     AW_GPIO_LEVEL_LOW);
-+    /* Check that value is written */
-+    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_LOW);
-+    /* Check interrupt status */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
-+    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    /* Clear interrupt */
-+    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
-+
-+    /* Check that IRQ line is low */
-+    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
-+    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
-+
-+    qtest_quit(s);
-+}
-+
-+
-+static void add_test(const char *type, const PortPinTestParam *p,
-+                      void (*testfn)(const void *))
-+{
-+    g_autofree char *name =
-+        g_strdup_printf("/allwinner-cubieboard/gpio/%s/%s%d",
-+                        type, portname(p->port), p->pin);
-+
-+    qtest_add_data_func(name, p, testfn);
-+}
-+
-+
-+int main(int argc, char **argv)
-+{
-+    int r;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    for (int i = 0; i < ARRAY_SIZE(in_out_test_parameters); i++) {
-+        const PortPinTestParam *p = &in_out_test_parameters[i];
-+        add_test("set_output_pins", p, test_set_output_pins);
-+        add_test("set_input_pins", p, test_set_input_pins);
-+    }
-+    qtest_add_func("/allwinner-cubieboard/gpio/reset_values",
-+                        test_reset_values);
-+    for (int i = 0; i < ARRAY_SIZE(irq_test_parameters); i++) {
-+        const PortPinTestParam *p = &irq_test_parameters[i];
-+        add_test("irq_pin_rising", p, test_irq_pin_rising);
-+        add_test("irq_pin_falling", p, test_irq_pin_falling);
-+        add_test("irq_pin_high_level", p, test_irq_pin_high_level);
-+        add_test("irq_pin_low_level", p, test_irq_pin_low_level);
-+        add_test("irq_pin_both_edge", p, test_irq_pin_both_edge);
-+    }
-+    r = g_test_run();
-+
-+    return r;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index c3593f7530..6c5db1a0a3 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -268,7 +268,8 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
-    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
-   ['arm-cpu-features',
--   'boot-serial-test']
-+   'boot-serial-test'] + \
-+  (config_all_devices.has_key('CONFIG_ALLWINNER_A10')? ['allwinner-gpio-test'] : [])
- 
- # TODO: once aarch64 TCG is fixed on ARM 32 bit host, make bios-tables-test unconditional
- qtests_aarch64 = \
++#endif /* ALLWINNER_GPIO_H */
 
 -- 
 2.55.0
