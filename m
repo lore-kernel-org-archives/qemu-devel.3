@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9162AC88E40
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 06:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982C5C88E56
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 06:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5dev-0000Oq-9V; Sun, 13 Sep 2026 02:25:49 -0400
+	id 1x5df7-0000YO-6R; Sun, 13 Sep 2026 02:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1x5det-0000OT-Em
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:47 -0400
-Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
+ id 1x5df4-0000Ut-5w
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:58 -0400
+Received: from va-1-114.ptr.blmpb.com ([209.127.230.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1x5deq-0002o3-TU
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:47 -0400
+ id 1x5df0-0002oe-1T
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 02:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1789280740; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1789280749; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=hjUCxRH7owdhiSIR0fePXWNWgjxCC/rztZABGwgn0Wo=;
- b=pvNJWbWDLFmKw7RjMiNrHP4bdoBRDnW2XUVCyW+MR+V54GlXnSvU8DGVs4KxlxXNAsrnZY
- rHYZKqj65ZJOFcxBCZIzYtyZeEu12iomBPFNdiu5tGTMUtTU6zUN4FdGosOLOx/4FNltpd
- 2u2gSMqtV+Ir609RdJsBpeY77khfUloaTWXa3Q5nREp8MmajDxCT5T55ZLIJhDI/TeaNxD
- Y0vN5zRRDcvuCtqCRzuuyyYIlqPL1VOZ+PGBIz+w2Ih7ayr5J0ikyksSTLSeaAJEBtthYx
- xkul5bxq7Pt4p5iqifgR+8rz/A/hOk4Oh1tr2eBtsRJp0bdUZF9KxugAn9+fhw==
+ bh=papa7K0qt3qBqtxuBR0A7TO9lTB6ZZXXJ86FLrBGYyo=;
+ b=fTQGlDDPbhC5DZaBBUAFaBBU+/0ahVv6tQcXOj1HVRrZ7M1FTKQOxXL8CebRivvIGwqc7Q
+ PrDnGBiRuWZwUEwwnuUeBTQsfOafq4a9DnhzvbU448gEXBDgQPSWUV4y9I9TsyAQIPe8K7
+ owtfqha1awAvESSOnEf0vCbR4ddJOaB0Jx0sfnD2crmMa/ODvQBh8jgpfM8UxaFRyox8Hl
+ X9l6/KtqSocA4yiJkisKvmseXUMO4jOl5iAaG6+x03yXrC9f2Bhw9nvvP88E5m7GPlaBYc
+ W6cOZfcOKvlj5k1CqGXt+o68L0tf4y35oUsxdiZKBychCxOq3XAdgmNncpgmUw==
+Subject: [PATCH v3 4/4] migration/rdma: Remove unused transit bitmap
+Date: Sun, 13 Sep 2026 14:24:55 +0800
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Lms-Return-Path: <lba+26aa641e2+0f31a6+nongnu.org+yanfei.xu@bytedance.com>
-X-Mailer: git-send-email 2.20.1
 X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
-References: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
 From: "Yanfei Xu" <yanfei.xu@bytedance.com>
-Subject: [PATCH v3 3/4] migration/rdma: Allow multiple in-flight writes per
- chunk
-Date: Sun, 13 Sep 2026 14:24:54 +0800
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: <qemu-devel@nongnu.org>, <peterx@redhat.com>
 Cc: <farosas@suse.de>, <lizhijian@fujitsu.com>, <isyanfei.xu@gmail.com>, 
  <jinpu.wang@cloud.ionos.com>, "Yanfei Xu" <yanfei.xu@bytedance.com>
-Message-Id: <20260913062455.940447-4-yanfei.xu@bytedance.com>
+Message-Id: <20260913062455.940447-5-yanfei.xu@bytedance.com>
+References: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
 In-Reply-To: <20260913062455.940447-1-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=209.127.230.112;
- envelope-from=yanfei.xu@bytedance.com; helo=va-1-112.ptr.blmpb.com
+X-Lms-Return-Path: <lba+26aa641eb+3ed993+nongnu.org+yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=209.127.230.114;
+ envelope-from=yanfei.xu@bytedance.com; helo=va-1-114.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,71 +68,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_rdma_write_one() waits for an earlier write that shares the same
-registration chunk, even when the dirty ranges do not overlap.  This
-serializes sparse writes and leaves send queue capacity unused.
+After the per-chunk write wait is removed, transit_bitmap is no longer
+read.  The remaining set and clear operations only maintain unused
+state.
 
-RAM round notifiers now provide the completion barrier before a newer
-page version can be sent, and the obsolete unregister path no longer
-requires per-chunk serialization.  Remove the wait.  The global nb_sent
-count continues to manage CQ and send queue resources.
+Remove the bitmap and simplify the block lifecycle tracepoints.
 
 Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- migration/rdma.c       | 19 +------------------
- migration/trace-events |  1 -
- 2 files changed, 1 insertion(+), 19 deletions(-)
+ migration/rdma.c       | 20 +++-----------------
+ migration/trace-events |  4 ++--
+ 2 files changed, 5 insertions(+), 19 deletions(-)
 
 diff --git a/migration/rdma.c b/migration/rdma.c
-index 16e9c6c30e..6f9b474e29 100644
+index 6f9b474e29..7a884ecb6e 100644
 --- a/migration/rdma.c
 +++ b/migration/rdma.c
-@@ -1740,7 +1740,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
-     struct ibv_sge sge;
-     struct ibv_send_wr send_wr = { 0 };
-     struct ibv_send_wr *bad_wr;
--    int reg_result_idx, ret, count = 0;
-+    int reg_result_idx, ret;
-     uint64_t chunk, chunks;
-     uint64_t chunk_size = migrate_rdma_chunk_size();
-     uint8_t *chunk_start, *chunk_end;
-@@ -1772,23 +1772,6 @@ retry:
+@@ -30,7 +30,6 @@
+ #include "qemu/module.h"
+ #include "qemu/rcu.h"
+ #include "qemu/sockets.h"
+-#include "qemu/bitmap.h"
+ #include "qemu/coroutine.h"
+ #include "system/memory.h"
+ #include <sys/socket.h>
+@@ -197,7 +196,6 @@ typedef struct RDMALocalBlock {
+     int            index;           /* which block are we */
+     unsigned int   src_index;       /* (Only used on dest) */
+     int            nb_chunks;
+-    unsigned long *transit_bitmap;
+ } RDMALocalBlock;
  
-     chunk_end = ram_chunk_end(block, chunk + chunks);
+ /*
+@@ -571,8 +569,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
+     block->index = local->nb_blocks;
+     block->src_index = ~0U; /* Filled in by the receipt of the block list */
+     block->nb_chunks = ram_chunk_index(host_addr, host_addr + length) + 1UL;
+-    block->transit_bitmap = bitmap_new(block->nb_chunks);
+-    bitmap_clear(block->transit_bitmap, 0, block->nb_chunks);
+     block->remote_keys = g_new0(uint32_t, block->nb_chunks);
  
+     if (rdma->blockmap) {
+@@ -583,8 +579,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
+                          (uintptr_t) block->local_host_addr,
+                          block->offset, block->length,
+                          (uintptr_t) (block->local_host_addr + block->length),
+-                         BITS_TO_LONGS(block->nb_chunks) *
+-                             sizeof(unsigned long) * 8,
+                          block->nb_chunks);
+ 
+     local->nb_blocks++;
+@@ -654,9 +648,6 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
+         block->mr = NULL;
+     }
+ 
+-    g_free(block->transit_bitmap);
+-    block->transit_bitmap = NULL;
 -
--    while (test_bit(chunk, block->transit_bitmap)) {
--        (void)count;
--        trace_rdma_write_one_block(count++, current_index, chunk,
--                sge.addr, length, rdma->nb_sent, block->nb_chunks);
+     g_free(block->remote_keys);
+     block->remote_keys = NULL;
+ 
+@@ -693,9 +684,8 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
+ 
+     trace_rdma_delete_block(block, (uintptr_t)block->local_host_addr,
+                            block->offset, block->length,
+-                            (uintptr_t)(block->local_host_addr + block->length),
+-                           BITS_TO_LONGS(block->nb_chunks) *
+-                               sizeof(unsigned long) * 8, block->nb_chunks);
++                           (uintptr_t)(block->local_host_addr + block->length),
++                           block->nb_chunks);
+ 
+     g_free(old);
+ 
+@@ -1221,8 +1211,6 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
+                                    index, chunk, block->local_host_addr,
+                                    (void *)(uintptr_t)block->remote_host_addr);
+ 
+-        clear_bit(chunk, block->transit_bitmap);
 -
--        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
--
--        if (ret < 0) {
--            error_setg(errp, "Failed to Wait for previous write to complete "
--                    "block %d chunk %" PRIu64
--                    " current %" PRIu64 " len %" PRIu64 " %d",
--                    current_index, chunk, sge.addr, length, rdma->nb_sent);
--            return -1;
--        }
--    }
--
-     if (!rdma->pin_all) {
-         if (!block->remote_keys[chunk]) {
-             /*
+         if (rdma->nb_sent > 0) {
+             rdma->nb_sent--;
+         }
+@@ -1877,8 +1865,7 @@ retry:
+     /*
+      * Encode the ram block index and chunk within this wrid.
+      * We will use this information at the time of completion
+-     * to figure out which bitmap to check against and then which
+-     * chunk in the bitmap to look for.
++     * to identify the completed write in trace output.
+      */
+     send_wr.wr_id = qemu_rdma_make_wrid(RDMA_WRID_RDMA_WRITE,
+                                         current_index, chunk);
+@@ -1916,7 +1903,6 @@ retry:
+         return -1;
+     }
+ 
+-    set_bit(chunk, block->transit_bitmap);
+     qatomic_add(&mig_stats.normal_pages, sge.length / qemu_target_page_size());
+     /*
+      * We are adding to transferred the amount of data written, but no
 diff --git a/migration/trace-events b/migration/trace-events
-index a9b02b3113..70d083f3fe 100644
+index 70d083f3fe..4b3239636c 100644
 --- a/migration/trace-events
 +++ b/migration/trace-events
-@@ -243,7 +243,6 @@ rdma_register_odp_mr(const char *name) "Try to register On-Demand Paging memory
- rdma_advise_mr(const char *name, uint32_t len, uint64_t addr, const char *res) "Try to advise block %s prefetch at %" PRIu32 "@0x%" PRIx64 ": %s"
- rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
- rdma_write_flush(int sent) "sent total: %d"
--rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
- rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
- rdma_write_one_queue_full(void) ""
- rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
+@@ -249,9 +249,9 @@ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received reg
+ rdma_write_one_sendreg(uint64_t chunk, int len, int index, int64_t offset) "Sending registration request chunk %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+ rdma_write_one_top(uint64_t chunks, uint64_t size) "Writing %" PRIu64 " chunks, (%" PRIu64 " MB)"
+ rdma_write_one_zero(uint64_t chunk, int len, int index, int64_t offset) "Entire chunk is zero, sending compress: %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+-rdma_add_block(const char *block_name, int block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, uint64_t bits, int chunks) "Added Block: '%s':%d, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " bits %" PRIu64 " chunks %d"
++rdma_add_block(const char *block_name, int block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, int chunks) "Added Block: '%s':%d, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " chunks %d"
+ rdma_block_notification_handle(const char *name, int index) "%s at %d"
+-rdma_delete_block(void *block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, uint64_t bits, int chunks) "Deleted Block: %p, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " bits %" PRIu64 " chunks %d"
++rdma_delete_block(void *block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, int chunks) "Deleted Block: %p, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " chunks %d"
+ rdma_registration_handle_compress(int64_t length, int index, int64_t offset) "Zapping zero chunk: %" PRId64 " bytes, index %d, offset %" PRId64
+ rdma_registration_handle_finished(void) ""
+ rdma_registration_handle_ram_blocks(void) ""
 -- 
 2.20.1
 
