@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3DDCC88E56
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 02:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF7AC88E40
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 03:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5aEZ-0001OB-Dv; Sat, 12 Sep 2026 22:46:23 -0400
+	id 1x5asU-0003pJ-U5; Sat, 12 Sep 2026 23:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5aEQ-00014I-FL
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 22:46:14 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1x5asS-0003oY-3m
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 23:27:36 -0400
+Received: from sonic309-22.consmr.mail.gq1.yahoo.com ([98.137.65.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5aEO-0002o8-Ll
- for qemu-devel@nongnu.org; Sat, 12 Sep 2026 22:46:14 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d747eb79fbso5369065ad.3
- for <qemu-devel@nongnu.org>; Sat, 12 Sep 2026 19:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789267571; x=1789872371; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=f536FhSaiAJO84pwnmXXXBKHZ0a9dcosugr/BSLxdIY=;
- b=HfujwryIvKnk7cW01vDbLpxMW84eoLs4aH534RCtei87heY/j51JgeU+glOda4Mx7O
- ggzLP3hw7UjVnoBatCbkI6LiEkoWyDbd4T4Br5vjOkYeY3vINQQAQMwJ06W4cVVIZMqe
- 2EfecG++uwJu04F1jNcvnKfseJBewvq4k1Xch0dJEPEIggQb1f34eXM/aiFfgUsHCbFT
- 5U6SN160c27xPKCuf3V7j4JgBvHgeglLCo+quVv8RDnLAmf7qwuGh05eHKUKIPz8MIZ8
- 4g2UB79mmGA6m7SnUr1t192zxw/kjcNDX+M7tIiS3mC74V7+HGxkIAS7FFn6WGygs3Mb
- aBlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789267571; x=1789872371;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=f536FhSaiAJO84pwnmXXXBKHZ0a9dcosugr/BSLxdIY=;
- b=KHlkvLXGUEhERnXMLPVq9CHffvx82UK6VVhfBYi/7dvS4fwFAOyakw+F2prfP57vef
- 21KGb73gR4QocmlHajIpkqs2/be2VmTD5Mk2cs9Rax0qMBl/o79k8pwCd60d7uNr+rRi
- dQhCqMD5UX4r7AqqGl96BmUNTqWYINnXbasCmcW0QDpcfYJ6D+pVYz/JGrD63t5+KWiI
- 9ypE+8mOYe0TthPtNZFL9rP5KUQ+qe2chrUPIo8vuXpp+irQOcybamo3dcs86b5rY40G
- sZWr9XD/fHR7MUJSamr9iSjwgydFAArn5AAb++Fnuv7jlJpWwVaCqCukZRkIS/Eqp+BC
- bMpw==
-X-Gm-Message-State: AFuF++n2pw8FbIV2q0dMvhwRXWk5dF9Q2qCzNUqVUTma/6E8AzJiFhXM
- NkVQ5nXoChu+/xvj5BQCVsLNayDNa6aK46g7CgUBm+5Ej2r/RdpZuSdiU3V7DCtSsPc98wQr/rP
- kt8SVCEI=
-X-Gm-Gg: AYBFou0PFGEUF/P9Okhtfv/Hy/K6Td0fyALwnwXoYLLnf9XyVSbAZ4AQ71pilddRCzd
- LLEHUbI3tZiBj1I3iWDT77ees1SoyvYPygoZ3Hxl+KNh1i0Win1/+ZwP8CkHKgH73NW7YKf3lGy
- ijH84VO4AcSFo860IPpYwKmr7MV2hd3q4EEpK5HpfBhz3/bfv1Ut+yon43HrLePLPDpA5HAALLa
- Nc8aWfvt0u+39RfHdYOaxe9duZP+jQ/nb49DCn45JxVabwom5OdpkBy1Lxw1dS1Bv5Ehr7t14bG
- apTnGFcQv+H34rluvSiVDIq1qf22+UnwtASj93y4k6o34ugcO9/g+ewxQRRVBqFdPeiY27b8DyO
- e7ybg0Su10ZVORdDkC1xqXyIGoH5/xDjRAdrSw4RlDlXpngqaBh/ai6O+QRL45If0r1b8SRLg2C
- TaoMUdH3KSP/VQEKz1Git6yGuqxc6XwMtWJrd8hM9lHT90rDrxRi7REwPjnAXf41gSQ/hyooSR2
- 4Jn4wPpo5rL1zKUvg==
-X-Received: by 2002:a17:902:f60e:b0:2d9:33d4:a910 with SMTP id
- d9443c01a7336-2dd2a1d526amr228889085ad.4.1789267571222; 
- Sat, 12 Sep 2026 19:46:11 -0700 (PDT)
-Received: from stoup ([2603:800c:7900:ed00:bf2d:a6f5:e308:cd27])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba7a9bb56sm17811679eec.31.2026.09.12.19.46.10
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 12 Sep 2026 19:46:10 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 84/86] tcg: Split out gen_bitswap
-Date: Sat, 12 Sep 2026 16:38:35 -1000
-Message-ID: <20260913023837.741866-85-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260913023837.741866-1-richard.henderson@linaro.org>
-References: <20260913023837.741866-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1x5asQ-00061L-Fq
+ for qemu-devel@nongnu.org; Sat, 12 Sep 2026 23:27:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
+ t=1789270052; bh=HkouYZw2OX7f6dDmS69vbQfS6RgsxVv51DceW+67D44=;
+ h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To;
+ b=gRqxbTCykPi4d9t+y28sXXjLI8DiSA8TZEqlmAqEJg9+0bIA8D+0QkAVMFHuv5NGjVJziOROO5keW1NQcxHetjsdTHyuYUc+iE02GVmKmRDGmpaHIsN8a5qeb1mf/hW/RLt+19WqvGFRH5fN64IDizUisnQnilmX5lPwyb2TveP0fWYHZeky5TAHKUfyhHm6Wm6CKRO0U6Eg2QIb38d9Qe8p2onZw4pPvKheSzCiFMHalh3HTqFayO1ThZ/H+rP6Hd+EU1IL6x1JyOERfxQzFRxOTEcpZU8sMHDJFRUs6NZ4k1cYCj7rk4Y4HBK6/bhbDZn+t+Qb//+u0z+3CIv9cw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1789270052; bh=WbPqrxs+NjO8G6mKw+TZVDB1erA7MoDgNa0UeFFjBXE=;
+ h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
+ b=GpJ+AJeaPJXEuhjRnGmLwuxTkP2DgfRWCrx+Z+Sxmv2kxX3A2SzFsG+tsoRCPG8WYHqAOtGdC6DhlbxgsmKMh0IPgsI8jaha+8KIiWV/VApIaIpRapIf57HKDuXGlZUkMzW56BgtCgbYihgSqHIb8fq1j22rL3IjPmOMYsGO5L9mz6JLooWHI0u85NwFz6+hYtND/st5E92eRqlU3gTo4DFgrHWH6ZS903WutM+p6Hle4/lAKOEGX3ZInxEckNmpF7o3lLwl2UUM9PyMQVhGzVLRur0qRUvNFDSdDVo5o1GJc9ZjrO+SKXq+WHvvJVPE8ZUTkzNp3JLH6flenqPPCg==
+X-YMail-OSG: iQUPos4VM1mvQ12dnxXVn72jDFlgX72YQvOl4iKHJQZGnSd3noD_KulfJAkrd8e
+ 4vsJPXLEpMK305IR80BrgouKmXQ5OSlkPIJidBRy8WNJVgKgfs2DhLaRLuGCzPWVC8ItW0anBVpG
+ DdUAkWExj5Rqvozx2lgw9L4K09ufYGCJOV634gXBmKjNFMlkkqdNiNkXowKV0Ik7fT8vct98YcDm
+ 7lZZKmAFA3MZZGLLWdzDGSE7LWlDkRu8MG9eUDG6QrJ_itL5yDqy2mFM63b5mgPyzz1cBRodE8ZB
+ oTnzISRYGsIKAZIzIa5f2um24uHmci2QjT4tvrbk0FCcwNXfJIaFgs22bqGuI_3Hw9gu6jUN0NIw
+ oxtvoUTlRh3ViisR.PCCfkLiC0NkyCbordSQWl9CHgCVxz3__4lTqBIDlpZm3zPmNB2MUBR.fJq4
+ gB2btE5MtemRFbp7gx63uB1O6MdzrCupPCwrz2MBGYPtwFXIKf2vcDg2aKr.w9QPq.wJm33Q9zL.
+ DAH4DQ_0z0GTJHIwSZei0UR11Ns8OTElrjf8qS4thNvlw9DbcsVE1e075ZnAQ04q3ZX8_652GO_Q
+ dGyBo0CvlWqCTLv6z_ykiduyHNDzaOmemmorU6w3AIAcjuEeuNa4xYHwjvIRL0Rg9jlGY7d5totk
+ qYLf_jLVUqhRBqtgjr3H8Zb8gOXKRebdfpGke7gWW6f5RhBnie839wwNJepys_ZnQNbYuuIekNYH
+ 4jokAWg73bhVjpiC8juuXlVp2EDjW84xEj2Sv3iEXtwxrd2W9Bznc3bbfACvGBl5R5_Ng1sihArH
+ 5aXrp3fCn8l8e_my0YzQKNHJu1OcBFPX6Q.iGTBV4gz6e95ecHMuyJvc9wUrou5C_tXAEzOKYlhp
+ 0i3ceCvGZD6pfG6u6xIEebA8aYhAAwi.pus.m6vR8v9DgIGTqfSbAtXxoyOrIMl8VvoFoGbqfhCL
+ aJFduF_1zyLZeJIHeR2QPW0M8SJIF0riEwyWGgmiYOA5qw_yyMxRb2qtsvZVTPRqa_f4exYuJZ9m
+ HpzsJwhXEK82RCzYjVrkN6ejYO_VCnOMMZNB.XXBu.dZwmHCGIiKfGjWEmJWG_wxSPqTSKPUqjsD
+ qcO5W_QwURr90MmeTQLq7yr1fFS0zbz8.dEup1ajAKSf8aEJyQ3XhkFUaFDG_0E0ylrhKE3SyJl7
+ 8Ltlj_KqrX0P5QIX6zhuI6V9Uygh2YSIFOWRSIj6Puox0nYNLEVHmG8LmUVOe_VeLpaaUYoa0wvZ
+ 0HH59Q1_wRgLMH2wHTPMaY6hwUbcOZf8o5ZyN2U7wzadF6WNTieEn8q2FRQx4s8de1wLI69wKasG
+ hKRwQQ6QCRkVgCGkICJ4uZBI3cOEGDqSBJK.yOcoKUe.wJeE3o.xx81H1nKGgO1X1y.a0PHRx_yd
+ qFdLIWrXFo.BzUcxi14UkXbrclt3jvB3BZgViAurf564_BFp8.msHe9PtyY.abbugfxWoLalmxlj
+ WgmWo5hSLYxwatpqnQBrHhWGnGggfIEVP4Wb.Zb2hojPHo3qSJqFt6TlqkIdzcysrtMTDcHbXPZJ
+ zktu7VuGObtg40jkLUPSBkHmUdJcpzAxlgkntCrXEpAMxM3fqQUwiWM0egoSPKpBjjGwZ.Ft4GLe
+ XX6yovJlpqXSZbAAX2NtVNqyaeGAJN_YaWccSn28Q5AOpw_0Aze.NI01OuYaUs6EQMR4BGBKzyLO
+ np54Cexgs51VZcjlwiVlbdjXsO1Wy9S1KjJvGV04t.BAlEenMiX2IMlH7_pj6Th8P4zwkFsAuUJm
+ 4ngouOfOOJJ1pRsiYYVipOYTPLL3Mrqcw6iv3NvZA4M2Ay7uELHcEyCAbZJe9_GQOYA3cmQhFf3T
+ Xc9e85C4Ax4oKRAnayeTRfg_lC7vypG2KdkpyLM6hUzVowTqfm5trecxbcIUvUbDqaSp87lZggcW
+ Qe4yuR1kYVH2VtT8Fmgem29BfFLxTfHluR5nMPYsb9BCrLoUag0mHlE.q1p0E1vYRh2bT28K87J2
+ LVq2pZHkQ5mDYi8x0sTdLzkg5mNjQ4e5jTQhNc6TAcxyEKqDhWg6hVcGBGtms8cCHh5z3mioI5l3
+ lOp5w0isi4KRTSA2opCcUUmnwOgAZfLFlLuVROotT.G9Uz_B5AJbWGMNrcZzkhGye7wlNKWcmv0K
+ gEK_FAIh9_bvqnYCIdMD80vE9zr5gLErCgvrVvxCuWqlZt84qkVdxPOU4asIa4H60BSBYJZEL3fq
+ P4NQukyTRxXARHntCXrUxTfcpFwsUqU1Z2rwM
+X-Sonic-MF: <brchuckz@aol.com>
+X-Sonic-ID: c76bfcf0-05e9-45f7-a584-afc9f234363e
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic309.consmr.mail.gq1.yahoo.com with HTTP; Sun, 13 Sep 2026 03:27:32 +0000
+Received: by hermes--production-ne1-6dbcb84f44-w9zrq (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 14c5b846713c82b711c43225786a63a7; 
+ Sun, 13 Sep 2026 03:27:26 +0000 (UTC)
+From: Chuck Zmudzinski <brchuckz@aol.com>
+To: xen-devel@lists.xenproject.org
+Cc: qemu-devel@nongnu.org, Jan Beulich <jbeulich@suse.com>,
+ Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>,
+ Anthony PERARD <anthony.perard@vates.tech>, Juergen Gross <jgross@suse.com>
+Subject: [PATCH v4 0/2] tools: Intel IGD fixes 
+Date: Sat, 12 Sep 2026 23:27:22 -0400
+Message-ID: <20260913032724.62438-1-brchuckz@aol.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+References: <20260913032724.62438-1-brchuckz.ref@aol.com>
+Received-SPF: pass client-ip=98.137.65.148; envelope-from=brchuckz@aol.com;
+ helo=sonic309-22.consmr.mail.gq1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,104 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need this for other generic expansions.
+The goal of this series is to provide improved support for Intel graphics
+device (IGD) passthrough to Xen HVM guests which is currently not good. It
+started with a 3-patch series for the Qemu device model and has grown to a
+seven-patch series for the Qemu device model and this 2-patch series for
+the Xen tools.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/tcg-op.c | 61 ++++++++++++++++++++++++----------------------------
- 1 file changed, 28 insertions(+), 33 deletions(-)
+Most of the fixes needed for Intel IGD passthrough are in the device
+model but help is also needed from the Xen tools to provide proper support
+for newer Intel IGD devices with an extended video bios table (VBT).
 
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index c1b696c8193..1882c0b5f3c 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -382,6 +382,7 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo)
- #undef DEF5
- #undef DEF6
- 
-+static void gen_bitswap(TCGType, TCGTemp *dst, TCGTemp *src, uint64_t mask);
- static void gen_extrh_i64_i32(TCGTemp *dst, TCGTemp *src);
- static void gen_extrl_i64_i32(TCGTemp *dst, TCGTemp *src);
- static void gen_ext_i32_i64(TCGTemp *dst, TCGTemp *src);
-@@ -513,6 +514,29 @@ static void gen_andc(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
-     }
- }
- 
-+/*
-+ * Internal helper for bit and byte reversal.
-+ * Given a repeating matched block of 1's and 0's, swap the bits within
-+ * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
-+ * right 8 bits.
-+ */
-+static void gen_bitswap(TCGType type, TCGTemp *dst, TCGTemp *src, uint64_t mask)
-+{
-+    TCGTemp *t0 = tcg_temp_new_internal(type, TEMP_EBB);
-+    TCGTemp *t1 = tcg_temp_new_internal(type, TEMP_EBB);
-+    TCGTemp *tmask = tcg_constant_internal(type, mask);
-+    TCGTemp *tshift = tcg_constant_internal(type, cto64(mask));
-+
-+    gen_and(type, t0, src, tmask);
-+    gen_shr(type, t1, src, tshift);
-+    gen_shl(type, t0, t0, tshift);
-+    gen_and(type, t1, t1, tmask);
-+    gen_or(type, dst, t0, t1);
-+
-+    tcg_temp_free_internal(t0);
-+    tcg_temp_free_internal(t1);
-+}
-+
- static void gen_brcond(TCGType type, TCGCond cond, TCGTemp *src1,
-                        TCGTemp *src2, TCGLabel *l)
- {
-@@ -1450,43 +1474,14 @@ void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
-     tcg_temp_free_i64(t1);
- }
- 
--/*
-- * Internal helper for bit and byte reversal.
-- * Given a repeating matched block of 1's and 0's, swap the bits within
-- * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
-- * right 8 bits.
-- */
--static void gen_bitswap_i32(TCGv_i32 ret, TCGv_i32 arg, uint32_t mask)
-+static void gen_bitswap_i32(TCGv_i32 dst, TCGv_i32 src, uint32_t mask)
- {
--    TCGv_i32 t0 = tcg_temp_ebb_new_i32();
--    TCGv_i32 t1 = tcg_temp_ebb_new_i32();
--    int sh = cto32(mask);
--
--    tcg_gen_andi_i32(t0, arg, mask);
--    tcg_gen_shri_i32(t1, arg, sh);
--    tcg_gen_shli_i32(t0, t0, sh);
--    tcg_gen_andi_i32(t1, t1, mask);
--    tcg_gen_or_i32(ret, t0, t1);
--
--    tcg_temp_free_i32(t0);
--    tcg_temp_free_i32(t1);
-+    gen_bitswap(TCG_TYPE_I32, tcgv_i32_temp(dst), tcgv_i32_temp(src), mask);
- }
- 
--/* Similarly for 64-bit operands. */
--static void gen_bitswap_i64(TCGv_i64 ret, TCGv_i64 arg, uint64_t mask)
-+static void gen_bitswap_i64(TCGv_i64 dst, TCGv_i64 src, uint64_t mask)
- {
--    TCGv_i64 t0 = tcg_temp_ebb_new_i64();
--    TCGv_i64 t1 = tcg_temp_ebb_new_i64();
--    int sh = cto64(mask);
--
--    tcg_gen_andi_i64(t0, arg, mask);
--    tcg_gen_shri_i64(t1, arg, sh);
--    tcg_gen_shli_i64(t0, t0, sh);
--    tcg_gen_andi_i64(t1, t1, mask);
--    tcg_gen_or_i64(ret, t0, t1);
--
--    tcg_temp_free_i64(t0);
--    tcg_temp_free_i64(t1);
-+    gen_bitswap(TCG_TYPE_I64, tcgv_i64_temp(dst), tcgv_i64_temp(src), mask);
- }
- 
- /*
+For the purpose of reviewing the two patches in this series, by far the most
+relevant patch in the patch series for the Qemu device model is Patch 6. At
+the least, reviewers of these two patches should also be familiar with Patch 6
+of the companion patch series to the Qemu device model that is available here:
+
+https://lore.kernel.org/qemu-devel/20260911072453.46256-7-brchuckz@aol.com/
+
+For further reference, the link to the cover letter of the latest version (v6)
+of the companion Qemu device model patch series is available here:
+
+https://lore.kernel.org/qemu-devel/20260911072453.46256-1-brchuckz@aol.com/
+
+Please refer to each patch in this series and in the companion patch series
+for the Qemu device model for further details.
+
+Chuck Zmudzinski (2):
+  tools/hvmloader: implement Intel IGD extended VBT support
+  libxl: add OpRegion and VBT to firmware when assigning IGD
+
+ tools/firmware/hvmloader/config.h |  6 +-
+ tools/firmware/hvmloader/e820.c   |  4 +-
+ tools/firmware/hvmloader/pci.c    | 96 ++++++++++++++++++++++++++++++-
+ tools/libs/light/libxl_pci.c      | 82 ++++++++++++++++++++++++++
+ 4 files changed, 182 insertions(+), 6 deletions(-)
+
 -- 
-2.53.0
+2.52.0
 
 
