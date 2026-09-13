@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59EAAC88E5C
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 17:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 025C3C88E63
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 18:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5oA8-0000ZZ-UY; Sun, 13 Sep 2026 13:38:45 -0400
+	id 1x5omE-0005ik-60; Sun, 13 Sep 2026 14:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
- id 1x5oA3-0000ZI-D2
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 13:38:39 -0400
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x5om9-0005he-4o
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 14:18:01 -0400
 Received: from mail-lr2-x10.google.com ([2a00:1450:4864:38::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
- id 1x5o9z-0000A4-8W
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 13:38:38 -0400
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x5om7-000224-9a
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 14:18:00 -0400
 Received: by mail-lr2-x10.google.com with SMTP id
- 38308e7fff4ca-3a35a64530bso10529151fa.2
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 10:38:33 -0700 (PDT)
+ 38308e7fff4ca-3a354118856so12243231fa.1
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 11:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789321112; x=1789925912; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=5SzuX8hK34l8gqGT4pU8KBZ1ewmKJHiG2PYYQdg6vOE=;
- b=r7RnwSwVxQGs2O/VSKfrSTvU1v9Tb3rvVw9Cy+rQOku5I7uYNkg06wcxogSJ+E/l/b
- TvGAXISIrqF/+Nws1V0BOLOY5hdZ8+cp1bkrQn2NYRSzQ6RsvOVDYRoY8UtM/L6E2yE0
- WAOQ6hURBeAhJ/e0XbWuo0zjrhhgGaw2W/f+oJNinBmMdwmGobq06C24yYRwORwLdXYd
- zQm8IOQ33qOQ/iQcbyj+Yi4mhRhty/hKnJYpHLplbNOUGdULeux0Gk2nrv1NHZcG+l3c
- os2zF5SBrDGPD5J5If2J4oEBYCjJoUV2gr16H6Y88kUnIooYV2jTnrLAoCnONG5deSMH
- hFoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789321112; x=1789925912;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1789323477; x=1789928277; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5SzuX8hK34l8gqGT4pU8KBZ1ewmKJHiG2PYYQdg6vOE=;
- b=W6981pUysHCmcPtEXXUy9eAVgqRVgEdpZANaatzh0226caucG2S1SPIFRxqiYFlqWv
- H4EoyJpoSaqLDgWgwIyBSxA/r1j/sLIUMjg4MEzsmDvr28/UJQGkStQ6G65qC+bfeAfF
- xqwTPjmCl8iUsJCQF+CIONMjnGUtUFF2H6Ljot/JxWRHhl5s1H+HBOumIe1uNieN3QpO
- b01nlRXgNR0rb1mf95mC8rrzFlQnmaXMeo6BZcBVOmHMNo3Eeig+R17poGNAZDS/KVRm
- x/K0umod9Fa6QTCCGlZq8AdqIXuzE1bVI+a6bU+W+koTvM8m3rAGw34BpajSjPyE0BcY
- +Grg==
-X-Gm-Message-State: AFuF++nzdFvHZLmknwQHIihCMmn+aWeoyTU6GGvSSA0D+QrYQehOBGyJ
- jzxo6/YtBkbliT4hKO9O9HuBMqA+rJcIAAUxizQzQ7RBJy1D2gF91AT8p8/HcaOI
-X-Gm-Gg: AYBFou0hIrYGmi23cY4gsUDTjS7KSYZB1kBFOCRTviVpKgvD8Akn+F4qKauIa7CZTFU
- 2IS3T/PtBfJMII4ED/kRByQngQd/irYi8PA4IGjTasCMiqJ46jOFhICZNyeW2edImSGtWKUrNrl
- Ml1JimYkEz0DjT6LwNFnajGqiD1D2yAFgFmQ1M3I+dGN2jUVIIqkR4/oCQ6SUM9lqAbR48jm6f5
- +dP1bIugNF2ecpvS1nnzS2XXml7cJiVzV+JQSWN4HA6rcoEnoH3icWTOtpMo+QnTTxSrj0hDFu7
- l5paVf5JKT7NiAUk4CWoeEb64bCe1VhKqpXigYjMExcDANcg/fNqSoNChVzIFMdBhNh2VDss+lq
- +uc/5QpDbIpjFpjbOX3DoBGro5rt4LZjbizlw5MLE72+KTSzb+DObxYMkLhFy6nkQF8wTvW7w7g
- y2NdwQEJi+J3SfZY/7V0C0aL/w85/LQXdjvraeWYz6fe1xjxiBmIWkbQT3r+xthYWVZzy4BYkBp
- JbraW6pIuAxFghbt7mg63XWbGSY5V1qOhuyBTgMwRU5BwMGgWBnEaUjZUvMXP8W9tsMYTEQOUdy
- ZkAn
-X-Received: by 2002:a2e:bea1:0:b0:3a3:74b9:8a7c with SMTP id
- 38308e7fff4ca-3a5b382d649mr9569701fa.21.1789321111582; 
- Sun, 13 Sep 2026 10:38:31 -0700 (PDT)
-Received: from qblck ([188.130.155.185]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3a5a334c571sm21190241fa.27.2026.09.13.10.38.29
+ bh=2iVnvtvgBTzNKgSIpJFBLB8jsQ2CSjE2UWOxHlCMc5w=;
+ b=ly6BaShJFn5Kxvvy1TlJP0dF3+jHrDcJiWhuTsVsBgqqw2u0XJGAXFL/BJupAh0qxO
+ 252pK1e+goo2/Fz8nqG9See1FNounZaOGPAaJwc/vIjN17TGxIJNziANxzKzWbxCk1jC
+ uu/sgMltthxGTUo/kR1T7Xrw7Qjsn1M74Cj3OXrcR8YNb2VwiFIae0bddWlOS8mVUpL7
+ uL2CJRY4vrgxeYlKPRlu2wrnEOLbcRpBX8cKuQBF0pVUPBNS7cP9ZndeM55XEyzZi8Y2
+ vfXsvZp3KlvYNNU8hESaUIJrOMOrikfbT18hIbzn0KiqppHTWMl8r24YZfwFHI+rSQ1Y
+ +bcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789323477; x=1789928277;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2iVnvtvgBTzNKgSIpJFBLB8jsQ2CSjE2UWOxHlCMc5w=;
+ b=mAhev5u0GlQyANPgfR53JBIhkQH7DwGNaTuyofNBoU/h34YxzC8tv2gtUn5FiR9JjZ
+ WElMOOT0/zZgI7f4w3oPxIWFo1wLaEjb1So4r/jFmkeWc5sH7YGjw8XKvRiy3hSqjAEE
+ xsNWsI72M3ldFEyxCwsN5Ro6wyOeP24SmOuPYve8DmxadIus4LzthEEhtKQ50NHNeEo4
+ I3cNFa1ZsVM03CH08JbPkSl6+14dju3v58rjVqgHKlnxdoYvHKLHYHop4JQtPgwV8BWm
+ y0yb7/2UiiLfLfGozYkldSgp/Z/4nLRxMN/uYtco6wVNN89wO11tMA2wMRUvFHAh6ZFX
+ Gq8Q==
+X-Gm-Message-State: AFuF++k+4p/wnPM4thXCIuCIr6qtjPXcgiMy2z8fVr629QiIu9xfNtPG
+ 5D2a1MgKiDAkfZtN97+osxVvs1bCtcgN9YuIYWoIgcmiotFFEVLM0yfFZCA7pHBhWM0=
+X-Gm-Gg: AYBFou2wevdlnmLdFACdvPyAVUC42cuciPeOC/Q/wTcWTfyhHdhip296PN6WRgnXspw
+ aGXARoZD8K4Qjlfm5eXDdCNw+Ei/0EhDfHFHAci6D6CnTQ2zuaic3fRIj1CFekJebT94AgNrzE6
+ uu4wbJeeFhU6RM0bLnVJCsIf6BL48Koin5bQqDMwFDPwSvOYfJ5YYhIUE6DfUojruVlr9UroO5P
+ IslZeHmLsuu41e3UEgaApywZ6Xj4GAG7ZIzYYabGZ2M3zczKUtoXS1nUACzh7DDr69SzYoWMal7
+ hBImsHOReSQrf5m1i9Y9gHpledT3NNyN1gkL2Hjs19zpzvJNXHAfWtE8fXoqRu238yi6W9Ov1MH
+ 9mg+TLVEKMXRiEvCRhdaM8ioyW5kkfHUHXVAk9bS39Mlko+Lstu58jbx0KbP0151XeQmiswzS47
+ 4fHRRy5SieElzIUxOkKKa3mjks8pkuiKLAhqAjKTOU/8xxP7ciSWMaH9wHGNj4ZPlIdFI5Pa5D3
+ mTk/eFhMAep+TKTCYTsGPCmThYVPxlZC4qis2SNUgqPdiNl6pRfNhyfveh/46QSGub4Eg==
+X-Received: by 2002:a05:651c:a10c:20b0:39b:2ff8:64ae with SMTP id
+ 38308e7fff4ca-3a5a5191544mr11393201fa.9.1789323476764; 
+ Sun, 13 Sep 2026 11:17:56 -0700 (PDT)
+Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
+ [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3a5a3326aecsm21122951fa.19.2026.09.13.11.17.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Sep 2026 10:38:31 -0700 (PDT)
-From: Artemii Mashanov <ralerrdirsardx@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, richard.henderson@linaro.org,
- alex.bennee@linaro.org, pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH] target/i386: fix EFLAGS reads in TCG plugin callbacks
-Date: Sun, 13 Sep 2026 20:38:01 +0300
-Message-ID: <20260913173801.96942-1-ralerrdirsardx@gmail.com>
-X-Mailer: git-send-email 2.55.0
+ Sun, 13 Sep 2026 11:17:55 -0700 (PDT)
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Subject: [PATCH v3 0/3] Allwinner A10 GPIO support
+Date: Sun, 13 Sep 2026 20:17:29 +0200
+Message-Id: <20260913-allwinner-gpio-v3-0-a9affa474b3b@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2XM0QqDIBiG4VsJj+dQC7Md7T7GDix/64fS0OE2o
+ nufBYPYDr8P3mchEQJCJJdiIQESRvQuj/JUkG7QrgeKJm8imJBMcUX1OD7ROQi0n9FTCVpVnNf
+ GNhXJ0RzA4msHb/e8B4wPH967n/j2fqnml0qcMiq0rJSUxlrOr/2kcTx3fiIblcQhF/+5yLll0
+ HYtq0sm4Jiv6/oBJjFKMesAAAA=
+X-Change-ID: 20260818-allwinner-gpio-6ea84117df94
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Jack wang <163wangjack@gmail.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+X-Mailer: b4 0.14.3
 Received-SPF: pass client-ip=2a00:1450:4864:38::10;
- envelope-from=ralerrdirsardx@gmail.com; helo=mail-lr2-x10.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lr2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,95 +109,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The plugin register API reads env->eflags through the gdbstub.
-During TCG execution, arithmetic flags are kept in the lazy CC state
-and DF in env->df, so this can return incorrect EFLAGS values.
+This patch series introduces GPIO support for Allwinner A10 and
+Cubieboard.
 
-Add eflags_in_tcg, set on TCG entry and cleared on exit, to select
-cpu_compute_eflags() while the flags are split. Also synchronize cc_op
-with gen_update_cc_op() before instruction callbacks when plugins are
-enabled, since the current value may still be in the translator context.
+The support is focused on input/output and interrupt functionality.
+The qtest suite is also updated with tests for implemented
+functionality.
 
-Outside TCG execution, keep reading env->eflags, which holds the
-complete flags. Unconditional reconstruction can use stale lazy state
-and break GDB readback: in testing, writing 0x0202 through GDB was
-followed by a readback of 0x0203.
-
-Richard Henderson previously proposed EFLAGS reconstruction and cc_op
-synchronization for i386 plugin register reads.
-
-Link: https://www.mail-archive.com/qemu-devel@nongnu.org/msg1047061.html
-Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 ---
- target/i386/cpu.h           | 1 +
- target/i386/gdbstub.c       | 3 +++
- target/i386/tcg/tcg-cpu.c   | 2 ++
- target/i386/tcg/translate.c | 3 +++
- 4 files changed, 9 insertions(+)
+Changes in v3:
+- replaced forward declarations of gpio_is_input and int_ctl_cfg with
+  definitions
+- updated use of extract32 for int_cfg_n to use full stride INT_CFG_IRQ_STRIDE
+- replaced custom bit manipulation with deposit32
+- updated output GPIO line handling to have same behavior when lines are
+  configured as input as when they are assigned to special function
+- removed update of outbound gpio lines in the reset function
+- improved test organization with common add_test function, as suggested
+- removed leftover comments
+- minor style fixes
+- Link to v2: https://lore.kernel.org/qemu-devel/20260829-allwinner-gpio-v2-0-f0ebcb07302e@gmail.com
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 9ce8ca0038..b3b4528ea7 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2347,6 +2347,7 @@ struct ArchCPU {
-     CPUState parent_obj;
- 
-     CPUX86State env;
-+    bool eflags_in_tcg;
-     VMChangeStateEntry *vmsentry;
- 
-     uint64_t ucode_rev;
-diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
-index 5c5fa72721..e636ca0f4a 100644
---- a/target/i386/gdbstub.c
-+++ b/target/i386/gdbstub.c
-@@ -151,6 +151,9 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         case IDX_IP_REG:
-             return gdb_get_reg(env, mem_buf, env->eip);
-         case IDX_FLAGS_REG:
-+            if (cpu->eflags_in_tcg) {
-+                return gdb_get_reg32(mem_buf, cpu_compute_eflags(env));
-+            }
-             return gdb_get_reg32(mem_buf, env->eflags);
- 
-         case IDX_SEG_REGS:
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index 6f5dc06b3b..2402608fe9 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -38,6 +38,7 @@ static void x86_cpu_exec_enter(CPUState *cs)
-     env->df = 1 - (2 * ((env->eflags >> 10) & 1));
-     CC_OP = CC_OP_EFLAGS;
-     env->eflags &= ~(DF_MASK | CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C);
-+    cpu->eflags_in_tcg = true;
- }
- 
- static void x86_cpu_exec_exit(CPUState *cs)
-@@ -46,6 +47,7 @@ static void x86_cpu_exec_exit(CPUState *cs)
-     CPUX86State *env = &cpu->env;
- 
-     env->eflags = cpu_compute_eflags(env);
-+    cpu->eflags_in_tcg = false;
- }
- 
- static TCGTBCPUState x86_get_tb_cpu_state(CPUState *cs)
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index d8de290acb..c469d74efe 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -3483,6 +3483,9 @@ static void i386_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
-     target_ulong pc_arg = dc->base.pc_next;
- 
-+    if (dcbase->plugin_enabled) {
-+        gen_update_cc_op(dc);
-+    }
-     dc->prev_insn_start = dc->base.insn_start;
-     dc->prev_insn_end = tcg_last_op();
-     if (tb_cflags(dcbase->tb) & CF_PCREL) {
+Changes in v2:
+- allwinner-gpio-test: Added test for interrupt triggered on both rising
+  and falling edge
+- Link to v1: https://lore.kernel.org/qemu-devel/20260819-allwinner-gpio-v1-0-2a64866dff11@gmail.com
 
-base-commit: 257bf4f160c50ca8c4ebd603f519f5c786013fb7
+---
+Strahinja Jankovic (3):
+      hw/gpio: Allwinner A10 GPIO emulation
+      hw/arm: Add GPIO to Allwinner A10 model
+      tests/qtest: Allwinner GPIO tests
+
+ MAINTAINERS                           |   3 +
+ docs/system/arm/cubieboard.rst        |   1 +
+ hw/arm/Kconfig                        |   1 +
+ hw/arm/allwinner-a10.c                |   8 +
+ hw/gpio/Kconfig                       |   3 +
+ hw/gpio/allwinner-gpio.c              | 449 ++++++++++++++++++++++++++++
+ hw/gpio/meson.build                   |   1 +
+ hw/gpio/trace-events                  |   6 +
+ include/hw/arm/allwinner-a10.h        |   2 +
+ include/hw/gpio/allwinner-gpio-regs.h | 227 +++++++++++++++
+ include/hw/gpio/allwinner-gpio.h      |  41 +++
+ tests/qtest/allwinner-gpio-test.c     | 535 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build               |   3 +-
+ 13 files changed, 1279 insertions(+), 1 deletion(-)
+---
+base-commit: d43c2d5f89db70359a7b3a7e2ad7098fcc0165ef
+change-id: 20260818-allwinner-gpio-6ea84117df94
+
+Best regards,
 -- 
-2.55.0
+Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
 
