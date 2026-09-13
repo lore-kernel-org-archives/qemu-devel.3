@@ -4,136 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C451EC88E5C
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 19:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1656DC88E63
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 20:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5qKi-0001dh-N8; Sun, 13 Sep 2026 15:57:48 -0400
+	id 1x5qqr-0007G4-B4; Sun, 13 Sep 2026 16:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1x5qKg-0001dR-B0
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 15:57:46 -0400
-Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1x5qqo-0007Ff-4V
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 16:30:58 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1x5qKe-00074R-Dt
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 15:57:46 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T3Jh1phTsU+T9SZ5FtUgoXddByx+wOv3oeiedFtJXam6AN5PmDK+O5dTeRWmBnZmqIV7Xv2KFG4ec+hz/Lvlb3Wf2lhzm/7iFwtUaRij1ypJ0zRLsrULyTZ+8Uhdrhx38s/s1FOQz/CDpRXWNxBLNrox1BFVsfK6EwVl4i10DexUoy6ZNQTihmaOvBCm7GFxWuoy1ZFSjmS2mmp+0CfZhYfZ9hQN61n+0+v6OWpRj9kxr+vBjwvgTVVFAiqqEoRivXUHnCYlH0gqTwI5gAIhnt9H1rWTUgayZ26NT714cR2O+4HEcT9G3AEwS1E6NA40T37ZVK0lgOVAWjQNwXJ9yw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HIFFtvtAd2K+VqJKs58TyWkWjTfV2ckNkdvLG1wd1n4=;
- b=O6sbLn3ys4XA9k20WW8TfZbUjdezFYRiKaRLuxDSnjuPGJed07N/5YgQFN84pEbId6xR5ssqGYA6XC18agTAutxq0QWDbx05azWpsUTcchyxJ+/9i4J0gML+IPvVM5HLh/+AIlQk6O42miNN38LtSha6ifjb9gY1KddhZ+Kxl1DnrfCnYYhmNPSpEXNC1+Kje3KknjptiruYd2SeKvweJ9CYoLe7S/jyulx6vChLM4MmRsKFHVHhUr7xKbOc85JFxJNIs9MFBKysTHCb3jDI27USJf6T/cpXdLxrX6u7qdNdeqLP9axUmrkFCOff72dGniRFeK5VnurHGdoIjdsZXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HIFFtvtAd2K+VqJKs58TyWkWjTfV2ckNkdvLG1wd1n4=;
- b=h0etY61meyjUhUCOchL4KNO9ygIGeDcrSp5uFhaLynJqFm2E3ANC/b1F6Ye9oAocqD+FaNa80dMB6uROqGGfKWv7ihX+6V7uq3oDMawwV3qHwcEQU76QZPAwTdS2mAtiZbdKwsDIclGb+uS6139f5rTEAly2pf9SI4rz2sii1J1ghvoVgrkNSUN/0K4yngBaEsT+1CwXoVpkj4eOsIH2C7BjzUsyXhnqzSJNOaX6ZmbVY+HFp+hj81Mj/XTbLhaGqyhHkeUgHG3uIZfyHCN2THcZmqT93Ya3qf2QvLo24Yen9uSVe/CzRaO3zNoHaBtHYbIBQzNDm9/wyO/cMX9d3g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by MI9PR08MB940098.eurprd08.prod.outlook.com (2603:10a6:290:c1::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.8; Sun, 13 Sep
- 2026 19:57:41 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0428.004; Sun, 13 Sep 2026
- 19:57:41 +0000
-Message-ID: <dbfd28b4-8beb-4af5-a9e2-72a296ce41cc@virtuozzo.com>
-Date: Sun, 13 Sep 2026 21:57:40 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] ui/cursor: fix two races that free a cursor early
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260903192647.2677279-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260903192647.2677279-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0016.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:34e::18) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1x5qqi-0004Xp-8V
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 16:30:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=snW5qyl+pje3IeX2lWBpwx0C5hDKvaRCJ5dSEubn920=; b=TL++ftbJ34YDThKa
+ Nq9oXAtOQtqokfWvoBfyrryBeBqPNs+VyISqjQXMiEpip9ek4YiVnVUFcPjuhCWeZjSVJk9+TqSYY
+ LtEz9lxMlBGADL/3dooaiK2G2crmiGqHjjhUZb4+/raZcc5QY7hkMABjJsoup6e6G0WcOdhFp1FSL
+ 5/LBlK2ocft07qoBtdoljXfEG75Y+acujfDTzGZ1Cx4iyU8Re5vjMX+JlEtUTPlT461q7Oe/aZ3AH
+ NUwZA8A5CwgvviOQRt0P2fwVszfQSdHxXcRf8CFK95pPAiGq2ml1TvP75thlzq6MUEKPnsLPDcAYY
+ Zn4Zu6APS/Ly0h3+Mg==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1x5qqd-00000000Auw-2Rhb;
+ Sun, 13 Sep 2026 20:30:47 +0000
+Date: Sun, 13 Sep 2026 20:30:47 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 09/18] tests/qtest/migration: Add a test for HMP
+Message-ID: <aqcH9wn2ElBqlFB9@gallifrey>
+References: <20260909214509.237309-1-farosas@suse.de>
+ <20260909214509.237309-10-farosas@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|MI9PR08MB940098:EE_
-X-MS-Office365-Filtering-Correlation-Id: 66445fdb-7f05-406d-f32c-08df11d144c6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|10070799003|1800799024|23010399003|56012099006|5023799004|3023799007|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: NCP7rtFakGThmuktMN/nl+WfrpyuwXeV1AAFK6KaB/K+1sCMfpAHb28X3ZUg15AVL4RfO8w7jj9BF0/IXb28eD6GMQzxkdywLtH3xu/1Of+c5N5Edh37rulj3n78238OLQGBxBTQUu9twA4d1q4bGZrMW0Ez+W6WpjQg6YKSSzhThonPZ9FzyooqOvzfemDodK1YWx+sH2VrrLJJLyTdEvz7hzxIHJp4BRUEbtOKCIy968ifq/vOiEOm3jNj3t6gdVX07bmz+oaTCb92wtA22nBt9+P5am9lis4MLhNY7lSUq39qdKMbkW3gakwuUJgNhOQgalVGS83HKg9hbYrfkafHeUzKy9fhSaIizOwwUyIn43nvt2XzFPP2tinMP36G6p2ERbtxriskc1+TpjlxD0c7AHo+91y0oy5Tn8L3RO2jiuy4z6AG4bYm+afVOVGRiDlYQvCTaJogyQbAk1/Ors1aV+I75ud4zN96diLWU0Yv4XpLFKqMzqAu6NOCxsAAYDoB+ja8fK2AYXE7wnz+wtp6thfxVVZ1Gvu5qHlMKi0gT6btJztRuYhOHTKd9vO7WPihao6YblQCdugUx0Kh55QNH8EEhnmX/IUf1f2AXx2EKa/iQT71V60wF22DbpDyGZpFZX7nX+lfnBpUHaYRKEQDF8ixY9V7XbfANa2rUAo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(23010399003)(56012099006)(5023799004)(3023799007)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cHFvMmtBM3dMQkhiRjcwRUZ5Q0NDSmdYdG94V09aT1QwK0FGbWo4RURPUjly?=
- =?utf-8?B?aVJ6WTEvdXJCcHR1TDFRYW9QNnhWenlQSHR2Q2NreFE5eDZnNG1qMHJsb1FY?=
- =?utf-8?B?UnlvZ0lsU095VFRYMUdqSTJPV1B3K0hMMlJMbEZzTmRTYjVDU0JFbGNKT2w4?=
- =?utf-8?B?NDcreWsxSjZsT1FVSHhqNXF5WEZ3K1REdWZINjV4MDViOC9zK1JzVVorR29h?=
- =?utf-8?B?cEE3UWpHRmlQS1JxR1VzMHlmU3RQRC9kK1FXekNuNXJNcThNQjk2RGxHMjVa?=
- =?utf-8?B?ZGg1MnltelZsQnpyc2V2RGxLS1BWSk9acWRHNXU3dWtDTWpheElSRi9WQXhu?=
- =?utf-8?B?bGE0TUdMVHh6U3hWOTFla0pOL1dXVkxTejZLRGZxVXR1cU9ZbzBkNTZRbGVQ?=
- =?utf-8?B?a0VzN1NZK3B5am95NkxBaUhUS1hzRDErbHBKTEtnRWpoZjdmZkdmUVJiZWRy?=
- =?utf-8?B?OWl4ZEpxZmgyUmRzM2NZMm1xb1drK3g4Snh1VlZhc01nb0l2Um9EZXhKY0RS?=
- =?utf-8?B?UFY4SWpEOFVxNjBnSzF1Q1E1cFRIbnNxVndaTWQvNkNTWTBxdXR0aE5ubHhn?=
- =?utf-8?B?YjVLT3dRU2EwRnd0YkpSYUs0Tm91c3lROEh6S1ZPS0lBQjNFdUFDZjZGejg0?=
- =?utf-8?B?RGpSek5vb0VLdkdBUXphd1AwS1RWalFzd2gyZzlXQTMwbzZtZ0ZzYXpYM2cy?=
- =?utf-8?B?eUV3UENXUnNOenNNNkJyZ0p1OUlxTUhScnRpVnl3TmRyb2JSbm1QMHRQb1pN?=
- =?utf-8?B?RjNjMU5abmFkUytyRFZwSmhaemZXNC8vTFZSZlMvZDNCRDJ2ZW9vZ0tHQnZI?=
- =?utf-8?B?czVlN0NJUFJoeGc5eEJUNTJEM05KY2g1aG0rVlJKYmVJaWg0cFprZnBWZXhp?=
- =?utf-8?B?eXE2RHhXMGxMOXVUdUVyMExLb2dlUHF2RE80a25rVmJmUDRKcndiKzd6eHFq?=
- =?utf-8?B?WXNzblpFb2lSN0lNVVZGRU5NQjVjdStrVmJsZzBiYUFVR0RSN2h2MEp1dlh2?=
- =?utf-8?B?ZTZOVFVDdklvbFQ2YVlaa2RCYlREdThEMUxMTVVKaDdQRWc0aFlqWUFmVkcx?=
- =?utf-8?B?bmZUQUd4V1hRemxSS082WEh2SDRMb0Q3Yk5hTDlMSWhRS0I2U3Y3eGZESEtL?=
- =?utf-8?B?anlaSGsyOHM0SUVOTFFIMWFKRitHUUdSSDZkbjRsL0dwNEl3UncybWV5eXdX?=
- =?utf-8?B?ck12UlJ0L2hQcWpmcDZoY2t0SXNjLys1d2REU2Rud3dvMDFHTkR6aUg3aVpB?=
- =?utf-8?B?Y0FTR0Z4Rm1IbE1NMVg3Z0F5SHhwL3pVOE9sTUhlVEt4czgyL3d1Z2lFOWJB?=
- =?utf-8?B?K1hrblRQazBPeEZobERCS2lvSUFxaEUrdjV6dnQyVkN4dlUzUEpmV1p0bnF0?=
- =?utf-8?B?RmVrOVZUcGFjd0V2VlhMK3N2RHkxczd2UmJtUFpvWTB5T1JwRUNKbnkzM3Rm?=
- =?utf-8?B?L2JUMkVKbSsyS2p1UEF4ZHJmemtCUEFTc2tVQ2VxWHdSSFN2ZGJTMHRha1oz?=
- =?utf-8?B?Rlg2NnFYYjN5am9sOERqNU5iaEt1RVpWdEV3NWdVS2dOUGVGMzBVaFU3Wm1h?=
- =?utf-8?B?Yjk3bUxETmRrVnhHanRCWlF0aTZjTTB5bEJwclBVc2V3dnBzYUlJd0MzZkEw?=
- =?utf-8?B?UXNkdkJCYjBuNW1jU0syQ2I2V1Uxd281R0Z5K3BRd3ZPdWpjb00yREUrY0Vv?=
- =?utf-8?B?TEVxZ3hyTkhuRHZ1WEdVaXAwQ09velZqYW5TUXIveVFkenhwcFJpVEJDa1NI?=
- =?utf-8?B?aVRGaVR5azBBaEhKUlpZWE44Z2FRclhBMExLUVdpb1FJb0YyeEk1WmlEUVNG?=
- =?utf-8?B?VG9lZ1k2N082L1VqVHVaWEthenRod0hHejVPQng5RmxjM2pEQXB5Q1NPQ29q?=
- =?utf-8?B?Z1pMR0ljY0l5TWt6d3VZRHExNm5OaW1aaGtoYUFEMk55eG1YWTdsbU9pMWRU?=
- =?utf-8?B?a0U4dEFRcXBzVkZPNDB1V0JOWVE4SU14M2YxU1NUYmI1UGlCSTNYN0pnSE1m?=
- =?utf-8?B?bTBoeGxCWkJDL211MjhGTWVtNUhQcTl4OWlHRllFTGluSDZmYVRha3d1N0Jo?=
- =?utf-8?B?T1RXN3JQbERIelJpd2QwSFVsYW5yek1HSTJIbC94bngyUWJKZzlQVXRKVEVR?=
- =?utf-8?B?OXVhdncyMDhraXRaU0dvYkJLaS9DQ1JYZS9oNVZ3SXpJd3hDVXRHa2pYbHp4?=
- =?utf-8?B?TWNFcU9VSmo2QmVHdGRxM3poUDYrRVpRVTAxM0JUQXFjZE1OMzJQS1BMSGUz?=
- =?utf-8?B?SVRsWmNIZW9VZ294ekFGVTA3d1pCamN6L0c2LzlqdlF2NWtBbUtva3hMaWx6?=
- =?utf-8?B?Z3JRd2JWQm9ObDFCZksydkxtYWR5TVJ0T1g5bEZxRFBkSjY0ei9SOVVONTF2?=
- =?utf-8?Q?h3Ct2TLqtxcj7Gw1rf0GgPS767c/1hccZirpbBrTxnydM?=
-X-MS-Exchange-AntiSpam-MessageData-1: COfd7oGJ3rAUcA==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66445fdb-7f05-406d-f32c-08df11d144c6
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2026 19:57:41.0628 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7l7d+veaywlw981BaFIy9+NzWIVqB7c3RnBZF3x1E7GptGdvulq3JP5jpiSwaHbXGpW8/uo1aS3FN5HVyX+VOQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI9PR08MB940098
-Received-SPF: pass client-ip=2a01:111:f403:c202::7;
- envelope-from=den@virtuozzo.com;
- helo=GVXPR05CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260909214509.237309-10-farosas@suse.de>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.107+deb13-amd64 (x86_64)
+X-Uptime: 20:29:07 up 1 day,  8:14,  2 users,  load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,62 +71,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 21:26, Denis V. Lunev wrote:
-> This email originated from an IP that might not be authorized by the domain it was sent from.
-> Do not click links or open attachments unless it is an email you expected to receive.
-> A guest with a qxl display can make QEMU drop more references to a
-> QEMUCursor than were taken. The cursor is freed while another owner
-> still points at it, and that owner's later cursor_unref() decrements
-> four bytes of a chunk the allocator has handed out again. Nothing
-> aborts and nothing is logged; QEMU dies later in an unrelated
-> allocation, in another thread.
->
-> Two defects get there, and neither fix is sufficient alone:
->
->  - qxl_spice_reset_cursor() replaces qxl->ssd.cursor with no lock held,
->    while every other writer of that field takes ssd.lock. It runs on a
->    vCPU thread from QXL_IO_DESTROY_PRIMARY and, unlike qxl_hard_reset(),
->    leaves the SPICE display worker running.
->
->  - QEMUCursor.refcount is a plain int, taken and dropped from the main
->    loop, the SPICE worker, ui/cocoa.m and ui/dbus-listener.c, with no
->    lock common to all of them, so an increment can be lost.
->
-> A qxl device starts a spice-server instance for local rendering even
-> with no -spice, so this is not limited to SPICE console setups.
->
-> Patch 2 also asserts that the refcount was positive. Only qxl was
-> exercised here, so if another display backend drops a reference it
-> never took, that assert turns a silent leak into an abort.
->
-> Reproducer: a libdrm program in the guest queues cursor SET commands,
-> then disables the CRTC so the driver issues QXL_IO_DESTROY_PRIMARY.
-> Unpatched QEMU dies within seconds; with the series it does not. Happy
-> to post it.
->
-> This is independent of the pending "ui/console: fix use-after-free in
-> qemu_console_set_cursor", which fixes a self-assignment ordering bug at
-> the same line. With that applied the crash here is unchanged.
->
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
->
-> Denis V. Lunev (2):
->   hw/display/qxl: hold ssd.lock while replacing ssd.cursor
->   ui/cursor: make the cursor refcount atomic
->
->  hw/display/qxl.c     |  2 ++
->  include/ui/console.h |  9 +++++++++
->  ui/cursor.c          | 17 +++++++++++------
->  3 files changed, 22 insertions(+), 6 deletions(-)
->
-Hi, Marc-Andre!
+* Fabiano Rosas (farosas@suse.de) wrote:
+> The following patches will change how parameters are set and shown in
+> HMP, add a test for it.
+> 
+> The test issues HMP migrate_set_parameters for each of the existing
+> migration parameters and queries them back with the info command. A
+> list is kept with the expected strings. A substring match function
+> inspired by glib's g_str_match_string is implemented for this test so
+> the test can produce a decent error output instead of just assert
+> failure. E.g:
+> 
+>  # HMP output mismatch for entry at line 55:
+>  # expected vs. found:
+>  #
+>  # max-bandwidth: 10356305952768 bytes/hour
+>  # ---
+>  # max-bandwidth: 10356305952768 bytes/second
+> 
+> (note that line 55 above is the source line where the test case for
+> max-bandwith is, which helps find the failing test in the list)
+> 
+> Usage:
+> QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+> ./tests/qtest/migration-test --full -p /x86_64/migration/hmp/parameters
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-You have not posted the notification that patches
-have been queued. Are you going to accept them?
-Unfortunately I see your review without any further
-actions and patches were not landed yet.
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-Sorry for bothering,
-    Den
+Two minor thoughts:
+  a) You might try a numeric out of range test?
+  b) 'input1' and 'input2' seem odd names for something that oculd be .name and .value ?
+    (But only if you need to rework anyway).
+
+Dave
+
+> ---
+>  tests/qtest/migration/misc-tests.c | 201 +++++++++++++++++++++++++++++
+>  1 file changed, 201 insertions(+)
+> 
+> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+> index 4e0deb7f18..533cf3d55d 100644
+> --- a/tests/qtest/migration/misc-tests.c
+> +++ b/tests/qtest/migration/misc-tests.c
+> @@ -22,6 +22,203 @@
+>  
+>  static char *tmpfs;
+>  
+> +#ifdef CONFIG_HMP
+> +static int test_case_line;
+> +
+> +#define TEST(i1, i2, e) { i1, i2, e , .line = __LINE__, }
+> +#define SKIP(i1, i2, e) { i1, i2, e , .skip = true, }
+> +#define BG_SNAP_MSG ("Error: Background-snapshot is not compatible with " \
+> +                     "currently set capabilities")
+> +
+> +typedef struct HMPTestData {
+> +    const char *input1;
+> +    const char *input2;
+> +    const char *output1;
+> +    bool skip;
+> +    int line;
+> +} HMPTestData;
+> +
+> +/*
+> + * .input1: string to be used as parameter name
+> + * .input2: string to be used as parameter value
+> + * .output1: expected output of migrate_set_parameters
+> + * E.g:
+> + * (qemu) migrate_set_parameters .input1 .input2
+> + * .output1
+> + */
+> +HMPTestData test_cases[] = {
+> +    TEST("", "", "migrate_set_parameter: string expected"),
+> +    TEST("foo", "", "migrate_set_parameter: string expected"),
+> +    TEST("foo", "on", "Error: invalid parameter value: foo"),
+> +
+> +    /* bool */
+> +    TEST("cpu-throttle-tailslow", "on", "on"),
+> +    TEST("direct-io", "on", "on"),
+> +
+> +    /* uint64_t */
+> +    TEST("announce-initial", "60", "60 ms"),
+> +    TEST("announce-max", "600", "600 ms"),
+> +    TEST("announce-rounds", "6", "6"),
+> +    TEST("announce-step", "15", "15 ms"),
+> +    TEST("downtime-limit", "400", "400 ms"),
+> +    TEST("avail-switchover-bandwidth", "2097152", "2199023255552 bytes/second"),
+> +    TEST("max-bandwidth", "9876543", "10356305952768 bytes/second"),
+> +    TEST("max-postcopy-bandwidth", "1048576", "1048576 bytes/second"),
+> +    TEST("vcpu-dirty-limit", "20", "20 MB/s"),
+> +    TEST("x-rdma-chunk-size", "1048576", "1048576 bytes"),
+> +    TEST("x-vcpu-dirty-limit-period", "750", "750 ms"),
+> +    TEST("xbzrle-cache-size", "67108864", "67108864 bytes"),
+> +
+> +    /* uint32_t */
+> +    TEST("x-checkpoint-delay", "5000", "5000 ms"),
+> +
+> +    /* uint8_t */
+> +    TEST("cpu-throttle-increment", "15", "15"),
+> +    TEST("cpu-throttle-initial", "25", "25"),
+> +    TEST("max-cpu-throttle", "85", "85"),
+> +    TEST("multifd-channels", "8", "8"),
+> +    TEST("throttle-trigger-threshold", "65", "65"),
+> +
+> +    /* complex types */
+> +    TEST("mode", "cpr-exec", "cpr-exec"),
+> +    TEST("multifd-compression", "zlib", "zlib"),
+> +    TEST("zero-page-detection", "none", "none"),
+> +    TEST("tls-authz", "my_authz", "'my_authz'"),
+> +    TEST("tls-creds", "null", "'null'"),
+> +    TEST("tls-hostname", "localhost", "'localhost'"),
+> +    TEST("cpr-exec-command", "/bin/true foobar", "/bin/true foobar"),
+> +
+> +    /* can be set but are currently missing in the query output */
+> +    SKIP("multifd-qatzip-level", "5", "5"),
+> +    SKIP("multifd-zlib-level", "4", "4"),
+> +    SKIP("multifd-zstd-level", "6", "6"),
+> +
+> +    /* cannot be set */
+> +    TEST("block-bitmap-mapping", "[]",
+> +         "Error: The block-bitmap-mapping parameter "
+> +         "can only be set through QMP"),
+> +};
+> +
+> +/*
+> + * Find a contiguous run of tokens in @larger that match the sequence
+> + * of tokens in @smaller, ignoring mismatches due to sequences of
+> + * empty tokens.
+> + *
+> + * Returns whether a match was found. @last is set if at least one
+> + * token has matched.
+> + */
+> +static bool token_list_is_substr(char **smaller, char **larger, int *last)
+> +{
+> +    int i, j, k = 0;
+> +    bool match = false;
+> +
+> +    for (i = 0; smaller[i]; i++) {
+> +        for (j = k; larger[j]; j++) {
+> +            if (!*larger[j]) {
+> +                continue;
+> +            }
+> +
+> +            /* readline adds several escape sequences */
+> +            if (*larger[j] == '\033') {
+> +                continue;
+> +            }
+> +
+> +            if (g_str_equal(larger[j], smaller[i])) {
+> +                match = true;
+> +                *last = j;
+> +                k = j + 1;
+> +                break;
+> +            }
+> +
+> +            if (match) {
+> +                return false;
+> +            } else {
+> +                match = false;
+> +            }
+> +        }
+> +    }
+> +
+> +    return match;
+> +}
+> +
+> +static void assert_hmp_match_line(const char *str, const char *text)
+> +{
+> +    g_auto(GStrv) tok_str = g_strsplit_set(str, " ", -1);
+> +    g_auto(GStrv) lines = g_strsplit_set(text, " \r\n", -1);
+> +    int i, idx = -1;
+> +
+> +    /*
+> +     * Note that the reason the 'str' above is split is to allow
+> +     * token_list_is_substr() to first match on the parameter name so
+> +     * matching can stop immediately after a mismatched value is
+> +     * found. This provides a better output for failing test cases
+> +     * than simply "str != line".
+> +     */
+> +
+> +    for (i = 0; lines[i]; i++) {
+> +        if (token_list_is_substr(tok_str, (char **)&lines[i], &idx)) {
+> +            return;
+> +        }
+> +
+> +        if (idx >= 0) {
+> +            break;
+> +        }
+> +    }
+> +
+> +    g_test_message("HMP output mismatch for entry at line %d:", test_case_line);
+> +    g_test_message("expected vs. found:\n\n%s\n---\n%s %s", str, lines[idx],
+> +                   lines[idx + 1]);
+> +    g_assert_not_reached();
+> +}
+> +
+> +static void assert_hmp_success(const char *str)
+> +{
+> +    if (!g_str_equal(str, "")) {
+> +        g_test_message("HMP command failed:\n\n%s", str);
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static void test_hmp_migration_parameters(char *name, MigrateCommon *args)
+> +{
+> +    QTestState *qts;
+> +
+> +    /* force TCG so it can run in all targets */
+> +    qts = qtest_init("-accel tcg -nodefaults -S");
+> +
+> +    for (int i = 0; i < G_N_ELEMENTS(test_cases); i++) {
+> +        g_autofree char *resp = NULL;
+> +        g_autofree char *line = NULL;
+> +        struct HMPTestData *t = &test_cases[i];
+> +
+> +        if (t->skip) {
+> +            continue;
+> +        }
+> +
+> +        test_case_line = t->line;
+> +
+> +        resp = qtest_hmp(qts, "migrate_set_parameter %s %s", t->input1,
+> +                         t->input2);
+> +
+> +        if (g_str_has_prefix(t->output1, "Error:") ||
+> +            g_str_has_prefix(resp, "migrate_set_parameter:")) {
+> +
+> +            assert_hmp_match_line(t->output1, resp);
+> +            continue;
+> +        }
+> +        assert_hmp_success(resp);
+> +        g_free(resp);
+> +
+> +        resp = qtest_hmp(qts, "info migrate_parameters");
+> +
+> +        line = g_strconcat(t->input1, ": ", t->output1, NULL);
+> +        assert_hmp_match_line(line, resp);
+> +    }
+> +
+> +    qtest_quit(qts);
+> +}
+> +#endif /* CONFIG_HMP */
+> +
+>  static void test_baddest(char *name, MigrateCommon *args)
+>  {
+>      QTestState *from, *to;
+> @@ -260,4 +457,8 @@ void migration_test_add_misc(MigrationTestEnv *env)
+>                         test_validate_uri_channels_both_set);
+>      migration_test_add("/migration/validate_uri/channels/none_set",
+>                         test_validate_uri_channels_none_set);
+> +#ifdef CONFIG_HMP
+> +    migration_test_add("/migration/hmp/parameters",
+> +                       test_hmp_migration_parameters);
+> +#endif
+>  }
+> -- 
+> 2.53.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
