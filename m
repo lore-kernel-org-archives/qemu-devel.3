@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8587C88E65
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 17:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F494C88E5C
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 17:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5nxF-0003Tr-IC; Sun, 13 Sep 2026 13:25:28 -0400
+	id 1x5nwr-0003J3-8J; Sun, 13 Sep 2026 13:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mani@kernel.org>)
- id 1x5nUK-000091-CN; Sun, 13 Sep 2026 12:55:32 -0400
+ id 1x5nUM-00009H-2Z; Sun, 13 Sep 2026 12:55:34 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mani@kernel.org>)
- id 1x5nTz-0004yi-KQ; Sun, 13 Sep 2026 12:55:32 -0400
+ id 1x5nU0-0005Av-LM; Sun, 13 Sep 2026 12:55:33 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 31DC460E81;
- Sun, 13 Sep 2026 16:55:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39AF1F000FF;
- Sun, 13 Sep 2026 16:55:00 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 647DB60E85;
+ Sun, 13 Sep 2026 16:55:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034D81F000FF;
+ Sun, 13 Sep 2026 16:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789318502;
- bh=o7utxavKpIFUW01FDjLkzTq/r3iL9g9em50W9YCGwG0=;
+ s=k20260515; t=1789318511;
+ bh=t3eABMYx10xOCPmuL2/oN9NpnfYFZjUwGHohBGog74I=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=BmKnMCUk95qG+c2MZk26tdmfh80tl7Iopt9rOaxwHPHSg6/ahdwK/mY0Iupprtk2a
- OJ1Vjk1uDrTt2D1fHa4sejgfab609cKjnv+UZiplf3mCVBq+AJMC41oIx7ES9DO4e+
- MDF8YyVN5usqagkGwnQqXZyrEI1+ryhcouU3mIsqIvJgNAMWu24bWZiaQUMxVXGH72
- E+A7E+M+7fvp/UtO4Qft9vL88Gs74PLK8PBmnmvyjKc6+onxW1l7+8X78BCf3V7ZEa
- VLC+KZOlXSZnvOgoSBY00IVKWtPoFh+LTcgINx2wjD/m4HSWH5D+iYC8Hyrh2/T1v8
- lHnZ1RLGlXZjg==
+ b=eizgEX5g+LzHDzxDI0ZYEurk8CmMC5Xc/oZdKCk8us7oZqvu5Lb1dlqkiIUa9gudg
+ em8avjIi6H7cNCemJR19aQoX1WEw4wS/ZDEco9Rp5l26WdJrKJnG4Hi2/W6skdNoLC
+ X9P0+Txz5q2OyKMpwNA1Ny0n++z4YVtEfPObKHUjxfNFW8Bmaqfhg8q0i6CquICgt2
+ wV/8zQEyx2/fZixGnICgKXeIT2NZ1PcOoU61m+oVx/DEyqSXOqkJPv4wX+eyGTJpQy
+ k3HK4Y3pR7EmeJuEMq4xw9qhWNhsoEExDssmTTxZogNzEnsHZH27rkcXyAgYlLb7b1
+ 6E+D76EJ42y2Q==
 From: Manivannan Sadhasivam <mani@kernel.org>
-Date: Sun, 13 Sep 2026 18:54:51 +0200
-Subject: [PATCH 1/4] docs/system/devices: Add PCIe Endpoint emulation
- documentation
+Date: Sun, 13 Sep 2026 18:54:54 +0200
+Subject: [PATCH 4/4] hw/arm/virt: Add PCIe Endpoint Controller support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260913-pcie-ep-emulation-v1-1-b8e8f74a5842@kernel.org>
+Message-Id: <20260913-pcie-ep-emulation-v1-4-b8e8f74a5842@kernel.org>
 References: <20260913-pcie-ep-emulation-v1-0-b8e8f74a5842@kernel.org>
 In-Reply-To: <20260913-pcie-ep-emulation-v1-0-b8e8f74a5842@kernel.org>
 To: qemu-devel@nongnu.org
@@ -49,15 +48,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8557; i=mani@kernel.org;
- h=from:subject:message-id; bh=+znO2n9Ef03QY6xyCPLProxiqj8u4AxSMuiMlvR8VEo=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBqptVgM4/tN7FFgayu6SXIvmzh06q0b6xcKZ4SV
- qS/GvMZriCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaqbVYAAKCRBVnxHm/pHO
- 9d+QB/9b3wiIo/WnAZG2mK7LhCuj3OTsyosRrOuPkz7tdmwImLlBO0mRyBXnAJXEjkYlxUIhZfO
- 7L0wAPW1WsbDd8iTE5U08ivD2HcnhbJKksA+hvmw6l5n9vDO40tkhOGm540VqWFvmiQEhsedMcp
- FvTDo/FaJWyz8OCXsVm94/NATE0ZUcGGHk7oOWM92CkgmvdzU8UxpuDtE80QakJ3SG1/StdNvH5
- S4FFsZJQeNi/jEKffKbgPFSpEIDIzO6Yq1qxI5TXad9jSGQa0+j67ouO7wE9MUZHlmPSt5X6c1z
- Lr6gwP1PcxBQuO3oMr0K/fPzSzigzjqW+qglphHyALn4ZqHm
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6182; i=mani@kernel.org;
+ h=from:subject:message-id; bh=4wOqO45KFOwtM58aoP89+yBny+rNvXOMQO9Jja7LR44=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBqptVhKHyh+8Nty6VEkecocuTJaI/LzjuYreeK2
+ YuMQxx0vTiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaqbVYQAKCRBVnxHm/pHO
+ 9aclB/sFfVrcq0V4YoyqGcZTA/YSLMaPX+M7FuZLmaZHNls7FA3Iod7qhENeZzqaPWi+Uz8HTsa
+ ErgNVquWZoxwMhv67NYq21QPyvbcol+JR9YZ+PxhuD/TcIU460k0y5COCiYsKgGFJtl/G3uCoUV
+ 7fZIxbqZrmRae/DAMJ+pfPjGo8Dq0QVFQkHD8UymqjYIiKgg4lxwJeT4X8097Z7V/JbyYYV8uh2
+ nmRXH87sEfo0XhW38vQHob3mhLeMhjPuySQeqhZ5sgPrGW5n+wx0UOk2LtkshUfTyFmU66kEXil
+ tzHpxU38E2E4MF2LJ0rU3kI/oqYhRBL+nQAHW0NbvNt2HHTF
 X-Developer-Key: i=mani@kernel.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 Received-SPF: pass client-ip=172.105.4.254; envelope-from=mani@kernel.org;
@@ -86,197 +85,160 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-Document the PCIe Endpoint Controller (pcie-ep-ctrl) and the Endpoint
-Function (pcie-ep-generic), including how they share a single guest
-address space.
+Wire the pcie-ep-ctrl controller into the ARM virt machine as a dynamic
+sysbus device on the platform bus.
 
-The documentation walks through the QEMU invocation and the configfs
-bring-up of an Endpoint Function. It also covers the kernel
-configuration needed for a single guest to act as both the Endpoint
-Controller and the PCI host that enumerates the Function. The current
-limitations are listed at the end.
+  -device pcie-ep-ctrl,target-bus=ID
+
+The platform bus assigns the MMIO windows, so the machine emits the
+device tree node (compatible "pci-ep-generic") with the resolved
+addresses. The node is also marked dma-coherent. This allows the
+Endpoint Controller driver to allocate coherent DMA memory from system
+RAM for the Endpoint Function BARs.
+
+Allow the device on the platform bus with
+machine_class_allow_dynamic_sysbus_dev(). Also register a no_fdt_node
+binding in hw/core/sysbus-fdt.c so the generic platform bus code leaves
+the node to the machine.
+
+The target-bus property names the PCIe Root Port the Endpoint Function
+is hotplugged onto when the Link comes up.
+
+A single guest kernel then drives the controller through the
+pci-ep-generic EPC driver. In the same kernel, it enumerates the
+resulting Function as a PCI host. This allows running Linux EPF drivers
+such as pci-epf-test against the matching host driver without a second
+QEMU instance.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- MAINTAINERS                      |   5 ++
- docs/system/device-emulation.rst |   1 +
- docs/system/devices/pcie-ep.rst  | 140 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 146 insertions(+)
+ hw/arm/Kconfig       |  1 +
+ hw/arm/virt.c        | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ hw/core/sysbus-fdt.c |  3 +++
+ 3 files changed, 61 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2b5b581e17..e241f206bc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2170,6 +2170,11 @@ F: docs/pci*
- F: docs/specs/*pci*
- F: docs/system/sriov.rst
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index fb798ccbee..0c8266d403 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -36,6 +36,7 @@ config ARM_VIRT
+     select VIRTIO_MEM_SUPPORTED
+     select ACPI_CXL
+     select ACPI_HMAT
++    select PCIE_EP_CTRL
  
-+PCIe Endpoint Emulation
-+M: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-+S: Maintained
-+F: docs/system/devices/pcie-ep.rst
+ config CUBIEBOARD
+     bool
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index b090233893..25091d2639 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -94,6 +94,7 @@
+ #include "hw/core/cpu.h"
+ #include "hw/cxl/cxl.h"
+ #include "hw/cxl/cxl_host.h"
++#include "hw/misc/pcie-ep-ctrl.h"
+ #include "qemu/guest-random.h"
+ 
+ static GlobalProperty arm_virt_compat_defaults[] = {
+@@ -1569,6 +1570,57 @@ static void create_rtc(const VirtMachineState *vms)
+     g_free(nodename);
+ }
+ 
++/*
++ * Emit the device tree node for a pcie-ep-ctrl instantiated on the platform
++ * bus and hand the device the absolute addresses the bus assigned to its
++ * regions. Called from the plug handler once platform_bus_link_device() has
++ * placed the MMIO regions, mirroring how the SMMUv3 device builds its own
++ * node in create_smmuv3_dev_dtb().
++ */
++static void create_pcie_ep_ctrl_dtb(VirtMachineState *vms, DeviceState *dev)
++{
++    PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
++    SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
++    PCIeEPCtrlState *ec = PCIE_EP_CTRL(dev);
++    MachineState *ms = MACHINE(vms);
++    hwaddr pbus_base = vms->memmap[VIRT_PLATFORM_BUS].base;
++    hwaddr ctrl_base, ob_base;
++    hwaddr ctrl_size, ob_size;
++    char *nodename;
++    static const char compat[] = "pci-ep-generic";
++    static const char reg_names[] = "ctrl\0outbound";
 +
- ARM PCI Hotplug
- M: Gustavo Romero <gustavo.romero@linaro.org>
- L: qemu-arm@nongnu.org
-diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-index 40054bb7df..841ce35511 100644
---- a/docs/system/device-emulation.rst
-+++ b/docs/system/device-emulation.rst
-@@ -95,6 +95,7 @@ Emulated Devices
-    devices/keyboard.rst
-    devices/net.rst
-    devices/nvme.rst
-+   devices/pcie-ep.rst
-    devices/scsi/index.rst
-    devices/usb-u2f.rst
-    devices/usb.rst
-diff --git a/docs/system/devices/pcie-ep.rst b/docs/system/devices/pcie-ep.rst
-new file mode 100644
-index 0000000000..0e661234f7
---- /dev/null
-+++ b/docs/system/devices/pcie-ep.rst
-@@ -0,0 +1,140 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
++    /* Absolute base of each region as the platform bus mapped it. */
++    ctrl_base = pbus_base + platform_bus_get_mmio_addr(pbus, sbdev, 0);
++    ob_base = pbus_base + platform_bus_get_mmio_addr(pbus, sbdev, 1);
 +
-+PCIe Endpoint Emulation
-+-----------------------
++    ctrl_size = memory_region_size(sysbus_mmio_get_region(sbdev, 0));
++    ob_size = memory_region_size(sysbus_mmio_get_region(sbdev, 1));
 +
-+QEMU can emulate a PCIe Endpoint Controller (EPC) that works with the
-+Linux PCI Endpoint framework (``drivers/pci/endpoint/``). This allows
-+running a Linux Endpoint Function driver, such as ``pci-epf-test``, and
-+exercising it against the matching host-side PCI driver.
++    /*
++     * The EP guest programs outbound window addresses using these absolute CPU
++     * addresses, so the device must know where the platform bus placed the
++     * region to translate them back into window offsets.
++     */
++    ec->ob_base = ob_base;
 +
-+Everything runs inside a single QEMU instance. One guest kernel acts as
-+both sides. It drives the Endpoint Controller through the
-+``pci-ep-generic`` platform driver and, when the Link comes up, it
-+enumerates the resulting Function as a PCI host. Because there is only
-+one guest, both sides share a single physical address space, so the
-+Endpoint BARs and the outbound DMA window are plain aliases of guest RAM
-+with no copying and no inter-process communication.
++    nodename = g_strdup_printf("/pcie-ep@%" PRIx64, ctrl_base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop(ms->fdt, nodename, "compatible",
++                     compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
++                                 2, ctrl_base, 2, ctrl_size,
++                                 2, ob_base, 2, ob_size);
++    qemu_fdt_setprop(ms->fdt, nodename, "reg-names",
++                     reg_names, sizeof(reg_names));
++    /*
++     * Mark the controller DMA-coherent so the EPC driver's dma_alloc_coherent
++     * returns cacheable coherent RAM for the Endpoint BAR backing buffers.
++     */
++    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
++    g_free(nodename);
++}
 +
-+Two devices cooperate:
+ static DeviceState *gpio_key_dev;
+ static void virt_powerdown_req(Notifier *n, void *opaque)
+ {
+@@ -3843,6 +3895,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+         if (device_is_dynamic_sysbus(mc, dev)) {
+             platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
+                                      SYS_BUS_DEVICE(dev));
 +
-+``pcie-ep-ctrl``
-+   A SysBus device on the ``virt`` machine's platform bus that exposes an
-+   MMIO based Endpoint Controller (EPC) controlled by the ``pci-ep-generic``
-+   Linux EPC driver. The guest configures Endpoint Functions via configfs
-+   and triggers operations (set_bar, raise_irq, map_addr, and so on)
-+   through register writes. When the Link is brought up, the controller
-+   creates a ``pcie-ep-generic`` Function and hotplugs it onto a Root Port.
-+
-+``pcie-ep-generic``
-+   The PCI Endpoint Function. It is created programmatically by
-+   ``pcie-ep-ctrl`` and cannot be instantiated with ``-device``. Its PCI
-+   identity, BAR layout and interrupt capabilities come from the register
-+   file the EPC driver programmed. Each BAR aliases guest RAM at the
-+   address the controller was told to use, so the host and the Function
-+   share the same memory.
-+
-+Architecture
-+^^^^^^^^^^^^
-+
-+::
-+
-+   +------------------------- one QEMU / one kernel -------------------------+
-+   |                                                                         |
-+   |   EPF driver (pci-epf-test)              Host driver (pci-endpoint-test)|
-+   |          |                                        ^                     |
-+   |          | configfs                               | /dev/              |
-+   |          v                                        |                     |
-+   |   EPC driver (pci-ep-generic)              PCIe subsystem (pciehp)      |
-+   |          |                                        ^                     |
-+   |          | MMIO                                   | enumerate/hotplug   |
-+   |          v                                        |                     |
-+   |   +----------------+   create + hotplug   +---------------------+       |
-+   |   |  pcie-ep-ctrl  |--------------------->|   pcie-ep-generic   |       |
-+   |   +----------------+                      |   (on Root Port)    |       |
-+   |          |                                +---------------------+       |
-+   |          | alias                                   | alias              |
-+   |          v                                         v                    |
-+   |   +-------------------------------------------------------------+       |
-+   |   |               guest RAM (single address space)              |       |
-+   |   |   outbound DMA window aliases  +  Endpoint BAR backing       |      |
-+   |   +-------------------------------------------------------------+       |
-+   +-------------------------------------------------------------------------+
-+
-+Outbound maps add an alias of the target RAM into the controller's
-+outbound window at the offset the driver chose, and unmaps remove it.
-+Endpoint BAR accesses reach the same RAM the Function was given for its
-+BAR backing buffers. No data is copied and no synchronization points are
-+needed, because both sides address the same memory.
-+
-+Usage
-+^^^^^
-+
-+A single invocation instantiates a Root Port and the Endpoint
-+Controller, pointing the controller at the Root Port with ``target-bus``:
-+
-+.. parsed-literal::
-+
-+   |qemu_system_aarch64| -machine virt -cpu cortex-a57 -m 1G \\
-+       -kernel Image -initrd rootfs.cpio.gz \\
-+       -device pcie-root-port,id=rp0,bus=pcie.0,chassis=1,slot=1,hotplug=on \\
-+       -device pcie-ep-ctrl,target-bus=rp0 \\
-+       -append "console=ttyAMA0"
-+
-+pcie-ep-ctrl properties
-+^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+``target-bus=ID``
-+   Device ID of the PCIe Root Port the Endpoint Function is hotplugged
-+   onto when the Link comes up. Required.
-+
-+``outbound-size=SIZE``
-+   Size of the outbound DMA window (default 16 MiB).
-+
-+Guest configuration
-+^^^^^^^^^^^^^^^^^^^^
-+
-+Configure the Endpoint Function via configfs (using ``pci-epf-test`` as an
-+example):
-+
-+.. code-block:: sh
-+
-+   mount -t configfs configfs /sys/kernel/config
-+   # The controller directory is named after the address the platform bus
-+   # assigned to the device; discover it rather than hardcoding:
-+   ctrl=$(ls /sys/kernel/config/pci_ep/controllers/ | head -n 1)
-+   mkdir /sys/kernel/config/pci_ep/functions/pci_epf_test/func0
-+   echo 0x104c > /sys/kernel/config/pci_ep/functions/pci_epf_test/func0/vendorid
-+   echo 0xb00d > /sys/kernel/config/pci_ep/functions/pci_epf_test/func0/deviceid
-+   echo 1 > /sys/kernel/config/pci_ep/functions/pci_epf_test/func0/msi_interrupts
-+   echo 1 > /sys/kernel/config/pci_ep/functions/pci_epf_test/func0/msix_interrupts
-+   ln -s /sys/kernel/config/pci_ep/functions/pci_epf_test/func0 \
-+       /sys/kernel/config/pci_ep/controllers/$ctrl/
-+   echo 1 > /sys/kernel/config/pci_ep/controllers/$ctrl/start
-+
-+The ``start`` write brings the Link up and triggers the hotplug. The same
-+kernel then enumerates the Endpoint on the Root Port as a standard PCI
-+device, which the host driver binds to.
-+
-+Kernel requirements
-+^^^^^^^^^^^^^^^^^^^^
-+
-+The single guest kernel needs both the Endpoint and the host support:
-+
-+- ``CONFIG_PCI_ENDPOINT=y``
-+- ``CONFIG_PCI_EP_GENERIC=y`` (the ``pci-ep-generic`` platform driver)
-+- EPF driver for your use case (e.g. ``CONFIG_PCI_EPF_TEST=y``)
-+- Host driver matching the EPF's vendor/device ID (e.g.
-+  ``CONFIG_PCI_ENDPOINT_TEST=y`` for ``pci-epf-test``)
-+- PCIe hotplug (``pciehp``) so the enumerated Endpoint appears at runtime
-+
-+Limitations
-+^^^^^^^^^^^
-+
-+- No DMA engine emulation. Transfers use the CPU, so the Endpoint
-+  framework's DMA-backed tests do not complete.
-+- Legacy INTx delivery is not routed on ARM ``virt``. Use MSI or MSI-X.
-+- The doorbell path is not implemented.
-+- Migration is not supported, as the controller mirrors Endpoint state
-+  built at runtime.
-+- Currently wired only for the ARM ``virt`` machine.
++            if (object_dynamic_cast(OBJECT(dev), TYPE_PCIE_EP_CTRL)) {
++                create_pcie_ep_ctrl_dtb(vms, dev);
++            }
+         }
+     }
+ 
+@@ -4091,6 +4147,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+ #ifdef CONFIG_TPM
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+ #endif
++    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PCIE_EP_CTRL);
+     mc->block_default_type = IF_VIRTIO;
+     mc->no_cdrom = 1;
+     mc->pci_allow_0_address = true;
+diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+index 89d0c46445..60586cc9b2 100644
+--- a/hw/core/sysbus-fdt.c
++++ b/hw/core/sysbus-fdt.c
+@@ -36,6 +36,7 @@
+ #include "hw/display/ramfb.h"
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/arm/fdt.h"
++#include "hw/misc/pcie-ep-ctrl.h"
+ 
+ /*
+  * internal struct that contains the information to create dynamic
+@@ -140,6 +141,8 @@ static const BindingEntry bindings[] = {
+     TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
+     TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
+     TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
++    /* Node emitted by the arm virt machine (create_pcie_ep_ctrl_dtb) */
++    TYPE_BINDING(TYPE_PCIE_EP_CTRL, no_fdt_node),
+     TYPE_BINDING("", NULL), /* last element */
+ };
+ 
 
 -- 
 2.43.0
