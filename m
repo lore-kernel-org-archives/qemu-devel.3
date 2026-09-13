@@ -4,123 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E02C88E56
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 08:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ACD1C88E40
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 09:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5fvv-0005oa-KY; Sun, 13 Sep 2026 04:51:31 -0400
+	id 1x5gBA-0007d4-FI; Sun, 13 Sep 2026 05:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x5fvu-0005oR-KF
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 04:51:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x5fvt-0007V2-0c
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 04:51:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789289488;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
- b=Ahg/3TMnkg6ge7YBpDh07kcIlBApK825wlV17AQbUiGvYDqcfeplXOzrEae0IxINJNoWUf
- /j2j4HfJ/efJLI9rTkAT78pm2tY6ph8LyyzqGJ2Vqm5rlOccVsOiXVUyKO3iC7cK96851r
- jtALItWzmI9YvqalpCpzLu4/3w684bM=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-5UXudFarPh2XfG2TxNjzUA-1; Sun, 13 Sep 2026 04:51:27 -0400
-X-MC-Unique: 5UXudFarPh2XfG2TxNjzUA-1
-X-Mimecast-MFC-AGG-ID: 5UXudFarPh2XfG2TxNjzUA_1789289486
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38ec0f510a9so5045965a91.2
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 01:51:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789289486; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x5gB8-0007ca-VN
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 05:07:14 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x5gB7-0000gg-43
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 05:07:14 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ d2e1a72fcca58-8631d0023daso495948b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 02:07:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789290431; cv=none;
  d=google.com; s=arc-20260327;
- b=nPGup97xvUfbDv5dd5721CUPhabBLK0qc5hTniiMMF4VvHWbjilr1fN4+j6qa/HrrD
- IHsQKuMn4iTrsDHo5k604l/d0ImAc4oeVCWEVdgXT6Q9dNm9Ps9G04I2xepg0AgXqmDg
- 3Zo3fIxkAZ62emqaoSkB6IU4i/vkIlO3ZhPRQ25PsKpz2ZQpmSpSgaq8BpFf7PJNt8jf
- 3MVh99c916C8SP9JpzWIUFnRaZ2wcCKK8NxwEMYqUyiwg2I8ZFvuuSX2ABYiBLmb4jMG
- iVt6FQ9GJi+yQnHtu7j0RALUvLtt451ZR79BjHBcWRzld2nMDzaXYsk/S6H+eiNq5yrX
- bGRw==
+ b=SisIPMKAgoBOmE7ysyMOrJf19nllwRfzwQEgjdtPAF5PEm1BmaKT6JO73nPFj1Y8bo
+ x3YCRWholzMSaB2gAPG1n9sFDKdzXizqUJEooqm0XfAY/fHw2AJ42oy6dH52cR7egvUx
+ UeW0jSBeu2dl33/k1lL7AZTI2l8fB1VOPHY+BXVN7ZMPSc//6wSaJnNtcFUtESpVBKpy
+ eMOJ8e8/opVVGcLzepXEulO68kgxDjH4shbqGq80uS+lULhSZUg5p5uGuWXjgpKDsl1x
+ D1QmXqQiCwxf4dE+qRf2OwUnUp8XwgNAp/cAmNJQp/F69LiRUBVNClQMShBRds0W7sg3
+ Y0Xg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
- fh=GIU+FyOM+eiO1tYKbHGSJ9iUu0d9Nn25uUBQaeMGCdg=;
- b=NksEk5CnGz1l503UuozJszWWTOhLXcYbe76T1ZC3ORlPjzG9JgTzZUZ4U9Bo1pOpYP
- q+NUwjhvDMjiDTupgmJ1zDCzBiUEgLuhdev1uwVFQoVmIvTvrxz47GdvXOe9PscQT3FK
- 2lvxIu5rI7cCRnleNXNm60hc1zm12tu8E1op0SzU10tL5N4Scq46FT2ADMVQbUfzJfjv
- ImEmBufHUF8WuuiHcZeDZyHaKJ1nehI7ysEjXI8VGK8rw4wJnJegJaKRJcUaX8kVotQp
- qben2AAATRkTmAeqIdaqzdPMmx/k4BGqkpwwg2P0e8i7dCwQzrzGaryL+P6xo6SyXrjK
- NWTg==; darn=nongnu.org
+ bh=danLeoRTSF6q8wCLFxlpfFfT+gr65XpcCVGrzBWqro0=;
+ fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
+ b=GmC7dx9mhq3uX6sSzmvSseM93BE5DyLoMcRuXwutJqlzO904dmaWVQvtmK33Jq2ev3
+ C3WK/4Q1W3LblAfjvqqnCUZZnivxTfnio3zsYL92E1ARQICpvt3TScOBcm3nMcUPu+MA
+ 5rhlGV2xeqgv8x/pNAccvApodo6tweAg/WItPLS7YejgRhsxcAGqlsPYCSSLJPElE5e7
+ n7ou/d6jR3P+WcP/oMqifqbKHQByOFRap7LKTpX5uzcLxk6npY44bYZvkzgvpNt2T+Wa
+ 6LR09muwnOb9M83X6hbbV3tngrB3F6FMtBWCNz5zjaVz1DPzJ95ABhlcj/POXS3sBr22
+ PJyg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789289486; x=1789894286; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789290431; x=1789895231; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
- b=WERI9l4wccJUwMxllFAcCZxWghEBmW8GBktexoH8w3ChvBke6nCc6C7dGocAxFccZV
- C+82V/dygsk/gvhAbdrCQH2NoumiqGmW7gIJop67okeg1VAH3KXlFiGvk3+beMWDYj0Y
- QKcMfRWrxkF3g1kk9LDmFJnPtB1acVm6wfMq44nIhFlUVgLgl4sOPk7iJN9O5ZRPzJbs
- n/K0QV6MFRNHpAOXkps6xxRapWKmidS9acENNS4O6G9E9YPMtNGGmCghZFCxtsUsE8Z4
- j7nhjzPTRZjI0gfwISIOi2FDHjQBTBvUMfTZOko0+2uMH32YUCkvdnHeA67Q90ct2UeY
- Y6BQ==
+ bh=danLeoRTSF6q8wCLFxlpfFfT+gr65XpcCVGrzBWqro0=;
+ b=UjNOb/PCtmk1KwxCavQuSslQRMQesbf6hAlGdzrgRkPebeI5Nnsf7GRUi96BFYHbso
+ gjymlSLmULk1RLJsIYf9yug0/0k6xAMij7QTu7D8OSnExjNH3QU3YYSBaI9n0lwO8lXv
+ X8HD7UJJe9/+BxpefEZQs7XqPKd50i1Li1gJlD1lnAzS4KHXeTjjwa4vnegCVQbqrxQ6
+ 3Jij4qptJwq35dbGhIzZLG1bHJVfng8NZev/bMOaIF2oZRuLhpZvrxct6ydiI7GMmD/t
+ BnbsCOldx+LO1G1xo6UCe028c1qts4SDzh8fXzwlk3+crpqtVV4RWP4kGKWc1IO1TvuY
+ ELfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789289486; x=1789894286;
+ d=1e100.net; s=20251104; t=1789290431; x=1789895231;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DEDnZK2M5MZLvR5ufB4E1ctCpfVdiqMg96TBTZznKnY=;
- b=SMhyjWjp9pE1pfHW5w3G1LlNwO7qdyCv3VhmxytgTlTMZ8SaOBpoDrHQiQqnSsgStE
- m01YXnVGqva/ZqcZ00NjKW6X6uZcqkBPk8dwCgLk52kJ3UQ8G3DovFeOW5IDzSTKbKb4
- Td/vUxYYGvWq+YkqvsB/HdL1/Oi2IZmGOzUYg4SBuP5twmORxKgqOa49Punidpg69zQj
- GWVYWHdtMi0kngW2ZZwlxkXbbqzXqUcgrmkZhdISUrM4iNUpp9reqXd7SlUjH/GX+1R8
- xBTal7Xk3Nkc6OKElck8eMdNkQsl7YumBicmWE3SCTvadnIGCfyS0ChEw3AXTuNrk9Qd
- 2pXQ==
-X-Gm-Message-State: AFuF++lngtGaPwHcjFGCnfmpaIkEKt/1kjBFqJBhuPYx/UbfMaLTBKaZ
- U2i68irNuyMjc5aqHb8VO5WQKdCEFZvC2Xm6bpgDjEBv1N8J2ukL2SICRPd1UCj5uLJ0RoqwISn
- 0pJ+o5MTSlZ0xus4s0nF3XNOogHF51hOM3+vQB+yBJ/sTDv0kumtQMj0tcMq0BX4fCBCk0SWJAZ
- fr5xR37j29lrLZZJ913vws8L4mirtGVHnCtXH41anY3A==
-X-Gm-Gg: AYBFou1T2r9WyvF7wG4upcLlHa5SnISbDYFHebKxVP3XCm14QIOkRIb+KFEqmQIVB1D
- Kjexuhsrx0jqT7SUUvmAqF4n5CgUYEImnB0VaPqoMAH73DhBJJ0tLoRGLaGQMSr8McK9Q6zOdr2
- LTQJPYQQ/N7pT/c/BDZ3ebViEACp0veQgfGBpE6LCj/2yZvM7DD8PTUY85G7+AyO3doWyZphPqT
- mcRFsLw2wgbeFT7PDOoF39WkyB16HJBhrAtWrp853QIzJw05j3gVxwlHn5rN5eSydgaKCNAslq1
- uA==
-X-Received: by 2002:a17:90b:4990:b0:396:4cbf:45a2 with SMTP id
- 98e67ed59e1d1-39d9c0acc23mr21789154a91.14.1789289485924; 
- Sun, 13 Sep 2026 01:51:25 -0700 (PDT)
-X-Received: by 2002:a17:90b:4990:b0:396:4cbf:45a2 with SMTP id
- 98e67ed59e1d1-39d9c0acc23mr21789130a91.14.1789289485479; Sun, 13 Sep 2026
- 01:51:25 -0700 (PDT)
+ bh=danLeoRTSF6q8wCLFxlpfFfT+gr65XpcCVGrzBWqro0=;
+ b=bsuVOu6s7FgZK7GImQuAQFpHm4U7vkR6iJwSqzVj0UCOh3a2Fb9nfixeecixrn6Nyz
+ cen0bKm3ZFhPiqLmGewY1qLe0neRibnLpHi3y/SxoV6SfIoSrzRqgPW36TqPtIerxHUn
+ jfFgk1BnaCuinZAjmxvzN2jScYh9AleLOAFOr7VKpltxQkj3B8QRvuD3tx3N3XDJscPJ
+ C2EQVQswyp2Dc50GBwyNnuimSjaAWwuG4wIlv8yedORXALn46Nm/nIqAGxiFCd/oNGYX
+ VLwriYacATGCOEl1HfyT7EOXot1mE4aRXaqT7+6pJBfYKSkgWL+ylBXCCJcj8SbZgYhB
+ 5yhQ==
+X-Gm-Message-State: AFuF++l6iA4q/ic8wOiB+1e24KKbbD/sfDI4b59nqMXdYM8C9rJfEcYG
+ 71t3PvvTJqzVZtIrs/Y3O45BC+S+s27Few5sh4EFf8KG7Ve9HTNZpo/rmOOjzfL0Qg5b31q5Ky4
+ QgXruCIlGa0MzTk1oQJoHOQkIE6rgW5Y=
+X-Gm-Gg: AYBFou0h4srEd3foqeQ46zH8knEFmOAfCA/X81aeuq40GXD4niK91DFNdEowBSZ9waZ
+ yE6KGtsEI8YyYERw41G1Q6Npsxvpw1z9euqmQifQHvTjQfCh8tu93tAtlIxtt6FARQEuZTsTWgN
+ m1nbEZIDgu4nRnjpA/tTMJTN6bdjwURgThhDX9agpRCPGGulROpJ5KiBxgKcxSn+WI3iBrBFByu
+ b5VgbUl+1M4rdD0L6PevS7DT8vDSJ7PtohXX7rFWF/48POeFZEweUXVFCcEi08x+BWtjC45qUIB
+ 3EcOWtJU5x8IdRelmOokqxjUqz3Rity6l0VFaB6WF/fFWi7tj9zdZNWzeScc7fT5DvTJySvD9fV
+ Ck4MaXzuXjdQDx3+h2WtISg==
+X-Received: by 2002:a05:6300:6684:b0:3bf:9b3d:61bb with SMTP id
+ adf61e73a8af0-3db0e1f7d7bmr12299102637.16.1789290430717; Sun, 13 Sep 2026
+ 02:07:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260913-gtk-v1-1-3e4ac542e054@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260913-gtk-v1-1-3e4ac542e054@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sun, 13 Sep 2026 12:51:13 +0400
-X-Gm-Features: AcwNN1UlfaawQaNGD3AZEGxmcggIlNKHtImD03lbkZU5h-PjWJCuPC2EhnJ2krg
-Message-ID: <CAMxuvawfKaBsigaf1Yfc+xGqrm2Va73tk-CwkwSH4yBx-FwkVQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Work around the gtk-menu-bar-accel leak
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260729214456.3350-1-dongwon.kim@intel.com>
+In-Reply-To: <20260729214456.3350-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Sun, 13 Sep 2026 13:06:57 +0400
+X-Gm-Features: AcwNN1VMqM4OPZfX1E1RDkRpqpD-_VY5VL1niAwfau2AJ8vv5ZkglzXcoh9NRik
+Message-ID: <CAJ+F1CKKzn8Ly3eH3CkgQTTvQHypTsZPdhgRPekEXSnaFuxmSw@mail.gmail.com>
+Subject: Re: [PATCH v2] ui/gtk: Handle empty notebook state in menu handlers
+To: dongwon.kim@intel.com
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,51 +117,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Wed, Sep 9, 2026 at 11:27=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> When all virtual console tabs are detached (untabified) from the main
+> window, the notebook contains no active pages, causing
+> gtk_notebook_get_current_page() to return -1.
+>
+> Because gtk_notebook_page_num() also returns -1 for any detached VC,
+> gd_vc_find_by_page(s, -1) mistakenly matches the first detached
+> console. As a result, gd_vc_find_current() incorrectly returns
+> a detached VC instead of NULL. Menu actions executed on the empty main
+> window then unintentionally operate on that detached VC.
+>
+> Fix this by having gd_vc_find_current() explicitly check for page < 0
+> and return NULL when the notebook has no active page. In addition, add
+> NULL checks for the current VC across relevant UI menu callbacks so
+> actions are properly bypassed or reset when no console tab is focused
+> in the main window.
+>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 
-On Sun, Sep 13, 2026 at 10:45=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> The implementation of the gtk-menu-bar-accel property had a bug that
-> leaks memory when the set value is an empty string, which was fixed
-> with:
-> https://gitlab.gnome.org/GNOME/gtk/-/commit/44bf10c4a2a0463891884a105fa27=
-cf36b73f119
->
-> To work around the issue for old GTK versions, replace the empty string
-> with NULL, which has the same meaning for the property.
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-good catch :)
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 > ---
->  ui/gtk.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  ui/gtk.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 50 insertions(+), 6 deletions(-)
 >
 > diff --git a/ui/gtk.c b/ui/gtk.c
-> index c615d35451b6..ae28f1fbb89b 100644
+> index 7078d89d67..0b5139ef31 100644
 > --- a/ui/gtk.c
 > +++ b/ui/gtk.c
-> @@ -2645,7 +2645,7 @@ static void gd_create_menus(GtkDisplayState *s, Dis=
-playOptions *opts)
+> @@ -184,6 +184,11 @@ static VirtualConsole *gd_vc_find_current(GtkDisplay=
+State *s)
+>      gint page;
 >
->      /* Disable the default "F10" menu shortcut. */
->      settings =3D gtk_widget_get_settings(s->window);
-> -    g_object_set(G_OBJECT(settings), "gtk-menu-bar-accel", "", NULL);
-> +    g_object_set(G_OBJECT(settings), "gtk-menu-bar-accel", NULL, NULL);
+>      page =3D gtk_notebook_get_current_page(GTK_NOTEBOOK(s->notebook));
+> +
+> +    if (page < 0) {
+> +        return NULL;
+> +    }
+> +
+>      return gd_vc_find_by_page(s, page);
 >  }
 >
+> @@ -1462,7 +1467,10 @@ static void gd_menu_show_tabs(GtkMenuItem *item, v=
+oid *opaque)
+>      } else {
+>          gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
+>      }
+> -    gd_update_windowsize(vc);
+> +
+> +    if (vc) {
+> +        gd_update_windowsize(vc);
+> +    }
+>  }
 >
+>  static int gd_vc_notebook_pos(GtkDisplayState *s, VirtualConsole *target=
+)
+> @@ -1535,6 +1543,10 @@ static void gd_menu_untabify(GtkMenuItem *item, vo=
+id *opaque)
+>      GtkDisplayState *s =3D opaque;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
 >
-> ---
-> base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
-> change-id: 20260912-gtk-2ab3b3ab846e
+> +    if (!vc) {
+> +        return;
+> +    }
+> +
+>      if (vc->type =3D=3D GD_VC_GFX &&
+>          qemu_console_is_graphic(vc->gfx.dcl.con)) {
+>          gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->grab_item)=
+,
+> @@ -1588,7 +1600,10 @@ static void gd_menu_show_menubar(GtkMenuItem *item=
+, void *opaque)
+>      } else {
+>          gtk_widget_hide(s->menu_bar);
+>      }
+> -    gd_update_windowsize(vc);
+> +
+> +    if (vc) {
+> +        gd_update_windowsize(vc);
+> +    }
+>  }
 >
-> Best regards,
+>  static void gd_accel_show_menubar(void *opaque)
+> @@ -1605,7 +1620,7 @@ static void gd_menu_full_screen(GtkMenuItem *item, =
+void *opaque)
+>      if (!s->full_screen) {
+>          gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
+>          gtk_widget_hide(s->menu_bar);
+> -        if (vc->type =3D=3D GD_VC_GFX) {
+> +        if (vc && vc->type =3D=3D GD_VC_GFX) {
+>              gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1);
+>          }
+>          gtk_window_fullscreen(GTK_WINDOW(s->window));
+> @@ -1618,14 +1633,16 @@ static void gd_menu_full_screen(GtkMenuItem *item=
+, void *opaque)
+>              gtk_widget_show(s->menu_bar);
+>          }
+>          s->full_screen =3D FALSE;
+> -        if (vc->type =3D=3D GD_VC_GFX) {
+> +        if (vc && vc->type =3D=3D GD_VC_GFX) {
+>              vc->gfx.scale_x =3D vc->gfx.preferred_scale;
+>              vc->gfx.scale_y =3D vc->gfx.preferred_scale;
+>              gd_update_windowsize(vc);
+>          }
+>      }
+>
+> -    gd_update_cursor(vc);
+> +    if (vc) {
+> +        gd_update_cursor(vc);
+> +    }
+>  }
+>
+>  static void gd_accel_full_screen(void *opaque)
+> @@ -1639,6 +1656,10 @@ static void gd_menu_zoom_in(GtkMenuItem *item, voi=
+d *opaque)
+>      GtkDisplayState *s =3D opaque;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+> +    if (!vc) {
+> +        return;
+> +    }
+> +
+>      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item)=
+,
+>                                     FALSE);
+>
+> @@ -1659,6 +1680,10 @@ static void gd_menu_zoom_out(GtkMenuItem *item, vo=
+id *opaque)
+>      GtkDisplayState *s =3D opaque;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+> +    if (!vc) {
+> +        return;
+> +    }
+> +
+>      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item)=
+,
+>                                     FALSE);
+>
+> @@ -1676,6 +1701,10 @@ static void gd_menu_zoom_fixed(GtkMenuItem *item, =
+void *opaque)
+>      GtkDisplayState *s =3D opaque;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+> +    if (!vc) {
+> +        return;
+> +    }
+> +
+>      vc->gfx.scale_x =3D vc->gfx.preferred_scale;
+>      vc->gfx.scale_y =3D vc->gfx.preferred_scale;
+>
+> @@ -1687,6 +1716,10 @@ static void gd_menu_zoom_fit(GtkMenuItem *item, vo=
+id *opaque)
+>      GtkDisplayState *s =3D opaque;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+> +    if (!vc) {
+> +        return;
+> +    }
+> +
+>      if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_i=
+tem))) {
+>          s->free_scale =3D TRUE;
+>      } else {
+> @@ -1800,6 +1833,11 @@ static void gd_menu_grab_input(GtkMenuItem *item, =
+void *opaque)
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+>      if (gd_is_grab_active(s)) {
+> +        if (!vc) {
+> +            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->grab_i=
+tem),
+> +                                           FALSE);
+> +            return;
+> +        }
+>          gd_grab_keyboard(vc, "user-request-main-window");
+>          gd_grab_pointer(vc, "user-request-main-window");
+>      } else {
+> @@ -1807,7 +1845,9 @@ static void gd_menu_grab_input(GtkMenuItem *item, v=
+oid *opaque)
+>          gd_ungrab_pointer(s);
+>      }
+>
+> -    gd_update_cursor(vc);
+> +    if (vc) {
+> +        gd_update_cursor(vc);
+> +    }
+>  }
+>
+>  static void gd_change_page(GtkNotebook *nb, gpointer arg1, guint arg2,
+> @@ -1983,6 +2023,10 @@ static void gd_menu_copy(GtkMenuItem *item, void *=
+opaque)
+>      GtkDisplayState *s =3D opaque;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+> +    if (!vc) {
+> +        return;
+> +    }
+> +
+>  #if VTE_CHECK_VERSION(0, 50, 0)
+>      vte_terminal_copy_clipboard_format(VTE_TERMINAL(vc->vte.terminal),
+>                                         VTE_FORMAT_TEXT);
 > --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 2.43.0
+>
 >
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
