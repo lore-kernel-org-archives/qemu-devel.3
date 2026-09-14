@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A60C88E71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42604C88E70
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 08:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x62FE-0004Gg-Aw; Mon, 14 Sep 2026 04:40:56 -0400
+	id 1x62F5-0004Fl-NK; Mon, 14 Sep 2026 04:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x62F9-0004G4-SB
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:40:51 -0400
+ id 1x62F1-0004FK-Br
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:40:43 -0400
 Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x62F3-0005PZ-Td
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:40:50 -0400
+ id 1x62Ex-0005PZ-Bl
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:40:41 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pJz0cDvazi0svL9pbBZIoFvMUdf9AJYbCZrzTYOWflwqg9gpBe8k522xSUwFmRYKwI8nUl0bQKvfzGPGHI4pjb+dCIZOUhDodsAdg21eIhNYZu/VTXSMxp7trYZ12fmxvzcA/FeQazIWST7aVTUoB2vZ6aVZSn1c4CA0WoNAxdtSSWxNBZyRKCwOl7TfzHe3agAMYgz8WXqdneUJWnOi+JfNTlcLyEWGNoGzp2WeXy/C7dEXU/kUhSfFImwERkyOR6i5YcQvaepJMb2G06SxWH03bHVie975NwvcIgvBBRTIy6su5n/IAjho+xuXvXO5LgvuKtVVRjTYmVFJ5YormQ==
+ b=qRfr3Bp/uf1scw3z6NYhlvIDANz3kJWSmrTcXLPQ9QGYXWThCqxlQvqz9cTJt7mvyXMVsNCJ8nJ4nh3xp36PfoMPGKgj0V0+wlqlye63bCTn0xYw70fZJeDPUjWmywe0Us2iwfl4LbXaNV81OWXu1+X1XCE8YyZBZtQvb/0BUfz2SQs0JBsQcxPoGm4a0OVXWnsKSvYJ5oyAQsz2E1OzqGln+08WGsViQaAlOKFHcxS5St3YaxoRwDFNDX3V6VcumxGG+O3gC+Ihr3ld/DA4MwJbZIMVjZSUrKwD9izYTHLuWVmRSsDq+NW/Y4RfdBBDgaTlb0CKnyhmRghjRTIAzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=42TxjWWVF52+WjX+vXTK/F5rsdLUfNrhRilXbJ+LOJc=;
- b=jQvCzo43f7sG3jB6wCDr6lKAidHtYdjwilix2LPEV4yfUSSZ42Woi++5XqvGeU4jiJNqL4BYc0URFt9Adv8Yj0ZlAYstRHN0O3R+psHqyE4mXTlh1tqhADXNDzitF+/lSHbVNU11rEFm/hd2xwoKWIwp6JUgrLr/CJL+KZD3WE5tpnzJzRJ+DhEeYAj1AdC7wXyuKlguTXIbdQe2J1Q4mBcsVnBm79xxSDX08/8MMqg8AjX0Z8qkGmGyfqaM7styg/pl3peS9NTXK9jhaWIenydYlntfh8mfkL4fq5DM6C6LY8+0jZOpsYdQQonvILDiIY9uTevLmtdXtXFPIGVCAw==
+ bh=b1BPlhQEjh1ve1t5MaJwKpaCjZIQvshKVhE9sp4dYpE=;
+ b=Yt9A4VkoJOiRlzwcYgZL2J9qPqfotbsPmKnwLAzCTltZmr5mz0B+9o9Ji1M370EwZlcvF0c75HaOgzVxBttg5UZLbEXz6iDeiL+Z49nR0B2I8RUWBSQjy9hKbig3FirQBEpn9EiJc9YuLQeEhP8pbcFFZTCMOLrkITee9UtIoBn3bwUCPv7lUdcgsXzhJB2fBhETe+grOYUTOz9qjTKI4y35SIG0GT7GCgdRFm2wL20Do17PeChY6oQGdVqdmUXmZBmqlkCzhdDn2DXZj56/VD7QwYgE9f4IuQMMbFK0GOWpPcGdz4DMKbLnkGdRhU0Pfu+ph2TffiZiP9WsxpRevA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=42TxjWWVF52+WjX+vXTK/F5rsdLUfNrhRilXbJ+LOJc=;
- b=PggUAOB1ah4RdVRMY0P3dLreUxoaD+7sGCDITnFAoB+6xSoPKkrh9xs11PJeMb1L/8ZlDS4+/xa5kV6I7RxY7e1Qpc+vzkEljcP2QC+4f/PEUrzWN+3vzOSHZBsB7+dnJ9LtWIlIZjl+qc2oVETwJlHv+/SRkf+8LMGAB2tnKorozXDLTAE1MCI5Wu+Xr4jLMt8joyUz/dn6AH6b8kJBqf6Lva7l6xuWigGSXeC+9MwBTjShV2S6iNDIgOqiqNiRnrcUXn54YIbOoMLJudPv3okoZXcJxrMopce2m3JEtrOjBGAqJO25I8GLmMOxGvTPx/O7gs52k6X8pNKIZTithw==
+ bh=b1BPlhQEjh1ve1t5MaJwKpaCjZIQvshKVhE9sp4dYpE=;
+ b=ohtbtKsLw4GUUyo86xRHO+okr5CIbgCpeQwHo34265O+c78ZkwdHQ6iFp+dK2GNgjKfHh8GmhQxvXpA5HBBuJOEKrIAbZmoTjnHEPaVA1um+sBFdA76/5yQX8v/YwYvGtL7D0b2DNMENtLmHo7I6ZzlKxVn3QHFJSFmj6aFOg7FjlNT0RCthBlyTWo/GKeCYCw/EqRXpPLeCLqTQ8OdfAeoelV0B+I18eLPSPVzdGbqz5vvRp6qCBigM47jhoqRXSEqjqYUCJjD5p4XbvnmKacGghCgdqdUcRQtSrKG/TIgQViG+Zhhq62D7zElb3HCGmTGzo1tIItndstEaRPkcqA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by GVXPR08MB10916.eurprd08.prod.outlook.com
  (2603:10a6:150:1f7::10) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Mon, 14 Sep
- 2026 08:40:25 +0000
+ 2026 08:40:23 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0428.004; Mon, 14 Sep 2026
- 08:40:25 +0000
+ 08:40:23 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Mon, 14 Sep 2026 11:37:36 +0300
-Subject: [PATCH v5 05/14] vhost-vsock: block CPR migration modes
+Date: Mon, 14 Sep 2026 11:37:33 +0300
+Subject: [PATCH v5 02/14] tests/unit: add test for duplicate keys in CPR FD
+ table
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260914-up-vsock-vhost-v5-v5-5-d17423589f48@virtuozzo.com>
+Message-Id: <20260914-up-vsock-vhost-v5-v5-2-d17423589f48@virtuozzo.com>
 References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
 In-Reply-To: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
 To: qemu-devel@nongnu.org
@@ -67,66 +68,66 @@ X-ClientProxiedBy: VIXP296CA0028.AUTP296.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|GVXPR08MB10916:EE_
-X-MS-Office365-Filtering-Correlation-Id: 33fc258c-e463-4af8-2231-08df123bd10f
+X-MS-Office365-Filtering-Correlation-Id: 3264fa6e-e0b0-4952-813c-08df123bd007
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|52116014|23010399003|1800799024|366016|10067099003|22082099003|18002099003|56012099006|38350700014;
-X-Microsoft-Antispam-Message-Info: R5KG8KKNASHZJ99rpx0j7TwiCgbc9oaCcxupxFVtEY0uOZ8RaDJ2eCSDiaCaNIUXAbLKNYXt5Hm4GLQu2P3kw0IUker08rUhn+uW+eIb25/fCatJ/Nd/kecwotY3XXul0/lcdGgfANZoyFC4j3oQCVOkAP0B5wWtj3cJZ7QLHovnZSdw2y0r1bqokay2xxh4+ISazRKHgJ8rfdxgsH1we9CRBSIkMaZzF0TpWAqMJ9+iZ1+5uGFuohKk61AYs35W3UvmrSuK8YvYnjYZGf62u7x7w/AEdO8rO8IzzNeoU2gSKji1dUpFVwU5vvChlvEaqbi1oSZNoaj0IqnEWQoXP3jyNgcYvnywexATwCJfqNhBQvCBespFAjbCpj2MpXzDZ2yinwYp48J49pqHLKMivk7lbX7AjpHJBKTJEpeF1sRMAhkToabuXlYjzDWc6/D8S4G1kC3TXpiww+QfM9tXG8loW15m4lkbah8DgMX2spKARjpToVSzjEhTZNecF7FbPvatL8e8jBACPsGsAZg/3bA/AAN/FoVMxddLW6i8Gr7Rr4RYVXSoFBsYN2LdF5LorHp4UwB9o3xuxLOrRxqR8c+JuFEoS8wGdwSiytJq3Xdr3C32h++QrHqu4jZH0uGz1+4myPkpAJiG8KT7+Q+O0Jz9yp8gHCFZGGWET4JhgLzYZGU041rmglR+0rTmsrI0VLrrrRLzjaANYXqxx9ZUOErvQ6e4RmyI51EOAOovY7Y=
+ ARA:13230040|376014|7416014|52116014|23010399003|1800799024|366016|10067099003|3023799007|22082099003|18002099003|56012099006|38350700014;
+X-Microsoft-Antispam-Message-Info: 1ODT5tX2JOQIfee2TI8ggopOFuZgX1Hwfm75e0FHb5j6hK3czxkYrh4fei7IGW8/1OuEZ4IWmNAwxAQFRZgambChT69v/0re7LmBgeDqY7WdZXC4jcOEMx67e/WmkR7tPLOmNgTSzcO6dbfOx112djvrjVlkeQ/26ifpd2kDCVxXYN0RdcOGrTxw7z312+xgBRHLjeDGd61+Sr0dwRNxGzUfevW3IuwW7XKPe/NBsdvebnAIOqgVZ3GSM8p2QHPNMeCgteriJ86SG0AelL0kVZKG2Nni2z//EYY0ezvopvoF+X/rMymacQDmx+9x7vWCoH9g43coJLGB1w4jDPpuOeRDH3RaXPbiNcqa57CwfgIr8YT7F+qgw44cpOXfUpLobpKQJ6aUoCM8C/ZfnRJD14X3aAht+zpQNJVe3JWvks9V48KztB/3g/frElUmacrGy90Ua4KJnMsoFpnt+D4pMAL1r6AYqZil7v/6j37vEhl+04KIb1IgB3qnzzLXgHQEvlsTPaAUsmXqVWmM6KGH+D6Rx+o1NJfAfB7W1RMl6fcTRrux3vig9T3Pq+HirWukO67DJpZ4D7KGnVO75FiMCAnQeR8cwlkuU69tg/+z74x4Tu5gllnvgctal2ir1o44XAU12WT+BYgFkdsqs9x0+7ciW7+4D7BroyzNZGPhiyejman91fA8Xuxi5lxmkI+Y7afANIlm/tFi8QkOVcLMxy9CK+Qanfb7BajwPebE+M4=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(52116014)(23010399003)(1800799024)(366016)(10067099003)(22082099003)(18002099003)(56012099006)(38350700014);
+ SFS:(13230040)(376014)(7416014)(52116014)(23010399003)(1800799024)(366016)(10067099003)(3023799007)(22082099003)(18002099003)(56012099006)(38350700014);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QlVYcXhsTXVlL2RMQ212ZHQrRjRadlEzTlE3NUZ6UUgzeFU1UnlwUFJYVlpB?=
- =?utf-8?B?UmhqZUhJaW5QLzdSeFE1dEVMWlBMRmZOQ3NZQjFlSXA1R0pDT0t2dnN3eUJr?=
- =?utf-8?B?Z3B6TjAzZW1OdGVMKzZMVUFncFZrTGRsTGhJV0ZsN0RnZGJMUkN4amxKVS9j?=
- =?utf-8?B?TXd1QktnS0wwamVUbWdXeXk2WmdWbzlMa0dTR0Z3bVFGT0RTQldOYjYzOGtq?=
- =?utf-8?B?NncxZ0ZpTnB5MTZBV0ZIZ0hoZ2hHVWpNY3c2RUFFYjNyZmxaQ1NVSGFweDda?=
- =?utf-8?B?TGRGQmtWNnN0bW9xbzE3ZTVmTGQvUVd3WWtRSFRPRkcyYm4zaVFZUGRCSVBH?=
- =?utf-8?B?dWlMVVEwTURLRVRKd2hsY3hJTTMxN0IvUHF3UGVvSU11eFYyRHFjRHFhSkNa?=
- =?utf-8?B?M2tKczIyQW1ORExwVGpvcjdiUUV4THRhVjJpZ2daZXlHb0lxaFhCNVN0RVFU?=
- =?utf-8?B?ODg1TVJheXgzUDBSdDMrYVlGeGxIdW9QWGZuZjNRaWxQLy84dUY2Wlh4NkdR?=
- =?utf-8?B?Mkxaa0NCbUZMalJDekRaSkJQRjZTOURCRW5md051VWRIUnMxNFJuNEhzaGNI?=
- =?utf-8?B?anJ6Z3BXYk1nUWE4eTlyZGZNM01DWXdLYkRmNFU0aEVXekxXVW5MQ0JwZ1Na?=
- =?utf-8?B?NC9rOGdDUklmeGJpdHBpVTFTQmVmZk9DT2ViNUdFM0JCY1QrV2xyTkh3K1dq?=
- =?utf-8?B?d2RiNzl6MDZzdkNpNTk4bUVLYURrN0RtbDRaU0dkVTdGQkdTeTlVYXB2RGo5?=
- =?utf-8?B?SU5qTkhlTVJVczB6VU5zWDM4Tlp6TUdUaXhES3BjMUgyVWR2OXlQOFRQQkJu?=
- =?utf-8?B?T2d5MUd5WDRHNHVCZVd5dXUvM2Q1MnQwQ3ZDWnZUYS8rVERsYWw5VUpEK1BP?=
- =?utf-8?B?RXp1MEVkMEppR2Z0WCtoNkg4OUFhRXNSaTM2Y0FGbEN6eTlWZGtIeVF4TmMr?=
- =?utf-8?B?S1Z6QTRnTGNuZEppZUhqbXV2WW9tY3hUQ2RqUzc0MFJoMkpRcTd3UUUrOS9Q?=
- =?utf-8?B?eERyYkJvbHd4ZTJsM1JhZ1NCWkYwbVNKNnAwczBPQ3hDbmpSU3Y2T3lYeVRO?=
- =?utf-8?B?eUpKQjFKMmZVZDdrMll0Q0tlWk9RSEQwQWZhQ291SFU2bzlhcEQrQkRiWkw3?=
- =?utf-8?B?SnJkdzJpN2ViRmVFWUZMZ0dWRmhYZFNyWWpXU04rV2VKWHBoN05tVmp2dGZP?=
- =?utf-8?B?OThZSzlIenZ6eC96L29PamR3VEQ4clFWaGpPSnQ3Y1dWQldCSjJ1dGxLTXpq?=
- =?utf-8?B?QTc1YjZKK09zbE5JSWY5c2pQZlhoTUlFYWtLWWFMQVdCMThnV0ZIKzFocCtx?=
- =?utf-8?B?K3JGd0pUMy9NbkxZVEJkSlhsdW9kc0RhK0RTWWlVNHZZaVgyejh1cjF5eU1w?=
- =?utf-8?B?RkNQWUdPOWZaTEU2L0pzOGs2aHU2RjRzQkNhUjFZM2luVk03UUdJM05hakdG?=
- =?utf-8?B?bmJmYnJhV1pZVnFzTFRpaUgrVFMyazI0eTRSVnNpRkxtVnUyUmhITXhRTlA1?=
- =?utf-8?B?VXEyTTI2M24rS3IxdDh2REFmVG0zRlNwVmFwcjlML3FoU2dBNG11bWd0SDlM?=
- =?utf-8?B?bnRYL0FwR1pWTmYvSWV2blVKelFucVNEaDQ1T1o1eGROcmhybUlsR1Vrbm5R?=
- =?utf-8?B?RkhzK3UzeEJmcmVSd25oTjJuNXZBcE9NKzBFSDY4VFpBT1hWSjFwcytra3RF?=
- =?utf-8?B?eGwzY3ZXRzFRUE1ZeWpNaWcyckRySEhVU3dpYmk4RWxqWWhwRm45Vk1HVGk3?=
- =?utf-8?B?MkpSY01xK0kzWTJQRVRITGtXMHRSQmQrejVvakxRb0owOTZZbkROUU51VElv?=
- =?utf-8?B?WlFZajR1aGUwZ2wwNlcrOWpaclV2K3huTjBRdHNjblZJM2ZTZmhXcmJ6WkJP?=
- =?utf-8?B?QWIrSTZiQjJ4L3h4OElJSmNXajVTQUZnZVZ4bERMdXNkT2xFdW03MERvc2d3?=
- =?utf-8?B?ck10RGZMT3hEMG1sdUZMMDhHY3M4STNUTHB4bnl5WURrY1J5TXNKcGlvZVlh?=
- =?utf-8?B?NVFzdkhwbEpQbDBGUWZ4Ykc5QnhmSjFYbjBrWTd6bW5FT1pnR3hPZ3EzenRo?=
- =?utf-8?B?eHNzeGs3YUFHWnZMbEluTmdrNEJZMks1aXQ2QmtvekRnOUcyenhmRjFBSVpN?=
- =?utf-8?B?SmtLRkVUelpCYXZrL0pVbklOQURXa0ZWb2xXYmpodG5YdnF0Q2NRUURXUlA4?=
- =?utf-8?B?MXR1MWJiS0U4blBYWVFTSmNqMjFpMkdFZ2hCc0Vsd3gwcjJlbm8rUXphWHF2?=
- =?utf-8?B?bEJldzJzMlR1RUN5aEE2cTVjNkNDSXpRbDJSREtzTnY2MEt5b2JtbkRlY1Vu?=
- =?utf-8?B?NGU5aW9pVVdray9aNXVieDJSeWEwMFpGdUVLRDVFb0dKUGordVhpaXZFaHF3?=
- =?utf-8?Q?wkP20xO9vL0wE/qE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eWlrdTdjSENNalo3VE1hUjliRGpkR1RQZnl2d0NDeUQ1NUx3dXJuQVJ5NTl6?=
+ =?utf-8?B?WW5vVnpSSy9hVVhqTjAwa24xVjNnb1NsUW9BZmRmTWNKb0Q3VmlkR3NxV1px?=
+ =?utf-8?B?S0hVWHM4amlId3NsdTdDTTFhK1Evb08rRHR4cTJRbWNrUytaYS9vRWRYekpy?=
+ =?utf-8?B?SG5ZSS8za0lXVjI3SkVRZjBNOG5paHViQndWQk9uZXhMYmpoZ3BSRTNlS0Ey?=
+ =?utf-8?B?Zkc0MFMzZWw2MzRaZGtsbGs0THJhL2QzV2o2RW0wS3l5aFM1ckNyQmt6eThK?=
+ =?utf-8?B?YkxpODV2MUcyVUFBQ090amx5Mm50VjBjamJ3dno5YVJESk1qUTQwek04a0Ny?=
+ =?utf-8?B?R1dHTFpoblhNbmVqZ21qZ3lFamg1WW1QVG9hSmNqU0MzTUlEUEdEVFFJWlpS?=
+ =?utf-8?B?ZkN0cmp0WWxjMUFORHM1UWJGZURMck5UUk9XRzFsOXNhTGFEcGwya1ZUd25P?=
+ =?utf-8?B?aGFHN2RQNXRrVWozK2xMTmV2SDJMT3VTUUFFZUNHelRpcmRXSTR3aXVjdDFC?=
+ =?utf-8?B?TnBBM283Z01UbGd5UnBocWZJMGFaVEFRWHhvQ0QyV3R0V3ZvL0ZiazRySnB3?=
+ =?utf-8?B?cTczcDdBKzFOYklReGdaZ0ZEUHBFWUp3cThSQjh2MUt3MGZjcG9BTXpIZWdz?=
+ =?utf-8?B?ZzRleXVUaUlMREtZSXVIRnF0Q3p0NnppRENUU0VwSVRwYVVvNVplRlNpL2Ex?=
+ =?utf-8?B?TmVDNW1yeWxzL1NpS2NYckZaUnRkVVVmbzY1a0VMWmVuck55VTBwY0pEeGJ6?=
+ =?utf-8?B?UzJoZVMySisyaTNjMDBsVUlQalZxaGpXRVUrc3lQRDlOWDdjWkw0RUh4Mi9n?=
+ =?utf-8?B?TUxKZnlHZURUelRUK1NBZ0g5dmRpMFlZbWdsazZjRFU2UnpNNm95d2JjbWpS?=
+ =?utf-8?B?RXBJNWRvV3VlU2h3TDZ2ZmYyWW0ydHhNUjF2ZVFDZHBKV2NwVDRDYjRZYmor?=
+ =?utf-8?B?ejRhd0FPZHVJbDZPbEYyWnhkUk1mZnN0OSt6aldMWC8vUkl1MEgyTUdTMWlK?=
+ =?utf-8?B?OW8rQVE1Qkd4WklpRnFFYlZFeXZ0VEhSQmY1ek5GOWlPMzhIWm5WWWl2L3d2?=
+ =?utf-8?B?Ty9ia1hPZDZVZFRLV05iRm9GMjN6UzZHZUV6bmdLelFMY2tvY28wRVBvamtw?=
+ =?utf-8?B?a1JXRVZFQVVyRXYvNGZxREU2dnY2ZmFIbVBLckxlL1RJeGJUVFJ3UlFkQmZ1?=
+ =?utf-8?B?dTh2YzVQMmlGUStWaGdDWk5qa0JiU2Z4K3p1amQxR3ZkREdpcUpQRW9BWE1i?=
+ =?utf-8?B?b3BmRVpvNmpXTkxRWWtsZ2p6TmlQTkhWS2RJTERvd2FnUEUxaGIzcnU2ejBV?=
+ =?utf-8?B?MTd2TlNRTUFiYWZjdU16dTdQa2x3U2svZ0hWL05VTDJiSTMvZ1RTUGRnV2tz?=
+ =?utf-8?B?cWlaNFdGaWxCOVVSWmtJQ2tkMnZqaUZCQzRjZDl5YmVTN1loN3RYeDdlTmUw?=
+ =?utf-8?B?REhQYzkrZGVQalJRblhWR0RFSE95bjZuTHE5NDZ6TUFTOFQ1YWJFNTk2T1Y2?=
+ =?utf-8?B?WktNcHdsZFJnYUdXblNMVlhzSFpNc3NLb0lNNXVNTVpESFNOUEJ1RWhxT0lo?=
+ =?utf-8?B?S0tZeTVKa00yNUZ5clhXSmtrd2NrMTVGM1ZkS1NXMlBJUkpzenpYclRPUG9V?=
+ =?utf-8?B?d2lWQUlsM2VpZ1hidm02QnVVWnQ2S3ozdWlKMHpOMytNNG9xdW1KTHZybW1p?=
+ =?utf-8?B?dko4T2JMazd5V2ZMOGZlaUtOY0phcmtHNDlQUTJvanIwVndPS1hLLytKYjds?=
+ =?utf-8?B?TUpFMi9zVVdWS1Vvb05WbzJxaHU2dVFkM1l3QnRaUVJja0FYUDFTa244YVV1?=
+ =?utf-8?B?Q1huSHRVVThGU3FTZkMwdnd2bUQ3dmdEbW55aE8rMU9lK3orMXpXOXN3MGd4?=
+ =?utf-8?B?VjVMM2tDZWxqcG5RM1lpS0FIWDFzWlBhUmVBc0FsSlZvaFVwNjk2R2o4NHY5?=
+ =?utf-8?B?VVQ3b1U5VFc1SUd5clg5QmZta1djSnJMUzFoZXc4b0ZVL3dLOVpTNDhhUWxi?=
+ =?utf-8?B?QjU4OUhFa2U4V0llbWVSeXBMa1BsQ2hsdU1XV09SR0FSQVpWYWozSWVFdndh?=
+ =?utf-8?B?RitMNXEvMjZFS1NXcUxYcm9ueFhpT0FhbnJackQ4RnpqeGV1TnhGRmErMmRh?=
+ =?utf-8?B?dmpZandvM1k2NXhTMWJ6TTR5TGVrVHMyMjVSWGNnWk1OZlREQkJNRGJOZUEr?=
+ =?utf-8?B?SWxUUlFIbjF1UERUbzUyVmxHdDdkQjhPaHM5KzZpeWxrRlUzMXZpSWVrZkJG?=
+ =?utf-8?B?NmtjOFBybFYzeFRva0xhUGh6aDJ4c3Z3VGhWbjJQVjAvZXdQdnUzcTZkWDJv?=
+ =?utf-8?B?dzRoSVl2dm1mN3FDcGJQaktjVlozV2RRYU9RNXpXclI5QlpROFBubUVZc2lU?=
+ =?utf-8?Q?780aPAxenqm7f9Yo=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33fc258c-e463-4af8-2231-08df123bd10f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3264fa6e-e0b0-4952-813c-08df123bd007
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 08:40:23.0626 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 08:40:21.3602 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: X57MKSF1DREvs6pdpRpJZwF+0y1UfKj8uTaTpZff59tkC0cwaZVlPcAnSgXcmRAy2jdGN1yXixAaWxjCBN++h80ReH9Tm3K6cTp5CcTpmlU=
+X-MS-Exchange-CrossTenant-UserPrincipalName: W/Z7OAWTQQMrY9wTPYThgpsYT49FGyFFcxDxwd+iWqwwxIpYH/eCj7bSwmjpLs1Da69AH60e151WJQVkVx1+scAW82ZUqmiN/kbZfJY1p8I=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR08MB10916
 Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -153,115 +154,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPR migration with a vhost-vsock device currently crashes the target
-QEMU.  The device ownership is not handed over, so while the source
-QEMU still holds the guest CID hashed in the kernel, the target's freshly
-opened vhost-vsock device fails to set the same CID in realize():
-
-  qemu-system-x86_64: -device vhost-vsock-pci,id=vsock0,guest-cid=3:
-  vhost-vsock: unable to set guest cid: Address already in use
-
-Add an unconditional migration blocker for the CPR modes, so that such
-a migration fails early and gracefully instead.  The following patches
-implement the actual vhost-vsock CPR support, and the blocker is lifted
-once it's fully working.
+cpr_save_fd() now refuses to register an FD under a (name, id) key which
+is already taken.  Add a test which checks that 2nd registration fails
+with an error while the 1st one is left intact, that different names
+or ids don't clash, and that the key can be reused once deleted.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- hw/virtio/vhost-vsock.c         | 27 +++++++++++++++++++++++----
- include/hw/virtio/vhost-vsock.h |  1 +
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ tests/unit/meson.build |  1 +
+ tests/unit/test-cpr.c  | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 99 insertions(+)
 
-diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index da244eb1657..503d248a617 100644
---- a/hw/virtio/vhost-vsock.c
-+++ b/hw/virtio/vhost-vsock.c
-@@ -20,6 +20,8 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/virtio/vhost-vsock.h"
- #include "monitor/monitor.h"
-+#include "migration/blocker.h"
-+#include "migration/misc.h"
- 
- static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
- {
-@@ -140,25 +142,38 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /*
-+     * CPR migration of a vhost-vsock device is not supported yet: the
-+     * device ownership is not handed over, so the target fails to set
-+     * up its device.  Fail the migration early and gracefully instead.
-+     */
-+    error_setg(&vsock->migration_blocker,
-+               "vhost-vsock: CPR migration is not supported");
-+    if (migrate_add_blocker_modes(&vsock->migration_blocker,
-+                                  BIT(MIG_MODE_CPR_TRANSFER) |
-+                                  BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
-+        return;
-+    }
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index e47bc7225ab..8d229ff60e6 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -140,6 +140,7 @@ if have_system
+     'test-bufferiszero': [],
+     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
+     'test-vmstate': [migration, io],
++    'test-cpr': [migration, io, meson.project_source_root() / 'migration/cpr.c'],
+     'test-yank': ['socket-helpers.c', qom, io, chardev],
+     'test-ram-discard-manager': [
+       'test-ram-discard-manager.c',
+diff --git a/tests/unit/test-cpr.c b/tests/unit/test-cpr.c
+new file mode 100644
+index 00000000000..dfc6b1f2ec0
+--- /dev/null
++++ b/tests/unit/test-cpr.c
+@@ -0,0 +1,98 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Unit tests for the CPR fd table
++ */
 +
-     if (vsock->conf.vhostfd) {
-         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
-         if (vhostfd == -1) {
-             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
--            return;
-+            goto err_blocker;
-         }
- 
-         if (!qemu_set_blocking(vhostfd, false, errp)) {
--            return;
-+            goto err_blocker;
-         }
-     } else {
-         vhostfd = open("/dev/vhost-vsock", O_RDWR);
-         if (vhostfd < 0) {
-             error_setg_file_open(errp, errno, "/dev/vhost-vsock");
--            return;
-+            goto err_blocker;
-         }
- 
-         if (!qemu_set_blocking(vhostfd, false, errp)) {
--            return;
-+            goto err_blocker;
-         }
-     }
- 
-@@ -187,16 +202,20 @@ err_vhost_dev:
-     vhost_dev_cleanup(&vvc->vhost_dev);
- err_virtio:
-     vhost_vsock_common_unrealize(vdev);
-+err_blocker:
-+    migrate_del_blocker(&vsock->migration_blocker);
- }
- 
- static void vhost_vsock_device_unrealize(DeviceState *dev)
- {
-     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    VHostVSock *vsock = VHOST_VSOCK(dev);
- 
-     /* This will stop vhost backend if appropriate. */
-     vhost_vsock_set_status(vdev, 0);
- 
-+    migrate_del_blocker(&vsock->migration_blocker);
-     vhost_dev_cleanup(&vvc->vhost_dev);
-     vhost_vsock_common_unrealize(vdev);
- }
-diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
-index 84f4e727c70..a964d57e1bc 100644
---- a/include/hw/virtio/vhost-vsock.h
-+++ b/include/hw/virtio/vhost-vsock.h
-@@ -29,6 +29,7 @@ struct VHostVSock {
-     /*< private >*/
-     VHostVSockCommon parent;
-     VHostVSockConf conf;
-+    Error *migration_blocker;   /* CPR migration is not supported */
- 
-     /*< public >*/
- };
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "migration/cpr.h"
++#include "migration/vmstate.h"
++#include "monitor/monitor.h"
++#include "hw/vfio/vfio-cpr.h"
++
++/* Stubs for the parts of migration/cpr.c that these tests don't exercise */
++
++const VMStateDescription vmstate_cpr_vfio_devices = {
++    .name = "cpr vfio devices",
++    .fields = (const VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++QEMUFile *cpr_exec_output(Error **errp)
++{
++    g_assert_not_reached();
++}
++
++QEMUFile *cpr_exec_input(Error **errp)
++{
++    g_assert_not_reached();
++}
++
++bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++bool cpr_exec_has_state(void)
++{
++    return false;
++}
++
++void cpr_exec_unpreserve_fds(void)
++{
++}
++
++int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++static void test_cpr_fd_duplicate(void)
++{
++    Error *err = NULL;
++
++    g_assert_true(cpr_save_fd("dup", 0, 10, &error_abort));
++
++    /* A second registration of the same (name, id) key must be refused */
++    g_assert_false(cpr_save_fd("dup", 0, 11, &err));
++    g_assert_nonnull(err);
++    g_assert_nonnull(strstr(error_get_pretty(err), "already registered"));
++    error_free(err);
++
++    /* and the first registration must be left intact */
++    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 10);
++
++    /* A different id or name is a different key */
++    g_assert_true(cpr_save_fd("dup", 1, 12, &error_abort));
++    g_assert_true(cpr_save_fd("other", 0, 13, &error_abort));
++    g_assert_cmpint(cpr_find_fd("dup", 1), ==, 12);
++    g_assert_cmpint(cpr_find_fd("other", 0), ==, 13);
++
++    /* Once deleted, the key can be registered again */
++    cpr_delete_fd("dup", 0);
++    g_assert_cmpint(cpr_find_fd("dup", 0), ==, -1);
++    g_assert_true(cpr_save_fd("dup", 0, 14, &error_abort));
++    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 14);
++
++    cpr_delete_fd("dup", 0);
++    cpr_delete_fd("dup", 1);
++    cpr_delete_fd("other", 0);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    g_test_add_func("/cpr/fd/duplicate", test_cpr_fd_duplicate);
++    return g_test_run();
++}
 
 -- 
 2.47.1
