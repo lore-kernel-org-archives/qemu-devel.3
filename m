@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32043C88E5C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD7CC88E69
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 00:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5uFG-00031B-VB; Sun, 13 Sep 2026 20:08:27 -0400
+	id 1x5uFI-00031S-7A; Sun, 13 Sep 2026 20:08:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5uFB-00030N-Vu
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:22 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1x5uFD-00030d-HF
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:23 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5uFA-0006s3-2k
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:21 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-38dfe7eb825so2369923a91.0
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:19 -0700 (PDT)
+ id 1x5uFB-0006s7-7c
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:22 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccb65437so848773a91.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789344498; x=1789949298; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789344500; x=1789949300; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0m2rAXMoagFHDfOq9qhvJe8XyC+YxtbYvXg3PJbo7Lg=;
- b=FgbRllSuT14AJkl0jExjoYSrA5ew0FmfdKXWx5HeDiPUn5/y6W0uQlCkGN7FMqfGwt
- GX8yGgKp51Fct8tijXTiwVKRwN7DyC2XnnQ8w49WRlp8eAVIbil4i0xntsgg2pHNtMD4
- jU2sYOokRenBpL2AxjFKOHO6Xq4aHSqzH3OjjSNOV1GaI6tYXXSM/rs2Y3GfgXtitmbz
- /ZiUYVsAtGm8upHiZVVmuDZ2LPwI7IWS/hOMsmxJvy1rhewqNkcSAfoDTxyeJyF/07dE
- 5Db4URkHPWiIEXPFD5yFjuz0MBIesR9BjUx5A2nABH9/g3QkMDUP1YzCdOND0B5P+czj
- K57A==
+ bh=7+CcwxXPo43h/KNUQ7Zn18bG5lRkYVCqnQ1Dy2GQs4Q=;
+ b=bpCo7RjrQZ4hQCJR57xwFxwx8bWB2VYjQaYvZ9FIdwNWZvAEXloZOWgCSp6M9UDI22
+ BCdt1QuScDQgWn2BZOVK13FJut5Mlro5UknKcFbdLjctqYw8XJjVcbr2n/XnLFlwuJWc
+ sGCi/W+sMTvTbG27MucG7n8NWhPsmXo4whqAH4bramkwURgveVfHK3lO7U0uMphvppTi
+ p1+GUhHo+VLxlr0H5RUf8nv7YfvKs0vLWfET179BX6wISY362JRp4uNohwet+IreWEE2
+ X0j8YoUKmKkyhkp3igqo3h7JAsBV0Bwi3KrPg78+faGLTGj3LGW9BpHVrrzIMXMINcsi
+ p4HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789344498; x=1789949298;
+ d=1e100.net; s=20251104; t=1789344500; x=1789949300;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=0m2rAXMoagFHDfOq9qhvJe8XyC+YxtbYvXg3PJbo7Lg=;
- b=Vx/q+AJfySaK1J/LWLQzNWzPUlO/Sv9PcLD4AFa1Tmsmm9XtgvML1nk/uaGsFyMzTW
- XVIMvsP8FYvaEzj77X20luLi0326spTFtXCWXGmeAk40M6e0w8OWcKeaGKJi5oWneWzr
- 1Ab3Jd235dX9EEFsyunSfDVMUG1x8FdANkmyQj1nLas4RXNNwjjvsnqIOpdXmzIOMAC8
- 9SKNSf2ytbv72geFCitU1m5KOaK97WAtAjuhqv7JsSHKsk7B7a00rAGCQSLpnBRf7en+
- QVQ65mEO9JKiaPrNhf2/dXQ8CbamLFKLpXsZBNyyjbwX4rgdQwxjVktnrbV5nAA+lqeC
- CFsg==
-X-Gm-Message-State: AFuF++kaBctM9TqCm983JhBstYAJtj2OnlhF2T5QLCJZ6k0VbA7oqqYi
- 8fAqXIS+t1WLb3JsAAup9Er3Q0tFiRsM5YfR+RfLEp3K1HRDZu2FGYOZ50UvjMAFYfAMl8M0B6J
- vd1DM
-X-Gm-Gg: AYBFou0M9U8TIaTxkB8OAFKP9dD0yynkGt4ivxQjSkmuaDL7F5PmD7+ZFweKuShUc9a
- Qc8i4vjkxqGD/6wFWVifWKU9YxN69Isoizo0+numpFHymSX078901M4eascxguO5uD6oloDtLQk
- fTG0ruMgtrnRgguw5CLfKYBskKNbThZ78oFgPa5F4iBoI38WBy17mHVd8gA4imI5SAevhHF1SC8
- gykUwdyuUD+idGhzfeRKZwz90hBpYeKmmW3DPUhrdn3Wib6FHGJ65FPhIM6c46K2JeiNWitKHih
- dHB4FoxSiGsC64ig8M9jMFMeGj+cdzTFakZOui4joGT4cIeMniUo1LAQ1O0h7D/X3Xd7RbQ73gi
- tBXknKz+ojbZmkU3vNV/J/4HyKxLG69WDXxOjJVTxcMTdIy0nrOCHUlMxmNnSTKoqaoLd4nC7hL
- k4M1Fsm7S/iXb2z8Z3olXn2QJo1RYccOvvxlIW/esuwKNgT3qDt1EDMWpaK5eIW4fvDQgPtUjQ9
- cjYd1oX3YWB5WKQSg==
-X-Received: by 2002:a17:90b:2e0e:b0:38e:250b:122f with SMTP id
- 98e67ed59e1d1-39dec056382mr553110a91.16.1789344498332; 
- Sun, 13 Sep 2026 17:08:18 -0700 (PDT)
+ bh=7+CcwxXPo43h/KNUQ7Zn18bG5lRkYVCqnQ1Dy2GQs4Q=;
+ b=mICF/k1SJq0Zt1bWCEsbyL7covCR4U4/KRkxjNfbZtGdMAIKuxfvJ5bYYvpNnaStO2
+ ZieQ1EzI8o3va2hk486vyc+K0j6LTbFTQgzAxDILLRE4mpxaEhjvqoG4NErIQUZL8gT5
+ 9AW3LAApAJNsBKeTaKtEQFhsd1rczmr7IawSZeejQQLhEj/Db/ZBk2vPhPM7Pt3jLA1s
+ fdqf8sKkOEWL4qlqFuWDMVFJ3+p9FzF0r9MGEOAVx89oA6x7FKfimrwBmhm7Eb4vyiLB
+ ZL9SYUe39GakLRAQlhD6ZXDh22tC+cfWAVV52GiC+iKhSuBxrs5RVHMEKTKjJyQSmUy2
+ fCCA==
+X-Gm-Message-State: AFuF++nMl1hIOXqWJF/gYeTR4cQrLdIloViSTdNJ+8SseLSF1DbNgjT0
+ 9/9hG2rauKtW2wXUYlzxluUKr1YfiVut3w0l2q8vqwFCmwRSXWmHxWsX6O9ZvQDq/zQkHo1pbxe
+ 18rPo5eU=
+X-Gm-Gg: AYBFou3EoKIJdml7tkR0BQ7xDztBPBHRxSuiamhqh0XbECqkJ2F5QBZ9vmcWWfqQJgf
+ l4DglzgSnLXK8xVkS5dSSZEnvtvFTQr9nlu17FcTaw8l4gKjT4ipxSGYHFCaQBMVYOLQRQqDXVO
+ J6v/hMlJSW3hF9d3WJ6kZybPc4UU91PJVYWuqOypyRcwa9kCIcGaSS6pZx4r0rqRAi8O90BAmUR
+ L7HBHYtvF9T6i79ocJdb0lf2kZfuAX0v524xBQPyTPrbwr9wD5tCjkEUUn8MdsZ6C3fO+kshpvb
+ dyuKfrRKIQSCO+WI+pcu3VnEw2YAceQ5H5O+L/Dgn+ElTR+9M8vxVcmXL816JPSYg84O+5Mx5Hw
+ eS/wO0cj2Z/GycPWoVvIf15YfeswwBeqwrn+umaIibcSKU2LOmQjV8VHmHFSkGqTJVf4uDLR58Q
+ /6rTLGIWZxTrwQSLlaRHYurboDtYmTKL8V5jv5f5xUvQd30vR4gh7EQJkUYkqavnKnlE/6DeIGv
+ 5j7FLj8
+X-Received: by 2002:a17:90b:3f4d:b0:38e:97f0:aa4b with SMTP id
+ 98e67ed59e1d1-39dec064f1amr554836a91.13.1789344499652; 
+ Sun, 13 Sep 2026 17:08:19 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.17
+ a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Sep 2026 17:08:17 -0700 (PDT)
+ Sun, 13 Sep 2026 17:08:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: max.chou@sifive.com, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com,
  Alistair.Francis@wdc.com, philmd@oss.qualcomm.com
-Subject: [PATCH v3 01/11] tcg/riscv64: Return tcg_insn_unit from insn encoders
-Date: Sun, 13 Sep 2026 14:08:04 -1000
-Message-ID: <20260914000814.785155-2-richard.henderson@linaro.org>
+Subject: [PATCH v3 02/11] tcg/riscv64: Rename sb-type to b-type format
+Date: Sun, 13 Sep 2026 14:08:05 -1000
+Message-ID: <20260914000814.785155-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260914000814.785155-1-richard.henderson@linaro.org>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,162 +102,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returning int32_t was logically incorrect.
+The current riscv documentation calls this b-type.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/riscv64/tcg-target.c.inc | 47 ++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ tcg/riscv64/tcg-target.c.inc | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 2ce9d47a633..a26503fa1ed 100644
+index a26503fa1ed..a10b433f2ff 100644
 --- a/tcg/riscv64/tcg-target.c.inc
 +++ b/tcg/riscv64/tcg-target.c.inc
-@@ -438,28 +438,28 @@ static bool tcg_target_const_match(int64_t val, int ct,
- 
- /* Type-R */
- 
--static int32_t encode_r(RISCVInsn opc, TCGReg rd, TCGReg rs1, TCGReg rs2)
-+static tcg_insn_unit encode_r(RISCVInsn opc, TCGReg rd, TCGReg rs1, TCGReg rs2)
- {
-     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20;
- }
- 
- /* Type-I */
- 
--static int32_t encode_imm12(uint32_t imm)
-+static tcg_insn_unit encode_imm12(uint32_t imm)
- {
-     return (imm & 0xfff) << 20;
- }
- 
--static int32_t encode_i(RISCVInsn opc, TCGReg rd, TCGReg rs1, uint32_t imm)
-+static tcg_insn_unit encode_i(RISCVInsn opc, TCGReg rd, TCGReg rs1, uint32_t imm)
- {
-     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | encode_imm12(imm);
- }
- 
- /* Type-S */
- 
--static int32_t encode_simm12(uint32_t imm)
-+static tcg_insn_unit encode_simm12(uint32_t imm)
- {
--    int32_t ret = 0;
-+    tcg_insn_unit ret = 0;
- 
-     ret |= (imm & 0xFE0) << 20;
-     ret |= (imm & 0x1F) << 7;
-@@ -467,16 +467,16 @@ static int32_t encode_simm12(uint32_t imm)
-     return ret;
- }
- 
--static int32_t encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
-+static tcg_insn_unit encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
- {
+@@ -472,9 +472,9 @@ static tcg_insn_unit encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t im
      return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_simm12(imm);
  }
  
- /* Type-SB */
+-/* Type-SB */
++/* Type-B */
  
--static int32_t encode_sbimm12(uint32_t imm)
-+static tcg_insn_unit encode_sbimm12(uint32_t imm)
+-static tcg_insn_unit encode_sbimm12(uint32_t imm)
++static tcg_insn_unit encode_bimm12(uint32_t imm)
  {
--    int32_t ret = 0;
-+    tcg_insn_unit ret = 0;
+     tcg_insn_unit ret = 0;
  
-     ret |= (imm & 0x1000) << 19;
-     ret |= (imm & 0x7e0) << 20;
-@@ -486,28 +486,28 @@ static int32_t encode_sbimm12(uint32_t imm)
+@@ -486,9 +486,9 @@ static tcg_insn_unit encode_sbimm12(uint32_t imm)
      return ret;
  }
  
--static int32_t encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
-+static tcg_insn_unit encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
+-static tcg_insn_unit encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
++static tcg_insn_unit encode_b(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
  {
-     return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_sbimm12(imm);
+-    return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_sbimm12(imm);
++    return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_bimm12(imm);
  }
  
  /* Type-U */
- 
--static int32_t encode_uimm20(uint32_t imm)
-+static tcg_insn_unit encode_uimm20(uint32_t imm)
+@@ -585,7 +585,7 @@ static void tcg_out_opc_store(TCGContext *s, RISCVInsn opc,
+ static void tcg_out_opc_branch(TCGContext *s, RISCVInsn opc,
+                                TCGReg rs1, TCGReg rs2, uint32_t imm)
  {
-     return imm & 0xfffff000;
+-    tcg_out32(s, encode_sb(opc, rs1, rs2, imm));
++    tcg_out32(s, encode_b(opc, rs1, rs2, imm));
  }
  
--static int32_t encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
-+static tcg_insn_unit encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
+ static void tcg_out_opc_upper(TCGContext *s, RISCVInsn opc,
+@@ -612,14 +612,14 @@ static void tcg_out_nop_fill(tcg_insn_unit *p, int count)
+  * Relocations
+  */
+ 
+-static bool reloc_sbimm12(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
++static bool reloc_bimm12(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
  {
-     return opc | (rd & 0x1f) << 7 | encode_uimm20(imm);
- }
+     const tcg_insn_unit *src_rx = tcg_splitwx_to_rx(src_rw);
+     intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
  
- /* Type-UJ */
+     tcg_debug_assert((offset & 1) == 0);
+     if (offset == sextreg(offset, 0, 12)) {
+-        *src_rw |= encode_sbimm12(offset);
++        *src_rw |= encode_bimm12(offset);
+         return true;
+     }
  
--static int32_t encode_ujimm20(uint32_t imm)
-+static tcg_insn_unit encode_ujimm20(uint32_t imm)
- {
--    int32_t ret = 0;
-+    tcg_insn_unit ret = 0;
+@@ -662,7 +662,7 @@ static bool patch_reloc(tcg_insn_unit *code_ptr, int type,
+     tcg_debug_assert(addend == 0);
+     switch (type) {
+     case R_RISCV_BRANCH:
+-        return reloc_sbimm12(code_ptr, (tcg_insn_unit *)value);
++        return reloc_bimm12(code_ptr, (tcg_insn_unit *)value);
+     case R_RISCV_JAL:
+         return reloc_jimm20(code_ptr, (tcg_insn_unit *)value);
+     case R_RISCV_CALL:
+@@ -1644,7 +1644,7 @@ static bool tcg_out_qemu_ld_slow_path(TCGContext *s, TCGLabelQemuLdst *l)
+     MemOp opc = get_memop(l->oi);
  
-     ret |= (imm & 0x0007fe) << (21 - 1);
-     ret |= (imm & 0x000800) << (20 - 11);
-@@ -517,7 +517,7 @@ static int32_t encode_ujimm20(uint32_t imm)
-     return ret;
- }
+     /* resolve label address */
+-    if (!reloc_sbimm12(l->label_ptr[0], tcg_splitwx_to_rx(s->code_ptr))) {
++    if (!reloc_bimm12(l->label_ptr[0], tcg_splitwx_to_rx(s->code_ptr))) {
+         return false;
+     }
  
--static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
-+static tcg_insn_unit encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
- {
-     return opc | (rd & 0x1f) << 7 | encode_ujimm20(imm);
- }
-@@ -525,8 +525,8 @@ static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
+@@ -1662,7 +1662,7 @@ static bool tcg_out_qemu_st_slow_path(TCGContext *s, TCGLabelQemuLdst *l)
+     MemOp opc = get_memop(l->oi);
  
- /* Type-OPIVI */
+     /* resolve label address */
+-    if (!reloc_sbimm12(l->label_ptr[0], tcg_splitwx_to_rx(s->code_ptr))) {
++    if (!reloc_bimm12(l->label_ptr[0], tcg_splitwx_to_rx(s->code_ptr))) {
+         return false;
+     }
  
--static int32_t encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
--                         TCGReg vs2, bool vm)
-+static tcg_insn_unit encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
-+                               TCGReg vs2, bool vm)
- {
-     return opc | (rd & 0x1f) << 7 | (imm & 0x1f) << 15 |
-            (vs2 & 0x1f) << 20 | (vm << 25);
-@@ -534,8 +534,8 @@ static int32_t encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
- 
- /* Type-OPIVV/OPMVV/OPIVX/OPMVX, Vector load and store */
- 
--static int32_t encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
--                        TCGReg s2, bool vm)
-+static tcg_insn_unit encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
-+                              TCGReg s2, bool vm)
- {
-     return opc | (d & 0x1f) << 7 | (s1 & 0x1f) << 15 |
-            (s2 & 0x1f) << 20 | (vm << 25);
-@@ -543,20 +543,19 @@ static int32_t encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
- 
- /* Vector vtype */
- 
--static uint32_t encode_vtype(bool vta, bool vma,
--                            MemOp vsew, RISCVVlmul vlmul)
-+static uint32_t encode_vtype(bool vta, bool vma, MemOp vsew, RISCVVlmul vlmul)
- {
-     return vma << 7 | vta << 6 | vsew << 3 | vlmul;
- }
- 
--static int32_t encode_vset(RISCVInsn opc, TCGReg rd,
--                           TCGArg rs1, uint32_t vtype)
-+static tcg_insn_unit encode_vset(RISCVInsn opc, TCGReg rd,
-+                                 TCGArg rs1, uint32_t vtype)
- {
-     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | (vtype & 0x7ff) << 20;
- }
- 
--static int32_t encode_vseti(RISCVInsn opc, TCGReg rd,
--                            uint32_t uimm, uint32_t vtype)
-+static tcg_insn_unit encode_vseti(RISCVInsn opc, TCGReg rd,
-+                                  uint32_t uimm, uint32_t vtype)
- {
-     return opc | (rd & 0x1f) << 7 | (uimm & 0x1f) << 15 | (vtype & 0x3ff) << 20;
- }
 -- 
 2.53.0
 
