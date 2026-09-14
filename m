@@ -4,94 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA648C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A87C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CLJ-0003Vk-0B; Mon, 14 Sep 2026 15:27:55 -0400
+	id 1x6CLf-0003ka-Lf; Mon, 14 Sep 2026 15:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CKs-0003Ag-Nf
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:27:27 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CKr-0002ue-A1
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:27:26 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-878ed0f17bfso32664717b3.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789414044; x=1790018844; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=72R6hDD+WJYl5RiYgiv/3BIyEbvQuSGVjrX4Hqydnew=;
- b=oRL8dGucGT1V8kZ3ta38aIJgOhJZiOFgHFFUFbr+YTcvAnWQzQAG2Au7E6iBrpsWYF
- /BEtyITIqBMKgUb/qy6FCnvwW7uJfqCkR8gVW3Vbekv5f3BkYtM42d8QfJeCiw1Fror9
- +ni+TXQgDtrChd7rMsUNRPlKWEosSIUZkTIjXHynPzf9QaTBJIe5Ya6fQUXc8lR/ejfn
- 2PReqSTRw2cXWsB5L8d23YyqZXvkeQ89tSQpltSayC6Xa6K2MTjCYC0hdlcvJH1Dadd3
- SgvsRkcUkp+8T1sCnVMflMjG1/f6Rg2AJkLkS462Dt21cOS6pkXLMTY2s0gYIAPb9V0F
- bYlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789414044; x=1790018844;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=72R6hDD+WJYl5RiYgiv/3BIyEbvQuSGVjrX4Hqydnew=;
- b=D/dFLRPKjlSok8P0Rlr+d2keQ6oBw9WOuqWz42KhExrSg9Y0DuWBtn7hX+PkjvK2F2
- 4835bm/m1M/E3aw0HG3wc+pV6Iohi4Gsqd3m3jAeng7EdkRbbthlhhBJA2fCbPhvCFK8
- kBeONAAnY/8kmbftab3VTtLmwNSfWbXzwfF3ioL0SFWkhN8SIT+ub0T17AzWB7eSoWOR
- sNtw7NoZ/zomDQR6y6FqOXtSwuxXG5zXTrTIW4Ojh21S+WugOQcNLrL5tQQYEfuHu1vf
- fWxCCubPHPElHvW+2fG5GYzE3ceY4Mo7i5gvB/VU1mx/w1HVy1Pb290rn6xe4szu80Lz
- r57A==
-X-Gm-Message-State: AFuF++kG+mJ0HtoIBCPZRmnwrl8Iu5mIOVfi6tywJza4KWM8Uq4IT6xZ
- c3/h/udsBV4fjkY8Bl6f0cgKf2kEmBqHHoblSvzTo6fzcxGgtq8tneCLSZqTr47sYQJRLplDEJy
- X9pQwUWI=
-X-Gm-Gg: AYBFou1ZeGI+yTkOTDnYL5EEMNbfCIpWDdhIesTrHqwMTk5kVkNje4UyPrRCSZLjdtW
- 1HMzaQfTay3Retrb8ina2u5e1JIhdZJFyfrdyHbjiXMcsOv2doA974rQk5cBD2/2bkaKHWjd4E7
- nbEljptYhSHlz/mOhSy/9YRfNBB5iSstg9Y6iu//ijmxEQ5fSiVJ5rGcFU/mZL0TX57GAB82BiX
- X+vp6sXPDvNiLmOfuhg0gbJJv7obLjvyZs3ov4GXQ/yNDPFd7GF1s/clK5qfyoaaZIQnsXq+vUl
- +jT+/g2OmHAm8Lnmnr/sMzEZ2x3FoHsWWNIpCEAsSXNLzAV8HNJTIavkDBZYmIC4uFi/ng4NVVC
- g9vfiYdHW+/zr3WZQIcaDej571/UJPpz4T8oQkRMxirK6bYMylWeuuTJs91rYsoCrvuMGsQK531
- a2Ex3MzB6t2/+bu3oFUNRO9t3W5Q2wjexA3DlrPh3LLpZLL+0ZrCofKVXGu2cqAiXc/234Xmht1
- c74qZzExVdWkdWepIRv+nGVPqo7YWIth72x8HlpfOrtbAooAyeToMyjZVpfbQ==
-X-Received: by 2002:a05:690c:dc9:b0:873:5ddf:d865 with SMTP id
- 00721157ae682-88d22217b62mr12719537b3.48.1789414043910; 
- Mon, 14 Sep 2026 12:27:23 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
- ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-884b55c2744sm38054827b3.41.2026.09.14.12.27.23
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 12:27:23 -0700 (PDT)
-Message-ID: <af473beb-b46f-4d29-950e-c0f2d3f94dd3@linaro.org>
-Date: Mon, 14 Sep 2026 09:27:20 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/14] docs: expand security docs with info about
- security status
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x6CL9-0003Pg-Lq; Mon, 14 Sep 2026 15:27:45 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x6CL8-0002v5-2o; Mon, 14 Sep 2026 15:27:43 -0400
+Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hkFXn2gHzzBqZm;
+ Mon, 14 Sep 2026 21:27:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
+ s=dkim; t=1789414057;
+ bh=w/UqNADqql0RoxyJa098KiPcHZjY4lX1ptO9zRQpReo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=TMtyE9AYLIsSDiLPJkHseJNDf5qkcWOScOvBYqYI7EbJaIohcjR4WX1BrZszYIp5N
+ AbkFqKl/svI3MPpPrXAD1k5fZNWzsNHbHjSGGs1n+b52/xfclNrqimxtxM0NBM0/t3
+ ap4cBqRTKuoRFM4N7mqwZ5nLMPDsjTMy4q2iiEVPvFbydzd1tf1wPseuQ63VqrJyYG
+ oE7rLoqb7X7a+wq+yqAMWVW5YphrYJaPBHZgUSY2zLG56BU4TN2piMiWIcq8tb4oJP
+ extOaGMlxvn38WNNyAnex4+lR4wn4SLhC3LLgLHcpRdq40XnDH8T+HS67TRTXIjS8t
+ LOFZf+4pRh8YA==
+Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
+ [90.45.87.101]) (Authenticated sender: gilles.grimaud)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hkFXn1GY0z801c;
+ Mon, 14 Sep 2026 21:27:37 +0200 (CEST)
+From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
-References: <20260910103628.2326622-1-berrange@redhat.com>
- <20260910103628.2326622-14-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260910103628.2326622-14-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: qemu-arm@nongnu.org,
+	peter.maydell@linaro.org,
+	alex.bennee@linaro.org
+Subject: [RFC PATCH v1 4/6] target/arm: MPU_RASR: mask TEX bits for Armv6-M
+Date: Mon, 14 Sep 2026 21:23:20 +0200
+Message-ID: <20260914192323.29250-5-gilles.grimaud@univ-lille.fr>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,22 +72,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/26 00:36, Daniel P. Berrangé wrote:
-> The description of virtualization vs non-virtualization use
-> cases is a crude approximation of the security characteristics
-> of QEMU devices.
-> 
-> Document how QEMU can be probed to obtain information on the
-> security status of type classes, and how policies can be set
-> to inform or control their usage.
-> 
-> Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
-> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
-> ---
->   docs/system/security.rst | 36 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 36 insertions(+)
+Keep the existing mask (0x173f) for CPUs with ARM_FEATURE_V7, and use a
+mask that excludes TEX (0x1707) for Armv6-M. PMSAv8 is handled by the
+earlier branch and is unaffected by this change.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+After writing MPU_RASR on an Armv6-M CPU a subsequent read returns zero
+for the TEX bits; Armv7-M behaviour remains unchanged.
 
-r~
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+---
+ hw/intc/armv7m_nvic.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index 51d3dba852..4136c91f23 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -1996,7 +1996,12 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+         }
+ 
+         cpu->env.pmsav7.drsr[region] = value & 0xff3f;
+-        cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x173f;
++        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x173f;
++        } else {
++            /* Armv6-M has XN, AP, S, C and B, but no TEX field. */
++            cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x1707;
++        }
+         tlb_flush(CPU(cpu));
+         break;
+     }
+-- 
+2.55.0
+
 
