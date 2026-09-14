@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEF9C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 17:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343DEC88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 17:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6AkI-0001Ce-1V; Mon, 14 Sep 2026 13:45:35 -0400
+	id 1x6Amn-0003JV-M6; Mon, 14 Sep 2026 13:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x6AjI-0000i7-0W; Mon, 14 Sep 2026 13:44:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x6AjE-0007ML-9g; Mon, 14 Sep 2026 13:44:31 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EFvkMV607523; Mon, 14 Sep 2026 17:44:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=i1ZBhMhBtrH1jHWox5b2SA8pkS6RJVVYZjL5VJLmK
- ew=; b=kq98GZN0tGwBdqzzgfgZ+PK1PurTaig2q8aYcb2AWMl9qvULf+JaFZ2FU
- VYFBf4glcqpmxTyBqGWEewuQMzziqp9X7i0h+h7m+NylZcnag0fNEizW0XuObwEC
- 9+T6032e3qjMnwmQAkWp1mw2cvLLwohjOzJclRCLCjtdJar1PSzOgnE4mzghorPR
- AX6QME7pjkg/8f0VVi2rKIbmvVL8I0Nt9FKcSel5b811d2TuerA6F5bpNOfc7Fj3
- aShnt7NNfY9q+EU2tvxDlNjra1uBHk01qaDtCL87FSWeyCtJIV3yug6JU6ndCcHj
- fYFeuj5vuObM0I2QsOnk5nCALfB/g==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdq317m-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 14 Sep 2026 17:44:23 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EGbc872359981; Mon, 14 Sep 2026 17:44:22 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gnh2pyhxv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Sep 2026 17:44:22 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68EHiL4631916736
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Sep 2026 17:44:21 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6BCA358055;
- Mon, 14 Sep 2026 17:44:21 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B7BC158043;
- Mon, 14 Sep 2026 17:44:20 +0000 (GMT)
-Received: from IBM-D32RQW3.ibm.com (unknown [9.61.242.224])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 14 Sep 2026 17:44:20 +0000 (GMT)
-From: Farhan Ali <alifm@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: alifm@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
- cohuck@redhat.com, alex@shazbot.org, clg@redhat.com, armbru@redhat.com
-Subject: [PATCH v5 0/3] Error recovery for zPCI passthrough devices
-Date: Mon, 14 Sep 2026 10:44:17 -0700
-Message-ID: <20260914174420.12309-1-alifm@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6Aml-0003Io-9P
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:48:07 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6Amj-0007zZ-Ga
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:48:07 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49e71cdb22bso14052175e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 10:48:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789408084; x=1790012884; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=cjzHHr+zu6/CCX9W07LBXdH1wGC98nkh/LFUkamci1Y=;
+ b=N90GlGupKTdm5v47JnVfGsYcAYkCwaJqX6t6RPqTzuciZ6GwwduaQVStHFZSsgtaym
+ /JMvlSPQJXb+oTa/gteHG8yLqTG+e800jcIVxD8/f014WWsQyITuaiUzyak4XYlSttr8
+ wlYlQr0LXMmvVZx0rwFQc0jZos5UtjDoiYMSfbm6oPqfZDEZfo+pZuJIdGuA6Wl16YpR
+ VEV/liiW32qop+OMl27PNKwPcKN8MlAceFEls7KSvRiSjOXQ5m93Lijb+HwOd0kwmizV
+ S1S+O7T2PZIiqctOJ6J0h6ZJkgh0QD4xDSqpTdzLHYfalRfwOhzz9pKo3tk8m+AKdCEQ
+ ja/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789408084; x=1790012884;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cjzHHr+zu6/CCX9W07LBXdH1wGC98nkh/LFUkamci1Y=;
+ b=oc4WqZyUuSSmd+z25SBqcl/OrEAqn48mN5ETSdNcHaG/CajoQl4NwlOkoJ9s9esx7+
+ 58nXIK5YdBxt4E9ZZp6Qy7z0A4AiCV3dGtrkhhe3BOB1sr/YTsUXVbcAFAH9UNncNA/V
+ 7ju1R5oNeRQi3z/dsdQigeB45o1cgeUif5HfcRTugrKD0nE6rgjTKJVEg/JsADlXbgUp
+ kT34Mx0jnRZgZBodI2FTs9qX7iA65pcbniKN46vefHEu5KSja8MMBDq0ImsE9e/bibQA
+ ZLUBK2cYM8RCTzac9zAKIA61nqFEkkt2Gkq+CwdF84MsudnSFWeOc5PJqMSlDCVoOL48
+ QBDA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx0Z0FOHZUe5uHRf7+rI0xvbTxKZS+lKK+71AseAMaRJ3VsE7sLVyZs74l9T/WPjTvU8wTPp3eTrDaf@nongnu.org
+X-Gm-Message-State: AFuF++mOllq0FBFwlRlIq8AzGynXDXHWEIA81DSdbzJnVSLlrL6yxiH1
+ N45aEchdGd9iOcqIFS9DL7hjK85Rj+YCYI0osw5ekxvOlAy/Z+iBhkbZ2B7rKKI8s+s=
+X-Gm-Gg: AYBFou03jgIGW5bN34O6F4KTXdWzWx6lyfdEo3Ku+dmrQsYmYoxU1WtLi6h6JhUhB8A
+ nSbWw0L8GbjTDSxTQxQK5xKwz2M8G8vU0V0UCriRUCAoypNn9qkC0qUK5AZykMw7Ks7CeJAl6VI
+ IeFD1xrSjyOm6m7OIpIaAJU4P0sKRvV8k9O3YFPi/xFHJqH+jdw4QfGRAyL5tsuN0ZDqQKip904
+ rDt7c1kHnsjC5OJgoSlZn0iv90r1hknBUelm/J9+cnneNEMH49RqwqsTZPdvatDWvKN4tKoIbQv
+ 98E7u1gFp8YFR2stN51q1lQ06bNSrXXH31tmjwKm3Rr4r3QIfzd405WgK8E0o9p024pgDKuy1dq
+ hDzh6tJtPHAzoOCW7ILAa9x0xNPOl7bVELNO3id5xlwgzlt2GwbKz/7rBbiux0zpAUFXtq2ycF0
+ v6m6G24RJGgkBZC0kp8Gaaq1Z/mTY2bwFnpg3k2NJec60YCAfn7Yw2mua4GsfAowCK1hw8/FQ=
+X-Received: by 2002:a05:600c:3ba7:b0:499:8aff:59b6 with SMTP id
+ 5b1f17b1804b1-49e7d4af7a5mr11277095e9.14.1789408083883; 
+ Mon, 14 Sep 2026 10:48:03 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e7d2acf1asm6368215e9.4.2026.09.14.10.48.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Sep 2026 10:48:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 275915F81D;
+ Mon, 14 Sep 2026 18:48:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Farman
+ <farman@linux.ibm.com>,
+ qemu-devel <qemu-devel@nongnu.org>,  Aniket Sahu <asahu1x@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>,  Zhuoying Cai <zycai@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>,  Matthew Rosato
+ <mjrosato@linux.ibm.com>
+Subject: Re: [PULL 102/105] configure: remove cross_cc and gdb detection logic
+In-Reply-To: <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
+ (Paolo Bonzini's message of "Mon, 14 Sep 2026 18:57:16 +0200")
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
+ <20260904124604.2207440-103-alex.bennee@linaro.org>
+ <dab85c9c-4718-48d1-a343-c2e6b5f8e24f@linux.ibm.com>
+ <87a4pn8yra.fsf@draig.linaro.org>
+ <CABgObfYEN8Qme6zXGYJpEeHTiFegjOm=Ym-3vU9LE1Z-Wsot3g@mail.gmail.com>
+ <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
+ <CABgObfZnyHenuVJ6maVs+jMNQCJeYhtcnXtXOqN1G3NcbvDt7g@mail.gmail.com>
+ <aqfX2414cAMCcI18@redhat.com>
+ <5cc8dd29-9093-4082-b8e5-32823f21c71d@oss.qualcomm.com>
+ <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Mon, 14 Sep 2026 18:48:01 +0100
+Message-ID: <871pavd8ry.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDI0OCBTYWx0ZWRfX6xCZoFlLpJw1
- w9gt50vW1ZeWO+bsiqaQBSZGxkEbOinPNaNPyzysBkipuET49ZTihF8D+R3yTDgxaxdMJyDEpE6
- 1Q4+C7kz5B7h9UvEw8p1elvA5lCvZF6KFeq2/4GRGwUDrNZwgLBveKZoe4uoRtlfMQELutmdAGV
- HYby3gTnflaCsq4d11Y1OzzQIedndA+8u8RYYxhrfyfdKaTBTgNPncUTM+UVf3Gqbv3kob9qHjj
- 1FJ0tEapeEs5lH1r7chVCvWRSIbsC4WOIlzCzONXTzNKbg6gbdkmWqSnl3F7UV8PA11vpWaxXlu
- 8Vs8VPabbV6ldZewjEFYdYxKGuyXVB60eFwdAP9GLuXnXGUL83LxpqUEDR0OKSDeun304PSn8fv
- Y1MH3wvf2FtkBbljU8MmKROVF5JbYsvPpBQhYwY1YNlCXCeM4LrvQqyesQAWAzgH/cC5GUBVriN
- Invnr1iQZp8tZLvzAlg==
-X-Proofpoint-GUID: f7324kA2_34SR9h3Cb6Q5Hauyhf08BBb
-X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aa83277 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=r1p2_3pzAAAA:8 a=VnNF1IyMAAAA:8
- a=7proyq5jN0fAEejWBk8A:9 a=r_pkcD-q9-ctt7trBg_g:22
-X-Proofpoint-ORIG-GUID: f7324kA2_34SR9h3Cb6Q5Hauyhf08BBb
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDI0OCBTYWx0ZWRfX7WB1eiQL+Cbm
- qulXbOtbr//x9VW/Ds2OadiX7ag5Liq6DqXFEYmY4ymqoz1H0aPB1b3mUj4IUI1W/56Ul6Oz6hm
- lyPXVOP1dxzY+eX0OrezBQaOeUGo5fs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_03,2026-09-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140248
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,78 +120,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-This patch series introduces support for error recovery for passthrough PCI
-devices on System Z (s390x). This is the user space component for the Linux
-kernel patches [1]. The kernel patches were merged for 7.3 release.
+> On Mon, Sep 14, 2026 at 6:13=E2=80=AFPM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>> There might be some confusion with what the series introduced. To make
+>> it clear, it does not touch, nor use tests/docker/Makefile.include.
+>>
+>> Each tests/tcg/arch declares which container it depends on, and we have
+>> tests/tcg/meson.build that automatically builds it if needed for tests.
+>> Reverting that will not be very easy to be honest, as it's a core part
+>> of the new logic.
+>
+> If it is core, why is it patches 102...105?
+>
+>>  > IMHO it would be nice to replace tests/docker/Makefile.include with
+>> > a meson.build too. Yes, that would make it rely on a configured
+>> > build tree, but IMHO that's an acceptable tradeoff to get more
+>> > stuff into meson natively.
+>>
+>> That's easy, and would allow us to get rid of
+>> tests/docker/Makefile.include completely, by adding matching targets
+>> make container-image-debian-*. Also, we can have a top target
+>> 'container-images'. With this, people can build them with ninja or make.
+>>
+>> As Daniel mentioned, the trade off is to run configure first, and I feel
+>> it's quite acceptable. What do you think Paolo?
+>
+> The problem is that right now firmware builds are broken, because all
+> the supporting code in configure was removed. I'll review anything
+> that fixes it, even moving firmware builds to meson custom_targets
+> even though it seems quite intrusive.
 
-The current design for QEMU updates the callback for vfio error notifier to
-an s390x specific error handler if the kernel supports the new device
-feature VFIO_DEVICE_FEATURE_ZPCI_ERROR, for s390 vfio-pci devices. So now
-on an eventfd notification for error notifier it will invoke the s390x
-specific error handler.  The s390x error handler will retrieve the
-architecture specific PCI error information and inject the information into
-the guest. Once the guest receives the error information, the guest drivers
-will drive the error recovery.  Typically recovery involves a device reset
-which translate to CLP disable/enable cycle for the device.
+I've reverted those three patches - so leaving the TCG tests still to
+run using meson but still generating tests/tcg/$TARGET/config-target.mak
+for the benefit of the firmware builds (and also vdso build which uses
+the same stuff).
 
-I would appreciate some feedback on this patch series.
+However I need to test the firmware builds and its not quite clear how
+to kick that off. I did try:
 
-Thanks Farhan
+  cd pc-bios/s390-ccw
+  make
 
-[1] https://lore.kernel.org/all/20260818164326.387bb27b@shazbot.org/
+but that works even with the current state of the tree.
 
-ChangeLog
----------
-v4 https://lore.kernel.org/all/20260831183151.12626-1-alifm@linux.ibm.com/
-v4 -> v5
-    - Remove err_handler() callback in vfio pci core.
-    - Update the vfio error notifier callback to an s390x specific callback
-    for s390x devices
-    - Include linux headers for 7.3-rc3.
-v3 https://lore.kernel.org/qemu-devel/20250925174852.1302-1-alifm@linux.ibm.com/
-v3 -> v4
-    - Include linux headers for 7.3-rc1.
-    - Rework VFIO API changes based on the kernel API (patch 3).
-    - Address Markus's comments from v3 (patch 2).
+Where is the firmware build documented so I can test the patches before
+I post v2 to the list?
 
-v2 https://lore.kernel.org/qemu-devel/20250825212434.2255-1-alifm@linux.ibm.com/
-v2 -> v3
-    - Update arch_err_handler to err_handler and include Error ** in
-    function definition. (patch 2)
+>
+> Paolo
 
-    - Introduce helper function to hide the internal indirection of device_feature()
-    (patch 3)
-
-    - Update function definitions to include Error ** (patch 4)
-    
-
-
-v1 https://lore.kernel.org/qemu-devel/20250813174152.1238-1-alifm@linux.ibm.com/
-v1 -> v2
-   - Use VFIO_DEVICE_FEATURE ioctl to get device error information.
-   (Based on Alex's feedback on kernel series)
-
-
-Farhan Ali (3):
-  linux-headers: Update Linux header to 7.3-rc3
-  s390x/pci: Add PCI error handling for vfio pci devices
-  s390x/pci: Reset a device in error state
-
- hw/s390x/s390-pci-bus.c                   |  13 ++
- hw/s390x/s390-pci-vfio-stubs.c            |  10 ++
- hw/s390x/s390-pci-vfio.c                  | 124 +++++++++++++
- include/hw/s390x/s390-pci-bus.h           |   1 +
- include/hw/s390x/s390-pci-vfio.h          |   2 +
- include/standard-headers/drm/drm_fourcc.h | 209 ++++++++++++++++++++--
- include/standard-headers/linux/fuse.h     |  63 ++++++-
- linux-headers/asm-arm64/kvm.h             |   1 +
- linux-headers/asm-riscv/kvm.h             |  13 ++
- linux-headers/linux/kvm.h                 |   1 +
- 10 files changed, 417 insertions(+), 20 deletions(-)
-
--- 
-2.43.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
