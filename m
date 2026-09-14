@@ -4,132 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B59C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E16AC88E50
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x63JZ-0000WN-4M; Mon, 14 Sep 2026 05:49:29 -0400
+	id 1x63Kr-000132-Q5; Mon, 14 Sep 2026 05:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.syms@citrix.com>)
- id 1x63JX-0000Vw-Gm
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:49:27 -0400
-Received: from mail-westcentralusazon11010045.outbound.protection.outlook.com
- ([40.93.198.45] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x63Kp-00012a-NI
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:50:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.syms@citrix.com>)
- id 1x63JV-0003NO-OB
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:49:27 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bu4LQQQLeOrvyQavYgmGeRAB7L/Q8S3GjfmFoBlroudlIyBnodyofSLY4iJhLLQBSjMmPE2yFC5gYayiCQA2knr2j0y+a9Y4EJVn/ehGqbe1ks/faC7w3EYbU881v28T+F8L4RZR9BuUdzZm1o0cfsOyXUPWEEo+xlBk4KUjh+wECgoKdFc4aVq1/UfSx8z8zSbCkf0ObqL21n5qKhLIVNRiZY94+6iIm9ejNS1LoHvqnNVdS4n/mSRCGINGKWixdsQ0c20xvcWYCT5GcBABYur9u/VhEKvzhgRtqN+wdOz2L5oGPUGFP7ta125XdzlL18I2ztW33h4qNfcVa8dBcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hVCM9Bd8dtXmxY2Pdmu4BEKJXZLE+qyH8JEtcseR1aw=;
- b=TA7vBxdOK7eF2nTi1Sy/8ynn8o0NsPuGmFKAZlPiOP5zNlyHNOWjXrEOzoLbkZ9WaSIGBbClQS++flAj4oolNu6wbwcfd3GUklKBG16ycqhqeXp1EJDQNTcvh8tqgi8h11wOhpyH9y7nF5UEhHFbVxWMi0tQdFHmspmh2YA1Tmu1SLVKWLlRvRKBigIGvrYpsdz3d+j8lUGug57kBXMfRFcwoImaA4wEKa9r9XMyiOJrcyqHZBDxJ+oSDn88+zxihjef+sWNeVS8yW3EJGRlKGfaWWmLQ/XBeoia79EfVKBCoQj2IDeqE9eOOtXeBRMvuf1z5M4NwP4cSXPGG8Qzmg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
- dkim=pass header.d=citrix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=citrix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hVCM9Bd8dtXmxY2Pdmu4BEKJXZLE+qyH8JEtcseR1aw=;
- b=m3oXGnvmKpWqJlE+pn8mlFG8iPlrQwvxO9TkVEDsk40y3xU2vXBnA334sRlfG4lwVt2u5Z7KbJ8zorVp5/ttHNUeEitaWdm2EQViR8PpHSyHQk7Lkp4Dm/ek2A14XzB/oPl1D0iArGiPNySRoDfS7/YEdNaVvAkqheGGLC9AW2c=
-Received: from DS0PR03MB7557.namprd03.prod.outlook.com (2603:10b6:8:1fc::8) by
- PH9PR03MB150476.namprd03.prod.outlook.com (2603:10b6:510:419::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Mon, 14 Sep
- 2026 09:44:21 +0000
-Received: from DS0PR03MB7557.namprd03.prod.outlook.com
- ([fe80::6884:8bd5:3e4d:fde7]) by DS0PR03MB7557.namprd03.prod.outlook.com
- ([fe80::6884:8bd5:3e4d:fde7%5]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
- 09:44:20 +0000
-From: Mark Syms <mark.syms@citrix.com>
-To: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
- <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>
-CC: "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: [bug] hw/xen/xen-bus.c return type confusion and missing error
- handling
-Thread-Topic: [bug] hw/xen/xen-bus.c return type confusion and missing error
- handling
-Thread-Index: AQHdRC1AOIgl1NL+C0ast83t01+HHg==
-Date: Mon, 14 Sep 2026 09:44:20 +0000
-Message-ID: <DS0PR03MB7557FE84436F26DAC1E9FCC787BB2@DS0PR03MB7557.namprd03.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=citrix.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS0PR03MB7557:EE_|PH9PR03MB150476:EE_
-x-ms-office365-filtering-correlation-id: 66a872f0-f95f-4c71-f319-08df1244c0a8
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|23010399003|1800799024|38070700021|11063799006|10067099003|56012099006|5023799004|6133799003|18002099003;
-x-microsoft-antispam-message-info: 4KGoN9a+/RQKxVBpaOJAcjgwAuHWJVd4vUNraPEwnYefdgEPcER0hxqv0qYQU70CgeePd0LycyMcl9tWsJ0t6peTbm5LjqjZf2gs9eDi/TlcrBFof8RTf0dt06GtXf7z3RudpgIg5RaxFNphw0yfFXrUWPctSDQzC7vXJmaxfCNG6ghinEAacKy/OQRqZVooHqPDInEmEHvFZ+JgdPwLJKLM2s2kYq1q83jFRE6ohvRvTSFSre+SAwx9qmqgurXSZGC4lDlgsoGea60C1fB9bj9F72N1nNjm+VAcuF8Xn4qM/lZ2MmGgGb1/mpdi3U0rzzLRgYMQCZsQxdIL9m2PEGUiUV//dW1NQ7DQ6DKHpKbjWdubU6KtbghzlLeWrggcYQIPRd/bgeRpHLcS4qKfgaggofBa2mcdtDT9TB4BIFCVMk6TnyeZBeixbGi+Ta80Eb77+EKCwxrmh3qrkVpTi8qr40PGk/oOAGBFlFVfdUpPnPVIXOYqXzEZucqAi0rb1Fr2AnPZfJE052pm1n/Zwfu7/Yhuu+t9UlcoumvQDceRL8EooztfFgrsgaBwdCpBDLtKp3jQMREMogpw73Qq7S62BFOjm3OW9O8ifiRY/yQBhhHlFngbwYf1ioDUk8p9UJcUe5ISWJ/i6LuErQk5kxvKSbdEdKS/Y0dOCiq2UCPWZ66Guk7VcyC3yIbggRDxxX/bgXyOXNKcYsWY/HDSY19JqfBuYqY10nb6Ep6+CVw=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR03MB7557.namprd03.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(38070700021)(11063799006)(10067099003)(56012099006)(5023799004)(6133799003)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?USmMPSwaSurNc63knlBk9ICcwH93nHTSs/r3Sj4gwOINfZvEBp84Z7rwb7?=
- =?iso-8859-1?Q?zLv5xVH31tHKghN2QODgLqBwgXEIdogjSX2FF3IqKRLj01+iy4Ai+TSPrR?=
- =?iso-8859-1?Q?bMIL+9/zg2d0Eq48zHkSnoBjjV8lXGj8ARRVamktZ+00QE9yQ8xrMIu8zP?=
- =?iso-8859-1?Q?c3wVPOJysCp+/tW7tROdILN17AROiEsBTClq/Pex5Zf36nDLUjeaxz/ai0?=
- =?iso-8859-1?Q?3iVdFFvYnt5NQv7KzuhVawKBg/6DNP53/0Q6fyepuFGPuv2aLgOmWa4oE2?=
- =?iso-8859-1?Q?mCGdcRrSf2rLJJwcOerVGs1xeuD6w+awj2wAwDBMBc1Oo80UHLMBJrVvTu?=
- =?iso-8859-1?Q?5BzX6GeEfra+WvNN7Ox06NJu67535essLOrxsGvuO/T4c+mfSRDCZ4waCx?=
- =?iso-8859-1?Q?KgvfAv64Mj6g+tuEngBqyGRSopy53ok4FilYRgwZFZ0Hlq/5a2a5MkAfSN?=
- =?iso-8859-1?Q?9zNDVYrA7oZsOYamqzLDyIs7gARdU8U/VYwVKELXAARda566SuYTt5BP2t?=
- =?iso-8859-1?Q?4MqVp6WO8/Q7AlVi/CG9dSxnpCtJic4C1yUmcy+0t0XKtKljN2gVYXaorD?=
- =?iso-8859-1?Q?XSb4jo1W5Q6c4tl9vKT722co1fxTLjhf6VopEx6IMAyr5j1E6QtJcPEhWc?=
- =?iso-8859-1?Q?flk82GsIMbt+k21baCtoJ2hBeKPYCCl8QPDM0WmmDbscT8gVjX2MFJR3l3?=
- =?iso-8859-1?Q?sUB25tHK9y0m4wWfQWh6UzyLklAnxqFu/MZX/1J/dnKrvIaz4wmDr1MKgj?=
- =?iso-8859-1?Q?Kwix5kNCW2YtiXGgev0rdPPcT7Z+GuO3DzpNh7NCWsUQlRFnva8Zesl0Hj?=
- =?iso-8859-1?Q?8AQgHH4meGWFMk3x8bxGhlM6vILFmVG0+7f2TdINE0SDJxmz2UmNY7YMW7?=
- =?iso-8859-1?Q?luRiDX6xJHhvr/mV0OQAQ1tCsCZ7n6j96byUnuo72hLvuZBRxO3AXfIEHb?=
- =?iso-8859-1?Q?OTZ35w1zzXaCs2padvUuJYae73lKwO+xlH4BmAMHKeEJ214CIJtZCdTF0y?=
- =?iso-8859-1?Q?8FNMq+t2n7TUsZSJ6vpbJ9f7+VP7vWETTGqc5Ajd+GkjHWEkMUE5sxGXGt?=
- =?iso-8859-1?Q?nJct8rq19c5i2+HTMCTZY7Ou1vII7//H1R+gtl+3yVVC9ynLrDioKcxooW?=
- =?iso-8859-1?Q?H9mBTmtzV6HQaP2yt0UotC/PCnFC1b6eAN0ws/BcqhLP0zUZOkR8j4qq/Q?=
- =?iso-8859-1?Q?A8GqLEzlJH5ZILn21CF12jr2HHsq2PZahFpUkpoWVmjOnVFuctUfDNXePi?=
- =?iso-8859-1?Q?b+jbyec2/vc/ObInt9PYQWfaot97BtWf6HiEbQxGqaiFLiinhGcE38eIp9?=
- =?iso-8859-1?Q?OeZzZQqhFIZbaYchO/mMwgz683oDYfSd37V2iYvYmHxXZvzArmdySMys+H?=
- =?iso-8859-1?Q?5nORCQseW7gfM9pEzqL7nJjdC6BoVSusCtEYbQl0uKwDkbL4bX95Rp2XyP?=
- =?iso-8859-1?Q?0JQ3HYSL9QbP1pKuaiusNy4udVlyBoE/9IGF5gV0sjdMxyF5BxpU03jlsB?=
- =?iso-8859-1?Q?WbX+x++aMA8VrqZUNiRGKCgMS6h+1wzVEMOpFhrsZA5xgxIFO9rXA4a6aG?=
- =?iso-8859-1?Q?AsMZZBh0MnpnmOTdYOcWuUIkqjU72vRoQXoq3AqAP1hfFP5LXAD4bCEZAi?=
- =?iso-8859-1?Q?g4Hn7jaPSf6YP5L7jJr3/Yi+9Q3uLo5BjHILYFoYdC3xEl3FuNs/158FpT?=
- =?iso-8859-1?Q?Xj7d6tnfaU/+rKSmXLhBg0mW9ULaXmhcA+/dx7Qy59en58mC5xK2tjz0Sf?=
- =?iso-8859-1?Q?/J1+hL5WJ1l5HGacShOMT0FYXUrwb4OzXoF3o5+3kS0itg?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x63Kk-0004ER-P9
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:50:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789379441;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7HDP0b/hfgT/6WkN55haVeTscJbVXp5zqLJ+JvZFgjk=;
+ b=N0o13XsjhpKvyQ6raAU0uLHMaoyC3+q6w0LXFjvRuJawEGk4MKLqiN4JL79B8nK+PjTnT4
+ lHFvqLgBDPMW/PlPE9wLSB1sbjquHLQpFejaaTiZ5zacBlGbcT8GeCNAt6H3gHqdYuxWhO
+ M3vKlr2Y5Wwo7iFpHM6+03Mp6sAIqXU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-581-Z5TOlTKbNUOhFcCockDZVA-1; Mon, 14 Sep 2026 05:50:40 -0400
+X-MC-Unique: Z5TOlTKbNUOhFcCockDZVA-1
+X-Mimecast-MFC-AGG-ID: Z5TOlTKbNUOhFcCockDZVA_1789379439
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49e635a6002so30957695e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:50:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789379439; x=1789984239;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7HDP0b/hfgT/6WkN55haVeTscJbVXp5zqLJ+JvZFgjk=;
+ b=pWoJmNidi6h3g1OEf0oZVBCL6nh9bEsKZhIRqXlMBfxcukEVDdkm+Gp5UHrrFA0ioL
+ wA0AGpHK48z6kQ6mRWBVTvqK8PUXaYT2sGriFFin/r1WgyRJU2K0FN6oREKztupjPjeE
+ riVFbeE0vQx5DKgBi2lS7dSiscZNQ6vxGc5ftnrjae1cKBHYX5oyrFsijiduAoBwUwli
+ 9v0M+JEk8XsjJ4by64ilfChVHo4WkhHU6BEcWSFQVwiV95wst3nFcW8MVM4jJTNNQAWM
+ pMEUHYYGssIYSRu0qo4lPNRtFV59TCzFTpZYqEIGyzjOEFHj1+PekBRMGM4xp7feFuOv
+ OcaQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxS07twOox7AWnuGxF0AjIqM5+7J/Ist+szcrKZbc8GVu1WRlcBD9/dVn8/lc527RB+4KJRJ74N3M1w@nongnu.org
+X-Gm-Message-State: AFuF++nfmO1LKq7jggonsyMASDM1d4Et9mOOWKjt8/uxxqqrDG7RRP+Z
+ 7QU9jUwCDDZ2g7gZywlBqmm6LrKF2aqn9wk/9f/Fp99J8HLVhsWHHtQDMvmnvSGTn66VWMwqFJW
+ njLWAVVe6p/QWKBlYEYWdov0Jppo7lLZHbUBIDqCXM27Pwv7cq0CXEFcn
+X-Gm-Gg: AYBFou2WR0ixd+jdZddiT5Aw8MKAA8otfmAJoxM6E8kTmIz0if8B7S0mddvlK98OKsy
+ T1SbiizB8jYNzjTjk/Him8zhfG9FBrDZIW0UzOhUGDrZTGqAeyLaV6rHci0SH7a3a5eSmkm8iKc
+ efiA2gz3HTRi7YxK0VODznIXUJLEqvR/5JHX4HGw4HCw0jKU38JqfHlWFC7A5lNFMX6Lzj5fujI
+ DjbgUBhpANm7gURRyLemu3PaL2GP9v04qruMlDp3ZioNiTSV4hrMfcMZ5Qfvh4i/6v0ehnY372R
+ cDENsmzxcLgUAHGt60jI/q+VrP1ztbD/qjymbTFDXIQ1cIIy5QFRxZi6VCR3EuTfAVPWwMYPVYp
+ qq1ADFnArD/oQVNIYZjcfWQAQGxoz2QGK6dXrwH/gIpqQT/yA
+X-Received: by 2002:a05:600c:a00b:b0:499:900c:9c69 with SMTP id
+ 5b1f17b1804b1-49e7a6626d0mr21781065e9.9.1789379439292; 
+ Mon, 14 Sep 2026 02:50:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:a00b:b0:499:900c:9c69 with SMTP id
+ 5b1f17b1804b1-49e7a6626d0mr21780835e9.9.1789379438878; 
+ Mon, 14 Sep 2026 02:50:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e636f7fa2sm306163015e9.15.2026.09.14.02.50.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 02:50:38 -0700 (PDT)
+Message-ID: <005af326-6624-44fa-9713-75ef2d5076fd@redhat.com>
+Date: Mon, 14 Sep 2026 11:50:36 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: citrix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR03MB7557.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66a872f0-f95f-4c71-f319-08df1244c0a8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Sep 2026 09:44:20.9239 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 335836de-42ef-43a2-b145-348c2ee9ca5b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5SDQWgZsxKHEWIe3WY4/KNzgIuzIOwPAqBapzMaJV8sn8rpGmScrGu8vrmWJDY7n3i+5tQCRtQ5ciiaEYyHxYA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH9PR03MB150476
-Received-SPF: pass client-ip=40.93.198.45; envelope-from=mark.syms@citrix.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/7] hw/arm/smmuv3-accel: Drain the vEVENTQ when the
+ VM stops
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
+ mochs@nvidia.com, jan@nvidia.com, jgg@ziepe.ca, ankita@nvidia.com,
+ aniketa@nvidia.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com
+References: <20260904180513.248396-1-skolothumtho@nvidia.com>
+ <20260904180513.248396-3-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260904180513.248396-3-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,44 +115,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We found a bug in `xen_device_event` in `hw/xen/xen-bus.c`. The call=0A=
-to `qemu_xen_evtchn_pending` places its return value into an `unsigned=0A=
-long` variable. The function returns a signed int -=0A=
-=0A=
-```c=0A=
-static inline int qemu_xen_evtchn_pending(xenevtchn_handle *xc)=0A=
-```=0A=
-=0A=
-Thus, forcing this into an unsigned type sign extends a negative,=0A=
-error, return. In particular `-1` which is the error return from=0A=
-`xen_evtchn_ops->pending` will become `0xFFFFFFFFFFFFFFFF`. To further=0A=
-exacerbate this there is no handling of an error return from this=0A=
-call.=0A=
-=0A=
-As things stand currently in the mainline this does not directly cause=0A=
-a problem. But, if for some reason, in our case a buggy development=0A=
-patch, an error is returned nothing distinguishes the return from a=0A=
-benign port mismatch. If the event polling keeps reporting ready, the=0A=
-event loop will re-enter immediately, resulting in a CPU spin.=0A=
-=0A=
-Other callers of this function, in `xen_pvdev.c` & `xen-hvm-common.c`=0A=
-store the return into an `evtchn_port_t` and check if the value does=0A=
-not match the `local_port` and take appropriate action. Even this is a=0A=
-bit questionable as `evtchn_port_t` is still unsigned.=0A=
-=0A=
-Whilst this was exposed by a bug in some development code we were=0A=
-working on we can't say whether this could occur for other reasons=0A=
-such as the ring being filled.=0A=
-=0A=
-I'm reporting this as an issue rather than via a patch as whilst we=0A=
-have a fix in our local build it was generated by our corporate=0A=
-agentic AI.=0A=
-=0A=
-Regards,=0A=
-=0A=
-Mark=0A=
-XenServer Storage Engineering.=
+Hi Shameer,
+
+On 9/4/26 8:05 PM, Shameer Kolothum wrote:
+> Fault events sit in the kernel vEVENTQ until smmuv3_accel_event_read()
+> moves them into the emulated event queue. The vEVENTQ is an iommufd object
+> that is not migrated, so anything left in it when the source stops is lost.
+>
+> Drain it from a VM state change handler, which runs before any state is
+> saved. Propagating an event writes the record into guest RAM and raises the
+> event queue interrupt, and both guest RAM and the GIC are saved before the
+> SMMUv3 device state. A pre_save hook would run after both, hence using
+> qemu_add_vm_change_state_handler().
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c | 35 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 35 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index fc503578f5..73509dbd8d 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -18,6 +18,7 @@
+>  
+>  #include "smmuv3-internal.h"
+>  #include "smmuv3-accel.h"
+> +#include "system/runstate.h"
+>  #include "system/system.h"
+>  #include "tegra241-cmdqv.h"
+>  
+> @@ -518,6 +519,37 @@ static void smmuv3_accel_event_read(void *opaque)
+>      }
+>  }
+>  
+> +/*
+> + * Drain the kernel vEVENTQ into the guest event queue whenever the VM stops,
+> + * so that a migration does not strand events in an object it does not carry.
+> + * Propagating an event writes the record into guest RAM and raises the event
+> + * queue interrupt, both of which are saved before the SMMUv3 device state, so
+> + * a pre_save hook would be too late for either.
+I prefered the description in the commit msg: 
+
+"and both guest RAM and the GIC are saved before the
+SMMUv3 device state" which sounds clearer to me.. A pre_save hook would run after both
+, which would be too late hence the choice of this VM state change handler.
+
+
+
+> + *
+> + * VFIO registers at a higher priority and the stop path runs in descending
+> + * priority, so the devices are already in STOP by the time this runs.
+> + */
+> +static void smmuv3_accel_vm_state_change(void *opaque, bool running,
+> +                                         RunState state)
+> +{
+> +    SMMUv3State *s = opaque;
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +    Error *local_err = NULL;
+> +    int ret;
+> +
+> +    if (running || !accel || !accel->veventq) {
+> +        return;
+> +    }
+> +
+> +    do {
+> +        ret = smmuv3_accel_event_read_one(s, &local_err);
+> +    } while (!ret);
+> +
+> +    if (ret < 0) {
+> +        warn_report_err(local_err);
+> +    }
+> +}
+> +
+>  static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+>  {
+>      IOMMUFDVeventq *veventq = accel->veventq;
+> @@ -1146,5 +1178,8 @@ bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
+>          qemu_add_machine_init_done_notifier(&s->machine_done);
+>      }
+>  
+> +    /* For migartion of vEVENTQ pending events */
+migration
+> +    qemu_add_vm_change_state_handler(smmuv3_accel_vm_state_change, s);
+> +
+>      return true;
+>  }
+Otherwise looks good to me
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+
 
