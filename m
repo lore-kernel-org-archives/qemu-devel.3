@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD2BC88E5C
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 00:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F9BC88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5v2M-0004YC-06; Sun, 13 Sep 2026 20:59:10 -0400
+	id 1x5v9s-0006eo-76; Sun, 13 Sep 2026 21:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5v2K-0004UD-BR
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:59:08 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1x5v9o-0006e7-MC
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:06:52 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5v2I-0005Hd-Da
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:59:08 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2d6d28aa26cso19856255ad.2
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:59:05 -0700 (PDT)
+ id 1x5v9k-0005v9-Hm
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:06:51 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-3856d6fbcb3so2568377a91.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 18:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789347544; x=1789952344; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789348006; x=1789952806; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=01V8qAHbRrbLD73qF6rxk6ZT+LflPQU2rePEqzW9TEk=;
- b=ni57L6aR/II5ijLMsPjPEdWxbz/Chu8a/D/Xub8iKLeKhmc60smQCCMEwVknKBKWkM
- bDHPu7NdP4GzO2hg4pGHJWjoKkF6nh+zxxaeqP3qO8NU5GKNxYOOQTTHOWcDJfmWUT7o
- BuMF/RfMr3qMD3wUFttedLH4qdCc8KP3c5Ss1xSVF9Bbsd607DzWLc7X8wQY+nvvZcXV
- wZwI6cyozs0frbvuOtGXeGZo+GA+72A2gx6dLMMyworvMEmAzSKHo7XEHYzZTYKv2ibs
- GFwcqIUcdithZpYzaKztW64ewXzeOIOhxyF4jbMe2UXiOxUndJF2Zgnro/UPn8kgAB1r
- UUGw==
+ bh=ULQuvrUe0mB90Wv3baK1ormQXrZY06F06Pd2Qx32e7A=;
+ b=vHqUsooRE412y7jR5rj5+fsUvdQZJ3rxOyRmbBfJvpTDKeludqYnhY8/ToLintvgZH
+ rkHzYdcpU9kpeZhnEhw+8ALZHIwuk4kws8FUWHXa8wsLV72U3eV4c76nYk4/v2r9hzzc
+ MEQ/pBj6zp9H9BHyH49XxC6uO5ilSQs9VKDob37BGLheb2aBmvnIAqckFseehHz4LHuH
+ h32H86niIzcraCQgpx2k7qLpBrW/b8qE+pn12wBO25ip3XICVEQcnggrWHsQxZyzZ3CP
+ vpFmCeJ0aWVFw/2a4jwqlvDAEMTJoayU1cyQsphbU/Du6UAcSgG1C0W9mouL8EZi33op
+ qg4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789347544; x=1789952344;
+ d=1e100.net; s=20251104; t=1789348006; x=1789952806;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=01V8qAHbRrbLD73qF6rxk6ZT+LflPQU2rePEqzW9TEk=;
- b=Sp6y9UnlTS8lwxAu/j+my1WV5y1x2ar9oIktXcNGsTaV2dg/cF3WOYQe4Ar37l8P1m
- Ylra3q0Y8Hx0hf+ZMeHm8yn7Fimcw3brTY8zKvC7o4LKQxGmRqvRWCueiDAky/JnK+gN
- J+EFJHEnXU/38bdzseRyia0WrTrXmjMxM5I/ijouGWC3Qlky0u9uE1iA3DqSK/F5vxoB
- 9/fFanSfKvgQknbVK3CTzYUSLy115TdIKM7iJXrgFzvYe46/8aDk5juZBsh27Qki/Tyb
- 5rMXUDQm6KwTImQLuL7/b4TzmN2vzy9kX6/5aSL3M/1JzW2JaDF4YV8UqBb97+8PxfKm
- bBrg==
+ bh=ULQuvrUe0mB90Wv3baK1ormQXrZY06F06Pd2Qx32e7A=;
+ b=Ez0/j29tP7Fj2cvVaZDlKN9PpIA81qW6bgh84oxDnz8W/IquLNDipEj1oqXFk5cbxV
+ uCYgjrfhxBxIbU+631HuxXmagTeEWwoKvj4pFo38INI3hAU19O8T7Hoz8mpbT5BrhMdk
+ Mz30XI3i1aV1jO0aUrYv3jIMFBVImhl/POiDW4VlxOc7E6WojqaQBro9ne2T9Nj/G6Un
+ KQ2qxNhUro9gZoCgdwdQ/mbqJTXhLwUGs0QtPA41Px/eKjdSKdTh5YUzzCU8CCQwsRYt
+ U8zP4DVGTYnyaeRdNCcIDr64b/xLQPF70rMhPpAY/PuU+5djavtpPRsCFiE0UBkrtRuC
+ salA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzMzXA5sZwfislfNBQAnwYNTkScKfS6HiMjEJL5nJh+EtvC8xiIOIWV13rMtob2RMPs+BRmhECPT2uN@nongnu.org
-X-Gm-Message-State: AFuF++kidqJ4tlkyHa3kCaU552e+JLE2Ev/clZLE/pMqn/fD8Jv3+fyd
- bg/E6mHECs3PjA5C4jjWdi7uks4xwH4yV1HE2puQ5ez7jqMVeiKzWnk7RdTnvVD1bsU=
-X-Gm-Gg: AYBFou0+zP3ec7AjGHGBAiERIp8Hg0fBkSmHWnDmECuJJunmXP67mLvGsnPxHRaFL2n
- ZBJYLLzqvUMvnSpcqVocKEgA6I01U50UCU4kiGY2C2JTuHCZrUAjvZQ+YCLu5m7oWhJ44QvXLsG
- MabJoNYYOw6linLpQ9IjRFT7hNRFwMpLUe6heSacZ6R5DPIg14tMv2TO/ImJlpiPwG2649jFFvp
- G8RWDg05gDyWqAWCsL7o0Zudc+iwZL/f9enoAa0gAm/mPysYiMARwt17JRaVJl6AdcHGPCwFMvV
- 0/Wk53bGmSp7rINdHR40sNJdwOyxI+2fsdEMLc7O4Ts0nrBbEoGJGx7Fk09ESSbkYj0As+Ig08a
- hnResqncuOUwtszB/g77ert4baGCq7UnyGmYZTmrSkXprGwViTmm2m7bhc6FJPlAe99MJhUZEH5
- BahLpQLplOFrvifuT0TOZAS3BdyLUmdKiuP5BuLmBfwAILiDreS5zYquLhCWdd8S5FzpgQtlqJa
- Ws40LpqPdpDvJ6ZUX3y2pvLx8JsYl+Q48wKfpKPEW7YVbTHZOb11xOMbOL+Sw==
-X-Received: by 2002:a17:902:d591:b0:2d7:5ebe:a588 with SMTP id
- d9443c01a7336-2dd6c6da391mr7219595ad.13.1789347544495; 
- Sun, 13 Sep 2026 17:59:04 -0700 (PDT)
+ AKwUvBxjy4sdcxruaoy6ecNuQaEQvzJIytdaPeE8EQ5gBh1Uzoos0JSaQpRRN5BGnbD4v9KXo5kR9CzfTcPv@nongnu.org
+X-Gm-Message-State: AFuF++kG2Z10f5IKABmNPLbbDVWvwBI8+36Q2Ab7XOGQJVKBA/u+A8WD
+ wdO7vdnb2Y9fbz/fpYlVNCsCNMaW/KKDC9hYYv/tyDRIiRtkr0fYI0vWryRiHP3vrrk=
+X-Gm-Gg: AYBFou0SSHqBvSSfkZnzzaT1UfxyHb0pyM31IF0RbSx7BWCz6/1ENF1E6c0XWzenMTN
+ 3i8NK1jYXConU2Tit/zUvhc9Qc+MNBMPvNh/mvBHSZtwdronrkzdAUX3+CL3w8KwNLSUSGBiq81
+ NMeZY/4v8QQaGYtPiJrxZPMXeMkHLqveWBht/Xc2X0FQq0fh7gYtcSYpSB/hI0+66ZqByzdAY5n
+ UgtUzabRfW8OOWgVp3DAYID7oFmCL33JJwV8NTh0LWEX0xE9Y8zMdieRZAEbP8yrqulIqpWYn1c
+ AMdzh/3j0kMZ1zeJcjc+QRWOtT+MrT/D4FZthVhYfnM6L4IMmzwlZg7+U0FKHkhp5QroVPNZGAL
+ B4R0oUO3eJ6k3JqX1u+j0za2mUa8lpEurLJv+r3roffLpsfZdBS4Mf9wDm9/fdb1Jn8OOP6yqNS
+ mXgLqyFtWRpd+gkGx6pa4AZwrDPSZ/67ABotZNpfqGlPlNXwfsWR0UhJ6/E/bEVtlkaxGbHEpK1
+ IN4kMvw6HhXyjG+encSdfLeQK9cQzW5W8N5PRZtIkxy15Ijy9KOA9ZkxRQylQ==
+X-Received: by 2002:a17:90b:17d0:b0:39d:c3bb:98e7 with SMTP id
+ 98e67ed59e1d1-39debfa60f6mr896155a91.6.1789348006493; 
+ Sun, 13 Sep 2026 18:06:46 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:1665:91c0:9a80:f870?
  ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4cf015csm24984449eec.4.2026.09.13.17.59.02
+ a92af1059eb24-14365b8f1f7sm19691111c88.11.2026.09.13.18.06.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Sep 2026 17:59:03 -0700 (PDT)
-Message-ID: <1781cb62-97c0-4ff8-bd76-02e149030359@linaro.org>
-Date: Sun, 13 Sep 2026 14:59:00 -1000
+ Sun, 13 Sep 2026 18:06:46 -0700 (PDT)
+Message-ID: <9b1ff139-7fd5-4678-bc3b-c472faa6b32e@linaro.org>
+Date: Sun, 13 Sep 2026 15:06:43 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/riscv: extract check_sfence_vma() from
- helper_tlb_flush()
+Subject: Re: [PATCH v2 2/2] target/riscv: add helper_tlb_flush_page(), use for
+ sfence.vma with vaddr operand
 To: Trevor Gamblin <tgamblin@baylibre.com>, qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
@@ -83,21 +83,21 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
 References: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
- <20260904-riscv_tlb_page_flush-v2-1-defec3f29312@baylibre.com>
+ <20260904-riscv_tlb_page_flush-v2-2-defec3f29312@baylibre.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260904-riscv_tlb_page_flush-v2-1-defec3f29312@baylibre.com>
+In-Reply-To: <20260904-riscv_tlb_page_flush-v2-2-defec3f29312@baylibre.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,79 +114,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/4/26 08:43, Trevor Gamblin wrote:
-> Create a new function to encapsulate the privilege/hypervisor checks
-> performed inside helper_tlb_flush(). The idea is to pass GETPC() as an
-> argument directly to it inside the helper_tlb_flush() function. We'll
-> use this function in the following patch for helper_tlb_flush_page().
+> sfence.vma unconditionally called helper_tlb_flush(), regardless of the
+> rs1 (vaddr) and rs2 (asid) operands, forcing a page-table walk on the
+> next access. Create a page-level counterpart to helper_tlb_flush()
+> called helper_tlb_flush_page(), and use it whenever rs1 != 0, falling
+> back to the existing full flush for rs1 == 0. This makes RISC-V
+> behaviour more similar to ARM's equivalent (tlbi_aa64_vae1_write), which
+> already does tlb_flush_page_by_mmuidx() instead of a full flush.
+> 
+> Pass get_address(ctx, a->rs1, 0) to gen_helper_tlb_flush_page() rather
+> than get_gpr(), so that the address being passed matches the current
+> addr_xl width regardless of '-cpu' input. Otherwise, the raw register
+> value can carry garbage above that width and never match the address the
+> TLB entry was actually filled under, so the flush silently misses and a
+> stale mapping survives.
 > 
 > Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 > ---
->   target/riscv/tcg/op_helper.c | 16 ++++++++++------
->   1 file changed, 10 insertions(+), 6 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-> index 3e94005d2b..7f63f3ada5 100644
-> --- a/target/riscv/tcg/op_helper.c
-> +++ b/target/riscv/tcg/op_helper.c
-> @@ -588,21 +588,25 @@ void helper_wrs_nto(CPURISCVState *env)
->       }
->   }
->   
-> -void helper_tlb_flush(CPURISCVState *env)
-> +static void check_sfence_vma(CPURISCVState *env, uintptr_t ra)
->   {
-> -    CPUState *cs = env_cpu(env);
->       if (!env->virt_enabled &&
->           (env->priv == PRV_U ||
->            (env->priv == PRV_S && get_field(env->mstatus, MSTATUS_TVM)))) {
-> -        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-> +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
->       } else if (env->virt_enabled &&
->                  (env->priv == PRV_U || get_field(env->hstatus, HSTATUS_VTVM))) {
-> -        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
-> -    } else {
-> -        tlb_flush(cs);
-> +        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, ra);
->       }
->   }
+>   target/riscv/helper.h                              | 1 +
+>   target/riscv/tcg/insn_trans/trans_privileged.c.inc | 6 +++++-
+>   target/riscv/tcg/op_helper.c                       | 6 ++++++
+>   3 files changed, 12 insertions(+), 1 deletion(-)
 
-The priv and virt_enabled tests can be done in the translator.
-Honestly, I'm surprised that PRV_U isn't already tested there.
-
-PRV_M, could avoid the test.
-PRV_S could perform the TVM test at runtime.
-
-     ctx->virt_inst_excp = ctx->virt_enabled;
-     if (ctx->priv == PRV_U) {
-         gen_exception_illegal(ctx);
-     } else if (ctx->priv == PRV_S) {
-         TCGv_i64 t = tcg_temp_new_i64();
-         TCGLabel *l = gen_new_label();
-         uint64_t mask;
-         ptrdiff_t ofs;
-
-         if (ctx->virt_enabled) {
-             ofs = offsetof(CPUArchState, hstatus);
-             mask = HSTATUS_VTVM;
-         } else {
-             ofs = offsetof(CPUArchState, mstatus);
-             mask = MSTATUS_TVM;
-         }
-
-         tcg_gen_ld_i64(t, tcg_env, ofs);
-         gen_update_pc(ctx, 0);
-         tcg_gen_brcondi_i64(TCG_COND_TSTEQ, t, mask, l);
-
-         gen_exception_illegal(ctx);
-         gen_set_label(l);
-     }
-
-Although the subtlety of virt_inst_excp vs virt_enabled wrt which 
-exception is raised confuses me.
-
-It appears this criticism is true for all privileged instructions, so 
-perhaps this should be done as part of a more global cleanup.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
