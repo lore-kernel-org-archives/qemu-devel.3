@@ -4,103 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1556C88E70
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 13:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9E8C88E70
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 13:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x66wJ-0004ks-V5; Mon, 14 Sep 2026 09:41:44 -0400
+	id 1x6778-0008Jd-4Z; Mon, 14 Sep 2026 09:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x66wA-0004kE-D8
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 09:41:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x6774-0008JH-Jq
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 09:52:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x66w7-0004Do-MT
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 09:41:32 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x6772-0008Eg-GM
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 09:52:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789393290;
+ s=mimecast20190719; t=1789393966;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=z+2lONM2W8dOjvp1pSg9bMB7y5PdyR/g78esQN9p+Xo=;
- b=AOjr14VE+tWVO8b0fF8LbiKJuZq52xVT6u82nXKRncM3MecD7LB6Pj+MFnhZ45P0eYVZt7
- 0g4F3KRot8LMk1AOoWeLofOHt16unfZRwmabyGZdRg4COifm/OZ7jn9AMGo+5lGHXoXBhe
- 3cFjAmxr1RFoPsiqqmu5cItvCi9NqYQ=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=G6J0f4KsxoGeRI5A8fzIdxQdFH23+wrPMOQiEiffT7s=;
+ b=gSuzt/lIATJOe4+EugrqMzR/Qxh3KGfhN7ITfue3WACXuDpnRiYzh+VG1dr5BXbqsTMirb
+ 6OmU5WjTETp+iwAw5PoIKtliqfbwwsx5tOIFMBRdsakFGMMwYH3GIojU2d82Bye4Q2gei0
+ I3O+g7NfOO5mWLxOX610bcskU3CSdIw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-EIpUyIgbNXa0Z8We5EgZQA-1; Mon, 14 Sep 2026 09:41:27 -0400
-X-MC-Unique: EIpUyIgbNXa0Z8We5EgZQA-1
-X-Mimecast-MFC-AGG-ID: EIpUyIgbNXa0Z8We5EgZQA_1789393287
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-90e8341cfb4so73117586d6.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 06:41:27 -0700 (PDT)
+ us-mta-502-9mIkZ1WLOr2Eij3fd9fxhg-1; Mon, 14 Sep 2026 09:52:43 -0400
+X-MC-Unique: 9mIkZ1WLOr2Eij3fd9fxhg-1
+X-Mimecast-MFC-AGG-ID: 9mIkZ1WLOr2Eij3fd9fxhg_1789393962
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-486f3dbf7d2so2031271f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 06:52:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789393287; x=1789998087; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789393962; x=1789998762; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=z+2lONM2W8dOjvp1pSg9bMB7y5PdyR/g78esQN9p+Xo=;
- b=IPYYIflzh1CeRysDEb7hJjEpuAHr+bBJ9Feo8zA22+gIyrHa4j8HanyZnRWkRU40NL
- Ixv9GNU+4X4Uk9J3dqKnP+ajSE55yARSMi8cty2L9cQDA4zyp6QocT+MmPBJ8dq7SGfb
- xf7CyqrkJg2zta4BMVe/kOpU5V4eHoLMjBCbIF+vG9kOMVStA7ChUMuhNNhmQEa4qqjr
- SSWLn5eZSUYEiBVUnSqwyO1CB2bDpnI//UIyQe4uCE56IFdNjN6ZMs5e0MmHGnCLziI1
- PfuRk4OvpQkUk4rp2i9keI216wkgEaUiSEcFHYeBzjJpvy/0LTM4vhJMMtEFwLl7dYMG
- gAEQ==
+ bh=G6J0f4KsxoGeRI5A8fzIdxQdFH23+wrPMOQiEiffT7s=;
+ b=gtQMp+JAuvZ8inLiSORk9CAhl1fhSej67CkfX3tMlzA9XVnDqpVoRXxVkbd0dQZgVY
+ rB1LKbnt0aFqJDpKwOEPIUoiW7CLnhyLtXhIHp0WikCbFyOaBMIQDS+Q7vuLS8tCA5F7
+ WY5q9dIC+ZkHFmQkWAhwwQ+f++yp8Gqb0MVO3vwiMKU21FwJU9Mb6mcuNh3e09hA8vX4
+ vzDOHiFg5uDi2yp/xS8M2nUi4KjjU/8zWG6Cft6pDCpIAWNI9DakjiKlsIwXhqQvlOoQ
+ 3nEDASQ4MCZuqyeDdxBE4tf2XPsB8uP7l9oaDJ53eSazXsUPIF+FPilfn4YH5tRjSGt5
+ NR3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789393287; x=1789998087;
+ d=1e100.net; s=20251104; t=1789393962; x=1789998762;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=z+2lONM2W8dOjvp1pSg9bMB7y5PdyR/g78esQN9p+Xo=;
- b=ApjG4XIDQINq81tCdxrEq8FPdFLyrPmu8rpNOB1xDPT8IlDzVBb7EkBe+n0cB9jn8y
- qB2i17KE8Aa4cEgDdGeYNMz9P7k5zdx3PLbLcvYBT1QlbMaln0z/obX9qXlJvTxCs8mo
- J4416HxfIAgyS6ag1AFIwItYkAsuaBAEc+hgZfLoNeE50FdruHVzlcIKMMWWy9RMkCS/
- EECPSL4ho64EDW4ijVtbIZiusYTHTgCBc6ohsmoef4Gd5sAhaWhZtGgAa5ELAX0zDZt1
- 4rhk1+na/USDzKvO1EM8IBPvmMzASivQ/EUrmCFEWDcyVHOJHLRknxwoLxMwh7aFhT18
- Xocg==
-X-Gm-Message-State: AFuF++kNn5bul/LKJo8lmNE8t81w5+wDjTn7B2w1BAhcZN9+fyjhO4yz
- WvUFhQVLlrKa37d6GK9iH0rgOa2CN/nY7UDt2vnWeEJdm7L6q8pbSku0LZukjqaJfrRnuHnaqQE
- HOiixkBfPcWtxB5VMfAQ+3+K/PfQiHHClocmYHflkhKnYyL3WhO8vqpM1
-X-Gm-Gg: AYBFou0cag3XoTmFv9FvxfKf0SLpDZH2r6KkDFpiiBEltsRVcWIiuZ5kBeqDgAEZx8b
- Ut6XM5P8DZ/Ik7C/IZLcWdqojpk6fBoi9pi11/vG9SHiV1827Qo66kH4Ttm+EVGwPQmy84cEBzc
- xbMsyGPekoxvPYaKH+pPBxD/nyge/qaBtljHQD34or8xR5JashdslnsKYATx0doxCRYdHj36yRC
- ExhVjvOrX1gmazbUpTs2RyBxnHQQPQTE+WtrWmrNT/8kMXgt+Dloqzu5rvjiGTmut+HrBnrVSl9
- DANnIgjeDzPmfE1T4yDDMpXlx7zmud9UkzNbNBzFmzahf7zsOLTxHMCb1MkDSqM3anCJ
-X-Received: by 2002:a05:6214:500c:b0:90e:893a:73dd with SMTP id
- 6a1803df08f44-9122e5042e2mr41208346d6.16.1789393287110; 
- Mon, 14 Sep 2026 06:41:27 -0700 (PDT)
-X-Received: by 2002:a05:6214:500c:b0:90e:893a:73dd with SMTP id
- 6a1803df08f44-9122e5042e2mr41207966d6.16.1789393286549; 
- Mon, 14 Sep 2026 06:41:26 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-912334f822esm468416d6.25.2026.09.14.06.41.25
+ bh=G6J0f4KsxoGeRI5A8fzIdxQdFH23+wrPMOQiEiffT7s=;
+ b=IdUAGrKLK1zoPTbajeCHerHTDyqysSjCFStjRqZg+JoIQpmwivs1H/EsDzVul4P30u
+ 8uw/HDilJDv9qADbvRlMvxuAduHSeSSYdBMzVvPVk/5mI5ESdBX9m4fJ5ZC2fpfzBdhV
+ C7G4FUQP/0xjpruDcgxNvc9XAeFG1RTdgp711PP5bN490YrZPhB406Tmiyy77n+FAya1
+ zJyZZMSzKsnEQZwVSDptiKTTXiJd3rZPetLQVbPHTz2daGC4y8wjzxUxFDsA86KnBSkh
+ B5+sG1OIYIMWu0hjlESF8WV9E9Yf9EUpFQjGnlCEHFmdRRznf2AMiuKoNSLFHaMWEycJ
+ 079Q==
+X-Gm-Message-State: AFuF++kFDVXguxbJKjqcfZ2P6OpPx7CigmcqrI+wt0iLE/N7VzEfRjMM
+ LDM3KylXPZTxXxQ6QW+ZZ+TWbFkVGMnnYmSE9MRqdyD+M+vL0ZOTLICgzZQtBv0XaLWYFANCBLh
+ blLxTpCC4UBAKarl2FZy29599C0zwsHpmkcRNonWxB0tSpdr+0USlJhaH
+X-Gm-Gg: AYBFou1n5KR8Rbhul3oL/4x/9Am8kCW0ECo7g+ElHs+1TxOV/dJfU22ieEt1CZbNmqX
+ Fj3ApTI8EbTqpf8p9NB9eZIjFsh2373usWsZMYSYQLOCTY7sE9qk2MmjVDoeTyGOSQyZDwU5kUi
+ C9cuZV65AfZrKEkQ2WXIfL4uTcvP7J4JhmwSJv+ZtrvTBqss+YtNwPqTW0TbP8EFvuYvHqLD7OZ
+ AHKOeFBW4o9kbIeya6tGL/5uleTzePaf1iWxh8gZZ0zz/f6PW8kgtHxygnbEiM7PH4yiHSBrzmC
+ /v+bJ/ew96tKH3bHtiWRfLC/LCaKNzH8unN0Zh2Jg9CVEv2h8fEPfaJ08trB3k1i99J3t5Mpv/G
+ 2HUuu2onmq3zsVR2rtHc7byFkc8GmEN+1e80/CR+rbMy/OQ==
+X-Received: by 2002:a05:6000:714:b0:486:f9a0:c3c1 with SMTP id
+ ffacd0b85a97d-48702ad29a1mr3616771f8f.25.1789393961955; 
+ Mon, 14 Sep 2026 06:52:41 -0700 (PDT)
+X-Received: by 2002:a05:6000:714:b0:486:f9a0:c3c1 with SMTP id
+ ffacd0b85a97d-48702ad29a1mr3616708f8f.25.1789393961347; 
+ Mon, 14 Sep 2026 06:52:41 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
+ [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-486eb32e81asm28593645f8f.7.2026.09.14.06.52.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 06:41:26 -0700 (PDT)
-Date: Mon, 14 Sep 2026 09:41:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, farosas@suse.de,
- eblake@redhat.com
-Subject: Re: [PATCH] qapi/migration: Make migration parameter @local
- consistently unstable
-Message-ID: <aqf5e32Ba_Q_7wXw@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260912045350.2139416-1-armbru@redhat.com>
+ Mon, 14 Sep 2026 06:52:40 -0700 (PDT)
+Date: Mon, 14 Sep 2026 15:52:33 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, philmd@oss.qualcomm.com, 
+ maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
+ den@openvz.org, 
+ farosas@suse.de, peterx@redhat.com, clg@redhat.com, dongli.zhang@oracle.com
+Subject: Re: [PATCH v5 06/14] vhost: add vhost_reset_owner op
+Message-ID: <aqf8DPjdqdEKOwBL@sgarzare-redhat>
+References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
+ <20260914-up-vsock-vhost-v5-v5-6-d17423589f48@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260912045350.2139416-1-armbru@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260914-up-vsock-vhost-v5-v5-6-d17423589f48@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,24 +122,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 12, 2026 at 06:53:50AM +0200, Markus Armbruster wrote:
-> @local is unstable in MigrationParameters, but not in
-> MigrationParameter.  Fix the latter.
-> 
-> Fixes: c9affb8e9b (qapi: add local migration parameter)
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+On Mon, Sep 14, 2026 at 11:37:37AM +0300, Andrey Drobyshev wrote:
+>Add a VhostOps callback issuing VHOST_RESET_OWNER, wired up for the kernel
+>backend.  The CPR (checkpoint-restore) path uses it to release device
+>ownership on the source so the destination can reclaim it later with
+>VHOST_SET_OWNER.
+>
+>Originally-by: Mark Kanda <mark.kanda@oracle.com>
+>Originally-by: Steve Sistare <steven.sistare@oracle.com>
+>Originally-by: Ben Chaney <bchaney@akamai.com>
+>Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>---
+> hw/virtio/vhost-kernel.c          | 6 ++++++
+> include/hw/virtio/vhost-backend.h | 2 ++
+> 2 files changed, 8 insertions(+)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
-To avoid this in the future, can we further simplify MigrationParameter in
-qapi/?  E.g. either dropping the @unstable completely (by mentioning in its
-doc to reference MigrationParameters), or I also wonder if there is way we
-can completely avoid some struct to be visible in doc, so we can drop it;
-currently MigrationParameter still shows all fields "Not Documented".
-
-Thanks,
-
--- 
-Peter Xu
+>
+>diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
+>index 3390b48c6f1..55d316b88e9 100644
+>--- a/hw/virtio/vhost-kernel.c
+>+++ b/hw/virtio/vhost-kernel.c
+>@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+>     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+> }
+>
+>+static int vhost_kernel_reset_owner(struct vhost_dev *dev)
+>+{
+>+    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
+>+}
+>+
+> static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+> {
+>     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+>@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
+>         .vhost_get_features_ex = vhost_kernel_get_features,
+>         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+>         .vhost_set_owner = vhost_kernel_set_owner,
+>+        .vhost_reset_owner = vhost_kernel_reset_owner,
+>         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+>         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+>         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+>diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+>index d878d7b733a..a8ec35f6263 100644
+>--- a/include/hw/virtio/vhost-backend.h
+>+++ b/include/hw/virtio/vhost-backend.h
+>@@ -104,6 +104,7 @@ typedef int (*vhost_get_features_op)(struct vhost_dev *dev,
+>                                      uint64_t *features);
+> typedef int (*vhost_set_backend_cap_op)(struct vhost_dev *dev);
+> typedef int (*vhost_set_owner_op)(struct vhost_dev *dev);
+>+typedef int (*vhost_reset_owner_op)(struct vhost_dev *dev);
+> typedef int (*vhost_reset_device_op)(struct vhost_dev *dev);
+> typedef int (*vhost_get_vq_index_op)(struct vhost_dev *dev, int idx);
+> typedef int (*vhost_set_vring_enable_op)(struct vhost_dev *dev,
+>@@ -204,6 +205,7 @@ typedef struct VhostOps {
+>     vhost_get_features_op vhost_get_features;
+>     vhost_set_backend_cap_op vhost_set_backend_cap;
+>     vhost_set_owner_op vhost_set_owner;
+>+    vhost_reset_owner_op vhost_reset_owner;
+>     vhost_reset_device_op vhost_reset_device;
+>     vhost_get_vq_index_op vhost_get_vq_index;
+>     vhost_set_vring_enable_op vhost_set_vring_enable;
+>
+>-- 
+>2.47.1
+>
 
 
