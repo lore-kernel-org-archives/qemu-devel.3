@@ -4,57 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E6CFC88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 13:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25AEAC88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x67CH-0000mQ-SL; Mon, 14 Sep 2026 09:58:14 -0400
+	id 1x67GA-0002AN-OA; Mon, 14 Sep 2026 10:02:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x67C4-0000kS-C5; Mon, 14 Sep 2026 09:58:01 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x67En-0001xj-OO
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:00:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x67C1-0001Kj-DO; Mon, 14 Sep 2026 09:57:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789394226; bh=6lYLZsszSiCgxeQWbyMitOWO+G1NEcJPneoZgAYb4R0=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=pis5EjJULDXnLtDnkvcumPCjlA2G1xgWyd0e49Vw+2Ouvv/f6K/vOT4J8Dm8WgcZ9
- dzYvX1xsBM/2EmoBj2zC/9npNLc2+ZzIzXwkikmPOuzt7h0Oo6D3f7+GJgZU5BGDPS
- fhqADbytdSCBprHtObdO/iU13K//Gnksrcr/eBRttfZVw5GlQ+H183ggnQx41ibd22
- WVE68YRYKOrILrYNY0I4FqTehtx6zpHGxheACjMIwNt6vbsS0qZk3/ccddnMrAdA6c
- liryUWcGIz3KicctcKBeYeh3oL57TrdOA/TYnB/f6HUeIHlSMZMNQWd7k1mSaAAQxT
- x6StIamgbvd2w==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 41BAD1D4D4B;
- Mon, 14 Sep 2026 16:57:06 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 408874280F4;
- Mon, 14 Sep 2026 16:57:45 +0300 (MSK)
-Message-ID: <320463c3-973e-47cb-aa9f-153816a1b4c8@tls.msk.ru>
-Date: Mon, 14 Sep 2026 16:57:45 +0300
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x67El-00036D-PY
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:00:49 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68ED0Po2674411
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 14:00:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ yJuW9qagNokRPYBHsOeWJisj9iYTxnVeVMKk4TTIhpI=; b=GzgADTGtQajVy826
+ NDQ2dUgUxlgVR7pycJQy113bU1P05KDbU1ha3xbu/4183zrFMheBPtcU1glV8ZRu
+ +tvkBqseywd96uCHksc8HB/vJcPdTuMjt04cdtUGoHgGcCUVsDE0b/3rYpFYAPWn
+ ZPZV5RI9dTIPT2kLahqB4T0SNoS24X++ICjLa0CB8avYIxZOzIV6/+nk2OEto36j
+ QW/5pwgblmTDLiT1iEyQAEGOl3Po2m6zpflRK5rSF95IL2V6990rZwP07ZXKA+r1
+ or9wfxC6f+cofBjpI/rslA1OmfSU+elOvLKNKY50AWrR9/YBWfBw3xie96L+bdcA
+ sDDmqQ==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpecs9121-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 14:00:43 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-7961a79fcd8so341685137.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789394443; x=1789999243; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=yJuW9qagNokRPYBHsOeWJisj9iYTxnVeVMKk4TTIhpI=;
+ b=EVReOwoY/N9++bApy+RNbEnmWTLD5GAmCoihFSReynOBR9mtBs8nd2A3/VuNXshd7j
+ SXx0qPsBWJZGuyHvr6skKJT+47Rv8XGxUY9sDEbnqMMZONZYfmUI01u0YPmpkJjtzCFQ
+ fAP8VQOLiKrY4mA8xIaPo6Bi1C6J/502z92FTuaVCzdztGV/FFVZSrNYCsDs1C7bu40O
+ qtL8NEbCcqPjAfB4I/hdkqmt2l2JQbDjq8Ec77GqVJkVX2YSeLngt4lnSrnh1EIDwYec
+ H1viv3g/FfdSb29glQ2BbejKh5Nurr0vzcn4IU6XA5p6EnbVDPizJhpIITKF145NQg4T
+ jLsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789394443; x=1789999243;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=yJuW9qagNokRPYBHsOeWJisj9iYTxnVeVMKk4TTIhpI=;
+ b=WpZOP2h4O1GztwAeyC+9EP0ltJUG4C+wimAgSe+hn9d+EgRF3U7FewiyaHEBPjp1iH
+ Hw+sLZWPdK2huYipP5ENJPn7Xx4k2k8xQUAJQQnmWWJfHS+15ANksDDO4875jgEvPGbp
+ MyUCKzNH6LoKQqfvtHivMWti8oQIeJ89Hcwg9Wn7yVWxT3BZWGPbAL/QJU6Ki3pMgzWy
+ klH5rhd8G7K6dkdraewQMgx57rPzUw58rAaAzdEeFhrWrMyy6CYcQL5CHlq2BsuzXwNw
+ o8FdNKASFpNDvpXXvfrLQDFbmRhtqc+WqbmruFOEU9WlwoSnFQv2nLWHSU/msQDzzg06
+ 8g7g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxeSjUjIDAQ7BWwLGKcJBxBRpcvCysy3woji4J4BTz/vEnMNw9q4NGP8Mt+TS0RgqvNHB9IZGfV/LNt@nongnu.org
+X-Gm-Message-State: AFuF++mJo063OgsfV0/ukL+JqbKJpAgv2sqbWpa/COEVsWHdzt4jrbmH
+ C/WsZRsIyt0EWIJo79c5wKILpULc2PEkLKu7X/M5e4locxW8uyV8c0xOxHgetJVdwd6614YAldj
+ 1fVgc93WabP/nawAQKnTBjwEvsUtHb7+Lnzm8xVU9WPIhDo+uM45JjInHtw==
+X-Gm-Gg: AYBFou3IQaOZF5wCjejM5W7vttzdvgmM6DHF/QTYgcw15QeTvMhAaIENHcAO48wVP2w
+ qryeZnUjmQjBI9MA1QZQmnm1HbbjkzSBkSrCdbBLnCUmQQKXUC5ZldvYY9Ug3J8NdPJueZidbId
+ UVs3Bj+eYGJTgi2KFZBi7JQxCMBHYnUnWvSZKoX3AxV1RuNmMVFhr7dz03XYlF9qKSlHzunp3mK
+ ybs/mugZbVkfb57bP1XTZktbXRbbFbNIGw9jItPDe3Wnh6zNjqGw9X+NsDvLz6GWQQBSV4Tf33+
+ HKhO5yj84KA8qmczwRK5upENL0k1dwsjastPuQUWti0/ltQ71bsnty+BJg0u2G3FXZGnrIREru4
+ CT3qCfgLd7XoNEJVZZDRigIwbKEt7f2w5KJ+AM+KLonIwlMc6oD0HUz4uV6W10f3x
+X-Received: by 2002:a67:e09a:0:b0:79b:afc1:21f1 with SMTP id
+ ada2fe7eead31-79bafc12fe0mr1159974137.5.1789394442278; 
+ Mon, 14 Sep 2026 07:00:42 -0700 (PDT)
+X-Received: by 2002:a67:e09a:0:b0:79b:afc1:21f1 with SMTP id
+ ada2fe7eead31-79bafc12fe0mr1159132137.5.1789394438193; 
+ Mon, 14 Sep 2026 07:00:38 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9120f4d0700sm97245636d6.38.2026.09.14.07.00.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 07:00:37 -0700 (PDT)
+Message-ID: <8420b6cf-4367-4388-b1f0-4dae7d853f33@oss.qualcomm.com>
+Date: Mon, 14 Sep 2026 09:00:35 -0500
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH 0/3] hw/display/qxl: Avoid crashing on stale guest
- addresses in qxl_post_load
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, philmd@oss.qualcomm.com, den@openvz.org,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260825172051.435372-1-andrey.drobyshev@virtuozzo.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20260825172051.435372-1-andrey.drobyshev@virtuozzo.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display: Guard new_blob to fix Wunused-function
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ marcandre.lureau@redhat.com
+References: <20260911141906.736052-1-brian.cain@oss.qualcomm.com>
+ <48eacf0c-503e-497c-b54e-686607f9cbf7@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <48eacf0c-503e-497c-b54e-686607f9cbf7@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDIwMCBTYWx0ZWRfX/2Tf9vSra0tX
+ YzPi2O7l0ihzMdkTag2DQNgab5EyDWfr4s06BUEDJxpp0VH7AAVGF73dSHvVqZLHBqbU4oj7/G/
+ sMB4xAcnyqrY0bXKJMF2OsUCN+O1scs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDIwMCBTYWx0ZWRfX+dZpaHM52asr
+ PUCKST/zJgwjmYxcgrafvIxjjo37jYyK3MuKrzb3WrCGTONiM+Bztvz0yrgNu8ygyodIoqwiU4f
+ CnphCqxalRMjRUj2otAgmiBXsQXM4/8UsX2uK6RGc/YnCmHSOCn0xRn5DfFoTeR1rnraJKAZ/kK
+ 6fcJ0WLshbzhF1/8KNYGiYPd8mNXbZajun+pKXaE44I200kQN7k0oKqBzmMM239ImCn+tHA0n2S
+ uzIqlSDPAJw3vNCh9JMQQIv0nAP2SRwqDwzsZO7oe9XCgFXEGXHzxso+Jgl2+vAlYh/RiAB2wC6
+ XwcEY5r9NX44HuHuWfw+VvukpSOqyrbQVhbzIjM8TYHEQ07BT0gGkBg/ZhY4tnYWJcz+gVW1zWQ
+ PGK0ImUvLn29tUHEphbBxqEX8vIlMnMXxZuvWOLnMSAun90hv2qQVxF3c8zn6ObMBXoJmizdcfP
+ AyN1KNmU1FIqneYPSRQ==
+X-Proofpoint-GUID: 3Y4bk7-hzXPLuJfOmHaEin_HYv7HzTuJ
+X-Authority-Analysis: v=2.4 cv=b/cncdGx c=1 sm=1 tr=0 ts=6aa7fe0b cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=Tae_BuFR3kxi_ssq9qgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-ORIG-GUID: 3Y4bk7-hzXPLuJfOmHaEin_HYv7HzTuJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_03,2026-09-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609140200
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,25 +158,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/25/26 20:20, Andrey Drobyshev wrote:
-> We've experienced crashes when spice-server aborts on migration target
-> when processing an invalid/stale guest address pointer.  While those are
-> hard to reproduce, it seems they can be fairly easily avoided by simply
-> skipping commands with invalid addresses in qxl_post_load.
-> 
-> Andrey Drobyshev (3):
->    hw/display/qxl: factor out qxl_guest_phys2virt()
->    hw/display/qxl: validate replayed commands in qxl_post_load
->    hw/display/qxl: trace skipped stale loadvm commands
-> 
->   hw/display/qxl.c        | 132 +++++++++++++++++++++++++++++-----------
->   hw/display/trace-events |   1 +
->   2 files changed, 97 insertions(+), 36 deletions(-)
-Hi!
 
-Is this a qemu-stable material?  Or there's no need to bother?
+On 9/11/2026 11:46 AM, Akihiko Odaki wrote:
+> On 2026/09/11 23:19, Brian Cain wrote:
+>> The call to virtio_gpu_virgl_resource_new_blob() should be guarded like
+>
+> s/call to/definition of/
 
-Thanks,
+yeah - I was going to send a v2 when I noticed this but realized that 
+Marc-Andre had sent their fix prior to mine.  So I figured this one was 
+obsolete.
 
-/mjt
+
+>
+>> the (sole) caller is, to avoid -Wunused-function.
+>>
+>>          ../hw/display/virtio-gpu-virgl.c:328:1: error: 
+>> ‘virtio_gpu_virgl_resource_new_blob’ defined but not used 
+>> [-Werror=unused-function]
+>>        328 | virtio_gpu_virgl_resource_new_blob(uint32_t resource_id, 
+>> uint64_t blob_size)
+>>            | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>
+> May also have:
+>
+> Fixes: d814b44636d0 ("hw/display/virtio-gpu: introduce 
+> virtio_gpu_{simple,virgl}_resource_new()")
+>
+> Nevertheless, everything other than these nits looks good, so:
+>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+> Regards,
+> Akihiko Odaki
+>
+>> ---
+>>   hw/display/virtio-gpu-virgl.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/hw/display/virtio-gpu-virgl.c 
+>> b/hw/display/virtio-gpu-virgl.c
+>> index 1c9380e2a6d..f45571060fe 100644
+>> --- a/hw/display/virtio-gpu-virgl.c
+>> +++ b/hw/display/virtio-gpu-virgl.c
+>> @@ -324,6 +324,7 @@ virtio_gpu_virgl_resource_new(uint32_t 
+>> resource_id, uint32_t width,
+>>       return res;
+>>   }
+>>   +#if VIRGL_VERSION_MAJOR >= 1
+>>   static struct virtio_gpu_virgl_resource *
+>>   virtio_gpu_virgl_resource_new_blob(uint32_t resource_id, uint64_t 
+>> blob_size)
+>>   {
+>> @@ -335,6 +336,7 @@ virtio_gpu_virgl_resource_new_blob(uint32_t 
+>> resource_id, uint64_t blob_size)
+>>         return res;
+>>   }
+>> +#endif
+>>     static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+>>                                            struct 
+>> virtio_gpu_ctrl_command *cmd)
+>
 
