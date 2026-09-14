@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F309BC88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B073CC88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CIF-0001lO-7j; Mon, 14 Sep 2026 15:24:43 -0400
+	id 1x6CJB-0002R3-NB; Mon, 14 Sep 2026 15:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CIC-0001ek-C2; Mon, 14 Sep 2026 15:24:40 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1x6CJA-0002Qq-5Y; Mon, 14 Sep 2026 15:25:40 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CIA-0002Pj-25; Mon, 14 Sep 2026 15:24:40 -0400
+ id 1x6CJ8-0002dF-BC; Mon, 14 Sep 2026 15:25:39 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hkFTH6nhhzBqZm;
- Mon, 14 Sep 2026 21:24:35 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hkFVS2yXQz7vHr;
+ Mon, 14 Sep 2026 21:25:36 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1789413876;
- bh=eTORqgHRjvLB7Zq5ZRd5F5B/wCOqFwPXotdNGYO5WvM=;
+ s=dkim; t=1789413936;
+ bh=tbh+Br5kxKIjFAp5cHgNYrIJK3nC03h/+dmIwaKU+/w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=m74jP/Z94JKQc6CMxVff2h0kDv8vyWTL2kpnOEzWQKT8GzNeRV2L0SOp1OAMbj1ZO
- 5op3GmSUW62H2T7/Jev94oClgdmFuRSMmgA1VDj7jc5g5sOMu4t3B1qxKAmC5y4T4d
- C8ieZ7ZLNkzKVE//K2IU9cBvWCGVDhOQCngDJKwm/CiT6qKyvQhravQdi+OWT7ISfW
- JlYkXQeLPXFWY+53L4HbuM7Vaekyf8zNLhpUBo3kyiCrDyDetn5K6RIReB+JZgglbI
- uGXESVl8zVVRXrnnb5cEaIJOAfPnN9w1DyI2vIw60uNQXyqErl2vS2RzuwAemjmY6p
- t1Yady6F8DvWg==
+ b=WxvwY0cV5NLTjVUanVpQCUptZEY7am8X/lNJ8g3h5FCyWKi8uk61zkQ9iDgJ8j3ek
+ yfggIxY6z3mFiej1KhnS08SdfCvzpzorFOKb1OwzW6C7OSVaz86CPj2ugkMbjzrlbb
+ aRhUR3BLG3D0ubgZ0caQPAiQ1XVeNTD0oezra1Mi0YUzGh/WmOocGsDley8iwQpsaY
+ hmPjoCYXR/ixik3Xx18Y3W7MhCih6OzT383EGGgDEhxZ5b/EsqneHA1TTxg7HcfJT8
+ EaZrI5MAewbciL6zpomoqNzH197SsxrbE1MkK5VQqO3W/X4kj0cXWKk3ck2bXcMzMz
+ s/4w40VFp2+SQ==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hkFTH1qQTz801x;
- Mon, 14 Sep 2026 21:24:35 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hkFVS1Qfcz80JX;
+ Mon, 14 Sep 2026 21:25:36 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org,
 	alex.bennee@linaro.org
-Subject: [RFC PATCH v1 1/6] target/arm: enforce Armv6-M NVIC limits
-Date: Mon, 14 Sep 2026 21:23:17 +0200
-Message-ID: <20260914192323.29250-2-gilles.grimaud@univ-lille.fr>
+Subject: [RFC PATCH v1 2/6] target/arm: model Cortex-M0+ privilege extension
+Date: Mon, 14 Sep 2026 21:23:18 +0200
+Message-ID: <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
 References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -72,47 +72,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Armv6-M supports no more than 32 external interrupts. Its ICTR and Active
-Bit Register locations are reserved, and Cortex-M0 implements two priority
-bits.
+The Armv6-M Unprivileged/Privileged Extension is optional. Cortex-M0 does
+not implement it, while Cortex-M0+ may implement it. The RP2040 Cortex-M0+
+configuration provides the extension.
 
-Reject Armv6-M NVIC configurations with more than 32 external interrupts.
-Add a check-tcg test that verifies the reserved register behavior and
-priority masking on the microbit machine.
+Add an ARM feature bit and a cortex-m0plus CPU type that enables it. Permit
+privileged writes to CONTROL.nPRIV when either the Main Extension or the
+optional privilege extension is present.
+
+Update the microbit Cortex-M0 test to verify that writes to nPRIV are
+ignored.
 
 Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/intc/armv7m_nvic.c                   |  5 ++
- tests/tcg/arm/system/meson.build        |  6 +++
- tests/tcg/arm/system/test-armv6m-nvic.S | 70 +++++++++++++++++++++++++
- 3 files changed, 81 insertions(+)
- create mode 100644 tests/tcg/arm/system/test-armv6m-nvic.S
+ target/arm/cpu.h                           |  1 +
+ target/arm/tcg/cpu-v7m.c                   | 11 ++++
+ target/arm/tcg/m_helper.c                  |  4 +-
+ tests/tcg/arm/system/meson.build           |  6 ++
+ tests/tcg/arm/system/test-armv6m-control.S | 66 ++++++++++++++++++++++
+ 5 files changed, 87 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
 
-diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
-index a7651f831e..b1d27dfb32 100644
---- a/hw/intc/armv7m_nvic.c
-+++ b/hw/intc/armv7m_nvic.c
-@@ -2728,6 +2728,11 @@ static void armv7m_nvic_realize(DeviceState *dev, Error **errp)
-         return;
-     }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e3f931dba2..66606b3444 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2168,6 +2168,7 @@ enum arm_features {
+     ARM_FEATURE_VBAR, /* has cp15 VBAR */
+     ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
+     ARM_FEATURE_M_MAIN, /* M profile Main Extension */
++    ARM_FEATURE_M_UNPRIV, /* M profile Unprivileged/Privileged Extension */
+     ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
+     /*
+      * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 48b31d5eac..ac99c93ec3 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -76,6 +76,15 @@ static void cortex_m0_initfn(Object *obj)
+     SET_IDREG(isar, ID_ISAR6, 0x00000000);
+ }
  
-+    if (!arm_feature(&s->cpu->env, ARM_FEATURE_V7) && s->num_irq > 32) {
-+        error_setg(errp, "Armv6-M NVIC cannot exceed 32 external IRQs");
-+        return;
-+    }
++static void cortex_m0plus_initfn(Object *obj)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
 +
-     qdev_init_gpio_in(dev, set_irq_level, s->num_irq);
- 
-     /* include space for internal exception vectors */
++    cortex_m0_initfn(obj);
++    set_feature(&cpu->env, ARM_FEATURE_M_UNPRIV);
++    cpu->midr = 0x410cc601;
++}
++
+ static void cortex_m3_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -325,6 +334,8 @@ static void arm_v7m_class_init(ObjectClass *oc, const void *data)
+ static const ARMCPUInfo arm_v7m_cpus[] = {
+     { .name = "cortex-m0",   .initfn = cortex_m0_initfn,
+                              .class_init = arm_v7m_class_init },
++    { .name = "cortex-m0plus", .initfn = cortex_m0plus_initfn,
++                                .class_init = arm_v7m_class_init },
+     { .name = "cortex-m3",   .initfn = cortex_m3_initfn,
+                              .class_init = arm_v7m_class_init },
+     { .name = "cortex-m4",   .initfn = cortex_m4_initfn,
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index 33c9e7c55b..f8461a4d66 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -2775,7 +2775,9 @@ void HELPER(v7m_msr)(CPUARMState *env, uint32_t maskreg, uint32_t val)
+                            !arm_v7m_is_handler_mode(env))) {
+             write_v7m_control_spsel(env, (val & R_V7M_CONTROL_SPSEL_MASK) != 0);
+         }
+-        if (cur_el > 0 && arm_feature(env, ARM_FEATURE_M_MAIN)) {
++        if (cur_el > 0 &&
++            (arm_feature(env, ARM_FEATURE_M_MAIN) ||
++             arm_feature(env, ARM_FEATURE_M_UNPRIV))) {
+             env->v7m.control[env->v7m.secure] &= ~R_V7M_CONTROL_NPRIV_MASK;
+             env->v7m.control[env->v7m.secure] |= val & R_V7M_CONTROL_NPRIV_MASK;
+         }
 diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index 4c77b9c3d6..5286997670 100644
+index 5286997670..e92a83a8d5 100644
 --- a/tests/tcg/arm/system/meson.build
 +++ b/tests/tcg/arm/system/meson.build
-@@ -39,6 +39,12 @@ tests += {
+@@ -45,6 +45,12 @@ tests += {
                 '-T', files('test-armv6m-undef.ld')],
      'qemu_args': ['-M', 'microbit', qemu_base_args],
    },
-+  'test-armv6m-nvic.S': {
++  'test-armv6m-control.S': {
 +    'cflags': ['-mcpu=cortex-m0', '-mfloat-abi=soft', '-nostdlib',
 +               '-Wl,--build-id=none',
 +               '-T', files('test-armv6m-undef.ld')],
@@ -121,14 +166,14 @@ index 4c77b9c3d6..5286997670 100644
    'semiconsole.c': {
      'cflags': cflags,
      'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-diff --git a/tests/tcg/arm/system/test-armv6m-nvic.S b/tests/tcg/arm/system/test-armv6m-nvic.S
+diff --git a/tests/tcg/arm/system/test-armv6m-control.S b/tests/tcg/arm/system/test-armv6m-control.S
 new file mode 100644
-index 0000000000..ecb29eaa3d
+index 0000000000..42ce42db2b
 --- /dev/null
-+++ b/tests/tcg/arm/system/test-armv6m-nvic.S
-@@ -0,0 +1,70 @@
++++ b/tests/tcg/arm/system/test-armv6m-control.S
+@@ -0,0 +1,66 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Test Armv6-M NVIC register behavior. */
++/* Test that Cortex-M0 does not implement CONTROL.nPRIV. */
 +
 +.syntax unified
 +.cpu cortex-m0
@@ -136,10 +181,6 @@ index 0000000000..ecb29eaa3d
 +
 +#define SRAM_BASE 0x20000000
 +#define SRAM_SIZE (16 * 1024)
-+
-+#define NVIC_ICTR  0xe000e004
-+#define NVIC_IABR0 0xe000e300
-+#define NVIC_IPR0  0xe000e400
 +
 +#define semihosting_call bkpt 0xab
 +#define SYS_EXIT 0x18
@@ -149,33 +190,33 @@ index 0000000000..ecb29eaa3d
 +    .word reset + 1
 +    .word 0
 +    .word failure + 1
-+    .rept 44
++    .rept 7
++    .word 0
++    .endr
++    .word 0
++    .word 0
++    .word 0
++    .word 0
++    .word 0
++    .rept 32
 +    .word 0
 +    .endr
 +
 +.equ exc_reset_thumb, reset + 1
 +.global exc_reset_thumb
 +reset:
-+    /* ICTR is reserved and reads as zero on Armv6-M. */
-+    ldr r0, =NVIC_ICTR
-+    ldr r1, [r0]
-+    cmp r1, 0
-+    bne failure
-+
-+    /* The Active Bit Register is reserved and behaves as RAZ/WI. */
-+    ldr r0, =NVIC_IABR0
++    /* Thread mode starts privileged. */
++    mrs r0, control
 +    movs r1, 1
-+    str r1, [r0]
-+    ldr r1, [r0]
-+    cmp r1, 0
++    tst r0, r1
 +    bne failure
 +
-+    /* Cortex-M0 implements the two most significant priority bits. */
-+    ldr r0, =NVIC_IPR0
-+    movs r1, 0xff
-+    strb r1, [r0]
-+    ldrb r1, [r0]
-+    cmp r1, 0xc0
++    /* Cortex-M0 does not implement the optional privilege extension. */
++    movs r0, 1
++    msr control, r0
++    isb
++    mrs r0, control
++    tst r0, r1
 +    bne failure
 +
 +success:
