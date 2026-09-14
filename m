@@ -4,139 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F1DC88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 08:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578FBC88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 08:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x62FV-0004QS-6s; Mon, 14 Sep 2026 04:41:13 -0400
+	id 1x62GV-0007hM-9C; Mon, 14 Sep 2026 04:42:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x62FS-0004P8-UO
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:41:10 -0400
-Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x62FR-0005PZ-7p
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:41:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CrduYbOT6gJFqgnwc/VS8lD5ZuxsnV6/yzmszxwHY9rRhbBpR1tAzSYUZ1gK+KHKx95wj1zsHzX7M1gqQf8M/bb8KHMLwpxjiNrSIBynZnmTZH/nIslVeGh0SPwg8XMYecJyXElV+H6uW+WihOSlAOMWPBEokPaiswBkXLctt3Elzuy6ItrUdTGxYdDXsHYfV7ghrdmXpJf1GuY8SuiBQKGvy/ZbXk6BTUAVyTztbS1TTnsGi3R8GoPLFWgGl7BgtqsGBuXKH90kslyU3bKGADAelpRTME7VF4DxcS+YOTCRsb91S9MPJRKYExpb8L9qNZJwrpH/i2KNt3cjSH2GTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=l9iW3avXufVWmYGC8C1uyWT8OqARai6s44TEZ4MTbfU=;
- b=whQ2X19FN5e96kg/AZsgpPVz3YMk4rpAFALtPc5BnDIhOwIaZU+s1/aHPcJJUBWSKjpewlGo3kM3CNevDw/QveQph5OwRRQRDt3rJ8Hb19EL+E3h47fB4vVEq/8TX7a3sOFA/QpXLEjheA8mPqQPA3BL89soK7b3gySmUmy173m62+IwseNPxhUn60U++QVInsNbWqi6ljyJopKQ5Ap+dOin9glLGb22ClSGI2I0DrDY6IMUOgY7RIpT4QZ8iyExJEj6J7e68BhuXabdi8Pt+Ry5l86Mh7mcp5587RedoDcQIaCrPwp8C0MEPDwd5lDdGIDLSvT7peBRrT333+0TPg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l9iW3avXufVWmYGC8C1uyWT8OqARai6s44TEZ4MTbfU=;
- b=y/J9P1GcwMvy4OnDeH4d3LU99dmYejqyN+A6d0WyWfpxRV8tcYakJRcYi9kPt3kKbhkVbfuhaUm3pv7P9mhM+erL9NgLbygCgsRhwRGDX/1eNqBQTH1LXaeuhJ7AuL0oOAXO31JVZRH5UGNTB2OSs1JoR9kS51gNvOrfP+ogeNk24Ev2ZhXdPuylzOi3fLzDMOUmWdLhRhUVS7l931QKoa1LnL3xeMrCMQapD0/ZIbPlY+Nf9SIJEU/f3HL015yAQIge3e1Ja29TlyHy77g0R3UtdmXleuUvGuKjfTGb6ERgHyi4pZ9uwI673a/lM/W7U33gjU4TxKj4zq3NV9cJ9A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by GVXPR08MB10916.eurprd08.prod.outlook.com
- (2603:10a6:150:1f7::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Mon, 14 Sep
- 2026 08:40:31 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0428.004; Mon, 14 Sep 2026
- 08:40:31 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Mon, 14 Sep 2026 11:37:44 +0300
-Subject: [PATCH v5 13/14] vhost: add vhost_dev_is_initialized() helper
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260914-up-vsock-vhost-v5-v5-13-d17423589f48@virtuozzo.com>
-References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
-In-Reply-To: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, philmd@oss.qualcomm.com, maciej.szmigiero@oracle.com, 
- bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org, farosas@suse.de, 
- peterx@redhat.com, clg@redhat.com, andrey.drobyshev@virtuozzo.com, 
- sgarzare@redhat.com, dongli.zhang@oracle.com
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VIXP296CA0028.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:36e::13) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x62GR-0007aJ-0F
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:42:12 -0400
+Received: from mail-pj2-x0b.google.com ([2607:f8b0:4864:39::b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x62GO-0005lP-8u
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:42:10 -0400
+Received: by mail-pj2-x0b.google.com with SMTP id
+ 98e67ed59e1d1-39569e136f9so2121697a91.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 01:42:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789375324; x=1789980124; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=wGITBOEYO32+cFmwKLRhC6sFLKrwKfXzxZ93sjA3g20=;
+ b=o2t9RdcwnrcJG7mF0MeFfBlULoDB5Zo13LZpIRmoUvbT6/8fclMLWnRwDL6fjEfNoz
+ 7qPoGbnDfCwGi6xhcKHRWqPL09ByjiswtbE1ev3EZ7sRDndq5fWy35brHGjTeusem/32
+ G/FeoQPsQSTUhSbz0elZzru2EdHWf3kd7WzcrjIW6cAg/wlUoDLoFJ7w7wwXn30C/G2c
+ OSumbEar9TDrZvPhyX3mqroDqZZ3m1yR+9qPFbcurgaWD4Ifohrt6uBH/C3vHBvya3Kz
+ si+w1bGNmXvgw9Vpy8g0RaJsDYFAISKqPnn0FRiRMRPWRTwFfAHjoKVPo+ios3F0C3EA
+ qzdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789375324; x=1789980124;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=wGITBOEYO32+cFmwKLRhC6sFLKrwKfXzxZ93sjA3g20=;
+ b=XCtbm2b9NmKA+RGEaARGLPAAsDIVZ0Txt531R981Ht2l13nqkvPNiiZu3LpLNcLjQD
+ Le4U6+DImLUNxsTVZ62Yv8eAZGW6raWVxYwA9sjjQTJsSojJs7XiOu5XH933W3tWzNDA
+ cWtfzbwZG+iIVfUdGYOn9r40uaBZ628x/QurE23D8nW0yi+u+Q5HsgLsNQNcXroz6y5s
+ lROISTrhIcniR/CJkBxmS/8TsIYg0m/Hch89tGUTm9EJjcsdN3Fleql+qIY/aEABXi4Z
+ fNIZgeCGt+aSA/paH+sv8hgnn8gfSk5yfS3JS2gMgIgEPihmr+E1DepiLnhNhprninZJ
+ NG8w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwnS/V8vLZiWKLhwj7QmoEpnOhP3JQtKYeIorfzrc4cjIZbZ5/j1GRdYplol/zQTnKuGhcqoQ3yCOas@nongnu.org
+X-Gm-Message-State: AFuF++lZx8Ap//086XB4DH7t/OYFB2Ch4JU51s3cpOGKKVLtARfjU0Q4
+ 8qARvNhUrvOyyVa6eIIRiVmTPbNh9aWI/nsowO1zov4dV4axC2cESRY=
+X-Gm-Gg: AYBFou0dlEnvYcYjYt/bEjqlJaVHgEL0B3p1IDztxbK+Zu9qYs+tvfKS4BLIgAg+/uu
+ OP7bejed+2w9BYwqMp+jXa4H2fvw/rvcbZJgRnk+uB5UcT7H0f0EZLykz0y1i10FJPY2+YA4nGw
+ h3aBIxw96GgL5+UM2aqL/qNYmxXyhQiC5Yf5Dh5JXqssEUJvtySqk2PxBoxkMu0LEZcrR+WDfZx
+ d3IvLe14q/RQINT6oUNFd3kt1t2H5q3DoAjd2Homq+381EuCrp7XYeJlS4xeXvIp1AN9bxh5ju+
+ pKyCyygCqj4QzTjC/Ad56pGCYaqvQQxzHZQlM+v8DC5I06FCbnDWOJEzKROo9ybfbEnFFkms1n+
+ lOHzSeTg3GqyJ0cLmFU8i/1ST9LEhzOxwT3U6v6smd13gAT3K9Vfs2a+hVlmG9SkqjMhsL+r5s/
+ YMbTyAX+Y2N+ebG2o+OeKQnyGDbMeg230wqanzrkpEHLFr5ebhnQImxcgaV4G2UyKc7rM8WpvdV
+ Ab6KmdwSJowfgFovkGLumzRipjQu0L63yRCTe+C5U1y38GENeWYtTLY+0A4MLdsMA==
+X-Received: by 2002:a05:6a20:d80d:b0:3da:e7dd:45d5 with SMTP id
+ adf61e73a8af0-3db40568311mr3200003637.20.1789375323817; 
+ Mon, 14 Sep 2026 01:42:03 -0700 (PDT)
+Received: from ?IPV6:2408:820c:8ffa:c0f0:b0aa:8f70:be80:3f60?
+ ([2408:820c:8ffa:c0f0:b0aa:8f70:be80:3f60])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33ba4f55735sm26641120eec.24.2026.09.14.01.42.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 01:42:03 -0700 (PDT)
+Message-ID: <e1c9833b-e534-4b02-831d-a22a25cc2a47@gmail.com>
+Date: Mon, 14 Sep 2026 16:41:58 +0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|GVXPR08MB10916:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee8ee7be-45c1-4564-006e-08df123bd3f4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|52116014|23010399003|1800799024|366016|10067099003|22082099003|18002099003|56012099006|38350700014;
-X-Microsoft-Antispam-Message-Info: 2bFWnDwjZ4XQWnB2PBIxsk+1lEFF32d1b71j6CCPDteL4Du3SNDOrncyZnfOSSf7f6lm/Fu9kq1QPijNsVNpGhW2lM9WrXLgk1Ky1ZO2Nt4of+8VJHeRlVy6BglnMnj9GU9/vovpkMNqNgYI0K9CoBqZ7fxLIsVetX5EhcXfTi3X++4nS5i8O/M2bVRHoFQnADRVnByCxR8+3oVXheEsqFGAN1JYEc1Cw0osgpyZ6WKkLOIfWipjHFkZBlA1B33pN7/ARuHhKxaulzlr84lS9CCZRG7oLHjWvOfRi6E1NuyDZYCNLBivW9FJwWuhoLuPDYJwAg8WNM+ikeiTmCE39FmWhVzmTpHSNrJoBs5sdyXFKrE/SNto0OGboOQCUht9fboHduv7R4lyXoruUU7jTGHXX8WPtoUAr4Ap18JH5Ta2oCZuB1mMq79q1/mJWUJCvLJk0q7PAaaqVmL0N5V79+qSp7Va37cxwrgQKfTFKFS2UahapXfvkxHCCScybiLF4D6V80dhOkUU0uAcxdXYEfsxNWlxxmxU01AzMcyof4S6iK0GYN26GFK+TH+efP7gP6jShNtJPUOkl/jZRc+urqweIx4caH9DKNqCqry33YHbPvBO7Hc+MoJpdSA9+bKXxi4nyOtO9ko6XUxM+sE6QYIOmaIvZBEv94kdsCdjaYVBbMYO/ihu/HVKhjgv9Ne/itsGqcmO8fkM1NZ1sikC8SjJ9WkPOEHZAmXgZLSvZFs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(52116014)(23010399003)(1800799024)(366016)(10067099003)(22082099003)(18002099003)(56012099006)(38350700014);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VVhSUm0yTXBYU0lYdDZGYy9PdDA5bUNpWFpuaXV2TnZoRm9UdGFFU3NHYlpZ?=
- =?utf-8?B?NXVnT2lnbW5sbEl2YjgzaVBOZDhYS3JwWFBaTG04V1V5bHlkakVMNGF6MzNh?=
- =?utf-8?B?cW9oaTJoOFIzSnIyTnMwYWRlSnNPbGF5VmhGcjlvS3o4SVUwMzUvSDVyaTMy?=
- =?utf-8?B?MHUzZE9meFpYREthWmc1OThZd3ZXb1B3Ymg0Z0VnWkRqSDNERnJqNWpWMVpP?=
- =?utf-8?B?MGV2ajJwZ0x4RXJBR2RCQWZtUEpvSGEwUlBxNjhmeVFJSUxrN040eU1Uc1hz?=
- =?utf-8?B?Umc0QUtxNXoyalN1V2NHa2VocFNRbm8rbVk1dGVmbzQvSWUxRlBHdFJ2NGJr?=
- =?utf-8?B?TkpUNWp5dWcvV3VhT0N5Si9pZzMwK1k2dVYzYjlBVU5JYThEaHJzdHVrSVBG?=
- =?utf-8?B?QXRlNGNkdHFvZFZ6WEVWZmRUWVBYSXlHNUg4RmovTHk2b1QxMzVCVTZWQXFY?=
- =?utf-8?B?d2pDblpXTWR3SzgrNW5FVmxoNFB2UFlHN3FpcXRRS3hCTzhOZkVQY1ZDUGdo?=
- =?utf-8?B?dklRU0VNY2dkVTV3NE12Q1JyaU9qd2JRcHdmdGdlQXpvMlFsSEFZRXNuemVI?=
- =?utf-8?B?WklMQXd2QnRXQ2tEZmJ1SWcwK3ZXRGR6OStrMVNIMm50WS9vb2xyWkNBVzVx?=
- =?utf-8?B?dklzYTY2NmpER01qUmczYXFJUkpsRUM5a0FDak52eWp4d0tpRWRvbnp5V1c4?=
- =?utf-8?B?d05wQm50dllJN0syZ2hVdHZGVlFMWW56UWIxTU9kNmxKL0QyanBab25SSmlT?=
- =?utf-8?B?dUkwKzlzcndoRnkzY3c3aFlFY1psd3hZcWZJNEdLRmQ2ZTlSRjJxYnRlWXQ3?=
- =?utf-8?B?Uy9YZndTaG1WaW1tOWxOUUZSVHd0cDhtRVNlbE1oYW1UTlMvSFpXVXVrSUtG?=
- =?utf-8?B?RzRlSE1RVUR4RnE4MFZtaVdKLyswcENyU3VaSjFybDVZVHV5YlhET2dQcWo0?=
- =?utf-8?B?RXJuTTFjenlsNENGeUNhdmhCcDQwVUFsa0xiSDFjTmJhbGtjTVdJS1Z6NXB4?=
- =?utf-8?B?Um5JTDM3MmM5UnF1aVFnVi96Y0o1UVNUZ20vWnBHOU9oZWZEdHhJTHJiSVBS?=
- =?utf-8?B?ZWIrVmptMFFEQkZjSFhuS0xGQS9vRnJiYi9lWmNMckx3Qm5CUmNNcWFRWmxC?=
- =?utf-8?B?c3kzUUloL3hCUFJJTG1ZNU0yUzNuSmNBQ20wLzU4YkFkMVZJdzNzWFVYd2x2?=
- =?utf-8?B?cG9jb01Dcmo4bWMxRlpkU0RYQTVrK3R3RWFkWXFFYVZDekRDbXEzVXJtejNw?=
- =?utf-8?B?RDZ6WW4rZmJmclNWclQzNllMQmpydHQzMVBBbi9TU2czek9TajZxNElnUHZq?=
- =?utf-8?B?Mi9UR3ZyUC9wQmxVZFNCbUxmVU1CYmMyYU5sckkvTVVIM3B1dktYOFdSTGpQ?=
- =?utf-8?B?MzhNV09xT2FST0dzbkY4UU1sQm1UbG45a0E0QnFwaGxTOGF2Sjh2RjVaQyti?=
- =?utf-8?B?UG9YUDU0YWdkWFdYQk9GcS9PRFgwK3dueTJveTI4T0VPdWczZWpQOXR2VUIz?=
- =?utf-8?B?ek40eXJDdlExMHJSa3FJbXJXYjN1cU9LRkVNTDhmQzNhbHlKdzByRXl6Qmhm?=
- =?utf-8?B?VlRsN1hTNnhGa1hubXFiVzVEU3RpcU43R3k0YXBrc1YwMWw2VUJCVkRvSVlX?=
- =?utf-8?B?OElua3dSQXF1Z1Mrdk9tU2FzQmxBQzBHWFpwdFlkaFZrUVN1NFNjd3dRTmpU?=
- =?utf-8?B?ay9ZaUw0ak1FUDU0R1liY3VOQkJmcmRwS0NVNGY2OVBvYXlZcDU1RGtwUEky?=
- =?utf-8?B?OVNKYTRIRnNhTEtISDhPTEs2VTVadFVDSTFnVVNRSU94SXoxWTJqRTV6eVgr?=
- =?utf-8?B?VUxrakUzWmxvSTAyQ3NOazY2Mys5dUZhMmVlRURodVhYL1h0ZmFVSUpLd3JY?=
- =?utf-8?B?R3VPQVAyU1VvS0xFdHo5SlBSZ0V0elZxa0VBd2lBeXZSWjVDdFBmYWhxSWdX?=
- =?utf-8?B?dmYyS051bWdsWWE2Tk8rdTlyZGw3WVU0dVB4emg0bXJoRHNPbzBkclVDVXZC?=
- =?utf-8?B?dE5oVTE3TkJUblV6YXNHakE0ZUVPcTRxNVRnVkViQ0gzOFZUL05ueE9KdWJP?=
- =?utf-8?B?aVFybVAwVDIycS9YdU85aFhyN2VXNjhseDBSOFdkOG5nQnRHZDNXeWZ5VWJJ?=
- =?utf-8?B?ZXJOa2xzYklxUXlRMFMyVVBrbmtrQ0I4ZEgyZVoxNnhhb3l1S0MrYlNCVWNr?=
- =?utf-8?B?S2wrM0VzQjB2bnpqemxiU3c0cENWRmdaV3piTGNodTFZYStPcUVBeUpXRUJR?=
- =?utf-8?B?QmNpMWJEYUVkQ1Zqa3FYejQvOWZHYlJDVkRaUG1haWV0V3ZRTXhrVVZwczV6?=
- =?utf-8?B?SmJoZ3ZVRHIrdEhlSXdSeFVjSjhzc0VCdU5lakh6UzlIenlWWm9XZC9yVnBn?=
- =?utf-8?Q?TjgFq1hk/sMFx7VE=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee8ee7be-45c1-4564-006e-08df123bd3f4
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 08:40:27.9400 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ym+yd2L6RazdCdl7B048s2xjQlIsQbUaEieV8wRWWSON9e4x/kOLxRENXg4GisfkTyYjRFSMuERNff0vxSF/eNvXhmjeMb/9hOUdZIGFidY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR08MB10916
-Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/igd: Add device ID support for Meteor Lake and
+ Arrow Lake
+To: "Wang, Yuan1" <yuan1.wang@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, bosheng.xue@intel.com,
+ junjie.cao@intel.com
+References: <20260825090435.1492485-1-yuan1.wang@intel.com>
+ <c425dffd-ccc6-42b0-b083-51f06562237d@gmail.com>
+ <2dde7fa2-de05-4a8b-91d0-22e0fb1df107@gmail.com>
+ <22327826-756f-445f-be34-f97b5f983976@intel.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <22327826-756f-445f-be34-f97b5f983976@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:39::b;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj2-x0b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,70 +110,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The upcoming CPR support for vhost-vsock defers the full vhost_dev_init()
-to .post_load(). On an incoming CPR .realize() only sets up the backend,
-so we need a way to tell a fully initialized vhost device from a partially
-initialized one.
+On 2026-09-11 16:36, Wang, Yuan1 wrote:
+> Hi Moeko
+>=20
+> Thanks for the kind review.
+>=20
+> On 9/8/2026 5:09 PM, Tomita Moeko wrote:
+>> I took a deeper look about the change, this change actually changes
+>> vfio_probe_igd_bar0_quirk() to go with the 64-bit emulated BDSM regist=
+er
+>> path, right? But the problem is, does the BDSM register really exists =
+on
+>> Meteor/Arrow Lake and later iGPUs?
+>>
+>> In drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c:xe_ttm_stolen_mgr_init()
+>>
+>> 	if (IS_SRIOV_VF(xe))
+>> 		stolen_size =3D 0;
+>> 	else if (IS_DGFX(xe))
+>> 		stolen_size =3D detect_bar2_dgfx(xe, mgr);
+>> 	else if (GRAPHICS_VERx100(xe) >=3D 1270)  // MTL+
+>> 		stolen_size =3D detect_bar2_integrated(xe, mgr);
+>> 	else
+>> 		stolen_size =3D detect_stolen(xe, mgr);
+>>
+>> For Meteor Lake and later, detect_bar2_integrated() is called. The DSM=
 
-Add an explicit 'bool initialized' field, set once vhost_dev_init()
-succeeds, and cleared only in vhost_dev_cleanup() (by memset(0)). Also add
-a public vhost_dev_is_initialized() helper.
+>> region used is at (BAR2 + 8M).
+>>
+>> 	/*
+>> 	 * Graphics >=3D 1270 uses the offset to the GSMBASE as address in th=
+e
+>> 	 * PTEs, together with the DM flag being set. Previously there was no=
 
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- hw/virtio/vhost.c         |  2 ++
- include/hw/virtio/vhost.h | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+>> 	 * such flag so the address was the io_base.
+>> 	 *
+>> 	 * DSMBASE =3D GSMBASE + 8MB
+>> 	 */
+>> 	mgr->stolen_base =3D SZ_8M;
+>> 	mgr->io_base =3D pci_resource_start(pdev, 2) + mgr->stolen_base;
+>>
+>> drivers/gpu/drm/i915/gem/i915_gem_stolen.c:i915_gem_stolen_lmem_setup(=
+)
+>> also suggests it is (BAR2 + 8M) on MTL (i915 only supports up to MTL)
+>>
+>> 	if (HAS_LMEMBAR_SMEM_STOLEN(i915)) {  // Only True for MTL
+>> 		/*
+>> 		 * MTL dsm size is in GGC register.
+>> 		 * Also MTL uses offset to GSMBASE in ptes, so i915
+>> 		 * uses dsm_base =3D 8MBs to setup stolen region, since
+>> 		 * DSMBASE =3D GSMBASE + 8MB.
+>> 		 */
+>> 		ret =3D mtl_get_gms_size(uncore);
+>> 		if (ret < 0) {
+>> 			drm_err(&i915->drm, "invalid MTL GGC register setting\n");
+>> 			return ERR_PTR(ret);
+>> 		}
+>>
+>> 		dsm_base =3D SZ_8M;
+>> 		dsm_size =3D (resource_size_t)(ret * SZ_1M);
+>>
+>> 		GEM_BUG_ON(pci_resource_len(pdev, GEN12_LMEM_BAR) !=3D SZ_256M);
+>> 		GEM_BUG_ON((dsm_base + dsm_size) > lmem_size);
+>> 	} else {
+>> 		...
+>> 	}
+>>
+>> 	if (i915_direct_stolen_access(i915)) {
+>> 		...
+>> 	} else if (pci_resource_len(pdev, GEN12_LMEM_BAR) < lmem_size) {
+>> 		...
+>> 	} else {  // MTL
+>> 		io_start =3D pci_resource_start(pdev, GEN12_LMEM_BAR) + dsm_base;
+>> 		io_size =3D dsm_size;
+>> 	}
+>>
+>> In addition, nothing about the BDSM register can be found in MTL datas=
+heet vol2,
+>> neither 32-bit 0x5C nor 64-bit 0xC0. I believed it is removed since Me=
+teor Lake.
+>> https://edc.intel.com/content/www/us/en/design/publications/14th-gener=
+ation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-regi=
+sters/
+> Correct. The BDSM register at PCIe config space offsets 0x5C/0xC0 has
+> been removed on Meteor Lake and Arrow Lake.
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index ea17bf01080..a81cd94f900 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1821,6 +1821,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-         goto fail;
-     }
- 
-+    hdev->initialized = true;
-+
-     trace_vhost_dev_init_out(hdev);
- 
-     return 0;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 94cc52f870d..7fe1a79d5a7 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -109,6 +109,8 @@ struct vhost_dev {
-     uint64_t backend_cap;
-     /* @started: is the vhost device started? */
-     bool started;
-+    /* @initialized: has the full vhost_dev_init() completed? */
-+    bool initialized;
-     bool log_enabled;
-     uint64_t log_size;
-     Error *migration_blocker;
-@@ -248,6 +250,18 @@ static inline bool vhost_dev_is_started(struct vhost_dev *hdev)
-     return hdev->started;
- }
- 
-+/**
-+ * vhost_dev_is_initialized() - report init status of vhost device
-+ * @hdev: common vhost_dev structure
-+ *
-+ * Return true if the full vhost_dev_init() has completed successfully
-+ * (and vhost_dev_cleanup() has not run since).
-+ */
-+static inline bool vhost_dev_is_initialized(struct vhost_dev *hdev)
-+{
-+    return hdev->initialized;
-+}
-+
- static inline int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
- {
-     if (!hdev->vhost_ops->vhost_set_vring_enable) {
+Got it.
 
--- 
-2.47.1
+>> Since you are probably an intel employee (from your mail address), you=
+ may check
+>> the GOP driver code to see if the BDSM register (0x5C/0xC0 in config s=
+pace and
+>> 0x1080C0 in BAR0) is really used or not. Please kindly correct me if I=
+ am wrong.
+>=20
+> For Meteor Lake and Arrow Lake, BDSM is still present and located in th=
+e
+> MMIO space at offset 0x1080C0 of BAR0.=C2=A0
 
+Just curious, on host side, does the value of 0x1080C0 equals (BAR2 + 8M)=
+
+on Meteor and Arrow Lake?
+
+> The GOP driver continues to read this register to obtain the stolen
+> memory base address.
+>=20
+> And for MTL, there is a WA which there in Linux Gfx driver which cause
+> it to read 0x1080c0.
+> Please check the following function i915_direct_stolen_access().
+>=20
+> drivers/gpu/drm/i915/i915_utils.c: i915_direct_stolen_access()
+> bool i915_direct_stolen_access(struct drm_i915_private *i915)
+> {
+> =C2=A0 =C2=A0 /*
+> =C2=A0 =C2=A0 =C2=A0* Wa_22018444074
+> =C2=A0 =C2=A0 =C2=A0*
+> =C2=A0 =C2=A0 =C2=A0* Access via BAR can hang MTL, go directly to GSM/D=
+SM,
+> =C2=A0 =C2=A0 =C2=A0* except for VM guests which won't have access to i=
+t.
+> =C2=A0 =C2=A0 =C2=A0*
+> =C2=A0 =C2=A0 =C2=A0* Normally this would not work but on MTL the syste=
+m firmware
+> =C2=A0 =C2=A0 =C2=A0* should have relaxed the access permissions suffic=
+iently.
+> =C2=A0 =C2=A0 =C2=A0* 0x138914=3D=3D0x1 indicates that the firmware has=
+ done its job.
+> =C2=A0 =C2=A0 =C2=A0*/
+> =C2=A0 =C2=A0 return IS_METEORLAKE(i915) && !i915_run_as_guest() &&
+> !IS_SRIOV_VF(i915) &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 intel_uncore_read(&i915->uncore, MTL_PCODE_=
+STOLEN_ACCESS) =3D=3D
+> STOLEN_ACCESS_ALLOWED;
+> }
+>=20
+> Consequently, MTL still needs to read BDSM to obtain the DSM base
+> address in i915_gem_stolen_lmem_setup() function.
+> As seen in i915_direct_stolen_access(), this bypass logic only applies
+> to the bare-metal environment (it falls back for VMs).
+> However, the GOP driver does not differentiate between bare-metal and
+> virtualized environments, so we still have to provide a valid BDSM valu=
+e
+> to it in GOP driver.
+>=20
+>> For the "IgdAssignmentDxe fails validation on the zero BDSM size and a=
+borts
+>> without programming the ASLS register", having a fix skipping BDSM siz=
+e check
+>> on Meteor Lake and later ones could make it work? OpRegion is automati=
+cally
+>> detected and exposed to guest on IGD as I remember.
+> The MTL GOP driver always attempts to read from the BDSM register, so a=
+
+> valid BDSM base address and size must be provided.
+>=20
+> Thanks
+>=20
+> Yuan
+
+
+My concern is that if guest driver still uses (BAR2 + 8M) as DSM base, wh=
+ile
+0x1080C0 pointing to the mocked region, will this bring any inconsistency=
+?
+Having the register pointing to guest's (BAR2 + 8M) sounds more reasonabl=
+e,
+but it would require more efforts, monitoring config space writes to BAR2=
+ and
+changing the emulated value in QEMU.
+
+Possibly an easier way is emulating MTL_PCODE_STOLEN_ACCESS(0x138914) to
+disallowed in QEMU, if the GOP driver code checks it, to enforce the acce=
+ss
+via BAR2 in guest. I'm also not sure if the issue in Wa_22018444074 also
+applies to virtualized guests and how ofter it reproduces :(
+
+Best Regards,
+Moeko
 
