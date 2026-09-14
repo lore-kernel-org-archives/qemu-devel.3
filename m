@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD5BC88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F309BC88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CHV-0000pD-Jb; Mon, 14 Sep 2026 15:23:57 -0400
+	id 1x6CIF-0001lO-7j; Mon, 14 Sep 2026 15:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CHF-0000kF-1k; Mon, 14 Sep 2026 15:23:41 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ id 1x6CIC-0001ek-C2; Mon, 14 Sep 2026 15:24:40 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CHC-0002Lq-Nq; Mon, 14 Sep 2026 15:23:40 -0400
-Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hkFS673YRz7ypq;
- Mon, 14 Sep 2026 21:23:34 +0200 (CEST)
+ id 1x6CIA-0002Pj-25; Mon, 14 Sep 2026 15:24:40 -0400
+Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hkFTH6nhhzBqZm;
+ Mon, 14 Sep 2026 21:24:35 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1789413815;
- bh=ZTxuBkdiyM6lBV5+oCGHkHOgg2kg/I1ByhAs3yLdk1E=;
- h=From:To:Cc:Subject:Date:From;
- b=g0r1Ozbpmms21L8oJd031psfoJlN1LDGGOIA8ubeI2KK+z49TyTLpRJ1dZuiT/gZ5
- u/Po91u+gPleMfFYMFAC0bkj0KCVId+w9PQqMsl8rMUvJATgxi8n15Csjtfm39nYfB
- rwQF5zTfvzjx3C5ZODp94AxjfUQbSfnVCGo4jMbGMSlU5Qqu6QQYMq+rPYKE+ag+pD
- 5IHX5b06b7GdAac9ytclLhN9SfLVI8IYRW/FqziZVSKwrSDUI7ekbZp4/puvu1uF6c
- abQVlzPiT+ALCp2WGzsQRT41JOpTiCXA89/bJEb6YszTjBQ0GeLqWuceeGxx0Y1Ou0
- rK3F/3RPyN4wA==
+ s=dkim; t=1789413876;
+ bh=eTORqgHRjvLB7Zq5ZRd5F5B/wCOqFwPXotdNGYO5WvM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=m74jP/Z94JKQc6CMxVff2h0kDv8vyWTL2kpnOEzWQKT8GzNeRV2L0SOp1OAMbj1ZO
+ 5op3GmSUW62H2T7/Jev94oClgdmFuRSMmgA1VDj7jc5g5sOMu4t3B1qxKAmC5y4T4d
+ C8ieZ7ZLNkzKVE//K2IU9cBvWCGVDhOQCngDJKwm/CiT6qKyvQhravQdi+OWT7ISfW
+ JlYkXQeLPXFWY+53L4HbuM7Vaekyf8zNLhpUBo3kyiCrDyDetn5K6RIReB+JZgglbI
+ uGXESVl8zVVRXrnnb5cEaIJOAfPnN9w1DyI2vIw60uNQXyqErl2vS2RzuwAemjmY6p
+ t1Yady6F8DvWg==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hkFS65VM3z6skd;
- Mon, 14 Sep 2026 21:23:34 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hkFTH1qQTz801x;
+ Mon, 14 Sep 2026 21:24:35 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org,
 	alex.bennee@linaro.org
-Subject: [RFC PATCH v1 0/6] target/arm: improve Armv6-M support
-Date: Mon, 14 Sep 2026 21:23:16 +0200
-Message-ID: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+Subject: [RFC PATCH v1 1/6] target/arm: enforce Armv6-M NVIC limits
+Date: Mon, 14 Sep 2026 21:23:17 +0200
+Message-ID: <20260914192323.29250-2-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -70,69 +72,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This RFC series refines the Armv6-M support in QEMU by correcting NVIC
-limits, modelling the optional Cortex-M0+ privilege extension,
-tightening MPU register access, fixing MPU region size checks, masking
-TEX bits for Armv6-M, and reusing QEMU's existing PMSAv7 implementation
-for the compatible v6-M MPU.
+Armv6-M supports no more than 32 external interrupts. Its ICTR and Active
+Bit Register locations are reserved, and Cortex-M0 implements two priority
+bits.
 
-Following review of the RP2040/Pico v3 RFC, these generic Arm changes
-have been split into a standalone series.  While they are motivated by
-the Pico bring-up effort, the patches address generic Armv6-M behaviour
-and improve Arm M-profile emulation independently of the Pico machine.
-They incorporate the review comments from Peter Maydell and Alex Bennee
-on the RP2040/Pico v3 RFC:
-Link: https://lore.kernel.org/qemu-devel/20260906194438.93046-1-gilles.grimaud@univ-lille.fr/
+Reject Armv6-M NVIC configurations with more than 32 external interrupts.
+Add a check-tcg test that verifies the reserved register behavior and
+priority masking on the microbit machine.
 
-The RP2040/Pico machine series will be posted separately and will depend
-on these generic Arm changes. The two new check-tcg tests pass with the
-Arm TCG cross compiler.
-
-The series consists of six patches:
-
-- enforce Armv6-M NVIC limits (max 32 external interrupts, respect
-  reserved registers, add TCG test)
-- model Cortex-M0+ privilege extension (feature bit, CPU type, allow
-  privileged writes to CONTROL.nPRIV when Main Extension or privilege
-  extension present)
-- limit MPU RBAR and RASR/RLAR alias registers to the Main Extension
-  (reorder cases, guard with ARM_FEATURE_M_MAIN)
-- mask TEX bits in MPU_RASR for Armv6-M (use mask 0x1707, preserve
-  Armv7-M behaviour)
-- enforce the architectural minimum region sizes for v6-M, v7-M and v7-R
-- extend PMSAv7 support to v6-M CPUs (widen conditionals to accept
-  ARM_FEATURE_M, keep PMSAv8 path for v8-M)
-
-Together, these patches add two new TCG assembly tests
-(test-armv6m-control.S and test-armv6m-nvic.S) that verify the corrected
-NVIC behaviour and Cortex-M0 CONTROL.nPRIV handling, and update the
-corresponding meson.build file.
-
-The series is ready for review and testing; please send any comments or
-suggestions.
-
-Gilles Grimaud (6):
-  target/arm: enforce Armv6-M NVIC limits
-  target/arm: model Cortex-M0+ privilege extension
-  target/arm: MPU - limit regs RBAR/RASR A1-A3 to Main Extension
-  target/arm: MPU_RASR: mask TEX bits for Armv6-M
-  target/arm: fix MPU SIZE min for v6-M/v7-M/v7-R
-  target/arm: extend PMSAv7 support to v6-M CPUs
-
- hw/intc/armv7m_nvic.c                      | 42 +++++++++++--
- target/arm/cpu.c                           | 12 +++-
- target/arm/cpu.h                           |  1 +
- target/arm/machine.c                       |  3 +-
- target/arm/ptw.c                           | 14 ++++-
- target/arm/tcg/cpu-v7m.c                   | 11 ++++
- target/arm/tcg/m_helper.c                  |  4 +-
- tests/tcg/arm/system/meson.build           | 12 ++++
- tests/tcg/arm/system/test-armv6m-control.S | 66 ++++++++++++++++++++
- tests/tcg/arm/system/test-armv6m-nvic.S    | 70 ++++++++++++++++++++++
- 10 files changed, 222 insertions(+), 13 deletions(-)
- create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
+Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+---
+ hw/intc/armv7m_nvic.c                   |  5 ++
+ tests/tcg/arm/system/meson.build        |  6 +++
+ tests/tcg/arm/system/test-armv6m-nvic.S | 70 +++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+)
  create mode 100644 tests/tcg/arm/system/test-armv6m-nvic.S
 
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index a7651f831e..b1d27dfb32 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -2728,6 +2728,11 @@ static void armv7m_nvic_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    if (!arm_feature(&s->cpu->env, ARM_FEATURE_V7) && s->num_irq > 32) {
++        error_setg(errp, "Armv6-M NVIC cannot exceed 32 external IRQs");
++        return;
++    }
++
+     qdev_init_gpio_in(dev, set_irq_level, s->num_irq);
+ 
+     /* include space for internal exception vectors */
+diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+index 4c77b9c3d6..5286997670 100644
+--- a/tests/tcg/arm/system/meson.build
++++ b/tests/tcg/arm/system/meson.build
+@@ -39,6 +39,12 @@ tests += {
+                '-T', files('test-armv6m-undef.ld')],
+     'qemu_args': ['-M', 'microbit', qemu_base_args],
+   },
++  'test-armv6m-nvic.S': {
++    'cflags': ['-mcpu=cortex-m0', '-mfloat-abi=soft', '-nostdlib',
++               '-Wl,--build-id=none',
++               '-T', files('test-armv6m-undef.ld')],
++    'qemu_args': ['-M', 'microbit', qemu_base_args],
++  },
+   'semiconsole.c': {
+     'cflags': cflags,
+     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
+diff --git a/tests/tcg/arm/system/test-armv6m-nvic.S b/tests/tcg/arm/system/test-armv6m-nvic.S
+new file mode 100644
+index 0000000000..ecb29eaa3d
+--- /dev/null
++++ b/tests/tcg/arm/system/test-armv6m-nvic.S
+@@ -0,0 +1,70 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Test Armv6-M NVIC register behavior. */
++
++.syntax unified
++.cpu cortex-m0
++.thumb
++
++#define SRAM_BASE 0x20000000
++#define SRAM_SIZE (16 * 1024)
++
++#define NVIC_ICTR  0xe000e004
++#define NVIC_IABR0 0xe000e300
++#define NVIC_IPR0  0xe000e400
++
++#define semihosting_call bkpt 0xab
++#define SYS_EXIT 0x18
++
++vector_table:
++    .word SRAM_BASE + SRAM_SIZE
++    .word reset + 1
++    .word 0
++    .word failure + 1
++    .rept 44
++    .word 0
++    .endr
++
++.equ exc_reset_thumb, reset + 1
++.global exc_reset_thumb
++reset:
++    /* ICTR is reserved and reads as zero on Armv6-M. */
++    ldr r0, =NVIC_ICTR
++    ldr r1, [r0]
++    cmp r1, 0
++    bne failure
++
++    /* The Active Bit Register is reserved and behaves as RAZ/WI. */
++    ldr r0, =NVIC_IABR0
++    movs r1, 1
++    str r1, [r0]
++    ldr r1, [r0]
++    cmp r1, 0
++    bne failure
++
++    /* Cortex-M0 implements the two most significant priority bits. */
++    ldr r0, =NVIC_IPR0
++    movs r1, 0xff
++    strb r1, [r0]
++    ldrb r1, [r0]
++    cmp r1, 0xc0
++    bne failure
++
++success:
++    movs r0, 1
++    b exit
++
++failure:
++    movs r0, 0
++
++exit:
++    movs r1, 0
++    cmp r0, 1
++    bne 1f
++    ldr r1, ADP_Stopped_ApplicationExit
++1:
++    movs r0, SYS_EXIT
++    semihosting_call
++
++.align 2
++ADP_Stopped_ApplicationExit:
++    .word 0x20026
 -- 
 2.55.0
+
 
