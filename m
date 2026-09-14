@@ -4,59 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BC8C88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50EAC88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CNJ-0005Wy-U7; Mon, 14 Sep 2026 15:29:57 -0400
+	id 1x6COP-0006HU-9F; Mon, 14 Sep 2026 15:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CN3-0005Sm-FU; Mon, 14 Sep 2026 15:29:41 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CN1-00035M-OZ; Mon, 14 Sep 2026 15:29:41 -0400
-Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hkFb62n7MzBqYN;
- Mon, 14 Sep 2026 21:29:38 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1789414178;
- bh=mC5RfBj6ylyOwDGowPmggfi/LrsOz8J7K11WQCUcqXg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=D3atsqv4miufLiJ4+ZIYGkutfWaVrx1wOa2BOCA9e1lnzRlWlZqFwWNkuMNdC6j4O
- NcnSqQyJHobDn57A++5oihVKA2/jd3dZdDZV5vwrYhZVu+2hY/btjUBc2cZsgL5AL4
- lQhFNjv1TIjBDPizlHS9QGG7SCPrFLyoFosqrDIJtZQs0mQ/5p+5AxOzXDh1rBi/xU
- 9a3b6trLpc2U1JCg1XD9C1yF01CyMvfflDC3Fk/XdNXC1fMo8g54tRUuuEQqNp78bK
- SMr+ESgSN1slqwOa4C5CPNOCoNJjpFys4ZaJ5Pt7mf9GdFE65lqccSCfvSOjUGuOgu
- eusB/LC91ruJg==
-Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
- [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hkFb616YNz6sxf;
- Mon, 14 Sep 2026 21:29:38 +0200 (CEST)
-From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	peter.maydell@linaro.org,
-	alex.bennee@linaro.org
-Subject: [RFC PATCH v1 6/6] target/arm: extend PMSAv7 support to v6-M CPUs
-Date: Mon, 14 Sep 2026 21:23:22 +0200
-Message-ID: <20260914192323.29250-7-gilles.grimaud@univ-lille.fr>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
-References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6CON-0006H6-VX
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:31:03 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6COM-0003OY-84
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:31:03 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccda24a3so1866280a91.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:31:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789414261; x=1790019061; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/BzrRLp9mH/7GyDi6mXglqMSLlljC64Yb9lrYXtBh4E=;
+ b=uu1x1uVYJlQDK1cjYYX8ctxfHvHc+axihGhUJk++LZeEg+Ro4pknFCQC3B6MuRC/dC
+ AvkPREu9O8WX0Ea3bqHckF16na1+dHXDS5OaPqTNVjZeC4t+UmUQx6SU/8Rm4jms4xbv
+ Tsx4r5ULCAqvZu+eYlfmeNRwprUlNpXrzIX5KMhUsp3HusApZwnYTkgDmyConB5hMmJs
+ 9VSIrhLGtqYJptLQeZYdJjluWMbu7B9H/Bfvgqr/trMgI0jcbyhw0OJ9bnF3wXBrKbz/
+ LHqgW7EctY9/JD++hi5cxbnYJCjXqRXwJMO8pyZmrTnIRNhi8ftis1FHYsaDzs2WUWai
+ QN5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789414261; x=1790019061;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/BzrRLp9mH/7GyDi6mXglqMSLlljC64Yb9lrYXtBh4E=;
+ b=Nx3KfPpbDhKKBPy5KBGNbF81robOuZTxfwaC5EbBKZcw6b93hrmxRTdWxGciOwDaVm
+ 5zl8ONzCesLYA3SS+4Mww9waayEsqZ29/MSK7ogOSzI+J7vsBxyMQJ/kXFM1dlVzT4rx
+ SS4JCbTy3Fim/ZiIDugmQ9oiyxcyYPNCrBiyAgK8iKJerzqYcvtY0Hb0HnEWRwdJAUzF
+ 7wK8hx+5MWDGeentrWDoZ2qFkQ9jwAY5NjGun0I94oRzGCh2gAvpcWk3Q6VvObCWxywF
+ 8OUuEBPR+nbKgwnwxuG0MgaM+xTcNnvF36l8r/GR8H7fdwg9qTk+1t+F8Ts509JB9ucM
+ FTEg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxmjp3L+hv8xIEldmJcEFL+Bu0uPyTgJbKczLbhbj6UY5uFWPE9DrwJApxXrQcKCHwJrrYDOjdIHxEz@nongnu.org
+X-Gm-Message-State: AFuF++nVwQAp1sA/Ef9aW0KNySU7jAkhq4nFNfKX8isiGpfNVFWZL1kW
+ nL94qumC2IM1caNCGcvCB4WcHtjCz8GT3i34Uz0IpjyTljNGy4l6GDEgDJZ17kn8eSc=
+X-Gm-Gg: AYBFou3CqBuw0dUDwM7yN6TxhYqMNh9KaI793PyRBxQeIPLlSe/L6utqNvoFVE/bQcl
+ aSeQPX5TzVHJ7KylRpgJ4uEDzo3e/GhxArkqqeSlGjfvxD0gn3IA+5rL5F5/f716LeDQ0ua+KtO
+ 5l0It0ohs4QHyEkoEAhSH1Pb5P+uxYwvXSXwTUM65C9aBeR9f8bKbMzQ0rVzZI1vVQUzeT0mT+S
+ 5lRQRtYx1iceFKXMhxZ14udhwkyz8uPzphbsakHlMrU2h18gzaVjccWpLKIzzhNp683AR6hvQX9
+ fbYtXAgcXR+tvo5uL2VZbIByBSRvvHpcB8YoIwT9BOvSnPOPhhEY6Mo0oA7RCSTwb9qxswCCIQU
+ t1N2w5CXQMPyKlYvtIaIXOpG2qNA//AgE8uW+MglHnYmNpAIxS90FFJF3CowkUAFShPHczTPFvK
+ 6G+/8nTtPsX8Lo+5K8oAO30KDhDaUq/lsD5djevtUc3dHM7JyVG3Pn0a5R9N5SDAzy/bpDpLQmo
+ Lf1R/0+4bpbS8h9eOo39hFlgYSmuFxq2GO/oeIk6E4zkLstylFU1kJCqs909w==
+X-Received: by 2002:a17:90b:1649:b0:39d:f60b:8121 with SMTP id
+ 98e67ed59e1d1-39df60b8c29mr4563304a91.17.1789414260741; 
+ Mon, 14 Sep 2026 12:31:00 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
+ ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33baf0ea9a1sm26715694eec.8.2026.09.14.12.30.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 12:31:00 -0700 (PDT)
+Message-ID: <7a47ed5e-fc50-4f13-8fac-455c6015d38e@linaro.org>
+Date: Mon, 14 Sep 2026 09:30:56 -1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 12/14] qom: report & filter on security status in
+ qom-list-types
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260910103628.2326622-1-berrange@redhat.com>
+ <20260910103628.2326622-13-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260910103628.2326622-13-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,88 +115,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU conditions PMSAv7 storage, reset, allocation, the pmsav7-dregion property,
-migration and address translation on ARM_FEATURE_V7, which prevents the Armv6-M
-MPU from being used. The checks are widened to also accept ARM_FEATURE_M while
-preserving the PMSAv8 path for v8-M CPUs (PMSAv8 is tested first and the
-migration vmstate excludes v8-M with !ARM_FEATURE_V8). This lets a Cortex-M0+
-declare and use its MPU regions without setting ARM_FEATURE_V7, while v8-M CPUs
-continue to use PMSAv8 storage and migration.
+On 9/10/26 00:36, Daniel P. Berrangé wrote:
+> @@ -161,9 +163,15 @@ static void qom_list_types_tramp(ObjectClass *klass, void *opaque)
+>       ObjectTypeInfo *info;
+>       ObjectClass *parent = object_class_get_parent(klass);
+>   
+> +    if (data->has_secure &&
+> +        data->secure != object_class_is_secure(klass)) {
+> +        return;
+> +    }
+> +
+>       info = g_malloc0(sizeof(*info));
+>       info->name = g_strdup(object_class_get_name(klass));
+>       info->has_abstract = info->abstract = object_class_is_abstract(klass);
+> +    info->has_secure = info->secure = object_class_is_secure(klass);
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
----
- target/arm/cpu.c     | 12 +++++++++---
- target/arm/machine.c |  3 ++-
- target/arm/ptw.c     |  3 ++-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+Why are you assigning to has_secure here?  I thought that was just for 
+the filter test above.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 77aa78f00e..f58a1db843 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -617,7 +617,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-                            sizeof(*env->pmsav8.rlar[M_REG_S])
-                            * cpu->pmsav7_dregion);
-                 }
--            } else if (arm_feature(env, ARM_FEATURE_V7)) {
-+            } else if (arm_feature(env, ARM_FEATURE_V7) ||
-+                       arm_feature(env, ARM_FEATURE_M)) {
-                 memset(env->pmsav7.drbar, 0,
-                        sizeof(*env->pmsav7.drbar) * cpu->pmsav7_dregion);
-                 memset(env->pmsav7.drsr, 0,
-@@ -1656,7 +1657,11 @@ static void arm_cpu_post_init(Object *obj)
- #ifndef CONFIG_USER_ONLY
-     if (arm_feature(&cpu->env, ARM_FEATURE_PMSA)) {
-         qdev_property_add_static(DEVICE(obj), &arm_cpu_has_mpu_property);
--        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
-+        /*
-+         * QEMU's PMSAv7 state also models the Armv6-M MPU register layout.
-+         */
-+        if (arm_feature(&cpu->env, ARM_FEATURE_V7) ||
-+            arm_feature(&cpu->env, ARM_FEATURE_M)) {
-             qdev_property_add_static(DEVICE(obj),
-                                      &arm_cpu_pmsav7_dregion_property);
-         }
-@@ -2332,7 +2337,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-     }
- 
-     if (arm_feature(env, ARM_FEATURE_PMSA) &&
--        arm_feature(env, ARM_FEATURE_V7)) {
-+        (arm_feature(env, ARM_FEATURE_V7) ||
-+         arm_feature(env, ARM_FEATURE_M))) {
-         uint32_t nr = cpu->pmsav7_dregion;
- 
-         if (nr > 0xff) {
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 7005f4e5d7..53a2734d25 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -584,7 +584,8 @@ static bool pmsav7_needed(void *opaque)
-     CPUARMState *env = &cpu->env;
- 
-     return arm_feature(env, ARM_FEATURE_PMSA) &&
--           arm_feature(env, ARM_FEATURE_V7) &&
-+           (arm_feature(env, ARM_FEATURE_V7) ||
-+            arm_feature(env, ARM_FEATURE_M)) &&
-            !arm_feature(env, ARM_FEATURE_V8);
- }
- 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index cb9e73fc0a..f537502d3b 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3908,7 +3908,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-             /* PMSAv8 */
-             ret = get_phys_addr_pmsav8(env, ptw, address, access_type,
-                                        result, fi);
--        } else if (arm_feature(env, ARM_FEATURE_V7)) {
-+        } else if (arm_feature(env, ARM_FEATURE_V7) ||
-+                   arm_feature(env, ARM_FEATURE_M)) {
-             /* PMSAv7 */
-             ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
-                                        result, fi);
--- 
-2.55.0
+Call object_class_is_secure once.
 
+
+r~
 
