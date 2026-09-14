@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C27C88E66
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0E7C88E66
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x634q-0000pW-KL; Mon, 14 Sep 2026 05:34:16 -0400
+	id 1x634p-0000oP-Pu; Mon, 14 Sep 2026 05:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x634T-0000hz-MH; Mon, 14 Sep 2026 05:33:55 -0400
+ id 1x634T-0000i1-Ma; Mon, 14 Sep 2026 05:33:55 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x634M-0000S3-U7; Mon, 14 Sep 2026 05:33:51 -0400
+ id 1x634M-0000S2-SQ; Mon, 14 Sep 2026 05:33:51 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9WXEX020350
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9WXEV020350
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 14 Sep 2026 18:32:38 +0900 (JST)
+ Mon, 14 Sep 2026 18:32:37 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=pNDWp1wjDVxMJm/uJywo6dRmA13XDrmoXUjAwLN19uU=; 
+DKIM-Signature: a=rsa-sha256; bh=AeO2yJog3gjS3iZDZPZIJ4JDg07yQG1oqIqSnGSE0KQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1789378359; v=1;
- b=KS/3EtfE9+kWhN+Ty6lLnn3hJdJa5pDtFe4S9ONW797jTVED2UnkHtnmm97rgC6m
- L7ko4Fi9gphWLUbkeDeTwyXSYDrpHiHckNq7ALvA/GwYRYR5wK/uMtW+aHxdBedo
- FdpV5tc8yvClYN3Gi226/sOLqUkwbZsEAR3qLDxqo467NKt2AJMfA0SVa826oFkw
- cp8HSy+GInbNonZurw2VVKhnJY2xFfU2/plZqTIwkvYvyhHU+M3YsPf1JsV+DnsM
- 5zFrhZFsbsnt3RZPDc3X2AdAj2BAT7JU7mP/Y42/+gqKAbkmSOjWRU0T1mpaA2Cq
- bWaPSksrEQSs8URC3vFnXg==
+ s=rs20250326; t=1789378358; v=1;
+ b=IJzkcPl5KV7GfoYpXn7bZLcMtOFU3ORxmxcmCIJcLdLfgdSydSMjDu25KFwI0vKl
+ 3k/ahBLZfzzfRqmLDj3gNW3S4iWoHsQyCFloRki6hjs3mVhnl8HUCVKQIf6ud77N
+ u3Lp7GF13hf5u8QoRsTZRlSFKyMz4Au9R0lee1i1oDuHyxI/CE1HoxN54AO+Z0DV
+ APUSXTPbx09sr4EMTwfGypnp7/AvasMvaeYm5l/6aSbS70UaIfntfVDNusJoljEq
+ kODHPyxluizoOZqvmy00Y9iKdjciGs1aX/CoyERm3LSxENSU9FlvNvnG+W7HWKGG
+ Jv1YcZhegpK6ktSBNDub7A==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 14 Sep 2026 18:31:50 +0900
-Subject: [PATCH v4 2/4] hw/qdev: Introduce DevicePhase
+Subject: [PATCH v4 0/4] qdev: Clarify and enforce the device realization
+ lifecycle
+Date: Mon, 14 Sep 2026 18:31:48 +0900
+Message-Id: <20260914-qdev-v4-0-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260914-qdev-v4-2-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260914-qdev-v4-0-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260914-qdev-v4-0-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33MSw7CIBSF4a0YxkIut5a2jtyHcdDCRdFEKlRi0
+ 3Tv4iuOdPifnHwTixQcRbZeTCxQctH5c47VcsH0oT3viTuTmyFgCQ0ofjGUeEOl7ioNytqW5Ws
+ fyLrbk9nuch9cHHwYn2qSj/UD1C8gSS65sVgoW2kqO7MJcS+0E05c+eBPoxetFseePbSEH0GBw
+ uYtYBZqbaRpOgJT/xeKr1ChfAsFB26QEJVtAZB+CvM83wH8lvKXKQEAAA==
+X-Change-ID: 20250906-qdev-9e5cb7c06ffa
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -69,13 +73,13 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12149;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3840;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=sovqxL/01FU2H2HTkQTqy4GMeDyj8MX23w6O2PdfADA=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9by/XpGq95pChkvzj3I3W0WtDXiv8mmzH1cO/kTu1tZp
- vPmuG7uKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmMgBe4Z/+idr30ywanRRrLQW
- X3Pwt8/1VPcVrncrVKt9mT8nTjx0gOF/Uo3DwfoOvUV7zyzb/SyyhWnf8zvPMg2mLVaqmeCU42X
- DDgA=
+ bh=OyFvKR47TPy/Co1fUGcJQdc9St9ACLq4hBtYx1r2OTA=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9by/SpJVwqPh7MorNMzbX41P6qC9RnTmWW9K6ecZ2R6f
+ YdzmVZ+RykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwES4ghn+2ac6Lrq3efrkiNNr
+ px2f2fs6a++ENf/4eRSfskXWimwK42b4p2l8fO3ZpHOLkvzWy1oL2FyYKWxemmXgaPC5ncHg9ao
+ OBgA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -101,333 +105,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the bool DeviceState::realized field with the enum-valued
-DeviceState::phase field to express finer phases in following changes.
+qdev currently represents a device's realization state with a single
+boolean. This cannot distinguish a device that has never been realized
+from one whose realization has failed or that has been unrealized, nor
+can it represent realization in progress. Consequently, the same device
+can enter DeviceClass::realize() reentrantly or more than once.
+Supporting that complicates device implementations, and the behavior is
+untested and likely broken.
 
-The QOM realized property is an internal lifecycle property, not for
-end users. Replace it with the enum-valued phase property.
+The accessor conversions, const qualification of qdev_is_realized(), and
+QOM-parenting fix from earlier revisions have already been merged. This
+revision contains the four remaining patches.
+
+The first patch clarifies the division of work between
+TypeInfo.instance_init, pre-realize property setting, and
+DeviceClass::realize, including the implications of device introspection
+and property-dependent child creation.
+
+The other three patches replace DeviceState::realized and the QOM
+realized property with four explicit phases: initialized, realizing,
+realized, and retired. Entering the realizing phase before invoking
+callbacks prevents reentrant realization. A failure after realization
+starts, or the start of unrealization, moves the device to the terminal
+retired phase, so a device's realize method is invoked at most once.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- qapi/common.json          | 14 ++++++++++++++
- include/hw/core/qdev.h    |  7 ++++---
- hw/core/qdev-clock.c      |  4 ++--
- hw/core/qdev-properties.c |  4 ++--
- hw/core/qdev.c            | 45 +++++++++++++++++++++++----------------------
- hw/scsi/scsi-bus.c        |  4 ++--
- qom/qom-qmp-cmds.c        |  2 +-
- system/qdev-monitor.c     |  5 +++--
- 8 files changed, 51 insertions(+), 34 deletions(-)
+Changes in v4:
+- Dropped the merged accessor conversions, const qualification, and
+  QOM-parenting fix.
+- Split the phase conversion into three patches.
+- Clarified automatic child-bus realization and explicit child-device
+  realization, and removed the obsolete plan for recursive realization
+  propagation.
+- Documented that properties added during realization are neither
+  configurable nor introspectable beforehand.
+- Initialized DeviceState::phase explicitly.
+- Updated the DevicePhase introduction version to 11.2.
+- Link to v3: https://lore.kernel.org/qemu-devel/20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp
 
-diff --git a/qapi/common.json b/qapi/common.json
-index af7e3d618a7c..415a2722fc1a 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -7,6 +7,20 @@
- # *****************
- ##
- 
-+##
-+# @DevicePhase:
-+#
-+# An enumeration of the device phases
-+#
-+# @unrealized: the initial phase
-+#
-+# @realized: the phase after realization
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'DevicePhase',
-+  'data': [ 'unrealized', 'realized' ] }
-+
- ##
- # @IoOperationType:
- #
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index b1c5f4780a90..ff367b2a5f98 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -1,6 +1,7 @@
- #ifndef QDEV_CORE_H
- #define QDEV_CORE_H
- 
-+#include "qapi/qapi-types-common.h"
- #include "qemu/atomic.h"
- #include "qemu/queue.h"
- #include "qemu/bitmap.h"
-@@ -232,9 +233,9 @@ struct DeviceState {
-      */
-     char *canonical_path;
-     /**
--     * @realized: has device been realized?
-+     * @phase: the current phase
-      */
--    bool realized;
-+    DevicePhase phase;
-     /**
-      * @pending_deleted_event: track pending deletion events during unplug
-      */
-@@ -440,7 +441,7 @@ DeviceState *qdev_try_new(const char *name);
-  */
- static inline bool qdev_is_realized(const DeviceState *dev)
- {
--    return qatomic_load_acquire(&dev->realized);
-+    return qatomic_load_acquire(&dev->phase) == DEVICE_PHASE_REALIZED;
- }
- 
- /**
-diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
-index 861f78f94c64..efb33a3a27e7 100644
---- a/hw/core/qdev-clock.c
-+++ b/hw/core/qdev-clock.c
-@@ -30,7 +30,7 @@ static NamedClockList *qdev_init_clocklist(DeviceState *dev, const char *name,
-      * Clock must be added before realize() so that we can compute the
-      * clock's canonical path during device_realize().
-      */
--    assert(!dev->realized);
-+    assert(dev->phase != DEVICE_PHASE_REALIZED);
- 
-     /*
-      * The ncl structure is freed by qdev_finalize_clocklist() which will
-@@ -186,6 +186,6 @@ Clock *qdev_alias_clock(DeviceState *dev, const char *name,
- 
- void qdev_connect_clock_in(DeviceState *dev, const char *name, Clock *source)
- {
--    assert(!dev->realized);
-+    assert(dev->phase != DEVICE_PHASE_REALIZED);
-     clock_set_source(qdev_get_clock_in(dev, name), source);
- }
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 34d7b26a7303..66cff4b9338c 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -33,7 +33,7 @@ static bool qdev_prop_allow_set(Object *obj, const char *name,
- {
-     DeviceState *dev = DEVICE(obj);
- 
--    if (dev->realized && !info->realized_set_allowed) {
-+    if (dev->phase == DEVICE_PHASE_REALIZED && !info->realized_set_allowed) {
-         qdev_prop_set_after_realize(dev, name, errp);
-         return false;
-     }
-@@ -46,7 +46,7 @@ void qdev_prop_allow_set_link_before_realize(const Object *obj,
- {
-     DeviceState *dev = DEVICE(obj);
- 
--    if (dev->realized) {
-+    if (dev->phase == DEVICE_PHASE_REALIZED) {
-         error_setg(errp, "Attempt to set link property '%s' on device '%s' "
-                    "(type '%s') after it was realized",
-                    name, dev->id, object_get_typename(obj));
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index 0b0f2f47fa78..3623fbf69e78 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -134,7 +134,7 @@ bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp)
-     dev->parent_bus = bus;
-     object_ref(OBJECT(bus));
-     bus_add_child(bus, dev);
--    if (dev->realized) {
-+    if (dev->phase == DEVICE_PHASE_REALIZED) {
-         resettable_change_parent(OBJECT(dev), OBJECT(bus),
-                                  OBJECT(old_parent_bus));
-     }
-@@ -230,7 +230,7 @@ bool qdev_should_hide_device(const QDict *opts, bool from_json, Error **errp)
- void qdev_set_legacy_instance_id(DeviceState *dev, int alias_id,
-                                  int required_for_version)
- {
--    assert(!dev->realized);
-+    assert(dev->phase != DEVICE_PHASE_REALIZED);
-     dev->instance_id_alias = alias_id;
-     dev->alias_required_for_version = required_for_version;
- }
-@@ -286,7 +286,7 @@ bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp)
-         assert(!DEVICE_GET_CLASS(dev)->bus_type);
-     }
- 
--    if (object_property_set_bool(OBJECT(dev), "realized", true, errp)) {
-+    if (object_property_set_str(OBJECT(dev), "phase", "realized", errp)) {
-         return true;
-     }
- 
-@@ -314,7 +314,7 @@ bool qdev_realize_and_unref(DeviceState *dev, BusState *bus, Error **errp)
- 
- void qdev_unrealize(DeviceState *dev)
- {
--    object_property_set_bool(OBJECT(dev), "realized", false, &error_abort);
-+    object_property_set_str(OBJECT(dev), "phase", "unrealized", &error_abort);
- }
- 
- static int qdev_assert_realized_properly_cb(Object *obj, void *opaque)
-@@ -324,7 +324,7 @@ static int qdev_assert_realized_properly_cb(Object *obj, void *opaque)
- 
-     if (dev) {
-         dc = DEVICE_GET_CLASS(dev);
--        assert(dev->realized);
-+        assert(dev->phase == DEVICE_PHASE_REALIZED);
-         assert(dev->parent_bus || !dc->bus_type);
-     }
-     return 0;
-@@ -477,10 +477,10 @@ bool qdev_unplug_blocked(DeviceState *dev, Error **errp)
-     return false;
- }
- 
--static bool device_get_realized(Object *obj, Error **errp)
-+static int device_get_phase(Object *obj, Error **errp)
- {
-     DeviceState *dev = DEVICE(obj);
--    return dev->realized;
-+    return dev->phase;
- }
- 
- static bool check_only_migratable(Object *obj, Error **errp)
-@@ -497,7 +497,7 @@ static bool check_only_migratable(Object *obj, Error **errp)
-     return true;
- }
- 
--static void device_set_realized(Object *obj, bool value, Error **errp)
-+static void device_set_phase(Object *obj, int value, Error **errp)
- {
-     DeviceState *dev = DEVICE(obj);
-     DeviceClass *dc = DEVICE_GET_CLASS(dev);
-@@ -512,15 +512,15 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-         return;
-     }
- 
--    if (value && !dev->realized) {
-+    if (value == DEVICE_PHASE_REALIZED && dev->phase != DEVICE_PHASE_REALIZED) {
-         if (!check_only_migratable(obj, errp)) {
-             goto fail;
-         }
- 
-         hotplug_ctrl = qdev_get_hotplug_handler(dev);
-         if (hotplug_ctrl) {
--            hotplug_handler_pre_plug(hotplug_ctrl, dev, &local_err);
--            if (local_err != NULL) {
-+            hotplug_handler_pre_plug(hotplug_ctrl, dev, errp);
-+            if (*errp) {
-                 goto fail;
-             }
-         }
-@@ -589,19 +589,19 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-             }
-        }
- 
--       qatomic_store_release(&dev->realized, value);
--
--    } else if (!value && dev->realized) {
-+       qatomic_store_release(&dev->phase, value);
- 
-+    } else if (value != DEVICE_PHASE_REALIZED &&
-+               dev->phase == DEVICE_PHASE_REALIZED) {
-         /*
-          * Change the value so that any concurrent users are aware
-          * that the device is going to be unrealized
-          *
--         * TODO: change .realized property to enum that states
--         * each phase of the device realization/unrealization
-+         * TODO: change .phase property to state
-+         * each sub-phase of the device realization/unrealization
-          */
- 
--        qatomic_set(&dev->realized, value);
-+        qatomic_set(&dev->phase, value);
-         /*
-          * Ensure that concurrent users see this update prior to
-          * any other changes done by unrealize.
-@@ -670,7 +670,7 @@ static void device_initfn(Object *obj)
-     }
- 
-     dev->instance_id_alias = -1;
--    dev->realized = false;
-+    dev->phase = DEVICE_PHASE_UNREALIZED;
-     dev->allow_unplug_during_migration = false;
- 
-     QLIST_INIT(&dev->gpios);
-@@ -736,7 +736,7 @@ static void device_unparent(Object *obj)
-     DeviceState *dev = DEVICE(obj);
-     BusState *bus;
- 
--    if (dev->realized) {
-+    if (dev->phase == DEVICE_PHASE_REALIZED) {
-         qdev_unrealize(dev);
-     }
-     while (dev->num_child_bus) {
-@@ -768,7 +768,7 @@ static void device_class_init(ObjectClass *class, const void *data)
- 
-     /* by default all devices were considered as hotpluggable,
-      * so with intent to check it in generic qdev_unplug() /
--     * device_set_realized() functions make every device
-+     * device_set_phase() functions make every device
-      * hotpluggable. Devices that shouldn't be hotpluggable,
-      * should override it in their class_init()
-      */
-@@ -786,8 +786,9 @@ static void device_class_init(ObjectClass *class, const void *data)
-      */
-     dc->legacy_reset = NULL;
- 
--    object_class_property_add_bool(class, "realized",
--                                   device_get_realized, device_set_realized);
-+    object_class_property_add_enum(class, "phase", "DevicePhase",
-+                                   &DevicePhase_lookup,
-+                                   device_get_phase, device_set_phase);
-     object_class_property_add_bool(class, "hotpluggable",
-                                    device_get_hotpluggable, NULL);
-     object_class_property_add_bool(class, "hotplugged",
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index aa02ff631b71..612f272deb2a 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -57,8 +57,8 @@ static SCSIDevice *do_scsi_device_find(SCSIBus *bus,
-     /*
-      * This function might run on the IO thread and we might race against
-      * main thread hot-plugging the device.
--     * We assume that as soon as .realized is set to true we can let
--     * the user access the device.
-+     * We assume that as soon as the device is realized we can let
-+     * the user access it.
-      */
- 
-     if (retval && !include_unrealized && !qdev_is_realized(&retval->qdev)) {
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index 330895361d47..4d2db574144a 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -211,7 +211,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
- 
-         /* Skip Object and DeviceState properties */
-         if (strcmp(prop->name, "type") == 0 ||
--            strcmp(prop->name, "realized") == 0 ||
-+            strcmp(prop->name, "phase") == 0 ||
-             strcmp(prop->name, "hotpluggable") == 0 ||
-             strcmp(prop->name, "hotplugged") == 0 ||
-             strcmp(prop->name, "parent_bus") == 0) {
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 5c87fda50939..586c9aaac9c3 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -596,7 +596,7 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
- {
-     ObjectProperty *prop;
- 
--    assert(!dev->id && !dev->realized);
-+    assert(!dev->id && dev->phase != DEVICE_PHASE_REALIZED);
- 
-     /*
-      * object_property_[try_]add_child() below will assert the device
-@@ -1083,7 +1083,8 @@ static int qdev_add_hotpluggable_device(Object *obj, void *opaque)
-         return 0;
-     }
- 
--    if (dev->realized && object_property_get_bool(obj, "hotpluggable", NULL)) {
-+    if (dev->phase == DEVICE_PHASE_REALIZED &&
-+        object_property_get_bool(obj, "hotpluggable", NULL)) {
-         *list = g_slist_append(*list, dev);
-     }
- 
+Changes in v3:
+- Ensured devices are QOM-parented before attaching them to a bus,
+  avoiding unparentable bus children when realization fails.
+- Clarified property-dependent child creation.
+- Removed documentation references to the QOM realized property.
+- Replaced DeviceState::realized and the QOM realized property with
+  device phases. The realizing phase prevents reentrant realization, and
+  the terminal retired phase prevents another attempt after realization
+  fails or unrealization begins.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp
 
--- 
-2.55.0
+Changes in v2:
+- Clarified the ordering of #TypeInfo.instance_init, pre-realize
+  property setting, and realization.
+- Clarified that #TypeInfo.instance_init is for per-instance properties,
+  not class properties.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250908-qdev-v1-1-df236f7ce5bd@rsg.ci.i.u-tokyo.ac.jp
+
+---
+Akihiko Odaki (4):
+      qdev: Clarify instantiation and realization
+      hw/qdev: Introduce DevicePhase
+      hw/qdev: Introduce the initialized and retired phases
+      hw/qdev: Introduce the realizing phase
+
+ qapi/common.json          |  19 ++++++++
+ include/hw/core/qdev.h    |  50 ++++++++++-----------
+ hw/core/qdev-clock.c      |   4 +-
+ hw/core/qdev-properties.c |   4 +-
+ hw/core/qdev.c            |  99 ++++++++++++++++++++++++++--------------
+ hw/scsi/scsi-bus.c        |   4 +-
+ qom/qom-qmp-cmds.c        |   2 +-
+ system/qdev-monitor.c     |   5 ++-
+ tests/unit/test-qdev.c    | 112 +++++++++++++++++++++++++++++++++++++++++++++-
+ 9 files changed, 231 insertions(+), 68 deletions(-)
+---
+base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
+change-id: 20250906-qdev-9e5cb7c06ffa
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
