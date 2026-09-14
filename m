@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6E2C88E5C
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 02:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E78C88E5C
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 02:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5wC5-0001EJ-6s; Sun, 13 Sep 2026 22:13:17 -0400
+	id 1x5wCA-0001G6-2E; Sun, 13 Sep 2026 22:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x5wC3-0001DS-34
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 22:13:15 -0400
+ id 1x5wC2-0001D0-7U
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 22:13:14 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x5wBw-0007C1-Uc
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 22:13:14 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x5wBx-0007FV-Gc
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 22:13:13 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxytEuWKdqfKULAA--.33763S3;
- Mon, 14 Sep 2026 10:13:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxHNIzWKdqkqULAA--.33726S3;
+ Mon, 14 Sep 2026 10:13:07 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJDxTs8rWKdqC2ggAA--.4739S2;
- Mon, 14 Sep 2026 10:13:00 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBx5cwyWKdqDmggAA--.43217S4;
+ Mon, 14 Sep 2026 10:13:06 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Subject: [PATCH 0/6] target/loongarch: Add la664 CPU type
-Date: Mon, 14 Sep 2026 10:14:14 +0800
-Message-ID: <20260914021420.4065683-1-maobibo@loongson.cn>
+Subject: [PATCH 6/6] target/loongarch: Add la664 CPU type
+Date: Mon, 14 Sep 2026 10:14:20 +0800
+Message-ID: <20260914021420.4065683-7-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260914021420.4065683-1-maobibo@loongson.cn>
+References: <20260914021420.4065683-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxTs8rWKdqC2ggAA--.4739S2
+X-CM-TRANSID: qMiowJBx5cwyWKdqDmggAA--.43217S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrZF4DKF18urWDGr43Ar4fJFc_yoWfAFgEgF
- y7AFyDGr4UW3WFqayavry5W34UAF48KFn0yF1qqr4fKry7Jr13ArsrKw4rZw1jqr4rXFn8
- Ar42yryrAr1ftosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb7xYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXUUUUU=
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrW8Kr1xJF4UuF4rWw1DCFX_yoW8Ww4DpF
+ 9xZw42gFWxJFZrAa4DAa98Wrs8Jrs3W3y2vFy3tw4kArs3Xry7X3W8J398ZF1Dt3y8WF1I
+ vr40y3WY9F4UJ3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUtVWrXwAv7VC2z280aVAF
+ wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28IcxkI7V
+ AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8l3
+ 8UUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -75,25 +78,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set is to add la664 CPU type, its feature is similar with max
-CPU type. The main change is to enable LoongArch Instruction Set version
-1.1 features in KVM mode, besides PTW and DINTC features.
+Most features about LA664 CPU hardware is finished in TCG and KVM mode,
+add la664 CPU type and it is similar with max CPU type.
 
-Bibo Mao (6):
-  hw/intc/loongarch_dintc: Check irqchip in kernel mode firstly
-  target/loongarch/kvm: Check LoongArch Instruction Set version 1.1
-  target/loongarch: Enable LoongArch Instruction Set version 1.1
-  target/loongarch: Set msgint property with auto detected
-  target/loongarch: Enable hw ptw feature by default
-  target/loongarch: Add la664 CPU type
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
- hw/intc/loongarch_dintc.c  | 19 ++++++-----
- target/loongarch/cpu.c     | 47 +++++++++++++++------------
- target/loongarch/kvm/kvm.c | 66 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 101 insertions(+), 31 deletions(-)
-
-
-base-commit: 257bf4f160c50ca8c4ebd603f519f5c786013fb7
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index f4d3d75e16..759fee0b26 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -457,12 +457,11 @@ static void loongarch_la132_initfn(Object *obj)
+     cpu->ptw = ON_OFF_AUTO_OFF;
+ }
+ 
+-static void loongarch_max_initfn(Object *obj)
++static void loongarch_la664_initfn(Object *obj)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+     uint32_t data;
+ 
+-    /* '-cpu max': use it for max supported CPU features */
+     loongarch_la464_initfn(obj);
+ 
+     cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, 1);
+@@ -484,6 +483,12 @@ static void loongarch_max_initfn(Object *obj)
+     cpu->env.cpucfg[3] = data;
+ }
+ 
++static void loongarch_max_initfn(Object *obj)
++{
++    /* '-cpu max': use it for max supported CPU features */
++    loongarch_la664_initfn(obj);
++}
++
+ #if defined(CONFIG_KVM)
+ static int read_cpuinfo(const char *field, char *value, int len)
+ {
+@@ -940,6 +945,8 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
+         .abstract = true,
+         .class_init = loongarch64_cpu_class_init,
+     },
++
++    DEFINE_LOONGARCH_CPU_TYPE(64, "la664", loongarch_la664_initfn),
+     DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
+     DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
+     DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
 -- 
 2.54.0
 
