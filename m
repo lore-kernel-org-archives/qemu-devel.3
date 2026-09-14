@@ -4,107 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2CEC88E50
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 08:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF98C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x62Lp-00026r-SB; Mon, 14 Sep 2026 04:47:45 -0400
+	id 1x62YT-0005tt-Db; Mon, 14 Sep 2026 05:00:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x62Lo-00026X-PJ
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:47:44 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x62Ln-0007FJ-25
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:47:44 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-6713d20d375so1089416d50.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 01:47:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789375662; cv=none;
- d=google.com; s=arc-20260327;
- b=ZjMNKuCOjZCZupscM2edDNSxLcIHeQJ9mRD1XbE7/X9HMXo/CQ7z/4qVZlxeABikZQ
- CXNelU6p0YQw3gJ/ymoe92rQ/xhRVTJwjyq1s9VR2GwFsJu6asdoeMdv13Z/FFuN0Ufj
- pgFC1d67wcVlD9v6RvV1idIvc+02pUaEgULfbUcr/KVfw4Q6Gy49T+KMMf3H/6DdjVv1
- evGIr4fu9rhpcqzGROylgeivdQ+F9x8o4Du/FvDcNyHSJsWq6elV6x9wy1Y7zIMVqObQ
- E+Gpavml0SXP4ct1nnY2WLa83eiwwvItYVQQrSTn8ddKVLiBQKNiy9ys9imhgTgx1VWU
- fBQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2JtW1O4fgmcvzaTWO6qEbTdakN4/wjXQB0I8Ry12PdM=;
- fh=OeH7OTjViatlmx0lFsRW36UoSyv0+l/u/cCvcQmcpa0=;
- b=ZGfdqYb4UJZIhNniuj9klo7GJBWn2Tkma8an8dT4eei5xB0ybS+vGRC1BWjs66JO+h
- 8c2t4DejL/pUdYmakKDGS8P9tu8g/2aslrKOlB8efYEk0VtvuFAi2K8S5cOQSpfgPFXC
- yuUNjmFRctWxJvf5LMmkHfW3+t0mgeTLRjuFsZlnAocTAe/sFodOKC/DfHOCqmg2apzM
- txNritxskpqUnqs4SbWp/71tJvYvvpECMyxhFBRvfBKUR2YjvzWxSjQ/PJmgF8FovwuF
- 7JwpZkpNYoL7VmgYEan/EUz93c/8R9dbe5q/mZ/0lG8mm8Xapv3uV/S2NiM4M0ifBft0
- 1kfA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789375662; x=1789980462; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=2JtW1O4fgmcvzaTWO6qEbTdakN4/wjXQB0I8Ry12PdM=;
- b=NA60OuNsm42YRAs5nV7blkJ2sOWIiAJBt/g08ygGPeWZN7rQA+euaiUCVM3Iw0E3xu
- VO/4WTd09bV90l3iJ3zCBIPNUJgqRvEEr+8EeLeW/jHoUFeROywqmD73xLIVgnt2zsqX
- lXaExC3Or+oT5a5n8CWQMRf+cNDEmFavFB5vdfkzC+KirlRWcX/kV5EXus8OtufBuyF/
- UC49zGEQQ7fjygv2qfV0gEeqXK5p/6+oI6E++lIrzrh/sjxHgC2mT9KUxhHqbvNaIu+L
- RL0XEHlmViCZDAcCTRc/47cm5Bpub+r1wwVd+hBf4TVaSbe9IDEbPSVTiet0D8eyqYhe
- nw5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789375662; x=1789980462;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=2JtW1O4fgmcvzaTWO6qEbTdakN4/wjXQB0I8Ry12PdM=;
- b=qL2XqbacEQAJoU+r6WTXIGjltJz9uwgQ5PM+FSFWeLue0YE5wpKiyI3x1XHOj0vSap
- bUGOGYmgdbI1d5wT/lLRU6tBc7IiNLSesoglQFz24P/qZUo8f4kO+eoHsigJS0HfYvAo
- DN1jKvlfjvvND78UmY4YBEG2a7wQW4ekQzC1RMdUgbe3vwF4DjidExPYIEDPJjKV3ayx
- 9KP6HJNq7I0mSH5wJ6a/qfgSU2AHV5D9vPHOnLFRgpHY7slLkacYxresoB+yjFUXV9oZ
- tSX5ynahQEF4G7MJd5hwrwgsNX1aDZqkUwwIKnTfuEZLxsRhc0IjqQVLCkVLFqlqgi8A
- lh5Q==
-X-Gm-Message-State: AFuF++lI/C2ITWGfgBxolIzeVpB8b96Qrj3aprLddfW3pBwmhhBLQSem
- D59/83kxHhwtFyhX7J/e5v063pCeQRk8V+IQxy8psvZRb0GvhW38Lq0TrpRygCTfZKPp5c0hE2T
- UalStcH07EK5erNBrQIEqXf31T73/HDmqtzDSnXMDnw==
-X-Gm-Gg: AYBFou1lehq+oQ7BAqt1a8Dp/hB1khH4v+GiQd2efzrFk8bnUDCnKiXo/rfZ7fuLbzM
- mncg9gWXGPcYiusLCilLFjiVRJMVbyUY12+YoeucTLAq5uUeaN1qrPUF6IZZzeT/Xexw8pHz0RT
- j0dASIEOpCcb89XCYiYGegFrR/wo5JjbrkwlJfQugwu3U9HbToEDav93G7+YZoIcCTIYo2FJrI6
- 1vm335mKJlpN2NVlrM/8quQjhfq4Wh7JvfNKsQuHZexbBWZFupS8xqP4aQk750ApGzPrIlgKbzg
- lQkX8j/FF43xBawHaQaWAfx7/PU5DJ6K2rtvRhIxH0cVf7MW5I9UtrHLGOohjSv+knVzz7qU+wC
- aBpJH2E5+DPNLPdwPKxmFQDHLcBNsTXbuDQplrRY=
-X-Received: by 2002:a05:690e:13cd:b0:66f:c1be:84e5 with SMTP id
- 956f58d0204a3-6714e1f3d49mr257397d50.83.1789375661733; Mon, 14 Sep 2026
- 01:47:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x62YR-0005tW-0j
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:00:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x62YO-0003DC-Qo
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:00:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789376444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=C/U5kWaSWBu/lz4gb7OE4mlsf2F1rBZISq9HNZUjyLU=;
+ b=fRcxLpROZHuBxtX3B7Xg/Fl1SOyhjO2CT1upHt3EZ+/JIsotiLVBhsoDk4Wl23GEYxxrFc
+ gs2FWaCZfBmeA8tygSWGGCg6LkkO0we0oTXaSKXOY1JQebiOj9upm20MiqW2B04jcHHon4
+ gNBL1RH3+MBIrgqnGhEc1JkvQUMoCMU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-an-6r4r1MGW9x_1iGpZLsQ-1; Mon,
+ 14 Sep 2026 05:00:41 -0400
+X-MC-Unique: an-6r4r1MGW9x_1iGpZLsQ-1
+X-Mimecast-MFC-AGG-ID: an-6r4r1MGW9x_1iGpZLsQ_1789376440
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA7FD1805A11; Mon, 14 Sep 2026 09:00:39 +0000 (UTC)
+Received: from thuth-p1g4.redhat.corp
+ (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A5CB4195604D; Mon, 14 Sep 2026 09:00:37 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>,
+	qemu-block@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2] block: Print simple help text when calling "-blockdev help"
+Date: Mon, 14 Sep 2026 11:00:36 +0200
+Message-ID: <20260914090036.125300-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <cover.1789117222.git.mst@redhat.com>
- <5ec2a0b21fe5b8e1419a94a753636088d6b0409b.1789117222.git.mst@redhat.com>
-In-Reply-To: <5ec2a0b21fe5b8e1419a94a753636088d6b0409b.1789117222.git.mst@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Sep 2026 09:47:30 +0100
-X-Gm-Features: AcwNN1VQzahoYUiYg-O9ILDj06boDEz0-hkdAWq9-lzYBOCVxe6YgXx-Q7tgjhQ
-Message-ID: <CAFEAcA9sG8ijHjbJ6g8m0JZfpkAQ_Ow_Qxd2ep8Lui2Qe2L7hQ@mail.gmail.com>
-Subject: Re: [PULL v2 01/75] virtio: fix exit(1) on DMA mapping failure during
- migration restore
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,81 +80,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 11 Sept 2026 at 10:01, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> When QEMU restores pending virtio requests from a migration stream, it
-> calls qemu_get_virtqueue_element(), which calls virtqueue_map() and
-> virtqueue_map_iovec() to re-map the saved DMA fragment addresses into
-> the destination address space.  If the addresses in the migration stream
-> are corrupted, and as a result dma_memory_map() returns NULL or a
-> shorter-than-expected length, virtqueue_map_iovec() calls exit(1),
-> terminating the destination QEMU process instead of failing the
-> migration cleanly.
->
-> Convert virtqueue_map_iovec() and virtqueue_map() from void to bool.
-> On failure, virtqueue_map_iovec() unmaps any entries it has already
-> mapped and returns false; virtqueue_map() similarly cleans up the in_sg
-> entries if out_sg mapping fails.  qemu_get_virtqueue_element() now
-> checks the return value, frees the element and returns NULL on failure,
-> allowing the migration restore path to propagate a clean error.  The
-> callers in virtio-blk, virtio-serial-bus and virtio-scsi that invoke
-> qemu_get_virtqueue_element() during load are updated to check for NULL
-> and return an error code.
->
+Other command line options like "-chardev", "-netdev" or "-device"
+already present the user with a list of available parameters, but
+when running "-blockdev help", there is currently only an error
+message. There is already the possibility to run "-drive format=help",
+but it does not seem to be documented, so this is not very useful
+for the average user. Thus let's improve this situation by providing
+a proper list of available drivers when running QEMU with
+"-blockdev help".
 
-Hi; Coverity points out an error in the error handling code
-added here (CID 1686764):
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v2: Don't re-use the code from "-drive format=help" and print the
+     help in a better readable way instead
 
-> -static void virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
-> +static bool virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
->                                  hwaddr *addr, unsigned int num_sg,
->                                  bool is_write)
->  {
->      unsigned int i;
->      hwaddr len;
-> +    DMADirection dir = is_write ? DMA_DIRECTION_FROM_DEVICE :
-> +                                 DMA_DIRECTION_TO_DEVICE;
->
->      for (i = 0; i < num_sg; i++) {
->          len = sg[i].iov_len;
-> -        sg[i].iov_base = dma_memory_map(vdev->dma_as,
-> -                                        addr[i], &len, is_write ?
-> -                                        DMA_DIRECTION_FROM_DEVICE :
-> -                                        DMA_DIRECTION_TO_DEVICE,
-> -                                        MEMTXATTRS_UNSPECIFIED);
-> +        sg[i].iov_base = dma_memory_map(vdev->dma_as, addr[i], &len,
-> +                                        dir, MEMTXATTRS_UNSPECIFIED);
->          if (!sg[i].iov_base) {
->              error_report("virtio: error trying to map MMIO memory");
-> -            exit(1);
-> +            goto err_undo_map;
+ include/block/block-common.h |  1 +
+ block.c                      | 15 +++++++++++++++
+ system/vl.c                  |  7 +++++--
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-If dma_memory_map() fails on the first iteration, we will jump
-to err_undo_map, with i == 0....
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index 895ea175413..c76a72c1220 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -583,5 +583,6 @@ char *path_combine(const char *base_path, const char *filename);
+ char *bdrv_get_full_backing_filename_from_filename(const char *backed,
+                                                    const char *backing,
+                                                    Error **errp);
++void bdrv_show_help(void);
+ 
+ #endif /* BLOCK_COMMON_H */
+diff --git a/block.c b/block.c
+index f0a6042e616..895d6db5acf 100644
+--- a/block.c
++++ b/block.c
+@@ -524,6 +524,21 @@ bool bdrv_uses_whitelist(void)
+     return use_bdrv_whitelist;
+ }
+ 
++static void bdrv_help_format_print(void *opaque, const char *name)
++{
++    if (bdrv_format_is_whitelisted(name, false)) {
++        printf("%s\n", name);
++    } else {
++        printf("%s (read-only)\n", name);
++    }
++}
++
++void bdrv_show_help(void)
++{
++      printf("Available blockdev drivers:\n");
++      bdrv_iterate_format(bdrv_help_format_print, NULL, true);
++}
++
+ typedef struct CreateCo {
+     BlockDriver *drv;
+     char *filename;
+diff --git a/system/vl.c b/system/vl.c
+index 9bd7664b85c..dc93e8737cb 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2960,7 +2960,10 @@ void qemu_init(int argc, char **argv)
+                           HD_OPTS);
+                 break;
+             case QEMU_OPTION_blockdev:
+-                {
++                if (is_help_option(optarg)) {
++                    bdrv_show_help();
++                    exit(EXIT_SUCCESS);
++                } else {
+                     Visitor *v;
+                     BlockdevOptionsQueueEntry *bdo;
+ 
+@@ -2973,8 +2976,8 @@ void qemu_init(int argc, char **argv)
+                     visit_free(v);
+                     loc_save(&bdo->loc);
+                     QSIMPLEQ_INSERT_TAIL(&bdo_queue, bdo, entry);
+-                    break;
+                 }
++                break;
+             case QEMU_OPTION_drive:
+                 if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
+                                              optarg, false)) {
+-- 
+2.55.0
 
->          }
->          if (len != sg[i].iov_len) {
->              error_report("virtio: unexpected memory split");
-> -            exit(1);
-> +            dma_memory_unmap(vdev->dma_as, sg[i].iov_base, len, dir, 0);
-> +            goto err_undo_map;
->          }
->      }
-> +    return true;
-> +
-> +err_undo_map:
-> +    while (i-- > 0) {
-
-...but since 'i' is an unsigned type, that will mean that "i--"
-here underflows to an extremely large value. This loop will
-then iterate many times unmapping random things.
-
-> +        dma_memory_unmap(vdev->dma_as, sg[i].iov_base, sg[i].iov_len,
-> +                         dir, 0);
-> +    }
-> +    return false;
->  }
-
-thanks
--- PMM
 
