@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326C8C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E750C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CGY-0000BS-SH; Mon, 14 Sep 2026 15:22:59 -0400
+	id 1x6CGt-0000Tr-Hd; Mon, 14 Sep 2026 15:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CGX-0000B0-8Y
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:22:57 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1x6CGl-0000Nv-UA
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:15 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CGV-0002IL-Rb
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:22:57 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-cc4dbcf2b85so1760582a12.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:22:55 -0700 (PDT)
+ id 1x6CGk-0002Ip-Ct
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:11 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ 41be03b00d2f7-cc1cea50dc1so1358937a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789413774; x=1790018574; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789413789; x=1790018589; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=brEurZzaAqzY+mkmQC6+3KGzTG1CyPr0eAzZ1ls3CDQ=;
- b=dlv+mFW2lHIwZzqtzZt39DmbTuLKbikDv/XuuywO0l3s6+GthHwpuG/yfBQ/D3RbrW
- 7Kj+swt9Mk1xrlcUnvo1eCe19qhM+HBQyRIs4EFQbA4XHQLw0oXfVozn+QIQLRqk6di8
- CgCm6a77EdnLUXwe/8KGcmbpvvE4ug23DG15eUNo+X0ylKEUABfrWChIxAUrQTxCHE3Z
- hVwiUl0jpgml2TLmdGQf01nRsHTErdKyuj8H4FwblxbU+N3mwPmvXivye8RX27byRniR
- hIjMrJGXZu1vp9pBnvuctyxBjbFKuQ1jLusZYu9hicI67yDpkfdiMUlEnnhOIOSfl8kR
- qGJw==
+ bh=FqzJgj5j0AKSdxwMHcgpuu8Vtht+GEYmg7TRFHJbHSs=;
+ b=iVaZO2NYx/prPpbAZDbntN34ueF0wq3HFjuvXLsYiC9i/G5fHJgfH/qcqU2Sd3ZlqW
+ ZkIDaLudxLTBYibp639pVNgF0GIqFti2FZsj0m6p1+m+5ftcNwRUbrtGsVmopX1b3gmo
+ C/iSqvuKgN5oRWd3ujfKMMICuwCSw94g3RTgIob2vytxQvl01nnAQK8NLBy/sL2lvOb5
+ kOBpKq8FAorDcs4HiQHM2uV3yui4GvUmOWLx0ucqzl2amzSW5MgZbfYaI0lqgN906Dg7
+ vMMP0kNbAfeMSZXFC/CZDhqmqcR+/9xYPw2Br5M1bJf2hx0NFueX7/Xpm1archTgWqWc
+ 2mAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789413774; x=1790018574;
+ d=1e100.net; s=20260707; t=1789413789; x=1790018589;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=brEurZzaAqzY+mkmQC6+3KGzTG1CyPr0eAzZ1ls3CDQ=;
- b=FE19sadBpzRyWEzmNIfzURXr5em3kR0xK5M8fmIoYO+r3dhtYF/JOWL6221fgQYek5
- s4/hUjAV2Q8wmKuHvaD8uWFD2dQ74ze4W2OzFIF0Mfl6128bAMGs43Bi1QE8ql44cI6V
- ZP35KL8VJUs9wqCbFTCrX7DDKszirXkYy4Gw0u2+AnBmGCgibYQph3rrXlG7pStc/ega
- PSJTHq6S/HNZM71cNeZUIndGJ28vlRZePN4uXFapOg+k9mQV6OLjMkGx7lKC6TdTUNbV
- HZ2oZn82h+FnVE1NYxQ8MQ+Ove02C9lRaIYMkX4JCZ+wm1V0F3oE3tEp6qi8BZzZlSIg
- MDdA==
-X-Gm-Message-State: AFuF++nm7Yt3vMNdBDHgB5AwQlczscn7o1PFwTfgT3wm0zkCjuw34/Sj
- eTucID/R5TQXD9rM0SydBkx5ABSbk3k9sGYYZfkftGE2+5llEbKjoHk3lUy/BCBJ49iLt4ceF5z
- dhKGcgOg=
-X-Gm-Gg: AYBFou3TDZbA5KLdcOqkelwu02hw7ynbPccxpZ4pWoz/ddct/8SLUo3RglTShA7n5ql
- JVDm9JbZM0kn2PTbBePLc89PrxiXYD6X1VTX+0d9XFQKv6yld4aoMkcxNxcbyW0LRs24Vqcn+81
- L/QPLpwYtCaYQh5RGtJy2Pj4huyAhw1Nj7WZAVFxgTjLLjvYVMRh/BKvJsbU3qx1jM2lACn9Dvz
- rgnQywbMb/MBLLDDOb6MGBNxWaTElszWASCtjzgDGusKyKlIOcUMHIt1dJeoM8oiWARLHXVmVyD
- I2KM7/Dj3UVoexdS/hnAGZBMq/7Uxe3mIhGhZUWKzJ6fdDZn/HxPXDiRWr2QBSxeDEJte96FtUC
- qdqnleAZZtXyATvqiirJGGO+A4pd8C1OXO1PWwBkOW4R/P8sP84L5PBxtJbQJeEQsaaC6100bi3
- AziRhVpZAbfa4RRoGSYCZRPskkkWqbf+cr6Xx2AfCQ6YGv3wvSDFzoiRh4xHBD2j8Yq/IUD5zKQ
- JSsz1RqRlApTA14GJ74eh4Oww0Dl6hR5WgYYSCajlq/PnJkkOoU4YQwVxXGEA==
-X-Received: by 2002:a17:90b:4c0e:b0:39d:f615:725e with SMTP id
- 98e67ed59e1d1-39df6157e00mr4582356a91.13.1789413774118; 
- Mon, 14 Sep 2026 12:22:54 -0700 (PDT)
+ bh=FqzJgj5j0AKSdxwMHcgpuu8Vtht+GEYmg7TRFHJbHSs=;
+ b=Np0t0cROp5EBEGGEecEFDXhfMrA/ndyYykFSrjYu9QL8k4LyHT4qMk2RTUoWn8D5Vl
+ moe8Cw8nRb0C7abAX7n9UsA0UpBKg+RYy4STmRECSCZJ5zKD3xAC0kVn6RJuRZCuduHF
+ +ohUeHcTBL5f4M4NT7yPgcJps+QMXCY3TVBB16YagFYFALE1+6QY3Ql3vL5v1QjrHLan
+ 0cCuOpctxJC0xLiKWgc2CL6NdWeOLLkkplhTfvmkvBm2xihmbh4LjMXxhD1qXZohDw7Z
+ 7FS8YcHKSVXNDvcPEH/OAB/OgqVTv4KOQDtxuzQ1bHVAnWIqnxMHODTTBKkCOXM8SKuC
+ bgHg==
+X-Gm-Message-State: AFuF++lm+U20khSXybyMErGSrOAoFNrWBPacojhnSz8LTenOILr7CKPs
+ eMboc5yt4NOrcccYmTniDvnnHoVUQizsvUJbZI55EVyNi5EjvVtT6LSy3dJ1uSqeKAQQj8Py74j
+ 3AhyU
+X-Gm-Gg: AYBFou0C1VoTQn8tFBHi2wrxMxyRBYwyD9oIUht1ccBynQPNFhTkbIoVpcE5vuWQwsr
+ jJDwaOKETxHb8VRX1NzRYVg08Y2XsFoSHIRXEgre/gfgHrtQrXBfwcE74chezBI7A4WonlTzT7c
+ Qgj9nxlxNcb+ERKonuE+yrBcJ/wjKxQvWmQSRLKq7e65FpKvN/i5gxX5DZXTYAuA9f8MNADO1Ab
+ NBdOiUE7bu+O+fIxHX7ErFFsvzOWYgcobmG62WyOwYGYQw+MuzqQNiNjiHyHu6g+MeChjK3ZBLi
+ jFtidV3bb6LgguiIBmW0iUUN57j/o0s0I2eRU1HHCvWE7iHop/96LCFr+Ijbh7iU5Ayq82hvlqC
+ UMlkYznmsg6SkPGS3jl3tYWWZTkdzr03ydeCV+rGvRyKD6y8CmALRhEdYP9EOOTRUPtqCT9b4z1
+ yxOycX0xEJkaBhTyX+hJBLfgbSJBCLia074YCcQ/o2xdmcoQFX9v6cc4Oz1jAjii4oo6XEJ/OI0
+ SHtHb2sCyVv69pzmQMwQtwmySs1x3l+2XecWrT2fUBeiilv1PPNJ6e4+9+7Jw==
+X-Received: by 2002:a17:90b:3812:b0:39d:fe64:5732 with SMTP id
+ 98e67ed59e1d1-39dfe646221mr1189240a91.2.1789413788657; 
+ Mon, 14 Sep 2026 12:23:08 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
  ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14365b78d59sm25072935c88.8.2026.09.14.12.22.53
+ 5a478bee46e88-33bd8ad03ccsm9352294eec.2.2026.09.14.12.23.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 12:22:53 -0700 (PDT)
-Message-ID: <8c1a2b23-5ddb-48bd-9ac4-c07b8332e745@linaro.org>
-Date: Mon, 14 Sep 2026 09:22:51 -1000
+ Mon, 14 Sep 2026 12:23:08 -0700 (PDT)
+Message-ID: <8012f136-1ade-40fa-878b-0258bf214f7f@linaro.org>
+Date: Mon, 14 Sep 2026 09:23:06 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/14] system: check security of device types
+Subject: Re: [PATCH v4 09/14] system: report device security status in help
+ output
 To: qemu-devel@nongnu.org
 References: <20260910103628.2326622-1-berrange@redhat.com>
- <20260910103628.2326622-9-berrange@redhat.com>
+ <20260910103628.2326622-10-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260910103628.2326622-9-berrange@redhat.com>
+In-Reply-To: <20260910103628.2326622-10-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,14 +108,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/10/26 00:36, Daniel P. Berrangé wrote:
-> This wires up the DeviceClass types to have their
-> security checked when devices are created.
+> When '-device help', 'device_add help' and 'info qdm' are used, report
+> the security status of each device.
 > 
 > Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 > Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   system/qdev-monitor.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>   system/qdev-monitor.c | 3 +++
+>   1 file changed, 3 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
