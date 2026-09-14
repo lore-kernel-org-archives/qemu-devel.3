@@ -4,135 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1E2C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D631C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CC7-0004xg-4d; Mon, 14 Sep 2026 15:18:23 -0400
+	id 1x6CBv-0004wc-2E; Mon, 14 Sep 2026 15:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6CC3-0004xS-VV
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:18:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <PratikRajesh.Sampat@amd.com>)
+ id 1x69Sc-0003WW-JL
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 12:23:21 -0400
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6CC2-0001XQ-8d
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:18:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789413496;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=se4eB4FpMuBa8eGTKqq0/FlgCnnxhiTkbD6AcH+LoPo=;
- b=VwJekC5bsWVGEyRA/PO6avmbj4w76PJbldybrvNBAQvg/V2eaLSTniLeVcoN6HcbsRGiPz
- J6ODHcH6M2Fr5kFQtT3IlrjvtVf/HZ1m/j195khoH5v1HrzE+s8Z8wCgEwh+dLRy2mGCG8
- kVWRvTC0SQCbw1TxjgBVjHpRSuelQQI=
-Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
- [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-Si2VAbjKPlGMoywoHbj16A-1; Mon, 14 Sep 2026 15:18:15 -0400
-X-MC-Unique: Si2VAbjKPlGMoywoHbj16A-1
-X-Mimecast-MFC-AGG-ID: Si2VAbjKPlGMoywoHbj16A_1789413494
-Received: by mail-yx1-f70.google.com with SMTP id
- 956f58d0204a3-66cad42590cso4863341d50.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:18:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789413494; cv=none;
- d=google.com; s=arc-20260327;
- b=WhrS1MsLz8VdRyYz03YAHgQLUPHddU5e0l0E/ZCmDvQcFKAYt/v9QK8v+fY6Vk5mW7
- zQZC7j77k5GKtlsCLQn7BvY/r3mhomj//Zeh6pyCVrg1QdFahpAx+VpX4xvbZcNuOKBF
- mQb/n7Q5Nxn9o5yvROr3wEe/UW2TSHTAISi46fO4fqXyfm4DwyK1jofhIfkKN6avXzC6
- TYV6Dt2LRQCYMKf6qMHTpBchJG3OvM7h5ZWfLQbs5Eua57kg2cB/BbLZa0QNtOdv7o1v
- OOTL1LCB4HLsMyOapEYC+OAfK9FwA/yX5aeUi7oqyI/RtGEN2/UdPPVhCl19hbZm8+SR
- zSaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=se4eB4FpMuBa8eGTKqq0/FlgCnnxhiTkbD6AcH+LoPo=;
- fh=6/3MBLY771l9Tjbp9sIrjfuM3gYSL1dAxCLrcHqISag=;
- b=rZ0lN+cUuD9lN+FfoZQKVeTmV6n5dlgOsiQPHiy2Oruowpx6yyk0ZzQ/wKIq8CUdUh
- weglv7aVBvXu/C5333wpCQijuQkundQSFR3rNASwkC8peCh4E4ivTVBCQDqCT5FzIu6j
- sLe0O7cEnNiJyWl1+yPeZVySXxEHzDLi1FLb7k3SKn1VbOzDzaAHp1jFunMVso1R0WeO
- 6g1SzheLh1GQI7lHDVaK4oRUs5OGhSO/rvMw9RuovRUoX95ehyNZEPeQsyfdtwfSaJmS
- QSncLRSkmNlTtJlX9oFpl1mhV4MpP6zq77NKPWAilenDynMcUMIAtZagrpCaZUfyVGZJ
- xSXw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789413494; x=1790018294; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=se4eB4FpMuBa8eGTKqq0/FlgCnnxhiTkbD6AcH+LoPo=;
- b=JYQB57/6Hlx02eby3IA3hM2HNYO0hiWZSBlF5PDVJPhyNwO7s/xpKeaDdLMtncQKAk
- X9hb6jhHi0dy1nNe5oLnnR9jpzwVs7tjCeUU6ghZ4mnb3roqu6Nio1HcJSEJAqvcfjYX
- 7NV+HVI9EM/8RXz+sLKM605XtvrreEIqqN+YyNL1SmXcJnPyKzGdO49+rV+GUiRxtxLW
- nwoZZ16hz8R9Dc3sDOzwEbQc7A2iPfqjv5HkmKouf+tg7SqLwg0Eby2oEqABWxDNj5V3
- oTHBRePcDl03hfj6LsJ8khkgKheIwerhVn795xp6X9EMGO3Nf14BowGUms3Vdrwr0Srp
- Ewbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789413494; x=1790018294;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=se4eB4FpMuBa8eGTKqq0/FlgCnnxhiTkbD6AcH+LoPo=;
- b=lMB2ewsLUSejpWO+xelbmOvLRwbko1R/y9fimhZZ4qRm+gUVYBo/I5n+eZOAMbNQ66
- IcyGvlJCIGX6AkebFdpq7s3a6YyQe0ufbuybh3NvpWttM4ZgebriquvzSmZ6kpr+1kzO
- De28BNyMpCHlze4t+haYle85MrxgMinIV8TmM3j3yZ2xiZGhzQXskIroidFBiXMSBlEF
- 1GwU3Q5S/n0sgd8A2Xuyz+Iitq2SvVpkq2LpYNdNzpxdF3KxeDSp5dE4tCyY9EEa4boI
- W9Ucv/I2zb9isNgRhbcdoWBzEE68kgBobHI5fAIq16TI/PUVpdC4Ix29YNB3g9dSu6Z9
- 1zQg==
-X-Gm-Message-State: AFuF++nffcfaukHuMjJq/OGVhx8q9iL1b+jHz7nV554Ulfnv2VvpR/MA
- W8MtGvwUyQHAIgOe0l6KluwWMT7vUyFnS+Nht6YmvdbEualsC1g3o8LQNjAHxDdW5+lv96twx6O
- ksHz3lo3mvFBFO8VyN5EijgHqtUFz7Z4C10w3wMEKpQixYNWjedXZu08bpCgwMnOdoZp93qhmqb
- nZ1Ho9c/AptW4TCv+4jfM9JL6LG9GNuA8=
-X-Gm-Gg: AYBFou3Pa901PS9J7cKoRLaZPPzQ+ufZX/lxGjws5pmDk6P6ZrvPbOLD6Jj5xRje6/m
- 8NRO0hNxRR8imNx7fZfgBAOC33l/mOWHpK2HLlvtkWDSg1j4j38/s52Lv1zr8Gg+dbHCQrjJyXu
- rssvuH9K0O/myHPT/XzKpbfCytlmC0PC4jaBVd/NGN6LicVCRyQBVTi1KTL6GMM/yV52QE7AB5x
- pWJp0FU48PpeQqK
-X-Received: by 2002:a53:e6cb:0:b0:66f:c1be:3172 with SMTP id
- 956f58d0204a3-6714e1a2dd8mr995084d50.73.1789413494383; 
- Mon, 14 Sep 2026 12:18:14 -0700 (PDT)
-X-Received: by 2002:a53:e6cb:0:b0:66f:c1be:3172 with SMTP id
- 956f58d0204a3-6714e1a2dd8mr995008d50.73.1789413489171; Mon, 14 Sep 2026
- 12:18:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <PratikRajesh.Sampat@amd.com>)
+ id 1x69Sa-0000U5-AL
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 12:23:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vqBOcE5sfevQOIkRh4ZOBODjgHw35/2FyumOHY6MoQLHQHJAOHYcRZW4Vu0gFtQaIhi77JL5xldwFzU/8XWXb8x/fKveizoDE7EhDY+9FpNpNQ1JV55+sl/rkRyBCME674wLyk9n2RhjCbwRXPhT2ujZGabHqp6Pm3xB83dAYnVDd8dJ/yqL/Mtqi0TIqnJIwirDRJHxwIUi4H259qceDAgMqZhVS6WvvUDbHWgmDm4JLr+tVI2ASmwh/NVK2ig7HLqSBl5Bki0w0pMI2jV7Towv0jXDHMVqXoPiu0aMyxxUR2bHSAJgtojIO2lwQZDGc4RN82lJLWjiO3bwvqDE7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cJQLQZClHL+ncNIYxtkuP85ZkOPqMq4ELLElU8u9H7U=;
+ b=t1nmXK4WtdCJ3MJqcCB3dPDQ8LRAhngkKJz4skeYGgPICay4kKChc0awtE59A7Xt72NPZ5C3hLdJqo56knh9r57wZpXURENF3k5gcuBPRB/A+xs7PvMPzACDzU/w9HF90wQMYuf0mwDumq4T7ip8+liM8zzGGJJxejvlY9j1VP21o1BRQQoub1ScKnlyYAniF6kTf3/g8urumyesx/tpLEjMISFRlysZmEhrSKNAbZuAcYc03YRCcLTwylTL0cO1sgbE8lSLn9P6nf9u16XIWKXO4jfu4zRNMO18gJnAkOac0N8+HEJSQIB7Gyz3aAc9QvyRQEZTMhvTeMjKYw0xVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cJQLQZClHL+ncNIYxtkuP85ZkOPqMq4ELLElU8u9H7U=;
+ b=BpemcmWgRoUkqY65tJDrsWMgXixO8PIwLHHhFi+DMavF4MOSIXQrNk5pZeUrWYdCmrMEII+sDpmXSdBgefRI6/rm27fw0TFApboQn8mOYUeFP+G24LxLiRmbYIJ3zZgxn/9q6K4O7K7OmFJRTxuO2TGf9Og7Iy280xKq3Oy2Rjc=
+Received: from BL1PR13CA0407.namprd13.prod.outlook.com (2603:10b6:208:2c2::22)
+ by CYYPR12MB8869.namprd12.prod.outlook.com (2603:10b6:930:bf::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.10; Mon, 14 Sep
+ 2026 16:23:02 +0000
+Received: from BN1PEPF0001854B.namprd05.prod.outlook.com
+ (2603:10b6:208:2c2:cafe::33) by BL1PR13CA0407.outlook.office365.com
+ (2603:10b6:208:2c2::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.8 via Frontend Transport; Mon, 14
+ Sep 2026 16:23:02 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN1PEPF0001854B.mail.protection.outlook.com (10.167.248.10) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.428.7 via Frontend Transport; Mon, 14 Sep 2026 16:23:02 +0000
+Received: from speedway8455host.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Mon, 14 Sep
+ 2026 11:23:00 -0500
+From: "Pratik R. Sampat" <prsampat@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <kvm@vger.kernel.org>, <michael.roth@amd.com>, <thomas.lendacky@amd.com>, 
+ <ashish.kalra@amd.com>, <pbonzini@redhat.com>, <prsampat@amd.com>
+Subject: [PATCH 1/2] i386/sev: Introduce Enhanced SMT Protection for SEV-SNP
+Date: Mon, 14 Sep 2026 16:22:43 +0000
+Message-ID: <771196a9b02a0b7d33265b574894cdd99c33cc96.1789399242.git.prsampat@amd.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1789399242.git.prsampat@amd.com>
+References: <cover.1789399242.git.prsampat@amd.com>
 MIME-Version: 1.0
-References: <20260911203002.305316-1-jsnow@redhat.com>
- <20260911203002.305316-2-jsnow@redhat.com>
- <8733vf3qav.fsf@pond.sub.org>
-In-Reply-To: <8733vf3qav.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 14 Sep 2026 15:17:58 -0400
-X-Gm-Features: AcwNN1UxCM6sVvgKFqbx8-QIvper17XOVocvYU9Y-cD71Ryl4moklh_9T1nRGvw
-Message-ID: <CAFn=p-anhPzHfd1S_UZiiw=W_=ZsZC5kaJxH9Uk4FDKHXyc-hw@mail.gmail.com>
-Subject: Re: [PATCH 1/9] qapi: convert remaining simple intros for
- block-export.json
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF0001854B:EE_|CYYPR12MB8869:EE_
+X-MS-Office365-Filtering-Correlation-Id: 92a6b20b-5de9-4c3c-f3bd-08df127c72e8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700016|23010399003|82310400026|1800799024|10067099003|56012099006|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: GJSTSsKCuhrATMPlnJDJARm6qUrpfGpOyb+hrjr6EMUXRQHRayu2/GUkTgiLv5ins8xYQothPm3DpkHKYrftaRX6W4+yEiACYdTM3WQFN5KXmOpwRHKrE1fYlJVPkt08Nz2jxqDRru8pcdy0NIcyMbbUAs9ATXrIPHAxu/1nHkUqNcPmSpfxq2hy2O2oA6nKuETNR36/2Gi0Ys6vgfkXP1kbEzHrdy5KPJYhu5zTW2NWEsEGYIgIPQtfNU3F3pnjjCnG0laqilasYKozanjqQl3Wz6hMMpXU6kvniQizxwR/OO6iXIOJudH+Mr9PmsxLjlA8JxkRqjhwvXcAwAVWDFqSE51YD4UmC/vSI2wCHL1+2ulAohUs2wNPY+5yMM/JOl2DnXIwwPlw9Ka29ZOWEYRh96Kk/GnAkpQaKtgZl5aGde4gv+gumimdCvuhQKLw9wblVH9FVx8UpuG90oR+uXhidJufwRhsoKmXwTGR9bjxvvbqNa2fqMCGw9pLhXvwvstf51m81wxadEbsKSjSW4GtwCX9PGP8WsXur/dxMYDk1eF4x2HE2QswbwVJpnFrtmkKH06Tog282zg/03E9ga8WUTElzcmrHsrha0vj4qof6nflqh5g0MjEPmE53zi8IYeqLLMs05tha/qYyQYnfgh1nERT4MMdFqiBCOanzfmgi2oxhw+0gjzV+/85WqiUaZiCdpxuvqvpO+DmCDVx7g==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700016)(23010399003)(82310400026)(1800799024)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: VHxNu7Pwh5rK4D6AtanlovGX4UkQ3Bmxu1DgUPf5ha3JRrhtP4BeVPURutEVEX3zFcUHq2s2p91GgOFps2FGMezeTmWgxlPqAWoDcbGIjk3huFb2aXR6Fv9hLnfxbZDNOqBoK8YC8I2+VZ3EeXi0oGkzIgKyZHLG0zpmiMcZ2yR2U1xpmEdZyo6Xf9Kl3+HFjf0KWCa8aCG/s3gs/uWGx1lTqFBoX6ucBZAvWBBpKsxKrGcaVtVvh6K9n3GrlgFj1eXRMdc7LmM4VrDC4wgmHPHMNtRZ2YVQXqW1kJHSS9DHG0FmH+IWVGYZDrp3/97oloRzVkHHmZgWPoabFOvWRLGOjXOgH+K1TsfLrJ+IQ1vyY0ZqgU+DZtd7LipWfxly7Mm8mGITnkbBMwmlQjB22VoDaztRbdVCutd6/QSRwUJNGKxfjz2EIkmUAxOo2Fec
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 16:23:02.2583 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92a6b20b-5de9-4c3c-f3bd-08df127c72e8
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0001854B.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8869
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
+ envelope-from=PratikRajesh.Sampat@amd.com;
+ helo=CH5PR02CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 14 Sep 2026 15:17:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -147,22 +127,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 12, 2026 at 3:02=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > These are either structs or unions that are used in an inlinable
-> > context: i.e. the generated documentation is likely to feature a
-> > version of this documentation block that does not include the intro in
-> > context of another command, event, or structure.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
-> This patch is also in "[PATCH 0/6] qapi: convert remaining "simple"
-> intro sections".  I believe it's included here accidentally.  Harmless
-> :)
+Enhanced SMT Protection (ESMTP) protects an SEV-SNP guest from sibling
+side channels by requiring that, while a vCPU is in guest mode, its SMT
+sibling thread is either idle in host mode or executing a vCPU the guest
+has declared to be a legal sibling.
 
-Yes, oops. Too far down the rebase chain.
+Add an "esmtp" property to request and use it to advertize this feature
+for KVM to write it into the launch-time VMSAs.
+
+Sample command-line:
+  -object sev-snp-guest,id=sev0,policy=0xb0000,cbitpos=51,reduced-phys-bits=1,esmtp=on
+
+Signed-off-by: Pratik R. Sampat <prsampat@amd.com>
+---
+ qapi/qom.json     |  9 ++++++++-
+ target/i386/sev.c | 15 +++++++++++++++
+ target/i386/sev.h |  1 +
+ 3 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 4a9b7f908844..010c5cc2bb82 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1119,6 +1119,12 @@
+ # @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
+ #     is enabled (default: zero) (since 11.1)
+ #
++# @esmtp: Enable Enhanced SMT Protection support for the guest.  Adds
++#     corresponding VMSA feature bit to KVM_SEV_INIT2 vmsa_features so
++#     the host applies it to each vCPU's VMSA.  Opt-in feature as it
++#     provides additional protection but with runtime overhead.
++#     (default: false) (since 11.2)
++#
+ # Since: 9.1
+ ##
+ { 'struct': 'SevSnpGuestProperties',
+@@ -1132,7 +1138,8 @@
+             '*host-data': 'str',
+             '*vcek-disabled': 'bool',
+             '*secure-tsc': 'bool',
+-            '*tsc-frequency': 'uint32' } }
++            '*tsc-frequency': 'uint32',
++            '*esmtp': 'bool' } }
+ 
+ ##
+ # @TdxGuestProperties:
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index cc16c6b07123..0b5767057175 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -3255,6 +3255,18 @@ sev_snp_guest_set_tsc_frequency(Object *obj, Visitor *v, const char *name,
+     SEV_SNP_GUEST(obj)->tsc_khz = value / 1000;
+ }
+ 
++static bool
++sev_snp_guest_get_esmtp(Object *obj, Error **errp)
++{
++    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_ESMTP);
++}
++
++static void
++sev_snp_guest_set_esmtp(Object *obj, bool value, Error **errp)
++{
++    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_ESMTP, value);
++}
++
+ static void
+ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -3296,6 +3308,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add(oc, "tsc-frequency", "uint32",
+                               sev_snp_guest_get_tsc_frequency,
+                               sev_snp_guest_set_tsc_frequency, NULL, NULL);
++    object_class_property_add_bool(oc, "esmtp",
++                                   sev_snp_guest_get_esmtp,
++                                   sev_snp_guest_set_esmtp);
+ }
+ 
+ static void
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 7725f92e1959..6b4128dea4ae 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -49,6 +49,7 @@ bool sev_snp_enabled(void);
+ #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
+ #define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
+ #define SVM_SEV_FEAT_SECURE_TSC     BIT(9)
++#define SVM_SEV_FEAT_ESMTP          BIT(17)
+ 
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
+-- 
+2.43.0
 
 
