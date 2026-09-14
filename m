@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C310C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2CAC88E78
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x683k-0002pB-UP; Mon, 14 Sep 2026 10:53:28 -0400
+	id 1x683l-0002qH-SO; Mon, 14 Sep 2026 10:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683H-0002bv-TP
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:00 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683V-0002fA-J2
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:20 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683F-0005lI-LA
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:52:59 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-49d0da752ffso41234865e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:52:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683R-0005oB-Ld
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:12 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-49e6bad7b79so19388075e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789397576; x=1790002376; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789397586; x=1790002386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FVFVBUMQqJn9U7YWOlxhFjuHlIQg5TGpWx/r9Z6Cy4Q=;
- b=AK5L5La+sXb3mYzrAjW+0BWFcoXHwsD8HdVW3A/lkipIb7emEPCac7c1YyvtSO+xAk
- IU7zNwwjEBZD9HA2DUTXLEEQFXB6nwkd3YvQ+GNEMgKFPbODWNsqtY1NhapJIaqfb6Et
- Nr4SnPrWfQqeSfrAp3F3SsOOK7s6G5nfK+KQs3p0KhcTIniVMvLmtsFgCYFmJNoBHru0
- 6LHe6pap3wKbPaAr/6yX5rMWIkA3DkcEZJfxsaxetT8Uj6bb2iMjrlsD9UmFbdDkycry
- xJdJt209SBjji8DtyZ8gG2a5KBxOox9eQI8/QTTuni97v9rkDTQmVW9F2kQon9KtGcN8
- 2RDQ==
+ bh=liBSdTP5ff8LcPYB2vyoXB7PN69e2uBoRDzt5wyNAtk=;
+ b=haSwEJgXjfAkYIfwQhjN685G7Cvo53rxJ8p+0YalHD3cDSc5840+kA2I9LJWzsgbqM
+ amZnffnsJae+QfMDRjYUkGG6QkXSI0WQ1Zr4bL3dyRFErkCPa8nnpowspr5VCbKOoLRl
+ KtSFfQa2y2ByFrfjvW3oBJC7T/3HSjqVFZy7HSvQI3hOmQqzGEcxBYLJk4/KUiH2OCZV
+ cBQSaCF8aIRO3eTsAqFPR98Llu1dtaAWxbw1el/7/ECX2/ZJKINh9c+7JjtR1IoSbFDL
+ RRBbjQIM/nakI+VmXYMFklYueGa7BjwcXyvo6QU8NpKhHvncw87fKaqpAyDPiBZ0e9I5
+ WLNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789397576; x=1790002376;
+ d=1e100.net; s=20251104; t=1789397586; x=1790002386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=FVFVBUMQqJn9U7YWOlxhFjuHlIQg5TGpWx/r9Z6Cy4Q=;
- b=EP3MoXq7TddGb/qb2PwpWMYodWK/PedMmf0+iZl3i0GL52qdwSnr47FR+By/AHXsSv
- 0zoDfjDuOGbG+5RvrY+SuiiJn6g/5C0pB1k72p/jZdfs+bp23TQDFxTPkMYH3+hunEcg
- roJTZ1vtchu3/xI6gaaIRF4SGP9EMoRY+RQ6lzqm3brZnDKKG+hm8XMfDT1hWxIwB+xK
- Woiq50haWXcnNUG2XxATN0nDjHBQGIv4i1I1BKCiLi7ynwNg4xZdb6+GdOmwojBZnDty
- 0fyBC4HPw7X9afEcGPMf/oIchSUo+5RblJMq8Ziuc2o4rS43FQhHgeW+GQmXDk6C8+SU
- EnrQ==
-X-Gm-Message-State: AFuF++kaCgpOGlu1a7AWspHVcqfEwTYM1N2qjfM2fJbTtjoRy2+5x9/5
- vdnc1JLE2WydnMZ2NWaqLoVsA5eB2UByOOHp+zqf6KPRVakkYC0IF70RaZHULvZz5mS7YgnrHQ7
- 0sq1R
-X-Gm-Gg: AYBFou3B0lhDhk2T0somGUURYGw1Xx/2lKl4P617UxIer63Usaov/D2Y/lccqgdugMP
- lFJpDf/gF1zPZ6dPiizxJo2B7WD41o+J+6qkDEwdk+5LruqaXEfxpQ3wqP8GvVRP3koqdrFfX/+
- WCpKMb4lhk+00NIpqUFOr5RNDlib2EYQUnHdFvN9aF22hfOBl+Rit03V+YSadX32sSd/VNyazHR
- YdYhQFhtobhnhD0HLHXWvIgRqiRaujuqBxU8ZCrTxT+NsABVgFXxd1q9ynf7PzcmXeGi5ZJLO1q
- 3te7opguAzGjKhimWCq+jU3jpFHmRBuZk2tnqWqvXdABdJm/71/OXckY5jtJVa5MDtruZvUOkUT
- r58NTAOt/WqnpimJOFYt31aY2EZifgJc0foxc/jeyXf6vLLqw90VAcciVOcPc3lcCSaYzIbmCuL
- v7umpAEgRu34ihJdWF5Mrr1pe92xkWN1L8ghOmcZvKEsVQhR08Oeogg8j/DHnb6eGy2X07
-X-Received: by 2002:a05:600c:a47:b0:49c:fc6e:8cb4 with SMTP id
- 5b1f17b1804b1-49e7a67741cmr36331425e9.24.1789397576170; 
- Mon, 14 Sep 2026 07:52:56 -0700 (PDT)
+ bh=liBSdTP5ff8LcPYB2vyoXB7PN69e2uBoRDzt5wyNAtk=;
+ b=TXhpFiz0tRpxU7QEoJ0VWCvfQJ3dbadBeCO7SAm2EzYBQQaOh2nUPxn/OSOVsIpNVu
+ iv4QNhM2QqfFPT0bYj7ja0QDUc5fwi4MID2o0ySDv9U9d+x1c2DVGrqdxUngKHMt/How
+ AwOW8FwB2WbeBYnnL27MLwwK0yM7QvXgEQkJmgk4vLzpwb1ziL6QXmS0bmiB95kHVq8/
+ r+fOXA4dRpT91Sznhg7JsVMbGo8fi1f6JdOyGF3CnRcSR5PMIeEEjglGpUJRzirpHsKQ
+ GslO19dQtYYJSl0dEUDizlLpvXEhMbYEWVomyUkF0QpE+Bqu48rp9ZxTI96CVQ9XZ2o6
+ Typw==
+X-Gm-Message-State: AFuF++ka2VUGfVE87RVGqnh9g35KZZzQ5EzlqV2EcLdacFnSM0qB02ra
+ sdwE7ghJBNopFkcnSuo1C+fwiD5nuaR1S9DsrT1otrl20azL20Cq9EAVMI/g4zaAqozOLrLx0cL
+ deiBb
+X-Gm-Gg: AYBFou3Fiy6BxGLKSLMDoJ3iI+mY23iOSVAV2US8FD1tht/87246C/AFh26xv68A137
+ yHi2ctz+5EqF/KTDFcWEvphV2mktpRMDZaU+VGzVRJFrRjy4qqJxa3nPtWIAwRSrpyVrR4LvQZK
+ p5Enb+gIHI2ZAS+/i9dHbV4nOzlTb5iMLptMIhQEcDamFhnskAZaQCM7hcGGkVWMghOOMxQmhW+
+ nZDkAa/nqt4JCfSqf+mGruZy+gKOTNqDS7xGKZpQypWOAbiwfn0CgHbbbFQauPbQ00z2AZNLy5W
+ qb/tCjZkfwVAu9Tj8V8PaCvruuFlj370GrF5qPDSlQwIWx+hFkL6ryaoOU+qysd4gk6GdJDdQnY
+ HVGXQ9r6FCjiZmjawd7yPeoExfPpEEziiVpuc0ojETsWBGNHjnFwFtAXQTEjapJD/42TN2Xzs0U
+ jwccI9va8b+lw4eG8T9YiQy2xBbRQOawBaG5QFQAlguwwTELZQ3H1JeHmO39kcaA/SZO1i4ODGf
+ YZ1MdI=
+X-Received: by 2002:a05:600c:190d:b0:49e:7a00:b9a5 with SMTP id
+ 5b1f17b1804b1-49e7a63a894mr37881775e9.4.1789397586155; 
+ Mon, 14 Sep 2026 07:53:06 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:aec6:5a37:bc54:89b7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e63c9a7c9sm540230595e9.13.2026.09.14.07.52.55
+ 5b1f17b1804b1-49e63c9a7c9sm540230595e9.13.2026.09.14.07.53.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 07:52:55 -0700 (PDT)
+ Mon, 14 Sep 2026 07:53:05 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH v2 2/9] iotests/040: cover large and fragmented commit runs
-Date: Mon, 14 Sep 2026 16:52:43 +0200
-Message-ID: <20260914145250.2792879-3-den@openvz.org>
+Subject: [PATCH v2 9/9] block/block-copy: coalesce write-zeroes tasks
+Date: Mon, 14 Sep 2026 16:52:50 +0200
+Message-ID: <20260914145250.2792879-10-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260914145250.2792879-1-den@openvz.org>
 References: <20260914145250.2792879-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=den@openvz.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=den@openvz.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,163 +104,198 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-040 never commits runs long enough to span more than one block-status
-query, so the answer that commit_iteration() is about to start caching
-goes untested.
+Task size was capped to block_copy_chunk_size() regardless of method,
+which sizes a task by the copy buffer. A write-zeroes task carries no
+buffer, so that cap only splits one long known-zero run into a crowd of
+small COPY_WRITE_ZEROES tasks, each with its own request against the
+target.
 
-Add two cases on a base <- mid <- active chain, committing mid so the
-job takes the regular commit path rather than active commit, and compare
-base against a snapshot of mid taken before the commit. One case mixes
-multi-megabyte data, zero and hole runs, the other fragments them down
-to single clusters with every transition off the 512K boundary.
+block_copy_task_create() already decides from zero_bitmap how far a task
+may run, so add block_copy_widen_zero_area() to that decision: for a
+write-zeroes task, re-search the dirty area under BDRV_REQUEST_MAX_BYTES
+instead of the buffer chunk size, and let the existing clamp cut it back
+to where the zero run ends. That bound is INT_MAX rounded down to a
+sector, so it is aligned down at the use site, nothing bounding
+cluster_size. Widening is safe: an overlapping caller waits on the
+task's BlockReq via reqlist_wait_one() rather than observing it
+mid-flight.
+
+A request that large is only cheap where the target zeroes by metadata.
+BDRV_REQ_NO_FALLBACK in supported_zero_flags rules out the targets which
+cannot, qcow2 v2 and iscsi among them, but it is optimistic for the rest:
+file-posix advertises it at open and only learns from a failing
+fallocate. So the first widened request also asks for it, which costs
+nothing when the target obliges and fails without writing when it does
+not. The run then keeps every write-zeroes request at the buffer chunk
+size, and the range that found out is written in those chunks.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/qemu-iotests/040     | 102 ++++++++++++++++++++++++++++++++++++-
- tests/qemu-iotests/040.out |   4 +-
- 2 files changed, 103 insertions(+), 3 deletions(-)
+ block/block-copy.c | 99 ++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 92 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qemu-iotests/040 b/tests/qemu-iotests/040
-index 5c18e413ec..e01c9385ba 100755
---- a/tests/qemu-iotests/040
-+++ b/tests/qemu-iotests/040
-@@ -25,13 +25,14 @@
- import time
- import os
- import iotests
--from iotests import qemu_img, qemu_io
-+from iotests import qemu_img, qemu_img_create, qemu_io, compare_images
- import struct
- import errno
+diff --git a/block/block-copy.c b/block/block-copy.c
+index c0a3359938..16f3d04819 100644
+--- a/block/block-copy.c
++++ b/block/block-copy.c
+@@ -38,6 +38,12 @@
+ #define BLOCK_COPY_SLICE_TIME 100000000ULL /* ns */
+ #define BLOCK_COPY_CLUSTER_SIZE_DEFAULT (1 << 16)
  
- backing_img = os.path.join(iotests.test_dir, 'backing.img')
- mid_img = os.path.join(iotests.test_dir, 'mid.img')
- test_img = os.path.join(iotests.test_dir, 'test.img')
-+reference_img = os.path.join(iotests.test_dir, 'reference.img')
++typedef enum {
++    ZERO_WIDEN_UNPROBED,
++    ZERO_WIDEN_ON,
++    ZERO_WIDEN_OFF,
++} BlockCopyZeroWiden;
++
+ typedef enum {
+     COPY_READ_WRITE_CLUSTER,
+     COPY_READ_WRITE,
+@@ -159,6 +165,8 @@ typedef struct BlockCopyState {
+     bool skip_unallocated; /* atomic */
+     /* State fields that use a thread-safe API */
+     BdrvDirtyBitmap *copy_bitmap;
++    /* Whether the target zeroes by metadata; see block_copy_write_zeroes(). */
++    BlockCopyZeroWiden zero_widen; /* atomic */
+     /* Clusters reading as zero; allocated on demand, frozen once valid. */
+     HBitmap *zero_bitmap;
+     /* Published only after the scan, with skip_unallocated already false. */
+@@ -187,6 +195,34 @@ static int64_t block_copy_chunk_size(BlockCopyState *s)
+     }
+ }
  
- class ImageCommitTestCase(iotests.QMPTestCase):
-     '''Abstract base class for image commit test cases'''
-@@ -951,6 +952,105 @@ class TestCommitWithOverriddenBacking(iotests.QMPTestCase):
-         self.vm.qmp('block-job-complete', device='commit')
-         self.vm.event_wait('BLOCK_JOB_COMPLETED')
++/*
++ * A write-zeroes task carries no buffer, so it may cover far more than
++ * block_copy_chunk_size(). Return how far it may run; the caller clamps it
++ * to where the zero run ends.
++ */
++static int64_t block_copy_widen_zero_area(BlockCopyState *s,
++                                          BlockCopyCallState *call_state,
++                                          int64_t offset, int64_t search_end,
++                                          int64_t bytes)
++{
++    int64_t aligned = QEMU_ALIGN_DOWN(BDRV_REQUEST_MAX_BYTES,
++                                      s->cluster_size);
++    int64_t zero_chunk = MIN_NON_ZERO(MAX(aligned, s->cluster_size),
++                                      call_state->max_chunk);
++    int64_t wide_offset, wide_bytes;
++
++    if (!bdrv_dirty_bitmap_next_dirty_area(s->copy_bitmap, offset, search_end,
++                                           zero_chunk, &wide_offset,
++                                           &wide_bytes)) {
++        return bytes;
++    }
++
++    /* @offset is dirty, so the search cannot have moved past it. */
++    assert(wide_offset == offset);
++
++    return wide_bytes;
++}
++
+ /*
+  * Search for the first dirty area in offset/bytes range and create task at
+  * the beginning of it.
+@@ -198,6 +234,7 @@ block_copy_task_create(BlockCopyState *s, BlockCopyCallState *call_state,
+     BlockCopyTask *task;
+     BlockCopyMethod method;
+     int64_t max_chunk;
++    int64_t search_end = offset + bytes;
  
-+class TestCommitLargeRuns(iotests.QMPTestCase):
-+    """Commit runs long enough to cross commit_iteration()'s cached span."""
-+
-+    MB = 1024 * 1024
-+    CLUSTER = 64 * 1024
-+
-+    # Runs several COMMIT_BUFFER_SIZE (512K) chunks long, of every kind.
-+    SIZE = 32 * MB
-+    LAYOUT = [
-+        (0, 4 * MB, 'data'),
-+        (4 * MB, 6 * MB, 'hole'),
-+        (10 * MB, 4 * MB, 'data'),
-+        (14 * MB, 6 * MB, 'zero'),
-+        (20 * MB, 4 * MB, 'data'),
-+        (24 * MB, 8 * MB, 'hole'),
-+    ]
-+
-+    # The same, with every transition off the 512K boundary.
-+    SIZE_FRAGMENTED = 384 * CLUSTER  # 24M
-+    LAYOUT_FRAGMENTED = [
-+        (0, 45 * CLUSTER, 'data'),
-+        (45 * CLUSTER, 55 * CLUSTER, 'hole'),
-+        (100 * CLUSTER, CLUSTER, 'data'),
-+        (101 * CLUSTER, 49 * CLUSTER, 'zero'),
-+        (150 * CLUSTER, 80 * CLUSTER, 'data'),
-+        (230 * CLUSTER, CLUSTER, 'hole'),
-+        (231 * CLUSTER, 69 * CLUSTER, 'data'),
-+        (300 * CLUSTER, 83 * CLUSTER, 'zero'),
-+        (383 * CLUSTER, CLUSTER, 'hole'),
-+    ]
-+
-+    def setUp(self):
-+        self.vm = iotests.VM()
-+        self.vm.launch()
-+
-+    def tearDown(self):
-+        self.vm.shutdown()
-+        for img in (backing_img, mid_img, test_img, reference_img):
-+            if os.path.exists(img):
-+                os.remove(img)
-+
-+    def build_images(self, layout, size):
-+        # A pattern of its own in base, so a misplaced cluster shows up.
-+        qemu_img_create('-f', iotests.imgfmt, backing_img, str(size))
-+        qemu_io('-c', f'write -P 0x11 0 {size}', backing_img)
-+
-+        qemu_img_create('-f', iotests.imgfmt, '-b', backing_img, '-F',
-+                        iotests.imgfmt, mid_img, str(size))
-+        for offset, length, kind in layout:
-+            if kind == 'data':
-+                qemu_io('-c', f'write -P 0x22 {offset} {length}', mid_img)
-+            elif kind == 'zero':
-+                qemu_io('-c', f'write -z {offset} {length}', mid_img)
-+
-+        # What base must equal once mid is committed into it.
-+        qemu_img('convert', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
-+                 mid_img, reference_img)
-+
-+        # An empty layer above mid, so top_node=mid is not the active one.
-+        qemu_img_create('-f', iotests.imgfmt, '-b', mid_img, '-F',
-+                        iotests.imgfmt, test_img, str(size))
-+
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'base',
-+            'driver': iotests.imgfmt,
-+            'file': {'driver': 'file', 'filename': backing_img},
-+        })
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'mid',
-+            'driver': iotests.imgfmt,
-+            'file': {'driver': 'file', 'filename': mid_img},
-+            'backing': 'base',
-+        })
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'active',
-+            'driver': iotests.imgfmt,
-+            'file': {'driver': 'file', 'filename': test_img},
-+            'backing': 'mid',
-+        })
-+
-+    def commit_and_verify(self):
-+        self.vm.cmd('block-commit', job_id='commit0', device='active',
-+                    top_node='mid', base_node='base')
-+        self.wait_until_completed(drive='commit0')
-+
-+        self.vm.cmd('blockdev-del', node_name='active')
-+        self.vm.cmd('blockdev-del', node_name='mid')
-+        self.vm.cmd('blockdev-del', node_name='base')
-+        self.assertTrue(compare_images(reference_img, backing_img))
-+
-+    def test_commit_large_runs(self):
-+        self.build_images(self.LAYOUT, self.SIZE)
-+        self.commit_and_verify()
-+
-+    def test_commit_fragmented_runs(self):
-+        self.build_images(self.LAYOUT_FRAGMENTED, self.SIZE_FRAGMENTED)
-+        self.commit_and_verify()
-+
-+
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'qed'],
-                  supported_protocols=['file'])
-diff --git a/tests/qemu-iotests/040.out b/tests/qemu-iotests/040.out
-index 1bb1dc5f0e..d2e2a2d98f 100644
---- a/tests/qemu-iotests/040.out
-+++ b/tests/qemu-iotests/040.out
-@@ -1,5 +1,5 @@
--.................................................................
-+...................................................................
- ----------------------------------------------------------------------
--Ran 65 tests
-+Ran 67 tests
+     QEMU_LOCK_GUARD(&s->lock);
+     max_chunk = MIN_NON_ZERO(block_copy_chunk_size(s), call_state->max_chunk);
+@@ -219,6 +256,10 @@ block_copy_task_create(BlockCopyState *s, BlockCopyCallState *call_state,
  
- OK
+         if (hbitmap_get(s->zero_bitmap, offset)) {
+             method = COPY_WRITE_ZEROES;
++            if (qatomic_read(&s->zero_widen) != ZERO_WIDEN_OFF) {
++                bytes = block_copy_widen_zero_area(s, call_state, offset,
++                                                   search_end, bytes);
++            }
+             boundary = hbitmap_next_zero(s->zero_bitmap, offset, bytes);
+         } else {
+             boundary = hbitmap_next_dirty(s->zero_bitmap, offset, bytes);
+@@ -465,6 +506,8 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
+         .max_transfer = QEMU_ALIGN_DOWN(
+                                     block_copy_max_transfer(source, target),
+                                     cluster_size),
++        .zero_widen = target->bs->supported_zero_flags & BDRV_REQ_NO_FALLBACK ?
++                      ZERO_WIDEN_UNPROBED : ZERO_WIDEN_OFF,
+     };
+ 
+     s->discard_source = discard_source;
+@@ -521,6 +564,54 @@ static coroutine_fn int block_copy_task_run(AioTaskPool *pool,
+     return 0;
+ }
+ 
++/*
++ * Widening a write-zeroes request only pays off where the target zeroes by
++ * metadata. Ask the first one to fail instead of falling back to writing the
++ * zeroes out: it then costs nothing, and a target which would have written
++ * them keeps its requests small for the rest of the run.
++ */
++static int coroutine_fn GRAPH_RDLOCK
++block_copy_write_zeroes(BlockCopyState *s, int64_t offset, int64_t bytes,
++                        bool *error_is_read)
++{
++    BdrvRequestFlags flags = s->write_flags & ~BDRV_REQ_WRITE_COMPRESSED;
++    int64_t chunk = bytes;
++    int ret = 0;
++
++    if (qatomic_read(&s->zero_widen) == ZERO_WIDEN_UNPROBED) {
++        ret = bdrv_co_pwrite_zeroes(s->target, offset, bytes,
++                                    flags | BDRV_REQ_NO_FALLBACK);
++        if (ret != -ENOTSUP) {
++            qatomic_set(&s->zero_widen, ZERO_WIDEN_ON);
++            goto out;
++        }
++
++        /* Nothing has been written, so the whole range is still to do. */
++        qatomic_set(&s->zero_widen, ZERO_WIDEN_OFF);
++        chunk = block_copy_chunk_size(s);
++    }
++
++    while (bytes) {
++        int64_t n = MIN(bytes, chunk);
++
++        ret = bdrv_co_pwrite_zeroes(s->target, offset, n, flags);
++        if (ret < 0) {
++            break;
++        }
++
++        offset += n;
++        bytes -= n;
++    }
++
++out:
++    if (ret < 0) {
++        trace_block_copy_write_zeroes_fail(s, offset, ret);
++        *error_is_read = false;
++    }
++
++    return ret;
++}
++
+ /*
+  * block_copy_do_copy
+  *
+@@ -552,13 +643,7 @@ block_copy_do_copy(BlockCopyState *s, int64_t offset, int64_t bytes,
+ 
+     switch (*method) {
+     case COPY_WRITE_ZEROES:
+-        ret = bdrv_co_pwrite_zeroes(s->target, offset, nbytes, s->write_flags &
+-                                    ~BDRV_REQ_WRITE_COMPRESSED);
+-        if (ret < 0) {
+-            trace_block_copy_write_zeroes_fail(s, offset, ret);
+-            *error_is_read = false;
+-        }
+-        return ret;
++        return block_copy_write_zeroes(s, offset, nbytes, error_is_read);
+ 
+     case COPY_RANGE_SMALL:
+     case COPY_RANGE_FULL:
 -- 
 2.53.0
 
