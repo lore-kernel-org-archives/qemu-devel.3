@@ -4,64 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E78C88E5C
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 02:14:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FBEC88E5C
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 03:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5wCA-0001G6-2E; Sun, 13 Sep 2026 22:13:22 -0400
+	id 1x5x4P-00039T-Rp; Sun, 13 Sep 2026 23:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x5wC2-0001D0-7U
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 22:13:14 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x5wBx-0007FV-Gc
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 22:13:13 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8AxHNIzWKdqkqULAA--.33726S3;
- Mon, 14 Sep 2026 10:13:07 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBx5cwyWKdqDmggAA--.43217S4;
- Mon, 14 Sep 2026 10:13:06 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Subject: [PATCH 6/6] target/loongarch: Add la664 CPU type
-Date: Mon, 14 Sep 2026 10:14:20 +0800
-Message-ID: <20260914021420.4065683-7-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260914021420.4065683-1-maobibo@loongson.cn>
-References: <20260914021420.4065683-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5x4E-00033p-Kb
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 23:09:16 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5x4D-0006zL-0O
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 23:09:14 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-86959a6f7f6so2165026b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 20:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789355349; x=1789960149; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vxEpeUk1PHnMzQBm4htKi9eebktVOTJEfLrkD8odnPI=;
+ b=qp3lJGxT5vjFu4cIk1bnjWtKD9UVEt64GJtCnjO9wcYFSk0sdduZ6FbRV5sXRK/F1g
+ +A4EXxbuhQ3zmL0uhzuKLWBIwzLkeeqa9b50equnTrDXp3VbrR4tZimsq+D4TcAc6kkK
+ dyQt52k/ML/OXBbo/c+cUvDxDm3acqdmPqXkxFeUH8b4HKMuXHTYB4Z8Byz+uGDQKypo
+ tloGm4YjLBE9PBIG4mH56zfRjnRsPiuWn6HBcDcw5+Txanp+M+DOit6JSpxu/Rjr75kM
+ q4VdJ0txFfgXl7Bu/fB24SeKNOmuZbd4ds947w4p8A4KMyYulTTrZywdndwJ0LO8dA/x
+ lDzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789355349; x=1789960149;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=vxEpeUk1PHnMzQBm4htKi9eebktVOTJEfLrkD8odnPI=;
+ b=HF8/mj//ysHD/30hftJMzfACwro9COpHVMS9PK2KspE3lQc1ch4G3dbVCgbo3vuMbY
+ q3N7Ta2QnX4rqT/wzgdZ4v8aqrzlAhOqMV//kWgYbaRXSGKUpeKDGyQDnijfaholqLhp
+ EembbVHR9IRA4rLWsEd0CdNJXZ8QOTPPheg651lz/vFTK53TCLz1xCcMiK07N+eFt1EQ
+ yrXDMj+OBBMYAf/xmRnEf+aHPkK9KJ/0coRSHEvTB2u6uJFZaErm+pvm3njSWfHBdrOv
+ OsKVV2+oX7FMmbeERw9VKhny9pjbnFb4Ze9QW6XdaShS6bMWJxcbQIJwBWD7AlD+nzDD
+ HjUQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxxHh8yEJthwSqw7W+2xRLLDA6xXgVJnfe82Ka1E3j29gBo5/D44Lb2NZ7VQ0pJ4ek1gl/0QFAgsuwv@nongnu.org
+X-Gm-Message-State: AFuF++lJ7DpPS/jwNb9i1z0O7EMBUJrmb3yx8TyYBmmVADqfj4LELgUs
+ Jl15zI9qYBgSl6pZ/3UfKSpR51NSbdJZpkjpI3patJFud2CDKVvNvuDh/K8865D5aL4=
+X-Gm-Gg: AYBFou2TDFZxZR15Ndc0JFrFm/U5qtUfGyy2tiDcwmc7X3oF46koeGpqK1DfcRLkyXV
+ y2XPtn42UcW/X7z+OHL3SJ8WxSUQCt8rOOGKYdH9EzAianCJhlA6rn+VbykBdFVfDqJGoXMUeJ+
+ Z3bvm/uO070DTLjUm3zo4IDXG2AyF6l0+97HaLgKBrMiqYnDQntD7W2r6VBSs+IE+YC/YuxcW3/
+ 13+PhZ5uTCOvj+gljDYU/6Yb/UXceLGwoB4erOCYijHTE2btMYYYscx55kReCbdI0SSjn9Y8j3t
+ Bu+O5LwFRCXpIQBbW/XCKihBAFr0StxgVJ8K1RtJP5BHPp+DEm/QNXls2tV18im3yWAp4BvMGQN
+ S3TU4GwNuJkTfA7T5X6yNmFCFBvOkoEaJdzRIots2wuJuMz0eiXAQmI1Szn7DPwlG+Scr3pIgjh
+ Ry6j/jtiBqqLOpr1Db8v+3QRoVI2PyXcM6NW7g+E3F5pB1i925esrzKz+P5SXOvnqTitoEwrgMF
+ w1I/rLSAkzxbhgwOkaTUHP05Ab1+h8ALnh8sQOBfqrMViTSf66CQfQ/AKokRA==
+X-Received: by 2002:a05:6a20:c88b:b0:3d1:c0e2:936b with SMTP id
+ adf61e73a8af0-3db404269e1mr1262320637.7.1789355349223; 
+ Sun, 13 Sep 2026 20:09:09 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:1665:91c0:9a80:f870?
+ ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33ba4e51449sm20325577eec.5.2026.09.13.20.09.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 13 Sep 2026 20:09:08 -0700 (PDT)
+Message-ID: <1abf89f0-51ec-427e-9b9f-3fc2a4570719@linaro.org>
+Date: Sun, 13 Sep 2026 17:09:06 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx5cwyWKdqDmggAA--.43217S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CrW8Kr1xJF4UuF4rWw1DCFX_yoW8Ww4DpF
- 9xZw42gFWxJFZrAa4DAa98Wrs8Jrs3W3y2vFy3tw4kArs3Xry7X3W8J398ZF1Dt3y8WF1I
- vr40y3WY9F4UJ3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUtVWrXwAv7VC2z280aVAF
- wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28IcxkI7V
- AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8l3
- 8UUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/1] OpenRISC Updates 2026-09-13
+To: Stafford Horne <shorne@gmail.com>, QEMU Development <qemu-devel@nongnu.org>
+Cc: Linux OpenRISC <linux-openrisc@vger.kernel.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260913070303.1010504-1-shorne@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260913070303.1010504-1-shorne@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,55 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most features about LA664 CPU hardware is finished in TCG and KVM mode,
-add la664 CPU type and it is similar with max CPU type.
+On 9/12/26 21:03, Stafford Horne wrote:
+> Hello,
+> 
+> Please consider for pull,
+> 
+> The following changes since commit d43c2d5f89db70359a7b3a7e2ad7098fcc0165ef:
+> 
+>    Merge tag 'for_upstream' ofhttps://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2026-09-11 12:04:42 -1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/stffrdhrn/qemu.git tags/or1k-updates-20260913
+> 
+> for you to fetch changes up to cfaf6a1edd8803f0334007dbbff9ca5eb293e98b:
+> 
+>    target/or1k: Implement l.extws and l.extwz (2026-09-12 08:31:14 +0100)
+> 
+> ----------------------------------------------------------------
+> OpenRISC Updates 2026-09-13
+> 
+> One patch:
+>   - Missing instruction definitions for word sign extension.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Applied, thanks.
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index f4d3d75e16..759fee0b26 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -457,12 +457,11 @@ static void loongarch_la132_initfn(Object *obj)
-     cpu->ptw = ON_OFF_AUTO_OFF;
- }
- 
--static void loongarch_max_initfn(Object *obj)
-+static void loongarch_la664_initfn(Object *obj)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-     uint32_t data;
- 
--    /* '-cpu max': use it for max supported CPU features */
-     loongarch_la464_initfn(obj);
- 
-     cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, 1);
-@@ -484,6 +483,12 @@ static void loongarch_max_initfn(Object *obj)
-     cpu->env.cpucfg[3] = data;
- }
- 
-+static void loongarch_max_initfn(Object *obj)
-+{
-+    /* '-cpu max': use it for max supported CPU features */
-+    loongarch_la664_initfn(obj);
-+}
-+
- #if defined(CONFIG_KVM)
- static int read_cpuinfo(const char *field, char *value, int len)
- {
-@@ -940,6 +945,8 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
-         .abstract = true,
-         .class_init = loongarch64_cpu_class_init,
-     },
-+
-+    DEFINE_LOONGARCH_CPU_TYPE(64, "la664", loongarch_la664_initfn),
-     DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
-     DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
-     DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
--- 
-2.54.0
-
+r~
 
