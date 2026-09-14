@@ -4,59 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B073CC88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110E6C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CJB-0002R3-NB; Mon, 14 Sep 2026 15:25:41 -0400
+	id 1x6CKL-0002x6-7h; Mon, 14 Sep 2026 15:26:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CJA-0002Qq-5Y; Mon, 14 Sep 2026 15:25:40 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1x6CKE-0002vG-Bc
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:26:47 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CJ8-0002dF-BC; Mon, 14 Sep 2026 15:25:39 -0400
-Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hkFVS2yXQz7vHr;
- Mon, 14 Sep 2026 21:25:36 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1789413936;
- bh=tbh+Br5kxKIjFAp5cHgNYrIJK3nC03h/+dmIwaKU+/w=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WxvwY0cV5NLTjVUanVpQCUptZEY7am8X/lNJ8g3h5FCyWKi8uk61zkQ9iDgJ8j3ek
- yfggIxY6z3mFiej1KhnS08SdfCvzpzorFOKb1OwzW6C7OSVaz86CPj2ugkMbjzrlbb
- aRhUR3BLG3D0ubgZ0caQPAiQ1XVeNTD0oezra1Mi0YUzGh/WmOocGsDley8iwQpsaY
- hmPjoCYXR/ixik3Xx18Y3W7MhCih6OzT383EGGgDEhxZ5b/EsqneHA1TTxg7HcfJT8
- EaZrI5MAewbciL6zpomoqNzH197SsxrbE1MkK5VQqO3W/X4kj0cXWKk3ck2bXcMzMz
- s/4w40VFp2+SQ==
-Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
- [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hkFVS1Qfcz80JX;
- Mon, 14 Sep 2026 21:25:36 +0200 (CEST)
-From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	peter.maydell@linaro.org,
-	alex.bennee@linaro.org
-Subject: [RFC PATCH v1 2/6] target/arm: model Cortex-M0+ privilege extension
-Date: Mon, 14 Sep 2026 21:23:18 +0200
-Message-ID: <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
-References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1x6CKC-0002sY-Kl
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:26:46 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68EIoSG51459098
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 19:26:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ m13jukTxSWBbbSPc9HV3LDc0mYIPpGcyLvW0845Pa/g=; b=GCVyzxAkNvwJod81
+ FqnMSK9u/gWAjD02liapObTL4GT2+LX22FNfsYeawqUyQVVr/OTKbQyvaYRY51C9
+ sEWzxyfWWrLLjjF5n8UwAAcfPzMekKS42z0Ml2GVbJ5KpE0h02ITYH+nWBXlyH6W
+ 4K3bbTH5uTvA3E3ywRikE3f+8//q59lYtPkIGgSkiFD/3hEomH8/nVTmD01qb4hI
+ IhX65yca3Q4UZvLWty2GI/0lPighIC6Z3sByrDCuVrikJYwLFOj0T2Eph9ZMmbY7
+ k27dcJQzWaZo6NJekmEEQrdvrNhNliU9ZnyYR8gt3d7nfV5qLRVo89a+RomMtLXo
+ uQ80Cw==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpnet0cq1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 19:26:42 +0000 (GMT)
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-7f4e8568ccdso5955181a34.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:26:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789414002; cv=none;
+ d=google.com; s=arc-20260327;
+ b=SUOR8jHHVQ6KWXtj73YUch9lJaUItZbMBK2wfXngZfja80X+MKIgoTJdm+m5W11z6k
+ Z7QCvaMAdC2NOXWyQ0sfcEB+Nof/nY3/cQUUB8t5Ee0Ff4xaE24ydOHPk8oPnRGRjgi3
+ mx+WlCPvFH5nACtgFob4r1kwAZ8Cl/akN0ZLwj3yDhOzKX684yIDLnODg8ifrcP52YAd
+ WV88L9dpRi89GwF6WtGvfr2QAsVcXnQPaPG6FKHtoXgT4QBOOqei2tEpkSeNGijtPbXX
+ u/sSUg/5Hc0l2RpIWID85Y26yIdcxlqPEUovC9tclxF5qcL9T85/EFIYpufhmrw1EiwM
+ 9Czg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=m13jukTxSWBbbSPc9HV3LDc0mYIPpGcyLvW0845Pa/g=;
+ fh=OSkAXfMXEjEHEK9eR4/7X1OkKzMaRPS7D6WMhg2fqKg=;
+ b=dN+TQIDLpIFvP3QqdTyPvl4cvIn7t+QX+wigcm+mQcRHEfZXW+Wdza9puxitrlKOTa
+ Ew6sUon79rNGefhl/bt/G7NnVq3Y0q5xnFfJvjZ9deBXbho1sgvOTniD+D4wgAMPaX9m
+ PgCj6WkdWHxWHyJW/4KMAjvHDdiwtRNLTfgc8UtKCe4IOsSVWwFUln1ZXYGOwcTuKKRk
+ j1RkdUAs6fYaMlEv84D/c9S99kiwHv9IR1jUjPg3vGbWVYWBfYV0fHf4D7qkvPZSGG5r
+ nQak96QKODuL4yO8HiXBGieuO1mooOZMg2T5OaHa3cDie1ypDirWgzJbIaCiJsgJkX18
+ 8TOA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789414002; x=1790018802; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=m13jukTxSWBbbSPc9HV3LDc0mYIPpGcyLvW0845Pa/g=;
+ b=Ansv++UUf4UEFet5tPe7hX97uWWm803efDqoqPCE0T4Y7QxHcfP756te6e+sPZjV9l
+ obivNfQZtkhAJDDyplYyFm3fiYdHiLeUKSvbY6aEo7dn+RdUyB+Pnvyp3SxQOGxi9rDR
+ kq0rIBJruPv/MAFrBoYt/DxQg3J+lEL0U8m1isIWKx0O3lWDo7+p4o0SH7SJWEK4rH1F
+ OJKu2gRVDfIIYlxaZU/V+thCaGAtRa6quSxWl0g06NUdGuoFv1rHucPhMvXMRzByKEB8
+ MjuBMilx8tnVLDy8jQrdjHm86hbgpx+D0AFpakctXNlBG3j5xyeAVaVJCf1Sa8he3tXL
+ JURQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789414002; x=1790018802;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=m13jukTxSWBbbSPc9HV3LDc0mYIPpGcyLvW0845Pa/g=;
+ b=WmwLCiMcECwAlRlobeTHNlVx6nShl6mN+IcXD62QRehuqIdhYQyWbXMPtMtGCXeDRX
+ rwRPkADcDmA528ziqhrC/6RJEO0dop4NedKmCb/4OWZm17ZudvjWqpydHmz4MgLPQ4Uz
+ K/nc5ohSCVBxR2a4X2938PQhM72TTXInf091sWurYDheJ2ybdrplu4B0JwWQqPY+WOgX
+ 8dENWAtjWvB88iBx6g+i6VF5r6yCJ/6KArLgyuniY5uy//6+rRjUcB1xenxFkZVBP4vi
+ 2C2Yvolb0U8AQMYx9/W5lLj/s8Z7+7XCxDU5nGhmy0PYDNEeMOH05Jcnio+BU2aXtOEZ
+ w8ug==
+X-Gm-Message-State: AFuF++mo7O32QLYeL1uBnf4fv3b68gOe3eNLQzeLMAjHVtUbyM5T3nq7
+ RIck//HdGpQo/4DwXjYHad8ZMF3p1aLOrOa7Jb6q325pdY1/pym5X3NYqg4IdN3kZYjWpWZpkSk
+ cQUpnWT3Xjq2Ufl7vzVqHlK6/XZUIUd3QpLegLSi/OJHM2AqS/PisSCMq01j8vx9kVTAdjx6ejD
+ XOrccuiHaNQGw4RIhoigsuR87x9CzREb5U
+X-Gm-Gg: AYBFou3x0Q/zkS4wBQuZ62b5hJwuGHcC0MYmbx8TkcF9zptQp09b955X+uJ8eVdWmlN
+ XLRzsed+qVcWSWmnE+kdw8sXxNOhHT1s2n8e5KgdKJ9xZjZ65AvhnCqEAe/K/FpdpNsAbmYSVYZ
+ Brf/eHin8DF1lM74EnkRIo1TIkxHynd5fl8CTxaeDSsm1611k34uPEft9uxEglyOFwCtnVquDs5
+ x3GAETr6J6BEYHyEQ==
+X-Received: by 2002:a05:6820:1988:b0:6b3:558f:706c with SMTP id
+ 006d021491bc7-6c542b35ffdmr2542062eaf.30.1789414001681; 
+ Mon, 14 Sep 2026 12:26:41 -0700 (PDT)
+X-Received: by 2002:a05:6820:1988:b0:6b3:558f:706c with SMTP id
+ 006d021491bc7-6c542b35ffdmr2542037eaf.30.1789414001324; Mon, 14 Sep 2026
+ 12:26:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260911220825.143115-1-ltaylorsimpson@gmail.com>
+ <20260911220825.143115-7-ltaylorsimpson@gmail.com>
+In-Reply-To: <20260911220825.143115-7-ltaylorsimpson@gmail.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Mon, 14 Sep 2026 14:26:30 -0500
+X-Gm-Features: AcwNN1U2mEh5fzURLDtMaUd-wIwONBWE_AlhLI5b5IyOW0wrtYMzgd5ljPEAoCk
+Message-ID: <CAJ+KCYMNEWEBuN44HM2z1mGrmO-YO0RQ3fLc8mkx-vdWoVvL0g@mail.gmail.com>
+Subject: Re: [PATCH v2 06/10] Hexagon (target/hexagon) Check for qreg
+ multiwrite in analyze_packet
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com,
+ matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDI3NSBTYWx0ZWRfX/z/L1+aZ1hP5
+ s6y6FrpaLhIUhaC+rB7FWc4iwUPG4BN/4wy9Uf/e+xtCEiNljqsib5l5Qp19LMlx7qs1o3rfcEs
+ ARfj3JkgXi0Ode4lHQ9+C0WvpsLcZhU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDI3NSBTYWx0ZWRfX+ZrXpTLhCK+e
+ aahGbCKZa3PzuBHM5W5x09TyFqNZoSinX8f5vGCYaGgMyKGT3cjm7HTjn/x3rIFSNLij9yxEROh
+ /o5n3b5JPj0MHw2zI741tDKqkkpZIGTYr6Nzy+bF4hA4hMvYI/bjoqbGTEZo7Q2lvLqM1tP5yxT
+ kdJq1AIXrEU++jVgUOJJ5IVaSe17AI5BmoHRLM7Ri8vQwYa4ByBGKznPvdb12zmmq8YTnM3VvLX
+ TljIqQ+BqXPQ7vcSNmiO1+fg2X+sZttpio+Z3XSxhPZzkXVEhx0maF7Oz9fj2O1P/bccee4hqSq
+ peCLfOmELv6JNXg2X0JaipAIkI8v/mmFsvHQItA/t4ww/ekiF/lz1th3wMwQR40l4XueaF56nmN
+ x3b6uXfIb4Sd80TDUu3YErhYaC7zgHGqug9jYeMgURBJvsZIVm+wMdzOmy7BXWdQs08Mk69/XrV
+ qnla1NxgXpWxUxpe6ww==
+X-Authority-Analysis: v=2.4 cv=PKKaavqC c=1 sm=1 tr=0 ts=6aa84a72 cx=c_pps
+ a=+3WqYijBVYhDct2f5Fivkw==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=yOCtJkima9RkubShWh1s:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=oiUj86p4EGMqR00RCskA:9 a=QEXdDO2ut3YA:10 a=eYe2g0i6gJ5uXG_o6N4q:22
+X-Proofpoint-GUID: o826qtZaoFiD8YWkKAMNJLj7foo0iaez
+X-Proofpoint-ORIG-GUID: o826qtZaoFiD8YWkKAMNJLj7foo0iaez
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_03,2026-09-14_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140275
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,173 +169,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Armv6-M Unprivileged/Privileged Extension is optional. Cortex-M0 does
-not implement it, while Cortex-M0+ may implement it. The RP2040 Cortex-M0+
-configuration provides the extension.
+On Fri, Sep 11, 2026 at 5:08=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
+l.com> wrote:
+>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>  target/hexagon/translate.h | 7 ++++++-
+>  target/hexagon/translate.c | 5 +++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
 
-Add an ARM feature bit and a cortex-m0plus CPU type that enables it. Permit
-privileged writes to CONTROL.nPRIV when either the Main Extension or the
-optional privilege extension is present.
-
-Update the microbit Cortex-M0 test to verify that writes to nPRIV are
-ignored.
-
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
----
- target/arm/cpu.h                           |  1 +
- target/arm/tcg/cpu-v7m.c                   | 11 ++++
- target/arm/tcg/m_helper.c                  |  4 +-
- tests/tcg/arm/system/meson.build           |  6 ++
- tests/tcg/arm/system/test-armv6m-control.S | 66 ++++++++++++++++++++++
- 5 files changed, 87 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
-
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index e3f931dba2..66606b3444 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2168,6 +2168,7 @@ enum arm_features {
-     ARM_FEATURE_VBAR, /* has cp15 VBAR */
-     ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
-     ARM_FEATURE_M_MAIN, /* M profile Main Extension */
-+    ARM_FEATURE_M_UNPRIV, /* M profile Unprivileged/Privileged Extension */
-     ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
-     /*
-      * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
-diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-index 48b31d5eac..ac99c93ec3 100644
---- a/target/arm/tcg/cpu-v7m.c
-+++ b/target/arm/tcg/cpu-v7m.c
-@@ -76,6 +76,15 @@ static void cortex_m0_initfn(Object *obj)
-     SET_IDREG(isar, ID_ISAR6, 0x00000000);
- }
- 
-+static void cortex_m0plus_initfn(Object *obj)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    cortex_m0_initfn(obj);
-+    set_feature(&cpu->env, ARM_FEATURE_M_UNPRIV);
-+    cpu->midr = 0x410cc601;
-+}
-+
- static void cortex_m3_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-@@ -325,6 +334,8 @@ static void arm_v7m_class_init(ObjectClass *oc, const void *data)
- static const ARMCPUInfo arm_v7m_cpus[] = {
-     { .name = "cortex-m0",   .initfn = cortex_m0_initfn,
-                              .class_init = arm_v7m_class_init },
-+    { .name = "cortex-m0plus", .initfn = cortex_m0plus_initfn,
-+                                .class_init = arm_v7m_class_init },
-     { .name = "cortex-m3",   .initfn = cortex_m3_initfn,
-                              .class_init = arm_v7m_class_init },
-     { .name = "cortex-m4",   .initfn = cortex_m4_initfn,
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index 33c9e7c55b..f8461a4d66 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -2775,7 +2775,9 @@ void HELPER(v7m_msr)(CPUARMState *env, uint32_t maskreg, uint32_t val)
-                            !arm_v7m_is_handler_mode(env))) {
-             write_v7m_control_spsel(env, (val & R_V7M_CONTROL_SPSEL_MASK) != 0);
-         }
--        if (cur_el > 0 && arm_feature(env, ARM_FEATURE_M_MAIN)) {
-+        if (cur_el > 0 &&
-+            (arm_feature(env, ARM_FEATURE_M_MAIN) ||
-+             arm_feature(env, ARM_FEATURE_M_UNPRIV))) {
-             env->v7m.control[env->v7m.secure] &= ~R_V7M_CONTROL_NPRIV_MASK;
-             env->v7m.control[env->v7m.secure] |= val & R_V7M_CONTROL_NPRIV_MASK;
-         }
-diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index 5286997670..e92a83a8d5 100644
---- a/tests/tcg/arm/system/meson.build
-+++ b/tests/tcg/arm/system/meson.build
-@@ -45,6 +45,12 @@ tests += {
-                '-T', files('test-armv6m-undef.ld')],
-     'qemu_args': ['-M', 'microbit', qemu_base_args],
-   },
-+  'test-armv6m-control.S': {
-+    'cflags': ['-mcpu=cortex-m0', '-mfloat-abi=soft', '-nostdlib',
-+               '-Wl,--build-id=none',
-+               '-T', files('test-armv6m-undef.ld')],
-+    'qemu_args': ['-M', 'microbit', qemu_base_args],
-+  },
-   'semiconsole.c': {
-     'cflags': cflags,
-     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-diff --git a/tests/tcg/arm/system/test-armv6m-control.S b/tests/tcg/arm/system/test-armv6m-control.S
-new file mode 100644
-index 0000000000..42ce42db2b
---- /dev/null
-+++ b/tests/tcg/arm/system/test-armv6m-control.S
-@@ -0,0 +1,66 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Test that Cortex-M0 does not implement CONTROL.nPRIV. */
-+
-+.syntax unified
-+.cpu cortex-m0
-+.thumb
-+
-+#define SRAM_BASE 0x20000000
-+#define SRAM_SIZE (16 * 1024)
-+
-+#define semihosting_call bkpt 0xab
-+#define SYS_EXIT 0x18
-+
-+vector_table:
-+    .word SRAM_BASE + SRAM_SIZE
-+    .word reset + 1
-+    .word 0
-+    .word failure + 1
-+    .rept 7
-+    .word 0
-+    .endr
-+    .word 0
-+    .word 0
-+    .word 0
-+    .word 0
-+    .word 0
-+    .rept 32
-+    .word 0
-+    .endr
-+
-+.equ exc_reset_thumb, reset + 1
-+.global exc_reset_thumb
-+reset:
-+    /* Thread mode starts privileged. */
-+    mrs r0, control
-+    movs r1, 1
-+    tst r0, r1
-+    bne failure
-+
-+    /* Cortex-M0 does not implement the optional privilege extension. */
-+    movs r0, 1
-+    msr control, r0
-+    isb
-+    mrs r0, control
-+    tst r0, r1
-+    bne failure
-+
-+success:
-+    movs r0, 1
-+    b exit
-+
-+failure:
-+    movs r0, 0
-+
-+exit:
-+    movs r1, 0
-+    cmp r0, 1
-+    bne 1f
-+    ldr r1, ADP_Stopped_ApplicationExit
-+1:
-+    movs r0, SYS_EXIT
-+    semihosting_call
-+
-+.align 2
-+ADP_Stopped_ApplicationExit:
-+    .word 0x20026
--- 
-2.55.0
-
+Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 
