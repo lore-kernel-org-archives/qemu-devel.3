@@ -4,51 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D4A1C88E50
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2076AC88E70
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x63AI-0003Xj-JY; Mon, 14 Sep 2026 05:39:54 -0400
+	id 1x63AQ-0003nS-Fq; Mon, 14 Sep 2026 05:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x63AG-0003Vd-HF; Mon, 14 Sep 2026 05:39:52 -0400
+ id 1x63AO-0003lI-Un; Mon, 14 Sep 2026 05:40:01 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x63AE-0001OK-GT; Mon, 14 Sep 2026 05:39:52 -0400
+ id 1x63AM-0001Qc-Od; Mon, 14 Sep 2026 05:40:00 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9ddbt024283
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9ddbw024283
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 14 Sep 2026 18:39:42 +0900 (JST)
+ Mon, 14 Sep 2026 18:39:43 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=eTAG/xVTDu8dcH+/FixoLcGvVpt3IZn80fR3us/AzSs=; 
+DKIM-Signature: a=rsa-sha256; bh=hfXOxNhgyvb8AQCZcAX4QjuBjBcWOsa4u7uJV9L+VRw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1789378783; v=1;
- b=kQHJQNLgu5dzaFd7D6fBO/1iFr1OUamqrt84JgipXatja79ToQaMAp6d5pSKkopB
- buFAjedvKbsjVXVUt6BemRX/d1AbfuVKwvlVVgbiX7F+S2TcafrDNI5+wBuu3HVz
- CdomEief5bEJ7BCZcJmeJSoEr4WCPw2tolFA9xOD3G48rlw5yQm2kryg2KfUlo3/
- jSE77ayqVY89ZCuRIl48U/1WOmHs9KmiA5T8qAln2gn+3DoGE/5FvG5C7jCRzjsr
- ZRNYlj9Ic6leitzLCoGR+5QoXa3Vlm+pvROKCAN/PjukH0A2l/JGS01ihRyocqqI
- IMaixRgmVC5UJWDhAjO3IQ==
+ b=fJrMoCzVC1JdPbCzuFjYs/dUnBJ8EkL4XY4fb0kuryIwrBdb0+KXUILRiMXDYP9h
+ QoFUtzlzZdOxNmoSCfw32zBZJyNGMLjb6ujOFlG2aHKKjvXA8A+y4mNSWfcKMaMb
+ R/pH3N4Vx1L/z/lNsuy7UW//Qy9RXln5pDINVoIobzNaN+tf/Vu/2HG9HfqahrES
+ wIm+UAstT64YQSp0UzddGhOUU7AXQsCbQ1Ueen+N1+d+kD2Hv5LUbn6OoFoJM4/T
+ 7WRWlOBLbxvdPjCygPg4JV2s4WHgt/ieFwkeq4xXuXyukD+uh3Y2XE9jWVfoDwZX
+ kr+5KJWsDrr8g3snchGfqw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v8 0/5] hw/arm/virt: Remove the lower bound of HighMem IO
+Date: Mon, 14 Sep 2026 18:39:24 +0900
+Subject: [PATCH v8 3/5] hw/arm/virt: Remove the lower bound of HighMem IO
  Regions
-Date: Mon, 14 Sep 2026 18:39:21 +0900
-Message-Id: <20260914-virt-v8-0-7418578fef08@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33R207DMAwG4FeZck0qxzmWK94DcZHmsAWkdSRdx
- TT13clKRyckevlb1mfLvpIScgqFPO+uJIcxldQfazBPO+IO9rgPNPmaCQJK0GjomPJADefeRqs
- cYx2praccYvqamde3n5zD57lqw1o8pDL0+TKPGtmt+kcdGWUUbNcqg6jQmZdc9o1LTWrOdOg/L
- n1jXfN+IjdtxFVogS0CVsE65LoVUAHYFPivwAD1InAKNFq0GLkOHP2mIO6CAoZyEUQVALxG1aF
- GFJuCfBTaRZBVEMhcvYW1EdWmoFZBIiyCqoJvFTMgpIg+bgr6Ubj/Qs87OOGZUQjd/7+Ypukb+
- ygBLUYCAAA=
-X-Change-ID: 20250728-virt-833dafa6c11b
+Message-Id: <20260914-virt-v8-3-7418578fef08@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260914-virt-v8-0-7418578fef08@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260914-virt-v8-0-7418578fef08@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -57,16 +52,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
+ Andrew Jones <andrew.jones@oss.qualcomm.com>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5189;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5693;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=iuiJSO0BBhYprlj07SaAWAxtEStsacZyAT+OrNf6eXI=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9byA5cv/NDT7JYvc/a9mnNTVtFVK2XL6kcbVV02/zcvE
- 39+X8eyo5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCKmSQz/fY9JCs7bzbv856uo
- Zdc4rk0/kuf1MXuGYBbn6XuaHvXxyxj+x7sUuE/cVLMgKfvD30S1x5e4dqieTzG8UqnwPZPreM0
- 9fgA=
+ bh=WH/cPDbmNsqwg4tEuzyf+oCc5uuIlH5jH40f20cR0fs=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9byAzfvWOw4pftjTZL6woRkjcquZd1a4l9v1gnO0Gz/s
+ WzTJZZlHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABPJUGBk+GGnM2eylMminvWP
+ t/2YY/nOdI7hApkzV5L6NlZc7Unv/8jIsGyqe1bULZU3SlaPOvTD7s56GtwdYXNf7XRhSKwm56u
+ TTAA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -125,78 +119,101 @@ The hardcoded memory map in tests/qtest/libqos/generic-pcihost.c is also
 updated.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
-Changes in v8:
-- Updated the compatibility test and memory layout preservation to
-  virt-11.1.
-- Stored the HighMem MMIO size in the machine instance so querying
-  another machine type's properties does not alter the active memory
-  map.
-- Link to v7: https://lore.kernel.org/qemu-devel/20260528-virt-v7-0-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp
+ include/hw/arm/virt.h                |  1 +
+ hw/arm/virt.c                        | 19 +++++++++++++------
+ tests/qtest/libqos/generic-pcihost.c |  2 +-
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-Changes in v7:
-- Added patch "hw/arm/virt: Relax the lower bound of HighMem MMIO region
-  size", addressing a limitation pointed out by Igor Mammedov. I
-  previously described this as out of scope, but addressed it in this
-  version.
-- Link to v6: https://lore.kernel.org/qemu-devel/20260520-virt-v6-0-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 22e66d1a113c..3f1eb0583c94 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -145,6 +145,7 @@ typedef enum VirtGICType {
+ 
+ struct VirtMachineClass {
+     MachineClass parent;
++    hwaddr min_highmem_base;
+     bool no_tcg_its;
+     bool no_highmem_compact;
+     bool no_kvm_steal_time;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0871a35e11f7..79a896ee578b 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -230,8 +230,7 @@ static const MemMapEntry base_memmap[] = {
+  * Highmem IO Regions: This memory map is floating, located after the RAM.
+  * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
+  * top of the RAM, so that its base get the same alignment as the size,
+- * ie. a 512GiB entry will be aligned on a 512GiB boundary. If there is
+- * less than 256GiB of RAM, the floating area starts at the 256GiB mark.
++ * ie. a 512GiB entry will be aligned on a 512GiB boundary.
+  * Note the extended_memmap is sized so that it eventually also includes the
+  * base_memmap entries (VIRT_HIGH_GIC_REDIST2 index is greater than the last
+  * index of base_memmap).
+@@ -2527,6 +2526,7 @@ static void virt_set_high_memmap(VirtMachineState *vms,
+ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+ {
+     MachineState *ms = MACHINE(vms);
++    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     hwaddr base, device_memory_base, device_memory_size, memtop;
+     int i;
+ 
+@@ -2553,8 +2553,7 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+     /*
+      * We compute the base of the high IO region depending on the
+      * amount of initial and device memory. The device memory start/size
+-     * is aligned on 1GiB. We never put the high IO region below 256GiB
+-     * so that if maxram_size is < 255GiB we keep the legacy memory map.
++     * is aligned on 1GiB.
+      * The device region size assumes 1GiB page max alignment per slot.
+      */
+     device_memory_base =
+@@ -2572,8 +2571,8 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+         error_report("maxmem/slots too huge");
+         exit(EXIT_FAILURE);
+     }
+-    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
+-        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
++    if (base < vmc->min_highmem_base) {
++        base = vmc->min_highmem_base;
+     }
+ 
+     /* We know for sure that at least the memory fits in the PA space */
+@@ -4448,8 +4447,16 @@ DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
+ 
+ static void virt_machine_11_1_options(MachineClass *mc)
+ {
++    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
++
+     virt_machine_11_2_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
++
++    /*
++     * Do not put the high IO region below 256GiB so that if maxram_size is
++     * < 255GiB we keep the legacy memory map.
++     */
++    vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
+ }
+ DEFINE_VIRT_MACHINE(11, 1)
+ 
+diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
+index b77617524cac..287e8445ec5b 100644
+--- a/tests/qtest/libqos/generic-pcihost.c
++++ b/tests/qtest/libqos/generic-pcihost.c
+@@ -210,7 +210,7 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
+     qpci->bus.pio_limit = 0x10000;
+     qpci->bus.mmio_alloc_ptr = 0x10000000;
+     qpci->bus.mmio_limit = 0x2eff0000;
+-    qpci->ecam_alloc_ptr = 0x4010000000;
++    qpci->ecam_alloc_ptr = 0x90000000;
+ 
+     qpci->obj.get_driver = qpci_generic_get_driver;
+ }
 
-Changes in v6:
-- Rebased.
-- Link to v5: https://lore.kernel.org/qemu-devel/20260129-virt-v5-0-421c0abaaf26@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v5:
-- Changed to preserve memory layout for 10.2.
-- Added patch "test/acpi: aarch64/virt: Test version 10.2".
-- Link to v4: https://lore.kernel.org/qemu-devel/20260125-virt-v4-0-00d726b27224@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v4:
-- Rebased.
-- Edited the patch message to avoid confusing git am.
-- Link to v3: https://lore.kernel.org/qemu-devel/20251027-virt-v3-0-fa2a2f37e32d@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v3:
-- Fixed test failures reported by Peter Maydell.
-- Link to v2: https://lore.kernel.org/qemu-devel/20250901-virt-v2-1-ac2379402c80@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v2:
-- Rebased.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250728-virt-v1-1-0ab9682262c8@rsg.ci.i.u-tokyo.ac.jp
-
----
-Akihiko Odaki (5):
-      test/acpi: aarch64/virt: Test version 11.1
-      test/acpi: aarch64/virt: Allow DSDT and MCFG changes
-      hw/arm/virt: Remove the lower bound of HighMem IO Regions
-      hw/arm/virt: Relax the lower bound of HighMem MMIO region size
-      test/acpi: aarch64/virt: Update golden masters for DSDT and MCFG
-
- docs/system/arm/virt.rst                         |   2 +-
- include/hw/arm/virt.h                            |   3 ++
- hw/arm/virt.c                                    |  48 +++++++++++++++--------
- tests/qtest/bios-tables-test.c                   |  24 ++++++++++++
- tests/qtest/libqos/generic-pcihost.c             |   2 +-
- tests/data/acpi/aarch64/virt/DSDT                | Bin 5337 -> 5333 bytes
- tests/data/acpi/aarch64/virt/DSDT.11.1           | Bin 0 -> 5337 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt   | Bin 5423 -> 5419 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | Bin 6246 -> 6242 bytes
- tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | Bin 5391 -> 5387 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp          | Bin 6698 -> 6698 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb            | Bin 7812 -> 7808 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev     | Bin 10274 -> 10270 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy  | Bin 10274 -> 10270 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology       | Bin 5539 -> 5535 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot           | Bin 5354 -> 5350 bytes
- tests/data/acpi/aarch64/virt/MCFG                | Bin 60 -> 60 bytes
- tests/data/acpi/aarch64/virt/MCFG.11.1           | Bin 0 -> 60 bytes
- tests/data/acpi/aarch64/virt/MCFG.memhp          | Bin 0 -> 60 bytes
- 19 files changed, 61 insertions(+), 18 deletions(-)
----
-base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
-change-id: 20250728-virt-833dafa6c11b
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.55.0
 
 
