@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77277C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 00:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDCEC88E5C
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 00:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5uFY-00035s-MJ; Sun, 13 Sep 2026 20:08:44 -0400
+	id 1x5uFK-00031f-NH; Sun, 13 Sep 2026 20:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5uFO-00033S-6k
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:34 -0400
+ id 1x5uFE-00030r-UM
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:25 -0400
 Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5uFM-0006tW-Fb
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:33 -0400
+ id 1x5uFD-0006sL-A2
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:24 -0400
 Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc4aa0f1a94so930264a12.2
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:32 -0700 (PDT)
+ 41be03b00d2f7-cc1cea4bfd1so1071961a12.0
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789344511; x=1789949311; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2z9m/YOpcToSgBJOfPpTljwJ75aRrsoL4rxY7if3/dA=;
- b=aMAOmfTL4llwsw+oeDpKpEi75dFGGqduynKqTQzJXH23zQm0EilY1ukfn/IWCLIVJu
- Ftata7/aFNePz9QL/lpO4xe9N0KwCCICKo6yjnI/q5jRbsw6u8gksJoAVeOZTzMjgoHa
- qIoeK+B7Rzvnq7Q/otWpTcRRZgs9qUcMYTM7fuphcbdOc9CLOudL+b+xS9hTVT08kbfv
- ofKIob2am+Uy2E41B3uBx6qNeDeD1lH9bjHKPlRdowT4rrNW1GSy1PsDaS6HXj6Vhbnp
- psexLrk6WGkCf26771uMGAHtpOz7b+OGXdC75GYqxWfRwUs+SLRUA6u1tjphJ2t5I7z7
- yp/g==
+ d=linaro.org; s=google; t=1789344501; x=1789949301; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5xEbEy2sAnJ0uzzrJQuBzI/Eaa3crDuL6b/2mmoZJrA=;
+ b=GeB8VmtsFi/myzLg6jottxWnUh5n71m7H6BkVQDrmhHgftzVXY/6UkMvoBLLRDNOGB
+ LhZXhInygw/I0ojI73T/zQ2C6UShfw4HLrvOAl/F68f8/wOc1G072RZDvKG53QxTO+5d
+ 85E3A30cFQq3dkMWndksATLQ74bWdTiw3CxvPaEDaC4xKVLGYse/EV38QF6Qp6685gU2
+ 9WduyXdO+F3AnjkQavFokgGBUgfegQB3yR1s4Zh7d7fPYci4ekWxRinkZdXg6JWFQ2Uu
+ OrVOlWifyohK3tQdh2Fdz16gYsL9DfoGJmOlACyZfmlXGdxsxp/hmY/nMGgoLXQi6AWx
+ DhWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789344511; x=1789949311;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2z9m/YOpcToSgBJOfPpTljwJ75aRrsoL4rxY7if3/dA=;
- b=hJxnMtrR9lVIQrux7mSNZWygnaXNkgghqYRP0zAIjBvvWEgAo1wHbovCbY5G80k3Mr
- XdfNblxxWX6OjbrEqEBqCqm+ZUFR/sLVy42Hs2/jmAejnUQE33pJk+W26wp4Lx4Fxns7
- eVtrR8e7h4pVBjaxLmT+gfZaRMOYgSxu3ZL8zAOtGyvb8erFas6upvxFIVeOoFM3NP7+
- 0LYCQqpvnubiEs1YLYm4ctYXFw+IjvAayeJCNwDh3lIiGVWswMvQ64MIU9zSCsg1sOzf
- 5I+uQMah70EPVmAh6oki92UHrj7DG8/NssPmGVdD7WZdwqYUNjEs4yLYJx1+2dS+ZqvS
- BGlQ==
-X-Gm-Message-State: AFuF++kpUNd61OKgS+k/FW/NfrnZRtrGVAgGwES2iMoguN/iN4aBvrOY
- be+dL3AyQygXgp4x1FXx/knn5NZRdZhOXxoET2St1wkOS+SwgufCmSmInJgmJPZTyruDTADBifA
- TUuMDHHI=
-X-Gm-Gg: AYBFou0v0cK5voENRg9O8FvjCDKpzE9kInP4DL7GQ0DWRbzQorTIqZCh5MOIPmt5BvS
- F6e9+5IkTc3P7/xOkmjY2epi5jLHoFFgxZ1jYa8iZmNuum+XWHz/VBfeYN9Ht/TWbJt2Smi6huY
- OKsiAvrlnXtS4eHxkYxjtEShcueb/oP+axYhGofoIQgJiKtXhcHwdGWnBVr/UQ4ynjO0PRiMW35
- 9AZyd8q2h56pBvHvPbbnfcEbwy1VC32tZmwywQ87DB3bJ7/LkHq83ikcqAUhTY9bX/mJNXdpZTm
- zUpPr6lAVJz/41AUduYWdMY2SyU4NXCV+HOkO1uU8S1p2l6wRqXv2ueL6+j4h44fjx7mi2fr1VZ
- Ql5aMhyBu3c8TRrAw6mPxzticj5aM5fL7mnuqUO6nqRFxTRoHXQ2C895X+/0TOZzVkf0bpmwEZ3
- U8I57GwpVpAltgLXS1fOC3UozH5MtoSh2a4TDl+uv6vbZYpg5vqSAEUMDOdrxGUqf4LUvSRRzIV
- PWVgrE=
-X-Received: by 2002:a05:6a20:72a4:b0:3da:1e7b:ea27 with SMTP id
- adf61e73a8af0-3db0e485bb5mr16576419637.21.1789344511079; 
- Sun, 13 Sep 2026 17:08:31 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789344501; x=1789949301;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5xEbEy2sAnJ0uzzrJQuBzI/Eaa3crDuL6b/2mmoZJrA=;
+ b=LsslJllVgiq4OQEiEdlI39I3FyfZhlphNu3IA0VQPshTjPlIfiZLORcP60b/BDm/wS
+ wVLquN3aKgONbcgPfEkRN4CNEg910uIw7q1ylnBG14Mi3sBMIW3xZHARGLzFG+oRMlOR
+ zVe+nlqd8KbG/ZEbSSGjdxe74gtIDgRVzzxfrrPAzMhuKnsIIEiTbwA7x262i4cCTFd1
+ tP90BNB6Uz/usgESYOGqFrXmgL4w1M4RnADEAr2P27IR5j0ZbLhlJwCah0RVU1GgHErZ
+ 8Fh9r2yF7uYgnT4okJMkYRiAx6HSoU5LV2pHVHhqh9w6EKhJgoj7mF/2bfB8vjPdflUt
+ gzng==
+X-Gm-Message-State: AFuF++kXb72mzhLpmgqhopAih2LA+/RpUUNvSLIsQ+42gi5zn3GEUgtB
+ hGiy0QLZ44YUVmP3Z8benR+OQZ7NoeetYtEjSXaLTAhpAv1mJWTiIyrOBL7Q0WOSS5Qy8zsa0Fb
+ jtVO7lqM=
+X-Gm-Gg: AYBFou3pLmURnMSIi5L2RfU3nVmQK4mGH6XnTAj66btsNbYnHG5zMm7/zx5SMPXKugE
+ dEH+YjNLTYeKyomWO0mW9+YX4R+HSsnZRv63Qglxo2saWTmWQDh677sJiiqjJvRgkGXeigcM5P3
+ Iq8tvP5x/UKB5GcmE8LV2937jyi2TnyDhDK9Bc8UCjPSP19EnKVm70pyxhjc3H4nHFQClckq7wx
+ cAQNYNaZxuIQTHI2DijabcK5js2/uYHfDUm/i/5eMlXIzAf10ReHV3s/T3XnxoNmvOALjulhACO
+ 9VuLs7tI8Xsw929Tj44J0cNgH+nQio0azL7o4dOak/W7vkWJUWcYfRZpNJsovOUF2rsNMI2ngtH
+ GrUtER1SV95ZI7U5CM8tn26020F5V1nzvVeLZiackjlDpctzt8ASMYrTq1WtF9KlnRC+do6/4E3
+ q4kd6zyrEAIOpE8B0kqJu9fdpCAsGPncIBM0s+9TWvgsTTcE+TEM27OkMJ5Nb1PZJWeKh2i9mB+
+ E/eP0A=
+X-Received: by 2002:a17:90b:2885:b0:398:b46d:48c0 with SMTP id
+ 98e67ed59e1d1-39dec0849e5mr593283a91.18.1789344501316; 
+ Sun, 13 Sep 2026 17:08:21 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.30
+ a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Sep 2026 17:08:30 -0700 (PDT)
+ Sun, 13 Sep 2026 17:08:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: max.chou@sifive.com, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com,
  Alistair.Francis@wdc.com, philmd@oss.qualcomm.com
-Subject: [PATCH v3 10/11] tcg/riscv64: Validate AUIPC relocation range
-Date: Sun, 13 Sep 2026 14:08:13 -1000
-Message-ID: <20260914000814.785155-11-richard.henderson@linaro.org>
+Subject: [PATCH v3 03/11] tcg/riscv64: Rename uj-type to j-type format
+Date: Sun, 13 Sep 2026 14:08:06 -1000
+Message-ID: <20260914000814.785155-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260914000814.785155-1-richard.henderson@linaro.org>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
  envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
@@ -104,65 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+The current riscv documentation calls this j-type.
 
-reloc_call splits a PC-relative offset into a signed 12-bit low
-immediate and an AUIPC contribution. When the low immediate carries
-into bit 31, the existing 32-bit arithmetic can accept an unencodable
-positive 0x80000000 AUIPC contribution.
-
-Keep the split in pointer-width arithmetic and reject it unless the
-rounded upper contribution is representable as signed 32-bit. Factor
-this validation into split_auipc_offset so reloc_call retains its
-existing failure contract.
-
-Fixes: dfa8e74f9463 ("tcg/riscv: Add the relocation functions")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-[rth: Pass target as intptr_t to split_auipc_offset.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/riscv64/tcg-target.c.inc | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ tcg/riscv64/tcg-target.c.inc | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index c167ff5237a..7754bcf39f2 100644
+index a10b433f2ff..f77fded1dfa 100644
 --- a/tcg/riscv64/tcg-target.c.inc
 +++ b/tcg/riscv64/tcg-target.c.inc
-@@ -643,14 +643,28 @@ static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
-     return encode_jimm20(src_rw, offset);
+@@ -503,9 +503,9 @@ static tcg_insn_unit encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
+     return opc | (rd & 0x1f) << 7 | encode_uimm20(imm);
  }
  
--static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
-+static bool split_auipc_offset(tcg_insn_unit *src_rw, intptr_t target,
-+                               int32_t *ret_hi, int32_t *ret_lo)
- {
-     const tcg_insn_unit *src_rx = tcg_splitwx_to_rx(src_rw);
--    intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
--    int32_t lo = sextreg(offset, 0, 12);
--    int32_t hi = offset - lo;
-+    intptr_t offset = target - (intptr_t)src_rx;
-+    int32_t lo = sextract32(offset, 0, 12);
-+    intptr_t hi = offset - lo;
+-/* Type-UJ */
++/* Type-J */
  
--    if (offset == hi + lo) {
-+    /* AUIPC sign-extends its 20-bit immediate after shifting by 12. */
-+    if (hi == (int32_t)hi) {
-+        *ret_lo = lo;
-+        *ret_hi = hi;
-+        return true;
-+    }
-+    return false;
-+}
-+
-+static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
-+{
-+    int32_t lo, hi;
-+
-+    if (split_auipc_offset(src_rw, (intptr_t)target, &hi, &lo)) {
-         src_rw[0] |= encode_uimm20(hi);
-         src_rw[1] |= encode_imm12(lo);
+-static tcg_insn_unit encode_ujimm20(uint32_t imm)
++static tcg_insn_unit encode_jimm20(uint32_t imm)
+ {
+     tcg_insn_unit ret = 0;
+ 
+@@ -517,9 +517,9 @@ static tcg_insn_unit encode_ujimm20(uint32_t imm)
+     return ret;
+ }
+ 
+-static tcg_insn_unit encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
++static tcg_insn_unit encode_j(RISCVInsn opc, TCGReg rd, uint32_t imm)
+ {
+-    return opc | (rd & 0x1f) << 7 | encode_ujimm20(imm);
++    return opc | (rd & 0x1f) << 7 | encode_jimm20(imm);
+ }
+ 
+ 
+@@ -597,7 +597,7 @@ static void tcg_out_opc_upper(TCGContext *s, RISCVInsn opc,
+ static void tcg_out_opc_jump(TCGContext *s, RISCVInsn opc,
+                              TCGReg rd, uint32_t imm)
+ {
+-    tcg_out32(s, encode_uj(opc, rd, imm));
++    tcg_out32(s, encode_j(opc, rd, imm));
+ }
+ 
+ static void tcg_out_nop_fill(tcg_insn_unit *p, int count)
+@@ -633,7 +633,7 @@ static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
+ 
+     tcg_debug_assert((offset & 1) == 0);
+     if (offset == sextreg(offset, 0, 20)) {
+-        *src_rw |= encode_ujimm20(offset);
++        *src_rw |= encode_jimm20(offset);
          return true;
+     }
+ 
+@@ -1958,7 +1958,7 @@ void tb_target_set_jmp_target(const TranslationBlock *tb, int n,
+ 
+     /* Either directly branch, or fall through to indirect branch. */
+     if (offset == sextreg(offset, 0, 20)) {
+-        insn = encode_uj(OPC_JAL, TCG_REG_ZERO, offset);
++        insn = encode_j(OPC_JAL, TCG_REG_ZERO, offset);
+     } else {
+         insn = OPC_NOP;
+     }
 -- 
 2.53.0
 
