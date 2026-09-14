@@ -4,44 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2289AC88E64
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Sep 2026 23:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A34FC88E66
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 00:09:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5tZs-0007iQ-Tn; Sun, 13 Sep 2026 19:25:41 -0400
+	id 1x5uFQ-00033y-DI; Sun, 13 Sep 2026 20:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1x5tZr-0007iA-8T
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 19:25:39 -0400
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1x5tZo-0007b3-UL; Sun, 13 Sep 2026 19:25:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
- s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
- Date; bh=1XvX2Gz35Pbgtp17RL3W7VaYMzM2Sqat7cOLBOMrqNE=; b=V6gWhZjtJyXvesidA1c6
- pdh0fkB9nm0OtcQ/+Y2/G73ZckajlVtLWg6Im6aJmRHavdknWm18oxuJwm+uH+ru2ezHSvhNKok40
- hO0jKswmShBn3N32zaud+pP4OxW0HSukaou/FDyONkYALfbijm2FLiOrgYrMocXsD2+nQ77gtTTma
- uUVe9E8yLbjhVtMajSpBvqQccIEqiCvRrPxDQCSzkwDxLTSyrdlVN+YFyoZo6DgzWhhwZHG68eavM
- YpUqGSTagw/Ye8i3Y+e5ofF7DVue17QnQLnlT1IwNpZYzt6TIjVhflsOlM+IoRBs7dg9AGchOMUy5
- QdpVwyxYsY2/aw==;
-Date: Mon, 14 Sep 2026 01:25:30 +0200
-From: Samuel Thibault <samuel.thibault@gnu.org>
-To: qemu-devel@nongnu.org, adam@os.inf.tu-dresden.de, pbonzini@redhat.com,
- richard.henderson@linaro.org, mst@redhat.com
-Subject: Re: [PATCH] Revert 9696846600ca ("multiboot: Prevent loading of
- x86_64 images")
-Message-ID: <aqcw6tAYGBtThnZu@end>
-References: <20260829175047.2710519-1-samuel.thibault@ens-lyon.org>
- <ap6i1z057uqnYo6g@end>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5uFL-00032W-Vj
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:32 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5uFK-0006tC-5u
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:31 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38a0c7e841fso4137777a91.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789344509; x=1789949309; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jCURvq3peylDGPhQ7UrlrETYmQ0E5EKE8owoGQOGrkg=;
+ b=AaEMwBHhEJUuslsmQlIcMTw2wgY3Pzewif6wf9RDFat0B9IkYyQbJ07OZG5BM5/jSM
+ 0c6EumQDBqVMiKtkH0MPirma2e3L1URCcn53Ejm+kAzxJ70MHsLeCk7nzVRqtAn3km18
+ 17tWUfQVDHeabbY5BxpaMwGe2P27YbWSifIGFiP5HWrUVFaO3+dZK6ijl56Wsig02jR1
+ IQXK7q3ivRe247HK1r3ycpxuGhy+fwMRaKeVDJ9+YSDV9NYI8cbww9y/VKI21Ik099Ts
+ g9jI3uaLf8gg9PLDBHV7u8jg01V4IZSCOG1OOSPPk+SIYwoD/T9AI34CuNndc/qg83b6
+ GcWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789344509; x=1789949309;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jCURvq3peylDGPhQ7UrlrETYmQ0E5EKE8owoGQOGrkg=;
+ b=oaGr2O8ilg/RlvkKZzSXy5ToOSK8/0krdvsQxGxDlO1h5qKZ9wO9npy9g80S5ABrjz
+ 9X7YcBmLGc86NTOua7g7kUgqy9tD4jgHD+BdIEKRhg4jnEjuWQSeIRs/Rm4OUVl20GzR
+ bGAGHcGVBfWn7z3REOWPQL8OUlof7pmGQwaU8zbc33yqlBSlgnl9wyMjhO1E0EdofSUU
+ R0YN/MSWc7OtvRWMzo78jaa6tMbUva7a47SnBSAXT4jSUU67qfLdE4yRI59XVK3wVurY
+ ZFep9Ulo/FAixh5AsWknfAXNV77oKi3piGRuCxX0yH5XGNhO4gBdDB+snitTep7BkN+X
+ fvng==
+X-Gm-Message-State: AFuF++lj20ImQK7jcGm2QwB5a8aaVh3Kzhr1alvkT1uHaqXWbW6sDJo4
+ hHSBl/YlG8zjt6AuV+2/BGXHXSOljCp+kIn1E3+x0ii+kM2C308pKmakrswzYkbtgIj1p/dM0pr
+ udqa5RHw=
+X-Gm-Gg: AYBFou0cqsw2cfmhTpU+PWiBgHfKLnMoVeeUEZkVFua40pAUciNoGv1iRsgIg8p0jDI
+ dfqRVS/yGjBFXvQeCxhuANTZUQnXKezDtKE3uCyQq6Oe4bNsLDuo/fxAbaZvAJ9tE6FLEAfObe7
+ uJ9fufbwmTWDL6/+YPo537L6sYS4RtdJEKtuXEoPagNIVvMy3uqNtyRpJpgYjbY+xB+ip838Kmp
+ XTBR/jAPUWQtKOPcMUXAH6PFAHu5YDYvM7GtFeSkKYMnB+HykczWEj5xxS72IMhYiK7KuP0EVt0
+ wF+dha1TZoC9bGLs3S+VybW01Q+1eK011kI9IsdI7sfFFI8eG8pcbRV31UmoCu/IDZOoz5Jkz9j
+ bmntvqw+5dtJgRJFRA6IrVlXJQp6K1YKpNqNKv/RXiV6JW5kHq3uKw4j4TLBqCoL5Yo4pNSXVEZ
+ xp13KJGG5c3CoW+boJM+L7muQ9GvO74uI/mc7ZU77UeiunbKBIPrqMgdWpGI9lNKr7P+ZMSZjdj
+ fObyFAk4tC03F4eDQ==
+X-Received: by 2002:a17:90b:2885:b0:398:9be5:b419 with SMTP id
+ 98e67ed59e1d1-39dec0bf165mr583034a91.20.1789344508633; 
+ Sun, 13 Sep 2026 17:08:28 -0700 (PDT)
+Received: from stoup ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 13 Sep 2026 17:08:28 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: max.chou@sifive.com, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com,
+ Alistair.Francis@wdc.com, philmd@oss.qualcomm.com
+Subject: [PATCH v3 08/11] tcg/riscv64: Return success from encode_bimm
+Date: Sun, 13 Sep 2026 14:08:11 -1000
+Message-ID: <20260914000814.785155-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260914000814.785155-1-richard.henderson@linaro.org>
+References: <20260914000814.785155-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ap6i1z057uqnYo6g@end>
-Organization: I am not organized
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,64 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Centralize the range test for this encoding.
+Directly OR into the insn value.
+Assert success in encode_b.
 
-Any opinion on this?
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/riscv64/tcg-target.c.inc | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-With regards,
-Samuel
-
-Samuel Thibault, le lun. 07 sept. 2026 13:41:11 +0200, a ecrit:
-> Hello,
-> 
-> Ping on this?
-> 
-> With regards,
-> Samuel
-> 
-> Samuel Thibault, le sam. 29 août 2026 19:50:47 +0200, a ecrit:
-> > Loading x86_64 images in multiboot was disabled on the ground that since
-> > multiboot actually boots 64bit kernels in 32bit mode, the binary would
-> > have to be 32bit.
-> > 
-> > https://lists.gnu.org/archive/html/qemu-devel/2010-08/msg00913.html
-> > 
-> > But making the binary 32bit makes using debugging tools such as gdb
-> > unnecessarily complex since they don't understand what architecture the
-> > kernel actually is.  Letting qemu load x86_64 images and boot them in 32bit
-> > mode is completely fine, works, and is what the multiboot standard actually
-> > expects.
-> > 
-> > This notably fixes loading gnumach in x86_64 mode.
-> > 
-> > Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-> > ---
-> >  hw/i386/multiboot.c | 5 -----
-> >  1 file changed, 5 deletions(-)
-> > 
-> > diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
-> > index d544b62afb..004d5185fb 100644
-> > --- a/hw/i386/multiboot.c
-> > +++ b/hw/i386/multiboot.c
-> > @@ -196,11 +196,6 @@ int load_multiboot(X86MachineState *x86ms,
-> >          int kernel_size;
-> >          fclose(f);
-> >  
-> > -        if (((struct elf64_hdr*)header)->e_machine == EM_X86_64) {
-> > -            error_report("Cannot load x86-64 image, give a 32bit one.");
-> > -            exit(1);
-> > -        }
-> > -
-> >          kernel_size = load_elf(kernel_filename, NULL, NULL, NULL, &elf_entry,
-> >                                 &elf_low, &elf_high, NULL,
-> >                                 ELFDATA2LSB, I386_ELF_MACHINE, 0, 0);
-> > -- 
-> > 2.53.0
-
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 09bfce79bb7..e8e1480016c 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -478,22 +478,25 @@ static tcg_insn_unit encode_s(RISCVInsn opc, TCGReg rs1,
+ 
+ /* Type-B */
+ 
+-static tcg_insn_unit encode_bimm12(tcg_target_long imm)
++static bool encode_bimm12(tcg_insn_unit *insn, tcg_target_long imm)
+ {
+-    tcg_insn_unit ret = 0;
+-
+-    ret |= (imm & 0x1000) << 19;
+-    ret |= (imm & 0x7e0) << 20;
+-    ret |= (imm & 0x1e) << 7;
+-    ret |= (imm & 0x800) >> 4;
+-
+-    return ret;
++    if ((imm & 1) == 0 && imm == sextract32(imm, 0, 12)) {
++        *insn |= ((imm & 0x1000) << 19
++                  | (imm & 0x7e0) << 20
++                  | (imm & 0x1e) << 7
++                  | (imm & 0x800) >> 4);
++        return true;
++    }
++    return false;
+ }
+ 
+ static tcg_insn_unit encode_b(RISCVInsn opc, TCGReg rs1,
+                               TCGReg rs2, tcg_target_long imm)
+ {
+-    return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_bimm12(imm);
++    tcg_insn_unit insn = opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20;
++    bool ok = encode_bimm12(&insn, imm);
++    tcg_debug_assert(ok);
++    return insn;
+ }
+ 
+ /* Type-U */
+@@ -626,12 +629,7 @@ static bool reloc_bimm12(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
+     intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
+ 
+     tcg_debug_assert((offset & 1) == 0);
+-    if (offset == sextreg(offset, 0, 12)) {
+-        *src_rw |= encode_bimm12(offset);
+-        return true;
+-    }
+-
+-    return false;
++    return encode_bimm12(src_rw, offset);
+ }
+ 
+ static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
 -- 
-Samuel
-Linux, c'est simple : ça s'adresse à une machine qui est parfois un peu
-maraboutée mais qui d'habitude n'a pas d'états d'âme. Sur Usenet y'a
-plein d'humains et de primates, et ça devient vraiment gore par moment.
--+- TP in : Guide du linuxien pervers - "Le linuxien a-t-il une âme ?" -+-
+2.53.0
+
 
