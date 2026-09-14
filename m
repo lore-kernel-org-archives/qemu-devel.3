@@ -4,108 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55437C88E6E
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6799C88E6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x68eT-000861-RZ; Mon, 14 Sep 2026 11:31:25 -0400
+	id 1x68h9-0000Vu-Qq; Mon, 14 Sep 2026 11:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x68dZ-0007nR-3H
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:30:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cam@linux.ibm.com>) id 1x67sR-0007tF-UM
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:41:49 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x68dX-0007lO-5P
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:30:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789399824;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fNtH5wTxcL6+tfLz8Ih+76DUyT1jSsf5s4YqsEqbQtI=;
- b=XG880goQS1z6hLA0i+GEcGkDU+jrVGTB201Rcq6RBXD0mYKk63ytFvNjVs0DTP+BpNiuLi
- q6sLfa724+h4ARPk2GM0Yxb+2qW12ZChJvIFk17niuZ8yVk0IEdXidvNp0AVp+oR1FsLEp
- 9tJr6gqw5sFD0t6swlLrrcv8V3QjwgA=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-lXBCxL2MNl29eZ9xrer7sQ-1; Mon, 14 Sep 2026 11:30:23 -0400
-X-MC-Unique: lXBCxL2MNl29eZ9xrer7sQ-1
-X-Mimecast-MFC-AGG-ID: lXBCxL2MNl29eZ9xrer7sQ_1789399823
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-90ce8ad8002so78527326d6.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:30:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789399823; x=1790004623; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fNtH5wTxcL6+tfLz8Ih+76DUyT1jSsf5s4YqsEqbQtI=;
- b=lU4YxI2DTArFG9rT3SKthIp2WuH7kn3cpRFZ+83xav24TWJLsd01sf/Cmsvr/vxfa8
- HR+BUnwRlTlZ1xBcwKdBwDmGTc/0P0tUnb1EAul8XrfreGJanLOZpLsA042XW6TZ6Vp+
- 7Czi7BprSYuC+C2wnoxLAXYVEoKMtQz2kFeBzntQzCu8qISLuYB1vx+lrO9NTWGA3+bT
- YIcQ85kDkS1urvGsWg9Itb3tKktz2BkD01Hpc4xVkaarzznz44gmncj5rXedbioNv9J7
- aUiNva7Gw2tEQrsKa0bQr//y3Wice/DygILkZM1Jv8Zn1PYH28mEIaLlv33gYgD5iXTU
- bgiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789399823; x=1790004623;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=fNtH5wTxcL6+tfLz8Ih+76DUyT1jSsf5s4YqsEqbQtI=;
- b=J/FbGGdkuQFLhSHyV6umPXszbls+o0ejeGf8nlq82NJ12usfMHr1igznHhJpUhB0P3
- NFwAeQuJn0C5m6GeyVvtyh7+Fl20axJqN4XfNdYqVJQaE+lxGibsMkAOVY7zK1rb4th/
- gg542ifZf3s77jMyRcnNzEPfBtVGdk/KhFbpPdLDMSnc/5Rcatiy7/nZ/KBiQxGTPJYW
- tSrR5I6zoZp46AyQbnZ/9bVQSPCfT1PQQ/ffcb2D2dU/ZvUuQmeOuMzfo14a6DyfORmR
- k94YtLoIktnZ5Kvav5AWz8ATthgXSyRP3qW1PTg1lDrpIdJgZ8MfJnjwYvKE1zOvF9dM
- HzEg==
-X-Gm-Message-State: AFuF++nD3xx+mmq1XhftNPPEVzFkA74nxPCf0RTkF8M7rQLPhEY5ODbW
- csPsEd88XGAVymWq3LeTwBeP3h5ceWcVpRe/DzaE8mDyr5E8huCTqIDlOb04KK5y3i0VHXZKO7K
- 56LNDb6TQMRwcj82OuXbCcbFga+0eysJzucoSXjzYecjVeKjT7wAi2WLY
-X-Gm-Gg: AYBFou28g1zMlXUAmBOqIXefSIbqLqdwAxOY1RzyC+x0EA+72p0gANENkvo60JU250L
- x4uT2gZ99OuwhxxiJ+f5djK87l/3UF1J/wbdTCXMGFzmmmOBU/d3l7xsN8DtY0GHZ/+GmXxKk2K
- f9jes6z9668ET3azhUo6DB/a7T5Sxow9wg0MFC84XVpyPUTEFebnum1/5TZeSoMRjk7Rdz/hBvs
- cU2PaXVdL5wdNJqXraXjfCIOIrvb3Qz4ScK8XNFhJfX8B7+8OIafAD45LOiDYd44ArCz/KqVjn/
- VtQ7FBM8q0PpiFOQ8MwXwQVTUjXTmriWxf2WhVh2vGtQ/8vz7QoT6QPi3PbVTeov740CUscFfW2
- vq6QgTAedQyFeCp6HA5Q4Qvq8JNaSwy3IDy8f4hOGt9MhXExn7BEP7OB7XKo=
-X-Received: by 2002:ac8:7d56:0:b0:530:f992:b1de with SMTP id
- d75a77b69052e-5310cf0ac43mr44219971cf.3.1789399822272; 
- Mon, 14 Sep 2026 08:30:22 -0700 (PDT)
-X-Received: by 2002:ac8:7d56:0:b0:530:f992:b1de with SMTP id
- d75a77b69052e-5310cf0ac43mr44219021cf.3.1789399821594; 
- Mon, 14 Sep 2026 08:30:21 -0700 (PDT)
-Received: from localhost
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-530ca4ba156sm101144991cf.19.2026.09.14.08.30.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 08:30:20 -0700 (PDT)
-Date: Mon, 14 Sep 2026 11:30:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH] io: cork TLS writes to avoid small TLS records
-Message-ID: <aqgTBpC0wcuuzYWa@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260909120033.1303511-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <cam@linux.ibm.com>) id 1x67sO-000471-20
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:41:47 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68EEThC42306801; Mon, 14 Sep 2026 14:41:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=CD4r3HeiBL6fnZLcIeeSeamtU+oO
+ 4tY5tEoikVpvY88=; b=GL7sVnwVdJxbKXnKic3ydbv8tRZ4tpglo2Dil2hNycgH
+ fxTtyBEJh7YO+KExhED2bvgEYpfoEtnw4L440MCLt7fnPktkonCbHOTiDcGYK9Xu
+ X1UlC8j/wjWNJ+LBk2oHiWjeUjuCX49K5n5Kd8xfRohzY3PYBs7QfeIoL4zZi+oc
+ nSZ8YukCIgis0TS5zdFE0PTbJ3bYMcgQlDFxNdbFNCc4GYuWFOPGad/V2i2sp/zq
+ CeP31AyilguYNjjmpV6LMXxuyePkaRQuDdtzw1M/925t3OzTr5oPU1ojgkrnorH0
+ twQauZysq7djaaRBJuYa9PPbxtJCRA5xbKMvr26gMg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxf4t24f-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 14 Sep 2026 14:41:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68ED54rH2298657; Mon, 14 Sep 2026 14:41:30 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gnj2jxkdu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Sep 2026 14:41:30 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68EEfTB612976688
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Sep 2026 14:41:29 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E86BE58056;
+ Mon, 14 Sep 2026 14:41:28 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4A96F5803F;
+ Mon, 14 Sep 2026 14:41:28 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.34.124])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 14 Sep 2026 14:41:28 +0000 (GMT)
+From: Cam Miller <cam@linux.ibm.com>
+Date: Mon, 14 Sep 2026 10:39:40 -0400
+Subject: [PATCH] system/ram-discard-manager: fix
+ offset_within_address_space in replay_by_populated_state()
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260909120033.1303511-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260914-vmem_fix-v1-1-f69ef04a07b0@linux.ibm.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDS0MT3bLc1Nz4tMwK3WQLgxRzU1Nzw8REMyWg8oKiVKAw2Kjo2NpaAIz
+ H3cFaAAAA
+X-Change-ID: 20260914-vmem_fix-c80d75571aa6
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cam Miller <cam@linux.ibm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789396888; l=5156;
+ i=cam@linux.ibm.com; s=20260914; h=from:subject:message-id;
+ bh=lj/Ha5JigU5FReq0GQMxO5Sgzbq/beZtmQNUNuy4EFI=;
+ b=0hgyuiV9rHGMXt3mnXRTtjO183Ue//0ZQohKlZlKzNJrBF52qPaO4EC+bQybrVXHsc9DIrmAN
+ 98meQZ9sYkiDhPnuR6X4EVjO4/brsUFY8Bb2gPXz7Kav/3kcoqZmXRe
+X-Developer-Key: i=cam@linux.ibm.com; a=ed25519;
+ pk=hYUWUUTeypJyPcaAD0ddbYHhhzqy5jl7iMQD+G5s4hM=
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Xk59accv-ONPShFQTnvKqqHdPnkhsfmQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDIwMSBTYWx0ZWRfX4Y+LvVbUiA2l
+ 9PNKl+eDqraUjWCxqKdaTzlac5q6s5mJqVRkWnH+bcVBM66LBKQEN/1dNZxXS8cfl2OW0rXk3L5
+ ucuiUVFVXM6vHcYDtgTkNBYgom+SqUM=
+X-Authority-Analysis: v=2.4 cv=cvgOAF4i c=1 sm=1 tr=0 ts=6aa8079b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=jn8I2yiD5M9h5jQta8IA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Xk59accv-ONPShFQTnvKqqHdPnkhsfmQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDIwMSBTYWx0ZWRfXygW8jXXtl4hJ
+ bJjL2Zn2ZuyxX7Yv170qw7ByednVlfKk2Fci3sDHGoWjcqyr0aOIYVxFSyfbExpAN3DaCWWQ1Ax
+ AJrSpQosDmC/WI6Y1QQk8jWU1TZkYldS2dHGOC/SkD002+BL0puT8nH3frfyLDg0ZHsOVmqeIxm
+ Q5qIkYTnH/WFQoI39Sn2PMt4zWzxH387+Tzro21pV+mIpmVfHuiuwQT2l7HYOzFXZ0FIz6ieDuZ
+ xWo/YrhyrQU7ACGidamordU72gXcVxctKhR7ouPiC7jh1BnFcQ5Hm1IHdIkRuwhi26dnaiKbdMY
+ Wby/Ee+RMSLKWUWW/hC71Dy0m+uRo+FEIYSj2aKVWOrByX4szxkKY9bKD7uhnlld+vHRzt0jMtw
+ jLbFU45QNIYfpouldRRHyou78CH0hYVRgETid7QtnD5AyBue2qa//7PFe27MUV7gR7wZokSKbpJ
+ HQEIMQgyEgdEuAAajKw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_03,2026-09-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 clxscore=1011 priorityscore=1501
+ suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609140201
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=cam@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 14 Sep 2026 11:32:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,77 +137,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 09, 2026 at 01:00:33PM +0100, Daniel P. Berrangé wrote:
-> The migration code caches vmstate/ram writes into an iovec and
-> flushes this periodically. The total amount of data to sent
-> may be 100's of KB, but split across many iovec, each of which
-> is potentially quite small.
-> 
-> The QIOChannelTLS receives the iovec, but since GNUTLS cannot
-> accept iovec data, it iterates calling send for each element.
-> 
-> As a result of the migration data pattern, this results in
-> GNUTLS putting lots of small TLS records on the wire. This
-> has shown writes alternate between about 4k and 30 bytes
-> in some tests.
-> 
-> This is triggering the nagle algorithm on migration-test for
-> many of the TLS test cases, resulting in a "go slow" for I/O
-> that eventually hits the migration timeout configured by the
-> test.
-> 
-> Not every contributor reports seeing the "go slow" but for
-> those who do see it, it hits >= 95% of the time for at least
-> one of the migration TLS test cases run by 'make check'.
-> 
-> While we could disable the nagle algorithm (and multifd
-> channels already do this), that would stil result in lots
-> of small TLS records hitting the wire which is not good for
-> throughput. The migration code flushes in batches because
-> it wants large writes for high throughput.
-> 
-> To achieve this we must tell GNUTLS to encrypt data but not
-> immediately sent TLS records by "corking" its output. Once
-> the complete iovec has been written to GNUTLS, it can be
-> uncorked allowing it to hit the wire.
-> 
-> There is added complexity with uncorking on non-blocking
-> channels as not all encrypted data can be sent at once.
-> qio_channel_write() will return what was sent, but some
-> data might remain pending inside GNUTLS buffers. A later
-> call to qio_channel_write() will provide the same plain
-> text data buffers that have already been cached. Thus the
-> code must attempt to uncork GNUTLS again to clear pending
-> data and then deduct the equivalent amount of plain text.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Fix bug inside replay_by_populated_state() that forgets to initialize
+MemoryRegionSection field offset_within_address_space. Follow the
+established pattern of calling memory_region_section_intersect_range()
+to accomplish this task.
 
-I wanted to test across two hosts on this patch, not for the issue because
-I can't reproduce, but for perf, due to the expected reduce on write
-syscalls. But then one of my hosts died.. so I only did a run locally with
-PSK, running high dirty loads and sample the bandwidth without multifd.
+Prior to commit cc9c77f4ddf0 ("system/memory: implement
+RamDiscardManager multi-source aggregation"),
+replay_by_populated_state() had called
+memory_region_section_intersect_range() in order to initialize
+interdependent fields offset_within_address_space, offset_within_region,
+and size together, as shown below.
 
-vanilla:
+    s->offset_within_address_space += start - s->offset_within_region;
+    s->offset_within_region = start;
+    s->size = int128_sub(end, int128_make64(start));
 
-2203.89 2061.09 2243.31 2241.19 2183.49
-2186.59 (±74.59)
+cc9c77f4ddf0 reimplements replay_by_populated_state() initializing the
+fields of the given MemoryRegionSection instance by hand instead of via
+memory_region_section_intersect_range(). In doing so, it leaves
+offset_within_address_space uninitialized for some reason, as you can
+see below.
 
-patched:
+    MemoryRegionSection subsection = {
+        .mr = section->mr,
+        .offset_within_region = offset,
+        .size = int128_make64(MIN(granularity, end_offset - offset)),
+    };
 
-3185.10 3223.91 2877.11 2987.71 2632.30
-2981.23 (±241.40)
+Consequently offset_within_address_space defaults to GPA 0x0, which is
+incorrect. For example, on s390x, base RAM begins at GPA 0x0 and it is
+problematic to report that a virtio-iommu MR section lives there
+instead.
 
-That's 36% improvement.
+cc9c77f4ddf0 deliberately calls memory_region_section_intersect_range()
+from other related code paths inside the same file, namely
+replay_source_by_state() and rdl_populate_cb()/rdl_discard_cb(). It is
+unclear why the new replay_by_populated_state() implementation does not
+conform to this same pattern.
 
-I still think we can do more things on top when we will care about perf
-(ktls might be the next to think about), but it looks a good start besides
-fixing the extremely (kind of a bug) slowness.
+The effects of the bug include qemu crashes on multiple architectures.
+The following assertion failure occurs when driving the
+guest_phys_blocks_append() code path, for guests with virtio-mem device
+that has some memory plugged.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+    DBG: guest_phys_block_add_section: predecessor->target_end=280000000 target_start=0
+    **
+    ERROR:../system/memory_mapping.c:222:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
+    Bail out! ERROR:../system/memory_mapping.c:222:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
+    2026-09-11 16:03:57.405+0000: shutting down, reason=crashed
 
-Thanks,
+This crash can be triggered on x86 via the dump-guest-memory QMP
+command. The same crash can be triggered on s390x by restoring VM State
+that has been migrated to a local file. (I used libvirt to manage this
+migration restore operation, namely command virsh managedsave then virsh
+start.) Applying the fix resolved the crash on both platforms.
 
+Fixes: cc9c77f4ddf0 ("system/memory: implement RamDiscardManager multi-source aggregation")
+Reported-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
+Signed-off-by: Cam Miller <cam@linux.ibm.com>
+---
+ system/ram-discard-manager.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
+
+diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
+index 4e8816e5a2..e9a609e5cd 100644
+--- a/system/ram-discard-manager.c
++++ b/system/ram-discard-manager.c
+@@ -238,14 +238,15 @@ static int replay_by_populated_state(const RamDiscardManager *rdm,
+             }
+         } else {
+             if (in_run) {
+-                MemoryRegionSection run_section = {
+-                    .mr = section->mr,
+-                    .offset_within_region = run_start,
+-                    .size = int128_make64(offset - run_start),
+-                };
+-                ret = replay_fn(&run_section, user_opaque);
+-                if (ret) {
+-                    return ret;
++                MemoryRegionSection run_section = *section;
++
++                if (memory_region_section_intersect_range(&run_section,
++                                                          run_start,
++                                                          offset - run_start)) {
++                    ret = replay_fn(&run_section, user_opaque);
++                    if (ret) {
++                        return ret;
++                    }
+                 }
+                 in_run = false;
+             }
+@@ -257,12 +258,12 @@ static int replay_by_populated_state(const RamDiscardManager *rdm,
+     }
+ 
+     if (in_run) {
+-        MemoryRegionSection run_section = {
+-            .mr = section->mr,
+-            .offset_within_region = run_start,
+-            .size = int128_make64(end_offset - run_start),
+-        };
+-        ret = replay_fn(&run_section, user_opaque);
++        MemoryRegionSection run_section = *section;
++
++        if (memory_region_section_intersect_range(&run_section, run_start,
++                                                  end_offset - run_start)) {
++            ret = replay_fn(&run_section, user_opaque);
++        }
+     }
+ 
+     return ret;
+
+---
+base-commit: 2242ae1f7bdcf76e78cf8a987118952fc6c9a469
+change-id: 20260914-vmem_fix-c80d75571aa6
+
+Best regards,
 -- 
-Peter Xu
+Cam Miller <cam@linux.ibm.com>
 
 
