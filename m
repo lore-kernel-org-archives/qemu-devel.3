@@ -4,114 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420A6C88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592A5C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6BBS-00058Y-8d; Mon, 14 Sep 2026 14:13:38 -0400
+	id 1x6BJU-0007YA-EQ; Mon, 14 Sep 2026 14:21:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6BBP-00055P-Bx
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:13:36 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ id 1x6BJF-0007Ti-Mk
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:21:42 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6BBM-0004H1-Kv
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:13:34 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-66de7e0bc85so2993030d50.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:13:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789409611; cv=none;
+ id 1x6BJ4-00062g-Bx
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:21:39 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-6714595153cso98823d50.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:21:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789410087; cv=none;
  d=google.com; s=arc-20260327;
- b=aM4Y37oeEXRFx8ORHv0wbx6XFB95REhjhj4vCV4unaSg/3lnK955rSGEm71UYVr7k0
- L+DmYPZ9KxZUvZo6VsDR99n7vQhcZ8icOTZ4jruV6RtMJPqbcVFgM+TKCgm0lJLwyg1I
- rcDgE9sD/RbFFvk84Tz+w7NLqQ+nzm4xFZk5NUZGOS+jjC0Me29IPW4IvqMvk5uKQWET
- GDJxlVU4eHVRcjxu5Whf/ParDdWgG80ROdpB/9xxvBMwdCiw2U2dGzvoOnVDXFPWVzhP
- nFpIrXtxa1KNG6/P1eWL3D4Y6PQJNE8z7ixDNgGE4bFRlO48cHyhSSxDAH3yu0aV2dNp
- dd+A==
+ b=ZDgvKQvAN7Y+oswXaFS6qQNNaYcATVyd7SbL4ArHpPKitOdKj9f924n5xJDSjOww74
+ emF9zquNL+qClfU9O2RBlCbSguMhmRVJOZASUxv0pkXyXzmwAn89ommmeVGjrtaFTXja
+ Yx2TbLys4lFd022DqYdcXStu0ZR8bYW1MuzwIETt+3K1oN5Mhj37b1+t5LY2DXZXRY7V
+ c+WsNIYbax50OFdFWD0bznPjCX0pl3/zrAb0NI5RtmYD46FOZ60ivegPOM49aHDj1XgP
+ UKlt/YmUp7y5kJFAL9Z7uy9c7od8AY1Ze7kx9LY71Wp8pDUcpqrt9//0WUQ/k++GnUEy
+ DMsw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=6NFLycDbYQLQ/wsVZAiSevufSezxm5IAib9EU8Njv3o=;
- fh=HX/mT844IYtdkvMd3nZDmf1m/n/lIPFwyrGp8Yh+TCQ=;
- b=krkDzNoGlKAl58OSwOKuhMYamtuBFftoShPilTIX06LSRPv0hRFICW6beNdJU9SMb1
- yu6Qjg3dv5gbLfgFVnOzxARMd1HKXjdC26cshVYTJvLwhLe9EBDLcP1dtcW5ifDHzg9X
- uAgldBkIQyZbzZN6spK7iqaxL3P9PzBlwfwFywv9mCoos/giEUdpUKMyRrBmiMtw0q8l
- +jsZOgLjp4deS8sdbxVpq7jYlB1KVV/Xfrt/8BhqkgDJOiEHdfkrMXDtx7vvW/HgyaoH
- uuMGkXsq1hQlaIZagQmza3Q8ecbiqMMZKR6BjpJz6Il2oP5YKh2L2M+CqGJtqNGKpltP
- VGqQ==; darn=nongnu.org
+ bh=gJIVwsqYH2Ah5mcekCYPyLfQfKzQzbJsGOyIhIdz7PM=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=R66A+5WmAcMe9k1TipCWHiwWCO5HMg/1UTKmXC2RrDiz3Dx9idBR7jqzIqyRqaVCCp
+ RVPMaxlhc4cBHNRmE6rmqgt4JqBZj1KIcS/mkKXMh55FcKkRDpR67MDq3ll6OstEls+E
+ 4b1wZaqdbIwtLXCblT/pn9BDFvdMpJt0AgFxl9ag5MTRZjAuH1WzeCeG7w5k35y+MAdL
+ h7tnwLgGr9DA1jb/ZCfJFPT4py7mt7j7OCvsCTaGK+2dJhOuvgbjYw1ND2wMSzV0kWPT
+ FZYpohcgR1nLhau/9Z8AiayROsNgaCT9JJbzQDEU2TxsT+iyJZ8Dgy4bmbl0JDdI/bZ7
+ bPdg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789409611; x=1790014411; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789410087; x=1790014887; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=6NFLycDbYQLQ/wsVZAiSevufSezxm5IAib9EU8Njv3o=;
- b=MeGk3rJsUq+gNtZ+6GcxfIzAKRAKqNjx7XaiARLjvgcm1JLi3y1LNl2hnLSwd/6hFL
- VcGKKKH22N6VZwUQycgdAJQ87nBECjwrcsbPXBLaEzApLR24AqkfEwbr7VGYunWisJ5l
- OJo5Nrv0NM+BY/0gYOYFnToYJ1q2M1yATvv/x2ohXwPtALvk9Ud6fYoQ7MNuuCi/PHK7
- nWw3as7VmUDCPAF7WjJ2C69gyvD9BmGt99D8nksFA08u6kCnC2zoz9E+znDNqmJPpANW
- PDbywesmQMTr9dS7j9n4yR26pO6UWlJP++Kx/mbFM/qj5SNBP2Ic1PF1XtZTsIPkZQc/
- zUNQ==
+ :content-type; bh=gJIVwsqYH2Ah5mcekCYPyLfQfKzQzbJsGOyIhIdz7PM=;
+ b=eP0R7aPKYN6KGjf1V5Ogm5rUEErgauawJZFqFXT0k2sdfnVspPt0RjJAjbSdI4Mh9x
+ XRjWCyqxX3P5olz2LPBYBM5ydFhNpUXyLcKkMkqBKNecJarcypHry4JvtQj39vR1bwJ8
+ rv5Y+EjgpH4KfAWbPaxGXOikpN6rb1t85CnYLtlDjHsFN7Xd1afjPfXWfuD3LEnwFB6y
+ ch5iNuNJcFBZh2htKVCrsaqz7qt1Hih2Frgq2r+mWDU8kuR0hlMMyJ0IhEW+yOEkwzYd
+ s/yv+sDiAkryafy5y1P10fuIYA897XhWiEJwWPKW/MqNUN8Aamycdid6BlW5QaHAfcGw
+ 70fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789409611; x=1790014411;
+ d=1e100.net; s=20251104; t=1789410087; x=1790014887;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=6NFLycDbYQLQ/wsVZAiSevufSezxm5IAib9EU8Njv3o=;
- b=cLO/aQLWgsAp3/iItJU4oCRk7+LSRjeSMxqAZYIj4O6y6uaP1nNmZleUFJCvHEP7XJ
- 1kIFd8f2fIprQYqpP1KBafC22KZK54CW+cJOxgpChaF1/zzdk1ciLogqyLlRAYtIZsno
- E4jV/n0nyuHHP0uZcjyY8o4py7rFJX83obJ0nNpedZ8Xotu4c38UcckHuw6UMZla7ul8
- I9gf0DKk1br4R5rr/5JzqE8nm1abKY6qZTpNcQj0O1x35oLo8qKkZ5iZeX8ivIPt5WQ4
- JaEt7OzHm9j1NAywyKoiGmdlmEbNOEcryRXMc2QV2Y+CbuPMltTrpARLCpBiIKD/8V+F
- subA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwIVsUnVGrwbCUD1xYuHx23Sd8zwSK5/+YS7lhesl1CtDjsysAWa6tR+ZSktP/JrnbxNAzB6fDKZai2@nongnu.org
-X-Gm-Message-State: AFuF++kX+DqbZ3I8t9noSD4AsYSIHcqj+oyPRSfm2akYun16P8F7iiX6
- /QUyzJxpjTDJtkboIsSubKFm1LtwQgeH6TgFJUxQeYjHI1I7E5AyNy+H3CMam73++gtRLCCzr/y
- LnrEqVH85EO4ph1FJ+y7kU5ngXspBra0w6rD99dUD4g==
-X-Gm-Gg: AYBFou2dobJTYwWj4gNmsKeU7vrdGglNecElQ2+HieMHTJ4c/Yz+HRRLsG/bGlanwG5
- My/sNhmlPm4+malxCPu+yRcvy3GD56gSQoGhtUGcFl5V3wWVHOJ+Ph3pQ3psPKOI7hJSStGQlC8
- MJPpDNukdf1V01dCq1kvc+4Yi47rd174PTHmJ20DD4UL1SxZP5ir8+iPLBGjfO7VN0jKPat4O8n
- fcp37Gs/hsKbigeiVEYWKAqLyCYMjn/ESab+V+ZfWbrYonqPlRmECLaATsXIqkZLQQhuGQLzQp4
- JRHusqCOWtVvFbXuC2NzW0334jgxEOtawVsQXOvuRnQFyOQOo6mmfk5jkBj0d0Cf51X7zi7UXEw
- rJ8UPmGc7gFcAweiaC2drbYZgfx3ookBfobTHBZU=
-X-Received: by 2002:a53:d84b:0:b0:671:3ae7:5216 with SMTP id
- 956f58d0204a3-6714e1a22e9mr886767d50.69.1789409611175; Mon, 14 Sep 2026
- 11:13:31 -0700 (PDT)
+ bh=gJIVwsqYH2Ah5mcekCYPyLfQfKzQzbJsGOyIhIdz7PM=;
+ b=bJXHAOa9IgQpVdVLDPfIWHD5fXaa/BHMAk818ub6LSPdCtjwqdIaNvrrJGhz69IROZ
+ 9/OBvmlfsA4UO9H3XXDuLPktDo/QYse1jDrhyA8dwD4SDVCRg4KoAG0w14gh4N9rnS6Y
+ mnnyC6PPyPNH8ckjNxByVpdgeEynkvnUltYEMw5WsusR7jjZ2dVxKpZf6vqBQF55gg36
+ UCVcocfVd9EcDTMPDbRCPpYVH+lb0rgmZV2Gll8d40Jid8/cfUMREpJczklA1Iyu6w2o
+ yYR1cCD2KBkMHNKXLFZdjOmA6Px2/YqXoOuIDqEqjezZs9FGQp5mtr57XTZoETY3gZsM
+ dAcw==
+X-Gm-Message-State: AFuF++kfv9/EmNrDmpnTeSTiphd4q99D76+9NiB7wCly8SifLxrv9ex6
+ bFXghf7i7/SYmsrqcFHjywUOBXUCXC09tCojO/U6L+c1Zj7Ni9/qKOv9VKpwyO4L6e5EzRXcaLh
+ r9MGTZcyTez3LwuVlWXw0jPJlZr9Lg1YymQpJiMcyvQ==
+X-Gm-Gg: AYBFou0dSYhuDTqe6ONUE+qssmcU5hqzgp1vM9p2TFM/YrPjI5EJVL2Ji55eRxyCNvq
+ GiWDt8C2LSJKmnBPRNrUSrGxubL2Yoq4ZgOp28lvWkZhu7rUC1Mxg4QnXE1r3G/1+JFc/t5KyMs
+ UHCUmSBb2Xx1ePjbmlihdGEhl7cS7naoIWFYN/WgU0tPOEg2lgGzmV1DRARph4xGhhifB/YTfrw
+ 2DNS+Pyc8AYZ05vpFQlx5dO8lzifBQqAIWwqLkbUBOILOCirTc6pj31Xt86nf0Wu4Gj9fGu1JQP
+ b224nFJlvwi9g8BssHXXk26FztzTUnWRUg8YBqIcC/D/8aBABQrKhFyT40zVDl27Gjv9S3kWovJ
+ 4pe9VUNUaXBWkNTJaZZiUsNwACrCLFlSn/0v/tCI=
+X-Received: by 2002:a05:690e:190d:b0:66f:b454:5872 with SMTP id
+ 956f58d0204a3-67154fa0fcdmr135312d50.22.1789410087172; Mon, 14 Sep 2026
+ 11:21:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260904124604.2207440-1-alex.bennee@linaro.org>
- <20260904124604.2207440-103-alex.bennee@linaro.org>
- <dab85c9c-4718-48d1-a343-c2e6b5f8e24f@linux.ibm.com>
- <87a4pn8yra.fsf@draig.linaro.org>
- <CABgObfYEN8Qme6zXGYJpEeHTiFegjOm=Ym-3vU9LE1Z-Wsot3g@mail.gmail.com>
- <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
- <CABgObfZnyHenuVJ6maVs+jMNQCJeYhtcnXtXOqN1G3NcbvDt7g@mail.gmail.com>
- <aqfX2414cAMCcI18@redhat.com>
- <5cc8dd29-9093-4082-b8e5-32823f21c71d@oss.qualcomm.com>
- <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
- <871pavd8ry.fsf@draig.linaro.org>
- <1a8155b3-92f2-452c-bd0f-884c3e0bef69@oss.qualcomm.com>
- <858ea3b2-689c-4110-92e2-237b7aa87fb6@oss.qualcomm.com>
-In-Reply-To: <858ea3b2-689c-4110-92e2-237b7aa87fb6@oss.qualcomm.com>
+References: <20260806173123.333423-1-richard.henderson@linaro.org>
+ <20260806173123.333423-4-richard.henderson@linaro.org>
+ <CAFEAcA-NoW=39G_m21zQO6CzH5UU3MnsKuFNjkjX-55gzXqD2g@mail.gmail.com>
+ <a930c1b6-dd93-46ad-9e61-eafda9dcaac9@linaro.org>
+ <CAFEAcA_-UwXB9svLsFwJRfe37+CkwkRHnNVoWDScTEL=L4uOpw@mail.gmail.com>
+ <72dd2ada-3b4d-4563-860a-86bf6c6a8a90@linaro.org>
+In-Reply-To: <72dd2ada-3b4d-4563-860a-86bf6c6a8a90@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Sep 2026 19:13:19 +0100
-X-Gm-Features: AcwNN1Whzuf8R-D-70-U9T4t9BfxU7sHY04AIwm2wDDyx6iKQL9gfWTnTYk8HvQ
-Message-ID: <CAFEAcA_f_u6KgojmixnKBn=v1nLybMXYn5MBycrjCtgSP1J7TQ@mail.gmail.com>
-Subject: Re: [PULL 102/105] configure: remove cross_cc and gdb detection logic
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Farman <farman@linux.ibm.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Aniket Sahu <asahu1x@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>, 
- Zhuoying Cai <zycai@linux.ibm.com>, Joshua Daley <jdaley@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>
+Date: Mon, 14 Sep 2026 19:21:15 +0100
+X-Gm-Features: AcwNN1WOoZK8WHiuz9hJ3D7TwBPkXIWyG0rg1hXCnEGBe6ndfQz4xLISzP5txSE
+Message-ID: <CAFEAcA_7eYjtgXVidEMsG9ztZf1Zy8A4Qip_baSGxdNRQQKj6g@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] target/arm: Implement HCR_EL2.TID3 trap on
+ undefined TID3 registers
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,15 +120,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Sept 2026 at 19:10, Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
-> For vdso, we could simply build them as part of tests/tcg and tcg-tests
-> target, without having tests associated. This way they are always built,
-> and people can update them by simply copying them if needed.
+On Mon, 14 Sept 2026 at 19:12, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 9/14/26 07:51, Peter Maydell wrote:
+> > On Mon, 14 Sept 2026 at 18:21, Richard Henderson
+> > <richard.henderson@linaro.org> wrote:
+> >>
+> >> On 9/13/26 23:16, Peter Maydell wrote:
+> >>> On Thu, 6 Aug 2026 at 18:32, Richard Henderson
+> >>> <richard.henderson@linaro.org> wrote:
+> >>>>
+> >>>> It is IMPLEMENTATION DEFINED whether HCR_EL2.TID3 traps on registers
+> >>>> within the range which are not explicitly listed.  Previously we chose
+> >>>> not to honor the TID3 bit.
+> >>>>
+> >>>> However, with FEAT_IDTE3 it becomes mandatory to honor SCR_EL3.TID3
+> >>>> on these registers, so we might as well honor HCR_EL2.TID3 too.
+> >>>
+> >>> I thought we agreed not to change the behaviour here? Is this
+> >>> just a "forgot to update commit message" thing?
+> >> Oh, yes.  Because I did update the code to test for v8 in translate.c.
+> >
+> > So what does this patch do? Is it just a no-behaviour-change
+> > refactor so we have a place to add the SCR_EL3.TID3 check
+> > in the following patch ?
+> It does what it says on the tin -- it honors HCR_EL2.TID3 for undefined
+> registers.  We currently only do this via access_tid3 for defined registers.
 
-Then they'd need to be an odd special case for --disable-tests,
-I suspect, since we always want the vdso built even if we're
-not building test cases.
+But there aren't any genuinely UNDEFINED encodings in the TID3
+space, are there? The ID register space has to RES0, not UNDEF,
+for reserved encodings, and so we have cpreg structs for
+all the reserved encodings in the ID space.
+
+We give the ones in the TID3 space either the access_tid3() accessfn
+(which honours HCR_TID3 only for v8) or access_v7a_tid3() (which
+always traps on HCR_TID3 and which we use for exactly the set of
+registers that were defined in v7A).
 
 -- PMM
 
