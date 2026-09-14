@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF042C88E66
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E24BC88E6A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x634r-0000qd-K5; Mon, 14 Sep 2026 05:34:17 -0400
+	id 1x634q-0000oX-1M; Mon, 14 Sep 2026 05:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x634R-0000he-NA; Mon, 14 Sep 2026 05:33:53 -0400
+ id 1x634R-0000hd-MU; Mon, 14 Sep 2026 05:33:53 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x634M-0000S6-Sx; Mon, 14 Sep 2026 05:33:49 -0400
+ id 1x634M-0000S1-SX; Mon, 14 Sep 2026 05:33:50 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9WXEZ020350
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9WXEW020350
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 14 Sep 2026 18:32:39 +0900 (JST)
+ Mon, 14 Sep 2026 18:32:38 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=O5wDgXC/TuaFHn1dcGoYTVezrrNNB83UDSJG4TY3Oyo=; 
+DKIM-Signature: a=rsa-sha256; bh=/Bvxk6KnPo0hgWabVbGt/xH9R1ZKFET4Zr3/tO589OM=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1789378360; v=1;
- b=rtoouPYCadezWfB6yc131UGlYHIuD1NFayTaA8z2OphmB4LUUn5JMs7kmhJtE5El
- XgLyccwX3Ox2T+HZuorZ/RCbMRc2TJ5zgpzqwgJV2V3sSf739fFX3zEWXDegEb0n
- HjqjVhns5XATbUEXvQpEUWrOuL8HbIB1d+jeLM8zwl55e92fkV1wxEQvgEhfebNf
- IXs1mMiDM9QPVIc6eabwc2itrKOORm1z2WbxfuhAnRUBGvodh2FQfj1beeciGGCI
- 0719JJ1Tzr4H1S3bA0Tk1EAzXYykF/WjUFpoaXrxqHPQ8wAfUieA7H6NLk8vmhDC
- 23euKPbwQJscgvRbQjQ5uQ==
+ s=rs20250326; t=1789378358; v=1;
+ b=ClVR0MZMbJCOXXzXdwjsc+A5CXKty+BnArkLQzVeJiBl/u6RUfjMNicLUV8QM0wz
+ UfAR+7GYG780CyJrKHyK50AbHh25aBXvo7jjxnQPPjEMfUI0G6C6LyCqx4q/C72K
+ 17jMDZH/7/kxWmQSe5d87aYoVcJW3/UFgF28m9EsdbjEP7xvYo4ocTbnObWgJGx8
+ 5GMhMIrWKfqBh5JV04PKwQq/Qk05gWNbVUHRuE/umB8/rqPsHnESUoEeb69tHyP+
+ XHM7R/OGXMduIpDscl63tOpPNGIbs6e9yaA/VIN8HY0I6WirG7TN15Yj61UABXNj
+ UEEJdT/upDWYAJHn05kGNw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 14 Sep 2026 18:31:52 +0900
-Subject: [PATCH v4 4/4] hw/qdev: Introduce the realizing phase
+Date: Mon, 14 Sep 2026 18:31:49 +0900
+Subject: [PATCH v4 1/4] qdev: Clarify instantiation and realization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260914-qdev-v4-4-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260914-qdev-v4-1-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260914-qdev-v4-0-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260914-qdev-v4-0-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -69,13 +69,13 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5563;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5771;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=M+YVSnl+FD4HvWRd/TW0KV+djv8mwPLa3roXX6sR2bk=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9by/QYrdQsXXv550ldCdpc6e67E8nuenGpRLt98lsVFM
- raZs6l2lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATGR3LsP/sj8BTwMyJh4omX9H
- sPV52MRVb9T7uIsU7q6SPGLRIG2xmJFhmj9zm0n6ktWXdpsnqBRqhM5sc9N7skPixu4wvk3xcSv
- YAQ==
+ bh=b0gqtLvYz6FByvP/TSQ7Ojke53C6GB4YJE92Ws3z45A=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9by/XriIUsz/xyrYilSODyluFB8guGUz/9W7wnbw3Hrk
+ tOukCPiHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABOR6Gb4nxt8/U4V76Kqnfye
+ j7l3Ojo8PjG7Ke1M+oWwurNBvskpjAz/lFezine2GTr932WiMrP2dPd8zk61b5zbb0yI+XfD7KI
+ 1LwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -101,165 +101,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qdev currently permits reentrant realization of the same device, but
-supporting it adds complexity to device implementations. It is untested
-and likely broken.
+The distinction of instantiation and realization was vague in the old
+documentation so this change clarifies it.
 
-Add the realizing phase, and move the device to the new phase before
-invoking realization callbacks, preventing another realization attempt.
+The old documentation said:
+> The former may not fail (and must not abort or exit, since it is
+> called during device introspection already), and the latter may return
+> error information to the caller and must be re-entrant.
+> Trivial field initializations should go into #TypeInfo.instance_init.
+> Operations depending on @props static properties should go into
+> @realize.
+
+The first problem with the old documentation is that it is unclear what
+"trivial field initializations" means and why triviality makes
+initialization appropriate for #TypeInfo.instance_init. Another problem
+is that the documentation is not comprehensive enough; for example, it
+mentions @props static properties, but it does not say anything about
+the other properties.
+
+The keys to distinguish instantiation and realization are instance
+property setting and device introspection. The fact that initial
+instance property setting happens after #TypeInfo.instance_init and
+before realization implies that operations depending on properties
+should go into @realize.
+
+The fact that instantiation happens during device introspection but
+realization does not implies:
+- Instance properties may be added in #TypeInfo.instance_init.
+- Instantiation must not have any side effect not contained in the
+  instance.
+- Any operations without special requirements should go into @realize so
+  that they can be skipped during device introspection.
+- Instance properties added during realization will not be configurable
+  or introspectable before realization.
+
+Note these two facts to guide appropriate instantiation and realization.
+
+We also omit mention of the realized property because it is a QOM
+interface detail, not part of the device API.
+
+The statements regarding a future prospect to propagate the realization
+state change are removed. Device realization is propagated to child
+buses, but not to the devices on those buses. The proposed recursive
+propagation to child devices has not been achieved after 13 years, has
+been questioned [1], and is not relevant with the current API usage.
+
+[1] https://lore.kernel.org/qemu-devel/878syd84s3.fsf@dusky.pond.sub.org/
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- qapi/common.json       |  6 ++++--
- include/hw/core/qdev.h |  6 +++---
- hw/core/qdev.c         | 11 +++++++++++
- tests/unit/test-qdev.c | 34 ++++++++++++++++++++++++++++++++++
- 4 files changed, 52 insertions(+), 5 deletions(-)
+ include/hw/core/qdev.h | 42 ++++++++++++++++++++----------------------
+ 1 file changed, 20 insertions(+), 22 deletions(-)
 
-diff --git a/qapi/common.json b/qapi/common.json
-index f3218b846ce8..c77fc6b01a2a 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -14,15 +14,17 @@
- #
- # @initialized: the initial phase
- #
-+# @realizing: the phase during realization
-+#
- # @realized: the phase after realization
- #
--# @retired: the phase entered when unrealization begins or
-+# @retired: the terminal phase entered when unrealization begins or
- #           realization fails after starting
- #
- # Since: 11.2
- ##
- { 'enum': 'DevicePhase',
--  'data': [ 'initialized', 'realized', 'retired' ] }
-+  'data': [ 'initialized', 'realizing', 'realized', 'retired' ] }
- 
- ##
- # @IoOperationType:
 diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index a0aa7e3f6e35..0d10410f6f06 100644
+index f054a214fc6a..b1c5f4780a90 100644
 --- a/include/hw/core/qdev.h
 +++ b/include/hw/core/qdev.h
-@@ -31,9 +31,9 @@
-  * 3) device realization
+@@ -23,27 +23,27 @@
+  * Realization
+  * -----------
   *
-  * #TypeInfo.instance_init may not fail. #DeviceClass.realize can
-- * fail, returning error information to the caller, and must be re-entrant.
-- * A device's realize method will not be called after realization, even
-- * if realization fails or the device is later unrealized.
-+ * fail, returning error information to the caller.
-+ * A device's realize method is called at most once, even if realization
-+ * fails or the device is later unrealized.
-  * #TypeInfo.instance_init should add instance properties but must not
-  * have any side effect not contained in the instance, since it happens
-  * during device introspection already. Any operations without special
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index ca150ecad023..63b87f20d645 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -511,6 +511,11 @@ static void device_set_phase(Object *obj, int value, Error **errp)
-         return;
-     }
- 
-+    if (old_value == DEVICE_PHASE_REALIZING) {
-+        error_setg(errp, "The device is currently realizing");
-+        return;
-+    }
-+
-     if (old_value == DEVICE_PHASE_RETIRED) {
-         error_setg(errp, "A device cannot transition from retired to another phase");
-         return;
-@@ -527,7 +532,13 @@ static void device_set_phase(Object *obj, int value, Error **errp)
-         error_setg(errp, "A device cannot transition from another phase to initialized");
-         return;
- 
-+    case DEVICE_PHASE_REALIZING:
-+        error_setg(errp, "The realizing phase cannot be set via property");
-+        return;
-+
-     case DEVICE_PHASE_REALIZED:
-+        qatomic_set(&dev->phase, DEVICE_PHASE_REALIZING);
-+
-         if (!check_only_migratable(obj, errp)) {
-             goto fail;
-         }
-diff --git a/tests/unit/test-qdev.c b/tests/unit/test-qdev.c
-index bb1049fa9919..14935f4d3d9e 100644
---- a/tests/unit/test-qdev.c
-+++ b/tests/unit/test-qdev.c
-@@ -10,6 +10,8 @@ typedef struct MyDev MyDev;
- DECLARE_INSTANCE_CHECKER(MyDev, STATIC_TYPE,
-                          TYPE_MY_DEV)
- 
-+#define TYPE_REENTRANT_REALIZATION "reentrant-realization"
-+
- struct MyDev {
-     DeviceState parent_obj;
- 
-@@ -58,6 +60,25 @@ static const TypeInfo my_dev_type_info = {
-     .class_init = my_dev_class_init,
- };
- 
-+static void reentrant_realization_realize(DeviceState *dev, Error **errp)
-+{
-+    g_assert_false(qdev_realize(dev, NULL, NULL));
-+}
-+
-+static void reentrant_realization_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    dc->realize = reentrant_realization_realize;
-+}
-+
-+static const TypeInfo reentrant_realization_type_info = {
-+    .name = TYPE_REENTRANT_REALIZATION,
-+    .parent = TYPE_DEVICE,
-+    .instance_size = sizeof(DeviceState),
-+    .class_init = reentrant_realization_class_init,
-+};
-+
- /*
-  * Initialize a fake machine, being prepared for future tests.
+- * Devices are constructed in two stages:
++ * Devices are constructed in the following order:
   *
-@@ -118,6 +139,15 @@ static void test_qdev_realize_after_unrealization(void)
-     object_unref(mt);
- }
- 
-+static void test_qdev_reentrant_realization(void)
-+{
-+    Object *obj = object_new(TYPE_REENTRANT_REALIZATION);
-+
-+    qdev_realize(DEVICE(obj), NULL, &error_fatal);
-+    object_unparent(OBJECT(obj));
-+    object_unref(obj);
-+}
-+
- static void test_qdev_retry_realization(void)
- {
-     MyDev *mt = STATIC_TYPE(object_new(TYPE_MY_DEV));
-@@ -159,6 +189,7 @@ int main(int argc, char **argv)
- 
-     module_call_init(MODULE_INIT_QOM);
-     type_register_static(&my_dev_type_info);
-+    type_register_static(&reentrant_realization_type_info);
-     test_init_machine();
- 
-     g_test_add_func("/qdev/free-properties",
-@@ -170,6 +201,9 @@ int main(int argc, char **argv)
-     g_test_add_func("/qdev/realize-after-unrealization",
-                     test_qdev_realize_after_unrealization);
- 
-+    g_test_add_func("/qdev/reentrant-realization",
-+                    test_qdev_reentrant_realization);
-+
-     g_test_add_func("/qdev/retry-realization",
-                     test_qdev_retry_realization);
- 
+- * 1) object instantiation via object_initialize() and
+- * 2) device realization via the #DeviceState.realized property
++ * 1) #TypeInfo.instance_init
++ * 2) pre-realize property value setting
++ * 3) device realization
+  *
+- * The former may not fail (and must not abort or exit, since it is called
+- * during device introspection already), and the latter may return error
+- * information to the caller and must be re-entrant.
+- * Trivial field initializations should go into #TypeInfo.instance_init.
+- * Operations depending on @props static properties should go into @realize.
+- * After successful realization, setting static properties will fail.
++ * #TypeInfo.instance_init may not fail. #DeviceClass.realize can
++ * fail, returning error information to the caller, and must be re-entrant.
++ *
++ * #TypeInfo.instance_init should add instance properties but must not
++ * have any side effect not contained in the instance, since it happens
++ * during device introspection already. Any operations without special
++ * requirements should go into @realize so that they can be skipped
++ * during device introspection. It is possible to add properties
++ * during realization, but they will not be introspectable or
++ * configurable before realization.
+  *
+- * As an interim step, the #DeviceState.realized property can also be
+- * set with qdev_realize(). In the future, devices will propagate this
+- * state change to their children and along busses they expose. The
+- * point in time will be deferred to machine creation, so that values
+- * set in @realize will not be introspectable beforehand. Therefore
+- * devices must not create children during @realize; they should
+- * initialize them via object_initialize() in their own
+- * #TypeInfo.instance_init and forward the realization events
+- * appropriately.
++ * Child buses are automatically realized. Child devices must be manually
++ * realized (e.g. by calling qdev_realize()).
++ *
++ * After successful realization, setting static properties will fail.
+  *
+  * Any type may override the @realize and/or @unrealize callbacks but needs
+  * to call the parent type's implementation if keeping their functionality
+@@ -102,10 +102,8 @@ typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
+ /**
+  * struct DeviceClass - The base class for all devices.
+  * @props: Properties accessing state fields.
+- * @realize: Callback function invoked when the #DeviceState:realized
+- * property is changed to %true.
+- * @unrealize: Callback function invoked when the #DeviceState:realized
+- * property is changed to %false.
++ * @realize: Callback function to realize the device.
++ * @unrealize: Callback function to unrealize the device.
+  * @sync_config: Callback function invoked when QMP command device-sync-config
+  * is called. Should synchronize device configuration from host to guest part
+  * and notify the guest about the change.
 
 -- 
 2.55.0
