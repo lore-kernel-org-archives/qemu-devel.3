@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBB1C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 23:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC106C88E7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 23:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6FnZ-000381-Vd; Mon, 14 Sep 2026 19:09:18 -0400
+	id 1x6FnV-00036q-VJ; Mon, 14 Sep 2026 19:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6FnT-000367-C9
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:12 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1x6FnQ-00035s-1D
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:09 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6FnR-0007Ei-NV
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:11 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-39647aa9d52so411152a91.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 16:09:09 -0700 (PDT)
+ id 1x6FnO-0007EG-4i
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:07 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ 41be03b00d2f7-cc1cebad4afso2552104a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 16:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789427348; x=1790032148; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IyVGjJQ1P54ox6RnEtsgUiCopR/0ZEh1fGFAxAbZhLs=;
- b=FkEnlurUNb5CpLV1JU6nsxVFg9ebYM1u4aSkqQL91swhPsqlFW22fo7o2Oc/hwq8S1
- UdfkVYXQ3NjQQITRZUcR5BraYn/GBWgnL7HslUttcK5he6s4IQHxwBhbCkeHh9zgk8eb
- oygp2MiQw2cvsiIRnhfyzvsie6fvGwk5hYlhPLeGOQgweMgn1RYX4dbyLglGUx328l9X
- jGiJBSJo1o5BH20a1zfjkymIiy2R/z6aRAE4D4FziWxZ9BN1M1E3jEUxBZwrF64Mb4tM
- fSGFphyrXNt0ARwT++iKvumA3cMj1SfM5EhW2nsBb1k2b/DP97ZPn9JLHhsznRdThkOG
- CcqQ==
+ d=linaro.org; s=google; t=1789427344; x=1790032144; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=bU4hxpiqZAXlf78JXX5IIfB6mQhq4utJHjuqGLhYvZY=;
+ b=L2GwZotMu0EYOhdXQHUDmFrIMv7WlFRes+zuQ8e0zNpjkf7TY2yQnloiSFsP/+SeEm
+ CPuepgmQGKEeHypWx7m+3LYOmUyICocn1ryAxfgWzTcH4QuzPMlzmIAep3BN5/b+5JFY
+ gcls4SrPleYpt+Qy3dI0r/Lpr3ZA0/hk4ZRp5sH+e4ISJsxaGXJJOYp3p/kT0rPc+YTR
+ d5rj1ln88g+BIL/zmKEnEO3X7PqPqw8gpAOTgI8i910cA+GHuiemF2Mb3qTTr4s1vCIo
+ 5yDtJ8BaAo7sqWou0T7FYmP6h+ChdwQrWZ6k4MHuqk2S/4fEKn6629R61J7c+LuQ/Ptr
+ wxsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789427348; x=1790032148;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IyVGjJQ1P54ox6RnEtsgUiCopR/0ZEh1fGFAxAbZhLs=;
- b=isW5VQxfSy3A8KeKSPOxZXw+vWosFNP3T50SzKewXLa3sFVfw2HWJYshmAD0H8DgUp
- a91ZH6ZIZ+ldltr2XPBOeexHKiMieQX/iNjFhZ7rHpsOuFAJxhvtKEcL5tmrdHjhPuK4
- qpdBO8IuxcSimaqepUpDbX8IN2tYDDDaQqaQAYN+0WbsT3w9B5vGxh9/9YGBWL3BTcQG
- rEITFBRBrrOQOWJkhqA7hvK975BnGhF5vTU3kvX8y5n+bcIONxWPy9bOShub+MuAJcJb
- tEElg2NcabxGmLXiykyphs8wV91PNvT2Hygk8PeyizkwuK/IQu/TAyhNbPdlA0LgYV27
- 1ysQ==
-X-Gm-Message-State: AFuF++kY6j5/3yyY+OTvw0ILw6UQXcz23BEHsG4ekHIVJRXxcBF83a/o
- WUwywTH0T9zrioyivR/8s8q5spPHFqT/vlmPLz4XUPvtrblBmX3StJQoEaAv9JY8cJpjAroKtK+
- zsuxz
-X-Gm-Gg: AYBFou0fmQEirmyHJlkTbm2jzJlxFzVySLSW2Uv6hlYV7aLA1Zgy0GweseiSujEtw6a
- XF2yV7eMeKYrApBtpvOlT4spAwqbXRwsay6WAwn9VIIzUN5K0ePGElkJt4NoMFDA3D7z7X2J+sJ
- 2iB3gBBUmAhCLFTbHDlN3oeKrKtOJ2yNLEF7ZD2hU+qW6gMKEf71/tDhmUZe2qtDxJ9RWzy13Gu
- VA4FhWKtJ/nUD9wJ+jcPfHuJB54W0zeYCkvmymYDZeZV4TDZaBqdD9HUuk8yZl3ChMY2J+A/Bg7
- vTIdaTvkcWNd6bQJvRuUamqJjhcCy55NSWMhg3JPHOHlRzR3e+gYerRSfcPvsqGi1fVWSoTFRo8
- F0aDwo52BfDhCZ0CUGo/qtV6gS9SGvNCgEG7iaXmQugEhv60V3xoTG9liuCkpSgLenFiiKJjD4G
- c7zVVlpmY0rCujdaPfGeiDNvQPoj2mm5up6NVF3QmI5jrZoNVoFvB649MORrQ1V6h3VagRAHviI
- YxEzDI=
-X-Received: by 2002:a17:90b:4a92:b0:398:9beb:a2b9 with SMTP id
- 98e67ed59e1d1-39dfe1ca2dbmr1911161a91.27.1789427347689; 
- Mon, 14 Sep 2026 16:09:07 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789427344; x=1790032144;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=bU4hxpiqZAXlf78JXX5IIfB6mQhq4utJHjuqGLhYvZY=;
+ b=11ZfHfMRTt8KhAaikxzqpdef7gI/+gST937u05Zg2hL7RQhaUpoEnwrqcbH1RTUd+s
+ 2D1gk2ql68kc3ITWSCwwi5YrA/oURQ+J20VvQvLNaY4dK7iQXJod4VmL4UgBMJzeGZH8
+ N5v9yuR9jilAnd8KfIZrKoBrG34sUhlV4/8KwVaU4/Gwm5DbranTRXxSvbFj2ZZXRpiF
+ nGF5q/K6hijBbM3Q7hay4Frv119ZI3WCd4RhRsgmH6kcL3Rcgx/Jq84KmOFmmxi9bkS+
+ MLQKRjMkxgLgt429TyixdewLTepuqWZFQw3SdlYJxQTyKGtehyf9BeiGXlHVRjPM4PID
+ Omyg==
+X-Gm-Message-State: AFuF++kXYn+g5PgWbtpslI2CL96qVxEYfIFaoJywFfKzYIVN7DY2DFm2
+ V1o9qdpYJptdtY8xDxQu7PStYaMqqaA6zAeQBSY6Z33EFSxVezmpA66C3ygIJRgNN8CShJ0oPNA
+ 7E9ES3hg=
+X-Gm-Gg: AYBFou09HpFhauGXN3/f+PGjV0mEjRE4LmOd0p3UomnpL8ZpO1oduWPBEuTOmdLhJP+
+ 3PiDqMNMJ6ltKJki4l04Vo+HuGBDM6YGEcigX8OXOtcuoyKR5YqvIVa8oobAkh/OpgI/NAicNbp
+ 0ovgNS+z4kjLpkP/tpVO4bav0RyjVvtWPATBbFY7TBji+HCop1N9NyOG4A1WsKDrTXEFBbeFkHV
+ sUWepj9hPvMyx2C0Zh3/8z2x3NHnQ8+rMJv2ylvtCYKGPSWiOAZK7jfmBAa8SbXI74liuxfsN0n
+ dMPcIYnmOKxFK/9+KieSwwTzCCWLG9x9enyxqM8mO57V2YfcLa60k6TCPcFs+7+jN8zwN7/1Cpv
+ aGEU9LqviwsprDGOryMBjQNt7xwzXzLYfix2/wvVtBvrgdzyUTfRK1XCu+tAT+l83MSvZpwHvw1
+ DlE9g/fqy1mFK2UkrKdXN2UPLyfrHrX5u8+X4MJRyDsqWyoc6g7W4LramWOLKRn16RK5ba95nOM
+ RQ1d/Gwr3mn+VC+XA==
+X-Received: by 2002:a05:6a21:3384:b0:3d3:adad:f171 with SMTP id
+ adf61e73a8af0-3db406a9225mr12592074637.19.1789427343554; 
+ Mon, 14 Sep 2026 16:09:03 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4e9a3casm28054447eec.12.2026.09.14.16.09.06
+ 5a478bee46e88-33ba4e9a3casm28054447eec.12.2026.09.14.16.09.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 16:09:07 -0700 (PDT)
+ Mon, 14 Sep 2026 16:09:03 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@oss.qualcomm.com
-Subject: [PATCH 4/6] target/mips/tcg: Use gen_mxu_logic for
- gen_mxu_S32MAX_S32MIN
-Date: Mon, 14 Sep 2026 13:08:56 -1000
-Message-ID: <20260914230901.1781309-5-richard.henderson@linaro.org>
+Subject: [PATCH 0/6] target/mips/tcg: MXU fixes and cleanups
+Date: Mon, 14 Sep 2026 13:08:52 -1000
+Message-ID: <20260914230901.1781309-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260914230901.1781309-1-richard.henderson@linaro.org>
-References: <20260914230901.1781309-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +99,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split S32MAX, S32MIN to separate functions.
-Fixes a bug in that "0" was passed in one of the zero reg cases,
-aka NULL, instead of a proper zero constant.
+Forthcoming tcg improvements will diagnose the passed null pointers,
+with or without --enable-ubsan:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/mips/tcg/mxu_translate.c | 47 +++++++--------------------------
- 1 file changed, 9 insertions(+), 38 deletions(-)
+../src/target/mips/tcg/mxu_translate.c: In function ‘gen_mxu_S32MAX_S32MIN’:
+../src/target/mips/tcg/mxu_translate.c:2149:13: error: argument 3 null where non-null expected [-Werror=nonnull]
+ 2149 |             tcg_gen_smax_i32(mxu_gpr[XRa - 1], mxu_gpr[XRx - 1], 0);
+      |             ^~~~~~~~~~~~~~~~
+In file included from /home/rth/qemu/src/include/tcg/tcg-op.h:11,
+                 from ../src/target/mips/tcg/translate.h:12,
+                 from ../src/target/mips/tcg/mxu_translate.c:19:
+/home/rth/qemu/src/include/tcg/tcg-op-common.h:166:23: note: in a call to function ‘tcg_gen_smax_i32’ declared ‘nonnull’
+  166 | QEMU_ARG_NONNULL void tcg_gen_smax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+      |                       ^~~~~~~~~~~~~~~~
+../src/target/mips/tcg/mxu_translate.c:2151:13: error: argument 3 null where non-null expected [-Werror=nonnull]
+ 2151 |             tcg_gen_smin_i32(mxu_gpr[XRa - 1], mxu_gpr[XRx - 1], 0);
+      |             ^~~~~~~~~~~~~~~~
+/home/rth/qemu/src/include/tcg/tcg-op-common.h:165:23: note: in a call to function ‘tcg_gen_smin_i32’ declared ‘nonnull’
+  165 | QEMU_ARG_NONNULL void tcg_gen_smin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+      |                       ^~~~~~~~~~~~~~~~
+../src/target/mips/tcg/mxu_translate.c: In function ‘gen_mxu_d8sum’:
+../src/target/mips/tcg/mxu_translate.c:3112:13: error: argument 2 null where non-null expected [-Werror=nonnull]
+ 3112 |             tcg_gen_mov_i32(t4, 0);
+      |             ^~~~~~~~~~~~~~~
+/home/rth/qemu/src/include/tcg/tcg-op-common.h:178:23: note: in a call to function ‘tcg_gen_mov_i32’ declared ‘nonnull’
+  178 | QEMU_ARG_NONNULL void tcg_gen_mov_i32(TCGv_i32 ret, TCGv_i32 arg);
+      |                       ^~~~~~~~~~~~~~~
+../src/target/mips/tcg/mxu_translate.c:3123:13: error: argument 2 null where non-null expected [-Werror=nonnull]
+ 3123 |             tcg_gen_mov_i32(t5, 0);
+      |             ^~~~~~~~~~~~~~~
+/home/rth/qemu/src/include/tcg/tcg-op-common.h:178:23: note: in a call to function ‘tcg_gen_mov_i32’ declared ‘nonnull’
+  178 | QEMU_ARG_NONNULL void tcg_gen_mov_i32(TCGv_i32 ret, TCGv_i32 arg);
+      |                       ^~~~~~~~~~~~~~~
 
-diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
-index 3f8acfcdb8f..4b2c264f031 100644
---- a/target/mips/tcg/mxu_translate.c
-+++ b/target/mips/tcg/mxu_translate.c
-@@ -2045,45 +2045,14 @@ static void gen_mxu_q16sxxv(DisasContext *ctx, bool right, bool arithmetic)
-  *    Update XRa with the minimum of signed 32-bit integers contained
-  *    in XRb and XRc.
-  */
--static void gen_mxu_S32MAX_S32MIN(DisasContext *ctx)
-+static void gen_mxu_S32MAX(DisasContext *ctx)
- {
--    uint32_t pad, opc, XRc, XRb, XRa;
-+    gen_mxu_logic(ctx, tcg_gen_smax_i32);
-+}
- 
--    pad = extract32(ctx->opcode, 21, 5);
--    opc = extract32(ctx->opcode, 18, 3);
--    XRc = extract32(ctx->opcode, 14, 4);
--    XRb = extract32(ctx->opcode, 10, 4);
--    XRa = extract32(ctx->opcode,  6, 4);
--
--    if (unlikely(pad != 0)) {
--        /* opcode padding incorrect -> do nothing */
--    } else if (unlikely(XRa == 0)) {
--        /* destination is zero register -> do nothing */
--    } else if (unlikely((XRb == 0) && (XRc == 0))) {
--        /* both operands zero registers -> just set destination to zero */
--        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
--    } else if (unlikely((XRb == 0) || (XRc == 0))) {
--        /* exactly one operand is zero register - find which one is not...*/
--        uint32_t XRx = XRb ? XRb : XRc;
--        /* ...and do max/min operation with one operand 0 */
--        if (opc == OPC_MXU_S32MAX) {
--            tcg_gen_smax_i32(mxu_gpr[XRa - 1], mxu_gpr[XRx - 1], 0);
--        } else {
--            tcg_gen_smin_i32(mxu_gpr[XRa - 1], mxu_gpr[XRx - 1], 0);
--        }
--    } else if (unlikely(XRb == XRc)) {
--        /* both operands same -> just set destination to one of them */
--        tcg_gen_mov_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
--    } else {
--        /* the most general case */
--        if (opc == OPC_MXU_S32MAX) {
--            tcg_gen_smax_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1],
--                                               mxu_gpr[XRc - 1]);
--        } else {
--            tcg_gen_smin_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1],
--                                               mxu_gpr[XRc - 1]);
--        }
--    }
-+static void gen_mxu_S32MIN(DisasContext *ctx)
-+{
-+    gen_mxu_logic(ctx, tcg_gen_smin_i32);
- }
- 
- /*
-@@ -4328,8 +4297,10 @@ static void decode_opc_mxu__pool00(DisasContext *ctx)
- 
-     switch (opcode) {
-     case OPC_MXU_S32MAX:
-+        gen_mxu_S32MAX(ctx);
-+        break;
-     case OPC_MXU_S32MIN:
--        gen_mxu_S32MAX_S32MIN(ctx);
-+        gen_mxu_S32MIN(ctx);
-         break;
-     case OPC_MXU_D16MAX:
-     case OPC_MXU_D16MIN:
+Mostly we need to drop all of the premature optimization vs
+the zero register.  In the extremely unlikely event that zero
+is passed, the optimizer will clean things up.
+
+Split out a helper for 32-bit 3-operand insns, which fixes
+the smin/smax failures above.
+
+Quite a bit more work wants doing to clean up the 16- and 8-bit
+3-operand insns, but except for the one instance in d8sum, those
+aren't currently causing problems.
+
+
+r~
+
+
+Richard Henderson (6):
+  target/mips/tcg: Fix zero in gen_mxu_d8sum
+  target/mips/tcg: Drop zero optimization in gen_mxu_s32mul
+  target/mips/tcg: Split out gen_mxu_logic
+  target/mips/tcg: Use gen_mxu_logic for gen_mxu_S32MAX_S32MIN
+  target/mips/tcg: Use gen_mxu_logic for gen_mxu_S32SLT
+  target/mips/tcg: Use gen_mxu_logic for gen_mxu_S32CPS
+
+ target/mips/tcg/mxu_translate.c | 265 +++++++-------------------------
+ 1 file changed, 59 insertions(+), 206 deletions(-)
+
 -- 
 2.53.0
 
