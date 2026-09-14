@@ -4,107 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343DEC88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 17:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8433C88E73
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 17:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Amn-0003JV-M6; Mon, 14 Sep 2026 13:48:09 -0400
+	id 1x6Aqe-0004HA-Ux; Mon, 14 Sep 2026 13:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6Aml-0003Io-9P
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:48:07 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x6AqX-0004G4-9s
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:52:01 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6Amj-0007zZ-Ga
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:48:07 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e71cdb22bso14052175e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 10:48:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x6AqU-0000B4-1M
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:52:01 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-66c9995ca60so49260d50.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 10:51:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789408316; cv=none;
+ d=google.com; s=arc-20260327;
+ b=G7kZNaEvI2+j/p75OMOzPeeavr6gawjLEhpkCGvKTp/Axum/QGOZ/G5J8lSpSMZkpU
+ hru9AdBZQNpYKM7BZYJhQIwlt0YcbWbIR+8D6Iloqi6lbDNbPMFPwvhjL/8swiL8i+vJ
+ AeRvA7DUzGPbReq6/53dTaKoIUegV1pj/wlDxscycAvos3DhJXdCI8SvjgY3NSko+Am7
+ 54HVrLXSJWsSM06a3+Xj+M8V+TrExuT0Bi9PLpfT+gfwgwXiltmMJt90iqQnQZoDX5JF
+ UPGCQEQqr5cDupbzBO3iuTESi+uh8iTbPSg1ooTwNoQ8Ph0q9BKiP1NVtRxQYaMUYinJ
+ uhyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Z+y9OUzhFJYi6VOAPvadEexAEwbMzmh1iwkml1S2xE0=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=c10PLQET6+rJHA+5JQfyFWZZZ1Bdzaf+U0lolwfZB4UTsouq+5xyK/uAwhMIKZgKSB
+ P/4jar2ghlKbcNMQsQ1DLEEs1XcKAHtd5HZKBRhUpp2Lr+ctSQ+cZWxbnF9EchFCr7fz
+ sa2DX7rYAFKqBdsxt7lQcFBkNYgcsUVFKp/EmANp2powvZ6gXJcmeLwyMv8kIl1r5z16
+ CBoLTsKkon8lqwMR8VBfMzdhQ0aynQ3WdeutjoWkmZ0N0RqcIMEHNm8U6h8QHpX8OIhD
+ csw5w/tNxLnOyu6JDzPF60R1mOqfKdpEm/Om8SjBHH4ODMAV89ykssHSi4D2eX8zQYDu
+ rz5g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789408084; x=1790012884; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=cjzHHr+zu6/CCX9W07LBXdH1wGC98nkh/LFUkamci1Y=;
- b=N90GlGupKTdm5v47JnVfGsYcAYkCwaJqX6t6RPqTzuciZ6GwwduaQVStHFZSsgtaym
- /JMvlSPQJXb+oTa/gteHG8yLqTG+e800jcIVxD8/f014WWsQyITuaiUzyak4XYlSttr8
- wlYlQr0LXMmvVZx0rwFQc0jZos5UtjDoiYMSfbm6oPqfZDEZfo+pZuJIdGuA6Wl16YpR
- VEV/liiW32qop+OMl27PNKwPcKN8MlAceFEls7KSvRiSjOXQ5m93Lijb+HwOd0kwmizV
- S1S+O7T2PZIiqctOJ6J0h6ZJkgh0QD4xDSqpTdzLHYfalRfwOhzz9pKo3tk8m+AKdCEQ
- ja/w==
+ d=linaro.org; s=google; t=1789408316; x=1790013116; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Z+y9OUzhFJYi6VOAPvadEexAEwbMzmh1iwkml1S2xE0=;
+ b=O4gWQ0vHMxgFC2VPN4arOF0Hj9TMmb7zKkO7t+xLmy3mCiKa+OBER44u/eBxHDI6vi
+ C60BoZJi9WqKOm6NJgS1Wko9hz2s+5gM0Eji3rrMNpHAkK8HugmMPmKBqdVr4xGfDoP2
+ 7vID9WQHWqnbpWal5Fes9mF9ZKWVBsI3INqrVBWOjtlMARq3Rry6EFw9sm65copZDIbt
+ 8vVzaHv/MlA1CPVo2I+jtsrWAZXM4fHOG8UPUKPvvDTQEbg2by8k2poq2As/c22BuQjU
+ riEgQ1KQet56QRffiaIUm3TivkabMYt757/G0p4GwNbffdKkzazzHf96gBU9vCufsDOr
+ mQNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789408084; x=1790012884;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=cjzHHr+zu6/CCX9W07LBXdH1wGC98nkh/LFUkamci1Y=;
- b=oc4WqZyUuSSmd+z25SBqcl/OrEAqn48mN5ETSdNcHaG/CajoQl4NwlOkoJ9s9esx7+
- 58nXIK5YdBxt4E9ZZp6Qy7z0A4AiCV3dGtrkhhe3BOB1sr/YTsUXVbcAFAH9UNncNA/V
- 7ju1R5oNeRQi3z/dsdQigeB45o1cgeUif5HfcRTugrKD0nE6rgjTKJVEg/JsADlXbgUp
- kT34Mx0jnRZgZBodI2FTs9qX7iA65pcbniKN46vefHEu5KSja8MMBDq0ImsE9e/bibQA
- ZLUBK2cYM8RCTzac9zAKIA61nqFEkkt2Gkq+CwdF84MsudnSFWeOc5PJqMSlDCVoOL48
- QBDA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx0Z0FOHZUe5uHRf7+rI0xvbTxKZS+lKK+71AseAMaRJ3VsE7sLVyZs74l9T/WPjTvU8wTPp3eTrDaf@nongnu.org
-X-Gm-Message-State: AFuF++mOllq0FBFwlRlIq8AzGynXDXHWEIA81DSdbzJnVSLlrL6yxiH1
- N45aEchdGd9iOcqIFS9DL7hjK85Rj+YCYI0osw5ekxvOlAy/Z+iBhkbZ2B7rKKI8s+s=
-X-Gm-Gg: AYBFou03jgIGW5bN34O6F4KTXdWzWx6lyfdEo3Ku+dmrQsYmYoxU1WtLi6h6JhUhB8A
- nSbWw0L8GbjTDSxTQxQK5xKwz2M8G8vU0V0UCriRUCAoypNn9qkC0qUK5AZykMw7Ks7CeJAl6VI
- IeFD1xrSjyOm6m7OIpIaAJU4P0sKRvV8k9O3YFPi/xFHJqH+jdw4QfGRAyL5tsuN0ZDqQKip904
- rDt7c1kHnsjC5OJgoSlZn0iv90r1hknBUelm/J9+cnneNEMH49RqwqsTZPdvatDWvKN4tKoIbQv
- 98E7u1gFp8YFR2stN51q1lQ06bNSrXXH31tmjwKm3Rr4r3QIfzd405WgK8E0o9p024pgDKuy1dq
- hDzh6tJtPHAzoOCW7ILAa9x0xNPOl7bVELNO3id5xlwgzlt2GwbKz/7rBbiux0zpAUFXtq2ycF0
- v6m6G24RJGgkBZC0kp8Gaaq1Z/mTY2bwFnpg3k2NJec60YCAfn7Yw2mua4GsfAowCK1hw8/FQ=
-X-Received: by 2002:a05:600c:3ba7:b0:499:8aff:59b6 with SMTP id
- 5b1f17b1804b1-49e7d4af7a5mr11277095e9.14.1789408083883; 
- Mon, 14 Sep 2026 10:48:03 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e7d2acf1asm6368215e9.4.2026.09.14.10.48.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 10:48:02 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 275915F81D;
- Mon, 14 Sep 2026 18:48:01 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Farman
- <farman@linux.ibm.com>,
- qemu-devel <qemu-devel@nongnu.org>,  Aniket Sahu <asahu1x@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>,  Zhuoying Cai <zycai@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>,  Matthew Rosato
- <mjrosato@linux.ibm.com>
-Subject: Re: [PULL 102/105] configure: remove cross_cc and gdb detection logic
-In-Reply-To: <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
- (Paolo Bonzini's message of "Mon, 14 Sep 2026 18:57:16 +0200")
-References: <20260904124604.2207440-1-alex.bennee@linaro.org>
- <20260904124604.2207440-103-alex.bennee@linaro.org>
- <dab85c9c-4718-48d1-a343-c2e6b5f8e24f@linux.ibm.com>
- <87a4pn8yra.fsf@draig.linaro.org>
- <CABgObfYEN8Qme6zXGYJpEeHTiFegjOm=Ym-3vU9LE1Z-Wsot3g@mail.gmail.com>
- <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
- <CABgObfZnyHenuVJ6maVs+jMNQCJeYhtcnXtXOqN1G3NcbvDt7g@mail.gmail.com>
- <aqfX2414cAMCcI18@redhat.com>
- <5cc8dd29-9093-4082-b8e5-32823f21c71d@oss.qualcomm.com>
- <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
-User-Agent: mu4e 1.14.4-pre3; emacs 30.1
-Date: Mon, 14 Sep 2026 18:48:01 +0100
-Message-ID: <871pavd8ry.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1789408316; x=1790013116;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Z+y9OUzhFJYi6VOAPvadEexAEwbMzmh1iwkml1S2xE0=;
+ b=YrGJPwZYJz/XXp+b/44v7/Kq1Z89xNdYsCmfSjsgvcKtZz4FCZTjEONzhImr6aZC3z
+ PqA35HhZdCtkRZOOMWOqq+1Q5EVsBKp9oHa3dCuWZnsaRtFlRRXmsVwmEn3HCzIoEQ/1
+ hBjTOTdGDhlttsUCEvxXpSDYB+ZzwiGZEUrfh1H7xChpPTPPWvnm4kAhTOXApsMXzvxb
+ +Pdw4p18OW/iwYDqgf5cRNji1c+cGqfeDuI9ve4MbK6lxgxhe4Sz1kJSa/lS9Y7v8jcN
+ Dh7F5UdsGKHmpaZonYygJpg720Z2sE4zeFEoujsxIFO3uwEb77SAn4PrkEx1oDVtkabA
+ jyyQ==
+X-Gm-Message-State: AFuF++lh839/Ar9uybOPh5+R+OVmMtun2LMbsCo9t0cxlkBabqfSZbzn
+ hLeJj1YEzEHi2kHd5BYpS+qWZUHoSzME8LBuSJQrglB3HHkkeaMUxMFOcC7/OsygIc62H98WCvA
+ zS3+jri6w0NbizObmSeSvUDUAgETwb4Ww6OEFDP/axw==
+X-Gm-Gg: AYBFou3GrWr0hSN/LaN3JJ96+l/c4M9/Lz0NF2mPyU90Yw95Jb4IZGiOl4pbGDrD+FW
+ hXRUbmUrcL16Fm/mOSEIR44zTLhDQYhn+rye/JPAOUUkPKmTUt1Qr8OwtK1i7/LPwtgEcfL9SKh
+ c+QyEzADQAzrEoVaJymHn5vMoueY1F0vC4D312nUEeF/tXkFqZ5nalw8oAfZsMKUTZLAgp5LDhU
+ G7L/txZ8Pe/Y1j+DT1rTXfFpDjZk7V65bO3kSFWL4jXISaqP3EcTUTOXyCFwEjMQSGTPhsCetTL
+ qdiDePQ/30TK2ZWv4YV5BYpxzJCM5jeoQnAnZY2XQb6IFYW0XQt+hPCZeoMEK2djF4TdCo/14nU
+ +PcqQeMuP2vUglIWhUqp/pczpg1v2GIeVlJsiGns=
+X-Received: by 2002:a53:ac9e:0:b0:671:482b:fc72 with SMTP id
+ 956f58d0204a3-6715501ce81mr110439d50.32.1789408316287; Mon, 14 Sep 2026
+ 10:51:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+References: <20260806173123.333423-1-richard.henderson@linaro.org>
+ <20260806173123.333423-4-richard.henderson@linaro.org>
+ <CAFEAcA-NoW=39G_m21zQO6CzH5UU3MnsKuFNjkjX-55gzXqD2g@mail.gmail.com>
+ <a930c1b6-dd93-46ad-9e61-eafda9dcaac9@linaro.org>
+In-Reply-To: <a930c1b6-dd93-46ad-9e61-eafda9dcaac9@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Sep 2026 18:51:44 +0100
+X-Gm-Features: AcwNN1UAMrlZMLL4c6UcZdvKECQiwi31H-8xgkYecW6cN_BvcU9IpsRw-nC5JBU
+Message-ID: <CAFEAcA_-UwXB9svLsFwJRfe37+CkwkRHnNVoWDScTEL=L4uOpw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] target/arm: Implement HCR_EL2.TID3 trap on
+ undefined TID3 registers
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,58 +118,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> On Mon, Sep 14, 2026 at 6:13=E2=80=AFPM Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
->> There might be some confusion with what the series introduced. To make
->> it clear, it does not touch, nor use tests/docker/Makefile.include.
->>
->> Each tests/tcg/arch declares which container it depends on, and we have
->> tests/tcg/meson.build that automatically builds it if needed for tests.
->> Reverting that will not be very easy to be honest, as it's a core part
->> of the new logic.
+On Mon, 14 Sept 2026 at 18:21, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> If it is core, why is it patches 102...105?
->
->>  > IMHO it would be nice to replace tests/docker/Makefile.include with
->> > a meson.build too. Yes, that would make it rely on a configured
->> > build tree, but IMHO that's an acceptable tradeoff to get more
->> > stuff into meson natively.
->>
->> That's easy, and would allow us to get rid of
->> tests/docker/Makefile.include completely, by adding matching targets
->> make container-image-debian-*. Also, we can have a top target
->> 'container-images'. With this, people can build them with ninja or make.
->>
->> As Daniel mentioned, the trade off is to run configure first, and I feel
->> it's quite acceptable. What do you think Paolo?
->
-> The problem is that right now firmware builds are broken, because all
-> the supporting code in configure was removed. I'll review anything
-> that fixes it, even moving firmware builds to meson custom_targets
-> even though it seems quite intrusive.
+> On 9/13/26 23:16, Peter Maydell wrote:
+> > On Thu, 6 Aug 2026 at 18:32, Richard Henderson
+> > <richard.henderson@linaro.org> wrote:
+> >>
+> >> It is IMPLEMENTATION DEFINED whether HCR_EL2.TID3 traps on registers
+> >> within the range which are not explicitly listed.  Previously we chose
+> >> not to honor the TID3 bit.
+> >>
+> >> However, with FEAT_IDTE3 it becomes mandatory to honor SCR_EL3.TID3
+> >> on these registers, so we might as well honor HCR_EL2.TID3 too.
+> >
+> > I thought we agreed not to change the behaviour here? Is this
+> > just a "forgot to update commit message" thing?
+> Oh, yes.  Because I did update the code to test for v8 in translate.c.
 
-I've reverted those three patches - so leaving the TCG tests still to
-run using meson but still generating tests/tcg/$TARGET/config-target.mak
-for the benefit of the firmware builds (and also vdso build which uses
-the same stuff).
+So what does this patch do? Is it just a no-behaviour-change
+refactor so we have a place to add the SCR_EL3.TID3 check
+in the following patch ?
 
-However I need to test the firmware builds and its not quite clear how
-to kick that off. I did try:
-
-  cd pc-bios/s390-ccw
-  make
-
-but that works even with the current state of the tree.
-
-Where is the firmware build documented so I can test the patches before
-I post v2 to the list?
-
->
-> Paolo
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+-- PMM
 
