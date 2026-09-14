@@ -4,76 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A01C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2330AC88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5vJS-0007vV-W7; Sun, 13 Sep 2026 21:16:51 -0400
+	id 1x5vKd-0008N2-33; Sun, 13 Sep 2026 21:18:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x5vJP-0007vN-Uj
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:16:48 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x5vJM-0006q8-6Y
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:16:47 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx79LzSqdq8aILAA--.34089S3;
- Mon, 14 Sep 2026 09:16:35 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxRs3ySqdq92MgAA--.57378S2;
- Mon, 14 Sep 2026 09:16:34 +0800 (CST)
-Subject: Re: [PATCH v5 23/62] loongarch/virt: convert OnOffAuto properties to
- QAPI-aware registration
-To: =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?=
- <berrange@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
- Song Gao <17746591750@163.com>, Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
- <20260911-qom-qapi-v5-23-7732a55b7760@redhat.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <80f064d9-8ff4-12e3-f672-0b3b990896fa@loongson.cn>
-Date: Mon, 14 Sep 2026 09:16:14 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5vKX-0008Ms-Ag
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:17:58 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x5vKT-0006x0-P0
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:17:55 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2d942c7cc2fso25885765ad.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 18:17:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789348672; x=1789953472; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rJwWQ1B0UNmdXzQP/tsP3RtcBA4w+0PuGKVtndws6Xg=;
+ b=rX5tnempLkPOcGFoiGm7LulRsTLkpLp7DBeLtM/a9Ujfk1PEA5zbVsu3IL6BIIZLT3
+ CBEYvLuiyFxtbDldc7za6eZOQMl23JrT6DQNqizEfXCGALC0bhQnvXRqyFXACx3TdAFj
+ qiB3CkDpAlAleWmmROBd13I96u78k2G1E9zFOOnLeJKaBVi2+yBLVYe31JmnvvQKyRYa
+ j5LvXtcN9gdF9R1cnG9a3JLTNRylHenJBENv+zXmLpBm9lcCKUVlYVyiUBcNnPAh0Afu
+ AI3py7o/kkhp5QjQufVZntwY85mkz+TyfO62SE9Zmiw+pfBjLPYHEqvz5JABMhaXc2ck
+ qqKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789348672; x=1789953472;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=rJwWQ1B0UNmdXzQP/tsP3RtcBA4w+0PuGKVtndws6Xg=;
+ b=aEE8RJYzfAORYtUGtzq+fsIfqAG2YmbfNmjG4dBbb+krAOz5eJzkHfIOWJFJVBfg63
+ LM0YCbzs3Nh6ezPpeAzU3bsStjzho9F8d8voLCjYXanOLc34ESlTCPM/KUddl8hV0M8v
+ 7XRDEHxtnFLjjzp3Xz83gDv7mSTfI3/39Mt7uwbkotpWI+ttzj5mnuKAjvDeXb2L0yG0
+ cMz5U/FjR+zAGZT/eiAitNeTdKWMo/lEk6siCu7DeWHeJwcdvAgy4uRat6w/wKlRjzJ+
+ i3FHyOBeL+Hg2xUKsbFaMv4EZRa4+lb10ADKlMSvnMT+sZmVPwow15NPB3YGJtElJdS1
+ mhKQ==
+X-Gm-Message-State: AFuF++k0ymb41o2lAOC1lK+gNRCakF9rbJKt14k+FKxhQC9N66sjCnuS
+ srOo//Yrjs6I7d8UCZ/0pvfwyarJkPMjLRycV03b+C9R1nj4vcqvzHTI7556ImpNjeKGY3RqL1i
+ BLGiUCZA=
+X-Gm-Gg: AYBFou2rVwqL9LHeGVNymIbD34PJdi1/dqBDP48LRg+tnU28RonpSCOajri4ht/a7//
+ MZiLWttiFwVcbEoFyg8+iJQnbiyNo0gWGD7fzdv1Vb4wXGlfBhjpDi4s2vsTtrFNw52S/z24hkW
+ wSKzL43IKVyO3CWt28g0phw7OxLBexdLjHIJ+3ZvkIdN9gXpDXlDsbF9wN8RJ0MuVMU7vLqvuk7
+ BUtt56tVTsSCjQew8f6Bhj/SRK4ekT9n6ETL7dQRD/yfdaNY4+cw7MfU76OBrhgJ+wCjLtF8noV
+ KSQQAdQpla8Mif85+umDXG2Hxy+rjp2YPtGxXrkCyIezDV0CLtqcNDCV+KAC7TCFO6MEJO5WjBD
+ FI+qwGxcO84EBbgeQHACQQbHtT6BXCCzkgCTrGxEf0lu/+ht7OkzExhvTtdLPXRAPkWVfftRwu9
+ auWAOv6t0haucLKto630w+10mwUDHQIR9LdEW+2EP5SlZM9ETAqi7mzOrvi7/vtNd/TYE1HOxMS
+ ahgeZdB4vR7ElTydPlLNqJsHqphvQizff0RW9LpHGCgK6nVzAwEp59ZoN3e/w==
+X-Received: by 2002:a17:90b:2712:b0:398:ba9e:75ff with SMTP id
+ 98e67ed59e1d1-39dec122218mr881758a91.21.1789348671013; 
+ Sun, 13 Sep 2026 18:17:51 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:1665:91c0:9a80:f870?
+ ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bc03ac1ecsm10334940eec.10.2026.09.13.18.17.50
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 13 Sep 2026 18:17:50 -0700 (PDT)
+Message-ID: <b11c9b27-8ec0-49d9-8cad-9f04b1ad3641@linaro.org>
+Date: Sun, 13 Sep 2026 15:17:48 -1000
 MIME-Version: 1.0
-In-Reply-To: <20260911-qom-qapi-v5-23-7732a55b7760@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] target/riscv: add helper_tlb_flush_page(), use for
+ sfence.vma with vaddr operand
+To: qemu-devel@nongnu.org
+References: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
+ <20260904-riscv_tlb_page_flush-v2-2-defec3f29312@baylibre.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxRs3ySqdq92MgAA--.57378S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Wr43uFW7AF1xWF15tFW5Jwc_yoW7trW8pF
- nxZanxZ3WUJF4I9aykK3WDu3WUKwsxCa4YgF4fuw18CF1qgr1jqryfCw12gFyUA3yDX3WF
- qa1ku39xZF1fJagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zwZ7UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.489,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260904-riscv_tlb_page_flush-v2-2-defec3f29312@baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,162 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/9/12 上午12:34, Marc-André Lureau wrote:
-> Convert the acpi, v-eiointc, and dmsi OnOffAuto properties from
-> manual visitor-based callbacks to property_add_qapi_enum().
+On 9/4/26 08:43, Trevor Gamblin wrote:
+> sfence.vma unconditionally called helper_tlb_flush(), regardless of the
+> rs1 (vaddr) and rs2 (asid) operands, forcing a page-table walk on the
+> next access. Create a page-level counterpart to helper_tlb_flush()
+> called helper_tlb_flush_page(), and use it whenever rs1 != 0, falling
+> back to the existing full flush for rs1 == 0. This makes RISC-V
+> behaviour more similar to ARM's equivalent (tlbi_aa64_vae1_write), which
+> already does tlb_flush_page_by_mmuidx() instead of a full flush.
 > 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Pass get_address(ctx, a->rs1, 0) to gen_helper_tlb_flush_page() rather
+> than get_gpr(), so that the address being passed matches the current
+> addr_xl width regardless of '-cpu' input. Otherwise, the raw register
+> value can carry garbage above that width and never match the address the
+> TLB entry was actually filled under, so the flush silently misses and a
+> stale mapping survives.
+> 
+> Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 > ---
->   hw/loongarch/virt.c | 85 +++++++++++++++++++++++++----------------------------
->   1 file changed, 40 insertions(+), 45 deletions(-)
+>   target/riscv/helper.h                              | 1 +
+>   target/riscv/tcg/insn_trans/trans_privileged.c.inc | 6 +++++-
+>   target/riscv/tcg/op_helper.c                       | 6 ++++++
+>   3 files changed, 12 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 9cc79929a8ab..750ce2dbe5fc 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -36,7 +36,8 @@
->   #include "target/loongarch/cpu.h"
->   #include "target/loongarch/cpu-mmu.h"
->   #include "hw/firmware/smbios.h"
-> -#include "qapi/qapi-visit-common.h"
-> +#include "qapi/qapi-type-infos-common.h"
-> +#include "qapi/visitor.h"
->   #include "hw/acpi/generic_event_device.h"
->   #include "hw/mem/nvdimm.h"
->   #include "hw/core/platform-bus.h"
-> @@ -51,26 +52,21 @@
->   #include "qemu/log.h"
->   #include "kvm/kvm_loongarch.h"
->   
-> -static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
-> -                             void *opaque, Error **errp)
-> +static int virt_get_dmsi(Object *obj, Error **errp)
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index 4fc2d3a155..652f85a5c7 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -137,6 +137,7 @@ DEF_HELPER_1(ctr_clear, void, env)
+>   DEF_HELPER_1(wfi, void, env)
+>   DEF_HELPER_1(wrs_nto, void, env)
+>   DEF_HELPER_1(tlb_flush, void, env)
+> +DEF_HELPER_2(tlb_flush_page, void, env, tl)
+>   DEF_HELPER_1(tlb_flush_all, void, env)
+>   DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
+>   /* Native Debug */
+> diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+> index a8eaccef67..8655fa332e 100644
+> --- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+> @@ -155,7 +155,11 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
 >   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -    OnOffAuto dmsi = lvms->dmsi;
-> -
-> -    visit_type_OnOffAuto(v, name, &dmsi, errp);
-> -
-> +    return lvms->dmsi;
+>   #ifndef CONFIG_USER_ONLY
+>       decode_save_opc(ctx, 0);
+> -    gen_helper_tlb_flush(tcg_env);
+> +    if (a->rs1 == 0) {
+> +        gen_helper_tlb_flush(tcg_env);
+> +    } else {
+> +        gen_helper_tlb_flush_page(tcg_env, get_address(ctx, a->rs1, 0));
+> +    }
+>       return true;
+>   #endif
+>       return false;
+> diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+> index 7f63f3ada5..178b4d271b 100644
+> --- a/target/riscv/tcg/op_helper.c
+> +++ b/target/riscv/tcg/op_helper.c
+> @@ -607,6 +607,12 @@ void helper_tlb_flush(CPURISCVState *env)
+>       tlb_flush(cs);
 >   }
-> -static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
-> -                              void *opaque, Error **errp)
+>   
+> +void helper_tlb_flush_page(CPURISCVState *env, target_ulong addr)
+> +{
+> +    check_sfence_vma(env, GETPC());
+> +    tlb_flush_page(env_cpu(env), addr);
+> +}
 > +
-> +static void virt_set_dmsi(Object *obj, int value, Error **errp)
+>   void helper_tlb_flush_all(CPURISCVState *env)
 >   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    lvms->dmsi = value;
->   
-> -    visit_type_OnOffAuto(v, name, &lvms->dmsi, errp);
-> -
-> -    if (lvms->dmsi == ON_OFF_AUTO_OFF) {
-> +    if (value == ON_OFF_AUTO_OFF) {
->           lvms->misc_feature &= ~BIT(IOCSRF_DMSI);
->           lvms->misc_status &= ~BIT_ULL(IOCSRM_DMSI_EN);
-> -    } else if (lvms->dmsi == ON_OFF_AUTO_ON) {
-> +    } else if (value == ON_OFF_AUTO_ON) {
->           lvms->misc_feature = BIT(IOCSRF_DMSI);
->       }
->   }
-> @@ -78,21 +74,16 @@ static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
->   #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 64
->   #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
->   
-> -static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
-> -                              void *opaque, Error **errp)
-> +static int virt_get_veiointc(Object *obj, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -    OnOffAuto veiointc = lvms->veiointc;
-> -
-> -    visit_type_OnOffAuto(v, name, &veiointc, errp);
-> +    return lvms->veiointc;
->   }
->   
-> -static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
-> -                              void *opaque, Error **errp)
-> +static void virt_set_veiointc(Object *obj, int value, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -
-> -    visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
-> +    lvms->veiointc = value;
->   }
->   
->   static bool virt_get_highmem_mmio(Object *obj, Error **errp)
-> @@ -1025,21 +1016,16 @@ static void virt_init(MachineState *machine)
->       loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
->   }
->   
-> -static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
-> -                          void *opaque, Error **errp)
-> +static int virt_get_acpi(Object *obj, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -    OnOffAuto acpi = lvms->acpi;
-> -
-> -    visit_type_OnOffAuto(v, name, &acpi, errp);
-> +    return lvms->acpi;
->   }
->   
-> -static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
-> -                               void *opaque, Error **errp)
-> +static void virt_set_acpi(Object *obj, int value, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> -
-> -    visit_type_OnOffAuto(v, name, &lvms->acpi, errp);
-> +    lvms->acpi = value;
->   }
->   
->   static char *virt_get_oem_id(Object *obj, Error **errp)
-> @@ -1483,20 +1469,29 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->       hc->unplug_request = virt_device_unplug_request;
->       hc->unplug = virt_device_unplug;
->   
-> -    object_class_property_add(oc, "acpi", "OnOffAuto",
-> -        virt_get_acpi, virt_set_acpi,
-> -        NULL, NULL);
-> -    object_class_property_set_description(oc, "acpi",
-> -        "Enable ACPI");
-> -    object_class_property_add(oc, "v-eiointc", "OnOffAuto",
-> -        virt_get_veiointc, virt_set_veiointc,
-> -        NULL, NULL);
-> -    object_class_property_set_description(oc, "v-eiointc",
-> -                            "Enable Virt Extend I/O Interrupt Controller.");
-> -    object_class_property_add(oc, "dmsi", "OnOffAuto",
-> -        virt_get_dmsi, virt_set_dmsi, NULL, NULL);
-> -    object_class_property_set_description(oc, "dmsi",
-> -                            "Enable direct Message-interrupts Controller.");
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name = "acpi",
-> +        .description = "Enable ACPI",
-> +        .qapi_type = &OnOffAuto_type_info,
-> +        .get = virt_get_acpi,
-> +        .set = virt_set_acpi,
-> +    ));
-> +
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name = "v-eiointc",
-> +        .description = "Enable Virt Extend I/O Interrupt Controller.",
-> +        .qapi_type = &OnOffAuto_type_info,
-> +        .get = virt_get_veiointc,
-> +        .set = virt_set_veiointc,
-> +    ));
-> +
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name = "dmsi",
-> +        .description = "Enable direct Message-interrupts Controller.",
-> +        .qapi_type = &OnOffAuto_type_info,
-> +        .get = virt_get_dmsi,
-> +        .set = virt_set_dmsi,
-> +    ));
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->   #ifdef CONFIG_TPM
+>       CPUState *cs = env_cpu(env);
 > 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
+You're missing the similar changes to sinval.vma and hinval.*
+
+
+r~
 
