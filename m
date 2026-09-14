@@ -4,110 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C46C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45679C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x68Ri-0003xz-Sg; Mon, 14 Sep 2026 11:18:15 -0400
+	id 1x68S0-00042q-Ex; Mon, 14 Sep 2026 11:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x68Rh-0003xf-5g
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x68Rf-00023W-Jc
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789399090;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GS9eUqO7p/HuRp+PCiJRBduEpbk5WGGnRVVf5gt6+F8=;
- b=Fq61n4ssuDPvbZFG+IGt/iU+KEdSu+epnQDZP2P5nD3Mad8YLSC/uCrVbya35Yjt0aa+8B
- YQaVkDnifjOYBa5IYX/X++3jxrJoHZbf8L+bpxiDOeqybKUN2QZQMClFKREMh9RLOCypGe
- OKQVZBp9Hz5HwSR+Dx9b4ZbtD0hIN+M=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-183-TSIBN6xcP2yUTMqcDw8VZA-1; Mon, 14 Sep 2026 11:18:09 -0400
-X-MC-Unique: TSIBN6xcP2yUTMqcDw8VZA-1
-X-Mimecast-MFC-AGG-ID: TSIBN6xcP2yUTMqcDw8VZA_1789399088
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49cd74fc1aaso16323085e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:18:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x68Ru-00041x-Mp
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:26 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x68Rs-0002CQ-VV
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:26 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd38e0e5dso26002935e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:18:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789399088; x=1790003888; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GS9eUqO7p/HuRp+PCiJRBduEpbk5WGGnRVVf5gt6+F8=;
- b=gc4PFPCZrYwIqwxMr++BNYr5lBHiNL0YRlEuSQTLO5t7F/e7M82EQzPLJVQ7ollBGf
- UcBog4ZkqVspQHieMbI5u+QF392b95q+FC+G6FXn4eAzfemfCZS2NRNQRRIRV/Ev3GYl
- MkuikAujhkuwQwoL8lTMaFJzsbqJPVYS/oYkt08bJ31LYcU/sVoysPLab3tigb/cCH2e
- Drow+x8qhldopW/aG5cjJhsY2kL51deQY1Rl0prWdkLELwvIcTcOqCy0NAV1RTkhFRPG
- IVOYJ8SpWRsC2yATMQij0aR3CmQB8ctY86a/thl/Z3/Ww2EfkBPwEDAbcmhRNCk43auP
- EUbQ==
+ d=linaro.org; s=google; t=1789399103; x=1790003903; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=fvOXAzZbmxL8ZIngJVpa41ewlC3JCUiLWJ8uo908XFg=;
+ b=YZq/+sMFuBbp5B2bqINUC8bt2glkvYA7LzMCNS1fDB/pKFKk+DgPg11C/qtxo94oox
+ s7VDQSIBbKwcTKuFgOsYX7Cgp0WBTiO2mKJaBSy3WQ/IGoGdP1QSvW3AqatQIN6/7x+4
+ KNRGgLSCIdXZqmTvbwfi3qC2/l6xn7Sca6wCmLffd6d6rO426O852dx5N/3eXt5Lwfn0
+ D1KnwhChH28eB4Cyw/PEEDHSEAHZqsr6KI3v4wBMXNM4jLcaZ6qt3uoBlyAOyI8pDpmR
+ 7JCObFbN+8XdxBm+narQx4846lZ6xOdlhrvi1KSDsNDr8WT3xWCyO8pJQzBAjdKkTZDQ
+ tvCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789399088; x=1790003888;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GS9eUqO7p/HuRp+PCiJRBduEpbk5WGGnRVVf5gt6+F8=;
- b=DD3b/IZDqN/Ei/NTmWrws2lBzf0P5tZ6SNQMcoWPtpy8aTDBCw6HOP+vesjlvtoKp3
- R1TTIrw43ueXSSnxGufiLthGFObF55YLStCgG1boWVisiFIH3BKDxr0ZGY4C2N5XRX0X
- vHuUj5lcMLNqrxeNns2l+xP3021KlOZgZWbrrqVGsvzyr7Im/9ZtDDD4UP79qXGefabj
- tFlnQSigiSuGjXfuyxDxTaYQw78i1RiqNhZPMKISbJKx4m6bsCFELg8ymG+/TuN7raur
- /WbGngswcpENMs5l7nXwMrJJOoxpnZYm6Pxw8wDziQAP9gL2DMJm5gaNjJ/5Yqg1CKRl
- An3A==
-X-Gm-Message-State: AFuF++m/2tUYgL+zz4raJA+3CEw/yV9zOS4TO9YQ/GYCY6tuYVNek5LQ
- zXpd5pmEoTVHotn9Im451chQ2jr9aLAY1zg/DYcYWISwSUEaJes7GpOvyjOixYnMgqy0EHwCd2f
- 64IL4qX1KCX+0FXmexC0igQF0NfXd2xmHttgTesdk4oJjyuP4AjsJGQyjp1Lr2f+f
-X-Gm-Gg: AYBFou0QEHwgHRKnhnGgp8gFPPe1sRp860bopzVw8fjYOZbz0mPLOeyODEJnrSXFcXP
- qeUo90Q6CvVNKB4nPmsnYcyS3mZ9fl4nD4FkOQmnvgsaFLr4JxCczP0AGSlZxInou77A4QTVFfU
- XzVVVgUAYZ6vX5G1jHbbtF0VBdhVDmzzPwQQhUGqAL24gkE4j4qCUlZMjOns+AEe/eYoXV8d2So
- kqgFoYbXMN9QlVkCl7Nm2dJf9vJKyI70tBaeYQoEU/X4Uu2eUc3kqH6+toALxZ7THNYVWicoCl1
- EFEmxwT7xM4gaEXYY/Zx9s7y9VKJ+5GkTNRt0Qxmgho4ZeBxw1Kv+5m9gQ2shAsfo85qe6j2lTY
- fztwfSlK2Fnh5zKEtRA6/ykzu41otLVZVWJHWsKs1c/dluw==
-X-Received: by 2002:a05:600c:3583:b0:49e:645e:2616 with SMTP id
- 5b1f17b1804b1-49e7a637631mr50343055e9.5.1789399088044; 
- Mon, 14 Sep 2026 08:18:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:3583:b0:49e:645e:2616 with SMTP id
- 5b1f17b1804b1-49e7a637631mr50342345e9.5.1789399087566; 
- Mon, 14 Sep 2026 08:18:07 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26c2a419sm453015025e9.7.2026.09.14.08.18.06
+ d=1e100.net; s=20251104; t=1789399103; x=1790003903;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=fvOXAzZbmxL8ZIngJVpa41ewlC3JCUiLWJ8uo908XFg=;
+ b=HI0YeBUpjLpjKX1yGLFaeuQJW3XnkAHmfJ/HyxOgFL9Opx5vcSre5twaawDZ99gABh
+ okwIBg2sHPwJ65SwvZiSebt9XE211uWOByQcdVk9iJhFX6tdGA4qOKoRy7I+ryeEV7zM
+ OtgjpXcAdBxbqSTxm5qX2PHIa54HpuebIcWT+/QeXm8+EXNbTqo1VWEbUhkWb6msQAhe
+ ifm6yEKVWV31LcN8xrAX+ScUTQs4YC9HPpBtOFORsNXSruJ0GXU7aQTALHjW7qjMA0WR
+ 5fUoQHzWHdbG+ac2R0KolDslXL5N5zadg+VhWWzFzU33Qefydg+Nq02/P50ei784g3ZF
+ 0Y6A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxJ5rdWPUVlrJX6pLHwEGDkRVcWibOnotOKk/FS6KwFhPZSeJT1fLZoxl1e587doewCNPqr4BCMAMT9@nongnu.org
+X-Gm-Message-State: AFuF++nsprVnHZdTGdWDQfnvMBt4kO2xzwncRrW2t4yYtu9pI5B1RkJ1
+ ngxy1kCXClmgwSkveAEg82Re6aVSZyFK64G7mBF7lBpcc9IvdcF6UkwqOcJ3IDRJQd0=
+X-Gm-Gg: AYBFou2/amcQLq3k5wPIz3ikIxSTE5uGJcl4gnlPatSPCHMLy0I1esgNRm++kZiLKmT
+ N/W0RTqghQkTm9Od2HbqFWqNRm/btogX+d6YxmiJsBGXsg3/V7axU5UELpAbtvpeXxbVBMV9DYS
+ kDYILX5cZ+bObWx63+XKquQMmnZtMhjiXKI5qq6THPYoIWrg10awAjAsmYdbuZJ0NhTwmqTHXZf
+ WO0Fvb00gKY3M0WfCCVC5mkNg6zy+EQ++6t+MNkyxYTLf6z+yyHadhZi2d1UDPAXaFfL6d0nasH
+ f/vGCGd9TxBcofXNWLGmldQpUkiHXHcxdsYnxEAsbxq9fa/+Oy5XvZgiSZZd8iEgVcJD29nMI0z
+ 7OKXPBfYIDhDc/BdES0gFnE3DgnIhWc4hzM5rvCCyz2nujnIJgJsxqYsCWNZ3t1yvtCb55xuoCN
+ 4FDkHjf7s5K1R19uihFPzx71oA3AcOBuHJn/rHD91TwfaX0vKRp4nrVjtRd+4I6qLMoePeXzI=
+X-Received: by 2002:a05:600c:138f:b0:49c:f617:7cf with SMTP id
+ 5b1f17b1804b1-49e7a5ede89mr57072335e9.0.1789399103312; 
+ Mon, 14 Sep 2026 08:18:23 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e636f7fa2sm326497745e9.15.2026.09.14.08.18.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 08:18:07 -0700 (PDT)
-Date: Mon, 14 Sep 2026 17:18:04 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, philmd@oss.qualcomm.com, 
- maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
- den@openvz.org, 
- farosas@suse.de, peterx@redhat.com, clg@redhat.com, dongli.zhang@oracle.com
-Subject: Re: [PATCH v5 11/14] vhost: make vhost_dev_cleanup() safe on a
- partially initialized device
-Message-ID: <aqgQI9BPXTTjN_tq@sgarzare-redhat>
-References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
- <20260914-up-vsock-vhost-v5-v5-11-d17423589f48@virtuozzo.com>
+ Mon, 14 Sep 2026 08:18:22 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 306745F81D;
+ Mon, 14 Sep 2026 16:18:21 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ cw@f00f.org,
+ dbarboza@qti.qualcomm.com, Demi Marie Obenour <demiobenour@gmail.com>,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
+ Eric <eric.auger@redhat.com>, felipe@nutanix.com,
+ helge.deller@googlemail.com, Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com,
+ Warner Losh <imp@bsdimp.com>, jacob.oursland@gmail.com, Jan Kiszka
+ <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
+ <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>, "Ho,
+ Nelson" <nelson.ho@windriver.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, utsingh@redhat.com, Wei Wang <wei.w.wang@intel.com>,
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ zwu.kernel@gmail.com
+Subject: KVM/QEMU community call tomorrow - call for agenda items
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Mon, 14 Sep 2026 16:18:21 +0100
+Message-ID: <87ik47dfpe.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260914-up-vsock-vhost-v5-v5-11-d17423589f48@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,42 +131,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 14, 2026 at 11:37:42AM +0300, Andrey Drobyshev wrote:
->A device which only went through vhost_dev_init_backend() has its VQs
->not yet initialized, so vq->dev is NULL and vhost_virtqueue_cleanup()
->would crash dereferencing it.  Check vq->dev before use, so that
->vhost_dev_cleanup() can be called to release a device whose full
->vhost_dev_init() never ran or failed along the way.
->
->As of now, there's no way for the cleanup path to be reached with
->vq->dev uninitialized.  However after a subsequent patch adding CPR
->support for vhost-vsock this'll become a possibility, so let's prevent
->such a crash beforehand.
->
->Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->---
-> hw/virtio/vhost.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Hi,
 
->
->diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->index f9b54c46f93..2bb9a23fee4 100644
->--- a/hw/virtio/vhost.c
->+++ b/hw/virtio/vhost.c
->@@ -1648,7 +1648,7 @@ fail_call:
-> static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
-> {
->     event_notifier_cleanup(&vq->masked_notifier);
->-    if (vq->dev->vhost_ops->vhost_set_vring_err) {
->+    if (vq->dev && vq->dev->vhost_ops->vhost_set_vring_err) {
->         event_notifier_set_handler(&vq->error_notifier, NULL);
->         event_notifier_cleanup(&vq->error_notifier);
->     }
->
->-- 
->2.47.1
->
+The KVM/QEMU community call is at:
 
+https://meet.jit.si/kvmcallmeeting
+@
+15/09/2026 14:00 UTC
+
+Are there any agenda items for the sync-up?
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
