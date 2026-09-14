@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E750C88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44817C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CGt-0000Tr-Hd; Mon, 14 Sep 2026 15:23:21 -0400
+	id 1x6CHI-0000kl-Ua; Mon, 14 Sep 2026 15:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CGl-0000Nv-UA
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:15 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ id 1x6CHB-0000gE-B1
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:37 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CGk-0002Ip-Ct
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:11 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc1cea50dc1so1358937a12.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:23:10 -0700 (PDT)
+ id 1x6CH9-0002Lj-OP
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:37 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-398b3b189e0so1860238a91.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789413789; x=1790018589; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789413814; x=1790018614; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=FqzJgj5j0AKSdxwMHcgpuu8Vtht+GEYmg7TRFHJbHSs=;
- b=iVaZO2NYx/prPpbAZDbntN34ueF0wq3HFjuvXLsYiC9i/G5fHJgfH/qcqU2Sd3ZlqW
- ZkIDaLudxLTBYibp639pVNgF0GIqFti2FZsj0m6p1+m+5ftcNwRUbrtGsVmopX1b3gmo
- C/iSqvuKgN5oRWd3ujfKMMICuwCSw94g3RTgIob2vytxQvl01nnAQK8NLBy/sL2lvOb5
- kOBpKq8FAorDcs4HiQHM2uV3yui4GvUmOWLx0ucqzl2amzSW5MgZbfYaI0lqgN906Dg7
- vMMP0kNbAfeMSZXFC/CZDhqmqcR+/9xYPw2Br5M1bJf2hx0NFueX7/Xpm1archTgWqWc
- 2mAA==
+ bh=kiqN/SNECHaFLGJUJJesup1atSVTnWLr1p2ytdyKDyg=;
+ b=BS5AIj9urAKVuAAFcu70CUwOLEK6XbaNe96runcbqcW3Gye125L4XOdwkCYLqrwRCq
+ zA3jPaYuqft7CqovWlq4j8t6NGjirA1r4ql/SWfAqZHpLbQ97uFGlSgxrsrPt+qL2t+7
+ rPomS+xQUhafW6P9FQ/yzSTh+GwGB50tec8u71H7FwrP5nNgmsa1ZCOehUcI4TwBUcy8
+ AUZcQmPjs0Wn4uNp+OtC5ls71eX0aeN5fxgV9/c56P2TwUbxM3R9d/7qK2VtSFjuPlMu
+ zRPZR1ACqtpvooV4JaJl2GWdxE37ZHGfIHz7IXaKosuvBLqM/bj69nAnggxqpouDa8PG
+ cG+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789413789; x=1790018589;
+ d=1e100.net; s=20260707; t=1789413814; x=1790018614;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=FqzJgj5j0AKSdxwMHcgpuu8Vtht+GEYmg7TRFHJbHSs=;
- b=Np0t0cROp5EBEGGEecEFDXhfMrA/ndyYykFSrjYu9QL8k4LyHT4qMk2RTUoWn8D5Vl
- moe8Cw8nRb0C7abAX7n9UsA0UpBKg+RYy4STmRECSCZJ5zKD3xAC0kVn6RJuRZCuduHF
- +ohUeHcTBL5f4M4NT7yPgcJps+QMXCY3TVBB16YagFYFALE1+6QY3Ql3vL5v1QjrHLan
- 0cCuOpctxJC0xLiKWgc2CL6NdWeOLLkkplhTfvmkvBm2xihmbh4LjMXxhD1qXZohDw7Z
- 7FS8YcHKSVXNDvcPEH/OAB/OgqVTv4KOQDtxuzQ1bHVAnWIqnxMHODTTBKkCOXM8SKuC
- bgHg==
-X-Gm-Message-State: AFuF++lm+U20khSXybyMErGSrOAoFNrWBPacojhnSz8LTenOILr7CKPs
- eMboc5yt4NOrcccYmTniDvnnHoVUQizsvUJbZI55EVyNi5EjvVtT6LSy3dJ1uSqeKAQQj8Py74j
- 3AhyU
-X-Gm-Gg: AYBFou0C1VoTQn8tFBHi2wrxMxyRBYwyD9oIUht1ccBynQPNFhTkbIoVpcE5vuWQwsr
- jJDwaOKETxHb8VRX1NzRYVg08Y2XsFoSHIRXEgre/gfgHrtQrXBfwcE74chezBI7A4WonlTzT7c
- Qgj9nxlxNcb+ERKonuE+yrBcJ/wjKxQvWmQSRLKq7e65FpKvN/i5gxX5DZXTYAuA9f8MNADO1Ab
- NBdOiUE7bu+O+fIxHX7ErFFsvzOWYgcobmG62WyOwYGYQw+MuzqQNiNjiHyHu6g+MeChjK3ZBLi
- jFtidV3bb6LgguiIBmW0iUUN57j/o0s0I2eRU1HHCvWE7iHop/96LCFr+Ijbh7iU5Ayq82hvlqC
- UMlkYznmsg6SkPGS3jl3tYWWZTkdzr03ydeCV+rGvRyKD6y8CmALRhEdYP9EOOTRUPtqCT9b4z1
- yxOycX0xEJkaBhTyX+hJBLfgbSJBCLia074YCcQ/o2xdmcoQFX9v6cc4Oz1jAjii4oo6XEJ/OI0
- SHtHb2sCyVv69pzmQMwQtwmySs1x3l+2XecWrT2fUBeiilv1PPNJ6e4+9+7Jw==
-X-Received: by 2002:a17:90b:3812:b0:39d:fe64:5732 with SMTP id
- 98e67ed59e1d1-39dfe646221mr1189240a91.2.1789413788657; 
- Mon, 14 Sep 2026 12:23:08 -0700 (PDT)
+ bh=kiqN/SNECHaFLGJUJJesup1atSVTnWLr1p2ytdyKDyg=;
+ b=oFxZtm5a1hRsI0rMPy6NsV5M18eFsCFjiEhCSMUC5RQuMqSAdWQgQEUMtKBXWY+waD
+ vl+kfkYQa+QEF2Dsb1ETCXpM76ieFM0iZSL6NQrwnv8oG7PQri7pYek+0e/X0eFVRTQj
+ Vodb9SzZAw18QguI5r/MK7PapmBYaTUDfaAbFchyGyUI/uxU/kbJv/MPdXD3ECi98Ts4
+ z2RXQv3dXIg8zaUokYxp8jDr2JQuYDsecjbLYDBMb34ubv22HozgI87x0Y7+V75s8Lq8
+ nEEEI13knJN9c0/r35Y4SvzHe0VnMfJeu5M/ly6ZVauVw/YcpIU6z9aNTOuwbUg9THHz
+ cemw==
+X-Gm-Message-State: AFuF++nIbGL+Q9OpZe6heBZtxepAXXxo3SQkZ5IJ7NjqiWTC3/q/D7sp
+ 9FWtYfj+6SycUdF1U8qGSNlqY17ZX3/Wg8rBa0k3BxS97UgNr0ApxQV0ZZkR07RaUo6fN3IrBEp
+ 2SWyHj4M=
+X-Gm-Gg: AYBFou1k23T/OhN9a0G6/b4jbCSvW5mD4XzDqTW6UBTusib2siKSYS1EdB31LGVB0cD
+ TBc9HXrfo2AL1rZTRuyGZ9pF4SF1h/L70N+FtoqU6FVJaK0ndOY5b8iaN/WCOJ5FmS0Fu+14IOx
+ mRZuxSIzYld9ew8q6Ou04x6TwD0Oxo7hrzYLacbVhwJiJpJw3z2N/ilSByDp8i1SpCnp+jfbRRZ
+ ujaebQQkPbQWYXgp+oLXCvTRJg3Thl8FCNvzZ2vFaXgtR36qTunYkss4yqC9Kxa5YnHZJLXi1C8
+ MllprHXp0UvJW9HVr6Yx26LYyU+dI7oBNYG7huzgMjXqAuxGYJ8eb4/KBMa0v25kpeDEXlskQ7W
+ uuRg1H+irluICx9L3cB63H+RpGVtGE78skjKKsJLINRbc50PbDJoWSxtTUfoEnPCSTXLKpZ0FbG
+ evvISzVmsfz+ER2SIr8zS8OvPeVB5KGnrIN8tuNzf/thExrh22qBWpa+PvBQFX8+ek6joWPtYQj
+ 75VedHXTFvW8rSzkzCGDiOt45D41eY3EYNCzqUNhaL06KeelOlnJSxojmt2rw==
+X-Received: by 2002:a17:90b:2809:b0:39d:f2b0:5afd with SMTP id
+ 98e67ed59e1d1-39df2b05b4emr5634398a91.2.1789413814312; 
+ Mon, 14 Sep 2026 12:23:34 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
  ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bd8ad03ccsm9352294eec.2.2026.09.14.12.23.08
+ a92af1059eb24-14365ba729dsm42216419c88.14.2026.09.14.12.23.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 12:23:08 -0700 (PDT)
-Message-ID: <8012f136-1ade-40fa-878b-0258bf214f7f@linaro.org>
-Date: Mon, 14 Sep 2026 09:23:06 -1000
+ Mon, 14 Sep 2026 12:23:33 -0700 (PDT)
+Message-ID: <83ba5d71-d430-48a9-9c86-338290d0136f@linaro.org>
+Date: Mon, 14 Sep 2026 09:23:31 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/14] system: report device security status in help
- output
+Subject: Re: [PATCH v4 10/14] hw/core: report security status in query-machines
 To: qemu-devel@nongnu.org
 References: <20260910103628.2326622-1-berrange@redhat.com>
- <20260910103628.2326622-10-berrange@redhat.com>
+ <20260910103628.2326622-11-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260910103628.2326622-10-berrange@redhat.com>
+In-Reply-To: <20260910103628.2326622-11-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,14 +107,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/10/26 00:36, Daniel P. Berrangé wrote:
-> When '-device help', 'device_add help' and 'info qdm' are used, report
-> the security status of each device.
-> 
 > Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 > Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   system/qdev-monitor.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   hw/core/machine-qmp-cmds.c | 1 +
+>   qapi/machine.json          | 8 +++++++-
+>   2 files changed, 8 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
