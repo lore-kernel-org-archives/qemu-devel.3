@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A628C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C46C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:18:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x68QJ-0003bv-O1; Mon, 14 Sep 2026 11:16:47 -0400
+	id 1x68Ri-0003xz-Sg; Mon, 14 Sep 2026 11:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x68QH-0003bX-SO
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:16:45 -0400
+ id 1x68Rh-0003xf-5g
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x68QE-0001jj-4N
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:16:45 -0400
+ id 1x68Rf-00023W-Jc
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789398999;
+ s=mimecast20190719; t=1789399090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xaQaNyymAKaKCe8NZv+/t9PaI8asE2lKCyCEiRXEsRQ=;
- b=bw0eJXbpvNeeuFLO/DDz2v4UF+voZ1RhmtZhc2TXUvJ4NcRkQHrhFSbV9q/hXlUnpfdJsM
- pR6pbB6AI76b/NH2lkVZyMXiEDI96CoR2hPRVOSWiCcLCmlREEZbwHMTYJdkYfWkUTNoNO
- fgqzyC8XfkerEguoYM2v71TtsjTzQXo=
+ bh=GS9eUqO7p/HuRp+PCiJRBduEpbk5WGGnRVVf5gt6+F8=;
+ b=Fq61n4ssuDPvbZFG+IGt/iU+KEdSu+epnQDZP2P5nD3Mad8YLSC/uCrVbya35Yjt0aa+8B
+ YQaVkDnifjOYBa5IYX/X++3jxrJoHZbf8L+bpxiDOeqybKUN2QZQMClFKREMh9RLOCypGe
+ OKQVZBp9Hz5HwSR+Dx9b4ZbtD0hIN+M=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-uq2EQKxcOdeJj52ydudWVQ-1; Mon, 14 Sep 2026 11:16:38 -0400
-X-MC-Unique: uq2EQKxcOdeJj52ydudWVQ-1
-X-Mimecast-MFC-AGG-ID: uq2EQKxcOdeJj52ydudWVQ_1789398997
+ us-mta-183-TSIBN6xcP2yUTMqcDw8VZA-1; Mon, 14 Sep 2026 11:18:09 -0400
+X-MC-Unique: TSIBN6xcP2yUTMqcDw8VZA-1
+X-Mimecast-MFC-AGG-ID: TSIBN6xcP2yUTMqcDw8VZA_1789399088
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4994d67d0e3so27789625e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:16:38 -0700 (PDT)
+ 5b1f17b1804b1-49cd74fc1aaso16323085e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789398997; x=1790003797; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789399088; x=1790003888; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xaQaNyymAKaKCe8NZv+/t9PaI8asE2lKCyCEiRXEsRQ=;
- b=rYsR0Z8Xb51o3vZWhDNnIeYVFND0JBhb8NJwPEBdGH/do4e8Db4b1DX1UcF/pnd2hH
- 3n75QLupoLtXOjEdbToSgP3yWIBmyXiNzawTmr4ThSJ74Q8U/GWRD+M7wGdexkGxxh+1
- gzSBlRLBR5io24+qUqcOqb3StoPORq7d6SwTImfMKlmtfKmufu3ZvoWDB3AbQeB7TdKL
- BqgMV185cReOrJg3fzQGltetC1sgjQsIK2BVwuohHNum26YM8tdvNUUamnQBkyH4r/90
- EdhwxqVqFaa58LH8n6Dq754IQ37IXMJJI8iU8WGEYtNnD5HOKXfz9Ts/ifJlyqQvn93k
- 1/lQ==
+ bh=GS9eUqO7p/HuRp+PCiJRBduEpbk5WGGnRVVf5gt6+F8=;
+ b=gc4PFPCZrYwIqwxMr++BNYr5lBHiNL0YRlEuSQTLO5t7F/e7M82EQzPLJVQ7ollBGf
+ UcBog4ZkqVspQHieMbI5u+QF392b95q+FC+G6FXn4eAzfemfCZS2NRNQRRIRV/Ev3GYl
+ MkuikAujhkuwQwoL8lTMaFJzsbqJPVYS/oYkt08bJ31LYcU/sVoysPLab3tigb/cCH2e
+ Drow+x8qhldopW/aG5cjJhsY2kL51deQY1Rl0prWdkLELwvIcTcOqCy0NAV1RTkhFRPG
+ IVOYJ8SpWRsC2yATMQij0aR3CmQB8ctY86a/thl/Z3/Ww2EfkBPwEDAbcmhRNCk43auP
+ EUbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789398997; x=1790003797;
+ d=1e100.net; s=20251104; t=1789399088; x=1790003888;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xaQaNyymAKaKCe8NZv+/t9PaI8asE2lKCyCEiRXEsRQ=;
- b=K3dr0Ip63clPL6DWxWk2jXSe3AQskYSu5QT4+msBzzQ75wZ7u9IDD195q7n9QWOo/m
- COM5otY1hqhhWrY8NXXmsLlM8BhwOGP4vCF2YK0IoBYYF9s3j1Kq0QzN7SXmhrZEoopQ
- PJzsakHBJRmEOlVQwX/EYPIwI//YalKgchJNe3EgLXiUJqoVDIUMJBGE0Jdtt8Za2WZB
- r4uTj30G3fgaCy26usKmwyp8TFQs0ld1HMqqQ2Ali6Tco7wHyNH4qmf6vzkzEao8+kzs
- p1aI6JVKAK/R2d0QxAcc8A9KeEsWOYJn+sXDF72m9mCLL+rJLVb1WlargxSwdtO3myXH
- EieQ==
-X-Gm-Message-State: AFuF++mJiZsHGWI/65muUdQfLRac1XRTblg+ZysX05Sn2clvjwhic6iI
- P6vce0z+cgLqQ/wO0Mb4p0u6qLJxJz6XmgJlRjiCO2FKrDWDsmtlT1YlIHkHhM3OU92gL4YTBk/
- FgSHBRdu7yllR198ZwPqhkx5uyRGPPySTcGAKDJmkVnP5z9YoF83rsEbi
-X-Gm-Gg: AYBFou0h4nEIjIvjg0Zrvtl/3wllWiLQKC+rd7mMxFI6lEiwSmKdntsM9TrC3/LVnyT
- qMLAHXdp6TP3IngXtFKGZTJ2jsfXFa0Rz3vf8eawafZ2atQLeS5qq2TOYxtArwk+4j+ntewPScj
- 8dqAqU7H11XHOmuyPIqQB/8tmROEWHE8IBThVuQ6q7v6bbrz0nDZiJ+20hbbB/ucUxwlGwrHj2M
- TXgC+yBS4GC0OuMnzZpKxRzbXJ4dtorafpyjz0Zwaz5cvgdJ+Ok0GUSSrGiobkLs6Y5NcmQlZAV
- dNgUGo2Sln070aVS8QrX1yBnKCJQumelJUTQqhXEobkHNd3ZRym79YiTQDNPO7eBEGa+nleuZWX
- cmZ8/RQOOI1oxjNKL+l4jv7HovlDGuo7JImFqoxhLJn24hQ==
-X-Received: by 2002:a05:600c:5489:b0:49c:c96a:d36b with SMTP id
- 5b1f17b1804b1-49e7a662f07mr32693895e9.12.1789398996990; 
- Mon, 14 Sep 2026 08:16:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:5489:b0:49c:c96a:d36b with SMTP id
- 5b1f17b1804b1-49e7a662f07mr32693315e9.12.1789398996503; 
- Mon, 14 Sep 2026 08:16:36 -0700 (PDT)
+ bh=GS9eUqO7p/HuRp+PCiJRBduEpbk5WGGnRVVf5gt6+F8=;
+ b=DD3b/IZDqN/Ei/NTmWrws2lBzf0P5tZ6SNQMcoWPtpy8aTDBCw6HOP+vesjlvtoKp3
+ R1TTIrw43ueXSSnxGufiLthGFObF55YLStCgG1boWVisiFIH3BKDxr0ZGY4C2N5XRX0X
+ vHuUj5lcMLNqrxeNns2l+xP3021KlOZgZWbrrqVGsvzyr7Im/9ZtDDD4UP79qXGefabj
+ tFlnQSigiSuGjXfuyxDxTaYQw78i1RiqNhZPMKISbJKx4m6bsCFELg8ymG+/TuN7raur
+ /WbGngswcpENMs5l7nXwMrJJOoxpnZYm6Pxw8wDziQAP9gL2DMJm5gaNjJ/5Yqg1CKRl
+ An3A==
+X-Gm-Message-State: AFuF++m/2tUYgL+zz4raJA+3CEw/yV9zOS4TO9YQ/GYCY6tuYVNek5LQ
+ zXpd5pmEoTVHotn9Im451chQ2jr9aLAY1zg/DYcYWISwSUEaJes7GpOvyjOixYnMgqy0EHwCd2f
+ 64IL4qX1KCX+0FXmexC0igQF0NfXd2xmHttgTesdk4oJjyuP4AjsJGQyjp1Lr2f+f
+X-Gm-Gg: AYBFou0QEHwgHRKnhnGgp8gFPPe1sRp860bopzVw8fjYOZbz0mPLOeyODEJnrSXFcXP
+ qeUo90Q6CvVNKB4nPmsnYcyS3mZ9fl4nD4FkOQmnvgsaFLr4JxCczP0AGSlZxInou77A4QTVFfU
+ XzVVVgUAYZ6vX5G1jHbbtF0VBdhVDmzzPwQQhUGqAL24gkE4j4qCUlZMjOns+AEe/eYoXV8d2So
+ kqgFoYbXMN9QlVkCl7Nm2dJf9vJKyI70tBaeYQoEU/X4Uu2eUc3kqH6+toALxZ7THNYVWicoCl1
+ EFEmxwT7xM4gaEXYY/Zx9s7y9VKJ+5GkTNRt0Qxmgho4ZeBxw1Kv+5m9gQ2shAsfo85qe6j2lTY
+ fztwfSlK2Fnh5zKEtRA6/ykzu41otLVZVWJHWsKs1c/dluw==
+X-Received: by 2002:a05:600c:3583:b0:49e:645e:2616 with SMTP id
+ 5b1f17b1804b1-49e7a637631mr50343055e9.5.1789399088044; 
+ Mon, 14 Sep 2026 08:18:08 -0700 (PDT)
+X-Received: by 2002:a05:600c:3583:b0:49e:645e:2616 with SMTP id
+ 5b1f17b1804b1-49e7a637631mr50342345e9.5.1789399087566; 
+ Mon, 14 Sep 2026 08:18:07 -0700 (PDT)
 Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
  [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e7d52f335sm123235e9.0.2026.09.14.08.16.35
+ 5b1f17b1804b1-49d26c2a419sm453015025e9.7.2026.09.14.08.18.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 08:16:35 -0700 (PDT)
-Date: Mon, 14 Sep 2026 17:16:30 +0200
+ Mon, 14 Sep 2026 08:18:07 -0700 (PDT)
+Date: Mon, 14 Sep 2026 17:18:04 +0200
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: qemu-devel@nongnu.org, mst@redhat.com, philmd@oss.qualcomm.com, 
  maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
  den@openvz.org, 
  farosas@suse.de, peterx@redhat.com, clg@redhat.com, dongli.zhang@oracle.com
-Subject: Re: [PATCH v5 09/14] vhost-vsock: preserve vhost FD during CPR
-Message-ID: <aqf9QkwF9J8SkHA4@sgarzare-redhat>
+Subject: Re: [PATCH v5 11/14] vhost: make vhost_dev_cleanup() safe on a
+ partially initialized device
+Message-ID: <aqgQI9BPXTTjN_tq@sgarzare-redhat>
 References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
- <20260914-up-vsock-vhost-v5-v5-9-d17423589f48@virtuozzo.com>
+ <20260914-up-vsock-vhost-v5-v5-11-d17423589f48@virtuozzo.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260914-up-vsock-vhost-v5-v5-9-d17423589f48@virtuozzo.com>
+In-Reply-To: <20260914-up-vsock-vhost-v5-v5-11-d17423589f48@virtuozzo.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -122,123 +123,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 14, 2026 at 11:37:40AM +0300, Andrey Drobyshev wrote:
->During CPR (checkpoint-restore) migration the guest keeps running on the
->same host, so instead of reopening /dev/vhost-vsock on the destination,
->we should reuse the FD from the source.  The FD is saved in the CPR
->namespace (hash table) with cpr_save_fd() and then reclaimed on the
->target via cpr_find_fd().
+On Mon, Sep 14, 2026 at 11:37:42AM +0300, Andrey Drobyshev wrote:
+>A device which only went through vhost_dev_init_backend() has its VQs
+>not yet initialized, so vq->dev is NULL and vhost_virtqueue_cleanup()
+>would crash dereferencing it.  Check vq->dev before use, so that
+>vhost_dev_cleanup() can be called to release a device whose full
+>vhost_dev_init() never ran or failed along the way.
 >
->Since the key in CPR hash table is the (prefixed) device ID, CPR needs a
->unique ID.  Thus we only preserve the FD with cpr_{save,find} if this ID
->is present.  In a following patch, when we lift the CPR migration blocker,
->we're going to condition it on the presence of ID.
->
->vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
->Deferring the ownership handoff to pre_save/post_load is done in a
->following patch.  Until then CPR remains blocked, so the restore path
->added here is not reachable yet.
+>As of now, there's no way for the cleanup path to be reached with
+>vq->dev uninitialized.  However after a subsequent patch adding CPR
+>support for vhost-vsock this'll become a possibility, so let's prevent
+>such a crash beforehand.
 >
 >Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 >---
-> hw/virtio/vhost-vsock.c | 30 +++++++++++++++++++++++++++++-
-> 1 file changed, 29 insertions(+), 1 deletion(-)
+> hw/virtio/vhost.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+
 >
->diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
->index 3ec20d87606..203055354ae 100644
->--- a/hw/virtio/vhost-vsock.c
->+++ b/hw/virtio/vhost-vsock.c
->@@ -69,6 +69,10 @@ static int vhost_vsock_set_running(VirtIODevice *vdev, int start)
->     return 0;
-> }
->
->+static char *vhost_vsock_cpr_name(DeviceState *proxy)
->+{
->+    return proxy->id ? g_strdup_printf("vhost-vsock/%s", proxy->id) : NULL;
-
-Sorry, I should have asked in previous reviewes, but is it okay to use 
-the proxy in any case?
-
-IIUC this will work well with `vhost-vsock-pci`, but what about MMIO 
-deivce like `vhost-vsock-device`?
-
-Also the "proxy" is used just here IIUC, so I think we can move that 
-here entirly to reduce the diff, I mean pass `DeviceState *dev` as param 
-here.
-
-
-While looking better at the code, I found qdev_get_dev_path(), can this 
-work fine for this scenario is some way?
-
->+}
->
-> static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index f9b54c46f93..2bb9a23fee4 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -1648,7 +1648,7 @@ fail_call:
+> static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
 > {
->@@ -143,6 +147,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
->     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->     VHostVSock *vsock = VHOST_VSOCK(dev);
->+    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vsock))->parent;
->+    g_autofree char *cpr_name = vhost_vsock_cpr_name(proxy);
->     int vhostfd;
->     int ret;
->
->@@ -170,7 +176,19 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->         return;
+>     event_notifier_cleanup(&vq->masked_notifier);
+>-    if (vq->dev->vhost_ops->vhost_set_vring_err) {
+>+    if (vq->dev && vq->dev->vhost_ops->vhost_set_vring_err) {
+>         event_notifier_set_handler(&vq->error_notifier, NULL);
+>         event_notifier_cleanup(&vq->error_notifier);
 >     }
->
->-    if (vsock->conf.vhostfd) {
->+    if (cpr_is_incoming()) {
->+        /* Reuse the fd handed over from the source QEMU. */
->+        if (!proxy->id) {
-
-IMO we should be consistent and check `cpr_name` everywhere to improve 
-readability and reduce the diff moving the proxy in 
-vhost_vsock_cpr_name().
-
-Stefano
-
->+            error_setg(errp, "vhost-vsock: device ID is required for "
->+                       "CPR migration");
->+            goto err_blocker;
->+        }
->+        vhostfd = cpr_find_fd(cpr_name, 0);
->+        if (vhostfd < 0) {
->+            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
->+            goto err_blocker;
->+        }
->+    } else if (vsock->conf.vhostfd) {
->         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
->         if (vhostfd == -1) {
->             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
->@@ -207,6 +225,11 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->         goto err_vhost_dev;
->     }
->
->+    /* Register the fd for a future CPR after a fully successful realize */
->+    if (cpr_name && !cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
->+        goto err_vhost_dev;
->+    }
->+
->     return;
->
-> err_vhost_dev:
->@@ -223,10 +246,15 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
->     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
->     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->     VHostVSock *vsock = VHOST_VSOCK(dev);
->+    DeviceState *proxy = qdev_get_parent_bus(dev)->parent;
->+    g_autofree char *cpr_name = vhost_vsock_cpr_name(proxy);
->
->     /* This will stop vhost backend if appropriate. */
->     vhost_vsock_set_status(vdev, 0);
->
->+    if (cpr_name) {
->+        cpr_delete_fd(cpr_name, 0);
->+    }
->     migrate_del_blocker(&vsock->migration_blocker);
->     vhost_dev_cleanup(&vvc->vhost_dev);
->     vhost_vsock_common_unrealize(vdev);
 >
 >-- 
 >2.47.1
