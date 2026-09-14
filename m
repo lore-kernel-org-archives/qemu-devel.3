@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE8BC88E6A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 425EAC88E6A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x62lM-0008IP-0Z; Mon, 14 Sep 2026 05:14:09 -0400
+	id 1x62mB-00005o-Kl; Mon, 14 Sep 2026 05:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x62lG-0008IC-Jp
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:14:02 -0400
-Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
+ id 1x62m1-0008Td-3d
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:14:50 -0400
+Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x62l0-0005ee-LF
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:13:49 -0400
-Received: by mail-yx2-x10.google.com with SMTP id
- 00721157ae682-86382f10801so4886207b3.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:13:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789377224; cv=none;
+ id 1x62ly-0005j1-NU
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:14:48 -0400
+Received: by mail-yx2-x11.google.com with SMTP id
+ 956f58d0204a3-66e4ab2029eso1530757d50.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:14:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789377285; cv=none;
  d=google.com; s=arc-20260327;
- b=q/1s9KIp4VlvdYC47c15xgxaCw6bhx4pcFJ2U8ltWmP9uF1grE7edL/wcHJBCvykvl
- mIKleZe8m6Dt3WniQ4+A+8Nbwt3E7DkQUneXbrL+o/Y7GEv9xOQ8d2P4emSZw5U4dw6c
- 2DNRNe/BPNB8v7AmcKyiC9g3fMQx1l0dzoYhq/GOifCRsNZqIyoOW0CCoWAylxFTttbK
- 1KoYG2zz694yXe4fcTHJDMidLp3CUWwRpO6INYE/c/OWNT7DO4RDfLFNGrXqws/+T1Kl
- OY+JyEU341qFIt/aml+RMC16qKZZq+pSB3Rzbh/C0yOdLWW31um3NWWu14HHv9co1Ohu
- 4a3w==
+ b=XA7VcTSe/aO85iEVnxryYHXmXVggdrvAcg9HnG7BqoV8Wf9NmPiWkE9WP1Mwi/B6YP
+ EdY73NaTVeVURmP5v4bjfGjfSKc1/mDU2HdDBUyoayvLa0LVu+FfpaNzSmVsiOqZcy6k
+ UOdwd9ibck8GHF5cUo8rAyxEaWYXfmtluTsa9dxIjP2pMIFCjV7qVVOD/+qCdG1xSwsM
+ wq8uECOIeRe2WSWlxXCpe1uFObWucO99SN7JgxFUcMWHROagQO/eDpagw3zZRu3AN8HB
+ /IE063TXDjZpbyA4P4tCkz82Nh9BPePeEVGytoQGUUsLaoJQnfblnSwqRL41pbseObpy
+ IfGQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=ZTsXqccZnn67dqHe3rEGu11j2FVDgwpzyyraxrGZuOA=;
+ bh=n0JaoRFooY/s4epk3+cMM8iTtFzbAc6LFJZ3j67fLc4=;
  fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
- b=jVOuXlBV+KHuU4UnsU9tY+qjqigig4cMg0Zm52f2/vgciddv1swk0cZFTaBMnkV/0W
- gqepBqWft4W0/sKN+kAVwTfYLkT73iBtBxOLxnQFg0kAZoDcVUBvyz8o7XKzlDAZQM0+
- bQGLWiPnApkTd7DEzg7JJmFvmpogIDe2skpls8IIK0mvEjyRU773byb862k24xlE4BXJ
- uY3mF/PPLVwXE8E9LNKgb6tthZQinlEBsKh937UM4EefJmCrKOF6joDGX9t2kt+f/K5F
- U/bN7cq1E93Zgj3V2ibeWepCUflWEd1HGJrE+NmLBd2t46GS5renHWCXoGsGmVC4hNJT
- H0qg==; darn=nongnu.org
+ b=nqBocvCI8OtO+wjeY+BIY8X3EzIa/wCDB/VJu26nks204LcejM5pOAbZjoCt8oWmfs
+ sV9nj4J/RKMp1kHnuCog4vsXxX5ak3Jjw4G4DFeuxxwJDc/mIsmDsBwhErTuJ+KSBN4r
+ S5GU8NB0yJyHbIxiXbUwxgMKobsJS1D3UzWkCS9MwkI3Dn2nZFCZQHNuDkmKpNvP/2yl
+ kr7Z+SA7jbqNVadi/4orBQofrBIwKVtDVaqnnepwzfA+KZ+clJ7Isdkve1YFnCY/FsBE
+ wvWoQvJ0Jd0bEHFmxX0IPncEgbTSm4xhQitZ3yF6fRFHezpstMnWrT6XC1SAkRDOgG+/
+ lTrw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789377224; x=1789982024; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789377285; x=1789982085; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ZTsXqccZnn67dqHe3rEGu11j2FVDgwpzyyraxrGZuOA=;
- b=w/HvjE8IrQVYCeqXO65kQxrp5tIad1vo51dhdg2HVH96GumQg1Zt+L+TVJ270VhpKr
- shEdyCku/58v8TPeT3Pd/MG4H1RorOkvrnqcL+4sX4g0FPWmrsLbiedL87XvKSYTykt7
- IhCHylKycrGvQ7bJs5SZfWM2YJWvgiRwqfjTC8uN8Yt5S3o9B7GA+wfjiBd+F8VI1AIg
- 2FTXG0MYlbI0Umx4G2qyFs4HIeNFiL5yFw8ffK3hqd9ttR57AEnOAegVn8mC/qyXO5eL
- N//7Vf0lWZuJCl8UZaEd3vkR0qP5eiz5Y1TU+QfetC23dMxDPmfQ28W+eRmRruAVMfQD
- es4g==
+ :content-type; bh=n0JaoRFooY/s4epk3+cMM8iTtFzbAc6LFJZ3j67fLc4=;
+ b=uwOovws1KPQoEdtO19n+ZuTdLhWl2qa/ibMcEjOudmfvAid97zcVUscLw77Q8kAopL
+ Z9OIENr2PzyhbGcv1KiwLh8FKH4qccZ5ZcZw59Qkju1w2AB2uaet6SK3xjKUrPLaI2up
+ WpH6yw1MPTL9FLlkBgjCVXF4UFRcnYZKCTzoKWfWGEvtdhS/I4x5+jaq5N503qMU2ucp
+ cXByE0vAF1TLuq9Mc0xo8m2k07wNvH5J9r+sfxNwIae7gGKq/mzCw7AfKc0viHyrAomd
+ +hzhyQQATYRnN2KgMk1NYqWFHEDq9URtPqcHpk5iF2VwwRrOIVZ8SVgLjOpuo3b7/8H5
+ JVAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789377224; x=1789982024;
+ d=1e100.net; s=20251104; t=1789377285; x=1789982085;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=ZTsXqccZnn67dqHe3rEGu11j2FVDgwpzyyraxrGZuOA=;
- b=FmSQSnCXZ1KJjQ1WkV3gg8yPoNdmTEueSiBk2RcSCJTufhw1ygMpgTGmimGMEc3QnF
- a2cogm3dEGrMtFWGG/TxaxzkgJY9qcLs7jetQVfjh/i0Z3top0M1BKr6YFJP2BOaKhiR
- 2R6wJpGpxSTKMrrjsrhf5JfgSuXTqf3QZbzLm+rU0UzQaq+Rted//kes8fwDYTUATudE
- mV5c4IWE2DVq1/n2i3CBwNWKvAStrcBLHy8a3ACdsXr/zS+Wu/hXh+fm5cm6CjLCVgcY
- Zna6PRY8SudroOW+88DHPsgSbDP6bveGBGTiFfJDEDlwRn+33kEKY1UksbuPH1Mcam/E
- euVQ==
-X-Gm-Message-State: AFuF++kBpDoXjNHlyKfYsJp0vSA+CIFxF0ob0I1DASzrEnM9U5ZovJlR
- ObwshZjS43zt46WsliMxXMrQ0cNpFpDjQFkCuyXnsZLXjOXzht0aMGQXUnCbtmwEheMkMp4EW12
- 9L/uXe3Wm+b7d79Do5MDadOuKSI6nSDNJ7a6OgoY4nQ==
-X-Gm-Gg: AYBFou3LiK0JkBTJw5BrrbpWMihBE3Bxl3KxsJqtZ1FvY/tYx6/uQzIRVYxUZv64GXP
- LZ7FdLzEU1C9fo7CS4Y/FM1pyVyw1B5jnUZiuit/KtuqZo4Ot0T6soJ49JGBfu0VMhqyWcYF2G0
- fMm6lmlOhvA8YxF6sqkNu3zPAnUnKrqB1q7IUbcIWTVLVYb/qqHTlunTN2pOVHGtR4RMkJKaN1w
- ZRXcyXBqQXEk+pvE5nS7vyUs9SbhSjr7N+LKhy3pY9d6x8lT9XgP+OFip51HDReepAeRX+SiLuG
- n3jTWdeaH+eTvtDng6jq6emS9j7ImHXDUzSIZ0a8dKdpZcD+uMyMIqFg3WJMw1ZrJKcl/K3MAJC
- L8tZwIP6Pz9NhSQkosBF1DvxeByfh5PlC3D3pOaM=
-X-Received: by 2002:a05:690e:801:10b0:671:3d20:c2de with SMTP id
- 956f58d0204a3-6714dba60b9mr174275d50.26.1789377223883; Mon, 14 Sep 2026
- 02:13:43 -0700 (PDT)
+ bh=n0JaoRFooY/s4epk3+cMM8iTtFzbAc6LFJZ3j67fLc4=;
+ b=N5w+EkxcbypJxaXoaP54femPX99BWRjqITKuKIB9KuMBUM78+I+yzt/ZpqURqDv3pj
+ V27fKKklhZKkQZNREHVhMeY2aw2qxeRBIC/J1gkyk4nx+LJX2QCVlP1SRm0HDvUeLPjC
+ sEj2yqkPYNWSQ6zaX7rgSz7l98aoITSaQvxdHJU9tfLdDQCa6Ifeb6c/fM2tVGIjLjzI
+ v4ipPsdamw+iTgRJSq8WHbjBa6yHXKIlDz9FdEqQfIRQxwoAQBMB6pa1nQHgdiVHhC5g
+ mnCc5mtGXSK80zfVZk3XlcT8X1F0FZE0ozAZQLvr93Hdgxv5Eo07jhRcpyZ9M5poZIk3
+ 1gCQ==
+X-Gm-Message-State: AFuF++njJyhx/2Xh/U0xC9A6igp0mlgI1iHRHnWFpLEsmJWSkEtt61GT
+ sqWD+seYAcayHnYs2+mtxy78hWai+xAb2NxD6qHyS50wwOJPfygqEpHtVqVX4WUfAH0Aq1y6nZH
+ 7VfZmzVAMGzpxlA2Ul9OEWR4fBWA+CuyI/WPjIeAHeA==
+X-Gm-Gg: AYBFou15Yd+S/7ntOjkc56pT1b7KLLc2ShxCfHMeteC8tQSlN6x9AlJJ16w4Z6+YTrF
+ N7qTdO8n8mvszFpdauoyiDjip8tW33PtkCqUQmvomf1OX8WY3sFfDbVftIBRtOaXxaE6zlC4H+N
+ 4Hp6anRcBEpVaJjvTTLZLEDtf6xs/XtzQckGp8gJGVqEsB+w2iZakzkUmC3q6bl43IZjWIplEDx
+ qWLY8VIQc/DOZoGLAWrX7i+7QdqWcamzftgtAnd5xCP15Mr/t1YP4pMWTcFtrqgfStZUh02QEkd
+ 9Xyvj3Z0jolcEBCUvk7IvT4cOeyipC0zGrmWHMlS1zSXyFpTzDM+1w5oWkZYQAXzwGqfeoF3D4k
+ BBLd0TgaYLOSHFI7WxYOQbVQhhkqtjtxRdR0GBgY=
+X-Received: by 2002:a05:690e:1908:b0:671:3884:8672 with SMTP id
+ 956f58d0204a3-6714e1a97a8mr335203d50.82.1789377285261; Mon, 14 Sep 2026
+ 02:14:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260906222551.3712954-1-brian.cain@oss.qualcomm.com>
- <20260906222551.3712954-3-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260906222551.3712954-3-brian.cain@oss.qualcomm.com>
+ <20260906222551.3712954-4-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260906222551.3712954-4-brian.cain@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Sep 2026 10:13:32 +0100
-X-Gm-Features: AcwNN1UpGbu_vKIWVGLa-JI7cl9Q5ZgNrkU2WZbWnlItt_LVbJj0cznRDIdoxGs
-Message-ID: <CAFEAcA9m21oDgdGXdbFHfj9Od1a9waj2Aopvpka8WbpcGuqEUw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] target/hexagon: Fix semihosting STAT filename handling
+Date: Mon, 14 Sep 2026 10:14:33 +0100
+X-Gm-Features: AcwNN1U09yPIzDUP3yit4mbxWDB3hukNVFNgoQsXN-KuSonoahOpTX4J0kdBZGc
+Message-ID: <CAFEAcA_VegX=QWO9GnycfVeeSsmpVd_20uGGYBJ2f_49fJT9cQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] target/hexagon: Fix semihosting ACCESS filename
+ handling
 To: Brian Cain <brian.cain@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,19 +116,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 6 Sept 2026 at 23:25, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+On Sun, 6 Sept 2026 at 23:26, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
-> HEX_SYS_STAT could pass an unterminated local filename buffer to stat() when
-> the guest string filled it. Use lock_user_string() to safely map the guest string instead.
+> HEX_SYS_ACCESS wrote a NUL byte past its fixed-size filename buffer when the
+> guest string filled it. Use lock_user_string() to avoid the out-of-bounds write.
 >
 > Fixes: 7711fdba88b ("target/hexagon: add main arch-specific semihosting operations")
+> Resolves: Coverity CID 1685942
 > Link: https://lore.kernel.org/all/CAFEAcA9MOs6VfHf2UHZ8z4cdvaB+7DY6hJb2emYZ2aLSe-t6iw@mail.gmail.com/
 > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/hexswi.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
+>  target/hexagon/hexswi.c | 21 ++++++++++-----------
+>  1 file changed, 10 insertions(+), 11 deletions(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
