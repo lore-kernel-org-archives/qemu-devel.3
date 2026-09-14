@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A34FC88E66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77277C88E64
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 00:09:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5uFQ-00033y-DI; Sun, 13 Sep 2026 20:08:36 -0400
+	id 1x5uFY-00035s-MJ; Sun, 13 Sep 2026 20:08:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5uFL-00032W-Vj
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:32 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1x5uFO-00033S-6k
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:34 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5uFK-0006tC-5u
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:31 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-38a0c7e841fso4137777a91.2
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:29 -0700 (PDT)
+ id 1x5uFM-0006tW-Fb
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 20:08:33 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ 41be03b00d2f7-cc4aa0f1a94so930264a12.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 17:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789344509; x=1789949309; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jCURvq3peylDGPhQ7UrlrETYmQ0E5EKE8owoGQOGrkg=;
- b=AaEMwBHhEJUuslsmQlIcMTw2wgY3Pzewif6wf9RDFat0B9IkYyQbJ07OZG5BM5/jSM
- 0c6EumQDBqVMiKtkH0MPirma2e3L1URCcn53Ejm+kAzxJ70MHsLeCk7nzVRqtAn3km18
- 17tWUfQVDHeabbY5BxpaMwGe2P27YbWSifIGFiP5HWrUVFaO3+dZK6ijl56Wsig02jR1
- IQXK7q3ivRe247HK1r3ycpxuGhy+fwMRaKeVDJ9+YSDV9NYI8cbww9y/VKI21Ik099Ts
- g9jI3uaLf8gg9PLDBHV7u8jg01V4IZSCOG1OOSPPk+SIYwoD/T9AI34CuNndc/qg83b6
- GcWw==
+ d=linaro.org; s=google; t=1789344511; x=1789949311; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=2z9m/YOpcToSgBJOfPpTljwJ75aRrsoL4rxY7if3/dA=;
+ b=aMAOmfTL4llwsw+oeDpKpEi75dFGGqduynKqTQzJXH23zQm0EilY1ukfn/IWCLIVJu
+ Ftata7/aFNePz9QL/lpO4xe9N0KwCCICKo6yjnI/q5jRbsw6u8gksJoAVeOZTzMjgoHa
+ qIoeK+B7Rzvnq7Q/otWpTcRRZgs9qUcMYTM7fuphcbdOc9CLOudL+b+xS9hTVT08kbfv
+ ofKIob2am+Uy2E41B3uBx6qNeDeD1lH9bjHKPlRdowT4rrNW1GSy1PsDaS6HXj6Vhbnp
+ psexLrk6WGkCf26771uMGAHtpOz7b+OGXdC75GYqxWfRwUs+SLRUA6u1tjphJ2t5I7z7
+ yp/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789344509; x=1789949309;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jCURvq3peylDGPhQ7UrlrETYmQ0E5EKE8owoGQOGrkg=;
- b=oaGr2O8ilg/RlvkKZzSXy5ToOSK8/0krdvsQxGxDlO1h5qKZ9wO9npy9g80S5ABrjz
- 9X7YcBmLGc86NTOua7g7kUgqy9tD4jgHD+BdIEKRhg4jnEjuWQSeIRs/Rm4OUVl20GzR
- bGAGHcGVBfWn7z3REOWPQL8OUlof7pmGQwaU8zbc33yqlBSlgnl9wyMjhO1E0EdofSUU
- R0YN/MSWc7OtvRWMzo78jaa6tMbUva7a47SnBSAXT4jSUU67qfLdE4yRI59XVK3wVurY
- ZFep9Ulo/FAixh5AsWknfAXNV77oKi3piGRuCxX0yH5XGNhO4gBdDB+snitTep7BkN+X
- fvng==
-X-Gm-Message-State: AFuF++lj20ImQK7jcGm2QwB5a8aaVh3Kzhr1alvkT1uHaqXWbW6sDJo4
- hHSBl/YlG8zjt6AuV+2/BGXHXSOljCp+kIn1E3+x0ii+kM2C308pKmakrswzYkbtgIj1p/dM0pr
- udqa5RHw=
-X-Gm-Gg: AYBFou0cqsw2cfmhTpU+PWiBgHfKLnMoVeeUEZkVFua40pAUciNoGv1iRsgIg8p0jDI
- dfqRVS/yGjBFXvQeCxhuANTZUQnXKezDtKE3uCyQq6Oe4bNsLDuo/fxAbaZvAJ9tE6FLEAfObe7
- uJ9fufbwmTWDL6/+YPo537L6sYS4RtdJEKtuXEoPagNIVvMy3uqNtyRpJpgYjbY+xB+ip838Kmp
- XTBR/jAPUWQtKOPcMUXAH6PFAHu5YDYvM7GtFeSkKYMnB+HykczWEj5xxS72IMhYiK7KuP0EVt0
- wF+dha1TZoC9bGLs3S+VybW01Q+1eK011kI9IsdI7sfFFI8eG8pcbRV31UmoCu/IDZOoz5Jkz9j
- bmntvqw+5dtJgRJFRA6IrVlXJQp6K1YKpNqNKv/RXiV6JW5kHq3uKw4j4TLBqCoL5Yo4pNSXVEZ
- xp13KJGG5c3CoW+boJM+L7muQ9GvO74uI/mc7ZU77UeiunbKBIPrqMgdWpGI9lNKr7P+ZMSZjdj
- fObyFAk4tC03F4eDQ==
-X-Received: by 2002:a17:90b:2885:b0:398:9be5:b419 with SMTP id
- 98e67ed59e1d1-39dec0bf165mr583034a91.20.1789344508633; 
- Sun, 13 Sep 2026 17:08:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789344511; x=1789949311;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=2z9m/YOpcToSgBJOfPpTljwJ75aRrsoL4rxY7if3/dA=;
+ b=hJxnMtrR9lVIQrux7mSNZWygnaXNkgghqYRP0zAIjBvvWEgAo1wHbovCbY5G80k3Mr
+ XdfNblxxWX6OjbrEqEBqCqm+ZUFR/sLVy42Hs2/jmAejnUQE33pJk+W26wp4Lx4Fxns7
+ eVtrR8e7h4pVBjaxLmT+gfZaRMOYgSxu3ZL8zAOtGyvb8erFas6upvxFIVeOoFM3NP7+
+ 0LYCQqpvnubiEs1YLYm4ctYXFw+IjvAayeJCNwDh3lIiGVWswMvQ64MIU9zSCsg1sOzf
+ 5I+uQMah70EPVmAh6oki92UHrj7DG8/NssPmGVdD7WZdwqYUNjEs4yLYJx1+2dS+ZqvS
+ BGlQ==
+X-Gm-Message-State: AFuF++kpUNd61OKgS+k/FW/NfrnZRtrGVAgGwES2iMoguN/iN4aBvrOY
+ be+dL3AyQygXgp4x1FXx/knn5NZRdZhOXxoET2St1wkOS+SwgufCmSmInJgmJPZTyruDTADBifA
+ TUuMDHHI=
+X-Gm-Gg: AYBFou0v0cK5voENRg9O8FvjCDKpzE9kInP4DL7GQ0DWRbzQorTIqZCh5MOIPmt5BvS
+ F6e9+5IkTc3P7/xOkmjY2epi5jLHoFFgxZ1jYa8iZmNuum+XWHz/VBfeYN9Ht/TWbJt2Smi6huY
+ OKsiAvrlnXtS4eHxkYxjtEShcueb/oP+axYhGofoIQgJiKtXhcHwdGWnBVr/UQ4ynjO0PRiMW35
+ 9AZyd8q2h56pBvHvPbbnfcEbwy1VC32tZmwywQ87DB3bJ7/LkHq83ikcqAUhTY9bX/mJNXdpZTm
+ zUpPr6lAVJz/41AUduYWdMY2SyU4NXCV+HOkO1uU8S1p2l6wRqXv2ueL6+j4h44fjx7mi2fr1VZ
+ Ql5aMhyBu3c8TRrAw6mPxzticj5aM5fL7mnuqUO6nqRFxTRoHXQ2C895X+/0TOZzVkf0bpmwEZ3
+ U8I57GwpVpAltgLXS1fOC3UozH5MtoSh2a4TDl+uv6vbZYpg5vqSAEUMDOdrxGUqf4LUvSRRzIV
+ PWVgrE=
+X-Received: by 2002:a05:6a20:72a4:b0:3da:1e7b:ea27 with SMTP id
+ adf61e73a8af0-3db0e485bb5mr16576419637.21.1789344511079; 
+ Sun, 13 Sep 2026 17:08:31 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.27
+ a92af1059eb24-14382741839sm4937677c88.6.2026.09.13.17.08.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Sep 2026 17:08:28 -0700 (PDT)
+ Sun, 13 Sep 2026 17:08:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: max.chou@sifive.com, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com,
  Alistair.Francis@wdc.com, philmd@oss.qualcomm.com
-Subject: [PATCH v3 08/11] tcg/riscv64: Return success from encode_bimm
-Date: Sun, 13 Sep 2026 14:08:11 -1000
-Message-ID: <20260914000814.785155-9-richard.henderson@linaro.org>
+Subject: [PATCH v3 10/11] tcg/riscv64: Validate AUIPC relocation range
+Date: Sun, 13 Sep 2026 14:08:13 -1000
+Message-ID: <20260914000814.785155-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260914000814.785155-1-richard.henderson@linaro.org>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,69 +104,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Centralize the range test for this encoding.
-Directly OR into the insn value.
-Assert success in encode_b.
+From: Max Chou <max.chou@sifive.com>
 
+reloc_call splits a PC-relative offset into a signed 12-bit low
+immediate and an AUIPC contribution. When the low immediate carries
+into bit 31, the existing 32-bit arithmetic can accept an unencodable
+positive 0x80000000 AUIPC contribution.
+
+Keep the split in pointer-width arithmetic and reject it unless the
+rounded upper contribution is representable as signed 32-bit. Factor
+this validation into split_auipc_offset so reloc_call retains its
+existing failure contract.
+
+Fixes: dfa8e74f9463 ("tcg/riscv: Add the relocation functions")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+[rth: Pass target as intptr_t to split_auipc_offset.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/riscv64/tcg-target.c.inc | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ tcg/riscv64/tcg-target.c.inc | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
 diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 09bfce79bb7..e8e1480016c 100644
+index c167ff5237a..7754bcf39f2 100644
 --- a/tcg/riscv64/tcg-target.c.inc
 +++ b/tcg/riscv64/tcg-target.c.inc
-@@ -478,22 +478,25 @@ static tcg_insn_unit encode_s(RISCVInsn opc, TCGReg rs1,
+@@ -643,14 +643,28 @@ static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
+     return encode_jimm20(src_rw, offset);
+ }
  
- /* Type-B */
- 
--static tcg_insn_unit encode_bimm12(tcg_target_long imm)
-+static bool encode_bimm12(tcg_insn_unit *insn, tcg_target_long imm)
+-static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
++static bool split_auipc_offset(tcg_insn_unit *src_rw, intptr_t target,
++                               int32_t *ret_hi, int32_t *ret_lo)
  {
--    tcg_insn_unit ret = 0;
--
--    ret |= (imm & 0x1000) << 19;
--    ret |= (imm & 0x7e0) << 20;
--    ret |= (imm & 0x1e) << 7;
--    ret |= (imm & 0x800) >> 4;
--
--    return ret;
-+    if ((imm & 1) == 0 && imm == sextract32(imm, 0, 12)) {
-+        *insn |= ((imm & 0x1000) << 19
-+                  | (imm & 0x7e0) << 20
-+                  | (imm & 0x1e) << 7
-+                  | (imm & 0x800) >> 4);
+     const tcg_insn_unit *src_rx = tcg_splitwx_to_rx(src_rw);
+-    intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
+-    int32_t lo = sextreg(offset, 0, 12);
+-    int32_t hi = offset - lo;
++    intptr_t offset = target - (intptr_t)src_rx;
++    int32_t lo = sextract32(offset, 0, 12);
++    intptr_t hi = offset - lo;
+ 
+-    if (offset == hi + lo) {
++    /* AUIPC sign-extends its 20-bit immediate after shifting by 12. */
++    if (hi == (int32_t)hi) {
++        *ret_lo = lo;
++        *ret_hi = hi;
 +        return true;
 +    }
 +    return false;
- }
- 
- static tcg_insn_unit encode_b(RISCVInsn opc, TCGReg rs1,
-                               TCGReg rs2, tcg_target_long imm)
- {
--    return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_bimm12(imm);
-+    tcg_insn_unit insn = opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20;
-+    bool ok = encode_bimm12(&insn, imm);
-+    tcg_debug_assert(ok);
-+    return insn;
- }
- 
- /* Type-U */
-@@ -626,12 +629,7 @@ static bool reloc_bimm12(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
-     intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
- 
-     tcg_debug_assert((offset & 1) == 0);
--    if (offset == sextreg(offset, 0, 12)) {
--        *src_rw |= encode_bimm12(offset);
--        return true;
--    }
--
--    return false;
-+    return encode_bimm12(src_rw, offset);
- }
- 
- static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
++}
++
++static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
++{
++    int32_t lo, hi;
++
++    if (split_auipc_offset(src_rw, (intptr_t)target, &hi, &lo)) {
+         src_rw[0] |= encode_uimm20(hi);
+         src_rw[1] |= encode_imm12(lo);
+         return true;
 -- 
 2.53.0
 
