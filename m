@@ -4,115 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D324C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A20C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x681m-0001RR-G1; Mon, 14 Sep 2026 10:51:26 -0400
+	id 1x682R-00021E-VT; Mon, 14 Sep 2026 10:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x681d-0001OG-Al
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:51:18 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x681X-0005WA-Bd
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:51:15 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 95D9A1FAB3;
- Mon, 14 Sep 2026 14:51:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789397464; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u5St656eyKFl7gRfKnwxgyTAuoGN6L1YK4z2pys8qa0=;
- b=ujhqDONJbN9YxL0qRCbtMvKQOgQCdpbV3C8Nbn86iTHmSClutEMtYAgRMlwsbOPl6EpHwc
- jlOv3+kvUppVPqBisFYq6pkIBWq78OgCdoIumB12aJoODxwPpUVqnv+VzG9W+2elThmEv4
- +J1oWmm9d4PI+jgj7KYeAOg+LUk4NNI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789397464;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u5St656eyKFl7gRfKnwxgyTAuoGN6L1YK4z2pys8qa0=;
- b=WALtX19iy8wJtn1vk01AdBFizRcMYoFJCNI6v8UAuKqNkJ7SLDxHGcRjlSKThZVYhkX9lh
- OR+X/XkcoFqzIQBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Eh8oKD5V;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=kxsEWvbQ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789397460; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u5St656eyKFl7gRfKnwxgyTAuoGN6L1YK4z2pys8qa0=;
- b=Eh8oKD5Vq/x20lvIzyG6b2ezLLSzFTm+kPioUd66/e/XiMr7XomcNcomQUgz8+Z5GejTEO
- XOSzX8R5vJXxJjjXwNImu77p9KRB9ezy3k6XEcvOuZm7hVvaRxGyGZR2LbqhFde0fr/bSO
- fw0juKt6CRvz/l6EywPgOLqjAajcwPQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789397460;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u5St656eyKFl7gRfKnwxgyTAuoGN6L1YK4z2pys8qa0=;
- b=kxsEWvbQf413v4J9gq8ZDhvFsBOTtE5QbPsqCnyi+C/Jcymc9Az7HiQHBXE3eldBJAR7JQ
- jEMXV+sEwXtFW0Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0027213693;
- Mon, 14 Sep 2026 14:50:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id G0ivMNMJqGpROwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 14 Sep 2026 14:50:59 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 09/18] tests/qtest/migration: Add a test for HMP
-In-Reply-To: <aqcH9wn2ElBqlFB9@gallifrey>
-References: <20260909214509.237309-1-farosas@suse.de>
- <20260909214509.237309-10-farosas@suse.de> <aqcH9wn2ElBqlFB9@gallifrey>
-Date: Mon, 14 Sep 2026 11:50:57 -0300
-Message-ID: <875x07ubse.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x682M-0001yv-Vz; Mon, 14 Sep 2026 10:52:04 -0400
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x682K-0005d7-Vn; Mon, 14 Sep 2026 10:52:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B0wqN/RoRbwClwjbcI5GBUu6Ii1qhWDV9+GlQtv9f5n7gEKUxlm0Srzz/lxp26okNlCIitprTILj+SHSzDIzMvfOE/tvjxl+KPwdKddB1cvDr2y+iM3FIiT3qH1mmzNZ8MICJ3UChNPa5K8w7GPdWFvWjL8fZwdmIG2TRkw721oqRRTackSnWHr5MPu651vtd7//p/bBWI35UXC46WVJBoWBHAsjun22qXbzGw8PKh6AXSuiTYvZTiS8myO8Cu4O7VBzrmB6nUsx2TYRk/RZ2fz8dS47KWAzAdQFLMesKSeqIT7GDzaeMALoOcZoyCF0v94PeIyW6VZiFlI26hhrWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qa61NCcnv9UNRXRYGjnzj4EnL+qRBjFyZyzbyMsAppk=;
+ b=ZQ4be6FkMA6igOi0MWb/+B81CayENY8EtAToTC3rAvZRw3n4ictjUB5Dne54quNNzsykr0isluPy0E8oNNaWe38G9UJx78nB9gtYtNwDwzk5LGYoC8oD8InHnD67e037STahcIrkxo0uvHsK105J4RprKcpKJBmh8DMR+PLYLETyy4myf/9f4eCOy92deGnSWmEnXUGk3SMUDZi9qvwUES1eXuuPdw2N9hIAYxdwqGz38ACr8AZh3/QjTuKOSZJGPWj11JN8WqOfauDOl4aRrfVer+rWlb54z7YZTBsiLEmJtYz1nL6rKFgzfU1Y+pDVh15YoPF1gV1YDX162rQhGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qa61NCcnv9UNRXRYGjnzj4EnL+qRBjFyZyzbyMsAppk=;
+ b=vcsNAF2zzbCy2Y0mJehkNaHWYPOpuSgAxrsyfrZ28nwxbQjRny5Cs1tQRcg9IsvYuiFLQGIoL4CzNcWNq/S78US5+iRQcBj1VbAaNyn9QZu0FOlQeUxArwLZRAzsNJOLhR7gaCVTRLtcrN3LvgVwvQiH4CXn3nBh+5O/t9PtNUgx96cSJ4nfMeUmMzPQ3BWpmadJPzubY4zV3cyddgGf7rON32SbwaaX1p1tIPcaBog7l9TMnb8EAsU8vstkW3B3s6c/3fbcLnACoc8CPSeBq4EB3HO/acO9YADbYDYaWODSl7WBCkO2kdHsI1V2sUwnsNm1HANrUq5ta0K0AsPE0g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PAXPR08MB6349.eurprd08.prod.outlook.com (2603:10a6:102:15b::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Mon, 14 Sep
+ 2026 14:51:56 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0428.004; Mon, 14 Sep 2026
+ 14:51:56 +0000
+Message-ID: <ae4b9680-8782-4311-af31-ee4599618976@virtuozzo.com>
+Date: Mon, 14 Sep 2026 16:51:55 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 9/9] block/block-copy: coalesce write-zeroes tasks
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>
+References: <20260828144554.1741910-1-den@openvz.org>
+ <20260828144554.1741910-10-den@openvz.org>
+ <178826982594.73810.9138039014408511227.b4-review@b4>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <178826982594.73810.9138039014408511227.b4-review@b4>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI6PEPF00000216.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8ce) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 95D9A1FAB3
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[treblig.org:email, suse.de:dkim, suse.de:email,
- suse.de:mid, imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAXPR08MB6349:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8503cfa7-4568-4b15-8054-08df126fb911
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|23010399003|10070799003|1800799024|376014|6133799003|18002099003|22082099003|56012099006|5023799004|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info: 33fDdR5ezhDEkhue8NxGpnJzuOnrRZBtu/e/YNmelBsQ3GHYRM/CmWGKKxLbRHdCWznyMF7bKKQjKZ3sXBUEOVCyMn6791eJlan9SYZ5rhz+UoRL7kkKMD9J7cU5Wz6V+vCbdcGZBDZCD5taEUgPqtRCzXJorzKLdjzOUfRhM1xJAaNVthEdmyQtWh3RCu6QkCNFlLQdGrkxSeARWpeu5o8qG1/R6pO98dquXk7X0RP6Eaaf7hgvt9RGTLG/mFKrbpVsEK9TUxeQfCxg7au++paKPOsTPycJYleiL6eHv94XOqcVwezKx71JGAryLclqMefWb/uhqGr5hC/WpFuNU+XGQHyVSY100Sb+StdNo9QsNmGRePp933xb5+L4DlnmA6Vt0qSi78kV/VmJSHZN3Lmk87RntOIB0Tfz1Sq9wfT/zwskjkiWfwK3FIUCDQER+JhuqYUHuMmut0ALS3NdpeyftkyY1hSrz+4XKJQx0jawnq1+OG89CmHYfpqxp5/JnSopDXd5VbuD0rgDfzgpx3lm4Lx2MJNyMC0WBWR6dzDrRGskbNM4AQLJfEllV6thNC8EK0pN1K8OCsMwPVnRiuXsb7hC3FHbKaLs9086PW8Y0ehOPyeCulSbhj7eOjUmRbmQrOcPUYwvXdlicEBe4kUUmt1lKKDRWuWGhtdm/sY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(10070799003)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(56012099006)(5023799004)(4143699003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGh2TTFUZ3FnRU9EUStjYU1Gak5wTDdiNnFUSXJWcm9FL0dQcGJ3Wnh1VHZU?=
+ =?utf-8?B?OFRrc2lFK3k4Y0ZpV05mUW1iaHNmeUs4ZU96MHU4TzZKMWZPaGdMMXZMMW1p?=
+ =?utf-8?B?bm00SXYwa0ZZMXpQZjVxbGdPSm50VFhNMjZwZmJaRUhvTTBlVkpVZE5tM2Na?=
+ =?utf-8?B?M3pqYVVHNWRIRmt3UTVVWGJ2dVd0Q3lTeUJkNXdaa2tqcUJoQnNWdEkrZVhU?=
+ =?utf-8?B?Q094cVByY3dYQkpXbW8vdVVVN1BUNFFQOEthNkErN1lzbDBwVXp2aXJCTWV1?=
+ =?utf-8?B?ZFY0VFROOXNlTFlrME0zaXhFcERFWjV1czMrWXJQdm4yZ1dPRzhRS1IzVGVz?=
+ =?utf-8?B?ajVuUEdSeDRwQmlwbWwySjNJY2s0TzVha0IrREI3cjFEd01xVGdEUkduQjk4?=
+ =?utf-8?B?RExmb0tUeTduZ1RMS1JEMmM4TnZWZGNSd3F4allYemd1c0xEN2ZoVnNES2Ix?=
+ =?utf-8?B?OE44MUFYZG83WExJaVQ1Q0tBQTFMU2t5dHo4S1g0Q1RTVHJobVBQaHp1b1F6?=
+ =?utf-8?B?UWhxbFdUY0k2Wi90Tkh2eFdSdDBxNlBsd3NVclV3Tzl4aFZ2RFlLR1UzWkZs?=
+ =?utf-8?B?c05lbTJ1dkExMkFCQ0JqdityNUgxOXVFb0U5SHdoWmdSRGJyNkF0THgyZ3Ix?=
+ =?utf-8?B?TmhlRVBQcnUxYW5WMnVoYmQ2K2poaFE1dk1Tbzd6QVU3T04wb2dNakdPdXJu?=
+ =?utf-8?B?eHhnOEhxQm9HMmhJUUFUNEJFVmZiejYyM0QxMHd4QkxUNTgwTHN1cVFLazhH?=
+ =?utf-8?B?b2FaU2FBMFZ5c2dPWFhjMFcwVjQ5MlMvK3orM1ZzUWdrRWp3RmN3R0NVVU56?=
+ =?utf-8?B?a0pmUmdycW5SdUM0bXNHVVpDenBRN3JOS1M3blJ4YThYUlVUR0F2NVhUUndH?=
+ =?utf-8?B?b2ZQWFNhWXNiU25YL2dCZmcvZ3IrNzgxOUhDbXk3N2NQMCtMT3VRSUhFM0JE?=
+ =?utf-8?B?TkpjZUpoTHlnSjZoN0l3NkdLQktiYzZ1K1V2Nk5MUjRsRlkvTkRkV1lGVWFT?=
+ =?utf-8?B?Qll0YVN4Z3RSRERZQS9oTnV0eUhTUjJvWWJlRHIrb1BzdlJyM0NvU01lM0xY?=
+ =?utf-8?B?MU1sY3o5QzdXbW1lNVFwcG5aYUNJMkJ0QlAvUGROd05ER1YyUDVyTGQvVDFt?=
+ =?utf-8?B?V2NlWXhQSzhCWEZjNW51ZWNoVzZuODJCS1p5WHJFaW1LaEJUTWRxSHhVckV6?=
+ =?utf-8?B?V2lma0I0NTlHSkNzWDhXdE9ucnZmbmVmWFc2V1Q2bTZMdVZPSXhCUlliVUJK?=
+ =?utf-8?B?TTRrSTFRckpmYWZ5Q3crbk1KNy9DOU9rQlRPajZsc08vcGZFT3lSY2xFREUx?=
+ =?utf-8?B?QmRIbUpSZzNUc1UzODRnL2JFWnJzVU9ZK3B6QWgwZW1tdnYvaGJTMXk0dHFq?=
+ =?utf-8?B?SzN0QTRmM2JYQWhtQ3JsTUw1ZnBDRFVEVjV6c3JZUktlYkdtM0VPcHRaWGRT?=
+ =?utf-8?B?S3czcEUrd0RYcFlIem9aQ2I2NTNYcHgxS2V2Ni9hWHFpTnhvNkUwSVIySjlL?=
+ =?utf-8?B?VWt6RUpScFVpWUJDYm4zSkxYUFQybGphbWkvaHhsUEp2UWp6STh3ODR3anlI?=
+ =?utf-8?B?dWZBSzdIZTUyT0xmZHRzWDFOREFvc3JnUnE2Umg5aUpyQTVvcjZnMEJETWQ0?=
+ =?utf-8?B?U1ppampHVlZKTzNpcnVpUjNoenBkYWZOTVVHY1FUV050ZFUzeHF3RlNXdDIr?=
+ =?utf-8?B?cWZsL1hTT1NXYlVQcTFpa2dpV3QxeFFXK3hZN2hjQy9WbStGZ2NVN1ptcExG?=
+ =?utf-8?B?Z2dKdy9jcm52Y3VoQlZzVlhoZUppS0FKbHBGdjBuZitQK3gwQ3JTcTI5Vzgy?=
+ =?utf-8?B?VlVEV04rUmZrVnNRc3RHZVlKMUhEOXhMU3FyWFlWMFBWVEU3YjhrNDRubDhC?=
+ =?utf-8?B?OS81VTZ2S2J5MVNuQ3NtcTI1UnIzbnRyTHFwTEVMV1F2NWhRaThZd3dISzlu?=
+ =?utf-8?B?eis0ZnBweHQra2VUYlYzclVhclpXeG9zbk5iN0MxakZ5VWxDWVpmMG44dlIz?=
+ =?utf-8?B?Wnd2dmpmZUpncCthT0FFdWpiQ3BHc21qdmoxVFlvRXQyRXZVQU4xWmxNa1JF?=
+ =?utf-8?B?ZzZGS0RKSlJuZzE0ZlcxZW4zdlFDakNmOHY3aVJoeTFjOFZoY2VDSkNzc2tC?=
+ =?utf-8?B?NjRYNnB0aW1aYW5ScDRSRFpzRDFUZEhnQjBKVE9JOEZzVHZ0Y1Y5RWVvQUNv?=
+ =?utf-8?B?UkUrZ3pEN0hxbTZIbGFnOU5HYjlNLy9pTklKMnprdGFCSGFqVmF3eVVHKzdN?=
+ =?utf-8?B?QWQ4WVU4WmduMHlyem1VQ3NsR3lSaVorb2w2NENORFJQbFlQeHBxZ005bW9F?=
+ =?utf-8?B?THNOZ1RVN1ZhQ1dwdERSYUk1clZ6R0N1M0EwaHpReHFhNXc2MHllTzEwaGxu?=
+ =?utf-8?Q?qDvdwbO4UUHZmIWq9r2gkMrXGuhjnBWKcaUI5HfFh1QfG?=
+X-MS-Exchange-AntiSpam-MessageData-1: pO6yWEFhhgfltQ==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8503cfa7-4568-4b15-8054-08df126fb911
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 14:51:56.6463 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: D2u3RLKgDT4Wt21CAijDj10HRPO3GSRhC5hhQYNdruJ7VZSVB3RaQuwr0qkpHNwRDFASnHN2OHhOhy3rku+bXw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR08MB6349
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,277 +155,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
-
-> * Fabiano Rosas (farosas@suse.de) wrote:
->> The following patches will change how parameters are set and shown in
->> HMP, add a test for it.
->> 
->> The test issues HMP migrate_set_parameters for each of the existing
->> migration parameters and queries them back with the info command. A
->> list is kept with the expected strings. A substring match function
->> inspired by glib's g_str_match_string is implemented for this test so
->> the test can produce a decent error output instead of just assert
->> failure. E.g:
->> 
->>  # HMP output mismatch for entry at line 55:
->>  # expected vs. found:
->>  #
->>  # max-bandwidth: 10356305952768 bytes/hour
->>  # ---
->>  # max-bandwidth: 10356305952768 bytes/second
->> 
->> (note that line 55 above is the source line where the test case for
->> max-bandwith is, which helps find the failing test in the list)
->> 
->> Usage:
->> QTEST_QEMU_BINARY=./qemu-system-x86_64 \
->> ./tests/qtest/migration-test --full -p /x86_64/migration/hmp/parameters
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On 9/1/26 15:37, Andrey Drobyshev wrote:
+>> Task size was capped to block_copy_chunk_size() regardless of method,
+>> which sizes a task by the copy buffer. A write-zeroes task carries no
+>> buffer, so that cap only splits one long known-zero run into a crowd of
+>> small COPY_WRITE_ZEROES tasks, each with its own request against the
+>> target.
+>>
+>> block_copy_task_create() already decides from zero_bitmap how far a task
+>> may run, so add block_copy_widen_zero_area() to that decision: for a
+>> write-zeroes task, re-search the dirty area under
+>> BLOCK_COPY_MAX_ZERO_CHUNK instead of the buffer chunk size, and let the
+>> existing clamp cut it back to where the zero run ends. Widening is safe:
+>> an overlapping caller waits on the task's BlockReq via
+>> reqlist_wait_one() rather than observing it mid-flight.
+>>
+>> The 256M cap stays well under BDRV_REQUEST_MAX_BYTES, where
+>> block_copy_do_copy() would trip assert(nbytes < INT_MAX), keeps the rate
+>> limiter usable, leaves enough tasks to fill BLOCK_COPY_MAX_WORKERS and
+>> bounds how long a cancel waits on one request. It is aligned at the use
+>> site rather than in the constant, since nothing bounds cluster_size.
+>>
+>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> CC: John Snow <jsnow@redhat.com>
+>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>
+>> diff --git a/block/block-copy.c b/block/block-copy.c
+>> index c0a33599384..16b76484cbd 100644
+>> --- a/block/block-copy.c
+>> +++ b/block/block-copy.c
+>> @@ -37,6 +37,8 @@
+>>  #define BLOCK_COPY_MAX_WORKERS 64
+>>  #define BLOCK_COPY_SLICE_TIME 100000000ULL /* ns */
+>>  #define BLOCK_COPY_CLUSTER_SIZE_DEFAULT (1 << 16)
+>> +/* Bounded by BDRV_REQUEST_MAX_BYTES, rate limiting and cancel latency. */
+>> +#define BLOCK_COPY_MAX_ZERO_CHUNK (256 * MiB)
+> AFAIU with this new cap we enlarge the range, a guest IO to which will
+> trigger CBW.  It used to be 1M or 16M depending on copy method, now it's
+> 256M.  If the target is qcow2 - then write_zeroes() is size-independent
+> and is a simple metadata write.  But what if target doesn't support fast
+> write_zeroes() operation?  Then guest IO will be stalled for the entire
+> CBW, and the latency increases.  Please correct me if I'm wrong.
 >
-> Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+> If it's true - shouldn't we probe for write_zeroes support adding
+> BDRV_REQ_NO_FALLBACK to the flags?  And if -ENOTSUP is returned - don't
+> widen zero area.
 >
-
-Thanks for the reviews!
-
-> Two minor thoughts:
->   a) You might try a numeric out of range test?
-
-I will, but allow me to do it as a follow-up, otherwise this series will
-drag on for too long.
-
->   b) 'input1' and 'input2' seem odd names for something that oculd be .name and .value ?
->     (But only if you need to rework anyway).
+> Andrey
 >
+v2 probes as you suggest. CBW itself cannot grow, though:
+block_copy_task_create() searches within the range of the block_copy()
+call it serves, so a copy driven by a guest write covers that write and
+nothing more. The wait comes the other way round, a guest write landing
+on a widened background task and waiting through reqlist_wait_one().
 
-Oh, it's because the completion test has different semantics for them
-and this used to be a single patch.
+supported_zero_flags rules out the targets which cannot zero cheaply at
+all, qcow2 v2 and iscsi among them, but is optimistic for the rest:
+file-posix advertises NO_FALLBACK at open and finds out from the first
+fallocate that fails. So the first widened request carries the flag. A
+target which would write the zeroes out fails it without writing, that
+range then goes out in buffer-sized chunks, and widening stays off for
+the run.
 
-> Dave
->
->> ---
->>  tests/qtest/migration/misc-tests.c | 201 +++++++++++++++++++++++++++++
->>  1 file changed, 201 insertions(+)
->> 
->> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
->> index 4e0deb7f18..533cf3d55d 100644
->> --- a/tests/qtest/migration/misc-tests.c
->> +++ b/tests/qtest/migration/misc-tests.c
->> @@ -22,6 +22,203 @@
->>  
->>  static char *tmpfs;
->>  
->> +#ifdef CONFIG_HMP
->> +static int test_case_line;
->> +
->> +#define TEST(i1, i2, e) { i1, i2, e , .line = __LINE__, }
->> +#define SKIP(i1, i2, e) { i1, i2, e , .skip = true, }
->> +#define BG_SNAP_MSG ("Error: Background-snapshot is not compatible with " \
->> +                     "currently set capabilities")
->> +
->> +typedef struct HMPTestData {
->> +    const char *input1;
->> +    const char *input2;
->> +    const char *output1;
->> +    bool skip;
->> +    int line;
->> +} HMPTestData;
->> +
->> +/*
->> + * .input1: string to be used as parameter name
->> + * .input2: string to be used as parameter value
->> + * .output1: expected output of migrate_set_parameters
->> + * E.g:
->> + * (qemu) migrate_set_parameters .input1 .input2
->> + * .output1
->> + */
->> +HMPTestData test_cases[] = {
->> +    TEST("", "", "migrate_set_parameter: string expected"),
->> +    TEST("foo", "", "migrate_set_parameter: string expected"),
->> +    TEST("foo", "on", "Error: invalid parameter value: foo"),
->> +
->> +    /* bool */
->> +    TEST("cpu-throttle-tailslow", "on", "on"),
->> +    TEST("direct-io", "on", "on"),
->> +
->> +    /* uint64_t */
->> +    TEST("announce-initial", "60", "60 ms"),
->> +    TEST("announce-max", "600", "600 ms"),
->> +    TEST("announce-rounds", "6", "6"),
->> +    TEST("announce-step", "15", "15 ms"),
->> +    TEST("downtime-limit", "400", "400 ms"),
->> +    TEST("avail-switchover-bandwidth", "2097152", "2199023255552 bytes/second"),
->> +    TEST("max-bandwidth", "9876543", "10356305952768 bytes/second"),
->> +    TEST("max-postcopy-bandwidth", "1048576", "1048576 bytes/second"),
->> +    TEST("vcpu-dirty-limit", "20", "20 MB/s"),
->> +    TEST("x-rdma-chunk-size", "1048576", "1048576 bytes"),
->> +    TEST("x-vcpu-dirty-limit-period", "750", "750 ms"),
->> +    TEST("xbzrle-cache-size", "67108864", "67108864 bytes"),
->> +
->> +    /* uint32_t */
->> +    TEST("x-checkpoint-delay", "5000", "5000 ms"),
->> +
->> +    /* uint8_t */
->> +    TEST("cpu-throttle-increment", "15", "15"),
->> +    TEST("cpu-throttle-initial", "25", "25"),
->> +    TEST("max-cpu-throttle", "85", "85"),
->> +    TEST("multifd-channels", "8", "8"),
->> +    TEST("throttle-trigger-threshold", "65", "65"),
->> +
->> +    /* complex types */
->> +    TEST("mode", "cpr-exec", "cpr-exec"),
->> +    TEST("multifd-compression", "zlib", "zlib"),
->> +    TEST("zero-page-detection", "none", "none"),
->> +    TEST("tls-authz", "my_authz", "'my_authz'"),
->> +    TEST("tls-creds", "null", "'null'"),
->> +    TEST("tls-hostname", "localhost", "'localhost'"),
->> +    TEST("cpr-exec-command", "/bin/true foobar", "/bin/true foobar"),
->> +
->> +    /* can be set but are currently missing in the query output */
->> +    SKIP("multifd-qatzip-level", "5", "5"),
->> +    SKIP("multifd-zlib-level", "4", "4"),
->> +    SKIP("multifd-zstd-level", "6", "6"),
->> +
->> +    /* cannot be set */
->> +    TEST("block-bitmap-mapping", "[]",
->> +         "Error: The block-bitmap-mapping parameter "
->> +         "can only be set through QMP"),
->> +};
->> +
->> +/*
->> + * Find a contiguous run of tokens in @larger that match the sequence
->> + * of tokens in @smaller, ignoring mismatches due to sequences of
->> + * empty tokens.
->> + *
->> + * Returns whether a match was found. @last is set if at least one
->> + * token has matched.
->> + */
->> +static bool token_list_is_substr(char **smaller, char **larger, int *last)
->> +{
->> +    int i, j, k = 0;
->> +    bool match = false;
->> +
->> +    for (i = 0; smaller[i]; i++) {
->> +        for (j = k; larger[j]; j++) {
->> +            if (!*larger[j]) {
->> +                continue;
->> +            }
->> +
->> +            /* readline adds several escape sequences */
->> +            if (*larger[j] == '\033') {
->> +                continue;
->> +            }
->> +
->> +            if (g_str_equal(larger[j], smaller[i])) {
->> +                match = true;
->> +                *last = j;
->> +                k = j + 1;
->> +                break;
->> +            }
->> +
->> +            if (match) {
->> +                return false;
->> +            } else {
->> +                match = false;
->> +            }
->> +        }
->> +    }
->> +
->> +    return match;
->> +}
->> +
->> +static void assert_hmp_match_line(const char *str, const char *text)
->> +{
->> +    g_auto(GStrv) tok_str = g_strsplit_set(str, " ", -1);
->> +    g_auto(GStrv) lines = g_strsplit_set(text, " \r\n", -1);
->> +    int i, idx = -1;
->> +
->> +    /*
->> +     * Note that the reason the 'str' above is split is to allow
->> +     * token_list_is_substr() to first match on the parameter name so
->> +     * matching can stop immediately after a mismatched value is
->> +     * found. This provides a better output for failing test cases
->> +     * than simply "str != line".
->> +     */
->> +
->> +    for (i = 0; lines[i]; i++) {
->> +        if (token_list_is_substr(tok_str, (char **)&lines[i], &idx)) {
->> +            return;
->> +        }
->> +
->> +        if (idx >= 0) {
->> +            break;
->> +        }
->> +    }
->> +
->> +    g_test_message("HMP output mismatch for entry at line %d:", test_case_line);
->> +    g_test_message("expected vs. found:\n\n%s\n---\n%s %s", str, lines[idx],
->> +                   lines[idx + 1]);
->> +    g_assert_not_reached();
->> +}
->> +
->> +static void assert_hmp_success(const char *str)
->> +{
->> +    if (!g_str_equal(str, "")) {
->> +        g_test_message("HMP command failed:\n\n%s", str);
->> +        g_assert_not_reached();
->> +    }
->> +}
->> +
->> +static void test_hmp_migration_parameters(char *name, MigrateCommon *args)
->> +{
->> +    QTestState *qts;
->> +
->> +    /* force TCG so it can run in all targets */
->> +    qts = qtest_init("-accel tcg -nodefaults -S");
->> +
->> +    for (int i = 0; i < G_N_ELEMENTS(test_cases); i++) {
->> +        g_autofree char *resp = NULL;
->> +        g_autofree char *line = NULL;
->> +        struct HMPTestData *t = &test_cases[i];
->> +
->> +        if (t->skip) {
->> +            continue;
->> +        }
->> +
->> +        test_case_line = t->line;
->> +
->> +        resp = qtest_hmp(qts, "migrate_set_parameter %s %s", t->input1,
->> +                         t->input2);
->> +
->> +        if (g_str_has_prefix(t->output1, "Error:") ||
->> +            g_str_has_prefix(resp, "migrate_set_parameter:")) {
->> +
->> +            assert_hmp_match_line(t->output1, resp);
->> +            continue;
->> +        }
->> +        assert_hmp_success(resp);
->> +        g_free(resp);
->> +
->> +        resp = qtest_hmp(qts, "info migrate_parameters");
->> +
->> +        line = g_strconcat(t->input1, ": ", t->output1, NULL);
->> +        assert_hmp_match_line(line, resp);
->> +    }
->> +
->> +    qtest_quit(qts);
->> +}
->> +#endif /* CONFIG_HMP */
->> +
->>  static void test_baddest(char *name, MigrateCommon *args)
->>  {
->>      QTestState *from, *to;
->> @@ -260,4 +457,8 @@ void migration_test_add_misc(MigrationTestEnv *env)
->>                         test_validate_uri_channels_both_set);
->>      migration_test_add("/migration/validate_uri/channels/none_set",
->>                         test_validate_uri_channels_none_set);
->> +#ifdef CONFIG_HMP
->> +    migration_test_add("/migration/hmp/parameters",
->> +                       test_hmp_migration_parameters);
->> +#endif
->>  }
->> -- 
->> 2.53.0
->> 
+The cap is therefore BDRV_REQUEST_MAX_BYTES rather than 256M, aligned
+down to the cluster size. On a 16G source holding 1G of data, sync=full:
+1088 block-copy tasks for qcow2 v3 and raw targets, 16384 for qcow2 v2,
+every target identical to the source.
+
+Thank you for your time,
+    Den
 
