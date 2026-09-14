@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93CE6C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 23:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91E0C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 23:58:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6GWO-00021p-9f; Mon, 14 Sep 2026 19:55:36 -0400
+	id 1x6GZD-0002SB-Nj; Mon, 14 Sep 2026 19:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1x6GWM-00021N-3Q
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:55:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1x6GWK-0004DU-07
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:55:33 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EN1XYN1491700; Mon, 14 Sep 2026 23:55:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=J3Y7WP
- r2dvqMduScZrcGEyqKfY5VAUFLPUTn3kXcdA0=; b=ZB9OWFQIDoZYNvrLEYgUXO
- nBreCJ9lXCsL8hVWNozcd/i0dtbnQFxevWs47sP5KeuzaXN2ysrhFYwiOe93s1IK
- XUlifLvmyyhJDnkYD15kNKgxfG0uixsaXS5+TMUEBZgyRtfLVL/5znpMgW8BVRrw
- 10VhY7asHJtJHhB78Td7Iih6TaX22kKFeXxYc67YHCOyOw2ZKVqJ3K2L10vaDCzu
- 3KEgnUdCo4Teg3ApGimBMfpCoGRvlJ9IHKZveIeVb4h3QuKd1h9A1IaMz0xjKtA1
- PGLKBo21f3gUAZfjUHyFv7/KnYhMuJ3UkHcPxUaIfn/HhbbTBOd5YzJHHgKpbA2w
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdq4eum-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 14 Sep 2026 23:55:28 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EN553v3060097; Mon, 14 Sep 2026 23:55:27 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gnjjgrkgy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Sep 2026 23:55:27 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68ENtPJo45416934
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Sep 2026 23:55:25 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC8D6200A2;
- Mon, 14 Sep 2026 23:55:25 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D3AB200A4;
- Mon, 14 Sep 2026 23:55:25 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.56.140])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 14 Sep 2026 23:55:25 +0000 (GMT)
-Message-ID: <178f2862-6110-4b72-9f6c-ef91963a89a9@linux.ibm.com>
-Date: Tue, 15 Sep 2026 01:55:25 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GZC-0002Rz-C1
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:58:30 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GZA-0004Oy-Aa
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:58:30 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CEF1B21DA2;
+ Mon, 14 Sep 2026 23:58:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789430301; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=33uSsAhfoVdokLUOv+9SvWqNI1Ttl/c+0tvk+yQmRhM=;
+ b=vduG/roq1lKvyb95zFrclsMouFWAnPwF4C3Xty4F+XWKk3HFpcm1JnoIvOjq5Gm3T7A5sk
+ OUDjXWxJ8oOYZxad5e9p+qSodmlG3tHNwjJrh0Ow7A42aTLZSLSPHkFGdjzof9AzTOQcBe
+ k6c2lb/3W1HASe57z39yQZOaHfZwWqU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789430301;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=33uSsAhfoVdokLUOv+9SvWqNI1Ttl/c+0tvk+yQmRhM=;
+ b=PhIa+HcRX7LBM3/Ed5TXUC5EaWU7Se9CCjlBWYsQ9GS6GM/5OCXQ35fRSK6SqS2+f54225
+ /9eo2pSuylHg58AQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=YgY9lwtI;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+oTxAKPi
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789430296; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=33uSsAhfoVdokLUOv+9SvWqNI1Ttl/c+0tvk+yQmRhM=;
+ b=YgY9lwtI4j6G//X7SxEkWw3qXryIKWNeTuoMTAzKR5R0Ve8OX7WzzBm1hxH+L/NglGtrTH
+ 4311rkbJxdCqVokKKfTgxIH2qLz8aA90l21tYZFoh4vSuUAIp0dp8ZDI+a1cFOzsipTiPe
+ kTsrQnWM5oNk3R1o6evDC+npf36uim4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789430296;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=33uSsAhfoVdokLUOv+9SvWqNI1Ttl/c+0tvk+yQmRhM=;
+ b=+oTxAKPiwHsEjWvh606gsjSpfVi6kB4JyiFELjhIXTtO3Fr28WibwddbxLcmThMJ9sPfql
+ Ac5CNyngBOH3uxDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5144D13515;
+ Mon, 14 Sep 2026 23:58:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xA8mCRiKqGrueAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 14 Sep 2026 23:58:16 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org, peterx@redhat.com, mjt@tls.msk.ru
+Subject: [RFC] container images for migration-test
+Date: Mon, 14 Sep 2026 20:58:09 -0300
+Message-ID: <8733vbtmge.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] tests/tcg: improve check for working cross compilers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-References: <20260910181504.1010916-1-alex.bennee@linaro.org>
- <20260910181504.1010916-3-alex.bennee@linaro.org>
- <22dca41b-3833-45d2-912f-b05a77d7d883@oss.qualcomm.com>
- <aqexk7afMhWLxf3w@redhat.com> <87a4pjddg5.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <87a4pjddg5.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDMzNyBTYWx0ZWRfX0npcrF3qOoBM
- d2/s1ypu+bR0Aeeg+RpA+jbO+2J6oSECHxfuFEC0mQLVwD3nnoGhOAHXNCetANx+ekwsTvVP7lU
- Qj7vcd4qq53WuiEBuX+NX3oU57X4IQwDVXkGo3FwT+u0ZZHOp0cViKXqLKnlUSJ9uydDrrIUlt1
- lblG0ILCjy+AaY1vkJH3e8UqhRWOdAC2ZizcbSBEl8jUhgoxGy8JwqvXmtjavJ9O7K2ClBWOjJC
- chd6/88ubToo75RovFI37cr2TaBGHS9wCCuJmvSBOWNUfMU+IfaqqDBWdIPtjH0s/U2/ACxstMj
- RraDIX9jNQWCN9j3eXVsyV+IeC/zO3w3ShEI4W3kp3RxF/13GSmg9JZKJQEAtqwmaeYapiGL5eH
- ioCRzszfxhrlzbL5hguivEDkE3Q1O+coBwLnEWeRYqHBBsi+OyqI+dlAviK174pRjckZC0Sq4aL
- fvHryekChWXF1iir/Ow==
-X-Proofpoint-GUID: NURemSL9SS1cMoOULp17kygqUxkG7Y7P
-X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aa88970 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=b4LDLZbEAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
- a=YS6Yfe__cX80-eF0oX8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=20T61YgZp4ItGotXEy2O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: NURemSL9SS1cMoOULp17kygqUxkG7Y7P
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDMzNyBTYWx0ZWRfX7R7S75/JNrZw
- snyHPZBnlb6pIdIMrjDSRYPdAnnlAjTONliKKI9fd0SFyp7fsV20JY3d17HDIzLvqHOJCh93Knk
- 5KNedHv20e+FaSfhorGW9t5uJAoZmkw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_05,2026-09-14_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140337
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Rspamd-Queue-Id: CEF1B21DA2
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_DN_NONE(0.00)[];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid,build.base:url,rootfs.base:url];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,148 +116,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi, I just wanted to share and ask for feedback on some container images
+I've been building as part of my testing of migration pull-requests.
+
+From a Dockerfile from ./tests/docker/dockerfiles/ I'm producing the
+following:
+
+$ docker images
+qemu-build-base:11.0.0                        b6efa198e93a        5.8GB
+qemu-rootfs-base:11.0.0                       72bcb5418f4d       4.08GB
+qemu:11.0.0                                   018a3f0f4dcc          2GB
+
+This last image is stripped (for size) of everything but a few libs and
+binaries (qemu, gdb, migration-test, sh) and has an entrypoint of:
+
+ CMD ["qemu-system-x86_64"]
+
+The point is that I can wrap it in a script called qemu-system-x86_64
+and run it interchangeably with any other qemu binary during
+migration-test:
+
+ QTEST_QEMU_BINARY_SRC=./build-11.0.0/qemu-system-x86_64 \
+ QTEST_QEMU_BINARY=./build-master/qemu-system-x86_64 \
+ ./tests/qtest/migration-test
+
+(note that migration-test spawns the qemu binaries itself)
+
+I run tests against the previous 3 QEMU releases. At every release I
+build the container for the new release and at every PR I build the
+container for that git hash using the latest tag as a base.
+
+The reasons that lead me to this solution are:
+
+1) Migration compat testing is special, the two migration peers can run
+in different OS versions, so their QEMU builds can be quite different. I
+cannot test using *just* my dev machine, neither using *just* a
+container. I need two hosts. Or two containers running different OSes
+that can both be reachable by the migration-test binary running in
+either of the OSes.
+
+2) Neither the QEMU build nor the distro repos are reliable enough to
+allow me to just "go back in time" and rebuild at any moment, I need to
+keep the artifacts cached to avoid rebuilding. Otherwise it comes time
+to send a PR and I discover that some python piece has changed or the
+distro messed up the older repository.
+
+Any thoughts on this? Could it be useful to anyone? Maybe the stable
+branch has some similar issues?
+
+I have a messy script that builds everything, but here are the important
+pieces:
+
+- Dockerfile.rootfs.base ==> qemu-rootfs-base-11.1.0
+This is just ./tests/docker/dockerfiles/opensuse-leap.docker with a sed
+to remove ncurses-devel (suse repo issue)
 
 
-On 9/14/26 18:07, Alex Bennée wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> (trimed cc list, add Ilya)
-> 
->> On Sun, Sep 13, 2026 at 10:08:52PM -0700, Pierrick Bouvier wrote:
->>> On 9/10/26 11:14 AM, Alex Bennée wrote:
->>>> From: Daniel P. Berrangé <berrange@redhat.com>
->>>>
->>>> When it finds a cross compiler, tests/tcg/meson.build tries
->>>> building test_cc.c to validate that the compiler works. This
->>>> includes "stdint.h" as a witness for working C library, however,
->>>> that is not a good choice as it can be provided by the toolchain
->>>> alone:
->>>>
->>>>     $ rpm -ql gcc-s390x-linux-gnu  | grep /stdint.h
->>>>     /usr/lib/gcc/s390x-linux-gnu/16/include/stdint.h
->>>>
->>>> As a result, if you install the s390x GCC cross compiler, but
->>>> not any C library, meson decides to use the host compiler instead
->>>> of the container:
->>>>
->>>>       cc for aarch64-softmmu          : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
->>>>       cc for loongarch64-softmmu      : loongarch64-unknown-linux-gnu-gcc (from 'debian-loongarch-cross' container)
->>>>       cc for riscv64-softmmu          : riscv64-linux-gnu-gcc (from 'debian-all-test-cross' container)
->>>>       cc for s390x-softmmu            : s390x-linux-gnu-gcc
->>>>       cc for x86_64-softmmu           : x86_64-linux-gnu-gcc (from 'debian-amd64-cross' container)
->>>>
->>>> Eventually this results in failure to run 'make check':
->>>>
->>>> [33/40] Generating tests/tcg/s390x-softmmu-hello with a custom command
->>>> FAILED: [code=1] tests/tcg/s390x-softmmu-hello.test
->>>> /usr/bin/s390x-linux-gnu-gcc /home/berrange/src/virt/qemu/tests/tcg/multiarch/system/hello.c -o tests/tcg/s390x-softmmu-hello.test -static -MMD -MF tests/tcg/s390x-softmmu-hello.d -Wall -Werror -O0 -g -fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I /home/berrange/src/virt/qemu/tests/tcg/s390x/system/../../minilib /home/berrange/src/virt/qemu/tests/tcg/s390x/system/../../minilib/printf.c -I /home/berrange/src/virt/qemu/include/hw/s390x/ipl -march=z13 ../tests/tcg/s390x/system/../head64.S ../tests/tcg/s390x/system/../console.c
->>>> In file included from ../tests/tcg/s390x/system/../console.c:8:
->>>> ../tests/tcg/s390x/system/../../../../pc-bios/s390-ccw/sclp.c:11:10: fatal error: string.h: No such file or directory
->>>>      11 | #include <string.h>
->>>>         |          ^~~~~~~~~~
->>>> compilation terminated.
->>>>
->>>> Adding more include files to the test program ensures the
->>>> meson probe makes a better decision.
->>>>
->>>> Fixes: e5d084d622b1 (tests/tcg/meson.build: check host cross cc is working)
->>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>>> Message-ID: <20260910100120.2076092-1-berrange@redhat.com>
->>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>>> ---
->>>>    tests/tcg/test_cc.c | 6 +++++-
->>>>    1 file changed, 5 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/tests/tcg/test_cc.c b/tests/tcg/test_cc.c
->>>> index d3614a01fe6..fafee055b40 100644
->>>> --- a/tests/tcg/test_cc.c
->>>> +++ b/tests/tcg/test_cc.c
->>>> @@ -1,7 +1,11 @@
->>>>    /* SPDX-License-Identifier: GPL-2.0-or-later */
->>>> -/* Include a standard header to make sure cross compiler provides them */
->>>> +/* Use some standard headers to ensure the cross compiler provides them */
->>>>    #include <stdint.h>
->>>> +#include <string.h>
->>>> +#include <stdbool.h>
->>>> +#include <stddef.h>
->>>> +#include <stdio.h>
->>>>    int main(void)
->>>>    {
->>>
->>> Ideally, we should do separate tests for system vs user tests.
->>> System ones are always compiled with -ffreestanding, while user ones should
->>> provide a C library.
->>>
->>>  From this standard:
->>>
->>> https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2338r3.html
->>> ```
->>> A freestanding C implementation is required to provide the entirety of the
->>> following headers:
->>>
->>> <float.h>
->>> <iso646.h>
->>> <limits.h>
->>> <stdalign.h>
->>> <stdarg.h>
->>> <stdbool.h>
->>> <stddef.h>
->>> <stdint.h>
->>> <stdnoreturn.h>
->>> Most of <string.h> is required (strdup, strndup, strcoll, strxfrm, and
->>> strerror are excluded). This includes strtok, which requires global data.
->>> ```
->>>
->>> Maybe for now we can just remove stdio.h from current patch, as it's not
->>> supposed to be provided in a freestanding environment.
->>
->> A huge number of files under tests/tcg/ have a #include <stdio.h>
->> currently.
-> 
-> They are all *-user mode tests though, which do need a proper libc.
-> 
->>
->> In the example build failure in the commit message, we have
->>
->>    tests/tcg/s390x/system/../console.c
->>
->> which does
->>
->>    #include "../../../pc-bios/s390-ccw/sclp.c"
->>
->> and sclp.c has
->>
->>    #include "s390-ccw.h"
->>
->> and that header has:
->>
->>    #include <stdbool.h>
->>    #include <stddef.h>
->>    #include <stdint.h>
->>    #include <stdio.h>
->>
->> hence the 4 headers I added to the meson check.
->>
->> So AFAICT, our code is expecting stdio.h to be provided in a
->> -ffreestanding build. Have we got a more fundamental mistake
->> wrt our use of -ffreestanding, such that it is relying on
->> unintended functionality ?
-> 
-> They shouldn't - but s390x seems to be doing something funky here. Ilya
-> can you explain what s390x is trying to do here?
+- Dockerfile.build.base ==> qemu-build-base:11.1.0
+FROM qemu-rootfs-base:11.1.0
 
-s390x used to use SLOF headers before the meson rework.
-I remember that Pierrick mentioned there were issues with checking out
-the SLOF submodule, but it seems to work for me.
-So I've posted my version of the fix [1], please take a look.
+# actual source, mounted RO
+RUN mkdir /src
 
-[1] 
-https://lore.kernel.org/qemu-devel/20260914235113.272992-1-iii@linux.ibm.com/
+# not the actual build dir, only the artifacts that are needed
+RUN mkdir /build
 
-> 
->>
->> With regards,
->> Daniel
-> 
+WORKDIR /build-tmp-11.1.0
+
+RUN --mount=type=cache,target=/build-tmp-11.1.0,rw \
+    --mount=type=bind,from=qemu-src-11.1.0,target=/src,ro \
+    /src/configure \
+    --target-list=x86_64-softmmu,aarch64-softmmu,ppc64-softmmu,s390x-softmmu \
+    --disable-plugins --disable-modules --enable-werror --enable-debug \
+    --disable-docs --disable-tools && \
+    make -j14 && { echo 'build ok'; } || { echo 'build failed'; exit 1; }; \
+    cp -rL qemu-bundle /build && \
+    cp -rL scripts /build && \
+    find . -maxdepth 1 -name "qemu-system-*" -type f -exec cp {} /build \; && \
+    find . -maxdepth 1 -name "tests" -type d -exec cp -r {} /build/tests \; ;
+
+RUN --mount=type=cache,target=/build-tmp-11.1.0,rw \
+    find /build -maxdepth 1 -name "qemu-system-*" -type f -exec cp -s {} /bin \; && \
+    find /build/tests/qtest -maxdepth 1 -name "migration-test" -type f -exec ln -sfT {} /bin/migration-test \; ;
+---
+
+
+- Dockerfile ==> qemu:11.1.0
+FROM qemu-build-base:11.1.0 AS runtime
+
+WORKDIR /build
+
+# isolate the library dependencies of qemu, python and gdb
+RUN mkdir /libs64 && \
+    cp -L $(ldd qemu-system-x86_64 | awk '{print $3}' | xargs) /libs64 && \
+    cp -L $(ldd /usr/bin/gdb | awk '{print $3}' | xargs) /libs64 && \
+    cp -L $(ldd /usr/bin/python3 | awk '{print $3}' | xargs) /libs64 && \
+    cp -L $(ldd /bin/sh | awk '{print $3}' | xargs) /libs64 && \
+    cp -L $(ldd /bin/sh | grep ld-linux | awk '{print $1}' | xargs) /libs64 && \
+    cp -L $(ldd /usr/lib64/$(readlink $(which python3))/site-packages/rpm/_rpm*.so | awk '{print $3}' | xargs) /libs64
+# rpm stuff above is because gdb has its own python runtime
+
+RUN mkdir -p /slash/usr/share && \
+    cp -r /usr/lib64/python* /libs64 && \
+    ln -sfT /lib64 /slash/usr/lib64
+
+RUN mkdir /libs && \
+    cp -r /usr/lib/rpm* /libs
+
+# only these binaries in the image to keep it small
+RUN mkdir /bins && \
+    cp -L /bin/sh /bins/ && \
+    cp -L /bin/ls /bins/ && \
+    cp -L /bin/echo /bins/ && \
+    cp -L /usr/bin/cat /bins/ && \
+    cp -L /usr/bin/gdb /bins/ && \
+    cp -L /usr/bin/python3 /bins/ && \
+    cp -L /usr/bin/docker /bins/ && \
+    cp -L /usr/bin/env /bins/ && \
+    cp -rL /usr/share/gdb /slash/usr/share
+
+# symlinks
+RUN cp -d /bin/migration-test /bins/ && \
+    cp -d /bin/qemu-system-* /bins/
+
+FROM scratch
+COPY --from=runtime /slash /
+COPY --from=runtime /libs64 /lib64
+COPY --from=runtime /libs /usr/lib
+COPY --from=runtime /bins /bin
+COPY --from=runtime /build /build
+ENV PYTHONPATH="/lib64/python3.13"
+ENV TMPDIR="/tmp/migtmp"
+WORKDIR /build
+
+# -version helps debugging, this is overriden when calling qemu with
+# proper args
+CMD ["qemu-system-x86_64", "-version"]
+---
+
+
+- The wrappers. One for each of qemu-system-x86_64, sh, migration-test,
+  these live in a build-<version> directory.
+---
+#!/bin/sh
+
+# pass the environment into the container 
+echo > "/tmp/migtmp/envfile"
+env | while IFS= read -r line; do
+    case "$line" in
+    QTEST*|QEMU*|PYTHON*)
+        echo "$line" >> "/tmp/migtmp/envfile"
+        ;;
+    esac
+done
+
+bin=qemu-system-x86_64
+exec docker run --rm -w /build \
+                -v /tmp/migtmp:/tmp/migtmp \
+                -v /home/farosas/archive:/archive \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                --network host \
+                --env-file /tmp/migtmp/envfile \
+                --cap-add=SYS_PTRACE \
+                --security-opt seccomp=unconfined \
+                --device /dev/kvm \
+                --device /dev/userfaultfd:/dev/userfaultfd \
+                -it qemu:11.1.0 $bin $(printf "%s\n" "$@")
+---
+
+- The snippet of the test script that uses all of this:
+
+cd ./archive/build-11.0.0
+
+# container-relative
+CURRENT_QEMU=/archive/build-latest
+
+if [ $1 = "src" ]; then
+     info "forward..."
+     run_qtest PYTHON=/bin/python3 TMPDIR=/tmp/migtmp \
+     QTEST_QEMU_BINARY=${CURRENT_QEMU}/qemu-system-${ARCH} \
+     QTEST_QEMU_BINARY_SRC=./qemu-system-${ARCH} ./tests/qtest/${TEST}
+else
+     info "backward..."
+     run_qtest PYTHON=/bin/python3 TMPDIR=/tmp/migtmp \
+     QTEST_QEMU_BINARY=${CURRENT_QEMU}/qemu-system-${ARCH} \
+     QTEST_QEMU_BINARY_DST=./qemu-system-${ARCH} ./tests/qtest/${TEST}
+fi
+---
 
 
