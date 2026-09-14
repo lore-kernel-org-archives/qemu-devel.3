@@ -4,104 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24F8C88E77
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 22:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1F3C88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 22:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ErV-000203-4y; Mon, 14 Sep 2026 18:09:17 -0400
+	id 1x6ExC-0003gU-3e; Mon, 14 Sep 2026 18:15:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6ErT-0001zv-Sc
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 18:09:15 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6ErS-0003at-Eg
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 18:09:15 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-395cf2535acso371041a91.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 15:09:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789423753; x=1790028553; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fXa55pJMZVxdQvYucCZg4TxUj5w4FJqgY4RPKboeu04=;
- b=q3ieaQdpSbLZc2eXaqvMQnDHZI8X2ININN8wHbOtvWnIsP+hML1us+XDRVPSCyANQU
- SUQa07FNF9kJ3i83bk5wj0yqIlzkhhclxNBoKCjoOL/HiKddY73aa0KZsTUFg5HcUGoz
- optqVY2662NrM94UtgOfNn0rLvhztaUbaI3sJI2+a1WIr5xAEmGAYpqqXwNJjGdMfPeS
- HWdfTQrMDjOUDcThJKiDXFXZ2hzWxFc+G6y4kg5BCDsp9MCHwuti6K/9v7IZL50ZTIrA
- 16+9QLeZsDBQJqgLYFZ28GKaVOTnHGZXkhWBvqc+1VPX+ZJkCk/zSQesPM4RDNv7UsXM
- R+mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789423753; x=1790028553;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=fXa55pJMZVxdQvYucCZg4TxUj5w4FJqgY4RPKboeu04=;
- b=M+k1hxVXxMpPqhyoIm+LrA0td2u9BylBGZ/MNU3I9nACBnqpmDWxQqVNPbsilON+h4
- Fmqe+UzZtLCzpbUehE5IS8m/9l+8E+SvJKgp8460SnHMvelut6Skk1/uyZgmzOAaVFzr
- eb9U4RI8VvtmGO/QlVKEaToZbCRTPa44T0SxhDO+IueICMyWw3wFXPJTgO8SVPW7wi3W
- JhQQif/0J5jEnjpnvW7UG5cjrg8s4C4Ac7V48mey+fGRjpC3rdLSm3IdVsQII0Sk2O0H
- Jb+b2VMdOyW+66WmPmhsIkjcUTwQcK68XlIQXBdCUyiUmwsgs/lxWqglJxSSAZBY6/lv
- 9j8w==
-X-Gm-Message-State: AFuF++k064RS3qomDsz6EZv2NJCC1WlxJ0YiQBwlfIPRs8RYl8VNXBAJ
- 5L7WDG7OS1YzsVzZKHup/WliEAEJBkQ16MRumN3PScp93jRBsUOJsn7f9RCNBoBGC/w=
-X-Gm-Gg: AYBFou1sbl5aD8bhWlYFB/RedsKanX2ieD6sWKi/EWkyvYEWvBwi+Ra46H/HbsfPeln
- D8HnwRhntj/iiT6ury0BfG98DqNIsnYtaBg4Lr52aEsnA5isghAAwIlBtl1uSlGWLUJSRLzzaBV
- U2R4IZMfF3z/f1hhCJ6rffz23FfOYtWhWMYaq1nh2NenVLxm0ugw9GUErSFhLjqnGpvOeyy0qlL
- 9SMI4meDvFpAn83zwwKIBC2UUUz+ibfvVnyUuqfkFBqL3O+ulBeH4iV3/RKJUWWjfgKcTjrcJgy
- RgS3fdovj7+js4V5gD0+0xyqqb1odTQzpW+iGdz/84UYZEtbbOczY7rYCcKXX73v8pJ5I2hsu99
- cpAYPwZLphHZIFAbeBjNMBTC9EtDTwBb666Ht8KNrCaLX7IWn6O38cOZ5ofNyHhllv297pHyAsU
- BN79016I6S96IG3jnoVNyPNJwvwEVQ6p/acFwuiwZMWrExvu2CmMnL5NPa6o7LUdXMncXBIAQA3
- YTh5iVEMhjWqncHhur5TuxqFlf6rCXyXDKJNz2Uo5bzH20yg+y6AV2nB0K7Qg==
-X-Received: by 2002:a17:90b:4a11:b0:38f:a81:15b1 with SMTP id
- 98e67ed59e1d1-39dfe188cd9mr1556974a91.19.1789423752672; 
- Mon, 14 Sep 2026 15:09:12 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
- ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4b1f409sm32959275eec.0.2026.09.14.15.09.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 15:09:12 -0700 (PDT)
-Message-ID: <e5b33b04-e10d-4b56-8917-cbc1705475d0@linaro.org>
-Date: Mon, 14 Sep 2026 12:09:08 -1000
+ (Exim 4.90_1) (envelope-from <owen.giles@hpe.com>)
+ id 1x6Dm4-0005xR-NR
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 16:59:38 -0400
+Received: from mx0a-002e3701.pphosted.com ([148.163.147.86])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <owen.giles@hpe.com>)
+ id 1x6Dm2-0007YE-Ju
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 16:59:36 -0400
+Received: from pps.filterd (m0134420.ppops.net [127.0.0.1])
+ by mx0b-002e3701.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68EJefXR3342521; Mon, 14 Sep 2026 20:59:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hpe.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pps0720; bh=SdNovYxwBbFJBPp0qj2C7KWxr7hkBBTfdm9dP
+ mWq2yc=; b=Foa9D008dTXm7/PeSRkmSrpDBPMBjeYvn8Iit2CCV1tovrl0LTzD0
+ icHSriAJsUb6JGsfNLmA3O95Mm4WYlD1F0yhGlUG1FKnLSGWSmnJrK36TQIRZutF
+ +uWhhQVoDLzx7epKeWEkV6AL76OOHTwatKvUIqoCRg8Hp60mrg+vrH0AXiR2JpQQ
+ 30m8BtMIN+dDVhPjObgyQ44emhngJAjS+5uX8sKorMg/7yyaNY7Yjj6J1nxAp4Es
+ vm2URLVeScpXy3UAL09AllMzUluVruWBH/TAngUaGaYWB93FU7ZVDcf0K2+1bBh3
+ JcIPTe/iI1YOhRW4A9HPqGTkATfNlJT0Q==
+Received: from p1lg14881.it.hpe.com (p1lg14881.it.hpe.com [16.230.97.202])
+ by mx0b-002e3701.pphosted.com (PPS) with ESMTPS id 4gpkm148jw-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 14 Sep 2026 20:59:29 +0000 (GMT)
+Received: from p1lg14886.dc01.its.hpecorp.net (unknown [10.119.18.237])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by p1lg14881.it.hpe.com (Postfix) with ESMTPS id B8975806B30;
+ Mon, 14 Sep 2026 20:59:28 +0000 (UTC)
+Received: from hpe.com (unknown [16.231.227.39])
+ by p1lg14886.dc01.its.hpecorp.net (Postfix) with ESMTP id D13468084FF;
+ Mon, 14 Sep 2026 20:59:27 +0000 (UTC)
+From: Owen Giles <owen.giles@hpe.com>
+To: elena.ufimtseva@oracle.com, jag.raman@oracle.com
+Cc: qemu-devel@nongnu.org, Owen Giles <owen.giles@hpe.com>
+Subject: [PATCH] hw/remote/vfio-user: Reset VFU region flags for each BAR
+Date: Mon, 14 Sep 2026 15:57:47 -0500
+Message-Id: <20260914205747.1540492-1-owen.giles@hpe.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/14] qom: report & filter on security status in
- qom-list-types
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260910103628.2326622-1-berrange@redhat.com>
- <20260910103628.2326622-13-berrange@redhat.com>
- <7a47ed5e-fc50-4f13-8fac-455c6015d38e@linaro.org>
- <aqhTQ4pad4OOWCcV@redhat.com>
- <0ff70c1c-cf73-46ec-9ae6-e2130bd1eb91@linaro.org>
- <aqhXANB86gps6UYR@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <aqhXANB86gps6UYR@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDI5OSBTYWx0ZWRfX06qCvQhyR7w0
+ gHl4tnV1JhoWPv83Tjjl6Md6MBhyZE3HYcqsWZaCDCmEZtQOPr6RV8ZY2W5PA2fngJVdahP8I0v
+ KzfWVk4WxF5TpkkXEapNSumIgXeF/tY=
+X-Authority-Analysis: v=2.4 cv=Kc5HIgYD c=1 sm=1 tr=0 ts=6aa86031 cx=c_pps
+ a=FAnPgvRYq/vnBSvlTDCQOQ==:117 a=FAnPgvRYq/vnBSvlTDCQOQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=gQcMVamqm3wCPoSYhaRC:22
+ a=RtSn8ETxjE2H05FtM2s8:22 a=MvuuwTCpAAAA:8 a=6yHLYObcNuKKdcwZnVQA:9
+X-Proofpoint-GUID: e4anmEVJGgsc-FbyqA9lPapZUybJj7OR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDI5OSBTYWx0ZWRfXwgJ139tzLQw6
+ sdfOMMwoKv3F103P2awox1WuWWmoK58QLlbVjIAb/gBSF499tojgKSNPtTnkjEzHvKLU52YodXQ
+ /g11LJqqIlXmVyCUo7lbPxI5+ahXwq483IV+xRT8Ng+j1IiUPDv6tNGT+rT4g2fEA+MVMgBgKsD
+ b/aREpW1fi/uUqJsOy7lwNYEW3tuJRU7cw9q0SrvgRWdaOi17bFMleRYehCldbmNYqRQgqeXqMf
+ ihzn3X941r+7NzSAU7y3+iYC3NaMuMwOlMMla3eDRcjuDnyh4uleuBqG05vEgbSVdi5U1o2VtCp
+ gF4yNo9QwOJNFphne6PlqdRTuyxaZv8I0z57y9U9iA1SEQILjgJpqQnhGjNInLTjIDr1vjYLr4g
+ 5P9EhriNqjjSGwH+PBDnt/bBouD82rGqHw1ojJ+74Xb55Z0svR//3fz1h48Yz9yGau4fXZ4t1fC
+ +aqDmew/qglfHA1p3LA==
+X-Proofpoint-ORIG-GUID: e4anmEVJGgsc-FbyqA9lPapZUybJj7OR
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_04,2026-09-14_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 bulkscore=0 clxscore=1011 lowpriorityscore=0
+ phishscore=0 spamscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140299
+Received-SPF: pass client-ip=148.163.147.86; envelope-from=owen.giles@hpe.com;
+ helo=mx0a-002e3701.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 14 Sep 2026 18:15:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,16 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/14/26 10:20, Daniel P. Berrangé wrote:
-> By setting  'has_secure = secure', it means that the returned
-> list will include "secure = true" in the JSON, but we will
-> entirely omit the 'secure = false' field for insecure devices.
-> This is essentially a short-cut making the JSON smaller by
-> omitting the implied default (insecure) value from the JSON.
+flags is only initialized once before the BAR setup loop, so if a lower
+BAR's io_region is read only, every subsequent BAR will have its
+flags set as read only despite not being read only. By setting flags to
+RW in every iteration, each region is properly assessed and assigned
+the proper flag.
 
-Ok.  This could perhaps do with a comment then.
+Fixes: 3123f93d6b85 ("vfio-user: handle PCI BAR accesses")
+Signed-off-by: Owen Giles <owen.giles@hpe.com>
+---
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Notes:
+    The ROM case of the read-only check is okay, as the ROM will always be the
+    last in the loop, but the other check is what can result in unintended
+    consequences.
 
-r~
+ hw/remote/vfio-user-obj.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index a0498d218fa..67687c841a6 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -519,14 +519,15 @@ static vfu_region_access_cb_t *vfu_object_bar_handlers[PCI_NUM_REGIONS] = {
+  */
+ static void vfu_object_register_bars(vfu_ctx_t *vfu_ctx, PCIDevice *pdev)
+ {
+-    int flags = VFU_REGION_FLAG_RW;
+-    int i;
++    int flags, i;
+ 
+     for (i = 0; i < PCI_NUM_REGIONS; i++) {
+         if (!pdev->io_regions[i].size) {
+             continue;
+         }
+ 
++        flags = VFU_REGION_FLAG_RW;
++
+         if ((i == VFU_PCI_DEV_ROM_REGION_IDX) ||
+             pdev->io_regions[i].memory->readonly) {
+             flags &= ~VFU_REGION_FLAG_WRITE;
+-- 
+2.34.1
+
 
