@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27100C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55437C88E6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x68SB-0004En-7J; Mon, 14 Sep 2026 11:18:43 -0400
+	id 1x68eT-000861-RZ; Mon, 14 Sep 2026 11:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x68S0-00043Z-Gh
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x68dZ-0007nR-3H
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:30:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x68Ry-0002Dz-PG
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x68dX-0007lO-5P
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:30:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789399110;
+ s=mimecast20190719; t=1789399824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jrbR86qvPSM1UT+pt+N2KElBfjNWyq9Pp++QoqytyGM=;
- b=E72lRUggv274+V+7jUvJQ6lzR8ndMDaniBki6VgJ36qcwHT5VzNgrkm4UMruCTk+IRr/ej
- s85MOtU/8b5vtAuOEMdW6Wvv9SqQSlhonoxalqKW9FSgRG9Oabu4xfdNmcOfAGiL/17YaA
- xy5FEY8amDo3i11nmX06YlTCl6SfBjM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fNtH5wTxcL6+tfLz8Ih+76DUyT1jSsf5s4YqsEqbQtI=;
+ b=XG880goQS1z6hLA0i+GEcGkDU+jrVGTB201Rcq6RBXD0mYKk63ytFvNjVs0DTP+BpNiuLi
+ q6sLfa724+h4ARPk2GM0Yxb+2qW12ZChJvIFk17niuZ8yVk0IEdXidvNp0AVp+oR1FsLEp
+ 9tJr6gqw5sFD0t6swlLrrcv8V3QjwgA=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-eRlxPTHfNd6FoibkAZMNxg-1; Mon, 14 Sep 2026 11:18:28 -0400
-X-MC-Unique: eRlxPTHfNd6FoibkAZMNxg-1
-X-Mimecast-MFC-AGG-ID: eRlxPTHfNd6FoibkAZMNxg_1789399108
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48597bbd963so2821314f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:18:28 -0700 (PDT)
+ us-mta-601-lXBCxL2MNl29eZ9xrer7sQ-1; Mon, 14 Sep 2026 11:30:23 -0400
+X-MC-Unique: lXBCxL2MNl29eZ9xrer7sQ-1
+X-Mimecast-MFC-AGG-ID: lXBCxL2MNl29eZ9xrer7sQ_1789399823
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-90ce8ad8002so78527326d6.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789399107; x=1790003907; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jrbR86qvPSM1UT+pt+N2KElBfjNWyq9Pp++QoqytyGM=;
- b=EVMuolU6lVWzIK4uydUuynWXCPYlBC8rhmH+jkrQ9h/JxGvu+yQM6ZbKvv7bqnJI8r
- hbtRG2FOWtOU7myvG+R+sj7eQFSd0axEsAMb/Fv0l1PhCBZzlV2JtdNr/Vp835h47NrH
- 3KI8hbIgcYkqYcEmBz2Jg8HXlCvB8gzVgO/kVNtLXNmZK4EHKrGi9g3zdCOq8qCSju17
- /jLpXepdiLOkRhm7Y1WWBk75PzOzJIW8K7pTQeLHLyJQOFWLAMjsY6LALZ/t8ZIdoW4F
- nqvvxK38HuxUZfn7pAKehGVhOtupE0MLypKeecMxPzVy5GZKXZvHBUE0NE0etY/cjiUh
- 97tg==
+ d=redhat.com; s=google; t=1789399823; x=1790004623; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fNtH5wTxcL6+tfLz8Ih+76DUyT1jSsf5s4YqsEqbQtI=;
+ b=lU4YxI2DTArFG9rT3SKthIp2WuH7kn3cpRFZ+83xav24TWJLsd01sf/Cmsvr/vxfa8
+ HR+BUnwRlTlZ1xBcwKdBwDmGTc/0P0tUnb1EAul8XrfreGJanLOZpLsA042XW6TZ6Vp+
+ 7Czi7BprSYuC+C2wnoxLAXYVEoKMtQz2kFeBzntQzCu8qISLuYB1vx+lrO9NTWGA3+bT
+ YIcQ85kDkS1urvGsWg9Itb3tKktz2BkD01Hpc4xVkaarzznz44gmncj5rXedbioNv9J7
+ aUiNva7Gw2tEQrsKa0bQr//y3Wice/DygILkZM1Jv8Zn1PYH28mEIaLlv33gYgD5iXTU
+ bgiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789399107; x=1790003907;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jrbR86qvPSM1UT+pt+N2KElBfjNWyq9Pp++QoqytyGM=;
- b=TE8dkcrZ7V063QS0BCHoXEQ1KnLXYr5yKUb8lfv+pBluQ/OU+YRlL3knt/+Mp7ryT0
- qBoJQAnB9t7qy+FLA0fDV2H8kKmAxkgMUBqN5m4sZCj7Qam3GzZ2dFf6StgcXF80KVYP
- Se5uFlNMm3TaJeggRN4Y6BD+/6U195SWCpOKrmYr038facBgKI5894oErOYBmEpv1A9M
- bvCvmtcZ41fRd4UC2ug/TrDcK1PPibf8k7xTtR9ElroJJ/emH2uBPqcIJhvO2hI50rLr
- hiuL7vYQaBRl1LiB8OVB8wkTZ6ZCJ8EWQ6OUO68c+8A3MJFem/RkxCrb/dJVdlKOVYIs
- 77mA==
-X-Gm-Message-State: AFuF++nEvow1Th0k1O//ABvV05VFiN9eAg/0yjjQ49OG+PR2gpviASlR
- yzgAXxKbzCqlq1vPm5AsAH9eUzhQsfI+1Ep/6zi3RFjyPviaqtZoP2nEZ1vcGnTwmvUI+WVnUu6
- sXztArtsrZMPw/eb2eRv7SLs4dvYJGaWw54wv+n+xLKSnYOChqnV+rDmX
-X-Gm-Gg: AYBFou1RkuzVJDZ3eFH//vxeXJp3hkeHFf+8R6jUesDcHypgIosOCRnVDdTXsrCSrp2
- /tcag5+RKqQnNSHrfKRekDx4Bddk3RHMI0H0cyTZwzDjdKS1kjWCtlCMvPGKahESld/yLigEmk0
- FSG+6D6c16QGrezmNJZFZKPCk9V65CnKo6VV2j9/cTU3Pdyx8ZwG3iEPTUK2uiDTHc00GF9I9wk
- S5aq2DBG1gG06lc3e5GTuWZbzGGd3Y9/yCmTbJjcjgn+cM+ekPkAjgKKT6iCStGb/KI/6xa5lzO
- uf6Uc1GSsy4S5kiTQ1L6HHEQ29PPUlxuKCbfJFU5JkzjjyOmYOqgMPYQKq9KpK5NeZ809JQqjgg
- A2+BV96/r34ncptDyzH+W5dP/rDZGNdnIFXcis6PsLa6LBA==
-X-Received: by 2002:a05:6000:2685:b0:485:ac96:7251 with SMTP id
- ffacd0b85a97d-48702b1d3f6mr9176584f8f.21.1789399107504; 
- Mon, 14 Sep 2026 08:18:27 -0700 (PDT)
-X-Received: by 2002:a05:6000:2685:b0:485:ac96:7251 with SMTP id
- ffacd0b85a97d-48702b1d3f6mr9176436f8f.21.1789399107038; 
- Mon, 14 Sep 2026 08:18:27 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb357288sm28121334f8f.29.2026.09.14.08.18.25
+ d=1e100.net; s=20251104; t=1789399823; x=1790004623;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=fNtH5wTxcL6+tfLz8Ih+76DUyT1jSsf5s4YqsEqbQtI=;
+ b=J/FbGGdkuQFLhSHyV6umPXszbls+o0ejeGf8nlq82NJ12usfMHr1igznHhJpUhB0P3
+ NFwAeQuJn0C5m6GeyVvtyh7+Fl20axJqN4XfNdYqVJQaE+lxGibsMkAOVY7zK1rb4th/
+ gg542ifZf3s77jMyRcnNzEPfBtVGdk/KhFbpPdLDMSnc/5Rcatiy7/nZ/KBiQxGTPJYW
+ tSrR5I6zoZp46AyQbnZ/9bVQSPCfT1PQQ/ffcb2D2dU/ZvUuQmeOuMzfo14a6DyfORmR
+ k94YtLoIktnZ5Kvav5AWz8ATthgXSyRP3qW1PTg1lDrpIdJgZ8MfJnjwYvKE1zOvF9dM
+ HzEg==
+X-Gm-Message-State: AFuF++nD3xx+mmq1XhftNPPEVzFkA74nxPCf0RTkF8M7rQLPhEY5ODbW
+ csPsEd88XGAVymWq3LeTwBeP3h5ceWcVpRe/DzaE8mDyr5E8huCTqIDlOb04KK5y3i0VHXZKO7K
+ 56LNDb6TQMRwcj82OuXbCcbFga+0eysJzucoSXjzYecjVeKjT7wAi2WLY
+X-Gm-Gg: AYBFou28g1zMlXUAmBOqIXefSIbqLqdwAxOY1RzyC+x0EA+72p0gANENkvo60JU250L
+ x4uT2gZ99OuwhxxiJ+f5djK87l/3UF1J/wbdTCXMGFzmmmOBU/d3l7xsN8DtY0GHZ/+GmXxKk2K
+ f9jes6z9668ET3azhUo6DB/a7T5Sxow9wg0MFC84XVpyPUTEFebnum1/5TZeSoMRjk7Rdz/hBvs
+ cU2PaXVdL5wdNJqXraXjfCIOIrvb3Qz4ScK8XNFhJfX8B7+8OIafAD45LOiDYd44ArCz/KqVjn/
+ VtQ7FBM8q0PpiFOQ8MwXwQVTUjXTmriWxf2WhVh2vGtQ/8vz7QoT6QPi3PbVTeov740CUscFfW2
+ vq6QgTAedQyFeCp6HA5Q4Qvq8JNaSwy3IDy8f4hOGt9MhXExn7BEP7OB7XKo=
+X-Received: by 2002:ac8:7d56:0:b0:530:f992:b1de with SMTP id
+ d75a77b69052e-5310cf0ac43mr44219971cf.3.1789399822272; 
+ Mon, 14 Sep 2026 08:30:22 -0700 (PDT)
+X-Received: by 2002:ac8:7d56:0:b0:530:f992:b1de with SMTP id
+ d75a77b69052e-5310cf0ac43mr44219021cf.3.1789399821594; 
+ Mon, 14 Sep 2026 08:30:21 -0700 (PDT)
+Received: from localhost
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-530ca4ba156sm101144991cf.19.2026.09.14.08.30.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 08:18:26 -0700 (PDT)
-Date: Mon, 14 Sep 2026 17:18:23 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, philmd@oss.qualcomm.com, 
- maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
- den@openvz.org, 
- farosas@suse.de, peterx@redhat.com, clg@redhat.com, dongli.zhang@oracle.com
-Subject: Re: [PATCH v5 12/14] vhost: add vhost_dev_set_owner() /
- vhost_dev_reset_owner() helpers
-Message-ID: <aqgQObEfJ8zu4pjF@sgarzare-redhat>
-References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
- <20260914-up-vsock-vhost-v5-v5-12-d17423589f48@virtuozzo.com>
+ Mon, 14 Sep 2026 08:30:20 -0700 (PDT)
+Date: Mon, 14 Sep 2026 11:30:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH] io: cork TLS writes to avoid small TLS records
+Message-ID: <aqgTBpC0wcuuzYWa@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260909120033.1303511-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260914-up-vsock-vhost-v5-v5-12-d17423589f48@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260909120033.1303511-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -123,101 +120,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 14, 2026 at 11:37:43AM +0300, Andrey Drobyshev wrote:
->Wrap the set_owner/reset_owner backend ops in dev-level helpers, matching
->other vhost_dev_* wrappers, so device code can take or release ownership
->without reaching into vhost_ops directly.  vhost_dev_init() now uses
->vhost_dev_set_owner(). Both return -ENOSYS if the backend has no such op.
->
->No functional change.  These are used by the following vhost-vsock patch to
->hand a device between owners during CPR.
->
->Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->---
-> hw/virtio/vhost.c         | 20 +++++++++++++++++++-
-> include/hw/virtio/vhost.h | 25 +++++++++++++++++++++++++
-> 2 files changed, 44 insertions(+), 1 deletion(-)
+On Wed, Sep 09, 2026 at 01:00:33PM +0100, Daniel P. Berrangé wrote:
+> The migration code caches vmstate/ram writes into an iovec and
+> flushes this periodically. The total amount of data to sent
+> may be 100's of KB, but split across many iovec, each of which
+> is potentially quite small.
+> 
+> The QIOChannelTLS receives the iovec, but since GNUTLS cannot
+> accept iovec data, it iterates calling send for each element.
+> 
+> As a result of the migration data pattern, this results in
+> GNUTLS putting lots of small TLS records on the wire. This
+> has shown writes alternate between about 4k and 30 bytes
+> in some tests.
+> 
+> This is triggering the nagle algorithm on migration-test for
+> many of the TLS test cases, resulting in a "go slow" for I/O
+> that eventually hits the migration timeout configured by the
+> test.
+> 
+> Not every contributor reports seeing the "go slow" but for
+> those who do see it, it hits >= 95% of the time for at least
+> one of the migration TLS test cases run by 'make check'.
+> 
+> While we could disable the nagle algorithm (and multifd
+> channels already do this), that would stil result in lots
+> of small TLS records hitting the wire which is not good for
+> throughput. The migration code flushes in batches because
+> it wants large writes for high throughput.
+> 
+> To achieve this we must tell GNUTLS to encrypt data but not
+> immediately sent TLS records by "corking" its output. Once
+> the complete iovec has been written to GNUTLS, it can be
+> uncorked allowing it to hit the wire.
+> 
+> There is added complexity with uncorking on non-blocking
+> channels as not all encrypted data can be sent at once.
+> qio_channel_write() will return what was sent, but some
+> data might remain pending inside GNUTLS buffers. A later
+> call to qio_channel_write() will provide the same plain
+> text data buffers that have already been cached. Thus the
+> code must attempt to uncork GNUTLS again to clear pending
+> data and then deduct the equivalent amount of plain text.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+I wanted to test across two hosts on this patch, not for the issue because
+I can't reproduce, but for perf, due to the expected reduce on write
+syscalls. But then one of my hosts died.. so I only did a run locally with
+PSK, running high dirty loads and sample the bandwidth without multifd.
 
->
->diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->index 2bb9a23fee4..ea17bf01080 100644
->--- a/hw/virtio/vhost.c
->+++ b/hw/virtio/vhost.c
->@@ -1690,6 +1690,24 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
->     return 0;
-> }
->
->+int vhost_dev_set_owner(struct vhost_dev *hdev)
->+{
->+    assert(hdev->vhost_ops);
->+    if (!hdev->vhost_ops->vhost_set_owner) {
->+        return -ENOSYS;
->+    }
->+    return hdev->vhost_ops->vhost_set_owner(hdev);
->+}
->+
->+int vhost_dev_reset_owner(struct vhost_dev *hdev)
->+{
->+    assert(hdev->vhost_ops);
->+    if (!hdev->vhost_ops->vhost_reset_owner) {
->+        return -ENOSYS;
->+    }
->+    return hdev->vhost_ops->vhost_reset_owner(hdev);
->+}
->+
-> int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->                    VhostBackendType backend_type, uint32_t busyloop_timeout,
->                    Error **errp)
->@@ -1707,7 +1725,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->         goto fail;
->     }
->
->-    r = hdev->vhost_ops->vhost_set_owner(hdev);
->+    r = vhost_dev_set_owner(hdev);
->     if (r < 0) {
->         error_setg_errno(errp, -r, "vhost_set_owner failed");
->         goto fail;
->diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
->index 9b98d34dd04..94cc52f870d 100644
->--- a/include/hw/virtio/vhost.h
->+++ b/include/hw/virtio/vhost.h
->@@ -178,6 +178,31 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-> int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
->                            VhostBackendType backend_type, Error **errp);
->
->+/**
->+ * vhost_dev_set_owner() - take ownership of a vhost device
->+ * @hdev: the common vhost_dev structure
->+ *
->+ * Issue VHOST_SET_OWNER on a device that has already been set up, e.g. to
->+ * complete a CPR handoff on the destination, or to take the device back on
->+ * the source after a failed CPR.
->+ *
->+ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
->+ * errno on failure.
->+ */
->+int vhost_dev_set_owner(struct vhost_dev *hdev);
->+
->+/**
->+ * vhost_dev_reset_owner() - release ownership of a vhost device
->+ * @hdev: the common vhost_dev structure
->+ *
->+ * Issue VHOST_RESET_OWNER so that another process can take the device over
->+ * with vhost_dev_set_owner(), e.g. on the CPR source once the VM is stopped.
->+ *
->+ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
->+ * errno on failure.
->+ */
->+int vhost_dev_reset_owner(struct vhost_dev *hdev);
->+
-> /**
->  * vhost_dev_cleanup() - tear down and cleanup vhost interface
->  * @hdev: the common vhost_dev structure
->
->-- 
->2.47.1
->
+vanilla:
+
+2203.89 2061.09 2243.31 2241.19 2183.49
+2186.59 (±74.59)
+
+patched:
+
+3185.10 3223.91 2877.11 2987.71 2632.30
+2981.23 (±241.40)
+
+That's 36% improvement.
+
+I still think we can do more things on top when we will care about perf
+(ktls might be the next to think about), but it looks a good start besides
+fixing the extremely (kind of a bug) slowness.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+Thanks,
+
+-- 
+Peter Xu
 
 
