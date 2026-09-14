@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 280BDC88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF83C88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Bq2-00086A-34; Mon, 14 Sep 2026 14:55:34 -0400
+	id 1x6Brd-0001WB-Kq; Mon, 14 Sep 2026 14:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6Bpz-0007zA-Di
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:55:31 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ id 1x6BrS-0001S3-1E
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:57:05 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6Bpx-0007Aq-ET
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:55:30 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc4c08393dfso1649778a12.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:55:28 -0700 (PDT)
+ id 1x6BrP-0007O2-Oe
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:57:01 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-396ccc09d65so2370682a91.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789412127; x=1790016927; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789412218; x=1790017018; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=auGF7eFDwjwKkOoNR9VE/J+MyxShi6ITYEXL2P2CaRI=;
- b=Ut3sdq1y0nH72w9h22Lq5UutThq08qqP4RA0lFqAXxZIiTSQllEh6TAaEM5lLuGzGc
- HtErLMtSH0HSaAZfTqVkxU8LQ7JBcfEGsAxtdm9MJn3E8iEJ8fQmfzb4hgeV8Peqy9A7
- pWxO4pw3UvuOB5PauDAm5xeFITKt8mgH07WR1mqURuGmYlR7tUPW+NH/Q0sZtp+6n6VN
- LT410tPBaUcDh1be+XTz1aVliMeYN0LFqkU7nEM6WC5nS9ktAHUA3ilxtLSntK7MXc33
- ojRbi5jRUkS57s6ayqFwqkDvKoFZbhS9KduDXEgqm8hZeaiZaWs31gNj7imgy16r9W80
- rI/Q==
+ bh=iErmpFcJi2QdxNS5FRoJHlT8Mi6eTwqMD9ZVS6Tt7dI=;
+ b=lURXz1z7KWuw5vy99iF/qqHMCGmP3XwWWnyWwg3IeMhxwfO1F+UE0lTV7JJ+qk65kp
+ 1RKdFqmAiB2T1jGMvRn8hAShT13vWOJ3WUXUo4KbZCqD3f3ub7oOSeXs5gHUDnoP3F5U
+ Je/xbSIPdzPPWx5+Xg4TnoulzALRckOsu0sufXKlpAeTnyFjaAeuQfsP60/fsZxNA/9J
+ Oj6lRIUACBasOt5czTQNDMzibO61EjnlP4iysKQzaiBItW9WxluuuPA1r8FZlM0C2QZR
+ wHiIdYgLB6SzcaCuj8bKVa++sQYpylUbMRQ+OrIMrU869Y7W0JDL2OxRxWDS8JNgKZRW
+ cpsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789412127; x=1790016927;
+ d=1e100.net; s=20251104; t=1789412218; x=1790017018;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=auGF7eFDwjwKkOoNR9VE/J+MyxShi6ITYEXL2P2CaRI=;
- b=NNiAZM2PGSfEeh9gSGpl4ouL11A5kGO+PRm1CXVHlANAk1PwE8c5xdvAL6nsey11IB
- MWJSi+/qD2rqRvrw9nhohAX8wnPO/mqPiYfnId3JgJiAjw9BExZ7wtSELexjdV59OZob
- ovNdfah3r8W4bON/D8EFbDVOEvFFfOdZCZBrlPjUuDlQUHnmBxoBBFnkke8DxD5CvXV+
- pedwzCtED1tgusbVngTcsDJjjC/YV0VcgV2ngHDzeIh/dnQB5efO40A0CxNYrNvmEkGg
- HPTqwpC80Ca+tXJ1LMjX0IZG+7YlpP5+3buB6WpJlqgTfHKO4Z9khYxQMmlgIUQb5l9w
- AryQ==
+ bh=iErmpFcJi2QdxNS5FRoJHlT8Mi6eTwqMD9ZVS6Tt7dI=;
+ b=XpqH0Pwzlwx20fkONas7OSCT+v1sJczWwYnKKPWaGylaIjNwppnzpb5l77srS0XWYY
+ JFCbrlt1/oQMFsqdZYHl0C+3L5fhwDouV0Bjwa/JEBNGEGmqD7cxza03dckGeuCkbdnx
+ R0HtVG3uta/ke1iER+ykjROn3+gVpl4o/TFQjOhfL/rI7Avpj2TyW6JH0EJCy6ISjDJc
+ Q8PqyQajBdX9Tl7MHUAuPH5pRuwDZ86nASGRp3XYVfPHRF/ybs7GMd1Urqy/MogXhH2i
+ yx8CfS97wrWkNlr0DOIqZrD2JFh88s9St75dUevSBrY+AnwGBDP+W4eD0QGJDA2luzMy
+ 4Rig==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxpbonIj99p0+nBSqmokHhHQ556vmVEO1MEgJE6eF0jklYwqJHD1bu8IQ5QXnbKV1x1HfScoLXotaOu@nongnu.org
-X-Gm-Message-State: AFuF++nZsA8/07afsiVwMt59kuIjbXPlP0kZgQtx/e+QymsHNSHcdaHg
- qr4khgbSEdehGHp/dcJclI1iIh9f0L6/tqFcEfgZqmihWH8YzWkPRt+9u6uIWwbVyJk=
-X-Gm-Gg: AYBFou3OO9aK7wESeZpv2rMyIzvDMnzcYp279gxqA4C7+Ejm/S7/ELyYR7sNrxdaziu
- uGJJSz1bSFjl8m0veqFvP0jZYybu0Aik0JZYOj2eEw+Ry5GegqrCprz2cqAZvS7pColJ+WoecSK
- GyG/9O+K9aWU+MLkD61emgic5qBy+0J2y45z/4i4ToVHGQ7oeSoQ9nbi4UTaob7B+/T+LibRB+q
- LNp+lOxJze5WN26INUP1heiN+6mWuwFF6TeDWKWeniZ2qXI8TTLV/zLDa5EOjDONyVvA0OSstQd
- qXzu2+RX5cvMUzOMlK4CjkfURPJcTmldEESwe8peFxr2KRgN0+XoLt8u8exSn5cnicpPIJzVgB2
- O0i2VCvU4B8Cebhahwc/maaeBMbt1nEfz665E1nzMKMtRnL/k4ZWNIEpQwWBVE6+1euQiXLUCjW
- Fg4Xbfcadwxt+HDbxXlFLyK9E4VyrsCE5S0+z6MZ6uLfsepvFlWpzgUzXKyZpSCJVbsC043Bqmt
- zztjDVLMlXYIRUh884fY/StrAfC3dII+kTGJ1LiUDTU2SCrOz88bMGo3aH3SZQSPLo4Dm5c
-X-Received: by 2002:a05:6a20:d28b:b0:3d3:ae0f:5269 with SMTP id
- adf61e73a8af0-3db406d1734mr7870321637.21.1789412127232; 
- Mon, 14 Sep 2026 11:55:27 -0700 (PDT)
+ AKwUvBy1hWx0MRS9QpBSWwSnWYgEOsZTQscByt7r7bCIbUxQvAgtU5Z468ujL+cpr8XLI3RwoH5e4wtfpVS8@nongnu.org
+X-Gm-Message-State: AFuF++mbZ2Vb/w4d54AqwXqfZe4zYMHtCqvHPATJIo/PcxXvBbIpAEZc
+ nbkEa/o27Vvb39mEXWj4g/Quw8niAIsnYROCgxjgxvHAv3OWsGcoKTF+nE8FIXlxtQQ=
+X-Gm-Gg: AYBFou1mJn17qwuXOCh+JAfcl+1DSBbJTY5fD8SBNo3UC/ZOo02LYHGo0ehfg6AYEZP
+ dUMsRiblEgWVg/w7rfFMgjJaHA5EKDjKoHcewtJ98hhYTqukYPyUJql6GMuAlxSdxaaIbeBBtj+
+ W91PH9sz1thBvRZ93AgwPFQQVC8rRMqsDsj36xmxrejP2nUpOL3SPgKkC2iQx+C152TiTE1zZGG
+ reicxBaOSf2BhfEN0f6IfMNuuO3OBuQIWyu7H2edfBioXHDFF0LAEFAJPhy8bLmdp9R7E1hIdXZ
+ fb2vqLEKrn6lNuOGDK3fjW3TFYV+1pILjYWKHEz6K2hLuY+0FqDpND5FRc6SR8zu8PTG0qjWY/l
+ uHeLezKdygG20K9pCB/WV0gaA0sFTnmg7wkA/zjiLaYky/4864LaMayZFLQdKrPSK4ARlQLJ0lT
+ o51sA1iAI9gNkMc4EtAJYudHkOXQYCmWDiAWzuqiwMLZVbCsZ/9OYgqt1KzbngIlNpTHY3VcGDJ
+ SByxT1RtEVoUAbyL784kJ44SWadwfjQgZ3vMTfJpcMsA8tEAag0o5ShJnnkiQ==
+X-Received: by 2002:a17:90a:e704:b0:39a:e002:f192 with SMTP id
+ 98e67ed59e1d1-39dec0d27f3mr8606682a91.22.1789412217737; 
+ Mon, 14 Sep 2026 11:56:57 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
  ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14365b8137fsm27043894c88.9.2026.09.14.11.55.25
+ 5a478bee46e88-33ba4e51449sm24284910eec.5.2026.09.14.11.56.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 11:55:26 -0700 (PDT)
-Message-ID: <95931448-eea3-4e09-a5eb-876534ae9eb8@linaro.org>
-Date: Mon, 14 Sep 2026 08:55:22 -1000
+ Mon, 14 Sep 2026 11:56:57 -0700 (PDT)
+Message-ID: <0f88cc6f-6aae-4b56-85ad-f7be5b2f050c@linaro.org>
+Date: Mon, 14 Sep 2026 08:56:53 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/14] qom: add tracking of security state of object
- types
+Subject: Re: [PATCH v4 02/14] qapi: add 'insecure-types' option for -compat
+ argument
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -85,20 +85,19 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
 References: <20260910103628.2326622-1-berrange@redhat.com>
- <20260910103628.2326622-2-berrange@redhat.com>
+ <20260910103628.2326622-3-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260910103628.2326622-2-berrange@redhat.com>
+In-Reply-To: <20260910103628.2326622-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,25 +115,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/10/26 00:36, Daniel P. Berrangé wrote:
-> This introduces a new flag "secure" against the Type/TypeInfo
-> structs, and helpers to check this against the ObjectClass
-> struct.
+> This introduces a new 'insecure-types' option for the 'compat'
+> argument that accepts three values
 > 
-> If an object is considered to provide a security boundary to
-> protect against untrusted code, the "secure" flag must be
-> explicitly set to true.
+>   * accept: Allow any usage
+>   * reject: Reject with an error reported
+>   * warn: Allow any usage, with a warning reported
 > 
-> If it is set to false, or left unset, this indicates that
-> the object does not intend to provide a security boundary.
-> Bugs related to this object class will be ineligible for
-> CVE assignment.
+> For historical compatibility it defaults to 'accept'.
+> 
+> The 'reject' and 'warn' values will take effect for any type
+> that has been explicitly marked insecure, or is lacking an
+> explicit declaration of its security status.
+> 
+> This new command line option is currently a no-op, but will
+> become functional as following patches enable the checks.
 > 
 > Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 > Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   include/qom/object.h | 13 +++++++++++++
->   qom/object.c         |  7 +++++++
->   2 files changed, 20 insertions(+)
+>   include/qapi/compat-policy.h |  5 +++++
+>   qapi/compat.json             | 23 ++++++++++++++++++++++-
+>   qapi/qapi-util.c             | 30 ++++++++++++++++++++++++++++++
+>   3 files changed, 57 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
