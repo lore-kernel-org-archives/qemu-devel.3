@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C611EC88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5A2C88E50
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x61a7-0006RY-Df; Mon, 14 Sep 2026 03:58:27 -0400
+	id 1x61b0-0006pQ-VB; Mon, 14 Sep 2026 03:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x61a5-0006Qg-4r
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:58:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x61ay-0006oy-Mg
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:59:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x61ZC-000520-Io
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:58:24 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x61aw-0005TQ-LL
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:59:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789372649;
+ s=mimecast20190719; t=1789372757;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=k5QCEbOB6Zr28+3sr+mvUJZpkwgWGkcnYdhHZODz710=;
- b=DR8VYrFABnbjLZRK4o60lNoALgpBjO3Hjc6bRLZyW6W/pSWiBLnji0tSfYv+HCHb59hraz
- bhTm1qMsgxOu64JI95IIWaFcR+5KY9Z6Bnj2X/a5jFYT83uV4EeJa5PXu9mUHspNyp6Zyp
- 7wLOP5FCjhGCAOC4Qg4lDr4f2alHXPQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=secwxCcSC5/MaWohFXsHniwuhUBhIR6i9QKferZgNHk=;
+ b=Q+ybsfhsiU1/fdJAOSAbuUX0hWVTwVPfiRIDRMbzuJ9UKWkMYSjRs+ZN853+dUd55K10Ga
+ tuUae6K5a//meB2N7Czyl3gZy8Kcdb1h0wC9n6+F2MOGF4ouV3HHwmN2F7TkR55P39ZS1A
+ luKkpoonnESLzn8OeHnTPhCeYNTEN8E=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-u4F4ypdCMTSmjOFhW1oT6Q-1; Mon, 14 Sep 2026 03:57:27 -0400
-X-MC-Unique: u4F4ypdCMTSmjOFhW1oT6Q-1
-X-Mimecast-MFC-AGG-ID: u4F4ypdCMTSmjOFhW1oT6Q_1789372646
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49e745d5dabso10830015e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:57:27 -0700 (PDT)
+ us-mta-655-PP7lbP0iPaajLvTNz_tN3g-1; Mon, 14 Sep 2026 03:59:13 -0400
+X-MC-Unique: PP7lbP0iPaajLvTNz_tN3g-1
+X-Mimecast-MFC-AGG-ID: PP7lbP0iPaajLvTNz_tN3g_1789372752
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49d156c917cso25208495e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789372646; x=1789977446; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789372752; x=1789977552; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=k5QCEbOB6Zr28+3sr+mvUJZpkwgWGkcnYdhHZODz710=;
- b=ZqJqMR/aSPBNuGa9NeO2XAiHgBn1iwzW/bcAA5ii9k84EU3POqmynG2qXV4iwn80gL
- ze/zOdDByLTL7TcC6BgzMqUeXrmw2Xhpzl02vjsfhI/qy06Q+EiFjgjB9M8vtTo7GTGL
- gWup+16K5+ZzVCo/ct0iQowKYa2iPczJPWLEU9tr7Ky4ve5W77FO4vvUKwAmfuEpoXC8
- JfWqNDhZxjjrhckZEv0k8IDixwt/wucM4TmASX9P3bBhKS5rbGe4k53ktZnbGOaBXeXF
- v3oXIQxREoNut4IQ5sFlEGVXzsMPezw+eppDrPQo94T9n+ftTBUjAIEDjaU8xlPBHGHr
- wsoA==
+ bh=secwxCcSC5/MaWohFXsHniwuhUBhIR6i9QKferZgNHk=;
+ b=Dnm5+e2+z31drTCMoIIZhUIOoxahtbDAh5EygYfD/KfM9MSOge0g3YMhfBJNTcoDQH
+ yhFdE9epYhzk/ojr0aGvoqhayQFjX5Xi+5XlJf+Kw9gWG9GSRwF3V6fiK6hvQWQKI62E
+ RgUUA2q7crYBBHMk3svf4TzTI6Dz6t71RcIVUmJTa7LKAxVFS7r/i+hUgoSO6YypHlSm
+ qCjDJFgs5EylgUbPvSzubn93McmGLwz+hcZgUC2hjm+jSqJ/VT4ku0o2OIL0Lv15DgFG
+ my2zuotmON4nk2XDAIaNzyDM/fnlrEXnPjsBPw6wxp+UH4QFfs5nTFYFcO/wV/5OWXj1
+ RV4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789372646; x=1789977446;
+ d=1e100.net; s=20251104; t=1789372752; x=1789977552;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=k5QCEbOB6Zr28+3sr+mvUJZpkwgWGkcnYdhHZODz710=;
- b=BiBU/mHLaxD50OvhVXSQUFxwpngp78I9OKLMN9V8tdXWLi5C8cGsz/ZvNCXwwvuLQI
- ymFs8l0z3i+zFXyCz+/t9264Jow2abiydpx6lIyojOwy3Ktl/pgNCG30+4qTFVPVg3jS
- r4QwzZhznJpca0LABTR7SNNB/ntzYKngyHIY+XR1/TuWPmNpgai7p2DiiV/HcHAl6sJX
- jxNaRlp52xxhKMCWNnTziAOxC5uRtYcI+t2CfIOVo+UJUjPczg74/5vdKUEqhMhdIEPW
- ZDIF2Lgg/oCLLFlegirLHILl9EEwUkVW8VnFiaMCrsarhGUpU7n6YB+RvmOT/vIbdU0i
- WO2w==
+ bh=secwxCcSC5/MaWohFXsHniwuhUBhIR6i9QKferZgNHk=;
+ b=DPzwNfKxxZHLh3rvY1ZR3gH9LWhTgVJPOKgQFORCOC6P/s4T5fPTMpof2+3pCcUI+5
+ pm5H/v3fA7qzRZiWoxnSYeTSdxABC+VJ0ZyQ8G7ssLvp55jcxFFp5BzQAShX5Am5V6nO
+ en8/4b4LynWd8dAYBlLZSu7BTDLM19NDHf25trhOGR1MSwqdhCwNoMNPguGZuOLxyKzt
+ PlaRZL6buKymBeMLhkxTkSEFTOLLDrWysNUbbCYog17kbfuT/i1fFw+xZeki+oZ2jvoz
+ wfekjI1awggrgzPwjZ2MCTce2ALv2YiYXaH+FNWvruujccz0zQAneL9E91MQoy/eDDj0
+ 50RA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBybvuKUWBJgxCXpzkT5hkjG0P3pP+VVT+a+qztiXxPokYmSBpwAPfLqSJZi+ljyFThHYaAqgnrDw7oT@nongnu.org
-X-Gm-Message-State: AFuF++k2JzAxYBBDksEhTplD6MOoS/aahxffFtUReifia6cI6tBkjMIE
- m9pE4p4vThn8I7N6qAl2Y6Ha5HLAUJnM9EOaSfED00kx7k0zTx1WtvqJKLgLLEbL3/wntK0YQMb
- anjd85Bl4Uh0HLRgk7ZyiBxf78zSY04FlPoKYQrt6V+io3IdSjVF+zvEl
-X-Gm-Gg: AYBFou2NqltU5tv+LOh5hQPOyBL7wGFUtZ+IchHhwAEgYc7/aMKaCZ0idUaCvJhZP9g
- az5PTW/U2MYLFH4yODlnswJOpSp7W2c1nOT7P2+n/yMicTtoG08dpUMrJiwy5PWalsRbR9gUNTK
- 9tTJEAee1G8WkCPDoh8dcQvkSHOBfo2l/JeWetKCN3+WhkgN4UKtRkTpLa7Xaw4aO5JZMV5COvm
- 5zJlzEy6ITQ23Qmg6KPXYqvQN0WkZSfDC4RKYo13mvHEaClDN6VPm+rSCa5hCTDVHv4Zo48l2KT
- jJ3rwx5LH9hFpgBLOTlZXshdHmbqvPRGhqNZ6jrQCGP4zJtUYNZqZzZ2JknLFv9t0fLqmLLAx7k
- B3rnvwRMRZ4nFddbbSmhkcj+LrOO4C9apl9oGDPfiaw==
-X-Received: by 2002:a05:600c:3b08:b0:49d:1e09:694a with SMTP id
- 5b1f17b1804b1-49e7a66af45mr30122195e9.11.1789372646271; 
- Mon, 14 Sep 2026 00:57:26 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b08:b0:49d:1e09:694a with SMTP id
- 5b1f17b1804b1-49e7a66af45mr30121875e9.11.1789372645872; 
- Mon, 14 Sep 2026 00:57:25 -0700 (PDT)
+ AKwUvByFeF2hstH135qtZCAuOLuTL5vRI3H6hybVToDPWSyvdNp+DLmRWjvzU7EWGJK6+kLfNvTS4u6yiSus@nongnu.org
+X-Gm-Message-State: AFuF++l5jLRMjaFpKu71FC2ZJPONWwc3pQ2EjV2CqTFdkQ5KY4R82dtx
+ glFpWtqfT54uUGF1sDItKUmWPTVXoR7qdfe+zotsKkPpctJalPbd6DW+H+s+de7QPG9Uv4cMPVs
+ T5FKQZX6HdPcxVqEWYKQNBgVGjV3yiSWHw1/RVu9veRT+Es2CvKtHvV++
+X-Gm-Gg: AYBFou1moHFEs2BIpResXSfcgjHhzJD25ttkdnQPlQiW1F/8Lj92lilIVcqg9echBkZ
+ 7Cnjf4i1EFhn8uFjwaRxnD4kxvAS9sF4D90HeaToktiEREtv5LXxEi0GVhx5cHj+XVHPDEgbhJL
+ kby0BJWq8PzW5dJfD4badFECCa3sOfG5K1H0XA6emtQPdKh/F2hlHx+gx+OxgR/HMh0iZlRew0S
+ fF15BggZRGsG0idelUY5tt7I2XXZOFQ/oxg9YTaFH46I5QNhwHzdwzdHKvqDuYgFwIiiSAhCQVp
+ 82NzYRpIQGJUNeLnJnjC+j0kNwa092VnzTEWHj3GfyIgV9vwDtflo63aFu/AIfGlZTCAJCtc8ht
+ CvAy7m5W9LS2e1fbEhsk5oBlRn9B5nyAzwIVLY+gjCw==
+X-Received: by 2002:a05:600c:1387:b0:49d:1916:2133 with SMTP id
+ 5b1f17b1804b1-49e7a65d32cmr14645725e9.8.1789372752339; 
+ Mon, 14 Sep 2026 00:59:12 -0700 (PDT)
+X-Received: by 2002:a05:600c:1387:b0:49d:1916:2133 with SMTP id
+ 5b1f17b1804b1-49e7a65d32cmr14645425e9.8.1789372751880; 
+ Mon, 14 Sep 2026 00:59:11 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
  ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e69f02c92sm185429595e9.2.2026.09.14.00.57.24
+ 5b1f17b1804b1-49e60ad0614sm319618085e9.10.2026.09.14.00.59.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 00:57:25 -0700 (PDT)
-Message-ID: <a0cdc67f-721c-492f-9c22-8f9e4c56e222@redhat.com>
-Date: Mon, 14 Sep 2026 09:57:23 +0200
+ Mon, 14 Sep 2026 00:59:10 -0700 (PDT)
+Message-ID: <017b012c-4c94-4f08-b902-9dc7cfe5eaf1@redhat.com>
+Date: Mon, 14 Sep 2026 09:59:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] vfio: route device_reset through io_ops
+Subject: Re: [PATCH v2 5/8] vfio: use io_ops abstraction for migration related
+ ioctls
 To: Hugo Komatsu <hugo.komatsu@nutanix.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
@@ -103,7 +104,7 @@ Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
  Rafael Castillo <rafael@trfs.me>, Thanos Makatos
  <thanos.makatos@nutanix.com>, Tony Krowiak <akrowiak@linux.ibm.com>
 References: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
- <20260911140710.2348139-5-hugo.komatsu@nutanix.com>
+ <20260911140710.2348139-6-hugo.komatsu@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -149,9 +150,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260911140710.2348139-5-hugo.komatsu@nutanix.com>
+In-Reply-To: <20260911140710.2348139-6-hugo.komatsu@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -177,88 +178,108 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/11/26 16:19, Hugo Komatsu wrote:
-> Various subsystems across QEMU issue kernel ioctls directly for
-> VFIO_DEVICE_RESET. Add a guarded vfio_device_reset() wrapper and route
-> all callers through a new device_reset slot in VFIODeviceIOOps so an
-> alternate transport such as vfio-user can supply its own implementation.
+> The generic VFIO migration code in hw/vfio/migration.c issued read()
+> and qemu_file_get_to_fd() directly, hardcoding the kernel as the only
+> transport. Route these through the VFIODeviceIOOps table so an
+> alternate transport (vfio-user) can supply its own implementations.
 > 
-> Implement the kernel backend as a thin wrapper around the existing
-> ioctl() call. This is a pure preparatory refactor: the kernel path is
-> unchanged.
+> Add three migration slots - get_precopy_info, mig_data_read, and
+> mig_data_write_from_file - and guarded public wrappers that dispatch to
+> the selected backend. Implement the kernel callbacks around the existing
+> calls. vfio_query_precopy_size() and vfio_save_block() now take a
+> VFIODevice so they can call the wrappers.
+> 
+> This is a pure refactor: the kernel path is unchanged.
 > 
 > Co-authored-by: Rafael Castillo <rafael@trfs.me>
 > Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
 > ---
->   hw/vfio/ap.c                  |  4 ++--
->   hw/vfio/ccw.c                 |  2 +-
->   hw/vfio/device.c              | 20 +++++++++++++++++++-
->   hw/vfio/migration.c           |  7 ++++---
->   hw/vfio/pci.c                 |  4 ++--
->   include/hw/vfio/vfio-device.h | 12 ++++++++++++
->   6 files changed, 40 insertions(+), 9 deletions(-)
+>   hw/vfio/device.c              | 64 +++++++++++++++++++++++++++++++++++
+>   hw/vfio/migration.c           | 37 ++++++++++----------
+>   include/hw/vfio/vfio-device.h | 45 ++++++++++++++++++++++++
+>   3 files changed, 127 insertions(+), 19 deletions(-)
 > 
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 6e2a1223ea..52d67a01ee 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -288,10 +288,10 @@ static void vfio_ap_reset(DeviceState *dev)
->       int ret;
->       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->   
-> -    ret = ioctl(vapdev->vdev.fd, VFIO_DEVICE_RESET);
-> +    ret = vfio_device_reset(&vapdev->vdev);
->       if (ret) {
->           error_report("%s: failed to reset %s device: %s", __func__,
-> -                     vapdev->vdev.name, strerror(errno));
-> +                     vapdev->vdev.name, strerror(-ret));
->       }
->   }
->   
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index c3dc7c1962..054121b71d 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -241,7 +241,7 @@ static void vfio_ccw_reset(DeviceState *dev)
->   {
->       VFIOCCWDevice *vcdev = VFIO_CCW(dev);
->   
-> -    ioctl(vcdev->vdev.fd, VFIO_DEVICE_RESET);
-> +    vfio_device_reset(&vcdev->vdev);
->   }
->   
->   static void vfio_ccw_crw_read(VFIOCCWDevice *vcdev)
 > diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 4f11959633..b2123a0443 100644
+> index b2123a0443..ddd7508359 100644
 > --- a/hw/vfio/device.c
 > +++ b/hw/vfio/device.c
-> @@ -568,6 +568,14 @@ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
->       return false;
+> @@ -30,8 +30,10 @@
+>   #include "qemu/units.h"
+>   #include "migration/cpr.h"
+>   #include "migration/blocker.h"
+> +#include "migration/qemu-file.h"
+>   #include "monitor/monitor.h"
+>   #include "vfio-helpers.h"
+> +#include "vfio-migration-internal.h"
+>   
+>   VFIODeviceList vfio_device_list =
+>       QLIST_HEAD_INITIALIZER(vfio_device_list);
+> @@ -576,6 +578,34 @@ int vfio_device_reset(VFIODevice *vbasedev)
+>       return vbasedev->io_ops->device_reset(vbasedev);
 >   }
 >   
-> +int vfio_device_reset(VFIODevice *vbasedev)
+> +int vfio_device_get_precopy_info(VFIODevice *vbasedev,
+> +                                 struct vfio_precopy_info *info)
 > +{
-> +    if (!vbasedev->io_ops || !vbasedev->io_ops->device_reset) {
+> +    if (!vbasedev->io_ops || !vbasedev->io_ops->get_precopy_info) {
 > +        return -EINVAL;
 > +    }
-> +    return vbasedev->io_ops->device_reset(vbasedev);
+> +    return vbasedev->io_ops->get_precopy_info(vbasedev, info);
+> +}
+> +
+> +ssize_t vfio_device_mig_data_read(VFIODevice *vbasedev, void *buf,
+> +                                  size_t buf_size)
+> +{
+> +    if (!vbasedev->io_ops || !vbasedev->io_ops->mig_data_read) {
+> +        return -EINVAL;
+> +    }
+> +    return vbasedev->io_ops->mig_data_read(vbasedev, buf, buf_size);
+> +}
+> +
+> +int vfio_device_mig_data_write_from_file(VFIODevice *vbasedev, QEMUFile *f,
+> +                                         size_t data_size)
+> +{
+> +    if (!vbasedev->io_ops ||
+> +        !vbasedev->io_ops->mig_data_write_from_file) {
+> +        return -EINVAL;
+> +    }
+> +    return vbasedev->io_ops->mig_data_write_from_file(vbasedev, f, data_size);
 > +}
 > +
 >   int vfio_device_get_feature(VFIODevice *vbasedev,
 >                               struct vfio_device_feature *feature)
 >   {
-> @@ -578,9 +586,18 @@ int vfio_device_get_feature(VFIODevice *vbasedev,
+> @@ -598,6 +628,37 @@ static int vfio_device_io_device_reset(VFIODevice *vbasedev)
+>       return ret < 0 ? -errno : ret;
 >   }
 >   
->   /*
-> - * Traditional ioctl() based io
-> + * VFIODeviceIOOps implementation for the kernel VFIO backend.
->    */
->   
-> +static int vfio_device_io_device_reset(VFIODevice *vbasedev)
+> +static ssize_t vfio_device_io_mig_data_read(VFIODevice *vbasedev, void *buf,
+> +                                            size_t buf_size)
 > +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +    ssize_t ret;
+> +
+> +    ret = read(migration->data_fd, buf, buf_size);
+> +
+> +    return ret < 0 ? -errno : ret;
+> +}
+> +
+> +static int vfio_device_io_mig_data_write_from_file(VFIODevice *vbasedev,
+> +                                                   QEMUFile *f,
+> +                                                   size_t data_size)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +
+> +    return qemu_file_get_to_fd(f, migration->data_fd, data_size);
+> +}
+> +
+> +static int vfio_device_io_get_precopy_info(VFIODevice *vbasedev,
+> +                                           struct vfio_precopy_info *info)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
 > +    int ret;
 > +
-> +    ret = ioctl(vbasedev->fd, VFIO_DEVICE_RESET);
+> +    ret = ioctl(migration->data_fd, VFIO_MIG_GET_PRECOPY_INFO, info);
 > +
 > +    return ret < 0 ? -errno : ret;
 > +}
@@ -266,94 +287,214 @@ On 9/11/26 16:19, Hugo Komatsu wrote:
 >   static int vfio_device_io_device_feature(VFIODevice *vbasedev,
 >                                            struct vfio_device_feature *feature)
 >   {
-> @@ -660,6 +677,7 @@ static int vfio_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
->   static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
+> @@ -678,6 +739,9 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
 >       .capabilities = VFIO_IO_CAP_DMA_BUF,
 >   
-> +    .device_reset = vfio_device_io_device_reset,
+>       .device_reset = vfio_device_io_device_reset,
+> +    .mig_data_read = vfio_device_io_mig_data_read,
+> +    .mig_data_write_from_file = vfio_device_io_mig_data_write_from_file,
+> +    .get_precopy_info = vfio_device_io_get_precopy_info,
 >       .device_feature = vfio_device_io_device_feature,
 >       .get_region_info = vfio_device_io_get_region_info,
 >       .get_irq_info = vfio_device_io_get_irq_info,
 > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 6db4c2a216..25acb6dca4 100644
+> index 25acb6dca4..257f9253aa 100644
 > --- a/hw/vfio/migration.c
 > +++ b/hw/vfio/migration.c
-> @@ -142,7 +142,7 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
->       struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
->       struct vfio_device_feature_mig_state *mig_state =
->           (struct vfio_device_feature_mig_state *)feature->data;
-> -    int ret;
-> +    int ret, reset_ret;
->       g_autofree char *error_prefix =
->           g_strdup_printf("%s: Failed setting device state to %s.",
->                           vbasedev->name, mig_state_to_str(new_state));
-> @@ -219,9 +219,10 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
->       return 0;
+> @@ -247,10 +247,9 @@ vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
+>   static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
+>                               uint64_t data_size)
+>   {
+> -    VFIOMigration *migration = vbasedev->migration;
+>       int ret;
 >   
->   reset_device:
-> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_RESET)) {
-> +    reset_ret = vfio_device_reset(vbasedev);
-> +    if (reset_ret) {
->           hw_error("%s: Failed resetting device, err: %s", vbasedev->name,
-> -                 strerror(errno));
-> +                 strerror(-reset_ret));
+> -    ret = qemu_file_get_to_fd(f, migration->data_fd, data_size);
+> +    ret = vfio_device_mig_data_write_from_file(vbasedev, f, data_size);
+>       trace_vfio_load_state_device_data(vbasedev->name, data_size, ret);
+>   
+>       return ret;
+> @@ -369,20 +368,20 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>       return ret;
+>   }
+>   
+> -static int vfio_query_precopy_size(VFIOMigration *migration)
+> +static int vfio_query_precopy_size(VFIODevice *vbasedev)
+>   {
+> -    VFIODevice *vbasedev = migration->vbasedev;
+> +    VFIOMigration *migration = vbasedev->migration;
+>       struct vfio_precopy_info precopy = {
+>           .argsz = sizeof(precopy),
+>       };
+>       bool reinit = false;
+>       int ret = 0;
+>   
+> -    if (ioctl(migration->data_fd, VFIO_MIG_GET_PRECOPY_INFO, &precopy)) {
+> +    ret = vfio_device_get_precopy_info(vbasedev, &precopy);
+> +    if (ret) {
+>           migration->precopy_init_size = 0;
+>           migration->precopy_dirty_size = 0;
+> -        ret = -errno;
+> -        warn_report_once("VFIO device %s ioctl(VFIO_MIG_GET_PRECOPY_INFO) "
+> +        warn_report_once("VFIO device %s get_precopy_info "
+>                            "failed (%d)", vbasedev->name, ret);
+>       } else {
+>           bool overflow;
+> @@ -425,18 +424,20 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
+>   }
+>   
+>   /* Returns the size of saved data on success and -errno on error */
+> -static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+> +static ssize_t vfio_save_block(QEMUFile *f, VFIODevice *vbasedev)
+>   {
+> +    VFIOMigration *migration = vbasedev->migration;
+>       ssize_t data_size;
+>   
+> -    data_size = read(migration->data_fd, migration->data_buffer,
+> -                     migration->data_buffer_size);
+> +    data_size = vfio_device_mig_data_read(vbasedev,
+> +                                          migration->data_buffer,
+> +                                          migration->data_buffer_size);
+>       if (data_size < 0) {
+>           /*
+>            * Pre-copy emptied all the device state for now. For more information,
+>            * please refer to the Linux kernel VFIO uAPI.
+>            */
+> -        if (errno == ENOMSG) {
+> +        if (data_size == -ENOMSG) {
+>               if (!migration->event_precopy_empty_hit) {
+>                   trace_vfio_save_block_precopy_empty_hit(migration->vbasedev->name);
+>                   migration->event_precopy_empty_hit = true;
+> @@ -444,7 +445,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+>               return 0;
+>           }
+>   
+> -        return -errno;
+> +        return data_size;
+>       }
+>       if (data_size == 0) {
+>           return 0;
+> @@ -599,7 +600,7 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>                   return ret;
+>               }
+>   
+> -            vfio_query_precopy_size(migration);
+> +            vfio_query_precopy_size(vbasedev);
+>               if (migrate_switchover_ack() && !migrate_switchover_ack_legacy()) {
+>                   migration->request_switchover_ack = true;
+>               }
+> @@ -662,12 +663,10 @@ static void vfio_save_cleanup(void *opaque)
+>   
+>   static void vfio_state_pending_sync(VFIODevice *vbasedev)
+>   {
+> -    VFIOMigration *migration = vbasedev->migration;
+> -
+>       vfio_query_stop_copy_size(vbasedev);
+>   
+>       if (vfio_device_state_is_precopy(vbasedev)) {
+> -        vfio_query_precopy_size(migration);
+> +        vfio_query_precopy_size(vbasedev);
+>       }
+>   }
+>   
+> @@ -738,7 +737,7 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+>           migration->event_save_iterate_started = true;
 >       }
 >   
->       vfio_migration_set_device_state(vbasedev, VFIO_DEVICE_STATE_RUNNING);
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 428ab2f069..73b4a93fca 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3785,7 +3785,7 @@ static void vfio_pci_reset(DeviceState *dev)
->   
->       if (vdev->vbasedev.reset_works &&
->           (vdev->has_flr || !vdev->has_pm_reset) &&
-> -        !ioctl(vdev->vbasedev.fd, VFIO_DEVICE_RESET)) {
-> +        !vfio_device_reset(&vdev->vbasedev)) {
->           trace_vfio_pci_reset_flr(vdev->vbasedev.name);
->           goto post_reset;
+> -    data_size = vfio_save_block(f, migration);
+> +    data_size = vfio_save_block(f, vbasedev);
+>       if (data_size < 0) {
+>           return data_size;
 >       }
-> @@ -3797,7 +3797,7 @@ static void vfio_pci_reset(DeviceState *dev)
->   
->       /* If nothing else works and the device supports PM reset, use it */
->       if (vdev->vbasedev.reset_works && vdev->has_pm_reset &&
-> -        !ioctl(vdev->vbasedev.fd, VFIO_DEVICE_RESET)) {
-> +        !vfio_device_reset(&vdev->vbasedev)) {
->           trace_vfio_pci_reset_pm(vdev->vbasedev.name);
->           goto post_reset;
+> @@ -778,7 +777,7 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
 >       }
+>   
+>       do {
+> -        data_size = vfio_save_block(f, vbasedev->migration);
+> +        data_size = vfio_save_block(f, vbasedev);
+>           if (data_size < 0) {
+>               return data_size;
+>           }
+> @@ -975,7 +974,7 @@ static void vfio_final_precopy_reinit_check(VFIODevice *vbasedev)
+>           return;
+>       }
+>   
+> -    ret = vfio_query_precopy_size(migration);
+> +    ret = vfio_query_precopy_size(vbasedev);
+>       if (ret) {
+>           error_report("%s: Final precopy reinit check failed (err: %d)",
+>                        vbasedev->name, ret);
 > diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 8472420d3f..6dc596c9fc 100644
+> index 6dc596c9fc..f0add3fd84 100644
 > --- a/include/hw/vfio/vfio-device.h
 > +++ b/include/hw/vfio/vfio-device.h
-> @@ -191,6 +191,17 @@ struct VFIODeviceIOOps {
+> @@ -202,6 +202,18 @@ struct VFIODeviceIOOps {
 >        */
->       uint64_t capabilities;
+>       int (*device_reset)(VFIODevice *vdev);
 >   
 > +    /**
-> +     * @device_reset
+> +     * @get_precopy_info
 > +     *
-> +     * Perform a device reset.
+> +     * Get information about pre-copy migration data transfer progress.
 > +     *
 > +     * @vdev: #VFIODevice to use
+> +     * @info: pointer to struct vfio_precopy_info to fill in
 > +     *
 > +     * Returns 0 on success or -errno.
 > +     */
-> +    int (*device_reset)(VFIODevice *vdev);
+> +    int (*get_precopy_info)(VFIODevice *vdev, struct vfio_precopy_info *info);
 > +
 >       /**
 >        * @device_feature
 >        *
-> @@ -287,6 +298,7 @@ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
->                                                   uint32_t type, void *caps,
+> @@ -268,6 +280,33 @@ struct VFIODeviceIOOps {
+>       int (*region_read)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
+>                          void *data);
+>   
+> +    /**
+> +     * @mig_data_read
+> +     *
+> +     * Read migration data from the device.
+> +     *
+> +     * @vdev: #VFIODevice to use
+> +     * @buf: buffer to read into
+> +     * @buf_size: maximum number of bytes to read
+> +     *
+> +     * Returns the number of bytes read on success or -errno.
+> +     */
+> +    ssize_t (*mig_data_read)(VFIODevice *vdev, void *buf, size_t buf_size);
+> +
+> +    /**
+> +     * @mig_data_write_from_file
+> +     *
+> +     * Write migration data to the device, reading the data from a QEMUFile.
+> +     *
+> +     * @vdev: #VFIODevice to use
+> +     * @f: source to read the migration data from
+> +     * @data_size: number of bytes to write
+> +     *
+> +     * Returns 0 on success or -errno.
+> +     */
+> +    int (*mig_data_write_from_file)(VFIODevice *vdev, QEMUFile *f,
+> +                                    size_t data_size);
+> +
+>       /**
+>        * @region_write
+>        *
+> @@ -299,6 +338,12 @@ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
 >                                                   uint32_t size);
 >   
-> +int vfio_device_reset(VFIODevice *vbasedev);
+>   int vfio_device_reset(VFIODevice *vbasedev);
+> +int vfio_device_get_precopy_info(VFIODevice *vbasedev,
+> +                                 struct vfio_precopy_info *info);
+> +ssize_t vfio_device_mig_data_read(VFIODevice *vbasedev, void *buf,
+> +                                  size_t buf_size);
+> +int vfio_device_mig_data_write_from_file(VFIODevice *vbasedev, QEMUFile *f,
+> +                                         size_t data_size);
 >   int vfio_device_get_feature(VFIODevice *vbasedev,
 >                               struct vfio_device_feature *feature);
 >   
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I would prefer one patch per op please.
 
 Thanks,
 
