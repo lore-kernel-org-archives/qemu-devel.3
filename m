@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27520C88E75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB71C88E77
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 23:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Fnb-00038H-TH; Mon, 14 Sep 2026 19:09:19 -0400
+	id 1x6FnZ-00037z-R5; Mon, 14 Sep 2026 19:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6FnR-00035y-Pl
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:09 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1x6FnU-00036M-IW
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:12 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6FnP-0007EO-KG
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:09 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2d6e954afbdso30283655ad.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 16:09:07 -0700 (PDT)
+ id 1x6FnT-0007F1-1r
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 19:09:12 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ d9443c01a7336-2d8fb334e72so25985955ad.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 16:09:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789427346; x=1790032146; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789427350; x=1790032150; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Hp98EFeGEXaMZfJzt6dBht66T/TZlFkqt0wAoHKZQrE=;
- b=LM1hxwyPeap/3Fxk6W0ZTIhXuIogN70N8ZX4hxD/sL0NpXeilZ4rT+1a39fOFJL6iz
- FRNOOVm3+2y63XSzOu+MJWMAeGAfyiW7dSrbxwqnp6nGHGP/n4YS6tRcqfv31JZC38ld
- BKEeXFcVEREowb7V/IW7VqsG8fl9v+92pFGy0xsFeEi+czPgGL/29/EOh1irsdtTf9Y9
- mhiiVCucDFf8/Mul5uUaFpnPB7ebjTciWXKN/NmLV17K7jbVI1nRlJcSM5UtnKUXzVw2
- j+N/BnYybuWwTzUMEpZCqazm9jt7VL2WaGDkd+vvOGy/9aZ+nCNEaKRWKuD7iwTizo+J
- +K2Q==
+ bh=HQIdXS2w1K3qctAQOmJPs0x8dOSjRImkqsuFqsC0g24=;
+ b=Bz6YlWio15mda6ta8azi9obV+9ReACPCM5Scp/ldPfaWL/ZGs7aSQXN8CBM4rqnRxi
+ STSDGwSJ1RGrFzo6T4uVVOjxbum5dFDBCJimluS6cuURLje7QhOyGcwBl8llOlaHit6w
+ T8vv3aNWvcy1rn4U2g4b0h5NHXQ69RlK0KMZtRYGl9ZnATBEDAna7gf4/enP+C+Oh+IJ
+ StKT0xSVQ6YPV4ju+EeMe8wAQiiJJX4VrUNFWHdCZHMsk2u3luVe6t4vkvOpC2BRToik
+ AhHZvIDiiIVMFXoPqWZzbAc4OPi7akWk/YvHsZWqCbPYZMNEczc8H4c/ii7IEfk97bjU
+ ET5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789427346; x=1790032146;
+ d=1e100.net; s=20260707; t=1789427350; x=1790032150;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Hp98EFeGEXaMZfJzt6dBht66T/TZlFkqt0wAoHKZQrE=;
- b=d5Hq4fNisTyxEJCus6UcHo2rQM4WY9ZTABJOm2nmmSu7Rm2HegH1DFK4HBDaGCVpZm
- 2rPsB16Ucq/W23wx0tffcifsNbi/UhryNzUqEqAq8YhWI9/5GNTke9Q0MytM9K/TF0xV
- kwS6H/zJ4vRsnY1JkOJd+KqdUEfmiOChjYNZppy9bvIb2o29nOyKyy7STt+D2rYfELYT
- s0uGz7cibnXF2Y1Ch4QikZM5yihQrNyxj3a6vBsBKbnDROAAOdlkbtlUcSqQFAAmMPdG
- 1oDhc0KsjDHzvHTiAlWxFmax/7vl3w6xZbKOip2jA4Q2sDWHTXvsEdY16PQebilAF72x
- eSnw==
-X-Gm-Message-State: AFuF++nxlfPb2jXD60EmyqenVIuCgjH70rPBXYeKTeht3DVvU6OAoiuV
- MP8ETqMRxJ2oEE+SuBRCbsQ1jQdvRuiLZUZsY9ge8WA7g/10fB9+nemVe8OgX4Z/1tQTxOZ/ED0
- e9tWxGXY=
-X-Gm-Gg: AYBFou1wm7IB6Pksy4qmzC4QxH6M+ZdolZqHCfZQj9JY/ELxfVVNrSCKPtGjYggYqFT
- yvSWXEg50jS/EOsWdGG/4OhmrehCLfyJLi7TC2GVhqPji/7t2I2DLUVTeuyZc2lsA3Oj3FH2SUI
- tclVTcECODPf7Y3SZBeQed1qmJQK152i7wr6CGWGgTtDLd6wj9x0Yr6QoumqPm36mknVT/6gBmX
- c+LsWAQRc0A6Lw+3yGBHX+i5Ms4/UaFuUmNPMgEbaO5u85xeH9g+WXFpBcINvbRp1PLDtdMGy8W
- DAOaF8jKdRu5m6hLduifuiA25OqQ9SkTXbUDn2kQpuS7EwEo9GPrFwD4ABXHaZ6yBqCmWQibkN8
- TnK/Gj5lFMhsWPw6LV/qMOBhnThCCW8yfw73z139XEk2iapBfW5pn4hH7AD6V8fM2ue7v2AoNGa
- /UwzafxK1jdMHRivO/HavrK8g16tRpHpwTMhhDl6dFXhYcS4xzDwAy9qYpybMc/+hqEO9S1XBhS
- b0kBCQ=
-X-Received: by 2002:a17:902:fc44:b0:2da:e67a:87d4 with SMTP id
- d9443c01a7336-2dd6c75e064mr100224695ad.19.1789427345626; 
- Mon, 14 Sep 2026 16:09:05 -0700 (PDT)
+ bh=HQIdXS2w1K3qctAQOmJPs0x8dOSjRImkqsuFqsC0g24=;
+ b=qbaG0C9GmLD3xe9+QSgCihZcCpH7pk6vj3uR0CiUyORVQE1YnG9zISuYY8JimICGPw
+ mB9E5wp3FG+COwPdlUnFhtcwq6IGxDhN2RSXl1IwnGqPdrmIFepE0Y6aTX94as29Xz8O
+ liz+hZxGzs1AfAuBZ78CkKHdj1lTe9RLwjvHq5BMb4gs8Q3bWhmrlcSKCwipsYi2I/dG
+ 27Xqk3AFbE2EhoMXox3y/G53eGRl5b77Yzp0jc1H3ETyPj34dT/Zjioub1z8xEPoEvLP
+ M4Qy67sFtEGZ//dyKsZkl70xF5fyY5kuqts8ITdlu1Up4Ueb/LJL4AX0kMR9dOnNAP1i
+ JWag==
+X-Gm-Message-State: AFuF++nDyYDy9uqlRMRi2A7tyqcPjODb+Wpb8Bci2yLR6vn07tIpmV6M
+ zOd3DZktg5+WGLnNB51ac7iIgtZYFdbczW0TNznKfx3NAb+qfG81uqhVOw1kN+HbK/gw4qETaQR
+ TluTDfGE=
+X-Gm-Gg: AYBFou2Jpn0AYWLp0/rIidl8kvbmN319Q6+KuOSlhtHxvgPKSrtuh6XaJJF/HjB3jst
+ R6j0j/qOMXh5FIVXbRpDSA47eRUltOcPjjeg/kP1VT0ysRmuvTbW1P+dekeLjgDY+RMdkYovKQk
+ /1QBFu7ERde+sAjkpPga4T2Nk56tW+Porumic73KW2HIOCmwLHIen7VzurL6aeFtX32o/gmzNUh
+ pFGdRsejtM0OR26iI00TH15eiCc4F9eUPEE8XYpUwKlMNgognZDSu1q8wLQXi63zWqNYxUtuKkO
+ vWZ6pnSEZBHf+aQvr0qiLlFasWDINPLMMkT84XUGBIsrzIZWmCD9VtY3nf+wRTMI5wwBKVOZ7u+
+ wquV1c8Dno+VkLew2kgy4e9O/WUkpxOJ66xCKl76WBRbQVvY/Cl695IJhab16N0v5qVR27j7Ef7
+ LK83OVZxfFouBUKFffpuFHay3l1HaIaz4oYNc4ggRf0NEq7eDs0c29a9cPAmfUQnMBwLpcmUUNN
+ 2AKcdqXrvjDWb4X1Q==
+X-Received: by 2002:a17:903:94e:b0:2db:117e:cf50 with SMTP id
+ d9443c01a7336-2dd6c5bfe2bmr113793235ad.4.1789427349633; 
+ Mon, 14 Sep 2026 16:09:09 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4e9a3casm28054447eec.12.2026.09.14.16.09.04
+ 5a478bee46e88-33ba4e9a3casm28054447eec.12.2026.09.14.16.09.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 16:09:05 -0700 (PDT)
+ Mon, 14 Sep 2026 16:09:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@oss.qualcomm.com
-Subject: [PATCH 2/6] target/mips/tcg: Drop zero optimization in gen_mxu_s32mul
-Date: Mon, 14 Sep 2026 13:08:54 -1000
-Message-ID: <20260914230901.1781309-3-richard.henderson@linaro.org>
+Subject: [PATCH 6/6] target/mips/tcg: Use gen_mxu_logic for gen_mxu_S32CPS
+Date: Mon, 14 Sep 2026 13:08:58 -1000
+Message-ID: <20260914230901.1781309-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260914230901.1781309-1-richard.henderson@linaro.org>
 References: <20260914230901.1781309-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,44 +101,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the unlikely event of the architecturally valid case
-of using the zero register as a multiply input, this will
-be folded away during optimize.
+Use movcond instead of a pair of branches to perform
+the computation, packed in a new gen_cps_i32.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/mips/tcg/mxu_translate.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ target/mips/tcg/mxu_translate.c | 42 +++++++++------------------------
+ 1 file changed, 11 insertions(+), 31 deletions(-)
 
 diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
-index 9559b8aada3..f30883f976f 100644
+index 293eeb46c23..a38f4da12ba 100644
 --- a/target/mips/tcg/mxu_translate.c
 +++ b/target/mips/tcg/mxu_translate.c
-@@ -964,18 +964,13 @@ static void gen_mxu_s32mul(DisasContext *ctx, bool mulu)
-     rs  = extract32(ctx->opcode, 16, 5);
-     rt  = extract32(ctx->opcode, 21, 5);
- 
--    if (unlikely(rs == 0 || rt == 0)) {
--        tcg_gen_movi_i32(t0, 0);
--        tcg_gen_movi_i32(t1, 0);
+@@ -2640,39 +2640,19 @@ static void gen_mxu_s32movzn(DisasContext *ctx, TCGCond cond)
+  *    Update XRa if XRc < 0 by value of 0 - XRb
+  *    else XRa = XRb
+  */
++
++static void gen_cps_i32(TCGv_i32 a, TCGv_i32 b, TCGv_i32 c)
++{
++    TCGv_i32 n = tcg_temp_new_i32();
++    TCGv_i32 z = tcg_constant_i32(0);
++
++    tcg_gen_neg_i32(n, b);
++    tcg_gen_movcond_i32(TCG_COND_LT, a, c, z, n, b);
++}
++
+ static void gen_mxu_S32CPS(DisasContext *ctx)
+ {
+-    uint32_t pad, XRc, XRb, XRa;
+-
+-    pad = extract32(ctx->opcode, 21, 5);
+-    XRc = extract32(ctx->opcode, 14, 4);
+-    XRb = extract32(ctx->opcode, 10, 4);
+-    XRa = extract32(ctx->opcode,  6, 4);
+-
+-    if (unlikely(pad != 0)) {
+-        /* opcode padding incorrect -> do nothing */
+-    } else if (unlikely(XRa == 0)) {
+-        /* destination is zero register -> do nothing */
+-    } else if (unlikely(XRb == 0)) {
+-        /* XRc make no sense 0 - 0 = 0 -> just set destination to zero */
+-        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+-    } else if (unlikely(XRc == 0)) {
+-        /* condition always false -> just move XRb to XRa */
+-        tcg_gen_mov_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
 -    } else {
--        gen_load_gpr(t0, rs);
--        gen_load_gpr(t1, rt);
-+    gen_load_gpr(t0, rs);
-+    gen_load_gpr(t1, rt);
+-        /* the most general case */
+-        TCGv_i32 t0 = tcg_temp_new_i32();
+-        TCGLabel *l_not_less = gen_new_label();
+-        TCGLabel *l_done = gen_new_label();
+-
+-        tcg_gen_brcondi_i32(TCG_COND_GE, mxu_gpr[XRc - 1], 0, l_not_less);
+-        tcg_gen_neg_i32(t0, mxu_gpr[XRb - 1]);
+-        tcg_gen_br(l_done);
+-        gen_set_label(l_not_less);
+-        gen_load_mxu_gpr(t0, XRb);
+-        gen_set_label(l_done);
+-        gen_store_mxu_gpr(t0, XRa);
+-    }
++    gen_mxu_logic(ctx, gen_cps_i32);
+ }
  
--        if (mulu) {
--            tcg_gen_mulu2_i32(t0, t1, t0, t1);
--        } else {
--            tcg_gen_muls2_i32(t0, t1, t0, t1);
--        }
-+    if (mulu) {
-+        tcg_gen_mulu2_i32(t0, t1, t0, t1);
-+    } else {
-+        tcg_gen_muls2_i32(t0, t1, t0, t1);
-     }
-     tcg_gen_mov_i32(cpu_HI[0], t1);
-     tcg_gen_mov_i32(cpu_LO[0], t0);
+ /*
 -- 
 2.53.0
 
