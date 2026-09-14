@@ -4,104 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8AC8C88E50
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E213C88E50
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x63BL-0006LS-0B; Mon, 14 Sep 2026 05:40:59 -0400
+	id 1x63Bi-0006mI-IF; Mon, 14 Sep 2026 05:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x63BJ-0006KL-IG
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:40:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x63Bg-0006lD-3F
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:41:20 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x63BH-0001qL-GK
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:40:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789378853;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KuTD4uLou3S6P+YVvK2ph7DlkjkW8DiH31MVPYP/58s=;
- b=iq6qg/hFp8DoyR4/5bXQe+Uea80Paga6G8p2c2vnIJDFDb5NZee++tY67NUs1CSRuEW9Y0
- jzhaTFZ3eZ/N8KMkSH5laHUBPsKS8q98BF/d46OinWlvQKVu8LAfSo/AUQ49z+vLvrePp5
- MlII8Z5PnYafgneMwb4N8W+k5RBZeis=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-oE39uzKjOGGTu44TMoswsg-1; Mon, 14 Sep 2026 05:40:52 -0400
-X-MC-Unique: oE39uzKjOGGTu44TMoswsg-1
-X-Mimecast-MFC-AGG-ID: oE39uzKjOGGTu44TMoswsg_1789378851
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-c294ae16988so372244066b.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:40:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789378851; x=1789983651;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=KuTD4uLou3S6P+YVvK2ph7DlkjkW8DiH31MVPYP/58s=;
- b=Nrn3pebg1oI0hhaSO10QvyJG5MKFq7sfozl7MNTNKU4xeVEJsKdqAfbLYCZfsN/cSp
- vTv2EF18uz36GC2N6RpQiK5SldIupC3sD3Vrg1EhHJG4azSGnAcHM2ZBLMvaTEbkLj/i
- 0jxi51QOVMVHhnNAc8uTwzadeZfqAs9Mbtq2WMsjvjJNvAFXzFt8E3Fd5n85+p+VK1eQ
- xg9JLAg8lacXsH/H/c8mBgvqovBGH7yqZPR/xmGxkWr/1BtAcIzI7Kd57Vik5nq0+B6T
- phQzneenubqINwF22ZkRyEXdM/dz3Er3Mp2TCxRP7+5vPmx7dpYbKZftUxa5UStIlLc1
- Glrg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwXmnMWNdK46eSBhjcX8zN/bVgqwbD0dBnhyCwHGDirOxtfawPylI7scEsjZ3EcGWjfLtCpPtkxvYEi@nongnu.org
-X-Gm-Message-State: AFuF++kqaLjMxORAUi8kVsQen0QaWKpTwsi8aTG3nB+Zwx+RFt7sEPgm
- 0cJFOZU1iq12w3nf/Psu8Jzj7qMTZwc+Pksq4DCW/l4E/3ERJ4lsbv+Z9FMLubn0VqNEhshmxqV
- h+MnJXkKqY33Wu8OOrTkY58hqSsxSEFIofdvU3Dyz981+AW7vhvCq62I1
-X-Gm-Gg: AYBFou3VZ/Bu7k9zsDe5WeP534Wd+37JCZo6adyDLDaWh9eqKTn9A8ypImOT4PPmekT
- eKE3cFaSFU5yvyvYFuZTwg90WyOWX7GaefvBVjZInPwS8ni7lcafHkTvmTTeg+yxVw/GfsLugOF
- g1wPTCrnafVTCOry7U6JFlNs0aCI/YJw5WyXHms1dfl30+0Wb/UZJYf+KmKcQqxoAzI4jwP0v05
- NlBA3ZYkadRyDywJC86GmOMRKSHMBI6PlAHSkjSSWsHH1o4AVKakB5gPVKCGid3WYq5ffOpk+Nh
- GfJ1bdyHJPX0HbIdHuiaBK7Oujn657Snv3ALWtljvRWdaWPmrt+OiU817p/Ech34zTT8zC7gtRN
- T5lP4pkYutLcQ3fiM8r9sWTVo3R1TcFu+KFh/peWfMZI4zySB
-X-Received: by 2002:a17:907:6d15:b0:c26:19de:9ad3 with SMTP id
- a640c23a62f3a-c29b874789cmr110763666b.43.1789378850983; 
- Mon, 14 Sep 2026 02:40:50 -0700 (PDT)
-X-Received: by 2002:a17:907:6d15:b0:c26:19de:9ad3 with SMTP id
- a640c23a62f3a-c29b874789cmr110761866b.43.1789378850624; 
- Mon, 14 Sep 2026 02:40:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2966066b6asm387939566b.34.2026.09.14.02.40.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 02:40:49 -0700 (PDT)
-Message-ID: <b4077c0f-61bc-4619-bf20-ce4992c6bf29@redhat.com>
-Date: Mon, 14 Sep 2026 11:40:47 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x63Be-0001sN-8v
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:41:19 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9fCdK025133
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 14 Sep 2026 18:41:16 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=+SNjQSTjYTQuXo9g9m0nSujeJ2kduqznDiq97Hz0U9A=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1789378876; v=1;
+ b=nTFtgCec76ve+o/lL8qIz4Ts+BfPrwuH3yqo7KAXJbWIIg5KWMNsUFJt0ZX6avvb
+ tdHIVltOS6XLK5KiNTXroyYV7+K+kC13/Bp83p+VTwEZDiqP0nXax6RUcH2ckwSW
+ BXBv93/qRL+E+D51L5GUyr6vzmv89vJ4D8ioxvfi4+2i32rh8fJBgRtUY98/Jgut
+ z/5w79YhKo1n8LWj/gPEJhUJI9vPhN1/hMEj9biAlCkY/P8M5jazoDvHJFjVi8kL
+ 9vW8CUFQDF+JOnZOdQnhvbmotSddUcScd5zB57qnBZ0CtZl4a1hCN9QaSiv6jhpC
+ fEMBB1h3Ow37ox9k7v5mFg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 14 Sep 2026 18:40:40 +0900
+Subject: [PATCH] hw/display/virtio-gpu: Block migration with large blobs
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/7] hw/arm/smmuv3-accel: Factor out the single vEVENT
- read
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
- mochs@nvidia.com, jan@nvidia.com, jgg@ziepe.ca, ankita@nvidia.com,
- aniketa@nvidia.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com
-References: <20260904180513.248396-1-skolothumtho@nvidia.com>
- <20260904180513.248396-2-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260904180513.248396-2-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Message-Id: <20260914-block-v1-1-4df9617573ca@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcyNL3aSc/ORsXaPUtBQzs9RkI+PkFCWg2oKi1LTMCrA50bEQfnFpUlZ
+ qcglIM1RFUWphKdCCEqiy2loAn/4SaH4AAAA=
+X-Change-ID: 20260729-block-2efd66ec23cd
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3451;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=KDvmjJ8HEQ2mdrZ7njg5NilOU8qMlDM0NwKIRwriYYc=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9byg6aHluu+lf6Y3XJK1irDk29hRa721PUzDctXZsQsX
+ 3UmaI9vRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwER2lzP8DzJ3NFhvvmrSnRem
+ ZvHX+kQ9y8QfKzSaP53Pqr178Y/eDYwMb6byRn52YVt7uG5/juaXkoXTLnYliR/bLFH5Pl//wad
+ MFgA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,86 +84,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+The blob size is encoded as a 64-bit integer in the virtio protocol, but
+it is encoded as a 32-bit integer in the migration stream, and
+a large blob whose size cannot be expressed in a 32-bit integer will
+be corrupted after migration.
 
-On 9/4/26 8:05 PM, Shameer Kolothum wrote:
-> Move the body of smmuv3_accel_event_read() into a new helper,
-> smmuv3_accel_event_read_one(), that reads one vEVENT and tells the caller
-> whether it propagated an event, found the queue empty, or failed.
-it is not totally obvious that "queue empty" reason matches EAGAIN/EINTR.
->
-> Subsequent patch will make use of the helper to drain the queue.
->
-> No functional change intended.
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 30 ++++++++++++++++++++----------
->  1 file changed, 20 insertions(+), 10 deletions(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 91aca1aa14..fc503578f5 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -484,28 +484,38 @@ int smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
->      return 0;
->  }
->  
-> -static void smmuv3_accel_event_read(void *opaque)
-> +/*
-> + * Read one pending vEVENT and propagate it to the guest event queue.
-> + * Returns 0 if an event was propagated, 1 if the queue is drained, -1 on
-> + * error with @errp set.
-> + */
-> +static int smmuv3_accel_event_read_one(SMMUv3State *s, Error **errp)
->  {
-> -    SMMUv3State *s = opaque;
->      IOMMUFDVeventq *veventq = s->s_accel->veventq;
->      struct {
->          struct iommufd_vevent_header hdr;
->          struct iommu_vevent_arm_smmuv3 vevent;
->      } buf;
-> -    Error *local_err = NULL;
->      int ret;
->  
->      ret = smmuv3_accel_event_read_validate(veventq,
->                                             IOMMU_VEVENTQ_TYPE_ARM_SMMUV3, &buf,
-> -                                           sizeof(buf), &local_err);
-> -    if (ret < 0) {
-> -        warn_report_err_once(local_err);
-> -        return;
-> -    }
-> -    if (ret > 0) {
-> -        return; /* EAGAIN/EINTR */
-> +                                           sizeof(buf), errp);
-> +    if (ret) {
-> +        return ret;
->      }
->      smmuv3_propagate_event(s, (Evt *)&buf.vevent);
-> +    return 0;
-> +}
-> +
-> +static void smmuv3_accel_event_read(void *opaque)
-> +{
-> +    SMMUv3State *s = opaque;
-> +    Error *local_err = NULL;
-> +
-> +    if (smmuv3_accel_event_read_one(s, &local_err) < 0) {
-> +        warn_report_err_once(local_err);
-> +    }
->  }
->  
->  static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
-Otherwise looks good to me
+Block migration with such large blobs, and, if it is not possible, deny
+creating a large blob.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
+Fixes: 10b9ddbc83b9 ("Revert "virtio-gpu: block migration of VMs with blob=true"")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Supersedes: <20260727-blob-v2-1-d0b9af38a975@rsg.ci.i.u-tokyo.ac.jp>
+("[PATCH v2] hw/display/virtio-gpu: Reject non-migratable large blobs")
+---
+ hw/display/virtio-gpu.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Eric
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index bb0f41bb1e05..5d43ffb99184 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -27,6 +27,7 @@
+ #include "hw/virtio/virtio-gpu-pixman.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/core/qdev-properties.h"
++#include "migration/blocker.h"
+ #include "qemu/log.h"
+ #include "qemu/memfd.h"
+ #include "qemu/module.h"
+@@ -35,6 +36,9 @@
+ 
+ #define VIRTIO_GPU_VM_VERSION 1
+ 
++static size_t num_large_blobs;
++static Error *large_blob_blocker;
++
+ static struct virtio_gpu_simple_resource *
+ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+                                const char *caller, uint32_t *error);
+@@ -355,6 +359,7 @@ end:
+ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+                                             struct virtio_gpu_ctrl_command *cmd)
+ {
++    Error *local_err = NULL;
+     struct virtio_gpu_simple_resource *res;
+     struct virtio_gpu_resource_create_blob cblob;
+     int ret;
+@@ -415,6 +420,26 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+         }
+     }
+ 
++    if (cblob.size > UINT32_MAX) {
++        if (!num_large_blobs) {
++            error_setg(&large_blob_blocker,
++                       "a large virtio-gpu blob is present");
++            if (migrate_add_blocker(&large_blob_blocker, &local_err)) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: blocking migration for a large blob failed: %s\n",
++                              __func__, error_get_pretty(local_err));
++                error_free(local_err);
++                cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++                virtio_gpu_fini_udmabuf(res);
++                virtio_gpu_cleanup_mapping(g, res);
++                g_free(res);
++                return;
++            }
++        }
++
++        num_large_blobs++;
++    }
++
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ }
+ 
+@@ -460,6 +485,13 @@ static void virtio_gpu_resource_destroy(VirtIOGPU *g,
+ {
+     virtio_gpu_disable_scanout_for_resource(g, res->resource_id);
+ 
++    if (res->blob_size > UINT32_MAX) {
++        num_large_blobs--;
++        if (!num_large_blobs) {
++            migrate_del_blocker(&large_blob_blocker);
++        }
++    }
++
+     qemu_pixman_image_unref(res->image);
+     virtio_gpu_cleanup_mapping(g, res);
+     QTAILQ_REMOVE(&g->reslist, res, next);
 
+---
+base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
+change-id: 20260729-block-2efd66ec23cd
 
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
