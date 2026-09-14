@@ -4,105 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDD8C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C28C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x617d-00087z-NQ; Mon, 14 Sep 2026 03:29:01 -0400
+	id 1x618t-0000L6-R6; Mon, 14 Sep 2026 03:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x617b-00082C-OC
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:28:59 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x618s-0000KA-5l
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:30:18 -0400
+Received: from mail-pz2-x29.google.com ([2607:f8b0:4864:3b::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x617Z-00062f-Ol
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:28:59 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4858bc96fabso1099559f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:28:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x618o-0006Qd-SU
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:30:17 -0400
+Received: by mail-pz2-x29.google.com with SMTP id
+ 41be03b00d2f7-cc4bdf8acd6so1150923a12.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789370936; x=1789975736; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=miCeAUCJ/P28lDvL07gO6RScRtVNKg+m4eTqKf4dglc=;
- b=mOBhVZw5l5+0yMCTBh6F3YtzVCaH+x55b1CmRgUCbZh8EVFms3VDnQeOOSrptemFSy
- L+iTliepvKU4WOodRjxn8zYC4lHwMPPUjBWkc+UPIOXgMH/+Opu8gkcgpA1NjxBiLpou
- bbxKHT31+sEIoO0+LT+wKL8YBL3tUfa6dSoPBJBtGMjKl4fA4DZQXtoR4TbtU06Nzi1j
- 6LkO+1OWKOl3p4Ap9w25LLAtfhjllUAkCQYx3BqTi8TsU+83YqJMqpKjTh/GX7/E6H+M
- ZymxTjLTamIR/VMOrb5gtlcEIBY0JXFIp7eIQhv5AaqbS2rMJghhrdZO1va1DJQ5NztR
- T4WQ==
+ d=linaro.org; s=google; t=1789371011; x=1789975811; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=S7+AL5afegpb0To3hlGT44wY+oi7DzN3AXe14w/8OVo=;
+ b=SH5lbHwpU+xvOzMLCxSbmaLXqTdCCCSdGiIUF5YGqmZJ9Q65eL87SRQ47D3LYqugAD
+ OIsWR8az3hN8cPpYogVJeinwzQZCFXWwY+WRObq2+duo1zdwTMQ9XDZNiZRKsD9mG6qi
+ /XEZcrMQZZRITahnS10TTXT5fcO/qr7xoDGUuzaM2pdgxDpXLUcqVLxzCuXpWWN/y2Na
+ kHXU9KEtsVb51g16xKd65ZqnTHGednse0k9ckqYCE1kAMp2QxD78V9RETVGNhSQVIgTA
+ oGC2gYd5zkIOkX2g7Tux0rdkY6o0sxHLYK0VhgiuNGzHR8YlgVDfD8dPjUhXRtvrpNMI
+ G34w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789370936; x=1789975736;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=miCeAUCJ/P28lDvL07gO6RScRtVNKg+m4eTqKf4dglc=;
- b=ihD/eZDl8WyEiNI59GRV2lrmnajUi/NE7gz5LaFnYKr0KsH43RE2FL/0YpEdaSEMNU
- PtCPCIF0GNM0UV4a/fiSbewHee1ukEmMU94aIIyNOZbAj6G9owMIdvMDJZj1ffD4hzjl
- Zd9DKKntUP8+s5lLJANHNwcBqL5g51h3BAjbSbeBX/X3yy/EpmZwxNthtFDApE+hVHic
- 9fwVF3YMRfodAxWREDrGclGMLxvDVrBJ3ko42BJoB9qSC+f6zD4YbV3cSA/U2BgLGc6t
- +QQdbzzD6fS5IexRbUVqnrO8VISgp4ldHqRB4XBNHRiv/SOzyoLl5pY6470Zu26uCPp3
- MTpw==
-X-Gm-Message-State: AFuF++lyT/gFz9sXP1b/C7eg+Xk580S5MUi4fTibCA2cJsd7NbTDmbuH
- A90PJrDUmzmCVCqW6p21kcjjIrTQnKnRZyYpuC1LEH4R8itPF4/1kvXWzOyDPjc56YE=
-X-Gm-Gg: AYBFou0VpGhiVF1IFMTn85I7ZJuMt1EqkabA09PZ1c44Yegzki0zTz2oDasCag0lt2E
- Z2/dScQojB5sbcO4OTF3b/zUcz9ycf1BZLfIUMUIoVRA01m+epuH+P/RN8jidWmWHDmUqxajqa9
- 977XIL7pu706iyqWsSuier2EX1qHaY6aLi3mIs9yyZ+h47oUtcdSGBPX9P9v5Jyl2YxYv8lnXdn
- OVBGgkPFyBkzNxgA3WxzWwp+VnIxO7HPqJu6PMjrNQDz6BhR7Vj0fjiJBo3pvLogjE4mI3Xw5R1
- 4m8UrUUrEBI9Ian6fLGycTkLDBVd5WYhOOfD/mZ8j9q+1hlLQp9ft7z4jj8SklFsZs9zE2pEEL+
- jIFAu2RA885VMzOJlFNssoXBs0pqtTxSg3fkvyYiyR5jWcYaT6C4nQwNe5E9VuYnEO9GlT+G1EW
- si0Lzyrx4LDDsQv/4J8dJQkNv6iDBKNr8JeHyKps/vXopnjs4XziljFXb0t2WeZ5dVNafuKGGb
-X-Received: by 2002:a05:6000:491e:b0:485:a964:be3d with SMTP id
- ffacd0b85a97d-48702ab66bbmr1193783f8f.13.1789370936155; 
- Mon, 14 Sep 2026 00:28:56 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb330bdcsm25732716f8f.13.2026.09.14.00.28.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 00:28:55 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 712855F920;
- Mon, 14 Sep 2026 08:28:54 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Brad Smith <brad@comstyle.com>,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,  Song Gao <gaosong@loongson.cn>,  Warner Losh
- <imp@bsdimp.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Cornelia Huck <cohuck@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,  John Snow <jsnow@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Thomas Huth <th.huth+qemu@posteo.eu>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  qemu-arm@nongnu.org,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Kyle Evans <kevans@freebsd.org>,  Richard
- Henderson <richard.henderson@linaro.org>,  Cleber Rosa <crosa@redhat.com>
-Subject: Re: [PATCH 5/9] tests/docker: add container registry to configure
- and use
-In-Reply-To: <abacad10-b9af-4a39-93c9-14b882f60bea@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Sun, 13 Sep 2026 22:21:33 -0700")
-References: <20260910181504.1010916-1-alex.bennee@linaro.org>
- <20260910181504.1010916-6-alex.bennee@linaro.org>
- <abacad10-b9af-4a39-93c9-14b882f60bea@oss.qualcomm.com>
-User-Agent: mu4e 1.14.4-pre2; emacs 30.1
-Date: Mon, 14 Sep 2026 08:28:54 +0100
-Message-ID: <87qziw1ebt.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1789371011; x=1789975811;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=S7+AL5afegpb0To3hlGT44wY+oi7DzN3AXe14w/8OVo=;
+ b=QVTyoDpYB7rahUjYITOBn/bxmeY4x3FxkZFdtgDDGsnxa4x8q925BIIL8jKQQ9a4yi
+ oiVkzI3mjurCktWRrtTa3j2D7MH0Cjx8+ekdXKsPldfdbUW65A7xetclJJseP7CDxQV/
+ XuV/kjbKwManmJjdRTpSQvGWjG0DJC1v5Un4+8wB71ETFZISfigd9GbzeZ/V1feTpWAa
+ eA/SGtOoW2icnL4E2qioQZcj1Cs1iX/jaCDwfFSj4x/5E/oNO+uxZIZgy8+1G4x1yyUf
+ 5ulzpkjH7a7G4M0QQjp02yoOxSjxOYJnuN2xXUxtsogJzdXAmleuTO8ZZwawRjDbGkK3
+ k46g==
+X-Gm-Message-State: AFuF++nRgW23vp00shWzSQMtim5PrUqk8DxBof/C1iMkGFarHpLEKbXV
+ 4+GVRj+1NXsPA9qWNgXtJJO39EDPZZS004AJ7BxK5c7NjjLSFzj2fg5FJucoWIYZzpY=
+X-Gm-Gg: AYBFou1HAc4ZURPI9IjQhAUXiKCykAuicZqk5I+iqbeUJ+4dP5ndXnmpc6X0tYgUHza
+ uAD2p7FxyWgNYN2MtUeARULPxrn/uB6b7TxhpaoWNbC3MuzlsEYV6CLbcfIubyVD65dulf8GrBT
+ pDtC2lFTyfy1TM0iigKCTkb/3WBVm+6s7yGMPaBAe+XcjcQlw8jE1l8CoaEogOnkEAl0S624OJj
+ Hki1d1GTJfXt0HmBkWLbcYEcVXWrOhR6Dr4EnTEW/UdUqdaYA2MAH5AzK6YeqrmEhMOsNiafrml
+ z9Lg/9tBAS1eaFXSt75yWV6ewx83826KsjTkquxuhVzmCilp2d2DOEVfg4pRScA2WwwpUI4Ced2
+ dZU3Gd5RyFir1HXf/P5pl6+EW/prGsLxwI03zpTCEH37YTn622sxBnIanAxe9ivzEnFJJf3cTg5
+ 2Bi7V9/rek3uOokWt+o95Um9WcQQuglwsdgKKrMTTU2R4wkltWIavhs7oxvE1HndogyZuEmmbj+
+ CDSh477IpIHAeCM3Bzaghf+RyoYgxDwzVTwbXjRvW+u2SHR8fzD3xYBj0shJg==
+X-Received: by 2002:a05:6a20:c901:b0:3cf:a7a5:e310 with SMTP id
+ adf61e73a8af0-3db404aebb2mr2897193637.9.1789371011433; 
+ Mon, 14 Sep 2026 00:30:11 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
+ ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bd8ad03ccsm4847348eec.2.2026.09.14.00.30.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 00:30:11 -0700 (PDT)
+Message-ID: <39f55a2a-8cf8-47a6-b218-042f31f4b572@linaro.org>
+Date: Sun, 13 Sep 2026 21:30:06 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 10/18] accel/tcg: Replace size with first/last in
+ probe_access_internal
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org
+References: <20260815203730.1468365-1-richard.henderson@linaro.org>
+ <20260815203730.1468365-11-richard.henderson@linaro.org>
+ <CAFEAcA-MVRya=Y8i+rURHqizQzJLh=Gp5tQxHSK_VNBUQCAzdg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-MVRya=Y8i+rURHqizQzJLh=Gp5tQxHSK_VNBUQCAzdg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,143 +106,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+On 9/1/26 05:28, Peter Maydell wrote:
+>> @@ -1440,6 +1440,7 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+>>                             MMUAccessType access_type, int mmu_idx,
+>>                             void **phost, CPUTLBEntryFull **pfull)
+>>   {
+>> +    vaddr last = size ? addr + size - 1 : addr;
+> 
+> This can never overflow for the convenient reason that all four callers to
+> probe_access_full_mmu() pass a size of zero :-)
+> 
+> Do we update probe_access_full_mmu() to the first/last convention later
+> in this series ? I couldn't see anywhere we do that, but maybe I missed it.
+No, I didn't do that one -- perhaps a mistake.
+This function is supposed to be only for page table walks.
 
-> On 9/10/26 11:15 AM, Alex Benn=C3=A9e wrote:
->> Previously we had the default baked into Makefile.include but as the
->> meson container logic will also benefit from it we update the configure
->> machinery.
->> For now we allow direct make invocations to override but for the
->> normal case it is in one place now.
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   configure                     | 8 ++++++++
->>   meson_options.txt             | 3 +++
->>   tests/docker/Makefile.include | 4 +---
->>   tests/tcg/meson.build         | 6 ++++++
->>   4 files changed, 18 insertions(+), 3 deletions(-)
->> diff --git a/configure b/configure
->> index aaa41fe47aa..7d6b11ddd35 100755
->> --- a/configure
->> +++ b/configure
->> @@ -172,6 +172,7 @@ fi
->>   # some defaults, based on the host environment
->>     # default parameters
->> +container_registry=3D"registry.gitlab.com/qemu-project/qemu"
->>   cpu=3D""
->>   cross_compile=3D"no"
->>   cross_prefix=3D""
->> @@ -728,6 +729,9 @@ for opt do
->>     ;;
->>     --container-command=3D*) meson_option_add -Dcontainer_command=3D"$op=
-targ"
->>     ;;
->> +  --container-registry=3D*) container_registry=3D"$optarg"
->> +                          meson_option_add -Dcontainer_registry=3D"$opt=
-arg"
->> +  ;;
->>     --rust-target-triple=3D*) rust_target_triple=3D"$optarg"
->>     ;;
->>     --gdb=3D*) meson_option_add -Dgdb=3D"$optarg"
->> @@ -862,6 +866,7 @@ Advanced options (experts only):
->>     --cpu=3DCPU                Build for host CPU [$cpu]
->>     --disable-containers     don't use containers for cross-building
->>     --container-command=3DCMD  which container command to use [autodetec=
-t]
->> +  --container-registry=3DURL which container registry to cache from [$c=
-ontainer_registry]
->>     --gdb=3DGDB-path           gdb to use for gdbstub tests [autodetect]
->>     --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit=
- (default
->>                                  is to use the whole 64-bit range).
->> @@ -1318,6 +1323,9 @@ echo "GENISOIMAGE=3D$genisoimage" >> $config_host_=
-mak
->>   echo "MESON=3D$meson" >> $config_host_mak
->>   echo "NINJA=3D$ninja" >> $config_host_mak
->>   echo "EXESUF=3D$EXESUF" >> $config_host_mak
->> +if test -n "$container_registry"; then
->> +  echo "DOCKER_DEFAULT_REGISTRY=3D$container_registry" >> $config_host_=
-mak
->> +fi
->>   if test "$default_targets" =3D "yes"; then
->>     echo "CONFIG_DEFAULT_TARGETS=3Dy" >> $config_host_mak
->>   fi
->> diff --git a/meson_options.txt b/meson_options.txt
->> index 292625af08a..030231492e1 100644
->> --- a/meson_options.txt
->> +++ b/meson_options.txt
->> @@ -391,6 +391,9 @@ option('containers', type: 'boolean', value: true,
->>          description: 'use containers to cross compile tcg tests')
->>   option('container_command', type: 'string',
->>          description: 'command to build/run containers')
->> +option('container_registry', type: 'string',
->> +       value: 'registry.gitlab.com/qemu-project/qemu',
->> +       description: 'container registry to cache from')
->>     option('tcg_tests_cross_cc_aarch64', type: 'string',
->>          description: 'cc for aarch64 tcg tests')
->> diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.inclu=
-de
->> index 0adddb6a5c6..74bf471f171 100644
->> --- a/tests/docker/Makefile.include
->> +++ b/tests/docker/Makefile.include
->> @@ -11,9 +11,7 @@ USER =3D $(if $(NOUSER),,$(shell id -un))
->>   UID =3D $(if $(NOUSER),,$(shell id -u))
->>     DOCKER_FILES_DIR :=3D $(SRC_PATH)/tests/docker/dockerfiles
->> -ifeq ($(HOST_ARCH),x86_64)
->> -DOCKER_DEFAULT_REGISTRY :=3D registry.gitlab.com/qemu-project/qemu
->> -endif
->> +DOCKER_DEFAULT_REGISTRY ?=3D registry.gitlab.com/qemu-project/qemu
->>   DOCKER_REGISTRY :=3D $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REG=
-ISTRY))
->>
->
-> Couldn't we read the default from config_host_mak generated by
-> configure instead?
->
->>   CONTAINER_COMMAND ?=3D $(shell $(SRC_PATH)/tests/docker/docker.py prob=
-e)
->> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
->> index 814f2f8cd8c..22157a47c96 100644
->> --- a/tests/tcg/meson.build
->> +++ b/tests/tcg/meson.build
->> @@ -101,6 +101,9 @@ if get_option('containers')
->>     endif
->>   endif
->>   tcg_tests_summary +=3D {'container command': container_command}
->> +if get_option('container_registry') !=3D ''
->> +  tcg_tests_summary +=3D {'container registry': get_option('container_r=
-egistry')}
->> +endif
->>     # plugins come first, as we need to build the list
->>   test_plugins =3D {}
->> @@ -257,6 +260,9 @@ foreach target, plan: tcg_tests
->>       if cc_dockerfile not in image_targets and has_docker
->>         cmd =3D [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/=
-' + cc_dockerfile,
->>                '--add-current-user']
->> +      if get_option('container_registry') !=3D ''
->> +        cmd +=3D ['--registry', get_option('container_registry')]
->> +      endif
->>         t =3D custom_target(image_name, command: cmd,
->>                           build_by_default: false,
->>                           output: 'no_output_' + image_name)
->
-> Do user benefit from this, or is it mostly for CI need?
-
-The aim is for faster image builds because the CI registry should always
-be up to date. Most of the time the images don't change.
-
->
-> The effect is to use --cache-from $registry, which I'm not sure is
-> what we want by default, given all the "caching issues" we had
-> previously with dockerfiles already.
-> If that's for CI, maybe it could simply set with --container-command
-> in our CI only.
->
-> Regards,
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
