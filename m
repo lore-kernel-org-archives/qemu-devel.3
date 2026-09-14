@@ -4,131 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1D1C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15912C88E77
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x68Cw-0000c3-0s; Mon, 14 Sep 2026 11:02:58 -0400
+	id 1x68Et-0001J2-E0; Mon, 14 Sep 2026 11:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x68Cl-0000ZX-FT
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:02:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1x68Cj-0007IP-DS
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:02:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789398161;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OsH+oxYwijmpnAjB8UTk0Ua0iNkmD9AVfjPmwAIMIbM=;
- b=LlMX90t7kZaxWS2cHirXliUupUi+EkHHWEUOuO0E5oBJGR9tHxqB/seGUl4sN7fkWOmfjl
- w2smgm6p7wioJdKrRmNOW3fkKNYbVGM5NIuzg3BKU+u1iSCVn9O3ykNRgfYnaZ7nTpnuPq
- g+4U4CaQ/RvZajXsonhal+5qxaNfBSY=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-8SjwNhbCNG-WkM1Ur0fetQ-1; Mon, 14 Sep 2026 11:02:39 -0400
-X-MC-Unique: 8SjwNhbCNG-WkM1Ur0fetQ-1
-X-Mimecast-MFC-AGG-ID: 8SjwNhbCNG-WkM1Ur0fetQ_1789398158
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cc1b8088202so2930158a12.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:02:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789398158; cv=none;
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1x68EQ-00013s-Dw
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:04:41 -0400
+Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1x68EO-0007dB-8E
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:04:29 -0400
+Received: by mail-yx2-x10.google.com with SMTP id
+ 956f58d0204a3-66e4ab20a33so1921267d50.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:04:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789398265; cv=none;
  d=google.com; s=arc-20260327;
- b=jUCuXTkHBqJ30Qa/Lqt0AZRdUvQynvkUnD3hOmKRujC0AhqS3SxDEZOQJIPSGf6Pd9
- Que/a3HqQyygqUohBqXDkoo71vOav/TpuhWtL/6hUQ60Efczu1o9zRGNYLD+jMr7/J6C
- s7Hh0hjVe0bNJq36SUkX6QegNsKAkTSfVvCPSMRAbNew4YNkc9oCibcPoNowtEsg7cy0
- xijiF7caCt5a+liKCzx5bweM13QvIVzzgLUKt58DVzfDpA+v8PIFFXB2Z9wFQgXXQB0c
- pHCwg94WdkZc8RoAbjXnlEhHuSkG3KL4o1Mf8TWcxbIX3SzeKA4laoMRZ0M76qufw7yZ
- BYcg==
+ b=oFb71nmPc8A5hpTFBFoTvnbP+BLhZiYMCzws+vPQ0GuyX8454on8+n2d9Hmb/LDZ1F
+ bpnfW4aaSkdpRaR36rvgM+P3S1Uo42G24kkuqiQHflxmaqYItjSnJPnX/YOuMXkdfSkN
+ LyChuSmj6ngrJLrdM1888YxIAnwI8rd7g/8E2M0nwuWAOcHLursh6IPLy1yb1cd78311
+ JNo5CXn7vdH+xV/FW4ltAj3/h1XQas2xMLLGS+R2gfvGceRB0/Zd9TiZR4zg9qM5KXE3
+ Rm3HK5u2CubF+JsKdoYpUqn3hSeWfopBCycnDINTdrMdQTjHWTy6jnNc9AMo4eDr5Tmd
+ n2+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=OsH+oxYwijmpnAjB8UTk0Ua0iNkmD9AVfjPmwAIMIbM=;
- fh=Rv6Xr49Vn3lqTFaNl5Jkv/KgdC6v9IqnBD35t3uum7E=;
- b=QmMH0PC9BoBhfGnEcQmaS3HkjX3mpKEt0FdZx+KWobMmtE1HwVc+jr1A4f0+7P2TDy
- IcpyDsnq8+LgE1Bik8OIEH4YXQBASCitHUOmbmfJon9geE0GrBxjEyxcmB1thwEg2OnE
- OnoZbEoaFByD3NKIbOjIR1AwOn5ARcyOzGp6d7D9eXJlN9qcmXku/QglTKqQlTtPyjwV
- R4V2YRDUpI+Vj+utA3I1vOf4W0PQuV3rodnCsLXRp8MimOaCmPdjNMfEos0ccbQytHie
- 5S3039iiUBVr1SmqaBHmk2YjnavjNxqTL2DJkVJusmLLQAXk2trZBJkloRgDd4Jr+D5H
- 9U1w==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=zEiBoKHET1yJkId8dW9GIBPKw1CXl96YMW9ueIbgyNw=;
+ fh=DkcsS+wDAht8mg8Un44vEXzEP9PftsclVxpMktWLF+E=;
+ b=otowKCJYCp8lD50qJrTHlhlQxrELH0Aqu6c2P8mhlTSVUhnK/5FkZZRlNonNEuEHkA
+ YCedeJZxxbd5OXg5dMSeatawFO8Qn4TFBR8iiV15r3u73CRCQEIG2SKk2KSIUB72jSJj
+ TuOBgSug7ehB48lHQNFNQwTU5OxCsXBstYJ6VRcvMtE6NxWB+uEI6mncS3jQx441fsGI
+ RIw5VZrkEqS/F9ES2lopoin6NU9QTES+hkAqhg5k/XBqofzvy+T5kj/qNaECnH2ZTjxx
+ PZOFM2TCsN6Oi1HCu70zTX7/5VQ4mKk+JcIBfGoNnv11wFjJmY8rsQJkg/Lo3MXyFifY
+ izBw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789398158; x=1790002958; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=OsH+oxYwijmpnAjB8UTk0Ua0iNkmD9AVfjPmwAIMIbM=;
- b=bVbpkQSoyHWmx+/ZxFQMlTz5js08F4Ge4PCbcK5LUl5RcD0vZvLDUJQpqGTJw6OUd9
- tJaGiF/RCh4ByLo6uAA7Deq8Ti7iuVFHDufC2FHa0Oal/uS8Btb/nJeITzoTSzVolDxQ
- tAieyM4b2fwWdPjMIpz1UlUycGs7B4u4T6JMNhiHVYnZJ71glHDRvDL54dUholI1jFu2
- k9H9MHkSGCfPWFpGsyhS3kQckE7NiFLgNskL7KGwwN24P27USVo1oLAcKriOg63ZQ1OE
- Ts0VBQ2wNwfkfnvzBJS6Y/OB1V88LokTqmvdsd6rHFjlsk1q8wL0q/E/vJJ7auNS5H0s
- 0egw==
+ d=gmail.com; s=20251104; t=1789398265; x=1790003065; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=zEiBoKHET1yJkId8dW9GIBPKw1CXl96YMW9ueIbgyNw=;
+ b=QW+DkcfN12AjjJ0YlPT3DABT/s8ArqgM8L15YTzSWb88KxNmJDjbQx9DRFq/MezUgt
+ FeJaKCZzLKITcOdZSNu27i61YsmJOmiWZtfok4L+ZUh/cvLAHro3ucVjRGpjy/btMvNg
+ MHNbEqrgqWuEqHvDHJu9KB5/FCUt6f3PjfWhAjg2jMutApBlcQNRqgJGLoR35TQKfnTE
+ muTLS7U1lqY8fjqelxyTMx/q2N5NZnHghn9i+766XiQjZfHfSRuf9MtMA2S1qdYWVZm2
+ y4tvIPJVc9QD4OgUEKaPcEmsWL7aaQ4sZuAshzaWnoWlYKyiHL+YIlMJN87z/ad2Ojqi
+ /sUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789398158; x=1790002958;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=OsH+oxYwijmpnAjB8UTk0Ua0iNkmD9AVfjPmwAIMIbM=;
- b=PvU92Gm/RJajjcywF4S1cX18FS7ro/tDyJKjDTU/JWiOqQR1qv4XMPeqo245hXv5Df
- ytYrDA4YNS3r6g+nhkjohHyICX0CIOvUQeRmbGkVsHxfwAkYoRPF6GdRKFJg2okfQCnV
- lF6eDZSepNNLfIg9Qa4BQEEzO4194Tsos7mMT8px7RgOxT82wPbKOQLJ1z7oE0u4n1G8
- MdZHydpWTTNqqCEte4zUbPNXifxYNcvWtZzsDM0l65wSqRE9cNYu6PrQj6PX89xXddXe
- JWybYHJks778viwdPlTL0JXEznXc9KfGwxqDdJiSrOTWzuZRyTWWXBFsI64RtXK8rTo0
- WDgQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzSNoLcu+UQDEaDrf8vbAsmm8USB0nlb9nWHL7jA2Oof90TVD0w+vh5yEpjlC8OR2YDpm9pSV3oKwVG@nongnu.org
-X-Gm-Message-State: AFuF++l52xZExc6QSeot1l6ZZrYtMt78aPJIgCwJbUKU75TydXJcSWge
- pk67ZFxRnus1GwRw/aYQzxPnOPeqDh10J6SYIahYet4hzjZX+j1tp/4TIqOFGTmHwbmWjxiIQPz
- Hmi0loNt8VeO3lzO8ID3IU7IM42zGb48gANGY7xpCApEk0mBJGUOnx7+oH8ynY5t6ZhwvHrSeQo
- dRVQrbPRATIkJbK29Z7iIpRma7Ku4wRcM=
-X-Gm-Gg: AYBFou1whf1SvMYvM+TxG0zg7vpobCGnb3Mj1zW6DWvMi03BSkGNQWE+yyKu2DvQwE0
- Aecg9Ck9CMS0O2adggP25qv0si3N2p0J4NBSFZEJ8bNtmx7U8d6mZzpbTuI8iilxXNOV+FS880e
- MJDw3BFr3d47AfGQNKXJwckAhTlpu2V0b9kdSZlSxnO7bXffkzjX8dlGnnogM/aJCuxkSuMvfXM
- uP6YVJ/AKaAE3sQ6Xpfo+36W6yKVYNwC80sGw3Y+brxEr7FNlvVzKyyTHHmbzWW7x6GLnRqf2xo
- Ig==
-X-Received: by 2002:a17:90b:2885:b0:398:b46d:48c0 with SMTP id
- 98e67ed59e1d1-39dec0849e5mr7257199a91.18.1789398158263; 
- Mon, 14 Sep 2026 08:02:38 -0700 (PDT)
-X-Received: by 2002:a17:90b:2885:b0:398:b46d:48c0 with SMTP id
- 98e67ed59e1d1-39dec0849e5mr7257076a91.18.1789398157695; Mon, 14 Sep 2026
- 08:02:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789398265; x=1790003065;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zEiBoKHET1yJkId8dW9GIBPKw1CXl96YMW9ueIbgyNw=;
+ b=mMNXzNbrtwu7rpqEyRKJA7nEa9a1LVTQvchDkc7fgxNA+7DC64GnpwMS4Ta6rC216M
+ OypUbXSgnio/1qLRMSIijEsJbR8xlPIbXQEiBb3rWIz+dARHy0DOhFVPqKkx/udhpiKD
+ syC6xnVc5FPP7DhAogLy3yjeL8E3nZMbGrwklkWu1gFoIBUNJT5XyXVzY4CmDM/zwRRZ
+ Adbzz/k8X6OIkR2CRxZ2qfUhLHWcAkvWh96nZxqDmqn3e+VBunaTNCc7KQWzGDS9SSU4
+ FoJfYKjoL9MnAV18P46pfDZz04graC5Xzd8kWQu8Rail1gVLW25SmHVY4M4EFEaCng55
+ Jw3w==
+X-Gm-Message-State: AFuF++lXyTO49VyFZeVriGDlpS/kVQ9yNUJ2nL8tw632ockeCw9zi7aX
+ Uvj98LTknQYINq/UxQ43sS2ocrf0OAsF061CIwiw4y1V9UEaRgKETi4OguK1vGdnEqr4mhrx14p
+ ngYZTlmHhu0idV/Sse4zG34VfjyFdv70=
+X-Gm-Gg: AYBFou0FnMHDkGMiRs5TMzWtfA0LHXjsuUgUSoV3+MMxgBv5q9swL2MfEC0H1WxSTvm
+ knAX4sy9VPQeJcYXXQdMKEw7fXef2HLRHutqMNzC9JHww5yw7TbzTxUn8waAsntQ97A+13TXA5v
+ mRCtmz9X0SjAG+j5peJAI2/y3e5LQiCwqOFhpOTlv3ht7eWfjhtd0SOUrhr7UctEY+EgYjtYEau
+ QNtFRHpTUCDz1G3rs2doF23sVsNdVuSmLq7jXEFq/hYs40S+iji8iskytFDd+KabJz1ixVKUeR0
+ +5KdUE6sATXhGt/frkgjPmBDH4NXx5GhOg8pl2ZUE0yGYJAARY1Am+F94bETM+kE278aHmSOElS
+ xtfTuRSPlCeLh4kI2r7mxyHxV0ka7+Lmi0K1hl4D3bzuXV1DG4632nIgQJv2lMgaAn+UG7EjFi9
+ 690niU+vfww1FaOyE9Vk38u74nXz3Tgw==
+X-Received: by 2002:a53:ac87:0:b0:66f:c8e4:f013 with SMTP id
+ 956f58d0204a3-6714e060f40mr870418d50.50.1789398265074; Mon, 14 Sep 2026
+ 08:04:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
- <20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
- <20260907075640-mutt-send-email-mst@kernel.org>
- <CAJ+F1CJfjvYWRW1Az=1Q2vUMM+RS56-_a5ugLbepeznHm8pvxw@mail.gmail.com>
- <20260907093319-mutt-send-email-mst@kernel.org>
- <CAJ+F1CKiUFGqJbWuxNM54bPJg1AicBKK_i+AuXttSCy-JRr8xg@mail.gmail.com>
- <20260907152927-mutt-send-email-mst@kernel.org>
- <85f8ffaa-f888-416c-beba-0344ceb8bf3d@yodel.dev>
-In-Reply-To: <85f8ffaa-f888-416c-beba-0344ceb8bf3d@yodel.dev>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 14 Sep 2026 19:02:24 +0400
-X-Gm-Features: AcwNN1XT8sCO27z_Qtb1fGx5-7JVeItkrqPiHjL7q9Si3hgagpHC6XPVe33T-Ek
-Message-ID: <CAMxuvazm00i=9Kj__0Otx96FCKnkebYqED50eiTS7D9ikYkz9Q@mail.gmail.com>
-Subject: Re: [PATCH 2/9] tests/test_vhost_user_bridge: skip when running ASAN
-To: Yodel Eldar <yodel.eldar@yodel.dev>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260817011008.652105-1-satur9nine@gmail.com>
+ <CAFEAcA9DGEO3yr0hgeyHjmenVvnYemqXUCHChPa9HDUsUvivGg@mail.gmail.com>
+In-Reply-To: <CAFEAcA9DGEO3yr0hgeyHjmenVvnYemqXUCHChPa9HDUsUvivGg@mail.gmail.com>
+From: Jacob Abrams <satur9nine@gmail.com>
+Date: Mon, 14 Sep 2026 08:04:13 -0700
+X-Gm-Features: AcwNN1WowIMFylkNigZV4rloXLzbGT1Os3GFeCXGw3kS8wn-6u5QawX1nl2i9cs
+Message-ID: <CAN_B+pAENp-HoAe9=Lh9RwgBxmQTRavmdu=shYkfHwGQ9YifuQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/char/stm32l4x5_usart.c: Support writes smaller than
+ 32-bit
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f39985065b72bff7"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
+ envelope-from=satur9nine@gmail.com; helo=mail-yx2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,111 +117,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+--000000000000f39985065b72bff7
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Sep 14, 2026 at 7:00=E2=80=AFPM Yodel Eldar <yodel.eldar@yodel.dev>=
- wrote:
->
-> Hi, Marc-Andr=C3=A9 and Michael
->
-> On 07/09/2026 14:32, Michael S. Tsirkin wrote:
-> > On Mon, Sep 07, 2026 at 06:18:39PM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> >> Hi
-> >>
-> >> On Mon, Sep 7, 2026 at 5:35=E2=80=AFPM Michael S. Tsirkin <mst@redhat.=
-com> wrote:
-> >>>
-> >>> On Mon, Sep 07, 2026 at 05:22:43PM +0400, Marc-Andr=C3=A9 Lureau wrot=
-e:
-> >>>>> maybe just avoid stdbuf completely.
-> >>>>> i don't remember why we use it, but it looks like merely to
-> >>>>> disable buffering for stdout?
-> >>>>>
-> >>>>> If so:
-> >>>>>
-> >>>>> setvbuf(stdout, NULL, _IONBF, 0);
-> >>>>>
-> >>>>> will do just that with no asan issues.
-> >>>>>
-> >>>>
-> >>>> That requires modifying vhost-user-bridge, not sure that's what we w=
-ant.
-> >>>>
-> >>>> thanks
-> >>>
-> >>> why not? it's not like it's a facility useful outside of testing qemu=
-.
-> >>> If we were we'd probably disable stdout printout completely.
-> >>
-> >> Since the test redirects stderr to stdout, I guess the log is
-> >> fully-buffered for stdout and unbuffered for stderr, and we see stderr
-> >> log lines in the file log before the others. If we call
-> >> setvbuf(stdout, NULL, _IONBF, 0) early, we probably will get
-> >> interleaved stream output, but probably broken lines...
+I started the effort back then but I never fully finished. This is to
+complete that work.
+
+Regards,
+Jacob
+
+On Mon, Sep 14, 2026, 02:23 Peter Maydell <peter.maydell@linaro.org> wrote:
+
+> On Mon, 17 Aug 2026 at 06:03, Jacob Whitaker Abrams
+> <jwhitakera@gmail.com> wrote:
 > >
-> > We can also just change that macro to write to stderr.
+> > Official STM32CubeL4 drivers use and require support for 16-bit writes to
+> > UART registers for proper function.
 > >
-> >> Tbh, I don't
-> >> have much motivation to check or fix this, I would just like the test
-> >> to be green or skipped when built with ASAN. The current workaround is
-> >> quite ok. If you prefer setvbuf() in vhost-user-bridge.c, I am okay
-> >> too.
-> >>
-> >> Yodel, wdyt?
-> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
 >
-> Apologies for the delayed response, and thanks for finding,
-> reporting, and addressing the problematic interaction
-> between stdbuf and ASAN.
+> This is a bug that was closed in 2024...
 >
-> I have implemented Michael's suggestion to modify the DPRINT
-> macro to write to stderr and can attest that the log lines
-> are properly interleaved even in the absence of stdbuf.
->
-> If there are no objections, I'll submit the patch shortly.
-> Below is a preview.
+> -- PMM
 >
 
-Yes please, thanks!
-> Thanks,
-> Yodel
->
-> -- >8 --
->
-> diff --git a/contrib/vhost-user-bridge/vhost-user-bridge.c
-> b/contrib/vhost-user-bridge/vhost-user-bridge.c
-> index 3f0fd0fa49..a6f7ec226c 100644
-> --- a/contrib/vhost-user-bridge/vhost-user-bridge.c
-> +++ b/contrib/vhost-user-bridge/vhost-user-bridge.c
-> @@ -41,7 +41,7 @@
->   #define DPRINT(...) \
->       do { \
->           if (VHOST_USER_BRIDGE_DEBUG) { \
-> -            printf(__VA_ARGS__); \
-> +            fprintf(stderr, __VA_ARGS__); \
->           } \
->       } while (0)
->
-> diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py
-> b/tests/functional/x86_64/test_vhost_user_bridge.py
-> index c36c625420..5e1db48884 100755
-> --- a/tests/functional/x86_64/test_vhost_user_bridge.py
-> +++ b/tests/functional/x86_64/test_vhost_user_bridge.py
-> @@ -76,12 +76,6 @@ def configure_vm(self, ud_socket_path, lport, rport,
-> hostfwd_port, tftpdir):
->       def assemble_vubr_args(self, vubr_path, ud_socket_path, lport, rpor=
-t):
->           vubr_args =3D []
->
-> -        if (stdbuf_path :=3D which("stdbuf")) is None:
-> -            self.log.info("Could not find stdbuf: vhost-user-bridge "
-> -                          "log lines may appear out of order")
-> -        else:
-> -            vubr_args +=3D [stdbuf_path, "-o0", "-e0"]
-> -
->           vubr_args +=3D [vubr_path, "-u", f"{ud_socket_path}",
->                         "-l", f"127.0.0.1:{lport}", "-r",
-> f"127.0.0.1:{rport}"]
->
 
+Jacob
+
+--000000000000f39985065b72bff7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div dir=3D"auto"><div>I started the effort back then but=
+ I never fully finished. This is to complete that work.</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">Regards,=C2=A0</div><div dir=3D"auto">Jacob=
+</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_=
+attr">On Mon, Sep 14, 2026, 02:23 Peter Maydell &lt;<a href=3D"mailto:peter=
+.maydell@linaro.org" target=3D"_blank" rel=3D"noreferrer">peter.maydell@lin=
+aro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">On Mon, 17 Aug 2026 at 06:03, Jacob Whitaker Abrams<br>
+&lt;<a href=3D"mailto:jwhitakera@gmail.com" rel=3D"noreferrer noreferrer" t=
+arget=3D"_blank">jwhitakera@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Official STM32CubeL4 drivers use and require support for 16-bit writes=
+ to<br>
+&gt; UART registers for proper function.<br>
+&gt;<br>
+&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/254=
+0" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://gitla=
+b.com/qemu-project/qemu/-/issues/2540</a><br>
+<br>
+This is a bug that was closed in 2024...<br>
+<br>
+-- PMM<br>
+</blockquote></div>
+<br><br><div data-smartmail=3D"gmail_signature"><font color=3D"#666666">Jac=
+ob</font></div></div>
+
+--000000000000f39985065b72bff7--
 
