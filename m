@@ -4,129 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028DFC88E50
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781B8C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x60zS-0005P3-4g; Mon, 14 Sep 2026 03:20:34 -0400
+	id 1x612C-00068b-4L; Mon, 14 Sep 2026 03:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x60zO-0005OQ-GZ; Mon, 14 Sep 2026 03:20:30 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6129-000689-St
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:23:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x60zM-0004fz-7H; Mon, 14 Sep 2026 03:20:29 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68E620HM1243556; Mon, 14 Sep 2026 07:20:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=eakFab
- f0S3DYZaDXbPkA0O5rOUJY/iFdMyBNf04aScg=; b=iDBhGoysffzspNurlwbS+F
- zx6L4fXW34OCGuQui7Hi5wvpCDEw71enCqRw7ohKLLNPJuOYT5O5gKMcV1Nffj/q
- o8XFtU9SSGUrxoAZJFLI/33Z1GUnhHnK2NN7c0e4EuSNvUq72qLspcqJ5rvcX4JD
- 86QWiIMXDcE61/5Ka1eHL/5Xhr1jwkgY+SxY60p425hUX8kxn4CJ2DhTr4jhkXqh
- bvNPXXSOYeINbZN00iGCAWuGYnczD49QvkJI+zew6Lp5EsHcSAU1KtuGAUYOsL6y
- poSzEe36rBX/LyoTJFScpVU+DBYNQdTF7Fv8vnUHXJmiRQoqxTX1a2MUNDez9cxg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcuqk6f-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 14 Sep 2026 07:20:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68E5o2FS1805292; Mon, 14 Sep 2026 07:20:24 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gnkry49wn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Sep 2026 07:20:24 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68E7KJeA54526384
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Sep 2026 07:20:20 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 18F6B20043;
- Mon, 14 Sep 2026 07:20:19 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AEE022004B;
- Mon, 14 Sep 2026 07:20:16 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 14 Sep 2026 07:20:16 +0000 (GMT)
-Date: Mon, 14 Sep 2026 12:58:01 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v5 31/62] ppc/spapr-caps: convert to QAPI-aware property
- registration
-Message-ID: <20260914125709.32fc3bf4-08-amachhiw@linux.ibm.com>
-Mail-Followup-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
- <20260911-qom-qapi-v5-31-7732a55b7760@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6126-0005Bh-7H
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:23:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789370596;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TXShNQpDfG0CcXWlxAE6GHfVVc7tbQ0dZ9GBj1Xlco0=;
+ b=Kcv0KXFwdr/BoF9dOpmaZGsgQ4D7Lunob7n4UP45EgvcwsnF7dIP2i88vSiSC43zHChpOb
+ x5J6chzgUEDafGXCRXJDcGwkak1CpZ+3daDHLu1+kuc1jv7J4DDhoZBOtf6UFVKv4+exl5
+ q0G7TFKRc1st3+cC7HTYJ/lxdTi7B4Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681-V8Y28qS4OOmPuM2lGOkblQ-1; Mon, 14 Sep 2026 03:23:14 -0400
+X-MC-Unique: V8Y28qS4OOmPuM2lGOkblQ-1
+X-Mimecast-MFC-AGG-ID: V8Y28qS4OOmPuM2lGOkblQ_1789370594
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49e745d5dabso10474395e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:23:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789370594; x=1789975394; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=TXShNQpDfG0CcXWlxAE6GHfVVc7tbQ0dZ9GBj1Xlco0=;
+ b=V3hCH8QHZ8Zn8bUywWq5eZ0xw4iyjaH7RZJ52wD49j1FK5Zwy3kUypW1BR97EqeoD7
+ b9NnWiugGiCLnnqqm4fBHAyOw2RIJnBb3XVIcJOTTWmiI5+l+iIX6ZdS3Y8gwjnn0VvR
+ v5Yze33zw5EIvwNWDC0xckl5E0+dFg2GeVjO7SniFnKfms7GGVZbZ1IPW/EZ+VqbpZz5
+ V0ZiQdPKLc7yYLKIfFUTNIC7cFMAy3z7rtj5u9NpWjLQ5n5PlQvb95+noG+hGLFVOd3L
+ p44O87PNk+6Dw9I0mjQ4CvUzTL+u6QcCOpYYK90BV+0wPCpBNKCnoBH0jnScLtQjmwa7
+ +BuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789370594; x=1789975394;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=TXShNQpDfG0CcXWlxAE6GHfVVc7tbQ0dZ9GBj1Xlco0=;
+ b=KLI2SoX/N1sukIYJ5L2hD0fDbziXlb/87L2LCuRXR9ZmMxNAw3YO6lq4Kqt7zm6Il6
+ 3xMjauNWfnjBpMuv1qRed9NwN6yvPSKP9O8beC2ag2I2oIyTAbGokIFl8D97/n8tcAqs
+ cRcz/XjM2hRPGGd2+afTg0fbYA/L4q2j/VeDbpTdKPUHcWcxgrfgHdT+0+lR/1wcileD
+ cZL0QjLieIlnKWwq/ZDQGDCFMDAXHSH9Vl/PdpI/+1jNydIkivMGCMmU06sRqQde7CMs
+ SLhQZ4Z21gw9e5hduYpnxFSRLvX+mtby/KpqC9BdeyyjlkQpWtvFhYXBpCR3sbvQ1w2g
+ CBJQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw3LZ565g6sKxHtDaS3qTiWyaY28IB7ukJSeN2wHraAivscnBTWau63EPa3f9H7M2r361C3L0j0tjrr@nongnu.org
+X-Gm-Message-State: AFuF++nwWvTgIM/hi6lSnSFxa0zwcTXy1nSaYDBshIepMUxd1fpbWpdX
+ EUdjORKJ/HvYRwP7iG2SxiDEwfm7E0AxTU7paKr4W7ddhhd53CBv1WsymwwFn16YMjRJ3n6Em9Y
+ J6DpXvPnILEtl1XXUcHBX/ubGwmwSt9wyV7MIpkQHcbx6xkDufDw3n6tA
+X-Gm-Gg: AYBFou2R7E4xlMvCRlGNZ614FcrYo+8nHQ2HnJdfZzc9dUmEF8HY3OaWBrJwneGO0jR
+ qd+S+M1KQg2s/VSriIePZy4IUukjNuEhZfNJ0pj3mf/9QC9VabfxFB1EcgqRci5a2YhVjy3hzHJ
+ D6qaP34rR3LhTTij48WjaBWNQzH3KhkM54NzrgG/oM+yaqwDgMKLpScIiep/ctkhD4csq/01M2k
+ ba6AUIQ8p3XLl6PIAJQbMmK9lWS0qL+c0c6ND7pnQVwlD14ojB+GtoK+udpNR/r/ElvW2IjLddX
+ O+hMuqstDdm5qzVd1kw5dJM7sOt1HbOeR/a8tI13p2R8wgFlAnkwPDstbeRhewNU4yRLtQOmoRu
+ gJBe9RFfvccl9BKVycUrPVNrjGaYIB2JB/5A4fzoBaQ==
+X-Received: by 2002:a05:600c:3487:b0:49d:1cc7:5ec3 with SMTP id
+ 5b1f17b1804b1-49e7a66af92mr29941485e9.9.1789370593721; 
+ Mon, 14 Sep 2026 00:23:13 -0700 (PDT)
+X-Received: by 2002:a05:600c:3487:b0:49d:1cc7:5ec3 with SMTP id
+ 5b1f17b1804b1-49e7a66af92mr29940605e9.9.1789370593308; 
+ Mon, 14 Sep 2026 00:23:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
+ ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49d26d4e3f3sm418751255e9.15.2026.09.14.00.23.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 00:23:11 -0700 (PDT)
+Message-ID: <dc456be0-9570-4349-a64b-c680f6535644@redhat.com>
+Date: Mon, 14 Sep 2026 09:23:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911-qom-qapi-v5-31-7732a55b7760@redhat.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDA5OCBTYWx0ZWRfX/MjKSIPtW1LX
- o5026QYbDAcrJoE1YAVBEWy1UqTi9UqbIXi7BhpuKZ12bHKslO3IrII/bbbdNpushrVMuUBdogY
- GEjdSlE2utYulixcQJB8vZ6jWTFw6dk=
-X-Proofpoint-ORIG-GUID: QNDeV_hKLzeb4BUpHevnWb6z-8-iI3r2
-X-Proofpoint-GUID: _Tt-aPJsph7VYhWkOjbRwvM6nIAu7FMs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDA5OCBTYWx0ZWRfX+HHLsgh9SpDM
- LORRUiK1i8/3C04xvWbJySPKMTDpWBHZ6KclR7rTvGHH8mn0DjCwmh10EKr7/h7fMMWba+Rdq0v
- Bf9TwBrJ/vnhLoV88LSxBJ02q3RB+FuXq1tI0yYCUa3Lsra0k2vhcO+R9/OcbhDcyCIfi/rtYGV
- rwELbQVkcdM5kGW6eMBhh1ukRHRPrIrylwKN7PD2Yas7LXIpgUcRPmSlxuBZe/GeMuLgs0ewutX
- /5pCzl5PAZK0iCPc3+1D3SP2PPGlzAQ20zJNzE4YloLDSqteq3vhKoHXnFi8Ll8LcqqlD/8S4hv
- o0pdUjZDFcA4nwoN5fDJN56k5bUz7YRhaAjDZeTqFx3rf59mjdaWn9WMBWQ8hstVKjQiXWS4Cgv
- +HkR2Jgn2BUKljCYhLaeJNKXe3vpCrVsjykeCd0lpZ7W62eBxv0WiIpwBwNnA8YOQQ2lAKpIFGs
- z3hJqvbpj6ZAQjRo3mw==
-X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aa7a039 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=8nJEP1OIZ-IA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=4OYFiqDFVgDF6Dc6gsgA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_02,2026-09-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140098
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] vfio-user: live migration support
+To: Hugo Komatsu <hugo.komatsu@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ Alex Williamson <alex@shazbot.org>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, John Levon <john.levon@nutanix.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Rafael Castillo <rafael@trfs.me>, Thanos Makatos
+ <thanos.makatos@nutanix.com>, Tony Krowiak <akrowiak@linux.ibm.com>
+References: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,197 +175,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/11 08:35 PM, Marc-André Lureau wrote:
-> Replace the type string in SpaprCapabilityInfo with a QAPITypeInfo
-> pointer and switch spapr_caps_add_properties() from
-> object_class_property_add() to object_class_property_add_qapi().
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/ppc/spapr_caps.c | 39 ++++++++++++++++++++-------------------
->  1 file changed, 20 insertions(+), 19 deletions(-)
-> 
-> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-> index 103b17364feb..e622c79eb52a 100644
-> --- a/hw/ppc/spapr_caps.c
-> +++ b/hw/ppc/spapr_caps.c
-> @@ -24,6 +24,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
-> +#include "qapi/qapi-builtin-type-infos.h"
->  #include "qapi/error.h"
->  #include "qapi/visitor.h"
->  #include "system/hw_accel.h"
-> @@ -59,7 +60,7 @@ typedef struct SpaprCapabilityInfo {
->      /* Getter and Setter Function Pointers */
->      ObjectPropertyAccessor *get;
->      ObjectPropertyAccessor *set;
-> -    const char *type;
-> +    const QAPITypeInfo *type;
+John, Thanos,
 
-Clean conversion; with patch 30 landing first, the full capability_table is now
-consistent.
+On 9/11/26 16:19, Hugo Komatsu wrote:
+> This patch series introduces live migration support for vfio-user PCI
+> devices, built on top of the VFIO v2 migration interface.
+> 
+> To avoid duplicating the extensive migration logic already present in
+> QEMU, this series reuses the generic VFIO migration infrastructure
+> (hw/vfio/migration.c). We achieve this by abstracting the hardcoded
+> kernel ioctl() and read()/write() calls behind the existing
+> VFIODeviceIOOps table, allowing the vfio-user transport to supply its
+> own socket-based implementations.
+> 
+> Kernel VFIO transfers device migration data through a dedicated data_fd.
+> vfio-user instead uses its already-established UNIX socket. We introduce
+> three new wire commands (VFIO_USER_MIG_DATA_READ, VFIO_USER_MIG_DATA_WRITE,
+> and VFIO_USER_GET_PRECOPY_INFO) for streaming migration data and querying
+> pre-copy information. The protocol documentation and dirty-page logging
+> behaviors are updated accordingly.
+> 
+> The corresponding SPDK device-side implementation is available as a WIP
+> series:
+> 
+> https://review.spdk.io/q/topic:vfio-user-live-migration-v2
+> 
+> Current limitations:
+> 1. Peer-to-Peer (P2P) migration states are not currently supported by
+>     the libvfio-user server, so P2P support is not included.
+> 2. Device state pre-copy is not yet supported over vfio-user. This
+>     series explicitly strips the PRE_COPY bit from the advertised
+>     migration flags, forcing the generic migration code to execute a
+>     standard stop-and-copy migration.
+> 3. Backward migration to older QEMU versions is not explicitly handled
+>     with compat properties in this series, as older destination binaries
+>     lack the underlying capability to receive the vfio-user migration
+>     state.
+> 
+> Changes in v2:
+> - Use vfio_device_get_feature() for migration device-feature operations.
+> - Add a guarded vfio_device_reset() wrapper and route all reset callers
+>    through it.
+> - Add guarded wrappers for get_precopy_info, mig_data_read, and
+>    mig_data_write_from_file, and route their callers through them.
+> - Preserve the separation between capabilities and callbacks in the
+>    kernel VFIODeviceIOOps initializer.
+> 
+> v1:
+> https://lore.kernel.org/qemu-devel/20260903130833.1437632-1-hugo.komatsu@nutanix.com/
+> 
+> Hugo Komatsu (7):
+>    docs/vfio-user: clarify data_fd and DMA logging behaviors
+>    vfio: route device_feature through io_ops
+>    vfio: route device_reset through io_ops
+>    vfio: use io_ops abstraction for migration related ioctls
+>    vfio-user: enable DMA logging for dirty page tracking
+>    vfio-user: implement mig_data read/write socket operations
+>    vfio-user: enable live migration for pci devices
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+I just received :
+
+   Dear sender,
+   Thank you for your email. This mailbox is no longer active and your email will not be forwarded. Please contact "andrew.dunn@nutanix.com"
+
+
+Is someone taking over this series ?
 
 Thanks,
-Amit
 
->      /* Possible values if this is a custom string type */
->      SpaprCapPossible *possible;
->      /* Make sure the virtual hardware can support this capability */
-> @@ -725,7 +726,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_HTM,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_htm_apply,
->      },
->      [SPAPR_CAP_VSX] = {
-> @@ -734,7 +735,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_VSX,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_vsx_apply,
->      },
->      [SPAPR_CAP_DFP] = {
-> @@ -743,7 +744,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_DFP,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_dfp_apply,
->      },
->      [SPAPR_CAP_CFPC] = {
-> @@ -752,7 +753,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_CFPC,
->          .get = spapr_cap_get_string,
->          .set = spapr_cap_set_string,
-> -        .type = "string",
-> +        .type = &str_type_info,
->          .possible = &cap_cfpc_possible,
->          .apply = cap_safe_cache_apply,
->      },
-> @@ -762,7 +763,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_SBBC,
->          .get = spapr_cap_get_string,
->          .set = spapr_cap_set_string,
-> -        .type = "string",
-> +        .type = &str_type_info,
->          .possible = &cap_sbbc_possible,
->          .apply = cap_safe_bounds_check_apply,
->      },
-> @@ -774,7 +775,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_IBS,
->          .get = spapr_cap_get_string,
->          .set = spapr_cap_set_string,
-> -        .type = "string",
-> +        .type = &str_type_info,
->          .possible = &cap_ibs_possible,
->          .apply = cap_safe_indirect_branch_apply,
->      },
-> @@ -784,7 +785,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_HPT_MAXPAGESIZE,
->          .get = spapr_cap_get_pagesize,
->          .set = spapr_cap_set_pagesize,
-> -        .type = "size",
-> +        .type = &size_type_info,
->          .apply = cap_hpt_maxpagesize_apply,
->          .cpu_apply = cap_hpt_maxpagesize_cpu_apply,
->      },
-> @@ -794,7 +795,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_NESTED_KVM_HV,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_nested_kvm_hv_apply,
->      },
->      [SPAPR_CAP_NESTED_PAPR] = {
-> @@ -803,7 +804,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_NESTED_PAPR,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_nested_papr_apply,
->      },
->      [SPAPR_CAP_LARGE_DECREMENTER] = {
-> @@ -812,7 +813,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_LARGE_DECREMENTER,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_large_decr_apply,
->          .cpu_apply = cap_large_decr_cpu_apply,
->      },
-> @@ -822,7 +823,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_CCF_ASSIST,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_ccf_assist_apply,
->      },
->      [SPAPR_CAP_FWNMI] = {
-> @@ -831,7 +832,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_FWNMI,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_fwnmi_apply,
->      },
->      [SPAPR_CAP_RPT_INVALIDATE] = {
-> @@ -840,7 +841,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_RPT_INVALIDATE,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_rpt_invalidate_apply,
->      },
->      [SPAPR_CAP_AIL_MODE_3] = {
-> @@ -849,7 +850,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_AIL_MODE_3,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_ail_mode_3_apply,
->      },
->      [SPAPR_CAP_DAWR1] = {
-> @@ -858,7 +859,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
->          .index = SPAPR_CAP_DAWR1,
->          .get = spapr_cap_get_bool,
->          .set = spapr_cap_set_bool,
-> -        .type = "bool",
-> +        .type = &bool_type_info,
->          .apply = cap_dawr1_apply,
->      },
->  };
-> @@ -1069,9 +1070,9 @@ void spapr_caps_add_properties(SpaprMachineClass *smc)
->          g_autofree char *name = g_strdup_printf("cap-%s", cap->name);
->          g_autofree char *desc = g_strdup(cap->description);
->  
-> -        object_class_property_add(klass, name, cap->type,
-> -                                  cap->get, cap->set,
-> -                                  NULL, cap);
-> +        object_class_property_add_qapi(klass, name, cap->type,
-> +                                       cap->get, cap->set,
-> +                                       NULL, cap);
->  
->          object_class_property_set_description(klass, name, desc);
->      }
-> 
-> -- 
-> 2.55.0.543.g5ebe2ebe4ea8
-> 
-> 
+C.
+
+
+
 
