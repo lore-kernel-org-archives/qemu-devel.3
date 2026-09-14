@@ -4,110 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0695FC88E73
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F9EC88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x67Yf-0005Hg-T1; Mon, 14 Sep 2026 10:21:23 -0400
+	id 1x67xw-0000Pk-86; Mon, 14 Sep 2026 10:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x67YP-0005Fy-9t
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:21:08 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x67xs-0000PV-Mm
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:47:24 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x67YN-0000aV-La
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:21:04 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6714595153cso642751d50.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:21:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789395662; cv=none;
- d=google.com; s=arc-20260327;
- b=alSKWi2q/fsmuWYXgjvwpk8J4go8aYHBdT7DRlD8/yn/SoE/IfoR2Qif/TrpvEqZ/Z
- DzAK1pK23lVz9EgYvTyeBuVhlgh3ufqai/aplK8wxtWs4qOghTovSLpmYjXw5HfhoaYO
- LQgLdiXpsTkc06t4ZBmAY0oTRILNnICLIGx43OvIV1IO5kaPw7yv4aG0W/6h4PTJ2fLT
- L3QmuTJlLlc6jZQz4v4DDS0wrog5mN+oFGyJzMMAbf3DaLaL6wiR9MeIiaJITcce0gOG
- ElOKsfmcsn3jpxUQ5N1ip/qHC0wz0qbgvL76vYm+p6hNo5nnbZGtvIXQ2PgSk56gA/Zb
- Zn8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=r396Lzczg0syui8baH6Ko5amzTIaAAgFy4E2en2/tHw=;
- fh=jol11vazjHn162B7nW4goQwOGRozc5aH2gJiMA21Eso=;
- b=RaiE9Fixhwev7sIY/Qi56xp8iX2zGo4L4vK9GKsTrz+L3+jGqQvZApVWVBKNpbjfuk
- d82xS4mVDDqKRMxaShBim+TQPziiMhuyjVVuvDNmVEbvZEEKiZLWRVcgcJVQe+57JBXo
- 2Nl8ZVBxKN0rVezO39m5hTU73IWiYFuV10wTjbtvki/W/AVJL2ICypbp08ae4zD4ujxE
- Dl0B5nEVASeUwXLZNbctXPTAo58NT2qhqgN9uoIV3c+mWIiKjWYiW68yndOTL0iLepb5
- 64eP+nGRn1XKwTTkjQMSIBRuSG5zSEnksx0UkjJhBljtSWMDpSsSwumdd7IaGpz+4+B9
- eecQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789395662; x=1790000462; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=r396Lzczg0syui8baH6Ko5amzTIaAAgFy4E2en2/tHw=;
- b=g699k6xz2SKkgR0U7dVinqgJCNm2zI5vnVxrfcvfKNpEbvsH8whAhvpcCSR4DYlCTN
- CK+kIlzGMTF0qX78qeSqYUKZPOAyWUHztXNN1f/Q+adDku95+htD7RGw08YScuaQurxV
- W8K0vajTUngeD2+KZjMSckuDAcSngmm6COlRdHegKpU+0zbY2TWCLAR74erWC3KjPT+4
- ft9yUllAC8BQ3vLJqxYqpyw//z7ECOMhA3ld8XUMWLnZ4j/8OAbpYZjXimjkMytSBXYA
- 7wFzdL5BMn4OFTeleWzzCpJiMeyCztdBMRHBXFKgH3MCeXbsLG3zqbx1AStTQcJySCP9
- 4Amw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789395662; x=1790000462;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=r396Lzczg0syui8baH6Ko5amzTIaAAgFy4E2en2/tHw=;
- b=VPTWGnqEA92bvWGItBYQIPNhHBKoW4cgCtBg7d5o61CODeQx99xfhZ94c0dv/np57y
- FJv+YQMZWLedppIaajpUOxasA/3a0lsCSQT/YOHT2QU7IAEei/0fM2BiOPJP4X4hRGQa
- feZYp0B3MveyWQXJjDA5P23vMLqRSfAU3wsBV6KFiqk6QukKRIapKMYi12VvajYy75M4
- NmARA8VVN9CjMXCdcsfC5c3vPn/meurpJb+7TEa7hLdddgZEXFOwDVyhtRYg38Q/Jfvn
- DhfTT3QAnqCmehWQE4llVDAZr1beN4lqqj/0NJX8m5FZ6935R/7Spq5y0PpfRiPf3dvl
- GW6g==
-X-Forwarded-Encrypted: i=1;
- AKwUvByTXNor5LnEQXp4bV+QsfiHYNEA81ElKac05H8VWL4nj+AytXS8kffWc2aSdJijjPQNMjn6afXev639@nongnu.org
-X-Gm-Message-State: AFuF++lafLUlYWmVnR9eYruXnlhUOsHFgpIQNp5ahzIYdTokj/hoD4vK
- HgGAdK+eBKKwnbX5UzLlvtXv9Fm3xDOjwLKEX/AiG3+Q6nJSmBh8V813fyufTIWdLfLtG/bEySM
- 9ELKOcgWusVwZ27DJKWUgb2NxT7HbdQ8t3zgO9N/4HA==
-X-Gm-Gg: AYBFou1AUb5K8B9AOfq22BiJ3w8t1cYn7bOSHKGHPGeIZ/wNABAj7H9f4qOGUaMiWwe
- VofFnUrDBwxWIG1K9y8W/RzCieq1fU7hGiyvLuP0dISPThgNnwbOAv6eWPDPiVo/HpbZdfDCtNW
- qPbJqi7YYzb1BHtVLcOwiZaUUAN7I1uI2f5VwbxykdwVJBH95MV1+N8K0eWaXxyfkuDzZXRgQ0r
- CuDRB+bEVxKXjfCER29t7KLXX1ULzj1UPmGroXmK6c+g1ueX3DWNThdd5nZuro5EIbvpn91h9wT
- xzj5ZFf86MidLRcVnMlxUUtNSzwrqzxT5jPJaXsUE6bfEE4Zz5QQDY/BGGEm37L4Z2ZGL+8FNtk
- ZpuXCFKMv+6dDGWHftMqGaJa9kMHw0idioXJbd6Y=
-X-Received: by 2002:a53:ac96:0:b0:664:bf1c:2922 with SMTP id
- 956f58d0204a3-67142c97195mr1196017d50.27.1789395657320; Mon, 14 Sep 2026
- 07:20:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x67xq-0004tS-W6
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:47:24 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 042FD21C6D;
+ Mon, 14 Sep 2026 14:47:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789397234; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qwNj2YsMIY+phz7k2LXsZWq+UTl99RO+xBp6icEKPmg=;
+ b=bXJf/VS2Y6j95puEuRt5Zb07I39PvhZARPgFHSM23IuGu6x/u6NVq6Wntk69ZyW1Fz2vgp
+ kBapVTU5U75vO/qadVggJuRr11pFXNczSPFTp4BAo6u3XI7ywt4/Kqk77ToH3T8A89vADG
+ u+i5C6sjoMSPUG3f29BGHfc2gq+46l8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789397234;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qwNj2YsMIY+phz7k2LXsZWq+UTl99RO+xBp6icEKPmg=;
+ b=C9D3Ibkqva8JJ4xmqL9vdxQr2d0BAiHHaaPGPPNMm4+pI7NZNX823LVKY7bVJ+fyDSv8ja
+ mkKiDSpXmK2SC/BA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="u4FIc/sT";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BA92ERkk
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789397230; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qwNj2YsMIY+phz7k2LXsZWq+UTl99RO+xBp6icEKPmg=;
+ b=u4FIc/sTPiKR/esZ2wPZTvoykgGs/Bci4QdA3VCJz0fkSFSrsSvPKi63+D9uzQyf2UK3hl
+ BXjeEuY/TdP5iuB1Pb4KIXQuOsigNUZGF8Kzg4CYYoAASdbdKSQuMuXtB+pYYHIfTixPJE
+ tSLwhffyt/f2oMHJ4qfF+bYU/1Pkc/A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789397230;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qwNj2YsMIY+phz7k2LXsZWq+UTl99RO+xBp6icEKPmg=;
+ b=BA92ERkkWrXDKcHXyeCPxbjOQ9541Yxxn0sCjVu7rzsUXJwZQfrL/xaeQqdV2n9j0Dcp46
+ R1WGZJnbROWIkuAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 77D0A13693;
+ Mon, 14 Sep 2026 14:47:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id j4CIEu0IqGr+NgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 14 Sep 2026 14:47:09 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 10/18] tests/qtest/migration: Add a test for HMP
+ completion
+In-Reply-To: <aqcOjb1jV_UJlBwx@gallifrey>
+References: <20260909214509.237309-1-farosas@suse.de>
+ <20260909214509.237309-11-farosas@suse.de> <aqcOjb1jV_UJlBwx@gallifrey>
+Date: Mon, 14 Sep 2026 11:47:03 -0300
+Message-ID: <87a4pjubyw.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260909144151.26803-1-sebott@redhat.com>
- <20260909144151.26803-2-sebott@redhat.com>
-In-Reply-To: <20260909144151.26803-2-sebott@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Sep 2026 15:20:44 +0100
-X-Gm-Features: AcwNN1Ub5nw9wtChzL2tYWe9mGDu0DkyVmpXYzrIP_mFtm9Uf1F0iYjcv7lA0uQ
-Message-ID: <CAFEAcA9HBVnBcSchvBrt-z9UgYBeJ2EZAJrdbeoL_CoKgvU6rw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] arm: handle demuxed ID registers
-To: Sebastian Ott <sebott@redhat.com>
-Cc: Eric Auger <eauger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- Alireza Sanaee <alireza.sanaee@huawei.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, 
- khushit.shah@nutanix.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Eric Auger <eric.auger@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 042FD21C6D
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_DN_SOME(0.00)[]; MISSING_XM_UA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,51 +126,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 9 Sept 2026 at 15:42, Sebastian Ott <sebott@redhat.com> wrote:
->
-> From: Cornelia Huck <cohuck@redhat.com>
->
-> For some registers, we do not have a single ID register, but actually
-> an array of values (e.g. CCSIDR_EL1, where the actual value is
-> determined by whatever CSSELR_EL1 points to.) If we want to avoid
-> using a different way to handle registers like that for every
-> instance, we should provide some kind of infrastructure. Therefore,
-> add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
-> we already use for regular ID registers.
->
-> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index e3f931dba2..9652f8b0bf 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -919,6 +919,18 @@ typedef struct {
->          i_->idregs[REG ## _EL1_IDX];                                    \
->      })
+> * Fabiano Rosas (farosas@suse.de) wrote:
+>> The following patches will touch HMP readline completion for migration
+>> parameters, add a test case.
+>> 
+>> The test puts the monitor on a chardev via socket and bypasses qtest
+>> facilities because it needs to emit raw codes to readline. It
+>> therefore requires a couple of new helpers to read/write to the
+>> monitor socket.
+>> 
+>> Usage:
+>> QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+>> ./tests/qtest/migration-test --full -p /x86_64/migration/hmp/completion
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
 >
-> +#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-> +    ({                                                                  \
-> +        ARMISARegisters *i_ = (ISAR);                                   \
-> +        i_->idregs[REG ## _IDX + INDEX] = VALUE;                        \
-> +    })
-> +
-> +#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
-> +    ({                                                                  \
-> +        ARMISARegisters *i_ = (ISAR);                                   \
-> +        i_->idregs[REG ## _IDX + INDEX];                                \
-> +    })
+>> +static void hmp_sock_read(int fd, char *buf, size_t buf_sz)
+>> +{
+>> +    char *p = buf;
+>> +    size_t sz = buf_sz - 1;
+>> +
+>> +    assert(fd >= 0);
+>> +    memset(buf, 0, buf_sz);
+>> +
+>> +    while (sz > 0) {
+>> +        ssize_t r = read(fd, p, sz);
+>> +        char *prompt;
+>> +
+>> +        if (!r) {
+>> +            break;
+>> +        } else if (r < 0) {
+>> +            if (errno == EINTR) {
+>> +                continue;
+>> +            }
+>> +            g_assert_not_reached();
+>> +        }
+>> +
+>> +        p += r;
+>> +        sz -= r;
+>> +
+>> +        prompt = strstr(buf, "(qemu) ");
+>> +        if (prompt) {
+>> +            *prompt = '\0';
+>
+> I'm a bit confused by what you want the output to look like after this,
+> are you assuming this is the end of the string you're reading so truncation
+> is OK?
+>
 
-Would it be reasonable to assert() in these that the INDEX is within
-the range we expect it to be (i.e. >=0 and <= REG ##_IDX_LAST) ?
-That would compensate for the loss of the compile-time checks
-in patch 2 and the fact that static checkers won't be able to
-see the intended bounds now this is just a slice of idregs[]
-rather than a standalone array.
+Yes, it's how I'm detecting the end of input. Here's a printf("%s|\n", buf)
+before the truncation:
 
-thanks
-- PMM
+1) Read banner:                                                                                    
+
+QEMU 11.1.50 monitor - type 'help' for more information
+(qemu) |
+
+2) Write completion input 'migra\t'. Then read back:
+
+migra
+migrate                 migrate_cancel          migrate_continue
+migrate_incoming        migrate_pause           migrate_recover
+migrate_set_capability  migrate_set_parameter   migrate_start_postcopy
+(qemu) |
+
+3) Write completion input 'info migra\t'. Then read back:
+
+info migra
+migrate               migrate_capabilities  migrate_parameters
+(qemu) |
+
+I think this is correct? Let me know if I missed something.
+
+>> +            break;
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +static int comp(const void *a, const void *b)
+>> +{
+>> +    return strcmp(*(const char **) a, *(const char **) b);
+>> +}
+>
+> Can you use qemu_pstrcmp0 there? (Maybe with g_ptr_array and g_ptr_array_sort is
+> what adds to some of the other questions below?)
+>
+
+Good idea, specially the g_ptr_array. I'll update the code.
+
 
