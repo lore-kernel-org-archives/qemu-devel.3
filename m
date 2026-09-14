@@ -4,148 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C910C88E50
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 06:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4AFEC88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x60Ph-0007Mx-V7; Mon, 14 Sep 2026 02:43:38 -0400
+	id 1x60xd-00044Y-6h; Mon, 14 Sep 2026 03:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x60PR-0007MC-Qw
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 02:43:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x60xQ-00043c-3O
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:18:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x60PP-0006p3-D7
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 02:43:21 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x60xL-00043q-M3
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:18:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789368195;
+ s=mimecast20190719; t=1789370299;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CTT/16hFC9yGJgnr9klrTPLxwxYTVEjeH6fbS+aYGQ0=;
- b=QYD0KWxoBJi8xFW0+m2xskk8lckbxX4TyCwA6HfuWf8CNpB+dwG6/EXSjNWUWR/PcGV1+h
- wf9bctfgHStEQ5Hzt26F+Z9647M3b5pGmQn0ZCer9T7pq1WTTg7aCRBEfyt9ijqHU0UjlC
- caIahZj21/DPgMXbixL6KdOHBHB/iWY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Oa1EvBQH+EvY51fHmzjZBL1/LrRXoMt6h/U5sgaYxeQ=;
+ b=d5olVE2zxcabWfM4oWsYe9YdusXj9ALdSs3Yn8J4qzr81fEBcJ9jcmEtENJ19xdWu+g0VI
+ M/56I480ANsSHbZ9VI6/f8tmRUUwEeuxcVwMKjBWur9QkfItavVmR7psUtNETsQXexOzdn
+ jYMQsv/i1V6cbrmKdfmbmh7mJ5GqiTY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-WsuEZommPli1AdCa7HSNZw-1; Mon, 14 Sep 2026 02:43:13 -0400
-X-MC-Unique: WsuEZommPli1AdCa7HSNZw-1
-X-Mimecast-MFC-AGG-ID: WsuEZommPli1AdCa7HSNZw_1789368192
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e6862e924so15963015e9.0
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 23:43:13 -0700 (PDT)
+ us-mta-304-aWacZQeYPuKO8xAaxJohOw-1; Mon, 14 Sep 2026 03:18:17 -0400
+X-MC-Unique: aWacZQeYPuKO8xAaxJohOw-1
+X-Mimecast-MFC-AGG-ID: aWacZQeYPuKO8xAaxJohOw_1789370296
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49e65f2f1baso16686295e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:18:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789368192; x=1789972992; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CTT/16hFC9yGJgnr9klrTPLxwxYTVEjeH6fbS+aYGQ0=;
- b=pLyIc+WcVkekYplMb6NX2Bw/T+juLEHijDT/KyjE3ET1dkGaHQHGqWtMwcHZC5quHQ
- IxGtypBVilFLRSNMqkm4KYWGQke4aO+1iMdOsNx5HcDS7odlLuNKbT6w6B7432PIxFOO
- QZN6jyy5muvaf5lRmYNG1lheeNAe9XMkXkDPQCB0+fpkBt9e6Z2Xdj7PEaQI9FcoZOrT
- Ogm14Xh59q1tDKh176dGcxs1P/s9mRuSOgULDx2BqJjAJx81fT+TLH3tv8ZAVDRZTueo
- T/UDLXeOC7DgMOVL9PH8OkDjwN0eFLzr7RnMJDzFYDj0LsSBqToRiZw/3+JespnY4iBV
- ZWTA==
+ d=redhat.com; s=google; t=1789370296; x=1789975096; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Oa1EvBQH+EvY51fHmzjZBL1/LrRXoMt6h/U5sgaYxeQ=;
+ b=Tc6jUGneFPVnYZkx9kbCNav3wrg+4kp94yDX86dtIssVE3864ZZAKE8heTv02ItvYi
+ DtHtPKtmAsfwAAY8wtoSSMVfmTOduIQlGcgQWq4DBA83KH8rTGY5gVChZU4RCO4Fto37
+ EjvZdxbwMUsWY9WQ5fVFmONfDLbjAl6HdhsyLe245CRZVK5FJXd5vgYv/JIOV75hIPDB
+ 1bRXis7CZ039RB5/YfVTQl9Jz0ylDIJ0hgxUkyGk8Vr/ERCLERsA+JAVMY30BB/xLTed
+ 2IGevcxMdMe7Qh9kLBT52S4gmfkqUcN5VCkWjFUEbKODtvRDayk568qOIoEIW6JauTYH
+ M6qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789368192; x=1789972992;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CTT/16hFC9yGJgnr9klrTPLxwxYTVEjeH6fbS+aYGQ0=;
- b=J1R5u+IXPiIrXwI23zSTo9i9k22AZkUa/oD0l/Rhf7bDKYOmj6gTuQsopvccKS5dDI
- sP4qez9zKqvYQzJ+G4iR8UKdUGw3XIMoMJ05UWwxFSd41wls2ymvOAhnWhqZ/rwd3hMv
- Xxhnl6UDoyU2aQJbti5c84PBjVNK6DxXbJNPQPJIUBkL/4JKx3OlmdXiCtXLxP07tdVt
- X3bTGxQWa9MWcdS3bXUHOSRzrELsIuxoqS4PRfM/fToLv0/Qwaob1Vpljcd8qU1aDEWG
- /HQ8OTZ8emgyjz/NtiHp1Mxg/JY8ELx/wwuHT+/uOVsU13gfk6+6DZqSmyePhTwwetAW
- 8P2g==
+ d=1e100.net; s=20251104; t=1789370296; x=1789975096;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Oa1EvBQH+EvY51fHmzjZBL1/LrRXoMt6h/U5sgaYxeQ=;
+ b=ADy2E+2vMf2/ZA8oi48c7uZ9+5UjoVS/WC38FcOVBtK7siXnYwLxBHUrTvHv1cYAG3
+ OUQMCPuYYL8XD+W5I1tXJDIXs+XvP1gYKdL4EgwDaeGVPokbu+TQkracNwHp+k/Mqwbi
+ 7cSyqGdksG+/HcAnJW83JEDgtpESZ1JHkZ3wZV3/ulOimr1Pv38G1GrV7CEwqLyqaC6t
+ Ie4R0oJTtcxg0fZEIKEirl00L47ONWYa548m3mzihBPrJtuUbOShg6qsawoUfyr7UsSh
+ QFfbg+KzHVlsnhA0HzhvxQ7G8oZeqPp35hS+wfIGc+iKstRmxgSUcLSbEgg5v3QCIHLH
+ /i6g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwRUlB22IYHhfF7ywTo8Gx9w6bsVd+uY+IO0PtOFV07jwBx+oZkoIKGowPP6CWvwGOhPpaXgul3OO9y@nongnu.org
-X-Gm-Message-State: AFuF++kY85FFXWD/zNrzVlAq3tHX3sMODyENxEv+Tx8gQ8gA16myXtyo
- VRBYMMvhp+4hCY1z11kBMaTB+QFk3NKsi5nkEeZCTG1ZlRGvtfAh3diUQIYMVhwsvwXnMsjSt4S
- Av6inqRY83SiDC9QDaIjjZDRCd6CAXsBDA4GSGXb16R8tMYQyWiXzdEwb
-X-Gm-Gg: AYBFou36hKMKBS30RaoBdyKpHKApjvCt245XVyM8sP9BcCu5Jqtclt/JPvkkbaFj+8D
- oSe2FaFH5fLhWLYfcDl0tOxlzcIuGcFeao+5y6YIZpHLBcbnz72FQwvW7Cb28/2CemlKhEzIOY9
- +GDYtuze8QugrHiUUgYkWAxiTLj9iv/rTs9Ro/7UtLehK5bz3xUHeu5gnnMTYxQKVo+l9SOITUT
- YctBz6dArIw/3AodqJqiiNQoWYTRqRzOL8So7mQp956UN8DGUHTG8t2i2P4upXCwvrspBBPJz9v
- /hNintfeCa5TeL17mBjwoZNgKfXzfiGJ99ex6eis+d06QSbOwmDrfyC9K4vqCWWb43uib9tt
-X-Received: by 2002:a05:600c:37c4:b0:49e:7862:c09e with SMTP id
- 5b1f17b1804b1-49e7a656db2mr13413425e9.14.1789368192435; 
- Sun, 13 Sep 2026 23:43:12 -0700 (PDT)
-X-Received: by 2002:a05:600c:37c4:b0:49e:7862:c09e with SMTP id
- 5b1f17b1804b1-49e7a656db2mr13413155e9.14.1789368192072; 
- Sun, 13 Sep 2026 23:43:12 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.51]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e71e300f3sm195576235e9.7.2026.09.13.23.43.10
+ AKwUvBzvwM+79yDjsPhYBR2T7tsRMPFpRMchcI4fzm2fUN26uqyj7RH/acmHUT222lJXZPiTAAnN1Okufb5j@nongnu.org
+X-Gm-Message-State: AFuF++nDF7zkIlliULQ2TzpPTvNZP0BWUIbLhePjTyZp8HJQYAmIwKMQ
+ JNQ5VzNLkF7spjOTrzZ/Lf+9He5pZGFi+1qEWNY+NtGBpx/zJ4CrMS5cSQCsoiFXTSSpegPHh4o
+ +LPw55z91j9Ulw65BBTTYciSmmVF65ID86Guci1c6blmPlUpKrDrMwE5G
+X-Gm-Gg: AYBFou0vvwyjCQUMH4t0j+i7EPGk2s1syxo1faxemVR5J6Rf29CF14Y/06NIxVTE0An
+ T+R0OOBFOTQEBoKuwi+NLEj5Sk9nfNpLKxVoQ0cwAcwdFuzP0taQ4GPkhc5P3JhEOQ85pRHKIFU
+ 02G0wiipRdiYhuDV7jxDqTTDw4V3AcNC14JFOc0jy8ypTVEwFHTxoozV2rQ8ohBrls6A44GY29+
+ yjLkXWiGxFjwXd3aLzRqC2lPndO4ST6tEYY9NswHDosulg9uHgz6zq0FznRbMK865F3wHlNR2de
+ rpwxoGzYrFgb2OA/FMR5fkNGil9cImrSnDSKgHo7oYC7uY6qDWvY4Ebn6Nz6LUdEBaY0EOWvo2W
+ BW9fY1psHicCQV1Cq1iamfN6WszHeVId6hlw6JgE7qQ==
+X-Received: by 2002:a05:600c:c8a:b0:493:aa0a:45ad with SMTP id
+ 5b1f17b1804b1-49e7a6386d4mr13249085e9.2.1789370296068; 
+ Mon, 14 Sep 2026 00:18:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:c8a:b0:493:aa0a:45ad with SMTP id
+ 5b1f17b1804b1-49e7a6386d4mr13248585e9.2.1789370295551; 
+ Mon, 14 Sep 2026 00:18:15 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
+ ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e7723d458sm91307095e9.0.2026.09.14.00.18.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Sep 2026 23:43:11 -0700 (PDT)
-Message-ID: <57431f7c-fcdc-408e-b6a2-9a255315c882@redhat.com>
-Date: Mon, 14 Sep 2026 08:43:10 +0200
+ Mon, 14 Sep 2026 00:18:14 -0700 (PDT)
+Message-ID: <0f4573f5-2828-4cae-9bab-2ec1a975c4eb@redhat.com>
+Date: Mon, 14 Sep 2026 09:18:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: The CPU_RESOLVING_TYPE is not fixed for x86_32 and x86_64. is
- that proper?
-To: luoyonggang@gmail.com, qemu-level <qemu-devel@nongnu.org>
-References: <CAE2XoE_=G5Ri9p23vJRX3iJMHSDH4Ec+0vWWbVNf4DksxtbG2A@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAE2XoE_=G5Ri9p23vJRX3iJMHSDH4Ec+0vWWbVNf4DksxtbG2A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] vfio: route device_feature through io_ops
+To: Hugo Komatsu <hugo.komatsu@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ Alex Williamson <alex@shazbot.org>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, John Levon <john.levon@nutanix.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Rafael Castillo <rafael@trfs.me>, Thanos Makatos
+ <thanos.makatos@nutanix.com>, Tony Krowiak <akrowiak@linux.ibm.com>
+References: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
+ <20260911140710.2348139-4-hugo.komatsu@nutanix.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260911140710.2348139-4-hugo.komatsu@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,25 +176,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/09/2026 07.45, Yonggang Luo wrote:
-> #define CPU_RESOLVING_TYPE TYPE_X86_CPU, and TYPE_X86_CPU is vary for for 
-> x86_32 and x86_64. can it define TYPE_X86_CPU to be a fixed 'x86-cpu' like 
-> other arches?
-TYPE_X86_CPU differs depending on whether you build the binary that targets 
-64-bit guest CPUs (qemu-system-x86_64) or the binary that targets 32-bit 
-guest CPUs (qemu-system-i386). You cannot easily change this without 
-breaking migration from older QEMU versions.
+On 9/11/26 16:19, Hugo Komatsu wrote:
+> The generic VFIO migration code in hw/vfio/migration.c issues kernel
+> ioctls directly for VFIO_DEVICE_FEATURE. Route these through the
+> existing vfio_device_get_feature() wrapper, which dispatches through
+> VFIODeviceIOOps so alternate transports such as vfio-user can supply
+> their own implementation.
+> 
+> This is a pure preparatory refactor: the kernel path is unchanged.
+> 
+> Co-authored-by: Rafael Castillo <rafael@trfs.me>
+> Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
+> ---
+>   hw/vfio/migration.c | 29 ++++++++++++++---------------
+>   1 file changed, 14 insertions(+), 15 deletions(-)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 73c49d8c24..6db4c2a216 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -168,33 +168,30 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
+>       feature->flags =
+>           VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_DEVICE_STATE;
+>       mig_state->device_state = new_state;
+> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> +    ret = vfio_device_get_feature(vbasedev, feature);
+> +    if (ret) {
+>           /* Try to set the device in some good state */
+> -        ret = -errno;
+> -
+>           if (recover_state == VFIO_DEVICE_STATE_ERROR) {
+> -            error_setg_errno(errp, errno,
+> +            error_setg_errno(errp, -ret,
+>                                "%s Recover state is ERROR. Resetting device",
+>                                error_prefix);
+> -
+>               goto reset_device;
+>           }
+>   
+> -        error_setg_errno(errp, errno,
+> +        error_setg_errno(errp, -ret,
+>                            "%s Setting device in recover state %s",
+>                            error_prefix, mig_state_to_str(recover_state));
+>   
+>           mig_state->device_state = recover_state;
+> -        if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> -            ret = -errno;
 
-What's exactly the problem that you have run into that led to this question?
+There is a little difference here.
 
-FWIW, I once proposed a patch series that allows to integrate both target 
-types in one binary:
+The code used to return the errno of :
 
-  https://lore.kernel.org/qemu-devel/20260402095132.29245-1-thuth@redhat.com/
+         mig_state->device_state = recover_state;
+         if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
 
-... however, I unfortunately failed to get the supporting attention of the 
-x86 maintainers, so this has never been merged.
+as introduced in commit 31bcbbb5be04 ("vfio/migration: Implement VFIO
+migration protocol v2").
 
-  Thomas
+Now it returns the errno of :
+
+     feature->flags =
+         VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_DEVICE_STATE;
+     mig_state->device_state = new_state;
+     if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+
+You proposal might be better but it is a behavior change and should
+be introduced in other patch. Or keep the original behavior in this
+patch.
+
+Thanks,
+
+C.
+
+
+> +        int recover_ret = vfio_device_get_feature(vbasedev, feature);
+> +        if (recover_ret) {
+>               /*
+>                * If setting the device in recover state fails, report
+>                * the error here and propagate the first error.
+>                */
+>               error_report(
+>                   "%s: Failed setting device in recover state, err: %s. Resetting device",
+> -                         vbasedev->name, strerror(errno));
+> -
+> +                         vbasedev->name, strerror(-recover_ret));
+>               goto reset_device;
+>           }
+>   
+> @@ -347,13 +344,13 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>       feature->flags =
+>           VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIG_DATA_SIZE;
+>   
+> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> +    ret = vfio_device_get_feature(vbasedev, feature);
+> +    if (ret) {
+>           /*
+>            * If getting pending migration size fails, VFIO_MIG_STOP_COPY_SIZE
+>            * is reported so downtime limit won't be violated.
+>            */
+>           migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
+> -        ret = -errno;
+>           warn_report_once("VFIO device %s ioctl(VFIO_DEVICE_FEATURE) on "
+>                            "VFIO_DEVICE_FEATURE_MIG_DATA_SIZE failed (%d)",
+>                            vbasedev->name, ret);
+> @@ -1094,11 +1091,13 @@ static int vfio_migration_query_flags(VFIODevice *vbasedev, uint64_t *mig_flags)
+>       struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
+>       struct vfio_device_feature_migration *mig =
+>           (struct vfio_device_feature_migration *)feature->data;
+> +    int ret;
+>   
+>       feature->argsz = sizeof(buf);
+>       feature->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIGRATION;
+> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> -        return -errno;
+> +    ret = vfio_device_get_feature(vbasedev, feature);
+> +    if (ret) {
+> +        return ret;
+>       }
+>   
+>       *mig_flags = mig->flags;
+> @@ -1137,7 +1136,7 @@ static bool vfio_dma_logging_supported(VFIODevice *vbasedev)
+>       feature->flags = VFIO_DEVICE_FEATURE_PROBE |
+>                        VFIO_DEVICE_FEATURE_DMA_LOGGING_START;
+>   
+> -    return !ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
+> +    return !vfio_device_get_feature(vbasedev, feature);
+>   }
+>   
+>   static bool vfio_migration_init(VFIODevice *vbasedev, Error **errp)
 
 
