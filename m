@@ -4,93 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44817C88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD5BC88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CHI-0000kl-Ua; Mon, 14 Sep 2026 15:23:46 -0400
+	id 1x6CHV-0000pD-Jb; Mon, 14 Sep 2026 15:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CHB-0000gE-B1
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:37 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6CH9-0002Lj-OP
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 15:23:37 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-398b3b189e0so1860238a91.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 12:23:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789413814; x=1790018614; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kiqN/SNECHaFLGJUJJesup1atSVTnWLr1p2ytdyKDyg=;
- b=BS5AIj9urAKVuAAFcu70CUwOLEK6XbaNe96runcbqcW3Gye125L4XOdwkCYLqrwRCq
- zA3jPaYuqft7CqovWlq4j8t6NGjirA1r4ql/SWfAqZHpLbQ97uFGlSgxrsrPt+qL2t+7
- rPomS+xQUhafW6P9FQ/yzSTh+GwGB50tec8u71H7FwrP5nNgmsa1ZCOehUcI4TwBUcy8
- AUZcQmPjs0Wn4uNp+OtC5ls71eX0aeN5fxgV9/c56P2TwUbxM3R9d/7qK2VtSFjuPlMu
- zRPZR1ACqtpvooV4JaJl2GWdxE37ZHGfIHz7IXaKosuvBLqM/bj69nAnggxqpouDa8PG
- cG+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789413814; x=1790018614;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=kiqN/SNECHaFLGJUJJesup1atSVTnWLr1p2ytdyKDyg=;
- b=oFxZtm5a1hRsI0rMPy6NsV5M18eFsCFjiEhCSMUC5RQuMqSAdWQgQEUMtKBXWY+waD
- vl+kfkYQa+QEF2Dsb1ETCXpM76ieFM0iZSL6NQrwnv8oG7PQri7pYek+0e/X0eFVRTQj
- Vodb9SzZAw18QguI5r/MK7PapmBYaTUDfaAbFchyGyUI/uxU/kbJv/MPdXD3ECi98Ts4
- z2RXQv3dXIg8zaUokYxp8jDr2JQuYDsecjbLYDBMb34ubv22HozgI87x0Y7+V75s8Lq8
- nEEEI13knJN9c0/r35Y4SvzHe0VnMfJeu5M/ly6ZVauVw/YcpIU6z9aNTOuwbUg9THHz
- cemw==
-X-Gm-Message-State: AFuF++nIbGL+Q9OpZe6heBZtxepAXXxo3SQkZ5IJ7NjqiWTC3/q/D7sp
- 9FWtYfj+6SycUdF1U8qGSNlqY17ZX3/Wg8rBa0k3BxS97UgNr0ApxQV0ZZkR07RaUo6fN3IrBEp
- 2SWyHj4M=
-X-Gm-Gg: AYBFou1k23T/OhN9a0G6/b4jbCSvW5mD4XzDqTW6UBTusib2siKSYS1EdB31LGVB0cD
- TBc9HXrfo2AL1rZTRuyGZ9pF4SF1h/L70N+FtoqU6FVJaK0ndOY5b8iaN/WCOJ5FmS0Fu+14IOx
- mRZuxSIzYld9ew8q6Ou04x6TwD0Oxo7hrzYLacbVhwJiJpJw3z2N/ilSByDp8i1SpCnp+jfbRRZ
- ujaebQQkPbQWYXgp+oLXCvTRJg3Thl8FCNvzZ2vFaXgtR36qTunYkss4yqC9Kxa5YnHZJLXi1C8
- MllprHXp0UvJW9HVr6Yx26LYyU+dI7oBNYG7huzgMjXqAuxGYJ8eb4/KBMa0v25kpeDEXlskQ7W
- uuRg1H+irluICx9L3cB63H+RpGVtGE78skjKKsJLINRbc50PbDJoWSxtTUfoEnPCSTXLKpZ0FbG
- evvISzVmsfz+ER2SIr8zS8OvPeVB5KGnrIN8tuNzf/thExrh22qBWpa+PvBQFX8+ek6joWPtYQj
- 75VedHXTFvW8rSzkzCGDiOt45D41eY3EYNCzqUNhaL06KeelOlnJSxojmt2rw==
-X-Received: by 2002:a17:90b:2809:b0:39d:f2b0:5afd with SMTP id
- 98e67ed59e1d1-39df2b05b4emr5634398a91.2.1789413814312; 
- Mon, 14 Sep 2026 12:23:34 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
- ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14365ba729dsm42216419c88.14.2026.09.14.12.23.33
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 12:23:33 -0700 (PDT)
-Message-ID: <83ba5d71-d430-48a9-9c86-338290d0136f@linaro.org>
-Date: Mon, 14 Sep 2026 09:23:31 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/14] hw/core: report security status in query-machines
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x6CHF-0000kF-1k; Mon, 14 Sep 2026 15:23:41 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x6CHC-0002Lq-Nq; Mon, 14 Sep 2026 15:23:40 -0400
+Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hkFS673YRz7ypq;
+ Mon, 14 Sep 2026 21:23:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
+ s=dkim; t=1789413815;
+ bh=ZTxuBkdiyM6lBV5+oCGHkHOgg2kg/I1ByhAs3yLdk1E=;
+ h=From:To:Cc:Subject:Date:From;
+ b=g0r1Ozbpmms21L8oJd031psfoJlN1LDGGOIA8ubeI2KK+z49TyTLpRJ1dZuiT/gZ5
+ u/Po91u+gPleMfFYMFAC0bkj0KCVId+w9PQqMsl8rMUvJATgxi8n15Csjtfm39nYfB
+ rwQF5zTfvzjx3C5ZODp94AxjfUQbSfnVCGo4jMbGMSlU5Qqu6QQYMq+rPYKE+ag+pD
+ 5IHX5b06b7GdAac9ytclLhN9SfLVI8IYRW/FqziZVSKwrSDUI7ekbZp4/puvu1uF6c
+ abQVlzPiT+ALCp2WGzsQRT41JOpTiCXA89/bJEb6YszTjBQ0GeLqWuceeGxx0Y1Ou0
+ rK3F/3RPyN4wA==
+Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
+ [90.45.87.101]) (Authenticated sender: gilles.grimaud)
+ by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hkFS65VM3z6skd;
+ Mon, 14 Sep 2026 21:23:34 +0200 (CEST)
+From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
-References: <20260910103628.2326622-1-berrange@redhat.com>
- <20260910103628.2326622-11-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260910103628.2326622-11-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: qemu-arm@nongnu.org,
+	peter.maydell@linaro.org,
+	alex.bennee@linaro.org
+Subject: [RFC PATCH v1 0/6] target/arm: improve Armv6-M support
+Date: Mon, 14 Sep 2026 21:23:16 +0200
+Message-ID: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+X-Mailer: git-send-email 2.55.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,15 +70,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/26 00:36, Daniel P. Berrangé wrote:
-> Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
-> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
-> ---
->   hw/core/machine-qmp-cmds.c | 1 +
->   qapi/machine.json          | 8 +++++++-
->   2 files changed, 8 insertions(+), 1 deletion(-)
+This RFC series refines the Armv6-M support in QEMU by correcting NVIC
+limits, modelling the optional Cortex-M0+ privilege extension,
+tightening MPU register access, fixing MPU region size checks, masking
+TEX bits for Armv6-M, and reusing QEMU's existing PMSAv7 implementation
+for the compatible v6-M MPU.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Following review of the RP2040/Pico v3 RFC, these generic Arm changes
+have been split into a standalone series.  While they are motivated by
+the Pico bring-up effort, the patches address generic Armv6-M behaviour
+and improve Arm M-profile emulation independently of the Pico machine.
+They incorporate the review comments from Peter Maydell and Alex Bennee
+on the RP2040/Pico v3 RFC:
+Link: https://lore.kernel.org/qemu-devel/20260906194438.93046-1-gilles.grimaud@univ-lille.fr/
 
-r~
+The RP2040/Pico machine series will be posted separately and will depend
+on these generic Arm changes. The two new check-tcg tests pass with the
+Arm TCG cross compiler.
+
+The series consists of six patches:
+
+- enforce Armv6-M NVIC limits (max 32 external interrupts, respect
+  reserved registers, add TCG test)
+- model Cortex-M0+ privilege extension (feature bit, CPU type, allow
+  privileged writes to CONTROL.nPRIV when Main Extension or privilege
+  extension present)
+- limit MPU RBAR and RASR/RLAR alias registers to the Main Extension
+  (reorder cases, guard with ARM_FEATURE_M_MAIN)
+- mask TEX bits in MPU_RASR for Armv6-M (use mask 0x1707, preserve
+  Armv7-M behaviour)
+- enforce the architectural minimum region sizes for v6-M, v7-M and v7-R
+- extend PMSAv7 support to v6-M CPUs (widen conditionals to accept
+  ARM_FEATURE_M, keep PMSAv8 path for v8-M)
+
+Together, these patches add two new TCG assembly tests
+(test-armv6m-control.S and test-armv6m-nvic.S) that verify the corrected
+NVIC behaviour and Cortex-M0 CONTROL.nPRIV handling, and update the
+corresponding meson.build file.
+
+The series is ready for review and testing; please send any comments or
+suggestions.
+
+Gilles Grimaud (6):
+  target/arm: enforce Armv6-M NVIC limits
+  target/arm: model Cortex-M0+ privilege extension
+  target/arm: MPU - limit regs RBAR/RASR A1-A3 to Main Extension
+  target/arm: MPU_RASR: mask TEX bits for Armv6-M
+  target/arm: fix MPU SIZE min for v6-M/v7-M/v7-R
+  target/arm: extend PMSAv7 support to v6-M CPUs
+
+ hw/intc/armv7m_nvic.c                      | 42 +++++++++++--
+ target/arm/cpu.c                           | 12 +++-
+ target/arm/cpu.h                           |  1 +
+ target/arm/machine.c                       |  3 +-
+ target/arm/ptw.c                           | 14 ++++-
+ target/arm/tcg/cpu-v7m.c                   | 11 ++++
+ target/arm/tcg/m_helper.c                  |  4 +-
+ tests/tcg/arm/system/meson.build           | 12 ++++
+ tests/tcg/arm/system/test-armv6m-control.S | 66 ++++++++++++++++++++
+ tests/tcg/arm/system/test-armv6m-nvic.S    | 70 ++++++++++++++++++++++
+ 10 files changed, 222 insertions(+), 13 deletions(-)
+ create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
+ create mode 100644 tests/tcg/arm/system/test-armv6m-nvic.S
+
+-- 
+2.55.0
 
