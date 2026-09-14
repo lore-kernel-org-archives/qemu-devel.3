@@ -4,141 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A20C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28E8C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x682R-00021E-VT; Mon, 14 Sep 2026 10:52:08 -0400
+	id 1x683K-0002ci-J3; Mon, 14 Sep 2026 10:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x682M-0001yv-Vz; Mon, 14 Sep 2026 10:52:04 -0400
-Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x682K-0005d7-Vn; Mon, 14 Sep 2026 10:52:02 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=B0wqN/RoRbwClwjbcI5GBUu6Ii1qhWDV9+GlQtv9f5n7gEKUxlm0Srzz/lxp26okNlCIitprTILj+SHSzDIzMvfOE/tvjxl+KPwdKddB1cvDr2y+iM3FIiT3qH1mmzNZ8MICJ3UChNPa5K8w7GPdWFvWjL8fZwdmIG2TRkw721oqRRTackSnWHr5MPu651vtd7//p/bBWI35UXC46WVJBoWBHAsjun22qXbzGw8PKh6AXSuiTYvZTiS8myO8Cu4O7VBzrmB6nUsx2TYRk/RZ2fz8dS47KWAzAdQFLMesKSeqIT7GDzaeMALoOcZoyCF0v94PeIyW6VZiFlI26hhrWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qa61NCcnv9UNRXRYGjnzj4EnL+qRBjFyZyzbyMsAppk=;
- b=ZQ4be6FkMA6igOi0MWb/+B81CayENY8EtAToTC3rAvZRw3n4ictjUB5Dne54quNNzsykr0isluPy0E8oNNaWe38G9UJx78nB9gtYtNwDwzk5LGYoC8oD8InHnD67e037STahcIrkxo0uvHsK105J4RprKcpKJBmh8DMR+PLYLETyy4myf/9f4eCOy92deGnSWmEnXUGk3SMUDZi9qvwUES1eXuuPdw2N9hIAYxdwqGz38ACr8AZh3/QjTuKOSZJGPWj11JN8WqOfauDOl4aRrfVer+rWlb54z7YZTBsiLEmJtYz1nL6rKFgzfU1Y+pDVh15YoPF1gV1YDX162rQhGQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qa61NCcnv9UNRXRYGjnzj4EnL+qRBjFyZyzbyMsAppk=;
- b=vcsNAF2zzbCy2Y0mJehkNaHWYPOpuSgAxrsyfrZ28nwxbQjRny5Cs1tQRcg9IsvYuiFLQGIoL4CzNcWNq/S78US5+iRQcBj1VbAaNyn9QZu0FOlQeUxArwLZRAzsNJOLhR7gaCVTRLtcrN3LvgVwvQiH4CXn3nBh+5O/t9PtNUgx96cSJ4nfMeUmMzPQ3BWpmadJPzubY4zV3cyddgGf7rON32SbwaaX1p1tIPcaBog7l9TMnb8EAsU8vstkW3B3s6c/3fbcLnACoc8CPSeBq4EB3HO/acO9YADbYDYaWODSl7WBCkO2kdHsI1V2sUwnsNm1HANrUq5ta0K0AsPE0g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by PAXPR08MB6349.eurprd08.prod.outlook.com (2603:10a6:102:15b::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Mon, 14 Sep
- 2026 14:51:56 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0428.004; Mon, 14 Sep 2026
- 14:51:56 +0000
-Message-ID: <ae4b9680-8782-4311-af31-ee4599618976@virtuozzo.com>
-Date: Mon, 14 Sep 2026 16:51:55 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] block/block-copy: coalesce write-zeroes tasks
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683F-0002bX-AC
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:52:57 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683D-0005jw-ED
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:52:57 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49b965f447cso16311155e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1789397573; x=1790002373; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2RQnyXFGRUuI9hkTWGmkBpredWSzDoc8HPj5yVNIXrs=;
+ b=FOWoaXePhESWDkbAJCoc1wM8YGcXr83qVC3OfPDpbgGHjep+QUTI0Xpd0kocANdEJH
+ rmTyKDCJv/6Fq8rKz5wLw0Cm2+8c3Nr9TzsW+bs8O0d4+WsMo15JXEukcC0c1mREWYV8
+ 8qy/agSWuSm59ctKAAqWl1VfWH7Z7pqGD3/vmcRzZiBTad4xPLq5gknv+tAtMcfaTFfc
+ qSyKKt5YWHig3s6NG6xmc3EdtvFYG1EUMVwxxENU+vTL85m08Qu3oMDUa6yGWv9gx/n/
+ SIFwaMg/NRgbUvFlY2O8BKadyeJ5CJnWpm8PCK0aL65jOT7NuyDc5l2sifYQnBx1g5iR
+ nqtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789397573; x=1790002373;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=2RQnyXFGRUuI9hkTWGmkBpredWSzDoc8HPj5yVNIXrs=;
+ b=MwOyS7wO3cqV/EihNp/POIMfXdSGzKjBmtr+iMsjdRYyq/kBBQrVW+y9VCR0grvCFx
+ Z2Ni9pLs9efubJLmSgZFJO7FZ+4IVM0fxi6gB7Ru3OVrBlia31sRZ/njCBknESt82Emv
+ r9DoCEQi9tjAOzeu0ZJC9uT/smHMIdREHpMJB40lq236fx3udKRJAUyQRVf7SY/ftPgE
+ TzvDzoVWLy5c3utr6JiBoqpKFnRMIZI9puwA5tPYU6B5AC3qez17+IeCaSA9atzTqGsg
+ 7tZIRj/9poTn2dii933rMJ9fdgwGUN457Sz8zAyhMiuDKUfOGTMz9iCC5KwOv4Mlh9zU
+ VXrw==
+X-Gm-Message-State: AFuF++kPG1oTNfdP/D6xDLoj33JKPK1YIFzJRnTZSPZECBqDilOTc+UQ
+ a1IlDF1dYBa1g6Wg7hyxTe4mZtX6PzdUD83kHTwsuijVjHFuULNRll/Iq70BPAkQfj5gk3p9t51
+ VTumD
+X-Gm-Gg: AYBFou2hgPzf+TS3YVGt4eSNmx81YM6Ivt9FopxS+sVGgfcOEMdJUNbyG4yGZ2Z0Bmp
+ iuL3Uh4oxaQ9Hb+bl6nyOulYR7nn/ubqBlWo5HY3msb78+fg6UMDBgrBjzLbpFGoTRxXtFs+EIR
+ B6FAjhi9oecrRpWIgLR4OVcIZmGIzlX/Uw9lDBMjoScjl7StvKjjyynXmqAkaH25XDnPsrfYF+n
+ kdsa3X7nKSogcRc6T+/IN25hUBey7mnjys1Dp1FEmHqxVxJ3iA1SHAudY4xuMcazVg6RQMfbKw6
+ eVngxDQAbgke4bcBvIQI8ZM52M3HTZpClYTWSiMMOL76WatH3oV0ejLgjuaT826BBTklRv0Gflo
+ 0VbSSNPcuurid3mnHtpxSoBA1bMQ31lN3Rod0bCC/ygVnVFATgn8jMXxytTPmkSVihozh8ksZzU
+ DiyaqOmrGGFmry2r/GQ2f1KW+xn1HsroBAWCl2TRJGcFHz1210e4dB09xLJdKV9xD1GJS1
+X-Received: by 2002:a05:600c:6089:b0:49d:16dc:e721 with SMTP id
+ 5b1f17b1804b1-49e7a677a88mr40344095e9.24.1789397573353; 
+ Mon, 14 Sep 2026 07:52:53 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:aec6:5a37:bc54:89b7])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e63c9a7c9sm540230595e9.13.2026.09.14.07.52.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Sep 2026 07:52:52 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-References: <20260828144554.1741910-1-den@openvz.org>
- <20260828144554.1741910-10-den@openvz.org>
- <178826982594.73810.9138039014408511227.b4-review@b4>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <178826982594.73810.9138039014408511227.b4-review@b4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI6PEPF00000216.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::8ce) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v2 0/9] block: cheaper zero handling in backup and commit
+Date: Mon, 14 Sep 2026 16:52:41 +0200
+Message-ID: <20260914145250.2792879-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAXPR08MB6349:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8503cfa7-4568-4b15-8054-08df126fb911
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|10070799003|1800799024|376014|6133799003|18002099003|22082099003|56012099006|5023799004|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info: 33fDdR5ezhDEkhue8NxGpnJzuOnrRZBtu/e/YNmelBsQ3GHYRM/CmWGKKxLbRHdCWznyMF7bKKQjKZ3sXBUEOVCyMn6791eJlan9SYZ5rhz+UoRL7kkKMD9J7cU5Wz6V+vCbdcGZBDZCD5taEUgPqtRCzXJorzKLdjzOUfRhM1xJAaNVthEdmyQtWh3RCu6QkCNFlLQdGrkxSeARWpeu5o8qG1/R6pO98dquXk7X0RP6Eaaf7hgvt9RGTLG/mFKrbpVsEK9TUxeQfCxg7au++paKPOsTPycJYleiL6eHv94XOqcVwezKx71JGAryLclqMefWb/uhqGr5hC/WpFuNU+XGQHyVSY100Sb+StdNo9QsNmGRePp933xb5+L4DlnmA6Vt0qSi78kV/VmJSHZN3Lmk87RntOIB0Tfz1Sq9wfT/zwskjkiWfwK3FIUCDQER+JhuqYUHuMmut0ALS3NdpeyftkyY1hSrz+4XKJQx0jawnq1+OG89CmHYfpqxp5/JnSopDXd5VbuD0rgDfzgpx3lm4Lx2MJNyMC0WBWR6dzDrRGskbNM4AQLJfEllV6thNC8EK0pN1K8OCsMwPVnRiuXsb7hC3FHbKaLs9086PW8Y0ehOPyeCulSbhj7eOjUmRbmQrOcPUYwvXdlicEBe4kUUmt1lKKDRWuWGhtdm/sY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(10070799003)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(56012099006)(5023799004)(4143699003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGh2TTFUZ3FnRU9EUStjYU1Gak5wTDdiNnFUSXJWcm9FL0dQcGJ3Wnh1VHZU?=
- =?utf-8?B?OFRrc2lFK3k4Y0ZpV05mUW1iaHNmeUs4ZU96MHU4TzZKMWZPaGdMMXZMMW1p?=
- =?utf-8?B?bm00SXYwa0ZZMXpQZjVxbGdPSm50VFhNMjZwZmJaRUhvTTBlVkpVZE5tM2Na?=
- =?utf-8?B?M3pqYVVHNWRIRmt3UTVVWGJ2dVd0Q3lTeUJkNXdaa2tqcUJoQnNWdEkrZVhU?=
- =?utf-8?B?Q094cVByY3dYQkpXbW8vdVVVN1BUNFFQOEthNkErN1lzbDBwVXp2aXJCTWV1?=
- =?utf-8?B?ZFY0VFROOXNlTFlrME0zaXhFcERFWjV1czMrWXJQdm4yZ1dPRzhRS1IzVGVz?=
- =?utf-8?B?ajVuUEdSeDRwQmlwbWwySjNJY2s0TzVha0IrREI3cjFEd01xVGdEUkduQjk4?=
- =?utf-8?B?RExmb0tUeTduZ1RMS1JEMmM4TnZWZGNSd3F4allYemd1c0xEN2ZoVnNES2Ix?=
- =?utf-8?B?OE44MUFYZG83WExJaVQ1Q0tBQTFMU2t5dHo4S1g0Q1RTVHJobVBQaHp1b1F6?=
- =?utf-8?B?UWhxbFdUY0k2Wi90Tkh2eFdSdDBxNlBsd3NVclV3Tzl4aFZ2RFlLR1UzWkZs?=
- =?utf-8?B?c05lbTJ1dkExMkFCQ0JqdityNUgxOXVFb0U5SHdoWmdSRGJyNkF0THgyZ3Ix?=
- =?utf-8?B?TmhlRVBQcnUxYW5WMnVoYmQ2K2poaFE1dk1Tbzd6QVU3T04wb2dNakdPdXJu?=
- =?utf-8?B?eHhnOEhxQm9HMmhJUUFUNEJFVmZiejYyM0QxMHd4QkxUNTgwTHN1cVFLazhH?=
- =?utf-8?B?b2FaU2FBMFZ5c2dPWFhjMFcwVjQ5MlMvK3orM1ZzUWdrRWp3RmN3R0NVVU56?=
- =?utf-8?B?a0pmUmdycW5SdUM0bXNHVVpDenBRN3JOS1M3blJ4YThYUlVUR0F2NVhUUndH?=
- =?utf-8?B?b2ZQWFNhWXNiU25YL2dCZmcvZ3IrNzgxOUhDbXk3N2NQMCtMT3VRSUhFM0JE?=
- =?utf-8?B?TkpjZUpoTHlnSjZoN0l3NkdLQktiYzZ1K1V2Nk5MUjRsRlkvTkRkV1lGVWFT?=
- =?utf-8?B?Qll0YVN4Z3RSRERZQS9oTnV0eUhTUjJvWWJlRHIrb1BzdlJyM0NvU01lM0xY?=
- =?utf-8?B?MU1sY3o5QzdXbW1lNVFwcG5aYUNJMkJ0QlAvUGROd05ER1YyUDVyTGQvVDFt?=
- =?utf-8?B?V2NlWXhQSzhCWEZjNW51ZWNoVzZuODJCS1p5WHJFaW1LaEJUTWRxSHhVckV6?=
- =?utf-8?B?V2lma0I0NTlHSkNzWDhXdE9ucnZmbmVmWFc2V1Q2bTZMdVZPSXhCUlliVUJK?=
- =?utf-8?B?TTRrSTFRckpmYWZ5Q3crbk1KNy9DOU9rQlRPajZsc08vcGZFT3lSY2xFREUx?=
- =?utf-8?B?QmRIbUpSZzNUc1UzODRnL2JFWnJzVU9ZK3B6QWgwZW1tdnYvaGJTMXk0dHFq?=
- =?utf-8?B?SzN0QTRmM2JYQWhtQ3JsTUw1ZnBDRFVEVjV6c3JZUktlYkdtM0VPcHRaWGRT?=
- =?utf-8?B?S3czcEUrd0RYcFlIem9aQ2I2NTNYcHgxS2V2Ni9hWHFpTnhvNkUwSVIySjlL?=
- =?utf-8?B?VWt6RUpScFVpWUJDYm4zSkxYUFQybGphbWkvaHhsUEp2UWp6STh3ODR3anlI?=
- =?utf-8?B?dWZBSzdIZTUyT0xmZHRzWDFOREFvc3JnUnE2Umg5aUpyQTVvcjZnMEJETWQ0?=
- =?utf-8?B?U1ppampHVlZKTzNpcnVpUjNoenBkYWZOTVVHY1FUV050ZFUzeHF3RlNXdDIr?=
- =?utf-8?B?cWZsL1hTT1NXYlVQcTFpa2dpV3QxeFFXK3hZN2hjQy9WbStGZ2NVN1ptcExG?=
- =?utf-8?B?Z2dKdy9jcm52Y3VoQlZzVlhoZUppS0FKbHBGdjBuZitQK3gwQ3JTcTI5Vzgy?=
- =?utf-8?B?VlVEV04rUmZrVnNRc3RHZVlKMUhEOXhMU3FyWFlWMFBWVEU3YjhrNDRubDhC?=
- =?utf-8?B?OS81VTZ2S2J5MVNuQ3NtcTI1UnIzbnRyTHFwTEVMV1F2NWhRaThZd3dISzlu?=
- =?utf-8?B?eis0ZnBweHQra2VUYlYzclVhclpXeG9zbk5iN0MxakZ5VWxDWVpmMG44dlIz?=
- =?utf-8?B?Wnd2dmpmZUpncCthT0FFdWpiQ3BHc21qdmoxVFlvRXQyRXZVQU4xWmxNa1JF?=
- =?utf-8?B?ZzZGS0RKSlJuZzE0ZlcxZW4zdlFDakNmOHY3aVJoeTFjOFZoY2VDSkNzc2tC?=
- =?utf-8?B?NjRYNnB0aW1aYW5ScDRSRFpzRDFUZEhnQjBKVE9JOEZzVHZ0Y1Y5RWVvQUNv?=
- =?utf-8?B?UkUrZ3pEN0hxbTZIbGFnOU5HYjlNLy9pTklKMnprdGFCSGFqVmF3eVVHKzdN?=
- =?utf-8?B?QWQ4WVU4WmduMHlyem1VQ3NsR3lSaVorb2w2NENORFJQbFlQeHBxZ005bW9F?=
- =?utf-8?B?THNOZ1RVN1ZhQ1dwdERSYUk1clZ6R0N1M0EwaHpReHFhNXc2MHllTzEwaGxu?=
- =?utf-8?Q?qDvdwbO4UUHZmIWq9r2gkMrXGuhjnBWKcaUI5HfFh1QfG?=
-X-MS-Exchange-AntiSpam-MessageData-1: pO6yWEFhhgfltQ==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8503cfa7-4568-4b15-8054-08df126fb911
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 14:51:56.6463 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: D2u3RLKgDT4Wt21CAijDj10HRPO3GSRhC5hhQYNdruJ7VZSVB3RaQuwr0qkpHNwRDFASnHN2OHhOhy3rku+bXw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR08MB6349
-Received-SPF: pass client-ip=2a01:111:f403:c200::3;
- envelope-from=den@virtuozzo.com;
- helo=DU2PR03CU002.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,74 +98,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/26 15:37, Andrey Drobyshev wrote:
->> Task size was capped to block_copy_chunk_size() regardless of method,
->> which sizes a task by the copy buffer. A write-zeroes task carries no
->> buffer, so that cap only splits one long known-zero run into a crowd of
->> small COPY_WRITE_ZEROES tasks, each with its own request against the
->> target.
->>
->> block_copy_task_create() already decides from zero_bitmap how far a task
->> may run, so add block_copy_widen_zero_area() to that decision: for a
->> write-zeroes task, re-search the dirty area under
->> BLOCK_COPY_MAX_ZERO_CHUNK instead of the buffer chunk size, and let the
->> existing clamp cut it back to where the zero run ends. Widening is safe:
->> an overlapping caller waits on the task's BlockReq via
->> reqlist_wait_one() rather than observing it mid-flight.
->>
->> The 256M cap stays well under BDRV_REQUEST_MAX_BYTES, where
->> block_copy_do_copy() would trip assert(nbytes < INT_MAX), keeps the rate
->> limiter usable, leaves enough tasks to fill BLOCK_COPY_MAX_WORKERS and
->> bounds how long a cancel waits on one request. It is aligned at the use
->> site rather than in the constant, since nothing bounds cluster_size.
->>
->> Signed-off-by: Denis V. Lunev <den@openvz.org>
->> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> CC: John Snow <jsnow@redhat.com>
->> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>
->> diff --git a/block/block-copy.c b/block/block-copy.c
->> index c0a33599384..16b76484cbd 100644
->> --- a/block/block-copy.c
->> +++ b/block/block-copy.c
->> @@ -37,6 +37,8 @@
->>  #define BLOCK_COPY_MAX_WORKERS 64
->>  #define BLOCK_COPY_SLICE_TIME 100000000ULL /* ns */
->>  #define BLOCK_COPY_CLUSTER_SIZE_DEFAULT (1 << 16)
->> +/* Bounded by BDRV_REQUEST_MAX_BYTES, rate limiting and cancel latency. */
->> +#define BLOCK_COPY_MAX_ZERO_CHUNK (256 * MiB)
-> AFAIU with this new cap we enlarge the range, a guest IO to which will
-> trigger CBW.  It used to be 1M or 16M depending on copy method, now it's
-> 256M.  If the target is qcow2 - then write_zeroes() is size-independent
-> and is a simple metadata write.  But what if target doesn't support fast
-> write_zeroes() operation?  Then guest IO will be stalled for the entire
-> CBW, and the latency increases.  Please correct me if I'm wrong.
->
-> If it's true - shouldn't we probe for write_zeroes support adding
-> BDRV_REQ_NO_FALLBACK to the flags?  And if -ENOTSUP is returned - don't
-> widen zero area.
->
-> Andrey
->
-v2 probes as you suggest. CBW itself cannot grow, though:
-block_copy_task_create() searches within the range of the block_copy()
-call it serves, so a copy driven by a guest write covers that write and
-nothing more. The wait comes the other way round, a guest write landing
-on a widened background task and waiting through reqlist_wait_one().
+Backup and commit re-query the source block status for every task and
+size a task by the copy buffer, so a long run of zeroes turns into a
+crowd of small write-zeroes requests. This series reuses what the
+up-front scan already learned and lets one write-zeroes task cover a
+whole run.
 
-supported_zero_flags rules out the targets which cannot zero cheaply at
-all, qcow2 v2 and iscsi among them, but is optimistic for the rest:
-file-posix advertises NO_FALLBACK at open and finds out from the first
-fallocate that fails. So the first widened request carries the flag. A
-target which would write the zeroes out fails it without writing, that
-range then goes out in buffer-sized chunks, and widening stays off for
-the run.
+Backup of a 16G qcow2 image holding 1G of data, the rest never
+allocated, sync=full to a raw target on ext4:
 
-The cap is therefore BDRV_REQUEST_MAX_BYTES rather than 256M, aligned
-down to the cluster size. On a 16G source holding 1G of data, sync=full:
-1088 block-copy tasks for qcow2 v3 and raw targets, 16384 for qcow2 v2,
-every target identical to the source.
+               tasks    time
+    before     16384    1.6s
+    after       1088    1.0s
 
-Thank you for your time,
-    Den
+Such an image is the normal case rather than a corner one: a guest with
+discard enabled on a disk which is mostly free leaves exactly this
+shape behind.
+
+v2, all from Andrey's review:
+- 2/9: holes spelled out in both layouts, and zero runs added, so the
+  write-zeroes path of 3/9 is covered too
+- 3/9: COMMIT_ZERO_CHUNK has a comment of its own saying what bounds it;
+  the cache check drops its dead half and asserts instead
+- 4/9: a Case namedtuple pairs each size with its layout, and
+  create_image(), write_layout(), dirty_layout() and backup_and_check()
+  take out the duplication
+- 8/9: g_assert_not_reached() for the sync mode which cannot reach there
+- 9/9: a widened write-zeroes request only pays off where the target
+  zeroes by metadata. supported_zero_flags rules out the targets which
+  cannot, and the first widened request asks for BDRV_REQ_NO_FALLBACK to
+  settle the rest, since a driver may advertise it and only learn better
+  from a failing call. A target which would write the zeroes out fails
+  that request without writing, and the run keeps its requests at the
+  buffer chunk size from there on. With the size question settled that
+  way the cap became BDRV_REQUEST_MAX_BYTES rather than 256M.
+- rebased on master
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+
+Denis V. Lunev (9):
+  block/commit: pass BDRV_WANT_PRECISE to block-status
+  iotests/040: cover large and fragmented commit runs
+  block/commit: batch block-status queries
+  iotests/124: cover backup of zero clusters and holes
+  block/block-copy: don't reserve memory for zero tasks
+  block/block-copy: extract block_copy_set_task_method()
+  block/block-copy: track known-zero source clusters
+  block/backup: pre-fill zero_bitmap for full/bitmap
+  block/block-copy: coalesce write-zeroes tasks
+
+ block/backup.c             |  93 ++++++----
+ block/block-copy.c         | 305 ++++++++++++++++++++++++++++----
+ block/commit.c             |  58 +++++--
+ include/block/block-copy.h |   5 +
+ tests/qemu-iotests/040     | 102 ++++++++++-
+ tests/qemu-iotests/040.out |   4 +-
+ tests/qemu-iotests/124     | 344 ++++++++++++++++++++++++++++++++++++-
+ tests/qemu-iotests/124.out |   4 +-
+ 8 files changed, 827 insertions(+), 88 deletions(-)
+
+
+base-commit: 5f664cd37aec17e8145aa117d8da68f507edc8f1
+-- 
+2.53.0
+
 
