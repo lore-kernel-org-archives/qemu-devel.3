@@ -4,101 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B0DC88E6A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAC6C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x62o4-0000lY-2J; Mon, 14 Sep 2026 05:16:56 -0400
+	id 1x62oO-0000qH-3k; Mon, 14 Sep 2026 05:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x62nv-0000kg-3w
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:16:48 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x62nt-0006AV-JH
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:16:46 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e56a1fe3fso1292816d50.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:16:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789377404; cv=none;
- d=google.com; s=arc-20260327;
- b=OSLpyr1Svz00Td0OBg50YZxaEfc20rIK+UmEiYwJt6NlqrkLakyydrUEYWyDT2QWcR
- C2InpklOkGwB3HKTWEYfE3z54+YEz6PsnNx5tEiMDfoSJfwKdv9hcZDV06fOapj41M/8
- 540XJANl4QCb/ko/2qSlWTHQNfw0odK/Bw1HuSZhkmXC7dS5X7QOx/lvQhAKmJf6U6dz
- /V0FJ1aIl9un6NC3QQqx7YnoMPC+Kzjjxf/7et2jHxuk4+Be1w3zB7Gu4Q/q8IqUahZg
- 7bJIoGPlHbeLxnz0pQPFcFejS/QZq3t9RcHhNJDilR8FuLt67fGRmmojYpFBB2P2YKIN
- THKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cuVNCcrSOpi9sOD7sQqHogVyBc5TXxEpbbTv0EpMwhk=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=VgbBQTOOK3W+Vr0/yF0rrchL9BlVDr939LzeQfeGoEd9a7pkiPABIfCu+aIhkbbqlb
- obIkNLFYQ09qRYIYf+ruCXtb4daS7esu/3DqjgL/qFhc/KYrheqnBF6opMgGmnzNCSfl
- ctTX4UbNqXACg7I8+l3JS4WtKIxghXDWZhlYPy3Ryp6+BiQG0SrOrSvMSDKBXQi2EcSo
- ZFnMMyDyyGpm7o98ApoXenlgIOvhkvVjlLMxQ0rRD1SJe1Qyw0p5L27jEFrgToFh7dKL
- WFuUiOWPE720Bp06Gi2gxDJTikzefH+qTDWRFw5sr+NCpu7cauN/rQm+qgn58mp5Z8Ac
- nl1Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x62oI-0000ov-LU
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:17:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x62oF-0006CL-B1
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:17:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789377424;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8aDrc3Q2MSD+jjlh/G8W7XjtNbahufiafhXwtdVy2YM=;
+ b=J9HFzi3DGNE46b8dYUYS9YKOBqctIs5vlHJWEsmyExf0eV740bypQwFD2mKU44zVw5Bnri
+ aHtIOMUsXsuAzDthOErnXz7p3QTOXYfo80+Yy6kdPmmgz+5opqpFQiJRc7WHeY8CexZeCg
+ uH7qKNxS19YRgN9BYknikuf9I3gjpE0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-443-5gTBYLKjOAqqh3ukC6y6Yg-1; Mon, 14 Sep 2026 05:17:03 -0400
+X-MC-Unique: 5gTBYLKjOAqqh3ukC6y6Yg-1
+X-Mimecast-MFC-AGG-ID: 5gTBYLKjOAqqh3ukC6y6Yg_1789377422
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49cd83ca361so28687295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:17:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789377404; x=1789982204; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=cuVNCcrSOpi9sOD7sQqHogVyBc5TXxEpbbTv0EpMwhk=;
- b=Pax7AZYyFArV9H8SnZ+9CLzlWCHUmbdUXQVlDt/QWPPNyD5UushHlyWugTrrpLsmQ1
- GHImuJHQiCX8cCWq4LZlB1pcMhOuoqU15HJjW/jXEY18wtMfWZ6tf1FB7c4ISAVDLyIi
- y/Ldfmyrhgs53I5nJT7gEAg51Cvo/cpK6SfUwSV2BtBBfbSTFrMSPG/ftthth5oMqVlj
- 4PYUFzyOAqBbJvkvPejIQM4LImgCdSRCzIFJLMKZBDLA20Q2+Peq0TDP+QICug9weBhs
- EEoHnFYzlASQEZQykRO/smpVOXbeeTkyNwrdRMlyt3lKH6h4zYTJLNULrOcPr9bDgCGN
- eKBg==
+ d=redhat.com; s=google; t=1789377422; x=1789982222; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8aDrc3Q2MSD+jjlh/G8W7XjtNbahufiafhXwtdVy2YM=;
+ b=sJ0gpvFKYsbf6f+R2hj8NdcppEKlozhk+56t8lJZteJXHIvId9h/Tc5vv3mE8Ycrig
+ g92IoNOhVNUgIOYg90/tY+yX6pbMqeE225LYrMiphqPYSkA5DkOlvos9LodZ4iEnB87O
+ +oTzL6o7iaP1a11pgxlHR+KopkGtLzb6O2e9McSxk3HMMkzR86AP1Em9zhvbzm8vNQX3
+ /4qA9C6CREz7UaNAHup8lbTMNjmq3L/LJ2+fCUkTUhJ73Yu2RBDSEG8kyYbPeb+skQrl
+ LtMBo2zn924ghLdGFNFM0fFOzbGmrb6+wv44upWtXtRJumFUXUNzNvR9iD0B4BVDmFUo
+ FxTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789377404; x=1789982204;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=cuVNCcrSOpi9sOD7sQqHogVyBc5TXxEpbbTv0EpMwhk=;
- b=pxWmxkBjLBBzMD+SLVs6uNM9ENWXWSK+odByu7CYYufKhQwYlNNfL47kcGubLUOYJp
- dvvggTPH2Yq+mWIfK4h9zMbyVVtENz14b+CeyhKtjSNKoTiWwAvSZ3hkDOZGoq7OrFsQ
- 4F0SY4lmGxlh8Og9aRqjB4dpZ9Nn2CJufqFJYnmQUAXi0dwX9jWTne1M4cSX1oKBV13S
- kHWgdT+BCt8xQtFOuxGsrdHOYU7veZqgTYnlt6nAJKLdKAfSyEWd8XgWVS4lPUvuIcIb
- J9WJldV3PhYtY7r6xCBDaj4GxtzRjo3gMsGieMWrBr/+HJK6TeLclchSlcqTKW3yvtN6
- OO/g==
-X-Gm-Message-State: AFuF++nxuFv4jenLMX2PnOhkNk79fm+L3NDqsyH5KVIoUCamQI2OnWu2
- 33PmFr9WMLhTovrVyQkcY0cb2G5cBEL0T3MPYj5vqhKhsmPuIJjjOXFT7BNo+W5PQZS0DtJoxFW
- Kdv1DSddRKh62mXF8/spSQL8fHBF0oO8LNrUi3H2KCw==
-X-Gm-Gg: AYBFou0j1nazUupDZwfLgFPEXXj7hpW5SlqNwz5N2Uy/AbaYAldCg7X+fV23mRWRGWB
- cwWvcC9MFAkYN4OGl+3iyyknvULGRetiYp3KNzGtlQKfpk/aK/4JR2QsJNF8l4YHGy7gMHmeCuU
- 7L5Y6Bp0fXSq2bJh24L/LwBNNJ58baJRhbg4aSexlgsqEsyHe0PgSz5od+baoHA25Ui3CWhqZ9V
- oNXS+2NFS838plumhNSF9HVWHZVfFSE/twUNwyZ2TLZuPQ70CrZ4oBrXPnfjCFdgN+FBjQZOnqr
- W4uXVnJHCfp/Ux/462DRrrDaZo50fzNFVjsdCiSZbulUUw1aJp86Qe95daD4RrAY4nbEtlGB9Hw
- S7cOqFIJq8g7CbxW+t6Ffd9Fm5UY2iK9pUzZamdo=
-X-Received: by 2002:a05:690e:4553:20b0:670:fdf6:dfb6 with SMTP id
- 956f58d0204a3-6714dfdaae7mr189754d50.21.1789377404174; Mon, 14 Sep 2026
- 02:16:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1789377422; x=1789982222;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8aDrc3Q2MSD+jjlh/G8W7XjtNbahufiafhXwtdVy2YM=;
+ b=UsYMsirALE01lDb9GIyN5JIp7cjry6xkKUUsVPEKbaFex41VF6c56sxR5lIKEh8BHk
+ bXinGu6orwP8JzsREkCy68V8J0yJNijn3/bipE1ae9sbc/pe+m6aShzLf3ErvTbb/13f
+ 3CgS+pykGj+o6r4V2iJfEOmtP70mgDkI+D2UyD+DrjXxFGM6leF6qrmKY1cHhCGIdi+t
+ qGmzkbaVZv9iwd3R2/OxrpEIbx9bwrWSR+1wMu9maMhUna6fIA96xWglv3kRr8L8/fac
+ Gb0RbXvYt13jYRt5a+7ZkwMCW6ZKnZNInEtH2PZ/Gru6sHZAEDEzkwW1Wngb3mj+AC81
+ x8hg==
+X-Gm-Message-State: AFuF++lOzOGSUSRo924LPn5rOP0syKIsF7WZju/hqjOxrDOJNdplZhk/
+ i3q46GUYxWhdDle0/mV4wt4+aDilJf3pTKcYWjrWwh7e8GZeClv6ONu++2M6czNCEYBN0BKIWc+
+ 5ha57QCwkLCHyc0czGXfpQfxJ8ZVE4O6l4I0WLTwzgmhiJzSycAmHJj6W
+X-Gm-Gg: AYBFou3Vt34K9xypWZug660/XkWODdf901GDDjD4XCUGfLrQ7Sp5qV1a/qt9VtrkKsC
+ FrSUXsr2FPtxv8vElFG1Zi3H1AJnY6fb6BVu22vGrkmFxcCDaTZtB289km7HsETWWhQPBT1FhpE
+ GxwSE1ziewGiorp5ujShjsGDhKVyNnfCFL4CV6qJo271pUzkDG4Lh8E6GtPg7lvOvsRqAugyRZK
+ wQ8hKxdfT+X4Qdl8DiVhTr1dLu+YmFi59mp00bg8Lm7CZ9jJMsZ1bBkDMlAhNttcSGXWk+1eGjF
+ TNKnNnx4xjm9Vxdq8JFniivnkHsX0R5rBf4Mrp+WRJdlP6DMhROH15aTqD23HYWUbtblk6BCMe+
+ IRPMPuSrKri8OKFgxGQsZ/GM=
+X-Received: by 2002:a05:600c:1546:b0:49c:fc6c:be0d with SMTP id
+ 5b1f17b1804b1-49e7a685a0cmr17754925e9.19.1789377421521; 
+ Mon, 14 Sep 2026 02:17:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:1546:b0:49c:fc6c:be0d with SMTP id
+ 5b1f17b1804b1-49e7a685a0cmr17754425e9.19.1789377420915; 
+ Mon, 14 Sep 2026 02:17:00 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e63c9a7c9sm507577375e9.13.2026.09.14.02.16.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Sep 2026 02:17:00 -0700 (PDT)
+Date: Mon, 14 Sep 2026 05:16:56 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org
+Subject: Re: [PULL v2 01/75] virtio: fix exit(1) on DMA mapping failure
+ during migration restore
+Message-ID: <20260914051629-mutt-send-email-mst@kernel.org>
+References: <cover.1789117222.git.mst@redhat.com>
+ <5ec2a0b21fe5b8e1419a94a753636088d6b0409b.1789117222.git.mst@redhat.com>
+ <CAFEAcA9sG8ijHjbJ6g8m0JZfpkAQ_Ow_Qxd2ep8Lui2Qe2L7hQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260806173123.333423-1-richard.henderson@linaro.org>
- <20260806173123.333423-4-richard.henderson@linaro.org>
-In-Reply-To: <20260806173123.333423-4-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Sep 2026 10:16:32 +0100
-X-Gm-Features: AcwNN1XiMSb6RZJn0vc6KF7TWvHzPXlsYl3L7Yoa2djgaU5fqKp5cuTo1w0l-_4
-Message-ID: <CAFEAcA-NoW=39G_m21zQO6CzH5UU3MnsKuFNjkjX-55gzXqD2g@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] target/arm: Implement HCR_EL2.TID3 trap on
- undefined TID3 registers
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9sG8ijHjbJ6g8m0JZfpkAQ_Ow_Qxd2ep8Lui2Qe2L7hQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,19 +124,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Aug 2026 at 18:32, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> It is IMPLEMENTATION DEFINED whether HCR_EL2.TID3 traps on registers
-> within the range which are not explicitly listed.  Previously we chose
-> not to honor the TID3 bit.
->
-> However, with FEAT_IDTE3 it becomes mandatory to honor SCR_EL3.TID3
-> on these registers, so we might as well honor HCR_EL2.TID3 too.
+On Mon, Sep 14, 2026 at 09:47:30AM +0100, Peter Maydell wrote:
+> On Fri, 11 Sept 2026 at 10:01, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > When QEMU restores pending virtio requests from a migration stream, it
+> > calls qemu_get_virtqueue_element(), which calls virtqueue_map() and
+> > virtqueue_map_iovec() to re-map the saved DMA fragment addresses into
+> > the destination address space.  If the addresses in the migration stream
+> > are corrupted, and as a result dma_memory_map() returns NULL or a
+> > shorter-than-expected length, virtqueue_map_iovec() calls exit(1),
+> > terminating the destination QEMU process instead of failing the
+> > migration cleanly.
+> >
+> > Convert virtqueue_map_iovec() and virtqueue_map() from void to bool.
+> > On failure, virtqueue_map_iovec() unmaps any entries it has already
+> > mapped and returns false; virtqueue_map() similarly cleans up the in_sg
+> > entries if out_sg mapping fails.  qemu_get_virtqueue_element() now
+> > checks the return value, frees the element and returns NULL on failure,
+> > allowing the migration restore path to propagate a clean error.  The
+> > callers in virtio-blk, virtio-serial-bus and virtio-scsi that invoke
+> > qemu_get_virtqueue_element() during load are updated to check for NULL
+> > and return an error code.
+> >
+> 
+> Hi; Coverity points out an error in the error handling code
+> added here (CID 1686764):
+> 
+> > -static void virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
+> > +static bool virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
+> >                                  hwaddr *addr, unsigned int num_sg,
+> >                                  bool is_write)
+> >  {
+> >      unsigned int i;
+> >      hwaddr len;
+> > +    DMADirection dir = is_write ? DMA_DIRECTION_FROM_DEVICE :
+> > +                                 DMA_DIRECTION_TO_DEVICE;
+> >
+> >      for (i = 0; i < num_sg; i++) {
+> >          len = sg[i].iov_len;
+> > -        sg[i].iov_base = dma_memory_map(vdev->dma_as,
+> > -                                        addr[i], &len, is_write ?
+> > -                                        DMA_DIRECTION_FROM_DEVICE :
+> > -                                        DMA_DIRECTION_TO_DEVICE,
+> > -                                        MEMTXATTRS_UNSPECIFIED);
+> > +        sg[i].iov_base = dma_memory_map(vdev->dma_as, addr[i], &len,
+> > +                                        dir, MEMTXATTRS_UNSPECIFIED);
+> >          if (!sg[i].iov_base) {
+> >              error_report("virtio: error trying to map MMIO memory");
+> > -            exit(1);
+> > +            goto err_undo_map;
+> 
+> If dma_memory_map() fails on the first iteration, we will jump
+> to err_undo_map, with i == 0....
+> 
+> >          }
+> >          if (len != sg[i].iov_len) {
+> >              error_report("virtio: unexpected memory split");
+> > -            exit(1);
+> > +            dma_memory_unmap(vdev->dma_as, sg[i].iov_base, len, dir, 0);
+> > +            goto err_undo_map;
+> >          }
+> >      }
+> > +    return true;
+> > +
+> > +err_undo_map:
+> > +    while (i-- > 0) {
+> 
+> ...but since 'i' is an unsigned type, that will mean that "i--"
+> here underflows to an extremely large value. This loop will
+> then iterate many times unmapping random things.
 
-I thought we agreed not to change the behaviour here? Is this
-just a "forgot to update commit message" thing?
 
-thanks
--- PMM
+I apologize, since when is 0 > 0 true?
+
+
+> > +        dma_memory_unmap(vdev->dma_as, sg[i].iov_base, sg[i].iov_len,
+> > +                         dir, 0);
+> > +    }
+> > +    return false;
+> >  }
+> 
+> thanks
+> -- PMM
+
 
