@@ -4,114 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63025C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 11:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E756EC88E50
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 11:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x64wE-0007BA-Ux; Mon, 14 Sep 2026 07:33:31 -0400
+	id 1x651m-0008Ve-9C; Mon, 14 Sep 2026 07:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x64w4-0007AW-89
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 07:33:20 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1x651P-0008TT-IK
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 07:38:53 -0400
+Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x64w0-00006r-7F
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 07:33:20 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e56a1fe3fso1392636d50.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 04:33:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789385594; cv=none;
- d=google.com; s=arc-20260327;
- b=QMU7kH2/vEsJBbxO9BEIiJNr22vDhQCNBoG5oNm3pYtBvmok9dlGoaeUPqETY3vLA9
- 9VhHDSNpmNyepsjMxXJbAJKc+0IDW9XSulUmmbU/YqK1Q1Ph5RZtISlnoBdBIPeVzWoM
- jzsT5kYZqMtJGLIlQgOcksIlrG1i93HbMVGEAiREO9p635iqoAqgOJDCIITWrKUHRASp
- jpx093qnLxAmsPuadpqewvpUq/KbO14SeZE9ck28b7TgpJmsEnz2INbnBwnlKLi76XB4
- Y5+gI8yrcRf1DXkd5xOetHrK9Ez3ve9Ep48YDBRP5mKjT7pkD0q2Cz9RhyZCFxAFtR0i
- 4C5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=46tUkjWcsGNE0/IRMnS9oYK/PTTMmBusYPYi2kH+L/w=;
- fh=I4+9jBsawlEC6VYtYQWWbwhwDHCjIcQfIwimnV5OqlQ=;
- b=hGCsqEUl8vLrOjzp/mqwQKxdD0Cu2V1vcKuF9WbRyTe1+PMjKPiJS3gM++b3B07YtT
- CdKyH+HoBosypLrT4XN00yBfuCXpDBVOiN89LXL7fqCmjvwe4nCDw8UFU8y1LJ7bNig6
- +WhUMlvXp5Tj1h2FWqOxW+AcEkFtK3KqhI3UjfblfHZCM2CT2QL3jAkq8BBG2mxZriZ6
- Qw0FyeP3yrQYRlSmv2F63P+lWXmMncanBFJ8JbMKCf9X62CrDsGtE+OsN0KV1MpYe7C0
- X/dJo07mpTXrrFdjjdHiztgamFjA3pSf+gYRG3uqamk1WCGuiKo024kImGb7fUghIKLZ
- MQWQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789385594; x=1789990394; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=46tUkjWcsGNE0/IRMnS9oYK/PTTMmBusYPYi2kH+L/w=;
- b=Vvwbcanhf/SjcVECnsy3Ho+U+sw4zZWOX70lqMeQeU/DSlROBW9FxKTSLnt44zK1lj
- 5yr5Ns10qQ6CL0KhWnQuUz+wR5qjOiVNUuoF5wdU+2+Yhn6RRZb8nieJV1OYH9lR+o3l
- K61nXD/msY9/kOfjwwzbS8J6KHgEaQIP0De1CfBRIm9jb8m6Dk/tLYeBKEn7AgtCBAtw
- UYmRlmiXPRmYL7BnxZ5Rmgos0N16SBHAu3mp0Fg+tWv+M1HbROjwnatdMmcKyGZcjouG
- 5pLp8qUR5qO54RiqTxu0HvIuRYMYrArLcZHzNczCu7csEnuhfhQ5DKfbUbGzK4hTQEhR
- YNhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789385594; x=1789990394;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=46tUkjWcsGNE0/IRMnS9oYK/PTTMmBusYPYi2kH+L/w=;
- b=NAQtJUMwcax/IDG0lmiVI0dpTVjrYc3nvatJvpJxXJ2dgK+gB45Tm/j0zPkkEqTFhw
- bi0KWXCldHmgqIRyzV+MZV69Mqei9aGIdKcwBJ9CQzPTJnYUmiJtR3ByzNzjrUxDCdkx
- 3hq6u5NUkyAeFgJpqPPJNQfC4supWYor972b1ZCXMdlDjC1vuM8hPnA20MW4qCpQpP5M
- 1ZyqKgj0QSRvfrLyZv5gbo+TMvrFTf3630QWNIGaRerzIy5ntzZtirFNVDcejgq+STDq
- 2nknlu9um0kzEPuwMaWNl787xwK1+Fh6XqZlJpSqSceY+MFb/w86c0YxOAHUnQaUQ8Ck
- VqlA==
-X-Gm-Message-State: AFuF++m6WRpkiGiVQZk80yJf2RCiWIFk04IJEnSYOp/lIdOuG9EehO6z
- 8yFxKLhu+pfa042+Zi44Gww9m+JSxXaY2FrNYLgqgi9MIqOuW/QHYNtxPLdyshMopLd5YgAcIWj
- cn4AtntLL/WoNwhSyAmliAzipAw3qvgGMwEthfJih2A==
-X-Gm-Gg: AYBFou1JJHN7cG5MTqroMEOMG3k8vIWOQasXaLqld4UVVv+6b++bKt4roHJlwkV1ct4
- uDTrjqOvnO0i6c3pmVJHCo3Qc0K/uuEMktRVxIS5g6ygOIZDC2vDMfPZpmSfM9igy7gHoE+/SLd
- sJQ3jcpqYZaR+KvEndroqSz8bL/NWl2pu6gDd+WnTYQHu1nWETT9mEwQxKGDuenSP3QonwWsExq
- mAAx+G6HSpdCI3nFptZ4rT7VNmWOYK2TuKsSAodhMNudWi5aO3wpVcOG/CHmHe01Mk3eGecRTJ0
- xHLtuS8Ff458epmv0pV4dWRCSYuaQzIa+pR46Xps49+72MoDva6fAGO1uTO38yZgSR78Wv1y3Ry
- 84ZjVdUb1hjc1l1Sna2z6kfXTnRwebIZEGJq3w77E
-X-Received: by 2002:a05:690e:118e:b0:66e:5f04:f755 with SMTP id
- 956f58d0204a3-6714dfdb4b6mr367008d50.22.1789385593677; Mon, 14 Sep 2026
- 04:33:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
- <20260906-nohmp-next-v1-5-2b21e63974f3@redhat.com>
-In-Reply-To: <20260906-nohmp-next-v1-5-2b21e63974f3@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Sep 2026 12:33:01 +0100
-X-Gm-Features: AcwNN1VVWrzTvrwaBlGfxk22-gnj45fSpuFI50FqYw3ztakj9uVsuJjmq3AI4Xs
-Message-ID: <CAFEAcA_vhcyjv02=XoLbtJSQzz79mOuBNgerPRnGxyRw6+cAeA@mail.gmail.com>
-Subject: Re: [PATCH 5/9] tests/launchupdate-test: correctly release qs
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1x651K-0000no-VH
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 07:38:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1789385913; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=WkyuMTSbGlEV93Svm6wlWfW9DWPAeHxv4B0O9qlKeCo=;
+ b=AnaveKa2CPQb0Amt01omnLl/AYjBFfi/3tzR6NSnGQJw3L1kHTazAMNopznVZoAVEPPv85
+ NNxKR4L2X9/stb9cJcFEYHJOGMCAVDzY3HexNz4XHWDQ+6HNGLfajmy4Qn7G/zlzuvousd
+ 3PXoAVd9VFGRhKJlekTvly08bTT8Y/I6QunRx4ZFuSyQS7421E6a3G/T4pBi+kyVyotDJi
+ UET0R1G4qbjxuwbXsOB6Pyg59FjuBc9bc+KqwjlYc61/7DEwLNweiN2IPfiEvAsbehYCUx
+ Ox+c7ALQ+eQIAtHQszBl9k+xZsk1kDwnWN7ObjF6Puy2cfAsep16aVGrF6uxbQ==
+Cc: <zhao1.liu@intel.com>, <richard.henderson@linaro.org>, 
+ <pbonzini@redhat.com>, <mst@redhat.com>, <peterx@redhat.com>, 
+ <isyanfei.xu@gmail.com>, <liyuxuan.darfux@bytedance.com>, 
+ "Yanfei Xu" <yanfei.xu@bytedance.com>, <qemu-stable@nongnu.org>
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+26aa7dcb7+d4a219+nongnu.org+yanfei.xu@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+To: <qemu-devel@nongnu.org>
+Subject: [PATCH] target/i386: Migrate error code only with an exception
+X-Mailer: git-send-email 2.20.1
+X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
+Content-Transfer-Encoding: 7bit
+From: "Yanfei Xu" <yanfei.xu@bytedance.com>
+Date: Mon, 14 Sep 2026 19:38:17 +0800
+Message-Id: <20260914113817.2212058-1-yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=209.127.230.112;
+ envelope-from=yanfei.xu@bytedance.com; helo=va-1-112.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,62 +68,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 6 Sept 2026 at 09:54, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> QOSState must be released with qtest_shutdown().
->
-> Fixes: 0b70c6ce7b31 ("Add functional and unit tests for the vm-launch-upd=
-ate device")
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  tests/qtest/launchupdate-test.c | 14 +++++---------
->  tests/qtest/libqos/libqos.h     |  2 ++
->  2 files changed, 7 insertions(+), 9 deletions(-)
->
-> diff --git a/tests/qtest/launchupdate-test.c b/tests/qtest/launchupdate-t=
-est.c
-> index ed007cdce29f..12a09079ae91 100644
-> --- a/tests/qtest/launchupdate-test.c
-> +++ b/tests/qtest/launchupdate-test.c
-> @@ -51,7 +51,7 @@ static void test_vm_launch_update_capability(void)
->  static void test_vm_launch_update_disable(void)
->  {
->      QFWCFG *fw_cfg;
-> -    QOSState *qs;
-> +    g_autoptr(QOSState) qs =3D NULL;
->      VMLaunchUpdate launch_update;
->      uint64_t control;
->      size_t filesize;
-> @@ -95,13 +95,12 @@ static void test_vm_launch_update_disable(void)
->      g_assert_cmpint(VM_LAUNCHUPDATE_CTL_DISABLE & control, =3D=3D, 1);
->
->      pc_fw_cfg_uninit(fw_cfg);
-> -    qtest_shutdown(qs);
->  }
->
+An exception that carries an error code must retain it across migration.
+Otherwise the destination reinjects it with error_code 0, which can make
+the guest panic. Do not suppress this required state for old machine
+types; an incompatible destination should abort migration instead.
 
->  static void check_error(void)
->  {
->      QFWCFG *fw_cfg;
-> -    QOSState *qs;
-> +    g_autoptr(QOSState) qs =3D NULL;
->      VMLaunchUpdate launch_update;
->      uint16_t status;
->      size_t filesize;
-> @@ -149,6 +148,7 @@ static void check_error(void)
->      status =3D le64_to_cpu(launch_update.status);
->      /* should fail with LOAD_FAIL since it was not IGVM format */
->      g_assert_cmpint(status, =3D=3D, VM_LAUNCHUPDATE_LOAD_FAIL);
-> +
+The chance of stopping a vCPU while an exception is pending or injected
+is extremely low, so the cpu/error_code subsection should rarely be
+needed.
 
-Stray extra blank line.
+It is currently emitted much more often because KVM does not clear
+has_error_code and error_code after completing exception injection.
+Require a valid exception_nr before sending the subsection. This filters
+stale KVM state while preserving the error code for a real exception.
 
->  }
+Fixes: 1b80f1009d ("target/i386: add compat for migrating error code")
+Cc: qemu-stable@nongnu.org
+Reported-by: Yuxuan Li <liyuxuan.darfux@bytedance.com>
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+---
+ hw/i386/pc.c          | 1 -
+ target/i386/cpu.c     | 1 -
+ target/i386/cpu.h     | 1 -
+ target/i386/machine.c | 2 +-
+ 4 files changed, 1 insertion(+), 4 deletions(-)
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index e9e4fc262b..1cfe1a50f7 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -85,7 +85,6 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
+ 
+ GlobalProperty pc_compat_10_1[] = {
+     { "mch", "extended-tseg-mbytes", "16" },
+-    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
+ };
+ const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
+ 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index e5ffb10d15..6f295d5325 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10819,7 +10819,6 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
+     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
+                      true),
+-    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
+     /*
+      * lecacy_cache defaults to true unless the CPU model provides its
+      * own cache information (see x86_cpu_load_def()).
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 641f3ee5c2..2fdc610539 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2379,7 +2379,6 @@ struct ArchCPU {
+     bool expose_tcg;
+     bool migratable;
+     bool migrate_smi_count;
+-    bool migrate_error_code;
+     uint32_t apic_id;
+ 
+     /* Enables publishing of TSC increment and Local APIC bus frequencies to
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 8d69d7e25e..b5c6b127c9 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -466,7 +466,7 @@ static bool cpu_errcode_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+ 
+-    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
++    return cpu->env.exception_nr != -1 && cpu->env.has_error_code != 0;
+ }
+ 
+ static const VMStateDescription vmstate_error_code = {
+-- 
+2.20.1
 
