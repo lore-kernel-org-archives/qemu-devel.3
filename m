@@ -4,73 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E213C88E50
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90911C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 09:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x63Bi-0006mI-IF; Mon, 14 Sep 2026 05:41:22 -0400
+	id 1x63CY-0007Xn-Sj; Mon, 14 Sep 2026 05:42:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x63Bg-0006lD-3F
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:41:20 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x63CX-0007XQ-K2
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:42:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x63Be-0001sN-8v
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:41:19 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68E9fCdK025133
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 14 Sep 2026 18:41:16 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=+SNjQSTjYTQuXo9g9m0nSujeJ2kduqznDiq97Hz0U9A=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1789378876; v=1;
- b=nTFtgCec76ve+o/lL8qIz4Ts+BfPrwuH3yqo7KAXJbWIIg5KWMNsUFJt0ZX6avvb
- tdHIVltOS6XLK5KiNTXroyYV7+K+kC13/Bp83p+VTwEZDiqP0nXax6RUcH2ckwSW
- BXBv93/qRL+E+D51L5GUyr6vzmv89vJ4D8ioxvfi4+2i32rh8fJBgRtUY98/Jgut
- z/5w79YhKo1n8LWj/gPEJhUJI9vPhN1/hMEj9biAlCkY/P8M5jazoDvHJFjVi8kL
- 9vW8CUFQDF+JOnZOdQnhvbmotSddUcScd5zB57qnBZ0CtZl4a1hCN9QaSiv6jhpC
- fEMBB1h3Ow37ox9k7v5mFg==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 14 Sep 2026 18:40:40 +0900
-Subject: [PATCH] hw/display/virtio-gpu: Block migration with large blobs
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x63CU-0001wf-4z
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 05:42:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789378929;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d6nuhTASwdygZ16yZhgzGNK1vUOSqCwBBNrAtFcc5FE=;
+ b=JejpvbDMql5tirkqKzla7BA7mvlqHby52m4H3UkSjzH9DYw4OWuwR/R8AEjizjEIv4st+7
+ pp8qe+5FDjj91UB0WRrqqE3wxYhG40V3jksdOHCIC32h2uUl72kXf8VYHVbNAXgNZ+fGKg
+ qUVffF6p0gn3gS5vpXlb97DoA5lOn5w=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-184-A2L27yWaOrqKHloqw_n5ww-1; Mon, 14 Sep 2026 05:42:06 -0400
+X-MC-Unique: A2L27yWaOrqKHloqw_n5ww-1
+X-Mimecast-MFC-AGG-ID: A2L27yWaOrqKHloqw_n5ww_1789378925
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-39533bb224cso3797414a91.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 02:42:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789378925; cv=none;
+ d=google.com; s=arc-20260327;
+ b=iXdoiq86nejzlQtZuAgKBgytxuJjNZtws+wdOBOGKa6fbkpcwfCR37je7ZdMroTw07
+ h8jHY4MTQlIPhTzhv5pw00mDKzurMD9Pfq92BMCH0nbxsdQQiOd9CPzs5msVM0W3Fbf1
+ YP+zpGM+jw40Hb9yM69g5HVRpi/xoJ9TX27tjHP1sVmbuRTCQxf0KwwSbYe9PsmoV0l7
+ Kn284jvdxAA9T4SuoxGtZVwJQyN7PKvqxvDRj2VxMpeG2ypvt9H9qeeebacGQvVxXEDI
+ chkR3gdlP9gXehi/d42cj6J4ak/tcK+82u8GlzCLoV108WP3guBdkMLjCd0jRxCq5+Zh
+ elvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=d6nuhTASwdygZ16yZhgzGNK1vUOSqCwBBNrAtFcc5FE=;
+ fh=GHRgIo4Mqr9cM90OZATk98gtxn7Fy4MWEZN1Jlm5aso=;
+ b=jp55NT49Uz306EJgpGE9c8mXH3Zaib9aFW4TzfZ5GyhkghJPJQ+M901TpVglvv06Hm
+ EpfAWc4Wo+WiA2cSVEcDvlbrOnHRvndz9s/rMuLVs8CtL22PCALgm0kYQMVISligC8I/
+ GpsGwb1mjSxk/nCAoiR+rE0fHX9Ke7YnlxyRGIpCP4rL2ITOZ/dOkVnadcWbizct72Xf
+ 9eA7G9ipg74rpMQqx9CGalGPefMjk/f+XrU8FtHJ9Ss8SQDC5L01QDPuCM4nl20E7ATO
+ T+I5U1qKQLfcG4I56vQ7tCSYjwx5XIQI5t2Ap+mEJfw6oEIxfMFBlkm7cdnTktL2JsSU
+ Yu4w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789378925; x=1789983725; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=d6nuhTASwdygZ16yZhgzGNK1vUOSqCwBBNrAtFcc5FE=;
+ b=j4XOqtHGn0Bj9/kCmbuM4QWRO+hXmNQfLryOIai3Yhsl29OUFp3b8GjdlrrnQyP01h
+ +oTQHK9zHV1ZRc9pfzapaYISaWvAhSmj2ZBPOZJwogeNtRJek2NfpUasu8IaSNvPAtd4
+ Yf30fDyWL3A3KHdibc7Z+1K29hswGhY0fEw/h6JPXKeO42cNKJzQz2e41yJTeZXLeB9o
+ fk0pzSRNlq57d4Ex7ysjswdpGmhwH4CK9Tdtt/2WDhePqqOfd2qHggi2YHykQbMhiwHV
+ RsjRebnEVcHWTEsWKyFgi1yDuUQuKwqL3sLAHL6ZkjrxgOMDwFVcRpL4Z+vS6X5+H2bq
+ AvTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789378925; x=1789983725;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=d6nuhTASwdygZ16yZhgzGNK1vUOSqCwBBNrAtFcc5FE=;
+ b=ay2V5nilKk5KIJ7cq6YHJxC+ZRtfRzpD+9duSWQ1ns2Pzb8ecLhMkscEr8oOGVjM3/
+ JfzBzp0s4ZusKaooGManBJCrJll36HIAhgYKhpHR/eqdbor6xKCII19LQWeGXw5+QhVx
+ wEjMYiM8FnutN/YPRqZ2AAOvrewyRasWjWsCD4DT6f1Zgz8Y00BjJsFQ0gSgAi14XT/d
+ kiu7HmicXNK8JBeK5Pv9S0fr8SS7Brg4ncS/ti7IUsSwXOaeLWofPhqIn4TX07bJ53zZ
+ nk+WnKJGiDs2WUEpCa9MUaSspXMoE/efr2stBvmy8ZTHeNmw6xDiTvh96XMo1Alkwbhe
+ T7hQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz44LBVFjQ6LL4Rl3Sbk54V3Yns+9PkRuFhYEEB3G9yKQ5fkqHjLzPRwOlIzanYX+7DyjuU1HXHUp1d@nongnu.org
+X-Gm-Message-State: AFuF++nSihxBv+7FBC30hejU13IWTJdS6Mq1Q9o3SR8l1L/mn/uU/cls
+ o2K/9dyip7H03xlUEprUwYsA/4pUyphYilWmInxZ7bRIu/q9UXSeT4KmzI+JPu0x69iu+skpLEe
+ IZlq97s3PXkEEl/7s45GpAhmZZsQKDGJAw9Hiz3Lz0WmqD6c1PIYd3pAESBNtfkdHXNf4j97aqb
+ tVnfSgoZuCnMS2T4HXQFVOhtFiivl7BM0=
+X-Gm-Gg: AYBFou21fPIi9W6nV/zlvAqA/mgJfeBmJL2CASObEwgHMp/hE5167FamDl26KBvhVzM
+ mdUaL9fbujoE3rmLOn7EoDeGs1m0fbFTfSPwVk2V40czUrDZ9A7jQLog5Jgc9ducj5V8NoGm9s8
+ X58fLmtuL6XkGddMVTIcdf+oFZmlhBpT/wag9NhdvkIxqk9itx/Cfa6n+AJA25iK8uGZigIO/uL
+ Z1/YdNoU7UfYMhFinU7ULC5StUpcUEZR9qikO74sB7r6aAWzLNwqOmvCGByaA==
+X-Received: by 2002:a17:90b:28d0:b0:396:4c63:7193 with SMTP id
+ 98e67ed59e1d1-39debfb7ae5mr4144435a91.11.1789378924863; 
+ Mon, 14 Sep 2026 02:42:04 -0700 (PDT)
+X-Received: by 2002:a17:90b:28d0:b0:396:4c63:7193 with SMTP id
+ 98e67ed59e1d1-39debfb7ae5mr4144390a91.11.1789378924464; Mon, 14 Sep 2026
+ 02:42:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260914-block-v1-1-4df9617573ca@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcyNL3aSc/ORsXaPUtBQzs9RkI+PkFCWg2oKi1LTMCrA50bEQfnFpUlZ
- qcglIM1RFUWphKdCCEqiy2loAn/4SaH4AAAA=
-X-Change-ID: 20260729-block-2efd66ec23cd
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3451;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=KDvmjJ8HEQ2mdrZ7njg5NilOU8qMlDM0NwKIRwriYYc=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9byg6aHluu+lf6Y3XJK1irDk29hRa721PUzDctXZsQsX
- 3UmaI9vRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwER2lzP8DzJ3NFhvvmrSnRem
- ZvHX+kQ9y8QfKzSaP53Pqr178Y/eDYwMb6byRn52YVt7uG5/juaXkoXTLnYliR/bLFH5Pl//wad
- MFgA=
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
+ <20260904124604.2207440-103-alex.bennee@linaro.org>
+ <dab85c9c-4718-48d1-a343-c2e6b5f8e24f@linux.ibm.com>
+ <87a4pn8yra.fsf@draig.linaro.org>
+ <CABgObfYEN8Qme6zXGYJpEeHTiFegjOm=Ym-3vU9LE1Z-Wsot3g@mail.gmail.com>
+ <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
+In-Reply-To: <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 14 Sep 2026 11:41:51 +0200
+X-Gm-Features: AcwNN1UVP8i5D9Ke_xJ8bZl2HAlapz_XFL-bI0e625VuH0G-01IjPA1zjRpoHxM
+Message-ID: <CABgObfZnyHenuVJ6maVs+jMNQCJeYhtcnXtXOqN1G3NcbvDt7g@mail.gmail.com>
+Subject: Re: [PULL 102/105] configure: remove cross_cc and gdb detection logic
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Eric Farman <farman@linux.ibm.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Aniket Sahu <asahu1x@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>, 
+ Zhuoying Cai <zycai@linux.ibm.com>, Joshua Daley <jdaley@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000296248065b6e3f95"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,102 +143,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The blob size is encoded as a 64-bit integer in the virtio protocol, but
-it is encoded as a 32-bit integer in the migration stream, and
-a large blob whose size cannot be expressed in a 32-bit integer will
-be corrupted after migration.
+--000000000000296248065b6e3f95
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Block migration with such large blobs, and, if it is not possible, deny
-creating a large blob.
+Il lun 14 set 2026, 07:54 Pierrick Bouvier <
+pierrick.bouvier@oss.qualcomm.com> ha scritto:
 
-Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
-Fixes: 10b9ddbc83b9 ("Revert "virtio-gpu: block migration of VMs with blob=true"")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Supersedes: <20260727-blob-v2-1-d0b9af38a975@rsg.ci.i.u-tokyo.ac.jp>
-("[PATCH v2] hw/display/virtio-gpu: Reject non-migratable large blobs")
----
- hw/display/virtio-gpu.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+> On 9/13/26 9:57 PM, Paolo Bonzini wrote:
+> >
+> >
+> > Il ven 11 set 2026, 19:49 Alex Benn=C3=A9e <alex.bennee@linaro.org
+> > <mailto:alex.bennee@linaro.org>> ha scritto:
+> >
+> >     Thanks for pointing this out. I hadn't noticed the issue as I guess
+> we
+> >     don't build firmware in the CI. That said on my current tree:
+> >
+> >       cd /home/alex/lsrc/qemu.git/builds/all/pc-bios/s390-ccw
+> >       make
+> >       -Wno-stringop-overflow detected
+> >       -fno-stack-protector detected
+> >       -Wno-array-bounds detected
+> >       -Wno-gnu detected
+> >       -march=3Dz900 detected
+> >       Assembling start.o
+> >       Compiling main.o
+> >       Compiling bootmap.o
+> >       Compiling jump2ipl.o
+> >       Compiling sclp.o
+> >       Compiling menu.o
+> >       Compiling netmain.o
+> >       Compiling virtio.o
+> >       Compiling virtio-net.o
+> >       Compiling virtio-scsi.o
+> >       Compiling virtio-blkdev.o
+> >       Compiling cio.o
+> >       Compiling dasd-ipl.o
+> >       Compiling virtio-ccw.o
+> >       Compiling clp.o
+> >       Compiling pci.o
+> >       Compiling virtio-pci.o
+> >       Compiling secure-ipl.o
+> >       Linking s390-ccw.elf
+> >       Stripping s390-ccw.elf into s390-ccw.img
+> >
+> >     So it seems to be working. How do you usually invoke the build?
+> >
+> >      > Fearing the worst, I started converting to use meson directly
+> (which
+> >      > is probably a noble goal anyway). I still don't have a workable
+> >     image,
+> >      > as inheriting the common meson cc/ld flags exposes a bunch of
+> other
+> >      > problems. Will keep poking, but I'd like to know if there's an
+> >      > easier/better option here?
+> >
+> >     I suspect the easiest way would be to move the rom specific cross
+> >     compiler detection into a configure script within pc-bios. Paolo
+> wdyt?
+> >
+> >
+> > I would prefer to revert this and load the config file from meson
+> instead.
+> >
+> > Paolo
+> >
+>
+> I would be happy to see only the related part reverted if possible, and
+> not all the patch. That said, no strong opinion, just a preference to
+> avoid seeing people start depending on this config file for other
+> things, instead of doing things properly in meson.
+>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index bb0f41bb1e05..5d43ffb99184 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -27,6 +27,7 @@
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/core/qdev-properties.h"
-+#include "migration/blocker.h"
- #include "qemu/log.h"
- #include "qemu/memfd.h"
- #include "qemu/module.h"
-@@ -35,6 +36,9 @@
- 
- #define VIRTIO_GPU_VM_VERSION 1
- 
-+static size_t num_large_blobs;
-+static Error *large_blob_blocker;
-+
- static struct virtio_gpu_simple_resource *
- virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
-                                const char *caller, uint32_t *error);
-@@ -355,6 +359,7 @@ end:
- static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-                                             struct virtio_gpu_ctrl_command *cmd)
- {
-+    Error *local_err = NULL;
-     struct virtio_gpu_simple_resource *res;
-     struct virtio_gpu_resource_create_blob cblob;
-     int ret;
-@@ -415,6 +420,26 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-         }
-     }
- 
-+    if (cblob.size > UINT32_MAX) {
-+        if (!num_large_blobs) {
-+            error_setg(&large_blob_blocker,
-+                       "a large virtio-gpu blob is present");
-+            if (migrate_add_blocker(&large_blob_blocker, &local_err)) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: blocking migration for a large blob failed: %s\n",
-+                              __func__, error_get_pretty(local_err));
-+                error_free(local_err);
-+                cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+                virtio_gpu_fini_udmabuf(res);
-+                virtio_gpu_cleanup_mapping(g, res);
-+                g_free(res);
-+                return;
-+            }
-+        }
-+
-+        num_large_blobs++;
-+    }
-+
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
- }
- 
-@@ -460,6 +485,13 @@ static void virtio_gpu_resource_destroy(VirtIOGPU *g,
- {
-     virtio_gpu_disable_scanout_for_resource(g, res->resource_id);
- 
-+    if (res->blob_size > UINT32_MAX) {
-+        num_large_blobs--;
-+        if (!num_large_blobs) {
-+            migrate_del_blocker(&large_blob_blocker);
-+        }
-+    }
-+
-     qemu_pixman_image_unref(res->image);
-     virtio_gpu_cleanup_mapping(g, res);
-     QTAILQ_REMOVE(&g->reslist, res, next);
+This is documented as a task for configure, so I don't think it's a problem
+not to do it in meson. In fact creating containers is not done by meson
+(it's done by make) so there is no real reason to do it outside configure.
 
----
-base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
-change-id: 20260729-block-2efd66ec23cd
+Having firmware have its own configure script is also bad, since you end up
+having code duplication.
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Overall, I don't see the big issue in reverting this patch.
+
+Paolo
+
+--000000000000296248065b6e3f95
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 14 set 2026, 07:54 Pierri=
+ck Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierric=
+k.bouvier@oss.qualcomm.com</a>&gt; ha scritto:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">On 9/13/26 9:57 PM, Paolo Bonzini wrote:<b=
+r>
+&gt; <br>
+&gt; <br>
+&gt; Il ven 11 set 2026, 19:49 Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.=
+bennee@linaro.org" target=3D"_blank" rel=3D"noreferrer">alex.bennee@linaro.=
+org</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:alex.bennee@linaro.org" target=3D"_blank"=
+ rel=3D"noreferrer">alex.bennee@linaro.org</a>&gt;&gt; ha scritto:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Thanks for pointing this out. I hadn&#39;t noticed =
+the issue as I guess we<br>
+&gt;=C2=A0 =C2=A0 =C2=A0don&#39;t build firmware in the CI. That said on my=
+ current tree:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0cd /home/alex/lsrc/qemu.git/builds/all/pc-bi=
+os/s390-ccw<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0make<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-stringop-overflow detected<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0-fno-stack-protector detected<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-array-bounds detected<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0-Wno-gnu detected<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0-march=3Dz900 detected<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Assembling start.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling main.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling bootmap.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling jump2ipl.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling sclp.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling menu.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling netmain.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling virtio.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling virtio-net.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling virtio-scsi.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling virtio-blkdev.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling cio.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling dasd-ipl.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling virtio-ccw.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling clp.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling pci.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling virtio-pci.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Compiling secure-ipl.o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Linking s390-ccw.elf<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Stripping s390-ccw.elf into s390-ccw.img<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0So it seems to be working. How do you usually invok=
+e the build?<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Fearing the worst, I started converting to us=
+e meson directly (which<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; is probably a noble goal anyway). I still don=
+&#39;t have a workable<br>
+&gt;=C2=A0 =C2=A0 =C2=A0image,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; as inheriting the common meson cc/ld flags ex=
+poses a bunch of other<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; problems. Will keep poking, but I&#39;d like =
+to know if there&#39;s an<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; easier/better option here?<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0I suspect the easiest way would be to move the rom =
+specific cross<br>
+&gt;=C2=A0 =C2=A0 =C2=A0compiler detection into a configure script within p=
+c-bios. Paolo wdyt?<br>
+&gt; <br>
+&gt; <br>
+&gt; I would prefer to revert this and load the config file from meson inst=
+ead.<br>
+&gt; <br>
+&gt; Paolo<br>
+&gt;<br>
+<br>
+I would be happy to see only the related part reverted if possible, and <br=
+>
+not all the patch. That said, no strong opinion, just a preference to <br>
+avoid seeing people start depending on this config file for other <br>
+things, instead of doing things properly in meson.<br></blockquote></div></=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">This is documented as a t=
+ask for configure, so I don&#39;t think it&#39;s a problem not to do it in =
+meson. In fact creating containers is not done by meson (it&#39;s done by m=
+ake) so there is no real reason to do it outside configure.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Having firmware have its own configur=
+e script is also bad, since you end up having code duplication.</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Overall, I don&#39;t see the big is=
+sue in reverting this patch.</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">Paolo</div></div>
+
+--000000000000296248065b6e3f95--
 
 
