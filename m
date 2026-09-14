@@ -4,136 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84AC6C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 08:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2CEC88E50
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 08:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x62M7-0002BQ-Jz; Mon, 14 Sep 2026 04:48:03 -0400
+	id 1x62Lp-00026r-SB; Mon, 14 Sep 2026 04:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1x62M5-00029i-WE
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:48:02 -0400
-Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1x62M4-0007Uh-6c
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:48:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i5NOt33+X9NdD4OWqBd8VWQiQmXSDaR6oiNxPhJ2biP0HWV/ssvs7BQOXOnbKXGi+A9CwEXCcVTT5pxwgPePYpnrKFyuB2A4+wtNCNk3hr6WWuLI1O2U6IzU91w2hf6PFJvl4SmR5aCzhDpIIqNyRyJZqjwLvH4jGc2aSyDpH0TzACU6FqVblE00MoFGugt9U5iZ1t45aVF0F3epEAZX+To6n6hiPEooXsLbm5Si+KdDBk37CvkNz9wwSEsMyoUedo8aQn35cWcWw+cKynGZ+DkcE6EF+G0AhwTV7Aa/BOQ8S8uSf6sSkQE+fNuTZ58JHXWYIjEM4dzPATyuMhWn9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tRmHnXaNKYltMwT2B8cNfAsU0vD9XkjREdTFvFyojlo=;
- b=xUWP1Z2JfsAWSU6baDB4IILItHWhCVaX3lRxFRCTBCskPbkf82yUe5rgeM9zhN8xNazgR7sVMXMcLDx77pd1PGtqlq2KHT9F3wPeqGF+RNl1FXw7yxgJJKAuwWikOzom5iTV9AQF4bnThZ5hw8lWEZKL6QNK+cmXIX75YoFlF55wSp5qnSoBL5JxIHQsscDvGDzHw0QFcS5KkYeMyYtsBlrZsy1iDdyzVV00QxSNgVILak+a+Z7wyEOa8SvSRt/LanXx2dyB/JxcTtyUYfy/8EemIEDwtwpunlTm0MscbF02Z9QOKitfxpbdyyXUZyGDKNRyP/VHOe/FOAvyY3c1bg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tRmHnXaNKYltMwT2B8cNfAsU0vD9XkjREdTFvFyojlo=;
- b=NwZY1wymeYM33GqIxRkgYMWUggtKK6SsiRZi7TJUiCLAmP0VEt4DQfxckxgXJj4omhLShWM/vUS+tfv6YOdQ+Nfq9QBnyOQX5S0G8czz7yCkg1gfOQY3Ed1KwZIx8bYZZy8Dbp0izOewT3MeBH094C5GGMLNkL3t+DpM2N6OCbIpCrKsGmRF4+QtfHtJDyRQlFAwQJe6Y7BdiNF12v3qBaSAaGxkMIkHJGHzfb7VpXWPNC3Zby3G9uTJ268Pfl40ss52uRDdCKx+PsiPPPCnxkCxUhUaBjc2Wlv2hwsqQxBG5iojB+S2IiMPekLLgwTy8w94OZTZTHniMLnUK7r9mw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by GV2PR08MB11692.eurprd08.prod.outlook.com (2603:10a6:150:300::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.8; Mon, 14 Sep
- 2026 08:47:56 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0428.004; Mon, 14 Sep 2026
- 08:47:56 +0000
-Message-ID: <2c7441f3-5fca-423b-bdd0-f155bc9ff472@virtuozzo.com>
-Date: Mon, 14 Sep 2026 10:47:55 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/ahci-test: replace HMP usage with QMP
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: "Denis V. Lunev" <den@openvz.org>
-References: <20260914075321.2429457-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260914075321.2429457-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0107.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:351::17) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x62Lo-00026X-PJ
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:47:44 -0400
+Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x62Ln-0007FJ-25
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 04:47:44 -0400
+Received: by mail-yx2-x11.google.com with SMTP id
+ 956f58d0204a3-6713d20d375so1089416d50.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 01:47:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789375662; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZjMNKuCOjZCZupscM2edDNSxLcIHeQJ9mRD1XbE7/X9HMXo/CQ7z/4qVZlxeABikZQ
+ CXNelU6p0YQw3gJ/ymoe92rQ/xhRVTJwjyq1s9VR2GwFsJu6asdoeMdv13Z/FFuN0Ufj
+ pgFC1d67wcVlD9v6RvV1idIvc+02pUaEgULfbUcr/KVfw4Q6Gy49T+KMMf3H/6DdjVv1
+ evGIr4fu9rhpcqzGROylgeivdQ+F9x8o4Du/FvDcNyHSJsWq6elV6x9wy1Y7zIMVqObQ
+ E+Gpavml0SXP4ct1nnY2WLa83eiwwvItYVQQrSTn8ddKVLiBQKNiy9ys9imhgTgx1VWU
+ fBQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2JtW1O4fgmcvzaTWO6qEbTdakN4/wjXQB0I8Ry12PdM=;
+ fh=OeH7OTjViatlmx0lFsRW36UoSyv0+l/u/cCvcQmcpa0=;
+ b=ZGfdqYb4UJZIhNniuj9klo7GJBWn2Tkma8an8dT4eei5xB0ybS+vGRC1BWjs66JO+h
+ 8c2t4DejL/pUdYmakKDGS8P9tu8g/2aslrKOlB8efYEk0VtvuFAi2K8S5cOQSpfgPFXC
+ yuUNjmFRctWxJvf5LMmkHfW3+t0mgeTLRjuFsZlnAocTAe/sFodOKC/DfHOCqmg2apzM
+ txNritxskpqUnqs4SbWp/71tJvYvvpECMyxhFBRvfBKUR2YjvzWxSjQ/PJmgF8FovwuF
+ 7JwpZkpNYoL7VmgYEan/EUz93c/8R9dbe5q/mZ/0lG8mm8Xapv3uV/S2NiM4M0ifBft0
+ 1kfA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789375662; x=1789980462; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=2JtW1O4fgmcvzaTWO6qEbTdakN4/wjXQB0I8Ry12PdM=;
+ b=NA60OuNsm42YRAs5nV7blkJ2sOWIiAJBt/g08ygGPeWZN7rQA+euaiUCVM3Iw0E3xu
+ VO/4WTd09bV90l3iJ3zCBIPNUJgqRvEEr+8EeLeW/jHoUFeROywqmD73xLIVgnt2zsqX
+ lXaExC3Or+oT5a5n8CWQMRf+cNDEmFavFB5vdfkzC+KirlRWcX/kV5EXus8OtufBuyF/
+ UC49zGEQQ7fjygv2qfV0gEeqXK5p/6+oI6E++lIrzrh/sjxHgC2mT9KUxhHqbvNaIu+L
+ RL0XEHlmViCZDAcCTRc/47cm5Bpub+r1wwVd+hBf4TVaSbe9IDEbPSVTiet0D8eyqYhe
+ nw5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789375662; x=1789980462;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=2JtW1O4fgmcvzaTWO6qEbTdakN4/wjXQB0I8Ry12PdM=;
+ b=qL2XqbacEQAJoU+r6WTXIGjltJz9uwgQ5PM+FSFWeLue0YE5wpKiyI3x1XHOj0vSap
+ bUGOGYmgdbI1d5wT/lLRU6tBc7IiNLSesoglQFz24P/qZUo8f4kO+eoHsigJS0HfYvAo
+ DN1jKvlfjvvND78UmY4YBEG2a7wQW4ekQzC1RMdUgbe3vwF4DjidExPYIEDPJjKV3ayx
+ 9KP6HJNq7I0mSH5wJ6a/qfgSU2AHV5D9vPHOnLFRgpHY7slLkacYxresoB+yjFUXV9oZ
+ tSX5ynahQEF4G7MJd5hwrwgsNX1aDZqkUwwIKnTfuEZLxsRhc0IjqQVLCkVLFqlqgi8A
+ lh5Q==
+X-Gm-Message-State: AFuF++lI/C2ITWGfgBxolIzeVpB8b96Qrj3aprLddfW3pBwmhhBLQSem
+ D59/83kxHhwtFyhX7J/e5v063pCeQRk8V+IQxy8psvZRb0GvhW38Lq0TrpRygCTfZKPp5c0hE2T
+ UalStcH07EK5erNBrQIEqXf31T73/HDmqtzDSnXMDnw==
+X-Gm-Gg: AYBFou1lehq+oQ7BAqt1a8Dp/hB1khH4v+GiQd2efzrFk8bnUDCnKiXo/rfZ7fuLbzM
+ mncg9gWXGPcYiusLCilLFjiVRJMVbyUY12+YoeucTLAq5uUeaN1qrPUF6IZZzeT/Xexw8pHz0RT
+ j0dASIEOpCcb89XCYiYGegFrR/wo5JjbrkwlJfQugwu3U9HbToEDav93G7+YZoIcCTIYo2FJrI6
+ 1vm335mKJlpN2NVlrM/8quQjhfq4Wh7JvfNKsQuHZexbBWZFupS8xqP4aQk750ApGzPrIlgKbzg
+ lQkX8j/FF43xBawHaQaWAfx7/PU5DJ6K2rtvRhIxH0cVf7MW5I9UtrHLGOohjSv+knVzz7qU+wC
+ aBpJH2E5+DPNLPdwPKxmFQDHLcBNsTXbuDQplrRY=
+X-Received: by 2002:a05:690e:13cd:b0:66f:c1be:84e5 with SMTP id
+ 956f58d0204a3-6714e1f3d49mr257397d50.83.1789375661733; Mon, 14 Sep 2026
+ 01:47:41 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|GV2PR08MB11692:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3ef99697-872a-46eb-5795-08df123cdf28
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|10070799003|23010399003|1800799024|376014|366016|5023799004|56012099006|18002099003|22082099003|10067099003;
-X-Microsoft-Antispam-Message-Info: JRS5z23lp3N/I4UtgA8KwLhjUEXbeuRiobnBBzqziQuzND0fVcVKXf4VdoW1dmwKlLnXXMLbc1Px/pJkVtOXluJCIVpWZ8ZTkp8NeF5pdY9DoYJmZaF7EvH24LfRAUIfI9rNKctvyo+cMKK5iY4gClSJVftRRtlPd9JLoVoedGtCFrlGl464qDI1HI3qEd62N4AKuF+kzE9FQYqhde1KJ4tEMyC5rZzsCU4exITbJVE7yQg17nSAns/s1DcpARJ9wkXwncWOsjyTaVTu26684mUi/PkNcH51AfqP3VXUCcJZ0EG0QWGbrUhOktYvNakAqgqmlelgPQsIoBNZZvR3vSahaOGIVTBWpqkvfT2+hRSQVHUbUOwWWSmHbQ2rWk0uOELX3wM4NQ8jhnEgMhpbYokKWpAJ9dEKHc/0iAgaQrH4Wh1IKTsN09Mr5AYI9+5Dlw3aRA4i1rmYVhKtNztqE/bXeczNLeErsNVYs6LHHbU8d4vQ0LvZuIzXjRjJIrnRJK85xkbDVN2NaX7AwCq0phbwlgQCvtzOIAlFr+NM1Pstjm3Oj491LtinJgwxbRLCWCfrI0e8AzA+wDXdfLdsZGuKW9JkWAOm/Cng+2E75s9uJ89r43qPuIjn2Zpc89W1ZOXa6zRvRTxl2EWixru5yQlqhztAJehp+Rzz7VbfYRE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(10070799003)(23010399003)(1800799024)(376014)(366016)(5023799004)(56012099006)(18002099003)(22082099003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SEZoTGpreFYxWDR4b3VBakRJWmQ1RE9lc2t0UzFNTU51WGFmU1A2T3hyNE5y?=
- =?utf-8?B?N2htQmFER24reGJxNkRVRis0UzRpdFFrS0VFYXl4ZVRjTjNlMlJnME1hSFJN?=
- =?utf-8?B?NEJmTXhDREViUG9hc1Y5SVB1QlErcmpGR3paYXpOQi8xNmpOOUlRTXo5MHJD?=
- =?utf-8?B?bSt0MVhsaUd0aEVYS25PM0FVWUU2OFpwTExmWkw3UkNtSGxxTzBlbG16U3BC?=
- =?utf-8?B?OFJTYWlKQWs1R285K1RFTHpZanYrVXMxVUFLQitCdUVzb2VOWTBNQ0pXZ2o5?=
- =?utf-8?B?OHRaN0tyV3o1eTFiWmo0dGxaZlFxVHBHclNyalIrdTUyT2orLzZDNExtUzFK?=
- =?utf-8?B?MUN3R3R1dk1rV2FKTHdrUFA1VTc3U0ozQ2VPclpVZHd3dmNaVmZ5M04xUkF0?=
- =?utf-8?B?OHVmMklYS3MveVBodnZqQlE5cit4dzc4U1p2alJ5aVV1OExSa1Y0c1JCOVU1?=
- =?utf-8?B?cHFDUVBRZ1FQb3RoeFNCRzNMSWlTZ2U3M09QRE9Jc09lcmVzRFJOUlg0SlhI?=
- =?utf-8?B?TWFDcU45UldWcFRYbDN1R3gvUDNUelFkOHdTbzFCM2toU0luRWladStMSkhq?=
- =?utf-8?B?cFNMY2pmRU9qdVBBbGgzWnk4SjNPWHhGS2VpbWYrSCtrUEVZMzlkcCtnU0F1?=
- =?utf-8?B?dXBGOHpvcGVMNFRwWGl5Zy9KVHBPUVJQSVowZWMzMXl1NFVPd05QaEFvdGVV?=
- =?utf-8?B?OFQzZnBhMWRjZUNjYzRxekV5eVQ5cjB4SUNMU2lDM1hwZytiaGo2aE5zVGNa?=
- =?utf-8?B?MXNacjF1VE92MGdacXYwYk1iRzdGbmJhd2dDWW5OZ0JFTStEZFd0YWRTQTQ1?=
- =?utf-8?B?Nlh6djhmNFJzaDV6cHNpVDRMenMxbTV4eTA2eDhvMVhCTnNBa0UvZ0dtSmFO?=
- =?utf-8?B?N3Joa2dxM0ZLL1N4OWRGKzBjU1N5NkduM0V3cWloVitHeURLNlk5TEtVNVc1?=
- =?utf-8?B?QmxlcGFNTGdBSjNZWVE0Z1RsdGNXb2wySGhDaUN3a21wUkVkTGRVbUxOU0ZN?=
- =?utf-8?B?V0UxNkRpaTd6alBBVk52bnRkcWxVSjhIYWxIN3pVa2FMYnpDRURhdDJLamtx?=
- =?utf-8?B?Z1hGZ2srbGFuZm9jTi83TUd4dSt0eHVTMlVTRWsyTEQwSlZmRTZIRDhUSUxT?=
- =?utf-8?B?UEZjWmdid2hjWjcwM3htMEM2eDV2Y1R2MmRnbFZLMjVycTlSbytIY1hqZXlp?=
- =?utf-8?B?QkNWcXkwcFVKVHJEUDNZUEhIV3UvYW5kL010YndlT0RzQS9mUXBUeFcxaEtH?=
- =?utf-8?B?bVlYZCtKZjBzVnpmM0p0S0FIUlpPNG1iZlI2UXgyb2VMejl2SHkvR2pkdWpp?=
- =?utf-8?B?K28rS3ZOQktHOUVhcGliN0s2M3ZmenFUaUJ5eXhDNkROODJ3clFZenBTTkpy?=
- =?utf-8?B?aWhlRHIreEN2MUxBVXVaYnJWUW84QzdwdWZFYmJaRU1XcWVWTGEwSWJnWFhF?=
- =?utf-8?B?dC8wRW81YWRmSWQ1YzBKeVFyZjN6Yk9ja2lyV1prUFI4T0NLSnBYeDN2RVc0?=
- =?utf-8?B?eDVsa0c2alBBVitCaWxwYWJOQlNxU1BIWTE4b3phd251eGk0K3NRaUhRRDhW?=
- =?utf-8?B?a0dNa0gxMUdXdWpTVmo4NjZWdjYyYUpMSmx0ZG8wWjlpNWlDR0U4bGRLR2lv?=
- =?utf-8?B?eWJwL2dVMzdyZ2hCd3BIb3M5VDYxbXY1MVBOOGtEL0piRXEwb2h6MG9ja0Ew?=
- =?utf-8?B?R2ZJMTZjZFV4dWY5TWVHMlJIV2U0bmttVkIvelA4RGlDWTdYK3V2T2FCMmxi?=
- =?utf-8?B?ajQ5TFRGK2NndmlWcjNCZEdBNS9OaVNmSXNQRnVZbmc0N0liZjZxY3VyUEp5?=
- =?utf-8?B?QnhVcFV3U1JSaGVNa1dFSFQ3ZjJFWXowWXVuelVMQVdBbEQxem92eWhRbU5E?=
- =?utf-8?B?dlpBVEZ5eHZ2a2NtLzJvY1gyQzYxb2EwUXhWODZUQlUxdEZCZlVpcitpM3Ix?=
- =?utf-8?B?MUhWZWdGSmFad2pXdVB3cHdtUXFWbk5MUjA0bzdNTnF0STZ3M1RDRzd0TGgw?=
- =?utf-8?B?RVlNMmVjZmd0TkV6MHloVmpUV1laa3RZWWtPRzdSL2t0a3pqY0tnSDl5ZVRC?=
- =?utf-8?B?Q3pUci9TNzIrN1Z4MDVjOUMrV09TeXcxNmZPOHVGLzAzY2RHYzREc0ZiZ1hk?=
- =?utf-8?B?NU13TEdEQ0VtS1pSd1hLK2hiR2RPSCszVW0wREtheDZpcmR0c2FZdDVCdCtx?=
- =?utf-8?B?ZlRkdEQ5SnBoSWRyeWdtOG9vV3czR0NuMlcrQ3dncDJacTU4Z25ZSi82RFdL?=
- =?utf-8?B?Vk1rQzh6SmhESVdTdW5GM3g4NW1qRVBmTG9NdkNnVzc3L29RWWFuZDhrSk1i?=
- =?utf-8?B?dkl2YUxFUXpjSjFrNUsxU3B4ZkdyQ1VJSmlVZVZWQ1lIWHBlVXFXRGY1ZVZ3?=
- =?utf-8?Q?DYCPWOzx3M7pNH4bSLxp1MHlmlPJ0JL07GxZ3kG5sT2Nw?=
-X-MS-Exchange-AntiSpam-MessageData-1: 6zzjCsmxroNgkg==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3ef99697-872a-46eb-5795-08df123cdf28
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 08:47:56.2476 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CuUWyPtb/cP3xEdbX3/DD9aX9XiSKZFfAMnSDDzbCJ4lUhBylwPybl7iy9PsxE2xK56aHa1cRuLxs8kD+ZwqxQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR08MB11692
-Received-SPF: pass client-ip=2a01:111:f403:c201::6;
- envelope-from=den@virtuozzo.com;
- helo=AM0PR02CU008.outbound.protection.outlook.com
+References: <cover.1789117222.git.mst@redhat.com>
+ <5ec2a0b21fe5b8e1419a94a753636088d6b0409b.1789117222.git.mst@redhat.com>
+In-Reply-To: <5ec2a0b21fe5b8e1419a94a753636088d6b0409b.1789117222.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Sep 2026 09:47:30 +0100
+X-Gm-Features: AcwNN1VQzahoYUiYg-O9ILDj06boDEz0-hkdAWq9-lzYBOCVxe6YgXx-Q7tgjhQ
+Message-ID: <CAFEAcA9sG8ijHjbJ6g8m0JZfpkAQ_Ow_Qxd2ep8Lui2Qe2L7hQ@mail.gmail.com>
+Subject: Re: [PULL v2 01/75] virtio: fix exit(1) on DMA mapping failure during
+ migration restore
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,32 +120,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/14/26 09:53, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Fri, 11 Sept 2026 at 10:01, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> Use qemu-io command instead.
+> When QEMU restores pending virtio requests from a migration stream, it
+> calls qemu_get_virtqueue_element(), which calls virtqueue_map() and
+> virtqueue_map_iovec() to re-map the saved DMA fragment addresses into
+> the destination address space.  If the addresses in the migration stream
+> are corrupted, and as a result dma_memory_map() returns NULL or a
+> shorter-than-expected length, virtqueue_map_iovec() calls exit(1),
+> terminating the destination QEMU process instead of failing the
+> migration cleanly.
 >
-> (CI didn't catch this because build-without-defaults doesn't build ahci..)
+> Convert virtqueue_map_iovec() and virtqueue_map() from void to bool.
+> On failure, virtqueue_map_iovec() unmaps any entries it has already
+> mapped and returns false; virtqueue_map() similarly cleans up the in_sg
+> entries if out_sg mapping fails.  qemu_get_virtqueue_element() now
+> checks the return value, frees the element and returns NULL on failure,
+> allowing the migration restore path to propagate a clean error.  The
+> callers in virtio-blk, virtio-serial-bus and virtio-scsi that invoke
+> qemu_get_virtqueue_element() during load are updated to check for NULL
+> and return an error code.
 >
-> CC: Denis V. Lunev <den@openvz.org>
-> Fixes: bc4f7b451e1f ("tests/qtest/ahci: fix a racy deadlock in the engine stop test")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  tests/qtest/ahci-test.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Hi; Coverity points out an error in the error handling code
+added here (CID 1686764):
+
+> -static void virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
+> +static bool virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
+>                                  hwaddr *addr, unsigned int num_sg,
+>                                  bool is_write)
+>  {
+>      unsigned int i;
+>      hwaddr len;
+> +    DMADirection dir = is_write ? DMA_DIRECTION_FROM_DEVICE :
+> +                                 DMA_DIRECTION_TO_DEVICE;
 >
-> diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-> index c49aa618629b..925f139d7590 100644
-> --- a/tests/qtest/ahci-test.c
-> +++ b/tests/qtest/ahci-test.c
-> @@ -1916,7 +1916,7 @@ static void test_write_engine_stop_in_flight(void)
->       * Retire the abandoned write. handle_cmd() drops a command that arrives
->       * while the drive is still busy and nothing retries it.
->       */
-> -    g_free(qtest_hmp(ahci->parent->qts, "qemu-io drive0 \"aio_flush\""));
-> +    qtest_qemu_io(ahci->parent->qts, "drive0", "aio_flush");
->  
->      /* Round-trip through the device to confirm qemu is still alive. */
->      ahci_px_rreg(ahci, port, AHCI_PX_TFD);
-Reviewed-by: Denis V. Lunev  <den@openvz.org>
+>      for (i = 0; i < num_sg; i++) {
+>          len = sg[i].iov_len;
+> -        sg[i].iov_base = dma_memory_map(vdev->dma_as,
+> -                                        addr[i], &len, is_write ?
+> -                                        DMA_DIRECTION_FROM_DEVICE :
+> -                                        DMA_DIRECTION_TO_DEVICE,
+> -                                        MEMTXATTRS_UNSPECIFIED);
+> +        sg[i].iov_base = dma_memory_map(vdev->dma_as, addr[i], &len,
+> +                                        dir, MEMTXATTRS_UNSPECIFIED);
+>          if (!sg[i].iov_base) {
+>              error_report("virtio: error trying to map MMIO memory");
+> -            exit(1);
+> +            goto err_undo_map;
+
+If dma_memory_map() fails on the first iteration, we will jump
+to err_undo_map, with i == 0....
+
+>          }
+>          if (len != sg[i].iov_len) {
+>              error_report("virtio: unexpected memory split");
+> -            exit(1);
+> +            dma_memory_unmap(vdev->dma_as, sg[i].iov_base, len, dir, 0);
+> +            goto err_undo_map;
+>          }
+>      }
+> +    return true;
+> +
+> +err_undo_map:
+> +    while (i-- > 0) {
+
+...but since 'i' is an unsigned type, that will mean that "i--"
+here underflows to an extremely large value. This loop will
+then iterate many times unmapping random things.
+
+> +        dma_memory_unmap(vdev->dma_as, sg[i].iov_base, sg[i].iov_len,
+> +                         dir, 0);
+> +    }
+> +    return false;
+>  }
+
+thanks
+-- PMM
 
