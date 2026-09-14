@@ -4,161 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781B8C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39A1C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 07:28:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x612C-00068b-4L; Mon, 14 Sep 2026 03:23:25 -0400
+	id 1x616x-0007iJ-JV; Mon, 14 Sep 2026 03:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6129-000689-St
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:23:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6126-0005Bh-7H
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:23:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789370596;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TXShNQpDfG0CcXWlxAE6GHfVVc7tbQ0dZ9GBj1Xlco0=;
- b=Kcv0KXFwdr/BoF9dOpmaZGsgQ4D7Lunob7n4UP45EgvcwsnF7dIP2i88vSiSC43zHChpOb
- x5J6chzgUEDafGXCRXJDcGwkak1CpZ+3daDHLu1+kuc1jv7J4DDhoZBOtf6UFVKv4+exl5
- q0G7TFKRc1st3+cC7HTYJ/lxdTi7B4Q=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-V8Y28qS4OOmPuM2lGOkblQ-1; Mon, 14 Sep 2026 03:23:14 -0400
-X-MC-Unique: V8Y28qS4OOmPuM2lGOkblQ-1
-X-Mimecast-MFC-AGG-ID: V8Y28qS4OOmPuM2lGOkblQ_1789370594
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e745d5dabso10474395e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:23:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x616p-0007hV-Sr
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:28:12 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x616g-0005up-Sn
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 03:28:07 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd38e0e5dso20061505e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 00:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789370594; x=1789975394; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=TXShNQpDfG0CcXWlxAE6GHfVVc7tbQ0dZ9GBj1Xlco0=;
- b=V3hCH8QHZ8Zn8bUywWq5eZ0xw4iyjaH7RZJ52wD49j1FK5Zwy3kUypW1BR97EqeoD7
- b9NnWiugGiCLnnqqm4fBHAyOw2RIJnBb3XVIcJOTTWmiI5+l+iIX6ZdS3Y8gwjnn0VvR
- v5Yze33zw5EIvwNWDC0xckl5E0+dFg2GeVjO7SniFnKfms7GGVZbZ1IPW/EZ+VqbpZz5
- V0ZiQdPKLc7yYLKIfFUTNIC7cFMAy3z7rtj5u9NpWjLQ5n5PlQvb95+noG+hGLFVOd3L
- p44O87PNk+6Dw9I0mjQ4CvUzTL+u6QcCOpYYK90BV+0wPCpBNKCnoBH0jnScLtQjmwa7
- +BuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789370594; x=1789975394;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1789370880; x=1789975680; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=TXShNQpDfG0CcXWlxAE6GHfVVc7tbQ0dZ9GBj1Xlco0=;
- b=KLI2SoX/N1sukIYJ5L2hD0fDbziXlb/87L2LCuRXR9ZmMxNAw3YO6lq4Kqt7zm6Il6
- 3xMjauNWfnjBpMuv1qRed9NwN6yvPSKP9O8beC2ag2I2oIyTAbGokIFl8D97/n8tcAqs
- cRcz/XjM2hRPGGd2+afTg0fbYA/L4q2j/VeDbpTdKPUHcWcxgrfgHdT+0+lR/1wcileD
- cZL0QjLieIlnKWwq/ZDQGDCFMDAXHSH9Vl/PdpI/+1jNydIkivMGCMmU06sRqQde7CMs
- SLhQZ4Z21gw9e5hduYpnxFSRLvX+mtby/KpqC9BdeyyjlkQpWtvFhYXBpCR3sbvQ1w2g
- CBJQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw3LZ565g6sKxHtDaS3qTiWyaY28IB7ukJSeN2wHraAivscnBTWau63EPa3f9H7M2r361C3L0j0tjrr@nongnu.org
-X-Gm-Message-State: AFuF++nwWvTgIM/hi6lSnSFxa0zwcTXy1nSaYDBshIepMUxd1fpbWpdX
- EUdjORKJ/HvYRwP7iG2SxiDEwfm7E0AxTU7paKr4W7ddhhd53CBv1WsymwwFn16YMjRJ3n6Em9Y
- J6DpXvPnILEtl1XXUcHBX/ubGwmwSt9wyV7MIpkQHcbx6xkDufDw3n6tA
-X-Gm-Gg: AYBFou2R7E4xlMvCRlGNZ614FcrYo+8nHQ2HnJdfZzc9dUmEF8HY3OaWBrJwneGO0jR
- qd+S+M1KQg2s/VSriIePZy4IUukjNuEhZfNJ0pj3mf/9QC9VabfxFB1EcgqRci5a2YhVjy3hzHJ
- D6qaP34rR3LhTTij48WjaBWNQzH3KhkM54NzrgG/oM+yaqwDgMKLpScIiep/ctkhD4csq/01M2k
- ba6AUIQ8p3XLl6PIAJQbMmK9lWS0qL+c0c6ND7pnQVwlD14ojB+GtoK+udpNR/r/ElvW2IjLddX
- O+hMuqstDdm5qzVd1kw5dJM7sOt1HbOeR/a8tI13p2R8wgFlAnkwPDstbeRhewNU4yRLtQOmoRu
- gJBe9RFfvccl9BKVycUrPVNrjGaYIB2JB/5A4fzoBaQ==
-X-Received: by 2002:a05:600c:3487:b0:49d:1cc7:5ec3 with SMTP id
- 5b1f17b1804b1-49e7a66af92mr29941485e9.9.1789370593721; 
- Mon, 14 Sep 2026 00:23:13 -0700 (PDT)
-X-Received: by 2002:a05:600c:3487:b0:49d:1cc7:5ec3 with SMTP id
- 5b1f17b1804b1-49e7a66af92mr29940605e9.9.1789370593308; 
- Mon, 14 Sep 2026 00:23:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
- ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49d26d4e3f3sm418751255e9.15.2026.09.14.00.23.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 00:23:11 -0700 (PDT)
-Message-ID: <dc456be0-9570-4349-a64b-c680f6535644@redhat.com>
-Date: Mon, 14 Sep 2026 09:23:10 +0200
+ bh=9Wr4UUfsftFAZNsHonDpEGv8jW7RYY1Ix8R2b/9+YfU=;
+ b=rMTCjY3gkpqEk6Lx4Ox7EKAPGwUb/Q3NBwKsdzOreOTu++4O6QLHi8N+lVLHHAB1UH
+ xiQnA2TNUROGjYaOR8PU78YiWNyH9PlttiZGrJC8T5xWnQNQiDaropXBtI7cQqxAbLI4
+ LdncIM5snoVuzFwD57ot1pu0mVDR8Rz43Ad6FQgvW2N+HJ1TtmkoCCfOUuFannAEvhwF
+ bTc/7YUGJcCHI44PrE6BJ5eiOE4tHNlWlC1NMPElpAIo3iRh8h/907yJrfT3oHFFSXJ4
+ y9olbi7xAznq/HEFNg+ORdOBbVYhK3qZsQw+LX092pt8ACMYT1BgHZHfV+5B2tdiXtU+
+ KtXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1789370880; x=1789975680;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9Wr4UUfsftFAZNsHonDpEGv8jW7RYY1Ix8R2b/9+YfU=;
+ b=F61M5mzNTZWRAKZ9ojNBbJsczwfMPWc6O+gm1v/sQ9fKBhmiKfFd1Q7VhVVh7XwZpN
+ nadHCT+5lQQtZdW0yuc1hUzZdYC5WLF4eiYWaC6niIZ3rIzJWiR/mXK4EjzIODT1AZHN
+ qqJIASJOcIVOcFcKKsC9tEpU5Yb9Xrs8zC2siRNYUgx3kVyRRXzJvK5VTBmaOaKEQYgW
+ JharDT2o1sIHM3BQWOaSqeSmziE8Ihuf1wb7LMPoO8zZUdHt3UHwGaCH9jnXMEPaj20w
+ dhNl84kpdcccF4J5M2ImYx/G/jZZtMzAOVOxTbytwGi/3/DeUQZIK6DPdB3T/xkkClIM
+ 1Zug==
+X-Gm-Message-State: AFuF++kT8JL82r/4ptlMWkQ29PdTVr2KwnBu08n1hhSGYjM76K4FdG75
+ wxXunS4TzKFpga4GKlVFvktEmOkDNguvIL6FpSOhnDHYO+OfhF1/+HREwTIgUaB5tHA=
+X-Gm-Gg: AYBFou1XBXehMESDWxbXJiTTGOICAgIx9R4Z+jQYwNvwgwJE34CL1Kvch1lnzklCUYY
+ I01XsL09k6itRxsAiNKNRc2vhiHuJ0pNIOl9m98MLjjWmfJBaaRa7Z+dsTEbV1E58KUlYIVIBXK
+ uO3fEDHGlD+iG6VgMPkcedtxsyE8MZfaev3JWDcBu/5t+0V0333pWMsHkoLBzYv3jw4sjBKy7n/
+ WIujPqdTJUXUEr7rOqTS7q7dbZBvnkXFvp9Jx41QS8CuHlzoZ+WaGkPFYTCjDQDRmjfqlqAd4KU
+ dyeqVyQ3fYSloqqgsV9OH+MF32zpW5/7jHVVd3uvMcocRnfnooGlE7ShB3pmLhNxLvyieNUcO3c
+ Oq26hzAr1Dc+DdqCenWMy6u3ICrjdTGCsYJaRJl1oN5SKh8ki6/hvduWvJADeF5Mw8Ue9SOU0c4
+ sJ1qokqsISahMYr9mNQYZDRyoUmE0T16Hx0LUCXNWA2FmIwDA2BGMNjUybyqRVwUBw7BwAFKhBY
+ 03LPXqeSA==
+X-Received: by 2002:a05:600c:4e02:b0:49d:272d:74b4 with SMTP id
+ 5b1f17b1804b1-49e7a6387bcmr32632785e9.2.1789370879713; 
+ Mon, 14 Sep 2026 00:27:59 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e7723d458sm92075965e9.0.2026.09.14.00.27.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Sep 2026 00:27:58 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 959A45F920;
+ Mon, 14 Sep 2026 08:27:57 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Brad Smith <brad@comstyle.com>,  Jiaxun Yang
+ <jiaxun.yang@flygoat.com>,  Song Gao <gaosong@loongson.cn>,  Warner Losh
+ <imp@bsdimp.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Cornelia Huck <cohuck@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,  John Snow <jsnow@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Thomas Huth <th.huth+qemu@posteo.eu>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  qemu-arm@nongnu.org,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Kyle Evans <kevans@freebsd.org>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Cleber Rosa <crosa@redhat.com>
+Subject: Re: [PATCH 4/9] tests/tcg: use --add-current-user when building
+ containers
+In-Reply-To: <78b4bda8-02cc-40b3-b9aa-137069a54811@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Sun, 13 Sep 2026 22:15:12 -0700")
+References: <20260910181504.1010916-1-alex.bennee@linaro.org>
+ <20260910181504.1010916-5-alex.bennee@linaro.org>
+ <78b4bda8-02cc-40b3-b9aa-137069a54811@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre2; emacs 30.1
+Date: Mon, 14 Sep 2026 08:27:57 +0100
+Message-ID: <87wlso1ede.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] vfio-user: live migration support
-To: Hugo Komatsu <hugo.komatsu@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
- Alex Williamson <alex@shazbot.org>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, John Levon <john.levon@nutanix.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Rafael Castillo <rafael@trfs.me>, Thanos Makatos
- <thanos.makatos@nutanix.com>, Tony Krowiak <akrowiak@linux.ibm.com>
-References: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -175,76 +119,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John, Thanos,
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-On 9/11/26 16:19, Hugo Komatsu wrote:
-> This patch series introduces live migration support for vfio-user PCI
-> devices, built on top of the VFIO v2 migration interface.
-> 
-> To avoid duplicating the extensive migration logic already present in
-> QEMU, this series reuses the generic VFIO migration infrastructure
-> (hw/vfio/migration.c). We achieve this by abstracting the hardcoded
-> kernel ioctl() and read()/write() calls behind the existing
-> VFIODeviceIOOps table, allowing the vfio-user transport to supply its
-> own socket-based implementations.
-> 
-> Kernel VFIO transfers device migration data through a dedicated data_fd.
-> vfio-user instead uses its already-established UNIX socket. We introduce
-> three new wire commands (VFIO_USER_MIG_DATA_READ, VFIO_USER_MIG_DATA_WRITE,
-> and VFIO_USER_GET_PRECOPY_INFO) for streaming migration data and querying
-> pre-copy information. The protocol documentation and dirty-page logging
-> behaviors are updated accordingly.
-> 
-> The corresponding SPDK device-side implementation is available as a WIP
-> series:
-> 
-> https://review.spdk.io/q/topic:vfio-user-live-migration-v2
-> 
-> Current limitations:
-> 1. Peer-to-Peer (P2P) migration states are not currently supported by
->     the libvfio-user server, so P2P support is not included.
-> 2. Device state pre-copy is not yet supported over vfio-user. This
->     series explicitly strips the PRE_COPY bit from the advertised
->     migration flags, forcing the generic migration code to execute a
->     standard stop-and-copy migration.
-> 3. Backward migration to older QEMU versions is not explicitly handled
->     with compat properties in this series, as older destination binaries
->     lack the underlying capability to receive the vfio-user migration
->     state.
-> 
-> Changes in v2:
-> - Use vfio_device_get_feature() for migration device-feature operations.
-> - Add a guarded vfio_device_reset() wrapper and route all reset callers
->    through it.
-> - Add guarded wrappers for get_precopy_info, mig_data_read, and
->    mig_data_write_from_file, and route their callers through them.
-> - Preserve the separation between capabilities and callbacks in the
->    kernel VFIODeviceIOOps initializer.
-> 
-> v1:
-> https://lore.kernel.org/qemu-devel/20260903130833.1437632-1-hugo.komatsu@nutanix.com/
-> 
-> Hugo Komatsu (7):
->    docs/vfio-user: clarify data_fd and DMA logging behaviors
->    vfio: route device_feature through io_ops
->    vfio: route device_reset through io_ops
->    vfio: use io_ops abstraction for migration related ioctls
->    vfio-user: enable DMA logging for dirty page tracking
->    vfio-user: implement mig_data read/write socket operations
->    vfio-user: enable live migration for pci devices
+> On 9/10/26 11:14 AM, Alex Benn=C3=A9e wrote:
+>> As the meson tcg build routes the container builds through docker.py
+>> we can also clean up its hack which involved appending a RUN line to
+>> the dockerfile. All the dockerfiles that care will work with the
+>> --build-arg.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   tests/docker/docker.py | 13 ++++++-------
+>>   tests/tcg/meson.build  |  3 ++-
+>>   2 files changed, 8 insertions(+), 8 deletions(-)
+>>=20
+>
+> I'm not sure why this was added in the first place.
+> Technically, running the container with a specific uid (whether or not
+> a user is declared for it) is enough. The only errors you can have is
+> if some specific commands ran expect to check if user exist on the
+> machine, like sudo for instance.
+> For our need (cross compilation), it's not needed, as a compiler will
+> never check who is $USER. Files written will still have the correct
+> uid on host fs anyway.
 
-I just received :
+That's why you do the mapping. Before I was seeing a whole bunch of the
+test files with a random group ownership.
 
-   Dear sender,
-   Thank you for your email. This mailbox is no longer active and your email will not be forwarded. Please contact "andrew.dunn@nutanix.com"
+>
+> Do you have more info on this?
+>
+> Regards,
+> Pierrick
 
-
-Is someone taking over this series ?
-
-Thanks,
-
-C.
-
-
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
