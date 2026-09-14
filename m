@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7DA6C88E77
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89AD0C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 14:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x683l-0002pr-DB; Mon, 14 Sep 2026 10:53:29 -0400
+	id 1x683l-0002pg-3g; Mon, 14 Sep 2026 10:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683S-0002eT-Mk
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:12 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683J-0002cn-8D
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:02 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683O-0005o1-QD
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:09 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-485b1d2874aso1710342f8f.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:53:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x683H-0005lw-DU
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 10:53:00 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49ccfd61ecaso20701955e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 07:52:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789397585; x=1790002385; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789397577; x=1790002377; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=thMNzpR9hfmP2UrqepCGOnSZLkYfUI9v4LXa+JCQASs=;
- b=AObpbK28oOD5B8ssrlK0J0SfmE4rSanzQE1jj+TXPw4124HnD+N0zsU8cuB/fPde74
- 5wBXlB4fqp+v8/zsLMGpbww4pAVLe9WFR4wnjLUfzwtgycEcQ77ESrwbm9gZVyAFd9zJ
- cEEx6vdWbFWAN4h7EFuBTR48MJ/tr3VyYYbjglygNiIL1nU4GWOggqSx9ELBokvu2c6f
- g9r2POu8P3bG7h3u4Z5Z6X6lkJj4+rlkgqAcgKjLQQkAx5jEIwI6BpkD/EhsESMyN8Ty
- G68mAib9eiE9GcUYH7idJeHOVEsAwkg7K9/TnHRw5sULvxS43TmabXan2USL/NquJDh/
- Xmmg==
+ bh=oWqwUVggYdA0tHiKmfstsBnPcdY+RLvUV4CZMwRpffs=;
+ b=rfOPj7Ik0Wu38sL33b0d4+XgldJ0/qj6CzdZvdqgY6abTt+Y8Li4y768LcYNNMVmPL
+ 7ET53kdST9iOc1FWvz5OaR9+XBqW1VYMNKA4Cr+Y0GbCr3tv1D/AkF+Uxdc+chNbtRmr
+ Gz1PZQ5VtxbRNTjLwpYxdcqk4ovhk/mVZSzcYi6W+Id+zxsIMC8edC+dlzhEzTpr0X+M
+ il5nTKwGuzBI33ZZDlobpaozj41eP7r4azhRPsOdjzmMTx69cptc0/cQhUEW5orZiYqu
+ 38ye02P4nf2XBEl5N3kZVqX1cIYe01XZEoOvNcY1FCFYR89uMrKCBVzTiMwVOfcpmBx8
+ yfhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789397585; x=1790002385;
+ d=1e100.net; s=20251104; t=1789397578; x=1790002378;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=thMNzpR9hfmP2UrqepCGOnSZLkYfUI9v4LXa+JCQASs=;
- b=jN55RzE/h8CeN+arhhz88S++JZCC1doHOghMEYolfxHt6Amy4SvccTSNME27DfYYfC
- 7+W+PGaZvuW12pBUK0vVREN30uxu2M0gAjaOeIhW+t5aqXJgzQiGU3SBSnGlY3qWHT0e
- UqTOODNgpYj6Pt0SERDoA8QZAmuosHxMxnPl3/pDiHcEnJT2a5wMUWZ4EEV6kQxdFfer
- Fg8N6alTA8SCoeQ+495UrZHZc8haotioU2pJJMZVhRABZqTfvapuSrfE0jEwSJKFf9+p
- iRyBJ9vO6N/SCmukBg2/nGoOnOMoVod/ICpk8YINJEd1qusel6UijyndqhfvXWlgaSsu
- gHaQ==
-X-Gm-Message-State: AFuF++krvGDH6RUy2mP7TsVeyQpZSANyXe8mEea/2ayRPy0Bsms3W5aM
- fRXACxnADRi1LDVFqSxsDexUlGZRMK7suz/uM1NbYDdG99PsFlqNh65++rmIP2nd8UdHKoO3mAN
- NqWYa
-X-Gm-Gg: AYBFou3A7UONMfNUpbQMGuLga1xtiyXA7aD5cJRUin7zdh+yTbotX1ZQqUmmYv9GO8O
- /d0FEXMuobgBKmcI/Mrt3D+XgquGCZacnFa+QHjp43Rzm1HGlCnG2LQsDicrhvIwIUFu18Og2Tm
- zOiILUwPaWFaz7OFZ55ZV5i6I0zz+Vj/we19MeZqkKiWo+1cBV+JRGSroT+8f7Ze8N2eLrUAz4o
- /dazbx2IBHqc+m+UpRFLuCEqogZzfBqevdy0ebZgmmWAUfDt+YpIWrOXmPVwXJO0lxnfhyzFEcw
- ryvFHzs9tQYclIB0i1j4vWp1iqwYzrRwM/n1ImxcDPCXq9jaV6fkkhuHW5C3m/XOYJvBhDI1Nb4
- ynUm2qGGMq7auE7HbwANc3q9e/BJmLb2kE4J6xyT6sZNnd4vWl8ug7XN3xiwDkcItA235s+E9wC
- Q1qMrszpCxashM4FTPxxbaDHU+UGUaPtoXHWp4U0fpUuUirrZCZpBl0wAry6VeUafi4CdM
-X-Received: by 2002:a05:600c:4703:b0:49c:f512:2361 with SMTP id
- 5b1f17b1804b1-49e7a67e2e1mr48499455e9.14.1789397584392; 
- Mon, 14 Sep 2026 07:53:04 -0700 (PDT)
+ bh=oWqwUVggYdA0tHiKmfstsBnPcdY+RLvUV4CZMwRpffs=;
+ b=KZ9CdAgrDina8aR1/6kVoi4JX1sLvY3X+nABwXK6KqIHehzf3HRXUxJWsHGIBt4f11
+ gbXsp7XWEzFWFchdAZZol3LdoQOZfax+v+EWFQ+6uMnEbL4xn8hZw9thnCcgNdLVlACe
+ A8owmch343qg6f5hRVm97siw4yiNh+lU0+xLx09y0capjIrsW4gBTZz3sTQ6qK4jrgwU
+ m5VG35oUvRw2DNduCu2IDcdMebp4UmIv5Y7ka2sdz9hNryPvFXhPI6sRrfR1Y6LAqh80
+ YM2loLyWKrOv6bRufwPTUWtR94Aj1RUxJboycCg8r+UTy8ulnfrejpYrUwCdhY1oc0X0
+ ZcXw==
+X-Gm-Message-State: AFuF++k66qqC86l3A3ZCJ2yVf07Wuc6JbZN58VT02H3f72KQ7D2Rz6pA
+ D8gXLHVeqfQR32tw0l2znNYYppSZhz0xJkY/5jWNZDBVkeb41aI+vEK7hw8a2z85M8wYrn1somc
+ Onc5i
+X-Gm-Gg: AYBFou1wW2Ad8YgqI1AhVEbxzwYTmvVoDNnDMLN/9rFjJ2SgHWVyMwVlz00wqOyGHny
+ lMTbHkpHYJAGFA9foGZLG2cCLIkhnHrf64o9kxcY0onub7FwnSnACKfQ5RbPoL+xDyFlPenKB32
+ YFe42gs95+MZshT0i2/8JaFCvqtBJ1MTgNGglYlx4ZHwl6aYc3WLMM92fCIdEfFTynTVgUdrnes
+ /FrHbzYyno5NZgeBEJsCLU9dy0BFc4lZn3QGL89E3QQ5HrugR+P5Tjr2mLTc2jQfOkC+KJWPE5x
+ S571Rkc9zZ3ijb5TXsSrir1aOYcqopf4XAHVh86o2jjPT2VpqN/Tq5hnerQ3s8QMXI6Jqp25lMT
+ hg6VW5TcQ7R9Ik49+vIETlo6sByviJ0RVfitIcb6ctUrQ9NMJRuI3EKa+18696cStQtVWE0CcwK
+ zLyoVJZzHHvWKRwXFOHAOQIJCC28kjGsctBJJa6RsomiKA6YfE8fQawcF25b6TRVwzRyiK
+X-Received: by 2002:a05:600c:3ba7:b0:49c:f4e1:4c2d with SMTP id
+ 5b1f17b1804b1-49e7a68698bmr45580575e9.16.1789397577617; 
+ Mon, 14 Sep 2026 07:52:57 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:aec6:5a37:bc54:89b7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e63c9a7c9sm540230595e9.13.2026.09.14.07.53.03
+ 5b1f17b1804b1-49e63c9a7c9sm540230595e9.13.2026.09.14.07.52.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 07:53:04 -0700 (PDT)
+ Mon, 14 Sep 2026 07:52:56 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 8/9] block/backup: pre-fill zero_bitmap for full/bitmap
-Date: Mon, 14 Sep 2026 16:52:49 +0200
-Message-ID: <20260914145250.2792879-9-den@openvz.org>
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v2 3/9] block/commit: batch block-status queries
+Date: Mon, 14 Sep 2026 16:52:44 +0200
+Message-ID: <20260914145250.2792879-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260914145250.2792879-1-den@openvz.org>
 References: <20260914145250.2792879-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,230 +103,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Only sync=top runs an up-front scan, so the previous patch did nothing
-for the other modes. FULL and BITMAP know their complete copy_bitmap
-before copying starts, and the same copy-before-write guarantee holds:
-a cluster still dirty when the copy loop reaches it has not been written
-since the scan.
+commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
+time, so a long run above base pays one query per 512K for an answer
+the whole run shares.
 
-Add block_copy_calculate_zero_bitmap(), driven one query at a time from
-backup_scan_source() so the graph rdlock and the pause point are taken
-per query, and query each confirmed span once however many dirty areas
-it covers. The scan only fills zero_bitmap and never clears copy_bitmap,
-so sync=full still writes zeroes for clusters the source never
-allocated; it just stops re-querying to find that out. Unlike the
-per-task queries it replaces the scan is serial, so a sparsely dirtied
-job against a slow source may spend more time here than it saves. The
-sync=top loop had the same shape, so both fold into
-backup_scan_source().
+Query the remainder of the image instead and keep the answer in a
+CommitStatus owned by commit_run(). Nothing can write top above
+base_overlay while the job runs: BLK_PERM_CONSISTENT_READ is shared
+only from filtered_base downwards, and the job writes below
+base_overlay.
 
-sync=none keeps the per-task query. Its bitmap says "anything may be
-copied", not "this will be copied", and it only ever copies what the
-guest writes during the fleecing window, so scanning the whole image at
-attach is the wrong trade.
+Copying is still bounded by the read buffer. Zeroes need no buffer, so
+COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
+write-zeroes, and an unallocated span is crossed in one step.
 
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- block/backup.c             | 94 ++++++++++++++++++++++++--------------
- block/block-copy.c         | 41 +++++++++++++++++
- include/block/block-copy.h |  4 ++
- 3 files changed, 105 insertions(+), 34 deletions(-)
+ block/commit.c | 58 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 11 deletions(-)
 
-diff --git a/block/backup.c b/block/backup.c
-index 11d70243e2..38b0838d69 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -247,59 +247,85 @@ static void backup_init_bcs_bitmap(BackupBlockJob *job)
-     job_progress_set_remaining(&job->common.job, estimate);
- }
- 
--static int coroutine_fn backup_run(Job *job, Error **errp)
-+/*
-+ * Walk the source before copying starts: fill zero_bitmap and, for sync=top,
-+ * drop the clusters that are not allocated above the backing.
-+ */
-+static int coroutine_fn backup_scan_source(BackupBlockJob *s)
- {
--    BackupBlockJob *s = container_of(job, BackupBlockJob, common.job);
--    int ret;
--
--    backup_init_bcs_bitmap(s);
--
--    if (s->sync_mode == MIRROR_SYNC_MODE_TOP) {
--        int64_t offset = 0;
--        int64_t count;
-+    Job *job = &s->common.job;
-+    bool top = s->sync_mode == MIRROR_SYNC_MODE_TOP;
-+    int64_t offset, cached_end = 0, count;
-+    int ret = 0;
- 
--        for (offset = 0; offset < s->len; ) {
--            if (job_is_cancelled(job)) {
--                return -ECANCELED;
--            }
-+    for (offset = 0; offset < s->len; offset += count) {
-+        if (job_is_cancelled(job)) {
-+            return -ECANCELED;
-+        }
- 
--            job_pause_point(job);
-+        job_pause_point(job);
- 
--            if (job_is_cancelled(job)) {
--                return -ECANCELED;
--            }
-+        if (job_is_cancelled(job)) {
-+            return -ECANCELED;
-+        }
- 
--            /* rdlock protects the subsequent call to bdrv_is_allocated() */
--            bdrv_graph_co_rdlock();
-+        /* rdlock protects the block-status queries below */
-+        bdrv_graph_co_rdlock();
-+        if (top) {
-             ret = block_copy_reset_unallocated(s->bcs, offset, &count);
--            bdrv_graph_co_rdunlock();
--            if (ret < 0) {
--                return ret;
--            }
-+        } else {
-+            block_copy_calculate_zero_bitmap(s->bcs, offset, &cached_end,
-+                                             &count);
-+        }
-+        bdrv_graph_co_rdunlock();
- 
--            offset += count;
-+        if (ret < 0) {
-+            return ret;
-         }
-+    }
+diff --git a/block/commit.c b/block/commit.c
+index 4e0b0f9029..e8ddd46053 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -31,8 +31,23 @@ enum {
+      * contiguous regions of the image is efficient.
+      */
+     COMMIT_BUFFER_SIZE = 512 * 1024, /* in bytes */
 +
-+    if (top) {
-         block_copy_set_skip_unallocated(s->bcs, false);
--        block_copy_set_zero_bitmap_valid(s->bcs);
-     }
-+    block_copy_set_zero_bitmap_valid(s->bcs);
++    /*
++     * Zeroes need no buffer, so they are bounded by this instead. It stays
++     * well under BDRV_REQUEST_MAX_BYTES and keeps a cancel from waiting on
++     * a multi-gigabyte write.
++     */
++    COMMIT_ZERO_CHUNK = 256 * 1024 * 1024, /* in bytes */
+ };
  
--    if (s->sync_mode == MIRROR_SYNC_MODE_NONE) {
-+    return 0;
-+}
-+
-+static int coroutine_fn backup_run(Job *job, Error **errp)
-+{
-+    BackupBlockJob *s = container_of(job, BackupBlockJob, common.job);
++/* Last block-status answer, covering [offset, end). Empty when equal. */
++typedef struct CommitStatus {
++    int64_t len;
++    int64_t offset;
++    int64_t end;
 +    int ret;
++} CommitStatus;
 +
-+    backup_init_bcs_bitmap(s);
+ typedef struct CommitBlockJob {
+     BlockJob common;
+     BlockDriverState *commit_top_bs;
+@@ -130,26 +145,45 @@ static void commit_clean(Job *job)
+ 
+ static int coroutine_fn
+ commit_iteration(CommitBlockJob *s, int64_t offset,
+-                 int64_t *requested_bytes, void *buf)
++                 int64_t *requested_bytes, void *buf, CommitStatus *st)
+ {
+     BlockErrorAction action;
+-    int64_t bytes = *requested_bytes;
++    int64_t bytes;
+     int ret = 0;
+     bool error_in_source = true;
+ 
+-    /* Copy if allocated above the base */
+-    WITH_GRAPH_RDLOCK_GUARD() {
+-        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+-            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
+-            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
++    assert(offset >= st->offset);
 +
-+    switch (s->sync_mode) {
-+    case MIRROR_SYNC_MODE_TOP:
-+    case MIRROR_SYNC_MODE_FULL:
-+    case MIRROR_SYNC_MODE_BITMAP:
-+        ret = backup_scan_source(s);
-+        if (ret < 0) {
-+            return ret;
++    if (offset >= st->end) {
++        /* Copy if allocated above the base */
++        WITH_GRAPH_RDLOCK_GUARD() {
++            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
++                s->base_overlay, true, BDRV_WANT_PRECISE, offset,
++                st->len - offset, &bytes, NULL, NULL, NULL);
 +        }
-+        break;
 +
-+    case MIRROR_SYNC_MODE_NONE:
-         /*
-          * All bits are set in bcs bitmap to allow any cluster to be copied.
--         * This does not actually require them to be copied.
-+         * This does not actually require them to be copied. Yield until the
-+         * job is cancelled and let the before_write notify callback service
-+         * CoW requests.
-          */
-         while (!job_is_cancelled(job)) {
--            /*
--             * Yield until the job is cancelled.  We just let our before_write
--             * notify callback service CoW requests.
--             */
-             job_yield(job);
-         }
--    } else {
--        return backup_loop(s);
-+        return 0;
++        if (ret < 0) {
++            trace_commit_one_iteration(s, offset, 0, ret);
++            goto fail;
++        }
 +
-+    default:
-+        g_assert_not_reached();
++        st->offset = offset;
++        st->end = offset + bytes;
++        st->ret = ret;
      }
  
--    return 0;
-+    return backup_loop(s);
- }
+-    trace_commit_one_iteration(s, offset, bytes, ret);
++    ret = st->ret;
++    bytes = st->end - offset;
  
- static void coroutine_fn backup_pause(Job *job)
-diff --git a/block/block-copy.c b/block/block-copy.c
-index 94d4f3dd69..c0a3359938 100644
---- a/block/block-copy.c
-+++ b/block/block-copy.c
-@@ -813,6 +813,47 @@ int64_t coroutine_fn block_copy_reset_unallocated(BlockCopyState *s,
-     return ret;
- }
+-    if (ret < 0) {
+-        goto fail;
++    /* An unallocated span costs no I/O, so it is crossed in one step. */
++    if (ret & BDRV_BLOCK_ZERO) {
++        bytes = MIN(bytes, COMMIT_ZERO_CHUNK);
++    } else if (ret & BDRV_BLOCK_ALLOCATED) {
++        bytes = MIN(bytes, COMMIT_BUFFER_SIZE);
+     }
  
-+/*
-+ * One scan step, like block_copy_reset_unallocated(); @cached_end
-+ * tracks progress across calls, @count how far @offset should move.
-+ */
-+void coroutine_fn GRAPH_RDLOCK
-+block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
-+                                 int64_t *cached_end, int64_t *count)
-+{
-+    int64_t dirty_offset, dirty_bytes, dirty_end;
-+    bool found;
++    trace_commit_one_iteration(s, offset, bytes, ret);
 +
-+    /* CBW mutates copy_bitmap from its own AioContext meanwhile. */
-+    WITH_QEMU_LOCK_GUARD(&s->lock) {
-+        found = bdrv_dirty_bitmap_next_dirty_area(s->copy_bitmap, offset,
-+                                                  s->len, INT64_MAX,
-+                                                  &dirty_offset, &dirty_bytes);
-+    }
-+
-+    if (!found) {
-+        *count = s->len - offset;
-+        return;
-+    }
-+    dirty_end = dirty_offset + dirty_bytes;
-+
-+    if (*cached_end < dirty_end) {
-+        int64_t clusters;
-+        int64_t query_offset = MAX(dirty_offset, *cached_end);
-+        int ret = block_copy_is_cluster_allocated(s, query_offset, &clusters);
-+
-+        if (ret >= 0) {
-+            *cached_end = query_offset + clusters * s->cluster_size;
-+        } else {
-+            /* Best-effort: leave this area unmarked; it copies as data. */
-+            *cached_end = dirty_end;
-+        }
-+    }
-+
-+    /* 0 if the query above didn't yet reach dirty_end: try again next call. */
-+    *count = *cached_end >= dirty_end ? dirty_end - offset : 0;
-+}
-+
- /*
-  * Decide how @task is copied: COPY_WRITE_ZEROES if it reads as zero. May
-  * shrink @task. Returns false if @task is to be skipped (already ended,
-diff --git a/include/block/block-copy.h b/include/block/block-copy.h
-index e4e5b56753..3a61066b55 100644
---- a/include/block/block-copy.h
-+++ b/include/block/block-copy.h
-@@ -44,6 +44,10 @@ void block_copy_reset(BlockCopyState *s, int64_t offset, int64_t bytes);
- int64_t coroutine_fn GRAPH_RDLOCK
- block_copy_reset_unallocated(BlockCopyState *s, int64_t offset, int64_t *count);
+     if (ret & BDRV_BLOCK_ALLOCATED) {
+         if (ret & BDRV_BLOCK_ZERO) {
+             /*
+@@ -215,6 +249,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     int64_t n = 0; /* bytes */
+     QEMU_AUTO_VFREE void *buf = NULL;
+     int64_t len, base_len;
++    CommitStatus st = { 0 };
  
-+void coroutine_fn GRAPH_RDLOCK
-+block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
-+                                 int64_t *cached_end, int64_t *count);
-+
- int coroutine_fn block_copy(BlockCopyState *s, int64_t offset, int64_t bytes,
-                             bool ignore_ratelimit, uint64_t timeout_ns,
-                             BlockCopyAsyncCallbackFunc cb,
+     len = blk_co_getlength(s->top);
+     if (len < 0) {
+@@ -235,6 +270,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     }
+ 
+     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
++    st.len = len;
+ 
+     for (offset = 0; offset < len; offset += n) {
+         /* Note that even when no rate limit is applied we need to yield
+@@ -245,7 +281,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+             break;
+         }
+ 
+-        ret = commit_iteration(s, offset, &n, buf);
++        ret = commit_iteration(s, offset, &n, buf, &st);
+ 
+         if (ret < 0) {
+             return ret;
 -- 
 2.53.0
 
