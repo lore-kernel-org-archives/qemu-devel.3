@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B10C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA232C88E5C
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5vb8-0001t7-NB; Sun, 13 Sep 2026 21:35:06 -0400
+	id 1x5vsx-0003wS-GN; Sun, 13 Sep 2026 21:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5vb4-0001sa-9R
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:35:02 -0400
-Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
+ id 1x5vso-0003w7-IT
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:53:23 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5vay-0002Ci-WD
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:35:02 -0400
-Received: by mail-pz2-x2b.google.com with SMTP id
- 41be03b00d2f7-cc4b29fa803so1180630a12.1
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 18:34:55 -0700 (PDT)
+ id 1x5vsm-0005Bc-Ut
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:53:22 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38dfe7eb825so2418067a91.0
+ for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 18:53:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789349694; x=1789954494; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=UtS5u+1eD4Z2AhmTXPYGTHkO9mfv9RCbB0EPbSoca6A=;
- b=DMy12gMd5fcBCeJEZg7sd8kysDZu/EPLC+eQEFCLkNTiXSoxicat7iMMXqm4xDnLCK
- kKqbpiC2vavObudMTJ2H36ZHE4GHECXwjxU2L1xnl2txGaEoFKOFDhkCEfAlY+vNkAbH
- EDob0R+INsJaV4V/+COAiPTXx870w5o7XEext447FkXSYJFb87zoeDb55NPke/MmI9+Q
- rK3z1H9qxY2QC8Klk9VF39hB6wDTwH/+Q9JMzq/iP0Y8O2oGNZDcw+IyVW+49uaK5pqL
- tPNGAuV2mGBnf/K1g+WqlUoU2i5KGsIcln0OW82785cRkZ4AX0beeRVn3AKeFGRc/End
- Tl4Q==
+ d=linaro.org; s=google; t=1789350799; x=1789955599; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jNZOvUK8o3EJEk6F6/4jpgOYEq/Vbqy/CIwqaCtwpbY=;
+ b=G5SkqK92WnW1T67vqt2KRQhgrg4aHqHWPIcuZojUg97c6wusJgqvT66HhtlDr00DVK
+ phxTB0Kp71YP5jFRPijG0Vv2b/IYBiFLZg/BTCKZT18G7yfopRSCrAiGwHRUZZHISLC+
+ 2GUeA0roXF7HEzjy6SXcfADy9b0vD9J795hz9x1wXLo5VMkgNy6SFjIA119Ny9tKyErT
+ GL/yTrZUt0ZJRwDA4+kRXxtlo/EFTTXYCxZKuMTg1v7GgG5pzBSmXHR6it7F/vRg/bIa
+ Ha+RxUOfwX4xUlvou6FI986yoHtFu3F4LU/q/81xQlmJDe1TZWt8BaSrlkr6605gcMEA
+ PQzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789349694; x=1789954494;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=UtS5u+1eD4Z2AhmTXPYGTHkO9mfv9RCbB0EPbSoca6A=;
- b=dVL/D+l8Nbas7aE2AVhsSnFr5dRDhn6ihdlo4GwodP50MTsLdF1LWN10Dx6GdgMz+q
- hD3X7Ndo8jFDQOf35/e3qae2LNzlk6RWQz/BNv6VS9xnF+tX2iRs/cdCLArIEZbcfX3f
- 7iqSIsjKxVzGk2LYodgFCgCk6tl4xShpAGuBYe+fZ+6ILRw8dbWfU7hHxfL6M/QK/no8
- DuSerFoabdeQRmS1xl6M3fEkyBdK7BNd8zwvex1DL4Cc7m3zl1hTpcSxBcBhqpp8Knpy
- 5kMvHiDxnzTvS5JMuMMNkvkvTi71ej4xcK4xdfl5kbzzRbFCgSf5y5LN348kQSVQzJQ4
- ob6Q==
-X-Gm-Message-State: AFuF++n7yTpUPrNl3JfUUMsoUYGeUoHkoBXz9qZwe073RDHbQcJg6aBz
- 1p91URszX+kNVdXItVi9T12s9waeZ4t0oYcgSrOZIW0UAG/6jm+GO7jTbg5avpxeyGNksBeS4tU
- LdDtBwaE=
-X-Gm-Gg: AYBFou0okQMEMVQkyP/dOXI2FdabL0UfhFk+Vpwmj+hP7v6ldDzT/tU6wW06DGGQM/s
- GLrfbX82qGWI+yfkO7QP8pRsd2c/CeOZyyChJCReiBJh+8n/20N2UR+X90rGR9qdptxZdFdspHe
- ZpYtkef9jM9VR6NnCuTVvVGQsqyeOYqQ67Ll5hWUcYwNZYo9n/oT1VN2Kj8M4IfnuFYBIDc2/TB
- xQc+QwrKtAFk01nHBBYh1IdwuB8KwTdk9fz6QKucUbK0MV0pksAqNycuRB1eDvdq464+Zb6UVBT
- CB/WEC0fyS26mES6kcF04S+D9wMXNErwdmq5jbUjFc+di7EGK+VcjxMD4j5cu17NPpN9Ldx6EHe
- eAIMn3yY1tfI0xvrx6a1mXD9ROSnHPrSS9U0A4i66czAaH+CP7X1xLMuMP1swvzFB3gDWwAMuFB
- Nw1utGy5XzYI4ERXRjFnsdp4Wb4J/6+QOs0ELRDAfYfILgzuOC0jE7X840l1dySs+TpQ4hgm3AL
- 9/kGlO2OOCHA5uGl7p91TNkV1xzdPqt4DE/qKrxNA+nBP0dFk1pDdpNrku4Jw==
-X-Received: by 2002:a05:6a20:914c:b0:3cd:67e9:8565 with SMTP id
- adf61e73a8af0-3db404225d9mr527354637.9.1789349693716; 
- Sun, 13 Sep 2026 18:34:53 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:1665:91c0:9a80:f870?
- ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
+ d=1e100.net; s=20251104; t=1789350799; x=1789955599;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jNZOvUK8o3EJEk6F6/4jpgOYEq/Vbqy/CIwqaCtwpbY=;
+ b=mAhZN6FJIyQejCEAfiv4oZWgZ5Pbvtxl4m5onnJwl5rxSTRnykjV4vzwnq/0PV3RDa
+ KASNClQYYaa6OCQUigH0soe7h/NsRItKU+hcKv+uOcE9uRuGfvj651eAO+aQj/gfFxNj
+ q9w4+UUiWeIvmSxlooAfREzVaqctPvtcZFBHaSJZy/D8nLoS1VtToIH+HH+28hFuXtO7
+ JB+YII3Y9gZVO1n9tZXzoZ0jdO1kz4sMRm061028WDwq7dLHI1pSF5WbQr+Bmwgfe9QH
+ +mpZGPkC3u6kg2PimIMcnrwnih/z/g4hdJPx41G+QpFRpsbD5sL0mzoq6zVbOqACQnKA
+ 9u7Q==
+X-Gm-Message-State: AFuF++mi94rbkjXmOnrxjeZBDJW2KIkIwP+xhJX6CDVb6vmT3FGvizuL
+ uORd2KpsUW4ZZFvfQWetBaUE1K/55C5qTKVr5EGFYLDuJlDtfbpTnLdn+7XVwuXgn8MRNQaK4rB
+ e7BS8
+X-Gm-Gg: AYBFou3J14bAg53zehOZJndzfhKqOGLSX8JUSnzkiNv/V0UhGVUtgjkNJusMzvYXZ9D
+ mcucBji8M9XvfEIYFl2OYNkVUpHFap60WVBo9CDiiCv314oE7mqmYg2bam11zgFaRaKi55IP6iW
+ QJ8B3bb+iWk0ELpfjObQzWYuKA/vZoV2d28qicEL8JXc/5kLlKbAcnjAYzfX3QXJEbQL73JRAXe
+ KqkpfiinDSWrWwatI06Q3kUAGmjYpw9U8EfwFPLYVqWbdxID87VATuhFeYK9Dh7lxkZkezPLnlv
+ uk5EtPFg0xzxqPaYIIeCJsR3blc05tXdQmgag2Cwbk0xwKd0Dw0JIyUVyo1uqCvBzk0s1lGZFIK
+ rCCrDw3OlOEs2Ftk4i9Z6Uj649hX7JWP2Z1B3AP679ITfO35d0Qze7sPCV7pwA4RuahvaXru6bu
+ dAQ1wWP4HVK+hzyt+ZPF4y6KC47ckKg45Z545/NwNCP0qovs9jmbHDnXqPzsgaNwfOhkjuIkIFp
+ jdcCGk=
+X-Received: by 2002:a17:90b:4c41:b0:398:9c39:520f with SMTP id
+ 98e67ed59e1d1-39dec05d384mr1091834a91.15.1789350799016; 
+ Sun, 13 Sep 2026 18:53:19 -0700 (PDT)
+Received: from stoup ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4f739b5sm22778317eec.25.2026.09.13.18.34.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Sep 2026 18:34:53 -0700 (PDT)
-Message-ID: <00fe78e7-8941-4da6-829f-1da1afa21fe0@linaro.org>
-Date: Sun, 13 Sep 2026 15:34:51 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] target/riscv: add helper_tlb_flush_page(), use for
- sfence.vma with vaddr operand
+ a92af1059eb24-14365b8137fsm22323467c88.9.2026.09.13.18.53.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 13 Sep 2026 18:53:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
- <20260904-riscv_tlb_page_flush-v2-2-defec3f29312@baylibre.com>
- <b11c9b27-8ec0-49d9-8cad-9f04b1ad3641@linaro.org>
-Content-Language: en-US
-In-Reply-To: <b11c9b27-8ec0-49d9-8cad-9f04b1ad3641@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x2b.google.com
+Cc: Alistair.Francis@wdc.com, qemu-riscv@nongnu.org, peter.maydell@linaro.org
+Subject: [PATCH] disas/riscv: Fix csrrs decode
+Date: Sun, 13 Sep 2026 15:53:16 -1000
+Message-ID: <20260914015316.792751-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,11 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/13/26 15:17, Richard Henderson wrote:
-> You're missing the similar changes to sinval.vma and hinval.*
-In addition, th.sfence.vmas.  Moreover, for that one, if rs2 != 0, we 
-don't need a synced global flush.
+Resolves: Coverity CID 1685513
+Fixes: 4fec981f18fd ("disas/riscv: Split rvi_opcode_data")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ disas/riscv.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
+diff --git a/disas/riscv.c b/disas/riscv.c
+index e85dbac0351..ef8b7ff20f9 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2560,7 +2560,6 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                 }
+                 break;
+             case 2:
+-                return &op_csrrs;
+                 if (operand_rs1(inst) == 0) {
+                     switch (operand_csr12(inst)) {
+                     case 0x001: return &op_frflags;
+@@ -2574,7 +2573,7 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                     case 0xc82: return &op_rdinstreth;
+                     }
+                 }
+-                break;
++                return &op_csrrs;
+             case 3: return &op_csrrc;
+             case 4:
+                 if (dec->cfg && dec->cfg->ext_zimop) {
+-- 
+2.53.0
 
-r~
 
