@@ -4,99 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BF26C88E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A01C88E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 01:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x5vHi-0007Md-N4; Sun, 13 Sep 2026 21:15:02 -0400
+	id 1x5vJS-0007vV-W7; Sun, 13 Sep 2026 21:16:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5vHg-0007LX-VK
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:15:00 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x5vHf-0006VQ-DT
- for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:15:00 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-39b2ad83dc6so1631563a91.0
- for <qemu-devel@nongnu.org>; Sun, 13 Sep 2026 18:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789348498; x=1789953298; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Qha8O7fIOACIdoDr+4f8rnJzFRtc1DQGdGU3sMCG/uA=;
- b=dGelAsmSfuWkidfDddWI78X2+JTD2AE8etn9Fo+qgrgAJNd0OHDfXYTkjWiUrffTjE
- rAebs+RLp4EjPJE8+zUjJCXrH/rvtFOi2xci3MTpoCUaUAxaUKn60WjthI2FRY9JCrtR
- DoaJZbbk8Tsggg3FTgodx9cX+UKUCLsRt1xFQlo0CeKiXKaMrsRMB6lBnJIFfd2ZyERB
- fMkdJ621TSKyQMDTEWJxGJKe6TUz/LwyANyNPIdr0qBe2GSbbOc6tggJ8+nmNQqueLwI
- WRvn0VbpBiWgOsebKk/g8YAODr4s+ydSYdGH5wVxykHCrb1NYWIn+ZynMhajhA+aCxQG
- WF4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789348498; x=1789953298;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Qha8O7fIOACIdoDr+4f8rnJzFRtc1DQGdGU3sMCG/uA=;
- b=jVVp/++NyzqNDmt5kzHhI+l4VmD9PkHqXh5K16HixXLbxgqPCtznjRqWpI1/iekaup
- AdkkB01yX5hHzpsopI/Z6ffP07hcgW5+4WwzBluT3ngWn4ZmdmgNnBpNHsXJyuMfO6I+
- 0rrUo8vu02mWCX7oM0zQjcAknnnuWlZvpyi/I2y68DdhXIEUcX2503Beyvwq9EhgjLZN
- oxGlJwghH8G4rqQ+TeGTC9Pxi44U4EZXyBlP4youG0wAmlt3LX2jtyRSXftEyjTmYL5f
- ZyuZnhTPtGIrTWFJnW92YjPE8YONkyZ87cKO1eVwpHKoFnqf3PPpGpX2CWTFcviQou+6
- vsow==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxmQKGbKmABXlq/M7pyMk2XId0IxdpgcRwCnIFt/S5VGOuxH6r01E5tRh0BcZgaVTBwiN17DRlJMvJd@nongnu.org
-X-Gm-Message-State: AFuF++me48OxgK9G+nF9mtWn4uNG5CCRa7CSFxniuVgYT7kJWVOdPP4K
- rWrGw6OiKcWY1tKbUYElrVkKBJTqLJ7RKTbrX0MB9SkTrnMCqngHb9F7/Aa/cocESZc=
-X-Gm-Gg: AYBFou1Z9iwaxI3Eqo0wNMAXykuiOoxfb0LED7UQUu9MsI6NKlA730HW9I0Tk2mMH70
- FXLJw8f4UrsknDEB0lNtV+FqYEgpgfWQL9z9UuV7u7mvO5R0OLWaZ97E4M3rlYSr5IJestNc52t
- rVwPzQtqWhRnLHx4PMZDNW+XIp5cM2J8K8Yz2eHplU3e9cd3pRFAPNCvUOhgQf9FiyuV8uYwUyA
- GUGtrWT/cWAUM9H4DX5X7QITdfyyAvp9Xml9IRcjGDW+4HeoMrxMu8IIsu4VcqvaOB/PbsHaOjY
- qogPnxU09qnjo/yeTueMkgkFP9zQkrsI3A677ihhPMd3vXawZHASht3KT0dHdG1N+dYW43jGsqh
- r5iQv7oafZqtmMGWP+0ssdSKIX/ZTEGPDKocmOn/rzNSdkMh918adq6r3MA6dJcUQhJOLTCipYL
- 0Rb8s9/k9OTDUXyOKArC+B2KjF/sjeMsq0QU75Ts3ihSmq4B8IZKN0AVJGfQ6V6+PdG7tmCbtzO
- 4rcp/3cWZuTapW6PNfoRLuUyIXYZyEvPCqByE8HVYLhZwPBoQu2WZp0k8oikw==
-X-Received: by 2002:a17:90a:1c8f:b0:39d:ec24:5ffe with SMTP id
- 98e67ed59e1d1-39dec2460a2mr586188a91.9.1789348497592; 
- Sun, 13 Sep 2026 18:14:57 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:1665:91c0:9a80:f870?
- ([2603:800c:7900:ed00:1665:91c0:9a80:f870])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4efc398sm26937961eec.19.2026.09.13.18.14.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Sep 2026 18:14:57 -0700 (PDT)
-Message-ID: <19735ac2-9357-4d17-847e-672781539b0f@linaro.org>
-Date: Sun, 13 Sep 2026 15:14:54 -1000
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x5vJP-0007vN-Uj
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:16:48 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x5vJM-0006q8-6Y
+ for qemu-devel@nongnu.org; Sun, 13 Sep 2026 21:16:47 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx79LzSqdq8aILAA--.34089S3;
+ Mon, 14 Sep 2026 09:16:35 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxRs3ySqdq92MgAA--.57378S2;
+ Mon, 14 Sep 2026 09:16:34 +0800 (CST)
+Subject: Re: [PATCH v5 23/62] loongarch/virt: convert OnOffAuto properties to
+ QAPI-aware registration
+To: =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?=
+ <berrange@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
+ Song Gao <17746591750@163.com>, Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
+ <20260911-qom-qapi-v5-23-7732a55b7760@redhat.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <80f064d9-8ff4-12e3-f672-0b3b990896fa@loongson.cn>
+Date: Mon, 14 Sep 2026 09:16:14 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target: riscv: support TLB page flush for
- sfence.vma
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Trevor Gamblin <tgamblin@baylibre.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-References: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
- <165fb72b-3cf2-4693-88e4-f9d36c5c498d@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20260911-qom-qapi-v5-23-7732a55b7760@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-In-Reply-To: <165fb72b-3cf2-4693-88e4-f9d36c5c498d@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJDxRs3ySqdq92MgAA--.57378S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Wr43uFW7AF1xWF15tFW5Jwc_yoW7trW8pF
+ nxZanxZ3WUJF4I9aykK3WDu3WUKwsxCa4YgF4fuw18CF1qgr1jqryfCw12gFyUA3yDX3WF
+ qa1ku39xZF1fJagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zwZ7UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.489,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,40 +89,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/7/26 03:14, Daniel Henrique Barboza wrote:
-> Richard,
-> 
-> 
-> This tlb_flush change is giving a +20% performance boost in riscv64- 
-> tuxrun.  From
-> this:
-> 
-> 23/23 func-thorough+func-riscv64-thorough+thorough - qemu:func-riscv64- 
-> tuxrun  OK   92.71s   4 subtests passed
-> 
-> To this:
-> 
-> 23/23 func-thorough+func-riscv64-thorough+thorough - qemu:func-riscv64- 
-> tuxrun  OK   73.45s   4 subtests passed
-> 
-> Other tests weren't that affected - I take it has to do with the amount of
-> sfence.vma being issued.  They look fine in my own testing with an emulated
-> Ubuntu host as well.
-> 
-> This is all fantastic but I wonder if we're missing something.  If you 
-> could
-> please take a look at these 2 patches and see if we're handling the tlb 
-> flushes
-> according that would be terrific.
-It looks good.
-
-The only possible improvement would be to avoid flushing the PRV_M 1-1 
-tlb, using tlb_flush_by_mmuidx / tlb_flush_page_by_mmuidx.
-
-You could also rename MMUIdx_M to MMUIdx_PHYS and use it in modes other 
-than PRV_M when the mmu is disabled, simplifying the test at the start 
-of get_physical_address.
 
 
-r~
+On 2026/9/12 上午12:34, Marc-André Lureau wrote:
+> Convert the acpi, v-eiointc, and dmsi OnOffAuto properties from
+> manual visitor-based callbacks to property_add_qapi_enum().
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/loongarch/virt.c | 85 +++++++++++++++++++++++++----------------------------
+>   1 file changed, 40 insertions(+), 45 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 9cc79929a8ab..750ce2dbe5fc 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -36,7 +36,8 @@
+>   #include "target/loongarch/cpu.h"
+>   #include "target/loongarch/cpu-mmu.h"
+>   #include "hw/firmware/smbios.h"
+> -#include "qapi/qapi-visit-common.h"
+> +#include "qapi/qapi-type-infos-common.h"
+> +#include "qapi/visitor.h"
+>   #include "hw/acpi/generic_event_device.h"
+>   #include "hw/mem/nvdimm.h"
+>   #include "hw/core/platform-bus.h"
+> @@ -51,26 +52,21 @@
+>   #include "qemu/log.h"
+>   #include "kvm/kvm_loongarch.h"
+>   
+> -static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
+> -                             void *opaque, Error **errp)
+> +static int virt_get_dmsi(Object *obj, Error **errp)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> -    OnOffAuto dmsi = lvms->dmsi;
+> -
+> -    visit_type_OnOffAuto(v, name, &dmsi, errp);
+> -
+> +    return lvms->dmsi;
+>   }
+> -static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
+> -                              void *opaque, Error **errp)
+> +
+> +static void virt_set_dmsi(Object *obj, int value, Error **errp)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> +    lvms->dmsi = value;
+>   
+> -    visit_type_OnOffAuto(v, name, &lvms->dmsi, errp);
+> -
+> -    if (lvms->dmsi == ON_OFF_AUTO_OFF) {
+> +    if (value == ON_OFF_AUTO_OFF) {
+>           lvms->misc_feature &= ~BIT(IOCSRF_DMSI);
+>           lvms->misc_status &= ~BIT_ULL(IOCSRM_DMSI_EN);
+> -    } else if (lvms->dmsi == ON_OFF_AUTO_ON) {
+> +    } else if (value == ON_OFF_AUTO_ON) {
+>           lvms->misc_feature = BIT(IOCSRF_DMSI);
+>       }
+>   }
+> @@ -78,21 +74,16 @@ static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
+>   #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 64
+>   #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
+>   
+> -static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
+> -                              void *opaque, Error **errp)
+> +static int virt_get_veiointc(Object *obj, Error **errp)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> -    OnOffAuto veiointc = lvms->veiointc;
+> -
+> -    visit_type_OnOffAuto(v, name, &veiointc, errp);
+> +    return lvms->veiointc;
+>   }
+>   
+> -static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
+> -                              void *opaque, Error **errp)
+> +static void virt_set_veiointc(Object *obj, int value, Error **errp)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> -
+> -    visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
+> +    lvms->veiointc = value;
+>   }
+>   
+>   static bool virt_get_highmem_mmio(Object *obj, Error **errp)
+> @@ -1025,21 +1016,16 @@ static void virt_init(MachineState *machine)
+>       loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
+>   }
+>   
+> -static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+> -                          void *opaque, Error **errp)
+> +static int virt_get_acpi(Object *obj, Error **errp)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> -    OnOffAuto acpi = lvms->acpi;
+> -
+> -    visit_type_OnOffAuto(v, name, &acpi, errp);
+> +    return lvms->acpi;
+>   }
+>   
+> -static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
+> -                               void *opaque, Error **errp)
+> +static void virt_set_acpi(Object *obj, int value, Error **errp)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> -
+> -    visit_type_OnOffAuto(v, name, &lvms->acpi, errp);
+> +    lvms->acpi = value;
+>   }
+>   
+>   static char *virt_get_oem_id(Object *obj, Error **errp)
+> @@ -1483,20 +1469,29 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+>       hc->unplug_request = virt_device_unplug_request;
+>       hc->unplug = virt_device_unplug;
+>   
+> -    object_class_property_add(oc, "acpi", "OnOffAuto",
+> -        virt_get_acpi, virt_set_acpi,
+> -        NULL, NULL);
+> -    object_class_property_set_description(oc, "acpi",
+> -        "Enable ACPI");
+> -    object_class_property_add(oc, "v-eiointc", "OnOffAuto",
+> -        virt_get_veiointc, virt_set_veiointc,
+> -        NULL, NULL);
+> -    object_class_property_set_description(oc, "v-eiointc",
+> -                            "Enable Virt Extend I/O Interrupt Controller.");
+> -    object_class_property_add(oc, "dmsi", "OnOffAuto",
+> -        virt_get_dmsi, virt_set_dmsi, NULL, NULL);
+> -    object_class_property_set_description(oc, "dmsi",
+> -                            "Enable direct Message-interrupts Controller.");
+> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
+> +        .name = "acpi",
+> +        .description = "Enable ACPI",
+> +        .qapi_type = &OnOffAuto_type_info,
+> +        .get = virt_get_acpi,
+> +        .set = virt_set_acpi,
+> +    ));
+> +
+> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
+> +        .name = "v-eiointc",
+> +        .description = "Enable Virt Extend I/O Interrupt Controller.",
+> +        .qapi_type = &OnOffAuto_type_info,
+> +        .get = virt_get_veiointc,
+> +        .set = virt_set_veiointc,
+> +    ));
+> +
+> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
+> +        .name = "dmsi",
+> +        .description = "Enable direct Message-interrupts Controller.",
+> +        .qapi_type = &OnOffAuto_type_info,
+> +        .get = virt_get_dmsi,
+> +        .set = virt_set_dmsi,
+> +    ));
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+>   #ifdef CONFIG_TPM
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+
 
