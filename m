@@ -4,145 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E145C88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B58A3C88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6BSy-0002vq-Jv; Mon, 14 Sep 2026 14:31:44 -0400
+	id 1x6Bas-0005su-HH; Mon, 14 Sep 2026 14:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x6BSu-0002vO-Uh
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:31:40 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x6BSs-000251-7v
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:31:39 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EHBhQq2087358
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 18:31:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Kksa0/kzQYXxRPAHQnpv0WgNyqJRYyD3q0imJIP8a3M=; b=Z5nSPduFO439xpjO
- G/Mor2Wukdweg21WQJ8KzhjFbtQOjYsOB93LljY+AMcbzpo52L44kuwRHU76/oRn
- aRvIZsFzjZj+AV24nyecSOQ4MOjOcdk76cXzFiuNp0gJ96QZhoVYwC4PxJnMNeOQ
- 5yMriR31sjgem4CzCMYgOc9Ccnd01AX6Skrlv82noAxIHQXTODqkBubZg7zIxrvA
- Qx5GljSrQ5mggOtPLkPmtze8qQRJZ00A92eCIj99xXT0ioax+9XZc5cK+SIwVzty
- Awgswtz7yrGk7FNB9aPL244VE4ZrCnYmEV+aqdD6SuMTanXDwbg6LDAIaJ3m2NSe
- zrDRnw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpn41ra2a-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 18:31:35 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9393ac4961fso400856285a.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:31:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6Bar-0005sY-37
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:39:53 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6Bap-0004EL-AX
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:39:52 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-398c066106cso2025889a91.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789410695; x=1790015495; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Kksa0/kzQYXxRPAHQnpv0WgNyqJRYyD3q0imJIP8a3M=;
- b=iQCdUqJNxAdu1k7xgxFTfFgtPDBCy85udM6AezsmmThB6rar65ZnD1GRiyZSDo1hZA
- d47+BMg4PtWCLK7YqFTaTpNMMlDhesBhuorOEmqHgknrUbQTKITFk+v7mBZfqplmBtvj
- 5gHJo6yY/lvzjvX2DtL/atWaZ9dITaX9Dv5+mHFBwyqh63Avg4t+DM1pymjhxi0H1wFA
- NydQ7U3HyU3tTRwCiwHl+lWy8H4dBfCOTXN+YIag88OcF06/YTusVvI9VzqK6u+kIPes
- AwOY2+6qyMsYKzcjCf+RtGOwWnpL/A5a+1eVY9XWUzihN6l4l6xXJbUbGpdr+0XBru6D
- yrVA==
+ d=linaro.org; s=google; t=1789411189; x=1790015989; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=IVzusJ89u+5300SYV7tOzlauq0FtY5j3SFhXmPaj7W0=;
+ b=hzcEKvQaJMdMDK3T4fjmhVvrG8F1IplQE7q8KWwBV3Ek8EclNEw1EdgrsH75I6YHee
+ O+IvfcdRlUXFGZL+NcaNXLFs8vYCgxkrYjwGPGxFlWloItQTGZx0lmTvxptmz6EGNKUp
+ IOaQTBVoUat3XoGb3o8cA4OTeLT53WyUm/1sJi4JSDEmlR4aSSSbSsrMEgpPDaO5PB09
+ 5j8PaKud+aDJAS1+fQnaPARtsIYyzfLvydK4RBEFN3/jsUNxHDuIY/Aq2FHBS7sRC0eN
+ f6WnoHFQgSWFVrY+EExJEw7JBqg/6L5zAMOoM0CjLZVHWopCDahbmWt6StVWozag+iSr
+ Kemw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789410695; x=1790015495;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1789411189; x=1790015989;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Kksa0/kzQYXxRPAHQnpv0WgNyqJRYyD3q0imJIP8a3M=;
- b=qEeKSC/v1XZAA31gIYvlY4UrKo3JIDzOhchMLmfd98oWFBFIiIPjslDxGJ3oU/mpJO
- Pkd1XGgab+VKzFJ1ZffW8Egm8eC6HqFRsVLyCIDtrYule7WqTJq4+P22qQ4LmcbDzn7T
- BJXa3/MHqvmcNtskODKdxVEuAREJfsnx2UwT0z6IBvDYwScdfSQX+AtlNLgLhwMlijG2
- 1XmYUcJ58dxP18Tsi3PAZCNcVNDeq+kn9bsAOb7yhfzlUV5nVHnwzjdWw+PD3xXs8V7X
- zaioGwQa2erqnvsOZPa6hNnXuuE14H1tQvR2ghYjooCuft5G4gkkkxztGWwDg5a8lYSt
- 07Yw==
-X-Gm-Message-State: AFuF++mX6fneKzMrfTGEuwwD7d2LJ/Vzc/M0zV8GYy7QEoIwb0kgSdh+
- 6aR7YQTuOPyEAx5gyRjcxZQXW/btABs093N3jm0tWL+rcxtVP/Zc/TPr8MXNT8wPtZ1oVbVL4zJ
- N/4ILy8KRwo8aFFIog0ZBg6bXx6pqy2pQUlqIXRLwbSXtDWNxSb7qdHWdIw==
-X-Gm-Gg: AYBFou33HF84MfON90gypc5IJZ7Y1IPhrK8SCyRg8+NeGHjCFwNU/PZugJmgV24Ix64
- xPn0BF0GU++oIjMLP22q5Fiv+IO/vR2Anr3ys9ZQ4GIBpwoMorwiTtPC84pkANQbxiQjia0Sia1
- 7i6S9j8EKLgvjh7BLhF9cf3hDsUHfAg3ewNofCrSwS0Q+kkRySHSRQdIUMZNCX1uUIKKFLgHY0x
- 029S7ze6j/Axy7LsRvmk000u1TCQbzMNQkgDUOL8s3mS8Nu30EF6br+MIlBw2wX88JVeLXXuPoJ
- FbvcUmgscSB6Qvuf4qvjOrbCum+F+HigIL4UunQWT394dtQl7LUQquiQlgSNqlUp9SRr8GGUWmp
- w0qepJumosyVp6WN2n0Uwaq4uOGS8MmHzDa1AYvqD8ZbQ42TDkBf7+V7aQIXGhIHJ
-X-Received: by 2002:a05:620a:4481:b0:939:ec25:e58d with SMTP id
- af79cd13be357-93a29839133mr552831785a.12.1789410689821; 
- Mon, 14 Sep 2026 11:31:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:4481:b0:939:ec25:e58d with SMTP id
- af79cd13be357-93a29839133mr552826385a.12.1789410689301; 
- Mon, 14 Sep 2026 11:31:29 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-939e80801c0sm1044159985a.30.2026.09.14.11.31.27
+ bh=IVzusJ89u+5300SYV7tOzlauq0FtY5j3SFhXmPaj7W0=;
+ b=rsE+CY49qplyMulKaxCxuQvOsxOkmFlcBXZwdgT9l6IKzz5fl+HBmiXQ+DT8SQ06DZ
+ wa83b2xfzi0A237kq31PrLQsAMa4vDAPujaeQQn3Jxhe4jFvqP6fIC7XY4jil18XQD8I
+ NuPk1aTV1NGrPUDCeka9k+l3qzLn4BmAA6keZC72/HLqFzsXp6EhNrxlLCh+lDzKpTIU
+ m6mkl4bKF8A+AqaQDaAZDkpYfeM2lKTSv6tMc39kiLV5flHAC5EwjYKQvLoDn5MiwcKF
+ gnRygZH56at0xkC0DR/Wqr227itCuzYO13/2qTk+roXCaH7Ft6IHxlhoqJb8juWn6TvI
+ N+PA==
+X-Gm-Message-State: AFuF++ni70wk3yH0+QMdx4zM5ax2KTsUNDbIBGEsVvBLxguPXIrQ9iRY
+ H9tLS8HE0yM6f14iEW9eL4FqggAZqISQbmJBiSKTG5TpbgyWWNLVLXambrL5BE7q0kYmhU6y4pS
+ lYiEH
+X-Gm-Gg: AYBFou0W03OeqxXEa17n20n/10cA6PwV+pepe/syM/TKGacFedKSTFfIctnQPHvBlRe
+ O9g6vxsNUX+vCXMENAc7UqipmpEIldstdsulg1RjVH7gd9caply4+WAW7XLQWMutCNjVz1ceCNK
+ mi/QCrOqSXx9hPxaVzbsLyToTsfldB4R6xwEAbQlrdnbpCOiuEl+nKBe/zxKXLBp18juy1yFH6W
+ +3g7WF49IZOYGjJQh3/ivbubQo5tAbzO+7Q7b/SA/e+HWED3m8fHKSobaLhBqGy1kVi8evWoIHK
+ OzlMNxiSE6U/3VK+0BCutj12wj9lbfQcHi2tkBoyFHBUM/C8jC/a1Nm3kVqloH5+OrNkcN6waqb
+ CpeKQaLZ/dRQfUmY1lUQTvo/ggiKVHICu4fPRz/gZh9expzGdrG1rPgmZFsAkMO7Qc6l36/b94h
+ FlPzJu4yqw94ZP9xqIWqnmmnYvbDyd+cwLr1DEXVdALS7XES2kElG4kwWKP5Q4DP31p0S6614Vf
+ dzqXVyx8QU0xMLtep0anIkcE+eJ+hLQLFFWL2EVQxt+is6o+5edcqNd3r2DcQ==
+X-Received: by 2002:a17:90b:3e4f:b0:398:9be6:f997 with SMTP id
+ 98e67ed59e1d1-39dec0f7abamr8807665a91.22.1789411189184; 
+ Mon, 14 Sep 2026 11:39:49 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
+ ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1438d1381c2sm522369c88.10.2026.09.14.11.39.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 11:31:28 -0700 (PDT)
-Message-ID: <32ecd071-2dc7-47ef-bbbb-abc8305916b9@oss.qualcomm.com>
-Date: Mon, 14 Sep 2026 13:31:26 -0500
+ Mon, 14 Sep 2026 11:39:48 -0700 (PDT)
+Message-ID: <15c1d593-588a-4ab3-b438-a499cb719e7c@linaro.org>
+Date: Mon, 14 Sep 2026 08:39:46 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] target/hexagon: select the HVX register file with
- SSR:XA
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260910153221.1674285-1-brian.cain@oss.qualcomm.com>
- <20260910153221.1674285-9-brian.cain@oss.qualcomm.com>
- <CAJ+KCYPb+en46bQs0TszcN7kP4pASyM+YWbYchdc_RkZpBETwA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] target/arm: Implement HCR_EL2.TID3 trap on
+ undefined TID3 registers
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260806173123.333423-1-richard.henderson@linaro.org>
+ <20260806173123.333423-4-richard.henderson@linaro.org>
+ <CAFEAcA-NoW=39G_m21zQO6CzH5UU3MnsKuFNjkjX-55gzXqD2g@mail.gmail.com>
+ <a930c1b6-dd93-46ad-9e61-eafda9dcaac9@linaro.org>
+ <CAFEAcA_-UwXB9svLsFwJRfe37+CkwkRHnNVoWDScTEL=L4uOpw@mail.gmail.com>
+ <72dd2ada-3b4d-4563-860a-86bf6c6a8a90@linaro.org>
+ <CAFEAcA_7eYjtgXVidEMsG9ztZf1Zy8A4Qip_baSGxdNRQQKj6g@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAJ+KCYPb+en46bQs0TszcN7kP4pASyM+YWbYchdc_RkZpBETwA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_7eYjtgXVidEMsG9ztZf1Zy8A4Qip_baSGxdNRQQKj6g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE0MDI2MyBTYWx0ZWRfXyMJNq+AYiO0P
- K7REvyuh986dlfa5KKA+s+fqDZpbaAVU9JZ1Mx+jR83If2aeeqjqIVvg1sIHMQHWcPOhzhQlObD
- svmDkRZ1avmp8LHBU++Ku6uTu35rm0GFFtP9nkmy7bScTzXr4Dw9JH/Qc2svc36VwZlxcaaH0N6
- mgyXejtnRgZIZErhu3OtvLwxCulOgLiGChwEk4W/Droko2x1ZrtjhSrFwVAC6YYv+4gdq9T1rdl
- KcPZ4TFDb0Id0Tdrh24JqWx1cbWC2EcTNzUE+hANLXwcnFRalzabvBPlYjQ+9eeSJMbFQvukwWm
- cgPcgoVQwv1zEdeY4XkzxJE0mJzlOUY7jZJqeuh0RFtfqWvZOjZm8ZM6cJnJUYlD8lvIIOapvLw
- GQBVSdF59061XzXnzuDOCVSGgHukzoYBI1nmt/c8OGbekFI2oQW2vZoRLrlTuOM0SqMwNmBTwAk
- a+AQXpaZh+kM9yGzQoA==
-X-Proofpoint-GUID: nZByhsPFibTHgYvMmBmImwOr8PtEYjdN
-X-Authority-Analysis: v=2.4 cv=cqQOAF4i c=1 sm=1 tr=0 ts=6aa83d87 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=9ImTclQ0_L8IZNJOhycA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: nZByhsPFibTHgYvMmBmImwOr8PtEYjdN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE0MDI2MyBTYWx0ZWRfX7Ir4nPQdiSuH
- jSt3+oik9Ch1AV45JFMsC89Ye1vMvr8nD2gr64vl0MbqirgO02Qd8ILvNbqY/fUIqLc45UvWsRg
- I3uhG+qSK9Cm4S2bY8vzdk+OLz0VyPE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_03,2026-09-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609140263
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,37 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/10/2026 6:44 PM, Marco Liebel wrote:
-> On Thu, Sep 10, 2026 at 10:32 AM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->> Assign env->hvx to the right context when SSR:XA changes.
+On 9/14/26 08:21, Peter Maydell wrote:
+> On Mon, 14 Sept 2026 at 19:12, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
 >>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/cpu_helper.h |  1 +
->>   target/hexagon/cpu.c        |  5 +++
->>   target/hexagon/cpu_helper.c | 72 +++++++++++++++++++++++++++++++++++++
->>   target/hexagon/machine.c    | 12 +++++++
->>   4 files changed, 90 insertions(+)
->>
->> +static unsigned hexagon_hvx_context_index(HexagonCPU *cpu, uint8_t xa)
->> +{
->> +    unsigned n = hexagon_hvx_context_count(cpu);
->> +
->> +    if (n == 0) {
->> +        return 0;
->> +    }
->> +    return xa % n;
->> +}
-> Why is `xa` wrapped with `% n` instead of being used directly?
+>> On 9/14/26 07:51, Peter Maydell wrote:
+>>> On Mon, 14 Sept 2026 at 18:21, Richard Henderson
+>>> <richard.henderson@linaro.org> wrote:
+>>>>
+>>>> On 9/13/26 23:16, Peter Maydell wrote:
+>>>>> On Thu, 6 Aug 2026 at 18:32, Richard Henderson
+>>>>> <richard.henderson@linaro.org> wrote:
+>>>>>>
+>>>>>> It is IMPLEMENTATION DEFINED whether HCR_EL2.TID3 traps on registers
+>>>>>> within the range which are not explicitly listed.  Previously we chose
+>>>>>> not to honor the TID3 bit.
+>>>>>>
+>>>>>> However, with FEAT_IDTE3 it becomes mandatory to honor SCR_EL3.TID3
+>>>>>> on these registers, so we might as well honor HCR_EL2.TID3 too.
+>>>>>
+>>>>> I thought we agreed not to change the behaviour here? Is this
+>>>>> just a "forgot to update commit message" thing?
+>>>> Oh, yes.  Because I did update the code to test for v8 in translate.c.
+>>>
+>>> So what does this patch do? Is it just a no-behaviour-change
+>>> refactor so we have a place to add the SCR_EL3.TID3 check
+>>> in the following patch ?
+>> It does what it says on the tin -- it honors HCR_EL2.TID3 for undefined
+>> registers.  We currently only do this via access_tid3 for defined registers.
+> 
+> But there aren't any genuinely UNDEFINED encodings in the TID3
+> space, are there? The ID register space has to RES0, not UNDEF,
+> for reserved encodings, and so we have cpreg structs for
+> all the reserved encodings in the ID space.
+Since we don't do this for all arm_cpreg_encoding_in_idspace(), I 
+assumed that we didn't do it for all arm_cpreg_encoding_in_tid3() either.
 
-The behavior for an out-of-range SSR.XA value is unspecified.
+Either that, or we have existing dead code testing 
+arm_cpreg_encoding_in_idspace()?
 
-Empirically I can see that the reference simulator happens to map these 
-values to some in-range context number, but the behavior varies from 
-arch rev to rev.  So - a modulus seems reasonable/appropriate to me.
+I wonder if I should prove that either way with a test at startup...
 
-But in v5 I'll add a GUEST_ERROR when it's out of range here so that 
-users have a way to find out what went wrong.
 
+r~
 
