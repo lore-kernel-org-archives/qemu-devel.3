@@ -4,118 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45679C88E75
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27100C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 15:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x68S0-00042q-Ex; Mon, 14 Sep 2026 11:18:32 -0400
+	id 1x68SB-0004En-7J; Mon, 14 Sep 2026 11:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x68Ru-00041x-Mp
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:26 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x68Rs-0002CQ-VV
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:26 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cd38e0e5dso26002935e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:18:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x68S0-00043Z-Gh
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x68Ry-0002Dz-PG
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 11:18:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789399110;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jrbR86qvPSM1UT+pt+N2KElBfjNWyq9Pp++QoqytyGM=;
+ b=E72lRUggv274+V+7jUvJQ6lzR8ndMDaniBki6VgJ36qcwHT5VzNgrkm4UMruCTk+IRr/ej
+ s85MOtU/8b5vtAuOEMdW6Wvv9SqQSlhonoxalqKW9FSgRG9Oabu4xfdNmcOfAGiL/17YaA
+ xy5FEY8amDo3i11nmX06YlTCl6SfBjM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-325-eRlxPTHfNd6FoibkAZMNxg-1; Mon, 14 Sep 2026 11:18:28 -0400
+X-MC-Unique: eRlxPTHfNd6FoibkAZMNxg-1
+X-Mimecast-MFC-AGG-ID: eRlxPTHfNd6FoibkAZMNxg_1789399108
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48597bbd963so2821314f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 08:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789399103; x=1790003903; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=fvOXAzZbmxL8ZIngJVpa41ewlC3JCUiLWJ8uo908XFg=;
- b=YZq/+sMFuBbp5B2bqINUC8bt2glkvYA7LzMCNS1fDB/pKFKk+DgPg11C/qtxo94oox
- s7VDQSIBbKwcTKuFgOsYX7Cgp0WBTiO2mKJaBSy3WQ/IGoGdP1QSvW3AqatQIN6/7x+4
- KNRGgLSCIdXZqmTvbwfi3qC2/l6xn7Sca6wCmLffd6d6rO426O852dx5N/3eXt5Lwfn0
- D1KnwhChH28eB4Cyw/PEEDHSEAHZqsr6KI3v4wBMXNM4jLcaZ6qt3uoBlyAOyI8pDpmR
- 7JCObFbN+8XdxBm+narQx4846lZ6xOdlhrvi1KSDsNDr8WT3xWCyO8pJQzBAjdKkTZDQ
- tvCA==
+ d=redhat.com; s=google; t=1789399107; x=1790003907; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=jrbR86qvPSM1UT+pt+N2KElBfjNWyq9Pp++QoqytyGM=;
+ b=EVMuolU6lVWzIK4uydUuynWXCPYlBC8rhmH+jkrQ9h/JxGvu+yQM6ZbKvv7bqnJI8r
+ hbtRG2FOWtOU7myvG+R+sj7eQFSd0axEsAMb/Fv0l1PhCBZzlV2JtdNr/Vp835h47NrH
+ 3KI8hbIgcYkqYcEmBz2Jg8HXlCvB8gzVgO/kVNtLXNmZK4EHKrGi9g3zdCOq8qCSju17
+ /jLpXepdiLOkRhm7Y1WWBk75PzOzJIW8K7pTQeLHLyJQOFWLAMjsY6LALZ/t8ZIdoW4F
+ nqvvxK38HuxUZfn7pAKehGVhOtupE0MLypKeecMxPzVy5GZKXZvHBUE0NE0etY/cjiUh
+ 97tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789399103; x=1790003903;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=fvOXAzZbmxL8ZIngJVpa41ewlC3JCUiLWJ8uo908XFg=;
- b=HI0YeBUpjLpjKX1yGLFaeuQJW3XnkAHmfJ/HyxOgFL9Opx5vcSre5twaawDZ99gABh
- okwIBg2sHPwJ65SwvZiSebt9XE211uWOByQcdVk9iJhFX6tdGA4qOKoRy7I+ryeEV7zM
- OtgjpXcAdBxbqSTxm5qX2PHIa54HpuebIcWT+/QeXm8+EXNbTqo1VWEbUhkWb6msQAhe
- ifm6yEKVWV31LcN8xrAX+ScUTQs4YC9HPpBtOFORsNXSruJ0GXU7aQTALHjW7qjMA0WR
- 5fUoQHzWHdbG+ac2R0KolDslXL5N5zadg+VhWWzFzU33Qefydg+Nq02/P50ei784g3ZF
- 0Y6A==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxJ5rdWPUVlrJX6pLHwEGDkRVcWibOnotOKk/FS6KwFhPZSeJT1fLZoxl1e587doewCNPqr4BCMAMT9@nongnu.org
-X-Gm-Message-State: AFuF++nsprVnHZdTGdWDQfnvMBt4kO2xzwncRrW2t4yYtu9pI5B1RkJ1
- ngxy1kCXClmgwSkveAEg82Re6aVSZyFK64G7mBF7lBpcc9IvdcF6UkwqOcJ3IDRJQd0=
-X-Gm-Gg: AYBFou2/amcQLq3k5wPIz3ikIxSTE5uGJcl4gnlPatSPCHMLy0I1esgNRm++kZiLKmT
- N/W0RTqghQkTm9Od2HbqFWqNRm/btogX+d6YxmiJsBGXsg3/V7axU5UELpAbtvpeXxbVBMV9DYS
- kDYILX5cZ+bObWx63+XKquQMmnZtMhjiXKI5qq6THPYoIWrg10awAjAsmYdbuZJ0NhTwmqTHXZf
- WO0Fvb00gKY3M0WfCCVC5mkNg6zy+EQ++6t+MNkyxYTLf6z+yyHadhZi2d1UDPAXaFfL6d0nasH
- f/vGCGd9TxBcofXNWLGmldQpUkiHXHcxdsYnxEAsbxq9fa/+Oy5XvZgiSZZd8iEgVcJD29nMI0z
- 7OKXPBfYIDhDc/BdES0gFnE3DgnIhWc4hzM5rvCCyz2nujnIJgJsxqYsCWNZ3t1yvtCb55xuoCN
- 4FDkHjf7s5K1R19uihFPzx71oA3AcOBuHJn/rHD91TwfaX0vKRp4nrVjtRd+4I6qLMoePeXzI=
-X-Received: by 2002:a05:600c:138f:b0:49c:f617:7cf with SMTP id
- 5b1f17b1804b1-49e7a5ede89mr57072335e9.0.1789399103312; 
- Mon, 14 Sep 2026 08:18:23 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e636f7fa2sm326497745e9.15.2026.09.14.08.18.22
+ d=1e100.net; s=20251104; t=1789399107; x=1790003907;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jrbR86qvPSM1UT+pt+N2KElBfjNWyq9Pp++QoqytyGM=;
+ b=TE8dkcrZ7V063QS0BCHoXEQ1KnLXYr5yKUb8lfv+pBluQ/OU+YRlL3knt/+Mp7ryT0
+ qBoJQAnB9t7qy+FLA0fDV2H8kKmAxkgMUBqN5m4sZCj7Qam3GzZ2dFf6StgcXF80KVYP
+ Se5uFlNMm3TaJeggRN4Y6BD+/6U195SWCpOKrmYr038facBgKI5894oErOYBmEpv1A9M
+ bvCvmtcZ41fRd4UC2ug/TrDcK1PPibf8k7xTtR9ElroJJ/emH2uBPqcIJhvO2hI50rLr
+ hiuL7vYQaBRl1LiB8OVB8wkTZ6ZCJ8EWQ6OUO68c+8A3MJFem/RkxCrb/dJVdlKOVYIs
+ 77mA==
+X-Gm-Message-State: AFuF++nEvow1Th0k1O//ABvV05VFiN9eAg/0yjjQ49OG+PR2gpviASlR
+ yzgAXxKbzCqlq1vPm5AsAH9eUzhQsfI+1Ep/6zi3RFjyPviaqtZoP2nEZ1vcGnTwmvUI+WVnUu6
+ sXztArtsrZMPw/eb2eRv7SLs4dvYJGaWw54wv+n+xLKSnYOChqnV+rDmX
+X-Gm-Gg: AYBFou1RkuzVJDZ3eFH//vxeXJp3hkeHFf+8R6jUesDcHypgIosOCRnVDdTXsrCSrp2
+ /tcag5+RKqQnNSHrfKRekDx4Bddk3RHMI0H0cyTZwzDjdKS1kjWCtlCMvPGKahESld/yLigEmk0
+ FSG+6D6c16QGrezmNJZFZKPCk9V65CnKo6VV2j9/cTU3Pdyx8ZwG3iEPTUK2uiDTHc00GF9I9wk
+ S5aq2DBG1gG06lc3e5GTuWZbzGGd3Y9/yCmTbJjcjgn+cM+ekPkAjgKKT6iCStGb/KI/6xa5lzO
+ uf6Uc1GSsy4S5kiTQ1L6HHEQ29PPUlxuKCbfJFU5JkzjjyOmYOqgMPYQKq9KpK5NeZ809JQqjgg
+ A2+BV96/r34ncptDyzH+W5dP/rDZGNdnIFXcis6PsLa6LBA==
+X-Received: by 2002:a05:6000:2685:b0:485:ac96:7251 with SMTP id
+ ffacd0b85a97d-48702b1d3f6mr9176584f8f.21.1789399107504; 
+ Mon, 14 Sep 2026 08:18:27 -0700 (PDT)
+X-Received: by 2002:a05:6000:2685:b0:485:ac96:7251 with SMTP id
+ ffacd0b85a97d-48702b1d3f6mr9176436f8f.21.1789399107038; 
+ Mon, 14 Sep 2026 08:18:27 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
+ [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-486eb357288sm28121334f8f.29.2026.09.14.08.18.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 08:18:22 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 306745F81D;
- Mon, 14 Sep 2026 16:18:21 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- cw@f00f.org,
- dbarboza@qti.qualcomm.com, Demi Marie Obenour <demiobenour@gmail.com>,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com,
- helge.deller@googlemail.com, Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com,
- Warner Losh <imp@bsdimp.com>, jacob.oursland@gmail.com, Jan Kiszka
- <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
- <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>, "Ho,
- Nelson" <nelson.ho@windriver.com>, Paul Walmsley
- <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, utsingh@redhat.com, Wei Wang <wei.w.wang@intel.com>,
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- zwu.kernel@gmail.com
-Subject: KVM/QEMU community call tomorrow - call for agenda items
-User-Agent: mu4e 1.14.4-pre3; emacs 30.1
-Date: Mon, 14 Sep 2026 16:18:21 +0100
-Message-ID: <87ik47dfpe.fsf@draig.linaro.org>
+ Mon, 14 Sep 2026 08:18:26 -0700 (PDT)
+Date: Mon, 14 Sep 2026 17:18:23 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, philmd@oss.qualcomm.com, 
+ maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
+ den@openvz.org, 
+ farosas@suse.de, peterx@redhat.com, clg@redhat.com, dongli.zhang@oracle.com
+Subject: Re: [PATCH v5 12/14] vhost: add vhost_dev_set_owner() /
+ vhost_dev_reset_owner() helpers
+Message-ID: <aqgQObEfJ8zu4pjF@sgarzare-redhat>
+References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
+ <20260914-up-vsock-vhost-v5-v5-12-d17423589f48@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260914-up-vsock-vhost-v5-v5-12-d17423589f48@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,18 +123,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Sep 14, 2026 at 11:37:43AM +0300, Andrey Drobyshev wrote:
+>Wrap the set_owner/reset_owner backend ops in dev-level helpers, matching
+>other vhost_dev_* wrappers, so device code can take or release ownership
+>without reaching into vhost_ops directly.  vhost_dev_init() now uses
+>vhost_dev_set_owner(). Both return -ENOSYS if the backend has no such op.
+>
+>No functional change.  These are used by the following vhost-vsock patch to
+>hand a device between owners during CPR.
+>
+>Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>---
+> hw/virtio/vhost.c         | 20 +++++++++++++++++++-
+> include/hw/virtio/vhost.h | 25 +++++++++++++++++++++++++
+> 2 files changed, 44 insertions(+), 1 deletion(-)
 
-Hi,
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
-The KVM/QEMU community call is at:
+>
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index 2bb9a23fee4..ea17bf01080 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -1690,6 +1690,24 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
+>     return 0;
+> }
+>
+>+int vhost_dev_set_owner(struct vhost_dev *hdev)
+>+{
+>+    assert(hdev->vhost_ops);
+>+    if (!hdev->vhost_ops->vhost_set_owner) {
+>+        return -ENOSYS;
+>+    }
+>+    return hdev->vhost_ops->vhost_set_owner(hdev);
+>+}
+>+
+>+int vhost_dev_reset_owner(struct vhost_dev *hdev)
+>+{
+>+    assert(hdev->vhost_ops);
+>+    if (!hdev->vhost_ops->vhost_reset_owner) {
+>+        return -ENOSYS;
+>+    }
+>+    return hdev->vhost_ops->vhost_reset_owner(hdev);
+>+}
+>+
+> int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+>                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+>                    Error **errp)
+>@@ -1707,7 +1725,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+>         goto fail;
+>     }
+>
+>-    r = hdev->vhost_ops->vhost_set_owner(hdev);
+>+    r = vhost_dev_set_owner(hdev);
+>     if (r < 0) {
+>         error_setg_errno(errp, -r, "vhost_set_owner failed");
+>         goto fail;
+>diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+>index 9b98d34dd04..94cc52f870d 100644
+>--- a/include/hw/virtio/vhost.h
+>+++ b/include/hw/virtio/vhost.h
+>@@ -178,6 +178,31 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+> int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
+>                            VhostBackendType backend_type, Error **errp);
+>
+>+/**
+>+ * vhost_dev_set_owner() - take ownership of a vhost device
+>+ * @hdev: the common vhost_dev structure
+>+ *
+>+ * Issue VHOST_SET_OWNER on a device that has already been set up, e.g. to
+>+ * complete a CPR handoff on the destination, or to take the device back on
+>+ * the source after a failed CPR.
+>+ *
+>+ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
+>+ * errno on failure.
+>+ */
+>+int vhost_dev_set_owner(struct vhost_dev *hdev);
+>+
+>+/**
+>+ * vhost_dev_reset_owner() - release ownership of a vhost device
+>+ * @hdev: the common vhost_dev structure
+>+ *
+>+ * Issue VHOST_RESET_OWNER so that another process can take the device over
+>+ * with vhost_dev_set_owner(), e.g. on the CPR source once the VM is stopped.
+>+ *
+>+ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
+>+ * errno on failure.
+>+ */
+>+int vhost_dev_reset_owner(struct vhost_dev *hdev);
+>+
+> /**
+>  * vhost_dev_cleanup() - tear down and cleanup vhost interface
+>  * @hdev: the common vhost_dev structure
+>
+>-- 
+>2.47.1
+>
 
-https://meet.jit.si/kvmcallmeeting
-@
-15/09/2026 14:00 UTC
-
-Are there any agenda items for the sync-up?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
