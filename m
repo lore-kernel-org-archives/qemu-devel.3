@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F616C88E6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BC8C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 19:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6CMC-0004iC-1T; Mon, 14 Sep 2026 15:28:49 -0400
+	id 1x6CNJ-0005Wy-U7; Mon, 14 Sep 2026 15:29:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CM4-0004a4-Sj; Mon, 14 Sep 2026 15:28:41 -0400
+ id 1x6CN3-0005Sm-FU; Mon, 14 Sep 2026 15:29:41 -0400
 Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x6CM3-000303-Bt; Mon, 14 Sep 2026 15:28:40 -0400
+ id 1x6CN1-00035M-OZ; Mon, 14 Sep 2026 15:29:41 -0400
 Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hkFYx6D3NzBqPV;
- Mon, 14 Sep 2026 21:28:37 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hkFb62n7MzBqYN;
+ Mon, 14 Sep 2026 21:29:38 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1789414117;
- bh=mZeRvHBGZjvTQDaNJAFKTjoSRtReNyYV8QT57TH3mGU=;
+ s=dkim; t=1789414178;
+ bh=mC5RfBj6ylyOwDGowPmggfi/LrsOz8J7K11WQCUcqXg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=uabNaIEbPTfsU1CRhmpWK3IvsmgbIiqUWrglHY1YnBBDf6Z6KTm5aam05V0YOG440
- /v9WJPzCS3WLXZFiCQOJ52KoAR2/vMmjGqzP/YboYjwOK7yGt5VZlDntQj6nU5Hz/7
- FbAhbFupExrCNn5Y7SUT/fi5wXybWJxUwWpx/AQUjOUK1cICXXDoflvxfgF7SHDhh+
- lji5MvJKrQk2wn69FvfcNPpaprNEBnmzEY2GqBrS6A5xDneVgTuktlngMu+/Cvs5SI
- gWzqfHDtXFWUcYV5OCHJ3uBpXl8A/3K9v5oZ/N11uLgRBth3nqcmBaAXIdwwM9YkeW
- FyXspFlwCESdg==
+ b=D3atsqv4miufLiJ4+ZIYGkutfWaVrx1wOa2BOCA9e1lnzRlWlZqFwWNkuMNdC6j4O
+ NcnSqQyJHobDn57A++5oihVKA2/jd3dZdDZV5vwrYhZVu+2hY/btjUBc2cZsgL5AL4
+ lQhFNjv1TIjBDPizlHS9QGG7SCPrFLyoFosqrDIJtZQs0mQ/5p+5AxOzXDh1rBi/xU
+ 9a3b6trLpc2U1JCg1XD9C1yF01CyMvfflDC3Fk/XdNXC1fMo8g54tRUuuEQqNp78bK
+ SMr+ESgSN1slqwOa4C5CPNOCoNJjpFys4ZaJ5Pt7mf9GdFE65lqccSCfvSOjUGuOgu
+ eusB/LC91ruJg==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hkFYx4hMhz6skd;
- Mon, 14 Sep 2026 21:28:37 +0200 (CEST)
+ by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hkFb616YNz6sxf;
+ Mon, 14 Sep 2026 21:29:38 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org,
 	alex.bennee@linaro.org
-Subject: [RFC PATCH v1 5/6] target/arm: fix MPU SIZE min for v6-M/v7-M/v7-R
-Date: Mon, 14 Sep 2026 21:23:21 +0200
-Message-ID: <20260914192323.29250-6-gilles.grimaud@univ-lille.fr>
+Subject: [RFC PATCH v1 6/6] target/arm: extend PMSAv7 support to v6-M CPUs
+Date: Mon, 14 Sep 2026 21:23:22 +0200
+Message-ID: <20260914192323.29250-7-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
 References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
@@ -72,50 +72,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PMSAv7 walk accepted any non-zero region size field, but Armv6-M
-requires a minimum of 7 (256 B), Armv7-M requires 4 (32 B) and v7-R
-retains its current minimum of 1 (4 B). Introduce rsize_min based on
-ARM_FEATURE_M and ARM_FEATURE_V7 and reject smaller values. The PMSAv8
-path is handled earlier and remains unchanged.
+QEMU conditions PMSAv7 storage, reset, allocation, the pmsav7-dregion property,
+migration and address translation on ARM_FEATURE_V7, which prevents the Armv6-M
+MPU from being used. The checks are widened to also accept ARM_FEATURE_M while
+preserving the PMSAv8 path for v8-M CPUs (PMSAv8 is tested first and the
+migration vmstate excludes v8-M with !ARM_FEATURE_V8). This lets a Cortex-M0+
+declare and use its MPU regions without setting ARM_FEATURE_V7, while v8-M CPUs
+continue to use PMSAv8 storage and migration.
 
 Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 ---
- target/arm/ptw.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ target/arm/cpu.c     | 12 +++++++++---
+ target/arm/machine.c |  3 ++-
+ target/arm/ptw.c     |  3 ++-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 77aa78f00e..f58a1db843 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -617,7 +617,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+                            sizeof(*env->pmsav8.rlar[M_REG_S])
+                            * cpu->pmsav7_dregion);
+                 }
+-            } else if (arm_feature(env, ARM_FEATURE_V7)) {
++            } else if (arm_feature(env, ARM_FEATURE_V7) ||
++                       arm_feature(env, ARM_FEATURE_M)) {
+                 memset(env->pmsav7.drbar, 0,
+                        sizeof(*env->pmsav7.drbar) * cpu->pmsav7_dregion);
+                 memset(env->pmsav7.drsr, 0,
+@@ -1656,7 +1657,11 @@ static void arm_cpu_post_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_PMSA)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_has_mpu_property);
+-        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++        /*
++         * QEMU's PMSAv7 state also models the Armv6-M MPU register layout.
++         */
++        if (arm_feature(&cpu->env, ARM_FEATURE_V7) ||
++            arm_feature(&cpu->env, ARM_FEATURE_M)) {
+             qdev_property_add_static(DEVICE(obj),
+                                      &arm_cpu_pmsav7_dregion_property);
+         }
+@@ -2332,7 +2337,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+     if (arm_feature(env, ARM_FEATURE_PMSA) &&
+-        arm_feature(env, ARM_FEATURE_V7)) {
++        (arm_feature(env, ARM_FEATURE_V7) ||
++         arm_feature(env, ARM_FEATURE_M))) {
+         uint32_t nr = cpu->pmsav7_dregion;
+ 
+         if (nr > 0xff) {
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 7005f4e5d7..53a2734d25 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -584,7 +584,8 @@ static bool pmsav7_needed(void *opaque)
+     CPUARMState *env = &cpu->env;
+ 
+     return arm_feature(env, ARM_FEATURE_PMSA) &&
+-           arm_feature(env, ARM_FEATURE_V7) &&
++           (arm_feature(env, ARM_FEATURE_V7) ||
++            arm_feature(env, ARM_FEATURE_M)) &&
+            !arm_feature(env, ARM_FEATURE_V8);
+ }
+ 
 diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index a29de0385f..cb9e73fc0a 100644
+index cb9e73fc0a..f537502d3b 100644
 --- a/target/arm/ptw.c
 +++ b/target/arm/ptw.c
-@@ -2720,6 +2720,11 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
-     ARMMMUIdx mmu_idx = ptw->in_mmu_idx;
-     bool is_user = regime_is_user(mmu_idx);
-     bool secure = arm_space_is_secure(ptw->in_space);
-+    uint32_t rsize_min = 1;
-+
-+    if (arm_feature(env, ARM_FEATURE_M)) {
-+        rsize_min = arm_feature(env, ARM_FEATURE_V7) ? 4 : 7;
-+    }
- 
-     result->f.phys_addr = address;
-     result->f.lg_page_size = TARGET_PAGE_BITS;
-@@ -2748,11 +2753,13 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
-                 continue;
-             }
- 
--            if (!rsize) {
-+            if (rsize < rsize_min) {
-                 qemu_log_mask(LOG_GUEST_ERROR,
--                              "DRSR[%d]: Rsize field cannot be 0\n", n);
-+                              "DRSR[%d]: invalid Rsize field 0x%x\n",
-+                              n, rsize);
-                 continue;
-             }
-+
-             rsize++;
-             rmask = (1ull << rsize) - 1;
- 
+@@ -3908,7 +3908,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+             /* PMSAv8 */
+             ret = get_phys_addr_pmsav8(env, ptw, address, access_type,
+                                        result, fi);
+-        } else if (arm_feature(env, ARM_FEATURE_V7)) {
++        } else if (arm_feature(env, ARM_FEATURE_V7) ||
++                   arm_feature(env, ARM_FEATURE_M)) {
+             /* PMSAv7 */
+             ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
+                                        result, fi);
 -- 
 2.55.0
 
