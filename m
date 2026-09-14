@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B58A3C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1F6C88E6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 18:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Bas-0005su-HH; Mon, 14 Sep 2026 14:39:56 -0400
+	id 1x6Bgn-0000px-Eg; Mon, 14 Sep 2026 14:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6Bar-0005sY-37
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:39:53 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6BgV-0000aQ-Om
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:45:49 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6Bap-0004EL-AX
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:39:52 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-398c066106cso2025889a91.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:39:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6BgS-00069a-Q2
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 14:45:43 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49ce364488dso7236725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 11:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789411189; x=1790015989; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IVzusJ89u+5300SYV7tOzlauq0FtY5j3SFhXmPaj7W0=;
- b=hzcEKvQaJMdMDK3T4fjmhVvrG8F1IplQE7q8KWwBV3Ek8EclNEw1EdgrsH75I6YHee
- O+IvfcdRlUXFGZL+NcaNXLFs8vYCgxkrYjwGPGxFlWloItQTGZx0lmTvxptmz6EGNKUp
- IOaQTBVoUat3XoGb3o8cA4OTeLT53WyUm/1sJi4JSDEmlR4aSSSbSsrMEgpPDaO5PB09
- 5j8PaKud+aDJAS1+fQnaPARtsIYyzfLvydK4RBEFN3/jsUNxHDuIY/Aq2FHBS7sRC0eN
- f6WnoHFQgSWFVrY+EExJEw7JBqg/6L5zAMOoM0CjLZVHWopCDahbmWt6StVWozag+iSr
- Kemw==
+ d=linaro.org; s=google; t=1789411539; x=1790016339; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=tgqLGCDswHOXNMCiczOi8KUqwHoDwkmN/cvWbKRFtdA=;
+ b=FBR+ADTEcx9MdJ43jm8j6Qn04ZS89VtOzpMlyiziRaWjZbza82EF7fI3Bgjh2jakNX
+ D+xdzthpI+5D9z7DZrIaa5rPsBVUgpGrgZ3vqzoaDY/kWeDpKDt42OgKlqPv0YyqVFRf
+ HCv3vp+KRIK+oO62uejDR6K3iB+bpVZQ7zj3KcULKVApW8tbnZafUoUgZda/YDqcX793
+ M2DHlhWiiqCxQr/uhsrIAKyAHtnwl4LXqzlJKbgXbutaUcZxlpko2RXnMgaNTk4qAdOf
+ Ne7h5I3K/en7tGZzD7XNdfOGl58UJymrUL5XJ3ELvdNm4c3sqIMoPFmbjx1lQiBv/lPB
+ 8fZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789411189; x=1790015989;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IVzusJ89u+5300SYV7tOzlauq0FtY5j3SFhXmPaj7W0=;
- b=rsE+CY49qplyMulKaxCxuQvOsxOkmFlcBXZwdgT9l6IKzz5fl+HBmiXQ+DT8SQ06DZ
- wa83b2xfzi0A237kq31PrLQsAMa4vDAPujaeQQn3Jxhe4jFvqP6fIC7XY4jil18XQD8I
- NuPk1aTV1NGrPUDCeka9k+l3qzLn4BmAA6keZC72/HLqFzsXp6EhNrxlLCh+lDzKpTIU
- m6mkl4bKF8A+AqaQDaAZDkpYfeM2lKTSv6tMc39kiLV5flHAC5EwjYKQvLoDn5MiwcKF
- gnRygZH56at0xkC0DR/Wqr227itCuzYO13/2qTk+roXCaH7Ft6IHxlhoqJb8juWn6TvI
- N+PA==
-X-Gm-Message-State: AFuF++ni70wk3yH0+QMdx4zM5ax2KTsUNDbIBGEsVvBLxguPXIrQ9iRY
- H9tLS8HE0yM6f14iEW9eL4FqggAZqISQbmJBiSKTG5TpbgyWWNLVLXambrL5BE7q0kYmhU6y4pS
- lYiEH
-X-Gm-Gg: AYBFou0W03OeqxXEa17n20n/10cA6PwV+pepe/syM/TKGacFedKSTFfIctnQPHvBlRe
- O9g6vxsNUX+vCXMENAc7UqipmpEIldstdsulg1RjVH7gd9caply4+WAW7XLQWMutCNjVz1ceCNK
- mi/QCrOqSXx9hPxaVzbsLyToTsfldB4R6xwEAbQlrdnbpCOiuEl+nKBe/zxKXLBp18juy1yFH6W
- +3g7WF49IZOYGjJQh3/ivbubQo5tAbzO+7Q7b/SA/e+HWED3m8fHKSobaLhBqGy1kVi8evWoIHK
- OzlMNxiSE6U/3VK+0BCutj12wj9lbfQcHi2tkBoyFHBUM/C8jC/a1Nm3kVqloH5+OrNkcN6waqb
- CpeKQaLZ/dRQfUmY1lUQTvo/ggiKVHICu4fPRz/gZh9expzGdrG1rPgmZFsAkMO7Qc6l36/b94h
- FlPzJu4yqw94ZP9xqIWqnmmnYvbDyd+cwLr1DEXVdALS7XES2kElG4kwWKP5Q4DP31p0S6614Vf
- dzqXVyx8QU0xMLtep0anIkcE+eJ+hLQLFFWL2EVQxt+is6o+5edcqNd3r2DcQ==
-X-Received: by 2002:a17:90b:3e4f:b0:398:9be6:f997 with SMTP id
- 98e67ed59e1d1-39dec0f7abamr8807665a91.22.1789411189184; 
- Mon, 14 Sep 2026 11:39:49 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:7164:7976:4c53:31bc?
- ([2603:800c:7900:ed00:7164:7976:4c53:31bc])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1438d1381c2sm522369c88.10.2026.09.14.11.39.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 11:39:48 -0700 (PDT)
-Message-ID: <15c1d593-588a-4ab3-b438-a499cb719e7c@linaro.org>
-Date: Mon, 14 Sep 2026 08:39:46 -1000
+ d=1e100.net; s=20260707; t=1789411539; x=1790016339;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=tgqLGCDswHOXNMCiczOi8KUqwHoDwkmN/cvWbKRFtdA=;
+ b=1eUn9CubqkX59P1j2gsD2TYVb8E2eTpi9udgM3PUs3DLHbSBookfZnaTuVG+Tzrr70
+ pC/yBedQbf/o7IU3tuQCFMFllUEd/nYnVbNa4jNGumRzhsxQVRnUpoDxONpq/16Gn/wv
+ iAa4VNdAqjsuTqSiKrsMSU7zzt62maf8XWBPItOT7SQY5mXaMCB7Zpab+3fEFDqYmlr0
+ So6UYgt6oV3bhMGMpojVBWSM7QE6F7n4AIHW+Rl+Dn6/M99u3XE/6UvoUZklt7dh13hf
+ 1X0iz7pB0OJ2WkYMbLkodU6JUZv8x1D7CDHacKlBRf3+LMS9CfVA2WjyeAQXC5BPjjkt
+ 9BDA==
+X-Gm-Message-State: AFuF++n/3GXcI57/XSeWoDIehnKIbJSGXR/L0e2FQQm7gCUGDtfQtsxo
+ G3/W7OTAC6zZ28/coJUhFc7X+DUmC/doFX1FzN6jMtggQ4Uwn4ZfZgW1fTlGhF+jJjsFczsRW6X
+ jenf+v2c=
+X-Gm-Gg: AYBFou141fiDIyhlmiUZbXP77v4SS22JZkPWSDpRpMiRGmGcwaqQDxscnGuZeiVcYA1
+ N/0kUhbEwPeiFK33GUPfb/Bet7GOBuUfEX1BpGaS7u3U1omtyZYt2RA2laCAFFAiYSUgjfEq7el
+ A/zO9ydWJ9K/rzgTN4nX1i9wAYO43qtonaav5od8IJ1f4n343SIQwWDR/TJoSuMbnAnJmzFAmQE
+ TjICY4eahKTBq8Fva5wIQeA6BDbgWWunNAyLKmCSocneX4IwsnLlAi2+Lm0UyjXoiBjajON8hla
+ RXZLtm4rrFFARtgtsYUiCUGOAj4iajfRLiIpYR+84Ayll6EIyDC7H9D3oFeJbWPuXGRQUl4MeLV
+ 25bpOKy4b5YdBuRGnzKrFnAQWEwHiMGTWaDZiWTN0uL3c8rGBUJ4zEIvD5cBIE63EVE8cqhZzNS
+ NhR6UYld1Zna9k7gHUODfrndsEcRvlp9wD2nr2lswOBLVTLO5VlydYx7xss10vGpjI6YQlB80=
+X-Received: by 2002:a05:600c:4514:b0:49c:e37e:4389 with SMTP id
+ 5b1f17b1804b1-49e7d72ab29mr9335135e9.4.1789411538779; 
+ Mon, 14 Sep 2026 11:45:38 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e7d68f556sm12623225e9.15.2026.09.14.11.45.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Sep 2026 11:45:38 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 43A835F81D;
+ Mon, 14 Sep 2026 19:45:37 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] gitlab: update the @user id mapping file
+Date: Mon, 14 Sep 2026 19:45:34 +0100
+Message-ID: <20260914184534.706637-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] target/arm: Implement HCR_EL2.TID3 trap on
- undefined TID3 registers
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260806173123.333423-1-richard.henderson@linaro.org>
- <20260806173123.333423-4-richard.henderson@linaro.org>
- <CAFEAcA-NoW=39G_m21zQO6CzH5UU3MnsKuFNjkjX-55gzXqD2g@mail.gmail.com>
- <a930c1b6-dd93-46ad-9e61-eafda9dcaac9@linaro.org>
- <CAFEAcA_-UwXB9svLsFwJRfe37+CkwkRHnNVoWDScTEL=L4uOpw@mail.gmail.com>
- <72dd2ada-3b4d-4563-860a-86bf6c6a8a90@linaro.org>
- <CAFEAcA_7eYjtgXVidEMsG9ztZf1Zy8A4Qip_baSGxdNRQQKj6g@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA_7eYjtgXVidEMsG9ztZf1Zy8A4Qip_baSGxdNRQQKj6g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,47 +100,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/14/26 08:21, Peter Maydell wrote:
-> On Mon, 14 Sept 2026 at 19:12, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 9/14/26 07:51, Peter Maydell wrote:
->>> On Mon, 14 Sept 2026 at 18:21, Richard Henderson
->>> <richard.henderson@linaro.org> wrote:
->>>>
->>>> On 9/13/26 23:16, Peter Maydell wrote:
->>>>> On Thu, 6 Aug 2026 at 18:32, Richard Henderson
->>>>> <richard.henderson@linaro.org> wrote:
->>>>>>
->>>>>> It is IMPLEMENTATION DEFINED whether HCR_EL2.TID3 traps on registers
->>>>>> within the range which are not explicitly listed.  Previously we chose
->>>>>> not to honor the TID3 bit.
->>>>>>
->>>>>> However, with FEAT_IDTE3 it becomes mandatory to honor SCR_EL3.TID3
->>>>>> on these registers, so we might as well honor HCR_EL2.TID3 too.
->>>>>
->>>>> I thought we agreed not to change the behaviour here? Is this
->>>>> just a "forgot to update commit message" thing?
->>>> Oh, yes.  Because I did update the code to test for v8 in translate.c.
->>>
->>> So what does this patch do? Is it just a no-behaviour-change
->>> refactor so we have a place to add the SCR_EL3.TID3 check
->>> in the following patch ?
->> It does what it says on the tin -- it honors HCR_EL2.TID3 for undefined
->> registers.  We currently only do this via access_tid3 for defined registers.
-> 
-> But there aren't any genuinely UNDEFINED encodings in the TID3
-> space, are there? The ID register space has to RES0, not UNDEF,
-> for reserved encodings, and so we have cpreg structs for
-> all the reserved encodings in the ID space.
-Since we don't do this for all arm_cpreg_encoding_in_idspace(), I 
-assumed that we didn't do it for all arm_cpreg_encoding_in_tid3() either.
+I needed to fix a POSIX-ism in the script as well.
 
-Either that, or we have existing dead code testing 
-arm_cpreg_encoding_in_idspace()?
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .gitlab-map-auto          | 8 +++++---
+ scripts/gitlab-map-update | 2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-I wonder if I should prove that either way with a test at startup...
+diff --git a/.gitlab-map-auto b/.gitlab-map-auto
+index 28ce448f1bf..3f717a15d4e 100644
+--- a/.gitlab-map-auto
++++ b/.gitlab-map-auto
+@@ -12,11 +12,12 @@ a1xndr	Alexander Bulekov
+ adi-g15-ibm	Aditya Gupta
+ agraf	Alexander Graf
+ alex.williamson	Alex Williamson
+-aliang1	Aihua Liang
+ alistair23	Alistair Francis
++amachhiw	Amit Machhiwal
+ anisinha	Ani Sinha
+ anthony-linaro	Anthony Roberts
+ anthonyper	Anthony PERARD
++aroxell	Anders Roxell
+ berrange	Daniel P. Berrangé
+ birkelund	Klaus Jensen
+ bonzini	Paolo Bonzini
+@@ -36,10 +37,10 @@ dwmw2	David Woodhouse
+ eauger1	Eric Auger
+ ebblake	Eric Blake
+ edgar.iglesias	Edgar E. Iglesias
++efarman	Eric Farman
+ ehabkost	Eduardo Habkost
+ eldondev	Eldon
+ epilys	Manos Pitsidianakis
+-famzheng	Fam Zheng
+ farosas	Fabiano Rosas
+ gautammenghani	Gautam Menghani
+ gkurz	Greg Kurz
+@@ -51,7 +52,6 @@ imammedo	Igor Mammedov
+ jasowang	Jason Wang
+ jmacarthur	Jim MacArthur
+ jsnow	John Snow
+-juan.quintela	Juan Quintela
+ kbastian-qemu	Bastian Koppelmann
+ kmwolf	Kevin Wolf
+ kostyanf14	Kostiantyn Kostiuk
+@@ -67,6 +67,7 @@ mauromatteo.cascella	Mauro Matteo Cascella
+ mcayland	Mark Cave-Ayland
+ mdroth	Michael Roth
+ mediouni-m	M. Mediouni
++mjrosato	Matthew Rosato
+ mjt0k	Michael Tokarev
+ mstredhat	MST
+ npiggin	npiggin
+@@ -79,6 +80,7 @@ pipo.sk	Peter Krempa
+ pkrempa	Peter Krempa (work)
+ pm215	Peter Maydell
+ qemu-janitor	Qemu Janitor
++raphael.s.norwitz	Raphael Norwitz
+ rathc	Chinmay Rath
+ rth7680	Richard Henderson
+ schoenebeck	Christian Schoenebeck
+diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
+index c134c226aa2..743ad11900d 100755
+--- a/scripts/gitlab-map-update
++++ b/scripts/gitlab-map-update
+@@ -33,7 +33,7 @@ glab api --paginate /projects/qemu-project%2fqemu/members | \
+     .gitlab-map-auto.tmp
+ test $? != 0 && fail=1
+ 
+-if test $fail == 0
++if test $fail -eq 0
+ then
+   grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
+   LC_ALL=C sort .gitlab-map-auto.tmp | uniq >> .gitlab-map-auto.new
+-- 
+2.47.3
 
-
-r~
 
