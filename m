@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80015C88E73
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 21:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5ED4C88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 21:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6EZf-0003uP-Vp; Mon, 14 Sep 2026 17:50:52 -0400
+	id 1x6EZo-0003vZ-4I; Mon, 14 Sep 2026 17:51:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1x6EZe-0003tf-5P
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 17:50:50 -0400
+ id 1x6EZf-0003uI-KN
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 17:50:51 -0400
 Received: from mail-oi2-x11.google.com ([2607:f8b0:4864:32::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1x6EZc-0001A3-J4
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 17:50:49 -0400
+ id 1x6EZe-0001AI-2c
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 17:50:51 -0400
 Received: by mail-oi2-x11.google.com with SMTP id
- 5614622812f47-4b37a3ed714so1562197b6e.0
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 14:50:48 -0700 (PDT)
+ 5614622812f47-4c206dc8adcso1055758b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 14:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789422647; x=1790027447; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789422649; x=1790027449; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=kGTBgZZyoBgscZLa4XGxTdhsorRtXVliE/QWC4MCN2g=;
- b=m71tIxhQjC/AWaao2v61Ll7lph6sEq7M5Olo56P6rdIxcoBVdNLQ/599ZpQwQYaxIw
- 81zIMu4yEcRKoXvwiVQalcCIz9pc5jSnrGsVjv4rAvvfLYwH9j+Nu5WoO0gsqcbu3sGu
- voO4Bf/Jbr1hvpUKeJp/v5SvgrvIRHCSmoSaH1LEk+VPTHHNcPt2zPBL91e237ty04cD
- LRIS4kv+wwmjhlzixQSlcrrDsJNDgjjYNrk16yiNzz7nocNVND1ZbTOMAvxZFCbNFwIq
- 9X1OUbK2hHRprfZWaZV9U4M3za9q7xmHksvep80W7c2jncnzUxlSwaRB6MleAJ87e0Vr
- Ilgw==
+ bh=fLsa//+XZ9+Xsn4gbcnm6ZGz+g+Rhrde2dTMeiCZzGI=;
+ b=CxWkmyAWZ9httHIlT16DpiUMgH1UhrvIPqP/TU12ncj1F31rvHwSbU9J+syvbCLEpt
+ /Th1c/LBgfBj7TWDmgCGTl8vEYCXi2b3xInT49QcjtF3JHEzydvugTTPuUqzATu4H01y
+ XxSv0gluccZlubKfmJwAtTKPQOWnmj/zXzguzyufCm2FtaTAwiaiv9V5rouMfGRKXVNj
+ eXU8CauQUZ1uwH7yURbTrInMvyTaKvd45jbWA5r1Dva8ScAC9gk9fw8/M4L9K6TjKY2t
+ wDWdRqAyxLhMPlpV5FxzwxYY2hB2Jvm1H2EowKOClBubKn9/GcATauhLzt8HGjuJx2DQ
+ XOKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789422647; x=1790027447;
+ d=1e100.net; s=20260707; t=1789422649; x=1790027449;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kGTBgZZyoBgscZLa4XGxTdhsorRtXVliE/QWC4MCN2g=;
- b=epACe7kC9jgbtjf9GAbRClIc6Ml4m1T4NjzFgINHql0I60SRzgvpzIdgsklPVsxXjC
- Y8OmMcWqvyxqIjRJ0tiG0Xe7jxsvBwF0w8QohH1LmpNl1VPpCJ4PclFMOvY2qsaTXvea
- i+5iFWV/N7/JJumLitUQPgmCCdq3POTRq6/PTv4BAFkdC1z28YmZKroDUXWCYxhw7jLy
- kaiQFUM8tSn94xnWTk2FfOf0nTaCM9Ft4KKFqTdGypZ/Ipfg76GpWvrN43HHKr5AIWc1
- XV6g7Xsm+9yDImYPbjgkGM7indc5o7XiWrHf71gZmnNYO2BDnfiwy73oVMIUzhwiZXS5
- mKuQ==
-X-Gm-Message-State: AFuF++mtGWfmhx7uxqmh7C7IiLXlfiP+4B8dM04jRHUrRMXl28yNbefP
- OZ6SwWthkAFjTaSSqU+lTn1c0+25WndJi1VXgprm82d0i7nWaZQm4jWsnMJmgbhO
-X-Gm-Gg: AYBFou1mpuokzV5QD+YBrLFzlFLtarRe8VtuTzarr3Xp4rIeWB/hRZy92aryJhtqTMI
- 54KuzlpMbKftwhTa8/1tGmiofDeh/F+pA9hPnNy8POJ57iDcSJPabZT96EuC2Gpym3SCFenKXJd
- zUGoz7tEPRzciUNhmYb9ldGYCWH80tcUhJpxvYVdnb7G9o6ZcIxhaoRXdaSbS4T1GC7RRupLjdG
- Y+9Kh6TPrbHu/gzNWWiwlLAnP4UDB8yQ0Fx4TdvvTTVRiSIXZdhRDQUrdSHTZOYe6EDvCfVbPaN
- PfOnsh8gRY3djiO4qYmjBI+G6ZiQ1Gc+sGS+FEB9mIjk2nARpNpt7lWqZWf9f0l+b1uSsmhRMoB
- AXaxtecYbps/fB/Lbn82t+dDknMaE8F5/hk66Ei8YZWra032pua8vYdxgXa3yYKLJV5UWpgWW4H
- MaUDTGi64QcecFAc3vBdkpKkOuydpYQjhaPZvQRRNTL4mz+no059zA8E8tVgWMzmJgOJMCLxXgd
- inUr/csynos9lc5rO/S6YshoXYQFKBjdV3tsLyPXZ2e9grvrrx7obtYoGEL5sV+
-X-Received: by 2002:a05:6808:15a2:b0:4a3:fefb:899b with SMTP id
- 5614622812f47-4c7b2dfaebamr2899062b6e.7.1789422647508; 
- Mon, 14 Sep 2026 14:50:47 -0700 (PDT)
+ bh=fLsa//+XZ9+Xsn4gbcnm6ZGz+g+Rhrde2dTMeiCZzGI=;
+ b=mMUlsd4GPL0FKzcWrQ2M6gLKKQAnSH/xcdHpqUuRzoGO7C3ubp7e+TizCtj15n2iTq
+ odr4P+kEGLLHvrVLMY0gDt5ZiBMsi2jtvxtDk0fBvZ4D+3SZPLhjoHq9HUnW0VJec17G
+ rjI/loL41cEiEE2VY85NDo4lSHqmBorX2fKLbgk+hB0Iv7w8m/1D3/uCnjoDXfWBNPMl
+ fM/XI0XUFW1oNCK5EH915nCK+lQXGliFZ8SAQz9V9oe3ASj7ydZjHrursd5nMTQIL5jw
+ X4eVdNRR2Ejsb81z0k9UklW4GW5rM9RMxomrtuvLLKnduVX0+D0bodez94Jj/Qs4GVs9
+ P7Sg==
+X-Gm-Message-State: AFuF++km5M5O8BJdcnhnrhgYEALd4pbXgS7gEUBmF0V0KtClPfEYBmxm
+ E+Ob4qYy3h8+zB5HiapvjzXOOA9XiTCA/9XoF8k85gRy3ePQhUWpjiu+2M2rkk+D
+X-Gm-Gg: AYBFou3q0c6QmR4Kzik3/4e94Us7ctMK9DcKR46sjQJTgnIjjsx12RM+4bCRMhu9+Jw
+ PSb7EP4a388UjzGOsj6ieh7SOJiuMgdtHPJ9ORg85JmCr9h9fccwkWog7xvSGFYjOki9SmF432U
+ BnZPrDAyu0KRHN3qWvpgCEdCRF+LRj7YQH/f1hjmlCWSV7MQLv3DW/Ak6fJECZ/E7GXF3PXSin1
+ uwvDnE/BhpNOVDIvuFnIjceHbeAB/ZqlZRfyxiI4HQwjYWfRC1TR01h6G8dmgK6LaIEZWVQenjm
+ 7xLeBFRl5LvhMyatBe1T6mCdT8PLc550KKgf78XwX8jo9ZQBo7IkJu9m6mji2WhygTKXK7yREpb
+ 9YhBjT1QixZYYwKpV4BzrzGOZg0XqgQ1ZteepNPwcTFxKElqhOWOLSOXfBpDRFmXteU8HcMUOtR
+ YeTDYU07bGa7NDui/52Xvibv7EUqHcZfAS2Uag0vVdrH//PaNpKdC4hLYSHNsJSEtFVwsLAkCj3
+ pPnC6r3XZYX/TeVGM4xodGi9I6AndyJgEwa5ObaksHRbH9AAfIM9CPtg/eQQDvp
+X-Received: by 2002:a05:6808:1709:b0:4c2:d7e8:cedb with SMTP id
+ 5614622812f47-4c7b3ad6320mr3044082b6e.11.1789422648944; 
+ Mon, 14 Sep 2026 14:50:48 -0700 (PDT)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4c4a2504bc4sm8937163b6e.17.2026.09.14.14.50.46
+ 5614622812f47-4c4a2504bc4sm8937163b6e.17.2026.09.14.14.50.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 14:50:47 -0700 (PDT)
+ Mon, 14 Sep 2026 14:50:48 -0700 (PDT)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@oss.qualcomm.com, ale@rev.ng,
  anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH v3 05/10] Hexagon (tests/tcg/hexagon) Add tests for vreg
- multiple writes
-Date: Mon, 14 Sep 2026 15:50:31 -0600
-Message-ID: <20260914215037.157879-6-ltaylorsimpson@gmail.com>
+Subject: [PATCH v3 06/10] Hexagon (target/hexagon) Check for qreg multiwrite
+ in analyze_packet
+Date: Mon, 14 Sep 2026 15:50:32 -0600
+Message-ID: <20260914215037.157879-7-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260914215037.157879-1-ltaylorsimpson@gmail.com>
 References: <20260914215037.157879-1-ltaylorsimpson@gmail.com>
@@ -105,109 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- tests/tcg/hexagon/multiple-writes.c | 66 +++++++++++++++++++++++++++++
- tests/tcg/hexagon/meson.build       |  2 +-
- 2 files changed, 67 insertions(+), 1 deletion(-)
+ target/hexagon/translate.h | 7 ++++++-
+ target/hexagon/translate.c | 5 +++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tests/tcg/hexagon/multiple-writes.c b/tests/tcg/hexagon/multiple-writes.c
-index 4305903547..62e5828a0a 100644
---- a/tests/tcg/hexagon/multiple-writes.c
-+++ b/tests/tcg/hexagon/multiple-writes.c
-@@ -199,6 +199,68 @@ static int test_post_increment3(void)
-     return sig;
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index 9ee5f25365..b6cdf51c20 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -76,6 +76,7 @@ typedef struct DisasContext {
+     int qreg_log[NUM_QREGS];
+     int qreg_log_idx;
+     DECLARE_BITMAP(qregs_written, NUM_QREGS);
++    DECLARE_BITMAP(qregs_multi_write, NUM_QREGS);
+     DECLARE_BITMAP(insn_qregs_written, NUM_QREGS);
+     DECLARE_BITMAP(insn_qregs_read, NUM_QREGS);
+     bool pre_commit;
+@@ -308,7 +309,11 @@ static inline void ctx_log_qreg_write(DisasContext *ctx,
+             ctx->has_hvx_overlap = true;
+         }
+     }
+-    set_bit(rnum, ctx->qregs_written);
++    if (!test_bit(rnum, ctx->qregs_written)) {
++        set_bit(rnum, ctx->qregs_written);
++    } else {
++        set_bit(rnum, ctx->qregs_multi_write);
++    }
+     ctx->qreg_log[ctx->qreg_log_idx] = rnum;
+     ctx->qreg_log_idx++;
+ }
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index ca22bae28f..815eecb60a 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -593,6 +593,7 @@ static void clear_pkt_ctx(DisasContext *ctx)
+     bitmap_zero(ctx->vregs_uncond, NUM_VREGS);
+     bitmap_zero(ctx->predicated_tmp_vregs, NUM_VREGS);
+     bitmap_zero(ctx->qregs_written, NUM_QREGS);
++    bitmap_zero(ctx->qregs_multi_write, NUM_QREGS);
+     ctx->qreg_log_idx = 0;
+     for (i = 0; i < STORES_MAX; i++) {
+         ctx->store_width[i] = 0;
+@@ -624,6 +625,10 @@ static bool pkt_has_write_conflict(DisasContext *ctx)
+         return true;
+     }
+ 
++    if (!bitmap_empty(ctx->qregs_multi_write, NUM_QREGS)) {
++        return true;
++    }
++
+     return false;
  }
  
-+static int test_vreg_legal_predicated(void)
-+{
-+    int sig;
-+
-+    asm volatile(
-+        "r0 = #0\n"
-+        "r1 = ##1f\n"
-+        "memw(%1) = r1\n"
-+        "r2 = #7\n"
-+        "r3 = #13\n"
-+        "p0 = cmp.eq(r2, r3)\n"
-+        "{\n"
-+        "    if (p0) v0 = v1\n"
-+        "    if (!p0) v0 = v2\n"
-+        "}\n"
-+        "1:\n"
-+        "%0 = #23\n"
-+        : "=r"(sig)
-+        : "r"(&resume_pc)
-+        : "r0", "r1", "r2", "r3", "p0", "v0", "v1", "memory");
-+
-+    return sig;
-+}
-+
-+static int test_vreg_illegal_mixed(void)
-+{
-+    int sig;
-+
-+    asm volatile(
-+        "r0 = #0\n"
-+        "r1 = ##1f\n"
-+        "memw(%1) = r1\n"
-+        ".word 0x1a004100    /* { if (p0) v0 = v1 */\n"
-+        ".word 0x1e03e2e0    /*   v0 = v2  } */\n"
-+        "1:\n"
-+        "%0 = r0\n"
-+        : "=r"(sig)
-+        : "r"(&resume_pc)
-+        : "r0", "r1", "memory");
-+
-+    return sig;
-+}
-+
-+static int test_vreg_illegal_uncond(void)
-+{
-+    int sig;
-+
-+    asm volatile(
-+        "r0 = #0\n"
-+        "r1 = ##1f\n"
-+        "memw(%1) = r1\n"
-+        ".word 0x1e0361e0    /* { v0 = v1 */\n"
-+        ".word 0x1e03e2e0    /*   v0 = v2  } */\n"
-+        "1:\n"
-+        "%0 = r0\n"
-+        : "=r"(sig)
-+        : "r"(&resume_pc)
-+        : "r0", "r1", "memory");
-+
-+    return sig;
-+}
-+
- int main()
- {
-     struct sigaction act;
-@@ -224,6 +286,10 @@ int main()
-     assert(test_post_increment2() == SIGILL);
-     assert(test_post_increment3() == SIGILL);
- 
-+    assert(test_vreg_legal_predicated() == 23);
-+    assert(test_vreg_illegal_mixed() == SIGILL);
-+    assert(test_vreg_illegal_uncond() == SIGILL);
-+
-     puts("PASS");
-     return EXIT_SUCCESS;
- }
-diff --git a/tests/tcg/hexagon/meson.build b/tests/tcg/hexagon/meson.build
-index 4a2826c427..08c6e34c20 100644
---- a/tests/tcg/hexagon/meson.build
-+++ b/tests/tcg/hexagon/meson.build
-@@ -54,7 +54,7 @@ tests += {
-   'load_unpack.c': {'cflags': cflags},
-   # Build this test with -mv71 to exercise the CABAC instruction
-   'misc.c': {'cflags': [cflags, '-mv71', '-O2']},
--  'multiple-writes.c': {'cflags': cflags},
-+  'multiple-writes.c': {'cflags': [cflags, '-mhvx']},
-   'overflow.c': {'cflags': cflags, 'exe_name': 'hex-overflow'},
-   'preg_alias.c': {'cflags': cflags},
-   'dual_stores.c': {'cflags': cflags},
 -- 
 2.43.0
 
