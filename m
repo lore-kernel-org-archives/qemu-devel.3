@@ -4,137 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD007C88E72
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 16:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E5FC88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Sep 2026 17:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6A07-0008WS-VG; Mon, 14 Sep 2026 12:57:52 -0400
+	id 1x6A4Z-00028y-0n; Mon, 14 Sep 2026 13:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x69zr-0008Uz-E3
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 12:57:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6A41-0001zb-RS
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:02:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x69zp-00060H-4i
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 12:57:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6A40-0000MP-4J
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 13:01:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789405051;
+ s=mimecast20190719; t=1789405308;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=csJqiF6iCPyAxB6OseXFVOlApc2lK/tkfzaPxXPAMn8=;
- b=EjFb+9Rq1AyzWMtAKgl2Ffh4k4favOhXk9QlWjwKH+1SjYT6kAnFV+5Totjjq7st3t/qkz
- XMsPh//9h3MD1bZ6WankC+0rSKLzg9CkN6GxnipHFK8jBkBVsCIylVytneldvalGViVVaW
- 0yK4meqazUYeIPNpIolPwRoVtbvSwdI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rUF9F2IXcFINbg6/6ZCehhFhgl2sjcbLQfDeQjrczP8=;
+ b=d48guC+VxaKoD64xGpj1I7lZrHX58SguLveIlEdrMw3RWBSI72GvLenKjQeSHG27gMnlLq
+ aYmlxWRZp1FcCS+w/QlYx118YKOVnCFSZgDz4dpOxSez6e+GNgp3pRj06rtIQUk7rj1k7L
+ g1ppQVMpbXOSiUv6j68zCMgWXOXK3UE=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-219-g1ma28zKOZ-_HJhGsn1Vrw-1; Mon, 14 Sep 2026 12:57:30 -0400
-X-MC-Unique: g1ma28zKOZ-_HJhGsn1Vrw-1
-X-Mimecast-MFC-AGG-ID: g1ma28zKOZ-_HJhGsn1Vrw_1789405049
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49e73659ac5so15299395e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 09:57:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789405049; cv=none;
- d=google.com; s=arc-20260327;
- b=I6EIjZPuoZXaqLUR/F9fHu5sgkHQP7GL3zGOiEyDuhxnxwvEM1EmDNckQ71gA1Itey
- dkHtKZcpJWNctno4T8om2ENqSoYeY4Z3aj5tMUsMl1o8Q0hKWz8QWwkWnvaIYQbNFteF
- HUBRJ8FZii8RaRekEopoFShuz463KCL6CfTCexxCBOfNAl9Gu/4N1UE/eyhY3YcvhMyT
- zKsuK+AfTM46oVzYlbPf1EcRWKlHclvILj9zUzF/nzZN8rmFucqeo/AZXIzF3uBgTa9I
- ZG45h+7unNk8zOIHO3Eh+p28DeZef2/O56X7+IGk8pCUFpb/OIgXNHfeRHfARVHiIoIU
- IDkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=csJqiF6iCPyAxB6OseXFVOlApc2lK/tkfzaPxXPAMn8=;
- fh=iOO5DGIw+RMgVJLlsg9Pz07H7nI+8Mi2vK+KLhPIETs=;
- b=ZVwdJpcglJXBLe7v4tRZ2kgirScclfsF26pY5no4Dmt8Nn2IVEVxUJabt+BETp3fdY
- NF7Yn5tkfu9gtgn9cuFhjtwWGFmc1wGJ7wYjMfShjRnaA/MoYpbYfT5HgHrK3z7uodVB
- Ty9670ST0Xp0GFyZL9EjhhupOFsL+Jp7atr3tpw38k5gfL86G1AKryJyKR6kw36HIqUS
- C+gqUquBFdZnsjUUZxZ09y1OTKx5h/WCc78N5uxJFo0EWZrOZmgJ6LgbJJBRRD7wrU8e
- 1cya+dQN0bT5BAgjYZ2Aed56EeB+pyNr8k1lQJmPpsLO3eJUif4Lq8KCWSdVToGX8k7M
- xaPQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-654-Wzk39c2CN9KxiArW156F9Q-1; Mon, 14 Sep 2026 13:01:45 -0400
+X-MC-Unique: Wzk39c2CN9KxiArW156F9Q-1
+X-Mimecast-MFC-AGG-ID: Wzk39c2CN9KxiArW156F9Q_1789405305
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93a1b824e84so274029885a.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 10:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789405049; x=1790009849; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=csJqiF6iCPyAxB6OseXFVOlApc2lK/tkfzaPxXPAMn8=;
- b=CXgwPUwOVxP4Z27Y1C1XXLAD+Q50F5knWEWxyFL7he7/2EJ37tKPY2JIReBR4Ub9FA
- fN2YiZBGF+z7OIseGj4duBpwXOqGS2foP6bJgwMho7OEXXu8JAigZ7TGJHzmmp+jez3x
- AOwetB9xKJFvrICP3rdYcVNEIDlNSuEd7B+r+LJs7tM3HIoYu4AWkfU+sRu1UpNYqTC/
- MqrLVHTSntLkpOO8ww+xL1WQ7haYrBdLpcP+A9W2K9h0eYRegdANRQNjPIyR14900Kwc
- kkCWPQZX/o6+xvz1rf+BbcE7SjP0iR/QzhB+APAJbNyNoRADmWlOLTcOAu+asoRglJQq
- RMUw==
+ d=redhat.com; s=google; t=1789405305; x=1790010105; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rUF9F2IXcFINbg6/6ZCehhFhgl2sjcbLQfDeQjrczP8=;
+ b=hi+AQuOePO/vq0hm3or1MW7Vp2lwYpIbzZSfSDR9kOVvAyEOvRA3z42mjN4ik80Tu8
+ adeEgMAHi86AsN8uqwzzu4879FQDkgmMxijjqT6asdx0vd/xyHJgrCHjgVTw1QYheasp
+ ZJcUkn7LW4CrY/igtWg3gwmeOVjscJmXh4ZJhf1WRg5YBE/aMEE4QW2V4YugjmXe1Ote
+ 7bkEeFZ0ZurM7AN0U8sdFHB3LLsasPPYNtDYSxYWHezzD5fzFTJSeAKrdx+qfOeqRqR6
+ S+X3/zacBq42cqh19bdw+Rkc6hkDda09FhZ9T8VmkGZJfwMnat+emzAI7b7OPRVFdjHC
+ kL7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1789405049; x=1790009849;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=csJqiF6iCPyAxB6OseXFVOlApc2lK/tkfzaPxXPAMn8=;
- b=dST0uI9ioemtdkHHk/5lUuwdjSCJAfpG/kxeJXIfwi2kUZidrd8zx8jv7LSLgitWQC
- C8mIDjiNw4e5MGRgg1qGqozpOUH3fq6VDoYI73playy0EDQcMW9pMc49yT5k7ky6biTl
- UBbjfv5BRQy6hrKaqqc0U01kigJgjnzKxyZzhTFvc3GjiYLJdU4NY6u1JeckbqP7s7gT
- ywA0a5pz9G0J2/JOThk33KWxfk/mm+O7jq/EI2t0AvTFqkxrRHON5NF6m7jXiCe4B1CV
- yT900KlDhw0N50jR6GGZI+7boW3dJE8VM+bAn8hdSfsAUjUzMTpTxjhs6778ra8yUrwV
- q5kg==
+ d=1e100.net; s=20260707; t=1789405305; x=1790010105;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=rUF9F2IXcFINbg6/6ZCehhFhgl2sjcbLQfDeQjrczP8=;
+ b=WkCjODDAT7/Za4yyssUDMTI9quQd7TE15h818v7uWnk2OND+qqfcvoB3NWmZ/EKxOd
+ GpL9zIeYoW3MqOk0L6SFsjnyfX6hMYqEk74yXlzHGYvkc+HWrzDtfSLbiIiALXDusN98
+ zO248J+IMMvxhklaP5NxQRZSdY5Axb5Ul35boFICju5AspnVNnpxT56Isrl5WXujL0Uz
+ RjqhH7ohNp0zcPcR6qdf5jcntmINFRlGAwwnxmzMkSNZKPfAvaxRgGGlitzpMr+5hXW1
+ gJ3Dlr3CHdIL4f8+HnQGlKMM3PcKSjAqJnMtsHZho9HudotugdH6D/tyTrqFt8bt85u7
+ +GTg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBz+19hCeThz8p2SSIe84mZH5+75yPRRgABcJDpE2UybUPPmdEL4V5y4cSekwNr61EKtS1mGpSPIUdRS@nongnu.org
-X-Gm-Message-State: AFuF++loHGtZ36NqcY7XvmVQQj8OEUZCKKwUid/V5QLU442/w2titD9l
- h57R4QyytFMgIUU2MushrwJHBVePkKe79DDhPyAncdKOyRS/w/3qNxvbSqY6jbXutf9C37kP5Nt
- /3wyr2bB9GEV4N4YxjA352Dx0g8+eR+HL98kaJeFZHhRWqtYF2BmasGQO5wlrFv5m/oDg380m8n
- QaZoQlWCuUD/Js7kxxMBACn8JtREFELao=
-X-Gm-Gg: AYBFou0PNfbDWHK8rfPisOcp1OXE6l/W0SW2HJ3uf6QcX5NBFVKW4eiXgbR7W+d7FQT
- 4sshhJa7duvb5qrOlSbw7sPfsHOMImqe+cnV3mEh5a6yJIo7WZuuVWSuvE+LXu4RN+fTjASRyGH
- fnpsflGn4fDJWt8dtQX0UWvSbi8cQqXMmLjEA+eQbEs3uAke8sjAkiHM0KAi+aWJ079SjJEaJBw
- HPWejphAY/YhSpC90VSISUH94xHn5+u4X+kbwxVB+OPamU6ym04nnVJxqTP8Q==
-X-Received: by 2002:a05:6000:491e:b0:487:198:8fd2 with SMTP id
- ffacd0b85a97d-48702b4d14amr3907667f8f.39.1789405048887; 
- Mon, 14 Sep 2026 09:57:28 -0700 (PDT)
-X-Received: by 2002:a05:6000:491e:b0:487:198:8fd2 with SMTP id
- ffacd0b85a97d-48702b4d14amr3907628f8f.39.1789405048481; Mon, 14 Sep 2026
- 09:57:28 -0700 (PDT)
+ AKwUvBxfcy5HK3aG+uJl1XRvtzSD+qbYBiqetYZxgpx6BlTx4YGUn6GFXkE0HUh6VKUrg6HL+EFONIPEtunl@nongnu.org
+X-Gm-Message-State: AFuF++n2aTq3+eCDFw/beViTJXKtLb5IwCZvUnkmh8EGRLoPuXpUrfnL
+ 8wemwhe16MfUWcuyM4zKSmo9WfFuqspO5lmpXnEAv//XOO4Mf4lio7Ykm2lzLqU0mYrIinRH3SH
+ 2SCdt4cWL5Vp9Gu6c/3ptZPQjo4OOY5CO1W7OaS9ahzKqnY4KKa+UPmsz
+X-Gm-Gg: AYBFou19ha428QVgBkek7lqdXbnaNspiM9Ee4xHKPLHfK9q9kbgcPk4IOM/O7jBP8Mr
+ zAqihM9vc0EA9lnbWaOjPm7nHTKMkdfJAHoUlB5dxAlGfec5n5NjhZfUeomU8Un5lZrPMVhn97j
+ 4OSLvG7YmhEYFUUHhHPadq3dAfPU/3hxTFA7xkIcJxHgsK1c5cxJQsoUv8DGio0yTfLDWn1s8GE
+ OxG6Hhup6VIM6Rc2iEfi5TB0AC3KZWD+0Bgw0ClBweOecmh8jo3AUMFpUuDiNmisBeftBBVE+Hb
+ uG+H2MCwTplKNO6m8o8zyEswCwGKQCQQS8s5x/zXHO1eGFTs5fnjksHHNX17YqgVvS/2h/Szlu8
+ 9nnI+vXlyFSNRxADrgAfNo4itbfV5sV1GWq/bzrE4kgQdhkX41k8qBvfTP9E=
+X-Received: by 2002:a05:620a:6489:b0:93a:2e8:5aff with SMTP id
+ af79cd13be357-93a297cb56cmr466623285a.21.1789405305186; 
+ Mon, 14 Sep 2026 10:01:45 -0700 (PDT)
+X-Received: by 2002:a05:620a:6489:b0:93a:2e8:5aff with SMTP id
+ af79cd13be357-93a297cb56cmr466616785a.21.1789405304550; 
+ Mon, 14 Sep 2026 10:01:44 -0700 (PDT)
+Received: from localhost
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-939ebda519bsm996273285a.26.2026.09.14.10.01.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Sep 2026 10:01:43 -0700 (PDT)
+Date: Mon, 14 Sep 2026 13:01:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc: Cam Miller <cam@linux.ibm.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH] system/ram-discard-manager: fix
+ offset_within_address_space in replay_by_populated_state()
+Message-ID: <aqgodgDLGSSbkTXL@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260914-vmem_fix-v1-1-f69ef04a07b0@linux.ibm.com>
+ <CAJ+F1CL4q0hbZGpdkzcMG9EgqbhrWaGQODCH819c13hS8ZLecA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260904124604.2207440-1-alex.bennee@linaro.org>
- <20260904124604.2207440-103-alex.bennee@linaro.org>
- <dab85c9c-4718-48d1-a343-c2e6b5f8e24f@linux.ibm.com>
- <87a4pn8yra.fsf@draig.linaro.org>
- <CABgObfYEN8Qme6zXGYJpEeHTiFegjOm=Ym-3vU9LE1Z-Wsot3g@mail.gmail.com>
- <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
- <CABgObfZnyHenuVJ6maVs+jMNQCJeYhtcnXtXOqN1G3NcbvDt7g@mail.gmail.com>
- <aqfX2414cAMCcI18@redhat.com>
- <5cc8dd29-9093-4082-b8e5-32823f21c71d@oss.qualcomm.com>
-In-Reply-To: <5cc8dd29-9093-4082-b8e5-32823f21c71d@oss.qualcomm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 14 Sep 2026 18:57:16 +0200
-X-Gm-Features: AcwNN1WNwDTPk6TIifcsWqACaAFCjDD8JBTcvtucv-5-P9hLb72vo1FtSeVeLaw
-Message-ID: <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
-Subject: Re: [PULL 102/105] configure: remove cross_cc and gdb detection logic
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Eric Farman <farman@linux.ibm.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Aniket Sahu <asahu1x@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>, 
- Zhuoying Cai <zycai@linux.ibm.com>, Joshua Daley <jdaley@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CL4q0hbZGpdkzcMG9EgqbhrWaGQODCH819c13hS8ZLecA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,36 +128,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 14, 2026 at 6:13=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
-> There might be some confusion with what the series introduced. To make
-> it clear, it does not touch, nor use tests/docker/Makefile.include.
->
-> Each tests/tcg/arch declares which container it depends on, and we have
-> tests/tcg/meson.build that automatically builds it if needed for tests.
-> Reverting that will not be very easy to be honest, as it's a core part
-> of the new logic.
+On Mon, Sep 14, 2026 at 07:54:44PM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Mon, Sep 14, 2026 at 7:35 PM Cam Miller <cam@linux.ibm.com> wrote:
+> >
+> > Fix bug inside replay_by_populated_state() that forgets to initialize
+> > MemoryRegionSection field offset_within_address_space. Follow the
+> > established pattern of calling memory_region_section_intersect_range()
+> > to accomplish this task.
+> >
+> > Prior to commit cc9c77f4ddf0 ("system/memory: implement
+> > RamDiscardManager multi-source aggregation"),
+> > replay_by_populated_state() had called
+> > memory_region_section_intersect_range() in order to initialize
+> > interdependent fields offset_within_address_space, offset_within_region,
+> > and size together, as shown below.
+> >
+> >     s->offset_within_address_space += start - s->offset_within_region;
+> >     s->offset_within_region = start;
+> >     s->size = int128_sub(end, int128_make64(start));
+> >
+> > cc9c77f4ddf0 reimplements replay_by_populated_state() initializing the
+> > fields of the given MemoryRegionSection instance by hand instead of via
+> > memory_region_section_intersect_range(). In doing so, it leaves
+> > offset_within_address_space uninitialized for some reason, as you can
+> > see below.
+> >
+> >     MemoryRegionSection subsection = {
+> >         .mr = section->mr,
+> >         .offset_within_region = offset,
+> >         .size = int128_make64(MIN(granularity, end_offset - offset)),
+> >     };
+> >
+> > Consequently offset_within_address_space defaults to GPA 0x0, which is
+> > incorrect. For example, on s390x, base RAM begins at GPA 0x0 and it is
+> > problematic to report that a virtio-iommu MR section lives there
+> > instead.
+> >
+> > cc9c77f4ddf0 deliberately calls memory_region_section_intersect_range()
+> > from other related code paths inside the same file, namely
+> > replay_source_by_state() and rdl_populate_cb()/rdl_discard_cb(). It is
+> > unclear why the new replay_by_populated_state() implementation does not
+> > conform to this same pattern.
+> >
+> > The effects of the bug include qemu crashes on multiple architectures.
+> > The following assertion failure occurs when driving the
+> > guest_phys_blocks_append() code path, for guests with virtio-mem device
+> > that has some memory plugged.
+> >
+> >     DBG: guest_phys_block_add_section: predecessor->target_end=280000000 target_start=0
+> >     **
+> >     ERROR:../system/memory_mapping.c:222:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
+> >     Bail out! ERROR:../system/memory_mapping.c:222:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
+> >     2026-09-11 16:03:57.405+0000: shutting down, reason=crashed
+> >
+> > This crash can be triggered on x86 via the dump-guest-memory QMP
+> > command. The same crash can be triggered on s390x by restoring VM State
+> > that has been migrated to a local file. (I used libvirt to manage this
+> > migration restore operation, namely command virsh managedsave then virsh
+> > start.) Applying the fix resolved the crash on both platforms.
+> >
+> > Fixes: cc9c77f4ddf0 ("system/memory: implement RamDiscardManager multi-source aggregation")
+> > Reported-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
+> > Signed-off-by: Cam Miller <cam@linux.ibm.com>
+> 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-If it is core, why is it patches 102...105?
+queued, thanks.
 
->  > IMHO it would be nice to replace tests/docker/Makefile.include with
-> > a meson.build too. Yes, that would make it rely on a configured
-> > build tree, but IMHO that's an acceptable tradeoff to get more
-> > stuff into meson natively.
->
-> That's easy, and would allow us to get rid of
-> tests/docker/Makefile.include completely, by adding matching targets
-> make container-image-debian-*. Also, we can have a top target
-> 'container-images'. With this, people can build them with ninja or make.
->
-> As Daniel mentioned, the trade off is to run configure first, and I feel
-> it's quite acceptable. What do you think Paolo?
-
-The problem is that right now firmware builds are broken, because all
-the supporting code in configure was removed. I'll review anything
-that fixes it, even moving firmware builds to meson custom_targets
-even though it seems quite intrusive.
-
-Paolo
+-- 
+Peter Xu
 
 
