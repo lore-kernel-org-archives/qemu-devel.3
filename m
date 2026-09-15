@@ -4,53 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F6EBC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E061C88E7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 14:05:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6TgV-0005xS-4a; Tue, 15 Sep 2026 09:58:55 -0400
+	id 1x6Tmc-0000tr-66; Tue, 15 Sep 2026 10:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1x6TgR-0005wT-Tw; Tue, 15 Sep 2026 09:58:51 -0400
+ id 1x6TmY-0000ok-VH; Tue, 15 Sep 2026 10:05:11 -0400
 Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1x6TgO-0000eb-QN; Tue, 15 Sep 2026 09:58:51 -0400
-Received: from [IPV6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1] (unknown
+ id 1x6TmQ-0002bL-Or; Tue, 15 Sep 2026 10:05:10 -0400
+Received: from lt-jeanlouis (unknown
  [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
- by apollo.dupie.be (Postfix) with ESMTPSA id 8717F1520F75;
- Tue, 15 Sep 2026 15:58:43 +0200 (CEST)
+ by apollo.dupie.be (Postfix) with ESMTPSA id 19C391520F75;
+ Tue, 15 Sep 2026 16:04:59 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1789480723;
+ t=1789481099;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WbTXZL5FA7BF5ur3tu5wJODxVvkpmrIQ+gzqfbtaLdU=;
- b=D6VP37ljh9z2K1NWc+C+O22K+rLEUwOUmQpcdDGljvRxxzsyQH7ZvMB5RAfX5IF4zIzAei
- 4jS8EGyWH59oIh2ufUV2mNgafdnVI4yTR/08A2ykBiR4CAJYuWPK5nk1uR0oe6nW0XGPnf
- oZo1ASXT1S0duCSJx3JRMaZ0AXLVPmpGVdOLM0qyfukokFaZCoRexSSyXSC5K/sbYkFn2C
- tCbrT0yYnNuBJQZBjHBDEsg/h/OG0vUntoJY8ZZiexTkqv6lDQYAibfDDbfL2myv97FXkq
- t2YTr9Gzrus6F5JXvbpGwlPjt9OJP4uOktANmJ3ddnDuVvCB1oNq55Q0Zx6Qjg==
-Message-ID: <d60e4c1a-0d51-425f-b5b1-c84e91934548@dupond.be>
-Date: Tue, 15 Sep 2026 15:58:43 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/1] qcow2: add functionality to repair bitmaps
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>
-References: <20260826101005.2345883-1-jean-louis@dupond.be>
- <20260826101005.2345883-2-jean-louis@dupond.be>
- <ee6e69df-673b-4859-8c77-e1f5b5552f68@yandex-team.ru>
-Content-Language: en-US, en-GB, nl-BE
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ILNDiLA3TpCuj8FVQSOiF4VwIM6Ff1HVC1i6ZCqCXo4=;
+ b=ZiKVN0ENmx6wp+Li3ySuvaMP7jakHLyHee0awxyRYRaE4Vn36FIITM2CxUn6/ZIpOpl8MR
+ remz9dxfa5vp5aom/JQZ50jJNzauR1BtJMFh0hTUg0R8LXWQDXYJZdPljf+XEMq7v+2qog
+ oLTbI6Ix8BJ/FrUhjXm+2D9PH8Wa9ZyRK0Bq0n/GsMrXhqj0jBTZmeyZ8dvqoKSpd747Wh
+ BJnk5FcbfjB1Jo02lm2vmNsIqfaa8X/BaAWihKRohxokYBGmEIi9AC38vMlulARBFkXcGq
+ I16rBjbVtnYy1qojBID/BO1UVrBid5kzLP1JqTWC/IwiigWd0qXQhPe3+blAFw==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <ee6e69df-673b-4859-8c77-e1f5b5552f68@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Hanna Reitz <hreitz@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>
+Subject: [PATCH v2 0/3] block: measure for commit
+Date: Tue, 15 Sep 2026 16:04:40 +0200
+Message-ID: <20260915140444.1223798-1-jean-louis@dupond.be>
+X-Mailer: git-send-email 2.55.0
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
  envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
@@ -75,68 +71,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In some cases we want to calculate the size an image will be after we commit A into B.
+This for example on block storage, where you need to resize the target storage before you start the merge.
 
-On 26/08/2026 17:46, Vladimir Sementsov-Ogievskiy wrote:
-> On 26.08.26 13:10, Jean-Louis Dupond wrote:
->> In some cases, it might happen that bitmaps become corrupt.
->> For example when adding/removing bitmaps on a live image.
->>
->> Of course this should not happen, but in case this happens, the image is
->> corrupt and even cannot be opened anymore. You'll get something like the
->> following:
->> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the 
->> constraints
->>
->> So the image becomes useless, and cannot be repaired. This while in fact
->> only (one) bitmap entry is corrupt, and the rest of the data is just
->> intact.
->>
->> This commit adds a way to fix this corruption, by just replacing the
->> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
->> bitmaps that are corrupt.
->>
->> $ qemu-img check disk.qcow2
->> qemu-img: Check failed: Invalid argument
->> qemu-img: Lost persistent bitmaps during inactivation of node 
->> '#block147': Bitmap '' doesn't satisfy the constraints
->>
->> $ qemu-img check -r all disk.qcow2
->> qcow2_free_clusters failed: Invalid argument
->> Leaked cluster 3 refcount=1 reference=0
->> Leaked cluster 26 refcount=1 reference=0
->> ERROR cluster 983214 refcount=0 reference=1
->> Rebuilding refcount structure
->> Repairing cluster 1 refcount=1 reference=0
->> Repairing cluster 2 refcount=1 reference=0
->> Repairing cluster 32768 refcount=1 reference=0
->> ....
->> Repairing cluster 983214 refcount=1 reference=0
->> The following inconsistencies were found and repaired:
->>
->>      2 leaked clusters
->>      3 corruptions
->>
->> Double checking the fixed image now...
->> No errors were found on the image.
->> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed 
->> clusters
->> Image end offset: 64437878784
->>
->> And the image is valid again!
->> Worst case you lose all bitmaps, but at least the image and the data
->> itself is useable again.
->>
->> Signed-off-by: Jean-Louis Dupond<jean-louis@dupond.be>
->
-> With accidental (I assume)  scripts/meson-buildoptions.sh.tmp file 
-> removed:
-Yea sorry for that, was accidental indeed.
-I don't need to push a new version to fix that I suppose?
->
-> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->
+These commits adds the functionality to do this.
+First of all a commit that adds bdrv_open_backing_chain_until. So we can open an image up to base image B.
 
-Thanks!
-Jean-Louis
+And then a modified qcow2_measure that calculates the size of B after A has been merged into it.
+This with taking into account the discard-no-unref setting of the base.
+
+Jean-Louis Dupond (3):
+  block: add bdrv_open_backing_chain_until
+  block: support measure for commit
+  iotests/290: add test case for qemu-img measure
+
+ block.c                            | 77 +++++++++++++++++++++++-----
+ block/crypto.c                     |  1 +
+ block/mirror.c                     |  2 +-
+ block/qcow2.c                      | 82 ++++++++++++++++++++++++++----
+ block/raw-format.c                 |  2 +-
+ docs/tools/qemu-img.rst            |  9 +++-
+ include/block/block-global-state.h |  7 ++-
+ include/block/block-io.h           |  3 +-
+ include/block/block_int-common.h   |  2 +-
+ qemu-img-cmds.hx                   |  4 +-
+ qemu-img.c                         | 45 +++++++++++++---
+ tests/qemu-iotests/178.out.qcow2   |  6 +--
+ tests/qemu-iotests/178.out.raw     |  6 +--
+ tests/qemu-iotests/290             | 45 ++++++++++++++++
+ tests/qemu-iotests/290.out         | 61 ++++++++++++++++++++++
+ 15 files changed, 310 insertions(+), 42 deletions(-)
+
+-- 
+2.55.0
 
 
