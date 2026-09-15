@@ -4,54 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D5C9C88E7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA2AC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WF3-0005vz-Ez; Tue, 15 Sep 2026 12:42:45 -0400
+	id 1x6WGn-0006Pq-V4; Tue, 15 Sep 2026 12:44:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zorin@swemel.ru>)
- id 1x6WF0-0005vN-W0; Tue, 15 Sep 2026 12:42:43 -0400
-Received: from mx.swemel.ru ([95.143.211.150])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x6WGk-0006Ph-Vn
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:44:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zorin@swemel.ru>)
- id 1x6WEt-0006Dv-41; Tue, 15 Sep 2026 12:42:42 -0400
-Content-Type: multipart/alternative;
- boundary="------------oWxnpPQ96j5IWZAjhUGlEAYT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
- t=1789490552;
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x6WGj-0006rS-MX
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:44:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789490668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+9PATGAQQGH7eJbKfpErqBb/PP37lvz+lx4bWi5cR5E=;
- b=l8ZTZ56fXbmCwV8L6P/4QZ4zbsfHsTXOGMwcHfzUx+Blj/qm/PpoaHFNA/L05lH6R7sieH
- oymZTqsohsVKFZZINbcct3E5BiWTQMnyO2AVH61smijftkw5opy0LMPw6Qagk61wG3H+z9
- lekMyR74EpZeX2JDGW56SgPDo7t12aY=
-Message-ID: <1749cad8-1651-4543-8a2b-aad3c1168328@swemel.ru>
-Date: Tue, 15 Sep 2026 19:42:31 +0300
+ bh=upSQMnaakZV9TITmKXS8o+Da50RX3hGMbGi+Wg7LRrY=;
+ b=BtnjetzB5beKIKADaawXFHf1HpQpWWBKdZwnlzkNf4agKi70OmN6cd7N+YJInD9XiPFJ63
+ eixGVv2+LNovbRWNFIswC/SEIENPa4HCq/nDFOjunrNlADsW75fq9e+Oe7bf4fYjlzvkJx
+ rJGuZ8QZkdijhgr66tGVEetdOz0biW8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-h9psZWiINUm6h--xswH9bg-1; Tue,
+ 15 Sep 2026 12:44:20 -0400
+X-MC-Unique: h9psZWiINUm6h--xswH9bg-1
+X-Mimecast-MFC-AGG-ID: h9psZWiINUm6h--xswH9bg_1789490659
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B81511954232; Tue, 15 Sep 2026 16:44:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.144])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F12119560AB; Tue, 15 Sep 2026 16:44:16 +0000 (UTC)
+Date: Tue, 15 Sep 2026 18:44:13 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Christian Quante <christian@quante.one>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, "Denis V. Lunev" <den@virtuozzo.com>
+Subject: Re: [PATCH] hw/block/fdc: account for read and write requests
+Message-ID: <aql13aEGZkBCkiJZ@redhat.com>
+References: <20260824114216.231916-1-christian@quante.one>
+ <20260911145309.47164-1-christian@quante.one>
+ <CAFn=p-Z-b6a5Z7V01pfWAR8gKpdt-v3DzzpkY4et6fpVHUmUHw@mail.gmail.com>
 MIME-Version: 1.0
-Subject: Re: PATCH] hw/s390x/s390-hypercall: fix potential NULL dereference in
- handle_virtio_ccw_notify
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com,
- Halil Pasic <pasic@linux.ibm.com>, qemu-s390x <qemu-s390x@nongnu.org>
-References: <13ad0871-44dd-40eb-aad1-d08cc2d7dfe5@swemel.ru>
- <597e1a7a-8720-4356-91ed-a7c9fa416312@redhat.com>
-Content-Language: en-US, ru-RU
-From: =?UTF-8?B?0J3QuNC60L7Qu9Cw0Lkg0JfQvtGA0LjQvQ==?= <zorin@swemel.ru>
-In-Reply-To: <597e1a7a-8720-4356-91ed-a7c9fa416312@redhat.com>
-Received-SPF: pass client-ip=95.143.211.150; envelope-from=zorin@swemel.ru;
- helo=mx.swemel.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFn=p-Z-b6a5Z7V01pfWAR8gKpdt-v3DzzpkY4et6fpVHUmUHw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,203 +86,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------oWxnpPQ96j5IWZAjhUGlEAYT
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Am 15.09.2026 um 16:30 hat John Snow geschrieben:
+> Is anyone looking at this, or should I be investigating it?
 
-This is the reaction of the (dynamic) static analyzer. We conducted 
-research (at the request of the quality department) and found out that 
-it could work. So we created a patch.If you're sure it will never 
-happen, then, of course, skip it (and I'll have to work hard, because 
-the quality department is digging into everything).
+I just returned from vacation, so a few things have piled up. Feel free
+to have a look, but if you won't, I'll get to it in a while.
 
-15.09.2026 19:32, Thomas Huth пишет:
-> On 15/09/2026 18.17, Николай Зорин wrote:
->> SWSA#4992cdf0-415c-45c1-be1a-71213467347d
->>
->> The `virtio_ccw_get_vdev()` function can return a `NULL` pointer if the
->> corresponding subchannel driver data (`sch->driver_data`) is not 
->> initialized
->> or has been cleared.
->>
->> If `vdev` is `NULL`, passing it directly into 
->> `virtio_queue_get_num(vdev, vq_idx)`
->> results in a `NULL` pointer dereference, which can lead to a hypervisor
->> crash or unexpected termination of the QEMU process.
->>
->> Fix this by adding an explicit check for `!vdev` before verifying the
->> queue index and its capacity, returning `-EINVAL` early if the device
->> is missing or not bound to the subchannel.
->>
->> Signed-off-by: Nikolay N Zorin <zorin@swemel.ru>
->> ---
->>   hw/s390x/s390-hypercall.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/s390x/s390-hypercall.c b/hw/s390x/s390-hypercall.c
->> index ac1b08b2..fd2972c0 100644
->> --- a/hw/s390x/s390-hypercall.c
->> +++ b/hw/s390x/s390-hypercall.c
->> @@ -44,7 +44,7 @@ static int handle_virtio_ccw_notify(uint64_t 
->> subch_id, uint64_t data)
->>       }
->>
->>       vdev = virtio_ccw_get_vdev(sch);
->> -    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, 
->> vq_idx)) {
->> +    if (!vdev || vq_idx >= VIRTIO_QUEUE_MAX || 
->> !virtio_queue_get_num(vdev, vq_idx)) {
->>           return -EINVAL;
->>       }
->
->  Hi!
->
-> How did you trigger this problem? It should not exist anymore since:
->
-> https://gitlab.com/qemu-project/qemu/-/commit/e5cb62e7b6f9
->
-> which has been included since QEMU v10.2.
->
-> So please provide some description how to reproduce it if it still 
-> happens with the latest version of QEMU.
->
->  Thanks,
->   Thomas
->
-> PS: The list of maintainers for the s390x part of QEMU also has 
-> recently been changed. Please use the MAINTAINERS file and 
-> scripts/get_maintainer.pl from the latest version to check before 
-> sending patches. Thanks!
->
+Kevin
 
---------------oWxnpPQ96j5IWZAjhUGlEAYT
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+> --js
+> 
+> On Fri, Sep 11, 2026 at 10:54 AM Christian Quante <christian@quante.one> wrote:
+> >
+> > Gentle ping.
+> >
+> > The patch still applies cleanly on master (209b2afaface) and fdc-test
+> > passes with it: 16 ok, 1 skipped without --enable-asan.
+> >
+> > Thanks,
+> > Christian
+> >
+> 
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <span class="HwtZe" lang="en"><span class="jCAhz ChMk0b"><span
-          class="ryNqvb">This is the reaction of the (dynamic) static
-          analyzer.</span></span> <span class="jCAhz ChMk0b"><span
-          class="ryNqvb">We conducted research (at the request of the
-          quality department) and found out that it could work.</span></span>
-      <span class="jCAhz"><span class="ryNqvb">So we created a patch.</span></span><span
-        class="jCAhz ChMk0b"><span class="ryNqvb">
-          If you're sure it will never happen, then, of course, skip it
-          (and I'll have to work hard, because the quality department is
-          digging into everything).</span></span></span><br>
-    <br>
-    <div class="moz-cite-prefix">15.09.2026 19:32, Thomas Huth пишет:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:597e1a7a-8720-4356-91ed-a7c9fa416312@redhat.com">On
-      15/09/2026 18.17, Николай Зорин wrote:
-      <br>
-      <blockquote type="cite">SWSA#4992cdf0-415c-45c1-be1a-71213467347d
-        <br>
-        <br>
-        The `virtio_ccw_get_vdev()` function can return a `NULL` pointer
-        if the
-        <br>
-        corresponding subchannel driver data (`sch-&gt;driver_data`) is
-        not initialized
-        <br>
-        or has been cleared.
-        <br>
-        <br>
-        If `vdev` is `NULL`, passing it directly into
-        `virtio_queue_get_num(vdev, vq_idx)`
-        <br>
-        results in a `NULL` pointer dereference, which can lead to a
-        hypervisor
-        <br>
-        crash or unexpected termination of the QEMU process.
-        <br>
-        <br>
-        Fix this by adding an explicit check for `!vdev` before
-        verifying the
-        <br>
-        queue index and its capacity, returning `-EINVAL` early if the
-        device
-        <br>
-        is missing or not bound to the subchannel.
-        <br>
-        <br>
-        Signed-off-by: Nikolay N Zorin <a class="moz-txt-link-rfc2396E" href="mailto:zorin@swemel.ru">&lt;zorin@swemel.ru&gt;</a>
-        <br>
-        ---
-        <br>
-          hw/s390x/s390-hypercall.c | 2 +-
-        <br>
-          1 file changed, 1 insertion(+), 1 deletion(-)
-        <br>
-        <br>
-        diff --git a/hw/s390x/s390-hypercall.c
-        b/hw/s390x/s390-hypercall.c
-        <br>
-        index ac1b08b2..fd2972c0 100644
-        <br>
-        --- a/hw/s390x/s390-hypercall.c
-        <br>
-        +++ b/hw/s390x/s390-hypercall.c
-        <br>
-        @@ -44,7 +44,7 @@ static int handle_virtio_ccw_notify(uint64_t
-        subch_id, uint64_t data)
-        <br>
-              }
-        <br>
-        <br>
-              vdev = virtio_ccw_get_vdev(sch);
-        <br>
-        -    if (vq_idx &gt;= VIRTIO_QUEUE_MAX ||
-        !virtio_queue_get_num(vdev, vq_idx)) {
-        <br>
-        +    if (!vdev || vq_idx &gt;= VIRTIO_QUEUE_MAX ||
-        !virtio_queue_get_num(vdev, vq_idx)) {
-        <br>
-                  return -EINVAL;
-        <br>
-              }
-        <br>
-      </blockquote>
-      <br>
-       Hi!
-      <br>
-      <br>
-      How did you trigger this problem? It should not exist anymore
-      since:
-      <br>
-      <br>
-       <a class="moz-txt-link-freetext" href="https://gitlab.com/qemu-project/qemu/-/commit/e5cb62e7b6f9">https://gitlab.com/qemu-project/qemu/-/commit/e5cb62e7b6f9</a>
-      <br>
-      <br>
-      which has been included since QEMU v10.2.
-      <br>
-      <br>
-      So please provide some description how to reproduce it if it still
-      happens with the latest version of QEMU.
-      <br>
-      <br>
-       Thanks,
-      <br>
-        Thomas
-      <br>
-      <br>
-      PS: The list of maintainers for the s390x part of QEMU also has
-      recently been changed. Please use the MAINTAINERS file and
-      scripts/get_maintainer.pl from the latest version to check before
-      sending patches. Thanks!
-      <br>
-      <br>
-    </blockquote>
-    <br>
-  </body>
-</html>
-
---------------oWxnpPQ96j5IWZAjhUGlEAYT--
 
