@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC7EC88E7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BE0C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Vbk-000061-VW; Tue, 15 Sep 2026 12:02:09 -0400
+	id 1x6VbJ-0007m6-HJ; Tue, 15 Sep 2026 12:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6Vbb-0008KC-TR
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:02:00 -0400
+ id 1x6VbI-0007kr-8t
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:40 -0400
 Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbY-0003Vi-3e
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:58 -0400
+ id 1x6VbF-0003Qb-9s
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:39 -0400
 Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c254f55eff0so440462366b.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:45 -0700 (PDT)
+ a640c23a62f3a-c254fa663c1so466117966b.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789488105; x=1790092905; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789488086; x=1790092886; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QeOKPFEA582PfRWcIcHhtyxEQbe8HlQaK11TI65dVMU=;
- b=knsXiCAvWlS/nlWMcFwJ0/j0xewk/IYe50ameUaBqtA8BtF9YgLYbfFtdeRp+U9dkV
- 1fybthndqhenqI9EluLzpb2raTPM657yQEM/cGWygaVSCCF/rzEKtdkHzRtDKekbAXmp
- Hb6UmHUNefpIo2BxhTfoBuvT1AWKj0Sb3nBQNzpoi09pSeaKtiRrKK/7wNst03CfCbI7
- ELKfrLd8SQBkaQ8NnG+Qi2xZUd0VQVGhbAWCicTdOA1V7zQYFfXifigOE7rPh0+ucZRc
- CppLAghN0RuEeyo1WuNPUwyx559OuFlAA46X1EUk4BlTCuAUjqRlEQ4MlI8SZokmEtCA
- ANDg==
+ bh=9YCy6DQ0BZQW71Ys8BPvP9f9laR4cAYvw0UQPtL7jF8=;
+ b=LKZJ4rkUlIHzL3S0NOsDaCIoyrBr7M1qqSKDoFsOPkcXrFTGJ2b1eI3YjPKlGTPELt
+ eWmDyV7toZQAL5FuOfBtDp7B2biOyArvFYOKMo73k+0rVSKXuUOVTKsDjN6D0vP5QTr4
+ z7nJyORVJcmk9PDIpVvjJXJx/1CC9EZ7tdQnWyA9wxVvwt7w0P6SLlENaGmBrjs1Tuur
+ cvpp8huSdvy8CCDsY2+uXtzkaR7qUUY2FlvTdfgazHHRdY5DXViacYp02XdIsdi1N4e1
+ o75o7Xyo5bmdssBvcsneMmOsonrVTg9CmLDN/yNmx/0tyan25GFzvNBxTD8BH9Rpp9LA
+ wmcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789488105; x=1790092905;
+ d=1e100.net; s=20260707; t=1789488086; x=1790092886;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=QeOKPFEA582PfRWcIcHhtyxEQbe8HlQaK11TI65dVMU=;
- b=Yw+TTPdvMbf57xQyqwhgjY057e56O3yySJITvCR29cjqivWGYqGwErTRZZ+9+kKjRu
- /zhSbPzSA4Pt/pfA+re6YvgsW/GWjrgwahPUSEccerSPphqOl/iXn/EKff5kGNykwD+H
- Uer5nrueI2NYozbZjzBghrNvcnwgdqJBQv9HWhYcHoMBFceE/kcaT1QJAYG61VaH3Ttq
- /b8XVhhofT/UuCxQLTYlX/FmfD50bLUcT7dCPFOrmwFGAX9WOQiQ30wIFeSmp/P3CjYQ
- UncPLdyELxjjoaK/fLLMAjExTXw6I/TG1K+IbaqxgzbBX9zVerU9Oz/35o/7YkZxTygc
- aRmQ==
-X-Gm-Message-State: AFuF++kQYk1T9jpf0T7t98+slRXjaFclPi1PREwMHL8V5zhNR4RGXEuR
- Ns65XsR4Dl39ip3su6r//jcUzCAShoE0d/z0HH+Q5vSTAQtkRLjCQ621SZ/tRQ==
-X-Gm-Gg: AYBFou1qQsUN4DUKnxJu9DsaRpu8niEHPydwZ9vpP97DXJfDYG5EnNq+FjkXqqF9fTy
- DQoVgamma8k3qK3vl2pusRHSzmE6TUleygHyNwXf23+3qizFIexW78xBRWZDwTWIk9tMyF2wCR4
- jcUSouKT/4xq2EPfD9Gfg2H/s7En7rqlX+NQAo8Z+tZFGwMc68g9+uQnKihgRA1HcCL6ljYgvzZ
- eGWvWhoaXydt6NDZYOB562WRDS1qc6vyk3nJB62/ahceM2uTaeSrIc6cMYpz7DaJ5ZkX7CXbZz8
- wsi5hnuNXdA3zXjQVkq/uMNsZL7+OMjdj6mvN4btqTetqrRpjaxHB6oc+2jN/ThVGEqiHsoBh73
- rNNCZQb9LXcgUEYQyi5Cr8nUdnO0qg+gHsEmEPFG9gj3y13Sku3y1+D0rGKVy1WYceKYcGzRHNn
- XYdSzD5pxHT7tnvASVKxA+3hmctC4PCfXYjIBp0cctnO1GNi3yAmZ6Z/X9SANbWVtMz3eHdCkUr
- hbaEXVLC+ssEvuLSzo5Lnd+5BPnyrcFtPqJSzVSWCFieA==
-X-Received: by 2002:a17:907:6d1f:b0:c25:5faf:b207 with SMTP id
- a640c23a62f3a-c29b84c9a48mr546735966b.3.1789488104484; 
- Tue, 15 Sep 2026 09:01:44 -0700 (PDT)
+ bh=9YCy6DQ0BZQW71Ys8BPvP9f9laR4cAYvw0UQPtL7jF8=;
+ b=a9QcjgY+yZwSEF9J+m+eA0eJK7qWgW7yeM92AITRLPgMnu4gPxATVmq/NXkgrnXxWx
+ 4nQRRdqFPMaAmAn4M/dOXHx6Gfr2erJdgGlt4WSol0xbj2Dt4EQvauev/xUVjxOcv3iQ
+ zPrMl+5XsUC2psyqEFN/Drol4KqX/q52hWkwZnArWY2beFBn3/de8dAYUGl5jkXmJTLU
+ jgAlmHSpU5AGpCcGauKUoWnT2H0tzL2p+3veupqKKpJC0xEgBRvMZVAJzWolO1Z9lcWD
+ yAto3jtHlOBHl00jCvQT8rpxksM1YBCpjOcP4vvvjJ8paA86gbkY4JD/pS/TMXJKQ6g4
+ e0uA==
+X-Gm-Message-State: AFuF++ljZisjdYTEO+uSDlYr+Pr78an2NKLxHGH+97HtcFnsDRpo7Efn
+ 6ELW9baP6WkX6KKkwG4Z5iHSyb2m4/WaWQLURzkz/OklqeFe3gCuxYURbbesnA==
+X-Gm-Gg: AYBFou3v4ImG+CorT8dc2jFi9MJgHqEVtH714UdGhtmZU5ebF96k2Txda4ECEtKl7ct
+ VMVxhOPku3O3izNSTrdpdJAN7KjMkV1IWPrP6wOaoCwy4zcCNiJBhybEjm5XXTe8G7DLSzp6z9U
+ iyEthAUv51OiV081U8NJozo2rSfauGpOtgCAzSD2RmhKIi8Z1HAqIl07hb6lTgPSjC+grs9BAjU
+ sIalpnN1MUDqg3MZjPjdte4UoDavhI8WVyyRefFYX5+H19C5OtxXdLftLARoEQgEQTxfTTuOi4b
+ 68Xq101F29rV9iiC1y88zbm4Qh5eJKp7Kk31L9b5l+/P0Y/rSSRhG3OZ9s495s/+yuKDuDndirF
+ 8YCZMnq7TWTiZqe8UBS2oREjx/hd0rj43Dcet9Dk/4UGjSiLZwna6FBDVHsAUc98CPCmP0wkkJM
+ Q54bUlLJRDkJOAdUVV0j5uk1SOfWuU/N4VLCQQyOj0wVQOOy4q5bvpbngrOXJ7Xvja65xPSWTTu
+ lZO3m+n6FTipOEw2J36TpQwz2Hf/CJ+hPNSrJ2wjLHCmg==
+X-Received: by 2002:a17:907:a089:b0:c25:c7a9:7b8a with SMTP id
+ a640c23a62f3a-c29b86b80b0mr805978666b.12.1789488085815; 
+ Tue, 15 Sep 2026 09:01:25 -0700 (PDT)
 Received: from thinkpad-t470s.. (83-131-196-251.adsl.net.t-com.hr.
  [83.131.196.251]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.43
+ a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 09:01:43 -0700 (PDT)
+ Tue, 15 Sep 2026 09:01:25 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
@@ -72,9 +72,9 @@ Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
  Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v2 19/20] hw/core: Add FDT support to Remote Port GPIO
-Date: Tue, 15 Sep 2026 18:00:43 +0200
-Message-ID: <20260915160044.345788-20-ruslichenko.r@gmail.com>
+Subject: [PATCH v2 08/20] hw/core: Implement Remote Port response handling
+Date: Tue, 15 Sep 2026 18:00:32 +0200
+Message-ID: <20260915160044.345788-9-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
 References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
@@ -88,7 +88,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,82 +106,278 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Implement the FDTGenericIntc interface for the Remote
-Port GPIO device.
+Add infrastructure to handle transaction responses from
+remote peers.
 
-This enables the device to be recognized as an interrupt
-controller when instantiated via the fdt-generic framework.
-It allows other devices defined in the Device Tree to connect
-their interrupt lines to this GPIO controller using standard
-FDT properties (e.g., 'interrupts' and 'interrupt-parent').
-
-The implementation maps the interrupt specifier from the
-Device Tree cells to the corresponding internal GPIO input
-line based on the configured cell offset.
+This patch enables QEMU to wait for replies when it initiates
+a memory access (Read/Write). It implements a mechanism to track
+outstanding transaction IDs and block the execution thread until
+the matching response is received.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port-gpio.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ hw/core/remote-port.c         | 133 +++++++++++++++++++++++++++++++++-
+ hw/core/trace-events          |   3 +-
+ include/hw/core/remote-port.h |  29 ++++++++
+ 3 files changed, 163 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/remote-port-gpio.c b/hw/core/remote-port-gpio.c
-index 43a40315c5..af7f3c6075 100644
---- a/hw/core/remote-port-gpio.c
-+++ b/hw/core/remote-port-gpio.c
-@@ -20,6 +20,8 @@
- #include "hw/core/irq.h"
- #include "trace.h"
+diff --git a/hw/core/remote-port.c b/hw/core/remote-port.c
+index 89f799493c..83515fc89c 100644
+--- a/hw/core/remote-port.c
++++ b/hw/core/remote-port.c
+@@ -35,6 +35,16 @@
  
-+#include "hw/core/fdt_generic_util.h"
-+
- #include "hw/core/remote-port.h"
- #include "hw/core/remote-port-proto.h"
- #include "hw/core/remote-port-gpio.h"
-@@ -157,14 +159,34 @@ static Property rp_properties[] = {
-     DEFINE_PROP_BOOL("posted-updates", RemotePortGPIO, posted_updates, true),
- };
+ static void rp_event_read_and_process(RemotePort *s);
  
-+static int rp_fdt_get_irq(FDTGenericIntc *obj, qemu_irq *irqs,
-+                          uint32_t *cells, int ncells, int max,
-+                          Error **errp)
++void rp_rsp_mutex_lock(RemotePort *s)
 +{
-+    RemotePortGPIO *s = REMOTE_PORT_GPIO(obj);
++    qemu_mutex_lock(&s->rsp_mutex);
++}
 +
-+    if (cells[s->cell_offset_irq_num] >= s->num_gpios) {
-+        error_setg(errp, "RP-GPIO was setup for %u interrupts: index %"
-+                   PRIu32 " requested", s->num_gpios,
-+                   cells[s->cell_offset_irq_num]);
-+        return 0;
-+    }
++void rp_rsp_mutex_unlock(RemotePort *s)
++{
++    qemu_mutex_unlock(&s->rsp_mutex);
++}
 +
-+    (*irqs) = qdev_get_gpio_in(DEVICE(obj), cells[s->cell_offset_irq_num]);
-+    return 1;
-+};
-+
- static void rp_gpio_class_init(ObjectClass *oc, const void *data)
+ static void rp_fatal_error(RemotePort *s, const char *reason)
  {
-     RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
-     DeviceClass *dc = DEVICE_CLASS(oc);
-+    FDTGenericIntcClass *fgic = FDT_GENERIC_INTC_CLASS(oc);
-+
-     rpdc->ops[RP_CMD_interrupt] = rp_gpio_interrupt;
-     dc->legacy_reset = rp_gpio_reset;
-     dc->realize = rp_gpio_realize;
-     device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
-+    fgic->get_irq = rp_fdt_get_irq;
+     error_report("%s: %s", s->prefix, reason);
+@@ -80,6 +90,80 @@ static unsigned int rp_has_work(RemotePort *s)
+     return work;
  }
  
- static const TypeInfo rp_info = {
-@@ -175,6 +197,7 @@ static const TypeInfo rp_info = {
-     .class_init    = rp_gpio_class_init,
-     .interfaces    = (InterfaceInfo[]) {
-         { TYPE_REMOTE_PORT_DEVICE },
-+        { TYPE_FDT_GENERIC_INTC },
-         { },
-     },
++/* Response handling.  */
++RemotePortRespSlot *rp_dev_timed_wait_resp(RemotePort *s, uint32_t dev,
++                                            uint32_t id, int timems)
++{
++    int i;
++
++    assert(s->devs[dev]);
++
++    /* Find a free slot.  */
++    for (i = 0; i < ARRAY_SIZE(s->dev_state[dev].rsp_queue); i++) {
++        if (s->dev_state[dev].rsp_queue[i].used == false) {
++            break;
++        }
++    }
++
++    if (i == ARRAY_SIZE(s->dev_state[dev].rsp_queue) ||
++        s->dev_state[dev].rsp_queue[i].used == true) {
++        error_report("Number of outstanding transactions exceeded! %d",
++                      RP_MAX_OUTSTANDING_TRANSACTIONS);
++        rp_fatal_error(s, "Internal error");
++    }
++
++    /* Got a slot, fill it in.  */
++    s->dev_state[dev].rsp_queue[i].id = id;
++    s->dev_state[dev].rsp_queue[i].valid = false;
++    s->dev_state[dev].rsp_queue[i].used = true;
++
++    while (!s->dev_state[dev].rsp_queue[i].valid) {
++        rp_rsp_mutex_unlock(s);
++        rp_event_read_and_process(s);
++        rp_rsp_mutex_lock(s);
++        if (s->dev_state[dev].rsp_queue[i].valid) {
++            break;
++        }
++        if (!rp_has_work(s)) {
++            if (timems) {
++                if (!qemu_cond_timedwait(&s->progress_cond, &s->rsp_mutex,
++                                       timems)) {
++                    /*
++                     * TimeOut!
++                     */
++                    break;
++                }
++            } else {
++                qemu_cond_wait(&s->progress_cond, &s->rsp_mutex);
++            }
++        }
++    }
++    return &s->dev_state[dev].rsp_queue[i];
++}
++
++RemotePortRespSlot *rp_dev_wait_resp(RemotePort *s, uint32_t dev, uint32_t id)
++{
++    return rp_dev_timed_wait_resp(s, dev, id, 0);
++}
++
++RemotePortDynPkt rp_wait_resp(RemotePort *s)
++{
++    while (!rp_dpkt_is_valid(&s->rspqueue)) {
++        rp_rsp_mutex_unlock(s);
++        rp_event_read_and_process(s);
++        rp_rsp_mutex_lock(s);
++        /* Need to recheck the condition with the rsp lock taken.  */
++        if (rp_dpkt_is_valid(&s->rspqueue)) {
++            break;
++        }
++        trace_rp_wait_resp(s->prefix);
++        if (!rp_has_work(s)) {
++            qemu_cond_wait(&s->progress_cond, &s->rsp_mutex);
++        }
++    }
++    return s->rspqueue;
++}
++
+ static void rp_cmd_hello(RemotePort *s, struct rp_pkt *pkt)
+ {
+     s->peer.version = pkt->hello.version;
+@@ -220,13 +304,50 @@ static bool rp_pt_process_pkt(RemotePort *s, RemotePortDynPkt *dpkt)
+ {
+     struct rp_pkt *pkt = dpkt->pkt;
+ 
+-    trace_rp_pt_process_pkt(s->prefix, pkt->hdr.cmd, pkt->hdr.id, pkt->hdr.dev);
++    trace_rp_pt_process_pkt(s->prefix, pkt->hdr.cmd, pkt->hdr.id, pkt->hdr.dev,
++                            pkt->hdr.flags & RP_PKT_FLAGS_response);
+ 
+     if (pkt->hdr.dev >= ARRAY_SIZE(s->devs)) {
+         /* FIXME: Respond with an error.  */
+         return true;
+     }
+ 
++    if (pkt->hdr.flags & RP_PKT_FLAGS_response) {
++        uint32_t dev = pkt->hdr.dev;
++        uint32_t id = pkt->hdr.id;
++        int i;
++
++        if (pkt->hdr.flags & RP_PKT_FLAGS_posted) {
++            return true;
++        }
++
++        qemu_mutex_lock(&s->rsp_mutex);
++
++        /* Try to find a per-device slot first.  */
++        for (i = 0; i < ARRAY_SIZE(s->dev_state[dev].rsp_queue); i++) {
++            if (s->devs[dev] && s->dev_state[dev].rsp_queue[i].used == true
++                && s->dev_state[dev].rsp_queue[i].id == id) {
++                break;
++            }
++        }
++
++        if (i < ARRAY_SIZE(s->dev_state[dev].rsp_queue)) {
++            /* Found a per device one.  */
++            assert(s->dev_state[dev].rsp_queue[i].valid == false);
++
++            rp_dpkt_swap(&s->dev_state[dev].rsp_queue[i].rsp, dpkt);
++            s->dev_state[dev].rsp_queue[i].valid = true;
++
++            qemu_cond_signal(&s->progress_cond);
++        } else {
++            rp_dpkt_swap(&s->rspqueue, dpkt);
++            qemu_cond_signal(&s->progress_cond);
++        }
++
++        qemu_mutex_unlock(&s->rsp_mutex);
++        return true;
++    }
++
+     switch (pkt->hdr.cmd) {
+     case RP_CMD_hello:
+         rp_cmd_hello(s, pkt);
+@@ -280,6 +401,7 @@ static void *rp_protocol_thread(void *arg)
+ 
+     /* Make sure we have a decent bufsize to start with.  */
+     rp_dpkt_alloc(&s->rsp, sizeof s->rsp.pkt->busaccess + 1024);
++    rp_dpkt_alloc(&s->rspqueue, sizeof s->rspqueue.pkt->busaccess + 1024);
+     for (i = 0; i < ARRAY_SIZE(s->rx_queue.pkt); i++) {
+         rp_dpkt_alloc(&s->rx_queue.pkt[i],
+                       sizeof s->rx_queue.pkt[i].pkt->busaccess + 1024);
+@@ -407,6 +529,7 @@ static void rp_prop_allow_set_link(const Object *obj, const char *name,
+ static void rp_init(Object *obj)
+ {
+     RemotePort *s = REMOTE_PORT(obj);
++    int t;
+     int i;
+ 
+     for (i = 0; i < REMOTE_PORT_MAX_DEVS; ++i) {
+@@ -416,6 +539,14 @@ static void rp_init(Object *obj)
+                              rp_prop_allow_set_link,
+                              OBJ_PROP_LINK_STRONG);
+         g_free(name);
++
++
++        for (t = 0; t < RP_MAX_OUTSTANDING_TRANSACTIONS; t++) {
++            s->dev_state[i].rsp_queue[t].used = false;
++            s->dev_state[i].rsp_queue[t].valid = false;
++            rp_dpkt_alloc(&s->dev_state[i].rsp_queue[t].rsp,
++               sizeof s->dev_state[i].rsp_queue[t].rsp.pkt->busaccess + 1024);
++        }
+     }
+ }
+ 
+diff --git a/hw/core/trace-events b/hw/core/trace-events
+index 612d5730b9..631cbb9c37 100644
+--- a/hw/core/trace-events
++++ b/hw/core/trace-events
+@@ -34,6 +34,7 @@ clock_set_mul_div(const char *clk, uint32_t oldmul, uint32_t mul, uint32_t olddi
+ cpu_reset(int cpu_index) "%d"
+ 
+ # remote-port.c
+-rp_pt_process_pkt(const char *rp, uint32_t cmd, uint32_t id, uint32_t dev) "%s: cmd=0x%"PRIx32" id=0x%"PRIx32" dev=0x%"PRIx32
++rp_pt_process_pkt(const char *rp, uint32_t cmd, uint32_t id, uint32_t dev, bool response) "%s: cmd=0x%"PRIx32" id=0x%"PRIx32" dev=0x%"PRIx32" rsp=%d"
+ rp_process(const char *rp, unsigned int rpos, unsigned int wpos, uint32_t cmd, uint32_t dev) "%s: io-thread rpos=%u wpos=%u cmd=0x%"PRIx32" dev=0x%"PRIx32
+ rp_pt_rx_queue_full(const char *rp, unsigned int rpos, unsigned int wpos) "%s: rpos=%u wpos=%u"
++rp_wait_resp(const char *rp) "'%s'"
+diff --git a/include/hw/core/remote-port.h b/include/hw/core/remote-port.h
+index 2d8a191bce..2cb070158f 100644
+--- a/include/hw/core/remote-port.h
++++ b/include/hw/core/remote-port.h
+@@ -55,6 +55,13 @@ typedef struct RemotePortDeviceClass {
+ #define TYPE_REMOTE_PORT "remote-port"
+ #define REMOTE_PORT(obj) OBJECT_CHECK(RemotePort, (obj), TYPE_REMOTE_PORT)
+ 
++typedef struct RemotePortRespSlot {
++            RemotePortDynPkt rsp;
++            uint32_t id;
++            bool used;
++            bool valid;
++} RemotePortRespSlot;
++
+ struct RemotePort {
+     DeviceState parent;
+ 
+@@ -88,6 +95,13 @@ struct RemotePort {
+      */
+     RemotePortDynPkt rsp;
+ 
++    /*
++     * rspqueue holds received responses from the remote side.
++     * Only one for the moment but it might grow.
++     * Used by the master.
++     */
++    RemotePortDynPkt rspqueue;
++
+     const char *prefix;
+     const char *remote_prefix;
+ 
+@@ -95,9 +109,24 @@ struct RemotePort {
+     bool reset_done;
+ 
+ #define REMOTE_PORT_MAX_DEVS 1024
++#define RP_MAX_OUTSTANDING_TRANSACTIONS 32
++    struct {
++        RemotePortRespSlot rsp_queue[RP_MAX_OUTSTANDING_TRANSACTIONS];
++    } dev_state[REMOTE_PORT_MAX_DEVS];
++
+     RemotePortDevice *devs[REMOTE_PORT_MAX_DEVS];
  };
+ 
++
++void rp_rsp_mutex_lock(RemotePort *s);
++void rp_rsp_mutex_unlock(RemotePort *s);
++
++RemotePortDynPkt rp_wait_resp(RemotePort *s);
++
++RemotePortRespSlot *rp_dev_wait_resp(RemotePort *s, uint32_t dev, uint32_t id);
++RemotePortRespSlot *rp_dev_timed_wait_resp(RemotePort *s, uint32_t dev,
++                                           uint32_t id, int timems);
++
+ void rp_process(RemotePort *s);
+ 
+ ssize_t rp_write(RemotePort *s, const void *buf, size_t count);
 -- 
 2.43.0
 
