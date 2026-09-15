@@ -4,157 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10524C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A006EC88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZlV-00071b-LY; Tue, 15 Sep 2026 16:28:35 -0400
+	id 1x6ZkX-0006jm-7W; Tue, 15 Sep 2026 16:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6Zkp-0006ns-22
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:50 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6Zki-0004qN-Qv
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:43 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68FItjnK3928501
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 20:27:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qP1fn1HLxgi8xIN+Cem5c9nyDmyVtqQ/ENoX0awITy0=; b=pOVCjGAWuRbFWP4z
- 9xeGVLeddD3sjVNYtWQ0T5cH2pg9izuCalNTQEopbeO0zs8BRDXjs3+177OCie+w
- N270GXMZb7Jx4aY+iCrdacaMLvydUftJyxCUsOFI78KHRI4g0K0PB+C4d1/EJtU8
- EN+XT1EaWJJPfXL/sEuAByX2evhwzFwLBb0NwmMGPfIff7haXwImvRQZNK5VkTnX
- B0SbniP64ss/UMJ0nl5LvWTk4gxzR9SL0+ZbFTVg5fhwKMH1IrjtBfdjf1Aitrjd
- dX9x5iaB3QzKKT9oK+39CuQyqpG0GK80yGiISam6X8b+kVI9xrUVktBbv6kza2xK
- VYCkDQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqagegs39-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 20:27:39 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-ca8aee88725so7135327a12.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:27:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x6ZkT-0006iu-Jp
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:26 -0400
+Received: from mail-lr2-x10.google.com ([2a00:1450:4864:38::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x6ZkQ-0004ot-7J
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:24 -0400
+Received: by mail-lr2-x10.google.com with SMTP id
+ 38308e7fff4ca-3a302c23fb2so2008101fa.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789504058; x=1790108858; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qP1fn1HLxgi8xIN+Cem5c9nyDmyVtqQ/ENoX0awITy0=;
- b=N4KzBYvfltabOOc2wvgD/obIaLty8W5b4vy7Z+S+gUkY4YTqykF9OT7UN4IP0qCXFL
- HeVwXDe5+VCrRg1eVHdgYn/JAUh/WSbe1cPlFFxG/cFwr2DPH8hP41NfPfpYkhTaKQwq
- kGVYy/Gx4ivWU5j4tINWlBIah35eBikNP4Q4FMZwERYtWgnLNJN3AMFBPwWVKu513lBK
- dm6AMHul63BKtJ8gWRxYQptDIZ4RVEDA2LHl3bDyZZpnoHcmD1hADNAhUd0U5qEoPED+
- 9MZKYE5UuP7ZUe0p1uRlgBSV3rbHATpKtXZio3XxQDroVyjVmSaGrWoqjrESMrCSUyHk
- vIow==
+ d=gmail.com; s=20251104; t=1789504041; x=1790108841; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:sender:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=tYmp6FJA1VtVZLQXUE2onzYmhLAFsyc6jZ5UKULWA6Q=;
+ b=E3A5/umEnf3ZTGEtz2c2PlCtykHp35qSusI1S4s4Q9cSm9Vv2/w/RysuLwiuAK8FRS
+ 06x1CP8+1eVYFITl4fGko86Vk/4shzDE6R9YbKm/MnI1iRXJtHXxGZZFjZQ8o+FCVBS9
+ RBTJCA0aYOI/TcKdyGgDESUL3Y9YM56KgEcZL6CU1duAGr9CV2DkrAM1kGFYcDLfD56X
+ UHx0MrJ32A1elrFZAaa8CwDHSSX5TlhzR8rlODfKA976/6YkwRF8NvQbPDDYj8I7Pw2l
+ ljLT+ZsuZiLEc15fJI0lnsdYtxoZBwaCnGp1Zyu5o72n49LliUARHCRGv+EgCq15Iy0e
+ VJyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789504058; x=1790108858;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qP1fn1HLxgi8xIN+Cem5c9nyDmyVtqQ/ENoX0awITy0=;
- b=iB9KuegLDUygalwIh7EdeiiltfkGxf37xjnm94eMtHB2CeR1KtCQOFAvyVx3p4CfCn
- evrcAlciTKTS8Iw/Ep3l8o5GW1iq7Mp3bjqry/KM7iIKk9QLv/CHLnqUzGFPcJ0Nd56T
- irfg5kfZvxwBuxkNGi/gk+mmbztbaAgt8I+zDeJ7T8N/4O8eg54NHsi49DOlXAfKak9D
- c4N8Cuj1vzyrkSnWy43YPQPYMguT48mPDbdthseBIa7IO/GauaY62YPUQXNxLbQ2xWj6
- x25KvjEsWBdIX69O3/avdhfQFk40Wc3V7N2m9gDhbRT9y0LNaFo+xmba4sRNM4lHLf1a
- TuRQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxLRrZjoFXQ+/Rpw3mkk8FXF1kKwrWs1iyRFFqqK8ILYwUy+yw7y7xhlFGtmBJzhjfjdeQ/807Bar4W@nongnu.org
-X-Gm-Message-State: AFuF++mmldLy++6gb6GBoP+9MnJ097NHfiCv6QNTBuGSCLj850exzS+/
- XyfPu6dXyZ19q+YoFcOhTkB88Wb1oZ08E1f32VGqGV64j3f8bt7RMKTNOenhjDprHoWM2UF9xET
- ORuCY+/M2S5WImYnamoZtRpjrxLaMVPZ8DSp+DSZhSVTm16LG2Qccn7UOog==
-X-Gm-Gg: AYBFou3pNbur5gwjxpurEAnWGNFbWNmNfP4mbfPQjOwId0N6iSwW/4sotPHWk8wRXpX
- iV6GSBLpR22fBylbuWPnfoP9gyQCWWGvXbmjUwPaN/bV1t+awuFL/KCOXHz51RHTELL64xyR15N
- M6+uhuu+MdI1GTpebzZPq3tic2i3wgTJFPhxcE4+aH5crk+1rzleu46c33KaaBCEXCbGSh3RwiE
- mMtXhDS/U3s+gdKDT9cf8i/413OweRsunP8R9Y0iR3lghwdy2sa7t2Jbu/IOoFL/QU2WZhBstMK
- dcLVH2UpiL153w0JtkyRn4L9cJncv4VDpd0Le7C97yf3CZDIlfsctxhQ9kAT/YZP+v/HvbfTSD7
- zdzhEEYOiJ9Lu4GZ/Oe3HWdizRpX/5FCveVDMN7XX5/1tuRJswOpBdPMgHHHn4QmSJpzD
-X-Received: by 2002:a17:90a:d407:b0:39d:fcbe:fe00 with SMTP id
- 98e67ed59e1d1-39e1e52242amr15348a91.22.1789504058459; 
- Tue, 15 Sep 2026 13:27:38 -0700 (PDT)
-X-Received: by 2002:a17:90a:d407:b0:39d:fcbe:fe00 with SMTP id
- 98e67ed59e1d1-39e1e52242amr15300a91.22.1789504058069; 
- Tue, 15 Sep 2026 13:27:38 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5a93f1fsm1497884eec.11.2026.09.15.13.27.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Sep 2026 13:27:37 -0700 (PDT)
-Message-ID: <f9c2d77b-bf09-489e-8e47-a9cc77fbf6f1@oss.qualcomm.com>
-Date: Tue, 15 Sep 2026 13:27:35 -0700
+ d=1e100.net; s=20260707; t=1789504041; x=1790108841;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tYmp6FJA1VtVZLQXUE2onzYmhLAFsyc6jZ5UKULWA6Q=;
+ b=h9qS/hkbY5mGE/tJLT3LV4oo7rhj0agF3hcLEaxYo8ObTRiVWKmj5wzu4SD0EO4kKW
+ gperyaUxqJOzo+hoMpo/Z0zV+fy8q7hz1Uz/V+LBAin+tMKPJstoIaR1bVRpny+SLOCf
+ htK7tn/4vUDkFBdFoFNar4OIxF5bhqTuivDFe+13Ogqi8dTkRRDXyESmkRlVxJbXgcV+
+ t/ONpRydKy++ORDWBHc2iWOef049gj/YdW+QdV45aYq2W0a9tw8t0EL3THuIBSHBZ3wC
+ vsUQvfrj0ao7/y3Pbn05/HSuorrMHSMui70uJqKwYfFR3XGCcD+yATY/0cOErj9orTHO
+ HPVA==
+X-Gm-Message-State: AFuF++ksQ5UluePVHWZOKMXwd4gAiCFnQSfb8KzjI6wpXuBV3vXFpMnS
+ mTYljKwy97F2GLmsRxDudvFz7fcGu+5Ayf6g1H8aJE/zRZLM1OjJ8XM8
+X-Gm-Gg: AYBFou2V4NXBKA/0TExZ+9yXj9Y0w+ImiNqsZRcXp9gaBoK9CctHAA8m3yoPXe/moOA
+ 4wfoKhTM0JncYcIuPvt5Z6u98WrmE0rqlYGVvW3Twi07jDqy5lRMIeRXZK7KW4TD7q5oJuxdVgN
+ Zs4+HhD+SpgEzSbtnvfI9qMgAWP3rD5X5BZ8uigXqo1pzXK03PVWjc86Qan8ymjsaIc6Sb6uTRP
+ LHH5Z6FE5QgSSX7dV/h1A4PbJ0fk58z2ZEBlybE/MXXiwfE33eMf2ECzPnJvNeIohfRVBYr1/pg
+ wrfRLq+poRIP7UXxEo2lTLLYejavXA7/kd448qh7m/UG0GK8O2OgXH2MiTPhsDnhXbqUsXUvH2b
+ 5LOFhCQ+fbRTEe5R8VdoFojKRBi4Abmof8POSHfbxYs3ypkSTlhN3AuQp345WQRMVJWQjgBsDqB
+ U6Q0Dlyme6RY46aN7q+635F5uKdiV2p/3Pmwnw2knyB01fRg7CL60ioA/AuuwB/QstOOM18hdJ1
+ M7L4LNWnndV29el2LNIvzV7I35rBejY6fXuit+6zY748gszc4H1k4N9Fak=
+X-Received: by 2002:a05:651c:1505:b0:3a5:aa00:60cd with SMTP id
+ 38308e7fff4ca-3a5dc9be4a0mr187511fa.8.1789504040336; 
+ Tue, 15 Sep 2026 13:27:20 -0700 (PDT)
+Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
+ [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3a5daf0dbacsm1621391fa.4.2026.09.15.13.27.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Sep 2026 13:27:18 -0700 (PDT)
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Date: Tue, 15 Sep 2026 22:27:06 +0200
+Subject: [PATCH v4 3/3] tests/qtest: Allwinner GPIO tests
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] Revert "tests/tcg/meson.build: implement
- ./configure -cross-cc-* options"
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Cleber Rosa <crosa@redhat.com>, qemu-arm@nongnu.org,
- Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Brad Smith <brad@comstyle.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260915201601.1207839-1-alex.bennee@linaro.org>
- <20260915201601.1207839-3-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260915201601.1207839-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDI5OCBTYWx0ZWRfXw8ZvvjwoeG1R
- j598aClIxEo0TB9DYc4l3G934CdlagwVidig7DiTS3yP0wd/QTQalkksQCpdoVS2AGvpd6boBto
- IaEDXg66wcoCqTn/ZTJBVkPUguDJeYk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDI5OCBTYWx0ZWRfX2PEDyIkVIUX8
- J5ek542d9OrFwZqrgDZILiXxOj2rrFwGfoYSkk4EdPlb/UZiidjudrQKZucOHGz0YhGGmlPJhYP
- f3NCTV5gs9dRWzWo66/up0ofROCLCx7QgdnkaW+wtaOIrYg+Kvxo/EhmlegkYuXlKmQ7xAKiK5K
- ZMroiSPcE+Wf0DrWCfemb61q/gfk4vulqN0LgWp0dg5JZBNx76htUpcjypPLDjAl+Ch+adA6tYR
- t4S+7hBZw0X2sPXdafU8azBL+Tb0X7rA5kH6UKKUca2gFWUNjTRq280FF8Qe5I7dTj9C1zWGkX/
- xRgMG5eKBjkozN1d9GMNHNJdawMSi7iFknINfwAmrd1uFKv+W5hj2VNGw9fmZVqYk3uinbUj//l
- TdQPkD9V12vdM03znWK6bGcBYrsrAWAEP/cf6+Ss6bjBqOtudEIUZpyvoLZd7e8WG2Pdz4crI9x
- f8RgbCuPuMFCwUU2fxg==
-X-Proofpoint-GUID: WrWtVzoaEoCDBh-N3vkSF2lCA_idVAx7
-X-Proofpoint-ORIG-GUID: WrWtVzoaEoCDBh-N3vkSF2lCA_idVAx7
-X-Authority-Analysis: v=2.4 cv=PcZqFShd c=1 sm=1 tr=0 ts=6aa9aa3b cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=tBIfNM-aaFI9AAqTsNAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609150298
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260915-allwinner-gpio-v4-3-b1ee1d09c9fd@gmail.com>
+References: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
+In-Reply-To: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Jack wang <163wangjack@gmail.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:38::10;
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lr2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,30 +107,587 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/15/2026 1:15 PM, Alex Bennée wrote:
-> We want to keep configuring of the cross compiler within configure so
-> it can be used by the firmware.
-> 
-> This reverts commit 7e1d54da6faf10e1fc70f6b3d8247068b80b1597.
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  configure             | 27 +++++++------
->  meson_options.txt     | 89 -------------------------------------------
->  tests/tcg/meson.build | 31 +++------------
->  3 files changed, 20 insertions(+), 127 deletions(-)
-> 
+Add Allwinner GPIO set of qtests to validate functionality.
+Tests cover input and output port setting, as well as interrupt
+functionality.
 
-It's worth mentioning that a side effect of this revert is to skip all
-tcg tests on macos in CI since we don't honor --cross-prefix-* anymore
-for compiling tcg-tests. Not a big deal since we test that on Linux though.
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ MAINTAINERS                       |   1 +
+ tests/qtest/allwinner-gpio-test.c | 535 ++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build           |   3 +-
+ 3 files changed, 538 insertions(+), 1 deletion(-)
 
-Also, if some people were relying on these options, they might be
-surprised to discover they have no effect for tcg-tests.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b453edc820..da6b588eca 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -749,6 +749,7 @@ F: hw/misc/axp2xx.c
+ F: hw/gpio/allwinner-gpio.c
+ F: include/hw/gpio/allwinner-gpio*
+ F: tests/functional/arm/test_cubieboard.py
++F: tests/qtest/allwinner-gpio-test.c
+ 
+ Allwinner-h3
+ M: Niek Linnenbank <nieklinnenbank@gmail.com>
+diff --git a/tests/qtest/allwinner-gpio-test.c b/tests/qtest/allwinner-gpio-test.c
+new file mode 100644
+index 0000000000..c048f0f88b
+--- /dev/null
++++ b/tests/qtest/allwinner-gpio-test.c
+@@ -0,0 +1,535 @@
++/*
++ *  Allwinner GPIO Tests
++ *
++ *  Copyright (C) 2026 Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "libqtest-single.h"
++
++#include "include/hw/gpio/allwinner-gpio-regs.h"
++
++#define AW_A10_GPIO_BASE 0x01c20800
++#define AW_A10_IRQ_LINE 28
++
++/* Port n configure register 0 */
++#define GPIO_Pn_CFG0_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG0(n))
++/* Port n configure register 1 */
++#define GPIO_Pn_CFG1_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG1(n))
++/* Port n configure register 2 */
++#define GPIO_Pn_CFG2_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG2(n))
++/* Port n configure register 3 */
++#define GPIO_Pn_CFG3_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_CFG3(n))
++/* Port n data register */
++#define GPIO_Pn_DAT_ADDR(n)    (AW_A10_GPIO_BASE + GPIO_Pn_DAT(n))
++/* Port n Multi-driving register 0 */
++#define GPIO_Pn_DRV0_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_DRV0(n))
++/* Port n Multi-driving register 1 */
++#define GPIO_Pn_DRV1_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_DRV1(n))
++/* Port n Pull register 0 */
++#define GPIO_Pn_PUL0_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_PUL0(n))
++/* Port n Pull register 1 */
++#define GPIO_Pn_PUL1_ADDR(n)   (AW_A10_GPIO_BASE + GPIO_Pn_PUL1(n))
++/* PIO interrupt configure register 0 */
++#define GPIO_INT_CFG0_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG0)
++/* PIO interrupt configure register 1 */
++#define GPIO_INT_CFG1_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG1)
++/* PIO interrupt configure register 2 */
++#define GPIO_INT_CFG2_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG2)
++/* PIO interrupt configure register 3 */
++#define GPIO_INT_CFG3_ADDR     (AW_A10_GPIO_BASE + GPIO_INT_CFG3)
++/* PIO interrupt control register */
++#define GPIO_INT_CTL_ADDR      (AW_A10_GPIO_BASE + GPIO_INT_CTL)
++/* PIO interrupt status register */
++#define GPIO_INT_STA_ADDR      (AW_A10_GPIO_BASE + GPIO_INT_STA)
++/* PIO interrupt debounce register */
++#define GPIO_INT_DEB_ADDR      (AW_A10_GPIO_BASE + GPIO_INT_DEB)
++/* SDRAM Pad Multi-driving register */
++#define SDR_PAD_DRV_ADDR       (AW_A10_GPIO_BASE + SDR_PAD_DRV)
++/* SDRAM Pad Pull register */
++#define SDR_PAD_PUL_ADDR       (AW_A10_GPIO_BASE + SDR_PAD_PUL)
++
++static inline uint32_t read_cfg_addr(QTestState *s, int port, int pin)
++{
++    uint32_t addr = 0;
++
++    if (pin >= 24) {
++        addr = GPIO_Pn_CFG3_ADDR(port);
++    } else if (pin >= 16) {
++        addr = GPIO_Pn_CFG2_ADDR(port);
++    } else if (pin >= 8) {
++        addr = GPIO_Pn_CFG1_ADDR(port);
++    } else {
++        addr = GPIO_Pn_CFG0_ADDR(port);
++    }
++    return addr;
++}
++
++static inline uint32_t read_int_cfg_addr(QTestState *s, int irq)
++{
++    uint32_t addr = 0;
++
++    if (irq >= 24) {
++        addr = GPIO_INT_CFG3_ADDR;
++    } else if (irq >= 16) {
++        addr = GPIO_INT_CFG2_ADDR;
++    } else if (irq >= 8) {
++        addr = GPIO_INT_CFG1_ADDR;
++    } else {
++        addr = GPIO_INT_CFG0_ADDR;
++    }
++    return addr;
++}
++
++static void update_cfg_reg(QTestState *s, int port, int pin, AWGPIOCfg val)
++{
++    uint32_t addr = read_cfg_addr(s, port, pin);
++    uint32_t cfg = qtest_readl(s, addr);
++    uint32_t offset = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
++
++    cfg = deposit32(cfg, offset, CFG_PIN_STRIDE - 1, val);
++    qtest_writel(s, addr, cfg);
++}
++
++static void assert_cfg_regval(QTestState *s, int port, int pin,
++                              AWGPIOCfg pin_choice)
++{
++    uint32_t addr = read_cfg_addr(s, port, pin);
++    uint32_t cfg = qtest_readl(s, addr);
++    uint32_t offset = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
++
++    g_assert_cmphex(extract32(cfg,
++                              offset, CFG_PIN_STRIDE - 1), ==, pin_choice);
++}
++
++static void update_data_reg(QTestState *s, int port, int pin, int val)
++{
++    uint32_t addr = GPIO_Pn_DAT_ADDR(port);
++    uint32_t data = qtest_readl(s, addr);
++
++    data = deposit32(data, pin, 1, val);
++    qtest_writel(s, addr, data);
++}
++
++static void assert_data_reg(QTestState *s, int port, int pin, int val)
++{
++    uint32_t addr = GPIO_Pn_DAT_ADDR(port);
++    uint32_t data = qtest_readl(s, addr);
++
++    g_assert_cmphex(extract32(data, pin, 1), ==, val);
++}
++
++static void update_int_cfg_reg(QTestState *s, int irq, AWGPIOIrqCfg val)
++{
++    uint32_t addr = read_int_cfg_addr(s, irq);
++    uint32_t cfg = qtest_readl(s, addr);
++    uint32_t offset = (irq % INT_CFG_IRQ_PER_REG) * INT_CFG_IRQ_STRIDE;
++
++    cfg = deposit32(cfg, offset, INT_CFG_IRQ_STRIDE - 1, val);
++    qtest_writel(s, addr, cfg);
++}
++
++static void assert_int_cfg_regval(QTestState *s, int irq, AWGPIOIrqCfg irq_cfg)
++{
++    uint32_t addr = read_int_cfg_addr(s, irq);
++    uint32_t cfg = qtest_readl(s, addr);
++    uint32_t offset = (irq % INT_CFG_IRQ_PER_REG) * INT_CFG_IRQ_STRIDE;
++
++    g_assert_cmphex(extract32(cfg,
++                              offset, INT_CFG_IRQ_STRIDE - 1), ==, irq_cfg);
++}
++
++static void test_reset_values(void)
++{
++    QTestState *s = qtest_init("-machine cubieboard");
++
++    for (int port = 0; port < AW_GPIO_PORTS_NUM; port++) {
++        g_assert_cmphex(qtest_readl(s,
++                                    GPIO_Pn_DRV0_ADDR(port)), ==,
++                                    aw_gpio_port_reset[port].drv[0]);
++        g_assert_cmphex(qtest_readl(s,
++                                    GPIO_Pn_DRV1_ADDR(port)), ==,
++                                    aw_gpio_port_reset[port].drv[1]);
++        g_assert_cmphex(qtest_readl(s,
++                                    GPIO_Pn_PUL0_ADDR(port)), ==,
++                                    aw_gpio_port_reset[port].pul[0]);
++        g_assert_cmphex(qtest_readl(s,
++                                    GPIO_Pn_PUL1_ADDR(port)), ==,
++                                    aw_gpio_port_reset[port].pul[1]);
++    }
++
++    qtest_quit(s);
++}
++
++typedef struct {
++    int port;
++    int pin;
++} PortPinTestParam;
++
++const PortPinTestParam in_out_test_parameters[] = {
++    { GPIO_PA, 0 },
++    { GPIO_PA, 17 },
++    { GPIO_PB, 19 },
++    { GPIO_PC, 23 },
++    { GPIO_PD, 26 },
++    { GPIO_PE, 11 },
++    { GPIO_PF, 5 },
++    { GPIO_PG, 10 },
++    { GPIO_PH, 16 },
++    { GPIO_PI, 21 },
++};
++
++const PortPinTestParam irq_test_parameters[] = {
++    { GPIO_PH, 1 },
++    { GPIO_PH, 10 },
++    { GPIO_PH, 21 },
++    { GPIO_PI, 10 },
++    { GPIO_PI, 19 },
++};
++
++/* Set pin to output, check that it propagates */
++static void test_set_output_pins(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    g_autofree char *out_name = portname_out(param->port);
++
++    QTestState *s = qtest_init("-machine cubieboard");
++    qtest_irq_intercept_out_named(s, "/machine/soc/gpio", out_name);
++
++    /* Configure pin as output */
++    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_OUT);
++    /* Set value in register */
++    update_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_HIGH);
++
++    /* Check that the output pin is high */
++    g_assert_true(qtest_get_irq(s, param->pin));
++
++    /* Cleanup */
++    /* Set value in register */
++    update_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_LOW);
++    /* Configure pin as input */
++    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_IN);
++
++    qtest_quit(s);
++}
++
++/*
++ * Set pin to input, check that the value is written but it does not propagate
++ */
++static void test_set_input_pins(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    g_autofree char *out_name = portname_out(param->port);
++
++    QTestState *s = qtest_init("-machine cubieboard");
++
++    qtest_irq_intercept_out_named(s, "/machine/soc/gpio", out_name);
++
++    /* Configure pin as input */
++    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_IN);
++    /* Set value in register */
++    update_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_HIGH);
++    /* Check that the output pin is still low */
++    g_assert_false(qtest_get_irq(s, param->pin));
++
++    qtest_quit(s);
++}
++
++/* Test rising edge interrupt */
++static void test_irq_pin_rising(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    QTestState *s = qtest_init("-machine cubieboard");
++    const int gpio_port = param->port;
++    const int port_pin = param->pin;
++    g_autofree char *in_name = portname_in(gpio_port);
++    int irq_pin = irq_nr(gpio_port, port_pin);
++    unsigned int irq_mask = 1u << irq_pin;
++
++    qtest_irq_intercept_in(s, "/machine/soc");
++
++    /* Configure as input and set pin low */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++
++    /* Enable interrupt */
++    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_RISING_EDGE);
++    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_RISING_EDGE);
++    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
++
++    /* Raise interrupt */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_HIGH);
++    /* Check that value is written */
++    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
++    /* Check interrupt status */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Clear interrupt */
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++
++    /* Check that IRQ line is low */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
++    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    qtest_quit(s);
++}
++
++/* Test falling edge interrupt */
++static void test_irq_pin_falling(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    QTestState *s = qtest_init("-machine cubieboard");
++    const int gpio_port = param->port;
++    const int port_pin = param->pin;
++    g_autofree char *in_name = portname_in(gpio_port);
++    int irq_pin = irq_nr(gpio_port, port_pin);
++    unsigned int irq_mask = 1u << irq_pin;
++
++    qtest_irq_intercept_in(s, "/machine/soc");
++
++    /* Configure as input and set pin high */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_HIGH);
++
++    /* Enable interrupt */
++    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_FALLING_EDGE);
++    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_FALLING_EDGE);
++    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
++
++    /* Raise interrupt */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++    /* Check that value is written */
++    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_LOW);
++    /* Check interrupt status */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Clear interrupt */
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++
++    /* Check that IRQ line is low */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
++    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    qtest_quit(s);
++}
++
++/* Test high level interrupt */
++static void test_irq_pin_high_level(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    QTestState *s = qtest_init("-machine cubieboard");
++    const int gpio_port = param->port;
++    const int port_pin = param->pin;
++    g_autofree char *in_name = portname_in(gpio_port);
++    int irq_pin = irq_nr(gpio_port, port_pin);
++    unsigned int irq_mask = 1u << irq_pin;
++
++    qtest_irq_intercept_in(s, "/machine/soc");
++
++    /* Configure as input and set pin low */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++
++    /* Enable interrupt */
++    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_HIGH_LEVEL);
++    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_HIGH_LEVEL);
++    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
++
++    /* Raise interrupt */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_HIGH);
++    /* Check that value is written */
++    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
++    /* Check interrupt status */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Try clearing interrupt, it should still be asserted */
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Set line low and clear interrupt, it should be cleared now */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++
++    /* Check that IRQ line is low */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
++    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    qtest_quit(s);
++}
++
++/* Test low level interrupt */
++static void test_irq_pin_low_level(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    QTestState *s = qtest_init("-machine cubieboard");
++    const int gpio_port = param->port;
++    const int port_pin = param->pin;
++    g_autofree char *in_name = portname_in(gpio_port);
++    int irq_pin = irq_nr(gpio_port, port_pin);
++    unsigned int irq_mask = 1u << irq_pin;
++
++    qtest_irq_intercept_in(s, "/machine/soc");
++
++    /* Configure as input and set pin high */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_HIGH);
++
++    /* Enable interrupt */
++    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_LOW_LEVEL);
++    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_LOW_LEVEL);
++    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
++
++    /* Raise interrupt */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++    /* Check that value is written */
++    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_LOW);
++    /* Check interrupt status */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Try clearing interrupt, it should still be asserted */
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Set line high and clear interrupt, it should be cleared now */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_HIGH);
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++
++    /* Check that IRQ line is low */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
++    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    qtest_quit(s);
++}
++
++/* Test both edge interrupt */
++static void test_irq_pin_both_edge(const void *data)
++{
++    PortPinTestParam *param = (PortPinTestParam *)data;
++    QTestState *s = qtest_init("-machine cubieboard");
++    const int gpio_port = param->port;
++    const int port_pin = param->pin;
++    g_autofree char *in_name = portname_in(gpio_port);
++    int irq_pin = irq_nr(gpio_port, port_pin);
++    unsigned int irq_mask = 1u << irq_pin;
++
++    qtest_irq_intercept_in(s, "/machine/soc");
++
++    /* Configure as input and set pin low */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++
++    /* Enable interrupt */
++    update_int_cfg_reg(s, irq_pin, AW_GPIO_IRQ_CFG_BOTH_EDGE);
++    assert_int_cfg_regval(s, irq_pin, AW_GPIO_IRQ_CFG_BOTH_EDGE);
++    qtest_writel(s, GPIO_INT_CTL_ADDR, irq_mask);
++
++    /* Raise interrupt - rising edge */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_HIGH);
++    /* Check that value is written */
++    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_HIGH);
++    /* Check interrupt status */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Clear interrupt */
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++
++    /* Check that IRQ line is low */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
++    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Raise interrupt - falling edge */
++    qtest_set_irq_in(s,
++                     "/machine/soc/gpio", in_name, port_pin,
++                     AW_GPIO_LEVEL_LOW);
++    /* Check that value is written */
++    assert_data_reg(s, gpio_port, port_pin, AW_GPIO_LEVEL_LOW);
++    /* Check interrupt status */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR), ==, irq_mask);
++    g_assert_true(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    /* Clear interrupt */
++    qtest_writel(s, GPIO_INT_STA_ADDR, irq_mask);
++
++    /* Check that IRQ line is low */
++    g_assert_cmphex(qtest_readl(s, GPIO_INT_STA_ADDR) & irq_mask, ==, 0);
++    g_assert_false(qtest_get_irq(s, AW_A10_IRQ_LINE));
++
++    qtest_quit(s);
++}
++
++
++static void add_test(const char *type, const PortPinTestParam *p,
++                      void (*testfn)(const void *))
++{
++    g_autofree char *name =
++        g_strdup_printf("/allwinner-cubieboard/gpio/%s/%s%d",
++                        type, portname(p->port), p->pin);
++
++    qtest_add_data_func(name, p, testfn);
++}
++
++
++int main(int argc, char **argv)
++{
++    int r;
++
++    g_test_init(&argc, &argv, NULL);
++
++    for (int i = 0; i < ARRAY_SIZE(in_out_test_parameters); i++) {
++        const PortPinTestParam *p = &in_out_test_parameters[i];
++        add_test("set_output_pins", p, test_set_output_pins);
++        add_test("set_input_pins", p, test_set_input_pins);
++    }
++    qtest_add_func("/allwinner-cubieboard/gpio/reset_values",
++                        test_reset_values);
++    for (int i = 0; i < ARRAY_SIZE(irq_test_parameters); i++) {
++        const PortPinTestParam *p = &irq_test_parameters[i];
++        add_test("irq_pin_rising", p, test_irq_pin_rising);
++        add_test("irq_pin_falling", p, test_irq_pin_falling);
++        add_test("irq_pin_high_level", p, test_irq_pin_high_level);
++        add_test("irq_pin_low_level", p, test_irq_pin_low_level);
++        add_test("irq_pin_both_edge", p, test_irq_pin_both_edge);
++    }
++    r = g_test_run();
++
++    return r;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index c3593f7530..6c5db1a0a3 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -268,7 +268,8 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+   ['arm-cpu-features',
+-   'boot-serial-test']
++   'boot-serial-test'] + \
++  (config_all_devices.has_key('CONFIG_ALLWINNER_A10')? ['allwinner-gpio-test'] : [])
+ 
+ # TODO: once aarch64 TCG is fixed on ARM 32 bit host, make bios-tables-test unconditional
+ qtests_aarch64 = \
 
-I don't have a better quick idea than keeping both (meson options, and
-config.mak for vdso/roms) for now.
+-- 
+2.55.0
 
-Regards,
-Pierrick
 
