@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869A0C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 21:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F361AC88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 21:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6aH6-0001Uc-Qz; Tue, 15 Sep 2026 17:01:08 -0400
+	id 1x6aH6-0001U2-Am; Tue, 15 Sep 2026 17:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x6aGf-0001M5-Tw
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 17:00:43 -0400
+ id 1x6aGj-0001Mp-Ic
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 17:00:47 -0400
 Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
  ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x6aGd-000102-Uf
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 17:00:41 -0400
+ id 1x6aGg-000102-72
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 17:00:44 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=w8hvw701H/L/hm76mshJyfjYhyla6yGPWtaAY5TvpmSQjBjf/eL0ylOAj4luugYp87/XKCk2ZPEs8tS0Dqo83VlQofklLq5x2WmpeZxiDJuY350t30m+1rhOg4o/Vr3aPA2XSr2Nz+wEqOgNmBJVkwuSGDegkGM9Jt79GElX9xAwUhPLJCkpG5mUBJjYa/p3IsG/nIwmKBIvfQ+SmCfDD3kDn1ZGCrLx/Ab4bROk94bx6kzqWdEHKIYcuXpDjiPQLPiPXNRN6eP1yuDhY/oGWwwwhuVnEsnRFjFt+WDe61HPz+VwNK1ypSuxJ10rfDAGVoWAWvjtaxN6Zfz+lWJlHw==
+ b=Ru+4IffXiSrGMpcIDOpGoUO851e0V42p1yPjtS3uSgeBsS2XtLtEX960aaElc1U6npPHefshLJmbJC4gedRDFQbHSK7BRu0+QdQ2K/uQdcx7X2nYDuaX9jYipp/maC3Yep1vrzZqJLPTmXNEGJsdOwn8APQ+uv4W9hmrw0DYaTwS7c/rO/Rdj+iS7wTLwWXxZUfNRst7bIcM+y7HUHdNmWpxgV+hwRBoAjfsSug1c/incL2RNfLh65jYsj/o3V3i/P0UqRSFnKkwl8emT1r7WuU7cRq9nZxPXVW/inTGrhZ/qL3LYxEmhxY+p6iq2h7VfMdjc/eifzcZODuoUOiZSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b1BPlhQEjh1ve1t5MaJwKpaCjZIQvshKVhE9sp4dYpE=;
- b=p6ZoJv2PqvEYRK9IcnPA85CLJhlRmF4leYE6rAuzDVu957uMsbohYdPHQslK+hP03GFBjHOxpbdPsN9HwMbXDQsA+NgVAguJ4HiQmiRUrQhq7slmO+D4xGvqERlXjn4ctB0XMPN8kJQ44dA3O8TZishBrUwZ4jPzllz7PPPuwQjrJM8CkgFkzzr04j4Q77o4Ta48zxxixKATtOtSCFz6l31PKhSTtM+AFdznJappPjEaklSIUoAe/jV9Z5aOBTHpklbjUfk158/0x3RING4HpWx0ihhiYuAYmYZoFCxFsEzOP81WijBmHCxLwY4ojp78FoA0hqqw2voaY8IYhiGSAQ==
+ bh=qh12CtVAVL9lQ0ICmhFjXMynrjuk0p8D6nzg+2i5aro=;
+ b=SVdeGuI1uGnAaPRvk8qJdXZIZUID4Td+aC2Exbbd/O2ICT9KD68JaI5oh1h7Yh1gSuw+XSYXjbQ9Cp5YQ8Ql2ZShC/3rrBOf5o39Zz34hRsKhToffTgFUGHz4eP2GA4IqRbmKcfjHvmlZOUU/n2pxLPh2QAcRgkSdTP7CVMCyJjs5q0TqHFJM3sXyiXudivKedgLdddKD6LIOMM5d5/8C+ESRwIAX+BnJL8DmrvM9eKKI8HgrhUyprC5IMtk1m/zV6xspytEP1+vvDVM/VjZGeAJkAZ4kaAKoot20wbzj7mY+KW+12No5Skeyh2rl6AL2aGsL8dQaKciME7zK6Gz2A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b1BPlhQEjh1ve1t5MaJwKpaCjZIQvshKVhE9sp4dYpE=;
- b=GZ3659LXgRdT0/ElYcYOTcT70M8sQ9ZZmtiIDQEbTKbWVhWEnAZLIVbUzRcQQ+7IQ1dtpE6RVGh6mWzWlCdjZR0FKnJDrIZR6ug6AsksWR/OEEtZT3YqhsYmR7WhY52QR1+YJOo9+PWvhdIv8kkESxiTbK3NWUcSaENCn4t7o17nX/8trJO6hWI7+THVqhBAYv2ilPxL93P0JDfcFOPeXpzXB6LqurVqnUnRP7JxPY7dD0hJHLJ76LuiHBMuHJqEc+sO1Xl5HqJZ8YMeI4hVjSclOjftJeX7g4GoHTNwpZd9Rd46j8MT1lwkYKLVVp5csW8p3Vl4NfMqJiXvzqXYBA==
+ bh=qh12CtVAVL9lQ0ICmhFjXMynrjuk0p8D6nzg+2i5aro=;
+ b=DJBh74fMwjmcT7xjol009kRAN4ovovxcrWn5PNYSHXOZovSeBygcV/8M6p4a5KX/BVhb+b9Wz/l0D7Ef1Zf+S4d1sRCSco99hxkhDPUS+Dmc9KCqdCO8e3+PK6bDS38x51X5nahdeIyfu9g8TytscVZ5nq2mtCh85+m45KpLZsk7dBd7ZsXUa4+LqDdbw+BHWQJCR+GxirKETgQBWKkBcnH76bkhtO8zVOcemFNDgdB6OeJiCfaNBQKfpAmROgULGtKtxvsZIhEkVATZOv1AUHVVcCOwizCortl1YbeLnCosk8Xegm9cdrgQpdBoSAg5ArF5kUTT+jBWo/maHncR1g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by PAWPR08MB11454.eurprd08.prod.outlook.com
  (2603:10a6:102:50b::14) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.8; Tue, 15 Sep
- 2026 21:00:31 +0000
+ 2026 21:00:32 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0428.008; Tue, 15 Sep 2026
- 21:00:31 +0000
+ 21:00:32 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Tue, 15 Sep 2026 23:59:38 +0300
-Subject: [PATCH v6 02/14] tests/unit: add test for duplicate keys in CPR FD
- table
+Date: Tue, 15 Sep 2026 23:59:40 +0300
+Subject: [PATCH v6 04/14] tests/qtest/migration: add test for snapshot
+ rejection in CPR modes
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260915-up-vsock-vhost-v5-v6-2-4d31b2dc6afd@virtuozzo.com>
+Message-Id: <20260915-up-vsock-vhost-v5-v6-4-4d31b2dc6afd@virtuozzo.com>
 References: <20260915-up-vsock-vhost-v5-v6-0-4d31b2dc6afd@virtuozzo.com>
 In-Reply-To: <20260915-up-vsock-vhost-v5-v6-0-4d31b2dc6afd@virtuozzo.com>
 To: qemu-devel@nongnu.org
@@ -68,66 +68,66 @@ X-ClientProxiedBy: VI1PR04CA0053.eurprd04.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PAWPR08MB11454:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3b0a5e29-f8ad-4d0e-4d08-08df136c60bf
+X-MS-Office365-Filtering-Correlation-Id: 22247136-a8e8-4188-2627-08df136c6181
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|52116014|1800799024|376014|23010399003|56012099006|3023799007|10067099003|22082099003|18002099003|38350700014;
-X-Microsoft-Antispam-Message-Info: yJ+KWzazP2c92dEgWsr3ksrxvStSHQCy0UO6p8hpjVcGd4ayO8Fde4RJYop4r2qsnLjWN4+7eNnGUJh0HtPVyWc6fuWT5Ub7LlJOy6B19fCK+EN0ysOP3bjALHnwCRKT0ybzwVgD0U0AD7PZcoa0WGnV1jFee4Qomm/q3HTUWvJOJQh1nOEgd+e3V4VIktg5DkxFUL6QwVVmUNGdfx78mKq+MeDHMl54tQ/ExUqhXR841l9RBXPkcqVzUyoMbBXXdR3Etck39Sa+QCkYbSz7ZlStV3I6atk1DxEK8uCTcqtAjodPPiCPj0dA6YwWMOPer/6mMKLRUT2ULrolkQDKk4w/EfGv5Uos1Kaorrf1CZa3owD/+HZbcx4LdZns4esIYY0T/XM3g0eupMS4md40ZyeFJizPe4U5/kndgLECulBNbYA1GIqsfC8300vzZrMjFqdjBUZXqbs5rTYOxez4lqHaPHzQfuAg6YgP3SfhzfYoB67kpYHnw8QYR5ExPMZ80ZluM7NhfTGdW/OC/xGJyAzkQb64nsWYF816kwBhJWAqRopSC5A1a+r5sriWaWadeNZbSiBHbgmh5FkZiSW10MeR7tF4ChBOt3lnrVkUKfnluYNUKVhi/+dw8MrKm3d4i1bQKUwuw7buB8ICt8btrFSCdwpri+elB4zdzlQ0mThdryVOI1kvuha5nA4tkyEhg2F+aynyhR+dqrdsRQ+WS4xe+SBceDHZ8xksVz+ue+8=
+ ARA:13230040|366016|7416014|52116014|1800799024|376014|23010399003|56012099006|10067099003|22082099003|18002099003|38350700014;
+X-Microsoft-Antispam-Message-Info: W5B48jwW10GRmxXM+VxamJzcIdy64Fskp6ioQQIgWOe2QjCJCWw/6jADL6usCEi4krWqFkI1RpYj9gGROq6y2hoNimLu+pTMJJeaaPx0/nzZ1/kFANbHC9hIC+ZZMEgETrm2TsOxcn1JrWgtvxmZF4o1VTAMFYKKH3yZdkh9+KfeK74qtfQbWl5DL6mGkKUNrjlA/+NrZ36yK99+VsBXH7/nsZz63ciwpD86Krb9UvrBqVgp7YeEJyKQJIGVNd8B3f0+l/YO23nHc6sB6A4lhxV3QD6G7hmOkMjgaaHVra6YALOvTd6iYKvWqs7pAHeJkrVh8K86upqUv2YCGaanP8IfOZeQH20apeu39UkKC1SDfEr9Rof41HatqUB2NfyqJPICnTP2KgcbCHKeIb3qy+xmX7LdsJ1Ya0l/rf7Oak+DWNaV99DklP7/oxB2XEbNqLWCtBwnj4AhQkirJMhyoR6m+lB7NyPXvZg/FVS4db4MF57gKShZ2YKwP/njdJPGqe7s5muWU0Fl2INQMDit3XnrtjP9ila55SbK5IKtBmoiQluuGmR5fFysiNDdDU95so+MByvPCnHJr457lfo4f/EE/5uYLPUM3aFxfjTSvbQP9caCFpVuSPdCyzLjlMrZgwEDetZW+2hKfn2rQxsO2l1ptcA5vXm/ivmY7q1IE25xLI3BwCwAyQRLr8LEbWt77kDVGlkgKVBagi8W8n6yyA==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(52116014)(1800799024)(376014)(23010399003)(56012099006)(3023799007)(10067099003)(22082099003)(18002099003)(38350700014);
+ SFS:(13230040)(366016)(7416014)(52116014)(1800799024)(376014)(23010399003)(56012099006)(10067099003)(22082099003)(18002099003)(38350700014);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Nndra1N4S1RTclVwUmxiTU0yNCsvcUptK1NBM2xMNzFjcldRSTlkOTVWQStH?=
- =?utf-8?B?dXU1cHZyWW5BVzd1aTZPWnVkL0x0UUQwc2VLSlROWDFFdSsvbUp2UVE1dmZz?=
- =?utf-8?B?anZZbkVBdnNsekJVdmNpbmpTWlJxRnkycTYybWg1SWEvaUhvamVzcXlSWnd4?=
- =?utf-8?B?SlVacy9HTG9DUHFzVXBMeUlScW9RRlp3MUl1NHYvY0MrSEQ3b2crWXl5L21h?=
- =?utf-8?B?WXZUZHNlZUR0L3cwTFIxbGk3ZjJidkRjWmJqcld5NG5DM2ZTb2tKMnpzSEJv?=
- =?utf-8?B?bjJqUFRQWGxGbzJNK0V5V1FmVm5icS8zTlh0bHU4TGpjeVNidmM5WWdpK2hB?=
- =?utf-8?B?YllFMUVZZ3B4L2NCUDcvSGx3dGFLM1NhRXlHQ3MvTFgvck9FdnBIR2dYVHd3?=
- =?utf-8?B?Vk9ZU3J5TEs1OHRNd0U0QzlFamE4Ky9wNEgvb1EwcFEwVHhVN1N3L0liUUVF?=
- =?utf-8?B?elpRSWhZNytsVFNXU3VTMUliRkllb0hZNTZ5LzJqN1pxWThETlVnTzgyVlpp?=
- =?utf-8?B?YkRLY1Bxb05kSlJidUMzVGFSbEVtVlRxdjdkc0UwVTZxM1VVUnlMNzBWc09C?=
- =?utf-8?B?aFBFZU9pc2VCYVJPRis2STFnNmdsdS9EYU1HSkV3SzhHZlRvTjdjd3JTT0E4?=
- =?utf-8?B?NHBReGNYbE9oVjZjR1VvQ0Q2MzYyZ2U0ZURCM1h2M2ZyNzRFWnhoUTBWckho?=
- =?utf-8?B?ZkZQbVlXK2IvSDljSUlvQVJnQXl0c2NrOHJocUdDTWJaNTBDZyttLzhacGZi?=
- =?utf-8?B?OEZtVHBleHdHSngzQU1ycGlPSElxamFXMHlBTXZtRjBEMmtJUGpCbTFDMm85?=
- =?utf-8?B?TDdWSG04V25WZCtkandMQlZ1NWt1YjQ3ZHQ0Q3pXanpwWnQxbFRpcG4vQitM?=
- =?utf-8?B?THlBc2x5aFIwanZVNHQrZThSS2F2MWJNYzh1cW0wNTZqdEc4L3BWRDZacFJp?=
- =?utf-8?B?QTdDb2Z4am1lK0gxYm5FeUlQa2R1azgxQktBVGY5VUNXaTI5UGsrWitPOFJN?=
- =?utf-8?B?U0RSckpZN0QzMDVzOEowRENtOERMVVluZTBRbitaRC9tME1CZWVKNFRnQnNq?=
- =?utf-8?B?RDU5bU52a05pMVA1S2lNZStSaXBoampsZ1RwZWZScFJuZm0rM252MTZjcjNE?=
- =?utf-8?B?cXhQdWRXWTQ1WlZ3T2o3alkzVHdVR2p6N3ZTckpqN1hQUnNhKzRZS2xja3Bu?=
- =?utf-8?B?SWl3WmR6eFdidEFQdk83ODBTMlk3ODIzSnVzcjF0MUd6RmhIcGpiZDBxZ0Er?=
- =?utf-8?B?cXJ0T1I3UFE2TGRWNUlBN0Y1d3pTc3RNWlM4S3R5bkw0NUE2c3RXYkNIY2NG?=
- =?utf-8?B?NUhYUUsydFZXRU1Dd0tQWElERjVTQU1MdGprQnhLM2duM1NlUmZQQWpFSm0w?=
- =?utf-8?B?dmdKeDk3ZmJsT0VtNUxxaUVuUGdEVFhwRTZXQzNGbWZYa2RqQ0E5Vm1BK1hG?=
- =?utf-8?B?NEI4Nml3SGhxSnl3d29sNC9QNEpibDBralhvOXVFWFYwYXFOOVROdWJtUGpy?=
- =?utf-8?B?Vk5ubDhncGc1bTdrWnBRUUgvM2FUYithbVh4bmZmVDltLzViM3dUeHRiUHRs?=
- =?utf-8?B?ZlNZZk82NkFnOFdkeDNYZ3FhMTlLOHpPYnRZcm1URHB2U1NMektQWVVweUky?=
- =?utf-8?B?dVRaQWljS2lRd0MxQjhPN2c3bDZXejJDT2xIQWF0ZElwcUJrRmErMUFuZ3g1?=
- =?utf-8?B?SjJQTUd2b2dmOVhPS0dEbzlRTlVCUFZaTzh5QjN1NUwzek5kMDUvSG1tQWs3?=
- =?utf-8?B?dTlBOW4zSmNySjNOVHJMWHJFVzdzY3VXb3pKVS9taXJiUlZ0MURxNE5oOG5G?=
- =?utf-8?B?VEw0dFB3WlBJTk9WVkxYMStjM3JSMGhZK0NvNSt0d3VrRU53TG43Y1FJYXcv?=
- =?utf-8?B?MC82c3llNkRRdWtkd2FMTDBuNVh0N2lZdzhPWU5ZYXNqd3lhajhRUEo3R0kr?=
- =?utf-8?B?bjhkbXNXcWZoUjJ5NXArWmNBSW1YMkVQbnBNRnIybmtPOXBzZGpsSkhDbDVY?=
- =?utf-8?B?UTRCQ0tKUFFVTEdpQ1FkcDJmc2hWbVdnaThEeUpQR1l2aGozSWRwaFM0TjBD?=
- =?utf-8?B?VGh0Sjk3NWMvTVpWTFFXc05DdHZLeW9xaUx5TEZUOTBRNzR3LzlOaEpoKzU0?=
- =?utf-8?B?T0d3NDJ1ZW5aaUlENkpCeEZzU29aQmVIYWV1c3JVaTh0NVg2UWpwS0NqU2Rq?=
- =?utf-8?B?MHQ4YzdtekxoTHJoM0NlY3RMS1ZVYXJqOXdmNElPMmJZa2N3dUNuNDlmSG00?=
- =?utf-8?B?TUJOQ2FkRGFmbHU4aGJXZXRkZUNJcFFBNGVIbWtXZlR6TkZGakZKMW14WHR2?=
- =?utf-8?B?QkNLZVZPbUpjVW44YXBSclErMzNjUGFoa09rTEVoODU0VUFRc0N2cTFrZTFv?=
- =?utf-8?Q?vmqrrKHhEPDCDkRc=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cTd1d1U4T1crNktHSHpwSk1QcUM3N1A5VkVBZWVIV1Z5aDR2Y0gyODNEME1p?=
+ =?utf-8?B?eHpSMUwvNjlhcTZab1ArdUVHNk1xeUpEZTFlM0pTa3FFZmZrbElTMVg1bFc1?=
+ =?utf-8?B?SkYva2ROUCtBQ05NczI3eDYrZE5aMWR0M3VHd0JRRUorQVNhWUwwWmVtN2Vh?=
+ =?utf-8?B?NTFQR3orUFNTczZld1FSZnNTK3BabG81cTlqTlRsS1MxcmV4V1pnVGhIcUNi?=
+ =?utf-8?B?UGxXSEdjNHVKcnQ5UzZGNEJZbHIyaFJRaGFFcEZ1VmhTeUNIQXNXWUxrMFlv?=
+ =?utf-8?B?Y29aZWl2cytFdDh3Vy9RRFd5WUJMMFR0S0dQQ3ZTUGNFQ1locURFMnFtMWt4?=
+ =?utf-8?B?WnY4QlRxU290K1Z4NzVwV0djaTgwaHkzaVZGWjBFSHRqUUdOMnI1cmVvcnFW?=
+ =?utf-8?B?ZjZJcXd6RWJsNTNLeDdwb0ZOS3FCMDArSGJlSlN3NkYvUG9YaCsrUVoyUHFO?=
+ =?utf-8?B?ZEpqQ2pvWFhvK0x2Y3cyMy9kYkdiZWpkeHkxU0VEdTBlV1Rnd3ozUnkxOVpH?=
+ =?utf-8?B?RktISkVGL0lVTFViWVlGY05oVVFvRU8rV3JzamFOcmpLVlR3Z3JUeXhkWGRS?=
+ =?utf-8?B?SnR4dUpOYkpnQ3hWR0w1TVpyS01teU5RUW9GVGEvQis4eXgxZmVCQnh4VkxT?=
+ =?utf-8?B?bHp0MkJVS1dCY2hEZGJnQkVzWUUyQjZtNzlHVHpWTVdBMFlBc2xkbEZSK0hU?=
+ =?utf-8?B?L2h0Wnk1bmZkVGlKVUo1RWJIcElwVlc5cjZGZlViaHcvRTcwVXdvb1FVZG9h?=
+ =?utf-8?B?cXBvckJyN0xzOHVMam9NME9UZ2hLdDFjNGhxTXNXby9NbGpNR004cXV2ZDV4?=
+ =?utf-8?B?QmtCV3Z4T1l6L1BQSzByOUxYT3c5cDUyRTFSSUl6VGFodEd5bmxyd2poSDhi?=
+ =?utf-8?B?WUtiNU1acWFENkpXTUErakpYTXRDSElkd1U2ZWh4YTJzbmlzTTk5RTJmWkJ6?=
+ =?utf-8?B?VjN4Ymw2Tit5Q091bU0vL1k4UEgrdUEzUU5yTllyLzBwQkpFbUFnOXh6N3hj?=
+ =?utf-8?B?TkVMT1QzY0VpN2Y5T1lrZ0dTMXhuMy94SXVVbnpwS2xmUmlQeHpDY2VrMStU?=
+ =?utf-8?B?MmZ5ZiswK0syVjFVK25lNHhNU0VIS01IejRmRmJ5YndtRGRsL0srcEFNVGVj?=
+ =?utf-8?B?clZYYUNONzhnVy8vMHNKaWpSRUlDd3IwMGsxT2RmRDFuQWcyNlM2QTZtRXJz?=
+ =?utf-8?B?cmszZVlwMEFFOG1tNDhxanZkM0J6aVY0UVFqek9ReHpGNDFxU2gzZVhjTzl4?=
+ =?utf-8?B?VWQ5WEt6VVhhUFdwRkwzOXlPU21KWkNDWTRqbEJlcndCakVxdTJvOThoNkdX?=
+ =?utf-8?B?RENtYjVXZThxVHRVTmVWNU54THJiYUEvcTlNK0hJUGJtempsREo2cEFQUUZp?=
+ =?utf-8?B?UUllbURheWZ4NXNoa2daWDlZL0MyQTJLMGtUNXFlOW04RHU2aWN2QXlxWGNz?=
+ =?utf-8?B?azl4L0xWVWd2dEhzYXkzT0lseUFWMENqejAxeE1HOGNkUlBxTjUvejlvU1dX?=
+ =?utf-8?B?WCtrM1FWaVhsRUZvQzc5TFkvWmlXeUJZK053ZUZqUzBQUWFPem5iMnhZQmZh?=
+ =?utf-8?B?dXNyR1Q3RjJCTGVhajJ4ek42dUFzUklvT0EycmtJZFFtMXg2K0RPeE4wM0pG?=
+ =?utf-8?B?SVhUZndzdk9LUFY2RVZ6d3kxMzljZTFzYkxGakVoQW5KUFg4dHBtZkNkMEpq?=
+ =?utf-8?B?Myt1WHFiM1dBNElIY1JORHpNTDBzRVFXenV3ejJ2eElqQjUwemQ5MWFpd2Q2?=
+ =?utf-8?B?YUd4V3NpQy92OC9PNk41dmYwMFl1d0xZT0VPLzNxcUdUMENJbU9udVROaGtz?=
+ =?utf-8?B?VFpsMkx5Z1VCWCtjd1ZpTXpvdlV6NWc4WTRLYnRsRVkrOXA1ZHB5dFlBRFVB?=
+ =?utf-8?B?ZWtGRUdoMTM3OHhjc3RZSG4wQzZRZURSZFJsRXlrSjRzSERmT2JZTkNKQmNm?=
+ =?utf-8?B?RFNrNHJBTTEwMWdLaGk1TTdmT2lIQ1FVODhkT09tYVBuQlVvNURhakFQWEpY?=
+ =?utf-8?B?blc1OFZ4QkxQUmh2enVDbm5LNnI3Sm56akhuMFZmS1l3OTk5c2ZYUW1NL1lQ?=
+ =?utf-8?B?aEQ3NGhLVFgrMkRPODJuOXBJM1lORGFaQ3FmdWtYOWQ4OTFqbEFiSDZ1ODcw?=
+ =?utf-8?B?dW1NM1JsSzJTZG15NkpiTGswRGx3ZDNLSFNvYW9kdnhCN08xeHMwdkR2ZHFI?=
+ =?utf-8?B?Z2ZHZjRoN2hxMHVZYmNWRU0xZ2JQTG1maFptOGJBa0JwMjZJa0hGVk9KT3ZO?=
+ =?utf-8?B?aldwRmdJeEJOMFk0WllqYjZOWWNxOVJlRXJZSlBnNWxoWm5zOWNPNzNDc1VZ?=
+ =?utf-8?B?eDJPbERkZjk4NDFNaUgveW9qZytZN1RPUjg1cTRZLzNZeGtzNlBueXBPQUht?=
+ =?utf-8?Q?rp+LHPlYqQ2EDC10=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b0a5e29-f8ad-4d0e-4d08-08df136c60bf
+X-MS-Exchange-CrossTenant-Network-Message-Id: 22247136-a8e8-4188-2627-08df136c6181
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 21:00:31.1791 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 21:00:32.4134 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: okMAU5JPIKj7g2ROp9L6ZiMkZtHMv4fJy+coFkVNA4BJyQwpBGwfQmkDQET52jK0IBPbLcMzoaOZaP+gayndFNOaihZaYEh8b0jbewo+r8Q=
+X-MS-Exchange-CrossTenant-UserPrincipalName: dqx/kXOjkAwhhGpM0ZMqCMLId4GSlIJFD2Pu71ggAPS6dqNbQsMkl5ySWSGWWLhXqdgAphrLijL84UXuesIYr3j2wIbPo8NfWb0VsHeKdFI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB11454
 Received-SPF: pass client-ip=2a01:111:f403:c207::3;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -153,133 +153,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpr_save_fd() now refuses to register an FD under a (name, id) key which
-is already taken.  Add a test which checks that 2nd registration fails
-with an error while the 1st one is left intact, that different names
-or ids don't clash, and that the key can be reused once deleted.
+Snapshots are refused whenever a CPR migration mode is set.  Add a test
+which sets each of the CPR modes in turn and checks that 'savevm' and
+'loadvm' fail with the corresponding error, then switches back to
+'normal' mode and checks that the error is gone.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/unit/meson.build |  1 +
- tests/unit/test-cpr.c  | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 99 insertions(+)
+ tests/qtest/migration/cpr-tests.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index e47bc7225ab..8d229ff60e6 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -140,6 +140,7 @@ if have_system
-     'test-bufferiszero': [],
-     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
-     'test-vmstate': [migration, io],
-+    'test-cpr': [migration, io, meson.project_source_root() / 'migration/cpr.c'],
-     'test-yank': ['socket-helpers.c', qom, io, chardev],
-     'test-ram-discard-manager': [
-       'test-ram-discard-manager.c',
-diff --git a/tests/unit/test-cpr.c b/tests/unit/test-cpr.c
-new file mode 100644
-index 00000000000..dfc6b1f2ec0
---- /dev/null
-+++ b/tests/unit/test-cpr.c
-@@ -0,0 +1,98 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Unit tests for the CPR fd table
-+ */
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 0bec753b4ab..a5255193101 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -290,11 +290,45 @@ static void test_mode_exec(char *name, MigrateCommon *args)
+     test_cpr_exec(args);
+ }
+ 
++/* Snapshots must be refused while a CPR migration mode is set */
++static void test_mode_no_snapshot(char *name, MigrateCommon *args)
++{
++    static const char *const modes[] = {
++        "cpr-reboot", "cpr-transfer", "cpr-exec",
++    };
++    QTestState *vm = qtest_init("-nodefaults");
++    char *out;
++    int i;
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "migration/cpr.h"
-+#include "migration/vmstate.h"
-+#include "monitor/monitor.h"
-+#include "hw/vfio/vfio-cpr.h"
++    for (i = 0; i < ARRAY_SIZE(modes); i++) {
++        g_autofree char *expected = g_strdup_printf(
++            "Snapshots are not compatible with migration mode %s", modes[i]);
 +
-+/* Stubs for the parts of migration/cpr.c that these tests don't exercise */
++        migrate_set_parameter_str(vm, "mode", modes[i]);
 +
-+const VMStateDescription vmstate_cpr_vfio_devices = {
-+    .name = "cpr vfio devices",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
++        out = qtest_hmp(vm, "savevm snap");
++        g_assert_nonnull(strstr(out, expected));
++        g_free(out);
++
++        out = qtest_hmp(vm, "loadvm snap");
++        g_assert_nonnull(strstr(out, expected));
++        g_free(out);
 +    }
-+};
 +
-+QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
-+{
-+    g_assert_not_reached();
++    /* Back in normal mode the mode check no longer fires */
++    migrate_set_parameter_str(vm, "mode", "normal");
++    out = qtest_hmp(vm, "savevm snap");
++    g_assert_null(strstr(out, "not compatible with migration mode"));
++    g_free(out);
++
++    qtest_quit(vm);
 +}
 +
-+QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+QEMUFile *cpr_exec_output(Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+QEMUFile *cpr_exec_input(Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool cpr_exec_has_state(void)
-+{
-+    return false;
-+}
-+
-+void cpr_exec_unpreserve_fds(void)
-+{
-+}
-+
-+int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+static void test_cpr_fd_duplicate(void)
-+{
-+    Error *err = NULL;
-+
-+    g_assert_true(cpr_save_fd("dup", 0, 10, &error_abort));
-+
-+    /* A second registration of the same (name, id) key must be refused */
-+    g_assert_false(cpr_save_fd("dup", 0, 11, &err));
-+    g_assert_nonnull(err);
-+    g_assert_nonnull(strstr(error_get_pretty(err), "already registered"));
-+    error_free(err);
-+
-+    /* and the first registration must be left intact */
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 10);
-+
-+    /* A different id or name is a different key */
-+    g_assert_true(cpr_save_fd("dup", 1, 12, &error_abort));
-+    g_assert_true(cpr_save_fd("other", 0, 13, &error_abort));
-+    g_assert_cmpint(cpr_find_fd("dup", 1), ==, 12);
-+    g_assert_cmpint(cpr_find_fd("other", 0), ==, 13);
-+
-+    /* Once deleted, the key can be registered again */
-+    cpr_delete_fd("dup", 0);
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, -1);
-+    g_assert_true(cpr_save_fd("dup", 0, 14, &error_abort));
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 14);
-+
-+    cpr_delete_fd("dup", 0);
-+    cpr_delete_fd("dup", 1);
-+    cpr_delete_fd("other", 0);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_add_func("/cpr/fd/duplicate", test_cpr_fd_duplicate);
-+    return g_test_run();
-+}
+ void migration_test_add_cpr(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
+ 
+-    /* no tests in the smoke set for now */
++    migration_test_add("/migration/mode/no-snapshot", test_mode_no_snapshot);
+ 
+     if (!env->full_set) {
+         return;
 
 -- 
 2.47.1
