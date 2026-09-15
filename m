@@ -4,106 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C90DC88E7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA48C88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WK1-000770-FV; Tue, 15 Sep 2026 12:47:53 -0400
+	id 1x6WNJ-0007ye-KZ; Tue, 15 Sep 2026 12:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6WJz-00076q-P4
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:47:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x6WNG-0007y3-Jd
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:51:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6WJy-0007TX-4H
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:47:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x6WNC-00084v-FH
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:51:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789490869;
+ s=mimecast20190719; t=1789491068;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/C5RnETemO61ESTF719dmkJlPRhgyUaymvtOIyPJ3fA=;
- b=E7vdW45GCHTSqIblYO0KpfZduyvb6dlz8oQVOOFP7HcvwPnA6yx8XaHixinrmCUjj9ZVZi
- 9MaLsoUzLM5oYbwjROP20x3yrj46/iwuG0tJhCT6ajiHsMZIuCRg/Uhq4BYW+x1D9AvwwH
- 9ZTqB0ERjNYwdm1svia1pKHCPVEdHNg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=GOixx6abFBVd1Ht1jJ5j+0ZQJz9VDeWAXuG8x0WDNps=;
+ b=atSLc2+/n14rRJe74fHVV8Q/8XhlTYPKg5X+H5webcoZ00sTgCTUgcqzzQGVYYyKfv4WPx
+ on+WgRqNJTECA3wcUcvfDXaA6qGhOvgrWDhTeTIl1QGQfQy40h8+fbLA/BFq0grGZPIeQa
+ 5dgSDfQ07qdYNjMeGuTnsAnVWSL/TGk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-nRX6eyBvPYynACRaA57Q3w-1; Tue, 15 Sep 2026 12:47:47 -0400
-X-MC-Unique: nRX6eyBvPYynACRaA57Q3w-1
-X-Mimecast-MFC-AGG-ID: nRX6eyBvPYynACRaA57Q3w_1789490867
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49ccfbe060aso41216105e9.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:47:47 -0700 (PDT)
+ us-mta-210-5Ualh7FkOHihj8LN2bTmLA-1; Tue, 15 Sep 2026 12:50:58 -0400
+X-MC-Unique: 5Ualh7FkOHihj8LN2bTmLA-1
+X-Mimecast-MFC-AGG-ID: 5Ualh7FkOHihj8LN2bTmLA_1789491057
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-487038bc9b8so1254995f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789490867; x=1790095667; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/C5RnETemO61ESTF719dmkJlPRhgyUaymvtOIyPJ3fA=;
- b=iOAb6QB4gEF1nutzrmPlYn9LtcmaX9Ts546tpbQREPf/EIy5ruFXcFFWXouN2+vxUc
- Nid+FnEPPJnUfnH5EStgwuUrd58BYwulZTG0IxlAuWHJGY2/9IRhDHpwcWbL6asXK6W5
- yCAhaQMaqp2KPucA3NViJA9D7grPCMVUOoy+wTaNCHCMal3zViW2uUHzEbBZIdW368C1
- uXpRyGk727P8L6j6SOvJfFe9zCDFnIMeUZ6AflfY1ALOc5Fwf4i28LByoyUdb0eJ00Ut
- 7pfEmor9e4s+FMil9LK/gdTXMw/LookGH3S3dJFgp7dIsJLth1wtF3yg11yNsd5YB6eZ
- bRFw==
+ d=redhat.com; s=google; t=1789491057; x=1790095857; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=GOixx6abFBVd1Ht1jJ5j+0ZQJz9VDeWAXuG8x0WDNps=;
+ b=syp3kW8+TMtIhmWpmiPcjmQzqENrLxn2LrcBkk+uI9jX0blzc1fL/ne/v+xOynJt+N
+ PkFU1Or1AAE8wOKYbNKKz29YtQfpzE2g0T+UFlGhxaXM5/CdczbT45b7pIRMNv80PEZT
+ EB5Cs6Og7cY0OogSZ5HhIPcHi6WioEmXeXwm77ebfIt6So4CvgvTGlHNeg2nMpf7S2nR
+ a1jDiN37TYAEM2K7jocv5xvWKiRTrAiPX9vZf5Hx3n8S3zEc87jTEJKv8P/cf6Vd2ORi
+ 1WJkxQuuZwLQtVuJI0VoWMwnnBADryDIUqK6KQHRWopGOxVwehlNRabfz9rcCtX9Z2uV
+ ODQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789490867; x=1790095667;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=/C5RnETemO61ESTF719dmkJlPRhgyUaymvtOIyPJ3fA=;
- b=pL1o5xpQLGKJtS19hEtF1dHBsRS7hCNKi/l/j9TiFhr+YhcoXm4EPFbKEfQlks5kMH
- tkY/y+ILD8vCY5VhWktHXNO81xbWla+8gNsw1fte1P7ZhfJcVsGXfCa+mukeeO7AaDNY
- exAaCAeZNG8Na6QF6IZLwI8ODzOU/Kns3Ar9G2GUJr2EgQt9xcnBv6EYd6bWbElQN4bR
- cjaja744mg1MzUpEy18sjt+5E8q9ZncpqavU+7U+wQuJxtrFZ0riP40Pu4ar+dF3NZME
- iPJHuEAHEGjDzw83BEPuMqkTzkQK3HiI1eC1JoJ0LkTs66bUNKkwx1HEGaBJ+Jtt60YF
- 3yjA==
-X-Gm-Message-State: AFuF++mw5A4DQN4K2MBIY2gGYBK+sO7/L5Ok9utRSJQ+aJd/NKsUekXH
- 7v2aEElELKndLqLhRVEKFLaaQM5DhhIcmsMd4wA6ldZwziya+KNDSX3GwZ5WAkKcbEx7DiPr3sv
- qecfLphxKoJvmvyI6L1J37WruztWtkfgrTeNn4GmEb+HmxztsLCm33cKu
-X-Gm-Gg: AYBFou0p/sniIkf9xTlHFXyE418xBYk2njOnRcBsGBTKfD6bFGJRGZH4pu5Ew/5mSDm
- UPpuVmAIeIfhQtGk2d9XmPlpAOxsz19lnAV/ltD9SQ6OthZCIsI1RIKInZkiu1ogVkyWB9rLa3I
- DHg+vd2vEx5xqAkOZ4lMsCRnOtj32TPn3JQBsMDbXOp/iXnOa/M43tTNOmK0BrZ48kxnFxHDF5X
- N0A6jUvjEaAsP94L8MQiIxidcsauB/rigs49WjcQqU9PY/Fxz898x1Oiu4wd88daqKxR+r8lbVo
- Q0WKKoeKnWofGQW1EUuiL0+kULzfQLUwojzoNnyYPCLdb10wfFs/x0+UoPtkapaU62QMEGfFnNw
- Uvj8Z32nbCXHg7XkRoevc8c0=
-X-Received: by 2002:a05:600c:4e89:b0:49d:7f5:4cdd with SMTP id
- 5b1f17b1804b1-49e7a68d80emr88682445e9.27.1789490866634; 
- Tue, 15 Sep 2026 09:47:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e89:b0:49d:7f5:4cdd with SMTP id
- 5b1f17b1804b1-49e7a68d80emr88681985e9.27.1789490866139; 
- Tue, 15 Sep 2026 09:47:46 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ d=1e100.net; s=20260707; t=1789491057; x=1790095857;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GOixx6abFBVd1Ht1jJ5j+0ZQJz9VDeWAXuG8x0WDNps=;
+ b=LZNDXHfVbUkp3ph7qkrDx+GcfuwEDKyjtSeXUHDKztV6Hzq82Z4grLzkK7CMsmhzI7
+ pH/s9lDpd9ek0M7McVoP5LMz4skf1MMJRin+BPb8gBuigJGKovLS9bIFnUQ/bd+LtbDS
+ fvUF8dFFkhRbIhylIpd1o3xCr5LS3u1U01a6yUpGFOC/yva+vtyoc9C0imjB8IXvxxYN
+ kSK6hIRdNI018GACAmwDtldEy0BpYeS/47yErbsryLa8gvjbdfjIoh64B+RAFzOMvOfM
+ Kp96R06pcAZRJBKJt1OOpxyBYV9u/evQFpJXf2vS3ZTOBLbDP+BaeC84Zv4Lra8YqMnP
+ jdCA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByw4SZ5AqkRvqnm4xlVK/lXOpMmY2bKEWfcLIV0cLWEmWV4jkc0BySzv/BFe49OkwefBxMn8BeQlZWL@nongnu.org
+X-Gm-Message-State: AFuF++lQH90+IdKSGRlaVzSZqIt7F9R0uEjgT47SbfUQcQv77Sy5GOmT
+ WUrcMJ6HapElES3Iqw45JXQ4ZtYUCBLqhL3YYHap/6SLMmH8AYL64rJ6UXZgkijR1TWp0vMm0PG
+ VGEoTYKx29gf+bWxSxGPIVSX6SnFcBTnQ8YplL+XG6zevii/Zt3Q47BIG
+X-Gm-Gg: AYBFou1GAxqsdWvPiyGyjn0yfbl6jdd8Ufe4xBGHL4potZIMcV22tM+fEcGKMTcm+qq
+ pLRghybIuPWBjU2RX6RAQY6Ldr/DbgOJ2rlpCSBmhrFDs5FsZ/61sER7+yGFKr4xbb9CEQ+RplQ
+ H6KPlgqNcT2egNnBslTv4ej+JJ5Ieb7ZApdC+aUNHXfrLGemocK94PxA0v8WLDfBTIJdf3SrGtX
+ 0Yu75QJ7rhEAMxD17EsZl0PaP+LQdzrqtXraheo07Xxf94y34zN4EC8Tcf1657NEKg7rEDO4MNB
+ fM4cbzo7UxZbEZXPKVtCiqqVz+oIUsxjDrrr2cyQFHBNb8dr7rLgcZ5bTQ53OJQodQgWedHjN58
+ hY65T89MFMxFHzS3EgBxi28qqzT7C
+X-Received: by 2002:a05:6000:3c8:b0:486:f533:daa5 with SMTP id
+ ffacd0b85a97d-48702ab92d8mr10360404f8f.24.1789491057396; 
+ Tue, 15 Sep 2026 09:50:57 -0700 (PDT)
+X-Received: by 2002:a05:6000:3c8:b0:486:f533:daa5 with SMTP id
+ ffacd0b85a97d-48702ab92d8mr10360373f8f.24.1789491057013; 
+ Tue, 15 Sep 2026 09:50:57 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-41-176-3.web.vodafone.de. [109.41.176.3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e83b031c3sm7590255e9.11.2026.09.15.09.47.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 09:47:45 -0700 (PDT)
-Date: Tue, 15 Sep 2026 12:47:43 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?utf-8?B?0J3QuNC60L7Qu9Cw0Lkg0JfQvtGA0LjQvQ==?= <zorin@swemel.ru>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH] util/error, hw/net/virtio-net: fix NULL pointer
- dereference in error_vprepend
-Message-ID: <20260915124114-mutt-send-email-mst@kernel.org>
-References: <500d4850-f7d7-45fb-91e5-74d32d35fde2@swemel.ru>
+ ffacd0b85a97d-4870bf344bfsm292808f8f.27.2026.09.15.09.50.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Sep 2026 09:50:56 -0700 (PDT)
+Message-ID: <5673b15b-22fb-474d-b3c4-89f9c3c0c8c6@redhat.com>
+Date: Tue, 15 Sep 2026 18:50:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: PATCH] hw/s390x/s390-hypercall: fix potential NULL dereference in
+ handle_virtio_ccw_notify
+To: =?UTF-8?B?0J3QuNC60L7Qu9Cw0Lkg0JfQvtGA0LjQvQ==?= <zorin@swemel.ru>,
+ qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-s390x <qemu-s390x@nongnu.org>
+References: <13ad0871-44dd-40eb-aad1-d08cc2d7dfe5@swemel.ru>
+ <597e1a7a-8720-4356-91ed-a7c9fa416312@redhat.com>
+ <1749cad8-1651-4543-8a2b-aad3c1168328@swemel.ru>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <1749cad8-1651-4543-8a2b-aad3c1168328@swemel.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <500d4850-f7d7-45fb-91e5-74d32d35fde2@swemel.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,107 +169,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the patch! Some questions:
+On 15/09/2026 18.42, Николай Зорин wrote:
+> This is the reaction of the (dynamic) static analyzer. We conducted research 
+> (at the request of the quality department) and found out that it could work. 
+> So we created a patch.If you're sure it will never happen, then, of course, 
+> skip it (and I'll have to work hard, because the quality department is 
+> digging into everything).
 
-On Tue, Sep 15, 2026 at 07:24:39PM +0300, Николай Зорин wrote:
-> SWSA#b0709cee-9722-4603-a30c-dc857dc87961
+Ok, but please don't send patches for such super theoretical problems found 
+by some static analyzers. The QEMU project is already badly suffering from 
+hundreds of AI-generated bug reports in the past months where we had to 
+filter out a lot of AI slop, so please always make sure that a problem can 
+also be really triggered before sending such a patch. Thanks!
 
-what is this?
+  Thomas
 
-> The `error_vprepend()` function modifies the error message inside an
-> existing Error object. However, it only validated if the `errp` pointer
-> itself was non-NULL, missing a check for whether the underlying Error
-> object `*errp` is `NULL`.
-> 
-> Calling `error_reportf_err(local_error, ...)` when `local_error` is `NULL`
-> invokes `error_vprepend(&local_error, ...)`, which subsequently crashes
-> via a `NULL` pointer dereference during `(*errp)->msg` access.
 
-but you then go on to remove such calls? then why do we need to change this?
-
+> 15.09.2026 19:32, Thomas Huth пишет:
+>> On 15/09/2026 18.17, Николай Зорин wrote:
+>>> SWSA#4992cdf0-415c-45c1-be1a-71213467347d
+>>>
+>>> The `virtio_ccw_get_vdev()` function can return a `NULL` pointer if the
+>>> corresponding subchannel driver data (`sch->driver_data`) is not initialized
+>>> or has been cleared.
+>>>
+>>> If `vdev` is `NULL`, passing it directly into `virtio_queue_get_num(vdev, 
+>>> vq_idx)`
+>>> results in a `NULL` pointer dereference, which can lead to a hypervisor
+>>> crash or unexpected termination of the QEMU process.
+>>>
+>>> Fix this by adding an explicit check for `!vdev` before verifying the
+>>> queue index and its capacity, returning `-EINVAL` early if the device
+>>> is missing or not bound to the subchannel.
+>>>
+>>> Signed-off-by: Nikolay N Zorin <zorin@swemel.ru>
+>>> ---
+>>>   hw/s390x/s390-hypercall.c | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/s390x/s390-hypercall.c b/hw/s390x/s390-hypercall.c
+>>> index ac1b08b2..fd2972c0 100644
+>>> --- a/hw/s390x/s390-hypercall.c
+>>> +++ b/hw/s390x/s390-hypercall.c
+>>> @@ -44,7 +44,7 @@ static int handle_virtio_ccw_notify(uint64_t subch_id, 
+>>> uint64_t data)
+>>>       }
+>>>
+>>>       vdev = virtio_ccw_get_vdev(sch);
+>>> -    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, 
+>>> vq_idx)) {
+>>> +    if (!vdev || vq_idx >= VIRTIO_QUEUE_MAX || ! 
+>>> virtio_queue_get_num(vdev, vq_idx)) {
+>>>           return -EINVAL;
+>>>       }
+>>
+>>  Hi!
+>>
+>> How did you trigger this problem? It should not exist anymore since:
+>>
+>> https://gitlab.com/qemu-project/qemu/-/commit/e5cb62e7b6f9
+>>
+>> which has been included since QEMU v10.2.
+>>
+>> So please provide some description how to reproduce it if it still happens 
+>> with the latest version of QEMU.
+>>
+>>  Thanks,
+>>   Thomas
+>>
+>> PS: The list of maintainers for the s390x part of QEMU also has recently 
+>> been changed. Please use the MAINTAINERS file and scripts/ 
+>> get_maintainer.pl from the latest version to check before sending patches. 
+>> Thanks!
+>>
 > 
-> Fix `util/error.c` by adding a defensive `!*errp` check inside
-> `error_vprepend()`.
-> 
-> Additionally, fix the invalid error reporting patterns in
-> `hw/net/virtio-net.c`:
-> - In `vhost_user_net_save_state()` and `vhost_user_net_load_state()`, when
->   `vhdev == NULL`,
-
-and when is that?
-
-> calling `error_reportf_err()` with an unallocated/NULL
->   `local_error` is incorrect and unsafe. Replace it with a straightforward
->   `error_report()` call.
-> - Fix a cosmetic double-space typo in "Error loading  back-end state".
-> 
-> 
-
-why two empty lines here?
-
-Fixes tag please?
-
-> Signed-off-by: Nikolay N Zorin <zorin@swemel.ru>
-> ---
->  hw/net/virtio-net.c | 14 +++++++-------
->  util/error.c        |  2 +-
->  2 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 4362e866..d505fb86 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3406,9 +3406,9 @@ static int vhost_user_net_save_state(QEMUFile *f, void
-> *pv, size_t size,
-> 
->      vhdev = virtio_net_get_vhost(vdev);
->      if (vhdev == NULL) {
-> -        error_reportf_err(local_error,
-> -                          "Error getting vhost back-end of %s device %s: ",
-> -                          vdev->name, vdev->parent_obj.canonical_path);
-> +        error_report("Error getting vhost back-end of %s device %s: "
-> +                     "device is not using vhost\n",
-> +                     vdev->name, vdev->parent_obj.canonical_path);
->          return -1;
->      }
-> 
-> @@ -3434,16 +3434,16 @@ static int vhost_user_net_load_state(QEMUFile *f,
-> void *pv, size_t size,
-> 
->      vhdev = virtio_net_get_vhost(vdev);
->      if (vhdev == NULL) {
-> -        error_reportf_err(local_error,
-> -                          "Error getting vhost back-end of %s device %s: ",
-> -                          vdev->name, vdev->parent_obj.canonical_path);
-> +        error_report("Error getting vhost back-end of %s device %s: "
-> +                     "device is not using vhost\n",
-> +                     vdev->name, vdev->parent_obj.canonical_path);
->          return -1;
->      }
-> 
->      ret = vhost_load_backend_state(vhdev, f, &local_error);
->      if (ret < 0) {
->          error_reportf_err(local_error,
-> -                          "Error loading  back-end state of %s device %s: ",
-> +                          "Error loading back-end state of %s device %s: ",
->                            vdev->name, vdev->parent_obj.canonical_path);
->          return ret;
->      }
-> diff --git a/util/error.c b/util/error.c
-> index 673011b8..db8b5e43 100644
-> --- a/util/error.c
-> +++ b/util/error.c
-> @@ -133,7 +133,7 @@ void error_vprepend(Error *const *errp, const char *fmt,
-> va_list ap)
->  {
->      GString *newmsg;
-> 
-> -    if (!errp) {
-> +    if (!errp || !*errp) {
->          return;
->      }
-> 
-> -- 
-> 2.43.0
 
 
