@@ -4,158 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA98C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADFFC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6VCt-0001fS-4j; Tue, 15 Sep 2026 11:36:27 -0400
+	id 1x6VHl-0002lo-8A; Tue, 15 Sep 2026 11:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6VCr-0001fA-I7
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:36:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6VCp-0006Vm-9G
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:36:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789486581;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qrFxi3srHFbZEdW0yrpmSTfpyYy/h61z2hCU0Lpx4+E=;
- b=g7a+QB/npDwgHN2K96AOrVBlvw0AXVh3IXLFx8gMOamnrFb2ifRWm/Um5yDPfBMpRhC3bK
- 4u7+jMTfP8g770B8QvVF9AwpymE1boIi69L5uqTRGUWvMJblmEpv3DQDXi7MWtUpnYb5q5
- W/hHaHjRHyE9JawK64VcdhTSCKs0oQ0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-1DcmsXXgN8aRmXqvIc17mw-1; Tue, 15 Sep 2026 11:36:19 -0400
-X-MC-Unique: 1DcmsXXgN8aRmXqvIc17mw-1
-X-Mimecast-MFC-AGG-ID: 1DcmsXXgN8aRmXqvIc17mw_1789486578
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-486e8fb7d75so1633265f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 08:36:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789486578; x=1790091378; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=qrFxi3srHFbZEdW0yrpmSTfpyYy/h61z2hCU0Lpx4+E=;
- b=LOI3RukPFOm3lCApGkn9S77DqxZm8sD/XZYaLAVMLPWVWKQlZiehH8T0iBoExOhZub
- XKd3YlibvTvXWFPsw/0ikJ54jWRv3fpGi1UfeDw91q6YchCajg39Ia1KvDQEmR2qOaVW
- zP0oTwl1CbJ/1wBUEaWIZIBCAX997+Hl7JSNW22VqbwQeJikj78BIrVZajzQnh6xzB5/
- GahILeIVkWK/4ugFObFJk/mOf+BC44m4H9LibBMmFDPcGtzk0eMdmH4Q8CDHdQm22+l7
- He/H+LKdzTQpA07b9D2ekYeW+KldjMSz8pto+TFe7HR+op4UAIXTuqQQqqd/14EAX30n
- rvPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789486578; x=1790091378;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=qrFxi3srHFbZEdW0yrpmSTfpyYy/h61z2hCU0Lpx4+E=;
- b=J8F3vQYo362mYN+JMYIXn6YVz8n8P704mVC+tc6dWYebktVnEejfYJ0IAj8TS4/azt
- yDFxeECSuOKxk3oCEAtfR6DW2Y3GduG09gUynExenruJINoBBOa0pVghJlDSR4HqawG/
- fsbbpbl1hktjHWf8VRsiWRxKEPfuJW6bqDoNbbfB4tfPG7lN5FyV5mFrzZPq48gULCMR
- iHlXVCoKoEJkfXpdiBkVjbMq9WYOommGOk/K0xK33164pJ04obiq/Qu2hByMNj6ONDK0
- 5U9EgD6sUEa9DE1vbeB0K/4VuMpCldel5brnIZuz++wirgWLaYKA0DSSTNooDO1opvNA
- 4RIw==
-X-Gm-Message-State: AFuF++nQtouU6Lph+zzRlxMULJyDPnB+zc+TYGgJUN3+aubV5t0ImRjm
- sB8vk7ClU9XRqwEZTO1UMDLtnmIaLjCUihdP+g/2t5WJKLCDlRTRrYiCsqN2lw3TYrke5PEBQBl
- HqVHcASWMsfcX7AKtsAkKlfO1YNjZbcs2pbPiOu+jnTffUJc3qnY+CIJD
-X-Gm-Gg: AYBFou28ZST6RrCZOosHU7SM52X4DuAmS6uhPKQMwP19A8pS4JIfGs99vaN72+GHo6x
- RbV6NIdQgtP9E4iP9urhlnbh2UM05MvAZQBxcWE838HJc3ANGoQQQVyEL2tJN7+AIxB+bB2S7UU
- MddOts6e8+q2SxUIwSeTn0hkeYroOpePsRyFsx3od6ab4ztIt8sxFsrhfwNse9vm8wjvjEK7F1z
- l1k+BMmPuiksDFvKS/nE0GNgCpvkBEGPLICNnVMYDcZeMZvyuZ+6HsShTSh00Hyne5pL7PE6Wf9
- Zn2A0R+IS3U/pgLfq/95i7RmNFilRHw4hHT6sOH1XvyhgN9QvDEo1qf3B2Czr91lQ+//6MveIhD
- BEFyt0R9HhBr3A0wHT1hiZB+qMP9gdRrjqviPcsACSA==
-X-Received: by 2002:a05:6000:2dc5:b0:487:971:6b19 with SMTP id
- ffacd0b85a97d-4870a9cf7f6mr1601439f8f.36.1789486577985; 
- Tue, 15 Sep 2026 08:36:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:2dc5:b0:487:971:6b19 with SMTP id
- ffacd0b85a97d-4870a9cf7f6mr1601386f8f.36.1789486577502; 
- Tue, 15 Sep 2026 08:36:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
- ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32d3c7sm32711419f8f.10.2026.09.15.08.36.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Sep 2026 08:36:16 -0700 (PDT)
-Message-ID: <1ef3b146-88b6-4c34-96f1-a272cf9b52d9@redhat.com>
-Date: Tue, 15 Sep 2026 17:36:16 +0200
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x6VHh-0002lP-OY; Tue, 15 Sep 2026 11:41:25 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x6VHe-0007Vl-Ec; Tue, 15 Sep 2026 11:41:25 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwAHfN0cZ6lqDWsEAA--.7924S2;
+ Tue, 15 Sep 2026 23:41:16 +0800 (CST)
+Received: from [192.168.2.9] (unknown [113.246.118.246])
+ by mail (Coremail) with SMTP id AQAAf8DwBXQaZ6lq9HfWAA--.37445S2;
+ Tue, 15 Sep 2026 23:41:15 +0800 (CST)
+Message-ID: <7ee4a2df-d295-49a0-a8d9-51e74576ec68@phytium.com.cn>
+Date: Tue, 15 Sep 2026 23:41:14 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/pci-bridge: Add x-speed and x-width properties to
- xio3130 ports
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- David Vrabel <david.vrabel@nutanix.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260915072507.1230187-1-clg@redhat.com>
- <20260915060015-mutt-send-email-mst@kernel.org>
- <81c899d9-a9fb-4eb2-ad85-7dde2f626646@nutanix.com>
- <20260915102221-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260915102221-mutt-send-email-mst@kernel.org>
+Subject: Re: [RFC v5 17/28] hw/arm/smmuv3: Add access checks for STRTAB_BASE
+ and CR2 registers
+To: Mostafa Saleh <smostafa@google.com>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162558.2808607-2-tangtao1634@phytium.com.cn>
+ <apbfjNgfmlRKWaqQ@google.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <apbfjNgfmlRKWaqQ@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: AQAAf8DwBXQaZ6lq9HfWAA--.37445S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWqoS0kibQACsa
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3JFWDZr4xXFWrXry5CrWDXFb_yoW7Xw43pr
+ WkGa1agr48tFy2g3ZxJayjyw43G3yvgF1UAry7GFyDZ34Yyr98JF4UWrW3Was7XryUAws2
+ yFW2kay3urW8tFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,62 +78,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/15/26 16:22, Michael S. Tsirkin wrote:
-> On Tue, Sep 15, 2026 at 12:17:31PM +0100, David Vrabel wrote:
->> On 15/09/2026 11:01, Michael S. Tsirkin wrote:
->>>
->>> On Tue, Sep 15, 2026 at 09:25:05AM +0200, Cédric Le Goater wrote:
->>>> Hello,
->>>>
->>>> The xio3130-downstream and x3130-upstream devices lacks x-speed and
->>>> x-width device properties, making it impossible to configure PCIe link
->>>> speed/width when building PIX switch topologies for GPU/NIC passthrough.
->>>>
->>>> Fix that and preserve migration compatibility with a 2.5GT/s x1 default.
->>>>
->>>> Thanks,
->>>>
->>>> C.
->>>
->>> Given they are clearly intended for users, time to rename to width/speed
->>> everywhere?
+Hi Mostafa,
+
+On 9/1/2026 10:22 PM, Mostafa Saleh wrote:
+> On Fri, Aug 14, 2026 at 12:25:55AM +0800, Tao Tang wrote:
+>> Add access control for SMMU_STRTAB_BASE and SMMU_CR2 registers to
+>> ensure they can only be modified when the SMMU is disabled.
 >>
->> A more comprehensive series (hw/pci-bridge: Configurable apparent bandwidth
->> for the PCIe topology) is here:
+>> This implements:
+>> - smmuv3_smmu_disabled_stable(): Check whether the SMMU is in a stable
+>>     disabled state (CR0.SMMUEN == 0 and CR0ACK.SMMUEN == 0);
+>> - smmu_strtab_base_writable(): returns true only when IDR1.TABLES_PRESET==0
+>>     and SMMU is completely disabled.
 >>
->> https://patchew.org/QEMU/20260908155223.164787-1-david.vrabel@nutanix.com/
+>> Additionally, mask reserved bits on writes to SMMU_STRTAB_BASE using
+>> SMMU_STRTAB_BASE_RESERVED.
 >>
->> This adds new upstream and switch port devices with configurable speed/width
->> and renames the options so they are non-experimental (but do not the open
->> question about the usability of the speed option with the need to set 2.5
->> GT/s as the string "2_5").
+>> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   hw/arm/smmuv3.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++--
+>>   1 file changed, 67 insertions(+), 2 deletions(-)
 >>
->> I did consider adding options to the XIO3130 device but since the real
->> hardware is Gen 1 only and does not support speeds/widths other 2.5GT/s/1x I
->> didn't consider it appropriate to claim these emulated ports are more
->> capable than the real hardware.
->>
->> David
-> 
-> Right that makes more sense to me.  Cédric what do you think?
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 628911d3f21..de8ca7cda48 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -1484,6 +1484,36 @@ smmu_gerror_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
+>>       return smmu_irq_cfg_writable(s, sec_sid, SMMU_IRQ_GERROR);
+>>   }
+>>   
+>> +static inline int smmuv3_get_cr0ack_smmuen(SMMUv3State *s, SMMUSecSID sec_sid)
+>> +{
+>> +    /*
+>> +     * CR0, CR0ACK, S_CR0 and S_CR0ACK are bit-layout compatible, so we reuse
+>> +     * the CR0 field definitions and only switch banks via sec_sid to reduce
+>> +     * code duplication. Also the other bits in CR0/CR0ACK are relevant here.
+>> +     */
+>> +    return FIELD_EX32(s->bank[sec_sid].cr0ack, CR0, SMMUEN);
+>> +}
+>> +
+>> +/* Check if SMMU is disabled in stable status */
+>> +static inline bool smmuv3_smmu_disabled_stable(SMMUv3State *s, SMMUSecSID sec_sid)
+>> +{
+>> +    int cr0_smmuen = smmu_enabled(s, sec_sid);
+>> +    int cr0ack_smmuen = smmuv3_get_cr0ack_smmuen(s, sec_sid);
+>> +    return (cr0_smmuen == 0 && cr0ack_smmuen == 0);
+>> +}
+>> +
+>> +/* Check if STRTAB_BASE register is writable */
+>> +static bool smmu_strtab_base_writable(SMMUv3State *s, SMMUSecSID sec_sid)
+>> +{
+>> +    /* SMMU_IDR1.TABLES_PRESET applies to both modeled interfaces. */
+>> +    if (FIELD_EX32(s->bank[SMMU_SEC_SID_NS].idr[1], IDR1, TABLES_PRESET)) {
+>> +        return false;
+>> +    }
+>> +
+> Again, I think those are not configurable at the moment, so I'd drop
+> such checks.
+>
+I'll drop the TABLES_PRESET check.
 
-I didn't know about it.
+I added it to avoid further changes here when TABLES_PRESET support is 
+implemented, but I agree that the simpler approach is clearer for now. 
+(There are also many similar places in patchset that follow this 
+approach such as IDR0.MSI in patch16)
 
-Regarding HW accuracy, I agree XIO3130 being Gen 1, the new speed
-and link are inaccurate and this could confuse some tools checking
-vendor/device ID.
+>> +    /* Check SMMUEN conditions for the specific security domain */
+>> +    return smmuv3_smmu_disabled_stable(s, sec_sid);
+>> +}
+>> +
+>>   static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+>>   {
+>>       SMMUState *bs = ARM_SMMU(s);
+>> @@ -1801,7 +1831,14 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>>           bank->gerror_irq_cfg0 = data & SMMU_GERROR_IRQ_CFG0_RESERVED;
+>>           return MEMTX_OK;
+>>       case A_STRTAB_BASE:
+>> -        bank->strtab_base = data;
+>> +        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>> +                          "STRTAB_BASE write ignored: register is RO\n");
+>> +            return MEMTX_OK;
+>> +        }
+>> +
+>> +        /* Clear reserved bits according to spec */
+>> +        bank->strtab_base = data & SMMU_STRTAB_BASE_RESERVED;
+>>           return MEMTX_OK;
+>>       case A_CMDQ_BASE:
+>>           bank->cmdq.base = data;
+>> @@ -1852,7 +1889,15 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>>           bank->cr[1] = data;
+>>           break;
+>>       case A_CR2:
+>> -        bank->cr[2] = data;
+>> +        if (smmuv3_smmu_disabled_stable(s, reg_sec_sid)) {
+>> +            /* Allow write: SMMUEN is 0 in both CR0 and CR0ACK */
+>> +            bank->cr[2] = data;
+>> +        } else {
+>> +            /* CONSTRAINED UNPREDICTABLE behavior: Ignore this write */
+>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>> +                          "CR2 write ignored: register is read-only when "
+>> +                          "CR0.SMMUEN or CR0ACK.SMMUEN is set\n");
+>> +        }
+>>           break;
+>>       case A_IRQ_CTRL:
+>>           bank->irq_ctrl = data;
+>> @@ -1915,12 +1960,32 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>>           }
+>>           break;
+>>       case A_STRTAB_BASE: /* 64b */
+>> +        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>> +                          "STRTAB_BASE write ignored: register is RO\n");
+>> +            return MEMTX_OK;
+>> +        }
+>> +
+>> +        data &= SMMU_STRTAB_BASE_RESERVED;
+>>           bank->strtab_base = deposit64(bank->strtab_base, 0, 32, data);
+>>           break;
+>>       case A_STRTAB_BASE + 4:
+>> +        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>> +                          "STRTAB_BASE + 4 write ignored: register is RO\n");
+>> +            return MEMTX_OK;
+>> +        }
+>> +
+>> +        data &= SMMU_STRTAB_BASE_RESERVED;
+> SMMU_STRTAB_BASE_RESERVED is the mask for the whole stream table base it
+> doesn't apply to A_STRTAB_BASE + 4 offset.
 
-Regarding the code size, user facing changes, existing topology,
-migration, etc, boosting XIO3130 capabilities is safer. What is
-worrisome is the downstream impact. backports will be a problem.
-That said I didn't check.
+You're right. It should be:
 
-David's proposal is preferable, as the device doesn't pretend
-to be real HW and should be pursued for upstream. Mine would be
-more a fallback solution for downstream. Hopefully not,
+data &= SMMU_STRTAB_BASE_RESERVED >> 32;
 
-Cheers,
 
-C.
+  I'll also check for similar mask misuse elsewhere.
+
+>
+> Thanks,
+> Mostafa
+
+
+Thanks,
+
+Tao
 
 
