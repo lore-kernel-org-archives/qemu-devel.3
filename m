@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B526C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5827EC88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 18:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6XP6-0007Z6-PZ; Tue, 15 Sep 2026 13:57:14 -0400
+	id 1x6XRd-0008Ho-Gz; Tue, 15 Sep 2026 13:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1x6XOu-0007Wg-8H; Tue, 15 Sep 2026 13:57:00 -0400
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1x6XRZ-0008Gp-TW
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:59:46 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1x6XOs-0004Fr-8M; Tue, 15 Sep 2026 13:56:59 -0400
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1x6XRY-0004xD-5u
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:59:45 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id D837440AF7;
- Tue, 15 Sep 2026 17:56:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC321F000FF;
- Tue, 15 Sep 2026 17:56:54 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 42793411FF;
+ Tue, 15 Sep 2026 17:59:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7997D1F000FF;
+ Tue, 15 Sep 2026 17:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789495016;
- bh=XseWBq8izn0Nrmc0zn5blFXPCwaM4UJNp8e2A5vqhqc=;
+ s=k20260515; t=1789495183;
+ bh=8zoKsP470aqDDwqwXvLW07dQb2yiVtQ3w8IhifEP4qk=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=B6AEoLYwWfv/YjRFBn2qURpPFo3w3W+OStjkg9O1CWS1UA/0IQ+pT+wFdsVv0k/6T
- FQZ5SPAseZhnW3ZWVbtjKeHnIWOffVIjRQ2/nGv9cavrIaC/zUly45ixakynQuWq2P
- xHq/vWRr6bIw/s2Pp+wRnAS+u31Aawq/ku69hCJ8lY4cCBapotlPP0JUZrqncA8pGk
- v9EOhqV5PGu2XzS/kHMnHIGT7yaJg05tDyvE+l59f2USnNJPo0YsXiR1G3eEVKuhc/
- J3HVr/7dMU2uccy29uQLppCZVznlxih2iCLFJCpTCM1TIOoOadMqImkiB5iSKTcZ7M
- y7VTP2P/qwhgQ==
-Date: Tue, 15 Sep 2026 18:56:50 +0100
+ b=ONj4lyHt16Tv81SJ0Ei2DsAzYXXEnQiQyJMYcnczfxa8IdwFuEr67JiDIH96srPR5
+ Se/JwIqtsAoRUu5j/81oPZlc8iFLy3gmxALzle682xMUi2fwgoZHxYy2rWVJ/cryhk
+ M5a51rxeMlD+7jsocUlmp7wfqYLLwlVJCxFmqb6PGBnH2+HTMl628rnpY4nZkzW9WR
+ d/COA4pbIcWwm6JaX83L0JJQ+6KZukkCl8pNtyRPfJhzTOtJJtIhmIMgN7poK3ijRU
+ JXxDoj7kuRwZSqKntJAvWmwzcQ9/tHAxwBpIZsT+mvWWILUPMzzUpW0A9O+1cLel3f
+ QkcbCP6AhnVJA==
+Date: Tue, 15 Sep 2026 18:59:38 +0100
 From: Jonathan Cameron <jic23@kernel.org>
-To: Chen Pei <cp0613@linux.alibaba.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
- imammedo@redhat.com, sunilvl@ventanamicro.com, pbonzini@redhat.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
- junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v6 6/6] tests/qtest: Update RISC-V CXL ACPI golden
- master binaries
-Message-ID: <20260915185650.272825f6@jic23-hlaptop>
-In-Reply-To: <20260907093735.2753-7-cp0613@linux.alibaba.com>
-References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
- <20260907093735.2753-7-cp0613@linux.alibaba.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, anjo@rev.ng, Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>, philmd@oss.qualcomm.com, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, "Daniel P. =?UTF-8?B?QmVycmFu?=
+ =?UTF-8?B?Z8Op?=" <berrange@redhat.com>
+Subject: Re: [PATCH 46/47] hw/pci-bridge: filter from CONFIG_CXL
+Message-ID: <20260915185938.0772edfe@jic23-hlaptop>
+In-Reply-To: <20260828225901.367438-47-pierrick.bouvier@oss.qualcomm.com>
+References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260828225901.367438-47-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -76,35 +73,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  7 Sep 2026 17:37:33 +0800
-Chen Pei <cp0613@linux.alibaba.com> wrote:
+On Fri, 28 Aug 2026 22:59:00 +0000
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
 
-> Populate the DSDT.cxl and CEDT.cxl golden master binaries for the
-> RISC-V CXL bios-tables test and empty
-> bios-tables-test-allowed-diff.h, following the bios-tables-test update
-> process.
-> 
-> The expected AML added by this series is:
-> 
-> DSDT.cxl:
->   Device (PC0C)        // ACPI0016 CXL host bridge (pxb-cxl, bus 0x0C)
->     Name (_CRS, ResourceTemplate () {
->         DWordMemory (... 0x40400000 .. 0x405FFFFF ...)   // 32-bit MMIO
->         QWordMemory (... 0x400100000 .. 0x40010FFFF ...) // 64-bit MMIO
->         WordBusNumber (... 0x000C .. 0x000D ...)
->     })
->     Method (_OSC, ...)   // PCI host bridge + CXL UUIDs
->   Device (CXLM)        // ACPI0017 CXL memory controller
->     Name (_HID, "ACPI0017")
->     Name (_DEP, Package () { \_SB.PC0C })
->     Method (_STA, ...) / Method (_DSM, ...)
-> 
-> CEDT.cxl:
->   CHBS : CXL Host Bridge Structure, Register base 0x800000000
->   CFMWS: CXL Fixed Memory Window, base 0x810000000, size 4G
-> 
-> Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-> Tested-by: Junjie Cao <junjie.cao@intel.com>
-> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+
+Fine by me.
 Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+
 
