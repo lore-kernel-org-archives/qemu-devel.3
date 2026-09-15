@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 978DDC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF9FC88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Zs1-0001KU-25; Tue, 15 Sep 2026 16:35:13 -0400
+	id 1x6Zrs-0001HQ-Ba; Tue, 15 Sep 2026 16:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zry-0001JJ-Fn
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:10 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrq-0001H8-Cv
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:02 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrw-0005bo-N2
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:10 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3931so1617965e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zro-0005ZU-FO
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:02 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-482f635552aso100011f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789504507; x=1790109307; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=mfggAYcfW+ee4C8Ti5nGRWscQD6bm2tdaOwAHPoXh0c=;
- b=Un8RtduvA8y0gTfc2Nk3fo1m/tECufJiIsxG/KVnOboKN2NoC/7log+JBPmasTSlKr
- 1voMWfS4lkEru7IgGZ9tlcWMp1kJ4arHXf3BJvTLkcLlGk/cxv8ze4Nj3rUMGL+S8ROy
- 0qyBxxW/OPMpFvVhuY7RbzTmXcPLbb+7J3VRmwF6i/2isXMfhJZurB29TQLw9HdlcwWK
- x96MG472GzJgqNUY/kmnt45wTPu7m7UktxT5oW4h1FVLyfMGFh/aGTBNxLxikjrCiNzi
- WE8AMfCI1V6LkKnYpzcQHZy6fFtceEy7lb4y5SZXXeLD90xjTcIegXwJcToRv8FvpPP2
- f+jw==
+ d=openvz.org; s=google; t=1789504499; x=1790109299; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=vzo6ObB9H7yVC9RecKBrGqXoabYS6sJDbZ5xznrbBJ0=;
+ b=HlP5Wigr72NqPpxtuREOZBMIx8KVdQv69XNMm6om6PZlw+xH9/UaGNST5S9oj8oizi
+ 67RjbBhFMbzIfdVhLvpSWASBrN6MOR6M+wxzJQASBhcNs98wPocObG1oocZHbBAaObge
+ HDxjhBZAP2zhwAY6PFhNghBqKB89/zvAOfRuFBHjbqzdsGgqREPzxsMjzY8Wht8uLX5r
+ yUgVk0WrnQGdMRw+4e8gIzgpE53eLYbIAzBLb212kaLgadwk/M6pbs9stn/Omw4hM3O/
+ 5XEeTDlIEdCX6btGk8fE++6SFs4zeckdv8UTxNOpnvX+hJmrrzxbrPpCwsK2I19/zxQu
+ rRyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789504507; x=1790109307;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mfggAYcfW+ee4C8Ti5nGRWscQD6bm2tdaOwAHPoXh0c=;
- b=FYKL7xIjutc3Bns9FAK8r7IHvp0+hF9c1H67fWNLIaqXMM1b6GA/r+qPRt10oZjTtf
- MGp00VY2Yi8jTf7xp8iSQ3HmwZ9s4/n5QhYNtTzn+nzkxTn7kvMLsuUsIbVZSK5wELxx
- mhijPGxGYrs+OZ9bISXm7GLQtka+ym3c8M89i7edmN3etsMYCvyfJEwawjwysMiXlHNI
- mlpCRAUbR91dC+8tWlV+RgotnVPRq5nemNxsk8DIZ1kqTKBmVxdNLac3OHOuC4z9e1HD
- ep2SWKtioIvyLEqMz2+nbKOuQK9Qp/HaVwH8e4eTxFzRSQ2sBzqoaMIFLyrZCj8y+k1B
- sN1A==
-X-Gm-Message-State: AFuF++m2KpjA8GdWhS64eJh/DVpKXw3z4kTemspeVi5bhDdvtBYZWWOf
- RGoOIxaltNGyFKzTj0iyMLTZ0T73JP5Q6raB0PG/+p0DWGfn/bOGArVozQIJ8K3KR5d0S63EUZ2
- 4PnUM
-X-Gm-Gg: AYBFou3NKvfyLZalbkXrsqiWAQsrezdxCJpafAg2zVJix+PexWZLDecUob0M3wOyrel
- pL8Ka/eW4lYd4+EbCFEfUUtah1hL0yAQqpuq+XI5qfTReSeJZA/0cGcB+2o6CkCrJ6oZHxbR2dP
- ABOFaAnZGAa+Z+eQN9G76i6hIbykZh+ixqIH+o0xBdaC3pZIYk093/RZeYE/kp8LRia18hOvN6B
- Qa61hbIxwLUYnJ2IdALcCYDYX+W8Gf1w3Bh6GtRuCjixZxJ1ZtzXphEwvKf3+siXcill47Ti9gh
- kquEd2wVxsx7u/DxbY2naf7oO7g7oaidO4/VYYxrcUF20Gsyrn2aJddqkHOlnBHZGnlz8VClTKa
- 7uJgwkmtsCFvQ3IhQe+gIRG8NmTmi2y95iDSz+UK2YAdxdLxO/UVCUa75bAJZDAmxaqr7qq+Fll
- cgOLCkVa9h1qeXYvDPpfN5msKz1mLAvbMWUMYMGPGefawcofnHb5SNsuYIKysOiG5RW8zum7WW+
- zyVwI8=
-X-Received: by 2002:a05:600c:35c2:b0:49c:eb16:9fd with SMTP id
- 5b1f17b1804b1-49e821ffef1mr43234155e9.3.1789504507309; 
- Tue, 15 Sep 2026 13:35:07 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789504499; x=1790109299;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=vzo6ObB9H7yVC9RecKBrGqXoabYS6sJDbZ5xznrbBJ0=;
+ b=hWBKvRRdXhzXhjD7M2oSSbb2X+sUqFILObh0JjtNmeU6wk+dK/19oCaRz1pTiueuL2
+ 5O6ZIPhAwECsBZQWyNYvv8I+CqdDmcnGktfP5twKpzcMTABirgFr6HCJPokrkpEXnlyh
+ 80dRzKNtzP8YO6XxJ6FWbaa6eC/PPXUCQb/tJgBEylJfsxR7UzS1ynFuD9XeGTbDAvQ9
+ HyIjdv7tslc9lqhTuAjnlRkqWfcpg58ALryRJ0lH6lxULASWh9wYr+7/AVCFxRpQafBe
+ mUPtBbIUwXMpEFs8PhmDs7/7VA+HNVgwQAxN82fdXsCuLvX3XhMYpX0qjYbWpfu4UVYB
+ Idfg==
+X-Gm-Message-State: AFuF++lMuRG4Mw7bdXk7pi7s4Aht/0Vkty+1eIdmohSE9WGkFA8EgmF8
+ 8WgPNcC8x8xaqgl67hwdjltwScFWX5S0c8LNIsLWL7RmOpN9vL0tTm0fK4gFrrb62BLcO1J+KiT
+ Qm7OD
+X-Gm-Gg: AYBFou0aQnjyTBqaGPAOGtgoO+qQLDVYJiblzg8l3ygGSgM6+pJeNwbOmtLUFT5lcU0
+ DK6UGVwB7hc+EkDbTeNFZpNPZIbtbWGdpQDEj3K1WfDNThfv3LiZv6ttEEKRwvvv998SFadLg1E
+ 9puBn/HTHhRkn1B/ZOpg97vviWWweIBd0/ofdRiI4MaZwZfE+TzYttc+WYhne6YCRUSKN68CmOz
+ 9Y0b1lw+alte1qNN2H/WLJAPvvcc/DbVJmIgStDamxCbv+jC8oDzhqwO0/MtmSW+Nx/WVDZkRWI
+ cjx649RA3oN3qOzAeCCPFr5T/3rgjsx+y2ziELbe1O7q4Pr+TNHxp5DczM00Y8B2P3j5Gp2J5LB
+ sZKay8C7P7j8EmINVIi2mnsVbsoLgh8xHcvw5AsOhVI+FHlBCELrJCLoU7IjPXTK9naRk5KwhF4
+ +zspaidhwUPk/s2vSpO2rvGxq5sePTbVGMbDsNS1AgXVYmVZHtjbs8fcbmZ+1DGVQSz5an
+X-Received: by 2002:a05:6000:1883:b0:487:94b:2262 with SMTP id
+ ffacd0b85a97d-4870d05adabmr128414f8f.52.1789504498649; 
+ Tue, 15 Sep 2026 13:34:58 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:f0fe:c7ed:403d:e487])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.06
+ ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.34.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:35:06 -0700 (PDT)
+ Tue, 15 Sep 2026 13:34:57 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 05/10] util/qemu-thread: reserve a signal for thread
- introspection
-Date: Tue, 15 Sep 2026 22:34:49 +0200
-Message-ID: <20260915203455.580999-6-den@openvz.org>
+Subject: [PATCH 0/10] system: add a watchdog for the Big QEMU Lock
+Date: Tue, 15 Sep 2026 22:34:44 +0200
+Message-ID: <20260915203455.580999-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260915203455.580999-1-den@openvz.org>
-References: <20260915203455.580999-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,70 +99,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+A vCPU thread reacquires the BQL on every exit that needs userspace. A
+holder that keeps it for tens of seconds stops every vCPU, the guest
+reports a soft lockup or panics, and qemu itself records nothing. The
+guest log is the only evidence, and it cannot say whether the hypervisor
+held the lock or the guest wedged on its own.
 
-qemu_thread_create() blocks every signal in the threads it starts so
-that process directed signals reach the main loop and nowhere else.
-That reasoning covers delivery the kernel is free to route: kill(2)
-picks any thread not blocking the signal, so leaving SIGTERM or SIGCHLD
-unblocked in a worker would let signalfd miss them.
+This series adds a BQL watchdog. A sampler thread watches a sequence
+counter that bql_update_status() advances on every acquire and release.
+One odd value across the whole window means one owner held the lock for
+the whole window. On expiry the watchdog names the holder and prints the
+state of every other thread:
 
-A thread directed signal is not routed. tgkill(2) delivers to the named
-thread whatever every other mask says, so a signal only ever sent that
-way was never the main loop's to receive, and unblocking it takes
-nothing from it.
+  qemu-system-x86_64: 2026-09-15T15:53:57Z BQL held for more than 100 ms by thread 168146
+    168146  qemu-system-x86  S
+        pc 0x785a4dbcb884 liburing.so.2+0x2884
+        wchan io_cqring_wait
+    168147  call_rcu         S
+        pc 0x785a4d534acb syscall+0x1b
+        wchan futex_do_wait
+    168148  IO mon_iothread  S
+        pc 0x785a4d4ac802 libc.so.6+0xac802
+        wchan poll_schedule_timeout.constprop.0
 
-Reserve SIGRTMIN for asking a thread what it is doing, and leave that
-one unblocked. Nothing sends it yet, and until something installs a
-handler the change is invisible: a real time signal terminates by
-default, which is already what a stray one does through the main
-thread, where it was never blocked either.
+With CAP_SYS_ADMIN the wchan line becomes the kernel stack. The pc line
+comes from signalling each thread and reading the program counter out of
+its signal frame, which is what tells a thread spinning in userspace
+from one asleep in a syscall.
+
+The watchdog is off by default and stays quiet under a debugger. Two
+machine properties drive it: bql-watchdog-ms sets the deadline, on the
+command line or over qom-set at any time, and bql-watchdog-abort turns
+the report into a core dump for hosts where the answer is worth more
+than the guest.
+
+Patches 1 to 6 are the pieces: a fix for bql_locked across the timed
+condvar wait, a debugger check, the per-thread state reader and its
+kernel stack and program counter extensions, and the signal reserved for
+the latter. Patches 7 to 9 are the watchdog itself. Patch 10 is a
+functional test that holds the BQL through an HMP qemu-io write to a
+null-co node with a latency longer than the deadline.
+
+The program counter lives at a host specific offset in the signal frame,
+so patch 6 reads it through a host/include header. The Linux headers for
+aarch64, ppc64, riscv64, s390x and loongarch64 repeat what linux-user's
+host-signal.h already knows about those frames, but only the x86_64 one
+has been compiled here, and the Windows half of patch 1 has not been
+compiled either.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Cc: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- include/qemu/osdep.h     | 9 +++++++++
- util/qemu-thread-posix.c | 4 ++++
- 2 files changed, 13 insertions(+)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index c15ffd7880..0bd08e0f7f 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -667,6 +667,15 @@ int qemu_get_thread_id(void);
-  */
- bool qemu_debugger_attached(void);
- 
-+/*
-+ * Signal reserved for asking a thread what it is doing. It is only ever
-+ * sent thread directed, so it does not compete for the process directed
-+ * signals that qemu routes to the main loop.
-+ */
-+#if defined(SIGRTMIN) && !defined(_WIN32)
-+#define QEMU_SIG_INTROSPECT SIGRTMIN
-+#endif
-+
- /**
-  * qemu_thread_states:
-  *
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index 580cdf8079..66bde85608 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -444,6 +444,10 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-     sigdelset(&set, SIGFPE);
-     sigdelset(&set, SIGILL);
-     /* TODO avoid SIGBUS loss on macOS */
-+#ifdef QEMU_SIG_INTROSPECT
-+    /* Thread directed, so it was never the iothread's to receive */
-+    sigdelset(&set, QEMU_SIG_INTROSPECT);
-+#endif
-     pthread_sigmask(SIG_SETMASK, &set, &oldset);
- 
-     qemu_thread_args = g_new0(QemuThreadArgs, 1);
+Denis V. Lunev (10):
+  util/qemu-thread: track bql_locked across the timed condvar wait
+  oslib: add qemu_debugger_attached()
+  oslib: add qemu_thread_states()
+  oslib: report kernel stacks in qemu_thread_states()
+  util/qemu-thread: reserve a signal for thread introspection
+  oslib: report each thread's program counter
+  system/cpus: report a BQL held past a deadline
+  system/cpus: hold off the BQL watchdog under a debugger
+  system/cpus: add bql-watchdog-abort
+  tests/functional: cover the BQL watchdog
+
+ host/include/aarch64/host/signal-pc.h         |  20 ++
+ host/include/generic/host/signal-pc.h         |  11 +
+ host/include/loongarch64/host/signal-pc.h     |  20 ++
+ host/include/ppc64/host/signal-pc.h           |  22 ++
+ host/include/riscv64/host/signal-pc.h         |  20 ++
+ host/include/s390x/host/signal-pc.h           |  20 ++
+ host/include/x86_64/host/signal-pc.h          |  20 ++
+ hw/core/machine.c                             |  44 +++
+ include/qemu/osdep.h                          |  29 ++
+ include/system/cpus.h                         |   8 +
+ meson.build                                   |   2 +
+ qemu-options.hx                               |  11 +
+ system/cpus.c                                 | 143 ++++++++
+ tests/functional/generic/meson.build          |   1 +
+ tests/functional/generic/test_bql_watchdog.py |  60 ++++
+ util/oslib-posix.c                            | 316 ++++++++++++++++++
+ util/oslib-win32.c                            |  10 +
+ util/qemu-thread-posix.c                      |   8 +-
+ util/qemu-thread-win32.c                      |   4 +-
+ 19 files changed, 765 insertions(+), 4 deletions(-)
+ create mode 100644 host/include/aarch64/host/signal-pc.h
+ create mode 100644 host/include/generic/host/signal-pc.h
+ create mode 100644 host/include/loongarch64/host/signal-pc.h
+ create mode 100644 host/include/ppc64/host/signal-pc.h
+ create mode 100644 host/include/riscv64/host/signal-pc.h
+ create mode 100644 host/include/s390x/host/signal-pc.h
+ create mode 100644 host/include/x86_64/host/signal-pc.h
+ create mode 100755 tests/functional/generic/test_bql_watchdog.py
+
 -- 
 2.53.0
 
