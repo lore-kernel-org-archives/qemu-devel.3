@@ -4,56 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B25C88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 07:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568DFC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 07:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Nbo-0008Kn-Ae; Tue, 15 Sep 2026 03:29:40 -0400
+	id 1x6NgI-0000eJ-RK; Tue, 15 Sep 2026 03:34:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=md1712AE31BF=lirongqing@baidu.com>)
- id 1x6Nbk-0008KT-HZ
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:29:36 -0400
-Received: from mx21.baidu.com ([220.181.3.85] helo=outbound.baidu.com)
- by eggs.gnu.org with smtp (Exim 4.90_1)
- (envelope-from <prvs=md1712AE31BF=lirongqing@baidu.com>)
- id 1x6Nbd-0004I9-6W
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:29:34 -0400
-X-MD-Sfrom: lirongqing@baidu.com
-X-MD-SrcIP: 172.31.50.47
-From: lirongqing <lirongqing@baidu.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>
-CC: Li RongQing <lirongqing@baidu.com>
-Subject: [PATCH] pcie_aer: fix pci_set_long overflow into PCI_EXP_LNKCAP
-Date: Tue, 15 Sep 2026 15:29:08 +0800
-Message-ID: <20260915072908.2197-1-lirongqing@baidu.com>
-X-Mailer: git-send-email 2.17.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6NgH-0000e8-9s
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:34:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6NgE-00057g-Ay
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:34:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789457644;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nfhldF4YQlrO/j2vB40mcgbI0hD8rLWOuLV4sJfHE6s=;
+ b=cpSDlyOGEozus/bS340eg5R5q7LY8HZpcGNpnBCjI4GfZs+MX+9cu/89o2oU2OJGQUetFd
+ TXOw/PL9dRskTygj649BToGi9wZa9m7sxlzZfgueOB6iaOi+er6D2k213j38NHOXf4merZ
+ tWLWDJfeIrEt2+lTK44n2+SyLp2rZpo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-E4_WIonyNz60KYWgAnYlRQ-1; Tue,
+ 15 Sep 2026 03:34:01 -0400
+X-MC-Unique: E4_WIonyNz60KYWgAnYlRQ-1
+X-Mimecast-MFC-AGG-ID: E4_WIonyNz60KYWgAnYlRQ_1789457640
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 32BA81955E74; Tue, 15 Sep 2026 07:34:00 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31E331955F78; Tue, 15 Sep 2026 07:33:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 94C7A21E6A04; Tue, 15 Sep 2026 09:33:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Eric Blake <eblake@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>
+Subject: Re: [PATCH V16 00/13] iothread: Support tracking and querying
+ IOThread holder
+In-Reply-To: <CAK3tnvKXv+HdK4d5KXXNagUCODj68A1XRuP7VTpZNyUFoMTQnw@mail.gmail.com>
+ (Zhang Chen's message of "Fri, 11 Sep 2026 20:53:50 +0800")
+References: <20260911100709.726366-1-zhangckid@gmail.com>
+ <87wlss6owr.fsf@pond.sub.org>
+ <CAK3tnvKXv+HdK4d5KXXNagUCODj68A1XRuP7VTpZNyUFoMTQnw@mail.gmail.com>
+Date: Tue, 15 Sep 2026 09:33:56 +0200
+Message-ID: <87pkyfrmsb.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.127.73.8]
-X-ClientProxiedBy: bjhj-exc13.internal.baidu.com (172.31.4.11) To
- bjkjy-exc3.internal.baidu.com (172.31.50.47)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
- s=selector1; t=1789457356;
- bh=DQbdwpCH9YgbPVUq2woUeW5Jrdfp8Cyb9n6JchKAGKo=;
- h=From:To:CC:Subject:Date:Message-ID:Content-Type;
- b=apwhUr99QHkaPWOCCrfveD1SDDITnCyfDPwfNbwnfiMM8Wf9EnQ8puC588kICpP2V
- Nu2iDqpow5LBpTRlsBWvkwZwTdvQHQKsIT5Qn2KiIxPT41t9mzHKXbQDqCC/Szpzon
- hajOaRHGnoyWcDxcuNv/vFJTUwO0xDrgauezQXGjhxwD3TKPflg9jKDUCu5zKiR8MM
- aseH+2nn432FmmsU+p0IS4s7EhoOXqdk64KisOscEqowT2h7MTQ9g0opNg/wPC4SyS
- SXCgCVesJQPTVOc7g/ZCSdEhp+o7dz5Za99Od2ZYYlPGM2tAwGc11hfmBtL77LB38h
- dNsYLQxtVw2Og==
-Received-SPF: pass client-ip=220.181.3.85;
- envelope-from=prvs=md1712AE31BF=lirongqing@baidu.com; helo=outbound.baidu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,38 +92,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li RongQing <lirongqing@baidu.com>
+Zhang Chen <zhangckid@gmail.com> writes:
 
-pcie_aer_inject_uncor_error() wrote inj->devsta (a uint16_t) into
-PCI_EXP_DEVSTA using pci_set_long(), which writes 4 bytes. PCI_EXP_DEVSTA
-is a 16-bit register at offset 0x0a; the extra 2 bytes written by
-pci_set_long() land at offset 0x0c, the low half of PCI_EXP_LNKCAP,
-zeroing the link speed/width capability fields on every uncorrectable
-error injection.
+> On Fri, Sep 11, 2026 at 6:52=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Doesn't apply to current master.
+>>
+>> https://patchew.org/QEMU/20260911100709.726366-1-zhangckid@gmail.com/
+>
+> This issue caused by the dropped patch 1 from V15.
+> https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg02947.html
+>
+> I assume that patch will be merged before this series.
+> I forgot to mention this earlier, I double confirmed no other problem her=
+e.
+> please continue reviewing.=EF=BC=9A=EF=BC=89
 
-Use pci_set_word() instead, matching the correctable error path in
-pcie_aer_inject_cor_error().
-
-Fixes: 34e65944c0351 ("pcie/aer: helper functions for pcie aer capability")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
----
- hw/pci/pcie_aer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
-index 22497b1..43b14c1 100644
---- a/hw/pci/pcie_aer.c
-+++ b/hw/pci/pcie_aer.c
-@@ -589,7 +589,7 @@ static bool pcie_aer_inject_uncor_error(PCIEAERInject *inj, bool is_fatal)
-     if (inj->unsupported_request) {
-         inj->devsta |= PCI_EXP_DEVSTA_URD;
-     }
--    pci_set_long(dev->config + dev->exp.exp_cap + PCI_EXP_DEVSTA, inj->devsta);
-+    pci_set_word(dev->config + dev->exp.exp_cap + PCI_EXP_DEVSTA, inj->devsta);
- 
-     if (inj->aer_cap) {
-         uint32_t mask = pci_get_long(inj->aer_cap + PCI_ERR_UNCOR_MASK);
--- 
-2.9.4
+The patch in question is now in master (commit f10977073c qapi/misc: Fix
+missed query-iothreads items), but git-am still fails for me.  Could you
+kindly rebase?
 
 
