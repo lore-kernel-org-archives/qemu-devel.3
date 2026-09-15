@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11772C88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6D7C88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZkR-0006iP-RA; Tue, 15 Sep 2026 16:27:23 -0400
+	id 1x6Zrt-0001Hh-JC; Tue, 15 Sep 2026 16:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1x6ZkP-0006h9-6U
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:21 -0400
-Received: from mail-lr2-x10.google.com ([2a00:1450:4864:38::10])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrr-0001HI-S5
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:03 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1x6ZkN-0004oE-A1
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:20 -0400
-Received: by mail-lr2-x10.google.com with SMTP id
- 38308e7fff4ca-3a5d4688decso2337711fa.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:27:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrq-0005Zw-5S
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:03 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49e6598dd44so1299275e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789504038; x=1790108838; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=0HzlsMupkT43STyFi+zWkNuXYuyJLKJmneYJJfz5S2w=;
- b=AiINi523euK6LKiWu9oSgscR0IyDc7XABSvKTeB3rRKqdbZrhURjvSbKvqnYOiSuZ1
- vFIfp6yEvXzTpVHj+jnKIKfo5E/6AVDF389kU1HzHOrci3rxv4c5U7VHPzmzvIGTJm2c
- bDf4cDAtIIYwElNuYUpREvADl/tnAc1Dc2HSCokT6jTIQtapUGcrK5h5jyfmloWNkWsr
- hrsJkIgezk/th8NtiNKHDGST6QE40fd0lauuuFdVYWpQwYTIC8RzC7dE/t7PKUnnJiNl
- dJnYx9d+0d6FC6MIBZ7WZ/D+8raG9Nm9h+1wAvqlJo8+rJNfb6r2DLSo8s6RE5OCs/BN
- fJFA==
+ d=openvz.org; s=google; t=1789504500; x=1790109300; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=XTYYskXjomYjrh7QaEEaHTvJmk0WsJMpAIC97SU4vck=;
+ b=nkLMKuv0QMMFsN9GKRib/zJXyhKn8HW9JuT0hb5eZws6X//s5JDzqUwW9EVBPpuy2Y
+ 1FOqtKga0Jv+FjgF7iwMvDS482lYDZ66P8bjIYG4sXxDgVnAxFv87LRZR3FhRuYgEobT
+ h3OZXGJzmU5K6yE3K5kmcHvk6xiorrayw0cZScHVfITs13VXRzleJf36o2f/qi60dNbQ
+ aueP6xcy3wTuBoDjc4zf8H2+Vcel0JaaZzu8bqeMiloU93AVGF2cdj2AsSvcU8ULiwNX
+ RdC8jXgwc2w6H0Yzv9Lr/pO9aMfVoKtvPLUNbbHjfUhW9Ou0d/JezrgCHwbs2DBdKepT
+ QdoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789504038; x=1790108838;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:sender:x-gm-gg
+ d=1e100.net; s=20260707; t=1789504500; x=1790109300;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=0HzlsMupkT43STyFi+zWkNuXYuyJLKJmneYJJfz5S2w=;
- b=qyYkZ9dqquR+PocX0tgL1e1g35P/GI+Z/aL0Uoclwt/8hOhSCu3V0sZci4NE318XoR
- yehlEBbtJruKFLuNjJIHtNtQUpaNagaoYOv8aqqAiryuYki0/5Jl1orAyMlTRIzESgQA
- 7NMhE8U+i5qlNMDy2oiuAhc/NtTQkqv/pEjWZcZJkUmPqHYKrZCbPyN/f1fBmul40tAH
- I99181ycWKiZT/VlfnpDdKeLAFLfwoduLPn5VOwQYexiyWYkHHOlvf38Ns3Md34PGksR
- qmXd+QjU94mfb8UUQi6W9HQ0OYDzU0jac6htW6yuLkS75J3Xr78BxWMhaUUxLhyuY0PS
- I+rw==
-X-Gm-Message-State: AFuF++m8PSEAUZ4bzAyIiAKISEwh5cEKan7xE70VCJpred82o55mu8mZ
- ySrUulgAWdt63GU68act8ndY51Bv/fLtH4GYm0L9SJp9eEByXJ8N27sk
-X-Gm-Gg: AYBFou12tyw6yhN8USANPIvocsPOU6CkJaAf8H5OpXL9rLykm5sPa3CIbjRqS7y4OF7
- cuHGTg0Ix/EeTHsvkRRSMHNimfP7nghGVdiDz5eMDIVPWZ2VAqFlMy3nWqutTGG+oOtyuMgvD3p
- 4u6jCiSwIFpvJBQE7/NOUvTDquL0mxdBQAbNaxW2UHnVwReAW1wK1xE3OUtJyxxscXXb7ZT0L+i
- /qFuhz1hmldBaYcc8iRcaNqc87D1XJUoTcQ2T1gtzpg+6wHyT941WvaSLd7X+qOWetnTPqHm1U+
- lZNLvGdF/EMMu6eIZ6Y/E4GJCMPUNQVIJvGuLr+v6liMBwskwB1gqD4tQWCmTTSeys4/YAUyNW4
- D+orQU2NfuRSSm/MzOIBv7gGHCw3KyoSHr3xUFAx1hCGOkg9XfGU7gwN+BkE7N1mUliKOv3MjFv
- lF0rWNgWLoEq3R2ZoI1kAJUuqW24Vvqh9wQA59Y95OgWkjDyEq3/VmMYxlLsFpQ9xZMxLAvQY1v
- KMrKU3ExygHC8IR+S2zFL7z2wjsPy3r06aOybseEtKffGBO4CzVPPKWsFc=
-X-Received: by 2002:a05:651c:1503:b0:3a3:7682:499f with SMTP id
- 38308e7fff4ca-3a5dca188e5mr143481fa.20.1789504037359; 
- Tue, 15 Sep 2026 13:27:17 -0700 (PDT)
-Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
- [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3a5daf0dbacsm1621391fa.4.2026.09.15.13.27.14
+ bh=XTYYskXjomYjrh7QaEEaHTvJmk0WsJMpAIC97SU4vck=;
+ b=phZHWfdRAkxMD97QZD+ZE4VGMd2GmV/nU+9zh/mWv/F+N8f+HJCEmg+PfAgPF3m6KD
+ zo4VEB6tfapKLpN35vGGZybQEj820CDSaiNWsvjerG5IIja1f+Qciek393neZk4s10tB
+ 5upEp6zq4RhFIFJ1XESvxU7bj5zAGLROKTKYZX5kbWoxkO1qdO5LOATE4AwERAvLvwPi
+ tlxXqTQ35mndSI4X0/NtkjguooHbIEhaC5ykNHterGlxfCM7USVMfzrhIvmYbjL6ua0O
+ cVSEgH8olz0rLaeTzaYEQeBtePw3hmJV4nEquEzFF/zxOu5aglX7hjV+3hZHiMVlAyDc
+ DyvA==
+X-Gm-Message-State: AFuF++mItoEESR+f6q8tek+Lz2XmOGcCaSuLwyI4DZPPNDoWHUyFjfeW
+ rH94gv2TOWKDKn4P0XBJC2h5UoZt5fzyFoerWHV/ZWUgQxndpyLBp67aE6bubHqehy+C2V7v32I
+ Sgrma
+X-Gm-Gg: AYBFou2ocyfDtQ/XNhrRqr1PvOTsfsCwS4N5gJytUJfYFAGmhx3/tIqXi4e2n6LLakJ
+ 1KZ1CK0BwqMc2DBaNCUECS7B82YfpY2WRRjq23TGDkh4QID/PFewzHsp21/C0By/ZxiXfOEhJKR
+ e9v5ZYOKRKyJAFxxOdzwHARIPjaR4jXIPkRVwINvChyboP0J2iuFzJ/WdfNmNcKuhemq1wkeoMv
+ kJgKycSrh/6hmFGrVRpoYVEgSw3gMZgjvwQu9Oo2VZ4K1jehuwRC3ot0hMtlgrtgoEQGSk4dRY2
+ xEjgA6LatDglDbJlqUqnIUNjQ0Rwjno6dVC8xZ2Iv7J3D+2cnGA49dPhYRPm5eQHsGvmYzqMw1e
+ 4dVDNlBoPCiN/D4ZsXkPgVMk9AV5Y8a2OsGlIzcxPZSqHu5uifril9UErro2mxpI35lTzCymsy/
+ f+R8r7TabCVMB4EOuDwx9tcLts8e+Ij/50tQ8UqnMl1DMQvgpBXiP+dosKBYrw2UCuXcOX
+X-Received: by 2002:a5d:5e91:0:b0:486:e558:604 with SMTP id
+ ffacd0b85a97d-4870d062624mr134707f8f.57.1789504500539; 
+ Tue, 15 Sep 2026 13:35:00 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:f0fe:c7ed:403d:e487])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.34.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:27:15 -0700 (PDT)
-From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Date: Tue, 15 Sep 2026 22:27:05 +0200
-Subject: [PATCH v4 2/3] hw/arm: Add GPIO to Allwinner A10 model
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260915-allwinner-gpio-v4-2-b1ee1d09c9fd@gmail.com>
-References: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
-In-Reply-To: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
+ Tue, 15 Sep 2026 13:35:00 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Jack wang <163wangjack@gmail.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:38::10;
- envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lr2-x10.google.com
+Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH 01/10] util/qemu-thread: track bql_locked across the timed
+ condvar wait
+Date: Tue, 15 Sep 2026 22:34:45 +0200
+Message-ID: <20260915203455.580999-2-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260915203455.580999-1-den@openvz.org>
+References: <20260915203455.580999-1-den@openvz.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,99 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Allwinner A10 GPIO is added to the Allwinner A10
-description, so it is available when Cubieboard is emulated.
+From: Denis V. Lunev <den@openvz.org>
 
-Update the documentation for Cubieboard to indicate GPIO availability.
+qemu_cond_timedwait_ts() releases and retakes the mutex around
+pthread_cond_timedwait(), but calls the two trace points by hand
+instead of going through the mutex hooks, so it never reaches
+bql_update_status(). A thread waiting there still reports bql_locked
+true while the mutex is released, which is the confusion the hooks were
+given that job to end. migration/cpu-throttle.c reaches this through
+qemu_cond_timedwait_bql(). The Windows qemu_cond_timedwait_impl() has
+the same two trace calls, next to a qemu_cond_wait_impl() that already
+uses the hooks.
 
-Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Call the hooks, which emit the same two trace points.
+
+Fixes: c89d1c879a ("bql: Fix bql_locked status with condvar APIs")
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Cc: Stefan Weil <sw@weilnetz.de>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- docs/system/arm/cubieboard.rst | 1 +
- hw/arm/Kconfig                 | 1 +
- hw/arm/allwinner-a10.c         | 8 ++++++++
- include/hw/arm/allwinner-a10.h | 2 ++
- 4 files changed, 12 insertions(+)
+ util/qemu-thread-posix.c | 4 ++--
+ util/qemu-thread-win32.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/docs/system/arm/cubieboard.rst b/docs/system/arm/cubieboard.rst
-index 90d24c73a1..ee9f489ead 100644
---- a/docs/system/arm/cubieboard.rst
-+++ b/docs/system/arm/cubieboard.rst
-@@ -12,6 +12,7 @@ Emulated devices:
- - RTC
- - EMAC
- - SDHCI
-+- GPIO
- - USB controller
- - SATA controller
- - TWI (I2C) controller
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index eae06369b0..4445f16f45 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -295,6 +295,7 @@ config ALLWINNER_A10
-     select ALLWINNER_EMAC
-     select ALLWINNER_I2C
-     select ALLWINNER_A10_SPI
-+    select ALLWINNER_GPIO
-     select AXP2XX_PMU
-     select SERIAL_MM
-     select UNIMP
-diff --git a/hw/arm/allwinner-a10.c b/hw/arm/allwinner-a10.c
-index 66f30757dd..66fe484ae0 100644
---- a/hw/arm/allwinner-a10.c
-+++ b/hw/arm/allwinner-a10.c
-@@ -41,6 +41,7 @@
- #define AW_A10_EHCI_BASE        0x01c14000
- #define AW_A10_OHCI_BASE        0x01c14400
- #define AW_A10_SATA_BASE        0x01c18000
-+#define AW_A10_GPIO_BASE        0x01c20800
- #define AW_A10_WDT_BASE         0x01c20c90
- #define AW_A10_RTC_BASE         0x01c20d00
- #define AW_A10_I2C0_BASE        0x01c2ac00
-@@ -83,6 +84,8 @@ static void aw_a10_init(Object *obj)
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index 089606c93f..580cdf8079 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -250,9 +250,9 @@ qemu_cond_timedwait_ts(QemuCond *cond, QemuMutex *mutex, struct timespec *ts,
+     int err;
  
-     object_initialize_child(obj, "spi0", &s->spi0, TYPE_AW_A10_SPI);
+     assert(cond->initialized);
+-    trace_qemu_mutex_unlock(mutex, file, line);
++    qemu_mutex_pre_unlock(mutex, file, line);
+     err = pthread_cond_timedwait(&cond->cond, &mutex->lock, ts);
+-    trace_qemu_mutex_locked(mutex, file, line);
++    qemu_mutex_post_lock(mutex, file, line);
+     if (err && err != ETIMEDOUT) {
+         error_exit(err, __func__);
+     }
+diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+index 3037732a6f..afdacdb5f2 100644
+--- a/util/qemu-thread-win32.c
++++ b/util/qemu-thread-win32.c
+@@ -177,11 +177,11 @@ bool qemu_cond_timedwait_impl(QemuCond *cond, QemuMutex *mutex, int ms,
+     int rc = 0;
  
-+    object_initialize_child(obj, "gpio", &s->gpio, TYPE_AW_GPIO);
-+
-     for (size_t i = 0; i < AW_A10_NUM_USB; i++) {
-         object_initialize_child(obj, "ehci[*]", &s->ehci[i],
-                                 TYPE_PLATFORM_EHCI);
-@@ -203,6 +206,11 @@ static void aw_a10_realize(DeviceState *dev, Error **errp)
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi0), 0, AW_A10_SPI0_BASE);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi0), 0, qdev_get_gpio_in(dev, 10));
- 
-+    /* GPIO */
-+    sysbus_realize(SYS_BUS_DEVICE(&s->gpio), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio), 0, AW_A10_GPIO_BASE);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0, qdev_get_gpio_in(dev, 28));
-+
-     /* WDT */
-     sysbus_realize(SYS_BUS_DEVICE(&s->wdt), &error_fatal);
-     sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->wdt), 0, AW_A10_WDT_BASE, 1);
-diff --git a/include/hw/arm/allwinner-a10.h b/include/hw/arm/allwinner-a10.h
-index 445ba1be21..8b7736c7bd 100644
---- a/include/hw/arm/allwinner-a10.h
-+++ b/include/hw/arm/allwinner-a10.h
-@@ -13,6 +13,7 @@
- #include "hw/misc/allwinner-a10-dramc.h"
- #include "hw/i2c/allwinner-i2c.h"
- #include "hw/ssi/allwinner-a10-spi.h"
-+#include "hw/gpio/allwinner-gpio.h"
- #include "hw/watchdog/allwinner-wdt.h"
- #include "system/block-backend.h"
- 
-@@ -42,6 +43,7 @@ struct AwA10State {
-     AwSdHostState mmc0;
-     AWI2CState i2c0;
-     AWA10SPIState spi0;
-+    AWGPIOState gpio;
-     AwRtcState rtc;
-     AwWdtState wdt;
-     MemoryRegion sram_a;
-
+     assert(cond->initialized);
+-    trace_qemu_mutex_unlock(mutex, file, line);
++    qemu_mutex_pre_unlock(mutex, file, line);
+     if (!SleepConditionVariableSRW(&cond->var, &mutex->lock, ms, 0)) {
+         rc = GetLastError();
+     }
+-    trace_qemu_mutex_locked(mutex, file, line);
++    qemu_mutex_post_lock(mutex, file, line);
+     if (rc && rc != ERROR_TIMEOUT) {
+         error_exit(rc, __func__);
+     }
 -- 
-2.55.0
+2.53.0
 
 
