@@ -4,130 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA598C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 19:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC24C982C1
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 19:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6YkH-0007Mm-Vq; Tue, 15 Sep 2026 15:23:10 -0400
+	id 1x6Z7k-00029L-LE; Tue, 15 Sep 2026 15:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6YkD-0007Mb-HC
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 15:23:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6YkA-0000mn-Ip
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 15:23:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789500180;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mkz1v7/R1IH61JV09OHuEI97WWlVuRYVueWKKLAEZcI=;
- b=W6MMYSB+zpY4M/2YEm2j+cziQ5cR1N661TU7+lm6KoknrgWF5ln2KIkE54MVa17m3HPC8J
- R7RTe17zdShgmnE/QfRJsLFJmhYFJnaQmJ0xbST/a46hiMRjIQXgPXjA99HT+WSBgFFMZq
- 1SEmEwMyqOqhEP8CDrmViVg8514gIZg=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-368-SZTTkl08PHWKT0u9PjEkEA-1; Tue, 15 Sep 2026 15:22:58 -0400
-X-MC-Unique: SZTTkl08PHWKT0u9PjEkEA-1
-X-Mimecast-MFC-AGG-ID: SZTTkl08PHWKT0u9PjEkEA_1789500178
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-671163d46bcso6537128d50.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 12:22:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789500178; cv=none;
- d=google.com; s=arc-20260327;
- b=rnOBZOk09bdHtHYX60qIohlDYHMN/Pz4EFZvF9pwtyi8/9u9SeV+xQb7mK/wDyXqe4
- VRmdCPMT2PD39FeqRwO1mlAsWtEwXEvzFEGYVsUsgyMyGzUg3jKSdPwrfsYIRfCdMdbz
- 5Un0LU2YNMFoMym8tzKZuBJWGlTIYJmSL+yhxKWUxxZ3ZdjDt+e3B2ef3AEE8/gGMRhm
- kOn7JB3sPUx7AQ1crUW/YkpfqAwK0PV5H+p0tAhvGg4miwfzGH0MwxeW8sHapsoTqI+N
- uJNRoGh7jV3dnk5miPBPMcwCtfvfBr+25tuQO+fKODEaeJCpaq4QclnJQoM/Jg+uEO04
- phiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mkz1v7/R1IH61JV09OHuEI97WWlVuRYVueWKKLAEZcI=;
- fh=Zsa/Zu/+dOV2ZGcNCPApu6/CGvbtd70DVsc8aDncJxQ=;
- b=fOfXLg0JqLex0RHmUndrvmDMdrIZucHVo+qru4gVoHn6xnAMTqf3dtZ0rX9N4UMMAb
- YsdLK5NlVnUk6h2LkcdeiCtAYNr9MRHVnZpch6MxtMhULR+7OBHPJCfBZJc39+lVjAsa
- 2TC7zp9itVFZEEckdIzlf5UIQKNJyWcuKiZIEY3qsH2p8yrIoalgWafuYWQ0tQno6Ncy
- jj54qOBienChMEeY4RLkY5pR6TUp5t6Gkzymlvn2dNpptcuk5fTfhCIokzDV5ocqh40v
- cwEaV/SILLqmlWd+sWTwaI85YWEEUAa0AnjoQZo8z+AcB81ZXiLCpYNMVx3m1AaBrs7g
- xIQw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6Z7P-00028p-8o
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 15:47:03 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6Z7N-0005rA-Ha
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 15:47:03 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-39d654f02baso115297a91.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 12:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789500178; x=1790104978; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=mkz1v7/R1IH61JV09OHuEI97WWlVuRYVueWKKLAEZcI=;
- b=j09hmM2bi3gsVmN0XDfltwTR/Fcxj3ehDVnheBXwEY4OkW7/4Qf9WtF4Vwlpy5P+5a
- E/6ezgdTQvN8EVrC6RaUoBf52v5iA8mnzSP/Pk9l8p44AO4+wJlrfIQuEyMKISk73VhZ
- tCy8YT0cBEE/NP00iqkMwauxGjPFxDNlhhuJ4xUny1rt5GOeEPT9xLmpbNJ9NuIYVkkE
- /an919CNjVH6ArnfmB4SWz+m3AtH0iI9Xpu6YFQE11fVuZnbtbZ3/cQe5/6yDQ2EPhM3
- ZZnq9E3feEbI+K0ECwvXqNmKBWjLMJdHjWhbQX5IWgDzkAJepc7/IRhbM0uP2fb02Qox
- tvWg==
+ d=linaro.org; s=google; t=1789501620; x=1790106420; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AEWqA4funNE75edyvGA/woE/lXH91/9o0skbK8mM7R0=;
+ b=MQ48NJHZelxIDJubCzSjwu/u6By8c+CcLN7BkUZXe1YdpH8fzB+kbp8PViPRPJ7c0s
+ ELZY2RmeCSOzAhwcyo0OXdmufnyujiNR4OYNqqf9ErM63EHv3OsIaosoAf0rbzk1o0zV
+ mNQrAmCFugazV6Ht9edUpcqg68Z+r8MdAJjdeJ/L1K8MgBbM28JZBmHYX1eb38Ci2pI8
+ pwTuw3f1zZnh4nbWNggMSb0DgA5el4U2p+Ffvw9L3V+SC/XLQ0f/wH1LREAjI60nXDAW
+ egnT2tYzQsQbylbwhQzm2gBXK23ggZBILemKUvH/V2OI2v+BiPlD3g+JlIMRS/FDnong
+ /bXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789500178; x=1790104978;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mkz1v7/R1IH61JV09OHuEI97WWlVuRYVueWKKLAEZcI=;
- b=PnhedcEjb1aC/uzKgs8uTEzzVgJTSj+oa1gPyuz7wEZg/BhyBEWwdsNiBzSJWYsfFy
- YiuPekxE7zg5HTaH8qV0k64x1grQTnUgdCD17anoIffOx3zHJ+GCGCB5JeUyXtrF8Vki
- 3x8JvXXzikzfahCftvUzMCNdXfz4TU6xoBXYdbJM2/LzcrxcplyNa7dUx1ssXknmRF9Y
- 8WU9lviREokanYq/Nsh2KFSR1GPka0HeLywI2Hl/86loJSf9rWLKk8QO4MGmiSlTsUCf
- oMg4W0n3IWISQnDoNNYWia23DZh7bBYvL1H+HSu1p58c8vGNewy3uO+ILf28LpZ7WA7g
- +I+w==
+ d=1e100.net; s=20260707; t=1789501620; x=1790106420;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=AEWqA4funNE75edyvGA/woE/lXH91/9o0skbK8mM7R0=;
+ b=rGTamgMMZO8hMUCYNdeTXupc/SC71V6XsES2vl/nkNSXTocP1kJSuYIrPTdbZ+wU4v
+ vCFemjXLNDxCpvo/rvQRQPAHggNtDIY3cnisbnFh7hF6uWGttS27hRD2P30Bi8WCEXTd
+ anrZumz3MvbvoDaczQ+lwjda3nRXQw3eN+LsG9Q+u7hVavjVhnzA9doGsGEGOuouUSV6
+ mqQJlKvQR4qaijlrZDj5cJm/L+Lo/5kSS8aMEfBp6lkSribFe7Bt0txA+2mCBPML/eAa
+ GWms8IJOcR6Vdqie4yS31IpmtLxJFX66SaOCe1w1GxhQAhTm066FkarySVNaCokI04Ad
+ dhHA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzSx4bieir76eJKQQ/UsfaQy9ZFohNMpX2f8feXBSNx/bseShyX2uxARMgZtUBnENldjX9sO2c5Hrhw@nongnu.org
-X-Gm-Message-State: AFuF++nMEdAQQP75GweQkQ4Cw1lwkHPeijpEoFeEgTswDWv8mJ5JXRIZ
- lX9Ox1GxfPQCr4zl2Ynne4uSk6ixYkf7U7HjTE1UYuWCIFjQACDYZWZ1oiGSAO8M+SnSIwj+Xld
- sdElDxOA2ietLTjTJO706spbCzIPCDJeWdb8TO9sinQxjhLR6DRldUKIQiZ8V1VttYNHVW4vsQw
- 2m1+NkU7+7H54SOuJw4hyxqSYyrRiIU4c=
-X-Gm-Gg: AYBFou38WKc6m7PmoXkFn7F2ewhrPVuiFrmGaIQqVF2WX+QAoVtkDt1wMxBhcTXMtc5
- 7k/ZphUoV2LxEbtHGplbYzBFhhzBj8VAlc9vMKZ1cnE1Td6Bh/aC2Zxlw//4TgO67S6TjnAIf01
- had8iKPTahYTM2GBt2NwQyWlZVulSptrbCk0M4zaR4Qh6bZx9iukPuH/oGan3AY+lAhauylAHZR
- VBkHaaMdNfpVfVA
-X-Received: by 2002:a05:690e:80a:20b0:671:3261:b0ab with SMTP id
- 956f58d0204a3-6714e205ff4mr2074929d50.96.1789500177773; 
- Tue, 15 Sep 2026 12:22:57 -0700 (PDT)
-X-Received: by 2002:a05:690e:80a:20b0:671:3261:b0ab with SMTP id
- 956f58d0204a3-6714e205ff4mr2074923d50.96.1789500177289; Tue, 15 Sep 2026
- 12:22:57 -0700 (PDT)
+ AKwUvByAp/5s0YehDE3qiSOVWnATe3fLlx3ukSgm3BB/li3N4a3n8Fydq27oq6WZq3p9VidQ1QYcR2NdsDVf@nongnu.org
+X-Gm-Message-State: AFuF++nOIF3EbhtMv7vfAW87M+gDarFG7hf9Zwquq0GAc7Hs5vGmqVYS
+ uYh4mmGB6Qb7mtmUBYo7LgAHZCx7DZKKUulVWpsIPVz8x/LTvVW8aW9zCKTqfXCwBek=
+X-Gm-Gg: AYBFou0YPH0xCorJVoNwJ7blgLY+InwJHbQnjUeSDGYCXKgwJ9PkWAOBq8RHsqxe001
+ 1K0/nPQtWmzlwrl6HAWe4pRGiB3NwkXR0Akc1+4nbuZojHJizV5spx9tPWzJ7ke26x8Re+oNKvs
+ FEd3hq5Nd3bWke6eGmvAdK4EkCiigUIxxnxdt9yLkhxIsfXNo1y6YSgoquvRCb6uGxHgWixyNHS
+ W0SpjD00FBq4LB4SNtwdC24B0wq5ELvvv0sIM7McB/XNplD5y/h5nM+P6FzsbbbYN54y2ZmQj5A
+ OQLyuWpUuWypZk6nNB5tFA08dv1UdgpYMqMQDk9CAfa29by7fw7T2oAzKe7e6duiS+fE3QoVIhM
+ JqxhyiCpdtqLEt108Md6S8UakNU31dBirEcLmbxEhBT6ze2UGyWiJyBpGv9y9+kCrghjZDbljG6
+ vJzWuifpQOzkD5ws8d8ru0CSTRN58QsI7eYu/7LlYautNv78EwXBc0RpzJXZ9w0Fp1eHFy8jEQq
+ L0UpP6NAS2Y1/Q825lfJJXkqC/DNKDe+TK8xIQqRdIbuGHZNDPEsCas/D8=
+X-Received: by 2002:a17:90b:4f45:b0:381:1c96:829b with SMTP id
+ 98e67ed59e1d1-39debf6f167mr15902251a91.3.1789501619614; 
+ Tue, 15 Sep 2026 12:46:59 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:c119:8717:353:53c6?
+ ([2603:800c:7900:ed00:c119:8717:353:53c6])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bf5aa1194sm1338554eec.14.2026.09.15.12.46.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Sep 2026 12:46:59 -0700 (PDT)
+Message-ID: <ad494979-4302-49fe-a8cf-13052be16720@linaro.org>
+Date: Tue, 15 Sep 2026 09:46:56 -1000
 MIME-Version: 1.0
-References: <20260904150826.2331577-1-alex.bennee@linaro.org>
- <CAFEAcA9vZZmVPP3_P1xz-NX_sqWY0zrOC2LeGLTdnaK54XKQzQ@mail.gmail.com>
- <CAFn=p-bXoctWNEdERPBL-SMRPYDisban2e0-mxYjws7UVcjVzw@mail.gmail.com>
- <a80c4add-8c2a-4a20-8888-223fecc3f697@oss.qualcomm.com>
- <CAFn=p-bLuN2La1aqp7rpanjNiezUPk-v4D3kneGiHAPqPO-iyA@mail.gmail.com>
- <05149892-fad2-4576-a47d-bd8523ae6ada@oss.qualcomm.com>
-In-Reply-To: <05149892-fad2-4576-a47d-bd8523ae6ada@oss.qualcomm.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 15 Sep 2026 15:22:46 -0400
-X-Gm-Features: AcwNN1X2rTTa3FF1MYZwJG8Pi_zFch9Cdwofd0KHKmFpCXu9QwfJG1xwzszZFlc
-Message-ID: <CAFn=p-a64Dq7NOJo-7KqtkGovw6m+r_7q6ronAoy5ivWRGgZSg@mail.gmail.com>
-Subject: Re: [PULL v2 000/105] move check-tcg into the meson build
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/19] Misc fixes for QEMU Guest Agent (2026-09-15)
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260915112337.43307-1-kkostiuk@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260915112337.43307-1-kkostiuk@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,276 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 3:07=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 9/15/2026 11:26 AM, John Snow wrote:
-> > On Tue, Sep 15, 2026 at 1:17=E2=80=AFPM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 9/15/2026 9:52 AM, John Snow wrote:
-> >>> On Fri, Sep 4, 2026 at 2:04=E2=80=AFPM Peter Maydell <peter.maydell@l=
-inaro.org> wrote:
-> >>>>
-> >>>> On Fri, 4 Sept 2026 at 16:08, Alex Benn=C3=A9e <alex.bennee@linaro.o=
-rg> wrote:
-> >>>>>
-> >>>>> The following changes since commit d2843fbf80260e4346c856819e8cea11=
-768c9d0e:
-> >>>>>
-> >>>>>   Merge tag 'pull-riscv-to-apply-20260904' of https://github.com/al=
-istair23/qemu into staging (2026-09-04 09:43:27 +0100)
-> >>>>>
-> >>>>> are available in the Git repository at:
-> >>>>>
-> >>>>>   https://gitlab.com/stsquad/qemu.git tags/pull-11.1-check-tcg-meso=
-n-040926-2
-> >>>>>
-> >>>>> for you to fetch changes up to 7a485176838e6b6044e73f925d308bb4b300=
-2597:
-> >>>>>
-> >>>>>   MAINTAINERS: add maintainer for tcg/tests meson infrastructure (2=
-026-09-04 16:06:22 +0100)
-> >>>>>
-> >>>>> ----------------------------------------------------------------
-> >>>>> tests/tcg: conversion to meson
-> >>>>>
-> >>>>>   - remove unused variable from multiarch/memory
-> >>>>>   - standardise checking plugin output
-> >>>>>   - bump minimal meson to 1.6.0
-> >>>>>   - introduce meson plumbing for check-tcg
-> >>>>>   - return error code if docker probe fails
-> >>>>>   - add CI/self/mem test to gdbstub prot-none tests
-> >>>>>   - use raw opcode for fprcvt test in arm
-> >>>>>   - remove unused variables from gpc-test
-> >>>>>   - teach probe-gdb-support about mips
-> >>>>>   - identify or1k pc register
-> >>>>>   - port check-tcg logic to meson (all targets)
-> >>>>>   - update documentation
-> >>>>>   - add Pierrick as a maintainer for tests/tcg
-> >>>
-> >>> Hi, I'm having difficulties building after this PR, after eb7f0c14 in
-> >>> particular.
-> >>>
-> >>> I keep seeing stuff like this:
-> >>>
-> >>> FAILED: [code=3D1] tests/tcg/x86_64-softmmu-hello.test
-> >>> /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman
-> >>> run --run-as-current-user -w /home/jsnow/src/qemu/build -v
-> >>> /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross
-> >>> x86_64-linux-gnu-gcc
-> >>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c -o
-> >>> tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF
-> >>> tests/tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g
-> >>> -fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I
-> >>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib
-> >>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c
-> >>> ../tests/tcg/x86_64/system/boot.S -Wl,-T
-> >>> ../tests/tcg/x86_64/system/kernel.ld -Wl,-melf_x86_64
-> >>> -Wl,--no-warn-rwx-segments -Wl,--build-id=3Dnone -lgcc
-> >>> cc1: fatal error:
-> >>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c: Permission
-> >>> denied
-> >>> compilation terminated.
-> >>> cc1: fatal error:
-> >>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c:
-> >>> Permission denied
-> >>> compilation terminated.
-> >>> cc1: fatal error: ../tests/tcg/x86_64/system/boot.S: Permission denie=
-d
-> >>> compilation terminated.
-> >>> Traceback (most recent call last):
-> >>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 657=
-,
-> >>> in <module>
-> >>>     sys.exit(main())
-> >>>              ~~~~^^
-> >>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 653=
-, in main
-> >>>     return args.cmdobj.run(args, argv)
-> >>>            ~~~~~~~~~~~~~~~^^^^^^^^^^^^
-> >>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 395=
-, in run
-> >>>     return Docker(args.command).run(argv, args.keep, quiet=3Dargs.qui=
-et,
-> >>>            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=
-^
-> >>>                                     as_user=3Dargs.run_as_current_use=
-r)
-> >>>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 353=
-, in run
-> >>>     ret =3D self._do_check(["run", "--rm", "--label",
-> >>>                          "com.qemu.instance.uuid=3D" + label] + cmd,
-> >>>                          quiet=3Dquiet)
-> >>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 230=
-,
-> >>> in _do_check
-> >>>     return subprocess.check_call(self._command + cmd, **kwargs)
-> >>>            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >>>   File "/usr/lib64/python3.14/subprocess.py", line 420, in check_call
-> >>>     raise CalledProcessError(retcode, cmd)
-> >>> subprocess.CalledProcessError: Command '['podman', 'run', '--rm',
-> >>> '--label', 'com.qemu.instance.uuid=3D0df29d1fcdc947f1b0cde41104eebed9=
-',
-> >>> '--userns=3Dkeep-id', '-u', '21266', '-w', '/home/jsnow/src/qemu/buil=
-d',
-> >>> '-v', '/home/jsnow/src/qemu:/home/jsnow/src/qemu',
-> >>> 'debian-amd64-cross', 'x86_64-linux-gnu-gcc',
-> >>> '/home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c', '-o',
-> >>> 'tests/tcg/x86_64-softmmu-hello.test', '-static', '-MMD', '-MF',
-> >>> 'tests/tcg/x86_64-softmmu-hello.d', '-Wall', '-Werror', '-O0', '-g',
-> >>> '-fno-strict-aliasing', '-nostdlib', '-ffreestanding',
-> >>> '-Wa,--noexecstack', '-I',
-> >>> '/home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib',
-> >>> '/home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c'=
-,
-> >>> '../tests/tcg/x86_64/system/boot.S', '-Wl,-T',
-> >>> '../tests/tcg/x86_64/system/kernel.ld', '-Wl,-melf_x86_64',
-> >>> '-Wl,--no-warn-rwx-segments', '-Wl,--build-id=3Dnone', '-lgcc']'
-> >>> returned non-zero exit status 1.
-> >>> filter=3D--filter=3Dlabel=3Dcom.qemu.instance.uuid=3D0df29d1fcdc947f1=
-b0cde41104eebed9
-> >>> ninja: build stopped: subcommand failed.
-> >>> make: *** [Makefile:170: run-ninja] Error 1
-> >>>
-> >>
-> >> Interesting, it seems to be an issue with podman user mapping.
-> >
-> > Maybe something I set up ages ago and promptly forgot about? I haven't
-> > fussed with user mapping permissions in several aeons, it's possible I
-> > have something stale in some config somewhere ...
-> >
-> >>
-> >> Which distro you use (especially which version)?
-> >
-> > ~> cat /etc/fedora-release
-> > Fedora release 44 (Forty Four)
-> >
-> >>
-> >> Also, could you please report output of those commands:
-> >> $ podman --version
-> >
-> > ~> podman --version
-> > podman version 5.8.4
-> >
-> >> $ ls -al /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
-> >
-> > ~> ls -al /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
-> > -rw-r--r--. 1 jsnow jsnow 229 May  7  2025
-> > /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
-> >
-> >> $ /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman =
-\
-> >>   run --run-as-current-user -w /home/jsnow/src/qemu/build -v \
-> >>   /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross \
-> >>   touch -v new_file && ls -al new_file
-> >
-> > There's no "-v" option for touch, but:
-> >
->
-> Copy-paste mistake sorry, thanks for fixing command.
->
-> > ~> /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman =
-\
-> >                                                                   run
-> > --run-as-current-user -w /home/jsnow/src/qemu/build -v \
-> >
-> > /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross \
-> >
-> > touch new_file && ls -al new_file
-> > touch: cannot touch 'new_file': Permission denied
-> > Traceback (most recent call last):
-> >   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 657,
-> > in <module>
-> >     sys.exit(main())
-> >              ~~~~^^
-> >   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 653, =
-in main
-> >     return args.cmdobj.run(args, argv)
-> >            ~~~~~~~~~~~~~~~^^^^^^^^^^^^
-> >   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 395, =
-in run
-> >     return Docker(args.command).run(argv, args.keep, quiet=3Dargs.quiet=
-,
-> >            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >                                     as_user=3Dargs.run_as_current_user)
-> >                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 353, =
-in run
-> >     ret =3D self._do_check(["run", "--rm", "--label",
-> >                          "com.qemu.instance.uuid=3D" + label] + cmd,
-> >                          quiet=3Dquiet)
-> >   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 230,
-> > in _do_check
-> >     return subprocess.check_call(self._command + cmd, **kwargs)
-> >            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >   File "/usr/lib64/python3.14/subprocess.py", line 420, in check_call
-> >     raise CalledProcessError(retcode, cmd)
-> > subprocess.CalledProcessError: Command '['podman', 'run', '--rm',
-> > '--label', 'com.qemu.instance.uuid=3Dd2faaf6ef4914d83b429069b4497cbb2',
-> > '--userns=3Dkeep-id', '-u', '21266', '-w', '/home/jsnow/src/qemu/build'=
-,
-> > '-v', '/home/jsnow/src/qemu:/home/jsnow/src/qemu',
-> > 'debian-amd64-cross', 'touch', 'new_file']' returned non-zero exit
-> > status 1.
-> > filter=3D--filter=3Dlabel=3Dcom.qemu.instance.uuid=3Dd2faaf6ef4914d83b4=
-29069b4497cbb2
-> >
->
-> What is the content of your /etc/subuid?
->
-> Giving your user id (21266), I guess you have a LDAP account or
-> something similar: not a local account.
-> I had the same issue on my corporate VM, and had to add an explicit
-> mapping for my user.
->
-> You should have something like:
->
-> $ cat /etc/subuid
-> jsnow:100000:65536
-> $ cat /etc/subgid
-> jsnow:100000:65536
+On 9/15/26 01:23, Kostiantyn Kostiuk wrote:
+> The following changes since commit 5f664cd37aec17e8145aa117d8da68f507edc8f1:
+> 
+>    Merge tag 'ui-pr-v1' ofhttps://gitlab.com/marcandre.lureau/qemu into staging (2026-09-13 15:54:17 -1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/kostyanf14/qemu.git tags/qga-pull-2026-09-15
+> 
+> for you to fetch changes up to 839bc113fb5e2aea3fd0d68a929725f76cd6a9b1:
+> 
+>    qga/vss-win32: log to file during COM+ registration (2026-09-15 14:09:40 +0300)
+> 
+> ----------------------------------------------------------------
+> qga-pull-2026-09-15
 
-I updated my entries to this; I am still having problems so I assume I
-need to refresh my login or restart or some such thing. Will have to
-try that a little bit later :)
+Applied, thanks.
 
-Do you think it's possible to add a simple "hello world" example that
-tries to touch a source file to determine if permissions are
-appropriately set up, and if not, gives a nice human-readable error
-message? (Along with advice to try --disable-containers as a
-fallback.)
-
->
-> Let me know if it solves your problem, else we'll find something else.
->
-> >
-> >
-> >>
-> >> This should help us to see what's your effective uid in the container.
-> >> Maybe this issue was present before, did you try running make check-tc=
-g
-> >> in the past, or not?
-> >>
-> >>> Is there some kind of setup I have neglected to perform to make this
-> >>> new build system work? Is there a way I can skip these tests in the
-> >>> meantime...?
-> >>>
-> >>
-> >> You can use ./configure --disable-containers, so it will not try to us=
-e
-> >> podman.
-> >>
-> >>> Thanks,
-> >>> --js
-> >>>
-> >>>
-> >>
-> >> Regards,
-> >> Pierrick
-> >>
-> >
->
-
+r~
 
