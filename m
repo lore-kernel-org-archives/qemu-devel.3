@@ -4,111 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2632EC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 09:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A08C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 09:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Pm8-0006sY-Fm; Tue, 15 Sep 2026 05:48:30 -0400
+	id 1x6Pri-0007dd-VR; Tue, 15 Sep 2026 05:54:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x6Pm0-0006ra-4r
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 05:48:20 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x6Prh-0007dP-TT
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 05:54:13 -0400
+Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x6Ply-0004BE-Dq
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 05:48:19 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a64c7cdb46so5415024a12.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 02:48:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789465696; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x6Prg-0005Hz-0p
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 05:54:13 -0400
+Received: by mail-pz2-x0f.google.com with SMTP id
+ d2e1a72fcca58-85469a34908so2545860b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 02:54:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789466050; cv=none;
  d=google.com; s=arc-20260327;
- b=DqCZr9aPethm1hfxMek59Cw+0dF/wlX/lGl1VaJ4B/mzH/1/j069p32yewIwU6iDZN
- g74ZyqHo0sYz6FzHYviRQ2EoQOUSTVdJ1whumm/LJ2cBSgVhzYqareBjEsYxvGsY2GFo
- jZq/BROXdXJ3wz+eAd9QLKKXuem743zhf0+yV+Mf941IFHI7gw6Hjpv4+aXpwF8NDhM3
- 2fjCvC71ke/Uz77jBI1LyY1UWkqX800+XtlLxlpTqOvgc+udu+Etvnf98pu1/3/uA4TJ
- BUQuDZxxMFRbbHgvHBhENzhn3JDPWorXH3RJcN6T6vAxtcHdU9k1zlmTxS2loUCEBwqw
- 0CMg==
+ b=ORZRHsAM/USlQLwgSlQQZl62DQx9/2+dIjMWjcUyHi1nvDcictfsFyCcSVx+yWiB6N
+ ZnLlKkr2qx1psH8iiU6X4Wb+HFTB45H1e6c/UIcG6M3lrJcGoAS5cVH+QKIbIj8AfMG+
+ A8RqZ+jpVdppm8JeIwXn02QcDEJVuV8jT8O0ofWgM2JctP0gwI1bW7CUZUllV/o815HO
+ uH80Gwn5uPIize8uaBEGHnfX3nLvl02dt3YpOz9qqrdMH2MKNJwHKBoVaryGbItPGwiw
+ Qk4Er371DLyq4sUMzNXwhXE8gOFpfFB3DI7tYxw+RnYkON3iHCBDwugpEmJIQ0l9FsiA
+ OEfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=SsBu4YyLp/fkKiqQ1bArvw+tc+teEBF/TycxUn6SOHg=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=WTKCWn6cvY22+G6/sLvkBk1KKo1vkgqTKNMQhKFspJnko9p9Yh8RLqrxBHwETeJAYI
- vsbKk5AzEKRGNtLcmDGHMXqaOh6t0mzcS38Gu4iljABVj32Vuy5DOP7hQ0nkiflSRVh3
- bEUoYiquqL8K+VsyC1HTn0WhkhvH5X5PWdJ3X4YrjNvDNVYHMeXbQRSKM8Jq5OT0Rg4b
- xwYTue+P/FkORsKRyAQLP3witxRnKQ/lnWx/VIQ2skok4TFLxHDnfXY1IRDziogI2prH
- eheOy+0cdupuxKKoHkSWuBzK7KZzcChryZp7tMJG3/sTy8BThwHCaCm568lVSjuNqGp+
- k6cw==; darn=nongnu.org
+ bh=YZC1CwVSt8Io5jByrJekTrRT1QlDVKp/06Xdfpv4ZEo=;
+ fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
+ b=AL9nNGjq2aVBdc7EYlGjveQS1HQta24X+PlP3zRA4ZXczT4uauyi/tU1V6EVUbNu7P
+ WhyF9XAred1zhc5JjvPtOYF6z2K6bQvSpcxTQ6far/6kC4j5JtLt+vnqNqm7GWv7AFiu
+ RzsNsCGYcd5Gg/0ndCq0iVZxOI5Y8m3ZCEGC8GYO10z3+XfjQv+7p8OsoPuNaJeCoyA0
+ 8E9MrSrD1W0fFDmARMdX4dmT0rkcCp9UIczqjhmInYXPRjoUU3XdUXHdhqrI38sFMLFv
+ 9HIeaf9Vyf65KvwHxFb3+G+SSSriT/jWfaYxf2kC4yxk7AoFNhtxXvPeXH29b2eSgWfs
+ BLzQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789465696; x=1790070496; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789466050; x=1790070850; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=SsBu4YyLp/fkKiqQ1bArvw+tc+teEBF/TycxUn6SOHg=;
- b=axz6ceo4e58ntT21hjCF7OZLdTr23MU3GeS+hy0vvQc39PblegV6Bxo0+3ysXxM9LX
- WPxKD0w8DsW7diHF6iKdAJXxtrCaLFTvOJhqyg9DwMkQo5SdH2+4gaWMW2nbKoxYv0EA
- +I9cROIDe0KJ1yuj/joThuEb66eb9RiLP4hfdGv3uvcOLii8FmfSWcD6EYgdSMpiGAcm
- ADZH6vgiw74T0pecTlVjXTmrE6gMuI9Xej5xxSlPyvoVB2ZrxCbyChVbzbi2Zavh7WL9
- vx1dG0zGSMmkkk7b0pdEtk2keebr6t3dVdhAHXtZTC122jCNHip9Xd14YfKkSZdx3xnO
- C1vg==
+ bh=YZC1CwVSt8Io5jByrJekTrRT1QlDVKp/06Xdfpv4ZEo=;
+ b=IwcHI0KbXOO7yMh5phQu/tr4YEypk+PrZ2Dc9/SQoIafJhJAvFKlIydaS9q0otpdo+
+ NxUmaEHM+1+mfjHbHJmLXDjhl9XCcKcZQVjOrposNw9TaH/j9FkE1gPcXWJ/+tFKzVcQ
+ /onHEcUDBgUdH0VuI+p5mWvA+PsWKzreXDbp69RobKUpeiskdaN20QSlC6BpvMK+rZmq
+ uqtKRYS1eLtK4q2+FxEtTkaYg60RDeb1bX+sHuYmJsP2Xih5RWDAP/jv87BDtJuACjZ7
+ H3ZSex0/3ohulghX/KMBF0k6qjGzkXpUqM2Q7jTG/6TQ8o3x2v6mUpQfOU09UdCW29Ze
+ 2C1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789465696; x=1790070496;
+ d=1e100.net; s=20260707; t=1789466050; x=1790070850;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=SsBu4YyLp/fkKiqQ1bArvw+tc+teEBF/TycxUn6SOHg=;
- b=JVUQJx+AOUALwLdO0ckXZ2bIHgysPmivxhgiqSEpN/UQziCXqIc2evQRhH4/5eF/tf
- eyNLORVuwsHEllAr99bx5fFdPV3UL2Az6+srSz+Xc99wMxnAINeh8vYzi9llb3ijRmfS
- jHyVYyolIJSBJHpOkJ0o47WpCIN3r7SWSkqcL9yXANO0bBa7c/IzdkZUUhaI7iE7GhcN
- NfHw1ecWnO0/rUQrMnIMKeaDnkeSvb9IN0ZTmnPO/onBZyfY1e0MGBrmffc2n7kQe9ho
- lvpxJrb3q75wb8by8vwnrnpF7onX3GoA9f+22tdcKGDyztRoZwjZJE69D0n6gPq1CdaJ
- q6PQ==
-X-Gm-Message-State: AFuF++lOBP8FFaY3ta+vKKSfOrJchhvxYWIs1yYaJAulOvkpPjO214c8
- bTfTQ3rM5r2ZDp4tQqlC8KqbyoWzLdLZmsZ3YG/OJzrJuuUjFL/m7SZWSCr7GmBH6kIZWYYnvmw
- 59LC9QplxwJGhsHG9Y4KgOSryXxTPJ7Q=
-X-Gm-Gg: AYBFou3inZP6+l2uAKQxIfktoA51DdHbgsCiXrqm7bf7F9HLvqntLoflUoQmxYwvljJ
- oBm3ihMuLh2Dr+9tawU/EXV1DO62INuuVYHRcVXUm+Pn4rfG9Rpc8doid5nUqY4mfckGmQBXmI4
- nPbPlrEDKG+K8STLfPsvqsxoYkMocncmv95QAZNVxmLt3wgTr/qRqL63T1GkRsSUsx5+VxpZxp+
- MNSxd1+n+JCDrofIShFRyYU/Uvde1C6yu2ryNf6/3v8InQXtcEK2Bl5u4y1w2X+52Cpxnkylvid
- d+dFqwjwNxznalPLMeidGSLnT5lSeF3DGHd0LWLUHCbP10fFWPPAOSz7
-X-Received: by 2002:a05:6402:210f:b0:6a7:ea53:f62c with SMTP id
- 4fb4d7f45d1cf-6a9f641ad45mr4703487a12.43.1789465696175; Tue, 15 Sep 2026
- 02:48:16 -0700 (PDT)
+ bh=YZC1CwVSt8Io5jByrJekTrRT1QlDVKp/06Xdfpv4ZEo=;
+ b=KQwWiitf2lGaZBXuO53MrAuWiue3jVaLFYo8xIMTLErPL1EYyVP7DLbvs7KxOM7n+Q
+ xfB04FUowOiUkTHTaltvE0bOnbiRa1Utu5qE5nacYUhHbf7Du4A3lEwNLoy7GSzO7mQO
+ DoL4nDIQIj87uyMuzrjQL0TOrHolprm/Tctz8tOSdhyWXS/XkGc5LuqWx+VTk6P+Tuu8
+ 1LhxNgyg5UzhFzu4iMWbaAtgmvHdP4pOhkiCBbOWmyedsV3E1MTjtu4uLo7kbwPUmhJB
+ B7KQdeVy01NAMt9+vgK/goJPS8VVa32SWU/GLHKKvavES7/AVvjfN5FeaLLwdDtTgeXC
+ OXRw==
+X-Gm-Message-State: AFuF++nUkoKgfxfhQaV9UGzpS4qQQHLwfqJtds2TLz6P5SDMWbtk4UmQ
+ irCh8DdLGvJjvXm5BMojDTgBVKL3UAU2DBFoSN5BHzpYUS4u4FHlQPqTMJD7BlQmvJqXRaXBJup
+ 3L7IoaRJmiBFNyQNkHXjjjnqV1CLJ2fo=
+X-Gm-Gg: AYBFou1RQVtI5hFgHmjv3l39VJqIJ74b8x6p7Nb3V48ra2uOHviboK5FlvJCBaBUouc
+ MGyD4TkstNIy+Jf3UmH2k56J2GL3rF1olKgqvgT72JaMj9gtPMVl7kxkAgXLHbuFLIDqxxAfyWS
+ dwGch+lq4X1q0rRK67HP0ewETdTkcvLASLhFEo8HhsR2nFasOvaVdHRDoyuSxrgIgvED93vV6lW
+ whmDerwKlJ74vcU0ajith898rjSeZ2QHyDF3z2nv/7bpWP0eLmWeqLaG389gOyhBAViKejPyLqG
+ 5Usfhw/rJkgkW+bIptCFd9rRlRPPPherjsRZsrEXHwa76VJ3eYIdMZq+gKJq0hFoJRZdkcLHYAE
+ ZbN2YMUPRZzxE
+X-Received: by 2002:a05:6a21:7a97:b0:3d3:ae0f:526d with SMTP id
+ adf61e73a8af0-3db406f54aemr13143356637.25.1789466050244; Tue, 15 Sep 2026
+ 02:54:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260911100709.726366-1-zhangckid@gmail.com>
- <87wlss6owr.fsf@pond.sub.org>
- <CAK3tnvKXv+HdK4d5KXXNagUCODj68A1XRuP7VTpZNyUFoMTQnw@mail.gmail.com>
- <87pkyfrmsb.fsf@pond.sub.org>
-In-Reply-To: <87pkyfrmsb.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 15 Sep 2026 17:47:39 +0800
-X-Gm-Features: AcwNN1V2YxlCTCqxGJV7iPuv2d656XuhzH6Meyr6XBwHbbag-H3QdfdvPL3Wzeg
-Message-ID: <CAK3tnv+D-nfjU5n_5xQ=z73PCUKTAK3xhSFdbHp1uC_7FHrjsg@mail.gmail.com>
-Subject: Re: [PATCH V16 00/13] iothread: Support tracking and querying
- IOThread holder
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
+References: <20260804090847.18871-1-dongwon.kim@intel.com>
+In-Reply-To: <20260804090847.18871-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 15 Sep 2026 13:53:58 +0400
+X-Gm-Features: AcwNN1WJT37ahgxzERp6h0JC4njtLHTuLuaTekFFL9hZg1PuSz8NRqWMlDcKZUM
+Message-ID: <CAJ+F1CJd6P7YPpCMx4Ntv6KAD=hv8yHzPHDq8=c2ZEcwHnjN2A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ui/gtk: enable fullscreen hotkey for detached windows
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=zhangckid@gmail.com; helo=mail-ed2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pz2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,31 +116,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 3:34=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Fri, Sep 11, 2026 at 6:52=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> >>
-> >> Doesn't apply to current master.
-> >>
-> >> https://patchew.org/QEMU/20260911100709.726366-1-zhangckid@gmail.com/
-> >
-> > This issue caused by the dropped patch 1 from V15.
-> > https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg02947.html
-> >
-> > I assume that patch will be merged before this series.
-> > I forgot to mention this earlier, I double confirmed no other problem h=
-ere.
-> > please continue reviewing.=EF=BC=9A=EF=BC=89
->
-> The patch in question is now in master (commit f10977073c qapi/misc: Fix
-> missed query-iothreads items), but git-am still fails for me.  Could you
-> kindly rebase?
+Hi
 
-Sure, I will update to v17.
-
+On Mon, Sep 14, 2026 at 10:50=E2=80=AFPM <dongwon.kim@intel.com> wrote:
 >
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> Currently, the fullscreen toggle hotkey (Ctrl+Alt+f by default) only
+> functions for the main QEMU window. When a Virtual Console (VC) is
+> detached into its own separate window (untabified), it loses this
+> capability.
+>
+> Implement a toggle helper, gd_win_fullscreen, and connect it to
+> the 'f' accelerator when a detached window is created in
+> gd_menu_untabify. This allows individual detached windows to be
+> toggled fullscreen independently.
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>  ui/gtk.c | 46 +++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 43 insertions(+), 3 deletions(-)
+>
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index a723c8215d..3c9720a330 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -1556,6 +1556,42 @@ static gboolean gd_win_grab(void *opaque)
+>      return TRUE;
+>  }
+>
+> +static void gd_win_fullscreen(void *opaque)
+> +{
+> +    VirtualConsole *vc =3D opaque;
+> +    GtkDisplayState *s =3D vc->s;
+> +    GdkWindow *window;
+> +    GdkWindowState state;
+> +
+> +    if (!vc->window || !gtk_widget_get_realized(vc->window)) {
+> +        return;
+> +    }
+> +
+> +    window =3D gtk_widget_get_window(vc->window);
+> +    if (!window) {
+> +        return;
+> +    }
+> +
+> +    state =3D gdk_window_get_state(window);
+> +
+> +    if (state & GDK_WINDOW_STATE_FULLSCREEN) {
+> +        gtk_window_unfullscreen(GTK_WINDOW(vc->window));
+> +
+> +        if (vc->type =3D=3D GD_VC_GFX) {
+> +            if (!s->free_scale) {
+> +                vc->gfx.scale_x =3D 1.0;
+> +                vc->gfx.scale_y =3D 1.0;
+
+gd_menu_full_screen restores it to gfx.preferred_scale
+
+> +            }
+> +            gd_update_windowsize(vc);
+> +        }
+> +    } else {
+> +        if (vc->type =3D=3D GD_VC_GFX) {
+> +            gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1);
+> +        }
+> +        gtk_window_fullscreen(GTK_WINDOW(vc->window));
+> +    }
+> +}
+
+For consistency with gd_menu_full_screen() it should call gd_update_cursor
+
+> +
+>  static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+>  {
+>      GtkDisplayState *s =3D opaque;
+> @@ -1590,9 +1626,13 @@ static void gd_menu_untabify(GtkMenuItem *item, vo=
+id *opaque)
+>              GtkAccelGroup *ag =3D gtk_accel_group_new();
+>              gtk_window_add_accel_group(GTK_WINDOW(vc->window), ag);
+>
+> -            GClosure *cb =3D g_cclosure_new_swap(G_CALLBACK(gd_win_grab)=
+,
+> -                                               vc, NULL);
+> -            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, =
+cb);
+> +            GClosure *cb_grab =3D g_cclosure_new_swap(G_CALLBACK(gd_win_=
+grab),
+> +                                                    vc, NULL);
+> +            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, =
+cb_grab);
+
+You also hook grab, this should be mentionned in the commit message.
+
+btw, it would be nice to remove the stderr printf there..
+
+Why not add the zoom keys while at it?
+
+thanks
+
+> +            GClosure *cb_fullscreen =3D g_cclosure_new_swap(
+> +                                             G_CALLBACK(gd_win_fullscree=
+n),
+> +                                             vc, NULL);
+> +            gtk_accel_group_connect(ag, GDK_KEY_f, HOTKEY_MODIFIERS, 0, =
+cb_fullscreen);
+>          }
+>
+>          gd_rebuild_vc_menu(s);
+> --
+> 2.43.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
