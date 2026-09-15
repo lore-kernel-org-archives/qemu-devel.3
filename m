@@ -4,107 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1687C88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36226C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZbP-0007fP-CT; Tue, 15 Sep 2026 16:18:03 -0400
+	id 1x6ZkN-0006gJ-Ir; Tue, 15 Sep 2026 16:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6ZZc-0006sN-Mb
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:18 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x6ZkL-0006g2-95
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:17 -0400
+Received: from mail-lf2-x10.google.com ([2a00:1450:4864:36::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6ZZZ-0003Hw-6k
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:12 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e8185e037so1165915e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:16:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x6ZkJ-0004ne-IA
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:27:17 -0400
+Received: by mail-lf2-x10.google.com with SMTP id
+ 2adb3069b0e04-5b5e4f1651bso161696e87.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789503368; x=1790108168; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=n037Ir9RlPxu5Jvv/I4vRtw1w6P183tFYwhqNEy4JVk=;
- b=QC8yCTLdcPgtHfTbF7MklQhgHjb44i8kV+EtXRc2cyT1QDCVmlhmNf5vnL9W8dFaVM
- 6tJH8hHg5aizhpMJM3eCsFBV5GF/OGVdiD//sJu299Cb3cquX7X4pU6euZPDuNXPZzuE
- 1TzamFvdxBgcq5CFox7zOEVZaS1QtB/NLZ2l98M2wGCmbOyzXJRJYK9zjutL31qBwOlq
- JmTVFTVNQMwp3ilZ3VbhiMu7hcKe0g7tnu30fyyph6XpIDXr6SwpliT8ANZkXsVbt9oK
- fxbj/d2ETw96GGL0520JGyHGSrakRAabPTgTHYPHwVba6tSkQq6IW4BpUJhoT0axVIi8
- 6Y4Q==
+ d=gmail.com; s=20251104; t=1789504033; x=1790108833; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fN3b5mCauh5j+9fpd8Ls87fXynxsmo08ZM13MUelkI0=;
+ b=hsAMgtgzC6gRvwg2UMLm+gA8KYhNIVrqrjmFRYaBaXPsK2bF8MRMjiPacOoXI7hfVS
+ a2IpRz7UtkPFlb/oOjR/PTEZ4in2Y9joPxQl81Nc8ej1DAKwT37d/OZlxG5v5pJu5d+2
+ +p1JJ6/Lbuu+zx4yW7sDaXQ3GNpD7b6auUpjoNP8Q7CMY3Vx4HBqoMankOtylEQraSrH
+ Lina5e7EbNumvtdKJdQrKMmFhEgyl90RClpFoeRQuDsSAcn56O+R7G8cWL1bfbJwLwpe
+ NuuaOyoXGLNFb2dhjqiKMw4yqv8jVjMJeT02N1c3RRxwCbvBAUoeZUoVz6pb9M/vBQtE
+ fySA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789503368; x=1790108168;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=n037Ir9RlPxu5Jvv/I4vRtw1w6P183tFYwhqNEy4JVk=;
- b=LBwb6qezD1LRYCEQOlygQ90MWhUqucJ09eHZ7REhEHdk5inWsWINhDTIr0bdwssf+6
- A5W9DOvX829eaEBq8EIAEhebkmZ/ZvBSGaLCCOIjRu4F5VfJJGzfSf1AYl/KRCUB39xv
- rGbwBecR+eE9qyO/7hj4sKs38jeUTO9/EOrnZKTw+kVdr4lfi3kR5UIHsNSRMGR2cU5n
- AW/6baViVygHmhkY+Ss0mTgqSOZbLD8STqSfmeNiiQIL8HNYSKrWROU8YZcxaefUpLcw
- 2tuV8UbTPz0ino6A/dWCV+N033sXqt4tjotyNOc+aS3clFw1YX6fz1Dxtp0diGAcdvSO
- CoVQ==
-X-Gm-Message-State: AFuF++lN5NEFu5Pb/4SWgJwDKoDWJUqKyC4/lGyY4LcRcUais9ne1F0o
- H8NrsRs1gHTekcEJF6onVkQQq6prl2Ioyqb+zsLhLwvC+2N6rJ2oe1+f3jALDTZhtVw=
-X-Gm-Gg: AYBFou2NtvM4A6kDCEpG91Fn+4kv3RrDBO2Vqwqx3lfZ3Iyt0QKvpmTA8hofbiGQvK/
- 7WfXSanH2odva0k8sCATDGLezK0vF7vUYuQ9nDaYSVR4JEo7TO8cvEnLE0kSpJ+pHUkzoE0sGcx
- oqRJqLzTppLErAzoBwxxoIrPIl81/BwTp2YwZGDlD65YFYNj7A5iYjwK+2+2Y5PkWgSLOmVN7ca
- VxoBXnA4B2eWnRa7zv4ppGUBclEL0uxhmD92zbuZI/GxqNzO2n86YdPCNTlXvdZEjLiYB9lAKcm
- eBNg9s3Q744VjxkX4oSxItQ1oZBAGwltI3I7XMGDKn6U3vTz8yd20yneBtQByr9lVsP00QdI6GU
- nNMxuNTngGB+fFboO/mblCafTRaE4E7VsxAvGVNbyBjLKCojnCpzYm4j7xGK1ZJrSs2Fq0LLkmp
- JggOwFlyXrtBbkYhMOjuYsHALsZFKpQZ3mN4AHY5q0lJn13pozXsd9dr5W7uQYud9qmxz1XUnWc
- v+Lg4Et8A==
-X-Received: by 2002:a05:600c:5486:b0:49c:cee2:1697 with SMTP id
- 5b1f17b1804b1-49e7a66aaf9mr105862885e9.16.1789503367703; 
- Tue, 15 Sep 2026 13:16:07 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf43542sm1375171f8f.32.2026.09.15.13.16.04
+ d=1e100.net; s=20260707; t=1789504033; x=1790108833;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fN3b5mCauh5j+9fpd8Ls87fXynxsmo08ZM13MUelkI0=;
+ b=n9vMtPdwshMMxVYJgd6z4xkohBttb5IMTqlFsWaRl6QyuLjqnB3f4ujWFfhL89LR4N
+ 3kEaqmjwm1TbPeEwHYYV5vyi94FhrzRDLbOc1JQZa27LCOCaDH/8jQpNXgjwpl/h2l8Q
+ 63g8wtSdPdOtFgAuZxoO1kjiCXPVD0NAB03yGBBFFxVMq+IHh08tVB0Ya44SdLBauZCD
+ XWxE9QnATfq6nGdmvjBs2pnoYZ5RHLkk+KpU/rZRm11MrftXIshAkTCSYrA6lU3qdiTn
+ D3Q7ro+CVomcq1peR4Aab8kUdQ0ZTAAfoiEaBieGUcQBqSD08I3xnjEXuuhFBg/+b8kA
+ C2uw==
+X-Gm-Message-State: AFuF++lYh1FyLO+GqQ6Slo471FWAcw+7IigqOf3T2uD3t9LGpY5m+/jT
+ 1oPWZ/iQkmz99XgZRPzYHm0//77Syv+4lQ52gAxlV58VmVRZm0N12jNO
+X-Gm-Gg: AYBFou2UU77SE7igQwz4ygADO+Ov2Nba24Xf7hqUxNVmTLN7s2vAlYaM9eForPXM5LV
+ 4Vz1bOCnHI6Wd9HCWqo2KMTKqPzjKLf9h3DJdMgntzPL6o+65LEAjI1nu/84XkJ+Y2F+9NPTSmk
+ rhP2CaLWcLk/qeJ2Ytk/SUoLHrvFQgU7HdZB/en/wYusvmHdWRwswCJrcQyDuIENRKXpvi085HW
+ 1EYmcIUUamQtYfgHxwf8EFDsbx+ymuTQ+sEwOoqlIdtYMip/p2gd6JOV83g5PBjbcKJgu7zdQiM
+ QER1AFbFxUqTyE0xSgRqLv989YkSXBSiA53WlC9NMcpN5tRg7jwoUJdk2L6P4jb6P5jh8vzE7bp
+ KCgoW39uEtxwk8fS1k8aqj51XpuWCuxr7HrXGYQw44TUYa/rDIb1avTch2saMAa2D8/Wqkqllhe
+ VuVvP5MzDH3OtGHBhqavKWOF5kHhRdpcbUZjW78klkjr2FVSNkrf4ni65nQswxc+msspzAZF3wH
+ reDHYR/hlrOR1UaFNan2vFD/cOUMOZpeB8PTu8cSBMtFsXrKzCDCeO4VHY=
+X-Received: by 2002:a05:6512:6c2:b0:5b7:a987:d03d with SMTP id
+ 2adb3069b0e04-5b8ae68dd4emr2153002e87.21.1789504032695; 
+ Tue, 15 Sep 2026 13:27:12 -0700 (PDT)
+Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
+ [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3a5daf0dbacsm1621391fa.4.2026.09.15.13.27.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:16:05 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 770C4618D2;
- Tue, 15 Sep 2026 21:16:02 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Kyle Evans <kevans@freebsd.org>,
- Eric Farman <farman@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Cleber Rosa <crosa@redhat.com>, qemu-arm@nongnu.org,
- Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Brad Smith <brad@comstyle.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v2 08/15] tests/tcg: use --add-current-user when building
- containers
-Date: Tue, 15 Sep 2026 21:15:53 +0100
-Message-ID: <20260915201601.1207839-9-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260915201601.1207839-1-alex.bennee@linaro.org>
-References: <20260915201601.1207839-1-alex.bennee@linaro.org>
+ Tue, 15 Sep 2026 13:27:11 -0700 (PDT)
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Subject: [PATCH v4 0/3] Allwinner A10 GPIO support
+Date: Tue, 15 Sep 2026 22:27:03 +0200
+Message-Id: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2XMSwqDMBSF4a2UjJuSFzHpqPsoHUS90Qu+SIptE
+ ffeKJSKDs+B759IhIAQyfU0kQAjRuy7NNT5RIradRVQLNMmggnNDDfUNc0Luw4CrQbsqQZnFOd
+ Z6a0iCQ0BPL7X4P2Rdo3x2YfP2h/58v5Sdp8aOWVUOK2M1qX3nN+q1mFzKfqWLKlRbLg4cpG4Z
+ 5AXOcskE7Dn8s8tlwcuE3fWee9UpnKZb/k8z1+cu5kLKgEAAA==
+X-Change-ID: 20260818-allwinner-gpio-6ea84117df94
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Jack wang <163wangjack@gmail.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:36::10;
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lf2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,63 +109,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As the meson tcg build routes the container builds through docker.py
-we can also clean up its hack which involved appending a RUN line to
-the dockerfile. All the dockerfiles that care will work with the
---build-arg.
+This patch series introduces GPIO support for Allwinner A10 and
+Cubieboard.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+The support is focused on input/output and interrupt functionality.
+The qtest suite is also updated with tests for implemented
+functionality.
+
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 ---
- tests/docker/docker.py | 13 ++++++-------
- tests/tcg/meson.build  |  3 ++-
- 2 files changed, 8 insertions(+), 8 deletions(-)
+Changes in v4:
+- removed unused allwinner_gpio_update_all_output_lines function that
+  was flagged by clang
+- Link to v3: https://lore.kernel.org/qemu-devel/20260913-allwinner-gpio-v3-0-a9affa474b3b@gmail.com
 
-diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-index 315fa2ff848..6090a9dc957 100755
---- a/tests/docker/docker.py
-+++ b/tests/docker/docker.py
-@@ -297,13 +297,6 @@ def build_image(self, tag, docker_dir, dockerfile,
-                                              dir=docker_dir, suffix=".docker")
-         tmp_df.write(dockerfile)
- 
--        if user:
--            uid = os.getuid()
--            uname = getpass.getuser()
--            tmp_df.write("\n")
--            tmp_df.write("RUN id %s 2>/dev/null || useradd -u %d -U %s" %
--                         (uname, uid, uname))
--
-         tmp_df.write("\n")
-         tmp_df.write("LABEL com.qemu.dockerfile-checksum=%s\n" % (checksum))
-         for f, c in extra_files_cksum:
-@@ -315,6 +308,12 @@ def build_image(self, tag, docker_dir, dockerfile,
-         if self._buildkit:
-             build_args += ["--build-arg", "BUILDKIT_INLINE_CACHE=1"]
- 
-+        if user:
-+            uid = os.getuid()
-+            uname = getpass.getuser()
-+            build_args += ["--build-arg", "USER=%s" % uname,
-+                           "--build-arg", "UID=%s" % uid]
-+
-         if registry is not None:
-             pull_args = ["pull", "%s/%s" % (registry, tag)]
-             self._do(pull_args, quiet=quiet)
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 5e2ee3e6e3f..28a8e7a0558 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -217,7 +217,8 @@ foreach target, plan: tcg_tests
-     image_name = 'image-' + cc_dockerfile
-     has_docker = docker_host_arch_supported and docker_supported
-     if cc_dockerfile not in image_targets and has_docker
--      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile]
-+      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile,
-+             '--add-current-user']
-       t = custom_target(image_name, command: cmd,
-                         build_by_default: false,
-                         output: 'no_output_' + image_name)
+Changes in v3:
+- replaced forward declarations of gpio_is_input and int_ctl_cfg with
+  definitions
+- updated use of extract32 for int_cfg_n to use full stride INT_CFG_IRQ_STRIDE
+- replaced custom bit manipulation with deposit32
+- updated output GPIO line handling to have same behavior when lines are
+  configured as input as when they are assigned to special function
+- removed update of outbound gpio lines in the reset function
+- improved test organization with common add_test function, as suggested
+- removed leftover comments
+- minor style fixes
+- Link to v2: https://lore.kernel.org/qemu-devel/20260829-allwinner-gpio-v2-0-f0ebcb07302e@gmail.com
+
+Changes in v2:
+- allwinner-gpio-test: Added test for interrupt triggered on both rising
+  and falling edge
+- Link to v1: https://lore.kernel.org/qemu-devel/20260819-allwinner-gpio-v1-0-2a64866dff11@gmail.com
+
+---
+Strahinja Jankovic (3):
+      hw/gpio: Allwinner A10 GPIO emulation
+      hw/arm: Add GPIO to Allwinner A10 model
+      tests/qtest: Allwinner GPIO tests
+
+ MAINTAINERS                           |   3 +
+ docs/system/arm/cubieboard.rst        |   1 +
+ hw/arm/Kconfig                        |   1 +
+ hw/arm/allwinner-a10.c                |   8 +
+ hw/gpio/Kconfig                       |   3 +
+ hw/gpio/allwinner-gpio.c              | 441 ++++++++++++++++++++++++++++
+ hw/gpio/meson.build                   |   1 +
+ hw/gpio/trace-events                  |   6 +
+ include/hw/arm/allwinner-a10.h        |   2 +
+ include/hw/gpio/allwinner-gpio-regs.h | 227 +++++++++++++++
+ include/hw/gpio/allwinner-gpio.h      |  41 +++
+ tests/qtest/allwinner-gpio-test.c     | 535 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build               |   3 +-
+ 13 files changed, 1271 insertions(+), 1 deletion(-)
+---
+base-commit: 302c2f2df4d8b2eec81c38ee5d5b04e8e6e40d31
+change-id: 20260818-allwinner-gpio-6ea84117df94
+
+Best regards,
 -- 
-2.47.3
+Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
 
