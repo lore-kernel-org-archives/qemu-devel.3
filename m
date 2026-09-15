@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC520C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1E4C88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6XG6-0003ch-Kj; Tue, 15 Sep 2026 13:47:54 -0400
+	id 1x6XGz-0004Rj-8w; Tue, 15 Sep 2026 13:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x6XFy-0003VI-G7; Tue, 15 Sep 2026 13:47:48 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1x6XGx-0004Q4-KX; Tue, 15 Sep 2026 13:48:47 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x6XFv-0002Iq-8C; Tue, 15 Sep 2026 13:47:45 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c18:1d16:0:640:f28c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 455B7C0BD7;
- Tue, 15 Sep 2026 20:47:37 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c22::1:38] (unknown
- [2a02:6bf:8080:c22::1:38])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id alYYT00WL4Y0-vhOHkzpC; Tue, 15 Sep 2026 20:47:36 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1789494456;
- bh=eGARBJLz8/DvQWw+edmllXWGVJ3Gh5FAO825cIjkDgA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=zkgciKEVo7qUMUOk6cDLcQuKYkRWhhgOtNhEekXIOgZrlVo3bDOwWAnZ8kGphnnGD
- FeezC6N+gZiFBO0OcASwOGFPePBImRQDss/O4btZVFq1COeBJzJA32GRlg2w+N8OkY
- jKsZ9eLFbJGJZr2tt5mNBYr03WFB1+na2hn+/RYo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0638ebba-e58c-4b42-b27b-596a2182d2da@yandex-team.ru>
-Date: Tue, 15 Sep 2026 20:47:35 +0300
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1x6XGv-0002Vd-FS; Tue, 15 Sep 2026 13:48:47 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id DC4CB600CB;
+ Tue, 15 Sep 2026 17:48:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F8E1F000FF;
+ Tue, 15 Sep 2026 17:48:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1789494523;
+ bh=iCjZ2yNGguw/kFBX7DMQal9LkVgh2UHx++IDVyxVlYY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=LTuZdhMW4kbH/UQVWptd4WnzbZB+r6Qk3d+rZv1HOLmBGZbX+taAjk9G7ePOT0pWi
+ 19zlJ59+PRvljVf4MuxK1DdgwPK0V6wM0lFZzbqDcq83I+7oXL4twv0dm5DFUyoWLX
+ 1nsrdV274L5+f98lRjtZTxapvNrNV8r4SfLlDToM0h3TC9YtzzbnMs67MX99CNjPHe
+ JY7FNN4jnEiV9TXcAzAtQIumPCUvYAttEvwrQ7zpuVg/BbknhjJlvzsQyIR4ZZLgGn
+ 01sno4bFPtwYfjpF+4wx9T5AHV+EIl5rQ6Kisd7lZ7Md9QkShQzB+eVrK1coSt2uoG
+ JV08HhdJD3ZBQ==
+Date: Tue, 15 Sep 2026 18:48:38 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Chen Pei <cp0613@linux.alibaba.com>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
+ imammedo@redhat.com, sunilvl@ventanamicro.com, pbonzini@redhat.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
+ junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v6 1/6] hw/riscv/virt: Add CXL support to the RISC-V
+ virt machine
+Message-ID: <20260915184838.6011cf41@jic23-hlaptop>
+In-Reply-To: <20260907093735.2753-2-cp0613@linux.alibaba.com>
+References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
+ <20260907093735.2753-2-cp0613@linux.alibaba.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/1] qcow2: add functionality to repair bitmaps
-To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>
-References: <20260826101005.2345883-1-jean-louis@dupond.be>
- <20260826101005.2345883-2-jean-louis@dupond.be>
- <ee6e69df-673b-4859-8c77-e1f5b5552f68@yandex-team.ru>
- <d60e4c1a-0d51-425f-b5b1-c84e91934548@dupond.be>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <d60e4c1a-0d51-425f-b5b1-c84e91934548@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,68 +76,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.09.26 16:58, Jean-Louis Dupond wrote:
+On Mon,  7 Sep 2026 17:37:28 +0800
+Chen Pei <cp0613@linux.alibaba.com> wrote:
+
+> Enable CXL support on the RISC-V virt machine following the same
+> approach used by the ARM virt machine:
+> - Add PXB and ACPI_CXL Kconfig selections
+> - Add CXLState and PCIBus pointer to RISCVVirtState
+> - Register CXL machine properties via cxl_machine_init()
+> - Create CXL host register region above the PCIe high MMIO region
+> - Call cxl_hook_up_pxb_registers() and cxl_fmws_link_targets() at
+>   machine_done time
+> - Map Fixed Memory Windows above the CXL host register region
+> - Add ACPI0017 device in DSDT and build CEDT table in virt-acpi-build.c
 > 
-> On 26/08/2026 17:46, Vladimir Sementsov-Ogievskiy wrote:
->> On 26.08.26 13:10, Jean-Louis Dupond wrote:
->>> In some cases, it might happen that bitmaps become corrupt.
->>> For example when adding/removing bitmaps on a live image.
->>>
->>> Of course this should not happen, but in case this happens, the image is
->>> corrupt and even cannot be opened anymore. You'll get something like the
->>> following:
->>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
->>>
->>> So the image becomes useless, and cannot be repaired. This while in fact
->>> only (one) bitmap entry is corrupt, and the rest of the data is just
->>> intact.
->>>
->>> This commit adds a way to fix this corruption, by just replacing the
->>> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
->>> bitmaps that are corrupt.
->>>
->>> $ qemu-img check disk.qcow2
->>> qemu-img: Check failed: Invalid argument
->>> qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
->>>
->>> $ qemu-img check -r all disk.qcow2
->>> qcow2_free_clusters failed: Invalid argument
->>> Leaked cluster 3 refcount=1 reference=0
->>> Leaked cluster 26 refcount=1 reference=0
->>> ERROR cluster 983214 refcount=0 reference=1
->>> Rebuilding refcount structure
->>> Repairing cluster 1 refcount=1 reference=0
->>> Repairing cluster 2 refcount=1 reference=0
->>> Repairing cluster 32768 refcount=1 reference=0
->>> ....
->>> Repairing cluster 983214 refcount=1 reference=0
->>> The following inconsistencies were found and repaired:
->>>
->>>      2 leaked clusters
->>>      3 corruptions
->>>
->>> Double checking the fixed image now...
->>> No errors were found on the image.
->>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
->>> Image end offset: 64437878784
->>>
->>> And the image is valid again!
->>> Worst case you lose all bitmaps, but at least the image and the data
->>> itself is useable again.
->>>
->>> Signed-off-by: Jean-Louis Dupond<jean-louis@dupond.be>
->>
->> With accidental (I assume)  scripts/meson-buildoptions.sh.tmp file removed:
-> Yea sorry for that, was accidental indeed.
-> I don't need to push a new version to fix that I suppose?
+> Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+> Tested-by: Junjie Cao <junjie.cao@intel.com>
+> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
 
-Actually, I think, I can queue it to my branch. It touches qcow2 generic files out of
-"Dirty Bitmaps" subsystem, but in a very limited way, and only changes bitmap-related
-logic. And it’s been quiet here for two weeks now. Please stop me if I'm doing wrong)
+Sorry for delay. LGTM
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 
-Thanks, applied to my branch (of-course, .sh.tmp file removed).
+> ---
+>  hw/riscv/Kconfig           |  2 ++
+>  hw/riscv/virt-acpi-build.c | 20 ++++++++++++++++
+>  hw/riscv/virt.c            | 47 ++++++++++++++++++++++++++++++++++----
+>  include/hw/riscv/virt.h    |  3 +++
+>  4 files changed, 68 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index d06ac26648..c2f8c5d2da 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -66,8 +66,10 @@ config RISCV_VIRT
+>      select VIRTIO_MMIO
+>      select FW_CFG_DMA
+>      select PLATFORM_BUS
+> +    select PXB
+>      select ACPI
+>      select ACPI_PCI
+> +    select ACPI_CXL
+>  
+>  config SHAKTI_C
+>      bool
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 8e516ec114..2be8c6d572 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -29,12 +29,16 @@
+>  #include "hw/acpi/aml-build.h"
+>  #include "hw/acpi/pci.h"
+>  #include "hw/acpi/utils.h"
+> +#include "hw/acpi/cxl.h"
+>  #include "hw/intc/riscv_aclint.h"
+>  #include "hw/nvram/fw_cfg_acpi.h"
+>  #include "hw/pci-host/gpex.h"
+> +#include "hw/pci/pci_bus.h"
+>  #include "hw/riscv/virt.h"
+>  #include "hw/riscv/numa.h"
+>  #include "hw/virtio/virtio-acpi.h"
+> +#include "hw/cxl/cxl.h"
+> +#include "hw/cxl/cxl_host.h"
+>  #include "kvm/kvm_riscv.h"
+>  #include "migration/vmstate.h"
+>  #include "qapi/error.h"
+> @@ -518,6 +522,17 @@ static void build_dsdt(GArray *table_data,
+>          acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + s->num_sources * 2);
+>      }
+>  
+> +    if (s->cxl_devices_state.is_enabled) {
+> +        Aml *cxl_dev = aml_device("CXLM");
+> +        aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
+> +        Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
+> +        aml_append(method, aml_return(aml_int(0x0B)));
+> +        aml_append(cxl_dev, method);
+> +        build_cxl_dsm_method(cxl_dev);
+> +
+> +        aml_append(scope, cxl_dev);
+> +    }
+> +
+>      aml_append(dsdt, scope);
+>  
+>      /* copy AML table into ACPI tables blob and patch header there */
+> @@ -925,6 +940,11 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+>                     s->oem_table_id);
+>      }
+>  
+> +    if (s->cxl_devices_state.is_enabled) {
+> +        cxl_build_cedt(table_offsets, tables_blob, tables->linker,
+> +                       s->oem_id, s->oem_table_id, &s->cxl_devices_state);
+> +    }
+> +
+>      if (ms->numa_state->num_nodes > 0) {
+>          acpi_add_table(table_offsets, tables_blob);
+>          build_srat(tables_blob, tables->linker, s);
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index f3a1cc5ba3..70090ca70a 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -56,6 +56,8 @@
+>  #include "hw/pci/pci.h"
+>  #include "hw/pci-host/gpex.h"
+>  #include "hw/display/ramfb.h"
+> +#include "hw/cxl/cxl.h"
+> +#include "hw/cxl/cxl_host.h"
+>  #include "hw/acpi/aml-build.h"
+>  #include "qapi/qapi-visit-common.h"
+>  #include "hw/virtio/virtio-iommu.h"
+> @@ -540,6 +542,29 @@ static void create_fdt(RISCVVirtState *s)
+>      create_fdt_pmu(s);
+>  }
+>  
+> +static void cxl_host_state_init(RISCVVirtState *s)
+> +{
+> +    MemoryRegion *sysmem = get_system_memory();
+> +    MemoryRegion *mr = &s->cxl_devices_state.host_mr;
+> +    hwaddr base;
+> +
+> +    if (!s->cxl_devices_state.is_enabled) {
+> +        return;
+> +    }
+> +
+> +    base = virt_high_pcie_memmap.base + virt_high_pcie_memmap.size;
+> +    base = ROUND_UP(base, 64 * KiB);
+> +
+> +    memory_region_init(mr, OBJECT(s), "cxl_host_reg", 64 * KiB * 16);
+> +    memory_region_add_subregion(sysmem, base, mr);
+> +
+> +    /* Map the Fixed Memory Windows above the CXL host register region. */
+> +    base += memory_region_size(mr);
+> +    base = ROUND_UP(base, 256 * MiB);
+> +    cxl_fmws_set_memmap(base, UINT64_MAX);
+> +    cxl_fmws_update_mmio();
+> +}
+> +
+>  static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+>  {
+>      FWCfgState *fw_cfg;
+> @@ -625,6 +650,13 @@ static void virt_machine_done(Notifier *notifier, void *data)
+>      BlockBackend *pflash_blk0;
+>      RISCVBootInfo boot_info;
+>  
+> +    cxl_hook_up_pxb_registers(s->pci_bus, &s->cxl_devices_state,
+> +                              &error_fatal);
+> +
+> +    if (s->cxl_devices_state.is_enabled) {
+> +        cxl_fmws_link_targets(&error_fatal);
+> +    }
+> +
+>      /*
+>       * An user provided dtb must include everything, including
+>       * dynamic sysbus devices. Our FDT needs to be finalized.
+> @@ -716,6 +748,7 @@ static void virt_machine_init(MachineState *machine)
+>      MemoryRegion *system_memory = get_system_memory();
+>      MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
+>      DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+> +    DeviceState *gpex_dev;
+>      int i, base_hartid, hart_count;
+>      int socket_count = riscv_socket_count(machine);
+>  
+> @@ -871,6 +904,8 @@ static void virt_machine_init(MachineState *machine)
+>              ROUND_UP(virt_high_pcie_memmap.base, virt_high_pcie_memmap.size);
+>      }
+>  
+> +    cxl_host_state_init(s);
+> +
+>      /* register system main memory (actual RAM) */
+>      memory_region_add_subregion(system_memory, s->memmap[VIRT_DRAM].base,
+>                                  machine->ram);
+> @@ -898,10 +933,12 @@ static void virt_machine_init(MachineState *machine)
+>              qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
+>      }
+>  
+> -    riscv_gpex_pcie_init(system_memory, pcie_irqchip,
+> -                   &s->memmap[VIRT_PCIE_ECAM], &s->memmap[VIRT_PCIE_MMIO],
+> -                   &virt_high_pcie_memmap, &s->memmap[VIRT_PCIE_PIO],
+> -                   PCIE_IRQ);
+> +    gpex_dev = riscv_gpex_pcie_init(system_memory, pcie_irqchip,
+> +                                    &s->memmap[VIRT_PCIE_ECAM],
+> +                                    &s->memmap[VIRT_PCIE_MMIO],
+> +                                    &virt_high_pcie_memmap,
+> +                                    &s->memmap[VIRT_PCIE_PIO], PCIE_IRQ);
+> +    s->pci_bus = PCI_HOST_BRIDGE(gpex_dev)->bus;
+>  
+>      s->platform_bus_dev = riscv_create_platform_bus(mmio_irqchip,
+>          &s->memmap[VIRT_PLATFORM_BUS], VIRT_PLATFORM_BUS_IRQ,
+> @@ -972,6 +1009,8 @@ static void virt_machine_instance_init(Object *obj)
+>      s->acpi = ON_OFF_AUTO_AUTO;
+>      s->iommu_sys = ON_OFF_AUTO_AUTO;
+>      s->num_sources = VIRT_IRQCHIP_NUM_SOURCES;
+> +
+> +    cxl_machine_init(obj, &s->cxl_devices_state);
+>  }
+>  
+>  static char *virt_get_aia_guests(Object *obj, Error **errp)
+> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> index e516898f9a..a7b74d10c6 100644
+> --- a/include/hw/riscv/virt.h
+> +++ b/include/hw/riscv/virt.h
+> @@ -24,6 +24,7 @@
+>  #include "hw/core/sysbus.h"
+>  #include "hw/block/flash.h"
+>  #include "hw/intc/riscv_imsic.h"
+> +#include "hw/cxl/cxl.h"
+>  
+>  #define VIRT_CPUS_MAX_BITS             9
+>  #define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
+> @@ -66,6 +67,8 @@ struct RISCVVirtState {
+>      OnOffAuto iommu_sys;
+>      uint16_t pci_iommu_bdf;
+>      uint16_t num_sources;
+> +    CXLState cxl_devices_state;
+> +    PCIBus *pci_bus;
+>  };
+>  
+>  enum {
 
--- 
-Best regards,
-Vladimir
 
