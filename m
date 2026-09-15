@@ -4,76 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F013C88E7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 21:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFC2C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 21:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6aV4-0001Dv-Go; Tue, 15 Sep 2026 17:15:34 -0400
+	id 1x6agx-0006DP-Jp; Tue, 15 Sep 2026 17:27:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6aUg-0000yu-FY
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 17:15:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x6agv-0006CA-EE; Tue, 15 Sep 2026 17:27:49 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6aUb-0002ap-OL
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 17:15:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789506905;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YBhz2UZF8bOOsvlTvTMmJ20/Eqyxkh0IEGurbSrhuto=;
- b=BHDulZTnSyp806wDxNxscuzakTKVDxh4mL24BlmxVffHM9oBdtq2ln4Tdmsf5nYKPJQO3p
- aJ0xCgwKc8/iv6ZgqiT9WI64hAlul4v35Tm+59C/xf7n+KDb+s79K937+Gk3/YQDStquf5
- 2BuEZyxDuc9zZ3NHHw/T05AdDFM1EkA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-8TXqaac9OUGBwGpMIUjstw-1; Tue,
- 15 Sep 2026 17:15:01 -0400
-X-MC-Unique: 8TXqaac9OUGBwGpMIUjstw-1
-X-Mimecast-MFC-AGG-ID: 8TXqaac9OUGBwGpMIUjstw_1789506899
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B54CF19540C3; Tue, 15 Sep 2026 21:14:59 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1EC551956042; Tue, 15 Sep 2026 21:14:57 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, linux-cxl@vger.kernel.org,
- Lukas Straub <lukasstraub2@web.de>, Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Jason Wang <jasowangio@gmail.com>,
- Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Junjie Cao <junjie.cao@intel.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 6/7] qapi: convert intro sections with "TODO" markers
-Date: Tue, 15 Sep 2026 17:14:33 -0400
-Message-ID: <20260915211434.3511110-7-jsnow@redhat.com>
-In-Reply-To: <20260915211434.3511110-1-jsnow@redhat.com>
-References: <20260915211434.3511110-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x6ags-0004kd-Uw; Tue, 15 Sep 2026 17:27:49 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XpXufWX7jBBCH1o8uHQy/1fK6M/OkzCw35nXwSsfbgDAwnYYt/DFC7KuFWRvRria4ypnseNbfU5b1RA+ydZ/HMm5HvUjdeULV3b4dTxUvGiOQTSVo2Wy2RBr/l6ku4KVp7s7ceT4lOg5R9Kj53R+C1cPaJS4N+Vd8ivZCZpjuNGm0B21ynUf0BHg/yK/ingC635K+DhApVn7KYF8LrH+jE3E5dtcooTw/fijroptksiO4UUElaY+3U/xqJWRKFznlL03A5kpAkWtw7tNurfzh/JfmuPdDcxZv8O598LKXxO5erNF6/tPKDHnJ5E3AhEm5G2qN4ZmfX2EOEzF9AQasw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=J2XM9bJ5LJOvmtgoeKz3wOHAAxZEbHdzwp/+D1Ye7TA=;
+ b=rdKqUSwgAdksfDJZF/sqlgguj7GyQSSqCOIbPcY2TUFh35n3LBJTyMZVeZpZRtNa1J76VLDtMgWvUHs91qiizEsy/L+aWx4FwppvefuE1tvhffKTOnHW2AfTzGI/FyGNmfXBRGERm9zYoiGrp2anY2yFE5As5K2fBKpm29P20xneWGTuujLgaJbfpJVChxL0o9WYzquJds2BUx7vL0rkNxETW3IUayQvdAnrkZ86smWn1ezxdpxrL+idfbXP8EawNZQEuV7wKuck1/Nl5xQTmp9JmloCIk7Ges6BpEYXxDxPR4J8QqsO5rpd834t9ZpEdo898WqTKdWFsUNEsyK5DQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=J2XM9bJ5LJOvmtgoeKz3wOHAAxZEbHdzwp/+D1Ye7TA=;
+ b=ThkECefVWAPF5JyaKQvuVp6aWB8/nnKkYRjTLOQrTb/4tba5kG/L/kBvlz4XpA7FcsIPhrpXdeF0K3v9ADgo2lUQSbFqJgeX/11hZSLbWb1SLmdJu03wOFOjOE7yu9s4TobtamU034Tm+MQ4c3JuQ/YtBWgvpQqSq2gjotprQqE=
+Received: from CH2PR18CA0038.namprd18.prod.outlook.com (2603:10b6:610:55::18)
+ by PH7PR12MB8780.namprd12.prod.outlook.com (2603:10b6:510:26b::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Tue, 15 Sep
+ 2026 21:27:38 +0000
+Received: from BN5PEPF0004698A.namprd02.prod.outlook.com
+ (2603:10b6:610:55:cafe::99) by CH2PR18CA0038.outlook.office365.com
+ (2603:10b6:610:55::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.9 via Frontend Transport; Tue, 15
+ Sep 2026 21:27:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN5PEPF0004698A.mail.protection.outlook.com (10.167.245.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.428.7 via Frontend Transport; Tue, 15 Sep 2026 21:27:38 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Tue, 15 Sep
+ 2026 16:27:36 -0500
+Date: Tue, 15 Sep 2026 16:01:06 -0500
+To: Mathieu Poirier <mathieu.poirier@linaro.org>
+CC: <berrange@redhat.com>, <kchamart@redhat.com>,
+ <pierrick.bouvier@oss.qualcomm.com>, <peter.maydell@linaro.org>,
+ <mst@redhat.com>, <cohuck@redhat.com>, <pbonzini@redhat.com>,
+ <eblake@redhat.com>, <armbru@redhat.com>, <lorenzo.pieralisi@linaro.org>,
+ <gshan@redhat.com>, <enju.kohei@fujitsu.com>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>, <kvm@vger.kernel.org>
+Subject: Re: [RFC v4 02/24] target/arm/kvm: Return immediately on error in
+ kvm_arch_init()
+Message-ID: <rocrppdlgvg6jcolhnlt7z7ilqmthepim66ujg4e5diayw2gmg@s345fbhx3sov>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-3-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+In-Reply-To: <20260903193611.1058589-3-mathieu.poirier@linaro.org>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN5PEPF0004698A:EE_|PH7PR12MB8780:EE_
+X-MS-Office365-Filtering-Correlation-Id: bf34ce9d-6921-465c-b825-08df13702a8d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|23010399003|7416014|376014|82310400026|1800799024|6133799003|10067099003|4143699003|56012099006|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: LSe5yxPsnqu9iNG59bdcNXh6tLHOovbNJ//42tgbkWmCzJmDL3EnmsahtfuKW/IZW9JZpxr9HHM8p/M4keoWKgSLJGc12A0IV4m4trB9DkD8QIrwUXTDNFErRDIw4TEz6p1EkwSGCFKp5dgtmi4lG/l9hy/INl8Z4y+NZf6LbDP0mcl7Yf9Bvl/qWt6/01VGXu1xmh3T9TKWDvyiPxh87A6iNR0iME3fNPhR5uUDwUU2glBOq06OhsplY3T0xIgClKXZv7B4+ZOdCigvPzFP0NHe8CRIyHgQnO1brPgoEBB78F2bBdPtJe+Pxz51Fpopu186MTED+Ty0ZzyktESCEixhlAI0F4Gp8Ec7J7d28YcBOxfHv8/+qw/w8M0irgQIrHVDxQG1oxcNW1KSXCR3t/tda+lQA81Y3fsnFTa/BVxva6rRVs/RZ2Fojhh+mN6MHOIlKYvR6J123+0tvYuBixfC5PGmWLdIdP7JcwJ0dkEodlAtfzHF1bEdkKR38OJqOCMW6bNvizBheWkLvTxYyzFgqOB0zh93YqHkBxpTnJzFf1nmN4/mzCFwe7rRr6aTBihTPGLdEfjJuqFw2TivKCanuBJ5z3GIcmSs2xkHhNc4sFffeo7zfi4rUzVkIy73bJN4i+L2mnbi1B0Obp3pmOPi+D45yhhHiOll6nPrZGuxe3Iv8sNevCpl0CT/JlMLUn9o8mQQp4xxTY8bsFc3/g==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(23010399003)(7416014)(376014)(82310400026)(1800799024)(6133799003)(10067099003)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: dAJwi8ba9AuRmWI7e3A1D0bQxtY7zNYh1T4sNAlbSqV9SZ4NG6WVXHG+H+9nWG3yYLCTxXeHs7pF72Ff2hP9nKQ2+rCqmCoz+ARcyO+D9WE4vEcivIq2Rdde9Y4kV/eFXwMlS5WV26Y8tNnxt5kZqnDgPSLFGXjiX3n3bCT+fX6Ph25AVJTBDJWwogPawSjCAx55QZgLAe3ac/rHvzG9pzR7x4LOm9KR5l0aW1bZ9KjPKdMz5qIKk5zbUHVtRICoslSd6aPRcwNzk8LncA4OX17FN1PsaF9F8Qk1Cy6OmDXOqqHmQYMbYJGkBerN7eeb122inYmoQeHybw6sRXRuMFjRkY081iwNMT58Hb6N3ZLLpgnzyOd+6XJSdrI7rszEqFK5uO+zg9aRYtVV0mucRgQL0oFN7pQug44Q8jIyENu+eQ1LcOsg5t1rq3XKcadE
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 21:27:38.0627 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf34ce9d-6921-465c-b825-08df13702a8d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN5PEPF0004698A.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8780
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,104 +125,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Michael Roth <michael.roth@amd.com>
+From:  Michael Roth via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch converts intro sections that are immediately followed by a
-"TODO:" that was formerly used to demarcate the stub member insertion
-point.
+On Thu, Sep 03, 2026 at 01:35:49PM -0600, Mathieu Poirier wrote:
+> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> 
+> Returning an error to kvm_init() is fatal anyway, no need to continue
+> the initialization.
+> 
+> Leave the `ret` variable in the function scope because it will be reused
+> when adding RME support.
+> 
+> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> ---
+>  target/arm/kvm.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index d40a6a985914..ed99be7fd80c 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -596,7 +596,7 @@ int kvm_arch_get_default_type(MachineState *ms)
+>  
+>  int kvm_arch_init(MachineState *ms, KVMState *s)
+>  {
+> -    int ret = 0;
+> +    int ret;
+>      /* For ARM interrupt delivery is always asynchronous,
+>       * whether we are using an in-kernel VGIC or not.
+>       */
+> @@ -618,7 +618,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>          !kvm_check_extension(s, KVM_CAP_ARM_IRQ_LINE_LAYOUT_2)) {
+>          error_report("Using more than 256 vcpus requires a host kernel "
+>                       "with KVM_CAP_ARM_IRQ_LINE_LAYOUT_2");
+> -        ret = -EINVAL;
+> +        return -EINVAL;
+>      }
+>  
+>      if (kvm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/machine.json   |  7 ++-----
- qapi/migration.json | 10 ++--------
- qapi/net.json       |  9 +++------
- qapi/yank.json      |  5 +----
- 4 files changed, 8 insertions(+), 23 deletions(-)
-
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a58e373dd70..84d95c8d87f 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1244,11 +1244,8 @@
- 
- ##
- # @query-memory-size-summary:
--#
--# Return the amount of initially allocated and present hotpluggable
--# (if enabled) memory in bytes.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Return the amount of initially allocated and present
-+#     hotpluggable (if enabled) memory in bytes.
- #
- # .. qmp-example::
- #
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 0428f777882..d571c06fc20 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1617,10 +1617,7 @@
- 
- ##
- # @query-xen-replication-status:
--#
--# Query replication status while the vm is running.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Query replication status while the vm is running.
- #
- # .. qmp-example::
- #
-@@ -1670,10 +1667,7 @@
- 
- ##
- # @query-colo-status:
--#
--# Query COLO status while the vm is running.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Query COLO status while the vm is running.
- #
- # .. qmp-example::
- #
-diff --git a/qapi/net.json b/qapi/net.json
-index 526108ca0bb..d0bacb4dcfe 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1159,12 +1159,9 @@
- 
- ##
- # @announce-self:
--#
--# Trigger generation of broadcast RARP frames to update network
--# switches.  This can be useful when network bonds fail-over the
--# active slave.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Trigger generation of broadcast RARP frames to update network
-+#     switches.  This can be useful when network bonds fail-over the
-+#     active slave.
- #
- # .. qmp-example::
- #
-diff --git a/qapi/yank.json b/qapi/yank.json
-index 8ac4b773653..187a0952e66 100644
---- a/qapi/yank.json
-+++ b/qapi/yank.json
-@@ -96,10 +96,7 @@
- 
- ##
- # @query-yank:
--#
--# Query yank instances.  See `YankInstance` for more information.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Query yank instances.  See `YankInstance` for more information.
- #
- # .. qmp-example::
- #
--- 
-2.55.0
-
+There's a error_report("Failed to enable KVM_CAP_ARM_NISV_TO_USER cap")
+under here as well that doesn't have a return -EINVAL after this patch.
+Is that intentional?
 
