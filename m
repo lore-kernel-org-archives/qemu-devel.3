@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D356C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E05C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZsA-0001UH-O3; Tue, 15 Sep 2026 16:35:22 -0400
+	id 1x6ZsF-0001UY-Cd; Tue, 15 Sep 2026 16:35:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zs6-0001TA-7K
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zs4-0001Qe-QF
  for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:19 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+Received: from mail-wr2-x1a.google.com ([2a00:1450:4864:30::1a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zs4-0005dY-3a
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:17 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4843c2790ccso71008f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zs2-0005d9-U8
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:16 -0400
+Received: by mail-wr2-x1a.google.com with SMTP id
+ ffacd0b85a97d-482f6350f88so83572f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789504515; x=1790109315; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789504513; x=1790109313; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=2ceqUPoH8MhXmSFtjgWPeXdjWgb1vco08D6FmhOncNY=;
- b=Mbx6VUjl8Xb+Qv6X2LzNnp/uvMjKHNbAiMUq2y2KxhJW0XZB5Ry+1pbBG4OGuM66y0
- IBqXtkVPKJPW/jWLFTPRLL8N+VeX3B2dFnXopLxHuyUXdoHAzxbRIkL5YJ9idS+eiZ8c
- WzRUiH+Ad66Q5XrFaaTFhlFWkk3LONePW6sBwAvy2gksxtDnd9Z62yUrg8s3TJtJhfC/
- /XHVm/oLHKVaoeiUhTb6DrWYiI0leZ+vFWydvDY9AxGjOWZ+nBlcSdhqYsOR733DNNNw
- sy1/58zrBDNvNHLuVLko8YL8ihniVz+RImqp/mxraB1W5wZ2BRuWNihE+s7KdoMIlepz
- s6KA==
+ bh=QW5K/W0TiJTIitpSY5ssNog89nsYvNRU+uFyJOyaiQ4=;
+ b=JShp3A5b/+8+CsBTYiO5Umpbt/XsBLbH30okZtX0+tDcFU3OlvGQmWgMbMoXvy/Wn6
+ nMzXl/sJwEurjq+hamv0GGhZbva7m7G90tKLcz0xUIgjXLXiQPGljWZ6ffhq4ZRu861H
+ 1ogagQz589ovQ0N3uE33oq8oQngOTkEcFFXbDVPFiySRTrzAtQCYVqOVSOh0mIFzyR1I
+ lwriF4822i6h//ZaOqxULt8n2bp5fFmq8HSWyRdqqB8GcMeRp0AK46fIbJolYYb63Jqd
+ e32pREVUyCwA5GdJTuaxpRa+CckZRccImtGHHeGV2v6YLPIH9PCaK31tWmE93hIHp22B
+ u1jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789504515; x=1790109315;
+ d=1e100.net; s=20260707; t=1789504513; x=1790109313;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=2ceqUPoH8MhXmSFtjgWPeXdjWgb1vco08D6FmhOncNY=;
- b=ZBRwXw+go4RtY1Nq6c3npn1QFA/UKsYqw0fXqow0ayojb7XNqglIiYjEZ50iHY5nUs
- ZIrr46bjVyxOu4qe6S07QWm37BSBO7qSXQJ9FRgD8OVW8q1b/HOwOW+gDfbKgqxVm1Yj
- yfTWn2EHaLWj34+ZhfTtOlSzdX+9jx1gJPGiZy+A6ok3LagcHvN3qMLE7WdpW+UQwr+6
- zWufBGaGb+1MqE/SGJeptBZ1raDZbhQTrunpz/c1qP1oMaN6PxOasPRJoDIQfTnbzNsW
- C1qOrvAV4MYAjI66johtGTYFurAbUJKv/gYTWdgYdhsbVTvsDIGs4yGxKxoYLlPhzP7x
- UgqQ==
-X-Gm-Message-State: AFuF++meiZemi+x4wqNJ8vqGgl1iEnarbh5cQOdpryzrf2GuoMN6jHMM
- UyC6uoFo8oLwhcOWi7GVAA2EvnOh9GfaqYA//4YHtVoSJnNJHuQMwb2z1r89H5rNc1zlZqpaNch
- cYG3L
-X-Gm-Gg: AYBFou2aT9ihb5gM9+BrRmEhde6C92ZXMphJWSBLjSVS7ys8VrAbRSFMEgGUJxRHmpJ
- PaSKo999lcYnun4WqwdZYvM7kfu4pqgMGbqwzvoF1oynt9wykfG6k27RJTc1pbOJgkAkm0WUmID
- 8SVPh+0uFjKQhA4bJMccb9b3HkFP/5QpPpoFMHS9zgI+8JlFXR+KsXV55A0/kC01Vvb9SNLrMIc
- 21UgUEyVFIrOJReu6UgeYPGUK90O8fn/o+Ky2gFgnc2YTmUlsom/t7WmMGWICaim9h/Qc2ZhBE5
- VxvXTFJxpTobThVPRiLUJlO9IRk7XIRwmLVl6kfLZvFuMB+BcsiJS9QgftSAKNSwq4om7iDLpMc
- ogYScSvRfwz6wXEhutuzn7048UpkFCnekhLCh7gKIkuZ6z9POs8xAx+XyzYnZfA9BN1KS3aHc4X
- qWvV3qJBPo6HMNtDAXwKMMgFv9h2OBHDClojU/MjCxypmJ2JC13RunaliRDRoO3Udm+PsD
-X-Received: by 2002:a05:6000:2990:10b0:485:8542:fee3 with SMTP id
- ffacd0b85a97d-4870cf29d43mr207690f8f.16.1789504514682; 
- Tue, 15 Sep 2026 13:35:14 -0700 (PDT)
+ bh=QW5K/W0TiJTIitpSY5ssNog89nsYvNRU+uFyJOyaiQ4=;
+ b=tlWC28Rosoplogl9wk0Grhy0DJpNa7QWmmec2WIHKek8mHRfWI6295L0Qc3qa7Twzv
+ z9n74Yme4ENsppQPrSdyAE3QgWtH+TOFniHt8zw+xW4EVkEQcLXNLtY9B5VnxnW11CFM
+ CEOOqdio2RgeaouR3efHlimjEcybh4niFm0FtrqdAJAsI5+V2Se9IMnaSv2zvJoSfFus
+ f4GB3zua2AS4+xlUz/9K2b1vQhaCUOJspSd1UUwQgV+MUsaai1mBVC+sAYD23XScZNo4
+ tSHRjCcHrWJszYDswW7kX5pJ0l1XrKN2JE5HEJUq0uCUvPsBmH/HNWEImd2XpZ0wdrW+
+ SkXQ==
+X-Gm-Message-State: AFuF++kj6ItoQ77XC4zm6YQAG8f0JUPbUjgUlGl1Dkzop9jT1Smd4XxI
+ uqEtaOZKG/pXd/Wiu54KjC8bomBnmrbiZ3/fC8ybQs1143vpGbZEyql61dUOz1Jk8lBojNzJPqr
+ kSEkw
+X-Gm-Gg: AYBFou021sCwgs7JVepWrDS1SigD7bc0hqPsClLaQtPu73kS3Rvqfio3Sn99/WTTp7T
+ UDIAkj6SORKkaTwp7eJ9oqO/T+4CM9kYlJsqhJddH6fs9E3Rtaag0FsPZJdi9P534qBwhaioaqu
+ uCDW9bjNL3gjfY/N+4WNhVtQgkDsM4CAt8zeqYXOYPMZGOJlqJcZ3OPTBjn2o00Dxrq3Y6WFRk8
+ 9JyXPUNhbi32Xrql9Bq14rP/virhrOhzwuzQKAoMK2tjmpALNL9ISWQOYtwQCPFdbs/k3MjctQG
+ aIp8RxbWDR4/3EfYpY02gAkinDI56KcVcDEQwrhHCOHAo0uPSMpFf9wd8e9ef1qHT85JYjRItYi
+ WQsVC609WTOEl2K5Ogl22YJXXXaYKuecLJQqPdgTz5yKdJdRehuA6/l95XzPBzbAcpI/q+kuPWp
+ wu6UhCwIzW79mwEIS1HaxpUJmSMnJQbSDsiy9i0Or0W6KOrX+6hejgt6TZIuX13xB/n66v
+X-Received: by 2002:a05:6000:71c:b0:487:4ba:97f0 with SMTP id
+ ffacd0b85a97d-4870cf31e89mr174072f8f.23.1789504513129; 
+ Tue, 15 Sep 2026 13:35:13 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:f0fe:c7ed:403d:e487])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.13
+ ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:35:14 -0700 (PDT)
+ Tue, 15 Sep 2026 13:35:12 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 10/10] tests/functional: cover the BQL watchdog
-Date: Tue, 15 Sep 2026 22:34:54 +0200
-Message-ID: <20260915203455.580999-11-den@openvz.org>
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 09/10] system/cpus: add bql-watchdog-abort
+Date: Tue, 15 Sep 2026 22:34:53 +0200
+Message-ID: <20260915203455.580999-10-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260915203455.580999-1-den@openvz.org>
 References: <20260915203455.580999-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::1a;
+ envelope-from=den@openvz.org; helo=mail-wr2-x1a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,114 +104,139 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Hold the BQL from the main thread and check that the watchdog says so.
-
-human-monitor-command is not a coroutine command, so a write issued
-through it runs to completion under AIO_WAIT_WHILE() in the main
-thread, which keeps the BQL for as long as the backend takes to answer.
-Point that at a null-co node with a latency ten times the deadline and
-the hold is both long enough to report and short enough to end on its
-own.
-
-Arm the watchdog after launch rather than on the command line, because
-machine creation takes the BQL in bursts of its own and a deadline this
-short is meant for the hold, not for startup.
-
-Check the quiet case too. A counter that stops distinguishing a held
-lock from a free one would report a hang on a healthy qemu, and that
-failure is invisible to a test that only looks for the report.
+The report says where each thread was when the watchdog looked, not
+how it got there. A core carries every thread's whole stack, at the
+price of the guest. A qemu whose BQL has been held this long is not
+running its vCPUs anyway, so on a host where the answer is worth more
+than the guest, abort after the report.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/functional/generic/meson.build          |  1 +
- tests/functional/generic/test_bql_watchdog.py | 60 +++++++++++++++++++
- 2 files changed, 61 insertions(+)
- create mode 100755 tests/functional/generic/test_bql_watchdog.py
+ hw/core/machine.c     | 17 +++++++++++++++++
+ include/system/cpus.h |  4 ++++
+ qemu-options.hx       |  5 +++++
+ system/cpus.c         | 19 +++++++++++++++++++
+ 4 files changed, 45 insertions(+)
 
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
-index c94105c62e..c20c2a91ea 100644
---- a/tests/functional/generic/meson.build
-+++ b/tests/functional/generic/meson.build
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index b55af89516..2abb9e6295 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -403,6 +403,17 @@ static void machine_set_bql_watchdog_ms(Object *obj, Visitor *v,
+     bql_watchdog_set_timeout_ms(value, errp);
+ }
  
- tests_generic_system = [
-+  'bql_watchdog',
-   'empty_cpu_model',
-   'info_usernet',
-   'linters',
-diff --git a/tests/functional/generic/test_bql_watchdog.py b/tests/functional/generic/test_bql_watchdog.py
-new file mode 100755
-index 0000000000..193dad15e3
---- /dev/null
-+++ b/tests/functional/generic/test_bql_watchdog.py
-@@ -0,0 +1,60 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Test the BQL watchdog against a main thread blocked on IO.
-+#
-+# Copyright (C) 2026 Virtuozzo International GmbH
++static bool machine_get_bql_watchdog_abort(Object *obj, Error **errp)
++{
++    return bql_watchdog_get_abort();
++}
 +
-+from qemu_test import QemuSystemTest
++static void machine_set_bql_watchdog_abort(Object *obj, bool value,
++                                           Error **errp)
++{
++    bql_watchdog_set_abort(value);
++}
 +
-+deadline_ms = 100
-+hold_ns = 1000 * 1000 * 1000
+ static bool machine_get_new_accel_vmfd_on_reset(Object *obj, Error **errp)
+ {
+     MachineState *ms = MACHINE(obj);
+@@ -1174,6 +1185,12 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+         "Watchdog deadline for a Big QEMU Lock hold, in ms. "
+         "Default: 0 (disabled)");
+ 
++    object_class_property_add_bool(oc, "bql-watchdog-abort",
++        machine_get_bql_watchdog_abort, machine_set_bql_watchdog_abort);
++    object_class_property_set_description(oc, "bql-watchdog-abort",
++        "Abort after the bql-watchdog-ms report, to leave a core dump. "
++        "Default: off");
 +
+     object_class_property_add_bool(oc, "x-change-vmfd-on-reset",
+         machine_get_new_accel_vmfd_on_reset,
+         machine_set_new_accel_vmfd_on_reset);
+diff --git a/include/system/cpus.h b/include/system/cpus.h
+index 0e1e63bd85..14dbc8ff0d 100644
+--- a/include/system/cpus.h
++++ b/include/system/cpus.h
+@@ -44,4 +44,8 @@ void cpu_synchronize_all_pre_loadvm(void);
+ bool bql_watchdog_set_timeout_ms(uint64_t ms, Error **errp);
+ uint64_t bql_watchdog_get_timeout_ms(void);
+ 
++/* Abort after reporting, to leave a core behind. */
++void bql_watchdog_set_abort(bool enable);
++bool bql_watchdog_get_abort(void);
 +
-+class BqlWatchdog(QemuSystemTest):
+ #endif
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 9600620d34..f43d8ca480 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -33,6 +33,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
+     "                mem-merge=on|off controls memory merge support (default: on)\n"
+     "                bql-watchdog-ms=ms report a Big QEMU Lock held longer than ms (default: 0, off)\n"
++    "                bql-watchdog-abort=on|off abort after the bql-watchdog-ms report (default: off)\n"
+     "                aes-key-wrap=on|off controls support for AES key wrapping (default=on)\n"
+     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
+     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
+@@ -94,6 +95,10 @@ SRST
+         milliseconds, up to a minute. The default is 0, which disables the
+         watchdog.
+ 
++    ``bql-watchdog-abort=on|off``
++        Abort after the ``bql-watchdog-ms`` report, to leave a core dump.
++        The default is off.
 +
-+    def setUp(self):
-+        super().setUp()
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.add_args('-blockdev',
-+                         f'driver=null-co,node-name=null0,size=1048576,'
-+                         f'latency-ns={hold_ns}')
-+        self.vm.launch()
+     ``aes-key-wrap=on|off``
+         Enables or disables AES key wrapping support on s390-ccw hosts.
+         This feature controls whether AES wrapping keys will be created
+diff --git a/system/cpus.c b/system/cpus.c
+index 03a07e4824..a200a07707 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -398,6 +398,7 @@ static int bql_this_tid(void)
+ static QemuThread bql_watchdog_thread;
+ static QemuSemaphore bql_watchdog_sem;
+ static uint64_t bql_watchdog_timeout_ms;
++static bool bql_watchdog_abort;
+ 
+ static void bql_report_thread_states(void)
+ {
+@@ -411,6 +412,16 @@ static void bql_report_thread_states(void)
+     qemu_funlockfile(stderr);
+ }
+ 
++bool bql_watchdog_get_abort(void)
++{
++    return qatomic_read(&bql_watchdog_abort);
++}
 +
-+    def arm(self, ms):
-+        self.vm.cmd('qom-set', path='/machine',
-+                    property='bql-watchdog-ms', value=ms)
++void bql_watchdog_set_abort(bool enable)
++{
++    qatomic_set(&bql_watchdog_abort, enable);
++}
 +
-+    def hold_the_bql(self):
-+        """
-+        human-monitor-command is not a coroutine command, so the write runs
-+        to completion under AIO_WAIT_WHILE() in the main thread, which keeps
-+        the BQL for as long as null-co takes to answer.
-+        """
-+        self.vm.cmd('human-monitor-command',
-+                    command_line='qemu-io null0 "write 0 4k"')
-+
-+    def log_after_shutdown(self):
-+        """The log only reaches the harness once the VM is reaped"""
-+        self.vm.shutdown()
-+        return self.vm.get_log() or ''
-+
-+    def test_reports_a_hold(self):
-+        self.arm(deadline_ms)
-+        self.hold_the_bql()
-+        self.arm(0)
-+
-+        log = self.log_after_shutdown()
-+        self.assertIn(f'BQL held for more than {deadline_ms} ms', log)
-+
-+    def test_silent_while_disarmed(self):
-+        self.hold_the_bql()
-+
-+        log = self.log_after_shutdown()
-+        self.assertNotIn('BQL held for more than', log)
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ static void *bql_watchdog_fn(void *opaque)
+ {
+     unsigned int last = qatomic_read(&bql_seq);
+@@ -456,6 +467,14 @@ static void *bql_watchdog_fn(void *opaque)
+                      when ?: "", when ? " " : "", timeout_ms,
+                      qatomic_read(&bql_owner_tid));
+         bql_report_thread_states();
++        if (!qatomic_read(&bql_watchdog_abort)) {
++            continue;
++        }
++        /*
++         * A core carries the whole of every stack, and a qemu whose BQL has
++         * been held this long has stopped running its vCPUs anyway.
++         */
++        abort();
+     }
+ }
+ 
 -- 
 2.53.0
 
