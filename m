@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6EDC88E53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6276DC88E7B
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 11:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6RZQ-0000ew-8n; Tue, 15 Sep 2026 07:43:30 -0400
+	id 1x6RZb-0000hW-Ge; Tue, 15 Sep 2026 07:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6RZ7-0000e7-Lp
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:43:11 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6RZL-0000fD-Qj
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:43:24 -0400
 Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6RZ3-0005PL-Ka
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:43:09 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6RZ5-0005Q0-I6
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:43:12 -0400
 Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f6350f89so1603010f8f.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 04:43:03 -0700 (PDT)
+ ffacd0b85a97d-485b1d2874fso994231f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 04:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789472582; x=1790077382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QX7411/5ED/T+bhUYNtfHfCA651QxXurBZ0xSbIhwWw=;
- b=BEMgAyjez4qequrqAOhoCM2hYbRwlWvAI1E9UHnM+1f11pTUA35RTVPs+DGANGVhS1
- qtf32/ZBCOK22uwJXuS0rwDOIPabgzBP6UdxwjlyBdjfbW8xLGt5oUgBJzaFE7ao0UG8
- 5GfUtdTrmYGe+JqHl6iQjR1mZ47jBFwmHPqX2jCa5vbyW3orQ0mSCfq0JMZmq6H0mzvc
- kTxpDcmAS0gE9E7tViwCk2ixw5fL8SdfplwHSCgH1Fu/27OPwlr3hlu3HMrXovRDXDL9
- ZsJ89HaZUDG14X7xGki1eq6ySDkFTKIjqyiJViObjFnEAjhfV5EiWISRPCcd0MHUMdVW
- iSoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789472582; x=1790077382;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=openvz.org; s=google; t=1789472585; x=1790077385; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QX7411/5ED/T+bhUYNtfHfCA651QxXurBZ0xSbIhwWw=;
- b=RRQB9HmEm2guSXkthiqWovJZmnk9sAw3Y8nITVnseKRsVnduBY57WpeJtmkWoqFH13
- HEeK7KZpTNlbPDhi9X36dHLsffjrYuSGT1dNJgGovHim/vSmXA+q7uzXPA1hCkCeZMbu
- YnSx1LOOXueMRKN361t0HaLt6lVyFc2hZz++L7JZHC7oavAawPf8WoNhfhd3zzmJQZg/
- QHm+5J842wgaLxNh8XFD7HiXcfTaPNKTxw9y/zd3FhgyeACQ21J24AHBA6KxaAMvDwWe
- ZJrS3edRTkajN83C6mI6GTup3dpiLd9YRPvGJTeXvkojIe4pDmN4VV6/YFJxBqMSdig4
- ZNyQ==
-X-Gm-Message-State: AFuF++ldqq51pugmCiISb6AAERpVx53CDX1VfRHil9jX/i1VXZfjWBnC
- C1mCX5qPR01t7FKfkNnQnLP31GqhQvT+NtP9OmhrYndIEzng6W3gzaOHEic0M01L18Ibs7qzbxm
- 4/OBI
-X-Gm-Gg: AYBFou3U/O53M2R25o4qYAwz56j2ure5TZS/0R124OiOUD2aMLcp+/BYIcwjmLo5Mo7
- vfjtxmZFgG5NCFrxgYmP9nJLvAKUlVZWLXrggv+qDctwg/HY1j8w/yDAuHD5QcpEOKP+g8vDk3C
- 7i3yx1RRZI8oa/m9PPpkhKJVs9XgnYfFY4K5OHuN08UYsB+0h4RmD7CfLCDSi4ReWC4JddoAqUx
- 4u/+hMSF3Z1Nu7svMVMo3jOzWkf0Ve6lMfrXpNVkEL6uXyH+J53TwiAPGyPsfaJ04bh73ZdxikZ
- pFlGaQcAf5luHimB1PpktVMg4d7GhZGMF+gY5LXdmEz1gtXh7M/3OUM89+PE6CsfEuPzjV8g3wZ
- bFY+rQUMIaRgFKftxJISAz38O532uMUTV5JJcuHDiHG4ifCHGBVuZMbLRajV8q8+KpSxyP9pHuH
- NFwuzBUAAAV3kDdzXPDkzUQaNkXQb4Z3ofatgN+lCRAksPQkXytqCOcyQweGEtDVPAnKC7
-X-Received: by 2002:a05:6000:41c8:b0:487:a9c:a287 with SMTP id
- ffacd0b85a97d-4870a9ca378mr525635f8f.50.1789472581774; 
- Tue, 15 Sep 2026 04:43:01 -0700 (PDT)
+ bh=0cFMp897/2LhAMY3XQX2UH5MPXIwRH5TBMsVmASGwDU=;
+ b=koD5z8u+Fvb/aXoYJOmxzCMsqe48cKxHVazvkVepbvAi/0ObG1yhT1r0r5jIlhdWC7
+ xzYZYg8WYGql0Mqm/JcAf5B5W4jBSff52Yi2geaGRt/h33hBQ7sETMUtAp+DeI8bIkI1
+ wUGyUkqwRJYh7usWHGwQpR29iseif6sFoEpB3M2tqyG80GRDFpL7wOwWgP3X/zg3Z0/i
+ S6LTklIbWMVvVzZWpQ0MAsaiwBA7OY0LZ95t42gn3TORlxTCAT5FAgHsK5zCuYSEpk6Y
+ fpdqd2L7TIz2i389BBUAZHZNVKeZHtKAZ+e+bSSo5MnuHnSeXXN55tLVabGEhRFiygDI
+ mwgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789472585; x=1790077385;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0cFMp897/2LhAMY3XQX2UH5MPXIwRH5TBMsVmASGwDU=;
+ b=bMvp/1iDIi99yjNZ+tuCvQ0nOm1hgma6BYAhCUzW2sK0EKVjlrhRm9of6GzGzUSO1l
+ CDaHGthPGxKxSL0/KRg3lSzCxBYBF1hfqWfwbOTq2hg5oAgtYiwO5ktBoiUAUAxvORQ7
+ OQBad/2R/CshgE6J9irl7NlOVUG8LxQgU3TjfOfOWo7ngIOzjoYmKvPjXFiRwA8ShJZ/
+ RBl/gJuLak5YB0tFGFJNHiEUj4HrigStzZavwgFB/iDErk6xkyCKNw1Mi2YDhkKvW/v7
+ 1MEjdEscPhw0V3ICj8nKHEUaGdykjLGiOSGGCbAfc2uwgUlpMK1WpvM7Na4cbMbucCi2
+ Vv1w==
+X-Gm-Message-State: AFuF++nkeKbGnGsXNWmrYoFWxoKeZjvLRHfioTi1uKd7CXelTLFvDYkE
+ NTI3BwOM7iKRexR70xPQkklfzVu1Psg+RilaNdvsWfL3OUwf1cAIBFuwEVF+liJLMoXpzs2dIN6
+ yKByJ
+X-Gm-Gg: AYBFou0sbDbAaTYxsYexe4ZPRNg9dkNHHr3J6MYghRG0udfmovFv1fN5MLF+2xLAVqj
+ dTq8nMrtjpzZcBwfzCdaWWqxtrJIWGjR4lSIUVR1p9yf/xQ3+F7DpyB6ZzlKX//5ervGwcR9MVF
+ tBwoUBqnHeBxITIRduawT3vIcn/aC5SYZwYxzLRDPydEgP3ENBxSX7wQ99otq7d4pNkaGzcWE9R
+ cBFxRtII6F/xGITg7ymvKxrQM//5n4hkwozK8+ELubbJmdrWQJX0Si/yAp5r5kVAg3cIRctMn1A
+ ae9VMSzenyp9l/KpWwX4wCXYhxi/t1zCCEBkQtQnz8WVMHDDwQkh6p3reiJ1Qr7LP4iHq4A+twv
+ 9AbmoXXuoR5s1UNSAI1f+EFUatJD7CLz5+5HXhhR7RzDsIb/YS3BJvQQuENvUM/yg7wH8Djdsu/
+ eOTztRNq548+chsRU+SI0QX8utvxSSZskzsDe8J0C5N4LCBGoC3rxztUlx508H1LZN5KXIy06IH
+ nMC6uQ=
+X-Received: by 2002:a05:6000:41dc:b0:487:a87:24c9 with SMTP id
+ ffacd0b85a97d-4870a87263fmr963470f8f.3.1789472584879; 
+ Tue, 15 Sep 2026 04:43:04 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:33e6:6107:4678:322f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb34e4b5sm33648081f8f.22.2026.09.15.04.43.00
+ ffacd0b85a97d-486eb34e4b5sm33648081f8f.22.2026.09.15.04.43.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 04:43:01 -0700 (PDT)
+ Tue, 15 Sep 2026 04:43:04 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 0/3] parallels: report the stored dirty bitmaps in qemu-img info
-Date: Tue, 15 Sep 2026 13:42:55 +0200
-Message-ID: <20260915114258.3862446-1-den@openvz.org>
+Subject: [PULL 3/3] iotests: cover the qemu-img bitmap operations on parallels
+Date: Tue, 15 Sep 2026 13:42:58 +0200
+Message-ID: <20260915114258.3862446-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260915114258.3862446-1-den@openvz.org>
+References: <20260915114258.3862446-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:30::10;
@@ -80,7 +84,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,45 +100,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5f664cd37aec17e8145aa117d8da68f507edc8f1:
+From: Denis V. Lunev <den@openvz.org>
 
-  Merge tag 'ui-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-09-13 15:54:17 -1000)
+qemu-img-bitmaps drives convert --bitmaps and every qemu-img bitmap
+sub-command, but for qcow2 alone. It is built on a backing chain and a
+rebase, which parallels has neither of, so half of it could not run
+there and the format is left with no coverage of any of this.
 
-are available in the Git repository at:
+Cover what applies in the parallels test instead. A copy made with
+--bitmaps has to carry them, and raw has to refuse them. --merge and
+--clear leave the bitmap count alone, --remove-all sweeps it to zero,
+and --remove-all --add in one invocation leaves only the bitmap which
+was just added.
 
-  https://gitlab.com/dlunev/qemu.git tags/pull-parallels-2026-09-15
+An image which was not closed correctly is left out. parallels-checks
+covers that already, next to the code which drops the bitmaps.
 
-for you to fetch changes up to ba48db334ba3ae0b89015583057468e127cb903c:
-
-  iotests: cover the qemu-img bitmap operations on parallels (2026-09-15 13:30:29 +0200)
-
-----------------------------------------------------------------
-parallels patches
-
-- report the stored dirty bitmaps in qemu-img info, the way qcow2
-  reports its bitmap directory
-- cover storing a bitmap and the qemu-img bitmap operations in the
-  parallels iotests
-
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ tests/qemu-iotests/tests/parallels-bitmap     | 39 +++++++++++++++++++
+ tests/qemu-iotests/tests/parallels-bitmap.out | 12 ++++++
+ 2 files changed, 51 insertions(+)
 
-----------------------------------------------------------------
-Denis V. Lunev (3):
-      parallels: report the stored dirty bitmaps in qemu-img info
-      iotests: cover storing a parallels dirty bitmap
-      iotests: cover the qemu-img bitmap operations on parallels
-
- block/parallels-ext.c                         |  26 +++
- block/parallels.c                             |  20 +++
- block/parallels.h                             |   3 +
- qapi/block-core.json                          |  45 +++++-
- tests/qemu-iotests/tests/parallels-bitmap     | 217 +++++++++++++++++++++++++-
- tests/qemu-iotests/tests/parallels-bitmap.out |  57 +++++++
- tests/qemu-iotests/tests/parallels-checks     |   6 +
- tests/qemu-iotests/tests/parallels-checks.out |  19 +++
- 8 files changed, 390 insertions(+), 3 deletions(-)
-
+diff --git a/tests/qemu-iotests/tests/parallels-bitmap b/tests/qemu-iotests/tests/parallels-bitmap
+index be0ba8185d..8ae9314114 100755
+--- a/tests/qemu-iotests/tests/parallels-bitmap
++++ b/tests/qemu-iotests/tests/parallels-bitmap
+@@ -273,6 +273,7 @@ stored = file_path('stored')
+ copy = file_path('copy')
+ STORED = '9b7b8b2e-1c4a-4d3f-8e6a-1f2d3c4b5a69'
+ OTHER = '11111111-2222-3333-4444-555555555555'
++MERGED = '22222222-3333-4444-5555-666666666666'
+ 
+ 
+ def read_header(off, fmt):
+@@ -434,3 +435,41 @@ log('--- and the image is still readable')
+ info_out = qemu_img('info', '-f', iotests.imgfmt, stored, check=False)
+ log('image opened' if info_out.returncode == 0
+     else iotests.filter_testfiles(info_out.stdout).strip())
++
++
++# qemu-img-bitmaps drives these for qcow2 alone, as it is built on a
++# backing chain and a rebase, which parallels has neither of.
++
++log('--- bitmaps can not be preserved into raw')
++make_image(STORED)
++raw_out = qemu_img('convert', '--bitmaps', '-f', iotests.imgfmt, '-O',
++                   'raw', stored, copy, check=False)
++log('    ' + iotests.filter_testfiles(raw_out.stdout).strip())
++
++log('--- convert --bitmaps carries the bitmaps into the copy')
++make_image(STORED, OTHER)
++qemu_io('-f', iotests.imgfmt, '-c', 'write -P 0x11 1M 64k', stored)
++qemu_img('convert', '--bitmaps', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
++         stored, copy)
++copy_info = iotests.qemu_img_info('-f', iotests.imgfmt, copy)
++copy_data = copy_info.get('format-specific', {}).get('data', {})
++log('    %d bitmaps in the copy' % len(copy_data.get('bitmaps', [])))
++
++log('--- merging one bitmap into a new one')
++qemu_img('bitmap', '--add', '--merge', STORED, '-f', iotests.imgfmt,
++         stored, MERGED)
++log('    %d bitmaps stored' % len(bitmaps_reported()))
++
++log('--- clearing a bitmap keeps it in the image')
++qemu_img('bitmap', '--clear', '-f', iotests.imgfmt, stored, STORED)
++log('    %d bitmaps stored' % len(bitmaps_reported()))
++
++log('--- remove-all sweeps every bitmap of the image')
++qemu_img('bitmap', '--remove-all', '-f', iotests.imgfmt, stored)
++log('    %d bitmaps after remove-all' % len(bitmaps_reported()))
++
++log('--- remove-all with --add leaves only the new bitmap')
++make_image(STORED, OTHER)
++qemu_img('bitmap', '--remove-all', '--add', '-f', iotests.imgfmt,
++         stored, MERGED)
++log('    ' + ' '.join(bitmaps_reported()))
+diff --git a/tests/qemu-iotests/tests/parallels-bitmap.out b/tests/qemu-iotests/tests/parallels-bitmap.out
+index 994c67390e..df6f676106 100644
+--- a/tests/qemu-iotests/tests/parallels-bitmap.out
++++ b/tests/qemu-iotests/tests/parallels-bitmap.out
+@@ -92,3 +92,15 @@ read 65536/65536 bytes at offset 0
+     0 bitmaps stored
+ --- and the image is still readable
+ image opened
++--- bitmaps can not be preserved into raw
++    qemu-img: Format driver 'raw' does not support bitmaps
++--- convert --bitmaps carries the bitmaps into the copy
++    2 bitmaps in the copy
++--- merging one bitmap into a new one
++    3 bitmaps stored
++--- clearing a bitmap keeps it in the image
++    3 bitmaps stored
++--- remove-all sweeps every bitmap of the image
++    0 bitmaps after remove-all
++--- remove-all with --add leaves only the new bitmap
++    22222222-3333-4444-5555-666666666666
 -- 
 2.53.0
+
 
