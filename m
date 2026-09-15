@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DCBCC88E7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 06:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50924C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 06:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Mnk-0006gp-U9; Tue, 15 Sep 2026 02:37:56 -0400
+	id 1x6MzD-0000TX-KN; Tue, 15 Sep 2026 02:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1x6Mnh-0006g1-Bo
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:37:53 -0400
-Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1x6MnZ-0001Dg-AY
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:37:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1789454241; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=2jbStDiS254YvbhyEOUZC6f0WPv1hY7v8gUee1Q8C3c=;
- b=DZR4xPKtt4xiYhzhsARxDrmcfEPbLF4MZ3eskjNdZ+oZZLL1+rjZEJy6urhYPzzNvHbijD98KfMElEyzUKoHJd0e0c8rAu/L2IIB4Dd8wDK4mr2V8tfdl9PslKfxZwI6Vu0/EG6LYvgmGbGDornhN21H1ZkdRMLZA4SvNPCe40c=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
- TI=SMTPD_---0XB0Kx0r_1789454240; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0XB0Kx0r_1789454240 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 15 Sep 2026 14:37:21 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de,
-	pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH 1/2] docs/migration: document that postcopy can be used with
- multifd
-Date: Tue, 15 Sep 2026 14:37:18 +0800
-Message-ID: <20260915063719.89031-2-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260915063719.89031-1-guobin@linux.alibaba.com>
-References: <20260915063719.89031-1-guobin@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1x6MzC-0000T8-23
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:49:46 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1x6MzA-0003yK-LS
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:49:45 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4hkXgh26dSz8PbS;
+ Tue, 15 Sep 2026 02:49:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+ :from:to:cc:subject:message-id:mime-version:content-type; s=
+ default; bh=tbXRKZUzA9S1VKs/qJ4uRJ0qKqE0TWHc4lb5tFj9BhQ=; b=PSeT
+ 0Nf6njZ3q+BWgXE4UQLqMVLfuVY8EYlfynIB+fqXM0bVoCLErNTIOovMagnr86+w
+ IhDNveIO/oqcAdcoSG+SJiccR5GNhaewfrdImLT9N8HrXjMwxX+jmsVVCE35ZEqe
+ dWxTE9sXb5NgSXUEhdHYGsu/eBtx5/4N8NQW4Jw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+ :cc:subject:message-id:mime-version:content-type; q=dns; s=
+ default; b=SzIBf9YaSmscI/auv3pGc2esOMiOE7vMN7RK+h7nDzlLzC1E/59O7
+ vA4mlKubVIZ8VThKkmq0FaZ0cZWHHl5ptFwlR+BzxkqOHG3i7GLmBK83vK1ypKW6
+ Ow3aYrYZHgumMGBu5Gpj4nnTyH6a3ayb7ikxNdeaItBhWuiG10t6ok=
+Received: from humpty.home.comstyle.com (unknown
+ [IPv6:2001:470:b050:3:73f1:f873:95ea:a09a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4hkXgh012mz8PbR;
+ Tue, 15 Sep 2026 02:49:35 -0400 (EDT)
+Date: Tue, 15 Sep 2026 02:49:34 -0400
+From: Brad Smith <brad@comstyle.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Marc-Andr_ Lureau <marcandre.lureau@redhat.com>,
+ "Daniel P. Berrang_" <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] util/cutils: Use getexecpath() on OpenBSD for
+ qemu_init_exec_dir()
+Message-ID: <aqjqfifkq8gi0w4Z@humpty.home.comstyle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
-Received-SPF: pass client-ip=115.124.30.130;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,61 +76,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit e27418861288 ("migration: enable multifd and postcopy
-together") in the 10.1 release, the multifd and postcopy-ram capabilities
-are no longer mutually exclusive, but the postcopy documentation does not
-mention multifd at all, leaving users unaware that the two features can be
-combined.
+util/cutils: Use getexecpath() on OpenBSD for qemu_init_exec_dir()
 
-Add a short section describing how they interact: multifd carries the
-pages of the precopy phase, the channels are flushed and synced before the
-switchover (because loading a page in a multifd receive thread is not
-atomic with regard to a running vCPU), and the postcopy phase itself does
-not use the multifd channels.
+OpenBSD has introduced a function getexecpath() to be
+able to retrieve the executable name and path.
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Signed-off-by: Brad Smith <brad@comstyle.com>
 ---
- docs/devel/migration/postcopy.rst | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ meson.build   | 8 ++++++++
+ util/cutils.c | 6 ++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/docs/devel/migration/postcopy.rst b/docs/devel/migration/postcopy.rst
-index e319388d8f..570a3a1ce6 100644
---- a/docs/devel/migration/postcopy.rst
-+++ b/docs/devel/migration/postcopy.rst
-@@ -294,6 +294,32 @@ the background migration channel.  Anyone who cares about latencies of page
- faults during a postcopy migration should enable this feature.  By default,
- it's not enabled.
+diff --git a/meson.build b/meson.build
+index cfac634cf1..0e07138b0c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3034,6 +3034,14 @@ config_host_data.set('CONFIG_ELF_AUX_INFO', cc.links(osdep_prefix + '''
+     return hwcap;
+   }'''))
  
-+Postcopy with multifd
-+---------------------
++config_host_data.set('CONFIG_GETEXECPATH', cc.links(osdep_prefix + '''
++  #include <limits.h>
++  #include <unistd.h>
++  int main(void) {
++    char buf[PATH_MAX];
++    getexecpath(buf, sizeof(buf));
++  }'''))
 +
-+The ``multifd`` capability can be enabled together with ``postcopy-ram``
-+since the 10.1 QEMU release.  The two features apply to different phases of
-+the migration:
-+
-+  - During the precopy phase, guest pages are sent over the multifd channels
-+    as usual, so the initial RAM transfer can use all of them.
-+
-+  - Just before switching to postcopy, the source flushes and syncs the
-+    multifd channels.  This guarantees that all the pages already queued on
-+    those channels are loaded on the destination *before* the destination
-+    CPUs are started, which is required because loading a page in a multifd
-+    receive thread is not atomic with regard to a running vCPU.
-+
-+  - During the postcopy phase the multifd channels are no longer used for
-+    guest pages.  Both the background stream and the pages requested by the
-+    destination go through the background migration channel instead, or
-+    through the preempt channel for the requested pages when postcopy
-+    preemption is enabled.
-+
-+Consequently, multifd only speeds up the precopy phase of a postcopy
-+migration.  The bandwidth available once postcopy has started is the same as
-+without multifd.
-+
- Postcopy blocktime statistics
- -----------------------------
+ config_host_data.set('CONFIG_USBFS', have_linux_user and cc.compiles('''
+   #include <linux/usbdevice_fs.h>
  
+diff --git a/util/cutils.c b/util/cutils.c
+index 91ddadfd15..b5d1d13e24 100644
+--- a/util/cutils.c
++++ b/util/cutils.c
+@@ -1091,6 +1091,12 @@ void qemu_init_exec_dir(const char *argv0)
+             p = buf;
+         }
+     }
++#elif defined(__OpenBSD__) && defined(CONFIG_GETEXECPATH)
++    {
++        if (getexecpath(buf, sizeof(buf)) == 0) {
++            p = buf;
++        }
++    }
+ #elif defined(__APPLE__)
+     {
+         char fpath[PATH_MAX];
 -- 
-2.50.1 (Apple Git-155)
+2.55.0
 
 
