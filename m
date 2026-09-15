@@ -4,105 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB156C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120C1C88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6QXH-0001xY-QN; Tue, 15 Sep 2026 06:37:11 -0400
+	id 1x6Qe3-0002fj-Q1; Tue, 15 Sep 2026 06:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x6QXG-0001xQ-4l
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:37:10 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x6QXE-0000B2-BB
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:37:09 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-39b350c6920so2850898a91.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:37:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789468626; cv=none;
- d=google.com; s=arc-20260327;
- b=jh1w80KOvv/pbfqPGmRR6EVGJIcdIzFQlGGibEeQ6+0qbpzqGpibgEi5+EzTzpndnT
- ljfKDWr63Fr7c8ezooqFVAggyCyrd88ZJDOqk3l/y74/6sV3Py2TCOXFq/L9PK5egAGk
- ysbF6ZyI3fk4uhg+C6dPiqB/2BfvqlhFRZhBPXQk6FHw12CCLOELDR/QbrV+VjqO2zjJ
- nZlqYUfNHL54LqeWf7b3kII1qoPgOSGNvEuPu0qGfTzTS/yIIsbdRb8JH+jXhB0VPxWl
- hfE12Ep7gYveAsjKWRVdsxpQhG7jL13F3Th+vKHlvCQKzcvcnCRap8SMeFzvcAOVEFOu
- NRdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=EGvpBS9AGBPJyElA0kheMsHRXcgn2BsskjCu6EV8nyc=;
- fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
- b=dCBHKFxyON7fFNyUM4dafimyRy/F92CNkEjNsQwuN9mqEgFpGD7DKSkBgdPCF7DDd3
- 95+x1ioDi4z2FVUSLTcLeWpzuK6cGgMMRWmqVa81Nyg83ljlwWLwLg3zfgsz5rrluGw6
- d1MLPcfbf9hhgIPAImRtYK9IjSSJCw1IDu6KCu6xJpxL4jdsGtQ/XVbYSKSInMxWHGy1
- xptPn0jfFQOCxiNogIa3ww1RNh0pc4DXqUF8O+pOz48sKHmt27p2ZOcSCUUyouZAJiHY
- +kxfUbX13jc4B3CSrlcrslYsJMhDVenWKKIiqVukFdzXHFyNeBcxyxrHt3+YS8fOyRuK
- Cm1w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6Qe2-0002fb-Gm
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:44:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6Qe0-0002pn-8G
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:44:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789469046;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=pTZ1brC5Ck9O2OvmwzGurpwpkodMJ1+TN92PJ88VCAI=;
+ b=I9d+xH0xc2Nhgy/RCklXCbOekUc1HMP/2qnNecqHZGJysAFnc5NC4J8eiwr/DMc4DTun93
+ CrO3DOeMU3us1BlIVGRevmTdueetOdcoDf9Pydi+TqvKt4ipVVZYoJlywZlDPNyz9AMbIc
+ YayEbwISny9RYe9vS1SyQufvmzB3Ogg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-32-3QBWYq4pPoix97kFmX9uRQ-1; Tue, 15 Sep 2026 06:44:04 -0400
+X-MC-Unique: 3QBWYq4pPoix97kFmX9uRQ-1
+X-Mimecast-MFC-AGG-ID: 3QBWYq4pPoix97kFmX9uRQ_1789469044
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49e823c4868so1830625e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789468626; x=1790073426; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=EGvpBS9AGBPJyElA0kheMsHRXcgn2BsskjCu6EV8nyc=;
- b=PmRj2s3k5HvvWhuDlf0GKZs1bBE4eryiu1WG07KYgsKAXH8mt27CbyAoGumjx6OrGn
- zcOWbdj5PzEi44nSOJsEkL4lme12yQbAPSzhJ6ROdt49P2FST/AprDyo2mIbPe4d39Do
- eIvlT9Xi1rUIyIZrmZJzQCrdql4dnC4S7pbSk+hZaAeRNC4wzqZZihGMq3PN/9s48ICH
- SQr9pho0Tz5T4JgWmSmpn1AB6Gq2Fq3s9jQyFHSWMx39lpIQb6fTGRpOiRJCo69rTfad
- JkPCRJPRekQwpkUMOtwunnmHyJb/31JCJEOC60JuHW96SwWUxrnvQwKFP9NwRmBUGWjj
- r8Nw==
+ d=redhat.com; s=google; t=1789469044; x=1790073844; darn=nongnu.org;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=pTZ1brC5Ck9O2OvmwzGurpwpkodMJ1+TN92PJ88VCAI=;
+ b=LC32/aah54YngaZbCUywpPYUE3fWZujGGZBuQn+no7wD6WG1Z8qIdRmy4RJQaNdpa+
+ ZElksgVTK/OWYuXg2Zvyxcw4MLc0yLJYVAZIczc3CRCnpIaFGFkkSMDD4xSfV+rEC8N1
+ IUEwExHguh+DZvqdOpr3kjaDulUGHbFEWMD6xHqYFbqQhJBVzEJ0HmaGPxc3chFsjk8D
+ kIWtVVIplSk/PnuvVMHnw2Fd2ieJFalx5JO2EVDUCyKEGRfb7HWFjNiJPkqVcLy19kUL
+ 31SIzewljk5OpsQI49uiIKYB7KvqRHl3nQXa65VQ8nRu3m+1MzsBHyLDZsYCAlTXfVyM
+ SuDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789468626; x=1790073426;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EGvpBS9AGBPJyElA0kheMsHRXcgn2BsskjCu6EV8nyc=;
- b=WC+Dn9rHeSRWdal8rTzQDkLuDbUCN/ny9BSINuagDrZYEmYFoQM+I17JG4idOLRy9s
- xZAeHkOWyPxEZTDQC+LcXd2RE5pMGbq2psriJ0A/KCoKNuuK+38Ji8I6uwMwwDlwyEaK
- q6+ogo8xF6gsJ0stpOdl9T5XKcHRFIAWNoSKZc+WTTUlo5/UOqhabPX3jgXhQyxCKqZu
- G3Aiulze0QXDxGwmzkhIsHtcXcWc86ktB9y2JhJlPnyl6LUbnBB2odJn3GzL/4agu38Q
- SGcYW5AetKsiSYFNec4pR8ckbe+TvafbSkivlo80wRwHqt0+veW68QEm0Vbl7Hor6SyB
- sztw==
-X-Gm-Message-State: AFuF++lbLIaFwuvizzAffqOivoH9bFGkKXmpMHAGVP5jCvRtWWXvLYcb
- T93nsrfd+r/v+b+TxVCe87WlyyayEqqlAKdxtMaPdWU+wu06b8SPTlEA3ywixuhrVdpdAEXH5zf
- 949kwlrl5lQCGgMDZXsOkd9FrQLQU9ao=
-X-Gm-Gg: AYBFou3qsCklVcRj68+XJoyQr4mR+xyweo1GIJaR2RucbI2MX/r75g3qKvNqygnq0oR
- ofm8DHEmJ8k5Fk5x8vcfatm+wYuKkspMqvBohtuyGoZ7x2FxfABaeDJiqNoly/6+r+h9WRbky99
- dSJcTypxKMzarYJRb2jhDh3qk+KeGDOSTzqdB+sCrTBchOnr4vVEfQMBOJEKdDmC3EfcwHainDn
- yVQyXugj7HDOorElXxrTVo73csMmWe+0qRi493/j0/x40Sbbgph6fSxp2ghYqdJaQmWryZkunEk
- 9WZ24+w4kQm3oXrI3sY04qnOO3S22Gipa7OpWNlTFBNIafuBmDhfdeoje8k9sQEmODzH7IdlUii
- b1e1749fHY+s=
-X-Received: by 2002:a17:90b:2dd2:b0:39e:132d:df19 with SMTP id
- 98e67ed59e1d1-39e132de5b4mr69723a91.10.1789468626005; Tue, 15 Sep 2026
- 03:37:06 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789469044; x=1790073844;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pTZ1brC5Ck9O2OvmwzGurpwpkodMJ1+TN92PJ88VCAI=;
+ b=HL7/pWnyKdcC5Nr1AHXSAd5ZkxDKudw69Qn+aJv3y/iA16aqjokZxwySJhWLlZvXU1
+ ACkJ7ltQI2V3wpYSI4zflAJxiRktF7FvDc0BW+qefRNr+xe9kH0rGmuAMQO3yRaTVj5d
+ VJbw0VFCPxYfupnXdoJoVu5wNPrGnm+99ZDGQeFBzor9Aj6piNtTx2lI9UNKZ2ELYhta
+ u8zyjazFknZyoKc1eRvJvLSx4ZV8EqMnrIt6IW7d6zhlY74ZCabQpvvhxukSFErMIXGz
+ tNt46T4gNzG3dz9GCX/CQcIMK244AdNXm9olsvXfgC4nxEIQoR5PCjiCInUYBZpl49HL
+ YKBQ==
+X-Gm-Message-State: AFuF++nSUMKgwscbONmfnohXwxZqwyWyIKLvpW/ChSmVCN9Xxo7FFL/h
+ yL7wT5z0JtfOTNDboasxgLJpG1Yk0DsDPUD1jgvYXsrlrFON4ijPUk6uxOJvqLse5V8uR+TceQ9
+ wooBo8R3dZBR8PsDwtydzZKbFLin8A6MFD/xDW+ffVP9cq+NXYFWvvirOpwTTbbzrRpiwjCsyxy
+ 3XXicXb8yGGYdkM1OcJFp4rTRyDMPm/ROxgA==
+X-Gm-Gg: AYBFou2DlGjP5gPU39c77/KM0ED+i2BQFD0uyIl+b+Pn8dqRnJXodwaIyslH1ChbZTh
+ 4EzfmWEd+Gx+ZPQaJT1JjQ3Uq06jVigdc/qSrjfEKRkt9Zl/VbyZpiSg6bA9UBXminSUv7jESv4
+ DkZv5qjjdy1saLpD08Xyx69gkCm/igIGUZcyrmRWuLtanbuYDMA96RVE/21CGoTRGLITIp+5qBD
+ m6amQNwCyAG25q4IYnpARWZYyXpQJLzdILRUoURm0HB4jNQrOuumTvrC+hueIuFQWaHZo3i+IKF
+ qeVZ0lkOGOne6S+cN0Fta5aUOOgPp07TR+8LozUGT0zUmx3KUEpBWUgougfriRuc094fpFi0bbG
+ QQjhQU5W2VrRPnfOZ67ufmU0=
+X-Received: by 2002:a05:600c:5394:b0:49d:2555:1a6d with SMTP id
+ 5b1f17b1804b1-49e7a68d7d5mr168299335e9.16.1789469043611; 
+ Tue, 15 Sep 2026 03:44:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:5394:b0:49d:2555:1a6d with SMTP id
+ 5b1f17b1804b1-49e7a68d7d5mr168298645e9.16.1789469043094; 
+ Tue, 15 Sep 2026 03:44:03 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e7ef8a7b1sm49801955e9.12.2026.09.15.03.44.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Sep 2026 03:44:02 -0700 (PDT)
+Date: Tue, 15 Sep 2026 06:44:01 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: luzhixing12345 <luzhixing12345@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] vhost-user: fix SET_MEM_TABLE number of regions
+Message-ID: <712e301bf7f815412fb264de8159cb3475bd237a.1789469028.git.mst@redhat.com>
 MIME-Version: 1.0
-References: <20260804090847.18871-1-dongwon.kim@intel.com>
- <20260804090847.18871-2-dongwon.kim@intel.com>
-In-Reply-To: <20260804090847.18871-2-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 15 Sep 2026 14:36:53 +0400
-X-Gm-Features: AcwNN1XjNIAOvVFx9drsd4idS9P4Cydd-xJ4cOrBcWVQXCe2dNlhZulIp_s3vQo
-Message-ID: <CAJ+F1C+T-j9qVD9sHSQdYEvw3LQYRGHo7=L4MgsaUhhZbr+LJg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ui/gtk: register "Grab Input" shortcut to accel_group
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj2-x10.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,93 +116,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+vhost-user.rst says the legacy SET_MEM_TABLE contains 8 regions, but
+this does not make sense - we have a num_regions field for this.
+And it is not true in practice: if QEMU has less, it sends less.
 
-On Mon, Sep 14, 2026 at 10:51=E2=80=AFPM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> The "Grab Input" shortcut key currently fails to trigger when the
-> window is in fullscreen mode because the menubar is hidden, which
-> disables GtkAccelMap-based shortcuts associated with it.
->
-> To ensure the accelerator remains active in fullscreen, connect it
-> directly to s->accel_group and explicitly set the hotkey display on
-> the menu item label.
->
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  ui/gtk.c | 20 +++++++++++++++-----
->  1 file changed, 15 insertions(+), 5 deletions(-)
->
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index 3c9720a330..2f83c557d8 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -1878,6 +1878,12 @@ static void gd_menu_grab_input(GtkMenuItem *item, =
-void *opaque)
->      gd_update_cursor(vc);
->  }
->
-> +static void gd_accel_grab_input(void *opaque)
-> +{
+The incorrect wording was introduced, without explanation, as
+part of an editorial cleanup. Probably an oversight.
 
-https://docs.gtk.org/gtk3/method.AccelGroup.connect.html
-The signature used for the closure is that of GtkAccelGroupActivate.
+It's really "up to 8".
 
-This means that other key events could potentially be triggered. It
-should return true (handled).
+Fixes: 1958bb23b9 ("docs: fix vhost-user protocol doc")
+Cc: luzhixing12345 <luzhixing12345@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ docs/interop/vhost-user.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index c1e02ff7e9..488214a306 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -248,7 +248,7 @@ Multiple Memory regions description
+ 
+ :padding: 32-bit
+ 
+-:regions: regions field contains 8 regions of type :ref:`Memory region description <memory_region_description>`.
++:regions: regions field contains up to 8 regions of type :ref:`Memory region description <memory_region_description>`.
+ 
+ Log description
+ ^^^^^^^^^^^^^^^
+-- 
+MST
 
-> +    GtkDisplayState *s =3D opaque;
-> +    gtk_menu_item_activate(GTK_MENU_ITEM(s->grab_item));
-> +}
-> +
->  static void gd_change_page(GtkNotebook *nb, gpointer arg1, guint arg2,
->                             gpointer data)
->  {
-> @@ -2557,6 +2563,7 @@ static void gd_create_menu_view(GtkDisplayState *s,=
- DisplayOptions *opts)
->  {
->      GtkWidget *view_menu;
->      GtkWidget *separator;
-> +    GtkWidget *child;
->      QemuConsole *con;
->      bool zoom_to_fit =3D false;
->      int vc, i;
-> @@ -2615,12 +2622,15 @@ static void gd_create_menu_view(GtkDisplayState *=
-s, DisplayOptions *opts)
->      gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->grab_on_hover_it=
-em);
->
->      s->grab_item =3D gtk_check_menu_item_new_with_mnemonic(_("_Grab Inpu=
-t"));
-> -    gtk_menu_item_set_accel_path(GTK_MENU_ITEM(s->grab_item),
-> -                                 "<QEMU>/View/Grab Input");
-> -    gtk_accel_map_add_entry("<QEMU>/View/Grab Input", GDK_KEY_g,
-> -                            HOTKEY_MODIFIERS);
->      gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->grab_item);
-> -
-> +    gtk_accel_group_connect(s->accel_group, GDK_KEY_g, HOTKEY_MODIFIERS,=
- 0,
-> +                            g_cclosure_new_swap(G_CALLBACK(gd_accel_grab=
-_input),
-> +                                                s, NULL));
-> +    child =3D gtk_bin_get_child(GTK_BIN(s->grab_item));
-> +    if (GTK_IS_ACCEL_LABEL(child)) {
-> +        gtk_accel_label_set_accel(GTK_ACCEL_LABEL(child),
-> +                                  GDK_KEY_g, HOTKEY_MODIFIERS);
-> +    }
->      separator =3D gtk_separator_menu_item_new();
->      gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), separator);
->
-> --
-> 2.43.0
->
->
-
-
---
-Marc-Andr=C3=A9 Lureau
 
