@@ -4,76 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36812C88E7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D334DC88E7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Upa-00012u-6x; Tue, 15 Sep 2026 11:12:23 -0400
+	id 1x6V1q-0006m2-AY; Tue, 15 Sep 2026 11:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpL-0000z5-Db
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpJ-00006N-Jg
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789485125;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rBLyZXbXlsOC8SLLzAeTtyZ5ri1ynYIY6/I844l2vDU=;
- b=gEuugPbZa9KSokZ6QincbyEPllaYMOLNuFQUTALvPZLewEy8delhTo1aT6e+xINPuE76Dc
- 9cKSbh3Pyi4uFxAZUbQ9e8X29gZRtqy0X84sWBVnNUXeKRgmP6EZp4MttSqga7D6S+pjKK
- gtZD02UkkUPBHZpF2a5pksoauNjOHIQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-yXVnqkb5O0KqbaW2p6bTyg-1; Tue,
- 15 Sep 2026 11:12:01 -0400
-X-MC-Unique: yXVnqkb5O0KqbaW2p6bTyg-1
-X-Mimecast-MFC-AGG-ID: yXVnqkb5O0KqbaW2p6bTyg_1789485119
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 03E201800668; Tue, 15 Sep 2026 15:11:59 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5E285195604C; Tue, 15 Sep 2026 15:11:54 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jonathan Cameron <jic23@kernel.org>, Kevin Wolf <kwolf@redhat.com>,
- Peter Xu <peterx@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- Lukas Straub <lukasstraub2@web.de>, Eric Blake <eblake@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- linux-cxl@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 4/7] qapi: convert remaining simple intros for
- block-core.json
-Date: Tue, 15 Sep 2026 11:11:24 -0400
-Message-ID: <20260915151127.1002244-5-jsnow@redhat.com>
-In-Reply-To: <20260915151127.1002244-1-jsnow@redhat.com>
-References: <20260915151127.1002244-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x6V1n-0006lL-R5
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:24:59 -0400
+Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x6V1l-0004Lz-LE
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:24:59 -0400
+Received: by mail-yx2-x11.google.com with SMTP id
+ 956f58d0204a3-66e56a1fe3fso3320075d50.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 08:24:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789485896; cv=none;
+ d=google.com; s=arc-20260327;
+ b=bDO7mXAHlli9di4jbmgNIdHoMVjz2VsRpLU9X98WjIc2OW5VhMgRQgpu3WVuRMLZ9G
+ OozDY2/RiMZU4zrG4gENCsNnKQNH+Bb9N8/xr0+vQ/DHlCZngHlfCRO2+QOvD6JwN0Fr
+ YTqVtM+KlifYsWo1HAfBawNDrxHndKvh5mXsw97AFgE4Duh5nVFaE3pTlEd4GqFlCwzc
+ Ag382n7BxjVeTldfLAuzJydYvyJdQlsIGjf+7SI0WQ5NnnHLVWvnQGVRyiHPrACIppl9
+ JmWlu+S+wsUui7j3tISkNwzBYHTQRLivV/K0B5E2QUSMBX1EDgMKkVMmd39+5fxLIsg+
+ wmLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=f39LRX6t5miX88Vb9pSej9Bo7WXHts2Zw12vmv6/pc8=;
+ fh=gicmf1zLCz5mLo37/slHRwiGNwG9FuwwhzHTeCt9t94=;
+ b=Umf7UzwO9Q4cZi3FSSsUcOQL0wL7gywa3LUsFNC1EFai76PcnVxp/FyJpCPiVmR3mp
+ BJa4CUji96LPkUyiqZIVaiWqQs/T1g6ksbLw8wklXjw8BZLFyDKpNLBXczpt01AveYq+
+ zZvzllUb6se2Z3TME5yjMP4OohewOXWnskqps05H1tsKkVsV8WI9pXU7PI8dthXSmgcb
+ yyFZehhiPNxGUQL1HB4cRRkuIaKuXsC8gwP9u4pqmz5b7yCDQI1BjH0ivIVtbpy+vEeP
+ 6842as0YJ3MpbMGoFWV3rMrRvMCqC4O9tQ6j7jwq9BxFpNlOslY8rm777ENB/g+N8ySd
+ Mu8A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789485896; x=1790090696; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=f39LRX6t5miX88Vb9pSej9Bo7WXHts2Zw12vmv6/pc8=;
+ b=nL7SRXFf8xH054AUbqjlceI37FymKw4npt+Ek0aP80AbLKEm9QIaWmF4Alg0MKyqFS
+ mvMmJrMoWp6MHtlN6NJj1n1RtXWb+MGZZ+8LM/Gts9OvTqRL2f6ZWwuDj73GyjbcZkte
+ RptnjPudGusib95EIxASI/8anxslRrm5HAvtvq/lLGAl8CuAYI4z7fQ7gdBSx3x26M4j
+ 1jrf7FsB40hka/MxegmMoEsZBshwxXIHcVI8MFmxwarVYQsosnSG1wicmXQ4BMKnt546
+ fx7TfuEPUv9OFJIzOUlDPz84uZbCg6NPb1jDm+Te1D6JJDmfCdhew3Q+Lg2+bOuKqAHe
+ v5SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789485896; x=1790090696;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=f39LRX6t5miX88Vb9pSej9Bo7WXHts2Zw12vmv6/pc8=;
+ b=adcMKTxo732vZM8IIRPAPAaQHDbp2KUER3Eke0/I4nGYJryw2mHQLG9vLHt0orINww
+ Znp2ch2jjnl5paBpZOs2EV3w/WKVIcnHv9PEEhMnVMMUSbdovORpAXpXNlziQ4+vYrSy
+ SkNAg/Uuyy1E3pJgju3wAle0OWHD93ZrcpTazBwI4B4tPNECP4fxA7r0nAOfDSme1BeK
+ ojIJX+3vyla0jhwi1hHlpQVTsMxEpdWoYQHnx21GuuwafxgTnmqbBhJyTNeSkWNVPS8p
+ zFvULtvVAo57TwriYCJ8ByIsPCgHLyPES67gWAJa/FmTWTot53/WyoHU2NB0Xg9ukJLQ
+ 8tDg==
+X-Gm-Message-State: AFuF++lrcTWdLGWljlZcQyCj4A8JGheRQMOkwHDRxFbFhWsuEAbGJl0P
+ AzAhI+X7PVrkDFQYlYJ0pD1XxHVBJSI4euy9uodQMf/F+9GGFAkQ7+bZcbRW0BTNEISLZxaFhgq
+ ExntfBYcH7erafHKLRzrZd0wDCAbwcYRy65a9WcT+wg==
+X-Gm-Gg: AYBFou3959gCDIt6xo6S626f1zkeqkHHU126ARVYihoIsnQmzH42x0hmHZCIlwXpx48
+ wKJdLRP8FEqCi91v8jo5b+WaaU6cNAgxchY4+CbPYkPRqGxUsb10JufXpkpyVfnPErg/DnpzIO0
+ 8BmgssjZZj4pU/e1aB4eblIno6NJef/T+QPzeKkB2GO0LKDjmmJaYkR74+Ta60bSSxjkNZzo0B2
+ sheH8hKewFJDn73ZezpxHxea/fsz3VoR2acXm07N/+LeRIlufIrtr/z2C2BW/eKgrDelcmF3hLI
+ 93yYmuIc5L/syh4EH5aiZen0qdY1jbPLY8Nvi6zV7/9KTdZZgmPOcjN1HDXjHSUpp3dtHom+cG+
+ u7d6ASNbdzBe4CV9fcFoD2kgc
+X-Received: by 2002:a53:ac87:0:b0:66f:c8e4:f013 with SMTP id
+ 956f58d0204a3-6714e060f40mr2664831d50.50.1789485896076; Tue, 15 Sep 2026
+ 08:24:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260913-allwinner-gpio-v3-0-a9affa474b3b@gmail.com>
+ <20260913-allwinner-gpio-v3-1-a9affa474b3b@gmail.com>
+In-Reply-To: <20260913-allwinner-gpio-v3-1-a9affa474b3b@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 15 Sep 2026 16:24:43 +0100
+X-Gm-Features: AcwNN1WP3f-o7iYou4z1A14ofObFQq9Hfo6kxvOpKfuHL4OkdG-PTuKJ64_fHFs
+Message-ID: <CAFEAcA-TOjsMHDpThkBP_Mjbt+gA23SoXabOpAUVMdoFbRGjow@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] hw/gpio: Allwinner A10 GPIO emulation
+To: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Jack wang <163wangjack@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,115 +117,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are either structs or unions that are used in an inlinable
-context: i.e. the generated documentation is likely to feature a
-version of this documentation block that does not include the intro in
-context of another command, event, or structure.
+On Sun, 13 Sept 2026 at 19:17, Strahinja Jankovic
+<strahinja.p.jankovic@gmail.com> wrote:
+>
+> This patch implements Allwinner A10 GPIO peripheral emulation.
+>
+> The emulation focuses on input/output and interrupt functionality,
+> whereas the drive and pull up/down functionality is not emulated.
+>
+> Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/block-core.json | 45 +++++++++++++++++++-------------------------
- 1 file changed, 19 insertions(+), 26 deletions(-)
+> +static inline void allwinner_gpio_update_all_output_lines(AWGPIOState *s)
+> +{
+> +    for (int port = 0; port < AW_GPIO_PORTS_NUM; port++) {
+> +        port_update_output_lines(s, port);
+> +    }
+> +}
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1ca147285e7..88218e38d02 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4462,9 +4462,8 @@
- 
- ##
- # @BlockdevOptionsCurlHttp:
--#
--# Driver specific block device options for HTTP connections over the
--# curl backend.  URLs must start with "http://".
-+#     Driver specific block device options for HTTP connections over
-+#     the curl backend.  URLs must start with "http://".
- #
- # @cookie: List of cookies to set; format is "name1=content1;
- #     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
-@@ -4488,9 +4487,8 @@
- 
- ##
- # @BlockdevOptionsCurlHttps:
--#
--# Driver specific block device options for HTTPS connections over the
--# curl backend.  URLs must start with "https://".
-+#     Driver specific block device options for HTTPS connections over
-+#     the curl backend.  URLs must start with "https://".
- #
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
-@@ -4503,9 +4501,8 @@
- 
- ##
- # @BlockdevOptionsCurlFtp:
--#
--# Driver specific block device options for FTP connections over the
--# curl backend.  URLs must start with "ftp://".
-+#     Driver specific block device options for FTP connections over
-+#     the curl backend.  URLs must start with "ftp://".
- #
- # Since: 2.9
- ##
-@@ -4515,9 +4512,8 @@
- 
- ##
- # @BlockdevOptionsCurlFtps:
--#
--# Driver specific block device options for FTPS connections over the
--# curl backend.  URLs must start with "ftps://".
-+#     Driver specific block device options for FTPS connections over
-+#     the curl backend.  URLs must start with "ftps://".
- #
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
-@@ -4643,14 +4639,13 @@
- 
- ##
- # @BlockdevOptionsCbw:
--#
--# Driver specific block device options for the copy-before-write
--# driver, which does so called copy-before-write operations: when data
--# is written to the filter, the filter first reads corresponding
--# blocks from its file child and copies them to @target child.  After
--# successfully copying, the write request is propagated to file child.
--# If copying fails, the original write request is failed too and no
--# data is written to file child.
-+#     Driver specific block device options for the copy-before-write
-+#     driver, which does so called copy-before-write operations: when
-+#     data is written to the filter, the filter first reads
-+#     corresponding blocks from its file child and copies them to
-+#     @target child.  After successfully copying, the write request is
-+#     propagated to file child.  If copying fails, the original write
-+#     request is failed too and no data is written to file child.
- #
- # @target: The target for copy-before-write operations.
- #
-@@ -4686,9 +4681,8 @@
- 
- ##
- # @BlockdevOptions:
--#
--# Options for creating a block device.  Many options are available for
--# all block devices, independent of the block driver:
-+#     Options for creating a block device.  Many options are available
-+#     for all block devices, independent of the block driver:
- #
- # @driver: block driver name
- #
-@@ -5473,9 +5467,8 @@
- 
- ##
- # @BlockdevAmendOptionsQcow2:
--#
--# Driver specific image amend options for qcow2.  For now, only
--# encryption options can be amended
-+#     Driver specific image amend options for qcow2.  For now, only
-+#     encryption options can be amended
- #
- # @encrypt: Encryption options to be amended
- #
--- 
-2.55.0
+This doesn't compile on clang because this function has no callers:
 
+../../hw/gpio/allwinner-gpio.c:257:20: error: unused function
+'allwinner_gpio_update_all_output_lines' [-Werror,-Wunused-function]
+  257 | static inline void
+allwinner_gpio_update_all_output_lines(AWGPIOState *s)
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+
+Should it be being called somewhere, or is it just a leftover
+from an earlier revision of the series?
+
+thanks
+-- PMM
 
