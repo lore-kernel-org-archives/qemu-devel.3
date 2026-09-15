@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDAAC88E72
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CCEC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6H19-00061v-Nd; Mon, 14 Sep 2026 20:27:23 -0400
+	id 1x6H1E-000648-Rz; Mon, 14 Sep 2026 20:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6H15-00060g-5D
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:27:19 -0400
+ id 1x6H17-000619-8w
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:27:21 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6H13-0000xL-4z
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:27:18 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1x6H15-0000yn-IG
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:27:21 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EMxtra2336077
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:27:15 GMT
+ 68EN04TZ2134017
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:27:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=7OTPk8d7M16USf0rJUkd+c
- bRAApOKxjP+/YyBOODUoE=; b=RMjjQoFkjLkozP1m5NBupb07sHSv5LS+a6z2Dg
- U0qpn2et9+xJhB5RtDDl2MvJFZJBz/PZFC3BBs6UUR0rTVTvmWf4oJtucZOscKuE
- N+Y/bbGSnCTWNBLRUoHpmIRgjLKfCb44i5+QXyxqDTubiPAV8VZS6NLLmFk8/OGY
- jOXhUkMWj7H/RMfDKuVw931STARlLwIN55WSTRgxFVDvVJo3axRK1UZ9SaVHjtIX
- o7wKfO4XTGQPNx042WFY+29EzEJ/z3LhfvLJveQJvQSw8tFFo2Bz4/oXHkNYTi4i
- 4rioEE+ppkGwL0t615IprAMxly7JSU6j4DoqpviKUFgqqaCg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpdb5ukmp-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=/X0cmuzPBsN
+ yNewKfNMraJHy0a4o+TtZ/F93K/SAZ5Y=; b=b72eAycBC+smUwX8GqWoI3nH75N
+ /LE6/T++uXNNmIaaCL2Jolx7/S5ZhUgH8hfd3+PQcUDYIFYUaCXJ1TpC2m3TM8iH
+ FhSmtLZvY5AUsHAF1OXMH0pPp1aRsmHhcwCddIbGGdZFXW5tXfmwl0hAiG7OEMLV
+ Yne2xcQevAVbHMkj4ytGtwC5cCdPJozI1mFXwac9+70QFP+2H2IQ8jzSeVpyHk7I
+ il6a04+zEYaItFnrZsOLFWVuud9WZfz6R/nam396jzYmnS6blvRQ493iDMTUs2rT
+ G05oyOMejh0TzoIMs4Ot33ruGm6Oiqd9EBs+mCyO66STo8RRcc5qJQY7otQ==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpmx9se67-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:27:15 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-39de4e72b33so2556389a91.2
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 17:27:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:27:18 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-39512608fb1so9155019a91.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 17:27:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789432034; x=1790036834; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=7OTPk8d7M16USf0rJUkd+cbRAApOKxjP+/YyBOODUoE=;
- b=YcxoUdqEgz/WFvwKQlccLylGFD1nrWuyq8TQ/nns/pMaiZ1yIhYN8zCKKSWEZ4MkRQ
- MrexlE4DvoiZBI+W1sHLOoiRanPGtWwMeBDlTPaci857CoSE6HhFBIl5k+R8hG6+y66w
- SPi3WpzW5TOX81YqgMlWGghwabx4t3md3OucLNhpFwQohec1ygY5Lg2FDpqwIwNVm/xh
- mzQlgdJZIaH9AwWE1YkAVgkb6T/0BkAHGn4mkxKtqTuoBQDtRus6kcki18BFaIgukv4s
- zAgxralynCTl/coivcFnReRmgNZ5jONI21KF1ki/bZogEailGXEP1oxK2OEjzvy66Sg+
- 1y2g==
+ d=oss.qualcomm.com; s=google; t=1789432038; x=1790036838; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/X0cmuzPBsNyNewKfNMraJHy0a4o+TtZ/F93K/SAZ5Y=;
+ b=BQG/4Vx+ECSq9AEz8NeqZXaLYDa78BMIFwKkg0VYbYT/vu1Set0xg57fAyAGB0ojZD
+ zTMIDjDYzJOdaM1/6+xAvT0CiIjJiHCs+3diB+dSsKVrQaqGLHpFPqxr4PPj2E909RLK
+ jlrf0s90jYqb8AWTv7/46Y2pTwvWnOd38jMP3W/KHP6/2ySiICTyX21tMfMi+owvKQOF
+ hT5AQffuRcNmsUuxdvuFqUbk+6TeVtjq5wicVLsX+yWwd1zyMosyYPEl+g3xJnsgHD/X
+ 2gMXvTFPXtLbO1HLid3KUOsY/1mBQEaT2HJVE5cpglsPRokUMCukUNPPiu4R2M5oVv68
+ pAUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789432034; x=1790036834;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7OTPk8d7M16USf0rJUkd+cbRAApOKxjP+/YyBOODUoE=;
- b=EHdWzEj1XcxcfUiQttx9+5e611BmEed7RM7kOx8UOEbtprT4bg2dZU3nV+pHDsBzR1
- VauIsBc6laXTEWrl359zzeBvrzyT9tbV/CtMCmt20MWZbB2KF6D5WJo+3Okmf4TIcPeO
- bOqT/w4vgzZ0jF8wK+zkAuGVkfiX1ZwKC4DLaispDNKlRfMq0uVYQbBW/FZmLCMMGfL+
- pIFQLEL/9aVszljvO410nTPzHl59hldhVauvGrFdsVMPM0mHqcIPo6ILs+2ImYO12gx8
- oRGu3S49dMNS6l0gVaejr1+l53IjJ4bop4FlPARf0MqaqPh23h84QIBNr8YBamVjRixu
- k13A==
-X-Gm-Message-State: AFuF++mohywOxEdTsOt2/QnTx4bGqpqA/6C44ogwkgW7MRCRcA9XIf+g
- +fxuxNolYZmtiDFgQH/dchW4lMOxiNh5ectTf6WJ3PYGhKXE4JxMfRet119tIrDUwA9FHdCamO6
- eTm4BVlvndZicAuSJjAlz9cjDqV2B0OvlY0xuvbW5rAy4BTcJUgvflOx2m2Xerw+M1Q==
-X-Gm-Gg: AYBFou26FnOwYfhQ54AIFeSxQD9l0/LHqqmd6s3eJNO9HYRqmYaCqAsF8p7hLMGtD/q
- NfsjZPSfX4tX+JeqTd3HIFO9UBHySawHvsI7obQ4rSntwOVEo15Rota83vf3NDxFAhkWeXh7s0a
- HrOQW/QUvE5Al+K7aL1an4e3iQuoHMdYeo3ld0YHufjsL21eyK73PU5oq+Ta1vtlD4IxDs4JQjj
- GOppIX1qeWdLTUPSTnL+o2hyy460ftnqSnbK+FVPGAjMYh3L+ivxeN7lE8WwZzUXZUaL8tI/oXt
- eIfEnRATdac9URR+rcpKWzitXGNGtwnjq0+Qbu9wstUjY0CD9BkEANvOYO5UcWGPja3RwCzLjzR
- rSETwmoJ70rsllCunTxcv6S8ihzjBacq8ErGDglqRwjdFyhHdBxCjDoTT38w=
-X-Received: by 2002:a05:6a20:1609:b0:3d3:afd9:6040 with SMTP id
- adf61e73a8af0-3db40746ea8mr11098883637.27.1789432034401; 
- Mon, 14 Sep 2026 17:27:14 -0700 (PDT)
-X-Received: by 2002:a05:6a20:1609:b0:3d3:afd9:6040 with SMTP id
- adf61e73a8af0-3db40746ea8mr11098818637.27.1789432033936; 
- Mon, 14 Sep 2026 17:27:13 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789432038; x=1790036838;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/X0cmuzPBsNyNewKfNMraJHy0a4o+TtZ/F93K/SAZ5Y=;
+ b=coZ1/HSImVJVAfodH19h0CnHC4x4VHc+K6cJpM6F/DbZkDyxex4obGIEF+K+x9m4Kp
+ 9Eu0abf5lUBzUYxspWFMcx2lQ5ogvtg37KXFWW1Y5iv/ybaEFRUuDuW9TwdimuJKM2JV
+ nLge35W6NKfwiLJK9uIetWdNQvK8LEWUhCgi5csIi1BdZolsnUtyHFGUzroVPxdTmohH
+ JiYAyKkf6APxSZltg/rY4pQHsf7aAtQPAfWOXw7t199s98FfIVMiqne1Glck3uSqdILI
+ 07qA9FaqsvdujyLtwEBhkp6th7/33v3yyBuTWaBHy9OU+5WGr2jZOTMNpkdtAkUdGpCH
+ eMRQ==
+X-Gm-Message-State: AFuF++kjpA8Syl6j0TXhE+oHXc0QHlQKorOOaY7Xg+J9pVEJCsFRteG9
+ L3kpnD7qnTP0ujrtPbh493xk3mMeLka9Vxzhu+zhVx+TxBRtgB/3qv4+MNWOgr9hrkZK2q9B4BW
+ cW6vlb/ryqBxAM0AtU3PokbAYrSpZ3tzZ6bpm9Q4EzJnTbbGlmmELQPp/L4TJCrpSVQ==
+X-Gm-Gg: AYBFou2wNQuobjXIlj4pEbotclyTkbijiibzYKahOZqidkVP3bUHhzxar3607Nbytgr
+ SR4FqC2lR+N+3+Ochv+m4Q4Udphhihnoh1Tn+iGHnQiAZUsQiKffKxdWZRoci/ahjPd233TLAcO
+ zjuCW2XnCHC3iwSt2THLdSiPS94ztasrdXT3redD3zEQHoFvTvDxycL/S+d71qLJukUJOVWBWkJ
+ WDDuwLemOqbOP9+i4ZTBaEJCGWokfWkZ5bBnYg6Q0Vj4brAVdCoXadORiulFrYSSYaCNFpDvoN1
+ 1rLN1wsfATnONciWgnli1YDEDDGe44c5SrvZYdg2RGvw8VecQEdTy6w9Uu/mkNC/YwKFZZ26NA7
+ G+lGFqCVZpBvoxsZ+NdpOesJDgfGT3Ewzzu09B+j+XIujYsceVsj6Wz82nd8=
+X-Received: by 2002:a17:90a:d888:b0:39d:f5b1:e365 with SMTP id
+ 98e67ed59e1d1-39df5b1e47amr6917035a91.25.1789432037618; 
+ Mon, 14 Sep 2026 17:27:17 -0700 (PDT)
+X-Received: by 2002:a17:90a:d888:b0:39d:f5b1:e365 with SMTP id
+ 98e67ed59e1d1-39df5b1e47amr6916981a91.25.1789432037233; 
+ Mon, 14 Sep 2026 17:27:17 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14365a59b18sm26880037c88.2.2026.09.14.17.27.12
+ a92af1059eb24-14365a59b18sm26880037c88.2.2026.09.14.17.27.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 17:27:13 -0700 (PDT)
+ Mon, 14 Sep 2026 17:27:16 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
@@ -94,40 +95,40 @@ Cc: Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 0/6] roms: fix compilation for {vof,optionrom,s390-ccw} blobs
-Date: Tue, 15 Sep 2026 00:27:00 +0000
-Message-ID: <20260915002706.36318-1-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 2/6] roms/Makefile: add vofrom
+Date: Tue, 15 Sep 2026 00:27:02 +0000
+Message-ID: <20260915002706.36318-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260915002706.36318-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260915002706.36318-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDAwNCBTYWx0ZWRfX8A/7ywSF5LF8
- LUfahK0E6mP64D2Do8OliMiYtoBKrOvzuM/T7lQ0T/B+VMi83seLduEXvqiojRiuISMVK3KLtSz
- xTGv/vaqVW8C7bBFAic78UKkxmoyy/Q=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDAwNCBTYWx0ZWRfX4qRV+PTjKUme
- 1eu5ZVSFWSKe3V/wCvN5mEoW1jkMemgl0t2+jwpLhSf2hin+gwTi9KUBJJDMPGWc3I+cAdcuUyD
- SAZ7C6vAPoxOkECNrUnUZAMvsLAWOTbMi/5Rc8/W7ZMoQy89RG4+mI4AxXUXMRgAjInCKesfF3U
- z4CQP9fpGTzCWB7j5+nYhcGKRRV6mtZ/pMhl2QTB3cZgoONQGSCltM++bGhYHAzdbKjExh0UeZ0
- iJGcRvn1S9eGVJqxP5Johbt3SkT0+zCU3VslS7a/eob5njEe7qq0KLQKva5ePtM3pjccw/IdYXc
- tNkUI1+e6y3Y7QqoS/KD3ZQANtQiXrVHI4lqPZ397rWNkjuKadICKDuOWbkwhhBbAiG0spOU9ib
- m/hk8W0B+1QxvVX+1TpOCnnG2BA9zTpxg34OwZlDW9KTz80NJ1bddWEdf5kEjWphuJRhP84dOpM
- EVgqKzzFdJu1nfWpLIQ==
-X-Proofpoint-GUID: KwvSQHrD1VtJ5ipra0Oymy4AeFfnXV29
-X-Authority-Analysis: v=2.4 cv=Ie4Symqa c=1 sm=1 tr=0 ts=6aa890e3 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=6z3NnJHWl-8rbS-XDkMA:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: KwvSQHrD1VtJ5ipra0Oymy4AeFfnXV29
+X-Authority-Analysis: v=2.4 cv=G+KJgNk5 c=1 sm=1 tr=0 ts=6aa890e6 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=0g6KD0rpRfIU_7JGXwsA:9 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDAwNCBTYWx0ZWRfX0DFOy+gAU2D7
+ PlV5u/dpG7BumpB/14kbDvN3UAQ10KZDH0ooWcfK2TNR6F++QOv57uxnprQrI496f2+cNyPTIuY
+ nXOkYynk2nT1fSB5WrA03lfII+Y8HtmDlaGP7u8pO3XYYXqV1fdiYIts1436KSDladXD5gPKxKF
+ urCQYSlVC/AjqAgZV8GO60/C0MCwf/PrT+rmVtceUS7besLSTnN8my4eLJG+6PBzahJhDnLaNu9
+ DD9WiYOe41/ohhODPIsbWnXwxa2OZ5RCzSAFWLhIR1Voqy3CPgsATSiiJ3ZLnTg/Yxg0mvS9J1n
+ 9yXmbUqJh2O+U8GiHUN8zu1zPczAA6SOLK+v+doSYaW6wt4p4HWP+aQ3mCMkHxNfjTknPFmbkVP
+ KJOA5sBxpsTRGARQNBvSELQbiQuLozeSjbcrqFIsZF06H7LS+ozuFZskAK6ScA0VPBCrR3wuyG7
+ r5y/ST7xuN4OC9tQ5Nw==
+X-Proofpoint-GUID: o9N8Z-iFc0haTDlrP6UBxHZKgajoj3YD
+X-Proofpoint-ORIG-GUID: o9N8Z-iFc0haTDlrP6UBxHZKgajoj3YD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDAwNCBTYWx0ZWRfXwbjVAyp4K+zH
+ 5bIW4rsIyql4MmX0d3ke0xoUrVXYj6JYUyvDMFWazJkqFaX5N3RGh/6eOAO/xYWU6doYm8AXyNJ
+ nvrAYdJHJneayk9pNLTqTH0G17ycCO0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-14_05,2026-09-14_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 phishscore=0 adultscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609150004
+ suspectscore=0 bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 phishscore=0 adultscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609150004
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -137,7 +138,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,144 +154,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent switch to tcg-tests removed a part of configure that was generating
-config .mak files, that were reused in other places of the tree:
-- linux-user vdso
-- pc-bios
+Remove dependency on config.mak and simplify Makefile.
 
-Taking a look closer, our roms sources are supposed to be in roms folder, and
-there is a standalone Makefile to build associated blobs.
-This series moves the remaining sources from pc-bios to roms, and adapt their
-Makefile to work without depending of config.mak.
-vdso build will be fixed in another series.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ roms/Makefile     |  6 ++++++
+ roms/vof/Makefile | 21 ++++++++-------------
+ 2 files changed, 14 insertions(+), 13 deletions(-)
 
-Pierrick Bouvier (6):
-  roms: move vof from pc-bios
-  roms/Makefile: add vofrom
-  roms: move optionrom from pc-bios
-  roms/Makefile: add optionrom-bin
-  roms: move s390-ccw from pc-bios
-  roms/Makefile: add s390-ccw-rom
-
- pc-bios/optionrom/Makefile                  | 69 ---------------------
- pc-bios/vof/Makefile                        | 31 ---------
- roms/Makefile                               | 22 +++++++
- roms/optionrom/Makefile                     | 56 +++++++++++++++++
- {pc-bios => roms}/optionrom/flat.lds        |  0
- {pc-bios => roms}/optionrom/kvmvapic.S      |  0
- {pc-bios => roms}/optionrom/linuxboot_dma.c |  0
- {pc-bios => roms}/optionrom/multiboot_dma.S |  0
- {pc-bios => roms}/optionrom/optionrom.h     |  0
- {pc-bios => roms}/optionrom/optrom.h        |  0
- {pc-bios => roms}/optionrom/optrom_fw_cfg.h |  0
- {pc-bios => roms}/optionrom/pvh.S           |  0
- {pc-bios => roms}/optionrom/pvh_main.c      |  0
- {pc-bios => roms}/s390-ccw/Makefile         | 67 ++++++++------------
- {pc-bios => roms}/s390-ccw/bootmap.c        |  0
- {pc-bios => roms}/s390-ccw/bootmap.h        |  0
- {pc-bios => roms}/s390-ccw/bswap.h          |  0
- {pc-bios => roms}/s390-ccw/cio.c            |  0
- {pc-bios => roms}/s390-ccw/cio.h            |  0
- {pc-bios => roms}/s390-ccw/clp.c            |  0
- {pc-bios => roms}/s390-ccw/clp.h            |  0
- {pc-bios => roms}/s390-ccw/dasd-ipl.c       |  0
- {pc-bios => roms}/s390-ccw/dasd-ipl.h       |  0
- {pc-bios => roms}/s390-ccw/helper.h         |  0
- {pc-bios => roms}/s390-ccw/iplb.h           |  0
- {pc-bios => roms}/s390-ccw/jump2ipl.c       |  0
- {pc-bios => roms}/s390-ccw/main.c           |  0
- {pc-bios => roms}/s390-ccw/menu.c           |  0
- {pc-bios => roms}/s390-ccw/netmain.c        |  0
- {pc-bios => roms}/s390-ccw/pci.c            |  0
- {pc-bios => roms}/s390-ccw/pci.h            |  0
- {pc-bios => roms}/s390-ccw/s390-arch.h      |  0
- {pc-bios => roms}/s390-ccw/s390-ccw.h       |  0
- {pc-bios => roms}/s390-ccw/s390-time.h      |  0
- {pc-bios => roms}/s390-ccw/sclp.c           |  0
- {pc-bios => roms}/s390-ccw/sclp.h           |  0
- {pc-bios => roms}/s390-ccw/scsi.h           |  0
- {pc-bios => roms}/s390-ccw/secure-ipl.c     |  0
- {pc-bios => roms}/s390-ccw/secure-ipl.h     |  0
- {pc-bios => roms}/s390-ccw/start.S          |  0
- {pc-bios => roms}/s390-ccw/virtio-blkdev.c  |  0
- {pc-bios => roms}/s390-ccw/virtio-ccw.c     |  0
- {pc-bios => roms}/s390-ccw/virtio-ccw.h     |  0
- {pc-bios => roms}/s390-ccw/virtio-net.c     |  0
- {pc-bios => roms}/s390-ccw/virtio-pci.c     |  0
- {pc-bios => roms}/s390-ccw/virtio-pci.h     |  0
- {pc-bios => roms}/s390-ccw/virtio-scsi.c    |  0
- {pc-bios => roms}/s390-ccw/virtio-scsi.h    |  0
- {pc-bios => roms}/s390-ccw/virtio.c         |  0
- {pc-bios => roms}/s390-ccw/virtio.h         |  0
- roms/vof/Makefile                           | 26 ++++++++
- {pc-bios => roms}/vof/bootmem.c             |  0
- {pc-bios => roms}/vof/ci.c                  |  0
- {pc-bios => roms}/vof/entry.S               |  0
- {pc-bios => roms}/vof/libc.c                |  0
- {pc-bios => roms}/vof/main.c                |  0
- {pc-bios => roms}/vof/vof.h                 |  0
- {pc-bios => roms}/vof/vof.lds               |  0
- tests/tcg/s390x/console.c                   |  4 +-
- tests/tcg/s390x/head64.S                    |  4 +-
- 60 files changed, 134 insertions(+), 145 deletions(-)
- delete mode 100644 pc-bios/optionrom/Makefile
- delete mode 100644 pc-bios/vof/Makefile
- create mode 100644 roms/optionrom/Makefile
- rename {pc-bios => roms}/optionrom/flat.lds (100%)
- rename {pc-bios => roms}/optionrom/kvmvapic.S (100%)
- rename {pc-bios => roms}/optionrom/linuxboot_dma.c (100%)
- rename {pc-bios => roms}/optionrom/multiboot_dma.S (100%)
- rename {pc-bios => roms}/optionrom/optionrom.h (100%)
- rename {pc-bios => roms}/optionrom/optrom.h (100%)
- rename {pc-bios => roms}/optionrom/optrom_fw_cfg.h (100%)
- rename {pc-bios => roms}/optionrom/pvh.S (100%)
- rename {pc-bios => roms}/optionrom/pvh_main.c (100%)
- rename {pc-bios => roms}/s390-ccw/Makefile (59%)
- rename {pc-bios => roms}/s390-ccw/bootmap.c (100%)
- rename {pc-bios => roms}/s390-ccw/bootmap.h (100%)
- rename {pc-bios => roms}/s390-ccw/bswap.h (100%)
- rename {pc-bios => roms}/s390-ccw/cio.c (100%)
- rename {pc-bios => roms}/s390-ccw/cio.h (100%)
- rename {pc-bios => roms}/s390-ccw/clp.c (100%)
- rename {pc-bios => roms}/s390-ccw/clp.h (100%)
- rename {pc-bios => roms}/s390-ccw/dasd-ipl.c (100%)
- rename {pc-bios => roms}/s390-ccw/dasd-ipl.h (100%)
- rename {pc-bios => roms}/s390-ccw/helper.h (100%)
- rename {pc-bios => roms}/s390-ccw/iplb.h (100%)
- rename {pc-bios => roms}/s390-ccw/jump2ipl.c (100%)
- rename {pc-bios => roms}/s390-ccw/main.c (100%)
- rename {pc-bios => roms}/s390-ccw/menu.c (100%)
- rename {pc-bios => roms}/s390-ccw/netmain.c (100%)
- rename {pc-bios => roms}/s390-ccw/pci.c (100%)
- rename {pc-bios => roms}/s390-ccw/pci.h (100%)
- rename {pc-bios => roms}/s390-ccw/s390-arch.h (100%)
- rename {pc-bios => roms}/s390-ccw/s390-ccw.h (100%)
- rename {pc-bios => roms}/s390-ccw/s390-time.h (100%)
- rename {pc-bios => roms}/s390-ccw/sclp.c (100%)
- rename {pc-bios => roms}/s390-ccw/sclp.h (100%)
- rename {pc-bios => roms}/s390-ccw/scsi.h (100%)
- rename {pc-bios => roms}/s390-ccw/secure-ipl.c (100%)
- rename {pc-bios => roms}/s390-ccw/secure-ipl.h (100%)
- rename {pc-bios => roms}/s390-ccw/start.S (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-blkdev.c (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-ccw.c (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-ccw.h (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-net.c (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-pci.c (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-pci.h (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-scsi.c (100%)
- rename {pc-bios => roms}/s390-ccw/virtio-scsi.h (100%)
- rename {pc-bios => roms}/s390-ccw/virtio.c (100%)
- rename {pc-bios => roms}/s390-ccw/virtio.h (100%)
- create mode 100644 roms/vof/Makefile
- rename {pc-bios => roms}/vof/bootmem.c (100%)
- rename {pc-bios => roms}/vof/ci.c (100%)
- rename {pc-bios => roms}/vof/entry.S (100%)
- rename {pc-bios => roms}/vof/libc.c (100%)
- rename {pc-bios => roms}/vof/main.c (100%)
- rename {pc-bios => roms}/vof/vof.h (100%)
- rename {pc-bios => roms}/vof/vof.lds (100%)
-
+diff --git a/roms/Makefile b/roms/Makefile
+index f15189a5409..84f22943d35 100644
+--- a/roms/Makefile
++++ b/roms/Makefile
+@@ -63,6 +63,7 @@ default help:
+ 	@echo "  pxerom             -- update nic roms (bios only)"
+ 	@echo "  efirom             -- update nic roms (bios+efi)"
+ 	@echo "  slof               -- update slof.bin"
++	@echo "  vofrom             -- update vof.bin"
+ 	@echo "  skiboot            -- update skiboot.lid"
+ 	@echo "  u-boot.e500        -- update u-boot.e500"
+ 	@echo "  u-boot.sam460      -- update u-boot.sam460"
+@@ -136,6 +137,10 @@ slof:
+ 	$(MAKE) -C SLOF CROSS=$(powerpc64_cross_prefix) qemu
+ 	cp SLOF/boot_rom.bin ../pc-bios/slof.bin
+ 
++vofrom:
++	$(MAKE) -C vof
++	cp vof/vof.bin ../pc-bios/vof.bin
++
+ u-boot.e500:
+ 	$(MAKE) -C u-boot O=build-e500 qemu-ppce500_config
+ 	$(MAKE) -C u-boot CROSS_COMPILE=$(powerpc_cross_prefix) \
+@@ -217,6 +222,7 @@ clean:
+ 	$(MAKE) -C edk2/BaseTools clean
+ 	rm -rf edk2/Conf/{.cache,BuildEnv.sh,build_rule.txt,target.txt,tools_def.txt}
+ 	$(MAKE) -C SLOF clean
++	$(MAKE) -C vof clean
+ 	rm -rf u-boot/build-e500
+ 	$(MAKE) -C u-boot-sam460ex distclean
+ 	$(MAKE) -C skiboot clean
+diff --git a/roms/vof/Makefile b/roms/vof/Makefile
+index d1eb6ced7ec..d5dbb374356 100644
+--- a/roms/vof/Makefile
++++ b/roms/vof/Makefile
+@@ -1,27 +1,22 @@
+-include config.mak
+-VPATH=$(SRC_DIR)
+ all: vof.bin
+ 
+-NULL :=
+-SPACE := $(NULL) #
+-TARGET_PREFIX := $(patsubst %/,%:$(SPACE),$(TARGET_DIR))
+-
+-quiet-@ = $(if $(V),,@$(if $1,,printf "%s\n" "$(TARGET_PREFIX)$1" && ))
+-quiet-command = $(call quiet-@,$2 $@)$1
+-
++CROSS := $(or $(CROSS),powerpc-linux-gnu-)
++CC := $(CROSS)gcc
++LD := $(CROSS)ld
++OBJCOPY := $(CROSS)objcopy
+ EXTRA_CFLAGS += -mcpu=power4
+ 
+ %.o: %.S
+-	$(call quiet-command, $(CC) $(EXTRA_CFLAGS) -c -o $@ $<,Assembling)
++	$(CC) $(EXTRA_CFLAGS) -c -o $@ $<
+ 
+ %.o: %.c
+-	$(call quiet-command, $(CC) $(EXTRA_CFLAGS) -c -fno-stack-protector -o $@ $<,Compiling)
++	$(CC) $(EXTRA_CFLAGS) -c -fno-stack-protector -o $@ $<
+ 
+ vof.elf: entry.o main.o ci.o bootmem.o libc.o
+-	$(call quiet-command, $(LD) -nostdlib -e_start -T$(SRC_DIR)/vof.lds -EB -o $@ $^,Linking)
++	$(LD) -nostdlib -e_start -Tvof.lds -EB -o $@ $^
+ 
+ %.bin: %.elf
+-	$(call quiet-command, $(OBJCOPY) -O binary -j .text -j .data -j .toc -j .got2 $^ $@,Extracting raw object)
++	$(OBJCOPY) -O binary -j .text -j .data -j .toc -j .got2 $^ $@
+ 
+ clean:
+ 	rm -f *.o vof.bin vof.elf *~
 -- 
 2.43.0
 
