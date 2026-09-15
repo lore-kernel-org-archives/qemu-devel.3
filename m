@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF7DC982C1
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD37C88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZbT-00082v-QX; Tue, 15 Sep 2026 16:18:07 -0400
+	id 1x6ZbX-0008Or-Bz; Tue, 15 Sep 2026 16:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6ZZo-0006uc-P0
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:25 -0400
+ id 1x6ZZr-0006vl-9v
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:32 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6ZZk-0003Ih-Ey
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:23 -0400
+ id 1x6ZZn-0003Jt-CV
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:26 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49b912df756so1505075e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:16:10 -0700 (PDT)
+ 5b1f17b1804b1-49cd38e0e5dso2050375e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789503369; x=1790108169; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789503372; x=1790108172; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=GUTqG0DlS0OOofGrd9CW23z9URjTrNkTI3zBmCNQUBg=;
- b=ZzLh36+fR0wbWLgf52ujrGmx2sMhaMu2R5pBMepS0GTi9R8AFcncPgTIK/GaRKkJn9
- docHq9w0GFAwjg3VFDFwm9AZEBg4Whlu/Fy/VEbJHURqAVJiUVWG/s6CGWKrFkDGAlyw
- wYBgn3T9DVc8kXRodiVXUhOSk4a+Gzj0sxnAunzM2TTDi6bpAucwDSWnL4avgfnkbhq+
- /F6MiyZdYb0ksW5oHJDA2+7aF84BIHzuo6dmNRbyJqtKUupbc/OjW0M+shaHGFSYpKe+
- nYjwm+AFEC4tTgoxziFQ6g/Qp9ykodrj4Wc8hxaoXdUk6u8BYiMR0t9PgqQE2mMKrdM1
- O+6Q==
+ bh=7O9UJOMF0J+VNfP7rnUceN1KGDlS3Etlt1DaVQnlEaY=;
+ b=PGFPnfiNaO7MoZseckKBQqqwsbsr2tUXagyq+hyoCtPTQ0zPeKUOcvWXTNOFBltL3Z
+ /zxAMic7DXm0jzYYqB4fuPu7r5mt/VMETu4Og/jpOF0DU39R/rA0Gz7hAYm1J/xjzZ0c
+ HcyfSfki35KMhiZ118lEErviygVzH/qJO5kMCdOckPLtfdfyAbfXWWIOjZkC53PIKT+A
+ 7LlI0WuAURzWqGYgZN52z0DFlW0RK9d8/WeS9u0mKLWu0bj8cImAwrhDKvR4MWMpTi2D
+ pvgJ0G/tsHFuXR6htk02fZsytB+JjTfNTroBylEfv5J5ECbHin8vYpaIXFFHOUgB4Im5
+ HZiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789503369; x=1790108169;
+ d=1e100.net; s=20260707; t=1789503372; x=1790108172;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GUTqG0DlS0OOofGrd9CW23z9URjTrNkTI3zBmCNQUBg=;
- b=ob2aOneBRvvWwOwmqylJF5XsndSdrkHhvPRqcJ4vl8k46HWI15qD+X6iVAqajmyGbE
- spo194VG0NsMT1RiaSkHp5ZzvT0AcL/lH+GLPJnMHvJI8n3UBdYZXYFK2VSr8TdApt39
- xs21ZF/laLBXzzitzxcSKsqJ3LCTAB2SWBhJNonEKDvoJNyPRtNErXVPRe6hUujPMc9l
- 4w5amudYUg+PNzcEPWWSdOwnno3J3KAZv8XGUMEbC79343+XwZGX+ro/BraMvg+Aqv+f
- KAiWEddN2OWzkAm16MuALnBsKqXAGrG9pbOJpGmxRRAQ1al+sU1qwF5qpyRZNckHvsHg
- +5Iw==
-X-Gm-Message-State: AFuF++nIT/gH046iV0dx12RrylwZ3WVxpwFi3L3FbZa1Y9D8FFLgRa4m
- aJ7RYRR6g1Gnx3gTydcsW92k1GGtPSfDKkxRn7OUJrW3QwYC10vuKS/l0e5cHIENhas=
-X-Gm-Gg: AYBFou26v3lOv7HD1blxthdkBJI325MZS2PhcftJuPSgqP0Es+tsGbhHsN2cTrp/XmT
- g3CzAhHTaRfoiON15LV0Y1q+EuFIgZ9rTyjUPnt5kL/wCulQJ8vUw1IHUxyMSmk0TRgtImInA/O
- 4uqZINcPDJQnQwoZT+ILxOf8bUTylEX/Bj49/xQf6y2yEPY3Vu7ctF3ctvnsKhvwOSdvKLwmzxQ
- m2U+9HsYKhtnn9v73da7BZyYKrTietGwLL2bvf5LXlYsjSkIqdrrmuRIAMACZkP9ZK6MJIverF7
- O/sqdbUyl9OAu7dJhcEsi3YWGCeUdXUd4YbFPQHVqdBu6QjTm0Ut56/wrpASkefbszQ5Haceyy8
- pnFA6nyvSDGdcu3Q1bgYu1GW3XrcXY9t+95AOQulPC9you8gqHIC05JEHilI6AXvWt2C6uj5/dq
- vIcd6QFH8TW7UpKeoPhltgUn1qv0ZRxN9M9/G7O0TzAENANzSBvfNgbHd4gh1ThWyruVSMcUI=
-X-Received: by 2002:a05:600c:c48e:b0:49d:1de5:ce0a with SMTP id
- 5b1f17b1804b1-49e822497cbmr37981255e9.13.1789503368953; 
- Tue, 15 Sep 2026 13:16:08 -0700 (PDT)
+ bh=7O9UJOMF0J+VNfP7rnUceN1KGDlS3Etlt1DaVQnlEaY=;
+ b=wbPasbUhvUy80LFeHCrksMP5F+AESfFrpmGEcWA5PAw3efltu/cH8MhBpGU8zIr8r9
+ lQoPqAamCJ2WMmRKYG4CqE2pcM+sHc5Fu8SVvt09KRf3wlSIt7asAJJR0nzDKNW1+uKk
+ jdmJhK/0ZYt3slXpyvcyydaIDu7IENzLmCCmKYCOSvXVC1RPSzT7O9gV9XzUFhtr0vc0
+ az9qFsoZYiXELDrtWRkpCmEzIcgbBqD3UhwA1ya8mFedjT90dGHJF3+YuPfBYWZlHf2z
+ 0bYxX7xfSvaszONzSPlbptXrrjLReh4pD24gbJlAoreq5qza4H4WgAEVxHvLgDPRoNFy
+ gXUA==
+X-Gm-Message-State: AFuF++kAkkc0fu28zw3o7G8a/2CMfjuP0DV70q0ToYymrRiys4smWF55
+ STWfvBiciY9NUWvX1IWQ68D4Ynrt6MyX3P2gzRrLC85Fsimr49pUjj5eatZqrgwG1p4=
+X-Gm-Gg: AYBFou0bKe/kHIz3/Fn+iGWGIKuZO74ow7z1yAvckurHwrzk1nx4XrT7PNFcTZNY5rj
+ OqptdbZE3eEfuxyr9VXLytSUrMI34d/nPEWgE90qBlMqJUMcmz56pP/R3dpCoBTvm30h/JGKfQZ
+ QJa/CPeO0THvd01Hj9wxggBAoj1sd7BK1LPAsLMUbaqP+O0qKhLgQIPyzp3ewd0soe0VDUN4ZLs
+ szSt/lhHFl++Z0ZFSMH6p21xKm/xhrhLgaVGqqX7cNQSoulu9BrG7t9FfQCD0yIrld1zIYHTEo7
+ gYG6Cfr2S/nfKpsFXBNzLjmeH0fJeXOGRNtGD6kFecd+9GcBh2XrG58bnjtE5KrhX1WsnfA1DbW
+ hd+/px60Xw7sUf6KU5XpvXCZRlyEXztMHeTxGqAKHG1z2qDLUa5lUCy62L5KSIk412kjfwEburY
+ 7CGt4K3H3fkK5mHyVP6+4Gxk74eSNFD3j7v/iVfi9pLPZjOaH+9Gwe7Jyk7HqRbQuQVrikWJaOI
+ 7N9bK3Eig==
+X-Received: by 2002:a05:600c:6217:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-49e7a656c01mr212379805e9.7.1789503371668; 
+ Tue, 15 Sep 2026 13:16:11 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e83da071asm16256555e9.8.2026.09.15.13.16.04
+ ffacd0b85a97d-4870bf462cesm1405272f8f.37.2026.09.15.13.16.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:16:05 -0700 (PDT)
+ Tue, 15 Sep 2026 13:16:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2D60E61839;
+ by draig.lan (Postfix) with ESMTP id C86BE61901;
  Tue, 15 Sep 2026 21:16:02 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -86,10 +87,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v2 05/15] configure: re-purpose the tcg test compiler configs
- for vdso building
-Date: Tue, 15 Sep 2026 21:15:50 +0100
-Message-ID: <20260915201601.1207839-6-alex.bennee@linaro.org>
+Subject: [PATCH v2 11/15] tests/docker: strip remaining caching logic from
+ docker.py
+Date: Tue, 15 Sep 2026 21:15:56 +0100
+Message-ID: <20260915201601.1207839-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260915201601.1207839-1-alex.bennee@linaro.org>
 References: <20260915201601.1207839-1-alex.bennee@linaro.org>
@@ -119,226 +120,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All the tcg tests are in meson now so there is no reason to put the
-config-target.mak files in those directories. We also don't need the
-GDB feature tests or to emit prerequsistes.
+The caching logic was a remnant of an older time when we had multiple
+shared layers building that went into the final image. It was arguable
+that it worked back then but it is definitely not needed now so into
+the bin it goes.
 
-The vdso re-build blob does use the compiler definitions though so
-we can emit the details for that and tweak the vdso makefiles to point
-at the right place. Note some of the vdso makefiles build both 32 and
-64 bit versions from the same compiler.
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- configure                            | 69 +++++++++++-----------------
- linux-user/aarch64/Makefile.vdso     |  2 +-
- linux-user/arm/Makefile.vdso         |  2 +-
- linux-user/hppa/Makefile.vdso        |  2 +-
- linux-user/i386/Makefile.vdso        |  2 +-
- linux-user/loongarch64/Makefile.vdso |  2 +-
- linux-user/ppc/Makefile.vdso         |  2 +-
- linux-user/riscv/Makefile.vdso       |  2 +-
- linux-user/s390x/Makefile.vdso       |  2 +-
- linux-user/sh4/Makefile.vdso         |  2 +-
- linux-user/x86_64/Makefile.vdso      |  2 +-
- 11 files changed, 36 insertions(+), 53 deletions(-)
+ tests/docker/docker.py | 148 ++++++++++++++---------------------------
+ 1 file changed, 49 insertions(+), 99 deletions(-)
 
-diff --git a/configure b/configure
-index 7fb90d26e5c..c89f3c61f7f 100755
---- a/configure
-+++ b/configure
-@@ -1733,65 +1733,48 @@ if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
- fi
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index fd0cbdfe856..a2e97061240 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -15,7 +15,6 @@
+ import sys
+ import subprocess
+ import json
+-import hashlib
+ import atexit
+ import uuid
+ import argparse
+@@ -27,7 +26,6 @@
+ from tarfile import TarFile, TarInfo
+ from io import StringIO, BytesIO
+ from shutil import copy, rmtree
+-from datetime import datetime, timedelta
  
--tcg_tests_with_compilers=
-+# Export the compiler details needed for rebuilding the vdso blobs
- for target in $target_list; do
--  arch=${target%%-*}
  
-+  # Skip anything that is not a linux-user target
-   case $target in
-+    *-linux-user)
-+      ;;
-+    *)
-+      continue
-+      ;;
-+  esac
+ FILTERED_ENV_NAMES = ['ftp_proxy', 'http_proxy', 'https_proxy']
+@@ -35,20 +33,9 @@
+ 
+ DEVNULL = open(os.devnull, 'wb')
+ 
+-def _bytes_checksum(bytes):
+-    """Calculate a digest string unique to the text content"""
+-    return hashlib.sha1(bytes).hexdigest()
+-
+-def _text_checksum(text):
+-    """Calculate a digest string unique to the text content"""
+-    return _bytes_checksum(text.encode('utf-8'))
+-
+ def _read_dockerfile(path):
+     return open(path, 'rt', encoding='utf-8').read()
+ 
+-def _file_checksum(filename):
+-    return _bytes_checksum(open(filename, 'rb').read())
+-
+ 
+ def _guess_engine_command():
+     """ Guess a working engine command or raise exception if not found"""
+@@ -263,38 +250,15 @@ def inspect_tag(self, tag):
+         except subprocess.CalledProcessError:
+             return None
+ 
+-    def get_image_creation_time(self, info):
+-        return json.loads(info)[0]["Created"]
+-
+-    def get_image_dockerfile_checksum(self, tag):
+-        resp = self.inspect_tag(tag)
+-        labels = json.loads(resp)[0]["Config"].get("Labels", {})
+-        return labels.get("com.qemu.dockerfile-checksum", "")
+-
+-    def build_image(self, tag, docker_dir, dockerfile,
+-                    quiet=True, user=False, argv=None, registry=None,
+-                    extra_files_cksum=[]):
++    def build_image(self, tag, docker_dir, dockerfile_path,
++                    quiet=True, user=False, argv=None, registry=None):
+         if argv is None:
+             argv = []
+ 
+-        if not _dockerfile_verify_flat(dockerfile):
++        if not _dockerfile_verify_flat(_read_dockerfile(dockerfile_path)):
+             return -1
+ 
+-        checksum = _text_checksum(dockerfile)
+-
+-        tmp_df = tempfile.NamedTemporaryFile(mode="w+t",
+-                                             encoding='utf-8',
+-                                             dir=docker_dir, suffix=".docker")
+-        tmp_df.write(dockerfile)
+-
+-        tmp_df.write("\n")
+-        tmp_df.write("LABEL com.qemu.dockerfile-checksum=%s\n" % (checksum))
+-        for f, c in extra_files_cksum:
+-            tmp_df.write("LABEL com.qemu.%s-checksum=%s\n" % (f, c))
+-
+-        tmp_df.flush()
+-
+-        build_args = ["build", "-t", tag, "-f", tmp_df.name]
++        build_args = ["build", "-t", tag, "-f", dockerfile_path]
+         if self._buildkit:
+             build_args += ["--build-arg", "BUILDKIT_INLINE_CACHE=1"]
+ 
+@@ -320,13 +284,6 @@ def update_image(self, tag, tarball, quiet=True):
+ 
+         self._do_check(["build", "-t", tag, "-"], quiet=quiet, stdin=tarball)
+ 
+-    def image_matches_dockerfile(self, tag, dockerfile):
+-        try:
+-            checksum = self.get_image_dockerfile_checksum(tag)
+-        except Exception:
+-            return False
+-        return checksum == _text_checksum(dockerfile)
+-
+     def run(self, cmd, keep, quiet, as_user=False):
+         label = uuid.uuid4().hex
+         if not keep:
+@@ -412,61 +369,54 @@ def args(self, parser):
+                             help="Dockerfile name")
+ 
+     def run(self, args, argv):
+-        dockerfile = _read_dockerfile(args.dockerfile)
+         tag = args.tag
+ 
+         dkr = Docker(args.command)
+-        if "--no-cache" not in argv and \
+-           dkr.image_matches_dockerfile(tag, dockerfile):
+-            pass
+-        else:
+-            # Create a docker context directory for the build
+-            docker_dir = tempfile.mkdtemp(prefix="docker_build")
+-
+-            # Validate binfmt_misc will work
+-            if args.skip_binfmt:
+-                qpath = args.include_executable
+-            elif args.include_executable:
+-                qpath, enabled = _check_binfmt_misc(args.include_executable)
+-                if not enabled:
+-                    return 1
+-
+-            # Is there a .pre file to run in the build context?
+-            docker_pre = os.path.splitext(args.dockerfile)[0]+".pre"
+-            if os.path.exists(docker_pre):
+-                stdout = DEVNULL if args.quiet else None
+-                rc = subprocess.call(os.path.realpath(docker_pre),
+-                                     cwd=docker_dir, stdout=stdout)
+-                if rc == 3:
+-                    print("Skip")
+-                    return 0
+-                elif rc != 0:
+-                    print("%s exited with code %d" % (docker_pre, rc))
+-                    return 1
+-
+-            # Copy any extra files into the Docker context. These can be
+-            # included by the use of the ADD directive in the Dockerfile.
+-            cksum = []
+-            if args.include_executable:
+-                # FIXME: there is no checksum of this executable and the linked
+-                # libraries, once the image built any change of this executable
+-                # or any library won't trigger another build.
+-                _copy_binary_with_libs(args.include_executable,
+-                                       qpath, docker_dir)
+-
+-            for filename in args.extra_files or []:
+-                _copy_with_mkdir(filename, docker_dir)
+-                cksum += [(filename, _file_checksum(filename))]
+-
+-            argv += ["--build-arg=" + k.lower() + "=" + v
+-                     for k, v in os.environ.items()
+-                     if k.lower() in FILTERED_ENV_NAMES]
+-            dkr.build_image(tag, docker_dir, dockerfile,
+-                            quiet=args.quiet, user=args.user,
+-                            argv=argv, registry=args.registry,
+-                            extra_files_cksum=cksum)
+-
+-            rmtree(docker_dir)
 +
-+  arch=${target%%-*}
++        # Create a docker context directory for the build
++        docker_dir = tempfile.mkdtemp(prefix="docker_build")
 +
-+  case $arch in
-     xtensa*-linux-user)
--      # the toolchain is not complete with headers, only build system tests
-+      # the toolchain can only build system tests due to missing headers
-+      continue
-+      ;;
-+    aarch64_be-linux-user)
-+      # there is no BE user space
-       continue
-       ;;
--    *-softmmu)
--      test -f "$source_path/tests/tcg/$arch/Makefile.softmmu-target" || continue
--      qemu="qemu-system-$arch"
-+    aarch64|arm|hppa|i386|loongarch64|ppc64|riscv64|s390x|sh4|x86_64)
-+      # arches which need a vdso, some 64 bit arches build both
-       ;;
--    *-linux-user|*-bsd-user)
--      qemu="qemu-$arch"
-+    *)
-+      continue
-       ;;
-   esac
++        # Validate binfmt_misc will work
++        if args.skip_binfmt:
++            qpath = args.include_executable
++        elif args.include_executable:
++            qpath, enabled = _check_binfmt_misc(args.include_executable)
++            if not enabled:
++                return 1
++
++        # Is there a .pre file to run in the build context?
++        docker_pre = os.path.splitext(args.dockerfile)[0]+".pre"
++        if os.path.exists(docker_pre):
++            stdout = DEVNULL if args.quiet else None
++            rc = subprocess.call(os.path.realpath(docker_pre),
++                                 cwd=docker_dir, stdout=stdout)
++            if rc == 3:
++                print("Skip")
++                return 0
++            elif rc != 0:
++                print("%s exited with code %d" % (docker_pre, rc))
++                return 1
++
++        # Copy any extra files into the Docker context. These can be
++        # included by the use of the ADD directive in the Dockerfile.
++        if args.include_executable:
++            # FIXME: there is no checksum of this executable and the linked
++            # libraries, once the image built any change of this executable
++            # or any library won't trigger another build.
++            _copy_binary_with_libs(args.include_executable,
++                                   qpath, docker_dir)
++
++        for filename in args.extra_files or []:
++            _copy_with_mkdir(filename, docker_dir)
++
++        argv += ["--build-arg=" + k.lower() + "=" + v
++                 for k, v in os.environ.items()
++                 if k.lower() in FILTERED_ENV_NAMES]
++        dkr.build_image(tag, docker_dir, args.dockerfile,
++                        quiet=args.quiet, user=args.user,
++                        argv=argv, registry=args.registry)
++
++        rmtree(docker_dir)
  
--  if probe_target_compiler $target || test -n "$container_image"; then
--      test -n "$container_image" && build_static=y
--      mkdir -p "tests/tcg/$target"
--      config_target_mak=tests/tcg/$target/config-target.mak
--      ln -sf "$source_path/tests/tcg/Makefile.target" "tests/tcg/$target/Makefile"
-+  # note container_image is set by a successful call to probe_target_compiler
-+  if probe_target_compiler "$target" || test -n "$container_image"; then
-+      mkdir -p "linux-user/$arch"
-+      config_target_mak=linux-user/$arch/config-target.mak
-       echo "# Automatically generated by configure - do not modify" > "$config_target_mak"
-       echo "TARGET_NAME=$arch" >> "$config_target_mak"
-       echo "TARGET=$target" >> "$config_target_mak"
--      write_target_makefile "build-tcg-tests-$target" >> "$config_target_mak"
--      echo "BUILD_STATIC=$build_static" >> "$config_target_mak"
--      echo "QEMU=$PWD/$qemu" >> "$config_target_mak"
--
--      # will GDB work with these binaries?
--      if test "${gdb_arches#*$arch}" != "$gdb_arches"; then
--          echo "GDB=$gdb_bin" >> $config_target_mak
--      fi
--
--      if test "${gdb_arches#*$arch}" != "$gdb_arches" && version_ge $gdb_version 14.1; then
--          echo "GDB_HAS_SME_TILES=y" >> $config_target_mak
--      else
--          echo "GDB_HAS_SME_TILES=n" >> $config_target_mak
--      fi
--
--      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 15.1; then
--          echo "GDB_HAS_MTE=y" >> $config_target_mak
--      fi
--
--      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 16.0; then
--          # GDB has to support MTE in baremetal to allow debugging MTE in QEMU system mode
--          echo "GDB_SUPPORTS_MTE_IN_BAREMETAL=y" >> $config_target_mak
--      fi
--
--      echo "run-tcg-tests-$target: $qemu\$(EXESUF)" >> Makefile.prereqs
--      tcg_tests_with_compilers="$tcg_tests_with_compilers $target"
-+      write_target_makefile "update-linux-vdso" >> "$config_target_mak"
-   fi
- done
+         return 0
  
--if test "$tcg" = "enabled"; then
--    echo "TCG_TESTS_WITH_COMPILERS=$tcg_tests_with_compilers" >> $config_host_mak
--fi
--
- if test "$skip_meson" = no; then
-   cross="config-meson.cross.new"
-   meson_quote() {
-diff --git a/linux-user/aarch64/Makefile.vdso b/linux-user/aarch64/Makefile.vdso
-index c33a679c0f2..82ed2011087 100644
---- a/linux-user/aarch64/Makefile.vdso
-+++ b/linux-user/aarch64/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/aarch64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/aarch64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/aarch64
- VPATH += $(SUBDIR)
-diff --git a/linux-user/arm/Makefile.vdso b/linux-user/arm/Makefile.vdso
-index ede489e2363..16ae8d7aaae 100644
---- a/linux-user/arm/Makefile.vdso
-+++ b/linux-user/arm/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/arm-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/arm/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/arm
- VPATH += $(SUBDIR)
-diff --git a/linux-user/hppa/Makefile.vdso b/linux-user/hppa/Makefile.vdso
-index f4537ae7169..78642c42661 100644
---- a/linux-user/hppa/Makefile.vdso
-+++ b/linux-user/hppa/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/hppa-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/hppa/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/hppa
- VPATH += $(SUBDIR)
-diff --git a/linux-user/i386/Makefile.vdso b/linux-user/i386/Makefile.vdso
-index 95bc616f6d6..ca2e37fa6b6 100644
---- a/linux-user/i386/Makefile.vdso
-+++ b/linux-user/i386/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/i386-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/i386/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/i386
- VPATH += $(SUBDIR)
-diff --git a/linux-user/loongarch64/Makefile.vdso b/linux-user/loongarch64/Makefile.vdso
-index 1d760b1e47e..ceb61101209 100644
---- a/linux-user/loongarch64/Makefile.vdso
-+++ b/linux-user/loongarch64/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/loongarch64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/loongarch64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/loongarch64
- VPATH += $(SUBDIR)
-diff --git a/linux-user/ppc/Makefile.vdso b/linux-user/ppc/Makefile.vdso
-index e2b8facbb50..6b9be843817 100644
---- a/linux-user/ppc/Makefile.vdso
-+++ b/linux-user/ppc/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/ppc64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/ppc64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/ppc
- VPATH += $(SUBDIR)
-diff --git a/linux-user/riscv/Makefile.vdso b/linux-user/riscv/Makefile.vdso
-index 2c257dbfda5..2eefdb70cf9 100644
---- a/linux-user/riscv/Makefile.vdso
-+++ b/linux-user/riscv/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/riscv64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/riscv64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/riscv
- VPATH += $(SUBDIR)
-diff --git a/linux-user/s390x/Makefile.vdso b/linux-user/s390x/Makefile.vdso
-index e82bf9e29ff..51f7c50a2de 100644
---- a/linux-user/s390x/Makefile.vdso
-+++ b/linux-user/s390x/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/s390x-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/s390x/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/s390x
- VPATH += $(SUBDIR)
-diff --git a/linux-user/sh4/Makefile.vdso b/linux-user/sh4/Makefile.vdso
-index 272c5d262de..ed2cc11b825 100644
---- a/linux-user/sh4/Makefile.vdso
-+++ b/linux-user/sh4/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/sh4-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/sh4/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/sh4
- VPATH += $(SUBDIR)
-diff --git a/linux-user/x86_64/Makefile.vdso b/linux-user/x86_64/Makefile.vdso
-index 26552b66dba..56fe87af72b 100644
---- a/linux-user/x86_64/Makefile.vdso
-+++ b/linux-user/x86_64/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/x86_64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/x86_64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/x86_64
- VPATH += $(SUBDIR)
 -- 
 2.47.3
 
