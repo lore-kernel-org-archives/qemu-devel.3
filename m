@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1F6BC88E7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E68C88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZOe-0005Jp-UA; Tue, 15 Sep 2026 16:04:52 -0400
+	id 1x6ZUf-00069s-BH; Tue, 15 Sep 2026 16:11:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6ZOc-0005JL-DN
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:04:50 -0400
+ id 1x6ZUZ-00069c-Ks
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:11:01 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6ZOZ-0000Q3-Dy
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:04:50 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1x6ZUX-00029u-1h
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:10:59 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68FItt1s971370
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 20:04:45 GMT
+ 68FIuEm3277844
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 20:10:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- VQ6WDl8R1iMYAMNFIi6hHRYkNG3lhEq4kXkBmPzFH4M=; b=eGDarFE864OufN/E
- lojftKwyjeqCgoFIFIHUG/5nDJ5ZAuTI1XBCvIH3PhMDLtf8naEAxXciZb1LBs40
- NgYUEj1KhksZeT5XLEfQcO7cy8/4qYuNWXu1DcJuuvg2G3kriP3eTkY8SpW5Qu1P
- 1XIQO5SoZt8pgnT7vzvN0Cswp/1QWLvUqi0cJNuffq0KmoVGiaLMtgk2B29mj0O5
- rDJCHDtP1aLKJ0wM/rSti+msgg/AfGSxt39EtvZ0YpnDOh7yNni7K51C19Mi/Biq
- 6UUXc1xpBCzB8qXGGS05O6nvudEFpolDZdD6qrVnGSlY92EBwwLt/R7gY87lVF17
- I8H6dw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gq0jeupws-1
+ wtU5B0GTh0yyWwfAmoOCHczsioJbwb7e5FeNATOTfaA=; b=V7Q9YVFQT15HjjPs
+ P+MYWaSS6cStMUVMBFAW/FdG8ZTPAa8S1IWcmG5u24tRsbGHAbgV1qTp9uQmbbah
+ n7kbigOi5WOya+Tcnkj1AW31DC5cBKF/zIwz4pYsOXYyaMOoIOmAkROz0vBgSvl9
+ qRnZ/xi+5xEaai18tGZgBeeToLCQR0i2vBUhPWU0rPCQ2SggmzZlYqAf5FC7pxtz
+ wrx3xyPq30dDfuhThIpT6BvIpzVqIOFIOrr2Ow8rZH161wABz16JP86bVwx3rLzv
+ mQVJpRJQGQ+GfHZ5DXZr6tenGHnFxm1OSGBwa9L+IBlxmrFFYmKzP8Kn6KEIUh/B
+ IySF3Q==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gq2y2k3su-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 20:04:45 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38e8e864ef0so8292846a91.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:04:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 20:10:45 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38ec0f510a9so9420498a91.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789502684; x=1790107484; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1789503044; x=1790107844; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=VQ6WDl8R1iMYAMNFIi6hHRYkNG3lhEq4kXkBmPzFH4M=;
- b=Bn3x2phVeDddrQhRj7ONi19M5EmkS2zDm+aUlRiFB7Vm5shzmOg3LBfvP+1kmkXVci
- W6jGT5f7/EiG/C+vwk+eB1ssyRyev7kxf97lbaK3UJho5Y9GxJE1MXh/YElR7OFWTLWp
- ohELCN8Tz7svpcskFGcd4sMJHiGSbdDR3/lV7350XAqr62bnMyEfgM6ux6Nw8INay6Mt
- PwXFfHOBbhg6aYdMY2nmymrclslMkYgGYng9KEM+6rYIhKbjTpFqOOi8OatA7Klg2Idg
- egH55gbSPVrHRJem24tkmjSXkPjv+g2z3cI8LVB8ra+FsW9/jwqL7T4SAn6OFrZSnTii
- 1Ciw==
+ bh=wtU5B0GTh0yyWwfAmoOCHczsioJbwb7e5FeNATOTfaA=;
+ b=Lr+ATOg4WP4wMaN8svXaWKpL4TShx4KmhUGrgH3KXqShiNLGH5x/EM7lWBxYe41F0Q
+ +8kg3K/1ZmyknUnrEZeJQE3eDi9BNTIXCCfVYy5q9gaANCWX/rfuG7LteJD9DtpjwsDZ
+ 67rm2ITBtKJ2gj+jU8fJfxnvJNQGfaO/P6kuQUT/iHUsHSlWr7wsCRiwMv1fzecECTO4
+ v/Jg5xdieYUEuqKqQW084fm4ryzaudANOC9F/1xVVF5x+tHleBpQ/tV5Wmy+DHOlq/J9
+ jMGKu7s9Ladc5PEueCM0x2fLuLVxG0SA4K/NWfiW5zsSwaWY2cmmmimPBdAPdwdgUZsG
+ tmZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789502684; x=1790107484;
+ d=1e100.net; s=20260707; t=1789503044; x=1790107844;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=VQ6WDl8R1iMYAMNFIi6hHRYkNG3lhEq4kXkBmPzFH4M=;
- b=kltXdKf0i0GygZ4dBIaLyGOvVyfG/NKRHm4UEin+GFtPtqh1AhI+8r0bEUAc3kNvoO
- IYvYirI3LtkvyNSmKKijXz9jVzA5DybXcdsJuVJIFF6s3z5wzZcPfUnabhsDS547Di6K
- 4HqLKecVdkm86VuEFkILMAKHf8FVD9NvmAxqGgp+gHTxF/E/rDO8asVphzSiDXyYG7I7
- 0JXCwLh2Z4dc/1chjDDyDbArA37MzxZmZMU+docD1gQ7X3wOrEW4YmpTyXbyL/42Yhm5
- 9s2U2Q35CVv09d7tDTVc5rzSwtvKnj1dBEnv9dh4R885xriy2PIK4EXfXrMKF7SJssZ1
- ghFg==
+ bh=wtU5B0GTh0yyWwfAmoOCHczsioJbwb7e5FeNATOTfaA=;
+ b=iMJCGI8HYO4I7wkyevxct8vw3cHi6oh4gYclki4DM4CAtE+Ihk4EkyQ30uyoQ27QzC
+ BYCRDMYIPqPOXIuJ7F+jg4i2WYMxOUY7rsTDea40MwIPKzYwXumNugiopsLCqfUfi2QN
+ NkZ3Ksru8gWkGfLBkwJPt6cunWtsn7gHMQgDUXCA6q2RXqZcnvKE3yLIclUf+uLyGWYQ
+ WTmhg/57cFjJI3TNx8eGCRS9qPO2NeRG37b/1V++Gp0Qw+PEIQkAPNfZ59O5rnOl+NzZ
+ 3S0zQNxJQwCg4w5AB9LT4RvVGd+rsEn5tFYv+/yU9+nDMajAYdnEH9b6Br0EYNXP7hyZ
+ +7jw==
 X-Forwarded-Encrypted: i=1;
- AKwUvByRe3S+d/EIYaVVsY9WhhtcOlpz3kdZzdxsVSvDa1UvP8EoCA9jkTSI45gO2XDPaxD9qF1n6bioWMCs@nongnu.org
-X-Gm-Message-State: AFuF++liljZLkdJGZP+FgfB9zJDiAxLKVvfDQ1vD32NlcHkQHXFzVP7C
- X5VeOimMWhSn4hxBpPPCJHrJX2crI2G1F+ZCarg8TMSXXt+eM7LRK/Fo+IRcH2PkU2hVxyb/FBP
- t6XA4uya+VXZ+E/5ANMWVJcmHQE490hwWaSa/aq3k3DU/SX/Fbshs4kAMCw==
-X-Gm-Gg: AYBFou0F9F8S704OO5R/hFqkc/TxYrWbPwsZRvU7UYbWxwVKPpN+4zlsfuk2popkIuE
- JrMlfLNBB/XABnxAEIDzO7vgBLBDkq6e5DtlY+iyeJ/jptlMs/znnrC+ALT0dXm3uZciFdkR8hU
- dBUE+f1nQwywSJ+u9Ztn966Ih0jRH/uJlEtPTTJlFmzPCmWM+tPhodhvwUG8D7kpc0MIYC9GEB5
- anxIN+9PzNnnu5trMRdb7/O5JuhISZGs7uUStxADAwqnS/onxxxTsf+DZFeQgbagaDir+h5HwLS
- WSjCBYnM8YWMly3vcT3i/OJjNK3phC/0Qh9T+eHFsLaZ2IkcxLbnVp9aB6NqgCk3zq1G6Oc/PXD
- e7/4lCEKaGB5g6j8Q0u5daR9/ykfv3QzOFjsN77PP8ycs7qK1WXT8rsuX7Mwe5blQKD28
-X-Received: by 2002:a17:90b:5887:b0:39e:8d5:fcee with SMTP id
- 98e67ed59e1d1-39e08d5fe14mr8001811a91.17.1789502684107; 
- Tue, 15 Sep 2026 13:04:44 -0700 (PDT)
-X-Received: by 2002:a17:90b:5887:b0:39e:8d5:fcee with SMTP id
- 98e67ed59e1d1-39e08d5fe14mr8001701a91.17.1789502683357; 
- Tue, 15 Sep 2026 13:04:43 -0700 (PDT)
+ AKwUvBx1gCfTVbZX1NDZ/kWWGYTbM5k3poI44XDZ7oGTDPbHYtnuB5sld0rVtDrBUYX40G9XvIzjrIA2MPbB@nongnu.org
+X-Gm-Message-State: AFuF++m5drvQm3vy4QtrgDeDJLEP6ZCii52zeHiuqd1w1pxHdGLJp9EY
+ tzw5pgCy4IDtEIu3lVVjWh9tPGUtnuR4PUFiH8HpjviDKNElJtKHKFA4VBYj51GTcgaTaLJeXRp
+ Um/k44wCa3XVSrs1bFt2TbiQ4BhhGHkVFUAoN1bRb0SQI/a6w7xMlhqH/Yw==
+X-Gm-Gg: AYBFou2OBH4XFn4zuK0rDf0kz4l9IfwJXcaXTxoqPWBVmKb5PdWDvBscL3qu/s0jd0i
+ lwpOFrODMhbT6Jry7vjy1bn5pRzpUTBHiReWegvgk7pUKte+ZNbob1RFGdPAlXGnvWhgo6HHeic
+ 62UMV4wV4FTu7Qw9r22ulvx0IIi9hlPescHbw6M3sLmYrzO3tHpQOG9maxYt+rZfanmX02CK2hP
+ 4Khqv7bLUQjmFpd/7XcU0kFYGvVkq6wvaHwBDGwceGW6d0WcSabxIYnwg23FV+SoJlj65ki8FbA
+ oj7UBY9u+dAi7I1KeVpUMfaSBsAhiWHzSeLUg4rlpfurzNmQ3UE+XvPXhFD1/Pu6ma1l8HxtjQB
+ +9/PFfleRqyHKy7ZBYtCqV5nE9SrA9vPhHy1iNGTbRDd3uz/V9Me1Eg9/bSlX7ORSPQp5
+X-Received: by 2002:a17:90b:380f:b0:395:7fff:a08f with SMTP id
+ 98e67ed59e1d1-39e1df8d6b4mr52569a91.0.1789503044175; 
+ Tue, 15 Sep 2026 13:10:44 -0700 (PDT)
+X-Received: by 2002:a17:90b:380f:b0:395:7fff:a08f with SMTP id
+ 98e67ed59e1d1-39e1df8d6b4mr52508a91.0.1789503043457; 
+ Tue, 15 Sep 2026 13:10:43 -0700 (PDT)
 Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5af4f0bsm1472700eec.24.2026.09.15.13.04.42
+ 5a478bee46e88-33bf5a6a175sm1364651eec.9.2026.09.15.13.10.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Sep 2026 13:04:42 -0700 (PDT)
-Message-ID: <ce78d727-046a-4755-b807-a996f06ae47b@oss.qualcomm.com>
-Date: Tue, 15 Sep 2026 13:04:41 -0700
+ Tue, 15 Sep 2026 13:10:42 -0700 (PDT)
+Message-ID: <95c18d55-87ca-4f81-bfa9-364b4b012657@oss.qualcomm.com>
+Date: Tue, 15 Sep 2026 13:10:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL v2 000/105] move check-tcg into the meson build
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -105,40 +106,40 @@ References: <20260904150826.2331577-1-alex.bennee@linaro.org>
  <CAFn=p-bLuN2La1aqp7rpanjNiezUPk-v4D3kneGiHAPqPO-iyA@mail.gmail.com>
  <05149892-fad2-4576-a47d-bd8523ae6ada@oss.qualcomm.com>
  <CAFn=p-a64Dq7NOJo-7KqtkGovw6m+r_7q6ronAoy5ivWRGgZSg@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ <ce78d727-046a-4755-b807-a996f06ae47b@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAFn=p-a64Dq7NOJo-7KqtkGovw6m+r_7q6ronAoy5ivWRGgZSg@mail.gmail.com>
+In-Reply-To: <ce78d727-046a-4755-b807-a996f06ae47b@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDI5MyBTYWx0ZWRfX3wMOVKOOzjGO
- 1uu1tVKaPL7Yi/PnAQv8PM8ovzFqHaxylyYvYuIJQWR9Te+Tw1MluilyToWkTW5l3HjkTDC9xSx
- 1z3VwomTVv0Ao+pQWV/1ZIpQxTlhUtQ=
-X-Authority-Analysis: v=2.4 cv=Kr/YSmWN c=1 sm=1 tr=0 ts=6aa9a4dd cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: U49sH-L7Zl61TMNA3O5wy0gxDLej6uGv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDI5NSBTYWx0ZWRfX3qI4KquwcUcS
+ mRV9+QUZ6ER0Ps08BIpjL4H+M54mFoIBW7VdDk7RrKW4+BD8Wv4zYDxavF41MQPALYKZ3PsUMGf
+ 5915FHnu/KxT3C5BR6+59LfB5YpzjE0rdtglKy6dZjv9HZYKTz353OI9bWBTtY9n/XBQj+MF044
+ FSlkPVHqAxv7sNw94bVp3pQh6n2FIjha/7UBNSD79pdPw1l5Oq8mSYx1HKoOixC7FRJp/oZPKpK
+ ySLPngYg3d1UHMWZaSWQJK584RpaG8s3ctHcS9f1OOgi/jMgLsjDY2fb9XyrXrfMxcjul1SBLln
+ kM0kHO3V5TsQBVhrGmtzZQFwEgpOi8SvmYiWjo60+YZv0Ct55qcdeCs7KUrMKF7heaKbqOGMAXc
+ ib6tN4yxP+frcpjNdBH71G+m6qBq8yzim/nMpHsGfK7m7ZWMoTi/L+sqXek6YVbD5BTrkqDiqt5
+ perYZ9/A+8NB790mpbg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDI5NSBTYWx0ZWRfX4f/oZzG2Q5pk
+ Kav+9GK3qiewTdx0LydH2e2lgzy1Sqmyrq69mhgHG/QTsMmpI0fgZJ8NrUoIhms75TNDt9fDrrr
+ G8EzqSzKH1r/JRgqjr9NEJWpV2+ioX0=
+X-Proofpoint-GUID: U49sH-L7Zl61TMNA3O5wy0gxDLej6uGv
+X-Authority-Analysis: v=2.4 cv=IcISymqa c=1 sm=1 tr=0 ts=6aa9a645 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
  a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=QimnV0fFZErb6rn68s4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 7MdSsvH0Kkce__bZyaaqQ7sSQVk55J_U
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDI5MyBTYWx0ZWRfX3sEBln2cM8wH
- YURV+B+CoxkFXx6DmxtNmge3gwuMP9+l8pFE5JAWhktSMET6HTJMAj3UlKtD71dAtsFnKuBue+Q
- +A6ZJRCPKJoW1P2URmUPtaS3thaAymiDfp6Z6+dGi7Z8+qVcNSYAASGPXsPsP6d0cKjC3HeEGpU
- C8UT13oaxGiz9nyHXbN6lM2cUUYXy2QJxKZARXQGFHmKt4zMXM3zTjmEpGwxemC/wyxZHn1mA+V
- ZwyDq3xLxVUCVGQg7822h5TmrqD93+0ypkR9W9n8ldC5+fP+5hRalRveyVEKg74gkKo9WsvUFSf
- Wf+rx8xbqVvDZbr8t1XCiXTuiHsWU5H99AKmOaz6eF6mj6M/5k0qoNgWUSDjcmKJDwMmndUTMTK
- wNBKq+hvzja5t2KvJUZuTjtFnJpeJXsxv8DlSsM3Eb+jUO20fsK4HjTIJEGoDHYyMnncdjzHoY5
- O+LiZIMzxuTkcLCefsw==
-X-Proofpoint-ORIG-GUID: 7MdSsvH0Kkce__bZyaaqQ7sSQVk55J_U
+ a=ukPzSHJ6_V1xlwr7hLcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609150293
+ spamscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609150295
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -164,250 +165,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/15/2026 12:22 PM, John Snow wrote:
-> On Tue, Sep 15, 2026 at 3:07 PM Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>
->> On 9/15/2026 11:26 AM, John Snow wrote:
->>> On Tue, Sep 15, 2026 at 1:17 PM Pierrick Bouvier
->>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>
->>>> On 9/15/2026 9:52 AM, John Snow wrote:
->>>>> On Fri, Sep 4, 2026 at 2:04 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+On 9/15/2026 1:04 PM, Pierrick Bouvier wrote:
+> On 9/15/2026 12:22 PM, John Snow wrote:
+>> On Tue, Sep 15, 2026 at 3:07 PM Pierrick Bouvier
+>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>
+>>> On 9/15/2026 11:26 AM, John Snow wrote:
+>>>> On Tue, Sep 15, 2026 at 1:17 PM Pierrick Bouvier
+>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>>
+>>>>> On 9/15/2026 9:52 AM, John Snow wrote:
+>>>>>> On Fri, Sep 4, 2026 at 2:04 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On Fri, 4 Sept 2026 at 16:08, Alex Bennée <alex.bennee@linaro.org> wrote:
+>>>>>>>>
+>>>>>>>> The following changes since commit d2843fbf80260e4346c856819e8cea11768c9d0e:
+>>>>>>>>
+>>>>>>>>   Merge tag 'pull-riscv-to-apply-20260904' of https://github.com/alistair23/qemu into staging (2026-09-04 09:43:27 +0100)
+>>>>>>>>
+>>>>>>>> are available in the Git repository at:
+>>>>>>>>
+>>>>>>>>   https://gitlab.com/stsquad/qemu.git tags/pull-11.1-check-tcg-meson-040926-2
+>>>>>>>>
+>>>>>>>> for you to fetch changes up to 7a485176838e6b6044e73f925d308bb4b3002597:
+>>>>>>>>
+>>>>>>>>   MAINTAINERS: add maintainer for tcg/tests meson infrastructure (2026-09-04 16:06:22 +0100)
+>>>>>>>>
+>>>>>>>> ----------------------------------------------------------------
+>>>>>>>> tests/tcg: conversion to meson
+>>>>>>>>
+>>>>>>>>   - remove unused variable from multiarch/memory
+>>>>>>>>   - standardise checking plugin output
+>>>>>>>>   - bump minimal meson to 1.6.0
+>>>>>>>>   - introduce meson plumbing for check-tcg
+>>>>>>>>   - return error code if docker probe fails
+>>>>>>>>   - add CI/self/mem test to gdbstub prot-none tests
+>>>>>>>>   - use raw opcode for fprcvt test in arm
+>>>>>>>>   - remove unused variables from gpc-test
+>>>>>>>>   - teach probe-gdb-support about mips
+>>>>>>>>   - identify or1k pc register
+>>>>>>>>   - port check-tcg logic to meson (all targets)
+>>>>>>>>   - update documentation
+>>>>>>>>   - add Pierrick as a maintainer for tests/tcg
 >>>>>>
->>>>>> On Fri, 4 Sept 2026 at 16:08, Alex Bennée <alex.bennee@linaro.org> wrote:
->>>>>>>
->>>>>>> The following changes since commit d2843fbf80260e4346c856819e8cea11768c9d0e:
->>>>>>>
->>>>>>>   Merge tag 'pull-riscv-to-apply-20260904' of https://github.com/alistair23/qemu into staging (2026-09-04 09:43:27 +0100)
->>>>>>>
->>>>>>> are available in the Git repository at:
->>>>>>>
->>>>>>>   https://gitlab.com/stsquad/qemu.git tags/pull-11.1-check-tcg-meson-040926-2
->>>>>>>
->>>>>>> for you to fetch changes up to 7a485176838e6b6044e73f925d308bb4b3002597:
->>>>>>>
->>>>>>>   MAINTAINERS: add maintainer for tcg/tests meson infrastructure (2026-09-04 16:06:22 +0100)
->>>>>>>
->>>>>>> ----------------------------------------------------------------
->>>>>>> tests/tcg: conversion to meson
->>>>>>>
->>>>>>>   - remove unused variable from multiarch/memory
->>>>>>>   - standardise checking plugin output
->>>>>>>   - bump minimal meson to 1.6.0
->>>>>>>   - introduce meson plumbing for check-tcg
->>>>>>>   - return error code if docker probe fails
->>>>>>>   - add CI/self/mem test to gdbstub prot-none tests
->>>>>>>   - use raw opcode for fprcvt test in arm
->>>>>>>   - remove unused variables from gpc-test
->>>>>>>   - teach probe-gdb-support about mips
->>>>>>>   - identify or1k pc register
->>>>>>>   - port check-tcg logic to meson (all targets)
->>>>>>>   - update documentation
->>>>>>>   - add Pierrick as a maintainer for tests/tcg
+>>>>>> Hi, I'm having difficulties building after this PR, after eb7f0c14 in
+>>>>>> particular.
+>>>>>>
+>>>>>> I keep seeing stuff like this:
+>>>>>>
+>>>>>> FAILED: [code=1] tests/tcg/x86_64-softmmu-hello.test
+>>>>>> /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman
+>>>>>> run --run-as-current-user -w /home/jsnow/src/qemu/build -v
+>>>>>> /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross
+>>>>>> x86_64-linux-gnu-gcc
+>>>>>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c -o
+>>>>>> tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF
+>>>>>> tests/tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g
+>>>>>> -fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I
+>>>>>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib
+>>>>>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c
+>>>>>> ../tests/tcg/x86_64/system/boot.S -Wl,-T
+>>>>>> ../tests/tcg/x86_64/system/kernel.ld -Wl,-melf_x86_64
+>>>>>> -Wl,--no-warn-rwx-segments -Wl,--build-id=none -lgcc
+>>>>>> cc1: fatal error:
+>>>>>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c: Permission
+>>>>>> denied
+>>>>>> compilation terminated.
+>>>>>> cc1: fatal error:
+>>>>>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c:
+>>>>>> Permission denied
+>>>>>> compilation terminated.
+>>>>>> cc1: fatal error: ../tests/tcg/x86_64/system/boot.S: Permission denied
+>>>>>> compilation terminated.
+>>>>>> Traceback (most recent call last):
+>>>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 657,
+>>>>>> in <module>
+>>>>>>     sys.exit(main())
+>>>>>>              ~~~~^^
+>>>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 653, in main
+>>>>>>     return args.cmdobj.run(args, argv)
+>>>>>>            ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+>>>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 395, in run
+>>>>>>     return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
+>>>>>>            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>>>                                     as_user=args.run_as_current_user)
+>>>>>>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 353, in run
+>>>>>>     ret = self._do_check(["run", "--rm", "--label",
+>>>>>>                          "com.qemu.instance.uuid=" + label] + cmd,
+>>>>>>                          quiet=quiet)
+>>>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 230,
+>>>>>> in _do_check
+>>>>>>     return subprocess.check_call(self._command + cmd, **kwargs)
+>>>>>>            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>>>   File "/usr/lib64/python3.14/subprocess.py", line 420, in check_call
+>>>>>>     raise CalledProcessError(retcode, cmd)
+>>>>>> subprocess.CalledProcessError: Command '['podman', 'run', '--rm',
+>>>>>> '--label', 'com.qemu.instance.uuid=0df29d1fcdc947f1b0cde41104eebed9',
+>>>>>> '--userns=keep-id', '-u', '21266', '-w', '/home/jsnow/src/qemu/build',
+>>>>>> '-v', '/home/jsnow/src/qemu:/home/jsnow/src/qemu',
+>>>>>> 'debian-amd64-cross', 'x86_64-linux-gnu-gcc',
+>>>>>> '/home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c', '-o',
+>>>>>> 'tests/tcg/x86_64-softmmu-hello.test', '-static', '-MMD', '-MF',
+>>>>>> 'tests/tcg/x86_64-softmmu-hello.d', '-Wall', '-Werror', '-O0', '-g',
+>>>>>> '-fno-strict-aliasing', '-nostdlib', '-ffreestanding',
+>>>>>> '-Wa,--noexecstack', '-I',
+>>>>>> '/home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib',
+>>>>>> '/home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c',
+>>>>>> '../tests/tcg/x86_64/system/boot.S', '-Wl,-T',
+>>>>>> '../tests/tcg/x86_64/system/kernel.ld', '-Wl,-melf_x86_64',
+>>>>>> '-Wl,--no-warn-rwx-segments', '-Wl,--build-id=none', '-lgcc']'
+>>>>>> returned non-zero exit status 1.
+>>>>>> filter=--filter=label=com.qemu.instance.uuid=0df29d1fcdc947f1b0cde41104eebed9
+>>>>>> ninja: build stopped: subcommand failed.
+>>>>>> make: *** [Makefile:170: run-ninja] Error 1
+>>>>>>
 >>>>>
->>>>> Hi, I'm having difficulties building after this PR, after eb7f0c14 in
->>>>> particular.
->>>>>
->>>>> I keep seeing stuff like this:
->>>>>
->>>>> FAILED: [code=1] tests/tcg/x86_64-softmmu-hello.test
->>>>> /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman
->>>>> run --run-as-current-user -w /home/jsnow/src/qemu/build -v
->>>>> /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross
->>>>> x86_64-linux-gnu-gcc
->>>>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c -o
->>>>> tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF
->>>>> tests/tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g
->>>>> -fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I
->>>>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib
->>>>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c
->>>>> ../tests/tcg/x86_64/system/boot.S -Wl,-T
->>>>> ../tests/tcg/x86_64/system/kernel.ld -Wl,-melf_x86_64
->>>>> -Wl,--no-warn-rwx-segments -Wl,--build-id=none -lgcc
->>>>> cc1: fatal error:
->>>>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c: Permission
->>>>> denied
->>>>> compilation terminated.
->>>>> cc1: fatal error:
->>>>> /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c:
->>>>> Permission denied
->>>>> compilation terminated.
->>>>> cc1: fatal error: ../tests/tcg/x86_64/system/boot.S: Permission denied
->>>>> compilation terminated.
->>>>> Traceback (most recent call last):
->>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 657,
->>>>> in <module>
->>>>>     sys.exit(main())
->>>>>              ~~~~^^
->>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 653, in main
->>>>>     return args.cmdobj.run(args, argv)
->>>>>            ~~~~~~~~~~~~~~~^^^^^^^^^^^^
->>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 395, in run
->>>>>     return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
->>>>>            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>>>                                     as_user=args.run_as_current_user)
->>>>>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 353, in run
->>>>>     ret = self._do_check(["run", "--rm", "--label",
->>>>>                          "com.qemu.instance.uuid=" + label] + cmd,
->>>>>                          quiet=quiet)
->>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 230,
->>>>> in _do_check
->>>>>     return subprocess.check_call(self._command + cmd, **kwargs)
->>>>>            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>>>   File "/usr/lib64/python3.14/subprocess.py", line 420, in check_call
->>>>>     raise CalledProcessError(retcode, cmd)
->>>>> subprocess.CalledProcessError: Command '['podman', 'run', '--rm',
->>>>> '--label', 'com.qemu.instance.uuid=0df29d1fcdc947f1b0cde41104eebed9',
->>>>> '--userns=keep-id', '-u', '21266', '-w', '/home/jsnow/src/qemu/build',
->>>>> '-v', '/home/jsnow/src/qemu:/home/jsnow/src/qemu',
->>>>> 'debian-amd64-cross', 'x86_64-linux-gnu-gcc',
->>>>> '/home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c', '-o',
->>>>> 'tests/tcg/x86_64-softmmu-hello.test', '-static', '-MMD', '-MF',
->>>>> 'tests/tcg/x86_64-softmmu-hello.d', '-Wall', '-Werror', '-O0', '-g',
->>>>> '-fno-strict-aliasing', '-nostdlib', '-ffreestanding',
->>>>> '-Wa,--noexecstack', '-I',
->>>>> '/home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib',
->>>>> '/home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c',
->>>>> '../tests/tcg/x86_64/system/boot.S', '-Wl,-T',
->>>>> '../tests/tcg/x86_64/system/kernel.ld', '-Wl,-melf_x86_64',
->>>>> '-Wl,--no-warn-rwx-segments', '-Wl,--build-id=none', '-lgcc']'
->>>>> returned non-zero exit status 1.
->>>>> filter=--filter=label=com.qemu.instance.uuid=0df29d1fcdc947f1b0cde41104eebed9
->>>>> ninja: build stopped: subcommand failed.
->>>>> make: *** [Makefile:170: run-ninja] Error 1
->>>>>
+>>>>> Interesting, it seems to be an issue with podman user mapping.
 >>>>
->>>> Interesting, it seems to be an issue with podman user mapping.
->>>
->>> Maybe something I set up ages ago and promptly forgot about? I haven't
->>> fussed with user mapping permissions in several aeons, it's possible I
->>> have something stale in some config somewhere ...
->>>
+>>>> Maybe something I set up ages ago and promptly forgot about? I haven't
+>>>> fussed with user mapping permissions in several aeons, it's possible I
+>>>> have something stale in some config somewhere ...
 >>>>
->>>> Which distro you use (especially which version)?
->>>
->>> ~> cat /etc/fedora-release
->>> Fedora release 44 (Forty Four)
->>>
+>>>>>
+>>>>> Which distro you use (especially which version)?
 >>>>
->>>> Also, could you please report output of those commands:
->>>> $ podman --version
+>>>> ~> cat /etc/fedora-release
+>>>> Fedora release 44 (Forty Four)
+>>>>
+>>>>>
+>>>>> Also, could you please report output of those commands:
+>>>>> $ podman --version
+>>>>
+>>>> ~> podman --version
+>>>> podman version 5.8.4
+>>>>
+>>>>> $ ls -al /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
+>>>>
+>>>> ~> ls -al /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
+>>>> -rw-r--r--. 1 jsnow jsnow 229 May  7  2025
+>>>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
+>>>>
+>>>>> $ /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman \
+>>>>>   run --run-as-current-user -w /home/jsnow/src/qemu/build -v \
+>>>>>   /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross \
+>>>>>   touch -v new_file && ls -al new_file
+>>>>
+>>>> There's no "-v" option for touch, but:
+>>>>
 >>>
->>> ~> podman --version
->>> podman version 5.8.4
+>>> Copy-paste mistake sorry, thanks for fixing command.
 >>>
->>>> $ ls -al /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
+>>>> ~> /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman \
+>>>>                                                                   run
+>>>> --run-as-current-user -w /home/jsnow/src/qemu/build -v \
+>>>>
+>>>> /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross \
+>>>>
+>>>> touch new_file && ls -al new_file
+>>>> touch: cannot touch 'new_file': Permission denied
+>>>> Traceback (most recent call last):
+>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 657,
+>>>> in <module>
+>>>>     sys.exit(main())
+>>>>              ~~~~^^
+>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 653, in main
+>>>>     return args.cmdobj.run(args, argv)
+>>>>            ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 395, in run
+>>>>     return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
+>>>>            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>                                     as_user=args.run_as_current_user)
+>>>>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 353, in run
+>>>>     ret = self._do_check(["run", "--rm", "--label",
+>>>>                          "com.qemu.instance.uuid=" + label] + cmd,
+>>>>                          quiet=quiet)
+>>>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 230,
+>>>> in _do_check
+>>>>     return subprocess.check_call(self._command + cmd, **kwargs)
+>>>>            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>   File "/usr/lib64/python3.14/subprocess.py", line 420, in check_call
+>>>>     raise CalledProcessError(retcode, cmd)
+>>>> subprocess.CalledProcessError: Command '['podman', 'run', '--rm',
+>>>> '--label', 'com.qemu.instance.uuid=d2faaf6ef4914d83b429069b4497cbb2',
+>>>> '--userns=keep-id', '-u', '21266', '-w', '/home/jsnow/src/qemu/build',
+>>>> '-v', '/home/jsnow/src/qemu:/home/jsnow/src/qemu',
+>>>> 'debian-amd64-cross', 'touch', 'new_file']' returned non-zero exit
+>>>> status 1.
+>>>> filter=--filter=label=com.qemu.instance.uuid=d2faaf6ef4914d83b429069b4497cbb2
+>>>>
 >>>
->>> ~> ls -al /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
->>> -rw-r--r--. 1 jsnow jsnow 229 May  7  2025
->>> /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c
+>>> What is the content of your /etc/subuid?
 >>>
->>>> $ /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman \
->>>>   run --run-as-current-user -w /home/jsnow/src/qemu/build -v \
->>>>   /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross \
->>>>   touch -v new_file && ls -al new_file
+>>> Giving your user id (21266), I guess you have a LDAP account or
+>>> something similar: not a local account.
+>>> I had the same issue on my corporate VM, and had to add an explicit
+>>> mapping for my user.
 >>>
->>> There's no "-v" option for touch, but:
+>>> You should have something like:
 >>>
+>>> $ cat /etc/subuid
+>>> jsnow:100000:65536
+>>> $ cat /etc/subgid
+>>> jsnow:100000:65536
 >>
->> Copy-paste mistake sorry, thanks for fixing command.
+>> I updated my entries to this; I am still having problems so I assume I
+>> need to refresh my login or restart or some such thing. Will have to
+>> try that a little bit later :)
 >>
->>> ~> /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman \
->>>                                                                   run
->>> --run-as-current-user -w /home/jsnow/src/qemu/build -v \
->>>
->>> /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross \
->>>
->>> touch new_file && ls -al new_file
->>> touch: cannot touch 'new_file': Permission denied
->>> Traceback (most recent call last):
->>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 657,
->>> in <module>
->>>     sys.exit(main())
->>>              ~~~~^^
->>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 653, in main
->>>     return args.cmdobj.run(args, argv)
->>>            ~~~~~~~~~~~~~~~^^^^^^^^^^^^
->>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 395, in run
->>>     return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
->>>            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>                                     as_user=args.run_as_current_user)
->>>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 353, in run
->>>     ret = self._do_check(["run", "--rm", "--label",
->>>                          "com.qemu.instance.uuid=" + label] + cmd,
->>>                          quiet=quiet)
->>>   File "/home/jsnow/src/qemu/tests/tcg/../docker/docker.py", line 230,
->>> in _do_check
->>>     return subprocess.check_call(self._command + cmd, **kwargs)
->>>            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>   File "/usr/lib64/python3.14/subprocess.py", line 420, in check_call
->>>     raise CalledProcessError(retcode, cmd)
->>> subprocess.CalledProcessError: Command '['podman', 'run', '--rm',
->>> '--label', 'com.qemu.instance.uuid=d2faaf6ef4914d83b429069b4497cbb2',
->>> '--userns=keep-id', '-u', '21266', '-w', '/home/jsnow/src/qemu/build',
->>> '-v', '/home/jsnow/src/qemu:/home/jsnow/src/qemu',
->>> 'debian-amd64-cross', 'touch', 'new_file']' returned non-zero exit
->>> status 1.
->>> filter=--filter=label=com.qemu.instance.uuid=d2faaf6ef4914d83b429069b4497cbb2
->>>
+>> Do you think it's possible to add a simple "hello world" example that
+>> tries to touch a source file to determine if permissions are
+>> appropriately set up, and if not, gives a nice human-readable error
+>> message? (Along with advice to try --disable-containers as a
+>> fallback.)
 >>
->> What is the content of your /etc/subuid?
->>
->> Giving your user id (21266), I guess you have a LDAP account or
->> something similar: not a local account.
->> I had the same issue on my corporate VM, and had to add an explicit
->> mapping for my user.
->>
->> You should have something like:
->>
->> $ cat /etc/subuid
->> jsnow:100000:65536
->> $ cat /etc/subgid
->> jsnow:100000:65536
 > 
-> I updated my entries to this; I am still having problems so I assume I
-> need to refresh my login or restart or some such thing. Will have to
-> try that a little bit later :)
-> 
-> Do you think it's possible to add a simple "hello world" example that
-> tries to touch a source file to determine if permissions are
-> appropriately set up, and if not, gives a nice human-readable error
-> message? (Along with advice to try --disable-containers as a
-> fallback.)
+> It could be possible to add something to docker.py probe directly.
+> However, it would be good to know why there is an issue on your setup at
+> the moment, just to rule out another obvious error.
 >
 
-It could be possible to add something to docker.py probe directly.
-However, it would be good to know why there is an issue on your setup at
-the moment, just to rule out another obvious error.
+Would that be possible to try a shared mount (:z)?
 
->>
->> Let me know if it solves your problem, else we'll find something else.
->>
+/home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman \
+ run --run-as-current-user -w /home/jsnow/src/qemu/build -v \
+ /home/jsnow/src/qemu:/home/jsnow/src/qemu:z debian-amd64-cross \
+ touch -v new_file && ls -al new_file
+
+If it works, that's related to SELinux blocking such access by default.
+And we can add the flag inconditionally.
+
 >>>
+>>> Let me know if it solves your problem, else we'll find something else.
 >>>
 >>>>
->>>> This should help us to see what's your effective uid in the container.
->>>> Maybe this issue was present before, did you try running make check-tcg
->>>> in the past, or not?
 >>>>
->>>>> Is there some kind of setup I have neglected to perform to make this
->>>>> new build system work? Is there a way I can skip these tests in the
->>>>> meantime...?
 >>>>>
->>>>
->>>> You can use ./configure --disable-containers, so it will not try to use
->>>> podman.
->>>>
->>>>> Thanks,
->>>>> --js
+>>>>> This should help us to see what's your effective uid in the container.
+>>>>> Maybe this issue was present before, did you try running make check-tcg
+>>>>> in the past, or not?
 >>>>>
+>>>>>> Is there some kind of setup I have neglected to perform to make this
+>>>>>> new build system work? Is there a way I can skip these tests in the
+>>>>>> meantime...?
+>>>>>>
 >>>>>
->>>>
->>>> Regards,
->>>> Pierrick
+>>>>> You can use ./configure --disable-containers, so it will not try to use
+>>>>> podman.
+>>>>>
+>>>>>> Thanks,
+>>>>>> --js
+>>>>>>
+>>>>>>
+>>>>>
+>>>>> Regards,
+>>>>> Pierrick
+>>>>>
 >>>>
 >>>
 >>
