@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E1DBC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65096C88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Vbd-0008JT-26; Tue, 15 Sep 2026 12:02:01 -0400
+	id 1x6VbS-00086D-AI; Tue, 15 Sep 2026 12:01:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbV-0008Cz-1a
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:55 -0400
+ id 1x6VbP-0007rT-4r
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:47 -0400
 Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbT-0003Tu-23
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:52 -0400
+ id 1x6VbK-0003RI-Bv
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:46 -0400
 Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c29703cb796so577315666b.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:40 -0700 (PDT)
+ a640c23a62f3a-c254f9f7dbfso77504066b.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789488100; x=1790092900; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789488091; x=1790092891; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=njMZgtKOcfOkDZU0dZIjVX7Nek8P5EbfO9WaLdMtUVA=;
- b=WD1sk+SKEDkEqZEmnhbpkYcUak0elpfk4GXHGy5vJcPCIMNHl6qLXOe0mi/yV22fmx
- 27p40RfkBVfx4KOKIL7THFZFvvRD0UAq92DRiZs7qI6uWfm+yw7L+kavDt2uCoPEwj4m
- w9hfSvXlSW3rnmPPHGYz+f4D3B0p2/ma/rH0Z1SEz3pELdPv8z4blOVlbJ98B1acWz00
- CvbHBDD5XjVVQY/d5ol0umyOh+g3npcXwFytnEfX2rU6Q2hVTT1ob34XWP7duaaMh7fl
- 1Mx349uFyenK0B1NzMFydKLwHxoSPXTANaHE1PiafQmzk7afh5Z/4QjPZRXjDxdMCYHB
- 8Uug==
+ bh=zwMKlS2VrjCsV9DFKblvAqWVEdyn/Vlz9Y/BIWWjlFo=;
+ b=LxlOX+FeALXWiGyEzwUywkNC5uUcrrXicasTNZHzxpUa0g+oGgid+fMortj2Fq80Wv
+ yuHl3sWY89az2ncj9YLEWlxVL7TIuUa4ZSAEqgRyuWYz6zTwlh1XwND4p9vY83YPMnh7
+ Qr/N1yOVP1OK9Pez6L0xqk6t70IQ+pFn2SADZmbWZXyGfaG333zp+UrVwSWiIlHFAsk5
+ Svzs9iEbDhks5kxJT0xAkjxX7ifME9rZpup5NQhDzLBVF169qrvbT50Xt88KRDvrEJeE
+ 4VXlr+lAGTP0wS35gzBwNkjoJ24pZgsacecTOf9eyWqrRkUBIBcLeTO7B+sjI3NfYhKg
+ 0Jzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789488100; x=1790092900;
+ d=1e100.net; s=20260707; t=1789488091; x=1790092891;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=njMZgtKOcfOkDZU0dZIjVX7Nek8P5EbfO9WaLdMtUVA=;
- b=U3M6pYgVG4ml4qhz9TPcACmEdG294xJ4wPmQCt/s0mOx5eKuoWf6c8kIIn18TzMMWg
- XnRnqlo6qbgO6QAmYycxcRhvEaed0NJ7br1hqAo8AICqotz5XCVHlbylzve/c7OCNXk7
- fyLs2YTTYfpsPOoZYSkVrxuhNcss15yMOPT5NVnqN6YhGOz487DIuOZV5yUKnaONG878
- DbJMC0hiSLL+5ofLb4k/A41YSx3wvEk/RNWysftp9wL7kbFrnKyY8EtsAaMkP91NRXWz
- ThE4vY80u4sOlfUG6SUBsUFRPxq+unGJlGaOKxHtmb5DuLPjgSeXXEZ9hj59IVYBlMUU
- Vj2A==
-X-Gm-Message-State: AFuF++n7GS5Bn6v/T+qCqbzwwHmmjJwSFFzDJmji21Fg/3so44fNuFJb
- Jm9RJkoGFhbB+cYlP1XqTTNWMmmhw8RmoLfKZWx6IrD1YkjNsJmSD9resgNsSA==
-X-Gm-Gg: AYBFou3A2fLFrUX1tZadRIFAZswvUIZpbeCMddfflr34gG1iU6WzfUg3C31ZMMXYYQf
- oUx0ylP6q6SMni704GmiJGi6i5TAN1e+0KyB+cIEO59wAjx0g99BrxLGUhR8DPc9DJfloRWqpGJ
- nnGSX02eB1e+zd/V4fzQyRXSP/o6ORbIYFcBbFGbC6ofsxtM/LUNWPKcBQNYQLWMghT35dJLA00
- KZLZ1jRNRW0QatJdE1Y1sg2QVt6is+0quNT8rFWs2XjCFNGGgo6K4o6k4iKZYAAz2Y6JK1QLBUf
- uTZxV6FTjLMx+02xCeGA6gGeMKjo7qqINlyljrk/p919Sy0ZwGa4Ay2zXcD0ORLPWnMeDUJtayh
- 0+DzurR/jKaMiPez+0eINqN5Z6/4DmlrTKV5j9r5Zym+TGaUA3AuG5yEm0BuP+0ICWKOqt8bPPC
- 5wHKDzKGUQJiwwH9M52FNxk2+/r/AbNBvr5fDtvSDCX4bJQwrIBJ/GuL0j/jG/lHVZrFC1gQOCM
- DHQs1VZe8nIX2vvdey1AA1FfWkDNLpo8RGzhYuXWWwyuw==
-X-Received: by 2002:a17:907:dab:b0:c26:1648:a065 with SMTP id
- a640c23a62f3a-c29b87267demr527431266b.32.1789488099490; 
- Tue, 15 Sep 2026 09:01:39 -0700 (PDT)
+ bh=zwMKlS2VrjCsV9DFKblvAqWVEdyn/Vlz9Y/BIWWjlFo=;
+ b=C3gurkskdspZc4nT7uSdUOvTvIoquGia4hL0/l1jb6lKhHJ9e6YnM3PyF9fm0P0D1O
+ Rrf+J8PAj0Wg5SpE4mgpWrKalsvxhbx8SwMkCE0w5yHVjHOoqzaWDH1UfqTrG3HbGZ+d
+ 634Sxs0D9E/0Jm4N2kaZoHF2UEtSeolRpHafYaRSkVnDoJdr/mbrmNxAe/Uo1AS2d8nx
+ xaZaH9F+k0c3cEFBFHOFgYuP9s5/Fr0MjpzpQ64PqPAbiD2J2+RHrYZG0louaaeasz3Q
+ SYnmfUjFBix/otlkgqJPooCzDaKBiIxzsouz8xn7f3HX81MSrVVKo8X4eSKhWZCC74+R
+ DW7A==
+X-Gm-Message-State: AFuF++kcx/biSrakgNnbiNDQPW/C18fTnohd+F18aYpfxOTCdqI4J1eY
+ 7yGCeAxlO/wv7sc0wsJmiPbalFitmDiNUOIeaaYQ5Odo8lKt5/0TGoi3JflFBQ==
+X-Gm-Gg: AYBFou0zAlZ/MtCgqiscDp9eQ6CLUAV3Jex0xzrxPHR7zATLDXlOTU8sfELZwfRELXp
+ Iz4f+rC6H6sXYH9+NwBCFRZ1I23VzvBCL1HhJlY7usJhFoc+5WqvqiXJCJ3WTcckIILk5Vn5wCg
+ X0Nh6bbUPzO5cufdVS0TF3wkmVUAZHnjxe9fgB3wCS0Kfe1WaDJKrR/JdJ5oiRYp4uut6xTzFhR
+ td96d/7xphybkjBc0bakYQKhZm0UrO2E9cpTk6+4Ueh/UX2BGqjYeLjKUNfAdkx4e4GoIbJVsmm
+ UYocxkZfwJeItdBWHLbArnfvs4lLLDpur9H2B2ZfIjsq7D2qBVNTJSdPTB9eygvkewIwVqgueLI
+ /C3XxW17YvtWofOVjh2PoPJbRwtdmIcEj4dgrBCso6HaWa12yjwA8uzOhjBE61Oe/28JjlU3ved
+ 29+QcLkMSPHt+MbQpCREL5n9vFCSKc5PPCKmJHg+AXBld5HwRR7z2EKSF0Z16N2A0MVxIavw5h+
+ cjJ7H+qggANa89THUCXraadWxhZZ0Aurw+55T4E/LsHgjk=
+X-Received: by 2002:a17:907:3e29:b0:c26:19de:9ae1 with SMTP id
+ a640c23a62f3a-c29d78ed54dmr127476566b.32.1789488090831; 
+ Tue, 15 Sep 2026 09:01:30 -0700 (PDT)
 Received: from thinkpad-t470s.. (83-131-196-251.adsl.net.t-com.hr.
  [83.131.196.251]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.37
+ a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 09:01:39 -0700 (PDT)
+ Tue, 15 Sep 2026 09:01:30 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
@@ -72,9 +72,10 @@ Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
  Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v2 16/20] hw/core: Add Remote Port GPIO/Interrupt bridge
-Date: Tue, 15 Sep 2026 18:00:40 +0200
-Message-ID: <20260915160044.345788-17-ruslichenko.r@gmail.com>
+Subject: [PATCH v2 11/20] hw/core: Implement Remote Port Memory Master bus
+ transactions
+Date: Tue, 15 Sep 2026 18:00:35 +0200
+Message-ID: <20260915160044.345788-12-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
 References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
@@ -106,272 +107,287 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-This patch adds the `remote-port-gpio` device, which enables
-GPIO levels exchange between QEMU and the remote peer.
+Implement the core access handlers for the Remote Port Memory
+Master device, which enables QEMU to initiate memory-mapped
+transaction to remote peers.
 
-It maps QEMU's `qemu_irq` lines (GPIOs) to Remote Port `RP_CMD_interrupt`
-packets, enabling the synchronization of interrupt lines and logic signals
-across the simulation.
-
-This is essential for wiring up interrupt controllers or discrete logic
-signals (reset lines, enable pins).
+The patch adds support for:
+- Translation of QEMU memory region read/write into Remote Port
+read/write packets
+- Support for propagating of transaction attributes
+(Secure, MasterID)
+- Synchronous response waiting with optional timeout (timeout
+  configuration to be added within later patches)
+- Add trace events for monitoring TX/RX bus transactions
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port-gpio.c         | 187 +++++++++++++++++++++++++++++
- hw/core/trace-events               |   4 +
- include/hw/core/remote-port-gpio.h |  34 ++++++
- 3 files changed, 225 insertions(+)
- create mode 100644 hw/core/remote-port-gpio.c
- create mode 100644 include/hw/core/remote-port-gpio.h
+ hw/core/remote-port-memory-master.c | 191 +++++++++++++++++++++++++++-
+ hw/core/remote-port.c               |   5 +
+ hw/core/trace-events                |   4 +
+ include/hw/core/remote-port.h       |  11 ++
+ 4 files changed, 207 insertions(+), 4 deletions(-)
 
-diff --git a/hw/core/remote-port-gpio.c b/hw/core/remote-port-gpio.c
-new file mode 100644
-index 0000000000..43a40315c5
---- /dev/null
-+++ b/hw/core/remote-port-gpio.c
-@@ -0,0 +1,187 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) 2013 Xilinx Inc
-+ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
-+ * Written by Peter Crosthwaite <peter.crosthwaite@xilinx.com>
-+ *
-+ * This code is licensed under the GNU GPL.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/sysbus.h"
-+#include "system/system.h"
-+#include "system/dma.h"
-+#include "qemu/log.h"
-+#include "qapi/qmp/qerror.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/irq.h"
-+#include "trace.h"
-+
-+#include "hw/core/remote-port.h"
-+#include "hw/core/remote-port-proto.h"
-+#include "hw/core/remote-port-gpio.h"
-+
-+#define CACHE_INVALID -1
-+
-+static void rp_gpio_handler(void *opaque, int irq, int level)
+diff --git a/hw/core/remote-port-memory-master.c b/hw/core/remote-port-memory-master.c
+index 4b0283f9fe..41ef1df518 100644
+--- a/hw/core/remote-port-memory-master.c
++++ b/hw/core/remote-port-memory-master.c
+@@ -29,18 +29,201 @@
+ 
+ #define RP_MAX_ACCESS_SIZE 4096
+ 
++static int rp_mm_get_timeout(RPMemoryTransaction *tr)
 +{
-+    RemotePortGPIO *s = opaque;
-+    struct rp_pkt pkt;
-+    size_t len;
-+    int64_t clk;
-+    uint32_t id = rp_new_id(s->rp);
-+    uint32_t flags = s->posted_updates ? RP_PKT_FLAGS_posted : 0;
++    RemotePortMap *map = tr->opaque;
++    RemotePortMemoryMaster *s;
 +
-+    /* If we hit the cache, return early.  */
-+    if (s->cache[irq] != CACHE_INVALID && s->cache[irq] == level) {
-+        return;
++    if (!map || !map->parent ||
++        !object_dynamic_cast(OBJECT(map->parent),
++                             TYPE_REMOTE_PORT_MEMORY_MASTER)) {
++        return 0;
 +    }
-+    /* Update the cache and update the remote peer.  */
-+    s->cache[irq] = level;
++    s = REMOTE_PORT_MEMORY_MASTER(map->parent);
++    return s->rp_timeout;
++}
 +
-+    clk = rp_normalized_vmclk(s->rp);
-+    len = rp_encode_interrupt_f(id, s->rp_dev, &pkt.interrupt, clk,
-+                              irq, 0, level, flags);
++MemTxResult rp_mm_access_with_def_attr(RemotePort *rp, uint32_t rp_dev,
++                                       struct rp_peer_state *peer,
++                                       RPMemoryTransaction *tr,
++                                       bool relative, uint64_t offset,
++                                       uint32_t def_attr)
++{
++    uint64_t addr = tr->addr;
++    RemotePortRespSlot *rsp_slot;
++    RemotePortDynPkt *rsp;
++    struct  {
++        struct rp_pkt_busaccess_ext_base pkt;
++        uint8_t reserved[RP_MAX_ACCESS_SIZE];
++    } pay;
++    uint8_t *data = rp_busaccess_tx_dataptr(peer, &pay.pkt);
++    struct rp_encode_busaccess_in in = {0};
++    int i;
++    int len;
++    int rp_timeout = rp_mm_get_timeout(tr);
++    MemTxResult ret;
 +
-+    trace_remote_port_gpio_tx_interrupt(id, flags, s->rp_dev, 0, irq, level);
-+
-+    if (s->peer->caps.wire_posted_updates && !s->posted_updates) {
-+        rp_rsp_mutex_lock(s->rp);
++    if (tr->rw) {
++        /* Data up to 8 bytes is passed as values.  */
++        if (tr->size <= 8) {
++            for (i = 0; i < tr->size; i++) {
++                data[i] = tr->data.u64 >> (i * 8);
++            }
++        } else {
++            memcpy(data, tr->data.p8, tr->size);
++        }
 +    }
 +
-+    rp_write(s->rp, (void *)&pkt, len);
++    addr += relative ? 0 : offset;
++
++    in.cmd = tr->rw ? RP_CMD_write : RP_CMD_read;
++    in.id = rp_new_id(rp);
++    in.dev = rp_dev;
++    in.clk = rp_normalized_vmclk(rp);
++    in.master_id = tr->attr.requester_id;
++    in.addr = addr;
++    in.attr = def_attr;
++    in.attr |= tr->attr.secure ? RP_BUS_ATTR_SECURE : 0;
++    in.size = tr->size;
++    in.stream_width = tr->size;
++    len = rp_encode_busaccess(peer, &pay.pkt, &in);
++    len += tr->rw ? tr->size : 0;
++
++    trace_remote_port_memory_master_tx_busaccess(rp_cmd_to_string(in.cmd),
++        in.id, in.flags, in.dev, in.addr, in.size, in.attr);
++
++    rp_rsp_mutex_lock(rp);
++    rp_write(rp, (void *) &pay, len);
++
++    if (!rp_timeout) {
++        rsp_slot = rp_dev_wait_resp(rp, in.dev, in.id);
++    } else {
++        rsp_slot = rp_dev_timed_wait_resp(rp, in.dev, in.id, rp_timeout);
++        if (rsp_slot->valid == false) {
++            /*
++             * Timeout error
++             */
++            rp_rsp_mutex_unlock(rp);
++            return MEMTX_ERROR;
++        }
++    }
++    rsp = &rsp_slot->rsp;
++
++    /* We dont support out of order answers yet.  */
++    assert(rsp->pkt->hdr.id == in.id);
++
++    switch (rp_get_busaccess_response(rsp->pkt)) {
++    case RP_RESP_OK:
++        ret = MEMTX_OK;
++        break;
++    case RP_RESP_ADDR_ERROR:
++        ret = MEMTX_DECODE_ERROR;
++        break;
++    default:
++        ret = MEMTX_ERROR;
++        break;
++    }
++
++    if (ret == MEMTX_OK && !tr->rw) {
++        data = rp_busaccess_rx_dataptr(peer, &rsp->pkt->busaccess_ext_base);
++        /* Data up to 8 bytes is return as values.  */
++        if (tr->size <= 8) {
++            for (i = 0; i < tr->size; i++) {
++                tr->data.u64 |= ((uint64_t) data[i]) << (i * 8);
++            }
++        } else {
++            memcpy(tr->data.p8, data, tr->size);
++        }
++    }
++
++    trace_remote_port_memory_master_rx_busaccess(
++        rp_cmd_to_string(rsp->pkt->hdr.cmd), rsp->pkt->hdr.id,
++        rsp->pkt->hdr.flags, rsp->pkt->hdr.dev, rsp->pkt->busaccess.addr,
++        rsp->pkt->busaccess.len, rsp->pkt->busaccess.attributes);
++
++    if (rp_timeout) {
++        for (i = 0; i < ARRAY_SIZE(rp->dev_state[rp_dev].rsp_queue); i++) {
++            if (rp->dev_state[rp_dev].rsp_queue[i].used &&
++                rp->dev_state[rp_dev].rsp_queue[i].valid) {
++                rp_resp_slot_done(rp, &rp->dev_state[rp_dev].rsp_queue[i]);
++            }
++        }
++    } else {
++        rp_resp_slot_done(rp, rsp_slot);
++    }
++    rp_rsp_mutex_unlock(rp);
 +
 +    /*
-+     * If peer supports posted updates it will respect our flag and
-+     * not respond.
++     * For strongly ordered or transactions that don't allow Early Acking,
++     * we need to drain the pending RP processing queue here. This is
++     * because RP handles responses in parallel with normal requests so
++     * they may get reordered. This becomes visible for example with reads
++     * to read-to-clear registers that clear interrupts. Even though the
++     * lowering of the interrupt-wires arrives to us before the read-resp,
++     * we may handle the response before the wire update, resulting in
++     * spurious interrupts.
++     *
++     * This has some room for optimization but for now we use the big hammer
++     * and drain the entire qeueue.
 +     */
-+    if (s->peer->caps.wire_posted_updates && !s->posted_updates) {
-+        RemotePortRespSlot *rsp_slot;
-+        struct rp_pkt_interrupt *intr;
++    rp_process(rp);
 +
-+        rsp_slot = rp_dev_wait_resp(s->rp, s->rp_dev, id);
-+        assert(rsp_slot->rsp.pkt->hdr.id == id);
++    /* Reads are sync-points, roll the sync timer.  */
++    rp_restart_sync_timer(rp);
++    return ret;
++}
 +
-+        intr = &rsp_slot->rsp.pkt->interrupt;
-+        trace_remote_port_gpio_rx_interrupt(intr->hdr.id, intr->hdr.flags,
-+            intr->hdr.dev, intr->vector, intr->line, intr->val);
++MemTxResult rp_mm_access(RemotePort *rp, uint32_t rp_dev,
++                         struct rp_peer_state *peer,
++                         RPMemoryTransaction *tr,
++                         bool relative, uint64_t offset)
++{
++    return rp_mm_access_with_def_attr(rp, rp_dev, peer, tr, relative, offset,
++                                      0);
++}
 +
-+        rp_resp_slot_done(s->rp, rsp_slot);
-+        rp_rsp_mutex_unlock(s->rp);
+ static MemTxResult rp_mm_read(void *opaque, hwaddr addr, uint64_t *data,
+                                  unsigned size, MemTxAttrs attrs)
+ {
+-    /* TBD */
+-    return MEMTX_OK;
++    MemTxResult ret;
++    RemotePortMap *map = opaque;
++    RemotePortMemoryMaster *s = map->parent;
++
++    RPMemoryTransaction tr = {};
++
++    tr.opaque = map;
++    tr.rw = false;
++    tr.addr = addr;
++    tr.size = size;
++    tr.attr = attrs;
++
++    ret = rp_mm_access(s->rp, s->rp_dev, s->peer, &tr, s->relative,
++                map->offset);
++
++    if (ret == MEMTX_OK) {
++        *data = tr.data.u64;
 +    }
-+}
 +
-+static void rp_gpio_interrupt(RemotePortDevice *rpdev, struct rp_pkt *pkt)
++    return ret;
+ }
+ 
+ static MemTxResult rp_mm_write(void *opaque, hwaddr addr, uint64_t data,
+                                   unsigned size, MemTxAttrs attrs)
+ {
+-    /* TBD */
+-    return MEMTX_OK;
++    RemotePortMap *map = opaque;
++    RemotePortMemoryMaster *s = map->parent;
++
++    RPMemoryTransaction tr = {};
++
++    tr.opaque = map;
++    tr.rw = true;
++    tr.addr = addr;
++    tr.size = size;
++    tr.attr = attrs;
++    tr.data.u64 = data;
++
++    return rp_mm_access(s->rp, s->rp_dev, s->peer, &tr, s->relative,
++                    map->offset);
+ }
+ 
+ static const MemoryRegionOps rp_ops_template = {
+diff --git a/hw/core/remote-port.c b/hw/core/remote-port.c
+index b4c9fa1528..6a6effdd19 100644
+--- a/hw/core/remote-port.c
++++ b/hw/core/remote-port.c
+@@ -39,6 +39,11 @@ static void rp_event_read_and_process(RemotePort *s);
+ static void sync_timer_hit(void *opaque);
+ static void syncresp_timer_hit(void *opaque);
+ 
++uint32_t rp_new_id(RemotePort *s)
 +{
-+    RemotePortGPIO *s = REMOTE_PORT_GPIO(rpdev);
-+
-+    trace_remote_port_gpio_rx_interrupt(pkt->hdr.id, pkt->hdr.flags,
-+        pkt->hdr.dev, pkt->interrupt.vector, pkt->interrupt.line,
-+        pkt->interrupt.val);
-+
-+    qemu_set_irq(s->gpio_out[pkt->interrupt.line], pkt->interrupt.val);
-+
-+    if (s->peer->caps.wire_posted_updates
-+        && !(pkt->hdr.flags & RP_PKT_FLAGS_posted)) {
-+        RemotePortDynPkt rsp = {0};
-+        size_t len;
-+
-+        /* Need to reply.  */
-+        rp_dpkt_alloc(&rsp, sizeof(struct rp_pkt_interrupt));
-+        len = rp_encode_interrupt_f(pkt->hdr.id, pkt->hdr.dev,
-+                                    &rsp.pkt->interrupt,
-+                                    pkt->interrupt.timestamp,
-+                                    pkt->interrupt.line,
-+                                    pkt->interrupt.vector,
-+                                    pkt->interrupt.val,
-+                                    pkt->hdr.flags | RP_PKT_FLAGS_response);
-+
-+        trace_remote_port_gpio_tx_interrupt(pkt->hdr.id,
-+            pkt->hdr.flags | RP_PKT_FLAGS_response, pkt->hdr.dev,
-+            pkt->interrupt.vector, pkt->interrupt.line, pkt->interrupt.val);
-+
-+        rp_write(s->rp, (void *)rsp.pkt, len);
-+    }
++    return qatomic_fetch_inc(&s->current_id);
 +}
 +
-+static void rp_gpio_reset(DeviceState *dev)
-+{
-+    RemotePortGPIO *s = REMOTE_PORT_GPIO(dev);
-+
-+    /* Mark as invalid.  */
-+    memset(s->cache, CACHE_INVALID, s->num_gpios);
-+}
-+
-+static void rp_gpio_realize(DeviceState *dev, Error **errp)
-+{
-+    RemotePortGPIO *s = REMOTE_PORT_GPIO(dev);
-+    RemotePortDevice *rpd = REMOTE_PORT_DEVICE(dev);
-+    unsigned int i;
-+
-+    rp_register_dev(s->rp, rpd, s->rp_dev);
-+
-+    s->peer = rp_get_peer(s->rp);
-+
-+    s->gpio_out = g_new0(qemu_irq, s->num_gpios);
-+    qdev_init_gpio_out(dev, s->gpio_out, s->num_gpios);
-+    qdev_init_gpio_in(dev, rp_gpio_handler, s->num_gpios);
-+
-+    for (i = 0; i < s->num_gpios; i++) {
-+        sysbus_init_irq(SYS_BUS_DEVICE(s), &s->gpio_out[i]);
-+    }
-+}
-+
-+static void rp_prop_allow_set_link(const Object *obj, const char *name,
-+                                   Object *val, Error **errp)
-+{
-+}
-+
-+static void rp_gpio_init(Object *obj)
-+{
-+    RemotePortGPIO *rpms = REMOTE_PORT_GPIO(obj);
-+
-+    object_property_add_link(obj, "rp-adaptor0", "remote-port",
-+                             (Object **)&rpms->rp,
-+                             rp_prop_allow_set_link,
-+                             OBJ_PROP_LINK_STRONG);
-+}
-+
-+static Property rp_properties[] = {
-+    DEFINE_PROP_UINT32("rp-chan0", RemotePortGPIO, rp_dev, 0),
-+    DEFINE_PROP_UINT32("num-gpios", RemotePortGPIO, num_gpios, 16),
-+    DEFINE_PROP_UINT16("cell-offset-irq-num", RemotePortGPIO,
-+                       cell_offset_irq_num, 0),
-+    DEFINE_PROP_BOOL("posted-updates", RemotePortGPIO, posted_updates, true),
-+};
-+
-+static void rp_gpio_class_init(ObjectClass *oc, const void *data)
-+{
-+    RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    rpdc->ops[RP_CMD_interrupt] = rp_gpio_interrupt;
-+    dc->legacy_reset = rp_gpio_reset;
-+    dc->realize = rp_gpio_realize;
-+    device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
-+}
-+
-+static const TypeInfo rp_info = {
-+    .name          = TYPE_REMOTE_PORT_GPIO,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RemotePortGPIO),
-+    .instance_init = rp_gpio_init,
-+    .class_init    = rp_gpio_class_init,
-+    .interfaces    = (InterfaceInfo[]) {
-+        { TYPE_REMOTE_PORT_DEVICE },
-+        { },
-+    },
-+};
-+
-+static void rp_register_types(void)
-+{
-+    type_register_static(&rp_info);
-+}
-+
-+type_init(rp_register_types)
+ void rp_rsp_mutex_lock(RemotePort *s)
+ {
+     qemu_mutex_lock(&s->rsp_mutex);
 diff --git a/hw/core/trace-events b/hw/core/trace-events
-index 475c8439ba..cbf8de6da3 100644
+index 631cbb9c37..dc98745178 100644
 --- a/hw/core/trace-events
 +++ b/hw/core/trace-events
-@@ -46,3 +46,7 @@ remote_port_memory_master_rx_busaccess(const char *cmd, uint32_t id, uint32_t fl
- # remote-port-memory-slave.c
- remote_port_memory_slave_tx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
- remote_port_memory_slave_rx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
+@@ -38,3 +38,7 @@ rp_pt_process_pkt(const char *rp, uint32_t cmd, uint32_t id, uint32_t dev, bool
+ rp_process(const char *rp, unsigned int rpos, unsigned int wpos, uint32_t cmd, uint32_t dev) "%s: io-thread rpos=%u wpos=%u cmd=0x%"PRIx32" dev=0x%"PRIx32
+ rp_pt_rx_queue_full(const char *rp, unsigned int rpos, unsigned int wpos) "%s: rpos=%u wpos=%u"
+ rp_wait_resp(const char *rp) "'%s'"
 +
-+# remote-port-memory-gpio.c
-+remote_port_gpio_tx_interrupt(uint32_t id, uint32_t flags, uint32_t dev, uint64_t vector, uint32_t irq, uint32_t val) "id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", vector=0x%"PRIx64", irq=0x%"PRIx32", level=0x%"PRIx32
-+remote_port_gpio_rx_interrupt(uint32_t id, uint32_t flags, uint32_t dev, uint64_t vector, uint32_t irq, uint32_t val) "id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", vector=0x%"PRIx64", irq=0x%"PRIx32", level=0x%"PRIx32
-diff --git a/include/hw/core/remote-port-gpio.h b/include/hw/core/remote-port-gpio.h
-new file mode 100644
-index 0000000000..0079ebfc73
---- /dev/null
-+++ b/include/hw/core/remote-port-gpio.h
-@@ -0,0 +1,34 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) 2013 Xilinx Inc
-+ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
-+ * Written by Peter Crosthwaite <peter.crosthwaite@xilinx.com>
-+ *
-+ * This code is licensed under the GNU GPL.
-+ */
-+#ifndef REMOTE_PORT_GPIO_H
-+#define REMOTE_PORT_GPIO_H
++# remote-port-memory-master.c
++remote_port_memory_master_tx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
++remote_port_memory_master_rx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
+diff --git a/include/hw/core/remote-port.h b/include/hw/core/remote-port.h
+index cef7471a73..7e3e022a20 100644
+--- a/include/hw/core/remote-port.h
++++ b/include/hw/core/remote-port.h
+@@ -150,4 +150,15 @@ ssize_t rp_write(RemotePort *s, const void *buf, size_t count);
+ 
+ struct rp_peer_state *rp_get_peer(RemotePort *s);
+ 
++uint32_t rp_new_id(RemotePort *s);
 +
-+#define TYPE_REMOTE_PORT_GPIO "remote-port-gpio"
-+#define REMOTE_PORT_GPIO(obj) \
-+        OBJECT_CHECK(RemotePortGPIO, (obj), TYPE_REMOTE_PORT_GPIO)
++static inline void rp_resp_slot_done(RemotePort *s,
++                                     RemotePortRespSlot *rsp_slot)
++{
++    rp_dpkt_invalidate(&rsp_slot->rsp);
++    rsp_slot->id = ~0;
++    rsp_slot->used = false;
++    rsp_slot->valid = false;
++}
 +
-+#define MAX_GPIOS 960
-+
-+typedef struct RemotePortGPIO {
-+    /* private */
-+    SysBusDevice parent;
-+    /* public */
-+
-+    int8_t cache[MAX_GPIOS];
-+    uint32_t num_gpios;
-+    qemu_irq *gpio_out;
-+    uint16_t cell_offset_irq_num;
-+
-+    bool posted_updates;
-+    uint32_t rp_dev;
-+    struct RemotePort *rp;
-+    struct rp_peer_state *peer;
-+} RemotePortGPIO;
-+#endif
+ #endif
 -- 
 2.43.0
 
