@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0AD1C982C1
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36812C88E7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:13:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Uq9-0001EY-6z; Tue, 15 Sep 2026 11:12:57 -0400
+	id 1x6Upa-00012u-6x; Tue, 15 Sep 2026 11:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpT-00011G-7R
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpL-0000z5-Db
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpR-00007v-N1
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:14 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpJ-00006N-Jg
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789485133;
+ s=mimecast20190719; t=1789485125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fVqJB7RA7wK1A3wU0gjI5S+gtvyNP6b0TlS+G7syIFw=;
- b=OuEVoPGK1xz2jfGisB28UoSIh6SpDLYLDJw4WCcv+U+UxhllibbSY4V1bVlCZZFOVC06xk
- KyhQWTG4vgNxFaTefxSzlO/aQS/+ODROsh735mOsinmI3c8Qt3+5bJ64tacTv3Tdim7V1X
- c+rJP9L4ZfcijvhtzLbkNrBG4FdescQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rBLyZXbXlsOC8SLLzAeTtyZ5ri1ynYIY6/I844l2vDU=;
+ b=gEuugPbZa9KSokZ6QincbyEPllaYMOLNuFQUTALvPZLewEy8delhTo1aT6e+xINPuE76Dc
+ 9cKSbh3Pyi4uFxAZUbQ9e8X29gZRtqy0X84sWBVnNUXeKRgmP6EZp4MttSqga7D6S+pjKK
+ gtZD02UkkUPBHZpF2a5pksoauNjOHIQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-b5gphxSzNg2L9JiAL5ofrw-1; Tue,
- 15 Sep 2026 11:12:08 -0400
-X-MC-Unique: b5gphxSzNg2L9JiAL5ofrw-1
-X-Mimecast-MFC-AGG-ID: b5gphxSzNg2L9JiAL5ofrw_1789485126
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-yXVnqkb5O0KqbaW2p6bTyg-1; Tue,
+ 15 Sep 2026 11:12:01 -0400
+X-MC-Unique: yXVnqkb5O0KqbaW2p6bTyg-1
+X-Mimecast-MFC-AGG-ID: yXVnqkb5O0KqbaW2p6bTyg_1789485119
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2BF11843AE4; Tue, 15 Sep 2026 15:12:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 03E201800668; Tue, 15 Sep 2026 15:11:59 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99941195604C; Tue, 15 Sep 2026 15:12:03 +0000 (UTC)
+ id 5E285195604C; Tue, 15 Sep 2026 15:11:54 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>,
@@ -56,23 +56,24 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  linux-cxl@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 6/7] qapi: convert intro sections with "TODO" markers
-Date: Tue, 15 Sep 2026 11:11:26 -0400
-Message-ID: <20260915151127.1002244-7-jsnow@redhat.com>
+Subject: [PATCH v2 4/7] qapi: convert remaining simple intros for
+ block-core.json
+Date: Tue, 15 Sep 2026 11:11:24 -0400
+Message-ID: <20260915151127.1002244-5-jsnow@redhat.com>
 In-Reply-To: <20260915151127.1002244-1-jsnow@redhat.com>
 References: <20260915151127.1002244-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,99 +89,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch converts intro sections that are immediately followed by a
-"TODO:" that was formerly used to demarcate the stub member insertion
-point.
+These are either structs or unions that are used in an inlinable
+context: i.e. the generated documentation is likely to feature a
+version of this documentation block that does not include the intro in
+context of another command, event, or structure.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/machine.json   |  7 ++-----
- qapi/migration.json | 10 ++--------
- qapi/net.json       |  9 +++------
- qapi/yank.json      |  5 +----
- 4 files changed, 8 insertions(+), 23 deletions(-)
+ qapi/block-core.json | 45 +++++++++++++++++++-------------------------
+ 1 file changed, 19 insertions(+), 26 deletions(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 13875fc4642..108033b6d64 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1216,11 +1216,8 @@
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 1ca147285e7..88218e38d02 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -4462,9 +4462,8 @@
  
  ##
- # @query-memory-size-summary:
+ # @BlockdevOptionsCurlHttp:
 -#
--# Return the amount of initially allocated and present hotpluggable
--# (if enabled) memory in bytes.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Return the amount of initially allocated and present
-+#     hotpluggable (if enabled) memory in bytes.
+-# Driver specific block device options for HTTP connections over the
+-# curl backend.  URLs must start with "http://".
++#     Driver specific block device options for HTTP connections over
++#     the curl backend.  URLs must start with "http://".
  #
- # .. qmp-example::
- #
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8096ef64682..70a1854fb73 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1604,10 +1604,7 @@
+ # @cookie: List of cookies to set; format is "name1=content1;
+ #     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
+@@ -4488,9 +4487,8 @@
  
  ##
- # @query-xen-replication-status:
+ # @BlockdevOptionsCurlHttps:
 -#
--# Query replication status while the vm is running.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Query replication status while the vm is running.
+-# Driver specific block device options for HTTPS connections over the
+-# curl backend.  URLs must start with "https://".
++#     Driver specific block device options for HTTPS connections over
++#     the curl backend.  URLs must start with "https://".
  #
- # .. qmp-example::
- #
-@@ -1657,10 +1654,7 @@
+ # @sslverify: Whether to verify the SSL certificate's validity
+ #     (defaults to true)
+@@ -4503,9 +4501,8 @@
  
  ##
- # @query-colo-status:
+ # @BlockdevOptionsCurlFtp:
 -#
--# Query COLO status while the vm is running.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Query COLO status while the vm is running.
+-# Driver specific block device options for FTP connections over the
+-# curl backend.  URLs must start with "ftp://".
++#     Driver specific block device options for FTP connections over
++#     the curl backend.  URLs must start with "ftp://".
  #
- # .. qmp-example::
- #
-diff --git a/qapi/net.json b/qapi/net.json
-index 7aabd8b9260..7a809d9a8a6 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1113,12 +1113,9 @@
+ # Since: 2.9
+ ##
+@@ -4515,9 +4512,8 @@
  
  ##
- # @announce-self:
+ # @BlockdevOptionsCurlFtps:
 -#
--# Trigger generation of broadcast RARP frames to update network
--# switches.  This can be useful when network bonds fail-over the
--# active slave.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Trigger generation of broadcast RARP frames to update network
-+#     switches.  This can be useful when network bonds fail-over the
-+#     active slave.
+-# Driver specific block device options for FTPS connections over the
+-# curl backend.  URLs must start with "ftps://".
++#     Driver specific block device options for FTPS connections over
++#     the curl backend.  URLs must start with "ftps://".
  #
- # .. qmp-example::
- #
-diff --git a/qapi/yank.json b/qapi/yank.json
-index 8ac4b773653..187a0952e66 100644
---- a/qapi/yank.json
-+++ b/qapi/yank.json
-@@ -96,10 +96,7 @@
+ # @sslverify: Whether to verify the SSL certificate's validity
+ #     (defaults to true)
+@@ -4643,14 +4639,13 @@
  
  ##
- # @query-yank:
+ # @BlockdevOptionsCbw:
 -#
--# Query yank instances.  See `YankInstance` for more information.
--#
--# TODO: This line is a hack to separate the example from the body
-+#     Query yank instances.  See `YankInstance` for more information.
+-# Driver specific block device options for the copy-before-write
+-# driver, which does so called copy-before-write operations: when data
+-# is written to the filter, the filter first reads corresponding
+-# blocks from its file child and copies them to @target child.  After
+-# successfully copying, the write request is propagated to file child.
+-# If copying fails, the original write request is failed too and no
+-# data is written to file child.
++#     Driver specific block device options for the copy-before-write
++#     driver, which does so called copy-before-write operations: when
++#     data is written to the filter, the filter first reads
++#     corresponding blocks from its file child and copies them to
++#     @target child.  After successfully copying, the write request is
++#     propagated to file child.  If copying fails, the original write
++#     request is failed too and no data is written to file child.
  #
- # .. qmp-example::
+ # @target: The target for copy-before-write operations.
+ #
+@@ -4686,9 +4681,8 @@
+ 
+ ##
+ # @BlockdevOptions:
+-#
+-# Options for creating a block device.  Many options are available for
+-# all block devices, independent of the block driver:
++#     Options for creating a block device.  Many options are available
++#     for all block devices, independent of the block driver:
+ #
+ # @driver: block driver name
+ #
+@@ -5473,9 +5467,8 @@
+ 
+ ##
+ # @BlockdevAmendOptionsQcow2:
+-#
+-# Driver specific image amend options for qcow2.  For now, only
+-# encryption options can be amended
++#     Driver specific image amend options for qcow2.  For now, only
++#     encryption options can be amended
+ #
+ # @encrypt: Encryption options to be amended
  #
 -- 
 2.55.0
