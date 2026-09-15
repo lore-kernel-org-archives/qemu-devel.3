@@ -4,113 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23FDAC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77688C88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Q4b-00024G-0M; Tue, 15 Sep 2026 06:07:33 -0400
+	id 1x6QEg-0003MB-4P; Tue, 15 Sep 2026 06:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x6Q4Y-00023u-AE
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:07:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x6Q4U-0008IP-LO
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:07:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789466843;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YpYjQtlKOa2RSRwrkcH0QknYGpTJVz6c5LjqmvPDU1M=;
- b=F3+4mY59y1qrLm7uQ+K+/ElkDVAhg8+lrg4suL15mw2SI2RA5MaeRIF1HlHEM8VHAt0ioG
- RZi/WCqpVh1JnxyRByMlS6sCqqQAfL1hdv7ynr5/iv54sEPzgS4BquLT260t6ajLiGfQur
- P3cu9V98m5FP4VC61G7Np02Mk75vySk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-q1a3JKeNPMa2sz_cu-lWeA-1; Tue, 15 Sep 2026 06:07:22 -0400
-X-MC-Unique: q1a3JKeNPMa2sz_cu-lWeA-1
-X-Mimecast-MFC-AGG-ID: q1a3JKeNPMa2sz_cu-lWeA_1789466841
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-486f3dbf7d2so2805342f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:07:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x6QEc-0003Ld-FU
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:17:55 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x6QEH-000312-0R
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:17:52 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccb1a990so2661668a91.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789466841; x=1790071641; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YpYjQtlKOa2RSRwrkcH0QknYGpTJVz6c5LjqmvPDU1M=;
- b=Wmwsi0msdTq6seOF6zVp1dmQNY+9EbSLXZaE6tT4V5Iz5/RulS9dtud5VUzXL6vax3
- 8naRUwaIFDQOybup3AWRQ+GnehwCQj7AnVFcxAt7oBel+MjjIPFXRfoi2uRdljFMV1u7
- 9wrcRZo0Eempo0DQr0vGWj53b63/2tT9okR8cvl7Ev8mrmcUeRY3H2/Fi5Ssek7YkWYJ
- J75yE0oMla0NEygsaxiTZrcesy1O+EqVfn26i2WWe04y32CIcPCIb/Y/8CBJbSYQZxS1
- vKrzmrCe2JOSX8vGBx7K4I04D/Khw+I5Wd5ZKk8xk3AauVRcSFfWjj33uzdkWQT73LLI
- aQRA==
+ d=gmail.com; s=20251104; t=1789467449; x=1790072249; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6tg37X+WJ5K6NgI6xa4zk6E5LxsaBQnLXWji4A3r66A=;
+ b=QxVy1WsYgvaXQ1o28P3/zy3i0T1MRf1Hehuv+AQT+MK0TGJmKEKgySZaagihvPG9x/
+ ut5ZlgkUsTyL0VPMYg3hJBZKdiFJNk+XrKpEkk/goU6DfG5Hj0QFyNjwuS1zsl50ipuP
+ QR9ct55Ap5g6EddPiQyObe2zFjxfDNEPlXMbWfb+RlkMOosfzDorLd/ogQsoqf2fTbxM
+ Uc0iGo58AQ5flImAhfnas8MRDYLleHahJdkl3PQ3CclYRRR4f7f/CxeN6jqVv85gH8Y5
+ c07Tymt/hNI02LCsrUyXHqoIkhNTwSMysrH3tTSKGC42T/Axi6ZG2r2yrqhtliPpLupF
+ 22cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789466841; x=1790071641;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=YpYjQtlKOa2RSRwrkcH0QknYGpTJVz6c5LjqmvPDU1M=;
- b=uUQxTWmf6O4lT0zXPqkMFbh71vD26ui1pugtiya6L0WwdxulcJLGiumOq3vcjmc4LU
- YJpPlXAmUhYTxwKSz3R+0MqrSND2KK5re7d8/J5+eSkHi4hDgb1rxOTCNKRvst6HJjHx
- bs/2+JKYrmvrXK9MAhY3tK3izl6M+Qy5AZA0czeWOOgfiY+a5JjSOVVDZ8mrrtbHYJ02
- A+2P4k+fqbwdk698MBvnTgBA60bmgAqB1kHvk9AWm8XDoAIkeyzOZ+QRRG9MYL49J1nj
- nw4f7xs1dflFmrqATSURBTQ1RIPOReoHn3S1+I7XfKH9YbZV58uATyjJmWzz8LUhgXwg
- tofg==
-X-Gm-Message-State: AFuF++knVVQ3z/jQ+hd1KAxLyRRfLbLLBa6AVJx/f2xVuCrsFN62iF+V
- cEXoo1b+LFkSyS9La6jZUuRzSrUPzCQu/gvZxD2QJiahMs5idvhIaGXesLu/Yi4eAh5kqOt4A2S
- ubrXhzwpnHZkIp1rZqiQ/QgnmF1ZOuqn8h7Cf5m3RZtr0cHPQ4tPEsdWh
-X-Gm-Gg: AYBFou35dr4EfUX7OrNcrwNU0nEu2mkLzJ4v+Hu4LZdvw7LVh5qODHAjv54wnFE4feU
- FFSbEdHe/eIOLzmIUye1ru9t4ZJkIGpCdd7WkGguGCNr/1d9NDB6NKFlSOcnGzuTBaj+rVwaFTo
- wushuMS81/o9jhocnZ2sUNs85Y1meumpZZDAEf7oJ/wQ6ZY4kBl8Q6KakaxR48GBSOc5+9hozWz
- Iwj1+tD682FevOTBVxEYFAPSocV92H4MUycv/YGUoh0gP0GYXBECpJ0yLePvga7TRu42+CPsrg6
- icYnixUP+2yYqC2RBBJtE+nMcd50k4g4apS3h8THERCZJzI8fJt/ucIqKLY2bABSfdUKrITT5Xd
- 885Shz6ofxla0jPgD/q82VY5S66KBYDUdK0LjaVtKj/ePDA==
-X-Received: by 2002:a5d:5e91:0:b0:487:947:db89 with SMTP id
- ffacd0b85a97d-4870a9e384bmr30838f8f.36.1789466841243; 
- Tue, 15 Sep 2026 03:07:21 -0700 (PDT)
-X-Received: by 2002:a5d:5e91:0:b0:487:947:db89 with SMTP id
- ffacd0b85a97d-4870a9e384bmr30776f8f.36.1789466840657; 
- Tue, 15 Sep 2026 03:07:20 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb33fd3bsm34537140f8f.19.2026.09.15.03.07.19
+ d=1e100.net; s=20260707; t=1789467449; x=1790072249;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6tg37X+WJ5K6NgI6xa4zk6E5LxsaBQnLXWji4A3r66A=;
+ b=wqXzYkgmEupjw9YBbLUJ18aHZ7yT9/RjsOAqByz2nRL6KK4r3PsYCixnHuwCYy6uU9
+ mvd8lmkol9vyqBgeM1WIdRSbb5dYuzzhSFLZooiAuiZz/OnEMNxps92lfO1X1329wutT
+ q7qkNPCglV3VGAA7GimCy89iUlewbekGrOTnLTo8vYQhfVAC1YGz6mwVvJn2U4yBOfUc
+ aOyoutBSWWXzdtbwSFdZyYizbstVG9+STi21Y/iPcWSn3yAM2f6ACK0tM8uMD728NV7v
+ 7ar6ecfJReQ9DFWT6zVSnUvG+V9mxWSt1caJMsJQRrBZmHt96mKgTK3maxt+ioVso/UM
+ 6PsQ==
+X-Gm-Message-State: AFuF++kOVBp1gVn+IcYisM2AVAq4QlJ2lPBui17AqHYo6B+0/2opey14
+ aMHXpquzcQQbyPTpKNnuBO1nSr2TMq1HY5/hDH0o5d6UpLZYjK7XArFHscyAex56lY8=
+X-Gm-Gg: AYBFou2R/JiwFpqJLGA9q/f5jfGj8OK46WuBZtvMl4jGAV8lEZyd2qXty1hNPd5++yp
+ 2Utaft8vR8ScLNAFTYcaz6Sdmm7lq7UXPK+28rtcHtIPPHCfb5Y7JqXhBeFNAMepGVbKW+oCuSx
+ n7zkYyCzQIiVxhLk9Xr2f41VvkybNYLVBREeyVq1DDxUIEq3Ukji0aIp+JGjAZ7InsJZCSeluK+
+ 35gVXlrjumXZVKuNLV4moOqclNGQqyz0dQHuO4WTIttN2IxWcjKul+3W6xuuUaXv07VlKKmvOYr
+ X75D/gm+jkNVhtt+PDe0MJ7rkS0qc6u90dxLGuSEiSd/P17n9E4elkLeCSx5x3JiJLD9B0VG7zM
+ jD3TNZt/Z/aZpYzS9O0gO/pXSOy56Ktc/9Goiv8CQy1jQ9qKUkBJZ/Cbycb4ID5KYNctudNYZEF
+ qtXbevuIrhBLWJw61t/DT3Zkq5MgSw8ohvZPTJNRCsGHEr12qxfY3YT1wmwJRSBdjIehyswNnBd
+ WhuglLyE11HQCkZkTvyudq/+AY=
+X-Received: by 2002:a17:90b:17c8:b0:396:65dd:4093 with SMTP id
+ 98e67ed59e1d1-39dec04f9d9mr12367570a91.14.1789467449452; 
+ Tue, 15 Sep 2026 03:17:29 -0700 (PDT)
+Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39dfdacba6bsm4416868a91.14.2026.09.15.03.17.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 03:07:20 -0700 (PDT)
-Date: Tue, 15 Sep 2026 12:07:15 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, philmd@oss.qualcomm.com, 
- maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
- den@openvz.org, 
- farosas@suse.de, peterx@redhat.com, clg@redhat.com, dongli.zhang@oracle.com
-Subject: Re: [PATCH v5 14/14] vhost-vsock: hand off device ownership across CPR
-Message-ID: <aqkXTbt49bPJW7R7@sgarzare-redhat>
-References: <20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com>
- <20260914-up-vsock-vhost-v5-v5-14-d17423589f48@virtuozzo.com>
- <aqgQYmbLk6O1Af7I@sgarzare-redhat>
- <328755e2-31d9-432f-88be-bda72d3ba3f0@virtuozzo.com>
+ Tue, 15 Sep 2026 03:17:28 -0700 (PDT)
+From: Zhang Chen <zhangckid@gmail.com>
+To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Cc: Zhang Chen <zhangckid@gmail.com>
+Subject: [PATCH V17 06/13] virtio: track IOThread references for thread pinning
+Date: Tue, 15 Sep 2026 18:16:48 +0800
+Message-ID: <20260915101655.3216101-7-zhangckid@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260915101655.3216101-1-zhangckid@gmail.com>
+References: <20260915101655.3216101-1-zhangckid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <328755e2-31d9-432f-88be-bda72d3ba3f0@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=zhangckid@gmail.com; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,144 +105,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 12:56:11PM +0300, Andrey Drobyshev wrote:
->On 9/14/26 6:36 PM, Stefano Garzarella wrote:
->> On Mon, Sep 14, 2026 at 11:37:45AM +0300, Andrey Drobyshev wrote:
+Use the virtio device canonical QOM path as the holder when virtio-blk
+and virtio-scsi acquire an IOThread AioContext.
 
-[...]
+Replace the raw object references with the holder-aware
+acquire/release helpers so the users are visible through IOThread
+introspection.
 
->>> @@ -115,8 +147,44 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
->>>     return vhost_vsock_common_get_features(vdev, requested_features, errp);
->>> }
->>>
->>> +static int vhost_vsock_pre_save(void *opaque)
->>> +{
->>> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->>> +    VHostVSock *vsock = VHOST_VSOCK(opaque);
->>> +    int ret;
->>> +
->>> +    ret = vhost_vsock_common_pre_save(opaque);
->>> +    if (ret) {
->>> +        return ret;
->>> +    }
->>> +
->>> +    /*
->>> +     * Release the device ownership now for CPR migration.  The device is
->>> +     * already stopped at pre_save, and destination reclaims it by calling
->>> +     * VHOST_SET_OWNER in post_load.
->>> +     */
->>> +    if (cpr_incoming_needed(NULL) && migration_is_running()) {
->>
->> Should we also check if vsock->owner_reset is already true?
->> Or it can never happen?
->
->Actually you're right, and we should also guard the RESET_OWNER op by
->!vsock->owner_reset.  If we fail somewhere after .pre_save() and the VM
->was stop before migration - we don't call set_status() just yet, so the
->device ownership isn't re-aquired, and a subsequent CPR attempt would
->fail here. I didn't think of such a case, thanks for noticing.
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+---
+ hw/block/virtio-blk.c           | 23 +++++++++++++----------
+ hw/scsi/virtio-scsi-dataplane.c | 23 +++++++++++++----------
+ 2 files changed, 26 insertions(+), 20 deletions(-)
 
-oh, right! Thanks for checking!
-
->>> +        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
->>> +        if (ret < 0) {
->>> +            error_report("vhost-vsock: vhost_reset_owner failed: %s",
->>> +                         strerror(-ret));
->>> +            return ret;
->>> +        }
->>> +        vsock->owner_reset = true;
->>> +    }
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> static int vhost_vsock_post_load(void *opaque, int version_id)
->>> {
->>> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->>> +    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
->>> +    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vdev))->parent;
->>> +    g_autofree char *cpr_name = vhost_vsock_cpr_name(proxy);
->>> +    Error *local_err = NULL;
->>> +    int vhostfd, ret;
->>> +
->>>     /*
->>>      * Only reset vsock connections for non-CPR migration.  For CPR the
->>>      * guest cid is unchanged, and the cid-change reset would otherwise
-
-[...]
-
->>> @@ -164,19 +262,21 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->>>     }
->>>
->>>     /*
->>> -     * CPR migration of a vhost-vsock device is not supported yet: the
->>> -     * device ownership is not handed over, so the target fails to set
->>> -     * up its device.  Fail the migration early and gracefully instead.
->>> +     * With the ownership handoff in place CPR migration is now supported.
->>> +     * Having a unique ID is mandatory for FD preservation during it, thus
->>> +     * we only keep the migration blocker for the ID-less case.
->>>      */
->>> -    error_setg(&vsock->migration_blocker,
->>> -               "vhost-vsock: CPR migration is not supported");
->>> -    if (migrate_add_blocker_modes(&vsock->migration_blocker,
->>> -                                  BIT(MIG_MODE_CPR_TRANSFER) |
->>> -                                  BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
->>> -        return;
->>> +    if (!proxy->id) {
->>
->> Ditto about using `cpr_name` here.
->
->Agreed.
->> The rest LGTM!
->>
->> Thanks,
->> Stefano
->>
->>
->>> +        error_setg(&vsock->migration_blocker,
->>> +                   "vhost-vsock: device ID is required for CPR migration");
->>> +        if (migrate_add_blocker_modes(&vsock->migration_blocker,
->>> +                                      BIT(MIG_MODE_CPR_TRANSFER) |
->>> +                                      BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
->>> +            return;
->>> +        }
->>>     }
->
->There's an interesting consequence of adopting qdev_get_dev_path().
->IIUC vhost-vsock device inherits from virtio device and is always
->attached to a device which is virtio device.  Then in qdev_get_dev_path():
->
->    bc = BUS_GET_CLASS(dev->parent_bus);
->
->    if (bc->get_dev_path) {
->
->        return bc->get_dev_path(dev);
->
->    }
->
->And all virtio buses, namely: virtio-pci-bus, virtio-mmio-bus,
->virtio-ccw-bus - implement their own .get_dev_path().
->
->This essentially means that for vhost-vsock device qdev_get_dev_path()
->can never return NULL.  This in turn means that our migration blocker
->which is now guarded by proxy->id can be entirely dropped.  We can just
->always allow CPR migration and simply do `g_assert(cpr_name)` whenever
->we obtain that name, as it's expected to never be NULL.
->
->I'll try adopting that approach, unless you have any objections.
-
-No objetions!
-
-I haven't looked closely at `qdev_get_dev_path()`. Can you check if it
-includes the device type (or the id) in the path, or should we add a
-suffix?
-
-Let me explain: I'd like to prevent other devices from conflicting in
-the future, so if we use “vhost-vsock” as the suffix, we should be fine,
-but I haven't checked carefully what it returns, so maybe it's already
-there.
-
-Thanks,
-Stefano
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index b2887d74f9..9f567f4c65 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -1475,6 +1475,7 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+     VirtIOBlkConf *conf = &s->conf;
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
++    g_autofree char *path = object_get_canonical_path(OBJECT(vdev));
+ 
+     if (conf->iothread && conf->iothread_vq_mapping_list) {
+         error_setg(errp,
+@@ -1499,8 +1500,6 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+     s->vq_aio_context = g_new(AioContext *, conf->num_queues);
+ 
+     if (conf->iothread_vq_mapping_list) {
+-        g_autofree char *path = object_get_canonical_path(OBJECT(vdev));
+-
+         if (!iothread_vq_mapping_apply(conf->iothread_vq_mapping_list,
+                                        s->vq_aio_context,
+                                        conf->num_queues,
+@@ -1511,13 +1510,15 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+             return false;
+         }
+     } else if (conf->iothread) {
+-        AioContext *ctx = iothread_get_aio_context(conf->iothread);
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
++        AioContext *ctx = iothread_ref_and_get_aio_context(conf->iothread,
++                                                           &io_holder);
+         for (unsigned i = 0; i < conf->num_queues; i++) {
+             s->vq_aio_context[i] = ctx;
+         }
+-
+-        /* Released in virtio_blk_vq_aio_context_cleanup() */
+-        object_ref(OBJECT(conf->iothread));
+     } else {
+         AioContext *ctx = qemu_get_aio_context();
+         for (unsigned i = 0; i < conf->num_queues; i++) {
+@@ -1532,18 +1533,20 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+ static void virtio_blk_vq_aio_context_cleanup(VirtIOBlock *s)
+ {
+     VirtIOBlkConf *conf = &s->conf;
++    g_autofree char *path = object_get_canonical_path(OBJECT(VIRTIO_DEVICE(s)));
+ 
+     assert(!s->ioeventfd_started);
+ 
+     if (conf->iothread_vq_mapping_list) {
+-        g_autofree char *path = object_get_canonical_path(
+-                                OBJECT(VIRTIO_DEVICE(s)));
+-
+         iothread_vq_mapping_cleanup(conf->iothread_vq_mapping_list, path);
+     }
+ 
+     if (conf->iothread) {
+-        object_unref(OBJECT(conf->iothread));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
++        iothread_unref_and_put_aio_context(conf->iothread, &io_holder);
+     }
+ 
+     g_free(s->vq_aio_context);
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index ac13f4a1ca..d66946f279 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -28,6 +28,7 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
++    g_autofree char *path = object_get_canonical_path(OBJECT(vdev));
+ 
+     if (vs->conf.iothread && vs->conf.iothread_vq_mapping_list) {
+         error_setg(errp,
+@@ -65,8 +66,6 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+     s->vq_aio_context[1] = qemu_get_aio_context();
+ 
+     if (vs->conf.iothread_vq_mapping_list) {
+-        g_autofree char *path = object_get_canonical_path(OBJECT(vdev));
+-
+         if (!iothread_vq_mapping_apply(vs->conf.iothread_vq_mapping_list,
+                     &s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED],
+                     vs->conf.num_queues, path, errp)) {
+@@ -75,13 +74,15 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+             return;
+         }
+     } else if (vs->conf.iothread) {
+-        AioContext *ctx = iothread_get_aio_context(vs->conf.iothread);
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
++        AioContext *ctx = iothread_ref_and_get_aio_context(vs->conf.iothread,
++                                                           &io_holder);
+         for (uint16_t i = 0; i < vs->conf.num_queues; i++) {
+             s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
+         }
+-
+-        /* Released in virtio_scsi_dataplane_cleanup() */
+-        object_ref(OBJECT(vs->conf.iothread));
+     } else {
+         AioContext *ctx = qemu_get_aio_context();
+         for (unsigned i = 0; i < vs->conf.num_queues; i++) {
+@@ -94,16 +95,18 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+ void virtio_scsi_dataplane_cleanup(VirtIOSCSI *s)
+ {
+     VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
++    g_autofree char *path = object_get_canonical_path(OBJECT(VIRTIO_DEVICE(s)));
+ 
+     if (vs->conf.iothread_vq_mapping_list) {
+-        g_autofree char *path = object_get_canonical_path(
+-                                OBJECT(VIRTIO_DEVICE(s)));
+-
+         iothread_vq_mapping_cleanup(vs->conf.iothread_vq_mapping_list, path);
+     }
+ 
+     if (vs->conf.iothread) {
+-        object_unref(OBJECT(vs->conf.iothread));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
++        iothread_unref_and_put_aio_context(vs->conf.iothread, &io_holder);
+     }
+ 
+     g_free(s->vq_aio_context);
+-- 
+2.43.0
 
 
