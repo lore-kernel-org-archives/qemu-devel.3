@@ -4,115 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD4FC88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28FCC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:08:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WZT-0003hd-PA; Tue, 15 Sep 2026 13:03:52 -0400
+	id 1x6WdD-0005NV-Jh; Tue, 15 Sep 2026 13:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6WYc-0003UG-Pv
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:03:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6WYa-0001vA-Fj
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:02:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789491773;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=efQn69+aIitCgUXrQDQSZ250W0uOnQnFUdUd6C1cc3c=;
- b=h6nH+FdcFpFoOhCGEu+HmSZMJUk1EbZkosa4PPPgG6LmVUeGToqiQkWBNI4BwSC3GG831Q
- Wxijpg9AXuOa/JqxRFL5dtPm7MlHMrzROzdL8M8hVGJCw/eemQ4UhG4mjfLaB46cy6K7l6
- Z7nU3VD6KbEP2jGBWi32Kg4DPQjaCOk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-177-yQUZ0cM-PFyAPZKiyTBRMw-1; Tue, 15 Sep 2026 13:02:52 -0400
-X-MC-Unique: yQUZ0cM-PFyAPZKiyTBRMw-1
-X-Mimecast-MFC-AGG-ID: yQUZ0cM-PFyAPZKiyTBRMw_1789491771
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49e6c17ec1dso37470965e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:02:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x6WdB-0005N2-Am
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:41 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x6Wd9-0003T0-95
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:41 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-485984ebf5cso2799291f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789491771; x=1790096571; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=efQn69+aIitCgUXrQDQSZ250W0uOnQnFUdUd6C1cc3c=;
- b=etTs/EnGUwt8CDiLh/FrK1LRcYIevpFVc2cePegwALg+SgbjIOMTqLiWgdChvXPDlg
- 05t3Vuf78P0tedSCB7CrmnzRkYqrHFmUZXAKdpcSfZlP9Sxj8DZuDxl7AM/IaQmtJGTK
- zKq7I4iVhfzFWP1ofB+uW5xsCP8izgPHvmWFV+uBNk7HVw1OmwILC6ikpI6EpSexZBZb
- 6yNsPGtcBQwVVjfTSGpYwwlgY9cpCCs9BVKUOXqBz1Aho2Wo46ySrNMskf5gF1u/qbGz
- bJ1U+AogvOwWpS8Z5HFotnkiqR+lrMOvsh0fFEW0QsdUxlHskrt7Js9e0VmwNExk1LP+
- RkvQ==
+ d=linaro.org; s=google; t=1789492057; x=1790096857; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Rp5wv7hU75EHPVC0TCrmoBB8H5e3nDpaJHzzSbyhTPI=;
+ b=kuCyBzhBs1WE1h5LWl/4jKHftaPrVnfa91ztDAA5VavJM58/aBCrZCO4L8Dnb3ntym
+ DBK4mxvumXgrbYLJmhx2maCOSF3CUjkcBZu7esJWPvDWvBbRHSQ6MJo1la2nvJM7uHCH
+ SKfG6xaGG+B6i0WSt/4aHMm8Wsdim+0LsCR5HPyWW4/JeqbHuFORSEdN+EzcnLFGXvQK
+ LIirrU5LOlbN0QaJKbQP9sdE8LBxKKtru7/lmu5Td8L7iKTDYW3yN1tOnHVSL9PEA6fV
+ JC2FFG9AISkzDeY6SCm5BXUJnXbGdwfcIOVLPhMzRH6PSaMK8+euzuO7HHlvEG/pQ3wN
+ Hm/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789491771; x=1790096571;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=efQn69+aIitCgUXrQDQSZ250W0uOnQnFUdUd6C1cc3c=;
- b=tFjC0VFrzoOLcOqOZc1PwV3meKRzoseDb9LbTixA4WfOfFtsMxVcWASyX6nOnPk693
- e/U9AJnr1vghwGLXzGFk9FegfP/3Hf1nV43GNeDSIkGo87Sdn2nOpZB+16nR4DSPSAYq
- +beyEkCOzzPDOe9srYtpL+ImrJn5n55v8+q1DRvLdwlggl5MtTj1Xzdu72vTH6BCfxyg
- eqOwXjxKqNfCzKbtgBeA/lC0qNPAJkmq6UbHnARuxTP5lV5UYzDq5wVQ/HthGRrgQiky
- 2JVp+YvqYhwQIuPx/RsKzlXV+oGjIfC2CC+u8obPBrhgVIML6Dds2O5DYvLS+BYJpJGj
- fUmw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByu8y1PGpjXYlpS/P7Ys90EdwE87ekURNgpQnHe80oYc5de/aWi99jvxdIQwRV1DraxXofTPaovzFbq@nongnu.org
-X-Gm-Message-State: AFuF++njc7wEhb5zDpGNY9VPP5nQWGse4FbMVe9TrLSbNsX/MGFE1oF2
- rz7izr0WZqur78DUDkC0aaDapwCVI7v4cgVRMC1JclFwrSbLCsWiNRln4Z9cTCayQ6tY3z3BXFq
- nLouBvvB95jYnsgYWGgd+YLK46t0n9DvyRjMRdYNpsv2N9moSMFI6T/HR
-X-Gm-Gg: AYBFou0cgEd8yfn+d2KjDuh01ecAu+Zq1sPyqV9G3rSEqhwpW/v0wlYmkSaCCHg0i8v
- gTugxRvr6C3P1wxe34rYI0sJCmeDPCPcN3CU8w+35CGRTErGF5W1UaV83yfAiOuxENKghgzK+Ri
- tQP2LJL0ZOKpTScbaa5rbXAwnKaU5wW//5Rij76aoeRT/NdHrqonTIg7xQpZYcTeVg2iffS6jVs
- Th1cyweRbt8GBr1x2gp8Ps05Ws8pb4JsxHLeYaSVYROTsHN1hYYBL5c0wXqc/j821iZJFixvlFW
- X4JNnvoTWEF3MpBspaELs50WY2mPqSCidtFjcV2O+SdXBhcfTAGj3p1itT2gDook5zRTqPZW4PF
- ME402Ku6C5D2sZUrES3Zjp94=
-X-Received: by 2002:a05:6000:4545:b0:487:350:59d0 with SMTP id
- ffacd0b85a97d-48703505a04mr13542014f8f.6.1789491770578; 
- Tue, 15 Sep 2026 10:02:50 -0700 (PDT)
-X-Received: by 2002:a05:6000:4545:b0:487:350:59d0 with SMTP id
- ffacd0b85a97d-48703505a04mr13541946f8f.6.1789491770112; 
- Tue, 15 Sep 2026 10:02:50 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ d=1e100.net; s=20260707; t=1789492057; x=1790096857;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Rp5wv7hU75EHPVC0TCrmoBB8H5e3nDpaJHzzSbyhTPI=;
+ b=xcIsJvpRlYILBrJX2k0kD79bq/5in8BOiiQ+Z2fi3A9sB+sMuIwqrUr7lXqHXkFZpm
+ xK7qsXJT2M9QRMNiTTtoLmNXTaK+5HhGjUQX/jPGASYLnBx/xB03PGhbiE7Lnxv487oz
+ Z5mNJr154yGZLEveQYnAHDtJ1Ig69OpjDPXOHv6qJxehLxS8tTFQ7oh+FlZHq2zJk/0+
+ RPYLQe6xFuTq8ZVCxEx8H87nac5pzEZWDWiJCBmR/m2Fc6GQKy/vFodB+s+D2Ujo6jNg
+ TQQsbwTbmO79DzPbTr2q3EhbXYTQvjmglyxxR5zThGi3KSzVrztMamLY7TavSRiyeAUY
+ Bh0Q==
+X-Gm-Message-State: AFuF++kLBOQpEz7QRkeyMqBAGWGK/sUR+qhQbY3geDwiHyrtzDBeV7nF
+ zi/C4lKHHps1Pjlx0iVfsyAOQk2EZYa5FDi2xiFB2YE/h4cTYFygPshjpZ7yoToYAJDXey7kyOt
+ CA+OFYU8=
+X-Gm-Gg: AYBFou2BrB8qj55iChETSOytAbQTTeiDBA/bCivC4QoPMMhzdcOUV5YrkRL8u21UZ4E
+ vBup95cxXCeDD6SO1vCg8OdM6w2HvtBOstRidGQo1duhKUmhCGQU4cU4YElvs6E6NMtdPW5K8Dk
+ mS15ko4B5ofZwLBJeFKDZSh1OyeTjBd6qDJ5s0UlYlMDMP8xwikuqgv+16kpqoeaNV4VO0nWSRy
+ pluIEhXwWxKdXWNlRbeR3Os+DgfNCgsGT0lIofDEIEu/mOibR/TLejiar0UD3oGzPRe94DQCUNk
+ PPDOh1JRUytraRsQluzWEVL9OBXwNJfJlA3+8b9lnCtdwVrEGzhXdOc974aScgQQ3W/WpM+2zJH
+ hIYHkGsjon0B1HHO+Xk7eIclSqZ2WI9Jmv+bxSHW8reznuUBUwrIwLfTxidwEGsLOcGjH8y1d4a
+ WFQ9ulUudKEW5rc4+lufmE5M6Qsybs7/WbRUvoOZe/4lXH6aagVT6v707cNkbKrtz6R0IxKnwSs
+ 8+osa1DtnB8FD6LUihDHXYBnTOIs2R9u9G2xig3peWDN1e+eV/GgVRtuY2YtKxNIUA2JWKgbjWB
+ YNxh
+X-Received: by 2002:a05:6000:38b:b0:487:aa1:ea90 with SMTP id
+ ffacd0b85a97d-4870aa1eaedmr2077018f8f.40.1789492057355; 
+ Tue, 15 Sep 2026 10:07:37 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf1fad3sm325828f8f.12.2026.09.15.10.02.48
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.36
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:02:49 -0700 (PDT)
-Date: Tue, 15 Sep 2026 13:02:46 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?utf-8?B?0J3QuNC60L7Qu9Cw0Lkg0JfQvtGA0LjQvQ==?= <zorin@swemel.ru>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, stefanha@redhat.com,
- kwolf@redhat.com, Halil Pasic <pasic@linux.ibm.com>,
- qemu-s390x <qemu-s390x@nongnu.org>
-Subject: Re: PATCH] hw/s390x/s390-hypercall: fix potential NULL dereference
- in handle_virtio_ccw_notify
-Message-ID: <20260915130139-mutt-send-email-mst@kernel.org>
-References: <13ad0871-44dd-40eb-aad1-d08cc2d7dfe5@swemel.ru>
- <597e1a7a-8720-4356-91ed-a7c9fa416312@redhat.com>
- <1749cad8-1651-4543-8a2b-aad3c1168328@swemel.ru>
- <5673b15b-22fb-474d-b3c4-89f9c3c0c8c6@redhat.com>
- <6bcce310-9ac7-4e08-9932-69277127636e@swemel.ru>
+ Tue, 15 Sep 2026 10:07:36 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/20] target-arm queue
+Date: Tue, 15 Sep 2026 18:07:15 +0100
+Message-ID: <20260915170735.425445-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6bcce310-9ac7-4e08-9932-69277127636e@swemel.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,16 +100,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 08:00:45PM +0300, Николай Зорин wrote:
-> not AI, only (empty) brain :)
-> 
-> ok.
+Hi; here's an arm pullreq; pretty much all bugfixes this time.
 
-I'm not saying the changes are bad as such. They just seem to need
-more work, such as reproducing the issue and testing the fix.
-Or maybe this was done, just not documented.
+thanks
+-- PMM
 
--- 
-MST
+The following changes since commit 5f664cd37aec17e8145aa117d8da68f507edc8f1:
 
+  Merge tag 'ui-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-09-13 15:54:17 -1000)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260915
+
+for you to fetch changes up to 157f6c69edd0627f5f78f1f14ea0d831b0948c69:
+
+  target/arm: extend PMSAv7 support to v6-M CPUs (2026-09-15 14:27:23 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * target/arm/whpx: fix whpx-arm post-reset CPU state
+ * target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
+ * target/arm/whpx: Don't try to sync ARM_CP_CONST registers
+ * hw/intc/bcm2835_ic: reject out-of-range FIQ source values
+ * sbsa-gwdt: reschedule timer on direct WCV load
+ * target/arm/hvf: implement MDCCSR_EL0 as RAZ
+ * hw/char/stm32l4x5_usart: Accept character input upon RDR read
+ * MAINTAINERS: Update email address for Vikram Garhwal
+ * hw/misc/bcm2835_powermgt: free wdog timer on finalize
+ * target/arm: initialize SCTLR reset value for arm11mpcore
+ * target/arm: Fix various v6M corner-case bugs
+
+----------------------------------------------------------------
+Alex Bennée (1):
+      hw/char/stm32l4x5_usart: Accept character input upon RDR read
+
+Bin Guo (1):
+      hw/intc/bcm2835_ic: reject out-of-range FIQ source values
+
+Doug Cook (3):
+      target/arm/whpx: Don't try to sync ARM_CP_CONST registers
+      target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
+      target/arm/whpx: fix whpx-arm post-reset CPU state
+
+Gilles Grimaud (5):
+      target/arm: enforce Armv6-M NVIC limits
+      target/arm: MPU - limit regs RBAR/RASR A1-A3 to Main Extension
+      target/arm: MPU_RASR: mask TEX bits for Armv6-M
+      target/arm: fix MPU SIZE min for v6-M/v7-M/v7-R
+      target/arm: extend PMSAv7 support to v6-M CPUs
+
+Igor Mammedov (6):
+      sbsa-gwdt: reduce code indent
+      arm: gwdt: consolidate clear WS0 and WS1 on explicit refresh
+      arm: gwdt: simplify WCV update condition
+      sbsa-gwdt: rename sbsa_gwdt_update_timer() to sbsa_gwdt_wor_update_timer()
+      sbsa-gwdt: don't arm timer for compare values above INT64_MAX
+      sbsa-gwdt: reschedule timer on direct WCV load
+
+Marc-André Lureau (1):
+      hw/misc/bcm2835_powermgt: free wdog timer on finalize
+
+Showta Ishizaki (1):
+      target/arm/hvf: implement MDCCSR_EL0 as RAZ
+
+Vikram Garhwal (1):
+      MAINTAINERS: Update email address for Vikram Garhwal
+
+vpyr (1):
+      target/arm: initialize SCTLR reset value for arm11mpcore
+
+ MAINTAINERS                             |   4 +-
+ hw/char/stm32l4x5_usart.c               |   1 +
+ hw/intc/armv7m_nvic.c                   |  42 +++++-
+ hw/intc/bcm2835_ic.c                    |  13 +-
+ hw/misc/bcm2835_powermgt.c              |   8 +
+ hw/watchdog/sbsa_gwdt.c                 |  87 +++++++----
+ target/arm/cpu.c                        |  12 +-
+ target/arm/hvf/hvf.c                    |  10 ++
+ target/arm/machine.c                    |   3 +-
+ target/arm/ptw.c                        |  14 +-
+ target/arm/tcg/cpu32.c                  |   1 +
+ target/arm/whpx/whpx-all.c              | 254 ++++++++++++++++++--------------
+ tests/qtest/bcm2835-ic-test.c           |  66 +++++++++
+ tests/qtest/meson.build                 |   2 +-
+ tests/tcg/arm/system/meson.build        |   6 +
+ tests/tcg/arm/system/test-armv6m-nvic.S |  70 +++++++++
+ 16 files changed, 439 insertions(+), 154 deletions(-)
+ create mode 100644 tests/qtest/bcm2835-ic-test.c
+ create mode 100644 tests/tcg/arm/system/test-armv6m-nvic.S
 
