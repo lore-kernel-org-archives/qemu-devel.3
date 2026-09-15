@@ -4,73 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15686C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 07:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B25C88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 07:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6NYK-0007A2-6p; Tue, 15 Sep 2026 03:26:04 -0400
+	id 1x6Nbo-0008Kn-Ae; Tue, 15 Sep 2026 03:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6NXo-00072a-Ex
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:25:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6NXl-0003oa-JL
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:25:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789457128;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KkJz1cYDdFso2M4EC6WyUDTgDDtbZALxBDNguIzm3gQ=;
- b=JXrhWtktR5wzTNxyE0cz5MWSdigDW2CwSiPuaINjW0jGaC6OpXWmQxdYI+t6S3TyMEZZsb
- u9q92nHyyRJdwitqeZ6oYuzS1SPpzgIg56URmrIP2Wb3WDApp7A7SB9Vmq5sbCpCKN1Z3j
- Lr6ZunlLE6X1Yc7TEq1z42OKg+MP7Cw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-k-uySmeyP_CApmYZ9vT9Xw-1; Tue,
- 15 Sep 2026 03:25:24 -0400
-X-MC-Unique: k-uySmeyP_CApmYZ9vT9Xw-1
-X-Mimecast-MFC-AGG-ID: k-uySmeyP_CApmYZ9vT9Xw_1789457123
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9965019541B0; Tue, 15 Sep 2026 07:25:23 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.48.23])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45C13418; Tue, 15 Sep 2026 07:25:19 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 1/2] hw/pci-bridge: Add x-speed and x-width properties to
- xio3130-downstream
-Date: Tue, 15 Sep 2026 09:25:06 +0200
-Message-ID: <20260915072507.1230187-2-clg@redhat.com>
-In-Reply-To: <20260915072507.1230187-1-clg@redhat.com>
-References: <20260915072507.1230187-1-clg@redhat.com>
+ (Exim 4.90_1)
+ (envelope-from <prvs=md1712AE31BF=lirongqing@baidu.com>)
+ id 1x6Nbk-0008KT-HZ
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:29:36 -0400
+Received: from mx21.baidu.com ([220.181.3.85] helo=outbound.baidu.com)
+ by eggs.gnu.org with smtp (Exim 4.90_1)
+ (envelope-from <prvs=md1712AE31BF=lirongqing@baidu.com>)
+ id 1x6Nbd-0004I9-6W
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 03:29:34 -0400
+X-MD-Sfrom: lirongqing@baidu.com
+X-MD-SrcIP: 172.31.50.47
+From: lirongqing <lirongqing@baidu.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>
+CC: Li RongQing <lirongqing@baidu.com>
+Subject: [PATCH] pcie_aer: fix pci_set_long overflow into PCI_EXP_LNKCAP
+Date: Tue, 15 Sep 2026 15:29:08 +0800
+Message-ID: <20260915072908.2197-1-lirongqing@baidu.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.127.73.8]
+X-ClientProxiedBy: bjhj-exc13.internal.baidu.com (172.31.4.11) To
+ bjkjy-exc3.internal.baidu.com (172.31.50.47)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
+ s=selector1; t=1789457356;
+ bh=DQbdwpCH9YgbPVUq2woUeW5Jrdfp8Cyb9n6JchKAGKo=;
+ h=From:To:CC:Subject:Date:Message-ID:Content-Type;
+ b=apwhUr99QHkaPWOCCrfveD1SDDITnCyfDPwfNbwnfiMM8Wf9EnQ8puC588kICpP2V
+ Nu2iDqpow5LBpTRlsBWvkwZwTdvQHQKsIT5Qn2KiIxPT41t9mzHKXbQDqCC/Szpzon
+ hajOaRHGnoyWcDxcuNv/vFJTUwO0xDrgauezQXGjhxwD3TKPflg9jKDUCu5zKiR8MM
+ aseH+2nn432FmmsU+p0IS4s7EhoOXqdk64KisOscEqowT2h7MTQ9g0opNg/wPC4SyS
+ SXCgCVesJQPTVOc7g/ZCSdEhp+o7dz5Za99Od2ZYYlPGM2tAwGc11hfmBtL77LB38h
+ dNsYLQxtVw2Og==
+Received-SPF: pass client-ip=220.181.3.85;
+ envelope-from=prvs=md1712AE31BF=lirongqing@baidu.com; helo=outbound.baidu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,53 +69,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Default to 16GT/s x32 for new machine types and add compat entries
-for <= 11.1 to preserve the old 2.5GT/s x1 behavior.
+From: Li RongQing <lirongqing@baidu.com>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4409
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+pcie_aer_inject_uncor_error() wrote inj->devsta (a uint16_t) into
+PCI_EXP_DEVSTA using pci_set_long(), which writes 4 bytes. PCI_EXP_DEVSTA
+is a 16-bit register at offset 0x0a; the extra 2 bytes written by
+pci_set_long() land at offset 0x0c, the low half of PCI_EXP_LNKCAP,
+zeroing the link speed/width capability fields on every uncorrectable
+error injection.
+
+Use pci_set_word() instead, matching the correctable error path in
+pcie_aer_inject_cor_error().
+
+Fixes: 34e65944c0351 ("pcie/aer: helper functions for pcie aer capability")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 ---
- hw/core/machine.c                  | 2 ++
- hw/pci-bridge/xio3130_downstream.c | 5 +++++
- 2 files changed, 7 insertions(+)
+ hw/pci/pcie_aer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 8939ae16666c2d9454d93eccc5ca44e231b1ef6d..b702a61f7335a30841164279e73432bc238ee5e5 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -43,6 +43,8 @@
- GlobalProperty hw_compat_11_1[] = {
-     { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
-     { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
-+    { "xio3130-downstream", "x-speed", "2_5" },
-+    { "xio3130-downstream", "x-width", "1" },
- };
- const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
+diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
+index 22497b1..43b14c1 100644
+--- a/hw/pci/pcie_aer.c
++++ b/hw/pci/pcie_aer.c
+@@ -589,7 +589,7 @@ static bool pcie_aer_inject_uncor_error(PCIEAERInject *inj, bool is_fatal)
+     if (inj->unsupported_request) {
+         inj->devsta |= PCI_EXP_DEVSTA_URD;
+     }
+-    pci_set_long(dev->config + dev->exp.exp_cap + PCI_EXP_DEVSTA, inj->devsta);
++    pci_set_word(dev->config + dev->exp.exp_cap + PCI_EXP_DEVSTA, inj->devsta);
  
-diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-index 0c3fed3053b0e2b2ee2cf703c5f9e1f33ec1ff5b..0669223159a43f334d7ed46bec347de1bb8420ca 100644
---- a/hw/pci-bridge/xio3130_downstream.c
-+++ b/hw/pci-bridge/xio3130_downstream.c
-@@ -25,6 +25,7 @@
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
- #include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-@@ -137,6 +138,10 @@ static void xio3130_downstream_exitfn(PCIDevice *d)
- static const Property xio3130_downstream_props[] = {
-     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-+    DEFINE_PROP_PCIE_LINK_SPEED("x-speed", PCIESlot,
-+                                speed, PCIE_LINK_SPEED_16),
-+    DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-+                                width, PCIE_LINK_WIDTH_32),
- };
- 
- static const VMStateDescription vmstate_xio3130_downstream = {
+     if (inj->aer_cap) {
+         uint32_t mask = pci_get_long(inj->aer_cap + PCI_ERR_UNCOR_MASK);
 -- 
-2.55.0
+2.9.4
 
 
