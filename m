@@ -4,104 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E071C88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 08:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECAEC88E73
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 08:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6OED-0002PK-6s; Tue, 15 Sep 2026 04:09:21 -0400
+	id 1x6OOw-0004rk-Km; Tue, 15 Sep 2026 04:20:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6OEA-0001vZ-20
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:09:18 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6OE8-0002Sh-Gh
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:09:17 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-396ccda24a3so2226363a91.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 01:09:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6OOt-0004kC-Vg
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:20:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6OOp-0004MP-H0
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:20:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789460417;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rawZcbHqTI6xheJawOEdPIAKymyVEHjFiz4lrZh7tcw=;
+ b=B9mGE7YUlFjdQT/L0DgJOdPrPu0lIP2XgsAbtlA0AZ4OUR4wuul5rSuyn6YFc+8bVB3jXM
+ ku9kj0aMwSpJShrcvq4L6ncQ0uWCdNjxiljnjlcMhEDqwikZ53tNUjXCTM5xF1givpT0i0
+ S9TOkOF+/VHGWj3iteUh8V/ioBVGZWk=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-466-SkU0weOsPWKGbLKECUHalA-1; Tue, 15 Sep 2026 04:20:16 -0400
+X-MC-Unique: SkU0weOsPWKGbLKECUHalA-1
+X-Mimecast-MFC-AGG-ID: SkU0weOsPWKGbLKECUHalA_1789460415
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-6a9ba2a281cso4548491a12.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 01:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789459754; x=1790064554; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=C93NDc8vKqZoRpwpL7rR0IlKISRmjl1MDRhlNgpz9xY=;
- b=BoqZC3aKj8wus5J4lYK8KsKgm0JrRV4Brb4vZildIZkP6/un1yYSJYrm7TFGtZLg9W
- IrJDD6XNsaK2248Zo4oaAVqyfQarRkii6EMXEYqse7qpPlofiFiuJPqA0kPTrA5bvSBU
- zzwVicN6O6zuo//n+lEXIWmjpaJq9gURejTZ+JH4Ko7wW9nX1YtWaijxx8wDQuPQNth9
- b0+ACfq/YeHOKM2okkzfFxjSCN+q+nhqvPzA7ylqbQueO4i4EDoyQHQjQvg+0HbOh/4z
- JkkWpZiUokkeqdizUCbzbrd0T5vl/ZgfSDmqt7h+f+YCU9wsEdmTskb2zuu9lueBuTDm
- 1uwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789459754; x=1790064554;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=redhat.com; s=google; t=1789460415; x=1790065215; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=C93NDc8vKqZoRpwpL7rR0IlKISRmjl1MDRhlNgpz9xY=;
- b=QTH9l3dOfTHKE/oK4PrVhWNjz18OnDW93QsM3GPtA0O0BcX7x3HU6q4/YKtUtvw9fx
- nr39sXguh/04R5ULz2gcN6RZ+j0oVx86cSpYIGRWb2YbnfhqyVkPsbkPIQ9lVKf6xvfz
- Acrzf6mihN7SSQkH3kurpIa9GKu60vKMhimHwg/vr9/Fa+FaFoJ/0ohMr5TywdEvzbTd
- 7GkjDvlycZEIo4qPo+2/D27tCWB1sGcMv1OwQjmihVcRD0V8oMFUlOy3iTvsUVsLKx5D
- prIGmwOwKLPQVEeGHmCfeqWxyG7OOrZB1IqPD9IOs8qjV569knqch7YtICvLbCaEb/h4
- TQEA==
-X-Gm-Message-State: AFuF++mn9XTrNmZksc9c/jpKhfOyiReRnBL5aMoL3c+gIqO7OwIBUkEn
- g/JO4+ibkUR4/aFGtYlz+qZbmSSlATpHCf3lnIGYsblzNT0psDlJsTfN4y7u8jqhnxnHy13wn2H
- abh3g
-X-Gm-Gg: AYBFou3CM5LhcT1rMQBivgJJoM6T4wjPX4QGGwdGk8xZr12EbG69ZnB9M9LxWt44sE3
- t9TIIQBmKuXWSNGWsTYHqMrTZZDhnFkMHkHrs+1V+WtzalgF94WyXfY1XdNYtRLX7vLZQeQmXN0
- x2j+6KQx7BdLcJ5DfgYsJlXJOmstJdhAUscxmp6CWu6brAGK0P4pRF5l1pZU3axzafrB7WoOrBB
- dDzWWegOWQoBtmSg7McAsNsjJkz1hLZFtEjtjVs5DU3tKsKBKqXQxSPlaaR8Zt2cpaa0aI5Hv9K
- ziQD3eG0OiG4acscy+qSC5K6iUoCv6bYFWZOqMLRp7VgB0rqXodHBk59HzQBhUFWGuxvId2CBlk
- lErmaxRp0IU8QZSu/GieyaYy1+ehyNy9lv9hvDk5DRMP4AvF6HqYGaFL9m0PdSUBVUkOj/A4GqD
- twQNLprEbERxtb9pYMF0gsnEm9XyOJZQNzuiJGYlU452wdyxyfwT0P2ESIjeFyYHXaUT+u7r5Tg
- Z5zEjKJF0RaIMVu70f9xyMe3aPOgeKlVDECds37aylmrJWLTcJ/orvhdm6A3sVXLE3QJQ==
-X-Received: by 2002:a17:90b:1649:b0:39d:f60b:8121 with SMTP id
- 98e67ed59e1d1-39df60b8c29mr8637273a91.17.1789459754068; 
- Tue, 15 Sep 2026 01:09:14 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:c119:8717:353:53c6?
- ([2603:800c:7900:ed00:c119:8717:353:53c6])
+ bh=rawZcbHqTI6xheJawOEdPIAKymyVEHjFiz4lrZh7tcw=;
+ b=iYAxyFfwTWjPCoKpvD6CnaCsrDmEPU3OpUuJl10dIr/ljvHVWtDAqze636P/qsco2v
+ dEAZvx9n4M7s9/A3bTN/ayKboN15ZK4uhCvR+KILnhaXEpcgn/tGdEpnfPGmLOSbJX0p
+ C8kNv2AxA+vkiutUggrmbXfWL/nQwDwM3+/GDnYTbLFjGNG1RXwgzveweC7No2YAn5mi
+ fa0V8sV6qRe/oHS+4vhxr3putOhFwO5AfauwBP+jyjbP1kG9k6y6qqXpS2U3kDqe0Dgd
+ fO3DBErrc7nZQ8GPq3QVh+PmXAyc/rbqbo6mlaHWFJYzGZvsRSA7AgJdj486boher612
+ BXyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789460415; x=1790065215;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=rawZcbHqTI6xheJawOEdPIAKymyVEHjFiz4lrZh7tcw=;
+ b=rwauPz/0K5wEOTjf4+LG+t6hkRG2hbgs/k/Dbk16GrKhm88Vgzi9EERghDKFaLCdo6
+ Wkwe+j6smBExXcvM5LmpoqlXgO1JohVd0ZNSRRlEeQX8LgJ5fas5/sSEgmODSeKhsWf+
+ xA20flypj5mA+ZGwQHBb+N+8NNSgv7IZVR7EOzmr1/qtgEZw72KMDpWkZeaMj9E1QHSy
+ wsg3CrcHkYo0GgYWJe1+Rhl1AWDWlwlH095fwJxk7tuWsDofs0y77SHIDsEZ8AA1pN+1
+ GvFRZhnQ2+TzPrZbLKEzq7CVwEsP3cko3eu6HxQxgFlc6S9vwxaNhnP2/4BCO2mq4qCi
+ YZxg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw1D2AaRefA4/s9Vz52GWz4/FpIdRT3WC/EZj9fKkfu28ap05IYtoZVnC9bj5zT3sXRYXN3XfsBrRa6@nongnu.org
+X-Gm-Message-State: AFuF++l/7SO7a4G3fHI7UtEK7JAFdtGQ/S/qN3X8wkd5rnXZ7mg8kUGa
+ EnBFl4LVMxxfO7bMY/d5guvf2S3WMaKoLQv7UhDOoA8WvJPuD8vP91TvPqGndQYhJmbq/8AZzdy
+ mZRjE5PW9WKNc58X/pr309uHrA1leCidShYveEWW6Nr4N0y4aAyS1IIHD
+X-Gm-Gg: AYBFou0hpSFdWiEXYhdp4HYYEctJZDXr7FprmnCeCVsrMogj0of57GwseMXfrRWm/9p
+ +Vd8oKVzg/vzLEXyuOztVxOqp9n0HGOUX+oHYgniPErfiNFLIBDuhvLuH8Vj1kix5uiECoj3N9J
+ 8s7rmdGlQC6PJjxo6NteuUj3sLcHoasyz5N07/qQuhDOn7VRiJxencdnQbSoj5IAsnLh4S/fE79
+ vrq6AhQMExUQf1UWi70SohgJpcQAXtkd/Pzm4DjhU9h13J2ZobhSUDx0D86hcvKzR/jnLMh6htM
+ PvXJaHl1P5x1viIvIyXLECAynobPZ6KFFZn+nWHbqH3Crmw4bmTVSk6S0XcWuskfxVaeQE8Pqq2
+ IAO8+kiCK3Ci+FTFMlGVkdXV1ns9JtNGhdsinfBFqbw==
+X-Received: by 2002:a05:6402:1ed1:b0:6a9:a311:25dd with SMTP id
+ 4fb4d7f45d1cf-6aa12b90970mr18872a12.17.1789460414773; 
+ Tue, 15 Sep 2026 01:20:14 -0700 (PDT)
+X-Received: by 2002:a05:6402:1ed1:b0:6a9:a311:25dd with SMTP id
+ 4fb4d7f45d1cf-6aa12b90970mr18817a12.17.1789460414238; 
+ Tue, 15 Sep 2026 01:20:14 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
+ ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14365a598aasm29093409c88.1.2026.09.15.01.09.13
- for <qemu-devel@nongnu.org>
+ 4fb4d7f45d1cf-6a9b594c28fsm5337219a12.23.2026.09.15.01.20.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Sep 2026 01:09:13 -0700 (PDT)
-Message-ID: <8897d12c-096e-4032-822c-ca752a0ccc01@linaro.org>
-Date: Mon, 14 Sep 2026 22:09:10 -1000
+ Tue, 15 Sep 2026 01:20:13 -0700 (PDT)
+Message-ID: <73fe443f-0acd-41b0-a9ca-259f88f0ff88@redhat.com>
+Date: Tue, 15 Sep 2026 10:20:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 102/105] configure: remove cross_cc and gdb detection logic
-To: qemu-devel@nongnu.org
-References: <20260904124604.2207440-1-alex.bennee@linaro.org>
- <20260904124604.2207440-103-alex.bennee@linaro.org>
- <dab85c9c-4718-48d1-a343-c2e6b5f8e24f@linux.ibm.com>
- <87a4pn8yra.fsf@draig.linaro.org>
- <CABgObfYEN8Qme6zXGYJpEeHTiFegjOm=Ym-3vU9LE1Z-Wsot3g@mail.gmail.com>
- <231c5426-b1b9-4465-b62d-a61dcb41c041@oss.qualcomm.com>
- <CABgObfZnyHenuVJ6maVs+jMNQCJeYhtcnXtXOqN1G3NcbvDt7g@mail.gmail.com>
- <aqfX2414cAMCcI18@redhat.com>
- <5cc8dd29-9093-4082-b8e5-32823f21c71d@oss.qualcomm.com>
- <CABgObfY68FT-V=G1Sks865FtEwEwB9SKyHx1YTLtG_4x9WDseA@mail.gmail.com>
- <871pavd8ry.fsf@draig.linaro.org>
- <1a8155b3-92f2-452c-bd0f-884c3e0bef69@oss.qualcomm.com>
- <858ea3b2-689c-4110-92e2-237b7aa87fb6@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <858ea3b2-689c-4110-92e2-237b7aa87fb6@oss.qualcomm.com>
+Subject: Re: [RFC PATCH v2 0/9] igb: Add experimental VF live migration support
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ Peter Xu <peterx@redhat.com>
+References: <20260902192054.3329753-1-clg@redhat.com>
+ <341bf6d3-27e4-425e-a0b1-0e3767e2db99@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <341bf6d3-27e4-425e-a0b1-0e3767e2db99@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,20 +169,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/14/26 08:09, Pierrick Bouvier wrote:
->> If vdso rely on this, we need to keep .mak files for now. They
->> definitely would deserve to be buildable using meson though.
+On 9/9/26 09:19, Akihiko Odaki wrote:
+> On 2026/09/03 4:20, Cédric Le Goater wrote:
+>> Hello,
 >>
+>> Live migration of VFIO-passthrough devices - SR-IOV VFs, vGPUs - is a
+>> growing requirement, but real hardware with migration support is
+>> scarce and hard to debug. An emulated device provides a fully
+>> controlled testbed for developing and validating the entire software
+>> stack - vfio-pci variant drivers, VFIO core migration v2 framework,
+>> QEMU, libvirt - and for tuning complex migration policies such as
+>> downtime convergence. It also serves as an educational reference for
+>> understanding VFIO migration end-to-end, from device state
+>> serialization to dirty page tracking.
+>>
+>> This series adds an experimental VF live migration interface to the
+>> emulated igb (82576) device. It enables a vfio-pci variant driver
+>> (igb-vfio-pci) to migrate VFs using the standard VFIO migration v2
+>> protocol with stop-copy and pre-copy support.
+>>
+>> The target scenario is nested virtualization:
+>>
+>>    L0 QEMU (these patches)
+>>      igb PF with x-vf-migration=on
+>>      └── VFs with migration DVSEC
+>>
+>>    L1 kernel
+>>      igb-vfio-pci variant driver [1]
+>>      translates VFIO migration v2 ioctls → DVSEC config writes
+>>
+>>    L1 QEMU (stock, unmodified)
+>>      vfio-pci device model, standard migration fd
+>>
+>>    L2 guest
+>>      standard igbvf driver, unaware of migration
+>>
+>> The L1 QEMU is completely unmodified -- it sees a standard VFIO
+>> migratable device and uses the normal migration fd path.
+>>
+>> * Design
+>>
+>> The migration interface is exposed through a DVSEC (Designated
+>> Vendor-Specific Extended Capability, PCIe cap id 0x23) at offset
+>> 0x160 in VF extended config space. The DVSEC uses a command doorbell
+>> model - all commands are synchronous via PCI config space writes.
+>>
+>> Device state is serialized as a versioned blob of per-VF register
+>> (offset, value) pairs covering control, interrupt, RX/TX queue,
+>> receive address (RA/RA2), etc. plus TX context descriptors and
+>> VFRE/VFTE enable bits. The buffer address is a guest physical
+>> address (GPA) written by the driver via virt_to_phys; the device
+>> accesses guest RAM directly through the system address space.
+>>
+>> Dirty page tracking is implemented with per-range bitmaps maintained
+>> in IGBCore. All VF DMA paths in igb_core.c (TX data, RX data,
+>> descriptor writeback) are instrumented to record touched pages. The
+>> variant driver registers tracked IOVA ranges and queries dirty bitmaps
+>> through a shared buffer. Buffer structures include len, flags, and
+>> reserved fields for future extensibility.
+>>
+>> * Caveats
+>>
+>> The x-vf-migration property is experimental (x- prefix, default off).
+>>
+>> The dirty bitmaps are maintained inside the device, which is not
+>> realistic for discrete NICs without on-chip DRAM.
+>>
+>> * Testing
+>>
+>> The target scenario is nested virtualization: L0 runs QEMU with an
+>> igb PF (x-vf-migration=on), L1 runs the igb-vfio-pci variant driver
+>> and an unmodified QEMU, and L2 runs a standard igbvf driver.
+>>
+>> Migration under iperf3 load works correctly: dirty page tracking
+>> converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
+>> STOP_COPY), and STOP_COPY stays under 250ms.
+>>
+>> * Todo
+>>
+>>    1. Add migration blocker when x-vf-migration=on (no VMState yet) or
+>>       add VMState support for L0 migration (dirty bitmaps, tracking
+>>       engines, DVSEC registers, stats)
+>>    2. Add PRE_COPY state transfer to validate device INIT data (magic,
+>>       version, etc.)
+>>    3. Add qtests for migration state machine transitions, dirty page
+>>       tracking ?
+>>
+>> * Ideas
+>>
+>>    1. RX bandwidth throttle (x-mig-rx-limit, uint32, default 0)
+>>
+>>       Return false from can_receive when the per-VF packet count in the
+>>       current tracking interval exceeds the limit. Reduces DMA writes
+>>       and dirty pages realistically.
+>>
+>>    2. Migration phase timing (GET_STATS extension)
+>>
+>>       Add per-VF timestamps: precopy_start_ns, stopcopy_start_ns,
+>>       precopy_duration_ns, stopcopy_duration_ns,
+>>       state_transition_count. Expose via GET_STATS.
+>>
+>>    3. Hot page simulation (x-mig-hot-pages, uint32, default 0)
+>>
+>>       Re-set the first N bitmap bits after each DIRTY_QUERY, simulating
+>>       workloads with hot pages that prevent convergence.
+>>
+>>    4. Error injection (x-mig-inject-error, uint32, default 0)
+>>
+>>       One-shot error code injection before command dispatch. A separate
+>>       x-mig-inject-dma-fail (bool) for persistent DMA failure testing.
+>>
+>> * Credits
+>>
+>> Alex Williamson suggested the overall approach of a variant driver
+>> with the "x-vf-migration" device property to gate the feature. Thanks
+>> for the ever ongoing support and valuable discussions throughout these
+>> years.
+>>
+>> * AI disclaimer
+>>
+>> The lack of a migration-capable device has been a recurring pain point
+>> for VFIO development over the years, and we hope this proposal
+>> demonstrates the value of having one.
+>>
+>> Claude was used to analyze the IGB PF and VF internal state and
+>> identify the pain points of a working live migration of such devices.
+>> The generated code served as a starting point but *significant* time
+>> was then spent cleaning up, reworking, and shaping it into a clear,
+>> reviewable IGB model extension.
+>>
+>> As QEMU does not yet accept AI-assisted contributions, this series is
+>> submitted as an RFC.
 > 
-> For vdso, we could simply build them as part of tests/tcg and tcg-tests
-> target, without having tests associated. This way they are always built,
-> and people can update them by simply copying them if needed.
-Why would linux-user depend on tests/tcg/?
+> This largely repeats the concerns I raised previously [1]. Your description of the *significant* time spent cleaning up and reworking the generated code suggests that this series is intended for upstream inclusion once the implementation direction is agreed. 
 
-It seems to me that the cross-compiler infrastructure belongs at 
-top-level, not in tests/tcg/, for use by everything else in the tree, 
-vdso and roms included.
+Yes. The IGB kernel vfip-pci variant driver is "ready", and so is the
+internal test framework for VFIO migration. The emulated IGB device
+is also becoming increasingly important as a reference device for
+the kernel VFIO self-tests. See:
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=1583ef1175ba533e326dfeff6d8b9f3aaf761225
+
+> My concerns as a maintainer are therefore correctness and maintainability.
+
+I am trying to avoid too much intrusion in the core igb model :
+
+  hw/net/igb_common.h                   |   16 +
+  hw/net/igb_core.h                     |   11 +
+  hw/net/igb.c                          |    7 +
+  hw/net/igb_core.c                     |  124 ++-
+  hw/net/igbvf.c                        |   52 +-
+
+These are mostly code movement or additions. The runtime is hardly
+impacted apart from the DMA tracking, which adds one indirection.
+
+I have added myself as Maintainer for the migration part :
+  
+   +igb VF migration
+   +M: Cédric Le Goater <clg@redhat.com>
+   +S: Maintained
+   +F: hw/net/igb_migration.*
+
+I can add you in the next respin. That would be a natural choice
+from my perspective, but I don't want to impose it on you.
+> The missing migration blocker is a concrete example: it is a basic correctness issue that should be straightforward to address, yet it remains a TODO. 
+
+yes. It's identified and easy to address. It can come at the end once
+all other issues have been discussed. What worries me the most is the
+control plane : interface with the Linux driver. That is the most
+important part on which these changes depend on getting it right :
+
+   https://github.com/legoater/linux/commits/vfio/
+
+> My comments on individual patches also raise the same kinds of issues I pointed out in the previous version.
+
+You're being tough on me ! I did all this fixing below ! :)
+
+* Changes since rfc-v1
+
+   - Migration BAR replaced with DVSEC at offset 0x160 (no BAR needed)
+   - Wire-format structs (IgbMigBlob, IgbMigRegPair, IgbMigTxCtx)
+     replace raw pointer arithmetic and memcpy
+   - RA entries separated from fixed regs, scanned by pool bit
+   - VFN relocation support (offset remapping + RA pool bit swap)
+   - GPA buffer (address_space_read/write) replaces PCI DMA through PF
+   - State blob validation on load (magic, version, error codes)
+   - NEED_WORDS macro and igb_vf_offset_valid removed
+   - Error codes renumbered: removed BAD_VFN, added UNK_CMD (1-11)
+
+   Reported by Akihiko Odaki:
+
+   - propagate_irqs: clear VF bits before OR (EIMS/EIAC/EIAM)
+   - propagate_ivar: clear IVAR entry when source VTIVAR is invalid
+   - rearm_irqs: restore actual PVTEICR causes, not all three
+   - Dirty bitmap allocation uses BITS_TO_LONGS (heap corruption fix)
+   - Dirty query validates range before g_malloc0 (memory exhaustion)
+   - Dirty bits cleared only after successful bitmap DMA write
+   - Dirty query buffer uses struct offsets (layout mismatch fix)
+   - Load path: register offsets validated against VF whitelist
+   - VMBMEM (mailbox payload) documented as transient, not serialized
+   - dma_writes counter: consistently uint64_t
+   - Dirty range_size: consistently uint64_t (was truncated to 32 bits)
+   - ERROR->STOP: quiesce VF (clear VFRE/VFTE) on transition
+   - rearm_irqs: runs on re || te, not just re (TX-only VF fix)
+   - Stats DMA-written atomically via GET_STATS (no split MMIO tear)
+   - Bisectability: DVSEC + state machine introduced together
+   - Removed NAPI reference and "===" comment decoration
 
 
-r~
+> 
+> Many of the correctness problems found in v1 and v2 stem from the choice to build on igb, which is more complex than virtio-net. That is why I suggested using virtio-net as a simpler basis, unless there is a problem that rules it out.
+
+virtio-net is a software abstraction designed for virtualization.
+
+Here’s my pitch for igb:
+
+Using an emulated igb device addresses a different problem: validating
+migration of hardware-like devices. igb exposes a real PCI device
+model, hardware-driver interface, DMA engines, queues, interrupts and
+SR-IOV VFs. It allows migration to be implemented at the same
+abstraction boundary at which VFIO migrates physical devices, rather
+than being reduced to serialization of a paravirtualized protocol
+state. Also,
+
+The igb VF uses the inbox igbvf kernel driver, which matches the
+hardware VFIO promise: transparent migration with unmodified guest
+drivers.
+   
+The DVSEC extended capability is a discoverable and standard control
+plane with the device. This is a mechanism a hardware vendor could
+use.
+     
+One cool aspect of an emulated device is that it allows the state to
+be inspected, the behavior is deterministic and faults can be injected
+at any boundary. That's the QEMU bonus.
+
+> I would be willing to support allowing AI use in the project for work like this. I would still need to see these correctness and maintainability concerns addressed before I could support merging the series.
+
+I agree. The save/load is still in progress and we might need some
+more intrusive changes in igb to support migration of all state.
+To start with, we could detect and warn.
+
+Thanks for the support,
+
+C.
+
 
