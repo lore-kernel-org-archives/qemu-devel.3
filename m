@@ -4,119 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C90C88E7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 11:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3CEC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 11:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Qw8-0000Ig-5G; Tue, 15 Sep 2026 07:02:53 -0400
+	id 1x6QwP-0000hn-TZ; Tue, 15 Sep 2026 07:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1x6QvV-0008Vn-Dx
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:02:19 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x6QvY-00005B-A7
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:02:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1x6QvT-0005BV-Od
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:02:13 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x6QvU-0005Bc-Mw
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:02:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1789470131;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2Rjt7zET7hvkaBbpC4zms4/6Qqc6b+RmcnR9rU3hQL4=;
- b=W+VXr4QY1QPrWkMosrX7C2+IFmCRMCAeajkfMPTUH4K9s4OCrbTe3k1Q7nXCKJCmf+WQWg
- 2kkgLnmxDUqPXFomOr+vY42WScuSp44MCniTbLZLQi5sWOosCshw3hfhGjapH9C8gzZP5b
- om6JFfhDGqaZiq+lvKZTFPl2aqLePZw=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sJ4zAho7UuxkU6bHAfbi9QAuVvdRjYnhPNLwXzdTOtA=;
+ b=FlJEzmhAt3OMRuOFNsBnZ3bOazoUJ8zCQzqG/mUW40A0l7wTLR3Bopi6H6Sq6OTG00i08c
+ DhbYlv1qGyTX18p94kpbuwKNtLvKEC15CFm7WMOefXRnlf97nDVA/PLROW+G9iNa3eVK0P
+ mLkTHiEAx1z/a2+TmxD8k22k91iunDE=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-pIgVSfbdPXWAfqO7gYHc-Q-1; Tue, 15 Sep 2026 07:02:08 -0400
-X-MC-Unique: pIgVSfbdPXWAfqO7gYHc-Q-1
-X-Mimecast-MFC-AGG-ID: pIgVSfbdPXWAfqO7gYHc-Q_1789470128
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-90cdc69a7b5so92760836d6.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 04:02:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789470128; cv=none;
- d=google.com; s=arc-20260327;
- b=IBi0swD/qlNP7Hq8dIbKCBzvkxvclILxD2T1DwboO1T2APXeDz+8RB9y+xlsDaslcr
- KopgzOSphQqkpN2QVF2R4fhJOTXOji7DaP6WYBvA9ETFsfTYgVTnP/gupyK08k64XgXw
- WCcVhsMlldtLj/tGbIGv+Zn2vhnIZ/EqZNBYrG7+gNaCDA/JcZ6E21NezUszj98IN+h1
- 6pT+JLQNarlTDIQjiBwHrtgNTkWvTJtD4679TvazakwUtMTj22qP6IqKWundj0ybtrrI
- 53/FTup89eohBdQUzeH3cijCaaBijlfqQMNYIhuQCEE/Tv/6rfUbww2QPVxjozH+MzNy
- /YMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2Rjt7zET7hvkaBbpC4zms4/6Qqc6b+RmcnR9rU3hQL4=;
- fh=2UZlmMdSzD3+f507HMdukLRvlcEDzodjJVY4NLN3tLg=;
- b=h7kE4UyNDpMSEQAiAi7oPlZCeUersUg5uNCIe8YskjNOaibkkWEoX3pd7MNdIPzKbY
- KKwTgWWivW5J3vcCkZZc1OX4aLfr4A1t3tHWjzDFzDG0+d58HEsoJvFSynjPxGT9+w3l
- 2/3uOKMQp/LESqmPnjLKGycPtuwMUa2Klfrrc4x/4X7bxPrZuetsaLT4jqwoMTTvEIJv
- 9kBtBXhFghsgne2aqxom30Y0koAD6dXT83gU1e3ztbaUGsGJPFkEOiI+hYA/ewc49B2I
- x8bAkEeHB5gL41OcK7/JzweH3+2/yd/4XZ4fWP3PubXehyGTrMLcvIIPIoWkvnOIow0e
- 1+Rw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789470128; x=1790074928; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=2Rjt7zET7hvkaBbpC4zms4/6Qqc6b+RmcnR9rU3hQL4=;
- b=Gov6G1tmfJJ8Gd4NGebECm/vsvUpepjfkNpTIQ4HGEC5Al09lu0aTr9IesLIleTPav
- xyfFDptopyrviIZZKhBy7aO9ROgVJ7MYOQpzLBuBPWm6nCsUtmEFmATr1aEj/GXJMtxI
- QyU1VA4KKSaPE/zx4gQZ4RBuo5XPpLn1iBHHvLEWVSJKnE7y6i20iVOQLoqdnwlK04we
- c4MmrhxWOTu8JIqYXUv9PsQt/06kVsZ48enhm7uc4Cr0790pcZEJsTz7t5TjJHtTu6Nd
- 9mrPmDqJYPgeAG1ZAlCZsnbpl6BctN3gPB6qS1w2eDW4R8DzVg/xE3tibNaCLxxqoitM
- ONxw==
+ us-mta-448-R1gOtLFsN1qLF7JjQCUe4A-1; Tue, 15 Sep 2026 07:02:10 -0400
+X-MC-Unique: R1gOtLFsN1qLF7JjQCUe4A-1
+X-Mimecast-MFC-AGG-ID: R1gOtLFsN1qLF7JjQCUe4A_1789470129
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-c2939e341f7so497934066b.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 04:02:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789470128; x=1790074928;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=2Rjt7zET7hvkaBbpC4zms4/6Qqc6b+RmcnR9rU3hQL4=;
- b=ECK3VfPwDAUitIHbD8acOzQQc3+uhoCNhuuoo8dEsclJdUScxtiAUdx0ajq+REkpM1
- MAteNimsC73cp6kUqjmbwHYzefhIA4aBIdhI1HgY9+OBzkQjFCSnXuANJaMcYNsYnd0Y
- nO1CwEJWaIzScV6BqhBZKq+mF1aycvuLgh2Jy4xHdkcfzCed6fqqfgpepuaBT9myzwks
- P43/yIgBsI2p6JlowvKeJOPo7tWCk+7BgVofPZel5dXlu5d8E9vWd0b+RlrRoDuYOF1N
- Z7gAmoSAZK5sCr62FmxzlpVKofJzEXsBWxsLwrYxZJsQuleOGrfEVj7FvhgZRciBbxi7
- 4fvg==
-X-Gm-Message-State: AFuF++lMq6+38Y+g2Kpx2HE8j/b8SUDDITTIsOasFXetIdCvjCY1bCwq
- BTMrL/G15KG3JiKwCYsUXZThwtsGlyZwcbBEPOAh8yHjTp0SFUwvaOc2TVImLGPY6LE/NohpXqC
- CT3C/ZTKHAY2oeOo3/S7tBuqQ06aguStv3Jy2d7S7zHFygaeQa3cv0d71psGkENLr3A5HUCGAWA
- si9fmiWpeDPoqjY4/vYYrmPbd6hiVtxc0=
-X-Gm-Gg: AYBFou2UaVeqTSsZlp2Vf5+xlSatVyQt+B9aoZdeP7ML+7JDP57kNgl7yLAGP75JNeY
- 2K5QoAR0+QzJjCEBUxsn1Wx5wlGmwiY8329d8FKjSYRFaVuDRzP33jiinZ6X0G6WfVFne3aHaj4
- TAjxlECr++klLitwFwNgCkMFUIp8XLiEsXhUaroiqicV4rxcbNXbod3O9NVvk=
-X-Received: by 2002:a05:622a:1b11:b0:52f:aa6c:bc7d with SMTP id
- d75a77b69052e-5310d03dcc6mr118357001cf.28.1789470127837; 
+ d=1e100.net; s=20260707; t=1789470129; x=1790074929;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=sJ4zAho7UuxkU6bHAfbi9QAuVvdRjYnhPNLwXzdTOtA=;
+ b=agkGpSZ3LhKDX7pR9UIbMZ4F8Q2q/6CgLWJpA7qPB7RcHMVzXOb8hoUMD4z6dubd/l
+ +jv0BiLpEo+z7raTaigYj0Z4GfV7o0TzBDTVa5CN9jAgTu/uadi7SIRh2M044IGbyCcQ
+ eGcNO9HaDhgPVsHS7zqyK46TXCgfsow+Q90Y+sc2ppQC1CL1jUq2vPBdwUGn0a5kzCip
+ hmiZUFBAEl7H3+kXHFYRq0mAKyg2RTi850BKFhwdCTdwE9g7s1PRWeAjFROLEpQMV2i/
+ bpyyvLeC4ovKon8oP8Vp3L/fOWeQ8oTo+J32o21b+4P6XrB5Q2WETnoznErtRMggFzLv
+ UYOw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwF2Lfn65mxyKdj7M2UynJWGKZ7yE3hm4fIQniFpAlgCANyi2gJM0cFicTlacoTHMIO/4Gf65lyjeMQ@nongnu.org
+X-Gm-Message-State: AFuF++lZucdwJsQoXL21Da2AFOqK6EJs669IVJI38dd6LYbfiC88UJpf
+ /SNgsscUKjU11P6NCdRGaNrH4J7QtkrkQmgVewuiXpsDcsCA/mw/s9V+u6oh7MxxGSWN1Bvd8IX
+ PNAR89ULDXscYFXDicTJNQIqNwwFrSrJ5wh0RFnaHKNPp8n/kiXxcHDij
+X-Gm-Gg: AYBFou2TUHrqC35gODR4MIvhAGxT5bNuLQZvoxaF7S+7S1bZwvs3lHKJx/GEP8IYld9
+ Cc0oamxUXfe2iYbLcHMLjej/6SEg9RjdHr/iJP0YGdWR5Nled8gSGRqcwC1+cClbnm/qIPK3esE
+ EDUbUxNx30m4knsUAvxjHnPzLuKV/07fyTS7TAjS7cuyWeIcvHkBMc489ixnqt8HH7GRyBmBRma
+ xk3JvRrdspySg+3cTVse9r7bIaxEzfgZP/lrp65GeDCGcUWI/8ufpubnL48FgUUZZITq4kTufYa
+ UAj2tXvRW17HvdOgtyr21/QsAkY7vbe3bqntrM7LZS3gFmOzsKkTF+k1ca5X4RnZ+QuzAS0Epdp
+ Rh3TRHnmLhiVJowb7pMUwX7cuYAe8KnNhFAsIN9c6hGaaojyy
+X-Received: by 2002:a17:907:a088:b0:c1c:2173:d412 with SMTP id
+ a640c23a62f3a-c29d773374dmr48824666b.1.1789470128821; 
+ Tue, 15 Sep 2026 04:02:08 -0700 (PDT)
+X-Received: by 2002:a17:907:a088:b0:c1c:2173:d412 with SMTP id
+ a640c23a62f3a-c29d773374dmr48821166b.1.1789470128302; 
+ Tue, 15 Sep 2026 04:02:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a9b594f0fasm5722322a12.25.2026.09.15.04.02.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Tue, 15 Sep 2026 04:02:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:1b11:b0:52f:aa6c:bc7d with SMTP id
- d75a77b69052e-5310d03dcc6mr118356131cf.28.1789470127335; Tue, 15 Sep 2026
- 04:02:07 -0700 (PDT)
+Message-ID: <934e0f8b-0e20-40c9-84b7-0785ecfcd786@redhat.com>
+Date: Tue, 15 Sep 2026 13:01:59 +0200
 MIME-Version: 1.0
-References: <20260907-qga-v1-0-86456ad356e2@redhat.com>
- <20260907-qga-v1-17-86456ad356e2@redhat.com>
-In-Reply-To: <20260907-qga-v1-17-86456ad356e2@redhat.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 15 Sep 2026 14:01:56 +0300
-X-Gm-Features: AcwNN1XGWa7Vu4WKWmepZCecsH04u33AYv7wCclijgWellrQK7BaWP9npAuCzSY
-Message-ID: <CAPMcbCoOV=UJUODrYTRAe75e-8dAZemUxDhxD4x6XBBAXv7t5w@mail.gmail.com>
-Subject: Re: [PATCH 17/17] qga/vss-win32: log to file during COM+ registration
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="00000000000046c596065b837b67"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 6/7] hw/arm/smmuv3-accel: Request dirty tracking on
+ the nesting parent
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
+ mochs@nvidia.com, jan@nvidia.com, jgg@ziepe.ca, ankita@nvidia.com,
+ aniketa@nvidia.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com
+References: <20260904180513.248396-1-skolothumtho@nvidia.com>
+ <20260904180513.248396-7-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260904180513.248396-7-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,148 +115,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000046c596065b837b67
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-On Mon, Sep 7, 2026 at 1:51=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
-marcandre.lureau@redhat.com> wrote:
-
-> COMRegister and COMUnregister are invoked both from the MSI installer
-> (via DLLCOMRegister/rundll32) and from qemu-ga -s vss-install, where
-> stderr is typically not visible. Redirect stderr to
-> %SystemRoot%\Temp\qga-vss-install.log so that qga_debug output is
-> captured for post-install troubleshooting.
+On 9/4/26 8:05 PM, Shameer Kolothum wrote:
+> With accel=on the guest owns Stage 1, so the Stage 2 nesting parent is the
+> only page table the host can track guest writes through.
 >
-> Suggested-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> VFIO only asks for IOMMU_HWPT_ALLOC_DIRTY_TRACKING on the nesting parent
+> when the vIOMMU sets VIOMMU_FLAG_WANT_NESTING_DIRTY_TRACKING, which
+> smmuv3-accel does not, so the parent is allocated plain.
+>
+> Set the flag.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
 > ---
->  qga/vss-win32/install.cpp | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+>  hw/arm/smmuv3-accel.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
-> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> index 9e8db79c122c..09d94edd4f53 100644
-> --- a/qga/vss-win32/install.cpp
-> +++ b/qga/vss-win32/install.cpp
-> @@ -241,10 +241,27 @@ out:
->      return hr;
->  }
->
-> +static void qga_vss_open_log(void)
-> +{
-> +    char path[MAX_PATH];
-> +    UINT n;
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index b653f3f4ce..3f83b505d0 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -1037,6 +1037,12 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
+>      SMMUState *bs = opaque;
+>      SMMUv3State *s = ARM_SMMUV3(bs);
+>  
+> +    /*
+> +     * The guest owns Stage 1, so the Stage 2 parent is the only page table
+> +     * the host can track guest writes through.
+> +     */
+> +    flags |= VIOMMU_FLAG_WANT_NESTING_DIRTY_TRACKING;
 > +
-> +    n =3D GetSystemWindowsDirectoryA(path, sizeof(path));
-> +    if (n =3D=3D 0 || n >=3D sizeof(path)) {
-> +        return;
-> +    }
-> +    snprintf(path + n, sizeof(path) - n,
-> +             "\\Temp\\qga-vss-install.log");
-> +    if (freopen(path, "a", stderr)) {
-> +        setvbuf(stderr, NULL, _IONBF, 0);
-> +    }
-> +}
-> +
->  /* Unregister this module from COM+ Applications Catalog */
->  STDAPI COMUnregister(void);
->  STDAPI COMUnregister(void)
->  {
-> +    qga_vss_open_log();
->      qga_debug_begin;
->
->      HRESULT hr;
-> @@ -260,6 +277,7 @@ out:
->  STDAPI COMRegister(void);
->  STDAPI COMRegister(void)
->  {
-> +    qga_vss_open_log();
->      qga_debug_begin;
->
->      HRESULT hr;
->
-> --
-> 2.55.0.543.g5ebe2ebe4ea8
->
->
-
---00000000000046c596065b837b67
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
-v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
-il_attr">On Mon, Sep 7, 2026 at 1:51=E2=80=AFPM Marc-Andr=C3=A9 Lureau &lt;=
-<a href=3D"mailto:marcandre.lureau@redhat.com">marcandre.lureau@redhat.com<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">C=
-OMRegister and COMUnregister are invoked both from the MSI installer<br>
-(via DLLCOMRegister/rundll32) and from qemu-ga -s vss-install, where<br>
-stderr is typically not visible. Redirect stderr to<br>
-%SystemRoot%\Temp\qga-vss-install.log so that qga_debug output is<br>
-captured for post-install troubleshooting.<br>
-<br>
-Suggested-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com"=
- target=3D"_blank">kkostiuk@redhat.com</a>&gt;<br>
-Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lurea=
-u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/vss-win32/install.cpp | 18 ++++++++++++++++++<br>
-=C2=A01 file changed, 18 insertions(+)<br>
-<br>
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
-index 9e8db79c122c..09d94edd4f53 100644<br>
---- a/qga/vss-win32/install.cpp<br>
-+++ b/qga/vss-win32/install.cpp<br>
-@@ -241,10 +241,27 @@ out:<br>
-=C2=A0 =C2=A0 =C2=A0return hr;<br>
-=C2=A0}<br>
-<br>
-+static void qga_vss_open_log(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 char path[MAX_PATH];<br>
-+=C2=A0 =C2=A0 UINT n;<br>
-+<br>
-+=C2=A0 =C2=A0 n =3D GetSystemWindowsDirectoryA(path, sizeof(path));<br>
-+=C2=A0 =C2=A0 if (n =3D=3D 0 || n &gt;=3D sizeof(path)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 snprintf(path + n, sizeof(path) - n,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;\\Temp\\qga-vss-inst=
-all.log&quot;);<br>
-+=C2=A0 =C2=A0 if (freopen(path, &quot;a&quot;, stderr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 setvbuf(stderr, NULL, _IONBF, 0);<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+<br>
-=C2=A0/* Unregister this module from COM+ Applications Catalog */<br>
-=C2=A0STDAPI COMUnregister(void);<br>
-=C2=A0STDAPI COMUnregister(void)<br>
-=C2=A0{<br>
-+=C2=A0 =C2=A0 qga_vss_open_log();<br>
-=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0HRESULT hr;<br>
-@@ -260,6 +277,7 @@ out:<br>
-=C2=A0STDAPI COMRegister(void);<br>
-=C2=A0STDAPI COMRegister(void)<br>
-=C2=A0{<br>
-+=C2=A0 =C2=A0 qga_vss_open_log();<br>
-=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0HRESULT hr;<br>
-<br>
--- <br>
-2.55.0.543.g5ebe2ebe4ea8<br>
-<br>
-</blockquote></div>
-
---00000000000046c596065b837b67--
+>      if (smmuv3_pasid_supported(s)) {
+>          flags |= VIOMMU_FLAG_PASID_SUPPORTED;
+>      }
 
 
