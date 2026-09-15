@@ -4,87 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FDBC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 11:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF43DC88E7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 11:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6RZy-0000kE-Ns; Tue, 15 Sep 2026 07:44:02 -0400
+	id 1x6Ra9-0000tq-6p; Tue, 15 Sep 2026 07:44:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6RZL-0000f8-O7
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:43:24 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6RZ5-0005PS-HZ
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 07:43:12 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4843f22dc83so2212380f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 04:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789472583; x=1790077383; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lDVXntjhSghPxLA6Cp0G7NQ6A+eniameEy7FZm2Hlnk=;
- b=mstC/ABLK2I0HYN1hNGJ0d+hG4/l5E4EThMNYfgSLbKQoly4vAzAtRM5jKBktLOIfR
- Ijj6gE3rYlEBVjcuFVE3WnoldZWMmxdSW8vV84AyuQ63KN0O9g9YwXe8nfEj1FNh5iHw
- u2+Ba9eFuHXCztNzHyqgPrH7uF7W2F8hDRRHmR0fuE5M8J1XM1Vm1aTbDtt4f8j7S8QL
- MwcxWUt0txXvK48sL1vVHMyuf8/o2o4zTyuYRltdpwA0G8PElM6nwRKbI38qAadlyLGM
- +fS2sig0jUtCjaXIQVny/DLw38y1NbmkcKvyuV8I+52SPuHoFVjEq15UvNvhe90O6ofA
- 5SOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789472583; x=1790077383;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lDVXntjhSghPxLA6Cp0G7NQ6A+eniameEy7FZm2Hlnk=;
- b=UUIvC5OVI9jmMKbBzheiMY7xtLddLtrHtVl4hadCInHVN39n7C1ezjsomXrH7LIVsN
- PTGyxPxZpCxWDMtpEA6mUIes7uCVssm4cCUKmpzyaRchu1Iym69WNlRY3adTkqAvZYMp
- MGosuez6Bb0NonLMKEBxODRNVmOTIxEBAgfcb8OZsQvOsvtDmu966prF/39qwc3kI55d
- uNPyrtxkk4/EmRVgUqX4zQrDdMRpFPfi931ZAMGR5LXWL+c35qSJfxVBDVseSsoyOL6C
- SpUmner1OM+ntK08zEq2+UGmpNs++RW0FO1w83K6rgEuxIcbqSb7H19VUhSypM9+T3PY
- S3vQ==
-X-Gm-Message-State: AFuF++mupb/jH5rJTbS9ZecCOtoVyVlgjhyOy5jTg1s/xJaTa9gQxzZR
- QgdEwvIsARD5bqya82M6Z9QzH7EvS+ano5mKyqWMzMQ/TM0gqO0+8wPp6P1b3SWdNImTwBzbYho
- OAwGq
-X-Gm-Gg: AYBFou3ErV3QQtPJwQdGDg8m9APAdLd74oc2sxvSe6jK/SBVYvc8krE/AhViO+P9Y11
- LGZPvVdSLPqJlxOqMcK+WoIMQ/Zgy48iAHjoEbNC6sXfQ6csOrv+iBfRSt0XQ7yIJnhEqnBI8NQ
- /bXhaBQ0J9HOvzAmLS0AYNVmVQHTi2O4xgnTZ/vcvrm7PqFygLCrRv1ljrOALxu900eHOxgezkM
- H3xQF0JPdrIXtCYkMMSDIaOxqZSZYgGjodYwgIA+Ma3Gv+kLk1iCQv2ERregS17otECLORActwz
- nz0uNUmW7hHOkF8g29y+ynZOqttMWrXvgkOgUYhKckB92orId+AL/66t7le4eC8e1YdVsojSY2H
- BjRqijzzUDXT3+BySCdWt/yqtoVKbdWuHC2nO+J4v9Yh6jWdgjQfK0XZkF8LeB4AdGFiBxW+Aed
- /kMA95LPb6kl6ICg9c0+cmZVecGUR6BRxjUr2kvj657w7sK6keSkoXoX9Y/W8fQX7QaPj6
-X-Received: by 2002:a05:6000:2312:b0:485:8edf:8353 with SMTP id
- ffacd0b85a97d-48702b184b7mr8514877f8f.43.1789472582822; 
- Tue, 15 Sep 2026 04:43:02 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:33e6:6107:4678:322f])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb34e4b5sm33648081f8f.22.2026.09.15.04.43.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 04:43:02 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 1/3] parallels: report the stored dirty bitmaps in qemu-img info
-Date: Tue, 15 Sep 2026 13:42:56 +0200
-Message-ID: <20260915114258.3862446-2-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260915114258.3862446-1-den@openvz.org>
-References: <20260915114258.3862446-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x6RZy-0000l2-OX; Tue, 15 Sep 2026 07:44:02 -0400
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x6RZw-0005d5-8i; Tue, 15 Sep 2026 07:44:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tIOi2/8YYYx9IxuHydESvH1NLaxHFUot4UA5hsrkO5Xu3UdUuLjvjNQ91t9v4bdW01TOzoGp8kRZAkpIdU2maPCAZFwhuQcuQ1+p+ttPnv7C7O25XdhGEyl12aq1Xklwl7aaOO0Pd+s7XqbW23o7f3un4sZPJeysUyquxn39+QGU8yuH1ES4//lY6JoEv6xTdnkVe15U9x4Uth/6IRyQho4P20GSvqLgaoxUQr5OlM7kZQiCDArUg8nQfaQqVVGD1Zar9JY1NDm1L8dEH52f5sTEoF35vz02RxfG6y/dzcVQ2RqsUQs9hGessVuqz1rEfVh1NFhq4FIHHt9zEBL0vw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0ckEs0vr99ceo9SyyQzWFbidRXvzYea1IXBZZpBfpL4=;
+ b=GijT8e/tah/SnVf5S29bk2jgkV6fSLtrD+Xd3ca5NQ6eBuI6IGSFG7lk5pIWRu6YOZJ7koc+UYlseJFpby1s5iyvCVeE2Wng1Y/yN69XZNfKu5ovKUQ2UlOxjsY0zQg/HewNGx12d0YUInM8NnnUmcz2N8HyBThAciccjCYMkSZLMJNUKj6pkhEslYHiylSaaaqIL7YwPHEWkljGXCnkAbc/zK9nBFYWkJ+HTyar6oGDpUTvDXudmwbX8nTssNhiGCv3twMtbXwIwhE0oavPoql221Q2IBQrYqChiQbjNKaQsgAyw7uFtHZO+yWFRB+Rm2LL+tXW2OAPbzd90avr5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0ckEs0vr99ceo9SyyQzWFbidRXvzYea1IXBZZpBfpL4=;
+ b=Vja3XvPsLbS3b4fnybZx9wsH0pCtK+VgpnCL1gegioKHuwj592pdwKu/kdva+GpRtGBbDtVxHXMSop6XLPsgOghkfrWLtYN/evJ+Ht13qm3/Rh8878RIOFeUDLrV27/EV8QKkIOmLE1OyAP0t3FTnIflZZcHNALjH5dS8C9Z6AksSp0dpkdjx6GcfrhyKkTXjusZNmm8hRuiS89GSYvqgrAGPINhv8Gru8zRrxldtxAbQ6fggyXVBXbwAiscqR4VR1XSL9G8guz+jBedoSSWDXpzvIh8i7w5MOaX1lA55LiQ2c81l2ofZK+7xg3O6vLqVF77udAEjqBqRKi15L5eUQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DB9PR08MB6713.eurprd08.prod.outlook.com (2603:10a6:10:2aa::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Tue, 15 Sep
+ 2026 11:43:55 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0428.008; Tue, 15 Sep 2026
+ 11:43:55 +0000
+Message-ID: <818f755e-40b8-443b-b9ab-9fb223a0d24d@virtuozzo.com>
+Date: Tue, 15 Sep 2026 13:43:54 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block: fix bdrv_next() skipping monitor-owned nodes
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20260828222005.2888213-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260828222005.2888213-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VIVP296CA0101.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:355::18) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB6713:EE_
+X-MS-Office365-Filtering-Correlation-Id: c275020e-f0ce-4c01-baf9-08df131e9f50
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|10070799003|366016|23010399003|1800799024|6133799003|10067099003|56012099006|5023799004|18002099003|22082099003|18056099003;
+X-Microsoft-Antispam-Message-Info: zetO7plCfOSP6FRCbgJwf/oQwsYBMTfHrpVC2rdADJ0veVa0b1pMpnccaLn1S2eQNWuS800YCtEhtvP136ndGVvtVUfcf6wWW9/KU5cS+0LqFHf9JISiqNMCJ6JthyWQyoR96huXzYUpXRG/SDE4yhbO9f8JA0KUMPCbXJdyA2qL8sjz56kuk2zBgZaUtjc+4JYynhU/x4psoxECreasPUjO0QUiD28FVGBWGv213eZmuibTlMuoaFfBglXPah36ag6IfRJZj4XZEuAyPp5j/aOlKlV+yK3mL3wK754spyQBSyIH7Fyrg+wpVSauMLn88xygScxv276Bmu+Bw3jy+3e+WWUdKtmIAWiXaAtr/QhNz17EAwrfhUxFmke4pOr+0c9Rqn68hxwYQ/PsbKV/6yVKAdYd8Muw7HrVD7Awqg2mC9th/rO1eAZmWZCOh1UvzrM8YL7khQDxdZg0l1Z91N/4xJZaNswTBMKPISURf8JKcm5Odz/8YSLZ6O4J5VmYWilQmpmzCa1iezhBgV3JCBCayZmev45jWmk9HURChjBDWMGmsOG6jra5ysPySVSFEjjL3RJthTjT+DsGpHaBwsh42BCldL0sauzLjN6CtQtXgo5IUsC/ltrIb0C17eYyVKz5Oq74VAHKIAFN8bnVQ1lflGih/1vhNz/K38fySPQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(10070799003)(366016)(23010399003)(1800799024)(6133799003)(10067099003)(56012099006)(5023799004)(18002099003)(22082099003)(18056099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZExDcXRjRm0wRmJ3MXFuamNlK3F2YmdZRTJsSHpuS3dlMjFUWEJXNzU5anBD?=
+ =?utf-8?B?M2lvVk93RVY2bDJWTXZBWjQxTUE0aGlBcUpEMkZmSjF4VGF0NWErcDMvZ3hY?=
+ =?utf-8?B?MmRLS0V3ODdZZmhpR0hwUnF2cCtVT04vTEZPSnkxcUdsUmNxMWwwKys0RVJG?=
+ =?utf-8?B?b2t3TGF4K3Z6MWYrcFdRb2xSbXdwR291VVh1RlZob09mcWVYY0dqbFRTbG1G?=
+ =?utf-8?B?dFlhcEZWbU5WVzJJano5aW5NOVdKZUorZWtwWXUxYURuWWpYemw4U29kS1RL?=
+ =?utf-8?B?amRmbGUzSTZneVdPdTdkNDFiTnBjUllqdEVaaDNUd0dxdFpzUDJod1hRNkk3?=
+ =?utf-8?B?U2hQcStxcEhkQmF0S3FMTTNuYUJzQmVyNG9HZk5OVHNFMG02RTZvYTlOZGx0?=
+ =?utf-8?B?emhzMkZVWFpvc0NRVlBkVmJGNDhqejM4SUVSZHU2ZEdoMGFySzF4UTlBWm1L?=
+ =?utf-8?B?R0JCYW5JaEZ2WXNvTzhFRDAyTTRJWVdhcUwvVGlTMlFyUDllZy9RazBvRlo4?=
+ =?utf-8?B?K3pCOTlXRGx2SERtZG8vNXk1aktVT2Mvb0MxUEtxN0F4ZkJaMFZSYmlSaER2?=
+ =?utf-8?B?RFVMWDNWRUN5VDY1RERwYm16VldOVXNySkRxNFhtT3hnd0tPTStCMUdVV0dz?=
+ =?utf-8?B?Q1RKTWY2VEI2QngrNEtuRTlCVXhRWVR2akE4ckwvZ3FiYi9TWVJyMDBLMlpQ?=
+ =?utf-8?B?WUZJSGMya0JMbWFHcnMyNHFZNDRCWWlzQ3FULzZaaFdmQVN4WkZ3Z1Bvcmds?=
+ =?utf-8?B?bjBuNWhGL0pBczdrazRWVlhvNGU5dDhvdklVZThOUVB2M0ZrTWhic0ZBNkJ2?=
+ =?utf-8?B?RmRjTnAwN3UzSmhwY2VaUnA0MVNONktEQjdQdmJhc2xEUm96TnlGQld6MGV5?=
+ =?utf-8?B?ZWREU0RDN0VQSEl2d2QzY1FnN2xuZWRsSXZDelQzRHhMVTFPR1ZZWXBoVkNR?=
+ =?utf-8?B?QU1OZHJuemxZclV3MEMwSXlRaHdvTEJCOWFQa0ZxRWVmbW5GRTE1L3ZRcGxw?=
+ =?utf-8?B?VVlmeUtrLzNldmVoM0lTL3kzTlpodUgzWXhTUURWUmlIL3ZkUmpzS2txRmJK?=
+ =?utf-8?B?N2NwenVvbHBFa3hNQ3NFek1aa09SVWtYQTRxWHQyTlRObDhTdWx5aDlBTzk2?=
+ =?utf-8?B?RHRJcytZYTRlaENCNUxFSW9PUmhlR213N1E1dmEyL2FHUmZxdk9CSGZSbU03?=
+ =?utf-8?B?TDZ2UkQ0NDhlUllaaHZsOEFmUHU5RnMvNjUrV2VJL3kvV0ExeXdaUFVMQTB5?=
+ =?utf-8?B?Vy9rZHJ2aWE3L1h6Nzd4cytTcnNLSEs1NWxGNjMxQml5Zjd4L0p4R2c5WVll?=
+ =?utf-8?B?T3pzYUVGQks3dVQzaTZyNEtSTWdXc0xwYUg5NnRCT0RGVE1jN2tQeUlLblFQ?=
+ =?utf-8?B?NDhhV1NONVFIbnJQWnphZ3hQeHF2WHQ3QkhvOUxEekxIOTZGcVZmZFVWOFhx?=
+ =?utf-8?B?QlNHdS9RczdPMFg1Wktva0NIUHF6RWxDMHcyeDlPc2ZXSHhqajlpWUhSZXZX?=
+ =?utf-8?B?MnNNZGdCbkd1YjhwVjA4V2tWSEdVbmpUeHp6MzhnUjBmekgxL3VtdElDZ0ZR?=
+ =?utf-8?B?YlNhRVdyQ21xNjE4Y1Y0L3FLY0d1c3IzQkpmYUJIZjhadWI1aUJWWUV6N2d0?=
+ =?utf-8?B?Sk1QZ3Mxa2thcnZHQ1JsLzRzdkRIZ2s5enFucWhIaW9jc0t4Q2YxQURPSWxL?=
+ =?utf-8?B?bTlPNmdQUUNYbmVTd3BsSHpCbzRCcHpLNTl1YjNjZG1XaGEyOG0zVlBtSi8x?=
+ =?utf-8?B?OU9XbUNXVHhQMGpyUEhYait0dVl6Wnk5Qkw5ZEhGV3R4MG5VcWlZN202dWdW?=
+ =?utf-8?B?K3l0ZkRTdWxjelFEMzY1WGNkZDlGVWJjc3lwOTFacG93dWRLNkt1MDMvSTJU?=
+ =?utf-8?B?L21Ra2YzVGdRTTlFNFpjTnFxQXZyTllydnZpT3B0d2tyc3VLQUordTNPMlE2?=
+ =?utf-8?B?Uk1VSTZjaGNXeFdIQ1VDMWxRMmVObGw4Umd6YUtkSFMyK0s1aGlncXdRcEph?=
+ =?utf-8?B?b2JKV3FweWNtbUxPcm1FRDE1NGZIUktqUUM3WmNLZzBPT25oMFBETDFCSFpN?=
+ =?utf-8?B?a1IwTHZrN2lMVnRhWkxFdmJ0SERXNVNETW16Y1ZZUndTOG40TDJkWHQ0b0RX?=
+ =?utf-8?B?NTc4MzBQK2hSY0tBRlRDamV3ZDFLelc3Nnk1U3R1NEk2L2YzRVp5ZkNpMGNm?=
+ =?utf-8?B?U0tZMWJreVdiYW5BTWxGMXExcWxOMjMxQTVLNnhBK0RrR2NEb1NKd3JTTCt4?=
+ =?utf-8?B?L0lxZ1BGMDFBMWI0L1F2d1RzM0J2WllZWVl0Mmx3UVBUdHJMRW11RWV2My9G?=
+ =?utf-8?B?K01ZbmxBSDRZTnR3djUrQUlFb0JUNGU3WE5La25MdTVwVmowRklPYzdsTzI4?=
+ =?utf-8?Q?nzEMKo/y9Gnsb7EXWGWS72Vb9Hfch+Ew0QOC/WXKtABuN?=
+X-MS-Exchange-AntiSpam-MessageData-1: qr1a2pnM4qx0Mw==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c275020e-f0ce-4c01-baf9-08df131e9f50
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 11:43:55.4769 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9uhjUWaAnIEjnY4IqVimiAbxit8DCxAt47Q/OSxCucCPgD/kVqBy8GvucqS2W4MJ8ES4BH5hyYpFsMNPyMD0dw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6713
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,290 +151,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
-
-Nothing tells which persistent bitmaps an image carries. qemu-img info
-says nothing about them, and the only other way to see one is to export
-the image over NBD and ask for a bitmap by name, which needs the name
-beforehand.
-
-Add ImageInfoSpecificParallels with the bitmaps and their granularity,
-in the same way as qcow2 reports the contents of its bitmap directory:
-
-    Format specific information:
-        bitmaps:
-            [0]:
-                name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
-                granularity: 65536
-
-For running VM process the list is built on the fly from in-memory
-list. This is the best we can do. FormatExtension could be dead in
-the image while VMs are running as all bitmaps are cleared on
-non-clean VM stop.
-
-A bitmap of an image which was not closed correctly is inconsistent
-and can not be used. Report that as well, the way qcow2 reports its
-in-use flag, so such a bitmap is not listed as a valid one.
-
-The section is left empty for an image with no persistent dirty
-bitmaps, and an empty section is not printed, so the human readable
-output of "qemu-img info" and "info block" is unchanged.
-
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Acked-by: Markus Armbruster <armbru@redhat.com>
----
- block/parallels-ext.c                         | 26 +++++++++++
- block/parallels.c                             | 20 +++++++++
- block/parallels.h                             |  3 ++
- qapi/block-core.json                          | 45 ++++++++++++++++++-
- tests/qemu-iotests/tests/parallels-checks     |  6 +++
- tests/qemu-iotests/tests/parallels-checks.out | 19 ++++++++
- 6 files changed, 117 insertions(+), 2 deletions(-)
-
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index f687f2da7c..8b8035af91 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -736,3 +736,29 @@ parallels_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
- 
-     return ret;
- }
-+
-+void parallels_get_bitmap_info_list(BlockDriverState *bs,
-+                                    ParallelsBitmapInfoList **info_list)
-+{
-+    BdrvDirtyBitmap *bitmap;
-+    ParallelsBitmapInfoList **tail = info_list;
-+
-+    *info_list = NULL;
-+
-+    FOR_EACH_DIRTY_BITMAP(bs, bitmap) {
-+        ParallelsBitmapInfo *info;
-+
-+        if (!bdrv_dirty_bitmap_get_persistence(bitmap)) {
-+            continue;
-+        }
-+
-+        info = g_new0(ParallelsBitmapInfo, 1);
-+        info->name = g_strdup(bdrv_dirty_bitmap_name(bitmap));
-+        info->granularity = bdrv_dirty_bitmap_granularity(bitmap);
-+        if (bdrv_dirty_bitmap_inconsistent(bitmap)) {
-+            info->has_inconsistent = true;
-+            info->inconsistent = true;
-+        }
-+        QAPI_LIST_APPEND(tail, info);
-+    }
-+}
-diff --git a/block/parallels.c b/block/parallels.c
-index 2a5ceb8978..e7d65d0458 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -1624,6 +1624,25 @@ static bool parallels_is_support_dirty_bitmaps(BlockDriverState *bs)
-     return 1;
- }
- 
-+static ImageInfoSpecific * GRAPH_RDLOCK
-+parallels_get_specific_info(BlockDriverState *bs, Error **errp)
-+{
-+    ImageInfoSpecificParallels *parallels_info;
-+    ImageInfoSpecific *spec_info;
-+
-+    parallels_info = g_new0(ImageInfoSpecificParallels, 1);
-+    parallels_get_bitmap_info_list(bs, &parallels_info->bitmaps);
-+    parallels_info->has_bitmaps = !!parallels_info->bitmaps;
-+
-+    spec_info = g_new(ImageInfoSpecific, 1);
-+    *spec_info = (ImageInfoSpecific){
-+        .type = IMAGE_INFO_SPECIFIC_KIND_PARALLELS,
-+        .u.parallels.data = parallels_info,
-+    };
-+
-+    return spec_info;
-+}
-+
- static BlockDriver bdrv_parallels = {
-     .format_name                = "parallels",
-     .instance_size              = sizeof(BDRVParallelsState),
-@@ -1653,6 +1672,7 @@ static BlockDriver bdrv_parallels = {
-                                   parallels_co_can_store_new_dirty_bitmap,
-     .bdrv_co_remove_persistent_dirty_bitmap =
-                                   parallels_co_remove_persistent_dirty_bitmap,
-+    .bdrv_get_specific_info     = parallels_get_specific_info,
- };
- 
- static void bdrv_parallels_init(void)
-diff --git a/block/parallels.h b/block/parallels.h
-index 27d8c3ac83..012f47320b 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -32,6 +32,7 @@
- #ifndef BLOCK_PARALLELS_H
- #define BLOCK_PARALLELS_H
- #include "qemu/coroutine.h"
-+#include "qapi/qapi-types-block-core.h"
- 
- #define HEADS_NUMBER 16
- #define SEC_IN_CYL 32
-@@ -111,5 +112,7 @@ parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs, const char *name,
- int coroutine_fn GRAPH_RDLOCK
- parallels_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
-                                             const char *name, Error **errp);
-+void parallels_get_bitmap_info_list(BlockDriverState *bs,
-+                                    ParallelsBitmapInfoList **info_list);
- 
- #endif
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 199efc1e00..aed2888147 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -188,6 +188,16 @@
-       '*extent-size-hint': 'size'
-   } }
- 
-+##
-+# @ImageInfoSpecificParallels:
-+#
-+# @bitmaps: A list of parallels bitmap details
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'ImageInfoSpecificParallels',
-+  'data': { '*bitmaps': ['ParallelsBitmapInfo'] } }
-+
- ##
- # @ImageInfoSpecificKind:
- #
-@@ -197,10 +207,12 @@
- #
- # @file: Since 8.0
- #
-+# @parallels: Since 11.2
-+#
- # Since: 1.7
- ##
- { 'enum': 'ImageInfoSpecificKind',
--  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
-+  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'parallels' ] }
- 
- ##
- # @ImageInfoSpecificQCow2Wrapper:
-@@ -255,6 +267,16 @@
- { 'struct': 'ImageInfoSpecificFileWrapper',
-   'data': { 'data': 'ImageInfoSpecificFile' } }
- 
-+##
-+# @ImageInfoSpecificParallelsWrapper:
-+#
-+# @data: image information specific to Parallels
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'ImageInfoSpecificParallelsWrapper',
-+  'data': { 'data': 'ImageInfoSpecificParallels' } }
-+
- ##
- # @ImageInfoSpecific:
- #
-@@ -273,7 +295,8 @@
-       'vmdk': 'ImageInfoSpecificVmdkWrapper',
-       'luks': 'ImageInfoSpecificLUKSWrapper',
-       'rbd': 'ImageInfoSpecificRbdWrapper',
--      'file': 'ImageInfoSpecificFileWrapper'
-+      'file': 'ImageInfoSpecificFileWrapper',
-+      'parallels': 'ImageInfoSpecificParallelsWrapper'
-   } }
- 
- ##
-@@ -751,6 +774,24 @@
-   'data': {'name': 'str', 'granularity': 'uint32',
-            'flags': ['Qcow2BitmapInfoFlags'] } }
- 
-+##
-+# @ParallelsBitmapInfo:
-+#
-+# Parallels bitmap information.
-+#
-+# @name: the name of the bitmap
-+#
-+# @granularity: granularity of the bitmap in bytes
-+#
-+# @inconsistent: true if the bitmap is in an inconsistent state and
-+#     cannot be used
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'ParallelsBitmapInfo',
-+  'data': { 'name': 'str', 'granularity': 'uint32',
-+            '*inconsistent': 'bool' } }
-+
- ##
- # @BlockLatencyHistogramInfo:
- #
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index 3e9928c9c3..ca89ed5d62 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -382,6 +382,9 @@ echo "== dirty a single granule of the bitmap =="
- file_size=`stat --printf="%s" "$TEST_IMG"`
- echo "file size: $file_size"
- 
-+echo "== the bitmap is reported by qemu-img info =="
-+_img_info --format-specific
-+
- echo "== the extension and its bitmap data are not a leak =="
- _check_test_img
- 
-@@ -425,6 +428,9 @@ $QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
- echo "== pretend the image was not closed correctly =="
- poke_file "$TEST_IMG" "$INUSE_OFFSET" "\x59\x6e\x6f\x74"
- 
-+echo "== a read-only open still reports it, marked inconsistent =="
-+_img_info --format-specific
-+
- echo "== the bitmap is stale, so it can not be used and is dropped =="
- $QEMU_IMG bitmap --clear -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
- 
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index 871a88d924..f6806f82fa 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -241,6 +241,15 @@ qemu-img: Operation add on bitmap bitmap0 failed: Bitmap name must be a UUID to
- wrote 65536/65536 bytes at offset 0
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- file size: 4194304
-+== the bitmap is reported by qemu-img info ==
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 4 MiB (4194304 bytes)
-+Format specific information:
-+    bitmaps:
-+        [0]:
-+            name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
-+            granularity: 65536
- == the extension and its bitmap data are not a leak ==
- No errors were found on the image.
- == extend image by 1 cluster ==
-@@ -273,6 +282,16 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
- wrote 65536/65536 bytes at offset 0
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- == pretend the image was not closed correctly ==
-+== a read-only open still reports it, marked inconsistent ==
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 4 MiB (4194304 bytes)
-+Format specific information:
-+    bitmaps:
-+        [0]:
-+            name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
-+            granularity: 65536
-+            inconsistent: true
- == the bitmap is stale, so it can not be used and is dropped ==
- Repairing image was not closed correctly
- qemu-img: Operation clear on bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45 failed: Bitmap 'b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45' is inconsistent and cannot be used
--- 
-2.53.0
-
+On 8/29/26 00:20, Denis V. Lunev wrote:
+> This email originated from an IP that might not be authorized by the domain it was sent from.
+> Do not click links or open attachments unless it is an email you expected to receive.
+> From: Denis V. Lunev <den@openvz.org>
+>
+> it->bs is the cursor into monitor_bdrv_states for the second phase of
+> bdrv_next(), so it has to be NULL when that phase starts. Commit
+> f6d38c9f6d made the first phase store the node it returns there, to
+> unreference the right one when the graph changes underneath. The cursor
+> is now left pointing at the last BlockBackend root, so the second phase
+> resumes from there instead of from the head of the list and never
+> returns a node added before it.
+>
+> A skipped node drops out of the vm_stop and migration handover paths:
+> not flushed, not inactivated, not snapshotted. bdrv_inactivate_all()
+> still reports success, so the node keeps its image lock and the
+> migration target cannot open the image. Only detached nodes are hit in
+> practice, as these callers also recurse into children.
+>
+> Reset the cursor when the second phase starts. old_bs is taken at the
+> top of the function, so f6d38c9f6d keeps working.
+>
+> Fixes: f6d38c9f6d ("block-backend: fix edge case in bdrv_next() where BDS associated to BB changes")
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Fiona Ebner <f.ebner@proxmox.com>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> ---
+>
+> Notes:
+>     The iterator was correct from its introduction in 2016 until 2024:
+>     it->bs was written only by the second phase, and the node to unreference
+>     came from the BlockBackend instead.
+>
+>     f6d38c9f6d's own reproducer does not fire for me, 240 runs across 8
+>     timings, even with its fix reverted. Tried hard.
+>
+>  block/block-backend.c                          |  1 +
+>  tests/qemu-iotests/tests/inactive-node-nbd     | 16 ++++++++++++++++
+>  tests/qemu-iotests/tests/inactive-node-nbd.out |  8 ++++++++
+>  3 files changed, 25 insertions(+)
+>
+> diff --git a/block/block-backend.c b/block/block-backend.c
+> index 37ba7e9fc4..55497c4551 100644
+> --- a/block/block-backend.c
+> +++ b/block/block-backend.c
+> @@ -625,6 +625,7 @@ BlockDriverState *bdrv_next(BdrvNextIterator *it)
+>              return bs;
+>          }
+>          it->phase = BDRV_NEXT_MONITOR_OWNED;
+> +        it->bs = NULL;
+>      }
+>  
+>      /* Then return the monitor-owned BDSes without a BB attached. Ignore all
+> diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
+> index 664157bfd0..ef876ae6be 100755
+> --- a/tests/qemu-iotests/tests/inactive-node-nbd
+> +++ b/tests/qemu-iotests/tests/inactive-node-nbd
+> @@ -47,6 +47,7 @@ def node_is_active(_vm, node_name):
+>      return node['active']
+>  
+>  with iotests.FilePath('disk.img') as path, \
+> +     iotests.FilePath('detached.img') as detached_path, \
+>       iotests.FilePath('snap.qcow2') as snap_path, \
+>       iotests.FilePath('snap2.qcow2') as snap2_path, \
+>       iotests.FilePath('target.img') as target_path, \
+> @@ -58,6 +59,7 @@ with iotests.FilePath('disk.img') as path, \
+>      iotests.log('Preparing disk...')
+>      iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
+>      iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
+> +    iotests.qemu_img_create('-f', iotests.imgfmt, detached_path, img_size)
+>  
+>      iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
+>                              snap_path)
+> @@ -68,6 +70,9 @@ with iotests.FilePath('disk.img') as path, \
+>      vm.add_blockdev(f'file,node-name=disk-file,filename={path}')
+>      vm.add_blockdev(f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
+>                       'active=off')
+> +    vm.add_blockdev(f'file,node-name=detached-file,filename={detached_path}')
+> +    vm.add_blockdev(f'{iotests.imgfmt},file=detached-file,'
+> +                     'node-name=detached-fmt')
+>      vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
+>      vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
+>      vm.add_blockdev(f'file,node-name=snap-file,filename={snap_path}')
+> @@ -297,6 +302,17 @@ with iotests.FilePath('disk.img') as path, \
+>      iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
+>      iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
+>  
+> +    iotests.log('\n=== Inactivating all nodes at once ===')
+> +
+> +    # detached-fmt has no parent and no BlockBackend, so nothing can reach it
+> +    # by recursion. It is only inactivated if bdrv_next() actually returns it.
+> +    vm.qmp_log('stop')
+> +    vm.qmp_log('blockdev-set-active', active=False)
+> +
+> +    iotests.log('detached-fmt active: %s' % node_is_active(vm, 'detached-fmt'))
+> +    iotests.log('detached-file active: %s'
+> +                % node_is_active(vm, 'detached-file'))
+> +
+>      iotests.log('\nShutting down...')
+>      vm.shutdown()
+>      log = vm.get_log()
+> diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+> index a458b4fc05..48451dc0c5 100644
+> --- a/tests/qemu-iotests/tests/inactive-node-nbd.out
+> +++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+> @@ -235,5 +235,13 @@ snap-fmt active: True
+>  snap2-fmt active: True
+>  target-fmt active: True
+>  
+> +=== Inactivating all nodes at once ===
+> +{"execute": "stop", "arguments": {}}
+> +{"return": {}}
+> +{"execute": "blockdev-set-active", "arguments": {"active": false}}
+> +{"return": {}}
+> +detached-fmt active: False
+> +detached-file active: False
+> +
+>  Shutting down...
+>  
+ping
 
