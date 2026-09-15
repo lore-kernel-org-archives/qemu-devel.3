@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28FCC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD51C88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WdD-0005NV-Jh; Tue, 15 Sep 2026 13:07:43 -0400
+	id 1x6WdP-0005RS-RR; Tue, 15 Sep 2026 13:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdB-0005N2-Am
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:41 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ id 1x6WdI-0005PM-1r
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:48 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6Wd9-0003T0-95
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:41 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-485984ebf5cso2799291f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:38 -0700 (PDT)
+ id 1x6WdF-0003V1-J0
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:46 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49b965f447cso386895e9.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789492057; x=1790096857; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Rp5wv7hU75EHPVC0TCrmoBB8H5e3nDpaJHzzSbyhTPI=;
- b=kuCyBzhBs1WE1h5LWl/4jKHftaPrVnfa91ztDAA5VavJM58/aBCrZCO4L8Dnb3ntym
- DBK4mxvumXgrbYLJmhx2maCOSF3CUjkcBZu7esJWPvDWvBbRHSQ6MJo1la2nvJM7uHCH
- SKfG6xaGG+B6i0WSt/4aHMm8Wsdim+0LsCR5HPyWW4/JeqbHuFORSEdN+EzcnLFGXvQK
- LIirrU5LOlbN0QaJKbQP9sdE8LBxKKtru7/lmu5Td8L7iKTDYW3yN1tOnHVSL9PEA6fV
- JC2FFG9AISkzDeY6SCm5BXUJnXbGdwfcIOVLPhMzRH6PSaMK8+euzuO7HHlvEG/pQ3wN
- Hm/Q==
+ d=linaro.org; s=google; t=1789492064; x=1790096864; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=KrYU6RJmNOF/FoaJu3Mw98qt2feP2v6ZmgeL681rOpk=;
+ b=jTmP1d/3kyJVngNx+HeprRdFsMdUJhcIUhnqQSo+HVgAyeLE64MPgbjKNj5erhBPxZ
+ 87SN4noZ4hLAUvRA/+DBFHi8JmN2o50E5E4BZG9BCuwL+fFIT7cabokdUeGAkefSQtUT
+ Wu0rZNdfnovDRKK75/VHrm2PT9W63qitXJpDz9Ovh338Kf9UEN3BPrnD/SdhO0XuwXMC
+ MKrCzXjqoGauD533+0o9bwMD1hRYpbTeXbckwTOHc7PfzjeIzcY9ne5E/W4j523WVNmZ
+ kFknWggXAS/u83xVQ+FYWVnJMPP35biLzEFGRpWpF3V/a+iBT6juzQ5CLqgnbvrX8HfQ
+ cl/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789492057; x=1790096857;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Rp5wv7hU75EHPVC0TCrmoBB8H5e3nDpaJHzzSbyhTPI=;
- b=xcIsJvpRlYILBrJX2k0kD79bq/5in8BOiiQ+Z2fi3A9sB+sMuIwqrUr7lXqHXkFZpm
- xK7qsXJT2M9QRMNiTTtoLmNXTaK+5HhGjUQX/jPGASYLnBx/xB03PGhbiE7Lnxv487oz
- Z5mNJr154yGZLEveQYnAHDtJ1Ig69OpjDPXOHv6qJxehLxS8tTFQ7oh+FlZHq2zJk/0+
- RPYLQe6xFuTq8ZVCxEx8H87nac5pzEZWDWiJCBmR/m2Fc6GQKy/vFodB+s+D2Ujo6jNg
- TQQsbwTbmO79DzPbTr2q3EhbXYTQvjmglyxxR5zThGi3KSzVrztMamLY7TavSRiyeAUY
- Bh0Q==
-X-Gm-Message-State: AFuF++kLBOQpEz7QRkeyMqBAGWGK/sUR+qhQbY3geDwiHyrtzDBeV7nF
- zi/C4lKHHps1Pjlx0iVfsyAOQk2EZYa5FDi2xiFB2YE/h4cTYFygPshjpZ7yoToYAJDXey7kyOt
- CA+OFYU8=
-X-Gm-Gg: AYBFou2BrB8qj55iChETSOytAbQTTeiDBA/bCivC4QoPMMhzdcOUV5YrkRL8u21UZ4E
- vBup95cxXCeDD6SO1vCg8OdM6w2HvtBOstRidGQo1duhKUmhCGQU4cU4YElvs6E6NMtdPW5K8Dk
- mS15ko4B5ofZwLBJeFKDZSh1OyeTjBd6qDJ5s0UlYlMDMP8xwikuqgv+16kpqoeaNV4VO0nWSRy
- pluIEhXwWxKdXWNlRbeR3Os+DgfNCgsGT0lIofDEIEu/mOibR/TLejiar0UD3oGzPRe94DQCUNk
- PPDOh1JRUytraRsQluzWEVL9OBXwNJfJlA3+8b9lnCtdwVrEGzhXdOc974aScgQQ3W/WpM+2zJH
- hIYHkGsjon0B1HHO+Xk7eIclSqZ2WI9Jmv+bxSHW8reznuUBUwrIwLfTxidwEGsLOcGjH8y1d4a
- WFQ9ulUudKEW5rc4+lufmE5M6Qsybs7/WbRUvoOZe/4lXH6aagVT6v707cNkbKrtz6R0IxKnwSs
- 8+osa1DtnB8FD6LUihDHXYBnTOIs2R9u9G2xig3peWDN1e+eV/GgVRtuY2YtKxNIUA2JWKgbjWB
- YNxh
-X-Received: by 2002:a05:6000:38b:b0:487:aa1:ea90 with SMTP id
- ffacd0b85a97d-4870aa1eaedmr2077018f8f.40.1789492057355; 
- Tue, 15 Sep 2026 10:07:37 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789492064; x=1790096864;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=KrYU6RJmNOF/FoaJu3Mw98qt2feP2v6ZmgeL681rOpk=;
+ b=tHEkSKAyhZ9A5Zfoj6d5hBPJtzM3vdE4gzjL9LVM9H9biGU7JOv8MG8hplYsJIXwD8
+ Xgt9138P1MTUOaT55lwWbQPHOSBZOKpjHyFZU+NaVTsQ3LlEar8IGYBGhUtgGLn0tGdB
+ qhhAi4nduMAqhNIZo9HhFjQf5NXuIVh736ps+lRW/JXecY/SctuwlX7txbWCVFCHizj0
+ rABTKLtVREjsH34HD7/wK7LNe1QxGMmJwPKPIv4KQhzbzU8ExHEIYMfnBOMBdfXUzQhk
+ VXagu8MrpYVd1zy6cRor2qjlFllT5Sbpg6WfgZUuKk0wo4g7P7FuKSPtCsBSdbbJjIHt
+ UwcA==
+X-Gm-Message-State: AFuF++lu9AiEkSa73uPZC240P5MXa+PRJYi/HVHBsMQTHKFS8wjQMVlf
+ TfvuyzqwZzo5CHDGdS4aXhiKh1EJF23z3CIBLwuA8JPzBq2kjpJdUbEAb+tFJN+uWydiIoDEAT5
+ 8xKmkBSg=
+X-Gm-Gg: AYBFou0oMS+Q5grKsKxnAcYifm4d/vHHZ3qZfEWX8+Ipty08/0YINTT1eLjhFfCw0/Y
+ k2iZ49MUkQg9bTf9zyGfRXfYWqn2HB3I2ie8fnABFAucdVWzSCFlG2EVcQPn8op9050jwVwVw1U
+ g+adRJRj+PU6WOjckcGfHp2qkVHJ08YQ8kRKyCVt1NGjgb5AOS0AA8gAfCknX7LqObCq+9i5Vse
+ N+xHPNn2qRFEASg9rro+AZ/ySt53WTBgR+7ousWT3Wz59SXqdKoIgDE4zM2SBIk4xLWPiLdp3iN
+ 2iIDR8OSHft9yMq1hFoXAAxrTOuz8yD2elAlsa1aFqiry1xKsFueu03bKkqZc4pBop2/iG7tRwg
+ yYQ9uOnpPhXGDXa+LTMPSIs9tpRraZ9lqsPX42r2/8R1abmScUQkS5x+v7nNN5mOjKMvXz46th1
+ 4k++JYFKJVlNEDfRqtqL6X/H5DnNtc0BqoaSh/GR+zxm6OJMTc3/tS0OWpM3/uwNG0aV3fiTbVY
+ y69EVZcc/1QFk5Z58Fdm0ZVyNbYbScimgKlZcuMwAXxYJZMNsM5WGvjDYRjS5nPqm7iRLlmlZsh
+ l66X
+X-Received: by 2002:a05:600c:4e47:b0:49c:fa20:cc02 with SMTP id
+ 5b1f17b1804b1-49e7a677cdbmr79686635e9.25.1789492064165; 
+ Tue, 15 Sep 2026 10:07:44 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.36
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:07:36 -0700 (PDT)
+ Tue, 15 Sep 2026 10:07:43 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/20] target-arm queue
-Date: Tue, 15 Sep 2026 18:07:15 +0100
-Message-ID: <20260915170735.425445-1-peter.maydell@linaro.org>
+Subject: [PULL 06/20] arm: gwdt: consolidate clear WS0 and WS1 on explicit
+ refresh
+Date: Tue, 15 Sep 2026 18:07:21 +0100
+Message-ID: <20260915170735.425445-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260915170735.425445-1-peter.maydell@linaro.org>
+References: <20260915170735.425445-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,93 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq; pretty much all bugfixes this time.
+From: Igor Mammedov <imammedo@redhat.com>
 
-thanks
--- PMM
+Current impl had logic scattered all over the place and WCS was implicitly
+cleared on WCS write.
 
-The following changes since commit 5f664cd37aec17e8145aa117d8da68f507edc8f1:
+Consolidate clear action in one place under EXPLICIT_REFRESH condition.
 
-  Merge tag 'ui-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-09-13 15:54:17 -1000)
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260902122646.2848464-3-imammedo@redhat.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/watchdog/sbsa_gwdt.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-are available in the Git repository at:
+diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+index 7cc5609b83f..2aa44573a7b 100644
+--- a/hw/watchdog/sbsa_gwdt.c
++++ b/hw/watchdog/sbsa_gwdt.c
+@@ -105,6 +105,10 @@ static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+ 
+     timer_del(s->timer);
+ 
++    if (rtype == EXPLICIT_REFRESH) {
++        s->wcs &= ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
++    }
++
+     if (!(s->wcs & SBSA_GWDT_WCS_EN)) {
+         return;
+     }
+@@ -134,8 +138,6 @@ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
+ 
+     trace_sbsa_gwdt_refresh_write(offset, data);
+     if (offset == SBSA_GWDT_WRR) {
+-        s->wcs &= ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
+-
+         sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
+     } else {
+         qemu_log_mask(LOG_GUEST_ERROR, "bad address in refresh frame write :"
+@@ -157,14 +159,12 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offset, uint64_t data,
+ 
+     case SBSA_GWDT_WOR:
+         s->worl = data;
+-        s->wcs &= ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
+         qemu_set_irq(s->irq, 0);
+         sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
+         break;
+ 
+     case SBSA_GWDT_WORU:
+         s->woru = data & SBSA_GWDT_WOR_MASK;
+-        s->wcs &= ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
+         qemu_set_irq(s->irq, 0);
+         sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
+         break;
+-- 
+2.43.0
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260915
-
-for you to fetch changes up to 157f6c69edd0627f5f78f1f14ea0d831b0948c69:
-
-  target/arm: extend PMSAv7 support to v6-M CPUs (2026-09-15 14:27:23 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * target/arm/whpx: fix whpx-arm post-reset CPU state
- * target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
- * target/arm/whpx: Don't try to sync ARM_CP_CONST registers
- * hw/intc/bcm2835_ic: reject out-of-range FIQ source values
- * sbsa-gwdt: reschedule timer on direct WCV load
- * target/arm/hvf: implement MDCCSR_EL0 as RAZ
- * hw/char/stm32l4x5_usart: Accept character input upon RDR read
- * MAINTAINERS: Update email address for Vikram Garhwal
- * hw/misc/bcm2835_powermgt: free wdog timer on finalize
- * target/arm: initialize SCTLR reset value for arm11mpcore
- * target/arm: Fix various v6M corner-case bugs
-
-----------------------------------------------------------------
-Alex Bennée (1):
-      hw/char/stm32l4x5_usart: Accept character input upon RDR read
-
-Bin Guo (1):
-      hw/intc/bcm2835_ic: reject out-of-range FIQ source values
-
-Doug Cook (3):
-      target/arm/whpx: Don't try to sync ARM_CP_CONST registers
-      target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
-      target/arm/whpx: fix whpx-arm post-reset CPU state
-
-Gilles Grimaud (5):
-      target/arm: enforce Armv6-M NVIC limits
-      target/arm: MPU - limit regs RBAR/RASR A1-A3 to Main Extension
-      target/arm: MPU_RASR: mask TEX bits for Armv6-M
-      target/arm: fix MPU SIZE min for v6-M/v7-M/v7-R
-      target/arm: extend PMSAv7 support to v6-M CPUs
-
-Igor Mammedov (6):
-      sbsa-gwdt: reduce code indent
-      arm: gwdt: consolidate clear WS0 and WS1 on explicit refresh
-      arm: gwdt: simplify WCV update condition
-      sbsa-gwdt: rename sbsa_gwdt_update_timer() to sbsa_gwdt_wor_update_timer()
-      sbsa-gwdt: don't arm timer for compare values above INT64_MAX
-      sbsa-gwdt: reschedule timer on direct WCV load
-
-Marc-André Lureau (1):
-      hw/misc/bcm2835_powermgt: free wdog timer on finalize
-
-Showta Ishizaki (1):
-      target/arm/hvf: implement MDCCSR_EL0 as RAZ
-
-Vikram Garhwal (1):
-      MAINTAINERS: Update email address for Vikram Garhwal
-
-vpyr (1):
-      target/arm: initialize SCTLR reset value for arm11mpcore
-
- MAINTAINERS                             |   4 +-
- hw/char/stm32l4x5_usart.c               |   1 +
- hw/intc/armv7m_nvic.c                   |  42 +++++-
- hw/intc/bcm2835_ic.c                    |  13 +-
- hw/misc/bcm2835_powermgt.c              |   8 +
- hw/watchdog/sbsa_gwdt.c                 |  87 +++++++----
- target/arm/cpu.c                        |  12 +-
- target/arm/hvf/hvf.c                    |  10 ++
- target/arm/machine.c                    |   3 +-
- target/arm/ptw.c                        |  14 +-
- target/arm/tcg/cpu32.c                  |   1 +
- target/arm/whpx/whpx-all.c              | 254 ++++++++++++++++++--------------
- tests/qtest/bcm2835-ic-test.c           |  66 +++++++++
- tests/qtest/meson.build                 |   2 +-
- tests/tcg/arm/system/meson.build        |   6 +
- tests/tcg/arm/system/test-armv6m-nvic.S |  70 +++++++++
- 16 files changed, 439 insertions(+), 154 deletions(-)
- create mode 100644 tests/qtest/bcm2835-ic-test.c
- create mode 100644 tests/tcg/arm/system/test-armv6m-nvic.S
 
