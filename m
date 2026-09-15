@@ -4,145 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15731C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 01:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E75C88E72
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 01:31:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Hiv-0004Wz-3l; Mon, 14 Sep 2026 21:12:38 -0400
+	id 1x6I0j-0006pt-Ax; Mon, 14 Sep 2026 21:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x6Hin-0004WW-LM
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 21:12:30 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1x6I0c-0006pF-97
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 21:30:55 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x6Hik-0006dB-PL
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 21:12:28 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EN1LZs1277733
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 01:12:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- u33krVk5+FTiPbm5gZpUkG785NjNq01FUsL9zKVcNEk=; b=fv4pvc+icc3MzdDL
- Ha5heYzVxapQ6g697hwDXZgPRHon/XMoNlB5yD8gdrGxovf1/RHYLGTGpngsHlfL
- fB6mTrTLhMUd4npczZX8wsbDDTVdLG8rkaYp/EvP7fY74cAJT9XBaPFyVRKBR52T
- Mcso5XFqU6F/EI6v2RfqfH8MX3wwpnfdKzqe7ajWcqUaFNuFYfSTO4a3QXcI0gUl
- C/7fPda5IYarE7KPXXvpKauwqUIl34A5HzvDCR7fKMXHiDenNHlWBV3GZWmhlHc6
- XVseF/uokwAaA5MG0/sO9Xuv1nMv+XxUNYs+Iu6qR8HGyfMtLJSuIv8v094xCu7T
- L1ai0A==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpd1f3rsu-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 01:12:24 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-53094ff7090so102721801cf.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 18:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789434743; x=1790039543; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=u33krVk5+FTiPbm5gZpUkG785NjNq01FUsL9zKVcNEk=;
- b=Z1/l1sYFDzW/m+bDaR6XfUBSWoA6uQ8/cL7ngFP6Hfmic5mCEh3KRkqkwLfpgo8Imv
- fyxkxxNfA0XunB1VfWBa15E4z6jjnkuaB9oimgXijwnQSv9Cfw7qXNipJV5CMUUwVy0w
- 62abEmtf8FYAMypk/YUlRyqP4tDtHpY5PUjQH+Srcj0LLgN3rRyV6gNybmAnV3zSYFQ2
- 86/x1rATenQmE2t2Mz5KFWdTPyfRtzCEs8PBxKndPxK26rcagckccNLVL44yP+oWzwwV
- cjjA2y1aAdkF108vpd2IZ9ARTWDeFadh1eCZ0crCLS3uk06+7dAHWdfbZ4ZenfjUbONu
- bJoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789434743; x=1790039543;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=u33krVk5+FTiPbm5gZpUkG785NjNq01FUsL9zKVcNEk=;
- b=A7F5W+t9i4lHWgsM8n47/mPHGwrRvesMhLzF/MZZgIrDf9JY1KWJJu8dEMYybYHHcs
- G0L5GVsfEczmHZtHmj6+Vhycftu34UQHlpDVGyzwlGToROvKs9DK5Xm17WunW0RJ89u2
- TzKYmzaMi3NPoMXNnu3IXgOXS3PEbBe/u9byo2L4hQvFoVzz/nmds7t5dZcSNgW4S5ge
- 0wwUyB/qXelvd3V70TbEHU2jnMG9h9XrcFzfrPAt5MT13tTaxL2tO5+wKZMxIH4P8p2E
- pRIM/GGh9BOmxPZrA5ff1UpyL6cQxodCJw/kw9h6R/DCV6CxL06aFJZw1xhFk1JUHDdF
- w5Xg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw8gHKHz98dyPXo6M1Afg5UcxHPPZp9xmHmnb1LFoFFjTzs2Y1ya8xo5aDJTGayy+48NNcbZt5oZCLd@nongnu.org
-X-Gm-Message-State: AFuF++kDcUZUP63oeCkIahqPd6rUHyX4jo6d43wexvax4vc9uQrafiQE
- 89+Rk4ZxAE8vyRMSL312D6DONWaDIJ7CJMCQYi5ddCqLavjyza2TQNJjYql4K1R8V0GaPqEJoXm
- J0zTpWL+4C43TP0eTIqGYXYnxRJIgQ5Q6gu/JzgCVvZ1D2GJwD5uasnYI8vr6X0UTiw==
-X-Gm-Gg: AYBFou2Es39Smi8Ex0RFmcl2C91V5hBA9a/FtFBLc6Ee7WUGUS16c/5q7RfUcA5FmiR
- BFuSRjnu0Li12f5LoljxiI03cXTra3Zjx038j9tgqGU5KjzmFNvkeR+S3vh3ubB8AwlwQigPmsa
- fjAFJflZ/SNPjzqdc1te0C0ZtTq85P2UgQtEy8PnRK3z1VBqxwlbh7jGHFcI0cIIsEJw4viWRMJ
- w3lIQydagXFDSBtLiGkzjQyCi6u/Bq87BzEYtbJoLWUgDx8XUlbu3fWuqb2NBKaGSRg3MF0FNnH
- LRR7hmsSi0ZNarYhDYDqynYZ7jOxzV/ICy1AG1J1L6rH7JbGJab7Wmppe1y3Yds7jMf8dTThOs0
- UFL/Mn7vrONqVy4yJdN5CskQprkdYuOjOaoouE8vH9sMVR6Pxfzii6eMPJrNh
-X-Received: by 2002:a05:622a:15d6:b0:52d:f484:eefe with SMTP id
- d75a77b69052e-5310d02f872mr76700821cf.35.1789434743526; 
- Mon, 14 Sep 2026 18:12:23 -0700 (PDT)
-X-Received: by 2002:a05:622a:15d6:b0:52d:f484:eefe with SMTP id
- d75a77b69052e-5310d02f872mr76700391cf.35.1789434743150; 
- Mon, 14 Sep 2026 18:12:23 -0700 (PDT)
-Received: from [10.248.104.162] (16.sub-174-226-168.myvzw.com.
- [174.226.168.16]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-53116090064sm18665031cf.5.2026.09.14.18.12.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2026 18:12:21 -0700 (PDT)
-Message-ID: <c69c665c-7cd9-4c96-90ff-8d6ac91a7b0a@oss.qualcomm.com>
-Date: Mon, 14 Sep 2026 20:12:19 -0500
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1x6I0a-0000MK-H5
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 21:30:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1789435852; x=1820971852;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=3UIufz+u1EznBYc8e0fT+S7hvsPTwXMo2JrfLZogTj8=;
+ b=Qh3DQgDANwP13c0cVGBnbOsrns/0lZLLSVEq6oPYE90tj+AZycNjJ+yI
+ xYIs0AhIkz5ozJYb++tvTTN1CCO3cIjM6oqHulUtmi0Yafzg95lqlVEPU
+ VE2xLdGOkUfZUP0jWyKoCeYXDcDYL1GwcL2xHz+BoDWS1mxWMEP9j4sxp
+ FHPZHICAj0AxN9OtVgJmWw6D4Iq/WAugr8E8AQp4Ic2Ntw4xVJH0OBr+T
+ qWLFg5t1Qs9R4cjxhfZHVYXVID1zA5ODoEDYyRg46qGTwpmxflKqg9N99
+ p+JNlLZZEcBEWp7JS8jVujmhxJCL1HrL3pUneKphh+FIbx19FcA3RdeuW A==;
+X-CSE-ConnectionGUID: gxPgynqbQ4C/AmzJOfHCfw==
+X-CSE-MsgGUID: OYxDeBviSDqqHXMhr55piQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93491753"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="93491753"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Sep 2026 18:30:47 -0700
+X-CSE-ConnectionGUID: evG5OCG+Twy8AlgRGdyfwg==
+X-CSE-MsgGUID: 3CamE945TCSUrZEUa1CS4g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="274744293"
+Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Sep 2026 18:30:46 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+	Yuan Wang <yuan1.wang@intel.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Cedric Le Goater <clg@redhat.com>, bosheng.xue@intel.com
+Subject: Re: [PATCH v2] vfio/igd: Add device ID support for Meteor Lake and
+ Arrow Lake
+Date: Tue, 15 Sep 2026 09:30:37 +0800
+Message-ID: <20260915013037.648161-1-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <e1c9833b-e534-4b02-831d-a22a25cc2a47@gmail.com>
+References: <e1c9833b-e534-4b02-831d-a22a25cc2a47@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/10] Hexagon (target/hexagon) Check for greg
- multiwrite in analyze_packet
-To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
-Cc: matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org,
- philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
-References: <20260914215037.157879-1-ltaylorsimpson@gmail.com>
- <20260914215037.157879-9-ltaylorsimpson@gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260914215037.157879-9-ltaylorsimpson@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: OBX61WYaylbE4s15jdW_WZ4wEH1N1hFy
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDAxMyBTYWx0ZWRfX5pOg6IOg9ehU
- dVMFujqMqw7E8VmH++D7PIDbfre47oDvgRaUBNvIFhFOksQ21CHgk+hHYl05q37vf/EU4KS4FY+
- 2DasgaFaYgZxq+um5dyQvYIskdM7dCg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDAxMyBTYWx0ZWRfXz7WTEoQPwV98
- 96fyj1PqqtPbNnDGUHvnXDY7/QRNi254yTTtuWURG9+aJ6h2sjqeTMA7iJkQNAJii5bPbwpMOEI
- 46PLabONu0KW8JQtLI9lw6Wn3Isejh3sNy9PA4i/BifjoduFRDmR5e9+3kstvBLl9xFqAOuMjGa
- gbcC438nYxIfnjZJUyTTRpUFw/HcMbtnoD2EOOjWRtq3dKRKsHsgZlRnRD7Ku45cl5QhxPQ0Iaa
- kIdSKaPj7HFKGoXxl1aZjdOvvPBGk+tf8k8ZM0okDLpQOZmwd7PwxtMFVxaLGGab0GNKvvZ8x5O
- cWtc2y0lrEjGF4C9UavZarv2d+4Pmf68+jID0lTkCG8L63TTbDMuqG3w9Whr1L6B9DdhvAGFmE7
- JDy+km/z+WgK5JhSnoTghdy8Vv4k/eWao2M/jPRHiVBzBGExFeCG9mqUE6Cgz8VT/54ypDtWwfB
- Q4vBgyTk00MxsgIHsJQ==
-X-Authority-Analysis: v=2.4 cv=XKel2ghE c=1 sm=1 tr=0 ts=6aa89b78 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=HnZmebILR7CVcA10YZfY7g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=J2ybx9f5ocyxwA71rbMA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: OBX61WYaylbE4s15jdW_WZ4wEH1N1hFy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-14_05,2026-09-14_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 phishscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609150013
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,71 +84,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 14 Sep 2026 16:41:58 +0800, Tomita Moeko wrote:
+> Just curious, on host side, does the value of 0x1080C0 equals (BAR2 + 8M)
+> on Meteor and Arrow Lake?
 
-On 9/14/2026 4:50 PM, Taylor Simpson wrote:
-> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> ---
+No.  Measured on Meteor Lake-P (8086:7d55, host i915):
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+  BAR2 (LMEMBAR)            0x4000000000, 256MB
+  MMIO 0x108100 GSMBASE     0x70000000
+  MMIO 0x1080C0 DSMBASE     0x70800000      (GSMBASE + 8MB)
+  MMIO 0x108040 GGC         0x4c0           (GGMS=3, GMS=4 -> 128MB)
+  config 0x50 GGC           0x4c0
+  config 0x5C               0
+  config 0xC0-0xC3          MSI Pending Bits (MSI cap at 0xac, 64-bit + PVM)
+  config 0xC4-0xC7          0
+  MMIO 0x138914             1
+  /proc/iomem               64000000-787fffff : Reserved
 
+DSMBASE is a system physical address inside the BIOS reserved range, and
+DSMBASE + 128MB is exactly the end of that range.  BAR2 + 8M is the
+aperture onto the same memory: i915_gem_stolen.c and xe_ttm_stolen_mgr.c
+use either DSMBASE or LMEMBAR + 8M as the io base of the same stolen
+region.
 
->   target/hexagon/translate.h | 11 +++++++++--
->   target/hexagon/translate.c |  8 ++++++++
->   2 files changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-> index b6cdf51c20..eb0d10d686 100644
-> --- a/target/hexagon/translate.h
-> +++ b/target/hexagon/translate.h
-> @@ -47,6 +47,8 @@ typedef struct DisasContext {
->   #ifndef CONFIG_USER_ONLY
->       int greg_log[GREG_WRITES_MAX];
->       int greg_log_idx;
-> +    DECLARE_BITMAP(gregs_written, NUM_GREGS);
-> +    DECLARE_BITMAP(gregs_multi_write, NUM_GREGS);
->       int sreg_log[SREG_WRITES_MAX];
->       int sreg_log_idx;
->       TCGv_i32 t_sreg_new_value[HEX_SREG_GLB_START];
-> @@ -105,8 +107,13 @@ static inline void ctx_log_greg_write(DisasContext *ctx, int rnum)
->       if (rnum > HEX_GREG_G3) {
->           return;
->       }
-> -    ctx->greg_log[ctx->greg_log_idx] = rnum;
-> -    ctx->greg_log_idx++;
-> +    if (!test_bit(rnum, ctx->gregs_written)) {
-> +        set_bit(rnum, ctx->gregs_written);
-> +        ctx->greg_log[ctx->greg_log_idx] = rnum;
-> +        ctx->greg_log_idx++;
-> +    } else {
-> +        set_bit(rnum, ctx->gregs_multi_write);
-> +    }
->   }
->   
->   static inline void ctx_log_greg_write_pair(DisasContext *ctx, int rnum)
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-> index 815eecb60a..19585a108c 100644
-> --- a/target/hexagon/translate.c
-> +++ b/target/hexagon/translate.c
-> @@ -575,6 +575,8 @@ static void clear_pkt_ctx(DisasContext *ctx)
->       bitmap_zero(ctx->predicated_regs, TOTAL_PER_THREAD_REGS);
->   #ifndef CONFIG_USER_ONLY
->       ctx->greg_log_idx = 0;
-> +    bitmap_zero(ctx->gregs_written, NUM_GREGS);
-> +    bitmap_zero(ctx->gregs_multi_write, NUM_GREGS);
->       ctx->sreg_log_idx = 0;
->   #endif
->       bitmap_zero(ctx->gpr_multi_write, TOTAL_PER_THREAD_REGS);
-> @@ -629,6 +631,12 @@ static bool pkt_has_write_conflict(DisasContext *ctx)
->           return true;
->       }
->   
-> +#ifndef CONFIG_USER_ONLY
-> +    if (!bitmap_empty(ctx->gregs_multi_write, NUM_GREGS)) {
-> +        return true;
-> +    }
-> +#endif
-> +
->       return false;
->   }
->   
+So with igd_gen() == -1, where no BAR0 quirk is installed, a guest reads
+the host physical DSMBASE from 0x1080C0.  Given Yuan's point that the
+GOP reads this register for its stolen base, that is a host address
+handed to guest firmware, and something QEMU should fix.
+
+> My concern is that if guest driver still uses (BAR2 + 8M) as DSM base, while
+> 0x1080C0 pointing to the mocked region, will this bring any inconsistency?
+
+The drivers map stolen on MTL+ with DM-flagged PTEs as offsets from
+GSMBASE (xe_ttm_stolen_mgr.c; i915 sets PTE_LM for stolen-local), which
+a region in guest RAM cannot satisfy.  Whether the GOP maps its frame
+buffer the same way I cannot check from here.  Yuan, if the display has
+come up for you with v2 and the stock GOP, that answers it; the variant
+below does not depend on the answer.
+
+> Having the register pointing to guest's (BAR2 + 8M) sounds more reasonable,
+> but it would require more efforts, monitoring config space writes to BAR2 and
+> changing the emulated value in QEMU.
+
+Agree with the direction, and it is cheaper than that: a read-only BAR0
+quirk can take pci_get_bar_addr(pdev, 2) at read time, returning BAR2 at
+0x108100 and BAR2 + 8M at 0x1080C0.  Then the CPU-side address resolves
+to real stolen memory through the aperture instead of guest RAM,
+bdsm-size stays 0 as documented, and nothing in config space is
+invented.
+
+> Possibly an easier way is emulating MTL_PCODE_STOLEN_ACCESS(0x138914) to
+> disallowed in QEMU, if the GOP driver code checks it, to enforce the access
+> via BAR2 in guest.
+
+0x138914 reads 1 on the host and is not quirked, so a guest sees 1 too.
+Returning 0 there is a small addition and covers a GOP that checks it;
+the DSMBASE quirk covers one that does not.  On the Wa itself: i915
+already takes the BAR path in guests (i915_run_as_guest() short-circuits
+i915_direct_stolen_access()), so that path has upstream precedent; we
+have not measured whether the hang reproduces there.
+
+The firmware still has to program ASLS.  The IgdAssignmentDxe build the
+v2 commit message describes aborts on bdsm-size=0 before doing so;
+VfioIgdPkg has no such check and programs ASLS for MTL+ as is.
+
+I'll write the quirk.  It can go into Yuan's v3 or on top of it as a
+separate patch -- Yuan, your call.  Either way it needs a run with the
+stock GOP build on your setup.
+
+Junjie
 
