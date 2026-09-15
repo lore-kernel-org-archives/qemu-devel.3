@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBDFC88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECCA7C88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Zrw-0001IZ-E5; Tue, 15 Sep 2026 16:35:08 -0400
+	id 1x6Zrv-0001IA-5P; Tue, 15 Sep 2026 16:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrv-0001IC-Cx
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:07 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrt-0001Hi-Ok
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:05 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrt-0005at-B4
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:07 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49b912d3920so1666375e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrs-0005aS-2d
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:05 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49e69b9e16aso2206835e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789504504; x=1790109304; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789504503; x=1790109303; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ya2xkpYj9xYatRBnkZU7QVEc+GAEhygQYkVwKQ4DXdc=;
- b=HObJrGy+b/d2LZUullOF0UbDmnHMi2OPJmOgiVBTxj2xlVc8bMsPKJ804UhCQTNpX5
- ak/VTAeGZY939b8GXSxR87umR1vKtOyVnLhp8Q8W0ZhaD8Akf85t+CyBV4RMjG1wkUXr
- iGHEHK4p8kEzPdyYt7XNTXJw5M/1BoKdiLdTcxKh90BkKhkmbBx3kcDWk+NSHc4vKLwj
- s7HR47fyIQDK94dJDg8h2Uevt5p7+/ohu+ed5QuR7Ey7jwEWesP3FgnHtb1ee4fz7LO5
- 5OUDQyERJNTYomqI6TY8bMH2TmyeVY4gSis0JPPm5JS/03uQcuVfBZVsd6q3EBK8agyC
- v9sg==
+ bh=tSwf+aSZl4o9EHWe1PTU6IuxaLQsk5COu15yj71WkRM=;
+ b=R6t7HLfT8GVWP4y3KqY47IIoLK211Nf59fuq5H/GJO2mSaIwyRfUZ5FwyxCRtR2hCO
+ 9aOMwD4KbsarkoOO4Ceqeazh+aI0MM3+8rbyFhsMFptJvNaxIvum8qyB2Gtwjyi7G68P
+ 71vtHYuKybK0UlYK7fPfIHqi4PauHh9JjuloXeSllLH5alzCj16pP/PZf+4z2KEZsLxz
+ lownTPhwOjihep+cWZkM7yVvkItznStT36YUaHyVbVmQGcC/bOtc+dc3R3n9xsP3qso3
+ kpT1eTnCGN/xjBA7KcMuDOFH0LCglv5Lzb1jrJSjGF/EiH08My1oSTvW0zuEJTXf+/pt
+ rWeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789504504; x=1790109304;
+ d=1e100.net; s=20260707; t=1789504503; x=1790109303;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ya2xkpYj9xYatRBnkZU7QVEc+GAEhygQYkVwKQ4DXdc=;
- b=CI1wzuEqN+tamB+rnYvNdlTDghHBEir2iffdJydQ3DOqelmXW/tGMi4ovA1KdRLEzL
- N7TNng2e04yGPs8tpKVUZfMCJDEajZPRCw+E7bm5VecOH5C+zT+bDYQ2uchtzT1pQygc
- q0Cfv2i9gAnzKb9cg9OXUWN+uEesSQ/XBmfZHev/qKRiRrBY8rag3f6swnqsBcyAcJ5Y
- 7huHwzzrMacd3ffhvKGMV3DcabpDsZYkydhpfu+2DKwEJDLlXsx9jvc2ZdCe96NTigQZ
- 98EEqjrsMRUsiY63pGElOCy7EeVK71ik35gY7dCjuXeeckHAhonGwAm/fx/9CmXAIycl
- mmVA==
-X-Gm-Message-State: AFuF++l6MbOcwAe5z17WJy8+VDqsLyMBOyYY/dmth9sZ3DdSJSl2b2ac
- rdtrxMGXtzGEb79YqcEeqkbFfh3KOKahN0ZUubwN6EbjpMvDmrMrCvBdm30AVMR686NQHkZvARt
- V6r+g
-X-Gm-Gg: AYBFou3GAO0l/bCePmjPe7BlQmKfcdnPnU52H2XBnFcRrOB5f8sH3Jdi2U5OHPzr5z0
- 4RrOWG9LN97URTdXfrPLLAhODQFylzrN3mjfFMapFOx3MQa7MC8L8KIonpixeZKJp9Q63oE1v4I
- fmFfsyEwTz4KuprB/PuisB83To9wuj3jTm5ETtr9kKItiqxoD0AtXtEiQJPS3s1xZKe9HeQxov9
- HR9FKGNkEbyGX+UfsE2cIEq4vW0L4iavt5blkVgb60AbziDN5nehDMKqfKSavnhgZvjxDKzwo1I
- 6fDV6veaGhw9PdzJeSMfObDFmyHair7MI4HUWfqMVKNsLs8pCV6B+TfpYLkbdW7kwUAn5ByOpg7
- 3G0SfjubAeENiWNWpRjLwVJWr0wOIEeed6XqwHhvna3Sph12iWce7xfdhYHhZdFBcBc50OwmKnE
- FupuilPq1Y2g2OUbQxo4lsPYCcGhOHKvgiPACTPWos3kfZNs4SrmWBDxvOz0bMrPclRusA
-X-Received: by 2002:a05:6000:25f4:b0:487:999:9ad9 with SMTP id
- ffacd0b85a97d-4870d26f060mr132045f8f.52.1789504503970; 
- Tue, 15 Sep 2026 13:35:03 -0700 (PDT)
+ bh=tSwf+aSZl4o9EHWe1PTU6IuxaLQsk5COu15yj71WkRM=;
+ b=CjcFGk8Zyedm7sUPLPLuaGZPQPyPzLDtFyZCMgfDrhpO0tIpXNzQ/9zOqaqGhKz950
+ AUe6Pl6IjVe/sBmvdN5xZPsS2SLL/kRibPDpoS5QGiIA2CP1NhH5h29QvXormQ3Rd5Z7
+ WQa3B4ZxR+X/YaDiQAV23h5uWcNpsipQC2HpSaPpmYNbSq0CSLkQVkJyX9GO27WHAQn6
+ gy0CrOHXDJlCLLbJ4KYS7OZsTwQQrZUpLtKhLw5WxyECoXUqXphoWD9iAIiLS+HsXvQ8
+ jeeK8EqEhqGy/XYxcNxb6J3QRWKCYWpXm+EYFmPGK825/chcduPMYR31xr5s1Wo5Sstu
+ KN8w==
+X-Gm-Message-State: AFuF++kgtQBfFnl8KCZR/eD5gmXQBgGoGdchGKSo2j0X/j6KU3ta14pv
+ azCGfQrvPgug1NLdOAD3l32HIpzP7PIQPwzE/SvCQvaWTE1HmUq4hBdsQGxbmF7Sc9VPhNXFJEA
+ 1MaU0
+X-Gm-Gg: AYBFou0cvIXZqNNfZTyPBSX+4eYEpVf7jhDER4HLQR8+0gGQSemzRrMV8e8bFos2SDy
+ rkaziOwsqZVb/ziZTnQ3+ZDqxPholYMpBorpuBoCLhx6iE36g7OSFdKNSoF0Ak86yWJa2//BNwR
+ +YtUSoHGCLFmZ7kEu573rcO9k6f9yaynPJwu0T/REnejvZfOhvLpxwpJxAVz7Y0ym2jR7uARHLb
+ nubTW6q5auAGBY8TX8S4mlpQRZISa5ZTpTZHrm60on1o4eD3F2GLmxMEqu5xFdDbVZ0RFoNibfx
+ yMeRMdpZyP7MBiv7CDbqSWlb/L9tG2pLm6BoIFukem3TKuPbMLozbRADlkMIcnvRamBUwsl8kq1
+ i+SnCY8aQHX0pz/XtDeMqHYP5GGxwtzcYQfxRc7uljG5OF91QgVlPqfZhAVV9TYyxiO+O15FlN9
+ 2xTafPyK1hCM4bUGdSq+hRp6Zt8b24LxlVc6sx5BdMzMMJt+6mxipG26YR0pF/a9KVskXbJsrnN
+ SD7pB8=
+X-Received: by 2002:a05:600c:4f43:b0:49e:6c27:d093 with SMTP id
+ 5b1f17b1804b1-49e7a6704d3mr117180085e9.15.1789504502723; 
+ Tue, 15 Sep 2026 13:35:02 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:f0fe:c7ed:403d:e487])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.02
+ ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:35:03 -0700 (PDT)
+ Tue, 15 Sep 2026 13:35:02 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Zhao Liu <zhao1.liu@intel.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH 03/10] oslib: add qemu_thread_states()
-Date: Tue, 15 Sep 2026 22:34:47 +0200
-Message-ID: <20260915203455.580999-4-den@openvz.org>
+Subject: [PATCH 02/10] oslib: add qemu_debugger_attached()
+Date: Tue, 15 Sep 2026 22:34:46 +0200
+Message-ID: <20260915203455.580999-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260915203455.580999-1-den@openvz.org>
 References: <20260915203455.580999-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=den@openvz.org; helo=mail-wm2-x11.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,20 +106,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-A watchdog that reports a hang wants to say what every thread was doing,
-and that answer is host specific. Put it beside the other process
-introspection helpers rather than in the code that happens to need it
-first.
+Code that watches for a hang has to tell a hang apart from a debugger
+stop, because under a debugger every thread stops and whatever liveness
+signal the watcher samples stops changing with them.
 
-Describe each thread by id, name, scheduler state and the wait channel
-it is parked on, all of which Linux exposes in /proc/self/task without
-privilege. That is already enough to separate a thread blocked on a
-userspace lock, which waits in a futex, from one blocked in the kernel,
-which names the primitive it sits on. Skip the caller, which is
-reporting rather than hanging.
+Linux reports the tracer in /proc/self/status and Windows has
+IsDebuggerPresent(). Answer false elsewhere, which leaves the caller
+behaving as it did before the check.
 
-Hosts with no way to answer return NULL, leaving the caller to print
-its own message and nothing more.
+Match the Linux field at the start of a line. The Name: line holds
+fifteen characters of comm, enough to spell the field name and appear
+ahead of the real one.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>
@@ -126,125 +125,75 @@ Cc: Zhao Liu <zhao1.liu@intel.com>
 Cc: Stefan Weil <sw@weilnetz.de>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- include/qemu/osdep.h | 10 +++++++
- util/oslib-posix.c   | 71 ++++++++++++++++++++++++++++++++++++++++++++
- util/oslib-win32.c   |  5 ++++
- 3 files changed, 86 insertions(+)
+ include/qemu/osdep.h |  9 +++++++++
+ util/oslib-posix.c   | 22 ++++++++++++++++++++++
+ util/oslib-win32.c   |  5 +++++
+ 3 files changed, 36 insertions(+)
 
 diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 96afe09632..8039bf91b8 100644
+index 1ec5b42230..96afe09632 100644
 --- a/include/qemu/osdep.h
 +++ b/include/qemu/osdep.h
-@@ -667,6 +667,16 @@ int qemu_get_thread_id(void);
-  */
- bool qemu_debugger_attached(void);
+@@ -658,6 +658,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **errp);
+ 
+ int qemu_get_thread_id(void);
  
 +/**
-+ * qemu_thread_states:
++ * qemu_debugger_attached:
 + *
-+ * Returns a newly allocated, newline terminated description of every thread
-+ * in this process apart from the caller: its id, name, scheduler state and
-+ * the wait channel it is parked on, or NULL on a host that cannot report any
-+ * of that.
++ * Returns true if a debugger is currently tracing this process. Meant for
++ * code that would otherwise mistake a debugger stop for a hang, and false
++ * on hosts where this cannot be determined.
 + */
-+char *qemu_thread_states(void);
++bool qemu_debugger_attached(void);
 +
  /**
   * qemu_kill_thread:
   * @tid: thread id.
 diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 4eb6a40628..79887d370c 100644
+index dc001da66d..4eb6a40628 100644
 --- a/util/oslib-posix.c
 +++ b/util/oslib-posix.c
-@@ -134,6 +134,77 @@ bool qemu_debugger_attached(void)
+@@ -112,6 +112,28 @@ int qemu_get_thread_id(void)
  #endif
  }
  
++bool qemu_debugger_attached(void)
++{
 +#ifdef CONFIG_LINUX
++    static const char key[] = "TracerPid:";
++    g_autofree char *status = NULL;
++    const char *p = NULL;
 +
-+static char *read_task_file(const char *tid, const char *name)
-+{
-+    g_autofree char *path = g_strdup_printf("/proc/self/task/%s/%s", tid, name);
-+    char *buf = NULL;
-+
-+    g_file_get_contents(path, &buf, NULL, NULL);
-+    return buf;
-+}
-+
-+static void append_thread_state(GString *out, const char *tid)
-+{
-+    g_autofree char *comm = read_task_file(tid, "comm");
-+    g_autofree char *stat = NULL;
-+    g_autofree char *wchan = NULL;
-+    char state = '?';
-+    char *rparen;
-+
-+    if (!comm) {
-+        return;
++    if (!g_file_get_contents("/proc/self/status", &status, NULL, NULL)) {
++        return false;
 +    }
-+    g_strchomp(comm);
-+
-+    stat = read_task_file(tid, "stat");
-+    if (stat) {
-+        /* comm can hold anything, ')' included, so scan from the right */
-+        rparen = strrchr(stat, ')');
-+        if (rparen && rparen[1] == ' ') {
-+            state = rparen[2];
++    while ((p = strstr(p ? p : status, key))) {
++        if (p == status || p[-1] == '\n') {
++            return atoi(p + sizeof(key) - 1) > 0;
 +        }
++        p += sizeof(key) - 1;
 +    }
-+    g_string_append_printf(out, "  %-7s %-16s %c\n", tid, comm, state);
-+
-+    wchan = read_task_file(tid, "wchan");
-+    if (wchan && wchan[0]) {
-+        g_string_append_printf(out, "      wchan %s\n", wchan);
-+    }
-+}
-+
-+char *qemu_thread_states(void)
-+{
-+    g_autoptr(GDir) dir = g_dir_open("/proc/self/task", 0, NULL);
-+    const char *tid;
-+    GString *out;
-+
-+    if (!dir) {
-+        return NULL;
-+    }
-+    out = g_string_new(NULL);
-+    while ((tid = g_dir_read_name(dir))) {
-+        if (atoi(tid) != qemu_get_thread_id()) {
-+            append_thread_state(out, tid);
-+        }
-+    }
-+    if (!out->len) {
-+        g_string_free(out, TRUE);
-+        return NULL;
-+    }
-+    return g_string_free(out, FALSE);
-+}
-+
++    return false;
 +#else
-+
-+char *qemu_thread_states(void)
-+{
-+    return NULL;
++    return false;
++#endif
 +}
-+
-+#endif /* CONFIG_LINUX */
 +
  int qemu_kill_thread(int tid, int sig)
  {
  #if defined(__linux__)
 diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 6663d83151..d18886847c 100644
+index 5f3e8f4d98..6663d83151 100644
 --- a/util/oslib-win32.c
 +++ b/util/oslib-win32.c
-@@ -233,6 +233,11 @@ bool qemu_debugger_attached(void)
-     return IsDebuggerPresent();
+@@ -228,6 +228,11 @@ int qemu_get_thread_id(void)
+     return GetCurrentThreadId();
  }
  
-+char *qemu_thread_states(void)
++bool qemu_debugger_attached(void)
 +{
-+    return NULL;
++    return IsDebuggerPresent();
 +}
 +
  char *
