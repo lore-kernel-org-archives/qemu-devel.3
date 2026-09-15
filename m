@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1C35C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE8FC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Vqp-0003FX-BW; Tue, 15 Sep 2026 12:17:43 -0400
+	id 1x6Vtr-0003yf-40; Tue, 15 Sep 2026 12:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zorin@swemel.ru>) id 1x6Vqg-0003FB-Fo
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:17:35 -0400
+ (Exim 4.90_1) (envelope-from <zorin@swemel.ru>) id 1x6Vtq-0003yX-21
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:20:50 -0400
 Received: from mx.swemel.ru ([95.143.211.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zorin@swemel.ru>) id 1x6Vqe-0007O7-7t
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:17:34 -0400
-Message-ID: <13ad0871-44dd-40eb-aad1-d08cc2d7dfe5@swemel.ru>
+ (Exim 4.90_1) (envelope-from <zorin@swemel.ru>) id 1x6Vto-0000g0-IY
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:20:49 -0400
+Message-ID: <da75d0f0-d98e-4e27-ac6c-c575a2d382ff@swemel.ru>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
- t=1789489048;
+ t=1789489246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=2DjEtRCtdauQXNDedT+2xLAS27KLrQEkzuO1dLWhZaQ=;
- b=HaovFGlm2/JNgp/vCao6aLB+yUx74xJLAeNteqAGwHgCjo8uNxE9GQOAa3I5uXB8AZ7P8/
- XuiQ1n++kb35clGnMox0N5FinEY6kapY3b0YFr5unXht2D/i9Dr10ReSkaz+2H+aONMLFP
- /N7di+oC1UAT5AHYCqSMn+MnsQ1yBNM=
-Date: Tue, 15 Sep 2026 19:17:28 +0300
+ bh=INxU0D4tvlYktP1JSHtIL+7zhfvZn36WtZGmwiYzHUA=;
+ b=N/8TuB/eIC8qaYtJbgrkSFU7MImravnYXcRCdFAeaQtkEKRiZaRet4mC7CvbQgQutzcORZ
+ iVoNwYvXSNPHtazaZp5Vef/PJbA9f8EPIwUjQsgkdbUB8qYB3+ZGj1KSXmMhPcmGZyKAry
+ RO/bZMsP6JA2VK7i22AF+g9NR8al+ks=
+Date: Tue, 15 Sep 2026 19:20:46 +0300
 MIME-Version: 1.0
 Content-Language: en-US, ru-RU
 To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com
+Cc: thuth@redhat.com, mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com,
+ marcandre.lureau@redhat.com, mark.cave-ayland@ilande.co.uk
 From: =?UTF-8?B?0J3QuNC60L7Qu9Cw0Lkg0JfQvtGA0LjQvQ==?= <zorin@swemel.ru>
-Subject: PATCH] hw/s390x/s390-hypercall: fix potential NULL dereference in
- handle_virtio_ccw_notify
+Subject: [PATCH] hw/display/tcx: use memmove instead of memcpy for overlapping
+ blit memory regions
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=95.143.211.150; envelope-from=zorin@swemel.ru;
@@ -61,41 +62,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SWSA#4992cdf0-415c-45c1-be1a-71213467347d
+SWSA#34e3af79-c6c2-4ad2-986f-313c1ce28e5a
 
-The `virtio_ccw_get_vdev()` function can return a `NULL` pointer if the
-corresponding subchannel driver data (`sch->driver_data`) is not initialized
-or has been cleared.
+In `tcx_blit_writel()`, memory copying occurs within the same video RAM
+buffers (`vram` and `vram24`) using source and destination offsets that
+can potentially overlap during blit operations.
 
-If `vdev` is `NULL`, passing it directly into 
-`virtio_queue_get_num(vdev, vq_idx)`
-results in a `NULL` pointer dereference, which can lead to a hypervisor
-crash or unexpected termination of the QEMU process.
+Using `memcpy()` on overlapping memory regions triggers undefined behavior
+according to the C standard. Depending on compiler optimizations, this
+can lead to graphical artifacts, memory corruption, or unexpected
+behavior in the guest system.
 
-Fix this by adding an explicit check for `!vdev` before verifying the
-queue index and its capacity, returning `-EINVAL` early if the device
-is missing or not bound to the subchannel.
+Fix this by replacing `memcpy()` with `memmove()`, which explicitly
+guarantees safe and correct behavior when memory regions overlap.
 
 Signed-off-by: Nikolay N Zorin <zorin@swemel.ru>
 ---
-  hw/s390x/s390-hypercall.c | 2 +-
-  1 file changed, 1 insertion(+), 1 deletion(-)
+  hw/display/tcx.c | 4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/s390-hypercall.c b/hw/s390x/s390-hypercall.c
-index ac1b08b2..fd2972c0 100644
---- a/hw/s390x/s390-hypercall.c
-+++ b/hw/s390x/s390-hypercall.c
-@@ -44,7 +44,7 @@ static int handle_virtio_ccw_notify(uint64_t subch_id, 
-uint64_t data)
-      }
-
-      vdev = virtio_ccw_get_vdev(sch);
--    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, 
-vq_idx)) {
-+    if (!vdev || vq_idx >= VIRTIO_QUEUE_MAX || 
-!virtio_queue_get_num(vdev, vq_idx)) {
-          return -EINVAL;
-      }
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 2cfc1e8f..fb48a199 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -587,9 +587,9 @@ static void tcx_blit_writel(void *opaque, hwaddr addr,
+                  }
+              }
+          } else {
+-            memcpy(&s->vram[addr], &s->vram[adsr], len);
++            memmove(&s->vram[addr], &s->vram[adsr], len);
+              if (s->depth == 24) {
+-                memcpy(&s->vram24[addr], &s->vram24[adsr], len * 4);
++                memmove(&s->vram24[addr], &s->vram24[adsr], len * 4);
+              }
+          }
+          tcx_set_dirty(s, addr, len);
 -- 
 2.43.0
 
