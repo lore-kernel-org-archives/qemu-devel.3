@@ -4,105 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10651C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF34C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6GdJ-0003Pd-45; Mon, 14 Sep 2026 20:02:45 -0400
+	id 1x6Gd4-0003Jv-2o; Mon, 14 Sep 2026 20:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdF-0003MR-H7
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:41 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6Gd1-0003Jn-Vh
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:27 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdC-0004nY-ST
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:41 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6Gd0-0004mL-8z
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:27 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7FEA021E24;
- Tue, 15 Sep 2026 00:02:29 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id EF30421E1B;
+ Tue, 15 Sep 2026 00:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789430553; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
- b=ZODmR7iM7UXcHzCUwSUyCuVZBd7TDQ06H8wvCYAkIPhzIR1fs1S3RYW5bfVwu0A1rA/H5b
- fP/swk2pOFf+eTJe1SS9WgCYRcp6T+XBz2R2k5CKze4000fniK3pCyMl1FU2j534gUd21m
- o63EGWpFOeHOM/u+cw7Oz+rKPQLHRU4=
+ t=1789430541; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=7vT2vUzn9gWXCh5K8wx9bQMsVYDGrMwJM+9uZRN6ul0=;
+ b=oVq7ep59Ajftdalk1xg1TrRvseZXaYciXCm6hE02eKx4Cl/VqbE6A9hpmjIb3bNRqiAlI5
+ jh6owSucxDw3d4OfUG9jbyFfvMhSlo54AZrTA+Pzx3Mxn7REuXvIOCWL9oPZ8V+espm1OR
+ MS9Jc8ywNWVaxvA5voMa43QgRH5IEMw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789430553;
+ s=susede2_ed25519; t=1789430541;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
- b=Fw+6aLNf1SsJZIzPZIU8asbXpeUsnIAjERpuUFJFCe0ggfZGHcLOs7dM/MPpnbhN8Pv/1f
- JoZJhOefPPlmSbDg==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=7vT2vUzn9gWXCh5K8wx9bQMsVYDGrMwJM+9uZRN6ul0=;
+ b=eslv/d+/vDSCCMVRoTbfN+r7vfXGqZnU26CZPWerNaU407vD4YnLtzOVRBKjvuuH+1fPjh
+ TVkhhiIS0R0kFwAQ==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=a6JsQcfa;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="g/vgvS74"
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789430549; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
- b=a6JsQcfab4aw9LbBMzajbyVuyu8e8ilbrdr6G4mXdKVB6tbXBnvWUSBvTlRmo/81zYIb9x
- ZeA7ogCUbLEo110d2orJDQeBYIpiYLceRdoX7wlnqRL9+d9yZZ1w24OkTs9R88TajOg0Bv
- Z+RL3gnEf0olaUcjq+wgLa7ASjSVZT4=
+ t=1789430536; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=7vT2vUzn9gWXCh5K8wx9bQMsVYDGrMwJM+9uZRN6ul0=;
+ b=BB0HLqJOuni8bUsBv6njOhpePE/84Ymrxz8Ifzlnfy92bRErNN7dPYAUEVVGGK8Ymp4Mxo
+ IandeZyZfVw3Bgli7YKFQ7adHK6J91diQF7fBXSBdDTo8slPK9twWsUqRuCxSDn7jkIt2r
+ octt0nv9Qf44MHTMaGaOtefXDf2ed/4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789430549;
+ s=susede2_ed25519; t=1789430536;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
- b=g/vgvS74cKjT+xH/TClJPThl/tGijyvNqtGHKFp1JV0qdSDkYrXiKWJjU1ftbdxpaqrMEt
- 6t9aOJZh1Baf47CA==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=7vT2vUzn9gWXCh5K8wx9bQMsVYDGrMwJM+9uZRN6ul0=;
+ b=N2p+4ZqydmihsXSnLkrzdU+aJaZt+cJ49q4K9n22FJ6EIT3xeGTXKE4rMUyP/gUO3QQqYP
+ GdAssbF5zGCOdHCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 46D6413710;
- Tue, 15 Sep 2026 00:02:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B41A6136D9;
+ Tue, 15 Sep 2026 00:02:15 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Gk6xFQeLqGqIFAAAD6G6ig:T9
- (envelope-from <farosas@suse.de>); Tue, 15 Sep 2026 00:02:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Gk6xFQeLqGqIFAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 15 Sep 2026 00:02:15 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v3 08/20] migration: Use migrate_params_free during finalize
-Date: Mon, 14 Sep 2026 21:01:56 -0300
-Message-ID: <20260915000209.3692668-9-farosas@suse.de>
+Subject: [PATCH v3 00/20] migration: MigrationParameters changes
+Date: Mon, 14 Sep 2026 21:01:48 -0300
+Message-ID: <20260915000209.3692668-1-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260915000209.3692668-1-farosas@suse.de>
-References: <20260915000209.3692668-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 7FEA021E24
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.996];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,gitlab.com:url];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -126,72 +106,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the recently introduced migrate_params_free routine at
-migration_instance_finalize() so that newly added pointers are already
-freed by default.
+since v2:
 
-Special case: The TLS options are currently the only pointers that
-also have a qdev property implementation, so they will be freed by
-qdev using the .release method. Update the method so that a second
-invocation of qapi_free_StrOrNull doesn't assert.
+- Better handling the cpr-exec-command special case by converting the
+  string input to a QList.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/migration.c | 3 +--
- migration/options.c   | 7 ++++---
- migration/options.h   | 1 +
- 3 files changed, 6 insertions(+), 5 deletions(-)
+- New clone visitor to replace the manual setting of has_* fields. It
+  now happens once at instance_init before s->parameters is even
+  available to the rest of the code.
 
-diff --git a/migration/migration.c b/migration/migration.c
-index d14beb5d22..fab7949fe1 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -4052,8 +4052,7 @@ static void migration_instance_finalize(Object *obj)
- {
-     MigrationState *ms = MIGRATION(obj);
- 
--    qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
--    qapi_free_strList(ms->parameters.cpr_exec_command);
-+    migrate_params_free(&ms->parameters, NULL);
-     qemu_mutex_destroy(&ms->error_mutex);
-     qemu_mutex_destroy(&ms->qemu_file_lock);
-     qemu_sem_destroy(&ms->wait_unplug_sem);
-diff --git a/migration/options.c b/migration/options.c
-index bdcff002db..46d040fc3f 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -273,8 +273,9 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
- 
- static void release_StrOrNull(Object *obj, const char *name, void *opaque)
- {
--    const Property *prop = opaque;
--    qapi_free_StrOrNull(*(StrOrNull **)object_field_prop_ptr(obj, prop));
-+    StrOrNull **ptr = object_field_prop_ptr(obj, opaque);
-+
-+    g_clear_pointer(ptr, qapi_free_StrOrNull);
- }
- 
- static void set_default_value_tls_opt(ObjectProperty *op, const Property *prop)
-@@ -1067,7 +1068,7 @@ AnnounceParameters *migrate_announce_params(void)
-     return &ap;
- }
- 
--static bool migrate_params_free(MigrationParameters *params, Error **errp)
-+bool migrate_params_free(MigrationParameters *params, Error **errp)
- {
-     Visitor *v = qapi_dealloc_visitor_new();
-     bool ret;
-diff --git a/migration/options.h b/migration/options.h
-index c272eb6208..c7da2d0b5b 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -93,4 +93,5 @@ uint64_t migrate_rdma_chunk_size(void);
- 
- bool migrate_params_check(MigrationParameters *params, Error **errp);
- void migrate_params_init(MigrationParameters *params);
-+bool migrate_params_free(MigrationParameters *params, Error **errp);
- #endif
+- Removed MigrationParameter.
+
+- Added some line breaks and spacing to the block-bitmap-mapping
+  output (and lists in general).
+
+- Simplified the completion test by using g_ptr_array.
+
+- Updated the parameters test to call query-migrate since there's no
+  MigrateParameter_lookup to list the parameters names anymore.
+
+- Rebased on master and picked-up the new 'local' parameter.
+
+(apologies if I might have missed some r-bs, my 'b4 trailers' is
+broken at the moment)
+
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2848741815
+
+v2:
+https://lore.kernel.org/r/20260909214509.237309-1-farosas@suse.de
+v1:
+https://lore.kernel.org/r/20260902221547.1812481-1-farosas@suse.de
+
+Fabiano Rosas (20):
+  checkpatch: Fix checking of newlines in error messages
+  migration/options.c: Don't export migrate_tls_opts_free
+  migration: Rename variables in qmp_migrate_set_parameters
+  migration: Use QAPI_CLONE_MEMBERS in migrate_params_apply
+  migration: Merge parameter structs instead of assigning one by one
+  migration: Open code migrate_params_apply
+  migration: Stop freeing s->parameters members individually
+  migration: Use migrate_params_free during finalize
+  tests/qtest/migration: Add a test for HMP
+  tests/qtest/migration: Add a test for HMP completion
+  migration: HMP: Change bandwidth parameters expected input unit
+  migration: Change HMP 'info migrate_parameters' output
+  migration: Use keyval input visitor in HMP set command
+  migration: Use output visitor in info command
+  migration: Rewrite migrate_set_parameter_completion using QDict
+  migration: Add capabilities into MigrationParameters
+  migration: Remove s->capabilities
+  qapi/migration: Deprecate capabilities commands
+  migration: Set the parameters present flag with a clone visitor
+  qapi: Remove MigrationParameter
+
+ docs/about/deprecated.rst          |  13 +
+ include/qapi/clone-visitor.h       |   1 +
+ migration/migration-hmp-cmds.c     | 445 +++++-----------
+ migration/migration.c              |  19 +-
+ migration/migration.h              |   2 +-
+ migration/options.c                | 789 +++++++++++------------------
+ migration/options.h                |  29 +-
+ migration/savevm.c                 |   8 +-
+ qapi/migration.json                | 168 ++++--
+ qapi/qapi-clone-visitor.c          |  13 +
+ scripts/checkpatch.pl              |  11 +-
+ tests/qemu-iotests/300             |  20 +-
+ tests/qtest/migration/misc-tests.c | 560 ++++++++++++++++++++
+ 13 files changed, 1173 insertions(+), 905 deletions(-)
+
 -- 
 2.53.0
 
