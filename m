@@ -4,63 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E88EC88E7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDCAC88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6XKp-0005ph-Mt; Tue, 15 Sep 2026 13:52:47 -0400
+	id 1x6XNa-0006ws-3Z; Tue, 15 Sep 2026 13:55:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1x6XKn-0005pV-FN; Tue, 15 Sep 2026 13:52:45 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6XN8-0006pH-2g
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:55:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1x6XKl-0003Hf-SF; Tue, 15 Sep 2026 13:52:45 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 68733600D1;
- Tue, 15 Sep 2026 17:52:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F14E1F000FF;
- Tue, 15 Sep 2026 17:52:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789494762;
- bh=uodPxlgBecGq4pzVFqjxaJw1KTwHptSdfwPzXkSyiuw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=YlVCiFBaRvrGblGKhXWX0PxF5kcleH4rh9Y0lxfn0a0Mz7zGL4jdPdqKnZ0WFSk9N
- 7aPkCOAmh6DKccghtpgJEGfw+hH3HObZmGsryJmRpX+fQpWP8hbk7zdqlctelNeoue
- o4durAKKYs3rOPIOalli+DFCv1i/9EVpGIUY6t+L1Mt/ILbNqufHFuLXu0kg0ixQbv
- mZQwOkYR/mgqF+uYd8qyjbT2MZ01AyCniFWZnu3kuKj/VQMGAaLjYC9ZPNMgcmi1A+
- jwM16nUQmJsLz2b7kyKxlSYugeES1y7cWm+ezjIO7Ktv+HBywktaZ/Z9SVEggNokv9
- saR39xa7TzoYQ==
-Date: Tue, 15 Sep 2026 18:52:39 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Chen Pei <cp0613@linux.alibaba.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
- imammedo@redhat.com, sunilvl@ventanamicro.com, pbonzini@redhat.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
- junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v6 3/6] hw/riscv/virt: Advertise the CXL host bridge to
- firmware via extra-pci-roots
-Message-ID: <20260915185239.2c79393a@jic23-hlaptop>
-In-Reply-To: <20260907093735.2753-4-cp0613@linux.alibaba.com>
-References: <20260907093735.2753-1-cp0613@linux.alibaba.com>
- <20260907093735.2753-4-cp0613@linux.alibaba.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6XN4-0003qU-4P
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:55:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789494903;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=isG/UafLGI1WqGN/jYrgbdMUzSDVyDgdbVXFdCNZheI=;
+ b=OdR41IGEmzp3GdJgBYziacZitNgmahbDmQbsxiEhq7FM00A2fPoSovWrB9rKngrDqWqpzg
+ Al3QtoBEV836L5nVKsTYxFyIqHnTI0Rw/AvjsnxsZXx4wbNZw8u38iGPpa6MoG3aEocEdZ
+ b5CrZZ9dOHoxhyAuYCxk8OgUpgN8nzI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-l6_wLJTXMzuf9olAlL-5eA-1; Tue, 15 Sep 2026 13:55:02 -0400
+X-MC-Unique: l6_wLJTXMzuf9olAlL-5eA-1
+X-Mimecast-MFC-AGG-ID: l6_wLJTXMzuf9olAlL-5eA_1789494901
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49e6b5c5f44so28206925e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:55:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789494901; x=1790099701; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=isG/UafLGI1WqGN/jYrgbdMUzSDVyDgdbVXFdCNZheI=;
+ b=c9VvC/UwbyuUqOcdAbd9+NNxkYhd8LUXhyngPATYEez90UkyO1Ja4Q1UGFN9ju/HUV
+ j6djgO+sVN+gWlioJAXYh720lwdbG6y6E8aRqKbLXZqNcpuH2jjG91s3zWZB0JdlGXSP
+ vHah5DIFKQmfeVg3Yp5kZN3elm3Rue++NrztsYNFFtKdaqk24S4R9kTk4ZUQqhNbJ5cU
+ 6fjlNEb8M5VSMWS7WqE5BtIqnhdZ4GEfH2xWJ2x9uQrGzVt4Ha2K141j4JsRlzyrmEjf
+ l4bI0ACKwHG1RHi4Wt0dgeGFuKvK1sMD4QIfRCowRwoGvBYJlCm4qys950uowZ82faYZ
+ Sfxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789494901; x=1790099701;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=isG/UafLGI1WqGN/jYrgbdMUzSDVyDgdbVXFdCNZheI=;
+ b=t58K9/5inU2u451fdy403EgLLRNSyMD4A4Hr2UEdHwBDRb3xpHck4QtuRp8Bs4RfH8
+ AAl5kzEgk7pSg21kiKui4vweroRcsV2sGqCG1ho6gw7MQ0jaq77/5sDH9BwbbcsK3Mvu
+ B9eGasfOFSMDaWsknCJLf7eECKZSwb3G5F+POUV7G31ouwNFwdesWB0f/OyEGcLsH60s
+ VpCjJIo0uAMkIaB1/VYekACbI1gJTfGX6+zvtlnPXRPaNndK5265nwfLM+/kZBHROodw
+ WHKoKzhmiyXoFKSas2PO4Nrox96deytDtksrO6QUzT5UJJnd8+mT4SchdVkKzK0r1+pv
+ HBPA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzJGoJZH5lRfsT6LO6/Q9ZK+5rBEniGAMvRthkzq0kxANIVtRGCZR8NQko2H3Ks5hlfM7LI01lbRM09@nongnu.org
+X-Gm-Message-State: AFuF++lBC7XNQ58eBz/Yx/RyOz0+9YL8YIFbr2midgsBD+pPsQ7ieVeP
+ jPMZgc1hC6MpmSZZk3fBQpi3Lz/gBeO+E8LoAY31u151synTRapBFeGP3rXwfri3RaKe6uTp2C6
+ bRgswn1p1t7ktRyWZd5MN4exmIBOsicSED79VkjGyxFR4mbD2q4kUs7Yk
+X-Gm-Gg: AYBFou1mZS9GbOb1zGY6bPO5ahVTcFx1rHc+c2y5Q5oww+RHjNVib91Ukr1S0KhM6qD
+ j4IXsHWQQHxBhoY/nQtfz2rlZLhc5vimZmW+1zAUVW+UAUOXvsT161Ah7R4Ay83Wy68xtEwymWY
+ cTGS5EHu7NL3/BaNaEzdIU5eMyiWMYNYqr0Qp08JJgRczUe+Bj/TCc2FapSDm97itYMdZSmsOHI
+ xk4ww0rUSU2i9ORXmJO6cEfUdOFTruf0KUFYaTaDNHFeyBGEIIpPAN0eZWPIaSP0jXxnDStOSDd
+ 1HweDPodLrUvbnUwpjBPtKsfPwEkUYiM7bAYYB7zzVC8ntIw9YfMdLDwrnUvNnNYiQgilC1ux9h
+ U8vAgSa/nMwkp+1YovthEqoY=
+X-Received: by 2002:a05:600c:c168:b0:496:c1f3:e8f8 with SMTP id
+ 5b1f17b1804b1-49e7a662e89mr100913855e9.7.1789494900967; 
+ Tue, 15 Sep 2026 10:55:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:c168:b0:496:c1f3:e8f8 with SMTP id
+ 5b1f17b1804b1-49e7a662e89mr100913515e9.7.1789494900520; 
+ Tue, 15 Sep 2026 10:55:00 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e83d903f6sm6702965e9.4.2026.09.15.10.54.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Sep 2026 10:55:00 -0700 (PDT)
+Date: Tue, 15 Sep 2026 13:54:57 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org,
+ jonathan.cameron@oss.qualcomm.com, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH] MAINTAINERS: add Junjie Cao as CXL reviewer
+Message-ID: <20260915135403-mutt-send-email-mst@kernel.org>
+References: <20260908042310.493882-1-junjie.cao@intel.com>
+ <20260915184056.44f30b8e@jic23-hlaptop>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260915184056.44f30b8e@jic23-hlaptop>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,40 +120,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  7 Sep 2026 17:37:30 +0800
-Chen Pei <cp0613@linux.alibaba.com> wrote:
+On Tue, Sep 15, 2026 at 06:40:56PM +0100, Jonathan Cameron wrote:
+> On Tue,  8 Sep 2026 12:23:10 +0800
+> Junjie Cao <junjie.cao@intel.com> wrote:
+> 
+> > I have been reviewing, testing and contributing to hw/cxl for the past
+> > few months, and would like to be Cc'd on incoming CXL changes to help
+> > with review.
+> > 
+> > Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+> > Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> 
+> Apologies for slow reply but for the record.
+> Acked-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+> 
+> Thanks for helping out!
+> 
+> I'm jumping through hoops to get a CXL staging tree up under new employer's
+> github.
+> 
+> Just waiting on what I think is final step so maybe have that done today.
+> 
+> Jonathan
 
-> The pxb-cxl expander bridge presents as a class 0x0600 host bridge with
-> a type-0 header, so EDK2's PciBusDxe never recurses into it and never
-> assigns the CXL root port a memory window or bus numbers.  As a result
-> build_crs() produces an empty _CRS for the ACPI0016 host bridge and the
-> CXL devices behind it are not enumerated by the OS.
-> 
-> Advertise the pxb-cxl expander root buses to firmware via the
-> etc/extra-pci-roots fw_cfg file, the same way arm/virt and x86 do, by
-> calling pci_bus_add_fw_cfg_extra_pci_roots() from virt_machine_done().
-> EDK2's PciBusDxe then enumerates behind the CXL host bridge and assigns
-> the root-port window and bus numbers.  The ACPI tables are rebuilt when
-> the guest reads them (after that firmware enumeration), so build_crs()
-> then emits a correct _CRS for the ACPI0016 host bridge.
-> 
-> The call is made unconditionally, in line with arm/virt, pc and hppa,
-> so plain pxb-pcie expander bridges, which likewise depend on
-> etc/extra-pci-roots, are advertised as well; the generator simply
-> returns nothing when there is no expander root bus.
-> 
-> This approach also scales to multiple pxb-cxl host bridges (each gets
-> its own window from the shared aperture) and lets firmware size the
-> window to what is actually behind the bridge, rather than reserving a
-> fixed carve-out.
-> 
-> Verified by booting an RVA22 guest: the CXL root port and Type3 device
-> enumerate, and 'cxl enable-memdev' / 'cxl create-region' /
-> 'daxctl online-memory' bring the CXL memory online as system RAM.
-> 
-> Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-> Tested-by: Junjie Cao <junjie.cao@intel.com>
-> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Aligns with other arch, so makes sense.
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+great! just to confirm the things you acked so far you will repost
+as you did previously? if u want me to pick something up out of band,
+pls let me know.
+
+> > ---
+> >  MAINTAINERS | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 7183babd6a..bbabcf8cca 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -3328,6 +3328,7 @@ F: docs/devel/migration/CPR.rst
+> >  
+> >  Compute Express Link
+> >  M: Jonathan Cameron <jic23@kernel.org>
+> > +R: Junjie Cao <junjie.cao@intel.com>
+> >  L: linux-cxl@vger.kernel.org
+> >  S: Supported
+> >  F: hw/cxl/
+
 
