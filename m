@@ -4,106 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3C9C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F30C88E72
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6GdO-0003Rb-21; Mon, 14 Sep 2026 20:02:50 -0400
+	id 1x6GdN-0003Qy-47; Mon, 14 Sep 2026 20:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdI-0003PH-W6
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:45 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdG-0003Mh-Qw
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:42 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdG-0004oC-JE
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:44 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdE-0004np-Qf
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:42 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3EA7D1FF5F;
- Tue, 15 Sep 2026 00:02:33 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 5F1971FF46;
+ Tue, 15 Sep 2026 00:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789430557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1789430555; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LQmGuUieg9ntOwCpKHX+vOejYK8gcY82r1qb8o5gXG8=;
- b=BMKRxTnMjIqfcO/ahpGQRCA6UXj9W8+Wz4c7YXSffTVaGxaDMJ7KXmuQW//HK3UWmuxTde
- uuMrEIX6n4yaCYlRi5Z6Shho022gBzaVlK5aA0fdryJOda1fvaho2+AurplnrVSxAbYtVG
- 0oB5T1k0hKlidGwFlsWU++q2w+qwOmw=
+ bh=T3S3wN8DiNwmev4ttv0k4VFYP+B990uqd2JDxzXQS3M=;
+ b=zsnC574RKx5Bqo6mUBfkUsB/JFl7WdZ3+83C/gXk5xpGng4NMdc3ZkO7BdeINZXBi1AbWE
+ rN+TM9+AOGsbeesfbBuYIek7PvNk37x7Dv+Un3VGtT0rhhsABfXMpelBC8H1PqiBt0Nj5/
+ apzOQu+0N1fVFFhj9T8IiwWqDI8fKyM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789430557;
+ s=susede2_ed25519; t=1789430555;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LQmGuUieg9ntOwCpKHX+vOejYK8gcY82r1qb8o5gXG8=;
- b=6t9FBqtaHJGGHa0WWCPZ4W+eCajJhzuAj27AywH90rbkKBIzgshg6bnK1gITft880Pw8Ex
- OxSv763IavZXI4DA==
+ bh=T3S3wN8DiNwmev4ttv0k4VFYP+B990uqd2JDxzXQS3M=;
+ b=H4pI9E99Yw8xpKft/bwELD4YjGiwo+W+1COdQi/ZCWEQJ221KYMlkbfDKSPEfQYCTX78F4
+ n2bhcyM3f10xpqCA==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zGgYJNlD;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ESC9ixaj
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789430553; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1789430551; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LQmGuUieg9ntOwCpKHX+vOejYK8gcY82r1qb8o5gXG8=;
- b=zGgYJNlDvUFmacOT5w0ZqiPgzM7Ssc+vVK+MibTkGLGI+KiuV2DBdgZ6zKIN+dXbkbPv8X
- Vn4QsmNeH2XqTqha5ziJr3e0+GALxvAK06L1uhZjN/AG5Fwvv4fulvoxxRVdjf/s8pakqr
- WzOG4zsR+FOk9eh52KIB5oC/jbsyxmE=
+ bh=T3S3wN8DiNwmev4ttv0k4VFYP+B990uqd2JDxzXQS3M=;
+ b=wNEpbOwMdyV5W/bu7Cc1fAiHLY0OLP+OxvcvQO8eDDawTJds9mzm4kTAx8e8sNjpoAz6Pl
+ 1W3+NmRvfc7vSVARetI6V2ZmaHuo5SCM+d9CSMIHaMbl11pMx6OX7Z6VDGmCnQKA2xIUoE
+ Ic9SexISAVroYHf29tdpXk4Md5vf3wg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789430553;
+ s=susede2_ed25519; t=1789430551;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LQmGuUieg9ntOwCpKHX+vOejYK8gcY82r1qb8o5gXG8=;
- b=ESC9ixajnN74lNVCVstYRUduxyQ6HrRLvcfGHSCrpdo1qIr1wi/LMIyqd1E1C6EPBoIDV1
- 2CquaNeLdK52CmBQ==
+ bh=T3S3wN8DiNwmev4ttv0k4VFYP+B990uqd2JDxzXQS3M=;
+ b=E7Zu30cZVlEY6UxBDTAovbTkRz6O4ehtaC3/YnTAwxaO0rBQ/dPa6lSosJPrN5Ui2Eqg3l
+ LxuyNAnQGbQZHkDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9EE6613707;
- Tue, 15 Sep 2026 00:02:31 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C054513515;
+ Tue, 15 Sep 2026 00:02:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Gk6xFQeLqGqIFAAAD6G6ig:T11
- (envelope-from <farosas@suse.de>); Tue, 15 Sep 2026 00:02:31 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Gk6xFQeLqGqIFAAAD6G6ig:T10
+ (envelope-from <farosas@suse.de>); Tue, 15 Sep 2026 00:02:29 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 10/20] tests/qtest/migration: Add a test for HMP completion
-Date: Mon, 14 Sep 2026 21:01:58 -0300
-Message-ID: <20260915000209.3692668-11-farosas@suse.de>
+Subject: [PATCH v3 09/20] tests/qtest/migration: Add a test for HMP
+Date: Mon, 14 Sep 2026 21:01:57 -0300
+Message-ID: <20260915000209.3692668-10-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260915000209.3692668-1-farosas@suse.de>
 References: <20260915000209.3692668-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 3EA7D1FF5F
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,treblig.org:email,suse.de:email,suse.de:mid];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
@@ -127,270 +117,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches will touch HMP readline completion for migration
-parameters, add a test case.
+The following patches will change how parameters are set and shown in
+HMP, add a test for it.
 
-The test puts the monitor on a chardev via socket and bypasses qtest
-facilities because it needs to emit raw codes to readline. It
-therefore requires a couple of new helpers to read/write to the
-monitor socket.
+The test issues HMP migrate_set_parameters for each of the existing
+migration parameters and queries them back with the info command. A
+list is kept with the expected strings. A substring match function
+inspired by glib's g_str_match_string is implemented for this test so
+the test can produce a decent error output instead of just assert
+failure. E.g:
+
+ # HMP output mismatch for entry at line 55:
+ # expected vs. found:
+ #
+ # max-bandwidth: 10356305952768 bytes/hour
+ # ---
+ # max-bandwidth: 10356305952768 bytes/second
+
+(note that line 55 above is the source line where the test case for
+max-bandwith is, which helps find the failing test in the list)
 
 Usage:
 QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-./tests/qtest/migration-test --full -p /x86_64/migration/hmp/completion
+./tests/qtest/migration-test --full -p /x86_64/migration/hmp/parameters
 
 Acked-by: Peter Xu <peterx@redhat.com>
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/misc-tests.c | 216 +++++++++++++++++++++++++++++
- 1 file changed, 216 insertions(+)
+ tests/qtest/migration/misc-tests.c | 200 +++++++++++++++++++++++++++++
+ 1 file changed, 200 insertions(+)
 
 diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index 02469a92ff..41bf123359 100644
+index 4e0deb7f18..02469a92ff 100644
 --- a/tests/qtest/migration/misc-tests.c
 +++ b/tests/qtest/migration/misc-tests.c
-@@ -11,6 +11,8 @@
-  */
+@@ -22,6 +22,202 @@
  
- #include "qemu/osdep.h"
-+#include "qemu/cutils.h"
-+#include "qemu/sockets.h"
- #include "qapi/error.h"
- #include "qobject/qjson.h"
- #include "libqtest.h"
-@@ -78,6 +80,22 @@ static bool token_list_is_substr(char **smaller, char **larger, int *last)
-     return match;
- }
+ static char *tmpfs;
  
-+static void assert_hmp_match_text(const char *str, const char *text)
++#ifdef CONFIG_HMP
++static int test_case_line;
++
++#define TEST(i1, i2, e) { i1, i2, e , .line = __LINE__, }
++#define SKIP(i1, i2, e) { i1, i2, e , .skip = true, }
++
++typedef struct HMPTestData {
++    const char *input1;
++    const char *input2;
++    const char *output1;
++    bool skip;
++    int line;
++} HMPTestData;
++
++/*
++ * Find a contiguous run of tokens in @larger that match the sequence
++ * of tokens in @smaller, ignoring mismatches due to sequences of
++ * empty tokens.
++ *
++ * Returns whether a match was found. @last is set if at least one
++ * token has matched.
++ */
++static bool token_list_is_substr(char **smaller, char **larger, int *last)
++{
++    int i, j, k = 0;
++    bool match = false;
++
++    for (i = 0; smaller[i]; i++) {
++        for (j = k; larger[j]; j++) {
++            if (!*larger[j]) {
++                continue;
++            }
++
++            /* readline adds several escape sequences */
++            if (*larger[j] == '\033') {
++                continue;
++            }
++
++            if (g_str_equal(larger[j], smaller[i])) {
++                match = true;
++                *last = j;
++                k = j + 1;
++                break;
++            }
++
++            if (match) {
++                return false;
++            } else {
++                match = false;
++            }
++        }
++    }
++
++    return match;
++}
++
++static void assert_hmp_match_line(const char *str, const char *text)
 +{
 +    g_auto(GStrv) tok_str = g_strsplit_set(str, " ", -1);
-+    g_auto(GStrv) tok_txt = g_strsplit_set(text, " \r\n", -1);
-+    int idx;
++    g_auto(GStrv) lines = g_strsplit_set(text, " \r\n", -1);
++    int i, idx = 0;
 +
-+    if (token_list_is_substr(tok_str, tok_txt, &idx)) {
-+        return;
++    /*
++     * Note that the reason the 'str' above is split is to allow
++     * token_list_is_substr() to first match on the parameter name so
++     * matching can stop immediately after a mismatched value is
++     * found. This provides a better output for failing test cases
++     * than simply "str != line".
++     */
++
++    for (i = 0; lines[i]; i++) {
++        if (token_list_is_substr(tok_str, (char **)&lines[i], &idx)) {
++            return;
++        }
++
++        if (idx) {
++            break;
++        }
 +    }
 +
 +    g_test_message("HMP output mismatch for entry at line %d:", test_case_line);
-+    g_test_message("expected vs. found (whitespace ignored):\n\n%s\n---\n%s",
-+                   str, text);
++    g_test_message("expected vs. found:\n\n%s\n---\n%s %s", str, lines[idx],
++                   lines[idx + 1]);
 +    g_assert_not_reached();
 +}
 +
- static void assert_hmp_match_line(const char *str, const char *text)
- {
-     g_auto(GStrv) tok_str = g_strsplit_set(str, " ", -1);
-@@ -216,6 +234,202 @@ static void test_hmp_migration_parameters(char *name, MigrateCommon *args)
- 
-     qtest_quit(qts);
- }
-+
-+static void hmp_sock_write(int fd, const char *buf)
++static void assert_hmp_success(const char *str)
 +{
-+    size_t sz = strlen(buf);
-+
-+    assert(fd > 0);
-+    assert(write(fd, buf, sz) == sz);
-+}
-+
-+static void hmp_sock_read(int fd, char *buf, size_t buf_sz)
-+{
-+    char *p = buf;
-+    size_t sz = buf_sz - 1;
-+
-+    assert(fd >= 0);
-+    memset(buf, 0, buf_sz);
-+
-+    while (sz > 0) {
-+        ssize_t r = read(fd, p, sz);
-+        char *prompt;
-+
-+        if (!r) {
-+            break;
-+        } else if (r < 0) {
-+            if (errno == EINTR) {
-+                continue;
-+            }
-+            g_assert_not_reached();
-+        }
-+
-+        p += r;
-+        sz -= r;
-+
-+        /* stop reading after the next prompt appears */
-+        prompt = strstr(buf, "(qemu) ");
-+        if (prompt) {
-+            *prompt = '\0';
-+            break;
-+        }
-+    }
-+}
-+
-+static gint comp(gconstpointer a, gconstpointer b)
-+{
-+    return qemu_pstrcmp0((const char **)a, (const char **)b);
-+}
-+
-+static char *get_migration_opts_sorted(QTestState *qts, const char *opt)
-+{
-+    GPtrArray *header = g_ptr_array_new_with_free_func(g_free);
-+    GPtrArray *opts = g_ptr_array_new();
-+    char *sorted_str;
-+
-+    if (g_str_equal(opt, "@params@")) {
-+        const QDictEntry *e;
-+        QDict *rsp;
-+
-+        g_ptr_array_add(header, g_strdup("migrate_set_parameter"));
-+
-+        rsp = qtest_qmp_assert_success_ref(
-+            qts, "{ 'execute': 'query-migrate-parameters' }");
-+
-+        for (e = qdict_first(rsp); e; e = qdict_next(rsp, e)) {
-+            g_ptr_array_add(opts, g_strdup(qdict_entry_key(e)));
-+        }
-+
-+        qobject_unref(rsp);
-+
-+        /*
-+         * query_migrate has this as optional, but for completion we want
-+         * it present.
-+         */
-+        g_ptr_array_add(opts, g_strdup("block-bitmap-mapping"));
-+
-+    } else if (g_str_equal(opt, "@caps@")) {
-+        int i;
-+
-+        g_ptr_array_add(header, g_strdup("migrate_set_capability"));
-+
-+        for (i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
-+            g_ptr_array_add(opts,
-+                            g_strdup(MigrationCapability_lookup.array[i]));
-+        }
-+    } else {
++    if (!g_str_equal(str, "")) {
++        g_test_message("HMP command failed:\n\n%s", str);
 +        g_assert_not_reached();
 +    }
-+
-+    g_ptr_array_sort(opts, comp);
-+    g_ptr_array_extend_and_steal(header, opts);
-+
-+    g_ptr_array_add(header, NULL);
-+    sorted_str = g_strjoinv(" ", (char **)header->pdata);
-+
-+    g_ptr_array_unref(header);
-+
-+    return sorted_str;
 +}
 +
-+static void hmp_completion_single(QTestState *qts, int fd,
-+                                  const struct HMPTestData *t)
++static void test_hmp_migration_parameters(char *name, MigrateCommon *args)
 +{
-+    g_autofree char *exp = NULL;
-+    char buf[8192];
-+    char *output;
-+
-+    test_case_line = t->line;
-+
-+    if (g_str_has_prefix(t->output1, "@")) {
-+        exp = get_migration_opts_sorted(qts, t->output1);
-+    } else {
-+        exp = g_strdup(t->output1);
-+    }
-+
-+    hmp_sock_write(fd, t->input1);
-+    hmp_sock_read(fd, buf, sizeof(buf));
-+
-+    /*
-+     * readline first rewrites the input to the common root of the
-+     * completions, then outputs the completion suggestions:
-+     *
-+     * (qemu) info migr<TAB>
-+     * (qemu) migrate migrate_parameters
-+     * migrate_capabilities ...
-+     */
-+    output = strstr(buf, t->input2);
-+    assert_hmp_match_text(exp, output);
-+
-+    /* ^U backward kill line */
-+    hmp_sock_write(fd, "\x15");
-+}
-+
-+static void test_hmp_completion(char *name, MigrateCommon *args)
-+{
-+    g_autofree char *cmdline;
-+    char buf[1024];
 +    QTestState *qts;
-+    int sockfds[2];
 +    /*
-+     * .input1:  partial string with an ending TAB (as if pressed by
-+     *           the user).
-+     * .input2:  common root of the completions, i.e. what the partial
-+     *           part of .input1 string completes to.
-+     * .output1: full list of completion suggestions for the string
-+     *           in .input2.
++     * .input1: string to be used as parameter name
++     * .input2: string to be used as parameter value
++     * .output1: expected output of migrate_set_parameters
 +     * E.g:
-+     * (qemu) .input1
-+     * <after TAB>
-+     * (qemu) .input2
++     * (qemu) migrate_set_parameters .input1 .input2
 +     * .output1
 +     */
-+    HMPTestData completion_cases[] = {
-+        TEST("migra\t",
-+             "migrate",
-+             "migrate migrate_cancel migrate_continue migrate_incoming "
-+             "migrate_pause migrate_recover migrate_set_capability "
-+             "migrate_set_parameter migrate_start_postcopy"),
++    HMPTestData test_cases[] = {
++        TEST("", "", "migrate_set_parameter: string expected"),
++        TEST("foo", "", "migrate_set_parameter: string expected"),
++        TEST("foo", "on", "Error: invalid parameter value: foo"),
 +
-+        /*
-+         * Note QEMU doesn't keep 'info' when offering the completions
-+         * suggestions.
-+         */
-+        TEST("info migra\t",
-+             "migrate",
-+             "migrate migrate_capabilities migrate_parameters"),
++        /* bool */
++        TEST("cpu-throttle-tailslow", "on", "on"),
++        TEST("direct-io", "on", "on"),
++        TEST("local", "on", "on"),
 +
-+        TEST("migrate_se\t",
-+             "migrate_set_",
-+             "migrate_set_capability migrate_set_parameter"),
++        /* uint64_t */
++        TEST("announce-initial", "60", "60 ms"),
++        TEST("announce-max", "600", "600 ms"),
++        TEST("announce-rounds", "6", "6"),
++        TEST("announce-step", "15", "15 ms"),
++        TEST("downtime-limit", "400", "400 ms"),
++        TEST("avail-switchover-bandwidth", "2097152",
++             "2199023255552 bytes/second"),
++        TEST("max-bandwidth", "9876543", "10356305952768 bytes/second"),
++        TEST("max-postcopy-bandwidth", "1048576", "1048576 bytes/second"),
++        TEST("vcpu-dirty-limit", "20", "20 MB/s"),
++        TEST("x-rdma-chunk-size", "1048576", "1048576 bytes"),
++        TEST("x-vcpu-dirty-limit-period", "750", "750 ms"),
++        TEST("xbzrle-cache-size", "67108864", "67108864 bytes"),
 +
-+        /*
-+         * parameters and capabilities are not listed here to avoid having
-+         * to enumerate them all, see test_hmp_completion().
-+         */
-+        TEST("migrate_set_parameter \t", "migrate_set_parameter ", "@params@"),
-+        TEST("migrate_set_capability \t", "migrate_set_capability ", "@caps@"),
++        /* uint32_t */
++        TEST("x-checkpoint-delay", "5000", "5000 ms"),
++
++        /* uint8_t */
++        TEST("cpu-throttle-increment", "15", "15"),
++        TEST("cpu-throttle-initial", "25", "25"),
++        TEST("max-cpu-throttle", "85", "85"),
++        TEST("multifd-channels", "8", "8"),
++        TEST("throttle-trigger-threshold", "65", "65"),
++
++        /* complex types */
++        TEST("mode", "cpr-exec", "cpr-exec"),
++        TEST("multifd-compression", "zlib", "zlib"),
++        TEST("zero-page-detection", "none", "none"),
++        TEST("tls-authz", "my_authz", "'my_authz'"),
++        TEST("tls-creds", "null", "'null'"),
++        TEST("tls-hostname", "localhost", "'localhost'"),
++        TEST("cpr-exec-command", "/bin/true foobar", "/bin/true foobar"),
++
++        /* can be set but are currently missing in the query output */
++        SKIP("multifd-qatzip-level", "5", "5"),
++        SKIP("multifd-zlib-level", "4", "4"),
++        SKIP("multifd-zstd-level", "6", "6"),
++
++        /* cannot be set */
++        TEST("block-bitmap-mapping", "[]",
++             "Error: The block-bitmap-mapping parameter "
++             "can only be set through QMP"),
 +    };
 +
-+    assert(!qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, sockfds));
-+    qemu_clear_cloexec(sockfds[1]);
++    /* force TCG so it can run in all targets */
++    qts = qtest_init("-accel tcg -nodefaults -S");
 +
-+    cmdline = g_strdup_printf("-chardev socket,id=mon0,fd=%d "
-+                              "-mon chardev=mon0,mode=readline -S",
-+                              sockfds[1]);
-+    qts = qtest_init(cmdline);
-+    close(sockfds[1]);
++    for (int i = 0; i < G_N_ELEMENTS(test_cases); i++) {
++        g_autofree char *resp = NULL;
++        g_autofree char *line = NULL;
++        struct HMPTestData *t = &test_cases[i];
 +
-+    /* read HMP banner */
-+    hmp_sock_read(sockfds[0], buf, sizeof(buf));
++        if (t->skip) {
++            continue;
++        }
 +
-+    for (int i = 0; i < G_N_ELEMENTS(completion_cases); i++) {
-+        hmp_completion_single(qts, sockfds[0], &completion_cases[i]);
++        test_case_line = t->line;
++
++        resp = qtest_hmp(qts, "migrate_set_parameter %s %s", t->input1,
++                         t->input2);
++
++        if (g_str_has_prefix(t->output1, "Error:") ||
++            g_str_has_prefix(resp, "migrate_set_parameter:")) {
++
++            assert_hmp_match_line(t->output1, resp);
++            continue;
++        }
++        assert_hmp_success(resp);
++        g_free(resp);
++
++        resp = qtest_hmp(qts, "info migrate_parameters");
++
++        line = g_strconcat(t->input1, ": ", t->output1, NULL);
++        assert_hmp_match_line(line, resp);
 +    }
 +
-+    close(sockfds[0]);
 +    qtest_quit(qts);
 +}
- #endif /* CONFIG_HMP */
- 
++#endif /* CONFIG_HMP */
++
  static void test_baddest(char *name, MigrateCommon *args)
-@@ -459,5 +673,7 @@ void migration_test_add_misc(MigrationTestEnv *env)
- #ifdef CONFIG_HMP
-     migration_test_add("/migration/hmp/parameters",
-                        test_hmp_migration_parameters);
-+    migration_test_add("/migration/hmp/completion",
-+                       test_hmp_completion);
- #endif
+ {
+     QTestState *from, *to;
+@@ -260,4 +456,8 @@ void migration_test_add_misc(MigrationTestEnv *env)
+                        test_validate_uri_channels_both_set);
+     migration_test_add("/migration/validate_uri/channels/none_set",
+                        test_validate_uri_channels_none_set);
++#ifdef CONFIG_HMP
++    migration_test_add("/migration/hmp/parameters",
++                       test_hmp_migration_parameters);
++#endif
  }
 -- 
 2.53.0
