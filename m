@@ -4,146 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A776CC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9931C88E72
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6HM7-0004eD-Nw; Mon, 14 Sep 2026 20:49:04 -0400
+	id 1x6HN3-0006Sm-HG; Mon, 14 Sep 2026 20:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6HLo-0004Qd-Hb
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:48:45 -0400
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x6HMw-0006FM-TH
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:49:56 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6HLa-0004CK-JN
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:48:41 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x6HMu-0004Jc-LB
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:49:54 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68EN06OW3071352
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:48:19 GMT
+ 68EN02Rj1440513
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:49:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=OUSwIejwnq0
- Khr0M43oXLgaMUXN+1LozK9e91bcKNHc=; b=OABesiGUa0sKnXbHt833m3UQ3Mp
- tcKxAivIb8RwF3MDu2HysYdz8cVnU6h+BnrGEk7dbEwXw7LQDUKtSW+wTWwjvW2r
- V22BPWWCx6VNCbJiof+PXhh0PCrqMD5656nG9bC+0O3wgH+QvesPduWFMcfkSfW0
- +igFAXHuXXKVaD66utPlwPi9LCpGEWUSJXURqhbiU8te8vule1VkLBd3j5jsh382
- 40/LyjmLpjnpTiSY77dHYMTPX+jXY3zPGibnRwh9oyPUYCceJGBc94dkl/KEyIk5
- QwpSpxtu+7Qw3Pt147qcXuY1RSWqgUF0speole1s3cQW+u8Zs6hWUppxfOw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpeexb931-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /nCue9h3Zgiy7S8auA8nybq7jHAZHZm00h26jImXccY=; b=Vy5qMxVEpiUOhZE9
+ xzcvW4fwiwzpNNjTcErMZPIXlQAInVe0oFw8N72JKEaLaQCkFcc5nCb61haczd7T
+ s0VZ4I/WbF3KgEkZRCrbRUunqPIKZlcdjime2if2s9GU+L4oWvm21yvMgSWK6OCQ
+ SL8DaXRviDMMvCQCVguXhsl/4ezZ4A67VVsOCpS+nMOLcEDLlF9/ku9LUzKAgHsn
+ gGDUVXqBd5zl7vYrDHNc7qhRNtgLmOMpMqrPfArRtOn6aCHFjcPkb4I14hBAnVq8
+ 1rYG/jyVt0SuQEorSYi2gnIoImtbt/T68Nnkqa6lQPYZtkwRJ28ngvSVVwXCayXB
+ Hayq5Q==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpeuqb7t6-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:48:19 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2d7443e0f0bso70994365ad.1
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 17:48:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:49:51 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-90e8dd8be81so51125836d6.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 17:49:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789433298; x=1790038098; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=OUSwIejwnq0Khr0M43oXLgaMUXN+1LozK9e91bcKNHc=;
- b=IfZAOpsOJMJd1P0KA8gbTTTRPgQkohB92eBpgCPwTshP8mIU/tKSCy3riUJ4QzU7Ul
- 8H1jNVSYPfY8HFhIGrOtw72T+sX8TrordHxRsKlXIUNbRmx7X+t0mcl8LWQTks/Cz1JG
- ez0wxGeYHZUz/X598PXeTBE/CQ5OUm9SKFOcRIn6xnAv0eDGxHevlmkGaW9QvJ1rmGM4
- 3cHS88SMjXdARAUb8bhJ9QyP7mwqQT7VO0+iKexqNpH34CGCum/1gb+6GoX6bxz1Pu4+
- xglSjiFrYGJYsVBGk5heeyHeO0i1vQJhijMLa2TF+Ge8lkwawN/z/yOqaiSORs0//3w5
- A91A==
+ d=oss.qualcomm.com; s=google; t=1789433390; x=1790038190; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/nCue9h3Zgiy7S8auA8nybq7jHAZHZm00h26jImXccY=;
+ b=W0kqVGBff7efqaFV/C0LkTH6xvmewiYJGYIGpRp58ZcWZ1DIymhlRpeyN8pe26E9hT
+ i7sjDTi8L6/hmkEyTkCRfXdojJgtvfYyNnnffWK8Nz/sugoSG1Mfpf2Vdh+pUCuE0CV2
+ okgF/udQs8RyXsA/6l63WVZpUVzh0v3wFTROYhlBS6V1lqhJV0GEkFkWSLQ0R3m442yT
+ ShARIMrqeiu9OaweqNVswCfTydaF+PnEcYyiSRuSRFzWFEPwjkNDUZIgpWi0lgS0wIhk
+ kzntV4bN4GzxqHNwAK+mHNHiqesia7ncWmFgogU7AISYVaHN/yXlKK+PHN2LY+ujoRG/
+ TZ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789433298; x=1790038098;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=OUSwIejwnq0Khr0M43oXLgaMUXN+1LozK9e91bcKNHc=;
- b=27K8EJlOgpPMyCFPbgZEor3SRHHlZsDU+64TtTBEik+/kNmQbrGo69yZfTOHzVTgXA
- wfBwLuQEyNZT/AmH7+ryuus9fL9sUDxGF3P3goJXJqK3kSTlDThofBL9TGusHDph0gED
- 7ZbRbwW3PGAfDjFSuja20N+Z1jS9JyfXpsNumynoplS4RvDC3CogSL1fITdrRnakSAa2
- yCyOm3JTuDFuHJEvZCxsOsqIj51NUaNufYct3Z6nOnzACTBTHeLSSNtyBFHB9dg6Jvv7
- C9KP29RmXvtRn8OICGect5ELvk2Seru4coV4xbC1oS5EmWET3JT5yFDiYDU+Y6xL3Mc4
- ztOg==
-X-Gm-Message-State: AFuF++k9C2Xpg1WpdeEvOnP/qI4Zk+HW/S/rBxkJrbVHSqqdpNOYP0aN
- F+vuW1mZifhZ4JbiVkjGwrzwQ0A5y18mJsL2v94aYhgnVfUwmynzIfiHR471tYqYri/hMEYNg/m
- eTvBny3T00ac4qmVKuW00RVOhlouV9QG1m7uzJGf4QLteNDVbAgJ+3rTxbn3QF++IoA==
-X-Gm-Gg: AYBFou3hu/ANMpx7th6jEsxpg5VFsqgeQOFVZDYY705U7lubEdjK/J4Ahe9pdlM/JdU
- vrT/38FnK/mJExPSESQTb1HRmQtuKzFjji6Bi68F+6MAx2/y7pk+5TnZ5ZEfqMUgHty5jTR9mnr
- 0DuNAgqqWdli1P8971bnBEQcmMY0R0U2FIui+VI76gnTfJe36wcSAV4TABUInzq/jfONnI+/Lcs
- VI3MoZCZShizHQQx08fWYCgeN8bFCuoEuST+2ijndXiVS84DBAsDhZPWPcpAo54RxbBPF4L3TS0
- XZ/FXG8FYMhKpxSjxWwgojn0ayKgjlzkDKwjHyhkfgVQpg01cRueHZ6X6Q2rNlFUve3jTfQ6PJH
- f0N7YJYgXPDNNEbKDxOwum5b7YQ8bHSjWYzUdxrEjMxELomA48e+7NzoOvZY=
-X-Received: by 2002:a17:903:1a6f:b0:2d9:2fc9:5706 with SMTP id
- d9443c01a7336-2dd6c5b17bdmr99006815ad.2.1789433298435; 
- Mon, 14 Sep 2026 17:48:18 -0700 (PDT)
-X-Received: by 2002:a17:903:1a6f:b0:2d9:2fc9:5706 with SMTP id
- d9443c01a7336-2dd6c5b17bdmr99006275ad.2.1789433298028; 
- Mon, 14 Sep 2026 17:48:18 -0700 (PDT)
-Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4cf015csm31978309eec.4.2026.09.14.17.48.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 17:48:17 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, Jason Herne <jjherne@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-s390x@nongnu.org, Zhuoying Cai <zycai@linux.ibm.com>,
- qemu-ppc@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexey Kardashevskiy <aik@ozlabs.ru>,
- Jared Rossi <jrossi@linux.ibm.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 6/6] roms/Makefile: add s390-ccw-rom
-Date: Tue, 15 Sep 2026 00:48:02 +0000
-Message-ID: <20260915004802.5749-7-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260915004802.5749-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260915004802.5749-1-pierrick.bouvier@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1789433390; x=1790038190;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/nCue9h3Zgiy7S8auA8nybq7jHAZHZm00h26jImXccY=;
+ b=U8Gm8zI6PQezD7zNZhItTOZRh9zVEdz+hPnzhujSXAd1/5E4Zgud54ba+qOHuI+Wcv
+ iF5lMvVa4BRKUGTTkix5CeGKHdUmMBQqfZE1m+d4NrLYdv3a97scpR0CegDD9HdiVnwL
+ zmY2gp9ugvT8wvgoEuFMdeR0x6z3HGl5aNXK0GcOFiACTPlbtQiVac7WI9kkTIdP1MlS
+ Jo2tgez1L4zUpcj8nAk0qT0VC2DdNwTiH3kBcfFS8eytXvHM8XvnqhBot5yQf7COJIcb
+ GFBN2YCARkZiQYhXkhsvgp3CN0BFyl95v6XZSjJqEa7MSZ+Zvylh8JLR0F8+wqkQZdtz
+ n/VA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz34sM87QkHtSJSzr8pNs1TLWw5/R8OUoG4PERoJuuRRohblQJFjgJxJaX2F4qfEeqBkJabiTwCDsqc@nongnu.org
+X-Gm-Message-State: AFuF++luFWwYZK2vdVCWIqoTU7bOT9wXctrCjzHzprXurTShxaw++oB5
+ 5rUzH3Ko9G3Zc4PJpRd9PEM3ZUCLUlf+H15tb4NFSPTstcOGXCaipzmGZdijkX23TufAEl2sfS8
+ MZcnLK1ATXjkOy34QJU3OxFvBcyrbgBtFgNfNy+1y4c2FUwvEBALYcl8T7g==
+X-Gm-Gg: AYBFou1Jro9vhxz0OjrlbhPc7egABqF70aD6uSVawee2N9e7SXoZAJ+Fec6G1dMgJP0
+ SmAirrSe/dUqKWe3sskFynCREFowR4YqtG4AwBccwWTkIrWV3enuaP3LQ7ECofx84UtCBcOvNAm
+ LMD2q6nUhWbpN2sXHPj1cvbugXve3AbLimWV26vW37I+G7+L+U2n/zODegLWT+yhLCTmQe+hq6P
+ lkzTQMWpQw/WOU9EVirkwfnsVwI94ThHqb74RwblJHIzun4eN9MkP+/Gbl11mc20hwtyRtfbWvw
+ 4ZhfsfxzLh+oNFf93Rwyio5Nm6OJQ/G7GeYV+ds9t0bevOOThWN74K+DLGrvurseF00kQnQ4Dk3
+ hcYe5ozZQVo2XTzQSQsFvkQR3BA3gYfmoPxQOqcHN+RrvZXUkJFXjXzUr92cq
+X-Received: by 2002:a05:6214:5f0a:b0:90e:8422:d154 with SMTP id
+ 6a1803df08f44-9122e4f6467mr87910196d6.13.1789433390103; 
+ Mon, 14 Sep 2026 17:49:50 -0700 (PDT)
+X-Received: by 2002:a05:6214:5f0a:b0:90e:8422:d154 with SMTP id
+ 6a1803df08f44-9122e4f6467mr87909866d6.13.1789433389593; 
+ Mon, 14 Sep 2026 17:49:49 -0700 (PDT)
+Received: from [10.248.104.162] (16.sub-174-226-168.myvzw.com.
+ [174.226.168.16]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9120f49444bsm108080326d6.29.2026.09.14.17.49.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 17:49:48 -0700 (PDT)
+Message-ID: <95c21214-af37-4a9a-b711-c790663b969a@oss.qualcomm.com>
+Date: Mon, 14 Sep 2026 19:49:42 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDAwNiBTYWx0ZWRfX4d2mRcZZrD7t
- pUl2vz4LDJEPTnQVkMPBeYYHhrvNfoLh5Q4NNe17sdBRKff2KSNT+1Xbzi1gwn5BdOO7DgNf85X
- PgmLmJv9yoCS0hldFqHD6hf2L+wgyg7v6j2m5O5O1XjkHwm8il3gF7PPuvDX32Xd1W7YrBPJeU+
- ddO6Epd8UEadxY9CJpkQ3XVI5ssyCpbF4tcfx21PIYbVmkVV6jORLHBWREHPMKAjqIVymdL1YXi
- 2cDyFRC0xptZlg3RS27FqMuWmQUdxOnNIFYLF/JSdA5uxzBahJJF3Mstrj3Ioxyj7gociHEC+Vq
- 9QFPvI8Fo3Isi8fyVpJUwN8zoFsxZHDoN3ENeB8Uqekn7ZKxyv+gAGJqR8SE9Kxe8Tnribw4o4D
- LwFuilewdtNgRIRXKj730P1kk4bdjerO9TDgWBtsvxoHQetimjdjliQfxKxX/YGK+kIpqu1gegq
- RipvE8moV8p2ZO2LADA==
-X-Proofpoint-GUID: -ESOdqvfb9-pfqfF9mW7J9bKVoXnmwtX
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDAwNiBTYWx0ZWRfX+6XNGDhCh6Dv
- 6IBBiI8uKcSWvyQ/8rP4RWe108DAtyshYOdBOOwDO2Q+bhpg4VC3ppAm/qIJBb+1Layqx6lx9v0
- cL3c157MvsgZdDc8h0BibYS8RAf/res=
-X-Proofpoint-ORIG-GUID: -ESOdqvfb9-pfqfF9mW7J9bKVoXnmwtX
-X-Authority-Analysis: v=2.4 cv=MsrHeGae c=1 sm=1 tr=0 ts=6aa895d3 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=S8F17m9pLibwSvgH3oIA:9 a=uG9DUKGECoFWVXl0Dc02:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/10] Hexagon (target/hexagon) Check for GPR
+ multiwrite in analyze_packet
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
+Cc: matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org,
+ philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
+References: <20260914215037.157879-1-ltaylorsimpson@gmail.com>
+ <20260914215037.157879-3-ltaylorsimpson@gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260914215037.157879-3-ltaylorsimpson@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDAwOCBTYWx0ZWRfX1mf3KWo1QzAz
+ 9812VCxOBf7rpu/wVm0F5VyJGgH6X8YuvO4xh03m8yv4aBVeItGij8HO/UKShyNfxF/j7rZELRx
+ MJrqtDSxlefzvKSQZHN+rGlLKlF+hqC78mSqMrDdy++jjDkohB1KX2GwLS153P9ZLFT97b/lxFy
+ wzCbqI97mrYcklPX0Zce231yT6pcTWUDo5Uo+M0lEipRVcAxsMWHW9kkluN6oSGnhT9uJnh6pBn
+ DSaI2mxkKg5teLbdfVsN7CnE/8RGg2jvtXNU2PXU00rE6m4pHqGLhqxqvZgczszLSWFDpzZxCoB
+ c0OqZi6wPEPTEo8lkMiCnmR7iky2IpXnbsE1b44B5E92SIAO3s2ui051/S00zuGJU0ghKMYskXT
+ dwHIrSl8o4MkNTUaun47wnO0PiHDnIXsNFEoZU+442X4hnijCprSR2NsELWC55oQktS8+A3mIP/
+ juxHamK4xbQM7FQEWBw==
+X-Authority-Analysis: v=2.4 cv=TrFzFzXh c=1 sm=1 tr=0 ts=6aa8962f cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=HnZmebILR7CVcA10YZfY7g==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=7doQLLFEGwBOEaR92BsA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-ORIG-GUID: 4kXQgX4LVRPrhjaQLi_KnTaWc_2lXqqV
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDAwOCBTYWx0ZWRfXztduMInEdqUW
+ 4uD2iYTCS/7aj23N0Qn9FTQGRz4kVRHgMbreycLDJTNqsP7Y9t3RNd04T239ushvr8XStPyazO1
+ sCgHjUBJ6LpUkJZ8Cu/CTuvFKgnCEsQ=
+X-Proofpoint-GUID: 4kXQgX4LVRPrhjaQLi_KnTaWc_2lXqqV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-14_05,2026-09-14_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609150006
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609150008
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,196 +157,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove dependency on config.mak and simplify Makefile.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- roms/Makefile          |  6 ++++
- roms/s390-ccw/Makefile | 67 ++++++++++++++++--------------------------
- 2 files changed, 32 insertions(+), 41 deletions(-)
+On 9/14/2026 4:50 PM, Taylor Simpson wrote:
+> For now, assert the new method is a superset of the old method
+> We'll remove the old method in a subsequent patch
+>
+> Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
 
-diff --git a/roms/Makefile b/roms/Makefile
-index 57a53944b9b..73d0277defd 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -76,6 +76,7 @@ default help:
- 	@echo "  qboot              -- update qboot"
- 	@echo "  hppa-firmware      -- update 32- and 64-bit hppa firmware"
- 	@echo "  optionrom-bin      -- update optionrom binaries"
-+	@echo "  s390-ccw-rom       -- update s390-ccw.img"
- 	@echo "  clean              -- delete the files generated by the previous" \
- 	                              "build targets"
- 
-@@ -225,6 +226,10 @@ optionrom-bin:
-         optionrom/pvh.bin \
- 	../pc-bios/
- 
-+s390-ccw-rom:
-+	$(MAKE) -C s390-ccw
-+	cp s390-ccw/s390-ccw.img ../pc-bios/
-+
- clean:
- 	rm -rf seabios/.config seabios/out seabios/builds
- 	$(MAKE) -C ipxe/src veryclean
-@@ -236,6 +241,7 @@ clean:
- 	$(MAKE) -C u-boot-sam460ex distclean
- 	$(MAKE) -C skiboot clean
- 	$(MAKE) -C optionrom distclean
-+	$(MAKE) -C s390-ccw distclean
- 	rm -rf Build
- 	$(MAKE) -C opensbi clean
- 	$(MAKE) -C qboot clean
-diff --git a/roms/s390-ccw/Makefile b/roms/s390-ccw/Makefile
-index 2109d167813..74078ce07eb 100644
---- a/roms/s390-ccw/Makefile
-+++ b/roms/s390-ccw/Makefile
-@@ -1,43 +1,32 @@
--all: build-all
--# Dummy command so that make thinks it has done something
--	@true
-+all: s390-ccw.img
- 
--include config-host.mak
--CFLAGS = -O2 -g -I $(SRC_PATH)/../../include/hw/s390x/ipl
-+CROSS := $(or $(CROSS),s390x-linux-gnu-)
-+AR := $(CROSS)ar
-+CC := $(CROSS)gcc
-+STRIP := $(CROSS)strip
-+
-+CFLAGS = -O2 -g -I ../../include/hw/s390x/ipl
- LDFLAGS ?=
- MAKEFLAGS += -rR
- 
- GIT_SUBMODULES = roms/SLOF
- 
--NULL :=
--SPACE := $(NULL) #
--TARGET_PREFIX := $(patsubst %/,%:$(SPACE),$(TARGET_DIR))
--
--quiet-@ = $(if $(V),,@$(if $1,printf "%s\n" "$(TARGET_PREFIX)$1" && ))
--quiet-command = $(call quiet-@,$2 $@)$1
--
--VPATH_SUFFIXES = %.c %.h %.S %.m %.mak %.sh %.rc Kconfig% %.json.in
--set-vpath = $(if $1,$(foreach PATTERN,$(VPATH_SUFFIXES),$(eval vpath $(PATTERN) $1)))
--$(call set-vpath, $(SRC_PATH))
--
- # Flags for dependency generation
- QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
- 
- %.o: %.c
--	$(call quiet-command,$(CC) $(EXTRA_CFLAGS) $(QEMU_DGFLAGS) $(CFLAGS) \
--	       -c -o $@ $<,Compiling)
-+	$(CC) $(EXTRA_CFLAGS) $(QEMU_DGFLAGS) $(CFLAGS) -c -o $@ $<
- 
- %.o: %.S
--	$(call quiet-command,$(CCAS) $(EXTRA_CFLAGS) $(QEMU_DGFLAGS) $(CFLAGS) \
--	       -c -o $@ $<,Assembling)
-+	$(CC) $(EXTRA_CFLAGS) $(QEMU_DGFLAGS) $(CFLAGS) -c -o $@ $<
- 
--.PHONY : all clean build-all distclean
-+.PHONY : all clean distclean
- 
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
- 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
- 	  virtio-ccw.o clp.o pci.o virtio-pci.o secure-ipl.o
- 
--SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
-+SLOF_DIR := ../../roms/SLOF
- 
- LIBC_INC := -nostdinc -I$(SLOF_DIR)/lib/libc/include
- LIBNET_INC := -I$(SLOF_DIR)/lib/libnet
-@@ -52,8 +41,8 @@ EXTRA_LDFLAGS += -static-pie -nostdlib -z noexecstack -z text
- 
- cc-test = $(CC) -Werror $1 -c -o /dev/null -xc /dev/null >/dev/null 2>/dev/null
- cc-option = if $(call cc-test, $1); then \
--    echo "$(TARGET_PREFIX)$1 detected" && echo "EXTRA_CFLAGS += $1" >&3; else \
--    echo "$(TARGET_PREFIX)$1 not detected" $(if $2,&& echo "EXTRA_CFLAGS += $2" >&3); fi
-+    echo "$1 detected" && echo "EXTRA_CFLAGS += $1" >&3; else \
-+    echo "$1 not detected" $(if $2,&& echo "EXTRA_CFLAGS += $2" >&3); fi
- 
- config-cc.mak: Makefile
- 	$(quiet-@)($(call cc-option,-Wno-stringop-overflow); \
-@@ -70,30 +59,30 @@ LIBC_CFLAGS = $(EXTRA_CFLAGS) $(CFLAGS) $(LIBC_INC) $(LIBNET_INC) \
- 
- CTYPE_OBJS = isdigit.o isxdigit.o toupper.o
- %.o : $(SLOF_DIR)/lib/libc/ctype/%.c
--	$(call quiet-command,$(CC) $(LIBC_CFLAGS) -c -o $@ $<,Compiling)
-+	$(CC) $(LIBC_CFLAGS) -c -o $@ $<
- 
- STRING_OBJS = strcat.o strchr.o strrchr.o strcpy.o strlen.o strncpy.o \
- 	      strcmp.o strncmp.o strcasecmp.o strncasecmp.o strstr.o \
- 	      memset.o memcpy.o memmove.o memcmp.o
- %.o : $(SLOF_DIR)/lib/libc/string/%.c
--	$(call quiet-command,$(CC) $(LIBC_CFLAGS) -c -o $@ $<,Compiling)
-+	$(CC) $(LIBC_CFLAGS) -c -o $@ $<
- 
- STDLIB_OBJS = atoi.o atol.o strtoul.o strtol.o rand.o malloc.o free.o
- %.o : $(SLOF_DIR)/lib/libc/stdlib/%.c
--	$(call quiet-command,$(CC) $(LIBC_CFLAGS) -c -o $@ $<,Compiling)
-+	$(CC) $(LIBC_CFLAGS) -c -o $@ $<
- 
- STDIO_OBJS = sprintf.o snprintf.o vfprintf.o vsnprintf.o vsprintf.o fprintf.o \
- 	     printf.o putc.o puts.o putchar.o stdchnls.o fileno.o
- %.o : $(SLOF_DIR)/lib/libc/stdio/%.c
--	$(call quiet-command,$(CC) $(LIBC_CFLAGS) -c -o $@ $<,Compiling)
-+	$(CC) $(LIBC_CFLAGS) -c -o $@ $<
- 
- sbrk.o: $(SLOF_DIR)/slof/sbrk.c
--	$(call quiet-command,$(CC) $(LIBC_CFLAGS) -c -o $@ $<,Compiling)
-+	$(CC) $(LIBC_CFLAGS) -c -o $@ $<
- 
- LIBCOBJS := $(STRING_OBJS) $(CTYPE_OBJS) $(STDLIB_OBJS) $(STDIO_OBJS) sbrk.o
- 
- libc.a: $(LIBCOBJS)
--	$(call quiet-command,$(AR) -rc $@ $^,Creating static library)
-+	$(AR) -rc $@ $^
- 
- # libnet files:
- 
-@@ -103,20 +92,16 @@ LIBNETCFLAGS = $(EXTRA_CFLAGS) $(CFLAGS) $(LIBC_INC) $(LIBNET_INC) \
- 	       -DDHCPARCH=0x1F -MMD -MP -MT $@ -MF $(@:%.o=%.d)
- 
- %.o : $(SLOF_DIR)/lib/libnet/%.c
--	$(call quiet-command,$(CC) $(LIBNETCFLAGS) -c -o $@ $<,Compiling)
-+	$(CC) $(LIBNETCFLAGS) -c -o $@ $<
- 
- libnet.a: $(LIBNETOBJS)
--	$(call quiet-command,$(AR) -rc $@ $^,Creating static library)
--
--# Main targets:
--
--build-all: s390-ccw.img
-+	$(AR) -rc $@ $^
- 
- s390-ccw.elf: $(OBJECTS) libnet.a libc.a
--	$(call quiet-command,$(CC) $(EXTRA_LDFLAGS) $(LDFLAGS) -o $@ $^,Linking)
-+	$(CC) $(EXTRA_LDFLAGS) $(LDFLAGS) -o $@ $^
- 
- s390-ccw.img: s390-ccw.elf
--	$(call quiet-command,$(STRIP) --strip-unneeded $< -o $@,Stripping $< into)
-+	$(STRIP) --strip-unneeded $< -o $@
- 
- $(OBJECTS): Makefile
- 
-@@ -126,14 +111,14 @@ ALL_OBJS = $(sort $(OBJECTS) $(LIBCOBJS) $(LIBNETOBJS))
- clean:
- 	rm -f *.o *.d *.img *.elf *~ *.a
- 
--distclean:
-+distclean: clean
- 	rm -f config-cc.mak
- 
- .PHONY: git-submodule-update
--$(SRC_PATH)/../../.git-submodule-status: git-submodule-update config-host.mak
-+$(SRC_PATH)/../../.git-submodule-status: git-submodule-update
- Makefile: $(SRC_PATH)/../../.git-submodule-status
- 
- git-submodule-update:
- ifneq ($(GIT_SUBMODULES_ACTION),ignore)
--	$(quiet-@)GIT=git "$(SRC_PATH)/../../scripts/git-submodule.sh" $(GIT_SUBMODULES_ACTION) $(GIT_SUBMODULES)
-+	$(quiet-@)GIT=git "../../scripts/git-submodule.sh" $(GIT_SUBMODULES_ACTION) $(GIT_SUBMODULES)
- endif
--- 
-2.43.0
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
+
+>   target/hexagon/translate.h |  6 ++++++
+>   target/hexagon/translate.c | 23 ++++++++++++++++++++++-
+>   2 files changed, 28 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index d8628383f1..964e6ce0b7 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -41,6 +41,8 @@ typedef struct DisasContext {
+>       DECLARE_BITMAP(regs_written, TOTAL_PER_THREAD_REGS);
+>       DECLARE_BITMAP(predicated_regs, TOTAL_PER_THREAD_REGS);
+>       bool pkt_ends_tb;
+> +    DECLARE_BITMAP(gpr_multi_write, TOTAL_PER_THREAD_REGS);
+> +    DECLARE_BITMAP(gpr_uncond, TOTAL_PER_THREAD_REGS);
+>       bool implicit_usr_write;
+>   #ifndef CONFIG_USER_ONLY
+>       int greg_log[GREG_WRITES_MAX];
+> @@ -157,9 +159,13 @@ static inline void ctx_log_reg_write(DisasContext *ctx, int rnum,
+>               ctx->reg_log[ctx->reg_log_idx] = rnum;
+>               ctx->reg_log_idx++;
+>               set_bit(rnum, ctx->regs_written);
+> +        } else {
+> +            set_bit(rnum, ctx->gpr_multi_write);
+>           }
+>           if (is_predicated) {
+>               set_bit(rnum, ctx->predicated_regs);
+> +        } else {
+> +            set_bit(rnum, ctx->gpr_uncond);
+>           }
+>       }
+>   }
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 52dd1f0266..60441dc309 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -577,6 +577,8 @@ static void clear_pkt_ctx(DisasContext *ctx)
+>       ctx->greg_log_idx = 0;
+>       ctx->sreg_log_idx = 0;
+>   #endif
+> +    bitmap_zero(ctx->gpr_multi_write, TOTAL_PER_THREAD_REGS);
+> +    bitmap_zero(ctx->gpr_uncond, TOTAL_PER_THREAD_REGS);
+>       ctx->preg_log_idx = 0;
+>       bitmap_zero(ctx->pregs_written, NUM_PREGS);
+>       ctx->future_vregs_idx = 0;
+> @@ -603,6 +605,19 @@ static void clear_pkt_ctx(DisasContext *ctx)
+>       }
+>   }
+>   
+> +static bool pkt_has_write_conflict(DisasContext *ctx)
+> +{
+> +    DECLARE_BITMAP(gpr_conflict, TOTAL_PER_THREAD_REGS);
+> +
+> +    bitmap_and(gpr_conflict, ctx->gpr_multi_write, ctx->gpr_uncond,
+> +               TOTAL_PER_THREAD_REGS);
+> +    if (!bitmap_empty(gpr_conflict, TOTAL_PER_THREAD_REGS)) {
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+>   static void analyze_packet(DisasContext *ctx)
+>   {
+>       ctx->read_after_write = false;
+> @@ -1206,7 +1221,13 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+>           clear_pkt_ctx(ctx);
+>           analyze_packet(ctx);
+>   
+> -        if (ctx->pkt.pkt_has_write_conflict) {
+> +        /*
+> +         * Check that the new method is a superset of the old methond
+> +         * Remove in a later patch
+> +         */
+> +        g_assert(!ctx->pkt.pkt_has_write_conflict ||
+> +                 pkt_has_write_conflict(ctx));
+> +        if (pkt_has_write_conflict(ctx)) {
+>               gen_exception_decode_fail(ctx, words_read,
+>                                         HEX_CAUSE_REG_WRITE_CONFLICT);
+>               return;
 
