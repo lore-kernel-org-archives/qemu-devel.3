@@ -4,105 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 663BCC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01E48C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Ssi-0000cy-6H; Tue, 15 Sep 2026 09:07:28 -0400
+	id 1x6T5c-0004YX-Oo; Tue, 15 Sep 2026 09:20:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6Ssd-0000cn-ER
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:07:25 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1x6T5a-0004Xa-UZ
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:20:46 -0400
+Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6SsX-0005N2-NT
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:07:22 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-864cd11a932so3993127b3.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 06:07:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789477634; cv=none;
+ id 1x6T5W-0001A8-Gx
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:20:46 -0400
+Received: by mail-yx2-x11.google.com with SMTP id
+ 956f58d0204a3-66e4ab19125so2966825d50.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 06:20:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789478441; cv=none;
  d=google.com; s=arc-20260327;
- b=H0aGoGVbUakLoLRL0U1G8W+EGQLiUosEmOuEVyO6NY5qQJ/tBvACotc8nBmXdgFEIN
- sJgBYp/Q9rLcQf92qCWUedNCa7mDk7Rh9Js+tF+3w1GnLrKdl8wP4IBKXMUqleC6CiH5
- nLN8CjTLR9dDp1dpKvgcNrAkHj5VF7RGLzmwxaVYpZWkzrKc2UeWu2BPtbGW9aGiLTpe
- GlPlfLsVm2JzGst+2yNlqa9x57gl4Ppd2kLhnDh444EX2ejzTougVb9b1Tzkpu8q3BGo
- Bcx75hywJsti7tKUE96309LX1UbE5/vujJPKqTNIIl/nEY/TEg+mqyQno2W+/cy0ECcZ
- vmjQ==
+ b=O6n2ErgobdHbGTFJ7THPP+ynQ3iM1DMLhloGQB4039HUabmVw100KsBK4KWRgm4Wf2
+ 6do0ADN6tdZ6KQoLzQ8hS4/WnkYKBvvevzkjyOz0NesO/O7W0Mcviv4/ye11wDIhPbxa
+ +/oRhXvSktRfm+xL6vfXbdj96UFTNk3tpcFISvR1rJ6vkYN5ZrpFWiXcoW80HkGeHawo
+ fgthk/HYZkEyrJXSxfFiuKzl9GDHHb9qRnCdHfLfh6H+5ixD3My+cdPWXdgq4fpXN2zI
+ XHoDEQPFHr2ggk6WxOAMGNGLzJD+beTz1aqfKS1ibo8WA+vfSzJ4RtuWlwbkSKLIZXxv
+ Wcpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=C5e6aiAKV7rnlC1LEkdzB4WDWu8xhaoG/qz6B1jbGPE=;
- fh=cXlu1n/FtA+ancPBniKYesW2UiXK4sHJOzQQcAa0reM=;
- b=nv+r0/LT4vjzhU3GGhNx/jsc8IelXxygukNatzGqBs7GC7nnTLBY73QupcMG0uiRRA
- o51NWy+hK75udFNf/gTfLRrr/kk77taGDbpWkihBPOxR90ZcZ59n/eF4N1oOrncVXMLu
- HpdICzwInR40YThA8P+iweMhMA4g+7n752n+xMXkbDwd8fYvUsotZBZ4adoUTDXO+hc+
- zAHlsh9jtfOjLGW+wyZx2QGf2+WLVqQbJ7USedyl78MjmXzwxP/E0GsQSgn19/yD2ngJ
- WO+W2CyVxJO/2+H/8Mh0/dq6ASzVpeFiJzHuzpyVN6QzJ28mQF+CYaRvbNDm23Ycjzzw
- 7YQw==; darn=nongnu.org
+ bh=ydLYY4SqBlxXdXCaVhbLtWJhfLG4FbNsEY5dxxALhXs=;
+ fh=fVPfpHMeJX2gxPKYTBQCzQO60hB2p26ro2vRuUEPsJ4=;
+ b=mxnuHmIEIJIHUbFyoZ4rsrXZnjt0qU3ocNUhpXEXm8oxlQNIh/L1G356tewXb2v91a
+ Gbu6IEbjO9Mgr78rEoRN4VU/5iW0Bzomibp/m6pHhr6hsB9sLXB2qGHlguPcDntb0QVL
+ DN+Aj4XdRp5rbiJtFRfV15hzqq4wmCsBvvutyc9Hnr75YrmLK/oObwzgiEVkYNPf8BuY
+ +ccZEtaxoIq3U82PgOXldkwzATHKFfUiCl0Wb71csxb8Q4eGV8KjWpyC5AjMHyGwqkMX
+ 1TrCCB4SxKnhowur+/nlq7WsMnBTU4voJvE3kwWQ6NetH0y6RnWU/hYFkBrMkmEzOu1X
+ 143A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789477634; x=1790082434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789478441; x=1790083241; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=C5e6aiAKV7rnlC1LEkdzB4WDWu8xhaoG/qz6B1jbGPE=;
- b=EhdL9boFgpf/HnsoovLSbyStwtJYVw1eSkW0U0U2k5oEORrtgKb3LirbaIRsfG/gTr
- zjckQuuGQkNe4Jn2YGVYB6zokRVKqr+oEReiuDWvJXMohQ6i/zndclGh1Islwzfzb6sH
- 7ScdDwQ9ljghia+pyDhQpk6St4NxSrc7+ehCSiBGB3lxW5YejpnFYRZRPQaSSR3JT2W6
- HwfNXGWSPT6KqEUik+U7rRDLWvi5NvTNTekxUe3rTXRkvDcSet4uAMJxDQP3cQRa14jt
- vl7dh0c6qOOB6zcoaHHZdcsZLfhPNVBiiy7yvQAh4VwGa3Behe7LFsYYQ3Xgs/alwE9e
- IKxw==
+ :content-type; bh=ydLYY4SqBlxXdXCaVhbLtWJhfLG4FbNsEY5dxxALhXs=;
+ b=I00UdDpYgKLEATrIKcWgLYhcdSUQfdFu/eMS1Cu6r/3SNMs8Rzb8dL9TXhynPqXn/a
+ XwBB+cMsHKce0IP32yAB07x+YuLLzzAbp6dxJVGb5DdSQHMs2uwo8tVmHbYGUVO6rsb8
+ p8o6RFV0u3JzdsfPkbI5SuRJGpQttnJ6ToMmFdPkgX2wV9Z5wS+058pILyxm2fIAdmiN
+ 0c53Uazqj4ryfITeCzSTy/e7bwnO4o29oVLAjUSomcLJtv0IbJxniczjgbg7RHx58VTE
+ 2PcFQ4eSLnYVY2QWJfSeKsId6UsFLyfJ4I+ovRfEWuFYKCMmsSU91PqJWp980LCwUWRc
+ 5IyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789477634; x=1790082434;
+ d=1e100.net; s=20260707; t=1789478441; x=1790083241;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=C5e6aiAKV7rnlC1LEkdzB4WDWu8xhaoG/qz6B1jbGPE=;
- b=EXb+sfhTJTmfVkg8vbq8iESevs4hYj9Pa2acWRe0bJzYdjek+9PRPsaDm6Ul5YKW+O
- bJlhMdVMA1m2Vg+4YTculD7jHDbjoiRsxoVf9mAaDwwQE7XMkA7u8Cf57p0Rcmb7o7U7
- aHr8U6mNT1oA2VUUXCRC/JgIsudColb/x/T8XxIMk1XoINgdzMLbz64p8q9ELEdqvKK0
- FEfhHjwIkQu5HJbVLEu081QSWrcTUoZcwsgVOSJXa+vKofaHS3yWiEvaeZ4vYlM6FAkw
- /VnYkCR7KzUDALKg5qp9zZ3BnMMKDSre2c0Qiks8GsWf99u7smc6VFsByfPf8eXpkopY
- 48mA==
-X-Gm-Message-State: AFuF++nBL7ul+fN/osf2ETcx2+EfPlzrhu2fIiTtN5l3swN/oHEY50HT
- yoDsz2LN+vL4jlwqrKgrlrqAJYmNjdD6IlcvgVqFjbp96mnBwdDFWefdq2LmcsFgGNPRb/MpEOM
- kqerg0uHwFcEjvL3Vk/sFSjnYYQZEDF9EYNmF15vDpA==
-X-Gm-Gg: AYBFou225xy6PFkoNt0vj58ofhe8yOjuI1RBUwDUweli6oH9g+v1gu95AM/a44TeRz8
- 6OLSnYKqkUDKxKZjZvUF5Jq9ylZ5a2SbxZIeBoiUn51D2fuJgQTiZusfBXqWpy0qIPThS7nwlqY
- g1zjyOvBWMLvvJuf2dajZk5Rfkw0ZcFJOSJDNVRTQ0PDNsbBH9qS9U3qWqRx08w/CDU07ZLqbGO
- Kpqi1BOpsfv7oNmzw3T2NhsYKQBT5Met/TXb837vhjdQIMc2hw3lnA+TumfHZUmIa3zQeJBQO3W
- 2ZOE4Qki2vRvUtVZ7hw5voBCl3weDwIqPPLBbazBg8HjPlOTnHDG6hL0Wj6o3d1mRiB8f+kzdJu
- TeCeE6IxGyw2Jblfv1dIDaFRTJnNYTRcxyulr4jk=
-X-Received: by 2002:a05:690c:c511:b0:861:7cb6:5790 with SMTP id
- 00721157ae682-88f15725b85mr8702677b3.4.1789477633981; Tue, 15 Sep 2026
- 06:07:13 -0700 (PDT)
+ bh=ydLYY4SqBlxXdXCaVhbLtWJhfLG4FbNsEY5dxxALhXs=;
+ b=GsERu/VONxaNl9jZXI/xTOQjnB4N5OZlEzUQAKFeTT3+QSu4pK1CZb4W13Tz5EysZc
+ NtHkvrYsWJyGPqV6Is6esoZ/v1pEHLG9WpRvFHuBkmXB8M2orJDC7DF9R8UqoJaPghH1
+ 6zDS5fFkmUSRr7TX8rlxqS3+ztG/76l8ImNIc2sLMtUdud+RYVW423KH5/ImRkgjp+ng
+ SHUPz8XvPLZtfYpPFn2ZiW55FLTpFFFwSz9zAwgzB/py4HqRkx5kPDp6AoBlZgbliy/H
+ Uwikk++okWiZjBcd9Wm3OPlbCAbCZzPGLdrzUlcyOwgHiuUozoOfVWbu347zAETFRb/L
+ 1KrA==
+X-Gm-Message-State: AFuF++nOaBddTLF3jQInZpHw3THzWiJDmtgye2hK0cPiVfmOe+zkPmwV
+ 3ecGf3ANl3DoC0Iw5xGFUGZtjeyzXRhfAGpS6EsVDpwsp/cZGJGfPYYTO/KNKYx9jsGQb/cpmC1
+ J7lmSDgWfhDf2BxdBGW2BiN67bxKDoolcI/zGh4A9FA==
+X-Gm-Gg: AYBFou00EfrJRJPDxTcEew4AAjPJWZDKpuGJPiTlR6j0VOGJz48HLunAWX4bhb+Bgl6
+ HV/E+bm6s91jSQGNYK5Azx0miVUgyOnIQZUbCweahMStWvv8CsojT1XpeX9OV2VEnL0il0PC0wx
+ KSstNmmD3Nrcnmi65tiWWjDigXJOSyagQI+YlA8r+OOkkqGiEVsWxCgsBqvpEMkfLF4NTCtG4WP
+ Fy43nb3kn2ss3Kv1ngSJSl8IvLyaFObDONa0lyqnSG6WneoQZRGJgWOP8raBrwImimk58F+ym6N
+ 5w3B5bNKu0USkETLQDUeeIYgrGoD5FLohVg8lHQGMEJNocv48lhethhBD7UHG/xCQ6MaFl2NxC8
+ cUs+YVSKA6cS+Ys7zd0JUx6GboPU3jC2Mg8cGFWFoliGHv+gVD7o=
+X-Received: by 2002:a05:690e:b8a:b0:671:a0c:6ea1 with SMTP id
+ 956f58d0204a3-6714dfdbde7mr2860817d50.13.1789478440855; Tue, 15 Sep 2026
+ 06:20:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260914223159.2735262-1-brian.cain@oss.qualcomm.com>
- <20260914223159.2735262-5-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260914223159.2735262-5-brian.cain@oss.qualcomm.com>
+References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
+ <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
+In-Reply-To: <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Sep 2026 14:07:02 +0100
-X-Gm-Features: AcwNN1XXyamuSKh6qEe0P-KdokFEj6A7zeG24mDbWagm1DqKXtj0J7n7QyP8Gzk
-Message-ID: <CAFEAcA-BeCMPhvHLG6Jkz9q68ZJUN36diepWvEbhN-+RxZtVQw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] target/hexagon: add directory semihosting
- operations
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Date: Tue, 15 Sep 2026 14:20:29 +0100
+X-Gm-Features: AcwNN1Xu0hXFTKzeAF-1QQyTSUeE_2gx-XE6Aj0PBiUQXqzpvfS3DC8zJz0iiyQ
+Message-ID: <CAFEAcA_=sRZboB1GyGDxEa4vTZe5YS4GwJV9aK=6h-fONgLVkQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 2/6] target/arm: model Cortex-M0+ privilege
+ extension
+To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,63 +115,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Sept 2026 at 23:32, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+On Mon, 14 Sept 2026 at 20:25, Gilles Grimaud
+<gilles.grimaud@univ-lille.fr> wrote:
 >
-> From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> The Armv6-M Unprivileged/Privileged Extension is optional. Cortex-M0 does
+> not implement it, while Cortex-M0+ may implement it. The RP2040 Cortex-M0+
+> configuration provides the extension.
 >
-> Bare-metal Hexagon programs use OPENDIR, READDIR, and CLOSEDIR
-> semihosting calls to enumerate host directories. Directory handles are shared
-> by CPUs in a cluster, allowing guest indices to resolve across calls.
+> Add an ARM feature bit and a cortex-m0plus CPU type that enables it. Permit
+> privileged writes to CONTROL.nPRIV when either the Main Extension or the
+> optional privilege extension is present.
 >
-> Use lock_user_string()/unlock_user() to read the OPENDIR path from guest
-> memory instead of copying it into a fixed-size buffer.
+> Update the microbit Cortex-M0 test to verify that writes to nPRIV are
+> ignored.
 >
-> CLOSEDIR clears its slot in the directory list, so a stale index reports
-> EBADF instead of dereferencing a freed pointer.
->
-> Also add a functional test for the new semihosting operations.
->
-> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 > ---
->  include/hw/hexagon/hexagon.h              |  14 ++-
->  hw/hexagon/hex-subsys.c                   |  32 ++++---
->  target/hexagon/hexswi.c                   | 108 ++++++++++++++++++++++
->  tests/functional/hexagon/test_systests.py |  11 +++
->  4 files changed, 153 insertions(+), 12 deletions(-)
+>  target/arm/cpu.h                           |  1 +
+>  target/arm/tcg/cpu-v7m.c                   | 11 ++++
+>  target/arm/tcg/m_helper.c                  |  4 +-
+>  tests/tcg/arm/system/meson.build           |  6 ++
+>  tests/tcg/arm/system/test-armv6m-control.S | 66 ++++++++++++++++++++++
+>  5 files changed, 87 insertions(+), 1 deletion(-)
+>  create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
 >
-> diff --git a/include/hw/hexagon/hexagon.h b/include/hw/hexagon/hexagon.h
-> index 62398eeb359..58bdcabe87e 100644
-> --- a/include/hw/hexagon/hexagon.h
-> +++ b/include/hw/hexagon/hexagon.h
-> @@ -11,6 +11,7 @@
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index e3f931dba2..66606b3444 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -2168,6 +2168,7 @@ enum arm_features {
+>      ARM_FEATURE_VBAR, /* has cp15 VBAR */
+>      ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
+>      ARM_FEATURE_M_MAIN, /* M profile Main Extension */
+> +    ARM_FEATURE_M_UNPRIV, /* M profile Unprivileged/Privileged Extension */
+>      ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
+>      /*
+>       * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
+> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+> index 48b31d5eac..ac99c93ec3 100644
+> --- a/target/arm/tcg/cpu-v7m.c
+> +++ b/target/arm/tcg/cpu-v7m.c
+> @@ -76,6 +76,15 @@ static void cortex_m0_initfn(Object *obj)
+>      SET_IDREG(isar, ID_ISAR6, 0x00000000);
+>  }
 >
->  #include "system/memory.h"
->  #include "hw/core/boards.h"
-> +#include "hw/cpu/cluster.h"
->
->  struct hexagon_board_boot_info {
->      uint64_t ram_size;
-> @@ -159,6 +160,17 @@ struct hexagon_machine_config {
->      union hexagon_config_table cfgtable;
->  };
->
-> +#define TYPE_HEXAGON_CLUSTER_STATE "hexagon-cluster-state"
-> +OBJECT_DECLARE_SIMPLE_TYPE(HexagonClusterState, HEXAGON_CLUSTER_STATE)
+> +static void cortex_m0plus_initfn(Object *obj)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
 > +
-> +struct HexagonClusterState {
-> +    CPUClusterState parent_obj;
-> +
-> +    struct {
-> +        GList *dir_list;
-> +    } semihosting;
-> +};
+> +    cortex_m0_initfn(obj);
+> +    set_feature(&cpu->env, ARM_FEATURE_M_UNPRIV);
+> +    cpu->midr = 0x410cc601;
+> +}
 
-This looks very odd. Why do we need to track open directory handles
-in this special per-cluster structure, but we don't need to do
-that for e.g. open file handles returned by SYS_OPEN ? I can't
-see anything in the semihosting specification that indicates
-that SYS_OPENDIR has special behaviour like that.
+This patch should only add the feature; it shouldn't add the M0+
+CPU type as well.
+
+> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+> index 33c9e7c55b..f8461a4d66 100644
+> --- a/target/arm/tcg/m_helper.c
+> +++ b/target/arm/tcg/m_helper.c
+> @@ -2775,7 +2775,9 @@ void HELPER(v7m_msr)(CPUARMState *env, uint32_t maskreg, uint32_t val)
+>                             !arm_v7m_is_handler_mode(env))) {
+>              write_v7m_control_spsel(env, (val & R_V7M_CONTROL_SPSEL_MASK) != 0);
+>          }
+> -        if (cur_el > 0 && arm_feature(env, ARM_FEATURE_M_MAIN)) {
+> +        if (cur_el > 0 &&
+> +            (arm_feature(env, ARM_FEATURE_M_MAIN) ||
+> +             arm_feature(env, ARM_FEATURE_M_UNPRIV))) {
+
+We should make ARM_FEATURE_M_MAIN imply ARM_FEATURE_M_UNPRIV
+(in arm_cpu_propagate_feature_implications()) so here we only
+need to test ARM_FEATURE_M_MAIN.
+
+>              env->v7m.control[env->v7m.secure] &= ~R_V7M_CONTROL_NPRIV_MASK;
+>              env->v7m.control[env->v7m.secure] |= val & R_V7M_CONTROL_NPRIV_MASK;
+>          }
 
 thanks
 -- PMM
