@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A44C88E7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF03C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Vbk-0008T7-4z; Tue, 15 Sep 2026 12:02:08 -0400
+	id 1x6Vbj-0008RB-A2; Tue, 15 Sep 2026 12:02:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbZ-0008Hp-LM
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:57 -0400
-Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x6Vba-0008JP-DU
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:59 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbW-0003V3-Au
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:57 -0400
-Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c254f6c7a4aso404524566b.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x6VbX-0003Ww-9q
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:58 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-cbe6295f05bso750651a12.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789488112; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jxGoMIRmLJBnIu44vOoyke9//4EgnBISpSsQHQ8g2Oo8Ya5zvDv1K6CYFMQoVyQFJj
+ 8+vz2mdPiGA61Q6yZhLaqc10SbPsPRzV870N9C14PyFrm71LTVkwfv4qK3pBDGEIbxUi
+ 4Fwk5vtPVx3qiNH3sqdSe9HNvSBBnZrRLVx6ztDdppBZS4s3+SZbR4OUb2NFhgkljWd6
+ RodlrloyGKgzxmbMjb8DgiwryHvZPM2byrxQz79bRNWhOsrgfgT6GkRn0wrdtHN4oUXi
+ /lkppURo+WJPjPIh0DTUy72IpoNov4cCg6+2dlKrzpASUXpgNHexpy+2PqhFRjvC6MEb
+ jJIw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nDULy346PEO3X8rtIZa/6Q6sX3fxV7QSzcqOMFv73HI=;
+ fh=DkEooEG7he3kAXG3TA9e4rdbNsIgMbuD3ROPyB6ao+c=;
+ b=AtrgckgecAwuJ/CTufp/pLSZ/ywDtdRko4CY5EAGlCVUOrRdsgbrBMjqpgw1P0ZRUx
+ DUmghmf6rVcRSerw3efF8FJE1TLX2D8x6w1IFvEw6UIVynAi/Ik5Iu4FcydCTsAWDisj
+ aL+iy8GkFYf6RNC7p9Y+xMSw8pl/qavpx7Hb8m2BDWljIEdzD40olPneJD3jT3Ks+8KZ
+ a9J0p4xslCLVdQJPwErcd2+Kj5P7atuWIB87Sa+kESiWzC4gXYpvFtoaHPkcTDJXUmIN
+ aN6g2spBkVGu0Kg2vDpqBZMdHW80Qia06TZ7mGgyahvEDc3qJfqsv14grPtTRd7FjWOa
+ gvWg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789488103; x=1790092903; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CbPrT7PLvBDymN3EeZkp0K9KuC7aLbOtM142o2glIGU=;
- b=GOcxTr8IckRPJK5EJ2LJxvDgzFr6uZTMTILlhPWEVIKSGVAeps9fg1RXZKwy+tY++V
- MFvenDVFZ71An7bu60CucXjLz5xklTBuadnun8zEHh4LjvTQikGCUcUsr6EQk6UqeCt6
- uCWiCw/WjDOa7cD747nyC+ON8HaWPBkaWntFkI9vdZlzZ6pOwe0GQivXpOtojho1sEIf
- cpVfPwsRdsXcks1hY99qSkiEGQbRydQlz2sOM2BsW99LNfJhZc0xydsT8GrupFboygMA
- SArd5i0O/mb7QZF+ka5eTFpK27NoKSnLMltv8hJetjj1zYnl/fNtyUo8LLab6jSjseVb
- Y7Bw==
+ d=gmail.com; s=20251104; t=1789488112; x=1790092912; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nDULy346PEO3X8rtIZa/6Q6sX3fxV7QSzcqOMFv73HI=;
+ b=e8n/JU2r+3BdAJTNpMgKqWWqD1/4gwfYeW8mbYeT6o72YZb09lnkJV5zilJfg0IZEg
+ h0lCOYSrCcA+x16qIIcH62N3g9MrTZJ18ACNpXziVAebqIcqQVcwx91YU+wkmFqxeia6
+ MA4pU3vIzyeaL/cMjMAGVIfid2wsvX3ak9zVWwfWQGfyOFEldlVqpo2NB88qdhFv6yhN
+ t3wRhTy2Pl8Wic1BE9hSz8hDQ6fI8O9hk9vM4GWABDMgOpu0C8dP7+n5pxbcIupG6zDB
+ G2hjD01gurRzZd2ci7/JU9xw9hoNx1ZYyIWcsUQLL+leSQ3uA0DTuadGnP9WCy6KEfde
+ kNFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789488103; x=1790092903;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CbPrT7PLvBDymN3EeZkp0K9KuC7aLbOtM142o2glIGU=;
- b=V0oDRF8rXThawkBX65aL0we1au2As3II1YNN3zw7mDNnGre47Z7GNxh697qt+qedQI
- gnSCXzRT30Qf6dgsjh1ouZUViK/7rYnRk9LtN8RHc/ajlWonkJXfE0ECNaye3tpuYrL4
- SSSpYO1EkIcdzCmz2dmvVITTabRAXX3utaE4JaMvmEpnplyXLaFIzGV4t9hsXCPcq7Jw
- 6D2W62Y413qwe9NVRjlJU4EVx1CpOOAtd4ZzZh3OtN6LUB0IS6veCRrdSJHL731667mz
- oYbxeCJWCvSV9pANEweKPPWtliKueDSDDXfu7HTIMQyPM3tMBOOl2fvi+g6r9wyiD2mV
- 4D+A==
-X-Gm-Message-State: AFuF++mvTV9z+teD1+pNi4YA/MqOqe01E7Yhr/9ZBHgp2oLv1AnxSLw3
- cT2kNAthtbSeMnYXVywFOma/+flBXCnMZlImgspcKmWFNRiFGy6xD9McyQ/Iqw==
-X-Gm-Gg: AYBFou0oOOD3KWP2b7Y6BjVPFDbINah2sCqTwgdWH7hYKgvSA4NFyIBQ0T3xnmwcgQx
- mtOMM2HkCUHzoXzXGjwgA9wctbDUAmhMF1P68SulpOB7EOFrvvNcNDMxX8CK3W/SOS4lr3np/aw
- vIGfixpU8A1iCjxJoezNh6zSGMi1lKyBI1qA0k7d9dvog4Ok9QEeVA4/qeGyeqm1CBocQHPgpow
- h4uI87MZ9Nz2sLSh1bGvq/cDkt7LWNi3SWUW6yBMf+PGR3yxN5fttcNA2FZOy15jMfLgaBKs8rM
- PNynztlljiGlyRnEl0t1hyE6g84i+h00MCAtotIvVdldfRYgAj+dCnW5U5eSjN+wjGeIoUCxYlh
- FOxA1NBbs7q5GmIhPFMq6ILrtIksmfM63vZ5TVKvzSChrLuSUj66MXBlHR3fWzMRay3MXrfvDO/
- fJ/hiA0fCbja2FxHkwu+dIrzIaDzZIYO6eyZo4gV1Zz0YDoGIE7JihWcpqGBzYpfiNPt7Lz4CSL
- zerHWf27kYUtNSIfOZ1st9PZqwRWz7mkMkpfN71eHQtUQ==
-X-Received: by 2002:a17:906:f597:b0:c25:541:fd3a with SMTP id
- a640c23a62f3a-c29b84d1bd1mr499723166b.7.1789488102788; 
- Tue, 15 Sep 2026 09:01:42 -0700 (PDT)
-Received: from thinkpad-t470s.. (83-131-196-251.adsl.net.t-com.hr.
- [83.131.196.251]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 09:01:42 -0700 (PDT)
-From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- peter.maydell@linaro.org, francisco.iglesias@amd.com,
- edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
- Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v2 18/20] hw/core: Add Remote Port files to build
-Date: Tue, 15 Sep 2026 18:00:42 +0200
-Message-ID: <20260915160044.345788-19-ruslichenko.r@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
-References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
+ d=1e100.net; s=20260707; t=1789488112; x=1790092912;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nDULy346PEO3X8rtIZa/6Q6sX3fxV7QSzcqOMFv73HI=;
+ b=dZGXV5U6xTfPP8FhWpEOTL+n60AREPGjN+tkFv1ovYAjZ9pEVxHc6SRw+JZsALufFF
+ 4MVXC9SueGS7hPSgPhCyqZUYT8xTI/1n1BnhyH0eKrjfLh31uChS74uW9QLPsQDAYdEd
+ iCLzUFCsjry+kZPPdbb3tU6EPHUJI22koJzZPPrvlkXLZ2fQXmmI/NPCevBOxSmxwDn+
+ ha77FiA1viih2vHsXHZ+NyufGu399rzgVgckNXeXl5aVnMv1kYkH1BkCn2jPPxSka9l3
+ f2EzvOIgLFxVs9ZiO7dUELtAWgpoJjyCEVc9HGKX4hjOuPlA/qvEgFTvrcGSODbfi0l5
+ Afcg==
+X-Gm-Message-State: AFuF++kJmdIrG0urBdwVOJdgXoqxta+6t9nVuuh77OhTATQHUmL+oxA7
+ ZeO/dekgxgSKnXayXxwOSJqvVFmxprFXNZNLX1Vgo9EVcNbWCwoCqdcKNGSw5225Rk1EQ6RZHhk
+ jAdetlTJoIr+FKfcJwyE48ezdNA2msVg=
+X-Gm-Gg: AYBFou0ReT/5JSNsmnTdIGOQiZ9/Crjg1vKBbkexa2ufM680GScg5BABzdVi7szywUL
+ YJF3ZyDgK7kLcorVD1b4qlimuqHVRcTaN0njuxzN4QDqLd5gVcVgkAnwBQyu5XAI3fvuSFjlyPG
+ Icn+fA3OMpIlPyHcucvzkbZ84/WStYd44AjrYvlMYXfFOxFlqmxd9MhD0JwbF6mWuwnod1xyEPk
+ ovOIYfAJXJETqqTbk5qO5kLOTv8ul1DmV4oUwsomV0TZtk/270y42aP5X58BaU4Yl5TJATRXSu6
+ bLnnvogHEch+SMEJSbbsTCWW0nXsQI5C1Zaps9SG+LTm1+0GwJ4Ms6HBx7xBpfshddl9z8n/ujG
+ k3hYt9dCYnic=
+X-Received: by 2002:a17:90b:4a92:b0:398:9beb:a2b9 with SMTP id
+ 98e67ed59e1d1-39dfe1ca2dbmr6800524a91.27.1789488112303; Tue, 15 Sep 2026
+ 09:01:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:34::10;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ej2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260915153326.90014-1-stefanha@redhat.com>
+In-Reply-To: <20260915153326.90014-1-stefanha@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 15 Sep 2026 20:01:39 +0400
+X-Gm-Features: AcwNN1W0v9C71d20ebY7vLHblXcXCpB5IetL8sjbQ6jD8Tu8ZoNRP2YiA1IYKPI
+Message-ID: <CAJ+F1CLs2OyGeRZLnxshXLzpNF+tU9=0MQC__UEFVzPcXR5qtg@mail.gmail.com>
+Subject: Re: [qemu-web PATCH] Add GSoC 2026 wrap-up post
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Tanish Desai <tanishdesai37@gmail.com>, 
+ Aadeshveer Singh <aadeshveer07@gmail.com>, i@uchout.moe, niko.ramak@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +119,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+On Tue, Sep 15, 2026 at 7:34=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> Google Summer of Code 2026 has completed and it's time to showcase the
+> projects that QEMU's 4 contributors worked on this summer.
+>
+> Cc: Tanish Desai <tanishdesai37@gmail.com>
+> Cc: Aadeshveer Singh <aadeshveer07@gmail.com>
+> Cc: i@uchout.moe
+> Cc: niko.ramak@gmail.com
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Add the Remote Port subsystem source files to the build system.
-These files are compiled when CONFIG_REMOTE_PORT is enabled.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
-Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
----
- hw/core/Kconfig     |  4 ++++
- hw/core/meson.build | 10 ++++++++++
- 2 files changed, 14 insertions(+)
+thanks all!
 
-diff --git a/hw/core/Kconfig b/hw/core/Kconfig
-index d1bdf765ee..25f553e189 100644
---- a/hw/core/Kconfig
-+++ b/hw/core/Kconfig
-@@ -38,3 +38,7 @@ config SPLIT_IRQ
- config EIF
-     bool
-     depends on LIBCBOR && GNUTLS
-+
-+config REMOTE_PORT
-+    bool
-+    depends on PTIMER && XILINX_AXI
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 8fe776d2c8..74021c5f6d 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -26,6 +26,16 @@ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
- system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
- system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
-+system_ss.add(when: 'CONFIG_REMOTE_PORT', if_true: files(
-+  'remote-port-proto.c',
-+  'remote-port.c',
-+  'remote-port-memory-master.c',
-+  'remote-port-memory-slave.c',
-+  'remote-port-gpio.c',
-+  'remote-port-stream.c',
-+  'remote-port-ats.c',
-+))
-+
- system_ss.add(files(
-   'cpu-system.c',
-   'fw-path-provider.c',
--- 
-2.43.0
+> ---
+> Aadeshveer, Nicola, Tanish, and uchouT: Feel free to suggest edits!
+>
+>  _posts/2026-09-15-gsoc-2026-wrap-up.md | 96 ++++++++++++++++++++++++++
+>  1 file changed, 96 insertions(+)
+>  create mode 100644 _posts/2026-09-15-gsoc-2026-wrap-up.md
+>
+> diff --git a/_posts/2026-09-15-gsoc-2026-wrap-up.md b/_posts/2026-09-15-g=
+soc-2026-wrap-up.md
+> new file mode 100644
+> index 0000000..c652251
+> --- /dev/null
+> +++ b/_posts/2026-09-15-gsoc-2026-wrap-up.md
+> @@ -0,0 +1,96 @@
+> +---
+> +layout: post
+> +title:  "QEMU Google Summer of Code 2026 project report"
+> +date:   2026-09-15 07:00:00 +0000
+> +categories: [internships, gsoc]
+> +---
+> +QEMU participated in [Google Summer of
+> +Code](https://summerofcode.withgoogle.com/) 2026 with 4 contributors wor=
+king on
+> +open source internships from May through August. The contributors gained
+> +experience in open source software development working on 12-week projec=
+ts.
+> +
+> +This post covers the GSoC projects that QEMU had this summer.
+> +
+> +## Fast Snapshot Load in QEMU (Aadeshveer Singh)
+> +When virtual machine snapshots are loaded by QEMU, the entire contents o=
+f RAM
+> +and all device state is loaded before the virtual machine can start exec=
+uting.
+> +A lazy approach is actually possible where the contents of RAM are loade=
+d
+> +on-demand when accessed by the virtual machine. This can significantly s=
+peed up
+> +snapshot load times since virtual machines may have a large amount of RA=
+M and
+> +loading it upfront takes time.
+> +
+> +Aadeshveer implemented fast snapshot load by taking advantage of QEMU's
+> +postcopy migration infrastructure, which monitors RAM accesses using Lin=
+ux
+> +userfaultfd(2) so that memory pages can be populated on-demand. A thread=
+ is
+> +introduced to load RAM in the background while the virtual machine is al=
+ready
+> +running so that on-demand loading is minimized (it affects virtual machi=
+ne
+> +performance). Testing showed that fast snapshot load indeed provides a m=
+ajor
+> +speed up.
+> +
+> +Aadeshveer has written up a [project
+> +report](https://gist.github.com/Aadeshveer/6a16579aed93f5d483bbb9419ecd2=
+211) as
+> +well as a [detailed
+> +journal](https://aadeshveer.bearblog.dev/a-summer-with-qemu/) if you wou=
+ld like
+> +to learn more. This project was mentored by Peter Xu.
+> +
+> +## Support x86 Process Context Identifiers (PCID) in COCONUT-SVSM (Tanis=
+h Desai)
+> +Process Context Identifiers are an x86 CPU feature that improves context
+> +switching performance. Without PCID, software has to flush the Translati=
+on
+> +Lookaside Buffer (TLB) when context switching so that memory translation=
+s that
+> +are no longer relevant in the new context are no longer used. PCID allow=
+s
+> +translations from multiple address spaces (contexts) to exist in the TLB=
+ and
+> +this can help if they are needed again in the near future.
+> +
+> +Tanish implemented PCID support in COCONUT-SVSM, software used by confid=
+ential
+> +virtual machines. This involved:
+> +1. Creating a [Rust crate for x86 CPUID feature descriptors](https://git=
+hub.com/coconut-svsm/cpufeature) so that PCID functionality can be detected=
+.
+> +1. Adding a PCID to each address space, including writing a bitmap alloc=
+ator for the available 4,096 PCIDs.
+> +
+> +Tanish described this in more detail
+> +[here](https://tanish111.github.io/tanishd/blog.html). This project was
+> +mentored by Luigi Leonardi and J=C3=B6rg R=C3=B6del.
+> +
+> +## Observability Support for COCONUT-SVSM (Nicola Ramacciotti)
+> +Troubleshooting confidential virtual machines can be challenging because=
+ the
+> +host is untrusted and does not have visibility into logs, traces, etc fr=
+om
+> +inside the virtual machine. Instead, an operating system running inside =
+the
+> +confidential virtual machine could extract logs and the new Observabilit=
+y and
+> +Configuration Protocol (OCP) has been defined for this purpose.
+> +
+> +Nicola implemented OCP in COCONUT-SVSM, creating the interface that soft=
+ware
+> +inside the guest can use to read logs. A Linux device driver was also
+> +implemented together with a userspace utility called svsm-tools that exp=
+oses
+> +OCP functionality to list, read, and write data.
+> +
+> +Nicola published a project report that goes into detail
+> +[here](https://github.com/n-ramacciotti/GSoC-2026-ocp-svsm). This projec=
+t was
+> +mentored by Stefano Garzarella, Gerd Hoffmann, and Joerg Roedel.
+> +
+> +## USB Device Redirection for qemu-rdp (uchouT)
+> +qemu-rdp provides Remote Desktop Protocol functionality via QEMU's
+> +org.qemu.Display1 D-Bus interface so that the display, keyboard, mouse, =
+and
+> +other devices can be forwarded from a client to a virtual machine. USB
+> +redirection is a missing feature that would allow USB devices to be plug=
+ged in
+> +on the client and attached remotely to the virtual machine.
+> +
+> +uchouT implemented support for QEMU's `-device usb-redir` in qemu-rdp an=
+d
+> +integrated with the RDP protocol's URBDRC feature for tunneling USB traf=
+fic. In
+> +the course of doing this, uchouT also contributed to the IronRDP Rust
+> +implementation of RDP (qemu-rdp is built on top of it) and FreeRDP (an R=
+DP
+> +client).
+> +
+> +uchouT covered this project in detail
+> +[here](https://uchout.moe/posts/gsoc-2026-final/). This project was ment=
+ored by
+> +Marc-Andr=C3=A9 Lureau.
+> +
+> +## Conclusion
+> +Google Summer of Code brings together talented contributors who would li=
+ke to
+> +participate in open source with mentors from established open source pro=
+jects.
+> +Thanks to Google's funding, our contributors were able to dedicate their=
+ time
+> +this summer to implementing these features for QEMU and its ecosystem. W=
+e hope
+> +to continue to see Aadeshveer, Tanish, Nicola, and uchouT in the open so=
+urce
+> +community.
+> +
+> +If you are interested in applying to future rounds of Google Summer of C=
+ode,
+> +keep an eye on the [GSoC website](https://summerofcode.withgoogle.com/) =
+for
+> +announcements and timelines.
+> --
+> 2.55.0
+>
+>
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
