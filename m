@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D631DC88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC50C88E77
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Wda-0005Y3-S5; Tue, 15 Sep 2026 13:08:06 -0400
+	id 1x6WdT-0005SV-Uf; Tue, 15 Sep 2026 13:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdU-0005TM-7G
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:08:00 -0400
+ id 1x6WdP-0005RT-9R
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:55 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdS-0003Xp-5Y
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:59 -0400
+ id 1x6WdN-0003Wp-Nv
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:55 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e6c0fce17so308105e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:57 -0700 (PDT)
+ 5b1f17b1804b1-49b912e64ccso435755e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789492077; x=1790096877; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=xjL05zRKIjgIZnaMYrtg7DzJZaQ9HoxCeRBWw/WDV5g=;
- b=txfYRSTdBYFnP8/u6oPOw236gVa2F8dHKarqNHxO5tPC4cJJzGVVbtPBAOpf87L/gs
- 1WxiD4cr99fUaq5hWH5dm4qdPLFc2BGOucePlUxpXQCK6nx/aA00dqNPjTwgcwQ9xPAn
- H0rQNR39g6uCVqQbJyO3fwaf5/i+wEi7hEbdkCko5oqAhc2iOOYPdCRDJAmV2EuoWK0M
- WOexwyIODikjAKAIcFRTSNVdbkdyhYgYGbjPmGNNI780LSaaCO6+ZyyRKcHTHiRBn9ik
- TD9C2WfpyGeOCZhECvzCWaDgfo7uGlRzAW7qhRvjsrMdCzowfzPc/dhyGN4+f9giUMeo
- dhSw==
+ d=linaro.org; s=google; t=1789492072; x=1790096872; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ws19gc3+FltY1dGtK5GkfLj1XsaSZHbJrk4tzn5m1FU=;
+ b=LFDbbeH6axBamel52BiKw6/xBsArIgbtOgvqlhId5wl0qx+8iRF4dWIIkB3/00n6UN
+ 7gPSGzRbk8nF/wvWMx3KlKVZzAnqi4omZGrfqdICkOJ+dd+rXGEMbPL7DQvOrjg7keFd
+ wJ58D+vsaKFyFlqXSZG1h+TXQyI9ZTbtsR7OHAn52XmkrudltE7DO+pHepQg/AzhbEtp
+ ppl2RIRME9iemT+4ulfLRdQZUbY5DRjpUuh8sJbJLlKMhrtuNiN0hjcE+VIZ1smX8Vjr
+ G7RySHlHcTToCC8N4gt8ZvoLM/WgzG959KoB8SbhNUnhJJXUSUww35LgkCQ3xf5XY7KL
+ KYhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789492077; x=1790096877;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=xjL05zRKIjgIZnaMYrtg7DzJZaQ9HoxCeRBWw/WDV5g=;
- b=N51NLkCTSzOSnAiX1WLhiKbx/AFW+ebcHCSfTsIfvBLA9KKZvcFMbtZfeqIYI56BtR
- oZA349/zIaX3PokQkfxwes/I6OzKgzBDVLHqsGuogypI0Le2MXh+X5lwSF8oGSzwK4UU
- hGcohjK+Yxn+7x58ecO4Od+m047inq7zzqAeXyol9SC/BjDMyRhEm5qcnDjAr6prX7Yv
- +k09gdjqmT0qwLf/Yitiq4x7ABx0uAyNLhkGtPdbHM9Epu2KZODfV3S4kzFtMmH5VMvI
- mnFUcHi9rwSkzxjEBYhgrrb4ziyAmSwK1HnZjCPYPE22DKURQPk6jLC8zVmXflNh0pri
- JUVQ==
-X-Gm-Message-State: AFuF++ktTp9tBMeuVZ8IJQnIcV6sr3vwVRinnz4/7v9PmQqYZuKXJ3JF
- voVFb1RLBy1oIORmL9hLk5i65xikXwqYSPEBhx8dhQ4H5KMwWZobjsI1IOGpQyOnamZGECUPCs4
- Lt5LkTnc=
-X-Gm-Gg: AYBFou3BcDKFgMWDDLugqKFWyzmGh9e4trfbt4u+OOyXJiJ6m3XBFuilcsfXMYZIZPV
- eqZ68JRRNJccjLaJg7FzLk1BEQsPlzRX+c0E6kHb38zM1SfEdFFI/H+yOwiIgMYcJvOQZtQFAGY
- QnB5W2oZW4Iucx5trOXtsgZ3KvxWIvOJu7ppa6GSYQCm/fZGrkWJhVyRKo2h3Brc+sdh6GNbnj2
- oD8Gss/GqIifJ1BBt78rpc0BbZOqpTTO90slgzfm6lXiXuBtzraDkOoGM0VaxHYoTVBLVuvay/G
- 0Z2JRdOeSHGRxgU8D47CO5Zspw34/l8hGjjt6cHRlMCEvcHsRRVhMYZEoRF4JNmvTwneeDDIIWT
- PMxY3HPMJW5OyxeUbdzInoG8dN43KviA/E8ntQf8FsjzT8regg5FPlwxeermYZapeUmVNQbWHul
- N3foEarKwXgIt0ws0cARoCfaRWF4R5QnOGn9zA32s5RfpYox1maH8xejlSvEXFcsHm4eJ0oZmHl
- 36HJZMnA5cC6w0v0kR4UQzHKv4O9U70nTzj2TeM+20wMuKLvI3As62VCHVGGvG2gm2qoLooWDG9
- PdPc
-X-Received: by 2002:a05:600c:3548:b0:49e:6e7c:d895 with SMTP id
- 5b1f17b1804b1-49e822a8fccmr23207045e9.26.1789492076772; 
- Tue, 15 Sep 2026 10:07:56 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789492072; x=1790096872;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Ws19gc3+FltY1dGtK5GkfLj1XsaSZHbJrk4tzn5m1FU=;
+ b=wq0WQcYbWTCA/DeEdcVy/i85cJmfS8OskgmDXQ6PX4RsFW7pVzTADouSG+UETW34Ib
+ awoRYlVpTTvlsaSbDk95X2i8r513AVoHhi6sj/5LnurdPmUS4Z/s0TdrfkTdL2Q2xvDs
+ nVKKPp5TUCZzgOlaflQ5VXmj5m0KJA6VYW3JOukWO2iaw++O5WkvRjb3vpHfg3KdNByh
+ PNYF3/hBNcIAfzkjrCx0HatBi+DodWnMNCUZOEE47z5u+Hf2VMWPsmZuJsdhYL8ZQUGV
+ JDxo27APZJ0bqIVJNWPI3xjZzbZPEhu4//YP3kIMRYckzz0XOG4h0wXcVyChW/AGBtfC
+ iweg==
+X-Gm-Message-State: AFuF++mtDbr/UZ+HM9KWGgs+x/wgy6xNqBN0WC0z3k139XEIc3N0MyhA
+ ILDihmLwglM8I27Ry2P5i4cw7+9/s1eR9b7WsEw9qbN5gMs9Uzt08skWAP+th3fzoKByJ3IbRpb
+ K8IA3bC0=
+X-Gm-Gg: AYBFou1SD3/iUbQoz4BrrKRyqsmU4LbKwpeMI4zmIN44E76rL5i362LvR8B1/C4TMeB
+ D4kPjcUedRPl0BGuzzV2ifJSam3eG0mAaBqtIgIPyXABrhYd+ypEAWHmPmSB1J6aYwVlEeEGVET
+ yKCmGoCce6wC+/tZiaDPFNnwsxWXRGU2iXlvZu6nURJkK+EIcn+zVcjPoS7VAwIKDCvDWu8MEfn
+ G8l4HK+dc2BoZrfvqZs308o3sGAsFmdqOCQ+5/eOX7UjOXqk0FNvhpi1mR+vkKINwBBYxI8IzSO
+ WLvjcaXkCXUgKGjVFgHtfwU5bAY2urbZvF8JQifT41XQFk8lLd4M49FTnRvW9iPRysWwu7OrurE
+ 6HDtkFercyHP8yoS11uRNIo5jtUrO/5vzvOuxdk+/bTCfAWelOzoMU3DJzRGyj6L1MT9Kh8TC3M
+ AbbUnQzBeIRSwyWPZe1UwzbhxjEoT5nYErjQs9NNdaT8CnScI0Y/Be/7o3kf+aQswVwL6Rv/Z0L
+ eUnwRbuka3B08e8Y/80h8/Tcom1Gk/dYcvUNDMEUTKWnAxNH/uFyTY5erQC3SBohewl7r1mEHiA
+ wgEM
+X-Received: by 2002:a05:600c:8705:b0:499:7a15:fcec with SMTP id
+ 5b1f17b1804b1-49e7a678629mr195478355e9.13.1789492072030; 
+ Tue, 15 Sep 2026 10:07:52 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.55
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:07:56 -0700 (PDT)
+ Tue, 15 Sep 2026 10:07:50 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/20] target/arm: MPU - limit regs RBAR/RASR A1-A3 to Main
- Extension
-Date: Tue, 15 Sep 2026 18:07:32 +0100
-Message-ID: <20260915170735.425445-18-peter.maydell@linaro.org>
+Subject: [PULL 12/20] hw/char/stm32l4x5_usart: Accept character input upon RDR
+ read
+Date: Tue, 15 Sep 2026 18:07:27 +0100
+Message-ID: <20260915170735.425445-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915170735.425445-1-peter.maydell@linaro.org>
 References: <20260915170735.425445-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:31::11;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x11.google.com
@@ -102,106 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The alias registers MPU_RBAR_A1-A3 and MPU_RASR_A1-A3 (v7M) or
-MPU_RLAR_A1-A3 (v8M) exist only when the Main Extension is implemented
-(ARM_FEATURE_M_MAIN). The current NVIC decoder groups the principal
-register and its aliases in the same case fall-through, so once the
-PMSAv7 path is enabled for v6-M (or the PMSAv8 path for v8-M Baseline)
-the aliases become incorrectly accessible.
+Looking through existing serial devices this seems to be a common
+pattern so it makes sense to me this is the right fix and matches the
+API description.
 
-The fix reorders the case statements for the four locations (read and
-write of RBAR and RASR/RLAR) in hw/intc/armv7m_nvic.c. Alias cases are
-placed before the principal register case with a fall-through and are
-guarded by a test of ARM_FEATURE_M_MAIN. If the Main Extension is absent
-the code jumps to bad_offset, causing a read to log "NVIC: Bad read
-offset" and return zero, and a write to log "NVIC: Bad write offset" and
-be ignored. The principal MPU_RBAR and MPU_RASR/RLAR registers remain
-functional for CPUs that implement the corresponding MPU.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4389
+Reported-by: Jan Brittenson (@bson)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260902165956.582901-1-alex.bennee@linaro.org
+Suggested-by: Jan Brittenson (@bson)
+AI-used-for: fetch issue, apply proposed patch, verify build and qtests
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/armv7m_nvic.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ hw/char/stm32l4x5_usart.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
-index b1d27dfb32d..51d3dba8525 100644
---- a/hw/intc/armv7m_nvic.c
-+++ b/hw/intc/armv7m_nvic.c
-@@ -1382,10 +1382,15 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
-         return cpu->env.v7m.mpu_ctrl[attrs.secure];
-     case 0xd98: /* MPU_RNR */
-         return cpu->env.pmsav7.rnr[attrs.secure];
--    case 0xd9c: /* MPU_RBAR */
-     case 0xda4: /* MPU_RBAR_A1 */
-     case 0xdac: /* MPU_RBAR_A2 */
-     case 0xdb4: /* MPU_RBAR_A3 */
-+        if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
-+            /* These aliases are not present for v6M or v8M without Main */
-+            goto bad_offset;
-+        }
-+        /* fall through */
-+    case 0xd9c: /* MPU_RBAR */
-     {
-         int region = cpu->env.pmsav7.rnr[attrs.secure];
- 
-@@ -1410,10 +1415,16 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
-         }
-         return (cpu->env.pmsav7.drbar[region] & ~0x1f) | (region & 0xf);
-     }
--    case 0xda0: /* MPU_RASR (v7M), MPU_RLAR (v8M) */
-+
-     case 0xda8: /* MPU_RASR_A1 (v7M), MPU_RLAR_A1 (v8M) */
-     case 0xdb0: /* MPU_RASR_A2 (v7M), MPU_RLAR_A2 (v8M) */
-     case 0xdb8: /* MPU_RASR_A3 (v7M), MPU_RLAR_A3 (v8M) */
-+        if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
-+            /* These aliases are not present for v6M or v8M without Main */
-+            goto bad_offset;
-+        }
-+        /* fall through */
-+    case 0xda0: /* MPU_RASR (v7M), MPU_RLAR (v8M) */
-     {
-         int region = cpu->env.pmsav7.rnr[attrs.secure];
- 
-@@ -1892,10 +1903,15 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
-             cpu->env.pmsav7.rnr[attrs.secure] = value;
-         }
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index dd1b0991956..0b02dde1f8c 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -441,6 +441,7 @@ static uint64_t stm32l4x5_usart_base_read(void *opaque, hwaddr addr,
+         /* Reset RXNE flag */
+         s->isr &= ~R_ISR_RXNE_MASK;
+         stm32l4x5_update_irq(s);
++        qemu_chr_fe_accept_input(&s->chr);
          break;
--    case 0xd9c: /* MPU_RBAR */
-     case 0xda4: /* MPU_RBAR_A1 */
-     case 0xdac: /* MPU_RBAR_A2 */
-     case 0xdb4: /* MPU_RBAR_A3 */
-+        if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
-+            /* These aliases are not present for v6M or v8M without Main */
-+            goto bad_offset;
-+        }
-+        /* fall through */
-+    case 0xd9c: /* MPU_RBAR */
-     {
-         int region;
- 
-@@ -1943,10 +1959,16 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
-         tlb_flush(CPU(cpu));
-         break;
-     }
--    case 0xda0: /* MPU_RASR (v7M), MPU_RLAR (v8M) */
-+
-     case 0xda8: /* MPU_RASR_A1 (v7M), MPU_RLAR_A1 (v8M) */
-     case 0xdb0: /* MPU_RASR_A2 (v7M), MPU_RLAR_A2 (v8M) */
-     case 0xdb8: /* MPU_RASR_A3 (v7M), MPU_RLAR_A3 (v8M) */
-+        if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
-+            /* These aliases are not present for v6M or v8M without Main */
-+            goto bad_offset;
-+        }
-+        /* fall through */
-+    case 0xda0: /* MPU_RASR (v7M), MPU_RLAR (v8M) */
-     {
-         int region = cpu->env.pmsav7.rnr[attrs.secure];
- 
+     case A_TDR:
+         retvalue = FIELD_EX32(s->tdr, TDR, TDR);
 -- 
 2.43.0
 
