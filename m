@@ -4,63 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A10EC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 08:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEA0C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 08:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Opy-00041O-GH; Tue, 15 Sep 2026 04:48:22 -0400
+	id 1x6Ou5-00053I-C0; Tue, 15 Sep 2026 04:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x6Opt-000410-RS
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:48:17 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x6Otx-00052H-9n
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:52:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x6Opr-00022z-RJ
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:48:17 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c16:1d84:0:640:ba03:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 3E1B880B43;
- Tue, 15 Sep 2026 11:48:11 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c22::1:38] (unknown
- [2a02:6bf:8080:c22::1:38])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id AmPuuZ2eVqM0-DleeDjIi; Tue, 15 Sep 2026 11:48:10 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1789462090;
- bh=Q007KTnHIygvllyWxn67dYQqXjNWbKPO7u1qouY1dlE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=KIGRC3mWjflZo/68rx5W5jIkUENkA1t+UlESEREWjEXN1bbFQHo+LJ/N0QtPI3623
- WJCOmUkxhNQE9ZWmiNl52a2z7R0Qh3+R2L6gCUg4YzI5NQ/DBgUq7t8fofRSVrTS+t
- Dbog8CErut9VoPgn+dhk56n6KCPcCD8XTiZMMq9M=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <86c445db-a3bd-4410-ba52-0be4f6ef400b@yandex-team.ru>
-Date: Tue, 15 Sep 2026 11:48:10 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x6Otv-0002iT-Pa
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:52:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789462347;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nFubn8BDBuWlIA4SuFL9wQmEilcQ7anhQNncRhyPd8Y=;
+ b=iKOIIcU3/C3+EZN0qf9jlYLm29zC09Dud3zenTAJi7ksUWd7R9/jwrUrEROovhJgMuo4h5
+ 1eDqmaBBkNlzh9VdQMd9vQIqImY45OXsSOQlGwSdfcs6RIUhpuZ8DKq9+hTeTcWWvaWpXf
+ LhONlWX3G8qZsR8xivxN/N7oaBKBsII=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-Z6bQ6UZ4Oh6YVGky5uVljA-1; Tue,
+ 15 Sep 2026 04:52:23 -0400
+X-MC-Unique: Z6bQ6UZ4Oh6YVGky5uVljA-1
+X-Mimecast-MFC-AGG-ID: Z6bQ6UZ4Oh6YVGky5uVljA_1789462342
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6DD781956041; Tue, 15 Sep 2026 08:52:22 +0000 (UTC)
+Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4F904426; Tue, 15 Sep 2026 08:52:20 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 2/5] meson: simplify clang version checks
+Date: Tue, 15 Sep 2026 09:52:10 +0100
+Message-ID: <20260915085213.139944-3-berrange@redhat.com>
+In-Reply-To: <20260915085213.139944-1-berrange@redhat.com>
+References: <20260915085213.139944-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qapi/migration: Make migration parameter @local
- consistently unstable
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com
-References: <20260912045350.2139416-1-armbru@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260912045350.2139416-1-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,18 +89,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.09.26 07:53, Markus Armbruster wrote:
-> @local is unstable in MigrationParameters, but not in
-> MigrationParameter.  Fix the latter.
-> 
-> Fixes: c9affb8e9b (qapi: add local migration parameter)
-> Signed-off-by: Markus Armbruster<armbru@redhat.com>
+The checks for the clang minor versions are currently redundant since
+there can never be a minor version less than zero. Going forward it
+is likely sufficient to always pick a NN.0.0 release as the min CLang
+version, so drop the minor version checks.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ meson.build | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks!
-
+diff --git a/meson.build b/meson.build
+index cfac634cf1..cb3eaf3abe 100644
+--- a/meson.build
++++ b/meson.build
+@@ -330,11 +330,11 @@ foreach lang : all_languages
+     # ok
+   elif compiler.get_id() == 'clang' and compiler.compiles('''
+       #ifdef __apple_build_version__
+-      # if __clang_major__ < 15 || (__clang_major__ == 15 && __clang_minor__ < 0)
++      # if __clang_major__ < 15
+       #  error You need at least XCode Clang v15.0 to compile QEMU
+       # endif
+       #else
+-      # if __clang_major__ < 10 || (__clang_major__ == 10 && __clang_minor__ < 0)
++      # if __clang_major__ < 10
+       #  error You need at least Clang v10.0 to compile QEMU
+       # endif
+       #endif''')
 -- 
-Best regards,
-Vladimir
+2.55.0
+
 
