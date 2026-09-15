@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF82C88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9C0C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WdK-0005Pe-6k; Tue, 15 Sep 2026 13:07:50 -0400
+	id 1x6WdW-0005W8-Ai; Tue, 15 Sep 2026 13:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdF-0005OP-If
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:45 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ id 1x6WdS-0005SB-3M
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:58 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdC-0003Tk-15
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:45 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f63546c5so432788f8f.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:41 -0700 (PDT)
+ id 1x6WdQ-0003XF-Cv
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:57 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49e69b9e16aso491435e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789492060; x=1790096860; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789492075; x=1790096875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=E044AAl5EJB3+S1h4ssG7CoWYXWkxOfE84p38VpBkXc=;
- b=rZhvWrZQXD+I6GCjobB6XmihoERhQiPeDj1zDE9fmeDumzdOB8GkR3awB/ylF/COvB
- Y0qQ6V7J+3cXAE6Or5l3Tj2v+jack9EtYtHgISW+O1VPW5GuBv4GeJfF1IEzgqkP3WH6
- 3Hmb8KxasbSzBjkT4IpgAzDIm+tf6HXiPHCCRDVuiPvmBHDGwsLwAuVLBVMKExlMUNvk
- VuiGatFsY2zJct8GviPFqpbqdQFiB5iYxvM82S9ieydfle2ErqS979gPTLtsmawJnGV2
- LRjYqPraN9OlVhYrftRH0ASUTaxY4uXwbm0hRkg1ZrZfvcNmOJG1F519yfJoFTqyt10k
- EKBw==
+ bh=+bXCjmu21euJUmgHKxj3AplYyvMlR+hu+L+3McdRLpA=;
+ b=aKiCBD3oDZBoS+RRc7emuJMep/YDLH7N+qa0XH1lj3QtJ94lXmfnImPGbMXvfx4cE7
+ tIGlF/2/bU6UsKVRehgOQ2P2Gx/WlNLks4PkbEiTyVtDisW5y+PNOwBj2nrhV21CXN9X
+ 5u5hzA3FLUsNRwWcupJREyXNDljwRCK17CBRAEQANbgV8MnPZ/6zSkANNfDJa1Zm39kp
+ 3b04uuWQMnD9Oc4jouPLzD7+Ftb1FV/3PEUzIK3m4lX4StrsBZvgYuLSekisfbltJ2ih
+ JpOHbXVTTHu7fAke5AS3U5QvADg7DF/9vzqgz6goKDtSRWIWdWei6M08cOoteue2+hfD
+ zB1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789492060; x=1790096860;
+ d=1e100.net; s=20260707; t=1789492075; x=1790096875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=E044AAl5EJB3+S1h4ssG7CoWYXWkxOfE84p38VpBkXc=;
- b=BMBtBXDWi8NhOpslNL0+wUoYnvvJ2LStP9xQP3IMrVZBWV3DIhOeIYAQdTM2sOHiTY
- bJ1uu8S4RHQKWjtOEIMLitryxPg6QppR+7YKyuZRc6Mlnlt/mlt+4eDlhBtlcF3xEhqn
- ApiWDKSkH5KJnNdifosoHPX24x4eWznS2i3hJB2zdo3V84AD/fVsFelYK017mE/psj1L
- GOwTBqh1VUKejkesT2qTD3kldUOOcLoIVUBbYtJIO0Wf6gQdnDtOnnXp7oM6saR8wZ6V
- 6rLOzOpZKfEUY5sy+JhD+G+FZLnV2H6I+TcnfHoXw+YrDV4QkZYUUE2tSY/5cohK27dr
- nVzA==
-X-Gm-Message-State: AFuF++ln7G2W6oBXcH27TBP1NVMgRrlUJHTkbUL7dvWt4qCJgnGr+4y5
- nTvtWmi04gjh7xrXbxFdAKC8BfTQZ7/+yiXPVyryYqSvmHDKBMpGNOp2ikcyut7spiKesC1oC+B
- Z5ao0J0k=
-X-Gm-Gg: AYBFou05O4KTyHVM5Euh0BYegzT/yDbBkpkHrHsEbifDNxvTni+R3LKOdLvpGsqql9o
- kpHRqDXFiXXIZlEJyNFtQwEfkuMVsia0/Psn+6yIS3duNougxstZQYNGKz8lQXd+o8CEm2HhyiI
- 8ip0BgneGQnSGvE/h5rS0hgJotOGSkoz/4PZMpD5pfbqrhftaBzPuNK1Il/iDzgaDTfni60mtHy
- jCdBa7pkEwZ/vp/TeCjGKOoVIfR3jU0b8Biok+YitjceslJPVedUJ+mLhKNomSUt/4F6Dx9yqgU
- uUT0aFzdpQxBkGlgQDweC4PQQOsuR03ufzKJwwGdlniFnf2mTBXhJwL9y+gdJzQGrnuBabGXxJd
- Fs+V7wvC58Bljoe8zsWQQQw4r2OSLCsFFPqfWWelUOwSUwia+UxL4FE6qSA3PB/F0lpkpj29m2P
- P84nAgR5jnDEOnzfXKJvBjrJQLJjNFjE9J4LqHNTkagTB528oqnRjj5NMrF1A9mWaUqDq9P9Wjz
- fj8qXz3HVr2rRjGZGHyUVLLNZaBrfoobpu/uhalBF2jLctkl+PF3kmUCS1DD+BQ5UiKiWv1Q057
- MP24
-X-Received: by 2002:a5d:59c1:0:b0:487:7fd:734 with SMTP id
- ffacd0b85a97d-4870a992fefmr2161898f8f.18.1789492059844; 
- Tue, 15 Sep 2026 10:07:39 -0700 (PDT)
+ bh=+bXCjmu21euJUmgHKxj3AplYyvMlR+hu+L+3McdRLpA=;
+ b=XwDozNaD79mlybSG+VXguZCiWBkIbphGjDikG/EAb6aOhGJBjfE6p8akFqCEEVFX9g
+ lR81syWX9C2YDT7x/jmo60sJLaNGWu1SqOWHMrboBu/Mzkd+dFD/fAOeMxNHEk3wvPX2
+ Bnqma1OKrZ7tQ1xOI46/nSSbsA1QM36MIgfENcxFaAZVzYwxbdYB2RwUjSVan19nqSxv
+ gxoUOSO/PServWv5u++3BzJai7Pv/Ewu9dLrFKBx9bzfgtsi55oX0zXkrqPHk+/dar8C
+ ol+uSGW8mwVN4xrdvsrmX2t1fh2ByxzsDJHEclmLmvUW+6o52Lupl+H6EvYcARzGCgek
+ tlDQ==
+X-Gm-Message-State: AFuF++maftejvN7P1q5YsHFHiETfPLO5cuhm+dm5KRnvQIrLqXEDTfhG
+ Bd15GHSZ1BuK3TO9sfcLeBxOxVrqj42O9Km5H0bDEYgrFsfs7GwN9PxC5ylQ+zAl1tSB+cukrsb
+ 0JjoSEOI=
+X-Gm-Gg: AYBFou0FS4fNTA7DvDGsScP+WDGg/kEddaiwAiRSgBvLFKrl5McNBIlSBTq94qkdzt/
+ nyTMGV4rNWIqtyCuJ6yGVUBkiBMPeB54/dBgJSGs98LmHz8aqTR8XENFE/ANIFOZi3UPJ90M8+Q
+ YSOqDnz62FVqJdUFY4zWw9qtsE4jc9IA1eueHeA6/rKx2JLtjcjLIbC3UkJNLFMc9PtapFU/xCm
+ TvwZClquXrurRVaOAGgqWOq+5fOsyPS/p0t8cO7neQhhPzLF6aAcGnb3A0ZauGaK8qslflEuFeQ
+ 00VHM9WYogzXVs+OYh6fP6MyYp9sR2cwb2eIiwLLy/iMVUJleIVXNd7Gurb/e1eezAeVLtvPXHh
+ KuZnnEdYv3+I2+YsLTBQtMolUm1Y+7VhsxPi0mwU7H2B2RoTvJYB4RvCfWSv2VnEbujjGfqATFM
+ X7hOERX6LBpY9qBv8W29DRJNW9pjmYIrmzPRl/7DM4eKnlfC1vgUor7Bl0KgeAEf9qmqu4yoK5t
+ QC8dpUmPRTO0TXZjj8pG4b6Wkqnlg8iy8UmxnvnHH7d6DVuqpEgo8zhONXUWuoll0gFejspYgbK
+ OQkI5QqjkGAJbJE=
+X-Received: by 2002:a05:600c:3b9f:b0:49c:fa21:1c86 with SMTP id
+ 5b1f17b1804b1-49e7a6933bbmr115547075e9.27.1789492075019; 
+ Tue, 15 Sep 2026 10:07:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.38
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:07:38 -0700 (PDT)
+ Tue, 15 Sep 2026 10:07:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/20] target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter
- order
-Date: Tue, 15 Sep 2026 18:07:17 +0100
-Message-ID: <20260915170735.425445-3-peter.maydell@linaro.org>
+Subject: [PULL 15/20] target/arm: initialize SCTLR reset value for arm11mpcore
+Date: Tue, 15 Sep 2026 18:07:30 +0100
+Message-ID: <20260915170735.425445-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915170735.425445-1-peter.maydell@linaro.org>
 References: <20260915170735.425445-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,290 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doug Cook <dcook@microsoft.com>
+From: vpyr <vpyr@proton.me>
 
-ENCODE_AA64_CP_REG expects parameters (op0, op1, crn, crm, op2) but whpx
-was using parameter order (crn, crm, op0, op1, op2). As a result, every
-call to get_arm_cp_reginfo() returned NULL, cp_idx was -1, and both
-whpx_get_registers() and whpx_set_registers() were no-ops.
+Initialize reset_sctlr to 0x00054078 in arm11mpcore_initfn.
 
-In addition, several encodings were paired with the wrong WHV register
-tag. These are inert while the encodings do not resolve, but would sync
-the wrong register once they do:
+Previously, the generic reset mechanism initialized SCTLR to zero because
+reset_sctlr was not set by the ARM11 MPCore CPU initialization function.
+The new value follows the fixed-bit requirements documented in ARM DDI 0360F,
+section 3.4.7, Table 3-20:
 
-- the series 1 debug register encodings used series 0 tags,
-- the SP_EL0 encoding was tagged WHvArm64RegisterSpEl1, which would
-  clobber SP_EL0 with SP_EL1 on get and never write SP_EL0 on set,
-- the ID_AA64PFR0_EL1 encoding was tagged WHvArm64RegisterIdPfr0El1.
+- Bits [21:16]: 000101, contributing 0x00050000
+- Bit [14]: Should Be One / Read As One, contributing 0x00004000
+- Bits [6:3]: Should Be One, contributing 0x00000078
 
-Fix parameter order (using a regular expression). Fix tags.
+V, U, and EE remain clear because their reset values depend on the VINITHI
+and CFGEND configuration signals.
 
-Signed-off-by: Doug Cook <dcook@microsoft.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+After rebuilding, the test read SCTLR as 0x00054078 instead of zero, and the
+0x00050078 mask check passed.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4454
+Signed-off-by: Felipe Junger <vpyr@vpyr.dev>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/whpx/whpx-all.c | 218 ++++++++++++++++++-------------------
- 1 file changed, 109 insertions(+), 109 deletions(-)
+ target/arm/tcg/cpu32.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 9a5a575b5e9..a05df7d2cb3 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -135,145 +135,145 @@ struct whpx_sreg_match {
- };
- 
- static struct whpx_sreg_match whpx_sreg_match[] = {
--    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 4) },
-+    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 5) },
-+    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 6) },
-+    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 7) },
- 
--    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 4) },
-+    { WHvArm64RegisterDbgbcr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 5) },
-+    { WHvArm64RegisterDbgwvr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 6) },
-+    { WHvArm64RegisterDbgwcr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 7) },
- 
--    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 4) },
-+    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 5) },
-+    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 6) },
-+    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 7) },
- 
--    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 4) },
-+    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 5) },
-+    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 6) },
-+    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 7) },
- 
--    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 4) },
-+    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 5) },
-+    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 6) },
-+    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 7) },
- 
--    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 4) },
-+    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 5) },
-+    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 6) },
-+    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 7) },
- 
--    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 4) },
-+    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 5) },
-+    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 6) },
-+    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 7) },
- 
--    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 4) },
-+    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 5) },
-+    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 6) },
-+    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 7) },
- 
--    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 4) },
-+    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 5) },
-+    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 6) },
-+    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 7) },
- 
--    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 4) },
-+    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 5) },
-+    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 6) },
-+    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 7) },
- 
--    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 4) },
-+    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 5) },
-+    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 6) },
-+    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 7) },
- 
--    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 4) },
-+    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 5) },
-+    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 6) },
-+    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 7) },
- 
--    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 4) },
-+    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 5) },
-+    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 6) },
-+    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 7) },
- 
--    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 4) },
-+    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 5) },
-+    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 6) },
-+    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 7) },
- 
--    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 4) },
-+    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 5) },
-+    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 6) },
-+    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 7) },
- 
--    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 4) },
--    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 5) },
--    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 6) },
--    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 7) },
-+    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 4) },
-+    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 5) },
-+    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 6) },
-+    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 7) },
- #ifdef SYNC_NO_RAW_REGS
-     /*
-      * The registers below are manually synced on init because they are
-      * marked as NO_RAW. We still list them to make number space sync easier.
-      */
--    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 0) },
--    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
--    { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
-+    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(3, 0, 0, 0, 0) },
-+    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(3, 0, 0, 0, 5) },
-+    { WHvArm64RegisterIdAa64Pfr0El1, ENCODE_AA64_CP_REG(3, 0, 0, 4, 0) },
- #endif
- #ifdef SYNC_CONST_ID_REGS
-     /* ID registers are ARM_CP_CONST (writes ignored).  */
--    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 1), true },
--    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 0), true },
--    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 1), true },
--    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 0), true },
--    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 1), true },
-+    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(3, 0, 0, 4, 1), true },
-+    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(3, 0, 0, 5, 0), true },
-+    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(3, 0, 0, 5, 1), true },
-+    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(3, 0, 0, 6, 0), true },
-+    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(3, 0, 0, 6, 1), true },
- #ifdef SYNC_NO_MMFR0
-     /* We keep the hardware MMFR0 around. HW limits are there anyway */
--    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 0) },
-+    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 0) },
- #endif
--    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 1), true },
--    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 2), true },
--    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 3), true },
-+    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 1), true },
-+    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 2), true },
-+    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 3), true },
- #endif
- 
--    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
--    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
--    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 2) },
--    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 0) },
--    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 1) },
--    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 2) },
-+    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 2) },
-+    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(3, 0, 1, 0, 0) },
-+    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(3, 0, 1, 0, 2) },
-+    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(3, 0, 2, 0, 0) },
-+    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(3, 0, 2, 0, 1) },
-+    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(3, 0, 2, 0, 2) },
- 
--    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 0) },
--    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 1) },
--    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 2) },
--    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 3) },
--    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 0) },
--    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 1) },
--    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 2) },
--    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 3) },
--    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 0) },
--    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 1) },
-+    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 0) },
-+    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 1) },
-+    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 2) },
-+    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 3) },
-+    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 0) },
-+    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 1) },
-+    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 2) },
-+    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 3) },
-+    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 3, 0) },
-+    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 3, 1) },
- 
--    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 0) },
--    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 1) },
--    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 0, 0) },
--    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(5, 2, 3, 0, 0) },
--    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(6, 0, 3, 0, 0) },
--    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(7, 4, 3, 0, 0) },
--    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(10, 2, 3, 0, 0) },
--    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(12, 0, 3, 0, 0) },
--    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 1) },
--    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 4) },
--    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(14, 1, 3, 0, 0) },
--    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 2, 0) },
--    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 2) },
--    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 3) },
--    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 1) },
--    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 2) },
--    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 4, 0) },
-+    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(3, 0, 4, 0, 0) },
-+    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(3, 0, 4, 0, 1) },
-+    { WHvArm64RegisterSpEl0, ENCODE_AA64_CP_REG(3, 0, 4, 1, 0) },
-+    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(3, 0, 5, 2, 0) },
-+    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(3, 0, 6, 0, 0) },
-+    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(3, 0, 7, 4, 0) },
-+    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(3, 0, 10, 2, 0) },
-+    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(3, 0, 12, 0, 0) },
-+    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(3, 0, 13, 0, 1) },
-+    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(3, 0, 13, 0, 4) },
-+    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(3, 0, 14, 1, 0) },
-+    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(3, 2, 0, 0, 0) },
-+    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(3, 3, 13, 0, 2) },
-+    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(3, 3, 13, 0, 3) },
-+    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(3, 3, 14, 3, 1) },
-+    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(3, 3, 14, 3, 2) },
-+    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(3, 4, 4, 1, 0) },
- };
- 
- HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index f292a269bf2..1999e502904 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -218,6 +218,7 @@ static void arm11mpcore_initfn(Object *obj)
+     cpu->isar.mvfr0 = 0x11111111;
+     cpu->isar.mvfr1 = 0x00000000;
+     cpu->ctr = 0x1d192992; /* 32K icache 32K dcache */
++    cpu->reset_sctlr = 0x00054078;
+     SET_IDREG(isar, ID_PFR0, 0x111);
+     SET_IDREG(isar, ID_PFR1, 0x1);
+     SET_IDREG(isar, ID_DFR0, 0);
 -- 
 2.43.0
 
