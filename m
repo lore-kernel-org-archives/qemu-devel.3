@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF03C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC7EC88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Vbj-0008RB-A2; Tue, 15 Sep 2026 12:02:07 -0400
+	id 1x6Vbk-000061-VW; Tue, 15 Sep 2026 12:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x6Vba-0008JP-DU
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:59 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1x6Vbb-0008KC-TR
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:02:00 -0400
+Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x6VbX-0003Ww-9q
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1x6VbY-0003Vi-3e
  for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:58 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-cbe6295f05bso750651a12.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789488112; cv=none;
- d=google.com; s=arc-20260327;
- b=jxGoMIRmLJBnIu44vOoyke9//4EgnBISpSsQHQ8g2Oo8Ya5zvDv1K6CYFMQoVyQFJj
- 8+vz2mdPiGA61Q6yZhLaqc10SbPsPRzV870N9C14PyFrm71LTVkwfv4qK3pBDGEIbxUi
- 4Fwk5vtPVx3qiNH3sqdSe9HNvSBBnZrRLVx6ztDdppBZS4s3+SZbR4OUb2NFhgkljWd6
- RodlrloyGKgzxmbMjb8DgiwryHvZPM2byrxQz79bRNWhOsrgfgT6GkRn0wrdtHN4oUXi
- /lkppURo+WJPjPIh0DTUy72IpoNov4cCg6+2dlKrzpASUXpgNHexpy+2PqhFRjvC6MEb
- jJIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nDULy346PEO3X8rtIZa/6Q6sX3fxV7QSzcqOMFv73HI=;
- fh=DkEooEG7he3kAXG3TA9e4rdbNsIgMbuD3ROPyB6ao+c=;
- b=AtrgckgecAwuJ/CTufp/pLSZ/ywDtdRko4CY5EAGlCVUOrRdsgbrBMjqpgw1P0ZRUx
- DUmghmf6rVcRSerw3efF8FJE1TLX2D8x6w1IFvEw6UIVynAi/Ik5Iu4FcydCTsAWDisj
- aL+iy8GkFYf6RNC7p9Y+xMSw8pl/qavpx7Hb8m2BDWljIEdzD40olPneJD3jT3Ks+8KZ
- a9J0p4xslCLVdQJPwErcd2+Kj5P7atuWIB87Sa+kESiWzC4gXYpvFtoaHPkcTDJXUmIN
- aN6g2spBkVGu0Kg2vDpqBZMdHW80Qia06TZ7mGgyahvEDc3qJfqsv14grPtTRd7FjWOa
- gvWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: by mail-ej2-x10.google.com with SMTP id
+ a640c23a62f3a-c254f55eff0so440462366b.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789488112; x=1790092912; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=nDULy346PEO3X8rtIZa/6Q6sX3fxV7QSzcqOMFv73HI=;
- b=e8n/JU2r+3BdAJTNpMgKqWWqD1/4gwfYeW8mbYeT6o72YZb09lnkJV5zilJfg0IZEg
- h0lCOYSrCcA+x16qIIcH62N3g9MrTZJ18ACNpXziVAebqIcqQVcwx91YU+wkmFqxeia6
- MA4pU3vIzyeaL/cMjMAGVIfid2wsvX3ak9zVWwfWQGfyOFEldlVqpo2NB88qdhFv6yhN
- t3wRhTy2Pl8Wic1BE9hSz8hDQ6fI8O9hk9vM4GWABDMgOpu0C8dP7+n5pxbcIupG6zDB
- G2hjD01gurRzZd2ci7/JU9xw9hoNx1ZYyIWcsUQLL+leSQ3uA0DTuadGnP9WCy6KEfde
- kNFw==
+ d=gmail.com; s=20251104; t=1789488105; x=1790092905; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QeOKPFEA582PfRWcIcHhtyxEQbe8HlQaK11TI65dVMU=;
+ b=knsXiCAvWlS/nlWMcFwJ0/j0xewk/IYe50ameUaBqtA8BtF9YgLYbfFtdeRp+U9dkV
+ 1fybthndqhenqI9EluLzpb2raTPM657yQEM/cGWygaVSCCF/rzEKtdkHzRtDKekbAXmp
+ Hb6UmHUNefpIo2BxhTfoBuvT1AWKj0Sb3nBQNzpoi09pSeaKtiRrKK/7wNst03CfCbI7
+ ELKfrLd8SQBkaQ8NnG+Qi2xZUd0VQVGhbAWCicTdOA1V7zQYFfXifigOE7rPh0+ucZRc
+ CppLAghN0RuEeyo1WuNPUwyx559OuFlAA46X1EUk4BlTCuAUjqRlEQ4MlI8SZokmEtCA
+ ANDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789488112; x=1790092912;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nDULy346PEO3X8rtIZa/6Q6sX3fxV7QSzcqOMFv73HI=;
- b=dZGXV5U6xTfPP8FhWpEOTL+n60AREPGjN+tkFv1ovYAjZ9pEVxHc6SRw+JZsALufFF
- 4MVXC9SueGS7hPSgPhCyqZUYT8xTI/1n1BnhyH0eKrjfLh31uChS74uW9QLPsQDAYdEd
- iCLzUFCsjry+kZPPdbb3tU6EPHUJI22koJzZPPrvlkXLZ2fQXmmI/NPCevBOxSmxwDn+
- ha77FiA1viih2vHsXHZ+NyufGu399rzgVgckNXeXl5aVnMv1kYkH1BkCn2jPPxSka9l3
- f2EzvOIgLFxVs9ZiO7dUELtAWgpoJjyCEVc9HGKX4hjOuPlA/qvEgFTvrcGSODbfi0l5
- Afcg==
-X-Gm-Message-State: AFuF++kJmdIrG0urBdwVOJdgXoqxta+6t9nVuuh77OhTATQHUmL+oxA7
- ZeO/dekgxgSKnXayXxwOSJqvVFmxprFXNZNLX1Vgo9EVcNbWCwoCqdcKNGSw5225Rk1EQ6RZHhk
- jAdetlTJoIr+FKfcJwyE48ezdNA2msVg=
-X-Gm-Gg: AYBFou0ReT/5JSNsmnTdIGOQiZ9/Crjg1vKBbkexa2ufM680GScg5BABzdVi7szywUL
- YJF3ZyDgK7kLcorVD1b4qlimuqHVRcTaN0njuxzN4QDqLd5gVcVgkAnwBQyu5XAI3fvuSFjlyPG
- Icn+fA3OMpIlPyHcucvzkbZ84/WStYd44AjrYvlMYXfFOxFlqmxd9MhD0JwbF6mWuwnod1xyEPk
- ovOIYfAJXJETqqTbk5qO5kLOTv8ul1DmV4oUwsomV0TZtk/270y42aP5X58BaU4Yl5TJATRXSu6
- bLnnvogHEch+SMEJSbbsTCWW0nXsQI5C1Zaps9SG+LTm1+0GwJ4Ms6HBx7xBpfshddl9z8n/ujG
- k3hYt9dCYnic=
-X-Received: by 2002:a17:90b:4a92:b0:398:9beb:a2b9 with SMTP id
- 98e67ed59e1d1-39dfe1ca2dbmr6800524a91.27.1789488112303; Tue, 15 Sep 2026
- 09:01:52 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789488105; x=1790092905;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=QeOKPFEA582PfRWcIcHhtyxEQbe8HlQaK11TI65dVMU=;
+ b=Yw+TTPdvMbf57xQyqwhgjY057e56O3yySJITvCR29cjqivWGYqGwErTRZZ+9+kKjRu
+ /zhSbPzSA4Pt/pfA+re6YvgsW/GWjrgwahPUSEccerSPphqOl/iXn/EKff5kGNykwD+H
+ Uer5nrueI2NYozbZjzBghrNvcnwgdqJBQv9HWhYcHoMBFceE/kcaT1QJAYG61VaH3Ttq
+ /b8XVhhofT/UuCxQLTYlX/FmfD50bLUcT7dCPFOrmwFGAX9WOQiQ30wIFeSmp/P3CjYQ
+ UncPLdyELxjjoaK/fLLMAjExTXw6I/TG1K+IbaqxgzbBX9zVerU9Oz/35o/7YkZxTygc
+ aRmQ==
+X-Gm-Message-State: AFuF++kQYk1T9jpf0T7t98+slRXjaFclPi1PREwMHL8V5zhNR4RGXEuR
+ Ns65XsR4Dl39ip3su6r//jcUzCAShoE0d/z0HH+Q5vSTAQtkRLjCQ621SZ/tRQ==
+X-Gm-Gg: AYBFou1qQsUN4DUKnxJu9DsaRpu8niEHPydwZ9vpP97DXJfDYG5EnNq+FjkXqqF9fTy
+ DQoVgamma8k3qK3vl2pusRHSzmE6TUleygHyNwXf23+3qizFIexW78xBRWZDwTWIk9tMyF2wCR4
+ jcUSouKT/4xq2EPfD9Gfg2H/s7En7rqlX+NQAo8Z+tZFGwMc68g9+uQnKihgRA1HcCL6ljYgvzZ
+ eGWvWhoaXydt6NDZYOB562WRDS1qc6vyk3nJB62/ahceM2uTaeSrIc6cMYpz7DaJ5ZkX7CXbZz8
+ wsi5hnuNXdA3zXjQVkq/uMNsZL7+OMjdj6mvN4btqTetqrRpjaxHB6oc+2jN/ThVGEqiHsoBh73
+ rNNCZQb9LXcgUEYQyi5Cr8nUdnO0qg+gHsEmEPFG9gj3y13Sku3y1+D0rGKVy1WYceKYcGzRHNn
+ XYdSzD5pxHT7tnvASVKxA+3hmctC4PCfXYjIBp0cctnO1GNi3yAmZ6Z/X9SANbWVtMz3eHdCkUr
+ hbaEXVLC+ssEvuLSzo5Lnd+5BPnyrcFtPqJSzVSWCFieA==
+X-Received: by 2002:a17:907:6d1f:b0:c25:5faf:b207 with SMTP id
+ a640c23a62f3a-c29b84c9a48mr546735966b.3.1789488104484; 
+ Tue, 15 Sep 2026 09:01:44 -0700 (PDT)
+Received: from thinkpad-t470s.. (83-131-196-251.adsl.net.t-com.hr.
+ [83.131.196.251]) by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Sep 2026 09:01:43 -0700 (PDT)
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
+ peter.maydell@linaro.org, francisco.iglesias@amd.com,
+ edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
+ Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v2 19/20] hw/core: Add FDT support to Remote Port GPIO
+Date: Tue, 15 Sep 2026 18:00:43 +0200
+Message-ID: <20260915160044.345788-20-ruslichenko.r@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
+References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
-References: <20260915153326.90014-1-stefanha@redhat.com>
-In-Reply-To: <20260915153326.90014-1-stefanha@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 15 Sep 2026 20:01:39 +0400
-X-Gm-Features: AcwNN1W0v9C71d20ebY7vLHblXcXCpB5IetL8sjbQ6jD8Tu8ZoNRP2YiA1IYKPI
-Message-ID: <CAJ+F1CLs2OyGeRZLnxshXLzpNF+tU9=0MQC__UEFVzPcXR5qtg@mail.gmail.com>
-Subject: Re: [qemu-web PATCH] Add GSoC 2026 wrap-up post
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Tanish Desai <tanishdesai37@gmail.com>, 
- Aadeshveer Singh <aadeshveer07@gmail.com>, i@uchout.moe, niko.ramak@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:34::10;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ej2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,181 +104,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 7:34=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> Google Summer of Code 2026 has completed and it's time to showcase the
-> projects that QEMU's 4 contributors worked on this summer.
->
-> Cc: Tanish Desai <tanishdesai37@gmail.com>
-> Cc: Aadeshveer Singh <aadeshveer07@gmail.com>
-> Cc: i@uchout.moe
-> Cc: niko.ramak@gmail.com
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Implement the FDTGenericIntc interface for the Remote
+Port GPIO device.
 
-thanks all!
+This enables the device to be recognized as an interrupt
+controller when instantiated via the fdt-generic framework.
+It allows other devices defined in the Device Tree to connect
+their interrupt lines to this GPIO controller using standard
+FDT properties (e.g., 'interrupts' and 'interrupt-parent').
 
-> ---
-> Aadeshveer, Nicola, Tanish, and uchouT: Feel free to suggest edits!
->
->  _posts/2026-09-15-gsoc-2026-wrap-up.md | 96 ++++++++++++++++++++++++++
->  1 file changed, 96 insertions(+)
->  create mode 100644 _posts/2026-09-15-gsoc-2026-wrap-up.md
->
-> diff --git a/_posts/2026-09-15-gsoc-2026-wrap-up.md b/_posts/2026-09-15-g=
-soc-2026-wrap-up.md
-> new file mode 100644
-> index 0000000..c652251
-> --- /dev/null
-> +++ b/_posts/2026-09-15-gsoc-2026-wrap-up.md
-> @@ -0,0 +1,96 @@
-> +---
-> +layout: post
-> +title:  "QEMU Google Summer of Code 2026 project report"
-> +date:   2026-09-15 07:00:00 +0000
-> +categories: [internships, gsoc]
-> +---
-> +QEMU participated in [Google Summer of
-> +Code](https://summerofcode.withgoogle.com/) 2026 with 4 contributors wor=
-king on
-> +open source internships from May through August. The contributors gained
-> +experience in open source software development working on 12-week projec=
-ts.
-> +
-> +This post covers the GSoC projects that QEMU had this summer.
-> +
-> +## Fast Snapshot Load in QEMU (Aadeshveer Singh)
-> +When virtual machine snapshots are loaded by QEMU, the entire contents o=
-f RAM
-> +and all device state is loaded before the virtual machine can start exec=
-uting.
-> +A lazy approach is actually possible where the contents of RAM are loade=
-d
-> +on-demand when accessed by the virtual machine. This can significantly s=
-peed up
-> +snapshot load times since virtual machines may have a large amount of RA=
-M and
-> +loading it upfront takes time.
-> +
-> +Aadeshveer implemented fast snapshot load by taking advantage of QEMU's
-> +postcopy migration infrastructure, which monitors RAM accesses using Lin=
-ux
-> +userfaultfd(2) so that memory pages can be populated on-demand. A thread=
- is
-> +introduced to load RAM in the background while the virtual machine is al=
-ready
-> +running so that on-demand loading is minimized (it affects virtual machi=
-ne
-> +performance). Testing showed that fast snapshot load indeed provides a m=
-ajor
-> +speed up.
-> +
-> +Aadeshveer has written up a [project
-> +report](https://gist.github.com/Aadeshveer/6a16579aed93f5d483bbb9419ecd2=
-211) as
-> +well as a [detailed
-> +journal](https://aadeshveer.bearblog.dev/a-summer-with-qemu/) if you wou=
-ld like
-> +to learn more. This project was mentored by Peter Xu.
-> +
-> +## Support x86 Process Context Identifiers (PCID) in COCONUT-SVSM (Tanis=
-h Desai)
-> +Process Context Identifiers are an x86 CPU feature that improves context
-> +switching performance. Without PCID, software has to flush the Translati=
-on
-> +Lookaside Buffer (TLB) when context switching so that memory translation=
-s that
-> +are no longer relevant in the new context are no longer used. PCID allow=
-s
-> +translations from multiple address spaces (contexts) to exist in the TLB=
- and
-> +this can help if they are needed again in the near future.
-> +
-> +Tanish implemented PCID support in COCONUT-SVSM, software used by confid=
-ential
-> +virtual machines. This involved:
-> +1. Creating a [Rust crate for x86 CPUID feature descriptors](https://git=
-hub.com/coconut-svsm/cpufeature) so that PCID functionality can be detected=
-.
-> +1. Adding a PCID to each address space, including writing a bitmap alloc=
-ator for the available 4,096 PCIDs.
-> +
-> +Tanish described this in more detail
-> +[here](https://tanish111.github.io/tanishd/blog.html). This project was
-> +mentored by Luigi Leonardi and J=C3=B6rg R=C3=B6del.
-> +
-> +## Observability Support for COCONUT-SVSM (Nicola Ramacciotti)
-> +Troubleshooting confidential virtual machines can be challenging because=
- the
-> +host is untrusted and does not have visibility into logs, traces, etc fr=
-om
-> +inside the virtual machine. Instead, an operating system running inside =
-the
-> +confidential virtual machine could extract logs and the new Observabilit=
-y and
-> +Configuration Protocol (OCP) has been defined for this purpose.
-> +
-> +Nicola implemented OCP in COCONUT-SVSM, creating the interface that soft=
-ware
-> +inside the guest can use to read logs. A Linux device driver was also
-> +implemented together with a userspace utility called svsm-tools that exp=
-oses
-> +OCP functionality to list, read, and write data.
-> +
-> +Nicola published a project report that goes into detail
-> +[here](https://github.com/n-ramacciotti/GSoC-2026-ocp-svsm). This projec=
-t was
-> +mentored by Stefano Garzarella, Gerd Hoffmann, and Joerg Roedel.
-> +
-> +## USB Device Redirection for qemu-rdp (uchouT)
-> +qemu-rdp provides Remote Desktop Protocol functionality via QEMU's
-> +org.qemu.Display1 D-Bus interface so that the display, keyboard, mouse, =
-and
-> +other devices can be forwarded from a client to a virtual machine. USB
-> +redirection is a missing feature that would allow USB devices to be plug=
-ged in
-> +on the client and attached remotely to the virtual machine.
-> +
-> +uchouT implemented support for QEMU's `-device usb-redir` in qemu-rdp an=
-d
-> +integrated with the RDP protocol's URBDRC feature for tunneling USB traf=
-fic. In
-> +the course of doing this, uchouT also contributed to the IronRDP Rust
-> +implementation of RDP (qemu-rdp is built on top of it) and FreeRDP (an R=
-DP
-> +client).
-> +
-> +uchouT covered this project in detail
-> +[here](https://uchout.moe/posts/gsoc-2026-final/). This project was ment=
-ored by
-> +Marc-Andr=C3=A9 Lureau.
-> +
-> +## Conclusion
-> +Google Summer of Code brings together talented contributors who would li=
-ke to
-> +participate in open source with mentors from established open source pro=
-jects.
-> +Thanks to Google's funding, our contributors were able to dedicate their=
- time
-> +this summer to implementing these features for QEMU and its ecosystem. W=
-e hope
-> +to continue to see Aadeshveer, Tanish, Nicola, and uchouT in the open so=
-urce
-> +community.
-> +
-> +If you are interested in applying to future rounds of Google Summer of C=
-ode,
-> +keep an eye on the [GSoC website](https://summerofcode.withgoogle.com/) =
-for
-> +announcements and timelines.
-> --
-> 2.55.0
->
->
+The implementation maps the interrupt specifier from the
+Device Tree cells to the corresponding internal GPIO input
+line based on the configured cell offset.
 
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
+Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+---
+ hw/core/remote-port-gpio.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---=20
-Marc-Andr=C3=A9 Lureau
+diff --git a/hw/core/remote-port-gpio.c b/hw/core/remote-port-gpio.c
+index 43a40315c5..af7f3c6075 100644
+--- a/hw/core/remote-port-gpio.c
++++ b/hw/core/remote-port-gpio.c
+@@ -20,6 +20,8 @@
+ #include "hw/core/irq.h"
+ #include "trace.h"
+ 
++#include "hw/core/fdt_generic_util.h"
++
+ #include "hw/core/remote-port.h"
+ #include "hw/core/remote-port-proto.h"
+ #include "hw/core/remote-port-gpio.h"
+@@ -157,14 +159,34 @@ static Property rp_properties[] = {
+     DEFINE_PROP_BOOL("posted-updates", RemotePortGPIO, posted_updates, true),
+ };
+ 
++static int rp_fdt_get_irq(FDTGenericIntc *obj, qemu_irq *irqs,
++                          uint32_t *cells, int ncells, int max,
++                          Error **errp)
++{
++    RemotePortGPIO *s = REMOTE_PORT_GPIO(obj);
++
++    if (cells[s->cell_offset_irq_num] >= s->num_gpios) {
++        error_setg(errp, "RP-GPIO was setup for %u interrupts: index %"
++                   PRIu32 " requested", s->num_gpios,
++                   cells[s->cell_offset_irq_num]);
++        return 0;
++    }
++
++    (*irqs) = qdev_get_gpio_in(DEVICE(obj), cells[s->cell_offset_irq_num]);
++    return 1;
++};
++
+ static void rp_gpio_class_init(ObjectClass *oc, const void *data)
+ {
+     RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
+     DeviceClass *dc = DEVICE_CLASS(oc);
++    FDTGenericIntcClass *fgic = FDT_GENERIC_INTC_CLASS(oc);
++
+     rpdc->ops[RP_CMD_interrupt] = rp_gpio_interrupt;
+     dc->legacy_reset = rp_gpio_reset;
+     dc->realize = rp_gpio_realize;
+     device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
++    fgic->get_irq = rp_fdt_get_irq;
+ }
+ 
+ static const TypeInfo rp_info = {
+@@ -175,6 +197,7 @@ static const TypeInfo rp_info = {
+     .class_init    = rp_gpio_class_init,
+     .interfaces    = (InterfaceInfo[]) {
+         { TYPE_REMOTE_PORT_DEVICE },
++        { TYPE_FDT_GENERIC_INTC },
+         { },
+     },
+ };
+-- 
+2.43.0
+
 
