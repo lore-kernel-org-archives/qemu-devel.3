@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38663C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B782C88E7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:18:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6QEO-0003JG-R5; Tue, 15 Sep 2026 06:17:42 -0400
+	id 1x6QF3-0003QO-BZ; Tue, 15 Sep 2026 06:18:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x6QEA-0003IG-Ta
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:17:32 -0400
+ id 1x6QF1-0003QA-Hj
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:18:19 -0400
 Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x6QE0-0002gm-Mc
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:17:25 -0400
+ id 1x6QEb-0003Bq-SH
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:18:18 -0400
 Received: by mail-pj2-x11.google.com with SMTP id
- 98e67ed59e1d1-396ccb1a98fso2319723a91.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:17:06 -0700 (PDT)
+ 98e67ed59e1d1-396ccd4f99dso78473a91.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789467425; x=1790072225; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JWYlYmRK3LEgK9lJxmfX974U9RrOZy0xieTAkX4KMS4=;
- b=NX7vg0ZGn8hliEOeV7DmP/ayydkLJuRvBYz24P7f55xCGPCkvTqMvihx0ho9STsY8Q
- FLpA49lgHp6JM5lRpNDoOsg95f9vHEeUU06zbOSuJod7LcDQbVVCWJ5wYOfmb05++ayc
- +qrXEtXwTQS0k1zy1Amg50gKId/i/0gjlJzTaF1BFyJUcSPIx+rbFhCUSVDXBb2OJr+p
- i7pfQcRAyHHPD9tqdT7foqsZ0tKDRZRRwG23bf2Y7uExUo1kdCNH/tFlHbYeBTGc2wdh
- jAzOozobFej39Un/+WAESoCZFjbavhJIwZPBVzPCLvnVyF1lsy/Si+oYhZGyPKH2Gtg0
- 6cMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789467425; x=1790072225;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1789467470; x=1790072270; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=JWYlYmRK3LEgK9lJxmfX974U9RrOZy0xieTAkX4KMS4=;
- b=NWzCzIW+pJUV1zq2q/PsQ8ePw/naJztqgcboC1HDVa1HlW+GFvGY48xG+hdN5r6SEI
- C3RdPYsjib9t0HludgOI6mNxsMVfy6h9cYQvkX6jll7apbVvtPYBNrXN/PxzvTPr1Jqa
- Br+5CnSOBJTwKxpwdcXBp64GfYAcf57csfR5sGUHP7a/b21oD6xkwSnUQXajtiWxPCTC
- UuvePIJ1q3IJUsYuGcHFmP8p48D8sEYCi3xbkyYASAa0m1ADWXACwBrvk1pjMSiqlPGQ
- OiFp3lrCj2w/zO4q3M7ogqH2vLF8EvjIvfKJPKAHYE7oeclsgqosxpqRMSYLhekoKIzy
- TBxQ==
-X-Gm-Message-State: AFuF++mBJfDWO0uSsos1u2BZvK1mT5TCXh73xevIYhX2/7W25eruzewQ
- YwnyFWIvwUmde6ZZTr3nGbD87bcDB/Z7X2Ll1HEzaZVW93vTpnSjE5+zUermlmOf9/M=
-X-Gm-Gg: AYBFou0iMJrLVaHUST1GoYsvUHb2ddzOIIMQc67QdhZrfPj3pB/DHac+6AArtaj1ZbD
- 0C5u0UB+siM10UPrbdS1NZwjnhRN4BpUz1S0cZxMIkj6vlJKXnsJJ/Nyyrhqr05Lr1/N5l+EfCa
- 7lsOhtevDdjKyViZzIbbDlsfFHBrf7vRLBDh/ouJstaAJtjkGdCkkD6BVGu6AuL9x5HO0GpoOc0
- P31DIEQ3sFrsLRKgizgk2zlXX2FvLQOn/INAr2nVbo78piRvtv4W3CjJPcN2gPJ8coZZLo2HJhj
- zGIvcwpQ+obGbaim11UZLh+1PccskBVv7iAaU7iIQsLgpB7J++/KieoGXaSIHBTJ8LMiHF6ylES
- w5I/cfL+Z9O+z93z/g8sbbw367yP/vBPIQgLePAfGE2L1VLhBN3PoV1KzihGr2wxxpPfkg3i8Zs
- ac+5gemTV66GrtLmLxOjqxpTH3zIJViG/DPSkytu49Ty+WhPdH8ObK/K9eeL4g5bhNhk82TrNag
- gCDdwuYXG/zQ1/6kvBqEMwMXgurhMD2JAd0fg==
-X-Received: by 2002:a17:90b:4988:b0:38e:bfe:81e9 with SMTP id
- 98e67ed59e1d1-39debf5f291mr13755430a91.1.1789467424880; 
- Tue, 15 Sep 2026 03:17:04 -0700 (PDT)
+ bh=l5YVe05pjG97AGrI1ym/t5dZv++HeTZWtnHCxE2pueI=;
+ b=VRWXaJ2Jp3af4lm0bt2mB1n9CBJ4rnKS5WUlWToTQMhPRDNnFBwxvLCWp2yxFhFDEk
+ iiJWCpe3sEJhtyBzpCjj+6vePVZfn10L15ABClplEzTpeaE1TLAdOn+grGDNfOdvKNWT
+ r8rpVM1vXgIkbLL58bK/FxC+jTbgDfN+8nF3/gZP3dlyk+LwD/JgV+J9EILNbiaqlhcg
+ XqF8Y/qnT2duUKvFKruPgBDqD1s2+c7zhs7MEIb4rsxPmdqC9HLuut4/dq+nh67TjF6V
+ Qxh8XXqDEnkoDhbf8Et6VKjCdXO7zstZluqaM661IaqOiciG2+N4EYaNx+9GC1dOFmf+
+ P5Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789467470; x=1790072270;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=l5YVe05pjG97AGrI1ym/t5dZv++HeTZWtnHCxE2pueI=;
+ b=i3vPRhAoQPswoR6/Izcaik3thsd23dcO9zLTz0v/0jTE0lM4SZ3ap+RV/RXPVtXKhd
+ y/8QVvvw6j9k3yGfLc1R2dY1X1qZK1VOlC6ZXviKD3l+E0pMuNFmRo5nm+Mii8hkD0nW
+ GKN86RNPACB8oZ1riyaCqN3tN6JbmwyAryuRTbNOs94nx58yy1BLLhXd+iz4GO2wmm/I
+ ZVj2p05iC5oe5gTO0cU4kPdTeiXOMwrqb84UEXFBHMjQTpV0Oo7eKPUWADJXyeHYjCSI
+ sKH6cpuv40uhdusRvkFaZ5GyKV7YDEqG60pqOiUCCIL9ngY8QIwBclEmm9x6OSkzhlZC
+ 0oeg==
+X-Gm-Message-State: AFuF++m/QgJIxiZ2s2DNatx/l+o9FHJcQPgG1mTzHRsmtOThY824PshF
+ 6e9OcEMNeQTmvTrUIIs2Cos4jOCxp80HP80hrOdgsInrJ0Zll+fG7ZAneR4/Wg==
+X-Gm-Gg: AYBFou2zvwrSkbnyNJZ2hUtjsE3L9aY8CjwmbN6I9xTISeNY9e7YJgSDt7rM6IIFcRb
+ asyRVTDD9XfkNnN226Ix1eNxCPL3KgdNYI/26ziAUeP9ImqXsSdDl2Mzls2pnqzxz+OK/kurLWN
+ eza+H1wSJ6Fw7mDO7TGCMZhqFh9i5BAq7ESXHeSGvxydpdx7RIDcqRAoGL++Ez01G5UJJpddyP1
+ eVwwEqSrepqlM985KsJHhmrjbFE5TuXIEyEHG5QYFzUZF3hEGc44q9iEzDdxicFPQX+VW/jZJNr
+ dpKG/QJhirKAI7CklonsqLdbMxgnOhZfns10aYN1XxLtZnU6lQnQeHsPyobe41uO9aEZr4hGaWr
+ sc9IJhFHd7j8NujKLKrArSPenfKfF0lNw4TmdYh8yeod8dRmWADgBJWP9O/J/vKhOG4soA7nbhh
+ Np91Pu8P0asunjjikIx8cFs9v3gu5DqDFytQeenf9WwK4HIPAE+fi9De3CxSpGaf35WeZfWAisX
+ t5+LzIGrFlKYdsFLQvRZbnyNck=
+X-Received: by 2002:a17:90b:1d49:b0:398:deed:6e1d with SMTP id
+ 98e67ed59e1d1-39e10ce0123mr487016a91.5.1789467470275; 
+ Tue, 15 Sep 2026 03:17:50 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39dfdacba6bsm4416868a91.14.2026.09.15.03.17.01
+ 98e67ed59e1d1-39dfdacba6bsm4416868a91.14.2026.09.15.03.17.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 03:17:04 -0700 (PDT)
+ Tue, 15 Sep 2026 03:17:49 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -72,11 +73,12 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V17 00/13] iothread: Support tracking and querying IOThread
- holder
-Date: Tue, 15 Sep 2026 18:16:42 +0800
-Message-ID: <20260915101655.3216101-1-zhangckid@gmail.com>
+Subject: [PATCH V17 11/13] monitor/hmp: display IOThread holders
+Date: Tue, 15 Sep 2026 18:16:53 +0800
+Message-ID: <20260915101655.3216101-12-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260915101655.3216101-1-zhangckid@gmail.com>
+References: <20260915101655.3216101-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
@@ -102,146 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-### Motivation
-Currently, the relationship between IOThreads and the resources using them is
-opaque. From a management perspective, it is difficult to determine which
-devices or block exports are currently associated with a specific IOThread
-via QMP or HMP.
+Display holder information in info iothreads to aid manual debugging.
 
-This series introduces a "holder" tracking mechanism based on QOM paths or
-block exports to significantly improve IOThread observability.
-In high-performance virtualization environments, users often pre-allocate
-a set of IOThreads to serve as a persistent thread pool. During device
-hotplug/unplug cycles, while IOThread objects remain persistent,
-their attachment state changes dynamically.
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+---
+ monitor/hmp-cmds.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-By tracking these "holders," administrators can use `query-iothreads` to
-monitor the real-time load distribution of the thread pool and identify which
-specific devices (e.g., virtio-blk, BlockExport) are attached to which thread.
-
-### Technical Overview
-* Holder tracking
-
-  Add a QAPI holder list to each IOThread.  A holder identifies either
-  a QOM object by its canonical path or a block export by its unique
-  BlockExportOptions ID.
-
-* Explicit reference lifecycle
-
-  Add iothread_ref_and_get_aio_context() and the matching
-  iothread_unref_and_put_aio_context().  Acquiring an AioContext registers a
-  holder and keeps the IOThread alive until the matching put.
-
-  Legacy callers without a matching lifecycle use the explicitly named
-  iothread_unsafe_get_aio_context().  The ambiguous legacy
-  iothread_get_aio_context() is removed after all production callers
-  are migrated.
-
-* Subsystem integration
-
-  Track holders for block exports, monitors, virtio-blk, virtio-scsi,
-  virtio queue mappings, virtio balloon thread pinning, COLO compare,
-  vfio-user proxy, and xen-block.
-
-* Introspection
-
-  Extend IOThreadInfo with a holders array returned by
-  query-iothreads.  Display the same information with info iothreads.
-
-
-### V17 -> V16 Changelog
-  - Rebase code to resolve code conflicts for patch 8:
-    "virtio-balloon: Update tracking iothread users with holder".
-    This issue caused by latest merged patch "fdc3f9a83d".
-
-### V16 -> V15 Changelog
-  - Unified per-monitor IOThread checks and accesses through
-    mon->iothread after initialization.
-  - Simplified PATCH 13's commit message and clarified why blockdev
-    cannot use the holder-aware get/put APIs.
-  - Dropped the v15 Patch 1 in this series, It will be taken away
-    independently by trivial-patches tree.
-
-### V15 -> V14 Changelog
-  - Moved monitor IOThread cleanup from unparent() to monitor_finalize(),
-    pairing complete() with instance finalization.
-  - Squashed V14 PATCH 04 and PATCH 14 into PATCH 13 and clarified the
-    blockdev lifetime assumption. Since the additional changes are minimal,
-    PATCH 13 retains Stefan's Reviewed-by from V14 PATCH 04.
-  - Rebased and adapted info iothreads to the MonitorHMP interface.
-
-### V14 -> V13 Changelog
-  - Renamed patch 3 and clarified that it introduces holder-tracking
-    infrastructure, with users converted in subsequent patches.
-  - Documented that monitor holders are not visible to management
-    applications, while retaining the tracking for a consistent holder
-    and IOThread reference lifecycle.
-  - Rebased on the latest upstream.
-
-### V13 -> V12 Changelog
-  - Refactored block export IOThread reference handling with shared
-    init/cleanup helpers and preserved the existing single-IOThread
-    driver arguments.
-  - Moved monitor IOThread cleanup to the QOM unparent callback,
-    where the canonical path is still available.
-  - Kept internal IOThreads hidden from query-iothreads.
-  - Made virtio queue-mapping holder arguments const.
-  - Improved some detail comments.
-
-### V12 -> V11 Changelog
-  - Change the function name from the "iothread_put_aio_context()"
-    to "iothread_unref_and_put_aio_context()" match the
-    "iothread_unref_and_put_aio_context".
-  - Fix unnecessary char * cast since the holder variable is
-    declared const.
-  - Add detailed commit msg in patch 06/15.
-  - Optimize the HMP print in patch 13/15.
-  - Rebase code on upstream.
-
-
-
-Zhang Chen (13):
-  iothread: introduce holder tracking
-  iothread: add holder-aware AioContext accessors
-  block/export: track IOThread references
-  monitor: track IOThread users with QOM paths
-  virtio-vq-mapping: track iothread-vq-mapping references using device
-    path
-  virtio: track IOThread references for thread pinning
-  net/colo: track IOThread references using path-based holder
-  virtio-balloon: Update tracking iothread users with holder
-  vfio-user/proxy: Update tracking iothread users with holder name
-  xen-block: Update tracking iothread users with holder name
-  monitor/hmp: display IOThread holders
-  iothread: make legacy AioContext getter explicitly unsafe
-  tests/unit/iothread: update AioContext ref/put helpers
-
- block/export/export.c                   | 62 +++++++++++++---
- blockdev.c                              |  9 ++-
- hw/block/dataplane/xen-block.c          | 19 ++++-
- hw/block/virtio-blk.c                   | 21 ++++--
- hw/scsi/virtio-scsi-dataplane.c         | 22 ++++--
- hw/vfio-user/proxy.c                    | 16 ++++-
- hw/virtio/iothread-vq-mapping.c         | 20 ++++--
- hw/virtio/virtio-balloon.c              | 21 ++++--
- include/block/export.h                  |  5 ++
- include/hw/virtio/iothread-vq-mapping.h |  6 +-
- include/hw/virtio/virtio-balloon.h      |  1 +
- include/system/iothread.h               | 38 +++++++++-
- iothread.c                              | 89 ++++++++++++++++++++++-
- monitor/hmp-cmds.c                      | 20 ++++++
- monitor/monitor-internal.h              |  7 +-
- monitor/monitor.c                       | 36 +++++++---
- monitor/qmp.c                           | 14 ++--
- net/colo-compare.c                      | 29 +++++---
- qapi/misc.json                          | 94 +++++++++++++++++++++----
- tests/unit/iothread.c                   | 18 +++--
- tests/unit/iothread.h                   |  7 +-
- tests/unit/test-aio-multithread.c       |  5 +-
- tests/unit/test-bdrv-drain.c            | 18 +++--
- tests/unit/test-block-iothread.c        | 21 ++++--
- 24 files changed, 496 insertions(+), 102 deletions(-)
-
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 91701ddf33..d7dd24d951 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -246,11 +246,31 @@ void hmp_info_iothreads(MonitorHMP *hmp, const QDict *qdict)
+     IOThreadInfoList *info_list = qmp_query_iothreads(NULL);
+     IOThreadInfoList *info;
+     IOThreadInfo *value;
++    IOThreadHolderList *h;
+ 
+     for (info = info_list; info; info = info->next) {
+         value = info->value;
+         monitor_hmp_printf(hmp, "%s:\n", value->id);
+         monitor_hmp_printf(hmp, "  thread_id=%" PRId64 "\n", value->thread_id);
++        monitor_hmp_printf(hmp, "  holders=");
++        for (h = value->holders; h; h = h->next) {
++            IOThreadHolder *holder = h->value;
++
++            switch (holder->type) {
++            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
++                monitor_hmp_printf(hmp, "[block-export: %s]",
++                                   holder->u.block_export.export_id);
++                break;
++            case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
++                monitor_hmp_printf(hmp, "[qom-path: %s]",
++                                   holder->u.qom_object.qom_path);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++        }
++        monitor_hmp_printf(hmp, "\n");
++
+         monitor_hmp_printf(hmp, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
+         monitor_hmp_printf(hmp, "  poll-grow=%" PRId64 "\n", value->poll_grow);
+         monitor_hmp_printf(hmp, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
 -- 
 2.43.0
 
