@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AF1C88E77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 663C7C982C1
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WdP-0005RQ-Ri; Tue, 15 Sep 2026 13:07:57 -0400
+	id 1x6We3-0005kP-Ti; Tue, 15 Sep 2026 13:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdJ-0005Pl-Pg
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:50 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1x6WdX-0005Xc-Fp
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:08:04 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdI-0003Vp-7V
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:49 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3920so363355e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:47 -0700 (PDT)
+ id 1x6WdV-0003Yh-I6
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:08:03 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-4834977ae75so1994257f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789492067; x=1790096867; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789492080; x=1790096880; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=MOtSxZrrjdbEdacF7VzlJXUvyavPDBMBn3SGwvN7DBE=;
- b=EAoPQerp/sbYcLKgJVg27/lM8dAph0fJFBGM6fpNiAcWTew+LNDrjHEJ0+x/jAFOSF
- gKL8pukXQx2U/cABp45ItKtEFNJQ8sjAx9/kHf8rQIyz+FOinxBesXpgUcwB6pU3j2Oj
- 6ISIjTMW2ijkdhgR/sOtekOZKWi9OoUxI5MCiuk5DI7v3PFykczF8HoYPmn2JC6tejP5
- yPjNMTI/JNeUHk4tdPrJfTfr4/HlpVSyFBwQMw7kCbMBzUZQ1lOiFlnChI8wN+7vsLKD
- FrBg8ynLj6rlvmYrcfvPWD2ZbYMeA7hxHnFJlPkvf0ry5o3/NVAW5UnGPZq9rYS/fzaf
- R0tg==
+ bh=LRH3b8482DZ2qTZr1l8vvVhFgp01fVVHG2VpejOl0go=;
+ b=ao4bLV0CLpxgQ9kUbu1J1jyBJm0FuP8bRmG+cA2aj2gM2wYs7plbFjGwjYMYzGKEwJ
+ fSJBbhjU/PwLE411GouT40BOyx6VbruZjndhNmJOL2uQoLHyiIwgoJEb76pMx/tEK1pa
+ aIaGJnIeItsJGHG9POnBUbOPBI5PMiBtgY/t8GruTVwsLm7Wgc2GTYwXbKsSlTwmGVUp
+ rTqyrPdrYne5ZyqIjvEyWHpqTHV02P7ghaMd3sQrl+HazfveWZZyC07QwAUHXn7hQVb4
+ Qyksq1tOhyJGroyRiwHh46Uy4ll5yaQ2sv72t7/44Hwgael3bUdNqJGNKwtU7DpXbwaG
+ loaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789492067; x=1790096867;
+ d=1e100.net; s=20260707; t=1789492080; x=1790096880;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=MOtSxZrrjdbEdacF7VzlJXUvyavPDBMBn3SGwvN7DBE=;
- b=nXGa2Jd2XsntDKfxSdRv++7FJBXWHPAt56BOmIyW9j2IvMkDf5izodjWpv0oMnpTK+
- 9pcMLWCQ0zu7ruSXbzMbGo6VEiTPUtfHB+q32Kl1O4aqNU03MssXgZ6+GW3w3mzamMbs
- ca3bwJSdimFz3S6QtYOTHVPoVPKBfbeQ2w6ZC4W4lPT2NO2o+UJLtTR481Pp04DgzkbI
- gGTYWjbyq9r6HZO92OHtS4Zonf9BAox3BQneZuSxN2ZGg+BwsahLmxiATJMpLV3ar6vv
- rtVhDG7iDjhN+kTdZlZeadlklucX9HCcpTHMdHhv9MJlc9ZF6pAOhlcJ4ZwXeENDjJfP
- Au8g==
-X-Gm-Message-State: AFuF++nMupYytkrpVW1wnJF9UUGyypmLwDJcw9/InqNoBNDmtt/MLH/Q
- fRBiBQuVQM9hyjYrvaWk7ybyDJMhK5Qtu3Pkgyubh4F2JUAYP1uU2gWKRJh9IqS0XwLOlMHr7LC
- Z8+AjYdA=
-X-Gm-Gg: AYBFou0ACJX2KTjdcVsCZAEmS2FgWElWG4at4E229PAr0xCozwBrDmM2NN2x/n4u3ru
- q2t8nQYteP8Cpkl3yoxpMvkX8tsEdkTEIQHFURJwQTBRS70mWkFfdmIm6pRRBmrRagv/+eYj+wH
- abo4rcQr0y6rNIzwYddJTav6EnQE96qKMJ0ZSCUfgvNr5ZnkDP9BbN8Rp6nWj9nS/g4C95FqROQ
- uEeYOQKbi7PMt+RKUfKHbTCAv27skFiZrDcMgDWP5UlW3CsTkJXuDwp0eAR2SitdYrk4JRVA36/
- cLuTA6GclCZvbGYPbAIRqR66k/YNWkx/e4aktm4kLnK9p2UWslJ2z6LTwXjYkCqisXU6XQ3k/Ec
- ZMMV7mZyxJheGxjbqV0KzwZjXy5t4FDBmhZ5d3BHAQocDUIGEzKw5JPd5rwcHj/ci1st/gakt8N
- X9+b1x8mL7iMnoL+gdfxNAf+U0aR1OM0R9h3aXUq9qUrOxhqWdrridNs+FFjY/a8JjHnjarqt0D
- gIi8ajmcJRWpkCO67qmLYb2HqFRB4wb1uAkxrxP9f43upW+srQVMT/e/gfzIHSYzX/pxgcU2rVm
- gYxC
-X-Received: by 2002:a05:600c:35c3:b0:49c:dada:f57f with SMTP id
- 5b1f17b1804b1-49e821ffe2bmr32717405e9.7.1789492066650; 
- Tue, 15 Sep 2026 10:07:46 -0700 (PDT)
+ bh=LRH3b8482DZ2qTZr1l8vvVhFgp01fVVHG2VpejOl0go=;
+ b=Q1R7TRiMz4aO/NOe0DOx2frT1KawA4zSC07VimqHm+ujsVruQlAENGFOmu0AK8KHZO
+ KqXxzZEGd4DmWdcJG78EdsvKArYja0Am094b6WECKF/rUo7k40uqsYM28Tdod79jV7yO
+ HyAYwjJWVGKojW5eaNvENJd9uFnO50jdEJz5pxxCxek/veCJk8xh5kCSW5C8QVFqxXEr
+ 7a2q1Q8j00tX33jdhtQWoDIxoun+yzz+BjHYmiMFpTySTuYt+augrSMLSTklcVMwTjTe
+ Jm9P03tsIDze24HnvZULG60XxK+ElVqRGaq4OBy8wjDMXI7yWXLTqpbKDfDM12HZP0bC
+ M+Hg==
+X-Gm-Message-State: AFuF++laH/e3B++o24qkl0drk8OaVpCJKAHLtj0+RZ8KTaBQ605sCav9
+ 5eSrnR4A3cQTkuzJIw31CdMoOl5GlGL43JWxcSEkoSkh2vgK08h+Yw04lrR/h18cupJxXaIvw7R
+ tvmmKJOM=
+X-Gm-Gg: AYBFou3BkwbxEJ7XMV/ca0tiJx5iPlSbpVKg2C42EDbeR4VktEnlJKADSsUibV1In+s
+ D9i4b5Hb7zsKsF/geAkPTBgpL6p3UAFgEq0qP2RmneJEkt4ImzzMQ+mI0bJZdL17yXglCFRuhpA
+ N4A9nAZwZCA4fydUOFPdUEkni410R55dHvlDo72v9/PAesok5bn6XyHWNrJVG5cMeRdPpOIxg/b
+ /9bllpbsyk4A0YTdXOVNuJ7iFL4r2z9/zvN+sftCULAoN0J89cbXyG9qhgng5URX59cgp4agyMn
+ M1EF2HYxMLVGFZpbAMmMhxeqml+Eu575wI2gd5cqKvAIkPKq7rlQxDLIAPHOGaepPOD/b06igJH
+ CeBHxSxyM8S76SrZ9AbiH3dU7QQNzLmw30FPLKXFSgOMFzYD7zar55UCLILj/f810PxURb2zan9
+ LO5DS8QPu3aMQKNTSp0RA+jzuhzzJ6bXjchnq4yNLCKy/0ESttcNZNmOlnidafu6pj3ha4ufGNz
+ TvI7VCuU/T5uBjePd9DULqveKm2lZF4LPY/aCdhKULcD4CZ/WC9x5qDTQGsWc+BIySz3SGeG87q
+ nKf4
+X-Received: by 2002:adf:e014:0:10b0:487:71d:e878 with SMTP id
+ ffacd0b85a97d-487071dea3dmr7738378f8f.2.1789492080126; 
+ Tue, 15 Sep 2026 10:08:00 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.45
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:07:45 -0700 (PDT)
+ Tue, 15 Sep 2026 10:07:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/20] sbsa-gwdt: rename sbsa_gwdt_update_timer() to
- sbsa_gwdt_wor_update_timer()
-Date: Tue, 15 Sep 2026 18:07:23 +0100
-Message-ID: <20260915170735.425445-9-peter.maydell@linaro.org>
+Subject: [PULL 20/20] target/arm: extend PMSAv7 support to v6-M CPUs
+Date: Tue, 15 Sep 2026 18:07:35 +0100
+Message-ID: <20260915170735.425445-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915170735.425445-1-peter.maydell@linaro.org>
 References: <20260915170735.425445-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,76 +102,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 
-The timer update helper computes the timeout from the WOR (watchdog
-offset register). Rename it to sbsa_gwdt_wor_update_timer() to make room
-for a separate WCV-based update helper added by a following patch.
+QEMU conditions PMSAv7 storage, reset, allocation, the pmsav7-dregion property,
+migration and address translation on ARM_FEATURE_V7, which prevents the Armv6-M
+MPU from being used. The checks are widened to also accept ARM_FEATURE_M while
+preserving the PMSAv8 path for v8-M CPUs (PMSAv8 is tested first and the
+migration vmstate excludes v8-M with !ARM_FEATURE_V8). This lets a Cortex-M0+
+declare and use its MPU regions without setting ARM_FEATURE_V7, while v8-M CPUs
+continue to use PMSAv8 storage and migration.
 
-No functional change.
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Message-id: 20260902122646.2848464-5-imammedo@redhat.com
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/watchdog/sbsa_gwdt.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/arm/cpu.c     | 12 +++++++++---
+ target/arm/machine.c |  3 ++-
+ target/arm/ptw.c     |  3 ++-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-index 0ed29faf13b..5b4f241fcb3 100644
---- a/hw/watchdog/sbsa_gwdt.c
-+++ b/hw/watchdog/sbsa_gwdt.c
-@@ -99,7 +99,7 @@ static uint64_t sbsa_gwdt_read(void *opaque, hwaddr addr, unsigned int size)
-     return ret;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 77aa78f00e2..f58a1db843a 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -617,7 +617,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+                            sizeof(*env->pmsav8.rlar[M_REG_S])
+                            * cpu->pmsav7_dregion);
+                 }
+-            } else if (arm_feature(env, ARM_FEATURE_V7)) {
++            } else if (arm_feature(env, ARM_FEATURE_V7) ||
++                       arm_feature(env, ARM_FEATURE_M)) {
+                 memset(env->pmsav7.drbar, 0,
+                        sizeof(*env->pmsav7.drbar) * cpu->pmsav7_dregion);
+                 memset(env->pmsav7.drsr, 0,
+@@ -1656,7 +1657,11 @@ static void arm_cpu_post_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_PMSA)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_has_mpu_property);
+-        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++        /*
++         * QEMU's PMSAv7 state also models the Armv6-M MPU register layout.
++         */
++        if (arm_feature(&cpu->env, ARM_FEATURE_V7) ||
++            arm_feature(&cpu->env, ARM_FEATURE_M)) {
+             qdev_property_add_static(DEVICE(obj),
+                                      &arm_cpu_pmsav7_dregion_property);
+         }
+@@ -2332,7 +2337,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+     if (arm_feature(env, ARM_FEATURE_PMSA) &&
+-        arm_feature(env, ARM_FEATURE_V7)) {
++        (arm_feature(env, ARM_FEATURE_V7) ||
++         arm_feature(env, ARM_FEATURE_M))) {
+         uint32_t nr = cpu->pmsav7_dregion;
+ 
+         if (nr > 0xff) {
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 7005f4e5d77..53a2734d25d 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -584,7 +584,8 @@ static bool pmsav7_needed(void *opaque)
+     CPUARMState *env = &cpu->env;
+ 
+     return arm_feature(env, ARM_FEATURE_PMSA) &&
+-           arm_feature(env, ARM_FEATURE_V7) &&
++           (arm_feature(env, ARM_FEATURE_V7) ||
++            arm_feature(env, ARM_FEATURE_M)) &&
+            !arm_feature(env, ARM_FEATURE_V8);
  }
  
--static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
-+static void sbsa_gwdt_wor_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
- {
-     uint64_t timeout = 0;
- 
-@@ -144,7 +144,7 @@ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
- 
-     trace_sbsa_gwdt_refresh_write(offset, data);
-     if (offset == SBSA_GWDT_WRR) {
--        sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
-+        sbsa_gwdt_wor_update_timer(s, EXPLICIT_REFRESH);
-     } else {
-         qemu_log_mask(LOG_GUEST_ERROR, "bad address in refresh frame write :"
-                         " 0x%x\n", (int)offset);
-@@ -160,19 +160,19 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offset, uint64_t data,
-     case SBSA_GWDT_WCS:
-         s->wcs = data & SBSA_GWDT_WCS_EN;
-         qemu_set_irq(s->irq, 0);
--        sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
-+        sbsa_gwdt_wor_update_timer(s, EXPLICIT_REFRESH);
-         break;
- 
-     case SBSA_GWDT_WOR:
-         s->worl = data;
-         qemu_set_irq(s->irq, 0);
--        sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
-+        sbsa_gwdt_wor_update_timer(s, EXPLICIT_REFRESH);
-         break;
- 
-     case SBSA_GWDT_WORU:
-         s->woru = data & SBSA_GWDT_WOR_MASK;
-         qemu_set_irq(s->irq, 0);
--        sbsa_gwdt_update_timer(s, EXPLICIT_REFRESH);
-+        sbsa_gwdt_wor_update_timer(s, EXPLICIT_REFRESH);
-         break;
- 
-     case SBSA_GWDT_WCV:
-@@ -211,7 +211,7 @@ static void sbsa_gwdt_timer_sysinterrupt(void *opaque)
-     if (!(s->wcs & SBSA_GWDT_WCS_WS0)) {
-         s->wcs |= SBSA_GWDT_WCS_WS0;
-         trace_sbsa_gwdt_ws0_asserted();
--        sbsa_gwdt_update_timer(s, TIMEOUT_REFRESH);
-+        sbsa_gwdt_wor_update_timer(s, TIMEOUT_REFRESH);
-         qemu_set_irq(s->irq, 1);
-     } else {
-         s->wcs |= SBSA_GWDT_WCS_WS1;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index cb9e73fc0ad..f537502d3b1 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3908,7 +3908,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+             /* PMSAv8 */
+             ret = get_phys_addr_pmsav8(env, ptw, address, access_type,
+                                        result, fi);
+-        } else if (arm_feature(env, ARM_FEATURE_V7)) {
++        } else if (arm_feature(env, ARM_FEATURE_V7) ||
++                   arm_feature(env, ARM_FEATURE_M)) {
+             /* PMSAv7 */
+             ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
+                                        result, fi);
 -- 
 2.43.0
 
