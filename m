@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E65C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D2A0C88E7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WdI-0005P3-0Y; Tue, 15 Sep 2026 13:07:48 -0400
+	id 1x6WdT-0005SW-VZ; Tue, 15 Sep 2026 13:08:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdE-0005Nu-If
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:44 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ id 1x6WdL-0005QS-5S
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:52 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdC-0003U9-GA
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:44 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f6350f89so1854606f8f.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:42 -0700 (PDT)
+ id 1x6WdJ-0003WC-BQ
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:50 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-4843e397f74so687735f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789492061; x=1790096861; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789492068; x=1790096868; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=24Orj4A/cTGpGkp1mwzozDfIPHw3PzO0nF/DEKBkz6w=;
- b=AKwmIoiQbV1NHd/gTasZsxx5v/0EEptV9DzTzR/U82+mIA1D+FzcQOxC3VUbi6ntSn
- PjCf2NpYsNN7X/4vjWkOhSveCuYrqhvp/VSGdVJBumTA9EwBWtgmS2Nv0q2hnsLGZqys
- O2ei4blZnlve6jt4LzrffWQbTgq8ayfrW0kh3gld8sMnfW1nRi+VE0V6wi0oSbHukP6m
- uOWJcM/cEaCuCCAqdOuopa6f51wX3yI1fSkY5f2Ecm4qX9affK6Ykx3r07o0kshCgmBA
- NKhonalqtiMSgTeSsWtXyjYbxR4+jsNkyQOxYQH4xmGjurwKYKBYoXqIYMa82Zl/5anx
- La5A==
+ bh=ePTbrn2QKUyDHGcC3OCZ2qXD2RHWJ0SPyZ9KMWVdQl8=;
+ b=znFetpSd8YJuHfranjpR46kDIgIMWbHBqs60WBLID8rPSgShghpbsuBw97wKVKAUm0
+ HwbXcHIuzOhQshdYB8i6PtUagjFt14diVU+2vQqvLA0XxXOwKYAV7Fx2wLw/f6J7mL15
+ AZmlxOdzNN2B9fo7xTGSx4s1ND538/S1U2SR/cdmtLK0lyYBZ6ETr+qbf7Xx1uGNxWxt
+ 7ZuTyeXaQ5yKFW1Z73Y9SXkxMo/elqbaY4eiphuDX+ai10/+bDM3/T0aY0yQJrZIXya0
+ VfPBFdQgIX4qlfJERuZ9p6XYjnlp9E5tNIXdHso1ewE9SVczVZdBH8d2thDEttSgmMry
+ UVdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789492061; x=1790096861;
+ d=1e100.net; s=20260707; t=1789492068; x=1790096868;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=24Orj4A/cTGpGkp1mwzozDfIPHw3PzO0nF/DEKBkz6w=;
- b=onCrEs++C1mSx/yLVzfL9xJgocx4xzqbzuZ3LYyKBO04yzHp/yLs+FpQJ1TM4ijhTn
- KliVQT7Ain7onEbw+NtZWQLPxRIHpdZsV3WEsmvElQnCZXgtIJ5JRWSsQuSlKJh1RlE+
- FeDJExPM+CJkdqikIUOalLbbFte6DFid8Cn0z1lbRXe3HNPVlr0zQgSSO9+amxS1FrC8
- DvarC9Nw2sXPgVljYPpzUOgXQzbN1NWJ+vT1Anq84y0iLqKeVEGpQoU+Rt4x/EpIYnpb
- 4CEwcSlmlxYigLPkEO1FI9g5H4laxQnGZdqTP/fK8aoTrqcWUdWzuMqHjv0ntQwCUFUa
- fFVQ==
-X-Gm-Message-State: AFuF++nsEfvpn00wlRMEQpp3w4/up5ThxgCZM0O4oTRzv5rFshUwU2AI
- 0C4KH213xzNMyfBCO9eWkF886xhZQukA/dse2sCq2mVUzx+mfQEUZU2v4I0VdW5xgXus/6KA5W4
- xwSPvboY=
-X-Gm-Gg: AYBFou192lV45cJt2iEAtcRy7BHkUJbdfQNz49ClzTk94VTn57i4WomGVlbHoYL5nbh
- 3yxS8k27SWO5NMRAJcc0/RK5PVQq7Fpiw4GWPQespB8dg0yaZX+vOBPmTc2KZzFA8OuId9HJdid
- +lcviyGh7oSAG+VhNvA9hvdnoIMYkaaY+LoT1Gi9B4bGfVV+Hxl7UCosvg82s6ktcRAR+U/QDqf
- aNMl5lR3jLwUkQ08mA5pZEx57tC6tUkG5yLuXy7h+SCKZTf6iNfTDXBztRCoERYy0WkhHY0WZv+
- k8ysXmA3dknAyQOpq1MpQ8r3OMDYLmb1iKZ6HiFAZXW6GMscQb5YEzVTY9XCGn6fGd6tnJ7DSjc
- ubpiYtufR9lFDyyKHVGLrNCSkcdfSv7tXCWECxH3Ty8yCwCXWtgotsBgljEI1XMqRxScRYm1Mi7
- nC7yHaoIECpw9v+aWFZAumKlvVUMQOI2a9zFlV/5WRxM/pGhrCcO75UsNzg9aky0KVYZ3bwi6VG
- luSR2V6oxMv6cBdjbramaAox639+dYg6BQ+B7CVTR2prk9JFNs7dM97Ts2vtGtEbYjHeC7X0mra
- W6s1
-X-Received: by 2002:a05:6000:2313:b0:487:8c8:8cb with SMTP id
- ffacd0b85a97d-48708c80907mr3966077f8f.8.1789492060948; 
- Tue, 15 Sep 2026 10:07:40 -0700 (PDT)
+ bh=ePTbrn2QKUyDHGcC3OCZ2qXD2RHWJ0SPyZ9KMWVdQl8=;
+ b=TrZ3/vzzHFTe0o5nHrpfWuGxB0Fso9gHQXuqAV904My4ePXj+rkZUshFSu/7AJCPPe
+ L9LN772ClOgEfg4jmjNRIJ3stNJ5YrHeHjRBfvpHBSrMhrPpfY2yZSzvZyvkNUW/Yw6a
+ M5Wws43B5avDC3FQhYiHCqvekDEhB8lvR8HRqZxOGz9bniMxDa3YRAzuNF2dPlFyha/P
+ PFDLE+0Z3sQ23/OD7qChYk05BypwndXQwV75Ddo5TmoBztlZ8HHaV6Bt4G0gFT9pRjF0
+ Z4/OSkr7cW2+RkjIW/z2MSRSyuL7u7t+lCzxRKc6yjsMo3qpwIq28l0e/Owggiy1dWyU
+ q9/w==
+X-Gm-Message-State: AFuF++nLK1m6DIDas27JUSrgFkRA6jwuc+EEE6xT/dikwtIZgBfNOgmS
+ V/ipodMyhCn282USwBb/YYIo6cUBZRF1qj6/WYICF1LdReButXDgEi4XvYMDb5cY+xBaOlz2iRt
+ QtRoE5is=
+X-Gm-Gg: AYBFou1VTuawe3yWHKylI61t2hAWmpihhpbeYkPnjkSiRIJBhpzm66gXmVAde91+Dt5
+ 1YXsAewJThwj4h1/FDUs0ySeyXVvMQqOJ4koxb49HhueqoEwMJGIo7JJpVIxcLczAuZY9ozt8rc
+ wnW9WSjByWrjSqkicNj8awAT5rfK0lhKwTjpCqG5PuVhe1wvR315hsKJjl3T1sENdnmt3T1lbDB
+ 9Li/na4Bifm+BnL+B9F3Ufs7l8nUjnQZiJzaA3qfncZiuWnqggAhlGmjQUlQUeoq8oIb5vCVPju
+ RFbXVm2TNyax9aYBPnkr0zUXnv/N33AX0oPaRh0uEqeuRwgus86ZgordDnPZan7kljiHn7OdSFl
+ JoU4mMjnEvxKdGHOVIvoniVBowGSLsTCHspHLZCT12tkRI8jS5nTcZVEzJp6ZW9SpniEtes4duJ
+ yh1MBvkShWqF6t8ZvyWZdnygtdtVBPXMybq3DrCuCySEN/NNnLZv+nHlDpJF1uh7ON3Hk7cLRrC
+ pNgjTe9aUFe4NzAVIAqRZdk3sRm5tn1xc/5mTEDWsoZYM77pC+nLw2ihrjVtGSp6xONQlcG2+OR
+ LLRq
+X-Received: by 2002:a05:6000:4718:b0:485:9309:6ec1 with SMTP id
+ ffacd0b85a97d-48705b665c1mr7484552f8f.13.1789492067863; 
+ Tue, 15 Sep 2026 10:07:47 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.39
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:07:40 -0700 (PDT)
+ Tue, 15 Sep 2026 10:07:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/20] target/arm/whpx: fix whpx-arm post-reset CPU state
-Date: Tue, 15 Sep 2026 18:07:18 +0100
-Message-ID: <20260915170735.425445-4-peter.maydell@linaro.org>
+Subject: [PULL 09/20] sbsa-gwdt: don't arm timer for compare values above
+ INT64_MAX
+Date: Tue, 15 Sep 2026 18:07:24 +0100
+Message-ID: <20260915170735.425445-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915170735.425445-1-peter.maydell@linaro.org>
 References: <20260915170735.425445-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,63 +103,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doug Cook <dcook@microsoft.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-Reset should leave CPU 0 running, and should leave all other CPUs
-suspended. Instead, no CPUs are suspended and CPUs may be left in
-low-power states.
+QEMU timer subsystem uses int64_t, so a WCV value with bit 63 set
+would overflow and cause the timer to fire immediately. The SBSA
+spec defines WCV as an unsigned 64-bit compare value, so such
+values are valid per spec and represent far-future deadlines
+(however unpractical).
 
-Fix by updating state in whpx_set_registers WHPX_LEVEL_RESET_STATE.
+The current code is not affected: WCV writes don't reschedule the
+timer yet, so a guest-supplied compare value never reaches the
+timer API. The follow-up patch ("sbsa-gwdt: reschedule timer on
+direct WCV load") changes that, at which point an out-of-range WCV
+would overflow the timer. For example, Windows in GTDT mode writes
+WCV in two 32-bit halves while the watchdog is running:
 
-Signed-off-by: Doug Cook <dcook@microsoft.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+ sbsa-gwdt_control_write [0x8]  <- 0xffffffff    # WOR (~4 sec)
+ sbsa-gwdt_control_write [0x0]  <- 0x1           # WCS enable
+ sbsa-gwdt_control_write [0x14] <- 0xffffffff    # WCVU (intermediate)
+ sbsa-gwdt_control_write [0x10] <- 0xa906ca28    # WCVL
+ sbsa-gwdt_control_write [0x14] <- 0xecb1        # WCVU (final)
+
+The intermediate WCVU write (0xffffffff) yields a WCV above
+INT64_MAX; once WCV writes arm the timer, this overflows QEMU's
+signed timer and fires immediately -- triggering WS0 => WS1 =>
+reboot before the final WCVU write lands.
+
+Add the guard first, before the WCV rescheduling patch, so the
+tree stays bisectable. Instead of arming the timer with an
+unsupported deadline, leave it disarmed. This reuses
+hw/timer/sse-timer.c:sse_set_timer() (commit 0b8ceee822
+"hw/timer/sse-timer: Model the SSE Subsystem System Timer").
+
+Introduce a sbsa_gwdt_set_timer() helper for this and route the
+WOR-based timeout through it.
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Message-id: 20260902122646.2848464-6-imammedo@redhat.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/whpx/whpx-all.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ hw/watchdog/sbsa_gwdt.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index a05df7d2cb3..d106400686f 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -613,6 +613,37 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-             whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
-         }
-     }
-+
-+    if (level == WHPX_LEVEL_RESET_STATE) {
-+        /*
-+         * WHPX keeps the "vCPU is in a low-power wait" state (entered when the
-+         * guest executes WFI/WFE) in WHvRegisterInternalActivityState, and that
-+         * state is not affected by writing the architectural registers above.
-+         * If the guest happened to be idle when the reset was requested, the
-+         * vCPU would stay suspended forever.
-+         *
-+         * StartupSuspend is the bit WHP uses to hold a vCPU that has not been
-+         * started yet, and it is how secondary vCPUs are parked until PSCI
-+         * CPU_ON releases them.
-+         */
-+        WHV_REGISTER_NAME name = WHvRegisterInternalActivityState;
-+        bool powered_off = arm_cpu->power_state == PSCI_OFF;
-+        WHV_REGISTER_VALUE ia;
-+        HRESULT hr;
-+
-+        clean_whv_register_value(&ia);
-+        hr = whp_dispatch.WHvGetVirtualProcessorRegisters(
-+            whpx_global.partition, cpu->cpu_index, &name, 1, &ia);
-+        if (SUCCEEDED(hr) &&
-+            (ia.InternalActivity.IdleSuspend ||
-+             ia.InternalActivity.HaltSuspend ||
-+             ia.InternalActivity.StartupSuspend != powered_off)) {
-+            ia.InternalActivity.IdleSuspend = 0;
-+            ia.InternalActivity.HaltSuspend = 0;
-+            ia.InternalActivity.StartupSuspend = powered_off;
-+            whpx_set_reg(cpu, WHvRegisterInternalActivityState, ia);
-+        }
-+    }
+diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+index 5b4f241fcb3..c5e88bf3d36 100644
+--- a/hw/watchdog/sbsa_gwdt.c
++++ b/hw/watchdog/sbsa_gwdt.c
+@@ -99,6 +99,22 @@ static uint64_t sbsa_gwdt_read(void *opaque, hwaddr addr, unsigned int size)
+     return ret;
  }
  
- static uint32_t max_vcpu_index;
++static void sbsa_gwdt_set_timer(SBSA_GWDTState *s, uint64_t deadline)
++{
++    /*
++     * WCV is an unsigned 64-bit compare value, but QEMUTimer stores the
++     * expiry as a signed int64_t. A deadline with bit 63 set would be seen
++     * as already expired and fire the watchdog immediately. Such a deadline
++     * is unreachable within any guest runtime, so treat it as "never" and
++     * leave the timer disarmed instead.
++     */
++    if (deadline <= INT64_MAX) {
++        timer_mod(s->timer, deadline);
++    } else {
++        timer_del(s->timer);
++    }
++}
++
+ static void sbsa_gwdt_wor_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+ {
+     uint64_t timeout = 0;
+@@ -135,7 +151,7 @@ static void sbsa_gwdt_wor_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+     s->wcvu = timeout >> 32;
+     s->wcvl = timeout;
+ 
+-    timer_mod(s->timer, timeout);
++    sbsa_gwdt_set_timer(s, timeout);
+ }
+ 
+ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
 -- 
 2.43.0
 
