@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A37C982C1
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D356C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Zrz-0001JZ-6u; Tue, 15 Sep 2026 16:35:11 -0400
+	id 1x6ZsA-0001UH-O3; Tue, 15 Sep 2026 16:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrx-0001Iq-Ev
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:09 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zs6-0001TA-7K
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:19 -0400
 Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zrv-0005bU-GK
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:09 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6Zs4-0005dY-3a
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:35:17 -0400
 Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4843c3ee4cfso68924f8f.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:07 -0700 (PDT)
+ ffacd0b85a97d-4843c2790ccso71008f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:35:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789504506; x=1790109306; darn=nongnu.org;
+ d=openvz.org; s=google; t=1789504515; x=1790109315; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=9U6r6zduGROyZttH41usMCNKKJFsk0T5lUOSw3Zwo2M=;
- b=d5f6scyDt6YmTKhIB4dYOlTlM+MLYuuWhIu3xO3zzs8QEFgKSsWPu+hxsZRj0/9VP5
- 3n8SgMLPU76QSfni4rsIkXFsi9ksDEKBX557Mg+TCmylhEYbsN50n6tJEjNDALnp0t/V
- QpdhZoPVj+XMFJNF54/Jbx2yHQVUGiK/c+7TU3IEQMT0ZiBcPW7PApAtPT2mv8rWiPZA
- wkBJSMQK45qSsT9EfIEkk77yZJcGwZ5n7IVTMaKmkR+YiSuoUkaamFLoRV3SWOvAQNSt
- jysTy6uXpQYvGZakfC0d/O4hrmzlm/tMrgVhFO65fXlAfaXBZM5o1V/yjPxneKF5e/Oy
- GGsA==
+ bh=2ceqUPoH8MhXmSFtjgWPeXdjWgb1vco08D6FmhOncNY=;
+ b=Mbx6VUjl8Xb+Qv6X2LzNnp/uvMjKHNbAiMUq2y2KxhJW0XZB5Ry+1pbBG4OGuM66y0
+ IBqXtkVPKJPW/jWLFTPRLL8N+VeX3B2dFnXopLxHuyUXdoHAzxbRIkL5YJ9idS+eiZ8c
+ WzRUiH+Ad66Q5XrFaaTFhlFWkk3LONePW6sBwAvy2gksxtDnd9Z62yUrg8s3TJtJhfC/
+ /XHVm/oLHKVaoeiUhTb6DrWYiI0leZ+vFWydvDY9AxGjOWZ+nBlcSdhqYsOR733DNNNw
+ sy1/58zrBDNvNHLuVLko8YL8ihniVz+RImqp/mxraB1W5wZ2BRuWNihE+s7KdoMIlepz
+ s6KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789504506; x=1790109306;
+ d=1e100.net; s=20260707; t=1789504515; x=1790109315;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=9U6r6zduGROyZttH41usMCNKKJFsk0T5lUOSw3Zwo2M=;
- b=DWnsEE8z7STE1ue3whroBlEQgFfZDfoHcxKmrqIJqrViqnx3hinkJLXmBWkxt87lON
- lFelSDW8bq5rucarQJoNQxeox1iIlN5ZNAeITaKPcRrvPyvG5ngy3NCP80DPAJ1Ryjep
- haQfR7/XceTYM3NyfORZv8GBoNdJv8ooEFU0T9riDmpsldgWSsjpUrOesF0ZNiMPTA+j
- KZ1SrG0QOte4PS698etwE2Zh48p9mPNsKfNXu5/l9C/LZWUbjvyBuA6lA8cCKK8L1MwB
- 1hq61t0dsxfiNbqbWDhKC73qAVx2t5QKwsgvsc1Fb6MBDpO+7HBZTpS5RZPeB6j11Lo5
- XbsA==
-X-Gm-Message-State: AFuF++nfP4QTkYs3JZiN2mXNjiKn/QLDmj6OUH0jZI3tzai2mFVwues8
- mx4OxbQ5pDt/zwffvco9666heCYGB+wjgrMcelE6WRLI5r3giobhNsz7Di4SDavZMazW8hfjvQL
- quVWp
-X-Gm-Gg: AYBFou1Uo0//B3ClOhWTfk902B2Ay6oWHyKkZ8weNieBzU/8jCn00aw2Zlm+DkTwlVM
- krsE/QYpbheGb+dWoEeHCJ3MzwLek3JI08AShecZGzzBryk8x9PkB1pzI+1nFnBBQeuyP7UBVXR
- gnS2j0czwdusCqsIMVNyEqfXVlN8XpgstVMVITiRPCndPCt3qPGjVQTyk/YsifVpjX1B31ChWJ0
- Mmvowk38Xal9gL5Zoa1URLKYWH6+bq4xs9VqAgsroQoaGQLUMFMW3A+EFAw6OXn+PJ12hiykVWw
- ywxIvC+ezxA9FnPc1wKMTrtzioVT7yTBFRX0cWfrn/3uQfW31kOqVQDEHaEUtkQAhTAPeHZiJaP
- w9zsJGVhgDfWYKlJT+MdV+PvZFOAkjT5u2VncjR7K1X+5sZU74wMdwsPYziNMB58D3P8SLylOLA
- MEqwYl5JIP1g1ijEEA4Gd1kgi2GPUznZUxYX21FxFEc2FNJ/Ku/1Obr+KOZzYkN0V2ImwL
-X-Received: by 2002:a05:6000:644:b0:487:4ba:97f2 with SMTP id
- ffacd0b85a97d-4870cf27ad0mr155723f8f.3.1789504506078; 
- Tue, 15 Sep 2026 13:35:06 -0700 (PDT)
+ bh=2ceqUPoH8MhXmSFtjgWPeXdjWgb1vco08D6FmhOncNY=;
+ b=ZBRwXw+go4RtY1Nq6c3npn1QFA/UKsYqw0fXqow0ayojb7XNqglIiYjEZ50iHY5nUs
+ ZIrr46bjVyxOu4qe6S07QWm37BSBO7qSXQJ9FRgD8OVW8q1b/HOwOW+gDfbKgqxVm1Yj
+ yfTWn2EHaLWj34+ZhfTtOlSzdX+9jx1gJPGiZy+A6ok3LagcHvN3qMLE7WdpW+UQwr+6
+ zWufBGaGb+1MqE/SGJeptBZ1raDZbhQTrunpz/c1qP1oMaN6PxOasPRJoDIQfTnbzNsW
+ C1qOrvAV4MYAjI66johtGTYFurAbUJKv/gYTWdgYdhsbVTvsDIGs4yGxKxoYLlPhzP7x
+ UgqQ==
+X-Gm-Message-State: AFuF++meiZemi+x4wqNJ8vqGgl1iEnarbh5cQOdpryzrf2GuoMN6jHMM
+ UyC6uoFo8oLwhcOWi7GVAA2EvnOh9GfaqYA//4YHtVoSJnNJHuQMwb2z1r89H5rNc1zlZqpaNch
+ cYG3L
+X-Gm-Gg: AYBFou2aT9ihb5gM9+BrRmEhde6C92ZXMphJWSBLjSVS7ys8VrAbRSFMEgGUJxRHmpJ
+ PaSKo999lcYnun4WqwdZYvM7kfu4pqgMGbqwzvoF1oynt9wykfG6k27RJTc1pbOJgkAkm0WUmID
+ 8SVPh+0uFjKQhA4bJMccb9b3HkFP/5QpPpoFMHS9zgI+8JlFXR+KsXV55A0/kC01Vvb9SNLrMIc
+ 21UgUEyVFIrOJReu6UgeYPGUK90O8fn/o+Ky2gFgnc2YTmUlsom/t7WmMGWICaim9h/Qc2ZhBE5
+ VxvXTFJxpTobThVPRiLUJlO9IRk7XIRwmLVl6kfLZvFuMB+BcsiJS9QgftSAKNSwq4om7iDLpMc
+ ogYScSvRfwz6wXEhutuzn7048UpkFCnekhLCh7gKIkuZ6z9POs8xAx+XyzYnZfA9BN1KS3aHc4X
+ qWvV3qJBPo6HMNtDAXwKMMgFv9h2OBHDClojU/MjCxypmJ2JC13RunaliRDRoO3Udm+PsD
+X-Received: by 2002:a05:6000:2990:10b0:485:8542:fee3 with SMTP id
+ ffacd0b85a97d-4870cf29d43mr207690f8f.16.1789504514682; 
+ Tue, 15 Sep 2026 13:35:14 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:f0fe:c7ed:403d:e487])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.04
+ ffacd0b85a97d-4870bf37e69sm1504073f8f.29.2026.09.15.13.35.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:35:04 -0700 (PDT)
+ Tue, 15 Sep 2026 13:35:14 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 04/10] oslib: report kernel stacks in qemu_thread_states()
-Date: Tue, 15 Sep 2026 22:34:48 +0200
-Message-ID: <20260915203455.580999-5-den@openvz.org>
+ Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 10/10] tests/functional: cover the BQL watchdog
+Date: Tue, 15 Sep 2026 22:34:54 +0200
+Message-ID: <20260915203455.580999-11-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260915203455.580999-1-den@openvz.org>
 References: <20260915203455.580999-1-den@openvz.org>
@@ -105,126 +106,114 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-A wait channel names the primitive a thread is parked on but not the
-path that got it there, and for a thread wedged in a syscall that path
-is the answer.
+Hold the BQL from the main thread and check that the watchdog says so.
 
-Read /proc/tid/stack when the report is built, and keep the wait
-channel for when it cannot be. The file is restricted to CAP_SYS_ADMIN
-in the init namespace, so ask once rather than failing per thread, and
-say why the report came back thinner. Skip a running thread, which has
-no settled stack to unwind, and cap the frames, because the deep end of
-a stack is rarely the part that explains the hang.
+human-monitor-command is not a coroutine command, so a write issued
+through it runs to completion under AIO_WAIT_WHILE() in the main
+thread, which keeps the BQL for as long as the backend takes to answer.
+Point that at a null-co node with a latency ten times the deadline and
+the hold is both long enough to report and short enough to end on its
+own.
+
+Arm the watchdog after launch rather than on the command line, because
+machine creation takes the BQL in bursts of its own and a deadline this
+short is meant for the hold, not for startup.
+
+Check the quiet case too. A counter that stops distinguishing a held
+lock from a free one would report a hang on a healthy qemu, and that
+failure is invisible to a test that only looks for the report.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Cc: Zhao Liu <zhao1.liu@intel.com>
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- include/qemu/osdep.h |  4 ++--
- util/oslib-posix.c   | 52 +++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 51 insertions(+), 5 deletions(-)
+ tests/functional/generic/meson.build          |  1 +
+ tests/functional/generic/test_bql_watchdog.py | 60 +++++++++++++++++++
+ 2 files changed, 61 insertions(+)
+ create mode 100755 tests/functional/generic/test_bql_watchdog.py
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 8039bf91b8..c15ffd7880 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -672,8 +672,8 @@ bool qemu_debugger_attached(void);
-  *
-  * Returns a newly allocated, newline terminated description of every thread
-  * in this process apart from the caller: its id, name, scheduler state and
-- * the wait channel it is parked on, or NULL on a host that cannot report any
-- * of that.
-+ * kernel stack, or NULL on a host that cannot report any of that. Where the
-+ * kernel stack is privileged the description falls back to a wait channel.
-  */
- char *qemu_thread_states(void);
+diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
+index c94105c62e..c20c2a91ea 100644
+--- a/tests/functional/generic/meson.build
++++ b/tests/functional/generic/meson.build
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 79887d370c..6a683b849e 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -145,13 +145,39 @@ static char *read_task_file(const char *tid, const char *name)
-     return buf;
- }
- 
-+#define THREAD_STACK_FRAMES 12
+ tests_generic_system = [
++  'bql_watchdog',
+   'empty_cpu_model',
+   'info_usernet',
+   'linters',
+diff --git a/tests/functional/generic/test_bql_watchdog.py b/tests/functional/generic/test_bql_watchdog.py
+new file mode 100755
+index 0000000000..193dad15e3
+--- /dev/null
++++ b/tests/functional/generic/test_bql_watchdog.py
+@@ -0,0 +1,60 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Test the BQL watchdog against a main thread blocked on IO.
++#
++# Copyright (C) 2026 Virtuozzo International GmbH
 +
-+/*
-+ * /proc/tid/stack is restricted to CAP_SYS_ADMIN in the init namespace, so
-+ * ask once instead of failing per thread, and say why the report is thinner.
-+ */
-+static bool thread_stacks_readable(void)
-+{
-+    static int readable = -1;
-+    g_autofree char *path = NULL;
-+    g_autofree char *buf = NULL;
++from qemu_test import QemuSystemTest
 +
-+    if (readable >= 0) {
-+        return readable;
-+    }
-+    path = g_strdup_printf("/proc/self/task/%d/stack", qemu_get_thread_id());
-+    readable = g_file_get_contents(path, &buf, NULL, NULL);
-+    if (!readable) {
-+        warn_report("kernel stacks need CAP_SYS_ADMIN, falling back to wchan");
-+    }
-+    return readable;
-+}
++deadline_ms = 100
++hold_ns = 1000 * 1000 * 1000
 +
- static void append_thread_state(GString *out, const char *tid)
- {
-     g_autofree char *comm = read_task_file(tid, "comm");
-     g_autofree char *stat = NULL;
-+    g_autofree char *stack = NULL;
-     g_autofree char *wchan = NULL;
-+    g_auto(GStrv) lines = NULL;
-     char state = '?';
-     char *rparen;
-+    int i;
- 
-     if (!comm) {
-         return;
-@@ -168,9 +194,26 @@ static void append_thread_state(GString *out, const char *tid)
-     }
-     g_string_append_printf(out, "  %-7s %-16s %c\n", tid, comm, state);
- 
--    wchan = read_task_file(tid, "wchan");
--    if (wchan && wchan[0]) {
--        g_string_append_printf(out, "      wchan %s\n", wchan);
-+    /* A running thread has no settled kernel stack to unwind */
-+    if (state != 'R' && thread_stacks_readable()) {
-+        stack = read_task_file(tid, "stack");
-+    }
-+    if (!stack) {
-+        wchan = read_task_file(tid, "wchan");
-+        if (wchan && wchan[0]) {
-+            g_string_append_printf(out, "      wchan %s\n", wchan);
-+        }
-+        return;
-+    }
 +
-+    lines = g_strsplit(stack, "\n", 0);
-+    for (i = 0; i < THREAD_STACK_FRAMES && lines[i]; i++) {
-+        if (lines[i][0]) {
-+            g_string_append_printf(out, "      %s\n", lines[i]);
-+        }
-+    }
-+    if (lines[i]) {
-+        g_string_append(out, "      ...\n");
-     }
- }
- 
-@@ -183,6 +226,9 @@ char *qemu_thread_states(void)
-     if (!dir) {
-         return NULL;
-     }
-+    /* Emit the permission notice ahead of the listing, not inside it */
-+    thread_stacks_readable();
++class BqlWatchdog(QemuSystemTest):
 +
-     out = g_string_new(NULL);
-     while ((tid = g_dir_read_name(dir))) {
-         if (atoi(tid) != qemu_get_thread_id()) {
++    def setUp(self):
++        super().setUp()
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.add_args('-blockdev',
++                         f'driver=null-co,node-name=null0,size=1048576,'
++                         f'latency-ns={hold_ns}')
++        self.vm.launch()
++
++    def arm(self, ms):
++        self.vm.cmd('qom-set', path='/machine',
++                    property='bql-watchdog-ms', value=ms)
++
++    def hold_the_bql(self):
++        """
++        human-monitor-command is not a coroutine command, so the write runs
++        to completion under AIO_WAIT_WHILE() in the main thread, which keeps
++        the BQL for as long as null-co takes to answer.
++        """
++        self.vm.cmd('human-monitor-command',
++                    command_line='qemu-io null0 "write 0 4k"')
++
++    def log_after_shutdown(self):
++        """The log only reaches the harness once the VM is reaped"""
++        self.vm.shutdown()
++        return self.vm.get_log() or ''
++
++    def test_reports_a_hold(self):
++        self.arm(deadline_ms)
++        self.hold_the_bql()
++        self.arm(0)
++
++        log = self.log_after_shutdown()
++        self.assertIn(f'BQL held for more than {deadline_ms} ms', log)
++
++    def test_silent_while_disarmed(self):
++        self.hold_the_bql()
++
++        log = self.log_after_shutdown()
++        self.assertNotIn('BQL held for more than', log)
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.53.0
 
