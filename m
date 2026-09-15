@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C7BC88E75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D261C88E7D
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 06:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Mnf-0006fW-6O; Tue, 15 Sep 2026 02:37:51 -0400
+	id 1x6Mni-0006gA-S7; Tue, 15 Sep 2026 02:37:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1x6Mnc-0006fC-GG
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:37:48 -0400
-Received: from [115.124.30.113] (helo=out30-113.freemail.mail.aliyun.com)
+ id 1x6Mnf-0006fb-3F
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:37:51 -0400
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1x6MnZ-0001Dv-1E
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:37:48 -0400
+ id 1x6MnY-0001Dd-V2
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:37:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1789454243; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=Qr52ItPjNoQFNh4q9cMQK9LkWdC9JRTZIHpsy1bQGyo=;
- b=M05nJSN7ic36x2cnodUAKQmfwQhxk3E8QSUZfkCtUS0cd1xqED68Mir4nAD2Y4IjBHowEXirdgUZLXN61uJBHtAG4fVRdyilF3UZCyPFu0Z2VpwcXO9x6NjIKc1aPc/JVFQst1Blzdta97w+T/A2kCHEYjc9ecT9Q0c0JT4ISVw=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R411e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ t=1789454241; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=O/3GMptzb1vKo3c20lv2ZapZq0oWy8s8RzFdroAIFWA=;
+ b=gZnjcX/wK0vfPtYwVmVXcGDlxRbofl5ezzpZcLO2cjIbH+bUDnqx2LG1aS9ytOmsfsZzphJPOoaJpaxD+2hzvzp1ObYTK07hYO0uzLQgB/ozYwKDoCIpUDa3Ige2FCRIOGf+er7kI053bxDrYuify8geLk9yj6j5BLD3puzzzuk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R391e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
- TI=SMTPD_---0XB0TToh_1789454241; 
+ TI=SMTPD_---0XB0Kx0F_1789454239; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0XB0TToh_1789454241 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 15 Sep 2026 14:37:22 +0800
+ fp:SMTPD_---0XB0Kx0F_1789454239 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 15 Sep 2026 14:37:20 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de,
 	pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH 2/2] migration/postcopy: account faults taken by memory
- sharing processes
-Date: Tue, 15 Sep 2026 14:37:19 +0800
-Message-ID: <20260915063719.89031-3-guobin@linux.alibaba.com>
+Subject: [PATCH 0/2] migration/postcopy: shared-fault accounting and multifd
+ docs
+Date: Tue, 15 Sep 2026 14:37:17 +0800
+Message-ID: <20260915063719.89031-1-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260915063719.89031-1-guobin@linux.alibaba.com>
-References: <20260915063719.89031-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.113 (deferred)
-Received-SPF: pass client-ip=115.124.30.113;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-113.freemail.mail.aliyun.com
+ helo=out30-119.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -73,118 +71,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Page faults taken by a process that shares guest memory with us (e.g. a
-vhost-user backend) are resolved over the migration stream just like our
-own, but they are not accounted for, so they are missing from the latency
-reports.  There is no thread id to report them with: the client's
-userfaultfd is not required to enable UFFD_FEATURE_THREAD_ID, and
-libvhost-user does not, so the ptid in the fault message stays zero.  Even
-when the feature is enabled, the reported ids belong to another process
-and can never match one of our vCPUs.  Passing zero would not work either,
-as mark_postcopy_blocktime_begin() reads it as "no thread id" and returns
-early.
+Two small patches from the same investigation of the postcopy
+shared-page-fault path:
 
-Report those faults with POSTCOPY_TID_FOREIGN instead, which takes the
-same path as the faults of our own non-vCPU threads: no vCPU is involved,
-so the vCPU blocktime reports are left alone and only the latency of the
-fault is accounted.  This also resolves the "TODO: support blocktime
-tracking" left in postcopy_request_shared_page().
+- Patch 1 documents that multifd and postcopy-ram can be enabled
+  together since the 10.1 release, and how the two features interact.
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- migration/postcopy-ram.c | 26 ++++++++++++++++----------
- migration/postcopy-ram.h | 10 ++++++++++
- 2 files changed, 26 insertions(+), 10 deletions(-)
+- Patch 2 resolves the "TODO: support blocktime tracking" in
+  postcopy_request_shared_page() by reporting faults taken by memory
+  sharing processes (e.g. a vhost-user backend) with a foreign tid, so
+  they show up in the latency reports without polluting the vCPU
+  blocktime ones.
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5509cbdcb8..00e2a6fc62 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -1122,8 +1122,6 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
-                                         qemu_ram_get_idstr(rb), rb_offset);
-         return postcopy_wake_shared(pcfd, client_addr, rb);
-     }
--    /* TODO: support blocktime tracking */
--
-     /*
-      * The page will be placed by qemu_ufd_copy_ioctl(), which removes the
-      * matching entry from mis->page_requested (and drops
-@@ -1133,10 +1131,16 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
-      * backend's address space and can never equal that host address, so the
-      * removal would miss forever, leaking page_requested_count and hanging
-      * postcopy teardown.
-+     *
-+     * We have no thread id to report for the client: its userfaultfd is not
-+     * required to enable UFFD_FEATURE_THREAD_ID, and even when it does the
-+     * thread ids it reports belong to another process, so they could never
-+     * match one of our vCPUs.  Report the fault as a foreign one, so that it
-+     * still shows up in the latency reports.
-      */
-     postcopy_request_page(mis, rb, aligned_rbo,
-                           (uint64_t)(uintptr_t)qemu_ram_get_host_addr(rb) +
--                          aligned_rbo, 0);
-+                          aligned_rbo, POSTCOPY_TID_FOREIGN);
-     return 0;
- }
- 
-@@ -1234,7 +1238,8 @@ bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
-  * blocking time.  It's protected by @page_request_mutex.
-  *
-  * @addr: faulted host virtual address
-- * @ptid: faulted process thread id
-+ * @ptid: faulted process thread id, or POSTCOPY_TID_FOREIGN when the fault
-+ *        was taken by a thread of another process
-  * @rb: ramblock appropriate to addr
-  */
- void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-@@ -1256,7 +1261,7 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-     assert(!ramblock_recv_bitmap_test(rb, (void *)addr));
- 
-     current = get_current_ns();
--    cpu = blocktime_get_vcpu(dc, ptid);
-+    cpu = ptid == POSTCOPY_TID_FOREIGN ? -1 : blocktime_get_vcpu(dc, ptid);
- 
-     if (cpu >= 0) {
-         /* How many faults on this vCPU in total? */
-@@ -1281,11 +1286,12 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-         }
-     } else {
-         /*
--         * For non-vCPU thread faults, we don't care about tid or cpu index
--         * or time the thread is blocked (e.g., a kworker trying to help
--         * KVM when async_pf=on is OK to be blocked and not affect guest
--         * responsiveness), but we care about latency.  Track it with
--         * cpu=-1.
-+         * For faults that did not come from a vCPU thread, we don't care
-+         * about tid or cpu index or time the thread is blocked (e.g., a
-+         * kworker trying to help KVM when async_pf=on is OK to be blocked
-+         * and not affect guest responsiveness; likewise for a thread of a
-+         * process that shares guest memory with us), but we care about
-+         * latency.  Track it with cpu=-1.
-          *
-          * Note that this will NOT affect blocktime reports on vCPU being
-          * blocked, but only about system-wide latency reports.
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index edba7b0240..028f774651 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -200,6 +200,16 @@ bool postcopy_is_paused(MigrationStatus status);
- bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
-                                        RAMBlock *rb, ram_addr_t start,
-                                        uint64_t haddr, uint32_t tid);
-+
-+/*
-+ * Thread id to report for a fault that did not come from one of our own
-+ * threads, e.g. one taken by a process that shares guest memory with us.  It
-+ * can never collide with a real thread id, as Linux pid values are far below
-+ * this.  See mark_postcopy_blocktime_begin() for how such faults are
-+ * accounted.
-+ */
-+#define POSTCOPY_TID_FOREIGN  ((uint32_t)-1)
-+
- void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-                                    RAMBlock *rb);
- 
+The patches are independent of each other; patch 2 was verified with a
+vhost-user postcopy migration, where the shared faults now show up in
+the latency reports and the page request accounting stays balanced.
+
+Bin Guo (2):
+  docs/migration: document that postcopy can be used with multifd
+  migration/postcopy: account faults taken by memory sharing processes
+
+ docs/devel/migration/postcopy.rst | 26 ++++++++++++++++++++++++++
+ migration/postcopy-ram.c          | 26 ++++++++++++++++----------
+ migration/postcopy-ram.h          | 10 ++++++++++
+ 3 files changed, 52 insertions(+), 10 deletions(-)
+
 -- 
 2.50.1 (Apple Git-155)
 
