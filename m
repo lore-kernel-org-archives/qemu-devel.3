@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01E48C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C85C982C3
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6T5c-0004YX-Oo; Tue, 15 Sep 2026 09:20:48 -0400
+	id 1x6T6f-0004yq-8b; Tue, 15 Sep 2026 09:21:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6T5a-0004Xa-UZ
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:20:46 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
+ id 1x6T6Y-0004tR-Nl
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:21:48 -0400
+Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6T5W-0001A8-Gx
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:20:46 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e4ab19125so2966825d50.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 06:20:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789478441; cv=none;
+ id 1x6T6W-0001J7-Nt
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:21:46 -0400
+Received: by mail-yx2-x10.google.com with SMTP id
+ 956f58d0204a3-66e4ab20a33so3318070d50.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 06:21:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789478503; cv=none;
  d=google.com; s=arc-20260327;
- b=O6n2ErgobdHbGTFJ7THPP+ynQ3iM1DMLhloGQB4039HUabmVw100KsBK4KWRgm4Wf2
- 6do0ADN6tdZ6KQoLzQ8hS4/WnkYKBvvevzkjyOz0NesO/O7W0Mcviv4/ye11wDIhPbxa
- +/oRhXvSktRfm+xL6vfXbdj96UFTNk3tpcFISvR1rJ6vkYN5ZrpFWiXcoW80HkGeHawo
- fgthk/HYZkEyrJXSxfFiuKzl9GDHHb9qRnCdHfLfh6H+5ixD3My+cdPWXdgq4fpXN2zI
- XHoDEQPFHr2ggk6WxOAMGNGLzJD+beTz1aqfKS1ibo8WA+vfSzJ4RtuWlwbkSKLIZXxv
- Wcpg==
+ b=WVOnSFlkM4PvZvNDiy4JwLfOYMqWXiLikARrivpGBjqNVTm9zDnuRimkU44hhJ+srD
+ jMfqM5ga1gz6ZSlI2363Qpqj687WhDf1ISj0YQds/HnEyP+xMr+Rg5J8ez2AAOwUnfZu
+ ulI/kVSdo+eMsmC3DJa9Azqs27Xw0NhVlf0QneRILYuun5NXE2gZWaDfLUm6pYLoGfib
+ 9n3VBS4FgYwoOV5pDABmxTHnKqit32Wu8OjG/zTOCxFMpA4UZLL1SixRSF/1b3V35BmD
+ V/oynDC+e6wpcI/6vTO+chG4iBh0Ok51gbVcYzuaa+ISXTVl1r1BtrhH8KUkulvhehb1
+ aEeg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=ydLYY4SqBlxXdXCaVhbLtWJhfLG4FbNsEY5dxxALhXs=;
+ bh=CZrGQFhDKi3Uv76rbzUZUgqf9dFVin9iGrrCgEcQlf4=;
  fh=fVPfpHMeJX2gxPKYTBQCzQO60hB2p26ro2vRuUEPsJ4=;
- b=mxnuHmIEIJIHUbFyoZ4rsrXZnjt0qU3ocNUhpXEXm8oxlQNIh/L1G356tewXb2v91a
- Gbu6IEbjO9Mgr78rEoRN4VU/5iW0Bzomibp/m6pHhr6hsB9sLXB2qGHlguPcDntb0QVL
- DN+Aj4XdRp5rbiJtFRfV15hzqq4wmCsBvvutyc9Hnr75YrmLK/oObwzgiEVkYNPf8BuY
- +ccZEtaxoIq3U82PgOXldkwzATHKFfUiCl0Wb71csxb8Q4eGV8KjWpyC5AjMHyGwqkMX
- 1TrCCB4SxKnhowur+/nlq7WsMnBTU4voJvE3kwWQ6NetH0y6RnWU/hYFkBrMkmEzOu1X
- 143A==; darn=nongnu.org
+ b=c8TvtaUszh0W20Of7HmMjRQB4fxlJZEVkXZL7Ugglgi3Bw75sRnItkxjxkxtNGTPOK
+ UJz6Zx5zsNrJLS/w2Z4/nvK97kiGeMgwAgh55WUqcr+fgGQ1/d7Uf2yBzyQbv/Mptx0w
+ zBLS337Rn0yq/91rIPmnllbw75IPLd7nPpzXfhsYWw6jD9F/tgTEMkrt1fN3sz6aRVzr
+ cs2et9EspbZzCjfTJfbMIak9tPGJJJ6nu788OtazozE1QGpUkWoB7HkEIMME3sixZgMf
+ p0GkwWbpVvKVKlw+JfumGmtqT5VN5CABjXDx3/j9eYknfzanyaH/38NF3Od78YCi7c8Y
+ rJeg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789478441; x=1790083241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789478503; x=1790083303; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ydLYY4SqBlxXdXCaVhbLtWJhfLG4FbNsEY5dxxALhXs=;
- b=I00UdDpYgKLEATrIKcWgLYhcdSUQfdFu/eMS1Cu6r/3SNMs8Rzb8dL9TXhynPqXn/a
- XwBB+cMsHKce0IP32yAB07x+YuLLzzAbp6dxJVGb5DdSQHMs2uwo8tVmHbYGUVO6rsb8
- p8o6RFV0u3JzdsfPkbI5SuRJGpQttnJ6ToMmFdPkgX2wV9Z5wS+058pILyxm2fIAdmiN
- 0c53Uazqj4ryfITeCzSTy/e7bwnO4o29oVLAjUSomcLJtv0IbJxniczjgbg7RHx58VTE
- 2PcFQ4eSLnYVY2QWJfSeKsId6UsFLyfJ4I+ovRfEWuFYKCMmsSU91PqJWp980LCwUWRc
- 5IyA==
+ :content-type; bh=CZrGQFhDKi3Uv76rbzUZUgqf9dFVin9iGrrCgEcQlf4=;
+ b=uIH4wLAHHnQv6GlP7kReAEgmjdPH4n/iYY7x9wXnhB3dtlAKYNMiv1dEkx5LMcKHrq
+ Vg1DMc6DyN+gPfytbMaYjWwELskBwx6eURW5Fp1MLM+QhdeuQXXU3Wu/ogO/dOhWyjHS
+ SPueyu/ZZScjNOnaUCjwObZwszNQ+2aoz1FJE1Jc5tTxY4rYKvQUaYTgtIx8ot9scrPa
+ GQ9kih53xQ6JWMScqal75mRAmOJ9sPJQGo2tEdK7GHHBhe+nvDgvnv1278XsV4lSqVX+
+ JtgsFf/zh9LpdUEdHNuEG25Kz3OAv0jQgI8G0E+M/BvOXoxQDM8di7YfbENyXGuKIePi
+ zNaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789478441; x=1790083241;
+ d=1e100.net; s=20260707; t=1789478503; x=1790083303;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=ydLYY4SqBlxXdXCaVhbLtWJhfLG4FbNsEY5dxxALhXs=;
- b=GsERu/VONxaNl9jZXI/xTOQjnB4N5OZlEzUQAKFeTT3+QSu4pK1CZb4W13Tz5EysZc
- NtHkvrYsWJyGPqV6Is6esoZ/v1pEHLG9WpRvFHuBkmXB8M2orJDC7DF9R8UqoJaPghH1
- 6zDS5fFkmUSRr7TX8rlxqS3+ztG/76l8ImNIc2sLMtUdud+RYVW423KH5/ImRkgjp+ng
- SHUPz8XvPLZtfYpPFn2ZiW55FLTpFFFwSz9zAwgzB/py4HqRkx5kPDp6AoBlZgbliy/H
- Uwikk++okWiZjBcd9Wm3OPlbCAbCZzPGLdrzUlcyOwgHiuUozoOfVWbu347zAETFRb/L
- 1KrA==
-X-Gm-Message-State: AFuF++nOaBddTLF3jQInZpHw3THzWiJDmtgye2hK0cPiVfmOe+zkPmwV
- 3ecGf3ANl3DoC0Iw5xGFUGZtjeyzXRhfAGpS6EsVDpwsp/cZGJGfPYYTO/KNKYx9jsGQb/cpmC1
- J7lmSDgWfhDf2BxdBGW2BiN67bxKDoolcI/zGh4A9FA==
-X-Gm-Gg: AYBFou00EfrJRJPDxTcEew4AAjPJWZDKpuGJPiTlR6j0VOGJz48HLunAWX4bhb+Bgl6
- HV/E+bm6s91jSQGNYK5Azx0miVUgyOnIQZUbCweahMStWvv8CsojT1XpeX9OV2VEnL0il0PC0wx
- KSstNmmD3Nrcnmi65tiWWjDigXJOSyagQI+YlA8r+OOkkqGiEVsWxCgsBqvpEMkfLF4NTCtG4WP
- Fy43nb3kn2ss3Kv1ngSJSl8IvLyaFObDONa0lyqnSG6WneoQZRGJgWOP8raBrwImimk58F+ym6N
- 5w3B5bNKu0USkETLQDUeeIYgrGoD5FLohVg8lHQGMEJNocv48lhethhBD7UHG/xCQ6MaFl2NxC8
- cUs+YVSKA6cS+Ys7zd0JUx6GboPU3jC2Mg8cGFWFoliGHv+gVD7o=
-X-Received: by 2002:a05:690e:b8a:b0:671:a0c:6ea1 with SMTP id
- 956f58d0204a3-6714dfdbde7mr2860817d50.13.1789478440855; Tue, 15 Sep 2026
- 06:20:40 -0700 (PDT)
+ bh=CZrGQFhDKi3Uv76rbzUZUgqf9dFVin9iGrrCgEcQlf4=;
+ b=jaG4q2wrME+s+yVwMMNQU13lcXZaQbgd7rB7oRJrHTQMhFWkUPS7+CAr7HD1cLDgCG
+ nDMVM0hYbDujw4uX0QNj1JqldzMnVI+5nzARPlxLqpcps1s38QNKhn/SAXDhfAowsjIh
+ hpmWgtkj3Mg6OTboTNfJDmwO2wVQLtrXbHW87CRdht4F73nBdN3TLskDOn/18n3zrMQR
+ GbRclL2YEh8MjRtibNCeDfVqNwfLZOMxugMqK8FbwybQ2zlQivIgTB1ijQJ5Z7nl7RLC
+ TMs7zX1eCzRcwAp7OyyrKx8yo1xihD/t4+2e+Bz+nxX0BRemqJeSksENMt1lNOBBSvlH
+ V4nQ==
+X-Gm-Message-State: AFuF++lhdSo0xKSeqrAik/ubWRBA3Y+6g5ENy8MgMeEZ81LTd3tEl4hq
+ OQjyObXlYDNDAoloYbofPBU2FpBRZ0i4UBZVLdrL+PdvdDmVPAHKN8/Mce9jHZ1SfWEgTb8grTN
+ E6TNFS2FHAzt4NSkdEQCMYBbkYEG3eKTDMo9wum0Gog==
+X-Gm-Gg: AYBFou1XYiLL3chLodzCITQ/3GtrbR4a76aizyjPin8g07X9J3VuFBbO7ht2eSdhITd
+ +ESJx3WSZ+CTyQvhdjdZVBYKxSypSchEWw90NcwAuJspaJMjfcffvNxJ86U3+GDB1JhBnW3fGls
+ LTf/LyVTcVXQMDR2WGnztpM2ttkLQK2dKNJB4PXOK95lr5mUevdC6bTbrerpEFUoBdKAN0pCqdS
+ /mKC1MT7GBW/c/spbj7LB6sOJXt/P3IOAEQf34ZS6ZQDuRy6KWlcJ1xlyAHPgqOAB+xbRyyEGke
+ P7FM28ChQ514wdPtxK6z8FsNewmnUZF6LPQKY/gOKPjRUEYYVlF0/vw4qpy8L+TFP8r3rkW6zOO
+ 3+ULAkv3xOiBL25s8dpgO7and/bepSk9j47agdWcwsuF6apVGJw==
+X-Received: by 2002:a05:690e:480c:b0:671:436f:adce with SMTP id
+ 956f58d0204a3-6714dff571amr1506403d50.45.1789478503014; Tue, 15 Sep 2026
+ 06:21:43 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
- <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
-In-Reply-To: <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
+ <20260914192323.29250-4-gilles.grimaud@univ-lille.fr>
+In-Reply-To: <20260914192323.29250-4-gilles.grimaud@univ-lille.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Sep 2026 14:20:29 +0100
-X-Gm-Features: AcwNN1Xu0hXFTKzeAF-1QQyTSUeE_2gx-XE6Aj0PBiUQXqzpvfS3DC8zJz0iiyQ
-Message-ID: <CAFEAcA_=sRZboB1GyGDxEa4vTZe5YS4GwJV9aK=6h-fONgLVkQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 2/6] target/arm: model Cortex-M0+ privilege
- extension
+Date: Tue, 15 Sep 2026 14:21:28 +0100
+X-Gm-Features: AcwNN1ViJ--V6in8r4K53SVhRZMltYtRv9qzUYqpz5MYNzF_Gt2VQ4jIRc85jMM
+Message-ID: <CAFEAcA9A+Vxq5rEA8DDHpEyFqiN1mdZPzLixDOXKzJhBtJcUEQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 3/6] target/arm: MPU - limit regs RBAR/RASR A1-A3
+ to Main Extension
 To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,82 +116,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Sept 2026 at 20:25, Gilles Grimaud
+On Mon, 14 Sept 2026 at 20:26, Gilles Grimaud
 <gilles.grimaud@univ-lille.fr> wrote:
 >
-> The Armv6-M Unprivileged/Privileged Extension is optional. Cortex-M0 does
-> not implement it, while Cortex-M0+ may implement it. The RP2040 Cortex-M0+
-> configuration provides the extension.
+> The alias registers MPU_RBAR_A1-A3 and MPU_RASR_A1-A3 (v7M) or
+> MPU_RLAR_A1-A3 (v8M) exist only when the Main Extension is implemented
+> (ARM_FEATURE_M_MAIN). The current NVIC decoder groups the principal
+> register and its aliases in the same case fall-through, so once the
+> PMSAv7 path is enabled for v6-M (or the PMSAv8 path for v8-M Baseline)
+> the aliases become incorrectly accessible.
 >
-> Add an ARM feature bit and a cortex-m0plus CPU type that enables it. Permit
-> privileged writes to CONTROL.nPRIV when either the Main Extension or the
-> optional privilege extension is present.
+> The fix reorders the case statements for the four locations (read and
+> write of RBAR and RASR/RLAR) in hw/intc/armv7m_nvic.c. Alias cases are
+> placed before the principal register case with a fall-through and are
+> guarded by a test of ARM_FEATURE_M_MAIN. If the Main Extension is absent
+> the code jumps to bad_offset, causing a read to log "NVIC: Bad read
+> offset" and return zero, and a write to log "NVIC: Bad write offset" and
+> be ignored. The principal MPU_RBAR and MPU_RASR/RLAR registers remain
+> functional for CPUs that implement the corresponding MPU.
 >
-> Update the microbit Cortex-M0 test to verify that writes to nPRIV are
-> ignored.
->
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 > ---
->  target/arm/cpu.h                           |  1 +
->  target/arm/tcg/cpu-v7m.c                   | 11 ++++
->  target/arm/tcg/m_helper.c                  |  4 +-
->  tests/tcg/arm/system/meson.build           |  6 ++
->  tests/tcg/arm/system/test-armv6m-control.S | 66 ++++++++++++++++++++++
->  5 files changed, 87 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index e3f931dba2..66606b3444 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -2168,6 +2168,7 @@ enum arm_features {
->      ARM_FEATURE_VBAR, /* has cp15 VBAR */
->      ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
->      ARM_FEATURE_M_MAIN, /* M profile Main Extension */
-> +    ARM_FEATURE_M_UNPRIV, /* M profile Unprivileged/Privileged Extension */
->      ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
->      /*
->       * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
-> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-> index 48b31d5eac..ac99c93ec3 100644
-> --- a/target/arm/tcg/cpu-v7m.c
-> +++ b/target/arm/tcg/cpu-v7m.c
-> @@ -76,6 +76,15 @@ static void cortex_m0_initfn(Object *obj)
->      SET_IDREG(isar, ID_ISAR6, 0x00000000);
->  }
->
-> +static void cortex_m0plus_initfn(Object *obj)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +
-> +    cortex_m0_initfn(obj);
-> +    set_feature(&cpu->env, ARM_FEATURE_M_UNPRIV);
-> +    cpu->midr = 0x410cc601;
-> +}
 
-This patch should only add the feature; it shouldn't add the M0+
-CPU type as well.
-
-> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-> index 33c9e7c55b..f8461a4d66 100644
-> --- a/target/arm/tcg/m_helper.c
-> +++ b/target/arm/tcg/m_helper.c
-> @@ -2775,7 +2775,9 @@ void HELPER(v7m_msr)(CPUARMState *env, uint32_t maskreg, uint32_t val)
->                             !arm_v7m_is_handler_mode(env))) {
->              write_v7m_control_spsel(env, (val & R_V7M_CONTROL_SPSEL_MASK) != 0);
->          }
-> -        if (cur_el > 0 && arm_feature(env, ARM_FEATURE_M_MAIN)) {
-> +        if (cur_el > 0 &&
-> +            (arm_feature(env, ARM_FEATURE_M_MAIN) ||
-> +             arm_feature(env, ARM_FEATURE_M_UNPRIV))) {
-
-We should make ARM_FEATURE_M_MAIN imply ARM_FEATURE_M_UNPRIV
-(in arm_cpu_propagate_feature_implications()) so here we only
-need to test ARM_FEATURE_M_MAIN.
-
->              env->v7m.control[env->v7m.secure] &= ~R_V7M_CONTROL_NPRIV_MASK;
->              env->v7m.control[env->v7m.secure] |= val & R_V7M_CONTROL_NPRIV_MASK;
->          }
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
