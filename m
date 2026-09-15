@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BD3C88E72
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 01:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE0EC88E72
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 02:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6IAn-0007vi-BM; Mon, 14 Sep 2026 21:41:25 -0400
+	id 1x6JFR-0001nO-1e; Mon, 14 Sep 2026 22:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6IAl-0007uY-SY
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 21:41:23 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x6JFO-0001mr-Vv
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 22:50:15 -0400
+Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6IAj-0003ZJ-Vu
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 21:41:23 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-383b4a3755fso4167826a91.3
- for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 18:41:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x6JFM-0004ae-UK
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 22:50:14 -0400
+Received: by mail-pj2-x01.google.com with SMTP id
+ d9443c01a7336-2dae660f31bso28238415ad.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 19:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789436480; x=1790041280; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MTqvBlEdbcDqKk+fC43xO2LCg7KVbS59qcAWR+HYP6E=;
- b=Yjsb3RGHDnSBtgYG/Q3fn87GJ7OIyz3pw8j/cWAjuOC757ycXaE+BsYlDFwM3ZJuHV
- LO5FY8J8OKvQKV3RQ8+uVJ0YxE1OvIdi1O3pPX38NusxsbWNGFaISgFnNzWcXz5ZP/OB
- Jz7JZv1wtMXuLRaSs21zzWp3lh7FVIfSpA8r+d0hqqpb1ZQm6gIBsHNpksKVnzfDhMxD
- oAShjWWepzDasVKQqMaH/gUh3kwoZfj6ie1kjmXm1p5xdOzbmvGbWPgM0zcATgzbDCh6
- NLI9xBdXnCW8q6cdDlnAhfF/Iw698kyV1KhLUcYfUW6hEbab0sPrr6elqJBJjkZ7zoZV
- sCFg==
+ d=gmail.com; s=20251104; t=1789440610; x=1790045410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zIfRCXrwFq9A0MguHCRXRlhKTnM48nvriB1y/d3i2Gc=;
+ b=mjLtnDr3RQCmv8SeOICrpq1VggJWq/8gl02KZXvZ664fSE1X2wi17BdttRjzdbJtbM
+ KKjZzBz9HQ4hBB01bXLsXe8FSQohi+1o598WEftHgQ7q4EVQphgBjt46cDVaUSWLmT8d
+ pUqo2TH8Y8ur5L94DBOWvRvwka9jqm3Uez27dUuJo5D/Nfp0v4DC7uOc8bHOCewFU8v4
+ ixSuorMoKubqdCM9I8O7qD6oIAZxf1Ytxadat5HbpAuvjLjGJHc8rVnGW7sRGdrQ3755
+ wzAoF07Ebmwhvc2HCrIq9OFyhrR8zUsHwoaK0nu78hMUsOAkFeHLQoXVnMGCtM04MM56
+ hPiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789436480; x=1790041280;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=MTqvBlEdbcDqKk+fC43xO2LCg7KVbS59qcAWR+HYP6E=;
- b=HWdxK4F3+VY1Y91BvxbxU9dldOdfeHzrAQxXl7Q/y0W/E3/INFYElqXrHjJ5rTZcTo
- XI/z81TveXWR4WgyaBBPX9zdIkl05opyYeVzNewQDzOp5Qs3Twdl1ufj5teRgoMaayFc
- KhqVW6lRnlkmFlq3hDIwE4k9tIyrS4Grogu4W5w3w4kfEr+aD0Bz6dpSExQtPUQHyhpT
- 8jVrimpkyHSAto9+DdRhnx601Vn8XE7el7UtggjgLwp/PNd/0HW8TkT+v2EJAgf59OXi
- KfPWUzBuo+HGcEqMmFajnzfMj2cWDZtqgzIiq1iuzidiBfYfduIeqXiO2/rXzvfY0B1P
- qkmw==
-X-Gm-Message-State: AFuF++k0GIWbSZUnuHJNsNDjDAfzC6XH7Y4d1hP8PQz+gBFVgFlWEtms
- oJoqZu93rUgapeHR0s6rSQhMA8VHTw3DBfj/tCGN7LaFBLKp79H0C9G0AU2CRbHQzawLfmXVvI0
- KnbKbtY8=
-X-Gm-Gg: AYBFou1LxYH0wodjIY9MoLg6TZAPYPShFkLfgd4k1qstxlUlWNnIp+QLvSBIgaJ1vrK
- wHZoXTspPPQ8Wkr/6cwSvYhShZAqedqXET+Uahj6dIUoC0lgVLaxJUhn2yeKID+gG7SGNn+5OBE
- NWuV7oN0jftzfSeYHShb/abcvk+fpYPJbJ3TwaiIG2mOzclEK1FM95sl3nVZWRoOcolSPb6DClJ
- ES1QXfJ13k3PWRR5x/+3j//7EThNvV9AfQyHm4hFr/K2T+vzTTCi6RtzXhdQdr++7Zb/+lyhG97
- cNO5bWvvDNi8VnrgnpjxdW/ygp8ZP2nA4Orb8ly0ur7cIsqqtgTua/CtGN2xDg7pDnHxZjI5RHF
- 9A82aezS3ZIUXRRxAgm63wjkcgJcznVCRoTLAVGB1XbRgu+s3Izbucbcma3W5nwGKyto4y5idVt
- 3qRs7N12AECKIgajYGXd/Emfr9iaf5BxhIkQiqFyMGGsxy2wCjIX3r9/w9Au7lTn7H6bfzDUjlK
- qZIbA==
-X-Received: by 2002:a17:90b:2809:b0:396:d27b:89b9 with SMTP id
- 98e67ed59e1d1-39debfa956bmr11362318a91.10.1789436480462; 
- Mon, 14 Sep 2026 18:41:20 -0700 (PDT)
-Received: from stoup ([2603:800c:7900:ed00:c119:8717:353:53c6])
+ d=1e100.net; s=20260707; t=1789440610; x=1790045410;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zIfRCXrwFq9A0MguHCRXRlhKTnM48nvriB1y/d3i2Gc=;
+ b=vJ3TGgG6oIK3cYiQMqqk+Zv8NGTp8HRYDwuMqGocsqEro+HNoHYvuBOvZZKnfHezvO
+ iOSakwNEKx8vyXjelDxxVruC7yayOTuL0klIsS7u1eL23uPCSOF3z9n7f4/s6UaeZqIr
+ hmNijDfqXdu2Y048+/ZmbPh/Ck/ug1u/fNvqaAnZzX9eTVCFIBjAKZNTWpRpRI8OZoNR
+ ZyNJiDOx0co9NlSSVR2CFx3tcLPhuM2lcZeZkLQAEjbW3PT7oRKhWOcWTLWejgqbExGx
+ w0NC5QYis0HsSwPG54qrwu+UJckIlee3JzXr7RQPAcv02JihzYsliV3Byy9vsS/Wha1X
+ i98A==
+X-Gm-Message-State: AFuF++m8rN7Xu6aVpjosgin3H4rsToTZu/Jh5eo8EYgrrklwa/F245I6
+ itnJK3ivFzWRAL7k6DvKryja6UHitZSBhEfZFJgESjUz05rNm1X79FKRwfytQXtg
+X-Gm-Gg: AYBFou0Upudy4UbDCoBqZzU5nv8Fw9bcVx3yNdyed2OXICWSvyY0nvVwQG3YNxGSckh
+ zrW7S4lRLsQOhN0pVn6drnnLaJDsgn0GeHCUvKzBka4/0ZfJPKK09oy+u8bHvS4Gi+TQA34jmtd
+ RhjoE45cd5CrhMWUwmUjB8H2FA2Yym7lacoLwWDpelI8hbqLnKAbbcj9dqTdldcPXiPrWrKkd5Y
+ h6OpnwTQCnb32r9Z7T1IYfFzqdXcay9yv7F8Jn44T+23tG3tkxuRy9Xgs9NlJbZ8cy8yHhNRjsi
+ Mc+bU/zAw5dEwKkvNNn4Tz8VX5UFUKRuVr2VcWRRMAel/I+e1GJvfFrpjnFKfrW93MI6WivJJBx
+ EbioCOLMcwGZ/cwEKvHfa/cSgx9IH09BuRUl/zsHA9P6YMjWRoAjyPbvafLU29kXxUNAMgtS70J
+ FCViP7pznqZSH4krpIL5l7kQKJ87XAcyaOig9DR80BWBqMAgNDCte21Ycola6dNPdNbAz763gQR
+ 3GVHJAnbvta25I+jKZ9KN7ZNHUtH37I+ZEeLKY=
+X-Received: by 2002:a17:903:3805:b0:2d0:cc92:f7a3 with SMTP id
+ d9443c01a7336-2dd6c5bfba0mr113696665ad.2.1789440609784; 
+ Mon, 14 Sep 2026 19:50:09 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([103.190.179.27])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33ba4fb3ddasm26351702eec.30.2026.09.14.18.41.19
+ d9443c01a7336-2dd2cfce707sm58445935ad.55.2026.09.14.19.50.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Sep 2026 18:41:19 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Mon, 14 Sep 2026 19:50:09 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH 2/2] tests/tcg/arm: Add regression test for #4448
-Date: Mon, 14 Sep 2026 15:41:15 -1000
-Message-ID: <20260915014115.1809286-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260915014115.1809286-1-richard.henderson@linaro.org>
-References: <20260915014115.1809286-1-richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH] target/riscv: mask vsepc according to IALIGN
+Date: Tue, 15 Sep 2026 10:49:44 +0800
+Message-ID: <20260915024945.32329-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,83 +100,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/tcg/arm/issue4448.c | 51 +++++++++++++++++++++++++++++++++++++++
- tests/tcg/arm/meson.build |  1 +
- 2 files changed, 52 insertions(+)
- create mode 100644 tests/tcg/arm/issue4448.c
+vsepc is the VS-mode counterpart of sepc and is a WARL register, but
+unlike mepc and sepc its accessors do not mask the low address bits
+according to IALIGN.  As a result, values with invalid low bits can be
+observed through vsepc.
 
-diff --git a/tests/tcg/arm/issue4448.c b/tests/tcg/arm/issue4448.c
-new file mode 100644
-index 00000000000..180ff4029a2
---- /dev/null
-+++ b/tests/tcg/arm/issue4448.c
-@@ -0,0 +1,51 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <assert.h>
-+#include <stdint.h>
-+
-+/* Signed 64-bit product, constant operand first then second. */
-+#define SMULL_CONST_LHS(k, x, lo, hi) \
-+    __asm__("mov r0, #" #k "\n\tsmull %0, %1, r0, %2" \
-+            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
-+
-+#define SMULL_CONST_RHS(k, x, lo, hi) \
-+    __asm__("mov r0, #" #k "\n\tsmull %0, %1, %2, r0" \
-+	    : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
-+
-+/* Unsigned 64-bit product, for contrast: this one is folded correctly. */
-+#define UMULL_CONST_LHS(k, x, lo, hi) \
-+    __asm__("mov r0, #" #k "\n\tumull %0, %1, r0, %2" \
-+	    : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
-+
-+static int64_t s64(int32_t hi, int32_t lo)
-+{
-+    return ((int64_t)hi << 32) | (uint32_t)lo;
-+}
-+
-+static uint64_t u64(int32_t hi, int32_t lo)
-+{
-+    return ((uint64_t)(uint32_t)hi << 32) | (uint32_t)lo;
-+}
-+
-+int main(void)
-+{
-+    static const int32_t values[] = { 1961612, -1479053948, -7, 0 };
-+
-+    for (unsigned i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
-+        int32_t x = values[i];
-+        int32_t lo, hi;
-+
-+        SMULL_CONST_LHS(1, x, lo, hi);
-+        assert(x == s64(hi, lo));
-+
-+        SMULL_CONST_RHS(1, x, lo, hi);
-+        assert(x == s64(hi, lo));
-+
-+        UMULL_CONST_LHS(1, x, lo, hi);
-+        assert((uint32_t)x == u64(hi, lo));
-+
-+        SMULL_CONST_LHS(0, x, lo, hi);
-+        assert(0 == u64(hi, lo));
-+    }
-+    return 0;
-+}
-diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
-index 1b491cea026..5c2af2189c5 100644
---- a/tests/tcg/arm/meson.build
-+++ b/tests/tcg/arm/meson.build
-@@ -39,6 +39,7 @@ tests += {
-     'expected_output': 'fcvt.ref',
-   },
-   'pcalign-a32.c': {'cflags': ['-marm']},
-+  'issue4448.c': {},
+Apply get_xepc_mask() to both vsepc reads and writes, matching the
+existing mepc/sepc handling.
+
+Add a TCG regression test covering both IALIGN=16 and IALIGN=32.
+
+Fixes: 8747c9eeb2aa ("target/riscv: Add Hypervisor virtual CSRs accesses")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4420
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+---
+ target/riscv/tcg/csr.c                 |  4 +-
+ tests/tcg/riscv64/system/meson.build   | 11 ++++++
+ tests/tcg/riscv64/test-vsepc-masking.S | 54 ++++++++++++++++++++++++++
+ 3 files changed, 67 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-vsepc-masking.S
+
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index bd4b6dc114..274c5cfbf4 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -5299,14 +5299,14 @@ static RISCVException write_vsscratch(CPURISCVState *env, int csrno,
+ static RISCVException read_vsepc(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+-    *val = env->vsepc;
++    *val = env->vsepc & get_xepc_mask(env);
+     return RISCV_EXCP_NONE;
  }
  
- # Vector SHA1
+ static RISCVException write_vsepc(CPURISCVState *env, int csrno,
+                                   target_ulong val, uintptr_t ra)
+ {
+-    env->vsepc = val;
++    env->vsepc = val & get_xepc_mask(env);
+     return RISCV_EXCP_NONE;
+ }
+ 
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 8604c2a45a..5d633a266a 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -24,6 +24,17 @@ tests += {
+   'test-crc32.S': setup + {'qemu_args': ['-cpu', 'rv64,xlrbr=true', qemu_args]},
+   'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
+   'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
++  'test-vsepc-masking.S': setup + {
++    'test_name': 'test-vsepc-masking-c',
++    'qemu_args': ['-cpu', 'rv64,h=true,c=true', qemu_args],
++  },
++}
++
++tests += {
++  'test-vsepc-masking.S': {
++    'test_name': 'test-vsepc-masking-no-c',
++    'qemu_args': ['-cpu', 'rv64,h=true,c=false,zca=false', qemu_args],
++  },
+ }
+ 
+ tests += {
+diff --git a/tests/tcg/riscv64/test-vsepc-masking.S b/tests/tcg/riscv64/test-vsepc-masking.S
+new file mode 100644
+index 0000000000..e5460f8aee
+--- /dev/null
++++ b/tests/tcg/riscv64/test-vsepc-masking.S
+@@ -0,0 +1,54 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#define MISA_C          (1 << 2)
++
++	.option	norvc
++	.text
++	.global	_start
++_start:
++	csrr	s0, misa
++	andi	s0, s0, MISA_C
++
++	lla	s1, test_addr
++	ori	t0, s1, 3
++	csrw	vsepc, t0
++	csrr	t1, vsepc
++
++	beqz	s0, ialign32
++	addi	t2, s1, 2	/* IALIGN=16: bit 0 reads as zero. */
++	j	check
++
++ialign32:
++	/* IALIGN=32: bits [1:0] read as zero. */
++	mv	t2, s1
++
++check:
++	li	a0, 2
++	bne	t1, t2, _exit
++
++	li	a0, 0
++	j	_exit
++
++	.balign	4
++test_addr:
++	nop
++
++/* Exit code in a0. */
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
-2.53.0
+2.43.0
 
 
