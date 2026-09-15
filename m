@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044ACC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 039E4C982C1
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 15:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Uj5-0007ye-Iu; Tue, 15 Sep 2026 11:05:41 -0400
+	id 1x6UpU-000113-F2; Tue, 15 Sep 2026 11:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x6Uil-0007xG-VY; Tue, 15 Sep 2026 11:05:22 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x6Uid-00075Z-Vk; Tue, 15 Sep 2026 11:05:19 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwDHy6SYXqlqr4UqAA--.58412S2; 
- Tue, 15 Sep 2026 23:04:56 +0800 (CST)
-Received: from [192.168.2.9] (unknown [113.246.118.246])
- by mail (Coremail) with SMTP id AQAAf8Dwr3SWXqlqZXbWAA--.39496S2;
- Tue, 15 Sep 2026 23:04:55 +0800 (CST)
-Message-ID: <fd1f4d1b-e676-47fb-b063-5440e29825c4@phytium.com.cn>
-Date: Tue, 15 Sep 2026 23:04:54 +0800
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpG-0000xo-Ui
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UpE-0008VT-D3
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 11:12:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789485119;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=BpCzdriJSazWjnAOE6Q7N+JmX+mu+zCdhCHsYzbLKpU=;
+ b=WtHraQtdu7e0rFQ5sm4KhhPF8KTddnlXBue1Q3U3eq/h9XTuuzj9ZBndXdHfwe4VVdTVAz
+ JE8E2qXh217xYo1Rq2i/VTbRARUZTZI9qddsnpswGgk39Fi0/zEbufF6VN0K6sj7CS9ZGc
+ WBUlZjffcsr7iAzHSQ0uALQm8wGZigc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-QzRJia2PPACiAii6EyZ61A-1; Tue,
+ 15 Sep 2026 11:11:55 -0400
+X-MC-Unique: QzRJia2PPACiAii6EyZ61A-1
+X-Mimecast-MFC-AGG-ID: QzRJia2PPACiAii6EyZ61A_1789485114
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA31E19539A7; Tue, 15 Sep 2026 15:11:37 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9FC0B195604C; Tue, 15 Sep 2026 15:11:32 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Jonathan Cameron <jic23@kernel.org>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Lukas Straub <lukasstraub2@web.de>, Eric Blake <eblake@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ linux-cxl@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>
+Subject: [PATCH v2 0/7] qapi: convert remaining "simple" intro sections
+Date: Tue, 15 Sep 2026 11:11:20 -0400
+Message-ID: <20260915151127.1002244-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Tao Tang <tangtao1634@phytium.com.cn>
-Subject: Re: [RFC v5 16/28] hw/arm/smmuv3: Add access checks for
- GERROR_IRQ_CFG registers
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162558.2808607-1-tangtao1634@phytium.com.cn>
- <7b5f99bb-891f-4184-9278-207664b02fb0@redhat.com>
-In-Reply-To: <7b5f99bb-891f-4184-9278-207664b02fb0@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Dwr3SWXqlqZXbWAA--.39496S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWqoS0kibQAAsY
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKr1UZF4xWrWktw4fXFykuFg_yoW7GrW8pr
- 48Gr4aqr4DtF4Iqw4Svw4jv3Z5urZ5tr13Gr13KF17Cw4DurySyryj9Fs8GayUurn5Wa1I
- qa1SgrZ3Ww45ArJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,159 +86,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric, Mostafa,
-
-I'm replying to both reviews here.
-
-
-On 8/28/2026 5:47 PM, Eric Auger wrote:
-> Hi Tao,
->
-> On 8/13/26 6:25 PM, Tao Tang wrote:
-> Please directly explain what is the problem we want to fix before what
-> is actually done in the patch.
->
-> Spec says: "SMMU_GERROR_IRQ_CFG0 is Guarded by
-> SMMU_IRQ_CTRL.GERROR_IRQEN and must only be modified
-> when SMMU_IRQ_CTRL.GERROR_IRQEN == 0." This check is currently not
-> performed
->
-> In SMMUv3.2 and later, a write while SMMU_IRQ_CTRL.GERROR_IRQEN == 1 is
-> IGNORED.
-> Accesses to this register use the following encodings:
-> Accessible at offset 0x0068 from SMMUv3_PAGE_0
-> • When SMMU_IRQ_CTRL.GERROR_IRQEN == 0 and SMMU_IRQ_CTRLACK.GERROR_IRQEN
-> == 0,
-> accesses to this register are RW.
-> • Otherwise, accesses to this register are RO.
-> "
->
-> By the way you are not checking  SMMU_IRQ_CTRLACK.GERROR_IRQEN
-
-IRQ_CTRL and IRQ_CTRLACK currently read the same bank->irq_ctrl field, 
-so the existing check covers both in this synchronous model. Would you 
-prefer a separate irq_ctrlack field to represent the acknowledged state 
-explicitly?
-
-> Nevertheless our emulation does not support MSI, right? So why don't we
-> hardcode this behavior on SMMU_GERROR_IRQ_CFG0 access, ie.
->
-> "This register is present only when SMMU_IDR0.MSI == 1.
-> SMMU_GERROR_IRQ_CFG0 are RES 0."
->
-> That would be simpler.
-
-...
-
->> Add helpers that separate IRQ_CFG register presence from the runtime
->> IRQ enable guard. The Non-secure and Secure GERROR_IRQ_CFG register sets
->> both use SMMU_IDR0.MSI for presence, while writability additionally
->> requires GERROR_IRQEN to be clear. IRQ_CTRL and IRQ_CTRLACK share one
->> synchronous backing field in the current model.
->>
->> Reads return RES0 when the register set is absent. Writes are ignored
->> when it is absent or GERROR_IRQEN is set. Apply the same checks to all
->> three GERROR_IRQ_CFG registers and mask reserved bits in CFG0 and CFG2.
->>
->> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
-> above is enought I think
-...
->> Fixes: 10a83cb9887e ("hw/arm/smmuv3: Skeleton")
->> Signed-off-by: Tao Tang<tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/smmuv3.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 116 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 47f0d575817..628911d3f21 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1428,6 +1428,62 @@ smmu_cmdq_stage2_supported(SMMUv3State *s, SMMUSecSID sec_sid)
->>       return true;
->>   }
->>   
->> +/* Check whether the selected IRQ_CFG register set is present. */
-> Remove the final "."
-> Besides worth to add, check if MSI are supported. Even I would rather
-> rename the helper to reflect what is pratcically does, even if your
-> eventual interest is to know if SMMU_PRIQ_IRQ_CFGn and
-> SMMU_GERROR_IRQ_CFGn are not RES 0. By the way IRQ_CFG is always present
-> ;-)
-
-...
-
->> +static bool smmu_irq_cfg_present(SMMUv3State *s, SMMUSecSID sec_sid,
->> +                                 SMMUIrq irq)
->> +{
->> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
->> +
->> +    switch (irq) {
->> +    case SMMU_IRQ_GERROR:
->> +        switch (sec_sid) {
->> +        case SMMU_SEC_SID_NS:
->> +        case SMMU_SEC_SID_S:
->> +            return FIELD_EX32(bank->idr[0], IDR0, MSI);
-
-> I am a bit confused about this, there is no configuration where this
-> is true?
->
-> Thanks,
-> Mostafa
-
-The SMMUv3 model does not advertise MSI support. In v6 I'll make the 
-Non-secure and Secure GERROR_IRQ_CFG0/1/2 registers explicitly RES0 and 
-remove the generic helpers. I'll make EVENTQ_IRQ_CFG0/1/2 RES0 in patch 
-18 as well because of unsupport MSI.
-
-I'll also explain the old MSI=0 write/readback bug first in the commit 
-message and keep only Fixes: fae4be38b35d.
-
->> +        case SMMU_SEC_SID_NUM:
->> +            g_assert_not_reached();
->> +        }
->> +        break;
->> +    case SMMU_IRQ_EVTQ:
-> why do you pass irq if everything besides
->
-> SMMU_IRQ_GERROR is unexpected?
-
-The irq argument was intended for the EVENTQ handling added in patch 18. 
-I'll remove the shared helpers as part of the RES0 simplification.
-
->
->> +    case SMMU_IRQ_PRIQ:
->> +    case SMMU_IRQ_CMD_SYNC:
->> +        g_assert_not_reached();
->> +    }
->> +
->> +    g_assert_not_reached();
->> +}
->> +
->> +/* Check whether the selected IRQ_CFG register set is writable. */
->> +static bool smmu_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid,
->> +                                  SMMUIrq irq)
->> +{
->> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->> +    uint32_t irqen;
->> +
->> +    if (!smmu_irq_cfg_present(s, sec_sid, irq)) {
->> +        return false;
->> +    }
->> +
->> +    switch (irq) {
->> +    case SMMU_IRQ_GERROR:
->> +        irqen = FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
-> again the name of the helper does not reflect what it does.
-> GERROR_IRQENMeaning
-> 0b0 interrupts are disabled.
-> 0b1 Interrupts are enabled.
-
-This helper will be removed as part of the RES0 simplification.
-
-
-Best regards,
-
-Tao
+v2:=0D
+ - Fix stub insertion algorithm for some "TODO:" replacement cases=0D
+=0D
+Hello, this work converts the remaining "simple" intro sections in the=0D
+QAPI schema to use the new syntax. This is part of our ongoing effort=0D
+to add the mythical "inliner" to our generated QMP documentation.=0D
+=0D
+This batch covers structures that *are* likely to be inlined, and thus=0D
+have introductory paragraphs that are quite likely to be omitted when=0D
+the member documentation is copied into other contexts (e.g. as=0D
+arguments for command documentation, or as members of a branch for=0D
+commands that accept union arguments.)=0D
+=0D
+"simple" here is a non-technical distinction that means a single=0D
+paragraph of text followed by an existing section boundary that=0D
+naturally already delineates what comprises the intro.=0D
+=0D
+If you are a non-QAPI maintainer who has been CC'd on this series, you=0D
+may wish to review what information is being codified as the "intro"=0D
+(The indented paragraph) and keep in mind that in the future, this=0D
+text may not be visible to the end-user reading our QMP documentation=0D
+if this structure is utilized as the 'base' for another struct, used=0D
+as the arguments for a command or event, or used as branch of a=0D
+union. This series keeps it pretty simple, and every conversion herein=0D
+is being codified as "the intro", i.e. "not crucial to understanding=0D
+the behavior of the members of this struct".=0D
+=0D
+This is the last of the brain-dead, simple conversions apart from any=0D
+new cases that may have been merged during the development of this=0D
+series. The remaining patches all convert or split longer paragraphs=0D
+and require more scrutiny.=0D
+=0D
+We're almost back to reviewing actual code! Hang in there, everybody.=0D
+=0D
+John Snow (7):=0D
+  qapi: convert remaining simple intros for block-export.json=0D
+  qapi: convert remaining simple intros for cxl.json=0D
+  qapi: convert remaining simple intros for machine.json=0D
+  qapi: convert remaining simple intros for block-core.json=0D
+  qapi/parser: fix intermediate "intro" detection=0D
+  qapi: convert intro sections with "TODO" markers=0D
+  qapi: convert intro sections followed by notes/examples=0D
+=0D
+ qapi/block-core.json   | 45 ++++++++++++++++++------------------------=0D
+ qapi/block-export.json | 19 ++++++++----------=0D
+ qapi/cxl.json          | 14 +++++--------=0D
+ qapi/machine.json      | 15 +++++---------=0D
+ qapi/migration.json    | 25 +++++++++--------------=0D
+ qapi/misc.json         |  3 +--=0D
+ qapi/net.json          |  9 +++------=0D
+ qapi/run-state.json    |  7 +++----=0D
+ qapi/yank.json         |  5 +----=0D
+ scripts/qapi/parser.py | 10 ++++++++++=0D
+ 10 files changed, 64 insertions(+), 88 deletions(-)=0D
+=0D
+-- =0D
+2.55.0=0D
+=0D
 
 
