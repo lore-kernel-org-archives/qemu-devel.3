@@ -4,63 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50924C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 06:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7C8C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 07:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6MzD-0000TX-KN; Tue, 15 Sep 2026 02:49:47 -0400
+	id 1x6N8w-0001zR-M8; Tue, 15 Sep 2026 02:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1x6MzC-0000T8-23
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:49:46 -0400
-Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
- helo=mail.comstyle.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1x6MzA-0003yK-LS
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:49:45 -0400
-Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4hkXgh26dSz8PbS;
- Tue, 15 Sep 2026 02:49:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
- :from:to:cc:subject:message-id:mime-version:content-type; s=
- default; bh=tbXRKZUzA9S1VKs/qJ4uRJ0qKqE0TWHc4lb5tFj9BhQ=; b=PSeT
- 0Nf6njZ3q+BWgXE4UQLqMVLfuVY8EYlfynIB+fqXM0bVoCLErNTIOovMagnr86+w
- IhDNveIO/oqcAdcoSG+SJiccR5GNhaewfrdImLT9N8HrXjMwxX+jmsVVCE35ZEqe
- dWxTE9sXb5NgSXUEhdHYGsu/eBtx5/4N8NQW4Jw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
- :cc:subject:message-id:mime-version:content-type; q=dns; s=
- default; b=SzIBf9YaSmscI/auv3pGc2esOMiOE7vMN7RK+h7nDzlLzC1E/59O7
- vA4mlKubVIZ8VThKkmq0FaZ0cZWHHl5ptFwlR+BzxkqOHG3i7GLmBK83vK1ypKW6
- Ow3aYrYZHgumMGBu5Gpj4nnTyH6a3ayb7ikxNdeaItBhWuiG10t6ok=
-Received: from humpty.home.comstyle.com (unknown
- [IPv6:2001:470:b050:3:73f1:f873:95ea:a09a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
- (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4hkXgh012mz8PbR;
- Tue, 15 Sep 2026 02:49:35 -0400 (EDT)
-Date: Tue, 15 Sep 2026 02:49:34 -0400
-From: Brad Smith <brad@comstyle.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Marc-Andr_ Lureau <marcandre.lureau@redhat.com>,
- "Daniel P. Berrang_" <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] util/cutils: Use getexecpath() on OpenBSD for
- qemu_init_exec_dir()
-Message-ID: <aqjqfifkq8gi0w4Z@humpty.home.comstyle.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x6N8u-0001zF-Jd
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:59:48 -0400
+Received: from smtpout9.mo539.mail-out.ovh.net ([51.210.91.48])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x6N8q-0007Cc-Fl
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 02:59:46 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hkXv74B9Kz4FFJ;
+ Tue, 15 Sep 2026 06:59:31 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 15 Sep 2026 06:59:30 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.101.227])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hkXv66Rbsz6MbP;
+ Tue, 15 Sep 2026 06:59:30 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 376A9192403C; Tue, 15 Sep 2026 06:59:29 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-99G0032333821a-d7e6-433b-ac90-a080adfba0e7,
+ F600A384739CB2938D551E0B9A20D51493CD20BB) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <269cd02d-df68-454a-8607-c235f1dc3dea@kaod.org>
+Date: Tue, 15 Sep 2026 08:59:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Received-SPF: pass client-ip=2607:f938:3000:8::2;
- envelope-from=brad@comstyle.com; helo=mail.comstyle.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] tests/qtest/aspeed-acry: Allocate SRAM buffers on the
+ heap
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260910012422.4065857-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260910012422.4065857-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 17064701940348267565
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEjKIwTz0mYlDQl2swrh4HBfqrSYmO1n9PFHHbDcjpUz6ZiTREQ+OPPyurLiuDbnz/O45N4pJdp5xp9ugmuqZeJfCcrwXVkEvuHgJuEalEklLGJrXxc3fuPFxy5F9k3ChzVG+9uC3Ds2AG5h9q6/JI2m91+aGtKsyf4mZ/eeGIIyJsEgxJkdmGednzzVbxZEW+HksMZIh+qldD3X+P+Okr33VBqS263tO1GuS0lVQc0l9jWKYAK9XQDO+LmgRYQKalC+u1yAYJa62D0OXoRJQrtFFKrNBEGFDcwFLnftSwoom4/f2a4Y08lraSfEq+DuDJN/Fz1R8LgU6hWifJVwkNmCXl/WnZY+cHzcklr1aGlvnL/5JW6EfT6tYyZmg0r3D0Dgfw8KVYzFTFWdAs38IA30inkLjQAI1ujpvhpDE44zymVvGL0j4MF+kKtQo5w/fHgq/IIpBezBURG+W7JiVCyEut/bFouxTE3GIiHhxu8xg05B+rO7hNubUq2hHOax1zHkBaPmqp9mU3sHdIo5pJQHf4RTvXngt933gVVKYlgsd5lbez8Ib3fXLCVEy19PFZzYo7h1AEi5HJK8ur7rDjusGtQQgUhr/4PvqGVb88fpWdq8c2FXumzstX1zwy216olMEiyO2vmK6+L0oXYtBMXXuP8mF6EvV0q19LAtAPiIQ
+DKIM-Signature: a=rsa-sha256; bh=xPiMEEJEG7DzeKJBMKXLRM10NdHf/WQ4gOHXSmJHbdA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1789455573; v=1;
+ b=mMgQe1o+ugNEpFfLp/SG2M59b9GStI26+z4gSU3KgadQBYu+RlvA7nwxKWEw1B5HrlTXhjRo
+ GmFy+cL8jORSNYktYW3930my14MYei4b8hgZ0+jAc1X4CS1jlHxNntf96oSqoYFf52bMs7PLttc
+ CoKhCHsqh4AFntvKaOgzDd969tViExbCjdHnip4IhDAYvKsYnwA8Q4c10c1AbKY9IslKFrh9dHK
+ P4PD+g4CQdDceTwm9dL/bZR4iAcFsVJp0MvBpACl+RD06fGEeYVfd/OQqnsSCqPC39b2KGIkX8H
+ UEPYwK6s1ZeOgaPxGOUIXeLqcGDlYo7x0CJmb7yYHwoUw==
+Received-SPF: pass client-ip=51.210.91.48; envelope-from=clg@kaod.org;
+ helo=smtpout9.mo539.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,54 +137,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-util/cutils: Use getexecpath() on OpenBSD for qemu_init_exec_dir()
+On 9/10/26 03:24, Jamin Lin wrote:
+> The ACRY RSA qtest allocates two ACRY_SRAM_SIZE buffers on the
+> stack. Since each buffer is nearly 9 KiB, this unnecessarily increases
+> the stack usage of test_modexp_rsa() and may cause unexpected failures
+> on environments with a limited stack size.
+> 
+> This reduces the stack usage while preserving the existing test
+> behavior.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/qtest/aspeed-acry-test.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tests/qtest/aspeed-acry-test.c b/tests/qtest/aspeed-acry-test.c
+> index ec348c2206..51048d697c 100644
+> --- a/tests/qtest/aspeed-acry-test.c
+> +++ b/tests/qtest/aspeed-acry-test.c
+> @@ -327,8 +327,8 @@ static void test_modexp_rsa(const void *opaque)
+>           .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
+>           .u.rsa.padding_alg = QCRYPTO_RSA_PADDING_ALGO_RAW,
+>       };
+> -    uint8_t dram_buf[ACRY_SRAM_SIZE] = { 0 };
+> -    uint8_t sram_buf[ACRY_SRAM_SIZE] = { 0 };
+> +    g_autofree uint8_t *dram_buf = g_malloc0(ACRY_SRAM_SIZE);
+> +    g_autofree uint8_t *sram_buf = g_malloc0(ACRY_SRAM_SIZE);
+>       uint8_t result[ACRY_MAX_BYTES] = { 0 };
+>       QTestState *qts;
+>   
+> @@ -345,7 +345,7 @@ static void test_modexp_rsa(const void *opaque)
+>       put_bignum_be_bytes(dram_buf, ACRY_MOD_OFFSET, t->n, t->n_len);
+>       put_bignum_be_bytes(dram_buf, ACRY_DATA_OFFSET, t->m, t->m_len);
+>   
+> -    qtest_memwrite(qts, c->dram_addr, dram_buf, sizeof(dram_buf));
+> +    qtest_memwrite(qts, c->dram_addr, dram_buf, ACRY_SRAM_SIZE);
+>   
+>       qtest_writel(qts, c->acry_addr + ACRY_DMA_CMD, ACRY_DMA_CMD_DMEM_AHB);
+>       qtest_writel(qts, c->acry_addr + ACRY_DMA_SRC, c->dram_addr);
+> @@ -362,7 +362,7 @@ static void test_modexp_rsa(const void *opaque)
+>       g_assert_cmphex(qtest_readl(qts, c->acry_addr + ACRY_STATUS), ==,
+>                       ACRY_STATUS_RSA_DONE);
+>   
+> -    qtest_memread(qts, c->sram_addr, sram_buf, sizeof(sram_buf));
+> +    qtest_memread(qts, c->sram_addr, sram_buf, ACRY_SRAM_SIZE);
+>       get_bignum_be_bytes(sram_buf, ACRY_DATA_OFFSET, result, t->c_len);
+>       g_assert_cmpmem(result, t->c_len, t->c, t->c_len);
+>   
 
-OpenBSD has introduced a function getexecpath() to be
-able to retrieve the executable name and path.
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Signed-off-by: Brad Smith <brad@comstyle.com>
----
- meson.build   | 8 ++++++++
- util/cutils.c | 6 ++++++
- 2 files changed, 14 insertions(+)
+Thanks,
 
-diff --git a/meson.build b/meson.build
-index cfac634cf1..0e07138b0c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3034,6 +3034,14 @@ config_host_data.set('CONFIG_ELF_AUX_INFO', cc.links(osdep_prefix + '''
-     return hwcap;
-   }'''))
- 
-+config_host_data.set('CONFIG_GETEXECPATH', cc.links(osdep_prefix + '''
-+  #include <limits.h>
-+  #include <unistd.h>
-+  int main(void) {
-+    char buf[PATH_MAX];
-+    getexecpath(buf, sizeof(buf));
-+  }'''))
-+
- config_host_data.set('CONFIG_USBFS', have_linux_user and cc.compiles('''
-   #include <linux/usbdevice_fs.h>
- 
-diff --git a/util/cutils.c b/util/cutils.c
-index 91ddadfd15..b5d1d13e24 100644
---- a/util/cutils.c
-+++ b/util/cutils.c
-@@ -1091,6 +1091,12 @@ void qemu_init_exec_dir(const char *argv0)
-             p = buf;
-         }
-     }
-+#elif defined(__OpenBSD__) && defined(CONFIG_GETEXECPATH)
-+    {
-+        if (getexecpath(buf, sizeof(buf)) == 0) {
-+            p = buf;
-+        }
-+    }
- #elif defined(__APPLE__)
-     {
-         char fpath[PATH_MAX];
--- 
-2.55.0
+C.
 
 
