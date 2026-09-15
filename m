@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D94C88E77
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF86C982C1
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 20:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ZbO-0007d0-Vx; Tue, 15 Sep 2026 16:18:03 -0400
+	id 1x6ZbN-0007Z2-CH; Tue, 15 Sep 2026 16:18:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6ZZs-0006vs-HR
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:32 -0400
+ id 1x6ZZe-0006sS-05
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:22 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6ZZp-0003Kd-2h
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:28 -0400
+ id 1x6ZZZ-0003IE-QQ
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 16:16:13 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e71cdb22bso1685885e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:16:14 -0700 (PDT)
+ 5b1f17b1804b1-49b912d3931so1517575e9.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 13:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789503373; x=1790108173; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789503368; x=1790108168; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=5jEk54sCARbNqwEALWIYvVVIO6zgDvVb82j7zjwYhno=;
- b=S8CbPDXpZkAGBaBC6qj/UbjJQOvqXQcONDZrn35ojDZYHV5ZqfnlfvQaaeKagyuNij
- OqIIGPI9fWENh2F+uj3RIW3M465CRv46F5fDZVccuFaepLGH68T01Kr1bPcIU4PoYhgv
- og4tH917QBIkedIG1QT/xypUd3v08ZvBqOlhBli+aQrZnSs/x+g1NiR/51/2O9WxS9ox
- bfeMrURjr2XcladcNq35LqGO/7NuLV+WG5eCFQ+Wq5V+ezDV6tyMupm4RMwcye8wjzqq
- z8C72x/Xy/k8W6XkfQpLDtf+g5TLVSjhDaRs+Zjp7xq6DnnY1OmBicT5zeM6Jm1ZacWS
- OUmg==
+ bh=Fckjvkn7unttlgUnvhFoPtFBnYywFxwoNxy67Zrv6pY=;
+ b=J5ffZsfKuwsn1F/QQ2FzcwyiZVLzoMBIILibkeTAPsoFnmytOdPm8i/QOnaZk8ksXJ
+ wotXpQL1lmBoTbydJPvizpi5HmKzq2DV1gUulIAQ07sSZ9G2MRzR0cA0nS6MJdIZ88Hz
+ 1Ochdo+fCq7bAbwscUXKnel6Ay5NePMy3QifbNoPlojxzo1F1Y9uR/eu1P7jisdkJg2h
+ YYkGqoq9Q2A52krVNx4TOSdAQNbuHLsEHJCknR3cDU5e6IRATVTZ5MGyPu8qhpDLcHi1
+ b5bT2XTs4TpehHRHycD+I4o3uEM1iazBeoMSe4IoszjpoLI1IXZw8pZghNzRGO2FZgLw
+ olXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789503373; x=1790108173;
+ d=1e100.net; s=20260707; t=1789503368; x=1790108168;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=5jEk54sCARbNqwEALWIYvVVIO6zgDvVb82j7zjwYhno=;
- b=iXrOveinH56HfiVFYk499O5ld94r3dUc5UWUZ3Q1HBdZA1anT8E7XlZUgcGrt4maJ0
- EBz0GWeB3pM9q1tMU1JiEEZ+3Sduw7VRA/QmQzJ2gxSTbhKoIKdgeLytrRYkMqzRk811
- 7/d62D+5pPUs0zDDTqW7oxogPNju6EEzmVuKaFfXVckCjQJBPFDMc9GL6PVmulZxkvP4
- p+cb+sX9bWphwTUERXoquG3fv6/6pWIMGHZXcLeitfnouytRhrjUPPjAt5a/MF5OCH+7
- T3ICXxDVuzNUjt7rGOLpJSb60A/qqAkHPr7723wkfk4uwQUGCxuUzs0I3iRUQ/va4kd1
- KFpA==
-X-Gm-Message-State: AFuF++kpQ4apxBi25Fj3qsJZgBOs7qqF6SstOgLQ5h5Ost9jHw8J6IF9
- DITzP8DB5c38WIgZ1E85gGpwT/0GU7Tc4o7IYnC8UVisOXwr4FVHbwi23T7YAYHIF3g=
-X-Gm-Gg: AYBFou1DQ4UyxpQb3alvsdxstB/MoHxZutAANGK0j/525SR8myGStSiDXhAGLZcZj3r
- QklB+OlC56Gg+VezFtT41Q3jZzyLf8C4Exz8bD1T0q8MqS9uUAju+PlZuhc+fA3j2xUpHSQU7WO
- IVNcCjP+gFf1y47n8uqZIH9SX9zhh9WKEEKmTBTPxDVZWp+hff80gmcSpwiMvvf38c5UH5CtOdN
- QrGqmXj4ba1+T665LpJCiJnfVP2BfZ+lz4V4q02qdnh7zwHcUkZsdExJ6831S9i0afb10qgQcXh
- NJ+eSOmRIVB25CdUH2yrvr42BMLV91m8EdwlXMJJPBciIflq6AUyG1noxYegOXClHtN0BcfnSwL
- 0HbtRca+1sbflkg65X0YgiHHPSutBQeSkWqE2pQGRoKZnoQUy7atwKiBIYPnU8WT8G616v1rqGn
- etGx1cWRt2WAukMSTR3NR5HHWtl35KOtBwLQir7qfbQtFPrAJyYZRm87LmO7xk27Cik0yexZY=
-X-Received: by 2002:a05:600c:3545:b0:49c:fa20:cc04 with SMTP id
- 5b1f17b1804b1-49e7a679271mr94888725e9.27.1789503373210; 
- Tue, 15 Sep 2026 13:16:13 -0700 (PDT)
+ bh=Fckjvkn7unttlgUnvhFoPtFBnYywFxwoNxy67Zrv6pY=;
+ b=JGIvBmm6Lco/RAhWnahqC0ORFi/qULiLCdS35udgrha2WORm0s9tubs5i67sYq8yK+
+ gnieAlSHi81ci4BSdtM5b5aqobKay7xH9tMOUy1s96QjZXnSb9xWu0Fb/hwry9Sf5/SO
+ SF3bSsIpPebC7RPr0vfRBXm8+ZNl62+Yyiqngcu+VbtKPKGL5Oo6xlPxky9vSE31Jv5R
+ 5x1imd5R4JKWHQeqvRaRU3hrEOzjxlPB5jjEd0pjnpJ9NBFJWGOdA9gHq63P39zsL+Pw
+ DbO5XVMs8Q/Dfi5YmrTBOfbJZtMPMJW604fbNaYSI41e+A7Pp8PKhFYBhn/UYpT8EKjh
+ uIEQ==
+X-Gm-Message-State: AFuF++kjRD6p1S/q6PwAyCXqdBJvDtloWdWJIyeu27iVhXGWjK3Kt9TP
+ sI7/LFFQrEnj1ymyNyzexYHudaL8LNQWtnBDnzblSQlFm2sutvp99djI8u27d8KFeZc=
+X-Gm-Gg: AYBFou0mpRa9Q1fyw/yEEpNmm8aNA9Ch86dzZ3UCDdTBoMSGJnsEjcd0J3KAtDV2v0C
+ RG/p283HBth8IXcoowzO9WPUaWUdsXvSqrtcV+6l49pT65nXygoce9+vjxTUKsC5CvCiyLjCVzD
+ ueBClseJOj/Z8LolGwpgUXrRZMJ7U1lwXnNhcfUAemSx+zlSijS48TsooNKpav1zZ8jL4rFoY+C
+ AToqX+g1eG5W1nzGp96nISk9GZFRAPmTAd1Cp5WG4K1st53VCkwS3K1HZz3C1dRadeCCBcigbcv
+ uickrnWNJleSu3waTEcTMZ0lFbb4eNF/j4HOV3C31pMebZyjX80Sl3DK9vl2EvsobObG4/c6PaP
+ avlmAdwOmsAbEKWzPhlYl4NtL/m7XCapYp11vxtvfTN8pNNfMRvAczzH+IPwo73lUW8Stg96pv7
+ eUAC5OaAOmfPDOhj9D7w2KndCjRk4SBrCZW3s4i/Ehk9q1TYk0/EYgodmjMSo4+Wr6tVfUa4TJk
+ A0A5CCiUw==
+X-Received: by 2002:a05:600c:4743:b0:49e:7cfc:a9b7 with SMTP id
+ 5b1f17b1804b1-49e82257f4bmr35173665e9.18.1789503368369; 
+ Tue, 15 Sep 2026 13:16:08 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e83da071asm16260275e9.8.2026.09.15.13.16.07
+ 5b1f17b1804b1-49e84202028sm8631125e9.0.2026.09.15.13.16.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 13:16:09 -0700 (PDT)
+ Tue, 15 Sep 2026 13:16:05 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3B89361971;
- Tue, 15 Sep 2026 21:16:03 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 46B00618BA;
+ Tue, 15 Sep 2026 21:16:02 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -86,9 +87,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v2 15/15] gitlab: update the @user id mapping file
-Date: Tue, 15 Sep 2026 21:16:00 +0100
-Message-ID: <20260915201601.1207839-16-alex.bennee@linaro.org>
+Subject: [PATCH v2 06/15] tests/tcg: improve check for working cross compilers
+Date: Tue, 15 Sep 2026 21:15:51 +0100
+Message-ID: <20260915201601.1207839-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260915201601.1207839-1-alex.bennee@linaro.org>
 References: <20260915201601.1207839-1-alex.bennee@linaro.org>
@@ -118,83 +119,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I needed to fix a POSIX-ism in the script as well.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260914184534.706637-1-alex.bennee@linaro.org>
+When it finds a cross compiler, tests/tcg/meson.build tries
+building test_cc.c to validate that the compiler works. This
+includes "stdint.h" as a witness for working C library, however,
+that is not a good choice as it can be provided by the toolchain
+alone:
+
+  $ rpm -ql gcc-s390x-linux-gnu  | grep /stdint.h
+  /usr/lib/gcc/s390x-linux-gnu/16/include/stdint.h
+
+As a result, if you install the s390x GCC cross compiler, but
+not any C library, meson decides to use the host compiler instead
+of the container:
+
+    cc for aarch64-softmmu          : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for loongarch64-softmmu      : loongarch64-unknown-linux-gnu-gcc (from 'debian-loongarch-cross' container)
+    cc for riscv64-softmmu          : riscv64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for s390x-softmmu            : s390x-linux-gnu-gcc
+    cc for x86_64-softmmu           : x86_64-linux-gnu-gcc (from 'debian-amd64-cross' container)
+
+Eventually this results in failure to run 'make check':
+
+[33/40] Generating tests/tcg/s390x-softmmu-hello with a custom command
+FAILED: [code=1] tests/tcg/s390x-softmmu-hello.test
+/usr/bin/s390x-linux-gnu-gcc /home/berrange/src/virt/qemu/tests/tcg/multiarch/system/hello.c -o tests/tcg/s390x-softmmu-hello.test -static -MMD -MF tests/tcg/s390x-softmmu-hello.d -Wall -Werror -O0 -g -fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I /home/berrange/src/virt/qemu/tests/tcg/s390x/system/../../minilib /home/berrange/src/virt/qemu/tests/tcg/s390x/system/../../minilib/printf.c -I /home/berrange/src/virt/qemu/include/hw/s390x/ipl -march=z13 ../tests/tcg/s390x/system/../head64.S ../tests/tcg/s390x/system/../console.c
+In file included from ../tests/tcg/s390x/system/../console.c:8:
+../tests/tcg/s390x/system/../../../../pc-bios/s390-ccw/sclp.c:11:10: fatal error: string.h: No such file or directory
+   11 | #include <string.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+
+Adding more include files to the test program ensures the
+meson probe makes a better decision.
+
+Fixes: e5d084d622b1 (tests/tcg/meson.build: check host cross cc is working)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260910100120.2076092-1-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .gitlab-map-auto          | 8 +++++---
- scripts/gitlab-map-update | 2 +-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ tests/tcg/test_cc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/.gitlab-map-auto b/.gitlab-map-auto
-index 28ce448f1bf..3f717a15d4e 100644
---- a/.gitlab-map-auto
-+++ b/.gitlab-map-auto
-@@ -12,11 +12,12 @@ a1xndr	Alexander Bulekov
- adi-g15-ibm	Aditya Gupta
- agraf	Alexander Graf
- alex.williamson	Alex Williamson
--aliang1	Aihua Liang
- alistair23	Alistair Francis
-+amachhiw	Amit Machhiwal
- anisinha	Ani Sinha
- anthony-linaro	Anthony Roberts
- anthonyper	Anthony PERARD
-+aroxell	Anders Roxell
- berrange	Daniel P. Berrangé
- birkelund	Klaus Jensen
- bonzini	Paolo Bonzini
-@@ -36,10 +37,10 @@ dwmw2	David Woodhouse
- eauger1	Eric Auger
- ebblake	Eric Blake
- edgar.iglesias	Edgar E. Iglesias
-+efarman	Eric Farman
- ehabkost	Eduardo Habkost
- eldondev	Eldon
- epilys	Manos Pitsidianakis
--famzheng	Fam Zheng
- farosas	Fabiano Rosas
- gautammenghani	Gautam Menghani
- gkurz	Greg Kurz
-@@ -51,7 +52,6 @@ imammedo	Igor Mammedov
- jasowang	Jason Wang
- jmacarthur	Jim MacArthur
- jsnow	John Snow
--juan.quintela	Juan Quintela
- kbastian-qemu	Bastian Koppelmann
- kmwolf	Kevin Wolf
- kostyanf14	Kostiantyn Kostiuk
-@@ -67,6 +67,7 @@ mauromatteo.cascella	Mauro Matteo Cascella
- mcayland	Mark Cave-Ayland
- mdroth	Michael Roth
- mediouni-m	M. Mediouni
-+mjrosato	Matthew Rosato
- mjt0k	Michael Tokarev
- mstredhat	MST
- npiggin	npiggin
-@@ -79,6 +80,7 @@ pipo.sk	Peter Krempa
- pkrempa	Peter Krempa (work)
- pm215	Peter Maydell
- qemu-janitor	Qemu Janitor
-+raphael.s.norwitz	Raphael Norwitz
- rathc	Chinmay Rath
- rth7680	Richard Henderson
- schoenebeck	Christian Schoenebeck
-diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
-index c134c226aa2..743ad11900d 100755
---- a/scripts/gitlab-map-update
-+++ b/scripts/gitlab-map-update
-@@ -33,7 +33,7 @@ glab api --paginate /projects/qemu-project%2fqemu/members | \
-     .gitlab-map-auto.tmp
- test $? != 0 && fail=1
+diff --git a/tests/tcg/test_cc.c b/tests/tcg/test_cc.c
+index d3614a01fe6..fafee055b40 100644
+--- a/tests/tcg/test_cc.c
++++ b/tests/tcg/test_cc.c
+@@ -1,7 +1,11 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
  
--if test $fail == 0
-+if test $fail -eq 0
- then
-   grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
-   LC_ALL=C sort .gitlab-map-auto.tmp | uniq >> .gitlab-map-auto.new
+-/* Include a standard header to make sure cross compiler provides them */
++/* Use some standard headers to ensure the cross compiler provides them */
+ #include <stdint.h>
++#include <string.h>
++#include <stdbool.h>
++#include <stddef.h>
++#include <stdio.h>
+ 
+ int main(void)
+ {
 -- 
 2.47.3
 
