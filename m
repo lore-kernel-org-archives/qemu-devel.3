@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F192C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1958DC88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 13:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6TFk-0001Jl-La; Tue, 15 Sep 2026 09:31:16 -0400
+	id 1x6TSj-0004XJ-Qw; Tue, 15 Sep 2026 09:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6TFi-0001J1-DW
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:31:14 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6TSg-0004X3-7W
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:44:38 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6TFe-0002dR-8x
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:31:13 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e56a1fe3fso3077794d50.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 06:31:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789479068; cv=none;
- d=google.com; s=arc-20260327;
- b=KBAiZ5NjAUnISFLchY4dOo2e/8IsWQ2k30CYPZ8Hcm4L0CsRVuKFJciiBIpvf1mbdo
- 7SOyou335PG3EPaKtUC/JeCWraUezRGtMzDlGvPbRwFbCpq03lEyBXiySFwjLad24QZ5
- OtBAPkF9IBK0tb1oKTyI6NwSqdZGmp+RAXn8jeFn8GAXQHryHaGYRqeFURFVs+Y9x1w+
- oj7DQVDQ6OM6SVguOG6FnlOIv9TwJYNp8/GV1jN6R1Kfig4ZFH6MOLalRqPS4qXSdIhZ
- uD8G+Ek9XpMeQjjqsfCQCPIKbK0eb2F1rd4phxJWe/bg4GQsTz6o8Q6PL7Ijq2sL1kkF
- 87Rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=fEhOrvP/PY+ycmNwRjKVQCDmoJyCRHPJYQDd+YEQUVY=;
- fh=fVPfpHMeJX2gxPKYTBQCzQO60hB2p26ro2vRuUEPsJ4=;
- b=NbzAOiaCGiqASbMDQY0skgDBaJzGFabNB9MpXHP6GF5sgLKR3t5ptPQ/QNm++ViQ5S
- LYn02aAIq3wZV90CE6MpvJ15MZXIJScjOAuH7uAruB0Qalob/i4/xAbT2z1QKcpjc2+8
- rq59RP847gYG5r5OzarHcYkXLOZz7KkkuwaccA5O5n9Ea2lXWjYNCNBmr7fOkfkOko+R
- EiwFYw1qqCfYyx5EIduE8JSM0ePNCvSmGocIMmvh6vlMIfkn62H4TQHKhr/AWGszt+26
- em+rsF9eH962oFbnwykXVenxcTHYayMKShkJGL67emK0HwPWWF731n7pBnTu++Ir+u0A
- GRyw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789479068; x=1790083868; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=fEhOrvP/PY+ycmNwRjKVQCDmoJyCRHPJYQDd+YEQUVY=;
- b=pxhmBiIV/AfD6dmRvDf0r6E94ik8W3ovsOxsMlwZCPDIO6/Aj0dEBh2Q77y3NKUFF6
- YvxW1DFp+dkfLTnBq55J31zRIUAj2hbIFcmBtXiXnlH3FgdL/uwbNA8RfpZilLLU0vk4
- QQTqyXzsiILiNbMmeJW4qO9N8pEPr3pyJq4SCWMVJmrTe7lkFj1pIZVmVqhv2YSZb8/q
- 51G0NtQSrtI0LLaBNCbVBXaj8Tlp65PWao0YEYz2rrRyzlFbMrOpprrVMdF1QtY6cGF0
- s4Q2dLKOeZtf0ZDZeC8nOmzx9ne5IzugOXyd3zPDUEYn5GZao1YoNyU8g52C1KRWuCUZ
- 4mVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789479068; x=1790083868;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=fEhOrvP/PY+ycmNwRjKVQCDmoJyCRHPJYQDd+YEQUVY=;
- b=nehDDJtwjQsJh+Fsth7qonEfW8UgdPHsAlYUuYg/mS0W8JiM40F9ZHJZmYqwiKkUDa
- 11H5Rffw8eyWLD6mbQvXBaR9IMz/8ymciOXO/Q5VxN04U7hhAy1bTHZ5DM4kZtAdIozb
- wr+UBljaARHy1BHimbLeTkk0m08WJu2vWYMzJLw9PnSlgj6bHhrPTdkrEMObZQWCehUk
- cl5kHKqrCKMe39VfVH4D74tVR8TGDb1QsHiNqbFA+cdcM78dVRcXUJgF7BfsRionAXlK
- enMrmUoa/BW8QV9iov7Cmn3ZUrzU4WbU5IGGJjEkhAQ1XGwFiUhG5KT9wxdyX287CNne
- XyXQ==
-X-Gm-Message-State: AFuF++mN/6ZPrmD3/DHD0ZPvqKyINmuiWVbrmhVVLP8pVh6W3w4OYlH7
- gal4joRr63txS2q0dikOgv0j+iiGpjQcrxCH4dwhKqLIzgCUa8OWQIQttjJiRsyXsmj3oFoz5Nc
- yiSCrrd8KoclyS1l+EJoFWaCOtSkknR8Hg6tT0ykh5A==
-X-Gm-Gg: AYBFou2F6lx/WVRxYafB02ljroF3lsrFJVTdoXGVz9UkCaavFCOwv5LCc55muooyLpB
- 28R8s2asKXt3RgaM2GL52rDpyz0FD9dz+C+F80fHLWp5ljL/70bLOMA2me8X5JwESthslMsglMe
- /r4sgUTCJjx0Akrkq+te+KJmCCJkGsG8ej0GNUnWvIYPiDcdvFKkuqNrx2TyLxWYi18r24JS6I9
- nITNz2m0rCTsxgormhy2LWVB7BHAMz8w4czK5hp1deeJQHqMM8NUNjp+7rjYsFGqalGR9WrbCxp
- ytlW5iTBtneKuXVRavWSKdzj0HZR/5lVFlhvx9RtyvlRR4bdBf6MCwiIB4NbtaFI3ol6JcDHmxW
- HdxNzp3+tNmE4md5QuALVrrwbAqWYwIOZcCiRGY8=
-X-Received: by 2002:a05:690e:1249:b0:671:4fbc:2452 with SMTP id
- 956f58d0204a3-6714fbc293amr1834521d50.49.1789479068335; Tue, 15 Sep 2026
- 06:31:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6TSd-0005sS-SC
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 09:44:37 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 17AAB21C5A;
+ Tue, 15 Sep 2026 13:44:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789479868; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kkvTy79EwEKYA902MVsiZAw5ul0UsKBOGYVO/1L4KjI=;
+ b=xgBeFvuHZR01gtw1jLnw13RdSItn5W6M8RiCQ9/DZMezJcbebaN294CHe7SwYVpdS0xbxv
+ 8rhg/TcXxx7YgJwL6mRmbEpwlcn7W/ViZsDUQL9NQCBA9H3l9BXvN9DPBkkKhJfG60VZig
+ ofeOzApYgAq/Eea9QgcnirodQ0lVZdU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789479868;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kkvTy79EwEKYA902MVsiZAw5ul0UsKBOGYVO/1L4KjI=;
+ b=gBngGvMc9ncz+kdQLCuxLsB3DhYdeBdjMLds5LU3U3jTyAtNgdN12gWIPOmLeQEfnskS3t
+ 6RsMIPLAnoTi0RAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789479864; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kkvTy79EwEKYA902MVsiZAw5ul0UsKBOGYVO/1L4KjI=;
+ b=ER7DdgtdtRY5vi70/H/4Oudf9xpToDITxDUiX2uDeQX1isR9NO8FGG2mCRiC617SaEBp85
+ upMOWK+fFvGk1VMmn9sb3xLntM+q5hOgIJT/BB2uMa+yofoOB7xxvqpd2qMPRpvEXDXDg1
+ /gzhIFZVfD4ikfaI1QKhlz6fsHaKjk8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789479864;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kkvTy79EwEKYA902MVsiZAw5ul0UsKBOGYVO/1L4KjI=;
+ b=2cDr8sPpLfcyW+vGVqY5HPc6xUtn0eFPnn/M9wHg9/gzWkwOwdaZkxoqBilZ1U7Bn4ycmA
+ ihtKVMRZUojVq2Dg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D305C136A5;
+ Tue, 15 Sep 2026 13:44:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id s6jaHLZLqWpeBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 15 Sep 2026 13:44:22 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH] qemu-option: Cope with a missing QemuOptsList
+Date: Tue, 15 Sep 2026 10:44:12 -0300
+Message-ID: <20260915134412.4187164-1-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
-In-Reply-To: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Sep 2026 14:30:56 +0100
-X-Gm-Features: AcwNN1VcHT47mpqUdKbYo6ksjx2UUKFcENSyTE-sQFRSvQFLxj56zCGvaCZldAY
-Message-ID: <CAFEAcA90mCJ60BmimEYWAx9YsxGSkWU54pbq6FTOxfQ1GsqSeQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 0/6] target/arm: improve Armv6-M support
-To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,28 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Sept 2026 at 20:23, Gilles Grimaud
-<gilles.grimaud@univ-lille.fr> wrote:
->
-> This RFC series refines the Armv6-M support in QEMU by correcting NVIC
-> limits, modelling the optional Cortex-M0+ privilege extension,
-> tightening MPU register access, fixing MPU region size checks, masking
-> TEX bits for Armv6-M, and reusing QEMU's existing PMSAv7 implementation
-> for the compatible v6-M MPU.
+It's a common pattern in vl.c to chain the qemu_find_opts() output
+into the first argument of qemu_opts_parse_noisily():
 
-> Gilles Grimaud (6):
->   target/arm: enforce Armv6-M NVIC limits
->   target/arm: model Cortex-M0+ privilege extension
->   target/arm: MPU - limit regs RBAR/RASR A1-A3 to Main Extension
->   target/arm: MPU_RASR: mask TEX bits for Armv6-M
->   target/arm: fix MPU SIZE min for v6-M/v7-M/v7-R
->   target/arm: extend PMSAv7 support to v6-M CPUs
+opts = qemu_opts_parse_noisily(qemu_find_opts("spice"), optarg, false);
+if (!opts) {
+    exit(1);
+}
 
-I had some comments on patch 2, but patches 1 and 3-6 are
-fine and 3-6 don't depend on patch 2, so I've taken 1, 3-6
-into target-arm.next. I plan to do a pullreq later today
-so those should appear upstream soon.
+In cases such as spice that have the group defined in the module file,
+it's possible to reach qemu_opts_parse_noisily() with a NULL QemuOptsList if
+the module is not present in the host filesystem.
 
-thanks
--- PMM
+  $ ../configure --enable-modules --enable-spice
+  $ make
+  $ mv qemu-bundle/usr/local/lib64/qemu/ui-spice-core.so{,.not}
+  $ ./qemu-system-x86_64 -spice a
+  qemu-system-x86_64: -spice a: There is no option group 'spice'
+  Segmentation fault (core dumped)
+
+Return NULL from qemu_opts_parse_noisily() if there is no list.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ util/qemu-option.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/util/qemu-option.c b/util/qemu-option.c
+index 9fbf425f86..0ec12d252c 100644
+--- a/util/qemu-option.c
++++ b/util/qemu-option.c
+@@ -945,6 +945,10 @@ QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *params,
+     QemuOpts *opts;
+     bool help_wanted = false;
+ 
++    if (!list) {
++        return NULL;
++    }
++
+     opts = opts_parse(list, params, permit_abbrev, true,
+                       opts_accepts_any(list) ? NULL : &help_wanted,
+                       &err);
+-- 
+2.53.0
+
 
