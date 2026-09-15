@@ -4,113 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E25C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 14:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F121AC88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 14:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6U3x-0006mG-Uf; Tue, 15 Sep 2026 10:23:10 -0400
+	id 1x6UBL-00087L-O5; Tue, 15 Sep 2026 10:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6U3u-0006lk-0F
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 10:23:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UBA-00085r-Tw
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 10:30:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6U3r-0000Go-5S
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 10:23:05 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6UB7-0001Nj-78
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 10:30:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789482181;
+ s=mimecast20190719; t=1789482631;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YSLNtL5Gcxee2dDdMNJ+PxLjdPZQHdAONByRxusHV4o=;
- b=bZYpv+KcoNqCqrkDGP2mT3gIONb/pqkiRunWOKLlYuIjexqzPiAjLHtBdM2iqTdEOyziOO
- kUBBDp/dxOCg6yHzGrwrXrlrRyZuC5MFF1D9jr+jB2gnB5G0hKTpM5ISve/I9LkpPkUnMP
- 3ko181N6ZSFw6TjJzM1Hpivbr8IMgQw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tjErqrJYDHKRcvTx/TfGCWSx0yK5M6NyHj4g0TjSaYk=;
+ b=LI6uXBm46E0UHKcedFqKkFAxDPUN8PPzgXbD5/pX4DDyDOoC8zoczYs6rqfhGubQecB2m6
+ T+loANyGLMDWd1LdGwz2JpuyACLHSrGihmpEuKc1OHm5+e5e/zOFkEFoFVp4NJjWQIAOh0
+ ylwMKuB8pbbrI7skiJyeKM0/nrrRTAU=
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-NidNwxNDM-67THb_1EhWCA-1; Tue, 15 Sep 2026 10:23:00 -0400
-X-MC-Unique: NidNwxNDM-67THb_1EhWCA-1
-X-Mimecast-MFC-AGG-ID: NidNwxNDM-67THb_1EhWCA_1789482179
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49e6c17ec1dso35721685e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 07:22:59 -0700 (PDT)
+ us-mta-10-wK0cUt6_N8-oMRg4VzHzIg-1; Tue, 15 Sep 2026 10:30:29 -0400
+X-MC-Unique: wK0cUt6_N8-oMRg4VzHzIg-1
+X-Mimecast-MFC-AGG-ID: wK0cUt6_N8-oMRg4VzHzIg_1789482629
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-6711a336db0so6816576d50.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 07:30:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789482629; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QIMkUupg0PPiNjjsYB1AreEegZSUGso6DdvuWoke1u/+GrlMKhKqgQwHiGm9iKZB1c
+ dHaNLKaGP9RiYwFo0khy7OExIxyKA3+sgSL05bTrik/+RBpaG7nYO7rHQbsjt/Pjnjc4
+ I4y25LgYaWk0GT0wPGSUS2VbQRoTzRC4G8sf/oZLklcKsLq9uP2kFWOhkGfw2oMWpwrW
+ RfEXOPndmfoXDPc58yG7urYtssE5XR03iNW2bjHouydpGBJHIHSvqs1GOYYYjDUNu4C6
+ /xZDl3vP7uev3H7JLTH9nJUSJ4SewGCRT5f5Ed4PrS7NB4fOEBmngV5lOMdifu+5viCW
+ dZYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tjErqrJYDHKRcvTx/TfGCWSx0yK5M6NyHj4g0TjSaYk=;
+ fh=dFa0GUsD5GokbfMbziB8x6v3mSrfsgy4R+k7qogBrzo=;
+ b=J4fuQO96dtdbD3cgJGLpue+yu2p6KxwpYZA80X1Nxq9TJ9w8QUumrSbLNWdpaJO3zS
+ XP1Svj+1JN8lufLM0+t50Biey4H0mQGB7s8N/21kByTZKKlBIstxuoFtheC5/901Un3B
+ p0Jmv3JE7s/tOAe66/yH1GBEPfebozIooI4bkCJ4xZFpyURyuEDTHrLPYMH+6rp0RCU3
+ eu1LpCF7K1DRVTG8ml0VuhEqN7hyNzEKGbNrOswXZWJWwyxTbz5wnXTs/eVR2gqZ/osL
+ yoVmleVa+k8p6HIIZaGxWOWvkoI34RA2aaklRxfTrXrubqUTMEfHyEuHgFEm+dDfYN1B
+ b/hQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789482179; x=1790086979; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YSLNtL5Gcxee2dDdMNJ+PxLjdPZQHdAONByRxusHV4o=;
- b=ISnbVi1yrMirLjEAu5YqT3OYH+NQ2ZoXFVIWW+usLKk+0a+eNTL/wBZ1xJudgeyv4O
- 6S2Z0YyFvpJK8sbzWrOrge5MtJ0fO2sjhaGgzLk8H315h09kXnhI6Tmih0PJ+KMAFW+U
- rZq/1tb3YtW/Q3qw7fOVhoXWOkK8P1+hNusMu4a/++lFgMf9zR+saFEgxJHhxWtU/7sE
- xQkDbf0ehOApMi6kMq7TLzc4D0trPF6EaB8g8cA/No2CcY8MwPUD+cfiKq1mWIaIeOd5
- tL7jyt0G/dqcEzIniFMJClZwhV/oBx3xUnutvaF+87ZBcja93VNiqJz+eUVQWK5oAsXF
- D+yQ==
+ d=redhat.com; s=google; t=1789482629; x=1790087429; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=tjErqrJYDHKRcvTx/TfGCWSx0yK5M6NyHj4g0TjSaYk=;
+ b=mfXr/cr6B48sVmyPho0zEKb34hOX8h/In2OxyYRhK0mMlU0vZo5mcxlL1OXUELj5Xa
+ hZ3EkHfd8KOYN9h2JEalmEecS85qV6Cw12lW1T/kZHd6vrgKnR1IYpK8YLBXK4iyJeQL
+ gGcDHmQDDkbf1QhlqrP9mXaD5piIrAdi64rSpK6jpdnfnXbzG3Oxb0kIsSErkLLUbUKG
+ La68nPWJmdGypkszks8FjWeGwqvGfKAG959aYqC1p9PfS6a6Obqk7GyGURQjp6S9+YdE
+ 76CRxONYAIQTSnwCf0IaCHcMe/ARNMhZ/L5Fn4GXHr2hgP/CrNn1DKvQuLCctbouKv/E
+ xyqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789482179; x=1790086979;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=YSLNtL5Gcxee2dDdMNJ+PxLjdPZQHdAONByRxusHV4o=;
- b=tyznCcWossjBobLSmeYM1o6qi58lZHjSBJ0rHbDT0p1OYG/lSvxDPRm/Mfr7+Q4f0v
- gLYcU3i0hEdi+xe0IBf2v9kUXaVIyw6rYK9jCgKTJ20+00xiGCitAToW7YxmVFswwv6B
- Sd1P2m+fTKfYbT02t7OuFnmp2n3Zlr9tz6ZB2LlAksbwEZFQ8EjPRHqvu/2nIMKAk+4s
- rSF1O/azbEAsj1yTMp0hSctt4mVqjcrVJcnohiruxCm2Uf//2+fkj4pRXkwrDFDVTSrH
- CrSPt+Kmdx9BuQqXmJ0Yn2UOP3MvQNNpipVDBFjuRd1glWTZXJtBlEXhXLqw8nlynNp4
- tEQA==
+ d=1e100.net; s=20260707; t=1789482629; x=1790087429;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tjErqrJYDHKRcvTx/TfGCWSx0yK5M6NyHj4g0TjSaYk=;
+ b=p6j3COIERaZrshhweAvBCp7ehz0nvTqI9sFMQ3YQFdt3rYHhjr90sOHE6iS+fChd54
+ 9W9Lcs4pAyMXkuWBsD2pNo7pSTiRGL+MkYunzxz2u6v8582LOnma4pMJUEu/SF4G8fXA
+ dp6sIS6/mKfqYZ/qUQyoMdYTZ7PfBMRdUPPrTcBiZmdbPP4Vp1nXCv+VcQ+TJUea/McF
+ sE3U5MvNYQvuE/oAHRBbdwObh/ony4FQhwz0FQmSI4BU0YLYXI1DHAyJqoSYLedmMEX+
+ zY04hsMXU/kwStFUDootKHkWhPgHonoTJ6jRh3QeVXwTFXautoXZii3onvdmvagt4lrM
+ FJig==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwmhDay4gtN8Ewv5RhMK5WS0CeckoOzOxN1UBT9kJL3QIv8zM7Zj8TLA1taKQYuHEG4pXIrw9x8XZAC@nongnu.org
-X-Gm-Message-State: AFuF++kujxFcgNeNX1hBFJxE38tBpcOmAIvpoe24XZGTLBFQxiqV6VD/
- D8iDQS+2POMe+20jpnG1b7/cMNMoOMBAstM3jLYBfTOztFk0b4JmWSSwTHGred/L+uWgGrtDhGZ
- dBuK/6ZuW6xsZpV4Ehq3krCupT44MMFgcPD+fHkq1SsyBG+ov2JwNeXg4
-X-Gm-Gg: AYBFou2InsFbMF/mCtaYRS+Rn51DCvaNWeb3qm/bsddfaPjM74Yr4JlJEqjvHr5r0t6
- v6pZrXkbC/L1bDw4A0CItVIeETtguTMDxMsm3EPbJArSgbPDZGjs9Zs3dfzpBGwgtn0ywoQtsrp
- 4BxzY5l/Nu0l3zi4nIyfzA/1rb1RwZQds6mv6WRYnAlK+cgosvILr44xNaMrblEAE5CvYMPeFrr
- qytwLkFeIJxi1Q17zadWrq8BFOF28osRML8FROH+LyaHZbUum198F/kWvons/FUfarDHEKMujkz
- p7W1K8FHesp2BzP5Zw3KeQMvZDAv4MOmZHklo4d18vq5Y/el2SscCxgbLy7m9eQqAyKhioYTsjt
- 00diYeSCQRAZP6812IilVGOA=
-X-Received: by 2002:a05:600c:4f84:b0:49c:cee0:e7c1 with SMTP id
- 5b1f17b1804b1-49e83a46e98mr119995e9.16.1789482178724; 
- Tue, 15 Sep 2026 07:22:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f84:b0:49c:cee0:e7c1 with SMTP id
- 5b1f17b1804b1-49e83a46e98mr118915e9.16.1789482178212; 
- Tue, 15 Sep 2026 07:22:58 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e7d6a9d1dsm78981575e9.10.2026.09.15.07.22.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 07:22:57 -0700 (PDT)
-Date: Tue, 15 Sep 2026 10:22:54 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Vrabel <david.vrabel@nutanix.com>
-Cc: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 0/2] hw/pci-bridge: Add x-speed and x-width properties to
- xio3130 ports
-Message-ID: <20260915102221-mutt-send-email-mst@kernel.org>
-References: <20260915072507.1230187-1-clg@redhat.com>
- <20260915060015-mutt-send-email-mst@kernel.org>
- <81c899d9-a9fb-4eb2-ad85-7dde2f626646@nutanix.com>
+ AKwUvBytHWP7Zay5ZvxVZOamGxoUvNVVWs4PqQRXmByERHP1LeKGwPwVEFS95Vj+8uxj5hYBNJZlL3ixvVen@nongnu.org
+X-Gm-Message-State: AFuF++mZ7ieCKnnzZh5IwwFq8NPuxxGAubqxfVuQPz1+3kvv0GFXf6Qf
+ laPHv9o5d67JJp8ZyEVZwgKtv1Q2IzOhK6BUCcwM2FmguyjHp21posYMEQvVqfGwdjXw9vyFsQt
+ CfWtOkr3294VEoXunBKJ530P1NkXM/0xhBgRfF9jorUqQy8XwqaLbVYiVJjg7ca36NK17CtOSh3
+ X3lPUP1MBrvYEq9jnhQb4xZO3bwP1I+G8=
+X-Gm-Gg: AYBFou1cdyksfLysH9oLh2rUCWiREelrROZwOZ7aMDkcyyPfwL88WjqbjKfoD6GqDM6
+ /tO3OqRp3LvvOhnVQALaPEoKS53mbgyg9idep0WZn/Y/uqUSQJXW+G/9CExPfHVuL3YZMDvJHtf
+ /mdN7SSLhc187sMV9CySe9HMqqmzWxmXNxmiR7o09maY+5AEegxOUrxFufuAireSK4bbZ79UFAq
+ 7LE3gY0hduVrWAY
+X-Received: by 2002:a05:690e:144f:b0:66f:c1be:84e3 with SMTP id
+ 956f58d0204a3-6714e1ed9dbmr2334590d50.81.1789482628620; 
+ Tue, 15 Sep 2026 07:30:28 -0700 (PDT)
+X-Received: by 2002:a05:690e:144f:b0:66f:c1be:84e3 with SMTP id
+ 956f58d0204a3-6714e1ed9dbmr2334548d50.81.1789482627987; Tue, 15 Sep 2026
+ 07:30:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <81c899d9-a9fb-4eb2-ad85-7dde2f626646@nutanix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+References: <20260824114216.231916-1-christian@quante.one>
+ <20260911145309.47164-1-christian@quante.one>
+In-Reply-To: <20260911145309.47164-1-christian@quante.one>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 15 Sep 2026 10:30:16 -0400
+X-Gm-Features: AcwNN1Xitwxk_sDqsaXaobCJ3nDaYocGq5ZVe_neF7-ROvcdJOccneSDp6VknAM
+Message-ID: <CAFn=p-Z-b6a5Z7V01pfWAR8gKpdt-v3DzzpkY4et6fpVHUmUHw@mail.gmail.com>
+Subject: Re: [PATCH] hw/block/fdc: account for read and write requests
+To: Christian Quante <christian@quante.one>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, 
+ qemu-devel@nongnu.org, "Denis V. Lunev" <den@virtuozzo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,45 +138,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 12:17:31PM +0100, David Vrabel wrote:
-> On 15/09/2026 11:01, Michael S. Tsirkin wrote:
-> > 
-> > On Tue, Sep 15, 2026 at 09:25:05AM +0200, Cédric Le Goater wrote:
-> > > Hello,
-> > > 
-> > > The xio3130-downstream and x3130-upstream devices lacks x-speed and
-> > > x-width device properties, making it impossible to configure PCIe link
-> > > speed/width when building PIX switch topologies for GPU/NIC passthrough.
-> > > 
-> > > Fix that and preserve migration compatibility with a 2.5GT/s x1 default.
-> > > 
-> > > Thanks,
-> > > 
-> > > C.
-> > 
-> > Given they are clearly intended for users, time to rename to width/speed
-> > everywhere?
-> 
-> A more comprehensive series (hw/pci-bridge: Configurable apparent bandwidth
-> for the PCIe topology) is here:
-> 
-> https://patchew.org/QEMU/20260908155223.164787-1-david.vrabel@nutanix.com/
-> 
-> This adds new upstream and switch port devices with configurable speed/width
-> and renames the options so they are non-experimental (but do not the open
-> question about the usability of the speed option with the need to set 2.5
-> GT/s as the string "2_5").
-> 
-> I did consider adding options to the XIO3130 device but since the real
-> hardware is Gen 1 only and does not support speeds/widths other 2.5GT/s/1x I
-> didn't consider it appropriate to claim these emulated ports are more
-> capable than the real hardware.
-> 
-> David
+Is anyone looking at this, or should I be investigating it?
 
-Right that makes more sense to me.  Cédric what do you think?
+--js
 
--- 
-MST
+On Fri, Sep 11, 2026 at 10:54=E2=80=AFAM Christian Quante <christian@quante=
+.one> wrote:
+>
+> Gentle ping.
+>
+> The patch still applies cleanly on master (209b2afaface) and fdc-test
+> passes with it: 16 ok, 1 skipped without --enable-asan.
+>
+> Thanks,
+> Christian
+>
 
 
