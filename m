@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE29FC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD6DAC88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6QgF-0003Xe-OL; Tue, 15 Sep 2026 06:46:27 -0400
+	id 1x6QgZ-0003aN-KY; Tue, 15 Sep 2026 06:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6QgD-0003XW-QX
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:46:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6QgX-0003Yh-Ox
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:46:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6QgC-000393-4P
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:46:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6QgW-0003AQ-1M
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:46:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789469183;
+ s=mimecast20190719; t=1789469203;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=WeyzZZUiLGeIrRoo9nKJp+He7XHtKP0SxIy/PtZiH30=;
- b=ffDl2HdkyyRC1noQ7nnJJwCbkUTdp7eDbkAHUI6WlvEqZo6BWqlPQaB6kbfB6mx2w/6FQU
- v+LG1OqTLCt1tDpRe89OJccIukqqMqbA3yMh4i5bem0iep5keBLO8lyfmYm8PQrlE88rEe
- PZrba0O84FFj7CeD9pZOcHcLQ8QRjKE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Ltvc2s6YKi8fj0BPf0LJ1XTclIzqktyzBAE+8hmOpg=;
+ b=ZaZDl6ojrljPPS92CsOuKxgBzAfwavvGmnK/uiV3xDLEB9h5MkigjMKQJPwO6NBcLP+ybR
+ gxgT+NfnOo681s5mhztr+q0E6haEF49nZdrjknMTSn5tGEQiLnLNAn3jH00+vAs/nvfZhE
+ k6QQnDa1mQA6VFdpQsW3VYi1WklzAvg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-wKWozQX0Mv263m7wLSOAJg-1; Tue, 15 Sep 2026 06:46:21 -0400
-X-MC-Unique: wKWozQX0Mv263m7wLSOAJg-1
-X-Mimecast-MFC-AGG-ID: wKWozQX0Mv263m7wLSOAJg_1789469180
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-486f3dbf7d2so2833350f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:46:21 -0700 (PDT)
+ us-mta-155-HyY587b8NByqYfsp2uaW8A-1; Tue, 15 Sep 2026 06:46:41 -0400
+X-MC-Unique: HyY587b8NByqYfsp2uaW8A-1
+X-Mimecast-MFC-AGG-ID: HyY587b8NByqYfsp2uaW8A_1789469200
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49cf4cc2125so18118375e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789469180; x=1790073980; darn=nongnu.org;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=WeyzZZUiLGeIrRoo9nKJp+He7XHtKP0SxIy/PtZiH30=;
- b=bqBQZvKvt3kQWIChKhJGRkh2KWlRj/CHOnTTQuZAJcB7Yf59KPpKLXqSiZdzq/tJDJ
- IcsTv1CJXLUw9Wk8h74qYpaPVOQIcQ1xeD6Qdc5D+KtYgg1YrXvU5g4wYwm74QE5NdMf
- vfNzJlDr0WWeprzUikKVzgY3DYhwzpJZEWvhe+SovAE1AgpgtGupQR3jY8eu7JS8s+SC
- 5JopRKaFJVwSPtQj3XANYIJdTBt0qrEtZ/kUwbx/JEy846vKgjJNKcvh+uds3+1UhRPf
- gTUPMc1HY32bMwlWJdkb1ugbHtfmTuuL4xA4xe1q55nqxRUkSbd1ifbUI9x8nuQ84zqE
- GomQ==
+ d=redhat.com; s=google; t=1789469200; x=1790074000; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+Ltvc2s6YKi8fj0BPf0LJ1XTclIzqktyzBAE+8hmOpg=;
+ b=Fc5yRgfuY6UNiKFZ+gYFm4RoBoajSirUkHNVPweFMrwlO5iWsJyGA7b7P+X6w1AuEx
+ maX/b4SCmp9dS8wkwFCvkwlzblP5RqfZaIqEuNiifohxJnxf5FtYtv2tD7uOBP9sLOYb
+ 2X62S7FScofu59MSQDfnasP97bNFPPShT3XkBEB3O7LsyE/4KO2Fw94OZ9CZH4I71d5d
+ DXH+3IZLgnLdTPW4EhUptyhivPYYCKfQvagtkU5VBp0Y5/5+xtD56jYnxGZwi2feGT1D
+ Z4bFsd74ZhhlhqcjUzUjJ4OQnOGyKW+GGJ/BjQ/3aDV/hqmnHN90AQPs5Zm5drB/26QJ
+ L0CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789469180; x=1790073980;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WeyzZZUiLGeIrRoo9nKJp+He7XHtKP0SxIy/PtZiH30=;
- b=W20G/KP2iPCCxcMS56bzIuXxCQHSvYebov4RZWy8LTIZuNXHXwsKnOtUV1SQ/Ti0/b
- lYqmIJyhRq61dy2AixC6+Hd20c0Z40X6nrsmgLSI2eonzoTrUHi0ntT0vDFbH/fOTVYn
- TojMV2dRQ21nXjo4hRPPd3zCfuueusMCLk7OjJK7hbcPW4NwgFKEflgOjtgyBJ3yVeTk
- CjdephWz8sdXkXAMTFUY365BADd+2LPpp8HTylAuYgHZKcZI54NirZlO9EXm2idVZmKP
- WPagYltH+FgF7ZKYCktSEvRoVkY+Abj5h0r0pMsKInSrmDxm6V01MmZgIYVj4rEhWHGf
- JvZg==
-X-Gm-Message-State: AFuF++lNfvz55IzOLuNbsb9Fg05o9bGpl3xSggD3Bwq6QUydZAeoatrp
- BK4Zzh0rb6AHmSHxekacN8UTGSwfXcA932R2eKfc3O4t1uKdsg8CnxtfOF71cl3ozURnIEelH8D
- H89GOqj6dLnsFzK4r5QsKBRt8bp98ltc9YYfQZoP1dAPJxpUXLDdxjG9GLbCBCFCgTpS86MhTdl
- rPzoavIXOpWez+ivoUxR0e0MsVsip03ZaQsA==
-X-Gm-Gg: AYBFou35Pswbfp0eFNcKV6SiQqLaKZ4hayqL8DgACKQCrhzxecFfX7Ivoi/9VC5lgkD
- QKLn+JcgBLfK5IS9B7tb0kRJneEYRF0deFVkxXk8egjVO0EkSs1+o6XGQODWRj0s0FU/DwCDrSr
- JRugo4apokYINrWUzh5+OShEmX8OGQg9OwO1dxEVuCI5wLUBjLZa61I59vXM8THOgsX2Ccn1o3G
- VYtcR8MTduKT7AKJS+gVrD3Nzq3w06yFeK9TjoW8YG6mKfRwtsJJqM+cuuD1QuryhcNrSFgppqn
- ihTQFPPLMo3R0GwDwGucE96jUcM2ZN9/Mc9BfcNqtoiYjzY3xib+8F2d7H6EKZJyG1QzLCV2Pt9
- qeI6QQALGHVgHGwMre/QYUrk=
-X-Received: by 2002:a05:6000:2388:b0:485:8c16:5ee9 with SMTP id
- ffacd0b85a97d-4870a9e3bbbmr227752f8f.35.1789469180275; 
- Tue, 15 Sep 2026 03:46:20 -0700 (PDT)
-X-Received: by 2002:a05:6000:2388:b0:485:8c16:5ee9 with SMTP id
- ffacd0b85a97d-4870a9e3bbbmr227707f8f.35.1789469179644; 
- Tue, 15 Sep 2026 03:46:19 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789469200; x=1790074000;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+Ltvc2s6YKi8fj0BPf0LJ1XTclIzqktyzBAE+8hmOpg=;
+ b=GmQBYhnSewSTt8jfiwl/Q0vfhLCKmtZx0Ln11dsGgxSUX0Id7C9P34YIgLVVOxyDJc
+ 7X1yKw69w5JdQjLB8FF+e9qpYQqTbEAbhw1gI0uyffxDgSREAfV2KoFdFp0eLhx9T5MG
+ z8fV36Y/GL1cCb8VGWtiw64ogmUvTCqYNAYB92VBht9lZQtbDylmbEMwRasEWOPyJQ4T
+ GRxqljV+f7Rn/ekEiC3Xl+h8qk9VN1NyqSBFHZQZP9vsyx6/xc/+f23JlOVltmShaEuj
+ f04VKfsODM4EIio9N9zN2Deo5xR6h8/rm86DJ5fuzW01Lom3Y0xfWEEZrJRMoRtZ56b/
+ hgfw==
+X-Gm-Message-State: AFuF++kZ4cyb53qaYiyMZ9xKhGGJTggB8zOWYgiDl+K2Ax6BGmfu5wDP
+ 4e6e6YMUli73YiNOxZqyLkBpETM0dqmT9jT0EiSI0jZorGD28xvUq6kJH/jN8kwJBaolssmZYMa
+ 1JpyZ7A6O1scs8XhxjnmXxr0Tb9JJt9mfPnxKrM/PkkjjGoNI+d4/uuEfeZ3Ipz0B/w+UWDBv1q
+ rTxZ3vIl+F76JbwO/o99qHFP2alUJ/TEz+yQ==
+X-Gm-Gg: AYBFou2btCFDnnSjDY7/ARQQ399SyGTVBZDCKheUS+r6j1TJOIowllNds42kn3ZpxEl
+ fE7uxBT8J9svhsbX5/IM4GMRzMRT5YqNPISMYeBVTkoKVzedI1tWZza3xy26IkfxX30qIeFw8xo
+ KyUhoz4KaKanXY/z14z5YhuK+7qK+6DFgaTLS0lGtSCgzI4zYkdxltAk2DnDa25v9807OcgSLF+
+ AIwndGsHe/zzXYJdpZN3r0wgistTK01sgPk7oKoDzilwhWp4DpMaMUC2vHEIV88wBD86xKO4iFX
+ ro8ei851NwKlQXKx1RTpIyzXi/4fMmFvKzuWFAG1rga0/bv8VVEyyWMH5gUbxYVq+oIhSta57NU
+ Lw9jZNlzEuGf2BpzRphvW6XM=
+X-Received: by 2002:a05:600d:8643:20b0:49e:823a:9dec with SMTP id
+ 5b1f17b1804b1-49e823a9f88mr11189335e9.3.1789469200131; 
+ Tue, 15 Sep 2026 03:46:40 -0700 (PDT)
+X-Received: by 2002:a05:600d:8643:20b0:49e:823a:9dec with SMTP id
+ 5b1f17b1804b1-49e823a9f88mr11188875e9.3.1789469199661; 
+ Tue, 15 Sep 2026 03:46:39 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-486eb32e7f5sm33247794f8f.9.2026.09.15.03.46.18
+ 5b1f17b1804b1-49e7d69f3c0sm59352605e9.6.2026.09.15.03.46.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 03:46:19 -0700 (PDT)
-Date: Tue, 15 Sep 2026 06:46:17 -0400
+ Tue, 15 Sep 2026 03:46:39 -0700 (PDT)
+Date: Tue, 15 Sep 2026 06:46:36 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefano Garzarella <sgarzare@redhat.com>,
  Omer Can Vural <can.omer.5306@outlook.com>
-Subject: [PATCH v2] libvhost-user: protect against OOB memory table access
-Message-ID: <8adc88f2f535ab0566a5df1c66db728112dd6f74.1789469161.git.mst@redhat.com>
+Subject: Re: [PATCH] libvhost-user: protect against OOB memory table access
+Message-ID: <20260915064628-mutt-send-email-mst@kernel.org>
+References: <00b77201ffaa7849634b251a4027e9818074ee30.1789469091.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
+In-Reply-To: <00b77201ffaa7849634b251a4027e9818074ee30.1789469091.git.mst@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -115,43 +118,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SET_MEM_TABLE handler uses nregions from the message as a loop
-bound without checking that it is below VHOST_MEMORY_BASELINE_NREGIONS,
-so a malformed message causes an out-of-bounds access to the
-regions[] and fds[] arrays.
+On Tue, Sep 15, 2026 at 06:45:00AM -0400, Michael S. Tsirkin wrote:
+> SET_MEM_TABLE handler uses nregions from the message as a loop
+> bound without checking that it is below VHOST_MEMORY_BASELINE_NREGIONS,
+> so a malformed message causes an out-of-bounds access to the
+> regions[] and fds[] arrays.
+> 
+> Frontend is trusted so not a security problem, but
+> an OOB access is not a nice way to handle errors.
+> Check, and panic.
+> 
+> Fixes: 7b2e5c65f4 ("contrib: add libvhost-user")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4403
+> Cc: Stefano Garzarella <sgarzare@redhat.com>
+> Reported-by: Omer Can Vural <can.omer.5306@outlook.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-Frontend is trusted so not a security problem, but
-an OOB access is not a nice way to handle errors.
-Check, and panic.
+Sorry pls disregard.
 
-Fixes: 7b2e5c65f4 ("contrib: add libvhost-user")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4403
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: Omer Can Vural <can.omer.5306@outlook.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- subprojects/libvhost-user/libvhost-user.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 2fed792e85..52817cc733 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1105,6 +1105,13 @@ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
-     vu_remove_all_mem_regs(dev);
- 
-     DPRINT("Nregions: %u\n", memory->nregions);
-+
-+    if (memory->nregions > VHOST_MEMORY_BASELINE_NREGIONS) {
-+        vu_panic(dev, "Invalid set_mem_table nregions: %u > %u",
-+                 memory->nregions, VHOST_MEMORY_BASELINE_NREGIONS);
-+        return false;
-+    }
-+
-     for (i = 0; i < memory->nregions; i++) {
-         _vu_add_mem_reg(dev, &memory->regions[i], vmsg->fds[i]);
-         close(vmsg->fds[i]);
--- 
-MST
+> ---
+>  subprojects/libvhost-user/libvhost-user.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+> index 2fed792e85..c17765110c 100644
+> --- a/subprojects/libvhost-user/libvhost-user.c
+> +++ b/subprojects/libvhost-user/libvhost-user.c
+> @@ -1105,6 +1105,12 @@ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
+>      vu_remove_all_mem_regs(dev);
+>  
+>      DPRINT("Nregions: %u\n", memory->nregions);
+> +
+> +    if (memory->nregions > VHOST_MEMORY_BASELINE_NREGIONS) {
+> +        vu_panic(dev, "Invalid nregions: %u", memory->nregions);
+> +        return false;
+> +    }
+> +
+>      for (i = 0; i < memory->nregions; i++) {
+>          _vu_add_mem_reg(dev, &memory->regions[i], vmsg->fds[i]);
+>          close(vmsg->fds[i]);
+> -- 
+> MST
 
 
