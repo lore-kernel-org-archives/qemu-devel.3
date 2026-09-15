@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95EDCC88E53
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE29FC88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 10:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6Qf6-0002ym-Lh; Tue, 15 Sep 2026 06:45:16 -0400
+	id 1x6QgF-0003Xe-OL; Tue, 15 Sep 2026 06:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6Qf4-0002uy-P4
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:45:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6QgD-0003XW-QX
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:46:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6Qev-00033p-5c
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:45:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6QgC-000393-4P
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 06:46:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789469104;
+ s=mimecast20190719; t=1789469183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=KK1oKuPYRHfb3Ps5HkAxGCLmFDRYUaEQsYbWazCkzwk=;
- b=ePaC//1qk6HkGfvPwF8IXpc6vbJ60qe0GmOMC0AO1+0A3kkfrJ0vfGhFZB6HRmI9nbnWvZ
- +XJyJr+/Rfv1LkU6sHQnbDhL2DQZMoMsXM2+9cnMqdEnj/2qm/h1H83lAWXZO9McZ8Wn/p
- sfHorNdZquAEPtGfy69qoOTU3dQ2NcM=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WeyzZZUiLGeIrRoo9nKJp+He7XHtKP0SxIy/PtZiH30=;
+ b=ffDl2HdkyyRC1noQ7nnJJwCbkUTdp7eDbkAHUI6WlvEqZo6BWqlPQaB6kbfB6mx2w/6FQU
+ v+LG1OqTLCt1tDpRe89OJccIukqqMqbA3yMh4i5bem0iep5keBLO8lyfmYm8PQrlE88rEe
+ PZrba0O84FFj7CeD9pZOcHcLQ8QRjKE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-zlfcDtxvNASonlD-a-3ZTw-1; Tue, 15 Sep 2026 06:45:02 -0400
-X-MC-Unique: zlfcDtxvNASonlD-a-3ZTw-1
-X-Mimecast-MFC-AGG-ID: zlfcDtxvNASonlD-a-3ZTw_1789469101
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c252b87e9a2so390782766b.3
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:45:02 -0700 (PDT)
+ us-mta-401-wKWozQX0Mv263m7wLSOAJg-1; Tue, 15 Sep 2026 06:46:21 -0400
+X-MC-Unique: wKWozQX0Mv263m7wLSOAJg-1
+X-Mimecast-MFC-AGG-ID: wKWozQX0Mv263m7wLSOAJg_1789469180
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-486f3dbf7d2so2833350f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 03:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789469101; x=1790073901; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789469180; x=1790073980; darn=nongnu.org;
  h=content-disposition:content-type:mime-version:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=KK1oKuPYRHfb3Ps5HkAxGCLmFDRYUaEQsYbWazCkzwk=;
- b=DjsmN6a8jIBjqZ3Xl6lHRHiEcMnWLC2ijUBzCY30JGUgjCQVkF2jZH0IbUrH7lFMbp
- ewfuxnV3ANEbyVPKKVb2R1pfCgQg8Nbwm9f3WrU0eBSXIH9uNn+NqmTO5pZyKGyAw6bf
- em9x31LoYvjJ1nQ1QKMz7Qj1O+YNDtbAqnVSNexOffVVqGBjE8lMrUymCId/yNy/Damj
- O79Jc3QL3Jj6FGt+ozrOfXyVQZvDcDl45ERab2zPYKX21IBdoDj2MILgpE2+hvjyaQoc
- XYhdugtBctSrrVu1EUECOEdLfKzcnDkUiCiwV6IJ3FM2aWaicixemfipNFbMsGySnE2g
- TwaQ==
+ :content-type; bh=WeyzZZUiLGeIrRoo9nKJp+He7XHtKP0SxIy/PtZiH30=;
+ b=bqBQZvKvt3kQWIChKhJGRkh2KWlRj/CHOnTTQuZAJcB7Yf59KPpKLXqSiZdzq/tJDJ
+ IcsTv1CJXLUw9Wk8h74qYpaPVOQIcQ1xeD6Qdc5D+KtYgg1YrXvU5g4wYwm74QE5NdMf
+ vfNzJlDr0WWeprzUikKVzgY3DYhwzpJZEWvhe+SovAE1AgpgtGupQR3jY8eu7JS8s+SC
+ 5JopRKaFJVwSPtQj3XANYIJdTBt0qrEtZ/kUwbx/JEy846vKgjJNKcvh+uds3+1UhRPf
+ gTUPMc1HY32bMwlWJdkb1ugbHtfmTuuL4xA4xe1q55nqxRUkSbd1ifbUI9x8nuQ84zqE
+ GomQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789469101; x=1790073901;
+ d=1e100.net; s=20260707; t=1789469180; x=1790073980;
  h=content-disposition:content-type:mime-version:message-id:subject:cc
  :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KK1oKuPYRHfb3Ps5HkAxGCLmFDRYUaEQsYbWazCkzwk=;
- b=E2uDg1cfPdSXKki73fJ6zRcYST+ZtUiVBPQkDERlwzicK+xN0dFafAmiKEfpGVi7M2
- QQajGdh4DoDsZNZG6OSwCNVFkOr/yyQnAVOb7qFgFfbSOAkSVt1/qVZIrr2L1wbPuME1
- 6CTse6vmus+rk3dpTcN+fRyZlyfJW+mMy15/GpZAPVfMBwbliS+Y1lGvAn5JMgLjBLX9
- aq5XanUHX2iAnrt9HkP9S08hscWZEhO11NW2BNtaEVn5+/dIh/C4V+CmL2dy7eWsn976
- cyEyeE6aZ2Kbvz8OswnYfK4qFdoVKDdjujPH7jnldijfV25FPx+8ONu52ezAFZpg/HG2
- 3W4w==
-X-Gm-Message-State: AFuF++nb7ixRVqRVH6lvBzIt25namJajPvw3/ddpAHCfN32vEgSdvgwu
- WngwVn5MCrAKUV/ex7PmFuV8maUesXinfZgt6/VS8KByIi6TA8HVwZR4/CiOqexrKGDlYNlYbr0
- 8yeJ0d9oQ7p5URFUzKLnfD4ecxNdcDRdrb2DKuwy1f10WVGbczcHP6AyBef/YkJEN/lVqA+JheA
- QLcS3fOQSg0+dMwJ4Q0Vb370Z9xKlSYHLImQ==
-X-Gm-Gg: AYBFou3B90TjEEnA6tNtDsmqCEech0/9x3IWc5cngl6JMFb6LnsGREdoo2xpT1ODgbN
- CLpuGWLUxsG3Nh/MUvjggANYhsT915mljHZllskhGbPX+aabcTZV0UDvMzR859SOje1AhmqZ1Pa
- Okg2F1RedBPzRtvLTFsjLfsTioPc8gAxGLoOjhKT/NwaqyRnR7IniPekd/GNNOljQGDOxF9/Unn
- pRy+oNNmNkkmfJgzaRZYFvKp1OcdOt6ZPVqQStO/XjKX6xW5woiOILJv1YlF6lcEWwr865+JbTf
- kQdkPKD5sbMavizqIAIgFxr4NNNkFynu8/XbzIKvk/WWn/a1GGr8ko/oEliv6MxX8vzxAevy/CN
- +uG+EV6JfwryeTnh5tDfxKq0=
-X-Received: by 2002:a17:907:9702:b0:c29:4513:f6fd with SMTP id
- a640c23a62f3a-c29d7940f77mr46085066b.35.1789469101230; 
- Tue, 15 Sep 2026 03:45:01 -0700 (PDT)
-X-Received: by 2002:a17:907:9702:b0:c29:4513:f6fd with SMTP id
- a640c23a62f3a-c29d7940f77mr46082366b.35.1789469100705; 
- Tue, 15 Sep 2026 03:45:00 -0700 (PDT)
+ bh=WeyzZZUiLGeIrRoo9nKJp+He7XHtKP0SxIy/PtZiH30=;
+ b=W20G/KP2iPCCxcMS56bzIuXxCQHSvYebov4RZWy8LTIZuNXHXwsKnOtUV1SQ/Ti0/b
+ lYqmIJyhRq61dy2AixC6+Hd20c0Z40X6nrsmgLSI2eonzoTrUHi0ntT0vDFbH/fOTVYn
+ TojMV2dRQ21nXjo4hRPPd3zCfuueusMCLk7OjJK7hbcPW4NwgFKEflgOjtgyBJ3yVeTk
+ CjdephWz8sdXkXAMTFUY365BADd+2LPpp8HTylAuYgHZKcZI54NirZlO9EXm2idVZmKP
+ WPagYltH+FgF7ZKYCktSEvRoVkY+Abj5h0r0pMsKInSrmDxm6V01MmZgIYVj4rEhWHGf
+ JvZg==
+X-Gm-Message-State: AFuF++lNfvz55IzOLuNbsb9Fg05o9bGpl3xSggD3Bwq6QUydZAeoatrp
+ BK4Zzh0rb6AHmSHxekacN8UTGSwfXcA932R2eKfc3O4t1uKdsg8CnxtfOF71cl3ozURnIEelH8D
+ H89GOqj6dLnsFzK4r5QsKBRt8bp98ltc9YYfQZoP1dAPJxpUXLDdxjG9GLbCBCFCgTpS86MhTdl
+ rPzoavIXOpWez+ivoUxR0e0MsVsip03ZaQsA==
+X-Gm-Gg: AYBFou35Pswbfp0eFNcKV6SiQqLaKZ4hayqL8DgACKQCrhzxecFfX7Ivoi/9VC5lgkD
+ QKLn+JcgBLfK5IS9B7tb0kRJneEYRF0deFVkxXk8egjVO0EkSs1+o6XGQODWRj0s0FU/DwCDrSr
+ JRugo4apokYINrWUzh5+OShEmX8OGQg9OwO1dxEVuCI5wLUBjLZa61I59vXM8THOgsX2Ccn1o3G
+ VYtcR8MTduKT7AKJS+gVrD3Nzq3w06yFeK9TjoW8YG6mKfRwtsJJqM+cuuD1QuryhcNrSFgppqn
+ ihTQFPPLMo3R0GwDwGucE96jUcM2ZN9/Mc9BfcNqtoiYjzY3xib+8F2d7H6EKZJyG1QzLCV2Pt9
+ qeI6QQALGHVgHGwMre/QYUrk=
+X-Received: by 2002:a05:6000:2388:b0:485:8c16:5ee9 with SMTP id
+ ffacd0b85a97d-4870a9e3bbbmr227752f8f.35.1789469180275; 
+ Tue, 15 Sep 2026 03:46:20 -0700 (PDT)
+X-Received: by 2002:a05:6000:2388:b0:485:8c16:5ee9 with SMTP id
+ ffacd0b85a97d-4870a9e3bbbmr227707f8f.35.1789469179644; 
+ Tue, 15 Sep 2026 03:46:19 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2965c4dfc7sm560842766b.4.2026.09.15.03.44.59
+ ffacd0b85a97d-486eb32e7f5sm33247794f8f.9.2026.09.15.03.46.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 03:45:00 -0700 (PDT)
-Date: Tue, 15 Sep 2026 06:44:58 -0400
+ Tue, 15 Sep 2026 03:46:19 -0700 (PDT)
+Date: Tue, 15 Sep 2026 06:46:17 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefano Garzarella <sgarzare@redhat.com>,
  Omer Can Vural <can.omer.5306@outlook.com>
-Subject: [PATCH] libvhost-user: protect against OOB memory table access
-Message-ID: <00b77201ffaa7849634b251a4027e9818074ee30.1789469091.git.mst@redhat.com>
+Subject: [PATCH v2] libvhost-user: protect against OOB memory table access
+Message-ID: <8adc88f2f535ab0566a5df1c66db728112dd6f74.1789469161.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,20 +130,21 @@ Cc: Stefano Garzarella <sgarzare@redhat.com>
 Reported-by: Omer Can Vural <can.omer.5306@outlook.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ subprojects/libvhost-user/libvhost-user.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 2fed792e85..c17765110c 100644
+index 2fed792e85..52817cc733 100644
 --- a/subprojects/libvhost-user/libvhost-user.c
 +++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1105,6 +1105,12 @@ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
+@@ -1105,6 +1105,13 @@ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
      vu_remove_all_mem_regs(dev);
  
      DPRINT("Nregions: %u\n", memory->nregions);
 +
 +    if (memory->nregions > VHOST_MEMORY_BASELINE_NREGIONS) {
-+        vu_panic(dev, "Invalid nregions: %u", memory->nregions);
++        vu_panic(dev, "Invalid set_mem_table nregions: %u > %u",
++                 memory->nregions, VHOST_MEMORY_BASELINE_NREGIONS);
 +        return false;
 +    }
 +
