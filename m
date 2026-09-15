@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECAEC88E73
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 08:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05E7C88E53
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 08:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6OOw-0004rk-Km; Tue, 15 Sep 2026 04:20:27 -0400
+	id 1x6OW4-0000rK-0M; Tue, 15 Sep 2026 04:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6OOt-0004kC-Vg
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:20:23 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6OW1-0000r0-M9
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:27:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6OOp-0004MP-H0
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:20:21 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6OVv-0005bU-JN
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 04:27:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789460417;
+ s=mimecast20190719; t=1789460854;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rawZcbHqTI6xheJawOEdPIAKymyVEHjFiz4lrZh7tcw=;
- b=B9mGE7YUlFjdQT/L0DgJOdPrPu0lIP2XgsAbtlA0AZ4OUR4wuul5rSuyn6YFc+8bVB3jXM
- ku9kj0aMwSpJShrcvq4L6ncQ0uWCdNjxiljnjlcMhEDqwikZ53tNUjXCTM5xF1givpT0i0
- S9TOkOF+/VHGWj3iteUh8V/ioBVGZWk=
+ bh=CE5z4FacnsphZY+jlak3oW5cOlOt5z6kT/UKXTKkOps=;
+ b=IRfa9Jyir0xbv0o/Q6iua8+SSviL1ETTgZrpxQpcoQh3w5k2izlDal6Dl+d2zD16j5eJkV
+ xTLUXSp4GCbTTmUwIVqGy2VV7dy8+dOpOvQufC+kzVFye8zei+CkMtTWZkvg6FO2c9c8Bu
+ E4vqVn66NW4X8TOLRmSffh9FzqtU6fc=
 Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
  [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-466-SkU0weOsPWKGbLKECUHalA-1; Tue, 15 Sep 2026 04:20:16 -0400
-X-MC-Unique: SkU0weOsPWKGbLKECUHalA-1
-X-Mimecast-MFC-AGG-ID: SkU0weOsPWKGbLKECUHalA_1789460415
+ us-mta-528-3LSqcF9NOhK2Y6I6Rtn55A-1; Tue, 15 Sep 2026 04:27:32 -0400
+X-MC-Unique: 3LSqcF9NOhK2Y6I6Rtn55A-1
+X-Mimecast-MFC-AGG-ID: 3LSqcF9NOhK2Y6I6Rtn55A_1789460851
 Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-6a9ba2a281cso4548491a12.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 01:20:15 -0700 (PDT)
+ 4fb4d7f45d1cf-6a9cd44bfbdso3577632a12.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 01:27:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789460415; x=1790065215; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789460851; x=1790065651; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=rawZcbHqTI6xheJawOEdPIAKymyVEHjFiz4lrZh7tcw=;
- b=iYAxyFfwTWjPCoKpvD6CnaCsrDmEPU3OpUuJl10dIr/ljvHVWtDAqze636P/qsco2v
- dEAZvx9n4M7s9/A3bTN/ayKboN15ZK4uhCvR+KILnhaXEpcgn/tGdEpnfPGmLOSbJX0p
- C8kNv2AxA+vkiutUggrmbXfWL/nQwDwM3+/GDnYTbLFjGNG1RXwgzveweC7No2YAn5mi
- fa0V8sV6qRe/oHS+4vhxr3putOhFwO5AfauwBP+jyjbP1kG9k6y6qqXpS2U3kDqe0Dgd
- fO3DBErrc7nZQ8GPq3QVh+PmXAyc/rbqbo6mlaHWFJYzGZvsRSA7AgJdj486boher612
- BXyg==
+ bh=CE5z4FacnsphZY+jlak3oW5cOlOt5z6kT/UKXTKkOps=;
+ b=WCUlC/3mQonGWVdvDDpXx7hvRmTKrlX3M4Le4s5xEWd8gJ43R/0jT7VAIui1cYvnAu
+ XyiZrGhwr22yJlp5PWbNKkp+SDZd94n64nHk7GsGeWxDtkbsc/guFHLZYz/FUEMS9Z3t
+ vcDKpcg+3R/ia1sd5qq73H/h49nj90PgSpHPuRGe7Yg34tWB6GG0uG7iMznlu/jY6gng
+ 0N2NCT8UyIka2LBfRg53gfrniQSqUqQd5fZFOMl0ERYveDDeGZsUXdsgKy2tF3xmZwGc
+ YH54L+uMoVCtwGDw71vrNHWnb/UYm0tdanVzs5LlGLEegPqkou+T3WPzH2WgDrxe03vb
+ lxbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789460415; x=1790065215;
+ d=1e100.net; s=20260707; t=1789460851; x=1790065651;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=rawZcbHqTI6xheJawOEdPIAKymyVEHjFiz4lrZh7tcw=;
- b=rwauPz/0K5wEOTjf4+LG+t6hkRG2hbgs/k/Dbk16GrKhm88Vgzi9EERghDKFaLCdo6
- Wkwe+j6smBExXcvM5LmpoqlXgO1JohVd0ZNSRRlEeQX8LgJ5fas5/sSEgmODSeKhsWf+
- xA20flypj5mA+ZGwQHBb+N+8NNSgv7IZVR7EOzmr1/qtgEZw72KMDpWkZeaMj9E1QHSy
- wsg3CrcHkYo0GgYWJe1+Rhl1AWDWlwlH095fwJxk7tuWsDofs0y77SHIDsEZ8AA1pN+1
- GvFRZhnQ2+TzPrZbLKEzq7CVwEsP3cko3eu6HxQxgFlc6S9vwxaNhnP2/4BCO2mq4qCi
- YZxg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw1D2AaRefA4/s9Vz52GWz4/FpIdRT3WC/EZj9fKkfu28ap05IYtoZVnC9bj5zT3sXRYXN3XfsBrRa6@nongnu.org
-X-Gm-Message-State: AFuF++l/7SO7a4G3fHI7UtEK7JAFdtGQ/S/qN3X8wkd5rnXZ7mg8kUGa
- EnBFl4LVMxxfO7bMY/d5guvf2S3WMaKoLQv7UhDOoA8WvJPuD8vP91TvPqGndQYhJmbq/8AZzdy
- mZRjE5PW9WKNc58X/pr309uHrA1leCidShYveEWW6Nr4N0y4aAyS1IIHD
-X-Gm-Gg: AYBFou0hpSFdWiEXYhdp4HYYEctJZDXr7FprmnCeCVsrMogj0of57GwseMXfrRWm/9p
- +Vd8oKVzg/vzLEXyuOztVxOqp9n0HGOUX+oHYgniPErfiNFLIBDuhvLuH8Vj1kix5uiECoj3N9J
- 8s7rmdGlQC6PJjxo6NteuUj3sLcHoasyz5N07/qQuhDOn7VRiJxencdnQbSoj5IAsnLh4S/fE79
- vrq6AhQMExUQf1UWi70SohgJpcQAXtkd/Pzm4DjhU9h13J2ZobhSUDx0D86hcvKzR/jnLMh6htM
- PvXJaHl1P5x1viIvIyXLECAynobPZ6KFFZn+nWHbqH3Crmw4bmTVSk6S0XcWuskfxVaeQE8Pqq2
- IAO8+kiCK3Ci+FTFMlGVkdXV1ns9JtNGhdsinfBFqbw==
-X-Received: by 2002:a05:6402:1ed1:b0:6a9:a311:25dd with SMTP id
- 4fb4d7f45d1cf-6aa12b90970mr18872a12.17.1789460414773; 
- Tue, 15 Sep 2026 01:20:14 -0700 (PDT)
-X-Received: by 2002:a05:6402:1ed1:b0:6a9:a311:25dd with SMTP id
- 4fb4d7f45d1cf-6aa12b90970mr18817a12.17.1789460414238; 
- Tue, 15 Sep 2026 01:20:14 -0700 (PDT)
+ bh=CE5z4FacnsphZY+jlak3oW5cOlOt5z6kT/UKXTKkOps=;
+ b=rY4+l9kkRCH7r1UHz2gETQTOWdJAa+i5Khh+tWCpPVzItkqd/oV7dRRFu+G+/SGrwZ
+ 7j6NIVeiUdX/Z64/pf/AmKCdOoOyO8bai4XsebMUBI8FRZRrQnH7pT6dMwDsaSxmwwHR
+ T2jkB6aacl+eShBg/X8Q8YiFU1+dJbxCbrZ/byimOEXTqWtcX5YQvfla2Xwvx53RnMqj
+ zHwegiJoTsiAZspsRCR+KILf3jbuoFBQQyeOpJ3RTprOZV4dv3MRLbuLvMrIQlKeQraX
+ XeRGQ9DLhE/sRATCbuWXVMKGpvCBWsuJEAVz8rmxThStISa26AuYcL3dL4qG2almkay/
+ cF3A==
+X-Gm-Message-State: AFuF++kvbVBT18ukbMnbOgGNUmecPhE/4Yb8KEWMrSXcEOI0GNQO2nz/
+ rirkOJKvojYX7O2ZArYxdKPTdZ5c4DPzGae5F8tnMJTu/2UJz+swyTf6LDKQYOf7Wr6uhyzB5wO
+ 6HRZhoeetqYVhdGxmyv3v+BdRuz8Ub7ONADBZN4bjWye+Xig21hmabMUajaMzFa93a57CgKqanu
+ DLPdGPTTb2JWhMN0B9RngGiVMYYSR4WaN3RA==
+X-Gm-Gg: AYBFou0f0BY2JuqnCj9ADcfmJEEtVDt1Wp7z5h3Uhayh1sTFF735CaUrQwb9DzlzQx3
+ /hD3ECTvFY7q3SL1SJGtDdwJy9IYbjH57baLhHdA/2tekLyyw1iO5pXL6V+kok6ulIo6LTf55k1
+ g4nyooVa9c//Qdmr5Fw28iyBHYvWHsyMsCiuZGHLlgf6/wE0LxkJsvaPMzhcFOLd2tdiRoHMYAO
+ bRN/EGNOJO68jmswr/ksPcNEAAYaI2Lq7gwngnoiuJA9sJI9H45u5f7R7EVwkAFTVYkhJx/kPD/
+ 48uEvAOTq7o0kFLKAqK7v5dD3TECJeahouwF05qP1hK+/zXbQKY+ghfUJTdOSvdTtf1yIy9F2kM
+ CSl+3F8MwC0dMRa9gfmlBMbGNNZwsW4750mMcrMD32Q==
+X-Received: by 2002:a05:6402:44d5:b0:6a9:93cf:2367 with SMTP id
+ 4fb4d7f45d1cf-6aa12f0825bmr7212a12.41.1789460851251; 
+ Tue, 15 Sep 2026 01:27:31 -0700 (PDT)
+X-Received: by 2002:a05:6402:44d5:b0:6a9:93cf:2367 with SMTP id
+ 4fb4d7f45d1cf-6aa12f0825bmr7193a12.41.1789460850702; 
+ Tue, 15 Sep 2026 01:27:30 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
  ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a9b594c28fsm5337219a12.23.2026.09.15.01.20.13
+ 4fb4d7f45d1cf-6a9b594e462sm5477729a12.24.2026.09.15.01.27.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Sep 2026 01:20:13 -0700 (PDT)
-Message-ID: <73fe443f-0acd-41b0-a9ca-259f88f0ff88@redhat.com>
-Date: Tue, 15 Sep 2026 10:20:12 +0200
+ Tue, 15 Sep 2026 01:27:30 -0700 (PDT)
+Message-ID: <9cd1f3b7-183f-41ba-baa7-7c7d0ef81ce0@redhat.com>
+Date: Tue, 15 Sep 2026 10:27:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/9] igb: Add experimental VF live migration support
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>
-References: <20260902192054.3329753-1-clg@redhat.com>
- <341bf6d3-27e4-425e-a0b1-0e3767e2db99@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH 0/2] hw/pci-bridge: Add x-speed and x-width properties to
+ xio3130 ports
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Boaz Ben Shabat <bbenshab@redhat.com>
+References: <20260915072507.1230187-1-clg@redhat.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -142,7 +142,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <341bf6d3-27e4-425e-a0b1-0e3767e2db99@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260915072507.1230187-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -169,248 +169,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/26 09:19, Akihiko Odaki wrote:
-> On 2026/09/03 4:20, Cédric Le Goater wrote:
->> Hello,
->>
->> Live migration of VFIO-passthrough devices - SR-IOV VFs, vGPUs - is a
->> growing requirement, but real hardware with migration support is
->> scarce and hard to debug. An emulated device provides a fully
->> controlled testbed for developing and validating the entire software
->> stack - vfio-pci variant drivers, VFIO core migration v2 framework,
->> QEMU, libvirt - and for tuning complex migration policies such as
->> downtime convergence. It also serves as an educational reference for
->> understanding VFIO migration end-to-end, from device state
->> serialization to dirty page tracking.
->>
->> This series adds an experimental VF live migration interface to the
->> emulated igb (82576) device. It enables a vfio-pci variant driver
->> (igb-vfio-pci) to migrate VFs using the standard VFIO migration v2
->> protocol with stop-copy and pre-copy support.
->>
->> The target scenario is nested virtualization:
->>
->>    L0 QEMU (these patches)
->>      igb PF with x-vf-migration=on
->>      └── VFs with migration DVSEC
->>
->>    L1 kernel
->>      igb-vfio-pci variant driver [1]
->>      translates VFIO migration v2 ioctls → DVSEC config writes
->>
->>    L1 QEMU (stock, unmodified)
->>      vfio-pci device model, standard migration fd
->>
->>    L2 guest
->>      standard igbvf driver, unaware of migration
->>
->> The L1 QEMU is completely unmodified -- it sees a standard VFIO
->> migratable device and uses the normal migration fd path.
->>
->> * Design
->>
->> The migration interface is exposed through a DVSEC (Designated
->> Vendor-Specific Extended Capability, PCIe cap id 0x23) at offset
->> 0x160 in VF extended config space. The DVSEC uses a command doorbell
->> model - all commands are synchronous via PCI config space writes.
->>
->> Device state is serialized as a versioned blob of per-VF register
->> (offset, value) pairs covering control, interrupt, RX/TX queue,
->> receive address (RA/RA2), etc. plus TX context descriptors and
->> VFRE/VFTE enable bits. The buffer address is a guest physical
->> address (GPA) written by the driver via virt_to_phys; the device
->> accesses guest RAM directly through the system address space.
->>
->> Dirty page tracking is implemented with per-range bitmaps maintained
->> in IGBCore. All VF DMA paths in igb_core.c (TX data, RX data,
->> descriptor writeback) are instrumented to record touched pages. The
->> variant driver registers tracked IOVA ranges and queries dirty bitmaps
->> through a shared buffer. Buffer structures include len, flags, and
->> reserved fields for future extensibility.
->>
->> * Caveats
->>
->> The x-vf-migration property is experimental (x- prefix, default off).
->>
->> The dirty bitmaps are maintained inside the device, which is not
->> realistic for discrete NICs without on-chip DRAM.
->>
->> * Testing
->>
->> The target scenario is nested virtualization: L0 runs QEMU with an
->> igb PF (x-vf-migration=on), L1 runs the igb-vfio-pci variant driver
->> and an unmodified QEMU, and L2 runs a standard igbvf driver.
->>
->> Migration under iperf3 load works correctly: dirty page tracking
->> converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
->> STOP_COPY), and STOP_COPY stays under 250ms.
->>
->> * Todo
->>
->>    1. Add migration blocker when x-vf-migration=on (no VMState yet) or
->>       add VMState support for L0 migration (dirty bitmaps, tracking
->>       engines, DVSEC registers, stats)
->>    2. Add PRE_COPY state transfer to validate device INIT data (magic,
->>       version, etc.)
->>    3. Add qtests for migration state machine transitions, dirty page
->>       tracking ?
->>
->> * Ideas
->>
->>    1. RX bandwidth throttle (x-mig-rx-limit, uint32, default 0)
->>
->>       Return false from can_receive when the per-VF packet count in the
->>       current tracking interval exceeds the limit. Reduces DMA writes
->>       and dirty pages realistically.
->>
->>    2. Migration phase timing (GET_STATS extension)
->>
->>       Add per-VF timestamps: precopy_start_ns, stopcopy_start_ns,
->>       precopy_duration_ns, stopcopy_duration_ns,
->>       state_transition_count. Expose via GET_STATS.
->>
->>    3. Hot page simulation (x-mig-hot-pages, uint32, default 0)
->>
->>       Re-set the first N bitmap bits after each DIRTY_QUERY, simulating
->>       workloads with hot pages that prevent convergence.
->>
->>    4. Error injection (x-mig-inject-error, uint32, default 0)
->>
->>       One-shot error code injection before command dispatch. A separate
->>       x-mig-inject-dma-fail (bool) for persistent DMA failure testing.
->>
->> * Credits
->>
->> Alex Williamson suggested the overall approach of a variant driver
->> with the "x-vf-migration" device property to gate the feature. Thanks
->> for the ever ongoing support and valuable discussions throughout these
->> years.
->>
->> * AI disclaimer
->>
->> The lack of a migration-capable device has been a recurring pain point
->> for VFIO development over the years, and we hope this proposal
->> demonstrates the value of having one.
->>
->> Claude was used to analyze the IGB PF and VF internal state and
->> identify the pain points of a working live migration of such devices.
->> The generated code served as a starting point but *significant* time
->> was then spent cleaning up, reworking, and shaping it into a clear,
->> reviewable IGB model extension.
->>
->> As QEMU does not yet accept AI-assisted contributions, this series is
->> submitted as an RFC.
+On 9/15/26 09:25, Cédric Le Goater wrote:
+> Hello,
 > 
-> This largely repeats the concerns I raised previously [1]. Your description of the *significant* time spent cleaning up and reworking the generated code suggests that this series is intended for upstream inclusion once the implementation direction is agreed. 
-
-Yes. The IGB kernel vfip-pci variant driver is "ready", and so is the
-internal test framework for VFIO migration. The emulated IGB device
-is also becoming increasingly important as a reference device for
-the kernel VFIO self-tests. See:
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=1583ef1175ba533e326dfeff6d8b9f3aaf761225
-
-> My concerns as a maintainer are therefore correctness and maintainability.
-
-I am trying to avoid too much intrusion in the core igb model :
-
-  hw/net/igb_common.h                   |   16 +
-  hw/net/igb_core.h                     |   11 +
-  hw/net/igb.c                          |    7 +
-  hw/net/igb_core.c                     |  124 ++-
-  hw/net/igbvf.c                        |   52 +-
-
-These are mostly code movement or additions. The runtime is hardly
-impacted apart from the DMA tracking, which adds one indirection.
-
-I have added myself as Maintainer for the migration part :
-  
-   +igb VF migration
-   +M: Cédric Le Goater <clg@redhat.com>
-   +S: Maintained
-   +F: hw/net/igb_migration.*
-
-I can add you in the next respin. That would be a natural choice
-from my perspective, but I don't want to impose it on you.
-> The missing migration blocker is a concrete example: it is a basic correctness issue that should be straightforward to address, yet it remains a TODO. 
-
-yes. It's identified and easy to address. It can come at the end once
-all other issues have been discussed. What worries me the most is the
-control plane : interface with the Linux driver. That is the most
-important part on which these changes depend on getting it right :
-
-   https://github.com/legoater/linux/commits/vfio/
-
-> My comments on individual patches also raise the same kinds of issues I pointed out in the previous version.
-
-You're being tough on me ! I did all this fixing below ! :)
-
-* Changes since rfc-v1
-
-   - Migration BAR replaced with DVSEC at offset 0x160 (no BAR needed)
-   - Wire-format structs (IgbMigBlob, IgbMigRegPair, IgbMigTxCtx)
-     replace raw pointer arithmetic and memcpy
-   - RA entries separated from fixed regs, scanned by pool bit
-   - VFN relocation support (offset remapping + RA pool bit swap)
-   - GPA buffer (address_space_read/write) replaces PCI DMA through PF
-   - State blob validation on load (magic, version, error codes)
-   - NEED_WORDS macro and igb_vf_offset_valid removed
-   - Error codes renumbered: removed BAD_VFN, added UNK_CMD (1-11)
-
-   Reported by Akihiko Odaki:
-
-   - propagate_irqs: clear VF bits before OR (EIMS/EIAC/EIAM)
-   - propagate_ivar: clear IVAR entry when source VTIVAR is invalid
-   - rearm_irqs: restore actual PVTEICR causes, not all three
-   - Dirty bitmap allocation uses BITS_TO_LONGS (heap corruption fix)
-   - Dirty query validates range before g_malloc0 (memory exhaustion)
-   - Dirty bits cleared only after successful bitmap DMA write
-   - Dirty query buffer uses struct offsets (layout mismatch fix)
-   - Load path: register offsets validated against VF whitelist
-   - VMBMEM (mailbox payload) documented as transient, not serialized
-   - dma_writes counter: consistently uint64_t
-   - Dirty range_size: consistently uint64_t (was truncated to 32 bits)
-   - ERROR->STOP: quiesce VF (clear VFRE/VFTE) on transition
-   - rearm_irqs: runs on re || te, not just re (TX-only VF fix)
-   - Stats DMA-written atomically via GET_STATS (no split MMIO tear)
-   - Bisectability: DVSEC + state machine introduced together
-   - Removed NAPI reference and "===" comment decoration
-
-
+> The xio3130-downstream and x3130-upstream devices lacks x-speed and
+> x-width device properties, making it impossible to configure PCIe link
+> speed/width when building PIX switch topologies for GPU/NIC passthrough.
 > 
-> Many of the correctness problems found in v1 and v2 stem from the choice to build on igb, which is more complex than virtio-net. That is why I suggested using virtio-net as a simpler basis, unless there is a problem that rules it out.
+> Fix that and preserve migration compatibility with a 2.5GT/s x1 default.
+> 
+> Thanks,
+> 
+> C.
+> 
+> Cédric Le Goater (2):
+>    hw/pci-bridge: Add x-speed and x-width properties to
+>      xio3130-downstream
+>    hw/pci-bridge: Add x-speed and x-width properties to x3130-upstream
+> 
+>   hw/core/machine.c                  |  4 ++++
+>   hw/pci-bridge/xio3130_downstream.c |  5 +++++
+>   hw/pci-bridge/xio3130_upstream.c   | 28 +++++++++++++++++++++++++++-
+>   3 files changed, 36 insertions(+), 1 deletion(-)
 
-virtio-net is a software abstraction designed for virtualization.
 
-Here’s my pitch for igb:
+Reported-by: Boaz Ben Shabat <bbenshab@redhat.com>
 
-Using an emulated igb device addresses a different problem: validating
-migration of hardware-like devices. igb exposes a real PCI device
-model, hardware-driver interface, DMA engines, queues, interrupts and
-SR-IOV VFs. It allows migration to be implemented at the same
-abstraction boundary at which VFIO migrates physical devices, rather
-than being reduced to serialization of a paravirtualized protocol
-state. Also,
-
-The igb VF uses the inbox igbvf kernel driver, which matches the
-hardware VFIO promise: transparent migration with unmodified guest
-drivers.
-   
-The DVSEC extended capability is a discoverable and standard control
-plane with the device. This is a mechanism a hardware vendor could
-use.
-     
-One cool aspect of an emulated device is that it allows the state to
-be inspected, the behavior is deterministic and faults can be injected
-at any boundary. That's the QEMU bonus.
-
-> I would be willing to support allowing AI use in the project for work like this. I would still need to see these correctness and maintainability concerns addressed before I could support merging the series.
-
-I agree. The save/load is still in progress and we might need some
-more intrusive changes in igb to support migration of all state.
-To start with, we could detect and warn.
-
-Thanks for the support,
+Thanks,
 
 C.
 
