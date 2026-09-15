@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF6DC88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9286AC88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 17:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6WdK-0005Pa-7s; Tue, 15 Sep 2026 13:07:50 -0400
+	id 1x6WdU-0005Sn-0E; Tue, 15 Sep 2026 13:08:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdF-0005OR-TJ
+ id 1x6WdG-0005Ov-EQ
  for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:46 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6WdD-0003UO-Tk
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:45 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d37b6so278775e9.0
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:43 -0700 (PDT)
+ id 1x6WdE-0003Ug-Mv
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 13:07:46 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-482f633ecdeso487652f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 10:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789492062; x=1790096862; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ULD2PM3N7WNC34JwQIlZJ2MFL6mWprc3t+7KMZ20CZc=;
- b=M5cDb/NQSDKXdvh06yslSzNndjinE6ZNwq9mTzlVCS5WN+zZSEEiCIQATRI/XEN03E
- ngy1S81YVmHtHbVZdRW8TiIIwIzLDWEsAYf1GRs9ro4sTNQFuXYsZ1CxnccIJyScdl7o
- bbwttFvi792q5DI+cgrgKLOFVIGDm2imYQ0A35/gH6adAMo1oCeFng48IOPoJ7LJf6KL
- q0hMOicqZGmDR024kF/eP5HzOv1DfC1JGUZWDH4PRMSoj5PfGXSi9YA6AMJR+qhdIqc6
- hSUJ+tqgvbnjREmbYfll/HvP1InHwwNxQfFkrl8FAIWe8EBNnzzwDYMJlbzZSyN108/w
- xobg==
+ d=linaro.org; s=google; t=1789492063; x=1790096863; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=RDP3r7WeFvBfusadg3H1XPE6z2aDMAqweiepZ0CeGqM=;
+ b=Ij8bbaDxZ6Qm1WcEl2idR5mzwzgmEXsHEdTkTf53BX3SuZ23wQLI8WeUdCW6h7z3uP
+ VUPemHH2d3TFumWcLZfnVV7cYJ+5bKE2B0UoRhyZnM8AldBWg8BqY/vvyZ4u6i1HgBwp
+ 4NhJy25uijQBFvI9YY1xqhOArFVZ3OHmMi809hu/bk6gtLwlpuTnQJo+Q4cH2WKNYmKF
+ PIWOGAVn/l04BFCFw9Jb4pye3LymWcgEuMHxH/ZmWr5IapAhKdsCxPYVyZEUzFuOsD3H
+ gT6HGiwYphoinQ/ieXD/tRnLdtiXTarqTCObsFHuXHn+X8mRGgR2F6zmCut7dmgWN4pS
+ dllQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789492062; x=1790096862;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ULD2PM3N7WNC34JwQIlZJ2MFL6mWprc3t+7KMZ20CZc=;
- b=YG8zaJSaKAN9fjmgCkxfzbpt7rl+OySZbd/asLWu6FATVBV5B++suYHtYimdsTdzTC
- ZHlN9U3uAzaVdlHgdZEnlfbeg7lfgkFK+R4h8vCjaexmZasVMhGlxvsxQr7/xefWaBVZ
- cM/r+7WD3semckiFnad2sQ9APsDKfnj+67hOQUZWtbFOO2b+yjsgqWWqG3siDHW44HJs
- QfDZU8IXgidatdvJyyjHVfBt+u5Vir1TgdTg3UMzZDppam0ZG5zzQgLPe1lX5Ikj7ymr
- bQbs96AgEjZwT48EWUNoKm0g70kP7SnBi3qRtQstQktAm3HbyfjGEuLVLauLdPiE4KDW
- 4FIg==
-X-Gm-Message-State: AFuF++lpy+Ee3yEdEiCtMldfToE+NujZBRoo3HTXMrL1CDnT7eiM8tbz
- 4mnxAJwhyky/M1ofHQQkstKIlYZIXbIcMT1UsDj98Ed9bxWhNdIKLX+A0ZQsHk0ghBy+YbJPG73
- 1HB2UZuY=
-X-Gm-Gg: AYBFou15iwCCh9lXFOZuYq9QvnRRiFJ/ZwP3oHUUjd3GvJS7CnmVqFK1Mm1B7BhEbOf
- trMVLF/aTn3zUeWSdFZkBWfK13YNGzRcvDDJRUc93pGDvcmvHk3JufMBkxvE0kLb9ODq4iZ0PHB
- 07BUqKgUJBAsHxD8cRvle1k3qJrBcO4C+T4+CmIbq17QeSVecQAaBPr15o3Zsqc7nfvebTFWxKe
- p96/H8BQ5TdYfwYuYQvxK6EpgPJDCOREem4Zo3raSSowo1i5fuxbt9oiVHWylPS8O58KG+NAW9X
- 516uUVlmuanQG4n8cWmOR5YHAiYTrGZFMxTpcYnjmHBEzdayzstPfifTeU/4tegezUZI3j3TdTh
- nRLStYR2rff9IzRGVYBclxhgj+7EBwljXPCcUANZ4UhQIGHLW01vVeQjy0VpLHAcFpDJSevlOCC
- /s6ADdzM24iyA49983r4RUI5mcrxx4eFdo4fUjogHCMi4bbPBTPFGilD+Qq6eeihxeg2GN0ZksH
- gGF71xoFr58n75+Fw0FoItUxZJaIsQBcWESC3NOzBFIV2jpJyUQC3YwTIJtmRZvtzukatUUMyTt
- EgMQ
-X-Received: by 2002:a05:600c:34c1:b0:49c:e3c3:5efd with SMTP id
- 5b1f17b1804b1-49e7a67e4d5mr211141035e9.9.1789492062396; 
- Tue, 15 Sep 2026 10:07:42 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789492063; x=1790096863;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=RDP3r7WeFvBfusadg3H1XPE6z2aDMAqweiepZ0CeGqM=;
+ b=fPa1HN1rdaMtvH7SWrdtkWiBsx4/T0VvR1DsZNz5IS0bjsVxnpguo8stEkg7s9sJOo
+ QoqbUbX14tC90un7Lcix86LF6Qihtln3PAHnJm+gMAOG8vFL2E/5JOI6tYPKIp+79Mwz
+ jE9Yc3eCateJD8HySktyvSCn6kV1PfjWzm4G7zr9N6yKSQxxUCk+1E1l9s4sY9BqQqRA
+ 9LUlTe/Dz4r1fSuDrsFRv0DcbQgcZ/KR/syXIBIoqHVlvloEt/dATIVTU6mWfW43Uw48
+ fLvZvKPDDDfbs0xRVH2oNuJW9GKPe1HW5lk2EXDxpRGI7uUohLrzZ/hTvah0vDzXM/OL
+ pV+w==
+X-Gm-Message-State: AFuF++mbX4T6U5q+sRXGx923r+yqO324gso+D/njx4fLifI5xVGt6JLX
+ iYlwZxyHlFHRDWSHPuZHv+fg7STaKp/SiI/7Ckg9bGANpFgnm4V8hdUAUJP8GF95lIPd1VwB8Fx
+ augpc+Ts=
+X-Gm-Gg: AYBFou3feAiCBXYcxdchF5ZLiWEUSA2gmRCeoYZzeZZdcF/ozxFoJL7AsldkcDoc3W3
+ wSQg2ninCi3f19L5ubGh1a/Zlf/BhleOHMH05JEob2zoBeR3KI5E360V20PYSDb9CAWk4wrMQ8a
+ sw+A7kVpvV+XXzUXDiE1esIl3qB1e9DDArRuY8QDiHYvpT/L5YANAE89Z875PQk9vJY/Kw0fj4Y
+ GDrFit6M393mhlGYo7Mbs1FIwZ3tA4/iHrWlIHU1k4mEYxOi4lLiHe1uEAKM38Yi3HL7y6hxLn9
+ 6G1deXrNERVgA2Pz0F1QfjM2P016mDAOS7KEyckwD/aQxUfkKnGkABuwH/AigtFQF/3eOcv0OtP
+ 9FhsudGeFz6CbofZTAxmohwHy4ATKZ60F16t3FaVyNDKDV+CyCiAaEn5G1Q9gI0PK7qTGv/3kPd
+ ra2lXVe59ew713QvMH9TBorP8flf+A53BEVjT3yVB9ED4cNz63YAS/e3lrfgnmadI6LUPwI0MOP
+ nnLvjE2i7whWAIdM5odqXKKIW8f4ojPK9LL0SlQxOyetepPrsVaFpVt8ovw61XWV2OxC3TDAjea
+ 9koX
+X-Received: by 2002:a5d:5f87:0:b0:486:e949:532c with SMTP id
+ ffacd0b85a97d-4870a9dd24cmr2098228f8f.43.1789492063298; 
+ Tue, 15 Sep 2026 10:07:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.41
+ ffacd0b85a97d-4870bf33e01sm431826f8f.23.2026.09.15.10.07.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 10:07:41 -0700 (PDT)
+ Tue, 15 Sep 2026 10:07:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/20] hw/intc/bcm2835_ic: reject out-of-range FIQ source values
-Date: Tue, 15 Sep 2026 18:07:19 +0100
-Message-ID: <20260915170735.425445-5-peter.maydell@linaro.org>
+Subject: [PULL 05/20] sbsa-gwdt: reduce code indent
+Date: Tue, 15 Sep 2026 18:07:20 +0100
+Message-ID: <20260915170735.425445-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915170735.425445-1-peter.maydell@linaro.org>
 References: <20260915170735.425445-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,142 +102,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-The FIQ_CONTROL register accepts a 7-bit source selector, but only
-sources 0..71 (64 GPU + 8 ARM IRQs) exist.  Values 96..127 cause
-bcm2835_ic_update() to call extract32(arm_irq_level, start, 1) with
-start >= 32, which trips the assertion in bitops.h and aborts QEMU.
-
-Reject writes that select a non-existent source and log a guest error,
-so that a malicious or buggy guest cannot kill the emulator.
-
-Add a qtest that verifies both valid and out-of-range FIQ source
-selections on raspi3b.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4368
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260831081709.77725-1-guobin@linux.alibaba.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260902122646.2848464-2-imammedo@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/bcm2835_ic.c          | 13 +++++--
- tests/qtest/bcm2835-ic-test.c | 66 +++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |  2 +-
- 3 files changed, 78 insertions(+), 3 deletions(-)
- create mode 100644 tests/qtest/bcm2835-ic-test.c
+ hw/watchdog/sbsa_gwdt.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/hw/intc/bcm2835_ic.c b/hw/intc/bcm2835_ic.c
-index 71bf671761b..262a620968f 100644
---- a/hw/intc/bcm2835_ic.c
-+++ b/hw/intc/bcm2835_ic.c
-@@ -139,10 +139,19 @@ static void bcm2835_ic_write(void *opaque, hwaddr offset, uint64_t val,
-     BCM2835ICState *s = opaque;
+diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+index 330a74798a2..7cc5609b83f 100644
+--- a/hw/watchdog/sbsa_gwdt.c
++++ b/hw/watchdog/sbsa_gwdt.c
+@@ -105,25 +105,27 @@ static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
  
-     switch (offset) {
--    case FIQ_CONTROL:
--        s->fiq_select = extract32(val, 0, 7);
-+    case FIQ_CONTROL: {
-+        unsigned fiq_select = extract32(val, 0, 7);
-+
-+        if (fiq_select >= GPU_IRQS + ARM_IRQS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: FIQ select %u out of range\n",
-+                          __func__, fiq_select);
-+            return;
-+        }
-+        s->fiq_select = fiq_select;
-         s->fiq_enable = extract32(val, 7, 1);
-         break;
-+    }
-     case IRQ_ENABLE_1:
-         s->gpu_irq_enable |= val;
-         break;
-diff --git a/tests/qtest/bcm2835-ic-test.c b/tests/qtest/bcm2835-ic-test.c
-new file mode 100644
-index 00000000000..1e171ee0924
---- /dev/null
-+++ b/tests/qtest/bcm2835-ic-test.c
-@@ -0,0 +1,66 @@
-+/*
-+ * QTest testcase for the BCM2835 Interrupt Controller
-+ *
-+ * Copyright (c) 2026 Bin Guo <guobin@linux.alibaba.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+
-+#define IC_BASE     0x3f00b200
-+#define FIQ_CONTROL (IC_BASE + 0x0c)
-+
-+static void test_fiq_select_out_of_range(void)
-+{
-+    uint32_t val;
+     timer_del(s->timer);
+ 
+-    if (s->wcs & SBSA_GWDT_WCS_EN) {
+-        /*
+-         * Extract the upper 16 bits from woru & 32 bits from worl
+-         * registers to construct the 48 bit offset value
+-         */
+-        timeout = s->woru;
+-        timeout <<= 32;
+-        timeout |= s->worl;
+-        timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
+-        timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-
+-        if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
+-                (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
+-            /* store the current timeout value into compare registers */
+-            s->wcvu = timeout >> 32;
+-            s->wcvl = timeout;
+-        }
+-        timer_mod(s->timer, timeout);
++    if (!(s->wcs & SBSA_GWDT_WCS_EN)) {
++        return;
+     }
 +
 +    /*
-+     * Only FIQ sources 0..71 exist.  Source 96 used to trigger an assertion
-+     * in bcm2835_ic_update() because extract32(arm_irq_level, 32, 1) was
-+     * called with start >= 32.  Make sure the write is rejected and QEMU
-+     * keeps running.
++     * Extract the upper 16 bits from woru & 32 bits from worl
++     * registers to construct the 48 bit offset value
 +     */
-+    writel(FIQ_CONTROL, 0xe0); /* fiq_select = 96, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
++    timeout = s->woru;
++    timeout <<= 32;
++    timeout |= s->worl;
++    timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
++    timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
 +
-+    /* The first source past the ARM IRQ range should also be rejected. */
-+    writel(FIQ_CONTROL, 0xc8); /* fiq_select = 72, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
-+}
-+
-+static void test_fiq_select_valid(void)
-+{
-+    uint32_t val;
-+
-+    /* Select the highest valid ARM IRQ source (64 + 7 = 71). */
-+    writel(FIQ_CONTROL, 0xc7); /* fiq_select = 71, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0xc7);
-+
-+    /* Select the highest valid GPU IRQ source. */
-+    writel(FIQ_CONTROL, 0x3f); /* fiq_select = 63, fiq_enable = 0 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0x3f);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-out-of-range",
-+                   test_fiq_select_out_of_range);
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-valid",
-+                   test_fiq_select_valid);
-+
-+    qtest_start("-machine raspi3b");
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index c3593f75304..33f58b0e95c 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -277,7 +277,7 @@ qtests_aarch64 = \
-     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
-   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-+  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test', 'bcm2835-ic-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
++    if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
++            (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
++        /* store the current timeout value into compare registers */
++        s->wcvu = timeout >> 32;
++        s->wcvl = timeout;
++    }
++    timer_mod(s->timer, timeout);
+ }
+ 
+ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
 -- 
 2.43.0
 
