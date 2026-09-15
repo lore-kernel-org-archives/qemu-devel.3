@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC4FC982C1
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB17C88E7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 16:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6VbM-0007ot-C0; Tue, 15 Sep 2026 12:01:44 -0400
+	id 1x6Vb4-0007YJ-IQ; Tue, 15 Sep 2026 12:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbI-0007kq-95
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:40 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1x6Vb2-0007XL-T2
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:24 -0400
+Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1x6VbE-0003SN-LG
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:39 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c294ad260fdso160578266b.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:36 -0700 (PDT)
+ id 1x6Vay-0003O2-R0
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 12:01:24 -0400
+Received: by mail-ej2-x10.google.com with SMTP id
+ a640c23a62f3a-c254f6c7a58so412152566b.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 09:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789488095; x=1790092895; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789488079; x=1790092879; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1UWLhGiru03iCBAYq6e7CUFMG/HcvDmu3qHp9LhwQeI=;
- b=L9pOh0L7xc7xO+qxyWFZrv7jFneDbp6dUgkhJIJmJ+ccviLNseU/6VJZ/4yJK0HpnF
- 4CsOjnDaKIqUZS3a/lJSeHD3jTDP5fd4UBptWRAv4NR2aGDE4KSXJDxkn0k+vtSm7Qyy
- sqluer3hm+LoqvC5FLvmx27IE7d6VSDr8FyvXTswh2rR7E+Lu5g4TYATE6YNFym+0y32
- Y5Yx9TlEeByd5ZhpIiEU7VQfZYQ0eW3cCN1X3btfxxhkKuZRCYWPo/Dl76n19Zub1YZB
- ffY7IDpA96cF7jq2FFP8N0ayU2qNCkM+AuHVvUD0zGa5L3nF4+rSZbmJBEhV8RxuPYaH
- Yiog==
+ bh=94yLgCZJnXztgL+1gk8uCJyDC6aCfGWvrBiAVC0Bd04=;
+ b=nkT4hykCQAg/7iWpvknzKwynrh4GwqTGkWtfMG8qy5jUfDUcRMgT7C6SUB+jwobg8n
+ EfyGlbUJeWz8K5pEXTLOIGtukLBvf3ly0Vo6d4TwsI0CzB1Wd0v7cxQUbx4uEmPv5MPH
+ ek1QuMYr60H9zY2RyjoT+ak7gamB3p5TNz1nE9yenrtKG/Z9TqVk89rZh3rKt3hbQD0L
+ o2HIcpeLKyBZWY4Xn7dTAKmpCXVGBpxzTYJP2VzYXbawozPNTrE2GZJ0fTVY817oMfsE
+ 9PO9h0cujf548LWROTdqL8TiZCsNj8Y04VKGEDc+pBD/6e6qwqepZSX9tI+qkZN6BnrZ
+ EMmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789488095; x=1790092895;
+ d=1e100.net; s=20260707; t=1789488079; x=1790092879;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1UWLhGiru03iCBAYq6e7CUFMG/HcvDmu3qHp9LhwQeI=;
- b=KpiSmnX1TgXHymIAZ3Y7/y9eDyQ8oepv8MdhX0910i6I40OZ8O+ePgwopY4rYcI769
- dC3FTttLqioCJ8fMSP/RI/ag2HJRGj+ppVmQb6Uy5CoIKGbM6g7lw/XbmVEjNNofQok7
- 8JBugR0IjfKrIPM9G+aqRmyl0q3/CDF4IdZtBi4s6c4hLF8qnfDgYXIRU5CXiz6BImzS
- HsKmzzX5ZdnCwusX9+l8cDV4Mo8TynCpa8Rq1cdoTiFafpjdhhAjdPp0eN7QxkOO3Jya
- n9G62yyp06QL5OszjlJ2jCsBjtFedHkjSAp8zxoGLFXtuEEbeBe/qYktXCj0Fb4EvlA7
- 9tsA==
-X-Gm-Message-State: AFuF++kd39wiBO1NTP3A8cg55DqUuo/o1ZzqxC+L+UvzXBuJW8FrsAI5
- jVYPq6ozGGmSEUwDVnMWYTk3D7tTBuzBAvnMqBIm1DMAhJiOjTrCWLe8L77Z7Q==
-X-Gm-Gg: AYBFou3Li8abq+0p59tyu+Ovaf4KwKw4BSePR/yhkxrwKlKxXRKF5C+ts01SWerP9/p
- jQyG/TCZlqRpTCamIe0cWRsBaSJnZHF5IyKa0L7d+7sCYaYs/tQcilR1VaLHtHiZ5CwM2Q2GTf7
- RGbN/jsZzmfjHaa9RrJL6iAvU0P3jkI6dhf+JvxNRptgIW7r4Cg9/T5r8Mh57rIahIugMpC7BvR
- KPooh1GYK1w/0lavalIJKmE3Af705R76mjRjPOY2BktCSTiGSqGXcWHTxyGmR4c0QLzYqGX23ks
- 9GJ1wwDZv3Szh8XiufEMJNdUExry/KoiYR/fOMQ96QNpTbejugzlJrTYocI6RPhj9a5grc1HwHH
- 4hlGSXBqtDuUTfcUQle2lLkHlZb7y2EK6u0EzQrBrjawREaPmNHHnSegf9uMffJfFK4O7L+so6J
- chaUHFvoFLaXbL2cdcFirIG2jiVuA/J85ARxqJ/nDCEJFH4v/E5cWZyRtiM/OyJv1UV4+YHPiRn
- b8jWdhBCYwcy3Fpxn042IziTwBPXfr+hSyVZ6ia/4hDWA==
-X-Received: by 2002:a17:907:da3:b0:c25:f7dc:2d9 with SMTP id
- a640c23a62f3a-c29c8bdb1ecmr343882866b.26.1789488094518; 
- Tue, 15 Sep 2026 09:01:34 -0700 (PDT)
+ bh=94yLgCZJnXztgL+1gk8uCJyDC6aCfGWvrBiAVC0Bd04=;
+ b=HF5tNzx/a+t6c7GOMq1EMRHTATFo8lr1wMXmdOuk7XecmND5FFOvXLUCSia6nc3q6r
+ xOtwOk/zyfHAHBBxhY6sRka+pN50oBCIzmBhSLVhQHeH0s9uylc1U5eGvFCibFJ4Scmk
+ g8yD9wYNWDlUZLsMyD74b8/8LwMdsAUFPMjA5DC12SCRk0fS6kTkBqAdK+qPBK2cf+oJ
+ u9xHvCFH7zTcgooVZoDBkyTjHfkkghaO5gWqmH2EQT4DUGExVJldrY8zwV0WJ49tfZ+e
+ 0avSkeKW+BsaEgVtmP82Psl/K/w7edPF0jK4mE5ZCmmrsKELGpCOqfYlp5xnBNbFq8ht
+ YMAw==
+X-Gm-Message-State: AFuF++k3dZ3XBuHnDMNxWR5cmaU5CUTPwyzjJ5nJ1jqziwd79/YLFYNr
+ J1j/2STc+lj4sG4aHE6oM539KHDPCMpVHBJsMUD83A9lLRlmjWcYUD4qpaVrbw==
+X-Gm-Gg: AYBFou0IjoqtlXw06A+91oOml4Bh7oYv3HuYahjQzgSnhqsv51oKbflc1U/ipkN++3a
+ iwAy5+3v8nQL187aKtgn7hM4L+1onq/ZU2zdfYtBG4/EElwf3CLhwL+n25HSR0t45j4XqsmajLj
+ 4vKnKmF4s6sFPw2zDIbfoOq0TqiFLlbxBMswoWvsyA0oGnnH2aHnF/kV7BDdnJTFX1cdlqEnBfG
+ HNV6swvj5DuRY+lvhE6YcUtdKJ1agwtu4AYiYWkdJoHLs+eB0D5lYX2he//EkY1nKFSArKcx1IL
+ fKrELlqNmaAeJ+PnZE13JMEmQmnmwIF5r8ch1BNATdRg0JliIHoraoxEC1wGF/yAoziTTamarDd
+ gVY1tVydjCHvFGMDhQiKEx350yl6blAFsi6AobKpGr/Bw2peK53eSZVxerxxcQjG0sP2mTmpE/3
+ NaOcPkVxjdhJrNZPZD+5ZcP2tMD6eHtdck6/5nM3iukKkt7hLmaMC2dl6QqwgC4ulSPFUEY+DlK
+ EVIPWNoLQI9b3q6OXhMW2eAK0KN+2yUkoy8uJ9Q5Z0lfG55qtGGxyWG
+X-Received: by 2002:a17:906:6a04:b0:c26:1649:47ab with SMTP id
+ a640c23a62f3a-c29b87180afmr450840166b.33.1789488079117; 
+ Tue, 15 Sep 2026 09:01:19 -0700 (PDT)
 Received: from thinkpad-t470s.. (83-131-196-251.adsl.net.t-com.hr.
  [83.131.196.251]) by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.32
+ a640c23a62f3a-c29ddd86344sm3235866b.0.2026.09.15.09.01.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Sep 2026 09:01:34 -0700 (PDT)
+ Tue, 15 Sep 2026 09:01:18 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
@@ -72,16 +72,16 @@ Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
  Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v2 13/20] hw/core: Add Remote Port ATS device skeleton
-Date: Tue, 15 Sep 2026 18:00:37 +0200
-Message-ID: <20260915160044.345788-14-ruslichenko.r@gmail.com>
+Subject: [PATCH v2 04/20] hw/core: Implement Remote Port bus access helpers
+Date: Tue, 15 Sep 2026 18:00:28 +0200
+Message-ID: <20260915160044.345788-5-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
 References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:34::10;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ej2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,323 +106,355 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Inroduce the remote-port-ats device and remote-port-ats-cache
-interface.
+Add bus access logic for Remote Port memory transactions.
+The patch add support for read and write commands, which
+enables data communication via the protocol.
 
-This patch provides the QOM definition and basic initialization
-logic required for Address Translation Services in Remote Port
-system.
+This includes support for both legacy and extended packet
+formats (such as 64-bit Master IDs) based on peer's
+capabilities.
 
-Preserved existing MIT license for remote-port-ats(.c,.h).
-
-Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port-ats.c         | 209 ++++++++++++++++++++++++++++++
- include/hw/core/remote-port-ats.h |  76 +++++++++++
+ hw/core/remote-port-proto.c         | 152 ++++++++++++++++++++++++++++
+ include/hw/core/remote-port-proto.h | 133 ++++++++++++++++++++++++
  2 files changed, 285 insertions(+)
- create mode 100644 hw/core/remote-port-ats.c
- create mode 100644 include/hw/core/remote-port-ats.h
 
-diff --git a/hw/core/remote-port-ats.c b/hw/core/remote-port-ats.c
-new file mode 100644
-index 0000000000..793f9fc52d
---- /dev/null
-+++ b/hw/core/remote-port-ats.c
-@@ -0,0 +1,209 @@
-+/*
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * QEMU remote port ATS
-+ *
-+ * Copyright (c) 2021 Xilinx Inc
-+ * Written by Francisco Iglesias <francisco.iglesias@xilinx.com>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+#include "qemu/osdep.h"
-+#include "system/system.h"
-+#include "system/dma.h"
-+#include "qemu/log.h"
-+#include "qapi/qmp/qerror.h"
-+#include "qapi/error.h"
-+#include "hw/core/sysbus.h"
-+#include "migration/vmstate.h"
-+#include "hw/core/qdev-properties.h"
-+#include "trace.h"
+diff --git a/hw/core/remote-port-proto.c b/hw/core/remote-port-proto.c
+index 9439f4b119..ddaefa7e36 100644
+--- a/hw/core/remote-port-proto.c
++++ b/hw/core/remote-port-proto.c
+@@ -63,6 +63,8 @@ int rp_decode_hdr(struct rp_pkt *pkt)
+ int rp_decode_payload(struct rp_pkt *pkt)
+ {
+     int used = 0;
++    /* Master_id has an odd decoding due to historical reasons.  */
++    uint64_t master_id;
+ 
+     switch (pkt->hdr.cmd) {
+     case RP_CMD_hello:
+@@ -102,6 +104,34 @@ int rp_decode_payload(struct rp_pkt *pkt)
+          */
+         used = pkt->hdr.len;
+         break;
++    case RP_CMD_write:
++    case RP_CMD_read:
++        assert(pkt->hdr.len >= sizeof pkt->busaccess - sizeof pkt->hdr);
++        pkt->busaccess.timestamp = be64_to_cpu(pkt->busaccess.timestamp);
++        pkt->busaccess.addr = be64_to_cpu(pkt->busaccess.addr);
++        pkt->busaccess.attributes = be64_to_cpu(pkt->busaccess.attributes);
++        pkt->busaccess.len = be32_to_cpu(pkt->busaccess.len);
++        pkt->busaccess.width = be32_to_cpu(pkt->busaccess.width);
++        pkt->busaccess.stream_width = be32_to_cpu(pkt->busaccess.stream_width);
++        master_id = be16_to_cpu(pkt->busaccess.master_id);
 +
-+#include "hw/core/remote-port-proto.h"
-+#include "hw/core/remote-port-ats.h"
++        used += sizeof pkt->busaccess - sizeof pkt->hdr;
 +
-+typedef struct ATSIOMMUNotifier {
-+    IOMMUNotifier n;
-+    MemoryRegion *mr;
-+    RemotePortATS *rp_ats;
-+    int iommu_idx;
-+} ATSIOMMUNotifier;
++        if (pkt->busaccess.attributes & RP_BUS_ATTR_EXT_BASE) {
++            struct rp_pkt_busaccess_ext_base *pext = &pkt->busaccess_ext_base;
 +
-+IOMMUTLBEntry *rp_ats_cache_lookup_translation(RemotePortATSCache *cache,
-+                                               hwaddr translated_addr,
-+                                               hwaddr len)
++            assert(pkt->hdr.len >= sizeof *pext - sizeof pkt->hdr);
++            master_id |= (uint64_t)be16_to_cpu(pext->master_id_31_16) << 16;
++            master_id |= (uint64_t)be32_to_cpu(pext->master_id_63_32) << 32;
++            pext->data_offset = be32_to_cpu(pext->data_offset);
++            pext->next_offset = be32_to_cpu(pext->next_offset);
++            pext->byte_enable_offset = be32_to_cpu(pext->byte_enable_offset);
++            pext->byte_enable_len = be32_to_cpu(pext->byte_enable_len);
++
++            used += sizeof *pext - sizeof pkt->busaccess;
++        }
++        pkt->busaccess.master_id = master_id;
++        break;
+     default:
+         break;
+     }
+@@ -144,6 +174,127 @@ size_t rp_encode_hello_caps(uint32_t id, uint32_t dev, struct rp_pkt_hello *pkt,
+     return sizeof *pkt;
+ }
+ 
++static void rp_encode_busaccess_common(struct rp_pkt_busaccess *pkt,
++                                  int64_t clk, uint16_t master_id,
++                                  uint64_t addr, uint64_t attr, uint32_t size,
++                                  uint32_t width, uint32_t stream_width)
 +{
-+    RemotePortATSCacheClass *c = REMOTE_PORT_ATS_CACHE_GET_CLASS(cache);
-+
-+    return c->lookup_translation(cache, translated_addr, len);
++    pkt->timestamp = cpu_to_be64(clk);
++    pkt->master_id = cpu_to_be16(master_id);
++    pkt->addr = cpu_to_be64(addr);
++    pkt->attributes = cpu_to_be64(attr);
++    pkt->len = cpu_to_be32(size);
++    pkt->width = cpu_to_be32(width);
++    pkt->stream_width = cpu_to_be32(stream_width);
 +}
 +
-+static IOMMUTLBEntry *rp_ats_lookup_translation(RemotePortATSCache *cache,
-+                                                hwaddr translated_addr,
-+                                                hwaddr len)
++size_t rp_encode_read(uint32_t id, uint32_t dev,
++                      struct rp_pkt_busaccess *pkt,
++                      int64_t clk, uint16_t master_id,
++                      uint64_t addr, uint64_t attr, uint32_t size,
++                      uint32_t width, uint32_t stream_width)
 +{
-+    /* TBD */
++    rp_encode_hdr(&pkt->hdr, RP_CMD_read, id, dev,
++                  sizeof *pkt - sizeof pkt->hdr, 0);
++    rp_encode_busaccess_common(pkt, clk, master_id, addr, attr,
++                               size, width, stream_width);
++    return sizeof *pkt;
++}
++
++size_t rp_encode_read_resp(uint32_t id, uint32_t dev,
++                           struct rp_pkt_busaccess *pkt,
++                           int64_t clk, uint16_t master_id,
++                           uint64_t addr, uint64_t attr, uint32_t size,
++                           uint32_t width, uint32_t stream_width)
++{
++    rp_encode_hdr(&pkt->hdr, RP_CMD_read, id, dev,
++                  sizeof *pkt - sizeof pkt->hdr + size, RP_PKT_FLAGS_response);
++    rp_encode_busaccess_common(pkt, clk, master_id, addr, attr,
++                               size, width, stream_width);
++    return sizeof *pkt + size;
++}
++
++size_t rp_encode_write(uint32_t id, uint32_t dev,
++                       struct rp_pkt_busaccess *pkt,
++                       int64_t clk, uint16_t master_id,
++                       uint64_t addr, uint64_t attr, uint32_t size,
++                       uint32_t width, uint32_t stream_width)
++{
++    rp_encode_hdr(&pkt->hdr, RP_CMD_write, id, dev,
++                  sizeof *pkt - sizeof pkt->hdr + size, 0);
++    rp_encode_busaccess_common(pkt, clk, master_id, addr, attr,
++                               size, width, stream_width);
++    return sizeof *pkt;
++}
++
++size_t rp_encode_write_resp(uint32_t id, uint32_t dev,
++                       struct rp_pkt_busaccess *pkt,
++                       int64_t clk, uint16_t master_id,
++                       uint64_t addr, uint64_t attr, uint32_t size,
++                       uint32_t width, uint32_t stream_width)
++{
++    rp_encode_hdr(&pkt->hdr, RP_CMD_write, id, dev,
++                  sizeof *pkt - sizeof pkt->hdr, RP_PKT_FLAGS_response);
++    rp_encode_busaccess_common(pkt, clk, master_id, addr, attr,
++                               size, width, stream_width);
++    return sizeof *pkt;
++}
++
++/* New API for extended header.  */
++size_t rp_encode_busaccess(struct rp_peer_state *peer,
++                           struct rp_pkt_busaccess_ext_base *pkt,
++                           struct rp_encode_busaccess_in *in) {
++    struct rp_pkt_busaccess *pkt_v4_0 = (void *) pkt;
++    uint32_t hsize = 0;
++    uint32_t ret_size = 0;
++
++    /* Allocate packet space.  */
++    if (in->cmd == RP_CMD_write && !(in->flags & RP_PKT_FLAGS_response)) {
++        hsize = in->size;
++    }
++    if (in->cmd == RP_CMD_read && (in->flags & RP_PKT_FLAGS_response)) {
++        hsize = in->size;
++        ret_size = in->size;
++    }
++
++    /*
++     * If peer does not support the busaccess base extensions, use the
++     * old layout. For responses, what matters is if we're responding
++     * to a packet with the extensions.
++     */
++    if (!peer->caps.busaccess_ext_base && !(in->attr & RP_BUS_ATTR_EXT_BASE)) {
++        /* Old layout.  */
++        assert(in->master_id < UINT16_MAX);
++
++        rp_encode_hdr(&pkt->hdr, in->cmd, in->id, in->dev,
++                  sizeof *pkt_v4_0 - sizeof pkt->hdr + hsize, in->flags);
++        rp_encode_busaccess_common(pkt_v4_0, in->clk, in->master_id,
++                                   in->addr, in->attr,
++                                   in->size, in->width, in->stream_width);
++        return sizeof *pkt_v4_0 + ret_size;
++    }
++
++    /* Encode the extended fields.  */
++    pkt->master_id_31_16 = cpu_to_be16(in->master_id >> 16);
++    pkt->master_id_63_32 = cpu_to_be32(in->master_id >> 32);
++
++    /* We always put data right after the header.  */
++    pkt->data_offset = cpu_to_be32(sizeof *pkt);
++    pkt->next_offset = 0;
++
++    pkt->byte_enable_offset = cpu_to_be32(sizeof *pkt + hsize);
++    pkt->byte_enable_len = cpu_to_be32(in->byte_enable_len);
++    hsize += in->byte_enable_len;
++
++    rp_encode_hdr(&pkt->hdr, in->cmd, in->id, in->dev,
++                  sizeof *pkt - sizeof pkt->hdr + hsize, in->flags);
++    rp_encode_busaccess_common(pkt_v4_0, in->clk, in->master_id, in->addr,
++                               in->attr | RP_BUS_ATTR_EXT_BASE,
++                               in->size, in->width, in->stream_width);
++
++    return sizeof *pkt + ret_size;
++}
++
+ void rp_process_caps(struct rp_peer_state *peer,
+                      void *caps, size_t caps_len)
+ {
+@@ -173,6 +324,7 @@ void rp_process_caps(struct rp_peer_state *peer,
+     }
+ }
+ 
++
+ void rp_dpkt_alloc(RemotePortDynPkt *dpkt, size_t size)
+ {
+     if (dpkt->size < size) {
+diff --git a/include/hw/core/remote-port-proto.h b/include/hw/core/remote-port-proto.h
+index ac7b7a9b96..de67cd6501 100644
+--- a/include/hw/core/remote-port-proto.h
++++ b/include/hw/core/remote-port-proto.h
+@@ -344,6 +344,134 @@ rp_encode_hello(uint32_t id, uint32_t dev, struct rp_pkt_hello *pkt,
+                                 NULL, NULL, 0);
+ }
+ 
++static inline void *__attribute__ ((deprecated))
++rp_busaccess_dataptr(struct rp_pkt_busaccess *pkt)
++{
++    /* Right after the packet.  */
++    return pkt + 1;
++}
++
++/*
++ * rp_busaccess_rx_dataptr
++ *
++ * Predicts the dataptr for a packet to be transmitted.
++ * This should only be used if you are trying to keep
++ * the entire packet in a linear buffer.
++ */
++static inline unsigned char *
++rp_busaccess_tx_dataptr(struct rp_peer_state *peer,
++                        struct rp_pkt_busaccess_ext_base *pkt)
++{
++    unsigned char *p = (unsigned char *) pkt;
++
++    if (peer->caps.busaccess_ext_base) {
++        /* We always put our data right after the header.  */
++        return p + sizeof *pkt;
++    } else {
++        /* Right after the old packet layout.  */
++        return p + sizeof(struct rp_pkt_busaccess);
++    }
++}
++
++/*
++ * rp_busaccess_rx_dataptr
++ *
++ * Extracts the dataptr from a received packet.
++ */
++static inline unsigned char *
++rp_busaccess_rx_dataptr(struct rp_peer_state *peer,
++                        struct rp_pkt_busaccess_ext_base *pkt)
++{
++    unsigned char *p = (unsigned char *) pkt;
++
++    if (pkt->attributes & RP_BUS_ATTR_EXT_BASE) {
++        return p + pkt->data_offset;
++    } else {
++        /* Right after the old packet layout.  */
++        return p + sizeof(struct rp_pkt_busaccess);
++    }
++}
++
++static inline unsigned char *
++rp_busaccess_byte_en_ptr(struct rp_peer_state *peer,
++                         struct rp_pkt_busaccess_ext_base *pkt)
++{
++    unsigned char *p = (unsigned char *) pkt;
++
++    if ((pkt->attributes & RP_BUS_ATTR_EXT_BASE)
++        && pkt->byte_enable_len) {
++        assert(pkt->byte_enable_offset >= sizeof *pkt);
++        assert(pkt->byte_enable_offset + pkt->byte_enable_len
++               <= pkt->hdr.len + sizeof pkt->hdr);
++        return p + pkt->byte_enable_offset;
++    }
 +    return NULL;
 +}
 +
-+static bool ats_translate_address(RemotePortATS *s, struct rp_pkt *pkt,
-+                                  hwaddr *phys_addr, hwaddr *phys_len)
-+{
-+    /* TBD */
-+    return true;
-+}
++size_t __attribute__ ((deprecated))
++rp_encode_read(uint32_t id, uint32_t dev,
++               struct rp_pkt_busaccess *pkt,
++               int64_t clk, uint16_t master_id,
++               uint64_t addr, uint64_t attr, uint32_t size,
++               uint32_t width, uint32_t stream_width);
 +
-+static void rp_ats_req(RemotePortDevice *dev, struct rp_pkt *pkt)
-+{
-+    RemotePortATS *s = REMOTE_PORT_ATS(dev);
-+    size_t pktlen = sizeof(struct rp_pkt_ats);
-+    hwaddr phys_addr = 0;
-+    hwaddr phys_len = (hwaddr)(-1);
-+    uint64_t result;
-+    size_t enclen;
-+    int64_t delay;
++size_t __attribute__ ((deprecated))
++rp_encode_read_resp(uint32_t id, uint32_t dev,
++                    struct rp_pkt_busaccess *pkt,
++                    int64_t clk, uint16_t master_id,
++                    uint64_t addr, uint64_t attr, uint32_t size,
++                    uint32_t width, uint32_t stream_width);
++
++size_t __attribute__ ((deprecated))
++rp_encode_write(uint32_t id, uint32_t dev,
++                struct rp_pkt_busaccess *pkt,
++                int64_t clk, uint16_t master_id,
++                uint64_t addr, uint64_t attr, uint32_t size,
++                uint32_t width, uint32_t stream_width);
++
++size_t __attribute__ ((deprecated))
++rp_encode_write_resp(uint32_t id, uint32_t dev,
++                     struct rp_pkt_busaccess *pkt,
++                     int64_t clk, uint16_t master_id,
++                     uint64_t addr, uint64_t attr, uint32_t size,
++                     uint32_t width, uint32_t stream_width);
++
++struct rp_encode_busaccess_in {
++    uint32_t cmd;
++    uint32_t id;
++    uint32_t flags;
++    uint32_t dev;
 +    int64_t clk;
-+
-+    assert(!(pkt->hdr.flags & RP_PKT_FLAGS_response));
-+
-+    rp_dpkt_alloc(&s->rsp, pktlen);
-+
-+    result = ats_translate_address(s, pkt, &phys_addr, &phys_len) ?
-+        RP_ATS_RESULT_ok : RP_ATS_RESULT_error;
-+
-+    /*
-+     * delay here could be set to the annotated cost of doing issuing
-+     * these accesses. QEMU doesn't support this kind of annotations
-+     * at the moment. So we just clear the delay.
-+     */
-+    delay = 0;
-+    clk = pkt->ats.timestamp + delay;
-+
-+    enclen = rp_encode_ats_req(pkt->hdr.id, pkt->hdr.dev,
-+                             &s->rsp.pkt->ats,
-+                             clk,
-+                             pkt->ats.attributes,
-+                             phys_addr,
-+                             phys_len,
-+                             result,
-+                             pkt->hdr.flags | RP_PKT_FLAGS_response);
-+    assert(enclen == pktlen);
-+
-+    rp_write(s->rp, (void *)s->rsp.pkt, enclen);
-+}
-+
-+static void rp_ats_realize(DeviceState *dev, Error **errp)
-+{
-+    RemotePortATS *s = REMOTE_PORT_ATS(dev);
-+    RemotePortDevice *rpd = REMOTE_PORT_DEVICE(dev);
-+
-+    rp_register_dev(s->rp, rpd, s->rp_dev);
-+
-+    s->peer = rp_get_peer(s->rp);
-+    address_space_init(&s->as, s->mr ? s->mr : get_system_memory(), "ats-as");
-+
-+    s->iommu_notifiers = g_array_new(false, true, sizeof(ATSIOMMUNotifier *));
-+    s->cache = g_array_new(false, true, sizeof(IOMMUTLBEntry *));
-+}
-+
-+static void rp_prop_allow_set_link(const Object *obj, const char *name,
-+                                   Object *val, Error **errp)
-+{
-+}
-+
-+static void rp_ats_init(Object *obj)
-+{
-+    RemotePortATS *s = REMOTE_PORT_ATS(obj);
-+
-+    object_property_add_link(obj, "rp-adaptor0", "remote-port",
-+                             (Object **)&s->rp,
-+                             rp_prop_allow_set_link,
-+                             OBJ_PROP_LINK_STRONG);
-+    object_property_add_link(obj, "mr", TYPE_MEMORY_REGION,
-+                             (Object **)&s->mr,
-+                             qdev_prop_allow_set_link_before_realize,
-+                             OBJ_PROP_LINK_STRONG);
-+}
-+
-+static void rp_ats_unrealize(DeviceState *dev)
-+{
-+    RemotePortATS *s = REMOTE_PORT_ATS(dev);
-+    ATSIOMMUNotifier *notifier;
-+    int i;
-+
-+    for (i = 0; i < s->iommu_notifiers->len; i++) {
-+        notifier = g_array_index(s->iommu_notifiers, ATSIOMMUNotifier *, i);
-+        memory_region_unregister_iommu_notifier(notifier->mr, &notifier->n);
-+        g_free(notifier);
-+    }
-+    g_array_free(s->iommu_notifiers, true);
-+
-+    address_space_destroy(&s->as);
-+
-+    for (i = 0; i < s->cache->len; i++) {
-+        IOMMUTLBEntry *tmp = g_array_index(s->cache, IOMMUTLBEntry *, i);
-+        g_free(tmp);
-+    }
-+    g_array_free(s->cache, true);
-+}
-+
-+static Property rp_properties[] = {
-+    DEFINE_PROP_UINT32("rp-chan0", RemotePortATS, rp_dev, 0),
++    uint64_t master_id;
++    uint64_t addr;
++    uint64_t attr;
++    uint32_t size;
++    uint32_t width;
++    uint32_t stream_width;
++    uint32_t byte_enable_len;
 +};
 +
-+static void rp_ats_class_init(ObjectClass *oc, const void *data)
-+{
-+    RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
-+    RemotePortATSCacheClass *atscc = REMOTE_PORT_ATS_CACHE_CLASS(oc);
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
-+
-+    rpdc->ops[RP_CMD_ats_req] = rp_ats_req;
-+    dc->realize = rp_ats_realize;
-+    dc->unrealize = rp_ats_unrealize;
-+    atscc->lookup_translation = rp_ats_lookup_translation;
++/* Prepare encode_busaccess input parameters for a packet response.  */
++static inline void
++rp_encode_busaccess_in_rsp_init(struct rp_encode_busaccess_in *in,
++                                struct rp_pkt *pkt) {
++    memset(in, 0, sizeof *in);
++    in->cmd = pkt->hdr.cmd;
++    in->id = pkt->hdr.id;
++    in->flags = pkt->hdr.flags | RP_PKT_FLAGS_response;
++    in->dev = pkt->hdr.dev;
++    /* FIXME: Propagate all master_id fields?  */
++    in->master_id = pkt->busaccess.master_id;
++    in->addr = pkt->busaccess.addr;
++    in->size = pkt->busaccess.len;
++    in->width = pkt->busaccess.width;
++    in->stream_width = pkt->busaccess.stream_width;
++    in->byte_enable_len = 0;
 +}
++size_t rp_encode_busaccess(struct rp_peer_state *peer,
++                           struct rp_pkt_busaccess_ext_base *pkt,
++                           struct rp_encode_busaccess_in *in);
 +
-+static const TypeInfo rp_ats_info = {
-+    .name          = TYPE_REMOTE_PORT_ATS,
-+    .parent        = TYPE_DEVICE,
-+    .instance_size = sizeof(RemotePortATS),
-+    .instance_init = rp_ats_init,
-+    .class_init    = rp_ats_class_init,
-+    .interfaces    = (InterfaceInfo[]) {
-+        { TYPE_REMOTE_PORT_DEVICE },
-+        { TYPE_REMOTE_PORT_ATS_CACHE },
-+        { },
-+    },
-+};
-+
-+static const TypeInfo rp_ats_cache_info = {
-+    .name          = TYPE_REMOTE_PORT_ATS_CACHE,
-+    .parent        = TYPE_INTERFACE,
-+    .class_size = sizeof(RemotePortATSCacheClass),
-+};
-+
-+static void rp_register_types(void)
+ void rp_process_caps(struct rp_peer_state *peer,
+                      void *caps, size_t caps_len);
+ 
+@@ -376,4 +504,9 @@ void rp_dpkt_invalidate(RemotePortDynPkt *dpkt);
+ 
+ void rp_dpkt_free(RemotePortDynPkt *dpkt);
+ 
++static inline int rp_get_busaccess_response(struct rp_pkt *pkt)
 +{
-+    type_register_static(&rp_ats_cache_info);
-+    type_register_static(&rp_ats_info);
++    return (pkt->busaccess_ext_base.attributes & RP_BUS_RESP_MASK) >>
++                                                            RP_BUS_RESP_SHIFT;
 +}
-+
-+type_init(rp_register_types)
-diff --git a/include/hw/core/remote-port-ats.h b/include/hw/core/remote-port-ats.h
-new file mode 100644
-index 0000000000..ffe60539ac
---- /dev/null
-+++ b/include/hw/core/remote-port-ats.h
-@@ -0,0 +1,76 @@
-+/*
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * QEMU remote port ATS
-+ *
-+ * Copyright (c) 2021 Xilinx Inc
-+ * Written by Francisco Iglesias <francisco.iglesias@xilinx.com>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+#ifndef REMOTE_PORT_ATS_H
-+#define REMOTE_PORT_ATS_H
-+
-+#include "hw/core/remote-port.h"
-+
-+#define TYPE_REMOTE_PORT_ATS "remote-port-ats"
-+#define REMOTE_PORT_ATS(obj) \
-+        OBJECT_CHECK(RemotePortATS, (obj), TYPE_REMOTE_PORT_ATS)
-+
-+typedef struct {
-+    /* private */
-+    SysBusDevice parent;
-+
-+    /* public */
-+    struct RemotePort *rp;
-+    struct rp_peer_state *peer;
-+    MemoryRegion *mr;
-+    AddressSpace as;
-+    RemotePortDynPkt rsp;
-+    GArray *iommu_notifiers;
-+    uint32_t rp_dev;
-+    GArray *cache; /* Translation cache */
-+} RemotePortATS;
-+
-+#define TYPE_REMOTE_PORT_ATS_CACHE "remote-port-ats-cache"
-+
-+#define REMOTE_PORT_ATS_CACHE_CLASS(klass) \
-+     OBJECT_CLASS_CHECK(RemotePortATSCacheClass, (klass), \
-+                        TYPE_REMOTE_PORT_ATS_CACHE)
-+#define REMOTE_PORT_ATS_CACHE_GET_CLASS(obj) \
-+    OBJECT_GET_CLASS(RemotePortATSCacheClass, (obj), TYPE_REMOTE_PORT_ATS_CACHE)
-+#define REMOTE_PORT_ATS_CACHE(obj) \
-+     INTERFACE_CHECK(RemotePortATSCache, (obj), TYPE_REMOTE_PORT_ATS_CACHE)
-+
-+typedef struct RemotePortATSCache {
-+    Object Parent;
-+} RemotePortATSCache;
-+
-+typedef struct RemotePortATSCacheClass {
-+    InterfaceClass parent;
-+
-+    IOMMUTLBEntry *(*lookup_translation)(RemotePortATSCache *cache,
-+                                         hwaddr translated_addr,
-+                                         hwaddr len);
-+} RemotePortATSCacheClass;
-+
-+IOMMUTLBEntry *rp_ats_cache_lookup_translation(RemotePortATSCache *cache,
-+                                               hwaddr translated_addr,
-+                                               hwaddr len);
-+#endif
+ #endif
 -- 
 2.43.0
 
