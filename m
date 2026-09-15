@@ -4,118 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FFEC88E7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73095C88E75
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 00:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6GdV-0003lt-2R; Mon, 14 Sep 2026 20:02:57 -0400
+	id 1x6Gsg-0003lP-CK; Mon, 14 Sep 2026 20:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdR-0003Xh-1k
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:53 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6GdN-0004oh-3t
- for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:02:52 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5B3A31FF6B;
- Tue, 15 Sep 2026 00:02:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789430561; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/DXE/id4ugWtIjlNn1UpgWZV0qHUesD6Nhy/EQlO1CQ=;
- b=SLeihxUKlYsRmRJ2qXR+ocM1fBH3IiywmIPU0QMSUm92pKYi/cPoaJ/MBhMKydS9a1OAJw
- ia9I08XRoMm7brVNDQ4axaZFA0Ii9UhUa4ShGgoLX8wgtknFuKerv200+9iamHf+mR+9DL
- hxsbLgLMaZt28MUYmg2zqwy0vic4VLs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789430561;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/DXE/id4ugWtIjlNn1UpgWZV0qHUesD6Nhy/EQlO1CQ=;
- b=zdU/01hAk/ZLw8E2gf6t3wRDzunX2SkBzGX/SGhsevfI2guWM1T8YcG2zX39H3keNqOzUz
- zT3TvtAdu5I66mDg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="R/11tr+z";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mo+OwUD5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789430557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/DXE/id4ugWtIjlNn1UpgWZV0qHUesD6Nhy/EQlO1CQ=;
- b=R/11tr+zxzRr0C4BwooG5B8TnA2AZImOMrVrsSxPTc5JDEZlB0j9FmSfVikSxawwtefamo
- 3mmitS6+JhS4fxl7m8l1c//aBp4DINBTsgYx952UY2ZUSnk2yMpJfJPJkZNnQhrHXMgyxD
- zmOUz/seHdpgPpqVjA9otNwY6bkWwUI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789430557;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/DXE/id4ugWtIjlNn1UpgWZV0qHUesD6Nhy/EQlO1CQ=;
- b=mo+OwUD51MvwurgdO8R0TW14RM7QY+rWpA8JlcER1qwMPFaHD2vT6a2WYjXcBy1vYCYUWa
- KVOG9w+qNzzWezCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 621681388C;
- Tue, 15 Sep 2026 00:02:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Gk6xFQeLqGqIFAAAD6G6ig:T13
- (envelope-from <farosas@suse.de>); Tue, 15 Sep 2026 00:02:35 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 12/20] migration: Change HMP 'info migrate_parameters'
- output
-Date: Mon, 14 Sep 2026 21:02:00 -0300
-Message-ID: <20260915000209.3692668-13-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260915000209.3692668-1-farosas@suse.de>
-References: <20260915000209.3692668-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x6Gse-0003kc-8E
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:18:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x6Gsc-0007ec-44
+ for qemu-devel@nongnu.org; Mon, 14 Sep 2026 20:18:36 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68EMxl9P1984420
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:18:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ o62Ys5YNlBz0uQNEq6FhQ2VZRL7QOzsQ1bzMkmrr+Fw=; b=n84HNHYBovdQhntz
+ 7u0GEvcVx1ls8OM4l/u1CwDZ33RvlWgLT+Ti18+NpdK9shE7fggQ3hDmsVpkwo4r
+ /YROQDRAJasfqzqGyUbDwtxE8XGEkj74QZLuC3opX/WcdG5C6R95J+1Hb1eXamJN
+ OXxa1gYVi2l8V8qgUk/sSHx3p8HmibcW8tauBUe/MYhqynhSZrfz0UnBvcwb8SRx
+ tOGiIZMAHSiV4O9A7kV1cOqZYOTIwkb3jAgbKghcwf0lQxV37j+hkH6NUhh+LGgn
+ HDysH6OQDq+QA/8MRKNOP9N+/eunlXkv3Me2qkQmwEfifdIb6gdrllgcT/UOsmv+
+ ZjhHow==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gpnet18bm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 00:18:31 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-39af92138f9so581467a91.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Sep 2026 17:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789431510; x=1790036310; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=o62Ys5YNlBz0uQNEq6FhQ2VZRL7QOzsQ1bzMkmrr+Fw=;
+ b=GD8+isUJHBzylmD27GiVJsJGpaS6qHojuMSGstsnvEQUUiW2g9qvWBfaI7NYv1yG1f
+ HPyaQWxyhdxB+/YvnWp2YVNmZPRtWxSapPpZ6c74T1TqEKivaViLTEIN4e7JishfyNb+
+ DvxTbMN0D+ml8in/YDY1Ysu4OsF3kXfM8LiC6RWZmFQTKN6k+taPmcz6qstAep2ve/Aq
+ rBdyx2a4ZNJ3qxJCOIZJXzsjcGToHnASCxushEdk9b0thS+Hn63SBVgia1B/vZlqiAYt
+ U1wxx7IAjtxejPGrI+abmhOLaoCqhjVb+BzVFZtqyM2Iqyfp8P3wv76LR15hMMfQAiHh
+ SSKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789431511; x=1790036311;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=o62Ys5YNlBz0uQNEq6FhQ2VZRL7QOzsQ1bzMkmrr+Fw=;
+ b=rSo8JuPmwyHzVJ1/cRHRZ2jq50S/nv1QWfHWSttJgF3m2iwH54ySPMb5sWoFWFUqMl
+ GVGSR7VrCSOpDPImBTP0gDWmPntRFdo6/LgZXIqgtbQ2FfrhvE25VnG82q/jQ37Vuymm
+ vnZb+k5o6sV/L2iMndx4lYjwff+ZnO/xc0vz3uju/FbvV9h+aQya3aHfnMR2Q/iZLPxH
+ vTDnbgLXSKoLdKsXA507GKqlmoJzSSihSrEOjA5Y6t2bSbLIMy9OU/brmHJrRCUDlZ4j
+ Am1ZQmVLUdblNVOKYxrYWvJQvDP2idXmg+7K9FYMAd7Fx4WePWVfyo3E0sMq5UFlb+Da
+ LDUg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzPLhJtoPXi4v7xPgL20q2JkpNQm2zfXYts7JoqHxN2c5Ql322oer/dmUGIPn+AKZVBfLTB6aFD4iOt@nongnu.org
+X-Gm-Message-State: AFuF++n5JmS1//sJeY94Q6DrQdOZSBTr7qYkkYDxnuqw6xMaqNXBa0b7
+ W/z1TEHWlWzdGWeWMyfUpsucFVrAta8w+08xFgxpLK0jXrN9ZW+dmpcKnXyqxRG26NoIpV/i6AP
+ XtK6vvhiRoG4q1ft04UgbXFQUxBh1pOu5eV7hdTOWhWFCINWCFiEA0YFnVA==
+X-Gm-Gg: AYBFou1QXYNjQnThXRLuM+rqJKwhO+HwdkmDVO0Yyp6CKS8C1sriz58HwQI5hPmuTK/
+ oCJMILAki2CSpT+C3LOHu34YcC39ViUWzZwhW13HGlOCUv1cbCwSQoe2P/6bMQ6UW/Goe7+KOlW
+ eYG4Z1ciIN/AJmkQhj0NhMyjM4owwSStsSc7L8YC7hcOJenW27Yt4+txIZAlhw85aDwnGQkroCI
+ 73laD+QciPxjMOw9jjfl9eVb/ZAB6pl4kJfFuSrK404NLSQzwd91bBWJIlxygE9axxOpEf7L+HV
+ qnXGB0SL9yvmg/rH3tRHbLkLj45p63L2rTP9j0cdw3DMX+Te52M/sDJKOpo6bWDba2WgCAVnvkP
+ 9MWr3B0BWF9F7BTHvTBGX4WGEOSUoWETvMRj8E0lnuKK9soGywTHhcdWHkQx4Bd6S/xbt
+X-Received: by 2002:a17:90a:d44d:b0:37f:a913:1554 with SMTP id
+ 98e67ed59e1d1-39dfe187ee6mr2594029a91.16.1789431510438; 
+ Mon, 14 Sep 2026 17:18:30 -0700 (PDT)
+X-Received: by 2002:a17:90a:d44d:b0:37f:a913:1554 with SMTP id
+ 98e67ed59e1d1-39dfe187ee6mr2593996a91.16.1789431510037; 
+ Mon, 14 Sep 2026 17:18:30 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33ba4f06423sm33636387eec.20.2026.09.14.17.18.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Sep 2026 17:18:29 -0700 (PDT)
+Message-ID: <3a1e2293-7390-4aee-bf36-c8ee77791643@oss.qualcomm.com>
+Date: Mon, 14 Sep 2026 17:18:28 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/tcg/s390x: Restore the SLOF libc include path
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260914235113.272992-1-iii@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260914235113.272992-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5B3A31FF6B
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[8]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE1MDAwMiBTYWx0ZWRfXzEyxGZTgS5YT
+ UO8/7jyNWrxheulfDgSLR2yGxk2y0HgCXxUbvLhpql2s6sOhtsPYCXwNeMEcClsrPQSsmniIYXs
+ NS7TCp2Fs8ncqjq48wPcj4nWtmeHzj8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDAwMiBTYWx0ZWRfX433AblX84cx5
+ +moL17nh6UiXRcObgMHLjupTgJtWJpbbo7yysHv20kE/Xp9qLvtYHjS3qBb2x/WSZ7ivMBLNB51
+ pl0pI8S5kDB5eNrB/v7KfNWVq3BYU3KU4wYRvCH7fcrC1EBKSxL5xVuidXXYd3d1Zg8Huzmd9vo
+ k/B/wFn/OyniBaEv4iO6Iin6Byr/NUNr3+4QzjA5B7I87R08fK8StMEPNY2XqTdloqapaf/0dAb
+ Ub1fsbuIQrx8/0E3NGPySijwTijwwQLerGkS+iWT1Hke9hsxmDrvADJ06Zd+/YDIaeX0FFCGAIG
+ 8jfHblZnAHS2RY0CnGRfnrmj10+8Q4fLxINBYQMdZxFqnOYtxm7tkdB7O4r955NCPneL8e9dE2A
+ PZyjjBEyNcYBL1OwFHL1QgbY+QwzIgOHNKPkecoIE+jGdNvEThTr98JsZiW1eraF7Fk5zT2sCdD
+ pq3308fMEIozPRFpywQ==
+X-Authority-Analysis: v=2.4 cv=PKKaavqC c=1 sm=1 tr=0 ts=6aa88ed7 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=GaQpPoNlAAAA:8 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=RsrfAPnzSv9tpYPlwikA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22 a=xF5q_uoM5gZT5J3czcBi:22
+X-Proofpoint-GUID: liu1RVXTRk-Mwz2JWTBlW_hnSXDE2um0
+X-Proofpoint-ORIG-GUID: liu1RVXTRk-Mwz2JWTBlW_hnSXDE2um0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-14_05,2026-09-14_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609150002
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,307 +161,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The output of 'info migrate_parameters' includes units of measurement
-for a few parameters. This is convenient for a user. However, having
-the units also means that every parameter must have its own separate
-piece of code to handle the formatting.
+On 9/14/2026 4:51 PM, Ilya Leoshkevich wrote:
+> The meson conversion dropped the SLOF libc include path that commit
+> 3fa010d5317 ("tests/tcg/s390x: Use the SLOF libc headers for the
+> multiarch tests") had added, breaking the build on systems without a
+> cross-libc, such as Fedora.
+>
 
-From a development and maintenance perspective, having a list of
-parameters explicitly written in several parts of the code brings
-annoyances: conflicts during rebase, extra hits when grepping,
-contributors need to mirror a change to various locations, etc.
+Would that be possible for you to post the exact compilation error?
 
-As the HMP output is not part of any ABI, remove the units from the
-output to avoid this requirement of having individualized code for
-every parameter. Next patches will take benefit from that and use
-generic code to output the parameters values in HMP.
+If that's a missing string.h header, we can simply add declarations with
+implementation we provide here:
+https://lore.kernel.org/qemu-devel/20260904124604.2207440-86-alex.bennee@linaro.org/
 
-Aside from the units, also remove quotes from around the TLS options
-strings as this is inconsistent with all the other strings.
+If there is another missing, we can also fast forward what's needed.
 
-Similarly, change block-bitmap-mapping format to remove the arrows
-(->) for the mappings as not all parameters represented as a list have
-this semantics. This requires updating one of the iotests.
+s390x is the only arch having this kind of dependency, so it would be
+better to align it with all others and ensure tests are self contained.
 
-Before:                                      After:
-                     (unchanged entries omitted)
-announce-initial: 50 ms                      announce-initial: 50
-announce-max: 550 ms                         announce-max: 550
-announce-rounds: 5                           announce-rounds: 5
-announce-step: 100 ms                        announce-step: 100
-tls-creds: ''                                tls-creds:
-tls-hostname: ''                             tls-hostname:
-tls-authz: ''                                tls-authz:
-max-bandwidth: 134217728 bytes/second        max-bandwidth: 134217728
-avail-switchover-bandwidth: 0 bytes/second   avail-switchover-bandwidth: 0
-max-postcopy-bandwidth: 0 bytes/second       max-postcopy-bandwidth: 0
-downtime-limit: 300 ms                       downtime-limit: 300
-x-checkpoint-delay: 20000 ms                 x-checkpoint-delay: 20000
-xbzrle-cache-size: 67108864 bytes            xbzrle-cache-size: 67108864
-x-vcpu-dirty-limit-period: 1000 ms           x-vcpu-dirty-limit-period: 1000
-vcpu-dirty-limit: 1 MB/s                     vcpu-dirty-limit: 1
-x-rdma-chunk-size: 1048576 bytes             x-rdma-chunk-size: 1048576
-block-bitmap-mapping:                        block-bitmap-mapping:
-  'node-src' -> 'node-dst'                    bitmaps:
-    'bmap0' -> 'bmap0'                        name: bmap0 alias: bmap0
-                                              node-name: node-src alias: node-dst
+> Restore the include path. Add the logic to check out SLOF libc.
+> 
+> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reported-by: Alex Bennée <alex.bennee@linaro.org>
+> Closes: https://patchew.org/QEMU/20260910100120.2076092-1-berrange@redhat.com/
+> Fixes: cd81cf86834 ("tests/tcg/s390x: system tests")
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>  tests/tcg/s390x/system/meson.build | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/tests/tcg/s390x/system/meson.build b/tests/tcg/s390x/system/meson.build
+> index ca07f503058..26f47d4184a 100644
+> --- a/tests/tcg/s390x/system/meson.build
+> +++ b/tests/tcg/s390x/system/meson.build
+> @@ -6,11 +6,13 @@ link_script = files('../softmmu.ld')[0]
+>  head64 = files('../head64.S')[0]
+>  console = files('../console.c')[0]
+>  ipl_inc = meson.project_source_root()/'include'/'hw'/'s390x'/'ipl'
+> +slof_inc = meson.project_source_root()/'roms'/'SLOF'/'lib'/'libc'/'include'
+>  cflags = ['-nostdlib',
+>            '-ffreestanding',
+>            '-Wa,--noexecstack',
+>            '-I', minilib_dir, minilib_printf,
+>            '-I', ipl_inc,
+> +          '-I', slof_inc,
+>            '-march=z13',
+>            head64, console]
+>  asmflags = ['-nostdlib',
+> @@ -21,6 +23,11 @@ qemu_args = ['-display', 'none',
+>               '-serial', 'stdio',
+>               '-kernel']
+>  
+> +if not fs.exists(slof_inc) and get_option('wrap_mode') != 'nodownload'
+> +  run_command(meson.project_source_root()/'scripts'/'git-submodule.sh',
+> +              'update', 'roms/SLOF', check: false)
+> +endif
+> +
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/migration-hmp-cmds.c     | 79 +++++++++++++++++-------------
- tests/qemu-iotests/300             | 20 +++++---
- tests/qtest/migration/misc-tests.c | 30 ++++++------
- 3 files changed, 74 insertions(+), 55 deletions(-)
+If we can't update the submodule, we should probably not continue further.
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 67ea2eea15..b3422b848a 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -335,16 +335,16 @@ void hmp_info_migrate_parameters(MonitorHMP *hmp, const QDict *qdict)
-     params = qmp_query_migrate_parameters(NULL);
- 
-     if (params) {
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " ms\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_INITIAL),
-             params->announce_initial);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " ms\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_MAX),
-             params->announce_max);
-         monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_ROUNDS),
-             params->announce_rounds);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " ms\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_STEP),
-             params->announce_step);
-         assert(params->has_throttle_trigger_threshold);
-@@ -368,35 +368,35 @@ void hmp_info_migrate_parameters(MonitorHMP *hmp, const QDict *qdict)
-             MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
-             params->max_cpu_throttle);
-         assert(params->tls_creds);
--        monitor_hmp_printf(hmp, "%s: '%s'\n",
-+        monitor_hmp_printf(hmp, "%s: %s\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_TLS_CREDS),
-                        params->tls_creds->u.s);
-         assert(params->tls_hostname);
--        monitor_hmp_printf(hmp, "%s: '%s'\n",
-+        monitor_hmp_printf(hmp, "%s: %s\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
-                        params->tls_hostname->u.s);
-         assert(params->tls_authz);
--        monitor_hmp_printf(hmp, "%s: '%s'\n",
-+        monitor_hmp_printf(hmp, "%s: %s\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
-                        params->tls_authz->u.s);
-         assert(params->has_max_bandwidth);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " bytes/second\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
-             params->max_bandwidth);
-         assert(params->has_avail_switchover_bandwidth);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " bytes/second\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_AVAIL_SWITCHOVER_BANDWIDTH),
-             params->avail_switchover_bandwidth);
-         assert(params->has_max_postcopy_bandwidth);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " bytes/second\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH),
-             params->max_postcopy_bandwidth);
-         assert(params->has_downtime_limit);
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " ms\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_DOWNTIME_LIMIT),
-             params->downtime_limit);
-         assert(params->has_x_checkpoint_delay);
--        monitor_hmp_printf(hmp, "%s: %u ms\n",
-+        monitor_hmp_printf(hmp, "%s: %u\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_X_CHECKPOINT_DELAY),
-             params->x_checkpoint_delay);
-         monitor_hmp_printf(hmp, "%s: %u\n",
-@@ -410,41 +410,52 @@ void hmp_info_migrate_parameters(MonitorHMP *hmp, const QDict *qdict)
-             MigrationParameter_str(MIGRATION_PARAMETER_ZERO_PAGE_DETECTION),
-             qapi_enum_lookup(&ZeroPageDetection_lookup,
-                 params->zero_page_detection));
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " bytes\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_XBZRLE_CACHE_SIZE),
-             params->xbzrle_cache_size);
- 
-         if (s->has_block_bitmap_mapping) {
--            const BitmapMigrationNodeAliasList *bmnal;
-+            BitmapMigrationNodeAliasList *nal;
-+            BitmapMigrationNodeAlias *na;
-+            BitmapMigrationBitmapAliasList *bal;
-+            BitmapMigrationBitmapAlias *ba;
-+            BitmapMigrationBitmapAliasTransform *bat;
- 
-             monitor_hmp_printf(hmp, "%s:\n",
--                               MigrationParameter_str(
--                                   MIGRATION_PARAMETER_BLOCK_BITMAP_MAPPING));
-+                           MigrationParameter_str(
-+                               MIGRATION_PARAMETER_BLOCK_BITMAP_MAPPING));
- 
--            for (bmnal = params->block_bitmap_mapping;
--                 bmnal;
--                 bmnal = bmnal->next)
-+            for (nal = params->block_bitmap_mapping; nal; nal = nal->next)
-             {
--                const BitmapMigrationNodeAlias *bmna = bmnal->value;
--                const BitmapMigrationBitmapAliasList *bmbal;
-+                na = nal->value;
-+                monitor_hmp_printf(hmp, " bitmaps:\n");
-+                for (bal = na->bitmaps; bal; bal = bal->next) {
-+                    ba = bal->value;
-+                    bat = ba->transform;
- 
--                monitor_hmp_printf(hmp, "  '%s' -> '%s'\n",
--                                   bmna->node_name, bmna->alias);
--
--                for (bmbal = bmna->bitmaps; bmbal; bmbal = bmbal->next) {
--                    const BitmapMigrationBitmapAlias *bmba = bmbal->value;
--
--                    monitor_hmp_printf(hmp, "    '%s' -> '%s'\n",
--                                       bmba->name, bmba->alias);
-+                    monitor_hmp_printf(hmp, " name: %s", ba->name);
-+                    if (bat && bat->has_persistent) {
-+                        monitor_hmp_printf(hmp, " transform:");
-+                        if (bat->persistent) {
-+                            monitor_hmp_printf(hmp, " persistent: on");
-+                        } else {
-+                            monitor_hmp_printf(hmp, " persistent: off");
-+                        }
-+                    }
-+                    monitor_hmp_printf(hmp, " alias: %s\n", ba->alias);
-                 }
-+                monitor_hmp_printf(hmp, " node-name: %s alias: %s\n",
-+                                   na->node_name, na->alias);
-             }
-+
-+            monitor_hmp_printf(hmp, "\n");
-         }
- 
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " ms\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-         MigrationParameter_str(MIGRATION_PARAMETER_X_VCPU_DIRTY_LIMIT_PERIOD),
-         params->x_vcpu_dirty_limit_period);
- 
--        monitor_hmp_printf(hmp, "%s: %" PRIu64 " MB/s\n",
-+        monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_VCPU_DIRTY_LIMIT),
-             params->vcpu_dirty_limit);
- 
-@@ -461,10 +472,10 @@ void hmp_info_migrate_parameters(MonitorHMP *hmp, const QDict *qdict)
-         }
- 
-         if (params->has_x_rdma_chunk_size) {
--            monitor_hmp_printf(hmp, "%s: %" PRIu64 " bytes\n",
--                               MigrationParameter_str(
--                                   MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
--                               params->x_rdma_chunk_size);
-+            monitor_hmp_printf(hmp, "%s: %" PRIu64 "\n",
-+                           MigrationParameter_str(
-+                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
-+                           params->x_rdma_chunk_size);
-         }
- 
-         assert(params->has_cpr_exec_command);
-diff --git a/tests/qemu-iotests/300 b/tests/qemu-iotests/300
-index df2ba32632..7b97eef1fd 100755
---- a/tests/qemu-iotests/300
-+++ b/tests/qemu-iotests/300
-@@ -147,11 +147,9 @@ class TestDirtyBitmapMigration(iotests.QMPTestCase):
- 
-             result = vm.qmp('human-monitor-command',
-                             command_line='info migrate_parameters')
--
--            m = re.search(r'^block-bitmap-mapping:\r?(\n  .*)*\n',
-+            m = re.search(r'^block-bitmap-mapping:\r\n( .*\r\n)*',
-                           result['return'], flags=re.MULTILINE)
-             hmp_mapping = m.group(0).replace('\r', '') if m else None
--
-             self.assertEqual(hmp_mapping, self.to_hmp_mapping(mapping))
-         else:
-             self.assert_qmp(result, 'error/desc', error)
-@@ -161,11 +159,21 @@ class TestDirtyBitmapMigration(iotests.QMPTestCase):
-         result = 'block-bitmap-mapping:\n'
- 
-         for node in mapping:
--            result += f"  '{node['node-name']}' -> '{node['alias']}'\n"
--
-             assert isinstance(node['bitmaps'], list)
-+            result += ' bitmaps:\n'
-             for bitmap in node['bitmaps']:
--                result += f"    '{bitmap['name']}' -> '{bitmap['alias']}'\n"
-+                result += f" name: {bitmap['name']}"
-+                if 'transform' in bitmap:
-+                    result += " transform:"
-+                    if 'persistent' in bitmap['transform']:
-+                        if bitmap['transform']['persistent']:
-+                            result += " persistent: on"
-+                        else:
-+                            result += " persistent: off"
-+                result += f" alias: {bitmap['alias']}\n"
-+
-+            result += f" node-name: {node['node-name']} alias: {node['alias']}"
-+            result += '\n'
- 
-         return result
- 
-diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index f70d35c658..182a8518a9 100644
---- a/tests/qtest/migration/misc-tests.c
-+++ b/tests/qtest/migration/misc-tests.c
-@@ -156,21 +156,21 @@ static void test_hmp_migration_parameters(char *name, MigrateCommon *args)
-         TEST("local", "on", "on"),
- 
-         /* uint64_t */
--        TEST("announce-initial", "60", "60 ms"),
--        TEST("announce-max", "600", "600 ms"),
-+        TEST("announce-initial", "60", "60"),
-+        TEST("announce-max", "600", "600"),
-         TEST("announce-rounds", "6", "6"),
--        TEST("announce-step", "15", "15 ms"),
--        TEST("downtime-limit", "400", "400 ms"),
--        TEST("avail-switchover-bandwidth", "2097152", "2097152 bytes/second"),
--        TEST("max-bandwidth", "9876543", "9876543 bytes/second"),
--        TEST("max-postcopy-bandwidth", "1048576", "1048576 bytes/second"),
--        TEST("vcpu-dirty-limit", "20", "20 MB/s"),
--        TEST("x-rdma-chunk-size", "1048576", "1048576 bytes"),
--        TEST("x-vcpu-dirty-limit-period", "750", "750 ms"),
--        TEST("xbzrle-cache-size", "67108864", "67108864 bytes"),
-+        TEST("announce-step", "15", "15"),
-+        TEST("downtime-limit", "400", "400"),
-+        TEST("avail-switchover-bandwidth", "2097152", "2097152"),
-+        TEST("max-bandwidth", "9876543", "9876543"),
-+        TEST("max-postcopy-bandwidth", "1048576", "1048576"),
-+        TEST("vcpu-dirty-limit", "20", "20"),
-+        TEST("x-rdma-chunk-size", "1048576", "1048576"),
-+        TEST("x-vcpu-dirty-limit-period", "750", "750"),
-+        TEST("xbzrle-cache-size", "67108864", "67108864"),
- 
-         /* uint32_t */
--        TEST("x-checkpoint-delay", "5000", "5000 ms"),
-+        TEST("x-checkpoint-delay", "5000", "5000"),
- 
-         /* uint8_t */
-         TEST("cpu-throttle-increment", "15", "15"),
-@@ -183,9 +183,9 @@ static void test_hmp_migration_parameters(char *name, MigrateCommon *args)
-         TEST("mode", "cpr-exec", "cpr-exec"),
-         TEST("multifd-compression", "zlib", "zlib"),
-         TEST("zero-page-detection", "none", "none"),
--        TEST("tls-authz", "my_authz", "'my_authz'"),
--        TEST("tls-creds", "null", "'null'"),
--        TEST("tls-hostname", "localhost", "'localhost'"),
-+        TEST("tls-authz", "my_authz", "my_authz"),
-+        TEST("tls-creds", "null", "null"),
-+        TEST("tls-hostname", "localhost", "localhost"),
-         TEST("cpr-exec-command", "/bin/true foobar", "/bin/true foobar"),
- 
-         /* can be set but are currently missing in the query output */
--- 
-2.53.0
-
+>  # Multi arch tests - add cflags only once per src
+>  multi_src = []
+>  foreach t: tcg_tests['multiarch-softmmu']['tests']
 
