@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23533C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C73C982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lic-0001Mb-1g; Wed, 16 Sep 2026 05:14:19 -0400
+	id 1x6liw-0001tR-6E; Wed, 16 Sep 2026 05:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6li9-0001DF-7n; Wed, 16 Sep 2026 05:13:49 -0400
+ id 1x6liO-0001H2-T0; Wed, 16 Sep 2026 05:14:05 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6li7-00088U-Bb; Wed, 16 Sep 2026 05:13:49 -0400
+ id 1x6liN-00088r-9I; Wed, 16 Sep 2026 05:14:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=RrRRTM+hKW9E9aukXzHv56EvBVfkTulUw32ij3Vb0sg=; b=jxxYAyX0DSLszxz
- HC/uCM59ZE9LLc9vtEwR9gkZ77LiuPLibt4lrWOIvPjwxIGzo9J1FWHWsuA4GNoTlKAxHmiP6XLCD
- O35BUZCDYiCBtG/vHpTK2J5lZMTe+ZGhTKrlnL+5iBWpgapSZy0OideNq7z1yrfA86NjbZyfH2nSC
- gE=;
-Date: Wed, 16 Sep 2026 11:19:02 +0200
-Subject: [PATCH v4 07/12] hw/riscv: Define SiFive E/U CPUs using runtime
- conditions
+ List-Help; bh=/5cKPTcNrENGYNboJ9Xh49xTMf7WRAhH+qgJvCNmrqI=; b=mSbjvPHg5SDRHRO
+ kn2sxmhzgbH6Zp5ymOJCnXwXTDBwV9agBgF4ETNs1ellQkOyC8yFClnBumswBbX9aUFavGNSLE2eE
+ Eln25UagM+ih9WZWp3nWT83dxN37czgwfHijTWyIT0V0iSQ+i5+uQGN6I89kDn1oYy6zStkHXcWHB
+ 0I=;
+Date: Wed, 16 Sep 2026 11:19:05 +0200
+Subject: [PATCH v4 10/12] target-info: Introduce target_riscv32
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260916-hw-riscv-cpu-int-v4-7-babc367b60f5@rev.ng>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260916-hw-riscv-cpu-int-v4-10-babc367b60f5@rev.ng>
 References: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 In-Reply-To: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, 
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, Chao Liu <chao.liu.zevorn@gmail.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=5281;
+ alistair.francis@wdc.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=1142;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=Q90V/MFI44KOgxihm0cIMXrVnnoPikfVf+Znrq0exHg=;
- b=cQr/tINaFYB/lhz1s73bD8xkC+3zoaFGH4pEOrytQhViqOaAfG6Z6oF0B6Yz8inbjlPNTgxkM
- HS1p/rcpTTYCCZWsCRBmz11AAEpC9VjirApKZf4mxYWho5xr5Kg8Yxv
+ bh=N+uEQZeAwfEqPvdkiOEOcw+Pf2L9CiSssjU+9HTIlpI=;
+ b=c/O1yoqTEOmrrvX1e13ZwzhumATIaWK4Lg85Se5VMHqWOQBuEC48MI5TUMX9w1kEYBS668ed4
+ jEnzOK/TrxoC0hXY1q/UchNXy04/UwEkSIKydEEbkArYR3FmV89vV18
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -74,128 +73,49 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Macros are removed and replaced with inlined ternary statements.  The
-now empty sifive_cpu.h header is then removed.
+Will be used in the following commit to filter machines using
+TypeInfo::is_available, so a simple !target_riscv64() is not sufficient.
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/hw/riscv/sifive_cpu.h | 31 -------------------------------
- include/hw/riscv/sifive_e.h   |  1 -
- include/hw/riscv/sifive_u.h   |  1 -
- hw/riscv/sifive_e.c           |  3 ++-
- hw/riscv/sifive_u.c           |  7 +++++--
- 5 files changed, 7 insertions(+), 36 deletions(-)
+ include/qemu/target-info.h | 7 +++++++
+ target-info.c              | 5 +++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/include/hw/riscv/sifive_cpu.h b/include/hw/riscv/sifive_cpu.h
-deleted file mode 100644
-index 136799633a..0000000000
---- a/include/hw/riscv/sifive_cpu.h
-+++ /dev/null
-@@ -1,31 +0,0 @@
--/*
-- * SiFive CPU types
-- *
-- * Copyright (c) 2017 SiFive, Inc.
-- * Copyright (c) 2019 Bin Meng <bmeng.cn@gmail.com>
-- *
-- * This program is free software; you can redistribute it and/or modify it
-- * under the terms and conditions of the GNU General Public License,
-- * version 2 or later, as published by the Free Software Foundation.
-- *
-- * This program is distributed in the hope it will be useful, but WITHOUT
-- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-- * more details.
-- *
-- * You should have received a copy of the GNU General Public License along with
-- * this program.  If not, see <http://www.gnu.org/licenses/>.
-- */
--
--#ifndef HW_SIFIVE_CPU_H
--#define HW_SIFIVE_CPU_H
--
--#if defined(TARGET_RISCV32)
--#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E31
--#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U34
--#elif defined(TARGET_RISCV64)
--#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E51
--#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U54
--#endif
--
--#endif /* HW_SIFIVE_CPU_H */
-diff --git a/include/hw/riscv/sifive_e.h b/include/hw/riscv/sifive_e.h
-index 4cf902ebc0..0f0d407d5d 100644
---- a/include/hw/riscv/sifive_e.h
-+++ b/include/hw/riscv/sifive_e.h
-@@ -20,7 +20,6 @@
- #define HW_SIFIVE_E_H
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index b23e5bc586..c09e5d2a3e 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -91,6 +91,13 @@ bool target_ppc64(void);
+  */
+ bool target_s390x(void);
  
- #include "hw/riscv/riscv_hart.h"
--#include "hw/riscv/sifive_cpu.h"
- #include "hw/gpio/sifive_gpio.h"
- #include "hw/misc/sifive_e_aon.h"
- #include "hw/core/boards.h"
-diff --git a/include/hw/riscv/sifive_u.h b/include/hw/riscv/sifive_u.h
-index aed966a62d..c12cf22b41 100644
---- a/include/hw/riscv/sifive_u.h
-+++ b/include/hw/riscv/sifive_u.h
-@@ -24,7 +24,6 @@
- #include "hw/dma/sifive_pdma.h"
- #include "hw/net/cadence_gem.h"
- #include "hw/riscv/riscv_hart.h"
--#include "hw/riscv/sifive_cpu.h"
- #include "hw/gpio/sifive_gpio.h"
- #include "hw/misc/sifive_u_otp.h"
- #include "hw/misc/sifive_u_prci.h"
-diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
-index 35ed7f42a4..1b6f9ab4fe 100644
---- a/hw/riscv/sifive_e.c
-+++ b/hw/riscv/sifive_e.c
-@@ -150,7 +150,8 @@ static void sifive_e_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "RISC-V Board compatible with SiFive E SDK";
-     mc->init = sifive_e_machine_init;
-     mc->max_cpus = 1;
--    mc->default_cpu_type = SIFIVE_E_CPU;
-+    mc->default_cpu_type = (target_riscv64()) ? TYPE_RISCV_CPU_SIFIVE_E51
-+                                              : TYPE_RISCV_CPU_SIFIVE_E31;
-     mc->default_ram_id = "riscv.sifive.e.ram";
-     mc->default_ram_size = sifive_e_memmap[SIFIVE_E_DEV_DTIM].size;
++/**
++ * target_riscv32:
++ *
++ * Returns whether the target architecture is riscv32
++ */
++bool target_riscv32(void);
++
+ /**
+  * target_riscv64:
+  *
+diff --git a/target-info.c b/target-info.c
+index 012b384036..bba4503151 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -89,6 +89,11 @@ bool target_s390x(void)
+     return target_arch() == SYS_EMU_TARGET_S390X;
+ }
  
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index b7d5e7b4da..344f3d915d 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -661,7 +661,8 @@ static void sifive_u_machine_class_init(ObjectClass *oc, const void *data)
-     mc->init = sifive_u_machine_init;
-     mc->max_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + SIFIVE_U_COMPUTE_CPU_COUNT;
-     mc->min_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + 1;
--    mc->default_cpu_type = SIFIVE_U_CPU;
-+    mc->default_cpu_type = (target_riscv64()) ? TYPE_RISCV_CPU_SIFIVE_U54
-+                                              : TYPE_RISCV_CPU_SIFIVE_U34;
-     mc->default_cpus = mc->min_cpus;
-     mc->default_ram_id = "riscv.sifive.u.ram";
-     mc->auto_create_sdcard = true;
-@@ -693,6 +694,8 @@ type_init(sifive_u_machine_init_register_types)
- static void sifive_u_soc_instance_init(Object *obj)
++bool target_riscv32(void)
++{
++    return target_arch() == SYS_EMU_TARGET_RISCV32;
++}
++
+ bool target_riscv64(void)
  {
-     SiFiveUSoCState *s = RISCV_U_SOC(obj);
-+    const char *e_cpu_type = (target_riscv64()) ? TYPE_RISCV_CPU_SIFIVE_E51
-+                                                : TYPE_RISCV_CPU_SIFIVE_E31;
- 
-     object_initialize_child(obj, "e-cluster", &s->e_cluster, TYPE_CPU_CLUSTER);
-     qdev_prop_set_uint32(DEVICE(&s->e_cluster), "cluster-id", 0);
-@@ -701,7 +704,7 @@ static void sifive_u_soc_instance_init(Object *obj)
-                             TYPE_RISCV_HART_ARRAY);
-     qdev_prop_set_uint32(DEVICE(&s->e_cpus), "num-harts", 1);
-     qdev_prop_set_uint32(DEVICE(&s->e_cpus), "hartid-base", 0);
--    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", SIFIVE_E_CPU);
-+    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", e_cpu_type);
-     qdev_prop_set_uint64(DEVICE(&s->e_cpus), "resetvec", 0x1004);
- 
-     object_initialize_child(obj, "u-cluster", &s->u_cluster, TYPE_CPU_CLUSTER);
+     return target_arch() == SYS_EMU_TARGET_RISCV64;
 
 -- 
 2.52.0
