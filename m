@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB39C982C1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EDAC88E77
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6liv-0001qe-Dz; Wed, 16 Sep 2026 05:14:37 -0400
+	id 1x6liA-0001DM-0u; Wed, 16 Sep 2026 05:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6liQ-0001HG-C8; Wed, 16 Sep 2026 05:14:06 -0400
+ id 1x6li5-0001BU-KR; Wed, 16 Sep 2026 05:13:45 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6liO-000891-16; Wed, 16 Sep 2026 05:14:06 -0400
+ id 1x6li2-00088l-Fn; Wed, 16 Sep 2026 05:13:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=+VTfntIU9uou9ZfefmBvu3VI8x4/ddAIbRY9yjJncTA=; b=YD83mRhK4zHbP1b
- bj9br60Stla8cZ0e8s34hgqXf4l0013JiSwQdjCTB+pqGDAOnY5fp6+NLWhWJrmZVA5LqGONuupBL
- XQjEL+eEQALaIWOXV2ARK4ztzpUdqmaf5x5yRDRcax0vv3jZwc1T8r6CfXVKBSMzftSewN8GMzSXT
- ac=;
-Date: Wed, 16 Sep 2026 11:19:06 +0200
-Subject: [PATCH v4 11/12] hw/riscv: Filter for 32- or 64-bit machine types
+ List-Help; bh=PhBiczhfL9JKVbsyNGB8L/d5YxsO1D1XLfJo7S5WBdI=; b=GSXDgig1Tfm20tj
+ Xobs9QdKCQPd9PC0/hZ3nCMUmBeiq06optaFeKkg4elon/jJzVGyacuZiL5MHq3g68/CGW6G3PqBh
+ 1jPVww6ZDhZAyANEaUe1vShjdz9sffaTvtlJtQ9kIPH4SsP9p5rwM0lG2tvFLbYsHxio3XiLJs3Qw
+ 1U=;
+Date: Wed, 16 Sep 2026 11:19:04 +0200
+Subject: [PATCH v4 09/12] hw: Add availfn arg to DEFINE_MACHINE_EXTENDED()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260916-hw-riscv-cpu-int-v4-11-babc367b60f5@rev.ng>
+Message-Id: <20260916-hw-riscv-cpu-int-v4-9-babc367b60f5@rev.ng>
 References: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 In-Reply-To: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 To: qemu-devel@nongnu.org
@@ -41,11 +41,11 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org,
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=7032;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=5721;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=Cb0MmmPN5MbBMjkSIF4842/I1+vyR0PcWQAnD8NIPVQ=;
- b=5bIyPUdACyQUgj8nknDix0qjIryytZtQp8kKN3FvvLS8ME3fFlkvYdxAYN5Gcf9dtMq60h8KK
- WMM+wx7y4UoAJnXDEJDdIzYcf15SRHKu6nL5mYxPJnaHLQGnxbOCCZz
+ bh=o6AHgEhgEygZ6J0W6zNb9P0grigU2bmRV1jObUOjqKk=;
+ b=BP5hI2ljbzGnDg8LIm/sNn/PtRnt3Qg5UR0UOIpfQTs5sf4Z3Uo17xAu5V9nVxNMZk9AZocx0
+ DW7OjnLEzxCAJd2t42REHt401iVbscKzMROUTBdqCE1WzZ9qpSLZLwN
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -73,203 +73,138 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filters for 32- or 64-bit machine types using TypeInfo::is_available,
-machines available for both 32-bit and 64-bit (amd-microblaze-v-generic,
-sifive-[e|u], spike, virt) leave the field unset.
+Allows specifying is_available when defining machines using convenience
+macros.  Also introduces DEFINE_MACHINE_WITH_GUARD() replacing
+DEFINE_MACHINE() for machines that need to specify is_available.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/riscv/boston-aia.c      | 3 ++-
- hw/riscv/k230.c            | 3 +++
- hw/riscv/microchip_pfsoc.c | 3 +++
- hw/riscv/opentitan.c       | 3 +++
- hw/riscv/shakti_c.c        | 3 +++
- hw/riscv/tt_atlantis.c     | 3 +++
- hw/riscv/xiangshan_kmh.c   | 3 +++
- 7 files changed, 20 insertions(+), 1 deletion(-)
+ include/hw/core/boards.h | 11 ++++++++---
+ hw/arm/bananapi_m2u.c    |  2 +-
+ hw/arm/cubieboard.c      |  2 +-
+ hw/arm/imx8mm-evk.c      |  2 +-
+ hw/arm/integratorcp.c    |  2 +-
+ hw/arm/mcimx7d-sabre.c   |  2 +-
+ hw/arm/orangepi.c        |  2 +-
+ hw/ppc/pegasos.c         |  3 ++-
+ 8 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
-index b90da096ea..e8371ff1f1 100644
---- a/hw/riscv/boston-aia.c
-+++ b/hw/riscv/boston-aia.c
-@@ -10,6 +10,7 @@
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index dba465efc2..8c35516622 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -514,7 +514,7 @@ struct MachineState {
   */
  
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
+ #define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
+-                                machine_initfn, ABSTRACT, ifaces...) \
++                                machine_initfn, ABSTRACT, availfn, ifaces...) \
+     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
+     { \
+         MachineClass *mc = MACHINE_CLASS(oc); \
+@@ -526,6 +526,7 @@ struct MachineState {
+         .class_init = machine_initfn##_class_init, \
+         .instance_size = sizeof(InstanceName), \
+         .abstract = ABSTRACT, \
++        .is_available = availfn, \
+         .interfaces = ifaces, \
+     }; \
+     static void machine_initfn##_register_types(void) \
+@@ -536,11 +537,15 @@ struct MachineState {
  
- #include "hw/core/boards.h"
-@@ -473,4 +474,4 @@ static void boston_mach_class_init(MachineClass *mc)
-     mc->default_cpu_type = TYPE_RISCV_CPU_MIPS_P8700;
+ #define DEFINE_MACHINE(namestr, machine_initfn) \
+     DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
+-                            false, NULL)
++                            false, NULL, NULL)
++
++#define DEFINE_MACHINE_WITH_GUARD(namestr, machine_initfn, availfn) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, availfn, NULL)
+ 
+ #define DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, ifaces...)\
+     DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
+-                            false, ifaces)
++                            false, NULL, ifaces)
+ 
+ #define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
+     DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
+diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
+index 8f59111fd4..7b86986efb 100644
+--- a/hw/arm/bananapi_m2u.c
++++ b/hw/arm/bananapi_m2u.c
+@@ -153,4 +153,4 @@ static void bpim2u_machine_init(MachineClass *mc)
  }
  
--DEFINE_MACHINE("boston-aia", boston_mach_class_init)
-+DEFINE_MACHINE_WITH_GUARD("boston-aia", boston_mach_class_init, target_riscv64)
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 1e4ca38579..43b6ae6d2f 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -17,6 +17,7 @@
- #include "cpu-qom.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "system/device_tree.h"
- #include "system/system.h"
-@@ -420,6 +421,7 @@ static const TypeInfo k230_soc_type_info = {
-     .instance_size = sizeof(K230SoCState),
-     .instance_init = k230_soc_init,
-     .class_init = k230_soc_class_init,
-+    .is_available = target_riscv64,
- };
+ DEFINE_MACHINE_EXTENDED("bpim2u", MACHINE, Bpim2uMachineState,
+-                        bpim2u_machine_init, false, NULL)
++                        bpim2u_machine_init, false, NULL, NULL)
+diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
+index ae27056938..da45bb2be5 100644
+--- a/hw/arm/cubieboard.c
++++ b/hw/arm/cubieboard.c
+@@ -134,4 +134,4 @@ static void cubieboard_machine_init(MachineClass *mc)
  
- static void k230_soc_register_types(void)
-@@ -558,6 +560,7 @@ static const TypeInfo k230_machine_typeinfo = {
-     .class_init = k230_machine_class_init,
-     .instance_init = k230_machine_instance_init,
-     .instance_size = sizeof(K230MachineState),
-+    .is_available = target_riscv64,
- };
+ DEFINE_MACHINE_EXTENDED("cubieboard", MACHINE, CubieboardMachineState,
+                         cubieboard_machine_init, false,
+-                        NULL)
++                        NULL, NULL)
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index 8a5737502f..68526c0e43 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -135,4 +135,4 @@ static void imx8mm_evk_machine_init(MachineClass *mc)
  
- static void k230_machine_init_register_types(void)
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index edd29626fa..b2991e5a71 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -38,6 +38,7 @@
- #include "qemu/error-report.h"
- #include "qemu/units.h"
- #include "qemu/cutils.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "hw/core/boards.h"
-@@ -504,6 +505,7 @@ static const TypeInfo microchip_pfsoc_soc_type_info = {
-     .instance_size = sizeof(MicrochipPFSoCState),
-     .instance_init = microchip_pfsoc_soc_instance_init,
-     .class_init = microchip_pfsoc_soc_class_init,
-+    .is_available = target_riscv64,
- };
+ DEFINE_MACHINE_EXTENDED("imx8mm-evk", MACHINE, Imx8mmEvkMachineState,
+                         imx8mm_evk_machine_init, false,
+-                        NULL)
++                        NULL, NULL)
+diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
+index 382ea7850d..6314bbb6c1 100644
+--- a/hw/arm/integratorcp.c
++++ b/hw/arm/integratorcp.c
+@@ -705,7 +705,7 @@ static void integratorcp_machine_init(MachineClass *mc)
  
- static void microchip_pfsoc_soc_register_types(void)
-@@ -757,6 +759,7 @@ static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
-     .class_init = microchip_icicle_kit_machine_class_init,
-     .instance_init = microchip_icicle_kit_machine_instance_init,
-     .instance_size = sizeof(MicrochipIcicleKitState),
-+    .is_available = target_riscv64,
- };
+ DEFINE_MACHINE_EXTENDED("integratorcp", MACHINE, IntegratorcpMachineState,
+                         integratorcp_machine_init, false,
+-                        NULL)
++                        NULL, NULL)
  
- static void microchip_icicle_kit_machine_init_register_types(void)
-diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
-index 8cd660dd41..c3a563db92 100644
---- a/hw/riscv/opentitan.c
-+++ b/hw/riscv/opentitan.c
-@@ -20,6 +20,7 @@
+ static const Property core_properties[] = {
+     DEFINE_PROP_UINT32("memsz", IntegratorCMState, memsz, 0),
+diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
+index db8a62e5f6..2c884b5c78 100644
+--- a/hw/arm/mcimx7d-sabre.c
++++ b/hw/arm/mcimx7d-sabre.c
+@@ -87,4 +87,4 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
  
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
-+#include "qemu/target-info.h"
- #include "hw/riscv/opentitan.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-@@ -332,11 +333,13 @@ static const TypeInfo open_titan_types[] = {
-         .instance_size  = sizeof(LowRISCIbexSoCState),
-         .instance_init  = lowrisc_ibex_soc_init,
-         .class_init     = lowrisc_ibex_soc_class_init,
-+        .is_available   = target_riscv32,
-     }, {
-         .name           = TYPE_OPENTITAN_MACHINE,
-         .parent         = TYPE_MACHINE,
-         .instance_size  = sizeof(OpenTitanState),
-         .class_init     = opentitan_machine_class_init,
-+        .is_available   = target_riscv32,
-     }
- };
+ DEFINE_MACHINE_EXTENDED("mcimx7d-sabre", MACHINE, Mcimx7dSabreMachineState,
+                         mcimx7d_sabre_machine_init, false,
+-                        NULL)
++                        NULL, NULL)
+diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
+index 7a19732f5d..87ed2ef4b6 100644
+--- a/hw/arm/orangepi.c
++++ b/hw/arm/orangepi.c
+@@ -134,4 +134,4 @@ static void orangepi_machine_init(MachineClass *mc)
  
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 3b6efd25be..76cfe30918 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -21,6 +21,7 @@
- #include "hw/riscv/shakti_c.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qemu/target-info.h"
- #include "hw/intc/sifive_plic.h"
- #include "hw/intc/riscv_aclint.h"
- #include "system/system.h"
-@@ -97,6 +98,7 @@ static const TypeInfo shakti_c_machine_type_info = {
-     .class_init = shakti_c_machine_class_init,
-     .instance_init = shakti_c_machine_instance_init,
-     .instance_size = sizeof(ShaktiCMachineState),
-+    .is_available = target_riscv64,
- };
+ DEFINE_MACHINE_EXTENDED("orangepi-pc", MACHINE, OrangePiMachineState,
+                         orangepi_machine_init, false,
+-                        NULL)
++                        NULL, NULL)
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index 9d7e279123..cbff8bb59d 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -788,7 +788,8 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
+ }
  
- static void shakti_c_machine_type_info_register(void)
-@@ -186,6 +188,7 @@ static const TypeInfo shakti_c_type_info = {
-     .class_init = shakti_c_soc_class_init,
-     .instance_init = shakti_c_soc_instance_init,
-     .instance_size = sizeof(ShaktiCSoCState),
-+    .is_available = target_riscv64,
- };
+ DEFINE_MACHINE_EXTENDED("pegasos", MACHINE, PegasosMachineState,
+-                        pegasos_machine_init, true, (const InterfaceInfo[]) {
++                        pegasos_machine_init, true, NULL,
++                        (const InterfaceInfo[]) {
+                         { TYPE_PPC_VIRTUAL_HYPERVISOR },
+                         { TYPE_VOF_MACHINE_IF }, { } })
  
- static void shakti_c_type_info_register(void)
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index b2333e7f6a..f54eb942f3 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -11,6 +11,7 @@
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/guest-random.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
- 
- #include "hw/core/boards.h"
-@@ -694,11 +695,13 @@ static const TypeInfo tt_atlantis_types[] = {
-         .instance_size = sizeof(TTAtlantisSoCState),
-         .instance_init = tt_atlantis_soc_init,
-         .class_init = tt_atlantis_soc_class_init,
-+        .is_available = target_riscv64,
-     }, {
-         .name       = MACHINE_TYPE_NAME("tt-atlantis"),
-         .parent     = TYPE_MACHINE,
-         .class_init = tt_atlantis_machine_class_init,
-         .instance_size = sizeof(TTAtlantisState),
-+        .is_available = target_riscv64,
-     },
- };
- 
-diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
-index a234c5f352..f2383c5399 100644
---- a/hw/riscv/xiangshan_kmh.c
-+++ b/hw/riscv/xiangshan_kmh.c
-@@ -30,6 +30,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "system/address-spaces.h"
- #include "hw/core/boards.h"
-@@ -157,6 +158,7 @@ static const TypeInfo xiangshan_kmh_soc_info = {
-     .instance_size = sizeof(XiangshanKmhSoCState),
-     .instance_init = xiangshan_kmh_soc_instance_init,
-     .class_init = xiangshan_kmh_soc_class_init,
-+    .is_available = target_riscv64,
- };
- 
- static void xiangshan_kmh_soc_register_types(void)
-@@ -220,6 +222,7 @@ static const TypeInfo xiangshan_kmh_machine_info = {
-     .parent = TYPE_MACHINE,
-     .instance_size = sizeof(XiangshanKmhState),
-     .class_init = xiangshan_kmh_machine_class_init,
-+    .is_available = target_riscv64,
- };
- 
- static void xiangshan_kmh_machine_register_types(void)
 
 -- 
 2.52.0
