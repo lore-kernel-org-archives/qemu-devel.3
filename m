@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF47C88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29522C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6mSK-0008Se-Nh; Wed, 16 Sep 2026 06:01:32 -0400
+	id 1x6mSA-0008Of-Kh; Wed, 16 Sep 2026 06:01:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1x6mRk-00088d-Cq
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:58 -0400
-Received: from qs-2003f-snip6-11.eps.apple.com ([2a01:b747:3006:204::3f]
+ id 1x6mRh-000884-Kk
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:56 -0400
+Received: from qs-2003j-snip6-1.eps.apple.com ([2a01:b747:3006:204::5e]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1x6mRi-0005Gq-QR
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:56 -0400
+ id 1x6mRe-0005Eb-H2
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:53 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-8 (Postfix) with ESMTPS id
- A634A18009F0; Wed, 16 Sep 2026 10:00:50 +0000 (UTC)
-X-ICL-RepId: 01a0a9a9-7679-76d4-937e-43d07503887b
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0IShMFUgddTVYNRw9YHlwUFwlAQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wLSAFbB1IDRghIA10FWhxHCkABWBpaA11UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIHWEcURw4PE0wLRwJaNFYfVBlaAw==
+ D4E831800BC5; Wed, 16 Sep 2026 10:00:43 +0000 (UTC)
+X-ICL-RepId: 01a0a9a9-5bff-7cb3-b7cd-d334028d275d
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0IShMFUgddTVYNRw9YHlwUFwlAQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wLSAFbB1IDRghIA10FWhxHCkABWBpcHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1789552854; x=1792144854;
- bh=nXTBrq9QmP+EI+S6P5g+rgoGsRJ/zxEegKF1eFwtIzY=;
+ s=sig1; t=1789552846; x=1792144846;
+ bh=KDf2DTW4By7UOzCqNMWGATcGpPtR9PyeQLUVDbCPI44=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=CoEOfu/Z2Z0hxQ7FWm8aFlf8ERp0E8VdK5H3HckQB9h/Vxu+jCzjUtByNelHLpuLA4rUtHUU1Zpuv8ehUVZ58smMtNsfWbK4Qjl91Dyy73XfDCQZ0P+fDRCJaNGrKJe+5loNjpfNDtmBpB2ivwJOxzA+3DmFR4eDxYW/Ba+DRRbWL6aGdA+UkG/V56cQH+k+AVxk1+uM6K0XkRM1BU51PRpptzYDsC4Pp9L8kWMJ9cBBlN1qxErA8XGC2a+oMy6dGEsKaBh7gcwrUa0xpzcceqtDc2DPUKiH0Tb77qhJZqKr8ld0jhp3iWUCYD3WRKivSbOY8LttrwAELLyFeUPlUg==
+ b=pJpQCW9VGXYCgN/eUJERmFaN24JmF0FI8OsGq2dKy6GtW8lSPSnv/AfuLleTlji1lI/v1yFPJYAjLPCit/kvxi8p7jvqxsNHb/FUYFmMQ8Saq4dpDw5m3SRI4CjiH+z9/OPsDVCEjO3F/2yXHJgtowwSB5EGdskZhDXoQYvnOx4+FiMew7JY6dNgl7NYiYI8jq8Mx7C7OOUrlTaUR+kZi2Y9TTxhOhpB6xre3EskxzAYnEHW8bcxqlrSnzil4cuPeyTSt4W2fshk632MXx90BKSTCUM78vmfl77Eq8UFYc653x23/+pAbe0d+Y0dm24t89EcCaFNS302Scux2w5zXQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-8 (Postfix) with ESMTPSA id
- 4782C18009ED; Wed, 16 Sep 2026 10:00:48 +0000 (UTC)
+ B21F518009F4; Wed, 16 Sep 2026 10:00:41 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -45,35 +45,35 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH v8 10/10] hw/vmapple: virtio-blk: allow FileVault off
-Date: Wed, 16 Sep 2026 12:00:18 +0200
-Message-ID: <20260916100021.73825-11-mohamed@unpredictable.fr>
+Subject: [RFC PATCH v8 06/10] hw/vmapple: aes: convert MAX_LEN to a #define
+Date: Wed, 16 Sep 2026 12:00:14 +0200
+Message-ID: <20260916100021.73825-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260916100021.73825-1-mohamed@unpredictable.fr>
 References: <20260916100021.73825-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=cbTfb3DM c=1 sm=1 tr=0 ts=6aaa68d4
+X-Authority-Info-Out: v=2.4 cv=B9G0EetM c=1 sm=1 tr=0 ts=6aaa68cd
  cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=XTwg747VhcxLksJOh8UA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDEzMCBTYWx0ZWRfX/p93+7Skz2lN
- s2o0x1larrbi3u4rxfpQAvWXpUC/3vJgsoWgCgehigI0aKYh2xNsSMRYPwNHuIJUxDQARX7kLwi
- mIdjBCcx3gRgfOXfiuKV+ZBs6XU+eHdZPS2SBFEEhg4/zSvKGq2sICYgLAYAEWDVBGPv3ON8zcp
- UhStSHmUqXA84lOfbY5ZqCZMsvsiUo3pJKIFb0qny9BbCqIOaMpbqT53sMr3F695sR272+mc6DT
- UwUPfM54LgyCzC0tDC6CqseySg2q+RnjFcGKE124tXGRGDmCKHY0ofSb0J/59nkdlfrRKxZXC4m
- 5Q3kwzy/kPDu1oIJTErMgxlZ5RhkvNlxY6Ij2KULTGtt/Isv9AsBMWpdzg4wrg=
-X-Proofpoint-ORIG-GUID: mSNohsmmwU0Cy0u0Q5E2_V9tUb8Bp4y3
-X-Proofpoint-GUID: mSNohsmmwU0Cy0u0Q5E2_V9tUb8Bp4y3
-X-JNJ: AAAAAAABS1Dvq5mZs8DFngDUrJFvPwtTuTBIHnuOA5udU0IyH0FAtRlCmh1CjCR5mvHT7+f8Ga6BOnKibds3x+Y54GhufXLP1NImgXqCse0+egVz+lwHRedIVxfmnFdCZNRDZoxuyusub5nELHOHVJ/viNhuq7MBxtaZSsxMKqfVr1ed7Umzl6eIZYvopBWt4IUwk/SZ0rwrc497aTu3ugSSVJ6V1LZvHYiemX7dT6B5T6QKO1C8V2Lt+feWc6Ytz5hdxyM/c+RQXuVzDVFj+GUarzedWh9le4HCMbfbN08WYhPJS2bDZ6LbZxg1LmEu5MTo8IE4Tjv576qu46MwWV1aPSpXNkh9DS7Jb/mJ5215bleQJikmx+l3OEkulLUWDfFWFWXb/B+5PuzPpJyVTsKvYxuc+/Gq15Rt0k1DAENg/g9KzmJ0GsPFcf3GINumwIXav09M4m8Am7fJxF2CTP9FtBW2K6mscJqpw6Y/OY4FQryjwIKYyRiLS9lwsXegWg8hjb3dq1y3cs7nK8r8yo+dksmK04DZud8x32ZlItcwbPBc6ngp+d4zdJOM5sS0rZ5feaXHiXxoldM+7KRka+EENze6a2MMs1ueccwfY2oict8In5WxgTywj8cWbZ2sTkRF9hYuz40rUmNjilY5YgR0Nr098V7qZ9Qbi3i8Of2Pk8M/GQCSI0/gLJ/akJ5sArLf/oiUAb45Dy7JcmcCa5hsaRmjIr7nMfNFnI1VI7prbREKHoKkI94xzC+z1TJqahV/jiEX7KXqPgjlLzs3j23xtYCNaE395rhJPlCHMyzoqu+snJvjknVzWmBWwZkkUGn0YFDzfs2rkJtrncZxWEvZaHddQDEQr2+fLF9J
-Received-SPF: pass client-ip=2a01:b747:3006:204::3f;
+ a=CNpkFlK3StMqgsPjqO8A:9
+X-Proofpoint-ORIG-GUID: 4-ccaC-8I-h1vjB8vBubo6DDJYDpmUrJ
+X-Proofpoint-GUID: 4-ccaC-8I-h1vjB8vBubo6DDJYDpmUrJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDEzMCBTYWx0ZWRfX9ioFqSTqtDfM
+ 0WSwI6zRKLPBF72zIusk5eorsjwx2MHL9J1E0anxwz/haFIsyw9/mc2hrZ8f5pBDGzPbkPqy3Qu
+ XW9XvHkAwIXM7MhqbiWJAhu7PL7XyQCasyykqejxUk2olMkM/qQEguYJJC/a8FEeUthK++C6CEN
+ ObPlfprY6jWTwgTES1iHpk6XXjlh/8aCcHOtRJ/+l68p0BJH1cFOMVTnp9nZ05ZRJgMQihpPLjk
+ R7En31A15I+SFejsalMhs6/57DkFONVbx33C7rO50tvsOPk4kU0HmwV5wA810I26oUEkaoCvcKN
+ H/IAWB56ONJNgIZhZ65mRQS1FbFlbxlBKpTwDmWoq2AK050sS+lrVieX4pguVo=
+X-JNJ: AAAAAAAB0EL8hrIM4W/71g2/KqLkLr2OtMUovKIeMlWBnj7KahzoPu/iwH56r4zlBNijufbi7sFV9hHa057vQbZQ2RYe4AT9f3hSxefFk63goVpG2jBvE+htIux/s/fwKv+X/6VuAQYNkx4pBoz7StWiX43mEJct4KXMvxrV2rdXbtiwHn10l+HdHCTEdz/i/Jg9b19pIGAN8vVuSUz3380xNMDH3mwJTRZmq5SAFZMOAtgkIi+7p6GPOciAx73M59J835M4ZeNDwAM5AK4C1fgmVAzY60EEekzGD9O+e6k+7qhoYzqJ9gUDvxrxdU0PLkygIBGACvBGEZKBlLbX0MrGSR+N5VzZbpiYk9JYtW73m1j5D/7+NfOr9lTfjr4RPZK3ABGKYZs4gvOlV2WfDfZv/W2FzJBKhdVuTtk2shQawqa8KCQbgjP83JKhpgvX2pHsKDhvGjOupXroYe8pOlNCT4etp+fnv3nGVsaAgyBL7QdtdeB/wTlE072XI7VfshEbAKf1lbv+kcYSKNHiPpzvOOWPzsy17eF3qR59vYFdi6azCxNsaRELYZbVFXtNSrqBxnrSm0ms7VW6/fhx1j73U/AdTWOCGqt7WTaStfRscQt8QABGDMO5PIVik12FRQ2XuBz44Cp/Ti2H6l05/ilUVciHMEY/9HBbuHQQwPtAsAbi1yS2bSqHWNgAUkLkWDD4ujRz5zNL1EMJhUGQAHDTDlgT1bxLq044ImjtqDuxWjk3dZvhXJhow1t0eN7b06HISNI4Id3lMPLQXKUvUDXLxPgWQDtN8zRY+MJLwz2lFzDvdv3jNn6jsaLmPzPQns2jGjRozf55V6RHhB2V+IZPJ8abNJi8KQ==
+Received-SPF: pass client-ip=2a01:b747:3006:204::5e;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,56 +89,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Otherwise, a newer macOS version with FileVault
-disabled in the guest does not boot.
+Working around this compiler warning:
+
+../hw/vmapple/aes.c:257:14: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]
+  257 |     char hex[MAX_LEN * 2 + 1] = "";
+      |              ^~~~~~~~~~~~~~~
+1 warning generated.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/vmapple/virtio-blk.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ hw/vmapple/aes.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c
-index 9de9aaae0b..906c2b2ec8 100644
---- a/hw/vmapple/virtio-blk.c
-+++ b/hw/vmapple/virtio-blk.c
-@@ -119,12 +119,17 @@ static const Property vmapple_virtio_blk_pci_properties[] = {
-                                            VM_APPLE_VIRTIO_BLK_VARIANT_UNSPECIFIED),
- };
+diff --git a/hw/vmapple/aes.c b/hw/vmapple/aes.c
+index 553e688adb..9d062d5a7f 100644
+--- a/hw/vmapple/aes.c
++++ b/hw/vmapple/aes.c
+@@ -253,7 +253,7 @@ static bool cmd_iv(AESState *s)
  
-+#define VMAPPLE_PCI_VNDR_SIZE 14
-+/* Disable requirement for FileVault to be enabled on the guest */
-+#define VMAPPLE_PCI_VNDR_LEGACY_FEATURES_DISABLE_ENCRYPTION (1 << 0)
-+
- static void vmapple_virtio_blk_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+ static void dump_data(const char *desc, const void *p, size_t len)
  {
-     ERRP_GUARD();
-     VMAppleVirtIOBlkPCI *dev = VMAPPLE_VIRTIO_BLK_PCI(vpci_dev);
-     DeviceState *vdev = DEVICE(&dev->vdev);
-     VirtIOBlkConf *conf = &dev->vdev.parent_obj.conf;
-+    int offset;
+-    static const size_t MAX_LEN = 0x1000;
++#define MAX_LEN  0x1000
+     char hex[MAX_LEN * 2 + 1] = "";
  
-     if (dev->variant == VM_APPLE_VIRTIO_BLK_VARIANT_UNSPECIFIED) {
-         error_setg(errp, "vmapple virtio block device variant unspecified");
-@@ -162,6 +167,19 @@ static void vmapple_virtio_blk_pci_realize(VirtIOPCIProxy *vpci_dev, Error **err
-     pci_config_set_vendor_id(vpci_dev->pci_dev.config, PCI_VENDOR_ID_APPLE);
-     pci_config_set_device_id(vpci_dev->pci_dev.config,
-                              PCI_DEVICE_ID_APPLE_VIRTIO_BLK);
-+
-+    offset = pci_add_capability(&vpci_dev->pci_dev, PCI_CAP_ID_VNDR, 0,
-+                                    VMAPPLE_PCI_VNDR_SIZE, errp);
-+    if (offset < 0) {
-+        return;
-+    }
-+
-+    pci_set_byte(vpci_dev->pci_dev.config + offset + 2,
-+        VMAPPLE_PCI_VNDR_SIZE);
-+    pci_set_byte(vpci_dev->pci_dev.config + offset + 3, 9);
-+    pci_set_word(vpci_dev->pci_dev.config + offset + 4, PCI_VENDOR_ID_APPLE);
-+    pci_set_byte(vpci_dev->pci_dev.config + offset + 6,
-+        VMAPPLE_PCI_VNDR_LEGACY_FEATURES_DISABLE_ENCRYPTION);
+     if (len > MAX_LEN) {
+@@ -262,6 +262,7 @@ static void dump_data(const char *desc, const void *p, size_t len)
+ 
+     qemu_hexdump_to_buffer(hex, sizeof(hex), p, len);
+     trace_aes_dump_data(desc, hex);
++#undef MAX_LEN
  }
  
- static void vmapple_virtio_blk_pci_class_init(ObjectClass *klass,
+ static bool cmd_data(AESState *s)
 -- 
 2.54.0 (Apple Git-157)
 
