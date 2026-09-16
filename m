@@ -4,44 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111CBC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F8B3C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lLg-00071F-1v; Wed, 16 Sep 2026 04:50:36 -0400
+	id 1x6lOw-0007rt-3I; Wed, 16 Sep 2026 04:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1x6lLe-000717-LA
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:50:34 -0400
-Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1x6lLb-0004i4-Py
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:50:33 -0400
-Received: from yuno-loong.localnet (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 9CE2C7A11;
- Wed, 16 Sep 2026 14:20:24 +0530 (IST)
-From: SignKirigami <prcups@krgm.moe>
-To: qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: Re: [PATCH v4 02/14] target/loongarch: Add LVZ CPU state definitions
-Date: Wed, 16 Sep 2026 16:50:21 +0800
-Message-ID: <xoCdfudmTUW6mj9tEmh4Cw@krgm.moe>
-In-Reply-To: <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
-References: <cover.1787739852.git.prcups@krgm.moe>
- <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
- <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6lOq-0007lF-IS
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:53 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6lOl-0004z8-K8
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:52 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49e71cdb22bso4946595e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:53:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789548826; x=1790153626; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Pz6D5LdjE3kJJTO4sUmd2SawfSM3Mp74GJqeo4tLsQA=;
+ b=J4B+S6leX9YfVASObyjZVsxx77qtlN+g/Mwl5qxMGaIc6a1xtLJd+mZcK7Rm7rgDmX
+ wN6GSpHKGR2nnlTj63kMwKZfm3U2QxwsdU8qS31Ev0/7IlzFKmiayJ0sPGGXryTY/uxH
+ ttUHIUAihMdO17URz/oB3wYqKyEzNN9t3EowR86HxRCReFN2TgffJ3Be9P2XOt+PyOzH
+ chNrHS9haCXO3j9AZSUW5fdMVttDFjn2hlqHp/rvY3EMT+zqQhseP/vjl2tF7Au9Rt44
+ pf0WMjP4vYoWAEa480MR9pH03FEkDUZ5+KuXwW569KVfBs3tms8F11jSmhjXoNQNd+Ef
+ xugw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789548826; x=1790153626;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Pz6D5LdjE3kJJTO4sUmd2SawfSM3Mp74GJqeo4tLsQA=;
+ b=YdWEDevwTm+y55vhuRUO7JAQzWNXcZdVIZJbqlS/cabSld15IZ7gKyno5eZKAhHFJm
+ 5akDLKlyPd7O9ACgDmtUY4qzklVCzkrWjDbzQrb9KLBFY1W1ISvl1U34NCxlJINnN+b6
+ D+1FwelZhV9tuqv8fFnZtVgyR7Te/oPcIYbRq+hZE7GIy5+wHXgBmvS92hp0dcSjOiGB
+ jEIkjNlYB4Qhc7/y7BRFpR2WracdUzSoBoakarJ/MSGKSCHoZjqp6iua1xTdGgv/gqxR
+ A2T3BuNWrB4k5YmRzlhCss6xXohPWfgmmM5vAuWC8PX2G/7klcS0N7K5tL4Q/noqFfNZ
+ nnxQ==
+X-Gm-Message-State: AFuF++lbZSLaJUrFLKFx4QLuJF6LmZHfW16L3pWpaeAg64JqLoMmbAGB
+ NRozDyZLXSLQmLPBbka+5hQJ7W0DvzvOHxgVTTbQ5I1Fferm4jENSt/vUUo3UPZM6CA=
+X-Gm-Gg: AYBFou2pQIIzYLi5y9AWzYIJ8lzqtdkmhqInDmvavuuahYHIiWhdRj/xtAMXv41G1BJ
+ mcQARvTgZZ+L+WhVCU7GeWiSimCkNHDJS1eOqibVdJA0pvKIXD5x5mupe6KceS3M2BDcHRxpqy1
+ 67wJuDWbppEiuhHsUWlO3fH1DmeXpGxuLhVq9dr/1U6DNShh0hxfN0yJzYCAMvf+Btv48PfgJDI
+ IvBHvJonkxYKBVYjyRGW6+29qxQVj05P4SqukJ+CV1ffiz1gGDCU6uxRGCYbYQnf1ysKziO07TL
+ EZw6FUHokH1f/H83YECjBiAMYubJr5dEaFtDYsi2yS4sPYuMROTSKUaayIGp46iCH1ntrVvyaVg
+ yodNsSYs0YI6+hK8CGSHG+Jd/nzugGFg2Nj39dtWtPSwpvywJKh/mUJoO8ao9fLi07g6gU+soww
+ CrhtAPxn6qQxUl8nb8IQKEMSYOhEVtbFqgsm6HfC+N46+Sns9YLE9VCaECVagXGRB+lF+E9U6F5
+ 26swTvXBQ==
+X-Received: by 2002:a05:600c:8b6a:b0:49c:eb04:1c49 with SMTP id
+ 5b1f17b1804b1-49eb72f62a1mr16541175e9.13.1789548825894; 
+ Wed, 16 Sep 2026 01:53:45 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e83dbb0c1sm65232915e9.14.2026.09.16.01.53.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 01:53:42 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8484B616E3;
+ Wed, 16 Sep 2026 09:53:41 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Warner Losh <imp@bsdimp.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <gaosong@loongson.cn>,
+ Kyle Evans <kevans@freebsd.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 01/17] Revert "configure: remove cross_cc and gdb detection
+ logic"
+Date: Wed, 16 Sep 2026 09:53:24 +0100
+Message-ID: <20260916085341.1692742-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260916085341.1692742-1-alex.bennee@linaro.org>
+References: <20260916085341.1692742-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2a14:640:1:12b5::1 (failed)
-Received-SPF: pass client-ip=2a14:640:1:12b5::1; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,285 +121,504 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026=E5=B9=B48=E6=9C=8831=E6=97=A5=E6=98=9F=E6=9C=9F=E4=B8=80 =E4=B8=AD=
-=E5=9B=BD=E6=A0=87=E5=87=86=E6=97=B6=E9=97=B4 10:56:26=EF=BC=8CBibo Mao wro=
-te=EF=BC=9A
->=20
-> On 2026/8/26 =E4=B8=8B=E5=8D=886:30, SignKirigami wrote:
-> > Add host and guest system-state banks, LVZ exception and MMU indices,
-> > CPU and translation state, and helpers for selecting a VM-level CSR ban=
-k.
-> >=20
-> > Read host ERA and BADV explicitly when generating ELF core notes so the
-> > result does not depend on the currently selected guest state.
-> >=20
-> > Signed-off-by: SignKirigami <prcups@krgm.moe>
-> > Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-> > ---
-> >   target/loongarch/arch_dump.c |  6 ++--
-> >   target/loongarch/cpu.c       |  4 +--
-> >   target/loongarch/cpu.h       | 64 ++++++++++++++++++++++++++++++++++--
-> >   target/loongarch/translate.h |  2 ++
-> >   4 files changed, 68 insertions(+), 8 deletions(-)
-> >=20
-> > diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-> > index 9d84faef96..711b23257b 100644
-> > --- a/target/loongarch/arch_dump.c
-> > +++ b/target/loongarch/arch_dump.c
-> > @@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFun=
-ction f, CPUState *cs,
-> >   {
-> >       struct loongarch_note note;
-> >       CPULoongArchState *env =3D &LOONGARCH_CPU(cs)->env;
-> > -    CPUSysState *sys =3D env_sys(env);
-> > +    CPUSysState *host =3D get_sys(env, LOONGARCH_VM_LEVEL_HOST);
-> >       int ret, i;
-> yes, it need similar modification with loongarch_cpu_write_elf64_note().
-> can we keep local variable sys unchanged so that the change is smaller?
-I think it may be more clear if using host for host mode, guest for guest m=
-ode, and sys
-for current mode in use.
-Regards
-SignKirigami
->=20
-> BTW I do not know which name is better between LOONGARCH_VM_LEVEL_HOST=20
-> and LOONGARCH_VM_LEVEL0. Such as in KVM mode, it is to dump CSR=20
-> resisters of guest VM; however in TCG mode, it is for host.
-> >  =20
-> >       loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
-> > @@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFun=
-ction f, CPUState *cs,
-> >       for (i =3D 0; i < 32; ++i) {
-> >           note.prstatus.pr_reg.gpr[i] =3D cpu_to_dump64(s, env->gpr[i]);
-> >       }
-> > -    note.prstatus.pr_reg.csr_era  =3D cpu_to_dump64(s, sys->CSR_ERA);
-> > -    note.prstatus.pr_reg.csr_badv =3D cpu_to_dump64(s, sys->CSR_BADV);
-> > +    note.prstatus.pr_reg.csr_era  =3D cpu_to_dump64(s, host->CSR_ERA);
-> > +    note.prstatus.pr_reg.csr_badv =3D cpu_to_dump64(s, host->CSR_BADV);
-> >       ret =3D f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
-> >       if (ret < 0) {
-> >           return -1;
-> > diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> > index fb03424ffa..2f7692dc93 100644
-> > --- a/target/loongarch/cpu.c
-> > +++ b/target/loongarch/cpu.c
-> > @@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
-> >       uint32_t data =3D 0, field;
-> >       int i;
-> >  =20
-> > -    set_sys_state(env, &env->sys_states[0]);
-> > +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
-> >       for (i =3D 0; i < 21; i++) {
-> >           env->cpucfg[i] =3D 0x0;
-> >       }
-> > @@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
-> >       uint32_t data =3D 0;
-> >       int i;
-> >  =20
-> > -    set_sys_state(env, &env->sys_states[0]);
-> > +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
-> >       for (i =3D 0; i < 21; i++) {
-> >           env->cpucfg[i] =3D 0x0;
-> >       }
-> I still think that it need split to smaller version, such as
->    1. get_sys()/set_sys() and its user.
->    2. mmu_idx change for new added LVZ
->    3. others
->=20
-> > diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> > index ad30c73167..be982b7695 100644
-> > --- a/target/loongarch/cpu.h
-> > +++ b/target/loongarch/cpu.h
-> > @@ -20,6 +20,8 @@
-> >   #include "cpu-csr.h"
-> >   #include "cpu-qom.h"
-> >  =20
-> > +#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
-> > +
-> >   #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
-> >   #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
-> >   #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
-> > @@ -93,6 +95,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
-> >   #define  EXCCODE_WPEM                EXCODE(19, 1)
-> >   #define  EXCCODE_BTD                 EXCODE(20, 0)
-> >   #define  EXCCODE_BTE                 EXCODE(21, 0)
-> > +#define  EXCCODE_GSPR                EXCODE(22, 0)
-> > +#define  EXCCODE_HVC                 EXCODE(23, 0)
-> > +#define  EXCCODE_GCSC                EXCODE(24, 0)
-> > +#define  EXCCODE_GCHC                EXCODE(25, 0)
-> The exception for LVZ is added however not used, it had better be added=20
-> in patch where it is actually used.
-> >   #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcod=
-e used for debug */
-> >  =20
-> >   /* cpucfg[0] bits */
-> > @@ -255,6 +261,7 @@ FIELD(TLB_MISC, E, 0, 1)
-> >   FIELD(TLB_MISC, ASID, 1, 10)
-> >   FIELD(TLB_MISC, VPPN, 13, 35)
-> >   FIELD(TLB_MISC, PS, 48, 6)
-> > +FIELD(TLB_MISC, GID, 54, 8)
-> >  =20
-> >   /*Msg interrupt registers */
-> >   #define N_MSGIS                4
-> > @@ -314,6 +321,10 @@ typedef struct  LoongArchBT {
-> >       uint32_t ftop;
-> >   } lbt_t;
-> >  =20
-> > +#define LOONGARCH_VM_LEVEL_HOST      0
-> > +#define LOONGARCH_VM_LEVEL_GUEST     1
-> > +#define LOONGARCH_VM_LEVELS          2
-> > +
-> >   #define CPU_VENDOR_LOONGSON   "Loongson"
-> >   #define CPU_MODEL_3A5000      "3A5000"
-> >   #define CPU_MODEL_1C101       "1C101"
-> > @@ -375,10 +386,18 @@ typedef struct CPUSysState {
-> >       uint64_t CSR_DBG;
-> >       uint64_t CSR_DERA;
-> >       uint64_t CSR_DSAVE;
-> > +    uint64_t CSR_GSTAT;
-> > +    uint64_t CSR_GCFG;
-> > +    uint64_t CSR_GINTC;
-> > +    uint64_t CSR_GCNTC;
-> > +    uint64_t CSR_GTLBC;
-> I think this patch can move to patch 1.
->=20
-> >       /* Msg interrupt registers */
-> >       uint64_t CSR_MSGIS[N_MSGIS];
-> >       uint64_t CSR_MSGIR;
-> >       uint64_t CSR_MSGIE;
-> > +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-> > +    LoongArchTLB tlb[LOONGARCH_TLB_MAX];
-> > +#endif
-> It can be deleted in this patch.
->=20
-> >   } CPUSysState;
-> >  =20
-> >   typedef struct CPUArchState {
-> > @@ -394,7 +413,7 @@ typedef struct CPUArchState {
-> >       uint32_t pv_features;
-> >       uint64_t vendor_id;
-> >       uint64_t cpu_id;
-> > -    CPUSysState sys_states[1];
-> > +    CPUSysState sys_states[LOONGARCH_VM_LEVELS];
-> >  =20
-> >       struct {
-> >           uint64_t guest_addr;
-> > @@ -419,6 +438,7 @@ typedef struct CPUArchState {
-> >       uint32_t mp_state;
-> >   #endif
-> >       CPUSysState *sys_state;
-> > +    bool vm_exit;
-> >   } CPULoongArchState;
-> >  =20
-> >   typedef struct LoongArchCPUTopo {
-> > @@ -438,8 +458,10 @@ struct ArchCPU {
-> >  =20
-> >       CPULoongArchState env;
-> >       QEMUTimer timer;
-> > +    QEMUTimer guest_timer;
-> >       uint32_t  phy_id;
-> >       OnOffAuto lbt;
-> > +    OnOffAuto lvz;
-> >       OnOffAuto pmu;
-> >       OnOffAuto ptw;
-> >       OnOffAuto lsx;
-> > @@ -484,15 +506,44 @@ struct LoongArchCPUClass {
-> >   #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
-> >   #define MMU_USER_IDX     MMU_PLV_USER
-> >   #define MMU_DA_IDX       4
-> > +#define MMU_GUEST_IDX    5
-> > +#define MMU_GUEST_DA_IDX 9
-> > +
-> > +static inline bool is_guest_mmu_idx(int mmu_idx)
-> > +{
-> > +    return mmu_idx >=3D MMU_GUEST_IDX;
-> > +}
-> > +
-> > +static inline int mmu_idx_to_plv(int mmu_idx)
-> > +{
-> > +    if (mmu_idx =3D=3D MMU_DA_IDX || mmu_idx =3D=3D MMU_GUEST_DA_IDX) {
-> > +        return 0;
-> > +    }
-> > +    if (is_guest_mmu_idx(mmu_idx)) {
-> > +        return mmu_idx - MMU_GUEST_IDX;
-> > +    }
-> > +    return mmu_idx;
-> > +}
-> >  =20
-> >   static inline CPUSysState *env_sys(CPULoongArchState *env)
-> >   {
-> >       return env->sys_state;
-> >   }
-> >  =20
-> > -static inline void set_sys_state(CPULoongArchState *env, CPUSysState *=
-sys)
-> > +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_leve=
-l)
-> > +{
-> > +    return &env->sys_states[vm_level];
-> > +}
-> > +
-> > +static inline void set_sys(CPULoongArchState *env, int vm_level)
-> >   {
-> > -    env->sys_state =3D sys;
-> > +    env->sys_state =3D get_sys(env, vm_level);
-> > +}
-> > +
-> > +static inline int env_vm_level(CPULoongArchState *env)
-> > +{
-> > +    return env_sys(env) =3D=3D get_sys(env, LOONGARCH_VM_LEVEL_GUEST) ?
-> > +           LOONGARCH_VM_LEVEL_GUEST : LOONGARCH_VM_LEVEL_HOST;
-> >   }
-> >  =20
-> >   static inline bool is_la64(CPULoongArchState *env)
-> > @@ -530,6 +581,13 @@ static inline void set_pc(CPULoongArchState *env, =
-uint64_t value)
-> >   #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
-> >   #define HW_FLAGS_VA32       0x20
-> >   #define HW_FLAGS_EUEN_ASXE  0x40
-> > +#define HW_FLAGS_GUEST_MODE 0x80
-> > +
-> > +bool has_lvz_capability(CPULoongArchState *env);
-> > +bool will_return_to_guest(CPULoongArchState *env);
-> > +uint8_t get_gid(CPULoongArchState *env);
-> > +uint8_t get_tgid(CPULoongArchState *env);
-> > +void trigger_vm_exit(CPULoongArchState *env);
-> There is only function declaration, no function implementation and=20
-> called. I think it can be removed in this patch.
->=20
-> In general it requires that every single patch can pass to compile and wo=
-rk.
->=20
-> Regards
-> Bibo Mao
-> >  =20
-> >   #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
-> >  =20
-> > diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-> > index 8aa8325dc6..257c3bbddd 100644
-> > --- a/target/loongarch/translate.h
-> > +++ b/target/loongarch/translate.h
-> > @@ -24,6 +24,7 @@
-> >   #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
-> >   #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
-> >   #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
-> > +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
-> >   #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
-> >   #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
-> >   #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
-> > @@ -66,6 +67,7 @@ typedef struct DisasContext {
-> >       TCGv zero;
-> >       bool la64; /* LoongArch64 mode */
-> >       bool va32; /* 32-bit virtual address */
-> > +    bool guest_mode;
-> >       uint32_t cpucfg1;
-> >       uint32_t cpucfg2;
-> >       uint32_t cpucfg3;
-> >=20
->=20
->=20
+We want to restore the logic to configure as it's also used by the
+firmware builds.
 
+This reverts commit 031f935567ab8abfa4e84682ecea08915ca9656d.
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ configure | 461 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 461 insertions(+)
 
+diff --git a/configure b/configure
+index aaa41fe47aa..1973f023b1e 100755
+--- a/configure
++++ b/configure
+@@ -1266,6 +1266,366 @@ EOF
+   fi
+ fi
+ 
++##########################################
++# functions to probe cross compilers
++
++if test "$container_command" = ""; then
++    container_command=$($python "$source_path"/tests/docker/docker.py probe)
++    test "$container_command" = "no" && container_command=""
++fi
++if test $use_containers = "yes" && test "$container_command" != ""; then
++    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
++fi
++
++# cross compilers defaults, can be overridden with --cross-cc-ARCH
++: ${cross_prefix_aarch64="aarch64-linux-gnu-"}
++: ${cross_prefix_aarch64_be="$cross_prefix_aarch64"}
++: ${cross_prefix_alpha="alpha-linux-gnu-"}
++: ${cross_prefix_arm="arm-linux-gnueabihf-"}
++: ${cross_prefix_armeb="$cross_prefix_arm"}
++: ${cross_prefix_hexagon="hexagon-unknown-linux-musl-"}
++: ${cross_prefix_loongarch64="loongarch64-unknown-linux-gnu-"}
++: ${cross_prefix_hppa="hppa-linux-gnu-"}
++: ${cross_prefix_i386="i686-linux-gnu-"}
++: ${cross_prefix_m68k="m68k-linux-gnu-"}
++: ${cross_prefix_microblaze="microblaze-linux-musl-"}
++: ${cross_prefix_mips64el="mips64el-linux-gnuabi64-"}
++: ${cross_prefix_mips64="mips64-linux-gnuabi64-"}
++: ${cross_prefix_mipsel="mipsel-linux-gnu-"}
++: ${cross_prefix_mips="mips-linux-gnu-"}
++: ${cross_prefix_ppc="powerpc-linux-gnu-"}
++: ${cross_prefix_ppc64="powerpc64-linux-gnu-"}
++: ${cross_prefix_ppc64le="$cross_prefix_ppc64"}
++: ${cross_prefix_riscv64="riscv64-linux-gnu-"}
++: ${cross_prefix_s390x="s390x-linux-gnu-"}
++: ${cross_prefix_sh4="sh4-linux-gnu-"}
++: ${cross_prefix_sparc64="sparc64-linux-gnu-"}
++: ${cross_prefix_sparc="$cross_prefix_sparc64"}
++: ${cross_prefix_tricore="tricore-"}
++: ${cross_prefix_x86_64="x86_64-linux-gnu-"}
++
++: ${cross_cc_aarch64_be="$cross_cc_aarch64"}
++: ${cross_cc_cflags_aarch64_be="-mbig-endian"}
++: ${cross_cc_armeb="$cross_cc_arm"}
++: ${cross_cc_cflags_armeb="-mbig-endian"}
++: ${cross_cc_hexagon="hexagon-unknown-linux-musl-clang"}
++: ${cross_cc_cflags_hexagon="-mv73 -O2 -static"}
++: ${cross_cc_cflags_i386="-m32"}
++: ${cross_cc_cflags_ppc="-m32 -mbig-endian"}
++: ${cross_cc_cflags_ppc64="-m64 -mbig-endian"}
++: ${cross_cc_ppc64le="$cross_cc_ppc64"}
++: ${cross_cc_cflags_ppc64le="-m64 -mlittle-endian"}
++: ${cross_cc_cflags_sparc64="-m64 -mcpu=ultrasparc"}
++: ${cross_cc_sparc="$cross_cc_sparc64"}
++: ${cross_cc_cflags_sparc="-m32 -mcpu=supersparc"}
++: ${cross_cc_cflags_x86_64="-m64 -mcx16"}
++
++compute_target_variable() {
++  eval "$2="
++  if eval test -n "\"\${cross_prefix_$1}\""; then
++    if eval has "\"\${cross_prefix_$1}\$3\""; then
++      eval "$2=\"\${cross_prefix_$1}\$3\""
++    fi
++  fi
++}
++
++have_target() {
++  for i; do
++    case " $target_list " in
++      *" $i "*) return 0;;
++      *) ;;
++    esac
++  done
++  return 1
++}
++
++# probe_target_compiler TARGET
++#
++# Look for a compiler for the given target, either native or cross.
++# Set variables target_* if a compiler is found, and container_cross_*
++# if a Docker-based cross-compiler image is known for the target.
++# Set got_cross_cc to yes/no depending on whether a non-container-based
++# compiler was found.
++#
++# If TARGET is a user-mode emulation target, also set build_static to
++# "y" if static linking is possible.
++#
++probe_target_compiler() {
++  # reset all output variables
++  got_cross_cc=no
++  container_image=
++  container_hosts=
++  container_cross_prefix=
++  container_cross_cc=
++  container_cross_ar=
++  container_cross_as=
++  container_cross_ld=
++  container_cross_nm=
++  container_cross_objcopy=
++  container_cross_ranlib=
++  container_cross_strip=
++
++  target_arch=${1%%-*}
++  case $target_arch in
++    aarch64) container_hosts="x86_64 aarch64" ;;
++    aarch64_be) container_hosts="x86_64 aarch64" ;;
++    alpha) container_hosts=x86_64 ;;
++    arm) container_hosts="x86_64 aarch64" ;;
++    hexagon) container_hosts=x86_64 ;;
++    hppa) container_hosts=x86_64 ;;
++    i386) container_hosts=x86_64 ;;
++    loongarch64) container_hosts=x86_64 ;;
++    m68k) container_hosts=x86_64 ;;
++    microblaze) container_hosts=x86_64 ;;
++    mips64el) container_hosts=x86_64 ;;
++    mips64) container_hosts=x86_64 ;;
++    mipsel) container_hosts=x86_64 ;;
++    mips) container_hosts=x86_64 ;;
++    ppc) container_hosts=x86_64 ;;
++    ppc64|ppc64le) container_hosts=x86_64 ;;
++    riscv64) container_hosts=x86_64 ;;
++    s390x) container_hosts=x86_64 ;;
++    sh4) container_hosts=x86_64 ;;
++    sparc64) container_hosts=x86_64 ;;
++    tricore) container_hosts=x86_64 ;;
++    x86_64) container_hosts="aarch64 ppc64le x86_64" ;;
++    xtensa*) container_hosts=x86_64 ;;
++  esac
++
++  for host in $container_hosts; do
++    test "$container_command" != "" || continue
++    test "$host" = "$cpu" || continue
++    case $target_arch in
++      # debian-all-test-cross architectures
++
++      aarch64_be)
++        container_image=debian-all-test-cross
++        container_cross_prefix=aarch64-linux-gnu-
++        ;;
++      alpha|hppa|m68k|mips|mipsel|riscv64|sh4|sparc64)
++        container_image=debian-all-test-cross
++        ;;
++      mips64)
++        container_image=debian-all-test-cross
++        container_cross_prefix=mips64-linux-gnuabi64-
++        ;;
++      ppc|ppc64|ppc64le)
++        container_image=debian-all-test-cross
++        container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
++        ;;
++
++      # architectures with individual containers
++
++      aarch64)
++        # We don't have any bigendian build tools so we only use this for AArch64
++        container_image=debian-arm64-cross
++        ;;
++      arm)
++        # We don't have any bigendian build tools so we only use this for ARM
++        container_image=debian-armhf-cross
++        container_cross_prefix=arm-linux-gnueabihf-
++        ;;
++      hexagon)
++        container_cross_prefix=hexagon-unknown-linux-musl-
++        container_cross_cc=${container_cross_prefix}clang
++        ;;
++      i386)
++        container_image=debian-i686-cross
++        container_cross_prefix=i686-linux-gnu-
++        ;;
++      loongarch64)
++        container_image=debian-loongarch-cross
++        container_cross_prefix=loongarch64-unknown-linux-gnu-
++        ;;
++      microblaze)
++        container_cross_prefix=microblaze-linux-musl-
++        ;;
++      mips64el)
++        container_image=debian-all-test-cross
++        container_cross_prefix=mips64el-linux-gnuabi64-
++        ;;
++      tricore)
++        container_image=debian-tricore-cross
++        container_cross_prefix=tricore-
++        ;;
++      x86_64)
++        container_image=debian-amd64-cross
++        ;;
++      xtensa*)
++        container_image=debian-xtensa-cross
++
++        # default to the dc232b cpu
++        container_cross_prefix=/opt/2020.07/xtensa-dc232b-elf/bin/xtensa-dc232b-elf-
++        ;;
++    esac
++    # Debian and GNU architecture names usually match
++    : ${container_image:=debian-$target_arch-cross}
++    : ${container_cross_prefix:=$target_arch-linux-gnu-}
++    : ${container_cross_cc:=${container_cross_prefix}gcc}
++    : ${container_cross_ar:=${container_cross_prefix}ar}
++    : ${container_cross_as:=${container_cross_prefix}as}
++    : ${container_cross_ld:=${container_cross_prefix}ld}
++    : ${container_cross_nm:=${container_cross_prefix}nm}
++    : ${container_cross_objcopy:=${container_cross_prefix}objcopy}
++    : ${container_cross_ranlib:=${container_cross_prefix}ranlib}
++    : ${container_cross_strip:=${container_cross_prefix}strip}
++  done
++
++  try=cross
++  # For softmmu/roms also look for a bi-endian or multilib-enabled host compiler
++  if [ "${1%softmmu}" != "$1" ] || test "$target_arch" = "$cpu"; then
++      case "$target_arch:$cpu" in
++        aarch64_be:aarch64 | \
++        armeb:arm | \
++        i386:x86_64 | \
++        ppc*:ppc64 | \
++        sparc:sparc64 | \
++        "$cpu:$cpu")
++        try='native cross' ;;
++      esac
++  fi
++  eval "target_cflags=\${cross_cc_cflags_$target_arch}"
++  for thistry in $try; do
++    case $thistry in
++    native)
++      target_cc=$cc
++      target_ccas=$ccas
++      target_ar=$ar
++      target_as=$as
++      target_ld=$ld
++      target_nm=$nm
++      target_objcopy=$objcopy
++      target_ranlib=$ranlib
++      target_strip=$strip
++      ;;
++    cross)
++      target_cc=
++      if eval test -n "\"\${cross_cc_$target_arch}\""; then
++        if eval has "\"\${cross_cc_$target_arch}\""; then
++          eval "target_cc=\"\${cross_cc_$target_arch}\""
++        fi
++      else
++        compute_target_variable $target_arch target_cc gcc
++      fi
++      target_ccas=$target_cc
++      compute_target_variable $target_arch target_ar ar
++      compute_target_variable $target_arch target_as as
++      compute_target_variable $target_arch target_ld ld
++      compute_target_variable $target_arch target_nm nm
++      compute_target_variable $target_arch target_objcopy objcopy
++      compute_target_variable $target_arch target_ranlib ranlib
++      compute_target_variable $target_arch target_strip strip
++      ;;
++    esac
++
++    if test -n "$target_cc"; then
++      case $target_arch in
++        i386|x86_64)
++          if $target_cc --version | grep -qi "clang"; then
++            continue
++          fi
++          ;;
++      esac
++    elif test -n "$target_as" && test -n "$target_ld"; then
++      # Special handling for assembler only targets
++      case $target in
++        tricore-softmmu)
++          build_static=
++          got_cross_cc=yes
++          break
++          ;;
++        *)
++          continue
++          ;;
++      esac
++    else
++      continue
++    fi
++
++    write_c_skeleton
++    case $1 in
++      *-softmmu)
++        if do_compiler "$target_cc" $target_cflags -o $TMPO -c $TMPC &&
++          do_compiler "$target_cc" $target_cflags -r -nostdlib -o "${TMPDIR1}/${TMPB}2.o" "$TMPO" -lgcc; then
++          got_cross_cc=yes
++          break
++        fi
++        ;;
++      *)
++        if do_compiler "$target_cc" $target_cflags -o $TMPE $TMPC -static ; then
++          build_static=y
++          got_cross_cc=yes
++          break
++        fi
++        if do_compiler "$target_cc" $target_cflags -o $TMPE $TMPC ; then
++          build_static=
++          got_cross_cc=yes
++          break
++        fi
++        ;;
++    esac
++  done
++  if test $got_cross_cc != yes; then
++    build_static=
++    target_cc=
++    target_ccas=
++    target_ar=
++    target_as=
++    target_ld=
++    target_nm=
++    target_objcopy=
++    target_ranlib=
++    target_strip=
++  fi
++  test -n "$target_cc"
++}
++
++write_target_makefile() {
++  echo "PYTHON=$python"
++  echo "EXTRA_CFLAGS=$target_cflags"
++  if test -z "$target_cc" && test -z "$target_as"; then
++    test -z "$container_image" && error_exit "Internal error: could not find cross compiler for $1?"
++    echo "$1: docker-image-$container_image" >> Makefile.prereqs
++    if test -n "$container_cross_cc"; then
++      echo "CC=$docker_py cc --cc $container_cross_cc -i qemu/$container_image -s $source_path --"
++      echo "CCAS=$docker_py cc --cc $container_cross_cc -i qemu/$container_image -s $source_path --"
++    fi
++    echo "AR=$docker_py cc --cc $container_cross_ar -i qemu/$container_image -s $source_path --"
++    echo "AS=$docker_py cc --cc $container_cross_as -i qemu/$container_image -s $source_path --"
++    echo "LD=$docker_py cc --cc $container_cross_ld -i qemu/$container_image -s $source_path --"
++    echo "NM=$docker_py cc --cc $container_cross_nm -i qemu/$container_image -s $source_path --"
++    echo "OBJCOPY=$docker_py cc --cc $container_cross_objcopy -i qemu/$container_image -s $source_path --"
++    echo "RANLIB=$docker_py cc --cc $container_cross_ranlib -i qemu/$container_image -s $source_path --"
++    echo "STRIP=$docker_py cc --cc $container_cross_strip -i qemu/$container_image -s $source_path --"
++  else
++    if test -n "$target_cc"; then
++      echo "CC=$target_cc"
++      echo "CCAS=$target_ccas"
++    fi
++    if test -n "$target_ar"; then
++      echo "AR=$target_ar"
++    fi
++    if test -n "$target_as"; then
++      echo "AS=$target_as"
++    fi
++    if test -n "$target_ld"; then
++      echo "LD=$target_ld"
++    fi
++    if test -n "$target_nm"; then
++      echo "NM=$target_nm"
++    fi
++    if test -n "$target_objcopy"; then
++      echo "OBJCOPY=$target_objcopy"
++    fi
++    if test -n "$target_ranlib"; then
++      echo "RANLIB=$target_ranlib"
++    fi
++    if test -n "$target_strip"; then
++      echo "STRIP=$target_strip"
++    fi
++  fi
++}
++
+ #######################################
+ # cross-compiled firmware targets
+ 
+@@ -1299,6 +1659,48 @@ fi
+ 
+ echo "# Automatically generated by configure - do not modify" > Makefile.prereqs
+ 
++# Mac OS X ships with a broken assembler
++if have_target i386-softmmu x86_64-softmmu && \
++        test "$host_os" != "darwin" && test "$host_os" != "sunos" && \
++        test "$host_os" != "haiku" && \
++        probe_target_compiler i386-softmmu; then
++    subdirs="$subdirs pc-bios/optionrom"
++    config_mak=pc-bios/optionrom/config.mak
++    echo "# Automatically generated by configure - do not modify" > $config_mak
++    echo "TOPSRC_DIR=$source_path" >> $config_mak
++    write_target_makefile >> $config_mak
++fi
++
++if have_target ppc-softmmu ppc64-softmmu && \
++        probe_target_compiler ppc-softmmu; then
++    subdirs="$subdirs pc-bios/vof"
++    config_mak=pc-bios/vof/config.mak
++    echo "# Automatically generated by configure - do not modify" > $config_mak
++    echo "SRC_DIR=$source_path/pc-bios/vof" >> $config_mak
++    write_target_makefile >> $config_mak
++fi
++
++# Only build s390-ccw bios if the compiler has -march=z900 or -march=z10
++# (which is the lowest architecture level that Clang supports)
++if have_target s390x-softmmu && probe_target_compiler s390x-softmmu && \
++    GIT=git "$source_path/scripts/git-submodule.sh" "$git_submodules_action" roms/SLOF >> config.log 2>&1; then
++  write_c_skeleton
++  do_compiler "$target_cc" $target_cc_cflags -march=z900 -o $TMPO -c $TMPC
++  has_z900=$?
++  if [ $has_z900 = 0 ] || do_compiler "$target_cc" $target_cc_cflags -march=z10 -msoft-float -Werror -o $TMPO -c $TMPC; then
++    if [ $has_z900 != 0 ]; then
++      echo "WARNING: Your compiler does not support the z900!"
++      echo "         The s390-ccw bios will only work with guest CPUs >= z10."
++    fi
++    subdirs="$subdirs pc-bios/s390-ccw"
++    config_mak=pc-bios/s390-ccw/config-host.mak
++    echo "# Automatically generated by configure - do not modify" > $config_mak
++    echo "SRC_PATH=$source_path/pc-bios/s390-ccw" >> $config_mak
++    echo "GIT_SUBMODULES_ACTION=$git_submodules_action" >> $config_mak
++    write_target_makefile >> $config_mak
++  fi
++fi
++
+ #######################################
+ # generate config-host.mak
+ 
+@@ -1322,6 +1724,65 @@ if test "$default_targets" = "yes"; then
+   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
+ fi
+ 
++tcg_tests_with_compilers=
++for target in $target_list; do
++  arch=${target%%-*}
++
++  case $target in
++    xtensa*-linux-user)
++      # the toolchain is not complete with headers, only build system tests
++      continue
++      ;;
++    *-softmmu)
++      test -f "$source_path/tests/tcg/$arch/Makefile.softmmu-target" || continue
++      qemu="qemu-system-$arch"
++      ;;
++    *-linux-user|*-bsd-user)
++      qemu="qemu-$arch"
++      ;;
++  esac
++
++  if probe_target_compiler $target || test -n "$container_image"; then
++      test -n "$container_image" && build_static=y
++      mkdir -p "tests/tcg/$target"
++      config_target_mak=tests/tcg/$target/config-target.mak
++      ln -sf "$source_path/tests/tcg/Makefile.target" "tests/tcg/$target/Makefile"
++      echo "# Automatically generated by configure - do not modify" > "$config_target_mak"
++      echo "TARGET_NAME=$arch" >> "$config_target_mak"
++      echo "TARGET=$target" >> "$config_target_mak"
++      write_target_makefile "build-tcg-tests-$target" >> "$config_target_mak"
++      echo "BUILD_STATIC=$build_static" >> "$config_target_mak"
++      echo "QEMU=$PWD/$qemu" >> "$config_target_mak"
++
++      # will GDB work with these binaries?
++      if test "${gdb_arches#*$arch}" != "$gdb_arches"; then
++          echo "GDB=$gdb_bin" >> $config_target_mak
++      fi
++
++      if test "${gdb_arches#*$arch}" != "$gdb_arches" && version_ge $gdb_version 14.1; then
++          echo "GDB_HAS_SME_TILES=y" >> $config_target_mak
++      else
++          echo "GDB_HAS_SME_TILES=n" >> $config_target_mak
++      fi
++
++      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 15.1; then
++          echo "GDB_HAS_MTE=y" >> $config_target_mak
++      fi
++
++      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 16.0; then
++          # GDB has to support MTE in baremetal to allow debugging MTE in QEMU system mode
++          echo "GDB_SUPPORTS_MTE_IN_BAREMETAL=y" >> $config_target_mak
++      fi
++
++      echo "run-tcg-tests-$target: $qemu\$(EXESUF)" >> Makefile.prereqs
++      tcg_tests_with_compilers="$tcg_tests_with_compilers $target"
++  fi
++done
++
++if test "$tcg" = "enabled"; then
++    echo "TCG_TESTS_WITH_COMPILERS=$tcg_tests_with_compilers" >> $config_host_mak
++fi
++
+ if test "$skip_meson" = no; then
+   cross="config-meson.cross.new"
+   meson_quote() {
+-- 
+2.47.3
 
 
