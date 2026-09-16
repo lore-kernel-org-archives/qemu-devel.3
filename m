@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DD3C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD12C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kJY-0004H8-Uf; Wed, 16 Sep 2026 03:44:21 -0400
+	id 1x6kKB-00056X-3O; Wed, 16 Sep 2026 03:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJX-0004Gf-RR; Wed, 16 Sep 2026 03:44:19 -0400
+ id 1x6kK9-00055f-GN; Wed, 16 Sep 2026 03:44:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJV-0004ud-R1; Wed, 16 Sep 2026 03:44:19 -0400
+ id 1x6kK7-00050y-67; Wed, 16 Sep 2026 03:44:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=2SRqz5S3YNkNI4mhAWqlHAgeN/EVcHYuNr8uZv0ic+s=;
+ t=1789544605; bh=WqzG8TiPC3fEAK89x5zr4kLKdh9Bk6lltBT/55ith4Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B3dAsTUh5WpB8qdKVlFpSPHV2pBFxy6YQfcTjNtgUtfsPI9OiCl9RbCeAsTv0pJu1
- ycCCfjTDZ2H0NdGkf5vtgZjyIgcdLBijseXlNS9cC2iQjVNgPcxqlFnSkd/mVyOWnJ
- VVyTCYx0wqu4gOpCErmPke19PEQJAFF9TU5+gbvPG8roIJUsDanD5QLS5DHKFFn7ek
- ECtw2YJMer9pWYbSEt5wEM8+d5bDh+/SQtycRX9Zt8+t4SLcTcHeO8mSn/I5+Pne6H
- DXe7UVj8JBRz82ytdChteq7oYEXkY7gOEthtSfJ3bLSDj9e/offf/Kqr4N1HpryQpi
- rz4jUYvFVoRFg==
+ b=rGGeZGdp9wEP021IbfqgezHxXJzr3mqW3X1FPUxlI17ngfM3WKEMmXm6aYB9JriMo
+ L8EJrTvwYCodANGwtECVxW8VM0QugNUUUjHvLgYjtAYWntgcQ8PxQNa0iYLOCIYPD6
+ LFtATMQe6hXk7uju8ap7hm+DznbKGlQs8++fxSM0IDxIkRMIAkAtt4v2DKNDxpyI4N
+ EqOwd53g8ic+HgmK0JF7NIZzWUtl80ESe7QreGb4faSyPsSENAaZmdrZTCZWDYf+H5
+ 7XXxPZ5ACzQ+q3259giyt0OxNEJC70gJGFCzDchvqRiAoOVAqYDIERUaiF14J2Cl6H
+ W1tFwxpnqlx0g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 348951D5592;
+ by isrv.corpit.ru (Postfix) with ESMTP id 59F5C1D559A;
  Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B7F06429B27;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDBDB429B2F;
  Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A0FF65A6CF; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id B9E8A5A6DF; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 07/49] tests/unit/test-blockjob: cover keeping a job
- paused while a pause is pending
-Date: Wed, 16 Sep 2026 10:42:25 +0300
-Message-ID: <20260916074346.671467-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 15/49] s390x/sclp: pv: only copy the original SCCB
+ buffer
+Date: Wed, 16 Sep 2026 10:42:33 +0300
+Message-ID: <20260916074346.671467-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -72,146 +72,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Add a regression test for the previous commit. A job that has reached
-its pause point is spuriously re-entered (job_enter()) while a pause is
-still pending (pause_count > 0), reproducing what an overlapping drain
-does: one drain's job_resume() wakes the job while the next drain's
-job_pause() is already counted. The job must stay parked - it must not
-run job code or clear job->paused, or job_set_aio_context() could
-observe paused == false and abort.
+With variable length and EXTENDED_LENGTH_SCCB, some callbacks might
+change the length field. For example read SCP info might write a new
+length into the SCCB header. We must not use that new length for the
+buffer copy, since the buffer was allocated with the original length.
+Only the length field in the work SCCB is changed, to indicate the
+"necessary" size. Using the new length reads past the allocation, so
+tools like ASAN might detect a buffer overrun.
 
-The test counts the job's run-loop iterations: without the fix the
-re-entered job clears job->paused, runs one iteration and re-pauses, so
-the counter advances; with the fix it stays parked and the counter is
-unchanged. It runs in the main AioContext, so job_enter() is synchronous
-and the check is deterministic.
+Secure guests do not have EXTENDED_LENGTH_SCCB, and the ultravisor checks
+and sanitizes the length field, so no qemu heap contents are exposed to
+the guest and the non pv-path already has the same header.length.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260623152406.1180235-3-den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 438ee08bc97af48ade6365133f2f5b43d4d788ae)
+Fixes: 0f73c5b30b8b ("s390x: protvirt: SCLP interpretation")
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260814125857.1729543-1-borntraeger@de.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit d7913fac774706a02faef0dc1c4c19df65a5a379)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
-index abdbe4b8350..3b77d19b911 100644
---- a/tests/unit/test-blockjob.c
-+++ b/tests/unit/test-blockjob.c
-@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
-     cancel_common(s);
- }
- 
-+typedef struct PauseCountJob {
-+    BlockJob common;
-+    int n;
-+    bool should_complete;
-+} PauseCountJob;
-+
-+static void pause_count_job_complete(Job *job, Error **errp)
-+{
-+    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
-+    s->should_complete = true;
-+}
-+
-+static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
-+{
-+    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
-+
-+    while (!s->should_complete) {
-+        if (job_is_cancelled(&s->common.job)) {
-+            return 0;
-+        }
-+        s->n++;
-+        /*
-+         * Yields; while a pause is pending the yield is skipped and the job
-+         * parks in job_pause_point() instead.
-+         */
-+        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
-+    }
-+
-+    return 0;
-+}
-+
-+static const BlockJobDriver pause_count_job_driver = {
-+    .job_driver = {
-+        .instance_size = sizeof(PauseCountJob),
-+        .free          = block_job_free,
-+        .user_resume   = block_job_user_resume,
-+        .run           = pause_count_job_run,
-+        .complete      = pause_count_job_complete,
-+    },
-+};
-+
-+/*
-+ * A job that has reached its pause point must stay paused while a pause is
-+ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
-+ * drain's job_resume() wakes it while the next drain's job_pause() is already
-+ * counted); the job must not run or clear job->paused, otherwise
-+ * job_set_aio_context() can observe paused == false and abort.
-+ */
-+static void test_pause_keeps_paused(void)
-+{
-+    BlockBackend *blk;
-+    BlockJob *bjob;
-+    PauseCountJob *s;
-+    Job *job;
-+    int n0;
-+
-+    blk = create_blk(NULL);
-+    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
-+                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
-+    s = container_of(bjob, PauseCountJob, common);
-+    job = &bjob->job;
-+    WITH_JOB_LOCK_GUARD() {
-+        job_ref_locked(job);
-+    }
-+
-+    job_start(job);
-+
-+    /* Pause the running job; it parks in job_pause_point() with paused set. */
-+    WITH_JOB_LOCK_GUARD() {
-+        job_pause_locked(job);
-+        g_assert_true(job->paused);
-+        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
-+    }
-+    n0 = s->n;
-+
-+    /*
-+     * Spurious wake while the pause is still pending. The job must stay parked:
-+     * the bug clears job->paused, runs an iteration (s->n advances) and
-+     * re-pauses, exposing a paused == false window.
-+     */
-+    job_enter(job);
-+    WITH_JOB_LOCK_GUARD() {
-+        g_assert_true(job->paused);
-+    }
-+    g_assert_cmpint(s->n, ==, n0);
-+
-+    /* Resume and tear down. */
-+    WITH_JOB_LOCK_GUARD() {
-+        job_resume_locked(job);
-+    }
-+    job_cancel_sync(job, true);
-+    WITH_JOB_LOCK_GUARD() {
-+        Job *dummy = job;
-+        job_dismiss_locked(&dummy, &error_abort);
-+        job_unref_locked(job);
-+    }
-+    destroy_blk(blk);
-+}
-+
- int main(int argc, char **argv)
- {
-     qemu_init_main_loop(&error_abort);
-@@ -402,5 +501,6 @@ int main(int argc, char **argv)
-     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
-     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
-     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
-+    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
-     return g_test_run();
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index ea5362771cf..977b8f59078 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -291,7 +291,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     sclp_c->execute(sclp, work_sccb, code);
+ out_write:
+     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+-                          be16_to_cpu(work_sccb->h.length));
++                          be16_to_cpu(header.length));
+     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+     return 0;
  }
 -- 
 2.47.3
