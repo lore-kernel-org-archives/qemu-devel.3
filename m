@@ -4,161 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5219DC982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B005BC982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6sYg-00019n-1I; Wed, 16 Sep 2026 12:32:30 -0400
+	id 1x6sZF-0001k6-UW; Wed, 16 Sep 2026 12:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6sYD-00014T-1N
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:32:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x6sZE-0001ir-33
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:33:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6sY3-00068Q-QC
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:31:55 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GFeJKF3233144
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:31:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- F1AREO69r44NgyUYJ7+qw6Vd+ao2yR0xyMzMBwd5clQ=; b=OBHxsmdlajPNH2yY
- joFfVh02B3jrkJKHyaATvVPyAPJHY6RvkJEZPzMwzFEUuaQ65lKX5aAyy8clKEBT
- xaaTQUYfdZ1aUEugDLs/BvCXVB1FzEalOvMHTYvEcMPe3Aqe/0JpDi74kuwB4/0J
- Vn97TDKlnO/eXvYmAoj+2CsI0KPaBAqFRTkwk+T7xur7epc7drOHIWbUsB7H9+Sp
- T9li3OiTCo430mx6Y0eGLncQuvfuim2khHSDnibdq6+ajKzJeQJhzF0dtIxxmCdv
- PjSl2ZakaYgFCdsqnVUQmi+E4tAqTh7rcq4S+d15BrZOYg/asS2kpIoLMfMwoiKb
- ZUJ33A==
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqdywcah0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:31:49 +0000 (GMT)
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-4959c49e054so4909468b6e.3
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 09:31:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x6sZC-0006PO-43
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:33:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789576379;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Tnt2E8YmCEeSRGx1jrMTVF/lKQfGLKxf5RHzaXjel+8=;
+ b=AEHCzZ9UdurGh1+xlbAHpKGWWWDYxuxkdNnxpqdoLAMZaCEJ1EQ5uw9qS0I9SaOL4RG4BH
+ KbBG73tV8BDa5/KKdSunfbKpGWe2WcC4lMd4lz1X1Nk6bEN5xAEdPRawjxgmnFNkbgY8XY
+ ZW1LKpRl5wvr1N0rahiVuFBcyLuvG8Q=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-371-jfXAZm1cOCC0JkoNPPiSQA-1; Wed, 16 Sep 2026 12:32:57 -0400
+X-MC-Unique: jfXAZm1cOCC0JkoNPPiSQA-1
+X-Mimecast-MFC-AGG-ID: jfXAZm1cOCC0JkoNPPiSQA_1789576376
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49cf9df1eadso57301525e9.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 09:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789576308; x=1790181108; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=F1AREO69r44NgyUYJ7+qw6Vd+ao2yR0xyMzMBwd5clQ=;
- b=BvDw6euTVmtrdRvG7qsfrjaj4yn9jz3YD7cbJ+xXX5t3F7mK4C17tYJCosu4GOGbRK
- OmDXMlHUCyz+szQ25cl0y2dDtDkkvOfxmncylfUAGgC3JLYuErzarJor3vU9SHVC987H
- hMXVQXu/CMI40RR7lcM6kL2KYdSJXpuY7m8xHO6fJU20Y6zHCuNmKL5GLaPx5X8vY2CF
- PgfFh1ZEOyEI4GAMZ5Oi9bfdysQMIlMFLS2IZalOm5kcQ6pw6MvlV8f162wwvpU+7NhK
- 17vcg9tfubwpc1YBM35lm2t8u8BE2dmlwJiDyJZPis/rG/6h0icubGenrcLqIZfp3mfj
- VMEg==
+ d=redhat.com; s=google; t=1789576376; x=1790181176; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Tnt2E8YmCEeSRGx1jrMTVF/lKQfGLKxf5RHzaXjel+8=;
+ b=rAuERocxpMwFZAe5+89bPcTqP9/zcqaStlN1n1XS9/za+h4C3hFEXqIkM8GAWWt+Hn
+ CwnEKsSKCw2xorFgnwqC4x3DlVZarqOvEULFfBQwadwEp5jMWesOtj4OzRFOneWNols/
+ BOQYBK5xixmBrV8KdxkQkMYDOYe2vKQecRV1KU6SxNh8ND2+TaE++WLJSxaySthEuQK+
+ MKE+g5m2Xc0mwdqLhnmpUWWmPNi0NbBJ+7HNIEjnRnp7WBfyKAQcOSRx5lKcayexlmkZ
+ +v3Uq49RgtJHhlwK4Spd7QxrXAqqXmrBiHsgwauLos5xCgMntXjt9LBknCSn2sTw1ZAl
+ vXWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789576308; x=1790181108;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=F1AREO69r44NgyUYJ7+qw6Vd+ao2yR0xyMzMBwd5clQ=;
- b=awG0c4RbY1uoVvy5AKr45dpYhv6aDvfbdVWyi7jZjjuha+RMJm1fU8LEVLL2tIQV3/
- cXE1oEBeIN8qAg/uSjE1/K9jc8MvMB5x1HJUh14EZmjKunKiigvI7PUof9pmD0CnHx1Y
- uFpDambk0vY4Wu/GOadYhZuqi1O+VxNvuqVlPULrtBGHl3ehCAhjra/ib8b45CKyr1Nw
- ZThReR0V1X8IyY1iQrA+Y6g2daeE01OL40XA6HoLhIn/G/rGGL6cb8kE72hSYWxKULgP
- YxW6O3C0p6Rn708Vuell+aWMGTuxZl5okpj1oauyWDlTdh2x8Y0pyhNI9qtzmyRB7vuM
- FVxA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBymCUCd3bgTNJqo00dKrUhJ2/R/m1muWqnavMNnUlxWqXwepmy54o7lRkeFETgDcwLFwk+xD/fVf0Lo@nongnu.org
-X-Gm-Message-State: AFuF++niA9hcy/lyS/yZgI8Gv/laHGtEOjqaeaQVX+HAdj4fOReAX3F+
- x6jWLIbLek9zZd4yFxOfhJ37+NYWiBJdE9/XtwHLb8mYnYyjLA0njoIf+FCJ704vqe5NMRQap1d
- 7FFuq2/kCmOS1wzFcH4lkHLyrKRV/Bk6qDsXIDJgPJ00dcJjrRBxcyiZjrA==
-X-Gm-Gg: AYBFou1dBTbqDdRgrRP7viUMY9MS6PDUJ0hBMpADOguesxjLpNszB6UVcfONsEGl+JN
- wvYFKjCUmUUdYOTVCzbEv2Mc89sDrbfI0gvoW5kmKv/iS1qd3M/6XIcYGZGn89fCt08AzNtupff
- tVVXtn7fLpqYOfCvnR6Zrphuyd/n3g88X1yRd6bvZk78GElswVlCeySlDp5pTFDxzxLFPGeOE7p
- igcUvURSbFvkyYeDl592Aj4HdC8hUpX7fqb0qkhz4VFfds5gQ8fBp6ICRBWm2EYYjsM0RWBHbXP
- +cRAcpIT6onGWHnSaHwMFlPC/gDpgckpHy5UKKXuZP9RGl14zq+JQpukZBrfiqpOlyKgnA9uKjl
- JWfqe/YQz9Y5EyGAvfnik3ekjlBHjskQFglW22SNmeyI6Qnk3iSvJ6KU8/6dEn0jvTc4H
-X-Received: by 2002:a05:6808:1903:b0:4b9:a88b:888a with SMTP id
- 5614622812f47-4ca4c49bdebmr3404456b6e.32.1789576308600; 
- Wed, 16 Sep 2026 09:31:48 -0700 (PDT)
-X-Received: by 2002:a05:6808:1903:b0:4b9:a88b:888a with SMTP id
- 5614622812f47-4ca4c49bdebmr3404396b6e.32.1789576308041; 
- Wed, 16 Sep 2026 09:31:48 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5a6a1a5sm9559834eec.5.2026.09.16.09.31.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Sep 2026 09:31:47 -0700 (PDT)
-Message-ID: <65a743c6-54ae-4e2c-ae4d-08e1d6f87ef3@oss.qualcomm.com>
-Date: Wed, 16 Sep 2026 09:31:45 -0700
+ d=1e100.net; s=20260707; t=1789576376; x=1790181176;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Tnt2E8YmCEeSRGx1jrMTVF/lKQfGLKxf5RHzaXjel+8=;
+ b=Ev+lfKcRoxzlsM8iFWCZ+EIOCYEoq9h8DmkAmAffEseKFUJDtLez7NSWc3P6goP6c+
+ xaq9cqkjD7y8caAJulo1k9WGXGYV2iYKsZcbAMPcTm6yYLCT5wnAF6QB0WP3thyFNufi
+ AIlZeR40mN1Gy/+1pTckq3NmYG34HsERg38F9Pq+Biji86j3wOJs6WZLyXv/sXvDvDYw
+ v3UcxUFp6629dICAv+hq8GtxsnPzUDNIp5z3hgReBH4PnxeuyshVHZGGpZycCrg1EhVm
+ aXJpQz8wmFNjsVqzw61hOlj+VIeckZwsJWFq+P8VyTN4T89xPtVvhey919blw/X1qiMF
+ M4rQ==
+X-Gm-Message-State: AFuF++lrfNJvNX/SYHlDBKz8kxnRrBl1qzypW+adIhTb/C2j7vSUztXU
+ 0dLQ9ZDbwJQ91P6d3sfRahiexwGOfOZ/UDCx84Rr+bGNMWUx0OywQd8vfdL4MPDHysdBoqxA1SL
+ cBBGzJl+kal1XWDD2o4tXsoBY6i/yrq+bLDykEeAJajogSW2hY1J3RE22
+X-Gm-Gg: AYBFou0kBhlB9+lM0hHBGmA7UIPb0IC96XeLPU8sYjhZ1RnsTHzJvS6PViMp5M1Gwe2
+ nbaPVGcmQBclHUVjGkT6eoDCi9E47edupL2OyNoVBgaORZSygYkMnCFauhXLNs1l+iyIxlaAVVZ
+ kvM1Wx9rPbitbhlP9ntlBJbR/rptcLaXtLOJNENHBE7HknCQwqBrmrvMGGa0Jy3/nktuOhi7WDw
+ sTsl4tt0oux1zXiQtNB0znSpv0TkUVuRv5R/SI7iRSE7NZ39OA57LUN6T0TVMBY4Gjj7ed9oalA
+ AhoezHDUeTzBSIBacZwBJ7bNJZl1BjcqVs3JC1LgO0ajYyBoJ4EJ2AG2Ukn/X0LUNiPQs4leepy
+ T2OLkgWlmKmhFmbXI7HROyEOQ6tdgHPMjGb2Gs0KuCOPZRA==
+X-Received: by 2002:a05:6000:29cf:b0:486:e707:42eb with SMTP id
+ ffacd0b85a97d-4870d06792cmr3005801f8f.33.1789576376485; 
+ Wed, 16 Sep 2026 09:32:56 -0700 (PDT)
+X-Received: by 2002:a05:6000:29cf:b0:486:e707:42eb with SMTP id
+ ffacd0b85a97d-4870d06792cmr3005765f8f.33.1789576375880; 
+ Wed, 16 Sep 2026 09:32:55 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
+ [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4870bf438fbsm8340504f8f.36.2026.09.16.09.32.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 09:32:55 -0700 (PDT)
+Date: Wed, 16 Sep 2026 18:32:52 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, bchaney@akamai.com, mark.kanda@oracle.com, 
+ farosas@suse.de, den@openvz.org, clg@redhat.com, philmd@oss.qualcomm.com, 
+ maciej.szmigiero@oracle.com, mst@redhat.com, dongli.zhang@oracle.com,
+ peterx@redhat.com
+Subject: Re: [PATCH v6 09/14] vhost-vsock: preserve vhost FD during CPR
+Message-ID: <aqq-9QeEXkZ8EISA@sgarzare-redhat>
+References: <20260915-up-vsock-vhost-v5-v6-0-4d31b2dc6afd@virtuozzo.com>
+ <20260915-up-vsock-vhost-v5-v6-9-4d31b2dc6afd@virtuozzo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/19] Revert "tests/tcg/meson.build: implement
- ./configure -cross-cc-* options"
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- John Snow <jsnow@redhat.com>, David Hildenbrand <david@kernel.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Warner Losh <imp@bsdimp.com>, Song Gao <gaosong@loongson.cn>,
- Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>,
- Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-s390x@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260916153013.2134555-1-alex.bennee@linaro.org>
- <20260916153013.2134555-3-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260916153013.2134555-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ktqxeg1lonruPYklWpG147Sq4jGuHUnN
-X-Authority-Analysis: v=2.4 cv=aJ1lOr9m c=1 sm=1 tr=0 ts=6aaac475 cx=c_pps
- a=WJcna6AvsNCxL/DJwPP1KA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=qpEU-adqf6FSEL6AZwUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
- a=_Y9Zt4tPzoBS9L09Snn2:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDIyNSBTYWx0ZWRfX5+MDXl2DE9jS
- IutllwybHaRQGeStItTTPd+xorshOfW5sHyz7wLlwlhZkY2Lv6kxhrWI/uT04+7XmIgmvTa+cNk
- gNZMI/BeSmULhbfwMyWtsNCP5L53eCA4nOaYfhzlnCduosPtV+sxH7KxHoDiLCWZjE4pe3t8drf
- 2AdEJMOSLZPgqGi7abdCRMZbKpakxFqjWsMcyq0jYTko3U7QjTm6b7dTZoGkLuqrYW0J7Haw/lP
- CFbhNuHZ2BI7IZc9ZXAD0j6HILzRSAHEux47OdcrB0jNARgOz87kS5eW+eFzYa0XyHT8rZKXFlp
- 1+irFvvWneiHk00wNNm4KoawG80AEYw86e6wl38+7I5WXWd3tfuzOXy5L254rD40/P9RGdx45gh
- tXDDie7RAmNPTZzHNtfEto4PXEBtfy8eS3uTfk4/7nAmmGosReVEnVDCzSQpn4f4QM1meACItf3
- 58NObF/ZDbeqc2JkkGg==
-X-Proofpoint-ORIG-GUID: ktqxeg1lonruPYklWpG147Sq4jGuHUnN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDIyNSBTYWx0ZWRfX2fHVvlPQ1bKl
- CI4RX8lG5TbuUE6sf7hjQ6fHSPIpOm2FPSrRDh5ataU36UzPoEDetpspynlpbvGdNk0yKaLZIKQ
- FL4y2/i1bfYL+QDY3kVeZZpwa001J2E=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 clxscore=1015 priorityscore=1501 spamscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609160225
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260915-up-vsock-vhost-v5-v6-9-4d31b2dc6afd@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -175,31 +122,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/2026 8:29 AM, Alex Bennée wrote:
-> We want to keep configuring of the cross compiler within configure so
-> it can be used by the firmware.
+On Tue, Sep 15, 2026 at 11:59:45PM +0300, Andrey Drobyshev wrote:
+>During CPR (checkpoint-restore) migration the guest keeps running on the
+>same host, so instead of reopening /dev/vhost-vsock on the destination,
+>we should reuse the FD from the source.  The FD is saved in the CPR
+>namespace (hash table) with cpr_save_fd() and then reclaimed on the
+>target via cpr_find_fd().
+>
+>Use the (suffixed) device path as the key in CPR hash table.  Device
+>path is obtained with qdev_get_dev_path() and is essentially the
+>device's address on the underlying bus.  As any vhost-vsock device is
+>attached to a virtio bus, whose .get_dev_path() forwards to the proxy
+>device, and every proxy bus (PCI, MMIO, CCW) implements it, we should
+>always be getting a unique non-empty path with qdev_get_dev_path().
+>
+>vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
+>Deferring the ownership handoff to pre_save/post_load is done in a
+>following patch.  Until then CPR remains blocked, so the restore path
+>added here is not reachable yet.
+>
+>Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>---
+> hw/virtio/vhost-vsock.c | 30 +++++++++++++++++++++++++++++-
+> 1 file changed, 29 insertions(+), 1 deletion(-)
+>
+>diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+>index 3ec20d87606..34eed2ea997 100644
+>--- a/hw/virtio/vhost-vsock.c
+>+++ b/hw/virtio/vhost-vsock.c
+>@@ -69,6 +69,18 @@ static int vhost_vsock_set_running(VirtIODevice *vdev, int start)
+>     return 0;
+> }
+>
+>+/*
+>+ * Any vhost-vsock device is attached to a virtio bus, whose .get_dev_path()
+>+ * forwards to the proxy device, and every proxy bus (PCI, MMIO, CCW)
+>+ * implements it.  Thus qdev_get_dev_path() always returns a non-empty string,
+>+ * which guarantees us a unique CPR name.
+>+ */
+>+static char *vhost_vsock_cpr_name(DeviceState *dev)
+>+{
+>+    g_autofree char *path = qdev_get_dev_path(dev);
+>+    g_assert(path && path[0]);
+>+    return g_strdup_printf("%s/vhost-vsock", path);
+>+}
+>
+> static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+> {
+>@@ -143,6 +155,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>     VHostVSock *vsock = VHOST_VSOCK(dev);
+>+    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
+>+    bool cpr_incoming = cpr_is_incoming();
+>     int vhostfd;
+>     int ret;
+>
+>@@ -170,7 +184,14 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>         return;
+>     }
+>
+>-    if (vsock->conf.vhostfd) {
+>+    if (cpr_incoming) {
+>+        /* Reuse the fd handed over from the source QEMU */
+>+        vhostfd = cpr_find_fd(cpr_name, 0);
+>+        if (vhostfd < 0) {
+>+            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
+>+            goto err_blocker;
+>+        }
+>+    } else if (vsock->conf.vhostfd) {
+>         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+>         if (vhostfd == -1) {
+>             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+>@@ -207,6 +228,11 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>         goto err_vhost_dev;
+>     }
+>
+>+    /* Register the fd for a future CPR after a fully successful realize */
+
+mmm, but if `cpr_incoming` is true, we should skip this, no?
+
+>+    if (!cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
+>+        goto err_vhost_dev;
+>+    }
+>+
+>     return;
+>
+> err_vhost_dev:
+
+Should we call cpr_delete_fd() in the error path?
+
+Maybe with patch 14 both are fixed, since it seems there is an early
+return, and also the delete in the error path.
+So now I'm thinking if it would be easier for you to squash them...
+
+Not a strong opinion here, but if you want to keep this patch, I think
+should be fixed.
+
+Thanks,
+Stefano
+
+>@@ -223,10 +249,12 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
+>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>     VHostVSock *vsock = VHOST_VSOCK(dev);
+>+    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
+>
+>     /* This will stop vhost backend if appropriate. */
+>     vhost_vsock_set_status(vdev, 0);
+>
+>+    cpr_delete_fd(cpr_name, 0);
+>     migrate_del_blocker(&vsock->migration_blocker);
+>     vhost_dev_cleanup(&vvc->vhost_dev);
+>     vhost_vsock_common_unrealize(vdev);
+>
+>-- 
+>2.47.1
 >
 
-Would that be possible to add in command message that it disable effect
-of those options for tcg-tests?
-
-> This reverts commit 7e1d54da6faf10e1fc70f6b3d8247068b80b1597.
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> v3
->   - declare empty container_command/use_containers to avoid unref var
-> ---
->  configure             | 31 ++++++++-------
->  meson_options.txt     | 89 -------------------------------------------
->  tests/tcg/meson.build | 31 +++------------
->  3 files changed, 23 insertions(+), 128 deletions(-)
-> 
-
-For the rest,
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-
-Regards,
-Pierrick
 
