@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F17C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD76C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4d-0002Wv-NR; Wed, 16 Sep 2026 06:41:07 -0400
+	id 1x6n15-00045D-Nr; Wed, 16 Sep 2026 06:37:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3v-0008Of-OO; Wed, 16 Sep 2026 06:40:28 -0400
+ id 1x6n13-0003wF-I1; Wed, 16 Sep 2026 06:37:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3t-0002A9-H8; Wed, 16 Sep 2026 06:40:23 -0400
+ id 1x6n10-0001hV-7f; Wed, 16 Sep 2026 06:37:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=ZJhRIevipQGcpE9OxfuFapD4TDrvm487gDTJPaFV3m8=;
+ t=1789554955; bh=WA4S4AEQz14oXbQcsJ/FIrIsaYwe8zOQ52GKTdDe23I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VvaDIwmz+WoKTuDM9FrkLPGdTZT1sFjePkG7MPJdbRUTrQNFc8oVKTOODSF9aAVBu
- qkOqileX+9lMkSqaumvO/FQilEBF+6QDcNWH8f8iNLOTB5qHRoRAwvYgIJTU8glYLY
- dYypzVpPqnGFg9ndrdnBH/R1UM+yDMqv4AWS2s6vfLhd8mCbY4DTewMVI01JAdlRYM
- fIxdjSS5xT3szdL7MIGPlTURqxN0JPDr7f1fbFKnSvNfrzP1wbFC3f2/haNyjp4ePv
- eV9dfw9DP0vstvefOcJWTyC9NwzQJfdxOxz/yTCUWtYVvPzRm+/QmK5lrlRNynm4Bs
- yVt6H+S4K5YEw==
+ b=HNXicrSSQVNu/+uAbYaRswOZOgkE2HtluHbdadfnvvbcCslig6Mg/delSde8GnoLJ
+ 72IUS6wlbjkyoXzEPWPYa+qqK2G9zkTXFxT412hKpUiiwPAIOMPpCGEfFjP0GEZlel
+ rlgeLz7uHM+2C/sBwDCSus0/TzvK0ihmdZoZsUh31I6LUyP+TyEUXPSG7+nujk4Vv3
+ jthfxkUfVeYaGxLuZ9KdGHUk8IRomDTnKgNDJwtvcP2l6aML0r9RC8cGQKz9K08XuT
+ 0QbB/X7uDDh73GQPmVozmbHrdZx8O3Vtyoxh/LUyMNGhj6cJGIiEd+UajIEjFfGACT
+ CLaSxD5g4ST/Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E30901D5824;
- Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DDEC41D5801;
+ Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AE3DD429F92;
- Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A7D1D429F60;
+ Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9BAD65A83D; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id 81E495A7FD; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 46/56] virtio-scsi: set dataplane_started to false
- upon failure
-Date: Wed, 16 Sep 2026 13:36:04 +0300
-Message-ID: <20260916103622.684817-46-mjt@tls.msk.ru>
+ Zheyu Ma <zheyuma97@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 14/56] hw/ide: reject an unsupported CHS translation
+Date: Wed, 16 Sep 2026 13:35:32 +0300
+Message-ID: <20260916103622.684817-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
@@ -74,52 +73,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
-dataplane_started to true when virtio_scsi_dataplane_start() fails. This
-is likely a typo since dataplane is not functional after failure.
+ide_set_sector() divides by (s->heads * s->sectors) when the drive is
+addressed in CHS mode. Both come from the guest via INITIALIZE DEVICE
+PARAMETERS, and cmd_specify() stored them without any check, so a guest
+asking for zero sectors per logical track killed QEMU with SIGFPE on the
+completion of the first CHS read or write. s->heads is safe, as the
+command passes a heads-1 value.
 
-The non-ioeventfd fallback is broken because dataplane_started is true
-after virtio_scsi_dataplane_start() failure. As a result, the following
-assertion failure occurs when a virtio-scsi device exceeds the open file
-descriptor ulimit when setting up notifiers (eventfds):
+The count has an upper bound as well. The legacy sector count register is
+eight bits wide, but handle_cmd() takes the count from a 16 bit field of
+the register FIS, so an AHCI guest can ask for up to 65535 sectors per
+track, and the CHS branch of ide_get_sector() then overflows the int it
+multiplies cylinder, heads and sectors in.
 
-  $ ulimit -n 104 # exact number can vary based on QEMU version
-  $ qemu-system-x86_64 -M q35,accel=kvm -m 1G -cpu host -smp 14 \
-         --blockdev file,node-name=drive0,filename=test.img,cache.direct=on,aio=native \
-         --blockdev file,node-name=drive1,filename=data01.img,cache.direct=on,aio=native \
-         --device virtio-scsi-pci,id=virtio-scsi-pci0 \
-         --device scsi-hd,drive=drive0,bus=virtio-scsi-pci0.0 \
-         --device virtio-scsi-pci,id=virtio-scsi-pci1 \
-         --device scsi-hd,drive=drive1,bus=virtio-scsi-pci1.0
-  qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -accel kvm is set.
-  qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
-  qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset: Assertion `!s->dataplane_started' failed.
-  Aborted                    (core dumped)
+ATA-5 6.2 numbers CHS sectors from one and ATA-2 D.2.8 limits IDENTIFY
+DEVICE word 56 to 1 through 255, so neither end is a translation a device
+may accept. ATA-5 8.16.6 requires an unsupported one to be reported as an
+aborted command: do that, leave the translation in effect alone, and
+refuse the value rather than checking it at every use.
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
-Buglink: https://redhat.atlassian.net/browse/RHEL-193328
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2399
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260825154854.263819-1-stefanha@redhat.com>
-(cherry picked from commit 5440b6b5de469f62787f47f2b9177cb1136a85c1)
+(cherry picked from commit 6c712a86f6c8d8bdd8a3ba6b39cbcd9550668c36)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index 95f13fb7c28..bcb6e441335 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -230,7 +230,7 @@ fail_host_notifiers:
- fail_guest_notifiers:
-     s->dataplane_fenced = true;
-     s->dataplane_starting = false;
--    s->dataplane_started = true;
-+    s->dataplane_started = false;
-     return -ENOSYS;
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index fb9bf11b455..747fa716773 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -1655,14 +1655,21 @@ static bool cmd_check_power_mode(IDEState *s, uint8_t cmd)
+ /* INITIALIZE DEVICE PARAMETERS */
+ static bool cmd_specify(IDEState *s, uint8_t cmd)
+ {
+-    if (s->blk && s->drive_kind != IDE_CD) {
+-        s->heads = (s->select & (ATA_DEV_HS)) + 1;
+-        s->sectors = s->nsector;
+-        ide_bus_set_irq(s->bus);
+-    } else {
++    if (!s->blk || s->drive_kind == IDE_CD) {
++        ide_abort_command(s);
++        return true;
++    }
++
++    /* ATA-2 D.2.8 limits IDENTIFY DEVICE word 56, and the count, to 1..255 */
++    if (s->nsector == 0 || s->nsector > 255) {
+         ide_abort_command(s);
++        return true;
+     }
+ 
++    s->heads = (s->select & (ATA_DEV_HS)) + 1;
++    s->sectors = s->nsector;
++    ide_bus_set_irq(s->bus);
++
+     return true;
  }
  
 -- 
