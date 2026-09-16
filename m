@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C98BC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 284F5C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6pQw-0008KP-RW; Wed, 16 Sep 2026 09:12:19 -0400
+	id 1x6pQs-0007nw-VE; Wed, 16 Sep 2026 09:12:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6pQo-0007Ot-SE
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:12:11 -0400
-Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
+ id 1x6pQo-0007Jo-1W
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:12:10 -0400
+Received: from mail-oo2-x0e.google.com ([2607:f8b0:4864:31::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6pQl-00020x-Em
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:12:10 -0400
-Received: by mail-oi2-x10.google.com with SMTP id
- 5614622812f47-4b37a29bf27so404051b6e.2
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:12:06 -0700 (PDT)
+ id 1x6pQl-000214-GE
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:12:09 -0400
+Received: by mail-oo2-x0e.google.com with SMTP id
+ 006d021491bc7-6b1ae6a9960so812484eaf.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:12:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1789564326; x=1790169126; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=a/IPU6OG8DNnwykMcPfCw/JVnRhv9fHLr5HOcMID90c=;
- b=ou1DNVksxVax6KLw+v58kWIc0FOdla8dUB17H7X41vKwmJw+TUvkDJzN+16PkVJPS2
- s24L5ojT5DwLiiZt0Ml0id0MXLD5IvCvK5fhpfGHkKYMSBlhwSnKuGfDbIvdVlVS5wO/
- vpRIqJQ3TjNmh+rquD1IU3L/2kOs+ZJPc+vw06qPYNT7260wC8OZdQsxTAjWL1JeQWR0
- bgB/Mq2rKuhqwmxt0y9rbL7p2JiQvxOWEXMKp4B4g2RWMXq2ywUZkrPR5wVBvFImMcba
- IIJfD+1C0Pj0YeOrhZ8Wg9bsR2ABj146Ui3mwOtOpmGWEAfyv/fckYNSJk5tdsxLA8Bo
- T3aA==
+ bh=xRsQmFDwHhDojWxumr8osIy07oDRi66+ow38sPhZ0SM=;
+ b=UqbrWumGZYTOStrDyWPo2E3PdzfUSeistwX0SC5ldrS9yeDR9/g/KFwDVPYlBiKWIv
+ bsLh+k2E9wyC2tIGdnjgfm7h8p1d7L9A6j+w2j5QL9hln7h84ZbOakNyjeGIxfNXmagp
+ RLXGEfeXu/jW8GIdzsxvREMgLLBU+kq8HhHrDX5QxWDNPyUJrgmpd4cS0xtkA4uYQvh7
+ oJYnGpBrRQUG8DZvezqF+zuexRs9MfVS5cNCl8IxVn4bI0OgmY5iERieHpXqQcDZsHLN
+ L5hyxeKosZ2FllAtG4TJNO8jdWKzazSH2tjM3zXk3DZJ5Zi3lRuvQ9ZDqBJnR7M0Cffr
+ xvJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1789564326; x=1790169126;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=a/IPU6OG8DNnwykMcPfCw/JVnRhv9fHLr5HOcMID90c=;
- b=Se+kj7d/62+rOfgdclTGfgnxldp4H5gcbSuQQoL6p2txtxleRiCM13JlGTpNlPPjGM
- 3nNV08fOO0qY7DEtF2SEMm9N3SfxRcAaNxUqIfXnQxSSWFiLNsCE7YbTfN6ytC+t51GM
- UGAszWAHA9gDjCS7WZQpnWoO8hEQX7ZortCunsdLryI6Ol/gU2BMa54FZf0wsBFIdhY2
- VW3BLR+p0s6lt6ESkFYsLf4kRVR0ZI5KysS7EOxr9wwHfYjcK0psG7c4b3enW8mAQXkG
- 8IPHCYpTmYLmwLWPnyyzL3NQawnNg6iNLJhTRafQ6Zb8Pg0wE8kLBJnzrSFPzWjj5LTX
- 2CVg==
-X-Gm-Message-State: AFuF++mvUSva0iZ8ufiKKWu2K1MoUR17snJN+umyqxIhc6jx8llZ7sAe
- 8qR4WredXgyflLEufqcOuL909aAiv65lfNK31Q4a5gNFaiPXkC28wHJAGqWoBQxCWAEa/M5tZbK
- /DORU3lA=
-X-Gm-Gg: AYBFou0xc6K3JAZQkWMv1jtXTzdqhrIpV1dzIeO31vMOLzvFLE42rm7UowT8ASz2i56
- 5EeG81dPW6FCT4JL83ucZkaBkGDnJMomzw5KBehE4x4BFvzu7sRUOPir5RYVtTKMIDrZQGbt9z7
- 65wIdMGkasTrsHMdDJ7ootglP0wMSSF4mAIi/MLZmiVGbioCan1/+gFeODUwIAz1M+igScGC/20
- 9BQiqxyw/mQ3cMCN4zbCRdN4DvvlafFR5eFLf9hJoFyzXA1CZZwlg87/9O9zkcL0q059196Trg0
- 8V3cnzIQFf84+2qewQVvW3vve9ELtmobRbSD40aEw/ZEa72yn3k4/Vd25/wI5UMMCE1rKBSQ7y5
- BAHpeVPJ5VRVZKKdecK7OKPyUYY4lnuiyjXMeCwH0NOkMcHVnkWrSC3ZW7cCRejBKiw18R7NLOO
- a6+CE/H5tBmCHnxJOn68EP/dVz/+r/2+R8meIxK4b6Sz7hDkbGkIUlCdB6zAqipJsSQZVwaPHbL
- wGC5As=
-X-Received: by 2002:a05:6808:bc3:b0:495:feaa:9e3b with SMTP id
- 5614622812f47-4ca49dd32e3mr3027543b6e.7.1789564325871; 
- Wed, 16 Sep 2026 06:12:05 -0700 (PDT)
+ bh=xRsQmFDwHhDojWxumr8osIy07oDRi66+ow38sPhZ0SM=;
+ b=eSqhLdV1zbud98getWMlwwZG1SCOk0W63lLEkxfZod/zZhC5+GwWr+dnyom7RUfNlP
+ MI13lPzYYsHsixhsB5eA4ohTtgtT2p7lWvIeJEll+RH6P/7FgZTEZSa1hHS8M2YaWP79
+ 3mLUpvEyhEnNVA0VIr3RXpct/gqI/3vdyPmWiYqdpiHnwqPFkfAuF7AHhS/AUo2M3uNi
+ uoikXoFqBsybUfue87r8dhf84mTlbxYLc2z9B1B9avdP4Iaztrc4cEcHph3Oaf261+Ga
+ DTzg7LeJY5WqwZBU10eSFmgitYqz4vvbPdHscfhyys7vcqCPYbpdlXNa7j3vSzvyMLg/
+ FRNg==
+X-Gm-Message-State: AFuF++lvMrdWTyWkWefa5pkCrhPWtAisIsLhb5xX9fKf3UNnPRW045Hc
+ Y7leY/uYu8w6QJjDpmgJvk8J+gBYghD6WnE7nLbCQUVy94mT6ymxN91feSgeZihSDKWOiExy752
+ uZCvJHNA=
+X-Gm-Gg: AYBFou2fImtuc2ACiXOQ5j/WD6oN5YYB23pk5BChd6J+SXlko+TfDUFePsvjcHVma31
+ Afldcxf+14tI3+cA2g1WCqnv3eAbthLgxQfJ6At7HUIoEYKUWz0ieBkzN8Ag/P8QQ21AaLmsEEH
+ gXCS7nwYmZky+Xs9leYIBq+FrCKjsLEYOWQ/x9w8fcrba3QJLFddkN8E16aGRVsvVvmNhcqhudE
+ koKo1otpSw4dt9i9kZom0PEAqXhisVumU+oCIt73Afi66S4KZCVKDW/nZUCwirq1DtPybSuat/w
+ lB+Q+5Exoe2Z8ilmPKLzBfDPo+U8PScuSq+zfpZ/7aIpyLUb4+UpcCD9ssHCT0/X67ACa+Z3LTE
+ SDEo/9g4tYyeAmWt8m2yhZeaUfPZMXX1GUjOJ0QyOSH+aj+asHhG3TOGSqGmscSzK3RZO+26e+K
+ 4qjsTrGR42FuE1XYp3jvDKgWT7+dTMr7BUDo4I3xhbuBJx5F0Yig186D7055G3NeGK+HgppcrQk
+ CP4Lp0=
+X-Received: by 2002:a4a:e841:0:b0:6aa:de29:651 with SMTP id
+ 006d021491bc7-6c7d1ad0793mr2983126eaf.16.1789564324833; 
+ Wed, 16 Sep 2026 06:12:04 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:845c:f507:397b:9b72])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5b22b74sm7873110eec.30.2026.09.16.06.12.05
+ 5a478bee46e88-33bf5b22b74sm7873110eec.30.2026.09.16.06.12.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 06:12:05 -0700 (PDT)
+ Wed, 16 Sep 2026 06:12:04 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 90/92] tcg: Annontate functions in tcg-op-common.h with
- QEMU_*_NONNULL
-Date: Wed, 16 Sep 2026 03:04:05 -1000
-Message-ID: <20260916130409.3382710-91-richard.henderson@linaro.org>
+Subject: [PATCH v3 89/92] tcg: Expand missing mulu2_i64 during liveness
+Date: Wed, 16 Sep 2026 03:04:04 -1000
+Message-ID: <20260916130409.3382710-90-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260916130409.3382710-1-richard.henderson@linaro.org>
 References: <20260916130409.3382710-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:32::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:31::e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,454 +101,379 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+During liveness, we finally know whether the high part
+of the double-word multiply is actually used.  If we were
+to decompose the operation earlier, we would prevent the
+removal of the unused value.  This is fairly common with
+translated x86 code, where the high part of the multiply
+may only be used for condition codes, which may easily be
+dead code eliminated.
+
+Once we know the computation is required, expand the multiply
+by parts for hosts without ISA support.  At present this is
+older s390x and sparc64.  This is far more efficient than the
+out-of-line helper.
+
+Since this is after the normal tcg_optmize pass, do some
+minimal constant decomposition and value propagation for
+the subexpressions within the double-word multiply.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-op-common.h | 278 +++++++++++++++++++++---------------
- 1 file changed, 162 insertions(+), 116 deletions(-)
+ accel/tcg/tcg-runtime.h |   3 -
+ accel/tcg/tcg-runtime.c |  14 ---
+ tcg/tcg-op.c            |  34 ++-----
+ tcg/tcg.c               | 214 ++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 218 insertions(+), 47 deletions(-)
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index c3d080222d9..77955c3af41 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -12,24 +12,24 @@
- #include "exec/helper-proto-common.h"
- #include "exec/helper-gen-common.h"
+diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
+index 003c963bc7d..0dda2079fd0 100644
+--- a/accel/tcg/tcg-runtime.h
++++ b/accel/tcg/tcg-runtime.h
+@@ -1,6 +1,3 @@
+-DEF_HELPER_FLAGS_2(mulsh_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
+-DEF_HELPER_FLAGS_2(muluh_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+-
+ DEF_HELPER_FLAGS_2(clz_i32, TCG_CALL_NO_RWG_SE, i32, i32, i32)
+ DEF_HELPER_FLAGS_2(ctz_i32, TCG_CALL_NO_RWG_SE, i32, i32, i32)
+ DEF_HELPER_FLAGS_2(clz_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
+index 77c4024148f..44b48a1ea79 100644
+--- a/accel/tcg/tcg-runtime.c
++++ b/accel/tcg/tcg-runtime.c
+@@ -32,20 +32,6 @@
+ #include "exec/helper-info.c.inc"
+ #undef  HELPER_H
  
--TCGv_i32 tcg_constant_i32(int32_t val);
--TCGv_i64 tcg_constant_i64(int64_t val);
--TCGv_vaddr tcg_constant_vaddr(uintptr_t val);
--TCGv_vec tcg_constant_vec(TCGType type, unsigned vece, int64_t val);
--TCGv_vec tcg_constant_vec_matching(TCGv_vec match, unsigned vece, int64_t val);
-+QEMU_RET_NONNULL TCGv_i32 tcg_constant_i32(int32_t val);
-+QEMU_RET_NONNULL TCGv_i64 tcg_constant_i64(int64_t val);
-+QEMU_RET_NONNULL TCGv_vaddr tcg_constant_vaddr(uintptr_t val);
-+QEMU_RET_NONNULL TCGv_vec tcg_constant_vec(TCGType type, unsigned vece, int64_t val);
-+QEMU_RET_NONNULL TCGv_vec tcg_constant_vec_matching(TCGv_vec match, unsigned vece, int64_t val);
+-uint64_t HELPER(muluh_i64)(uint64_t arg1, uint64_t arg2)
+-{
+-    uint64_t l, h;
+-    mulu64(&l, &h, arg1, arg2);
+-    return h;
+-}
+-
+-int64_t HELPER(mulsh_i64)(int64_t arg1, int64_t arg2)
+-{
+-    uint64_t l, h;
+-    muls64(&l, &h, arg1, arg2);
+-    return h;
+-}
+-
+ uint32_t HELPER(clz_i32)(uint32_t arg, uint32_t zero_val)
+ {
+     return arg ? clz32(arg) : zero_val;
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 555af3cf24b..0fff27a4e60 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -973,8 +973,7 @@ static void gen_muls2(TCGType type, TCGTemp *rl, TCGTemp *rh,
  
--TCGv_i128 tcg_zero_i128(void);
-+QEMU_RET_NONNULL TCGv_i128 tcg_zero_i128(void);
- 
--TCGv_i32 tcg_temp_new_i32(void);
--TCGv_i64 tcg_temp_new_i64(void);
--TCGv_ptr tcg_temp_new_ptr(void);
--TCGv_i128 tcg_temp_new_i128(void);
--TCGv_vec tcg_temp_new_vec(TCGType type);
--TCGv_vec tcg_temp_new_vec_matching(TCGv_vec match);
-+QEMU_RET_NONNULL TCGv_i32 tcg_temp_new_i32(void);
-+QEMU_RET_NONNULL TCGv_i64 tcg_temp_new_i64(void);
-+QEMU_RET_NONNULL TCGv_ptr tcg_temp_new_ptr(void);
-+QEMU_RET_NONNULL TCGv_i128 tcg_temp_new_i128(void);
-+QEMU_RET_NONNULL TCGv_vec tcg_temp_new_vec(TCGType type);
-+QEMU_RET_NONNULL TCGv_vec tcg_temp_new_vec_matching(TCGv_vec match);
- 
--TCGv_i32 tcg_global_mem_new_i32(TCGv_ptr reg, intptr_t off, const char *name);
--TCGv_i64 tcg_global_mem_new_i64(TCGv_ptr reg, intptr_t off, const char *name);
--TCGv_ptr tcg_global_mem_new_ptr(TCGv_ptr reg, intptr_t off, const char *name);
-+QEMU_RET_NONNULL TCGv_i32 tcg_global_mem_new_i32(TCGv_ptr reg, intptr_t off, const char *name);
-+QEMU_RET_NONNULL TCGv_i64 tcg_global_mem_new_i64(TCGv_ptr reg, intptr_t off, const char *name);
-+QEMU_RET_NONNULL TCGv_ptr tcg_global_mem_new_ptr(TCGv_ptr reg, intptr_t off, const char *name);
- 
- /* Generic ops.  */
- static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
-@@ -41,8 +41,8 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
-     tcg_set_insn_start_param(op, 2, a2);
+         tcg_temp_free_internal(t0);
+         tcg_temp_free_internal(t1);
+-    } else if (tcg_op_supported(INDEX_op_mulu2, TCG_TYPE_I64, 0) ||
+-               tcg_op_supported(INDEX_op_muluh, TCG_TYPE_I64, 0)) {
++    } else {
+         TCGTemp *t0 = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
+         TCGTemp *t1 = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
+         TCGTemp *t2 = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
+@@ -995,24 +994,13 @@ static void gen_muls2(TCGType type, TCGTemp *rl, TCGTemp *rh,
+         tcg_temp_free_internal(t1);
+         tcg_temp_free_internal(t2);
+         tcg_temp_free_internal(t3);
+-    } else {
+-        TCGTemp *t = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
+-
+-        gen_mul(TCG_TYPE_I64, t, src1, src2);
+-        gen_helper_mulsh_i64(temp_tcgv_i64(rh), temp_tcgv_i64(src1),
+-                             temp_tcgv_i64(src2));
+-        gen_mov(TCG_TYPE_I64, rl, t);
+-
+-        tcg_temp_free_internal(t);
+     }
  }
  
--void gen_set_label(TCGLabel *l);
--void tcg_gen_br(TCGLabel *l);
-+QEMU_ARG_NONNULL void gen_set_label(TCGLabel *l);
-+QEMU_ARG_NONNULL void tcg_gen_br(TCGLabel *l);
- void tcg_gen_mb(TCGBar);
+ static void gen_mulu2(TCGType type, TCGTemp *rl, TCGTemp *rh,
+                       TCGTemp *src1, TCGTemp *src2)
+ {
+-    if (tcg_op_supported(INDEX_op_mulu2, type, 0)) {
+-        gen_op_tttt(INDEX_op_mulu2, type, rl, rh, src1, src2);
+-    } else if (tcg_op_supported(INDEX_op_muluh, type, 0)) {
++    if (tcg_op_supported(INDEX_op_muluh, type, 0)) {
+         TCGTemp *t = tcg_temp_new_internal(type, TEMP_EBB);
  
- /**
-@@ -86,7 +86,7 @@ void tcg_gen_goto_tb(unsigned idx);
- void tcg_gen_lookup_and_goto_ptr(void);
+         gen_mul(type, t, src1, src2);
+@@ -1020,7 +1008,14 @@ static void gen_mulu2(TCGType type, TCGTemp *rl, TCGTemp *rh,
+         gen_mov(type, rl, t);
  
- void tcg_gen_plugin_cb(unsigned from);
--void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
-+QEMU_ARG_NONNULL void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+         tcg_temp_free_internal(t);
+-    } else if (type == TCG_TYPE_I32) {
++    } if (type == TCG_TYPE_I64 ||
++          tcg_op_supported(INDEX_op_mulu2, TCG_TYPE_I32, 0)) {
++        /*
++         * Unsupported mulu2_i64 is expanded after liveness analysis
++         * has a chance to discard an unused high-part.
++         */
++        gen_op_tttt(INDEX_op_mulu2, type, rl, rh, src1, src2);
++    } else {
+         TCGTemp *t0 = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
+         TCGTemp *t1 = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
  
- /*
-  * Construct operations from templates.
-@@ -132,234 +132,280 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+@@ -1033,15 +1028,6 @@ static void gen_mulu2(TCGType type, TCGTemp *rl, TCGTemp *rh,
  
- /* 32 bit ops */
+         tcg_temp_free_internal(t0);
+         tcg_temp_free_internal(t1);
+-    } else {
+-        TCGTemp *t = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
+-
+-        gen_mul(TCG_TYPE_I64, t, src1, src2);
+-        gen_helper_muluh_i64(temp_tcgv_i64(rh), temp_tcgv_i64(src1),
+-                             temp_tcgv_i64(src2));
+-        gen_mov(TCG_TYPE_I64, rl, t);
+-
+-        tcg_temp_free_internal(t);
+     }
+ }
  
--void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2);
--void tcg_gen_bswap32_i32(TCGv_i32 ret, TCGv_i32 arg);
--void tcg_gen_hswap_i32(TCGv_i32 ret, TCGv_i32 arg);
--void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg);
-+QEMU_ARG_NONNULL void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2);
-+QEMU_ARG_NONNULL void tcg_gen_bswap32_i32(TCGv_i32 ret, TCGv_i32 arg);
-+QEMU_ARG_NONNULL void tcg_gen_hswap_i32(TCGv_i32 ret, TCGv_i32 arg);
-+QEMU_ARG_NONNULL void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg);
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 489df0e7386..8cdca81ceb2 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -3687,6 +3687,32 @@ static inline void la_reset_pref(TCGTemp *ts)
+         = (ts->state == TS_DEAD ? 0 : tcg_target_available_regs[ts->type]);
+ }
  
- /* Replicate a value of size @vece from @in to all the lanes in @out */
--void tcg_gen_dup_i32(unsigned vece, TCGv_i32 out, TCGv_i32 in);
-+QEMU_ARG_NONNULL void tcg_gen_dup_i32(unsigned vece, TCGv_i32 out, TCGv_i32 in);
++/* For liveness_pass_1, allocate a new dead temporary. */
++static TCGTemp *la_temp_new(TCGType type)
++{
++    TCGTemp *t = tcg_temp_new_internal(type, TEMP_EBB);
++
++    t->state_ptr = tcg_malloc(sizeof(TCGRegSet));
++    t->state = TS_DEAD;
++    la_reset_pref(t);
++
++    return t;
++}
++
++/* For liveness_pass_1, allocate a new constant. */
++static TCGTemp *la_const_new(TCGType type, int64_t val)
++{
++    TCGTemp *t = tcg_constant_internal(type, val);
++
++    /* This constant may already be live within the TB. */
++    if (!t->state_ptr) {
++        t->state_ptr = tcg_malloc(sizeof(TCGRegSet));
++        t->state = TS_DEAD;
++        la_reset_pref(t);
++    }
++    return t;
++}
++
+ /* liveness analysis: end of function: all temps are dead, and globals
+    should be in memory. */
+ static void la_func_end(TCGContext *s, int ng, int nt)
+@@ -3890,9 +3916,184 @@ static void assert_carry_dead(TCGContext *s)
+     tcg_debug_assert(!s->carry_live);
+ }
  
--void tcg_gen_ld8u_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld8s_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld16u_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld16s_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld8u_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld8s_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld16u_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld16s_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld_i32(TCGv_i32 ret, TCGv_ptr arg2, tcg_target_long offset);
+-/* Liveness analysis : update the opc_arg_life array to tell if a
+-   given input arguments is dead. Instructions updating dead
+-   temporaries are removed. */
++/*
++ * Expand missing mulu2.  This is delayed until liveness because x86
++ * translation generates double-word multiplies which may turn out to
++ * be dead with condition codes, and we may be able to simplify to
++ * just a single-word multiply.
++ */
++
++static TCGTemp *la_mulu2_ext32u(TCGContext *ctx, TCGOp *op,
++                                TCGTemp *dst, TCGTemp *src)
++{
++    TCGOp *op2 = tcg_op_insert_before(ctx, op, INDEX_op_extract,
++                                      TCG_TYPE_I64, 4);
++
++    op2->args[0] = temp_arg(dst);
++    op2->args[1] = temp_arg(src);
++    op2->args[2] = 0;
++    op2->args[3] = 32;
++    return dst;
++}
++
++static TCGTemp *la_mulu2_mov(TCGContext *ctx, TCGOp *op,
++                             TCGTemp *dst, TCGTemp *src)
++{
++    TCGOp *op2 = tcg_op_insert_before(ctx, op, INDEX_op_mov, TCG_TYPE_I64, 2);
++
++    op2->args[0] = temp_arg(dst);
++    op2->args[1] = temp_arg(src);
++    return dst;
++}
++
++static TCGTemp *la_mulu2_op3(TCGContext *ctx, TCGOp *op, TCGOpcode opc,
++                             TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
++{
++    TCGOp *op2 = tcg_op_insert_before(ctx, op, opc, TCG_TYPE_I64, 3);
++
++    op2->args[0] = temp_arg(dst);
++    op2->args[1] = temp_arg(src1);
++    op2->args[2] = temp_arg(src2);
++    return dst;
++}
++
++static TCGTemp *la_mulu2_op3c(TCGContext *ctx, TCGOp *op, TCGOpcode opc,
++                              TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
++{
++    if (src2->kind != TEMP_CONST && (src1->kind == TEMP_CONST || dst == src2)) {
++        TCGTemp *t = src1;
++        src1 = src2;
++        src2 = t;
++    }
++    return la_mulu2_op3(ctx, op, opc, dst, src1, src2);
++}
++
++static TCGOp *la_expand_mulu2_i64(TCGContext *s, TCGOp *op)
++{
++    TCGTemp *o0_orig = arg_temp(op->args[0]);
++    TCGTemp *o1_orig = arg_temp(op->args[1]);
++    TCGTemp *i0 = arg_temp(op->args[2]);
++    TCGTemp *i1 = arg_temp(op->args[3]);
++    TCGTemp *o0, *o1, *l0, *l1, *h0, *h1, *m0, *m1, *t0 = NULL, *t1 = NULL;
++    TCGTemp *t32 = la_const_new(TCG_TYPE_I64, 32);
++    TCGTemp *tzero = la_const_new(TCG_TYPE_I64, 0);
++    TCGOp *ret;
++
++    /*
++     * At present, the only two hosts missing some form of double-word or
++     * high-part multiply are s390x without misc-insn-ext-2 (before z14)
++     * or sparc64 without vis3 (before ultrasparc t3).
++     * Both of these have ext32u and addci.
++     */
++    tcg_debug_assert(op->opc == INDEX_op_mulu2);
++    tcg_debug_assert(TCGOP_TYPE(op) == TCG_TYPE_I64);
++    tcg_debug_assert(TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, 32));
++    tcg_debug_assert(tcg_op_supported(INDEX_op_addci, TCG_TYPE_I64, 0));
++
++    /*
++     * Split the two 64-bit multiplicands into unsigned halves.
++     * Via fold_multiply2, i0 must be non-constant.
++     */
++    l0 = la_mulu2_ext32u(s, op, la_temp_new(TCG_TYPE_I64), i0);
++    h0 = la_mulu2_op3(s, op, INDEX_op_shr, la_temp_new(TCG_TYPE_I64), i0, t32);
++
++    if (i1->kind == TEMP_CONST) {
++        l1 = la_const_new(TCG_TYPE_I64, extract64(i1->val, 0, 32));
++        h1 = la_const_new(TCG_TYPE_I64, extract64(i1->val, 32, 32));
++    } else {
++        l1 = la_mulu2_ext32u(s, op, la_temp_new(TCG_TYPE_I64), i1);
++        h1 = la_mulu2_op3(s, op, INDEX_op_shr,
++                          la_temp_new(TCG_TYPE_I64), i1, t32);
++    }
++
++    /*
++     * Compute partial products.
++     */
++    if (l1 == tzero) {
++        o0 = tzero;
++        m0 = tzero;
++    } else {
++        o0 = la_mulu2_op3c(s, op, INDEX_op_mul, o0_orig, l0, l1);
++        m0 = la_mulu2_op3c(s, op, INDEX_op_mul,
++                           la_temp_new(TCG_TYPE_I64), h0, l1);
++    }
++    if (h1 == tzero) {
++        m1 = tzero;
++        o1 = tzero;
++    } else {
++        m1 = la_mulu2_op3c(s, op, INDEX_op_mul,
++                           la_temp_new(TCG_TYPE_I64), l0, h1);
++        o1 = la_mulu2_op3c(s, op, INDEX_op_mul, o1_orig, h0, h1);
++    }
++
++    /*
++     * The middle partial products need shifting up by 32, producing
++     * bits within [63:32] and [95:64].
++     */
++    if (m0 != tzero) {
++        t0 = la_mulu2_op3(s, op, INDEX_op_shr,
++                          la_temp_new(TCG_TYPE_I64), m0, t32);
++        la_mulu2_op3(s, op, INDEX_op_shl, m0, m0, t32);
++        if (o0 == tzero) {
++            o0 = m0;
++            if (o1 == tzero) {
++                o1 = t0;
++            } else {
++                o1 = la_mulu2_op3c(s, op, INDEX_op_add, o0_orig, o1, t0);
++            }
++        } else {
++            o0 = la_mulu2_op3c(s, op, INDEX_op_addco, o0_orig, o0, m0);
++            o1 = la_mulu2_op3c(s, op, INDEX_op_addci, o1_orig, o1, t0);
++        }
++    }
++    if (m1 != tzero) {
++        t1 = la_mulu2_op3(s, op, INDEX_op_shr,
++                          la_temp_new(TCG_TYPE_I64), m1, t32);
++        la_mulu2_op3(s, op, INDEX_op_shl, m1, m1, t32);
++        if (o0 == tzero) {
++            o0 = m1;
++            if (o1 == tzero) {
++                o1 = t1;
++            } else {
++                o1 = la_mulu2_op3c(s, op, INDEX_op_add, o0_orig, o1, t1);
++            }
++        } else {
++            o0 = la_mulu2_op3c(s, op, INDEX_op_addco, o0_orig, o0, m1);
++            o1 = la_mulu2_op3c(s, op, INDEX_op_addci, o1_orig, o1, t1);
++        }
++    }
++
++    /* Final write-back, if necessary. */
++    if (o0 != o0_orig) {
++        la_mulu2_mov(s, op, o0_orig, o0);
++    }
++    if (o1 != o1_orig) {
++        la_mulu2_mov(s, op, o1_orig, o1);
++    }
++
++    tcg_temp_free_internal(l0);
++    tcg_temp_free_internal(l1);
++    tcg_temp_free_internal(h0);
++    tcg_temp_free_internal(h1);
++    tcg_temp_free_internal(m0);
++    tcg_temp_free_internal(m1);
++    if (t0) {
++        tcg_temp_free_internal(t0);
++    }
++    if (t1) {
++        tcg_temp_free_internal(t1);
++    }
++
++    ret = QTAILQ_PREV(op, link);
++    tcg_op_remove(s, op);
++    return ret;
++}
++
++/*
++ * Liveness analysis : update the opc_arg_life array to tell if a
++ * given input arguments is dead. Instructions updating dead
++ * temporaries are removed.
++ */
+ static void __attribute__((noinline))
+ liveness_pass_1(TCGContext *s)
+ {
+@@ -4067,10 +4268,11 @@ liveness_pass_1(TCGContext *s)
+                 op->args[0] = op->args[1];
+                 op->args[1] = op->args[2];
+                 op->args[2] = op->args[3];
+-            } else {
+-                goto do_not_remove;
++            } else if (!tcg_op_supported(opc, TCGOP_TYPE(op), 0)) {
++                op = la_expand_mulu2_i64(s, op);
++                op_prev = QTAILQ_PREV(op, link);
++                opc = op->opc;
+             }
+-            /* Mark the single-word operation live.  */
+             goto do_not_remove;
  
--void tcg_gen_st8_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_st16_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_st_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st8_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st16_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
- /* 64 bit ops */
- 
--void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a, TCGv_i64 *b);
--void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
--void tcg_gen_ext32s_i64(TCGv_i64 ret, TCGv_i64 arg);
--void tcg_gen_ext32u_i64(TCGv_i64 ret, TCGv_i64 arg);
--void tcg_gen_bswap32_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
--void tcg_gen_bswap64_i64(TCGv_i64 ret, TCGv_i64 arg);
--void tcg_gen_hswap_i64(TCGv_i64 ret, TCGv_i64 arg);
--void tcg_gen_wswap_i64(TCGv_i64 ret, TCGv_i64 arg);
--void tcg_gen_revbit32_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
--void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a, TCGv_i64 *b);
-+QEMU_ARG_NONNULL void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
-+QEMU_ARG_NONNULL void tcg_gen_ext32s_i64(TCGv_i64 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_ext32u_i64(TCGv_i64 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_bswap32_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
-+QEMU_ARG_NONNULL void tcg_gen_bswap64_i64(TCGv_i64 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_hswap_i64(TCGv_i64 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_wswap_i64(TCGv_i64 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_revbit32_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
-+QEMU_ARG_NONNULL void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg);
- 
- /* Replicate a value of size @vece from @in to all the lanes in @out */
--void tcg_gen_dup_i64(unsigned vece, TCGv_i64 out, TCGv_i64 in);
-+QEMU_ARG_NONNULL void tcg_gen_dup_i64(unsigned vece, TCGv_i64 out, TCGv_i64 in);
- 
--void tcg_gen_st8_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_st16_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_st32_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st8_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st16_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st32_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
--void tcg_gen_ld8u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld8s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld16u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld16s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld32u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld32s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_ld_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
--void tcg_gen_st_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld8u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld8s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld16u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld16s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld32u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld32s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_ld_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
- /* Size changing operations.  */
- 
--void tcg_gen_extu_i32_i64(TCGv_i64 ret, TCGv_i32 arg);
--void tcg_gen_ext_i32_i64(TCGv_i64 ret, TCGv_i32 arg);
--void tcg_gen_concat_i32_i64(TCGv_i64 dest, TCGv_i32 low, TCGv_i32 high);
--void tcg_gen_extrl_i64_i32(TCGv_i32 ret, TCGv_i64 arg);
--void tcg_gen_extrh_i64_i32(TCGv_i32 ret, TCGv_i64 arg);
--void tcg_gen_extr_i64_i32(TCGv_i32 lo, TCGv_i32 hi, TCGv_i64 arg);
--void tcg_gen_extr32_i64(TCGv_i64 lo, TCGv_i64 hi, TCGv_i64 arg);
--void tcg_gen_concat32_i64(TCGv_i64 ret, TCGv_i64 lo, TCGv_i64 hi);
-+QEMU_ARG_NONNULL void tcg_gen_extu_i32_i64(TCGv_i64 ret, TCGv_i32 arg);
-+QEMU_ARG_NONNULL void tcg_gen_ext_i32_i64(TCGv_i64 ret, TCGv_i32 arg);
-+QEMU_ARG_NONNULL void tcg_gen_concat_i32_i64(TCGv_i64 dest, TCGv_i32 low, TCGv_i32 high);
-+QEMU_ARG_NONNULL void tcg_gen_extrl_i64_i32(TCGv_i32 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_extrh_i64_i32(TCGv_i32 ret, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_extr_i64_i32(TCGv_i32 lo, TCGv_i32 hi, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_extr32_i64(TCGv_i64 lo, TCGv_i64 hi, TCGv_i64 arg);
-+QEMU_ARG_NONNULL void tcg_gen_concat32_i64(TCGv_i64 ret, TCGv_i64 lo, TCGv_i64 hi);
- 
--void tcg_gen_extr_i128_i64(TCGv_i64 lo, TCGv_i64 hi, TCGv_i128 arg);
--void tcg_gen_concat_i64_i128(TCGv_i128 ret, TCGv_i64 lo, TCGv_i64 hi);
-+QEMU_ARG_NONNULL void tcg_gen_extr_i128_i64(TCGv_i64 lo, TCGv_i64 hi, TCGv_i128 arg);
-+QEMU_ARG_NONNULL void tcg_gen_concat_i64_i128(TCGv_i128 ret, TCGv_i64 lo, TCGv_i64 hi);
- 
- /* 128 bit ops */
- 
--void tcg_gen_mov_i128(TCGv_i128 dst, TCGv_i128 src);
--void tcg_gen_ld_i128(TCGv_i128 ret, TCGv_ptr base, tcg_target_long offset);
--void tcg_gen_st_i128(TCGv_i128 val, TCGv_ptr base, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_mov_i128(TCGv_i128 dst, TCGv_i128 src);
-+QEMU_ARG_NONNULL void tcg_gen_ld_i128(TCGv_i128 ret, TCGv_ptr base, tcg_target_long offset);
-+QEMU_ARG_NONNULL void tcg_gen_st_i128(TCGv_i128 val, TCGv_ptr base, tcg_target_long offset);
- 
- /* Local load/store bit ops */
- 
--void tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
--void tcg_gen_qemu_st_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
--void tcg_gen_qemu_ld_i64_chk(TCGv_i64, TCGTemp *, TCGArg, MemOp, TCGType);
--void tcg_gen_qemu_st_i64_chk(TCGv_i64, TCGTemp *, TCGArg, MemOp, TCGType);
--void tcg_gen_qemu_ld_i128_chk(TCGv_i128, TCGTemp *, TCGArg, MemOp, TCGType);
--void tcg_gen_qemu_st_i128_chk(TCGv_i128, TCGTemp *, TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL void tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL void tcg_gen_qemu_st_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL void tcg_gen_qemu_ld_i64_chk(TCGv_i64, TCGTemp *, TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL void tcg_gen_qemu_st_i64_chk(TCGv_i64, TCGTemp *, TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL void tcg_gen_qemu_ld_i128_chk(TCGv_i128, TCGTemp *, TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL void tcg_gen_qemu_st_i128_chk(TCGv_i128, TCGTemp *, TCGArg, MemOp, TCGType);
- 
- /* Atomic ops */
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_cmpxchg_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32, TCGv_i32,
-                                     TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_cmpxchg_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64, TCGv_i64,
-                                     TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_cmpxchg_i128_chk(TCGv_i128, TCGTemp *, TCGv_i128,
-                                      TCGv_i128, TCGArg, MemOp, TCGType);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_nonatomic_cmpxchg_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_nonatomic_cmpxchg_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_nonatomic_cmpxchg_i128_chk(TCGv_i128, TCGTemp *, TCGv_i128,
-                                         TCGv_i128, TCGArg, MemOp, TCGType);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_xchg_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                  TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_xchg_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                  TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_xchg_i128_chk(TCGv_i128, TCGTemp *, TCGv_i128,
-                                   TCGArg, MemOp, TCGType);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_add_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_add_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_and_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_and_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_or_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                      TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_or_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                      TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_xor_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_xor_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_smin_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_smin_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_umin_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_umin_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_smax_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_smax_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_umax_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_umax_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_add_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_add_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_and_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_and_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_or_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                      TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_or_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                      TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_xor_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_xor_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                       TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_smin_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_smin_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_umin_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_umin_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_smax_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_smax_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_umax_fetch_i32_chk(TCGv_i32, TCGTemp *, TCGv_i32,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_umax_fetch_i64_chk(TCGv_i64, TCGTemp *, TCGv_i64,
-                                        TCGArg, MemOp, TCGType);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_and_i128_chk(TCGv_i128, TCGTemp *, TCGv_i128,
-                                        TCGArg, MemOp, TCGType);
-+QEMU_ARG_NONNULL
- void tcg_gen_atomic_fetch_or_i128_chk(TCGv_i128, TCGTemp *, TCGv_i128,
-                                       TCGArg, MemOp, TCGType);
- 
- /* Vector ops */
- 
--void tcg_gen_mov_vec(TCGv_vec, TCGv_vec);
--void tcg_gen_dup_i32_vec(unsigned vece, TCGv_vec, TCGv_i32);
--void tcg_gen_dup_i64_vec(unsigned vece, TCGv_vec, TCGv_i64);
--void tcg_gen_dup_mem_vec(unsigned vece, TCGv_vec, TCGv_ptr, tcg_target_long);
--void tcg_gen_dupi_vec(unsigned vece, TCGv_vec, uint64_t);
--void tcg_gen_add_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_sub_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_mul_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_and_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_or_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_xor_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_andc_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_orc_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_nand_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_nor_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_eqv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_not_vec(unsigned vece, TCGv_vec r, TCGv_vec a);
--void tcg_gen_neg_vec(unsigned vece, TCGv_vec r, TCGv_vec a);
--void tcg_gen_abs_vec(unsigned vece, TCGv_vec r, TCGv_vec a);
--void tcg_gen_ssadd_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_usadd_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_sssub_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_ussub_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_smin_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_umin_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_smax_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
--void tcg_gen_umax_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_mov_vec(TCGv_vec, TCGv_vec);
-+QEMU_ARG_NONNULL void tcg_gen_dup_i32_vec(unsigned vece, TCGv_vec, TCGv_i32);
-+QEMU_ARG_NONNULL void tcg_gen_dup_i64_vec(unsigned vece, TCGv_vec, TCGv_i64);
-+QEMU_ARG_NONNULL void tcg_gen_dup_mem_vec(unsigned vece, TCGv_vec, TCGv_ptr, tcg_target_long);
-+QEMU_ARG_NONNULL void tcg_gen_dupi_vec(unsigned vece, TCGv_vec, uint64_t);
-+QEMU_ARG_NONNULL void tcg_gen_add_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_sub_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_mul_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_and_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_or_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_xor_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_andc_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_orc_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_nand_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_nor_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_eqv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_not_vec(unsigned vece, TCGv_vec r, TCGv_vec a);
-+QEMU_ARG_NONNULL void tcg_gen_neg_vec(unsigned vece, TCGv_vec r, TCGv_vec a);
-+QEMU_ARG_NONNULL void tcg_gen_abs_vec(unsigned vece, TCGv_vec r, TCGv_vec a);
-+QEMU_ARG_NONNULL void tcg_gen_ssadd_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_usadd_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_sssub_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_ussub_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_smin_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_umin_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_smax_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
-+QEMU_ARG_NONNULL void tcg_gen_umax_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec b);
- 
--void tcg_gen_shli_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
--void tcg_gen_shri_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
--void tcg_gen_sari_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
--void tcg_gen_rotli_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
--void tcg_gen_rotri_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
-+QEMU_ARG_NONNULL void tcg_gen_shli_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
-+QEMU_ARG_NONNULL void tcg_gen_shri_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
-+QEMU_ARG_NONNULL void tcg_gen_sari_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
-+QEMU_ARG_NONNULL void tcg_gen_rotli_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
-+QEMU_ARG_NONNULL void tcg_gen_rotri_vec(unsigned vece, TCGv_vec r, TCGv_vec a, int64_t i);
- 
--void tcg_gen_shls_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
--void tcg_gen_shrs_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
--void tcg_gen_sars_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
--void tcg_gen_rotls_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
-+QEMU_ARG_NONNULL void tcg_gen_shls_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
-+QEMU_ARG_NONNULL void tcg_gen_shrs_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
-+QEMU_ARG_NONNULL void tcg_gen_sars_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
-+QEMU_ARG_NONNULL void tcg_gen_rotls_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_i32 s);
- 
--void tcg_gen_shlv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
--void tcg_gen_shrv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
--void tcg_gen_sarv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
--void tcg_gen_rotlv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
--void tcg_gen_rotrv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
-+QEMU_ARG_NONNULL void tcg_gen_shlv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
-+QEMU_ARG_NONNULL void tcg_gen_shrv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
-+QEMU_ARG_NONNULL void tcg_gen_sarv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
-+QEMU_ARG_NONNULL void tcg_gen_rotlv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
-+QEMU_ARG_NONNULL void tcg_gen_rotrv_vec(unsigned vece, TCGv_vec r, TCGv_vec a, TCGv_vec s);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_cmp_vec(TCGCond cond, unsigned vece, TCGv_vec r,
-                      TCGv_vec a, TCGv_vec b);
- 
-+QEMU_ARG_NONNULL
- void tcg_gen_bitsel_vec(unsigned vece, TCGv_vec r, TCGv_vec a,
-                         TCGv_vec b, TCGv_vec c);
-+QEMU_ARG_NONNULL
- void tcg_gen_cmpsel_vec(TCGCond cond, unsigned vece, TCGv_vec r,
-                         TCGv_vec a, TCGv_vec b, TCGv_vec c, TCGv_vec d);
- 
--void tcg_gen_ld_vec(TCGv_vec r, TCGv_ptr base, TCGArg offset);
--void tcg_gen_st_vec(TCGv_vec r, TCGv_ptr base, TCGArg offset);
--void tcg_gen_stl_vec(TCGv_vec r, TCGv_ptr base, TCGArg offset, TCGType t);
-+QEMU_ARG_NONNULL void tcg_gen_ld_vec(TCGv_vec r, TCGv_ptr base, TCGArg offset);
-+QEMU_ARG_NONNULL void tcg_gen_st_vec(TCGv_vec r, TCGv_ptr base, TCGArg offset);
-+QEMU_ARG_NONNULL void tcg_gen_stl_vec(TCGv_vec r, TCGv_ptr base, TCGArg offset, TCGType t);
- 
- /* Host pointer ops */
- 
+         case INDEX_op_addco:
 -- 
 2.53.0
 
