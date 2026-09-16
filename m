@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C624C982CF
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C5E7C982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6rbH-0002TS-4I; Wed, 16 Sep 2026 11:31:07 -0400
+	id 1x6rbL-0002Wz-Ed; Wed, 16 Sep 2026 11:31:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6rac-00025L-Cu
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:26 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1x6rb6-0002Jl-Ol
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:59 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6raY-0001MV-58
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:24 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49e66390995so6635345e9.2
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:30:21 -0700 (PDT)
+ id 1x6rb4-0001VX-2V
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:55 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49b912e64ccso7426565e9.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789572621; x=1790177421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789572642; x=1790177442; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=AJwEWFJNlhZhHGtBDzm5rjgGSC2PicgfXm/bmyyHSjI=;
- b=Lwbigcn2WKYLnBFPG/QIJw1p8T6pYbD7zGZIG/eeXt558H8M05MAcw0FebYGb70S+H
- up7m1GZVeLbHGtIayzsMcU79ohdu5ho6OEs1gfGdLqq9VUseRtbExjZpGUGsQ3mCzWpu
- Bj16FYhZMrM8SfeXilSgTZjUpUhMngqhy2ic4fbfoWiRHByCuW3F/vn6hMhBSc/Yh4bg
- nhOEAkFtpacLDr50tU0mz+tKupF/RwruErpu+ybPMbFuRkllITTnDikYXj0mWc1jhr/+
- TdFOvJCWfb5TLoD7D4v7u9CDrrfy/LJvhubjfz/ZU7Za54D+desDIOxs+Rj9ACE3ivZJ
- BP4g==
+ bh=s+iJgOTicDwCjhm5qp3QC56yC+WLMH8ocrsmN4EU6Dc=;
+ b=wcB6cI90QZCD/wIjH81Msda/6xHRKMhwo5guXzLgmrDcPvaKMbFMUltET7oibebxDC
+ D4+TZIO6MrxIkyYoXyCjbhrv0iPfS+c5BlzgMKQ7uSlsXabkfw2jgAGjDKZX+NBGMaeS
+ X2eKJ+J+JIcCu07o2WaXhGzFjdLvwRs68uQiE4EYBRzrKpMTKsbhMxRmzT8VPtKwSI1n
+ W2ZSMvE+YrQvdXKipwwELZvAlNGqn27jmbSPlCN1eI0C81AFxUvB4awHNpK4OWQAVG6l
+ O3FTHwCcCFQjQQvjMnzpMP+FblBKU8JfXHGb7v6tkSg5RXEcB/Y0L80pk3Rp/aCLz+0G
+ axyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789572621; x=1790177421;
+ d=1e100.net; s=20260707; t=1789572642; x=1790177442;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=AJwEWFJNlhZhHGtBDzm5rjgGSC2PicgfXm/bmyyHSjI=;
- b=PvmIcH+s9OsUmgmp2HMS5ZXWf1qJel8UgYOkRytjxwYzROefL02DL5wY7q8y+QhWJi
- izBUaDRysYPbXzyHpIe1jEJDBX9aPBo6cpfsVg98J67V18NrHm/+XlJf1vlvlghUipQ2
- /AIEPGiwdrED/TfC0cUkItPcybS+LOyhzkPxCH6pTDzb1iH6Z/UTBuVxsh46zEXTXV4U
- rF4gyKn/i+otNzbVLzhDTM+wjjgzKGtywQ7/sZQp+MzTLtPYoov/6NPJCDketPKoMmSQ
- L0w4Qnt9Wh1MjnjmiV9aPXwHmywxgSlEIpYTtCWZc3qADJ/JAY9FbO/zMPqIfJMv1G9b
- IgZQ==
-X-Gm-Message-State: AFuF++lARBZsFkGA+UzXWLvUzCHHOsj3NdZf+IJQFprnc/cPNW1LMPd9
- cUHyW/yyRXvMyt/tsFp8m4b/M+2ZfLD7YmYd+dbk5/1sAiTyv7jvorlPOuhlJ2as1YA=
-X-Gm-Gg: AYBFou3zlx21VIdpRQW06oxs6S15odldri3VVG8uhQPcJzSCcp7YxyH390c2ZPVBstD
- +x1r0/erNl1lb0UIAajF+nFMVS8FW68IEEP94lR8XPcQAaXsF/KZ2/iy0Z5eprCsOP2Rw6CDl3v
- pLQ8PI4eQ4UDPJh3A7nGMBFPDBmw5sbmxqLQo2Iu3BiYKgZKT0l7Z+DVMiHuni8/D/e2DEck+tU
- yHRJOBEWeignEkWRuBYOT0GVXgoKL0sdnQ8czMHIODqoA071mkxFR3Qtmy1j1XOr48uxQCrcIUA
- TIFMRPQ3q39kejQjiVbJ5N/GJT5y629OIXWncZctfBrsBHh2YRzr5OowgvK93kRWo2mXM/+g+/w
- L3S96ozk4u1gltUsBa7260p57+Y+yMRLTGXCYf0SihmwAT6O0fGH9GC+6wk8JxEdcmhU+sKdu1C
- pX59J0nhABFssNqTxWoad5qM8vf+7P9IveUqxxCYaqkMBSeHx7P4Xu7G9Q6sKnLema3JjI8Po=
-X-Received: by 2002:a05:600c:6085:b0:49c:dca2:ac47 with SMTP id
- 5b1f17b1804b1-49eac45c06bmr36770935e9.2.1789572620516; 
- Wed, 16 Sep 2026 08:30:20 -0700 (PDT)
+ bh=s+iJgOTicDwCjhm5qp3QC56yC+WLMH8ocrsmN4EU6Dc=;
+ b=TtCibRNB9dUY4rEcqdNDjI6PwA7AvXaCMSL2UHSwxX2IxeJuT6CXrgxIQ6ASBe2GzN
+ I9/qQBJPWnp/SZjB9Z5FGflPvt4lvpsDW9GSkAfC6s9bb6q0KZ2I4WEXcY8nvMiQzq0t
+ FTVhtXfwWZyOfURdxzlXRmt4sROSayKs1EEOuyCNBD+7XRoy114AGPYKhrvYAUNEGuwr
+ FKsPB2y83bHahkCnD6OK2zuzyAjdh7wRyPeXECwdTrk+7/MmIRw05hq2m8lyBa18vxNG
+ NyiUCJUENmC2Cq7+kBNdfD97BoXuV3NkTVSznPjZWNd2PYMExi6dwhYUozZ/zfJ5+Wnt
+ 6zEg==
+X-Gm-Message-State: AFuF++kJrUHDYgjwzd7DQjEgneWaf75CBv3Ns6grxfAOXs473YyRb6Ab
+ 2tv77YZd9cEW3u4ZYq4JhZLHyDQY70lY/4MFUXNByjyQun/ssyeqLFP4juOgT4jHPys=
+X-Gm-Gg: AYBFou3c8yuoWjlozqVJmwUlZCcTiJdeklGzajcOqCRBzMl+woJ/HNMng7P75WOTX5a
+ AShsEmhrzojWemZJC84AYdtOgB30t791nxebfYq85AMraXPJkYAZhm1qXurvWNqNr05DDcWPjVt
+ 3dXX8GhpHrPNsaxVfal2aqTRythv1grKs9xwACPP+eOGO2JPN1dXb8YzeOp6mAXKj9HMgWyoE5G
+ 7gGbu35r3DfVr20DefUY2V3edEtvAnSRZ/29tuGiqOteaR8pye24sAB8a/yRm9xBD5hXe/7BLgv
+ eg1JEv9AHjUYZdHu/7NEBO+UIJgzudsw/lQoei0I9MZFGZLOw9jBwsbbdvcBpzrX9xX4wbpWplf
+ 6SJhjYVic8bwPhscKvs7MnF2WDcIsz6CXHPBV3iXxk3qtvn6bmhMqWHAoaD8eVsZHlgD61Yne4x
+ Wph17duiS0TgiubEBq/I+1Kvmv+PmEoDDhhoHfhyhE26gyfDjgVbC6kFSUlANfJSnq8pNlctQ=
+X-Received: by 2002:a05:600c:3e15:b0:49c:f617:7cf with SMTP id
+ 5b1f17b1804b1-49eac41066amr71528515e9.0.1789572641350; 
+ Wed, 16 Sep 2026 08:30:41 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd0fef38sm1392095e9.9.2026.09.16.08.30.14
+ 5b1f17b1804b1-49fbbd951a0sm16970965e9.4.2026.09.16.08.30.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 08:30:14 -0700 (PDT)
+ Wed, 16 Sep 2026 08:30:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 698AA618D2;
- Wed, 16 Sep 2026 16:30:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id F2A6061A7B;
+ Wed, 16 Sep 2026 16:30:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
@@ -88,24 +88,23 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 02/19] Revert "tests/tcg/meson.build: implement ./configure
- -cross-cc-* options"
-Date: Wed, 16 Sep 2026 16:29:55 +0100
-Message-ID: <20260916153013.2134555-3-alex.bennee@linaro.org>
+Subject: [PATCH v4 17/19] scripts/make2mtest: add docker dependencies for
+ check-tcg-% targets
+Date: Wed, 16 Sep 2026 16:30:10 +0100
+Message-ID: <20260916153013.2134555-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260916153013.2134555-1-alex.bennee@linaro.org>
 References: <20260916153013.2134555-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,254 +121,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to keep configuring of the cross compiler within configure so
-it can be used by the firmware.
+This should trigger the building of the docker image when the user
+calls "make check-tcg" or one of the arch specific targets such as
+"make check-tcg-m68k-linux-user".
 
-This reverts commit 7e1d54da6faf10e1fc70f6b3d8247068b80b1597.
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+We still keep the internal meson dependency so individual tests can
+launched and the docker build verified.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v3
-  - declare empty container_command/use_containers to avoid unref var
----
- configure             | 31 ++++++++-------
- meson_options.txt     | 89 -------------------------------------------
- tests/tcg/meson.build | 31 +++------------
- 3 files changed, 23 insertions(+), 128 deletions(-)
+ scripts/mtest2make.py | 35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/configure b/configure
-index 1973f023b1e..bedde58b8cf 100755
---- a/configure
-+++ b/configure
-@@ -172,6 +172,7 @@ fi
- # some defaults, based on the host environment
+diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+index 383ea68b16d..ab894d90d47 100644
+--- a/scripts/mtest2make.py
++++ b/scripts/mtest2make.py
+@@ -14,6 +14,7 @@ class Suite(object):
+     def __init__(self):
+         self.deps = set()
+         self.speeds = set()
++        self.docker_deps = set()
  
- # default parameters
-+container_command=""
- cpu=""
- cross_compile="no"
- cross_prefix=""
-@@ -227,6 +228,19 @@ for opt do
-   ;;
-   --extra-ldflags=*) EXTRA_LDFLAGS="$EXTRA_LDFLAGS $optarg"
-   ;;
-+  --cross-cc-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-cc-FOO option"
-+  ;;
-+  --cross-cc-cflags-*) cc_arch=${opt#--cross-cc-cflags-}; cc_arch=${cc_arch%%=*}
-+                      eval "cross_cc_cflags_${cc_arch}=\$optarg"
-+  ;;
-+  --cross-cc-*) cc_arch=${opt#--cross-cc-}; cc_arch=${cc_arch%%=*}
-+                eval "cross_cc_${cc_arch}=\$optarg"
-+  ;;
-+  --cross-prefix-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-prefix-FOO option"
-+  ;;
-+  --cross-prefix-*) cc_arch=${opt#--cross-prefix-}; cc_arch=${cc_arch%%=*}
-+                    eval "cross_prefix_${cc_arch}=\$optarg"
-+  ;;
-   --without-default-features) default_feature="no"
-   ;;
-   --wasm64-32bit-address-limit) wasm64_memory64="2"
-@@ -246,6 +260,7 @@ ninja=""
- python=
- download="enabled"
- skip_meson=no
-+use_containers=""
- rust="disabled"
- rust_target_triple=""
+     def names(self, base):
+         return [f'{base}-{speed}' for speed in self.speeds]
+@@ -40,7 +41,22 @@ def names(self, base):
  
-@@ -618,19 +633,9 @@ for opt do
-   ;;
-   --extra-ldflags=*)
-   ;;
--  --cross-cc-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-cc-FOO option"
--  ;;
--  --cross-cc-cflags-*) arch=${opt#--cross-cc-cflags-}; arch=${arch%%=*}
--                       meson_option_add "-Dtcg_tests_cross_cflags_${arch}=${optarg}"
--  ;;
--  --cross-cc-*) arch=${opt#--cross-cc-}; arch=${arch%%=*}
--                meson_option_add "-Dtcg_tests_cross_cc_${arch}=${optarg}"
--  ;;
--  --cross-prefix-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-prefix-FOO option"
-+  --cross-cc-*)
-   ;;
--  # cross-prefix is just used as a syntactic sugar for -cross-cc.
--  --cross-prefix-*) arch=${opt#--cross-prefix-}; arch=${arch%%=*}
--                    meson_option_add "-Dtcg_tests_cross_cc_${arch}=${optarg}gcc"
-+  --cross-prefix-*)
-   ;;
-   --enable-docs) docs=enabled
-   ;;
-@@ -1273,7 +1278,7 @@ if test "$container_command" = ""; then
-     container_command=$($python "$source_path"/tests/docker/docker.py probe)
-     test "$container_command" = "no" && container_command=""
- fi
--if test $use_containers = "yes" && test "$container_command" != ""; then
-+if test "$use_containers" = "yes" && test "$container_command" != ""; then
-     docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
- fi
+ introspect = json.load(sys.stdin)
  
-diff --git a/meson_options.txt b/meson_options.txt
-index e3570a418aa..66d3689d14c 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -393,92 +393,3 @@ option('containers', type: 'boolean', value: true,
-        description: 'use containers to cross compile tcg tests')
- option('container_command', type: 'string',
-        description: 'command to build/run containers')
+-def process_tests(test, targets, suites):
++targets = {t['id']: [os.path.relpath(f) for f in t['filename']]
++           for t in introspect['targets']}
++
++# collect the docker images uses by the tests. This is totally a hacky
++# heuristic that fishes the images out of the test custom commands by
++# looking for the qemu/image pattern.
++targets_docker = {}
++for t in introspect['targets']:
++    for src in t.get('target_sources', []):
++        for arg in src.get('compiler', []):
++            if arg.startswith('qemu/'):
++                img = arg.split('/', 1)[1]
++                targets_docker[t['id']] = f'docker-image-{img}'
++                break
++
++def process_tests(test, targets, targets_docker, suites):
+     executable = test['cmd'][0]
+     try:
+         executable = os.path.relpath(executable)
+@@ -51,6 +67,8 @@ def process_tests(test, targets, suites):
+     deps = itertools.chain.from_iterable(deps)
+     deps = list(deps)
+ 
++    docker_deps = [targets_docker[x] for x in test['depends'] if x in targets_docker]
++
+     test_suites = test['suite'] or ['default']
+     for s in test_suites:
+         # The suite name in the introspection info is "PROJECT" or "PROJECT:SUITE"
+@@ -59,6 +77,7 @@ def process_tests(test, targets, suites):
+             if s == 'slow' or s == 'thorough':
+                 continue
+         suites[s].deps.update(deps)
++        suites[s].docker_deps.update(docker_deps)
+         if s.endswith('-slow'):
+             s = s[:-5]
+             suites[s].speeds.add('slow')
+@@ -81,6 +100,9 @@ def emit_prolog(suites, prefix):
+     print(f'all-{prefix}-xml = {all_xml}')
+     print(f'.PHONY: {prefix} do-meson-{prefix} {prefix}-report.junit.xml $(all-{prefix}-targets) $(all-{prefix}-xml)')
+     print(f'ninja-cmd-goals += $(foreach s, $(.{prefix}.mtest-suites), $(.{prefix}-$s.deps))')
++    print(f'docker-cmd-goals += $(foreach s, $(.{prefix}.mtest-suites), $(.{prefix}-$s.docker-deps))')
++    print(f'docker-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.docker-goals.$g))')
++    print(f'run-ninja: $(sort $(docker-cmd-goals))')
+     print(f'{prefix}-build: run-ninja')
+     print(f'{prefix} $(all-{prefix}-targets): do-meson-{prefix}')
+     print(f'do-meson-{prefix}: run-ninja; $(if $(MAKE.n),,+)$(MESON) test $(.{prefix}.mtestargs)')
+@@ -93,6 +115,10 @@ def emit_suite(name, suite, prefix):
+     print()
+     print(f'.{prefix}-{tgtname}.deps = {deps}')
+     print(f'.ninja-goals.check-build += $(.{prefix}-{tgtname}.deps)')
++    if suite.docker_deps:
++        docker_deps = ' '.join(sorted(suite.docker_deps))
++        print(f'.{prefix}-{tgtname}.docker-deps = {docker_deps}')
++        print(f'.docker-goals.check-build += $(.{prefix}-{tgtname}.docker-deps)')
+ 
+     names = ' '.join(sorted(suite.names(name)))
+     targets = f'{prefix}-{tgtname} {prefix}-report-{tgtname}.junit.xml'
+@@ -105,19 +131,16 @@ def emit_suite(name, suite, prefix):
+     print(f".{prefix}.mtest-suites += {name} $(call .speed.$(SPEED), {names})")
+     print(f'endif')
+ 
+-targets = {t['id']: [os.path.relpath(f) for f in t['filename']]
+-           for t in introspect['targets']}
 -
--option('tcg_tests_cross_cc_aarch64', type: 'string',
--       description: 'cc for aarch64 tcg tests')
--option('tcg_tests_cross_cflags_aarch64', type: 'string',
--       description: 'cflags for aarch64 tcg tests')
--option('tcg_tests_cross_cc_aarch64_be', type: 'string',
--       description: 'cc for aarch64_be tcg tests')
--option('tcg_tests_cross_cflags_aarch64_be', type: 'string',
--       description: 'cflags for aarch64_be tcg tests')
--option('tcg_tests_cross_cc_alpha', type: 'string',
--       description: 'cc for alpha tcg tests')
--option('tcg_tests_cross_cflags_alpha', type: 'string',
--       description: 'cflags for alpha tcg tests')
--option('tcg_tests_cross_cc_arm', type: 'string',
--       description: 'cc for arm tcg tests')
--option('tcg_tests_cross_cflags_arm', type: 'string',
--       description: 'cflags for arm tcg tests')
--option('tcg_tests_cross_cc_hexagon', type: 'string',
--       description: 'cc for hexagon tcg tests')
--option('tcg_tests_cross_cflags_hexagon', type: 'string',
--       description: 'cflags for hexagon tcg tests')
--option('tcg_tests_cross_cc_hppa', type: 'string',
--       description: 'cc for hppa tcg tests')
--option('tcg_tests_cross_cflags_hppa', type: 'string',
--       description: 'cflags for hppa tcg tests')
--option('tcg_tests_cross_cc_i386', type: 'string',
--       description: 'cc for i386 tcg tests')
--option('tcg_tests_cross_cflags_i386', type: 'string',
--       description: 'cflags for i386 tcg tests')
--option('tcg_tests_cross_cc_loongarch64', type: 'string',
--       description: 'cc for loongarch64 tcg tests')
--option('tcg_tests_cross_cflags_loongarch64', type: 'string',
--       description: 'cflags for loongarch64 tcg tests')
--option('tcg_tests_cross_cc_m68k', type: 'string',
--       description: 'cc for m68k tcg tests')
--option('tcg_tests_cross_cflags_m68k', type: 'string',
--       description: 'cflags for m68k tcg tests')
--option('tcg_tests_cross_cc_mips', type: 'string',
--       description: 'cc for mips tcg tests')
--option('tcg_tests_cross_cflags_mips', type: 'string',
--       description: 'cflags for mips tcg tests')
--option('tcg_tests_cross_cc_mips64', type: 'string',
--       description: 'cc for mips64 tcg tests')
--option('tcg_tests_cross_cflags_mips64', type: 'string',
--       description: 'cflags for mips64 tcg tests')
--option('tcg_tests_cross_cc_mips64el', type: 'string',
--       description: 'cc for mips64el tcg tests')
--option('tcg_tests_cross_cflags_mips64el', type: 'string',
--       description: 'cflags for mips64el tcg tests')
--option('tcg_tests_cross_cc_or1k', type: 'string',
--       description: 'cc for or1k tcg tests')
--option('tcg_tests_cross_cflags_or1k', type: 'string',
--       description: 'cflags for or1k tcg tests')
--option('tcg_tests_cross_cc_ppc64', type: 'string',
--       description: 'cc for ppc64 tcg tests')
--option('tcg_tests_cross_cflags_ppc64', type: 'string',
--       description: 'cflags for ppc64 tcg tests')
--option('tcg_tests_cross_cc_ppc64le', type: 'string',
--       description: 'cc for ppc64le tcg tests')
--option('tcg_tests_cross_cflags_ppc64le', type: 'string',
--       description: 'cflags for ppc64le tcg tests')
--option('tcg_tests_cross_cc_riscv64', type: 'string',
--       description: 'cc for riscv64 tcg tests')
--option('tcg_tests_cross_cflags_riscv64', type: 'string',
--       description: 'cflags for riscv64 tcg tests')
--option('tcg_tests_cross_cc_s390x', type: 'string',
--       description: 'cc for s390x tcg tests')
--option('tcg_tests_cross_cflags_s390x', type: 'string',
--       description: 'cflags for s390x tcg tests')
--option('tcg_tests_cross_cc_sh4', type: 'string',
--       description: 'cc for sh4 tcg tests')
--option('tcg_tests_cross_cflags_sh4', type: 'string',
--       description: 'cflags for sh4 tcg tests')
--option('tcg_tests_cross_cc_tricore', type: 'string',
--       description: 'cc for tricore tcg tests')
--option('tcg_tests_cross_cflags_tricore', type: 'string',
--       description: 'cflags for tricore tcg tests')
--option('tcg_tests_cross_cc_x86_64', type: 'string',
--       description: 'cc for x86_64 tcg tests')
--option('tcg_tests_cross_cflags_x86_64', type: 'string',
--       description: 'cflags for x86_64 tcg tests')
--option('tcg_tests_cross_cc_xtensa', type: 'string',
--       description: 'cc for xtensa tcg tests')
--option('tcg_tests_cross_cflags_xtensa', type: 'string',
--       description: 'cflags for xtensa tcg tests')
--option('tcg_tests_cross_cc_xtensaeb', type: 'string',
--       description: 'cc for xtensaeb tcg tests')
--option('tcg_tests_cross_cflags_xtensaeb', type: 'string',
--       description: 'cflags for xtensaeb tcg tests')
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index d41a228fb3d..ce208e686ff 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -185,8 +185,6 @@ foreach target, plan: tcg_tests
-     continue
-   endif
+ testsuites = defaultdict(Suite)
+ for test in introspect['tests']:
+-    process_tests(test, targets, testsuites)
++    process_tests(test, targets, targets_docker, testsuites)
+ emit_prolog(testsuites, 'check')
+ for name, suite in testsuites.items():
+     emit_suite(name, suite, 'check')
  
--  cc_arch = target.replace('-linux-user', '').replace('-softmmu', '')
--
-   # Detect duplicated executables/tests, and report an error to force user to
-   # choose how to deal with it.
-   built_tests = {}
-@@ -204,35 +202,16 @@ foreach target, plan: tcg_tests
-   endforeach
- 
-   cc = find_program(plan['cc'], required : false)
--  cc_cflags = []
--
--  check_flags = []
--  check_required = false
--  cross_cc = get_option('tcg_tests_cross_cc_' + cc_arch)
--  if cross_cc != ''
--    # we make sure cross cc exists
--    cc = find_program(cross_cc, required: true)
--    check_required = true
--  endif
--  cross_cflags = get_option('tcg_tests_cross_cflags_' + cc_arch)
--  if cross_cflags != ''
--    cc_cflags = cross_cflags.split()
--    # and that cross cc can compile programs
--    check_flags = cc_cflags
--    check_required = true
--  endif
--
-   cc_from_system = cc.found()
-   has_cc = cc.found()
-   if has_cc
-+    check_flags = ['-static']
-     if target.endswith('softmmu')
--      check_flags += ['-nostdlib', '-ffreestanding', '-r']
--    else
--      check_flags += ['-static']
-+      check_flags = ['-nostdlib', '-ffreestanding', '-r']
-     endif
- 
-     cmd = run_command([cc, files('test_cc.c'), check_flags, '-o', '/dev/null'],
--                      check: check_required)
-+                      check: false)
-     has_cc = cmd.returncode() == 0
-     cc_from_system = has_cc
-   endif
-@@ -368,9 +347,9 @@ foreach target, plan: tcg_tests
-         endif
-       endif
- 
--      cflags = cc_cflags
-+      cflags = []
-       if 'cflags' in setup
--        cflags += setup['cflags']
-+        cflags = setup['cflags']
-       endif
- 
-       if 'cc_feat' in setup
+ benchsuites = defaultdict(Suite)
+ for test in introspect['benchmarks']:
+-    process_tests(test, targets, benchsuites)
++    process_tests(test, targets, targets_docker, benchsuites)
+ emit_prolog(benchsuites, 'bench')
+ for name, suite in benchsuites.items():
+     emit_suite(name, suite, 'bench')
 -- 
 2.47.3
 
