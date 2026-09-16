@@ -4,160 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71712C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CE7C982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6shS-000547-Ci; Wed, 16 Sep 2026 12:41:34 -0400
+	id 1x6sjS-00060p-7Y; Wed, 16 Sep 2026 12:43:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6shP-00053b-QG
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:41:31 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x6shO-00088c-83
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:41:31 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GFeRIi2432184
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:41:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6qPigUD9fIsyQC74evRL8+c2D6v/j8LAmrNKWPC7+Ac=; b=NjKCLxAzW4Z2us9G
- lAts3Q/uv2nHuWXsvSnQi96apX2fPrm18pi/unNJ8cs8e1WzunRA/ARCamsufbiv
- ux7Q7RPx/ApuQ6qM+6YrKTDpt5n2srO4b7ve/w83+cwJuMpKWUwEizSe3cjjrncJ
- /79QeS+gXirSSpEr7HHUv1MPgMrjUyBkERe8ptxhh5dh3n18F/hfIxc23jDG31wG
- 5lzMzhtnj4pcYoTkd3Xiwooo0ej+DAxwPaRHbF82DfuDV+TPijwbsv3aF8LXqsZC
- +cetyA9PJe7LUL10W/HlAxKgjV7UAiEUoXEytzQI3A0OaaXlq2w80g4S+d4hIZdd
- 6y0gMQ==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqthnsb86-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:41:28 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-cc1a439db36so4811537a12.2
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 09:41:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6sjC-0005xS-Vc
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:43:25 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6sjA-0008P6-Ia
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:43:22 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd5462b69so7130195e9.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 09:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789576887; x=1790181687; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6qPigUD9fIsyQC74evRL8+c2D6v/j8LAmrNKWPC7+Ac=;
- b=ha8HQzV+czh1d6hGTyWoTWTP4ixNaUk1Wlq6bgjt3nGz322lyrwtI+a3+98NMs1e0Y
- ETSnfLFskSqq4By7fA1Uz1vix7OnmcuZWOt2Ba8SuE5lZXjNoqY8xIh3ELJEesKZXX/e
- vUddYkkiA9Gb4X+e+L4EeMtvefrH4fInf4chY9Yya3HyT8myifITvjyaspmLKNT962Cu
- XO/WNWWKX9whHMFTX47GsG/Pa6ubUt+oU21KxxZIHxfBsMgOJ+12uDchGpsy0kMb5XQi
- DfKmDtRKKC0Bkt2x44rirkiVIHV/W1L6bYUi2DOI/aOnky9XG8KPOxf7v4RFofY289EV
- 1P9Q==
+ d=linaro.org; s=google; t=1789576998; x=1790181798; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=cURPh13A7rpPibbmOCy1e/wvavz2IRwRodYDoxGsQ4A=;
+ b=WNhHVVxxJpLieZe+R1pST/WSqn1Ug+zntYo5065+5LvSzNkps/91iWClQT32ab5dGo
+ +zuwMy8OVPXHy7qlzMKvE8k7QVW+kyjzUFu1QwEqY/iJvnep9Vi81t38WqZesxKjYWn8
+ kEDPSsgMhAZ5IzLpExzu1JFw2yxuN8liIVhkWb5hIks1F2Fq+8Jn57L/bXwb957oqwFJ
+ 6FJjaepwz4+qZ2lMzFzPvgnzIElwAxnvScjAtkqK6zVlZHp/wWO8pKy9Hq0y2BtCI2sl
+ /qaqY1epxJU+K468KUDtKz3VRfpatWBtZfjpRfVS6F1L+yFajTnnoeoo0TKSeaRH8cBS
+ ypCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789576887; x=1790181687;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6qPigUD9fIsyQC74evRL8+c2D6v/j8LAmrNKWPC7+Ac=;
- b=EwINpy6vgXj0RwJpVQtuVckhMqlNZxN53gPfEKF+yMqdkQkM5aLr63yJ8KaaD9dUnG
- ogtvAK8mpFzZ7aPJsX/Nk+8U+4SoDpSoud8E0pOFY61FZKxhqAfgBr0twjZBfGdr3IG6
- y7uh6L8pj17mbwUeUgfCGr442QZtfk5bWsHRSO1RmTfRAwhE6a0iwmxKO2v+snV6KSAh
- l+Rwj+DlolOL+XNZx9OxLID1atZTTrSTdDthY8VchcwYKokjBsDUCvirseCHsploSfnU
- UdjpHWcCvvYFyrmEK4khR9Ksbd0mP2MkObLMRjuxEzLBp3TcGcdlx4HuOy3WK4VbwgHK
- bedA==
+ d=1e100.net; s=20260707; t=1789576998; x=1790181798;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cURPh13A7rpPibbmOCy1e/wvavz2IRwRodYDoxGsQ4A=;
+ b=rt3Zs039Vz0VyZe2hvQr0nuzCXg839w31xZKoXb87nQpQW6pP0a0k+U5pAiTKdYQwZ
+ TeDUEKqxW818+q2FJ2TbwKLRrLu+sjDzIPlMQ4fM3XGYO1949C8YZOc9ybxO2+jCxsyV
+ L2q1DMzCeELcOxm1Qg9kPyKzaq7lyk9qmfJtP/jRGPsg8qUMP8KOwOJVXhi9Ic85eabM
+ EwAhgOTi4XN4a3AoDxN05iTiervkncIfxJ0KxmFqNRC4tKeLlbsEsKZCIofoSz2WsYeR
+ RFDHTqyn8KbVrwm/5Th2nwq5OvhLINUMtZlImDuojiMX09YSjHaOYQeFvQ9TWkDuLXby
+ u3/g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwxLfO3RF3U5jUbCGdA74G+K/xJiBYrxGsfGN1HvbQL4njItG3HFK3BmnCogqRmDv/bSXYCCiws3wOc@nongnu.org
-X-Gm-Message-State: AFuF++m+Anf7cqTIIP2wd14TWIf8XyhMvlQHpjc4NOAGVaPt9CddqNY9
- FgCGsIK79V1003PjrMAN2vFTTTPqUUp52/LYlexuYHdXufxXDuQmq068mpnM2F4TgzMUjrCsux6
- SQhaIv8ckMoWW0K2Uh1ne3qat8aZebQW/Gnv/83njNXPgDaYMxvCkE/sUep5ar5JI4g==
-X-Gm-Gg: AYBFou2lNNju85/QtBiw41RyvADhpwQgTgmhAK68iXtLtpGTDFfqzF+g64DT6FtnPHN
- ZaVrTczG3+NzMu8NEuXYTxHCeG20dqpsOmpoi9itUKZZol+83DmEP0m2KF7QhFpkomDp2lJ7ega
- J9bZ+4u1LA+2lh+FkAXumvbWQijoM4TY4cbUHEXK4+WRYeh10rywc5nWFgHf2fA/TkxrEOpCBSV
- 7b+9WSL7zYbImIDum/CFK33RdXcT4/QC4f4LN4H10E4BOj+xr5cK2DT8vA0osXOXl4cX1QGGvIB
- LkXxJkxy3280z8KHMwX4BcD6W5oR4R6/MkOVJOIjLeYWtaVAkyy/QM3k3EK2IxosMWY2bKkbkoP
- C4lPv6HxOudZusBtGJfdcJCFM0QVIxL1eiNhzN+k9bZyX1JFFMl8lf/t7n2Y0j+9k0oKV
-X-Received: by 2002:a05:6a20:94ca:b0:3d3:b00b:26e8 with SMTP id
- adf61e73a8af0-3dd5f8123f7mr8115301637.28.1789576887183; 
- Wed, 16 Sep 2026 09:41:27 -0700 (PDT)
-X-Received: by 2002:a05:6a20:94ca:b0:3d3:b00b:26e8 with SMTP id
- adf61e73a8af0-3dd5f8123f7mr8115243637.28.1789576886759; 
- Wed, 16 Sep 2026 09:41:26 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5aa1e38sm9327051eec.16.2026.09.16.09.41.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Sep 2026 09:41:26 -0700 (PDT)
-Message-ID: <85491ee1-f04f-4716-8e0d-3bb6580392e9@oss.qualcomm.com>
-Date: Wed, 16 Sep 2026 09:41:23 -0700
+ AKwUvByL9B6N1tU3TJUWHSWKAyAIDKt53FkXqTQHwj0vNaq1+LvOzvvLr92SwzsfC705Sv+9P2z+nnBpaHGn@nongnu.org
+X-Gm-Message-State: AFuF++nCnePu7sJkwv7ndK28lNfSVYpVJya5hXIu7wyCpINxTFA8x9c2
+ bAAdSSzQ5hiBdkf99Qi5g/vzJmcGXRPAEMHMetGmd6VOWj/cib1g0zPyagl2cOAk7xA=
+X-Gm-Gg: AYBFou0pcm/2UECapp/IMZez5KeSQ5l9/L0usT+tYL+b+b7tyEwJbvia6gz98qRVvyH
+ N85OmO07SnAqcebTnc+HkgWe1WIu4hXZYsielQ+HmCgVhIivGPAz4EWSt/SN4PSA31pYYFUYz2T
+ qdb5vsTUPmoQxYV95abUChZn964n2V87HQOAaFIluoDpCKDE2dZlKWjAio29Drfw+K0tiv/ISN7
+ o7mHZAQu5FxvPN3jSL3IPsph1o0dbrn+W3BvcG9vbSL0/ZVgr/hV/H9VANC9/TV8CgeVEDyLrkz
+ gWyOzOlAe/amZp1RFlbxeUZVK5zkec6yuMXCPH+Ihp+LM12pRXK4giMoM5hfW2gnfvQuWn0pQQu
+ C2dT1+AK0VExxJFFXs4T6zDecWMGM4irChhp/4ujCm6r5dpOfkLuFdcgg6H4I6XMZFn06QcBPIX
+ diZb7kVhpqWwsJbiZNzEl6L2gmzNwMZVqW3zOEAWjtoMxpyYYWM0KFMcLLvMNX6FyyZalELjk=
+X-Received: by 2002:a05:600c:8b71:b0:49c:e1f1:3dd5 with SMTP id
+ 5b1f17b1804b1-49eb72f3b22mr80157395e9.4.1789576998408; 
+ Wed, 16 Sep 2026 09:43:18 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e847e994dsm55799355e9.2.2026.09.16.09.43.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 09:43:17 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 72A03618BA;
+ Wed, 16 Sep 2026 17:43:16 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: John Snow <jsnow@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PULL v2 000/105] move check-tcg into the meson build
+In-Reply-To: <CAFn=p-au47ecRqxo=FB5S=LoQqa0dPRXb1xDuCefVXXyZP+OWA@mail.gmail.com>
+ (John Snow's message of "Wed, 16 Sep 2026 12:16:36 -0400")
+References: <20260904150826.2331577-1-alex.bennee@linaro.org>
+ <CAFEAcA9vZZmVPP3_P1xz-NX_sqWY0zrOC2LeGLTdnaK54XKQzQ@mail.gmail.com>
+ <CAFn=p-bXoctWNEdERPBL-SMRPYDisban2e0-mxYjws7UVcjVzw@mail.gmail.com>
+ <87tsnq9siw.fsf@draig.linaro.org>
+ <CAFn=p-au47ecRqxo=FB5S=LoQqa0dPRXb1xDuCefVXXyZP+OWA@mail.gmail.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Wed, 16 Sep 2026 17:43:16 +0100
+Message-ID: <87v78587vf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/19] tests/docker: add container registry to
- configure and use
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- John Snow <jsnow@redhat.com>, David Hildenbrand <david@kernel.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Warner Losh <imp@bsdimp.com>, Song Gao <gaosong@loongson.cn>,
- Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>,
- Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-s390x@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260916153013.2134555-1-alex.bennee@linaro.org>
- <20260916153013.2134555-11-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260916153013.2134555-11-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: -qiQoU8XdJLboU6zeTbPJT2da6YSuEMJ
-X-Authority-Analysis: v=2.4 cv=IsKL47/g c=1 sm=1 tr=0 ts=6aaac6b8 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=AVDwjEnD-0tbelgwmW0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDIyOCBTYWx0ZWRfX+bI03Ez4tPk4
- RMvIvgIGinHBklw+ixbAY00lqANMtzGtY9TmGpNZYdMA6hKZzTLsPr/eJRP+y74HwuN2uhpj/Nm
- T7uR7Fl5RsviLn5JTabUPE5qeTpJkrH2G2hx4CQtaXT6qSVygmkuovMfdaB8MBLxIayIkBHCXXr
- Zoqe7IRkcV/OA35cz8sGriVq9xwbOuKykiddu4GcOhVg53z1noyoxTIzi4kmSmEw7p4pQikvljm
- ZTz+yytI84ueYIYYfcBrIfsSG7cNEQb/vxx0XFCdn/RiNLvDdL+4yDzum3qDyqDLCOa4l8RBXcP
- OqUd5ZwTkmXlc6LtKZAQOu13ueMS3La3b+9ykMjDFrXfbDQSaBJkWpKoH6vaHRaF+RxKWT+Ok86
- 9lbA01hCK8wgyOlqlT0Kw0A8eWnzSL1J9RKmQGnMIyrYyH/GfpYLMMsGW90H+e5BrcwZW97u3GM
- WLoOzZgo6wWiEuLSIkA==
-X-Proofpoint-GUID: -qiQoU8XdJLboU6zeTbPJT2da6YSuEMJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDIyOCBTYWx0ZWRfXxw2K/z4OPLPb
- 7Swm5byg3VeJen2Xu4qKniTZvX5/epEJmi++uJkTZ8or3fh8yQhXc+BZh+/QZmnlrqk2Bt+h1Pc
- aVOmNboDrGab2GZkMHFGssUHE4/2rTI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160228
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -173,30 +110,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/2026 8:30 AM, Alex Bennée wrote:
-> Previously we had the default baked into Makefile.include but as the
-> meson container logic will also benefit from it we update the configure
-> machinery.
-> 
-> For now we allow direct make invocations to override but for the
-> normal case it is in one place now.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> v2
->   - fixed conflicts from the revert.
-> v3
->   - regen meson-buildoptions.sh
-> v4
->   - merge conflicts
-> ---
->  configure                     | 8 ++++++++
->  scripts/meson-buildoptions.sh | 3 +++
->  tests/docker/Makefile.include | 4 +---
->  tests/tcg/meson.build         | 6 ++++++
->  4 files changed, 18 insertions(+), 3 deletions(-)
-> 
+John Snow <jsnow@redhat.com> writes:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> On Tue, Sep 15, 2026 at 4:19=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > On Fri, Sep 4, 2026 at 2:04=E2=80=AFPM Peter Maydell <peter.maydell@li=
+naro.org> wrote:
+>> >>
+>> >> On Fri, 4 Sept 2026 at 16:08, Alex Benn=C3=A9e <alex.bennee@linaro.or=
+g> wrote:
+>> >> >
+>> >> > The following changes since commit d2843fbf80260e4346c856819e8cea11=
+768c9d0e:
+>> >> >
+>> >> >   Merge tag 'pull-riscv-to-apply-20260904' of https://github.com/al=
+istair23/qemu into staging (2026-09-04 09:43:27 +0100)
+>> >> >
+>> >> > are available in the Git repository at:
+>> >> >
+>> >> >   https://gitlab.com/stsquad/qemu.git tags/pull-11.1-check-tcg-meso=
+n-040926-2
+>> >> >
+>> >> > for you to fetch changes up to 7a485176838e6b6044e73f925d308bb4b300=
+2597:
+>> >> >
+>> >> >   MAINTAINERS: add maintainer for tcg/tests meson infrastructure (2=
+026-09-04 16:06:22 +0100)
+>> >> >
+>> >> > ----------------------------------------------------------------
+>> >> > tests/tcg: conversion to meson
+>> >> >
+>> >> >   - remove unused variable from multiarch/memory
+>> >> >   - standardise checking plugin output
+>> >> >   - bump minimal meson to 1.6.0
+>> >> >   - introduce meson plumbing for check-tcg
+>> >> >   - return error code if docker probe fails
+>> >> >   - add CI/self/mem test to gdbstub prot-none tests
+>> >> >   - use raw opcode for fprcvt test in arm
+>> >> >   - remove unused variables from gpc-test
+>> >> >   - teach probe-gdb-support about mips
+>> >> >   - identify or1k pc register
+>> >> >   - port check-tcg logic to meson (all targets)
+>> >> >   - update documentation
+>> >> >   - add Pierrick as a maintainer for tests/tcg
+>> >
+>> > Hi, I'm having difficulties building after this PR, after eb7f0c14 in
+>> > particular.
+>> >
+>> > I keep seeing stuff like this:
+>> >
+>> > FAILED: [code=3D1] tests/tcg/x86_64-softmmu-hello.test
+>> > /home/jsnow/src/qemu/tests/tcg/../docker/docker.py --command podman
+>> > run --run-as-current-user -w /home/jsnow/src/qemu/build -v
+>> > /home/jsnow/src/qemu:/home/jsnow/src/qemu debian-amd64-cross
+>> > x86_64-linux-gnu-gcc
+>> > /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c -o
+>> > tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF
+>> > tests/tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g
+>> > -fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I
+>> > /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib
+>> > /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c
+>> > ../tests/tcg/x86_64/system/boot.S -Wl,-T
+>> > ../tests/tcg/x86_64/system/kernel.ld -Wl,-melf_x86_64
+>> > -Wl,--no-warn-rwx-segments -Wl,--build-id=3Dnone -lgcc
+>> > cc1: fatal error:
+>> > /home/jsnow/src/qemu/tests/tcg/multiarch/system/hello.c: Permission
+>> > denied
+>> > compilation terminated.
+>> > cc1: fatal error:
+>> > /home/jsnow/src/qemu/tests/tcg/x86_64/system/../../minilib/printf.c:
+>> > Permission denied
+>> > compilation terminated.
+>> > cc1: fatal error: ../tests/tcg/x86_64/system/boot.S: Permission denied
+>> > compilation terminated.
+>>
+>> Try the v2 I've just posted. That fixed up the handling of mapping your
+>> host user id into the container so there are less surprises when it
+>> writes to the mapped volume.
+>>
+>>   https://patchew.org/QEMU/20260915201601.1207839-1-alex.bennee@linaro.o=
+rg/
+>>
+>
+> No dice there. Fully rebooted my machine just in case there were
+> permission issues lingering in my session; still getting perm errors:
+>
+> jsnow@jsnow-thinkpadp16vgen1 ~/s/q/build (review)> cat /etc/subuid
+> jsnow:100000:65536
+> jsnow@jsnow-thinkpadp16vgen1 ~/s/q/build (review)> cat /etc/subgid
+> jsnow:100000:65536
+>
+> jsnow@jsnow-thinkpadp16vgen1 ~/s/q/build (review)> ls -lahZ
+> ../tests/tcg/multiarch/system/hello.c
+> -rw-r--r--. 1 jsnow jsnow unconfined_u:object_r:user_home_t:s0 229 May
+>  7  2025 ../tests/tcg/multiarch/system/hello.c
+>
+> Setting the dreaded `setenforce 0` it does seem to work, so I suppose
+> the issue is that my source tree is not labeled in a way that permits
+> it to be mapped into a container.
+>
+> I'd like to ask that we have a hello world style check that tests to
+> see if it can access your source tree and, if not, proposes some
+> solutions:
+>
+> (1) Prompt user to check that rootless podman is functioning
+> correctly, check your subuid/subgid etc
+
+Perhaps we should just run the same compile test when we detect
+containers.
+
+> (2) Prompt user to check selinux labels
+> (3) Suggest that container builds can be disabled with --disable-containe=
+rs
+>
+> Possibly even as part of configure we do a simple hello-world test and
+> if it works, enable containers by default and if it does not, we
+> disable them. If you pass --enable-containers and the hello world
+> fails, configure exits with an error.
+>
+> Or some other such thing.
+>
+> --js
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
