@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4CBC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F4BC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6leJ-0007uj-Bs; Wed, 16 Sep 2026 05:09:51 -0400
+	id 1x6leS-0008OZ-Qz; Wed, 16 Sep 2026 05:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6leG-0007gY-KW; Wed, 16 Sep 2026 05:09:48 -0400
+ id 1x6leK-00084i-4l; Wed, 16 Sep 2026 05:09:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6leE-0007W8-Va; Wed, 16 Sep 2026 05:09:48 -0400
+ id 1x6leI-0007YT-34; Wed, 16 Sep 2026 05:09:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549562; bh=zuJ25Qwoepx64JeLHRK8tPAAxVebrDg/Ykxpo3dxdA8=;
+ t=1789549562; bh=gRtC9Ai0tnc5O4cbrhFyCgkmjJzmeR6tZluv7lJ8n2U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=n5Z5Xf7TzlcJKjToC0HPScVyKXfRF4Ais4omxuIEiIOTUPdzEgrv9a0zHsqbgYRWX
- Zxq2B8EJaU+jEi3CR4Wdj4BlgtsOtSKDbH7BjIBFxj7gMdF12yBZkMBaQjKOsk7OyJ
- SfVtEBZ64u5NoXCdxCSS9JWX4ZvdpWacHkaV7S09y2+zU35MAt9HgRT/CuKTZBczfB
- EbdogIz8uvrijr49eM+u/6etqa2Hx+K9N5hTW82QUaoEZF8fEzDRWbCz6elyVtaFvX
- Y4z0WTDyOzyUu7xvnKf59osZS7tSXv0ykcAYhI7aH+Wj8wDOZ/YpuHuplzCqrEICwN
- oBJdslv0hXbTg==
+ b=RHWwhiN1nldpgbEg3NDh52q13smaCUuEe3Xsg+C06WeOebc+zgXsYDMZyIxquHtz8
+ KwA5HHZlJpMM7Y/+YQ5uHYgjTkUqBZzF2tP4yP6bViwzuvAy+H2Q4bbAJL3/ASi1AL
+ pq/KEf5hPQn6CjqCKSbroeSAOZtddHyEM/3pgfR1+xE9XJNN7sZekjWZ0ruktsqByW
+ q8rpZTroFRgSOWTooENcem+Yt01kyC6Ys5HjQYkjBspMtmJLm2ayuopl+MgpIqPB0I
+ XIHn5AnVo+zs6oizeP1v4GSPGjU5+YRXQ4dW7ahutdtbzKdkQP75eBnt7oTqGlt4So
+ QOajNCyqMyvwQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 336EC1D56E0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3CA3C1D56E2;
  Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D35CD429E3C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DC8E5429E3E;
  Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C9C455A7AF; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
+ id CFF905A7B3; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zhang Chen <zhangckid@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 43/57] qapi/misc: Fix missed query-iothreads items
-Date: Wed, 16 Sep 2026 12:04:07 +0300
-Message-ID: <20260916090516.677749-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 45/57] hw/net/virtio-net: strip trailing padding when
+ caching RSC segment
+Date: Wed, 16 Sep 2026 12:04:09 +0300
+Message-ID: <20260916090516.677749-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -71,48 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhang Chen <zhangckid@gmail.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-The example is incomplete: it misses members @poll-max-ns, @poll-grow,
-@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
-(monitor: add poll-* properties into query-iothreads result) and
-commit 1793ad0247c (iothread: add aio-max-batch parameter).
+When an RSC candidate packet has trailing padding bytes beyond the
+declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
+size into the coalescing buffer and sets seg->size to that value.
+The bounds check in virtio_net_rsc_coalesce_data() uses the IP
+length field (o_ip_len) which does not include the padding, so the
+check can pass while the subsequent memmove() overflows the buffer.
 
-CC: qemu-stable@nongnu.org
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Fix this by computing the actual IP packet size from the IP header
+and using it for both the memcpy and seg->size, so that seg->size
+stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
+guarantees that ip_size <= size.
+
+Fixes: CVE-2026-66900
+Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
+Cc: qemu-stable@nongnu.org
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
+Reported-by: Sven <bestswngs@gmail.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
+(cherry picked from commit 73c3d017ef6a01f92463b398db61c1c1e430fb6d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit f10977073cb4ac58fce7274893e7129e7f64dcae)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 28c641fe2fe..1f5062df2a5 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -117,11 +117,19 @@
- #     <- { "return": [
- #              {
- #                 "id":"iothread0",
--#                 "thread-id":3134
-+#                 "thread-id":3134,
-+#                 "poll-max-ns":32768,
-+#                 "poll-grow":0,
-+#                 "poll-shrink":0,
-+#                 "aio-max-batch":0
- #              },
- #              {
- #                 "id":"iothread1",
--#                 "thread-id":3135
-+#                 "thread-id":3135,
-+#                 "poll-max-ns":32768,
-+#                 "poll-grow":0,
-+#                 "poll-shrink":0,
-+#                 "aio-max-batch":0
- #              }
- #           ]
- #        }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 93653581cb6..310a7c2f007 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2199,13 +2199,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
+ {
+     uint16_t hdr_len;
+     VirtioNetRscSeg *seg;
++    size_t ip_size;
+ 
+     hdr_len = chain->n->guest_hdr_len;
++
++    /*
++     * Strip any trailing padding beyond the IP payload so that seg->size
++     * stays in sync with the IP length field used by the bounds check in
++     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
++     * guarantees that ip_size <= size.
++     */
++    ip_size = hdr_len + sizeof(struct eth_header);
++    if (chain->proto == ETH_P_IP) {
++        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
++        ip_size += htons(ip->ip_len);
++    } else {
++        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
++        ip_size += sizeof(struct ip6_header)
++                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
++    }
++
+     seg = g_new(VirtioNetRscSeg, 1);
+     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
+         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
+-    memcpy(seg->buf, buf, size);
+-    seg->size = size;
++    memcpy(seg->buf, buf, ip_size);
++    seg->size = ip_size;
+     seg->packets = 1;
+     seg->dup_ack = 0;
+     seg->is_coalesced = 0;
 -- 
 2.47.3
 
