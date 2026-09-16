@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DBBC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DD3C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kJb-0004Ii-6a; Wed, 16 Sep 2026 03:44:23 -0400
+	id 1x6kJY-0004H8-Uf; Wed, 16 Sep 2026 03:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJX-0004G4-C8; Wed, 16 Sep 2026 03:44:19 -0400
+ id 1x6kJX-0004Gf-RR; Wed, 16 Sep 2026 03:44:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJV-0004uY-Kz; Wed, 16 Sep 2026 03:44:19 -0400
+ id 1x6kJV-0004ud-R1; Wed, 16 Sep 2026 03:44:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=0JUQwdsD42rCBLJnwMCsiD+JtuaZU9eg5je+fU1SpSA=;
+ t=1789544605; bh=2SRqz5S3YNkNI4mhAWqlHAgeN/EVcHYuNr8uZv0ic+s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=S1wHsR859jFCFXU9GNVXPfVwFnp6XyM/HkQ+eBJPrcsAQjym2Q7DdHRqFxn0W+nhN
- dk6vgfa2TaZptqVzmA/qkiLq5tmDxnA7t2pj84op24FNZboOBGsRLaM1WucFwOWkH5
- GSbVfe3eFJYg04Yp5VLEmSna71ld9XmblD+WWx0Vrg3LIrE+Wj3bR77Bv9nCKCMMRT
- bemVpeZzrPWRNzk4PM0u3/pPAoRsWKWU3MkSWJRnE4yOVhZwGvaUada+PmIejBJPCb
- qyiG4MRvvW9BHHH8gmN74MfkX7Gkl/PZbofNlioMJ6pE6xrmJoU6E8aEJSyhHTi92u
- mW7Ofnm24KYSw==
+ b=B3dAsTUh5WpB8qdKVlFpSPHV2pBFxy6YQfcTjNtgUtfsPI9OiCl9RbCeAsTv0pJu1
+ ycCCfjTDZ2H0NdGkf5vtgZjyIgcdLBijseXlNS9cC2iQjVNgPcxqlFnSkd/mVyOWnJ
+ VVyTCYx0wqu4gOpCErmPke19PEQJAFF9TU5+gbvPG8roIJUsDanD5QLS5DHKFFn7ek
+ ECtw2YJMer9pWYbSEt5wEM8+d5bDh+/SQtycRX9Zt8+t4SLcTcHeO8mSn/I5+Pne6H
+ DXe7UVj8JBRz82ytdChteq7oYEXkY7gOEthtSfJ3bLSDj9e/offf/Kqr4N1HpryQpi
+ rz4jUYvFVoRFg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F93F1D5591;
+ by isrv.corpit.ru (Postfix) with ESMTP id 348951D5592;
  Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2D80429B26;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B7F06429B27;
  Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9DE0C5A6CD; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id A0FF65A6CF; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 06/49] job: keep job paused across overlapping pause
- requests
-Date: Wed, 16 Sep 2026 10:42:24 +0300
-Message-ID: <20260916074346.671467-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 07/49] tests/unit/test-blockjob: cover keeping a job
+ paused while a pause is pending
+Date: Wed, 16 Sep 2026 10:42:25 +0300
+Message-ID: <20260916074346.671467-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -74,69 +74,145 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-job_pause_point_locked() sets job->paused before yielding and clears it
-unconditionally on wake, before re-checking whether a pause is still
-pending. job_pause() re-enters a parked job only while it is not yet
-paused, so the wake that resumes one comes from a drain *ending*
-(job_resume() -> job_enter_cond()). If the next drain begins before that
-wake runs, the woken coroutine clears job->paused while pause_count is
-already > 0 again:
+Add a regression test for the previous commit. A job that has reached
+its pause point is spuriously re-entered (job_enter()) while a pause is
+still pending (pause_count > 0), reproducing what an overlapping drain
+does: one drain's job_resume() wakes the job while the next drain's
+job_pause() is already counted. The job must stay parked - it must not
+run job code or clear job->paused, or job_set_aio_context() could
+observe paused == false and abort.
 
-  AioContext change (BQL thread)     job coroutine (iothread)
-  -----------------------------      ------------------------
-                                     parked in job_pause_point():
-                                       paused=1, pause_count=1, yielded
-  drain ends -> job_resume():
-    pause_count = 0
-    job_enter_cond(): queue wake ..>   (wake pending)
-  bdrv_try_change_aio_context():
-    bdrv_drain_all_begin():
-      job_pause() per node
-      pause_count = N (> 0)
-                                     wake runs, leaves job_do_yield():
-                                       paused = 0  (pause_count == N)
-    tran_commit -> job_set_aio_context():
-      assert(paused || completed) --> abort: paused == 0
-
-bdrv_try_change_aio_context() drains precisely to quiesce the job before
-changing its AioContext, but that brief paused==0 window trips the
-assertion. It is guest-triggerable: a virtio-blk reset
-(virtio_blk_stop_ioeventfd() -> blk_set_aio_context()) racing a running
-mirror/blockCopy job hits it, as do x-blockdev-set-iothread, blockdev
-hot-plug/unplug and job completion.
-
-Keep job->paused set while a pause is still pending: loop the yield
-until job_should_pause_locked() is false (or the job is cancelled), and
-only then clear job->paused. Drained-state consumers then never observe
-a pending-pause job as unpaused.
+The test counts the job's run-loop iterations: without the fix the
+re-entered job clears job->paused, runs one iteration and re-pauses, so
+the counter advances; with the fix it stays parked and the counter is
+unchanged. It runs in the main AioContext, so job_enter() is synchronous
+and the check is deterministic.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260623152406.1180235-2-den@openvz.org>
+Message-ID: <20260623152406.1180235-3-den@openvz.org>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 2667133c2799f670366b94059cc0513ae57fe8cb)
+(cherry picked from commit 438ee08bc97af48ade6365133f2f5b43d4d788ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/job.c b/job.c
-index 0653bc2ba69..28981e64bd9 100644
---- a/job.c
-+++ b/job.c
-@@ -629,7 +629,14 @@ static void coroutine_fn job_pause_point_locked(Job *job)
-                                     ? JOB_STATUS_STANDBY
-                                     : JOB_STATUS_PAUSED);
-         job->paused = true;
--        job_do_yield_locked(job, -1);
+diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
+index abdbe4b8350..3b77d19b911 100644
+--- a/tests/unit/test-blockjob.c
++++ b/tests/unit/test-blockjob.c
+@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
+     cancel_common(s);
+ }
+ 
++typedef struct PauseCountJob {
++    BlockJob common;
++    int n;
++    bool should_complete;
++} PauseCountJob;
++
++static void pause_count_job_complete(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++    s->should_complete = true;
++}
++
++static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++
++    while (!s->should_complete) {
++        if (job_is_cancelled(&s->common.job)) {
++            return 0;
++        }
++        s->n++;
 +        /*
-+         * Stay paused across back-to-back pause requests: a transient
-+         * paused == false while pause_count > 0 would be observed as
-+         * "not paused" by job_set_aio_context() and other drain consumers.
++         * Yields; while a pause is pending the yield is skipped and the job
++         * parks in job_pause_point() instead.
 +         */
-+        do {
-+            job_do_yield_locked(job, -1);
-+        } while (job_should_pause_locked(job) && !job_is_cancelled_locked(job));
-         job->paused = false;
-         job_state_transition_locked(job, status);
-     }
++        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
++    }
++
++    return 0;
++}
++
++static const BlockJobDriver pause_count_job_driver = {
++    .job_driver = {
++        .instance_size = sizeof(PauseCountJob),
++        .free          = block_job_free,
++        .user_resume   = block_job_user_resume,
++        .run           = pause_count_job_run,
++        .complete      = pause_count_job_complete,
++    },
++};
++
++/*
++ * A job that has reached its pause point must stay paused while a pause is
++ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
++ * drain's job_resume() wakes it while the next drain's job_pause() is already
++ * counted); the job must not run or clear job->paused, otherwise
++ * job_set_aio_context() can observe paused == false and abort.
++ */
++static void test_pause_keeps_paused(void)
++{
++    BlockBackend *blk;
++    BlockJob *bjob;
++    PauseCountJob *s;
++    Job *job;
++    int n0;
++
++    blk = create_blk(NULL);
++    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
++                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
++    s = container_of(bjob, PauseCountJob, common);
++    job = &bjob->job;
++    WITH_JOB_LOCK_GUARD() {
++        job_ref_locked(job);
++    }
++
++    job_start(job);
++
++    /* Pause the running job; it parks in job_pause_point() with paused set. */
++    WITH_JOB_LOCK_GUARD() {
++        job_pause_locked(job);
++        g_assert_true(job->paused);
++        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
++    }
++    n0 = s->n;
++
++    /*
++     * Spurious wake while the pause is still pending. The job must stay parked:
++     * the bug clears job->paused, runs an iteration (s->n advances) and
++     * re-pauses, exposing a paused == false window.
++     */
++    job_enter(job);
++    WITH_JOB_LOCK_GUARD() {
++        g_assert_true(job->paused);
++    }
++    g_assert_cmpint(s->n, ==, n0);
++
++    /* Resume and tear down. */
++    WITH_JOB_LOCK_GUARD() {
++        job_resume_locked(job);
++    }
++    job_cancel_sync(job, true);
++    WITH_JOB_LOCK_GUARD() {
++        Job *dummy = job;
++        job_dismiss_locked(&dummy, &error_abort);
++        job_unref_locked(job);
++    }
++    destroy_blk(blk);
++}
++
+ int main(int argc, char **argv)
+ {
+     qemu_init_main_loop(&error_abort);
+@@ -402,5 +501,6 @@ int main(int argc, char **argv)
+     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
+     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
+     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
++    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
+     return g_test_run();
+ }
 -- 
 2.47.3
 
