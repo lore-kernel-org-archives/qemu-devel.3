@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C6CBC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1419C982C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kLI-0008Lo-FM; Wed, 16 Sep 2026 03:46:11 -0400
+	id 1x6kJi-0004Uq-PW; Wed, 16 Sep 2026 03:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kL8-0008D0-MU; Wed, 16 Sep 2026 03:45:58 -0400
+ id 1x6kJg-0004SM-Uu; Wed, 16 Sep 2026 03:44:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kL6-0005IJ-Vs; Wed, 16 Sep 2026 03:45:58 -0400
+ id 1x6kJc-0004va-9o; Wed, 16 Sep 2026 03:44:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544614; bh=Aa65615ZRMuxQDrc2RZnqcSGzCzsGLLuiRUtWyknYmo=;
+ t=1789544605; bh=wkr2SScfAHSFGujK19QskNfiVQUy+bDd6XfkKA8UHuM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bj87bAHAySo+P9KcAW2lqR+bccM5h4PnRA9RpB2mdc7zl5E9r3phPSngNerowY80T
- qJUD42PEyNzn3RUEN0rDvE3KM8NVbD7ZDdJrWFUbWDOumULFsvPb71uFU8AjsvjLh0
- g56hjjPiIFiBNkn0q/sJVlPjw4Dj56dyhc3pUjsnCoqnuclVyVSNtaISXUPsHCK4bQ
- aXwPhN4FsH2Z+A6vb7IMxMVSrVguTUhyvtsztZc8sCl9+u5oBSN5AfFgbbeHfABcRi
- 498EKCHGL9XNSwZpF0AuJ1J6FXObSY+UCpWleZWzGURkWBwRO5YqIDsZGz6/EcZXYM
- 06vABvyq86zTw==
+ b=HhzciEVLMOC0T8h8T1+OHk+tCD3+mpvTQeJARQo/AZ0ugASkfUvSaAiqdJHmlBfij
+ sf7YDTLaq3CZrP7lzOeSYL8QVMwvdoKJEDUbB/+AlVSi3lKE8CDVWH/AuUrt4V9r+n
+ YiTzf4I2HM2QDdd50OyhV2VN9gzV8wFDsr4/sCOEPukDArNkfg7RrNCYy7PUZbp0p+
+ b77+1GyQZRTOYe2opBf4zYBbeczwKxA/8QkpqRUtmWrJNQcNc6DFf7ajtkiSiXNjuU
+ P2KL4eIN2fI78cbovY2ZwVtZc8LTEE7lCuUixz7c6/JUTPNM5xWRuxenFD2jawuMMm
+ FE0Zyr+85yvag==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA09D1D55A7;
- Wed, 16 Sep 2026 10:43:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 44D951D5595;
+ Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 69DDF429B4E;
- Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C61D6429B2A;
+ Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5AD5F5A6F3; Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
+ id AAA165A6D5; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 25/49] target/arm: Make CBZ/CBNZ UNDEF before v6T2
-Date: Wed, 16 Sep 2026 10:42:43 +0300
-Message-ID: <20260916074346.671467-25-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 10/49] block/monitor: allow dropping a bitmap never
+ stored on disk
+Date: Wed, 16 Sep 2026 10:42:28 +0300
+Message-ID: <20260916074346.671467-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -71,42 +75,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: "Denis V. Lunev" <den@openvz.org>
 
-The Thumb CBZ/CBNZ encodings are only introduced in v6T2 (for
-A-profile) and v7M (for M-profile).  We missed out the feature-check
-in trans_CBZ(), so don't UNDEF on v5T or v6M.  Add the missing check:
-conveniently, the ARM_FEATURE_THUMB2 feature is true for exactly the
-cases where CBZ is implemented.
+block-dirty-bitmap-remove refuses any readonly bitmap outright, via
+the generic BDRV_BITMAP_RO check in bdrv_dirty_bitmap_check(). That
+check cannot tell whether the bitmap is actually on disk, so it also
+blocks dropping one that only ever existed in memory, which needs no
+write at all.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 9ee6e8bb853bde ("ARMv7 support.")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-2-peter.maydell@linaro.org
-(cherry picked from commit c05e01a885811f85c291ffa8513cb1d159b8c8b8)
+Drop the blanket check and let qcow2 decide: bdrv_remove_persistent_
+dirty_bitmap() already treats an absent on-disk entry as a no-op, so
+such a bitmap is now released with no write attempted. For one that
+is genuinely stored, qcow2_co_remove_persistent_dirty_bitmap_locked()
+now checks can_write() before it would update the on-disk directory,
+so removal still fails there, with a message naming the actual
+reason instead of just the bitmap's readonly flag.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Eric Blake <eblake@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260716112242.3000035-4-den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 9a77ef813f5f915bda408f4e53c11d0ca17c5d70)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 426445ae69a..752f80b519b 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6991,7 +6991,14 @@ static bool trans_TBH(DisasContext *s, arg_tbranch *a)
+diff --git a/block/monitor/bitmap-qmp-cmds.c b/block/monitor/bitmap-qmp-cmds.c
+index d87ca982aa9..aabf2790b67 100644
+--- a/block/monitor/bitmap-qmp-cmds.c
++++ b/block/monitor/bitmap-qmp-cmds.c
+@@ -165,11 +165,11 @@ BdrvDirtyBitmap *block_dirty_bitmap_remove(const char *node, const char *name,
+         return NULL;
+     }
  
- static bool trans_CBZ(DisasContext *s, arg_CBZ *a)
- {
--    TCGv_i32 tmp = load_reg(s, a->rn);
-+    TCGv_i32 tmp;
-+
-+    /* CBZ was introduced in v6T2 and v7M */
-+    if (!arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        return false;
+-    if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_BUSY | BDRV_BITMAP_RO,
+-                                errp)) {
++    if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_BUSY, errp)) {
+         return NULL;
+     }
+ 
++    /* Dropping a bitmap needs no write access unless it is actually stored. */
+     if (bdrv_dirty_bitmap_get_persistence(bitmap) &&
+         bdrv_remove_persistent_dirty_bitmap(bs, name, errp) < 0)
+     {
+diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+index 256ec998788..ac5a7245885 100644
+--- a/block/qcow2-bitmap.c
++++ b/block/qcow2-bitmap.c
+@@ -1487,6 +1487,15 @@ int coroutine_fn qcow2_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
+         goto out;
+     }
+ 
++    if (!can_write(bs)) {
++        error_setg(errp, "Cannot remove persistent bitmap '%s': "
++                   "no write access to node '%s'", name,
++                   bdrv_get_node_name(bs));
++        ret = -EACCES;
++        bm = NULL;
++        goto out;
 +    }
 +
-+    tmp = load_reg(s, a->rn);
+     QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
  
-     arm_gen_condlabel(s);
-     tcg_gen_brcondi_i32(a->nz ? TCG_COND_EQ : TCG_COND_NE,
+     ret = update_ext_header_and_dir(bs, bm_list);
+diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
+index fe105fe0a38..628fa737d97 100644
+--- a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
++++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
+@@ -1,6 +1,6 @@
+ Trying to remove persistent bitmap from r-o base node, should fail:
+ {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
+-{"error": {"class": "GenericError", "desc": "Bitmap 'bitmap0' is readonly and cannot be modified"}}
++{"error": {"class": "GenericError", "desc": "Cannot remove persistent bitmap 'bitmap0': no write access to node 'base'"}}
+ Remove persistent bitmap from base node reopened to RW:
+ {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
+ {"return": {}}
 -- 
 2.47.3
 
