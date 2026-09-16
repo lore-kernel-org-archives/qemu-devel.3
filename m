@@ -4,81 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BBDC88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6386C982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6u81-0003gS-Hf; Wed, 16 Sep 2026 14:13:05 -0400
+	id 1x6uL0-0005VY-Ik; Wed, 16 Sep 2026 14:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6u7z-0003ft-5O
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:13:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6u7w-0005Ti-Bj
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:13:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789582377;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QXH7k6JNHTLZhRW14ruEsP3wRtHT0wa1ys334Qv3x1I=;
- b=i2eta966TDopyBhcxbYcbGVAic5WYvOtuR7Q2EJr+/8mofQA6GCAXvICuSl/bjV6u2o+yR
- LQav0976aaiSMJvyc4P48+wsFXXFW1cpX9dqbcp9Dn3gM1j/Z6GNLyWtkmARhdC71S8H6l
- 4ZhlcgdKCPFHOiSQEkcoQ0OjBNUpJa0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-w5dPXNaWO5GdxH5nCepoJg-1; Wed,
- 16 Sep 2026 14:12:56 -0400
-X-MC-Unique: w5dPXNaWO5GdxH5nCepoJg-1
-X-Mimecast-MFC-AGG-ID: w5dPXNaWO5GdxH5nCepoJg_1789582371
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6uJy-0005Rr-TE
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:25:36 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6uJw-0007jR-W7
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:25:26 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E11218A6970; Wed, 16 Sep 2026 18:12:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E543300418B; Wed, 16 Sep 2026 18:12:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1F58B21E6A04; Wed, 16 Sep 2026 20:12:47 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Peter Xu
- <peterx@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Jonathan Cameron
- <jic23@kernel.org>,  Eric Blake <eblake@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  linux-cxl@vger.kernel.org,
- qemu-block@nongnu.org,  Junjie Cao <junjie.cao@intel.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Hanna Reitz <hreitz@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Jason Wang <jasowangio@gmail.com>
-Subject: Re: [PATCH v4 7/7] qapi: convert intro sections followed by
- notes/examples
-In-Reply-To: <20260916135841.3614495-8-jsnow@redhat.com> (John Snow's message
- of "Wed, 16 Sep 2026 09:58:41 -0400")
-References: <20260916135841.3614495-1-jsnow@redhat.com>
- <20260916135841.3614495-8-jsnow@redhat.com>
-Date: Wed, 16 Sep 2026 20:12:47 +0200
-Message-ID: <877bkl6p5s.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 12B541FEEE;
+ Wed, 16 Sep 2026 18:25:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789583115; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
+ b=ok3ammhry7ch3JuhWsZx3z1kp7Ag+6c8U6JDZlL7GJMjl+D0TlblGM7Lg+2rUan1Ybt0nU
+ KSfusnHtAzYK0+QPjvHA2yky7kbjvAsrAmk7iqt4rHsTEqx2GvmHyXFgBVnn/qsMVyiAsY
+ x1UhZfjgxSaOQaPKXnmoMDXW8Ei96AU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789583115;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
+ b=MOy5SD7HAfTLRzvyPjAJGg3KnmihqghEZeFMOS/rZnn0egOcle/x2kyS8oFsWINDOg9wJo
+ FOAsZWRIZLsHI1Cw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1789583111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
+ b=tQNdKNGwLrHnJCtSVoZJFuvRlFLZCxu5zgi/TfbNHBdPBBvte9MAV7nMSDKOtLMai/vmLn
+ yVnNfBM8peKVUgM+mJ6IyEcAjSzRYl81gm31wgCqzywToobm+JFW3Uiya/yV/K3i8LwxkV
+ TSNkaFdwrDlqK3OlIVWFZiShkS4YjIA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1789583111;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
+ b=v9jMA1/HaFbPDAeDN/0mbKhzci9Sqs3hp8hFRW3606epIFTHewMjIZ/bzkb/fdqDJ8/yS0
+ ka9coCgMVe0qRJBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 891C0136A5;
+ Wed, 16 Sep 2026 18:25:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qq7VCwbfqmrFWwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 16 Sep 2026 18:25:10 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: den@openvz.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Peter Xu <peterx@redhat.com>, Mark Kanda <mark.kanda@oracle.com>, Ben
+ Chaney <bchaney@akamai.com>, Steve Sistare <steven.sistare@oracle.com>
+Subject: Re: [PATCH 1/1] migration/cpr: lock the cpr state
+In-Reply-To: <20260916132428.1628553-1-den@openvz.org>
+References: <20260916132428.1628553-1-den@openvz.org>
+Date: Wed, 16 Sep 2026 15:25:04 -0300
+Message-ID: <87y0d1rr3z.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email, akamai.com:email, suse.de:mid,
+ suse.de:email, openvz.org:email, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,91 +116,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+"Denis V. Lunev" <den@openvz.org> writes:
 
-> These provide a rather natural cutoff point, but technically this does
-> introduce a new intro/details split to these documentation blocks.
-
-Not sure what you mean by "technically".
-
+> From: Denis V. Lunev <den@openvz.org>
 >
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> The cpr state is a process wide registry of the resources that have to
+> survive an exec. Entries are added and dropped from realize and teardown
+> paths all over the tree, and a caller has no way to tell which thread the
+> next caller will run in.
+>
+> The state carries no serialization of its own. It is safe today only
+> because its callers happen to hold the BQL, and that is a property of
+> where those callers live rather than anything the interface promises or
+> checks. A caller that is correct within its own subsystem can therefore
+> break this one from a distance: two that overlap corrupt the registry,
+> and the next lookup walks an entry that has already been freed.
+>
+> Give the state a lock of its own instead of relying on that. Entries
+> move when a device is realized, when a resource is handed over, and when
+> a migration starts, so none of this is on a hot path and an uncontended
+> mutex costs nothing.
+>
+> Take the lock in every accessor and across the save and load walks.
+> Holding it over the walk callbacks is safe because none of them comes
+> back through this interface. State that is not reached through these
+> accessors, such as the VFIO device list that hw/vfio manipulates
+> directly, stays outside it.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Mark Kanda <mark.kanda@oracle.com>
+> Cc: Ben Chaney <bchaney@akamai.com>
+> Cc: Steve Sistare <steven.sistare@oracle.com>
 > ---
->  qapi/machine.json   |  5 ++---
->  qapi/migration.json | 15 +++++++--------
->  qapi/misc.json      |  3 +--
->  qapi/run-state.json |  7 +++----
->  4 files changed, 13 insertions(+), 17 deletions(-)
+>  migration/cpr.c | 59 ++++++++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 49 insertions(+), 10 deletions(-)
 >
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 84d95c8d87f..276258d9e5c 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -1209,9 +1209,8 @@
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index bca43e9bf3..503057e262 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -9,6 +9,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+> +#include "qemu/lockable.h"
+>  #include "hw/vfio/vfio-cpr.h"
+>  #include "migration/cpr.h"
+>  #include "migration/misc.h"
+> @@ -26,6 +27,14 @@
+>  CprState cpr_state;
+>  static GHashTable *cpr_fds_hash;
 >  
->  ##
->  # @HV_BALLOON_STATUS_REPORT:
-> -#
-> -# Emitted when the hv-balloon driver receives a "STATUS" message from
-> -# the guest.
-> +#     Emitted when the hv-balloon driver receives a "STATUS" message
-> +#     from the guest.
->  #
->  # .. note:: This event is rate-limited.
->  #
-   # Since: 8.2
-
-The patch splits the first section between after the first paragraph,
-i.e. before the note.
-
-This matters, because we insert generated argument documentation after
-the first section.  Rendered documentation changes like this
-
-    Emitted when the hv-balloon driver receives a "STATUS" message from
-    the guest.
- 
-+   Members:
-+      * The members of "HvBalloonInfo".
-+
-    Note:
- 
-      This event is rate-limited.
- 
--   Members:
--      * The members of "HvBalloonInfo".
--
-    Example::
- 
-       <- { "event": "HV_BALLOON_STATUS_REPORT",
-
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index d571c06fc20..a272e701385 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1254,10 +1254,10 @@
+> +/* Callers are spread across the tree and need not share a thread. */
+> +static QemuMutex cpr_fds_lock;
+> +
+> +static void __attribute__((constructor)) cpr_fds_lock_init(void)
+> +{
+> +    qemu_mutex_init(&cpr_fds_lock);
+> +}
+> +
+>  /****************************************************************************/
 >  
->  ##
->  # @migrate_cancel:
-> -#
-> -# Cancel the currently executing migration process.  Allows a new
-> -# migration to be started right after.  When postcopy-ram is in use,
-> -# cancelling is not allowed after the postcopy phase has started.
-> +#     Cancel the currently executing migration process.  Allows a new
-> +#     migration to be started right after.  When postcopy-ram is in
-> +#     use, cancelling is not allowed after the postcopy phase has
-> +#     started.
->  #
->  # .. note:: This command succeeds even if there is no migration
->  #    process running.
+>  typedef struct CprFd {
+> @@ -94,6 +103,8 @@ static int cpr_fd_pre_save(void *opaque)
+>      GHashTableIter iter;
+>      CprFd *elem;
+>  
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+>      QLIST_INIT(&state->fds);
+>  
+>      g_hash_table_iter_init(&iter, get_cpr_fds_hash());
+> @@ -109,6 +120,8 @@ static int cpr_fd_post_load(void *opaque, int version_id)
+>      CprState *state = (CprState *)opaque;
+>      CprFd *elem;
+>  
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+>      while ((elem = QLIST_FIRST(&state->fds))) {
+>          QLIST_REMOVE(elem, next);
+>  
+> @@ -127,7 +140,7 @@ static int cpr_fd_post_load(void *opaque, int version_id)
+>      return 0;
+>  }
+>  
+> -void cpr_save_fd(const char *name, int id, int fd)
+> +static void do_cpr_save_fd(const char *name, int id, int fd)
+>  {
+>      CprFd *elem = g_new0(CprFd, 1);
+>  
+> @@ -139,6 +152,13 @@ void cpr_save_fd(const char *name, int id, int fd)
+>      cpr_fd_hash_insert(elem);
+>  }
+>  
+> +void cpr_save_fd(const char *name, int id, int fd)
+> +{
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+> +    do_cpr_save_fd(name, id, fd);
+> +}
+> +
+>  static CprFd *find_fd(const char *name, int id)
+>  {
+>      CprFd key = {
+> @@ -149,6 +169,15 @@ static CprFd *find_fd(const char *name, int id)
+>      return g_hash_table_lookup(get_cpr_fds_hash(), &key);
+>  }
+>  
+> +static int do_cpr_find_fd(const char *name, int id)
+> +{
+> +    CprFd *elem = find_fd(name, id);
+> +    int fd = elem ? elem->fd : -1;
+> +
+> +    trace_cpr_find_fd(name, id, fd);
+> +    return fd;
+> +}
+> +
+>  void cpr_delete_fd(const char *name, int id)
+>  {
+>      CprFd key = {
+> @@ -156,6 +185,8 @@ void cpr_delete_fd(const char *name, int id)
+>          .id = id,
+>      };
+>  
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+>      g_hash_table_remove(get_cpr_fds_hash(), &key);
+>  
+>      trace_cpr_delete_fd(name, id);
+> @@ -163,20 +194,23 @@ void cpr_delete_fd(const char *name, int id)
+>  
+>  int cpr_find_fd(const char *name, int id)
+>  {
+> -    CprFd *elem = find_fd(name, id);
+> -    int fd = elem ? elem->fd : -1;
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+>  
+> -    trace_cpr_find_fd(name, id, fd);
+> -    return fd;
+> +    return do_cpr_find_fd(name, id);
+>  }
+>  
+>  void cpr_resave_fd(const char *name, int id, int fd)
+>  {
+> -    CprFd *elem = find_fd(name, id);
+> -    int old_fd = elem ? elem->fd : -1;
+> +    CprFd *elem;
+> +    int old_fd;
+> +
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+> +    elem = find_fd(name, id);
+> +    old_fd = elem ? elem->fd : -1;
+>  
+>      if (old_fd < 0) {
+> -        cpr_save_fd(name, id, fd);
+> +        do_cpr_save_fd(name, id, fd);
+>      } else if (old_fd != fd) {
+>          error_report("internal error: cpr fd '%s' id %d value %d "
+>                       "already saved with a different value %d",
+> @@ -188,12 +222,15 @@ void cpr_resave_fd(const char *name, int id, int fd)
+>  int cpr_open_fd(const char *path, int flags, const char *name, int id,
+>                  Error **errp)
+>  {
+> -    int fd = cpr_find_fd(name, id);
+> +    int fd;
+>  
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+> +    fd = do_cpr_find_fd(name, id);
+>      if (fd < 0) {
+>          fd = qemu_open(path, flags, errp);
+>          if (fd >= 0) {
+> -            cpr_save_fd(name, id, fd);
+> +            do_cpr_save_fd(name, id, fd);
+>          }
+>      }
+>      return fd;
+> @@ -204,6 +241,8 @@ bool cpr_walk_fd(cpr_walk_fd_cb cb)
+>      GHashTableIter iter;
+>      CprFd *elem;
+>  
+> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
+> +
+>      g_hash_table_iter_init(&iter, get_cpr_fds_hash());
+>      while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
+>          g_assert(elem->fd >= 0);
 
-Similar split, but rendered documentation doesn't change, because
-nothing gets inserted.
-
-Same for the remaining hunks.
-
-Should the one hunk that changes rendered documentation be in the "qapi:
-convert/split remaining QAPI/QMP intro sections" series?
-
-[...]
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
