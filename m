@@ -4,115 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353A1C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53660C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kqL-0001kr-60; Wed, 16 Sep 2026 04:18:13 -0400
+	id 1x6ktX-0002ZO-DX; Wed, 16 Sep 2026 04:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x6kqG-0001kW-0Q
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:18:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x6ktW-0002ZG-67
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:21:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x6kqC-0000Al-Qd
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:18:07 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x6ktU-0000ux-JO
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:21:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789546683;
+ s=mimecast20190719; t=1789546887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qfjNHRQkFwrTeCqysdjoBYns8txaeAKMSx5QhQnqGDk=;
- b=Y7SnGkcsJgUSu1KVZngNSArJkQz4djylQqKL1YfYZ5Bjfz4DZWnVBVbhFvASXpACcYRGvk
- DQbyK6pMe7ZmQ1fDG3s9nuMV0yzwK3sBySUxAdNPmgLZo3byUJRQcocKPWYUMKN9AGSrCc
- oq3AA3Cw6JctMfMzGGPl2nnnFb4eWEg=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SGeYSlCdtXd2a7KFnNvbzzuAVmS1KQhOtuQO/61RVRo=;
+ b=D/iq7OBlDo/zNOBVq836MtTH0GGXxKVqNrovMH8xoLmLOu3/bqsrk2HMFPWYHI2SkX+tPb
+ UvvgBfNw/xQpa66KKKRR6sB5Hf9GgbMX7BQluY8DgqhcY9wJ5bO0kakNaiosMCWxbmu8k/
+ /HioSbTK6C9jVP2SjUAUlmlffxa8jLs=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-RAvW80m0NC-8GD022Jhbgg-1; Wed, 16 Sep 2026 04:18:01 -0400
-X-MC-Unique: RAvW80m0NC-8GD022Jhbgg-1
-X-Mimecast-MFC-AGG-ID: RAvW80m0NC-8GD022Jhbgg_1789546681
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-6a9a19c8bdbso2914009a12.1
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:18:01 -0700 (PDT)
+ us-mta-629-KwqfYHYoO3unVP1N3gnwJg-1; Wed, 16 Sep 2026 04:21:26 -0400
+X-MC-Unique: KwqfYHYoO3unVP1N3gnwJg-1
+X-Mimecast-MFC-AGG-ID: KwqfYHYoO3unVP1N3gnwJg_1789546885
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c29959eb71fso360624666b.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789546680; x=1790151480; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789546885; x=1790151685; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=qfjNHRQkFwrTeCqysdjoBYns8txaeAKMSx5QhQnqGDk=;
- b=kgl0E+96Sdo3LwzgPZmegD4wIMIZ+m/mIvHJaJ60hpWpy3Rd6iql373XpwdT/o4n1a
- SyMndmgXUhmSIIrEdLS4kdFOosqjTK05yq3UA848r4f5MyeVyd3uv/BYFdvlyifhJomj
- JiaabABGXZBimLKdT9Gu838njth3g8lpWco6gw7bMejtmMoag2sDMI3nPUKhwe5Ww12i
- 3OtYOBMEdoAgciF9qaevXRweSNXxCOczSKelxM3reoBrT/hUI2SeTa3YE5g3rmqgmaO3
- /lm1LQPgK9VfG+1m61jbFGh/oCRMPO37xUKxWJPp2VXCU/66lS6b1E6go18XpdaeCepR
- yOiA==
+ :content-type; bh=SGeYSlCdtXd2a7KFnNvbzzuAVmS1KQhOtuQO/61RVRo=;
+ b=S8uh2nSZbsxCRopaqEHEBzrvvFaNk/LxaJdfvFLQPSr+2VDeuRbherj/4yKAWXFlc8
+ A42/wXw7lULW2SN4bHkSwg7UlynIXG28rELl4XDCBf5w1mHxvYP76Xn8Cwol8GayvR80
+ 23qsYbFL7M0XePKwU74o6NxlLnTZtc0GNqJF5g+riwiPPoUvwEe50RuQOhvOCqDlIoEx
+ /CB9dwQE92xXo901uF0+xUoc39f73PXrIV2o4DfWHyG7mykF+BFuaCaAIctF49WAaJw3
+ LgWNGkAFEWhce3psW799svQkcnbq4O6Tx0mZcF5ytcZKBjbH+ZIWo3ad/9L7TUDR9sL8
+ wFSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789546680; x=1790151480;
+ d=1e100.net; s=20260707; t=1789546885; x=1790151685;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qfjNHRQkFwrTeCqysdjoBYns8txaeAKMSx5QhQnqGDk=;
- b=Mn2fbVSOc5wkGhVWQSw7pCVl2fuR8cr47QolJpEx2ZPHk/ZUyBeSBfvxAxU+Yr/6da
- 7Cur3vzfW4WkDIBn1ELQAHnBGxkTVEsNy4USCsOC7pqeV4rqs524oQquao/A5tGjQzwV
- 4BF8XgCZHOeQYXkh8/h1dq4rkUNToOrnmxPs7sL0TWzPCORU5T/ByjGwPk0dYFCCTPBV
- 5zZdCZy6yxIgiRmTEpZVYhxyVT4aKXVvxrkeul/t+JtPce7Uky5n3Pzh6xZU9W0aFYfi
- 7XQOET0uWsN6f78c+fTodUbcKGSQ4+ou1r+Rt+PlfVjWsqM4RcCYJQps7Ra/JMM85/rh
- dcbw==
+ bh=SGeYSlCdtXd2a7KFnNvbzzuAVmS1KQhOtuQO/61RVRo=;
+ b=kNP/mJwr7DEOmxtwnldIxLm21S9/CLXS0Nk/4X7n7p6ilBAABdDlrH0HEfh7t8N3ns
+ lno8hoOgBrzHG4CrCwyNYNHalcfJfmtRMCbf+jSLLckRz6KU8jVw5083fGUUV476xGzw
+ 3HediIikoNAezTzOiMu7s3OSe56KGD/bzxa40tIUA2cQn3gDjydl/HgiTgylDpj6PJmf
+ VTB8/u6nMZvLiJKpQYRa1BB1oM+90guK0+25jX0OCnTL6NT52iBhybS6RV0E0i6pUOkI
+ uVr448RrdSQv/nhWG4CYVTOSD/F1PWRJucWzcCdoARMUz3gckX2tngvZ7jLfVDhjV/Pg
+ bHQQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxb58c+FEI9pz+JVFCG8KFUN5t4zocJd0spaogUZJr20hKoG/A0tpB2rFFBgWnsIZhh02QSox/nebOa@nongnu.org
-X-Gm-Message-State: AFuF++lF+Bxbruje1qFvVxg068YQzT62AYfXbOmb8A5AgTiw9orXpNB9
- MWG0u0i2JjZhJ8jfuJRjWivsi45bX4po6mkbPUw/aRNKpvjO+IWSnZStbVfNISvdDOyl/fILjGh
- WIu+lPeCwvJgoodTcrfXy1rd2EFzgykwNHRQM9QvVfoY5Qy5lZFEAX7BH
-X-Gm-Gg: AYBFou2I/NbFOAJE1ec4ALXEU0nTM7CQsgcaCxr+MNKJ69espqB5MyS0PEhuwQzHJo8
- 3dZ5bNwhfJh8rG2kZO4aN4tUTSHED/GQIEzQsU5cAXwK/bifS16mNrbbIUL4WBse9ZlDpuE/Ey+
- KRnFigGeCk43pGdz4xbzmI4+B8GDbBe4J2RS91VZI5b4BN0dHMvH3wIaZEZHQ8Z8uaFq2Rj0Y5H
- hLLdTr9CH8OFwrpFLSlz8oIMMI6rGiLjmKeiIHGqjLUgZ2MxZ/TyQ+89iKtRySMWHHZL2XlVrub
- afwesOXXCRZR8B2XJ0kSNyD7PZz9X9PIN/T3gGYpjNO+fz2aQ3lksSZOuRS8GCVoub357Rwq/Kt
- GEXlEkJWhsoF9LzmPhnj/TbSYWpKJZ+C5ID1HpNXbi+uDYNCLwtFqO/VVUxuE+fVlmQ2fwunBOi
- 1A1JiloCHs2LYShBZExWS5Y3WL7f8=
-X-Received: by 2002:a05:6402:2747:b0:69e:2ca5:53bb with SMTP id
- 4fb4d7f45d1cf-6aa22681579mr1213540a12.0.1789546680607; 
- Wed, 16 Sep 2026 01:18:00 -0700 (PDT)
-X-Received: by 2002:a05:6402:2747:b0:69e:2ca5:53bb with SMTP id
- 4fb4d7f45d1cf-6aa22681579mr1213517a12.0.1789546680171; 
- Wed, 16 Sep 2026 01:18:00 -0700 (PDT)
+ AKwUvBzAwWlwldiKbRK6DFzLDq9ohUeD4208Q087mAhq/kYuDbiItc8fRwLahJr52gRcpicezULPIXbTD/he@nongnu.org
+X-Gm-Message-State: AFuF++k8lBgoc6HT+wTg6DPR/z3ulE61DCe/SjMyaiojy9Yz/Ie3l9Us
+ E7R4EwivArKcuiTNkT0jBNT/BIVcMjmmDCRvOaTxRCiJ3pJgdT6+dECbulZHHNHVF6ZOIGghrUv
+ umuBgwzc7PMkdGWtMmdryNSaMDGD4NnGB1V6hvSLKp8+pmkjiLDtf3gON
+X-Gm-Gg: AYBFou34SW7TVtE77uaCdsjsvkcXdDWoVK6mnjGhuVaSmKqBHIdrWHT3oD3d9L+9fcf
+ 6H053oTFntsi2xZUxAiNNiEJTuwpMMpP/zzP+6mculjSEP6IACosL5xVNqrm8FWMNuwenBPBc81
+ 0Th9IvO01Zx0gXKVwp5CHdV76R+CrTuIY+W6mir2qQ7qRNVCDChmUAr+5cyEb1FHwnnu1wBV/xC
+ Hr79e9vDfnoLcpQDh2LQCLGFmxbX8muKERO0b146nNNo+WYcU1wzcymVbCWIJ0QCDx19jrlTJev
+ WywW4xcvfwI5USQN9a9TPnkvJMwA0MB/1dMWKeA9jmhnzGxeDJ+BeKyYinHz27END75Cv8Azqgx
+ 3oAxmy+hFU15dobOIQrHl5q7oeBLBpbRD5ZnUI7fD7dEerL7Yz1yd+5mdjtynwCOb8Zc+05GUVR
+ aD3StKLVxxAodPmR6x3TvQldk8WaQ=
+X-Received: by 2002:a17:907:d64a:b0:c1f:1520:4de5 with SMTP id
+ a640c23a62f3a-c29e51dc0ebmr100261566b.1.1789546885071; 
+ Wed, 16 Sep 2026 01:21:25 -0700 (PDT)
+X-Received: by 2002:a17:907:d64a:b0:c1f:1520:4de5 with SMTP id
+ a640c23a62f3a-c29e51dc0ebmr100259166b.1.1789546884656; 
+ Wed, 16 Sep 2026 01:21:24 -0700 (PDT)
 Received: from ?IPV6:2003:cf:d704:f6c1:9398:5dbc:cc8:753b?
  (p200300cfd704f6c193985dbc0cc8753b.dip0.t-ipconnect.de.
  [2003:cf:d704:f6c1:9398:5dbc:cc8:753b])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aa1d228bccsm1142856a12.7.2026.09.16.01.17.58
+ a640c23a62f3a-c29de5bb4acsm80120666b.41.2026.09.16.01.21.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Sep 2026 01:17:59 -0700 (PDT)
-Message-ID: <cc6bfc83-457e-40c3-a263-0cde3c65f5d3@redhat.com>
-Date: Wed, 16 Sep 2026 10:17:55 +0200
+ Wed, 16 Sep 2026 01:21:24 -0700 (PDT)
+Message-ID: <292ff2f9-b3fe-423b-9b36-ada26904a617@redhat.com>
+Date: Wed, 16 Sep 2026 10:21:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] block: Add delay-alert-ms property
+Subject: Re: [PATCH 8/9] block/accounting: Move latency_ns override down
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
  "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
 References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260831135206.126184-8-hreitz@redhat.com> <20260903143055.GE825275@fedora>
+ <20260831135206.126184-9-hreitz@redhat.com> <20260903150842.GF825275@fedora>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260903143055.GE825275@fedora>
+In-Reply-To: <20260903150842.GF825275@fedora>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,433 +128,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.09.26 16:30, Stefan Hajnoczi wrote:
-> On Mon, Aug 31, 2026 at 03:52:03PM +0200, Hanna Czenczek wrote:
->> This device property allows setting up an I/O latency threshold for when
->> to emit a delay QMP event.
->>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
->> ---
->>   include/hw/block/block.h   |  5 ++++-
->>   blockdev.c                 | 16 +++++++++++++++-
->>   hw/block/block.c           |  4 +++-
->>   tests/qemu-iotests/172.out | 38 ++++++++++++++++++++++++++++++++++++++
->>   4 files changed, 60 insertions(+), 3 deletions(-)
->>
->> diff --git a/include/hw/block/block.h b/include/hw/block/block.h
->> index df941df19f2..e7e401dd303 100644
->> --- a/include/hw/block/block.h
->> +++ b/include/hw/block/block.h
->> @@ -36,6 +36,7 @@ typedef struct BlockConf {
->>       BlockdevOnError werror;
->>       uint32_t num_stats_intervals;
->>       uint32_t *stats_intervals;
->> +    uint32_t delay_alert_ms;
->>   } BlockConf;
->>   
->>   static inline unsigned int get_physical_block_exp(BlockConf *conf)
->> @@ -83,7 +84,9 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
->>                               _conf.account_failed, ON_OFF_AUTO_AUTO),    \
->>       DEFINE_PROP_ARRAY("stats-intervals", _state,                        \
->>                        _conf.num_stats_intervals, _conf.stats_intervals,  \
->> -                     qdev_prop_uint32, uint32_t)
->> +                     qdev_prop_uint32, uint32_t),                       \
->> +    DEFINE_PROP_UINT32("delay-alert-ms", _state, _conf.delay_alert_ms,  \
->> +                       0)                                               \
-> The latency histogram feature uses nanoseconds (64-bit integer) whereas
-> this patch series uses delay-alert-ms (uint32) and a double
-> floating-point seconds value in the QMP event. Maybe stick to 64-bit
-> integer nanoseconds everywhere for consistency?
+On 03.09.26 17:08, Stefan Hajnoczi wrote:
+> On Mon, Aug 31, 2026 at 03:52:04PM +0200, Hanna Czenczek wrote:
+>> I am not quite sure why `latency_ns` is overridden by a fixed value in
+>> qtest mode because personally, I find it much better if I can
+>> individually change requests' latency by modifying the qtest clock.
+> It looks like tests/qemu-iotests/136 relies on a hardcoded constant so
+> it can check min/max/avg against known values.
+>
+>> But I'm not going to change existing behavior for the histogram and
+>> such, so I will just move this override after the latency has been
+>> evaluated regarding a potential BLOCK_IO_DELAY event.
+> That's fine if you aren't taking the same testing approach as
+> tests/qemu-iotests/136. I think the benefit of hardcoding the value for
+> testing is that it would become possible to trigger the latency
+> threshold without worrying about timing in the test environment.
 
-I don’t have technical objections because doing so is easy, of course. 
-Personally, I found nanoseconds really unwieldy to specify here. But I 
-suppose if @block-latency-histogram-set does the same, then I might as well.
+FWIW, as far as I understand, in qtest mode, `clock_type` is 
+`QEMU_CLOCK_VIRTUAL`, so it is not dependent on the test environment 
+anyway, but on the qtest clock. That’s why I don’t understand the fixed 
+latency value, but maybe it was just easier this way for 136 because 
+this way it does not have to do a clock_step for each request.
 
 Hanna
 
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> ---
+>>   block/accounting.c | 8 ++++----
+>>   1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/block/accounting.c b/block/accounting.c
+>> index debf1924455..223becd2e04 100644
+>> --- a/block/accounting.c
+>> +++ b/block/accounting.c
+>> @@ -271,10 +271,6 @@ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
+>>       int64_t time_ns = qemu_clock_get_ns(clock_type);
+>>       int64_t latency_ns = time_ns - cookie->start_time_ns;
 >>   
->>   #define DEFINE_BLOCK_PROPERTIES(_state, _conf)                          \
->>       DEFINE_PROP_DRIVE("drive", _state, _conf.blk),                      \
->> diff --git a/blockdev.c b/blockdev.c
->> index 195bac8af01..9c76e89ef38 100644
->> --- a/blockdev.c
->> +++ b/blockdev.c
->> @@ -496,6 +496,7 @@ static BlockBackend *blockdev_init(const char *file, QDict *bs_opts,
->>       BlockdevDetectZeroesOptions detect_zeroes =
->>           BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF;
->>       const char *throttling_group = NULL;
->> +    uint64_t delay_alert_ns;
+>> -    if (qtest_enabled()) {
+>> -        latency_ns = qtest_latency_ns;
+>> -    }
+>> -
+>>       assert(cookie->type < BLOCK_MAX_IOTYPE);
 >>   
->>       /* Check common options by copying from bs_opts to opts, all other options
->>        * stay in bs_opts for processing by bdrv_open(). */
->> @@ -580,6 +581,14 @@ static BlockBackend *blockdev_init(const char *file, QDict *bs_opts,
->>   
->>       read_only = qemu_opt_get_bool(opts, BDRV_OPT_READ_ONLY, false);
->>   
->> +    delay_alert_ns = qemu_opt_get_number(opts, "delay-alert-ms", 0);
->> +    if (delay_alert_ns > (uint64_t)INT64_MAX / SCALE_MS) {
->> +        error_setg(errp, "delay-alert-ms must not exceed %" PRId64,
->> +                   INT64_MAX / SCALE_MS);
->> +        goto early_err;
->> +    }
->> +    delay_alert_ns *= SCALE_MS;
->> +
->>       /* init */
->>       if ((!file || !*file) && !qdict_size(bs_opts)) {
->>           BlockBackendRootState *blk_rs;
->> @@ -618,7 +627,7 @@ static BlockBackend *blockdev_init(const char *file, QDict *bs_opts,
->>           bs->detect_zeroes = detect_zeroes;
->>   
->>           block_acct_setup(blk_get_stats(blk), account_invalid, account_failed,
->> -                         NULL, 0, 0, NULL);
->> +                         NULL, 0, delay_alert_ns, NULL);
->>   
->>           if (!parse_stats_intervals(blk_get_stats(blk), interval_list, errp)) {
->>               blk_unref(blk);
->> @@ -3753,6 +3762,11 @@ QemuOptsList qemu_common_drive_opts = {
->>               .type = QEMU_OPT_BOOL,
->>               .help = "whether to account for failed I/O operations "
->>                       "in the statistics",
->> +        },{
->> +            .name = "delay-alert-ms",
->> +            .type = QEMU_OPT_NUMBER,
->> +            .help = "threshold in ms when to emit an I/O operation "
->> +                    "delay QMP event",
->>           },
->>           { /* end of list */ }
->>       },
->> diff --git a/hw/block/block.c b/hw/block/block.c
->> index 19301c6f995..be0ea89cb79 100644
->> --- a/hw/block/block.c
->> +++ b/hw/block/block.c
->> @@ -207,6 +207,7 @@ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
->>       BlockBackend *blk = conf->blk;
->>       BlockdevOnError rerror, werror;
->>       uint64_t perm, shared_perm;
->> +    uint64_t delay_alert_ns;
->>       bool wce;
->>       int ret;
->>   
->> @@ -249,9 +250,10 @@ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
->>       blk_set_enable_write_cache(blk, wce);
->>       blk_set_on_error(blk, rerror, werror);
->>   
->> +    delay_alert_ns = (uint64_t)conf->delay_alert_ms * SCALE_MS;
->>       if (!block_acct_setup(blk_get_stats(blk), conf->account_invalid,
->>                             conf->account_failed, conf->stats_intervals,
->> -                          conf->num_stats_intervals, 0, errp)) {
->> +                          conf->num_stats_intervals, delay_alert_ns, errp)) {
->>           return false;
+>>       if (cookie->type == BLOCK_ACCT_NONE) {
+>> @@ -292,6 +288,10 @@ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
+>>                                          cookie->bytes);
 >>       }
->>       return true;
->> diff --git a/tests/qemu-iotests/172.out b/tests/qemu-iotests/172.out
->> index a023cd407de..ea6a1875eb3 100644
->> --- a/tests/qemu-iotests/172.out
->> +++ b/tests/qemu-iotests/172.out
->> @@ -31,6 +31,7 @@ Testing:
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
 >>   
->>   
->> @@ -61,6 +62,7 @@ Testing: -fda TEST_DIR/t.qcow2
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -98,6 +100,7 @@ Testing: -fdb TEST_DIR/t.qcow2
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -113,6 +116,7 @@ Testing: -fdb TEST_DIR/t.qcow2
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>   floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -154,6 +158,7 @@ Testing: -fda TEST_DIR/t.qcow2 -fdb TEST_DIR/t.qcow2.2
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -169,6 +174,7 @@ Testing: -fda TEST_DIR/t.qcow2 -fdb TEST_DIR/t.qcow2.2
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -211,6 +217,7 @@ Testing: -fdb
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -226,6 +233,7 @@ Testing: -fdb
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>   
->>   
->> @@ -256,6 +264,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -293,6 +302,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2,index=1
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -308,6 +318,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2,index=1
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>   floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -349,6 +360,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=floppy,file=TEST_DIR/t
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -364,6 +376,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=floppy,file=TEST_DIR/t
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -409,6 +422,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -446,6 +460,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,unit=1
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -483,6 +498,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qco
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -498,6 +514,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qco
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -549,6 +566,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -564,6 +582,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -606,6 +625,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -621,6 +641,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -663,6 +684,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 1 (0x1)
->> @@ -678,6 +700,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -720,6 +743,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 1 (0x1)
->> @@ -735,6 +759,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -786,6 +811,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -801,6 +827,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -843,6 +870,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>                 dev: floppy, id ""
->>                   unit = 0 (0x0)
->> @@ -858,6 +886,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/unattached/device[N]
->> @@ -906,6 +935,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -global floppy.drive=none0 -device
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -973,6 +1003,7 @@ Testing: -device floppy
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>   
->>   Testing: -device floppy,drive-type=120
->> @@ -1000,6 +1031,7 @@ Testing: -device floppy,drive-type=120
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "120"
->>   
->>   Testing: -device floppy,drive-type=144
->> @@ -1027,6 +1059,7 @@ Testing: -device floppy,drive-type=144
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   
->>   Testing: -device floppy,drive-type=288
->> @@ -1054,6 +1087,7 @@ Testing: -device floppy,drive-type=288
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>   
->>   
->> @@ -1084,6 +1118,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,drive-t
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "120"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -1121,6 +1156,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,drive-t
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "288"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -1161,6 +1197,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,logical
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
->> @@ -1198,6 +1235,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,physica
->>                   account-invalid = "auto"
->>                   account-failed = "auto"
->>                   stats-intervals = <null>
->> +                delay-alert-ms = 0 (0x0)
->>                   drive-type = "144"
->>   none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
->>       Attached to:      /machine/peripheral-anon/device[N]
+>> +    if (qtest_enabled()) {
+>> +        latency_ns = qtest_latency_ns;
+>> +    }
+>> +
+>>       WITH_QEMU_LOCK_GUARD(&stats->lock) {
+>>           if (failed) {
+>>               stats->failed_ops[cookie->type]++;
 >> -- 
 >> 2.55.0
 >>
