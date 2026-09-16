@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C73B2C982C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A7CC982C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6rHU-0004pw-8H; Wed, 16 Sep 2026 11:10:40 -0400
+	id 1x6rHR-0004of-9T; Wed, 16 Sep 2026 11:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x6rHG-0004ma-9Z
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:27 -0400
+ id 1x6rHC-0004ls-Tn
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x6rH9-0004GZ-Tm
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:23 -0400
+ id 1x6rH7-0004H5-3o
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789571415;
+ s=mimecast20190719; t=1789571416;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2NkEtgKOWDst9bIExK9oubIOYm0vQRtXHvPelFD6VYc=;
- b=LYctQdkO/GYSrCBA+l7QH2Py+dxvbcZyq/hMWlQ1cVsHYoO7ScQp50FmZ4FO6Cf927nnH5
- opi1m8FI/KEqEUuP3faAOfGTURbktaE/esGGtDLyMw8F+P/hf4U3cgOX61haeA2AZl63dw
- 1wG/f/EfGAKFNVZOn9OD9MiIcSUqmc4=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XOGgYjCQ/eE/ZQO6VLQZA05Bps2xeA+ra0/sSQXijm4=;
+ b=JYnr6KGfsIDda5f0y1+cdb7PJ6xuMFevkfrTqIV52cZWLMbRwF0nqZr58eP0N7QUMUl1FK
+ lm/EspTawHW8upx9SVmlQnHv2YZifxyJq1Ri6vnwkdShF9yUvTxd3JCNir2L4aUFYJcbjZ
+ 019wTSEmo9fDygDHaMGy7ldE9ACeNsM=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-444-Q26smeQ0OBq72dyHIt7gLA-1; Wed, 16 Sep 2026 11:10:11 -0400
-X-MC-Unique: Q26smeQ0OBq72dyHIt7gLA-1
-X-Mimecast-MFC-AGG-ID: Q26smeQ0OBq72dyHIt7gLA_1789571410
+ us-mta-128-jjqSXYtdMCWWTh-uhVeR9Q-1; Wed, 16 Sep 2026 11:10:13 -0400
+X-MC-Unique: jjqSXYtdMCWWTh-uhVeR9Q-1
+X-Mimecast-MFC-AGG-ID: jjqSXYtdMCWWTh-uhVeR9Q_1789571413
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49cdc4080ddso13821865e9.1
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:10:11 -0700 (PDT)
+ 5b1f17b1804b1-490a767c7dcso47944065e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789571410; x=1790176210; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=2NkEtgKOWDst9bIExK9oubIOYm0vQRtXHvPelFD6VYc=;
- b=ZIgV6QlCgm3tu0hUlyPJAHjVR5poScu7xBb2CgBFVytQb+YSRINaoPAsRLLFSQt4mc
- HwxOMwg03ptlVN0upX30FaCohFkCX5ze/QOgj5pSSTFoxiMLizgXnufvpQrAMRGDNxCU
- DS7oY12ePl/tNXvepiMM9KeALknK8qCS9InuI9v/l4ph1/FtIVapjNOyyfgw5h2VsUaL
- 5mTsC4Cii6jn3amJppAwSd5dUZ5uMi8NedCY2ibgPLY51G9PT5OMiaUZWmVi3hzLVSpp
- mqGgWt/cSYl1AVROEHGeDyjLyCeCanskA7mji7f3l1ss9N5bW5tM2kcrkAL2O6OM9kCt
- NR4Q==
+ d=redhat.com; s=google; t=1789571412; x=1790176212; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XOGgYjCQ/eE/ZQO6VLQZA05Bps2xeA+ra0/sSQXijm4=;
+ b=J4Rj+tuYJ+RD+V/HlRF6bjmj13eiCKHXIafWTA3vnFNe3AjonUxXhCAxnkc/fQm6by
+ mYR6sgghWeUec1G89LmgbrafXhmZJwCnK658jNmZEZdOsvZ78grQMjeTBcRuq+GfyTgv
+ GHRXiIEtcM40+0iVpqgYVeWdIwpP2UgszPcCscZrYiDiXcWMYeYaC+XbJuiSJwaoSWez
+ o5ofEZ3NlexkXN2KCCQtctQMmMfdp1rzzO5nAq5H4zcv9Dw8EFvL37a8thzcE0tgR6Ij
+ MJrCeo7z4u02TP3n84arcbWBv8oQw9jXKIdAgs7+oANK6zIhuZ75gSmpSpo2Zs1BvD2U
+ LW/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789571410; x=1790176210;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=2NkEtgKOWDst9bIExK9oubIOYm0vQRtXHvPelFD6VYc=;
- b=Z3t1b+0b5I3UKB+WUP9rezALQtDWNgY9HOs506jc2uQFbK/gv+DUegrtBvvA8gEPZt
- rWjo74VNR/YI7/emoyo3WlUua29qaaJXYsg8Vb5mojnj2CddwcM1L1KWDejQezOvHh1e
- fDLfmoCjyVtWCWJAmGeCYUMFWv8WyO99eGYiz0dt+WHb50rgsTj4WIYiwI6BbchSWShh
- m2l9hd48Ian9vyg46U4KeTqyP17wU3T3ggFQtnY/mSEEcGKuEdRNjXRfawridty1lK1r
- Ki8uxmPDhKRRb1x150c4GG4qJkyTGT8TLanbbDhMMioDEwSqVCvwNJkKRyWFv1GKiW7E
- jApQ==
-X-Gm-Message-State: AFuF++klVHKFSCZhVs4BDytVIxPD/FHQ36HF3+CIFqXokgH1Zx25oRNu
- IlxXNJetpLItQOc/1XkbYbBJ000obW6uTfhxYogBrWKsaiFxTuQFJt6OsMTw2d7DVqSSSHiROrD
- TWGwEUe57hm9fH5QHgUplIRUnxOXFFICge8zmJVCNMHVhiWK2Rq44o5VqiIxfzmVwySe1LJe3Ah
- tAB6PJ5k1o8hQf4EyOTCWebRRLhATJiimDopn682ercoU=
-X-Gm-Gg: AYBFou3WPu7ZoeaTy3wpjaI15vX6BWbsdZGgNvPrxTu9al64VpbeId+QdMwf1lNAArI
- z9c4RWRR0AnHdGfPA08rWgakREvCEQEIKOMNvfC2AIve5Qr2cltLvMgY7/K5lY50SM+TU542iUH
- mUgw4LDy/a2ax83Xb68w7BjHv52kvnTx/IbunooQA4iAKtJqK0Y43dR5ZGRExnREzXds9g9dZs0
- P0EiCD/GJP29H8sDN9SVJrCMJkhsw/Nsv0OTvmnyfiiQ+m6P1W8uhULMbc0COq15/7g+ETBof3F
- ev61qZTHdVWDKKGjTMBxpiSsoeUqPJGa1Dh6HI0GoAvWToR7rWrqKKeqM4c5wfCHbKPcA1p0AR7
- QAq5elOvoJGtU7sDd5Dqqkj1gQdQ3yNkAjMISYoNR5bzry+ofTBkBffF5yyaF091nkNKB
-X-Received: by 2002:a05:600c:1f94:b0:49d:257c:a735 with SMTP id
- 5b1f17b1804b1-49e9669fabamr32509795e9.11.1789571410398; 
- Wed, 16 Sep 2026 08:10:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:1f94:b0:49d:257c:a735 with SMTP id
- 5b1f17b1804b1-49e9669fabamr32509065e9.11.1789571409684; 
- Wed, 16 Sep 2026 08:10:09 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789571412; x=1790176212;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XOGgYjCQ/eE/ZQO6VLQZA05Bps2xeA+ra0/sSQXijm4=;
+ b=LIPnzoN9MKL8Of1zdCsJkVyrDmEdWBg5zY+T8rhiZLWEHFgHsAmfe0xd6w+JNXXBj9
+ m+jObQz0qRjnGjKV/KdizDYDSVtFG4DdRuMEPzpxv9a5XgHVe2uSHRcDfqyFqam949S7
+ rxnhypqT7Ij+gGwisPWtFN0fAzns/ywhEWR9xJ8orKxMD4KHjkFx69a/Xv6PFf8llSBG
+ qn1M12/p1qTN0tR6MANFBbqxEmTLgWkKpSb1+TnHQhteslbooo8miC7CTbp6O0KurcYL
+ lnMZm0WO/CFf/v//OKouOm9POM/2HhMLhdvJR70a2T2qdYKpeavwrS8dMjGoYceJ2bI7
+ T5Cw==
+X-Gm-Message-State: AFuF++lQ+ZHoZuBkqUsCGU9UFyCqL8tIwLGgv4ZRu3VgoiSCRDXEYdM7
+ WgcOwjGbzT18gJcwl7Qimj8LyNINliq/CJM8vW2PdmNjiEz1+1dyNGeFPLnZI7/XjoYm4xN8c4K
+ zQuwFCEB06/Jguw6U+g7HY3A+FrqjOuSelEeBPdwsxOeycC/jnnsiVfyGIKFx/5CYhWB+nIVMHx
+ 89RoSMpNzW2+qsSeelcDE1sUMjc1bAhfL45B1O0WJLfbQ=
+X-Gm-Gg: AYBFou1nQ1tlTjfGrRoUADpbmYotabD6a2i/q3d7U1CrLHSg05FG8T5rVb3N5AtnMxm
+ yD7nVWHLbgdFEUquKZYLs4atI/L3aR1KRqZ0ZE/7wY4No8M6ZGzTwkkVvMSKlRwn2zeqObndf3M
+ a2lV/ARRAO+MYSji2/gdiie/8H89mxj0QjdpaCi20OAgjsQ7O5ubqCj8oGQpza8PxbZU6f3buj4
+ 4xJbgAOeoDyij/DH1pfsNWpe+NQ5a7FinXtpz7X/QpM7whWsDIi6P4d8fsR181j2UpyuL9+/6QT
+ NMa+4WDpLktqM4IUbIZ9ttx2GifGxDKCfCb59KT2tk73YkLWwq6i1lkTjpOyWCgHQUBtvg53NEp
+ 7CMXKaEMAZGOoF+6Mo8Wr9KbfAkB8PzWd+ePZM570MetTnDyjjfnHK0qLKNzajTgm2Xdy
+X-Received: by 2002:a05:600c:1c1d:b0:49c:fc6c:be08 with SMTP id
+ 5b1f17b1804b1-49eb733de1emr44827455e9.31.1789571412678; 
+ Wed, 16 Sep 2026 08:10:12 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c1d:b0:49c:fc6c:be08 with SMTP id
+ 5b1f17b1804b1-49eb733de1emr44826695e9.31.1789571412179; 
+ Wed, 16 Sep 2026 08:10:12 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd112455sm40865e9.12.2026.09.16.08.10.08
+ 5b1f17b1804b1-49fbd112455sm40865e9.12.2026.09.16.08.10.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 08:10:09 -0700 (PDT)
+ Wed, 16 Sep 2026 08:10:11 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH v5 0/2] igvm: fix byte_offset handling in parameter directives
-Date: Wed, 16 Sep 2026 17:10:04 +0200
-Message-Id: <20260916-fix_offset-v5-0-11cf8ef37854@redhat.com>
+Date: Wed, 16 Sep 2026 17:10:06 +0200
+Subject: [PATCH v5 2/2] igvm: mark qigvm_find_param_entry as static
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23NQQ6DIBCF4asY1qUBBJWueo+maWBkKotKA8a0M
- d696Epjl2/I9zOR5KJ3iVyKiUQ3+uRDn4c6FQQ60z8d9W3eRDBRMc0ERf95BMTkBmpE1YDlwhg
- EksE7uvy6xm73vDufhhC/a3vky/VvZuSUUSYtb7BWWllxja7tzHCG8CJLZxRbK3dWZIvKWglYt
- dKygy23tt7ZMlsLiOAQmG7UwcqN5ft/JeW01G0tpa6hsns7z/MPIVHj1VkBAAA=
-X-Change-ID: 20260902-fix_offset-a268cb12aafc
+Message-Id: <20260916-fix_offset-v5-2-11cf8ef37854@redhat.com>
+References: <20260916-fix_offset-v5-0-11cf8ef37854@redhat.com>
+In-Reply-To: <20260916-fix_offset-v5-0-11cf8ef37854@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
@@ -109,7 +108,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,59 +124,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGVM directives _can_ place their data at a byte_offset within a shared
-parameter area, letting multiple parameters be packed into one area.
+Previous commit removed all external usage of `qigvm_find_param_entry`,
+therefore we can mark it as a static function.
 
-This offset was either ignored entirely or used without first checking it.
-
-Patch 1 introduces checks and honors the offset.
-Patch 2 cleanup patch (marks one function as static).
-
-More details in commit messages.
-
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
-Changes in v5:
-- Marked `qigvm_find_param_entry` as static [Stefano]
-- Improved commit message [Stefano]
-- Link to v4: https://lore.kernel.org/qemu-devel/20260914-fix_offset-v4-1-39d74497c6b5@redhat.com
+ backends/igvm.c                | 2 +-
+ include/system/igvm-internal.h | 4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-Changes in v4:
-- Squashed two commits in one.
-- Removed one parameter from `qigvm_get_param_data` [Stefano]
-- Removed some useless variables [Stefano]
-- Rebased to latest upstream
-- Link to v3: https://lore.kernel.org/qemu-devel/20260907-fix_offset-v3-0-bcffcefc0985@redhat.com
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 9a2bafc0ca..ec7bee428b 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -85,7 +85,7 @@ struct QEMU_PACKED sev_id_authentication {
+ 
+ #define IGVM_SEV_ID_BLOCK_VERSION 1
+ 
+-QIgvmParameterData*
++static QIgvmParameterData*
+ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
+                        Error **errp)
+ {
+diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+index 0467eff0ce..b3b64cb584 100644
+--- a/include/system/igvm-internal.h
++++ b/include/system/igvm-internal.h
+@@ -77,10 +77,6 @@ struct QIgvm {
+ 
+ IgvmHandle qigvm_file_init(char *filename, Error **errp);
+ 
+-QIgvmParameterData*
+-qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
+-                       Error **errp);
+-
+ uint8_t *
+ qigvm_get_param_data(QIgvm *igvm, const IGVM_VHS_PARAMETER *param,
+                      uint32_t *param_size,
 
-Changes in v3:
-- Renamed the function to `qigvm_get_param_data`. [Stefano]
-- `qigvm_get_param_data` now returns the data pointer directly [Stefano]
-- Added fixes tags. [Stefano]
-- Renamed variables to param_data and param_size [Stefano]
-- Link to v2: https://lore.kernel.org/qemu-devel/20260904-fix_offset-v2-0-f5bb4cf6d4b0@redhat.com
-
-Changes in v2:
-- Inverted commit order: first I introduce the helper and use it where
-  necessary, then in commit 2 I handle the `offset`. [Stefano]
-- The helper now returns data and size, that already consider the byte
-  offset [Stefano]
-- Link to v1: https://lore.kernel.org/qemu-devel/20260902-fix_offset-v1-0-04b18f7595b2@redhat.com
-
----
-Luigi Leonardi (2):
-      igvm: validate and honor byte_offset in parameter directives
-      igvm: mark qigvm_find_param_entry as static
-
- backends/igvm.c                | 91 +++++++++++++++++++++++++++++++-----------
- include/system/igvm-internal.h |  7 ++--
- target/i386/igvm.c             | 12 +++---
- 3 files changed, 77 insertions(+), 33 deletions(-)
----
-base-commit: 5f664cd37aec17e8145aa117d8da68f507edc8f1
-change-id: 20260902-fix_offset-a268cb12aafc
-
-Best regards,
 -- 
-Luigi Leonardi <leonardi@redhat.com>
+2.55.0
 
 
