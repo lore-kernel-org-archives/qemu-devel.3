@@ -4,92 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23CDAC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C38EC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qDE-0007f8-Nu; Wed, 16 Sep 2026 10:02:12 -0400
+	id 1x6qDC-0007eB-9F; Wed, 16 Sep 2026 10:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1x6qDD-0007eF-4X
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:02:11 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x6qD7-0007c2-3F; Wed, 16 Sep 2026 10:02:06 -0400
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1x6qDA-0004BJ-GQ
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:02:10 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1x6qCv-000000053xU-2aLI; Wed, 16 Sep 2026 16:01:53 +0200
-Message-ID: <ad6b2233-13e5-494c-ab66-4052218313b6@maciej.szmigiero.name>
-Date: Wed, 16 Sep 2026 16:01:48 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x6qD4-0004Be-VK; Wed, 16 Sep 2026 10:02:04 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YaIPOW5oiKzivUzpAvshep33fdjG6eCfbimzIUPt12BSJ16KrrmsMrQcsZyE5AejWIz0aRFrWYh4oiRERaGVjwnlMJlqWjdyp7IjSy2H80f5IGtUf/Pu/qJVBC7bHqkEjOQVHe8A5QsNSDQgPYYX1ykAFsoop6Oba2S0ToMWxBcfSkuly7DVI/R6mrFHPc8L0K+G4Rp1taex2DqPZRf/mpR18/BcKTmxCF6WPoHz5e5PnNfspQTOUxuhHsv9RFb0kFhXSBP0v9cRvCJyVtR3h+l3ANj3wLhA/8WQQLxAmN2OOrgXTjADtIKzT80SSrFAeccEkLA3wt7Cg4eNnI31wA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hXfoJBvMcPu/T+DtXspef5IOZz+siC5ydyqn6Wwi/Ck=;
+ b=V6Kg6EnYzMbXcID93GgRmi5cX9RWpu/0RKZB3SIayxqzQjQBHbncYinf/co+dEcB1B2p/4y/PpnFqOq7+65t9TfMlXnCxZpyZnHhHe+5TW0LyfE4t8DW/hLRyBY+LHIC18pTDe+BUHCmqqKDiuFoZ2bT5XvNdnzFYrdWATxHxX05ztMqg+3pdEEYbhSSInvDx48ziBWhaZ8D2dPLUgZm3293FioPbozkGcmsLLaF+/WOrCWM6pIeCxbkZedf4YS5DAzLwHGlk1qzhZcArncuzAEV4D7ASGdnAg8zapFql/+9++z/Ve96Ujqrze8BRL6UZ+NvMpb3QBrSYR2I3qAPUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hXfoJBvMcPu/T+DtXspef5IOZz+siC5ydyqn6Wwi/Ck=;
+ b=TYCM+Akv1YyIOq8xOA4c6UaAw/iWK+ygbLxn3gSh+1w1CBYEauKarOPAmLuNOQ4608jmo7kyB+lS6SGbQ2QhYknOw/tgfaJhJeU5fpW8iqi94dYOcJrhhJPW6BzXTnlkxyDCNK4Exzx+uDrldQt9D2eTTEL74FQE3T8RM8r4jK9hRELOJNCMLXqHgTlmBfGB4DfTTTjPDVZncnneO3SHKLLLG7gtgWB+2jUrp77R0Rp2EO88ZFMILSd3CKkku1hld+NT6p74QRJJniwiSjmwTxvbtSgGCo0IXNqYoq0C15me73PyqxcN27eRuW36wlzpOZZJy/u6KvFR+NDY8sJSbA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AMBPR08MB11657.eurprd08.prod.outlook.com (2603:10a6:20b:738::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.5; Wed, 16 Sep
+ 2026 14:01:56 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0451.004; Wed, 16 Sep 2026
+ 14:01:56 +0000
+Message-ID: <1df6125a-c7e6-469d-831b-19996725f785@virtuozzo.com>
+Date: Wed, 16 Sep 2026 16:01:54 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/migration: Avoid savevm_vfio_handlers for
- cpr-exec and cpr-transfer
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
- qemu-devel@nongnu.org, farosas@suse.de, mark.kanda@oracle.com,
- bchaney@akamai.com, joe.jin@oracle.com
-References: <20260825225054.807116-1-dongli.zhang@oracle.com>
- <20260825225054.807116-2-dongli.zhang@oracle.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20260825225054.807116-2-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: Re: [PATCH 1/2] nbd: comment on locking for requests[].coroutine
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: den@openvz.org, qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260916132740.872244-1-pbonzini@redhat.com>
+ <20260916132740.872244-2-pbonzini@redhat.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260916132740.872244-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI6PEPF000001FD.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::910) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AMBPR08MB11657:EE_
+X-MS-Office365-Filtering-Correlation-Id: b8c29cea-abb4-4c2b-6d43-08df13fb116a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|1800799024|23010399003|376014|366016|3023799007|56012099006|4143699003|22082099003|18002099003|10067099003;
+X-Microsoft-Antispam-Message-Info: K1AeV0YW2iaatANd5m7pQihmBNb5TmpG6zAza6Ek91CV5BXZ5DLaliz34PtlwBJbTm6uyLXmTnJxYnXnsGHYueMJXiDMRz0BtsfTe+D0fmYgRmPIaVGJzKDNcZsHWubBaPm4Ya17dnIw4c7CV4NmB8a7WW8Goggntw0xcOuRPIQ66ZNfdK9cxQH7wpyqxanXQ8qKw+6KyuyqqZ1bSMXmpDa28UBMD7AN4qQ1C3xlq/voGuN6jjf64mLu9sXF3OxraEN6RUJ+nLaFHN+KW2NgkFdNMmQoT9vlTWrYYjJWAd6zFiEDDD5XmT1jeQRDjVIv19JngNdMewPCUhtqsuNa7vvy8M8lomgjfqYYVcJmejGU4uwDOQp5WZ8PbNFWoxaAZGw+IimagWzESrFqp1GHfP9BvaZR+xNHIU5ST/WasT/ioF6zEHgo10vNbDgh/M07Jfaw/+YjxXPKgUOKvRwxNfOXH4rcJDQW4h4ZsNbjycBgm8JtHf3/fa+ob3BbmOB9CSIdV8b6AzHGMH1tK5Fthpl8TRWrDgsvI9t2UPTN7eClawed3j4gVAxUPgpkx902tJMk0TU6tqrk3KgPgs43R/uu1CaYsitYYlDm7jOQVLswb94Mw7jYiUCTU/ZsjvRUho+FD3J+GDghEPPOqfN8NZbCXhB7zL4S8lT8z8wdxx4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(1800799024)(23010399003)(376014)(366016)(3023799007)(56012099006)(4143699003)(22082099003)(18002099003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Smd3VkxhR2duUGYydDdqcjVqNit6RU1WelpSTC9VWVF0NGlacmhUZk45L2Vw?=
+ =?utf-8?B?Q3JJRXFBWjZWSlFuWFZTWUpSbC8xVVRIK0tRSUhnYTEyNWtFT3pua1hhUGpB?=
+ =?utf-8?B?cmhGV1JYZkh4d0hNenJ4QlBKR2lVVXpzK3ozUUNRQ0VJMVhabm9sMzBWeDlM?=
+ =?utf-8?B?aTlIRUt3dzU5QWZ0RWZaQjBFeGZCV3B5WmRaeG5aR3YzUmhpdWhMaG0zQUE0?=
+ =?utf-8?B?ZnIrRTlpM0o1ZG9iRXBNZWlNbTBMckNmc2pvaHFDNUtWUWZjSTFFQjNlUVFn?=
+ =?utf-8?B?Uy83NXFvTEZ4eEpnemtiVzhCQnczOEMrWW1hMTV0SXRzVFQ3NjlJZW92dndJ?=
+ =?utf-8?B?a0dnNFVJUWI5OU1KOEkzNU1VN2diQzhxN3laUUlHRVhmWnppZnAwaS93VmtH?=
+ =?utf-8?B?Y2t3MHNyOSs2RnRYQzJEQlVwdHZPdUJGMkNtN1hnTm8zUm9iNS8wTUNmNE50?=
+ =?utf-8?B?Y3MrSm9aaWVQV3YyT1VTTXJhRW1QY0xEdGJSYy9EcG5rT05VYWJ0QVRkNURJ?=
+ =?utf-8?B?ZklOTVltaWZ3dDZaTnVGY21MT0NLQlF4c1NVcmduNUhEMEZoZE12ajZHRVVK?=
+ =?utf-8?B?N1RtMWUxRHNONXZsZlBTdmlUQ3hGTXJ6bWVnT1IweVlFbEZFWkEybWRWK3Q3?=
+ =?utf-8?B?bDBlNForQTNSaWxXMyttQmt5ZlU0Z1Q2dmpweWZsbDhkV2VBb2tvek5RV2h5?=
+ =?utf-8?B?UG5sbkw1alU1S25vOWxKU1VIZGJtQ1F0dGtEUHVybUtOemtyM3c4aE9aRFdN?=
+ =?utf-8?B?NTg5RHcraE8wajhNTmdEMTZ6YTV3K3RJbWcyVlRZeldYeTZtZ1NkTWRoVGlt?=
+ =?utf-8?B?T2Y5VVRZUndhalh1eCtDZll2czBRdzRMNzZLanhzWnhUU3I0YVMvWFlyTm5H?=
+ =?utf-8?B?VlVPaVBJVE1LUUN2cDA4QnZyWDFuZCtsczNOR0VRbWsra3hqc2V3eEZhWGdZ?=
+ =?utf-8?B?eU8zSUdWREJjdS9KSHZSaUlWQ0JKREVoeGdKcmFCZllkUmdBc2JRKzNQb2Fk?=
+ =?utf-8?B?UXZQY3p2bnZiMUtjQmpvaVdOTEdLRCtrMDB3ZWVBV1Uyb3JTQlNyMmhiem1C?=
+ =?utf-8?B?S3MrRERtL1RMMXBRdTl6cnd5akE3UFB6Y3NJRmhURDBFUTZORDNRdUNyc0VD?=
+ =?utf-8?B?ajBmbzhOMm1wQ2NBck9XSmhaZmRGalg1RitRNFlCc1ZwVmNGOFVkdk9SZ3ZU?=
+ =?utf-8?B?SjZmTEdKUGFwc2puK3JrUS90aU1LRXpyS2x6cUFtRzd4d2ZaUVRJdG5qVVJk?=
+ =?utf-8?B?aGlhWGt1d0ZhbnFxY2dKcmErSUtVdTNUdmFvenh2WDAzWHVpTW1zQjAyRzZz?=
+ =?utf-8?B?d0s4RG9xRXdQaFlnVW1TdzM5TW91bGNMazN1dnBZM3B5MWZKQS93OEdjdHVH?=
+ =?utf-8?B?N0orRXkwdW1YM2hzek9QR01TMnFpcEQwY1o3aVhXaU5ORUNSUEJ6eFRxQjV2?=
+ =?utf-8?B?UVJSM1VmRURGRllDa3hyNjY3VnFUVGxINkhBTlVyRjNIbWhrUWVrL2NGNWx5?=
+ =?utf-8?B?TzhTYW9VM3lXVDMxL1o0YVNONjNvZ0t1Yjl0bUtSdXZEVkp1Tm5aOFluM1VS?=
+ =?utf-8?B?K01UNm9YOUtlVGw0ZWROL0tpOERuQ2pPbVd0MldNSVM1U0V3cGJvNWdJd05Z?=
+ =?utf-8?B?MXRJcElpVEhDVHVMdk0ralJob1lGWElhRjg0U21zV3dNVlBQL09CMkZBYnRu?=
+ =?utf-8?B?bWNVa3JjTXQyYWVKeHRnbXd3aU1pRWVQVUpMdS9pVzhveUhLd2hnbVMwK0Qy?=
+ =?utf-8?B?WHpaT3M0a0tZRzBRcldRcTVicEFoNHAyNFZlN3FmcEVRMXE2S1l5OURkcUVa?=
+ =?utf-8?B?elFRSmZMeXRpYUJ0Y1hobWFJWjlqb0RhYVI1eU9WSjBNYjBxRktKS3BIZ1lk?=
+ =?utf-8?B?SkpSNnpLM3RqTER5WDlsZUVuVFN5MThTWCt5RUw1eno4NUxNazR6NXRIMERF?=
+ =?utf-8?B?cWNpeEk5d2JCajE4K09XcXBJS0dOSUlkcCsvdmpvZktZZk5kYzNHcEI5cmln?=
+ =?utf-8?B?bkp5Q1EwcG9wMzFQS01CamdYbkdldG81K0xEWEtXNTRvVHRrOE9pL0VINXdt?=
+ =?utf-8?B?Z0hFZjVleTE2c3NVYmFSYlR5Uk11bGlqdC82VXluUWxudEtldVBtOWwwcmhk?=
+ =?utf-8?B?bEkzRXJkZHFpYUhlS3JBN1pNQ2RkMFZhNEdHQkM4ajZzZkE1aGxmaWpzdUsw?=
+ =?utf-8?B?TENsMWUwajV3NHdNVWFRclRRSml5N2ZwQlc1UkhXRE01TVhFVTd0T0Rxb1Ix?=
+ =?utf-8?B?OGFTS1l1eFZ0ZzlMbjdDSVJnVjNoRVZCSVNHTU5BL1pxK01YWjdrcjErT1NP?=
+ =?utf-8?B?KzQrcjcvWlpRR0Fzc0xiOXo0b3JHOGVGUWx0ak1IbVdOS3R1VFNieTVIUzdQ?=
+ =?utf-8?Q?YJuKcfquiuLEnM5efF7Txj1KsCZglO+4OL4ZGmLh60vDu?=
+X-MS-Exchange-AntiSpam-MessageData-1: yETayOHvVKcGmg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8c29cea-abb4-4c2b-6d43-08df13fb116a
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 14:01:56.0692 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: F1f/03n1/Ni57oMZWysbbNHBybIuIbz6Lk+g9zMr5JxUa75OB7axdM3u4qZ4yMuxXWtI7/sH+97g7Oe/Oi6ScA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR08MB11657
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,72 +152,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.08.2026 00:49, Dongli Zhang wrote:
-> When the VFIO driver is vfio-pci, vfio_migration_query_flags() returns
-> -ENOTTY, so savevm_vfio_handlers is not registered or involved.
-> 
-> However, VFIO drivers that support live migration, such as mlx5_vfio_pci,
-> do support vfio_migration_query_flags(). In that case, savevm_vfio_handlers
-> is registered and may be used to save and load the VFIO migration stream.
-> This is expected for VFIO live migration, but not for cpr-exec or
-> cpr-transfer.
-> 
-> Even after migration converges with
-> "migrate_set_parameter downtime-limit 1000000", the target still reports
-> the following error:
-> 
-> failed (load of migration failed: Invalid argument: Failed to load vmstate version_id: 1, ret: -22)
-> 
-> Skip savevm_vfio_handlers for cpr-exec and cpr-transfer.
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+On 9/16/26 15:27, Paolo Bonzini wrote:
+> Explain why it is safe to read it outside the lock.  Basically, if
+> the protocol is followed correctly, the reply header will not
+> appear until after the request has been sent out in its entirety;
+> long after requests[].coroutine has been set and s->request_lock
+> has been released in nbd_co_send_request.  And
+> requests[].coroutine will also not become NULL until after
+> the reply has been read, and that requires nbd_receive_replies
+> to finish.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/vfio/migration.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 73c49d8c24..49aeaad516 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -723,6 +723,13 @@ static bool vfio_is_active_iterate(void *opaque)
->       return vfio_device_state_is_precopy(vbasedev);
->   }
->   
-> +static bool vfio_is_active(void *opaque)
-> +{
-> +    MigMode mode = migrate_mode();
+>  block/nbd.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/block/nbd.c b/block/nbd.c
+> index e5e16722ba2..85842e7cdfb 100644
+> --- a/block/nbd.c
+> +++ b/block/nbd.c
+> @@ -141,6 +141,11 @@ static NBDClientRequest *nbd_request_by_cookie(BDRVNBDState *s, uint64_t cookie,
+>  {
+>      uint64_t ind = COOKIE_TO_INDEX(cookie);
+>  
+> +    /*
+> +     * Once requests[].coroutine is set, it will not be cleared until its
+> +     * reply is read completely; so it is okay to read it as long as a
+> +     * request is in progress or receive_mutex is taken.
+> +     */
+this is incorrect as written nbd_co_send_request could
+clean requests[].coroutine on a fail path. It seems
+not a problem now, but in the future this could be
+misleading 
+
+the second part "or receive mutex is taken" also does
+not stand. Mutex by comment at declaration does not
+protect this field. I am unsure on that
+
+
+>      if (ind >= MAX_NBD_REQUESTS || !s->requests[ind].coroutine) {
+>          error_setg(errp, "unexpected cookie value");
+>          return NULL;
+> @@ -154,6 +159,12 @@ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
+>  {
+>      if (req->receiving) {
+>          req->receiving = false;
 > +
-> +    return mode != MIG_MODE_CPR_EXEC && mode != MIG_MODE_CPR_TRANSFER;
-> +}
-> +
->   /*
->    * Note about migration rate limiting: VFIO migration buffer size is currently
->    * limited to 1MB, so there is no need to check if migration rate exceeded (as
-> @@ -951,6 +958,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
->       .save_cleanup = vfio_save_cleanup,
->       .save_query_pending = vfio_state_pending,
->       .is_active_iterate = vfio_is_active_iterate,
-> +    .is_active = vfio_is_active,
->       .save_live_iterate = vfio_save_iterate,
->       .save_complete = vfio_save_complete_precopy,
->       .save_state = vfio_save_state,
+> +        /*
+> +         * Once requests[].coroutine is set, it will not be cleared until its
+> +         * reply is read completely; so it is okay to read it within
+> +         * receive_mutex.
+> +         */
+>          aio_co_wake(req->coroutine);
+>          return true;
+>      }
 
-Looks like with this patch VFIO save_setup won't be called for CPR so it won't
-initialize migration->multifd_transfer either.
+May be Vova or Eric will bring some light here.
 
-If there was a previous live migration with multifd transfer this flag will still
-be enabled so CPR attempt will (at least) launch VFIO device state saving threads
-and possibly cause other breakage in the VFIO code too.
-
-Similar issue seems to be with load_setup on destination, since with this patch
-it won't be called so the device state won't be changed to RESUMING.
-
-So if the VFIO device doesn't support P2P states it will stay in the STOP state
-that the source put it into at the VM stop since VFIO code (at the destination)
-assumes that VFIO devices by default (without load_setup) are in the RUNNING state
-so it won't do what it thinks would be a RUNNING -> RUNNING transition on VM (re)start.
-
-Thanks,
-Maciej
-
+Den
 
