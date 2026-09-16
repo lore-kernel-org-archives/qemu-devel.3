@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 432DFC88E77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86DB7C982C1
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 06:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6j7m-0005oq-Tp; Wed, 16 Sep 2026 02:28:06 -0400
+	id 1x6j84-0005vu-Tm; Wed, 16 Sep 2026 02:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rdondi@axiado.com>)
- id 1x6hcc-0002E2-Cu; Wed, 16 Sep 2026 00:51:52 -0400
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ id 1x6hcu-0002Ef-Rs; Wed, 16 Sep 2026 00:52:10 -0400
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rdondi@axiado.com>)
- id 1x6hcZ-0001Wh-4C; Wed, 16 Sep 2026 00:51:48 -0400
+ id 1x6hcr-0001XO-Td; Wed, 16 Sep 2026 00:52:07 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GVIk5Ew6jCei1whLGkhdfINqlHInSIOfXMqq6QBKLawJNmutUt4VKbGITMtuh+LHgL6B/n8R5LP3i8FJNSU3Kmcm7kxWZ1gIQ7qG2LDXyjB6pdK4OlHnnNn4BWvJIgb7410npG/1D9XG6ONiJ244hE+l4HK0cUI0gJQIM+flmVJCWJesrZcUwrfQUh7ZNL7M1fztU/rCwc41aw8vRiHwOSL+4zJs4WcvHByVXqNnATB9kGWnLCoSx2rKjxEb9z8NIvEZBQRGRl/okZWi4EIPnSvSoEW7f3+prp626vflHeV+z30cUbc28vV3xWDJNb6OcsdRMRLC42rhYIOhi5wFQg==
+ b=xRsGVlcHuF2VYMbDhGQvQSwgex9Kw4/AZkW7if4jZ3QcxlMOntupHQoUqqj1yydpisLTIiShz7ETMa7MZMgfNEOtjoyBXl/xbW6WYm1k8m1diVIVYWV6s+QoBy8pR4Fx//fnIjJSO+OS8GjEDjCsrow3eTwfKZdrmilQEqQuNx3wtmyXazP7o5p9eDUqCjPslNO/QUu6LDRx3nVHPp+ymjxFCoqufSxCEpQ7mh53tn0sK5KVeVBEOE52HW2IMC2OjS0PKxG0Qp99ANbDujIkZllRy5LLAt9odNZwCwin0H1aLeCuf9ar5VtH+PX4xL6iAT2gZJIPfi2zE/1sM2NRGA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UQr1sTT/BXajgT6GLHoDeZqpInK646UGJ+AjWxFGMHQ=;
- b=fj1k1ZFJxsF5I0BYj3sViiz2Xs8kDvqeQL1G1K4Pp9pzRnkGmY7PDM7EDeZ+RdoAyOlItMRJDFICmeeBnUeSw+0WQOiQf7omqkJLHeOVHUq19XE2Nc9zGC4XFOgV+9Q4G2Emlta6cVpNDL6pscVk4Lozh5qJwhrQUmluWM7q9sK1l2egI+dwRbqhiri9GunYMjJIcVUz2YzkjNFwWo/RhELg8Kc0jmMsVQ/E53GL1+5sDPpdpezG2vmMG7Zgecldtq1s29hGY3K7HPPSRGjh2Pj3V6D99627kVSnWv2ySwJhzANxl2OreUY18kuvIz+WqEoJmbGOxtcAM1+2/4/2Aw==
+ bh=yKb4EafBysRSKmV477/Xy1Ah8Q06+juLK9rG8DOlISc=;
+ b=rC9RC6nW7rwFxbeHvtlZJciSXE9tlvlZxgpknq8zI9dFdk8oPn0jJrjHUUBLy0CAoyDcdwdPAT8YgFQ7hxCSKP1VYgK44drQAKObIFjeNJn2w1lY1DRc8uha+lrY6Ph9hu039eyg2UG77w9dUhrpg8uTl9GsWEoXyT22YnkHip40HqqXyfKSs/Rh6VpRX76AmcXBkqaq2qwsliQzXCsDBflFW1UBHILKjfXXFjD4QUs4oOYOtcts3N0KXosyCRHGv3D4UXmKejIyPsHBnQIPABft4htQf0ZxUd20/Nm/fosbIA6z9FkK9bUAaBV1ZWxAr2zoJ+Lh2k6CoLV8H1xtog==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
  64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
  dmarc=none action=none header.from=axiado.com; dkim=none (message not
@@ -33,18 +33,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UQr1sTT/BXajgT6GLHoDeZqpInK646UGJ+AjWxFGMHQ=;
- b=TKFlt6edBP4sRNhpjtQCGFEnehkCQdjG4A0DaaSnm5vwhijuU558l17RVmfigzkVL+gcUeVqYStlzhfVyVIoTEoTUUvV648YIVPSQD5j1LIVv56lXZttk7+3ub5Y10r6ipprY+pGg2GtgsB6qZsOlzWzCG5f4uR0EgXC/2o2oJ+jJCQIy+Xn/zy4D19W8GVzUnQOyriQPx93GWbFmpdgX06p/udHFX9IcDTNm3C29C6n9tGvSOKRTedICiM3iBOaYxD3eiEHwzVcd/MM0+Drw0WOieNB/t9MRaijGexFPAfsdhHvbVn80dS5ayi+UjxogcAKH+vXYA5xYb3Khh6aCQ==
-Received: from CH0PR03CA0035.namprd03.prod.outlook.com (2603:10b6:610:b3::10)
- by SN7PR18MB3823.namprd18.prod.outlook.com (2603:10b6:806:105::9)
+ bh=yKb4EafBysRSKmV477/Xy1Ah8Q06+juLK9rG8DOlISc=;
+ b=W5dw7qGzGIkhYQtY7RvxXdmosnh+KZURDn6R4tbnQQE9v0ZiYK2BMlf9PbgHMqNxYEqBH0rup7+sPWBonK8dXYfrrsIPm3dgQ9TGkNRycvTSwhcBkSuPpmAb7ABKdoUMoM2RMm5WEktMIZPAaoPtpfZdk0yt4ZeigIvv2oZo31/OWgIgF/e9mBYlpmitr7jhrUKT6w+VWRP99p8mQjW1qVEb+C3cvMOefcbGNlcqZlZg81n6tq82TIq4Cpg/DBAvPJ1VTt1OKhSgOSwGznsqv/+KHd4x09x4YjjZ4wCzAAXTXK5Xjrab8NADlUzMhheevnuW94GxgY1gK+V6w5V1eQ==
+Received: from BL1P221CA0043.NAMP221.PROD.OUTLOOK.COM (2603:10b6:208:5b5::13)
+ by PH0PR18MB4426.namprd18.prod.outlook.com (2603:10b6:510:e9::18)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Wed, 16 Sep
- 2026 04:51:41 +0000
-Received: from CH2PEPF0000009E.namprd02.prod.outlook.com
- (2603:10b6:610:b3:cafe::94) by CH0PR03CA0035.outlook.office365.com
- (2603:10b6:610:b3::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.9 via Frontend Transport; Wed, 16
- Sep 2026 04:51:41 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Wed, 16 Sep
+ 2026 04:52:00 +0000
+Received: from BN2PEPF000044AB.namprd04.prod.outlook.com
+ (2603:10b6:208:5b5:cafe::62) by BL1P221CA0043.outlook.office365.com
+ (2603:10b6:208:5b5::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.11 via Frontend Transport; Wed,
+ 16 Sep 2026 04:52:00 +0000
 X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
  smtp.mailfrom=axiado.com; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=axiado.com;
@@ -52,57 +52,59 @@ Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
  designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
  client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
 Received: from smtp.corp.axiado.com (64.62.143.114) by
- CH2PEPF0000009E.mail.protection.outlook.com (10.167.244.27) with Microsoft
+ BN2PEPF000044AB.mail.protection.outlook.com (10.167.243.106) with Microsoft
  SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.7
- via Frontend Transport; Wed, 16 Sep 2026 04:51:40 +0000
+ via Frontend Transport; Wed, 16 Sep 2026 04:52:00 +0000
 Received: from axiado.com (unknown [10.4.1.32])
- by smtp.corp.axiado.com (Postfix) with ESMTP id A791B4186B53;
- Tue, 15 Sep 2026 21:51:39 -0700 (PDT)
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 79C9F4186B53;
+ Tue, 15 Sep 2026 21:51:59 -0700 (PDT)
 From: Ratan Lal Dondi <rdondi@axiado.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org, jasowangio@gmail.com,
  kchiu@axiado.com, Ratan Lal Dondi <rdondi@axiado.com>
-Subject: [PATCH 0/2] Add Axiado HCP network device model
-Date: Tue, 15 Sep 2026 21:51:32 -0700
-Message-Id: <20260916045134.1687145-1-rdondi@axiado.com>
+Subject: [PATCH 2/2] hw/arm: Wire up the HCP network complex in the AX3000 SoC
+Date: Tue, 15 Sep 2026 21:51:34 -0700
+Message-Id: <20260916045134.1687145-3-rdondi@axiado.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260916045134.1687145-1-rdondi@axiado.com>
+References: <20260916045134.1687145-1-rdondi@axiado.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000009E:EE_|SN7PR18MB3823:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: da19c0d1-abe6-453f-2b3d-08df13ae32e9
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044AB:EE_|PH0PR18MB4426:EE_
+X-MS-Office365-Filtering-Correlation-Id: d9d8b88b-c235-4450-3853-08df13ae3e81
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|23010399003|376014|1800799024|82310400026|56012099006|10067099003|18002099003|3023799007|13003099007;
-X-Microsoft-Antispam-Message-Info: ig3PVArMZEQ59Z2futjiHuDYoI1Luetm4t/t0vPcOcsMUpT3zfXRJ03OrXsQXpWNbUOinMw8Q9T5O2LHnHb2H/3Gn0kNEtvZtLTsSGm3yXOX/4Ssn0x+6tKgMm5oyOzfr/cGT66ZuGfzbU3bSWIW8BOyuy6P/knjIsFTbb+coZVUnfOIJX6dgjVKUjMhJn3vA1pm4PBAj1GK/hADVbAxcYJ+PgET+RPfoxenPjgnLMyeWFkg/yW0hiP2ufh+Ph5YhC4nVJLrwki+zrSvCMOUDS/W05Ppa2/3gDVUGtSQFxwTJIKaEyNEYFap4Q+DpO4dkaGA4vMkuGTQBUfPz728Hbu+7iXKnWf1ATl2lwmhs4rHO2qrozkDuffS2NKrMQOo1bvcWzrLNwBmQzIXPglIL+3vyst7ztlCRk5TSa6mB2nQ89JcZHYXOeMhMciZjqZMhXqO1BmA9rQAKFb6EXsIPGFmfPlpCKuuyEzDAjpnyyms6CbMfgMiwZIpKiVa5B8YjNEoFL+x1BbKmJ2w7m0NsQH/X66bASSmum0LNuticwjhfB7PMV7FxW3RTpiUXAbUxgjBcibn2PL2eVsZhMaKo8fZqwmB7piFPhNDOZ/zYCgfY4G+OMWbqRksr48oKKuDy5GNYzOrtTHZhtikPlP6yA==
+ ARA:13230040|30052699003|36860700016|23010399003|376014|1800799024|82310400026|56012099006|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: 4ItoEYvArvUmcx7muplvB10RSE0Sj/SveIGyfOwC9eT0WpjojXFe0xmzWHhl2ak9CF/YKl7pZTj5/seedE5gLp/waiIuvffNLH3xNJvKyLaXZmhOhdJM4a9GhMnOZvErVs+ECbddboC7tIns5MfsCIF1kSkes2LgkfgWH/kqP6nkuT0uhjH5jYCWbWeGPoFMF+uQq9LMlUgNiM5UZb+9LSjzXbIGuYEzHQvO69r2QmlMJ60e0mYBwmgtjmBjAO6v0NrhBqI6R2dO7+HnQymRQEjR+su04AVviOGA0w6fuyucJm4RXnGwMNNaJJVMoopMvujfDHy/yak/6aDd0o9Shs8+7xyNrR/mtNmd16Yew26AGmCIgdDOjJujJ9P202bBD0Nik0SRZjU2O/eoP/l83BFFMG4aY/bOKHhq998CbAiPJGurd20JprNjPdH4JlD2eV7bRADLx08d3zOl+2aFTfEaj4PEZj1VgfS8FsZk+z5+zbT2TCMJEdXIgvgnBgv28kUL/tMJKAMM34F1PPVJEH2LE/1IOhu0uvtBxym8D2utBNFm6XlVcX+vTO0ga2f9OkRk7m1KUoDnukEktaUghP8Y3YyK6080AWFjxSCPACyNutVYIoxxsqJBYt1E5j9Va0THj1yz4LifH3KU8bP4Pmjh3W5QffTH/2oVblo2dYhR5cc3lsieEPo3OPC8W28iEd6KFy8UeVmWZURIZx0DHw==
 X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(23010399003)(376014)(1800799024)(82310400026)(56012099006)(10067099003)(18002099003)(3023799007)(13003099007);
+ SFS:(13230040)(30052699003)(36860700016)(23010399003)(376014)(1800799024)(82310400026)(56012099006)(10067099003)(18002099003)(22082099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 1czYKFhViOPPUk5pKyHnAVeEBA5gloxvGxWTeGQQc+a99dX4jfbukkGf7tZQuNp3a4UdcxPjbtvaexscajtXbIJ1UcAKvRQspwSoWjgFN+v1xpEM3Vi/kLjTcOqcbHLaBzPUXBa6anzSnyZ89XfD4tpWWBWZGEiYYruB85K1ApuEK7K2a729pvk1zinnpSP/snZoMNnZj9n2oWzIqaXYzAnYsT0UG1JHduypfc0vKR+7S1aOvcLcor+0C9fFUuBnQl09Lrik/6pC1s5KTWqcGGdwKxzVHL25aoS7ckEHtg/sUlX0WvuAJZYonDV95jVi/hIJA9nCkh/7HtnIr77eyNBSsuODFB4r/K3FOvHfTh/95qo0Vqq6tWX6cap5pcNM3FSnfMIIsTdssDxh+xebq3KVP6KJE2bWqlhxanFBord988kpaSUfdMxmrbTDNH2V
+X-MS-Exchange-AntiSpam-MessageData-0: UWKCUiZeMZ+zrBuGamBDbFqbz+jpGaMZ5mlqMRecwPYGTfHC10QjDNukfJzF+Pu2nZFNruq4G09r16mhRI0yX2JDSe+QpGatsSXo9DVNSWWG5WAl7uqqvpAWy7+bpRc4CWAjBBBXmJf4B0qq6oLuIy1YStlGqjA69Q4nfLqvbgvnjFHjttz/GAkzz4aSLCNNLSHhCGoNPZdDGRqOTaIBBKefL7yUbtOTeg8VkR90LHPMVQ8Yp1YP6bxB47oL3I/3TxS3XGH9f9mf7cyOJwi7CAKeA/Io5byBrGVasB319GKjM35Ld1C6O/FO3AksQQoK/Y37oNTochoxK3ufxIz6WMcvXrQsfv/T0r6XMjl4mJL88KYK9EtGseTdjdDahY9pho4g9QFlv8ugxKa5CZQejTRuZJrZhdAPbXSW10+2nFP4kL/tZKx+Wxi9CqeiGxGc
 X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 04:51:40.5790 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: da19c0d1-abe6-453f-2b3d-08df13ae32e9
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 04:52:00.2123 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9d8b88b-c235-4450-3853-08df13ae3e81
 X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
  Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009E.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044AB.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR18MB3823
-Received-SPF: pass client-ip=2a01:111:f403:c10c::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR18MB4426
+Received-SPF: pass client-ip=2a01:111:f403:c007::2;
  envelope-from=rdondi@axiado.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
+ helo=MW6PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 16 Sep 2026 02:28:02 -0400
@@ -120,80 +122,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset introduces Axiado HCP network model for SoC AX3000
+Instantiate the Axiado HCP and map its three MMIO regions - the EIP-197
+packet engine, the SHIM MAC configuration block and the PCS/SerDes CSR
+region - at the addresses the SoC uses.
 
-The HCP (Header and Crypto Processing) block is the substantial part of
-the series. It is the SoC's network complex, built around an Inside
-Secure SafeXcel EIP-197 packet engine that acts as bus master for all
-packet I/O over four command/result descriptor ring pairs. Five MACs
-are demultiplexed by an "application ID" tag carried in the EIP-96
-input and output tokens. Only the packet datapath is modelled; the
-EIP-197 cryptographic transforms are treated as pass-through, which is
-what the guest asks for when the block is used as a network interface.
+Its ten interrupt lines are connected to the GIC in the order the guest
+expects: one for the EIP-197 itself, four for the descriptor ring
+interfaces and five for the MACs.
 
-Refer Axiado website for more product information
-https://axiado.com/products/
+Signed-off-by: Ratan Lal Dondi <rdondi@axiado.com>
+---
+ hw/arm/Kconfig              |  1 +
+ hw/arm/ax3000-soc.c         | 23 +++++++++++++++++++++++
+ include/hw/arm/ax3000-soc.h | 14 ++++++++++++++
+ 3 files changed, 38 insertions(+)
 
-Testing
--------
- The user-mode network backend is required, so configure with libslirp
- enabled (it is auto-detected, and silently absent otherwise):
-
-  ./configure --target-list=aarch64-softmmu -Dslirp=enabled
-
-  qemu-system-aarch64 \
-    -m 4G \
-    -machine axiado-scm3003 \
-    -device loader,file=u-boot.bin,addr=0x3C000000,cpu-num=0 \
-    -nographic \
-    -serial null \
-    -serial null \
-    -serial null \
-    -serial mon:stdio \
-    -drive if=sd,file=obmc-phosphor-image-evk-axiado-qemu.wic,format=raw \
-    -netdev user,id=net4,hostfwd=tcp::2222-:22 \
-    -global axiado-hcp.netdev4=net4 \
-
-
-In the guest, bring the interface up with DHCP:
-
-  udhcpc -i eth0
-
-Then from the host:
-
-  ssh -p 2222 root@127.0.0.1
-
-With the unmodified vendor Linux driver, the guest:
-
-  - probes the HCP and brings eth0 up
-  - obtains an address over DHCP from the SLIRP backend
-  - resolves ARP and answers ping
-  - sustains an SSH session and completes an SCP transfer
-
-Not modelled
-------------
-
-  - EIP-197 cryptographic transforms. Descriptors are pass-through.
-  - PCS/SerDes behaviour. The guest configures these registers and never
-    reads them back, so writes are accepted and discarded; the link is
-    always reported up.
-
-Ratan Lal Dondi (2):
-  hw/net: Add Axiado HCP network device model
-  hw/arm: Wire up the HCP network complex in the AX3000 SoC
-
- hw/arm/Kconfig              |    1 +
- hw/arm/ax3000-soc.c         |   23 +
- hw/net/Kconfig              |    3 +
- hw/net/axiado_hcp.c         | 1372 +++++++++++++++++++++++++++++++++++
- hw/net/meson.build          |    2 +
- hw/net/trace-events         |    6 +
- include/hw/arm/ax3000-soc.h |   14 +
- include/hw/net/axiado_hcp.h |  172 +++++
- 8 files changed, 1593 insertions(+)
- create mode 100644 hw/net/axiado_hcp.c
- create mode 100644 include/hw/net/axiado_hcp.h
-
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index eae06369b0..5545f4846d 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -723,6 +723,7 @@ config AXIADO_SOC
+     select AXIADO_CLK
+     select CADENCE_GPIO
+     select AXIADO_SDHCI
++    select AXIADO_HCP
+     select UNIMP
+ 
+ config AXIADO_EVK
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index ebe174fb97..9c3137af2a 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -41,6 +41,10 @@ static void ax3000_init(Object *obj)
+         g_autofree char *name = g_strdup_printf("gpio%d", i);
+         object_initialize_child(obj, name, &s->gpio[i], TYPE_CADENCE_GPIO);
+     }
++
++
++    object_initialize_child(obj, "hcp", &s->hcp, TYPE_AXIADO_HCP);
++
+ }
+ 
+ static void ax3000_realize(DeviceState *dev, Error **errp)
+@@ -49,6 +53,7 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+     Ax3000SoCClass *sc = AX3000_SOC_GET_CLASS(s);
+     SysBusDevice *gic_sbd = SYS_BUS_DEVICE(&s->gic);
+     DeviceState *gic_dev = DEVICE(&s->gic);
++    SysBusDevice *hcp_sbd = SYS_BUS_DEVICE(&s->hcp);
+     QList *redist_region_count;
+     SysBusDevice *sdhci0_sbd;
+     DeviceState *card;
+@@ -217,6 +222,24 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
+                            qdev_get_gpio_in(gic_dev, gpio_table[i].irq));
+     }
++
++    /* HCP */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->hcp), errp)) {
++        return;
++    }
++
++    sysbus_mmio_map(hcp_sbd, 0, AX3000_HCP_EIP197_BASE);
++
++    sysbus_mmio_map(hcp_sbd, 1, AX3000_HCP_SHIM_BASE);
++
++    sysbus_mmio_map(hcp_sbd, 2, AX3000_HCP_PHY_CSR_BASE);
++
++    for (int i = 0; i < HCP_NUM_IRQS; i++) {
++        sysbus_connect_irq(hcp_sbd, i,
++                           qdev_get_gpio_in(gic_dev,
++                                            AX3000_HCP_IRQ_BASE + i));
++    }
++
+ }
+ 
+ static void ax3000_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
+index 344fcb6f3c..187c1e02ad 100644
+--- a/include/hw/arm/ax3000-soc.h
++++ b/include/hw/arm/ax3000-soc.h
+@@ -15,6 +15,7 @@
+ #include "hw/misc/axiado_clk.h"
+ #include "hw/gpio/cadence_gpio.h"
+ #include "hw/sd/axiado_sdhci.h"
++#include "hw/net/axiado_hcp.h"
+ #include "hw/core/sysbus.h"
+ #include "qemu/units.h"
+ 
+@@ -48,6 +49,10 @@ OBJECT_DECLARE_TYPE(Ax3000SoCState, Ax3000SoCClass, AX3000_SOC)
+ #define AX3000_GPIO6_BASE       0x80800000
+ #define AX3000_GPIO7_BASE       0x80880000
+ 
++#define AX3000_HCP_EIP197_BASE  0x83000000
++#define AX3000_HCP_SHIM_BASE    0x83100000
++#define AX3000_HCP_PHY_CSR_BASE 0x87000000
++
+ #define AX3000_TIMER_CTRL       0x8A020000
+ #define AX3000_PLL_BASE         0x80000000
+ 
+@@ -69,6 +74,7 @@ typedef struct Ax3000SoCState {
+     CadenceUARTState    uart[AX3000_NUM_UARTS];
+     CadenceGPIOState    gpio[AX3000_NUM_GPIOS];
+     AxiadoSDHCIState    sdhci0;
++    AXIADOHCPState      hcp;
+ } Ax3000SoCState;
+ 
+ typedef struct Ax3000SoCClass {
+@@ -93,6 +99,14 @@ enum Ax3000Irqs {
+     AX3000_GPIO5_IRQ    = 188,
+     AX3000_GPIO6_IRQ    = 189,
+     AX3000_GPIO7_IRQ    = 190,
++
++    /*
++     * HCP IRQ base — 10 contiguous SPIs :
++     *   +0       = EIP-197 global
++     *   +1..+4   = ring interfaces (4)
++     *   +5..+9   = MAC IRQs (5)
++     */
++    AX3000_HCP_IRQ_BASE = 0,
+ };
+ 
+ #endif /* AXIADO_AX3000_H */
 -- 
 2.34.1
 
