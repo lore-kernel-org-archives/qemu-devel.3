@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9B7C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EDBC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ld3-0003Ue-OI; Wed, 16 Sep 2026 05:08:33 -0400
+	id 1x6lfM-0000n3-1M; Wed, 16 Sep 2026 05:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcx-00036t-SI; Wed, 16 Sep 2026 05:08:27 -0400
+ id 1x6ler-0000Q3-Lp; Wed, 16 Sep 2026 05:10:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcv-0007PQ-Oe; Wed, 16 Sep 2026 05:08:27 -0400
+ id 1x6lep-0007qy-5c; Wed, 16 Sep 2026 05:10:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549560; bh=5IOFmpdzdx7PlferpKeVeyi70Yn76f+MfnaCbgEiA8w=;
+ t=1789549562; bh=rjEjEziej6cjRYGPvzsqBfzwhuKzOOOtYiCHS5jWO4Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fwCtsDmUoqd8XzAZUg8n6T883FurdpJvT7yOxYtL8NvZ3kPnphBkdEAbwDmTPM/QA
- UbmB4+DBsK74zjLl8vRTXC4NsC/0QAf4UKZSt5VMasl6NI9RTqu6iYdM2NS9dGmF/J
- T1XnnSQ0mSAgcQgMK7C24/bmffhJJ4fZV5L5O6bbAO90fiSBSh1ohMdXhDK+y7Jk/F
- r3rQptArXcu7T6CxjDkH04HWzRDyND83Q7ZYXy3QvlY4xPMw1kcJqghdoDKF+PRz9R
- 2pX9mf/X8+KsnBCu/BjOpwABV3wPHvgKNGbM4k/0Gqr2YsCsQmyWsw+L2AIL446Bzk
- Shw7ObrRd5MQg==
+ b=rwRtn5eFVBjtDzV4lH9hB1CL+ui8jG49fS/R1kRBRjJRPsk8znEQMh+fBI+hqXqm1
+ ono0K28GPk+dnqKUgUeqrviUAbhrMQj5Z9Eift+3JUgXCMyXAdqiqHC7oqonmQc5ct
+ pugcVO3bDFuO+1mFa5v9PvsXPEXd12o3pKLmzysuTpKkx3D2ucZhHtNYbpEw9r+L+X
+ P7g0im57CkxBFVG7d+XVGGIu9XPX1qbzfc9OtgMLwLCGHqFhsWgCx+iA5mm/RFnFNO
+ N0iyxd5+/O2v5uQsYutWh6vIi/J4MD81ZsfgLWq073xjopCag44MPADG0cxWbfHQ14
+ iYqgwcq4FYGAA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D8A061D56CF;
- Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 538211D56E7;
+ Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 846D6429E19;
- Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F3623429E43;
+ Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 769155A78D; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id DF0695A7BD; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexandre Frey <alexandre.frey@nxp.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 26/57] target/arm: fix TTA instruction S bit for
- IDAU-exempt addresses
-Date: Wed, 16 Sep 2026 12:03:50 +0300
-Message-ID: <20260916090516.677749-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 50/57] hw/display/qxl: hold ssd.lock while replacing
+ ssd.cursor
+Date: Wed, 16 Sep 2026 12:04:14 +0300
+Message-ID: <20260916090516.677749-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,72 +73,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandre Frey <alexandre.frey@nxp.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-The TTA (Test Target Alternate Domain) instruction is specific to
-ARMv8-M processors with the Security Extension (TrustZone). It allows
-Secure code to query the security attributes and access permissions of
-a memory address as seen from the Non-secure domain, and is typically
-used by Secure code to validate pointers received from Non-secure
-callers before dereferencing them.
+qxl_spice_reset_cursor() unrefs qxl->ssd.cursor and installs the hidden
+cursor without holding qxl->ssd.lock. Every other writer of that field
+takes it: qxl_render_cursor(), display_mouse_define() and
+qemu_spice_cursor_refresh_bh().
 
-The TTA instruction incorrectly reports the S bit (bit 22) of the
-result register for IDAU-exempt addresses when executed from Secure
-state.
+The unlocked path runs on a vCPU thread, reached from ioport_write() on
+QXL_IO_DESTROY_PRIMARY and QXL_IO_DESTROY_PRIMARY_ASYNC, and holds only
+the BQL, which the SPICE display worker never takes. Unlike
+qxl_hard_reset(), it leaves that worker running.
+spice_qxl_reset_cursor() does round trip through the dispatcher, but the
+worker is free again as soon as it returns, so it can enter
+qxl_render_cursor() and unref the same QEMUCursor a few instructions
+later. Both threads then drop one reference for what is a single
+reference, freeing a cursor that another user still holds. The store to
+ssd.cursor races the same way, and a guest that keeps this up also ends
+up waiting forever in qxl_fence_wait().
 
-According to the ARMv8-M Architecture Reference Manual (DDI0553B.z),
-the TTResp() pseudocode (E2.1.408) always calls SecurityCheck() with
-the current security state, regardless of the alt flag:
+A guest reaches this by switching QXL mode while it also updates the
+pointer shape.
 
-  sAttributes = SecurityCheck(address, FALSE, IsSecure());
-
-The alt flag only affects which MPU bank is queried for the R/RW/MREGION
-fields. It does not affect the SAU/IDAU security attribute lookup that
-determines the S bit.
-
-For an IDAU-exempt address, SecurityCheck() (E2.1.366) sets:
-
-  result.ns = !isSecure;  // isSecure = current CPU security state
-
-So TTA executed from Secure state on an IDAU-exempt address should
-return S=1. This is confirmed by testing on real Cortex-M33 hardware.
-
-QEMU currently passes targetsec (which is flipped to !env->v7m.secure
-when alt=true) to v8m_security_lookup(), causing the IDAU-exempt path
-to set sattrs->ns = TRUE and return S=0 instead.
-
-Fix this by always passing the current security state to
-v8m_security_lookup(), as the spec requires.
-
+Fixes: 958c2bceba06 ("qxl: fix cursor reset")
 Cc: qemu-stable@nongnu.org
-Fixes: 5158de241b0f ("target/arm: Implement TT instruction")
-(the is_secure argument to v8m_security_lookup() was only added in
-dbf2a71ad62b992 ("target/arm: Add is_secure parameter to
-v8m_security_lookup"), but the code before that implicitly had the
-equivalent bug.)
-Signed-off-by: Alexandre Frey <alexandre.frey@nxp.com>
-Message-id: ZR6PR04MB44238851A057F385D7EECEAD3599AE2@ZR6PR04MB442388.eurprd04.prod.outlook.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: added comment]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f63124af78462f2210b90b07ef62a74bc32281a3)
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260903192647.2677279-2-den@openvz.org>
+(cherry picked from commit 2c43897356ac10dcce76a0287de8f9561c84fe82)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index a0cb8cb021e..ca6a45a8289 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -2857,8 +2857,9 @@ uint32_t HELPER(v7m_tt)(CPUARMState *env, uint32_t addr, uint32_t op)
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 2af2065a512..fc1c3059c6f 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -294,10 +294,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
+     qemu_mutex_lock(&qxl->track_lock);
+     qxl->guest_cursor = 0;
+     qemu_mutex_unlock(&qxl->track_lock);
++    qemu_mutex_lock(&qxl->ssd.lock);
+     if (qxl->ssd.cursor) {
+         cursor_unref(qxl->ssd.cursor);
      }
+     qxl->ssd.cursor = cursor_builtin_hidden();
++    qemu_mutex_unlock(&qxl->ssd.lock);
+ }
  
-     if (env->v7m.secure) {
-+        /* Note that security check is done as Secure even if alt is true */
-         v8m_security_lookup(env, addr, MMU_DATA_LOAD, mmu_idx,
--                            targetsec, &sattrs);
-+                            env->v7m.secure, &sattrs);
-         nsr = sattrs.ns && r;
-         nsrw = sattrs.ns && rw;
-     } else {
+ static uint32_t qxl_crc32(const uint8_t *p, unsigned len)
 -- 
 2.47.3
 
