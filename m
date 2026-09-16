@@ -4,48 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFC04C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87077C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kJk-0004XD-E2; Wed, 16 Sep 2026 03:44:32 -0400
+	id 1x6kL8-000885-4i; Wed, 16 Sep 2026 03:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJi-0004Tz-B4; Wed, 16 Sep 2026 03:44:30 -0400
+ id 1x6kL1-0007zR-7v; Wed, 16 Sep 2026 03:45:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJc-0004vi-KH; Wed, 16 Sep 2026 03:44:29 -0400
+ id 1x6kKy-0005Fk-W8; Wed, 16 Sep 2026 03:45:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=inRrAmY1iduQgFn52/DZ7mmh8xDPO5suzTu9cKN5rdA=;
+ t=1789544614; bh=zxWmyasIhfgT6vc02V3XvzJfGY16yMLjXFGy4NUaMjE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sjsw/QctCm4RAzOIh8PLm3r1kxnOX0OPGY5MXmxQNAlRgOpFjMtu4zH9foA8GV4RW
- MsXLJ3KlPaHQ4t9Mq4hC7xgF/fsvPrpybtkZ3GJipT7jcMUIo2VrOnc32zO/CG3Jnd
- Rrrp9S8aHke2fG/y8MZr/Jw12SJF4RayTWa4DE3BNmCgy5fkiuy/IZwZFWtCU4N8Gn
- UiN4RicMUilUb52R2k0QtyMOLY1q5c/ZujUj/TWoB8mSE47qN1s7gxPthqp1iTn7vr
- 8aMy3qOFeLoQ24vDIlbRWJ3xtKes6u8F4guh3Aj7aLd4C91tDKgo5qn4p+hLJbwAIt
- ArGOxi9UIc62g==
+ b=pOxiwrX4wQYTqMWo1XSRUs9PXi+8VK72ZhROuSoqvun0bzfjcQauULtjlfG9Al1WW
+ j2NUhFekd+4RcMcCxxYuyn3vDdHFFfqxnDeVaIl8l6yf4Ak1244/c46qB4HRhEY0kd
+ UTCj6fHGQsI9ONIVKRMZsU5QW18DMgHl2+Zt82ob4tdLTXlzZWYCrp7SjmzRlUC6Q4
+ W4eLSAD80Z38F1SvrYU/wPi1sCBsEgQDeeEPSz/yxj+txPDVALV+6+LlRF2A5sqx1/
+ 0SX7fIT9IcrVIaa8Q9ohkwonSkj1LWBHv7dO7+a8tRNv44L1n2gJ5WQalxWbcb6DTh
+ 8FgwArx9/WmQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B7861D5596;
- Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CB6BF1D55A4;
+ Wed, 16 Sep 2026 10:43:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CB483429B2B;
- Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B268429B4B;
+ Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id ADC3C5A6D7; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id 518035A6ED; Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 11/49] dirty-bitmap: fix integer overflow in
- serialization coverage
-Date: Wed, 16 Sep 2026 10:42:29 +0300
-Message-ID: <20260916074346.671467-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 22/49] i386/vapic: unref MemoryRegion if
+ vapic_map_rom_writable fails
+Date: Wed, 16 Sep 2026 10:42:40 +0300
+Message-ID: <20260916074346.671467-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -74,46 +71,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The chunk size is an int and is shifted left by 3 before the result is
-widened, so a chunk size of 1 << 28 or above overflows.
+memory_region_find returns the memory region with an elevated
+reference count.  Drop the reference count also if the memory
+region cannot be mapped writable.
 
-parallels passes s->cluster_size, which parallels_open() lets reach
-2 GiB. With a bitmap needing two L1 entries the bogus limit makes the
-"bm_size - offset" in parallels_load_bitmap_data() underflow; both
-wrong values slip past the assertions in serialization_chunk() and the
-resulting index lands outside the hbitmap, so a 128 KiB image memsets
-unrelated memory through hbitmap_deserialize_ones().
-
-Widen the shift. qcow2, the only other caller, never exceeds a 2 MiB
-cluster.
-
-Fixes: 35f428ba3971 ("qcow2-bitmap: make bytes_covered_by_bitmap_cluster() public")
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260811173857.396571-4-den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit dc04053687ec7219a78f9b90fe2f71c9336914e1)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit cfa6e2c52ca8f756461fe41f4ce40e61a82fd914)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/dirty-bitmap.c b/block/dirty-bitmap.c
-index 13a1979755d..9fda3a4b983 100644
---- a/block/dirty-bitmap.c
-+++ b/block/dirty-bitmap.c
-@@ -612,7 +612,7 @@ uint64_t bdrv_dirty_bitmap_serialization_coverage(int serialized_chunk_size,
-                                                   const BdrvDirtyBitmap *bitmap)
- {
-     uint64_t granularity = bdrv_dirty_bitmap_granularity(bitmap);
--    uint64_t limit = granularity * (serialized_chunk_size << 3);
-+    uint64_t limit = granularity * ((uint64_t)serialized_chunk_size << 3);
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index 2069a4b962a..c914d96d946 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -608,11 +608,13 @@ static int vapic_map_rom_writable(VAPICROMState *s)
  
-     assert(QEMU_IS_ALIGNED(limit,
-                            bdrv_dirty_bitmap_serialization_align(bitmap)));
+     /* read ROM size from RAM region */
+     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
++        memory_region_unref(section.mr);
+         return -1;
+     }
+     ram = memory_region_get_ram_ptr(section.mr);
+     rom_size = ram[rom_paddr + 2] * ROM_BLOCK_SIZE;
+     if (rom_size == 0 || rom_size > OPTION_ROM_END - rom_paddr) {
++        memory_region_unref(section.mr);
+         return -1;
+     }
+ 
 -- 
 2.47.3
 
