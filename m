@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 290D3C88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F0DC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4L-0001Q3-GX; Wed, 16 Sep 2026 06:40:49 -0400
+	id 1x6n0X-0003OH-LP; Wed, 16 Sep 2026 06:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3Q-0007Vb-0d; Wed, 16 Sep 2026 06:39:52 -0400
+ id 1x6n0V-0003NN-Fm; Wed, 16 Sep 2026 06:36:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3M-00026U-GI; Wed, 16 Sep 2026 06:39:50 -0400
+ id 1x6n0T-0001fA-PW; Wed, 16 Sep 2026 06:36:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=EiCjEHBu+hQ7AFPuyTbFuH1uiPdR0MhfuSL6H69evW0=;
+ t=1789554955; bh=7koLpmv1W1MGtoRMh3djCnU1tOPgdiMFlT327+OMUvA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=esiteBKQ78q0J9efnqfUkj9EwIJMaynHvblKGq6mxkLh0ZPyRywZmWMf/fn66tNxN
- slVXXsi8YHjkOw4uStnNYQ+VfutDj+FgMg0fdgvat/L80zeOdlvSTiKjCKck6VqMwD
- gr3D0QU8Il0sAAvcrFWtT/m1XEx0csrJb1xnK0GwBlP0IvmxRk3JMXmQb5Aj8awDqd
- u401SskazBAFKA0fQ/5oCjRQli5IFWV47eIIvHKE0SV3yN90+AIcEr045BhovrVeji
- LCC6+gFPwHOte9yp0+eo5+JZ1PasOmeIlcPCWIJyBUA3e3FIDHcFDxPBouEuTBPVgk
- E8qskEwsbH21Q==
+ b=X8zSEV3J2uqbqiKzWSPvMYOjuU8o6ejt7Gbm7pVIAzas3R9QWqGilg/YfiyTZZVvL
+ shJKSEvP6qJB/qBDKuu6MWMI37litjJRjRKTTlOk/75Q6qw8U4zsE0dX0jBpYd0adR
+ u8QhBdjkbEuPstbXSXNsH+oUJVLkfjsINaga+iZvOtUP1JVcLP9Ka/gE8vKASSaIcp
+ TS2pX5Tx/8Xm6qxy/k0/WyG02V0OK91w1LmhjyHOD+PRX/AtUoHeIoZQPSDjnUV1F+
+ Ij2p5NYSijHUPsmBUOe3M6/9e2iKakEydcK/1L7j7vNqzzMmr5LZBcdHNpx3w7qBno
+ qWTZ8u1GxD45Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D15291D5820;
- Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BAB2B1D57FA;
+ Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B5CF429F8E;
- Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 85663429F59;
+ Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8FA8F5A835; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id 6BDB85A7EF; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 42/56] hw/net/virtio-net: check packet size before
- VLAN tag access in receive_filter()
-Date: Wed, 16 Sep 2026 13:36:00 +0300
-Message-ID: <20260916103622.684817-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 07/56] job: keep job paused across overlapping pause
+ requests
+Date: Wed, 16 Sep 2026 13:35:25 +0300
+Message-ID: <20260916103622.684817-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,49 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-receive_filter() reads ptr[14..15] to extract the VLAN ID without
-checking the packet is large enough. A short frame with VLAN TPID
-at bytes 12-13 but no VLAN TCI causes a 2-byte out-of-bounds read.
+job_pause_point_locked() sets job->paused before yielding and clears it
+unconditionally on wake, before re-checking whether a pause is still
+pending. job_pause() re-enters a parked job only while it is not yet
+paused, so the wake that resumes one comes from a drain *ending*
+(job_resume() -> job_enter_cond()). If the next drain begins before that
+wake runs, the woken coroutine clears job->paused while pause_count is
+already > 0 again:
 
-Add size checks before accessing the Ethernet header and the VLAN
-tag fields.
+  AioContext change (BQL thread)     job coroutine (iothread)
+  -----------------------------      ------------------------
+                                     parked in job_pause_point():
+                                       paused=1, pause_count=1, yielded
+  drain ends -> job_resume():
+    pause_count = 0
+    job_enter_cond(): queue wake ..>   (wake pending)
+  bdrv_try_change_aio_context():
+    bdrv_drain_all_begin():
+      job_pause() per node
+      pause_count = N (> 0)
+                                     wake runs, leaves job_do_yield():
+                                       paused = 0  (pause_count == N)
+    tran_commit -> job_set_aio_context():
+      assert(paused || completed) --> abort: paused == 0
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3788
-Fixes: f21c0ed97c97 ("qemu:virtio-net: Add VLAN filtering (Alex Williamson)")
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260722115008.1570510-1-lvivier@redhat.com>
-(cherry picked from commit 5d85a09554fb66e18107cfbfa4e6b637bf4e2508)
+bdrv_try_change_aio_context() drains precisely to quiesce the job before
+changing its AioContext, but that brief paused==0 window trips the
+assertion. It is guest-triggerable: a virtio-blk reset
+(virtio_blk_stop_ioeventfd() -> blk_set_aio_context()) racing a running
+mirror/blockCopy job hits it, as do x-blockdev-set-iothread, blockdev
+hot-plug/unplug and job completion.
+
+Keep job->paused set while a pause is still pending: loop the yield
+until job_should_pause_locked() is false (or the job is cancelled), and
+only then clear job->paused. Drained-state consumers then never observe
+a pending-pause job as unpaused.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260623152406.1180235-2-den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 2667133c2799f670366b94059cc0513ae57fe8cb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 814b99a43d2..93653581cb6 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1750,12 +1750,16 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
+diff --git a/job.c b/job.c
+index e7479084726..d7220aaf30c 100644
+--- a/job.c
++++ b/job.c
+@@ -629,7 +629,14 @@ static void coroutine_fn job_pause_point_locked(Job *job)
+                                     ? JOB_STATUS_STANDBY
+                                     : JOB_STATUS_PAUSED);
+         job->paused = true;
+-        job_do_yield_locked(job, -1);
++        /*
++         * Stay paused across back-to-back pause requests: a transient
++         * paused == false while pause_count > 0 would be observed as
++         * "not paused" by job_set_aio_context() and other drain consumers.
++         */
++        do {
++            job_do_yield_locked(job, -1);
++        } while (job_should_pause_locked(job) && !job_is_cancelled_locked(job));
+         job->paused = false;
+         job_state_transition_locked(job, status);
      }
- 
-     ptr += n->host_hdr_len;
-+    size -= n->host_hdr_len;
-+
-+    if (size < sizeof(struct eth_header)) {
-+        return 0;
-+    }
- 
-     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
-         int vid;
- 
--        /* Truncated vlan packet */
--        if (size < n->host_hdr_len + 16) {
-+        if (size < 16) {
-             return 0;
-         }
-         vid = lduw_be_p(ptr + 14) & 0xfff;
 -- 
 2.47.3
 
