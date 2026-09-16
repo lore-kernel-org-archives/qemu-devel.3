@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CB0C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DB5C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n3Q-0007SU-Do; Wed, 16 Sep 2026 06:39:54 -0400
+	id 1x6n4O-0001fo-Ql; Wed, 16 Sep 2026 06:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2B-0005nc-RO; Wed, 16 Sep 2026 06:38:39 -0400
+ id 1x6n3S-0007au-Ay; Wed, 16 Sep 2026 06:39:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n28-0001vf-N4; Wed, 16 Sep 2026 06:38:34 -0400
+ id 1x6n3Q-00028m-2s; Wed, 16 Sep 2026 06:39:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554956; bh=C4MOFvijSzw8CIJIdZ3m/DedTlzh+pyTH8zY3O/QuFQ=;
+ t=1789554957; bh=gRtC9Ai0tnc5O4cbrhFyCgkmjJzmeR6tZluv7lJ8n2U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NdCkR6q1mhrxrd+xxjMrJhCjuQU5cvOSD5GwSc6Phwi4cyymO+nMAh+4NjgutHeWq
- 6iaHN0RPjitAlXlE98Nc4QJQL69CwK30qzRPjeYryYDKFY9ShdX/OhtFzGLxdxAjy+
- 2bFb902a5QJUYTotnBdEKcLYj9Uo+pDg/9WCIL/1nis3S5EY+8RTZtb+4We3ZWT/Ey
- R1E921P1EDqL6s0ogVFGlE6pj8b6/2a1GZ1YbxiMIkT77Dnw2+RvC2S5IkbTQ2pydt
- 4Gm6wbf9t+iI/JztIkVtnYI0jsaCXVEpdufVjuKgcngK14KC+lSRArJC3r2BjdZUN1
- wxExBnNf3kReQ==
+ b=TiBLj8H3tNhqf3T8D25inzhct/h+pSMIfhlemgZvGMF8qOD6xe+LH9CRksDMFNP/H
+ kuJdyRoO8/mDjR61a3icBRiyCNCBAQlBbbGJo2BM7+XJF1A9mewh4K9ifv32NqzwDW
+ gYZEmU8DEWE1e7VjjPz4Eel8+nFHEH82yN+mLPayMmfl0uyO7nCsE32a4Mit4EMZKo
+ LqPuTKszwAfA9Oy+1LJQ/04RW9qDY9RnXT/0cnEetKmsb36fXMcslecRxbBV0Qx/Yr
+ cpv/2RyRE12pCx5jpycZE97pkN3Q/KvvzFaJCNRVFRHu700jD+HR9hUokLaw4esD1f
+ +yHoSv2gke/Zg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF9241D580C;
- Wed, 16 Sep 2026 13:35:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D524E1D5821;
+ Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA36C429F6A;
- Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A0166429F8F;
+ Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AB6355A811; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ id 92AB55A837; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexandre Frey <alexandre.frey@nxp.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 24/56] target/arm: fix TTA instruction S bit for
- IDAU-exempt addresses
-Date: Wed, 16 Sep 2026 13:35:42 +0300
-Message-ID: <20260916103622.684817-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 43/56] hw/net/virtio-net: strip trailing padding when
+ caching RSC segment
+Date: Wed, 16 Sep 2026 13:36:01 +0300
+Message-ID: <20260916103622.684817-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
@@ -71,72 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandre Frey <alexandre.frey@nxp.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-The TTA (Test Target Alternate Domain) instruction is specific to
-ARMv8-M processors with the Security Extension (TrustZone). It allows
-Secure code to query the security attributes and access permissions of
-a memory address as seen from the Non-secure domain, and is typically
-used by Secure code to validate pointers received from Non-secure
-callers before dereferencing them.
+When an RSC candidate packet has trailing padding bytes beyond the
+declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
+size into the coalescing buffer and sets seg->size to that value.
+The bounds check in virtio_net_rsc_coalesce_data() uses the IP
+length field (o_ip_len) which does not include the padding, so the
+check can pass while the subsequent memmove() overflows the buffer.
 
-The TTA instruction incorrectly reports the S bit (bit 22) of the
-result register for IDAU-exempt addresses when executed from Secure
-state.
+Fix this by computing the actual IP packet size from the IP header
+and using it for both the memcpy and seg->size, so that seg->size
+stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
+guarantees that ip_size <= size.
 
-According to the ARMv8-M Architecture Reference Manual (DDI0553B.z),
-the TTResp() pseudocode (E2.1.408) always calls SecurityCheck() with
-the current security state, regardless of the alt flag:
-
-  sAttributes = SecurityCheck(address, FALSE, IsSecure());
-
-The alt flag only affects which MPU bank is queried for the R/RW/MREGION
-fields. It does not affect the SAU/IDAU security attribute lookup that
-determines the S bit.
-
-For an IDAU-exempt address, SecurityCheck() (E2.1.366) sets:
-
-  result.ns = !isSecure;  // isSecure = current CPU security state
-
-So TTA executed from Secure state on an IDAU-exempt address should
-return S=1. This is confirmed by testing on real Cortex-M33 hardware.
-
-QEMU currently passes targetsec (which is flipped to !env->v7m.secure
-when alt=true) to v8m_security_lookup(), causing the IDAU-exempt path
-to set sattrs->ns = TRUE and return S=0 instead.
-
-Fix this by always passing the current security state to
-v8m_security_lookup(), as the spec requires.
-
+Fixes: CVE-2026-66900
+Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
 Cc: qemu-stable@nongnu.org
-Fixes: 5158de241b0f ("target/arm: Implement TT instruction")
-(the is_secure argument to v8m_security_lookup() was only added in
-dbf2a71ad62b992 ("target/arm: Add is_secure parameter to
-v8m_security_lookup"), but the code before that implicitly had the
-equivalent bug.)
-Signed-off-by: Alexandre Frey <alexandre.frey@nxp.com>
-Message-id: ZR6PR04MB44238851A057F385D7EECEAD3599AE2@ZR6PR04MB442388.eurprd04.prod.outlook.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: added comment]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f63124af78462f2210b90b07ef62a74bc32281a3)
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
+Reported-by: Sven <bestswngs@gmail.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
+(cherry picked from commit 73c3d017ef6a01f92463b398db61c1c1e430fb6d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index f4ba93b291b..33c9e7c55bc 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -2869,8 +2869,9 @@ uint32_t HELPER(v7m_tt)(CPUARMState *env, uint32_t addr, uint32_t op)
-     }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 93653581cb6..310a7c2f007 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2199,13 +2199,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
+ {
+     uint16_t hdr_len;
+     VirtioNetRscSeg *seg;
++    size_t ip_size;
  
-     if (env->v7m.secure) {
-+        /* Note that security check is done as Secure even if alt is true */
-         v8m_security_lookup(env, addr, MMU_DATA_LOAD, mmu_idx,
--                            targetsec, &sattrs);
-+                            env->v7m.secure, &sattrs);
-         nsr = sattrs.ns && r;
-         nsrw = sattrs.ns && rw;
-     } else {
+     hdr_len = chain->n->guest_hdr_len;
++
++    /*
++     * Strip any trailing padding beyond the IP payload so that seg->size
++     * stays in sync with the IP length field used by the bounds check in
++     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
++     * guarantees that ip_size <= size.
++     */
++    ip_size = hdr_len + sizeof(struct eth_header);
++    if (chain->proto == ETH_P_IP) {
++        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
++        ip_size += htons(ip->ip_len);
++    } else {
++        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
++        ip_size += sizeof(struct ip6_header)
++                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
++    }
++
+     seg = g_new(VirtioNetRscSeg, 1);
+     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
+         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
+-    memcpy(seg->buf, buf, size);
+-    seg->size = size;
++    memcpy(seg->buf, buf, ip_size);
++    seg->size = ip_size;
+     seg->packets = 1;
+     seg->dup_ack = 0;
+     seg->is_coalesced = 0;
 -- 
 2.47.3
 
