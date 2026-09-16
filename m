@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FFEC88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CB0C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n3p-0008C3-3f; Wed, 16 Sep 2026 06:40:17 -0400
+	id 1x6n3Q-0007SU-Do; Wed, 16 Sep 2026 06:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2R-00061r-5p; Wed, 16 Sep 2026 06:38:52 -0400
+ id 1x6n2B-0005nc-RO; Wed, 16 Sep 2026 06:38:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2P-00020m-Cu; Wed, 16 Sep 2026 06:38:50 -0400
+ id 1x6n28-0001vf-N4; Wed, 16 Sep 2026 06:38:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=pVexX22Gswp37I+jYIlwDUiiRIeswn+1lPMG9xjQgtY=;
+ t=1789554956; bh=C4MOFvijSzw8CIJIdZ3m/DedTlzh+pyTH8zY3O/QuFQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AH8/wvB60BJiT0ef+Nu+56/7GGeN2NRIiIC5uoKBceCeuYQpKdrFAxwDIEJFxGz47
- w+Qm/ckDavza7gWW6qTaYGdl5tNwjQHoVT6VALMlDfzcoR6Epy/AGfYWFm9YSO+O6M
- ghLh9kTZgtBZGlbK/Me3zUGviUUvR+2ey7tAb6fHzPiMn54FnMOZY+QfotND0lK7/R
- Gi1aiAjsuJ5pkuKuxEiKCLv2WP5Yas8c2zZc8rO8COzhfdCwr+/Q/xnbAaDx7AMO5g
- DN29vvA4mdVnWie8hJAnibvx2TZ2VMKlLzMUNuPQsZ7QpOjlBQy7zK8RK9eEJVpCsM
- OiQ+x+FGqbxgA==
+ b=NdCkR6q1mhrxrd+xxjMrJhCjuQU5cvOSD5GwSc6Phwi4cyymO+nMAh+4NjgutHeWq
+ 6iaHN0RPjitAlXlE98Nc4QJQL69CwK30qzRPjeYryYDKFY9ShdX/OhtFzGLxdxAjy+
+ 2bFb902a5QJUYTotnBdEKcLYj9Uo+pDg/9WCIL/1nis3S5EY+8RTZtb+4We3ZWT/Ey
+ R1E921P1EDqL6s0ogVFGlE6pj8b6/2a1GZ1YbxiMIkT77Dnw2+RvC2S5IkbTQ2pydt
+ 4Gm6wbf9t+iI/JztIkVtnYI0jsaCXVEpdufVjuKgcngK14KC+lSRArJC3r2BjdZUN1
+ wxExBnNf3kReQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 150F61D5811;
- Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EF9241D580C;
+ Wed, 16 Sep 2026 13:35:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D3889429F6F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BA36C429F6A;
  Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BAA865A81B; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ id AB6355A811; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 29/56] hw/sd: sdhci: Accept version 4 enable without
- UHS-I
-Date: Wed, 16 Sep 2026 13:35:47 +0300
-Message-ID: <20260916103622.684817-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexandre Frey <alexandre.frey@nxp.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 24/56] target/arm: fix TTA instruction S bit for
+ IDAU-exempt addresses
+Date: Wed, 16 Sep 2026 13:35:42 +0300
+Message-ID: <20260916103622.684817-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,65 +71,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Alexandre Frey <alexandre.frey@nxp.com>
 
-Host Control 2 writes have been conditional on modeled UHS-I support
-since commit 0034ebe6ee31. Host Version 4 Enable does not control UHS
-signaling, so controllers without modeled UHS-I cannot enter version
-4 mode.
+The TTA (Test Target Alternate Domain) instruction is specific to
+ARMv8-M processors with the Security Extension (TrustZone). It allows
+Secure code to query the security attributes and access permissions of
+a memory address as seen from the Non-secure domain, and is typically
+used by Secure code to validate pointers received from Non-secure
+callers before dereferencing them.
 
-Retain Host Version 4 Enable independently of UHS-I while continuing
-to reject UHS-specific fields and keeping voltage changes UHS-gated.
+The TTA instruction incorrectly reports the S bit (bit 22) of the
+result register for IDAU-exempt addresses when executed from Secure
+state.
+
+According to the ARMv8-M Architecture Reference Manual (DDI0553B.z),
+the TTResp() pseudocode (E2.1.408) always calls SecurityCheck() with
+the current security state, regardless of the alt flag:
+
+  sAttributes = SecurityCheck(address, FALSE, IsSecure());
+
+The alt flag only affects which MPU bank is queried for the R/RW/MREGION
+fields. It does not affect the SAU/IDAU security attribute lookup that
+determines the S bit.
+
+For an IDAU-exempt address, SecurityCheck() (E2.1.366) sets:
+
+  result.ns = !isSecure;  // isSecure = current CPU security state
+
+So TTA executed from Secure state on an IDAU-exempt address should
+return S=1. This is confirmed by testing on real Cortex-M33 hardware.
+
+QEMU currently passes targetsec (which is flipped to !env->v7m.secure
+when alt=true) to v8m_security_lookup(), causing the IDAU-exempt path
+to set sattrs->ns = TRUE and return S=0 instead.
+
+Fix this by always passing the current security state to
+v8m_security_lookup(), as the spec requires.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 0034ebe6ee31 ("sdhci: implement UHS-I voltage switch")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723151853.2143177-9-bin.meng@processmission.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 10dddf15e294f01561bacd815c78f2da03c4f1a0)
+Fixes: 5158de241b0f ("target/arm: Implement TT instruction")
+(the is_secure argument to v8m_security_lookup() was only added in
+dbf2a71ad62b992 ("target/arm: Add is_secure parameter to
+v8m_security_lookup"), but the code before that implicitly had the
+equivalent bug.)
+Signed-off-by: Alexandre Frey <alexandre.frey@nxp.com>
+Message-id: ZR6PR04MB44238851A057F385D7EECEAD3599AE2@ZR6PR04MB442388.eurprd04.prod.outlook.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: added comment]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit f63124af78462f2210b90b07ef62a74bc32281a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index e58a6103970..a612e5cbafb 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1345,11 +1345,24 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-         }
-         sdhci_update_irq(s);
-         break;
--    case SDHC_ACMD12ERRSTS:
-+    case SDHC_ACMD12ERRSTS: {
-+        uint16_t hostctl2_mask = mask >> 16;
-+        uint16_t hostctl2_value = value >> 16;
-+
-         MASKED_WRITE(s->acmd12errsts, mask, value & UINT16_MAX);
--        if (s->uhs_mode >= UHS_I) {
--            MASKED_WRITE(s->hostctl2, mask >> 16, value >> 16);
-+        if (s->uhs_mode < UHS_I) {
-+            /*
-+             * VERSION4 is writable even without UHS-I. Preserve all other
-+             * Host Control 2 bits when UHS-I is not supported.
-+             */
-+            uint16_t independent = R_SDHC_HOSTCTL2_VERSION4_MASK;
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index f4ba93b291b..33c9e7c55bc 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -2869,8 +2869,9 @@ uint32_t HELPER(v7m_tt)(CPUARMState *env, uint32_t addr, uint32_t op)
+     }
  
-+            hostctl2_mask |= ~independent;
-+            hostctl2_value &= independent;
-+        }
-+        MASKED_WRITE(s->hostctl2, hostctl2_mask, hostctl2_value);
-+
-+        if (s->uhs_mode >= UHS_I) {
-             if (FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, V18_ENA)) {
-                 sdbus_set_voltage(&s->sdbus, SD_VOLTAGE_1_8V);
-             } else {
-@@ -1357,6 +1370,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-             }
-         }
-         break;
-+    }
- 
-     case SDHC_CAPAB:
-     case SDHC_CAPAB + 4:
+     if (env->v7m.secure) {
++        /* Note that security check is done as Secure even if alt is true */
+         v8m_security_lookup(env, addr, MMU_DATA_LOAD, mmu_idx,
+-                            targetsec, &sattrs);
++                            env->v7m.secure, &sattrs);
+         nsr = sattrs.ns && r;
+         nsrw = sattrs.ns && rw;
+     } else {
 -- 
 2.47.3
 
