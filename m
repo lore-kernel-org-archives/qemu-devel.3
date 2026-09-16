@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BABC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B51E8C982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lbM-0008MD-TQ; Wed, 16 Sep 2026 05:06:49 -0400
+	id 1x6lbM-0008M7-4U; Wed, 16 Sep 2026 05:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbK-0008Lf-NZ; Wed, 16 Sep 2026 05:06:46 -0400
+ id 1x6lbK-0008Le-Ih; Wed, 16 Sep 2026 05:06:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbI-00070S-8Z; Wed, 16 Sep 2026 05:06:46 -0400
+ id 1x6lbI-00070Q-8l; Wed, 16 Sep 2026 05:06:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=MgBrDFQHo9AaofYCiKC2zcH60/jmqW6wGC024FiTP/c=;
+ t=1789549558; bh=+gzfoz3x3bDrUody7yIvT4bORUvW2sx+TMx20Vu8V90=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lOglWsG4oZhm7GWXG5+L9C8yFHA+OTi3wJDFOZ4o3go1GZ1dpC+fQMqPsVHlQ+pFM
- +L3TsqM9H2wqlX37rgttcxtiJy6gBDKWb+a8xriD62+gOeW44xXRVKTG0UzDwS3Y9d
- W0uZxNxBPWnjMJc4tmh24iokT2bpEC/6+kmwL68kjGK7ydErUXH9ABuKKRw3lygt1c
- t8Ku/OqUKIqE2B/19YACS5yZXfGdtaSx7LPISAdaF6crgpPDug+8cHJKeMS9qTkBsc
- gKuTOEsSLKwrj1X7POtbhgmeaPvjvJkN00HKDS5ZVc9oAGXyY8EG9mxEJAq+u/2xwN
- YC3072mIBukAw==
+ b=bSLYG43ktLm2EXavob/lgXi/ERe1x6Jsra7U4MjutmigdgwPEsj+Zal7E5YQiwlEM
+ aO7RniWvCTusIe3l6NRbpL0FIbD5K66km3RL5Efp81zvsg4kUR8CdPQ5DvPcyvMCYv
+ UoTbdjx11jUp6QunShkJhWyW8LbHNr6o1oX8SCyYQnr5c+8epenUn5fMCjTtxIQmeo
+ Xc/gSdir7yOKHsWP4diVo1H5NY01+MKpZXtOElxJrN+nU/TZy6t6QImerKw2Pz8MCo
+ V+MpPY7542fYL49VHmRa8Ov1/Mq+NlgBut1+ucnHfFwVRSeQhZ5Nriy92z+ysGVWJ+
+ FkvCgMXYUlJ6g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5E6D31D56B5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 66BD21D56B6;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 09B75429DFD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 12408429DFE;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 034AA5A75B; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 0689F5A75D; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 01/57] hw/display/qxl: validate primary surface stride
- against width
-Date: Wed, 16 Sep 2026 12:03:25 +0300
-Message-ID: <20260916090516.677749-1-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 02/57] virtio-gpu: use g_try_malloc to avoid
+ guest-triggered abort
+Date: Wed, 16 Sep 2026 12:03:26 +0300
+Message-ID: <20260916090516.677749-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -76,266 +76,259 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The existing validation in qxl_create_guest_primary() checks that
-abs(stride) * height fits in vgamem_size and that stride is 4-byte
-aligned, but never checks that abs(stride) is large enough to hold one
-row of pixels for the declared width and format.
+Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
+returns an error to the guest rather than crashing the host (glib
+behaviour).
 
-A malicious guest can create a primary surface with a stride much
-smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
-surface). The spice server rejects this via red_validate_surface(), but
-the return is void and QEMU unconditionally proceeds to set up the local
-rendering state. On the next display refresh, VNC or SDL reads width *
-bytes_pp per scanline from a region backed by only stride bytes per
-row, causing a host-side out-of-bounds read.
-
-Add three checks in qxl_create_guest_primary() before creating the
-surface:
- - reject unknown surface formats
- - reject zero width or height
- - reject surfaces where abs(stride) < width * bytes_per_pixel
-
-Also fix three related issues in qxl-render.c:
- - qxl_blit() used abs_stride to advance the dst pointer into the
-   DisplaySurface, but when stride is negative the DisplaySurface is a
-   packed buffer whose stride may be smaller. Use surface_stride()
-   instead.
- - qxl_render_update_area_unlocked() uses guest_head0_width (set via
-   QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
-   abs_stride, bypassing the new validation. Clamp the effective width
-   to abs_stride / bytes_pp to prevent out-of-bounds access while
-   tolerating the normal transient where the monitor config arrives
-   before the primary surface is resized to match.
- - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
-   validation. Without clamping, abs_stride * height can overrun
-   vgamem_size, and the product can also overflow 32 bits (e.g.
-   abs_stride=16 MiB, height=256 wraps to zero), defeating the
-   qxl_phys2virt() bounds check. Clamp height to
-   vgamem_size / abs_stride to prevent both.
-
-While touch it, fix some endianness issues.
-
-Fixes: CVE-2026-16271
-Fixes: a19cbfb34642 ("spice: add qxl device")
-Fixes: 979f7ef8966b ("qxl: use guest_monitor_config for local renderer.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
-Reported-by: huntr bubble
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260806094028.640676-1-marcandre.lureau@redhat.com>
-(cherry picked from commit ab7183ed4eecb4727532e3ffe5953d127e102c72)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260805130141.211398-1-marcandre.lureau@redhat.com>
+(cherry picked from commit eb2b3a1fa807f47515a1d86e434c60c981310bcd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index cf0f6849cd0..f2bc25f03ad 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -27,6 +27,7 @@
- static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+index 78648815093..933bdbb671c 100644
+--- a/contrib/vhost-user-gpu/vhost-user-gpu.c
++++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
+                       struct virtio_gpu_ctrl_command *cmd,
+                       struct iovec **iov)
  {
-     DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
-+    int dst_stride = surface_stride(surface);
-     uint8_t *dst = surface_data(surface);
-     uint8_t *src;
-     int len, i;
-@@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
-     } else {
-         src += rect->top * qxl->guest_primary.abs_stride;
-     }
--    dst += rect->top  * qxl->guest_primary.abs_stride;
-+    dst += rect->top  * dst_stride;
-     src += rect->left * qxl->guest_primary.bytes_pp;
-     dst += rect->left * qxl->guest_primary.bytes_pp;
-     len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
- 
-     for (i = rect->top; i < rect->bottom; i++) {
-         memcpy(dst, src, len);
--        dst += qxl->guest_primary.abs_stride;
-+        dst += dst_stride;
-         src += qxl->guest_primary.qxl_stride;
-     }
- }
-@@ -61,30 +62,13 @@ void qxl_render_resize(PCIQXLDevice *qxl)
- {
-     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
- 
--    qxl->guest_primary.qxl_stride = sc->stride;
--    qxl->guest_primary.abs_stride = abs(sc->stride);
-+    qxl->guest_primary.qxl_stride = le32_to_cpu(sc->stride);
-+    qxl->guest_primary.abs_stride = abs(qxl->guest_primary.qxl_stride);
-     qxl->guest_primary.resized++;
--    switch (sc->format) {
--    case SPICE_SURFACE_FMT_16_555:
--        qxl->guest_primary.bytes_pp = 2;
--        qxl->guest_primary.bits_pp = 15;
--        break;
--    case SPICE_SURFACE_FMT_16_565:
--        qxl->guest_primary.bytes_pp = 2;
--        qxl->guest_primary.bits_pp = 16;
--        break;
--    case SPICE_SURFACE_FMT_32_xRGB:
--    case SPICE_SURFACE_FMT_32_ARGB:
--        qxl->guest_primary.bytes_pp = 4;
--        qxl->guest_primary.bits_pp = 32;
--        break;
--    default:
--        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
--                qxl->guest_primary.surface.format);
--        qxl->guest_primary.bytes_pp = 4;
--        qxl->guest_primary.bits_pp = 32;
--        break;
--    }
-+    /* fallback to default bpp if format is unknown */
-+    qxl_format_bpp(qxl, le32_to_cpu(sc->format),
-+                   &qxl->guest_primary.bytes_pp,
-+                   &qxl->guest_primary.bits_pp);
- }
- 
- static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
-@@ -101,15 +85,45 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
-     DisplaySurface *surface;
-     int width = qxl->guest_head0_width ?: qxl->guest_primary.surface.width;
-     int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
-+    uint64_t map_height;
+-    struct virtio_gpu_mem_entry *ents;
++    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
+     size_t esize, s;
      int i;
  
-+    if (width <= 0 || height <= 0) {
-+        goto end;
+@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
+     }
+ 
+     esize = sizeof(*ents) * ab->nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
 +    }
-+
-+    if (qxl->guest_primary.bytes_pp > 0) {
-+        int max_width = qxl->guest_primary.abs_stride
-+                        / qxl->guest_primary.bytes_pp;
-+        width = MIN(width, max_width);
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(*ab), ents, esize);
+     if (s != esize) {
+         g_critical("%s: command data size incorrect %zu vs %zu",
+                    __func__, s, esize);
+-        g_free(ents);
+         return -1;
+     }
+ 
+-    *iov = g_new0(struct iovec, ab->nr_entries);
++    *iov = g_try_new0(struct iovec, ab->nr_entries);
++    if (!*iov && ab->nr_entries) {
++        return -1;
 +    }
-+
-+    if (qxl->guest_primary.qxl_stride < 0) {
-+        /* qxl_blit() uses the primary height to find the first scanline. */
-+        height = MIN(height, (int)qxl->guest_primary.surface.height);
-+    }
-+
-+    if (qxl->guest_primary.abs_stride > 0) {
-+        int max_height = qxl->vgamem_size / qxl->guest_primary.abs_stride;
-+        height = MIN(height, max_height);
-+    }
-+
-+    /*
-+     * height limits the visible update, while map_height is the guest memory
-+     * span validated by qxl_phys2virt().  With a negative stride qxl_blit()
-+     * addresses scanlines from the declared primary height, so a shorter
-+     * monitor still requires validating the full primary surface.
-+     */
-+    map_height = qxl->guest_primary.qxl_stride < 0 ?
-+                 qxl->guest_primary.surface.height : height;
-+
-     if (qxl->guest_primary.resized) {
-         qxl->guest_primary.resized = 0;
-         qxl->guest_primary.data = qxl_phys2virt(qxl,
-                                                 qxl->guest_primary.surface.mem,
-                                                 MEMSLOT_GROUP_GUEST,
-                                                 qxl->guest_primary.abs_stride
--                                                * height);
-+                                                * map_height);
-         if (!qxl->guest_primary.data) {
-             goto end;
+     for (i = 0; i < ab->nr_entries; i++) {
+         uint64_t len = ents[i].length;
+         (*iov)[i].iov_len = ents[i].length;
+@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
+             g_critical("%s: resource %d element %d",
+                        __func__, ab->resource_id, i);
+             g_free(*iov);
+-            g_free(ents);
+             *iov = NULL;
+             return -1;
          }
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index c3639092ca9..2af2065a512 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -1490,6 +1490,47 @@ static void qxl_create_guest_primary_complete(PCIQXLDevice *qxl)
-     qxl_render_resize(qxl);
+     }
+-    g_free(ents);
+     return 0;
  }
  
-+/*
-+ * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
-+ *
-+ * Only valid for surface suitable for rendering.
-+ */
-+bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
-+                    uint32_t *bytes_pp, uint32_t *bits_pp)
-+{
-+    uint32_t bypp = 4;
-+    uint32_t bipp = 32;
-+    bool ret = true;
-+
-+    switch (format) {
-+    case SPICE_SURFACE_FMT_16_555:
-+        bypp = 2;
-+        bipp = 15;
-+        break;
-+    case SPICE_SURFACE_FMT_16_565:
-+        bypp = 2;
-+        bipp = 16;
-+        break;
-+    case SPICE_SURFACE_FMT_32_xRGB:
-+    case SPICE_SURFACE_FMT_32_ARGB:
-+        bypp = 4;
-+        bipp = 32;
-+        break;
-+    default:
-+        ret = false;
-+        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, format);
-+    }
-+
-+    if (bytes_pp != NULL) {
-+        *bytes_pp = bypp;
-+    }
-+    if (bits_pp != NULL) {
-+        *bits_pp = bipp;
-+    }
-+
-+    return ret;
-+}
-+
- static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
-                                      qxl_async_io async)
- {
-@@ -1497,6 +1538,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
-     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
-     uint32_t requested_height = le32_to_cpu(sc->height);
-     int requested_stride = le32_to_cpu(sc->stride);
-+    uint32_t bytes_pp;
+@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
+                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
+             size_t size = width * height * bpp;
  
-     if (requested_stride == INT32_MIN ||
-         abs(requested_stride) * (uint64_t)requested_height
-@@ -1533,6 +1575,23 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+-            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
+-                               sizeof(VhostUserGpuUpdate) + size);
++            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
++                                   sizeof(VhostUserGpuUpdate) + size);
++            if (!p) {
++                pixman_region_fini(&region);
++                pixman_region_fini(&finalregion);
++                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++                break;
++            }
+             VhostUserGpuMsg *msg = p;
+             msg->request = VHOST_USER_GPU_UPDATE;
+             msg->size = sizeof(VhostUserGpuUpdate) + size;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 550fd03bf5c..20bae57d0fe 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
          return;
      }
  
-+    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
 +        return;
 +    }
-+
-+    if (surface.width == 0 || surface.height == 0) {
-+        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
-+                          __func__, surface.width, surface.height);
-+        return;
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
+index 710d5452977..e2d8385fd85 100644
+--- a/contrib/vhost-user-gpu/vugbm.c
++++ b/contrib/vhost-user-gpu/vugbm.c
+@@ -13,7 +13,10 @@
+ static bool
+ mem_alloc_bo(struct vugbm_buffer *buf)
+ {
+-    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
++    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
++    if (!buf->mmap && buf->width && buf->height) {
++        return false;
 +    }
-+
-+    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
-+        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
-+                          " stride %d width %u bpp %u",
-+                          __func__, surface.stride, surface.width, bytes_pp);
-+        return;
-+    }
-+
-     surface.mouse_mode = true;
-     surface.group_id   = MEMSLOT_GROUP_GUEST;
-     if (loadvm) {
-diff --git a/hw/display/qxl.h b/hw/display/qxl.h
-index ddbab3d693a..10b3d1a043a 100644
---- a/hw/display/qxl.h
-+++ b/hw/display/qxl.h
-@@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
- void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
- void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
- void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
-+bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
-+                    uint32_t *bytes_pp, uint32_t *bits_pp);
+     buf->stride = buf->width * 4;
+     return true;
+ }
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index fd55656c114..8f12290f188 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -366,10 +366,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
  
- /* qxl-logger.c */
- int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int group_id);
+-    buf = g_new0(uint8_t, cs.size);
++    buf = g_try_new0(uint8_t, cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+-    CHECK(s == cs.size, cmd);
++    if (s != cs.size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: size mismatch (%zu/%u)\n",
++                      __func__, s, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
+ 
+     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
+     rutabaga_cmd.cmd = buf;
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 20884f397e9..b1519254582 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -39,8 +39,11 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+         return;
+     }
+ 
+-    list = g_malloc0(sizeof(struct udmabuf_create_list) +
+-                     sizeof(struct udmabuf_create_item) * res->iov_cnt);
++    list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
++                         sizeof(struct udmabuf_create_item) * res->iov_cnt);
++    if (!list) {
++        return;
++    }
+ 
+     for (i = 0; i < res->iov_cnt; i++) {
+         rcu_read_lock();
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 789b7e3e9b7..b3ca806e2cb 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -621,7 +621,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 01675c87deb..d6f83da852a 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -892,7 +892,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+     }
+ 
+     esize = sizeof(*ents) * nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    offset, ents, esize);
+     if (s != esize) {
+@@ -913,6 +916,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+         hwaddr len;
+         void *map;
+ 
++        /* TODO: a common DMA map SG helper */
+         do {
+             len = l;
+             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+@@ -921,20 +925,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
+-                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
+-                g_free(ents);
+-                *iov = NULL;
+-                if (addr) {
+-                    g_free(*addr);
+-                    *addr = NULL;
+-                }
+-                return -1;
++                goto err;
+             }
+ 
+             if (!(v % 16)) {
+-                *iov = g_renew(struct iovec, *iov, v + 16);
++                struct iovec *new_iov;
++                new_iov = g_try_renew(struct iovec, *iov, v + 16);
++                if (!new_iov) {
++                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                     DMA_DIRECTION_TO_DEVICE, len);
++                    goto err;
++                }
++                *iov = new_iov;
+                 if (addr) {
+-                    *addr = g_renew(uint64_t, *addr, v + 16);
++                    uint64_t *new_addr;
++                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
++                    if (!new_addr) {
++                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                         DMA_DIRECTION_TO_DEVICE, len);
++                        goto err;
++                    }
++                    *addr = new_addr;
+                 }
+             }
+             (*iov)[v].iov_base = map;
+@@ -952,6 +963,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+ 
+     g_free(ents);
+     return 0;
++
++err:
++    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
++    *iov = NULL;
++    if (addr) {
++        g_clear_pointer(addr, g_free);
++    }
++    g_free(ents);
++    return -1;
+ }
+ 
+ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
 -- 
 2.47.3
 
