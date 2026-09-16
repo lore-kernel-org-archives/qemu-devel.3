@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDA8C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CC2C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4e-0002a4-Om; Wed, 16 Sep 2026 06:41:09 -0400
+	id 1x6n4e-0002Zt-Oi; Wed, 16 Sep 2026 06:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n43-0008Qh-RC; Wed, 16 Sep 2026 06:40:35 -0400
+ id 1x6n42-0008QQ-Az; Wed, 16 Sep 2026 06:40:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n42-0002QK-7q; Wed, 16 Sep 2026 06:40:31 -0400
+ id 1x6n3z-0002Li-MD; Wed, 16 Sep 2026 06:40:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554958; bh=W8vuVPPk7YFnn93xLGvKlsRQLztsdjQUBnJj3kpGymg=;
+ t=1789554957; bh=M0H3Ac6vh+pqzQ+Xk78MpEPRiI2f/IWvMxLbMdJFKws=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Kaf6gLCoXoM9hmonp/iMTBYEHzVCui1ZKNWIGGuXHefr8xbPkA2Q5bu/JWqgWlSXW
- VjioBe4T7JWmXekLiAZg71mX4FnK9MD5yHQqrlH3VJbIlLC2MTwYa8QTfJkaHhewdP
- iTxkl/adVtsVcBXid2cbk4XotdniFyVCWBLXWZANWL+W4atROvXlfQk7pV7ru0BOQN
- gDwn/F7ABAgMvIpZNWDSgE+TTfGc3hg5gPyFbhAm6JYs+uX5Sv6Pm7oQIaoZxe0oFT
- CSerw224NY7de/Iti6oAb+Z2HXBojFOUaO+i/NswVpaaxMPeC/8+nogqd8/nI9GzNZ
- VYK3/Rz87z5tA==
+ b=hA7i79FyLkDKvjsmqDZaovrCSeJrKdRH0exY/D7bcJxaNYMS1RxcAPj1E9X/JZVGb
+ a89+YejJaITlSdqWYdS7XpOyAhCB3RoyP0gKjJdQN5Y8lbcusAHTrAg/B56xuGLo4m
+ YBzT67x7fmFWyRgQBjHfUkystQzyXZt+78HoJsoTGp6aAL1Rq8WfSyr9mmFnJUg7QZ
+ s4uuA9kfJe3c6KxImRxAf1voe37/N5bYI6D9U+OaprdRZ9x1dqHb2Hyq8y8j+lrYM6
+ kZ50LzWc/FhHOCpoMz7gnQRCJ+qq1MfabJG+a5BGTyB59QLqRUtJAjrsOUMIWgbjXn
+ Q1oXT8o8JMlmg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0198E1D5828;
- Wed, 16 Sep 2026 13:35:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ECCBF1D5826;
+ Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C0A7C429F96;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B7AC8429F94;
  Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A762C5A845; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id A19F35A841; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- admin@fluentlogic.org, Michael S. Tsirkin <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 50/56] vhost-user-gpu: validate command buffer size in
- submit_3d
-Date: Wed, 16 Sep 2026 13:36:08 +0300
-Message-ID: <20260916103622.684817-50-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 48/56] hw/display/qxl: hold ssd.lock while replacing
+ ssd.cursor
+Date: Wed, 16 Sep 2026 13:36:06 +0300
+Message-ID: <20260916103622.684817-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
@@ -74,61 +73,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-virgl_cmd_submit_3d() passes the guest-controlled cs.size directly to
-g_malloc() without any bounds check. A malicious guest can set this
-field to an arbitrarily large value (up to 4GB), causing an OOM abort
-that crashes the vhost-user-gpu daemon.
+qxl_spice_reset_cursor() unrefs qxl->ssd.cursor and installs the hidden
+cursor without holding qxl->ssd.lock. Every other writer of that field
+takes it: qxl_render_cursor(), display_mouse_define() and
+qemu_spice_cursor_refresh_bh().
 
-Validate cs.size against the actual descriptor payload size before
-allocating, rejecting values that exceed what the virtqueue entry
-can carry.
+The unlocked path runs on a vCPU thread, reached from ioport_write() on
+QXL_IO_DESTROY_PRIMARY and QXL_IO_DESTROY_PRIMARY_ASYNC, and holds only
+the BQL, which the SPICE display worker never takes. Unlike
+qxl_hard_reset(), it leaves that worker running.
+spice_qxl_reset_cursor() does round trip through the dispatcher, but the
+worker is free again as soon as it returns, so it can enter
+qxl_render_cursor() and unref the same QEMUCursor a few instructions
+later. Both threads then drop one reference for what is a single
+reference, freeing a cursor that another user still holds. The store to
+ssd.cursor races the same way, and a guest that keeps this up also ends
+up waiting forever in qxl_fence_wait().
 
-Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-Reported-by: admin@fluentlogic.org
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260713125431.107278-1-marcandre.lureau@redhat.com>
-Message-ID: <67f10fb88d3c75da3ba7fa5a37f7d6bcfcf3ce9e.1789071042.git.mst@redhat.com>
-(cherry picked from commit 01df81b24c50fe70e816cce70956acd6ac632fc9)
+A guest reaches this by switching QXL mode while it also updates the
+pointer shape.
+
+Fixes: 958c2bceba06 ("qxl: fix cursor reset")
+Cc: qemu-stable@nongnu.org
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260903192647.2677279-2-den@openvz.org>
+(cherry picked from commit 2c43897356ac10dcce76a0287de8f9561c84fe82)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 20bae57d0fe..c95c4afc5c5 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -197,20 +197,24 @@ virgl_cmd_submit_3d(VuGpu *g,
-                     struct virtio_gpu_ctrl_command *cmd)
- {
-     struct virtio_gpu_cmd_submit cs;
-+    size_t iov_len;
-     void *buf;
-     size_t s;
- 
-     VUGPU_FILL_CMD(cs);
- 
--    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
--        g_critical("%s: command buffer too large (%u)",
--                   __func__, cs.size);
-+    iov_len = iov_size(cmd->elem.out_sg, cmd->elem.out_num);
-+    if (cs.size == 0 || iov_len < sizeof(cs) ||
-+        cs.size > iov_len - sizeof(cs) ||
-+        cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        g_critical("%s: size out of range (%u/%zu)",
-+                   __func__, cs.size, iov_len);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-         return;
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 384b8767b8e..c4f547e88bd 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -294,10 +294,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
+     qemu_mutex_lock(&qxl->track_lock);
+     qxl->guest_cursor = 0;
+     qemu_mutex_unlock(&qxl->track_lock);
++    qemu_mutex_lock(&qxl->ssd.lock);
+     if (qxl->ssd.cursor) {
+         cursor_unref(qxl->ssd.cursor);
      }
+     qxl->ssd.cursor = cursor_builtin_hidden();
++    qemu_mutex_unlock(&qxl->ssd.lock);
+ }
  
-     buf = g_try_malloc(cs.size);
--    if (!buf && cs.size) {
-+    if (!buf) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-         return;
-     }
+ static uint32_t qxl_crc32(const uint8_t *p, unsigned len)
 -- 
 2.47.3
 
