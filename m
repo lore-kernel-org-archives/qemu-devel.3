@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6D6C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E605C982C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:06:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6mWO-0004wD-SD; Wed, 16 Sep 2026 06:05:44 -0400
+	id 1x6mWM-0004r7-QX; Wed, 16 Sep 2026 06:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x6mWM-0004r9-UI
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:05:43 -0400
+ id 1x6mWJ-0004pd-5T
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:05:39 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x6mWK-0005yb-WE
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:05:42 -0400
+ id 1x6mWG-0005xp-U7
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:05:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1789553141; x=1821089141;
+ t=1789553137; x=1821089137;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=sJz8rZtbXW8w3h7HqUiV3nSV1VSsb4eVDHHjg8BHWF0=;
- b=Ki7gsVAZ4fQMEH/etIeN7wbIGxOLgdlDv3qSHSuyHCt/fSSN1EnBI3wb
- TRDnBO71a5zj6qfmURAKn6rlNeM3UCFvplVPgFNWXiW+8ogAfTFhhXz/T
- fvTN4zoHZy4s/428k8ZW9zJofzIFYwDfl4fDFrV5O5LoAWPMO8W1+/QOs
- pDJCzkNHb313+sKStmAaCvRKAyHPETRaCuGH7jiYNMmudIR5OwmozwBWG
- lHhtmBUuMYHzn0B2eX74JECd7Bl9YRGZAYRNOV/avF4p876pCH6RaF6Wd
- syDNAuWIzsmJqwOT0KjZ4C0IPjcCBf1jlmOYGMUvePwEaFDBQczeTJNmW g==;
-X-CSE-ConnectionGUID: HuYiW5IeRjKfVlfLZnZVDQ==
-X-CSE-MsgGUID: IuoJvsGBS9abxby9y+TxLA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93797346"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="93797346"
+ bh=DN7PFBClXMHO52I7nrYjGvbfkH+PUzXSt49cJL9vsV8=;
+ b=B++9fA3eaX45gPxOAtpK28WXu7Va6G9vejOPn9tH0VWEQj/sLr6m8m/w
+ dAYP/GQHelm1JYr61Q6X/CYFo/DLL4dDXODvIinivCgHaph/RkPfMsAIa
+ mwCZmF7a/WDbmglLM4gT5M9ntpXWYBh1R62OCggn0WJmb40tt59RPWt5t
+ ge5rbb0RMOaMh+sBwWQ65Dwa6SZt689vcz2Xm7LrajvDc/qaIai9oJ+DC
+ Klyba6mQgxF7bm/LJHbftLKMHWcoFG09wf48cUe0wkWCio8PReluj7EDG
+ euy2N4Gy3hCXdBkG00MQrI6yeDtsluG7HuRhlh/JCFDsiZYfHQQpotKXE A==;
+X-CSE-ConnectionGUID: vZ04J4sRR9mBrBitkQA0+g==
+X-CSE-MsgGUID: BvoZ59u+Tz29hQim7ooFOQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93797336"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="93797336"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Sep 2026 03:05:40 -0700
-X-CSE-ConnectionGUID: HLkobyc0Sk6T6J91OvaCfQ==
-X-CSE-MsgGUID: ji2S0p2YTsqdqEnSHGMP1Q==
+ 16 Sep 2026 03:05:36 -0700
+X-CSE-ConnectionGUID: kRCIna6WSbqEuZhVClz3Ig==
+X-CSE-MsgGUID: 9f1cFgSGQratErIis98hIA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="269600265"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="269600260"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Sep 2026 03:05:36 -0700
+ 16 Sep 2026 03:05:33 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -54,10 +54,10 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v7 6/6] intel_iommu_accel: teardown FAULTQ resources in bottom
- half
-Date: Wed, 16 Sep 2026 18:04:41 +0800
-Message-ID: <20260916100442.1034043-7-zhenzhong.duan@intel.com>
+Subject: [PATCH v7 5/6] intel_iommu_accel: Accept PRQ response for passthrough
+ device
+Date: Wed, 16 Sep 2026 18:04:40 +0800
+Message-ID: <20260916100442.1034043-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260916100442.1034043-1-zhenzhong.duan@intel.com>
 References: <20260916100442.1034043-1-zhenzhong.duan@intel.com>
@@ -87,85 +87,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a pasid entry becomes invalid, we need to release all resources
-allocated for that entry including FAULTQ object and fault_fd.
+Propagate guest's PRQ response to host by writing to fault_fd.
+Create a new VTDPRQEntry to cache cookie for each fault group,
+this cookie is used to mark the fault group on host side.
 
-We call qemu_set_fd_handler() to detach fault_fd's io_read handler and
-wakes up main thread from poll(), but there could still be a small
-window we call iommufd_backend_free_id(fault_id) before poll() exit
-and release fault_id file reference. In this rare case, FAULTQ object
-free return -EBUSY because opened fault_id file keeps reference of
-FAULTQ object.
+If there is either PRQ overflow or full error condition, propagate
+a success response to host for LPIG request with the PRQ requests
+dropped. For other error conditions, propagate response of invalid
+request.
 
-Teardown FAULTQ resources in bottom half to ensure poll() has released
-fault_id file reference.
-
-Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- hw/i386/intel_iommu_accel.c | 40 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 37 insertions(+), 3 deletions(-)
+ hw/i386/intel_iommu_accel.h   | 12 +++++
+ include/hw/i386/intel_iommu.h |  6 +++
+ hw/i386/intel_iommu.c         |  4 ++
+ hw/i386/intel_iommu_accel.c   | 99 ++++++++++++++++++++++++++++++++---
+ hw/i386/trace-events          |  1 +
+ 5 files changed, 115 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index cd227315da..c3f3c74482 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -268,17 +268,51 @@ free_faultq:
-     return false;
+diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
+index e0319749a5..0cc22b2cbb 100644
+--- a/hw/i386/intel_iommu_accel.h
++++ b/hw/i386/intel_iommu_accel.h
+@@ -20,6 +20,7 @@ typedef struct VTDAccelPASIDCacheEntry {
+     uint32_t fs_hwpt_id;
+     uint32_t fault_id;
+     int fault_fd;
++    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
+     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
+ } VTDAccelPASIDCacheEntry;
+ 
+@@ -31,6 +32,9 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
+                                       uint64_t npages, bool ih);
+ void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
+ void vtd_accel_pasid_cache_reset(IntelIOMMUState *s);
++bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
++                                             uint16_t rid, uint32_t pasid,
++                                             IOMMUPRIResponse *response);
+ void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
+ #else
+ static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
+@@ -69,6 +73,14 @@ static inline void vtd_accel_pasid_cache_reset(IntelIOMMUState *s)
+ {
  }
  
-+typedef struct IOMMUFaultQueue {
-+    IOMMUFDBackend *iommufd;
-+    uint32_t id;
-+    int fd;
-+    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
-+} IOMMUFaultQueue;
-+
-+static void faultq_teardown_bh(void *opaque)
++static inline
++bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
++                                             uint16_t rid, uint32_t pasid,
++                                             IOMMUPRIResponse *response)
 +{
-+    IOMMUFaultQueue *fq = opaque;
-+    VTDPRQEntry *prqe, *next;
-+
-+    QLIST_FOREACH_SAFE(prqe, &fq->vtd_prq_list, next, next) {
-+        QLIST_REMOVE(prqe, next);
-+        g_free(prqe);
-+    }
-+
-+    qemu_set_fd_handler(fq->fd, NULL, NULL, NULL);
-+    close(fq->fd);
-+    iommufd_backend_free_id(fq->iommufd, fq->id);
-+
-+    g_free(fq);
++    return false;
 +}
 +
- static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
+ static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
  {
-+    HostIOMMUDeviceIOMMUFD *idev =
-+        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
-+    IOMMUFaultQueue *fq;
+ }
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 1842ba5840..5d44eac0ed 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -100,6 +100,12 @@ typedef struct VTDPASIDCacheEntry {
+     bool valid;
+ } VTDPASIDCacheEntry;
+ 
++typedef struct VTDPRQEntry {
++    uint32_t grpid;
++    uint32_t cookie;
++    QLIST_ENTRY(VTDPRQEntry) next;
++} VTDPRQEntry;
 +
-     if (vtd_pce->fault_fd < 0) {
-         return;
+ struct VTDAddressSpace {
+     PCIBus *bus;
+     uint8_t devfn;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 81c53c6f5a..4c2347e7d2 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3380,6 +3380,10 @@ static bool vtd_process_page_group_response_desc(IntelIOMMUState *s,
+         response.response_code = IOMMU_PRI_RESP_FAILURE;
      }
  
--    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
--    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
--                          vtd_pce->fault_fd);
-+    fq = g_malloc(sizeof(IOMMUFaultQueue));
-+    fq->iommufd = idev->iommufd;
-+    fq->fd = vtd_pce->fault_fd;
-+    fq->id = vtd_pce->fault_id;
-     vtd_pce->fault_id = 0;
-     vtd_pce->fault_fd = -1;
-+    fq->vtd_prq_list.lh_first = vtd_pce->vtd_prq_list.lh_first;
-+    QLIST_INIT(&vtd_pce->vtd_prq_list);
++    if (vtd_accel_propagate_page_group_response(s, rid, pasid, &response)) {
++        return true;
++    }
 +
-+    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
-+                            faultq_teardown_bh, fq);
+     if (vtd_dev_as->pri_notifier) {
+         vtd_dev_as->pri_notifier->notify(vtd_dev_as->pri_notifier, &response);
+     }
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 7baefe30cc..cd227315da 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -84,6 +84,62 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+     return NULL;
  }
  
- static void vtd_setup_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
++static void vtd_write_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
++                                uint32_t cookie, uint32_t code)
++{
++    struct iommu_hwpt_page_response resp = {.cookie = cookie, .code = code};
++    uint32_t id = vtd_pce->fault_id;
++    int fd = vtd_pce->fault_fd;
++    ssize_t bytes;
++
++    bytes = write(fd, &resp, sizeof(resp));
++    trace_vtd_write_fs_faultq(id, fd, cookie, code, bytes);
++    if (bytes < 0) {
++        error_report_once("FAULTQ(id %u): write failed "
++                          "[cookie 0x%x code 0x%x] (%m)", id, cookie, code);
++    }
++}
++
++static void vtd_prq_handle_pasid_response(VTDAccelPASIDCacheEntry *vtd_pce,
++                                          IOMMUPRIResponse *response)
++{
++    VTDPRQEntry *prqe, *tmp;
++
++    QLIST_FOREACH_SAFE(prqe, &vtd_pce->vtd_prq_list, next, tmp) {
++        if (prqe->grpid != response->prgi) {
++            continue;
++        }
++
++        vtd_write_fs_faultq(vtd_pce, prqe->cookie, response->response_code);
++
++        QLIST_REMOVE(prqe, next);
++        g_free(prqe);
++        break;
++    }
++}
++
++bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
++                                             uint16_t rid, uint32_t pasid,
++                                             IOMMUPRIResponse *response)
++{
++    VTDAddressSpace *vtd_as = vtd_get_as_by_sid(s, rid);
++    VTDAccelPASIDCacheEntry *vtd_pce;
++    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
++
++    if (!vtd_hiod) {
++        return false;
++    }
++
++    QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
++        if (vtd_pce->pasid == pasid) {
++            vtd_prq_handle_pasid_response(vtd_pce, response);
++            return true;
++        }
++    }
++
++    return false;
++}
++
+ static void vtd_propagate_recoverable_faults(VTDAccelPASIDCacheEntry *vtd_pce,
+                                              struct iommu_hwpt_pgfault *fault,
+                                              unsigned cnt)
+@@ -94,14 +150,42 @@ static void vtd_propagate_recoverable_faults(VTDAccelPASIDCacheEntry *vtd_pce,
+ 
+     for (; cnt--; fault++) {
+         bool last_page = fault->flags & IOMMU_PGFAULT_FLAGS_LAST_PAGE;
++        int ret;
++
++        ret = vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
++                                   vtd_hiod->devfn, pasid,
++                                   fault->perm & IOMMU_PGFAULT_PERM_PRIV,
++                                   fault->perm & IOMMU_PGFAULT_PERM_EXEC,
++                                   fault->addr, last_page, fault->grpid,
++                                   fault->perm & IOMMU_PGFAULT_PERM_READ,
++                                   fault->perm & IOMMU_PGFAULT_PERM_WRITE);
++        if (!last_page) {
++            continue;
++        }
++
++        if (!ret) {
++            VTDPRQEntry *prqe = g_malloc0(sizeof(*prqe));
++
++            prqe->grpid = fault->grpid;
++            prqe->cookie = fault->cookie;
++            QLIST_INSERT_HEAD(&vtd_pce->vtd_prq_list, prqe, next);
++            continue;
++        }
+ 
+-        vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
+-                             vtd_hiod->devfn, pasid,
+-                             fault->perm & IOMMU_PGFAULT_PERM_PRIV,
+-                             fault->perm & IOMMU_PGFAULT_PERM_EXEC,
+-                             fault->addr, last_page, fault->grpid,
+-                             fault->perm & IOMMU_PGFAULT_PERM_READ,
+-                             fault->perm & IOMMU_PGFAULT_PERM_WRITE);
++        /*
++         * vt-d spec 7.4.1:
++         *
++         * Hardware generates page group response with code of success for
++         * PRQ overflow and PRQ full, with code of invalid request for
++         * other error conditions.
++         */
++        if (ret == -ENOSPC) {
++            vtd_write_fs_faultq(vtd_pce, fault->cookie,
++                                IOMMUFD_PAGE_RESP_SUCCESS);
++        } else {
++            vtd_write_fs_faultq(vtd_pce, fault->cookie,
++                                IOMMUFD_PAGE_RESP_INVALID);
++        }
+     }
+ }
+ 
+@@ -433,6 +517,7 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
+     vtd_pce->pasid = pasid;
+     vtd_pce->pasid_entry = *pe;
+     vtd_pce->fault_fd = -1;
++    QLIST_INIT(&vtd_pce->vtd_prq_list);
+     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
+ 
+     if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index ad84d106a4..7bf4cddd38 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -78,6 +78,7 @@ vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int re
+ vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
+ vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
+ vtd_read_fs_faultq(uint32_t fault_id, uint32_t fault_fd, ssize_t ret) "fault_id %d fault_fd %d ret: %zd"
++vtd_write_fs_faultq(uint32_t fault_id, uint32_t fault_fd, uint32_t cookie, uint32_t code, ssize_t ret) "fault_id %d fault_fd %d cookie %d code %d ret: %zd"
+ 
+ # amd_iommu.c
+ amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
 -- 
 2.52.0
 
