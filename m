@@ -4,134 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16774C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 22:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CCFDC982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 22:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6xgY-00083N-Pf; Wed, 16 Sep 2026 18:00:59 -0400
+	id 1x6xsK-00014u-Cr; Wed, 16 Sep 2026 18:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
- id 1x6xgO-000834-JV
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 18:00:51 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1x6xsH-00014f-TY
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 18:13:05 -0400
+Received: from ms-2003f-snip6-6.eps.apple.com ([2a01:b747:3002:201::2f]
+ helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
- id 1x6xgN-0003Sf-0d
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 18:00:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W0jKZJACht7DAlEuSBTlbvA/rqD/P7mXynxt7DrAhLZlALcNr2VP9zdpeguRmE9Z0wf5PEeo6QIK8qqLNOXL788BygVFITjz7BDJD9sIMOZmeYNdrRNoTYyb2dgmumRHfYRiFaoSEaJcaD9IMGe97jhCGUpe5CMzFsusILMPEg6N8Cy1Y7snal7dyqdplC7ZhB8W/XNbqb1sJRBJQIL5KY/r9tL6goSmXUMyRHdwrq5QiNKIOjDWp4pKSyjUEmg38cPmQNJ2hlW7hfrTo90AyU5CH7cjzIE5tDhH5DxWrbHnehMPRC2hAiiO9atSXWLrK5DbwaSNB567us6QgUhpog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PmehvTvc5vnrttoIklhUE6Z4quA6ps2a+odHXDAORkk=;
- b=YKEu6Nq7WZI1ha7/RqUeg47+4C4gHF4CNNPIFzchz5VW1EwRaCu7HsopMrkTPa0PMSdz8loqUlzCLs9CPQSWux0Ny8AMDEfGHUfyOiIQG/W51Hp+5/UnoyhZd/65LGqNBq8MoGYMkw/AZjuJ3ENleRz5IYw+hLsKrEWx0Mw7fivEUMS0MqVZfOO8RuDWAexqZcWDIXPzjbIVW81ZSddnDvAUh5wWJaTEGWBtIKvMFFxqDoY3oHeDhbIdM6q8vPgSqPTTfOQRGeGLI7UUXyxmP1Dv/HOF/CTUtVJt/ASkMWBHfaQY+MHj0nEin300PUI5cPquNK+ov57HAz3LoFyf7Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PmehvTvc5vnrttoIklhUE6Z4quA6ps2a+odHXDAORkk=;
- b=IhU+tBtkcklFiFBfYwBgEEg+ZDL76RH8OFe7eQVF82LE1D6zUbFEqPIfrv8FbL6weu8NmQTT6WU3mCzcfLRQ7TD7W3CgklriMo0YZZaADjBVT8w4YSM+6Y9WL0/HPwklNdsOiIbFyLEUslMDtnbEkCVnFC7EVbK195EEun7kvUQ=
-Received: from LVXPR21MB7009.namprd21.prod.outlook.com (2603:10b6:408:37f::24)
- by LV4PR21MB6079.namprd21.prod.outlook.com (2603:10b6:408:357::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.4; Wed, 16 Sep
- 2026 21:49:38 +0000
-Received: from LVXPR21MB7009.namprd21.prod.outlook.com
- ([fe80::31c0:bc96:2ac3:64dc]) by LVXPR21MB7009.namprd21.prod.outlook.com
- ([fe80::31c0:bc96:2ac3:64dc%4]) with mapi id 15.21.0451.003; Wed, 16 Sep 2026
- 21:49:38 +0000
-From: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>,
- "mohamed@unpredictable.fr" <mohamed@unpredictable.fr>
-Subject: [PATCH] target/arm/whpx: fix uninitialized PhysicalAddressWidth
-Thread-Topic: [PATCH] target/arm/whpx: fix uninitialized PhysicalAddressWidth
-Thread-Index: Ad1GJO+7qYxXzYiCTnSuEdCbzbCL6w==
-Date: Wed, 16 Sep 2026 21:49:38 +0000
-Message-ID: <LVXPR21MB7009F3FB78275620435BEEC6ADB92@LVXPR21MB7009.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=cd841ea2-8d9f-4777-bbe4-a5a4c3c1d0a1;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-09-16T21:47:14Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10, 3, 0, 1;
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LVXPR21MB7009:EE_|LV4PR21MB6079:EE_
-x-ms-office365-filtering-correlation-id: c9382abc-6fc7-4fca-0c1f-08df143c6825
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|56012099006|6133799003|18002099003|38070700021|7146999003|10067099003|11063799006;
-x-microsoft-antispam-message-info: BK5KWj4IOlJAnpmpqVuCQn9axvW0lxtlXEhGjEZBKPo6TJx6v/o2MTVjDDW8d3wKMVb4coJQgshHgq4Op3e0hrs5ucl6ioM1bCQL911I4umAzQAlBrfccY2YpYs21bJ9yiVVAW030jytfOLHoZRnpZIXqukxt7stkOFbnRW9B9DqkY1W0d6g+Q00mQpg6H03t+ZSTW8ovv8vBbRNjQ07KV49lOHfbj1Xm4CPtUWXspyrnx9dMpHDElCbrYArPbbHO0TjIkLJTTKxLaw4XnmYZ5eXNrlqdtIVmYjx1c7PamiJFxcL+RxCWWRlXtUVrhtGeBpFKuwtlOM+jLouuKJ8hIHYfQwl2Z+M/nz5SiJTXtuiKqzrHvtYCXIXd/ES0ZES8zohxTMgfKEVaYIy+AUjWjyhCYAQ8V4nDQGA7Qfvc8QiyNuUpjDK4MIy3dQp9oKiwUPVVIdcdk3WAMbEkbb1QIiI6uEaGrF82qCOWLwawpfGDzOtjobqrhne2UldAD+QkvogmfkmOBGf55qg6+V2sguUTMp2H+Oe87T7RqQNxgzNj8CdyAeZgMabFU7j6VjqqchvSt68G2eXqA38g4nsg+aP6U07TfcsBiwml+xcNbY+cu/ICJYa1ceI+l51QGAzWHXoAsO0BC6s3xPp4kFa9WRldLOUymRhyst+z3Ag5p1MGwMzCLQGFcfOY9KF5C2J4F3LuPlpTlqsVahAt1x4WAeb7FPQg5v67KhN27qKU+k=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LVXPR21MB7009.namprd21.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(56012099006)(6133799003)(18002099003)(38070700021)(7146999003)(10067099003)(11063799006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?mJTG6Ro2GaKVXtK3h/cY0agqAkTPxhCiXJMd9Xs2lKCJG4aeVSPwxl/ejHVM?=
- =?us-ascii?Q?L9K5CNcyGdQjGQbfdoOy/H4SbYkGii/QmWzVAH0hJwbkHzN7zq64zRGo5Ssx?=
- =?us-ascii?Q?slAkJeO5Vg+E+VyGgMfM4JIJh+MkFQrdaAGco6ju/iiAfi/Y1WwSjdNMMSzt?=
- =?us-ascii?Q?8ueUVTQXcKSC3CrJ8hlPmxXsbkzakjlTJ4XQr76JxEZuxpOTa9r/ff75bVqZ?=
- =?us-ascii?Q?JgNUeRHtVCH/vqdvDnVZmZESERgD0ONyshXFCq+2ZbU3SIK/GbZOd8ljDLpS?=
- =?us-ascii?Q?t1C/L4aaM6QHkc7dxp3eMztij9BoUnvOUYYCKkQTpk8o2shuSw/IJrU1ofa0?=
- =?us-ascii?Q?n4ruzZk62FYNAKixEAnkCc6N5Fq39wsoQgcsGkJtwyZf7JI0hG8Q2eQfi4GD?=
- =?us-ascii?Q?VSOsIeUnVwSQIFrpWOAYxYdyVn2sKCcFF1liBS5n+QCDq6f1VQYbbvFYewzX?=
- =?us-ascii?Q?ondmG270yS8Ysg0+Z8dS+bSTBhkZVyPB/LpiINgW9gOeSa9qjQ0FMd9XD5S+?=
- =?us-ascii?Q?dbjyjMQp2wNYDa1xy7a2iDuyepWMiN1rXdOUWkC2QqV8hK8NLdd/6CHHGGpN?=
- =?us-ascii?Q?CHQuwBhDHUr5YJMIqGThx2NW+9uzm/ZjIDcDdMwIGWq/rDdE0ejICLTxsIW0?=
- =?us-ascii?Q?vRkCVJDSl4qLAF/pPvN+5U9/O6iIyO/c4OdyzXY24+alngyU987uA2uCCNUe?=
- =?us-ascii?Q?Z/1kyFeFWuvAA/w5+5fw87h2YAC+xjuaZmZNk14MQakAOQ8gJvlHFsvLuTEW?=
- =?us-ascii?Q?kWFpQsInk1eutRN+0x/OSjQVDlUVxOzL0yBlZtPx7jyrrg3GSUePUCkRoQN6?=
- =?us-ascii?Q?euF3Jh8PCIAy3sDHsQNuo3PIHgX2Dk7RRFPn1jmhU9lJh5sd/SXFlL2A5JFW?=
- =?us-ascii?Q?BS54iYU4zqXm1xXNhuXz3ddiB7fQlU2YBbU21NrSuwxv7Iot99ly2r42AAWB?=
- =?us-ascii?Q?dhm6SQhsk02sbOxezS5h5+L8MIMYDXpFtof9IE9bygezK+tu53Tiq8FxaBAR?=
- =?us-ascii?Q?CIH19GxsgRd0DvQ9+D3lPG18IBI9Sxv5qjYB0evNS7VogT6DAQgPczuDy30Y?=
- =?us-ascii?Q?z8hOBZ6rhFgyqtsNgI8CboDbXKMMaKUk+mQh1gL2HxTjQWIS9JcsJvIVn+op?=
- =?us-ascii?Q?c2+9XppotTqjYUnJdZ/D/61P6kJZFQnYK6uEUz26FklNjw/VynXsGecvBYTV?=
- =?us-ascii?Q?DsLzhBGvlHj6LS3E/rLSSqMnqLfRFyKxY5Z8byuQc9Baod1hjnaWYddXM0uR?=
- =?us-ascii?Q?16PbRxlSi4g6rgW5QXh3025lEx1fSWilU7cux0zpEAX54iB/W+rJyzMPgdZw?=
- =?us-ascii?Q?o0Hxp1eaGmDtYF0unpNiibF3CzM3lz+bXxOwMPzJS2YnmytCUU85x8taTqg+?=
- =?us-ascii?Q?7P9hcHL4kTvc03AOjlrjQ/Zs/+lfX3KYDVJWknGyinFjSE23NLgyrpU23h7T?=
- =?us-ascii?Q?LZVi5emptjSF5SP6WkqwBjyHOQhcH6PTWr1dMyXTtTh2LJ5FkTdUFJ7Z1j7V?=
- =?us-ascii?Q?wPTUfIYwzv9OQVlUAbGo2dVC3kHL+XZm9OUWI/ms1FNHf5+0/fjqAAv4mwPs?=
- =?us-ascii?Q?6nlXGVpveBs+EXHQHANoXEFxqRuNJXy0REcCzxxVUeLgyqVmFIbxGmhv9gjG?=
- =?us-ascii?Q?NUm1eeGzHEIVmqEfuZquPCxXPl1K+fj2obn+g//ZjyK+XPk1kLC9+fYWsZd8?=
- =?us-ascii?Q?HhosmdcMoCkELXhmsxd3VSuv0NMOcGrk7FYh0y+2LoEE4fBv?=
-Content-Type: text/plain; charset="us-ascii"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1x6xsF-0004Vk-9b
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 18:13:05 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-10-percent-1 (Postfix) with ESMTPS id
+ 637F1180011A; Wed, 16 Sep 2026 22:12:58 +0000 (UTC)
+X-ICL-RepId: 01a0ac47-be4f-7e33-b554-07dee0e0ab9f
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeVAsdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkJ7PgosAVIDXQxJcCwaXwBEfVULWXFfHzF9TgErdVsKRwtJdS1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1789596780; x=1792188780;
+ bh=rGG0RctTdyYTtxnzHW6pEsgUFw67RrG2UyVUQFdKR9I=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=brhYTuOKtAlVxSoIgJ3GubNqXfAdcFSDWaMPrpeg1laxNUGAzxXRHT0izDwlXCpj4SRdWAuHkvuhgkAgcbnUI+z9sqfjXlpMkqc/tdHDfijgimaJYwhfWAi3Zdgy+Bnh7JXtUJ5fD0cS44MiF6Za3n4o87ClLoibY6xJrExewxFvkaZB8ipod1jKn/zjmGecBZ8N6UrPYE9z/4GabFZHtheqeXTG4wEArVUFPMYQ0J96h7MVJlMCSuNt+28crQudN5VvisJVK6pl0F5aSSBzS6XJIYJs7Yt/yJDUVe/c9FxRsLfEWgtTrlOSBBH4Fo2ssY3eHRIX72KNtFalNU1k4g==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.208.39])
+ by p00-icloudmta-asmtp-us-west-3a-10-percent-1 (Postfix) with ESMTPSA id
+ 085B918007C2; Wed, 16 Sep 2026 22:12:56 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH] target/arm/whpx: fix uninitialized PhysicalAddressWidth
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <LVXPR21MB7009F3FB78275620435BEEC6ADB92@LVXPR21MB7009.namprd21.prod.outlook.com>
+Date: Thu, 17 Sep 2026 00:12:44 +0200
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>
 Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LVXPR21MB7009.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c9382abc-6fc7-4fca-0c1f-08df143c6825
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Sep 2026 21:49:38.7588 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5niGE5aerkWhasRLe+6gv+2DNVakFrQfT6qqKUkr5f2a+swL6OJ2kQjf5sV3Em5C5dB/6HHXKPYSNihIRO5FYA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV4PR21MB6079
-Received-SPF: pass client-ip=2a01:111:f403:c10d::3;
- envelope-from=dcook@microsoft.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
+Message-Id: <2BF9A691-51CA-424D-84F4-AD62FB08721F@unpredictable.fr>
+References: <LVXPR21MB7009F3FB78275620435BEEC6ADB92@LVXPR21MB7009.namprd21.prod.outlook.com>
+To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Proofpoint-GUID: faZwThJGdnlATeHWnbV-u8OVvw3nmjHY
+X-Proofpoint-ORIG-GUID: faZwThJGdnlATeHWnbV-u8OVvw3nmjHY
+X-Authority-Info-Out: v=2.4 cv=UrFu9uwB c=1 sm=1 tr=0 ts=6aab146a
+ cx=c_apl:c_pps:t_out a=kRaGL2Q7qLiahLf3O6OaIA==:117
+ a=kRaGL2Q7qLiahLf3O6OaIA==:17 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=MJSrpaO5NUvuYd39e24A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDMxMCBTYWx0ZWRfX0lWg/qzWmK5f
+ W3rRI8tk5ByyGSNggMT6uilvE0Xuhc51VmPV559rv+ySi42AKQ6L1IHCLEcaOXn0ZB0RnvcJB5j
+ EN0YDjFAc8CLuQodbtxs/xpMwQZ8DRWE6BCvem+OMRY/9calRhai+nPW1JKq4zP8IFyKbzC2172
+ LIG4RheY+qrQY0Aan1kQLB7+QVFbj894oP1ZPntjoGiDPcExV6s29QXbT1lAOENjCKBcQq3Lkfq
+ cTloSv8n6VZYqX+izu5CcEXwQYkXQT72dMn3PnA36hQBhl3tk4x+hZ8SSmPeuT9lFyTAHxpSC5o
+ HwEdWsIgdTidvzzwupzp9DwnXDopDjbphKLmoqYTUbH1OvMSqAQNUDSFJfNXp8=
+X-JNJ: AAAAAAABaoA0eLQoxOTkzg7VfkE7kikPBrjE0kz795EdQ08JTwzDdi8Be6BRChCztmH5BZhfIA65lNSKUrqDpjs/NH5s97JxWPQWS1xlOyDSiojuUF6dL4b1RuOQKIjUYT9Vqam8p/RFfeIWBWguYjHDqaYm91HLvfM7oGQpg3s0RiupHxR8ARzHvVssFQiW8ThXu82sf1+OW1SUaP0MacKaGJ6A83bVu8Dj2ixn10oDr4ojTj9X4SnPjD32Egi1fUxagwzojqDvR/y8gosb8I9XVeJ0R4MQ1h0/4TBptDzLdRkC9HWurVGx+fWE5mA6qlwoC9FOrvWTNOrX46rJw0qjINHf0RTAjIrkelHjJEMpWggNi8gIkUqpBtdGiRfAMvN7xhRSJEGuq8I686i1ginAvyaUZ+sPljM9viiUYAoroqEPG4IFobw9gjbrSgtgTpaIeKj4aHxMNCu2HeLabkfC20RQpS8efuvI52VA2AvpV6Z5wLzKN7allpIRtmbMB2TCbs35Y1YmcpwLbJYjSZLCYheScV4qnjfkwoxvhnvSEcuZSrTh5WTVviataL9OLwyxA3PmtcLS84yWxMgeZJoenFH2xCCT4PexRPt9dp/9b7nhU6/qaYEvyvwKneJaGr0yEMCLOwqRNC6nfgeXpVtmnCM2DWjtTSaSoptjzDwM4nmkeOPx/tfNzF/PmzDs8Ip7ORPfSN5g28zrryuI5kIT5f0YQJx9pfSgnt0c1hZD5/PrEpGWsuHmAHp28INdEzSMDeGGzPORUOqmh6XPUSi932F1ni9UHo5nUDZnU5Wg1EOF8Ajy1Y5OdFhtTL3Bp5ef3g3KzwMdeoYzvJnzC43vBxXByicz9D2rjSzMqVWKdd2B2NZJ9UQjje4ozHPotVbYOvVorlIL07k7XwfSZ9paEvKMJgfiXcGqedh++NLusLU2lNGE9R2C0LczLx7c+d1fDDiWxPeQG9KmADrX/1sGcQeoWLs
+ 5Mgw71NiRHGWesrQsb8NxO5QYNLxQP9Fy/L5STYQAVQP7Ufr/6A46XFz2nCCBHOV6rrFXISGOImqhce6/8M2U1VNokldFN5cH2DagNM0f4NhYTeIcK9gGYloVU6bNRpUtFIuAsfnfpNcbyLanYAIpDXDWsy7QBJU+Zf7Qb6aWwtCRGDLJqbaxEfVqUT8ggEmEkHJpiaOe/32SBFgbhmfl8Ch7aiydjZQBfVFmoPpDGA4qLWkGmxbcYLC9DRI14Yi6hIzC0vm+YgxeEbVBx62xVV1pqA2X0PUpL8Jsbn3mXqD1JNNjD9BxqMvxdM1Cddoc
+Received-SPF: pass client-ip=2a01:b747:3002:201::2f;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,41 +87,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-whpx_arm_get_ipa_bit_size() declares WHV_CAPABILITY whpx_cap on the
-stack and initializes it only via WHvGetCapability(). If that fails, the
-error is reported but execution falls through to
-round_down_to_parange_bit_size(whpx_cap.PhysicalAddressWidth), reading
-an uninitialized value.
 
-round_down_to_parange_index() searches pamax_map[] for the largest entry
-that is <=3D the requested size and ends in g_assert_not_reached(). The
-smallest valid PARange is 32, so any smaller value aborts QEMU.
 
-Fix by setting PhysicalAddressWidth to 32, the smallest
-architecturally valid PARange. Behaviour then becomes defined, and
-where the guest memory map fits within that range initialization
-continues on to the accelerator capability checks and their more
-specific error messages.
+> On 16. Sep 2026, at 23:49, Doug Cook (WINDOWS) <dcook@microsoft.com> =
+wrote:
+>=20
+> whpx_arm_get_ipa_bit_size() declares WHV_CAPABILITY whpx_cap on the
+> stack and initializes it only via WHvGetCapability(). If that fails, =
+the
+> error is reported but execution falls through to
+> round_down_to_parange_bit_size(whpx_cap.PhysicalAddressWidth), reading
+> an uninitialized value.
 
-Fixes: ea475a5ebb00 ("whpx: arm64: clamp down IPA size")
+Hi,
 
-Signed-off-by: Doug Cook <dcook@microsoft.com>
----
- target/arm/whpx/whpx-all.c | 1 +
- 1 file changed, 1 insertion(+)
+We have default values on the stack as initialised as 0 in QEMU.
 
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index d106400686..dc70b33bc0 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -663,6 +663,7 @@ uint32_t whpx_arm_get_ipa_bit_size(void)
-     if (FAILED(hr)) {
-         error_report("WHPX: failed to get supported "
-              "physical address width, hr=3D%08lx", hr);
-+        whpx_cap.PhysicalAddressWidth =3D 32;
-     }
-=20
-     /*
---=20
-2.55.0.vfs.0.8
+>=20
+> round_down_to_parange_index() searches pamax_map[] for the largest =
+entry
+> that is <=3D the requested size and ends in g_assert_not_reached(). =
+The
+> smallest valid PARange is 32, so any smaller value aborts QEMU.
+>=20
+> Fix by setting PhysicalAddressWidth to 32, the smallest
+> architecturally valid PARange.
+
+Where are you getting this condition? Is a certain Windows release =
+broken
+there that I=E2=80=99m not aware of?
+
+Or is the hypervisor present check not happening early enough?
+> Behaviour then becomes defined, and
+> where the guest memory map fits within that range initialization
+> continues on to the accelerator capability checks and their more
+> specific error messages.
+>=20
+> Fixes: ea475a5ebb00 ("whpx: arm64: clamp down IPA size")
+>=20
+> Signed-off-by: Doug Cook <dcook@microsoft.com>
+> ---
+> target/arm/whpx/whpx-all.c | 1 +
+> 1 file changed, 1 insertion(+)
+>=20
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index d106400686..dc70b33bc0 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -663,6 +663,7 @@ uint32_t whpx_arm_get_ipa_bit_size(void)
+>     if (FAILED(hr)) {
+>         error_report("WHPX: failed to get supported "
+>              "physical address width, hr=3D%08lx", hr);
+> +        whpx_cap.PhysicalAddressWidth =3D 32;
+>     }
+>=20
+>     /*
+> --=20
+> 2.55.0.vfs.0.8
+
 
