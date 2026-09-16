@@ -4,106 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A71FC88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF19C88E7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6uTF-0007X0-6I; Wed, 16 Sep 2026 14:35:01 -0400
+	id 1x6ud5-0000Ii-KK; Wed, 16 Sep 2026 14:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6uTB-0007Wd-8v
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:34:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x6ucz-0000IK-WB; Wed, 16 Sep 2026 14:45:06 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6uT9-00014k-0B
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:34:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789583693;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3ympUeyP8j1uprO9LQ5N1t4b3impkrKz1jkXOMizHbw=;
- b=d+GDlOVmGN9CHIIZXyJjx5it9tSX5XBq4f9tkxo2oPl/llBnoRlzyF+58QEu/7igoOeh7S
- CY5ZFdNG3RjwKOzL4A+SPfroArZRNVmKKKrqQ/8BTaCxQpWftTUbiaHz0NhG5TP30DPsM7
- RpgVIExEi61FWEEo4DycI2X8pJLI6x4=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-u1zaor3eOqmUmFS-WiObWg-1; Wed, 16 Sep 2026 14:34:51 -0400
-X-MC-Unique: u1zaor3eOqmUmFS-WiObWg-1
-X-Mimecast-MFC-AGG-ID: u1zaor3eOqmUmFS-WiObWg_1789583691
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5328dae1305so2129051cf.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 11:34:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789583691; x=1790188491; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3ympUeyP8j1uprO9LQ5N1t4b3impkrKz1jkXOMizHbw=;
- b=jnQtOjAV4Q21+dxvREIrI5kLkxqN1PxZfk62J7ugL2Pi8+COtRl5w7n6TsXTKA7AHp
- 1VAyBkGmaeDiePBcdz9ljsHpv1A54R4vqBti9vJM4kl8mdijPAHArCXiCUMnCN1Pwd8Y
- IkP49TP0NFUM58cwFhi0UHD2tEl2EAE/HRZowp4LB2w/OBYq/VfgNLLwfg9MzdF+2jPL
- 5RBtOwnuB4wmhXdl0uzA2WQTtGAE3FQHCcdcLw7PTM5bBRxNUynkFyElU6jOnacgoAaU
- uc/CmZyflzII3s6RN+YWWzHPN5D9oALLYy7oHdRjQG3kBbsIimZsFMZgA5uiE6a/tgDD
- XrQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789583691; x=1790188491;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3ympUeyP8j1uprO9LQ5N1t4b3impkrKz1jkXOMizHbw=;
- b=KeZFPnzwtScZGIOYEM2S5N8mfY5AYiCs/4Dhmq8Pe50LTgOy7GaH03muRjbklgg+Fr
- 2Nt8MUEqigEnJZxI7ztxXVk9bKsqNFkRdj6AZLbeFLW6Vkrp5yeHXDQ0qbBj7A7kv5z9
- 1/2Zk8yg+acKUKcz9GIFfvuC2Kf0/IpYqxCXFElYByyucz6Cv94bFrZBLQWv2qaGsZqe
- hg+Z1OEqYoIXOYQ5EMz8nRa2fXE9Pj88FUAH/x+bZEU+yTghMc6YcLWpCPkhXaRAtlQp
- TXdNOwz6YJt1iPIAcvhSu8McMVqvp7htr5DEkxM/cEVAfkaSxf5mPEvkAU/x8yTMtu+g
- 5lQg==
-X-Gm-Message-State: AFuF++nEwW9zk8c4YnC09MAp8IN8OrSnG834X/VDP5NuqUchDba0VW/Z
- w8y3wC5ej040iJez5HdfgsiERpb2pgb1eSEJMIQxMRvRgTnZQ7SfqfxHi6Fp3nROJfguzOOT4FD
- qAd1q0qxLq/fo9B2YMo1eWbTXgjvM+a7FXIuUMtoB6bSwlhFLosjCnIC8
-X-Gm-Gg: AYBFou065Jm2LsKau1gDrPpl3tvdK2/sVjKm+Hqo4TvjnLcx8ALlVc2FSUElM/8nZcP
- K2oW0yw51joyIhpN2bUKwgTX/CfZa8vgvI4p2/M7NgU3ONUR6z5L3jeU8fgEaUThaCwPKBVImgi
- 8DgIceTcUYtpW7d57wPnT3EVSPPuyfLwyrOKOt6JFhRLEp0rw1u33m8lPFz62b+R1Cg4gjxFPy5
- 6K2by0s5V+dtyDW+emz8OZi/v8iaIB9Xeb0G5OB5QURhUayLw31Jn4AotgqptA9ldmaBO4XQbs7
- mYRX9xDoIk7hv8ym8Xupme3dD7SmOpjn14vCyzvqFH3PlY1Yq2oAXeOc1o8M5O0cEHWXPlUJWTX
- QhB/Q1Wn+OcPgFUgIQzXIRXqFvTGyn90uM0W5rSNnbJee28jHY79Yj6Cvf8o=
-X-Received: by 2002:a05:622a:5c07:b0:531:4a1:fecf with SMTP id
- d75a77b69052e-5327f205baemr58542041cf.5.1789583691189; 
- Wed, 16 Sep 2026 11:34:51 -0700 (PDT)
-X-Received: by 2002:a05:622a:5c07:b0:531:4a1:fecf with SMTP id
- d75a77b69052e-5327f205baemr58541441cf.5.1789583690652; 
- Wed, 16 Sep 2026 11:34:50 -0700 (PDT)
-Received: from localhost
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5326204ad36sm28740861cf.18.2026.09.16.11.34.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 11:34:49 -0700 (PDT)
-Date: Wed, 16 Sep 2026 14:34:39 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH 1/1] migration/cpr: lock the cpr state
-Message-ID: <aqrhPxFO7zHvZgs5@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260916132428.1628553-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x6ucx-0003i6-Sj; Wed, 16 Sep 2026 14:45:05 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68GG1nf0046150; Wed, 16 Sep 2026 18:44:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HduV2l
+ D/K1jjudToyg5L1jEnqRx0OKTJ6KOVY86Mkak=; b=daR6cImm/KkNPX5/0BbH56
+ kg5fmL3QGEr+ZG+c2kjADeWIxjXlHz/iohRf8B2X1SQ61yAmiqnMWTURMMj5hsKE
+ JuTVol25ne3WF2XCaTOkMPkdefjlRK+tURedjwjBUMGzO388fINS01A/tdXxX8q9
+ vWsoi28l42hb48cRpORAIlWnmQJ0JjGceCRA4oDQ971JgLWxkrRPmbRYUoWlp1zR
+ z0auJlDQftXQR6Y2maE/A4d+e8fGvCtJx2S/JH9BXZvQoNVng1W7yuyeb/jcLxF1
+ i/jqrChtTZK+TRiMmZAdy/fsePvdsvmSaIwKuw1Sth3u+ogfUvjbuM51UqJqep7Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcv5xbb-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 16 Sep 2026 18:44:59 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68GFe42V1649278; Wed, 16 Sep 2026 18:44:58 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gq03byu9s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Sep 2026 18:44:58 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68GIivCR17891934
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Sep 2026 18:44:57 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7887558055;
+ Wed, 16 Sep 2026 18:44:57 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4960F5804B;
+ Wed, 16 Sep 2026 18:44:56 +0000 (GMT)
+Received: from [9.61.249.152] (unknown [9.61.249.152])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 16 Sep 2026 18:44:56 +0000 (GMT)
+Message-ID: <2c2bf867-a11a-4591-88bf-bf38d114d364@linux.ibm.com>
+Date: Wed, 16 Sep 2026 11:44:56 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260916132428.1628553-1-den@openvz.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 01/16] s390x/pci: implement IOMMU replay
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260911152137.676602-1-kshk@linux.ibm.com>
+ <20260911152137.676602-2-kshk@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260911152137.676602-2-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI1NSBTYWx0ZWRfX/eh2WGn7vrHK
+ oEcNVfoEsgajW3hV01l/FNqFbF1w9uf0G+/nZxh5SBXsgpuTbPb1QeihW/0hBszQzOLk/vCo1hT
+ sRAzkTd1C4BCY26ilg7gOHL8x/0l8E0=
+X-Proofpoint-ORIG-GUID: 4ZyBeXVpTAQ-Ne1CdS2off0wHsVOebDh
+X-Proofpoint-GUID: 4ZyBeXVpTAQ-Ne1CdS2off0wHsVOebDh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI1NSBTYWx0ZWRfX9uCim0HHSOz/
+ g5Ct74aft6w3qYXHUJe48KT0+Dtck2AnTjrUQrmCgVtDupMd5G/k7HSQ4indYjeKQhUJAPgflRq
+ f2FHf1PH4om3lqSaJFBJvOpEmRznVw1927jXj1giPmTqirTiYU+3tV4b4c/R7Fu2nv8ZU9mcycQ
+ 2HimCIkwxsqgG/q8TU9QPSPFr5XyWKsJ6Z4RbjJKmrK2oUXX4nIId68eormtWjIGy/pfQ7BVIMb
+ TjpIczxEVGbkaAiFkPbHBbXcA89s0axnOxeo/7CXtzITl7Ab5x896nGsrjhFzapQ/zPIUYSltWY
+ aS5UuKgW/VcHxdRLMAqShmyxiPPxS6+KsYzBD0PZji6AhrVHcxFfMl98Unc45wnQ+z++c4/xlbG
+ k89Ar9k1ct5eML9I58K1dSf9ESzLY2b7ptqbGsjee+zNp7kHI1cZtb5Hw+43nIGBdaRBc/kBLf1
+ t7X6TgWRj+mCFp+OhNQ==
+X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aaae3ab cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=MCo1tqE0FQsNgFF58BcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160255
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,50 +125,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 16, 2026 at 03:24:28PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> The cpr state is a process wide registry of the resources that have to
-> survive an exec. Entries are added and dropped from realize and teardown
-> paths all over the tree, and a caller has no way to tell which thread the
-> next caller will run in.
-> 
-> The state carries no serialization of its own. It is safe today only
-> because its callers happen to hold the BQL, and that is a property of
-> where those callers live rather than anything the interface promises or
-> checks. A caller that is correct within its own subsystem can therefore
-> break this one from a distance: two that overlap corrupt the registry,
-> and the next lookup walks an entry that has already been freed.
-> 
-> Give the state a lock of its own instead of relying on that. Entries
-> move when a device is realized, when a resource is handed over, and when
-> a migration starts, so none of this is on a hot path and an uncontended
-> mutex costs nothing.
-> 
-> Take the lock in every accessor and across the save and load walks.
-> Holding it over the walk callbacks is safe because none of them comes
-> back through this interface. State that is not reached through these
-> accessors, such as the VFIO device list that hw/vfio manipulates
-> directly, stays outside it.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Cc: Ben Chaney <bchaney@akamai.com>
-> Cc: Steve Sistare <steven.sistare@oracle.com>
 
-Is there a real problem anywhere?
+On 9/11/2026 8:21 AM, Konstantin Shkolnyy wrote:
+> From: Matthew Rosato <mjrosato@linux.ibm.com>
+>
+> There are a few scenarios where IOMMU replay can potentially be needed
+> for zPCI device, namely VFIO device reset scenarios where the guest
+> continues running and expects the contents of its IOMMU to be replayed
+> upon IOAT re-registration and migration scenarios where the destination
+> must reconstruct the IOMMU on the destination.
+>
+> zPCI migration is not supported yet, but the IOMMU replay function is
+> implemented so that it can be called both from IOMMUMemoryRegionClass
+> now and migration post_load later.
+>
+> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> ---
+>   hw/s390x/s390-pci-bus.c          | 68 +++++++++++++++++++++++++++++---
+>   hw/s390x/s390-pci-inst.c         |  4 +-
+>   include/hw/s390x/s390-pci-inst.h |  1 +
+>   3 files changed, 65 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index eff980fdfe..10b417a779 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+> @@ -593,14 +593,70 @@ err:
+>       return ret;
+>   }
+>   
+> -static void s390_pci_iommu_replay(IOMMUMemoryRegion *iommu,
+> +static void s390_pci_ioat_replay(S390PCIIOMMU *iommu)
+> +{
+> +    S390PCIBusDevice *pbdev = iommu->pbdev;
+> +    S390IOTLBEntry entry;
+> +    uint16_t error = 0;
+> +    uint32_t dma_avail;
+> +    hwaddr curr, end;
+> +
+> +    curr = iommu->pba;
+> +    end = iommu->pal;
+> +
+> +    if (iommu->dm_mr || !pbdev) {
+> +        /* If direct mapping is used, there are no guest tables to replay */
+> +        return;
+> +    }
+> +
+> +    if (iommu->dma_limit) {
+> +        dma_avail = iommu->dma_limit->avail;
+> +    } else {
+> +        dma_avail = 1;
+> +    }
+> +
+> +    while (curr < end) {
+> +        error = s390_guest_io_table_walk(iommu->g_iota, curr, &entry);
+> +        if (error) {
+> +            pbdev->state = ZPCI_FS_ERROR;
+> +            s390_pci_generate_error_event(error, pbdev->fh, pbdev->fid, curr,
+> +                                          0);
+> +            error_report("Failure to walk table during iommu remap");
+> +            return;
+> +        }
+> +
+> +        curr += entry.len;
+> +        if (entry.perm != IOMMU_NONE) {
+> +            while (entry.iova < curr && entry.iova < end) {
+> +                if (dma_avail > 0) {
+> +                    dma_avail = s390_pci_update_iotlb(iommu, &entry);
+> +                } else {
+> +                    /*
+> +                     * There is no reliable method to request the guest to
+> +                     * release mappings other than in response to a RPCIT
+> +                     * instruction; generate a permanent error condition and
+> +                     * require the device to be completely re-initialized from
+> +                     * the guest side.
+> +                     */
+> +                    pbdev->state = ZPCI_FS_ERROR;
+> +                    s390_pci_generate_error_event(ERR_EVENT_PERMERR, pbdev->fh,
+> +                                                  pbdev->fid, 0, 0);
 
-My gut feeling is we shouldn't be randomly adding fds into cpr unless we're
-creating a new device or so, which should normally need bql already.
+A permanent error will indicate to the guest that PCI device in 
+unusable, in that case would the guest drive a device re-initialization? 
+Would it be better to generate a ERR_EVENT_SERVAC to allow the guest to 
+attempt recovery and so drive the mappings again?
 
-To ask in another way, shall we simply assert bql_locked()?
+Thanks
 
-Thanks,
+Farhan
 
--- 
-Peter Xu
-
+> +                    error_report("DMA mappings exhausted: iommu remap failed");
+> +                    return;
+> +                }
+> +                entry.iova += TARGET_PAGE_SIZE;
+> +                entry.translated_addr += TARGET_PAGE_SIZE;
+> +            }
+> +        }
+> +    }
+> +}
+> +
+> +static void s390_pci_iommu_replay(IOMMUMemoryRegion *mr,
+>                                     IOMMUNotifier *notifier)
+>   {
+> -    /* It's impossible to plug a pci device on s390x that already has iommu
+> -     * mappings which need to be replayed, that is due to the "one iommu per
+> -     * zpci device" construct. But when we support migration of vfio-pci
+> -     * devices in future, we need to revisit this.
+> -     */
+> +    S390PCIIOMMU *iommu = container_of(mr, S390PCIIOMMU, iommu_mr);
+> +
+> +    s390_pci_ioat_replay(iommu);
+>   }
+>   
+>   static S390PCIIOMMU *s390_pci_get_iommu(S390pciState *s, PCIBus *bus,
+> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+> index b7de23c7d2..37ca70dcf1 100644
+> --- a/hw/s390x/s390-pci-inst.c
+> +++ b/hw/s390x/s390-pci-inst.c
+> @@ -630,8 +630,8 @@ int pcistg_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+>       return 0;
+>   }
+>   
+> -static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
+> -                                      S390IOTLBEntry *entry)
+> +uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
+> +                               S390IOTLBEntry *entry)
+>   {
+>       S390IOTLBEntry *cache = g_hash_table_lookup(iommu->iotlb, &entry->iova);
+>       IOMMUTLBEvent event = {
+> diff --git a/include/hw/s390x/s390-pci-inst.h b/include/hw/s390x/s390-pci-inst.h
+> index 5cb8da540b..c782990e3b 100644
+> --- a/include/hw/s390x/s390-pci-inst.h
+> +++ b/include/hw/s390x/s390-pci-inst.h
+> @@ -111,6 +111,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
+>   int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
+>                            uintptr_t ra);
+>   void fmb_timer_free(S390PCIBusDevice *pbdev);
+> +uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu, S390IOTLBEntry *entry);
+>   
+>   #define ZPCI_IO_BAR_MIN 0
+>   #define ZPCI_IO_BAR_MAX 5
 
