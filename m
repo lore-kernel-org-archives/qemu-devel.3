@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DADC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B922C982C3
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6pg6-0001li-ER; Wed, 16 Sep 2026 09:27:58 -0400
+	id 1x6pg7-0001ll-Lh; Wed, 16 Sep 2026 09:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pfx-0001kX-3z
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:50 -0400
+ (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pfx-0001kW-0Q
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:49 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pft-0003sS-Tu
+ (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pfu-0003sV-IJ
  for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
@@ -24,19 +24,20 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=1eXrWsY9QzEZjAtgFp+SDzuMxOY85sHaE+WCiHXYFPA=; b=AskOddfwJR2Qvoe
- OH6YzdFJxaAdzjN8kz743e1Pa+FJvSNRt9l1QI4Pt54ErJLO1oIW9kFy1KosZF7gKDyzzgMemCSsO
- NV0MFmTiQnao3sas4VEIGoecUdGuebKqA7iFQRjIElacFQHKaRuORxQst4HB51A2nP/IlQQYVulmR
- 6Y=;
-Date: Wed, 16 Sep 2026 14:42:39 +0200
+ List-Help; bh=15tu9Igm3t/Cu5fVDuOxFO/Z0eZPJsUUwGHTpW66s+Y=; b=U/Bl0EHToUw4yA2
+ e8/XfafRB1br2nTuncavnyRm8u//EcJqRIlLQ40fWevmx+N49lewDqwPDR6KzdzQ0lYaSSv/YgDHC
+ gmzoJ8Wabdz8p71+G+ZQ5wmt0OLmsgh7zZdaS4Nupua+mSKfk7iQ3npHYuQLiMstFAGzE1y7bj8Le
+ 6E=;
+Date: Wed, 16 Sep 2026 15:16:26 +0200
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com,
  pierrick.bouvier@oss.qualcomm.com, philmd@mailo.com
-Subject: Re: [PATCH v2 22/50] helper-to-tcg: Introduce PrepareForTcgPass
-Message-ID: <20260916144239.4350a6ec@spawn>
-In-Reply-To: <20260730031025.12926-23-anjo@rev.ng>
+Subject: Re: [PATCH v2 23/50] helper-to-tcg: PrepareForTcgPass, remove
+ functions with cycles
+Message-ID: <20260916151626.03678639@spawn>
+In-Reply-To: <20260730031025.12926-24-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
- <20260730031025.12926-23-anjo@rev.ng>
+ <20260730031025.12926-24-anjo@rev.ng>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -65,199 +66,77 @@ From:  Alessandro Di Federico via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Jul 2026 05:09:56 +0200
+On Thu, 30 Jul 2026 05:09:57 +0200
 Anton Johansson <anjo@rev.ng> wrote:
 
-> Adds a new pass over the LLVM module which runs post-optimization with
-> the end-goal of:
+> Functions with cycles are removed for two primary reasons:
 > 
->   * Culling functions which aren't worth translating;
->   * Canonicalizing the IR to something closer to TCG, and;
-
-When you "canonicalize" for a backend, you're doing more "instruction
-selection" than canonicalization. The goal of canonicalization is to
-bring the IR in the most standard, frontend- and backend-agnostic
-representation you can.
-
-I'd talk about a form of instruction selection.
-
->   * Extracting information which may be useful in the backend pass.
+>   * As a simplifying assumption for register allocation which occurs down
+>     the line, and;
 > 
-> The bulk of IR transformations occur in the canonicalization phase, with
-> a handful occuring later in the packend. This commits sets up a new LLVM
+>   * If a function contains cycles post-optimization neither unrolling or
+>     loop vectorization were deemed beneficial, and the function _might_ be
+>     better suited as a helper anyway.
+> 
+> Cycles are detected by iterating over Strongly Connected Components
+> (SCCs) which imply the existence of cycles if a SCC contains more than one
+> node, or it has a self-edge.
 
-packend
+I'd move most of the commit message to the documentation of the
+function.
 
-> pass over the IR module and runs it from the pipeline.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->  .../helper-to-tcg/include/CmdLineOptions.hpp  |  2 ++
->  .../include/PrepareForTcgPass.hpp             | 27 +++++++++++++++++++
->  subprojects/helper-to-tcg/meson.build         |  1 +
->  subprojects/helper-to-tcg/src/Pipeline.cpp    | 24 +++++++++++++++++
->  .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 25 +++++++++++++++++
->  5 files changed, 79 insertions(+)
->  create mode 100644 subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
->  create mode 100644 subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+>  .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 34 +++++++++++++++++--
+>  1 file changed, 32 insertions(+), 2 deletions(-)
 > 
-> diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
-> index ca1cb59835..bfdd3ebe41 100644
-> --- a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
-> +++ b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
-> @@ -23,3 +23,5 @@
->  extern llvm::cl::list<std::string> InputFiles;
->  // Options for PrepareForOptPass
->  extern llvm::cl::opt<bool> TranslateAllHelpers;
-> +// Options for PrepareForTcgPass
-> +extern llvm::cl::opt<std::string> TcgGlobalMappingsName;
-> diff --git a/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
-> new file mode 100644
-> index 0000000000..90bc9402cb
-> --- /dev/null
-> +++ b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
-> @@ -0,0 +1,27 @@
-> +//
-> +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-> +//
-> +//  This program is free software; you can redistribute it and/or modify
-> +//  it under the terms of the GNU General Public License as published by
-> +//  the Free Software Foundation; either version 2 of the License, or
-> +//  (at your option) any later version.
-> +//
-> +//  This program is distributed in the hope that it will be useful,
-> +//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> +//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> +//  GNU General Public License for more details.
-> +//
-> +//  You should have received a copy of the GNU General Public License
-> +//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-> +//
-> +
-> +#pragma once
-> +
-> +#include <llvm/IR/PassManager.h>
-> +
-> +class PrepareForTcgPass : public llvm::PassInfoMixin<PrepareForTcgPass> {
-> +public:
-> +    PrepareForTcgPass() {}
-> +    llvm::PreservedAnalyses run(llvm::Module &M,
-> +                                llvm::ModuleAnalysisManager &MAM);
-> +};
-> diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-> index b3a3de6297..c2926652f3 100644
-> --- a/subprojects/helper-to-tcg/meson.build
-> +++ b/subprojects/helper-to-tcg/meson.build
-> @@ -44,6 +44,7 @@ sources = [
->      'src/Pipeline.cpp',
->      'src/PrepareForOptPass/PrepareForOptPass.cpp',
->      'src/PseudoInst.cpp',
-> +    'src/PrepareForTcgPass/PrepareForTcgPass.cpp',
->  ]
+> diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+> index cea6573e41..41f317ed0b 100644
+> --- a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+> +++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+> @@ -17,9 +17,39 @@
 >  
->  clang = bindir / 'clang'
-> diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
-> index 571276de24..6058718a9c 100644
-> --- a/subprojects/helper-to-tcg/src/Pipeline.cpp
-> +++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
-> @@ -18,6 +18,7 @@
->  #include "CmdLineOptions.hpp"
->  #include "LlvmCompat.hpp"
->  #include "PrepareForOptPass.hpp"
-> +#include "PrepareForTcgPass.hpp"
+>  #include "PrepareForTcgPass.hpp"
 >  
->  #if LLVM_VERSION_MAJOR == 15
->  #include <llvm/ADT/Triple.h>
-> @@ -32,6 +33,7 @@
->  #include <llvm/IR/LLVMContext.h>
->  #include <llvm/IR/Module.h>
->  #include <llvm/IR/PassManager.h>
-> +#include <llvm/IR/Verifier.h>
->  #include <llvm/IRReader/IRReader.h>
->  #include <llvm/InitializePasses.h>
->  #include <llvm/Linker/Linker.h>
-> @@ -43,6 +45,7 @@
->  #include <llvm/Support/SourceMgr.h>
->  #include <llvm/Support/TargetSelect.h>
->  #include <llvm/Target/TargetMachine.h>
-> +#include <llvm/Transforms/Scalar/DCE.h>
->  #include <llvm/Transforms/Scalar/SROA.h>
->  
->  #define DEBUG_TYPE "pipeline"
-> @@ -70,6 +73,13 @@ cl::opt<bool> TranslateAllHelpers(
->      "translate-all-helpers", cl::init(false),
->      cl::desc("Translate all functions starting with helper_*"), cl::cat(Cat));
->  
-> +// Options for PrepareForTcgPass
-> +cl::opt<std::string> TcgGlobalMappingsName(
-> +    "tcg-global-mappings",
-> +    cl::desc("<Name of global cpu_mappings[] used for mapping accesses"
-> +             "into a struct to TCG globals>"),
-> +    cl::Required, cl::cat(Cat));
+> +#include <llvm/ADT/SCCIterator.h>
+> +#include <llvm/ADT/SmallPtrSet.h>
+> +#include <llvm/IR/Function.h>
+> +#include <llvm/IR/Module.h>
 > +
-
-I'd drop this and go by convention (i.e., just assume the name) +
-documentation.
-If you think this is useful for debugging purposes, at least give it a
-default so we don't need to specify the parameter in the regular invocation.
-
-If you keep this, introduce it in the first commit using it
-TcgGlobalMappingsName.
-
->  // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
->  // common per-llvm-target information expected by other LLVM passes, such
->  // as the width of the largest scalar/vector registers.  Needed for consistent
-> @@ -214,5 +224,19 @@ int main(int argc, char **argv) {
->      MPM.addPass(
->          PB.buildModuleOptimizationPipeline(compat::OptimizationLevel::Oz, {}));
+>  using namespace llvm;
 >  
-> +    //
-> +    // Next, we run our final transformations, including removing phis and our
-> +    // own instruction combining that prioritizes instructions that map more
-> +    // easily to TCG.
-> +    //
-> +
-> +    MPM.addPass(PrepareForTcgPass());
-> +    MPM.addPass(VerifierPass());
-> +    {
-> +        FunctionPassManager FPM;
-> +        FPM.addPass(DCEPass());
-> +        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
+> -PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
+> -{
+> +static void removeFunctionsWithLoops(Module &M, ModuleAnalysisManager &MAM) {
+> +    // Iterate over all Strongly Connected Components (SCCs), a SCC implies
+> +    // the existence of loops if:
+> +    //   - it has more than one node, or;
+> +    //   - it has a self-edge.
+> +    SmallPtrSet<Function *, 16> FunctionsToRemove;
+> +    for (Function &F : M) {
+> +        if (F.isDeclaration()) {
+> +            continue;
+> +        }
+> +        for (auto It = scc_begin(&F); !It.isAtEnd(); ++It) {
+> +            if (It.hasCycle()) {
+> +                FunctionsToRemove.insert(&F);
+> +                break;
+> +            }
+> +        }
 > +    }
 > +
->      return 0;
->  }
-> diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
-> new file mode 100644
-> index 0000000000..cea6573e41
-> --- /dev/null
-> +++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
-> @@ -0,0 +1,25 @@
-> +//
-> +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-> +//
-> +//  This program is free software; you can redistribute it and/or modify
-> +//  it under the terms of the GNU General Public License as published by
-> +//  the Free Software Foundation; either version 2 of the License, or
-> +//  (at your option) any later version.
-> +//
-> +//  This program is distributed in the hope that it will be useful,
-> +//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> +//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> +//  GNU General Public License for more details.
-> +//
-> +//  You should have received a copy of the GNU General Public License
-> +//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-> +//
-> +
-> +#include "PrepareForTcgPass.hpp"
-> +
-> +using namespace llvm;
-> +
-> +PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
-> +{
-> +    return PreservedAnalyses::none();
+> +    for (Function *F : FunctionsToRemove) {
+> +        F->setComdat(nullptr);
+> +        F->deleteBody();
+> +    }
 > +}
+> +
+> +PreservedAnalyses PrepareForTcgPass::run(Module &M,
+> +                                         ModuleAnalysisManager &MAM) {
+> +    removeFunctionsWithLoops(M, MAM);
+>      return PreservedAnalyses::none();
+>  }
 > -- 
 > 2.52.0
 
