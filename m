@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808CBC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23CDAC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qAQ-00043Y-Lm; Wed, 16 Sep 2026 09:59:19 -0400
+	id 1x6qDE-0007f8-Nu; Wed, 16 Sep 2026 10:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAG-00040k-PV
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1x6qDD-0007eF-4X
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:02:11 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAF-0003CK-2t
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789567146;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ClPV5sIPWojjTAynGwc1mftqvUQ/Gr/l3qbEvnYoawE=;
- b=Gvfk95UY+px/6zG73nXsYlSxDXDDnvlGE8EPZHv1GFBJ71SRZbw8npymmv4CgC7K8m5Arr
- 86pE3V3Ap8FwDt5xE4Mp1kMoaCMWedKxx/xOvvTYfawfnroKqyKzELAD6hvMRBTbfeQTXm
- kbUJKx7L/uNK5X/dPQPi0T3ofI71DPM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-9rpq0ancMD-B5qO5Qr6Kbw-1; Wed,
- 16 Sep 2026 09:59:02 -0400
-X-MC-Unique: 9rpq0ancMD-B5qO5Qr6Kbw-1
-X-Mimecast-MFC-AGG-ID: 9rpq0ancMD-B5qO5Qr6Kbw_1789567140
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A54B1809A02; Wed, 16 Sep 2026 13:59:00 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E704B1956054; Wed, 16 Sep 2026 13:58:55 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Jonathan Cameron <jic23@kernel.org>, Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Michael Roth <michael.roth@amd.com>, linux-cxl@vger.kernel.org,
- qemu-block@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 2/7] qapi: convert remaining simple intros for cxl.json
-Date: Wed, 16 Sep 2026 09:58:36 -0400
-Message-ID: <20260916135841.3614495-3-jsnow@redhat.com>
-In-Reply-To: <20260916135841.3614495-1-jsnow@redhat.com>
-References: <20260916135841.3614495-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1x6qDA-0004BJ-GQ
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:02:10 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1x6qCv-000000053xU-2aLI; Wed, 16 Sep 2026 16:01:53 +0200
+Message-ID: <ad6b2233-13e5-494c-ab66-4052218313b6@maciej.szmigiero.name>
+Date: Wed, 16 Sep 2026 16:01:48 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] vfio/migration: Avoid savevm_vfio_handlers for
+ cpr-exec and cpr-transfer
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
+ qemu-devel@nongnu.org, farosas@suse.de, mark.kanda@oracle.com,
+ bchaney@akamai.com, joe.jin@oracle.com
+References: <20260825225054.807116-1-dongli.zhang@oracle.com>
+ <20260825225054.807116-2-dongli.zhang@oracle.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20260825225054.807116-2-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,63 +105,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are either structs or unions that are used in an inlinable
-context: i.e. the generated documentation is likely to feature a
-version of this documentation block that does not include the intro in
-context of another command, event, or structure.
+On 26.08.2026 00:49, Dongli Zhang wrote:
+> When the VFIO driver is vfio-pci, vfio_migration_query_flags() returns
+> -ENOTTY, so savevm_vfio_handlers is not registered or involved.
+> 
+> However, VFIO drivers that support live migration, such as mlx5_vfio_pci,
+> do support vfio_migration_query_flags(). In that case, savevm_vfio_handlers
+> is registered and may be used to save and load the VFIO migration stream.
+> This is expected for VFIO live migration, but not for cpr-exec or
+> cpr-transfer.
+> 
+> Even after migration converges with
+> "migrate_set_parameter downtime-limit 1000000", the target still reports
+> the following error:
+> 
+> failed (load of migration failed: Invalid argument: Failed to load vmstate version_id: 1, ret: -22)
+> 
+> Skip savevm_vfio_handlers for cpr-exec and cpr-transfer.
+> 
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> ---
+>   hw/vfio/migration.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 73c49d8c24..49aeaad516 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -723,6 +723,13 @@ static bool vfio_is_active_iterate(void *opaque)
+>       return vfio_device_state_is_precopy(vbasedev);
+>   }
+>   
+> +static bool vfio_is_active(void *opaque)
+> +{
+> +    MigMode mode = migrate_mode();
+> +
+> +    return mode != MIG_MODE_CPR_EXEC && mode != MIG_MODE_CPR_TRANSFER;
+> +}
+> +
+>   /*
+>    * Note about migration rate limiting: VFIO migration buffer size is currently
+>    * limited to 1MB, so there is no need to check if migration rate exceeded (as
+> @@ -951,6 +958,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+>       .save_cleanup = vfio_save_cleanup,
+>       .save_query_pending = vfio_state_pending,
+>       .is_active_iterate = vfio_is_active_iterate,
+> +    .is_active = vfio_is_active,
+>       .save_live_iterate = vfio_save_iterate,
+>       .save_complete = vfio_save_complete_precopy,
+>       .save_state = vfio_save_state,
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/cxl.json | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+Looks like with this patch VFIO save_setup won't be called for CPR so it won't
+initialize migration->multifd_transfer either.
 
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index 631d4def2ac..9422d5a0e2d 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -32,9 +32,8 @@
- 
- ##
- # @CXLCommonEventBase:
--#
--# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
--# Table 8-55 Common Event Record Format).
-+#     Common event base for a CXL Event (CXL r3.2 8.2.10.2.1 Table
-+#     8-55 Common Event Record Format).
- #
- # @path: CXL type 3 device canonical QOM path
- #
-@@ -63,8 +62,7 @@
- 
- ##
- # @CXLGeneralMediaEvent:
--#
--# Event record for a General Media Event (CXL r3.2 8.2.10.2.1.1).
-+#     Event record for a General Media Event (CXL r3.2 8.2.10.2.1.1).
- #
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.2 Table 8-57 General
-@@ -129,8 +127,7 @@
- 
- ##
- # @CXLDRAMEvent:
--#
--# Event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
-+#     Event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
- #
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.2 Table 8-58 DRAM
-@@ -211,8 +208,7 @@
- 
- ##
- # @CXLMemModuleEvent:
--#
--# Event record for a Memory Module Event (CXL r3.2 8.2.10.2.1.3).
-+#     Event record for a Memory Module Event (CXL r3.2 8.2.10.2.1.3).
- #
- # @type: Device Event Type.  See CXL r3.2 Table 8-59 Memory Module
- #     Event Record for bit definitions for bit definiions.
--- 
-2.55.0
+If there was a previous live migration with multifd transfer this flag will still
+be enabled so CPR attempt will (at least) launch VFIO device state saving threads
+and possibly cause other breakage in the VFIO code too.
+
+Similar issue seems to be with load_setup on destination, since with this patch
+it won't be called so the device state won't be changed to RESUMING.
+
+So if the VFIO device doesn't support P2P states it will stay in the STOP state
+that the source put it into at the VM stop since VFIO code (at the destination)
+assumes that VFIO devices by default (without load_setup) are in the RUNNING state
+so it won't do what it thinks would be a RUNNING -> RUNNING transition on VM (re)start.
+
+Thanks,
+Maciej
 
 
