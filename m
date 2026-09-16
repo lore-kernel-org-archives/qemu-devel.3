@@ -4,97 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1437C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 21:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16774C982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 22:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6xMW-0004S6-25; Wed, 16 Sep 2026 17:40:16 -0400
+	id 1x6xgY-00083N-Pf; Wed, 16 Sep 2026 18:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x6xMU-0004OS-7r
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 17:40:14 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x6xMS-0008AU-HH
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 17:40:13 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-396ccd4f99cso176769a91.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 14:40:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789594810; x=1790199610; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MOqIR1QOnXez06E1wQXG6QO22jSC2ZUg23ltXaD7bv8=;
- b=rKVCgXhjxsVE7o3PnxPMKZ8A002RcXtcstrW0494i+fekQUD+rixGsVp2azcbf6Hu5
- iAyTpl1HdQzu8LFloEor5ZqI4aBPSz4TeMST0E8ICA+fl7ueHnRoPVmm1APKSJr23VGJ
- IclfQrLD2vEGD7IkjfqjBSpnLH93rwV2KqcILhR4cHcqgdjWhFw8Ij5P5doZ49fn5ANu
- i5DjTf1OQ9Ay4pR0vL/FdeiTm/ydHgVTOkv4+kXTop3Njl0LabB6XLQAWC+M0AslwcQa
- EHAIHprYDVTNOHudJlhkkf0OctPLFaPz4/wA+CZtOeIG7R11xs5JPi+0LpkbGvw+knjP
- c2Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789594810; x=1790199610;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MOqIR1QOnXez06E1wQXG6QO22jSC2ZUg23ltXaD7bv8=;
- b=sJ0Og02lB3wG6KcQ9cJM8LnGAa7/5PP4kR2NAsiJQ4FZZ4xtzvXSl2MzWYu9KBRc/q
- V29mpKQKf0WYKKOg1F7O3BpRMb7dWsT8U1zp1JPMfvOPv+WNUyFMUxU32AV2MUe0yn9z
- wEPsTJVO9E8bijYIFlMcGON/Nkzi8/og+MAH/kEMLthQz5VfeCiSm6Sjx9slj93Z8nXv
- Vai7aHyRBqMHoGJih8OACEy/7N6JXccL5ZLzPS+X8iFfBCWk1Vp01gjpl7VeFcVZ+6kq
- ejTsIe/0ybwyddezsSc/DQUpFm9Hlh8LCjXQQKU8+8COCxpssyvu4wTUcpkLLATzCZlA
- 6/sQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwVUe9Bb2/5mP4NgahCE0ssaYh9/eBZnQ29IO6WKFk04ICz1n8ONWvSCfte0bSSse3Svt905pAv8Hqt@nongnu.org
-X-Gm-Message-State: AFuF++mp9iG5SSep9H1U6QUW3OWnvbqlphFdh0mQsVp/FDr3BWB7hpWP
- DzZ7vrWIuTFY6TO3d4ijEX5nW/mQrhQu202ZHXLIkcyT3xrkghhiWW7YE4dw0lCW/T4=
-X-Gm-Gg: AYBFou3eEc2rFLRjBuMVMi4sNR/2fZVI8Y0+wdyYk6FltQjg2xCaD5VNBIECxEPOLsN
- y+tNyXD3TBO6q02qOaInaN0nTE9/F76US/uT37bhDcucb7yXhBLfKVb9bR4uSOyw1Mx8xUGMZUc
- /fs54GntVdkBv3nYmm/Y0QbkQJxt7ghNxEhaB8W0GxC1W6folCFXkyQaIHF7S9VurxN+FTXVgE9
- eI5VSpoepry/vbdZY6nWb+IMOJoEZsNAMWBXBdmYE93HbTc7dVJat+eptZpnt7DbZXynODcf5uv
- SyxlXTCfIkzPpYNheiV67dILumzkwt/XMUHs6FBDzunJD+qjvJtjrIHv8Wsk/tIU0BVDZM+WzsE
- w0kUkhUdQB9VvTbc+ubsUgsCaQ86oHMq5Y2HEsJhQ/wAqcoSK0OZzNsxozfNFTLxliIjCGnuHjt
- EKaFJ4yTHneHOzVBX1VmHfZDP/yOGoAbGlmITLLLwVeUamkAG28jK2cVaVXmkTnzmA0N+ar42id
- AY=
-X-Received: by 2002:a17:90b:1fce:b0:39e:2faa:2e83 with SMTP id
- 98e67ed59e1d1-39e2faa31f1mr4703559a91.10.1789594810007; 
- Wed, 16 Sep 2026 14:40:10 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:5703:e05c:9814:52a1])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39e36115cc8sm1206938a91.3.2026.09.16.14.40.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 14:40:09 -0700 (PDT)
-Date: Wed, 16 Sep 2026 15:40:07 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Michael Roth <michael.roth@amd.com>
-Cc: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, armbru@redhat.com, lorenzo.pieralisi@linaro.org,
- gshan@redhat.com, enju.kohei@fujitsu.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v4 10/24] target/arm/kvm-rme: Keep track of images loaded
- in Realm memory
-Message-ID: <aqsMt8etnjhTgfK9@p14s>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-11-mathieu.poirier@linaro.org>
- <e3cpd54xpkgonmn4rziolhqvdkge5ke5mhi3cx57j3cfcc7qwd@eq7btw5en54c>
+ (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
+ id 1x6xgO-000834-JV
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 18:00:51 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
+ id 1x6xgN-0003Sf-0d
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 18:00:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W0jKZJACht7DAlEuSBTlbvA/rqD/P7mXynxt7DrAhLZlALcNr2VP9zdpeguRmE9Z0wf5PEeo6QIK8qqLNOXL788BygVFITjz7BDJD9sIMOZmeYNdrRNoTYyb2dgmumRHfYRiFaoSEaJcaD9IMGe97jhCGUpe5CMzFsusILMPEg6N8Cy1Y7snal7dyqdplC7ZhB8W/XNbqb1sJRBJQIL5KY/r9tL6goSmXUMyRHdwrq5QiNKIOjDWp4pKSyjUEmg38cPmQNJ2hlW7hfrTo90AyU5CH7cjzIE5tDhH5DxWrbHnehMPRC2hAiiO9atSXWLrK5DbwaSNB567us6QgUhpog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PmehvTvc5vnrttoIklhUE6Z4quA6ps2a+odHXDAORkk=;
+ b=YKEu6Nq7WZI1ha7/RqUeg47+4C4gHF4CNNPIFzchz5VW1EwRaCu7HsopMrkTPa0PMSdz8loqUlzCLs9CPQSWux0Ny8AMDEfGHUfyOiIQG/W51Hp+5/UnoyhZd/65LGqNBq8MoGYMkw/AZjuJ3ENleRz5IYw+hLsKrEWx0Mw7fivEUMS0MqVZfOO8RuDWAexqZcWDIXPzjbIVW81ZSddnDvAUh5wWJaTEGWBtIKvMFFxqDoY3oHeDhbIdM6q8vPgSqPTTfOQRGeGLI7UUXyxmP1Dv/HOF/CTUtVJt/ASkMWBHfaQY+MHj0nEin300PUI5cPquNK+ov57HAz3LoFyf7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PmehvTvc5vnrttoIklhUE6Z4quA6ps2a+odHXDAORkk=;
+ b=IhU+tBtkcklFiFBfYwBgEEg+ZDL76RH8OFe7eQVF82LE1D6zUbFEqPIfrv8FbL6weu8NmQTT6WU3mCzcfLRQ7TD7W3CgklriMo0YZZaADjBVT8w4YSM+6Y9WL0/HPwklNdsOiIbFyLEUslMDtnbEkCVnFC7EVbK195EEun7kvUQ=
+Received: from LVXPR21MB7009.namprd21.prod.outlook.com (2603:10b6:408:37f::24)
+ by LV4PR21MB6079.namprd21.prod.outlook.com (2603:10b6:408:357::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.4; Wed, 16 Sep
+ 2026 21:49:38 +0000
+Received: from LVXPR21MB7009.namprd21.prod.outlook.com
+ ([fe80::31c0:bc96:2ac3:64dc]) by LVXPR21MB7009.namprd21.prod.outlook.com
+ ([fe80::31c0:bc96:2ac3:64dc%4]) with mapi id 15.21.0451.003; Wed, 16 Sep 2026
+ 21:49:38 +0000
+From: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>,
+ "mohamed@unpredictable.fr" <mohamed@unpredictable.fr>
+Subject: [PATCH] target/arm/whpx: fix uninitialized PhysicalAddressWidth
+Thread-Topic: [PATCH] target/arm/whpx: fix uninitialized PhysicalAddressWidth
+Thread-Index: Ad1GJO+7qYxXzYiCTnSuEdCbzbCL6w==
+Date: Wed, 16 Sep 2026 21:49:38 +0000
+Message-ID: <LVXPR21MB7009F3FB78275620435BEEC6ADB92@LVXPR21MB7009.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=cd841ea2-8d9f-4777-bbe4-a5a4c3c1d0a1;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-09-16T21:47:14Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10, 3, 0, 1;
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LVXPR21MB7009:EE_|LV4PR21MB6079:EE_
+x-ms-office365-filtering-correlation-id: c9382abc-6fc7-4fca-0c1f-08df143c6825
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|23010399003|56012099006|6133799003|18002099003|38070700021|7146999003|10067099003|11063799006;
+x-microsoft-antispam-message-info: BK5KWj4IOlJAnpmpqVuCQn9axvW0lxtlXEhGjEZBKPo6TJx6v/o2MTVjDDW8d3wKMVb4coJQgshHgq4Op3e0hrs5ucl6ioM1bCQL911I4umAzQAlBrfccY2YpYs21bJ9yiVVAW030jytfOLHoZRnpZIXqukxt7stkOFbnRW9B9DqkY1W0d6g+Q00mQpg6H03t+ZSTW8ovv8vBbRNjQ07KV49lOHfbj1Xm4CPtUWXspyrnx9dMpHDElCbrYArPbbHO0TjIkLJTTKxLaw4XnmYZ5eXNrlqdtIVmYjx1c7PamiJFxcL+RxCWWRlXtUVrhtGeBpFKuwtlOM+jLouuKJ8hIHYfQwl2Z+M/nz5SiJTXtuiKqzrHvtYCXIXd/ES0ZES8zohxTMgfKEVaYIy+AUjWjyhCYAQ8V4nDQGA7Qfvc8QiyNuUpjDK4MIy3dQp9oKiwUPVVIdcdk3WAMbEkbb1QIiI6uEaGrF82qCOWLwawpfGDzOtjobqrhne2UldAD+QkvogmfkmOBGf55qg6+V2sguUTMp2H+Oe87T7RqQNxgzNj8CdyAeZgMabFU7j6VjqqchvSt68G2eXqA38g4nsg+aP6U07TfcsBiwml+xcNbY+cu/ICJYa1ceI+l51QGAzWHXoAsO0BC6s3xPp4kFa9WRldLOUymRhyst+z3Ag5p1MGwMzCLQGFcfOY9KF5C2J4F3LuPlpTlqsVahAt1x4WAeb7FPQg5v67KhN27qKU+k=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LVXPR21MB7009.namprd21.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(56012099006)(6133799003)(18002099003)(38070700021)(7146999003)(10067099003)(11063799006);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?mJTG6Ro2GaKVXtK3h/cY0agqAkTPxhCiXJMd9Xs2lKCJG4aeVSPwxl/ejHVM?=
+ =?us-ascii?Q?L9K5CNcyGdQjGQbfdoOy/H4SbYkGii/QmWzVAH0hJwbkHzN7zq64zRGo5Ssx?=
+ =?us-ascii?Q?slAkJeO5Vg+E+VyGgMfM4JIJh+MkFQrdaAGco6ju/iiAfi/Y1WwSjdNMMSzt?=
+ =?us-ascii?Q?8ueUVTQXcKSC3CrJ8hlPmxXsbkzakjlTJ4XQr76JxEZuxpOTa9r/ff75bVqZ?=
+ =?us-ascii?Q?JgNUeRHtVCH/vqdvDnVZmZESERgD0ONyshXFCq+2ZbU3SIK/GbZOd8ljDLpS?=
+ =?us-ascii?Q?t1C/L4aaM6QHkc7dxp3eMztij9BoUnvOUYYCKkQTpk8o2shuSw/IJrU1ofa0?=
+ =?us-ascii?Q?n4ruzZk62FYNAKixEAnkCc6N5Fq39wsoQgcsGkJtwyZf7JI0hG8Q2eQfi4GD?=
+ =?us-ascii?Q?VSOsIeUnVwSQIFrpWOAYxYdyVn2sKCcFF1liBS5n+QCDq6f1VQYbbvFYewzX?=
+ =?us-ascii?Q?ondmG270yS8Ysg0+Z8dS+bSTBhkZVyPB/LpiINgW9gOeSa9qjQ0FMd9XD5S+?=
+ =?us-ascii?Q?dbjyjMQp2wNYDa1xy7a2iDuyepWMiN1rXdOUWkC2QqV8hK8NLdd/6CHHGGpN?=
+ =?us-ascii?Q?CHQuwBhDHUr5YJMIqGThx2NW+9uzm/ZjIDcDdMwIGWq/rDdE0ejICLTxsIW0?=
+ =?us-ascii?Q?vRkCVJDSl4qLAF/pPvN+5U9/O6iIyO/c4OdyzXY24+alngyU987uA2uCCNUe?=
+ =?us-ascii?Q?Z/1kyFeFWuvAA/w5+5fw87h2YAC+xjuaZmZNk14MQakAOQ8gJvlHFsvLuTEW?=
+ =?us-ascii?Q?kWFpQsInk1eutRN+0x/OSjQVDlUVxOzL0yBlZtPx7jyrrg3GSUePUCkRoQN6?=
+ =?us-ascii?Q?euF3Jh8PCIAy3sDHsQNuo3PIHgX2Dk7RRFPn1jmhU9lJh5sd/SXFlL2A5JFW?=
+ =?us-ascii?Q?BS54iYU4zqXm1xXNhuXz3ddiB7fQlU2YBbU21NrSuwxv7Iot99ly2r42AAWB?=
+ =?us-ascii?Q?dhm6SQhsk02sbOxezS5h5+L8MIMYDXpFtof9IE9bygezK+tu53Tiq8FxaBAR?=
+ =?us-ascii?Q?CIH19GxsgRd0DvQ9+D3lPG18IBI9Sxv5qjYB0evNS7VogT6DAQgPczuDy30Y?=
+ =?us-ascii?Q?z8hOBZ6rhFgyqtsNgI8CboDbXKMMaKUk+mQh1gL2HxTjQWIS9JcsJvIVn+op?=
+ =?us-ascii?Q?c2+9XppotTqjYUnJdZ/D/61P6kJZFQnYK6uEUz26FklNjw/VynXsGecvBYTV?=
+ =?us-ascii?Q?DsLzhBGvlHj6LS3E/rLSSqMnqLfRFyKxY5Z8byuQc9Baod1hjnaWYddXM0uR?=
+ =?us-ascii?Q?16PbRxlSi4g6rgW5QXh3025lEx1fSWilU7cux0zpEAX54iB/W+rJyzMPgdZw?=
+ =?us-ascii?Q?o0Hxp1eaGmDtYF0unpNiibF3CzM3lz+bXxOwMPzJS2YnmytCUU85x8taTqg+?=
+ =?us-ascii?Q?7P9hcHL4kTvc03AOjlrjQ/Zs/+lfX3KYDVJWknGyinFjSE23NLgyrpU23h7T?=
+ =?us-ascii?Q?LZVi5emptjSF5SP6WkqwBjyHOQhcH6PTWr1dMyXTtTh2LJ5FkTdUFJ7Z1j7V?=
+ =?us-ascii?Q?wPTUfIYwzv9OQVlUAbGo2dVC3kHL+XZm9OUWI/ms1FNHf5+0/fjqAAv4mwPs?=
+ =?us-ascii?Q?6nlXGVpveBs+EXHQHANoXEFxqRuNJXy0REcCzxxVUeLgyqVmFIbxGmhv9gjG?=
+ =?us-ascii?Q?NUm1eeGzHEIVmqEfuZquPCxXPl1K+fj2obn+g//ZjyK+XPk1kLC9+fYWsZd8?=
+ =?us-ascii?Q?HhosmdcMoCkELXhmsxd3VSuv0NMOcGrk7FYh0y+2LoEE4fBv?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e3cpd54xpkgonmn4rziolhqvdkge5ke5mhi3cx57j3cfcc7qwd@eq7btw5en54c>
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj2-x0f.google.com
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LVXPR21MB7009.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9382abc-6fc7-4fca-0c1f-08df143c6825
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Sep 2026 21:49:38.7588 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5niGE5aerkWhasRLe+6gv+2DNVakFrQfT6qqKUkr5f2a+swL6OJ2kQjf5sV3Em5C5dB/6HHXKPYSNihIRO5FYA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV4PR21MB6079
+Received-SPF: pass client-ip=2a01:111:f403:c10d::3;
+ envelope-from=dcook@microsoft.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,132 +147,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael - thanks for taking the time to review this work.
+whpx_arm_get_ipa_bit_size() declares WHV_CAPABILITY whpx_cap on the
+stack and initializes it only via WHvGetCapability(). If that fails, the
+error is reported but execution falls through to
+round_down_to_parange_bit_size(whpx_cap.PhysicalAddressWidth), reading
+an uninitialized value.
 
-On Tue, Sep 15, 2026 at 05:50:37PM -0500, Michael Roth wrote:
-> On Thu, Sep 03, 2026 at 01:35:57PM -0600, Mathieu Poirier wrote:
-> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > 
-> > Add a Rom notifier to keep track of binary blobs loaded in Realm memory.
-> > That way we can deterministically calculate the Realm Initial Measurement (RIM).
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
-> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > ---
-> >  target/arm/kvm-rme.c | 52 ++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 52 insertions(+)
-> > 
-> > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> > index f7c2cc786e2c..9985f5daba89 100644
-> > --- a/target/arm/kvm-rme.c
-> > +++ b/target/arm/kvm-rme.c
-> > @@ -10,6 +10,7 @@
-> >  
-> >  #include "hw/core/boards.h"
-> >  #include "hw/core/cpu.h"
-> > +#include "hw/core/loader.h"
-> >  #include "kvm_arm.h"
-> >  #include "migration/blocker.h"
-> >  #include "qapi/error.h"
-> > @@ -22,8 +23,18 @@
-> >  #define TYPE_RME_GUEST "rme-guest"
-> >  OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
-> >  
-> > +#define RME_PAGE_SIZE qemu_real_host_page_size()
-> > +
-> > +typedef struct {
-> > +    hwaddr base;
-> > +    hwaddr size;
-> > +    uint8_t *data;
-> > +} RmeRamRegion;
-> > +
-> >  struct RmeGuest {
-> >      ConfidentialGuestSupport parent_obj;
-> > +    Notifier rom_load_notifier;
-> > +    GSList *ram_regions;
-> >  };
-> >  
-> >  OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-> > @@ -41,6 +52,44 @@ static void rme_vm_state_change(void *opaque, bool running, RunState state)
-> >      kvm_mark_guest_state_protected();
-> >  }
-> >  
-> > +static gint rme_compare_ram_regions(gconstpointer a, gconstpointer b)
-> > +{
-> > +    const RmeRamRegion *ra = a;
-> > +    const RmeRamRegion *rb = b;
-> > +
-> > +    g_assert(ra->base != rb->base);
-> > +    return ra->base < rb->base ? -1 : 1;
-> > +}
-> > +
-> > +static void rme_rom_load_notify(Notifier *notifier, void *data)
-> > +{
-> > +    RmeRamRegion *region;
-> > +    RomLoaderNotifyData *rom = data;
-> > +
-> > +    if (rom->addr == -1) {
-> 
-> Are these entries also added via the rom_reset() path in the previous
-> patch? If so, wouldn't it be better to filter them out there?
+round_down_to_parange_index() searches pamax_map[] for the largest entry
+that is <=3D the requested size and ends in g_assert_not_reached(). The
+smallest valid PARange is 32, so any smaller value aborts QEMU.
 
-Duly noted.  I will also wrap the previous patch into this one.
+Fix by setting PhysicalAddressWidth to 32, the smallest
+architecturally valid PARange. Behaviour then becomes defined, and
+where the guest memory map fits within that range initialization
+continues on to the accelerator capability checks and their more
+specific error messages.
 
-> 
-> Also, if that's where these entries are added, then it looks like we
-> might call address_space_flush_icache_range() with this -1 addr before
-> adding it to the notifier list. Is that expected?
+Fixes: ea475a5ebb00 ("whpx: arm64: clamp down IPA size")
 
-Function address_space_flush_icache_range() is indeed called with @rom->addr set
-to -1 (0xffffffffffffffff).  Since this address is not accessible, the inner
-loop of the function skips over the entire Rom area without ever calling
-flush_idcache_range().
+Signed-off-by: Doug Cook <dcook@microsoft.com>
+---
+ target/arm/whpx/whpx-all.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Regards,
-Mathieu
-
-> 
-> -Mike
-> 
-> > +        /*
-> > +         * These blobs (ACPI tables) are not loaded into guest RAM at reset.
-> > +         * Instead the firmware will load them via fw_cfg and measure them
-> > +         * itself.
-> > +         */
-> > +        return;
-> > +    }
-> > +
-> > +    region = g_new0(RmeRamRegion, 1);
-> > +    region->base = rom->addr;
-> > +    region->size = rom->len;
-> > +    region->data = rom->data;
-> > +
-> > +    /*
-> > +     * The Realm Initial Measurement (RIM) depends on the order in which we
-> > +     * initialize and populate the RAM regions. To help a verifier
-> > +     * independently calculate the RIM, sort regions by GPA.
-> > +     */
-> > +    rme_guest->ram_regions = g_slist_insert_sorted(rme_guest->ram_regions,
-> > +                                                   region,
-> > +                                                   rme_compare_ram_regions);
-> > +}
-> > +
-> >  static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
-> >  {
-> >      KVMState *s = KVM_STATE(current_accel());
-> > @@ -58,6 +107,9 @@ static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
-> >      error_setg(&rme_mig_blocker, "RME: migration is not implemented");
-> >      migrate_add_blocker(&rme_mig_blocker, &error_fatal);
-> >  
-> > +    rme_guest->rom_load_notifier.notify = rme_rom_load_notify;
-> > +    rom_add_load_notifier(&rme_guest->rom_load_notifier);
-> > +
-> >      /*
-> >       * The realm activation is done last, when the VM starts, after all images
-> >       * have been loaded and all vcpus finalized.
-> > -- 
-> > 2.43.0
-> > 
-> > 
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index d106400686..dc70b33bc0 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -663,6 +663,7 @@ uint32_t whpx_arm_get_ipa_bit_size(void)
+     if (FAILED(hr)) {
+         error_report("WHPX: failed to get supported "
+              "physical address width, hr=3D%08lx", hr);
++        whpx_cap.PhysicalAddressWidth =3D 32;
+     }
+=20
+     /*
+--=20
+2.55.0.vfs.0.8
 
