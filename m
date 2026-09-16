@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93015C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1537EC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4I-00016u-6C; Wed, 16 Sep 2026 06:40:46 -0400
+	id 1x6n4U-00026y-L9; Wed, 16 Sep 2026 06:40:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2w-0006xu-Ce; Wed, 16 Sep 2026 06:39:22 -0400
+ id 1x6n3X-0007k6-RV; Wed, 16 Sep 2026 06:40:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2u-00025a-Eh; Wed, 16 Sep 2026 06:39:21 -0400
+ id 1x6n3S-00028y-9X; Wed, 16 Sep 2026 06:39:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=8Wdaw7XHfIyMuDE6hTUe60zXNKJEhHUZXFlfHk6uDaQ=;
+ t=1789554957; bh=TtFryoeQLP5gfjIrhRQci4/cuVejgADB+TxRbIahijk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tUW02oefH3eAABXJLmfIKWdBGqDr82XYVVmZOukc63xgsLQ1XChnjjSlvYnvySuaA
- 6xqJHzHP+yX3jUr3l6PiBo1D9r+0yIypn5EIzkprm268YOUEiko9lFzcinlOPhv2z1
- FZtFbkC0nk2cK7FcL9lVMjhRuxqolVnHfD7u+dg/SqdWRNjIxOd+qo8F+Ey1cmt0BD
- K9O/pW9J/pD7thyIhvkb1KijSLGemiARrGrKXiF0vQsH/b6bOi8164Qenef46se0pk
- Uzw9T8YVzLioRnJ7poSRdQZZq5Z2nm5mFUZndXWhUJJGRfN8EClLyiwqncy7YBiUBl
- 32j2tHAga4e4g==
+ b=GLoNpR+ztORHNWFmhYjDsDTZMPt9Kz0e8Ete+t0ZI8R7lRAcB2Q1vhnf8fvoaHVAU
+ VHtSLe9lZz5DnChD/+lbHqgP6SIbHWXiuVOWuOTG7ozi3toEICZ7Rt7aDS91YXe2fv
+ 4/MIiLZ4d4w217RRP0HeTQRkco7GDpbt21OWuZJMSXYXM5LoT4Dz+d1SzLiX5R+rj9
+ V/XBc0hOkqakrnex1+4MjTKEkZvS+usJ72n83s9at1nEhXB0lapxn8UuSaQ+voc345
+ 0wPiRgQQU4rHFH/dUxItECsHKp9nAwlF2l0RVt2wddtcnVC4fD1ikP/oIlNXiaoyT8
+ J5MaUijMwQtpQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C62E01D581E;
+ by isrv.corpit.ru (Postfix) with ESMTP id DB2BC1D5822;
  Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 908EF429F8C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A4A16429F90;
  Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 899E35A831; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id 95B815A839; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+Cc: qemu-stable@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
  Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 40/56] hw/cxl: Fix guest-triggerable QEMU exit on
- reserved interleave ways
-Date: Wed, 16 Sep 2026 13:35:58 +0300
-Message-ID: <20260916103622.684817-40-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 44/56] hw/virtio: reject inverted virtio-iommu IOVA
+ ranges
+Date: Wed, 16 Sep 2026 13:36:02 +0300
+Message-ID: <20260916103622.684817-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
@@ -71,68 +71,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-A buggy or malicious guest can program a committed HDM decoder with a
-reserved Interleave Ways encoding (e.g. 0x5-0x7, 0xb-0xf).  Two call
-sites pass &error_fatal to cxl_interleave_ways_dec(), which calls
-exit(1) on the reserved encoding before the subsequent decoded_iw == 0
-guards can run:
+Guest MAP and UNMAP requests can set virt_end below virt_start. Since
+virt_end is inclusive, this is not a valid interval. MAP nevertheless
+stores it in domain->mappings, but interval_cmp() assumes low <= high.
+For an inverted key, interval_cmp(key, key) returns -1. A covering UNMAP
+can therefore find the key but fail to remove it and repeat forever while
+holding s->mutex.
 
-  - cxl-host.c update_non_interleaved(): called at commit time from
-    hdm_decoder_commit() via cfmws_update_non_interleaved(), so a guest
-    writing COMMIT with a reserved IW terminates QEMU immediately.  This
-    is the primary trigger on the current tree.
+Reject inverted request ranges with VIRTIO_IOMMU_S_INVAL and make the
+notifier range decomposition skip invalid ranges. Keep the existing
+notifier-before-remove ordering, but return VIRTIO_IOMMU_S_DEVERR if
+g_tree_remove() fails.
 
-  - cxl_type3.c cxl_type3_dpa(): called on memory access while iterating
-    past committed decoders to accumulate dpa_base.  Once the commit-time
-    exit is removed, the decoder stays committed with the reserved
-    encoding, so a later guest access outside that decoder's range would
-    otherwise hit this second &error_fatal; both are fixed here.
-
-Pass NULL instead of &error_fatal at both sites so that the reserved
-encoding returns zero and the existing guards handle it gracefully.
-
-This can be reproduced by writing the HDM Decoder 0 Control register
-with a reserved IW encoding and the COMMIT bit set (e.g. IW=0x5,
-COMMIT=1).
-
-Cc: qemu-stable@nongnu.org
-Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
-Fixes: 48461825af1b ("hw/mem/cxl_type3: Fix potential divide by zero reported by coverity")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Fixes: fe2cacae2438 ("virtio-iommu: Implement map/unmap")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260618104316.557306-1-junjie.cao@intel.com>
-(cherry picked from commit 713e7e85a2b43e9d4e58d91643aef230d2c30b07)
+Message-ID: <20260729131953.1720567-1-physicalmtea@gmail.com>
+(cherry picked from commit 15dcee9195550ffcce90594554a22fd4b63c0d7e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index eba13c9e7cb..369a985f9b9 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -442,7 +442,7 @@ static int update_non_interleaved(Object *obj, void *opaque)
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 533bd5073f2..208815096fc 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -212,6 +212,10 @@ static void virtio_iommu_notify_map_unmap(IOMMUMemoryRegion *mr,
+ {
+     uint64_t delta = virt_end - virt_start;
+ 
++    if (virt_end < virt_start) {
++        return;
++    }
++
+     event->entry.iova = virt_start;
+     event->entry.addr_mask = delta;
+ 
+@@ -807,6 +811,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
+         return VIRTIO_IOMMU_S_INVAL;
+     }
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -857,6 +865,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+ 
+     trace_virtio_iommu_unmap(domain_id, virt_start, virt_end);
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -879,7 +891,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+                 virtio_iommu_notify_unmap(ep->iommu_mr, current_low,
+                                           current_high);
              }
-         }
- 
--        interleave_ways_dec = cxl_interleave_ways_dec(iw, &error_fatal);
-+        interleave_ways_dec = cxl_interleave_ways_dec(iw, NULL);
-         if (interleave_ways_dec == 0) {
-             return 0;
-         }
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 28f41fa6231..6f44770db60 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1200,7 +1200,7 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-         }
-         if (((uint64_t)host_addr < decoder_base) ||
-             (hpa_offset >= decoder_size)) {
--            int decoded_iw = cxl_interleave_ways_dec(iw, &error_fatal);
-+            int decoded_iw = cxl_interleave_ways_dec(iw, NULL);
- 
-             if (decoded_iw == 0) {
-                 return false;
+-            g_tree_remove(domain->mappings, iter_key);
++            if (!g_tree_remove(domain->mappings, iter_key)) {
++                ret = VIRTIO_IOMMU_S_DEVERR;
++                break;
++            }
+             trace_virtio_iommu_unmap_done(domain_id, current_low, current_high);
+         } else {
+             ret = VIRTIO_IOMMU_S_RANGE;
 -- 
 2.47.3
 
