@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C5BC982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AE6C982C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lOy-0007xG-9x; Wed, 16 Sep 2026 04:54:00 -0400
+	id 1x6lOs-0007oI-Lg; Wed, 16 Sep 2026 04:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6lOw-0007ru-4X
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:58 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ id 1x6lOn-0007ku-TV
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:51 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6lOt-00052U-P4
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:57 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e71cdb22bso4947615e9.2
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:53:55 -0700 (PDT)
+ id 1x6lOk-0004yY-Gv
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:48 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-485933b2522so382666f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:53:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789548834; x=1790153634; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=pg0bQgdSVMUQdOP+pS6xC8ogAtGnUdIXIfDsr16ThzQ=;
- b=TYtrWKWeV1huDPG3Mm+Wx+DarJ6EggTd41rFfYV1xa1VFUtPvpTryIaV8rHqLN6g6g
- 7oug2ySWwe+vUcbUcDtWPGfbRCqQK0n3jvBZKF2DU22rmBxB6+iNTXLOOamnUaVp90JB
- ZNA7odenK4qLzNvqQlKMbPfRC5R5YuXo4u+aoNthmKoEr1I1AI0HKCbpEy/JZQ7uRFUR
- Q2Bzc86rXWPxG9fDugsciEXPBqm+CdOYXSB+QzpriqQuTbtYyCScBmozESYvtJDNOqqk
- 64AselvzznZb6NGjskRdAPFPWWiS1NLE+T5YCJvV50I3nMRyioO+grcEKXHGcbuZHBAD
- kCCw==
+ d=linaro.org; s=google; t=1789548824; x=1790153624; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=PqU7zmqi9sCRWx52rpoAkvDkzojSDVWmHlCN7bfz3sQ=;
+ b=py/6I3XxoD7NL3amLT4G58DyjPXIYQm0fqtIifnRVVlvBe4Q+xwUBh9mlesSyK4vJB
+ mAv4pC83ToDfBePDXwXmqrRjRoRdAP4wZJ0axqwWPKaxKdk010c9V8SYEPKQvs+dYeRI
+ p4JBQBcwuhwTVFjp7vhHdKEskhecwZmsUX1GPfGdUff4gR74tQCTafZTHU+k4xmIu9UD
+ O1k5AxcgtH5NiemgWEyx+ouqEjUAg6uWv8f7mSn3hNMzQuBP4FR+c4rfrqOZtR0nt70y
+ SZhhdi9Kn8i0tKxtL+K9dcoa7FFkiPuTdCOIYoN6ab+5IdRhOTdjGmP7yKs/5ia96ttu
+ yBhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789548834; x=1790153634;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=pg0bQgdSVMUQdOP+pS6xC8ogAtGnUdIXIfDsr16ThzQ=;
- b=GJJDexAQ7D16fvtCFpf0yzRUBeYPlmasnv7MgsYJiW56x+eFrqAMPelo4J675+Tkpg
- YQpAE841vCGJ4bwPKbqJkftX0QXON307HeHz4iyjoi83lvihjJRo1n/mCegkeF7iXcJ6
- vEzVgrd+O30SM2k9pStrVNIJnV1ftQGNOh2T0rYzJUgOQ0OjXX+Jmjra5TyzDV8AwaRM
- 6GFaE52F7syiPqyyaMSHX7yhdDoz33A+hKUEGnLiPcmRaXf9gdGqLyTB8xIs9ComQrmt
- R/3U8qPp2F5KnKcfgQagY/pwU0zQFxgTtjoa2VUYbjZiCj98LRHAobJ3hEGjxh3my/Cm
- uJ1A==
-X-Gm-Message-State: AFuF++l/Lu03abm7apvRVvwYU5iUIvGhXblLUuJhMopvAf5KUFG4PqQQ
- HRfjxvQzM9hQGCr0nJpnI7BEmX6qgUL4qFlidVrAe+Dx4VhdaBMCxlGnkk7tFQN3H1o=
-X-Gm-Gg: AYBFou2O578vox1EwCPhLlCmJ4pVeHA4+wf6VhGh+ooZgBhFPCKb7rcFJMqOQhWIe+p
- xNrHhH+/Ssj2X3Smfsw2nAgxVB27ER39CWW4TF/naYQPkcoNNBf21pMfbfmXB9GE2aGt7fhRdWU
- RW86tt0ijJrFxEIvWcRRu8f3EJv3B9HdGWxXzwvF65wSdBoBRiE6fcklsZeNXRAg6Lzi1vrg4Xr
- pimPbA96pb+xKexQ5+aurx+X7W80F4aamFtbkZmqXjnyNmQaj6SGK0mS01jG/EFPxcGSLhScGsR
- MdI/iZzbrUcjcLzs0y8y5glcVubYJn0P1vD2Z+Why/8074x8idcucnVrl/hFPAPWWI3L1A6cgMp
- /0LIydMV2fYQBnyoL8t39KiET3y/oqcxiVIuvQhEKKoLhgQD8TircJJh7ig5hwAujYwSaobB7Ag
- 3+CIXjDs7uW9MOH7xV/gZrtUmXdKPcogSYL61nDl2DcUoslcTW4i79+WxCNFI/SXKnWcyjoi8=
-X-Received: by 2002:a05:600c:3547:b0:49c:fa20:cbfb with SMTP id
- 5b1f17b1804b1-49eb73253demr16754265e9.18.1789548834316; 
- Wed, 16 Sep 2026 01:53:54 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789548824; x=1790153624;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=PqU7zmqi9sCRWx52rpoAkvDkzojSDVWmHlCN7bfz3sQ=;
+ b=kAWE5UkAbHhDJe9td45Iw84n/P5iJnEKtIwBNAFQFulUwKl1ZVMzr7923uaGN4TFDO
+ PBi4lGW4/xQ2mHey/PnE+H2kgU3YKPv33sVTHmRHRdXWJJcNR2/iLoPwoe9Rh1sTVdbc
+ uQ+WlIUCOOy0ott7TqdnuaBUKVYvWSVFsYu11S++zAAbO06ytLNf+luZ2gDaYC/62Cte
+ 8sv71ISPYNQfIslF73a3kYonmB1XewtbtqQMwiZz0I5hkFL7KxUTmshIosplzL6Uxy7t
+ mV1aFnCgw2zxx7xklfhSEbzIrm1w5e0Qd/XbhItSHkIaOB3l7a76lBi37XZeAJQFgOZQ
+ Io7A==
+X-Gm-Message-State: AFuF++lTGl+i7CA3aGYHhoRozOkvab8Ad8xQOJJWiKK0uR4YoVbXQWyq
+ ur0UuCHslw1UoldbuSz18oTwEJxvc1wZoVd6QSR9ASf1SjN7aLVTWAECKwHDTAxMeTw=
+X-Gm-Gg: AYBFou2twR65+3KbCq7cOY9oGemCxqisXp6GJWCQrZwTIoCn+GGOAhs+hC09yPRQiM5
+ oZC/rmlWE9b1HxQwCEbKuoQ6d3QDvFTaHX2l3rcVEjjjU8KDOAtzMtqgzJZPsEEfOMN3Rljkvlh
+ TZl03+fP1q5fcSP+xLcO1Askc0hPC3lmpbuWvngl/vum/S87F8Wnrv/J6esGuVcER8zVp6X4YFq
+ VvW+T29/4cwttwEpIXsyG1fUAYoRkEm9qTM7MSreGTzdBgNG97qe3woxRSn6WgTA/wk49Hs1NZu
+ 1CFg4PkA6uSksDEV0COH1pN5f705K5op4liCv/Pcw1yVII8jKdP/pk/3cZyHteUtKGlDombPbnO
+ 4JNilPz+RHzZm69vaJfUcx7V7VQkEGC4B7dJQETKCqvXLh5UtVwglEECa1fjq2Uy8k89/jixva+
+ /kkCx1VTvzWay0AhqwmmbCx9m7goLLTDSuAXbvFmlhEl8Uia1VAGGDuL1bRwG/P6zKziMSLj4=
+X-Received: by 2002:a5d:5888:0:b0:487:c5e:4572 with SMTP id
+ ffacd0b85a97d-4870cf03182mr4514723f8f.11.1789548823999; 
+ Wed, 16 Sep 2026 01:53:43 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e83fca34asm53701275e9.1.2026.09.16.01.53.46
+ ffacd0b85a97d-4870bf27a41sm5305754f8f.18.2026.09.16.01.53.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 01:53:50 -0700 (PDT)
+ Wed, 16 Sep 2026 01:53:42 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D337761926;
- Wed, 16 Sep 2026 09:53:42 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6884A5F8A6;
+ Wed, 16 Sep 2026 09:53:41 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
@@ -87,22 +85,22 @@ Cc: John Snow <jsnow@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v3 13/17] tests/docker: swap --quiet for --verbose
-Date: Wed, 16 Sep 2026 09:53:36 +0100
-Message-ID: <20260916085341.1692742-14-alex.bennee@linaro.org>
+Subject: [PATCH v3 00/17] testing: various docker clean-ups post meson tcg
+ conversion
+Date: Wed, 16 Sep 2026 09:53:23 +0100
+Message-ID: <20260916085341.1692742-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260916085341.1692742-1-alex.bennee@linaro.org>
-References: <20260916085341.1692742-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,144 +117,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Running the docker build in meson spams the output so default to quiet
-and make --verbose the options. If we want to expose verbosity in
-meson we can deal with that later.
+This cleans up a few bits and pieces although doesn't totally solve
+the issue of an apparent stall while meson builds the docker image.
+However with these changes there should be no difference between the
+meson build and the equivalent "make docker-image-foo" invocation.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+We also finally get rid of the ill-advised magic caching support in
+docker.py.
 
----
 v3
-  - dropped accidental libvirt-ci inclusion
----
- tests/docker/Makefile.include | 10 +++++-----
- tests/docker/docker.py        | 22 ++++++++++++----------
- 2 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index 74bf471f171..85825d74dfb 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -72,13 +72,13 @@ docker-binfmt-image-debian-%: $(DOCKER_FILES_DIR)/debian-bootstrap.docker
- 			DEB_TYPE=$(DEB_TYPE) 					\
- 			$(if $(DEB_URL),DEB_URL=$(DEB_URL),)			\
- 			$(DOCKER_SCRIPT) build -t qemu/debian-$* -f $< 		\
--			$(if $(DOCKER_V),,--quiet) $(if $(NOCACHE),--no-cache) 	\
-+			$(if $(DOCKER_V),--verbose) $(if $(NOCACHE),--no-cache) \
- 			$(if $(NOUSER),,--add-current-user) 			\
- 			$(if $(EXTRA_FILES),--extra-files $(EXTRA_FILES))	\
- 			$(if $(EXECUTABLE),--include-executable=$(EXECUTABLE)), \
- 			"BUILD","binfmt debian-$* (debootstrapped)"),		\
- 		$(call quiet-command,						\
--			$(DOCKER_SCRIPT) check --quiet qemu/debian-$* $< || 	\
-+			$(DOCKER_SCRIPT) check qemu/debian-$* $< || 		\
- 			{ echo "You will need to build $(EXECUTABLE)"; exit 1;},\
- 			"CHECK", "debian-$* exists"))
- 
-@@ -103,17 +103,17 @@ debian-toolchain-run = \
- 	$(if $(NOCACHE)$(NOFETCH),					\
- 		$(call quiet-command,					\
- 			$(DOCKER_SCRIPT) build -t qemu/$1 -f $< 	\
--			$(if $(DOCKER_V),,--quiet) 			\
-+			$(if $(DOCKER_V),--verbose) 			\
- 			$(if $(NOCACHE),--no-cache)			\
- 			--registry $(DOCKER_REGISTRY) --extra-files	\
- 			$(DOCKER_FILES_DIR)/$1.d/build-toolchain.sh,	\
- 			"BUILD", $1),				        \
- 		$(call quiet-command,					\
--			$(DOCKER_SCRIPT) fetch $(if $(DOCKER_V),,--quiet) \
-+			$(DOCKER_SCRIPT) fetch $(if $(DOCKER_V),--verbose) \
- 				qemu/$1 $(DOCKER_REGISTRY),		\
- 			"FETCH", $1)					\
- 		$(call quiet-command,					\
--			$(DOCKER_SCRIPT) update $(if $(DOCKER_V),,--quiet) \
-+			$(DOCKER_SCRIPT) update $(if $(DOCKER_V),--verbose) \
- 				qemu/$1 				\
- 				$(if $(NOUSER),,--add-current-user) 	\
- 			"PREPARE", $1))
-diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-index d7eb4cf6811..10cb4cbde11 100755
---- a/tests/docker/docker.py
-+++ b/tests/docker/docker.py
-@@ -312,8 +312,8 @@ class SubCommand(object):
-     name = None  # Subcommand name
- 
-     def shared_args(self, parser):
--        parser.add_argument("--quiet", action="store_true",
--                            help="Run quietly unless an error occurred")
-+        parser.add_argument("--verbose", "-v", action="store_true",
-+                            help="Run verbosely (default is quiet)")
- 
-     def args(self, parser):
-         """Setup argument parser"""
-@@ -341,7 +341,8 @@ def args(self, parser):
-                             -- to avoid confusion about its flags""")
- 
-     def run(self, args, argv):
--        return Docker(args.command).run(args.cmd, args.keep, quiet=args.quiet,
-+        return Docker(args.command).run(args.cmd, args.keep,
-+                                        quiet=not args.verbose,
-                                         as_user=args.run_as_current_user)
- 
- 
-@@ -390,7 +391,7 @@ def run(self, args, argv):
-         # Is there a .pre file to run in the build context?
-         docker_pre = os.path.splitext(args.dockerfile)[0]+".pre"
-         if os.path.exists(docker_pre):
--            stdout = DEVNULL if args.quiet else None
-+            stdout = None if args.verbose else DEVNULL
-             rc = subprocess.call(os.path.realpath(docker_pre),
-                                  cwd=docker_dir, stdout=stdout)
-             if rc == 3:
-@@ -416,7 +417,7 @@ def run(self, args, argv):
-                  for k, v in os.environ.items()
-                  if k.lower() in FILTERED_ENV_NAMES]
-         dkr.build_image(tag, docker_dir, args.dockerfile,
--                        quiet=args.quiet, user=args.user,
-+                        quiet=not args.verbose, user=args.user,
-                         argv=argv, registry=args.registry)
- 
-         rmtree(docker_dir)
-@@ -435,9 +436,9 @@ def args(self, parser):
- 
-     def run(self, args, argv):
-         dkr = Docker(args.command)
--        dkr.command(cmd="pull", quiet=args.quiet,
-+        dkr.command(cmd="pull", quiet=not args.verbose,
-                     argv=["%s/%s" % (args.registry, args.tag)])
--        dkr.command(cmd="tag", quiet=args.quiet,
-+        dkr.command(cmd="tag", quiet=not args.verbose,
-                     argv=["%s/%s" % (args.registry, args.tag), args.tag])
- 
- 
-@@ -513,7 +514,7 @@ def run(self, args, argv):
- 
-         # Run the build with our tarball context
-         dkr = Docker(args.command)
--        dkr.update_image(args.tag, tmp, quiet=args.quiet)
-+        dkr.update_image(args.tag, tmp, quiet=not args.verbose)
- 
-         return 0
- 
-@@ -532,7 +533,8 @@ class ImagesCommand(SubCommand):
-     name = "images"
- 
-     def run(self, args, argv):
--        return Docker(args.command).command("images", argv, args.quiet)
-+        return Docker(args.command).command("images", argv,
-+                                            quiet=not args.verbose)
- 
- 
- class ProbeCommand(SubCommand):
-@@ -574,7 +576,7 @@ def run(self, args, argv):
-                 cmd += ["-v", "%s:%s:ro,z" % (p, p)]
-         cmd += [args.image, args.cc]
-         cmd += argv
--        return Docker(args.command).run(cmd, False, quiet=args.quiet,
-+        return Docker(args.command).run(cmd, False, quiet=not args.verbose,
-                                         as_user=True)
- 
- 
+ - Update make2test to trigger docker build from Makefile.include.
+ - add Daniels's suggested console: true patch
+ - fixed up some unref vars from the reverts
+
+v2
+
+I've restored the configure based compiler checks for so we can build
+roms and the vdso blobs again. It looks like we could never build roms
+with container based images so I've left it for now. Unlike the vdso
+build we can't trigger a container build through Makefile.prereqs.
+
+TODO
+----
+
+I've still got Ilya's s390 test image patches to look at but I'm
+sending v2 because enough people are hitting issues.
+
+I also need to look at the timestamp stuff that Pierrick has suggested
+to see if that improves the caching from the registry.
+
+The following still need review:
+
+  tests/tcg: add console property to docker image custom target
+  scripts/make2mtest: add docker dependencies for check-tcg-% targets
+  tests/docker: fix brown bag typo for docker-ccache
+  tests/docker: swap --quiet for --verbose
+  tests/docker: add container registry to configure and use
+  tests/tcg: use --add-current-user when building containers
+  configure: re-purpose the tcg test compiler configs for vdso building
+  Revert "tests/tcg/meson.build: implement ./configure -cross-cc-* options"
+
+Please test and review.
+
+Alex.
+
+Alex Bennée (15):
+  Revert "configure: remove cross_cc and gdb detection logic"
+  Revert "tests/tcg/meson.build: implement ./configure -cross-cc-*
+    options"
+  Revert "tests/tcg/meson.build: implement ./configure containers
+    options"
+  configure: re-purpose the tcg test compiler configs for vdso building
+  tests/tcg: prefix meson built docker tags with qemu/
+  tests/tcg: use --add-current-user when building containers
+  tests/docker: add container registry to configure and use
+  tests/docker: remove used _read_qemu_dockerfile
+  tests/docker: strip remaining caching logic from docker.py
+  tests/docker: add specific command to parser
+  tests/docker: swap --quiet for --verbose
+  tests/docker: fix brown bag typo for docker-ccache
+  gitlab: update the @user id mapping file
+  scripts/make2mtest: add docker dependencies for check-tcg-% targets
+  tests/tcg: add console property to docker image custom target
+
+Daniel P. Berrangé (2):
+  configure: correctly honour --disable-containers
+  tests/tcg: improve check for working cross compilers
+
+ configure                               | 491 +++++++++++++++++++++++-
+ tests/tcg/test_cc.c                     |   6 +-
+ .gitlab-map-auto                        |   8 +-
+ linux-user/aarch64/Makefile.vdso        |   2 +-
+ linux-user/arm/Makefile.vdso            |   2 +-
+ linux-user/hppa/Makefile.vdso           |   2 +-
+ linux-user/i386/Makefile.vdso           |   2 +-
+ linux-user/loongarch64/Makefile.vdso    |   2 +-
+ linux-user/ppc/Makefile.vdso            |   2 +-
+ linux-user/riscv/Makefile.vdso          |   2 +-
+ linux-user/s390x/Makefile.vdso          |   2 +-
+ linux-user/sh4/Makefile.vdso            |   2 +-
+ linux-user/x86_64/Makefile.vdso         |   2 +-
+ meson_options.txt                       |  95 +----
+ scripts/coverity-scan/run-coverity-scan |   2 +-
+ scripts/gitlab-map-update               |   2 +-
+ scripts/meson-buildoptions.sh           |   3 +
+ scripts/mtest2make.py                   |  35 +-
+ tests/docker/Makefile.include           |  16 +-
+ tests/docker/docker.py                  | 188 ++++-----
+ tests/tcg/meson.build                   |  72 +---
+ 21 files changed, 627 insertions(+), 311 deletions(-)
+
 -- 
 2.47.3
 
