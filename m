@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A9AC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3DEC982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMe-0002th-7n; Wed, 16 Sep 2026 03:47:33 -0400
+	id 1x6kMV-0002HI-VF; Wed, 16 Sep 2026 03:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMZ-0002Yr-Pw; Wed, 16 Sep 2026 03:47:28 -0400
+ id 1x6kMC-0000bf-HX; Wed, 16 Sep 2026 03:47:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMX-0005Os-WD; Wed, 16 Sep 2026 03:47:27 -0400
+ id 1x6kMA-0005OC-R6; Wed, 16 Sep 2026 03:47:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=dqYtT2IAPAYcJUav5EC8iwsqGWDCxqOhCO0lF2sDFQc=;
+ t=1789544619; bh=ZJhRIevipQGcpE9OxfuFapD4TDrvm487gDTJPaFV3m8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B7mKq6aLnSM3+ZLT8pR9tdEnTiPh7SOO9v2Z5AFLJDyEEo5PxrzIDpXg2eYXGxD7p
- +EwovIzCqGfi1au2xDgTqxlMPhDLTY4Ke7px2uZ6ymCoHoyPcTqwBkSe0PHNngB0c3
- aNUfJ+xw59atv4GHfhvVBitWRJTipT6NfsLWkQmj36ItzWKefLNgkY6+NpN+IML/oo
- JDuM5ViO6IctPgIB5f2E6j9P+0r2q93aTOi8vGRG9Jo7/6eKV/dubPCighG1I6Tbax
- ZBU8uePSqQtrU2ZpPYosCbeODSE+HKvpEbU3TFU/+YAU1/J/dTlqOhr0vdP9AQYI8N
- D7cbdI1qaGiBQ==
+ b=HJ+hEgCme571c9YWPI8YL2EoPZVY2JfpN/1MD9SmgRIBw7btOFGlsZNqJDq1FOwtz
+ eLYNOiVbTIndDXrh5SoNbb8RPW0dtii4If/QzHaa84nq6QX08QFkU4CyjUaZjZF12V
+ WumS3Yn7t8kKkgayErlkDG5P4jjXMA85el1SLK314rhc5EEnMPYpz31zHg8D6TDYgf
+ 2OJOHawc9BY8bzf4U/F8a4Z+eoSeFhbI7FdgxN2j8ZORH3ZH1GgYlUm2FHazw953ib
+ jAi1L688rtl8+pulBxnSktBaI1lFub57MhOt/PJhUV0AavezImTWktjftjNdD7I/PC
+ tW18CkfdxPyBg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 272EE1D55BB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0FB661D55B9;
  Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB04C429B74;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 935EB429B72;
  Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 58D0C5A71B; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id 52D7F5A717; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 45/49] hw/display/qxl: hold ssd.lock while replacing
- ssd.cursor
-Date: Wed, 16 Sep 2026 10:43:03 +0300
-Message-ID: <20260916074346.671467-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 43/49] virtio-scsi: set dataplane_started to false
+ upon failure
+Date: Wed, 16 Sep 2026 10:43:01 +0300
+Message-ID: <20260916074346.671467-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -73,54 +74,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-qxl_spice_reset_cursor() unrefs qxl->ssd.cursor and installs the hidden
-cursor without holding qxl->ssd.lock. Every other writer of that field
-takes it: qxl_render_cursor(), display_mouse_define() and
-qemu_spice_cursor_refresh_bh().
+Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
+dataplane_started to true when virtio_scsi_dataplane_start() fails. This
+is likely a typo since dataplane is not functional after failure.
 
-The unlocked path runs on a vCPU thread, reached from ioport_write() on
-QXL_IO_DESTROY_PRIMARY and QXL_IO_DESTROY_PRIMARY_ASYNC, and holds only
-the BQL, which the SPICE display worker never takes. Unlike
-qxl_hard_reset(), it leaves that worker running.
-spice_qxl_reset_cursor() does round trip through the dispatcher, but the
-worker is free again as soon as it returns, so it can enter
-qxl_render_cursor() and unref the same QEMUCursor a few instructions
-later. Both threads then drop one reference for what is a single
-reference, freeing a cursor that another user still holds. The store to
-ssd.cursor races the same way, and a guest that keeps this up also ends
-up waiting forever in qxl_fence_wait().
+The non-ioeventfd fallback is broken because dataplane_started is true
+after virtio_scsi_dataplane_start() failure. As a result, the following
+assertion failure occurs when a virtio-scsi device exceeds the open file
+descriptor ulimit when setting up notifiers (eventfds):
 
-A guest reaches this by switching QXL mode while it also updates the
-pointer shape.
+  $ ulimit -n 104 # exact number can vary based on QEMU version
+  $ qemu-system-x86_64 -M q35,accel=kvm -m 1G -cpu host -smp 14 \
+         --blockdev file,node-name=drive0,filename=test.img,cache.direct=on,aio=native \
+         --blockdev file,node-name=drive1,filename=data01.img,cache.direct=on,aio=native \
+         --device virtio-scsi-pci,id=virtio-scsi-pci0 \
+         --device scsi-hd,drive=drive0,bus=virtio-scsi-pci0.0 \
+         --device virtio-scsi-pci,id=virtio-scsi-pci1 \
+         --device scsi-hd,drive=drive1,bus=virtio-scsi-pci1.0
+  qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -accel kvm is set.
+  qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
+  qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset: Assertion `!s->dataplane_started' failed.
+  Aborted                    (core dumped)
 
-Fixes: 958c2bceba06 ("qxl: fix cursor reset")
-Cc: qemu-stable@nongnu.org
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260903192647.2677279-2-den@openvz.org>
-(cherry picked from commit 2c43897356ac10dcce76a0287de8f9561c84fe82)
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
+Buglink: https://redhat.atlassian.net/browse/RHEL-193328
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260825154854.263819-1-stefanha@redhat.com>
+(cherry picked from commit 5440b6b5de469f62787f47f2b9177cb1136a85c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 7d7961a150f..96fba65a92f 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -299,10 +299,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
-     qemu_mutex_lock(&qxl->track_lock);
-     qxl->guest_cursor = 0;
-     qemu_mutex_unlock(&qxl->track_lock);
-+    qemu_mutex_lock(&qxl->ssd.lock);
-     if (qxl->ssd.cursor) {
-         cursor_unref(qxl->ssd.cursor);
-     }
-     qxl->ssd.cursor = cursor_builtin_hidden();
-+    qemu_mutex_unlock(&qxl->ssd.lock);
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index 95f13fb7c28..bcb6e441335 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -230,7 +230,7 @@ fail_host_notifiers:
+ fail_guest_notifiers:
+     s->dataplane_fenced = true;
+     s->dataplane_starting = false;
+-    s->dataplane_started = true;
++    s->dataplane_started = false;
+     return -ENOSYS;
  }
  
- static uint32_t qxl_crc32(const uint8_t *p, unsigned len)
 -- 
 2.47.3
 
