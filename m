@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DB5C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E521AC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4O-0001fo-Ql; Wed, 16 Sep 2026 06:40:53 -0400
+	id 1x6n3o-0007z5-8J; Wed, 16 Sep 2026 06:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3S-0007au-Ay; Wed, 16 Sep 2026 06:39:57 -0400
+ id 1x6n2L-0005rG-08; Wed, 16 Sep 2026 06:38:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3Q-00028m-2s; Wed, 16 Sep 2026 06:39:53 -0400
+ id 1x6n2D-0001yx-VQ; Wed, 16 Sep 2026 06:38:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=gRtC9Ai0tnc5O4cbrhFyCgkmjJzmeR6tZluv7lJ8n2U=;
+ t=1789554957; bh=djJszjwEWhZSV76xQmF5LHS0gSDaH7ORP7stN6fh+Zo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TiBLj8H3tNhqf3T8D25inzhct/h+pSMIfhlemgZvGMF8qOD6xe+LH9CRksDMFNP/H
- kuJdyRoO8/mDjR61a3icBRiyCNCBAQlBbbGJo2BM7+XJF1A9mewh4K9ifv32NqzwDW
- gYZEmU8DEWE1e7VjjPz4Eel8+nFHEH82yN+mLPayMmfl0uyO7nCsE32a4Mit4EMZKo
- LqPuTKszwAfA9Oy+1LJQ/04RW9qDY9RnXT/0cnEetKmsb36fXMcslecRxbBV0Qx/Yr
- cpv/2RyRE12pCx5jpycZE97pkN3Q/KvvzFaJCNRVFRHu700jD+HR9hUokLaw4esD1f
- +yHoSv2gke/Zg==
+ b=tY6qrEdoFKRMDeupYZYG2eCXYiyYaYP7y1q5FLeLt6JzMRGm7cU659TEcQvSJQatW
+ saZuHAbUg9C8duXmHopT1n5NtsXeUgAj+4Pe1PuB9SyBMuEI0ce1U/gJs6cZWE2ekb
+ TC+iC8Gx7w26BE+j4PRvkrHY5Y2w9qlAtvAd7j5vQ5qA+CVNSPOV+BPgCdq7rkmPSM
+ 0h7m0pXHmLEgkAHwq39+Dysrf6q4D0roD0XAzr9FaYi3Ua6CwaDWpGprdb9TpkFitk
+ 80qrEMCrtCyOyDbT0C/6kZX2q9vRg2138LBuF9Rjc9ZFl8Y0RKtmJwvJmoVcdrP7vF
+ ekqjGhAM1te/g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D524E1D5821;
+ by isrv.corpit.ru (Postfix) with ESMTP id 065F21D580E;
  Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0166429F8F;
- Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C59C9429F6C;
+ Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 92AB55A837; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id B17D35A815; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 43/56] hw/net/virtio-net: strip trailing padding when
- caching RSC segment
-Date: Wed, 16 Sep 2026 13:36:01 +0300
-Message-ID: <20260916103622.684817-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 26/56] target/arm: Make CBZ/CBNZ UNDEF before v6T2
+Date: Wed, 16 Sep 2026 13:35:44 +0300
+Message-ID: <20260916103622.684817-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
@@ -72,71 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When an RSC candidate packet has trailing padding bytes beyond the
-declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
-size into the coalescing buffer and sets seg->size to that value.
-The bounds check in virtio_net_rsc_coalesce_data() uses the IP
-length field (o_ip_len) which does not include the padding, so the
-check can pass while the subsequent memmove() overflows the buffer.
+The Thumb CBZ/CBNZ encodings are only introduced in v6T2 (for
+A-profile) and v7M (for M-profile).  We missed out the feature-check
+in trans_CBZ(), so don't UNDEF on v5T or v6M.  Add the missing check:
+conveniently, the ARM_FEATURE_THUMB2 feature is true for exactly the
+cases where CBZ is implemented.
 
-Fix this by computing the actual IP packet size from the IP header
-and using it for both the memcpy and seg->size, so that seg->size
-stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
-guarantees that ip_size <= size.
-
-Fixes: CVE-2026-66900
-Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
 Cc: qemu-stable@nongnu.org
-Cc: Yuri Benditovich <ybendito@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
-Reported-by: Sven <bestswngs@gmail.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
-(cherry picked from commit 73c3d017ef6a01f92463b398db61c1c1e430fb6d)
+Fixes: 9ee6e8bb853bde ("ARMv7 support.")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260821132550.168896-2-peter.maydell@linaro.org
+(cherry picked from commit c05e01a885811f85c291ffa8513cb1d159b8c8b8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 93653581cb6..310a7c2f007 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2199,13 +2199,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
- {
-     uint16_t hdr_len;
-     VirtioNetRscSeg *seg;
-+    size_t ip_size;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 055f3c5b403..df98dc2e34d 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -5783,7 +5783,14 @@ static bool trans_TBH(DisasContext *s, arg_tbranch *a)
  
-     hdr_len = chain->n->guest_hdr_len;
+ static bool trans_CBZ(DisasContext *s, arg_CBZ *a)
+ {
+-    TCGv_i32 tmp = load_reg(s, a->rn);
++    TCGv_i32 tmp;
 +
-+    /*
-+     * Strip any trailing padding beyond the IP payload so that seg->size
-+     * stays in sync with the IP length field used by the bounds check in
-+     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
-+     * guarantees that ip_size <= size.
-+     */
-+    ip_size = hdr_len + sizeof(struct eth_header);
-+    if (chain->proto == ETH_P_IP) {
-+        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
-+        ip_size += htons(ip->ip_len);
-+    } else {
-+        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
-+        ip_size += sizeof(struct ip6_header)
-+                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
++    /* CBZ was introduced in v6T2 and v7M */
++    if (!arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
++        return false;
 +    }
 +
-     seg = g_new(VirtioNetRscSeg, 1);
-     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
-         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
--    memcpy(seg->buf, buf, size);
--    seg->size = size;
-+    memcpy(seg->buf, buf, ip_size);
-+    seg->size = ip_size;
-     seg->packets = 1;
-     seg->dup_ack = 0;
-     seg->is_coalesced = 0;
++    tmp = load_reg(s, a->rn);
+ 
+     arm_gen_condlabel(s);
+     tcg_gen_brcondi_i32(a->nz ? TCG_COND_EQ : TCG_COND_NE,
 -- 
 2.47.3
 
