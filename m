@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40581C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FFEC88E7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n3Q-0007SN-DQ; Wed, 16 Sep 2026 06:39:54 -0400
+	id 1x6n3p-0008C3-3f; Wed, 16 Sep 2026 06:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2H-0005qm-Do; Wed, 16 Sep 2026 06:38:45 -0400
+ id 1x6n2R-00061r-5p; Wed, 16 Sep 2026 06:38:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2B-0001wK-O3; Wed, 16 Sep 2026 06:38:40 -0400
+ id 1x6n2P-00020m-Cu; Wed, 16 Sep 2026 06:38:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=7b7tSBrJkoj8dNixU6UJUP9vuLJS1oyfQ9WZqaEltQE=;
+ t=1789554957; bh=pVexX22Gswp37I+jYIlwDUiiRIeswn+1lPMG9xjQgtY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DXr/U1lLFB7WgiSRg2AF480YBupa1df0xdWYjAtCI2t2rqW8FKkWdvt+VBoj9Y3D2
- PHb2ddBfh0wkNrwSfRes35zDoUXiZQEQIyzImzsJw74irEAmrgFYFXwTqpHMKv6Ug6
- HjLDnJ8bns3k7Hh9UqiTI62mm5XrbwOiv9G67Vc4sXLn9U6mPKBoFfSwjhMzepjaju
- 9lvjaCsOvkOCzf45LJ5DfzFhTIHGgNlUV2AinAE50BuawPmYNPk0uAg4yCaG9rO5XG
- OT+C74r7qU7H9qHrG8OBM/dELGeOwnhJJZFePssxHvK7tqLA2yp2k33NG9jVpZU5P+
- ybEzPoMgb91bw==
+ b=AH8/wvB60BJiT0ef+Nu+56/7GGeN2NRIiIC5uoKBceCeuYQpKdrFAxwDIEJFxGz47
+ w+Qm/ckDavza7gWW6qTaYGdl5tNwjQHoVT6VALMlDfzcoR6Epy/AGfYWFm9YSO+O6M
+ ghLh9kTZgtBZGlbK/Me3zUGviUUvR+2ey7tAb6fHzPiMn54FnMOZY+QfotND0lK7/R
+ Gi1aiAjsuJ5pkuKuxEiKCLv2WP5Yas8c2zZc8rO8COzhfdCwr+/Q/xnbAaDx7AMO5g
+ DN29vvA4mdVnWie8hJAnibvx2TZ2VMKlLzMUNuPQsZ7QpOjlBQy7zK8RK9eEJVpCsM
+ OiQ+x+FGqbxgA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 00DA41D580D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 150F61D5811;
  Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF802429F6B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D3889429F6F;
  Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AE7675A813; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ id BAA865A81B; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 25/56] target/arm: Correct reset value of SCTLR for
- arm926, arm1026
-Date: Wed, 16 Sep 2026 13:35:43 +0300
-Message-ID: <20260916103622.684817-25-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 29/56] hw/sd: sdhci: Accept version 4 enable without
+ UHS-I
+Date: Wed, 16 Sep 2026 13:35:47 +0300
+Message-ID: <20260916103622.684817-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,57 +73,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Bin Meng <bin.meng@processmission.com>
 
-For the arm926 CPU we reset the SCTLR to 0x00090078.  This is not the
-value specified in the ARM926EJ-S TRM (ARM DDI 0198E), which states
-that bits 16 and 18 are SBO, bit 17 is SBZ, and bits [31:19] are SBZ.
-It's also not the value seen on real hardware.
+Host Control 2 writes have been conditional on modeled UHS-I support
+since commit 0034ebe6ee31. Host Version 4 Enable does not control UHS
+signaling, so controllers without modeled UHS-I cannot enter version
+4 mode.
 
-Similarly, for the arm1026 we use the same SCTLR reset value but
-the TRM says that bits 18 and 16 are the SBO ones.
-
-This has been wrong in QEMU since 2007 when we first started actively
-resetting the SCTLR to some fixed value rather than zero.
-
-This wrong value didn't affect any of QEMU's behaviour, because we
-don't implement any handling of the old pre-v6 meanings of these bits
-(which were IMPDEF), and their v8 reuse is guarded by appropriate
-version checks.
-
-Correct the reset values to 0x00050078 (i.e set bit 18 and not 19).
+Retain Host Version 4 Enable independently of UHS-I while continuing
+to reject UHS-specific fields and keeping voltage changes UHS-gated.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 610c3c8afd99f4f11 ("Reset ARM cp15.c1_sys to default values. Fix XScale cp15 accesses.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4202
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821114138.4068582-1-peter.maydell@linaro.org
-(cherry picked from commit 59716ac3067d2f87550fa3a59bdbaf9180c06c7b)
+Fixes: 0034ebe6ee31 ("sdhci: implement UHS-I voltage switch")
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260723151853.2143177-9-bin.meng@processmission.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 10dddf15e294f01561bacd815c78f2da03c4f1a0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index 8220d785f5b..c49265e673c 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -33,7 +33,7 @@ static void arm926_initfn(Object *obj)
-     cpu->midr = 0x41069265;
-     cpu->reset_fpsid = 0x41011090;
-     cpu->ctr = 0x1dd20d2;
--    cpu->reset_sctlr = 0x00090078;
-+    cpu->reset_sctlr = 0x00050078;
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index e58a6103970..a612e5cbafb 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1345,11 +1345,24 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         }
+         sdhci_update_irq(s);
+         break;
+-    case SDHC_ACMD12ERRSTS:
++    case SDHC_ACMD12ERRSTS: {
++        uint16_t hostctl2_mask = mask >> 16;
++        uint16_t hostctl2_value = value >> 16;
++
+         MASKED_WRITE(s->acmd12errsts, mask, value & UINT16_MAX);
+-        if (s->uhs_mode >= UHS_I) {
+-            MASKED_WRITE(s->hostctl2, mask >> 16, value >> 16);
++        if (s->uhs_mode < UHS_I) {
++            /*
++             * VERSION4 is writable even without UHS-I. Preserve all other
++             * Host Control 2 bits when UHS-I is not supported.
++             */
++            uint16_t independent = R_SDHC_HOSTCTL2_VERSION4_MASK;
  
-     /*
-      * ARMv5 does not have the ID_ISAR registers, but we can still
-@@ -74,7 +74,7 @@ static void arm1026_initfn(Object *obj)
-     cpu->midr = 0x4106a262;
-     cpu->reset_fpsid = 0x410110a0;
-     cpu->ctr = 0x1dd20d2;
--    cpu->reset_sctlr = 0x00090078;
-+    cpu->reset_sctlr = 0x00050078;
-     cpu->reset_auxcr = 1;
++            hostctl2_mask |= ~independent;
++            hostctl2_value &= independent;
++        }
++        MASKED_WRITE(s->hostctl2, hostctl2_mask, hostctl2_value);
++
++        if (s->uhs_mode >= UHS_I) {
+             if (FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, V18_ENA)) {
+                 sdbus_set_voltage(&s->sdbus, SD_VOLTAGE_1_8V);
+             } else {
+@@ -1357,6 +1370,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+             }
+         }
+         break;
++    }
  
-     /*
+     case SDHC_CAPAB:
+     case SDHC_CAPAB + 4:
 -- 
 2.47.3
 
