@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB23C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6D7C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n18-0004FL-Fd; Wed, 16 Sep 2026 06:37:30 -0400
+	id 1x6n1D-0004WY-4m; Wed, 16 Sep 2026 06:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n13-0003vU-7D; Wed, 16 Sep 2026 06:37:25 -0400
+ id 1x6n19-0004Oh-WA; Wed, 16 Sep 2026 06:37:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n10-0001hF-6S; Wed, 16 Sep 2026 06:37:24 -0400
+ id 1x6n14-0001oc-Qz; Wed, 16 Sep 2026 06:37:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554955; bh=F4yFCQzPY2cPkjs6VtpGZD0nzjBIa8nFrfMRBt0nG7k=;
+ t=1789554955; bh=9KSDexL2jFPWx8fQO4DDDN2LzRknMZSOyzdf5oS754I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tkux7m7px+rFay1yRaACrLK560Fo2lqeiztuq+229/ILahLrVi2fSbRwz3SROhs0N
- 4vKc60yZz8vqQW6tkBXBkAf9OQEekVGSpj5Zx8pwt3oo+2Yga+4SE0WwiobKGUJD+B
- /Q5x6Hc6Ex8aheqSIny16G0/xOYcKWKENXBuzo0koC/qnx/Qd+VuqrDZF7P2GlPh7B
- 1lWc2JDQfPEaty323GY0aqhjB6nfG/EroXX6rgPpajGfX2s1hltaq4EMlcqXa5f/Cw
- yIHMVjKub/1/2Pkrp1AOtOx70qFccA8BxiakO1y/+zqmFATjjQRt+FTwP1HdC9Vt2E
- QsVzXnTTe5CrA==
+ b=vBcgOi220FYejD/1WNlnF0Ku4lXeg05i4HGMrcJh6Fg6xpVLYACS2umtUORXD5UWr
+ cjcC8mkc9GQ7T1oG3oaTuY2SSzV6lG9VFJSoTGNEBkYUghkuoXXen+Zd4qqF4OmVwh
+ x92hSOc7P/PqvwvNeHD46vIQFW3nfqi8xBo10lKzyanIrioYOvI+EEvWLz3aX+otcm
+ aMTVWPrHM9OB5aTB7UIPq2a7b0frhDFWmQYS54IfbpirLPf4pfDZil2+kJu9k1oOOY
+ P8GEAk2pyykbsMWIDcs39KcuGUAyE1+YIbqkUm7zUflCknah9cWjLy2VsC+DetXsW0
+ WyRDdJ7uX4Tvg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D7FF51D5800;
+ by isrv.corpit.ru (Postfix) with ESMTP id E1C541D5802;
  Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A2FD3429F5F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id ACB91429F61;
  Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7EA815A7FB; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+ id 84F005A7FF; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 13/56] s390x/sclp: pv: only copy the original SCCB
- buffer
-Date: Wed, 16 Sep 2026 13:35:31 +0300
-Message-ID: <20260916103622.684817-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 15/56] tests/qtest/ide-test: cover a CHS translation
+ with zero sectors
+Date: Wed, 16 Sep 2026 13:35:33 +0300
+Message-ID: <20260916103622.684817-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,42 +74,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-With variable length and EXTENDED_LENGTH_SCCB, some callbacks might
-change the length field. For example read SCP info might write a new
-length into the SCCB header. We must not use that new length for the
-buffer copy, since the buffer was allocated with the original length.
-Only the length field in the work SCCB is changed, to indicate the
-"necessary" size. Using the new length reads past the allocation, so
-tools like ASAN might detect a buffer overrun.
+Ask for zero sectors per logical track via INITIALIZE DEVICE PARAMETERS
+and check that the command is aborted, that IDENTIFY DEVICE still reports
+the translation that was in effect before, and that a CHS read then
+completes normally rather than killing QEMU with SIGFPE.
 
-Secure guests do not have EXTENDED_LENGTH_SCCB, and the ultravisor checks
-and sanitizes the length field, so no qemu heap contents are exposed to
-the guest and the non pv-path already has the same header.length.
-
-Fixes: 0f73c5b30b8b ("s390x: protvirt: SCLP interpretation")
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260814125857.1729543-1-borntraeger@de.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit d7913fac774706a02faef0dc1c4c19df65a5a379)
+Cc: John Snow <jsnow@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+(cherry picked from commit 0905ef5b6d483da0e27831152fdde059595244b9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 3c8cb164888..b452f2ce54d 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -287,7 +287,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     sclp_c->execute(sclp, work_sccb, code);
- out_write:
-     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
--                          be16_to_cpu(work_sccb->h.length));
-+                          be16_to_cpu(header.length));
-     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
-     return 0;
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index b36b0f8875b..99aa5e039ca 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -95,6 +95,7 @@ enum {
+ 
+ enum {
+     CMD_DSM         = 0x06,
++    CMD_READ        = 0x20,  /* READ SECTOR(S) */
+     CMD_DIAGNOSE    = 0x90,
+     CMD_INIT_DP     = 0x91,  /* INITIALIZE DEVICE PARAMETERS */
+     CMD_READ_DMA    = 0xc8,
+@@ -1194,6 +1195,66 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+     free_pci_device(dev);
  }
+ 
++/* Zero sectors per track has to abort (ATA-5 8.16.6), not divide by zero */
++static void test_specify_zero_sectors(void)
++{
++    QTestState *qts;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    uint16_t buf[256];
++    uint8_t data;
++    int i;
++
++    qts = ide_test_start(
++        "-blockdev driver=file,node-name=hda,filename=%s "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
++        tmp_path[0]);
++
++    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
++
++    qpci_io_writeb(dev, ide_bar, reg_nsectors, 0);
++    qpci_io_writeb(dev, ide_bar, reg_device, 0);
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
++
++    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), ERR);
++    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_error), ABRT);
++
++    /* The refused request has to leave the default translation in effect */
++    qpci_io_writeb(dev, ide_bar, reg_device, 0);
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_IDENTIFY);
++    for (i = 0; i < 256; i++) {
++        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
++    }
++    g_assert_cmpint(buf[55], ==, 16);
++    g_assert_cmpint(buf[56], ==, 63);
++
++    /* READ SECTOR(S) of CHS 0/0/1, which used to crash QEMU */
++    qpci_io_writeb(dev, ide_bar, reg_nsectors, 1);
++    qpci_io_writeb(dev, ide_bar, reg_lba_low, 1);
++    qpci_io_writeb(dev, ide_bar, reg_lba_middle, 0);
++    qpci_io_writeb(dev, ide_bar, reg_lba_high, 0);
++    qpci_io_writeb(dev, ide_bar, reg_device, 0);
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_READ);
++
++    data = ide_wait_clear(qts, BSY);
++    assert_bit_set(data, DRQ);
++    assert_bit_clear(data, ERR | DF);
++    for (i = 0; i < 256; i++) {
++        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
++    }
++    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR | DF | DRQ);
++
++    /* A supported translation is still accepted */
++    qpci_io_writeb(dev, ide_bar, reg_nsectors, 32);
++    qpci_io_writeb(dev, ide_bar, reg_device, 7);
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
++
++    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR);
++
++    ide_test_quit(qts);
++    free_pci_device(dev);
++}
++
+ static void test_cdrom_pio(void)
+ {
+     cdrom_read_impl(1, CDROM_PIO);
+@@ -1265,6 +1326,7 @@ int main(int argc, char **argv)
+     g_test_init(&argc, &argv, NULL);
+ 
+     qtest_add_func("/ide/read_native", test_specify);
++    qtest_add_func("/ide/specify/zero_sectors", test_specify_zero_sectors);
+ 
+     qtest_add_func("/ide/identify", test_identify);
+ 
 -- 
 2.47.3
 
