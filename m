@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7969C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C441C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lcs-0002aY-VD; Wed, 16 Sep 2026 05:08:23 -0400
+	id 1x6lds-0005jk-Ay; Wed, 16 Sep 2026 05:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcq-0002Sf-Qp; Wed, 16 Sep 2026 05:08:20 -0400
+ id 1x6ldn-0005FW-IT; Wed, 16 Sep 2026 05:09:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lco-0007N0-U5; Wed, 16 Sep 2026 05:08:20 -0400
+ id 1x6ldl-0007U4-Sl; Wed, 16 Sep 2026 05:09:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=0vcwv13N92iv7fe8CuLosOOghUFeYFv8uZD/ZeveCqI=;
+ t=1789549561; bh=FpXgxKhV6+gDOV4M/c1B79NsdWOC/6Sj91SFxhLgddc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=usq7irQhIgSxj21Z8cYbAmfyr5zKqOnxF+c1+bHROPi3iiYcFkPgdf4adr858fYQL
- /rCe0SyqgOvy0qC2whAmJ7+g7JeuWv7gjyFqot/TPN4w5nEPpqdKUzVOHivWF7omJw
- 6nJ5MN6S8Atzq1ukVXduyumJyu2dPUSSRDxpjKetD5MNP4vNT54h+XgiInHAHwSy2i
- c+6EJjhVMr46z4vEmti9iv3uLVOCCH1ykETcbhSFNDbtaWAGTvIu6jSnIMCHRwrC8L
- YovrMaecImrAnqLD6pHUn75F38Js2qo1ASzWdpsPpvHf7Uf35kUdEYS4h7ai7K2aBZ
- IQo9+007RSFjQ==
+ b=xz47yNWw0lKVPgOu4lOy+v8PtD5c/rIG/OhDI2nWjKswL7kaS6WaHlpTEYHHBfzvH
+ k7Ubuvu97F/cHOVIyHfu9xRHHVZBwt1/K2M+OFRW8fzwwK+NpC8CeioqlXycwiqgTO
+ ljuTH6peQXBf5jegbmJGXdpFwIpaZc/oPwjcp7WDL3Rk8Kj1llWqtaNN4ktki0hjbi
+ BPQ4zr6il7Bh8WJR/ODJvxlrEGXINfwq6/dsqab5bgNf0/5P7Gn/JrKE45KOPB0tSj
+ Wk4Gt4IBf2KbKz6RfCrJSJxbQHoKgvkZg+sg3pyQTayd1/DLQXP7+SuP5cHR6NZVAQ
+ WV9y5fh3DRccQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D1B611D56CA;
- Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 068E41D56D6;
+ Wed, 16 Sep 2026 12:06:01 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7B8E9429E15;
- Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A6739429E20;
+ Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 461125A785; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 8AE905A79B; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 22/57] scsi: hide MODE SELECT block size change behind
- a quirk
-Date: Wed, 16 Sep 2026 12:03:46 +0300
-Message-ID: <20260916090516.677749-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 33/57] hw/cxl: fix timer leak in cxl_destroy_cci()
+Date: Wed, 16 Sep 2026 12:03:57 +0300
+Message-ID: <20260916090516.677749-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,87 +72,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-This is a dangerous operation in that the block size is not
-protected by a lock, but it can be written concurrently if
-you have a multi-queue virtio-scsi HBA.  Put it behind a quirk
-that is only enabled by the Q800 machine, since the MODE
-SELECT feature was added for A/UX.
+cxl_init_cci() allocates a QEMUTimer via timer_new_ms() but
+cxl_destroy_cci() never frees it.  This leaks a timer object on every
+device exit path and, more critically, on every device reset cycle since
+the secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) are destroyed
+and re-initialized each time ct3d_reset() runs.
+
+Tear the CCI down in the reverse of cxl_init_cci()'s setup order:
+destroy the mutex, then free the timer.  timer_free() cancels any
+pending expiry via timer_del() internally and tolerates a NULL pointer;
+clear the field afterwards so that a repeated timer_free() on the same
+CCI is a safe no-op.
+(The function as a whole is still not idempotent: qemu_mutex_destroy()
+asserts on an already-destroyed mutex.  Callers must not invoke
+cxl_destroy_cci() twice; the .initialized guard added in the next patch
+enforces that.)
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 0f410adf6b0dead1f09938054da639954bda3bc1)
+Fixes: 98cbac128f1c ("hw/cxl: Support aborting background commands")
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260729144645.1552511-2-junjie.cao@intel.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 259b877eac36be4dc593f42b36d33260741cd7d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index c0d78eb7d71..8400cebe4c1 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -710,12 +710,14 @@ static void q800_init(Object *obj)
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 1724b09a6dc..ee01ebf5dec 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -4793,6 +4793,8 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+ void cxl_destroy_cci(CXLCCI *cci)
+ {
+     qemu_mutex_destroy(&cci->bg.lock);
++    timer_free(cci->bg.timer);
++    cci->bg.timer = NULL;
+     cci->initialized = false;
+ }
  
- static GlobalProperty hw_compat_q800[] = {
-     { "scsi-hd", "quirk_mode_page_vendor_specific_apple", "on" },
-+    { "scsi-hd", "quirk_mode_page_set_block_size", "on" },
-     { "scsi-hd", "vendor", " SEAGATE" },
-     { "scsi-hd", "product", "          ST225N" },
-     { "scsi-hd", "ver", "1.0 " },
-     { "scsi-cd", "quirk_mode_page_apple_vendor", "on" },
-     { "scsi-cd", "quirk_mode_sense_rom_use_dbd", "on" },
-     { "scsi-cd", "quirk_mode_page_vendor_specific_apple", "on" },
-+    { "scsi-cd", "quirk_mode_page_set_block_size", "on" },
-     { "scsi-cd", "quirk_mode_page_truncated", "on" },
-     { "scsi-cd", "vendor", "MATSHITA" },
-     { "scsi-cd", "product", "CD-ROM CR-8005" },
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 5bb7a974d69..a42f7d8e77d 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1673,8 +1673,12 @@ static void scsi_disk_emulate_mode_select(SCSIDiskReq *r, uint8_t *inbuf)
-         goto invalid_param;
-     }
- 
--    /* Allow changing the block size */
--    if (bd_len) {
-+    /*
-+     * Allow changing the block size only if the quirk is enabled for it.
-+     * Writing s->qdev.blocksize is not thread safe!
-+     */
-+    if (bd_len && (s->quirks &
-+                   (1 << SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE))) {
-         bs = p[5] << 16 | p[6] << 8 | p[7];
- 
-         /*
-@@ -3247,6 +3251,8 @@ static const Property scsi_hd_properties[] = {
-     DEFINE_PROP_BIT("quirk_mode_page_vendor_specific_apple", SCSIDiskState,
-                     quirks, SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE,
-                     0),
-+    DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-+                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
-     DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
- };
- 
-@@ -3352,6 +3358,8 @@ static const Property scsi_cd_properties[] = {
-                     0),
-     DEFINE_PROP_BIT("quirk_mode_page_truncated", SCSIDiskState, quirks,
-                     SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED, 0),
-+    DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-+                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
- };
- 
- static void scsi_cd_class_initfn(ObjectClass *klass, const void *data)
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 332c2f04ebe..b4023079922 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -261,5 +261,6 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
- #define SCSI_DISK_QUIRK_MODE_SENSE_ROM_USE_DBD             1
- #define SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE    2
- #define SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED                3
-+#define SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE           4
- 
- #endif
 -- 
 2.47.3
 
