@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F8AC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 04:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D73BC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 04:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6hPF-0000P4-MF; Wed, 16 Sep 2026 00:38:03 -0400
+	id 1x6hWz-0001Rr-BZ; Wed, 16 Sep 2026 00:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6hOv-0000NJ-AG; Wed, 16 Sep 2026 00:37:41 -0400
+ id 1x6hWy-0001RG-01; Wed, 16 Sep 2026 00:46:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6hOq-0000AH-Rj; Wed, 16 Sep 2026 00:37:40 -0400
+ id 1x6hWw-00013Q-CN; Wed, 16 Sep 2026 00:45:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789533401; bh=+j9O/7tluwaYInDQcn9Szmr6B2fm4OS9Xch3KBTS+Gs=;
+ t=1789533913; bh=p+N4rR/mBVjdf2W27VwmAYQhVVMgwZTyfXg2SzzUXik=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=oHF4aHNqr8lgcqcNWa9NxdyZLh9UOvp2G2SBCU8QXjHeOhm5uWkwKNa5xFPeY5pvz
- 3WYSLi+8UQPVVvRy/GZXnZcokqoGD/Rj7MpaPId2ZYb6FbijD75P3RDu+Fc2jLH5zF
- 5oP8xBSl8OcBOz4YqdgflZMyOqHtnaAKZBNEwvUAXQrRR0mAFVDG4lSGMSQ0Bnvu3S
- rhV4DNuJn8M2nfQ5xVbuK4P4xL+kNmQtvAcMVUokrpZT1r94rGYpS0pCSpBWB6Mp4P
- pT+DN6G/5hdNExof7Ep/XlRdbky2uDN2LEJyOHYHzUNiYvKW5vDakwZvTtrgA4GcGR
- G5KVxAsBH9jLw==
+ b=YDRjU+mjWGXhlFfF6BzTucxX4l8LZprbju2EvuBlh07yDRki6AvEmNw+s22CFV8mu
+ mJJU3C9TONcWoxN+E7BIyXM8x6hea7TFVsq4J+AFv+e8oU2b0PoYAn0eg/7NS28k+c
+ yoopbH3z9lw1M28Z5hEgyj1xhYh7PRdTL4PaWW5hWcJF/Mf+6H71WJscESAWalHnix
+ j97/7Vi6xd6s7LrnYdzOoq929PalkamiefaoANbdg/MfGr76sIVtsPPdbKJ/sqgxi1
+ c+EaL0EAR3r9QGIqQCCLWcUCaHlXVAbRYaQhmPgpwXLpOMefnE54z+nh9+oN2OrGIn
+ xmDHe9P+HB6NA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A39731D54AE;
- Wed, 16 Sep 2026 07:36:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BEF1A1D54B4;
+ Wed, 16 Sep 2026 07:45:13 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B3E5D429869;
- Wed, 16 Sep 2026 07:37:23 +0300 (MSK)
-Message-ID: <83d78d2f-f85d-4d6c-b388-9c301fe572e1@tls.msk.ru>
-Date: Wed, 16 Sep 2026 07:37:23 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0472142996A;
+ Wed, 16 Sep 2026 07:45:56 +0300 (MSK)
+Message-ID: <dece0a0d-e4af-46aa-91cf-d79ef510b739@tls.msk.ru>
+Date: Wed, 16 Sep 2026 07:45:55 +0300
 MIME-Version: 1.0
 User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH] hw/intc/bcm2835_ic: reject out-of-range FIQ source values
-To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@mailo.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com, qemu-arm@nongnu.org,
+Subject: Re: [PATCH v2 1/3] target/arm/whpx: Don't try to sync ARM_CP_CONST
+ registers
+To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>,
+ "mohamed@unpredictable.fr" <mohamed@unpredictable.fr>,
  QEMU Stable <qemu-stable@nongnu.org>
-References: <20260831081709.77725-1-guobin@linux.alibaba.com>
+References: <LVXPR21MB7009C0007D22503C38FE053EADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20260831081709.77725-1-guobin@linux.alibaba.com>
+In-Reply-To: <LVXPR21MB7009C0007D22503C38FE053EADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -71,29 +73,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/31/26 11:17, Bin Guo wrote:
-> The FIQ_CONTROL register accepts a 7-bit source selector, but only
-> sources 0..71 (64 GPU + 8 ARM IRQs) exist.  Values 96..127 cause
-> bcm2835_ic_update() to call extract32(arm_irq_level, start, 1) with
-> start >= 32, which trips the assertion in bitops.h and aborts QEMU.
+On 8/20/26 03:30, Doug Cook (WINDOWS) wrote:
+> ARM_CP_CONST registers ignore writes, so readback assertion fails.
 > 
-> Reject writes that select a non-existent source and log a guest error,
-> so that a malicious or buggy guest cannot kill the emulator.
+> Not asserting now because all entries in the whpx_sreg_match table are
+> invalid. Needs to be fixed now so that we can fix the table entries.
 > 
-> Add a qtest that verifies both valid and out-of-range FIQ source
-> selections on raspi3b.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4368
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> Signed-off-by: Doug Cook <dcook@microsoft.com>
 > ---
->   hw/intc/bcm2835_ic.c          | 13 +++++--
->   tests/qtest/bcm2835-ic-test.c | 66 +++++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build       |  2 +-
->   3 files changed, 78 insertions(+), 3 deletions(-)
->   create mode 100644 tests/qtest/bcm2835-ic-test.c
+>   target/arm/whpx/whpx-all.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 
-I'm picking this up for currently active stable qemu series.
+I'm picking this series:
+
+  1/3 target/arm/whpx: Don't try to sync ARM_CP_CONST registers
+  2/3 target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
+  3/3 target/arm/whpx: fix whpx-arm post-reset CPU state
+
+for 11.0.x and 11.1.x stable qemu series.
 Please let me know if I shouldn't.
+
+Also, in the future, please consider marking changes which are possible
+relevant for the older/stable qemu series, with Cc: qemu-stable@, and
+consider adding a cover letter for multi-patch series, so whole series
+comes as a single email thread with a description in front.
 
 Thanks,
 
