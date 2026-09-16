@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 309BAC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8D0C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMS-0001s9-AU; Wed, 16 Sep 2026 03:47:20 -0400
+	id 1x6kMc-0002oG-Mg; Wed, 16 Sep 2026 03:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kM9-0000YO-9L; Wed, 16 Sep 2026 03:47:03 -0400
+ id 1x6kMa-0002eq-QP; Wed, 16 Sep 2026 03:47:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kM7-0005Na-I2; Wed, 16 Sep 2026 03:47:01 -0400
+ id 1x6kMY-0005Pq-UH; Wed, 16 Sep 2026 03:47:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=EBVbP8KH+zJ1vd4SbsplDbZGZlnyHDz590RPuGGxxPo=;
+ t=1789544619; bh=fGIfOHo4G3xiBmArlwd/EnZidqgBSF17YDxjakE2cNI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=io16FOc4+DLIWw/ggixJD/JEuPnI1QmksPzzjbIxbeGf+YxA80rHWMywYXZcwJdAk
- 96kjBhvJpzrFhn/ZUw+YYtzE+wD/A6nmJhuwfg1HoR9yKGE2V5684x01P00JVLuX2n
- I3TN5xYmXuWR4UjJkytqDeDJGj9hj1Q+V9z6HliAzc4k+vda3eWXM4z/EVT8/9m/Eq
- 4orq3vOBfZz8iDtPDK9eb3MMr4iK0Z7uW5EivBMm+pZd3KfmoZf4GNLaVYAuvd8n14
- 3AAAjxvNDJ44wVMVyHHJpTIVo6tKq7H8tnP4UQ9xxChxOpOc825klhSThrlPZ6WuPN
- XkxgWodMH2MvQ==
+ b=d2F7z5zFbjFV0AvB93nOjC9KveMPKYvvF2D7GAlttzgeQQI6QIzLD0+oklTzfkRDF
+ k2IUdRxmutIxzU82G74v2LDK5mitIHPLl4CneWfXDl5yESfJp7m/HgCCVxooTlJNch
+ l4H9I40K723SqLd115hTv8uEI43ZG895B1IqHlLUK2QtrzjFW9zO/z8wOMvlzsQCgA
+ /AI4PUScMTo86IzxRPfov6uXPlBEYh6csMVSVeBX+6/M/a0VwfKv5XOdUAJlc+tWpF
+ Fni1MTC7OV9KzgxTvQv7YLPRPP42akDG6/NCvXTbrpFfyMJgRZEqTzZ6O4B5lpPqw0
+ l467cHFn0QCtg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 00B211D55B7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2EF351D55BC;
  Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 84875429B70;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B2974429B75;
  Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4CA565A713; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id 5BF595A71D; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 41/49] hw/virtio: reject inverted virtio-iommu IOVA
- ranges
-Date: Wed, 16 Sep 2026 10:42:59 +0300
-Message-ID: <20260916074346.671467-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 46/49] ui/cursor: make the cursor refcount atomic
+Date: Wed, 16 Sep 2026 10:43:04 +0300
+Message-ID: <20260916074346.671467-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,78 +72,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Guest MAP and UNMAP requests can set virt_end below virt_start. Since
-virt_end is inclusive, this is not a valid interval. MAP nevertheless
-stores it in domain->mappings, but interval_cmp() assumes low <= high.
-For an inverted key, interval_cmp(key, key) returns -1. A covering UNMAP
-can therefore find the key but fail to remove it and repeat forever while
-holding s->mutex.
+A QEMUCursor outlives the call that publishes it and is shared between
+threads, but its refcount was a plain int with no single lock covering
+every user. qemu_console_set_cursor() takes and drops references from
+the main loop under the BQL alone, hw/display/qxl-render.c does so from
+the SPICE display worker thread, and ui/spice-display.c does so under
+SimpleSpiceDisplay::lock. ui/cocoa.m and ui/dbus-listener.c add two more
+threads.
 
-Reject inverted request ranges with VIRTIO_IOMMU_S_INVAL and make the
-notifier range decomposition skip invalid ranges. Keep the existing
-notifier-before-remove ordering, but return VIRTIO_IOMMU_S_DEVERR if
-g_tree_remove() fails.
+The pair that collides is qemu_spice_cursor_refresh_bh(), which drops
+ssd->lock before calling qemu_console_set_cursor(), and the worker
+refcounting the same cursor under that lock. A lost increment frees the
+cursor while the console still points at it, so the console's next unref
+decrements memory the allocator has already handed out again. Locking
+ssd.cursor is not enough on its own: with that done, this is the race
+that remains.
 
-Fixes: fe2cacae2438 ("virtio-iommu: Implement map/unmap")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260729131953.1720567-1-physicalmtea@gmail.com>
-(cherry picked from commit 15dcee9195550ffcce90594554a22fd4b63c0d7e)
+Assert on the value the decrement observed while here. Dropping a
+reference that was never taken used to be silent, because the decrement
+lands in the allocator metadata of the freed chunk: nothing is logged,
+the object is not freed twice, and the process runs on until some later
+allocation walks the damaged free list and faults, arbitrarily far from
+the code that caused it.
+
+Fixes: 0b2824e5e48a ("spice: use bottom half instead of refresh timer for cursor updates")
+Cc: qemu-stable@nongnu.org
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260903192647.2677279-3-den@openvz.org>
+(cherry picked from commit 1063bbb711856353625d78a9c498988470e91b22)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 86deff70385..3c8d6922feb 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -213,6 +213,10 @@ static void virtio_iommu_notify_map_unmap(IOMMUMemoryRegion *mr,
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 46b31281850..4ebd28f6af1 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -164,6 +164,15 @@ typedef struct QEMUCursor {
+ } QEMUCursor;
+ 
+ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height);
++
++/*
++ * A cursor may be shared between the main loop, a vCPU thread and a
++ * display backend's own thread, so the refcount is atomic and these two
++ * may be called from any of them.  The object itself is not otherwise
++ * thread-safe: take a reference before publishing the pointer anywhere
++ * another thread can reach it, and never dereference a cursor you do
++ * not hold a reference to.
++ */
+ QEMUCursor *cursor_ref(QEMUCursor *c);
+ void cursor_unref(QEMUCursor *c);
+ QEMUCursor *cursor_builtin_hidden(void);
+diff --git a/ui/cursor.c b/ui/cursor.c
+index 6e23244fbe6..69d27d49a13 100644
+--- a/ui/cursor.c
++++ b/ui/cursor.c
+@@ -1,4 +1,5 @@
+ #include "qemu/osdep.h"
++#include "qemu/atomic.h"
+ #include "ui/console.h"
+ 
+ #include "cursor_hidden.xpm"
+@@ -103,24 +104,28 @@ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height)
+     c = g_malloc0(sizeof(QEMUCursor) + datasize);
+     c->width  = width;
+     c->height = height;
+-    c->refcount = 1;
++    qatomic_set(&c->refcount, 1);
+     return c;
+ }
+ 
+ QEMUCursor *cursor_ref(QEMUCursor *c)
  {
-     uint64_t delta = virt_end - virt_start;
+-    c->refcount++;
++    qatomic_inc(&c->refcount);
+     return c;
+ }
  
-+    if (virt_end < virt_start) {
-+        return;
-+    }
+ void cursor_unref(QEMUCursor *c)
+ {
++    int refcount;
 +
-     event->entry.iova = virt_start;
-     event->entry.addr_mask = delta;
- 
-@@ -808,6 +812,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
-         return VIRTIO_IOMMU_S_INVAL;
-     }
- 
-+    if (virt_end < virt_start) {
-+        return VIRTIO_IOMMU_S_INVAL;
-+    }
+     if (c == NULL)
+         return;
+-    c->refcount--;
+-    if (c->refcount)
+-        return;
+-    g_free(c);
 +
-     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
-     if (!domain) {
-         return VIRTIO_IOMMU_S_NOENT;
-@@ -858,6 +866,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
- 
-     trace_virtio_iommu_unmap(domain_id, virt_start, virt_end);
- 
-+    if (virt_end < virt_start) {
-+        return VIRTIO_IOMMU_S_INVAL;
++    refcount = qatomic_fetch_dec(&c->refcount);
++    assert(refcount > 0);
++    if (refcount == 1) {
++        g_free(c);
 +    }
-+
-     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
-     if (!domain) {
-         return VIRTIO_IOMMU_S_NOENT;
-@@ -880,7 +892,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
-                 virtio_iommu_notify_unmap(ep->iommu_mr, current_low,
-                                           current_high);
-             }
--            g_tree_remove(domain->mappings, iter_key);
-+            if (!g_tree_remove(domain->mappings, iter_key)) {
-+                ret = VIRTIO_IOMMU_S_DEVERR;
-+                break;
-+            }
-             trace_virtio_iommu_unmap_done(domain_id, current_low, current_high);
-         } else {
-             ret = VIRTIO_IOMMU_S_RANGE;
+ }
+ 
+ int cursor_get_mono_bpl(QEMUCursor *c)
 -- 
 2.47.3
 
