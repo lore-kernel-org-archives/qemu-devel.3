@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3DEC982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B219C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:50:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMV-0002HI-VF; Wed, 16 Sep 2026 03:47:24 -0400
+	id 1x6kKI-0005Nj-Gt; Wed, 16 Sep 2026 03:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMC-0000bf-HX; Wed, 16 Sep 2026 03:47:04 -0400
+ id 1x6kKD-00058R-4S; Wed, 16 Sep 2026 03:45:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMA-0005OC-R6; Wed, 16 Sep 2026 03:47:04 -0400
+ id 1x6kKB-00051e-0K; Wed, 16 Sep 2026 03:45:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=ZJhRIevipQGcpE9OxfuFapD4TDrvm487gDTJPaFV3m8=;
+ t=1789544605; bh=YWQ9AuR6RncoYk+h8Eh6DPTQY/bs8+/9te4+oNmft5k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HJ+hEgCme571c9YWPI8YL2EoPZVY2JfpN/1MD9SmgRIBw7btOFGlsZNqJDq1FOwtz
- eLYNOiVbTIndDXrh5SoNbb8RPW0dtii4If/QzHaa84nq6QX08QFkU4CyjUaZjZF12V
- WumS3Yn7t8kKkgayErlkDG5P4jjXMA85el1SLK314rhc5EEnMPYpz31zHg8D6TDYgf
- 2OJOHawc9BY8bzf4U/F8a4Z+eoSeFhbI7FdgxN2j8ZORH3ZH1GgYlUm2FHazw953ib
- jAi1L688rtl8+pulBxnSktBaI1lFub57MhOt/PJhUV0AavezImTWktjftjNdD7I/PC
- tW18CkfdxPyBg==
+ b=W4Dfu3Y0s7VFgurfOINcwPZXig2vjcotSapNnJSCoiwEp5G9L/esl3OODikL3fbpH
+ BsWAbcRhXUVGMYLPGg20nG8ku6D6HvERrHQQsjKpbAKzeaZT8ey19G+kO9zFvpDPoN
+ QBa4etJtvtkUnNDrHqWT0yxphXGcBneDixwvatjgugPv4xOtcVE8pXjM3qtcqhWAIu
+ y/G0I/h5rFYv2ZElS+dIczPjHHqiLlVrSZFOD1ierJMGCo1M1jnrj4QIlMKkvdjNif
+ ZeFfWry3neRYGhDa9oCRJoELXPJG4dCoM0LjiSMzQQWMl17zcr3/MIvADDZnhR7tFT
+ n5l2bjJ/ZuwGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0FB661D55B9;
- Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6ADE11D559C;
+ Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 935EB429B72;
- Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EBDD4429B32;
+ Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 52D7F5A717; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id C3DA05A6E5; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 43/49] virtio-scsi: set dataplane_started to false
- upon failure
-Date: Wed, 16 Sep 2026 10:43:01 +0300
-Message-ID: <20260916074346.671467-43-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 18/49] hw/ide: report the default CHS translation in
+ IDENTIFY DEVICE
+Date: Wed, 16 Sep 2026 10:42:36 +0300
+Message-ID: <20260916074346.671467-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -74,54 +74,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
-dataplane_started to true when virtio_scsi_dataplane_start() fails. This
-is likely a typo since dataplane is not functional after failure.
+IDENTIFY DEVICE words 1, 3 and 6 describe the default CHS translation,
+and ATA-5 8.16.8 requires INITIALIZE DEVICE PARAMETERS to leave them
+alone; the translation in effect is described by words 54 to 56 instead.
+Words 3 and 6 were filled from s->heads and s->sectors, which the command
+replaces, so a guest that selected a translation of its own was told that
+its choice was what the drive came with, and could no longer find out the
+default. Word 1 is already right, as no command changes s->cylinders.
 
-The non-ioeventfd fallback is broken because dataplane_started is true
-after virtio_scsi_dataplane_start() failure. As a result, the following
-assertion failure occurs when a virtio-scsi device exceeds the open file
-descriptor ulimit when setting up notifiers (eventfds):
+Report s->drive_heads and s->drive_sectors, which ide_init_drive() keeps
+for exactly this, along with the retired word 4 derived from them. The
+CompactFlash data labels those words as the default geometry too, and
+INITIALIZE DEVICE PARAMETERS is accepted for CFA drives, so fix both.
 
-  $ ulimit -n 104 # exact number can vary based on QEMU version
-  $ qemu-system-x86_64 -M q35,accel=kvm -m 1G -cpu host -smp 14 \
-         --blockdev file,node-name=drive0,filename=test.img,cache.direct=on,aio=native \
-         --blockdev file,node-name=drive1,filename=data01.img,cache.direct=on,aio=native \
-         --device virtio-scsi-pci,id=virtio-scsi-pci0 \
-         --device scsi-hd,drive=drive0,bus=virtio-scsi-pci0.0 \
-         --device virtio-scsi-pci,id=virtio-scsi-pci1 \
-         --device scsi-hd,drive=drive1,bus=virtio-scsi-pci1.0
-  qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -accel kvm is set.
-  qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
-  qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset: Assertion `!s->dataplane_started' failed.
-  Aborted                    (core dumped)
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
-Buglink: https://redhat.atlassian.net/browse/RHEL-193328
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260825154854.263819-1-stefanha@redhat.com>
-(cherry picked from commit 5440b6b5de469f62787f47f2b9177cb1136a85c1)
+(cherry picked from commit 0df27c66dc7271ee2e63636b5183c0b3acdf7eed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index 95f13fb7c28..bcb6e441335 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -230,7 +230,7 @@ fail_host_notifiers:
- fail_guest_notifiers:
-     s->dataplane_fenced = true;
-     s->dataplane_starting = false;
--    s->dataplane_started = true;
-+    s->dataplane_started = false;
-     return -ENOSYS;
- }
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 606a3adf9c2..ff33ebe1c63 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -138,11 +138,12 @@ static void ide_identify(IDEState *s)
+     memset(p, 0, sizeof(s->identify_data));
  
+     put_le16(p + 0, 0x0040);
++    /* Words 1, 3 and 6 describe the default translation (ATA-5 8.16.8) */
+     put_le16(p + 1, s->cylinders);
+-    put_le16(p + 3, s->heads);
+-    put_le16(p + 4, 512 * s->sectors); /* XXX: retired, remove ? */
++    put_le16(p + 3, s->drive_heads);
++    put_le16(p + 4, 512 * s->drive_sectors); /* XXX: retired, remove ? */
+     put_le16(p + 5, 512); /* XXX: retired, remove ? */
+-    put_le16(p + 6, s->sectors);
++    put_le16(p + 6, s->drive_sectors);
+     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
+     put_le16(p + 20, 3); /* XXX: retired, remove ? */
+     put_le16(p + 21, 512); /* cache size in sectors */
+@@ -332,8 +333,8 @@ static void ide_cfata_identify(IDEState *s)
+ 
+     put_le16(p + 0, 0x848a);                    /* CF Storage Card signature */
+     put_le16(p + 1, s->cylinders);              /* Default cylinders */
+-    put_le16(p + 3, s->heads);                  /* Default heads */
+-    put_le16(p + 6, s->sectors);                /* Default sectors per track */
++    put_le16(p + 3, s->drive_heads);            /* Default heads */
++    put_le16(p + 6, s->drive_sectors);          /* Default sectors per track */
+     /* *(p + 7) := nb_sectors >> 16 -- see ide_cfata_identify_size */
+     /* *(p + 8) := nb_sectors       -- see ide_cfata_identify_size */
+     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
 -- 
 2.47.3
 
