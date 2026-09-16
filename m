@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADB6C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B0AC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ldX-0004YP-2m; Wed, 16 Sep 2026 05:09:03 -0400
+	id 1x6ldV-0004Kp-2q; Wed, 16 Sep 2026 05:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldP-00043T-7L; Wed, 16 Sep 2026 05:08:56 -0400
+ id 1x6ldJ-0003uW-Qc; Wed, 16 Sep 2026 05:08:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldN-0007Rf-E1; Wed, 16 Sep 2026 05:08:54 -0400
+ id 1x6ldI-0007Po-3E; Wed, 16 Sep 2026 05:08:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549560; bh=3X5KhR9unJ3pxNlBAJ3w+vwmMTfnndNh7QH1A19Hzkc=;
+ t=1789549560; bh=OzhItmOd4NPcbBOmJAQzYEdSYvXwKsq/R1UWSfJ9PVA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jSkcL/g56L0poXiZ5rA2SrO+9vtcAbuRpBfP93uQ3LdSDEqgbI/bt+iyMyWMlWE+A
- 9LReGUUXhq0eTLKmQWNTVSqencYXt18atZ+d3U5DiZObT0JRiCwt2lRo3/m2QTbZqV
- 5WPbRVh2tk22F1jyqZOU3CUtliFGqaxvacUePbizklK1j4F2C1ggMwDU0pAu0XCb1t
- c6OBmseGkGFj5u4lz8F5yptCLPBgtiov6XAiX4tXAnX8LtaLCmblOfDB0uw7lsFjZi
- rRZiJ7YJuISUZmlHFusIpvqvYq0Rj7lfF41pfGfQp1PmaCAsMIbjK34ROVaHzuYb0k
- siaeX1ak1rd4Q==
+ b=RH9qpLRgEntt21w2ZnHRiglvhXMs/8xNdA2PYMZ0hY4UOsR1Npu1n+bDMFZtmYrfL
+ Sj9nG+Brkwl+OTC/bze5JEa5WKdUvT1IWTqiAqOMysnmqFxiz2GtOxBo7s5xy+8vKR
+ LsXLdegoE7+tl2YulH+kGbM+YeG2eTZfsB8kugLiTYIkj4rbxem0cvkdVCMwC/yWxJ
+ XKHN5RahhKVpS23CKKOd5atfhk3184SjXMWMh05GbKhDiXDFSL+D8lxb2/J06fBWY6
+ 2S9rD32dRkug+z4Ebo0tkAtiI+7mFyhIiDoGR16rlD6EYAxXm0iD250IswZzETAqGl
+ dNTG09rozJwpA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECB4A1D56D3;
+ by isrv.corpit.ru (Postfix) with ESMTP id DEE671D56D0;
  Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 98918429E1D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 890D7429E1A;
  Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 822C85A795; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id 798045A78F; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 30/57] target/arm: Make Thumb T1 hint space UNDEF
- before v6T2
-Date: Wed, 16 Sep 2026 12:03:54 +0300
-Message-ID: <20260916090516.677749-30-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 27/57] target/arm: Correct reset value of SCTLR for
+ arm926, arm1026
+Date: Wed, 16 Sep 2026 12:03:51 +0300
+Message-ID: <20260916090516.677749-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -74,74 +74,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The "hint space" is a region of the encoding space which is defined
-to NOP if not specified as an architected instruction, so that future
-instructions can be added there which fall back to NOPs on older
-CPUs.  In the A32 encoding, this hint space was carved out of the MSR
-(imm) insn by using the fact that a field_mask (bits [19:15]) of
-0b0000 meant that an MSR (imm) would set no parts of the CPSR from
-the immediate, so it was always NOP on existing CPUs.
+For the arm926 CPU we reset the SCTLR to 0x00090078.  This is not the
+value specified in the ARM926EJ-S TRM (ARM DDI 0198E), which states
+that bits 16 and 18 are SBO, bit 17 is SBZ, and bits [31:19] are SBZ.
+It's also not the value seen on real hardware.
 
-For the T1 encoding, the hint space is in a range that used to UNDEF
-in Armv5, and so the hint insns and the NOP region must all UNDEF
-before v6T2.  Rather than putting this check in the trans functions
-for each hint insn and for the NOP space (which is a lot of places,
-and awkward since those trans functions are often shared with the A64
-and A32 encodings), put in a decode line that covers the whole space
-which we check before any of the hints and which will explicitly
-UNDEF if necessary.
+Similarly, for the arm1026 we use the same SCTLR reset value but
+the TRM says that bits 18 and 16 are the SBO ones.
+
+This has been wrong in QEMU since 2007 when we first started actively
+resetting the SCTLR to some fixed value rather than zero.
+
+This wrong value didn't affect any of QEMU's behaviour, because we
+don't implement any handling of the old pre-v6 meanings of these bits
+(which were IMPDEF), and their v8 reuse is guarded by appropriate
+version checks.
+
+Correct the reset values to 0x00050078 (i.e set bit 18 and not 19).
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4208
+Fixes: 610c3c8afd99f4f11 ("Reset ARM cp15.c1_sys to default values. Fix XScale cp15 accesses.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4202
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-4-peter.maydell@linaro.org
-(cherry picked from commit 2931a675e9d3fcddedf673509fe9759955fc616d)
+Message-id: 20260821114138.4068582-1-peter.maydell@linaro.org
+(cherry picked from commit 59716ac3067d2f87550fa3a59bdbaf9180c06c7b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 778fbf16275..70b7608d2ce 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -224,6 +224,9 @@ REVSH           1011 1010 11 ... ...            @rdm
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 2127d456ad6..e788acc7364 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -129,7 +129,7 @@ static void arm926_initfn(Object *obj)
+     cpu->midr = 0x41069265;
+     cpu->reset_fpsid = 0x41011090;
+     cpu->ctr = 0x1dd20d2;
+-    cpu->reset_sctlr = 0x00090078;
++    cpu->reset_sctlr = 0x00050078;
  
- {
-   {
-+    # Before v6T2 this was not NOP space and must UNDEF
-+    MAYBE_UNDEF_T1_HINT 1011 1111 ---- 0000
-+
-     YIELD       1011 1111 0001 0000
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index b480f6f65ea..2df91c4818b 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3310,6 +3310,24 @@ static bool trans_NOP(DisasContext *s, arg_NOP *a)
-     return true;
- }
+     /*
+      * ARMv5 does not have the ID_ISAR registers, but we can still
+@@ -170,7 +170,7 @@ static void arm1026_initfn(Object *obj)
+     cpu->midr = 0x4106a262;
+     cpu->reset_fpsid = 0x410110a0;
+     cpu->ctr = 0x1dd20d2;
+-    cpu->reset_sctlr = 0x00090078;
++    cpu->reset_sctlr = 0x00050078;
+     cpu->reset_auxcr = 1;
  
-+static bool trans_MAYBE_UNDEF_T1_HINT(DisasContext *s,
-+                                      arg_MAYBE_UNDEF_T1_HINT *a)
-+{
-+    /*
-+     * The Thumb T1 encoding hint space was only defined starting
-+     * in v6T2 for A-profile. For M-profile it always exists, even
-+     * in v6M.
-+     */
-+    if (arm_dc_feature(s, ARM_FEATURE_M) ||
-+        arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        /* Allow decode to fall through to the hint insns and NOP space */
-+        return false;
-+    }
-+    /* On the earlier cores, we must UNDEF */
-+    unallocated_encoding(s);
-+    return true;
-+}
-+
- static bool trans_MSR_imm(DisasContext *s, arg_MSR_imm *a)
- {
-     uint32_t val = ror32(a->imm, a->rot * 2);
+     /*
 -- 
 2.47.3
 
