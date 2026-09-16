@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81220C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F24C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kKg-0006N8-Is; Wed, 16 Sep 2026 03:45:30 -0400
+	id 1x6kKm-0006mj-9R; Wed, 16 Sep 2026 03:45:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kKZ-00066h-34; Wed, 16 Sep 2026 03:45:23 -0400
+ id 1x6kKg-0006OQ-6d; Wed, 16 Sep 2026 03:45:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kKX-000520-8D; Wed, 16 Sep 2026 03:45:22 -0400
+ id 1x6kKd-0005Fe-Lo; Wed, 16 Sep 2026 03:45:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=9KSDexL2jFPWx8fQO4DDDN2LzRknMZSOyzdf5oS754I=;
+ t=1789544614; bh=kMhCLQcBupnBgh6uJLc7Xa3JdBGKO67+7tOWDOI6asE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JOUjQfPHfSkEa+q5+NOtp33hqdYa+cyZfEl8YNO5qDDOlUABVYnmEBirUayIoCti/
- wqZSTcjILVb+c1AunOlxoDiU4hi3ngw7NMG5wJKFIZZuTvo+WSbKN1sMyejOiDsoS2
- 8dPkqfd2E7BnmimfTA8ntqwMMSngFaLzQTd5mXXPO+v0zIbLYyQVB/Uaelr/QIOdH+
- EvEe+3iBtQ3mW9em9Y3yYFbjk452GLA9CFxmPYYrnkzMQ8p1UQi+QvnlhAR930Im4+
- pP10mhPf1ocQf/XE19Z1cUCDMTMjfcWwi4Xn/zLoWGO5pBhW5MjNUM5hn25qlv2z2W
- cqCpACV4f4Wpg==
+ b=blHW6RX8fgYJwhF2yJen1VCU8HY0UlvV7wXhKI2sIYEP/BfU9s5bw149x5vPedWY+
+ nEDx72j+KaHMsNVry6cPKT52io8pGcDjy15LAbTXHPc6aV3dpUVCKJKWHmQQ442Q2o
+ sgDrPl53+GQFTi5Lin0uAul6qDs+qJfJOq+CBrXlgr3JGtZpMF563Ns01TsyYhQ9uR
+ 40J8uaGn7VSpZL/Oy3OpRVH+ELn04dVJsXLnPW4gqHHQr0k1MGuG7dz++DrBN7UbGa
+ Rg/sjtfVd+tU/ue/kpDGOhxYZTuZj8FLiaqYkMji86cIKIz8weeOxC4h0WxVRctVEV
+ fhBrqjAIPHDxQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6B4781D559D;
- Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C40F71D55A3;
+ Wed, 16 Sep 2026 10:43:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E716E429B31;
- Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 538F2429B4A;
+ Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C090D5A6E3; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id 4E6335A6EB; Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 17/49] tests/qtest/ide-test: cover a CHS translation
- with zero sectors
-Date: Wed, 16 Sep 2026 10:42:35 +0300
-Message-ID: <20260916074346.671467-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 21/49] vapic: confine the VAPIC region to
+ 0xc0000..0xe0000
+Date: Wed, 16 Sep 2026 10:42:39 +0300
+Message-ID: <20260916074346.671467-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -74,107 +73,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Ask for zero sectors per logical track via INITIALIZE DEVICE PARAMETERS
-and check that the command is aborted, that IDENTIFY DEVICE still reports
-the translation that was in effect before, and that a CHS read then
-completes normally rather than killing QEMU with SIGFPE.
+The VAPIC region is mapped as writable RAM, at very high priority,
+above existing memory.  If the guest is allowed to map it everywhere,
+it can overlap PCI BARs or even SMRAM.  Ensure that the whole
+region first in the 128K of low memory that are reserved to
+option ROMs.
 
-Cc: John Snow <jsnow@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit 0905ef5b6d483da0e27831152fdde059595244b9)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4206
+Reported-by: Artem Dinaburg <https://gitlab.com/artem35>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit d61c8a6fb7388486353aa267ba0d75b098f16662)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index b36b0f8875b..99aa5e039ca 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -95,6 +95,7 @@ enum {
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index 14de9b7a820..2069a4b962a 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -30,6 +30,10 @@
+ #define ROM_BLOCK_SIZE          512
+ #define ROM_BLOCK_MASK          (~(ROM_BLOCK_SIZE - 1))
  
- enum {
-     CMD_DSM         = 0x06,
-+    CMD_READ        = 0x20,  /* READ SECTOR(S) */
-     CMD_DIAGNOSE    = 0x90,
-     CMD_INIT_DP     = 0x91,  /* INITIALIZE DEVICE PARAMETERS */
-     CMD_READ_DMA    = 0xc8,
-@@ -1194,6 +1195,66 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
-     free_pci_device(dev);
- }
++/* Option ROM window on PC/Q35 machines; the vapic ROM must live in here. */
++#define OPTION_ROM_START        0xc0000
++#define OPTION_ROM_END          0xe0000
++
+ typedef enum VAPICMode {
+     VAPIC_INACTIVE = 0,
+     VAPIC_ACTIVE   = 1,
+@@ -586,6 +590,14 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+     size_t rom_size;
+     uint8_t *ram;
  
-+/* Zero sectors per track has to abort (ATA-5 8.16.6), not divide by zero */
-+static void test_specify_zero_sectors(void)
-+{
-+    QTestState *qts;
-+    QPCIDevice *dev;
-+    QPCIBar bmdma_bar, ide_bar;
-+    uint16_t buf[256];
-+    uint8_t data;
-+    int i;
-+
-+    qts = ide_test_start(
-+        "-blockdev driver=file,node-name=hda,filename=%s "
-+        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
-+        tmp_path[0]);
-+
-+    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-+
-+    qpci_io_writeb(dev, ide_bar, reg_nsectors, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
-+
-+    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), ERR);
-+    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_error), ABRT);
-+
-+    /* The refused request has to leave the default translation in effect */
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_IDENTIFY);
-+    for (i = 0; i < 256; i++) {
-+        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
++    /*
++     * The VAPIC region should be mapped in place, refuse mapping it
++     * outside of the option ROM window.
++     */
++    if (rom_paddr < OPTION_ROM_START || rom_paddr >= OPTION_ROM_END) {
++        return -1;
 +    }
-+    g_assert_cmpint(buf[55], ==, 16);
-+    g_assert_cmpint(buf[56], ==, 63);
 +
-+    /* READ SECTOR(S) of CHS 0/0/1, which used to crash QEMU */
-+    qpci_io_writeb(dev, ide_bar, reg_nsectors, 1);
-+    qpci_io_writeb(dev, ide_bar, reg_lba_low, 1);
-+    qpci_io_writeb(dev, ide_bar, reg_lba_middle, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_lba_high, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_READ);
+     if (s->rom_mapped_writable) {
+         memory_region_del_subregion(mr, &s->rom);
+         object_unparent(OBJECT(&s->rom));
+@@ -600,9 +612,10 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+     }
+     ram = memory_region_get_ram_ptr(section.mr);
+     rom_size = ram[rom_paddr + 2] * ROM_BLOCK_SIZE;
+-    if (rom_size == 0) {
++    if (rom_size == 0 || rom_size > OPTION_ROM_END - rom_paddr) {
+         return -1;
+     }
 +
-+    data = ide_wait_clear(qts, BSY);
-+    assert_bit_set(data, DRQ);
-+    assert_bit_clear(data, ERR | DF);
-+    for (i = 0; i < 256; i++) {
-+        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
-+    }
-+    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR | DF | DRQ);
-+
-+    /* A supported translation is still accepted */
-+    qpci_io_writeb(dev, ide_bar, reg_nsectors, 32);
-+    qpci_io_writeb(dev, ide_bar, reg_device, 7);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
-+
-+    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR);
-+
-+    ide_test_quit(qts);
-+    free_pci_device(dev);
-+}
-+
- static void test_cdrom_pio(void)
- {
-     cdrom_read_impl(1, CDROM_PIO);
-@@ -1265,6 +1326,7 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
+     s->rom_size = rom_size;
  
-     qtest_add_func("/ide/read_native", test_specify);
-+    qtest_add_func("/ide/specify/zero_sectors", test_specify_zero_sectors);
+     /* We need to round to avoid creating subpages
+@@ -610,6 +623,7 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+     rom_size += rom_paddr & ~TARGET_PAGE_MASK;
+     rom_paddr &= TARGET_PAGE_MASK;
+     rom_size = TARGET_PAGE_ALIGN(rom_size);
++    assert(rom_paddr >= OPTION_ROM_START && rom_paddr + rom_size <= OPTION_ROM_END);
  
-     qtest_add_func("/ide/identify", test_identify);
- 
+     memory_region_init_alias(&s->rom, OBJECT(s), "kvmvapic-rom", section.mr,
+                              rom_paddr, rom_size);
 -- 
 2.47.3
 
