@@ -4,149 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA408C982CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E0E5C982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6s7u-0001wy-OC; Wed, 16 Sep 2026 12:04:50 -0400
+	id 1x6sGr-0003zH-B6; Wed, 16 Sep 2026 12:14:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x6s7t-0001wU-Fi; Wed, 16 Sep 2026 12:04:49 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x6sGm-0003yr-RE
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:14:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x6s7r-0000Y7-Ll; Wed, 16 Sep 2026 12:04:49 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1YKu3041099; Wed, 16 Sep 2026 16:04:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wHuQkR
- cqAz31seByJNGJZoA6PPrxojX2LrpP4NqKFNA=; b=OxosSGT9ZE3qm3r/ylvaEx
- 3Cf8Uet53bhkgI+iqcMJXLRN5PjOfoIGqgKzjzLE3hxxmZZSGhyU9P2t+aIUVyQ1
- G8bl5YQScu4AfU82N3ENReFqDvdYoGVzem1wE9+r1x90eVkn7GGB6g0oWnkiS6x5
- 2dSnos/155jxsQ5hcEivgIhN+bRGnZdrhezCQOL3mjS8gKBr4UOF5buRdp6AZXP6
- nKGSUCbQowwYPmspZHqJHUm8/NGuo+2OUnt0HP8HyaO5A6/iYujfjZHOciwJufm4
- fGGPALHn36vuJYZbzORikdF4Fdzv8jgPQhvKUp9f50v9WY9n4gLlo53pV7lZ5Gbw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5e5aat-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 16:04:26 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GFe1hF1712957; Wed, 16 Sep 2026 16:04:25 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gpywey5f4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 16:04:25 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GG4MmM38732158
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 16:04:22 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 175BD2004B;
- Wed, 16 Sep 2026 16:04:22 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AFB620043;
- Wed, 16 Sep 2026 16:04:17 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 16 Sep 2026 16:04:16 +0000 (GMT)
-Date: Wed, 16 Sep 2026 21:42:02 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-arm@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- John Snow <jsnow@redhat.com>, David Hildenbrand <david@kernel.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Warner Losh <imp@bsdimp.com>, Song Gao <gaosong@loongson.cn>,
- Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>,
- Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-s390x@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v4 16/19] gitlab: update the @user id mapping file
-Message-ID: <20260916213951.50d6cec1-2a-amachhiw@linux.ibm.com>
-Mail-Followup-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-arm@nongnu.org, 
- Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- John Snow <jsnow@redhat.com>, David Hildenbrand <david@kernel.org>, 
- Thomas Huth <th.huth+qemu@posteo.eu>, Paolo Bonzini <pbonzini@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, Warner Losh <imp@bsdimp.com>,
- Song Gao <gaosong@loongson.cn>, 
- Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>, 
- Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>,
- Helge Deller <deller@gmx.de>, 
- Laurent Vivier <laurent@vivier.eu>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-s390x@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260916153013.2134555-1-alex.bennee@linaro.org>
- <20260916153013.2134555-17-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x6sGk-0002bY-Co
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:14:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789575236;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WeIEbpeU2EJW58VBcNC5Z8chHiGZwZjUNZD136kW/KE=;
+ b=hH+qf0UHJe3Lppqn7zBUb4+gFUdD4KEm3+1HEA5vEWvVkcvcHkHGESTXNzUIk3CtFc2Vq1
+ CzFDsMg/pKEwtmww7n8AYRljqJoGAMHg+5/lqZRw/fG4EZeOzdVyokazsXjKz+jz+f4mXi
+ bHYCGw80QiGM8ZqiCtiLrUT2tAnJggw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-CUjGCff5OLi3_XLbpDvCUg-1; Wed,
+ 16 Sep 2026 12:13:52 -0400
+X-MC-Unique: CUjGCff5OLi3_XLbpDvCUg-1
+X-Mimecast-MFC-AGG-ID: CUjGCff5OLi3_XLbpDvCUg_1789575231
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 811071944B32; Wed, 16 Sep 2026 16:13:51 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DBF891800361; Wed, 16 Sep 2026 16:13:50 +0000 (UTC)
+Date: Wed, 16 Sep 2026 12:13:49 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Alex Fishman <afishman@redhat.com>, qemu-devel@nongnu.org,
+ sgarzare@redhat.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com
+Subject: Re: [PATCH v1 0/2] vhost: Handle vrings crossing virtio-mem slots
+Message-ID: <20260916161349.GA149950@fedora>
+References: <20260909125923.75340-1-afishman@redhat.com>
+ <20260916145903.GA145703@fedora>
+ <20260916110929-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="7RGlq1s+OQszzsvp"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260916153013.2134555-17-alex.bennee@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDIxOSBTYWx0ZWRfX2olmLrDHKMfh
- Me90o3ssNvx6iAXPOUpvX1ELQ9auKOoJMA1WX3EcipOK2iFJOGTkwYJ2woAs7oxJW2BDM8slTmE
- vIH02lNeRLaxtBiTvT2TUBXJOG+gSRdF8PvcRuOO73xQA9ywZQ4QN6+F+s5oH+B7IVRWx7EKZLI
- nr73XLXQ0mtjZYKRsMiPFGpvuRQngb/j1R0fG+odCDrXZLWD9NakkPSj+K6CBSLtt8LcTefZabA
- OsnKrmJ+fJ+di6Oa4QFOqvnC0gLDGuXW07KJ6oCoAPdHRjiwUHILXNm1OOY7Pmx4q5ErVtmhmwb
- ebt8GYGso6iEAn+VdLMtft/0l5W16SEnz+y/7YiLGqg/8TTefNMWEuMuTYju+VeLupQu+vtpy+J
- TdJ2izEKExi/Lg1Wr2clY8KiYjDDsHFpPRtfafuINLssVTIzzQFdFBG+dOd9X1wllVaWTzy5Nt0
- natC9pEvDaNKIkhQPIg==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aaabe0b cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=8nJEP1OIZ-IA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=20KFwNOVAAAA:8
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=FYw9-_tljx6d6srUq_IA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: ExjTRV5ud2S6FTkkMFQQPgk7GAqAHP7E
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDIxOSBTYWx0ZWRfX5grjpXaxyx6X
- zDL7EZm4ztcUgA8XhcDqcU9UCFATgWbI8j2K1uBo6g3/YYeh/fm2abYLQrpJOTCgT6+Ml6a4tvA
- MZgO7kedyRipn5OPQUuQxXxZlBiFers=
-X-Proofpoint-GUID: ASCxqupTLUHFrO9QKGzswEjV5a_MehM5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- adultscore=0 clxscore=1011 bulkscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609160219
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260916110929-mutt-send-email-mst@kernel.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,33 +89,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/16 04:30 PM, Alex Bennée wrote:
-> I needed to fix a POSIX-ism in the script as well.
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20260914184534.706637-1-alex.bennee@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  .gitlab-map-auto          | 8 +++++---
->  scripts/gitlab-map-update | 2 +-
->  2 files changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/.gitlab-map-auto b/.gitlab-map-auto
-> index 28ce448f1bf..3f717a15d4e 100644
-> --- a/.gitlab-map-auto
-> +++ b/.gitlab-map-auto
-> @@ -12,11 +12,12 @@ a1xndr	Alexander Bulekov
->  adi-g15-ibm	Aditya Gupta
->  agraf	Alexander Graf
->  alex.williamson	Alex Williamson
-> -aliang1	Aihua Liang
->  alistair23	Alistair Francis
-> +amachhiw	Amit Machhiwal
+--7RGlq1s+OQszzsvp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for adding my ID, Alex!
+On Wed, Sep 16, 2026 at 11:10:00AM -0400, Michael S. Tsirkin wrote:
+> On Wed, Sep 16, 2026 at 10:59:03AM -0400, Stefan Hajnoczi wrote:
+> > On Wed, Sep 09, 2026 at 03:59:21PM +0300, Alex Fishman wrote:
+> > > Virtio-mem dynamic memslots are intentionally exposed as separate mem=
+ory
+> > > regions. If a guest places a vring part across two adjacent slots, a =
+later
+> > > memory update fails vhost ring verification because the complete ring=
+ part
+> > > is not contained in one vhost memory region.
+> > >=20
+> > > Coalesce coherent adjacent sections only when a descriptor table,
+> > > available ring, or used ring crosses their boundary. Unrelated
+> > > unmergeable sections remain separate so they can still be updated
+> > > independently.
+> > >=20
+> > > Patch 2 adds an end-to-end qtest reproducer using a fake vhost-user
+> > > backend and virtio-mem dynamic memslots. It also verifies that a newly
+> > > activated slot is not folded into the merge required by the crossing
+> > > vring.
+> > >=20
+> > > Tested with the vhost-user/mem-slots/boundary qtest.
+> > >=20
+> > > Buglink: https://redhat.atlassian.net/browse/RHEL-146583
+> > >=20
+> > > Alex Fishman (2):
+> > >   vhost: coalesce unmergeable sections across vring boundaries
+> > >   tests/qtest: Add vhost-user memslot boundary test
+> > >=20
+> > >  hw/virtio/vhost.c             |  72 ++++++-
+> > >  tests/qtest/vhost-user-test.c | 395 ++++++++++++++++++++++++++++++++=
++-
+> > >  2 files changed, 452 insertions(+), 15 deletions(-)
+> > >=20
+> > >=20
+> > > base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+> > > --=20
+> > > 2.52.0
+> >=20
+> > I'm pretty sure a similar problem exists with hw/virtio/virtio.c's
+> > MemoryRegionCaches. If a vring spans virtio-mem dynamic memslots, then
+> > the MemoryRegionCache won't work because the memory range crosses
+> > MemoryRegions.
+>=20
+> IIUC address_space_cache_init does not check unmergeable, so virtio
+> doesn't have this problem.
 
-Acked-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+You are right: address_space_cache_init() ->
+flatview_extend_translation() extends cache->ptr across active memslots.
+flatview_extend_translation() effectively merges the
+MemoryRegionSections whereas vhost.c's MemoryListener does not!
 
-Thanks,
-Amit
+Stefan
+
+--7RGlq1s+OQszzsvp
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqqwD0ACgkQnKSrs4Gr
+c8jj8gf/dZWDKAsJHTTAZPkv54RnFX5vDC95cYuGFTne8YJZtJWtuVDZzVaJE9uN
+l3ykpd5QWJPMpD+lVayJCNd234IiFOqW95WF+1SGaYDbihlvUhgJZigDr8uGhZFj
+Qo8CP3o60EZMLlQAKZ3FKnh8aWJlldONJ3AoaDR1InF1zWVF+mZxKQYRI9bxH/86
+70kY5k4L0eZPHPVuFrbnfXaqDn+lum+ayMbilHwxVbPlZg8OLz2cca6lOZkNz5rG
+cI72yCh/vLRe6Jh/SvbcGioEcP6/aHK0aSVlqj3xdcrPOTkh8tFqLfUIhTIeyUVb
+WQkpG4+G3eqtX/sF9bia6AIqduR84Q==
+=w+gB
+-----END PGP SIGNATURE-----
+
+--7RGlq1s+OQszzsvp--
+
 
