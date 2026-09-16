@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C61AC982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 21:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449C9C982D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 21:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6xJQ-0000nw-EP; Wed, 16 Sep 2026 17:37:04 -0400
+	id 1x6xJM-0000mP-Fj; Wed, 16 Sep 2026 17:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6xIW-0000hZ-EL
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 17:36:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6xIq-0000j4-Je
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 17:36:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6xIU-0007ZI-1R
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 17:36:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x6xIo-0007bS-Ua
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 17:36:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789594564;
+ s=mimecast20190719; t=1789594583;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qaVb+pX+Dprf1Z/whMh/eAqXrLOZN7xKMykck4AAS0Y=;
- b=LzZg54NrQHiqlGqq78bpsDu7nItJHX8btdTiHXN/nkdbabE2qhpJlQ8XsPAHLRclQzhamP
- f/HvWOELkIYGVqwArfc1teec0N47TAhCowfYjTnV1gj9/+KZ76IYurcRWa80HEPxxwAdO1
- CNvyVQc4iNXmeS8h5zoCsB/zGqB3d5Q=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=G6LO977wvI2xcfln2SzfX18ONYi8bEpf5XH34bvwTKM=;
+ b=ChNW4YPVVtZveytNtNC8e0YxLEPHzK06Gg2YaDUellwt96fXko/yPxfgnUCr02T9Tf1/+N
+ FPmv7MSlXJXdJSx7qhVbOg4YhvyWNbIqj7i7oST4894hYhxOi5QZi70oC0pnNTLD1vnSHN
+ Rup3RFw68sYYkARWKQoYkRvftV9jX6Y=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-jZCSu7vXNyaA4GwSaxD9Zw-1; Wed, 16 Sep 2026 17:36:03 -0400
-X-MC-Unique: jZCSu7vXNyaA4GwSaxD9Zw-1
-X-Mimecast-MFC-AGG-ID: jZCSu7vXNyaA4GwSaxD9Zw_1789594563
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-530ef845909so1762611cf.1
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 14:36:03 -0700 (PDT)
+ us-mta-389-4B2ZYE7sNtKLedbVLMTklg-1; Wed, 16 Sep 2026 17:36:15 -0400
+X-MC-Unique: 4B2ZYE7sNtKLedbVLMTklg-1
+X-Mimecast-MFC-AGG-ID: 4B2ZYE7sNtKLedbVLMTklg_1789594575
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93a3f673221so41238685a.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 14:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789594562; x=1790199362; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789594575; x=1790199375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qaVb+pX+Dprf1Z/whMh/eAqXrLOZN7xKMykck4AAS0Y=;
- b=fguZplTF1KPA7++SLPajjZOjTbxhffGcIEuvf6Cei80yoyuhF9VE8XzLd3CiEgbdAP
- MaqEfmR0d6MVcJk8BogLlOqMs2g/iBT4p+bgUSmPOKIa83gJ3D5jeX5FpqvQEi4aTDFA
- GVRexVgfYe59hrxo1gTqg//HJrukpoDDlvxy7K/A6g5S/qyrT3UzXLj0gvchQki45S9Q
- oWu+745Na7DZJw/dO3LUWkvNrLvh2XsKAMycsBPPZq54Skde2FwdAcg4LS5X5dmjiuaN
- zaFRcHDdumuwJgLNaYIYlducDyfCcqtBuyajvYlny1odZFw1hMxp/c+O51o/LeX8GD1u
- VXag==
+ bh=G6LO977wvI2xcfln2SzfX18ONYi8bEpf5XH34bvwTKM=;
+ b=agMT8ABNYPDAqOz0eJW6FXhIBzoGWGsS3n2d97CxAQbk1Pky8LpTenANPVMF+4cUKY
+ waNDcyzcV+rnDKx41UyN3wQt9iMtW20ay/MX+eGyeVNIyExe8fJsldIASwvVzeXllVyz
+ Y8V2uguIlkCAw2umgrkcOzrhts2HNB2jGn/rU9zCj7aTbYkh8zAqdFANa5TTqAH9eR3s
+ ja764szS3zhtzpTQe/DG2SGH862Bpy2nZdZlRL8HFZwkxj9MCEiV6Kl/QuQURUJAm8Hd
+ R+Ty18u/7ECKO6QIOmW9Qsl4+f2frSl+1rfmjLpoqGjCbWnrqI5YK1WPhF+VojBgpszF
+ GTGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789594562; x=1790199362;
+ d=1e100.net; s=20260707; t=1789594575; x=1790199375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=qaVb+pX+Dprf1Z/whMh/eAqXrLOZN7xKMykck4AAS0Y=;
- b=drU/EpOu0wWiYbFYaoZ/E+5pjBRe9EOtoKZHmTC0+3k11kil0W7Y7Vr8Q/t9Gbrbbb
- sj/MM+Z89NEu7OQSYHCEXOO/AYGinbXYcfaVrhCeFd2fTkBnqKN48tYxqynpIVp8iUwG
- J3Ikj4pQMaCHeoXdaO9CwAjz+sGOTvuYV0ouWzODOJuralMMdFVhw+Pt8Y4t5ZvBO7ll
- SdIS+jQ0LPOel4qFDKJZSa8MdE18wqa8qKr+RHS5jo9xWlgghQHjxQ9csO6ln3QyWLtq
- +eORmhJv42HBLIviZdMqZtYQ7SGjEUYCoxjQ4rHZ87gkriwUbntuHKAFBXxh1+QZJFtr
- U2DQ==
-X-Gm-Message-State: AFuF++nq4rxci2f7mqv+tintH56x9xcCeQZM1XiuWX4yZX4cXacbzEOM
- Y+2klxbOFzvVEN5a6nUeKuQ7yPInsDBOD28n0hB+Y3OKNRuTy48NDkbQUjx9KL5ISzXyF0NegnO
- bt6h0yl9t6ZtSW594ejWUrjjozApqCcurfxzmqAK7r7nZZwJsFmfhf7gGawDA8vbRB0Xs5aotsf
- KDmGBXCoseR4hTIcKNt9EJC6797Ls+SYZ5eGdXsKyF
-X-Gm-Gg: AYBFou0+DYZU59fKmNWmox+LQubKUwFqBWYS+QdzVQQE0GyIqa7V7+s+XGJoz0m5qZt
- 9Ne1tpo8gJo5DnHUsPgliSETDV+9zhEczmAtrGRrAHjkeVb+dgqKBIEJFiHXq/ULw99ofuf+AnY
- 6kHaPgaXv68d/F6ZbGqQuEnXdWwRE5a/FfYsW07Td2g69SFdu+IQeH0U4irD6x9fneE/yuw+ewV
- Exfr9bFr+1sMKGI4hrD8y76todw+SG37m1+FbZOjSoALer+aPbjPj3dyxzpmU2pFHYiyn8zvdAu
- 0PGslxFnYvQ1pQcysBDTp+KeGaYfcgJt+inWcQ479BEbshYW5ialXgOXsd4EcH3ZL51Vx2U0Opl
- neD17cMBvBWm9QgHJs/tkk+qNWZxcJnR59vJq+j7R652rbmropuPb0wB/16g=
-X-Received: by 2002:a05:622a:2cc:b0:530:e4fb:60fc with SMTP id
- d75a77b69052e-5327ee1b2bbmr72002001cf.15.1789594562522; 
- Wed, 16 Sep 2026 14:36:02 -0700 (PDT)
-X-Received: by 2002:a05:622a:2cc:b0:530:e4fb:60fc with SMTP id
- d75a77b69052e-5327ee1b2bbmr72001641cf.15.1789594561936; 
- Wed, 16 Sep 2026 14:36:01 -0700 (PDT)
-Received: from localhost
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-53261fd4cc4sm31478721cf.6.2026.09.16.14.36.01
+ bh=G6LO977wvI2xcfln2SzfX18ONYi8bEpf5XH34bvwTKM=;
+ b=FTx96WDgxj1AVX36DWAruu17YtknXvuujWj+snYea0A5Dq2Vq7FpcJVSJhCV3Rj/R2
+ EBCm78J5dd6AiCwVnHKeyd0pkYQT8xC4aK2Hh+Y5aopoEn1mFZoHvRh2VpavRL6K8Evq
+ O0Zg9RpU+9R3sALEN1zEec5gMvFs5VsWCa/loJQLWIPhbwkLa55r/uO6hwVYBBzKQBm7
+ etURzNedNhkrC+s4sQkSmaWL9Uqip0BM7hhzegfA+CxXO9YMgntFaE/cialxu24QMRln
+ ADBSsBKvYTDxIze91ksXeCdpcxBjb2P03ZzL7iCE5sIdw8DdYzwjBSkWik7SBC1fWCEm
+ INPg==
+X-Gm-Message-State: AFuF++mvm4p88f+gKpy/BqLvGKU9gyydH/fxjh83DlAKW6lNZ5pXdJlt
+ 5jFM3XAeo8k7iaalLGiHq8zI7yJ4ZczZH3VV8hZpHxN2ItkE3PlNOsUKqIXHXhS26lnzqHOhzQN
+ fkgfkUFUxIQcx872WQ5FKJbqOLzQmi5LQ/L9qWdNkeTEdeLArTwv+r2qTEFIRUnjl5sQKkBoRUc
+ KOzJdJ6tatoEpcTAiCa/qL8i+w2KiEBxcrSA4IwFNC
+X-Gm-Gg: AYBFou3g/i6iSPNYbuuw37/9jOGoQ2VQ0g6d2YfYNlJDgmReImH2zNE6E5Ck3p+cMs2
+ qKGYlqe3HtjE86nZxzkPnUAlQm8iNpXDsJoncM+C0p6lJlT5EajjYO6B15xx3vUmr6MuFUXB1ic
+ joaxFMqXce+Xdo14jv4NU1w0FjwwNtd2Aifsktj10cwjOn6G6XctIYK2BWm07017WSpO9Q/fy3C
+ 07wrsF4oAmUYo3uQVi+vE0zZwScKsC4Hr8swqDLEeGTpPoltiZsGb7jLtBrnn172VUzPNJb/XiX
+ TnD3/gu1XEBu1+Eo2sA4aplHoaJYyxHbONS+ldp+MGpGS7pC44UA6r3y/VNPdr64+jKp
+X-Received: by 2002:a05:620a:43a1:b0:939:a834:98f2 with SMTP id
+ af79cd13be357-93bb770c70amr697956785a.15.1789594574657; 
+ Wed, 16 Sep 2026 14:36:14 -0700 (PDT)
+X-Received: by 2002:a05:620a:43a1:b0:939:a834:98f2 with SMTP id
+ af79cd13be357-93bb770c70amr697947685a.15.1789594573955; 
+ Wed, 16 Sep 2026 14:36:13 -0700 (PDT)
+Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93b7821d231sm313373085a.21.2026.09.16.14.36.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 14:36:01 -0700 (PDT)
+ Wed, 16 Sep 2026 14:36:12 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 1/7] tests/migration-test: Add multifd+postcopy test for
- preempt recovery
-Date: Wed, 16 Sep 2026 17:35:52 -0400
-Message-ID: <20260916213558.587304-2-peterx@redhat.com>
+Subject: [PATCH 2/7] migration: Add two more trace points for incoming channel
+ mgmt
+Date: Wed, 16 Sep 2026 17:35:53 -0400
+Message-ID: <20260916213558.587304-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260916213558.587304-1-peterx@redhat.com>
 References: <20260916213558.587304-1-peterx@redhat.com>
@@ -120,42 +117,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have one for TLS, but we don't have the non-TLS version.  Add it.
+We have trace points for both multifd channel and preempt channel when a
+new channel is established on the destination, but no main channel.  We can
+normally deduce this by analyzing the socket channel tracepoints, but add
+one for debugging purpose so in a trace log we can see when all channels
+are established.
+
+Add one more for start / resume of incoming migration too.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/postcopy-tests.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ migration/migration.c  | 3 +++
+ migration/trace-events | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-index 13a5759655..6c4fd31152 100644
---- a/tests/qtest/migration/postcopy-tests.c
-+++ b/tests/qtest/migration/postcopy-tests.c
-@@ -89,6 +89,15 @@ static void test_multifd_postcopy_preempt(char *name, MigrateCommon *args)
-     test_postcopy_common(args);
- }
+diff --git a/migration/migration.c b/migration/migration.c
+index d14beb5d22..cfadcc79c2 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -852,6 +852,7 @@ bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
+         assert(!mis->from_src_file);
+         mis->from_src_file = f;
+         qemu_file_set_blocking(f, false, &error_abort);
++        trace_migration_main_channel_received();
+         break;
  
-+static void test_multifd_postcopy_preempt_recovery(char *name,
-+                                                   MigrateCommon *args)
-+{
-+    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-+    args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
-+
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
-+}
-+
- void migration_test_add_postcopy(MigrationTestEnv *env)
+     case CH_MULTIFD:
+@@ -918,6 +919,8 @@ static bool postcopy_try_recover(void)
+ 
+ void migration_start_incoming(void)
  {
-     migration_test_add_postcopy_smoke(env);
-@@ -113,6 +122,8 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
-                            test_multifd_postcopy);
-         migration_test_add("/migration/multifd+postcopy/preempt/plain",
-                            test_multifd_postcopy_preempt);
-+        migration_test_add("/migration/multifd+postcopy/preempt/recovery/plain",
-+                           test_multifd_postcopy_preempt_recovery);
-         if (env->is_x86) {
-             migration_test_add("/migration/postcopy/suspend",
-                                test_postcopy_suspend);
++    trace_migration_start_incoming();
++
+     if (postcopy_try_recover()) {
+         return;
+     }
+diff --git a/migration/trace-events b/migration/trace-events
+index e87d4abd91..e755872496 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -200,6 +200,8 @@ postcopy_preempt_enabled(bool value) "%d"
+ migration_precopy_complete(void) ""
+ migration_call_notifiers(int type) "type=%d"
+ migration_request_switchover_ack_legacy(const char *requester, unsigned int switchover_ack_pending_num_legacy) "Requester %s, switchover_ack_pending_num_legacy %u"
++migration_main_channel_received(void) ""
++migration_start_incoming(void) ""
+ 
+ # migration-stats
+ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma) "qemu_file %" PRIu64 " multifd %" PRIu64 " RDMA %" PRIu64
 -- 
 2.55.0
 
