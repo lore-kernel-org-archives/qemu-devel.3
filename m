@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6468FC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DADC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6pgF-0001nf-57; Wed, 16 Sep 2026 09:28:07 -0400
+	id 1x6pg6-0001li-ER; Wed, 16 Sep 2026 09:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pfx-0001kV-09
+ (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pfx-0001kX-3z
  for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:50 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pfs-0003sJ-RD
+ (Exim 4.90_1) (envelope-from <ale@rev.ng>) id 1x6pft-0003sS-Tu
  for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
@@ -24,19 +24,19 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=yl6dm3GlDc68CU7bkDGzf4HQS+zaz68pmpt/Lpko+7o=; b=g4hwxEoQQ7BUhrF
- Bje3k8x33UnulqkAEF9sfntOoowxdLMsmdiK/hrPgxKokZk7q0mvn8C54LpKkfMg05ZOldZwn5jNk
- VD6/rScBkT5G89b1o5cF1CLkVvWnd8y1YVGFjMpsQ002hjks2YnHv0uYBpH7dM3HMRzJYpIdFuNVm
- Qg=;
-Date: Wed, 16 Sep 2026 15:26:41 +0200
-To: Anton Johansson via qemu development <qemu-devel@nongnu.org>
-Cc: Anton Johansson <anjo@rev.ng>, brian.cain@oss.qualcomm.com,
+ List-Help; bh=1eXrWsY9QzEZjAtgFp+SDzuMxOY85sHaE+WCiHXYFPA=; b=AskOddfwJR2Qvoe
+ OH6YzdFJxaAdzjN8kz743e1Pa+FJvSNRt9l1QI4Pt54ErJLO1oIW9kFy1KosZF7gKDyzzgMemCSsO
+ NV0MFmTiQnao3sas4VEIGoecUdGuebKqA7iFQRjIElacFQHKaRuORxQst4HB51A2nP/IlQQYVulmR
+ 6Y=;
+Date: Wed, 16 Sep 2026 14:42:39 +0200
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com,
  pierrick.bouvier@oss.qualcomm.com, philmd@mailo.com
-Subject: Re: [PATCH v2 31/50] helper-to-tcg: TcgGenPass, linearize basic blocks
-Message-ID: <20260916152641.5c8eb83d@spawn>
-In-Reply-To: <20260730031025.12926-32-anjo@rev.ng>
+Subject: Re: [PATCH v2 22/50] helper-to-tcg: Introduce PrepareForTcgPass
+Message-ID: <20260916144239.4350a6ec@spawn>
+In-Reply-To: <20260730031025.12926-23-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
- <20260730031025.12926-32-anjo@rev.ng>
+ <20260730031025.12926-23-anjo@rev.ng>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -65,249 +65,58 @@ From:  Alessandro Di Federico via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Jul 2026 05:10:05 +0200
-Anton Johansson via qemu development <qemu-devel@nongnu.org> wrote:
+On Thu, 30 Jul 2026 05:09:56 +0200
+Anton Johansson <anjo@rev.ng> wrote:
 
-> Passes over the IR that will follow all depend on a specific iteration
-> order over the IR that must match between passes, establish that
-> iteration order.  Also replace conditional branches with a pseudo
-> instruction closer in semantics to TCG, this breaks the IR verification,
+> Adds a new pass over the LLVM module which runs post-optimization with
+> the end-goal of:
+> 
+>   * Culling functions which aren't worth translating;
+>   * Canonicalizing the IR to something closer to TCG, and;
 
-Are you saying the IR is invalid after this pass?
-That's not great. If the problem is the lack of terminators, just put
-an `unreachable` instruction. If you don't want to put unreachable
-because DCE than drops code, add a call to a opaque noreturn function.
-Or maybe a branch to a sink block.
+When you "canonicalize" for a backend, you're doing more "instruction
+selection" than canonicalization. The goal of canonicalization is to
+bring the IR in the most standard, frontend- and backend-agnostic
+representation you can.
 
-I know it's not nice, but if you give up on verification to avoid
-checking X, you also lose the check for Y, Z and so on.
+I'd talk about a form of instruction selection.
 
-I'd be strict and make sure the result of each pass is valid, no
-exceptions.
+>   * Extracting information which may be useful in the backend pass.
+> 
+> The bulk of IR transformations occur in the canonicalization phase, with
+> a handful occuring later in the packend. This commits sets up a new LLVM
 
-> but as this is the last transformation of the IR in this tool that's
-> acceptable.
+packend
 
-We run DCE after this AFAIU, so it's not the last transformation.
-
+> pass over the IR module and runs it from the pipeline.
+> 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->  subprojects/helper-to-tcg/meson.build         |   1 +
->  .../src/TcgGenPass/LinearizeBlocks.cpp        | 140 ++++++++++++++++++
->  .../src/TcgGenPass/LinearizeBlocks.hpp        |  32 ++++
->  3 files changed, 173 insertions(+)
->  create mode 100644 subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.cpp
->  create mode 100644 subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.hpp
+>  .../helper-to-tcg/include/CmdLineOptions.hpp  |  2 ++
+>  .../include/PrepareForTcgPass.hpp             | 27 +++++++++++++++++++
+>  subprojects/helper-to-tcg/meson.build         |  1 +
+>  subprojects/helper-to-tcg/src/Pipeline.cpp    | 24 +++++++++++++++++
+>  .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 25 +++++++++++++++++
+>  5 files changed, 79 insertions(+)
+>  create mode 100644 subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
+>  create mode 100644 subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
 > 
-> diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-> index 880561416a..58e5f67153 100644
-> --- a/subprojects/helper-to-tcg/meson.build
-> +++ b/subprojects/helper-to-tcg/meson.build
-> @@ -49,6 +49,7 @@ sources = [
->      'src/PrepareForTcgPass/CanonicalizeIR.cpp',
->      'src/PrepareForTcgPass/IdentityMap.cpp',
->      'src/TcgGenPass/TcgGenPass.cpp',
-> +    'src/TcgGenPass/LinearizeBlocks.cpp',
->  ]
->  
->  clang = bindir / 'clang'
-> diff --git a/subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.cpp b/subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.cpp
+> diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+> index ca1cb59835..bfdd3ebe41 100644
+> --- a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+> +++ b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+> @@ -23,3 +23,5 @@
+>  extern llvm::cl::list<std::string> InputFiles;
+>  // Options for PrepareForOptPass
+>  extern llvm::cl::opt<bool> TranslateAllHelpers;
+> +// Options for PrepareForTcgPass
+> +extern llvm::cl::opt<std::string> TcgGlobalMappingsName;
+> diff --git a/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
 > new file mode 100644
-> index 0000000000..28dff1c572
+> index 0000000000..90bc9402cb
 > --- /dev/null
-> +++ b/subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.cpp
-> @@ -0,0 +1,140 @@
-> +//
-> +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-> +//
-> +//  This program is free software; you can redistribute it and/or modify
-> +//  it under the terms of the GNU General Public License as published by
-> +//  the Free Software Foundation; either version 2 of the License, or
-> +//  (at your option) any later version.
-> +//
-> +//  This program is distributed in the hope that it will be useful,
-> +//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> +//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> +//  GNU General Public License for more details.
-> +//
-> +//  You should have received a copy of the GNU General Public License
-> +//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-> +//
-> +
-> +#include "LinearizeBlocks.hpp"
-> +#include "PseudoInst.hpp"
-> +
-> +#include <llvm/ADT/PostOrderIterator.h>
-> +#include <llvm/ADT/SmallPtrSet.h>
-> +#include <llvm/ADT/SmallSet.h>
-> +#include <llvm/ADT/SmallVector.h>
-> +#include <llvm/Analysis/RegionInfo.h>
-> +#include <llvm/Analysis/VectorUtils.h>
-> +#include <llvm/IR/Constants.h>
-> +#include <llvm/IR/DerivedTypes.h>
-> +#include <llvm/IR/Dominators.h>
-> +#include <llvm/IR/Function.h>
-> +#include <llvm/IR/IRBuilder.h>
-> +#include <llvm/IR/InstIterator.h>
-> +#include <llvm/IR/InstrTypes.h>
-> +#include <llvm/IR/Instruction.h>
-> +#include <llvm/IR/Instructions.h>
-> +#include <llvm/IR/Intrinsics.h>
-> +#include <llvm/IR/Module.h>
-> +#include <llvm/IR/PassManager.h>
-> +#include <llvm/IR/PatternMatch.h>
-> +#include <llvm/Support/Casting.h>
-> +
-> +using namespace llvm;
-> +using namespace PatternMatch;
-> +
-> +// Needed to track and remove instructions not handled by a subsequent dead code
-> +// elimination, this applies to calls to pseudo instructions in particular.
-> +using EraseInstVec = SmallVector<Instruction *, 16>;
-
-Just `InstructionVector`? The additional meaning can be embedded in the
-name of the instance.
-
-> +
-> +static void convertICmpBrToPseudInst(LLVMContext &Context, RegionInfo &RI,
-> +                                     EraseInstVec &InstToErase, Module &M,
-> +                                     Instruction *I, BasicBlock *NextBB) {
-
-Docs: why do we do this?
-Also, document the fact that this is an optimization, the backend can
-emit regular conditional branches.
-
-> +    auto *ICmp = dyn_cast<ICmpInst>(I);
-> +    if (!ICmp) {
-> +        return;
-> +    }
-> +
-> +    // Since we want to remove the icmp instruction we ensure that
-> +    // all uses are branch instructions that can be converted into
-> +    // @brcond.* calls.
-> +    for (User *U : ICmp->users()) {
-> +        if (!isa<BranchInst>(U)) {
-> +            return;
-> +        }
-> +    }
-> +
-> +    Value *Op0 = ICmp->getOperand(0);
-> +    Value *Op1 = ICmp->getOperand(1);
-> +    auto *CmpIntTy = dyn_cast<IntegerType>(Op0->getType());
-> +    if (!CmpIntTy) {
-> +        return;
-> +    }
-> +    for (User *U : ICmp->users()) {
-> +        auto *Br = cast<BranchInst>(U);
-> +
-> +        BasicBlock *True = Br->getSuccessor(0);
-> +        BasicBlock *False = Br->getSuccessor(1);
-> +
-> +        IRBuilder<> Builder(Br);
-> +
-> +        // TODO: This is strange, indeally the unreachable branch should have
-> +        // been optimized out, here we invert the conditional branch if we can
-> +        // fallthrough to the reachable branch.
-> +        bool TrueUnreachable =
-> +            True->getTerminator()->getOpcode() == Instruction::Unreachable and
-> +            False->getTerminator()->getOpcode() != Instruction::Unreachable;
-
-I'd consider running `simplify-cfg`, which should do this for you.
-`simplify-cfg` is a bit invasive, maybe you can find something simpler
-bisecting the -O2 pipeline.
-
-If you end up doing this by hand, I'd like at least to see a comment
-like "we're not using simplify-cfg because...".
-
-> +
-> +        // If the next basic block is either of our true/false
-> +        // branches, we can fallthrough instead of branching.
-> +        bool Fallthrough = (NextBB == True or NextBB == False);
-
-I now understand why you call this linearizeBlocks, explain in docs
-above the function declaration.
-
-Are sure you want a pseudo instruction for this?
-We could have the transformation "canonicalize" the conditional branch
-into having the fallthrough block to be the first successor and then
-have the backend detect this and optimize emission on the fly.
-
-I'd prefer to keep the number of pseudoinstructions to the minimum, but
-there's also an argument for keeping the backend as trivial as possible
-(at the cost of more pseudo-instructions).
-Up to you, no biggie.
-
-> +
-> +        // If the succeeding basic block is the true branch we
-> +        // invert the condition so we can fallthrough instead.
-> +        ICmpInst::Predicate Predicate;
-> +        if (NextBB == True or (TrueUnreachable and NextBB == False)) {
-> +            std::swap(True, False);
-> +            Predicate = ICmp->getInversePredicate();
-> +        } else {
-> +            Predicate = ICmp->getPredicate();
-> +        }
-> +
-> +        createPseudoInstCall(M, Builder, Brcond, Builder.getVoidTy(),
-> +                             {Builder.getInt8(Fallthrough),
-> +                              ConstantInt::get(CmpIntTy, Predicate), Op0, Op1,
-> +                              True, False});
-> +
-> +        InstToErase.push_back(Br);
-> +    }
-> +    InstToErase.push_back(ICmp);
-> +}
-> +
-> +LinearBlocks linearizeBlocks(Module &M, FunctionAnalysisManager &FAM,
-> +                             Function &F) {
-> +    assert(!F.isDeclaration());
-> +
-> +    LinearBlocks Blocks{};
-> +
-> +    LLVMContext &Context = F.getContext();
-> +    EraseInstVec InstToErase;
-> +    auto &RI = FAM.getResult<RegionInfoAnalysis>(F);
-> +
-> +    ReversePostOrderTraversal<Function *> RPOT(&F);
-> +    for (auto BBIt = RPOT.begin(); BBIt != RPOT.end(); ++BBIt) {
-
-Use range-based for loop.
-
-> +        Blocks.push_back(*BBIt);
-> +    }
-> +
-> +    for (int i = 0; i < Blocks.size(); ++i) {
-
-Use range-based for loop + `llvm::zip(Blocks, skip_first(Blocks)`,
-something like this.
-
-> +        BasicBlock *BB = Blocks[i];
-> +        BasicBlock *NextBB = (i + 1 < Blocks.size()) ? Blocks[i + 1] : nullptr;
-> +        for (Instruction &I : *BB) {
-> +            convertICmpBrToPseudInst(Context, RI, InstToErase, M, &I, NextBB);
-
-It's quite unexpected for a function called linearizeBlocks to do
-`convertICmpBrToPseudInst`. Either split or add good documentation on
-the function to convey the role of this function.
-
-My initial intuition was: just reorder blocks in reverse post order.
-
-> +        }
-> +    }
-> +
-> +    // Finally clean up instructions we need to remove manually
-> +    for (Instruction *I : InstToErase) {
-> +        I->eraseFromParent();
-> +    }
-> +
-> +    return Blocks;
-> +}
-> diff --git a/subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.hpp b/subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.hpp
-> new file mode 100644
-> index 0000000000..8d9a1afc54
-> --- /dev/null
-> +++ b/subprojects/helper-to-tcg/src/TcgGenPass/LinearizeBlocks.hpp
-> @@ -0,0 +1,32 @@
+> +++ b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
+> @@ -0,0 +1,27 @@
 > +//
 > +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
 > +//
@@ -327,19 +136,128 @@ My initial intuition was: just reorder blocks in reverse post order.
 > +
 > +#pragma once
 > +
-> +#include <llvm/ADT/SmallVector.h>
 > +#include <llvm/IR/PassManager.h>
 > +
-> +namespace llvm {
-> +class BasicBlock;
-> +class Function;
-> +class Module;
-> +} // namespace llvm
+> +class PrepareForTcgPass : public llvm::PassInfoMixin<PrepareForTcgPass> {
+> +public:
+> +    PrepareForTcgPass() {}
+> +    llvm::PreservedAnalyses run(llvm::Module &M,
+> +                                llvm::ModuleAnalysisManager &MAM);
+> +};
+> diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
+> index b3a3de6297..c2926652f3 100644
+> --- a/subprojects/helper-to-tcg/meson.build
+> +++ b/subprojects/helper-to-tcg/meson.build
+> @@ -44,6 +44,7 @@ sources = [
+>      'src/Pipeline.cpp',
+>      'src/PrepareForOptPass/PrepareForOptPass.cpp',
+>      'src/PseudoInst.cpp',
+> +    'src/PrepareForTcgPass/PrepareForTcgPass.cpp',
+>  ]
+>  
+>  clang = bindir / 'clang'
+> diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
+> index 571276de24..6058718a9c 100644
+> --- a/subprojects/helper-to-tcg/src/Pipeline.cpp
+> +++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
+> @@ -18,6 +18,7 @@
+>  #include "CmdLineOptions.hpp"
+>  #include "LlvmCompat.hpp"
+>  #include "PrepareForOptPass.hpp"
+> +#include "PrepareForTcgPass.hpp"
+>  
+>  #if LLVM_VERSION_MAJOR == 15
+>  #include <llvm/ADT/Triple.h>
+> @@ -32,6 +33,7 @@
+>  #include <llvm/IR/LLVMContext.h>
+>  #include <llvm/IR/Module.h>
+>  #include <llvm/IR/PassManager.h>
+> +#include <llvm/IR/Verifier.h>
+>  #include <llvm/IRReader/IRReader.h>
+>  #include <llvm/InitializePasses.h>
+>  #include <llvm/Linker/Linker.h>
+> @@ -43,6 +45,7 @@
+>  #include <llvm/Support/SourceMgr.h>
+>  #include <llvm/Support/TargetSelect.h>
+>  #include <llvm/Target/TargetMachine.h>
+> +#include <llvm/Transforms/Scalar/DCE.h>
+>  #include <llvm/Transforms/Scalar/SROA.h>
+>  
+>  #define DEBUG_TYPE "pipeline"
+> @@ -70,6 +73,13 @@ cl::opt<bool> TranslateAllHelpers(
+>      "translate-all-helpers", cl::init(false),
+>      cl::desc("Translate all functions starting with helper_*"), cl::cat(Cat));
+>  
+> +// Options for PrepareForTcgPass
+> +cl::opt<std::string> TcgGlobalMappingsName(
+> +    "tcg-global-mappings",
+> +    cl::desc("<Name of global cpu_mappings[] used for mapping accesses"
+> +             "into a struct to TCG globals>"),
+> +    cl::Required, cl::cat(Cat));
 > +
-> +using LinearBlocks = llvm::SmallVector<llvm::BasicBlock *, 16>;
-> +LinearBlocks linearizeBlocks(llvm::Module &M,
-> +                             llvm::FunctionAnalysisManager &FAM,
-> +                             llvm::Function &F);
+
+I'd drop this and go by convention (i.e., just assume the name) +
+documentation.
+If you think this is useful for debugging purposes, at least give it a
+default so we don't need to specify the parameter in the regular invocation.
+
+If you keep this, introduce it in the first commit using it
+TcgGlobalMappingsName.
+
+>  // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
+>  // common per-llvm-target information expected by other LLVM passes, such
+>  // as the width of the largest scalar/vector registers.  Needed for consistent
+> @@ -214,5 +224,19 @@ int main(int argc, char **argv) {
+>      MPM.addPass(
+>          PB.buildModuleOptimizationPipeline(compat::OptimizationLevel::Oz, {}));
+>  
+> +    //
+> +    // Next, we run our final transformations, including removing phis and our
+> +    // own instruction combining that prioritizes instructions that map more
+> +    // easily to TCG.
+> +    //
+> +
+> +    MPM.addPass(PrepareForTcgPass());
+> +    MPM.addPass(VerifierPass());
+> +    {
+> +        FunctionPassManager FPM;
+> +        FPM.addPass(DCEPass());
+> +        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
+> +    }
+> +
+>      return 0;
+>  }
+> diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+> new file mode 100644
+> index 0000000000..cea6573e41
+> --- /dev/null
+> +++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+> @@ -0,0 +1,25 @@
+> +//
+> +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
+> +//
+> +//  This program is free software; you can redistribute it and/or modify
+> +//  it under the terms of the GNU General Public License as published by
+> +//  the Free Software Foundation; either version 2 of the License, or
+> +//  (at your option) any later version.
+> +//
+> +//  This program is distributed in the hope that it will be useful,
+> +//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+> +//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> +//  GNU General Public License for more details.
+> +//
+> +//  You should have received a copy of the GNU General Public License
+> +//  along with this program; if not, see <http://www.gnu.org/licenses/>.
+> +//
+> +
+> +#include "PrepareForTcgPass.hpp"
+> +
+> +using namespace llvm;
+> +
+> +PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
+> +{
+> +    return PreservedAnalyses::none();
+> +}
 > -- 
 > 2.52.0
 
