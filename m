@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF8CC982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FC5C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kML-0001D2-8U; Wed, 16 Sep 2026 03:47:14 -0400
+	id 1x6kJm-0004Yp-Bd; Wed, 16 Sep 2026 03:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kLD-0008RZ-OE; Wed, 16 Sep 2026 03:46:08 -0400
+ id 1x6kJj-0004Wc-MY; Wed, 16 Sep 2026 03:44:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kLB-0005Ix-Cy; Wed, 16 Sep 2026 03:46:03 -0400
+ id 1x6kJi-0004xA-61; Wed, 16 Sep 2026 03:44:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544614; bh=Nw8KpMgvc4Ke8i5Jw6QvfVZExY6cWUeNUE5WyydfqoE=;
+ t=1789544605; bh=O7uvzl1j2rwcDtI6oY0RT4kLJrwWtasNHNozCBBEW18=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rdNWGGZtKVAxPQAB4mTCgI0tjYyj4X6M3zEEI2H+qANoE13CNdOAiFbCHBKw7K259
- HpLzqwDkQAxBMaS5evVurWSndFaNaBjD0ky1ud6/n3PS/Ldmno1Fp54gsk9oTkr0bR
- zdnu1a7ndSPGAWQj2iuYhF28CntJYw6Cs6aSjDV8oU4neJICOQAdEHeV5AXqzfW72i
- lSsyVD+zCcUpvMOqmnwBWrAfV8ZF67YNTGsjAXRYKV6Dp2KYgmMRx3+iKqBjv7sBtc
- evvWW2RQG7Iee4QIh4jpNoWD7x05wa7efe/lUmTvBzp7xWAEJLYqKtx3uBZtu/omOo
- lOQBfTibO4kmw==
+ b=A3CBRRZw27Hdra1Ul3wKPWfd4JNJFlMLS4vGQnY8JJwo6ViN2jpiOph37CaNdfTG3
+ Ujstkg7WGwzBrqBxkIOsE/Tdjgv59LvF6PX2PCS0PKD1O/h59LQxmOnnRxc2EuFsxl
+ 4JU2p8cupriXgEXUChHRkJn9QHCAMV23Hkdk6ulHKKsFTnGBeF8mMnIa6RcCoH128E
+ 1ffEvQybd4Akn71jml5QAfY3nJTygb+5BpltUnrlbSAbo5ih6Y9kmfksifW6vjcE4h
+ BTh/SDlFQVrKpCDlqRFakhsBTpaGTe1lMYSq+8gK015D25HJVf6IRj5SsPitRl9Lir
+ hpfYK5klfApGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E37261D55A9;
- Wed, 16 Sep 2026 10:43:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E3DB1D5597;
+ Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 734DA429B50;
- Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFD23429B2C;
+ Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 60EDD5A6F7; Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
+ id B0DD75A6D9; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 27/49] target/arm: Make Thumb T1 hint space UNDEF
- before v6T2
-Date: Wed, 16 Sep 2026 10:42:45 +0300
-Message-ID: <20260916074346.671467-27-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 12/49] target/riscv: tt-ascalon: Enable Zkr extension
+Date: Wed, 16 Sep 2026 10:42:30 +0300
+Message-ID: <20260916074346.671467-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -72,76 +72,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-The "hint space" is a region of the encoding space which is defined
-to NOP if not specified as an architected instruction, so that future
-instructions can be added there which fall back to NOPs on older
-CPUs.  In the A32 encoding, this hint space was carved out of the MSR
-(imm) insn by using the fact that a field_mask (bits [19:15]) of
-0b0000 meant that an MSR (imm) would set no parts of the CPSR from
-the immediate, so it was always NOP on existing CPUs.
+Ascalon supports Zkr and the SEED CSR.
 
-For the T1 encoding, the hint space is in a range that used to UNDEF
-in Armv5, and so the hint insns and the NOP region must all UNDEF
-before v6T2.  Rather than putting this check in the trans functions
-for each hint insn and for the NOP space (which is a lot of places,
-and awkward since those trans functions are often shared with the A64
-and A32 encodings), put in a decode line that covers the whole space
-which we check before any of the hints and which will explicitly
-UNDEF if necessary.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4208
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-4-peter.maydell@linaro.org
-(cherry picked from commit 2931a675e9d3fcddedf673509fe9759955fc616d)
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Message-ID: <20260630024952.1520546-7-joel@jms.id.au>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 569aa6280d141129c705c361350705832b33cf88)
+(Mjt: back-port to 10.0.x across v10.0.0-1083-g09ef7d97454a
+ "target/riscv: convert TT Ascalon to RISCVCPUDef")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 646c74929d5..cbc99534f8f 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -224,6 +224,9 @@ REVSH           1011 1010 11 ... ...            @rdm
- 
- {
-   {
-+    # Before v6T2 this was not NOP space and must UNDEF
-+    MAYBE_UNDEF_T1_HINT 1011 1111 ---- 0000
-+
-     YIELD       1011 1111 0001 0000
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 7097077880e..d6dbbf48a7f 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -4547,6 +4547,24 @@ static bool trans_NOP(DisasContext *s, arg_NOP *a)
-     return true;
- }
- 
-+static bool trans_MAYBE_UNDEF_T1_HINT(DisasContext *s,
-+                                      arg_MAYBE_UNDEF_T1_HINT *a)
-+{
-+    /*
-+     * The Thumb T1 encoding hint space was only defined starting
-+     * in v6T2 for A-profile. For M-profile it always exists, even
-+     * in v6M.
-+     */
-+    if (arm_dc_feature(s, ARM_FEATURE_M) ||
-+        arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        /* Allow decode to fall through to the hint insns and NOP space */
-+        return false;
-+    }
-+    /* On the earlier cores, we must UNDEF */
-+    unallocated_encoding(s);
-+    return true;
-+}
-+
- static bool trans_MSR_imm(DisasContext *s, arg_MSR_imm *a)
- {
-     uint32_t val = ror32(a->imm, a->rot * 2);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index bf4855ec02d..5e37cc3645d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -646,6 +646,7 @@ static void rv64_tt_ascalon_cpu_init(Object *obj)
+     cpu->cfg.ext_zba = true;
+     cpu->cfg.ext_zbb = true;
+     cpu->cfg.ext_zbs = true;
++    cpu->cfg.ext_zkr = true;
+     cpu->cfg.ext_zkt = true;
+     cpu->cfg.ext_zvbb = true;
+     cpu->cfg.ext_zvbc = true;
 -- 
 2.47.3
 
