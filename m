@@ -4,85 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32CC4C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6258EC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6k8L-0002Tw-Mr; Wed, 16 Sep 2026 03:32:45 -0400
+	id 1x6k8u-0002fA-5h; Wed, 16 Sep 2026 03:33:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1x6k8K-0002Tn-JT
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 03:32:44 -0400
-Received: from mail-oo2-x0c.google.com ([2607:f8b0:4864:31::c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1x6k8J-0003QN-2o
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 03:32:44 -0400
-Received: by mail-oo2-x0c.google.com with SMTP id
- 46e09a7af769-80a6fbf797dso141818a34.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 00:32:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1789543951; x=1790148751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=VsHLsYo9PjIwrfm9IhZPcrhpy7+xxZmiTGTP+zvPlqo=;
- b=QSXlR73SFoaxNve4IRPpfKxoDjTB8lqbVjS27CTMEPCcXOpy6GSw4MogpK9qXD2LU6
- wlVih/bdvNjxNkVPnBIqqJkuUWC0yib7MbL8av5zkrFcMht6YCtnIXXDO+wp/fe2iQPe
- 06qhu7+BUB7pgeUKGxnDWx/I63m57F3c0pyDL7JExTcRz//SMGHJYpH0/FHBxR2prDG7
- RO18P/vtnmFSegU/hBnpO3nM0b0dWUDDvcpmWI4tFfyRoCCCw9+9vswINTFnWz0Y0Xc2
- T6TN5Vj5KfkNKv+r9YMndxWlwKHBD1JzAGBGJafpOp1Aqrr4ppJnGrJf14F9+eAGglfz
- 0xZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789543951; x=1790148751;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=VsHLsYo9PjIwrfm9IhZPcrhpy7+xxZmiTGTP+zvPlqo=;
- b=yp2DOyliRrckPzrenTxnSM1LlXn69wqbrrbryD+S2hQniRcvWpr8pUUX7s4KjYhuVD
- YS5o67IuPKSIJ+z0Jide7hRbGCeQAfMZbINy8JRklIFr0eP/SadWFpsRZgOmfdLzuVSS
- eI2h415O/40PsrXTS0gn7YrZ3pXIdmMX/pNABCs4XdMz1MM9dhMVYghFUoIQX+H9BPIM
- I6A889236RcW2BdGkVx6XiC+Vc9Ctz/qq4Rt/OwgW9DENeMD4oZa8+yRKgwRgEABMK+R
- DrvWzbXms1upea2oo/bFkd9co3N5eejpxfbbEiEQlqsc7w0Si27ZGrs5ZPY3a8oQbnDG
- QojQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwve+ysP4Ih1sU3kYtdaqg6vb27blTEdTGZYVWZfmfPZ5AECklYkt3ekMqqvj9Bs37PzjgN8dCIYn3+@nongnu.org
-X-Gm-Message-State: AFuF++nIyxcEibvLcNX3g1Vk3M07arf1HWAiuLySPFAclLkQg32Z3MZS
- a7U6V3Ty4vpuqI2AsiQK/vJIuIlyhc8evS+f0e565F25NbFboQ+/4UqqMo4Tu0yF/TE=
-X-Gm-Gg: AYBFou15m/n73Xm7R5biYRJO05xlPfFkN4m40oGicv/JzNqnfb9/rE+7oHmHa09nvcb
- bTFl2f1cwKSS+7GAHmh3WLYzWb7Gigw6FJQgASj0nmd3V7uNXpZMvr8wPZG7l/RNOYFiYVn+qUB
- G6ZGpyP+ltDY6csVt10R15gUa8jLOn0Zn5yChAV/cBDp17MOrvM48+4SvQC2TYK8D7ymxgoSLMb
- 4ETdbaR9DEHU+uNcJvYIRk64XDuYkro4zFvUdKGuJ8Ixg80TaAw4gjQckoPfIpJuWenyEUy0OtT
- XuWGJaigzHYXoxJxDT2qN6C2N0C23Fv862Bfh2O5lcnY5UEJWhfdns2ibKB5Yd9oUf/R/WXPe7O
- dvpzoCQUWM2Se3CVzwqVh8EfC11mEjE1wsfFqAjRzodQ9GQfCrnlnChILA0X27t3WL0NqLlczS5
- +lrz99ZxmALi3IcPTJUT64CI3ZUKQFtDglconxaF4ka2yFUFMZITLh/Bdx9AXyOSgo0FmGRzSir
- 2VCAmKePvFG1xd3o7MNR+Yj/scG581n
-X-Received: by 2002:a05:6830:6385:b0:805:b4a8:724e with SMTP id
- 46e09a7af769-80b363a986cmr1332250a34.6.1789543951115; 
- Wed, 16 Sep 2026 00:32:31 -0700 (PDT)
-Received: from ausc-rvsw-c-01-anton.tenstorrent.com ([38.104.49.66])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80b06cb8c77sm1906282a34.11.2026.09.16.00.32.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 00:32:29 -0700 (PDT)
-From: Anton Blanchard <antonb@tenstorrent.com>
-To: richard.henderson@linaro.org, pbonzini@redhat.com, qemu-devel@nongnu.org
-Cc: Anton Blanchard <antonb@tenstorrent.com>
-Subject: [PATCH] accel/tcg: Fix TLB_MMIO check in tlb_plugin_lookup()
-Date: Wed, 16 Sep 2026 07:32:09 +0000
-Message-Id: <20260916073209.1791732-1-antonb@tenstorrent.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1x6k8k-0002cG-1d
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 03:33:11 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1x6k8g-0003Rm-Ad
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 03:33:08 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8AxdvAtRqpqv4cMAA--.36553S3;
+ Wed, 16 Sep 2026 15:33:01 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJDxg8wqRqpqolUhAA--.44203S2;
+ Wed, 16 Sep 2026 15:32:59 +0800 (CST)
+Subject: Re: [PATCH v3] target/loongarch: Fix data race in CSR_ESTAT
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <17746591750@163.com>,
+ shankerwangmiao@gmail.com
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260901034833.2215072-1-maobibo@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <d0000abf-1f83-c3c6-dd1e-0ebaec3dc98f@loongson.cn>
+Date: Wed, 16 Sep 2026 15:31:28 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20260901034833.2215072-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:31::c;
- envelope-from=antonb@tenstorrent.com; helo=mail-oo2-x0c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDxg8wqRqpqolUhAA--.44203S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXFWDZr48Aw13WFWfAw4UKFX_yoW5Wr1Dpr
+ W7uF90gw4kKrWDZa4DGa9xZF98Zr4fWF1IvF4akryfCrWUJw45Wrykt3s7XF1Du34rWF40
+ vFWrGFW5WF4UCFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUcCD7
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +81,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update tlb_plugin_lookup() to check TLB_MMIO in slow_flags when
-TLB_FORCE_SLOW is set.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
----
- accel/tcg/cputlb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> The CSR_ESTAT register of a CPU can be read and written by both the
+> CPU thread and other threads (e.g., the interrupt controller thread).
+> Currently the possible readers and writers of CSR_ESTAT are:
+>
+> The access from the CPU thread is not synchronized with the access from
+> other threads, which may lead to data races. The above readers and
+> writers shall all run on the corresponding CPU thread except for
+> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+> loongarch_cpu_set_irq() is moved to the CPU thread by using
+> async_run_on_cpu().
+>
+> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+> Changes in v3:
+>    1. Combine irq and level into 32 bit int type.
+>    2. Rename do_set_cpu_estat() with loongarch_cpu_self_set_irq().
+>
+> Changes in v2:
+>    Simplify the changes to move the access to CSR_ESTAT from the only
+>    unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>    async_run_on_cpu() to avoid the race condition.
+> ---
+>   target/loongarch/cpu.c | 25 +++++++++++++++++++------
+>   1 file changed, 19 insertions(+), 6 deletions(-)
+>
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 84a130956d..3bfc9a8034 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -75,13 +75,26 @@ void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old)
+>       }
+>   }
+>   
+> -void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+> +static void loongarch_cpu_self_set_irq(CPUState *cs, run_on_cpu_data data)
+>   {
+> -    LoongArchCPU *cpu = opaque;
+> -    CPULoongArchState *env = &cpu->env;
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> +    CPULoongArchState *env = cpu_env(cs);
+>       CPUSysState *sys = env_sys(env);
+> +    int irq, level;
+>       uint64_t old;
+>   
+> +    irq = data.host_int & ~BIT(31);
+> +    level = (data.host_int >> 31) & 1;
+> +    old = sys->CSR_ESTAT;
+> +    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> +    loongarch_cpu_update_irq(cpu, old);
+> +}
+> +
+> +void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+> +{
+> +    LoongArchCPU *cpu = opaque;
+> +    CPUState *cs = CPU(cpu);
+> +
+>       if (irq < 0 || irq >= N_IRQS) {
+>           return;
+>       }
+> @@ -89,9 +102,9 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>       if (kvm_enabled()) {
+>           kvm_loongarch_set_interrupt(cpu, irq, level);
+>       } else if (tcg_enabled()) {
+> -        old = sys->CSR_ESTAT;
+> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> -        loongarch_cpu_update_irq(cpu, old);
+> +        irq |= (level & 1) << 31;
+> +        async_run_on_cpu(cs, loongarch_cpu_self_set_irq,
+> +                         RUN_ON_CPU_HOST_INT(irq));
+>       }
+>   }
+>   
+>
+> base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 7f7c208ba1..7150d6d126 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1593,7 +1593,8 @@ bool tlb_plugin_lookup(CPUState *cpu, vaddr addr, int mmu_idx,
-     data->phys_addr = full->phys_addr | (addr & ~TARGET_PAGE_MASK);
- 
-     /* We must have an iotlb entry for MMIO */
--    if (tlb_addr & TLB_MMIO) {
-+    if ((tlb_addr & TLB_FORCE_SLOW) &&
-+        (full->slow_flags[access_type] & TLB_MMIO)) {
-         MemoryRegionSection *section = full->section;
-         data->is_io = true;
-         data->mr = section->mr;
--- 
-2.34.1
+
+  Reviewed-by:  Xianglai Li <lixianglai@loongson.cn>
+
 
 
