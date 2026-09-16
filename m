@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19333C982C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74405C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n0R-0003Lb-Cg; Wed, 16 Sep 2026 06:36:47 -0400
+	id 1x6n0Z-0003PC-KZ; Wed, 16 Sep 2026 06:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n0Q-0003Kl-63; Wed, 16 Sep 2026 06:36:46 -0400
+ id 1x6n0X-0003OC-0z; Wed, 16 Sep 2026 06:36:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n0O-0001dt-ER; Wed, 16 Sep 2026 06:36:45 -0400
+ id 1x6n0V-0001fW-0C; Wed, 16 Sep 2026 06:36:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554955; bh=JjEuYMdA73Wc0qSZUXrfHhlif2ImgY6fNny3Dtpzx1c=;
+ t=1789554955; bh=2SRqz5S3YNkNI4mhAWqlHAgeN/EVcHYuNr8uZv0ic+s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nBoj0HHdo/ZzVQfDFZZit8GAte2APsIobHygThyjrEX/qFoGZx5jqsi7AXUIKs8z1
- 2SGRYN/F9OT6js1ovKO36mpdrythfEKyeJqp3r/s+OEV0gKo42VR4kncdMXwMZxKrj
- zvt6abKk5Xzsxq+5xvz/fdvQwWDlMlKuIvZN3RNIk5eUlychfr35cZa/+f4zGoyso8
- 973cM4mnWEKmboz0LPWbu2s8y5yDiRAAOZE+hvLzGxXU8+aTCwFW9Cddksorj288y9
- 1VPcZvmXjPVW9B5Zssu6IZb/MRFVp1ZURjjR6L+wbdNhPYhocIOL7XPKIwgCXyvS6C
- h/DB1of6SX7Bg==
+ b=dVwsKzpipIsuymmJ19vuW3nOSBFQut1uEJUkL7Zl4YC5i+X5kKV7phKleThowe3/X
+ l7Unl+wUGCfvWMIuUmcWvGtRXfEGsN7K6ADMC9g/FeRP3xtf8DKtv0O+psB/tshWSE
+ F6sWbuo8jfsHniOiwC5PHJYrP5ly1iKfvJ2dFVQkNpNo4snD6bXnmkuSywNPKfE6A5
+ 6wdgShjAVQKZbtp32NcVG0PzAEIEg3oiNPR2nYZ6zoYemzAKnhoLYrlMSXkl+JlPSf
+ MjEoYSqB7wfabcYBs6/yG9YuVSCi7+qKeA08ihr+LcDnTaZij85KmobarGUt3JAYp5
+ lc4QBs4aoUkGQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AD3921D57F7;
+ by isrv.corpit.ru (Postfix) with ESMTP id BFD831D57FB;
  Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 771DF429F53;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A49D429F5A;
  Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 62F615A7E9; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+ id 6EDDC5A7F1; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 04/56] chardev: Don't unregister yank upon async path
- connection failure
-Date: Wed, 16 Sep 2026 13:35:22 +0300
-Message-ID: <20260916103622.684817-4-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 08/56] tests/unit/test-blockjob: cover keeping a job
+ paused while a pause is pending
+Date: Wed, 16 Sep 2026 13:35:26 +0300
+Message-ID: <20260916103622.684817-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,41 +72,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
-yank registration in the tcp_chr_connect_client_async() path to after
-the connection is successful. If qio_channel_socket_connect_sync()
-fails early, there will be no yank registered to be unregistered in
-the error path, leading to assert.
+Add a regression test for the previous commit. A job that has reached
+its pause point is spuriously re-entered (job_enter()) while a pause is
+still pending (pause_count > 0), reproducing what an overlapping drain
+does: one drain's job_resume() wakes the job while the next drain's
+job_pause() is already counted. The job must stay parked - it must not
+run job code or clear job->paused, or job_set_aio_context() could
+observe paused == false and abort.
 
-Remove the now-extraneous unregister.
+The test counts the job's run-loop iterations: without the fix the
+re-entered job clears job->paused, runs one iteration and re-pauses, so
+the counter advances; with the fix it stays parked and the counter is
+unchanged. It runs in the main AioContext, so job_enter() is synchronous
+and the check is deterministic.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260603141137.1108963-1-farosas@suse.de>
-(cherry picked from commit ddf5738503e2ba6adb74359abf3b6e7aa81af420)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260623152406.1180235-3-den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 438ee08bc97af48ade6365133f2f5b43d4d788ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index b629575fcf8..81bac42a158 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
+diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
+index abdbe4b8350..3b77d19b911 100644
+--- a/tests/unit/test-blockjob.c
++++ b/tests/unit/test-blockjob.c
+@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
+     cancel_common(s);
+ }
  
-     if (qio_task_propagate_error(task, &err)) {
-         tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
--        if (s->registered_yank) {
--            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
--                                     char_socket_yank_iochannel,
--                                     QIO_CHANNEL(sioc));
--        }
-         check_report_connect_error(chr, err);
-         goto cleanup;
-     }
++typedef struct PauseCountJob {
++    BlockJob common;
++    int n;
++    bool should_complete;
++} PauseCountJob;
++
++static void pause_count_job_complete(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++    s->should_complete = true;
++}
++
++static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++
++    while (!s->should_complete) {
++        if (job_is_cancelled(&s->common.job)) {
++            return 0;
++        }
++        s->n++;
++        /*
++         * Yields; while a pause is pending the yield is skipped and the job
++         * parks in job_pause_point() instead.
++         */
++        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
++    }
++
++    return 0;
++}
++
++static const BlockJobDriver pause_count_job_driver = {
++    .job_driver = {
++        .instance_size = sizeof(PauseCountJob),
++        .free          = block_job_free,
++        .user_resume   = block_job_user_resume,
++        .run           = pause_count_job_run,
++        .complete      = pause_count_job_complete,
++    },
++};
++
++/*
++ * A job that has reached its pause point must stay paused while a pause is
++ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
++ * drain's job_resume() wakes it while the next drain's job_pause() is already
++ * counted); the job must not run or clear job->paused, otherwise
++ * job_set_aio_context() can observe paused == false and abort.
++ */
++static void test_pause_keeps_paused(void)
++{
++    BlockBackend *blk;
++    BlockJob *bjob;
++    PauseCountJob *s;
++    Job *job;
++    int n0;
++
++    blk = create_blk(NULL);
++    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
++                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
++    s = container_of(bjob, PauseCountJob, common);
++    job = &bjob->job;
++    WITH_JOB_LOCK_GUARD() {
++        job_ref_locked(job);
++    }
++
++    job_start(job);
++
++    /* Pause the running job; it parks in job_pause_point() with paused set. */
++    WITH_JOB_LOCK_GUARD() {
++        job_pause_locked(job);
++        g_assert_true(job->paused);
++        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
++    }
++    n0 = s->n;
++
++    /*
++     * Spurious wake while the pause is still pending. The job must stay parked:
++     * the bug clears job->paused, runs an iteration (s->n advances) and
++     * re-pauses, exposing a paused == false window.
++     */
++    job_enter(job);
++    WITH_JOB_LOCK_GUARD() {
++        g_assert_true(job->paused);
++    }
++    g_assert_cmpint(s->n, ==, n0);
++
++    /* Resume and tear down. */
++    WITH_JOB_LOCK_GUARD() {
++        job_resume_locked(job);
++    }
++    job_cancel_sync(job, true);
++    WITH_JOB_LOCK_GUARD() {
++        Job *dummy = job;
++        job_dismiss_locked(&dummy, &error_abort);
++        job_unref_locked(job);
++    }
++    destroy_blk(blk);
++}
++
+ int main(int argc, char **argv)
+ {
+     qemu_init_main_loop(&error_abort);
+@@ -402,5 +501,6 @@ int main(int argc, char **argv)
+     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
+     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
+     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
++    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
+     return g_test_run();
+ }
 -- 
 2.47.3
 
