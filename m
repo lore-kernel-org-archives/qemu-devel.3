@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F884C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B3CC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6mbc-0007My-8t; Wed, 16 Sep 2026 06:11:08 -0400
+	id 1x6meG-0007r0-5h; Wed, 16 Sep 2026 06:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6mbV-0007MZ-7j
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:11:01 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1x6meC-0007qm-Bj
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:13:48 -0400
+Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6mbT-0006RZ-DR
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:11:00 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-396ccc02279so587844a91.1
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 03:10:58 -0700 (PDT)
+ id 1x6meA-0006aa-4E
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:13:47 -0400
+Received: by mail-pz2-x0e.google.com with SMTP id
+ 41be03b00d2f7-cc1cea48edcso563960a12.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 03:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789553457; x=1790158257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789553625; x=1790158425; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=reXyOkWf+wcGli+dRwlPWqNmFDYbagokc/fUO/uANLQ=;
- b=s/VjV441XssQphWpgBu891mJ2L+PX7sOHrQrPG9oBFuoCdROiZsC7BTUd/XsAWSKwr
- IwMt81ATrU13NsNNMkXcjUkYUBQlqt2ANfKkDXnKfuq/lnATAVzc1tceiooPrvAe4qsS
- gEJRUsHNMwKJEIAhxrRXX8Bb31xf3MrZHHbw1Y1a+N9tXlYCTZaULkxzS9Tc+YVSDvdO
- 8CyZNaVW3yLbFEGhGQPTp/zqy1cT/gZXUnZtwkvoRjcFkfAjTNfal3rgMvGvN0hQIC5o
- BO8qU/w9k56M2YgFZLMRp6MGX+b4nb3aCdAY7szDmzHm4JPS9Mj7U2iz3GuT2DlUANiX
- cxnw==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Y2y0r3csQobljLetqX8eKWSFh1bXU3rUJlSrAQH4Eeo=;
+ b=k0IX5CGoyhIFz7VjPoeW1UZOTtC3CfTUgaiQviGAOBUSVtjdv9Igkw1JV+snA08sOs
+ 5T6wjwqWhkfWfnhOXtBkO4jBd/PLAatjJmqqwN2CD+waTrY9667y/OBSfyWkvTHJSoFV
+ GbI4uuVPIpANtzWB/ilj9CQa802CwyGdE5ifAY5NBTKyy+gWaUMJIq4X+pDoQT9Iftl/
+ 93xTWTtctwlMZRyUG6ZwslIij+2wsK8b9ci7Y1Gq5TKDuPQm8b/Be1dfsrI0+lwAxKUC
+ A38eRTI7BNRmsrmBidh5zJstkwJpKegmomiHfB5/fKaxxm3BQlRa0nmxqTOASTj1DeRw
+ 8LHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789553457; x=1790158257;
+ d=1e100.net; s=20260707; t=1789553625; x=1790158425;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=reXyOkWf+wcGli+dRwlPWqNmFDYbagokc/fUO/uANLQ=;
- b=ooPPF8m9apszM/RsnDH2bjKzJqSvEsfYx/FtsFv94QxThCDiSkRGEdPYOI13vD+j2j
- yp0wofsnmUUFmTHJpFEJPJ38NyjcZHoPSf8K2F3qaZebHXeHeBBdu0ZhZeW7EkGOlxp5
- WrxRKmuRf/u1ZXjXPYKt1QkC0IV6pom5Yz0jluueEfVrWUdHGSuZw3iESup78/O8pMnz
- kt9B3ln3w+afVqx+5m6R8oUDNSoxvglVLt6u03xsVYOf2jMMy6Z0/JrBYmECjGsoyGh6
- MhpBOifhFelreVZG4iH1JFmHmYUrE5Xh/V9SOlRyn4UDB+V+TGZKMV9oqmcK/ED7k3H2
- yvVQ==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Y2y0r3csQobljLetqX8eKWSFh1bXU3rUJlSrAQH4Eeo=;
+ b=Qgh59BJJfcgM5xqnjVUMzF8v8ISQQp8k1G4eY3sXHA6F6kn2zvYd+rMN6hsxC3u7iZ
+ 8DzCiSED/jJxVMpx6x0cWXzlXg3gh8ADYG2KA3v7qg/q1mKofOjlhJLbUPAgkg+moXOU
+ lOqCgwhkezSWB3rBMyu4RUGBdvlCrvgXwy6ePI3N8uR37r1vqRJfIBpzWY9LXTjyGjbq
+ +vC/IS5+72hDcn8S7PxS5jebe8Iulqk9GjL/m7uB+lGqr+rrEGUF0jFHEeaXsN32FI7A
+ eV80NsBMECtbixSkVQHdd+n2TqVwVlhQy0LpQIRuJ/uRBiIY+wcg53P/Nk0aoe/DLu0V
+ wcXw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzJ6706x7F1xZQobPzVBqyKlLWUlqtdZ1AteepLeYScRdyabrOFK20FPlCziZHTO6Lc/5mROiO6O8Ru@nongnu.org
-X-Gm-Message-State: AFuF++k7qcgkUBZZllu+TICANvxigZa5mYfDL789HsVOeo0/jLurXgbY
- 7rBDcS3dstuTwsy1GaqUzDeFY0Sr3BBEmSEf7oZQitWd4Uc/fRBDeVY1tqpWQPGC61Q=
-X-Gm-Gg: AYBFou2t8QzjelhUEI7B3DnBox/KZm4OBZhNobU8UtPjZbr27a4ElPZ0pJ6uZG9t/tm
- NHzOCrXCDcoQPF1wxns0QL+FXyiuDwBmwgjd5+8eSviw4PIncBk9zU81XdXo0LTIA8HYVEZDhUB
- TXYsfONAsyum4DZLSS83JK9p3t1TCK+h/4+rdJHIrihwfXdch9Xxyj3VFO3P95y/XHoPDL6IBYQ
- SMKjKy6YoxEcj4WyYpuI8jzRPjnzHD7CG+KZaKc6kO0eSEXtYfv2YVMoBh5gc3AZEShwy0XIgAC
- 6Jf8lzO3ELSDWIwqg69XlH3HJoYS34lL5k6wydjzHLz12C/8j66nn6e/QWFCHRHbsIWtC3CRbUn
- OvoE1aSaY/bX6M3g+f+YBne6q93gExGv6xslLKNEvMZ+sVTG9gV41HOfHaPMg6w1eFpfdg+OOHg
- +TN/6ep9gOOfC77ASs0tmNdDaSwwO1sxa3yzw5LoOog3dTrtx/MTCs7Jg+Ly+aEG/JWJQ510/p1
- SuCDAYNwxHRuGdqokWU9kM4c5UqdsKkHXQ0M3gDzZ4M3/AdCfaEYSuYDrkKeg==
-X-Received: by 2002:a17:90b:2f50:b0:39e:2c5c:a69a with SMTP id
- 98e67ed59e1d1-39e2c5cac47mr424076a91.5.1789553457320; 
- Wed, 16 Sep 2026 03:10:57 -0700 (PDT)
+ AKwUvBxmrPVxTgTqXtpZxs623WhbEX+CPekeVKLhQh6yzrbunhuHqzGGdQ58p4alnAB/JHLDqsSQ1//nvONC@nongnu.org
+X-Gm-Message-State: AFuF++kC78tLOgTC7BJn9J1X5OkwOZ1yxk8jOKGpqYwz33qqAQtqYoqv
+ LzjKatSpjWAB6w/hnR941goKNO0gkGEKBDc2DgrML3ETcZMTVvbn2GkEwYFA8XuhycOtMl4N7sT
+ Yv7QETF8=
+X-Gm-Gg: AYBFou2xU+HID6E3cum3ZV1VJ5felHEDSJBdqzOWrn2v6ydRQCLurc7n6Aa6f4zgKqd
+ jhGj03GqfTdx0HzTUpdI7yCRaqETG7RgMKaVWoAvC0dP0uDvHEckYopNYRAbx0KXsayhVyA+OyM
+ 92dQ5CBbisnFQ2O1cfEnmhWtFLAMDDUiqtyTIRbyFKzhsA8fcHm/a46TieFJ5uenKv5uXNOzLYM
+ lkFWkM4GbpZK9dgrT/Bnc1hKlUhK6sdz+PyeKD5GpWL6AAfIs2jITcLDtESmfXjHR11Qi/FT8kp
+ RJHY8j8rGAHFzvTqfCIr5OInFP5aixaGnCy37l/D7HE0wYG0TeN+wEpa7Wv8A/KOCdGWwOE19+i
+ fkefABXbYxjs6gW/3EuGoMd/Nad7m4lIfB7euKb7BPXft4N9JVcIiMYT9G9oX43TnIfNChZIjEr
+ hL85+rFRVORH5aTj5KGaLPWyQ5baEW/yS5irA2c+f4rTI9RNjFbwUCdggwGAYZaD4B/4RZ6w0Cq
+ 6KYDxzs6vUp65rmjLkh0zAbVzk3nAd8k/g0PsqwwqVKiMY1RIEDu7K/295LGw==
+X-Received: by 2002:a05:6a21:1193:b0:3da:ebec:69c1 with SMTP id
+ adf61e73a8af0-3dd5f7acb7amr5205327637.24.1789553624548; 
+ Wed, 16 Sep 2026 03:13:44 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:845c:f507:397b:9b72?
  ([2603:800c:7900:ed00:845c:f507:397b:9b72])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14397197dc8sm4917957c88.3.2026.09.16.03.10.56
+ a92af1059eb24-14395d13cb7sm5811581c88.7.2026.09.16.03.13.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Sep 2026 03:10:56 -0700 (PDT)
-Message-ID: <0ebf4cdd-d5be-41f0-adaf-d540f3dd0793@linaro.org>
-Date: Wed, 16 Sep 2026 00:10:53 -1000
+ Wed, 16 Sep 2026 03:13:44 -0700 (PDT)
+Message-ID: <78b25d1a-5b32-4327-8bb0-5c863293f014@linaro.org>
+Date: Wed, 16 Sep 2026 00:13:41 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/pmp: unlock all PMP entries on reset
-To: Sebastian Alba Vives <sebasjosue84@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
-References: <20260916034331.2390427-1-sebasjosue84@gmail.com>
+Subject: Re: [PATCH v2 00/15] testing: various docker clean-ups post meson tcg
+ conversion
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260915201601.1207839-1-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260916034331.2390427-1-sebasjosue84@gmail.com>
+In-Reply-To: <20260915201601.1207839-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,53 +107,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/15/26 17:43, Sebastian Alba Vives wrote:
-> pmp_unlock_entries() bounds its loop with pmp_get_num_rules(), which is
-> the count of entries whose A field is not OFF, not the number of
-> implemented PMP entries. When the active rules are not contiguous from
-> index 0, every entry at an index greater than or equal to num_rules
-> keeps its lock bit across a CPU reset.
+On 9/15/26 10:15, Alex Bennée wrote:
+> This cleans up a few bits and pieces although doesn't totally solve
+> the issue of an apparent stall while meson builds the docker image.
+> However with these changes there should be no difference between the
+> meson build and the equivalent "make docker-image-foo" invocation.
 > 
-> Those entries stay locked after the reset has cleared mseccfg, so
-> mseccfg.RLB is no longer set and pmp_is_readonly() silently discards
-> subsequent pmpcfg writes. Firmware started after the reset finds PMP
-> entries it did not configure and cannot clear.
+> We also finally get rid of the ill-advised magic caching support in
+> docker.py.
 > 
-> Reproduced on -machine virt -cpu rv64,smepmp=true with a bare-metal
-> payload that sets pmpcfg0 = 0x99990000 (entries 2 and 3 as
-> L | NAPOT | R, entries 0 and 1 left OFF) and then resets through the
-> sifive_test device. On the second boot pmpcfg0 reads back 0x99990000
-> and writing 0 to it leaves the value unchanged. With this patch the
-> same payload reads 0x01010000 on the second boot and clearing pmpcfg0
-> succeeds.
+> v2
 > 
-> Iterate over the implemented entries instead.
+> I've restored the configure based compiler checks for so we can build
+> roms and the vdso blobs again. It looks like we could never build roms
+> with container based images so I've left it for now. Unlike the vdso
+> build we can't trigger a container build through Makefile.prereqs.
 > 
-> Fixes: 4bf501dc0118 ("target/riscv: pmp: Clear pmp/smepmp bits on reset")
-> Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-> ---
->   target/riscv/tcg/pmp.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> TODO
+> ----
 > 
-> diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-> index 41b55519a8..5286c6aa90 100644
-> --- a/target/riscv/tcg/pmp.c
-> +++ b/target/riscv/tcg/pmp.c
-> @@ -201,10 +201,10 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
->   
->   void pmp_unlock_entries(CPURISCVState *env)
->   {
-> -    uint32_t pmp_num = pmp_get_num_rules(env);
-> +    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
->       int i;
->   
-> -    for (i = 0; i < pmp_num; i++) {
-> +    for (i = 0; i < pmp_regions; i++) {
->           env->pmp_state.pmp[i].cfg_reg &= ~(PMP_LOCK | PMP_AMATCH);
->       }
->   }
+> I've still got Ilya's s390 test image patches to look at but I'm
+> sending v2 because enough people are hitting issues.
+> 
+> I've got a very hacky patch which fishes the docker image names out of
+> the custom commands and exposes them via Makefile.mtest which will
+> trigger the containers to be built outside of meson although meson
+> will still attempt to build (and find everything cached).
+> 
+> I also need to look at the timestamp stuff that Pierrick has suggested
+> to see if that improves the caching from the registry.
+> 
+> Please test and review.
 
-Why is the entire env->pmp_state not zeroed instead?
+Normal configure allowing podman seems to work:
+
+>   TCG tests
+>     gdb                             : /usr/bin/gdb
+>     container registry              : registry.gitlab.com/qemu-project/qemu
+>     cc for aarch64-softmmu          : aarch64-linux-gnu-gcc
+>     cc for aarch64-linux-user       : aarch64-linux-gnu-gcc
+>     cc for aarch64_be-linux-user    : aarch64-linux-gnu-gcc
+>     cc for alpha-softmmu            : alpha-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for alpha-linux-user         : alpha-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for arm-softmmu              : arm-linux-gnueabihf-gcc
+>     cc for arm-linux-user           : arm-linux-gnueabihf-gcc
+>     cc for hexagon-linux-user       : hexagon-unknown-linux-musl-clang (from 'qemu/debian-hexagon-cross' container)
+>     cc for hppa-linux-user          : hppa-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for i386-softmmu             : i686-linux-gnu-gcc
+>     cc for i386-linux-user          : i686-linux-gnu-gcc
+>     cc for loongarch64-softmmu      : loongarch64-unknown-linux-gnu-gcc (from 'qemu/debian-loongarch-cross' container)
+>     cc for loongarch64-linux-user   : loongarch64-unknown-linux-gnu-gcc (from 'qemu/debian-loongarch-cross' container)
+>     cc for m68k-linux-user          : m68k-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for mips-linux-user          : mips-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for mips64-linux-user        : mips64-linux-gnuabi64-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for mips64el-linux-user      : mips64el-linux-gnuabi64-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for or1k-linux-user          : or1k-none-linux-musl-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for ppc64-linux-user         : powerpc64-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for ppc64le-linux-user       : powerpc64le-linux-gnu-gcc
+>     cc for riscv64-softmmu          : riscv64-linux-gnu-gcc
+>     cc for riscv64-linux-user       : riscv64-linux-gnu-gcc
+>     cc for s390x-softmmu            : s390x-linux-gnu-gcc
+>     cc for s390x-linux-user         : s390x-linux-gnu-gcc
+>     cc for sh4-linux-user           : sh4-linux-gnu-gcc (from 'qemu/debian-all-test-cross' container)
+>     cc for tricore-softmmu          : tricore-gcc (from 'qemu/debian-tricore-cross' container)
+>     cc for x86_64-softmmu           : x86_64-linux-gnu-gcc
+>     cc for x86_64-linux-user        : x86_64-linux-gnu-gcc
+>     cc for xtensa-softmmu           : xtensa-dc232b-elf-gcc (from 'qemu/debian-xtensa-cross' container)
+>     cc for xtensaeb-softmmu         : xtensa-test_kc705_be-elf-gcc (from 'qemu/debian-xtensa-cross' container)
+
+However --disable-containers yields the exact same output ("from ... 
+container" and all).  Confirmed by "make check-tcg" attempting to 
+rebuild said containers.  So that's not working at all.
 
 
 r~
