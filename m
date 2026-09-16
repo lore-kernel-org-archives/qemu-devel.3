@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA111C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F979C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ldq-0005U6-3u; Wed, 16 Sep 2026 05:09:22 -0400
+	id 1x6ldw-0006Is-DQ; Wed, 16 Sep 2026 05:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldk-0005C3-CJ; Wed, 16 Sep 2026 05:09:17 -0400
+ id 1x6ldt-0005yM-EK; Wed, 16 Sep 2026 05:09:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldi-0007Rz-QK; Wed, 16 Sep 2026 05:09:16 -0400
+ id 1x6ldq-0007VE-7z; Wed, 16 Sep 2026 05:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549560; bh=pVexX22Gswp37I+jYIlwDUiiRIeswn+1lPMG9xjQgtY=;
+ t=1789549562; bh=6ibJYDh910YOpNAnSA9vZ8CdyRDluSyl3/eUKfEtaiI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gto0DBmPgTOzWpapF7VB/GBwT5/Co98W0Fw9CwhqCNA1A3RsyC663YOwvXZeMPvfs
- h8nsA082RMqfJo/zO4flgUDgO6f4kjXT6BIYasBTelZ85Qht2dyRVAzNJ1X6zur8ox
- nwtTjyxfkHgyu/JWTrVj1IqICVW8/tWR4x9drsJE9rfg/Kb/BJo/OcuglwyCZvxCju
- tcFZnx8yU5W/r/MSFFf4b6jaJ5PUbXtDxo7XIiDzqMay00f7moN8H6t+XzSiM4fe/E
- +LpfOikDAYI7Tb8LuuOKBQPj0mwTPsohR1zU3h/Bh4obam8VJ5Do/l1Sq5xtrZ3DC9
- oB78wwrhVNujQ==
+ b=uilCdOSI4Qr4/KaqNO9x+ZUZESEtCBGgUiLc83O/AbmO71BhqIRuMxgFhRSFQPdF4
+ CE+7FY11VPB5Ptqt5qztlDZMcztE2uKTT4/tWueCrCF9eT+qLnESbmdRev0Ff7JlaA
+ o1j0eMCYKs2aQkhRgNg2wNCu18X8yQW40SjxhOzmGiVPa00w6+HhmBhXCSPIv1qaaW
+ g7XLd/Lvsb6/bBrsjyl3V66HyY6hnv2qSLyYvlCEP7CQV6zKIOPbEqjdpqIjpOZvee
+ Z1qo0wnNLTkhEBnyodfTNRofTWNe9aZYDR30ZbbJCmhmswjjEIAzIr2DbMOgGcM/o7
+ 22AmSFhO4rL8Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F139C1D56D4;
- Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2A0F51D56DE;
+ Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9CF1F429E1E;
- Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C9F1A429E3A;
+ Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8515F5A797; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id C347C5A7AB; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ swing <swing@mail.exp.sh>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 31/57] hw/sd: sdhci: Accept version 4 enable without
- UHS-I
-Date: Wed, 16 Sep 2026 12:03:55 +0300
-Message-ID: <20260916090516.677749-31-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 41/57] virtio-gpu: clear res->blob on mapping cleanup
+Date: Wed, 16 Sep 2026 12:04:05 +0300
+Message-ID: <20260916090516.677749-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -73,65 +73,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Host Control 2 writes have been conditional on modeled UHS-I support
-since commit 0034ebe6ee31. Host Version 4 Enable does not control UHS
-signaling, so controllers without modeled UHS-I cannot enter version
-4 mode.
+d3c2da174ca6 ("hw/display/virtio-gpu: Check cursor data presence")
+already prevents the use-after-free on blob cursor after detach.
 
-Retain Host Version 4 Enable independently of UHS-I while continuing
-to reject UHS-specific fields and keeping voltage changes UHS-gated.
+Clear res->blob in virtio_gpu_destroy_udmabuf() to keep init/fini
+symmetric, and add LOG_GUEST_ERROR messages in
+virtio_gpu_update_cursor_data() for missing or undersized blobs.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 0034ebe6ee31 ("sdhci: implement UHS-I voltage switch")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723151853.2143177-9-bin.meng@processmission.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 10dddf15e294f01561bacd815c78f2da03c4f1a0)
+Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
+Reported-by: 章鱼哥@aipy (www.aipyaipy.com)
+Reported-by: swing <swing@mail.exp.sh>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit c7254cd584bb667c3f01f95b94c64970b6944452)
+(Mjt: fixup across v11.1.0-574-gd3c2da174ca6
+ "hw/display/virtio-gpu: Check cursor data presence"
+ (this commit re-does v11.1.0-574-gd3c2da174ca6))
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index e58a6103970..a612e5cbafb 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1345,11 +1345,24 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-         }
-         sdhci_update_irq(s);
-         break;
--    case SDHC_ACMD12ERRSTS:
-+    case SDHC_ACMD12ERRSTS: {
-+        uint16_t hostctl2_mask = mask >> 16;
-+        uint16_t hostctl2_value = value >> 16;
-+
-         MASKED_WRITE(s->acmd12errsts, mask, value & UINT16_MAX);
--        if (s->uhs_mode >= UHS_I) {
--            MASKED_WRITE(s->hostctl2, mask >> 16, value >> 16);
-+        if (s->uhs_mode < UHS_I) {
-+            /*
-+             * VERSION4 is writable even without UHS-I. Preserve all other
-+             * Host Control 2 bits when UHS-I is not supported.
-+             */
-+            uint16_t independent = R_SDHC_HOSTCTL2_VERSION4_MASK;
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index b1519254582..86335341de7 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -92,6 +92,7 @@ static void virtio_gpu_destroy_udmabuf(struct virtio_gpu_simple_resource *res)
+         close(res->dmabuf_fd);
+         res->dmabuf_fd = -1;
+     }
++    res->blob = NULL;
+ }
  
-+            hostctl2_mask |= ~independent;
-+            hostctl2_value &= independent;
+ static int find_memory_backend_type(Object *obj, void *opaque)
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 1cf2adeebbd..b2232709516 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -63,8 +63,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+         }
+         data = pixman_image_get_data(res->image);
+     } else {
++        if (!res->blob) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
++                          __func__, resource_id);
++            return;
 +        }
-+        MASKED_WRITE(s->hostctl2, hostctl2_mask, hostctl2_value);
-+
-+        if (s->uhs_mode >= UHS_I) {
-             if (FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, V18_ENA)) {
-                 sdbus_set_voltage(&s->sdbus, SD_VOLTAGE_1_8V);
-             } else {
-@@ -1357,6 +1370,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-             }
+         if (res->blob_size < (s->current_cursor->width *
+                               s->current_cursor->height * 4)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: blob size too small for resource %d\n",
++                          __func__, resource_id);
+             return;
          }
-         break;
-+    }
- 
-     case SDHC_CAPAB:
-     case SDHC_CAPAB + 4:
+         data = res->blob;
 -- 
 2.47.3
 
