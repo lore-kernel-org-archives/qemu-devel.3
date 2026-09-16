@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC92C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C257BC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n3L-0007J2-J0; Wed, 16 Sep 2026 06:39:48 -0400
+	id 1x6n5I-0003IV-HF; Wed, 16 Sep 2026 06:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2N-000611-Uj; Wed, 16 Sep 2026 06:38:50 -0400
+ id 1x6n4U-00029G-VS; Wed, 16 Sep 2026 06:40:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2L-0001ze-1Z; Wed, 16 Sep 2026 06:38:47 -0400
+ id 1x6n4T-0002SV-4T; Wed, 16 Sep 2026 06:40:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=i2eTjwAS15hDaE5AkghnwVPezGdJR8H9au733wSuoIs=;
+ t=1789554958; bh=mO2F+gh2MjrhIhO9aLkbTWVdakLr8y8ZwzYV+u0UlW8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xrFd35O4pgMtGa49uKuVZj0TWtpI+GrDum0Mtwwwgy0uGe2MaORTU0QnGFwjoiC1L
- 5wsnMBLhkNB05HQXI6Ojvqa4NyT4vygSjT2dlQWM3ApeD/kyIlsMPRqyLbWvQZso2a
- B+5pOQabACx2fdAlIufmuG0z3xsNod3AH8fwxjTTbKY2P9V6xnIIDDly7jXXb4BAw6
- tO9Njc8uqf7XNlihTftwDdx3rzEpKQTowPWbM8YApYJ6HHlTM7fz4A01Wragbd1II5
- XDbmb5ksC9OZTheBOGEW8IeYdZlwaU57lDOP3ccd/z7h8ngtSp/qG5T6sWzj0sl62k
- H2jixvRplnrRA==
+ b=P6WBQJE/Y244UabUWmmX6ApTreeYIIB2yrtcjGKXfW2NZ6Ow8+9Su2wE2l2x3ylDI
+ qYibWw6IyU2IsnJM1nL9yAzeKkmQWKdS+cXk/BwUVA0tPtteME8aHPpRjrtAx+VCZz
+ tPb+CbG9zSHrVujGJdTb39ZSZi+i69pEiohpcdo0nZFhXDyo5q09nmi6hJyT30JiVR
+ rvy++uRDs9XBhNqg9WTObufIpm+fbGZkxS2u/SEVpd6UC3bxVOJHaB3+59B+18PE3q
+ bWnCzLIfJvshKnBzDqGZJ0EpwtKKae+haNloDL3Etw/k/OXfUUZZQyHMdnKE7DZ99z
+ RBW/vSC2ynLlA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0B4B91D580F;
- Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 19BCD1D582E;
+ Wed, 16 Sep 2026 13:35:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C9FFA429F6D;
- Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D8AE0429F9E;
+ Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B45965A817; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ id B66E55A84F; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 27/56] target/arm: Make IT insn undef when not present
-Date: Wed, 16 Sep 2026 13:35:45 +0300
-Message-ID: <20260916103622.684817-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Doug Cook <dcook@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 55/56] target/arm/whpx: fix whpx-arm post-reset CPU
+ state
+Date: Wed, 16 Sep 2026 13:36:13 +0300
+Message-ID: <20260916103622.684817-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
@@ -71,49 +72,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Doug Cook <dcook@microsoft.com>
 
-The IT insn is introduced for A-profile starting in v6T2; for
-M-profile it is present when the Main Extension is implemented (which
-includes v7M and excludes v6M).  We were missing the feature-check,
-so fail to UNDEF on earlier cores.
+Reset should leave CPU 0 running, and should leave all other CPUs
+suspended. Instead, no CPUs are suspended and CPUs may be left in
+low-power states.
 
-Add the missing check.
+Fix by updating state in whpx_set_registers WHPX_LEVEL_RESET_STATE.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 9ee6e8bb853bde ("ARMv7 support.")
+Signed-off-by: Doug Cook <dcook@microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-3-peter.maydell@linaro.org
-(cherry picked from commit 50d6757147dbc74b1b904535afaf986f72e942ae)
+(cherry picked from commit 57197bf183f3afa906f9007de918244adff9ab7e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index df98dc2e34d..3d352497a70 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -1,3 +1,4 @@
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index a05df7d2cb3..d106400686f 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -613,6 +613,37 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+             whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
+         }
+     }
 +
- /*
-  *  ARM translation
-  *
-@@ -6038,6 +6039,16 @@ static bool trans_IT(DisasContext *s, arg_IT *a)
- {
-     int cond_mask = a->cond_mask;
- 
-+    /*
-+     * IT insn introduced in v6T2 for A-profile; it is only present
-+     * on M-profile if the Main Extension is implemented.
-+     */
-+    if (!(arm_dc_feature(s, ARM_FEATURE_M)
-+          ? arm_dc_feature(s, ARM_FEATURE_M_MAIN)
-+          : arm_dc_feature(s, ARM_FEATURE_THUMB2))) {
-+        return false;
++    if (level == WHPX_LEVEL_RESET_STATE) {
++        /*
++         * WHPX keeps the "vCPU is in a low-power wait" state (entered when the
++         * guest executes WFI/WFE) in WHvRegisterInternalActivityState, and that
++         * state is not affected by writing the architectural registers above.
++         * If the guest happened to be idle when the reset was requested, the
++         * vCPU would stay suspended forever.
++         *
++         * StartupSuspend is the bit WHP uses to hold a vCPU that has not been
++         * started yet, and it is how secondary vCPUs are parked until PSCI
++         * CPU_ON releases them.
++         */
++        WHV_REGISTER_NAME name = WHvRegisterInternalActivityState;
++        bool powered_off = arm_cpu->power_state == PSCI_OFF;
++        WHV_REGISTER_VALUE ia;
++        HRESULT hr;
++
++        clean_whv_register_value(&ia);
++        hr = whp_dispatch.WHvGetVirtualProcessorRegisters(
++            whpx_global.partition, cpu->cpu_index, &name, 1, &ia);
++        if (SUCCEEDED(hr) &&
++            (ia.InternalActivity.IdleSuspend ||
++             ia.InternalActivity.HaltSuspend ||
++             ia.InternalActivity.StartupSuspend != powered_off)) {
++            ia.InternalActivity.IdleSuspend = 0;
++            ia.InternalActivity.HaltSuspend = 0;
++            ia.InternalActivity.StartupSuspend = powered_off;
++            whpx_set_reg(cpu, WHvRegisterInternalActivityState, ia);
++        }
 +    }
-+
-     /*
-      * No actual code generated for this insn, just setup state.
-      *
+ }
+ 
+ static uint32_t max_vcpu_index;
 -- 
 2.47.3
 
