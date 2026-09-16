@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCB7C982F0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE70C982ED
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 13:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8eCu-0002s2-Vn; Mon, 21 Sep 2026 09:37:21 -0400
+	id 1x8eCu-0002rX-0W; Mon, 21 Sep 2026 09:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x8eCt-0002rV-LN
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:19 -0400
+ id 1x8eCs-0002rM-7P
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x8eCs-0002kK-17
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:19 -0400
+ id 1x8eCq-0002kD-Ro
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789997837;
+ s=mimecast20190719; t=1789997836;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=A3KttKas8LwS05duudE/TBGCb5jkwv47U96z9guubLQ=;
- b=cDrJHLpm38+/RC9XtWNnIYKP8ct9QpZRel9iLZbAwvklRzTIxDH9RIe09wtuYU0SI2Lygk
- SuRzJUoGLYcpiau8JlAMJ/ywWx1oDDOoTATYoj4AO7F/Xz6Fg1k+SVqX9dynLqV3IBeRe5
- TISixFlEXJ+/U7hWtuBEXjuECeO09B4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vsf5qLyYHsdytF9EY+N5ou1jqhbNOX/dgztdIEkrxaE=;
+ b=LzI5Plk8X2zMT/U1kVvAMrM0aaLix1D+IM+DTc+VdseRNnLnI+OC6wVLTddM+f8OzHwdSn
+ DV0NXLsMeVXSFNveudK68NFC5SdVXe/7VtjycvTTg7uO8xAdiaMDI4mMODowSJDalZ8Gv8
+ fSyDYNDsQM63iwTPfydyY4L4obrf/fc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-Br8H75hfOhSx8OX1l5yURg-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-nNL2xCiFM9yvOgvSXiLFrg-1; Mon,
  21 Sep 2026 09:37:12 -0400
-X-MC-Unique: Br8H75hfOhSx8OX1l5yURg-1
-X-Mimecast-MFC-AGG-ID: Br8H75hfOhSx8OX1l5yURg_1789997832
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: nNL2xCiFM9yvOgvSXiLFrg-1
+X-Mimecast-MFC-AGG-ID: nNL2xCiFM9yvOgvSXiLFrg_1789997830
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE8CE1954120; Mon, 21 Sep 2026 13:37:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 780231964CC1; Mon, 21 Sep 2026 13:37:10 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C9ED1956042; Mon, 21 Sep 2026 13:37:11 +0000 (UTC)
-Date: Wed, 16 Sep 2026 16:01:55 -0400
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BE09676A; Mon, 21 Sep 2026 13:37:09 +0000 (UTC)
+Date: Wed, 16 Sep 2026 15:56:28 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  "'Michael S . Tsirkin'" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Zhang Chen <zhangckid@gmail.com>
-Subject: Re: [PATCH V17 11/13] monitor/hmp: display IOThread holders
-Message-ID: <20260916200155.GH162769@fedora>
+ Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH V17 10/13] xen-block: Update tracking iothread users with
+ holder name
+Message-ID: <20260916195628.GG162769@fedora>
 References: <20260915101655.3216101-1-zhangckid@gmail.com>
- <20260915101655.3216101-12-zhangckid@gmail.com>
+ <20260915101655.3216101-11-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="xRoO7NltFh7fUM11"
+ protocol="application/pgp-signature"; boundary="flP3lSlL1EUh7luC"
 Content-Disposition: inline
-In-Reply-To: <20260915101655.3216101-12-zhangckid@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+In-Reply-To: <20260915101655.3216101-11-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 46
@@ -91,63 +92,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---xRoO7NltFh7fUM11
+--flP3lSlL1EUh7luC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2026 at 06:16:53PM +0800, Zhang Chen wrote:
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index 91701ddf33..d7dd24d951 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -246,11 +246,31 @@ void hmp_info_iothreads(MonitorHMP *hmp, const QDic=
-t *qdict)
->      IOThreadInfoList *info_list =3D qmp_query_iothreads(NULL);
->      IOThreadInfoList *info;
->      IOThreadInfo *value;
-> +    IOThreadHolderList *h;
-> =20
->      for (info =3D info_list; info; info =3D info->next) {
->          value =3D info->value;
->          monitor_hmp_printf(hmp, "%s:\n", value->id);
->          monitor_hmp_printf(hmp, "  thread_id=3D%" PRId64 "\n", value->th=
-read_id);
-> +        monitor_hmp_printf(hmp, "  holders=3D");
-> +        for (h =3D value->holders; h; h =3D h->next) {
-> +            IOThreadHolder *holder =3D h->value;
-> +
-> +            switch (holder->type) {
-> +            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-> +                monitor_hmp_printf(hmp, "[block-export: %s]",
-> +                                   holder->u.block_export.export_id);
-> +                break;
+On Tue, Sep 15, 2026 at 06:16:52PM +0800, Zhang Chen wrote:
+> Replace raw object_ref/unref calls with
+> iothread_ref_and_get/unref_and_put_aio_context.
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  hw/block/dataplane/xen-block.c | 19 ++++++++++++++++---
+>  1 file changed, 16 insertions(+), 3 deletions(-)
 
-Kevin: Special-casing block exports is unfortunate. Other IOThread users
-tend to be full-blown Objects. Do you think BlockExport should become an
-Object with a path (e.g. /block-exports/ similar to how /audiodevs and
-other object types are in the QOM tree)?
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-What I'm thinking is that block-export-add/block-export-del remain the
-commands for managing the lifetime of exports - we don't use --object
-syntax. But simply making BlockExport an Object would make this and
-maybe other future changes cleaner (no special cases for non-Objects).
-
---xRoO7NltFh7fUM11
+--flP3lSlL1EUh7luC
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqq9bMACgkQnKSrs4Gr
-c8jNkwgAlLLNlP11DsDvVAwqrCfiiw0zsnEks69vqcOFRkXQ9LiLm8jEMA3oMxyY
-5qR393yoiZa1k/Sk5p4QYp3hoXPhuXoVStXEm1RvRWEXLB7hKCLlGhrNHqKptkjf
-TKowqcOFS+HdN5fFxg6iGuw4M0o9K9dFCh58mtQKDFs5AMczEok/DImloXusRtat
-Pr3oh9ZzIQyIOLFEbFJrJjhiJySK7XMPoUMJ9XS6mAqnhVFfr4hNzTEvkREI7rsS
-tbWkv6kDuHJwYSV0ngcZxY67kNEZVPFZACtVDhL8Q4QdNGAmX3jbf3iWwMcVmpyV
-/DMYMOvsv1Rvtr4qygPX3sZK7UJ7JA==
-=u7bg
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqq9GwACgkQnKSrs4Gr
+c8hU7wf/REkB44h3Iv69ZdquPMvDSV3wYdsBx1FeDVL6HYsa8bp/wPXAq9vC9uDC
+5lCKRA7Jlj1i6X64a/bYLbH75hB+mTRby5Q9KmwkDFQH27rB6ZWFVunvYaJduE8c
+1DuWQjfpWmDg4hOiuMiVtTC7PuFKl8P2YAhGBRvzHPbgLkktnEExI1oCO8qZkpMJ
+fBauE9okvWKM0i7nOf5Ih8912rcbuMGyTHRWuQSAntFzpff+skucVcJxbHeOHZAd
+3sYIXLvJiJuC+x8dBD6YYEh7lAUmYclF38rHv4AVqaTWAcNzZXMRSaYC0NnuvZNz
++PR2CbMr8FnQWC4Khsa+lPBaVlPMQg==
+=9W+J
 -----END PGP SIGNATURE-----
 
---xRoO7NltFh7fUM11--
+--flP3lSlL1EUh7luC--
 
 
