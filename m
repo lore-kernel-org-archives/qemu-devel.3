@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DDEC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 309BAC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMN-0001Nt-DG; Wed, 16 Sep 2026 03:47:15 -0400
+	id 1x6kMS-0001s9-AU; Wed, 16 Sep 2026 03:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kM6-0000Y7-PX; Wed, 16 Sep 2026 03:47:01 -0400
+ id 1x6kM9-0000YO-9L; Wed, 16 Sep 2026 03:47:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kM4-0005Lm-Uo; Wed, 16 Sep 2026 03:46:58 -0400
+ id 1x6kM7-0005Na-I2; Wed, 16 Sep 2026 03:47:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544618; bh=7kefvAB12X0/1GvXh9KP0ZRk1BYFccayQLhwWx636TM=;
+ t=1789544619; bh=EBVbP8KH+zJ1vd4SbsplDbZGZlnyHDz590RPuGGxxPo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RDBizDYSHxKXnmw4p4hK/jE5DRVxucY/REj6wVZIHyDRCuidiabg5Js/S+tFmGroI
- 3FfJQiDBOVp2f9U01skem0lBIddueKYjfWBSgehw02c7610IUMl092VYu62NnP3rry
- sSEsQR10eGS1CJgZVrNhNjU3BCPjppnqVEklkoZFo3liD3B0F935D39p9d33ul32Nl
- OysrbwFfOJBY1OB/jgn3VQdsLn6yqxLcWBP2STnqFyyNAN/kg/mzz2EZFC9++ofp8G
- cUX4e+DJUxxt772PW2ckOfrdwFkuBp5Aw1zBsEV7m8beCghHH9Kl6FdBEaiAO+TE6g
- U3Jxw1ZxHuMag==
+ b=io16FOc4+DLIWw/ggixJD/JEuPnI1QmksPzzjbIxbeGf+YxA80rHWMywYXZcwJdAk
+ 96kjBhvJpzrFhn/ZUw+YYtzE+wD/A6nmJhuwfg1HoR9yKGE2V5684x01P00JVLuX2n
+ I3TN5xYmXuWR4UjJkytqDeDJGj9hj1Q+V9z6HliAzc4k+vda3eWXM4z/EVT8/9m/Eq
+ 4orq3vOBfZz8iDtPDK9eb3MMr4iK0Z7uW5EivBMm+pZd3KfmoZf4GNLaVYAuvd8n14
+ 3AAAjxvNDJ44wVMVyHHJpTIVo6tKq7H8tnP4UQ9xxChxOpOc825klhSThrlPZ6WuPN
+ XkxgWodMH2MvQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EB2D01D55B6;
- Wed, 16 Sep 2026 10:43:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 00B211D55B7;
+ Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A93A429B6F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 84875429B70;
  Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 49A065A711; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id 4CA565A713; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
+Cc: qemu-stable@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
  Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 40/49] hw/net/virtio-net: strip trailing padding when
- caching RSC segment
-Date: Wed, 16 Sep 2026 10:42:58 +0300
-Message-ID: <20260916074346.671467-40-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 41/49] hw/virtio: reject inverted virtio-iommu IOVA
+ ranges
+Date: Wed, 16 Sep 2026 10:42:59 +0300
+Message-ID: <20260916074346.671467-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -72,71 +71,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-When an RSC candidate packet has trailing padding bytes beyond the
-declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
-size into the coalescing buffer and sets seg->size to that value.
-The bounds check in virtio_net_rsc_coalesce_data() uses the IP
-length field (o_ip_len) which does not include the padding, so the
-check can pass while the subsequent memmove() overflows the buffer.
+Guest MAP and UNMAP requests can set virt_end below virt_start. Since
+virt_end is inclusive, this is not a valid interval. MAP nevertheless
+stores it in domain->mappings, but interval_cmp() assumes low <= high.
+For an inverted key, interval_cmp(key, key) returns -1. A covering UNMAP
+can therefore find the key but fail to remove it and repeat forever while
+holding s->mutex.
 
-Fix this by computing the actual IP packet size from the IP header
-and using it for both the memcpy and seg->size, so that seg->size
-stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
-guarantees that ip_size <= size.
+Reject inverted request ranges with VIRTIO_IOMMU_S_INVAL and make the
+notifier range decomposition skip invalid ranges. Keep the existing
+notifier-before-remove ordering, but return VIRTIO_IOMMU_S_DEVERR if
+g_tree_remove() fails.
 
-Fixes: CVE-2026-66900
-Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
-Cc: qemu-stable@nongnu.org
-Cc: Yuri Benditovich <ybendito@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
-Reported-by: Sven <bestswngs@gmail.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Fixes: fe2cacae2438 ("virtio-iommu: Implement map/unmap")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
-(cherry picked from commit 73c3d017ef6a01f92463b398db61c1c1e430fb6d)
+Message-ID: <20260729131953.1720567-1-physicalmtea@gmail.com>
+(cherry picked from commit 15dcee9195550ffcce90594554a22fd4b63c0d7e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index ad4b0d8d9a1..5954dd70de3 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2202,13 +2202,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 86deff70385..3c8d6922feb 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -213,6 +213,10 @@ static void virtio_iommu_notify_map_unmap(IOMMUMemoryRegion *mr,
  {
-     uint16_t hdr_len;
-     VirtioNetRscSeg *seg;
-+    size_t ip_size;
+     uint64_t delta = virt_end - virt_start;
  
-     hdr_len = chain->n->guest_hdr_len;
-+
-+    /*
-+     * Strip any trailing padding beyond the IP payload so that seg->size
-+     * stays in sync with the IP length field used by the bounds check in
-+     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
-+     * guarantees that ip_size <= size.
-+     */
-+    ip_size = hdr_len + sizeof(struct eth_header);
-+    if (chain->proto == ETH_P_IP) {
-+        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
-+        ip_size += htons(ip->ip_len);
-+    } else {
-+        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
-+        ip_size += sizeof(struct ip6_header)
-+                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
++    if (virt_end < virt_start) {
++        return;
 +    }
 +
-     seg = g_new(VirtioNetRscSeg, 1);
-     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
-         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
--    memcpy(seg->buf, buf, size);
--    seg->size = size;
-+    memcpy(seg->buf, buf, ip_size);
-+    seg->size = ip_size;
-     seg->packets = 1;
-     seg->dup_ack = 0;
-     seg->is_coalesced = 0;
+     event->entry.iova = virt_start;
+     event->entry.addr_mask = delta;
+ 
+@@ -808,6 +812,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
+         return VIRTIO_IOMMU_S_INVAL;
+     }
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -858,6 +866,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+ 
+     trace_virtio_iommu_unmap(domain_id, virt_start, virt_end);
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -880,7 +892,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+                 virtio_iommu_notify_unmap(ep->iommu_mr, current_low,
+                                           current_high);
+             }
+-            g_tree_remove(domain->mappings, iter_key);
++            if (!g_tree_remove(domain->mappings, iter_key)) {
++                ret = VIRTIO_IOMMU_S_DEVERR;
++                break;
++            }
+             trace_virtio_iommu_unmap_done(domain_id, current_low, current_high);
+         } else {
+             ret = VIRTIO_IOMMU_S_RANGE;
 -- 
 2.47.3
 
