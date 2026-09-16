@@ -4,102 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6386C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD02CC88E7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6uL0-0005VY-Ik; Wed, 16 Sep 2026 14:26:30 -0400
+	id 1x6uO2-0006AH-CD; Wed, 16 Sep 2026 14:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6uJy-0005Rr-TE
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:25:36 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x6uJw-0007jR-W7
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:25:26 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 12B541FEEE;
- Wed, 16 Sep 2026 18:25:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789583115; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
- b=ok3ammhry7ch3JuhWsZx3z1kp7Ag+6c8U6JDZlL7GJMjl+D0TlblGM7Lg+2rUan1Ybt0nU
- KSfusnHtAzYK0+QPjvHA2yky7kbjvAsrAmk7iqt4rHsTEqx2GvmHyXFgBVnn/qsMVyiAsY
- x1UhZfjgxSaOQaPKXnmoMDXW8Ei96AU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789583115;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
- b=MOy5SD7HAfTLRzvyPjAJGg3KnmihqghEZeFMOS/rZnn0egOcle/x2kyS8oFsWINDOg9wJo
- FOAsZWRIZLsHI1Cw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789583111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
- b=tQNdKNGwLrHnJCtSVoZJFuvRlFLZCxu5zgi/TfbNHBdPBBvte9MAV7nMSDKOtLMai/vmLn
- yVnNfBM8peKVUgM+mJ6IyEcAjSzRYl81gm31wgCqzywToobm+JFW3Uiya/yV/K3i8LwxkV
- TSNkaFdwrDlqK3OlIVWFZiShkS4YjIA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789583111;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oE0hIo5jZf8VCGn9Wb6Vg7pw7T401l6C8ASv97kwSKo=;
- b=v9jMA1/HaFbPDAeDN/0mbKhzci9Sqs3hp8hFRW3606epIFTHewMjIZ/bzkb/fdqDJ8/yS0
- ka9coCgMVe0qRJBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 891C0136A5;
- Wed, 16 Sep 2026 18:25:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qq7VCwbfqmrFWwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 16 Sep 2026 18:25:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: den@openvz.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Peter Xu <peterx@redhat.com>, Mark Kanda <mark.kanda@oracle.com>, Ben
- Chaney <bchaney@akamai.com>, Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH 1/1] migration/cpr: lock the cpr state
-In-Reply-To: <20260916132428.1628553-1-den@openvz.org>
-References: <20260916132428.1628553-1-den@openvz.org>
-Date: Wed, 16 Sep 2026 15:25:04 -0300
-Message-ID: <87y0d1rr3z.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x6uNz-000697-Ou
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:29:35 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x6uNp-0008Mf-5W
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 14:29:28 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c16:1d84:0:640:ba03:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id B067781136;
+ Wed, 16 Sep 2026 21:29:21 +0300 (MSK)
+Received: from i115954770.. (185.215.60.179.mosline.ru [185.215.60.179])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id JTaLWK3cWGk0-xaBFq5jn; Wed, 16 Sep 2026 21:29:20 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1789583360;
+ bh=zWOjjlSfRkOh/Yu/5K9agEL7GfVQsW1a0lLdeS95xoA=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=LrCJKC7CScYXrerSFoJGT1EwwJ8AXepKvCFbDpRFmt23rBFMZbnUkmNIRTWeA8H0c
+ 4+rool26X96hcWQf+Ydn7yV+DU0iDeLS5eeLUFClwpXFCmLAI6OdSodef7ZTagRgj7
+ q0WedvlpMHLGuMH31aX/3NuM8F6Sf4A3fFD0xQcc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: mst@redhat.com
+Cc: sgarzare@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ qemu-devel@nongnu.org, vsementsov@yandex-team.ru
+Subject: [PATCH 1/2] vhost-user: drop postcopy support for CONFIGURE_MEM_SLOTS
+ case
+Date: Wed, 16 Sep 2026 21:29:16 +0300
+Message-ID: <20260916182917.820031-2-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260916182917.820031-1-vsementsov@yandex-team.ru>
+References: <20260916182917.820031-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email, akamai.com:email, suse.de:mid,
- suse.de:email, openvz.org:email, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,195 +75,478 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Denis V. Lunev" <den@openvz.org> writes:
+Postcopy with CONFIGURE_MEM_SLOTS has a poorly specified handshake and
+broken handling of memory table updates.
 
-> From: Denis V. Lunev <den@openvz.org>
->
-> The cpr state is a process wide registry of the resources that have to
-> survive an exec. Entries are added and dropped from realize and teardown
-> paths all over the tree, and a caller has no way to tell which thread the
-> next caller will run in.
->
-> The state carries no serialization of its own. It is safe today only
-> because its callers happen to hold the BQL, and that is a property of
-> where those callers live rather than anything the interface promises or
-> checks. A caller that is correct within its own subsystem can therefore
-> break this one from a distance: two that overlap corrupt the registry,
-> and the next lookup walks an entry that has already been freed.
->
-> Give the state a lock of its own instead of relying on that. Entries
-> move when a device is realized, when a resource is handed over, and when
-> a migration starts, so none of this is on a hot path and an uncontended
-> mutex costs nothing.
->
-> Take the lock in every accessor and across the save and load walks.
-> Holding it over the walk callbacks is safe because none of them comes
-> back through this interface. State that is not reached through these
-> accessors, such as the VFIO device list that hw/vfio manipulates
-> directly, stays outside it.
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Cc: Ben Chaney <bchaney@akamai.com>
-> Cc: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  migration/cpr.c | 59 ++++++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 49 insertions(+), 10 deletions(-)
->
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index bca43e9bf3..503057e262 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -9,6 +9,7 @@
->  #include "qemu/error-report.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/lockable.h"
->  #include "hw/vfio/vfio-cpr.h"
->  #include "migration/cpr.h"
->  #include "migration/misc.h"
-> @@ -26,6 +27,14 @@
->  CprState cpr_state;
->  static GHashTable *cpr_fds_hash;
->  
-> +/* Callers are spread across the tree and need not share a thread. */
-> +static QemuMutex cpr_fds_lock;
-> +
-> +static void __attribute__((constructor)) cpr_fds_lock_init(void)
-> +{
-> +    qemu_mutex_init(&cpr_fds_lock);
-> +}
-> +
->  /****************************************************************************/
->  
->  typedef struct CprFd {
-> @@ -94,6 +103,8 @@ static int cpr_fd_pre_save(void *opaque)
->      GHashTableIter iter;
->      CprFd *elem;
->  
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
->      QLIST_INIT(&state->fds);
->  
->      g_hash_table_iter_init(&iter, get_cpr_fds_hash());
-> @@ -109,6 +120,8 @@ static int cpr_fd_post_load(void *opaque, int version_id)
->      CprState *state = (CprState *)opaque;
->      CprFd *elem;
->  
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
->      while ((elem = QLIST_FIRST(&state->fds))) {
->          QLIST_REMOVE(elem, next);
->  
-> @@ -127,7 +140,7 @@ static int cpr_fd_post_load(void *opaque, int version_id)
->      return 0;
->  }
->  
-> -void cpr_save_fd(const char *name, int id, int fd)
-> +static void do_cpr_save_fd(const char *name, int id, int fd)
->  {
->      CprFd *elem = g_new0(CprFd, 1);
->  
-> @@ -139,6 +152,13 @@ void cpr_save_fd(const char *name, int id, int fd)
->      cpr_fd_hash_insert(elem);
->  }
->  
-> +void cpr_save_fd(const char *name, int id, int fd)
-> +{
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
-> +    do_cpr_save_fd(name, id, fd);
-> +}
-> +
->  static CprFd *find_fd(const char *name, int id)
->  {
->      CprFd key = {
-> @@ -149,6 +169,15 @@ static CprFd *find_fd(const char *name, int id)
->      return g_hash_table_lookup(get_cpr_fds_hash(), &key);
->  }
->  
-> +static int do_cpr_find_fd(const char *name, int id)
-> +{
-> +    CprFd *elem = find_fd(name, id);
-> +    int fd = elem ? elem->fd : -1;
-> +
-> +    trace_cpr_find_fd(name, id, fd);
-> +    return fd;
-> +}
-> +
->  void cpr_delete_fd(const char *name, int id)
->  {
->      CprFd key = {
-> @@ -156,6 +185,8 @@ void cpr_delete_fd(const char *name, int id)
->          .id = id,
->      };
->  
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
->      g_hash_table_remove(get_cpr_fds_hash(), &key);
->  
->      trace_cpr_delete_fd(name, id);
-> @@ -163,20 +194,23 @@ void cpr_delete_fd(const char *name, int id)
->  
->  int cpr_find_fd(const char *name, int id)
->  {
-> -    CprFd *elem = find_fd(name, id);
-> -    int fd = elem ? elem->fd : -1;
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
->  
-> -    trace_cpr_find_fd(name, id, fd);
-> -    return fd;
-> +    return do_cpr_find_fd(name, id);
->  }
->  
->  void cpr_resave_fd(const char *name, int id, int fd)
->  {
-> -    CprFd *elem = find_fd(name, id);
-> -    int old_fd = elem ? elem->fd : -1;
-> +    CprFd *elem;
-> +    int old_fd;
-> +
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
-> +    elem = find_fd(name, id);
-> +    old_fd = elem ? elem->fd : -1;
->  
->      if (old_fd < 0) {
-> -        cpr_save_fd(name, id, fd);
-> +        do_cpr_save_fd(name, id, fd);
->      } else if (old_fd != fd) {
->          error_report("internal error: cpr fd '%s' id %d value %d "
->                       "already saved with a different value %d",
-> @@ -188,12 +222,15 @@ void cpr_resave_fd(const char *name, int id, int fd)
->  int cpr_open_fd(const char *path, int flags, const char *name, int id,
->                  Error **errp)
->  {
-> -    int fd = cpr_find_fd(name, id);
-> +    int fd;
->  
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
-> +    fd = do_cpr_find_fd(name, id);
->      if (fd < 0) {
->          fd = qemu_open(path, flags, errp);
->          if (fd >= 0) {
-> -            cpr_save_fd(name, id, fd);
-> +            do_cpr_save_fd(name, id, fd);
->          }
->      }
->      return fd;
-> @@ -204,6 +241,8 @@ bool cpr_walk_fd(cpr_walk_fd_cb cb)
->      GHashTableIter iter;
->      CprFd *elem;
->  
-> +    QEMU_LOCK_GUARD(&cpr_fds_lock);
-> +
->      g_hash_table_iter_init(&iter, get_cpr_fds_hash());
->      while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
->          g_assert(elem->fd >= 0);
+Look:
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+for VHOST_USER_SET_MEM_TABLE we have note in the spec:
+
+.. Note::
+    ``NEED_REPLY_MASK`` is not set in this case.  QEMU will then
+    reply back to the list of mappings with an empty
+    ``VHOST_USER_SET_MEM_TABLE`` as an acknowledgement; only upon
+    reception of this message may the guest start accessing the memory
+    and generating faults.
+
+and in code we do in vhost_user_set_mem_table_postcopy():
+
+         msg.hdr.size = sizeof(msg.payload.u64);
+         msg.payload.u64 = 0; /* OK */
+         ret = vhost_user_write(dev, &msg, NULL, 0);
+         if (ret < 0) {
+             return ret;
+         }
+
+Note, that msg.hdr.request is set to VHOST_USER_SET_MEM_TABLE by
+vhost_user_fill_set_mem_table_msg() call.
+
+But when CONFIGURE_MEM_SLOTS is negotiated we don't use VHOST_USER_SET_MEM_TABLE
+message, instead we use VHOST_USER_REM_MEM_REG and VHOST_USER_ADD_MEM_REG.
+
+for VHOST_USER_REM_MEM_REG we have nothing about postcopy in documentation,
+and for VHOST_USER_ADD_MEM_REG we have only:
+
+   In postcopy mode (see ``VHOST_USER_POSTCOPY_LISTEN``), the back-end
+   replies with the bases of the memory mapped region to the front-end.
+   For further details on postcopy, see ``VHOST_USER_SET_MEM_TABLE``.
+   They apply to ``VHOST_USER_ADD_MEM_REG`` accordingly.
+
+how should it work about "an acknowledgement"? Should QEMU send
+an empty VHOST_USER_SET_MEM_TABLE ? And when?
+
+Let's see what we have in code:
+
+vhost_user_add_remove_regions() {
+
+    if (nr_rem_reg) { send_remove_regions() }
+
+    if (nr_add_reg) { send_add_regions() }
+
+    ... and for postcopy:
+
+    msg->hdr.size = sizeof(msg->payload.u64);
+    msg->payload.u64 = 0; /* OK */
+
+    ret = vhost_user_write(dev, msg, NULL, 0);
+    if (ret < 0) {
+        return ret;
+    }
+
+Note that:
+
+1. We send only one acknowledgement, after sending several (or zero)
+    ADD/REM requests.
+
+2. We send an acknowledgement with request set to either VHOST_USER_ADD_MEM_REG,
+    or VHOST_USER_REM_MEM_REG, or zero (if both nr_rem_reg and nr_add_reg are zero).
+
+libvhost-user recognizes the final ADD_MEM_REG acknowledgement, so its
+handshake agrees with QEMU when initially adding regions. However, it
+rejects the short REM_MEM_REG acknowledgement, and the specification does
+not describe a batch acknowledgement at all. A back-end interpreting the
+specification as requiring an acknowledgement for each ADD_MEM_REG would
+not interoperate with this implementation.
+
+Drop support for this combination until its handshake and memory table
+updates are properly specified and implemented. Reject it during the
+postcopy probe, before sending postcopy commands or switching over, and
+add the memory-table check as an additional guard.
+
+Update the documentation accordingly.
+
+Feature: vhost-user-blk-fd-mig
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ docs/interop/vhost-user.rst |  30 +++++--
+ hw/virtio/vhost-user.c      | 161 ++++++------------------------------
+ 2 files changed, 50 insertions(+), 141 deletions(-)
+
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index c1e02ff7e96..5e7a72be2a3 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -664,6 +664,8 @@ Once the source has finished migration, rings will be stopped by the
+ source (:ref:`Suspended device state <suspended_device_state>`). No
+ further update must be done before rings are restarted.
+ 
++.. _vhost_user_postcopy:
++
+ In postcopy migration the back-end is started before all the memory has
+ been received from the source host, and care must be taken to avoid
+ accessing pages that have yet to be received.  The back-end opens a
+@@ -674,6 +676,14 @@ it performs WAKE ioctl's on the userfaultfd to wake the stalled
+ back-end.  The front-end indicates support for this via the
+ ``VHOST_USER_PROTOCOL_F_PAGEFAULT`` feature.
+ 
++Postcopy migration is not supported when
++``VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS`` has been negotiated. In this
++case, the front-end MUST NOT send ``VHOST_USER_POSTCOPY_ADVISE``,
++``VHOST_USER_POSTCOPY_LISTEN``, or ``VHOST_USER_POSTCOPY_END``. The behavior
++of the back-end if it receives any of these messages is unspecified.
++Negotiating both ``VHOST_USER_PROTOCOL_F_PAGEFAULT`` and
++``VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS`` does not lift this restriction.
++
+ .. _migrating_backend_state:
+ 
+ Migrating back-end state
+@@ -763,6 +773,9 @@ can be removed via the ``VHOST_USER_REM_MEM_REG`` message. These messages can
+ only be used if the ``VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS`` protocol
+ feature has been successfully negotiated.
+ 
++Negotiating this feature prevents the use of
++:ref:`postcopy migration <vhost_user_postcopy>`.
++
+ Guest addresses are physical addresses in the guest.  User addresses are
+ arbitrary opaque values, though they typically refer to userspace addresses in
+ the client process.
+@@ -1587,6 +1600,10 @@ Front-end message types
+   the back-end must open a userfaultfd for later use.  Note that at this
+   stage the migration is still in precopy mode.
+ 
++  This message MUST NOT be sent when
++  ``VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS`` has been negotiated; see
++  :ref:`postcopy migration <vhost_user_postcopy>`.
++
+ ``VHOST_USER_POSTCOPY_LISTEN``
+   :id: 29
+   :request payload: N/A
+@@ -1599,6 +1616,10 @@ Front-end message types
+   This is always sent sometime after a ``VHOST_USER_POSTCOPY_ADVISE``,
+   and thus only when ``VHOST_USER_PROTOCOL_F_PAGEFAULT`` is supported.
+ 
++  This message MUST NOT be sent when
++  ``VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS`` has been negotiated; see
++  :ref:`postcopy migration <vhost_user_postcopy>`.
++
+ ``VHOST_USER_POSTCOPY_END``
+   :id: 30
+   :request payload: N/A
+@@ -1614,6 +1635,10 @@ Front-end message types
+ 
+   The value returned is an error indication; 0 is success.
+ 
++  This message MUST NOT be sent when
++  ``VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS`` has been negotiated; see
++  :ref:`postcopy migration <vhost_user_postcopy>`.
++
+ ``VHOST_USER_GET_INFLIGHT_FD``
+   :id: 31
+   :equivalent ioctl: N/A
+@@ -1708,11 +1733,6 @@ Front-end message types
+   Exactly one file descriptor from which the memory is mapped is
+   passed in the ancillary data.
+ 
+-  In postcopy mode (see ``VHOST_USER_POSTCOPY_LISTEN``), the back-end
+-  replies with the bases of the memory mapped region to the front-end.
+-  For further details on postcopy, see ``VHOST_USER_SET_MEM_TABLE``.
+-  They apply to ``VHOST_USER_ADD_MEM_REG`` accordingly.
+-
+ ``VHOST_USER_REM_MEM_REG``
+   :id: 38
+   :equivalent ioctl: N/A
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 65889b0776d..da7e3f149c1 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -360,7 +360,6 @@ struct vhost_user {
+ struct scrub_regions {
+     struct vhost_memory_region *region;
+     int reg_idx;
+-    int fd_idx;
+ };
+ 
+ bool vhost_user_has_protocol_feature(struct vhost_dev *dev, uint64_t feature)
+@@ -682,15 +681,12 @@ static void scrub_shadow_regions(struct vhost_dev *dev,
+                                  struct scrub_regions *add_reg,
+                                  int *nr_add_reg,
+                                  struct scrub_regions *rem_reg,
+-                                 int *nr_rem_reg, uint64_t *shadow_pcb,
+-                                 bool track_ramblocks)
++                                 int *nr_rem_reg)
+ {
+     struct vhost_user *u = dev->opaque;
+     bool found[VHOST_USER_MAX_RAM_SLOTS] = {};
+     struct vhost_memory_region *reg, *shadow_reg;
+-    int i, j, fd, add_idx = 0, rm_idx = 0, fd_num = 0;
+-    ram_addr_t offset;
+-    MemoryRegion *mr;
++    int i, j, add_idx = 0, rm_idx = 0;
+     bool matching;
+ 
+     /*
+@@ -706,25 +702,9 @@ static void scrub_shadow_regions(struct vhost_dev *dev,
+         for (j = 0; j < dev->mem->nregions; j++) {
+             reg = &dev->mem->regions[j];
+ 
+-            mr = vhost_user_get_mr_data(reg->userspace_addr, &offset, &fd);
+-
+             if (reg_equal(shadow_reg, reg)) {
+                 matching = true;
+                 found[j] = true;
+-                if (track_ramblocks) {
+-                    /*
+-                     * Reset postcopy client bases, region_rb, and
+-                     * region_rb_offset in case regions are removed.
+-                     */
+-                    if (fd > 0) {
+-                        u->region_rb_offset[j] = offset;
+-                        u->region_rb[j] = mr->ram_block;
+-                        shadow_pcb[j] = u->postcopy_client_bases[i];
+-                    } else {
+-                        u->region_rb_offset[j] = 0;
+-                        u->region_rb[j] = NULL;
+-                    }
+-                }
+                 break;
+             }
+         }
+@@ -747,11 +727,6 @@ static void scrub_shadow_regions(struct vhost_dev *dev,
+      */
+     for (i = 0; i < dev->mem->nregions; i++) {
+         reg = &dev->mem->regions[i];
+-        vhost_user_get_mr_data(reg->userspace_addr, &offset, &fd);
+-        if (fd > 0) {
+-            ++fd_num;
+-        }
+-
+         /*
+          * If the region was in both the shadow and device state we don't
+          * need to send a VHOST_USER_ADD_MEM_REG message for it.
+@@ -762,7 +737,7 @@ static void scrub_shadow_regions(struct vhost_dev *dev,
+ 
+         add_reg[add_idx].region = reg;
+         add_reg[add_idx].reg_idx = i;
+-        add_reg[add_idx++].fd_idx = fd_num;
++        add_idx++;
+     }
+     *nr_rem_reg = rm_idx;
+     *nr_add_reg = add_idx;
+@@ -824,34 +799,21 @@ static int send_remove_regions(struct vhost_dev *dev,
+ 
+ static int send_add_regions(struct vhost_dev *dev,
+                             struct scrub_regions *add_reg, int nr_add_reg,
+-                            VhostUserMsg *msg, uint64_t *shadow_pcb,
+-                            bool reply_supported, bool track_ramblocks)
++                            VhostUserMsg *msg,
++                            bool reply_supported)
+ {
+     struct vhost_user *u = dev->opaque;
+-    int i, fd, ret, reg_idx, reg_fd_idx;
++    int i, fd, ret;
+     struct vhost_memory_region *reg;
+-    MemoryRegion *mr;
+     ram_addr_t offset;
+-    VhostUserMsg msg_reply;
+     VhostUserMemoryRegion region_buffer;
+ 
+     for (i = 0; i < nr_add_reg; i++) {
+         reg = add_reg[i].region;
+-        reg_idx = add_reg[i].reg_idx;
+-        reg_fd_idx = add_reg[i].fd_idx;
+ 
+-        mr = vhost_user_get_mr_data(reg->userspace_addr, &offset, &fd);
++        vhost_user_get_mr_data(reg->userspace_addr, &offset, &fd);
+ 
+         if (fd > 0) {
+-            if (track_ramblocks) {
+-                trace_vhost_user_set_mem_table_withfd(reg_fd_idx, mr->name,
+-                                                      reg->memory_size,
+-                                                      reg->guest_phys_addr,
+-                                                      reg->userspace_addr,
+-                                                      offset);
+-                u->region_rb_offset[reg_idx] = offset;
+-                u->region_rb[reg_idx] = mr->ram_block;
+-            }
+             msg->hdr.request = VHOST_USER_ADD_MEM_REG;
+             vhost_user_fill_msg_region(dev, &region_buffer, reg, offset);
+             msg->payload.mem_reg.region = region_buffer;
+@@ -861,59 +823,12 @@ static int send_add_regions(struct vhost_dev *dev,
+                 return ret;
+             }
+ 
+-            if (track_ramblocks) {
+-                uint64_t reply_gpa;
+-
+-                ret = vhost_user_read(dev, &msg_reply);
+-                if (ret < 0) {
+-                    return ret;
+-                }
+-
+-                reply_gpa = msg_reply.payload.mem_reg.region.guest_phys_addr;
+-
+-                if (msg_reply.hdr.request != VHOST_USER_ADD_MEM_REG) {
+-                    error_report("%s: Received unexpected msg type."
+-                                 "Expected %d received %d", __func__,
+-                                 VHOST_USER_ADD_MEM_REG,
+-                                 msg_reply.hdr.request);
+-                    return -EPROTO;
+-                }
+-
+-                /*
+-                 * We're using the same structure, just reusing one of the
+-                 * fields, so it should be the same size.
+-                 */
+-                if (msg_reply.hdr.size != msg->hdr.size) {
+-                    error_report("%s: Unexpected size for postcopy reply "
+-                                 "%d vs %d", __func__, msg_reply.hdr.size,
+-                                 msg->hdr.size);
+-                    return -EPROTO;
+-                }
+-
+-                /* Get the postcopy client base from the backend's reply. */
+-                if (reply_gpa == dev->mem->regions[reg_idx].guest_phys_addr) {
+-                    shadow_pcb[reg_idx] =
+-                        msg_reply.payload.mem_reg.region.userspace_addr;
+-                    trace_vhost_user_set_mem_table_postcopy(
+-                        msg_reply.payload.mem_reg.region.userspace_addr,
+-                        msg->payload.mem_reg.region.userspace_addr,
+-                        reg_fd_idx, reg_idx);
+-                } else {
+-                    error_report("%s: invalid postcopy reply for region. "
+-                                 "Got guest physical address %" PRIX64 ", expected "
+-                                 "%" PRIX64, __func__, reply_gpa,
+-                                 dev->mem->regions[reg_idx].guest_phys_addr);
+-                    return -EPROTO;
+-                }
+-            } else if (reply_supported) {
++            if (reply_supported) {
+                 ret = process_message_reply(dev, msg);
+                 if (ret) {
+                     return ret;
+                 }
+             }
+-        } else if (track_ramblocks) {
+-            u->region_rb_offset[reg_idx] = 0;
+-            u->region_rb[reg_idx] = NULL;
+         }
+ 
+         /*
+@@ -936,13 +851,10 @@ static int send_add_regions(struct vhost_dev *dev,
+ 
+ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
+                                          VhostUserMsg *msg,
+-                                         bool reply_supported,
+-                                         bool track_ramblocks)
++                                         bool reply_supported)
+ {
+-    struct vhost_user *u = dev->opaque;
+     struct scrub_regions add_reg[VHOST_USER_MAX_RAM_SLOTS];
+     struct scrub_regions rem_reg[VHOST_USER_MAX_RAM_SLOTS];
+-    uint64_t shadow_pcb[VHOST_USER_MAX_RAM_SLOTS] = {};
+     int nr_add_reg, nr_rem_reg;
+     int ret;
+ 
+@@ -952,57 +864,29 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
+     assert(dev->mem->nregions <= VHOST_USER_MAX_RAM_SLOTS);
+ 
+     /* Find the regions which need to be removed or added. */
+-    scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg,
+-                         shadow_pcb, track_ramblocks);
++    scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg);
+ 
+     if (nr_rem_reg) {
+         ret = send_remove_regions(dev, rem_reg, nr_rem_reg, msg,
+                                   reply_supported);
+         if (ret < 0) {
+-            goto err;
++            return ret;
+         }
+     }
+ 
+     if (nr_add_reg) {
+-        ret = send_add_regions(dev, add_reg, nr_add_reg, msg, shadow_pcb,
+-                               reply_supported, track_ramblocks);
+-        if (ret < 0) {
+-            goto err;
+-        }
+-    }
+-
+-    if (track_ramblocks) {
+-        memcpy(u->postcopy_client_bases, shadow_pcb,
+-               sizeof(uint64_t) * VHOST_USER_MAX_RAM_SLOTS);
+-        /*
+-         * Now we've registered this with the postcopy code, we ack to the
+-         * client, because now we're in the position to be able to deal with
+-         * any faults it generates.
+-         */
+-        /* TODO: Use this for failure cases as well with a bad value. */
+-        msg->hdr.size = sizeof(msg->payload.u64);
+-        msg->payload.u64 = 0; /* OK */
+-
+-        ret = vhost_user_write(dev, msg, NULL, 0);
++        ret = send_add_regions(dev, add_reg, nr_add_reg, msg,
++                               reply_supported);
+         if (ret < 0) {
+             return ret;
+         }
+     }
+ 
+     return 0;
+-
+-err:
+-    if (track_ramblocks) {
+-        memcpy(u->postcopy_client_bases, shadow_pcb,
+-               sizeof(uint64_t) * VHOST_USER_MAX_RAM_SLOTS);
+-    }
+-
+-    return ret;
+ }
+ 
+ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
+                                              struct vhost_memory *mem,
+-                                             bool reply_supported,
+                                              bool config_mem_slots)
+ {
+     struct vhost_user *u = dev->opaque;
+@@ -1028,10 +912,9 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
+     }
+ 
+     if (config_mem_slots) {
+-        ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, true);
+-        if (ret < 0) {
+-            return ret;
+-        }
++        error_report(
++            "vhost-user: postcopy is not supported with CONFIGURE_MEM_SLOTS");
++        return -ENOTSUP;
+     } else {
+         ret = vhost_user_fill_set_mem_table_msg(u, dev, &msg, fds, &fd_num,
+                                                 true);
+@@ -1133,8 +1016,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+          * Postcopy has enough differences that it's best done in it's own
+          * version
+          */
+-        return vhost_user_set_mem_table_postcopy(dev, mem, reply_supported,
+-                                                 config_mem_slots);
++        return vhost_user_set_mem_table_postcopy(dev, mem, config_mem_slots);
+     }
+ 
+     VhostUserMsg msg = {
+@@ -1146,7 +1028,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+     }
+ 
+     if (config_mem_slots) {
+-        ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, false);
++        ret = vhost_user_add_remove_regions(dev, &msg, reply_supported);
+         if (ret < 0) {
+             return ret;
+         }
+@@ -2513,6 +2395,13 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
+ 
+     switch (pnd->reason) {
+     case POSTCOPY_NOTIFY_PROBE:
++        if (vhost_user_has_protocol_feature(
++                dev, VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS)) {
++            error_setg(errp,
++                       "vhost-user: postcopy is not supported with "
++                       "CONFIGURE_MEM_SLOTS");
++            return -ENOTSUP;
++        }
+         if (!vhost_user_has_protocol_feature(
+                 dev, VHOST_USER_PROTOCOL_F_PAGEFAULT)) {
+             /* TODO: Get the device name into this error somehow */
+-- 
+2.43.0
+
 
