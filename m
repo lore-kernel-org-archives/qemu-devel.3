@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E8CC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0186C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kJZ-0004HE-05; Wed, 16 Sep 2026 03:44:21 -0400
+	id 1x6kLZ-0000Bx-Ec; Wed, 16 Sep 2026 03:46:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJU-0004FA-Dw; Wed, 16 Sep 2026 03:44:16 -0400
+ id 1x6kLC-0008RN-1U; Wed, 16 Sep 2026 03:46:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJR-0004ty-Ir; Wed, 16 Sep 2026 03:44:16 -0400
+ id 1x6kLA-0005Ij-8R; Wed, 16 Sep 2026 03:46:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=d6/lmz3ycWWaNMwV5SDGfd/81v0DRc4MNRpU620mnfE=;
+ t=1789544614; bh=zegNz8jDwIa0dzallJDteMwv28sfdSYosgLzkxIrmdg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Pwbp+EBNegwXGDjLIfZwEXMK1vkzzms8OgEy+nuETDY1feIqhnoqJr+JACloR4xLt
- HngjSD6M5vfl5QdkAwaIossldw92Iu8U3LeO3SidHWgKmLQbjZUu+s8xUvtgmP1c3o
- /lWfVP2cSLEkZrO4FX62vNM7nBDm9sfoUH5clbYY5hMcEOQ2VLczuSE6n02QjQ4z6Y
- p/OXKs2Eu94hvR6gxT+gmNjvHICBivfxMNB+ZYCFsNOWCKo7/kLg46/fyd0ufZlPOP
- vUlhLlmbnyvVdir90Y2sLZSU+CukLv5aOwdgfRPgfupTUJaqPXp9BMgsykaW2wt1d6
- eZUBykVSmujlQ==
+ b=Shc8ivwZtzmtO102PhPMFwY5hDtbJYz59mQjcfcb8ExC6FuWe+ZJpxdS/XKqB2/eW
+ 9fpOBwgQXVAFT1EC765qTXltlq9XmcPkATXf/Q1tytE729/EOP8/V+LuU0rbNwhxig
+ ufcJR7Xbalma32S7hMP7fk9MmuDRiNKGV1Oydr/bAuA7LOh17g2L/ywHLl7EBbT4MO
+ 2aDEBsYK4jKHq1iLrYSKzB4EzprvUxXnCNkEQ48aeMRLPSm/SkT8GrgnWJYrLvHZv6
+ +Fwek5n2BqpuMAzEAbwIs+WewCnFnBRhoB0chDuN8lq8lfLfhYheNGVUZpNuoORxEg
+ JisQj+HIe+KKQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 26A3C1D558F;
- Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DEFB41D55A8;
+ Wed, 16 Sep 2026 10:43:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A98AD429B21;
- Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6EA68429B4F;
+ Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 97DCC5A6C9; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id 5DD335A6F5; Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Warisjeet Singh <sinxx198@gmail.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 04/49] hw/display/vga: fix text-mode OOB write after
- a graphics surface switch
-Date: Wed, 16 Sep 2026 10:42:22 +0300
-Message-ID: <20260916074346.671467-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 26/49] target/arm: Make IT insn undef when not present
+Date: Wed, 16 Sep 2026 10:42:44 +0300
+Message-ID: <20260916074346.671467-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -71,164 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Warisjeet Singh <sinxx198@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-vga_draw_text() decides whether the console surface needs a resize from
-its geometry cache, but none of the cache terms observe the graphics
-renderer having replaced the console surface in between:
+The IT insn is introduced for A-profile starting in v6T2; for
+M-profile it is present when the Main Extension is implemented (which
+includes v7M and excludes v6M).  We were missing the feature-check,
+so fail to UNDEF on earlier cores.
 
-- last_width/last_height are shared with vga_draw_graphic(), which
-  stores them in pixels while the text path stores characters;
-- last_depth stays 0 for legacy (non-VBE) graphics modes, because
-  vga_get_bpp() only reports a depth when VBE is enabled, so the
-  "s->last_depth" term that normally forces a resize after a graphics
-  frame does not fire.
+Add the missing check.
 
-So a graphics frame that shrinks the console surface (e.g. 80x25
-pixels) followed by a text frame with matching character geometry
-(80x25 chars) skips the resize, and the glyph loop then paints
-width*cw x height*cheight pixels into the smaller surface, out of
-bounds, with guest-controlled (DAC palette) values, on every display
-refresh.
-
-Separate the geometry cache per renderer: text paths (vga_draw_text,
-vga_update_text, and the text handling in vga_invalidate_display /
-vga_common_reset) now only manipulate last_text_{width,height}, in
-characters; last_{width,height} become graphics-only, in pixels.
-Additionally, make the text path compare the pixel size it is about
-to paint against the console surface's actual dimensions.  The
-surface check is the load-bearing term: caches in either unit cannot
-see the other renderer swapping the surface, the surface can.
-
-Fixes: CVE-2026-77913
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
-Message-ID: <vga-v3-20260824.sinxx198@gmail.com>
-(cherry picked from commit 418396be8013386a81f8d8d89ac0effcf03a64b6)
-(Mjt: adjust across v11.0.0-787-g405a42e36550
- "ui/console: rename public API to use consistent qemu_console_ prefix")
+Fixes: 9ee6e8bb853bde ("ARMv7 support.")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260821132550.168896-3-peter.maydell@linaro.org
+(cherry picked from commit 50d6757147dbc74b1b904535afaf986f72e942ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index af31f210e89..405ea89ed48 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1239,7 +1239,10 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         return;
-     }
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 752f80b519b..7097077880e 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -1,3 +1,4 @@
++
+ /*
+  *  ARM translation
+  *
+@@ -7246,6 +7247,16 @@ static bool trans_IT(DisasContext *s, arg_IT *a)
+ {
+     int cond_mask = a->cond_mask;
  
--    if (width != s->last_width || height != s->last_height ||
-+    if (surface == NULL ||
-+        surface_width(surface) != width * cw ||
-+        surface_height(surface) != height * cheight ||
-+        width != s->last_text_width || height != s->last_text_height ||
-         cw != s->last_cw || cheight != s->last_ch || s->last_depth) {
-         s->last_scr_width = width * cw;
-         s->last_scr_height = height * cheight;
-@@ -1247,8 +1250,8 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         surface = qemu_console_surface(s->con);
-         dpy_text_resize(s->con, width, height);
-         s->last_depth = 0;
--        s->last_width = width;
--        s->last_height = height;
-+        s->last_text_width = width;
-+        s->last_text_height = height;
-         s->last_ch = cheight;
-         s->last_cw = cw;
-         full_update = 1;
-@@ -1827,6 +1830,8 @@ static void vga_invalidate_display(void *opaque)
- 
-     s->last_width = -1;
-     s->last_height = -1;
-+    s->last_text_width = -1;
-+    s->last_text_height = -1;
- }
- 
- void vga_common_reset(VGACommonState *s)
-@@ -1869,6 +1874,8 @@ void vga_common_reset(VGACommonState *s)
-     s->last_ch = 0;
-     s->last_width = 0;
-     s->last_height = 0;
-+    s->last_text_width = 0;
-+    s->last_text_height = 0;
-     s->last_scr_width = 0;
-     s->last_scr_height = 0;
-     s->cursor_start = 0;
-@@ -1920,8 +1927,8 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
-         s->graphic_mode = graphic_mode;
-         full_update = 1;
-     }
--    if (s->last_width == -1) {
--        s->last_width = 0;
-+    if (s->last_text_width == -1) {
-+        s->last_text_width = 0;
-         full_update = 1;
-     }
- 
-@@ -1960,15 +1967,15 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
-             break;
-         }
- 
--        if (width != s->last_width || height != s->last_height ||
-+        if (width != s->last_text_width || height != s->last_text_height ||
-             cw != s->last_cw || cheight != s->last_ch) {
-             s->last_scr_width = width * cw;
-             s->last_scr_height = height * cheight;
-             qemu_console_resize(s->con, s->last_scr_width, s->last_scr_height);
-             dpy_text_resize(s->con, width, height);
-             s->last_depth = 0;
--            s->last_width = width;
--            s->last_height = height;
-+            s->last_text_width = width;
-+            s->last_text_height = height;
-             s->last_ch = cheight;
-             s->last_cw = cw;
-             full_update = 1;
-@@ -2053,22 +2060,22 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
-     }
- 
-     /* Display a message */
--    s->last_width = 60;
--    s->last_height = height = 3;
-+    s->last_text_width = 60;
-+    s->last_text_height = height = 3;
-     dpy_text_cursor(s->con, -1, -1);
--    dpy_text_resize(s->con, s->last_width, height);
-+    dpy_text_resize(s->con, s->last_text_width, height);
- 
--    for (dst = chardata, i = 0; i < s->last_width * height; i ++)
-+    for (dst = chardata, i = 0; i < s->last_text_width * height; i ++)
-         console_write_ch(dst ++, ' ');
- 
-     size = strlen(msg_buffer);
--    width = (s->last_width - size) / 2;
--    dst = chardata + s->last_width + width;
-+    width = (s->last_text_width - size) / 2;
-+    dst = chardata + s->last_text_width + width;
-     for (i = 0; i < size; i ++)
-         console_write_ch(dst ++, ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
-                                              QEMU_COLOR_BLACK, 1));
- 
--    dpy_text_update(s->con, 0, 0, s->last_width, height);
-+    dpy_text_update(s->con, 0, 0, s->last_text_width, height);
- }
- 
- static uint64_t vga_mem_read(void *opaque, hwaddr addr,
-diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-index f77c1c11457..2cd66becb1f 100644
---- a/hw/display/vga_int.h
-+++ b/hw/display/vga_int.h
-@@ -122,7 +122,8 @@ typedef struct VGACommonState {
-     uint32_t plane_updated;
-     uint32_t last_line_offset;
-     uint8_t last_cw, last_ch;
--    uint32_t last_width, last_height; /* in chars or pixels */
-+    uint32_t last_width, last_height; /* in pixels (graphics renderer) */
-+    uint32_t last_text_width, last_text_height; /* in chars (text renderer) */
-     uint32_t last_scr_width, last_scr_height; /* in pixels */
-     uint32_t last_depth; /* in bits */
-     bool last_byteswap;
++    /*
++     * IT insn introduced in v6T2 for A-profile; it is only present
++     * on M-profile if the Main Extension is implemented.
++     */
++    if (!(arm_dc_feature(s, ARM_FEATURE_M)
++          ? arm_dc_feature(s, ARM_FEATURE_M_MAIN)
++          : arm_dc_feature(s, ARM_FEATURE_THUMB2))) {
++        return false;
++    }
++
+     /*
+      * No actual code generated for this insn, just setup state.
+      *
 -- 
 2.47.3
 
