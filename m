@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0824C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BABC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6laA-0007tJ-5X; Wed, 16 Sep 2026 05:05:34 -0400
+	id 1x6lbM-0008MD-TQ; Wed, 16 Sep 2026 05:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6la1-0007sn-JV; Wed, 16 Sep 2026 05:05:27 -0400
+ id 1x6lbK-0008Lf-NZ; Wed, 16 Sep 2026 05:06:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lZv-0006vw-Q2; Wed, 16 Sep 2026 05:05:24 -0400
+ id 1x6lbI-00070S-8Z; Wed, 16 Sep 2026 05:06:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549473; bh=Soc9/2KBUIjTKPVh7s+JPUnydUdx6tqPcY+J+f45wBQ=;
- h=From:To:Cc:Subject:Date;
- b=X+eP8LicD2lCIuPHah+7lEa+lVro3bnW8G8AajtJ+xUJn7uGHrV9jqv4mJuDa6wTe
- 7SpUA8hpfzUUIFu+3kPi7NYO4HQqYKAehkYRbDgH5/rMWlS13+VKLpnMaHWQZQKNpy
- MJtmcQ6HSSToiQBm9B24hF4JC9a0Qhup22oP7wjj4SEJIh9CMLiDM8hUF+ARaoXbvG
- F8bht2/8MI7rBe6ZuIKsDQYlRtfrGRVeTcANDFEwoZYMOTj/a/sXU/jQdMgANTTnBW
- 8nnDkmgjy99l/+DjF7kb3kN07jvqSP7BO45gEE27S30IBw0ZeTZ9t/lQfZbHf8Hwu1
- kiJv/Pgjl8eDA==
+ t=1789549558; bh=MgBrDFQHo9AaofYCiKC2zcH60/jmqW6wGC024FiTP/c=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=lOglWsG4oZhm7GWXG5+L9C8yFHA+OTi3wJDFOZ4o3go1GZ1dpC+fQMqPsVHlQ+pFM
+ +L3TsqM9H2wqlX37rgttcxtiJy6gBDKWb+a8xriD62+gOeW44xXRVKTG0UzDwS3Y9d
+ W0uZxNxBPWnjMJc4tmh24iokT2bpEC/6+kmwL68kjGK7ydErUXH9ABuKKRw3lygt1c
+ t8Ku/OqUKIqE2B/19YACS5yZXfGdtaSx7LPISAdaF6crgpPDug+8cHJKeMS9qTkBsc
+ gKuTOEsSLKwrj1X7POtbhgmeaPvjvJkN00HKDS5ZVc9oAGXyY8EG9mxEJAq+u/2xwN
+ YC3072mIBukAw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82BA41D56B1;
- Wed, 16 Sep 2026 12:04:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E6D31D56B5;
+ Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2B350429DF9;
- Wed, 16 Sep 2026 12:05:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 09B75429DFD;
+ Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 200575A759; Wed, 16 Sep 2026 12:05:16 +0300 (MSK)
+ id 034AA5A75B; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 00/57] Patch Round-up for stable 11.0.5,
- freeze on 2026-09-26
-Date: Wed, 16 Sep 2026 12:03:24 +0300
-Message-ID: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 01/57] hw/display/qxl: validate primary surface stride
+ against width
+Date: Wed, 16 Sep 2026 12:03:25 +0300
+Message-ID: <20260916090516.677749-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
+References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,139 +74,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v11.0.5:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-11.0
+The existing validation in qxl_create_guest_primary() checks that
+abs(stride) * height fits in vgamem_size and that stride is 4-byte
+aligned, but never checks that abs(stride) is large enough to hold one
+row of pixels for the declared width and format.
 
-Patch freeze is 2026-09-26, and the release is planned for 2026-09-28:
+A malicious guest can create a primary surface with a stride much
+smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
+surface). The spice server rejects this via red_validate_surface(), but
+the return is void and QEMU unconditionally proceeds to set up the local
+rendering state. On the next display refresh, VNC or SDL reads width *
+bytes_pp per scanline from a region backed by only stride bytes per
+row, causing a host-side out-of-bounds read.
 
-  https://wiki.qemu.org/Planning/11.0
+Add three checks in qxl_create_guest_primary() before creating the
+surface:
+ - reject unknown surface formats
+ - reject zero width or height
+ - reject surfaces where abs(stride) < width * bytes_per_pixel
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Also fix three related issues in qxl-render.c:
+ - qxl_blit() used abs_stride to advance the dst pointer into the
+   DisplaySurface, but when stride is negative the DisplaySurface is a
+   packed buffer whose stride may be smaller. Use surface_stride()
+   instead.
+ - qxl_render_update_area_unlocked() uses guest_head0_width (set via
+   QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
+   abs_stride, bypassing the new validation. Clamp the effective width
+   to abs_stride / bytes_pp to prevent out-of-bounds access while
+   tolerating the normal transient where the monitor config arrives
+   before the primary surface is resized to match.
+ - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
+   validation. Without clamping, abs_stride * height can overrun
+   vgamem_size, and the product can also overflow 32 bits (e.g.
+   abs_stride=16 MiB, height=256 wraps to zero), defeating the
+   qxl_phys2virt() bounds check. Clamp height to
+   vgamem_size / abs_stride to prevent both.
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+While touch it, fix some endianness issues.
 
-Thanks!
+Fixes: CVE-2026-16271
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: 979f7ef8966b ("qxl: use guest_monitor_config for local renderer.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+Reported-by: huntr bubble
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260806094028.640676-1-marcandre.lureau@redhat.com>
+(cherry picked from commit ab7183ed4eecb4727532e3ffe5953d127e102c72)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-/mjt
+diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+index cf0f6849cd0..f2bc25f03ad 100644
+--- a/hw/display/qxl-render.c
++++ b/hw/display/qxl-render.c
+@@ -27,6 +27,7 @@
+ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+ {
+     DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
++    int dst_stride = surface_stride(surface);
+     uint8_t *dst = surface_data(surface);
+     uint8_t *src;
+     int len, i;
+@@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+     } else {
+         src += rect->top * qxl->guest_primary.abs_stride;
+     }
+-    dst += rect->top  * qxl->guest_primary.abs_stride;
++    dst += rect->top  * dst_stride;
+     src += rect->left * qxl->guest_primary.bytes_pp;
+     dst += rect->left * qxl->guest_primary.bytes_pp;
+     len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
+ 
+     for (i = rect->top; i < rect->bottom; i++) {
+         memcpy(dst, src, len);
+-        dst += qxl->guest_primary.abs_stride;
++        dst += dst_stride;
+         src += qxl->guest_primary.qxl_stride;
+     }
+ }
+@@ -61,30 +62,13 @@ void qxl_render_resize(PCIQXLDevice *qxl)
+ {
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+ 
+-    qxl->guest_primary.qxl_stride = sc->stride;
+-    qxl->guest_primary.abs_stride = abs(sc->stride);
++    qxl->guest_primary.qxl_stride = le32_to_cpu(sc->stride);
++    qxl->guest_primary.abs_stride = abs(qxl->guest_primary.qxl_stride);
+     qxl->guest_primary.resized++;
+-    switch (sc->format) {
+-    case SPICE_SURFACE_FMT_16_555:
+-        qxl->guest_primary.bytes_pp = 2;
+-        qxl->guest_primary.bits_pp = 15;
+-        break;
+-    case SPICE_SURFACE_FMT_16_565:
+-        qxl->guest_primary.bytes_pp = 2;
+-        qxl->guest_primary.bits_pp = 16;
+-        break;
+-    case SPICE_SURFACE_FMT_32_xRGB:
+-    case SPICE_SURFACE_FMT_32_ARGB:
+-        qxl->guest_primary.bytes_pp = 4;
+-        qxl->guest_primary.bits_pp = 32;
+-        break;
+-    default:
+-        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
+-                qxl->guest_primary.surface.format);
+-        qxl->guest_primary.bytes_pp = 4;
+-        qxl->guest_primary.bits_pp = 32;
+-        break;
+-    }
++    /* fallback to default bpp if format is unknown */
++    qxl_format_bpp(qxl, le32_to_cpu(sc->format),
++                   &qxl->guest_primary.bytes_pp,
++                   &qxl->guest_primary.bits_pp);
+ }
+ 
+ static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
+@@ -101,15 +85,45 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
+     DisplaySurface *surface;
+     int width = qxl->guest_head0_width ?: qxl->guest_primary.surface.width;
+     int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
++    uint64_t map_height;
+     int i;
+ 
++    if (width <= 0 || height <= 0) {
++        goto end;
++    }
++
++    if (qxl->guest_primary.bytes_pp > 0) {
++        int max_width = qxl->guest_primary.abs_stride
++                        / qxl->guest_primary.bytes_pp;
++        width = MIN(width, max_width);
++    }
++
++    if (qxl->guest_primary.qxl_stride < 0) {
++        /* qxl_blit() uses the primary height to find the first scanline. */
++        height = MIN(height, (int)qxl->guest_primary.surface.height);
++    }
++
++    if (qxl->guest_primary.abs_stride > 0) {
++        int max_height = qxl->vgamem_size / qxl->guest_primary.abs_stride;
++        height = MIN(height, max_height);
++    }
++
++    /*
++     * height limits the visible update, while map_height is the guest memory
++     * span validated by qxl_phys2virt().  With a negative stride qxl_blit()
++     * addresses scanlines from the declared primary height, so a shorter
++     * monitor still requires validating the full primary surface.
++     */
++    map_height = qxl->guest_primary.qxl_stride < 0 ?
++                 qxl->guest_primary.surface.height : height;
++
+     if (qxl->guest_primary.resized) {
+         qxl->guest_primary.resized = 0;
+         qxl->guest_primary.data = qxl_phys2virt(qxl,
+                                                 qxl->guest_primary.surface.mem,
+                                                 MEMSLOT_GROUP_GUEST,
+                                                 qxl->guest_primary.abs_stride
+-                                                * height);
++                                                * map_height);
+         if (!qxl->guest_primary.data) {
+             goto end;
+         }
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index c3639092ca9..2af2065a512 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1490,6 +1490,47 @@ static void qxl_create_guest_primary_complete(PCIQXLDevice *qxl)
+     qxl_render_resize(qxl);
+ }
+ 
++/*
++ * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
++ *
++ * Only valid for surface suitable for rendering.
++ */
++bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
++                    uint32_t *bytes_pp, uint32_t *bits_pp)
++{
++    uint32_t bypp = 4;
++    uint32_t bipp = 32;
++    bool ret = true;
++
++    switch (format) {
++    case SPICE_SURFACE_FMT_16_555:
++        bypp = 2;
++        bipp = 15;
++        break;
++    case SPICE_SURFACE_FMT_16_565:
++        bypp = 2;
++        bipp = 16;
++        break;
++    case SPICE_SURFACE_FMT_32_xRGB:
++    case SPICE_SURFACE_FMT_32_ARGB:
++        bypp = 4;
++        bipp = 32;
++        break;
++    default:
++        ret = false;
++        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, format);
++    }
++
++    if (bytes_pp != NULL) {
++        *bytes_pp = bypp;
++    }
++    if (bits_pp != NULL) {
++        *bits_pp = bipp;
++    }
++
++    return ret;
++}
++
+ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+                                      qxl_async_io async)
+ {
+@@ -1497,6 +1538,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+     uint32_t requested_height = le32_to_cpu(sc->height);
+     int requested_stride = le32_to_cpu(sc->stride);
++    uint32_t bytes_pp;
+ 
+     if (requested_stride == INT32_MIN ||
+         abs(requested_stride) * (uint64_t)requested_height
+@@ -1533,6 +1575,23 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+         return;
+     }
+ 
++    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
++        return;
++    }
++
++    if (surface.width == 0 || surface.height == 0) {
++        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
++                          __func__, surface.width, surface.height);
++        return;
++    }
++
++    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
++        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
++                          " stride %d width %u bpp %u",
++                          __func__, surface.stride, surface.width, bytes_pp);
++        return;
++    }
++
+     surface.mouse_mode = true;
+     surface.group_id   = MEMSLOT_GROUP_GUEST;
+     if (loadvm) {
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index ddbab3d693a..10b3d1a043a 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
+ void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
+ void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
+ void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
++bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
++                    uint32_t *bytes_pp, uint32_t *bits_pp);
+ 
+ /* qxl-logger.c */
+ int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int group_id);
+-- 
+2.47.3
 
---------------------------------------
-01 ab7183ed4eec Marc-André Lureau:
-   hw/display/qxl: validate primary surface stride against width
-02 eb2b3a1fa807 Marc-André Lureau:
-   virtio-gpu: use g_try_malloc to avoid guest-triggered abort
-03 0e62034ca10f Marc-André Lureau:
-   crypto: fix build against nettle >= 4
-04 ddf5738503e2 Fabiano Rosas:
-   chardev: Don't unregister yank upon async path connection failure
-05 418396be8013 Warisjeet Singh:
-   hw/display/vga: fix text-mode OOB write after a graphics surface switch
-06 0846740652d1 Christian Quante:
-   hw/input/ps2: answer unknown mouse commands with a resend
-07 2667133c2799 Denis V. Lunev:
-   job: keep job paused across overlapping pause requests
-08 438ee08bc97a Denis V. Lunev:
-   tests/unit/test-blockjob: cover keeping a job paused while a pause is 
-   pending
-09 59ecd8a1ac3f Denis V. Lunev:
-   block/monitor: reject persistent bitmap add on a read-only node
-10 3f3f5cdb929e Denis V. Lunev:
-   migration/block-dirty-bitmap: reject bitmap load onto ro node
-11 9a77ef813f5f Denis V. Lunev:
-   block/monitor: allow dropping a bitmap never stored on disk
-12 dc04053687ec Denis V. Lunev:
-   dirty-bitmap: fix integer overflow in serialization coverage
-13 569aa6280d14 Nicholas Piggin:
-   target/riscv: tt-ascalon: Enable Zkr extension
-14 51362da8f73b Ivan Efremov:
-   target/riscv: Fix seed CSR sign extension
-15 e80cf2947978 Ivan Efremov:
-   tests/qtest: Add seed CSR zero extension test
-16 d7913fac7747 Christian Borntraeger:
-   s390x/sclp: pv: only copy the original SCCB buffer
-17 6c712a86f6c8 Denis V. Lunev:
-   hw/ide: reject an unsupported CHS translation
-18 0905ef5b6d48 Denis V. Lunev:
-   tests/qtest/ide-test: cover a CHS translation with zero sectors
-19 0df27c66dc72 Denis V. Lunev:
-   hw/ide: report the default CHS translation in IDENTIFY DEVICE
-20 1332990194b5 Denis V. Lunev:
-   hw/ide: reject an out-of-range PIO transfer window on load
-21 d30254aec931 Paolo Bonzini:
-   scsi-disk: fix out-of-bound read in WRITE SAME
-22 0f410adf6b0d Paolo Bonzini:
-   scsi: hide MODE SELECT block size change behind a quirk
-23 d61c8a6fb738 Paolo Bonzini:
-   vapic: confine the VAPIC region to 0xc0000..0xe0000
-24 cfa6e2c52ca8 Paolo Bonzini:
-   i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails
-25 b78c6d5b1bf0 Gautam Menghani:
-   ppc/xive: Trigger the pending interrupt for a guest after migration
-26 f63124af7846 Alexandre Frey:
-   target/arm: fix TTA instruction S bit for IDAU-exempt addresses
-27 59716ac3067d Peter Maydell:
-   target/arm: Correct reset value of SCTLR for arm926, arm1026
-28 c05e01a88581 Peter Maydell:
-   target/arm: Make CBZ/CBNZ UNDEF before v6T2
-29 50d6757147db Peter Maydell:
-   target/arm: Make IT insn undef when not present
-30 2931a675e9d3 Peter Maydell:
-   target/arm: Make Thumb T1 hint space UNDEF before v6T2
-31 10dddf15e294 Bin Meng:
-   hw/sd: sdhci: Accept version 4 enable without UHS-I
-32 15d4bc75f817 Alberto Garcia:
-   hw/sd/sdcard: Register device ops in drives without media
-33 259b877eac36 Junjie Cao:
-   hw/cxl: fix timer leak in cxl_destroy_cci()
-34 a3de21bfa5d0 Denis V. Lunev:
-   io/channel-socket: do not treat a zero length write as an error
-35 cd71c2f40a53 Denis V. Lunev:
-   io/channel-websock: send an HTTP 400 when the greeting has no space
-36 2295deb48898 Denis V. Lunev:
-   io/channel-websock: handle a blocked write during the handshake
-37 e867e2047c6c Denis V. Lunev:
-   tests/unit: add websock handshake test
-38 7a72a4652a79 Denis V. Lunev:
-   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
-39 0e5718799199 Denis V. Lunev:
-   tests/unit: cover blocked IO during the websock handshake
-40 3ece85b53c12 Marc-André Lureau:
-   virtio-gpu: disable blob scanouts on mapping cleanup
-41 c7254cd584bb Marc-André Lureau:
-   virtio-gpu: clear res->blob on mapping cleanup
-42 713e7e85a2b4 Junjie Cao:
-   hw/cxl: Fix guest-triggerable QEMU exit on reserved interleave ways
-43 f10977073cb4 Zhang Chen:
-   qapi/misc: Fix missed query-iothreads items
-44 5d85a09554fb Laurent Vivier:
-   hw/net/virtio-net: check packet size before VLAN tag access in 
-   receive_filter()
-45 73c3d017ef6a Laurent Vivier:
-   hw/net/virtio-net: strip trailing padding when caching RSC segment
-46 15dcee919555 Jia Jia:
-   hw/virtio: reject inverted virtio-iommu IOVA ranges
-47 fdc3f9a83ddf Michael S. Tsirkin:
-   virtio-balloon: fix free-page BH teardown on unrealize
-48 5440b6b5de46 Stefan Hajnoczi:
-   virtio-scsi: set dataplane_started to false upon failure
-49 0ddbce88c45a Junjie Cao:
-   hw/cxl: fix the CDAT DOE overlapping the Flex Bus DVSEC when sn= is set
-50 2c43897356ac Denis V. Lunev:
-   hw/display/qxl: hold ssd.lock while replacing ssd.cursor
-51 1063bbb71185 Denis V. Lunev:
-   ui/cursor: make the cursor refcount atomic
-52 01df81b24c50 Marc-André Lureau:
-   vhost-user-gpu: validate command buffer size in submit_3d
-53 7e5c85f7f2a8 Kostiantyn Kostiuk:
-   qga: Change effective user/group ID in guest-ssh-* commands
-54 2a8b740e7acf Bin Guo:
-   hw/intc/bcm2835_ic: reject out-of-range FIQ source values
-55 6ae0b0426705 Doug Cook:
-   target/arm/whpx: Don't try to sync ARM_CP_CONST registers
-56 518f45b32d04 Doug Cook:
-   target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
-57 57197bf183f3 Doug Cook:
-   target/arm/whpx: fix whpx-arm post-reset CPU state
 
