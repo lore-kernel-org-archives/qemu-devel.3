@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 058ABC88E5C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F263C88E77
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qAJ-00041C-9C; Wed, 16 Sep 2026 09:59:11 -0400
+	id 1x6qB1-0004Rb-Ek; Wed, 16 Sep 2026 09:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAD-000408-KG
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAo-0004DQ-0H
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAA-0003Bl-TX
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:05 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAh-0003Gr-Tv
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789567142;
+ s=mimecast20190719; t=1789567175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6rV63i5zLz4J/LUzf54w3p9IiUX+skDQOv9c6EGZuIE=;
- b=FBfdJctPXa/CA3E3WWa33AyWsoofBX/P1mH5Y24UnBaRpHckeDUDAxJ//ZUbM8Z8YvgXa/
- PwYH2pzb66+Cz+tgZ17w1Zc3ZwKpt9UGstW/OhUkL6VhYZzuZXAtcdqYpAD0tmvIbeh6JG
- D1uz+l71+tay5rsYG2qqy+5Sbbv5XC4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=pxwSvjyweKaZCuJXGsfI9jwtz+eDtnLs/f3FZEar0W4=;
+ b=XpfsDLk340PasNnDfAUa40vnb7cYYQ3HIdwifXtorrIc6CRe3RjY32AkPg/sYmmaaRCZQt
+ sI+8TTYLvb8g6GteUiB1lU//11QuvTCgH2S/F8DWAJyI9UVSfQ0AgtRAoAI2eejKtgyCZO
+ TWeq4wdoaqxHOdfqwC93XATgCqOuxFg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-D6iXkVmfNwmnVSZS8mh5ow-1; Wed,
- 16 Sep 2026 09:58:57 -0400
-X-MC-Unique: D6iXkVmfNwmnVSZS8mh5ow-1
-X-Mimecast-MFC-AGG-ID: D6iXkVmfNwmnVSZS8mh5ow_1789567136
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-z-zjJ5clOmqcVCrve-Z-qw-1; Wed,
+ 16 Sep 2026 09:59:30 -0400
+X-MC-Unique: z-zjJ5clOmqcVCrve-Z-qw-1
+X-Mimecast-MFC-AGG-ID: z-zjJ5clOmqcVCrve-Z-qw_1789567169
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B188318558A9; Wed, 16 Sep 2026 13:58:55 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D72F619540C8; Wed, 16 Sep 2026 13:59:28 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 566BD1956058; Wed, 16 Sep 2026 13:58:50 +0000 (UTC)
+ id E222A1956054; Wed, 16 Sep 2026 13:59:22 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -58,24 +58,24 @@ Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 1/7] qapi: convert remaining simple intros for
- block-export.json
-Date: Wed, 16 Sep 2026 09:58:35 -0400
-Message-ID: <20260916135841.3614495-2-jsnow@redhat.com>
+Subject: [PATCH v4 7/7] qapi: convert intro sections followed by notes/examples
+Date: Wed, 16 Sep 2026 09:58:41 -0400
+Message-ID: <20260916135841.3614495-8-jsnow@redhat.com>
 In-Reply-To: <20260916135841.3614495-1-jsnow@redhat.com>
 References: <20260916135841.3614495-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,60 +91,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are either structs or unions that are used in an inlinable
-context: i.e. the generated documentation is likely to feature a
-version of this documentation block that does not include the intro in
-context of another command, event, or structure.
+These provide a rather natural cutoff point, but technically this does
+introduce a new intro/details split to these documentation blocks.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block-export.json | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ qapi/machine.json   |  5 ++---
+ qapi/migration.json | 15 +++++++--------
+ qapi/misc.json      |  3 +--
+ qapi/run-state.json |  7 +++----
+ 4 files changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 2893c6456d5..e9f7e72c8ee 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -37,10 +37,9 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 84d95c8d87f..276258d9e5c 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1209,9 +1209,8 @@
  
  ##
- # @NbdServerOptions:
+ # @HV_BALLOON_STATUS_REPORT:
 -#
--# Keep this type consistent with the `NbdServerOptionsLegacy` type.
--# The only intended difference is using `SocketAddress` instead of
--# `SocketAddressLegacy`.
-+#     Keep this type consistent with the `NbdServerOptionsLegacy`
-+#     type.  The only intended difference is using `SocketAddress`
-+#     instead of `SocketAddressLegacy`.
+-# Emitted when the hv-balloon driver receives a "STATUS" message from
+-# the guest.
++#     Emitted when the hv-balloon driver receives a "STATUS" message
++#     from the guest.
  #
- # @addr: Address on which to listen (since 4.2).
- ##
-@@ -50,10 +49,9 @@
+ # .. note:: This event is rate-limited.
+ #
+diff --git a/qapi/migration.json b/qapi/migration.json
+index d571c06fc20..a272e701385 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1254,10 +1254,10 @@
  
  ##
- # @NbdServerOptionsLegacy:
+ # @migrate_cancel:
 -#
--# Keep this type consistent with the `NbdServerOptions` type.  The
--# only intended difference is using `SocketAddressLegacy` instead of
--# `SocketAddress`.
-+#     Keep this type consistent with the `NbdServerOptions` type.  The
-+#     only intended difference is using `SocketAddressLegacy` instead
-+#     of `SocketAddress`.
+-# Cancel the currently executing migration process.  Allows a new
+-# migration to be started right after.  When postcopy-ram is in use,
+-# cancelling is not allowed after the postcopy phase has started.
++#     Cancel the currently executing migration process.  Allows a new
++#     migration to be started right after.  When postcopy-ram is in
++#     use, cancelling is not allowed after the postcopy phase has
++#     started.
  #
- # @addr: Address on which to listen (since 1.3).
- ##
-@@ -339,9 +337,8 @@
+ # .. note:: This command succeeds even if there is no migration
+ #    process running.
+@@ -1632,8 +1632,8 @@
  
  ##
- # @BlockExportOptions:
+ # @xen-colo-do-checkpoint:
 -#
--# Describes a block export, i.e. how single node should be exported on
--# an external interface.
-+#     Describes a block export, i.e. how single node should be
-+#     exported on an external interface.
+-# Xen uses this command to notify replication to trigger a checkpoint.
++#     Xen uses this command to notify replication to trigger a
++#     checkpoint.
  #
- # @type: Block export type
+ # .. qmp-example::
  #
+@@ -1700,8 +1700,7 @@
+ 
+ ##
+ # @migrate-pause:
+-#
+-# Pause a migration.  Currently it only supports postcopy.
++#     Pause a migration.  Currently it only supports postcopy.
+ #
+ # .. qmp-example::
+ #
+diff --git a/qapi/misc.json b/qapi/misc.json
+index b7d08532768..b62cabc2b79 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -103,8 +103,7 @@
+ 
+ ##
+ # @query-iothreads:
+-#
+-# Return a list of information about each iothread.
++#     Return a list of information about each iothread.
+ #
+ # .. note:: This list excludes the QEMU main loop thread, which is not
+ #    declared using the ``-object iothread`` command-line option.  It
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index 703ca1bb5b9..8bbd9884087 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -232,10 +232,9 @@
+ 
+ ##
+ # @SUSPEND_DISK:
+-#
+-# Emitted when guest enters a hardware suspension state with data
+-# saved on disk, for example, S4 state, which is sometimes called
+-# hibernate state
++#     Emitted when guest enters a hardware suspension state with data
++#     saved on disk, for example, S4 state, which is sometimes called
++#     hibernate state
+ #
+ # .. note:: QEMU shuts down (similar to event `SHUTDOWN`) when
+ #    entering this state.
 -- 
 2.55.0
 
