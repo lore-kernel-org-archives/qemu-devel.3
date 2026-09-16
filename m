@@ -4,138 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A164C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9E1C982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 16:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6sWD-0007bd-L9; Wed, 16 Sep 2026 12:29:57 -0400
+	id 1x6sWx-0008Td-Bg; Wed, 16 Sep 2026 12:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x6sW2-0007Z6-5U; Wed, 16 Sep 2026 12:29:46 -0400
-Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x6sWq-0008I1-Ov
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:30:39 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x6sVz-0005RC-Uy; Wed, 16 Sep 2026 12:29:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V57RXzJN6hk8t9IeJkU6nbXtknbCQPE69WTceEQdpsc5LTN1g93qE6PosSb019OXVbScDD15h+oRg2aPy3Ho5U21h4YZwy9Y9/le4Jzftd6hMDUz8wWe+Lkv72RcqH1H2Y3WuqM1p2JTTeNudI3cPAVw5z/iR0+rVxztD8If3Wf+jSabI9xVflgap0miKzTx+zU8S5zu1Zf61H+ZMO2jTW2ih+H0dwnYM9xafJ0GNtBsEwx9h0G1diy2PdzzrN0REE9M5e/ZZsG93y445rUgK4Vvj3Zwfv81h1juSOHbM2jpVHtpKrqF9x7zWem5EKVlUUhk4sX3Mw7tlBDpJ+czvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VFYKSOUKG0kjWB0UAlrcxua8Vb8dG0OgLd7wL0Gi8IE=;
- b=rdVtQbPNbIn+dUI4aOgfqGYFmeCl/3TwWSK2O4i5pcglg2R2g+v3hAnKxK+Pm81GmjTWBzVHTwzQqSOb1oABNTtPnF5pyw7pjFBQt/8PSLWYB1rCuFze645vtbHfdNeGKEqZu5r+StLnBhOeRcNBa7g34BRK7e78O/P26UQzvSU9r4bUGfSwSMJ4j+Zguc4Jb5p2MvYfkjMlOBqMbSLF/jCRHgKKdr8uAhm0vL0bi8mvvYbK/iCOoRFlFhqaBsZOTpEhHNerU8Bse7qc3myUWM0VCJEmA46XX5nYg3aQd/Xp4/CgZ/DXGUyq7U4OHFiEH7FDm/lXCz3JpiJgWcTxzw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VFYKSOUKG0kjWB0UAlrcxua8Vb8dG0OgLd7wL0Gi8IE=;
- b=XjjQCgiu0hYn9HDllPgvheOezVPhZmPILgpsMbMOeVNWLmOFy5ZKsSEIgsSV1tjtKPGwx2gfaSuHH6kP6zwoKbSFqXbLONmyjBKMeB0YkNOb3/OUfVSV2NEt86XygB/1sBJkSwcP/SIdtjiirMEFcUncMKKkiR8ONVUOtUUyus/7LJuXku+aIEpaw4AIwrSXI+NU3z5yH4WG3IvVXh+bYOEX8QkA4fGpRm2AMLWc3UKv5F+XVM+7eiaFduWnTlpHwvvq30iKXqu/VSaGzR8fbS5CLeA9jrO86vikIu3Em4cFMhNi+EujDUkzlaxwF+92rm94/T8qbe64feO2oO2hNw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by BR0PR08MB801654.eurprd08.prod.outlook.com
- (2603:10a6:2c8:2a::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Wed, 16 Sep
- 2026 16:29:28 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0428.008; Wed, 16 Sep 2026
- 16:29:28 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2 9/9] block/block-copy: coalesce write-zeroes tasks
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- John Snow <jsnow@redhat.com>, 
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20260914145250.2792879-10-den@openvz.org>
-References: <20260914145250.2792879-1-den@openvz.org>
- <20260914145250.2792879-10-den@openvz.org>
-Date: Wed, 16 Sep 2026 19:29:16 +0300
-Message-Id: <178957615605.653083.4507906324748620096.b4-review@b4>
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VIVP296CA0098.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:35b::7) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x6sWn-0005k5-Ve
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 12:30:35 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68GFeKqW1855006
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:30:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mEhix1JPVKJPRvLKpSWmE41G8fXUfNYvUUOIm/hpNEw=; b=WlCIHTUNFAKW6VHW
+ hEAlUIj5VTYTJqLkz13+yWG38AyDuqSrEIIZMFHITo2xUCeJApotHKioDoMWV/4S
+ aAVtn30pEtrmi15AKUNnRfOOwRvk+tICdCgZAWrJM0DqwjI9ItlgfOXFkv3hCfWH
+ tR/suyZpKYw+NEbut1gwVSrsINot7b1vCHxPEJseV+jqexM9trzwRGHrkqzTVQ+P
+ YaJP9LQCdecCd4Q1zHALCK6qKtSZ6sP3P7MzRumFHo3TrvUuc5ka252lwVYJ0wGW
+ U1QjDBjTMnd4YUAAa2LDV27hWiDYNovVUNdxWOE74AhHm00ysdxCDj6+ivRgSFu/
+ xSY/lg==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqqp3t1we-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:30:31 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-39deb05ef51so4993217a91.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 09:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789576231; x=1790181031; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mEhix1JPVKJPRvLKpSWmE41G8fXUfNYvUUOIm/hpNEw=;
+ b=MVj/Kn/+NJ8jVl7FcagCP3XmEpp77KKGtfpcgW05lRzjXcOcHTVgQe586CnC/4BdfJ
+ 84HfSYPCyWGowWdzAzSOPKbsYKqm1ngi0jszVrHiGBxicsc5oDm724ouvU0Qwv2dH2db
+ r0WWBZkaJSZqB9nnsqV+GpOxC9wQSoMi+SjAGFR2/W1SmWur7+Ci72jYtazB2+8LkRsq
+ EPquiZW9UQ5YzLPufOLCeETbEn2DmtJwpN6tIriniDIFdZQCnUZRa0KIF8IJbyTfROaJ
+ O4ewAnOeQvZoJfJB5CbudtXW4IMuCYCeopKG3ah1HfkvPFkTgm5Sf7bOVeeD8dUv5IXV
+ orgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789576231; x=1790181031;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mEhix1JPVKJPRvLKpSWmE41G8fXUfNYvUUOIm/hpNEw=;
+ b=XNnYF9MKGkwyYKabRCtlfzHCVd8o+9XVv9xh3lu57dxniDavEgJOvS2jxX6XGo5BIp
+ qVk+yH5Yt9PiDuqmFC4KrXw49PNXcL8uaCBKo+kK3JcROQe3o5hNglsjqqpNOvnDS48T
+ Yn+f30MMCd5cQxxfYx/UqJGWtc7iCsYOHroZh4b0PDjSN/mANusU8JbmgsQ8dpwEBHWN
+ uSzM0OllN1lpho6SlVc5YZvdgwfl8XSFDCKE8bkUbBn0lBau31SNQujI3fYtBpy4YM/D
+ TUqwuT0daHnsyWt8WQ7g25v5Cr62ac0rodqnbKbejg3hAVRrpk4JMVdJy54PWUAMBBDJ
+ muhA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxOv+Gfq8SPgWuP6ZYCW6jZxNLhhFm5K7b3GsDrSeGuDQI/KamRuakpbBTUWi+xoVcvgzLUxG7Fcmru@nongnu.org
+X-Gm-Message-State: AFuF++l6wJ31E/5Lq/dXsztx8KGq2qse/NbtuuEPvbWDC1AmsiovL+NZ
+ ixwPoZ52pMuWxilOPLhOuDtVMKe5VT9nVQxGDJFaqVDRcxxPAoyKXt/bxGuQOmzC/u642VWzy95
+ XfKoYMPbRSwf/SdoQunILAO47okcrDhFfg0RB6r4SrP3RkzOYCh8xSy1wmw==
+X-Gm-Gg: AYBFou1QM/ERmHIhtGZ2pixAyDY4uz1C4bcs09AF0fXEEwXbsUA7irGRtpGsu4LaY9T
+ 0R530cLSTjGI6OgnQgVzYJvmATWYmIapUAepkkEbeP8LLWQPLSSyxXmCpOpKBmGlj10d+jq4KPm
+ javLk1Pkfi1BrsxcMsPr5hPxs9lKw856RvuqiZHVvxCxRnUwihoFIxltQOVpElxxr6iGdH4FUCK
+ tc5GTYh6ShkfT5a1GgTdRU0vj1Id532FTXV8fR+aScNmX6Qtnl3zc6NdmlB1P6bqIuooaMjR3sE
+ M7xt0+kmGVBTRnj8a4ZDYNpmx2S7cqh78YPJZT8mSY7xi/8ZIK+T7GNmckFEjuHAMXgmghndyYh
+ Hjusu58H8qUyo2rvfwGldspak4LHu101dadJPaG43pmAv2QU8cBipKayWCIV1nxYytYFb
+X-Received: by 2002:a17:90b:2ec7:b0:39d:f317:44cd with SMTP id
+ 98e67ed59e1d1-39e1e4907f3mr8931910a91.14.1789576231130; 
+ Wed, 16 Sep 2026 09:30:31 -0700 (PDT)
+X-Received: by 2002:a17:90b:2ec7:b0:39d:f317:44cd with SMTP id
+ 98e67ed59e1d1-39e1e4907f3mr8931775a91.14.1789576230567; 
+ Wed, 16 Sep 2026 09:30:30 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bf5aca3fbsm9457405eec.20.2026.09.16.09.30.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Sep 2026 09:30:29 -0700 (PDT)
+Message-ID: <36cbf64f-e187-4d15-b710-7d4e6124ca07@oss.qualcomm.com>
+Date: Wed, 16 Sep 2026 09:30:27 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|BR0PR08MB801654:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4e84b358-a46c-406b-48c3-08df140fad95
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|52116014|1800799024|366016|10067099003|6133799003|56012099006|5023799004|4143699003|18002099003|22082099003|38350700014;
-X-Microsoft-Antispam-Message-Info: ToBlOqC4yPC5+rB8BlqXg7QC/vzIL5pG6y+kraieAWhOxgBsWiP/ZR3C43Ne8Y/apFj/c1MfV0gWoYo+K4u0bs+G3JbOMc8MQVGkp5IXwZ5lxDBCIxfSHyiJpewd9wvZOfYJTBK2WaWiz8GsatwxcC0gyP0szRI6lmOfbZ/KMIaQ1rda52Qc9t938VOvcPLnimRo4voPUueAiRSjV2e3ph0kaSzVWRAP9DG4qvvx7yR6QCulQBJ02ALh+1M7LTh57fn4E3pBJrWEni2MYBlk/RZr/RBuxy4gIhQ8rHigffcaM/+46CeElg9c8D4D4jOQuXovPcXcMszzD5YcquikzV8qccEqKC9D3LmodwdqxOsI/ShhSOeF/tYuWaeuwiWO5BhrHJpQ+wSZSfamLhc0vTuZiTN5ynRXmyZzk5v8kSWHnnsraPPQ4bQUO5p3/zfa6iFgEKVgsSdx+yeADCTLaLte6ymkynDa0rYRrdKEH0T0sTjOQhTWJ0ASigrTDv8TwqHaQ/aKeprj5LP1YjjCU3jo/LJfYt0Cjs5SYW9GoIfnMy+pD7PW3z/rao6tOpo4oArUgKQTsQ6EvHpuRpDNpzsXZLmaYEngJjaEPg0cUgMIOQo+gWXIH5AbUCNHXdfZfziqMHtI8Ol0N/ZIaUqOCW8fE7l/gH6l2qFQRPLNsLkYRNM2OAmHAVE1EXM9BomYenHK6G5pgcZZWgeNe7ynRTMxGt22IMRVD6Ln0m+ZF0U=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(52116014)(1800799024)(366016)(10067099003)(6133799003)(56012099006)(5023799004)(4143699003)(18002099003)(22082099003)(38350700014);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SlhKZzcwYjJMdTNNem9hN3dZR1RxQmhVdVk2MXJaVmdNN1IxaU4zM3V5QURF?=
- =?utf-8?B?aVNLY2pvZFJaNW5nM0MxMXBZOHU1bW5XcjRRcS9IVE91YzZJM2tGMDNORDk0?=
- =?utf-8?B?dmEzMnFzOUpvbmxQSlQxUUhwK0FGckFncE1zeXA2WFllKzBLRlNxSzkxbUM0?=
- =?utf-8?B?VmNUTkV5bnp0T1VXbnhRWkhDbVNIQVdpcGpjVHVLOUZ1UXNQeEhZcW1wRVhE?=
- =?utf-8?B?WU02eVZpZW5GZUpSOXBTOEoxdTVSYTByaG8wUTZjUk1JVFIyQXpiNXRSWERn?=
- =?utf-8?B?Q1liU3VXcXU4eFU4NGxrejFYMm9PQUF0U0ZNOEdZUnNQVzBCQVFzRi90VU04?=
- =?utf-8?B?M3c4THk1QTAzVG5MZk9RcW5PQlE5d1NlWTFIRE9JVERwWUhCeGZlQis1WjZG?=
- =?utf-8?B?U1k1ajV2enljbmZWSFViZUhxUm1kdm5ZMEsvMnpscEJNS0FYVUczcFNXVDcx?=
- =?utf-8?B?MW1iVnFEMlJNS2JnVEd1K0pMS2tRdjdkTHkyVnZPb3VhMTVUeG1xS3hxYmh2?=
- =?utf-8?B?aEV3MndmOUgrMnlKanZ4VnEzR0pYTCtGM0d0MnIzNFhaUURiT21xVGFRN3Fx?=
- =?utf-8?B?L0RldllWR0N6L1EwUnFyOGc1K2tIWnlMWGgzRlRCY0JtSkUvbTdCalVZcmNa?=
- =?utf-8?B?RDRvcTB2RXRmWDhxdjZmelpnRGhSNDcvMU0vM05TS2ZvU3BOU3ROcWVuRGxs?=
- =?utf-8?B?SGJCVXhPdXJPTWhnS2dVREU5MG83c0s0Y0h5L1cvTTF0SXRBcEV3c2ZhQk0y?=
- =?utf-8?B?U2d0Q0tudkdmejBxRUQwZXZwcG1WUzNYN0oxQU0wWXJuSjd6QnV0Q3U1bmF2?=
- =?utf-8?B?UGFndXhJYWlSMEJOK04zdy9zQThlUThCKzk5M0J4czNsQ3hlaWxzcTc5Nys4?=
- =?utf-8?B?ampIMmRGSkJqQ0RKM3hWL05WRFk0UHcrUWsxYTQ0UjJhb3RxUzVYS1BZM29H?=
- =?utf-8?B?SklXd3RkcjRsQmJUYkRBeVljN3BnNEo2YzlzSmVMRHhCQWpmRTViMFl0SzVH?=
- =?utf-8?B?ZCtZYzIwRUhWRFZ0aUJsbVhkdXZqS3NDY0NGSVdBeXdKT3pMU0UvZzJLMU9C?=
- =?utf-8?B?amplUWM3R2NBNGtCZG5CN0VSNHpoVUsxbGw5YkFvaHN4OUUxWDRBSmhCL09N?=
- =?utf-8?B?Zm9xS2ZkVGR4NmlKdEpZZHRyS04vRCtIdlBFaXJneFBMNTlvd1RMQy9xTENn?=
- =?utf-8?B?Z0tIcEtFNWRxYmxzSlcxZlpvQW1xK0QyNnQvc3REQk9qS0ZRcXVNMFIyMFVp?=
- =?utf-8?B?M3VQU1JwNDJ4S2VManhxRXpRdnRwTWxVZzRjdGk1REdxYTB6d0I4MytXU21V?=
- =?utf-8?B?RWNqUm5iMjJtSEFFZWJ1eXVjQUxPR2FaSnlYYVo2Ky9MWXdzdlJKVGFsVGZK?=
- =?utf-8?B?TU5uRjI1bXJRVDQ2aXY0cXVVT0tpWk9QZkpDeXlSTGQvbGhHdGpERndxNjdV?=
- =?utf-8?B?YXlNdHZ1R1JnRzJFSWlHVkIzMlJ1Vjh1QmN0QzNZRHdUQXVWdi9pdUUwcm5L?=
- =?utf-8?B?SHFaemppVDVYTHJUc1RDN1Ewei9RS09yQUJHQm8rYXhyZks4b2FLTjVDZjB2?=
- =?utf-8?B?YU9iRGlGYUhuc1EzallyUmMxcUpPeTdUZElQeENhSENkN0pFR0RnT1ZJZWpp?=
- =?utf-8?B?RVRDZHB1SGsxbHdLOGxmMzdnOHFJM0lESGV6a1FYRG1iQzU2d1hQZ21SRVJj?=
- =?utf-8?B?RXVKM0dsaG9TWDlPWGtvVGVnbFN0azM5dUpWUFBTL1NUR056T3Z4Q2xuUHAx?=
- =?utf-8?B?RFJQOStGNXBhclh3YjNaeXVmNWhJQmFLQW93eHpOTXpRdkEvUkF1WWRrcjZO?=
- =?utf-8?B?eE5NOWNlVjN4bVpXTU9KbGdESnRYOXZGN3RYZm1qbTcrdHBqSVRUR0FucDhl?=
- =?utf-8?B?S2MrYkFxN096NkhwL1A5bUI4N1RXYVZSUlpaam55TjJSbkRYRTNRWThvRWNz?=
- =?utf-8?B?UnR0TjFRTTNoL2hZRnVXNU5BKzJhQlovSUNFTE5RaExRQ2ZQRytoM25qM25U?=
- =?utf-8?B?YTYvMzZ4YnRnVzkwVU5ScTc4WUpUbXdXYWhHN2xGVGxseUpMNHR5ek1DSkNK?=
- =?utf-8?B?cnFhWHhyc09PQ0tUR0pFSXJ4RGx2ZEpwVk9LanBXR3ovZXlUUXJ0dzk0Slo2?=
- =?utf-8?B?c0Y2K25Ob3diQ1hpZVN2ZEJDTDNJR1NGYlpoekt5Yi83WjBtdCtvUE56RGtj?=
- =?utf-8?B?UDMwMDFUVjBFamxENTdGQm1DTFkyR3dRai81UHlOVGg0d2kwMWZEZHJjajRx?=
- =?utf-8?B?TkE2WXZqZ0QxSTZlNUUrRXozd3h6TVdkMUw1TVg3dkZkMU1XVTVyeE9SNXI3?=
- =?utf-8?B?aUFLcUpjRFVMM1ptVVBTb29DTVVja2g3WSs3OFJqSncrN0tIWWlGVlB3RzJW?=
- =?utf-8?Q?M30TUJdyDAb1u+B0=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4e84b358-a46c-406b-48c3-08df140fad95
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 16:29:28.0412 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: q5uKK8aXCCrSpXuC7j6fNZcWWzP+BjlB7Nvl+lRNnv2WCPjp5Ez4fKDQ0Dy52JDmTOICJzFXJBjQb+JSm4x5QuzjpgORc+1a8Mski/KzvKI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR0PR08MB801654
-Received-SPF: pass client-ip=2a01:111:f403:c201::6;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AM0PR02CU008.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 17/19] scripts/make2mtest: add docker dependencies for
+ check-tcg-% targets
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ John Snow <jsnow@redhat.com>, David Hildenbrand <david@kernel.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, Song Gao <gaosong@loongson.cn>,
+ Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
+ Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>,
+ Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260916153013.2134555-1-alex.bennee@linaro.org>
+ <20260916153013.2134555-18-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260916153013.2134555-18-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDIyNSBTYWx0ZWRfXzej6K9HAfqpQ
+ TTBKt0EdZ3c0MjNbN8Xf8fqhAQ6XPYpqRkfmhA6WikYYAm9yAIlwAgGkaP+2D+6hQdWqbsQhR6D
+ cNOz1dSxnu5xQgGpu/lkTMV3KoRPG+F6tktIIaY1X/cwnwR/gf9qXYUfM3KtBD/1WDF3bC+zXxk
+ ppTdiVma/gkM0P2HCHI8fw8W+QwkLTBl79KxfLzXPgTqhIhnjNu9dBJUuMrd43fhcNo9d5Uv972
+ RX16Ir3DPZp4m5zxh7xHixJL37W7ppmTTUBDmuUs3PS7Pv93oKBIVx8f9FpXVbWK7kAQdq2RSJd
+ uDAPL5ic/ccXKuVqpFjZxNh+fSb7UYeY/MXXhxqPwwwduI3t+V27yfwHUYnQgLcCMxyeaaMSvG7
+ MdjsUui/LMlCTiBK7Qts6rVudcnGgg6T0RVkegpyYCeoa5ihmZ8GtuJWdWrLm3KtDY6xHX+er8G
+ E1VWRXmfveH4l1m6y6g==
+X-Proofpoint-GUID: 3Hdkg65MZoTFbw6kfRcTgtNZktwxDbkg
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDIyNSBTYWx0ZWRfXz8wbIA0uwM8v
+ 8SA+++WfYOjdVY2m3oPHvR8vuQMDxifINlPbbJ+eQwQ3mDtx/JYye6o34nD1AwQ92Ta0YZEm7CR
+ d6FS8RKxoB4Yi2sm7aezRfosaHELHkk=
+X-Proofpoint-ORIG-GUID: 3Hdkg65MZoTFbw6kfRcTgtNZktwxDbkg
+X-Authority-Analysis: v=2.4 cv=F/DC5ahN c=1 sm=1 tr=0 ts=6aaac427 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=KKAkSRfTAAAA:8 a=dlnC7Bs9CAUtgJ-sswUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 phishscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160225
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,177 +173,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Task size was capped to block_copy_chunk_size() regardless of method,
-> which sizes a task by the copy buffer. A write-zeroes task carries no
-> buffer, so that cap only splits one long known-zero run into a crowd of
-> small COPY_WRITE_ZEROES tasks, each with its own request against the
-> target.
+On 9/16/2026 8:30 AM, Alex Bennée wrote:
+> This should trigger the building of the docker image when the user
+> calls "make check-tcg" or one of the arch specific targets such as
+> "make check-tcg-m68k-linux-user".
 > 
-> block_copy_task_create() already decides from zero_bitmap how far a task
-> may run, so add block_copy_widen_zero_area() to that decision: for a
-> write-zeroes task, re-search the dirty area under BDRV_REQUEST_MAX_BYTES
-> instead of the buffer chunk size, and let the existing clamp cut it back
-> to where the zero run ends. That bound is INT_MAX rounded down to a
-> sector, so it is aligned down at the use site, nothing bounding
-> cluster_size. Widening is safe: an overlapping caller waits on the
-> task's BlockReq via reqlist_wait_one() rather than observing it
-> mid-flight.
+> We still keep the internal meson dependency so individual tests can
+> launched and the docker build verified.
 > 
-> A request that large is only cheap where the target zeroes by metadata.
-> BDRV_REQ_NO_FALLBACK in supported_zero_flags rules out the targets which
-> cannot, qcow2 v2 and iscsi among them, but it is optimistic for the rest:
-> file-posix advertises it at open and only learns from a failing
-> fallocate. So the first widened request also asks for it, which costs
-> nothing when the target obliges and fails without writing when it does
-> not. The run then keeps every write-zeroes request at the buffer chunk
-> size, and the range that found out is written in those chunks.
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>  scripts/mtest2make.py | 35 +++++++++++++++++++++++++++++------
+>  1 file changed, 29 insertions(+), 6 deletions(-)
 > 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> CC: John Snow <jsnow@redhat.com>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->
-> diff --git a/block/block-copy.c b/block/block-copy.c
-> index c0a33599384..16f3d048195 100644
-> --- a/block/block-copy.c
-> +++ b/block/block-copy.c
-> @@ -38,6 +38,12 @@
->  #define BLOCK_COPY_SLICE_TIME 100000000ULL /* ns */
->  #define BLOCK_COPY_CLUSTER_SIZE_DEFAULT (1 << 16)
+> diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+> index 383ea68b16d..ab894d90d47 100644
+> --- a/scripts/mtest2make.py
+> +++ b/scripts/mtest2make.py
+> @@ -14,6 +14,7 @@ class Suite(object):
+>      def __init__(self):
+>          self.deps = set()
+>          self.speeds = set()
+> +        self.docker_deps = set()
 >  
-> +typedef enum {
-> +    ZERO_WIDEN_UNPROBED,
-> +    ZERO_WIDEN_ON,
-> +    ZERO_WIDEN_OFF,
-> +} BlockCopyZeroWiden;
-> +
->  typedef enum {
->      COPY_READ_WRITE_CLUSTER,
->      COPY_READ_WRITE,
-> @@ -159,6 +165,8 @@ typedef struct BlockCopyState {
->      bool skip_unallocated; /* atomic */
->      /* State fields that use a thread-safe API */
->      BdrvDirtyBitmap *copy_bitmap;
-> +    /* Whether the target zeroes by metadata; see block_copy_write_zeroes(). */
-> +    BlockCopyZeroWiden zero_widen; /* atomic */
->      /* Clusters reading as zero; allocated on demand, frozen once valid. */
->      HBitmap *zero_bitmap;
->      /* Published only after the scan, with skip_unallocated already false. */
-> @@ -187,6 +195,34 @@ static int64_t block_copy_chunk_size(BlockCopyState *s)
->      }
->  }
+>      def names(self, base):
+>          return [f'{base}-{speed}' for speed in self.speeds]
+> @@ -40,7 +41,22 @@ def names(self, base):
 >  
-> +/*
-> + * A write-zeroes task carries no buffer, so it may cover far more than
-> + * block_copy_chunk_size(). Return how far it may run; the caller clamps it
-> + * to where the zero run ends.
-> + */
-> +static int64_t block_copy_widen_zero_area(BlockCopyState *s,
-> +                                          BlockCopyCallState *call_state,
-> +                                          int64_t offset, int64_t search_end,
-> +                                          int64_t bytes)
-> +{
-> +    int64_t aligned = QEMU_ALIGN_DOWN(BDRV_REQUEST_MAX_BYTES,
-> +                                      s->cluster_size);
-> +    int64_t zero_chunk = MIN_NON_ZERO(MAX(aligned, s->cluster_size),
-> +                                      call_state->max_chunk);
-> +    int64_t wide_offset, wide_bytes;
-> +
-> +    if (!bdrv_dirty_bitmap_next_dirty_area(s->copy_bitmap, offset, search_end,
-> +                                           zero_chunk, &wide_offset,
-> +                                           &wide_bytes)) {
-> +        return bytes;
-> +    }
-> +
-> +    /* @offset is dirty, so the search cannot have moved past it. */
-> +    assert(wide_offset == offset);
-> +
-> +    return wide_bytes;
-> +}
-> +
->  /*
->   * Search for the first dirty area in offset/bytes range and create task at
->   * the beginning of it.
-> @@ -198,6 +234,7 @@ block_copy_task_create(BlockCopyState *s, BlockCopyCallState *call_state,
->      BlockCopyTask *task;
->      BlockCopyMethod method;
->      int64_t max_chunk;
-> +    int64_t search_end = offset + bytes;
+>  introspect = json.load(sys.stdin)
 >  
->      QEMU_LOCK_GUARD(&s->lock);
->      max_chunk = MIN_NON_ZERO(block_copy_chunk_size(s), call_state->max_chunk);
-> @@ -219,6 +256,10 @@ block_copy_task_create(BlockCopyState *s, BlockCopyCallState *call_state,
->  
->          if (hbitmap_get(s->zero_bitmap, offset)) {
->              method = COPY_WRITE_ZEROES;
-> +            if (qatomic_read(&s->zero_widen) != ZERO_WIDEN_OFF) {
-
-There's a potential race here.  Imagine:
-
-  1) task A is created and widened here;
-  2) task B is created and widened here;
-  3) in block_copy_write_zeroes() we get -ENOTSUP on task A and
-     set zero_widen=OFF.
-  4) in block_copy_write_zeroes() OFF != UNPROBED, we skip the probing
-     and go via slow path.
-
-The race is minor, but still.  Maybe we don't need tristate enum here
-and might just make zero_widen a bool, so every fast-path request
-carries NO_FALLBACK (not just the 1st request)?
-
-> +                bytes = block_copy_widen_zero_area(s, call_state, offset,
-> +                                                   search_end, bytes);
-> +            }
->              boundary = hbitmap_next_zero(s->zero_bitmap, offset, bytes);
->          } else {
->              boundary = hbitmap_next_dirty(s->zero_bitmap, offset, bytes);
-> @@ -465,6 +506,8 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
->          .max_transfer = QEMU_ALIGN_DOWN(
->                                      block_copy_max_transfer(source, target),
->                                      cluster_size),
-> +        .zero_widen = target->bs->supported_zero_flags & BDRV_REQ_NO_FALLBACK ?
-> +                      ZERO_WIDEN_UNPROBED : ZERO_WIDEN_OFF,
->      };
->  
->      s->discard_source = discard_source;
-> @@ -521,6 +564,54 @@ static coroutine_fn int block_copy_task_run(AioTaskPool *pool,
->      return 0;
->  }
->  
-> +/*
-> + * Widening a write-zeroes request only pays off where the target zeroes by
-> + * metadata. Ask the first one to fail instead of falling back to writing the
-> + * zeroes out: it then costs nothing, and a target which would have written
-> + * them keeps its requests small for the rest of the run.
-> + */
-> +static int coroutine_fn GRAPH_RDLOCK
-> +block_copy_write_zeroes(BlockCopyState *s, int64_t offset, int64_t bytes,
-> +                        bool *error_is_read)
-> +{
-> +    BdrvRequestFlags flags = s->write_flags & ~BDRV_REQ_WRITE_COMPRESSED;
-> +    int64_t chunk = bytes;
-> +    int ret = 0;
+> -def process_tests(test, targets, suites):
+> +targets = {t['id']: [os.path.relpath(f) for f in t['filename']]
+> +           for t in introspect['targets']}
 > +
-> +    if (qatomic_read(&s->zero_widen) == ZERO_WIDEN_UNPROBED) {
-> +        ret = bdrv_co_pwrite_zeroes(s->target, offset, bytes,
-> +                                    flags | BDRV_REQ_NO_FALLBACK);
-> +        if (ret != -ENOTSUP) {
-
-And what if it's -EIO?  Why not 'if (ret == 0)'?
-
-> +            qatomic_set(&s->zero_widen, ZERO_WIDEN_ON);
-> +            goto out;
-> +        }
+> +# collect the docker images uses by the tests. This is totally a hacky
+> +# heuristic that fishes the images out of the test custom commands by
+> +# looking for the qemu/image pattern.
+> +targets_docker = {}
+> +for t in introspect['targets']:
+> +    for src in t.get('target_sources', []):
+> +        for arg in src.get('compiler', []):
+> +            if arg.startswith('qemu/'):
+> +                img = arg.split('/', 1)[1]
+> +                targets_docker[t['id']] = f'docker-image-{img}'
+> +                break
 > +
-> +        /* Nothing has been written, so the whole range is still to do. */
-> +        qatomic_set(&s->zero_widen, ZERO_WIDEN_OFF);
-> +        chunk = block_copy_chunk_size(s);
+> +def process_tests(test, targets, targets_docker, suites):
+>      executable = test['cmd'][0]
+>      try:
+>          executable = os.path.relpath(executable)
+> @@ -51,6 +67,8 @@ def process_tests(test, targets, suites):
+>      deps = itertools.chain.from_iterable(deps)
+>      deps = list(deps)
+>  
+> +    docker_deps = [targets_docker[x] for x in test['depends'] if x in targets_docker]
+> +
+>      test_suites = test['suite'] or ['default']
+>      for s in test_suites:
+>          # The suite name in the introspection info is "PROJECT" or "PROJECT:SUITE"
+> @@ -59,6 +77,7 @@ def process_tests(test, targets, suites):
+>              if s == 'slow' or s == 'thorough':
+>                  continue
+>          suites[s].deps.update(deps)
+> +        suites[s].docker_deps.update(docker_deps)
+>          if s.endswith('-slow'):
+>              s = s[:-5]
+>              suites[s].speeds.add('slow')
+> @@ -81,6 +100,9 @@ def emit_prolog(suites, prefix):
+>      print(f'all-{prefix}-xml = {all_xml}')
+>      print(f'.PHONY: {prefix} do-meson-{prefix} {prefix}-report.junit.xml $(all-{prefix}-targets) $(all-{prefix}-xml)')
+>      print(f'ninja-cmd-goals += $(foreach s, $(.{prefix}.mtest-suites), $(.{prefix}-$s.deps))')
+> +    print(f'docker-cmd-goals += $(foreach s, $(.{prefix}.mtest-suites), $(.{prefix}-$s.docker-deps))')
+> +    print(f'docker-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.docker-goals.$g))')
+> +    print(f'run-ninja: $(sort $(docker-cmd-goals))')
+>      print(f'{prefix}-build: run-ninja')
+>      print(f'{prefix} $(all-{prefix}-targets): do-meson-{prefix}')
+>      print(f'do-meson-{prefix}: run-ninja; $(if $(MAKE.n),,+)$(MESON) test $(.{prefix}.mtestargs)')
+> @@ -93,6 +115,10 @@ def emit_suite(name, suite, prefix):
+>      print()
+>      print(f'.{prefix}-{tgtname}.deps = {deps}')
+>      print(f'.ninja-goals.check-build += $(.{prefix}-{tgtname}.deps)')
+> +    if suite.docker_deps:
+> +        docker_deps = ' '.join(sorted(suite.docker_deps))
+> +        print(f'.{prefix}-{tgtname}.docker-deps = {docker_deps}')
+> +        print(f'.docker-goals.check-build += $(.{prefix}-{tgtname}.docker-deps)')
+>  
+>      names = ' '.join(sorted(suite.names(name)))
+>      targets = f'{prefix}-{tgtname} {prefix}-report-{tgtname}.junit.xml'
+> @@ -105,19 +131,16 @@ def emit_suite(name, suite, prefix):
+>      print(f".{prefix}.mtest-suites += {name} $(call .speed.$(SPEED), {names})")
+>      print(f'endif')
+>  
+> -targets = {t['id']: [os.path.relpath(f) for f in t['filename']]
+> -           for t in introspect['targets']}
+> -
+>  testsuites = defaultdict(Suite)
+>  for test in introspect['tests']:
+> -    process_tests(test, targets, testsuites)
+> +    process_tests(test, targets, targets_docker, testsuites)
+>  emit_prolog(testsuites, 'check')
+>  for name, suite in testsuites.items():
+>      emit_suite(name, suite, 'check')
+>  
+>  benchsuites = defaultdict(Suite)
+>  for test in introspect['benchmarks']:
+> -    process_tests(test, targets, benchsuites)
+> +    process_tests(test, targets, targets_docker, benchsuites)
+>  emit_prolog(benchsuites, 'bench')
+>  for name, suite in benchsuites.items():
+>      emit_suite(name, suite, 'bench')
 
-block_copy_chunk_size() own doc says "Called with lock held", but we
-aren't doing so here.  Should we?
+From previous answer on v3, this patch does duplicate existing
+dependencies. If we don't have a specific reason to repeat it on
+Makefile side, it should not be included in this series.
 
-Andrey
-
--- 
-Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Regards,
+Pierrick
 
