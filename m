@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABCFC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAA2C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ldT-00049w-Qk; Wed, 16 Sep 2026 05:09:00 -0400
+	id 1x6ldt-0005zp-WE; Wed, 16 Sep 2026 05:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldL-0003w9-37; Wed, 16 Sep 2026 05:08:51 -0400
+ id 1x6ldn-0005FV-4O; Wed, 16 Sep 2026 05:09:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldJ-0007Pz-Av; Wed, 16 Sep 2026 05:08:50 -0400
+ id 1x6ldl-0007SC-CB; Wed, 16 Sep 2026 05:09:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549560; bh=bENLbQuW/cWME8k7e48VF18YPWnTClhuUH86cmvfzIE=;
+ t=1789549561; bh=agIX9ebtKvlmC8vTC7wPKo+eTyHg2PpAeDqfqw80kx4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=K+ZCuScwHUJjoj5foP3qaCzNzaBUtUKCpYb5PbLQY8IScYyA6TWw1GbApRwz5w4Jq
- sxFSDRo5Dkhid+JRq2BgqaYFyPgCpTBdYXpxvpeVxHEt/+5AF5/OBhB1bn3n14Yg1V
- RFB5ZXz+FE45ZUosoxLVy9V3xs2yvLvYd8xX+n6o2fBFTTp90GMXhrwLixjneI61hx
- /A6zT3MdxcZYhzIWySqNs7PpWF38b9QY+NJsZKkfz2xdG6sgyQks1rkNiMV+wq0OzF
- NWfJpCN1eihhK1pEENNUoEUuawehlv+Bv9Tw4Yr9jvUL8CL+Xh9qzP7JQv+bgK08QC
- nlnyKSGsWqNfQ==
+ b=UU2BSq+Q4ywo/nV1k8rAGmGfdPJnvpErpvuUjDlGdRnycol8gIkK+Vz/jfOtGIedO
+ RIZfQGamvkjNA65AZFXYA7BksWa9393uaVAoe5hR7ymkR11IbxWIHcPp78NdcMMXIW
+ aOXuZ2Bg38dt6b7QYvEa6zqFFq+1h54VMEWIwYKzi/V4B08fh1svr76o/omAEogocM
+ Pma8eycesqIlAoRTqioSa/xzBbLEg8ceZUUF6/lZ43bacrpiaMWV+yXvQQuWid8o4U
+ mfNUiX/b5Q+VJnqCqtDA7Qe9l/UtIoZhfSfCEIG27Nj05NvuwuUJyCBrAgeyiTHHtW
+ FnimhvtTNmDHw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E34531D56D1;
- Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 01C671D56D5;
+ Wed, 16 Sep 2026 12:06:01 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8F306429E1B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A1BB7429E1F;
  Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7C4E95A791; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id 880475A799; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Alberto Garcia <berto@igalia.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 28/57] target/arm: Make CBZ/CBNZ UNDEF before v6T2
-Date: Wed, 16 Sep 2026 12:03:52 +0300
-Message-ID: <20260916090516.677749-28-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 32/57] hw/sd/sdcard: Register device ops in drives
+ without media
+Date: Wed, 16 Sep 2026 12:03:56 +0300
+Message-ID: <20260916090516.677749-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,42 +73,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Alberto Garcia <berto@igalia.com>
 
-The Thumb CBZ/CBNZ encodings are only introduced in v6T2 (for
-A-profile) and v7M (for M-profile).  We missed out the feature-check
-in trans_CBZ(), so don't UNDEF on v5T or v6M.  Add the missing check:
-conveniently, the ARM_FEATURE_THUMB2 feature is true for exactly the
-cases where CBZ is implemented.
+Commit a362b19a39 ("hw/sd/sdcard: Fix size check for backing block
+image") accidentally moved the blk_set_dev_ops() call into the new
+'if (blk_size >= 0)' block in sd_realize().
+
+Because of that, if a drive is attached without a medium then the
+condition is false (blk_size == -ENOMEDIUM) and blk_set_dev_ops() is
+never called, so the drive is registered as having non-removable
+media:
+
+  $QEMU -device sd-card,drive=sdcard0 -drive if=none,id=sdcard0
+  (qemu) change sdcard0 sd-card.qcow2
+  Error: Device 'sdcard0' is not removable
+
+This patch moves the blk_set_perm() and blk_set_dev_ops() calls
+outside of the 'if (blk_size >= 0)' block so the device ops and
+permissions are registered when a drive is attached.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 9ee6e8bb853bde ("ARMv7 support.")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-2-peter.maydell@linaro.org
-(cherry picked from commit c05e01a885811f85c291ffa8513cb1d159b8c8b8)
+Fixes: a362b19a39 ("hw/sd/sdcard: Fix size check for backing block image")
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260723205847.137001-1-berto@igalia.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 15d4bc75f81709f641ef1de6b9dbdac7f74ebdf7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c57d1a6e73b..515db84af16 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -5753,7 +5753,14 @@ static bool trans_TBH(DisasContext *s, arg_tbranch *a)
- 
- static bool trans_CBZ(DisasContext *s, arg_CBZ *a)
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 37f6e0702b0..3d9b8342354 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -3060,7 +3060,6 @@ static void sd_blk_size_error(SDState *sd, int64_t blk_size,
+ static void sd_realize(DeviceState *dev, Error **errp)
  {
--    TCGv_i32 tmp = load_reg(s, a->rn);
-+    TCGv_i32 tmp;
-+
-+    /* CBZ was introduced in v6T2 and v7M */
-+    if (!arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        return false;
-+    }
-+
-+    tmp = load_reg(s, a->rn);
+     SDState *sd = SDMMC_COMMON(dev);
+-    int64_t blk_size = -ENOMEDIUM;
+     int ret;
  
-     arm_gen_condlabel(s);
-     tcg_gen_brcondi_i32(a->nz ? TCG_COND_EQ : TCG_COND_NE,
+     switch (sd->spec_version) {
+@@ -3078,32 +3077,32 @@ static void sd_realize(DeviceState *dev, Error **errp)
+             return;
+         }
+ 
+-        blk_size = blk_getlength(sd->blk);
+-    }
+-    if (blk_size >= 0) {
+-        blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
+-        if (blk_size > SDSC_MAX_CAPACITY) {
+-            if (sd_is_emmc(sd) &&
+-                !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
+-                int64_t blk_size_aligned =
+-                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
+-                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+-                                  "multiples of 512", errp);
++        int64_t blk_size = blk_getlength(sd->blk);
++        if (blk_size >= 0) {
++            blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
++            if (blk_size > SDSC_MAX_CAPACITY) {
++                if (sd_is_emmc(sd) &&
++                    !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
++                    int64_t blk_size_aligned =
++                        ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
++                    sd_blk_size_error(sd, blk_size, blk_size_aligned,
++                                      "multiples of 512", errp);
++                    return;
++                } else if (!sd_is_emmc(sd) &&
++                    !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
++                    int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
++                    sd_blk_size_error(sd, blk_size, blk_size_aligned,
++                                      "multiples of 512K", errp);
++                    return;
++                }
++            } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
++                sd_blk_size_error(sd, blk_size, pow2ceil(blk_size),
++                                  "a power of 2", errp);
+                 return;
+-            } else if (!sd_is_emmc(sd) &&
+-                !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
+-                int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
+-                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+-                                  "multiples of 512K", errp);
++            } else if (blk_size < 0) {
++                error_setg(errp, "eMMC image smaller than boot partitions");
+                 return;
+             }
+-        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
+-            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power of 2",
+-                              errp);
+-            return;
+-        } else if (blk_size < 0) {
+-            error_setg(errp, "eMMC image smaller than boot partitions");
+-            return;
+         }
+ 
+         ret = blk_set_perm(sd->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
 -- 
 2.47.3
 
