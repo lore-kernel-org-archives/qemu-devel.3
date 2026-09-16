@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5582C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 06:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83EFDC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6jYH-0002Vh-3T; Wed, 16 Sep 2026 02:55:29 -0400
+	id 1x6jkC-0005a4-2b; Wed, 16 Sep 2026 03:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6jYD-0002S1-So
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 02:55:25 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x6jkA-0005Zo-DX
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 03:07:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6jYB-0006rk-DS
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 02:55:25 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x6jk8-0008FU-1t
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 03:07:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789541722;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1789542462;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DrxzflWO+sJDx9IQn/gmdCq+2s78ZWoL+GSaAaU5Ba4=;
- b=RCqh4GHmXKDDwSlkNZhdfmPjLijMBrZmgZd3hLTWb2muJ55Now+8rH1+xbQEpkS23xRp5H
- latznTBDGA5g6MTHzFNuVm0WLH+LWULqie8X6k+Z8YkS7DXyBwS08B1R3nexvrxO2+GGjA
- uKdjmq6JiGM208aRVCalIQOmMLgNLRM=
+ bh=j+Tx7I/Oj6APG7rsHQna30uX6/1X0S1vXB/9ii4YTG8=;
+ b=Y6JEaCGOraSr7TAJdXQDWymSld5Q+Kl5Bd6FSMKw7nIvS0ClSDmlLk4C9rAG535M/FkYqA
+ 4vzeNG03t8d357e2NXpTaE5pk6jakBFGn6t35uELhlKbWJi6UN9G1OiE+A5KtIcwui5scY
+ jlFJYYXuKAWKmMonQV8H2BuQvgqmqz4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-MvCpIx7BNXCYAitj4MX-DQ-1; Wed,
- 16 Sep 2026 02:55:18 -0400
-X-MC-Unique: MvCpIx7BNXCYAitj4MX-DQ-1
-X-Mimecast-MFC-AGG-ID: MvCpIx7BNXCYAitj4MX-DQ_1789541717
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-eW6LrOnXNWWdUq7lmaj2gg-1; Wed,
+ 16 Sep 2026 03:07:39 -0400
+X-MC-Unique: eW6LrOnXNWWdUq7lmaj2gg-1
+X-Mimecast-MFC-AGG-ID: eW6LrOnXNWWdUq7lmaj2gg_1789542456
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A525189F071; Wed, 16 Sep 2026 06:55:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 207741956095; Wed, 16 Sep 2026 06:55:17 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C7FE121E6A04; Wed, 16 Sep 2026 08:55:14 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>, Jason Wang <jasowangio@gmail.com>
-Subject: Re: [PATCH V17 12/13] iothread: make legacy AioContext getter
- explicitly unsafe
-In-Reply-To: <CAK3tnvJa6rwyQWTYRQr3Zv7V95_PaY5Abi8_Ndwv4aw917USQw@mail.gmail.com>
- (Zhang Chen's message of "Wed, 16 Sep 2026 10:24:47 +0800")
-References: <20260915101655.3216101-1-zhangckid@gmail.com>
- <20260915101655.3216101-13-zhangckid@gmail.com>
- <87bj9yrda8.fsf@pond.sub.org>
- <CAK3tnvJa6rwyQWTYRQr3Zv7V95_PaY5Abi8_Ndwv4aw917USQw@mail.gmail.com>
-Date: Wed, 16 Sep 2026 08:55:14 +0200
-Message-ID: <87ld91eld9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ id 0E092184B3A6; Wed, 16 Sep 2026 07:07:35 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5F03426; Wed, 16 Sep 2026 07:07:28 +0000 (UTC)
+Date: Wed, 16 Sep 2026 08:07:25 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Song Gao <gaosong@loongson.cn>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Kyle Evans <kevans@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Cleber Rosa <crosa@redhat.com>, qemu-arm@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, Brad Smith <brad@comstyle.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 09/15] tests/docker: add container registry to
+ configure and use
+Message-ID: <aqpALXSGrVeVDi2D@redhat.com>
+References: <20260915201601.1207839-1-alex.bennee@linaro.org>
+ <20260915201601.1207839-10-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260915201601.1207839-10-alex.bennee@linaro.org>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,18 +101,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+On Tue, Sep 15, 2026 at 09:15:54PM +0100, Alex Bennée wrote:
+> Previously we had the default baked into Makefile.include but as the
+> meson container logic will also benefit from it we update the configure
+> machinery.
+> 
+> For now we allow direct make invocations to override but for the
+> normal case it is in one place now.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> ---
+> v2
+>   - fixed conflicts from the revert.
+> ---
+>  configure                     | 8 ++++++++
+>  meson_options.txt             | 4 ++++
 
-[...]
+Needs to re-generate meson-buildoptions.txt
 
-> If you have time, could you also take a look at the remaining patches
-> converting IOThread users to the holder-aware API? I'd appreciate your
-> feedback.
+>  tests/docker/Makefile.include | 4 +---
+>  tests/tcg/meson.build         | 6 ++++++
+>  4 files changed, 19 insertions(+), 3 deletions(-)
 
-Looking at my patch review queue...  seems unlikely at this time, sorry.
-I hope the maintainers of the files touched can take care of it.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
