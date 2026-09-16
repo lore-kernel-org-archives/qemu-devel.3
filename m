@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2083AC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714BDC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lfF-0000im-Au; Wed, 16 Sep 2026 05:10:53 -0400
+	id 1x6leM-0008FF-Iu; Wed, 16 Sep 2026 05:09:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lep-0000ON-3y; Wed, 16 Sep 2026 05:10:26 -0400
+ id 1x6leI-0007rq-JE; Wed, 16 Sep 2026 05:09:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lel-0007pY-6t; Wed, 16 Sep 2026 05:10:22 -0400
+ id 1x6leG-0007Y6-Ly; Wed, 16 Sep 2026 05:09:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549562; bh=l4t3mYwthO81EFZprOn4QdrTywRvd8idy44sH6fAno0=;
+ t=1789549562; bh=EiCjEHBu+hQ7AFPuyTbFuH1uiPdR0MhfuSL6H69evW0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RlcvfFqnF2VBjcIXW4IOrNcahuFqpqOmHpL3UrRqxfP2m0+WpCclvepO74nLS01Gu
- jYoDIBjwKrnFiv5jvAP8liGxUyxR+xC7rJ5sBngT1Znl9lOcGDVw7YRfVvlyxpGX7B
- a/PNEQ4ilYqEusyN4nYlnNcZHs3iKJ715u8PTfG0kM/VD/Bm/9m6xfeslOCznN75eT
- d1pCwvZBjqhVFV/2Hcul8BjzRs4ul7nIlIclqLwpsx/h/do3paKJ1FbWjEn8BwC7wC
- QhJlC7oI7f49UNTu5KmtRHxjFOnG88FOPlRrAbEuIniZviN51y2/74KH+I7aO+MhjK
- C0OC7ee/AassQ==
+ b=Ny/9tPvmPFcJZH7qbSkQupDv4krC6cfO+QEf/pzg8bAmZBh2ueUDg09tGgkqHUbjA
+ w61M9WJHRDxYqqQRPMEmE9jlvJSZMTH2mOA7nh7+9wZGt84DAaPhTx+vbARuKhyrKE
+ Lt9+pL090t72v3uFINUc9GhIlMqcuYQKlRxSf0CdY7STDWVNmyd8eB3UEWf6kqwO4C
+ FVVIWZuA6ISyisjUaurpbez+YbjjL6Dlobnv6oVvFH36GBnXAyAidxiBTL7BpVc9uk
+ JAqk7GuVQq6m5TbztK+duq/m2hIXIDra3zlfnm4OQ6dNKkbqoghAG5McpTZAIABrhC
+ 2mD35fNUR3wOg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4EDA61D56E6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 385001D56E1;
  Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EEC48429E42;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D7EF2429E3D;
  Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DBFB25A7BB; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
+ id CCD1F5A7B1; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 49/57] hw/cxl: fix the CDAT DOE overlapping the Flex
- Bus DVSEC when sn= is set
-Date: Wed, 16 Sep 2026 12:04:13 +0300
-Message-ID: <20260916090516.677749-49-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 44/57] hw/net/virtio-net: check packet size before
+ VLAN tag access in receive_filter()
+Date: Wed, 16 Sep 2026 12:04:08 +0300
+Message-ID: <20260916090516.677749-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,47 +73,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-ct3_realize() adds the CDAT DOE at a fixed 0x190.  Since 8700ee15de the
-four DVSECs take 0x90 bytes, which from 0x100 ends exactly at 0x190.
-With sn= the Device Serial Number capability pushes the block to
-0x10c..0x19c, and the DOE, added later, overwrites the last 12 bytes of
-the Flex Bus Port DVSEC: Capability2, Control2 and Status2.  Nothing
-catches this -- pcie_add_capability() checks bounds, not overlap, and
-the chain still walks because the DVSEC's next pointer becomes 0x190,
-inside its own body.  Most cxl-type3 examples in
-docs/system/devices/cxl.rst set sn=.
+receive_filter() reads ptr[14..15] to extract the VLAN ID without
+checking the packet is large enough. A short frame with VLAN TPID
+at bytes 12-13 but no VLAN TCI causes a 2-byte out-of-bounds read.
 
-Derive the offset from the DVSEC block instead, as cxl_upstream.c
-already does.  Without sn= the layout is unchanged byte for byte; with
-sn= the DOE moves to 0x19c, below the AER capability at 0x200.  The
-type 3 device has no VMStateDescription, so its config space never
-reaches the migration stream.
+Add size checks before accessing the Ethernet header and the VLAN
+tag fields.
 
-Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3788
+Fixes: f21c0ed97c97 ("qemu:virtio-net: Add VLAN filtering (Alex Williamson)")
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260831022302.406740-1-junjie.cao@intel.com>
-(cherry picked from commit 0ddbce88c45a7376a9fc948097d58195358ffec7)
+Message-ID: <20260722115008.1570510-1-lvivier@redhat.com>
+(cherry picked from commit 5d85a09554fb66e18107cfbfa4e6b637bf4e2508)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 91db48570d2..f516ab203b2 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -932,8 +932,8 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 814b99a43d2..93653581cb6 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1750,12 +1750,16 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
      }
  
-     /* DOE Initialization */
--    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
--                  CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
-+    pcie_doe_init(pci_dev, &ct3d->doe_cdat, cxl_cstate->dvsec_offset,
-+                  doe_cdat_prot, true, CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
+     ptr += n->host_hdr_len;
++    size -= n->host_hdr_len;
++
++    if (size < sizeof(struct eth_header)) {
++        return 0;
++    }
  
-     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
-     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
+         int vid;
+ 
+-        /* Truncated vlan packet */
+-        if (size < n->host_hdr_len + 16) {
++        if (size < 16) {
+             return 0;
+         }
+         vid = lduw_be_p(ptr + 14) & 0xfff;
 -- 
 2.47.3
 
