@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E6CC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2083AC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lcx-00033X-Mu; Wed, 16 Sep 2026 05:08:27 -0400
+	id 1x6lfF-0000im-Au; Wed, 16 Sep 2026 05:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcu-0002ht-9u; Wed, 16 Sep 2026 05:08:24 -0400
+ id 1x6lep-0000ON-3y; Wed, 16 Sep 2026 05:10:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcs-0007Oo-Bc; Wed, 16 Sep 2026 05:08:23 -0400
+ id 1x6lel-0007pY-6t; Wed, 16 Sep 2026 05:10:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549560; bh=SPB3AVDJrkjsD5s2KloeltPIYsqYgkVQj0g4+nHV9qE=;
+ t=1789549562; bh=l4t3mYwthO81EFZprOn4QdrTywRvd8idy44sH6fAno0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QliN3Vkb8Vnk0t+hDXFqioX3tW5wjDsU9iPcilmLjJoshKVlML+d25qRncflPUkkW
- xXs/j6MzCHVYO0cHMnwWspQes6wt5Yn5Frqs8j+ojoB2n653U8prtMW2IPDIbQSn4T
- gIpC8BgUu32LLpyFgPUkEsfoOvsOhEpULUy2vJpgZa3mp4Mb9paWaVb8OlKTZXcsHY
- RFvJMAa+zP3z3QxC8THoU2h0FuRhCVeSm9hwRhxFyABn95H225nrKq8P2g302dXZ9u
- to6X8+YOSvNjZ0o383T0M2Jlqhk3reLPphHVMNy21BwPFdk/Bs8dfbPMT8JavA9I6v
- x9dg2U0jkgJZw==
+ b=RlcvfFqnF2VBjcIXW4IOrNcahuFqpqOmHpL3UrRqxfP2m0+WpCclvepO74nLS01Gu
+ jYoDIBjwKrnFiv5jvAP8liGxUyxR+xC7rJ5sBngT1Znl9lOcGDVw7YRfVvlyxpGX7B
+ a/PNEQ4ilYqEusyN4nYlnNcZHs3iKJ715u8PTfG0kM/VD/Bm/9m6xfeslOCznN75eT
+ d1pCwvZBjqhVFV/2Hcul8BjzRs4ul7nIlIclqLwpsx/h/do3paKJ1FbWjEn8BwC7wC
+ QhJlC7oI7f49UNTu5KmtRHxjFOnG88FOPlRrAbEuIniZviN51y2/74KH+I7aO+MhjK
+ C0OC7ee/AassQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CFF211D56CD;
- Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4EDA61D56E6;
+ Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7B8A8429E17;
- Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EEC48429E42;
+ Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7013C5A789; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id DBFB25A7BB; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 24/57] i386/vapic: unref MemoryRegion if
- vapic_map_rom_writable fails
-Date: Wed, 16 Sep 2026 12:03:48 +0300
-Message-ID: <20260916090516.677749-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 49/57] hw/cxl: fix the CDAT DOE overlapping the Flex
+ Bus DVSEC when sn= is set
+Date: Wed, 16 Sep 2026 12:04:13 +0300
+Message-ID: <20260916090516.677749-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -71,35 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-memory_region_find returns the memory region with an elevated
-reference count.  Drop the reference count also if the memory
-region cannot be mapped writable.
+ct3_realize() adds the CDAT DOE at a fixed 0x190.  Since 8700ee15de the
+four DVSECs take 0x90 bytes, which from 0x100 ends exactly at 0x190.
+With sn= the Device Serial Number capability pushes the block to
+0x10c..0x19c, and the DOE, added later, overwrites the last 12 bytes of
+the Flex Bus Port DVSEC: Capability2, Control2 and Status2.  Nothing
+catches this -- pcie_add_capability() checks bounds, not overlap, and
+the chain still walks because the DVSEC's next pointer becomes 0x190,
+inside its own body.  Most cxl-type3 examples in
+docs/system/devices/cxl.rst set sn=.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit cfa6e2c52ca8f756461fe41f4ce40e61a82fd914)
+Derive the offset from the DVSEC block instead, as cxl_upstream.c
+already does.  Without sn= the layout is unchanged byte for byte; with
+sn= the DOE moves to 0x19c, below the AER capability at 0x200.  The
+type 3 device has no VMStateDescription, so its config space never
+reaches the migration stream.
+
+Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260831022302.406740-1-junjie.cao@intel.com>
+(cherry picked from commit 0ddbce88c45a7376a9fc948097d58195358ffec7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index a61ab19a676..ce433aa4449 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -612,11 +612,13 @@ static int vapic_map_rom_writable(VAPICROMState *s)
- 
-     /* read ROM size from RAM region */
-     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
-+        memory_region_unref(section.mr);
-         return -1;
-     }
-     ram = memory_region_get_ram_ptr(section.mr);
-     rom_size = ram[rom_paddr + 2] * ROM_BLOCK_SIZE;
-     if (rom_size == 0 || rom_size > OPTION_ROM_END - rom_paddr) {
-+        memory_region_unref(section.mr);
-         return -1;
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 91db48570d2..f516ab203b2 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -932,8 +932,8 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
      }
  
+     /* DOE Initialization */
+-    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
+-                  CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
++    pcie_doe_init(pci_dev, &ct3d->doe_cdat, cxl_cstate->dvsec_offset,
++                  doe_cdat_prot, true, CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
+ 
+     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
+     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
 -- 
 2.47.3
 
