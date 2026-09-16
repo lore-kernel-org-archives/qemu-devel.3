@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF8BDC88E77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A42C88E5C
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lbV-0008Qz-Iv; Wed, 16 Sep 2026 05:06:57 -0400
+	id 1x6ld0-0003MG-B8; Wed, 16 Sep 2026 05:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbU-0008Q3-CN; Wed, 16 Sep 2026 05:06:56 -0400
+ id 1x6lcw-0002z3-Mx; Wed, 16 Sep 2026 05:08:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbS-00072Y-ML; Wed, 16 Sep 2026 05:06:56 -0400
+ id 1x6lcu-0007P4-DJ; Wed, 16 Sep 2026 05:08:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=2SRqz5S3YNkNI4mhAWqlHAgeN/EVcHYuNr8uZv0ic+s=;
+ t=1789549560; bh=4/+oO+YNr9Z+nEWd5rHNTQ7uqZn1m8PE6IR4GevuM7Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WdooMaiStM9W+O2aV7JCax5asekQtHhSh9WkBFeNK6kPjzxDKamtv0xzRWgRAOtmy
- S7mHtL2Nj1KOJaGNu3/aztaMM7WpY4fPVE0xSpPB2pOjjIAeaCBX9/JXxMbQObyStO
- JPkasD8FrE5WCXwqkTjBJkT1fElddk428PkTWmXSbExIOPXoi0mb5rs9xi0t+jfWqn
- yMHaOlnw18RdTmoFSKrKxKbJjLGes+HLLz1DbovbysK/S/nB+5o66ECo2uMquijJ/Z
- B+4YEZhcNRacdJMximrt5mjjPZHCj2YL7pFuiL1aaFnt1mreYnoxe59FrTtIWQ81FP
- D2iX7DdDZ5tZw==
+ b=Wtu/PiwHLmYXanWi4CcQDB4eM1g3AiJX+ewLGZDD7Ymqq24TMETo42DECUgu72riJ
+ 7eL4vFRHizCCicqdAKO0ruA14i6iq2KwA2dLHvbjsAYss0JDZLFWqrn6mPFRW07hpj
+ /BchV3ANZPuMGIryGNb9gz3HRKJeFWjNLhLDvaiw4mGjhjzYMzX7yqkZCWWLICWzPk
+ ymBO58RdkMmuaDQxoVVC0O/dpeS6++H8MV8BdcDL43XxrTAdXZO4c16yv+lCBbdkYU
+ beyDnPp635eNzjbNqOVezA71z/FQa/ths/CUSTisX+m0H7tHqYky675W9pA/bayQ1v
+ qSaXpJyKQTtsA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8EFBB1D56BC;
- Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D41881D56CE;
+ Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3942C429E07;
- Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7FDF8429E18;
+ Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1894B5A769; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 738925A78B; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: qemu-stable@nongnu.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Nikhil Kumar Singh <nikhilks@linux.ibm.com>,
+ Michael Kowal <kowal@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 08/57] tests/unit/test-blockjob: cover keeping a job
- paused while a pause is pending
-Date: Wed, 16 Sep 2026 12:03:32 +0300
-Message-ID: <20260916090516.677749-8-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 25/57] ppc/xive: Trigger the pending interrupt for a
+ guest after migration
+Date: Wed, 16 Sep 2026 12:03:49 +0300
+Message-ID: <20260916090516.677749-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -72,147 +75,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-Add a regression test for the previous commit. A job that has reached
-its pause point is spuriously re-entered (job_enter()) while a pause is
-still pending (pause_count > 0), reproducing what an overlapping drain
-does: one drain's job_resume() wakes the job while the next drain's
-job_pause() is already counted. The job must stay parked - it must not
-run job code or clear job->paused, or job_set_aio_context() could
-observe paused == false and abort.
+When a KVM guest is migrated to another LPAR while a stress-ng workload
+is running, lockups are seen when the guest resumes on the destination
+LPAR. This root cause is that if there was a pending interrupt for a cpu
+on the source machine but it was not presented yet when the migration
+started, the interrupt is not retriggered on the destination LPAR. This
+is evident when running 'info pic' on the destination LPAR:
 
-The test counts the job's run-loop iterations: without the fix the
-re-entered job clears job->paused, runs one iteration and re-pauses, so
-the counter advances; with the fix it stays parked and the counter is
-unchanged. It runs in the main AioContext, so job_enter() is synchronous
-and the check is deterministic.
+$ virsh qemu-monitor-command --hmp migrate 'info pic' | grep -e OS -e MSI
+CPU[0000]:   OS    00   ff  00    ff   ff  00  ff   ff  80000400
+CPU[0001]:   OS    00   ff  00    ff   ff  00  ff   ff  80000401
+CPU[0002]:   OS    00   ff  00    ff   ff  00  ff   ff  80000402
+CPU[0003]:   OS    00   ff  00    ff   ff  00  ff   ff  80000403
+CPU[0004]:   OS    00   ff  00    ff   ff  00  ff   ff  80000404
+CPU[0005]:   OS    00   ff  00    ff   ff  00  ff   ff  80000405
+CPU[0006]:   OS    80   ff  02    ff   ff  00  ff   06  80000406
+CPU[0007]:   OS    00   ff  00    ff   ff  00  ff   ff  80000407
+  00000000 MSI --    00000010   0/6   3071/16384 @3710000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
+  00000001 MSI --    00000010   1/6   1852/16384 @3980000 ^1 [ 80000010 80000033 80000033 80000033 80000033 ^00000000 ]
+  00000002 MSI --    00000010   2/6   4424/16384 @40c0000 ^1 [ 80000020 80000020 80000020 80000010 80000010 ^00000000 ]
+  00000003 MSI --    00000010   3/6   1913/16384 @4220000 ^1 [ 80000010 80000032 80000010 80000010 80000010 ^00000000 ]
+  00000004 MSI --    00000010   4/6   2946/16384 @4360000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
+  00000005 MSI --    00000010   5/6   2313/16384 @44a0000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
+  00000006 MSI P-    00000010   6/6   5825/16384 @45f0000 ^1 [ 80000024 80000024 80000024 80000010 80000016 ^00000000 ]
+  00000007 MSI --    00000010   7/6   2346/16384 @4760000 ^1 [ 80000032 80000032 80000010 80000032 80000032 ^00000000 ]
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260623152406.1180235-3-den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 438ee08bc97af48ade6365133f2f5b43d4d788ae)
+Fix this by calling xive_tctx_pipr_set() in
+vmstate_xive_tctx_post_load(), which ends up calling qemu_irq_raise() to
+present the interrupt. This fix is relevant only for setups where KVM
+guests rely on emulated XIVE provided by QEMU, since the native XIVE
+case is already handled.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260826060217.24978-1-gautam@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit b78c6d5b1bf019ccb0803734754297ed440688d0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
-index abdbe4b8350..3b77d19b911 100644
---- a/tests/unit/test-blockjob.c
-+++ b/tests/unit/test-blockjob.c
-@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
-     cancel_common(s);
- }
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index d702b58bd0a..52f1a880091 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -1080,6 +1080,9 @@ static int vmstate_xive_tctx_post_load(void *opaque, int version_id)
+             error_report_err(local_err);
+             return ret;
+         }
++    } else {
++        uint8_t pipr = tctx->regs[TM_QW1_OS + TM_PIPR];
++        xive_tctx_pipr_set(tctx, TM_QW1_OS, pipr, 0);
+     }
  
-+typedef struct PauseCountJob {
-+    BlockJob common;
-+    int n;
-+    bool should_complete;
-+} PauseCountJob;
-+
-+static void pause_count_job_complete(Job *job, Error **errp)
-+{
-+    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
-+    s->should_complete = true;
-+}
-+
-+static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
-+{
-+    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
-+
-+    while (!s->should_complete) {
-+        if (job_is_cancelled(&s->common.job)) {
-+            return 0;
-+        }
-+        s->n++;
-+        /*
-+         * Yields; while a pause is pending the yield is skipped and the job
-+         * parks in job_pause_point() instead.
-+         */
-+        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
-+    }
-+
-+    return 0;
-+}
-+
-+static const BlockJobDriver pause_count_job_driver = {
-+    .job_driver = {
-+        .instance_size = sizeof(PauseCountJob),
-+        .free          = block_job_free,
-+        .user_resume   = block_job_user_resume,
-+        .run           = pause_count_job_run,
-+        .complete      = pause_count_job_complete,
-+    },
-+};
-+
-+/*
-+ * A job that has reached its pause point must stay paused while a pause is
-+ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
-+ * drain's job_resume() wakes it while the next drain's job_pause() is already
-+ * counted); the job must not run or clear job->paused, otherwise
-+ * job_set_aio_context() can observe paused == false and abort.
-+ */
-+static void test_pause_keeps_paused(void)
-+{
-+    BlockBackend *blk;
-+    BlockJob *bjob;
-+    PauseCountJob *s;
-+    Job *job;
-+    int n0;
-+
-+    blk = create_blk(NULL);
-+    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
-+                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
-+    s = container_of(bjob, PauseCountJob, common);
-+    job = &bjob->job;
-+    WITH_JOB_LOCK_GUARD() {
-+        job_ref_locked(job);
-+    }
-+
-+    job_start(job);
-+
-+    /* Pause the running job; it parks in job_pause_point() with paused set. */
-+    WITH_JOB_LOCK_GUARD() {
-+        job_pause_locked(job);
-+        g_assert_true(job->paused);
-+        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
-+    }
-+    n0 = s->n;
-+
-+    /*
-+     * Spurious wake while the pause is still pending. The job must stay parked:
-+     * the bug clears job->paused, runs an iteration (s->n advances) and
-+     * re-pauses, exposing a paused == false window.
-+     */
-+    job_enter(job);
-+    WITH_JOB_LOCK_GUARD() {
-+        g_assert_true(job->paused);
-+    }
-+    g_assert_cmpint(s->n, ==, n0);
-+
-+    /* Resume and tear down. */
-+    WITH_JOB_LOCK_GUARD() {
-+        job_resume_locked(job);
-+    }
-+    job_cancel_sync(job, true);
-+    WITH_JOB_LOCK_GUARD() {
-+        Job *dummy = job;
-+        job_dismiss_locked(&dummy, &error_abort);
-+        job_unref_locked(job);
-+    }
-+    destroy_blk(blk);
-+}
-+
- int main(int argc, char **argv)
- {
-     qemu_init_main_loop(&error_abort);
-@@ -402,5 +501,6 @@ int main(int argc, char **argv)
-     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
-     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
-     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
-+    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
-     return g_test_run();
- }
+     return 0;
 -- 
 2.47.3
 
