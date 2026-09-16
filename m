@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17CDFC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82535C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qAX-00047t-3h; Wed, 16 Sep 2026 09:59:25 -0400
+	id 1x6qAn-0004CD-PL; Wed, 16 Sep 2026 09:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAU-000460-KX
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAc-000493-30
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAT-0003EE-2j
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:22 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAa-0003FC-Ke
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789567160;
+ s=mimecast20190719; t=1789567167;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TwJsi9UUeAWz/adeB4oM3iT2Ph48/gpOC88/Cc20NEI=;
- b=OKdSeVrVXEBT+M5QzsD1FFIgdscUubVOPmKiKKtEgx22OGC8sfJ2EsefgZXx9ZPxCf/qBU
- YpfrtPMGn+lWn58DwuVtfyD7aIVjrdjMd2MzZYWzEg9p8qBEO3VkY1sAYIQY9EiTFG+mWJ
- qx7p9p2wn29/XOJfGu8b2IAOgZm0RiI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YBhz2UZF8bOOsvlTvTMmJ20/Eqyxkh0IEGurbSrhuto=;
+ b=RzdHZ4Fx5g/MQ2aDe1b71qt3IfoDZ5AL0WWkAhpzPCUeoiUmvDhiXpVWoYnwWWA1P1N4wN
+ WSp05N4zBbR4F6DjelZGXv8jjgGSH+V8ysmtpbgARArViNH5O/bqGQfLwUb2S1PMQVzymD
+ dSZpeb+kFPDaVAEUfxWX3XDKK5RqkAQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-cvZ64Kz9MLOnHo1sCRQftg-1; Wed,
- 16 Sep 2026 09:59:18 -0400
-X-MC-Unique: cvZ64Kz9MLOnHo1sCRQftg-1
-X-Mimecast-MFC-AGG-ID: cvZ64Kz9MLOnHo1sCRQftg_1789567156
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-JU3eWqANNrGMRE1KkVn9jA-1; Wed,
+ 16 Sep 2026 09:59:24 -0400
+X-MC-Unique: JU3eWqANNrGMRE1KkVn9jA-1
+X-Mimecast-MFC-AGG-ID: JU3eWqANNrGMRE1KkVn9jA_1789567162
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3E051954B18; Wed, 16 Sep 2026 13:59:16 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E6731956076; Wed, 16 Sep 2026 13:59:22 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D168A1956054; Wed, 16 Sep 2026 13:59:11 +0000 (UTC)
+ id 097B71956054; Wed, 16 Sep 2026 13:59:16 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -58,23 +58,24 @@ Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 5/7] qapi/parser: fix intermediate "intro" detection
-Date: Wed, 16 Sep 2026 09:58:39 -0400
-Message-ID: <20260916135841.3614495-6-jsnow@redhat.com>
+Subject: [PATCH v4 6/7] qapi: convert intro sections with "TODO" markers
+Date: Wed, 16 Sep 2026 09:58:40 -0400
+Message-ID: <20260916135841.3614495-7-jsnow@redhat.com>
 In-Reply-To: <20260916135841.3614495-1-jsnow@redhat.com>
 References: <20260916135841.3614495-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,45 +91,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In 43e7ad1a3fa5, I adjusted the insertion algorithm for inserting
-something after the "introduction" to cope with both the old and new
-syntax while we converted QAPI to the new syntax. There's a bug in
-that code that only shows up in a handful of cases and only when using
-the new syntax while this affordance/flex code is still enabled.
-
-In the case that we do actually have a real bona-fide intro section,
-we want to insert directly after that real-deal intro section, not
-after any plaintext sections that may follow it. This code adjusts the
-temporary code to strongly prefer inserting after the actual intro
-section if it exists.
-
-Once again: once conversion is done, you will be delighted by how much
-of this ugly code goes away.
+This patch converts intro sections that are immediately followed by a
+"TODO:" that was formerly used to demarcate the stub member insertion
+point.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/parser.py | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ qapi/machine.json   |  7 ++-----
+ qapi/migration.json | 10 ++--------
+ qapi/net.json       |  9 +++------
+ qapi/yank.json      |  5 +----
+ 4 files changed, 8 insertions(+), 23 deletions(-)
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 9e14c2f7921..6a9a5589c14 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -845,6 +845,14 @@ def _insert_after_intro(
-         needed and ``_insert_near_kind(QAPIDoc.Kind.INTRO, ...)`` will
-         be sufficient.
-         """
-+        first = self.all_sections[0]
-+        if first.text and first.kind == QAPIDoc.Kind.INTRO:
-+            # First section is introduction and is non-empty: insert here.
-+            # Rest assured all of this ugliness will very soon go away.
-+            # Pinkie-swear.
-+            self._insert_near_kind(QAPIDoc.Kind.INTRO, section, after=True)
-+            return
-+
-         index = 0
-         for index, ref_section in enumerate(self.all_sections):
-             if ref_section.kind.name in ("PLAIN", "INTRO"):
+diff --git a/qapi/machine.json b/qapi/machine.json
+index a58e373dd70..84d95c8d87f 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1244,11 +1244,8 @@
+ 
+ ##
+ # @query-memory-size-summary:
+-#
+-# Return the amount of initially allocated and present hotpluggable
+-# (if enabled) memory in bytes.
+-#
+-# TODO: This line is a hack to separate the example from the body
++#     Return the amount of initially allocated and present
++#     hotpluggable (if enabled) memory in bytes.
+ #
+ # .. qmp-example::
+ #
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 0428f777882..d571c06fc20 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1617,10 +1617,7 @@
+ 
+ ##
+ # @query-xen-replication-status:
+-#
+-# Query replication status while the vm is running.
+-#
+-# TODO: This line is a hack to separate the example from the body
++#     Query replication status while the vm is running.
+ #
+ # .. qmp-example::
+ #
+@@ -1670,10 +1667,7 @@
+ 
+ ##
+ # @query-colo-status:
+-#
+-# Query COLO status while the vm is running.
+-#
+-# TODO: This line is a hack to separate the example from the body
++#     Query COLO status while the vm is running.
+ #
+ # .. qmp-example::
+ #
+diff --git a/qapi/net.json b/qapi/net.json
+index 526108ca0bb..d0bacb4dcfe 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -1159,12 +1159,9 @@
+ 
+ ##
+ # @announce-self:
+-#
+-# Trigger generation of broadcast RARP frames to update network
+-# switches.  This can be useful when network bonds fail-over the
+-# active slave.
+-#
+-# TODO: This line is a hack to separate the example from the body
++#     Trigger generation of broadcast RARP frames to update network
++#     switches.  This can be useful when network bonds fail-over the
++#     active slave.
+ #
+ # .. qmp-example::
+ #
+diff --git a/qapi/yank.json b/qapi/yank.json
+index 8ac4b773653..187a0952e66 100644
+--- a/qapi/yank.json
++++ b/qapi/yank.json
+@@ -96,10 +96,7 @@
+ 
+ ##
+ # @query-yank:
+-#
+-# Query yank instances.  See `YankInstance` for more information.
+-#
+-# TODO: This line is a hack to separate the example from the body
++#     Query yank instances.  See `YankInstance` for more information.
+ #
+ # .. qmp-example::
+ #
 -- 
 2.55.0
 
