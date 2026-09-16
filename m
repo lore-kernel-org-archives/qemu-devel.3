@@ -4,74 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E605C982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F884C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6mWM-0004r7-QX; Wed, 16 Sep 2026 06:05:42 -0400
+	id 1x6mbc-0007My-8t; Wed, 16 Sep 2026 06:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x6mWJ-0004pd-5T
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:05:39 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1x6mWG-0005xp-U7
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:05:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1789553137; x=1821089137;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=DN7PFBClXMHO52I7nrYjGvbfkH+PUzXSt49cJL9vsV8=;
- b=B++9fA3eaX45gPxOAtpK28WXu7Va6G9vejOPn9tH0VWEQj/sLr6m8m/w
- dAYP/GQHelm1JYr61Q6X/CYFo/DLL4dDXODvIinivCgHaph/RkPfMsAIa
- mwCZmF7a/WDbmglLM4gT5M9ntpXWYBh1R62OCggn0WJmb40tt59RPWt5t
- ge5rbb0RMOaMh+sBwWQ65Dwa6SZt689vcz2Xm7LrajvDc/qaIai9oJ+DC
- Klyba6mQgxF7bm/LJHbftLKMHWcoFG09wf48cUe0wkWCio8PReluj7EDG
- euy2N4Gy3hCXdBkG00MQrI6yeDtsluG7HuRhlh/JCFDsiZYfHQQpotKXE A==;
-X-CSE-ConnectionGUID: vZ04J4sRR9mBrBitkQA0+g==
-X-CSE-MsgGUID: BvoZ59u+Tz29hQim7ooFOQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93797336"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="93797336"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Sep 2026 03:05:36 -0700
-X-CSE-ConnectionGUID: kRCIna6WSbqEuZhVClz3Ig==
-X-CSE-MsgGUID: 9f1cFgSGQratErIis98hIA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; d="scan'208";a="269600260"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Sep 2026 03:05:33 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowangio@gmail.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v7 5/6] intel_iommu_accel: Accept PRQ response for passthrough
- device
-Date: Wed, 16 Sep 2026 18:04:40 +0800
-Message-ID: <20260916100442.1034043-6-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260916100442.1034043-1-zhenzhong.duan@intel.com>
-References: <20260916100442.1034043-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6mbV-0007MZ-7j
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:11:01 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6mbT-0006RZ-DR
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:11:00 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccc02279so587844a91.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 03:10:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789553457; x=1790158257; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=reXyOkWf+wcGli+dRwlPWqNmFDYbagokc/fUO/uANLQ=;
+ b=s/VjV441XssQphWpgBu891mJ2L+PX7sOHrQrPG9oBFuoCdROiZsC7BTUd/XsAWSKwr
+ IwMt81ATrU13NsNNMkXcjUkYUBQlqt2ANfKkDXnKfuq/lnATAVzc1tceiooPrvAe4qsS
+ gEJRUsHNMwKJEIAhxrRXX8Bb31xf3MrZHHbw1Y1a+N9tXlYCTZaULkxzS9Tc+YVSDvdO
+ 8CyZNaVW3yLbFEGhGQPTp/zqy1cT/gZXUnZtwkvoRjcFkfAjTNfal3rgMvGvN0hQIC5o
+ BO8qU/w9k56M2YgFZLMRp6MGX+b4nb3aCdAY7szDmzHm4JPS9Mj7U2iz3GuT2DlUANiX
+ cxnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789553457; x=1790158257;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=reXyOkWf+wcGli+dRwlPWqNmFDYbagokc/fUO/uANLQ=;
+ b=ooPPF8m9apszM/RsnDH2bjKzJqSvEsfYx/FtsFv94QxThCDiSkRGEdPYOI13vD+j2j
+ yp0wofsnmUUFmTHJpFEJPJ38NyjcZHoPSf8K2F3qaZebHXeHeBBdu0ZhZeW7EkGOlxp5
+ WrxRKmuRf/u1ZXjXPYKt1QkC0IV6pom5Yz0jluueEfVrWUdHGSuZw3iESup78/O8pMnz
+ kt9B3ln3w+afVqx+5m6R8oUDNSoxvglVLt6u03xsVYOf2jMMy6Z0/JrBYmECjGsoyGh6
+ MhpBOifhFelreVZG4iH1JFmHmYUrE5Xh/V9SOlRyn4UDB+V+TGZKMV9oqmcK/ED7k3H2
+ yvVQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzJ6706x7F1xZQobPzVBqyKlLWUlqtdZ1AteepLeYScRdyabrOFK20FPlCziZHTO6Lc/5mROiO6O8Ru@nongnu.org
+X-Gm-Message-State: AFuF++k7qcgkUBZZllu+TICANvxigZa5mYfDL789HsVOeo0/jLurXgbY
+ 7rBDcS3dstuTwsy1GaqUzDeFY0Sr3BBEmSEf7oZQitWd4Uc/fRBDeVY1tqpWQPGC61Q=
+X-Gm-Gg: AYBFou2t8QzjelhUEI7B3DnBox/KZm4OBZhNobU8UtPjZbr27a4ElPZ0pJ6uZG9t/tm
+ NHzOCrXCDcoQPF1wxns0QL+FXyiuDwBmwgjd5+8eSviw4PIncBk9zU81XdXo0LTIA8HYVEZDhUB
+ TXYsfONAsyum4DZLSS83JK9p3t1TCK+h/4+rdJHIrihwfXdch9Xxyj3VFO3P95y/XHoPDL6IBYQ
+ SMKjKy6YoxEcj4WyYpuI8jzRPjnzHD7CG+KZaKc6kO0eSEXtYfv2YVMoBh5gc3AZEShwy0XIgAC
+ 6Jf8lzO3ELSDWIwqg69XlH3HJoYS34lL5k6wydjzHLz12C/8j66nn6e/QWFCHRHbsIWtC3CRbUn
+ OvoE1aSaY/bX6M3g+f+YBne6q93gExGv6xslLKNEvMZ+sVTG9gV41HOfHaPMg6w1eFpfdg+OOHg
+ +TN/6ep9gOOfC77ASs0tmNdDaSwwO1sxa3yzw5LoOog3dTrtx/MTCs7Jg+Ly+aEG/JWJQ510/p1
+ SuCDAYNwxHRuGdqokWU9kM4c5UqdsKkHXQ0M3gDzZ4M3/AdCfaEYSuYDrkKeg==
+X-Received: by 2002:a17:90b:2f50:b0:39e:2c5c:a69a with SMTP id
+ 98e67ed59e1d1-39e2c5cac47mr424076a91.5.1789553457320; 
+ Wed, 16 Sep 2026 03:10:57 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:845c:f507:397b:9b72?
+ ([2603:800c:7900:ed00:845c:f507:397b:9b72])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-14397197dc8sm4917957c88.3.2026.09.16.03.10.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Sep 2026 03:10:56 -0700 (PDT)
+Message-ID: <0ebf4cdd-d5be-41f0-adaf-d540f3dd0793@linaro.org>
+Date: Wed, 16 Sep 2026 00:10:53 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/pmp: unlock all PMP entries on reset
+To: Sebastian Alba Vives <sebasjosue84@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+References: <20260916034331.2390427-1-sebasjosue84@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260916034331.2390427-1-sebasjosue84@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,233 +108,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Propagate guest's PRQ response to host by writing to fault_fd.
-Create a new VTDPRQEntry to cache cookie for each fault group,
-this cookie is used to mark the fault group on host side.
+On 9/15/26 17:43, Sebastian Alba Vives wrote:
+> pmp_unlock_entries() bounds its loop with pmp_get_num_rules(), which is
+> the count of entries whose A field is not OFF, not the number of
+> implemented PMP entries. When the active rules are not contiguous from
+> index 0, every entry at an index greater than or equal to num_rules
+> keeps its lock bit across a CPU reset.
+> 
+> Those entries stay locked after the reset has cleared mseccfg, so
+> mseccfg.RLB is no longer set and pmp_is_readonly() silently discards
+> subsequent pmpcfg writes. Firmware started after the reset finds PMP
+> entries it did not configure and cannot clear.
+> 
+> Reproduced on -machine virt -cpu rv64,smepmp=true with a bare-metal
+> payload that sets pmpcfg0 = 0x99990000 (entries 2 and 3 as
+> L | NAPOT | R, entries 0 and 1 left OFF) and then resets through the
+> sifive_test device. On the second boot pmpcfg0 reads back 0x99990000
+> and writing 0 to it leaves the value unchanged. With this patch the
+> same payload reads 0x01010000 on the second boot and clearing pmpcfg0
+> succeeds.
+> 
+> Iterate over the implemented entries instead.
+> 
+> Fixes: 4bf501dc0118 ("target/riscv: pmp: Clear pmp/smepmp bits on reset")
+> Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+> ---
+>   target/riscv/tcg/pmp.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+> index 41b55519a8..5286c6aa90 100644
+> --- a/target/riscv/tcg/pmp.c
+> +++ b/target/riscv/tcg/pmp.c
+> @@ -201,10 +201,10 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+>   
+>   void pmp_unlock_entries(CPURISCVState *env)
+>   {
+> -    uint32_t pmp_num = pmp_get_num_rules(env);
+> +    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+>       int i;
+>   
+> -    for (i = 0; i < pmp_num; i++) {
+> +    for (i = 0; i < pmp_regions; i++) {
+>           env->pmp_state.pmp[i].cfg_reg &= ~(PMP_LOCK | PMP_AMATCH);
+>       }
+>   }
 
-If there is either PRQ overflow or full error condition, propagate
-a success response to host for LPIG request with the PRQ requests
-dropped. For other error conditions, propagate response of invalid
-request.
+Why is the entire env->pmp_state not zeroed instead?
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
----
- hw/i386/intel_iommu_accel.h   | 12 +++++
- include/hw/i386/intel_iommu.h |  6 +++
- hw/i386/intel_iommu.c         |  4 ++
- hw/i386/intel_iommu_accel.c   | 99 ++++++++++++++++++++++++++++++++---
- hw/i386/trace-events          |  1 +
- 5 files changed, 115 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-index e0319749a5..0cc22b2cbb 100644
---- a/hw/i386/intel_iommu_accel.h
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -20,6 +20,7 @@ typedef struct VTDAccelPASIDCacheEntry {
-     uint32_t fs_hwpt_id;
-     uint32_t fault_id;
-     int fault_fd;
-+    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
-     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
- } VTDAccelPASIDCacheEntry;
- 
-@@ -31,6 +32,9 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-                                       uint64_t npages, bool ih);
- void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
- void vtd_accel_pasid_cache_reset(IntelIOMMUState *s);
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response);
- void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
- #else
- static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
-@@ -69,6 +73,14 @@ static inline void vtd_accel_pasid_cache_reset(IntelIOMMUState *s)
- {
- }
- 
-+static inline
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response)
-+{
-+    return false;
-+}
-+
- static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
- {
- }
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 1842ba5840..5d44eac0ed 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -100,6 +100,12 @@ typedef struct VTDPASIDCacheEntry {
-     bool valid;
- } VTDPASIDCacheEntry;
- 
-+typedef struct VTDPRQEntry {
-+    uint32_t grpid;
-+    uint32_t cookie;
-+    QLIST_ENTRY(VTDPRQEntry) next;
-+} VTDPRQEntry;
-+
- struct VTDAddressSpace {
-     PCIBus *bus;
-     uint8_t devfn;
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 81c53c6f5a..4c2347e7d2 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3380,6 +3380,10 @@ static bool vtd_process_page_group_response_desc(IntelIOMMUState *s,
-         response.response_code = IOMMU_PRI_RESP_FAILURE;
-     }
- 
-+    if (vtd_accel_propagate_page_group_response(s, rid, pasid, &response)) {
-+        return true;
-+    }
-+
-     if (vtd_dev_as->pri_notifier) {
-         vtd_dev_as->pri_notifier->notify(vtd_dev_as->pri_notifier, &response);
-     }
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 7baefe30cc..cd227315da 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -84,6 +84,62 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-     return NULL;
- }
- 
-+static void vtd_write_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                uint32_t cookie, uint32_t code)
-+{
-+    struct iommu_hwpt_page_response resp = {.cookie = cookie, .code = code};
-+    uint32_t id = vtd_pce->fault_id;
-+    int fd = vtd_pce->fault_fd;
-+    ssize_t bytes;
-+
-+    bytes = write(fd, &resp, sizeof(resp));
-+    trace_vtd_write_fs_faultq(id, fd, cookie, code, bytes);
-+    if (bytes < 0) {
-+        error_report_once("FAULTQ(id %u): write failed "
-+                          "[cookie 0x%x code 0x%x] (%m)", id, cookie, code);
-+    }
-+}
-+
-+static void vtd_prq_handle_pasid_response(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                          IOMMUPRIResponse *response)
-+{
-+    VTDPRQEntry *prqe, *tmp;
-+
-+    QLIST_FOREACH_SAFE(prqe, &vtd_pce->vtd_prq_list, next, tmp) {
-+        if (prqe->grpid != response->prgi) {
-+            continue;
-+        }
-+
-+        vtd_write_fs_faultq(vtd_pce, prqe->cookie, response->response_code);
-+
-+        QLIST_REMOVE(prqe, next);
-+        g_free(prqe);
-+        break;
-+    }
-+}
-+
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response)
-+{
-+    VTDAddressSpace *vtd_as = vtd_get_as_by_sid(s, rid);
-+    VTDAccelPASIDCacheEntry *vtd_pce;
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
-+
-+    if (!vtd_hiod) {
-+        return false;
-+    }
-+
-+    QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-+        if (vtd_pce->pasid == pasid) {
-+            vtd_prq_handle_pasid_response(vtd_pce, response);
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- static void vtd_propagate_recoverable_faults(VTDAccelPASIDCacheEntry *vtd_pce,
-                                              struct iommu_hwpt_pgfault *fault,
-                                              unsigned cnt)
-@@ -94,14 +150,42 @@ static void vtd_propagate_recoverable_faults(VTDAccelPASIDCacheEntry *vtd_pce,
- 
-     for (; cnt--; fault++) {
-         bool last_page = fault->flags & IOMMU_PGFAULT_FLAGS_LAST_PAGE;
-+        int ret;
-+
-+        ret = vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
-+                                   vtd_hiod->devfn, pasid,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_PRIV,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_EXEC,
-+                                   fault->addr, last_page, fault->grpid,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_READ,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-+        if (!last_page) {
-+            continue;
-+        }
-+
-+        if (!ret) {
-+            VTDPRQEntry *prqe = g_malloc0(sizeof(*prqe));
-+
-+            prqe->grpid = fault->grpid;
-+            prqe->cookie = fault->cookie;
-+            QLIST_INSERT_HEAD(&vtd_pce->vtd_prq_list, prqe, next);
-+            continue;
-+        }
- 
--        vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
--                             vtd_hiod->devfn, pasid,
--                             fault->perm & IOMMU_PGFAULT_PERM_PRIV,
--                             fault->perm & IOMMU_PGFAULT_PERM_EXEC,
--                             fault->addr, last_page, fault->grpid,
--                             fault->perm & IOMMU_PGFAULT_PERM_READ,
--                             fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-+        /*
-+         * vt-d spec 7.4.1:
-+         *
-+         * Hardware generates page group response with code of success for
-+         * PRQ overflow and PRQ full, with code of invalid request for
-+         * other error conditions.
-+         */
-+        if (ret == -ENOSPC) {
-+            vtd_write_fs_faultq(vtd_pce, fault->cookie,
-+                                IOMMUFD_PAGE_RESP_SUCCESS);
-+        } else {
-+            vtd_write_fs_faultq(vtd_pce, fault->cookie,
-+                                IOMMUFD_PAGE_RESP_INVALID);
-+        }
-     }
- }
- 
-@@ -433,6 +517,7 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-     vtd_pce->pasid = pasid;
-     vtd_pce->pasid_entry = *pe;
-     vtd_pce->fault_fd = -1;
-+    QLIST_INIT(&vtd_pce->vtd_prq_list);
-     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
- 
-     if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index ad84d106a4..7bf4cddd38 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -78,6 +78,7 @@ vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int re
- vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
- vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
- vtd_read_fs_faultq(uint32_t fault_id, uint32_t fault_fd, ssize_t ret) "fault_id %d fault_fd %d ret: %zd"
-+vtd_write_fs_faultq(uint32_t fault_id, uint32_t fault_fd, uint32_t cookie, uint32_t code, ssize_t ret) "fault_id %d fault_fd %d cookie %d code %d ret: %zd"
- 
- # amd_iommu.c
- amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
--- 
-2.52.0
-
+r~
 
