@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EDBC88E77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79DBC88E5C
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lfM-0000n3-1M; Wed, 16 Sep 2026 05:10:57 -0400
+	id 1x6le1-0006jl-Cc; Wed, 16 Sep 2026 05:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ler-0000Q3-Lp; Wed, 16 Sep 2026 05:10:28 -0400
+ id 1x6ldr-0005l9-GW; Wed, 16 Sep 2026 05:09:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lep-0007qy-5c; Wed, 16 Sep 2026 05:10:24 -0400
+ id 1x6ldp-0007V4-RW; Wed, 16 Sep 2026 05:09:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549562; bh=rjEjEziej6cjRYGPvzsqBfzwhuKzOOOtYiCHS5jWO4Q=;
+ t=1789549561; bh=NfcBORrjkAekWb0y70qOM6vtK9AUvfxjCuYl+d66bEU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rwRtn5eFVBjtDzV4lH9hB1CL+ui8jG49fS/R1kRBRjJRPsk8znEQMh+fBI+hqXqm1
- ono0K28GPk+dnqKUgUeqrviUAbhrMQj5Z9Eift+3JUgXCMyXAdqiqHC7oqonmQc5ct
- pugcVO3bDFuO+1mFa5v9PvsXPEXd12o3pKLmzysuTpKkx3D2ucZhHtNYbpEw9r+L+X
- P7g0im57CkxBFVG7d+XVGGIu9XPX1qbzfc9OtgMLwLCGHqFhsWgCx+iA5mm/RFnFNO
- N0iyxd5+/O2v5uQsYutWh6vIi/J4MD81ZsfgLWq073xjopCag44MPADG0cxWbfHQ14
- iYqgwcq4FYGAA==
+ b=dqCqdHzxNYwrtbFHgzgwpZ57FOj8G6PW0s6NJ6rkYod1Z3Yc89ABcQxud+Bcp2aV2
+ jUBx60hzfF3uDVM+BGzGVBnIzy4uzTO40yNDUHwb5JB6N0WfjBCb6sNw138I6KOJIN
+ CP9iipjIN4JhWPU4u4U8mClR5p7diIs6g+5Tn6zypkuanmy12hqxKBu3KYnoh7gdH1
+ uwKN21wGZjwah12ZwL4U0wtXEv6R58xAVRypAzmdDjr7iCF0rS88tRqyj/TSvkrTdy
+ XUZoKKF+I0v43T0B8dVzIx68PN84ioYEs5ZR8/evC7CYJBnNgx5BSswztHtNcmJVg6
+ 8BCh7VQ8XwnJQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 538211D56E7;
- Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 293771D56DD;
+ Wed, 16 Sep 2026 12:06:01 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3623429E43;
- Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C9325429E38;
+ Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DF0695A7BD; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
+ id A0A655A7A9; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 50/57] hw/display/qxl: hold ssd.lock while replacing
- ssd.cursor
-Date: Wed, 16 Sep 2026 12:04:14 +0300
-Message-ID: <20260916090516.677749-50-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 40/57] virtio-gpu: disable blob scanouts on mapping
+ cleanup
+Date: Wed, 16 Sep 2026 12:04:04 +0300
+Message-ID: <20260916090516.677749-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -73,54 +74,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-qxl_spice_reset_cursor() unrefs qxl->ssd.cursor and installs the hidden
-cursor without holding qxl->ssd.lock. Every other writer of that field
-takes it: qxl_render_cursor(), display_mouse_define() and
-qemu_spice_cursor_refresh_bh().
+When a blob resource backing is cleaned up (for ex via detach_backing),
+any scanouts referencing it must be disabled first to prevent the
+dmabuf from outliving its backing memory.
 
-The unlocked path runs on a vCPU thread, reached from ioport_write() on
-QXL_IO_DESTROY_PRIMARY and QXL_IO_DESTROY_PRIMARY_ASYNC, and holds only
-the BQL, which the SPICE display worker never takes. Unlike
-qxl_hard_reset(), it leaves that worker running.
-spice_qxl_reset_cursor() does round trip through the dispatcher, but the
-worker is free again as soon as it returns, so it can enter
-qxl_render_cursor() and unref the same QEMUCursor a few instructions
-later. Both threads then drop one reference for what is a single
-reference, freeing a cursor that another user still holds. The store to
-ssd.cursor races the same way, and a guest that keeps this up also ends
-up waiting forever in qxl_fence_wait().
-
-A guest reaches this by switching QXL mode while it also updates the
-pointer shape.
-
-Fixes: 958c2bceba06 ("qxl: fix cursor reset")
-Cc: qemu-stable@nongnu.org
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260903192647.2677279-2-den@openvz.org>
-(cherry picked from commit 2c43897356ac10dcce76a0287de8f9561c84fe82)
+Fixes: CVE-2026-66020
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 3ece85b53c124142c7d5cbb1165d4da125b7c369)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 2af2065a512..fc1c3059c6f 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -294,10 +294,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
-     qemu_mutex_lock(&qxl->track_lock);
-     qxl->guest_cursor = 0;
-     qemu_mutex_unlock(&qxl->track_lock);
-+    qemu_mutex_lock(&qxl->ssd.lock);
-     if (qxl->ssd.cursor) {
-         cursor_unref(qxl->ssd.cursor);
-     }
-     qxl->ssd.cursor = cursor_builtin_hidden();
-+    qemu_mutex_unlock(&qxl->ssd.lock);
- }
- 
- static uint32_t qxl_crc32(const uint8_t *p, unsigned len)
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index d6f83da852a..1cf2adeebbd 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -991,6 +991,16 @@ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+                                 struct virtio_gpu_simple_resource *res)
+ {
++    if (res->blob) {
++        int i, max_outputs = g->parent_obj.conf.max_outputs;
++
++        for (i = 0; i < max_outputs; i++) {
++            if (g->parent_obj.scanout[i].resource_id == res->resource_id) {
++                virtio_gpu_disable_scanout(g, i);
++            }
++        }
++    }
++
+     virtio_gpu_cleanup_mapping_iov(g, res->iov, res->iov_cnt);
+     res->iov = NULL;
+     res->iov_cnt = 0;
 -- 
 2.47.3
 
