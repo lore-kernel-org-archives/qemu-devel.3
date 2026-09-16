@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A72C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 11:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4876DC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 11:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6nh6-0004rL-03; Wed, 16 Sep 2026 07:20:52 -0400
+	id 1x6nou-0006Zm-Ae; Wed, 16 Sep 2026 07:28:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6nh2-0004qk-Px
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 07:20:48 -0400
-Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6nos-0006Ze-Jv
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 07:28:54 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x6nh1-0008Uw-2Q
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 07:20:48 -0400
-Received: by mail-yx2-x10.google.com with SMTP id
- 00721157ae682-85d43db0c1cso7137207b3.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 04:20:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789557646; cv=none;
- d=google.com; s=arc-20260327;
- b=KZtPEgj3rrFoR5DjapCtr1vAmeCWhNv2hCZ8E+6ef8TcFOzTC+EPWGH5UY2SFgjfGC
- BFVAEakssEkvnyywmQLT7vS+GwJKzLxcDnM4T9DjUIYVqZdP8afiQXki2LPXmR0pMV7D
- inFUD0TSF8/ZjfJ7Jko7KygvtMDaTVIP1aytbcQitw9Vbc6N0YD+ev8qs1vkxUR8dCAa
- qGwtO8iJ7b6KvHKYL7Hc3YiKrDSqR/Dy+BxLx0CRfTGUTDIKQfGNa0MfUpeWmagLb9+o
- HoGewO1D5IH+oBPjkmReIG0TXqGzU/wJgsSDH3x7w/QWB0flxlo8Uk06AdBOn6VecD65
- 4cMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=aRgVgjOFsh5/uu7F/9NUKjsFy7qIQcVbVGDCxF6g9zM=;
- fh=EQRlMMMaBW8zxI2rwUI6QZvbR3nqOcEaFehDENRIQPg=;
- b=CIL/vgFnOkWLFGZikJEXI/q0LBx2p/uDYRLsEZvXAonxQ9NbveTcsRSCK2ko43Vfrr
- S03fnmfqkOdUC3F+N/RZesDwRWU3YQ+ILsuttWMhAF48w4PmRhBF6xtmRgguAkVbtKeI
- 9QVXQ3zQAKOInEatoT6fu/Itkw9C249Pmamzb5qzWMuxxwUhl/1WfxYEAZVw906oTClx
- BLBXMCHtUsKnZ0BTIzVALWIXN7nhlSGhHzdbSj27HErAz9WIZ0bujIKrqXCEAlinPdcb
- 1zswE5oltmHV9EqQrr7j4U9WcDWC6rDbfIxFtQ1y2FPM4J52m+0Gi0Ecxg3JPyqBng+k
- nNEg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x6nor-0000db-2m
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 07:28:54 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49b965f447cso7174165e9.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 04:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789557645; x=1790162445; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=aRgVgjOFsh5/uu7F/9NUKjsFy7qIQcVbVGDCxF6g9zM=;
- b=rIMVrHqE17sr6jiSMT//bFsi0FVGFPppOS9nOjpgVO6d8i51MlPZ0tFaNG1mxn5zA/
- hYXigox24i/iyMqnCmC+K1eGanI8q8+FBIgWFyRfPWFt0cHrJKePGeWzRbOWAR+uPuoW
- vAqLAi024I8oRXHdcBQ6q3xmVLTZQ4A5yxbRdpS2sLrEQ8xQNNLwTNM3Fki0yJMnOWZK
- VGGKZZzwBAOM2BpcA+pUmcbJUfYc4svs6unbfCt083F5ISg9cUveVXfgD0su3CW8VphP
- aKms1KPND5+2EneRDiBJcDwvN2/rFjEWj+O6td04szhvPHjq7MSiKkrmRvJUmHktD16x
- HIoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789557646; x=1790162446;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1789558131; x=1790162931; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=aRgVgjOFsh5/uu7F/9NUKjsFy7qIQcVbVGDCxF6g9zM=;
- b=FBKlPRvIQxjMDXZC0BSBwgzl1I6A/ru1lwyJpe4S4381TbXdZes/OxZwbseXJLagQ6
- ERvhfpwOhUrQnrTOf8j28WRQEL8Hd698LNW8rJJXCkc1DHbOKA8oht/PXDcjc6W/lP64
- xuILoamJRpgRytD1PSJEjLhjj7gcaUUlXnhO6i7YWMtEFXU4bgIEKY1c2Tp6dgXp9mJg
- eWweNxST0Jig0t3VaNsQFYKxKR2YxCxYHYDLBGnOtaJHsIwDbMS0sh37HJLAy1TYhlet
- /F8OHdZNJzAwbNsIFZLbMXSjTsFcVi+tuutgT29hK00iwfZSE96WUXqWZQvsx2Cr0xc9
- bxmw==
-X-Gm-Message-State: AFuF++kDGW5KWnLuKUukMsflskuwZ8E1v3VHw10iSZte2MYb5Nb7Hd6F
- utcc7v7r2+2zZJNMb3jZmntqcs/y6cgmu0rq78OtFOsqCZ4MYpnz8XHOfa44xg8v7JLjsJwr08z
- c7tvHCmAnJ2+rNTZrNAIlBmdNXx1eHYZj0DULSlD80A==
-X-Gm-Gg: AYBFou2UV3FCwcCbtWCroPB3A7gYPDaBae1F0rD6R8ylRs/o1hraRtkiwIi74Oiz77W
- BRRknZFM1lKt2k4J8FeDt7T9Zzgh+K1hTOuDaXQBbn/9a16SV7saznPSj3B+lL53JCblI2jb94I
- XV9UGhlcPVeWCdA+XXEbYpykW9L0m3l5r6VsesBNS9aGjj6UugsQnSK0leJo754n35gUiNKFWci
- yU0BBxDMJNutFLXgMcQtl4wI5owOCPLo2aXxmyCNDv0I74Aiu6VXnhHZxgIyv1R2HJuq+z+H7L5
- vMwdUSnOaU2Ye8ko8b2vcA/znBBQkxIVs5B5DYV2W5M1Lpj/+2HQ4OXt7ngC0dEVkGDL4RXYahS
- zl83Nx1KjplPn7EJ6mnCvZZEDboVeoS+wS7kxGIxFG3JeCYlENQ==
-X-Received: by 2002:a05:690e:806:20b0:66f:c1bc:4091 with SMTP id
- 956f58d0204a3-671632efa5dmr421632d50.84.1789557645604; Wed, 16 Sep 2026
- 04:20:45 -0700 (PDT)
+ bh=r+TbMKsqCv4o4KmHQTuvDDj2hNt8/u7hIWMeRF+sdlw=;
+ b=OXRnJIdY28Pe7WV2IBN+r8DGSVt3c1zcUlKAxaVeAS4mEx8vIH9COBJT3Hp3kOR/qu
+ wSa4mvMfyoE/GieSVAwQDE6YO/MuAQgvFC6pC1NAUFVpAk1xLdScJKQCX+YOGNhus1Iz
+ MOlXe+ydE2UqwIihkOQylHcKBIm2JxNz3wUEF76YY95u/0AwKs3jOGSvSdieWBy6a1+3
+ S7ZARy271pvLa9Y9L1sts/lArWmYvv+q70YNJyR1FVNZVc24TWcp8X48Pnh4wgcO4ZO+
+ B9cWk/bKCAwMTPzZ8hXxOD0ESe2RcF53IPZ44rBI8dVduV56WTWr1e7zmAJxp/MMuFpc
+ YVUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789558131; x=1790162931;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=r+TbMKsqCv4o4KmHQTuvDDj2hNt8/u7hIWMeRF+sdlw=;
+ b=rceFacOOxRCoVCwO1fQbSBh/IDZIMNEPJZE1JwxRAdOq80v3epo6Xn77BQpt+I4VXG
+ 2pCe4JplpWUeGfV5tEdtfBIBLzrZEEAURix/8Cp9cAguek7wJ+YIJsjXL72WynE6Zd/B
+ GqVrmFM1uu4vYB7xZRbYMrY6EPe4pWQXnzkR3SvTGWSX59zN1Cv6h7ZwI+YbBMOyXxbN
+ TKQ3tHdNoR4nXmhWajJvpJpZj+zQyfr8ebifRf11kLYs1j85pYqgp78ImK3shDMSuLWB
+ uW/G5r7Yi5C4f3tX+wzHkCxgBQsVyIwGapl2vAdORIhqcDRj4H8deniqpLa3t9ZPmN0H
+ 9VOA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx9yAxOe4onyYuLOSYqlrg+SOyDP5B790aKTz1rffk11bWeIRTajkMQkzg+GgvUBqws5zfMbrfXPSve@nongnu.org
+X-Gm-Message-State: AFuF++msx4C6vZHeDHA4eGMlFTnRBx19h2tbyOtWL6qm+BxRW4rwKYP1
+ bWKVso8nvakUWtrpmbf6JCpDGawyOreff2ioRsgmXYc3WsScclLArH7sj8m2Xt9W6Ec=
+X-Gm-Gg: AYBFou2tJFcSD8hQNHcd27tiq+AHT7TLI53W2KUFA9hbQsUDq8CdgbBQ/dQTyvasdfs
+ GIOe094FMWENKb3fDmBynVwxpOkPR1t4UI0yIU2dzVc1SVXp3qdefqHGmcSzpKapp4RpZ7wtm3p
+ 9ucJxfF1jh+9/Sguf2jwvs5QFJ7TKezyngrou7U1+9XNE/O9onkcfSxm7AXZat6Yf2NoV80Wx31
+ 8xq4TqombtLY0B2zsC7ZH8nB6GeiFJVe3R6viUcRIeA5LQeDhXAJTYbv56t9L3U0TxR4J1P0tix
+ +3f43pw1aVW0LIIZz4zH3ED1+yQro3S/pWol8rm5pbyNQJ9oJS/XqdICjc8q/jpVaNkCF/6TrZZ
+ 9jWgNA+d72kn/OCJm238o+IlxFKoNmTqIGOwd+FdhSAr122ris1UsArmmbe6r1Sr8X0K4o23CgD
+ s7bQErbw8prZNhr+VaMy0oQRa89rtEV09EdNW1PzhM8YiUASUESwm4cSjhFpC4MSsO1G8iSq8=
+X-Received: by 2002:a05:600c:a00e:b0:49c:fa20:cc07 with SMTP id
+ 5b1f17b1804b1-49eb7336c57mr27420175e9.30.1789558130885; 
+ Wed, 16 Sep 2026 04:28:50 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e83fca34asm62137345e9.1.2026.09.16.04.28.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 04:28:50 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1A9895F8A6;
+ Wed, 16 Sep 2026 12:28:49 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] tests/tcg: Fix building outside of the source tree
+In-Reply-To: <20260915110855.491985-1-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Tue, 15 Sep 2026 13:08:41 +0200")
+References: <20260915110855.491985-1-iii@linux.ibm.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Wed, 16 Sep 2026 12:28:49 +0100
+Message-ID: <87ik45a0zy.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260916100021.73825-1-mohamed@unpredictable.fr>
- <20260916100021.73825-7-mohamed@unpredictable.fr>
-In-Reply-To: <20260916100021.73825-7-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 16 Sep 2026 12:20:33 +0100
-X-Gm-Features: AcwNN1WbDPC4zWhoTX8SZTF9QBFaMBagXwI6VYb1ZyKkLYdHhm8DkSczai9lXUQ
-Message-ID: <CAFEAcA_T1Ka5M=40LYKXD1nwnEefYbjx5mG=OfWuDqwFkMcdYA@mail.gmail.com>
-Subject: Re: [RFC PATCH v8 06/10] hw/vmapple: aes: convert MAX_LEN to a #define
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x10.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,59 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Sept 2026 at 11:00, Mohamed Mediouni
-<mohamed@unpredictable.fr> wrote:
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
+
+> Running TCG tests from a build directory that is outside of the source
+> tree fails with:
 >
-> Working around this compiler warning:
+>     [...]/qemu/tests/tcg/multiarch/libs/float_helpers.c:228:1: fatal erro=
+r: opening dependency file tests/tcg/s390x-linux-user-float_convs.d: No suc=
+h file or directory
 >
-> ../hw/vmapple/aes.c:257:14: warning: variable length array folded to constant array as an extension [-Wgnu-folding-constant]
->   257 |     char hex[MAX_LEN * 2 + 1] = "";
->       |              ^~~~~~~~~~~~~~~
-> 1 warning generated.
-
-I'm surprised this wasn't already caught by our '-Wvla' setting:
-we don't want to have variable length arrays at all.
-
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->  hw/vmapple/aes.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> This is because the build directory is not mounted into the container.
+> Add this mount. Do not bother with preventing overlapping mounts, they
+> are harmless.
 >
-> diff --git a/hw/vmapple/aes.c b/hw/vmapple/aes.c
-> index 553e688adb..9d062d5a7f 100644
-> --- a/hw/vmapple/aes.c
-> +++ b/hw/vmapple/aes.c
-> @@ -253,7 +253,7 @@ static bool cmd_iv(AESState *s)
->
->  static void dump_data(const char *desc, const void *p, size_t len)
->  {
-> -    static const size_t MAX_LEN = 0x1000;
-> +#define MAX_LEN  0x1000
->      char hex[MAX_LEN * 2 + 1] = "";
->
->      if (len > MAX_LEN) {
-> @@ -262,6 +262,7 @@ static void dump_data(const char *desc, const void *p, size_t len)
->
->      qemu_hexdump_to_buffer(hex, sizeof(hex), p, len);
->      trace_aes_dump_data(desc, hex);
-> +#undef MAX_LEN
->  }
+> Fixes: 27939ad414ca ("tests/tcg/meson.build: introduce cc_dockerfile and =
+cc_docker_host_arch")
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
-MAX_LEN is an awkwardly generic name. I would define it outside
-the function, something like
+Queued to testing/next, thanks.
 
-/* Maximum amount of AES data to dump in trace events */
-#define MAX_AES_DUMP_DATA_LEN 0x1000
-
-Then you don't need to #undef it as there's no risk of a clash.
-
-(Really this function ought not to do the binary-to-hex
-conversion of all the data unless the trace event is actually
-enabled, which docs/devel/tracing.rst says you can do, and
-it would maybe be nice to emit at least some truncated data
-in the "more than 1K of data" case, but let's stick to fixing
-the compile issues for the moment.)
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
