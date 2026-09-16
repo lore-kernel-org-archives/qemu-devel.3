@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EDAC88E77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24E0C88E5C
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6liA-0001DM-0u; Wed, 16 Sep 2026 05:13:50 -0400
+	id 1x6liw-0001xp-Sh; Wed, 16 Sep 2026 05:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6li5-0001BU-KR; Wed, 16 Sep 2026 05:13:45 -0400
+ id 1x6liQ-0001HH-DC; Wed, 16 Sep 2026 05:14:07 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6li2-00088l-Fn; Wed, 16 Sep 2026 05:13:45 -0400
+ id 1x6liO-00089B-O6; Wed, 16 Sep 2026 05:14:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=PhBiczhfL9JKVbsyNGB8L/d5YxsO1D1XLfJo7S5WBdI=; b=GSXDgig1Tfm20tj
- Xobs9QdKCQPd9PC0/hZ3nCMUmBeiq06optaFeKkg4elon/jJzVGyacuZiL5MHq3g68/CGW6G3PqBh
- 1jPVww6ZDhZAyANEaUe1vShjdz9sffaTvtlJtQ9kIPH4SsP9p5rwM0lG2tvFLbYsHxio3XiLJs3Qw
- 1U=;
-Date: Wed, 16 Sep 2026 11:19:04 +0200
-Subject: [PATCH v4 09/12] hw: Add availfn arg to DEFINE_MACHINE_EXTENDED()
+ List-Help; bh=TbZb94MuWzbziXvToTjwlOx61+5F1jk2mxBbl666i1Y=; b=nEBnGsVIlEqHNkh
+ qLlYlCQhOMXM+o5/z2sXyWJzaZDOpcOyvx9eTHJV3VN6rpO1bCXDfCh3RcjxJazLhB+25JvmW82AY
+ eDzmi1j/VPNs0uSa/yDBA47Yx6a+Te+ze459JDG0+HNp+cNg/sz3+F0Cz9sy/6Ogx16S8VZUnhSE+
+ 3g=;
+Date: Wed, 16 Sep 2026 11:19:07 +0200
+Subject: [PATCH v4 12/12] hw/riscv: Compile once
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260916-hw-riscv-cpu-int-v4-9-babc367b60f5@rev.ng>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260916-hw-riscv-cpu-int-v4-12-babc367b60f5@rev.ng>
 References: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 In-Reply-To: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 To: qemu-devel@nongnu.org
@@ -41,11 +41,11 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org,
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=5721;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=3555;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=o6AHgEhgEygZ6J0W6zNb9P0grigU2bmRV1jObUOjqKk=;
- b=BP5hI2ljbzGnDg8LIm/sNn/PtRnt3Qg5UR0UOIpfQTs5sf4Z3Uo17xAu5V9nVxNMZk9AZocx0
- DW7OjnLEzxCAJd2t42REHt401iVbscKzMROUTBdqCE1WzZ9qpSLZLwN
+ bh=9j6u0VO1MNm6eSXRDfR+CmzXxXhtVlrF3pwysoMdPag=;
+ b=uLv0kr7Bf6QgPKi0S654IAPVe1xY0YN6FEcsO8SGh9/Igjm90s9J3qtThQCUBVRjuvTiq9K0s
+ 3iRxviG6BXiA7zBJGz91r/QhL1DWFm8AD04GM9EI6B4qGWKsDXgug92
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -73,138 +73,67 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows specifying is_available when defining machines using convenience
-macros.  Also introduces DEFINE_MACHINE_WITH_GUARD() replacing
-DEFINE_MACHINE() for machines that need to specify is_available.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/hw/core/boards.h | 11 ++++++++---
- hw/arm/bananapi_m2u.c    |  2 +-
- hw/arm/cubieboard.c      |  2 +-
- hw/arm/imx8mm-evk.c      |  2 +-
- hw/arm/integratorcp.c    |  2 +-
- hw/arm/mcimx7d-sabre.c   |  2 +-
- hw/arm/orangepi.c        |  2 +-
- hw/ppc/pegasos.c         |  3 ++-
- 8 files changed, 16 insertions(+), 10 deletions(-)
+ hw/riscv/meson.build | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index dba465efc2..8c35516622 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -514,7 +514,7 @@ struct MachineState {
-  */
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 7aa3c1578d..b53661cf31 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -1,25 +1,26 @@
+-riscv_ss = ss.source_set()
+-riscv_ss.add(files('aia.c'))
+-riscv_ss.add(files('boot.c'))
+-riscv_ss.add(files('device-common.c'))
+-riscv_ss.add(files('fdt-common.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+-riscv_ss.add(files('riscv_hart.c'))
+-riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+-riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+-riscv_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
+-riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+-riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
+-riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
+-riscv_ss.add(when: 'CONFIG_TENSTORRENT', if_true: files('tt_atlantis.c'))
+-riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
++riscv_common_ss = ss.source_set()
++riscv_common_ss.add(files('aia.c'))
++riscv_common_ss.add(files('boot.c'))
++riscv_common_ss.add(files('device-common.c'))
++riscv_common_ss.add(files('fdt-common.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
++riscv_common_ss.add(files('riscv_hart.c'))
++riscv_common_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
++riscv_common_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
++riscv_common_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
++riscv_common_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
++riscv_common_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
++riscv_common_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
++riscv_common_ss.add(when: 'CONFIG_TENSTORRENT', if_true: files('tt_atlantis.c'))
++riscv_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+ 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
+-riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
+-riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
+-riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
+-riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
++riscv_common_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
++riscv_common_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
  
- #define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
--                                machine_initfn, ABSTRACT, ifaces...) \
-+                                machine_initfn, ABSTRACT, availfn, ifaces...) \
-     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-@@ -526,6 +526,7 @@ struct MachineState {
-         .class_init = machine_initfn##_class_init, \
-         .instance_size = sizeof(InstanceName), \
-         .abstract = ABSTRACT, \
-+        .is_available = availfn, \
-         .interfaces = ifaces, \
-     }; \
-     static void machine_initfn##_register_types(void) \
-@@ -536,11 +537,15 @@ struct MachineState {
- 
- #define DEFINE_MACHINE(namestr, machine_initfn) \
-     DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
--                            false, NULL)
-+                            false, NULL, NULL)
+-hw_arch += {'riscv': riscv_ss}
++riscv_common_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
++riscv_common_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
++riscv_common_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
 +
-+#define DEFINE_MACHINE_WITH_GUARD(namestr, machine_initfn, availfn) \
-+    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
-+                            false, availfn, NULL)
- 
- #define DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, ifaces...)\
-     DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
--                            false, ifaces)
-+                            false, NULL, ifaces)
- 
- #define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
-     DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
-diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
-index 8f59111fd4..7b86986efb 100644
---- a/hw/arm/bananapi_m2u.c
-+++ b/hw/arm/bananapi_m2u.c
-@@ -153,4 +153,4 @@ static void bpim2u_machine_init(MachineClass *mc)
- }
- 
- DEFINE_MACHINE_EXTENDED("bpim2u", MACHINE, Bpim2uMachineState,
--                        bpim2u_machine_init, false, NULL)
-+                        bpim2u_machine_init, false, NULL, NULL)
-diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
-index ae27056938..da45bb2be5 100644
---- a/hw/arm/cubieboard.c
-+++ b/hw/arm/cubieboard.c
-@@ -134,4 +134,4 @@ static void cubieboard_machine_init(MachineClass *mc)
- 
- DEFINE_MACHINE_EXTENDED("cubieboard", MACHINE, CubieboardMachineState,
-                         cubieboard_machine_init, false,
--                        NULL)
-+                        NULL, NULL)
-diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
-index 8a5737502f..68526c0e43 100644
---- a/hw/arm/imx8mm-evk.c
-+++ b/hw/arm/imx8mm-evk.c
-@@ -135,4 +135,4 @@ static void imx8mm_evk_machine_init(MachineClass *mc)
- 
- DEFINE_MACHINE_EXTENDED("imx8mm-evk", MACHINE, Imx8mmEvkMachineState,
-                         imx8mm_evk_machine_init, false,
--                        NULL)
-+                        NULL, NULL)
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index 382ea7850d..6314bbb6c1 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -705,7 +705,7 @@ static void integratorcp_machine_init(MachineClass *mc)
- 
- DEFINE_MACHINE_EXTENDED("integratorcp", MACHINE, IntegratorcpMachineState,
-                         integratorcp_machine_init, false,
--                        NULL)
-+                        NULL, NULL)
- 
- static const Property core_properties[] = {
-     DEFINE_PROP_UINT32("memsz", IntegratorCMState, memsz, 0),
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index db8a62e5f6..2c884b5c78 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -87,4 +87,4 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
- 
- DEFINE_MACHINE_EXTENDED("mcimx7d-sabre", MACHINE, Mcimx7dSabreMachineState,
-                         mcimx7d_sabre_machine_init, false,
--                        NULL)
-+                        NULL, NULL)
-diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
-index 7a19732f5d..87ed2ef4b6 100644
---- a/hw/arm/orangepi.c
-+++ b/hw/arm/orangepi.c
-@@ -134,4 +134,4 @@ static void orangepi_machine_init(MachineClass *mc)
- 
- DEFINE_MACHINE_EXTENDED("orangepi-pc", MACHINE, OrangePiMachineState,
-                         orangepi_machine_init, false,
--                        NULL)
-+                        NULL, NULL)
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 9d7e279123..cbff8bb59d 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -788,7 +788,8 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
- }
- 
- DEFINE_MACHINE_EXTENDED("pegasos", MACHINE, PegasosMachineState,
--                        pegasos_machine_init, true, (const InterfaceInfo[]) {
-+                        pegasos_machine_init, true, NULL,
-+                        (const InterfaceInfo[]) {
-                         { TYPE_PPC_VIRTUAL_HYPERVISOR },
-                         { TYPE_VOF_MACHINE_IF }, { } })
- 
++hw_common_arch += {'riscv': riscv_common_ss}
 
 -- 
 2.52.0
