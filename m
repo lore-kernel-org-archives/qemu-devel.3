@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA6FC982C1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19426C88E5C
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kJ8-00046E-RU; Wed, 16 Sep 2026 03:43:55 -0400
+	id 1x6kJS-0004EF-Po; Wed, 16 Sep 2026 03:44:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJ6-00045V-U8; Wed, 16 Sep 2026 03:43:52 -0400
+ id 1x6kJQ-0004Dc-3K; Wed, 16 Sep 2026 03:44:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJ3-0004rk-GR; Wed, 16 Sep 2026 03:43:52 -0400
+ id 1x6kJN-0004tM-Ta; Wed, 16 Sep 2026 03:44:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544583; bh=FUxEyQwDOLWLmLEqTUSbm9r0/I6u8apmnZsixUvEDPA=;
- h=From:To:Cc:Subject:Date;
- b=nEwiYMBd4rIfv+VOGV2oacvTScQDOECTEm9wy/p/l7ql6qOF8L1R1urouQplc+K8E
- 6B6qzarHZ4b2aFe8TrfQ+742DPn3c/JVhlXW0CXQ9tCU4rMpVDKlWdhxNrhvCynQlg
- jrxmCN6XYIFWzEiiP4AaDVVIL4h1LJbuzf6CzTa0Vm87CZzOD7Jo817TFHnp2LMN7Z
- arfx8xSFk9q6KJO80ZJWhVM3dachyLptn85RRy5jslIIYbajwAcJ6sanP8AvrqNwqo
- GMUmwYDhOOG2h+zvAcGymxF9eyuHUVmRuw6z+q5e8hrWDNKqJgAQN0mJQvyU24ZVj1
- 85e2fQaUIPkpQ==
+ t=1789544605; bh=WvKgO1IgVQSUbPcCbs/EfzeDp8D8/MHwatlgn5KBGrQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=ub/aE5NJ1AyRk8MD4jYca/0lvsGWJM/TiXp6A7yo/hcr7BZbTmiqQXZfaS+4T/4Ik
+ 2CFvhB0X7ByZHJb4gJOBD9vTI2B93scL5gb6bbmfaLXkoQDrwpntR7gMHR8wHb+Mow
+ R1Uw1D4NzK5vKss0hTJmcNiZQclCsspyxmfPlbxA8r/DkumnCzEQ7uN9EpsefAPtpk
+ Nxh1X8Nehi195duApV+7tEl5xvtbPapU95fzK+m9KiAVmHCSdVLspo+dQmIU+qPUBY
+ oms+xqhaNN1TWjeg1t8BKVBGuBGwc/H1Ff+MP3gBgpxXlaAEG3dZgD0PqIBeENtIBf
+ 1+yY0i+ln2B7w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 822B51D558A;
- Wed, 16 Sep 2026 10:43:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 182131D558D;
+ Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E9CE429B14;
- Wed, 16 Sep 2026 10:43:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9B9FA429B1F;
+ Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 04BE45A6C1; Wed, 16 Sep 2026 10:43:46 +0300 (MSK)
+ id 91CA25A6C5; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 00/49] Patch Round-up for stable 10.0.14,
- freeze on 2026-09-26
-Date: Wed, 16 Sep 2026 10:42:18 +0300
-Message-ID: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 02/49] virtio-gpu: use g_try_malloc to avoid
+ guest-triggered abort
+Date: Wed, 16 Sep 2026 10:42:20 +0300
+Message-ID: <20260916074346.671467-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
+References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,123 +74,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.0.14:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
+returns an error to the guest rather than crashing the host (glib
+behaviour).
 
-Patch freeze is 2026-09-26, and the release is planned for 2026-09-28:
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260805130141.211398-1-marcandre.lureau@redhat.com>
+(cherry picked from commit eb2b3a1fa807f47515a1d86e434c60c981310bcd)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  https://wiki.qemu.org/Planning/10.0
+diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+index 78648815093..933bdbb671c 100644
+--- a/contrib/vhost-user-gpu/vhost-user-gpu.c
++++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
+                       struct virtio_gpu_ctrl_command *cmd,
+                       struct iovec **iov)
+ {
+-    struct virtio_gpu_mem_entry *ents;
++    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
+     size_t esize, s;
+     int i;
+ 
+@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
+     }
+ 
+     esize = sizeof(*ents) * ab->nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(*ab), ents, esize);
+     if (s != esize) {
+         g_critical("%s: command data size incorrect %zu vs %zu",
+                    __func__, s, esize);
+-        g_free(ents);
+         return -1;
+     }
+ 
+-    *iov = g_new0(struct iovec, ab->nr_entries);
++    *iov = g_try_new0(struct iovec, ab->nr_entries);
++    if (!*iov && ab->nr_entries) {
++        return -1;
++    }
+     for (i = 0; i < ab->nr_entries; i++) {
+         uint64_t len = ents[i].length;
+         (*iov)[i].iov_len = ents[i].length;
+@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
+             g_critical("%s: resource %d element %d",
+                        __func__, ab->resource_id, i);
+             g_free(*iov);
+-            g_free(ents);
+             *iov = NULL;
+             return -1;
+         }
+     }
+-    g_free(ents);
+     return 0;
+ }
+ 
+@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
+                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
+             size_t size = width * height * bpp;
+ 
+-            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
+-                               sizeof(VhostUserGpuUpdate) + size);
++            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
++                                   sizeof(VhostUserGpuUpdate) + size);
++            if (!p) {
++                pixman_region_fini(&region);
++                pixman_region_fini(&finalregion);
++                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++                break;
++            }
+             VhostUserGpuMsg *msg = p;
+             msg->request = VHOST_USER_GPU_UPDATE;
+             msg->size = sizeof(VhostUserGpuUpdate) + size;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 550fd03bf5c..20bae57d0fe 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
+index 710d5452977..e2d8385fd85 100644
+--- a/contrib/vhost-user-gpu/vugbm.c
++++ b/contrib/vhost-user-gpu/vugbm.c
+@@ -13,7 +13,10 @@
+ static bool
+ mem_alloc_bo(struct vugbm_buffer *buf)
+ {
+-    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
++    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
++    if (!buf->mmap && buf->width && buf->height) {
++        return false;
++    }
+     buf->stride = buf->width * 4;
+     return true;
+ }
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index cfa91b9e8a5..851b7cae2cb 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -366,10 +366,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_new0(uint8_t, cs.size);
++    buf = g_try_new0(uint8_t, cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+-    CHECK(s == cs.size, cmd);
++    if (s != cs.size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: size mismatch (%zu/%u)\n",
++                      __func__, s, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
+ 
+     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
+     rutabaga_cmd.cmd = buf;
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 44eb1f5c972..326b887451b 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -38,8 +38,11 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+         return;
+     }
+ 
+-    list = g_malloc0(sizeof(struct udmabuf_create_list) +
+-                     sizeof(struct udmabuf_create_item) * res->iov_cnt);
++    list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
++                         sizeof(struct udmabuf_create_item) * res->iov_cnt);
++    if (!list) {
++        return;
++    }
+ 
+     for (i = 0; i < res->iov_cnt; i++) {
+         rcu_read_lock();
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index d4d46148b5d..e6862716dc2 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -499,7 +499,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 930b069c7ec..365ffba9919 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -888,7 +888,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+     }
+ 
+     esize = sizeof(*ents) * nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    offset, ents, esize);
+     if (s != esize) {
+@@ -909,6 +912,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+         hwaddr len;
+         void *map;
+ 
++        /* TODO: a common DMA map SG helper */
+         do {
+             len = l;
+             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+@@ -917,20 +921,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
+-                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
+-                g_free(ents);
+-                *iov = NULL;
+-                if (addr) {
+-                    g_free(*addr);
+-                    *addr = NULL;
+-                }
+-                return -1;
++                goto err;
+             }
+ 
+             if (!(v % 16)) {
+-                *iov = g_renew(struct iovec, *iov, v + 16);
++                struct iovec *new_iov;
++                new_iov = g_try_renew(struct iovec, *iov, v + 16);
++                if (!new_iov) {
++                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                     DMA_DIRECTION_TO_DEVICE, len);
++                    goto err;
++                }
++                *iov = new_iov;
+                 if (addr) {
+-                    *addr = g_renew(uint64_t, *addr, v + 16);
++                    uint64_t *new_addr;
++                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
++                    if (!new_addr) {
++                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                         DMA_DIRECTION_TO_DEVICE, len);
++                        goto err;
++                    }
++                    *addr = new_addr;
+                 }
+             }
+             (*iov)[v].iov_base = map;
+@@ -948,6 +959,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+ 
+     g_free(ents);
+     return 0;
++
++err:
++    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
++    *iov = NULL;
++    if (addr) {
++        g_clear_pointer(addr, g_free);
++    }
++    g_free(ents);
++    return -1;
+ }
+ 
+ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+-- 
+2.47.3
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
-
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01 ab7183ed4eec Marc-André Lureau:
-   hw/display/qxl: validate primary surface stride against width
-02 eb2b3a1fa807 Marc-André Lureau:
-   virtio-gpu: use g_try_malloc to avoid guest-triggered abort
-03 0e62034ca10f Marc-André Lureau:
-   crypto: fix build against nettle >= 4
-04 418396be8013 Warisjeet Singh:
-   hw/display/vga: fix text-mode OOB write after a graphics surface switch
-05 0846740652d1 Christian Quante:
-   hw/input/ps2: answer unknown mouse commands with a resend
-06 2667133c2799 Denis V. Lunev:
-   job: keep job paused across overlapping pause requests
-07 438ee08bc97a Denis V. Lunev:
-   tests/unit/test-blockjob: cover keeping a job paused while a pause is 
-   pending
-08 59ecd8a1ac3f Denis V. Lunev:
-   block/monitor: reject persistent bitmap add on a read-only node
-09 3f3f5cdb929e Denis V. Lunev:
-   migration/block-dirty-bitmap: reject bitmap load onto ro node
-10 9a77ef813f5f Denis V. Lunev:
-   block/monitor: allow dropping a bitmap never stored on disk
-11 dc04053687ec Denis V. Lunev:
-   dirty-bitmap: fix integer overflow in serialization coverage
-12 569aa6280d14 Nicholas Piggin:
-   target/riscv: tt-ascalon: Enable Zkr extension
-13 51362da8f73b Ivan Efremov:
-   target/riscv: Fix seed CSR sign extension
-14 e80cf2947978 Ivan Efremov:
-   tests/qtest: Add seed CSR zero extension test
-15 d7913fac7747 Christian Borntraeger:
-   s390x/sclp: pv: only copy the original SCCB buffer
-16 6c712a86f6c8 Denis V. Lunev:
-   hw/ide: reject an unsupported CHS translation
-17 0905ef5b6d48 Denis V. Lunev:
-   tests/qtest/ide-test: cover a CHS translation with zero sectors
-18 0df27c66dc72 Denis V. Lunev:
-   hw/ide: report the default CHS translation in IDENTIFY DEVICE
-19 d30254aec931 Paolo Bonzini:
-   scsi-disk: fix out-of-bound read in WRITE SAME
-20 0f410adf6b0d Paolo Bonzini:
-   scsi: hide MODE SELECT block size change behind a quirk
-21 d61c8a6fb738 Paolo Bonzini:
-   vapic: confine the VAPIC region to 0xc0000..0xe0000
-22 cfa6e2c52ca8 Paolo Bonzini:
-   i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails
-23 f63124af7846 Alexandre Frey:
-   target/arm: fix TTA instruction S bit for IDAU-exempt addresses
-24 59716ac3067d Peter Maydell:
-   target/arm: Correct reset value of SCTLR for arm926, arm1026
-25 c05e01a88581 Peter Maydell:
-   target/arm: Make CBZ/CBNZ UNDEF before v6T2
-26 50d6757147db Peter Maydell:
-   target/arm: Make IT insn undef when not present
-27 2931a675e9d3 Peter Maydell:
-   target/arm: Make Thumb T1 hint space UNDEF before v6T2
-28 10dddf15e294 Bin Meng:
-   hw/sd: sdhci: Accept version 4 enable without UHS-I
-29 a3de21bfa5d0 Denis V. Lunev:
-   io/channel-socket: do not treat a zero length write as an error
-30 cd71c2f40a53 Denis V. Lunev:
-   io/channel-websock: send an HTTP 400 when the greeting has no space
-31 2295deb48898 Denis V. Lunev:
-   io/channel-websock: handle a blocked write during the handshake
-32 e867e2047c6c Denis V. Lunev:
-   tests/unit: add websock handshake test
-33 7a72a4652a79 Denis V. Lunev:
-   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
-34 0e5718799199 Denis V. Lunev:
-   tests/unit: cover blocked IO during the websock handshake
-35 3ece85b53c12 Marc-André Lureau:
-   virtio-gpu: disable blob scanouts on mapping cleanup
-36 c7254cd584bb Marc-André Lureau:
-   virtio-gpu: clear res->blob on mapping cleanup
-37 713e7e85a2b4 Junjie Cao:
-   hw/cxl: Fix guest-triggerable QEMU exit on reserved interleave ways
-38 f10977073cb4 Zhang Chen:
-   qapi/misc: Fix missed query-iothreads items
-39 5d85a09554fb Laurent Vivier:
-   hw/net/virtio-net: check packet size before VLAN tag access in 
-   receive_filter()
-40 73c3d017ef6a Laurent Vivier:
-   hw/net/virtio-net: strip trailing padding when caching RSC segment
-41 15dcee919555 Jia Jia:
-   hw/virtio: reject inverted virtio-iommu IOVA ranges
-42 fdc3f9a83ddf Michael S. Tsirkin:
-   virtio-balloon: fix free-page BH teardown on unrealize
-43 5440b6b5de46 Stefan Hajnoczi:
-   virtio-scsi: set dataplane_started to false upon failure
-44 0ddbce88c45a Junjie Cao:
-   hw/cxl: fix the CDAT DOE overlapping the Flex Bus DVSEC when sn= is set
-45 2c43897356ac Denis V. Lunev:
-   hw/display/qxl: hold ssd.lock while replacing ssd.cursor
-46 1063bbb71185 Denis V. Lunev:
-   ui/cursor: make the cursor refcount atomic
-47 01df81b24c50 Marc-André Lureau:
-   vhost-user-gpu: validate command buffer size in submit_3d
-48 7e5c85f7f2a8 Kostiantyn Kostiuk:
-   qga: Change effective user/group ID in guest-ssh-* commands
-49 2a8b740e7acf Bin Guo:
-   hw/intc/bcm2835_ic: reject out-of-range FIQ source values
 
