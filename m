@@ -4,92 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38454C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EABEC982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6vp0-0002GS-Ki; Wed, 16 Sep 2026 16:01:34 -0400
+	id 1x6vtk-0003Da-8w; Wed, 16 Sep 2026 16:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6voq-0002G7-W6
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 16:01:27 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x6voo-00060m-Tv
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 16:01:24 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc50bcf87b2so43855a12.1
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 13:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789588880; x=1790193680; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=grBhvtJiOkTraGTpm5AYZCtzN8O5euX8I7MJ3U+9SjY=;
- b=HEPs/pOcDOGlIS2VKirxPXJoqh5jR/pH1kgOtliU1KeiY2rmYQ4fAM70+PnBWdarGf
- qTbJqBcr22D9LmJS58C95Ppt9UZ0nX9svXZaImlqQ1GIaXOdJ2M1LLpZuBD8RbX7IIzZ
- 53EWa+KRn4KfN8KT9OwPogqTqYZtJiR4jT/eQUu4mxGNHgqE/nP24E0ZIDYs2QnqbPkR
- cCBHP8iPromTkoAGCvVVYJyJyYiqVpHOAcM9eN/YLp9wKf7uCxOXVw2NRq3RR63+cPo/
- nlCXa0J8rOWExCMe3pr1zeFc0CSyHxK7q1Sd4AwO/YT+lrxPMM8EgxW/IgsZsVPGMD9U
- x7jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789588880; x=1790193680;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=grBhvtJiOkTraGTpm5AYZCtzN8O5euX8I7MJ3U+9SjY=;
- b=WER0quY7IT9hMC7LpRryh8og19A7T48+VWJOLm0v/3c8DbF6HFfGJc7WoF2L69kc/p
- fP/zp5GoH4tmjwmlwqIg0UchPNKIPJfD07CvpjBXeRkdIL/baW4b6rbI6uFZ3uRbpZzD
- u1d+t3amosEAquznvuRSjf7OyDQFFuv4ebwQ0sJ+EadQGsO5id2WtUHszTAIJuUaFXKF
- COipNWZDf+qRKM68HF7XQ4q62qrdxLK7uhmtDQ7yXY1dhhAXt2ryBQfX1y25muCxGpM0
- AjGNfKXnXAiWgqo3JQfuyxuweisaZZlP3a/dfIxf8v21d0YGzOSreqUS/Q2oWVL11p67
- /Mfw==
-X-Gm-Message-State: AFuF++mYaoGOQohlUTnx3iRnCXIUBCL0kRWo1+VKXJC347wfX9O8zppv
- YEvvMzpidDLxH0C6sF2DOnp+iPO+T+DK+sokOYgy+Vkj0OIcR0X6uIa01B4l0NAOPhe1an7bXeS
- bj5qH
-X-Gm-Gg: AYBFou232uU/I+7wVEJ//VsutejljcwbOZpEr7+Q7rpMY/GPimqWmBp8bytAMUPyRII
- l70acyeOP6Tl4E2Zht7mBdLMQNJOIuhIYzsKW3WtoSVVOa3nFifPAkPlbL+rD/Q0mY5GXd2plL3
- S06nyzNgHAfYK8+v9M4hLnCGtXSj6LiDk16UeVFni5BihItmUNNHv+BcXgI/Wn2Nf5eLIfUttpr
- CXz5dW62nALgR/pT3pnJFl1tDXLVUzqxxTLWYcu3FKlfO0Ya7U2AwVITgA52CiTti/ot08obCtz
- 1S8Mj6Na0oMO2KrJ5Cw0JAIJv3fibOey+iCGKXtpSrXT+i5YzTANqHwnx5cATr5xcnRQ/ILfgrW
- kHPYUbKCv54tnx/UwuQ8zrs/tPXPRIFHCmoF65p3f2gcg2DLv9Raax/s5cKmI9gkWKIGs3UMOTM
- TRuHgOolnag9zWEpaxyw1dd3l8AHT17Z9/D3+1D5StyKeLwFb5lDzB5HVrcZCO/cZ4kxOa5uolP
- T9x3OsvOTMziCDCdS+vx+cqMU45mGFsKos2B3c1670JccjIIWqHmr9ou9KTDQ==
-X-Received: by 2002:a17:90b:2585:b0:39e:261:4e10 with SMTP id
- 98e67ed59e1d1-39e1e5380cdmr11536298a91.22.1789588880208; 
- Wed, 16 Sep 2026 13:01:20 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:2521:7533:da60:6a28?
- ([2603:800c:7900:ed00:2521:7533:da60:6a28])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5ad9ed5sm10574659eec.22.2026.09.16.13.01.18
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Sep 2026 13:01:19 -0700 (PDT)
-Message-ID: <663295d0-b1de-4c8f-bfbb-f2f85c7cb77a@linaro.org>
-Date: Wed, 16 Sep 2026 10:01:16 -1000
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1x6vth-0003Cp-8R; Wed, 16 Sep 2026 16:06:25 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1x6vte-000708-SX; Wed, 16 Sep 2026 16:06:25 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 43D68601EF;
+ Wed, 16 Sep 2026 20:06:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7251F000FF;
+ Wed, 16 Sep 2026 20:06:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1789589173;
+ bh=YGuP/gAN5ygsx2j5cjpwIXtDRIjDeLDtv8WvQN5Rl+Y=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=EI664whNbZvXK8AYgfjuCn8aqKfw+Yu4HXCVo58+1Ym3gLx1NRJHSOliiI5OOQ+Ck
+ a7Zu50+WUKVdYReLG7OE4PRYk+unF/WCsX7khRwzlA2X7qVZ2BGMqG5CS4J1xV4K4r
+ i2SzYyqb/mn2z/HLSkwRQFgu5cRhmATxwXgyKNwyAKGE5K0PABUNm7A2JXNZEn6APU
+ iZfqE/rkrIDDPbrTn2fxmHj/09bP0ogOk/x9fluUX7IR9sjUMDdm/xlRJKqqpewryc
+ e3yRXH+mEcKzF6hu6MxW5A3xet32+3XVMAuCoK4e+90uyivx9HV4kwdffrjYCp5jKf
+ +6ROz9i26zbjQ==
+Date: Wed, 16 Sep 2026 22:06:07 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Sam Li <faithilikerun@gmail.com>,
+ Damien Le Moal <dlemoal@kernel.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 04/12] virtio-blk: report the effective zone write
+ granularity
+Message-ID: <aqr2r83GkqmujyUG@ryzen>
+References: <20260907110748.1868714-1-cassel@kernel.org>
+ <20260907110748.1868714-5-cassel@kernel.org>
+ <20260909182755.GC20134@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/tcg: compute C of CC_OP_ADOX without going
- through helper
-To: qemu-devel@nongnu.org
-References: <20260916133033.875328-1-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260916133033.875328-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260909182755.GC20134@fedora>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +74,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/26 03:30, Paolo Bonzini wrote:
-> With the CC_OP_ADOX cc_op, the carry flag remains in CC_SRC just like
-> with CC_OP_EFLAGS.  Add CC_OP_ADOX to the same gen_prepare_eflags_c
-> fast path as CC_OP_EFLAGS, to avoid generating a helper call.
+On Wed, Sep 09, 2026 at 02:27:55PM -0400, Stefan Hajnoczi wrote:
+> On Mon, Sep 07, 2026 at 01:07:39PM +0200, Niklas Cassel wrote:
+> > @@ -1274,7 +1274,8 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+> >                       bs->bl.max_active_zones);
+> >          virtio_stl_p(vdev, &blkcfg.zoned.max_open_zones,
+> >                       bs->bl.max_open_zones);
+> > -        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity, blk_size);
+> > +        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
+> > +                     blkconf_zone_write_granularity(conf));
+> >          virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
+> >                       bs->bl.max_append_sectors);
+> >      } else {
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/translate.c | 1 +
->   1 file changed, 1 insertion(+)
+> The device emulation code cannot expose the limit value from the host
+> device because that would break live migration: a guest device must
+> remain unchanged across migration and the VIRTIO Configuration Space
+> cannot change field values if the source and destination hosts have
+> different disks. The guest driver does not expect these values to
+> change once the device has been probed.
+> 
+> For example, it would be possible to migrate from a host with a write
+> granularity of 64 KB to a host with a write granularity of 4 KB. The
+> guest must still see a 64 KB write granularity the entire time (even
+> after migration).
+> 
+> For this reason, limits on guest devices must be configured explicitly
+> rather than automatically populated from the host device limits.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Sure, this can easily be implemented as:
 
-r~
+MAX(conf->logical_block_size, conf->physical_block_size)
+
+which is a pure function of the device configuration.
+
+
+> 
+> Could you implement an error when the guest limit has not been
+> configured appropriately for the given BlockBackend instead?
+
+Will do.
+
+
+Kind regards,
+Niklas
 
