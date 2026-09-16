@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86750C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB650C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lOu-0007qO-LX; Wed, 16 Sep 2026 04:53:56 -0400
+	id 1x6lOv-0007qx-Fl; Wed, 16 Sep 2026 04:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6lOp-0007l7-KZ
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:52 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ id 1x6lOn-0007kv-Tr
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:51 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6lOm-0004zG-Gy
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:51 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f6350f91so334682f8f.1
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:53:47 -0700 (PDT)
+ id 1x6lOk-0004yT-GS
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:53:48 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49b912e4ad9so3474225e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789548827; x=1790153627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789548823; x=1790153623; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Oc6yr6zbpyTI1sBnf60D2N+15kHWjne7Pv8s7CbUCQc=;
- b=KDSOOGQFM4DHYFlcAivzMKZ3KQ1KmVxQ3wKew9NsU97K0N4oWW7dJbQWDm/ioqhLRH
- zjI8HmcS8BL1eygxladKMppmnnLAedhwjxOupjWAXpVz8eyt6Dc7p21vvnOkRav7CXiR
- +CgYlqXpwS26gsNVcNe/m+1FMrQq7Q9TMfYC9PEcUG3Xa3wSNrLSHMyy5n2AVbXB10ix
- B7MTvAuUFpqOD0IgqPMR2JY1l3e268k//7bniHXWJ3QU22GjIWhCt1RGUFXk7BDt+Kk4
- gHMkLeXSB/lugKxWbpuaGCrrb18gKjRIWY5JedoBimSdQmFS2kfhJ0SHZ9hAlRla8Yeo
- u5Rg==
+ bh=Ry2sd1z4lQEPz/cq12Fj5YfxjJ6T7+6xlmSJ+36c4vQ=;
+ b=Su3DbH+YMF9MHUtwWRK9okXHUcedxttmBQp62bz5K7iUsnARpHU038beDNhem3i/u7
+ b294vzLFsNeb6Opv0VHAVMvq1rbtDxZzMJ7ikiTqrzaWvWKf70Ll8l5BfD5vpgKlsIbt
+ minZyG1ox6wOMy1Z6u+nPrkA0JoDoPIKQl+08NGhs5Z64g0+PnMLqSgRO/4rp2T3lJai
+ sCGGZKXFe09kwNpnlt3A6TZ6CUeSbA4U58zwEsdpYTGJOfYOaqrZi4MJuuVubUUhGiVR
+ rcUx02ak3z0ZsBTf27sGSv8FxO33VXG2le1xjFOtvSSN0LjSXQTy7AjquL8+UWAAfrLL
+ P3ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789548827; x=1790153627;
+ d=1e100.net; s=20260707; t=1789548823; x=1790153623;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Oc6yr6zbpyTI1sBnf60D2N+15kHWjne7Pv8s7CbUCQc=;
- b=f8bbPBHLs3aJhAv/DTj0NANmxsqy+aUFM8iFmUsKygg1ZORYQ5Z6nKxBGgt7Vy/mY9
- wBEK9ulYThiqUz1WnF3H4V43IeZIi1G2g/x975cewvrqDlF+gxcITOGIFokoBWMq5kPI
- OhL0etsUdzhBoaH03xr2rpeaG88ZKMpVoZAZtBr6E/E1thOuNJIR6bdAxWUUteLmN5Jo
- MpJUzQR7/jgGHCIdtZkhwqwh7zSlJdRigZpsYFzyUPewid0Fe7+u4xcYayefsUzDL60S
- n8+T6cwJt0hluJHSdWmvRezeL1ROTd4Vyv96+p9BomDiLBC5CXmER/S3ud2CnShV1UPM
- TVtg==
-X-Gm-Message-State: AFuF++lkCnAxnHPFWCyECXjlz0aGyRPxmRGrAfhL48b4Ji/rXSAVEr4O
- Lglx2SK2oz3EeHfwE8pD3TQ/RDRONqBKrgYbBPiEn9HO8OwkhmJV8OpiLNCbR3huFno=
-X-Gm-Gg: AYBFou2ltFcJiQP6XGzQCDwVvjQc7EtVet+f+rmXOyG0AK+tus1xmdXvhNHB+bpH9eC
- Fs451WPUAX4bjjYAghhCg22kiNsjqNx0ik3riHp14gywYRpKx296aNniQ5eoGpJYbb72SpXNe8/
- lCKgORbO9tVMEc8HAQHve5Np1Nah2BAh6kuh+QNbgiuCgAfh7nXV4Hzp17ap3we2mGQDhx/BNal
- r/K4O6V/ltkKE8o2Q2vyIcC+StyQpQhP8z4dYbCNxcZEqXskE5d6JS98tes/rwLmBUA7GePctJm
- dSH/avQJJ966+aDq4WjQBsOiYxVPdVYhjTxaTrY21qjhvGftnDcLVEz8u5ENuYY7oFhz80fcRRZ
- ExTnBCvAfevrnuu/hIS4rsPNa8Un+wu/CUgFTshC5csTLAnGmujjc2gxdBTgSw7M8cccEkmbjEi
- LTscD4lzAxxfS7iy+pFtHSFHFmw4VuJW3cRbeGAFxi9eE2Y21Ej16aGY6ZQ4Ucu14MzBw4eV0=
-X-Received: by 2002:a05:6000:46c6:b0:487:363:d8d9 with SMTP id
- ffacd0b85a97d-4870cf20995mr1608042f8f.18.1789548826910; 
- Wed, 16 Sep 2026 01:53:46 -0700 (PDT)
+ bh=Ry2sd1z4lQEPz/cq12Fj5YfxjJ6T7+6xlmSJ+36c4vQ=;
+ b=tAK/75rzjujvyHDV1fOMUHcGXdVEXV7Yy3OGU1WX6Lem5xjSPJ42AqRl6QB8MU/MUP
+ rC9DiS+VNT7FrUGHtMOMJcewXGchbAJ2HWWgxcnQ7C5VdU4vhxu+Iejvas2eauXksThp
+ 22z/WVLJqyXT1k57Nhn4Mr892JZCzZBBpf8hTFkngwNnYkmaOgYQwd2mTszE63RLd+cV
+ 20dNxwzRRR/mm+u+iCS10Yug629I/OJKWP+QUdiolnlXjlE2n3YRy6XYSZD1aolt9wJA
+ Rwpz4/HZ94p7mU/jLmFCSAZMp/tz6/3zz6pOMnB1tp/F2bzWSg1GldE0axPL7xd2KZpN
+ PM2A==
+X-Gm-Message-State: AFuF++k3OvbeytvwdxCjZNMBTs4gYM+nuSNjwRpCNG3j9Ln9bTr92XcZ
+ Gkq4B8aNtR511ZRLHw/RrvJdjK7srO8WR0HdAxGbbUQ776S8TzQCt62//E6qfq/lufs=
+X-Gm-Gg: AYBFou04kLgF/K9xEqVAq4Ms2FESCH2+FlVwFAhRstdesBDhtRTdpJbC5qClXs0IFBY
+ VsSN02GalrbpPBKdU58q0l8UeIvNGbhrWpct3eD2DTfKYJqYQI+z+4/gtf6UyZOUiIGn7JZoG3N
+ cqm6stveHAyDRDnyjOS5MXaMudd5k8yCftrqMoTiJe9MIRNqbP9ZvSvL7IiDDvbqj4EJTsVjJuP
+ 1T8yZo8o/aQJPxqwq/HAShHF5OTqzrzGGR6IcqCrRtsXW6vtFoHQuI4PqSXyYMdnt8HTPZ02h0U
+ 8XDhxyyiwLSYp2bZ6oInRfoPFiInsMy5IH00fXOP1O50O6gBSUU6iv/7cZYxBrjMPj7WJkTtDwg
+ 9uH0C+OHiSdlaKRcg/gzQQ+qHWp7sstYcd49gFtY8fX9coEcMX4glX9ZB+2Lbu2hwG5oGCZLIaf
+ 4tnkwwYdP6t+d2C/REHgFcQHgUuAJxFTQS2V6IwBJQgygE9J+M4BvUezzntJf/N2rjc16/KoM=
+X-Received: by 2002:a05:600c:6208:b0:49e:660a:935e with SMTP id
+ 5b1f17b1804b1-49eb7340978mr18023765e9.29.1789548823390; 
+ Wed, 16 Sep 2026 01:53:43 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf26c8dsm5868377f8f.14.2026.09.16.01.53.44
+ ffacd0b85a97d-4870bf462cesm5652880f8f.37.2026.09.16.01.53.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 01:53:45 -0700 (PDT)
+ Wed, 16 Sep 2026 01:53:42 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2CD3F618C3;
- Wed, 16 Sep 2026 09:53:42 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id B9A286178D;
+ Wed, 16 Sep 2026 09:53:41 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
@@ -87,23 +87,23 @@ Cc: John Snow <jsnow@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v3 07/17] tests/tcg: prefix meson built docker tags with qemu/
-Date: Wed, 16 Sep 2026 09:53:30 +0100
-Message-ID: <20260916085341.1692742-8-alex.bennee@linaro.org>
+Subject: [PATCH v3 03/17] Revert "tests/tcg/meson.build: implement ./configure
+ containers options"
+Date: Wed, 16 Sep 2026 09:53:26 +0100
+Message-ID: <20260916085341.1692742-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260916085341.1692742-1-alex.bennee@linaro.org>
 References: <20260916085341.1692742-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,64 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the meson changes we now build the images directly by calling
-docker.py. However the Makefile.include builds prefix all the images
-with qemu/:
+We want to keep the container configuration inside configure for the
+firmware builds.
 
-  # General rule for building docker images.
-  docker-image-%: $(DOCKER_FILES_DIR)/%.docker
-            $(call quiet-command,			\
-                  DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
-                  $(if $(DOCKER_V),,--quiet)		\
-                  $(if $(NOCACHE),--no-cache,		\
-                          $(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
-                  --build-arg BUILDKIT_INLINE_CACHE=1 	\
-                  $(if $(NOUSER),,			\
-                          --build-arg USER=$(USER)	\
-                          --build-arg UID=$(UID))		\
-                  -t qemu/$* - < $< $(if $(DOCKER_V),,> /dev/null),\
-                  "BUILD", $*)
+This reverts commit 522b299ca4316d8cad57f9496ffcba87dcc20719.
 
-So to ensure we don't end up building every container twice make sure
-the naming conventions line up.
-
+Tested-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+[AJB: untangle changes since]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/meson.build | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ configure             | 11 +++++++----
+ meson_options.txt     |  4 ----
+ tests/tcg/meson.build | 25 ++++---------------------
+ 3 files changed, 11 insertions(+), 29 deletions(-)
 
+diff --git a/configure b/configure
+index bedde58b8cf..25d26376f12 100755
+--- a/configure
++++ b/configure
+@@ -260,7 +260,7 @@ ninja=""
+ python=
+ download="enabled"
+ skip_meson=no
+-use_containers=""
++use_containers="yes"
+ rust="disabled"
+ rust_target_triple=""
+ 
+@@ -727,11 +727,11 @@ for opt do
+   ;;
+   --disable-plugins) plugins="no"
+   ;;
+-  --enable-containers) # enabled by default
++  --enable-containers) use_containers="yes"
+   ;;
+-  --disable-containers) meson_option_add -Dcontainers=false
++  --disable-containers) use_containers="no"
+   ;;
+-  --container-command=*) meson_option_add -Dcontainer_command="$optarg"
++  --container-command=*) container_command="$optarg"
+   ;;
+   --rust-target-triple=*) rust_target_triple="$optarg"
+   ;;
+@@ -1718,6 +1718,9 @@ echo all: >> $config_host_mak
+ 
+ echo "SRC_PATH=$source_path" >> $config_host_mak
+ echo "TARGET_DIRS=$target_list" >> $config_host_mak
++if test "$container_command" != ""; then
++    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
++fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
+ echo "PYTHON=$python" >> $config_host_mak
+ echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
+diff --git a/meson_options.txt b/meson_options.txt
+index 66d3689d14c..218d003a80b 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -389,7 +389,3 @@ option('rust', type: 'feature', value: 'disabled',
+        description: 'Rust support')
+ option('strict_rust_lints', type: 'boolean', value: false,
+        description: 'Enable stricter set of Rust warnings')
+-option('containers', type: 'boolean', value: true,
+-       description: 'use containers to cross compile tcg tests')
+-option('container_command', type: 'string',
+-       description: 'command to build/run containers')
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index e966774c8c2..5e2ee3e6e3f 100644
+index ce208e686ff..e966774c8c2 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -217,7 +217,7 @@ foreach target, plan: tcg_tests
-     image_name = 'image-' + cc_dockerfile
-     has_docker = docker_host_arch_supported and docker_supported
-     if cc_dockerfile not in image_targets and has_docker
--      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', cc_dockerfile]
-+      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile]
-       t = custom_target(image_name, command: cmd,
-                         build_by_default: false,
-                         output: 'no_output_' + image_name)
-@@ -232,7 +232,7 @@ foreach target, plan: tcg_tests
-       here = meson.project_build_root()
-       cc = [docker_wrapper, 'run', '--run-as-current-user',
-             '-w', here, '-v', mount,
--            cc_dockerfile, plan['cc']]
-+            'qemu/' + cc_dockerfile, plan['cc']]
-       has_cc = true
-     endif
-   endif
-@@ -241,7 +241,7 @@ foreach target, plan: tcg_tests
-   if has_cc
-     summary_cc = plan['cc']
-     if not cc_from_system
--      summary_cc += ' (from \'' + plan['cc_dockerfile'] + '\' container)'
-+      summary_cc += ' (from \'qemu/' + plan['cc_dockerfile'] + '\' container)'
-     endif
-   endif
-   tcg_tests_summary += {'cc for ' + target: summary_cc}
+@@ -79,28 +79,11 @@ if gdb.found()
+ endif
+ tcg_tests_summary += {'gdb': gdb}
+ 
+-docker_supported = false
+-container_command = false
+-if get_option('containers')
+-  if get_option('container_command') != ''
+-    # make sure command is working
+-    container_command = get_option('container_command')
+-    cmd = container_command.split()
+-    run_command([cmd, 'info'], check: true)
+-    docker_supported = true
+-    docker_wrapper = [docker_wrapper, '--command',
+-                      container_command]
+-  else
+-    docker_probe = run_command(docker_wrapper, 'probe', check: false)
+-    docker_supported = docker_probe.returncode() == 0
+-    if docker_supported
+-      container_command = docker_probe.stdout().strip()
+-      docker_wrapper = [docker_wrapper, '--command',
+-                        container_command]
+-    endif
+-  endif
++docker_probe = run_command(docker_wrapper, 'probe', check: false)
++docker_supported = docker_probe.returncode() == 0
++if docker_supported
++  docker_wrapper = [docker_wrapper, '--command', docker_probe.stdout().strip()]
+ endif
+-tcg_tests_summary += {'container command': container_command}
+ 
+ # plugins come first, as we need to build the list
+ test_plugins = {}
 -- 
 2.47.3
 
