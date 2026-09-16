@@ -4,116 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0270C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 19:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC341C982CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 19:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6v8r-0003iI-IH; Wed, 16 Sep 2026 15:18:01 -0400
+	id 1x6vFC-0004aO-HB; Wed, 16 Sep 2026 15:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x6v8f-0003hP-6E; Wed, 16 Sep 2026 15:17:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x6vF3-0004Zo-Ui
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 15:24:26 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x6v8b-0003xK-DD; Wed, 16 Sep 2026 15:17:48 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1VRT006701; Wed, 16 Sep 2026 19:17:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=I/8KC9
- hcBGhfJiUOtjN93iOwtxQXIjHJJSLdigBPBy4=; b=k5OctkbxOhBzkBLpuFWzHn
- YDfCP/0jmW6IPN6Gjotuz6zgn21LtmuQVgPcNzM1cAFRUbMx/9z87mXbK6ZRa1/Q
- TnWJzQ3sT0RiS2aQK6Ud++hbvzmuvfqP4Fm13kHtuR8We0ufCmnnIg/vxtYcwQqX
- l6bZEIed/GK7X4P754O8XtS6LSDS8C1Ky/Rm2fgcM/DdQY204j2sHLkZvoPNxNRZ
- ewY6Ft8OR//NKbKzFqRvsAnw/EyhfhYE1J4uDtkpORf+jvDixeGJCb40rhxsFKev
- FvCXQxnyTlEr4B4yR94kp+/YL5lBa0QFeo5xAi0+I86xVuOt9pW5iSwvSDnExjKg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmx83xj9p-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 19:17:36 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GIxgEr1649278; Wed, 16 Sep 2026 19:17:35 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gq03c015s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 19:17:35 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GJHYK253215490
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 19:17:34 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EFC7B5804B;
- Wed, 16 Sep 2026 19:17:33 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D667E58067;
- Wed, 16 Sep 2026 19:17:32 +0000 (GMT)
-Received: from [9.61.249.152] (unknown [9.61.249.152])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Sep 2026 19:17:32 +0000 (GMT)
-Message-ID: <1a755a8a-2615-49c1-b9ef-508f3245c497@linux.ibm.com>
-Date: Wed, 16 Sep 2026 12:17:32 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/16] s390x/pci: implement IOMMU replay
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260911152137.676602-1-kshk@linux.ibm.com>
- <20260911152137.676602-2-kshk@linux.ibm.com>
- <2c2bf867-a11a-4591-88bf-bf38d114d364@linux.ibm.com>
- <3687f02c-a0fb-4801-9b45-e32bc87dd248@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <3687f02c-a0fb-4801-9b45-e32bc87dd248@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x6vF2-0005fg-9W
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 15:24:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XEjJ6uA2gp4omooFuCB0hm/dFD1kgnx17PX4ewV34AL7EeP/OKB9Y+jXMn92sKfcgcNKdVNlZKzrEHiTa2VB74trX45LpmwKTKXXOnkBIxJYtz6nz+s6xuk+lcrYiyECYejkDgKBQcOg867r0fDN8VrUM3BuhOgQnvre2KKvJPTRfsUUxi1ztoDubABqS9vqXwhHhAIfFbLz4hdDEWS7JG3B0mNVsDqQOuFApFlcn7CzeryEdBi46KrKhY1EDWm9YC6PuanIIL04C3F4DNIddfaReFK1hmNtQ94tehoxEMVBNAITFJJ8FNkjCH96cAAR4qFRQeBqARYK1iDWHe6gYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YDNBuMe1NB7DvbTK1fFKmwja4VZvfukLOCwCeqS8P2M=;
+ b=uPfUWxHw8jd7XuJOmQMwvnF5POr/t8yTfLOgfuqyOVhT736rrB8cLDvH67owABqcxNUgEuCUZkGk/c19wougFeKztxUOVXIfL4UvhrVCUzGYDq6xEJ3sJjUYJg0t6dElNMdM/9PfpBeJwA9YfpdyY/H9W7+hwsdHeijJKx+2nZwQuVqjEKNXAz3usdalJeCJW+ozY1eT+ct7XKMSTLnvrSN4WHlMr+xRR+9e6/C07314iIdLDUIIMM7SCJgo5dJDKbtOqA8e72lTNbHpBypBtrFHKcYFaVd3+D6LYiTnVT98N6SrQtPz3PhcUHb+nqbHPddwfEZpK2Uf0bvrBvqSRQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YDNBuMe1NB7DvbTK1fFKmwja4VZvfukLOCwCeqS8P2M=;
+ b=eajwoIKUm6+vxcHTTfNM+SxAJlLc3nlEwN8+hnqQdO4GWXuf8bXF5cY7RCOMYII0fZttM2KDX88xIcNOMQCMsLfr85nGNYX7qX8yqOHMfCKunC9TQX5CagLAx1AbRLEFW0AZtBJlPNEUhR5bmQ93RC4HzqvQ9ikXmCoGfZZtbcv2cpg43w/2+upuCf+M2ZtSDIZH5us5jTnmvYQwclB1NpkT7LPsStt3O0jWmxyVECbxG4tT0o111el08TS4EGJvGrbEuKrLGkfAcR+ZTp13WmKzsnqte/B4pFHdzDaPkR/ZXC8YSANsn1r07azmdQrtcZ7vc8RXeha5+VI3LwdNiA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17) by MW4PR12MB7213.namprd12.prod.outlook.com
+ (2603:10b6:303:22a::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Wed, 16 Sep
+ 2026 19:24:13 +0000
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0428.008; Wed, 16 Sep 2026
+ 19:24:13 +0000
+From: Tushar Dave <tdave@nvidia.com>
+To: devel@edk2.groups.io
+Cc: gaoliming@byosoft.com.cn, ardb+tianocore@kernel.org, sami.mujawar@arm.com,
+ jiewen.yao@intel.com, kraxel@redhat.com, qemu-devel@nongnu.org,
+ alwilliamson@nvidia.com, jgg@nvidia.com, skolothumtho@nvidia.com
+Subject: [PATCH 0/3] MdeModulePkg, ArmVirtPkg, OvmfPkg: fixed PCI BAR placement
+Date: Wed, 16 Sep 2026 14:24:05 -0500
+Message-Id: <20260916192408.928411-1-tdave@nvidia.com>
+X-Mailer: git-send-email 2.34.1
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI2MyBTYWx0ZWRfX9l+qbVLtdTpB
- Owmcozmw84gdNDwalX9rp6jUEH6lGGZH3WZLG4ViXGtb0KGdEDLKHD9k3shHcBMBfexkSKzB0wf
- MDdPbVommju3+SKGnJl/BCjT19H0ePGqkbM/Dpm2Wgo5c1GnLoX1agPwODvT2gqlDeyKowaJxRg
- owUNzWlReuaI6IEUrAJFyiXTM0XU4PXLvsScelPuh0TpjmChwdxpJL46p2bQhq8NmA6ed4+nJ/E
- Xn/xX4jsmo87XXmsYcS5DcjlF4yXtcXkC0lL8TAr6Rewdhm52FiOkQq5KLyDTgi5hqCjoPZurEl
- 7c53yBnthKWiP8bEXr+Wti4Z1wg3upKSkZ/u6GdM9ZjobOqpnKW9547vUrunJdDFKSDPhJt4Dpb
- OsLiApuN/UvWbAB3zPWZf9wWL+Hj0+ga0a+QShmFtp9sucsbAfVe80vQX3GQHHXgoKr2jXgHoIu
- Dd5rFKDElm/9MjMdECg==
-X-Proofpoint-ORIG-GUID: --Yuwn6HgHM2fZ0QK7GEePWG8Vk8CgFq
-X-Proofpoint-GUID: --Yuwn6HgHM2fZ0QK7GEePWG8Vk8CgFq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI2MyBTYWx0ZWRfX2EULOI2jHCCt
- mz5EAly13LguNYjjZTuTyjmWoPxk3QQIOwOUip2mOdyKATGsEr1cxYrA0ixyPTAKczdBGpkLkf0
- ZudfJ3ONeGq8VD66PcahM+DOby+RfkQ=
-X-Authority-Analysis: v=2.4 cv=cY9HPXDM c=1 sm=1 tr=0 ts=6aaaeb50 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=P-IC7800AAAA:8
- a=VnNF1IyMAAAA:8 a=HAOIqs6GJIo4af_rMDUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160263
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: BY5PR04CA0020.namprd04.prod.outlook.com
+ (2603:10b6:a03:1d0::30) To IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|MW4PR12MB7213:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93bcabfe-5e59-4925-dfd9-08df14281792
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|366016|376014|6133799003|18002099003|10067099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: OOhisXi8q/kCGKTPPHhyRMgySa7F+sUndtF5WZF97R0c6yhI1IlmcsB1srdd0+Su7qaSzx0c5HYlEK6ydwQsFtrphQwxmPUatU1vQOtQdY45F80wpNzwesXAyZ8h96PpUsOewNdSn+58Dm4F0d0KLqlXGLRiwvaiB/7OyHsXedulIl5D+i8NIIWp8Qz9JULvtu/UwpOMZYHX4cDcZruK2VLun3NehgLH2y/dTW3/6J9DChspSzqTiUn80gPwOpvsCNYUY36lqiB+z1vc+7uYyXhNvnqV3zljEMPRLJKJ5BqYnICEqwnFukJ5Ms/9D1YhC5ISDGBi2Quhvg+bzmwTTm8jveT6MJC9mtoJ+CxSrjEbwTCdyghKG1iAwbcfxs+Ezz9F5GDt0KTdXNkrEAFXHWrWi0T95zfzRcB1bwehinCQUnYGyId+sLdmUXeiQyzt0AjqmTz206OC9f+PRJ6fT3cazXUFmi5Y+MWArRCldFAN/Ywh4XZvbxE8hX/6wvnc6emxCA+ZlNPZ1BkB4DYDimEyXkIFxFMusHe81lG7x27xuiNTD6XwgGVWNWHH7I0zn1rcFBzwqCxc14qWa5yaqzVQlkQ881AYdx/faWIAsB+TTZlKv4/bkQVt+TCLCBDAAvCvbCGIaP4HAuBGfi+n1Znjf9zV/rH4tp84Ex92O1A=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(18002099003)(10067099003)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?UwilYQet7VWhmkETEPR331n58HgPZcRip0loeOqn97YTqA0FVUKFbKjGzXjr?=
+ =?us-ascii?Q?bU2cAnquOIvdWmXTe57Em4UUdj1xXVN2SUoX0D7RSSHUFf6wqVWOvGeoOSTq?=
+ =?us-ascii?Q?+02tGnfUpa+z3KZwbyLHiRXY/DxFQyeCNp2zG8iNv0Ol2sJGnDypOz/Z6EaZ?=
+ =?us-ascii?Q?xqDye+yF3UgfePHRRirbHpGCGk7tPyD24S57+LMMAgdYUkjK1Dxy2O6YXH7T?=
+ =?us-ascii?Q?YOg1IYK5g/vISfBfMJjGQPaMmXwM1Jnj8Ol3GGxbEEFSyk/FvJPHFALoh2h/?=
+ =?us-ascii?Q?7cblY993syReBNL1Z3Ha7m8XGqT9fk/SEmFvuaospa/9w+dQthK7GWny88c1?=
+ =?us-ascii?Q?Qp3Ao3qIAyXSEbwym8MumiOfKyIZVQuex65iOiCk8MKEsave99lLhVUapxQ2?=
+ =?us-ascii?Q?8tRMoLAGChbo0YaQChPKtX1v/UVgm1LRur8BJiOfNVwJdUlrhhPKBJYqZhTX?=
+ =?us-ascii?Q?jBOAxCERlp1wnsEQ53QnV5KqagOHVY4r8Ca0Z+2MUaH0VsBdbAD6G+2P1gnd?=
+ =?us-ascii?Q?OjZAbqDUmknt6u8aTKoSy1bhv6VTy//zqyZ4BfM/kmY6cgG78kS1qV5blhPc?=
+ =?us-ascii?Q?w88553St8cP4I03OHwoeJfBfqPYbqluAc9wVLevcuK72clP/47CvVNkqi7ds?=
+ =?us-ascii?Q?E7QBXNwVCO+h6BwtIdDgsJD6luSSIG430FmpK9KaCt+Zp2WGePeCGos0kg9v?=
+ =?us-ascii?Q?5En5Lr8aN0s3ggu28C0yq/KxpByllU+TCLkYT+SVgxd+AHVZu3vx+QcZ4ReE?=
+ =?us-ascii?Q?Qnf4YaYW7E1aSvcpP1R3/Rnfw0M75PI4hH7oVhZiqhhy9py17DZHtF2BqfS1?=
+ =?us-ascii?Q?gUAh45obF/4JGM1LvUqwpAQK+EwqfR6YEyYp3D7pPp1U6Pnu6ylZJdTsQKAQ?=
+ =?us-ascii?Q?z7nOW/87gtSNouQhwQt/NycMww1gaVcwHEY5qoiLw/T8EqNH2DEzJpgv/2wj?=
+ =?us-ascii?Q?AgxQCVbEdFD5qW5yqbwpKyiX8n/It3YfVytY7AXVYXL9VKEwxNjojXVy598d?=
+ =?us-ascii?Q?UzTPGbqv+RetGb6KYVFhK+Fq7Azao95FhmCJKRd+f0sjSn2dmiWyWLGAbKRN?=
+ =?us-ascii?Q?yYp3yeqxd4hoee/eLR4yCubUs3wNJO+AKNsFgFDDLh2c8TubgTuruqWh05wU?=
+ =?us-ascii?Q?oSc1Fphf+o9ZGq9mW4HPqJ4w1lo0JueusU9/h+sZ8/MA4N+ze96CyjLHZ4Wv?=
+ =?us-ascii?Q?TC9Q48a68z9HxzfPz8bqqrEReb4xCzfClRLzAXG2bDlYYSk2+t+KK5o3lu0J?=
+ =?us-ascii?Q?PyADUPqzP+330DvdDP4aYM5RtJOSKDs78J6fUqedZw4KZ0VEK/Hyg9yhTjnC?=
+ =?us-ascii?Q?9+UaZSlmzCb2nn5+kOs/ANF6sdmwgX4zL0vbESJZ625pAModeMVgq8RLadbP?=
+ =?us-ascii?Q?UOGzhN4RtBNUDsV61X7Lmsmts3CawCr7ADMp8tCdlsGVH38tKXFZdGLXK1it?=
+ =?us-ascii?Q?U7oEDRwph9+dr7uXOX0xV7t9AEfll9PRxcEc5SdUQmhqI/8ZQQpdF6mR7nm1?=
+ =?us-ascii?Q?d0G4cGTOZAsqEhbioXTGQckBLnOb6YwgZrt09NpSHyY8lP262wcH38QvegWV?=
+ =?us-ascii?Q?s6fb9s2om4Fms8K7P71zP6VAvfY8ordePpg7AizaRarT4bsWksp15MHt3+/U?=
+ =?us-ascii?Q?mUxDt8Se2Qns7VHhdzw84Coj4cLLyrtU0AXyfhenzzi7AF/nW4cKb3LUd9oc?=
+ =?us-ascii?Q?TmGFiAuokFMxbD86lYIvs0aLVAi6ot4bo9eheb6C+JfTBnb0?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93bcabfe-5e59-4925-dfd9-08df14281792
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 19:24:13.7180 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BVkhP5wtAGycOn9ztL+zdZKIVTbSRycQO8nKfMk3441TQO7eHmqtN6YfOjOtSG+LybMfvXpMgpAGSBa7HK3vdA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7213
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=tdave@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,54 +137,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is the firmware companion to the QEMU series [1], which validates
+fixed BAR configuration and exports it to firmware through the
+"etc/fixed-bars" fw_cfg file.
 
-On 9/16/2026 12:05 PM, Matthew Rosato wrote:
->>> +                    pbdev->state = ZPCI_FS_ERROR;
->>> +                    s390_pci_generate_error_event(ERR_EVENT_PERMERR,
->>> pbdev->fh,
->>> +                                                  pbdev->fid, 0, 0);
->> A permanent error will indicate to the guest that PCI device in
->> unusable, in that case would the guest drive a device re-initialization?
->> Would it be better to generate a ERR_EVENT_SERVAC to allow the guest to
->> attempt recovery and so drive the mappings again?
->>
-> The problem is that if we hit this scenario, we've exhausted the vfio
-> DMA limit for the device, so there is no way to create more mappings
-> without freeing some other ones up.
-> In the case of a RPCIT, we can ask the guest to try and free up all
-> stale/invalidated mappings to make room, but in this case
-> 1) we have no mechanism to ask the guest to do that
-> 2) we are in the middle replaying only the valid mappings, so there are
-> no invalid mappings to flush anyway -- so we're really in a permanent
-> error case here -- the number of vfio-allowed concurrent DMA mappings is
-> less than what our IOMMU wishes to replay.  AFAICT this can only get
-> solved by forcing the guest to throw everything out and start over.
->
-> I think in reality, you would only hit this in a migration scenario with
-> a vfio-pci device (which we don't support with this series) where the
-> vfio DMA limit is lower on the target than it was on the host.
-> If you hit this doing IOMMU replay of a vfio-pci device without a
-> migration involved then the limit should be the same as it was before
-> replay and it should have been impossible to map more than the vfio DMA
-> limit (so if you managed it, a permanent error also seems reasonable
-> because there may be a deeper issue).
->
-> Would an 0x3a trigger a total wipe of the IOMMU contents that we were
-> trying to replay?  If yes, it might be something to consider if/when we
-> support vfio-pci migration but I'm not sure it makes sense under the
-> current scenario(s) where we should never hit this path.
->
-> Thanks,
-> Matt
+The existing IncompatiblePciDeviceSupportDxe driver is extended to read
+the fw_cfg blob and supply fixed BAR addresses to PciBusDxe. The PciBusDxe
+changes honor these addresses both when programming a BAR directly and
+when sizing and programming the bridge windows above it, so a fixed BAR
+behind one or more bridges is placed correctly and covered by the
+appropriate bridge windows.
 
-I think on 0x3a the guest will attempt a hot reset and so I think will 
-also re-initialize the IOMMU [1]. But as you said this only would apply 
-in the case of vfio-pci and may not be applicable to the virtio case. We 
-can re-visit this if/when we support vfio-pci migration.
+Testing:
 
-[1] https://elixir.bootlin.com/linux/v7.2.5/source/arch/s390/pci/pci.c#L731
+The series was tested together with the QEMU companion patches on the
+AArch64 virt machine across a range of PCIe topologies: emulated devices,
+VFIO passthrough devices, PCIe switches, single and multiple fixed-BAR
+endpoints under a shared root port, and fixed BARs behind nested bridges.
 
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Changes since RFC v2:
 
+- Integrate fixed-BAR handling into the existing
+  IncompatiblePciDeviceSupportDxe driver instead of adding a new
+  QemuFixedBarsDxe driver.
+- Size and program PCI bridge windows for fixed BARs as part of
+  PciBusDxe's own normal resource calculation and programming
+  (CalculateResourceAperture()/ProgramPpbApperture()), instead of a
+  separate post-enumeration reprogramming pass.
+
+RFC v2:
+https://lore.kernel.org/qemu-devel/20260827004530.600410-1-tdave@nvidia.com/
+
+[1] QEMU companion series:
+https://lore.kernel.org/qemu-arm/20260916185554.917526-1-tdave@nvidia.com/
+
+A git branch with this series applied is available at:
+https://github.com/tdavenvidia/edk2/tree/Upstream-fixed-bar-Sep-15-V1
+
+The related QEMU change is available at:
+https://github.com/tdavenvidia/upstream-qemu/tree/Upstream-fixed-bar-Sep-15-V1
+
+Tushar Dave (3):
+  MdeModulePkg/PciBusDxe: honor fixed BAR addresses from IncompatiblePci
+  ArmVirtPkg,OvmfPkg: fold fixed BAR placement into IncompatiblePci
+  MdeModulePkg/PciBusDxe: size and program bridge windows for fixed BARs
+
+ ArmVirtPkg/ArmVirtQemu.dsc                    |   2 +
+ ArmVirtPkg/ArmVirtQemuFvMain.fdf.inc          |   1 +
+ MdeModulePkg/Bus/Pci/PciBusDxe/PciBus.h       |   2 +
+ .../Bus/Pci/PciBusDxe/PciEnumeratorSupport.c  |  12 +
+ .../Bus/Pci/PciBusDxe/PciResourceSupport.c    | 121 +++++
+ .../Bus/Pci/PciBusDxe/PciResourceSupport.h    |   7 +
+ .../FixedBars.c                               | 413 ++++++++++++++++++
+ .../FixedBars.h                               |  63 +++
+ .../IncompatiblePciDeviceSupport.c            | 114 +++--
+ .../IncompatiblePciDeviceSupport.inf          |   8 +-
+ 10 files changed, 712 insertions(+), 31 deletions(-)
+ create mode 100644 OvmfPkg/IncompatiblePciDeviceSupportDxe/FixedBars.c
+ create mode 100644 OvmfPkg/IncompatiblePciDeviceSupportDxe/FixedBars.h
+
+-- 
+2.34.1
 
 
