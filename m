@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC204C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F17C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4A-0008QF-DQ; Wed, 16 Sep 2026 06:40:38 -0400
+	id 1x6n4d-0002Wv-NR; Wed, 16 Sep 2026 06:41:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2P-00061I-B3; Wed, 16 Sep 2026 06:38:52 -0400
+ id 1x6n3v-0008Of-OO; Wed, 16 Sep 2026 06:40:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n2N-0001zz-J5; Wed, 16 Sep 2026 06:38:49 -0400
+ id 1x6n3t-0002A9-H8; Wed, 16 Sep 2026 06:40:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=/F/0oo0mgbM4IIAd8nPjrZploeVW8AfdHJaJHuohFLQ=;
+ t=1789554957; bh=ZJhRIevipQGcpE9OxfuFapD4TDrvm487gDTJPaFV3m8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H/a1PR2w7etKkAmT13fe+Gl4tRBEB0COlnAxET/YNqytki5X14GnYFc6D7cvhXKBc
- Wx55eJI6A+IBhAqotF3WkO1IU/v97jZPktMDCYbcfua5Zx8Y9rNu7fn8RurjF8bjpR
- FLv8nMp1vnV575ctl4e+YY4Qr7pQg60e0isJMvB2acn8LtS0Dwmclmudvj9C/r0w1I
- 4STagBWnC4gU6ggt3N/J0pFQD9QHNdgw070NDxlXAuzSLenRU1SrCSNDUJopzjbDEb
- fMfbgXu+Ol2lW+wBlrI3dIuI/O/iigPy894yw+nyNmE2yKj9gKwaY6bDKsZnQ+NnBT
- G5iPe8Ari7lFQ==
+ b=VvaDIwmz+WoKTuDM9FrkLPGdTZT1sFjePkG7MPJdbRUTrQNFc8oVKTOODSF9aAVBu
+ qkOqileX+9lMkSqaumvO/FQilEBF+6QDcNWH8f8iNLOTB5qHRoRAwvYgIJTU8glYLY
+ dYypzVpPqnGFg9ndrdnBH/R1UM+yDMqv4AWS2s6vfLhd8mCbY4DTewMVI01JAdlRYM
+ fIxdjSS5xT3szdL7MIGPlTURqxN0JPDr7f1fbFKnSvNfrzP1wbFC3f2/haNyjp4ePv
+ eV9dfw9DP0vstvefOcJWTyC9NwzQJfdxOxz/yTCUWtYVvPzRm+/QmK5lrlRNynm4Bs
+ yVt6H+S4K5YEw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0FC8B1D5810;
+ by isrv.corpit.ru (Postfix) with ESMTP id E30901D5824;
  Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CF170429F6E;
- Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AE3DD429F92;
+ Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B791F5A819; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
+ id 9BAD65A83D; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 28/56] target/arm: Make Thumb T1 hint space UNDEF
- before v6T2
-Date: Wed, 16 Sep 2026 13:35:46 +0300
-Message-ID: <20260916103622.684817-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 46/56] virtio-scsi: set dataplane_started to false
+ upon failure
+Date: Wed, 16 Sep 2026 13:36:04 +0300
+Message-ID: <20260916103622.684817-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,76 +74,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-The "hint space" is a region of the encoding space which is defined
-to NOP if not specified as an architected instruction, so that future
-instructions can be added there which fall back to NOPs on older
-CPUs.  In the A32 encoding, this hint space was carved out of the MSR
-(imm) insn by using the fact that a field_mask (bits [19:15]) of
-0b0000 meant that an MSR (imm) would set no parts of the CPSR from
-the immediate, so it was always NOP on existing CPUs.
+Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
+dataplane_started to true when virtio_scsi_dataplane_start() fails. This
+is likely a typo since dataplane is not functional after failure.
 
-For the T1 encoding, the hint space is in a range that used to UNDEF
-in Armv5, and so the hint insns and the NOP region must all UNDEF
-before v6T2.  Rather than putting this check in the trans functions
-for each hint insn and for the NOP space (which is a lot of places,
-and awkward since those trans functions are often shared with the A64
-and A32 encodings), put in a decode line that covers the whole space
-which we check before any of the hints and which will explicitly
-UNDEF if necessary.
+The non-ioeventfd fallback is broken because dataplane_started is true
+after virtio_scsi_dataplane_start() failure. As a result, the following
+assertion failure occurs when a virtio-scsi device exceeds the open file
+descriptor ulimit when setting up notifiers (eventfds):
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4208
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-4-peter.maydell@linaro.org
-(cherry picked from commit 2931a675e9d3fcddedf673509fe9759955fc616d)
+  $ ulimit -n 104 # exact number can vary based on QEMU version
+  $ qemu-system-x86_64 -M q35,accel=kvm -m 1G -cpu host -smp 14 \
+         --blockdev file,node-name=drive0,filename=test.img,cache.direct=on,aio=native \
+         --blockdev file,node-name=drive1,filename=data01.img,cache.direct=on,aio=native \
+         --device virtio-scsi-pci,id=virtio-scsi-pci0 \
+         --device scsi-hd,drive=drive0,bus=virtio-scsi-pci0.0 \
+         --device virtio-scsi-pci,id=virtio-scsi-pci1 \
+         --device scsi-hd,drive=drive1,bus=virtio-scsi-pci1.0
+  qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -accel kvm is set.
+  qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
+  qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset: Assertion `!s->dataplane_started' failed.
+  Aborted                    (core dumped)
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
+Buglink: https://redhat.atlassian.net/browse/RHEL-193328
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260825154854.263819-1-stefanha@redhat.com>
+(cherry picked from commit 5440b6b5de469f62787f47f2b9177cb1136a85c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 9a8f89538ac..43cd36e949c 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -224,6 +224,9 @@ REVSH           1011 1010 11 ... ...            @rdm
- 
- {
-   {
-+    # Before v6T2 this was not NOP space and must UNDEF
-+    MAYBE_UNDEF_T1_HINT 1011 1111 ---- 0000
-+
-     YIELD       1011 1111 0001 0000
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 3d352497a70..86c3c30a477 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3340,6 +3340,24 @@ static bool trans_NOP(DisasContext *s, arg_NOP *a)
-     return true;
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index 95f13fb7c28..bcb6e441335 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -230,7 +230,7 @@ fail_host_notifiers:
+ fail_guest_notifiers:
+     s->dataplane_fenced = true;
+     s->dataplane_starting = false;
+-    s->dataplane_started = true;
++    s->dataplane_started = false;
+     return -ENOSYS;
  }
  
-+static bool trans_MAYBE_UNDEF_T1_HINT(DisasContext *s,
-+                                      arg_MAYBE_UNDEF_T1_HINT *a)
-+{
-+    /*
-+     * The Thumb T1 encoding hint space was only defined starting
-+     * in v6T2 for A-profile. For M-profile it always exists, even
-+     * in v6M.
-+     */
-+    if (arm_dc_feature(s, ARM_FEATURE_M) ||
-+        arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        /* Allow decode to fall through to the hint insns and NOP space */
-+        return false;
-+    }
-+    /* On the earlier cores, we must UNDEF */
-+    unallocated_encoding(s);
-+    return true;
-+}
-+
- static bool trans_MSR_imm(DisasContext *s, arg_MSR_imm *a)
- {
-     uint32_t val = ror32(a->imm, a->rot * 2);
 -- 
 2.47.3
 
