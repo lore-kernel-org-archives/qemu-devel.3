@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AE7C982C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 804A2C982C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qxM-0001aQ-1H; Wed, 16 Sep 2026 10:49:52 -0400
+	id 1x6r6T-0002Gs-LR; Wed, 16 Sep 2026 10:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x6qx5-0000ze-Hr
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:49:39 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x6r6R-0002Gk-7w
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:59:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x6qx3-0006mC-No
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:49:35 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x6r6O-00016d-62
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:59:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789570173;
+ s=mimecast20190719; t=1789570750;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=e02JHTK5vtyACAt9OjPCN3RGbXnELCnkz1SQgi2oqUc=;
- b=UMOjgj4SiRziIdUHdeshGfgHxENL8DD+wbVbn3MDwLagAVIVWTeaADhZT8e2ocOlRjdC3d
- spk2ml/W9Ke2RU1bIiScBzGsg2U/wZFXRRwcOskeMfcjo+78Lk90ceXtJ6ZGu7LOIKd1rh
- SB2NOIgPGCkF+4vG+At4hT3yHIymD6k=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=oGKlLk+7PGa0yDjM1ZYp5n4187Ijm+pX6dAk979NvcE=;
+ b=Ox1EaGbGJYJ+6nj/xbaQ9cLNbElqpogEibsWUs3QS1FCbn4CbupTbgu6LUyGdrBqnyzuBb
+ 0HaYOcqRV4M165veNt6Mdl3yquaiP5DJ4BzodBufcYUZfOBDiSPKmYjRMZ9vdnlKmd4RmS
+ rKaD8Qq7Y9cHqfHY1dFgr3S2wIPIkKo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-pDKpRdLvO4mUUX9UnosilA-1; Wed,
- 16 Sep 2026 10:49:29 -0400
-X-MC-Unique: pDKpRdLvO4mUUX9UnosilA-1
-X-Mimecast-MFC-AGG-ID: pDKpRdLvO4mUUX9UnosilA_1789570167
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-YZgCWZq8OxiUHXuE1THf4w-1; Wed,
+ 16 Sep 2026 10:59:07 -0400
+X-MC-Unique: YZgCWZq8OxiUHXuE1THf4w-1
+X-Mimecast-MFC-AGG-ID: YZgCWZq8OxiUHXuE1THf4w_1789570746
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99FF2183019A; Wed, 16 Sep 2026 14:49:27 +0000 (UTC)
-Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA73919560AB; Wed, 16 Sep 2026 14:49:22 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- shaju.abraham@nutanix.com, khushit.shah@nutanix.com,
- yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org,
- sebott@redhat.com, skolothumtho@nvidia.com, philmd@oss.qualcomm.com
-Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
- armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
- jdenemar@redhat.com
-Subject: [PATCH v9 22/26] target/arm/kvm: Add an error handle to
- kvm_arm_create_scratch_host_vcpu
-Date: Wed, 16 Sep 2026 16:45:45 +0200
-Message-ID: <20260916144721.751810-23-eric.auger@redhat.com>
-In-Reply-To: <20260916144721.751810-1-eric.auger@redhat.com>
-References: <20260916144721.751810-1-eric.auger@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC2EF1964CE1; Wed, 16 Sep 2026 14:59:05 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1B98E18002B1; Wed, 16 Sep 2026 14:59:04 +0000 (UTC)
+Date: Wed, 16 Sep 2026 10:59:03 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alex Fishman <afishman@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, sgarzare@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+Subject: Re: [PATCH v1 0/2] vhost: Handle vrings crossing virtio-mem slots
+Message-ID: <20260916145903.GA145703@fedora>
+References: <20260909125923.75340-1-afishman@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Fcevn8N3cMHtIj/E"
+Content-Disposition: inline
+In-Reply-To: <20260909125923.75340-1-afishman@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,117 +85,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows to report a precise error message if any error occurs.
+--Fcevn8N3cMHtIj/E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- target/arm/kvm_arm.h |  3 ++-
- target/arm/kvm.c     | 15 ++++++++++++---
- 2 files changed, 14 insertions(+), 4 deletions(-)
+On Wed, Sep 09, 2026 at 03:59:21PM +0300, Alex Fishman wrote:
+> Virtio-mem dynamic memslots are intentionally exposed as separate memory
+> regions. If a guest places a vring part across two adjacent slots, a later
+> memory update fails vhost ring verification because the complete ring part
+> is not contained in one vhost memory region.
+>=20
+> Coalesce coherent adjacent sections only when a descriptor table,
+> available ring, or used ring crosses their boundary. Unrelated
+> unmergeable sections remain separate so they can still be updated
+> independently.
+>=20
+> Patch 2 adds an end-to-end qtest reproducer using a fake vhost-user
+> backend and virtio-mem dynamic memslots. It also verifies that a newly
+> activated slot is not folded into the merge required by the crossing
+> vring.
+>=20
+> Tested with the vhost-user/mem-slots/boundary qtest.
+>=20
+> Buglink: https://redhat.atlassian.net/browse/RHEL-146583
+>=20
+> Alex Fishman (2):
+>   vhost: coalesce unmergeable sections across vring boundaries
+>   tests/qtest: Add vhost-user memslot boundary test
+>=20
+>  hw/virtio/vhost.c             |  72 ++++++-
+>  tests/qtest/vhost-user-test.c | 395 +++++++++++++++++++++++++++++++++-
+>  2 files changed, 452 insertions(+), 15 deletions(-)
+>=20
+>=20
+> base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+> --=20
+> 2.52.0
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index bace69efed..185018e00c 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -106,6 +106,7 @@ struct kvm_vcpu_init;
-  * @init: filled in with the necessary values for creating a host
-  * vcpu. If NULL is provided, will not init the vCPU (though the cpufd
-  * will still be set up).
-+ * @errp: Error handle
-  *
-  * Create a scratch vcpu in its own VM of the type preferred by the host
-  * kernel (as would be used for '-cpu host'), for purposes of probing it
-@@ -115,7 +116,7 @@ struct kvm_vcpu_init;
-  * false on failure (and fdarray and init are not valid).
-  */
- bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
--                                      struct kvm_vcpu_init *init);
-+                                      struct kvm_vcpu_init *init, Error **errp);
- 
- /**
-  * kvm_arm_destroy_scratch_host_vcpu:
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index f7ca0e0250..43fb61bef4 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -107,13 +107,14 @@ static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
- }
- 
- bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
--                                      struct kvm_vcpu_init *init)
-+                                      struct kvm_vcpu_init *init, Error **errp)
- {
-     int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
-     int max_vm_pa_size;
- 
-     kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
-     if (kvmfd < 0) {
-+        error_setg(errp, "Failed opening /dev/kvm");
-         goto err;
-     }
-     max_vm_pa_size = ioctl(kvmfd, KVM_CHECK_EXTENSION, KVM_CAP_ARM_VM_IPA_SIZE);
-@@ -124,6 +125,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
-         vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
-     } while (vmfd == -1 && errno == EINTR);
-     if (vmfd < 0) {
-+        error_setg(errp, "Failed creating the scratch VM");
-         goto err;
-     }
- 
-@@ -143,6 +145,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
- 
-     cpufd = ioctl(vmfd, KVM_CREATE_VCPU, 0);
-     if (cpufd < 0) {
-+        error_setg(errp, "Failed creating the scratch VCPU");
-         goto err;
-     }
- 
-@@ -156,12 +159,14 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
- 
-         ret = ioctl(vmfd, KVM_ARM_PREFERRED_TARGET, &preferred);
-         if (ret < 0) {
-+            error_setg(errp, "Failed getting the preferred target");
-             goto err;
-         }
-         init->target = preferred.target;
-     }
-     ret = ioctl(cpufd, KVM_ARM_VCPU_INIT, init);
-     if (ret < 0) {
-+        error_setg(errp, "Failed the init of the scratch vcpu");
-         goto err;
-     }
- 
-@@ -659,6 +664,7 @@ kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     bool el2_supported;
-     bool pmu_supported = false;
-     uint64_t features = 0;
-+    Error *local_err = NULL;
-     int err;
- 
-     ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
-@@ -706,7 +712,8 @@ kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         features |= 1ULL << ARM_FEATURE_PMU;
-     }
- 
--    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
-+    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init, &local_err)) {
-+        error_report_err(local_err);
-         return;
-     }
- 
-@@ -3093,8 +3100,10 @@ void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level)
- void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
- {
-     int fdarray[3];
-+    Error *err = NULL;
- 
--    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL)) {
-+    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL, &err)) {
-+        error_report_err(err);
-         return;
-     }
- 
--- 
-2.53.0
+I'm pretty sure a similar problem exists with hw/virtio/virtio.c's
+MemoryRegionCaches. If a vring spans virtio-mem dynamic memslots, then
+the MemoryRegionCache won't work because the memory range crosses
+MemoryRegions.
+
+Is it worth looking at that first (e.g. triggering the issue with a test
+case that uses a built-in VIRTIO device instead of a vhost-user device)
+before implementing a solution that is specific to vhost-user?
+
+Stefan
+
+--Fcevn8N3cMHtIj/E
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqqrrcACgkQnKSrs4Gr
+c8jilAgAhktzMnjIwJhh3noM+MoFq0kUL3fXWlUFLJvbVF8XzOUzMUJXXik7S4Mx
+qUq5fvO53M3DlwLQoiCHbf5UmvqsiXXlHkt1+Cw4HV08UNifgKQGiAffbuqgJh4F
+atx1190Gpq4iKdi0mXsA9yb378DGEVi+w/F/sGhbTvPX5Kj7AZT8VWyV+8a6cO6f
+DiGeaj/cV49en2DcQvmNU615A/qekx0bYzHPu/jLnxSUkBS11DpTYaVrjzMcC5y8
+l0B23YKCjZjVxtUFrjinNLqRG4XkM38XRSNcp2hzcg/Y8hjZZSuE9Wfb9GJFWM81
+BdsLXGFORC1NpIcRAV86XDARHPrzCg==
+=TPCZ
+-----END PGP SIGNATURE-----
+
+--Fcevn8N3cMHtIj/E--
 
 
