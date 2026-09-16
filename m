@@ -4,110 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100E8C88E7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19333C982C5
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:38:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n13-0003wq-Ph; Wed, 16 Sep 2026 06:37:25 -0400
+	id 1x6n0R-0003Lb-Cg; Wed, 16 Sep 2026 06:36:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
- id 1x6n0u-0003nS-FL; Wed, 16 Sep 2026 06:37:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x6n0Q-0003Kl-63; Wed, 16 Sep 2026 06:36:46 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
- id 1x6n0s-0001jb-6x; Wed, 16 Sep 2026 06:37:16 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68FLVqYk791655; Wed, 16 Sep 2026 10:37:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=u+H3DkdBtUxaF+rhr
- m3DezAyLe8fhl+QaVzZEetcwG8=; b=dnvpv6pJE1Fvf5aJxaZVC+IQRLmenEI4e
- Jq2iDV+s67i8RmTfDaL2xk29styJZnDGZmTWdP/mFeJ+eOjRcvMLIj95KsDootJV
- ALMwOUsbnuhXn3kJRqNxNSCjJaYRt7RzkBNIRJYL3BN///nbBReD2hH/Jo9t6RoW
- AxK4cEEiHJaWXiJfSMJt0ux2Us/nZxc/dFPKxLSHJSTIBCTvCMDID0oAR6iTTxNH
- TMA5gipZ0KoerGDeyemTmG9c/brhgEAHFOv3+XS0loarAXiqGd63ZKSPw+m+m+bM
- ADFxK10Ph7UQfvhfUXAAk+EtbIXm91aqWn/N4Fp4Fr8BvMMhIilCA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5e3sjr-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 10:37:05 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68G7UjRM477719; Wed, 16 Sep 2026 10:37:05 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gpywewvah-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 10:37:05 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GAb1ia23855788
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 10:37:01 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 571C820043;
- Wed, 16 Sep 2026 10:37:01 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B5BF20040;
- Wed, 16 Sep 2026 10:36:58 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.39.21.121])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 16 Sep 2026 10:36:58 +0000 (GMT)
-From: Aniket Sahu <asahu1x@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, rathc@linux.ibm.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, anushree.mathur@linux.ibm.com,
- misanjum@linux.ibm.com, adityag@linux.ibm.com, gautam@linux.ibm.com,
- thuth@redhat.com, asahu1x@linux.ibm.com
-Subject: [PATCH v2 2/2] tests/functional/ppc64: extend ppc64 powernv net
- device tests
-Date: Wed, 16 Sep 2026 16:06:35 +0530
-Message-ID: <20260916103635.7797-3-asahu1x@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260916103635.7797-1-asahu1x@linux.ibm.com>
-References: <20260916103635.7797-1-asahu1x@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x6n0O-0001dt-ER; Wed, 16 Sep 2026 06:36:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1789554955; bh=JjEuYMdA73Wc0qSZUXrfHhlif2ImgY6fNny3Dtpzx1c=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=nBoj0HHdo/ZzVQfDFZZit8GAte2APsIobHygThyjrEX/qFoGZx5jqsi7AXUIKs8z1
+ 2SGRYN/F9OT6js1ovKO36mpdrythfEKyeJqp3r/s+OEV0gKo42VR4kncdMXwMZxKrj
+ zvt6abKk5Xzsxq+5xvz/fdvQwWDlMlKuIvZN3RNIk5eUlychfr35cZa/+f4zGoyso8
+ 973cM4mnWEKmboz0LPWbu2s8y5yDiRAAOZE+hvLzGxXU8+aTCwFW9Cddksorj288y9
+ 1VPcZvmXjPVW9B5Zssu6IZb/MRFVp1ZURjjR6L+wbdNhPYhocIOL7XPKIwgCXyvS6C
+ h/DB1of6SX7Bg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id AD3921D57F7;
+ Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 771DF429F53;
+ Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 62F615A7E9; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 04/56] chardev: Don't unregister yank upon async path
+ connection failure
+Date: Wed, 16 Sep 2026 13:35:22 +0300
+Message-ID: <20260916103622.684817-4-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
+References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDEzOCBTYWx0ZWRfX3mnewUjM95Jy
- nLmn6mrT5lKMTp2Yz/TBCQRVpZhOFCuX2oJNqpPgSXD38mOgwZYqhBQoaZ8MAvi2TKRZwwXTvzE
- PWr24FwJaVIgv+162rG3JxQSHnL2g0hYxduE6WHIxKTeQMXsy4JNyI7aRktuXFTJBZOoMHu1E1/
- 8lqsV0M0MASDLfTBaVOYCVU+BUNb44ko3MQVPYpoBO9twf6DQYplD4/Fn6RuCVIaThxQGbOLCMW
- wtF238+7PvVc0oAdpiclq5BE8YWmtKCPkzt15jNZew1Tsd34ngo6HsanJPln9QJirzVtmh5oLiZ
- qlpJZ4iAqepJaj7WJcfPm2xDefHZg9yZAc2ikN/U+TKJg/bANmeWRc/mggIoLvOUVeMV98pqsrQ
- CptZZLIo6Sy0Xan1vXi2gLeKqcQxFJyBhG/+BbGxw5N3yydDuScwjFVRog9XqpcPzlwKYLuJGIP
- 0kTmj6BJ0HwuYtURWGg==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aaa7152 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=qvQqbTaxai10iMa-vdEA:9
-X-Proofpoint-ORIG-GUID: YrGIeURe30P015aNh4iHPTzDkM7XL9Ja
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDEzOCBTYWx0ZWRfX7a85x/mfX10v
- f8nD2fkL+M3QJvShHJ3PCl9xqo2zG3SJt58rpah6jI/3ScWcKFtd4Xj9Pxn1XBqcbNfNUOnkQuj
- fuDQ3DHlu1e7MywJth2uoG6i0YyHpjQ=
-X-Proofpoint-GUID: PUAZhxOPDENJ-5H8RmgHk84joWj6jKK6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609160138
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=asahu1x@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,32 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added console checks as the probe log lines will appear before the
-S14Silence-console init scripts.
----
- tests/functional/ppc64/test_powernv.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+From: Fabiano Rosas <farosas@suse.de>
 
-diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
-index f3e05e4d38..200fd2c894 100755
---- a/tests/functional/ppc64/test_powernv.py
-+++ b/tests/functional/ppc64/test_powernv.py
-@@ -201,9 +201,12 @@ def do_test_ppc64_powernv(self, proc):
+Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
+yank registration in the tcp_chr_connect_client_async() path to after
+the connection is successful. If qio_channel_socket_connect_sync()
+fails early, there will be no yank registered to be unregistered in
+the error path, leading to assert.
+
+Remove the now-extraneous unregister.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260603141137.1108963-1-farosas@suse.de>
+(cherry picked from commit ddf5738503e2ba6adb74359abf3b6e7aa81af420)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index b629575fcf8..81bac42a158 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
  
-         self.wait_for_console_pattern("CPU: " + proc + " generation processor")
-         self.wait_for_console_pattern("INIT: Starting kernel at ")
-+        # NVMe, e1000e, and xHCI are probed synchronously by the kernel
-+        # during PCI enumeration, after OPAL hands off to Linux.
-+        self.wait_for_console_pattern("nvme nvme0")
-+        self.wait_for_console_pattern("e1000e")
-+        self.wait_for_console_pattern("xhci_hcd")
-         self.wait_for_console_pattern("Run /sbin/init as init process")
--        # Device detection output driven by udev probing is sometimes cut off
--        # from console output, suspect S14silence-console init script.
- 
-     def test_ppc64_powernv_external_dtb(self):
-         self.set_machine('powernv11')
+     if (qio_task_propagate_error(task, &err)) {
+         tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+-        if (s->registered_yank) {
+-            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
+-                                     char_socket_yank_iochannel,
+-                                     QIO_CHANNEL(sioc));
+-        }
+         check_report_connect_error(chr, err);
+         goto cleanup;
+     }
 -- 
-2.52.0
+2.47.3
 
 
