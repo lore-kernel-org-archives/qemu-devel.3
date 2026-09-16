@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19426C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DBBC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kJS-0004EF-Po; Wed, 16 Sep 2026 03:44:15 -0400
+	id 1x6kJb-0004Ii-6a; Wed, 16 Sep 2026 03:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJQ-0004Dc-3K; Wed, 16 Sep 2026 03:44:12 -0400
+ id 1x6kJX-0004G4-C8; Wed, 16 Sep 2026 03:44:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kJN-0004tM-Ta; Wed, 16 Sep 2026 03:44:11 -0400
+ id 1x6kJV-0004uY-Kz; Wed, 16 Sep 2026 03:44:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=WvKgO1IgVQSUbPcCbs/EfzeDp8D8/MHwatlgn5KBGrQ=;
+ t=1789544605; bh=0JUQwdsD42rCBLJnwMCsiD+JtuaZU9eg5je+fU1SpSA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ub/aE5NJ1AyRk8MD4jYca/0lvsGWJM/TiXp6A7yo/hcr7BZbTmiqQXZfaS+4T/4Ik
- 2CFvhB0X7ByZHJb4gJOBD9vTI2B93scL5gb6bbmfaLXkoQDrwpntR7gMHR8wHb+Mow
- R1Uw1D4NzK5vKss0hTJmcNiZQclCsspyxmfPlbxA8r/DkumnCzEQ7uN9EpsefAPtpk
- Nxh1X8Nehi195duApV+7tEl5xvtbPapU95fzK+m9KiAVmHCSdVLspo+dQmIU+qPUBY
- oms+xqhaNN1TWjeg1t8BKVBGuBGwc/H1Ff+MP3gBgpxXlaAEG3dZgD0PqIBeENtIBf
- 1+yY0i+ln2B7w==
+ b=S1wHsR859jFCFXU9GNVXPfVwFnp6XyM/HkQ+eBJPrcsAQjym2Q7DdHRqFxn0W+nhN
+ dk6vgfa2TaZptqVzmA/qkiLq5tmDxnA7t2pj84op24FNZboOBGsRLaM1WucFwOWkH5
+ GSbVfe3eFJYg04Yp5VLEmSna71ld9XmblD+WWx0Vrg3LIrE+Wj3bR77Bv9nCKCMMRT
+ bemVpeZzrPWRNzk4PM0u3/pPAoRsWKWU3MkSWJRnE4yOVhZwGvaUada+PmIejBJPCb
+ qyiG4MRvvW9BHHH8gmN74MfkX7Gkl/PZbofNlioMJ6pE6xrmJoU6E8aEJSyhHTi92u
+ mW7Ofnm24KYSw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 182131D558D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F93F1D5591;
  Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B9FA429B1F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B2D80429B26;
  Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 91CA25A6C5; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id 9DE0C5A6CD; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 02/49] virtio-gpu: use g_try_malloc to avoid
- guest-triggered abort
-Date: Wed, 16 Sep 2026 10:42:20 +0300
-Message-ID: <20260916074346.671467-2-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 06/49] job: keep job paused across overlapping pause
+ requests
+Date: Wed, 16 Sep 2026 10:42:24 +0300
+Message-ID: <20260916074346.671467-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,261 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
-returns an error to the guest rather than crashing the host (glib
-behaviour).
+job_pause_point_locked() sets job->paused before yielding and clears it
+unconditionally on wake, before re-checking whether a pause is still
+pending. job_pause() re-enters a parked job only while it is not yet
+paused, so the wake that resumes one comes from a drain *ending*
+(job_resume() -> job_enter_cond()). If the next drain begins before that
+wake runs, the woken coroutine clears job->paused while pause_count is
+already > 0 again:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260805130141.211398-1-marcandre.lureau@redhat.com>
-(cherry picked from commit eb2b3a1fa807f47515a1d86e434c60c981310bcd)
+  AioContext change (BQL thread)     job coroutine (iothread)
+  -----------------------------      ------------------------
+                                     parked in job_pause_point():
+                                       paused=1, pause_count=1, yielded
+  drain ends -> job_resume():
+    pause_count = 0
+    job_enter_cond(): queue wake ..>   (wake pending)
+  bdrv_try_change_aio_context():
+    bdrv_drain_all_begin():
+      job_pause() per node
+      pause_count = N (> 0)
+                                     wake runs, leaves job_do_yield():
+                                       paused = 0  (pause_count == N)
+    tran_commit -> job_set_aio_context():
+      assert(paused || completed) --> abort: paused == 0
+
+bdrv_try_change_aio_context() drains precisely to quiesce the job before
+changing its AioContext, but that brief paused==0 window trips the
+assertion. It is guest-triggerable: a virtio-blk reset
+(virtio_blk_stop_ioeventfd() -> blk_set_aio_context()) racing a running
+mirror/blockCopy job hits it, as do x-blockdev-set-iothread, blockdev
+hot-plug/unplug and job completion.
+
+Keep job->paused set while a pause is still pending: loop the yield
+until job_should_pause_locked() is false (or the job is cancelled), and
+only then clear job->paused. Drained-state consumers then never observe
+a pending-pause job as unpaused.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260623152406.1180235-2-den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 2667133c2799f670366b94059cc0513ae57fe8cb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index 78648815093..933bdbb671c 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
-                       struct virtio_gpu_ctrl_command *cmd,
-                       struct iovec **iov)
- {
--    struct virtio_gpu_mem_entry *ents;
-+    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
-     size_t esize, s;
-     int i;
- 
-@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
+diff --git a/job.c b/job.c
+index 0653bc2ba69..28981e64bd9 100644
+--- a/job.c
++++ b/job.c
+@@ -629,7 +629,14 @@ static void coroutine_fn job_pause_point_locked(Job *job)
+                                     ? JOB_STATUS_STANDBY
+                                     : JOB_STATUS_PAUSED);
+         job->paused = true;
+-        job_do_yield_locked(job, -1);
++        /*
++         * Stay paused across back-to-back pause requests: a transient
++         * paused == false while pause_count > 0 would be observed as
++         * "not paused" by job_set_aio_context() and other drain consumers.
++         */
++        do {
++            job_do_yield_locked(job, -1);
++        } while (job_should_pause_locked(job) && !job_is_cancelled_locked(job));
+         job->paused = false;
+         job_state_transition_locked(job, status);
      }
- 
-     esize = sizeof(*ents) * ab->nr_entries;
--    ents = g_malloc(esize);
-+    ents = g_try_malloc(esize);
-+    if (!ents && esize) {
-+        return -1;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(*ab), ents, esize);
-     if (s != esize) {
-         g_critical("%s: command data size incorrect %zu vs %zu",
-                    __func__, s, esize);
--        g_free(ents);
-         return -1;
-     }
- 
--    *iov = g_new0(struct iovec, ab->nr_entries);
-+    *iov = g_try_new0(struct iovec, ab->nr_entries);
-+    if (!*iov && ab->nr_entries) {
-+        return -1;
-+    }
-     for (i = 0; i < ab->nr_entries; i++) {
-         uint64_t len = ents[i].length;
-         (*iov)[i].iov_len = ents[i].length;
-@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
-             g_critical("%s: resource %d element %d",
-                        __func__, ab->resource_id, i);
-             g_free(*iov);
--            g_free(ents);
-             *iov = NULL;
-             return -1;
-         }
-     }
--    g_free(ents);
-     return 0;
- }
- 
-@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
-                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
-             size_t size = width * height * bpp;
- 
--            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
--                               sizeof(VhostUserGpuUpdate) + size);
-+            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
-+                                   sizeof(VhostUserGpuUpdate) + size);
-+            if (!p) {
-+                pixman_region_fini(&region);
-+                pixman_region_fini(&finalregion);
-+                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+                break;
-+            }
-             VhostUserGpuMsg *msg = p;
-             msg->request = VHOST_USER_GPU_UPDATE;
-             msg->size = sizeof(VhostUserGpuUpdate) + size;
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 550fd03bf5c..20bae57d0fe 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
-         return;
-     }
- 
--    buf = g_malloc(cs.size);
-+    buf = g_try_malloc(cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-     if (s != cs.size) {
-diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
-index 710d5452977..e2d8385fd85 100644
---- a/contrib/vhost-user-gpu/vugbm.c
-+++ b/contrib/vhost-user-gpu/vugbm.c
-@@ -13,7 +13,10 @@
- static bool
- mem_alloc_bo(struct vugbm_buffer *buf)
- {
--    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
-+    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
-+    if (!buf->mmap && buf->width && buf->height) {
-+        return false;
-+    }
-     buf->stride = buf->width * 4;
-     return true;
- }
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index cfa91b9e8a5..851b7cae2cb 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -366,10 +366,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    buf = g_new0(uint8_t, cs.size);
-+    buf = g_try_new0(uint8_t, cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
--    CHECK(s == cs.size, cmd);
-+    if (s != cs.size) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: size mismatch (%zu/%u)\n",
-+                      __func__, s, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
- 
-     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
-     rutabaga_cmd.cmd = buf;
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index 44eb1f5c972..326b887451b 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -38,8 +38,11 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-         return;
-     }
- 
--    list = g_malloc0(sizeof(struct udmabuf_create_list) +
--                     sizeof(struct udmabuf_create_item) * res->iov_cnt);
-+    list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
-+                         sizeof(struct udmabuf_create_item) * res->iov_cnt);
-+    if (!list) {
-+        return;
-+    }
- 
-     for (i = 0; i < res->iov_cnt; i++) {
-         rcu_read_lock();
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index d4d46148b5d..e6862716dc2 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -499,7 +499,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    buf = g_malloc(cs.size);
-+    buf = g_try_malloc(cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-     if (s != cs.size) {
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 930b069c7ec..365ffba9919 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -888,7 +888,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-     }
- 
-     esize = sizeof(*ents) * nr_entries;
--    ents = g_malloc(esize);
-+    ents = g_try_malloc(esize);
-+    if (!ents && esize) {
-+        return -1;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    offset, ents, esize);
-     if (s != esize) {
-@@ -909,6 +912,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-         hwaddr len;
-         void *map;
- 
-+        /* TODO: a common DMA map SG helper */
-         do {
-             len = l;
-             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-@@ -917,20 +921,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-             if (!map) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
-                               " element %d\n", __func__, e);
--                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
--                g_free(ents);
--                *iov = NULL;
--                if (addr) {
--                    g_free(*addr);
--                    *addr = NULL;
--                }
--                return -1;
-+                goto err;
-             }
- 
-             if (!(v % 16)) {
--                *iov = g_renew(struct iovec, *iov, v + 16);
-+                struct iovec *new_iov;
-+                new_iov = g_try_renew(struct iovec, *iov, v + 16);
-+                if (!new_iov) {
-+                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
-+                                     DMA_DIRECTION_TO_DEVICE, len);
-+                    goto err;
-+                }
-+                *iov = new_iov;
-                 if (addr) {
--                    *addr = g_renew(uint64_t, *addr, v + 16);
-+                    uint64_t *new_addr;
-+                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
-+                    if (!new_addr) {
-+                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
-+                                         DMA_DIRECTION_TO_DEVICE, len);
-+                        goto err;
-+                    }
-+                    *addr = new_addr;
-                 }
-             }
-             (*iov)[v].iov_base = map;
-@@ -948,6 +959,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
- 
-     g_free(ents);
-     return 0;
-+
-+err:
-+    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
-+    *iov = NULL;
-+    if (addr) {
-+        g_clear_pointer(addr, g_free);
-+    }
-+    g_free(ents);
-+    return -1;
- }
- 
- void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
 -- 
 2.47.3
 
