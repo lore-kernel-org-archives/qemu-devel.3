@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3C6C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8560BC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kKn-000713-TM; Wed, 16 Sep 2026 03:45:38 -0400
+	id 1x6kME-0000kE-Df; Wed, 16 Sep 2026 03:47:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kKb-0006Gr-No; Wed, 16 Sep 2026 03:45:27 -0400
+ id 1x6kL9-0008Kt-VM; Wed, 16 Sep 2026 03:46:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kKZ-00052N-M0; Wed, 16 Sep 2026 03:45:25 -0400
+ id 1x6kL3-0005Hk-0J; Wed, 16 Sep 2026 03:45:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544605; bh=+BcNUnqgn+mS789eCV9YP531lCttk2FP3uNJuVoyAOY=;
+ t=1789544614; bh=7N0jd0jFL16W4G84h8L0ipzoPoATQkQs6WcUF3CIKPg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Awi16t8Kf4Ap4AZs1lZ2sRI7tqjn3XifxkET3GBtPkLOM/QMfQ/ZDpCZ5cOnSzEdP
- U9D/f+K1Jes5nWaYfBz/jE2JEYMX5v1VUkiz8eW9H111Zzq4KQDNY99yZoCqZprbdn
- WRnsJcVMu0D/k0NwIVD+y/ds8oPd/hLYKJ9lvT06MoNyXXW0ve41+ZtwSHJFecGd1I
- FNroaXdeXSoXzBPX4FKGzRY0MOEYkLRmC/t4ZPtFvG0YPBYNAmwoDC47FUQ6gJaohT
- wgaBySyMuGGvn+6w5v/+BypcsAGe3ayzFUumx+X1ZojqeZe67h3Q1SeI0BnFyqblti
- xDL06JP7gJChg==
+ b=Atx0+V2Jacs3Uhs90mMg4pfDL+FnpIfWI+YQ8DTgTnDgYJSOIfuxBcRzoW4JUmdFu
+ 1PQiPh0Hp6Q069SVb0uv630RA17O/XpCDjj+tXmTp4M71Ypd7kJfMTiJdZDmFQjUn1
+ YgNsZUCDmJEi8rz3K0SOWSxTIfSgT6awE8HrKq5OhrEaQ/RIhNDXJkbYmAXJdXhaXH
+ lQCjI4e+VknufXaB2GTQMkKFUvaAYLo0ONz+jdtM1CX54wFETuC2mvJMxnA1TSwhbw
+ vI8AdRVffjlU7pIHJeh326m+a+P/vc2kOZVQlnKqhLy9uQqNjDFXbR49TOql/jwlJ9
+ Sr56ipVFoEiVg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F6751D559E;
- Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D53A51D55A6;
+ Wed, 16 Sep 2026 10:43:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F0FF2429B33;
- Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6516F429B4D;
+ Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C74745A6E7; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
+ id 57DEB5A6F1; Wed, 16 Sep 2026 10:44:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 19/49] scsi-disk: fix out-of-bound read in WRITE SAME
-Date: Wed, 16 Sep 2026 10:42:37 +0300
-Message-ID: <20260916074346.671467-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 24/49] target/arm: Correct reset value of SCTLR for
+ arm926, arm1026
+Date: Wed, 16 Sep 2026 10:42:42 +0300
+Message-ID: <20260916074346.671467-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -70,71 +72,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
-to read roughly 60 KiB past the end of a heap buffer, copying that out
-of bounds host memory into the guest's own disk image.
+For the arm926 CPU we reset the SCTLR to 0x00090078.  This is not the
+value specified in the ARM926EJ-S TRM (ARM DDI 0198E), which states
+that bits 16 and 18 are SBO, bit 17 is SBZ, and bits [31:19] are SBZ.
+It's also not the value seen on real hardware.
 
-WRITE SAME computes the request transfer length at dev->blocksize
-when the request is prepared and sets cmd->xfer from dev->blocksize.
-scsi_disk_emulate_command() then uses cmd->xfer as the size of the
-request buffer.
+Similarly, for the arm1026 we use the same SCTLR reset value but
+the TRM says that bits 18 and 16 are the SBO ones.
 
-However, MODE SELECT can race with the WRITE SAME command and guest raise
-the logical block size to any value whose low bits fit 0xfe00, up to 65024.
-In the presence of this race, scsi_disk_emulate_write_same() will read
-from memory as many bytes as indicated by the *new* dev->blocksize,
-and write it to disk.
+This has been wrong in QEMU since 2007 when we first started actively
+resetting the SCTLR to some fixed value rather than zero.
 
-The read length in WRITE SAME must be bounded by the buffer that was
-actually allocated, not by the mutable s->qdev.blocksize, so clamp the
-length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
-against the current block size would not work because the race is
-intrinsic in the SCSI protocol.
+This wrong value didn't affect any of QEMU's behaviour, because we
+don't implement any handling of the old pre-v6 meanings of these bits
+(which were IMPDEF), and their v8 reuse is guarded by appropriate
+version checks.
 
-I am not sure if this is exploitable with virtio-scsi and other SG-capable
-HBAs, because it should process the WRITE SAME input immediately,
-without letting the MODE SELECT command race with it.
+Correct the reset values to 0x00050078 (i.e set bit 18 and not 19).
 
-Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit d30254aec93141d6b89262986a62764b2ae07177)
+Fixes: 610c3c8afd99f4f11 ("Reset ARM cp15.c1_sys to default values. Fix XScale cp15 accesses.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4202
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260821114138.4068582-1-peter.maydell@linaro.org
+(cherry picked from commit 59716ac3067d2f87550fa3a59bdbaf9180c06c7b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 831598688d1..e6fbd23d178 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1933,6 +1933,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-     SCSIRequest *req = &r->req;
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
-     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
-+    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
-     WriteSameCBData *data;
-     uint8_t *buf;
-     int i, l;
-@@ -1952,7 +1953,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-         return;
-     }
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 2c45b7eddda..42221383e22 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -134,7 +134,7 @@ static void arm926_initfn(Object *obj)
+     cpu->midr = 0x41069265;
+     cpu->reset_fpsid = 0x41011090;
+     cpu->ctr = 0x1dd20d2;
+-    cpu->reset_sctlr = 0x00090078;
++    cpu->reset_sctlr = 0x00050078;
  
--    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
-+    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
-         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
+     /*
+      * ARMv5 does not have the ID_ISAR registers, but we can still
+@@ -175,7 +175,7 @@ static void arm1026_initfn(Object *obj)
+     cpu->midr = 0x4106a262;
+     cpu->reset_fpsid = 0x410110a0;
+     cpu->ctr = 0x1dd20d2;
+-    cpu->reset_sctlr = 0x00090078;
++    cpu->reset_sctlr = 0x00050078;
+     cpu->reset_auxcr = 1;
  
-         /* The request is used as the AIO opaque value, so add a ref.  */
-@@ -1978,7 +1979,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
- 
-     for (i = 0; i < data->iov.iov_len; i += l) {
--        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
-+        l = MIN(buflen, data->iov.iov_len - i);
-         memcpy(&buf[i], inbuf, l);
-     }
- 
+     /*
 -- 
 2.47.3
 
