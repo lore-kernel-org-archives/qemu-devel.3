@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79DBC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8DEC982C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6le1-0006jl-Cc; Wed, 16 Sep 2026 05:09:35 -0400
+	id 1x6lfc-0001u9-E4; Wed, 16 Sep 2026 05:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldr-0005l9-GW; Wed, 16 Sep 2026 05:09:23 -0400
+ id 1x6lfO-0000vK-AG; Wed, 16 Sep 2026 05:11:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldp-0007V4-RW; Wed, 16 Sep 2026 05:09:23 -0400
+ id 1x6lfM-0007uc-Ma; Wed, 16 Sep 2026 05:10:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549561; bh=NfcBORrjkAekWb0y70qOM6vtK9AUvfxjCuYl+d66bEU=;
+ t=1789549562; bh=vLGvC5zUkfPEy2DPF2t5YDzCFoKSBwPb98aoEix/IEc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dqCqdHzxNYwrtbFHgzgwpZ57FOj8G6PW0s6NJ6rkYod1Z3Yc89ABcQxud+Bcp2aV2
- jUBx60hzfF3uDVM+BGzGVBnIzy4uzTO40yNDUHwb5JB6N0WfjBCb6sNw138I6KOJIN
- CP9iipjIN4JhWPU4u4U8mClR5p7diIs6g+5Tn6zypkuanmy12hqxKBu3KYnoh7gdH1
- uwKN21wGZjwah12ZwL4U0wtXEv6R58xAVRypAzmdDjr7iCF0rS88tRqyj/TSvkrTdy
- XUZoKKF+I0v43T0B8dVzIx68PN84ioYEs5ZR8/evC7CYJBnNgx5BSswztHtNcmJVg6
- 8BCh7VQ8XwnJQ==
+ b=vbeLcJvsoBTR5C1g8mpuQ35bBubTTtX4DVfBHU3JNSdjfaXJu7WvCr4ny6tjC+Mj2
+ VfnEo2up4RkO7WcSUEXEDqk8uLfGDvdd96LA+TEuBMYv3oVS2gExxJdUomxjcwdmFv
+ 0JbNCceHYQcmu+b0cjmIUqmhizV6jVcpuq4Oy/PyY1utEKlV2pJZy/MdCfmt/ZJEsK
+ tdz6K3Q5J1U4KvJrxwBg+A7/+o7C3EeqmCn8KU4FS9B8yT9bXBycUShhhebOR+UGyA
+ 38HloMfeR4RrEtQ9PEQQa6Mmrlo+B1uxBrkrcdwvKtKaxzui3/fxFd5224EtpFkERy
+ Vk4MHGmx/+QEQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 293771D56DD;
- Wed, 16 Sep 2026 12:06:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 78B811D56EE;
+ Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C9325429E38;
- Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 23CE8429E4D;
+ Wed, 16 Sep 2026 12:06:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A0A655A7A9; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id 0066E5A7CB; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 40/57] virtio-gpu: disable blob scanouts on mapping
- cleanup
-Date: Wed, 16 Sep 2026 12:04:04 +0300
-Message-ID: <20260916090516.677749-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Doug Cook <dcook@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 57/57] target/arm/whpx: fix whpx-arm post-reset CPU
+ state
+Date: Wed, 16 Sep 2026 12:04:21 +0300
+Message-ID: <20260916090516.677749-57-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,41 +72,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Doug Cook <dcook@microsoft.com>
 
-When a blob resource backing is cleaned up (for ex via detach_backing),
-any scanouts referencing it must be disabled first to prevent the
-dmabuf from outliving its backing memory.
+Reset should leave CPU 0 running, and should leave all other CPUs
+suspended. Instead, no CPUs are suspended and CPUs may be left in
+low-power states.
 
-Fixes: CVE-2026-66020
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 3ece85b53c124142c7d5cbb1165d4da125b7c369)
+Fix by updating state in whpx_set_registers WHPX_LEVEL_RESET_STATE.
+
+Signed-off-by: Doug Cook <dcook@microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 57197bf183f3afa906f9007de918244adff9ab7e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index d6f83da852a..1cf2adeebbd 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -991,6 +991,16 @@ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
- void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
-                                 struct virtio_gpu_simple_resource *res)
- {
-+    if (res->blob) {
-+        int i, max_outputs = g->parent_obj.conf.max_outputs;
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 6aa5e2cfd25..cca0f8e30d7 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -617,6 +617,37 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+             whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
+         }
+     }
 +
-+        for (i = 0; i < max_outputs; i++) {
-+            if (g->parent_obj.scanout[i].resource_id == res->resource_id) {
-+                virtio_gpu_disable_scanout(g, i);
-+            }
++    if (level == WHPX_LEVEL_RESET_STATE) {
++        /*
++         * WHPX keeps the "vCPU is in a low-power wait" state (entered when the
++         * guest executes WFI/WFE) in WHvRegisterInternalActivityState, and that
++         * state is not affected by writing the architectural registers above.
++         * If the guest happened to be idle when the reset was requested, the
++         * vCPU would stay suspended forever.
++         *
++         * StartupSuspend is the bit WHP uses to hold a vCPU that has not been
++         * started yet, and it is how secondary vCPUs are parked until PSCI
++         * CPU_ON releases them.
++         */
++        WHV_REGISTER_NAME name = WHvRegisterInternalActivityState;
++        bool powered_off = arm_cpu->power_state == PSCI_OFF;
++        WHV_REGISTER_VALUE ia;
++        HRESULT hr;
++
++        clean_whv_register_value(&ia);
++        hr = whp_dispatch.WHvGetVirtualProcessorRegisters(
++            whpx_global.partition, cpu->cpu_index, &name, 1, &ia);
++        if (SUCCEEDED(hr) &&
++            (ia.InternalActivity.IdleSuspend ||
++             ia.InternalActivity.HaltSuspend ||
++             ia.InternalActivity.StartupSuspend != powered_off)) {
++            ia.InternalActivity.IdleSuspend = 0;
++            ia.InternalActivity.HaltSuspend = 0;
++            ia.InternalActivity.StartupSuspend = powered_off;
++            whpx_set_reg(cpu, WHvRegisterInternalActivityState, ia);
 +        }
 +    }
-+
-     virtio_gpu_cleanup_mapping_iov(g, res->iov, res->iov_cnt);
-     res->iov = NULL;
-     res->iov_cnt = 0;
+ }
+ 
+ static uint32_t max_vcpu_index;
 -- 
 2.47.3
 
