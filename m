@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45182C982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AE7C982C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qz3-00040q-OB; Wed, 16 Sep 2026 10:51:37 -0400
+	id 1x6qxM-0001aQ-1H; Wed, 16 Sep 2026 10:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1x6qyb-0003qw-9v
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:51:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x6qx5-0000ze-Hr
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:49:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1x6qyX-0007LU-Ii
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:51:08 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x6qx3-0006mC-No
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:49:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789570256;
+ s=mimecast20190719; t=1789570173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=vEXdstDua2BZAhj6ayDVN5F5Nk8TK/TZmKRVlNcBD9I=;
- b=GOkl+wBQt5gC2arxpQavtRERytuHEWSeS0eWhq8b3yrau9HOtzwzIXxIrl6NhDhylud04z
- fHePrz0doP3HX6rpTvoJKtV1OYjrguMP2NLDIzatAKZ+QoR/H7mcNpFyFlGXiPZ3MUZdr8
- 0BYHNgRZZMtUXE3ALVcmREHYn7eTMII=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e02JHTK5vtyACAt9OjPCN3RGbXnELCnkz1SQgi2oqUc=;
+ b=UMOjgj4SiRziIdUHdeshGfgHxENL8DD+wbVbn3MDwLagAVIVWTeaADhZT8e2ocOlRjdC3d
+ spk2ml/W9Ke2RU1bIiScBzGsg2U/wZFXRRwcOskeMfcjo+78Lk90ceXtJ6ZGu7LOIKd1rh
+ SB2NOIgPGCkF+4vG+At4hT3yHIymD6k=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-zrs2gKk0PCCnHkzDkF4h1A-1; Wed,
- 16 Sep 2026 10:50:53 -0400
-X-MC-Unique: zrs2gKk0PCCnHkzDkF4h1A-1
-X-Mimecast-MFC-AGG-ID: zrs2gKk0PCCnHkzDkF4h1A_1789570252
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-pDKpRdLvO4mUUX9UnosilA-1; Wed,
+ 16 Sep 2026 10:49:29 -0400
+X-MC-Unique: pDKpRdLvO4mUUX9UnosilA-1
+X-Mimecast-MFC-AGG-ID: pDKpRdLvO4mUUX9UnosilA_1789570167
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C2A2185589F
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 14:50:52 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.48.37])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E2DB5433; Wed, 16 Sep 2026 14:50:51 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id CD8C9180038A; Wed, 16 Sep 2026 16:50:50 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] hw/uefi: add missing uefi_str_is_valid check to
- uefi_vars_mm_lock_variable
-Date: Wed, 16 Sep 2026 16:50:50 +0200
-Message-ID: <20260916145050.1329206-1-kraxel@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99FF2183019A; Wed, 16 Sep 2026 14:49:27 +0000 (UTC)
+Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EA73919560AB; Wed, 16 Sep 2026 14:49:22 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ shaju.abraham@nutanix.com, khushit.shah@nutanix.com,
+ yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org,
+ sebott@redhat.com, skolothumtho@nvidia.com, philmd@oss.qualcomm.com
+Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com
+Subject: [PATCH v9 22/26] target/arm/kvm: Add an error handle to
+ kvm_arm_create_scratch_host_vcpu
+Date: Wed, 16 Sep 2026 16:45:45 +0200
+Message-ID: <20260916144721.751810-23-eric.auger@redhat.com>
+In-Reply-To: <20260916144721.751810-1-eric.auger@redhat.com>
+References: <20260916144721.751810-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,28 +90,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4213
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- hw/uefi/var-service-vars.c | 4 ++++
- 1 file changed, 4 insertions(+)
+This allows to report a precise error message if any error occurs.
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index e0ea3d532eb6..ef8849f81511 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -690,6 +690,10 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+---
+ target/arm/kvm_arm.h |  3 ++-
+ target/arm/kvm.c     | 15 ++++++++++++---
+ 2 files changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index bace69efed..185018e00c 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -106,6 +106,7 @@ struct kvm_vcpu_init;
+  * @init: filled in with the necessary values for creating a host
+  * vcpu. If NULL is provided, will not init the vCPU (though the cpufd
+  * will still be set up).
++ * @errp: Error handle
+  *
+  * Create a scratch vcpu in its own VM of the type preferred by the host
+  * kernel (as would be used for '-cpu host'), for purposes of probing it
+@@ -115,7 +116,7 @@ struct kvm_vcpu_init;
+  * false on failure (and fdarray and init are not valid).
+  */
+ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+-                                      struct kvm_vcpu_init *init);
++                                      struct kvm_vcpu_init *init, Error **errp);
+ 
+ /**
+  * kvm_arm_destroy_scratch_host_vcpu:
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index f7ca0e0250..43fb61bef4 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -107,13 +107,14 @@ static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
+ }
+ 
+ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+-                                      struct kvm_vcpu_init *init)
++                                      struct kvm_vcpu_init *init, Error **errp)
+ {
+     int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
+     int max_vm_pa_size;
+ 
+     kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
+     if (kvmfd < 0) {
++        error_setg(errp, "Failed opening /dev/kvm");
+         goto err;
+     }
+     max_vm_pa_size = ioctl(kvmfd, KVM_CHECK_EXTENSION, KVM_CAP_ARM_VM_IPA_SIZE);
+@@ -124,6 +125,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+         vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
+     } while (vmfd == -1 && errno == EINTR);
+     if (vmfd < 0) {
++        error_setg(errp, "Failed creating the scratch VM");
+         goto err;
      }
  
-+    if (!uefi_str_is_valid(name, lv->name_size, true)) {
-+        return uefi_vars_mm_error(mhdr, mvar, EFI_INVALID_PARAMETER);
-+    }
-+
-     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
+@@ -143,6 +145,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
  
-     pe = g_malloc0(sizeof(*pe) + lv->name_size);
+     cpufd = ioctl(vmfd, KVM_CREATE_VCPU, 0);
+     if (cpufd < 0) {
++        error_setg(errp, "Failed creating the scratch VCPU");
+         goto err;
+     }
+ 
+@@ -156,12 +159,14 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+ 
+         ret = ioctl(vmfd, KVM_ARM_PREFERRED_TARGET, &preferred);
+         if (ret < 0) {
++            error_setg(errp, "Failed getting the preferred target");
+             goto err;
+         }
+         init->target = preferred.target;
+     }
+     ret = ioctl(cpufd, KVM_ARM_VCPU_INIT, init);
+     if (ret < 0) {
++        error_setg(errp, "Failed the init of the scratch vcpu");
+         goto err;
+     }
+ 
+@@ -659,6 +664,7 @@ kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     bool el2_supported;
+     bool pmu_supported = false;
+     uint64_t features = 0;
++    Error *local_err = NULL;
+     int err;
+ 
+     ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
+@@ -706,7 +712,8 @@ kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         features |= 1ULL << ARM_FEATURE_PMU;
+     }
+ 
+-    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
++    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init, &local_err)) {
++        error_report_err(local_err);
+         return;
+     }
+ 
+@@ -3093,8 +3100,10 @@ void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level)
+ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
+ {
+     int fdarray[3];
++    Error *err = NULL;
+ 
+-    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL)) {
++    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL, &err)) {
++        error_report_err(err);
+         return;
+     }
+ 
 -- 
-2.55.0
+2.53.0
 
 
