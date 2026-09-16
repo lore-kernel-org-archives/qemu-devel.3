@@ -4,104 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 545B3C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D4DDC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6pXC-0005Iz-Iz; Wed, 16 Sep 2026 09:18:46 -0400
+	id 1x6pZr-0005xX-Nr; Wed, 16 Sep 2026 09:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x6pWp-0005I5-9s
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:18:25 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x6pWn-0002bj-Kt
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:18:23 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e4ab20f4bso977322d50.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:18:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789564700; cv=none;
- d=google.com; s=arc-20260327;
- b=ew93TgMuu62mJ4iHY7z2WFMeWTDOJpe4RHN6SEg/X34kw5+EMi0i4Dfo650uIlorid
- l/AMFjvaR2sMjsudL/4ftxtO+DegKw+YzoUQacEDMdnWK0XS52wpAcGXjaOJpfg24Z6v
- ZCXDKkaPEIG0Km58coid/qfCfZ0i68VqCJpiu76UBh38ByyTjfy2FtkDXoCRRwDh86Sj
- QyYBx9ErW+9YJBkOHB+SKy/LmN1UObHclp2i0+ADPr3KlX26xhb/oGxPWiRi40vK8oZ/
- 0gOMUSGPvCpCLqR+O+VfQYS0xh69eGcqZqNxFA7ynROvsnDySC8VpIhQ1B5yPg4stGgd
- D+rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mlqmq8/RsaiYUeBt9fHkH+TqQ5EKxqpkrlv0TwHdpcI=;
- fh=HX/6yOwwcGcXE+wPdTTUyHfPGXheT45Z021guP59lnw=;
- b=qQwfJyvQTrYpnYAVRexp9fHnkGLvNrWkFg7RY7QK8YZb8evRNhc9XGTg8Jll1eB9yP
- PYJSHgz3Oz0BpuvOXvou8FaVEThf5mriyeWLF4ArBVggn+1cTvxkJtoqtEwNKn/MZSnA
- MbYV2wle+xGv+C714VNbQIStoB3vtzTrpk8C7sMRicIHMSfOZZGxu/+k4WQTKfezYZSP
- kRihGeifAnAoPQEa3gViWKXGwIHyIGzZ2GQvcM0arAUKTEGpTHHF5XH17NulFB83Coih
- M1c1aHLanEGtt8K+MFkMUkDJa8aiZKn9KEthAhFHFwfLKw/2HzKPZB3YJFehgPf7G5VB
- d2tg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x6pZq-0005x3-GL
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:21:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x6pZo-00032U-Ks
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:21:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789564887;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4REO1qBeWuk8/clBHJch74Ty6Oz13hhJb9h5IHDXZ44=;
+ b=N35+Z0kHy+qOcHlpkNSiJLLYyTqhPwY1ElBQknMnorkFt5lkWJZVXOYVV+r0RFWqZjCW95
+ 0CtD1lg4E/V1udlV/tol7Uff5rfhxuVusu3V3Rww5PzRUuNtPxUHhjIWMBvRaVpund+EYC
+ UjEYvQjsBnnAl6Ve4ec21h53UBidJic=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-314-V0XdP7S5O1ezDJ_YPBdvLQ-1; Wed, 16 Sep 2026 09:21:25 -0400
+X-MC-Unique: V0XdP7S5O1ezDJ_YPBdvLQ-1
+X-Mimecast-MFC-AGG-ID: V0XdP7S5O1ezDJ_YPBdvLQ_1789564884
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49ccfad90f1so32696965e9.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789564700; x=1790169500; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=mlqmq8/RsaiYUeBt9fHkH+TqQ5EKxqpkrlv0TwHdpcI=;
- b=QX588GFN7fMcLnNPkKSL0WGl/j+X90zFTZKpCiEchhMOlt2B8TzKqRKqKe1wA+fGT8
- tOR38bicl92q4SxtBkaNfV+rS0OPJxTXjbyxLy37YdkVE4HkeWZkLzoyOHRJAPfm7K/Z
- hzxE2fdy3eSPzk33FSHWsKQ2rnmbX0ezvvxVcWHsi96v22Yzb82OOdUPyUzHgLtacWmN
- R8MnjwA0IpirkpEF+wHDvoq0kNhMntoMGptqGVnpub2lk1V6ruaRIkquoLpcF1lZI/Wh
- UYW95lA4b/hwlgoaAeaRYs/vhLSuPXDuycSCFAILgc6VMuQ0TAVQL+inoZR7ZrWz9Hxu
- KhoA==
+ d=redhat.com; s=google; t=1789564884; x=1790169684; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=4REO1qBeWuk8/clBHJch74Ty6Oz13hhJb9h5IHDXZ44=;
+ b=epjxzLD+P/0EhwfC4rjzZ5gxBNV/GhX3JqYHtbjkEAhKwJrousbNkIW6m/3nYTRQCI
+ 2UzVmmY2QED+2H5Uuxdezsvwx1nyiCy1SLPluGdv6s2BaPRoT63CaEGZP15uo7f9c95S
+ 2v7P/gbCXNatYzTtALRZCN7VRcUKfxB+BPFQZG1WpRAsBKyFsPP3BiZEl7BkXxHRzLka
+ 7H26nEABZ/bNvlUr2tTv0jTmb7ytmJ0PGHq3GV9vCMzkOCkJnU8tUVt3cMvPW0i5XwPy
+ +fCihzobxOWo+i/4MxMWIJm+84Qdb3dOBPaa33kIT6cBtQYb/DJo9oB3UkVRktKmLexb
+ 6uZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789564700; x=1790169500;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mlqmq8/RsaiYUeBt9fHkH+TqQ5EKxqpkrlv0TwHdpcI=;
- b=K5PLGuSNM2uG7c3El3Uy+4LFccyHGJYYC33Oxwz8c4iQWx0pav1Tdb0RjZC2yAOS8p
- IhmHxBBirOncql+6G8B4J02nWqxZvylcqztHdFxRuC4ZvO8R/N3iQQ9SEYd8YNJko5ww
- QlnSF/2L73v/zmYKs/iVrsbn3qLSOy3JSqOJ5axpCLpjxvk5k2Zg9Fu96Jih0XkyF16E
- NGW8I0PIq7bw5mSisSk+cfJ8DZfSSYLItx28QfZ/xOpSmm3Im0QES6wop7sqBpYYYyF8
- 4Eq9QrN16dKxS9gPsly5xqyONK+qot9jn6kPKkyUJD4UUrwryJZbR2YcPLL2gffXyP7z
- sokQ==
-X-Gm-Message-State: AFuF++mYdy8rV0YJPambQa2+cxDDYSdr61FPae+LZz1W7iN9+vY/TVbk
- N13UZs4ElyQHP0RM5182jN+oIULsNiFEbsTMCdGB9B0ZG/JTWQpuXjo7J2e3AWOWruwy258pfel
- XokEgq9JajFc1dDdps8dtxBA7lW0EYdk=
-X-Gm-Gg: AYBFou2+U5hN1JG+tRgwMSOtIUE6Lt8le2ljSajK7fuJl4mAzKm3Az+RjTjismPJrJq
- fyjDb2xqG1qyXcFBDkG5uXJlpG5sjWSVLpkxzTAw30yDQUfdsnO4TQKtIeCkiXXQoYL6Lu2+5+1
- Bmw9y2CYI/y/sSoDT6b3rNl8SCSW8lf7PUB0WYY0lQ8kno6UCgqZ5xKJPA+AUs32Z1OTrMQ8vVe
- lWXaT57oA5AORJT2zEZg0xLp8Za3I2xPp5A57pchAdeTuvS1mg8qt80O4RtSC6jRkvCeCynEKSg
- qNMqr5VOZdSUl3nQtT0m/EAwZ6p9KqZ/BkgrgGzVIszbk5i3upkAP6DaC49E+tEvOgS8Kt9sVa8
- 13c9hTDR5j4o=
-X-Received: by 2002:a05:690e:803:20b0:671:3392:7d68 with SMTP id
- 956f58d0204a3-671632fd96bmr552034d50.90.1789564699697; Wed, 16 Sep 2026
- 06:18:19 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789564884; x=1790169684;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4REO1qBeWuk8/clBHJch74Ty6Oz13hhJb9h5IHDXZ44=;
+ b=fnLY8EoRMcR2vQByV5m5SwuaAKsRcWyS4nja92sFzPXeZYIx8gnT4kAhrzKv7+0h9a
+ QfgnR6qh+06BkasR74FHP/d2icTWJH22/khBBkJBW7y6eHl3/zvSkfyEViQxcYdtjYS3
+ ygBS/F+p3ECoD3SijGX+S/tkMV/hlw612Pb0JHBjgiyGdED8z9SphdIEL2x7bL6PSfb5
+ DD0R06iPWH+3undxF3XJk2Pk5RwNslvavdYyRKBchVoUMaUWxwI1k/H4G3PlwYk/+R6P
+ oAYiqV1YXNCQPo/jrEYqavmpvpmx5Izaf8ucUOv57bKfh9PSjdiDCDsseGSiJ5l1UXt+
+ mQOQ==
+X-Gm-Message-State: AFuF++mIcfO6BIV1y4IvBTenfo4furnBN9xnFvW53EUQhF4oxVmf3Oci
+ s26ZsiYF5Q8uoJAPo8ENDu147TEpUB5ebnN7jTL8TlYL6U3Q2IAPTRmWZBpzmwzJ0euSfeQh32i
+ GsQK0TTlXaCTG5Bi2IcdTciUls3nMwyRhaK7fuw69bl44XWemVlZX7wnZQ0UXakD6wFKbf4Ue3c
+ TiEh3n9vV2s2IymbsvrORpjPs97KMNn3Z5/uLNJ6Ee
+X-Gm-Gg: AYBFou0FyZwZ059/jVr6yv3Gk3KtYSWwiEbw8Z2X4jnlWrIfl06IZiuID+UdGXaRiN2
+ cz1QtOZ4vfZohoOGrpFwPAvCOxWCx9xCySYliXKrwfMaUZKRlhzSh29LHYDxMAHX3gnwFbPzWB4
+ JB0mFe/lccyqkJj+5wngxMqdB7WBH1LP4wjZ+THyj9BYvSOvRsVFyodil1WZ3y0x2Ya1eeK+Kse
+ SAtZLYoWg0wAoOSRkqQ/rHw3UPxqXPLOj+VT50CitWsEwh+/7sosGrDBVeOOTsqmN3ZJfW5tovt
+ dT3KP9FMDu821NHxCxpPJ0oVaOoQpBCx4QSVLNUsOqrfJvI1D+sqMiwclx3sHNjnwx+L2TsV4u4
+ ilVP/LSb0YMjzFMaHXPSxxbHiE0K+zNKNOghhGT0WPbeogswXsJIhpR3op0onkGkJeuLfRvQkAT
+ Ihrkdc
+X-Received: by 2002:a05:600c:6085:b0:49c:dca2:ac47 with SMTP id
+ 5b1f17b1804b1-49eac45c06bmr30124885e9.2.1789564884427; 
+ Wed, 16 Sep 2026 06:21:24 -0700 (PDT)
+X-Received: by 2002:a05:600c:6085:b0:49c:dca2:ac47 with SMTP id
+ 5b1f17b1804b1-49eac45c06bmr30124345e9.2.1789564883890; 
+ Wed, 16 Sep 2026 06:21:23 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.232.249])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49e83a8d6e2sm81816535e9.1.2026.09.16.06.21.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 06:21:22 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: deller@gmx.de
+Subject: [PATCH 1/8] ncr710: simplify ncr710_clear_pending_irq
+Date: Wed, 16 Sep 2026 15:21:13 +0200
+Message-ID: <20260916132120.860910-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260916132120.860910-1-pbonzini@redhat.com>
+References: <20260916132120.860910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <DLGIW2X7905Z.1AXV42Q0QG1CM@hetzner.com>
-In-Reply-To: <DLGIW2X7905Z.1AXV42Q0QG1CM@hetzner.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 16 Sep 2026 17:18:05 +0400
-X-Gm-Features: AcwNN1WH4euw5aKv8mqaqUEDpaKVMA5M7keTEqBW-mChcrUrnhmGtiq8t4ClciA
-Message-ID: <CAJ+F1CLxsqfT302SGcq9vx5pgjrY3OiibmTpZHVtx1d-rXroVQ@mail.gmail.com>
-Subject: Re: QMP: exposing the host TAP interface name
-To: Tim Foerster <tim.foerster@hetzner.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>, 
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-yx2-x11.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,72 +120,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+The same checks are done in ncr710_request_free.  If req->hba_private is
+anything, it is the NCR710Request that points to req, so it would be
+cleared.
 
-On Wed, Sep 16, 2026 at 10:22=E2=80=AFAM Tim Foerster via qemu development
-<qemu-devel@nongnu.org> wrote:
->
-> Hi,
->
-> I'd like to query the host TAP interface name of a network backend via QM=
-P, especially when the TAP FD is passed to QEMU using SCM_RIGHTS
-> and then assigned to a backend through fd=3D.
->
-> In my current setup, retrieving this information externally requires CAP_=
-SYS_PTRACE. This gives the management process far more access
-> than needed and conflicts with the Landlock sandboxing I want to apply, d=
-ue to Landlock's ptrace restrictions [1].
->
-> QEMU already owns the FD, and tap_fd_get_ifname() can retrieve the name u=
-sing TUNGETIFF on Linux. For a TAP passed through fd=3D, x-query-
-> network currently reports the following (simplified):
->
-> {
->   "name": "hostnet0",
->   "type": "tap",
->   "info-str": "fd=3D42"
-> }
->
-> I'd like to obtain the actual interface name in a structured field, regar=
-dless of how the TAP was created or passed to QEMU. For example:
->
-> {
->   "name": "hostnet0",
->   "type": "tap",
->   "info-str": "fd=3D42",
->   "data": {
->     "ifname": "vnet7"
->   }
-> }
->
-> Would extending x-query-network be the preferred approach? If so, would y=
-ou prefer a dedicated ifname field or a type-specific data object
-> selected by the existing type field?
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/scsi/ncr53c710.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-x- QMP commands are not meant for any other usage than debugging and
-testing (in fact, we should probably exclude them in production
-builds!). In particular, this command is currently only meant to be a
-HMP "info network" substitute for test/debugging only atm.
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index 57967e7a84f..b87fed05a4d 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -316,11 +316,7 @@ static inline int ncr710_irq_on_rsl(NCR710State *s)
+ static void ncr710_clear_pending_irq(NCR710State *s)
+ {
+     if (s->current) {
+-        if (s->current->req) {
+-            s->current->req->hba_private = NULL;
+-        }
+         ncr710_request_free(s, s->current);
+-        s->current = NULL;
+     }
+ }
+ 
+@@ -739,9 +735,6 @@ static void ncr710_add_msg_byte(NCR710State *s, uint8_t data)
+ 
+ static void ncr710_request_free(NCR710State *s, NCR710Request *p)
+ {
+-    if (!p) {
+-        return;
+-    }
+     if (p->req && p->req->hba_private == p) {
+         p->req->hba_private = NULL;
+     }
+-- 
+2.55.0
 
->
-> Personally, I'd prefer an approach that is reasonably easy to backport do=
-wnstream to older QEMU releases. Since x-query-network is
-> relatively new, extending it would also require bringing that command to =
-releases which don't have it yet, potentially increasing the
-> backporting effort.
->
-> A type-specific data object could also accommodate additional TAP propert=
-ies later, such as multiqueue mode or vnet_hdr. However, those
-> are outside my current scope, I only need the interface name.
-
-I'd suggest a new query-network-tap(name: hostnet0) -> TAPInfo command
-for your specific case. Eventually, later, NetworkClientInfo could
-later embed that data.
-
-Let see what other people & maintainers think
-
-thanks
-
---=20
-Marc-Andr=C3=A9 Lureau
 
