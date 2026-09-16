@@ -4,106 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18434C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 12:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DC6C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 12:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ovy-0004tb-6W; Wed, 16 Sep 2026 08:40:19 -0400
+	id 1x6owP-0004x4-Vj; Wed, 16 Sep 2026 08:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1x6ovr-0004q2-3O
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 08:40:11 -0400
-Received: from mail-lf2-x11.google.com ([2a00:1450:4864:36::11])
+ id 1x6owK-0004ux-GI
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 08:40:42 -0400
+Received: from mail-oa2-x10.google.com ([2607:f8b0:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1x6ovo-0003yP-Ev
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 08:40:10 -0400
-Received: by mail-lf2-x11.google.com with SMTP id
- 2adb3069b0e04-5b5e4f13d77so1097073e87.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 05:40:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789562406; cv=none;
- d=google.com; s=arc-20260327;
- b=q3WclVQGaAO3/43sZKioZDQAs/dw1E3nDMLwLbKYAhPOc3IRg7jB64B5ZPBx28Atp/
- LKQ4/o5y04dU741Khg69oPUyqx/FTVifrrD1BOg6Sy8LAAuTtF0aM/Xy8S5uXv4557Ry
- B29QFRi2X4zYMYb+Y+LHxR4EoJCG0lSRKCRNBaPgfgMe/usrLO8/t6vX2MmNq5IjD8TG
- D/H+Y0qUvRN21xovaFYkvUIUIg+imfZOE9RjiX4RiQQEtYZPM/5FOmHwIdghnGbZ/Cwm
- qk8XQw6lylyqJvgURg3W3U0fuQLMU9p21J+7Uz049v4pDZEtBlXdryG+hgjlJoqQ+SpH
- C5WQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=DbD3p8jMET1nmvhB+WjefO62+1Xr/3+riUWqZdD6110=;
- fh=/c8Hxh4HFY4gZJGkC/smGKMSvLG7cYMQ/9bafODEfcI=;
- b=Rs2++apPsnU+VRNW/HoobWrmbuU1HgHW5ymUF27CWGFVQMpPstik3PACHCqehz9GYn
- 6rQZxeSYoHS3gJCx13Cdh6CNzs4gDafYDAI5gIzPhFBKgrp+b+zdLtp3hn3dyfjYXbxC
- 0aO+1vy1486NKPnetlHi3ijn+I2CCbEgiMoR3liGwjEJhXQ8PTs40XMn9JmMq+AM/a5d
- CuiiAUybKaat3OFh05fJK+1AoVOu/HSv67AsvQmp6pu3lwEd04QAMbXxYrCM+PK74eew
- gqhjXyDnzcEHWgH524CgzR+RKmJFJ4aqD6fdY0DF84122foKBPy1oeDG7Cv+wusUlLqJ
- +n9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1x6owI-0004CV-C3
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 08:40:39 -0400
+Received: by mail-oa2-x10.google.com with SMTP id
+ 586e51a60fabf-466cc9ab667so1043307fac.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 05:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1789562406; x=1790167206; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=DbD3p8jMET1nmvhB+WjefO62+1Xr/3+riUWqZdD6110=;
- b=KZd3/D1nsb/CzCX8Rj9NwTEeJzwHg5eghgAP+QgHrSKfUGvPGA7gRsjFOgSD0C1vvM
- 6hg+jqmokBQEsmmtTigfSScIAWU+Plp+D/dCC4oVTbMypfydkQYHF2+HizHGoPLbmq8h
- TJczUsB3gQxYIKB/X7pwKi4QhWP8rZcnpcKu7NIpsxfWiEvLIk0Yj20zex3yOZLB3gJN
- iFvxCe7dakRSuzzDPN5eFfQ9CkIyAfgVS0OT/l4lURQKE9/xJfSnsM7EjROoM2nxt3mn
- GwyiAMaUNakcSKgs3SV1nNZKLckF2p7oTagqQo/Dlbq8gpJpjFi9/Ojh02o+BbMdKTte
- pRjA==
+ d=tenstorrent.com; s=google; t=1789562437; x=1790167237; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=g8oEo7D9iYKvCKk37zByHEQLHp5NBlGac6gC1FFqQIY=;
+ b=ZHLo/5zy4eq+N1blGD8nKoa9pwtKp/TJEHu/TD25DDzpfqKfGJAYg1Hc5BsRk4igbK
+ 9inGtWjN1kI7wSgjIgGsqVLB2v8GkL8xRlUVQpPnSlcRvjOu1++k18m2ro/Pd9jsklTf
+ N3vx0zr50syz1CrewfD498NDDBdHpA/lndhpCfPrTOHtV8NZz22mxhncwKFk0VYmNKdj
+ 4JD8Q6r4uzodshmM8heyuyiiSLMbbiTnMCAoI/hTpaeFsCLipt+O3D3n+wpP4FYiIaW+
+ zWUIHPVD+czYhI6IzHbo8SOy7YowvAH+nhx+D1pwd5WteyZd2R1hZIQUmBUNShsbfNXW
+ dZbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789562406; x=1790167206;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=DbD3p8jMET1nmvhB+WjefO62+1Xr/3+riUWqZdD6110=;
- b=lHSlwn2xmqlwrH50KPMbUpiWoXNPY58GeHB7TcDy0IQJYT9yxPgCoJPmHkG6K6QMnA
- KsXWIGoTpdLznXEdimOSjom5Vt8QQ3EnxxK2uOvDhS9s3cjjDBlezyd1pUr+0pkTdH1N
- m/YSUqVpxFBYJLMCTx+VlnqVUJzN2RY7n9uiBpPyrFWs8xmme2mStu5mOQw6RRsvfrhz
- rhhYnTbn/AuEveeU6oAUTsqre1OcS+cENPk9WXtEKaaWsOJ43q9pwxx3ZZkIf8dIa+6F
- xM4fUSp2jrHXAsXHIAvj8F1iu+bHdC6AmSZdEcyT9oObbtJRvFiawin6Qk4kYy7cI648
- uwVw==
+ d=1e100.net; s=20260707; t=1789562437; x=1790167237;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=g8oEo7D9iYKvCKk37zByHEQLHp5NBlGac6gC1FFqQIY=;
+ b=0gVMiu1KIz7t/x8VbAskbLDEXRAzMmSPaNKeYfauNF/JtBKaIQz5R1PTdxzsRKgKwd
+ Jai1dA4HIALRCniXyp1KSD03DQXC5jkLIk+vEyaoqehVfI4N79PkNFHG3JXXOqxBpNDk
+ q3ljmrjtU3UQ3p2gfRltpwgHcjpuqNe72gn+rLwhLzZ2OQ4aTdO9qFLMmcYyvJpcrCac
+ b+Db46axXrDRKVlGWTZjRp9zpswTK5Bv4XTACjcHOypOASiTf8rB/V8aAu7JWzDkpOt8
+ S5lRDkyp+oUY9FubPnBGAZLEbc1HNa/GuMlINjzlLCqTAVga31sOZgn6Zb8ckh4av8Tf
+ 64Sg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBw/G1sd5W9IEky+s9pL0JPc52s9IoqcfT8Mo8bG+L7KqCxgYmtGCIEhvYSQ+wdoBkQ6kxjSw18y5SGE@nongnu.org
-X-Gm-Message-State: AFuF++nY6HB/v3349yQnHmBdO+0585QeHaOx43roq++Y1N3xpgmkrNFV
- KAAb9C5o30u38WZUthwvKJ+GiadIzAcSclBj4EsqCrdgChi9XKOMvCp1a7Tb8mvkTurrG/bmzim
- h0RI7v5kY2EGftk4rUx827KdPttMQUqB8aFy08kQsKA==
-X-Gm-Gg: AYBFou3ZZ7Ux3OM5CnMZUdYbRYfCDhsZriHMr/pYbNdAPI2Vuzgmrt6JY7bqaXvu1Wr
- HJ0C4IySlVAHt47AYHTMWL911VfJx34t8OQLbMqK58Lk2a48Wy1WiBhFcazD/38F/DCKrXqET/q
- 6CbTLFiEj1vXzQPplSo1gj5AiN9p2JMu3HrUu2URcUQD8IaQPV6i+TJGy6qV29UEQhnjlfRCumi
- CQsVzVHbDFizL5hDa/VJCPEzY9RGdqXHY42KJgU9/sVCygyOyIDS38AksELOiIjAiDFk1jlVXh4
- Jb5O2deMsEezgGZD32HyBVmUTLyO0h1YHwAfi+k3cDHLE9vsVSowUT9OsyAJA2POJ0yTs/oKfp6
- jYBn3muZO
-X-Received: by 2002:a05:651c:43db:20b0:3a5:b53e:1243 with SMTP id
- 38308e7fff4ca-3a5dc987755mr3069781fa.8.1789562405982; Wed, 16 Sep 2026
- 05:40:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260916073209.1791732-1-antonb@tenstorrent.com>
- <d0f6d31b-af76-4a21-821a-8f997491abe6@linaro.org>
-In-Reply-To: <d0f6d31b-af76-4a21-821a-8f997491abe6@linaro.org>
+ AKwUvByP9n1gtYhlvaOTMmRc/KaucF38XwbQlZXjlm1qQcAFtgaBFgQucV3kiZFqgV8Kp5kUijgFbfyE/y/1@nongnu.org
+X-Gm-Message-State: AFuF++ky13o9H28luhdqLydrT78Y6Dwvslzw1MHLPw/nR/LV8ihylMFx
+ bEDBH/HkvBvPOt3TbefZZ6ZdzahwxQHTudZ3BAPfIIoBY29S43Fc866ZsEv4CzVWuwI=
+X-Gm-Gg: AYBFou3bd1q2dU2t5bI6v49/aHzakAPKNF4JkHFAlDok5NjylCde4GxI+9OqsMFPTQM
+ czR+8X3Oh4GXefbgmlZk8bKJCOckN1mLbsagHIPenrS3jn2Iqz6qUczn+zneDDTkUObaLZY/NOT
+ KQzwFhC09UkrIGNkrvK8Tvu+tl/a56SkjVmPo3myFTmxAlJ58np0sReBPRs6Nvl/PwyzyUqu6z1
+ 78/GIbGoOu1u7NH1shh9kJrIzyjnTJlObg2ZnvkCt+rkDxmHI5pYE3op3O7KXOyEjU02ZJOmrH8
+ GeOFoqGRT1vp7+3gu2u6GBxN4aW2Fcsq3XGeoqFowSX7u4zBzZM2OcRoNZ+bgnSVqJbAV82RHpS
+ TteE8KwhhDvFexrRiVjRpLFNFS99EHilHLIQr4KrPZsI0oHsIyILL27u2zXzwx3kzJSw3BAaBYw
+ o6jgDk49ZxXhi4lLRdER3AaHYgvmXRRGfFfGVTeobNuqjXJVjgEy6xgcyioAiD1nRSNsna7xpE9
+ 3cIwsnSw2irOag5cX5ld6PyHkFj7IxR
+X-Received: by 2002:a05:6870:a08c:b0:479:7931:cd6a with SMTP id
+ 586e51a60fabf-48478060b7cmr2200186fac.32.1789562436958; 
+ Wed, 16 Sep 2026 05:40:36 -0700 (PDT)
+Received: from ausc-rvsw-c-01-anton.tenstorrent.com ([38.104.49.66])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-48427b26d1csm2551321fac.2.2026.09.16.05.40.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 05:40:36 -0700 (PDT)
 From: Anton Blanchard <antonb@tenstorrent.com>
-Date: Wed, 16 Sep 2026 22:39:54 +1000
-X-Gm-Features: AcwNN1UQ30c0OumQSh9LHhhlaKSYGQk2uQyety7KWNS82kPAM7jwVufZt8Kv-58
-Message-ID: <CAN7m+mCgv2v9GeY=kLJUMkrBeGeKLfrCe2+TtcfMoKUJhAXUdA@mail.gmail.com>
-Subject: Re: [EXT] Re: [PATCH] accel/tcg: Fix TLB_MMIO check in
- tlb_plugin_lookup()
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:36::11;
- envelope-from=antonb@tenstorrent.com; helo=mail-lf2-x11.google.com
+To: richard.henderson@linaro.org, pbonzini@redhat.com, qemu-devel@nongnu.org
+Cc: Anton Blanchard <antonb@tenstorrent.com>
+Subject: [PATCH v2] accel/tcg: Fix TLB_MMIO check in tlb_plugin_lookup()
+Date: Wed, 16 Sep 2026 12:39:58 +0000
+Message-Id: <20260916123958.1884903-1-antonb@tenstorrent.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:30::10;
+ envelope-from=antonb@tenstorrent.com; helo=mail-oa2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,17 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi rth,
+Update tlb_plugin_lookup() to check TLB_MMIO in slow_flags.
 
-On Wed, Sep 16, 2026 at 8:19=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Mm.  Missed when doing the conversion.
->
-> You don't actually need to test vs FORCE_SLOW; that's just there for the
-> fast path to notice.  Just test slow_flags unconditionally.
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+---
+ accel/tcg/cputlb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks, I'll resubmit with the test removed.
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 7f7c208ba1..3ca777d59c 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1593,7 +1593,7 @@ bool tlb_plugin_lookup(CPUState *cpu, vaddr addr, int mmu_idx,
+     data->phys_addr = full->phys_addr | (addr & ~TARGET_PAGE_MASK);
+ 
+     /* We must have an iotlb entry for MMIO */
+-    if (tlb_addr & TLB_MMIO) {
++    if (full->slow_flags[access_type] & TLB_MMIO) {
+         MemoryRegionSection *section = full->section;
+         data->is_io = true;
+         data->mr = section->mr;
+-- 
+2.34.1
 
-Anton
 
