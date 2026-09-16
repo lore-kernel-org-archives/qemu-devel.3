@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 657A6C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B181C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lbZ-00008i-Sa; Wed, 16 Sep 2026 05:07:02 -0400
+	id 1x6lcC-00013N-PH; Wed, 16 Sep 2026 05:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbX-0008Vv-LN; Wed, 16 Sep 2026 05:06:59 -0400
+ id 1x6lc0-0000lm-Mu; Wed, 16 Sep 2026 05:07:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbV-00073B-PZ; Wed, 16 Sep 2026 05:06:59 -0400
+ id 1x6lby-0007EO-LK; Wed, 16 Sep 2026 05:07:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=iRkUpmMVE9o99Dq3SIDNURufrWifhl+9plk4IqjsyUw=;
+ t=1789549558; bh=/bxgVcHEK6Vu822bzNHTaM2Sah5dOzYWRwwPzRqIuUg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WknWrjBl8Ah/CFEo2+mBhie3TbkYShRIhktQ93EKhMve3kMuKmS6wCp+9yEp4o/U4
- wEcKX3i66F/yVK5H6VYPuDH+HTwGh7LdfEVdXRzXqEfQ2/fJ9POHcjPGdryG5Q/gA6
- uH3Ofoo9FGwRcVSP6P74qriotgfjUb9+99eKGtSA5h5+nLcHMrLHXCUkTQ+mDZtgcj
- V9+sDT4alsFrTMuN94B1dgVf+gyVviuwHxAlFiiq+yG1GSXRCmZlgOAc8MCcaaGtqU
- xThtQrI8tPHxRyZSAHiKkPJA/tfPHL8oHjfO3mrxIBxERg8aA6aktK/UR+e03ptOuw
- uB66XRdS813+Q==
+ b=BPU6FYrSt3uVF259TBQWnHJpKoC/brvvuEoHFkUVGxXyG6VrpSZPmVUlnUyGaxtHb
+ fDA5rotxm1oO+wsHvTIzOesg1iJVA2GgBh9RToZrozjZBY2HdNYzz8wdZlrqPcudHU
+ /y76nBSbMH6Xh8TUjzpFGbJ/Hf9Kb36LPSsSw4JeMOEq5uRFvC1peE3IKh/65+ZlUD
+ dbsq/uWxGrVL7FkW9nwMSqjqwUMUAckokdap88jpqkqzGm0czk8EjWcw8zVyGh6UgD
+ X8MMiXBV/SrwaGcIH/ECDvOfGteDXPPHoxHX+YtJFS77oS0QTTRDObo3Lhf+WUU6Im
+ ljKZwyK3wpPSQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9817D1D56BE;
+ by isrv.corpit.ru (Postfix) with ESMTP id AFA0A1D56C3;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 438CF429E09;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B4E2429E0E;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1F2165A76D; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 2E2DB5A777; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+Cc: qemu-stable@nongnu.org, Ivan Efremov <nendensu@ispras.ru>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 10/57] migration/block-dirty-bitmap: reject bitmap
- load onto ro node
-Date: Wed, 16 Sep 2026 12:03:34 +0300
-Message-ID: <20260916090516.677749-10-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 15/57] tests/qtest: Add seed CSR zero extension test
+Date: Wed, 16 Sep 2026 12:03:39 +0300
+Message-ID: <20260916090516.677749-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -75,129 +71,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Ivan Efremov <nendensu@ispras.ru>
 
-dirty_bitmap_load_start() creates an incoming migrated bitmap with
-bdrv_create_dirty_bitmap() and, if the source marked it persistent,
-calls bdrv_dirty_bitmap_set_persistence() without checking whether
-the destination node can be written to. Same gap as
-qmp_block_dirty_bitmap_add(), reached via incoming migration: a
-persistent bitmap for a read-only destination (e.g. a migrated
-CD-ROM-class attachment with dirty-bitmaps migration enabled) ends
-up writable in memory on a node that can never store it.
+Add a qtest that reads the seed CSR on RV64 machine with Zkr support
+and verifies that the upper 32 bits are clear.
 
-Reject it the same way, with one difference from the QMP path:
-every destination node is BDRV_O_INACTIVE until migration completes,
-so bdrv_is_writable() would reject every incoming persistent
-bitmap, not just read-only ones. Check bdrv_is_read_only() alone.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Eric Blake <eblake@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: John Snow <jsnow@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Message-ID: <20260716112242.3000035-3-den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 3f3f5cdb929e8621699f92ee6e5018e1e6ea5bf2)
+Signed-off-by: Ivan Efremov <nendensu@ispras.ru>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260802113130.7818-3-nendensu@ispras.ru>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit e80cf294797870b019d31dd299328aebdfaaa76c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index a061aad8177..321e1cdf11a 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -808,13 +808,6 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
-         error_report("Bitmap with the same name ('%s') already exists on "
-                      "destination", bdrv_dirty_bitmap_name(s->bitmap));
-         return -EINVAL;
--    } else {
--        s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
--                                             s->bitmap_name, &local_err);
--        if (!s->bitmap) {
--            error_report_err(local_err);
--            return -EINVAL;
--        }
+diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
+index bb1b0ffed30..7479a5c5bcc 100644
+--- a/tests/qtest/riscv-csr-test.c
++++ b/tests/qtest/riscv-csr-test.c
+@@ -20,6 +20,12 @@
+ #define CSR_MVENDORID       0xf11
+ #define CSR_MISELECT        0x350
+ 
++#define CSR_SEED           0x015
++
++#define SEED_OPST_MASK     (UINT64_C(0x3) << 30)
++#define SEED_OPST_ES16     (UINT64_C(0x2) << 30)
++#define SEED_OPST_DEAD     (UINT64_C(0x3) << 30)
++
+ static void run_test_csr(void)
+ {
+     uint64_t res;
+@@ -46,12 +52,32 @@ static void run_test_csr(void)
+     qtest_quit(qts);
+ }
+ 
++static void run_test_seed_csr(void)
++{
++    uint64_t val = 0;
++    uint64_t opst;
++    QTestState *qts;
++
++    qts = qtest_init("-machine virt -cpu tt-ascalon");
++
++    qtest_csr_call(qts, "get_csr", 0, CSR_SEED, &val);
++
++    opst = val & SEED_OPST_MASK;
++    g_assert_true(opst == SEED_OPST_ES16 ||
++                  opst == SEED_OPST_DEAD);
++
++    g_assert_cmphex(val >> 32, ==, 0);
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+ 
+     if (qtest_has_machine("virt")) {
+         qtest_add_func("/cpu/csr", run_test_csr);
++        qtest_add_func("/cpu/csr/seed", run_test_seed_csr);
      }
  
-     if (flags & DIRTY_BITMAP_MIG_START_FLAG_RESERVED_MASK) {
-@@ -831,6 +824,21 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
-         persistent = flags & DIRTY_BITMAP_MIG_START_FLAG_PERSISTENT;
-     }
- 
-+    /* Not bdrv_is_writable(): nodes stay inactive until migration ends. */
-+    if (persistent && bdrv_is_read_only(s->bs)) {
-+        error_report("Cannot make migrated bitmap '%s' persistent "
-+                     "on read-only node '%s'", s->bitmap_name,
-+                     bdrv_get_node_name(s->bs));
-+        return -EINVAL;
-+    }
-+
-+    s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
-+                                         s->bitmap_name, &local_err);
-+    if (!s->bitmap) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
-+
-     if (persistent) {
-         bdrv_dirty_bitmap_set_persistence(s->bitmap, true);
-     }
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test b/tests/qemu-iotests/tests/migrate-bitmaps-test
-index 8fb4099201d..cb9154ca8d7 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-test
-@@ -206,6 +206,39 @@ class TestDirtyBitmapMigration(iotests.QMPTestCase):
-             self.vm_b.launch()
-             self.check_bitmap(self.vm_b, sha256 if persistent else False)
- 
-+    def test_migration_to_readonly_destination(self):
-+        granularity = 512
-+        mig_caps = [{'capability': 'events', 'state': True},
-+                   {'capability': 'dirty-bitmaps', 'state': True}]
-+
-+        self.vm_b.add_incoming("defer")
-+        self.vm_b.add_drive(disk_b, 'read-only=on')
-+
-+        self.add_bitmap(self.vm_a, granularity, True)
-+        self.vm_a.hmp_qemu_io('drive0', 'write 0 4096')
-+
-+        self.vm_a.cmd('migrate-set-capabilities', capabilities=mig_caps)
-+        self.vm_a.cmd('migrate', uri=mig_cmd)
-+        while True:
-+            event = self.vm_a.event_wait('MIGRATION')
-+            if event['data']['status'] == 'completed':
-+                break
-+        self.vm_a.shutdown()
-+
-+        self.vm_b.launch()
-+        self.vm_b.cmd('migrate-set-capabilities', capabilities=mig_caps)
-+        self.vm_b.cmd('migrate-incoming', uri=incoming_cmd)
-+        while True:
-+            event = self.vm_b.event_wait('MIGRATION')
-+            if event['data']['status'] in ('completed', 'failed'):
-+                break
-+
-+        self.assert_qmp(event, 'data/status', 'failed')
-+
-+        # A failed incoming load makes the destination process exit on
-+        # its own; reap it so tearDown()'s shutdown() is a clean no-op.
-+        self.vm_b.wait()
-+
- 
- def inject_test_case(klass, suffix, method, *args, **kwargs):
-     mc = operator.methodcaller(method, *args, **kwargs)
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test.out b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
-index cafb8161f7b..73e375a9d74 100644
---- a/tests/qemu-iotests/tests/migrate-bitmaps-test.out
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
-@@ -1,5 +1,5 @@
--.....................................
-+......................................
- ----------------------------------------------------------------------
--Ran 37 tests
-+Ran 38 tests
- 
- OK
+     return g_test_run();
 -- 
 2.47.3
 
