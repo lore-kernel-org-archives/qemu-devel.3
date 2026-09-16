@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAA2C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E6CC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ldt-0005zp-WE; Wed, 16 Sep 2026 05:09:26 -0400
+	id 1x6lcx-00033X-Mu; Wed, 16 Sep 2026 05:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldn-0005FV-4O; Wed, 16 Sep 2026 05:09:19 -0400
+ id 1x6lcu-0002ht-9u; Wed, 16 Sep 2026 05:08:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldl-0007SC-CB; Wed, 16 Sep 2026 05:09:18 -0400
+ id 1x6lcs-0007Oo-Bc; Wed, 16 Sep 2026 05:08:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549561; bh=agIX9ebtKvlmC8vTC7wPKo+eTyHg2PpAeDqfqw80kx4=;
+ t=1789549560; bh=SPB3AVDJrkjsD5s2KloeltPIYsqYgkVQj0g4+nHV9qE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UU2BSq+Q4ywo/nV1k8rAGmGfdPJnvpErpvuUjDlGdRnycol8gIkK+Vz/jfOtGIedO
- RIZfQGamvkjNA65AZFXYA7BksWa9393uaVAoe5hR7ymkR11IbxWIHcPp78NdcMMXIW
- aOXuZ2Bg38dt6b7QYvEa6zqFFq+1h54VMEWIwYKzi/V4B08fh1svr76o/omAEogocM
- Pma8eycesqIlAoRTqioSa/xzBbLEg8ceZUUF6/lZ43bacrpiaMWV+yXvQQuWid8o4U
- mfNUiX/b5Q+VJnqCqtDA7Qe9l/UtIoZhfSfCEIG27Nj05NvuwuUJyCBrAgeyiTHHtW
- FnimhvtTNmDHw==
+ b=QliN3Vkb8Vnk0t+hDXFqioX3tW5wjDsU9iPcilmLjJoshKVlML+d25qRncflPUkkW
+ xXs/j6MzCHVYO0cHMnwWspQes6wt5Yn5Frqs8j+ojoB2n653U8prtMW2IPDIbQSn4T
+ gIpC8BgUu32LLpyFgPUkEsfoOvsOhEpULUy2vJpgZa3mp4Mb9paWaVb8OlKTZXcsHY
+ RFvJMAa+zP3z3QxC8THoU2h0FuRhCVeSm9hwRhxFyABn95H225nrKq8P2g302dXZ9u
+ to6X8+YOSvNjZ0o383T0M2Jlqhk3reLPphHVMNy21BwPFdk/Bs8dfbPMT8JavA9I6v
+ x9dg2U0jkgJZw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 01C671D56D5;
- Wed, 16 Sep 2026 12:06:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CFF211D56CD;
+ Wed, 16 Sep 2026 12:06:00 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A1BB7429E1F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7B8A8429E17;
  Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 880475A799; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id 7013C5A789; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alberto Garcia <berto@igalia.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 32/57] hw/sd/sdcard: Register device ops in drives
- without media
-Date: Wed, 16 Sep 2026 12:03:56 +0300
-Message-ID: <20260916090516.677749-32-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 24/57] i386/vapic: unref MemoryRegion if
+ vapic_map_rom_writable fails
+Date: Wed, 16 Sep 2026 12:03:48 +0300
+Message-ID: <20260916090516.677749-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,102 +71,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alberto Garcia <berto@igalia.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Commit a362b19a39 ("hw/sd/sdcard: Fix size check for backing block
-image") accidentally moved the blk_set_dev_ops() call into the new
-'if (blk_size >= 0)' block in sd_realize().
-
-Because of that, if a drive is attached without a medium then the
-condition is false (blk_size == -ENOMEDIUM) and blk_set_dev_ops() is
-never called, so the drive is registered as having non-removable
-media:
-
-  $QEMU -device sd-card,drive=sdcard0 -drive if=none,id=sdcard0
-  (qemu) change sdcard0 sd-card.qcow2
-  Error: Device 'sdcard0' is not removable
-
-This patch moves the blk_set_perm() and blk_set_dev_ops() calls
-outside of the 'if (blk_size >= 0)' block so the device ops and
-permissions are registered when a drive is attached.
+memory_region_find returns the memory region with an elevated
+reference count.  Drop the reference count also if the memory
+region cannot be mapped writable.
 
 Cc: qemu-stable@nongnu.org
-Fixes: a362b19a39 ("hw/sd/sdcard: Fix size check for backing block image")
-Signed-off-by: Alberto Garcia <berto@igalia.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723205847.137001-1-berto@igalia.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 15d4bc75f81709f641ef1de6b9dbdac7f74ebdf7)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit cfa6e2c52ca8f756461fe41f4ce40e61a82fd914)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 37f6e0702b0..3d9b8342354 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -3060,7 +3060,6 @@ static void sd_blk_size_error(SDState *sd, int64_t blk_size,
- static void sd_realize(DeviceState *dev, Error **errp)
- {
-     SDState *sd = SDMMC_COMMON(dev);
--    int64_t blk_size = -ENOMEDIUM;
-     int ret;
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index a61ab19a676..ce433aa4449 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -612,11 +612,13 @@ static int vapic_map_rom_writable(VAPICROMState *s)
  
-     switch (sd->spec_version) {
-@@ -3078,32 +3077,32 @@ static void sd_realize(DeviceState *dev, Error **errp)
-             return;
-         }
+     /* read ROM size from RAM region */
+     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
++        memory_region_unref(section.mr);
+         return -1;
+     }
+     ram = memory_region_get_ram_ptr(section.mr);
+     rom_size = ram[rom_paddr + 2] * ROM_BLOCK_SIZE;
+     if (rom_size == 0 || rom_size > OPTION_ROM_END - rom_paddr) {
++        memory_region_unref(section.mr);
+         return -1;
+     }
  
--        blk_size = blk_getlength(sd->blk);
--    }
--    if (blk_size >= 0) {
--        blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
--        if (blk_size > SDSC_MAX_CAPACITY) {
--            if (sd_is_emmc(sd) &&
--                !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
--                int64_t blk_size_aligned =
--                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
--                sd_blk_size_error(sd, blk_size, blk_size_aligned,
--                                  "multiples of 512", errp);
-+        int64_t blk_size = blk_getlength(sd->blk);
-+        if (blk_size >= 0) {
-+            blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
-+            if (blk_size > SDSC_MAX_CAPACITY) {
-+                if (sd_is_emmc(sd) &&
-+                    !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
-+                    int64_t blk_size_aligned =
-+                        ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
-+                    sd_blk_size_error(sd, blk_size, blk_size_aligned,
-+                                      "multiples of 512", errp);
-+                    return;
-+                } else if (!sd_is_emmc(sd) &&
-+                    !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
-+                    int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
-+                    sd_blk_size_error(sd, blk_size, blk_size_aligned,
-+                                      "multiples of 512K", errp);
-+                    return;
-+                }
-+            } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
-+                sd_blk_size_error(sd, blk_size, pow2ceil(blk_size),
-+                                  "a power of 2", errp);
-                 return;
--            } else if (!sd_is_emmc(sd) &&
--                !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
--                int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
--                sd_blk_size_error(sd, blk_size, blk_size_aligned,
--                                  "multiples of 512K", errp);
-+            } else if (blk_size < 0) {
-+                error_setg(errp, "eMMC image smaller than boot partitions");
-                 return;
-             }
--        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
--            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power of 2",
--                              errp);
--            return;
--        } else if (blk_size < 0) {
--            error_setg(errp, "eMMC image smaller than boot partitions");
--            return;
-         }
- 
-         ret = blk_set_perm(sd->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
 -- 
 2.47.3
 
