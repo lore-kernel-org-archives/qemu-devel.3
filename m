@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46064C982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 13:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 937B5C982F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 13:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8eCo-0002qN-Ng; Mon, 21 Sep 2026 09:37:14 -0400
+	id 1x8eCl-0002pn-M3; Mon, 21 Sep 2026 09:37:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x8eCl-0002pi-9u
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:11 -0400
+ id 1x8eCk-0002pK-Gt
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x8eCj-0002jJ-Tx
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:11 -0400
+ id 1x8eCj-0002jA-3s
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:37:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789997829;
+ s=mimecast20190719; t=1789997828;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=h+MReMFvlqvtNw+bmlwKyZlVOomCQ+e8ahH9+hb4unM=;
- b=WM/hF5u2uVMbA4NPftOkjyXTb1I/U0pQpROxd9BZIw/hQmGqHnLlivbxpQmeODgiFWKcrO
- IMTSKpeskPOH9c1bOQuP4LBHte7oZHP3gmflGvhHiNOMs1CrR3XaTUzd1s4AUApHz1d/30
- LsFSQ/C+2UOBuZ9+VAvZG8XOC2wMjpg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=rAKRrx7NMTNus2m8i+1dVJT7gJUTuLJtMMjOSJ10I6o=;
+ b=EZuLJ2Ta/mdnOKeLzcckV4maLF+CnyYUh3Zce2D0eJT2nQ8BP22LdZPQKf2d5ZB992cR1A
+ lVhL8THIoDh2uQ/UtUeF4UbOp8rJS4iGgV4YjyI4gM9agCdM7pdOVTJd85K/ilSRBSV4Ac
+ VHO5Sb0FtLzqmXac2auntFQ19HSBc2c=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-r9Vvw7C6NkmzXvtPvtncBg-1; Mon,
- 21 Sep 2026 09:37:07 -0400
-X-MC-Unique: r9Vvw7C6NkmzXvtPvtncBg-1
-X-Mimecast-MFC-AGG-ID: r9Vvw7C6NkmzXvtPvtncBg_1789997826
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-YFDZSsqTN-2kTlMyIRfQkQ-1; Mon,
+ 21 Sep 2026 09:37:06 -0400
+X-MC-Unique: YFDZSsqTN-2kTlMyIRfQkQ-1
+X-Mimecast-MFC-AGG-ID: YFDZSsqTN-2kTlMyIRfQkQ_1789997825
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD86D1953970; Mon, 21 Sep 2026 13:37:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 397541828A84; Mon, 21 Sep 2026 13:37:05 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5839419539A7; Mon, 21 Sep 2026 13:37:06 +0000 (UTC)
-Date: Wed, 16 Sep 2026 15:48:42 -0400
+ id 95F6919539A7; Mon, 21 Sep 2026 13:37:04 +0000 (UTC)
+Date: Wed, 16 Sep 2026 15:47:25 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Zhang Chen <zhangckid@gmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
@@ -56,27 +56,26 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
-Subject: Re: [PATCH V17 08/13] virtio-balloon: Update tracking iothread users
- with holder
-Message-ID: <20260916194841.GE162769@fedora>
+Subject: Re: [PATCH V17 07/13] net/colo: track IOThread references using
+ path-based holder
+Message-ID: <20260916194725.GD162769@fedora>
 References: <20260915101655.3216101-1-zhangckid@gmail.com>
- <20260915101655.3216101-9-zhangckid@gmail.com>
+ <20260915101655.3216101-8-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="8WXjo8glMSiVo5Zu"
+ protocol="application/pgp-signature"; boundary="ZMyXVgQIIhWaG+Yz"
 Content-Disposition: inline
-In-Reply-To: <20260915101655.3216101-9-zhangckid@gmail.com>
+In-Reply-To: <20260915101655.3216101-8-zhangckid@gmail.com>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 46
-X-Spam_score: 4.6
-X-Spam_bar: ++++
-X-Spam_report: (4.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+X-Spam_score_int: 13
+X-Spam_score: 1.3
+X-Spam_bar: +
+X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
  DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,38 +91,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---8WXjo8glMSiVo5Zu
+--ZMyXVgQIIhWaG+Yz
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2026 at 06:16:50PM +0800, Zhang Chen wrote:
-> Replace raw object_ref/unref calls with
-> iothread_ref_and_get/unref_and_put_aio_context.
->=20
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  hw/virtio/virtio-balloon.c         | 21 ++++++++++++++++-----
->  include/hw/virtio/virtio-balloon.h |  1 +
->  2 files changed, 17 insertions(+), 5 deletions(-)
+On Tue, Sep 15, 2026 at 06:16:49PM +0800, Zhang Chen wrote:
+> @@ -1404,6 +1410,7 @@ static void colo_compare_finalize(Object *obj)
+>  {
+>      CompareState *s =3D COLO_COMPARE(obj);
+>      CompareState *tmp;
+> +    g_autofree char *path =3D object_get_canonical_path(OBJECT(s));
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Did you test this? I think object_get_canonical_path() doesn't work here
+because the object's ->parent link is already NULL:
 
---8WXjo8glMSiVo5Zu
+  static void object_finalize_child_property(Object *obj, const char *name,
+                                             void *opaque)
+  {
+      Object *child =3D opaque;
+ =20
+      if (child->class->unparent) {
+          (child->class->unparent)(child);
+      }
+      child->parent =3D NULL;
+      ^^^^^^^^^^^^^^^^^^^^^
+      object_unref(child);
+      ^^   we are here  ^^
+  }
+
+Stefan
+
+--ZMyXVgQIIhWaG+Yz
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqq8pkACgkQnKSrs4Gr
-c8g2TAgAtcKOng0EMlG0fSwVtKWtrbHa9B53xhKxlEDp8nGg4XdmGaZFYitT+GTz
-7GR3zkGIjU7ON3V1kQjCPEjMOMn8bA8BtaAf2iQtYldB5vg9CfcVvdUGMVQ60sHu
-yceKHMdS4KT1lM57Cfd84vlUhMeLvkf6WNdsy4j1QHf73AbpeXocxYGzqGhwiND/
-EsTyn5Hy60gsbnDfCCWMPxB9d7IpRgCvpmwjMU8ukDmLc4U8+/KujXHMYH8BFoYF
-IxRn/kHGD0w20iFQBw6xymWc21p0MWCSHvcT9hMY+aFEqr/G/38t+yw9Qh2rAQ0m
-fVZtfH5K/pviVsRc5PHQtkre6nMnyw==
-=hvVs
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqq8k0ACgkQnKSrs4Gr
+c8iwIwf/VVsKR+tbmOWnoazkIfZ2q1IU9izXCp38PQNx7lCZGWdA04vHKh664HD9
+TM0Rpd/OCIOXsWrkJJVb9AIlO2eEzkZpxd5BIq7fNVIMhAvLSvJyusgYxtHztFo0
+SAte/GRkY4znH9EEpTqcEC971oWq0QndDZVen9Ius34l5oljtUh1Tu4Age7rymWM
+nGLgYbbSkoWyanjluchatQW+hyFZYp84BN/NYzGs9fSHhWPwJADnvxrJnPdpMPju
+rn/GyOZB/bUpZdqbVp5oZfTvR/eZ94IGJrA7m2Gxw+PxNPsogLzqyul/fou3xydI
+tvjSQr5sQRQVL4PMr8E5Vpndxrv4hQ==
+=GFze
 -----END PGP SIGNATURE-----
 
---8WXjo8glMSiVo5Zu--
+--ZMyXVgQIIhWaG+Yz--
 
 
