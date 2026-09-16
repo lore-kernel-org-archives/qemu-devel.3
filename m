@@ -4,167 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0738C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F77C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6nAv-0002Cg-LH; Wed, 16 Sep 2026 06:47:38 -0400
+	id 1x6n5H-0003BF-3j; Wed, 16 Sep 2026 06:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x6n8q-0001Cd-2T
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:45:31 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x6n4V-0002Ab-7V; Wed, 16 Sep 2026 06:40:59 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x6n8o-00032d-F4
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:45:27 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68G81MRd579034; Wed, 16 Sep 2026 03:45:20 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=iHuChNbu5rbXyA0PVs5s0TbcMgtzaERrjGU1D2vny
- 2c=; b=aPIChpv9SLgz6h9+7a/QT8YbBtPd7Yxpcu5TiJKB1SmzoGEE4w3XwTc3R
- E4olm4PAv5Zhown74IZCt0QaKyIncoZoLdTk3cVC4TtiyHsbx+jwf4JqEueQw9RE
- JmwVLZ0YGSF2hRDSQCgCI8PeteOw1UAZ4ejNDpEUvwYrOF0NaIXVrvkfCGa20mqV
- ueV4SbgAbGUP+CtUHfOqOCw1yjsFU4OXdBEnc4rsf1qyim9a7UrymDZETo4ar0X5
- h408zfbAyhSB3/Gs/h063m7x4lrZRfcV4QLGweqNTXZAaVfO3bh6cCdes4eBjW6/
- k/c9BDOXNnZXqwfO0fAaBpPFlYg4A==
-Received: from ph0pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11021117.outbound.protection.outlook.com [40.107.208.117])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4gqbtb9yb3-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 03:45:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NXoSynAj3pqOeFftRU4ugQUmLGxjxNcZ6WFS14d9HPhYyIyM67V48YEn8Y0HSDyxBUarz7SMi6SEdLKGoQ8wPuk6iKVQWA5L7QkpoKpX+tA0MuXesGCpeCd30wLwvrCHsqrmZBzuL5wtC/j/nMhA19/bZv4l3McoAIZJ5t9tlsNnwovpzmPyVdQ9qg+DbPxXKyZ1aZ0rdV7HtX1RQzd0AdyS3SmT7IsK6ofcNzoHG+OTafDscmZb3Z8fv1zsmlJ7rI6i7fLIvDlZkG9mtLN8B8Ywm/mJLtUf9LIWrVPjz26TzOTE0v278qW3NY5YkIXBFbtzmBnPgFBJZoBYz95+aQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iHuChNbu5rbXyA0PVs5s0TbcMgtzaERrjGU1D2vny2c=;
- b=OCy3+9scQ85i+x+PnJFA7Dz7zJDE1cux9vdzV2W77SfVg778fLGCwuZBhj7Z96QvxOlpXmUKvxf812sEV6IWXPsKtFMkkGZuijNlWQK7qoAS53wy7rKgRqWF6eWI+jt/ogYL3KOKuqU22rW+edNKyljLwNbvQYQc2n7yVHspeUjdsybGtuosIQesTMZgMoE7XHIK64PVJJoNe/7VLCDmyrtjrXJ1vO90yoWkibV1WGssDg42qIZqTEmsMxoP7cTEPZWI7892btuq/cpCBGleLkId5e0mPuTLBlB9OlM7HDhngkeesdRZ8ayNW3pBIOTmF9ovIIzao3EYFF5LK3dEEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iHuChNbu5rbXyA0PVs5s0TbcMgtzaERrjGU1D2vny2c=;
- b=wicJ7Sb77IsjkASCtm9QGpVG8oBTm9x4k3Aucv2350gOm2AOf+w8787d5YVe3Eaw0aHDb2WQSsXyW5lnHPe79gSvRCs4FXr5AOA/7bQNf1VDmh3jmNRYjOF+HvYFj+0JCo1ei+/H6JHeVRDRcThdX54T9lruMJyklx0vzm9MnmIKFoDRccHCHWQ19cuI8OnYDPzXFzOKb4naejA9Q0DUGVQqiwGDqvkPrTgVUu8MHeqOLh++tp9kO2gPF5apjbIPtQNeTCmgKmmDB0qAowTH9+4v5aTzc/2nwEOkJ0srV5moDguqvhfbgqucFBGq8dqyrrS/B14ZRTVH/Z0ZVHPC1A==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by PHXPR02MB11343.namprd02.prod.outlook.com (2603:10b6:510:3cc::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Wed, 16 Sep
- 2026 10:45:18 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0406.007; Wed, 16 Sep 2026
- 10:45:18 +0000
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- sstabellini@kernel.org, anthony@xenproject.org,
- edgar.iglesias@gmail.com, qemu-devel@nongnu.org,
- xen-devel@lists.xenproject.org
-Subject: [PATCH 11/22] i8259.c: convert to use DEFINE_TYPES() macro
-Date: Wed, 16 Sep 2026 11:43:39 +0100
-Message-ID: <20260916104435.600211-12-mark.caveayland@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260916104435.600211-1-mark.caveayland@nutanix.com>
-References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR05CA0070.namprd05.prod.outlook.com
- (2603:10b6:a03:332::15) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x6n4S-0002RA-7g; Wed, 16 Sep 2026 06:40:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1789554958; bh=Em0f4KyxSjcRIJCYnP1SAo6aaSY/F50xATLKXsOCVqg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=dCcYPhd8SecZhHXK98UDKjkVQXQEgfhBJb/7L6d7BSp+/hc2jBgyu3cdR/L2G37U8
+ cK4+09WkA0K42F3mXOf8Trv5NhCu+NnPygaN7QG5LWfaEpowfO+nD2PFl8ac32ZGBu
+ w0mvsd8AJohJwHbHIwEDceBJK/Mf3+rIUAasnbmneAz5/GPe+RFh7PtNHKLowvhjBc
+ uwDBjz7fmf+Ejwo0/vgNCs0YH6G1h4+t+0iEYyB7OmlQzeVP/rDSMx0U3EMdAaQTNv
+ B+3OLVoht0cCBp2NPHV5OzYQiuM4WFzz6OFlvDP3PFN1S3AUQXCKumZIHS5rBCNEPq
+ ErERZSbiaat5Q==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 155D81D582D;
+ Wed, 16 Sep 2026 13:35:58 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D2A0A429F9C;
+ Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id B38255A84D; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Doug Cook <dcook@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 54/56] target/arm/whpx: incorrect ENCODE_AA64_CP_REG
+ parameter order
+Date: Wed, 16 Sep 2026 13:36:12 +0300
+Message-ID: <20260916103622.684817-54-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
+References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|PHXPR02MB11343:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3b2d9d4c-b562-4545-e46c-08df13df9969
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|23010399003|18002099003|10067099003|56012099006|22082099003;
-X-Microsoft-Antispam-Message-Info: prJoDOR8yx1WBqIPyJNTXUB8ZLH+vqWeUJs5H6umAmMF5NcLWgXoUd8IKgvhTk1hiu78Zz0c7yRAPXcWX+QR0j9Hux/bA6kzmagFAj66GFwV5CRyvSQgX5+mjSpaSqz7ZAFSvl4znUvTTl2pFBh5w66GG0sK/lO4+zVHH+zaZ2qea+uOG7lINk33LFPLhOEvWF90MhRTjq/mXkz8OVZW9oyDVsZxWM0uiZClSawuXQDGsbiCDa1YaiRUZf6Mx3mlJuiPYB0VjnNPlBaZaC2frrtQ2DsQu/jMoL05j03I9rjPyPShEms7xjkRr5IPEN0z+DyqlDR1HHVOh7F7mAcDn3oSpmhVyzUmVkoPPkMxxA5So0B57vlAyeoMNrSF/xEjgpCcLc2p1Oj32Bf2lC45vNrIvstbjXyyuAS2QxKQLay5BZChk3LQFyrmtf0DptnJjcrF0knvFxvab8EiDE74EAnXQa3iC3NGqjXNbescEMKh2koNQsvN5hQvn1+Sk95VhWC4q6Ibl5NOyPQnT08d6zUdQyPPAXnW9/NgAAImisaru3mnTv8klhWIVJmmhS4tMxhgzi63dX441kEnx9/Mvo9QCuxUjA5ydU/1ukzGApqZ7sD8hxxaJ9h14EHq+jm9LM5o8vd+ZcifjZJWDb4KzxYJymhmfXwQ82GSmsgqixY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(18002099003)(10067099003)(56012099006)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?GZNsWJUOH8v3xYMC+xQ8yZ3aER1nnzwboLkmW9AEc5PLGE9FEN+UcUM2/qsv?=
- =?us-ascii?Q?wMf0rrGQ8ffzLyDS3U9RNUWonE/gPEyp65ZvMqppZq2YxtIxwvJZ9kcaL1fg?=
- =?us-ascii?Q?L2S3tK7qACONpR3uwGOX8T7OPRgRRMdUskO/I3E0QxKmnNxcgN4P6e55UtNZ?=
- =?us-ascii?Q?WNHJa6TFlsRhvXi/8dUk7B32sCtI6kjO7kjLv7RsHcK487whIlmGB/WukFdg?=
- =?us-ascii?Q?FPIAVxtGv+9iJFX912emTWfUu2DLWcUKkL9A3m31ioqfhpgx5wwVGwkPEGZn?=
- =?us-ascii?Q?r6HySyUDc8KHsKkfYOpwoQt0nx7TGb2xf0nS/f32MPvIumQPkSBmPLwjNRp/?=
- =?us-ascii?Q?HZSn08T6ps5oItCJwpnxOWyiSNSPx1x26hH0l0zQeApUboYacy6Mz19t3RaB?=
- =?us-ascii?Q?IW8Hn2Y7/64vy9gT/tj6/k0tL/8V1mliT7u10KSt1ok3mm/d+gvd78FxkqPK?=
- =?us-ascii?Q?Qly7tDlL7thv5vZEk7yVKLTIi7h2G/Pdu26QiAzsgvOGFaXPRRMe5jPdxbBs?=
- =?us-ascii?Q?tW5X9woG/XGY1MoZ2u5pXvHVDkmzO5cklYo0FuquyNRuwHGBFf7k7/NL/jQ8?=
- =?us-ascii?Q?f7YgGcVChhhmwz46GhHenh+JNfZl+SGc+Yjouj+0pqpE1n+9RMue+fg8KHyM?=
- =?us-ascii?Q?JJEtadptNOEJWRyp6aYa6Qzl2xIxQt25LR3pmbXzGCY7XsJUAquVcWKW1IOm?=
- =?us-ascii?Q?OaBr2BIvwvC4S2Zyjh1j8GKZleSymnXt5TkBh8dZH6VuDHC4t2sWx3GBQn7C?=
- =?us-ascii?Q?E/wVQo2E1lxKTIVjlDSFpYNTGOk82/PmVGMAFEr1Q2/tYwVGLFVEn6/RvN9P?=
- =?us-ascii?Q?k+4XklBiBtxfpI30OlC7z3OIkrwU3h90rX58FbMErrpUe7HLwwwB7GwkH3y3?=
- =?us-ascii?Q?vEJmS+VxPStfq2sW8xxeZ0K+BohGzQGgokBnSgKr6TBnkFCAuSz3KcmK0wjK?=
- =?us-ascii?Q?ot+wCfsCwE9y9b7dU6r84sYIEsc9FNIH1AwaU524bKW4d+8GrA0jCdEZelMJ?=
- =?us-ascii?Q?XT5TK8dSk3NQbfrF7aUcFAIPMDwo9ZAbJ1uBoyQOk3bBgZFCrdFTnb05dAw9?=
- =?us-ascii?Q?Z37fBe0i4xtmSVXhpFywykGTyA9Pm/bFd7Jlt1FXaeJOvo6HyLb8tRHwUNjc?=
- =?us-ascii?Q?JEtp6jen7DYV/TwA4gxqgRqQv6E8+iC5dC3JNJJkE3bnHbhJozT1sqiD98cN?=
- =?us-ascii?Q?CmUNnz//aI6jr1RGHPNDQBv/D3oKg2HXH5Zk0+cjdoJFCUD0r/pSB1SCZLD7?=
- =?us-ascii?Q?aFWQDS7J4WcrxuXfGCxPrU5+aEdXMUD5N5DbT5c0FqxtXSr7bLxoYFy5D19Y?=
- =?us-ascii?Q?1d+pMEXoumQiDv7GSCs4iRR9jePsb2C1HmqFIq4gAJ/qAf5JEQLTbAoaB7SF?=
- =?us-ascii?Q?tiiD/2AzhAYGRNHRvBlZ9PfMiAKBiK5TjDuRTHaTqeHmns91o+aEPvbGTHga?=
- =?us-ascii?Q?I2VWHTMQp+bVWt4dgeeR5x2pFi8E2CQTcBN/FhTBsdV92+1K8tWacyzhYgqs?=
- =?us-ascii?Q?4sQeW8h3Snl5PHYE/kMcqcqZLbbL9d+FoKOzu9IenWWc79VUOGqT0sdNQrS0?=
- =?us-ascii?Q?fWNiSxQZPAdKVCszNm590yl8Nu2ieZgNpuUU5dmNZiju3Hw8gaMa8LUS/kuz?=
- =?us-ascii?Q?uzpYqpwVqtsldjaehhPoG+UBpGovrQMGYoSN6BrNRAyP0NF9NFPrfiiODZLG?=
- =?us-ascii?Q?1RGc9r0VSjiaQqTckqjzkfJ/uLAeHggwpHz/Ven2rN97o72RqRxXieCqG3B5?=
- =?us-ascii?Q?XdZBixzhysLKNjEIMLGNqbVndddfnqo=3D?=
-X-Exchange-RoutingPolicyChecked: jLEfsHiq1xlZcmq9vpqLejaNdN2egt3edMN8H7vRf0xmMYxSkPAErmqOJTzYT8vQPDrmFupnsSi9q29Uwm7tzN1A9TnoFtAlTcTjmAxYsuzNEIO/LXevTmxTu/Jew21FobA7r0xhmCwAFxOJOXRxZoiv+ipviAwBeQ3wPhIJNPuw2FLBPJollkCJyOAXfA5UolU8CmvXfPbTuA5IJFG6MhnERwU8tW24apDdtnWAA75pWolSQ3jas0cIcSfgtH0YAFlk+qpJ4Abf5tBC+N3dHKBVyYY4wIoSGVHGg2iV6GsLG/UrMzLmWVvfmKYANhpMFxCsz7gbTeuCzR1zftIOzA==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b2d9d4c-b562-4545-e46c-08df13df9969
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 10:45:18.3671 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: l1Fl1rshUhTKy6dNuYmf1y9ulbiQc9abteeTKr2aEBJYQcP8pko1vJgxfbSTKIlFEn6Vqupnhe0I7GW6/8sgsMxX8WnCDR9rPAlnJmSzFtY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PHXPR02MB11343
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDE0MSBTYWx0ZWRfX4rcPc3GjM8D1
- wa5uB0EY0Y9iyLgzrpamJfFXSefkD46zEZ3+tEYY8zdZ/NVaZMPjaDJdZzP2Nqlsi9ff7+IOTpi
- Nrs+jN3S39p6OhME0Zd1YLFAscx0Csg=
-X-Proofpoint-ORIG-GUID: Uh_gmNpcXbqHiEMQ9VPaUsqYzNb0UyrM
-X-Proofpoint-GUID: Uh_gmNpcXbqHiEMQ9VPaUsqYzNb0UyrM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDE0MSBTYWx0ZWRfX0RBcQQwhNTmY
- Lwea4NNuGtL8yO3UhLvXnw08n/iEaRlEVidtwX2j23xIRiNFapc0ZA34wPWSpugZ8zdixWAboRf
- VinHkIyr67fbsO1JMDcDMhb4uIqwNe0D6+/TmQEUJ2Nx+CxGZdBb/rQtRf4Ae5ycbE+c6EmTvZc
- adN7eVEyZIdjVVDy/qNWWFyXWJnmCpilP2yESbe/f20XWDZPn/+IIVhDAY3ME5tp7JIvbJqgwRd
- ylQtrIAONuSmYdnT7a7JtQREeaTuqjx5r8Zk7mXM0AanK/JhwidBau93o81DOAJ95sIt/rfvYUk
- oMUF7lItAgm4EBiFcD01m/TC4SbIOMZiBtunUiyVtCl3EiVHHwTmco3qhoh4ZSLAv75KfVIrzg9
- TlhclNsRe+PT5jxQYwjMoGekMUw1LQg7ABCeeMuREX4gTDouf3RN81j0L7w+gXoOo1fGFQKcFic
- DzcQ5NyKa8DXKwDdWAA==
-X-Authority-Analysis: v=2.4 cv=QYvzLcbv c=1 sm=1 tr=0 ts=6aaa733f cx=c_pps
- a=fJIB0T+C2yAfE4P2TQxPqg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=64Cc0HZtAAAA:8 a=7eIJgSlqxBVt2QvjjhkA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -181,39 +72,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
----
- hw/intc/i8259.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+From: Doug Cook <dcook@microsoft.com>
 
-diff --git a/hw/intc/i8259.c b/hw/intc/i8259.c
-index f2d8cb1489..af33b71591 100644
---- a/hw/intc/i8259.c
-+++ b/hw/intc/i8259.c
-@@ -429,15 +429,12 @@ static void i8259_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, i8259_reset);
- }
- 
--static const TypeInfo i8259_info = {
--    .name       = TYPE_I8259,
--    .parent     = TYPE_I8259_COMMON,
--    .class_init = i8259_class_init,
-+static const TypeInfo i8259_type_infos[] = {
-+    {
-+        .name       = TYPE_I8259,
-+        .parent     = TYPE_I8259_COMMON,
-+        .class_init = i8259_class_init,
-+    },
+ENCODE_AA64_CP_REG expects parameters (op0, op1, crn, crm, op2) but whpx
+was using parameter order (crn, crm, op0, op1, op2). As a result, every
+call to get_arm_cp_reginfo() returned NULL, cp_idx was -1, and both
+whpx_get_registers() and whpx_set_registers() were no-ops.
+
+In addition, several encodings were paired with the wrong WHV register
+tag. These are inert while the encodings do not resolve, but would sync
+the wrong register once they do:
+
+- the series 1 debug register encodings used series 0 tags,
+- the SP_EL0 encoding was tagged WHvArm64RegisterSpEl1, which would
+  clobber SP_EL0 with SP_EL1 on get and never write SP_EL0 on set,
+- the ID_AA64PFR0_EL1 encoding was tagged WHvArm64RegisterIdPfr0El1.
+
+Fix parameter order (using a regular expression). Fix tags.
+
+Signed-off-by: Doug Cook <dcook@microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 518f45b32d04d3c5e8d67a41cdf5a00f12957981)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 9a5a575b5e9..a05df7d2cb3 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -135,145 +135,145 @@ struct whpx_sreg_match {
  };
  
--static void i8259_register_types(void)
--{
--    type_register_static(&i8259_info);
--}
+ static struct whpx_sreg_match whpx_sreg_match[] = {
+-    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 7) },
 -
--type_init(i8259_register_types)
-+DEFINE_TYPES(i8259_type_infos)
+-    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 7) },
+-
+-    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 4) },
+-    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 5) },
+-    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 6) },
+-    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 7) },
++    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 4) },
++    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 5) },
++    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 6) },
++    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(2, 0, 0, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 4) },
++    { WHvArm64RegisterDbgbcr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 5) },
++    { WHvArm64RegisterDbgwvr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 6) },
++    { WHvArm64RegisterDbgwcr1El1, ENCODE_AA64_CP_REG(2, 0, 0, 1, 7) },
++
++    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 4) },
++    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 5) },
++    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 6) },
++    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 7) },
++
++    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 4) },
++    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 5) },
++    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 6) },
++    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(2, 0, 0, 3, 7) },
++
++    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 4) },
++    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 5) },
++    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 6) },
++    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(2, 0, 0, 4, 7) },
++
++    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 4) },
++    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 5) },
++    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 6) },
++    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(2, 0, 0, 5, 7) },
++
++    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 4) },
++    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 5) },
++    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 6) },
++    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(2, 0, 0, 6, 7) },
++
++    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 4) },
++    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 5) },
++    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 6) },
++    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(2, 0, 0, 7, 7) },
++
++    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 4) },
++    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 5) },
++    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 6) },
++    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(2, 0, 0, 8, 7) },
++
++    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 4) },
++    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 5) },
++    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 6) },
++    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(2, 0, 0, 9, 7) },
++
++    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 4) },
++    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 5) },
++    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 6) },
++    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(2, 0, 0, 10, 7) },
++
++    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 4) },
++    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 5) },
++    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 6) },
++    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(2, 0, 0, 11, 7) },
++
++    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 4) },
++    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 5) },
++    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 6) },
++    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(2, 0, 0, 12, 7) },
++
++    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 4) },
++    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 5) },
++    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 6) },
++    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(2, 0, 0, 13, 7) },
++
++    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 4) },
++    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 5) },
++    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 6) },
++    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(2, 0, 0, 14, 7) },
++
++    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 4) },
++    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 5) },
++    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 6) },
++    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(2, 0, 0, 15, 7) },
+ #ifdef SYNC_NO_RAW_REGS
+     /*
+      * The registers below are manually synced on init because they are
+      * marked as NO_RAW. We still list them to make number space sync easier.
+      */
+-    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 0) },
+-    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
+-    { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
++    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(3, 0, 0, 0, 0) },
++    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(3, 0, 0, 0, 5) },
++    { WHvArm64RegisterIdAa64Pfr0El1, ENCODE_AA64_CP_REG(3, 0, 0, 4, 0) },
+ #endif
+ #ifdef SYNC_CONST_ID_REGS
+     /* ID registers are ARM_CP_CONST (writes ignored).  */
+-    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 1), true },
+-    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 0), true },
+-    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 1), true },
+-    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 0), true },
+-    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 1), true },
++    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(3, 0, 0, 4, 1), true },
++    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(3, 0, 0, 5, 0), true },
++    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(3, 0, 0, 5, 1), true },
++    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(3, 0, 0, 6, 0), true },
++    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(3, 0, 0, 6, 1), true },
+ #ifdef SYNC_NO_MMFR0
+     /* We keep the hardware MMFR0 around. HW limits are there anyway */
+-    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 0) },
++    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 0) },
+ #endif
+-    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 1), true },
+-    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 2), true },
+-    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 3), true },
++    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 1), true },
++    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 2), true },
++    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(3, 0, 0, 7, 3), true },
+ #endif
+ 
+-    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
+-    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
+-    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 2) },
+-    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 0) },
+-    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 1) },
+-    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 2) },
+-
+-    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 0) },
+-    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 1) },
+-    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 2) },
+-    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 3) },
+-    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 0) },
+-    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 1) },
+-    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 2) },
+-    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 3) },
+-    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 0) },
+-    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 1) },
+-
+-    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 0) },
+-    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 1) },
+-    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 0, 0) },
+-    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(5, 2, 3, 0, 0) },
+-    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(6, 0, 3, 0, 0) },
+-    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(7, 4, 3, 0, 0) },
+-    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(10, 2, 3, 0, 0) },
+-    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(12, 0, 3, 0, 0) },
+-    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 1) },
+-    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 4) },
+-    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(14, 1, 3, 0, 0) },
+-    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 2, 0) },
+-    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 2) },
+-    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 3) },
+-    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 1) },
+-    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 2) },
+-    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 4, 0) },
++    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(2, 0, 0, 2, 2) },
++    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(3, 0, 1, 0, 0) },
++    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(3, 0, 1, 0, 2) },
++    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(3, 0, 2, 0, 0) },
++    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(3, 0, 2, 0, 1) },
++    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(3, 0, 2, 0, 2) },
++
++    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 0) },
++    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 1) },
++    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 2) },
++    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 1, 3) },
++    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 0) },
++    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 1) },
++    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 2) },
++    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 2, 3) },
++    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(3, 0, 2, 3, 0) },
++    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(3, 0, 2, 3, 1) },
++
++    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(3, 0, 4, 0, 0) },
++    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(3, 0, 4, 0, 1) },
++    { WHvArm64RegisterSpEl0, ENCODE_AA64_CP_REG(3, 0, 4, 1, 0) },
++    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(3, 0, 5, 2, 0) },
++    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(3, 0, 6, 0, 0) },
++    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(3, 0, 7, 4, 0) },
++    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(3, 0, 10, 2, 0) },
++    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(3, 0, 12, 0, 0) },
++    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(3, 0, 13, 0, 1) },
++    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(3, 0, 13, 0, 4) },
++    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(3, 0, 14, 1, 0) },
++    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(3, 2, 0, 0, 0) },
++    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(3, 3, 13, 0, 2) },
++    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(3, 3, 13, 0, 3) },
++    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(3, 3, 14, 3, 1) },
++    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(3, 3, 14, 3, 2) },
++    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(3, 4, 4, 1, 0) },
+ };
+ 
+ HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
 -- 
-2.43.0
+2.47.3
 
 
