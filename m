@@ -4,116 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C1BC88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 19:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371BAC982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 19:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6vFI-0004bT-7V; Wed, 16 Sep 2026 15:24:40 -0400
+	id 1x6vFG-0004b6-Hg; Wed, 16 Sep 2026 15:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x6vF8-0004aF-Mz
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 15:24:32 -0400
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x6vF5-0004a3-OV
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 15:24:28 -0400
 Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
  ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x6vF6-0005fg-1f
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 15:24:29 -0400
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x6vF4-0005fg-7B
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 15:24:27 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Fcig+Dc1/sazGumeRjBqccvHDH/3MYNcl3iQoVmgyDXXkEtjIxkf7Mt6J1Hs3qHan9hi1dtcgoXOL1mHtPDzwx3wfKDBKDL8rHJ+9wWCJS3Gf8hf/icnKvsK9PF3sv8PBB6iEANUD+HMpurMA7LEeQmIJAHAFl3lABqwF8Hyk2C4OdHnZ5bpj/C7SnnTSBLENRPugbpSBxY5AGHhSpWI2hsILa7feVVpkjvzz2cKeTh60axof+ehgH5Xs9vQ4QhJsIBoVibJ1gJp+CJACbBXFdmgO2rvhQ4Q5bTMm4FvjDia8+TPDvzvuw42DwLZzQo2gjysCxFqW+sKdzGmVOF7fA==
+ b=UQuj1C47K6t/HbpW+o9Lt9MMfVNJSS3MN3uCbYpkQujXwr+bkt1fNPU2LldJjA/f+hdLBwf+rfOXZ9wWBqIsMSZ7xiQkqI7Hw7PbzzDu8rjoqoU2yqnJe1Fx4cUfArN0N4biAVprrburpAVEus4VYzF1ASy8qPOFooqwDGTyuiErYSGqqUGkjUSXR6OBphoF82NfMvQIkuRFJmkrPZysef8WSzy4Yr+llYN/Abada42pb0ww6WQKEbyYcibfV6gzNupGyuJbt3TErLkfz+ycGeASH3VLNvIqEwwTHWCsTH4cTWDsEVbdWFZyk4DfNZnn8CJyDIaQMYI+l4xS0lUlNA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AVjGNgzZu2/AY9mFbmBd00R2d7GS52g/oDXLHRVsqyI=;
- b=ZgMJyzUOUt06JI2Zq/DRb3z3t6R8jbrw6QBn6hAuPV0WgAydjdjPv8/92BDfGB1v1Scjq0YOvalFfsLJQJ2RbtjIGJLGzhVDIVdazwKOTSy1R01LM/KNHjoG8SzQYUIKDfirq+6cj95AtDR96T13N/TV1BzbIAyKtLCYpIGP36L+RSmqrrJYSxH/bX201R5yPH0JF8uwoTLMGZyRd5HYCwIUj5THkl2McjFhwmVnE5xdqm2Wv0cK4Xj5pG8gnqoe+XBbKeyU/PlkMaeBleKnIvejauSAugdx1eOjIERqkLkMFn8nOgTvTm8nkQBGKftmKnJXEhopoWeZjXwHRN9wOg==
+ bh=jhCAWjE9Jwbkv/2TRFOBW498jquBVoqoJ35h2DL2jrk=;
+ b=ON6MvoUdb5fekj6T664TFoYgXOFkMihPAks2N8Om0lp0noW+eNMd1yyetICFH1GMPxHNTv0fUQEUEp4I1H6tIe8JNco25/ETOacWiZRA+1bElSp9AX8tLK5pq/Ou4CtJDSGsnBFBSMaUOA7QycksYpN+H3zVy+q1ZV3mX+c2inQmKunxrITKW6ew/wkEehT15YNthUKOx9DZgydE4lKFe0IiWoPs7fn6uN0dCqRuicwKMuHYeMQAyloVPyvRqSB9PntE6RuMd3SI9f6Ruc5qtHaA7jXj4h5oqjglNoO2IP/VM2Za+Hkz2/yZo/MuIro1HNXJCAX8WniYLnEI5ln6lQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AVjGNgzZu2/AY9mFbmBd00R2d7GS52g/oDXLHRVsqyI=;
- b=OwhY5JA4H6NarKusd56Kd9hEVf75LhjTbjg0jDykF8/9KbhlamK/mzRx5Mg9JtMuK95U/WFG3R8dn72mgTM7ivGWTVY6eA149reVAXfu/UQMf2eVmKBBGHKvlJp19+p0QY29xvpaqfHHO6MzoPjZzzOWf//flRgsOqAo/IyTUzwFh/fitOwyzot3oPf5BkqFrQ5zmetrWsQPiPAWEfmqwF/CcRLbxuxWFBzE8J13+v53TOJcvIfTw9Tu2WmPMb1Pzm62mV92aGdLJXvJoOXCELbsQH1cYyon4dti1h3a05b6FPtgoM7YSHBxI1HY+huhttGJvK61juwr3g+pCMqbjQ==
+ bh=jhCAWjE9Jwbkv/2TRFOBW498jquBVoqoJ35h2DL2jrk=;
+ b=iGwI5zlhBTtVtrL03jk8p9Ioh66DUvusF4fEw+XhxYAyzsSCbf3BJQA3nC9gUNe26CUFwa/xaVyHH0/pwbE9hSXcBg8uLLeAGyPHWDbEeQV5NlrE3BoNaa8lXqTiMjB9XMRhZUu5KfmDoGVvjjwRm+KrjIDCDsPmMMit1qpsBpkjP8ErNAUgQ5vOIDyYtHndZKZh+mc6olqDUxd03SNT3iR6JEqOBsS/JADftQl9Yl5sJua94DkVLw5iDLEOv1+Z1Rc1Ugwn6u3WPrJXpHkyBGDOMizUvuS9qb0FT3AGDs173pt1H4Yb22BQIqY7DS4NNgz2XXZ90YnRtwyonByEkQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from IA3PR12MB923065.namprd12.prod.outlook.com
  (2603:10b6:208:627::17) by MW4PR12MB7213.namprd12.prod.outlook.com
  (2603:10b6:303:22a::18) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Wed, 16 Sep
- 2026 19:24:20 +0000
+ 2026 19:24:16 +0000
 Received: from IA3PR12MB923065.namprd12.prod.outlook.com
  ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
  ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0428.008; Wed, 16 Sep 2026
- 19:24:20 +0000
+ 19:24:16 +0000
 From: Tushar Dave <tdave@nvidia.com>
 To: devel@edk2.groups.io
 Cc: gaoliming@byosoft.com.cn, ardb+tianocore@kernel.org, sami.mujawar@arm.com,
  jiewen.yao@intel.com, kraxel@redhat.com, qemu-devel@nongnu.org,
  alwilliamson@nvidia.com, jgg@nvidia.com, skolothumtho@nvidia.com
-Subject: [PATCH 3/3] MdeModulePkg/PciBusDxe: size and program bridge windows
- for fixed BARs
-Date: Wed, 16 Sep 2026 14:24:08 -0500
-Message-Id: <20260916192408.928411-4-tdave@nvidia.com>
+Subject: [PATCH 1/3] MdeModulePkg/PciBusDxe: honor fixed BAR addresses from
+ IncompatiblePci
+Date: Wed, 16 Sep 2026 14:24:06 -0500
+Message-Id: <20260916192408.928411-2-tdave@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260916192408.928411-1-tdave@nvidia.com>
 References: <20260916192408.928411-1-tdave@nvidia.com>
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0035.namprd03.prod.outlook.com
- (2603:10b6:a03:33e::10) To IA3PR12MB923065.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR03CA0031.namprd03.prod.outlook.com
+ (2603:10b6:a03:33e::6) To IA3PR12MB923065.namprd12.prod.outlook.com
  (2603:10b6:208:627::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|MW4PR12MB7213:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0a785daf-0fce-442f-c716-08df14281b83
+X-MS-Office365-Filtering-Correlation-Id: 2980e6eb-0e3b-45e6-e037-08df142818cb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|23010399003|1800799024|366016|376014|22082099003|18002099003|3023799007|10067099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: UehSJn+BUrv/e3m5tAF7gkzcjPDaE6hRkRCQyL6iT1z1OH6/WDgn7se+24QhawO7G2kThFGR/9fh8HVftFVgmuTluSQOuzg2GevHgqhkyjIG14p1XuaEKV3GkDLVN28+yyahBYgCzDTRlLyF4lsDdEPPqXIsLNWeL2MtJH/zNUgCT+3fp4JolLV74gDpB80VbjVqiEtg7inxrrCxqtGQzHJY5lCRkoLlqFKkv1rX8xC6znVMAjKlN9j1/UESthiqh/Jy6ZCgq2yBkS7sQcerV1sC2MnjZrwdyDHTVFXW1seQSnxtvoO8O4ReUWdo+Epfl03u1gLzHs4jGqztfDpdsksMraC6aeU0AGbpv1RNaQffItrFIYQ35nZKzdssLDNMl1ihCizVJ3i1UhpQYJ7XNJMMkpmAYHhLoyF7Q5ZYGQhoRZ/t/Zl7xPqg9B6q/VquIh536W7SpJxPeKx06bu+17EI8eFbo/0dw63aHe8denYfFHz2b3CxVKRzmPMGo24uGxgGi+uKZmMcabr6W7VHfnyKcOwVCyR84XVXrlmCvZ+sB7BDMXxJ90UWAc4Tjan7yGR/BTvIDcCal1BP38tm7PPfaNyxLeSPyCU7tXswQO2/beC0/1LcX2A06VuyLWKfBcIqZz5eOzlYb4yqGNwVlNNEBF/J579tF0u+OV52y/A=
+X-Microsoft-Antispam-Message-Info: 5/AjdSdXtqS1uJLh0i3GonSbnE3Tdf8LgEzQ3tiqDyE4252qmAfMZc4p+7795AIaqTD9fGym1FZyvsIZHzVGyo8MWTuy21nUjuouRaiAtPjB9A3fXStX4yTqj4wZsnbpO0Wh+r6U0oBuqt0kmCIQfm1JqGvuCnOBQuvzwT6OK1cg9V+v25Q1hTh4n9+xzSC04+n8p0N69wPVf5WoeD0rxitOnkgRfcdLw2MyVhAkOMsX/BPA4iI8M44b4MXSimDiaY20VfxBRhgqd/1KKAuM9po7bLorSMwtc+4l++KjsLdva6WpGDu/poOx72eLjbiI47vY51AeN7Lll14XuGqXSbk3tt5UkLfVb8rsFeX47ooylhcRAOZkk+aAPmyWQFFNVTH/gpulmURMfOgnHrTUnYyKoDhk3xuVqs2STo4WBc/P7SAVnf6MW1QM89dosTI2c8XdJDcX2gaU4I8Ib0CACP7vN+wV4cCRjEckRPS8iHj+LZ+BewxRWpvvfhbMdwYosJjrvZWs4AHRF+zeIk2SWLVZOmNwWp4qAFsOt3Yge00YzAYP/Up8Oen1vwTrNarKHvuFJRoBksxCe9dhcz3V2FBNxRi6cqd6Xy5FcWem6EvsjGyW1w1Lj5r7oFX5QgS6a7RNyJbqs2c39YBlwXidIzfhN+o5gMZXHzgmrugtWos=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(22082099003)(18002099003)(3023799007)(10067099003)(11063799006)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?eGBMH9x5nl3fg0tmjeJjZ1qvzz+yJyyeSh7IM5tm06ARsjqpertSWMqu16xL?=
- =?us-ascii?Q?karPwb4wDxfbmPKiCHf8qVzzx4NDeNFwVvRwTO3JYJkK2+psrXRk156iY8aF?=
- =?us-ascii?Q?C5TJpVbTAW2OcerYfDqJsBhpczQhauKQFR6WGKkFLOE5D9whsSG9QoKBoI1P?=
- =?us-ascii?Q?1J5X+kK04r+Q+UpODuZOkwAtto/HXLQ8ftyuC8e7gKgJLiChJU/4q69/m8ed?=
- =?us-ascii?Q?YLhCy0SG5O1LOi8WU1DFIXhbFrnjyv3fuzgtFB59e04dVGeQog/bEwVQlHx5?=
- =?us-ascii?Q?V0tNzc4wf1XEyseyN4aSPfDKHNiw5LCi+voDjiARcUjkToyqOb0HnEXbg0Z1?=
- =?us-ascii?Q?tySTS8w60WeL93FeA5xb04DNdtzP3pYvCQ6jZznDKbrnu5hFAhxK+w3j0yEy?=
- =?us-ascii?Q?Cgm/GSiqxCirGAfmLQZxttCQIQUHCYQ9jNNs90YG0LC9i5v+NT3dpRwytMaV?=
- =?us-ascii?Q?qXw/1FZx35nJ4WeovhoGjTodaeV7z7/cLNtx+HERCj+sHBNBjHAzliZ0Kvut?=
- =?us-ascii?Q?b+9KFPCufCBagSTSW8ThwrGHbT3Z7mCi6kZcW6drLNHXIinXhYJv9D04R6PW?=
- =?us-ascii?Q?w0vrZOy3KcF0CQ4FYI7rA7vYplt2zJI2aUtEbVYWDBKp4r04psX8pEsjqsF3?=
- =?us-ascii?Q?OJZWNTPObdVPX7S2JNKJME6I/AqU7KmAeLGgGh+3E7b42wzZ6HAoGDXsePx9?=
- =?us-ascii?Q?K1Njt7oD5n4iPSP48oyz38poi5Nbc/9b+1QsvifS+vo3LIMtkBiqvaZ/3Al4?=
- =?us-ascii?Q?7ve73tQRye9VyONYxEpn+Att7D2b3knXQNwCsLcBkxZryTCE1ch0CaqvzBt0?=
- =?us-ascii?Q?tzGazVMj6dcS2ndF8xiIs2sTEIZvDvg75vGkHK8D95Apx9EhcrqpG107hwhb?=
- =?us-ascii?Q?DmuaULCYRD2e322Q9e6npvuSKiIHLOOwujjYfW9223lqnJ4/JtKAUxFG7XuP?=
- =?us-ascii?Q?/5l5KTL8FCvsMd99UkRlY7r+beTY439apeS29d0kSWj06V/7x+Pbmps2SHkS?=
- =?us-ascii?Q?7927+B71ARgxJ1KIiHFjdEVbqQ1oA6R2hXNKSF00l1BnpGlh8p9TS7qANm8a?=
- =?us-ascii?Q?LBlFH7G1iEWtsThaWR/Rh5DA7Mu2vwf5rDd1QaspziZyCU5oLrVIh5Wg8bVA?=
- =?us-ascii?Q?2ENHAz5TAOL5dv5vgy7oVwdo2JPGU5mfIRts6FyPNHLSZNAiyTkPeYKkvb5Y?=
- =?us-ascii?Q?/QMxYTcc1UQxxlfX7o1IZUyvMJ6LcDHVn482ZPgOxivHtrja78pj5sXAcCpD?=
- =?us-ascii?Q?bNR1eJ6oPrgiNHhHsvyTKQ8tLJ1GvbHJPF0kJ8Z4P2HX15gIGDChF/s2Zhev?=
- =?us-ascii?Q?CBWTtBmi/VwIIuDnjAo2U21TyMbH8L0cVjSWi9LOBZi/Q420+mebCmMJBJ9s?=
- =?us-ascii?Q?s4amlHIOiDBBWQhN3zeu2wSC+I6L8AN/ej2RMv7ttBl2h31R1YYF/95ukDRT?=
- =?us-ascii?Q?oAZcer/aZcDXyV8gV5vC4vi3j2MLahwpKgVp1Fqk5yC1Y6aBXRiFlogdr9vf?=
- =?us-ascii?Q?VzeexUpga5NyMgrkK2MMiApiUUX8Yg3OEfiJMsJkqLSHsz8h1xgTL2EY0xhW?=
- =?us-ascii?Q?Aw+zjDzEMbeCCB7oH0jUYguqkxF606rRCoT3XO5+wTDrPVsY9rN6g2HIt1WX?=
- =?us-ascii?Q?Af4mt+NaFrlaOCcrU3fpyRtunQq/Slz8b9s6kPnePWPerFhePeOnoeG7zPeb?=
- =?us-ascii?Q?ueXotKTwi2bE9xL0vY1fnNW7nSFVighMh2nihh0ihoPQnTRj?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QBaOVfg+pCIa1ayVjTQRedL47PP2HdbjyuF1vuShrp6vLBKEFUQQy0bwUhJF?=
+ =?us-ascii?Q?LKWwxceC442aN13IWoOrLaLidVvS1l/EcOwkFgAgvrJEJYzlUyU2GinIMERP?=
+ =?us-ascii?Q?kZS3WTN3+/S33N51j8xCBoXGYORGFoUifMB5d0B2WYJ/pyU3hRI2OzTKziQu?=
+ =?us-ascii?Q?RPRWc6pv4pDz11xrTbLzlTszMhFxmbwx6WKJ3iNuJsVGhQ9Yfo73qoWzd5jA?=
+ =?us-ascii?Q?Fezih3F69Dj3jKzaMXY3eScV8XnDoDv7rtLDD2p2xGWvjacHzxiDQouPcfWt?=
+ =?us-ascii?Q?UtBCefJpMJapUYu3GUMHLjPdpnGYP3foH4LVJPFdlKXQDEhJsS9AjBfJJJ3p?=
+ =?us-ascii?Q?dr7EpLtwMFHnpLhHsTn6f7MDIWy5JnntAUVA5kL1HyIAjnvAupuY42DYSz9B?=
+ =?us-ascii?Q?QsdbOhyedSIsVf2t3oaGtQsLEkTozBrmqbJl54pg5LFFeXTYINs+AFSbUj3u?=
+ =?us-ascii?Q?XKn0s7WpZL36x3BSDBf9aneTFh3vwo2hKlHFGxeaLU8tC0M3cM9v2UOgwyaw?=
+ =?us-ascii?Q?nkv6TDS8bxbgpErFrW66oy51LVkUohhGX9De1UrjY8qvgXdXUYkbt+/eW7is?=
+ =?us-ascii?Q?nH7iwiWTiefOAwfh3LHzyWaKqgDVtNeVzsUgAfLDByLnP7lCZKkjm7QXE2Zm?=
+ =?us-ascii?Q?ZX7VNNuMCu+30h3hmfSnGsiGifkiUx3tzh7Y8bJWjE/TmH+yfn3ALWFgWYYy?=
+ =?us-ascii?Q?ut3EthMPQtKp4qmmg5B9Iuucs3KgMAb30nkKnXJqM37jXcpEbcUe5BdG7NvD?=
+ =?us-ascii?Q?Fii0zOQ/YHqV28f/m1DiIe6uq008qDAS5ta3WcbDWIiq/3IAnumDh68GX1JJ?=
+ =?us-ascii?Q?GLR/G1ISEwGvKlea8cbDbfIdZx4rPk5nnNYjsdx+wVsNb8NgRRydFp38cROR?=
+ =?us-ascii?Q?rLRXfjWWWmnR6aW8MIEchGzHFZbevbgRdghLvWaub5lQRWSES1PzaHKayh/c?=
+ =?us-ascii?Q?wKu+rufWwOJA0Qb+kvJ/ElM2DE6b9sIjtVRL+SR6o5oMkE5mrsT6W+lD8lQB?=
+ =?us-ascii?Q?aam2Hoq7gOkZfQL/R1Vs40ZEC3hOGi/7rN+uWqSFeiVbZVrAHURLNK9KthRy?=
+ =?us-ascii?Q?vfXqRRdjLOVb6gB3XNk3U9KUOlObs0c15madbvQFGvJnniMENKFtGvOPHEMq?=
+ =?us-ascii?Q?M6Gt7i6NYHaaTn1BJQRnbrlgBp/v8XpNHlEOLgMRotm601qcoUEyzimFbulm?=
+ =?us-ascii?Q?tvhUtHvE33Um2iqUW1bkQi8r5ubVuZduvM83t18NBjZzM1t0hSKOhxVB/Xwg?=
+ =?us-ascii?Q?xbs1KRHmQ/9KMlQPKjWfEpbpxFWcFJf/moYAzlM0gOWogFGilnsmObRNSJnk?=
+ =?us-ascii?Q?woqXNtnF3GDX+hrRc6k8bFxo4kNWrTEVPvqlR9TeuRGrUMrZsHgxwx1YT3LM?=
+ =?us-ascii?Q?kp1vAmrh7+/n46kmm+8pLIzvVhCpp9rRm8rRcSAjKIgzY5pJx30hf9/ghZRn?=
+ =?us-ascii?Q?jZmF1l7gPCODduj9UiXi2nayCGiC1nfv7GqKyZPymadloJkX4DgK9/qI7Unb?=
+ =?us-ascii?Q?90qM4x8juXbqDJ5G4n+K4IR+b8xmXGoDvDVBiSXyKEr/NqeOXaWbmx7lOAzq?=
+ =?us-ascii?Q?SpjGaQOtJJOBh1VhXe6KJwFxF2nPuzBUIcebfFcidnwi0O98Zps8d8WhKloW?=
+ =?us-ascii?Q?bg2g2BwhTn0u5aSOvbP2dMAlPgyrcJO50tmLU9LICXT+nadmNYwbgdp/aLn5?=
+ =?us-ascii?Q?msHczUxOwpcHlKhtm2cGt6trXm3vE9UEPicKGM6IT6XktKYw?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0a785daf-0fce-442f-c716-08df14281b83
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2980e6eb-0e3b-45e6-e037-08df142818cb
 X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 19:24:20.3264 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 19:24:15.8362 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: m+xW7pTHiZoFP/xPy1T37U0V/EputmayoIi0yFMK4icqNowenG0fnrRJzeUdMn8bs+nTVWpQ5pXTZDqWFwnl0g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: bwsVySTBCUzfM2/cqZn42kr8uwTaoXIGEs4fmTIyPPygT5AsxbvMwj02VEpidw9DLQZGzf18bZexeOi0Ycl8gQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7213
 Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
  envelope-from=tdave@nvidia.com;
@@ -140,207 +140,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CalculateResourceAperture() sizes a PCI bridge's resource window from
-its children's Length and Alignment, without accounting for a fixed
-base address assigned to a child BAR by
-EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL. As a result, the bridge
-window does not cover the fixed BAR, and ProgramPpbApperture()
-programs the resource allocator's base instead of the fixed base.
+EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL returns ACPI address
+descriptors describing PCI resource requirements. When both _MIF (BIT2)
+and _MAF (BIT3) are set in the descriptor's GenFlag, the descriptor
+represents a fixed address range.
 
-Track Fixed and FixedBase in PCI_RESOURCE_NODE and add
-ResourceNodeIsFixed() to identify fixed BARs and bridge windows
-inherited from fixed children.
+Extend PCI_BAR with FixedBaseAddress and update the PCI bus driver to
+preserve and use this information:
 
-When a bridge has fixed children, CalculateResourceAperture() now
-sizes and places the bridge window to cover the union of their fixed
-address ranges. Bridges without fixed children retain the existing
-behavior.
+  * UpdatePciInfo() detects _MIF|_MAF, records AddrRangeMin as
+    FixedBaseAddress, and marks the BAR as fixed.
 
-ProgramPpbApperture() also honors FixedBase when programming the
-bridge window, consistent with ProgramBar() for fixed BARs.
+  * ProgramBar() programs FixedBaseAddress into the BAR register instead
+    of the resource allocator selected address for fixed BARs.
+
+No functional change occurs unless a platform driver supplies fixed BAR
+descriptors through EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL.
 
 Signed-off-by: Tushar Dave <tdave@nvidia.com>
 ---
- .../Bus/Pci/PciBusDxe/PciResourceSupport.c    | 110 ++++++++++++++++++
- .../Bus/Pci/PciBusDxe/PciResourceSupport.h    |   7 ++
- 2 files changed, 117 insertions(+)
+ MdeModulePkg/Bus/Pci/PciBusDxe/PciBus.h              |  2 ++
+ .../Bus/Pci/PciBusDxe/PciEnumeratorSupport.c         | 12 ++++++++++++
+ MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.c  | 11 +++++++++++
+ 3 files changed, 25 insertions(+)
 
+diff --git a/MdeModulePkg/Bus/Pci/PciBusDxe/PciBus.h b/MdeModulePkg/Bus/Pci=
+/PciBusDxe/PciBus.h
+index 01bce28b1b..dbec57bd54 100644
+--- a/MdeModulePkg/Bus/Pci/PciBusDxe/PciBus.h
++++ b/MdeModulePkg/Bus/Pci/PciBusDxe/PciBus.h
+@@ -96,6 +96,8 @@ struct _PCI_BAR {
+   UINT64          Alignment;=0D
+   PCI_BAR_TYPE    BarType;=0D
+   BOOLEAN         BarTypeFixed;=0D
++  UINT64          FixedBaseAddress;=0D
++  BOOLEAN         HasFixedBaseAddress;=0D
+   UINT16          Offset;=0D
+ };=0D
+ =0D
+diff --git a/MdeModulePkg/Bus/Pci/PciBusDxe/PciEnumeratorSupport.c b/MdeMod=
+ulePkg/Bus/Pci/PciBusDxe/PciEnumeratorSupport.c
+index ae94462f60..b7c132cc10 100644
+--- a/MdeModulePkg/Bus/Pci/PciBusDxe/PciEnumeratorSupport.c
++++ b/MdeModulePkg/Bus/Pci/PciBusDxe/PciEnumeratorSupport.c
+@@ -1638,6 +1638,18 @@ UpdatePciInfo (
+         if (Ptr->AddrLen !=3D 0) {=0D
+           PciIoDevice->PciBar[BarIndex].Length =3D Ptr->AddrLen;=0D
+         }=0D
++=0D
++        //=0D
++        // When both _MIF (BIT2) and _MAF (BIT3) are set in GenFlag the=0D
++        // descriptor carries a fixed base address in AddrRangeMin.=0D
++        //=0D
++        if ((Ptr->GenFlag & (BIT2 | BIT3)) =3D=3D (BIT2 | BIT3)) {=0D
++          PciIoDevice->PciBar[BarIndex].HasFixedBaseAddress =3D TRUE;=0D
++          PciIoDevice->PciBar[BarIndex].FixedBaseAddress    =3D Ptr->AddrR=
+angeMin;=0D
++          DEBUG ((DEBUG_INFO,=0D
++                  "PciBus: UpdatePciInfo BAR[%u] fixed address=3D0x%016Lx\=
+n",=0D
++                  (UINT32)BarIndex, Ptr->AddrRangeMin));=0D
++        }=0D
+       }=0D
+     }=0D
+ =0D
 diff --git a/MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.c b/MdeModul=
 ePkg/Bus/Pci/PciBusDxe/PciResourceSupport.c
-index 169011e647..0aa3465636 100644
+index 8f3cff3eaa..169011e647 100644
 --- a/MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.c
 +++ b/MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.c
-@@ -324,6 +324,35 @@ CalculateApertureIo16 (
-   Bridge->Length =3D MAX (Bridge->Length, PaddingAperture);=0D
- }=0D
+@@ -1276,6 +1276,17 @@ ProgramBar (
  =0D
-+/**=0D
-+  Return TRUE, with the fixed base address, if Node must be placed at a=0D
-+  specific address instead of anywhere satisfying Length/Alignment. Node i=
-s=0D
-+  either a BAR marked fixed by IncompatiblePciDeviceSupport, or a=0D
-+  child bridge whose own window was already determined to be fixed.=0D
-+=0D
-+  @param Node        Resource node to check.=0D
-+  @param FixedBase   Fixed base address of Node.=0D
-+=0D
-+  @retval TRUE   Node requires a fixed base address.=0D
-+  @retval FALSE  Node has no fixed base address requirement.=0D
-+=0D
-+**/=0D
-+STATIC=0D
-+BOOLEAN=0D
-+ResourceNodeIsFixed (=0D
-+  IN  PCI_RESOURCE_NODE  *Node,=0D
-+  OUT UINT64             *FixedBase=0D
-+  )=0D
-+{=0D
-+  if (IS_PCI_BRIDGE (&Node->PciDev->Pci)) {=0D
-+    *FixedBase =3D Node->FixedBase;=0D
-+    return Node->Fixed;=0D
-+  }=0D
-+=0D
-+  *FixedBase =3D Node->PciDev->PciBar[Node->Bar].FixedBaseAddress;=0D
-+  return Node->PciDev->PciBar[Node->Bar].HasFixedBaseAddress;=0D
-+}=0D
-+=0D
- /**=0D
-   This function is used to calculate the resource aperture=0D
-   for a given bridge device.=0D
-@@ -339,6 +368,10 @@ CalculateResourceAperture (
-   UINT64             Aperture[2];=0D
-   LIST_ENTRY         *CurrentLink;=0D
-   PCI_RESOURCE_NODE  *Node;=0D
-+  UINT64             ChildFixedBase;=0D
-+  UINT64             FixedMin;=0D
-+  UINT64             FixedMax;=0D
-+  UINT64             NextFreeAddr;=0D
- =0D
-   if (Bridge =3D=3D NULL) {=0D
-     return;=0D
-@@ -349,6 +382,71 @@ CalculateResourceAperture (
-     return;=0D
-   }=0D
- =0D
-+  //=0D
-+  // If at least one child requires a fixed base address, size and place=0D
-+  // this bridge's window as the exact union of those addresses instead of=
-=0D
-+  // packing children by size and alignment alone.=0D
-+  //=0D
-+  FixedMin =3D MAX_UINT64;=0D
-+  FixedMax =3D 0;=0D
-+  for ( CurrentLink =3D GetFirstNode (&Bridge->ChildList)=0D
-+        ; !IsNull (&Bridge->ChildList, CurrentLink)=0D
-+        ; CurrentLink =3D GetNextNode (&Bridge->ChildList, CurrentLink)=0D
-+        )=0D
-+  {=0D
-+    Node =3D RESOURCE_NODE_FROM_LINK (CurrentLink);=0D
-+=0D
-+    if (ResourceNodeIsFixed (Node, &ChildFixedBase)) {=0D
-+      FixedMin =3D MIN (FixedMin, ChildFixedBase);=0D
-+      FixedMax =3D MAX (FixedMax, ChildFixedBase + Node->Length);=0D
-+    }=0D
-+  }=0D
-+=0D
-+  if (FixedMin < FixedMax) {=0D
-+    Bridge->Fixed     =3D TRUE;=0D
-+    Bridge->FixedBase =3D FixedMin & ~Bridge->Alignment;=0D
-+    NextFreeAddr      =3D FixedMax;=0D
-+=0D
-+    for ( CurrentLink =3D GetFirstNode (&Bridge->ChildList)=0D
-+          ; !IsNull (&Bridge->ChildList, CurrentLink)=0D
-+          ; CurrentLink =3D GetNextNode (&Bridge->ChildList, CurrentLink)=
-=0D
-+          )=0D
-+    {=0D
-+      Node =3D RESOURCE_NODE_FROM_LINK (CurrentLink);=0D
-+=0D
-+      if (ResourceNodeIsFixed (Node, &ChildFixedBase)) {=0D
-+        Node->Offset =3D ChildFixedBase - Bridge->FixedBase;=0D
-+        FixedMax     =3D MAX (FixedMax, Node->Offset + Node->Length + Brid=
-ge->FixedBase);=0D
-+=0D
-+        DEBUG ((DEBUG_INFO,=0D
-+                "PciBus: bridge %02x:%02x.%x child %02x:%02x.%x BAR[%d] fi=
-xed at 0x%016Lx, length 0x%Lx\n",=0D
-+                Bridge->PciDev->BusNumber, Bridge->PciDev->DeviceNumber, B=
-ridge->PciDev->FunctionNumber,=0D
-+                Node->PciDev->BusNumber, Node->PciDev->DeviceNumber, Node-=
->PciDev->FunctionNumber,=0D
-+                Node->Bar, ChildFixedBase, Node->Length));=0D
-+      } else {=0D
-+        Node->Offset  =3D ALIGN_VALUE (NextFreeAddr - Bridge->FixedBase, N=
-ode->Alignment + 1);=0D
-+        NextFreeAddr  =3D Bridge->FixedBase + Node->Offset + Node->Length;=
-=0D
-+      }=0D
-+    }=0D
-+=0D
-+    Bridge->Length =3D ALIGN_VALUE (MAX (FixedMax, NextFreeAddr) - Bridge-=
->FixedBase, Bridge->Alignment + 1);=0D
-+=0D
-+    DEBUG ((DEBUG_INFO,=0D
-+            "PciBus: bridge %02x:%02x.%x fixed window [0x%016Lx, 0x%016Lx]=
-\n",=0D
-+            Bridge->PciDev->BusNumber, Bridge->PciDev->DeviceNumber, Bridg=
-e->PciDev->FunctionNumber,=0D
-+            Bridge->FixedBase, Bridge->FixedBase + Bridge->Length - 1));=0D
-+=0D
-+    CurrentLink =3D Bridge->ChildList.ForwardLink;=0D
-+    if (CurrentLink !=3D &Bridge->ChildList) {=0D
-+      Node =3D RESOURCE_NODE_FROM_LINK (CurrentLink);=0D
-+      if (Node->Alignment > Bridge->Alignment) {=0D
-+        Bridge->Alignment =3D Node->Alignment;=0D
-+      }=0D
-+    }=0D
-+=0D
-+    return;=0D
-+  }=0D
-+=0D
-   Aperture[PciResUsageTypical] =3D 0;=0D
-   Aperture[PciResUsagePadding] =3D 0;=0D
-   //=0D
-@@ -1468,6 +1566,18 @@ ProgramPpbApperture (
-   PciIo   =3D &(Node->PciDev->PciIo);=0D
    Address =3D Base + Node->Offset;=0D
  =0D
 +  //=0D
-+  // If CalculateResourceAperture() determined this window must cover a=0D
-+  // fixed BAR, use its base directly.=0D
++  // If EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL supplied a fixed=0D
++  // base address (_MIF|_MAF in the ACPI descriptor), use it directly.=0D
 +  //=0D
-+  if (Node->Fixed) {=0D
-+    Address =3D Node->FixedBase;=0D
++  if (Node->PciDev->PciBar[Node->Bar].HasFixedBaseAddress) {=0D
++    Address =3D Node->PciDev->PciBar[Node->Bar].FixedBaseAddress;=0D
 +    DEBUG ((DEBUG_INFO,=0D
-+            "PciBus: bridge %02x:%02x.%x fixed window base 0x%016Lx (GCD 0=
-x%016Lx)\n",=0D
-+            Node->PciDev->BusNumber, Node->PciDev->DeviceNumber, Node->Pci=
-Dev->FunctionNumber,=0D
-+            Address, Base + Node->Offset));=0D
++            "PciBus: BAR[%d] fixed address 0x%016Lx (GCD 0x%016Lx)\n",=0D
++            Node->Bar, Address, Base + Node->Offset));=0D
 +  }=0D
 +=0D
    //=0D
-   // Indicate the PPB resource has been allocated=0D
-   //=0D
-diff --git a/MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.h b/MdeModul=
-ePkg/Bus/Pci/PciBusDxe/PciResourceSupport.h
-index 148d9503c8..0682237d74 100644
---- a/MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.h
-+++ b/MdeModulePkg/Bus/Pci/PciBusDxe/PciResourceSupport.h
-@@ -28,6 +28,13 @@ typedef struct {
-   BOOLEAN               Reserved;=0D
-   PCI_RESOURCE_USAGE    ResourceUsage;=0D
-   BOOLEAN               Virtual;=0D
-+=0D
-+  //=0D
-+  // TRUE if this bridge's aggregate window must be placed at=0D
-+  // FixedBase, because it has at least one fixed descendant.=0D
-+  //=0D
-+  BOOLEAN               Fixed;=0D
-+  UINT64                FixedBase;=0D
- } PCI_RESOURCE_NODE;=0D
- =0D
- #define RESOURCE_NODE_FROM_LINK(a) \=0D
+   // Indicate pci bus driver has allocated=0D
+   // resource for this device=0D
 --=20
 2.34.1
 
