@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C96C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3C6C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kN5-0003g2-DT; Wed, 16 Sep 2026 03:47:59 -0400
+	id 1x6kKn-000713-TM; Wed, 16 Sep 2026 03:45:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMy-0003Y8-PQ; Wed, 16 Sep 2026 03:47:53 -0400
+ id 1x6kKb-0006Gr-No; Wed, 16 Sep 2026 03:45:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMw-0005QQ-PK; Wed, 16 Sep 2026 03:47:52 -0400
+ id 1x6kKZ-00052N-M0; Wed, 16 Sep 2026 03:45:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=Qo8/TCuIxmbiCW5sM9s9fqZgAfcv+TeFbYK1+lFwjlo=;
+ t=1789544605; bh=+BcNUnqgn+mS789eCV9YP531lCttk2FP3uNJuVoyAOY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XGAAAQbRLPv1/hesM7Kd30nCzLDHWmv/najeqgXLZ8DB1NX3a0ZQMHgpz95jD+NMd
- XznMi+AejEjypK91pWO0wHW9InukiiM+AbJtINbkBNsaz43uhgp6psMYoQZXDQ1xK2
- XIHnvBufkWZ9bgj4sAbWeTBpwPNicMQE+sEb3OFLgrJSypnZXPgpu6TLkEii4Z5iI/
- XDS8NYYtJf2nUoibMXfZXciPkLSn66dPuKxn7I40tPWYHi6qfdVtC2TcfDiW7aX3Y0
- ryUaIZeiwHmAQsVJ7iUjyVREQAngtrQa9IZZIRJze6IjBhbMVlDW23/B++Vt4ML5qt
- jV751gQgQEs5g==
+ b=Awi16t8Kf4Ap4AZs1lZ2sRI7tqjn3XifxkET3GBtPkLOM/QMfQ/ZDpCZ5cOnSzEdP
+ U9D/f+K1Jes5nWaYfBz/jE2JEYMX5v1VUkiz8eW9H111Zzq4KQDNY99yZoCqZprbdn
+ WRnsJcVMu0D/k0NwIVD+y/ds8oPd/hLYKJ9lvT06MoNyXXW0ve41+ZtwSHJFecGd1I
+ FNroaXdeXSoXzBPX4FKGzRY0MOEYkLRmC/t4ZPtFvG0YPBYNAmwoDC47FUQ6gJaohT
+ wgaBySyMuGGvn+6w5v/+BypcsAGe3ayzFUumx+X1ZojqeZe67h3Q1SeI0BnFyqblti
+ xDL06JP7gJChg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 56D8E1D55BF;
- Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F6751D559E;
+ Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D91C4429B7A;
- Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F0FF2429B33;
+ Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 653825A723; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id C74745A6E7; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 49/49] hw/intc/bcm2835_ic: reject out-of-range FIQ
- source values
-Date: Wed, 16 Sep 2026 10:43:07 +0300
-Message-ID: <20260916074346.671467-49-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 19/49] scsi-disk: fix out-of-bound read in WRITE SAME
+Date: Wed, 16 Sep 2026 10:42:37 +0300
+Message-ID: <20260916074346.671467-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,138 +70,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The FIQ_CONTROL register accepts a 7-bit source selector, but only
-sources 0..71 (64 GPU + 8 ARM IRQs) exist.  Values 96..127 cause
-bcm2835_ic_update() to call extract32(arm_irq_level, start, 1) with
-start >= 32, which trips the assertion in bitops.h and aborts QEMU.
+A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
+to read roughly 60 KiB past the end of a heap buffer, copying that out
+of bounds host memory into the guest's own disk image.
 
-Reject writes that select a non-existent source and log a guest error,
-so that a malicious or buggy guest cannot kill the emulator.
+WRITE SAME computes the request transfer length at dev->blocksize
+when the request is prepared and sets cmd->xfer from dev->blocksize.
+scsi_disk_emulate_command() then uses cmd->xfer as the size of the
+request buffer.
 
-Add a qtest that verifies both valid and out-of-range FIQ source
-selections on raspi3b.
+However, MODE SELECT can race with the WRITE SAME command and guest raise
+the logical block size to any value whose low bits fit 0xfe00, up to 65024.
+In the presence of this race, scsi_disk_emulate_write_same() will read
+from memory as many bytes as indicated by the *new* dev->blocksize,
+and write it to disk.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4368
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260831081709.77725-1-guobin@linux.alibaba.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2a8b740e7acf4bcf54f0f186d9184d764cd06f01)
+The read length in WRITE SAME must be bounded by the buffer that was
+actually allocated, not by the mutable s->qdev.blocksize, so clamp the
+length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
+against the current block size would not work because the race is
+intrinsic in the SCSI protocol.
+
+I am not sure if this is exploitable with virtio-scsi and other SG-capable
+HBAs, because it should process the WRITE SAME input immediately,
+without letting the MODE SELECT command race with it.
+
+Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit d30254aec93141d6b89262986a62764b2ae07177)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/bcm2835_ic.c b/hw/intc/bcm2835_ic.c
-index 4a42fcf60dd..7fb193f9264 100644
---- a/hw/intc/bcm2835_ic.c
-+++ b/hw/intc/bcm2835_ic.c
-@@ -139,10 +139,19 @@ static void bcm2835_ic_write(void *opaque, hwaddr offset, uint64_t val,
-     BCM2835ICState *s = opaque;
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 831598688d1..e6fbd23d178 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1933,6 +1933,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     SCSIRequest *req = &r->req;
+     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
+     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
++    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
+     WriteSameCBData *data;
+     uint8_t *buf;
+     int i, l;
+@@ -1952,7 +1953,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+         return;
+     }
  
-     switch (offset) {
--    case FIQ_CONTROL:
--        s->fiq_select = extract32(val, 0, 7);
-+    case FIQ_CONTROL: {
-+        unsigned fiq_select = extract32(val, 0, 7);
-+
-+        if (fiq_select >= GPU_IRQS + ARM_IRQS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: FIQ select %u out of range\n",
-+                          __func__, fiq_select);
-+            return;
-+        }
-+        s->fiq_select = fiq_select;
-         s->fiq_enable = extract32(val, 7, 1);
-         break;
-+    }
-     case IRQ_ENABLE_1:
-         s->gpu_irq_enable |= val;
-         break;
-diff --git a/tests/qtest/bcm2835-ic-test.c b/tests/qtest/bcm2835-ic-test.c
-new file mode 100644
-index 00000000000..1e171ee0924
---- /dev/null
-+++ b/tests/qtest/bcm2835-ic-test.c
-@@ -0,0 +1,66 @@
-+/*
-+ * QTest testcase for the BCM2835 Interrupt Controller
-+ *
-+ * Copyright (c) 2026 Bin Guo <guobin@linux.alibaba.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+
-+#define IC_BASE     0x3f00b200
-+#define FIQ_CONTROL (IC_BASE + 0x0c)
-+
-+static void test_fiq_select_out_of_range(void)
-+{
-+    uint32_t val;
-+
-+    /*
-+     * Only FIQ sources 0..71 exist.  Source 96 used to trigger an assertion
-+     * in bcm2835_ic_update() because extract32(arm_irq_level, 32, 1) was
-+     * called with start >= 32.  Make sure the write is rejected and QEMU
-+     * keeps running.
-+     */
-+    writel(FIQ_CONTROL, 0xe0); /* fiq_select = 96, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
-+
-+    /* The first source past the ARM IRQ range should also be rejected. */
-+    writel(FIQ_CONTROL, 0xc8); /* fiq_select = 72, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
-+}
-+
-+static void test_fiq_select_valid(void)
-+{
-+    uint32_t val;
-+
-+    /* Select the highest valid ARM IRQ source (64 + 7 = 71). */
-+    writel(FIQ_CONTROL, 0xc7); /* fiq_select = 71, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0xc7);
-+
-+    /* Select the highest valid GPU IRQ source. */
-+    writel(FIQ_CONTROL, 0x3f); /* fiq_select = 63, fiq_enable = 0 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0x3f);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-out-of-range",
-+                   test_fiq_select_out_of_range);
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-valid",
-+                   test_fiq_select_valid);
-+
-+    qtest_start("-machine raspi3b");
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 6ea825e1d7d..73c9bd9fb65 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -254,7 +254,7 @@ qtests_aarch64 = \
-     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
-   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-+  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test', 'bcm2835-ic-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+-    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
++    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
+         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
+ 
+         /* The request is used as the AIO opaque value, so add a ref.  */
+@@ -1978,7 +1979,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
+ 
+     for (i = 0; i < data->iov.iov_len; i += l) {
+-        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
++        l = MIN(buflen, data->iov.iov_len - i);
+         memcpy(&buf[i], inbuf, l);
+     }
+ 
 -- 
 2.47.3
 
