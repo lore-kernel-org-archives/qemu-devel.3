@@ -4,61 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EABEC982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733FEC982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6vtk-0003Da-8w; Wed, 16 Sep 2026 16:06:28 -0400
+	id 1x6w31-0004Qn-RN; Wed, 16 Sep 2026 16:16:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x6vth-0003Cp-8R; Wed, 16 Sep 2026 16:06:25 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x6vte-000708-SX; Wed, 16 Sep 2026 16:06:25 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 43D68601EF;
- Wed, 16 Sep 2026 20:06:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7251F000FF;
- Wed, 16 Sep 2026 20:06:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789589173;
- bh=YGuP/gAN5ygsx2j5cjpwIXtDRIjDeLDtv8WvQN5Rl+Y=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=EI664whNbZvXK8AYgfjuCn8aqKfw+Yu4HXCVo58+1Ym3gLx1NRJHSOliiI5OOQ+Ck
- a7Zu50+WUKVdYReLG7OE4PRYk+unF/WCsX7khRwzlA2X7qVZ2BGMqG5CS4J1xV4K4r
- i2SzYyqb/mn2z/HLSkwRQFgu5cRhmATxwXgyKNwyAKGE5K0PABUNm7A2JXNZEn6APU
- iZfqE/rkrIDDPbrTn2fxmHj/09bP0ogOk/x9fluUX7IR9sjUMDdm/xlRJKqqpewryc
- e3yRXH+mEcKzF6hu6MxW5A3xet32+3XVMAuCoK4e+90uyivx9HV4kwdffrjYCp5jKf
- +6ROz9i26zbjQ==
-Date: Wed, 16 Sep 2026 22:06:07 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Sam Li <faithilikerun@gmail.com>,
- Damien Le Moal <dlemoal@kernel.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 04/12] virtio-blk: report the effective zone write
- granularity
-Message-ID: <aqr2r83GkqmujyUG@ryzen>
-References: <20260907110748.1868714-1-cassel@kernel.org>
- <20260907110748.1868714-5-cassel@kernel.org>
- <20260909182755.GC20134@fedora>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6w2y-0004QP-0x
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 16:16:00 -0400
+Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6w2w-0000Oo-42
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 16:15:59 -0400
+Received: by mail-pj2-x0f.google.com with SMTP id
+ 98e67ed59e1d1-396ccd5cf03so85759a91.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 13:15:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789589756; x=1790194556; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WImQE9HG9jNDpws/IHnxznQT65cqjjh0HyOsZ8JIRr0=;
+ b=LuzPOQf1LHRX4ilJAGBKvegfsAxg8m6YsmPQ/DTE3wWEXmiJpcDI2bEmpgfKM+q18Q
+ n2C8pXH85IYcQov2kuM0Da2pxEHi/eInrdQL1z37SnesTeOix+IhiAUQk7Zjynlc3Kl5
+ tJyEFTnGeoKoj8kLoS+4RcR2bRJ9Q5+yNPIT/N6fIRtccCDmLiqg5eDYEQOhDuB/M+oa
+ bDaBlm35j5Jud8KMIGthW5dMEgy4+u5NckOhlV69Q/dXgXCrb2N/i04yvdZeOqbyGAcn
+ ZpyCBGEl0BKJnWYWTbpGH47WiA1e3dx00bbA/U4+Nenc2HAYvSbexQFBhMI0TzY4Sfkq
+ 5zyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789589756; x=1790194556;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=WImQE9HG9jNDpws/IHnxznQT65cqjjh0HyOsZ8JIRr0=;
+ b=moOvHOf7BC3A7+6TmCWsuDL+iG0XMOl3LE7h+EsLlNFY0ExkgQYNKTL5heQlDINlTd
+ iDgevadIXAwcxJTqAfdMQ/P5roLsy4QNpZNuqwdZRJLL86eXg1fCEBUs611r+6SGppSt
+ wWmF8fwrE7BaP/osrc1K/sxT8EYr43Db7YxiZBD26wbv1xHN4B//RYToOmIZj4Jb3a1I
+ ZsPdSo+bx31qh3+PjraqzTxK7/odnj7nn8FvQVvgJg+y1G+M2d29V8Ey2+7+BQk8PL4f
+ rhVcHDQVCNZSGvuWthlHkkPpRqL/LJ2f//GzxPnhl/onBwKdWKEccuznH4JIMZV79U0X
+ pgxA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByhbTCOMHAaFrlneaBYJ8zAs5T6ghCnNteBExgti4YjIgAB+2w3bGnS/TkWby3xG3PDLPLlrJqhC1MH@nongnu.org
+X-Gm-Message-State: AFuF++k7gryqGK571FWRK6/vQlVcoZJtLSslJuf8PyQ8Ua0qKsJGbVmu
+ Er9glOih5W7NcZyzS4rGUOnvDxTyoCmWWzMygb1HJmmfg6yyjn+7fbaYflHbdG0DYCk=
+X-Gm-Gg: AYBFou1bcEerhF283OzPrc4ppmBQQhv5tl07AtC3qTf4S58wndJ/Kpjgzqe/h+wEJ7t
+ M2a+CrKZxyHVOzrlord/+SX2O1OLNKD8dWv4llloDOwndFCt0NGwnbpus4gefkJaOl9cYNt1SRr
+ 0fTejeEhJWtX86rAnmPZZ4960TqsBqvkylQQ6Ng6DJ67jKDoBzr0fMH3jLP14WQUfpqLsnlwbkH
+ EbV0Y6rsiJujI5ID26LB34IgrQPO+Jmq0htCustAz5IAgC2lju4MpJAEACBxeFqpqzR5g/2LvVI
+ 2NyxkOO8+s60yU7tZysPIsZ2LVmn3xORPcW7McauRiMUk/NGk7NknAJf9HKiRWd61eqQ7h/FaqU
+ H6zqibhv10ahAZ2hOvn37HSJBjubvYKCqyLwQnrTq7kySh1FrwWh/IS61yXDod/BpsOEzfexzC9
+ T3TUX4jP/F1MnESq63+uz+DORdyownQk1iX+ModvR85/gCJ+I+cxQoemzyOX9VuL8QXGBkEOpZF
+ twBin1jO9GXowd6XmgabwBPw2utVbOaTurx6P8WUyS5KBxNf4vEc5NOcbk9gw==
+X-Received: by 2002:a17:90b:548f:b0:39e:b7:cbea with SMTP id
+ 98e67ed59e1d1-39e1e4d1fdcmr9246022a91.18.1789589756270; 
+ Wed, 16 Sep 2026 13:15:56 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:2521:7533:da60:6a28?
+ ([2603:800c:7900:ed00:2521:7533:da60:6a28])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-14395cfb0b1sm7601274c88.5.2026.09.16.13.15.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Sep 2026 13:15:55 -0700 (PDT)
+Message-ID: <2541e000-0bac-4a06-86f1-f286a2eec5ee@linaro.org>
+Date: Wed, 16 Sep 2026 10:15:52 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260909182755.GC20134@fedora>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/19] tests/tcg: prefix meson built docker tags with
+ qemu/
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260916153013.2134555-1-alex.bennee@linaro.org>
+ <20260916153013.2134555-8-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260916153013.2134555-8-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,48 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 09, 2026 at 02:27:55PM -0400, Stefan Hajnoczi wrote:
-> On Mon, Sep 07, 2026 at 01:07:39PM +0200, Niklas Cassel wrote:
-> > @@ -1274,7 +1274,8 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
-> >                       bs->bl.max_active_zones);
-> >          virtio_stl_p(vdev, &blkcfg.zoned.max_open_zones,
-> >                       bs->bl.max_open_zones);
-> > -        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity, blk_size);
-> > +        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
-> > +                     blkconf_zone_write_granularity(conf));
-> >          virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
-> >                       bs->bl.max_append_sectors);
-> >      } else {
+On 9/16/26 05:30, Alex Bennée wrote:
+> With the meson changes we now build the images directly by calling
+> docker.py. However the Makefile.include builds prefix all the images
+> with qemu/:
 > 
-> The device emulation code cannot expose the limit value from the host
-> device because that would break live migration: a guest device must
-> remain unchanged across migration and the VIRTIO Configuration Space
-> cannot change field values if the source and destination hosts have
-> different disks. The guest driver does not expect these values to
-> change once the device has been probed.
+>    # General rule for building docker images.
+>    docker-image-%: $(DOCKER_FILES_DIR)/%.docker
+>              $(call quiet-command,			\
+>                    DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
+>                    $(if $(DOCKER_V),,--quiet)		\
+>                    $(if $(NOCACHE),--no-cache,		\
+>                            $(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
+>                    --build-arg BUILDKIT_INLINE_CACHE=1 	\
+>                    $(if $(NOUSER),,			\
+>                            --build-arg USER=$(USER)	\
+>                            --build-arg UID=$(UID))		\
+>                    -t qemu/$* - < $< $(if $(DOCKER_V),,> /dev/null),\
+>                    "BUILD", $*)
 > 
-> For example, it would be possible to migrate from a host with a write
-> granularity of 64 KB to a host with a write granularity of 4 KB. The
-> guest must still see a 64 KB write granularity the entire time (even
-> after migration).
+> So to ensure we don't end up building every container twice make sure
+> the naming conventions line up.
 > 
-> For this reason, limits on guest devices must be configured explicitly
-> rather than automatically populated from the host device limits.
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> ---
+>   tests/tcg/meson.build | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-Sure, this can easily be implemented as:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-MAX(conf->logical_block_size, conf->physical_block_size)
-
-which is a pure function of the device configuration.
-
-
-> 
-> Could you implement an error when the guest limit has not been
-> configured appropriately for the given BlockBackend instead?
-
-Will do.
-
-
-Kind regards,
-Niklas
+r~
 
