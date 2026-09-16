@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51790C982CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C624C982CF
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6rbH-0002TV-5Q; Wed, 16 Sep 2026 11:31:07 -0400
+	id 1x6rbH-0002TS-4I; Wed, 16 Sep 2026 11:31:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6rao-0002Cx-OW
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:42 -0400
+ id 1x6rac-00025L-Cu
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:26 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6raj-0001Rp-Ek
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:38 -0400
+ id 1x6raY-0001MV-58
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:30:24 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ccfd61ecaso9926375e9.3
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:30:32 -0700 (PDT)
+ 5b1f17b1804b1-49e66390995so6635345e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789572632; x=1790177432; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789572621; x=1790177421; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=gwlxe/ftx0pHehXwbKVnrhXAcQYcmg6mCdmQFjqdGEY=;
- b=PxbpSlPorMVoCHb141w6dV4BPE8XSpJqXfVDP3Z5ujNSCczWPsoqSkqRW79YrgEpxD
- 5YcJC/H4UI1799mqTdd/5RdDxJnHq9/UdUOgpgVp/NHbejpWFR3B7h4/PW547zD8XWf/
- rUcIZE2ykMVCAZX2riL0wo2C1TGedeEzUZCD/5pI5D6TYJOhIgLPhgAXbvCL/4+0GHKz
- dRUk+6kqma4+IuefbA9Q1TBwwk0D1i86lWzvBJbaMFjEf/ROYz9M9OyKeo6fCLqG0JOX
- UAb0SVb5ThnY2l749OkKcoP3nDVnb6tphMh4Bk/gibZj4ZheKl743ca45v0bE8sT31sh
- MxSQ==
+ bh=AJwEWFJNlhZhHGtBDzm5rjgGSC2PicgfXm/bmyyHSjI=;
+ b=Lwbigcn2WKYLnBFPG/QIJw1p8T6pYbD7zGZIG/eeXt558H8M05MAcw0FebYGb70S+H
+ up7m1GZVeLbHGtIayzsMcU79ohdu5ho6OEs1gfGdLqq9VUseRtbExjZpGUGsQ3mCzWpu
+ Bj16FYhZMrM8SfeXilSgTZjUpUhMngqhy2ic4fbfoWiRHByCuW3F/vn6hMhBSc/Yh4bg
+ nhOEAkFtpacLDr50tU0mz+tKupF/RwruErpu+ybPMbFuRkllITTnDikYXj0mWc1jhr/+
+ TdFOvJCWfb5TLoD7D4v7u9CDrrfy/LJvhubjfz/ZU7Za54D+desDIOxs+Rj9ACE3ivZJ
+ BP4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789572632; x=1790177432;
+ d=1e100.net; s=20260707; t=1789572621; x=1790177421;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gwlxe/ftx0pHehXwbKVnrhXAcQYcmg6mCdmQFjqdGEY=;
- b=HtASh4pH3hlJGfgRZseAoPvW7cMbswBVX+9fwfabLJcSVeO6TCfMGck2Cyo7eTJmc0
- vR/bl+IhFLGXaxtj6P0klcP+u6Oqi67EkyXlnO8W3jFK/SoUuutnYbHrMi8hUKvjCsrf
- wz5IT5FfcCSsOVhCgwQAbIfDyje/5CEXlb0pJKVTaXK9GLpnOqHjhy4kMaEJJDg2ksnH
- 0E4HDAvLAh0NEzdzabhPWQK7bUVzn6unXAKu+etRbYAp9zopV1kMB7eT3RvmkBKHDCq9
- hyVTNVSVmFtAIDbvteW1HhTMC8W3dB8Ra2jadhPTpUlkQPOUZeY/6A17i5c5hzhR2YJM
- vdxw==
-X-Gm-Message-State: AFuF++mGMhgd/L3CNHg0ZGdoq1TRFsbnHKLczJC/yFEvDhbQ9WIYAWk2
- E27Y/J7py9NLnA6jctSIXqgMqqoyFeZ6xQV8NHtvcpAOZPLkwzhr3mePWBVAm2OQ8l0=
-X-Gm-Gg: AYBFou0Namo5VEfN9nQGv77plLrIv5Gi/wFOrxK53tlAsZ+wX8jzFKchEtCxZllTmWw
- +icZpMevvWO0dgX3EDBWorYiZU9lFr9YxVOVrINuIoeoLD4/vBAUvpiBme+ellqsdxoLASYPDKu
- SuA9Bj5P9c811N1zo2Xpq3FiVfX4BVMzz8bYd/ISI310bPwPbWfVvX8BmO1fneCcUbbsAP+29pZ
- KEi/cQL14DeO0IOcrDRI/1ZRv68j7DiX+8dWJEP7s2fqKHoRplK0NTygUFIagdfObKf0+OeA9fq
- PdJ7t5306iORRt5jWEV4erymYHFFLWnyZwfe29ien8cXEHSXQs1g/R6Cp6clEqElGA9oMZFi5jf
- l0VE0qnC/OdvVZW6O11kXzWSVjlqGJL5MkeZt+JvW4ByNIy/muWPk4COQTm2LUVUHPtYaATP2Qk
- O2dFbifwhOktx4OjMZQ7tvRb7vgorlfAI4rwLLLmg08UGH1ytNnHYEbygz2wruiNlOz9r+1Cw=
-X-Received: by 2002:a05:600c:6290:b0:49d:1f32:c911 with SMTP id
- 5b1f17b1804b1-49eac462565mr33754665e9.3.1789572631761; 
- Wed, 16 Sep 2026 08:30:31 -0700 (PDT)
+ bh=AJwEWFJNlhZhHGtBDzm5rjgGSC2PicgfXm/bmyyHSjI=;
+ b=PvmIcH+s9OsUmgmp2HMS5ZXWf1qJel8UgYOkRytjxwYzROefL02DL5wY7q8y+QhWJi
+ izBUaDRysYPbXzyHpIe1jEJDBX9aPBo6cpfsVg98J67V18NrHm/+XlJf1vlvlghUipQ2
+ /AIEPGiwdrED/TfC0cUkItPcybS+LOyhzkPxCH6pTDzb1iH6Z/UTBuVxsh46zEXTXV4U
+ rF4gyKn/i+otNzbVLzhDTM+wjjgzKGtywQ7/sZQp+MzTLtPYoov/6NPJCDketPKoMmSQ
+ L0w4Qnt9Wh1MjnjmiV9aPXwHmywxgSlEIpYTtCWZc3qADJ/JAY9FbO/zMPqIfJMv1G9b
+ IgZQ==
+X-Gm-Message-State: AFuF++lARBZsFkGA+UzXWLvUzCHHOsj3NdZf+IJQFprnc/cPNW1LMPd9
+ cUHyW/yyRXvMyt/tsFp8m4b/M+2ZfLD7YmYd+dbk5/1sAiTyv7jvorlPOuhlJ2as1YA=
+X-Gm-Gg: AYBFou3zlx21VIdpRQW06oxs6S15odldri3VVG8uhQPcJzSCcp7YxyH390c2ZPVBstD
+ +x1r0/erNl1lb0UIAajF+nFMVS8FW68IEEP94lR8XPcQAaXsF/KZ2/iy0Z5eprCsOP2Rw6CDl3v
+ pLQ8PI4eQ4UDPJh3A7nGMBFPDBmw5sbmxqLQo2Iu3BiYKgZKT0l7Z+DVMiHuni8/D/e2DEck+tU
+ yHRJOBEWeignEkWRuBYOT0GVXgoKL0sdnQ8czMHIODqoA071mkxFR3Qtmy1j1XOr48uxQCrcIUA
+ TIFMRPQ3q39kejQjiVbJ5N/GJT5y629OIXWncZctfBrsBHh2YRzr5OowgvK93kRWo2mXM/+g+/w
+ L3S96ozk4u1gltUsBa7260p57+Y+yMRLTGXCYf0SihmwAT6O0fGH9GC+6wk8JxEdcmhU+sKdu1C
+ pX59J0nhABFssNqTxWoad5qM8vf+7P9IveUqxxCYaqkMBSeHx7P4Xu7G9Q6sKnLema3JjI8Po=
+X-Received: by 2002:a05:600c:6085:b0:49c:dca2:ac47 with SMTP id
+ 5b1f17b1804b1-49eac45c06bmr36770935e9.2.1789572620516; 
+ Wed, 16 Sep 2026 08:30:20 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e847e89f3sm30371715e9.3.2026.09.16.08.30.16
+ 5b1f17b1804b1-49fbd0fef38sm1392095e9.9.2026.09.16.08.30.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 08:30:22 -0700 (PDT)
+ Wed, 16 Sep 2026 08:30:14 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BE8F761901;
+ by draig.lan (Postfix) with ESMTP id 698AA618D2;
  Wed, 16 Sep 2026 16:30:13 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -88,10 +88,10 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 05/19] configure: re-purpose the tcg test compiler configs
- for vdso building
-Date: Wed, 16 Sep 2026 16:29:58 +0100
-Message-ID: <20260916153013.2134555-6-alex.bennee@linaro.org>
+Subject: [PATCH v4 02/19] Revert "tests/tcg/meson.build: implement ./configure
+ -cross-cc-* options"
+Date: Wed, 16 Sep 2026 16:29:55 +0100
+Message-ID: <20260916153013.2134555-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260916153013.2134555-1-alex.bennee@linaro.org>
 References: <20260916153013.2134555-1-alex.bennee@linaro.org>
@@ -122,226 +122,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All the tcg tests are in meson now so there is no reason to put the
-config-target.mak files in those directories. We also don't need the
-GDB feature tests or to emit prerequsistes.
+We want to keep configuring of the cross compiler within configure so
+it can be used by the firmware.
 
-The vdso re-build blob does use the compiler definitions though so
-we can emit the details for that and tweak the vdso makefiles to point
-at the right place. Note some of the vdso makefiles build both 32 and
-64 bit versions from the same compiler.
-
+This reverts commit 7e1d54da6faf10e1fc70f6b3d8247068b80b1597.
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
 ---
- configure                            | 69 +++++++++++-----------------
- linux-user/aarch64/Makefile.vdso     |  2 +-
- linux-user/arm/Makefile.vdso         |  2 +-
- linux-user/hppa/Makefile.vdso        |  2 +-
- linux-user/i386/Makefile.vdso        |  2 +-
- linux-user/loongarch64/Makefile.vdso |  2 +-
- linux-user/ppc/Makefile.vdso         |  2 +-
- linux-user/riscv/Makefile.vdso       |  2 +-
- linux-user/s390x/Makefile.vdso       |  2 +-
- linux-user/sh4/Makefile.vdso         |  2 +-
- linux-user/x86_64/Makefile.vdso      |  2 +-
- 11 files changed, 36 insertions(+), 53 deletions(-)
+v3
+  - declare empty container_command/use_containers to avoid unref var
+---
+ configure             | 31 ++++++++-------
+ meson_options.txt     | 89 -------------------------------------------
+ tests/tcg/meson.build | 31 +++------------
+ 3 files changed, 23 insertions(+), 128 deletions(-)
 
 diff --git a/configure b/configure
-index 4c7bf406b88..67967cd294c 100755
+index 1973f023b1e..bedde58b8cf 100755
 --- a/configure
 +++ b/configure
-@@ -1736,65 +1736,48 @@ if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
+@@ -172,6 +172,7 @@ fi
+ # some defaults, based on the host environment
+ 
+ # default parameters
++container_command=""
+ cpu=""
+ cross_compile="no"
+ cross_prefix=""
+@@ -227,6 +228,19 @@ for opt do
+   ;;
+   --extra-ldflags=*) EXTRA_LDFLAGS="$EXTRA_LDFLAGS $optarg"
+   ;;
++  --cross-cc-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-cc-FOO option"
++  ;;
++  --cross-cc-cflags-*) cc_arch=${opt#--cross-cc-cflags-}; cc_arch=${cc_arch%%=*}
++                      eval "cross_cc_cflags_${cc_arch}=\$optarg"
++  ;;
++  --cross-cc-*) cc_arch=${opt#--cross-cc-}; cc_arch=${cc_arch%%=*}
++                eval "cross_cc_${cc_arch}=\$optarg"
++  ;;
++  --cross-prefix-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-prefix-FOO option"
++  ;;
++  --cross-prefix-*) cc_arch=${opt#--cross-prefix-}; cc_arch=${cc_arch%%=*}
++                    eval "cross_prefix_${cc_arch}=\$optarg"
++  ;;
+   --without-default-features) default_feature="no"
+   ;;
+   --wasm64-32bit-address-limit) wasm64_memory64="2"
+@@ -246,6 +260,7 @@ ninja=""
+ python=
+ download="enabled"
+ skip_meson=no
++use_containers=""
+ rust="disabled"
+ rust_target_triple=""
+ 
+@@ -618,19 +633,9 @@ for opt do
+   ;;
+   --extra-ldflags=*)
+   ;;
+-  --cross-cc-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-cc-FOO option"
+-  ;;
+-  --cross-cc-cflags-*) arch=${opt#--cross-cc-cflags-}; arch=${arch%%=*}
+-                       meson_option_add "-Dtcg_tests_cross_cflags_${arch}=${optarg}"
+-  ;;
+-  --cross-cc-*) arch=${opt#--cross-cc-}; arch=${arch%%=*}
+-                meson_option_add "-Dtcg_tests_cross_cc_${arch}=${optarg}"
+-  ;;
+-  --cross-prefix-*[!a-zA-Z0-9_-]*=*) error_exit "Passed bad --cross-prefix-FOO option"
++  --cross-cc-*)
+   ;;
+-  # cross-prefix is just used as a syntactic sugar for -cross-cc.
+-  --cross-prefix-*) arch=${opt#--cross-prefix-}; arch=${arch%%=*}
+-                    meson_option_add "-Dtcg_tests_cross_cc_${arch}=${optarg}gcc"
++  --cross-prefix-*)
+   ;;
+   --enable-docs) docs=enabled
+   ;;
+@@ -1273,7 +1278,7 @@ if test "$container_command" = ""; then
+     container_command=$($python "$source_path"/tests/docker/docker.py probe)
+     test "$container_command" = "no" && container_command=""
+ fi
+-if test $use_containers = "yes" && test "$container_command" != ""; then
++if test "$use_containers" = "yes" && test "$container_command" != ""; then
+     docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
  fi
  
--tcg_tests_with_compilers=
-+# Export the compiler details needed for rebuilding the vdso blobs
- for target in $target_list; do
--  arch=${target%%-*}
- 
-+  # Skip anything that is not a linux-user target
-   case $target in
-+    *-linux-user)
-+      ;;
-+    *)
-+      continue
-+      ;;
-+  esac
-+
-+  arch=${target%%-*}
-+
-+  case $arch in
-     xtensa*-linux-user)
--      # the toolchain is not complete with headers, only build system tests
-+      # the toolchain can only build system tests due to missing headers
-+      continue
-+      ;;
-+    aarch64_be-linux-user)
-+      # there is no BE user space
-       continue
-       ;;
--    *-softmmu)
--      test -f "$source_path/tests/tcg/$arch/Makefile.softmmu-target" || continue
--      qemu="qemu-system-$arch"
-+    aarch64|arm|hppa|i386|loongarch64|ppc64|riscv64|s390x|sh4|x86_64)
-+      # arches which need a vdso, some 64 bit arches build both
-       ;;
--    *-linux-user|*-bsd-user)
--      qemu="qemu-$arch"
-+    *)
-+      continue
-       ;;
-   esac
- 
--  if probe_target_compiler $target || test -n "$container_image"; then
--      test -n "$container_image" && build_static=y
--      mkdir -p "tests/tcg/$target"
--      config_target_mak=tests/tcg/$target/config-target.mak
--      ln -sf "$source_path/tests/tcg/Makefile.target" "tests/tcg/$target/Makefile"
-+  # note container_image is set by a successful call to probe_target_compiler
-+  if probe_target_compiler "$target" || test -n "$container_image"; then
-+      mkdir -p "linux-user/$arch"
-+      config_target_mak=linux-user/$arch/config-target.mak
-       echo "# Automatically generated by configure - do not modify" > "$config_target_mak"
-       echo "TARGET_NAME=$arch" >> "$config_target_mak"
-       echo "TARGET=$target" >> "$config_target_mak"
--      write_target_makefile "build-tcg-tests-$target" >> "$config_target_mak"
--      echo "BUILD_STATIC=$build_static" >> "$config_target_mak"
--      echo "QEMU=$PWD/$qemu" >> "$config_target_mak"
+diff --git a/meson_options.txt b/meson_options.txt
+index e3570a418aa..66d3689d14c 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -393,92 +393,3 @@ option('containers', type: 'boolean', value: true,
+        description: 'use containers to cross compile tcg tests')
+ option('container_command', type: 'string',
+        description: 'command to build/run containers')
 -
--      # will GDB work with these binaries?
--      if test "${gdb_arches#*$arch}" != "$gdb_arches"; then
--          echo "GDB=$gdb_bin" >> $config_target_mak
--      fi
+-option('tcg_tests_cross_cc_aarch64', type: 'string',
+-       description: 'cc for aarch64 tcg tests')
+-option('tcg_tests_cross_cflags_aarch64', type: 'string',
+-       description: 'cflags for aarch64 tcg tests')
+-option('tcg_tests_cross_cc_aarch64_be', type: 'string',
+-       description: 'cc for aarch64_be tcg tests')
+-option('tcg_tests_cross_cflags_aarch64_be', type: 'string',
+-       description: 'cflags for aarch64_be tcg tests')
+-option('tcg_tests_cross_cc_alpha', type: 'string',
+-       description: 'cc for alpha tcg tests')
+-option('tcg_tests_cross_cflags_alpha', type: 'string',
+-       description: 'cflags for alpha tcg tests')
+-option('tcg_tests_cross_cc_arm', type: 'string',
+-       description: 'cc for arm tcg tests')
+-option('tcg_tests_cross_cflags_arm', type: 'string',
+-       description: 'cflags for arm tcg tests')
+-option('tcg_tests_cross_cc_hexagon', type: 'string',
+-       description: 'cc for hexagon tcg tests')
+-option('tcg_tests_cross_cflags_hexagon', type: 'string',
+-       description: 'cflags for hexagon tcg tests')
+-option('tcg_tests_cross_cc_hppa', type: 'string',
+-       description: 'cc for hppa tcg tests')
+-option('tcg_tests_cross_cflags_hppa', type: 'string',
+-       description: 'cflags for hppa tcg tests')
+-option('tcg_tests_cross_cc_i386', type: 'string',
+-       description: 'cc for i386 tcg tests')
+-option('tcg_tests_cross_cflags_i386', type: 'string',
+-       description: 'cflags for i386 tcg tests')
+-option('tcg_tests_cross_cc_loongarch64', type: 'string',
+-       description: 'cc for loongarch64 tcg tests')
+-option('tcg_tests_cross_cflags_loongarch64', type: 'string',
+-       description: 'cflags for loongarch64 tcg tests')
+-option('tcg_tests_cross_cc_m68k', type: 'string',
+-       description: 'cc for m68k tcg tests')
+-option('tcg_tests_cross_cflags_m68k', type: 'string',
+-       description: 'cflags for m68k tcg tests')
+-option('tcg_tests_cross_cc_mips', type: 'string',
+-       description: 'cc for mips tcg tests')
+-option('tcg_tests_cross_cflags_mips', type: 'string',
+-       description: 'cflags for mips tcg tests')
+-option('tcg_tests_cross_cc_mips64', type: 'string',
+-       description: 'cc for mips64 tcg tests')
+-option('tcg_tests_cross_cflags_mips64', type: 'string',
+-       description: 'cflags for mips64 tcg tests')
+-option('tcg_tests_cross_cc_mips64el', type: 'string',
+-       description: 'cc for mips64el tcg tests')
+-option('tcg_tests_cross_cflags_mips64el', type: 'string',
+-       description: 'cflags for mips64el tcg tests')
+-option('tcg_tests_cross_cc_or1k', type: 'string',
+-       description: 'cc for or1k tcg tests')
+-option('tcg_tests_cross_cflags_or1k', type: 'string',
+-       description: 'cflags for or1k tcg tests')
+-option('tcg_tests_cross_cc_ppc64', type: 'string',
+-       description: 'cc for ppc64 tcg tests')
+-option('tcg_tests_cross_cflags_ppc64', type: 'string',
+-       description: 'cflags for ppc64 tcg tests')
+-option('tcg_tests_cross_cc_ppc64le', type: 'string',
+-       description: 'cc for ppc64le tcg tests')
+-option('tcg_tests_cross_cflags_ppc64le', type: 'string',
+-       description: 'cflags for ppc64le tcg tests')
+-option('tcg_tests_cross_cc_riscv64', type: 'string',
+-       description: 'cc for riscv64 tcg tests')
+-option('tcg_tests_cross_cflags_riscv64', type: 'string',
+-       description: 'cflags for riscv64 tcg tests')
+-option('tcg_tests_cross_cc_s390x', type: 'string',
+-       description: 'cc for s390x tcg tests')
+-option('tcg_tests_cross_cflags_s390x', type: 'string',
+-       description: 'cflags for s390x tcg tests')
+-option('tcg_tests_cross_cc_sh4', type: 'string',
+-       description: 'cc for sh4 tcg tests')
+-option('tcg_tests_cross_cflags_sh4', type: 'string',
+-       description: 'cflags for sh4 tcg tests')
+-option('tcg_tests_cross_cc_tricore', type: 'string',
+-       description: 'cc for tricore tcg tests')
+-option('tcg_tests_cross_cflags_tricore', type: 'string',
+-       description: 'cflags for tricore tcg tests')
+-option('tcg_tests_cross_cc_x86_64', type: 'string',
+-       description: 'cc for x86_64 tcg tests')
+-option('tcg_tests_cross_cflags_x86_64', type: 'string',
+-       description: 'cflags for x86_64 tcg tests')
+-option('tcg_tests_cross_cc_xtensa', type: 'string',
+-       description: 'cc for xtensa tcg tests')
+-option('tcg_tests_cross_cflags_xtensa', type: 'string',
+-       description: 'cflags for xtensa tcg tests')
+-option('tcg_tests_cross_cc_xtensaeb', type: 'string',
+-       description: 'cc for xtensaeb tcg tests')
+-option('tcg_tests_cross_cflags_xtensaeb', type: 'string',
+-       description: 'cflags for xtensaeb tcg tests')
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index d41a228fb3d..ce208e686ff 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -185,8 +185,6 @@ foreach target, plan: tcg_tests
+     continue
+   endif
+ 
+-  cc_arch = target.replace('-linux-user', '').replace('-softmmu', '')
 -
--      if test "${gdb_arches#*$arch}" != "$gdb_arches" && version_ge $gdb_version 14.1; then
--          echo "GDB_HAS_SME_TILES=y" >> $config_target_mak
--      else
--          echo "GDB_HAS_SME_TILES=n" >> $config_target_mak
--      fi
+   # Detect duplicated executables/tests, and report an error to force user to
+   # choose how to deal with it.
+   built_tests = {}
+@@ -204,35 +202,16 @@ foreach target, plan: tcg_tests
+   endforeach
+ 
+   cc = find_program(plan['cc'], required : false)
+-  cc_cflags = []
 -
--      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 15.1; then
--          echo "GDB_HAS_MTE=y" >> $config_target_mak
--      fi
+-  check_flags = []
+-  check_required = false
+-  cross_cc = get_option('tcg_tests_cross_cc_' + cc_arch)
+-  if cross_cc != ''
+-    # we make sure cross cc exists
+-    cc = find_program(cross_cc, required: true)
+-    check_required = true
+-  endif
+-  cross_cflags = get_option('tcg_tests_cross_cflags_' + cc_arch)
+-  if cross_cflags != ''
+-    cc_cflags = cross_cflags.split()
+-    # and that cross cc can compile programs
+-    check_flags = cc_cflags
+-    check_required = true
+-  endif
 -
--      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 16.0; then
--          # GDB has to support MTE in baremetal to allow debugging MTE in QEMU system mode
--          echo "GDB_SUPPORTS_MTE_IN_BAREMETAL=y" >> $config_target_mak
--      fi
--
--      echo "run-tcg-tests-$target: $qemu\$(EXESUF)" >> Makefile.prereqs
--      tcg_tests_with_compilers="$tcg_tests_with_compilers $target"
-+      write_target_makefile "update-linux-vdso" >> "$config_target_mak"
-   fi
- done
+   cc_from_system = cc.found()
+   has_cc = cc.found()
+   if has_cc
++    check_flags = ['-static']
+     if target.endswith('softmmu')
+-      check_flags += ['-nostdlib', '-ffreestanding', '-r']
+-    else
+-      check_flags += ['-static']
++      check_flags = ['-nostdlib', '-ffreestanding', '-r']
+     endif
  
--if test "$tcg" = "enabled"; then
--    echo "TCG_TESTS_WITH_COMPILERS=$tcg_tests_with_compilers" >> $config_host_mak
--fi
--
- if test "$skip_meson" = no; then
-   cross="config-meson.cross.new"
-   meson_quote() {
-diff --git a/linux-user/aarch64/Makefile.vdso b/linux-user/aarch64/Makefile.vdso
-index c33a679c0f2..82ed2011087 100644
---- a/linux-user/aarch64/Makefile.vdso
-+++ b/linux-user/aarch64/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/aarch64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/aarch64/config-target.mak
+     cmd = run_command([cc, files('test_cc.c'), check_flags, '-o', '/dev/null'],
+-                      check: check_required)
++                      check: false)
+     has_cc = cmd.returncode() == 0
+     cc_from_system = has_cc
+   endif
+@@ -368,9 +347,9 @@ foreach target, plan: tcg_tests
+         endif
+       endif
  
- SUBDIR = $(SRC_PATH)/linux-user/aarch64
- VPATH += $(SUBDIR)
-diff --git a/linux-user/arm/Makefile.vdso b/linux-user/arm/Makefile.vdso
-index ede489e2363..16ae8d7aaae 100644
---- a/linux-user/arm/Makefile.vdso
-+++ b/linux-user/arm/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/arm-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/arm/config-target.mak
+-      cflags = cc_cflags
++      cflags = []
+       if 'cflags' in setup
+-        cflags += setup['cflags']
++        cflags = setup['cflags']
+       endif
  
- SUBDIR = $(SRC_PATH)/linux-user/arm
- VPATH += $(SUBDIR)
-diff --git a/linux-user/hppa/Makefile.vdso b/linux-user/hppa/Makefile.vdso
-index f4537ae7169..78642c42661 100644
---- a/linux-user/hppa/Makefile.vdso
-+++ b/linux-user/hppa/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/hppa-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/hppa/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/hppa
- VPATH += $(SUBDIR)
-diff --git a/linux-user/i386/Makefile.vdso b/linux-user/i386/Makefile.vdso
-index 95bc616f6d6..ca2e37fa6b6 100644
---- a/linux-user/i386/Makefile.vdso
-+++ b/linux-user/i386/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/i386-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/i386/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/i386
- VPATH += $(SUBDIR)
-diff --git a/linux-user/loongarch64/Makefile.vdso b/linux-user/loongarch64/Makefile.vdso
-index 1d760b1e47e..ceb61101209 100644
---- a/linux-user/loongarch64/Makefile.vdso
-+++ b/linux-user/loongarch64/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/loongarch64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/loongarch64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/loongarch64
- VPATH += $(SUBDIR)
-diff --git a/linux-user/ppc/Makefile.vdso b/linux-user/ppc/Makefile.vdso
-index e2b8facbb50..6b9be843817 100644
---- a/linux-user/ppc/Makefile.vdso
-+++ b/linux-user/ppc/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/ppc64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/ppc64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/ppc
- VPATH += $(SUBDIR)
-diff --git a/linux-user/riscv/Makefile.vdso b/linux-user/riscv/Makefile.vdso
-index 2c257dbfda5..2eefdb70cf9 100644
---- a/linux-user/riscv/Makefile.vdso
-+++ b/linux-user/riscv/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/riscv64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/riscv64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/riscv
- VPATH += $(SUBDIR)
-diff --git a/linux-user/s390x/Makefile.vdso b/linux-user/s390x/Makefile.vdso
-index e82bf9e29ff..51f7c50a2de 100644
---- a/linux-user/s390x/Makefile.vdso
-+++ b/linux-user/s390x/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/s390x-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/s390x/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/s390x
- VPATH += $(SUBDIR)
-diff --git a/linux-user/sh4/Makefile.vdso b/linux-user/sh4/Makefile.vdso
-index 272c5d262de..ed2cc11b825 100644
---- a/linux-user/sh4/Makefile.vdso
-+++ b/linux-user/sh4/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/sh4-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/sh4/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/sh4
- VPATH += $(SUBDIR)
-diff --git a/linux-user/x86_64/Makefile.vdso b/linux-user/x86_64/Makefile.vdso
-index 26552b66dba..56fe87af72b 100644
---- a/linux-user/x86_64/Makefile.vdso
-+++ b/linux-user/x86_64/Makefile.vdso
-@@ -1,4 +1,4 @@
--include $(BUILD_DIR)/tests/tcg/x86_64-linux-user/config-target.mak
-+include $(BUILD_DIR)/linux-user/x86_64/config-target.mak
- 
- SUBDIR = $(SRC_PATH)/linux-user/x86_64
- VPATH += $(SUBDIR)
+       if 'cc_feat' in setup
 -- 
 2.47.3
 
