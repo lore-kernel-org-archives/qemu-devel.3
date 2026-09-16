@@ -4,52 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC1BC982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB04C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lcU-0001NC-3B; Wed, 16 Sep 2026 05:07:58 -0400
+	id 1x6lcY-0001bk-NU; Wed, 16 Sep 2026 05:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcS-0001Iq-5J; Wed, 16 Sep 2026 05:07:56 -0400
+ id 1x6lcV-0001U6-EU; Wed, 16 Sep 2026 05:07:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcQ-0007If-BJ; Wed, 16 Sep 2026 05:07:55 -0400
+ id 1x6lcT-0007Mk-KM; Wed, 16 Sep 2026 05:07:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=11bJ0S48RHBUuEzSrdoXgCZN2ra5JEE4DHeP98szIC0=;
+ t=1789549558; bh=vTNv0n7GHd9WF4rk69YqO7UkDWWJLEWO9Qji/0+capI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YCviEBmKHNkW4qxQmti/1KG0tsm3vTE13kxSnpk9LALTCMkTyIRHz1KV+O8kmFhhl
- S9I1V4AC96tpPcuKVXeNZLCV6A4r6KATlhxXPQHssV5J2NCVGfiaiTD4KLmI/0qbnP
- H/WBsQ4dd7wEvvjvGkS4oUzcILwZktmcTb8q6lkzd4qucKFT92O//Ppl5VLQQChayn
- dCXNgM3MBVsAh8qdTXz7n3lzDPVaDFxGfTzrB53lUjZOMfzA+jrHA8KcfyCx/sp+mL
- i9U9WmdaQU05sZ8naGAH+2Lv/r9qqY42Q9Y26gzRZClr1hiPLav/oC4X40whKK9H01
- 8+hA6K+eM3YzA==
+ b=xEl0fmswPU7/rfmTqsh/WqP/yK50gQwztHAsqgQ8O8189GsCVkatTipvK0JWF02/B
+ PWHmsblhBgozMbZMxRm66kBxOliql7fOB2bh7y7rDNzAURTtGZj/DoQUZYU6JusGRX
+ g+QiiCsKlGKEM6ZrVYtgq7r8x9VCZr8Oz4SKCIfmlmdeTZN9mdTLJ7uFBvnOzUX9Kj
+ rD9gbEJpDytJm/eVozEDGzpsRlgzr80igL34YxQYci89rJbqOm/ujJgIGHHfkUzH2b
+ vf2KIVNlgGTSnJRewUV3FJgHYm3BSN5JW5+hEqMPDi96Cc4X6b8xAuzCeQVt8oPm2r
+ G8/0xeszZOLhw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C23F21D56C7;
+ by isrv.corpit.ru (Postfix) with ESMTP id CB5171D56C9;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6DF86429E12;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 770A9429E14;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3D1B25A77F; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 431A25A783; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 19/57] hw/ide: report the default CHS translation in
- IDENTIFY DEVICE
-Date: Wed, 16 Sep 2026 12:03:43 +0300
-Message-ID: <20260916090516.677749-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 21/57] scsi-disk: fix out-of-bound read in WRITE SAME
+Date: Wed, 16 Sep 2026 12:03:45 +0300
+Message-ID: <20260916090516.677749-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,62 +70,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-IDENTIFY DEVICE words 1, 3 and 6 describe the default CHS translation,
-and ATA-5 8.16.8 requires INITIALIZE DEVICE PARAMETERS to leave them
-alone; the translation in effect is described by words 54 to 56 instead.
-Words 3 and 6 were filled from s->heads and s->sectors, which the command
-replaces, so a guest that selected a translation of its own was told that
-its choice was what the drive came with, and could no longer find out the
-default. Word 1 is already right, as no command changes s->cylinders.
+A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
+to read roughly 60 KiB past the end of a heap buffer, copying that out
+of bounds host memory into the guest's own disk image.
 
-Report s->drive_heads and s->drive_sectors, which ide_init_drive() keeps
-for exactly this, along with the retired word 4 derived from them. The
-CompactFlash data labels those words as the default geometry too, and
-INITIALIZE DEVICE PARAMETERS is accepted for CFA drives, so fix both.
+WRITE SAME computes the request transfer length at dev->blocksize
+when the request is prepared and sets cmd->xfer from dev->blocksize.
+scsi_disk_emulate_command() then uses cmd->xfer as the size of the
+request buffer.
 
-Cc: John Snow <jsnow@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+However, MODE SELECT can race with the WRITE SAME command and guest raise
+the logical block size to any value whose low bits fit 0xfe00, up to 65024.
+In the presence of this race, scsi_disk_emulate_write_same() will read
+from memory as many bytes as indicated by the *new* dev->blocksize,
+and write it to disk.
+
+The read length in WRITE SAME must be bounded by the buffer that was
+actually allocated, not by the mutable s->qdev.blocksize, so clamp the
+length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
+against the current block size would not work because the race is
+intrinsic in the SCSI protocol.
+
+I am not sure if this is exploitable with virtio-scsi and other SG-capable
+HBAs, because it should process the WRITE SAME input immediately,
+without letting the MODE SELECT command race with it.
+
+Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
 Cc: qemu-stable@nongnu.org
-Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 0df27c66dc7271ee2e63636b5183c0b3acdf7eed)
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit d30254aec93141d6b89262986a62764b2ae07177)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 747fa716773..befbab94867 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -138,11 +138,12 @@ static void ide_identify(IDEState *s)
-     memset(p, 0, sizeof(s->identify_data));
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 1b0cce128c5..5bb7a974d69 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1911,6 +1911,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     SCSIRequest *req = &r->req;
+     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
+     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
++    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
+     WriteSameCBData *data;
+     uint8_t *buf;
+     int i, l;
+@@ -1930,7 +1931,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+         return;
+     }
  
-     put_le16(p + 0, 0x0040);
-+    /* Words 1, 3 and 6 describe the default translation (ATA-5 8.16.8) */
-     put_le16(p + 1, s->cylinders);
--    put_le16(p + 3, s->heads);
--    put_le16(p + 4, 512 * s->sectors); /* XXX: retired, remove ? */
-+    put_le16(p + 3, s->drive_heads);
-+    put_le16(p + 4, 512 * s->drive_sectors); /* XXX: retired, remove ? */
-     put_le16(p + 5, 512); /* XXX: retired, remove ? */
--    put_le16(p + 6, s->sectors);
-+    put_le16(p + 6, s->drive_sectors);
-     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
-     put_le16(p + 20, 3); /* XXX: retired, remove ? */
-     put_le16(p + 21, 512); /* cache size in sectors */
-@@ -332,8 +333,8 @@ static void ide_cfata_identify(IDEState *s)
+-    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
++    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
+         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
  
-     put_le16(p + 0, 0x848a);                    /* CF Storage Card signature */
-     put_le16(p + 1, s->cylinders);              /* Default cylinders */
--    put_le16(p + 3, s->heads);                  /* Default heads */
--    put_le16(p + 6, s->sectors);                /* Default sectors per track */
-+    put_le16(p + 3, s->drive_heads);            /* Default heads */
-+    put_le16(p + 6, s->drive_sectors);          /* Default sectors per track */
-     /* *(p + 7) := nb_sectors >> 16 -- see ide_cfata_identify_size */
-     /* *(p + 8) := nb_sectors       -- see ide_cfata_identify_size */
-     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
+         /* The request is used as the AIO opaque value, so add a ref.  */
+@@ -1956,7 +1957,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
+ 
+     for (i = 0; i < data->iov.iov_len; i += l) {
+-        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
++        l = MIN(buflen, data->iov.iov_len - i);
+         memcpy(&buf[i], inbuf, l);
+     }
+ 
 -- 
 2.47.3
 
