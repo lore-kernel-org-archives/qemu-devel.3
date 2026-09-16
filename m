@@ -4,111 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC36C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 23:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C76C982C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 23:52:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6yrT-0008VZ-G2; Wed, 16 Sep 2026 19:16:19 -0400
+	id 1x6zQ6-00061l-U5; Wed, 16 Sep 2026 19:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x6yrR-0008V1-SM; Wed, 16 Sep 2026 19:16:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x6yrQ-0002jZ-2U; Wed, 16 Sep 2026 19:16:17 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1ShA006600; Wed, 16 Sep 2026 23:16:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gZVOVG
- rDT4DX+RR3O2OAC5uA4aJJmFz0c79qswu003I=; b=lrApeD4tF6yfKrZp0aNnrh
- Bsdcoq18KEJG7UvB6PWgsUdoTK1juSJ69Sd33KBaMtxhQBkH0jx1RICTiVqzLq6i
- 2aP4lalp0q2LLqPGAe4edqLGIG+zRdqaHm9Pztee4o4AStlvLJW3bQdDSP44R0i0
- VA+hSExce6kKj07kekZykHTD7o2O4W+Ngh29hmJdhIpcZPJikBjgeBvJKEBCN5m0
- ydDBMArdhtappEXkfxoXJjw3B7OVkC7T4Y6sj+wMlhDgdwveRl0oU69ZBkO4AVlU
- ApFW5+/C2sE2s8P/DoiQcuVmYzwH0lQuUMyhfNy5P5wtl7fXwZkPQQwbUpcsuXwg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmx83yeg7-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 23:16:14 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GMqohv1663497; Wed, 16 Sep 2026 23:16:13 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gq089ru8s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 23:16:13 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GNGCtc852756
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 23:16:12 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0410058052;
- Wed, 16 Sep 2026 23:16:12 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69FE058060;
- Wed, 16 Sep 2026 23:16:11 +0000 (GMT)
-Received: from [9.61.177.109] (unknown [9.61.177.109])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Sep 2026 23:16:11 +0000 (GMT)
-Message-ID: <5ebb0fac-7941-4703-ace2-86855354346f@linux.ibm.com>
-Date: Wed, 16 Sep 2026 19:16:10 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6zQ4-00061b-I7
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 19:52:04 -0400
+Received: from mail-pj2-x0e.google.com ([2607:f8b0:4864:39::e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x6zQ3-0006b4-0z
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 19:52:04 -0400
+Received: by mail-pj2-x0e.google.com with SMTP id
+ 98e67ed59e1d1-396ccb65437so173490a91.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 16:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789602721; x=1790207521; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pxTheTmuEJVS5NQG/0gsVUvYnK6yf8SSBLXaSvpGHCM=;
+ b=qGaBc132Xc1PuXqNM8uRSEJoOI1kia5jS+7z25bAiZodDUkaF/C3DnEEXqhjDFyPxs
+ tH9BVPJIXeWaKsnEky2zhKExfCzhambCZ0YsAsgFQAwkq9Upv2sF19drO0CqhEr4iQSZ
+ sq7HusIBP5aHqGfvM+8vOW2847xp7EzuecnswsJAljP7XEKW/NlgA2w7z9zx5uxcuE38
+ HeTb3ts9Bgrpn3JTN9CryNDJMAgFL4zfdhAVTAJ1++U2G+LR0xreq1TNFSx6MLUI83zZ
+ bcMDiN92FMcsvOgRh6xODq5Hd4+cp0s/8nu6tVdTzoSyPT+KAdrduE+Og+8kos3e52/x
+ eN/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789602721; x=1790207521;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pxTheTmuEJVS5NQG/0gsVUvYnK6yf8SSBLXaSvpGHCM=;
+ b=OhyEXzQaNmInYYPeocIm6n2ykRwL6AAGNLJjUj22NBlSNFWRnfn2VtTp0HuwH0ydIf
+ 3IoDbVrI4Z9G7N4tx0eBKInKaxz8tsJBZSiSM1qUfNdqoxYixJidCWJjTylaygOl9W4r
+ fbHdRG0/byY+hCfxede2dNxfuwdv2ng7fG5F1ALIlzhRDW9LkN2mONvJ7LlD7wVH7/4U
+ 4d7r3A2UUo8yk/C+0SoZYabha4JYiIBWDkCvvTfjNELwRhAs8BFLmB542+CC3mOYuFVQ
+ AcPkefLZFISRB+qTVKcYeNuQ7Og6y90VvwOi7hF/ZrGlQ93+AWi3wazxna3o13i/2zHG
+ nb1Q==
+X-Gm-Message-State: AFuF++mPFAw3G9OGgFlj7LIUq6xWSijycspirlLefoMclv8BaA3ee3vn
+ Q3xvwu7nzL75mlXUpTFDRiV8ny4ph/GGm6l6bns6SEOksZCwp7iXT/8WDI0I0rs0aakN4iy1q6Q
+ glE6z9aA=
+X-Gm-Gg: AYBFou1oFeePFpjma8oljsIVmTGAaVsKZEf4YIaD61+xPaBOCgYbogQhHJcuFuvdnTw
+ SZkc9cRhJ0m3vPTXeFh3fZ5DKp4uxAyUIXpaXKxrNX03ovfzNCClqyZCo2YTfWlL6c6LRzjwL6E
+ nix0cKG4/alKKEbSVfrxnmR6XttbANuq/uLe+z795V8806DX8cTGWAsmb6XlphBUcIQzjxJDn9d
+ LW3Ja2oRTuVXUafDVpE2PQLpDVHkbABiObtGNDohkysL/ExiBayw5cO0gyQXTDJjGNbTNXJLo1P
+ WQZR06Gs+o4yPtOSGsCzc1wIRjUiqs/nRVMqOk+LxKpRbqqntRKwxfU9pYQLYciPPKxX70+cEfk
+ ybZhCYIEH8deAzadI01SVMcd+1wQMcz5XH8JubTdpkZsnPSzLRjaptxwPm4bhBNxZObmgd9CUwk
+ g6g32Tf37EBLPmfTbAkgta2Ue1U49+lWiaiM0hz0owt0i6himQEbGD/PHwbGxFgiFbGHUBuusuD
+ 5GptlNg
+X-Received: by 2002:a17:90a:d88b:b0:39e:3baa:bd3a with SMTP id
+ 98e67ed59e1d1-39e3baae393mr1147465a91.12.1789602721253; 
+ Wed, 16 Sep 2026 16:52:01 -0700 (PDT)
+Received: from stoup ([2603:800c:7900:ed00:325f:1938:d075:8c13])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bfb05e604sm9240454eec.12.2026.09.16.16.52.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 16:52:00 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: cui.tao@linux.dev
+Subject: [PATCH v2 0/2] accel/tcg: fix crash on instruction straddling
+ address-space end
+Date: Wed, 16 Sep 2026 13:51:56 -1000
+Message-ID: <20260916235158.294901-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] s390x/css: Expand check against no-data-count CCWs
-To: Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260916203242.2509787-1-farman@linux.ibm.com>
- <20260916203242.2509787-9-farman@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260916203242.2509787-9-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDMyMiBTYWx0ZWRfXyl4klyLOJDKV
- aS4U1JoYpCWynq/4pQ1eF1svlHYktQICAbxGlH4/c5hcwSpfLzfGYqNIoRCf7BEsYD+Ugm69Bzy
- k4tJh6y3xNzIc0UnsjOZl3pZNs+NZV4+mUIfkYFJj9+m5i/X4lXuBhIXxkE1EkXDdEXege0m8sf
- YXoVeyTrsJLmqQVCFu+cJiXiDu2Dfg37jDOCICMjr5sXRDlPegsUxI8koHrGzzPbZT03f1nCFdP
- +Wav/l9ouFwqK5cJwngajIcn8yMG/Ui8Dyvt8PSdgzWuwS7Av05gNessoHV3HTOo1Mrye1H7yLD
- NXUYmhRLdsIZsDWtTeBIajm8kz8rymeKnhbW44kxollepjC+fwZqpOEf2N21pXMD+KMbd0Styni
- tSqSNKiPciq0GiRsjb58EbYB7T41s44v+Su9/rtwrKPJUcosJdR1GOX8SlhIFEyspx6GEmS6SUP
- phB6cxLhvFcIBTD9CCA==
-X-Proofpoint-ORIG-GUID: Rq8JlTcgFTocQ3Wlo3DLVpTgJScS73li
-X-Proofpoint-GUID: Rq8JlTcgFTocQ3Wlo3DLVpTgJScS73li
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDMyMiBTYWx0ZWRfX1aPfXsf95M5p
- rUJyg2XqSdauR6tFfbx+XHJ0AGjH3FUUa083aPKC6DqEaMp+jpHz8q79Zx/5tAbEg05EaXJuDLL
- jSjacNmITEwHUzoNY4J1FTX4X5w5vkw=
-X-Authority-Analysis: v=2.4 cv=cY9HPXDM c=1 sm=1 tr=0 ts=6aab233e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=FdgE7B24lvi5G1TxQcMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160322
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,42 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/26 4:32 PM, Eric Farman wrote:
-> The channel subsystem will reject channel programs that incorporate
-> 256 CCWs without a data transfer, but the existing check for this
-> does so against a data address of zero. Expand the check to include
-> other CCWs that are valid but would transfer no data.
-> 
-> Fixes: e8601dd5d0 ("s390x/css: catch ccw sequence errors")
+Handle address space wraparound during translation, with help from
+the target translator.
 
-guest-triggerable, cc stable
+Without cooperation of the target translator, unless this is a 64-bit
+guest, this will no longer assert but is unlikely to function
+correctly as generic code doesn't know the address space width.
 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->  hw/s390x/css.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-> index 9da9128d88..c38549c7be 100644
-> --- a/hw/s390x/css.c
-> +++ b/hw/s390x/css.c
-> @@ -1016,7 +1016,9 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
->  
->      check_len = !((ccw.flags & CCW_FLAG_SLI) && !(ccw.flags & CCW_FLAG_DC));
->  
-> -    if (!ccw.cda) {
-> +    if (!ccw.cda ||
-> +        (ccw.flags & CCW_FLAG_SKIP) ||
-> +        (ccw.cmd_code == CCW_CMD_NOOP)) {
+Thanks to Tao Cui for a brilliant test case.
 
-I'm not sure if this list is complete...
 
-I wonder if we could we key off of the number of bytes transferred e.g.
-sch->cds.at_byte == 0 instead?  Would have to happen at the end of this
-function e.g. in the ret == 0 check maybe?
+r~
 
->          if (sch->ccw_no_data_cnt == 255) {
->              return -EINVAL;
->          }
+
+Richard Henderson (1):
+  accel/tcg: Allow some address space wraparound during translation
+
+Tao Cui (1):
+  tests/tcg/i386/system: Add regression test for translator_ld
+    wraparound
+
+ include/exec/translator.h          |  3 ++
+ accel/tcg/translator.c             | 45 +++++++++++++++++++-----------
+ tests/tcg/i386/system/meson.build  |  4 +++
+ tests/tcg/i386/system/wraparound.S | 35 +++++++++++++++++++++++
+ 4 files changed, 70 insertions(+), 17 deletions(-)
+ create mode 100644 tests/tcg/i386/system/wraparound.S
+
+-- 
+2.53.0
 
 
