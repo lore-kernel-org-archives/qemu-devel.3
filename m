@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 176FAC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E74C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lfc-000212-Uy; Wed, 16 Sep 2026 05:11:13 -0400
+	id 1x6ley-0000N1-CK; Wed, 16 Sep 2026 05:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6len-0000LT-3D; Wed, 16 Sep 2026 05:10:22 -0400
+ id 1x6leM-0008FG-4h; Wed, 16 Sep 2026 05:09:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6leh-0007ZO-L8; Wed, 16 Sep 2026 05:10:17 -0400
+ id 1x6leK-0007Yi-5K; Wed, 16 Sep 2026 05:09:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549562; bh=ZJhRIevipQGcpE9OxfuFapD4TDrvm487gDTJPaFV3m8=;
+ t=1789549562; bh=PG3TvUVR4tubUTpD72iZ53uuSa8dyY4xQJy+FDxdsWI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mUbUkwgpHH0kRZGqrsrbuSWj1tlwsPQfgbYPHgXsDp9ZsI4XloajB85geIQ8HgZKs
- 9NEY4wtq5aWgtbmyA6Uw1yksZGyWYyqVuBuj/IMO4zsUoswil48OSd4waDdRfcPtzH
- brSZicSpjNpNTICBKGPf/GFxD5trN3Q/yrO8mb7jFMoF2YuZsNVCdZJjCaF6Bf7f1G
- 5ciOD/86whg4lkRcilkLuAS44gD0XEZS/ut1oU8t/OhQr23Fg7wSUVz5ervQ9mRNmr
- PFDdGRXZsaP1LQN6h5dViCS+54KwF512k5wT6U9LZP/DmsHjBfPWIMUJ89aSUKVzdi
- hnfVVRaCOrENQ==
+ b=PIxhUqDOFF0/ox1C0vVAJ1IycARmxLRYiqD1tNFPkubrD5UzOYpHFQULksEA9ENlA
+ TmpStbyPQhrmgjZ59CdD0IzSY0Yp9epE8vMEee/AgXJH2O5+Mfl8lTOUJZ1gAMzR7w
+ CH4TAZ9gGOYyssiKRdZrIUO9CmVNmQtcEVBbzQ0Gey90mj4k5H2osqjBsNG03hj5TT
+ OW6VtYEEMQ7+QZd4YnAMuyABqTuKqgk/Zz77f/0UnhJivIubqtzYHMxozfeDhkpabm
+ c1DqwQ2KXKzfPA8C4pPIWESiBP1jUQeofmfLzyZy3tixgyCWcAPanA0uCVTl6VMm8K
+ 42D7XTFjsY1/w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4A26B1D56E5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 412851D56E3;
  Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EA1DF429E41;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E10F1429E3F;
  Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D90905A7B9; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
+ id D2F0C5A7B5; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
  Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 48/57] virtio-scsi: set dataplane_started to false
- upon failure
-Date: Wed, 16 Sep 2026 12:04:12 +0300
-Message-ID: <20260916090516.677749-48-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 46/57] hw/virtio: reject inverted virtio-iommu IOVA
+ ranges
+Date: Wed, 16 Sep 2026 12:04:10 +0300
+Message-ID: <20260916090516.677749-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,54 +71,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
-dataplane_started to true when virtio_scsi_dataplane_start() fails. This
-is likely a typo since dataplane is not functional after failure.
+Guest MAP and UNMAP requests can set virt_end below virt_start. Since
+virt_end is inclusive, this is not a valid interval. MAP nevertheless
+stores it in domain->mappings, but interval_cmp() assumes low <= high.
+For an inverted key, interval_cmp(key, key) returns -1. A covering UNMAP
+can therefore find the key but fail to remove it and repeat forever while
+holding s->mutex.
 
-The non-ioeventfd fallback is broken because dataplane_started is true
-after virtio_scsi_dataplane_start() failure. As a result, the following
-assertion failure occurs when a virtio-scsi device exceeds the open file
-descriptor ulimit when setting up notifiers (eventfds):
+Reject inverted request ranges with VIRTIO_IOMMU_S_INVAL and make the
+notifier range decomposition skip invalid ranges. Keep the existing
+notifier-before-remove ordering, but return VIRTIO_IOMMU_S_DEVERR if
+g_tree_remove() fails.
 
-  $ ulimit -n 104 # exact number can vary based on QEMU version
-  $ qemu-system-x86_64 -M q35,accel=kvm -m 1G -cpu host -smp 14 \
-         --blockdev file,node-name=drive0,filename=test.img,cache.direct=on,aio=native \
-         --blockdev file,node-name=drive1,filename=data01.img,cache.direct=on,aio=native \
-         --device virtio-scsi-pci,id=virtio-scsi-pci0 \
-         --device scsi-hd,drive=drive0,bus=virtio-scsi-pci0.0 \
-         --device virtio-scsi-pci,id=virtio-scsi-pci1 \
-         --device scsi-hd,drive=drive1,bus=virtio-scsi-pci1.0
-  qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -accel kvm is set.
-  qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
-  qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset: Assertion `!s->dataplane_started' failed.
-  Aborted                    (core dumped)
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
-Buglink: https://redhat.atlassian.net/browse/RHEL-193328
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Fixes: fe2cacae2438 ("virtio-iommu: Implement map/unmap")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260825154854.263819-1-stefanha@redhat.com>
-(cherry picked from commit 5440b6b5de469f62787f47f2b9177cb1136a85c1)
+Message-ID: <20260729131953.1720567-1-physicalmtea@gmail.com>
+(cherry picked from commit 15dcee9195550ffcce90594554a22fd4b63c0d7e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index 95f13fb7c28..bcb6e441335 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -230,7 +230,7 @@ fail_host_notifiers:
- fail_guest_notifiers:
-     s->dataplane_fenced = true;
-     s->dataplane_starting = false;
--    s->dataplane_started = true;
-+    s->dataplane_started = false;
-     return -ENOSYS;
- }
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index f70d942ff7b..edf35726a74 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -213,6 +213,10 @@ static void virtio_iommu_notify_map_unmap(IOMMUMemoryRegion *mr,
+ {
+     uint64_t delta = virt_end - virt_start;
  
++    if (virt_end < virt_start) {
++        return;
++    }
++
+     event->entry.iova = virt_start;
+     event->entry.addr_mask = delta;
+ 
+@@ -808,6 +812,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
+         return VIRTIO_IOMMU_S_INVAL;
+     }
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -858,6 +866,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+ 
+     trace_virtio_iommu_unmap(domain_id, virt_start, virt_end);
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -880,7 +892,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+                 virtio_iommu_notify_unmap(ep->iommu_mr, current_low,
+                                           current_high);
+             }
+-            g_tree_remove(domain->mappings, iter_key);
++            if (!g_tree_remove(domain->mappings, iter_key)) {
++                ret = VIRTIO_IOMMU_S_DEVERR;
++                break;
++            }
+             trace_virtio_iommu_unmap_done(domain_id, current_low, current_high);
+         } else {
+             ret = VIRTIO_IOMMU_S_RANGE;
 -- 
 2.47.3
 
