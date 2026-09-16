@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63D9C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DDEC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMf-0002x0-L0; Wed, 16 Sep 2026 03:47:33 -0400
+	id 1x6kMN-0001Nt-DG; Wed, 16 Sep 2026 03:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMd-0002r7-57; Wed, 16 Sep 2026 03:47:31 -0400
+ id 1x6kM6-0000Y7-PX; Wed, 16 Sep 2026 03:47:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMb-0005Q4-7T; Wed, 16 Sep 2026 03:47:30 -0400
+ id 1x6kM4-0005Lm-Uo; Wed, 16 Sep 2026 03:46:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=W8vuVPPk7YFnn93xLGvKlsRQLztsdjQUBnJj3kpGymg=;
+ t=1789544618; bh=7kefvAB12X0/1GvXh9KP0ZRk1BYFccayQLhwWx636TM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=X8fk+TNyI8xVplbqXRT2mLvAmiuLwZJF6GIcTM1Ht83oskz30lYnAQIxszDOqW+s+
- IzbR9pFJ/yEYf7nGEV83Nb9jK7LATPlYQk0L+bEKmCroTHWjdYehJbSNjVcNBK/+UL
- XHVjvsOCpu0/29dHlbjvcSgJIbUkPDc+QXIR9pmr3KVnBkI9MaxBJ3y8iROOVgyRAp
- vfZzzSWvwJsx6+CZSGyBleVqSgSyCe/1WuuwzPXs0nAd6waZHUMZRxqppweetZHfhP
- QqzYp3y88lOuN2kNkHhAvWr56ertvXdLND+m66IMlUu4rnw3Q6M6K9paN9XpD3rs03
- lucIPcY8b111g==
+ b=RDBizDYSHxKXnmw4p4hK/jE5DRVxucY/REj6wVZIHyDRCuidiabg5Js/S+tFmGroI
+ 3FfJQiDBOVp2f9U01skem0lBIddueKYjfWBSgehw02c7610IUMl092VYu62NnP3rry
+ sSEsQR10eGS1CJgZVrNhNjU3BCPjppnqVEklkoZFo3liD3B0F935D39p9d33ul32Nl
+ OysrbwFfOJBY1OB/jgn3VQdsLn6yqxLcWBP2STnqFyyNAN/kg/mzz2EZFC9++ofp8G
+ cUX4e+DJUxxt772PW2ckOfrdwFkuBp5Aw1zBsEV7m8beCghHH9Kl6FdBEaiAO+TE6g
+ U3Jxw1ZxHuMag==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 403C21D55BD;
- Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EB2D01D55B6;
+ Wed, 16 Sep 2026 10:43:38 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C3CB6429B76;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7A93A429B6F;
  Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5EF205A71F; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id 49A065A711; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- admin@fluentlogic.org, Michael S. Tsirkin <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 47/49] vhost-user-gpu: validate command buffer size
- in submit_3d
-Date: Wed, 16 Sep 2026 10:43:05 +0300
-Message-ID: <20260916074346.671467-47-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Yuri Benditovich <ybendito@redhat.com>, Sven <bestswngs@gmail.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 40/49] hw/net/virtio-net: strip trailing padding when
+ caching RSC segment
+Date: Wed, 16 Sep 2026 10:42:58 +0300
+Message-ID: <20260916074346.671467-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,61 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-virgl_cmd_submit_3d() passes the guest-controlled cs.size directly to
-g_malloc() without any bounds check. A malicious guest can set this
-field to an arbitrarily large value (up to 4GB), causing an OOM abort
-that crashes the vhost-user-gpu daemon.
+When an RSC candidate packet has trailing padding bytes beyond the
+declared IP payload, virtio_net_rsc_cache_buf() copies the full wire
+size into the coalescing buffer and sets seg->size to that value.
+The bounds check in virtio_net_rsc_coalesce_data() uses the IP
+length field (o_ip_len) which does not include the padding, so the
+check can pass while the subsequent memmove() overflows the buffer.
 
-Validate cs.size against the actual descriptor payload size before
-allocating, rejecting values that exceed what the virtqueue entry
-can carry.
+Fix this by computing the actual IP packet size from the IP header
+and using it for both the memcpy and seg->size, so that seg->size
+stays in sync with the IP length field. virtio_net_rsc_sanity_check4/6()
+guarantees that ip_size <= size.
 
-Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-Reported-by: admin@fluentlogic.org
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: CVE-2026-66900
+Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
+Cc: qemu-stable@nongnu.org
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3879
+Reported-by: Sven <bestswngs@gmail.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260713125431.107278-1-marcandre.lureau@redhat.com>
-Message-ID: <67f10fb88d3c75da3ba7fa5a37f7d6bcfcf3ce9e.1789071042.git.mst@redhat.com>
-(cherry picked from commit 01df81b24c50fe70e816cce70956acd6ac632fc9)
+Message-ID: <20260728082311.4179910-1-lvivier@redhat.com>
+(cherry picked from commit 73c3d017ef6a01f92463b398db61c1c1e430fb6d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 20bae57d0fe..c95c4afc5c5 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -197,20 +197,24 @@ virgl_cmd_submit_3d(VuGpu *g,
-                     struct virtio_gpu_ctrl_command *cmd)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index ad4b0d8d9a1..5954dd70de3 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2202,13 +2202,31 @@ static void virtio_net_rsc_cache_buf(VirtioNetRscChain *chain,
  {
-     struct virtio_gpu_cmd_submit cs;
-+    size_t iov_len;
-     void *buf;
-     size_t s;
+     uint16_t hdr_len;
+     VirtioNetRscSeg *seg;
++    size_t ip_size;
  
-     VUGPU_FILL_CMD(cs);
- 
--    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
--        g_critical("%s: command buffer too large (%u)",
--                   __func__, cs.size);
-+    iov_len = iov_size(cmd->elem.out_sg, cmd->elem.out_num);
-+    if (cs.size == 0 || iov_len < sizeof(cs) ||
-+        cs.size > iov_len - sizeof(cs) ||
-+        cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        g_critical("%s: size out of range (%u/%zu)",
-+                   __func__, cs.size, iov_len);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-         return;
-     }
- 
-     buf = g_try_malloc(cs.size);
--    if (!buf && cs.size) {
-+    if (!buf) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-         return;
-     }
+     hdr_len = chain->n->guest_hdr_len;
++
++    /*
++     * Strip any trailing padding beyond the IP payload so that seg->size
++     * stays in sync with the IP length field used by the bounds check in
++     * virtio_net_rsc_coalesce_data(). virtio_net_rsc_sanity_check4/6()
++     * guarantees that ip_size <= size.
++     */
++    ip_size = hdr_len + sizeof(struct eth_header);
++    if (chain->proto == ETH_P_IP) {
++        struct ip_header *ip = (struct ip_header *)(buf + ip_size);
++        ip_size += htons(ip->ip_len);
++    } else {
++        struct ip6_header *ip6 = (struct ip6_header *)(buf + ip_size);
++        ip_size += sizeof(struct ip6_header)
++                   + htons(ip6->ip6_ctlun.ip6_un1.ip6_un1_plen);
++    }
++
+     seg = g_new(VirtioNetRscSeg, 1);
+     seg->buf = g_malloc(hdr_len + sizeof(struct eth_header)
+         + sizeof(struct ip6_header) + VIRTIO_NET_MAX_TCP_PAYLOAD);
+-    memcpy(seg->buf, buf, size);
+-    seg->size = size;
++    memcpy(seg->buf, buf, ip_size);
++    seg->size = ip_size;
+     seg->packets = 1;
+     seg->dup_ack = 0;
+     seg->is_coalesced = 0;
 -- 
 2.47.3
 
