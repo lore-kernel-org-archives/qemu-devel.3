@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691F2C982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0927C982CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qvU-0006Vn-H4; Wed, 16 Sep 2026 10:47:56 -0400
+	id 1x6qw9-0006xp-DS; Wed, 16 Sep 2026 10:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x6qvP-0006Us-Tj
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:47:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x6qw7-0006nH-JU
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:48:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x6qvN-0006Mz-Ux
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:47:51 -0400
+ id 1x6qw6-0006Ut-33
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 10:48:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789570069;
+ s=mimecast20190719; t=1789570113;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PGwhGSRwbZ5oBDYs0gjQNDzMSLjGv9rxTmsKdTjHBlA=;
- b=aF9OiS2BfK0XW53OdwEHZ+gBzd9kqtPJKibTYcatUTVtpIzHOC0UXUtAjjkSwY0+y5atz7
- lXH3rlWQKJb4CDxPf7whY4itfAbwqLUPn/KIyNj2BASdZLolln42nK/NNqcH7XhLx1lZe2
- LNKD9vgVll2qEgQOiXY9exwsNp9bGpU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=d7M+hAoqVV66CrNBQhd7YNBsCtAKpmI8ROODStiGn7s=;
+ b=bOiAWwN6WYG47O8Gz8GRKGxUJJCW77Q0n4wI/CCHk6pktrFUuA7i0D5MXFb+Gp99nJnx9Q
+ 3YIg70vJ5+ch3IPIV7DTAVSh94dC933e2JMdFWYcaaENB/Z7qz3TUX08kfVz99ZcOdCOJT
+ 10Y3fmAgjidQ+NQ/cO8Wk3jIv1GtLgU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-LJ-J0ZNQO-SjI1h2Oj59tQ-1; Wed,
- 16 Sep 2026 10:47:44 -0400
-X-MC-Unique: LJ-J0ZNQO-SjI1h2Oj59tQ-1
-X-Mimecast-MFC-AGG-ID: LJ-J0ZNQO-SjI1h2Oj59tQ_1789570062
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-0T5OCJZHPzK0JhzzJRu1Jw-1; Wed,
+ 16 Sep 2026 10:48:27 -0400
+X-MC-Unique: 0T5OCJZHPzK0JhzzJRu1Jw-1
+X-Mimecast-MFC-AGG-ID: 0T5OCJZHPzK0JhzzJRu1Jw_1789570105
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D10C1944B3A; Wed, 16 Sep 2026 14:47:42 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C8AC1801355; Wed, 16 Sep 2026 14:48:25 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 22A1619560AB; Wed, 16 Sep 2026 14:47:36 +0000 (UTC)
+ id 3569C1956053; Wed, 16 Sep 2026 14:48:20 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -57,24 +57,23 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v9 02/26] target/arm/cpu-sysregs.h.inc: Sort by name
- alphabetical order
-Date: Wed, 16 Sep 2026 16:45:25 +0200
-Message-ID: <20260916144721.751810-3-eric.auger@redhat.com>
+Subject: [PATCH v9 10/26] target/arm/kvm: Retrieve writable ID reg map
+Date: Wed, 16 Sep 2026 16:45:33 +0200
+Message-ID: <20260916144721.751810-11-eric.auger@redhat.com>
 In-Reply-To: <20260916144721.751810-1-eric.auger@redhat.com>
 References: <20260916144721.751810-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,97 +89,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sort by register name alphabetical order. This will allow to
-easily diff with the future content, automatically generated.
+From: Cornelia Huck <cohuck@redhat.com>
 
-No functional change intended.
+Add an helper to retrieve the writable id reg bitmask.
+
+then retrieve the writable_map array and dispatch it in the writable_map
+fields of arm64_id_regs[] elements.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Khushit Shah <khushit.shah@nutanix.com>
 
 ---
-v5 -> v6:
-- v5 version conflicted because ID_AA64FPFR0_EL1 has been
-  added
 
-v4 -> v5:
-- remove spurious CCSIDR definition
+v7 -> v8
+- added kvm_enabled()
+
+v5 -> v6
+- use arm64_id_regs[].writable_map
+- squashed 2 commits (helper + user)
+- removed stub
 ---
- target/arm/cpu-sysregs.h.inc | 44 ++++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ target/arm/kvm.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 6e8b335b8f..ec5a12b0f4 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -1,13 +1,12 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
--DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
--DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
--DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
--DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
--DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
--DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
-+DEF(CTR_EL0, 3, 3, 0, 0, 1)
-+DEF(DCZID_EL0, 3, 3, 0, 0, 7)
- DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
- DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
-+DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
- DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
- DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
- DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-@@ -17,29 +16,30 @@ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
- DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
- DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
- DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
--DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
--DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
--DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
-+DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
- DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
--DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
--DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
--DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
--DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
- DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
- DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
- DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
- DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
- DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
- DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
--DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
-+DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
-+DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
-+DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
-+DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
-+DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
-+DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
-+DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
-+DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
- DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
- DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
- DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
--DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
--DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
--DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
--DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
--DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
--DEF(CTR_EL0, 3, 3, 0, 0, 1)
--DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index ed99be7fd8..c6eac41991 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -28,6 +28,7 @@
+ #include "kvm_arm.h"
+ #include "cpu.h"
+ #include "cpu-sysregs.h"
++#include "cpu-idregs.h"
+ #include "trace.h"
+ #include "internals.h"
+ #include "hw/pci/pci.h"
+@@ -51,6 +52,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+ static bool cap_has_mp_state;
+ static bool cap_has_inject_serror_esr;
+ static bool cap_has_inject_ext_dabt;
++static bool writable_map_dispatched;
+ 
+ /**
+  * ARMHostCPUFeatures: information about the host CPU (identified
+@@ -273,6 +275,21 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+ }
+ 
++static int kvm_feature_idx_to_idregs_idx(int kidx)
++{
++    int op1, crm, op2;
++    ARMSysRegs sysreg;
++
++    op1 = kidx / 64;
++    if (op1 == 2) {
++        op1 = 3;
++    }
++    crm = (kidx % 64) / 8;
++    op2 = kidx % 8;
++    sysreg = ENCODE_ID_REG(3, op1, 0, crm, op2);
++    return get_sysreg_idx(sysreg);
++}
++
+ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ {
+     /* Identify the feature bits corresponding to the host CPU, and
+@@ -480,9 +497,53 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     ahcf->features = features;
+ }
+ 
++static int kvm_arm_get_writable_id_regs(uint64_t *idregmap)
++{
++    int cap_writable_id_regs;
++    struct reg_mask_range range = {
++        .range = KVM_ARM_FEATURE_ID_RANGE,
++        .reserved = {0},
++        .addr = (uint64_t)idregmap,
++    };
++
++    cap_writable_id_regs =
++        kvm_check_extension(kvm_state, KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
++
++    if (!cap_writable_id_regs ||
++        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
++        return -ENOSYS;
++    }
++
++    if (kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range)) {
++        return -errno;
++    }
++    return 0;
++}
++
+ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+ {
+     CPUARMState *env = &cpu->env;
++    uint64_t *writable_map;
++
++    writable_map = g_new(uint64_t, KVM_ARM_FEATURE_ID_RANGE_SIZE);
++
++    if (kvm_enabled() && !writable_map_dispatched &&
++        !kvm_arm_get_writable_id_regs(writable_map)) {
++        for (int i = 0; i < KVM_ARM_FEATURE_ID_RANGE_SIZE; i++) {
++            uint64_t mask = writable_map[i];
++
++            if (mask) {
++                int idx = kvm_feature_idx_to_idregs_idx(i);
++
++                if (idx < 0 || idx > ARRAY_SIZE(arm64_id_regs)) {
++                    continue;
++                }
++                arm64_id_regs[idx].writable_mask = mask;
++            }
++        }
++        writable_map_dispatched = true;
++    }
++    g_free(writable_map);
+ 
+     if (!arm_host_cpu_features.dtb_compatible) {
+         kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
 -- 
 2.53.0
 
