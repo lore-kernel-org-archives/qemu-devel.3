@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB04C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09957C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lcY-0001bk-NU; Wed, 16 Sep 2026 05:08:02 -0400
+	id 1x6lbP-0008Nd-U4; Wed, 16 Sep 2026 05:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcV-0001U6-EU; Wed, 16 Sep 2026 05:07:59 -0400
+ id 1x6lbO-0008N2-4H; Wed, 16 Sep 2026 05:06:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcT-0007Mk-KM; Wed, 16 Sep 2026 05:07:59 -0400
+ id 1x6lbM-00071K-Ci; Wed, 16 Sep 2026 05:06:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=vTNv0n7GHd9WF4rk69YqO7UkDWWJLEWO9Qji/0+capI=;
+ t=1789549558; bh=dNUYf1O8coHjm8GVvyg01qdESgJDFVLQ13nYIzbVYnI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xEl0fmswPU7/rfmTqsh/WqP/yK50gQwztHAsqgQ8O8189GsCVkatTipvK0JWF02/B
- PWHmsblhBgozMbZMxRm66kBxOliql7fOB2bh7y7rDNzAURTtGZj/DoQUZYU6JusGRX
- g+QiiCsKlGKEM6ZrVYtgq7r8x9VCZr8Oz4SKCIfmlmdeTZN9mdTLJ7uFBvnOzUX9Kj
- rD9gbEJpDytJm/eVozEDGzpsRlgzr80igL34YxQYci89rJbqOm/ujJgIGHHfkUzH2b
- vf2KIVNlgGTSnJRewUV3FJgHYm3BSN5JW5+hEqMPDi96Cc4X6b8xAuzCeQVt8oPm2r
- G8/0xeszZOLhw==
+ b=t/9JggIqHqy67LXMX/TF0ALMKp1t8Mq8C2eHPuEZwMZFGeEP026QVfd7dfeMDtOzD
+ Cz4d1+eN/KVgTRLYHEz1gZ7fvkusKU+3pp+X//qdeCOD08aNoLaj/ZfZ7v8iGdvZhx
+ ORV09BXyZlvwBQEan+DA+tMZCHy29G1JY8D8T9Q/OqU6dAw6zHjRMMcO9+AtsQYOd6
+ NaL/iWVBWuFnWMsp56rs0XtVZ8LdjT1PfiVH8lgNL+LOOSaBb/e8W3xOOfLMTEu6zX
+ RWMgPKMzUbtJIweNMYAs1g/b38z5ET8gxDxtELmX6nY6TiNvQhyFVLXKVn+WP51C+R
+ fZH1XiVceyGEg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB5171D56C9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 79CF31D56B8;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 770A9429E14;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 259B7429E00;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 431A25A783; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 0C76C5A761; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 21/57] scsi-disk: fix out-of-bound read in WRITE SAME
-Date: Wed, 16 Sep 2026 12:03:45 +0300
-Message-ID: <20260916090516.677749-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 04/57] chardev: Don't unregister yank upon async path
+ connection failure
+Date: Wed, 16 Sep 2026 12:03:28 +0300
+Message-ID: <20260916090516.677749-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,71 +73,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
-to read roughly 60 KiB past the end of a heap buffer, copying that out
-of bounds host memory into the guest's own disk image.
+Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
+yank registration in the tcp_chr_connect_client_async() path to after
+the connection is successful. If qio_channel_socket_connect_sync()
+fails early, there will be no yank registered to be unregistered in
+the error path, leading to assert.
 
-WRITE SAME computes the request transfer length at dev->blocksize
-when the request is prepared and sets cmd->xfer from dev->blocksize.
-scsi_disk_emulate_command() then uses cmd->xfer as the size of the
-request buffer.
+Remove the now-extraneous unregister.
 
-However, MODE SELECT can race with the WRITE SAME command and guest raise
-the logical block size to any value whose low bits fit 0xfe00, up to 65024.
-In the presence of this race, scsi_disk_emulate_write_same() will read
-from memory as many bytes as indicated by the *new* dev->blocksize,
-and write it to disk.
-
-The read length in WRITE SAME must be bounded by the buffer that was
-actually allocated, not by the mutable s->qdev.blocksize, so clamp the
-length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
-against the current block size would not work because the race is
-intrinsic in the SCSI protocol.
-
-I am not sure if this is exploitable with virtio-scsi and other SG-capable
-HBAs, because it should process the WRITE SAME input immediately,
-without letting the MODE SELECT command race with it.
-
-Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit d30254aec93141d6b89262986a62764b2ae07177)
+Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260603141137.1108963-1-farosas@suse.de>
+(cherry picked from commit ddf5738503e2ba6adb74359abf3b6e7aa81af420)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 1b0cce128c5..5bb7a974d69 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1911,6 +1911,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-     SCSIRequest *req = &r->req;
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
-     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
-+    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
-     WriteSameCBData *data;
-     uint8_t *buf;
-     int i, l;
-@@ -1930,7 +1931,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-         return;
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index e064b105c50..99e01a4875a 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
+ 
+     if (qio_task_propagate_error(task, &err)) {
+         tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+-        if (s->registered_yank) {
+-            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
+-                                     char_socket_yank_iochannel,
+-                                     QIO_CHANNEL(sioc));
+-        }
+         check_report_connect_error(chr, err);
+         goto cleanup;
      }
- 
--    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
-+    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
-         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
- 
-         /* The request is used as the AIO opaque value, so add a ref.  */
-@@ -1956,7 +1957,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
- 
-     for (i = 0; i < data->iov.iov_len; i += l) {
--        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
-+        l = MIN(buflen, data->iov.iov_len - i);
-         memcpy(&buf[i], inbuf, l);
-     }
- 
 -- 
 2.47.3
 
