@@ -4,112 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF19C88E7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52B4C982CC
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ud5-0000Ii-KK; Wed, 16 Sep 2026 14:45:13 -0400
+	id 1x6udE-0000KC-4J; Wed, 16 Sep 2026 14:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x6ucz-0000IK-WB; Wed, 16 Sep 2026 14:45:06 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
+ id 1x6udA-0000JY-J0; Wed, 16 Sep 2026 14:45:16 -0400
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x6ucx-0003i6-Sj; Wed, 16 Sep 2026 14:45:05 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1nf0046150; Wed, 16 Sep 2026 18:44:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=HduV2l
- D/K1jjudToyg5L1jEnqRx0OKTJ6KOVY86Mkak=; b=daR6cImm/KkNPX5/0BbH56
- kg5fmL3QGEr+ZG+c2kjADeWIxjXlHz/iohRf8B2X1SQ61yAmiqnMWTURMMj5hsKE
- JuTVol25ne3WF2XCaTOkMPkdefjlRK+tURedjwjBUMGzO388fINS01A/tdXxX8q9
- vWsoi28l42hb48cRpORAIlWnmQJ0JjGceCRA4oDQ971JgLWxkrRPmbRYUoWlp1zR
- z0auJlDQftXQR6Y2maE/A4d+e8fGvCtJx2S/JH9BXZvQoNVng1W7yuyeb/jcLxF1
- i/jqrChtTZK+TRiMmZAdy/fsePvdsvmSaIwKuw1Sth3u+ogfUvjbuM51UqJqep7Q
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcv5xbb-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 18:44:59 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GFe42V1649278; Wed, 16 Sep 2026 18:44:58 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gq03byu9s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 18:44:58 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GIivCR17891934
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 18:44:57 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7887558055;
- Wed, 16 Sep 2026 18:44:57 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4960F5804B;
- Wed, 16 Sep 2026 18:44:56 +0000 (GMT)
-Received: from [9.61.249.152] (unknown [9.61.249.152])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Sep 2026 18:44:56 +0000 (GMT)
-Message-ID: <2c2bf867-a11a-4591-88bf-bf38d114d364@linux.ibm.com>
-Date: Wed, 16 Sep 2026 11:44:56 -0700
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
+ id 1x6ud9-0003v5-0U; Wed, 16 Sep 2026 14:45:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XzRQTFElohJ26qHBpEU+gv19qGrV2hI0m3dEY457wRD4Ht3UwZHmTuYorGaglgqipse08jpbxok9soVgsYWaILeHCIKvdYr+37pRa0o/W2zT7RQ/JNrcpGm591K2VRu6Cnk0ign/ORfiUjI4Qo67i7KZcgoPzXEpfyZGh33K10b6qUJrPaOOpx+9NIwVmOZqy980toPljbonO1wCWKOFNf5zO6VRF60UmyFhA8G2h44AppOq6GuQtEnn2jYrTUsQBWf4PffkuhWSJl/GgmAiN0+O4wU9do5CuwhAV/fslXDeeMMoE34JJITeS+O9G/TI5zNUkFw2dHu7nGejnnWZBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RJUN3ZbVnCx2yds0AQaLWk+34CUcYl1osu4CCpkjwKI=;
+ b=LeInT1dRn2oNsWSwlsLnijiIER32mjZ9/FAoHqOCuy3ulXT3jMqij5goUxLxralT9mjwtVG0jxXpW9WZwg0evvCXhKVa1R3+BDjINyB5sjB2Qas2yQtc8QLXx7IOWA3DG18V2b7VS0WuEbR4ekEBZSYQYvSiVues9WHihWcz0GE2y4j2wG21pb9tuCJsvo4P+p1bqHwQr7X3I+tupAnNoluqswyrLG06usR6NKZwaq5zvMgGzavO0ceMeTgyXEei2SIjW/AHp9A8IILERio9W7Rw4gxnmZpJQ0xeN7/fc0BOYUsHgOrCKbyXb60GKA3Rg1itRKNyypPrV4ZhdFTLOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RJUN3ZbVnCx2yds0AQaLWk+34CUcYl1osu4CCpkjwKI=;
+ b=bmpERxx/YgSmj0yNePQzPI9k4TsJWVeyImK+SM9llqPa1cR8Y5o31T74z5zgklJsv3mucEWtxGz1ifBFusCTmKKeZ1QJWyRwXxGQpE56b/DRJOSp57cX2MQQT0udb8zSfdZVeXpi7rkgEpjxnZu36SrLaTkM3fGR0qh0fqzLEXmmjBr6YKX1hXHqYe/QvjE4aKVeVCW+Mi7Vk44N14G+2OhmLVLy4BTAI/ScG7+TZXOToDKAua4CYs/g3yad0EQ7wR+lNSIxbDbQBh8KP9MvBwf2UELEV62JnJIgZTp57J47QPuv5ZJ5ifgmEyd9Gvvoo+9OapodGmMw+EQEFaRitA==
+Received: from DS7PR06CA0006.namprd06.prod.outlook.com (2603:10b6:8:2a::7) by
+ MN2PR12MB4046.namprd12.prod.outlook.com (2603:10b6:208:1da::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Wed, 16 Sep
+ 2026 18:45:06 +0000
+Received: from DM2PEPF00003FC5.namprd04.prod.outlook.com
+ (2603:10b6:8:2a:cafe::43) by DS7PR06CA0006.outlook.office365.com
+ (2603:10b6:8:2a::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.11 via Frontend Transport; Wed,
+ 16 Sep 2026 18:45:06 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DM2PEPF00003FC5.mail.protection.outlook.com (10.167.23.23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.428.7 via Frontend Transport; Wed, 16 Sep 2026 18:45:05 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 16 Sep
+ 2026 11:44:40 -0700
+Received: from nvidia-4028GR-scsim.nvidia.com (10.126.231.37) by
+ rnnvmail202.nvidia.com (10.129.68.7) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 16 Sep 2026 11:44:34 -0700
+From: <mhonap@nvidia.com>
+To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
+ <dave.jiang@intel.com>, <alejandro.lucero-palau@amd.com>,
+ <smadhavan@nvidia.com>, <pierrick.bouvier@oss.qualcomm.com>,
+ <mst@redhat.com>, <imammedo@redhat.com>, <anisinha@redhat.com>,
+ <pbonzini@redhat.com>, <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
+ <richard.henderson@linaro.org>, <clg@redhat.com>, <cohuck@redhat.com>
+CC: <kjaju@nvidia.com>, <vsethi@nvidia.com>, <zhiw@nvidia.com>,
+ <mhonap@nvidia.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
+ <linux-cxl@vger.kernel.org>
+Subject: [PATCH v2 01/10] linux-headers: Update vfio.h for CXL Type-2
+ passthrough
+Date: Thu, 17 Sep 2026 00:14:03 +0530
+Message-ID: <20260916184412.3825713-2-mhonap@nvidia.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260916184412.3825713-1-mhonap@nvidia.com>
+References: <20260916184412.3825713-1-mhonap@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/16] s390x/pci: implement IOMMU replay
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260911152137.676602-1-kshk@linux.ibm.com>
- <20260911152137.676602-2-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260911152137.676602-2-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI1NSBTYWx0ZWRfX/eh2WGn7vrHK
- oEcNVfoEsgajW3hV01l/FNqFbF1w9uf0G+/nZxh5SBXsgpuTbPb1QeihW/0hBszQzOLk/vCo1hT
- sRAzkTd1C4BCY26ilg7gOHL8x/0l8E0=
-X-Proofpoint-ORIG-GUID: 4ZyBeXVpTAQ-Ne1CdS2off0wHsVOebDh
-X-Proofpoint-GUID: 4ZyBeXVpTAQ-Ne1CdS2off0wHsVOebDh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI1NSBTYWx0ZWRfX9uCim0HHSOz/
- g5Ct74aft6w3qYXHUJe48KT0+Dtck2AnTjrUQrmCgVtDupMd5G/k7HSQ4indYjeKQhUJAPgflRq
- f2FHf1PH4om3lqSaJFBJvOpEmRznVw1927jXj1giPmTqirTiYU+3tV4b4c/R7Fu2nv8ZU9mcycQ
- 2HimCIkwxsqgG/q8TU9QPSPFr5XyWKsJ6Z4RbjJKmrK2oUXX4nIId68eormtWjIGy/pfQ7BVIMb
- TjpIczxEVGbkaAiFkPbHBbXcA89s0axnOxeo/7CXtzITl7Ab5x896nGsrjhFzapQ/zPIUYSltWY
- aS5UuKgW/VcHxdRLMAqShmyxiPPxS6+KsYzBD0PZji6AhrVHcxFfMl98Unc45wnQ+z++c4/xlbG
- k89Ar9k1ct5eML9I58K1dSf9ESzLY2b7ptqbGsjee+zNp7kHI1cZtb5Hw+43nIGBdaRBc/kBLf1
- t7X6TgWRj+mCFp+OhNQ==
-X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aaae3ab cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=MCo1tqE0FQsNgFF58BcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160255
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.126.231.37]
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail202.nvidia.com (10.129.68.7)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM2PEPF00003FC5:EE_|MN2PR12MB4046:EE_
+X-MS-Office365-Filtering-Correlation-Id: dbe102a1-f936-4039-8b12-08df1422a034
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|82310400026|7416014|376014|36860700016|1800799024|921020|11063799006|56012099006|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: TDPQmjEAkq5C2V/EAqrfetb+oZWKZdFlvIm5ChXiCiNXxS7zLqrvJvUPP4etG0Emw/OiM81C00Oyw+rVZjBrUVoYHraFBSWbuDwHpZ1SaF29Zen3KRcMFuLHQl3rCNDI3NWWokHVaoVOfv9l7FYKYE4fwRQT3o47QvTSmRBDCOoUlY7vPcR71HuLDPVziA0IEPpmnMy5gmGrQqcUHOCzARx75JP38COGQMhyd5190ReDa5ztX6pK6SUWbo1AWfuMPjgCuK46yxfh8IyZyRNDgWQ9v/KODdHGsyS+Q7V8ayHqeFagVfbq6ewaHOwzsfubMyfOyqnjhF0s5VP+gz+ITyh3I5C06U43QdVEGndpuIDe97sqrlC6IF6ChDMIS7hWvdRbOH3CEIDuligHqnClZAsvnj1UUgTjNKHBR97BVJ1XIMsZcawg2gL/VFekkP9tt7lpDuLaV7cQnDr8gDY40CPODeccly3HAj7CWXDBAnrtEOzEL5fBk9jBhKcst0Oj8Yoc5doIpT19a2GLeaOZWVb1t+qUdmI2O2oDX1TexqJNDb92P9ZSGV5alu9a1i0JA0Sg/PkFmfV54bW64oW+cEGAY50Hb+c798A1vKHcbrgtS9UR38btQFKN2ZgJ0llUBWm8ZsQ2W4HCxL+rTDz3GKEKmYHpAwTmcvPs4QiySzXzqx3EqoEyY0RS4fJZXpNyTWTMR1dgtoQdOosCJ97lQRFXnxagdDo39u5iSbsWHMq9NCxLeH8TdNPFpNCG3rYl
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(23010399003)(82310400026)(7416014)(376014)(36860700016)(1800799024)(921020)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003)(6133799003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: x3RknyRqcQeM7q3zrCvoxafx1v1vxcDWSnKwfLq6wiSJlKRg73yOopnsKo+T1BY1WTppFsham2R2KVl7pjDMhkaCKQttHxEnFWZlMgJkj6nx5KZNN0gIjrKEZRPN+HG2Z+mf3HKSQMYDB0puTtxqlpsJ1AqVw4xn0w88+FUQQXvhATchVCaBR0ELa8lU39r5qSyEE2nqKjp4uWQxeEQuLsepWdU9WON7f4q4HCOg55zKP6OngUK8z6hDyx65jwOs6YuJDrhkcZiWQPzjTv8sYrEbkmafG4u9U+/U7AT/IQajBWQ58+QohVhH1QPtSKq0/h8K2PeE/K2pFj46co3XBdBcDrGVqtMEOpiuYgwRCVRx+BBiw7Zs+ASVMxJX9+szSzvyiygonqFr8b/q78prVqxhw53LdWHekRk1N8jDO16d6AuzTnalVtlMur2Gb80V
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 18:45:05.7627 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dbe102a1-f936-4039-8b12-08df1422a034
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DM2PEPF00003FC5.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4046
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=mhonap@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,144 +137,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Manish Honap <mhonap@nvidia.com>
 
-On 9/11/2026 8:21 AM, Konstantin Shkolnyy wrote:
-> From: Matthew Rosato <mjrosato@linux.ibm.com>
->
-> There are a few scenarios where IOMMU replay can potentially be needed
-> for zPCI device, namely VFIO device reset scenarios where the guest
-> continues running and expects the contents of its IOMMU to be replayed
-> upon IOAT re-registration and migration scenarios where the destination
-> must reconstruct the IOMMU on the destination.
->
-> zPCI migration is not supported yet, but the IOMMU replay function is
-> implemented so that it can be called both from IOMMUMemoryRegionClass
-> now and migration post_load later.
->
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-bus.c          | 68 +++++++++++++++++++++++++++++---
->   hw/s390x/s390-pci-inst.c         |  4 +-
->   include/hw/s390x/s390-pci-inst.h |  1 +
->   3 files changed, 65 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index eff980fdfe..10b417a779 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -593,14 +593,70 @@ err:
->       return ret;
->   }
->   
-> -static void s390_pci_iommu_replay(IOMMUMemoryRegion *iommu,
-> +static void s390_pci_ioat_replay(S390PCIIOMMU *iommu)
-> +{
-> +    S390PCIBusDevice *pbdev = iommu->pbdev;
-> +    S390IOTLBEntry entry;
-> +    uint16_t error = 0;
-> +    uint32_t dma_avail;
-> +    hwaddr curr, end;
-> +
-> +    curr = iommu->pba;
-> +    end = iommu->pal;
-> +
-> +    if (iommu->dm_mr || !pbdev) {
-> +        /* If direct mapping is used, there are no guest tables to replay */
-> +        return;
-> +    }
-> +
-> +    if (iommu->dma_limit) {
-> +        dma_avail = iommu->dma_limit->avail;
-> +    } else {
-> +        dma_avail = 1;
-> +    }
-> +
-> +    while (curr < end) {
-> +        error = s390_guest_io_table_walk(iommu->g_iota, curr, &entry);
-> +        if (error) {
-> +            pbdev->state = ZPCI_FS_ERROR;
-> +            s390_pci_generate_error_event(error, pbdev->fh, pbdev->fid, curr,
-> +                                          0);
-> +            error_report("Failure to walk table during iommu remap");
-> +            return;
-> +        }
-> +
-> +        curr += entry.len;
-> +        if (entry.perm != IOMMU_NONE) {
-> +            while (entry.iova < curr && entry.iova < end) {
-> +                if (dma_avail > 0) {
-> +                    dma_avail = s390_pci_update_iotlb(iommu, &entry);
-> +                } else {
-> +                    /*
-> +                     * There is no reliable method to request the guest to
-> +                     * release mappings other than in response to a RPCIT
-> +                     * instruction; generate a permanent error condition and
-> +                     * require the device to be completely re-initialized from
-> +                     * the guest side.
-> +                     */
-> +                    pbdev->state = ZPCI_FS_ERROR;
-> +                    s390_pci_generate_error_event(ERR_EVENT_PERMERR, pbdev->fh,
-> +                                                  pbdev->fid, 0, 0);
+Sync the vfio.h additions from the kernel vfio-cxl series: the
+VFIO_DEVICE_FLAGS_CXL device flag, the CXL Type-2 (0x1e98) HDM memory and
+component-register sub-types under VFIO_REGION_TYPE_PCI_VENDOR_TYPE, and
+the component-register geometry capability that reports the BAR and offset
+of the trapped HDM decoder block.
 
-A permanent error will indicate to the guest that PCI device in 
-unusable, in that case would the guest drive a device re-initialization? 
-Would it be better to generate a ERR_EVENT_SERVAC to allow the guest to 
-attempt recovery and so drive the mappings again?
+The capability ID is provisional until the kernel series lands, at which
+point this becomes a scripted linux-headers update.
 
-Thanks
+AI-used-for: docs
+Signed-off-by: Manish Honap <mhonap@nvidia.com>
+---
+ linux-headers/linux/vfio.h | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-Farhan
+diff --git a/linux-headers/linux/vfio.h b/linux-headers/linux/vfio.h
+index c85dcbfe30..c12e55426d 100644
+--- a/linux-headers/linux/vfio.h
++++ b/linux-headers/linux/vfio.h
+@@ -215,6 +215,7 @@ struct vfio_device_info {
+ #define VFIO_DEVICE_FLAGS_FSL_MC (1 << 6)	/* vfio-fsl-mc device */
+ #define VFIO_DEVICE_FLAGS_CAPS	(1 << 7)	/* Info supports caps */
+ #define VFIO_DEVICE_FLAGS_CDX	(1 << 8)	/* vfio-cdx device */
++#define VFIO_DEVICE_FLAGS_CXL	(1 << 9)	/* vfio-cxl device */
+ 	__u32	num_regions;	/* Max region index + 1 */
+ 	__u32	num_irqs;	/* Max IRQ index + 1 */
+ 	__u32   cap_offset;	/* Offset within info struct of first cap */
+@@ -370,6 +371,12 @@ struct vfio_region_info_cap_type {
+  */
+ #define VFIO_REGION_SUBTYPE_IBM_NVLINK2_ATSD	(1)
+ 
++/* CXL Type-2 device (0x1e98) sub-types for VFIO_REGION_TYPE_PCI_VENDOR_TYPE */
++/* CXL.mem HDM region of a Type-2 device, mmap-able */
++#define VFIO_REGION_SUBTYPE_CXL_MEM		(1)
++/* CXL HDM decoder registers: read live, guest writes are absorbed */
++#define VFIO_REGION_SUBTYPE_CXL_COMP_REGS	(2)
++
+ /* sub-types for VFIO_REGION_TYPE_GFX */
+ #define VFIO_REGION_SUBTYPE_GFX_EDID            (1)
+ 
+@@ -497,6 +504,23 @@ struct vfio_region_info_cap_nvlink2_lnkspd {
+ 	__u32 __pad;
+ };
+ 
++/*
++ * Geometry of a CXL Type-2 device's HDM decoder registers, so a VMM can place
++ * the trapped component register window where the guest expects it. The trapped
++ * region spans the whole HDM decoder block (every decoder), not just decoder 0:
++ * a VMM reads the decoder count and each decoder's committed base from the block
++ * itself. Additional trapped component capabilities, such as CXL RAS, are
++ * exposed as their own region subtypes rather than by extending this cap.
++ */
++#define VFIO_REGION_INFO_CAP_CXL_COMP_REGS	6
++
++struct vfio_region_info_cap_cxl_comp_regs {
++	struct vfio_info_cap_header header;
++	__u32 bar;
++	__u32 __resv;
++	__aligned_u64 offset;
++};
++
+ /**
+  * VFIO_DEVICE_GET_IRQ_INFO - _IOWR(VFIO_TYPE, VFIO_BASE + 9,
+  *				    struct vfio_irq_info)
+-- 
+2.25.1
 
-> +                    error_report("DMA mappings exhausted: iommu remap failed");
-> +                    return;
-> +                }
-> +                entry.iova += TARGET_PAGE_SIZE;
-> +                entry.translated_addr += TARGET_PAGE_SIZE;
-> +            }
-> +        }
-> +    }
-> +}
-> +
-> +static void s390_pci_iommu_replay(IOMMUMemoryRegion *mr,
->                                     IOMMUNotifier *notifier)
->   {
-> -    /* It's impossible to plug a pci device on s390x that already has iommu
-> -     * mappings which need to be replayed, that is due to the "one iommu per
-> -     * zpci device" construct. But when we support migration of vfio-pci
-> -     * devices in future, we need to revisit this.
-> -     */
-> +    S390PCIIOMMU *iommu = container_of(mr, S390PCIIOMMU, iommu_mr);
-> +
-> +    s390_pci_ioat_replay(iommu);
->   }
->   
->   static S390PCIIOMMU *s390_pci_get_iommu(S390pciState *s, PCIBus *bus,
-> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-> index b7de23c7d2..37ca70dcf1 100644
-> --- a/hw/s390x/s390-pci-inst.c
-> +++ b/hw/s390x/s390-pci-inst.c
-> @@ -630,8 +630,8 @@ int pcistg_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
->       return 0;
->   }
->   
-> -static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-> -                                      S390IOTLBEntry *entry)
-> +uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-> +                               S390IOTLBEntry *entry)
->   {
->       S390IOTLBEntry *cache = g_hash_table_lookup(iommu->iotlb, &entry->iova);
->       IOMMUTLBEvent event = {
-> diff --git a/include/hw/s390x/s390-pci-inst.h b/include/hw/s390x/s390-pci-inst.h
-> index 5cb8da540b..c782990e3b 100644
-> --- a/include/hw/s390x/s390-pci-inst.h
-> +++ b/include/hw/s390x/s390-pci-inst.h
-> @@ -111,6 +111,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
->   int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
->                            uintptr_t ra);
->   void fmb_timer_free(S390PCIBusDevice *pbdev);
-> +uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu, S390IOTLBEntry *entry);
->   
->   #define ZPCI_IO_BAR_MIN 0
->   #define ZPCI_IO_BAR_MAX 5
 
