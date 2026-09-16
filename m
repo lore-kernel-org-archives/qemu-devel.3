@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080A5C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC92C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4g-0002gT-KO; Wed, 16 Sep 2026 06:41:11 -0400
+	id 1x6n3L-0007J2-J0; Wed, 16 Sep 2026 06:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n46-00005z-BS; Wed, 16 Sep 2026 06:40:38 -0400
+ id 1x6n2N-000611-Uj; Wed, 16 Sep 2026 06:38:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n44-0002Qb-1N; Wed, 16 Sep 2026 06:40:33 -0400
+ id 1x6n2L-0001ze-1Z; Wed, 16 Sep 2026 06:38:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554958; bh=fuDIRaxqq2hLPQmIth0hffcWPn6BnrhFVNo27AyPN8Y=;
+ t=1789554957; bh=i2eTjwAS15hDaE5AkghnwVPezGdJR8H9au733wSuoIs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rRKEw8XCgwATJVAE7rslIgL+ktV/nrnffhVRa4qRrerFZ70PmgBrBR/0CB2i3uNCh
- I438XCag+pKsOlJgoz201epRs/1S/5JRaAqvXOfF4tfAsI1AceZa2XuiK0E6xNZg98
- 3CXvZYiW79ys2p9Sfhm2C2JbJZfELljkk5treVDsilijFJ25gLvsviMPpyvyMrAyM2
- Uh1UI9wYiBh1aPtgLyTS3Urzg2XiDbQ1VzXRP0lFpViIcAi4Gd2yDVVwdy9fMs/VT+
- s3k5ufddoC2Wg+nnMWKsQT/lU70hZXPQonA9k+UZy3/WX5Gvxt2w0NFY3sdcDDwyty
- MpOqLs/pofsew==
+ b=xrFd35O4pgMtGa49uKuVZj0TWtpI+GrDum0Mtwwwgy0uGe2MaORTU0QnGFwjoiC1L
+ 5wsnMBLhkNB05HQXI6Ojvqa4NyT4vygSjT2dlQWM3ApeD/kyIlsMPRqyLbWvQZso2a
+ B+5pOQabACx2fdAlIufmuG0z3xsNod3AH8fwxjTTbKY2P9V6xnIIDDly7jXXb4BAw6
+ tO9Njc8uqf7XNlihTftwDdx3rzEpKQTowPWbM8YApYJ6HHlTM7fz4A01Wragbd1II5
+ XDbmb5ksC9OZTheBOGEW8IeYdZlwaU57lDOP3ccd/z7h8ngtSp/qG5T6sWzj0sl62k
+ H2jixvRplnrRA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0AA781D582B;
- Wed, 16 Sep 2026 13:35:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B4B91D580F;
+ Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C9AA3429F99;
- Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C9FFA429F6D;
+ Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AD7005A849; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id B45965A817; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 52/56] hw/intc/bcm2835_ic: reject out-of-range FIQ
- source values
-Date: Wed, 16 Sep 2026 13:36:10 +0300
-Message-ID: <20260916103622.684817-52-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 27/56] target/arm: Make IT insn undef when not present
+Date: Wed, 16 Sep 2026 13:35:45 +0300
+Message-ID: <20260916103622.684817-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,138 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The FIQ_CONTROL register accepts a 7-bit source selector, but only
-sources 0..71 (64 GPU + 8 ARM IRQs) exist.  Values 96..127 cause
-bcm2835_ic_update() to call extract32(arm_irq_level, start, 1) with
-start >= 32, which trips the assertion in bitops.h and aborts QEMU.
+The IT insn is introduced for A-profile starting in v6T2; for
+M-profile it is present when the Main Extension is implemented (which
+includes v7M and excludes v6M).  We were missing the feature-check,
+so fail to UNDEF on earlier cores.
 
-Reject writes that select a non-existent source and log a guest error,
-so that a malicious or buggy guest cannot kill the emulator.
+Add the missing check.
 
-Add a qtest that verifies both valid and out-of-range FIQ source
-selections on raspi3b.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4368
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260831081709.77725-1-guobin@linux.alibaba.com
+Cc: qemu-stable@nongnu.org
+Fixes: 9ee6e8bb853bde ("ARMv7 support.")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2a8b740e7acf4bcf54f0f186d9184d764cd06f01)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260821132550.168896-3-peter.maydell@linaro.org
+(cherry picked from commit 50d6757147dbc74b1b904535afaf986f72e942ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/bcm2835_ic.c b/hw/intc/bcm2835_ic.c
-index 71bf671761b..262a620968f 100644
---- a/hw/intc/bcm2835_ic.c
-+++ b/hw/intc/bcm2835_ic.c
-@@ -139,10 +139,19 @@ static void bcm2835_ic_write(void *opaque, hwaddr offset, uint64_t val,
-     BCM2835ICState *s = opaque;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index df98dc2e34d..3d352497a70 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -1,3 +1,4 @@
++
+ /*
+  *  ARM translation
+  *
+@@ -6038,6 +6039,16 @@ static bool trans_IT(DisasContext *s, arg_IT *a)
+ {
+     int cond_mask = a->cond_mask;
  
-     switch (offset) {
--    case FIQ_CONTROL:
--        s->fiq_select = extract32(val, 0, 7);
-+    case FIQ_CONTROL: {
-+        unsigned fiq_select = extract32(val, 0, 7);
-+
-+        if (fiq_select >= GPU_IRQS + ARM_IRQS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: FIQ select %u out of range\n",
-+                          __func__, fiq_select);
-+            return;
-+        }
-+        s->fiq_select = fiq_select;
-         s->fiq_enable = extract32(val, 7, 1);
-         break;
-+    }
-     case IRQ_ENABLE_1:
-         s->gpu_irq_enable |= val;
-         break;
-diff --git a/tests/qtest/bcm2835-ic-test.c b/tests/qtest/bcm2835-ic-test.c
-new file mode 100644
-index 00000000000..1e171ee0924
---- /dev/null
-+++ b/tests/qtest/bcm2835-ic-test.c
-@@ -0,0 +1,66 @@
-+/*
-+ * QTest testcase for the BCM2835 Interrupt Controller
-+ *
-+ * Copyright (c) 2026 Bin Guo <guobin@linux.alibaba.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+
-+#define IC_BASE     0x3f00b200
-+#define FIQ_CONTROL (IC_BASE + 0x0c)
-+
-+static void test_fiq_select_out_of_range(void)
-+{
-+    uint32_t val;
-+
 +    /*
-+     * Only FIQ sources 0..71 exist.  Source 96 used to trigger an assertion
-+     * in bcm2835_ic_update() because extract32(arm_irq_level, 32, 1) was
-+     * called with start >= 32.  Make sure the write is rejected and QEMU
-+     * keeps running.
++     * IT insn introduced in v6T2 for A-profile; it is only present
++     * on M-profile if the Main Extension is implemented.
 +     */
-+    writel(FIQ_CONTROL, 0xe0); /* fiq_select = 96, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
++    if (!(arm_dc_feature(s, ARM_FEATURE_M)
++          ? arm_dc_feature(s, ARM_FEATURE_M_MAIN)
++          : arm_dc_feature(s, ARM_FEATURE_THUMB2))) {
++        return false;
++    }
 +
-+    /* The first source past the ARM IRQ range should also be rejected. */
-+    writel(FIQ_CONTROL, 0xc8); /* fiq_select = 72, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
-+}
-+
-+static void test_fiq_select_valid(void)
-+{
-+    uint32_t val;
-+
-+    /* Select the highest valid ARM IRQ source (64 + 7 = 71). */
-+    writel(FIQ_CONTROL, 0xc7); /* fiq_select = 71, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0xc7);
-+
-+    /* Select the highest valid GPU IRQ source. */
-+    writel(FIQ_CONTROL, 0x3f); /* fiq_select = 63, fiq_enable = 0 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0x3f);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-out-of-range",
-+                   test_fiq_select_out_of_range);
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-valid",
-+                   test_fiq_select_valid);
-+
-+    qtest_start("-machine raspi3b");
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e216..78b30106496 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -266,7 +266,7 @@ qtests_aarch64 = \
-     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
-   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-+  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test', 'bcm2835-ic-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+     /*
+      * No actual code generated for this insn, just setup state.
+      *
 -- 
 2.47.3
 
