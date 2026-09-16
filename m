@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0950AC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 657A6C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lbQ-0008OH-OD; Wed, 16 Sep 2026 05:06:52 -0400
+	id 1x6lbZ-00008i-Sa; Wed, 16 Sep 2026 05:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbP-0008NR-4o; Wed, 16 Sep 2026 05:06:51 -0400
+ id 1x6lbX-0008Vv-LN; Wed, 16 Sep 2026 05:06:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lbM-00071M-Uo; Wed, 16 Sep 2026 05:06:50 -0400
+ id 1x6lbV-00073B-PZ; Wed, 16 Sep 2026 05:06:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=5MYcBkhmyM4o5DOkggo6Nz0eCpywz9LbMKZq+b237qU=;
+ t=1789549558; bh=iRkUpmMVE9o99Dq3SIDNURufrWifhl+9plk4IqjsyUw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B/jly1mDWzh/qASOV7BRZQk+NLNoJNqT1gjI5m7lXXewQYpv7wljUq2xZuAsECObS
- BN+RIVJAsd02+L8GMMLyvv5nTQttQIBCRtlHYuc3QYEi0onoOY/yaHeY5yfTYLP1wW
- l2C5gRSOsPYPqITojtUfxIB+P/YhyuczpFOPNlFzMcPPrAtSYi0wzcLmv8LLEos8an
- fJoveDDpBpQ8j/3ohUABOpnQSEewGabOyg3A1Q+zSuXWiFJaQuQ8lD2uS8+u6iKJ+2
- 6lO8lNBi3t1Xh6xrpYo96eSf7rj+TwBbkqgj3iOozgftXNVV9qpe4pEohQDVousfUq
- blL1twMg4Gr/g==
+ b=WknWrjBl8Ah/CFEo2+mBhie3TbkYShRIhktQ93EKhMve3kMuKmS6wCp+9yEp4o/U4
+ wEcKX3i66F/yVK5H6VYPuDH+HTwGh7LdfEVdXRzXqEfQ2/fJ9POHcjPGdryG5Q/gA6
+ uH3Ofoo9FGwRcVSP6P74qriotgfjUb9+99eKGtSA5h5+nLcHMrLHXCUkTQ+mDZtgcj
+ V9+sDT4alsFrTMuN94B1dgVf+gyVviuwHxAlFiiq+yG1GSXRCmZlgOAc8MCcaaGtqU
+ xThtQrI8tPHxRyZSAHiKkPJA/tfPHL8oHjfO3mrxIBxERg8aA6aktK/UR+e03ptOuw
+ uB66XRdS813+Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7F3D21D56B9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9817D1D56BE;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2A798429E04;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 438CF429E09;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0F67B5A763; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 1F2165A76D; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Warisjeet Singh <sinxx198@gmail.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 05/57] hw/display/vga: fix text-mode OOB write after a
- graphics surface switch
-Date: Wed, 16 Sep 2026 12:03:29 +0300
-Message-ID: <20260916090516.677749-5-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 10/57] migration/block-dirty-bitmap: reject bitmap
+ load onto ro node
+Date: Wed, 16 Sep 2026 12:03:34 +0300
+Message-ID: <20260916090516.677749-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -71,164 +75,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Warisjeet Singh <sinxx198@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-vga_draw_text() decides whether the console surface needs a resize from
-its geometry cache, but none of the cache terms observe the graphics
-renderer having replaced the console surface in between:
+dirty_bitmap_load_start() creates an incoming migrated bitmap with
+bdrv_create_dirty_bitmap() and, if the source marked it persistent,
+calls bdrv_dirty_bitmap_set_persistence() without checking whether
+the destination node can be written to. Same gap as
+qmp_block_dirty_bitmap_add(), reached via incoming migration: a
+persistent bitmap for a read-only destination (e.g. a migrated
+CD-ROM-class attachment with dirty-bitmaps migration enabled) ends
+up writable in memory on a node that can never store it.
 
-- last_width/last_height are shared with vga_draw_graphic(), which
-  stores them in pixels while the text path stores characters;
-- last_depth stays 0 for legacy (non-VBE) graphics modes, because
-  vga_get_bpp() only reports a depth when VBE is enabled, so the
-  "s->last_depth" term that normally forces a resize after a graphics
-  frame does not fire.
+Reject it the same way, with one difference from the QMP path:
+every destination node is BDRV_O_INACTIVE until migration completes,
+so bdrv_is_writable() would reject every incoming persistent
+bitmap, not just read-only ones. Check bdrv_is_read_only() alone.
 
-So a graphics frame that shrinks the console surface (e.g. 80x25
-pixels) followed by a text frame with matching character geometry
-(80x25 chars) skips the resize, and the glyph loop then paints
-width*cw x height*cheight pixels into the smaller surface, out of
-bounds, with guest-controlled (DAC palette) values, on every display
-refresh.
-
-Separate the geometry cache per renderer: text paths (vga_draw_text,
-vga_update_text, and the text handling in vga_invalidate_display /
-vga_common_reset) now only manipulate last_text_{width,height}, in
-characters; last_{width,height} become graphics-only, in pixels.
-Additionally, make the text path compare the pixel size it is about
-to paint against the console surface's actual dimensions.  The
-surface check is the load-bearing term: caches in either unit cannot
-see the other renderer swapping the surface, the surface can.
-
-Fixes: CVE-2026-77913
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
-Message-ID: <vga-v3-20260824.sinxx198@gmail.com>
-(cherry picked from commit 418396be8013386a81f8d8d89ac0effcf03a64b6)
-(Mjt: adjust across v11.0.0-787-g405a42e36550
- "ui/console: rename public API to use consistent qemu_console_ prefix")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Eric Blake <eblake@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260716112242.3000035-3-den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 3f3f5cdb929e8621699f92ee6e5018e1e6ea5bf2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index f9f3d054f61..b8f7ed13013 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1240,7 +1240,10 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         return;
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index a061aad8177..321e1cdf11a 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -808,13 +808,6 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
+         error_report("Bitmap with the same name ('%s') already exists on "
+                      "destination", bdrv_dirty_bitmap_name(s->bitmap));
+         return -EINVAL;
+-    } else {
+-        s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
+-                                             s->bitmap_name, &local_err);
+-        if (!s->bitmap) {
+-            error_report_err(local_err);
+-            return -EINVAL;
+-        }
      }
  
--    if (width != s->last_width || height != s->last_height ||
-+    if (surface == NULL ||
-+        surface_width(surface) != width * cw ||
-+        surface_height(surface) != height * cheight ||
-+        width != s->last_text_width || height != s->last_text_height ||
-         cw != s->last_cw || cheight != s->last_ch || s->last_depth) {
-         s->last_scr_width = width * cw;
-         s->last_scr_height = height * cheight;
-@@ -1248,8 +1251,8 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         surface = qemu_console_surface(s->con);
-         dpy_text_resize(s->con, width, height);
-         s->last_depth = 0;
--        s->last_width = width;
--        s->last_height = height;
-+        s->last_text_width = width;
-+        s->last_text_height = height;
-         s->last_ch = cheight;
-         s->last_cw = cw;
-         full_update = 1;
-@@ -1828,6 +1831,8 @@ static void vga_invalidate_display(void *opaque)
- 
-     s->last_width = -1;
-     s->last_height = -1;
-+    s->last_text_width = -1;
-+    s->last_text_height = -1;
- }
- 
- void vga_common_reset(VGACommonState *s)
-@@ -1870,6 +1875,8 @@ void vga_common_reset(VGACommonState *s)
-     s->last_ch = 0;
-     s->last_width = 0;
-     s->last_height = 0;
-+    s->last_text_width = 0;
-+    s->last_text_height = 0;
-     s->last_scr_width = 0;
-     s->last_scr_height = 0;
-     s->cursor_start = 0;
-@@ -1921,8 +1928,8 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
-         s->graphic_mode = graphic_mode;
-         full_update = 1;
-     }
--    if (s->last_width == -1) {
--        s->last_width = 0;
-+    if (s->last_text_width == -1) {
-+        s->last_text_width = 0;
-         full_update = 1;
+     if (flags & DIRTY_BITMAP_MIG_START_FLAG_RESERVED_MASK) {
+@@ -831,6 +824,21 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
+         persistent = flags & DIRTY_BITMAP_MIG_START_FLAG_PERSISTENT;
      }
  
-@@ -1961,15 +1968,15 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
-             break;
-         }
- 
--        if (width != s->last_width || height != s->last_height ||
-+        if (width != s->last_text_width || height != s->last_text_height ||
-             cw != s->last_cw || cheight != s->last_ch) {
-             s->last_scr_width = width * cw;
-             s->last_scr_height = height * cheight;
-             qemu_console_resize(s->con, s->last_scr_width, s->last_scr_height);
-             dpy_text_resize(s->con, width, height);
-             s->last_depth = 0;
--            s->last_width = width;
--            s->last_height = height;
-+            s->last_text_width = width;
-+            s->last_text_height = height;
-             s->last_ch = cheight;
-             s->last_cw = cw;
-             full_update = 1;
-@@ -2054,22 +2061,22 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
++    /* Not bdrv_is_writable(): nodes stay inactive until migration ends. */
++    if (persistent && bdrv_is_read_only(s->bs)) {
++        error_report("Cannot make migrated bitmap '%s' persistent "
++                     "on read-only node '%s'", s->bitmap_name,
++                     bdrv_get_node_name(s->bs));
++        return -EINVAL;
++    }
++
++    s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
++                                         s->bitmap_name, &local_err);
++    if (!s->bitmap) {
++        error_report_err(local_err);
++        return -EINVAL;
++    }
++
+     if (persistent) {
+         bdrv_dirty_bitmap_set_persistence(s->bitmap, true);
      }
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test b/tests/qemu-iotests/tests/migrate-bitmaps-test
+index 8fb4099201d..cb9154ca8d7 100755
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-test
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-test
+@@ -206,6 +206,39 @@ class TestDirtyBitmapMigration(iotests.QMPTestCase):
+             self.vm_b.launch()
+             self.check_bitmap(self.vm_b, sha256 if persistent else False)
  
-     /* Display a message */
--    s->last_width = 60;
--    s->last_height = height = 3;
-+    s->last_text_width = 60;
-+    s->last_text_height = height = 3;
-     dpy_text_cursor(s->con, -1, -1);
--    dpy_text_resize(s->con, s->last_width, height);
-+    dpy_text_resize(s->con, s->last_text_width, height);
++    def test_migration_to_readonly_destination(self):
++        granularity = 512
++        mig_caps = [{'capability': 'events', 'state': True},
++                   {'capability': 'dirty-bitmaps', 'state': True}]
++
++        self.vm_b.add_incoming("defer")
++        self.vm_b.add_drive(disk_b, 'read-only=on')
++
++        self.add_bitmap(self.vm_a, granularity, True)
++        self.vm_a.hmp_qemu_io('drive0', 'write 0 4096')
++
++        self.vm_a.cmd('migrate-set-capabilities', capabilities=mig_caps)
++        self.vm_a.cmd('migrate', uri=mig_cmd)
++        while True:
++            event = self.vm_a.event_wait('MIGRATION')
++            if event['data']['status'] == 'completed':
++                break
++        self.vm_a.shutdown()
++
++        self.vm_b.launch()
++        self.vm_b.cmd('migrate-set-capabilities', capabilities=mig_caps)
++        self.vm_b.cmd('migrate-incoming', uri=incoming_cmd)
++        while True:
++            event = self.vm_b.event_wait('MIGRATION')
++            if event['data']['status'] in ('completed', 'failed'):
++                break
++
++        self.assert_qmp(event, 'data/status', 'failed')
++
++        # A failed incoming load makes the destination process exit on
++        # its own; reap it so tearDown()'s shutdown() is a clean no-op.
++        self.vm_b.wait()
++
  
--    for (dst = chardata, i = 0; i < s->last_width * height; i ++)
-+    for (dst = chardata, i = 0; i < s->last_text_width * height; i ++)
-         console_write_ch(dst ++, ' ');
+ def inject_test_case(klass, suffix, method, *args, **kwargs):
+     mc = operator.methodcaller(method, *args, **kwargs)
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test.out b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
+index cafb8161f7b..73e375a9d74 100644
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-test.out
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
+@@ -1,5 +1,5 @@
+-.....................................
++......................................
+ ----------------------------------------------------------------------
+-Ran 37 tests
++Ran 38 tests
  
-     size = strlen(msg_buffer);
--    width = (s->last_width - size) / 2;
--    dst = chardata + s->last_width + width;
-+    width = (s->last_text_width - size) / 2;
-+    dst = chardata + s->last_text_width + width;
-     for (i = 0; i < size; i ++)
-         console_write_ch(dst ++, ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
-                                              QEMU_COLOR_BLACK, 1));
- 
--    dpy_text_update(s->con, 0, 0, s->last_width, height);
-+    dpy_text_update(s->con, 0, 0, s->last_text_width, height);
- }
- 
- static uint64_t vga_mem_read(void *opaque, hwaddr addr,
-diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-index 747b5cc6cf8..1950ef5fcd0 100644
---- a/hw/display/vga_int.h
-+++ b/hw/display/vga_int.h
-@@ -122,7 +122,8 @@ typedef struct VGACommonState {
-     uint32_t plane_updated;
-     uint32_t last_line_offset;
-     uint8_t last_cw, last_ch;
--    uint32_t last_width, last_height; /* in chars or pixels */
-+    uint32_t last_width, last_height; /* in pixels (graphics renderer) */
-+    uint32_t last_text_width, last_text_height; /* in chars (text renderer) */
-     uint32_t last_scr_width, last_scr_height; /* in pixels */
-     uint32_t last_depth; /* in bits */
-     bool last_byteswap;
+ OK
 -- 
 2.47.3
 
