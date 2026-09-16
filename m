@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48442C982CC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF7E1C982D0
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 18:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6ueL-0000j1-LQ; Wed, 16 Sep 2026 14:46:31 -0400
+	id 1x6udD-0000Jj-7X; Wed, 16 Sep 2026 14:45:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1x6udm-0000cy-B6; Wed, 16 Sep 2026 14:45:55 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ id 1x6ud9-0000JM-UO; Wed, 16 Sep 2026 14:45:15 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1x6udj-00040t-Oh; Wed, 16 Sep 2026 14:45:53 -0400
+ id 1x6ud7-0003ur-Gq; Wed, 16 Sep 2026 14:45:15 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PFoE5rbrGeb0K4B6BVWPSBwxPN42WI89eaE/X2QnT+WmIL5ZTua3gSGaHM8mB4bG09jGhNL0ze1RZylcIOkAtTYiM8RCigfaksFBf5SKZAPQOb0/b41H9snS5WIBKvjP0LMUaADp/PvJScOvJM2ceKih6zk8oDlBmnxR7b4HLYjUEcvv0z1R49mpS4aoROpUqlV5GdymZiOXICcHPCAVU+UuJpghCzG8Y5Kc4uLNci4nIsefVk68sX7dEzTUjvuYv2G0lzPGIKmmZfhshacLOkHXdlKyggaiIntQzZmNyuALTkCk9qEEP+8Kej64B9e0LMF/qj9hwjg79Vv35MzKhQ==
+ b=L99o+/vk0EQk3JAuaAfUYfdAfuCZ++dxVcBul+FoBj9NMU9Y6n0ZTAqnXqn3PlXGNcpP/DT0bh89BJKJmWwGwjOw4qQSY6Or1LzQgwyNtm/i5EakLLml/wZErLXdXLaM5wXT073Eqyv5nLHXgRsTPuFapeqQleIAO26N1MTagvj6kNd/RhF6wLX6242ZmAfDRvehgJZ5Gem5MK1BS+kaAsoq1S4MQ3IdARtxAkteQgPoCCWy2uDSjkKDkh14THtjN1VyHMDaeQCJiy8JODcnao43zqCJHVsgZMeSALINf8bcSl4fvDZvs/7N3SXOVHCIiu0TofL1Pw0e7Nb/E7YUjA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V/Ytff3I87tMAQBB1h9bJsCipx0IG6OvspiOISzTm98=;
- b=QXhkuGE9I//Ov6bWZfhvTh7yAzbwWu0NeGNZDL+zzyb2WN1WOTFNv1Avgl3D0vJYPz1A6bPt88KEZTF57A8LT5qV5UM60JfX5Vq1K0vc6AmefKKzfGz61514d7CWex8MgjFm3Asr3Wqofg205iZXt/DN9B8SJrNqaEZnJfrSwmP+ElUmkqDeO6wiTJCKM2dNes2ZWvIkULdFQleieXcw0AGpGxqRzJ+8kPk6bN0WVVOxWnGzL9b2E17Y7PzI64KM5pynywM3NtYbmfsR4jhQ6TtMskmlUnZYI7u1fntIVLOrzn9RX57DGhIh+LtJWi6wlxfZuPZK+MgAcZEqLGftVQ==
+ bh=0BXpBtAJnXGa/TcBpPFAjoxgsdT3fv5Qh0pT915IDNU=;
+ b=mBIacEf2m5CK56/pfaUcTZG21gTn8N+xe7cjWK2hXCFGCSelQZA3P9L2PCHhcWQoGV0M/aH4bjnWaubJE0burLM05QrIuJi9w1nDogoyrQnKcDhX9/Om3yG4evCL12ZrO3kPhIra+IUfX72O9BrmQ8UHc9lNTz0yeHOQ1N06ide8M4GEUdsLT5hsIEsbCTzEIYmSzvJbIgwiI6eo/ApcJGb434q7H+d0uufZoNIOCNyGNEcYeFompv7zIyINlflEK7CapK00ISUzNn0IWSKbUdfU9BvYzvzyxvPKpUnoe6TIF1BbK0HzSvSEwRYNNvDGl5HueBH5kNw5FqcjHq3d/g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.161) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -33,18 +33,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V/Ytff3I87tMAQBB1h9bJsCipx0IG6OvspiOISzTm98=;
- b=jG2FVHZ8XkC/S03YFbdX9kmTZPO7wZr7Vs64cLki6kZjr5nafLFt5dyuFtBYsoepeHpvE7OchrCiWTD+HvvxN2xmGe6L9Ye/JrfLOwmvoBhP7/qsKFP+muJL3u7H77Rdcmik+kN+Lf/pnjOcZV6+jOvLziKj8dARz++uGaUXHGOF2hfX00bBFuCcH+pRde5W5UX0MxWupK0bXyG4vaWNT/hLAd+l3n4khqO8SHqN1OA87ettsD950oY9iOk9dvqr4KFUO9qs66vYJ6DsnN4/AQZ0No2XFDnlzsOpOF05c2FgoN/1zczFVZOOpMCsyFJdK5pya0XIwTkZfA5E+cmVEg==
-Received: from SJ0PR03CA0167.namprd03.prod.outlook.com (2603:10b6:a03:338::22)
- by SJ2PR12MB7944.namprd12.prod.outlook.com (2603:10b6:a03:4c5::16)
+ bh=0BXpBtAJnXGa/TcBpPFAjoxgsdT3fv5Qh0pT915IDNU=;
+ b=OOdR+jp5gzphKIXC8vHyOafKeq/0nz75SJ5cSmajHlvVPd96T58fuXTk2QlW7l0X76gJrIwDtwKNlBhp7JCUSb8sdku2ZyqRqIrK2deaLU3DcSVN2svnrQKuum2LpuYynmL33lIIQxvFpyvVQdolJ1gjyC3Rm75pkf24XlaOLaE28Ma/2a+FqUImqF41THG1YR0SZJE3fDG5nmanBtnjhSRfavbN5aAmcYcj50Cb75IBWdeiIaftQJPC3euDzJQNew2dhp2MbNm7CPM0bYWI0NUzjHVXgdXNl2o5AuyggutwKxgpjuePt5/D+ZqFGUG7X1jqLahIiwPmR6JZKA0bcw==
+Received: from SJ0PR13CA0206.namprd13.prod.outlook.com (2603:10b6:a03:2c3::31)
+ by MN0PR12MB6272.namprd12.prod.outlook.com (2603:10b6:208:3c0::22)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Wed, 16 Sep
- 2026 18:45:38 +0000
-Received: from SJ1PEPF00002315.namprd03.prod.outlook.com
- (2603:10b6:a03:338:cafe::8a) by SJ0PR03CA0167.outlook.office365.com
- (2603:10b6:a03:338::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.11 via Frontend Transport; Wed,
- 16 Sep 2026 18:45:37 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.10; Wed, 16 Sep
+ 2026 18:45:03 +0000
+Received: from SJ1PEPF00002310.namprd03.prod.outlook.com
+ (2603:10b6:a03:2c3:cafe::17) by SJ0PR13CA0206.outlook.office365.com
+ (2603:10b6:a03:2c3::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.7 via Frontend Transport; Wed, 16
+ Sep 2026 18:45:02 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
@@ -53,17 +53,17 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.161 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.161) by
- SJ1PEPF00002315.mail.protection.outlook.com (10.167.242.169) with Microsoft
+ SJ1PEPF00002310.mail.protection.outlook.com (10.167.242.164) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.428.7 via Frontend Transport; Wed, 16 Sep 2026 18:45:36 +0000
+ 15.21.428.7 via Frontend Transport; Wed, 16 Sep 2026 18:45:02 +0000
 Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
  (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 16 Sep
- 2026 11:45:08 -0700
+ 2026 11:44:33 -0700
 Received: from nvidia-4028GR-scsim.nvidia.com (10.126.231.37) by
  rnnvmail202.nvidia.com (10.129.68.7) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 16 Sep 2026 11:45:01 -0700
+ 15.2.2562.46; Wed, 16 Sep 2026 11:44:27 -0700
 From: <mhonap@nvidia.com>
 To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
  <dave.jiang@intel.com>, <alejandro.lucero-palau@amd.com>,
@@ -74,13 +74,10 @@ To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
 CC: <kjaju@nvidia.com>, <vsethi@nvidia.com>, <zhiw@nvidia.com>,
  <mhonap@nvidia.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
  <linux-cxl@vger.kernel.org>
-Subject: [PATCH v2 05/10] hw/vfio/pci: Back the CXL memory with a RAM-device
- region
-Date: Thu, 17 Sep 2026 00:14:07 +0530
-Message-ID: <20260916184412.3825713-6-mhonap@nvidia.com>
+Subject: [PATCH v2 00/10] QEMU: CXL Type-2 device passthrough via vfio-pci
+Date: Thu, 17 Sep 2026 00:14:02 +0530
+Message-ID: <20260916184412.3825713-1-mhonap@nvidia.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260916184412.3825713-1-mhonap@nvidia.com>
-References: <20260916184412.3825713-1-mhonap@nvidia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -89,39 +86,39 @@ X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
  rnnvmail202.nvidia.com (10.129.68.7)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00002315:EE_|SJ2PR12MB7944:EE_
-X-MS-Office365-Filtering-Correlation-Id: 050f17fd-208c-45b2-e2c1-08df1422b2a5
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002310:EE_|MN0PR12MB6272:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4dca214f-6418-4c4d-54a7-08df14229e54
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|23010399003|376014|82310400026|1800799024|7416014|921020|10067099003|18002099003|56012099006|11063799006|22082099003;
-X-Microsoft-Antispam-Message-Info: aVnS7wdOD7pNWP6nG2wAJG0Inn/tlUWpHJEMma5BnVFjAePhtsVRZxj8k8VobdWghsE6fOE3KGETS9PMVKRlMtW8O3T7d8q5Z00e/Gj8VQbcRkY/BgFC32UYfcFVNspMoSporHzc+kpjvjh4V/4ubFrdPme9ZXt+glnSIHyyns54xVn7gufSLGhEaZmZfEUTmdXik8bXiFHwRYcObm6Y5+A4jJIRWZnWx5hdklShUzOpzJ3w6MOo84s5XJtEC28fbtHtrNO2XoWGI1O9J+4Y78LqmbmshpLK4RCWoSnpKd0vfeHrcL4t2roo1MonDJvn5buIP+aIyQfjnO9p+mXqc4SUtKZndUg5QqjcG9i9Fa1YoBBrnVBbb2Y2AP1QSV4hHtaskwOTuEJFHm6PORtsISB5xz2/WyaxolAkVS6lvgJR4ETvTmDG2o3j9VvXYxHOb93QY2Fkw1OGAMM7nDoelJVp7IVM4YzLFOV3J5A/KZ3y5hBWcpKzMENyvbu4bolSCdTmZi02FOWnlJkrTD2WeQ2dgs8jMmKIoZXEnBchR3/cETU4EwoJHgmJAJrtZ7XCjBWmwQawjync6x9hfSG0i2rqVfWu4Y6sMnxX4D71yumCl6/vQ6mIlIxMOC+szntIGjiON/E8iHlXL/7HJcRm5Ida1+6IB8aiOPkIRGRoKNL8xdypS9x6DFBcVOfFsP+5lUwaWN8uA43YOlZXRq8xlfOJHaAtxZSqpggdXKmowfP+TrWfs+c9OmxmhTmqBDqS
+ ARA:13230040|36860700016|7416014|23010399003|376014|82310400026|1800799024|921020|56012099006|5023799004|10067099003|11063799006|18002099003|6133799003|13003099007;
+X-Microsoft-Antispam-Message-Info: +JL36iTfDh60OfFPDA3nU4qCFkYVKhmole5zNvAEGy46jqhifYroJsUC4tv0N7yiRnJQ+eu4NPOhFgYrUxpDquTfJkRr9709KihmChl/JFqwvzcz36UFmAXdHjzOUwhTmw8scHKjaiTAk1LqQTtE0hrxqSQTDxJuGJ5EBhz4t0iJKwFa08nRbwgN12zazIo7FB2BkhumKIW5pEMCxu2lM8cY2Fa9Z2gmhTXK1ii9n8o29p2dQ6L7m/x48uyi98MR5cyMcDW7SG+4bqY5SolyA/qsTH3GicYwmoHoKUiZs+z+UUZxV3ErK6u5wxG3BCWd7k26TqtUH7azf90Lh32ko1td4hCWCk2kzBORM5SC34igUQPYu1Xqi0FQYqyOph9TnPAr0rndESGVHaamALZPGS+m4Vhhxb1TeMDMfpVyPZiIzPH4qQ+tk6OuOdkI3kBVOFse2nJeI3w61DZ3oNRI0zqFvPvq7gr6F3Qr2GFEpb9I38KknL7XKKkPpWGTlZO7moyUXdhZc8yvfzWcZxEM00in2pxYqxqV4AbKXBMlaZVvpAJHZGoQG+VAPDP8c69ESrzyHZWZFZlVH5jBpT1pL9a9XdIfcqidw6Eihh7IAMbEZ6oEZzSV3lOke5oExR0H1zyOq/MeccHnif+LtAc9WgpPBlr1vCbwyj+iYMQmiVPS84juXfoPNq/97ESlUr2Zf3TBpikOZpYhN5vAnlLTY0h/+waOax1XP406DUZiDujEseZVPoScbTtlDIyFoIOk
 X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700016)(23010399003)(376014)(82310400026)(1800799024)(7416014)(921020)(10067099003)(18002099003)(56012099006)(11063799006)(22082099003);
+ SFS:(13230040)(36860700016)(7416014)(23010399003)(376014)(82310400026)(1800799024)(921020)(56012099006)(5023799004)(10067099003)(11063799006)(18002099003)(6133799003)(13003099007);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: KKVKOpNF3HqBQWwIdpyS6DBkybJ2E4kQnXjKhsmSttPBF/MSEDuX+GHoNdcAmzx+6DQ6U5PdMx2ooKkUsDNW9+nFfJ0ap6+4VREB7nsWP5kFNXIVMW068os8BsT8W2bPLugLf6ITi0qfNsW3/vWB10Hix1zg5vpJVgE2xvVuy/Fa53dlTDYKgtAFU9aC/fLHTGzhsU8/BaE2NkS0v57DDqDVcLNlihzFldsStLVMyUswSqRnR1GgKvDPn8g9SS/5s0AoQxy/CpEAlO2wVTtkkEGBDBEqfa0Olxf+5wJHNH8YFgDRtQGXazwVMmeO5yKTsn1EasI8+xLo81XmCpWIOChlKHpTnd54KfJ09uODdPKsEQRBRMd/C1kmnXfSxPsJxqh3NL/Sp1+SUaFGiC81RHsZV3aqS/KBBZ70Pr/kmmQ3aVKC1Er0pyV8OOi6CPos
+X-MS-Exchange-AntiSpam-MessageData-0: xuv1CpdmLDNdypGoMllpV1hLV7jqO/Wjiw4e8iljIAbSaM0JWS6xs3a5folIGhSXyL8vlEwMBIbDoyiXK1w2/EJYHzN6o7uROEb22P4Tr9QtzxGuN5tRzfnzKgPklEbk2K+I5aCIL+HyqJjDc7Rd7j/CoWO6VoSWCfrg2V3qo7E2RGK4miEyzliZ74SZQQ94VcojdpbRAQu12uAc8Wa5WWBnkVRaCnkkYz1WUFy40/5dGALeahs4zecAePW4ZTtfjQL/qHRASOiicGJXC5pNqeTo8OGwjtIpX3PnOlp3udGLluYVCJcwK8jhKmEW5deALuniJppdx2zoes0uQK5ndLDjV2h/e9uA8rP54f9ICirbik86oTIP0XK7BwUSQQDRw5D4WtUAbA72Q1hhnTIGi4Qskd9byVj/M2xvs+BnWxxgfi5BJ3lG9sBgCl6QCWXt
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 18:45:36.7124 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 050f17fd-208c-45b2-e2c1-08df1422b2a5
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 18:45:02.6223 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4dca214f-6418-4c4d-54a7-08df14229e54
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002315.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002310.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7944
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6272
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
  envelope-from=mhonap@nvidia.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,88 +136,201 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manish Honap <mhonap@nvidia.com>
 
-mmap the kernel's HDM memory region so its host physical pages back a
-RAM-device MemoryRegion. It stays out of the guest address space until
-the guest commits its decoder and QEMU learns the GPA to place it at.
+This series adds QEMU support for passing a CXL Type-2 device (an
+accelerator with host-managed device memory, e.g. a GPU) to a guest via
+vfio-pci. The guest drives its own virtual endpoint HDM decoder and QEMU
+maps the device memory at the guest physical address the guest commits,
+while the host owns the host physical placement.
 
-AI-used-for: code (prototype)
-Signed-off-by: Manish Honap <mhonap@nvidia.com>
----
- hw/vfio/pci.c | 34 ++++++++++++++++++++++++++++++++++
- hw/vfio/pci.h |  1 +
- 2 files changed, 35 insertions(+)
+v1 [1] was reviewed by Junjie Cao and Cedric Le Goater. v2 addresses
+Junjie's comments; see "Changes since v1" below.
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 10b13f200d..4716266595 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3221,8 +3221,11 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
-     return true;
- }
- 
-+static void vfio_cxl_teardown(VFIOPCIDevice *vdev);
-+
- void vfio_pci_put_device(VFIOPCIDevice *vdev)
- {
-+    vfio_cxl_teardown(vdev);
-     vfio_display_finalize(vdev);
-     vfio_bars_finalize(vdev);
-     vfio_cpr_pci_unregister_device(vdev);
-@@ -3696,11 +3699,42 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
-         return false;
-     }
- 
-+    /*
-+     * The HDM memory is host physical. Set up the region, which installs the
-+     * fd read/write path, and mmap it for direct guest access; it is added to
-+     * the guest address space only once the guest commits its endpoint decoder.
-+     */
-+    if (vfio_region_setup(OBJECT(vdev), vbasedev, &cxl->mem_region,
-+                          cxl->mem_region_index, "cxl-mem", errp)) {
-+        return false;
-+    }
-+    if (vfio_region_mmap(&cxl->mem_region)) {
-+        /*
-+         * Without mmap the region falls back to the kernel's fd read/write
-+         * path, which works but traps every access. Warn rather than fail.
-+         */
-+        warn_report("vfio-cxl: %s: failed to mmap the HDM memory region; "
-+                    "performance may be slow", vbasedev->name);
-+    }
-+
-     cxl->enabled = true;
- 
-     return true;
- }
- 
-+static void vfio_cxl_teardown(VFIOPCIDevice *vdev)
-+{
-+    VFIOCXL *cxl = &vdev->cxl;
-+
-+    if (!cxl->enabled) {
-+        return;
-+    }
-+    if (cxl->mem_region.mem) {
-+        vfio_region_exit(&cxl->mem_region);
-+        vfio_region_finalize(&cxl->mem_region);
-+    }
-+}
-+
- static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
- {
-     ERRP_GUARD();
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 7fdd695704..06d15e807d 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -134,6 +134,7 @@ typedef struct VFIOCXL {
-     uint32_t comp_bar;               /* component BAR carrying that block */
-     uint64_t hdm_offset;             /* block offset within the component BAR */
-     uint64_t dpa_size;               /* size of the HDM memory region */
-+    VFIORegion mem_region;           /* HDM memory, mapped at committed GPA */
- } VFIOCXL;
- 
- struct VFIOPCIDevice {
+Base: qemu master, commit 28e7aad522.
+
+
+Kernel dependency
+-----------------
+
+Pairs with the kernel "vfio/cxl: CXL Type-2 device passthrough" series [2].
+The kernel exposes the device memory as an HPA-backed VFIO region, traps
+the HDM decoder block and runs its lock-on-commit FSM, handles the CXL
+DVSEC (including a guest-triggered reset), and reports two things through
+VFIO:
+  - A device flag (VFIO_DEVICE_FLAGS_CXL), and
+  - The component-register geometry (VFIO_REGION_INFO_CAP_CXL_COMP_REGS).
+That series in turn builds on the cxl_reset series [3].
+
+Status of the kernel side: v5 is on-list [2]; rebased onto cxl_reset [3]
+and addressed the v4 review comments. This QEMU series depends on the VFIO
+uAPI above (patch 1 imports it) and on the kernel servicing fd read/write
+on the HDM memory region, which QEMU uses as the fallback when the region
+is not mmap'd. Both are part of the same vfio-cxl series and are stable
+across those revisions.
+
+
+Sample supported topology
+-------------------------
+
+Guest disk, network, and system-RAM lines are omitted:
+
+  -machine virt,accel=kvm,gic-version=3,hmat=on,cxl=on,ras=on, \
+           highmem-mmio-size=4T
+  -object iommufd,id=iommufd0
+  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1
+  -device cxl-rp,port=1,bus=cxl.1,id=rport0.1,chassis=4, \
+          pref64-reserve=2G,mem-reserve=1G
+  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=256G
+  -device arm-smmuv3,primary-bus=cxl.1,id=smmuv3.0,accel=on,ats=on, \
+          ril=on,ssidsize=8,oas=48
+  -device vfio-pci-nohotplug,host=<BDF>,bus=rport0.1,id=dev0, \
+          iommufd=iommufd0
+  -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2
+  ... (one acpi-generic-initiator per guest NUMA node the HDM memory backs)
+
+
+Address model
+-------------
+
+The kernel fixes device memory to a host physical range before the guest
+sees the device, and hardware presents a firmware-committed, locked
+endpoint HDM decoder whose registers hold that host physical base.
+
+QEMU never exposes the host physical base. It virtualizes the decoder base
+registers in the trapped component-register read and returns the base of
+the device's CFMWS window, a guest physical address, so the guest only
+ever sees a GPA. QEMU maps the RAM-device region (backed by the fixed HPA)
+at that CFMWS base. The kernel never learns the GPA and the guest never
+learns the HPA.
+
+Because the decoder is already committed at boot, no guest commit write
+triggers the mapping. QEMU maps once the guest enables memory decoding
+(the Command register Memory-Space bit) and re-checks on any decoder
+control write, so the region enters the guest address space and the IOAS
+while the device is live.
+
+When the guest clears Memory-Space, QEMU withdraws the mapping, matching
+the kernel's revoke of the backing PTEs on the same write, so a guest
+access during the disabled interval cannot fault a zapped mapping and stop
+the VM; the enable path re-installs it.
+
+The pxb-cxl _DSM is here because an OS may treat PCI configuration as
+reassignable, and a BAR move would break the CXL.mem mapping. It applies
+only to the host bridge that carries the passed-through CXL device.
+
+
+Reset
+-----
+
+There is no QEMU reset patch. A guest CXL reset is a DVSEC write that
+lands in vfio config space and is handled by the host kernel, which runs
+the CXL reset sequence and stamps the outcome into DVSEC STATUS2. The
+kernel re-commits this firmware-fixed decoder across the reset, and the
+guest reaches its memory through the mapping QEMU already installed.
+
+
+Changes since v1
+----------------
+
+All from Junjie Cao's v1 review:
+
+  - The _DSM is emitted only when the machine asks OSPM to preserve the
+    firmware PCI configuration (preserve_config). x86 q35 passes false, so
+    its DSDT is unchanged and the bios-tables golden files stay valid.
+  - The endpoint count counts every present function, not one per slot, so
+    two functions cold-plugged at one slot no longer bind and map the same
+    window at the same base.
+  - The unrealize path (vfio_exitfn) drops the CXL mapping, so an ACPI
+    eject no longer leaves the vfio fd held through the region's owner
+    reference.
+  - The decoder-count read uses the shared cxl_decoder_count_dec() helper
+    with a floor of 1, instead of a local switch that stopped at 4 decoders.
+  - On commit, a guest decoder base that differs from the CFMWS base is
+    refused and logged rather than mapped at the window base regardless.
+  - The hotplug validation branch moved into the patch that registers the
+    machine-init-done notifier, so no intermediate commit can exit(1) on a
+    bad device_add.
+
+
+AI assistance
+-------------
+
+Parts of this series were drafted with the help of an AI coding assistant:
+the code was AI-prototyped, then reviewed, edited, and rewritten by me,
+and the documentation was drafted the same way. The assistant was also
+used to research the existing vfio and CXL APIs. I built the series and
+functionally tested it against real CXL Type-2 hardware. I take
+responsibility for the whole of every patch and certify it under the
+DCO via Signed-off-by. The patches carry AI-used-for: trailers,
+"code (prototype)" or "docs", per QEMU's code-provenance policy.
+
+This series adds new passthrough code, which is outside the mechanical,
+small-bug-fix, docs, and tests categories the policy covers without prior
+maintainer agreement. I am flagging that here rather than assuming it is
+in scope.
+
+
+Validation
+----------
+
+- Every patch passes scripts/checkpatch.pl --codespell --strict (patch 1
+  carries the expected imported-from-Linux header warning).
+- The series applies cleanly on the stated base.
+- Built and functionally tested against a CXL Type-2 device: guest boot,
+  decoder commit and mapping, and guest-triggered CXL reset.
+
+
+Pending items
+-------------
+
+- Multi-decoder, interleaved, and switched topologies are future work.
+- Trapped CXL RAS registers are planned as a new VFIO region subtype that
+  the existing region-by-subtype detection already handles.
+- The bios-tables test refresh is not needed now that the _DSM is gated on
+  preserve_config.
+
+
+References
+----------
+
+[1] [PATCH 0/10] QEMU: CXL Type-2 device passthrough via vfio-pci
+    https://lore.kernel.org/qemu-devel/20260813130623.2499506-1-mhonap@nvidia.com/
+[2] [PATCH v5 00/27] vfio/pci: Add CXL Type-2 device passthrough support
+    https://lore.kernel.org/linux-cxl/20260916183540.3813685-1-mhonap@nvidia.com/
+[3] [PATCH v12 00/12] PCI/CXL: Add CXL reset support for Type 2 devices:
+    https://lore.kernel.org/linux-cxl/20260910070808.1444264-1-smadhavan@nvidia.com/
+
+
+Manish Honap (10):
+  linux-headers: Update vfio.h for CXL Type-2 passthrough
+  hw/vfio/region: Add vfio_region_setup_with_ops()
+  hw/vfio/pci: Detect a CXL Type-2 device and read its geometry
+  hw/vfio/pci: Enforce the passthrough topology for a CXL device
+  hw/vfio/pci: Back the CXL memory with a RAM-device region
+  hw/vfio/pci: Bind a CXL device to its fixed memory window
+  hw/vfio/pci: Map the CXL memory on the guest decoder commit
+  docs/cxl: Document CXL Type-2 device passthrough
+  hw/arm/smmu-common: Allow pxb-cxl as an SMMUv3 primary bus
+  hw/pci-host: Emit a _DSM on pxb-cxl to preserve firmware PCI config
+
+ docs/system/devices/cxl.rst               |  45 ++
+ hw/acpi/Kconfig                           |   1 +
+ hw/acpi/cxl-stub.c                        |   2 +-
+ hw/acpi/cxl.c                             |  12 +-
+ hw/acpi/pci.c                             |  40 ++
+ hw/arm/smmu-common.c                      |  19 +-
+ hw/cxl/cxl-host-stubs.c                   |   5 +
+ hw/i386/acpi-build.c                      |   2 +-
+ hw/pci-bridge/pci_expander_bridge_stubs.c |   6 +
+ hw/pci-host/gpex-acpi.c                   |  42 +-
+ hw/vfio/pci.c                             | 745 ++++++++++++++++++++++
+ hw/vfio/pci.h                             |  27 +
+ hw/vfio/region.c                          |  27 +-
+ hw/vfio/vfio-region.h                     |   3 +
+ include/hw/acpi/cxl.h                     |   2 +-
+ include/hw/acpi/pci.h                     |   1 +
+ linux-headers/linux/vfio.h                |  24 +
+ 17 files changed, 947 insertions(+), 56 deletions(-)
+
 -- 
 2.25.1
 
