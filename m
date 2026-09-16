@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD37C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B286C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lcS-0001JW-Nl; Wed, 16 Sep 2026 05:07:56 -0400
+	id 1x6lc9-0000x0-Dz; Wed, 16 Sep 2026 05:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcQ-0001Fw-8t; Wed, 16 Sep 2026 05:07:54 -0400
+ id 1x6lbx-0000lC-6v; Wed, 16 Sep 2026 05:07:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lcO-0007IJ-Ld; Wed, 16 Sep 2026 05:07:54 -0400
+ id 1x6lbu-00074F-S0; Wed, 16 Sep 2026 05:07:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=9KSDexL2jFPWx8fQO4DDDN2LzRknMZSOyzdf5oS754I=;
+ t=1789549558; bh=sKTxxlkev9MIXdsmYr5x9Qj8Itg/DTRI/GAhfCDBzqM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bviBcZ+7J+6cDL8h0EdfxydOH14ekAfFHz4PHclt4ZlZ4nBog4b/TmE5QWkA9B9y8
- NIw+YwuuBkkNv9lzP+Iu6vA4EWjAwoWt2sxtcfuSPD3qiPGn+Hvk9Hj3DCRA2f2fz3
- huYI8F1m7FFhYGEN8TNoeUzcBSlQBR3lxnkw08qYPM6iNHYOZ5SaUeZAdXcHkmHAtj
- 25FPbKGHEm+0JRzvSgcqKC1MFezkN7OR/stMN/p5/yPk/Q9CgRWXpbs2RPKfA2Qb4z
- CDPmIrHE3D8dwJXwgTXOHDSFVgboJYb4yZpmpgPwtscjHkDQKBohY0DMQE153i5oxU
- SylIXJL56H4FQ==
+ b=ccetPvAAK+VqHKJ68xOQQjbcEgja/S3oVherbbR1eBi+fI8VqyYrWjxgQVgoBQvYH
+ nVxX6LbjVmf3Ml5NqCr6XP3R+URwLFDd2G1AujMEgLB+qStWOlVzJvngskrYApeuvh
+ EKFNFtxeZvVJjCwnlh3KJeeYHoAhMExUNni63DF50Kzx8eUXMpOZtxRhO7zAfRDOJD
+ va1tFJXPdnRB5BSSWleg0RJUlidm6O/NbUmL1badP+LF4Ib26sRWMeO+4rxEuUFw02
+ A4yrnJ6Dpd9aNdRpVnDWwQ8PLZLmitchULWNqDsH+PoCF8VH4cpoQiMjbR2TgkO67H
+ bU2eX/dZGWVtQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BDA501D56C6;
+ by isrv.corpit.ru (Postfix) with ESMTP id A61CE1D56C1;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 69340429E11;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 51E96429E0C;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 375925A77D; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 2856D5A773; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 18/57] tests/qtest/ide-test: cover a CHS translation
- with zero sectors
-Date: Wed, 16 Sep 2026 12:03:42 +0300
-Message-ID: <20260916090516.677749-18-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 13/57] target/riscv: tt-ascalon: Enable Zkr extension
+Date: Wed, 16 Sep 2026 12:03:37 +0300
+Message-ID: <20260916090516.677749-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,107 +72,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Ask for zero sectors per logical track via INITIALIZE DEVICE PARAMETERS
-and check that the command is aborted, that IDENTIFY DEVICE still reports
-the translation that was in effect before, and that a CHS read then
-completes normally rather than killing QEMU with SIGFPE.
+Ascalon supports Zkr and the SEED CSR.
 
-Cc: John Snow <jsnow@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit 0905ef5b6d483da0e27831152fdde059595244b9)
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Message-ID: <20260630024952.1520546-7-joel@jms.id.au>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 569aa6280d141129c705c361350705832b33cf88)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index b36b0f8875b..99aa5e039ca 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -95,6 +95,7 @@ enum {
- 
- enum {
-     CMD_DSM         = 0x06,
-+    CMD_READ        = 0x20,  /* READ SECTOR(S) */
-     CMD_DIAGNOSE    = 0x90,
-     CMD_INIT_DP     = 0x91,  /* INITIALIZE DEVICE PARAMETERS */
-     CMD_READ_DMA    = 0xc8,
-@@ -1194,6 +1195,66 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
-     free_pci_device(dev);
- }
- 
-+/* Zero sectors per track has to abort (ATA-5 8.16.6), not divide by zero */
-+static void test_specify_zero_sectors(void)
-+{
-+    QTestState *qts;
-+    QPCIDevice *dev;
-+    QPCIBar bmdma_bar, ide_bar;
-+    uint16_t buf[256];
-+    uint8_t data;
-+    int i;
-+
-+    qts = ide_test_start(
-+        "-blockdev driver=file,node-name=hda,filename=%s "
-+        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
-+        tmp_path[0]);
-+
-+    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-+
-+    qpci_io_writeb(dev, ide_bar, reg_nsectors, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
-+
-+    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_status), ERR);
-+    assert_bit_set(qpci_io_readb(dev, ide_bar, reg_error), ABRT);
-+
-+    /* The refused request has to leave the default translation in effect */
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_IDENTIFY);
-+    for (i = 0; i < 256; i++) {
-+        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
-+    }
-+    g_assert_cmpint(buf[55], ==, 16);
-+    g_assert_cmpint(buf[56], ==, 63);
-+
-+    /* READ SECTOR(S) of CHS 0/0/1, which used to crash QEMU */
-+    qpci_io_writeb(dev, ide_bar, reg_nsectors, 1);
-+    qpci_io_writeb(dev, ide_bar, reg_lba_low, 1);
-+    qpci_io_writeb(dev, ide_bar, reg_lba_middle, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_lba_high, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_READ);
-+
-+    data = ide_wait_clear(qts, BSY);
-+    assert_bit_set(data, DRQ);
-+    assert_bit_clear(data, ERR | DF);
-+    for (i = 0; i < 256; i++) {
-+        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
-+    }
-+    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR | DF | DRQ);
-+
-+    /* A supported translation is still accepted */
-+    qpci_io_writeb(dev, ide_bar, reg_nsectors, 32);
-+    qpci_io_writeb(dev, ide_bar, reg_device, 7);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
-+
-+    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR);
-+
-+    ide_test_quit(qts);
-+    free_pci_device(dev);
-+}
-+
- static void test_cdrom_pio(void)
- {
-     cdrom_read_impl(1, CDROM_PIO);
-@@ -1265,6 +1326,7 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_func("/ide/read_native", test_specify);
-+    qtest_add_func("/ide/specify/zero_sectors", test_specify_zero_sectors);
- 
-     qtest_add_func("/ide/identify", test_identify);
- 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 87b9afcf241..663c486a4df 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3188,6 +3188,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zba = true,
+         .cfg.ext_zbb = true,
+         .cfg.ext_zbs = true,
++        .cfg.ext_zkr = true,
+         .cfg.ext_zkt = true,
+         .cfg.ext_zvbb = true,
+         .cfg.ext_zvbc = true,
 -- 
 2.47.3
 
