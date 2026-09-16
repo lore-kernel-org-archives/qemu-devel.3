@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDB0C88E7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC204C88E77
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n4X-0002EW-Lr; Wed, 16 Sep 2026 06:41:01 -0400
+	id 1x6n4A-0008QF-DQ; Wed, 16 Sep 2026 06:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3z-0008PX-Ms; Wed, 16 Sep 2026 06:40:29 -0400
+ id 1x6n2P-00061I-B3; Wed, 16 Sep 2026 06:38:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n3x-0002Pi-99; Wed, 16 Sep 2026 06:40:26 -0400
+ id 1x6n2N-0001zz-J5; Wed, 16 Sep 2026 06:38:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554957; bh=HyWqKYhBvbTYV9lTLukeqj5VyQJ/c0jJwPX3ymcevcU=;
+ t=1789554957; bh=/F/0oo0mgbM4IIAd8nPjrZploeVW8AfdHJaJHuohFLQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hsEee2DykrEeqs1zqnWQbtVpGznTS6TfSazCfeHdGbM99VWYYKdFH0Y3agiNIZzuk
- /FUIQfhyRcZKmQyW4k6OW4hrRziFca786cmJ/hDW5dQI6yzipMDih5pznvweODnALO
- zxpSA/CjmB+Q7WeR6Or1OY5HImYYwdylSTRfSPUMaPP39AEePXtAQJ4pIYx5i2HW1m
- 6sqKOi4F/eMoSF/hW7FacXY03Wwr+fEg2gmIS1btjHtll/PQcq924zaReURuJ+qo0o
- NGVjJnYybSaBn1ZLl5OsMnohmHu0jQRX7EdgENm7Dj1T1zqK6d+Qc/Nu/0KtyUyupB
- SgQCDUA8fcdCg==
+ b=H/a1PR2w7etKkAmT13fe+Gl4tRBEB0COlnAxET/YNqytki5X14GnYFc6D7cvhXKBc
+ Wx55eJI6A+IBhAqotF3WkO1IU/v97jZPktMDCYbcfua5Zx8Y9rNu7fn8RurjF8bjpR
+ FLv8nMp1vnV575ctl4e+YY4Qr7pQg60e0isJMvB2acn8LtS0Dwmclmudvj9C/r0w1I
+ 4STagBWnC4gU6ggt3N/J0pFQD9QHNdgw070NDxlXAuzSLenRU1SrCSNDUJopzjbDEb
+ fMfbgXu+Ol2lW+wBlrI3dIuI/O/iigPy894yw+nyNmE2yKj9gKwaY6bDKsZnQ+NnBT
+ G5iPe8Ari7lFQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F10771D5827;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0FC8B1D5810;
  Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BC2BD429F95;
- Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CF170429F6E;
+ Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A480E5A843; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
+ id B791F5A819; Wed, 16 Sep 2026 13:36:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 49/56] ui/cursor: make the cursor refcount atomic
-Date: Wed, 16 Sep 2026 13:36:07 +0300
-Message-ID: <20260916103622.684817-49-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 28/56] target/arm: Make Thumb T1 hint space UNDEF
+ before v6T2
+Date: Wed, 16 Sep 2026 13:35:46 +0300
+Message-ID: <20260916103622.684817-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,105 +72,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-A QEMUCursor outlives the call that publishes it and is shared between
-threads, but its refcount was a plain int with no single lock covering
-every user. qemu_console_set_cursor() takes and drops references from
-the main loop under the BQL alone, hw/display/qxl-render.c does so from
-the SPICE display worker thread, and ui/spice-display.c does so under
-SimpleSpiceDisplay::lock. ui/cocoa.m and ui/dbus-listener.c add two more
-threads.
+The "hint space" is a region of the encoding space which is defined
+to NOP if not specified as an architected instruction, so that future
+instructions can be added there which fall back to NOPs on older
+CPUs.  In the A32 encoding, this hint space was carved out of the MSR
+(imm) insn by using the fact that a field_mask (bits [19:15]) of
+0b0000 meant that an MSR (imm) would set no parts of the CPSR from
+the immediate, so it was always NOP on existing CPUs.
 
-The pair that collides is qemu_spice_cursor_refresh_bh(), which drops
-ssd->lock before calling qemu_console_set_cursor(), and the worker
-refcounting the same cursor under that lock. A lost increment frees the
-cursor while the console still points at it, so the console's next unref
-decrements memory the allocator has already handed out again. Locking
-ssd.cursor is not enough on its own: with that done, this is the race
-that remains.
+For the T1 encoding, the hint space is in a range that used to UNDEF
+in Armv5, and so the hint insns and the NOP region must all UNDEF
+before v6T2.  Rather than putting this check in the trans functions
+for each hint insn and for the NOP space (which is a lot of places,
+and awkward since those trans functions are often shared with the A64
+and A32 encodings), put in a decode line that covers the whole space
+which we check before any of the hints and which will explicitly
+UNDEF if necessary.
 
-Assert on the value the decrement observed while here. Dropping a
-reference that was never taken used to be silent, because the decrement
-lands in the allocator metadata of the freed chunk: nothing is logged,
-the object is not freed twice, and the process runs on until some later
-allocation walks the damaged free list and faults, arbitrarily far from
-the code that caused it.
-
-Fixes: 0b2824e5e48a ("spice: use bottom half instead of refresh timer for cursor updates")
 Cc: qemu-stable@nongnu.org
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260903192647.2677279-3-den@openvz.org>
-(cherry picked from commit 1063bbb711856353625d78a9c498988470e91b22)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4208
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260821132550.168896-4-peter.maydell@linaro.org
+(cherry picked from commit 2931a675e9d3fcddedf673509fe9759955fc616d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 29bf7228883..3634956949a 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -126,6 +126,15 @@ typedef struct QEMUCursor {
- } QEMUCursor;
+diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
+index 9a8f89538ac..43cd36e949c 100644
+--- a/target/arm/tcg/t16.decode
++++ b/target/arm/tcg/t16.decode
+@@ -224,6 +224,9 @@ REVSH           1011 1010 11 ... ...            @rdm
  
- QEMUCursor *cursor_alloc(uint16_t width, uint16_t height);
+ {
+   {
++    # Before v6T2 this was not NOP space and must UNDEF
++    MAYBE_UNDEF_T1_HINT 1011 1111 ---- 0000
 +
-+/*
-+ * A cursor may be shared between the main loop, a vCPU thread and a
-+ * display backend's own thread, so the refcount is atomic and these two
-+ * may be called from any of them.  The object itself is not otherwise
-+ * thread-safe: take a reference before publishing the pointer anywhere
-+ * another thread can reach it, and never dereference a cursor you do
-+ * not hold a reference to.
-+ */
- QEMUCursor *cursor_ref(QEMUCursor *c);
- void cursor_unref(QEMUCursor *c);
- QEMUCursor *cursor_builtin_hidden(void);
-diff --git a/ui/cursor.c b/ui/cursor.c
-index 6e23244fbe6..69d27d49a13 100644
---- a/ui/cursor.c
-+++ b/ui/cursor.c
-@@ -1,4 +1,5 @@
- #include "qemu/osdep.h"
-+#include "qemu/atomic.h"
- #include "ui/console.h"
- 
- #include "cursor_hidden.xpm"
-@@ -103,24 +104,28 @@ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height)
-     c = g_malloc0(sizeof(QEMUCursor) + datasize);
-     c->width  = width;
-     c->height = height;
--    c->refcount = 1;
-+    qatomic_set(&c->refcount, 1);
-     return c;
+     YIELD       1011 1111 0001 0000
+     WFE         1011 1111 0010 0000
+     WFI         1011 1111 0011 0000
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 3d352497a70..86c3c30a477 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -3340,6 +3340,24 @@ static bool trans_NOP(DisasContext *s, arg_NOP *a)
+     return true;
  }
  
- QEMUCursor *cursor_ref(QEMUCursor *c)
- {
--    c->refcount++;
-+    qatomic_inc(&c->refcount);
-     return c;
- }
- 
- void cursor_unref(QEMUCursor *c)
- {
-+    int refcount;
-+
-     if (c == NULL)
-         return;
--    c->refcount--;
--    if (c->refcount)
--        return;
--    g_free(c);
-+
-+    refcount = qatomic_fetch_dec(&c->refcount);
-+    assert(refcount > 0);
-+    if (refcount == 1) {
-+        g_free(c);
++static bool trans_MAYBE_UNDEF_T1_HINT(DisasContext *s,
++                                      arg_MAYBE_UNDEF_T1_HINT *a)
++{
++    /*
++     * The Thumb T1 encoding hint space was only defined starting
++     * in v6T2 for A-profile. For M-profile it always exists, even
++     * in v6M.
++     */
++    if (arm_dc_feature(s, ARM_FEATURE_M) ||
++        arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
++        /* Allow decode to fall through to the hint insns and NOP space */
++        return false;
 +    }
- }
- 
- int cursor_get_mono_bpl(QEMUCursor *c)
++    /* On the earlier cores, we must UNDEF */
++    unallocated_encoding(s);
++    return true;
++}
++
+ static bool trans_MSR_imm(DisasContext *s, arg_MSR_imm *a)
+ {
+     uint32_t val = ror32(a->imm, a->rot * 2);
 -- 
 2.47.3
 
