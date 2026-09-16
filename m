@@ -4,102 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06B3C88E75
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Sep 2026 23:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F8FC88E75
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 00:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6cwU-0004df-Pb; Tue, 15 Sep 2026 19:52:02 -0400
+	id 1x6dOH-00071x-TC; Tue, 15 Sep 2026 20:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1x6cwR-0004dJ-0L
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 19:51:59 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1x6dOG-00071k-G3
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 20:20:44 -0400
+Received: from mail-pz2-x17.google.com ([2607:f8b0:4864:3b::17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1x6cwP-0004lG-Hl
- for qemu-devel@nongnu.org; Tue, 15 Sep 2026 19:51:58 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-85f0fc1fd8eso213633b3a.1
- for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 16:51:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789516316; cv=none;
- d=google.com; s=arc-20260327;
- b=KjKMGkAGFZZgGFzMqkHEsJGvBQCi6w1Q+OcSnW5o+ObhGtXqUaUIjaLlxDFZHXL7Or
- XCeDxvtLsr52zepiuGyF+VRa5vYKuBKS29Ds6rnjEqzXe9CWA7L+ASg4P7Z8wPx+SELU
- lw2XkUaI6A6/xMp+n404zp8VOqgdel7b8xiQa9l1pgIg8twNohGmc59w1kvKP4lEvJ8O
- IHedr9odEWtb+96E9BgVdS5eeX/d4xiiw3NHZr3PtHFO20yDhYfs9PibFXY5hEez1p0b
- 3V4xecsl0d2yXjhzLB7u0hPaqZFws6+G4mk2DUvUfjiZj7MJ+Le3Ute5/kNiuUSMyetx
- LSzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DcTktokyCWgS/l+JQBzl0U6NqJPXYg2gW7F4ECFbL5M=;
- fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
- b=RrDaVFvVqs/WYXf3p+XBgVhqzo2U4nLaCd6coYI+vaefZUSDbrhS7cKGkD2jG3oRUY
- SGiWoXfFpPs68boX1pQnf2O/oqclRZhZK8f6KGbmMhvoxLfOOohVOWlKZk9jb8JGw+TQ
- RjjnCLE0x36xwa1qH6SagyY522QtMtyKmU5Fleos+NEXh04O6tyZcRaPYu1GCVsmjDjo
- JncXc35to7Q3U6rE7XRiv3DZGdW5/8s5YCDLXRMP81egq4nNaiEyEzgTcppmVcFburgi
- 0/JAuwwOTtdjMBwnwGcaMxbwNT2L4QnJbJZQrQi4QjxpyuNUoY7xPTaSEzkZCpp0K58p
- slpg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1x6dOE-0007vG-Va
+ for qemu-devel@nongnu.org; Tue, 15 Sep 2026 20:20:44 -0400
+Received: by mail-pz2-x17.google.com with SMTP id
+ 41be03b00d2f7-cc1cea48edcso257258a12.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Sep 2026 17:20:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789516316; x=1790121116; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=DcTktokyCWgS/l+JQBzl0U6NqJPXYg2gW7F4ECFbL5M=;
- b=JSNJwwXp2GrDYlLa/qI9HGo3FA5uw7fN/yibyWId7JtMuhOn+4ptlrW5+VgEFWYOGd
- q7V3vLWXuJmKrF5I/6pHeZwkPTIXsjqZVJmKFKmnuoU39iDwIc/YtsDG1C2ogX9mqfl/
- xtnqw+7fcEGFrl6v8a27pM8cXhIBnM5sp1+1zxPgrj26nO2MY89YXhwXpYGNkibkPcZp
- M4B4YbPzPrSK2gblER+b+y19OAzO8QQCtPsABaTamBJfb6Cy94z6dwbkyHFph4LswhjQ
- yjgBVpYPEPXpd3seI+g6orQ3fVA669sSLJbB8wbn5wzSfaZvXhvh2T4J0gr3vlXukLR6
- 8KpA==
+ d=gmail.com; s=20251104; t=1789518041; x=1790122841; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PXYtwTHnaHGmGuPdZD07fr4p1RgWffwiJHcJgMk0B/o=;
+ b=kMf3CW/12pq4g8j/JWsazcpHBCC5rUk9Z4RU06BC0h7BpCsCI/fIfOqwsqqad+k0Jh
+ uhyo+d70by5+32iZfJi/lc5OmDdS8xWP9BY4esj7Q0rt+Z0sCh3woE5hINbqSTeX1m/8
+ vR6yTXbWZkg4SRbb85pSX/h2rOmrw9b7QY+pDfMgG6uMqp63sxAAaNVUxeKn95eMtEfE
+ sMG//GorBteQsf7Bv4lPWuo/G6sUaWf0jbIWBThA+WSkILMl5Q4wLCT38zoZcWPQKbS0
+ 4TvYifPbHjJ7VA7YndMZ9cj/EYci+a6Q0cxfdx42c8u61LhL2t0VqktPB/2u+YfviGoj
+ ocfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789516316; x=1790121116;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=DcTktokyCWgS/l+JQBzl0U6NqJPXYg2gW7F4ECFbL5M=;
- b=fWkYLnOyVz2MUOYMDcVhxRISGhJwZgBbudwlzPpB7VnFGa+6Sro7sRsxFjz601u/rt
- EZdd/wyyiJNyIKDqVumCYTjiOVI3JyM8CGbfjeD+zEXbqnYOPoUPiVkY5wBF4/bpcUtd
- DguWf76fCiI3GcAaDgqth66PdIGZQyHsl9LJCc25YqOy43lLPF6yrIloEIFDRWUR8lq2
- yd+x4dMQJA+1VP0Nm6FpU1DMp4VW2BgiIegRfNWai+ZajsvqGZ5d2KzHDTDaxrRokEXy
- vm1MJhJyGd+xBm7zRLUONeRrrEK3pnBVvXt7dy4sxO4GfIYGphnuWLab/74+JTtkPhBl
- EL5Q==
-X-Gm-Message-State: AFuF++kyEEtI9QdCSxbuCPGfVO08qLMbZhuvwkF2EU5aT8GRq5n52d8+
- UPzdxuDZaaZsbwKsN5d6oXgd9RKJbO+gM4BX12i3XVs7OlAGLnrE+VMXM+DCaoK7kLTVs3u9ok6
- lyDSWH4i29IqH+jKwYXDCrNMMmCuORhU=
-X-Gm-Gg: AYBFou0EklfOo2ZY2+RHqF4/Q95Zh5qUF2qBmyhIRN5T0zKIl/WHon4yuZbl6gJWFLk
- PHToCQEg4gYN6or37VPMovyFMNdabvIRsg/Ob0LT6dVOgwBYjYhSgbQ7NhRBeACawWQjbvgy6d4
- UFJqYmm7Y7OG2ipzSiYC3jZ8D/xDyW/htzBpjJnHjH95QBzMoZphlXcDzlewBjIoFHPqHruuxNZ
- NF2wekJVE0iNE34JrgCFW1uEjcA54NiLgmKZ7M8w0ymQP/c5asJxRkHRU/2UGFgEi+HEHhZ3IF8
- Xr7NGxxinnnGhJNW6wLbu/EMfCa9Ny5oLlucZCbVL3B8a+EnW+4+dVJH0fPMCYIPyqZXulbEsKD
- 7ax//w1Ae0mqchgzB4uNgbA==
-X-Received: by 2002:a05:6a20:6f8c:b0:3c2:dcdd:a85a with SMTP id
- adf61e73a8af0-3dd5f5dd0a9mr1160118637.13.1789516316052; Tue, 15 Sep 2026
- 16:51:56 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789518041; x=1790122841;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PXYtwTHnaHGmGuPdZD07fr4p1RgWffwiJHcJgMk0B/o=;
+ b=aRBWe1UmFOAt8qYcZSx9t2YWTPKxoScV7nwxMeA6FeH87pnfudMAEYwovSiZQ6Qn6U
+ Ll/nDY8JM1y59384SkrT5nWwZ3zGqqp1iJxg4fq17oQkd3AtGDpE6zbZcxwgJ7uHDaiH
+ hdQNiV1qenLUywP9Exvg8bltLFqYz3eWW/yUOIE9YMAKYBKicpIWX8v90uC86mrPs1AZ
+ qWZ9nB4DiUSL5AkQn392ZWCIME0Yxk3KUPgJoYzgJfBBW1pzdbvGFH6v1vhjRYjqI/J8
+ /Qi0GgYb8QmPxXfCexM2RRL03nga8L6MNgeheuvnO7J2uBi/CTHxYh+OkKv9X00siQCV
+ GJWQ==
+X-Gm-Message-State: AFuF++n+RSt4aiczcfGiIqyIyNk1GkQCcOvz/B28qJ60g6Szk20CGXE7
+ TTrJBMr3JvPhck1Qq8wL3ImGipybIHbeamz5tDkEwMBiY5DNIXA3mOfwLsCIy6zJ
+X-Gm-Gg: AYBFou3wpHV4c2LbSOp2Xlu16widuwMwle95it75pjX71Sv3IPYPnA0REyqOIcaNoQU
+ BwoqtTcvMoHfSTgEFh8YylaSg4VfSqzHvZ1cNbYeGoG6o3T5kT76O9DhCvlG1t58dqWpAes11ux
+ j1ye5bWsCgRGN6MQcSsNwk/PKfbM3A3YeAFdi4Lefw+6QXVhaoJENnh8putf1Xgef8MpB5LQc8b
+ 00HMJvHJSdlHZBPa5On5fF4KHtFCPpSQ73EZLn5wYug4a6S0Mk55WaOp0Uqcko0GK3K/sGgOpJo
+ U8j5Zejude250RvcS8SWbKNGBJhx65tGB4ZAOSX190VC+hws9z6beKPLOlaRaEo2/OZojZyk4AU
+ q7J0kBqlK+HPJtlnQiZcx/wr/w2wuMWrP6n1yoSOTNT9r3thYbp54T3Z43ypPkT6Fd3Ra8QhiQI
+ 6CyW5Y0Q9kh+sw7SDbRHW7RgHwKbLM3VfDK6rmK7wc/1LELAXBgY832Zk7vfitLTur1WMrPqjWt
+ j7uGTOw4qldocXekZIcer2mZyws
+X-Received: by 2002:a05:6a21:4a98:b0:3dd:5831:ef5c with SMTP id
+ adf61e73a8af0-3dd5f5af371mr1422097637.17.1789518040876; 
+ Tue, 15 Sep 2026 17:20:40 -0700 (PDT)
+Received: from cxlqual.. ([220.120.90.131]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc50ab8ae01sm609027a12.18.2026.09.15.17.20.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Sep 2026 17:20:40 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+To: qemu-devel@nongnu.org,
+	linux-cxl@vger.kernel.org
+Cc: jic23@kernel.org, mst@redhat.com, junjie.cao@intel.com, dave@stgolabs.net,
+ Anisa Su <anisa.su@samsung.com>
+Subject: [PATCH] MAINTAINERS: Add Anisa Su as a reviewer for CXL
+Date: Wed, 16 Sep 2026 09:21:28 +0900
+Message-ID: <20260916002143.777233-1-anisa.su@samsung.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260915154502.4106597-1-brian.cain@oss.qualcomm.com>
- <20260915154502.4106597-5-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260915154502.4106597-5-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Tue, 15 Sep 2026 17:51:44 -0600
-X-Gm-Features: AcwNN1Xff25ia5jSxblIBY3SW-oXsoIK4VamULZ2ueajxuMeUvEgEPolDyvcIQ8
-Message-ID: <CAATN3NpD++_Tkdmd+4oF7qT=KfyT4khDaJJ88oXZo=TG1HiNCQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] tests/functional/hexagon: add bestwait systest
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: multipart/alternative; boundary="000000000000568f83065b8e3caa"
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pz2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::17;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pz2-x17.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,71 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000568f83065b8e3caa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I contributed the FMAPI DCD mailbox command support in hw/cxl and also
+work on the Linux driver side, which is developed and tested against QEMU's
+CXL emulation, so I would like to be Cc'd on incoming CXL changes to help
+with review.
 
-On Tue, Sep 15, 2026 at 9:45=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm=
-.com>
-wrote:
+Suggested-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Anisa Su <anisa.su@samsung.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  tests/functional/hexagon/test_systests.py | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/tests/functional/hexagon/test_systests.py
-> b/tests/functional/hexagon/test_systests.py
-> index 2779efa9172..15c6d22acfa 100755
-> --- a/tests/functional/hexagon/test_systests.py
-> +++ b/tests/functional/hexagon/test_systests.py
-> @@ -93,6 +93,9 @@ def test_semihost(self):
->      def test_dtg_interrupt(self):
->          self.run_exit_zero("dtg_interrupt")
->
-> +    def test_bestwait(self):
-> +        self.run_exit_zero("bestwait")
-> +
->      def test_mmu_multi_tlb(self):
->          self.run_exit_zero("mmu_multi_tlb")
->
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5bf895732c..14412a6b4c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3334,6 +3334,7 @@ F: docs/devel/migration/CPR.rst
+ Compute Express Link
+ M: Jonathan Cameron <jic23@kernel.org>
+ R: Junjie Cao <junjie.cao@intel.com>
++R: Anisa Su <anisa.su@samsung.com>
+ L: linux-cxl@vger.kernel.org
+ S: Supported
+ F: hw/cxl/
 
-Acked-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+base-commit: 302c2f2df4d8b2eec81c38ee5d5b04e8e6e40d31
+-- 
+2.43.0
 
---000000000000568f83065b8e3caa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 15,=
- 2026 at 9:45=E2=80=AFAM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
-alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">Signed-off-by: Brian Cain &lt;<a hre=
-f=3D"mailto:brian.cain@oss.qualcomm.com" target=3D"_blank">brian.cain@oss.q=
-ualcomm.com</a>&gt;<br>
----<br>
-=C2=A0tests/functional/hexagon/test_systests.py | 3 +++<br>
-=C2=A01 file changed, 3 insertions(+)<br>
-<br>
-diff --git a/tests/functional/hexagon/test_systests.py b/tests/functional/h=
-exagon/test_systests.py<br>
-index 2779efa9172..15c6d22acfa 100755<br>
---- a/tests/functional/hexagon/test_systests.py<br>
-+++ b/tests/functional/hexagon/test_systests.py<br>
-@@ -93,6 +93,9 @@ def test_semihost(self):<br>
-=C2=A0 =C2=A0 =C2=A0def test_dtg_interrupt(self):<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0self.run_exit_zero(&quot;dtg_interrupt&qu=
-ot;)<br>
-<br>
-+=C2=A0 =C2=A0 def test_bestwait(self):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.run_exit_zero(&quot;bestwait&quot;)<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0def test_mmu_multi_tlb(self):<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0self.run_exit_zero(&quot;mmu_multi_tlb&qu=
-ot;)<br></blockquote><div><br></div><div>Acked-by: Taylor Simpson &lt;<a hr=
-ef=3D"mailto:ltaylorsimpson@gmail.com">ltaylorsimpson@gmail.com</a>&gt;</di=
-v><div>=C2=A0</div></div></div>
-
---000000000000568f83065b8e3caa--
 
