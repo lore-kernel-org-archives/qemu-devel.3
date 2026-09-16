@@ -4,108 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 847E7C982C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84795C982C3
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6rHC-0004lY-Qx; Wed, 16 Sep 2026 11:10:23 -0400
+	id 1x6rHJ-0004mg-EN; Wed, 16 Sep 2026 11:10:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6rH8-0004jS-0E
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x6rHC-0004lr-To
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6rH1-0004EI-N6
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:16 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x6rH6-0004Gc-Ra
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789571409;
+ s=mimecast20190719; t=1789571415;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cadIf6707X9oo2vFy6VRSXmLT7YgvB4txOMXdRDkuHk=;
- b=cNy19N3kEcFfAnKYadjwhvVdhl50s9iKQn0jL8wP+vSmsAA/8fjZK8wEqmsm+QSNYg5EZ8
- OcM3UWRWC3UA1/aMyGt1wX1NfUZw3Itwa7I8eQGwKLI9Kxrz+du+U63q9LZExgKu5+AumX
- JPPEa0G+YH3E0PkrZGGtaDpqW39FdpU=
+ bh=PIT3TyieWx42Sg74YtgUs+uuEvQmhcL3DRQI3EBPTcA=;
+ b=TvDG9FfYscjhQmEVy8tsiKuRge9/gN9i7yih0YHJFyte/010hGSMADAapsqn/jVUGBVCKV
+ +ckizGbTEXbK7RjqwqGDjricpQtYHUSRivUUxP63I0JnbvxW9rN+i/orZdzZeGCK85KCCU
+ 6ywEngqqOHMVZ6+97MdYezv6D42CeJM=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-KWHBVlaUMLS5ySWxVZUSqA-1; Wed, 16 Sep 2026 11:10:06 -0400
-X-MC-Unique: KWHBVlaUMLS5ySWxVZUSqA-1
-X-Mimecast-MFC-AGG-ID: KWHBVlaUMLS5ySWxVZUSqA_1789571405
+ us-mta-435-wU81QP8lOyqPTKdPCEmz0g-1; Wed, 16 Sep 2026 11:10:13 -0400
+X-MC-Unique: wU81QP8lOyqPTKdPCEmz0g-1
+X-Mimecast-MFC-AGG-ID: wU81QP8lOyqPTKdPCEmz0g_1789571412
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e73659ac5so43038075e9.2
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:10:06 -0700 (PDT)
+ 5b1f17b1804b1-49cf4cc2125so25134085e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:10:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789571405; x=1790176205; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=cadIf6707X9oo2vFy6VRSXmLT7YgvB4txOMXdRDkuHk=;
- b=biASkbEhWZUwXFg0/5wENEJmB57YnNNGgVR5O6MFPNtNDpH1Qvz9YCyZapHL9R9Wf8
- nNtMJ+3kHUHDBRRv4TSWNFvhjg1FXNwvBfGjkPK5EdVX3fsRFAO2l0gZnEm999bx7Bha
- 5Mtqsc8tivZswzq5MQCaoVZbPfQ+PU5v741nb2I3AalXAhXfqlC8rmz5VkRCegf/ulSE
- 0wB54MmFWv1c2aNb2L63kSwvBEBMjANU+iWjKm6UM47djRmQPO119vxzZxl9HLQrVb6U
- D1uEMXkpD046Srl4gTRJxNptdloaFwpUfCEDGeTjdv5bmGBOg97ygzghO/WdEyMsZ0pJ
- NXag==
+ d=redhat.com; s=google; t=1789571412; x=1790176212; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PIT3TyieWx42Sg74YtgUs+uuEvQmhcL3DRQI3EBPTcA=;
+ b=VZ8vDp5k84Z3IWc9uMkkRfGw9pTFUaBOf2iJxce6JNS+Zo0E0vfoAXetDKCzg74cRF
+ zzdLCIIh53u9AEEYNFRiii3VK/i2cSP6XrHgCvJCMwmni/BYweduylHZutng1OlhEfXc
+ VtSg95qhE97GB+Waw6lXv28bvJ8YeUtKnl531B98kvxvxL14fQaEcQ1BSHNfflmE6zI7
+ co6u4pyY1EGeOHq7XjERUzSMijdAhapyVz92XL43O3Y59ImT4k2EMDqTq7IJO7QdYjFm
+ hSaDKri6WHS+gNiW7T7QN4+2dgRGIA3xJC6RppCABG3FNzVNTPHXNGs8JnVuYvqF7YVW
+ cllQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789571405; x=1790176205;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20260707; t=1789571412; x=1790176212;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cadIf6707X9oo2vFy6VRSXmLT7YgvB4txOMXdRDkuHk=;
- b=eU47f6O03DgbSMgRG7d50Z7cm94B/QuwTpVFHccvQAZncyiAtCN+bJQ3Y2OnOFwomL
- 7tZZWhNoWzC1ftHTUHNR45ckzlxD8SImVIy6YjJEoh6udBfYKqUAWpgu6LhrXf/b2RbL
- V4UJX0uy/s3SDqIpQYHkCcOR4i4XCP4JC8uF+l93/BRA5wFBsjB5byVy3y7aPS2jzunb
- yHrZCByJjOkX664jnzZpYElICUZriat4Qr7ZbNUmFvTkFJOE8xqKPbtNZSkkKRs3PPU/
- oiC58Ik9WTsmgippdG/Ug3araQkCfe4Boju37lgkqFcVWNOjkqNVqKcvHRkwiUtlJG9f
- Oi7Q==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx4Owg/XqjjMzhgEIy2r9vGvO8SMi85SrLH+T82BmlcvuH1lzP0pBopmrMwo50xICB+eIMxxiyGFGY9@nongnu.org
-X-Gm-Message-State: AFuF++nlCUxW4FK+R4NIEpXvfZ7MV5gvJ0xUzxkTDp4FJEDZdQLVXDrJ
- 3nTwRm5VtFEKV8Ca1LOn9Qio/nqYm2mN0TA1YgOgLYSH0sJWPbM6+6hHrSrxdxGy/LLIk+ieifX
- CQTPzDNzTgBxV+6g6TsfINFlYTsMgPg+3M0fNuF47P+WAXgefoYAthkYC
-X-Gm-Gg: AYBFou0dT4xJRhMfv24cdVBrqeojM1yXKelyQy+Z4ZZhhdSHvr55jbFzuQfa2+0rzb+
- 2zxk9Vua7yRKcuyH8+41UzPqXlosF27GtjggDsEuD9o6bze+oa/8B/PS1q/T1J/rhv9XLWilnCW
- teiSdDOGB42ckp754MMqjv8+UerbLMF8CYhiauIyDhZgE3PCmeM69xmknZW1SJa+ESS73pS4oRq
- /cxnT1SumJ03AOjCW3FHbnTKDhkc0IzQ38Z4W3SUJkbMgZx4xcqfwgqvGruFXzZxJ15B/u0IqzM
- lSR8cj+CsVKeoZ3EvWwntDzKc8le4f9N2wxmBvFrk9qDh8fGCXY9onh4uk7vAZyQL1relcsuKBF
- rEVp0OKSqN7vZSyUqAcFaOaI=
-X-Received: by 2002:a05:600c:8b6a:b0:49c:eb04:1c49 with SMTP id
- 5b1f17b1804b1-49eb72f62a1mr33398975e9.13.1789571404716; 
- Wed, 16 Sep 2026 08:10:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b6a:b0:49c:eb04:1c49 with SMTP id
- 5b1f17b1804b1-49eb72f62a1mr33398575e9.13.1789571404155; 
- Wed, 16 Sep 2026 08:10:04 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ bh=PIT3TyieWx42Sg74YtgUs+uuEvQmhcL3DRQI3EBPTcA=;
+ b=QL8glLOC0q2nOc+CVot0IiwEIMZ/zJJwD4NSWrYAH7LUsJtnooWNENNzvC+d/mzNWf
+ fRpiTJurpEErv8+RTsUnCqxuchwdMLs1sxPbB6yxXlITg/iZXtsAPoOravMoNpb2YsEM
+ 5xprL2Ny00gR/JawG0K15r+2pKl778oAO8vn7E3vpO0x7UkT26kwo54RV4Z1HMAmpLLo
+ k8VolPlMbJjaIxp39esfBpT/N2m0A/2AnqoBfhe8r+vkNAAqUtXZN0fRqaZqpnUE8aQk
+ UjMC0OZ9JMyvlpOSBtBit/YIvgUQIzhMmvyrfVkE3GsWZqHsr3flRmJflKmWC5bck/zq
+ 0IbA==
+X-Gm-Message-State: AFuF++m+LvnBr1D1tkDoApRTsKGQhMY0qfxdqWJ7bMQt7vylwXyIbUy/
+ 2AwLGCP4v0ie07M/pFU6jHdzd2xn0CSJfE5RIfXgikf/6LzOi5TniJtvLs9Lp8ToYJrp3uacZ74
+ Bfy0sWKZLNmKujzqCnjqiUv3/O8dYGFKu4LT2dAxNSbv3ix/CHz4RmbjSRf6o6oCBo3oxsGS663
+ J5PW9ueev49QOIzRpDuO+h3pGervgNsB20uHVA/RzrUcQ=
+X-Gm-Gg: AYBFou0FpwlIqtUDJwu50h/TxRoShZ7f9avEr5YFE+TON7gZ7KcoLCZpNm4t5/FzEjI
+ tt4IaqQOZh4PoKYhE4oGFTFnqGvm240nSK96dXoBDXDi0UAI9V9qcfbmKAvs2Wo82EykfDCFMSS
+ PaNMZFu+MURju/CKpH3J85fB8QtZy2s+526ErPTkCSzKdOl2druuXobNhoXZATMbXGiJljamrW9
+ VJgxueD1SFbJmzf3Gxm1XF2qA5aTYdSCpM/JCcqX4gthcEJNN7QJndWv/F8wCHxCFvRngEBJU/R
+ v8RcldIlqJRnYTwTGglK0BObLVppFw/msX6qYzuoyD1lSPUu9AgU553mWdWw445p5UdmnDFkDOc
+ Pfa4P4RrKyVlgIwtElREETzTiza6ijkREpgiXNhoR5Tg/yOzP76+uweSug3+2JeZ48/Ox
+X-Received: by 2002:a05:600c:474a:b0:49c:ee20:e787 with SMTP id
+ 5b1f17b1804b1-49eac464371mr52820425e9.1.1789571411636; 
+ Wed, 16 Sep 2026 08:10:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:474a:b0:49c:ee20:e787 with SMTP id
+ 5b1f17b1804b1-49eac464371mr52819575e9.1.1789571411107; 
+ Wed, 16 Sep 2026 08:10:11 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd0a4e68sm929655e9.2.2026.09.16.08.10.02
+ 5b1f17b1804b1-49fbd112455sm40865e9.12.2026.09.16.08.10.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 08:10:03 -0700 (PDT)
-Date: Wed, 16 Sep 2026 11:10:00 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Alex Fishman <afishman@redhat.com>, qemu-devel@nongnu.org,
- sgarzare@redhat.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com
-Subject: Re: [PATCH v1 0/2] vhost: Handle vrings crossing virtio-mem slots
-Message-ID: <20260916110929-mutt-send-email-mst@kernel.org>
-References: <20260909125923.75340-1-afishman@redhat.com>
- <20260916145903.GA145703@fedora>
+ Wed, 16 Sep 2026 08:10:10 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Wed, 16 Sep 2026 17:10:05 +0200
+Subject: [PATCH v5 1/2] igvm: validate and honor byte_offset in parameter
+ directives
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260916145903.GA145703@fedora>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260916-fix_offset-v5-1-11cf8ef37854@redhat.com>
+References: <20260916-fix_offset-v5-0-11cf8ef37854@redhat.com>
+In-Reply-To: <20260916-fix_offset-v5-0-11cf8ef37854@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ qemu-stable@nongnu.org, Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,54 +125,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 16, 2026 at 10:59:03AM -0400, Stefan Hajnoczi wrote:
-> On Wed, Sep 09, 2026 at 03:59:21PM +0300, Alex Fishman wrote:
-> > Virtio-mem dynamic memslots are intentionally exposed as separate memory
-> > regions. If a guest places a vring part across two adjacent slots, a later
-> > memory update fails vhost ring verification because the complete ring part
-> > is not contained in one vhost memory region.
-> > 
-> > Coalesce coherent adjacent sections only when a descriptor table,
-> > available ring, or used ring crosses their boundary. Unrelated
-> > unmergeable sections remain separate so they can still be updated
-> > independently.
-> > 
-> > Patch 2 adds an end-to-end qtest reproducer using a fake vhost-user
-> > backend and virtio-mem dynamic memslots. It also verifies that a newly
-> > activated slot is not folded into the merge required by the crossing
-> > vring.
-> > 
-> > Tested with the vhost-user/mem-slots/boundary qtest.
-> > 
-> > Buglink: https://redhat.atlassian.net/browse/RHEL-146583
-> > 
-> > Alex Fishman (2):
-> >   vhost: coalesce unmergeable sections across vring boundaries
-> >   tests/qtest: Add vhost-user memslot boundary test
-> > 
-> >  hw/virtio/vhost.c             |  72 ++++++-
-> >  tests/qtest/vhost-user-test.c | 395 +++++++++++++++++++++++++++++++++-
-> >  2 files changed, 452 insertions(+), 15 deletions(-)
-> > 
-> > 
-> > base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
-> > -- 
-> > 2.52.0
-> 
-> I'm pretty sure a similar problem exists with hw/virtio/virtio.c's
-> MemoryRegionCaches. If a vring spans virtio-mem dynamic memslots, then
-> the MemoryRegionCache won't work because the memory range crosses
-> MemoryRegions.
+Parameter directive handlers either ignore param->byte_offset,
+overwriting each other when several parameters share one area, or use
+it without validating it, letting a malformed IGVM file corrupt QEMU's
+memory.
 
-IIUC address_space_cache_init does not check unmergeable, so virtio
-doesn't have this problem.
+Add qigvm_get_param_data(), which validates byte_offset against the
+parameter area size and returns the offset-adjusted pointer together
+with the space left after it. Convert all parameter directive handlers
+to use it and to check their writes against that remaining space, so
+that no parameter can be written past the end of its area.
 
+Fixes: c1d466d267 ("backends/igvm: Add IGVM loader and configuration")
+Fixes: dea1f68a5c ("igvm: Fill MADT IGVM parameter field on x86_64")
+Fixes: 1c4bd8f13c ("igvm: add device tree parameter support")
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+ backends/igvm.c                | 89 +++++++++++++++++++++++++++++++-----------
+ include/system/igvm-internal.h |  5 +++
+ target/i386/igvm.c             | 12 +++---
+ 3 files changed, 77 insertions(+), 29 deletions(-)
 
-> Is it worth looking at that first (e.g. triggering the issue with a test
-> case that uses a built-in VIRTIO device instead of a vhost-user device)
-> before implementing a solution that is specific to vhost-user?
-> 
-> Stefan
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 7b7bdc72b7..9a2bafc0ca 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -101,6 +101,38 @@ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
+     return NULL;
+ }
+ 
++/*
++ * Get parameter area data at byte_offset with bounds validation.
++ * On success, returns offset-adjusted data pointer and sets param_size
++ * to remaining space.
++ * Returns NULL on failure.
++ */
++uint8_t *
++qigvm_get_param_data(QIgvm *igvm, const IGVM_VHS_PARAMETER *param,
++                     uint32_t *param_size,
++                     Error **errp)
++{
++    QIgvmParameterData *param_entry;
++
++    assert(param_size);
++
++    param_entry = qigvm_find_param_entry(igvm, param->parameter_area_index,
++                                         errp);
++    if (!param_entry) {
++        return NULL;
++    }
++
++    if (param->byte_offset > param_entry->size) {
++        error_setg(errp,
++                   "IGVM: byte_offset 0x%x exceeds parameter area size 0x%x",
++                   param->byte_offset, param_entry->size);
++        return NULL;
++    }
++
++    *param_size = param_entry->size - param->byte_offset;
++    return param_entry->data + param->byte_offset;
++}
++
+ static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
+                                      Error **errp);
+ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+@@ -605,7 +637,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
+                              Error **errp) = NULL;
+-    QIgvmParameterData *param_entry;
++    uint32_t param_size;
+     int max_entry_count;
+     int entry = 0;
+     IGVM_VHS_MEMORY_MAP_ENTRY *mm_entry;
+@@ -626,14 +658,14 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+     }
+ 
+     /* Find the parameter area that should hold the memory map */
+-    param_entry = qigvm_find_param_entry(ctx,
+-                                         param->parameter_area_index, errp);
+-    if (param_entry == NULL) {
++    mm_entry =
++        (IGVM_VHS_MEMORY_MAP_ENTRY *)qigvm_get_param_data(ctx, param,
++                                                          &param_size, errp);
++    if (!mm_entry) {
+         return -1;
+     }
+ 
+-    max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+-    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
++    max_entry_count = param_size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+ 
+     retval = get_mem_map_entry(entry, &cgmm_entry, errp);
+     while (retval == 0) {
+@@ -682,17 +714,22 @@ static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
+                                     Error **errp)
+ {
+     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+-    QIgvmParameterData *param_entry;
++    uint32_t param_size;
+     uint32_t *vp_count;
+     CPUState *cpu;
+ 
+-    param_entry = qigvm_find_param_entry(ctx,
+-                                         param->parameter_area_index, errp);
+-    if (param_entry == NULL) {
++    vp_count = (uint32_t *)qigvm_get_param_data(ctx, param, &param_size, errp);
++    if (!vp_count) {
++        return -1;
++    }
++
++    if (sizeof(*vp_count) > param_size) {
++        error_setg(errp,
++                   "IGVM: vp-count parameter exceeds parameter area "
++                   "defined in IGVM file");
+         return -1;
+     }
+ 
+-    vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
+     *vp_count = 0;
+     CPU_FOREACH(cpu)
+     {
+@@ -707,17 +744,23 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
+                                             Error **errp)
+ {
+     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+-    QIgvmParameterData *param_entry;
++    uint32_t param_size;
+     IgvmEnvironmentInfo *environmental_state;
+ 
+-    param_entry = qigvm_find_param_entry(ctx,
+-                                         param->parameter_area_index, errp);
+-    if (param_entry == NULL) {
++    environmental_state =
++        (IgvmEnvironmentInfo *)qigvm_get_param_data(ctx, param, &param_size,
++                                                    errp);
++    if (!environmental_state) {
++        return -1;
++    }
++
++    if (sizeof(*environmental_state) > param_size) {
++        error_setg(errp,
++                   "IGVM: environment-info parameter exceeds parameter area "
++                   "defined in IGVM file");
+         return -1;
+     }
+ 
+-    environmental_state =
+-        (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
+     environmental_state->memory_is_shared = 1;
+ 
+     return 0;
+@@ -814,12 +857,12 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+ {
+     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+     g_autofree void *fdt_packed = NULL;
+-    QIgvmParameterData *param_entry;
++    uint8_t *param_data;
++    uint32_t param_size;
+     uint32_t fdt_size;
+ 
+-    param_entry = qigvm_find_param_entry(ctx,
+-                                         param->parameter_area_index, errp);
+-    if (param_entry == NULL) {
++    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
++    if (!param_data) {
+         return -1;
+     }
+ 
+@@ -837,14 +880,14 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+     }
+ 
+     fdt_size = fdt_totalsize(fdt_packed);
+-    if (fdt_size > param_entry->size) {
++    if (fdt_size > param_size) {
+         error_setg(errp,
+                    "IGVM: device tree size exceeds parameter area"
+                    " defined in IGVM file");
+         return -1;
+     }
+ 
+-    memcpy(param_entry->data, fdt_packed, fdt_size);
++    memcpy(param_data, fdt_packed, fdt_size);
+ 
+     return 0;
+ }
+diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+index 9e9fa1d9af..0467eff0ce 100644
+--- a/include/system/igvm-internal.h
++++ b/include/system/igvm-internal.h
+@@ -81,4 +81,9 @@ QIgvmParameterData*
+ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
+                        Error **errp);
+ 
++uint8_t *
++qigvm_get_param_data(QIgvm *igvm, const IGVM_VHS_PARAMETER *param,
++                     uint32_t *param_size,
++                     Error **errp);
++
+ #endif
+diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+index ad9bf87761..9c2f8d5164 100644
+--- a/target/i386/igvm.c
++++ b/target/i386/igvm.c
+@@ -187,20 +187,20 @@ void qigvm_x86_bsp_reset(CPUX86State *env)
+ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+ {
+     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+-    QIgvmParameterData *param_entry;
++    uint8_t *param_data;
++    uint32_t param_size;
+     int result = 0;
+ 
+     /* Find the parameter area that should hold the MADT data */
+-    param_entry = qigvm_find_param_entry(ctx,
+-                                         param->parameter_area_index, errp);
+-    if (param_entry == NULL) {
++    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
++    if (!param_data) {
+         return -1;
+     }
+ 
+     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
+ 
+-    if (madt->len <= param_entry->size) {
+-        memcpy(param_entry->data, madt->data, madt->len);
++    if (madt->len <= param_size) {
++        memcpy(param_data, madt->data, madt->len);
+     } else {
+         error_setg(
+             errp,
 
+-- 
+2.55.0
 
 
