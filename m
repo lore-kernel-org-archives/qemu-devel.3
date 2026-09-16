@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFC3C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D16C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n2V-00062h-E4; Wed, 16 Sep 2026 06:38:57 -0400
+	id 1x6n4S-0001vp-3c; Wed, 16 Sep 2026 06:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n1d-0005MW-AZ; Wed, 16 Sep 2026 06:38:03 -0400
+ id 1x6n2w-0006z3-I5; Wed, 16 Sep 2026 06:39:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n1Z-0001qp-5I; Wed, 16 Sep 2026 06:37:59 -0400
+ id 1x6n2u-00025Y-FO; Wed, 16 Sep 2026 06:39:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554956; bh=vTNv0n7GHd9WF4rk69YqO7UkDWWJLEWO9Qji/0+capI=;
+ t=1789554957; bh=iPnw4BADB84pHeItw6wrZTCrVkGEw7YUt2uKmtqoSo0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=v7iynss6nMkOfDEPm1bX9cdUBGpF+7zvWY9Ayt5vgYJGHjjOiTg91bhKOjO/5x4Eq
- G4TlDcpoKZXPxqFZgjHpSqhp35KmyCiTCtN68Sr+6TYIrBQYCde9RJobxRnz411nGy
- i4F5JYHXjK+q+s31RdzWMlKZLyKysliuX6XNlc9sfyIVYz3VHbaaKNpV8MI3xpPBSd
- gYPZquY4TCbfkC6bTP+Mj4gUemBEmMgN2uXclpLrlTETj6h+89CZBaG09syOyyabYD
- FyG0+IDi6dDba+WfspZt+wVs8Qj8hhxIyn3gj8DaeI4d7ORk1JPF5cHKDk9mToLigz
- aFF0ZO44ceGHg==
+ b=ZF5HdQkpvlIfqXLiptVkLBmmgKbCIfzNRCkzCQj59j84Kylm/9o6ztibdzeqXJ4+2
+ cRssb5KbPKy9UOQ8WSuR4c0doVleFarcSUxKFAuSMPZIBG+GdxIGhedUvdb6OkfYE8
+ wZG27jOlnLXcuOOKGZjQV7UFlUpA/zjYabkXsKwXTJSLRyIiZrdBrT2G2uPtPGdsGT
+ q2/MPz7a+L169MH+09e88CsMm38K7/ht2jhcS/VTNwjtgAzS7j943wU/QF/y37eITE
+ rVU+K27HGV/3dethwGnKJHyUJPaIkpBiYn//wluHUTby4xau5hNshxmnJZAoZG8X85
+ zQ0RMgJd1adng==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 00ECB1D5806;
- Wed, 16 Sep 2026 13:35:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C10421D581D;
+ Wed, 16 Sep 2026 13:35:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C02FC429F65;
- Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C225429F8B;
+ Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 910345A807; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+ id 869115A82F; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 19/56] scsi-disk: fix out-of-bound read in WRITE SAME
-Date: Wed, 16 Sep 2026 13:35:37 +0300
-Message-ID: <20260916103622.684817-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ swing <swing@mail.exp.sh>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 39/56] virtio-gpu: clear res->blob on mapping cleanup
+Date: Wed, 16 Sep 2026 13:35:57 +0300
+Message-ID: <20260916103622.684817-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,71 +73,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
-to read roughly 60 KiB past the end of a heap buffer, copying that out
-of bounds host memory into the guest's own disk image.
+d3c2da174ca6 ("hw/display/virtio-gpu: Check cursor data presence")
+already prevents the use-after-free on blob cursor after detach.
 
-WRITE SAME computes the request transfer length at dev->blocksize
-when the request is prepared and sets cmd->xfer from dev->blocksize.
-scsi_disk_emulate_command() then uses cmd->xfer as the size of the
-request buffer.
+Clear res->blob in virtio_gpu_destroy_udmabuf() to keep init/fini
+symmetric, and add LOG_GUEST_ERROR messages in
+virtio_gpu_update_cursor_data() for missing or undersized blobs.
 
-However, MODE SELECT can race with the WRITE SAME command and guest raise
-the logical block size to any value whose low bits fit 0xfe00, up to 65024.
-In the presence of this race, scsi_disk_emulate_write_same() will read
-from memory as many bytes as indicated by the *new* dev->blocksize,
-and write it to disk.
-
-The read length in WRITE SAME must be bounded by the buffer that was
-actually allocated, not by the mutable s->qdev.blocksize, so clamp the
-length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
-against the current block size would not work because the race is
-intrinsic in the SCSI protocol.
-
-I am not sure if this is exploitable with virtio-scsi and other SG-capable
-HBAs, because it should process the WRITE SAME input immediately,
-without letting the MODE SELECT command race with it.
-
-Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit d30254aec93141d6b89262986a62764b2ae07177)
+Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
+Reported-by: 章鱼哥@aipy (www.aipyaipy.com)
+Reported-by: swing <swing@mail.exp.sh>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit c7254cd584bb667c3f01f95b94c64970b6944452)
+(Mjt: fixup across v11.1.0-574-gd3c2da174ca6
+ "hw/display/virtio-gpu: Check cursor data presence"
+ (this commit re-does v11.1.0-574-gd3c2da174ca6))
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 1b0cce128c5..5bb7a974d69 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1911,6 +1911,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-     SCSIRequest *req = &r->req;
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
-     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
-+    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
-     WriteSameCBData *data;
-     uint8_t *buf;
-     int i, l;
-@@ -1930,7 +1931,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-         return;
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 816f52a5145..5a642d5754f 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -92,6 +92,7 @@ static void virtio_gpu_destroy_udmabuf(struct virtio_gpu_simple_resource *res)
+         close(res->dmabuf_fd);
+         res->dmabuf_fd = -1;
      }
++    res->blob = NULL;
+ }
  
--    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
-+    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
-         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
- 
-         /* The request is used as the AIO opaque value, so add a ref.  */
-@@ -1956,7 +1957,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
-     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
- 
-     for (i = 0; i < data->iov.iov_len; i += l) {
--        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
-+        l = MIN(buflen, data->iov.iov_len - i);
-         memcpy(&buf[i], inbuf, l);
-     }
- 
+ static int find_memory_backend_type(Object *obj, void *opaque)
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 9eb010082d0..f991baf856d 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -63,8 +63,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+         }
+         data = pixman_image_get_data(res->image);
+     } else {
++        if (!res->blob) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
++                          __func__, resource_id);
++            return;
++        }
+         if (res->blob_size < (s->current_cursor->width *
+                               s->current_cursor->height * 4)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: blob size too small for resource %d\n",
++                          __func__, resource_id);
+             return;
+         }
+         data = res->blob;
 -- 
 2.47.3
 
