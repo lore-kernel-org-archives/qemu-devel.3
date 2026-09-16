@@ -4,100 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2DDC982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6ABC982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6wJh-0007e7-CR; Wed, 16 Sep 2026 16:33:17 -0400
+	id 1x6wJr-0007kH-0w; Wed, 16 Sep 2026 16:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x6wJP-0007Zo-5r; Wed, 16 Sep 2026 16:33:00 -0400
+ id 1x6wJP-0007Zq-LU; Wed, 16 Sep 2026 16:33:02 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x6wJL-00030q-EA; Wed, 16 Sep 2026 16:32:58 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1x6wJM-00031L-Nr; Wed, 16 Sep 2026 16:32:59 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1dIi2330029; Wed, 16 Sep 2026 20:32:51 GMT
+ 68GG1QFd017615; Wed, 16 Sep 2026 20:32:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Ycjpvrhm3Hk+/sjo2
- WGDZDV9uHNy/wRNVisP632dfzQ=; b=bKJeDx4GJwteV0YvEgwm6z1k/+2IQOqhJ
- wgrv+m/ztvaGLtg+eGe1aH86SpkMaYechJWQiI/OAv9ySDhZyrc+43YbUG8q15Eg
- hiaSrzKW+z9gvS+VUeMYCux75wOOt4dop9CU0r/xDTGShZF7qW0Vv4zpoBP50FRg
- Fht/iRAWeqhByIO7QePXQXyc5g5M6tiVeuuPju0ump3WXPjKIz7o9ISgy2gAzmFA
- 3VTeXQqQeFVASWFW0it1f3c9ooKiuvP6Qjyb342LFd5u8+A4hbunAj/030EZ1vuH
- b+qRPhCLfjHqxCpSr4QKyd/jtW795dIJ5floYc7qsCQ1ps356Ge6A==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdqev64-1
+ :mime-version:references:subject:to; s=pp1; bh=FuGKytLMs2BC3h9ds
+ 0S7fGLwYIr34qH+N7VVjas75qY=; b=gpTkwU8909m45vNFjOrKaKlyCiC0j0wsf
+ rrMRdsyhLbk/I00M4uiJ4E+cPwKC/fn2OJi/7yzb/ZIgGUQy/im8q1/CRTZmUJso
+ Gp8SCXSu4QjwvsW+FaG+J/TGEJH/0wiVwboE0Zd0bZcZapqsgKSq8mdvND35RhBi
+ QDg76As/2BbktEYZk8xRRNt6pPX/t97PcSE3koJ33pEl6dK1dBPpcuArqzqxhQqW
+ 9r8ZBFpjYMBNsjW6Vp3xdrGJLcU8uzHjRgZPN7aBUI92m8hpPWu4alcENyjlwZ8Y
+ uvAoOc4jkGXXXBVkzmjQpgjqrwVKP6AZQ1o/J9y9fZ3AlW0d3DQBw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxf56vtw-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 20:32:51 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GIvlvS2599802; Wed, 16 Sep 2026 20:32:50 GMT
+ Wed, 16 Sep 2026 20:32:52 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68GJ0la71699595; Wed, 16 Sep 2026 20:32:50 GMT
 Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gpw6d8wg8-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gq03vgb05-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Wed, 16 Sep 2026 20:32:50 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
  by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GKWkXF43123058
+ 68GKWkcY47710516
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 20:32:46 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BA0B82004B;
+ Wed, 16 Sep 2026 20:32:47 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D45D62004B;
  Wed, 16 Sep 2026 20:32:46 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9710D20043;
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B720320040;
  Wed, 16 Sep 2026 20:32:46 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
  Wed, 16 Sep 2026 20:32:46 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 7B590160EF5; Wed, 16 Sep 2026 22:32:46 +0200 (CEST)
+ id 816D916129C; Wed, 16 Sep 2026 22:32:46 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Christian Borntraeger <borntraeger@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH 2/9] virtio-ccw: Do not overwrite existing indicators
-Date: Wed, 16 Sep 2026 22:32:34 +0200
-Message-ID: <20260916203242.2509787-3-farman@linux.ibm.com>
+ qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH 5/9] vfio/ccw: Clear error object pointer after non-fatal
+ errors
+Date: Wed, 16 Sep 2026 22:32:37 +0200
+Message-ID: <20260916203242.2509787-6-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260916203242.2509787-1-farman@linux.ibm.com>
 References: <20260916203242.2509787-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX3h/V4513s43o
- YqyxIvfFGfP1azTb8htIPLRWZVdT2p1d/X0Y6N3JLc2rnx33NlHbG9pHHxUByJna3rHP87FqvMn
- dwjI24faeWTEjjTzn29lYR21+lOAPFxYsdzY0BdLWpBf5JkW/EhucTSVxeup08DoDu+ZvWOrQYB
- 7VkgH/yAWZKG/IuL/So1PkhBxX3nUMw0/eh+KWcd41fSLDXh2d2tTztpVO/UkqtdZGTSSkNFZqW
- 1Z5H/aoby5PFJ0ARvv11bnZEh/G1njyjiuxK1zXfjdrWmS7LCo9O2/ytO7GAa/vdicAhY/gU+is
- GojsgBztKIQc9r9evdNpm7NrBk5+EPZGA3pAFCdpN55Wf0vWihFykkz2p5Tcnga2R55ilL55pWt
- VQAfw+uT1DziMzWVpymk7sjnSENnLiyqjelHIEhcqYk4W4kOexj8diAKFtO3s5OtuyqzRqCd/h4
- QAaIBR6AIdB7FUoDymQ==
-X-Proofpoint-GUID: M6cwLRoEuG3lBaSvBtweiO2PL0c9Jy7R
-X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aaafcf3 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-GUID: DgSABzF4iJvsVuu8P3-VGxSG9sPKRMSJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX1j1GYgCjGlk3
+ uhDi892GRwT7Xza9MPz1g8o4Lqko0LkBb6s7YPTc8RB7ZI/mefXyapX8AU23UJYbfXX++KZ1Bqs
+ NelRPmejfLzY26YU8VA72wFVwfVmhWs=
+X-Authority-Analysis: v=2.4 cv=cvgOAF4i c=1 sm=1 tr=0 ts=6aaafcf5 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=AcHJBQmbBjRtW04g4g8A:9
-X-Proofpoint-ORIG-GUID: M6cwLRoEuG3lBaSvBtweiO2PL0c9Jy7R
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX2hWj9zBZ4ZH0
- +CmjbydLnVzQRahAWokPuiZDDizjsyOsKvnHE7C/re5KOGMyYpvJ/ACUgAQqo9gIp2cH/kFs//Y
- hsidNPVCYHY23TNxG70cu9sIy4IQelE=
+ a=U7nrCbtTmkRpXpFmAIza:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=WuYEg3pJWr1ZmXxL5igA:9 a=ZXulRonScM0A:10 a=zZCYzV9kfG8A:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: DgSABzF4iJvsVuu8P3-VGxSG9sPKRMSJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX26mx5RET8Ui5
+ Fh+i98gLkx5yl7uHuM8wwGjQcTdXaNb6OogTwF0MIJcXJhvJmL8q8OG3KU6oz6dSP4vCiSPE9WW
+ TV2C4Kr13gk0fKY4nOeoIoxMi9WpHlKVrAfotm0XA2Vz/Hd+fJqBWf3qtutzFl/Ru+EDN02Mjtb
+ ZJYaxZAENqYCROywlscLRReaEtKoPqK8IK2s6j2nlhfbi0Gukb7MLBiHydE6uKK+P3bnLTiZqGw
+ JA/JCNYhTE7siuG00rGqaczLZz5zS4x0vnAcsF/RXL8mdeFfA4QxieGqGKkrP0vXFDHCI5ENuSu
+ u+44B+NYQhdo0oz6VpKL/m8+i0x6mD7xoX+qUoYtE/XePIaxnXIMrMZS0Tqfjz997UyxqzgtnzK
+ fkslhQ14ETvtHTMvzDf0KONQIb76t7SsJBLMO1KPdvFP+rwj2GGv7fbru08Hbq2lyEUQ8tUb04i
+ YH7e754Y8tnjopCkzeA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160285
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609160285
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -122,57 +127,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The various indicators pointers allow them to be overwritten,
-but leak any existing structs that might be there. The adapter
-indicators path checks that it isn't converting from regular
-to thin interrupts, but a check in the reverse direction isn't
-performed.
+Just like in vfio/ap, there is a non-fatal message that could be
+generated, with a stale pointer in the error object variable.
 
-Rather than unwinding the existing allocations to allow additional
-assignments, just reject these duplicates.
+Unlike vfio/ap, there is no secondary message that could attempt
+to use it. Clear it in the same way, in case that ever changes.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 6178d4689a ("vfio-ccw: Permit missing IRQs")
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/virtio-ccw.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ hw/vfio/ccw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index eb6378ea4c..d700db405b 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -565,6 +565,11 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
-             ret =3D -EINVAL;
-             break;
-         }
-+        if (dev->indicators) {
-+            /* Do not set without un-setting first */
-+            ret =3D -ENOSYS;
-+            break;
-+        }
-         if (sch->thinint_active) {
-             /* Trigger a command reject. */
-             ret =3D -ENOSYS;
-@@ -599,6 +604,11 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
-             ret =3D -EINVAL;
-             break;
-         }
-+        if (dev->indicators2) {
-+            /* Do not set without un-setting first */
-+            ret =3D -ENOSYS;
-+            break;
-+        }
-         if (!ccw.cda) {
-             ret =3D -EFAULT;
-         } else {
-@@ -657,7 +667,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
-         }
-         if (!ccw.cda) {
-             ret =3D -EFAULT;
--        } else if (dev->indicators && !sch->thinint_active) {
-+        } else if (dev->indicators || dev->summary_indicator) {
-             /* Trigger a command reject. */
-             ret =3D -ENOSYS;
-         } else {
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index c3dc7c1962..8e29a3ae61 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -604,8 +604,10 @@ static void vfio_ccw_realize(DeviceState *dev, Error=
+ **errp)
+         /*
+          * Report this error, but do not make it a failing condition.
+          * Lack of this IRQ in the host does not prevent normal operatio=
+n.
++         * Clear the pointer, since the warning will release it.
+          */
+         warn_report_err(err);
++        err =3D NULL;
+     }
+=20
+     return;
 --=20
 2.53.0
 
