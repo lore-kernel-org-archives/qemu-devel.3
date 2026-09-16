@@ -4,65 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E992EC982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 847E7C982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6rEb-0003R3-4M; Wed, 16 Sep 2026 11:07:41 -0400
+	id 1x6rHC-0004lY-Qx; Wed, 16 Sep 2026 11:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x6rEY-0003QV-VS; Wed, 16 Sep 2026 11:07:38 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x6rEU-0003LK-W1; Wed, 16 Sep 2026 11:07:38 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwAHD1uosKpqLAEHAA--.230S2;
- Wed, 16 Sep 2026 23:07:20 +0800 (CST)
-Received: from [192.168.2.9] (unknown [113.246.119.91])
- by mail (Coremail) with SMTP id AQAAf8Dw0HWmsKpqulDXAA--.40918S2;
- Wed, 16 Sep 2026 23:07:19 +0800 (CST)
-Message-ID: <b7530aa3-a009-4aac-950a-9276638a3da5@phytium.com.cn>
-Date: Wed, 16 Sep 2026 23:07:16 +0800
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6rH8-0004jS-0E
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x6rH1-0004EI-N6
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:10:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789571409;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cadIf6707X9oo2vFy6VRSXmLT7YgvB4txOMXdRDkuHk=;
+ b=cNy19N3kEcFfAnKYadjwhvVdhl50s9iKQn0jL8wP+vSmsAA/8fjZK8wEqmsm+QSNYg5EZ8
+ OcM3UWRWC3UA1/aMyGt1wX1NfUZw3Itwa7I8eQGwKLI9Kxrz+du+U63q9LZExgKu5+AumX
+ JPPEa0G+YH3E0PkrZGGtaDpqW39FdpU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-630-KWHBVlaUMLS5ySWxVZUSqA-1; Wed, 16 Sep 2026 11:10:06 -0400
+X-MC-Unique: KWHBVlaUMLS5ySWxVZUSqA-1
+X-Mimecast-MFC-AGG-ID: KWHBVlaUMLS5ySWxVZUSqA_1789571405
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49e73659ac5so43038075e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:10:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789571405; x=1790176205; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=cadIf6707X9oo2vFy6VRSXmLT7YgvB4txOMXdRDkuHk=;
+ b=biASkbEhWZUwXFg0/5wENEJmB57YnNNGgVR5O6MFPNtNDpH1Qvz9YCyZapHL9R9Wf8
+ nNtMJ+3kHUHDBRRv4TSWNFvhjg1FXNwvBfGjkPK5EdVX3fsRFAO2l0gZnEm999bx7Bha
+ 5Mtqsc8tivZswzq5MQCaoVZbPfQ+PU5v741nb2I3AalXAhXfqlC8rmz5VkRCegf/ulSE
+ 0wB54MmFWv1c2aNb2L63kSwvBEBMjANU+iWjKm6UM47djRmQPO119vxzZxl9HLQrVb6U
+ D1uEMXkpD046Srl4gTRJxNptdloaFwpUfCEDGeTjdv5bmGBOg97ygzghO/WdEyMsZ0pJ
+ NXag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789571405; x=1790176205;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cadIf6707X9oo2vFy6VRSXmLT7YgvB4txOMXdRDkuHk=;
+ b=eU47f6O03DgbSMgRG7d50Z7cm94B/QuwTpVFHccvQAZncyiAtCN+bJQ3Y2OnOFwomL
+ 7tZZWhNoWzC1ftHTUHNR45ckzlxD8SImVIy6YjJEoh6udBfYKqUAWpgu6LhrXf/b2RbL
+ V4UJX0uy/s3SDqIpQYHkCcOR4i4XCP4JC8uF+l93/BRA5wFBsjB5byVy3y7aPS2jzunb
+ yHrZCByJjOkX664jnzZpYElICUZriat4Qr7ZbNUmFvTkFJOE8xqKPbtNZSkkKRs3PPU/
+ oiC58Ik9WTsmgippdG/Ug3araQkCfe4Boju37lgkqFcVWNOjkqNVqKcvHRkwiUtlJG9f
+ Oi7Q==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx4Owg/XqjjMzhgEIy2r9vGvO8SMi85SrLH+T82BmlcvuH1lzP0pBopmrMwo50xICB+eIMxxiyGFGY9@nongnu.org
+X-Gm-Message-State: AFuF++nlCUxW4FK+R4NIEpXvfZ7MV5gvJ0xUzxkTDp4FJEDZdQLVXDrJ
+ 3nTwRm5VtFEKV8Ca1LOn9Qio/nqYm2mN0TA1YgOgLYSH0sJWPbM6+6hHrSrxdxGy/LLIk+ieifX
+ CQTPzDNzTgBxV+6g6TsfINFlYTsMgPg+3M0fNuF47P+WAXgefoYAthkYC
+X-Gm-Gg: AYBFou0dT4xJRhMfv24cdVBrqeojM1yXKelyQy+Z4ZZhhdSHvr55jbFzuQfa2+0rzb+
+ 2zxk9Vua7yRKcuyH8+41UzPqXlosF27GtjggDsEuD9o6bze+oa/8B/PS1q/T1J/rhv9XLWilnCW
+ teiSdDOGB42ckp754MMqjv8+UerbLMF8CYhiauIyDhZgE3PCmeM69xmknZW1SJa+ESS73pS4oRq
+ /cxnT1SumJ03AOjCW3FHbnTKDhkc0IzQ38Z4W3SUJkbMgZx4xcqfwgqvGruFXzZxJ15B/u0IqzM
+ lSR8cj+CsVKeoZ3EvWwntDzKc8le4f9N2wxmBvFrk9qDh8fGCXY9onh4uk7vAZyQL1relcsuKBF
+ rEVp0OKSqN7vZSyUqAcFaOaI=
+X-Received: by 2002:a05:600c:8b6a:b0:49c:eb04:1c49 with SMTP id
+ 5b1f17b1804b1-49eb72f62a1mr33398975e9.13.1789571404716; 
+ Wed, 16 Sep 2026 08:10:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b6a:b0:49c:eb04:1c49 with SMTP id
+ 5b1f17b1804b1-49eb72f62a1mr33398575e9.13.1789571404155; 
+ Wed, 16 Sep 2026 08:10:04 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fbd0a4e68sm929655e9.2.2026.09.16.08.10.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Sep 2026 08:10:03 -0700 (PDT)
+Date: Wed, 16 Sep 2026 11:10:00 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Alex Fishman <afishman@redhat.com>, qemu-devel@nongnu.org,
+ sgarzare@redhat.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com
+Subject: Re: [PATCH v1 0/2] vhost: Handle vrings crossing virtio-mem slots
+Message-ID: <20260916110929-mutt-send-email-mst@kernel.org>
+References: <20260909125923.75340-1-afishman@redhat.com>
+ <20260916145903.GA145703@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 19/28] hw/arm/smmuv3: Determine register bank from MMIO
- offset
-To: Mostafa Saleh <smostafa@google.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162558.2808607-4-tangtao1634@phytium.com.cn>
- <apbgonXpyX3ehO5i@google.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <apbgonXpyX3ehO5i@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Dw0HWmsKpqulDXAA--.40918S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWqpnMkH+AAAst
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxtr1kAF4kJr15Ary5Cr17KFg_yoW7WrWfpr
- Z5JF15KrWDKa1SgF43Ja1DZFyUAwn7Kw15Ar1UKF1UC34UAw1vqrWUWr1S9r1DurWrZr4D
- trWrJr43ur1YyrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260916145903.GA145703@fedora>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,171 +121,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+On Wed, Sep 16, 2026 at 10:59:03AM -0400, Stefan Hajnoczi wrote:
+> On Wed, Sep 09, 2026 at 03:59:21PM +0300, Alex Fishman wrote:
+> > Virtio-mem dynamic memslots are intentionally exposed as separate memory
+> > regions. If a guest places a vring part across two adjacent slots, a later
+> > memory update fails vhost ring verification because the complete ring part
+> > is not contained in one vhost memory region.
+> > 
+> > Coalesce coherent adjacent sections only when a descriptor table,
+> > available ring, or used ring crosses their boundary. Unrelated
+> > unmergeable sections remain separate so they can still be updated
+> > independently.
+> > 
+> > Patch 2 adds an end-to-end qtest reproducer using a fake vhost-user
+> > backend and virtio-mem dynamic memslots. It also verifies that a newly
+> > activated slot is not folded into the merge required by the crossing
+> > vring.
+> > 
+> > Tested with the vhost-user/mem-slots/boundary qtest.
+> > 
+> > Buglink: https://redhat.atlassian.net/browse/RHEL-146583
+> > 
+> > Alex Fishman (2):
+> >   vhost: coalesce unmergeable sections across vring boundaries
+> >   tests/qtest: Add vhost-user memslot boundary test
+> > 
+> >  hw/virtio/vhost.c             |  72 ++++++-
+> >  tests/qtest/vhost-user-test.c | 395 +++++++++++++++++++++++++++++++++-
+> >  2 files changed, 452 insertions(+), 15 deletions(-)
+> > 
+> > 
+> > base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+> > -- 
+> > 2.52.0
+> 
+> I'm pretty sure a similar problem exists with hw/virtio/virtio.c's
+> MemoryRegionCaches. If a vring spans virtio-mem dynamic memslots, then
+> the MemoryRegionCache won't work because the memory range crosses
+> MemoryRegions.
 
-On 9/1/2026 10:26 PM, Mostafa Saleh wrote:
-> On Fri, Aug 14, 2026 at 12:25:57AM +0800, Tao Tang wrote:
->> Modify the main MMIO handlers to select the target register bank from the
->> memory-mapped offset.
->>
->> Offsets in the Secure register window select SMMU_SEC_SID_S and are
->> normalized by subtracting SMMU_SECURE_REG_START. Other offsets select the
->> Non-secure bank. Pass the selected SEC_SID to the register access helpers,
->> where the normalized bank-local offset identifies the register.
->>
->> Keep bank-specific differences explicit, such as S_IDR5 being unimplemented.
->> This patch implements Non-secure and Secure bank dispatch and prepares for
->> later access checks; Realm and Root programming interfaces are not modeled.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/smmuv3.c | 44 ++++++++++++++++++++++++++++++++------------
->>   1 file changed, 32 insertions(+), 12 deletions(-)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index efa78869251..b36bc4a54e0 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1889,9 +1889,9 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->>   }
->>   
->>   static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->> -                               uint64_t data, MemTxAttrs attrs)
->> +                                uint64_t data, MemTxAttrs attrs,
->> +                                SMMUSecSID reg_sec_sid)
->>   {
->> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->>       SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->>   
->>       switch (offset) {
->> @@ -1959,10 +1959,10 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->>   }
->>   
->>   static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->> -                               uint64_t data, MemTxAttrs attrs)
->> +                               uint64_t data, MemTxAttrs attrs,
->> +                               SMMUSecSID reg_sec_sid)
->>   {
->>       Error *local_err = NULL;
->> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->>       SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->>   
->>       switch (offset) {
->> @@ -2223,16 +2223,26 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
->>       SMMUState *sys = opaque;
->>       SMMUv3State *s = ARM_SMMUV3(sys);
->>       MemTxResult r;
->> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->>   
->>       /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
->>       offset &= ~0x10000;
->>   
->> +    /*
->> +     * Dispatch the Non-secure window directly. After access validation,
->> +     * translate the Secure window to its bank-local register offsets.
->> +     */
->> +    if (offset >= SMMU_SECURE_REG_START) {
->> +        reg_sec_sid = SMMU_SEC_SID_S;
->> +        offset -= SMMU_SECURE_REG_START;
-> It's not that simple, both banks aren't identical.
->
-> Beyond the IDR5 handled here, AFAICT the following doesn't also exist
-> in the secure bank:
-> - 0x0018 SMMU_IIDR
-> - 0x001C SMMU_AIDR
-> - 0x0040 SMMU_STATUSR
-
-You're right. I prepare to centralize these register-layout differences 
-in a helper:
+IIUC address_space_cache_init does not check unmergeable, so virtio
+doesn't have this problem.
 
 
-```
+> Is it worth looking at that first (e.g. triggering the issue with a test
+> case that uses a built-in VIRTIO device instead of a vhost-user device)
+> before implementing a solution that is specific to vhost-user?
+> 
+> Stefan
 
-static bool smmuv3_reg_is_raz_wi(hwaddr offset,
-                                SMMUSecSID reg_sec_sid)
-{
-     switch (offset) {
-     case A_IDR5:
-     case A_IIDR:
-     case A_STATUSR:
-     case A_IDREGS ... A_IDREGS + 0x2f:
-         return reg_sec_sid != SMMU_SEC_SID_NS;
-     case A_AIDR:
-         return reg_sec_sid == SMMU_SEC_SID_S;
-     default:
-         /* Leave other offsets to the register handlers */
-         return false;
-     }
-}
-
-static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
-                               uint64_t *data, MemTxAttrs attrs,
-                               SMMUSecSID reg_sec_sid)
-{
-     SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
-
-     if (smmuv3_reg_is_raz_wi(offset, reg_sec_sid)) {
-
-         *data = 0;
-
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: read from undefined register: bank=%d "
-                       "offset=0x%" PRIx64 " (RAZ)\n",
-                       __func__, reg_sec_sid, offset);
-
-         return MEMTX_OK;
-     }
-
-     switch (offset) {
-
-     case A_AIDR:
-         if (reg_sec_sid == SMMU_SEC_SID_R) {  // For the future Realm 
-support
-             /* RME architecture revision 0.0. */
-             *data = 0;
-         } else {
-             *data = s->aidr;
-         }
-         return MEMTX_OK;
-......
-
-     default:
-     unhandled:
-         *data = 0;
-         qemu_log_mask(LOG_UNIMP,
-                       "%s unhandled 32-bit access at 0x%"PRIx64" (RAZ)\n",
-                       __func__, offset);
-         return MEMTX_OK;
-     }
-}
-
-```
-
-
-The shared handlers will return zero or ignore writes when this helper 
-returns true. Also there is a code piece(` case A_AIDR `) to show how we 
-handle with same relative offset but with different meanings.
-
-How do you think about this?
-
-> Also, A_GBPA seems to call smmuv3_accel_attach_gbpa_hwpt() irrelevant
-> of security state.
-
-I'll add an if (reg_sec_sid == SMMU_SEC_SID_NS) guard before the 
-accelerator call.
-
-
->
-> Finally, the first patch introduced SMMU_S_CR0_RESERVED for the secure
-> register, but SMMU_CR0_RESERVED is still used here.
-I'll fix it in V6.
->
-> Thanks,
-> Mostafa
-
-Thanks,
-
-Tao
 
 
