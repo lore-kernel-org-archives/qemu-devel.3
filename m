@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC64C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED360C982CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 15:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6rhz-0001mn-8T; Wed, 16 Sep 2026 11:38:03 -0400
+	id 1x6ri3-0001q8-Fw; Wed, 16 Sep 2026 11:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6rhx-0001k0-Jb
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:38:01 -0400
+ id 1x6ri2-0001pL-3i
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:38:06 -0400
 Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x6rhv-0003Mt-MN
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:38:01 -0400
+ id 1x6ri0-0003OV-CJ
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 11:38:05 -0400
 Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4843f22dcb8so698745f8f.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:37:59 -0700 (PDT)
+ ffacd0b85a97d-4843c3ee4cfso512716f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 08:38:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789573078; x=1790177878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789573083; x=1790177883; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cAgsbGsJR8UlzgK1nHztriprY/pdiSp4sfs5YZ9q3Ag=;
- b=LUlKgp6z1g1MklW6MvAv0iJnpF9xKyvGxbHNtiPaR6HsV3qoWKzmXQrDeHT3/l4wor
- XmYADrqXNtE4llrvWRIsPGfS7+MelCdgr6i/X3R3VLBX2O37fTBLDSJksEi+jaZAABiU
- FIHa/e7eoBaiWqj66wdMqYP4zJwVIFoa28NPG3ZWO+x0fqWmg/qc5XsfOqjeVF/dDMUB
- JiLoEIKxR86V3xAbYnuwQ43AS0/at2SHgt508du+mlB+DAs2wuEwVWmufood7mIqf2sN
- jWQHOYr2PKxbR4MonIQSZaozcGznyxsN9PVQmAPRjrJSAMsvEDIJwglCWRh5tZaYvq+D
- wzWA==
+ bh=5jEk54sCARbNqwEALWIYvVVIO6zgDvVb82j7zjwYhno=;
+ b=bYjPk9B0VadSzPiPiGo3DOYbdzKkR9k0rviM17ygVY8ROos0Rz2+y4iCE7IV/7hjdx
+ YuVFl+JEql+QmRXHAoYr0GlWCpNHyoKa6/v4bm+EJ668HkfhXpMaTaueoTWtUgKmg70b
+ DRWoLeb9HoydIOU8QY/L69uRu6UU7ZJcWYJs9Ja+6VoSwiT2Ksawa2d2/pwmf/HSdNw+
+ 6y9jVQYwFOof5RtO2Uqz5SxCSOCH0rkuS9lN8GU1y/ut8do8BpivuNkI4ERI+22kh5ga
+ oVZUL2ZqN0APwbAL/SRirv52sAvjWCEA7OqcL3zJJxhSLa3tDQnzUuh9Y7WxLRjAhP1V
+ MGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789573078; x=1790177878;
+ d=1e100.net; s=20260707; t=1789573083; x=1790177883;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cAgsbGsJR8UlzgK1nHztriprY/pdiSp4sfs5YZ9q3Ag=;
- b=PCstmyBp0YiD78Q+PgWrXGMXTJI4Z61IQZRL0CpRmeMX2LRpzdQRIdYyTQ6EQohucH
- aPxZrPpMt+6AUnC7VOxFt1FFyg4jAvPsd2MYA84SK9o1SKp8zwheZyUBSsk+JYgAH6Vp
- q/Yf9ZWncv5IIdqlts//VyhSMLbOr+VV2oJK3CJ4sh8/fl1/z/mIPOzop8cDA7Qo1077
- cX3hdKMxMLb6uLUoQQwpVZAyRHsA2UbDWGKIupvZFbuyTXVN9awMc8trfLfC2D2MA6N9
- 2QnCDLMJph5/evUzoyC8lgGkgnMSU5O6GEE87Sd2VSqYOKbcxLeZ7Fnqz3sKd9lqoH2T
- 4HBA==
-X-Gm-Message-State: AFuF++mi2yKLVv+V30hkMyTYXpvvtW2zBG4XhFo7eZlKL+NjqtT0xdXH
- 8uchD7cJ1auPyybozybjK97qcykgMTeiK6z2B0015PXoa9cheKUAd8QNVjMDsW92g7Y=
-X-Gm-Gg: AYBFou0A5oNGdfZu1CBK2K7BBIBSg3rb4dZWlUb4nBkhWN87BC7R5yTPLo/Xtn1YvYt
- Fa16gd1IfPaWteAqkJSqgfli4R75ry9D0XHJr8uPJlFnJsnZl9LwiBPhc9ei7VZYj6yyQMy73ad
- Em5jglz1eAsR1+us6AQaOQel9COXaexG4b09P6fODMielK2pattosZITVb26pGAOO7aAdzFfv9b
- FkrhkwoDjoFPzxUkQQbKZyb9WhciGsSWikr0LiIG7UPnbv2Deh4CoWonWkxGajlGzOxS5X/sQAo
- DM3As7mn14jSp/A6FEqDyU77wVoZwWobXD5W/BMo+dbNh4a1CcdyDyNAfHmh/bQ4JVvdHCx4SPn
- 8wV87h2RYo53Dw4GcaQDIzcAlJNYpi29KRWDXjqmxEae4LLeBM7k450OElvNQeul/S2LQXSurZ/
- 7nXE3oVc6R8GpKDbBLf9GfcX3piFkvFOHrRlnKL/N4t0ykbNsawk1P7ebSsVypY7G5nw+58EZL0
- Z0d09XZkA==
-X-Received: by 2002:a5d:64c3:0:b0:487:11c3:b004 with SMTP id
- ffacd0b85a97d-48711c3b044mr1154909f8f.52.1789573077949; 
- Wed, 16 Sep 2026 08:37:57 -0700 (PDT)
+ bh=5jEk54sCARbNqwEALWIYvVVIO6zgDvVb82j7zjwYhno=;
+ b=dN8BI1f+J1SprG0+R566xzQ3I+7CBVSSZIiVuyTp0O0/J3QLKT40gjrQejKOsTg2Xe
+ 9iuQAcIDH/ybHqQj72r7DXHaXg8meOoSk6LyuQGzeNsBoQJDYHBZ5b9iodvbq4fRWZJ4
+ mqKCfKmSonEoqrrUzUgRsVuTIq+ZANzUXFJO1+/71hmPDZynXpaerY7321fGzaiA+b52
+ /MicvQOuC+sO9dVCb3kQ+g4jeBHPFNFq4WUxwFxxYfUvwMtfhg1r+KYdcjxbtvG9AVAS
+ 1neoNSuZ7Tl5kDNRjkr4ITs6j/tVy527ZpZKYkGgNc65lb3LHeK5JjMhz8XVe7n92gaE
+ 1VAg==
+X-Gm-Message-State: AFuF++n/YuWWhyOpYxfeFimZ0ziZ1Z5w8jyC9zfxJ6tNvbdQHbxz6AoL
+ UO8lgiw4lzAu3UQdk1e2P13umjy2rBu+KXYkS2shKf5g+WknpJCkuBSqJvkgVvtJsoY=
+X-Gm-Gg: AYBFou0Xa4cEA6VO+/Tufk4Oo+cmbFcAidWAtrLyND+S+o1GlrvLOwmYvcyGNoxdAst
+ +TzUq371weT3KgM+DBVFAFdh8FdBSEyz7edNTQS/7HNucp01A1t/+gTqFZ9f6FG8GMdvHgDm8v6
+ k8GQWd0QdlIzweBuO9I/CGeJdgkf6rSZtxxHthV2SlDpPUYryCCldNDgdrVbpWVPgfwZlFTMBl+
+ PL8Jv2NU4n4EZNwKuW+7D8OYF31XBMMuuU+M+qgRbZw46dv+2QE2KS8Z/Ny+4df7lQ/h0EeXMhF
+ ROqJb18scKrxvGCLee5dxdzSMfyiqeZAZdaDq2b7Ylo13BSzkMJlGxQ1RloNC4vN3Jj1EpwqEx7
+ f/qh7EmeHqCo8tYHIBuu6mnuOEGzL7kseUbXHPCLBe0bDIvlaFsI2UCwbgAkrDG4BdcUN51TfXe
+ xvfNhpctqBml9VlwiA+Z0a/xfxbuZHWnFOhbNImSPpzvGkg7zi5XtJfY9DW+gntEIPbPajsmw=
+X-Received: by 2002:a5d:64e7:0:b0:485:8c16:a355 with SMTP id
+ ffacd0b85a97d-4870d27897emr4244038f8f.45.1789573082519; 
+ Wed, 16 Sep 2026 08:38:02 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf27a41sm7464951f8f.18.2026.09.16.08.37.56
+ ffacd0b85a97d-4870bf27a36sm7600519f8f.17.2026.09.16.08.37.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 16 Sep 2026 08:37:57 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2F5E861AF2;
- Wed, 16 Sep 2026 16:30:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id DC06961A5B;
+ Wed, 16 Sep 2026 16:30:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
@@ -89,9 +88,9 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 19/19] tests/tcg: Fix building outside of the source tree
-Date: Wed, 16 Sep 2026 16:30:12 +0100
-Message-ID: <20260916153013.2134555-20-alex.bennee@linaro.org>
+Subject: [PATCH v4 16/19] gitlab: update the @user id mapping file
+Date: Wed, 16 Sep 2026 16:30:09 +0100
+Message-ID: <20260916153013.2134555-17-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260916153013.2134555-1-alex.bennee@linaro.org>
 References: <20260916153013.2134555-1-alex.bennee@linaro.org>
@@ -106,7 +105,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,41 +121,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+I needed to fix a POSIX-ism in the script as well.
 
-Running TCG tests from a build directory that is outside of the source
-tree fails with:
-
-    [...]/qemu/tests/tcg/multiarch/libs/float_helpers.c:228:1: fatal error: opening dependency file tests/tcg/s390x-linux-user-float_convs.d: No such file or directory
-
-This is because the build directory is not mounted into the container.
-Add this mount. Do not bother with preventing overlapping mounts, they
-are harmless.
-
-Fixes: 27939ad414ca ("tests/tcg/meson.build: introduce cc_dockerfile and cc_docker_host_arch")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260915110855.491985-1-iii@linux.ibm.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260914184534.706637-1-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitlab-map-auto          | 8 +++++---
+ scripts/gitlab-map-update | 2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 6c675a554cf..c566820c097 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -259,7 +259,7 @@ foreach target, plan: tcg_tests
-       mount = mount + ':' + mount
-       here = meson.project_build_root()
-       cc = [docker_wrapper, 'run', '--run-as-current-user', '--',
--            '-w', here, '-v', mount,
-+            '-w', here, '-v', here + ':' + here, '-v', mount,
-             'qemu/' + cc_dockerfile, plan['cc']]
-       has_cc = true
-     endif
+diff --git a/.gitlab-map-auto b/.gitlab-map-auto
+index 28ce448f1bf..3f717a15d4e 100644
+--- a/.gitlab-map-auto
++++ b/.gitlab-map-auto
+@@ -12,11 +12,12 @@ a1xndr	Alexander Bulekov
+ adi-g15-ibm	Aditya Gupta
+ agraf	Alexander Graf
+ alex.williamson	Alex Williamson
+-aliang1	Aihua Liang
+ alistair23	Alistair Francis
++amachhiw	Amit Machhiwal
+ anisinha	Ani Sinha
+ anthony-linaro	Anthony Roberts
+ anthonyper	Anthony PERARD
++aroxell	Anders Roxell
+ berrange	Daniel P. Berrangé
+ birkelund	Klaus Jensen
+ bonzini	Paolo Bonzini
+@@ -36,10 +37,10 @@ dwmw2	David Woodhouse
+ eauger1	Eric Auger
+ ebblake	Eric Blake
+ edgar.iglesias	Edgar E. Iglesias
++efarman	Eric Farman
+ ehabkost	Eduardo Habkost
+ eldondev	Eldon
+ epilys	Manos Pitsidianakis
+-famzheng	Fam Zheng
+ farosas	Fabiano Rosas
+ gautammenghani	Gautam Menghani
+ gkurz	Greg Kurz
+@@ -51,7 +52,6 @@ imammedo	Igor Mammedov
+ jasowang	Jason Wang
+ jmacarthur	Jim MacArthur
+ jsnow	John Snow
+-juan.quintela	Juan Quintela
+ kbastian-qemu	Bastian Koppelmann
+ kmwolf	Kevin Wolf
+ kostyanf14	Kostiantyn Kostiuk
+@@ -67,6 +67,7 @@ mauromatteo.cascella	Mauro Matteo Cascella
+ mcayland	Mark Cave-Ayland
+ mdroth	Michael Roth
+ mediouni-m	M. Mediouni
++mjrosato	Matthew Rosato
+ mjt0k	Michael Tokarev
+ mstredhat	MST
+ npiggin	npiggin
+@@ -79,6 +80,7 @@ pipo.sk	Peter Krempa
+ pkrempa	Peter Krempa (work)
+ pm215	Peter Maydell
+ qemu-janitor	Qemu Janitor
++raphael.s.norwitz	Raphael Norwitz
+ rathc	Chinmay Rath
+ rth7680	Richard Henderson
+ schoenebeck	Christian Schoenebeck
+diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
+index c134c226aa2..743ad11900d 100755
+--- a/scripts/gitlab-map-update
++++ b/scripts/gitlab-map-update
+@@ -33,7 +33,7 @@ glab api --paginate /projects/qemu-project%2fqemu/members | \
+     .gitlab-map-auto.tmp
+ test $? != 0 && fail=1
+ 
+-if test $fail == 0
++if test $fail -eq 0
+ then
+   grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
+   LC_ALL=C sort .gitlab-map-auto.tmp | uniq >> .gitlab-map-auto.new
 -- 
 2.47.3
 
