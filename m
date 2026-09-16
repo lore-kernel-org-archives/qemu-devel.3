@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C73C982C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F83DC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6liw-0001tR-6E; Wed, 16 Sep 2026 05:14:38 -0400
+	id 1x6li7-0001Ca-SS; Wed, 16 Sep 2026 05:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6liO-0001H2-T0; Wed, 16 Sep 2026 05:14:05 -0400
+ id 1x6li5-0001BM-78; Wed, 16 Sep 2026 05:13:45 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x6liN-00088r-9I; Wed, 16 Sep 2026 05:14:04 -0400
+ id 1x6li3-00087h-8m; Wed, 16 Sep 2026 05:13:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=/5cKPTcNrENGYNboJ9Xh49xTMf7WRAhH+qgJvCNmrqI=; b=mSbjvPHg5SDRHRO
- kn2sxmhzgbH6Zp5ymOJCnXwXTDBwV9agBgF4ETNs1ellQkOyC8yFClnBumswBbX9aUFavGNSLE2eE
- Eln25UagM+ih9WZWp3nWT83dxN37czgwfHijTWyIT0V0iSQ+i5+uQGN6I89kDn1oYy6zStkHXcWHB
- 0I=;
-Date: Wed, 16 Sep 2026 11:19:05 +0200
-Subject: [PATCH v4 10/12] target-info: Introduce target_riscv32
+ List-Help; bh=nwLwQgR42J7eKkcK5W6JtsjBjSmohEpkHacQMA24HDk=; b=MaPLKnNF3wru7fk
+ LNCyXx+juwdFDVytJAaPaXndGbeKmelFMWX0nD8iQ28MKczec5vvZLvm6sGWAiYrOt0ZT0oViMbRR
+ CuaxN/ME8ZhvBUtxDqDV3IgLKCjtGd44meYiPl8BszLUk8xK3t5tSLKvGuPz1WXFHl903fnXOq/c8
+ PY=;
+Date: Wed, 16 Sep 2026 11:18:56 +0200
+Subject: [PATCH v4 01/12] target/riscv: Replace TYPE_RISCV_CPU_BASE
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260916-hw-riscv-cpu-int-v4-10-babc367b60f5@rev.ng>
+Message-Id: <20260916-hw-riscv-cpu-int-v4-1-babc367b60f5@rev.ng>
 References: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 In-Reply-To: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, 
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=1142;
+ alistair.francis@wdc.com, Chao Liu <chao.liu.zevorn@gmail.com>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789550353; l=2759;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=N+uEQZeAwfEqPvdkiOEOcw+Pf2L9CiSssjU+9HTIlpI=;
- b=c/O1yoqTEOmrrvX1e13ZwzhumATIaWK4Lg85Se5VMHqWOQBuEC48MI5TUMX9w1kEYBS668ed4
- jEnzOK/TrxoC0hXY1q/UchNXy04/UwEkSIKydEEbkArYR3FmV89vV18
+ bh=UBOkEAVcELBmELPjY92jS8lwx3tbFIEInyLiERUp3yM=;
+ b=oSp9sgo8YDzx7XE4KP0qaiD3V4kCOPj351ec5X1Q/COWyrZ5zr/LIZeqONVR94t7SoxJaE9wW
+ cmdACvDKl1UCKDtA9vurlAWmZSCz5nkzgv+g1p2/N7Dva5r9viWtnsc
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -73,49 +73,81 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Will be used in the following commit to filter machines using
-TypeInfo::is_available, so a simple !target_riscv64() is not sufficient.
+TYPE_RISCV_CPU_BASE is used only to initialize the correct default
+machine for 2 machines. Replace it with a runtime check.
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
+--
+Note, this patch is to be replaced by: 20260526095731.63525-1-philmd@linaro.org
 ---
- include/qemu/target-info.h | 7 +++++++
- target-info.c              | 5 +++++
- 2 files changed, 12 insertions(+)
+ target/riscv/cpu.h              | 6 ------
+ hw/riscv/microblaze-v-generic.c | 4 +++-
+ hw/riscv/virt.c                 | 4 +++-
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index b23e5bc586..c09e5d2a3e 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -91,6 +91,13 @@ bool target_ppc64(void);
-  */
- bool target_s390x(void);
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index c2138dbd4b..aee1dcaaf9 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -39,12 +39,6 @@ typedef struct CPUArchState CPURISCVState;
  
-+/**
-+ * target_riscv32:
-+ *
-+ * Returns whether the target architecture is riscv32
-+ */
-+bool target_riscv32(void);
-+
- /**
-  * target_riscv64:
-  *
-diff --git a/target-info.c b/target-info.c
-index 012b384036..bba4503151 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -89,6 +89,11 @@ bool target_s390x(void)
-     return target_arch() == SYS_EMU_TARGET_S390X;
+ #define CPU_RESOLVING_TYPE TYPE_RISCV_CPU
+ 
+-#if defined(TARGET_RISCV32)
+-# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE32
+-#elif defined(TARGET_RISCV64)
+-# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE64
+-#endif
+-
+ /*
+  * b0: Whether a instruction always raise a store AMO or not.
+  */
+diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
+index b0494b1ac5..3f07ab2132 100644
+--- a/hw/riscv/microblaze-v-generic.c
++++ b/hw/riscv/microblaze-v-generic.c
+@@ -15,6 +15,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "target/riscv/cpu.h"
+ #include "hw/core/sysbus.h"
+@@ -182,7 +183,8 @@ static void mb_v_generic_machine_init(MachineClass *mc)
+     mc->init = mb_v_generic_init;
+     mc->min_cpus = 1;
+     mc->max_cpus = 1;
+-    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
++    mc->default_cpu_type = (target_riscv64()) ? TYPE_RISCV_CPU_BASE64
++                                              : TYPE_RISCV_CPU_BASE32;
+     mc->default_cpus = 1;
  }
  
-+bool target_riscv32(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_RISCV32;
-+}
-+
- bool target_riscv64(void)
- {
-     return target_arch() == SYS_EMU_TARGET_RISCV64;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index d4b501802f..4da11db8b9 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -22,6 +22,7 @@
+ #include "qemu/units.h"
+ #include "qemu/error-report.h"
+ #include "qemu/guest-random.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/loader.h"
+@@ -1136,7 +1137,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->desc = "RISC-V VirtIO board";
+     mc->init = virt_machine_init;
+     mc->max_cpus = VIRT_CPUS_MAX;
+-    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
++    mc->default_cpu_type = (target_riscv64()) ? TYPE_RISCV_CPU_BASE64
++                                              : TYPE_RISCV_CPU_BASE32;
+     mc->block_default_type = IF_VIRTIO;
+     mc->no_cdrom = 1;
+     mc->pci_allow_0_address = true;
 
 -- 
 2.52.0
