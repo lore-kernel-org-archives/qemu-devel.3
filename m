@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37EB2C982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4CBC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6leG-0007g8-V5; Wed, 16 Sep 2026 05:09:49 -0400
+	id 1x6leJ-0007uj-Bs; Wed, 16 Sep 2026 05:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6leE-0007UH-Vd; Wed, 16 Sep 2026 05:09:47 -0400
+ id 1x6leG-0007gY-KW; Wed, 16 Sep 2026 05:09:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6leD-0007Vh-2m; Wed, 16 Sep 2026 05:09:46 -0400
+ id 1x6leE-0007W8-Va; Wed, 16 Sep 2026 05:09:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549562; bh=4BAAZ5J13oAfcQOn4licbUGM9NvyUpA3Ch790R8g+pM=;
+ t=1789549562; bh=zuJ25Qwoepx64JeLHRK8tPAAxVebrDg/Ykxpo3dxdA8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qHOQpOihymrkwdHGWFTjXijBTG3I+wUaAMc83Owd5jb1hUNHxt0SRbSSG1Qjn4oBM
- n8A6U9DpkFJwleJlZHq82Fi33iMIvGYhU14LvUzw3IOjwM0rsjsEsOvpBdRNQLa1Ix
- /sk7v4RxjYhpwE8S0e9AKHQB2KwmI3EwhYhHSu4oMvO4hFphukbReiq3rOQl2UFnSu
- BDWcGpAt7Zbq1M8eWknatugi0u+ZLV02MO1cHx4lpVk9CAtfvy7v96Lo/sjy8vMk1r
- 74t8XgGq+Q/eLYyJ3P7r7UkeKSzyDUBoTGkOIpoPeagi5xFa8REx/7vhtPhgfvJPz5
- RoA6wIJ8OT37w==
+ b=n5Z5Xf7TzlcJKjToC0HPScVyKXfRF4Ais4omxuIEiIOTUPdzEgrv9a0zHsqbgYRWX
+ Zxq2B8EJaU+jEi3CR4Wdj4BlgtsOtSKDbH7BjIBFxj7gMdF12yBZkMBaQjKOsk7OyJ
+ SfVtEBZ64u5NoXCdxCSS9JWX4ZvdpWacHkaV7S09y2+zU35MAt9HgRT/CuKTZBczfB
+ EbdogIz8uvrijr49eM+u/6etqa2Hx+K9N5hTW82QUaoEZF8fEzDRWbCz6elyVtaFvX
+ Y4z0WTDyOzyUu7xvnKf59osZS7tSXv0ykcAYhI7aH+Wj8wDOZ/YpuHuplzCqrEICwN
+ oBJdslv0hXbTg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2ED2E1D56DF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 336EC1D56E0;
  Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CE773429E3B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D35CD429E3C;
  Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C68DE5A7AD; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
+ id C9C455A7AF; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 42/57] hw/cxl: Fix guest-triggerable QEMU exit on
- reserved interleave ways
-Date: Wed, 16 Sep 2026 12:04:06 +0300
-Message-ID: <20260916090516.677749-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zhang Chen <zhangckid@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 43/57] qapi/misc: Fix missed query-iothreads items
+Date: Wed, 16 Sep 2026 12:04:07 +0300
+Message-ID: <20260916090516.677749-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -71,57 +71,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Zhang Chen <zhangckid@gmail.com>
 
-A buggy or malicious guest can program a committed HDM decoder with a
-reserved Interleave Ways encoding (e.g. 0x5-0x7, 0xb-0xf).  Two call
-sites pass &error_fatal to cxl_interleave_ways_dec(), which calls
-exit(1) on the reserved encoding before the subsequent decoded_iw == 0
-guards can run:
+The example is incomplete: it misses members @poll-max-ns, @poll-grow,
+@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
+(monitor: add poll-* properties into query-iothreads result) and
+commit 1793ad0247c (iothread: add aio-max-batch parameter).
 
-  - cxl-host.c update_non_interleaved(): called at commit time from
-    hdm_decoder_commit() via cfmws_update_non_interleaved(), so a guest
-    writing COMMIT with a reserved IW terminates QEMU immediately.  This
-    is the primary trigger on the current tree.
-
-  - cxl_type3.c cxl_type3_dpa(): called on memory access while iterating
-    past committed decoders to accumulate dpa_base.  Once the commit-time
-    exit is removed, the decoder stays committed with the reserved
-    encoding, so a later guest access outside that decoder's range would
-    otherwise hit this second &error_fatal; both are fixed here.
-
-Pass NULL instead of &error_fatal at both sites so that the reserved
-encoding returns zero and the existing guards handle it gracefully.
-
-This can be reproduced by writing the HDM Decoder 0 Control register
-with a reserved IW encoding and the COMMIT bit set (e.g. IW=0x5,
-COMMIT=1).
-
-Cc: qemu-stable@nongnu.org
-Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
-Fixes: 48461825af1b ("hw/mem/cxl_type3: Fix potential divide by zero reported by coverity")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260618104316.557306-1-junjie.cao@intel.com>
-(cherry picked from commit 713e7e85a2b43e9d4e58d91643aef230d2c30b07)
-(Mjt: drop changes to hw/cxl/cxl-host.c for code introduced in
- v11.0.0-1291-g680935c9a6ff "hw/cxl: Add a performant (and correct) path for the non interleaved cases")
+CC: qemu-stable@nongnu.org
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit f10977073cb4ac58fce7274893e7129e7f64dcae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index e39a85cde8e..91db48570d2 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1196,7 +1196,7 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-         }
-         if (((uint64_t)host_addr < decoder_base) ||
-             (hpa_offset >= decoder_size)) {
--            int decoded_iw = cxl_interleave_ways_dec(iw, &error_fatal);
-+            int decoded_iw = cxl_interleave_ways_dec(iw, NULL);
- 
-             if (decoded_iw == 0) {
-                 return false;
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 28c641fe2fe..1f5062df2a5 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -117,11 +117,19 @@
+ #     <- { "return": [
+ #              {
+ #                 "id":"iothread0",
+-#                 "thread-id":3134
++#                 "thread-id":3134,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              },
+ #              {
+ #                 "id":"iothread1",
+-#                 "thread-id":3135
++#                 "thread-id":3135,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              }
+ #           ]
+ #        }
 -- 
 2.47.3
 
