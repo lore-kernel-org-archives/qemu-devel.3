@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6195C88E7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDA8C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n0b-0003RB-SR; Wed, 16 Sep 2026 06:36:58 -0400
+	id 1x6n4e-0002a4-Om; Wed, 16 Sep 2026 06:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n0Z-0003PV-6w; Wed, 16 Sep 2026 06:36:55 -0400
+ id 1x6n43-0008Qh-RC; Wed, 16 Sep 2026 06:40:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6n0W-0001fz-VJ; Wed, 16 Sep 2026 06:36:54 -0400
+ id 1x6n42-0002QK-7q; Wed, 16 Sep 2026 06:40:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789554955; bh=AZuIUWV3z1Cmut3elQ3UtGqAfpQF1H5jzluizxXuriw=;
+ t=1789554958; bh=W8vuVPPk7YFnn93xLGvKlsRQLztsdjQUBnJj3kpGymg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WlM4kYlJCy1L1z5XgdbRKer/zz2UqPZAQfZgApYNH5wg+p+H03v4C4s4bhvqnb7N9
- 6m0Ll/avqLNzAu787FjgyY4uGlvfbneZSx+YyWhTRKUaKjb46tY7trwnmku2GakoDH
- FZBGBmNqTpJtF63vALo5ljs34LkVNXtPEDHCFx7fAKkVrVin8B9DMt9dM+YJF8xj0R
- MOV3R1Q0y17L3WsMy621p/i9CmH9FsqGOynXgmCdrP0ITlAuk1d2qUz5F/JqIOmmSv
- nR0E9JU89NEpcmz2K3Uy+CxltbSnaQZe2EfKWjpCNx3CnzZWebP7XZPouUTXBu2370
- 1DUSmSDT37Htg==
+ b=Kaf6gLCoXoM9hmonp/iMTBYEHzVCui1ZKNWIGGuXHefr8xbPkA2Q5bu/JWqgWlSXW
+ VjioBe4T7JWmXekLiAZg71mX4FnK9MD5yHQqrlH3VJbIlLC2MTwYa8QTfJkaHhewdP
+ iTxkl/adVtsVcBXid2cbk4XotdniFyVCWBLXWZANWL+W4atROvXlfQk7pV7ru0BOQN
+ gDwn/F7ABAgMvIpZNWDSgE+TTfGc3hg5gPyFbhAm6JYs+uX5Sv6Pm7oQIaoZxe0oFT
+ CSerw224NY7de/Iti6oAb+Z2HXBojFOUaO+i/NswVpaaxMPeC/8+nogqd8/nI9GzNZ
+ VYK3/Rz87z5tA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C46141D57FC;
- Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0198E1D5828;
+ Wed, 16 Sep 2026 13:35:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8F580429F5B;
- Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C0A7C429F96;
+ Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 720E55A7F3; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+ id A762C5A845; Wed, 16 Sep 2026 13:36:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ admin@fluentlogic.org, Michael S. Tsirkin <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 09/56] block/monitor: reject persistent bitmap add on
- a read-only node
-Date: Wed, 16 Sep 2026 13:35:27 +0300
-Message-ID: <20260916103622.684817-9-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 50/56] vhost-user-gpu: validate command buffer size in
+ submit_3d
+Date: Wed, 16 Sep 2026 13:36:08 +0300
+Message-ID: <20260916103622.684817-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,153 +74,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-qmp_block_dirty_bitmap_add() marks a new bitmap persistent without
-checking write access to its node. bdrv_create_dirty_bitmap() always
-creates bitmaps writable, so a persistent bitmap added to an
-already read-only node stays writable in memory on a node that can
-never store it, and the next global inactivation fails:
+virgl_cmd_submit_3d() passes the guest-controlled cs.size directly to
+g_malloc() without any bounds check. A malicious guest can set this
+field to an arbitrarily large value (up to 4GB), causing an OOM abort
+that crashes the vhost-user-gpu daemon.
 
-  Lost persistent bitmaps during inactivation of node '<node>': No write access
-  migration_block_inactivate: bdrv_inactivate_all() failed: -22
+Validate cs.size against the actual descriptor payload size before
+allocating, rejecting values that exceed what the virtqueue entry
+can carry.
 
-Forcing it read-only instead does not help: it was never stored,
-so it stays unpromotable on the next reopen to read-write and can
-trip bdrv_set_dirty()'s readonly assert on the first write. Reject
-the add instead, for both read-only and inactive nodes -- an
-already-inactive node skips qcow2_inactivate() on close, so a
-bitmap added during that window would never get stored either.
-Wrapped in a transaction, this denies the whole transaction, since
-qmp_transaction() is already all-or-none.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Eric Blake <eblake@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: John Snow <jsnow@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Message-ID: <20260716112242.3000035-2-den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 59ecd8a1ac3f05f572155a2d7a81fbeec397e2d3)
+Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
+Reported-by: admin@fluentlogic.org
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260713125431.107278-1-marcandre.lureau@redhat.com>
+Message-ID: <67f10fb88d3c75da3ba7fa5a37f7d6bcfcf3ce9e.1789071042.git.mst@redhat.com>
+(cherry picked from commit 01df81b24c50fe70e816cce70956acd6ac632fc9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/monitor/bitmap-qmp-cmds.c b/block/monitor/bitmap-qmp-cmds.c
-index a738e7bbf7a..d87ca982aa9 100644
---- a/block/monitor/bitmap-qmp-cmds.c
-+++ b/block/monitor/bitmap-qmp-cmds.c
-@@ -125,10 +125,17 @@ void qmp_block_dirty_bitmap_add(const char *node, const char *name,
-         disabled = false;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 20bae57d0fe..c95c4afc5c5 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -197,20 +197,24 @@ virgl_cmd_submit_3d(VuGpu *g,
+                     struct virtio_gpu_ctrl_command *cmd)
+ {
+     struct virtio_gpu_cmd_submit cs;
++    size_t iov_len;
+     void *buf;
+     size_t s;
+ 
+     VUGPU_FILL_CMD(cs);
+ 
+-    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
+-        g_critical("%s: command buffer too large (%u)",
+-                   __func__, cs.size);
++    iov_len = iov_size(cmd->elem.out_sg, cmd->elem.out_num);
++    if (cs.size == 0 || iov_len < sizeof(cs) ||
++        cs.size > iov_len - sizeof(cs) ||
++        cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
++        g_critical("%s: size out of range (%u/%zu)",
++                   __func__, cs.size, iov_len);
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+         return;
      }
  
--    if (persistent &&
--        !bdrv_can_store_new_dirty_bitmap(bs, name, granularity, errp))
--    {
--        return;
-+    if (persistent) {
-+        if (!bdrv_is_writable(bs)) {
-+            error_setg(errp, "Cannot add a persistent bitmap to "
-+                       "read-only or inactive node '%s'",
-+                       bdrv_get_node_name(bs));
-+            return;
-+        }
-+
-+        if (!bdrv_can_store_new_dirty_bitmap(bs, name, granularity, errp)) {
-+            return;
-+        }
+     buf = g_try_malloc(cs.size);
+-    if (!buf && cs.size) {
++    if (!buf) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+         return;
      }
- 
-     bitmap = bdrv_create_dirty_bitmap(bs, granularity, name, errp);
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1f87b078505..199efc1e008 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2353,7 +2353,9 @@
- # @persistent: the bitmap is persistent, i.e. it will be saved to the
- #     corresponding block device image file on its close.  For now
- #     only Qcow2 disks support persistent bitmaps.  Default is false
--#     for `block-dirty-bitmap-add`.  (Since: 2.10)
-+#     for `block-dirty-bitmap-add`.  This fails if the node is
-+#     read-only or inactive, since such a bitmap could never be
-+#     stored.  (Since: 2.10)
- #
- # @disabled: the bitmap is created in the disabled state, which means
- #     that it will not track drive changes.  The bitmap may be enabled
-diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing b/tests/qemu-iotests/tests/remove-bitmap-from-backing
-index 15be32dcb96..a54984fa58e 100755
---- a/tests/qemu-iotests/tests/remove-bitmap-from-backing
-+++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing
-@@ -35,7 +35,7 @@ qemu_img('bitmap', '--add', base, 'bitmap0')
- # Just assert that our method of checking bitmaps in the image works.
- assert 'bitmaps' in qemu_img_info(base)['format-specific']['data']
- 
--vm = iotests.VM().add_drive(top, 'backing.node-name=base')
-+vm = iotests.VM().add_drive(top, 'node-name=top,backing.node-name=base')
- vm.launch()
- 
- log('Trying to remove persistent bitmap from r-o base node, should fail:')
-@@ -66,6 +66,33 @@ result = vm.qmp('blockdev-reopen', **new_base_opts)
- if result != {'return': {}}:
-     log('Failed to reopen: ' + str(result))
- 
-+log('Adding a persistent bitmap to the r-o base node, should fail:')
-+vm.qmp_log('block-dirty-bitmap-add', node='base', name='bitmap1',
-+          persistent=True)
-+
-+log('Same add inside a transaction, preceded by an otherwise valid')
-+log('action: the whole transaction must fail and roll back the')
-+log('already-succeeded first action too:')
-+vm.qmp_log('transaction', actions=[
-+    {'type': 'block-dirty-bitmap-add',
-+     'data': {'node': 'top', 'name': 'bitmap2', 'persistent': True}},
-+    {'type': 'block-dirty-bitmap-add',
-+     'data': {'node': 'base', 'name': 'bitmap1', 'persistent': True}},
-+])
-+
-+log('bitmap2 on the rw top node must not have survived the rollback:')
-+vm.qmp_log('block-dirty-bitmap-remove', node='top', name='bitmap2')
-+
-+log('Marking the rw top node inactive:')
-+vm.qmp_log('blockdev-set-active', **{'node-name': 'top', 'active': False})
-+
-+log('Adding a persistent bitmap to a rw but inactive node, should fail:')
-+vm.qmp_log('block-dirty-bitmap-add', node='top', name='bitmap3',
-+          persistent=True)
-+
-+log('Reactivating the top node:')
-+vm.qmp_log('blockdev-set-active', **{'node-name': 'top', 'active': True})
-+
- vm.shutdown()
- 
- if 'bitmaps' in qemu_img_info(base)['format-specific']['data']:
-diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-index c28af82c752..fe105fe0a38 100644
---- a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-+++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-@@ -4,3 +4,23 @@ Trying to remove persistent bitmap from r-o base node, should fail:
- Remove persistent bitmap from base node reopened to RW:
- {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
- {"return": {}}
-+Adding a persistent bitmap to the r-o base node, should fail:
-+{"execute": "block-dirty-bitmap-add", "arguments": {"name": "bitmap1", "node": "base", "persistent": true}}
-+{"error": {"class": "GenericError", "desc": "Cannot add a persistent bitmap to read-only or inactive node 'base'"}}
-+Same add inside a transaction, preceded by an otherwise valid
-+action: the whole transaction must fail and roll back the
-+already-succeeded first action too:
-+{"execute": "transaction", "arguments": {"actions": [{"data": {"name": "bitmap2", "node": "top", "persistent": true}, "type": "block-dirty-bitmap-add"}, {"data": {"name": "bitmap1", "node": "base", "persistent": true}, "type": "block-dirty-bitmap-add"}]}}
-+{"error": {"class": "GenericError", "desc": "Cannot add a persistent bitmap to read-only or inactive node 'base'"}}
-+bitmap2 on the rw top node must not have survived the rollback:
-+{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap2", "node": "top"}}
-+{"error": {"class": "GenericError", "desc": "Dirty bitmap 'bitmap2' not found"}}
-+Marking the rw top node inactive:
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "top"}}
-+{"return": {}}
-+Adding a persistent bitmap to a rw but inactive node, should fail:
-+{"execute": "block-dirty-bitmap-add", "arguments": {"name": "bitmap3", "node": "top", "persistent": true}}
-+{"error": {"class": "GenericError", "desc": "Cannot add a persistent bitmap to read-only or inactive node 'top'"}}
-+Reactivating the top node:
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "top"}}
-+{"return": {}}
 -- 
 2.47.3
 
