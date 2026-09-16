@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF3EDC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E8CC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMb-0002gv-F4; Wed, 16 Sep 2026 03:47:29 -0400
+	id 1x6kJZ-0004HE-05; Wed, 16 Sep 2026 03:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMX-0002R4-Fu; Wed, 16 Sep 2026 03:47:25 -0400
+ id 1x6kJU-0004FA-Dw; Wed, 16 Sep 2026 03:44:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMV-0005OR-OZ; Wed, 16 Sep 2026 03:47:25 -0400
+ id 1x6kJR-0004ty-Ir; Wed, 16 Sep 2026 03:44:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=lG5vrb1V1sHxv7qGHlbvZp5ErE/m362kDdv72vKviZQ=;
+ t=1789544605; bh=d6/lmz3ycWWaNMwV5SDGfd/81v0DRc4MNRpU620mnfE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B7i/KNNzCDTseWe/lDYLQ0oDd/mk4gJ/Y8Rgh113cS0y3iFTxZWHxE3ES8QwgeSPW
- 1L+rxyuNXKDo3T3VtD3S8gFWQNmeZ3IDEAfRTach4ljCnpTg85iwEacR9lTyps4QTj
- 0hmzyIVqIhn3xziRdcqpnmy5Q4a+5IzAS6fBcRJCuDpl4ae1Xx+ijrTWtlJJyegOG5
- VjdYPJ5cIyWC74t5h/tLlKMgWdweyZ6k+eIoZUnpl9j3L9DMvcrzsJSTEwA9SWmejB
- xLuznRRpsaeE6x0H6y1iix45xEwgy+XzpjsHxLVetNr/tq7gVkiIsVBkY94V6Nkv78
- rGOF9nxXw1tsA==
+ b=Pwbp+EBNegwXGDjLIfZwEXMK1vkzzms8OgEy+nuETDY1feIqhnoqJr+JACloR4xLt
+ HngjSD6M5vfl5QdkAwaIossldw92Iu8U3LeO3SidHWgKmLQbjZUu+s8xUvtgmP1c3o
+ /lWfVP2cSLEkZrO4FX62vNM7nBDm9sfoUH5clbYY5hMcEOQ2VLczuSE6n02QjQ4z6Y
+ p/OXKs2Eu94hvR6gxT+gmNjvHICBivfxMNB+ZYCFsNOWCKo7/kLg46/fyd0ufZlPOP
+ vUlhLlmbnyvVdir90Y2sLZSU+CukLv5aOwdgfRPgfupTUJaqPXp9BMgsykaW2wt1d6
+ eZUBykVSmujlQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1413C1D55BA;
- Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 26A3C1D558F;
+ Wed, 16 Sep 2026 10:43:25 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9802E429B73;
- Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A98AD429B21;
+ Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 55CED5A719; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id 97DCC5A6C9; Wed, 16 Sep 2026 10:44:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 44/49] hw/cxl: fix the CDAT DOE overlapping the Flex
- Bus DVSEC when sn= is set
-Date: Wed, 16 Sep 2026 10:43:02 +0300
-Message-ID: <20260916074346.671467-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Warisjeet Singh <sinxx198@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 04/49] hw/display/vga: fix text-mode OOB write after
+ a graphics surface switch
+Date: Wed, 16 Sep 2026 10:42:22 +0300
+Message-ID: <20260916074346.671467-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -71,47 +71,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Warisjeet Singh <sinxx198@gmail.com>
 
-ct3_realize() adds the CDAT DOE at a fixed 0x190.  Since 8700ee15de the
-four DVSECs take 0x90 bytes, which from 0x100 ends exactly at 0x190.
-With sn= the Device Serial Number capability pushes the block to
-0x10c..0x19c, and the DOE, added later, overwrites the last 12 bytes of
-the Flex Bus Port DVSEC: Capability2, Control2 and Status2.  Nothing
-catches this -- pcie_add_capability() checks bounds, not overlap, and
-the chain still walks because the DVSEC's next pointer becomes 0x190,
-inside its own body.  Most cxl-type3 examples in
-docs/system/devices/cxl.rst set sn=.
+vga_draw_text() decides whether the console surface needs a resize from
+its geometry cache, but none of the cache terms observe the graphics
+renderer having replaced the console surface in between:
 
-Derive the offset from the DVSEC block instead, as cxl_upstream.c
-already does.  Without sn= the layout is unchanged byte for byte; with
-sn= the DOE moves to 0x19c, below the AER capability at 0x200.  The
-type 3 device has no VMStateDescription, so its config space never
-reaches the migration stream.
+- last_width/last_height are shared with vga_draw_graphic(), which
+  stores them in pixels while the text path stores characters;
+- last_depth stays 0 for legacy (non-VBE) graphics modes, because
+  vga_get_bpp() only reports a depth when VBE is enabled, so the
+  "s->last_depth" term that normally forces a resize after a graphics
+  frame does not fire.
 
-Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260831022302.406740-1-junjie.cao@intel.com>
-(cherry picked from commit 0ddbce88c45a7376a9fc948097d58195358ffec7)
+So a graphics frame that shrinks the console surface (e.g. 80x25
+pixels) followed by a text frame with matching character geometry
+(80x25 chars) skips the resize, and the glyph loop then paints
+width*cw x height*cheight pixels into the smaller surface, out of
+bounds, with guest-controlled (DAC palette) values, on every display
+refresh.
+
+Separate the geometry cache per renderer: text paths (vga_draw_text,
+vga_update_text, and the text handling in vga_invalidate_display /
+vga_common_reset) now only manipulate last_text_{width,height}, in
+characters; last_{width,height} become graphics-only, in pixels.
+Additionally, make the text path compare the pixel size it is about
+to paint against the console surface's actual dimensions.  The
+surface check is the load-bearing term: caches in either unit cannot
+see the other renderer swapping the surface, the surface can.
+
+Fixes: CVE-2026-77913
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
+Message-ID: <vga-v3-20260824.sinxx198@gmail.com>
+(cherry picked from commit 418396be8013386a81f8d8d89ac0effcf03a64b6)
+(Mjt: adjust across v11.0.0-787-g405a42e36550
+ "ui/console: rename public API to use consistent qemu_console_ prefix")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index df2a2fa6345..1606aa32790 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -903,8 +903,8 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index af31f210e89..405ea89ed48 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1239,7 +1239,10 @@ static void vga_draw_text(VGACommonState *s, int full_update)
+         return;
      }
  
-     /* DOE Initialization */
--    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
--                  CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
-+    pcie_doe_init(pci_dev, &ct3d->doe_cdat, cxl_cstate->dvsec_offset,
-+                  doe_cdat_prot, true, CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
+-    if (width != s->last_width || height != s->last_height ||
++    if (surface == NULL ||
++        surface_width(surface) != width * cw ||
++        surface_height(surface) != height * cheight ||
++        width != s->last_text_width || height != s->last_text_height ||
+         cw != s->last_cw || cheight != s->last_ch || s->last_depth) {
+         s->last_scr_width = width * cw;
+         s->last_scr_height = height * cheight;
+@@ -1247,8 +1250,8 @@ static void vga_draw_text(VGACommonState *s, int full_update)
+         surface = qemu_console_surface(s->con);
+         dpy_text_resize(s->con, width, height);
+         s->last_depth = 0;
+-        s->last_width = width;
+-        s->last_height = height;
++        s->last_text_width = width;
++        s->last_text_height = height;
+         s->last_ch = cheight;
+         s->last_cw = cw;
+         full_update = 1;
+@@ -1827,6 +1830,8 @@ static void vga_invalidate_display(void *opaque)
  
-     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
-     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+     s->last_width = -1;
+     s->last_height = -1;
++    s->last_text_width = -1;
++    s->last_text_height = -1;
+ }
+ 
+ void vga_common_reset(VGACommonState *s)
+@@ -1869,6 +1874,8 @@ void vga_common_reset(VGACommonState *s)
+     s->last_ch = 0;
+     s->last_width = 0;
+     s->last_height = 0;
++    s->last_text_width = 0;
++    s->last_text_height = 0;
+     s->last_scr_width = 0;
+     s->last_scr_height = 0;
+     s->cursor_start = 0;
+@@ -1920,8 +1927,8 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
+         s->graphic_mode = graphic_mode;
+         full_update = 1;
+     }
+-    if (s->last_width == -1) {
+-        s->last_width = 0;
++    if (s->last_text_width == -1) {
++        s->last_text_width = 0;
+         full_update = 1;
+     }
+ 
+@@ -1960,15 +1967,15 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
+             break;
+         }
+ 
+-        if (width != s->last_width || height != s->last_height ||
++        if (width != s->last_text_width || height != s->last_text_height ||
+             cw != s->last_cw || cheight != s->last_ch) {
+             s->last_scr_width = width * cw;
+             s->last_scr_height = height * cheight;
+             qemu_console_resize(s->con, s->last_scr_width, s->last_scr_height);
+             dpy_text_resize(s->con, width, height);
+             s->last_depth = 0;
+-            s->last_width = width;
+-            s->last_height = height;
++            s->last_text_width = width;
++            s->last_text_height = height;
+             s->last_ch = cheight;
+             s->last_cw = cw;
+             full_update = 1;
+@@ -2053,22 +2060,22 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
+     }
+ 
+     /* Display a message */
+-    s->last_width = 60;
+-    s->last_height = height = 3;
++    s->last_text_width = 60;
++    s->last_text_height = height = 3;
+     dpy_text_cursor(s->con, -1, -1);
+-    dpy_text_resize(s->con, s->last_width, height);
++    dpy_text_resize(s->con, s->last_text_width, height);
+ 
+-    for (dst = chardata, i = 0; i < s->last_width * height; i ++)
++    for (dst = chardata, i = 0; i < s->last_text_width * height; i ++)
+         console_write_ch(dst ++, ' ');
+ 
+     size = strlen(msg_buffer);
+-    width = (s->last_width - size) / 2;
+-    dst = chardata + s->last_width + width;
++    width = (s->last_text_width - size) / 2;
++    dst = chardata + s->last_text_width + width;
+     for (i = 0; i < size; i ++)
+         console_write_ch(dst ++, ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
+                                              QEMU_COLOR_BLACK, 1));
+ 
+-    dpy_text_update(s->con, 0, 0, s->last_width, height);
++    dpy_text_update(s->con, 0, 0, s->last_text_width, height);
+ }
+ 
+ static uint64_t vga_mem_read(void *opaque, hwaddr addr,
+diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
+index f77c1c11457..2cd66becb1f 100644
+--- a/hw/display/vga_int.h
++++ b/hw/display/vga_int.h
+@@ -122,7 +122,8 @@ typedef struct VGACommonState {
+     uint32_t plane_updated;
+     uint32_t last_line_offset;
+     uint8_t last_cw, last_ch;
+-    uint32_t last_width, last_height; /* in chars or pixels */
++    uint32_t last_width, last_height; /* in pixels (graphics renderer) */
++    uint32_t last_text_width, last_text_height; /* in chars (text renderer) */
+     uint32_t last_scr_width, last_scr_height; /* in pixels */
+     uint32_t last_depth; /* in bits */
+     bool last_byteswap;
 -- 
 2.47.3
 
