@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D4DDC88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4943EC88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6pZr-0005xX-Nr; Wed, 16 Sep 2026 09:21:32 -0400
+	id 1x6pa5-00060s-Q5; Wed, 16 Sep 2026 09:21:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x6pZq-0005x3-GL
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:21:30 -0400
+ id 1x6pa1-0005zu-V5
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:21:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x6pZo-00032U-Ks
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:21:30 -0400
+ id 1x6pa0-00034F-Ed
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:21:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789564887;
+ s=mimecast20190719; t=1789564899;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4REO1qBeWuk8/clBHJch74Ty6Oz13hhJb9h5IHDXZ44=;
- b=N35+Z0kHy+qOcHlpkNSiJLLYyTqhPwY1ElBQknMnorkFt5lkWJZVXOYVV+r0RFWqZjCW95
- 0CtD1lg4E/V1udlV/tol7Uff5rfhxuVusu3V3Rww5PzRUuNtPxUHhjIWMBvRaVpund+EYC
- UjEYvQjsBnnAl6Ve4ec21h53UBidJic=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+zBW25gKUyiE/snsk8aXKtC3LP8ALTPiyrh6mxfmGyk=;
+ b=fM3iuSHn8oxGnJJLHtcCXbdyl/5obSsdIcgomvBiiEEZtZGrt/ho4+pi+vetyS+BOQMA7y
+ LDW8IWMbtAE/69+lIn+XFRIU9TDxYx2VRYDTMcOOZddi8gBOjRBvs8qkntpblZm6trNcZ/
+ PDIepQEG/Zcev9KrUL0aKswRGUChwLs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-V0XdP7S5O1ezDJ_YPBdvLQ-1; Wed, 16 Sep 2026 09:21:25 -0400
-X-MC-Unique: V0XdP7S5O1ezDJ_YPBdvLQ-1
-X-Mimecast-MFC-AGG-ID: V0XdP7S5O1ezDJ_YPBdvLQ_1789564884
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49ccfad90f1so32696965e9.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:21:25 -0700 (PDT)
+ us-mta-572-2GwZjtUBMrOs49J6UbUOXw-1; Wed, 16 Sep 2026 09:21:35 -0400
+X-MC-Unique: 2GwZjtUBMrOs49J6UbUOXw-1
+X-Mimecast-MFC-AGG-ID: 2GwZjtUBMrOs49J6UbUOXw_1789564894
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49e65f2f1baso45010885e9.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789564884; x=1790169684; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789564894; x=1790169694; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4REO1qBeWuk8/clBHJch74Ty6Oz13hhJb9h5IHDXZ44=;
- b=epjxzLD+P/0EhwfC4rjzZ5gxBNV/GhX3JqYHtbjkEAhKwJrousbNkIW6m/3nYTRQCI
- 2UzVmmY2QED+2H5Uuxdezsvwx1nyiCy1SLPluGdv6s2BaPRoT63CaEGZP15uo7f9c95S
- 2v7P/gbCXNatYzTtALRZCN7VRcUKfxB+BPFQZG1WpRAsBKyFsPP3BiZEl7BkXxHRzLka
- 7H26nEABZ/bNvlUr2tTv0jTmb7ytmJ0PGHq3GV9vCMzkOCkJnU8tUVt3cMvPW0i5XwPy
- +fCihzobxOWo+i/4MxMWIJm+84Qdb3dOBPaa33kIT6cBtQYb/DJo9oB3UkVRktKmLexb
- 6uZA==
+ bh=+zBW25gKUyiE/snsk8aXKtC3LP8ALTPiyrh6mxfmGyk=;
+ b=joJrFdRF6y+4HxfqmUaIGTFnivTVMNJfcwVK41S3R4bW/c9DLJiz0NixL6fLEDTwnE
+ J01Nlr3ScqGjILC3pZdQzO5R/5H8nKodH8yuxRVuCa4t5EjqDC8IIUADeWV7AMnr47mx
+ wJl+X6eHm9fZqSWnevsuxXJrkSwu7YH+uhHQ7Nk+ZYRgCImvgDeqHMKGsk44wr7c+4Et
+ vA6ukmQR9vcrTUAD5ab8TaLMgp5fHEry5PydI+icOrW7tUHvOFNC4DsuoNuAxFhq8raP
+ 3kH+0pJOoJZ/igAhfmnyHKOmcJ7fhYnftGvby3T3r+0fHXABp4xLH3HdmeQ30FQtCJp3
+ Bhcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789564884; x=1790169684;
+ d=1e100.net; s=20260707; t=1789564894; x=1790169694;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4REO1qBeWuk8/clBHJch74Ty6Oz13hhJb9h5IHDXZ44=;
- b=fnLY8EoRMcR2vQByV5m5SwuaAKsRcWyS4nja92sFzPXeZYIx8gnT4kAhrzKv7+0h9a
- QfgnR6qh+06BkasR74FHP/d2icTWJH22/khBBkJBW7y6eHl3/zvSkfyEViQxcYdtjYS3
- ygBS/F+p3ECoD3SijGX+S/tkMV/hlw612Pb0JHBjgiyGdED8z9SphdIEL2x7bL6PSfb5
- DD0R06iPWH+3undxF3XJk2Pk5RwNslvavdYyRKBchVoUMaUWxwI1k/H4G3PlwYk/+R6P
- oAYiqV1YXNCQPo/jrEYqavmpvpmx5Izaf8ucUOv57bKfh9PSjdiDCDsseGSiJ5l1UXt+
- mQOQ==
-X-Gm-Message-State: AFuF++mIcfO6BIV1y4IvBTenfo4furnBN9xnFvW53EUQhF4oxVmf3Oci
- s26ZsiYF5Q8uoJAPo8ENDu147TEpUB5ebnN7jTL8TlYL6U3Q2IAPTRmWZBpzmwzJ0euSfeQh32i
- GsQK0TTlXaCTG5Bi2IcdTciUls3nMwyRhaK7fuw69bl44XWemVlZX7wnZQ0UXakD6wFKbf4Ue3c
- TiEh3n9vV2s2IymbsvrORpjPs97KMNn3Z5/uLNJ6Ee
-X-Gm-Gg: AYBFou0FyZwZ059/jVr6yv3Gk3KtYSWwiEbw8Z2X4jnlWrIfl06IZiuID+UdGXaRiN2
- cz1QtOZ4vfZohoOGrpFwPAvCOxWCx9xCySYliXKrwfMaUZKRlhzSh29LHYDxMAHX3gnwFbPzWB4
- JB0mFe/lccyqkJj+5wngxMqdB7WBH1LP4wjZ+THyj9BYvSOvRsVFyodil1WZ3y0x2Ya1eeK+Kse
- SAtZLYoWg0wAoOSRkqQ/rHw3UPxqXPLOj+VT50CitWsEwh+/7sosGrDBVeOOTsqmN3ZJfW5tovt
- dT3KP9FMDu821NHxCxpPJ0oVaOoQpBCx4QSVLNUsOqrfJvI1D+sqMiwclx3sHNjnwx+L2TsV4u4
- ilVP/LSb0YMjzFMaHXPSxxbHiE0K+zNKNOghhGT0WPbeogswXsJIhpR3op0onkGkJeuLfRvQkAT
- Ihrkdc
-X-Received: by 2002:a05:600c:6085:b0:49c:dca2:ac47 with SMTP id
- 5b1f17b1804b1-49eac45c06bmr30124885e9.2.1789564884427; 
- Wed, 16 Sep 2026 06:21:24 -0700 (PDT)
-X-Received: by 2002:a05:600c:6085:b0:49c:dca2:ac47 with SMTP id
- 5b1f17b1804b1-49eac45c06bmr30124345e9.2.1789564883890; 
- Wed, 16 Sep 2026 06:21:23 -0700 (PDT)
+ bh=+zBW25gKUyiE/snsk8aXKtC3LP8ALTPiyrh6mxfmGyk=;
+ b=DIbyBIUoNCPwwppMpRvZe0l7AoPkxRrXkyddE44DRpeBC1+gmsGrj/u1JbH+gcMTQ3
+ Z7uE/gTyy+TVzbiRWzLnzFfrPTW3tKN8pLDCP91P2IQvNHDTlpKhF8AyOzwtRwDjd/yl
+ rjo98IyA9qtZUNGnH7cJ+ujqQ+c4Lz6c3/4ON7kFigQsGiUMxjX3+qD2dXC2OSe0HFf/
+ 5WVVcBEpieYPV+dyEr0CVIAMke4T02QIKaibgbW/wV8spb3Z+f5V4LIo8Szc0i4bE4gr
+ CFr9kAbsG/BqKMWhpTgFuNc3c+LrsgfplIuFxq/pOjXu2kF2iNAyOTI8NJbPYvF1CymV
+ kH3g==
+X-Gm-Message-State: AFuF++k9jsEpLVUeQFD1bd2mJmSOgHJCGjVwNPiQkX2JNXNx9n/PTWzK
+ hIoiaitclDCkhQJb95K/KE84Mkgf5KeI8mEtJGDqFy2GnrxcbUxrYbQMjOtejzrJ3muRO54rFzu
+ EaPGNdxXn5dboELmLPLODXiXgQscaqmQTL9GQXRZPTk0XDXwRbuSX8d60UnCk8xYphYfM1X1F39
+ k0X7SlCoXMoa4df+4xBc8WHUgc+T9CLWz8lFquUKq6
+X-Gm-Gg: AYBFou0gUNWdmG49Ts5ZGRXg2mA0Mw8SB1MmlhivSH9TVLD8EyW6t/0D3IsjjG0Mztf
+ SFvtxZJ9t0Ms3EUWRDRTdq0TtX4cGIL1YTFr/3Xs6NrObtsulTrpHetNu7GZRiTibJMutZbQ5jF
+ 6WEk9EJhFgN0xI9lDDiVNnCwiK3pmE5Oypm7307CqU3afodNk5/e67jwZP4cVmyWlsCrj/oHt8E
+ IPc/N2HswKqhyPxTuBBgFDGKv2sKFvcd2kEa2U4LQ5hhMImjh2n2QI6ES7WRwIvSTI+PZWQzNNf
+ eTNR19BGvJFrjibM9GMTB1hb74+iEyyyuoxm5ZvzbZ8t+Dofl9uRddXXEMVzfGW8sGspfX4rGc/
+ 4909wMVa1aLrlXXuRS7AG1Q1J9XSHAW6Ps+5OTsIf5RaQyd82+lSY1QnGg9Z9Txnr9t8nvvirC/
+ 5K8+pl
+X-Received: by 2002:a05:600c:83c4:b0:49c:ff9f:f6b6 with SMTP id
+ 5b1f17b1804b1-49eac463960mr32560785e9.6.1789564894113; 
+ Wed, 16 Sep 2026 06:21:34 -0700 (PDT)
+X-Received: by 2002:a05:600c:83c4:b0:49c:ff9f:f6b6 with SMTP id
+ 5b1f17b1804b1-49eac463960mr32560275e9.6.1789564893664; 
+ Wed, 16 Sep 2026 06:21:33 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49e83a8d6e2sm81816535e9.1.2026.09.16.06.21.22
+ 5b1f17b1804b1-49e83b11691sm88193685e9.12.2026.09.16.06.21.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 06:21:22 -0700 (PDT)
+ Wed, 16 Sep 2026 06:21:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH 1/8] ncr710: simplify ncr710_clear_pending_irq
-Date: Wed, 16 Sep 2026 15:21:13 +0200
-Message-ID: <20260916132120.860910-2-pbonzini@redhat.com>
+Subject: [PATCH 4/8] ncr710: clean up ncr710_transfer_data
+Date: Wed, 16 Sep 2026 15:21:16 +0200
+Message-ID: <20260916132120.860910-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260916132120.860910-1-pbonzini@redhat.com>
 References: <20260916132120.860910-1-pbonzini@redhat.com>
@@ -120,41 +120,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The same checks are done in ncr710_request_free.  If req->hba_private is
-anything, it is the NCR710Request that points to req, so it would be
-cleared.
+Move the short ncr710_execute_script case first.  Remove redundant
+s->current check.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/ncr53c710.c | 7 -------
- 1 file changed, 7 deletions(-)
+ hw/scsi/ncr53c710.c | 65 ++++++++++++++++++++++-----------------------
+ 1 file changed, 32 insertions(+), 33 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 57967e7a84f..b87fed05a4d 100644
+index ac44e99dd90..9939d2e2813 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -316,11 +316,7 @@ static inline int ncr710_irq_on_rsl(NCR710State *s)
- static void ncr710_clear_pending_irq(NCR710State *s)
- {
-     if (s->current) {
--        if (s->current->req) {
--            s->current->req->hba_private = NULL;
--        }
-         ncr710_request_free(s, s->current);
--        s->current = NULL;
+@@ -842,43 +842,42 @@ void ncr710_transfer_data(SCSIRequest *req, uint32_t len)
      }
+     s->current->dma_len = len;
+ 
+-    if (s->waiting) {
+-        s->scntl1 |= NCR710_SCNTL1_CON;
+-        s->istat |= NCR710_ISTAT_CON;
+-        s->sbcl = NCR710_SBCL_IO | NCR710_SBCL_CD | NCR710_SBCL_MSG |
+-                  NCR710_SBCL_BSY | NCR710_SBCL_SEL | NCR710_SBCL_REQ;
+-        uint8_t host_id = (s->scid & 0x07);
+-
+-        /* Special case: both target and host are ID 0 */
+-        if (req->dev->id == 0 && host_id == 0) {
+-            s->sfbr = 0x00;
+-        } else {
+-            s->sfbr = (req->dev->id == 0 ? 0 : (1 << req->dev->id)) |
+-                      (host_id == 0 ? 0 : (1 << host_id));
++    if (!s->waiting) {
++        if (!s->script_active) {
++            ncr710_execute_script(s);
+         }
+-
+-        ncr710_set_phase(s, PHASE_MI);
+-
+-        if (s->current) {
+-            uint8_t identify_msg = 0x80 | (req->lun & 0x07);
+-            ncr710_add_msg_byte(s, identify_msg);
+-
+-            if (s->current->tag) {
+-                ncr710_add_msg_byte(s, 0x20);  /* SIMPLE_TAG_MSG */
+-                ncr710_add_msg_byte(s, s->current->tag & 0xff);
+-            }
+-        }
+-
+-        s->sstat0 |= NCR710_SSTAT0_SEL;
+-        s->istat |= NCR710_ISTAT_SIP;
+-        s->dsps = RESELECTED_DURING_SELECTION;
+-        s->waiting = NCR710_WAIT_NONE;
+-        ncr710_update_irq(s);
+         return;
+     }
+-    if (!s->script_active && !s->waiting) {
+-        ncr710_execute_script(s);
++
++    s->scntl1 |= NCR710_SCNTL1_CON;
++    s->istat |= NCR710_ISTAT_CON;
++    s->sbcl = NCR710_SBCL_IO | NCR710_SBCL_CD | NCR710_SBCL_MSG |
++              NCR710_SBCL_BSY | NCR710_SBCL_SEL | NCR710_SBCL_REQ;
++    uint8_t host_id = (s->scid & 0x07);
++
++    /* Special case: both target and host are ID 0 */
++    if (req->dev->id == 0 && host_id == 0) {
++        s->sfbr = 0x00;
++    } else {
++        s->sfbr = (req->dev->id == 0 ? 0 : (1 << req->dev->id)) |
++                  (host_id == 0 ? 0 : (1 << host_id));
+     }
++
++    ncr710_set_phase(s, PHASE_MI);
++
++    uint8_t identify_msg = 0x80 | (req->lun & 0x07);
++    ncr710_add_msg_byte(s, identify_msg);
++
++    if (s->current->tag) {
++        ncr710_add_msg_byte(s, 0x20);  /* SIMPLE_TAG_MSG */
++        ncr710_add_msg_byte(s, s->current->tag & 0xff);
++    }
++
++    s->sstat0 |= NCR710_SSTAT0_SEL;
++    s->istat |= NCR710_ISTAT_SIP;
++    s->dsps = RESELECTED_DURING_SELECTION;
++    s->waiting = NCR710_WAIT_NONE;
++    ncr710_update_irq(s);
  }
  
-@@ -739,9 +735,6 @@ static void ncr710_add_msg_byte(NCR710State *s, uint8_t data)
- 
- static void ncr710_request_free(NCR710State *s, NCR710Request *p)
- {
--    if (!p) {
--        return;
--    }
-     if (p->req && p->req->hba_private == p) {
-         p->req->hba_private = NULL;
-     }
+ static int idbitstonum(uint8_t id)
 -- 
 2.55.0
 
