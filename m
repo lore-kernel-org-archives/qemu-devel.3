@@ -4,107 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829BDC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB23C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6n0Y-0003Or-HU; Wed, 16 Sep 2026 06:36:54 -0400
+	id 1x6n18-0004FL-Fd; Wed, 16 Sep 2026 06:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
- id 1x6n0X-0003OE-5E; Wed, 16 Sep 2026 06:36:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x6n13-0003vU-7D; Wed, 16 Sep 2026 06:37:25 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
- id 1x6n0V-0001fL-7y; Wed, 16 Sep 2026 06:36:52 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68FLVekl079058; Wed, 16 Sep 2026 10:36:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=LMuD2aY5bTg1sUs5iAO/ZjyAiX0DQ79qy2+FvNtzq
- 4o=; b=ZtOs3A/9r+GqYv9QpDYqzi2nqITca2phylCjrMoI+B9ECC5cBO30Me5aP
- dujSivRfbMkkhMce7rr24RLyKPJaOqPTkqre8o0t0LAADbwYaNG8EPl8JD2Bej1/
- P7XVxMFxbjnCpzZRgPvHhR1MuD49ePVPN1pjwIrowhx/Gg6EfjpFenA4WTtfx2up
- dO2vktISRzaAZqWoZTtjq8XRcFtkkudY/1u6KatTZ2AciDKUUR32TwbkQ/iAD/Es
- qGnrH5VeqWpB64Tc5KvLEeEjG0GQ5bIKFozByfifUYkC7vHFFuODuK5vN9wOGzmJ
- f7fj8z/wONChrgx9r5XUQELO4vgtg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdqbyhh-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 10:36:47 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68G7k8FX1354805; Wed, 16 Sep 2026 10:36:47 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gpw6d6d6g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Sep 2026 10:36:47 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GAahj833489374
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Sep 2026 10:36:43 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 563DA20043;
- Wed, 16 Sep 2026 10:36:43 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E041420040;
- Wed, 16 Sep 2026 10:36:39 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.39.21.121])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 16 Sep 2026 10:36:39 +0000 (GMT)
-From: Aniket Sahu <asahu1x@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, rathc@linux.ibm.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, anushree.mathur@linux.ibm.com,
- misanjum@linux.ibm.com, adityag@linux.ibm.com, gautam@linux.ibm.com,
- thuth@redhat.com, asahu1x@linux.ibm.com
-Subject: [PATCH v2 0/2] tests/functional/ppc64: extend ppc64 functional tests
-Date: Wed, 16 Sep 2026 16:06:33 +0530
-Message-ID: <20260916103635.7797-1-asahu1x@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x6n10-0001hF-6S; Wed, 16 Sep 2026 06:37:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1789554955; bh=F4yFCQzPY2cPkjs6VtpGZD0nzjBIa8nFrfMRBt0nG7k=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=tkux7m7px+rFay1yRaACrLK560Fo2lqeiztuq+229/ILahLrVi2fSbRwz3SROhs0N
+ 4vKc60yZz8vqQW6tkBXBkAf9OQEekVGSpj5Zx8pwt3oo+2Yga+4SE0WwiobKGUJD+B
+ /Q5x6Hc6Ex8aheqSIny16G0/xOYcKWKENXBuzo0koC/qnx/Qd+VuqrDZF7P2GlPh7B
+ 1lWc2JDQfPEaty323GY0aqhjB6nfG/EroXX6rgPpajGfX2s1hltaq4EMlcqXa5f/Cw
+ yIHMVjKub/1/2Pkrp1AOtOx70qFccA8BxiakO1y/+zqmFATjjQRt+FTwP1HdC9Vt2E
+ QsVzXnTTe5CrA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D7FF51D5800;
+ Wed, 16 Sep 2026 13:35:55 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A2FD3429F5F;
+ Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 7EA815A7FB; Wed, 16 Sep 2026 13:36:38 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 13/56] s390x/sclp: pv: only copy the original SCCB
+ buffer
+Date: Wed, 16 Sep 2026 13:35:31 +0300
+Message-ID: <20260916103622.684817-13-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
+References: <qemu-stable-11.1.2-20260916133554@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDEzOCBTYWx0ZWRfXyIE+nwz75Gy7
- GiGCf/qWUoFj1noPyEtwqt2kYMXqOVfBR2cIOKVCKPdU4XgJBd+VAZzLiK7ZHRiCVDe3xLFgEjH
- gXfLel0pG3RWgCF4gfNooJmIyGyCev4SYRwRXZyHOuP/fxVZojTkPm8LnN9H2Uzkp9TJWNOmLF+
- Gr48Zeom0AD13AlooMTnptV2rxUpr3fAiiaeWmRhnfQKbbCcn0zDK9dv3FGf4xWOYsXnYFwDNjU
- LOVIcTkTGfS1w7DfEi+Uk+kywALnV678WOpfjMWiJQoCM20eOzxgvcdcLqblyT2heZsuoMFEOuK
- /mdyVQU1bmjdKV62mfqQsE3SyxODAJd7b4e6NQaV81VDXSWPfMRSedjIrvRk6em3z4W0y1BTPhp
- cAFZNSOL2qMgLap3LI6+ax9kmBHIIUiWud9kikjoFDOu7SGgPSDoPBbMPGv9g3nhXQW0Opf/nB6
- fODIhsm2wCKcW1x67DA==
-X-Proofpoint-GUID: KkHNGlZtdKKpgdzKXsaG2vqJ_wbfEefH
-X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aaa7140 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=WP77DTfFEFgqxUSISpMA:9 a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: cbdRgUr_HGs9ePL3TGw_fRRbRYeLry6B
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDEzOCBTYWx0ZWRfXwB1FJi7cnvqF
- EYap6a6pxTaYsnp1D8Ai70N6GmeknqzmlDMuV/tEok/wtp2U1QE+IwJ5kFQwmaE6Xpki+OhoEel
- k9ot6hrQBeYi8bgenYyRro13LLVTv5A=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609160138
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=asahu1x@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,34 +72,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patch 1 extends pseries migration coverage by refactoring the existing
-test_ppc64_linux_migration into a shared helper and adding two new tests
-for the UNIX socket and exec (socat) transport paths, which were previously
-untested for pseries. Referred to the mac99 migration tests for the same.
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Patch 2 adds explicit console checks for NVMe, e1000e, and xHCI driver
-probe messages in do_test_ppc64_powernv(). These are emitted synchronously
-during PCI enumeration, after OPAL hands off to Linux, making them safe
-to check without a separate test file.
+With variable length and EXTENDED_LENGTH_SCCB, some callbacks might
+change the length field. For example read SCP info might write a new
+length into the SCCB header. We must not use that new length for the
+buffer copy, since the buffer was allocated with the original length.
+Only the length field in the work SCCB is changed, to indicate the
+"necessary" size. Using the new length reads past the allocation, so
+tools like ASAN might detect a buffer overrun.
 
-Aniket Sahu (2):
-  tests/functional/ppc64: extend pseries migration tests
-  tests/functional/ppc64: extend ppc64 powernv net device tests
+Secure guests do not have EXTENDED_LENGTH_SCCB, and the ultravisor checks
+and sanitizes the length field, so no qemu heap contents are exposed to
+the guest and the non pv-path already has the same header.length.
 
- tests/functional/ppc64/test_powernv.py |  7 +++--
- tests/functional/ppc64/test_pseries.py | 41 ++++++++++++++++++++++----
- 2 files changed, 41 insertions(+), 7 deletions(-)
+Fixes: 0f73c5b30b8b ("s390x: protvirt: SCLP interpretation")
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260814125857.1729543-1-borntraeger@de.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit d7913fac774706a02faef0dc1c4c19df65a5a379)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
----
-Changes in v2:
-- Patch 1: Dropped test_pseries_migrate.py; UNIX and exec transport tests
-  are now full-boot tests in test_pseries.py alongside the existing TCP
-  test. (Review comments by Thomas Huth)
-- Patch 2: Dropped test_powernv_devices.py; PCIe device checks are folded
-  into the existing do_test_ppc64_powernv() helper instead.
-  (Review comments by Thomas Huth)
-
-v1: https://lore.kernel.org/qemu-devel/77e89fea-0284-4e19-8ee7-04b900b13749@linux.ibm.com/
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 3c8cb164888..b452f2ce54d 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -287,7 +287,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     sclp_c->execute(sclp, work_sccb, code);
+ out_write:
+     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+-                          be16_to_cpu(work_sccb->h.length));
++                          be16_to_cpu(header.length));
+     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+     return 0;
+ }
 -- 
-2.52.0
+2.47.3
+
 
