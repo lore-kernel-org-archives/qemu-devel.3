@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B181C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF8BDC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lcC-00013N-PH; Wed, 16 Sep 2026 05:07:40 -0400
+	id 1x6lbV-0008Qz-Iv; Wed, 16 Sep 2026 05:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lc0-0000lm-Mu; Wed, 16 Sep 2026 05:07:29 -0400
+ id 1x6lbU-0008Q3-CN; Wed, 16 Sep 2026 05:06:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6lby-0007EO-LK; Wed, 16 Sep 2026 05:07:27 -0400
+ id 1x6lbS-00072Y-ML; Wed, 16 Sep 2026 05:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549558; bh=/bxgVcHEK6Vu822bzNHTaM2Sah5dOzYWRwwPzRqIuUg=;
+ t=1789549558; bh=2SRqz5S3YNkNI4mhAWqlHAgeN/EVcHYuNr8uZv0ic+s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BPU6FYrSt3uVF259TBQWnHJpKoC/brvvuEoHFkUVGxXyG6VrpSZPmVUlnUyGaxtHb
- fDA5rotxm1oO+wsHvTIzOesg1iJVA2GgBh9RToZrozjZBY2HdNYzz8wdZlrqPcudHU
- /y76nBSbMH6Xh8TUjzpFGbJ/Hf9Kb36LPSsSw4JeMOEq5uRFvC1peE3IKh/65+ZlUD
- dbsq/uWxGrVL7FkW9nwMSqjqwUMUAckokdap88jpqkqzGm0czk8EjWcw8zVyGh6UgD
- X8MMiXBV/SrwaGcIH/ECDvOfGteDXPPHoxHX+YtJFS77oS0QTTRDObo3Lhf+WUU6Im
- ljKZwyK3wpPSQ==
+ b=WdooMaiStM9W+O2aV7JCax5asekQtHhSh9WkBFeNK6kPjzxDKamtv0xzRWgRAOtmy
+ S7mHtL2Nj1KOJaGNu3/aztaMM7WpY4fPVE0xSpPB2pOjjIAeaCBX9/JXxMbQObyStO
+ JPkasD8FrE5WCXwqkTjBJkT1fElddk428PkTWmXSbExIOPXoi0mb5rs9xi0t+jfWqn
+ yMHaOlnw18RdTmoFSKrKxKbJjLGes+HLLz1DbovbysK/S/nB+5o66ECo2uMquijJ/Z
+ B+4YEZhcNRacdJMximrt5mjjPZHCj2YL7pFuiL1aaFnt1mreYnoxe59FrTtIWQ81FP
+ D2iX7DdDZ5tZw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFA0A1D56C3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8EFBB1D56BC;
  Wed, 16 Sep 2026 12:05:58 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5B4E2429E0E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3942C429E07;
  Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 2E2DB5A777; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
+ id 1894B5A769; Wed, 16 Sep 2026 12:06:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ivan Efremov <nendensu@ispras.ru>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 15/57] tests/qtest: Add seed CSR zero extension test
-Date: Wed, 16 Sep 2026 12:03:39 +0300
-Message-ID: <20260916090516.677749-15-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 08/57] tests/unit/test-blockjob: cover keeping a job
+ paused while a pause is pending
+Date: Wed, 16 Sep 2026 12:03:32 +0300
+Message-ID: <20260916090516.677749-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -71,68 +72,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ivan Efremov <nendensu@ispras.ru>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Add a qtest that reads the seed CSR on RV64 machine with Zkr support
-and verifies that the upper 32 bits are clear.
+Add a regression test for the previous commit. A job that has reached
+its pause point is spuriously re-entered (job_enter()) while a pause is
+still pending (pause_count > 0), reproducing what an overlapping drain
+does: one drain's job_resume() wakes the job while the next drain's
+job_pause() is already counted. The job must stay parked - it must not
+run job code or clear job->paused, or job_set_aio_context() could
+observe paused == false and abort.
 
-Signed-off-by: Ivan Efremov <nendensu@ispras.ru>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260802113130.7818-3-nendensu@ispras.ru>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit e80cf294797870b019d31dd299328aebdfaaa76c)
+The test counts the job's run-loop iterations: without the fix the
+re-entered job clears job->paused, runs one iteration and re-pauses, so
+the counter advances; with the fix it stays parked and the counter is
+unchanged. It runs in the main AioContext, so job_enter() is synchronous
+and the check is deterministic.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260623152406.1180235-3-den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 438ee08bc97af48ade6365133f2f5b43d4d788ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
-index bb1b0ffed30..7479a5c5bcc 100644
---- a/tests/qtest/riscv-csr-test.c
-+++ b/tests/qtest/riscv-csr-test.c
-@@ -20,6 +20,12 @@
- #define CSR_MVENDORID       0xf11
- #define CSR_MISELECT        0x350
- 
-+#define CSR_SEED           0x015
-+
-+#define SEED_OPST_MASK     (UINT64_C(0x3) << 30)
-+#define SEED_OPST_ES16     (UINT64_C(0x2) << 30)
-+#define SEED_OPST_DEAD     (UINT64_C(0x3) << 30)
-+
- static void run_test_csr(void)
- {
-     uint64_t res;
-@@ -46,12 +52,32 @@ static void run_test_csr(void)
-     qtest_quit(qts);
+diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
+index abdbe4b8350..3b77d19b911 100644
+--- a/tests/unit/test-blockjob.c
++++ b/tests/unit/test-blockjob.c
+@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
+     cancel_common(s);
  }
  
-+static void run_test_seed_csr(void)
++typedef struct PauseCountJob {
++    BlockJob common;
++    int n;
++    bool should_complete;
++} PauseCountJob;
++
++static void pause_count_job_complete(Job *job, Error **errp)
 +{
-+    uint64_t val = 0;
-+    uint64_t opst;
-+    QTestState *qts;
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++    s->should_complete = true;
++}
 +
-+    qts = qtest_init("-machine virt -cpu tt-ascalon");
++static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
 +
-+    qtest_csr_call(qts, "get_csr", 0, CSR_SEED, &val);
++    while (!s->should_complete) {
++        if (job_is_cancelled(&s->common.job)) {
++            return 0;
++        }
++        s->n++;
++        /*
++         * Yields; while a pause is pending the yield is skipped and the job
++         * parks in job_pause_point() instead.
++         */
++        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
++    }
 +
-+    opst = val & SEED_OPST_MASK;
-+    g_assert_true(opst == SEED_OPST_ES16 ||
-+                  opst == SEED_OPST_DEAD);
++    return 0;
++}
 +
-+    g_assert_cmphex(val >> 32, ==, 0);
++static const BlockJobDriver pause_count_job_driver = {
++    .job_driver = {
++        .instance_size = sizeof(PauseCountJob),
++        .free          = block_job_free,
++        .user_resume   = block_job_user_resume,
++        .run           = pause_count_job_run,
++        .complete      = pause_count_job_complete,
++    },
++};
 +
-+    qtest_quit(qts);
++/*
++ * A job that has reached its pause point must stay paused while a pause is
++ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
++ * drain's job_resume() wakes it while the next drain's job_pause() is already
++ * counted); the job must not run or clear job->paused, otherwise
++ * job_set_aio_context() can observe paused == false and abort.
++ */
++static void test_pause_keeps_paused(void)
++{
++    BlockBackend *blk;
++    BlockJob *bjob;
++    PauseCountJob *s;
++    Job *job;
++    int n0;
++
++    blk = create_blk(NULL);
++    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
++                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
++    s = container_of(bjob, PauseCountJob, common);
++    job = &bjob->job;
++    WITH_JOB_LOCK_GUARD() {
++        job_ref_locked(job);
++    }
++
++    job_start(job);
++
++    /* Pause the running job; it parks in job_pause_point() with paused set. */
++    WITH_JOB_LOCK_GUARD() {
++        job_pause_locked(job);
++        g_assert_true(job->paused);
++        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
++    }
++    n0 = s->n;
++
++    /*
++     * Spurious wake while the pause is still pending. The job must stay parked:
++     * the bug clears job->paused, runs an iteration (s->n advances) and
++     * re-pauses, exposing a paused == false window.
++     */
++    job_enter(job);
++    WITH_JOB_LOCK_GUARD() {
++        g_assert_true(job->paused);
++    }
++    g_assert_cmpint(s->n, ==, n0);
++
++    /* Resume and tear down. */
++    WITH_JOB_LOCK_GUARD() {
++        job_resume_locked(job);
++    }
++    job_cancel_sync(job, true);
++    WITH_JOB_LOCK_GUARD() {
++        Job *dummy = job;
++        job_dismiss_locked(&dummy, &error_abort);
++        job_unref_locked(job);
++    }
++    destroy_blk(blk);
 +}
 +
  int main(int argc, char **argv)
  {
-     g_test_init(&argc, &argv, NULL);
- 
-     if (qtest_has_machine("virt")) {
-         qtest_add_func("/cpu/csr", run_test_csr);
-+        qtest_add_func("/cpu/csr/seed", run_test_seed_csr);
-     }
- 
+     qemu_init_main_loop(&error_abort);
+@@ -402,5 +501,6 @@ int main(int argc, char **argv)
+     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
+     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
+     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
++    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
      return g_test_run();
+ }
 -- 
 2.47.3
 
