@@ -4,130 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F796C982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3813CC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lxL-0001vM-AJ; Wed, 16 Sep 2026 05:29:31 -0400
+	id 1x6m6e-0003Tu-1O; Wed, 16 Sep 2026 05:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.syms@citrix.com>)
- id 1x6lxJ-0001uv-7m; Wed, 16 Sep 2026 05:29:30 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6m6d-0003Tb-4C
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 05:39:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.syms@citrix.com>)
- id 1x6lxG-0001WF-Ol; Wed, 16 Sep 2026 05:29:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AVKZySrl2wXQU16m79sBlNxVb3a0Yq436qWDY4cIq+RclPmxMOZvTWAPNkC83OGyIdi/dL3eBbBKyngqq66IZ1LHUW9y+CwVmH8xRE870DI6cOEfcG+RCvmwKzhBnPbTY2TIHfxYdkMh8Zk3auKdSo3jTcN48CkWBWous1OLGlKyQKR6Xsp+hcNipuOmbhqF6k3mJBwEEjejfspA2sxyKW9VxWf8tu0+zwML1KwC7Ho6CXDVXQcM85sxjXVePPtF745UOK7g8ZzAlqeTC/XK6zNWkX4Eh/JBVVoaMVs4KB0puMqYc3CT7asK1hqfrXheyQj5jtLheWQDdMaSUaxPFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=B+bVW6awHFUI9dFXxsOrceZQwHB+1lgluMYbgslDmYs=;
- b=kyMwodk6uIJI0chjcM0MDVJyR3a8GFwTbnbgPrAzD87fjB3QkpJJaguabv4BhFRPkMkRVseha/1Nzjh3PQ8TOG+1lUih7VwsHxniFPFLVXwJxGDRM4hiU9acurCVw5YV6Fb3P+9EpPhlFc0GB3hYdiJAXIExKGMyxvfr7gevkhEgbz0s8WrGQNLYgG5UsSO3It+W330dVtCSQxLlrnKDJ71QQ/8oVeLcsvb6pYtdZWjjy8f8+D6UfqU5lyghLh/sU8jHzX6jm7ANZf0JapwCgVK019s4w2VwGV+bfHRYBEBuvWn/aPh03WQFJgYtM5LjhLWHs459zHP51fVCpe84QA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
- dkim=pass header.d=citrix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=citrix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B+bVW6awHFUI9dFXxsOrceZQwHB+1lgluMYbgslDmYs=;
- b=NZ/nq9SMHOPsL8qTgZxSiTlI4isnsw8hSsd8ZjgMU1jKUAmbugR6gfaRKX5hdbpmM/o+RBdYtCzoWWgIRlbxEagxE6yM5Ki5ZYG3xkzrZhhl8SwAsGrboHfTMgoSxRCgzypfPpyUxG6/LvLua7ut0gPkk/vymiNsV5/HQGNMWzs=
-Received: from DS0PR03MB7557.namprd03.prod.outlook.com (2603:10b6:8:1fc::8) by
- DS0PR03MB7582.namprd03.prod.outlook.com (2603:10b6:8:1f5::5) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.428.9; Wed, 16 Sep 2026 09:29:21 +0000
-Received: from DS0PR03MB7557.namprd03.prod.outlook.com
- ([fe80::6884:8bd5:3e4d:fde7]) by DS0PR03MB7557.namprd03.prod.outlook.com
- ([fe80::6884:8bd5:3e4d:fde7%5]) with mapi id 15.21.0428.008; Wed, 16 Sep 2026
- 09:29:21 +0000
-From: Mark Syms <mark.syms@citrix.com>
-To: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
- <anthony@xenproject.org>, Paul Durrant <paul@xen.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>
-Subject: Xen/QEMU PV Storage backend performance issues
-Thread-Topic: Xen/QEMU PV Storage backend performance issues
-Thread-Index: AQHdRby6p8WbXIfQiUq6fN2CsBlKNQ==
-Date: Wed, 16 Sep 2026 09:29:21 +0000
-Message-ID: <DS0PR03MB7557CCE44CDE2BCDB033C7A787B92@DS0PR03MB7557.namprd03.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=citrix.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS0PR03MB7557:EE_|DS0PR03MB7582:EE_
-x-ms-office365-filtering-correlation-id: cee1a447-a47c-4c9e-c99a-08df13d4fd6b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|23010399003|38070700021|3023799007|10067099003|56012099006|11063799006|18002099003;
-x-microsoft-antispam-message-info: PHnMssEOMcXePAOP+Qw+jbbtMFEDprWcnYOfM7DERqbGfWmLaltgD3Ma0IG7wWnwi2gAWdms1jfyV43ebRhw1VjmcAbQRDCNo/n2n1FY2U2DZtwoHAQK1B9PUE3ca8y088AMB+MeqTP90XkJcgt52Q9FCeVDdS1EQnpKTMIm+lZ3Fh1qSEfehy9zCkbMpwHIvrZXvhli42kK38NzeH9EAXC63w/wAKBcgOzaj4ScMzFxFEiqh2mopUJFARNmdzKDa3a4bfrC3I0QhI0DGKZwavl3XRU/LLxaDSjO2M04yJ0WBpuXWlOOqWHqAFPwLtJ8L4yqCrBugv7IZdDT/6DDXeFjUT/CTfVUvgKMkZyBRSu3OSjZd7Clh5o2f0ngVkgba//dAPvQpzaCjO4uE8UJrAwI/N0zejov3j0w5tCiQg05MO5koMjdfSOWNlJK89KNKA6rkvw8exdf5mlGNZwfEPtoE1iQD6Ja2Quevpw9M+c1/N5onwneDusQ0maodnfz45u+jna3OxFUFrIHrgS+0PDsN6wD8XzZo8gWAm9Da/auiz6JAMVtKmJb+tcdnbyFSmVLeCVLrHtAa3n8QT85DgImr6yJHBbVeXKI585KU0hxvbg4wFhngavcK6UAdGuexz7XtZbLh3i137Is+VyUQu0NVuQ1OJEZvrgZuRsuOCqIeZJ9b8dtixjkaDJr3MdfQArtYLpmQ5cZjHYG8xOobo1ReS+VY1XWxgxraSTxPT8=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR03MB7557.namprd03.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(23010399003)(38070700021)(3023799007)(10067099003)(56012099006)(11063799006)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?CFYT4X69YayEA+Q6AVdVO6KhOLYJbyuzQBmyfd+CSPqAvhHLpx7bPmLbGL?=
- =?iso-8859-1?Q?YzRbbPdRbNd3Z3TYovQzggB0MV2KDugxz4RhxKAL8MQaucU7+1waHnQLBG?=
- =?iso-8859-1?Q?FO0whe9tbsK+gfIWiufGUC3G8A1vFTGPsR8JKqGwvdp/ebE2vNT+nl5laY?=
- =?iso-8859-1?Q?tN0WpZZBx5e1jPc4eqZUg5eb7qhR9bXlX2ZGmIjUISEPgxYqnI7QwbviWF?=
- =?iso-8859-1?Q?s6fdY+goSKCmwXUtFHMfBi5mty2wnOTZ1D3Gct6XORn+NGzM/W/WY3LbcU?=
- =?iso-8859-1?Q?61u9ZFP1yFJGzbcO/oeLzo31M5B0AKsHLTMEAa789lWIM53wwyBYtutgnA?=
- =?iso-8859-1?Q?sCjMYq5SkyUALRSQtznbQsgFaDjHuKWTkDBXjB2SfCYWJ7yByeSyBvL7YT?=
- =?iso-8859-1?Q?btEK7H1hB1xgpxhQQXFjPyCxOdWEGc113OiOQDeAwh5m9PzHAuYtT+IBb3?=
- =?iso-8859-1?Q?zB0cNOdgL+TMtnwz8aBITq0dylR3rAZ0pusQAbcEU9jcVOIri+qaAbfYOg?=
- =?iso-8859-1?Q?0JgLuavhBPvAr1a525z89HNR7bfkilyBKP3UmNUNvK6Htd3njlMLr07dBF?=
- =?iso-8859-1?Q?uJYM8xd/38xmaXn7N9jUPLOuowrgsvpZb0hwvnQGO7oqciPCGCeJzYYGr/?=
- =?iso-8859-1?Q?5qxucsIuSNqVH1sxXh/PTG5Tb4b9HfCMHqTQkvIkrtwCPTipG11j3EXhz7?=
- =?iso-8859-1?Q?6TgvVq3N8jiWBpI/ddTyFZdAfnlzpHtRxTWqsK67m3kBZHXGtlyicFqrK9?=
- =?iso-8859-1?Q?BEONeyneqkVbyo+gMXe0xqRDtwMdS3gfpBfP2FI7fpYkl9eqOGkogOVDg+?=
- =?iso-8859-1?Q?CLcCq/QNnWM4r7NNmy+q6vAi1Ys3b7+T/0xCS5ak13J5+gELkaH/hOKPYg?=
- =?iso-8859-1?Q?98XaeiZa20vnj1sJeCNk7zquoWg40Gw2kVCyiJjJAY2Wfxa6ofO//QqVBC?=
- =?iso-8859-1?Q?DmySHCG2SH2j3nH/aXZJLZ2vgYRfDg+aOQNIT112cRQX9qXNXqNwphxpdM?=
- =?iso-8859-1?Q?IRCnZ6tENDR3/Drc8tQjA/SlmiOV1Kw4Pp40yh/hdAepS2ME9zS+m9YeA8?=
- =?iso-8859-1?Q?LD+W18D5e+83XlyzkJQrFaNCl5i24yCqGT7v4qWAIwtlLDy/iJwvsQ/m6C?=
- =?iso-8859-1?Q?idVirCTWGhDorbIRWH7mjBeeKDaH7NNczsLIXJlWZViQ3TTVi0MXnLwCvr?=
- =?iso-8859-1?Q?fHiRMWjbkD5vp/OKj7jRxzKHg9GsHDh3fr/1nHW0Q1nMNJdlh+cQKCgAZO?=
- =?iso-8859-1?Q?tGCVaLppr/3R0eTf5twUwLUrwbUnAbGvxSQorztOXpkaqBu6jWMdn7/LKd?=
- =?iso-8859-1?Q?f6w8FfbiawpbMa/xVJnLekQY3R2n8O9vyyuZw5i/Cfk6Erc+QqEQQlKDjL?=
- =?iso-8859-1?Q?7XtpU/DB4i1u2+hBkCdbi0Z9+LkjcB1XN/9R3cQVqN0/qbXBbVOT1QrwL7?=
- =?iso-8859-1?Q?tJFaj8qU55Aj/H/6prLwFhfxomNdCpbu72Em2QwZVk8iTQBpcEtL5kkuZD?=
- =?iso-8859-1?Q?uquMEbTYLbxQ0zYnvrsJvqgyzdBJUoQp+5T3f44F9HEuRV0Yh+gMczh14c?=
- =?iso-8859-1?Q?u5rX5f6buXb+npphxM21ztG62Kq+lypfi3IE1Hkni0K2ttM80DFzZgwqQ1?=
- =?iso-8859-1?Q?deGu2nhVlS8p0NQHs585xPGyO/gwQVQPV+BOgiMnXaeMFpG/CbHu/8L/JC?=
- =?iso-8859-1?Q?NCxuxMHprLpxe5ROh5EDS28IY2lsi+Ov46Ou48+0E8qhrZPKtVkfIwLDs7?=
- =?iso-8859-1?Q?5JaFl2S6JePY3JGyyM/DosA36ro2rYmfonzCfKB1BydBvl?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x6m6a-0002Xi-Tu
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 05:39:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789551540;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AFIdLN2mfUDmSvJW1giQxzJpemmLGbl/4FggnVW//UM=;
+ b=GTV7rzYXubhlb8H6I8RiM9Tb+8zVxV5Aulaz4AECR26SMuh4YHpuVDwIIznYg9mTr921Ij
+ SmXBOTnmsxbAqvXGVQFX25/m1YVvrmIxqBBVQPnPKmFPehibBzLgHbJVIPDZsdJpKg96pB
+ ToR1phSyyjWyf4CaRqB9S/5ksuLZyM4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-7wSlneYgNCuEYmuerOjN4g-1; Wed,
+ 16 Sep 2026 05:38:56 -0400
+X-MC-Unique: 7wSlneYgNCuEYmuerOjN4g-1
+X-Mimecast-MFC-AGG-ID: 7wSlneYgNCuEYmuerOjN4g_1789551535
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7EAF1809CAD; Wed, 16 Sep 2026 09:38:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47FA11800446; Wed, 16 Sep 2026 09:38:53 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DD77521E6A04; Wed, 16 Sep 2026 11:38:50 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org,  Eric Blake <eblake@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>
+Subject: Re: [PATCH 2/9] qapi: convert multi-paragraph intros (commands)
+In-Reply-To: <20260911203002.305316-3-jsnow@redhat.com> (John Snow's message
+ of "Fri, 11 Sep 2026 16:29:55 -0400")
+References: <20260911203002.305316-1-jsnow@redhat.com>
+ <20260911203002.305316-3-jsnow@redhat.com>
+Date: Wed, 16 Sep 2026 11:38:50 +0200
+Message-ID: <874ifpcz85.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: citrix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR03MB7557.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cee1a447-a47c-4c9e-c99a-08df13d4fd6b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Sep 2026 09:29:21.5167 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 335836de-42ef-43a2-b145-348c2ee9ca5b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OsOjePThIar9NRrPnoith6NwKDmggnjcxgH1AcpgKQiSKhESJmG/m5U+wg/hjoP02pEtqEnxBB8dWa/MHGF5jg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR03MB7582
-Received-SPF: pass client-ip=2a01:111:f403:c107::3;
- envelope-from=mark.syms@citrix.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,163 +95,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefano, Anthony, Paul,=0A=
-=0A=
-Hi guys, hope this finds you all well. We, in XenServer, have been=0A=
-doing some back to back Xen VM PV storage backend performance=0A=
-comparisons between tapdisk + VHD and QEMU + QCOW2. The image=0A=
-storage format appears to be largely irrelevant to the rest of this=0A=
-conversation. In doing so we have found a few significant issues in=0A=
-QEMU, mainly around the xen-block dataplane and adjacent code.=0A=
-=0A=
-## Testing Environment=0A=
-=0A=
-Debian 12 VM, 8 vCPUS, 4G Ram on XenServer 9. Three virtual block=0A=
-devices, one for the OS on host local storage and two, unformatted,=0A=
-20G test devices, one backed by tapdisk and one backed by QEMU. These=0A=
-disks themselves are then backed by a BRD based target hosted on a=0A=
-native installed Rocky 9.8 host. The two hosts are connected over a=0A=
-25G, 9000 MTU, switched storage network whose switch is rated to run=0A=
-all ports at wire speed without contention. In the guest=0A=
-`xen_blkfront` is configured with `max_ring_page_order=3D3`, which is=0A=
-honoured by both tapdisk and QEMU. QEMU supports 4 but tapdisk caps at=0A=
-3 so for consistency 3 was used. Performance data was collected by=0A=
-`fio` v3.33 from the default Debian 12 repo.=0A=
-=0A=
-Note: we did find during this that QEMU has a separate problem with=0A=
-feature publication when hot plugging a device -=0A=
-=0A=
-https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg03492.html=0A=
-=0A=
-This was worked around by always cold booting the VM which then=0A=
-negotiates correctly.=0A=
-=0A=
-## Results=0A=
-=0A=
-The following table is the full grid from the testing=0A=
-performed. Points are expressed as ratios of QEMU/tapdisk so any=0A=
-points < 1.0 show QEMU having a performance deficit. Each figure is=0A=
-the median of the per-repeat ratio over 12 repeats, the first discarded=0A=
-as unstable on a newly booted VM. The tapdisk arm is measured=0A=
-seconds away from the QEMU arm in every repeat, so that drift in the=0A=
-rig cancels rather than being attributed to either datapath.=0A=
-=0A=
-| block size | queue depth | read | write |=0A=
-|:-----------|------------:|-----:|------:|=0A=
-| 4k         |           1 | 0.73 |  0.73 |=0A=
-| 64k        |           1 | 0.81 |  0.83 |=0A=
-| 256k       |           1 | 0.67 |  0.92 |=0A=
-| 1m         |           1 | 0.67 |  0.76 |=0A=
-| 4m         |           1 | 0.81 |  1.01 |=0A=
-| 4k         |          32 | 1.90 |  1.32 |=0A=
-| 64k        |          32 | 0.99 |  1.00 |=0A=
-| 256k       |          32 | 1.14 |  0.84 |=0A=
-| 1m         |          32 | 0.86 |  0.88 |=0A=
-| 4m         |          32 | 0.87 |  0.86 |=0A=
-=0A=
-Median across the 20 cells is 0.86, with 5 of 20 at or above parity.=0A=
-=0A=
-The deficit is concentrated at queue depth 1, which is what pointed at=0A=
-per-request latency rather than throughput. Note that 1m QD1 read is the=0A=
-noisiest cell in the grid at 24% coefficient of variation across=0A=
-repeats, so treat 0.67 as "much worse" rather than as a precise figure;=0A=
-the 4k and 64k QD1 cells sit at 3-4% and are solid. 1m QD1 is noisy on=0A=
-both backends and is probably an artifact of the environment.=0A=
-=0A=
-## Issues found=0A=
-=0A=
-1. **Large (4m) blocksize read**. Analysis determined that this was=0A=
-   impacted by QEMU being overly keen in notifying the frontend of=0A=
-   completion responses being placed into the ring. In turn this=0A=
-   results in a Dom0 to DomU context switch and all the associated=0A=
-   hypervisor flushes and mitigations. This can also be observed in=0A=
-   the `ctx` count tracker in `fio` itself. Tapdisk mitigates this by=0A=
-   only sending the notification on the `final` completion, managed by=0A=
-   a `bool` flag. For QEMU we can use built in primitives such as=0A=
-   `qemu_bh_schedule` so that the notify is sent at the tail of=0A=
-   processing the `iothread` events.=0A=
-=0A=
-2. **Small (4k) Queue Depth 1 read/writes**. Analysis pointed at=0A=
-   dataplane wakeup latency of ~57us being the culprit. Tapdisk=0A=
-   mitigates this by implementing polling, for a defined time period,=0A=
-   after receiving a request from the ring. QEMU contains built in=0A=
-   support for equivalent polling which can be set a property on the=0A=
-   `iothread`. However there is no plumbing for this in=0A=
-   `xen_device_set_event_channel_context` as `io_poll_ready` is passed=0A=
-   as NULL to `aio_set_fd_handler` so no polling occurs regardless of=0A=
-   the value set for `poll-max-ns`. Adding an implementation for this=0A=
-   goes most of the way to addressing this issue. Matching tapdisk we=0A=
-   used 8,000,000, i.e. 8ms. This ensures that the poll window exceeds=0A=
-   the backend service time. There should be no `evtchn` unmask in the=0A=
-   `io_poll_end` as this will introduce a CPU spin in the poller.=0A=
-=0A=
-3. **Overall performance deficit**. After addressing the above two=0A=
-   issues, overall comparative performance was still found to be=0A=
-   deficient relative to tapdisk. Analysis found that QEMU was making=0A=
-   many more, much smaller, I/O requests to the block layer than=0A=
-   tapdisk was for equivalent guest I/O patterns. This I/O pattern=0A=
-   difference was traced to tapdisk performing merges of adjacent,=0A=
-   same operation, I/O requests at the blkif level before submitting=0A=
-   to the lower level format drivers. Equivalent behaviour can be=0A=
-   achieved in QEMU using the `qemu_iovec` function family and issuing=0A=
-   `blk_aio_pwritev`/`blk_aio_preadv` as necessary. Suitable=0A=
-   completion fan-out is then needed to respond appropriately to the=0A=
-   associated request IDs.=0A=
-=0A=
-## Outcomes=0A=
-=0A=
-After addressing the above items the resulting comparison table is as=0A=
-follows, measured the same way on the same rig as the table above,=0A=
-again 12 repeats, first discarded.=0A=
-=0A=
-| block size | queue depth | read | write |=0A=
-|:-----------|------------:|-----:|------:|=0A=
-| 4k         |           1 | 1.07 |  1.07 |=0A=
-| 64k        |           1 | 1.02 |  1.03 |=0A=
-| 256k       |           1 | 0.93 |  1.04 |=0A=
-| 1m         |           1 | 0.80 |  1.00 |=0A=
-| 4m         |           1 | 1.03 |  1.01 |=0A=
-| 4k         |          32 | 2.24 |  1.50 |=0A=
-| 64k        |          32 | 1.05 |  1.00 |=0A=
-| 256k       |          32 | 1.32 |  0.99 |=0A=
-| 1m         |          32 | 1.17 |  0.99 |=0A=
-| 4m         |          32 | 1.06 |  0.98 |=0A=
-=0A=
-Median across the 20 cells moves from 0.86 to 1.03, and the number of=0A=
-cells at or above parity from 5 of 20 to 13 of 20. The cells still=0A=
-well below parity are 1m QD1 read at 0.80, 256k QD1 read at 0.93, the=0A=
-other deficient cells are 1-2% down.=0A=
-=0A=
-4k QD1 operations benefited most from the fixes for issue 2, voluntary=0A=
-context switches per I/O went from 1.94 to 0.00, corresponding CPU=0A=
-usage went from 26.5% to 96.7% which is a significant increase but it=0A=
-was mostly doing useful work.=0A=
-=0A=
-We believe that the final 3 rows of QD32 operations are probably I/O=0A=
-bound on the iSCSI transport.=0A=
-=0A=
-One cell deserves comment so it is not mistaken for one of our fixes.=0A=
-4k QD32 sits well above parity at 2.24 read and 1.50 write, but it was=0A=
-already at 1.90 and 1.32 before any of these changes; whatever causes=0A=
-it is pre-existing and we have not investigated it.=0A=
-=0A=
-XenServer has fixes for all of the above issues which are undergoing=0A=
-further testing before release to customers. We can't send these to=0A=
-qemu-devel as we have made extensive use of Claude Opus 5 in all=0A=
-aspects of this work from defining the test environment, the test=0A=
-strategy and automation to implement it, post-run analysis and gap=0A=
-detection, and finally implementation of the solution fixes. All text=0A=
-in this message is mine with the exception of the data tables.=0A=
-=0A=
-We did feel though that it was only right that we made you aware of=0A=
-the issues we have found so that you can make your own decisions about=0A=
-them and whether to address them.=0A=
-=0A=
-I'm happy to have any further conversation on this as you deem=0A=
-necessary.=0A=
-=0A=
-Regards,=0A=
-=0A=
-Mark=0A=
-XenServer Storage Engineering.=0A=
+John Snow <jsnow@redhat.com> writes:
+
+> This patch converts some slightly-non-trivial intros with more than
+> one paragraph, but doesn't create any new intro/details splits.
+>
+> Review notes: Some of these possibly could be split, but as they are commands
+> (not eligible as an inlining source) and the additional information in
+> the intro is not terribly long, I opted to leave them alone instead of
+> laboring on prose rewrites.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  qapi/block-core.json | 49 +++++++++++++++++++++-----------------------
+>  qapi/block.json      | 29 +++++++++++++-------------
+>  qapi/migration.json  |  9 ++++----
+>  qapi/misc-arm.json   |  9 ++++----
+>  qapi/misc.json       | 13 ++++++------
+>  qapi/qdev.json       | 14 ++++++-------
+>  6 files changed, 58 insertions(+), 65 deletions(-)
+>
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index 1ca147285e7..c505369aeb2 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -1772,13 +1772,12 @@
+>  
+>  ##
+>  # @blockdev-snapshot:
+> +#     Takes a snapshot of a block device.
+>  #
+> -# Takes a snapshot of a block device.
+> -#
+> -# Take a snapshot, by installing 'node' as the backing image of
+> -# 'overlay'.  Additionally, if 'node' is associated with a block
+> -# device, the block device changes to using 'overlay' as its new
+> -# active image.
+> +#     Take a snapshot, by installing 'node' as the backing image of
+> +#     'overlay'.  Additionally, if 'node' is associated with a block
+> +#     device, the block device changes to using 'overlay' as its new
+> +#     active image.
+
+'overlay' and 'node' refer to arguments, so they should be @overlay and
+@node.  Since the arguments are in type BlockdevSnapshot, the reference
+is non-local until the inliner lands.
+
+We may want to render this paragraph below the argument descriptions to
+avoid forward references.  This requires splitting it off the intro.  We
+can do it now, or leave it for later.
+
+Not splitting now keeps the conversion simple, which is a plus.  It
+reindents the entire unsplit intro, and if we do split it later, the
+part split off gets reindented right back.
+
+I'm leaning towards not rocking the boat, but you decide.
+
+Not noting these things again.
+
+>  #
+>  # Features:
+>  #
+> @@ -2471,15 +2470,15 @@
+>  ##
+>  # @block-dirty-bitmap-merge:
+>  #
+
+Drop the blank line.
+
+> -# Merge dirty bitmaps listed in @bitmaps to the @target dirty bitmap.
+> -# Dirty bitmaps in @bitmaps will be unchanged, except if it also
+> -# appears as the @target bitmap.  Any bits already set in @target will
+> -# still be set after the merge, i.e., this operation does not clear
+> -# the target.  On error, @target is unchanged.
+> +#     Merge dirty bitmaps listed in @bitmaps to the @target dirty
+> +#     bitmap.  Dirty bitmaps in @bitmaps will be unchanged, except if
+> +#     it also appears as the @target bitmap.  Any bits already set in
+> +#     @target will still be set after the merge, i.e., this operation
+> +#     does not clear the target.  On error, @target is unchanged.
+>  #
+> -# The resulting bitmap will count as dirty any clusters that were
+> -# dirty in any of the source bitmaps.  This can be used to achieve
+> -# backup checkpoints, or in simpler usages, to copy bitmaps.
+> +#     The resulting bitmap will count as dirty any clusters that were
+> +#     dirty in any of the source bitmaps.  This can be used to achieve
+> +#     backup checkpoints, or in simpler usages, to copy bitmaps.
+>  #
+>  # Errors:
+>  #     - If @node is not a valid block device, DeviceNotFound
+> @@ -5848,15 +5847,14 @@
+>  
+>  ##
+>  # @block-set-write-threshold:
+> +#     Change the write threshold for a block drive.  An event will be
+> +#     delivered if a write to this block drive crosses the configured
+> +#     threshold.  The threshold is an offset, thus must be
+> +#     non-negative.  Default is no write threshold.  Setting the
+> +#     threshold to zero disables it.
+>  #
+> -# Change the write threshold for a block drive.  An event will be
+> -# delivered if a write to this block drive crosses the configured
+> -# threshold.  The threshold is an offset, thus must be non-negative.
+> -# Default is no write threshold.  Setting the threshold to zero
+> -# disables it.
+> -#
+> -# This is useful to transparently resize thin-provisioned drives
+> -# without the guest OS noticing.
+> +#     This is useful to transparently resize thin-provisioned drives
+> +#     without the guest OS noticing.
+>  #
+>  # @node-name: graph node name on which the threshold must be set.
+>  #
+> @@ -5938,11 +5936,10 @@
+>  
+>  ##
+>  # @x-blockdev-set-iothread:
+> +#     Move @node and its children into the @iothread.  If @iothread is
+> +#     null then move @node and its children into the main loop.
+>  #
+> -# Move @node and its children into the @iothread.  If @iothread is
+> -# null then move @node and its children into the main loop.
+> -#
+> -# The node must not be attached to a BlockBackend.
+> +#     The node must not be attached to a BlockBackend.
+
+This one arguably lacks an intro.  Let's not worry about this now.
+
+>  #
+>  # @node-name: the name of the block driver node
+>  #
+> diff --git a/qapi/block.json b/qapi/block.json
+> index e47592d5500..15f08372564 100644
+> --- a/qapi/block.json
+> +++ b/qapi/block.json
+> @@ -181,12 +181,13 @@
+>  
+>  ##
+>  # @blockdev-close-tray:
+> +#     Closes a block device's tray.
+>  #
+> -# Closes a block device's tray.  If there is a block driver state tree
+> -# associated with the block device (which is currently ejected), that
+> -# tree will be loaded as the medium.
+> +#     If there is a block driver state tree associated with the block
+> +#     device (which is currently ejected), that tree will be loaded as
+> +#     the medium.
+>  #
+> -# If the tray was already closed before, this will be a no-op.
+> +#     If the tray was already closed before, this will be a no-op.
+>  #
+>  # @device: Block device name
+>  #
+
+Shouldn't this one be in "[PATCH 5/9] qapi: split intro sections for
+commands"?
+
+> @@ -218,13 +219,12 @@
+>  
+>  ##
+>  # @blockdev-remove-medium:
+> +#     Removes a medium (a block driver state tree) from a block
+> +#     device.  That block device's tray must currently be open
+> +#     (unless there is no attached guest device).
+>  #
+> -# Removes a medium (a block driver state tree) from a block device.
+> -# That block device's tray must currently be open (unless there is no
+> -# attached guest device).
+> -#
+> -# If the tray is open and there is no medium inserted, this will be a
+> -# no-op.
+> +#     If the tray is open and there is no medium inserted, this will
+> +#     be a no-op.
+>  #
+>  # @id: The name or QOM path of the guest device
+>  #
+> @@ -504,12 +504,11 @@
+>  
+>  ##
+>  # @block-latency-histogram-set:
+> +#     Manage read, write and flush latency histograms for the device.
+>  #
+> -# Manage read, write and flush latency histograms for the device.
+> -#
+> -# If only @id parameter is specified, remove all present latency
+> -# histograms for the device.  Otherwise, add/reset some of (or all)
+> -# latency histograms.
+> +#     If only @id parameter is specified, remove all present latency
+> +#     histograms for the device.  Otherwise, add/reset some of (or
+> +#     all) latency histograms.
+>  #
+>  # @id: The name or QOM path of the guest device.
+>  #
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 8096ef64682..13c446b922f 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -1965,12 +1965,11 @@
+>  
+>  ##
+>  # @cancel-vcpu-dirty-limit:
+> +#     Cancel the upper limit of dirty page rate for virtual CPUs.
+>  #
+> -# Cancel the upper limit of dirty page rate for virtual CPUs.
+> -#
+> -# Cancel the dirty page limit for the vCPU which has been set with
+> -# `set-vcpu-dirty-limit` command.  Note that this command requires
+> -# support from dirty ring, same as the `set-vcpu-dirty-limit`.
+> +#     Cancel the dirty page limit for the vCPU which has been set with
+> +#     `set-vcpu-dirty-limit` command.  Note that this command requires
+> +#     support from dirty ring, same as the `set-vcpu-dirty-limit`.
+>  #
+>  # @cpu-index: index of a virtual CPU, default is all.
+>  #
+> diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+> index 8cb2ea77951..64059b5688d 100644
+> --- a/qapi/misc-arm.json
+> +++ b/qapi/misc-arm.json
+> @@ -28,12 +28,11 @@
+>  
+>  ##
+>  # @query-gic-capabilities:
+> +#     It will return a list of `GICCapability` objects that describe
+> +#     its capability bits.
+>  #
+> -# It will return a list of `GICCapability` objects that describe its
+> -# capability bits.
+> -#
+> -# On non-ARM targets this command will report an error as the GIC
+> -# technology is not applicable.
+> +#     On non-ARM targets this command will report an error as the GIC
+> +#     technology is not applicable.
+>  #
+>  # Since: 2.6
+>  #
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index b3c2a1421f3..374711ac6c7 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -178,14 +178,13 @@
+>  
+>  ##
+>  # @x-exit-preconfig:
+> +#     Exit from "preconfig" state
+>  #
+> -# Exit from "preconfig" state
+> -#
+> -# This command makes QEMU exit the preconfig state and proceed with VM
+> -# initialization using configuration data provided on the command line
+> -# and via the QMP monitor during the preconfig state.  The command is
+> -# only available during the preconfig state (i.e. when the --preconfig
+> -# command line option was in use).
+> +#     This command makes QEMU exit the preconfig state and proceed
+> +#     with VM initialization using configuration data provided on the
+> +#     command line and via the QMP monitor during the preconfig state.
+> +#     The command is only available during the preconfig state
+> +#     (i.e. when the --preconfig command line option was in use).
+>  #
+>  # Features:
+>  #
+> diff --git a/qapi/qdev.json b/qapi/qdev.json
+> index a35321d2fd1..e19a92a44e8 100644
+> --- a/qapi/qdev.json
+> +++ b/qapi/qdev.json
+> @@ -163,14 +163,14 @@
+>  ##
+>  # @device-sync-config:
+>  #
+
+Drop the blank line.
+
+> -# Synchronize device configuration from host to guest part.  First,
+> -# copy the configuration from the host part (backend) to the guest
+> -# part (frontend).  Then notify guest software that device
+> -# configuration changed.
+> +#     Synchronize device configuration from host to guest part.
+> +#     First, copy the configuration from the host part (backend) to
+> +#     the guest part (frontend).  Then notify guest software that
+> +#     device configuration changed.
+>  #
+> -# The command may be used to notify the guest about block device
+> -# capacity change.  Currently only vhost-user-blk device supports
+> -# this.
+> +#     The command may be used to notify the guest about block device
+> +#     capacity change.  Currently only vhost-user-blk device supports
+> +#     this.
+>  #
+>  # @id: the device's ID or QOM path
+>  #
+
 
