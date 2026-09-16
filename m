@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C441C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3DAC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 09:12:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6lds-0005jk-Ay; Wed, 16 Sep 2026 05:09:24 -0400
+	id 1x6lfW-0001AP-Ku; Wed, 16 Sep 2026 05:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldn-0005FW-IT; Wed, 16 Sep 2026 05:09:19 -0400
+ id 1x6let-0000Rl-JW; Wed, 16 Sep 2026 05:10:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6ldl-0007U4-Sl; Wed, 16 Sep 2026 05:09:19 -0400
+ id 1x6leq-0007rg-Js; Wed, 16 Sep 2026 05:10:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789549561; bh=FpXgxKhV6+gDOV4M/c1B79NsdWOC/6Sj91SFxhLgddc=;
+ t=1789549562; bh=elcWQy2s1sLzznu7JdUiXaYNqAED+oVMoA1+wruMEiM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xz47yNWw0lKVPgOu4lOy+v8PtD5c/rIG/OhDI2nWjKswL7kaS6WaHlpTEYHHBfzvH
- k7Ubuvu97F/cHOVIyHfu9xRHHVZBwt1/K2M+OFRW8fzwwK+NpC8CeioqlXycwiqgTO
- ljuTH6peQXBf5jegbmJGXdpFwIpaZc/oPwjcp7WDL3Rk8Kj1llWqtaNN4ktki0hjbi
- BPQ4zr6il7Bh8WJR/ODJvxlrEGXINfwq6/dsqab5bgNf0/5P7Gn/JrKE45KOPB0tSj
- Wk4Gt4IBf2KbKz6RfCrJSJxbQHoKgvkZg+sg3pyQTayd1/DLQXP7+SuP5cHR6NZVAQ
- WV9y5fh3DRccQ==
+ b=U7AbaiIktv6OHGK/J7FccjG3Yq58pm/BCGOoXQoKfgIub6MkOxyWR3BjvbIaZmR2L
+ PAZxMWiaDcSprejfrbvl2GXjWzQJC7OEeNM2FfzP5JF4WrAH3WPqRcPxbNYzF/YeNo
+ uO8B/LHkQiUANGYC6Akzdx8Ac8XcNzss7cMjTW3d7m6x5IfL0HePFW7pQaU8PADba6
+ KGvH3s1sst7gaIDJdjue34nzLfmFYo9IeNJfw/JeAl0xqHrpVQ88oOepVc2HxL65ja
+ FWe6db2La+bnWUow41hICkOuGLX1yP3eq0X8H+0RQX5oY2QUu6rFYYSqMYipvKmXo+
+ W0q1YaKJzPkiA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 068E41D56D6;
- Wed, 16 Sep 2026 12:06:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 57C291D56E8;
+ Wed, 16 Sep 2026 12:06:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A6739429E20;
- Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 03BD8429E44;
+ Wed, 16 Sep 2026 12:06:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8AE905A79B; Wed, 16 Sep 2026 12:06:43 +0300 (MSK)
+ id E20405A7BF; Wed, 16 Sep 2026 12:06:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 33/57] hw/cxl: fix timer leak in cxl_destroy_cci()
-Date: Wed, 16 Sep 2026 12:03:57 +0300
-Message-ID: <20260916090516.677749-33-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 51/57] ui/cursor: make the cursor refcount atomic
+Date: Wed, 16 Sep 2026 12:04:15 +0300
+Message-ID: <20260916090516.677749-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260916120417@cover.tls.msk.ru>
@@ -72,46 +72,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-cxl_init_cci() allocates a QEMUTimer via timer_new_ms() but
-cxl_destroy_cci() never frees it.  This leaks a timer object on every
-device exit path and, more critically, on every device reset cycle since
-the secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) are destroyed
-and re-initialized each time ct3d_reset() runs.
+A QEMUCursor outlives the call that publishes it and is shared between
+threads, but its refcount was a plain int with no single lock covering
+every user. qemu_console_set_cursor() takes and drops references from
+the main loop under the BQL alone, hw/display/qxl-render.c does so from
+the SPICE display worker thread, and ui/spice-display.c does so under
+SimpleSpiceDisplay::lock. ui/cocoa.m and ui/dbus-listener.c add two more
+threads.
 
-Tear the CCI down in the reverse of cxl_init_cci()'s setup order:
-destroy the mutex, then free the timer.  timer_free() cancels any
-pending expiry via timer_del() internally and tolerates a NULL pointer;
-clear the field afterwards so that a repeated timer_free() on the same
-CCI is a safe no-op.
-(The function as a whole is still not idempotent: qemu_mutex_destroy()
-asserts on an already-destroyed mutex.  Callers must not invoke
-cxl_destroy_cci() twice; the .initialized guard added in the next patch
-enforces that.)
+The pair that collides is qemu_spice_cursor_refresh_bh(), which drops
+ssd->lock before calling qemu_console_set_cursor(), and the worker
+refcounting the same cursor under that lock. A lost increment frees the
+cursor while the console still points at it, so the console's next unref
+decrements memory the allocator has already handed out again. Locking
+ssd.cursor is not enough on its own: with that done, this is the race
+that remains.
 
+Assert on the value the decrement observed while here. Dropping a
+reference that was never taken used to be silent, because the decrement
+lands in the allocator metadata of the freed chunk: nothing is logged,
+the object is not freed twice, and the process runs on until some later
+allocation walks the damaged free list and faults, arbitrarily far from
+the code that caused it.
+
+Fixes: 0b2824e5e48a ("spice: use bottom half instead of refresh timer for cursor updates")
 Cc: qemu-stable@nongnu.org
-Fixes: 98cbac128f1c ("hw/cxl: Support aborting background commands")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260729144645.1552511-2-junjie.cao@intel.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 259b877eac36be4dc593f42b36d33260741cd7d2)
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260903192647.2677279-3-den@openvz.org>
+(cherry picked from commit 1063bbb711856353625d78a9c498988470e91b22)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 1724b09a6dc..ee01ebf5dec 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -4793,6 +4793,8 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
- void cxl_destroy_cci(CXLCCI *cci)
- {
-     qemu_mutex_destroy(&cci->bg.lock);
-+    timer_free(cci->bg.timer);
-+    cci->bg.timer = NULL;
-     cci->initialized = false;
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 08082389f71..743b16ce80a 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -164,6 +164,15 @@ typedef struct QEMUCursor {
+ } QEMUCursor;
+ 
+ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height);
++
++/*
++ * A cursor may be shared between the main loop, a vCPU thread and a
++ * display backend's own thread, so the refcount is atomic and these two
++ * may be called from any of them.  The object itself is not otherwise
++ * thread-safe: take a reference before publishing the pointer anywhere
++ * another thread can reach it, and never dereference a cursor you do
++ * not hold a reference to.
++ */
+ QEMUCursor *cursor_ref(QEMUCursor *c);
+ void cursor_unref(QEMUCursor *c);
+ QEMUCursor *cursor_builtin_hidden(void);
+diff --git a/ui/cursor.c b/ui/cursor.c
+index 6e23244fbe6..69d27d49a13 100644
+--- a/ui/cursor.c
++++ b/ui/cursor.c
+@@ -1,4 +1,5 @@
+ #include "qemu/osdep.h"
++#include "qemu/atomic.h"
+ #include "ui/console.h"
+ 
+ #include "cursor_hidden.xpm"
+@@ -103,24 +104,28 @@ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height)
+     c = g_malloc0(sizeof(QEMUCursor) + datasize);
+     c->width  = width;
+     c->height = height;
+-    c->refcount = 1;
++    qatomic_set(&c->refcount, 1);
+     return c;
  }
  
+ QEMUCursor *cursor_ref(QEMUCursor *c)
+ {
+-    c->refcount++;
++    qatomic_inc(&c->refcount);
+     return c;
+ }
+ 
+ void cursor_unref(QEMUCursor *c)
+ {
++    int refcount;
++
+     if (c == NULL)
+         return;
+-    c->refcount--;
+-    if (c->refcount)
+-        return;
+-    g_free(c);
++
++    refcount = qatomic_fetch_dec(&c->refcount);
++    assert(refcount > 0);
++    if (refcount == 1) {
++        g_free(c);
++    }
+ }
+ 
+ int cursor_get_mono_bpl(QEMUCursor *c)
 -- 
 2.47.3
 
