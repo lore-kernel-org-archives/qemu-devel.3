@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A65BC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17CDFC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 14:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6qAU-00044y-4o; Wed, 16 Sep 2026 09:59:22 -0400
+	id 1x6qAX-00047t-3h; Wed, 16 Sep 2026 09:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAI-00041A-Br
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAU-000460-KX
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAF-0003CT-Mf
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:09 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x6qAT-0003EE-2j
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:59:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789567146;
+ s=mimecast20190719; t=1789567160;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=kurv1qVJk9tNs+6YV3/z84+SKkFud0o0nkejio5Imos=;
- b=WsqU9u9f0aGTX+xZ1fdf0PK6r5V9qUE8Pi39EHu2O0Vs90CYhIwa+8P3ZNb0S8ToUTZX/E
- ffCMt5tTUMDySFdGxR2xmHh3Slp3gH0vkPzo8A+8P6rxFFuYRwCvv3lU6etFOHBTVpb8fu
- 1TW4CnvVhkQ9TGDqYJ5hoYs6zD38vtg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TwJsi9UUeAWz/adeB4oM3iT2Ph48/gpOC88/Cc20NEI=;
+ b=OKdSeVrVXEBT+M5QzsD1FFIgdscUubVOPmKiKKtEgx22OGC8sfJ2EsefgZXx9ZPxCf/qBU
+ YpfrtPMGn+lWn58DwuVtfyD7aIVjrdjMd2MzZYWzEg9p8qBEO3VkY1sAYIQY9EiTFG+mWJ
+ qx7p9p2wn29/XOJfGu8b2IAOgZm0RiI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-127--IHSpPR1NjeEt2QRqD_86g-1; Wed,
- 16 Sep 2026 09:58:57 -0400
-X-MC-Unique: -IHSpPR1NjeEt2QRqD_86g-1
-X-Mimecast-MFC-AGG-ID: -IHSpPR1NjeEt2QRqD_86g_1789567130
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-cvZ64Kz9MLOnHo1sCRQftg-1; Wed,
+ 16 Sep 2026 09:59:18 -0400
+X-MC-Unique: cvZ64Kz9MLOnHo1sCRQftg-1
+X-Mimecast-MFC-AGG-ID: cvZ64Kz9MLOnHo1sCRQftg_1789567156
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 042E41953971; Wed, 16 Sep 2026 13:58:50 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3E051954B18; Wed, 16 Sep 2026 13:59:16 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B3E181956054; Wed, 16 Sep 2026 13:58:44 +0000 (UTC)
+ id D168A1956054; Wed, 16 Sep 2026 13:59:11 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -57,12 +58,13 @@ Cc: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 0/7] qapi: convert remaining "simple" intro sections
-Date: Wed, 16 Sep 2026 09:58:34 -0400
-Message-ID: <20260916135841.3614495-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v4 5/7] qapi/parser: fix intermediate "intro" detection
+Date: Wed, 16 Sep 2026 09:58:39 -0400
+Message-ID: <20260916135841.3614495-6-jsnow@redhat.com>
+In-Reply-To: <20260916135841.3614495-1-jsnow@redhat.com>
+References: <20260916135841.3614495-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,70 +90,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v4:=0D
- - :(=0D
- - :( :(=0D
- - Fix 'Fix python typing issue with hotfix from below ...'=0D
-v3:=0D
- - Fix python typing issue with hotfix from below ...=0D
- - Rebase on top of armbru/qapi-not-next=0D
-v2:=0D
- - Fix stub insertion algorithm for some "TODO:" replacement cases=0D
-=0D
-Hello, this work converts the remaining "simple" intro sections in the=0D
-QAPI schema to use the new syntax. This is part of our ongoing effort=0D
-to add the mythical "inliner" to our generated QMP documentation.=0D
-=0D
-This batch covers structures that *are* likely to be inlined, and thus=0D
-have introductory paragraphs that are quite likely to be omitted when=0D
-the member documentation is copied into other contexts (e.g. as=0D
-arguments for command documentation, or as members of a branch for=0D
-commands that accept union arguments.)=0D
-=0D
-"simple" here is a non-technical distinction that means a single=0D
-paragraph of text followed by an existing section boundary that=0D
-naturally already delineates what comprises the intro.=0D
-=0D
-If you are a non-QAPI maintainer who has been CC'd on this series, you=0D
-may wish to review what information is being codified as the "intro"=0D
-(The indented paragraph) and keep in mind that in the future, this=0D
-text may not be visible to the end-user reading our QMP documentation=0D
-if this structure is utilized as the 'base' for another struct, used=0D
-as the arguments for a command or event, or used as branch of a=0D
-union. This series keeps it pretty simple, and every conversion herein=0D
-is being codified as "the intro", i.e. "not crucial to understanding=0D
-the behavior of the members of this struct".=0D
-=0D
-This is the last of the brain-dead, simple conversions apart from any=0D
-new cases that may have been merged during the development of this=0D
-series. The remaining patches all convert or split longer paragraphs=0D
-and require more scrutiny.=0D
-=0D
-We're almost back to reviewing actual code! Hang in there, everybody.=0D
-=0D
-John Snow (7):=0D
-  qapi: convert remaining simple intros for block-export.json=0D
-  qapi: convert remaining simple intros for cxl.json=0D
-  qapi: convert remaining simple intros for machine.json=0D
-  qapi: convert remaining simple intros for block-core.json=0D
-  qapi/parser: fix intermediate "intro" detection=0D
-  qapi: convert intro sections with "TODO" markers=0D
-  qapi: convert intro sections followed by notes/examples=0D
-=0D
- qapi/block-core.json   | 45 ++++++++++++++++++------------------------=0D
- qapi/block-export.json | 19 ++++++++----------=0D
- qapi/cxl.json          | 14 +++++--------=0D
- qapi/machine.json      | 15 +++++---------=0D
- qapi/migration.json    | 25 +++++++++--------------=0D
- qapi/misc.json         |  3 +--=0D
- qapi/net.json          |  9 +++------=0D
- qapi/run-state.json    |  7 +++----=0D
- qapi/yank.json         |  5 +----=0D
- scripts/qapi/parser.py |  8 ++++++++=0D
- 10 files changed, 62 insertions(+), 88 deletions(-)=0D
-=0D
--- =0D
-2.55.0=0D
-=0D
+In 43e7ad1a3fa5, I adjusted the insertion algorithm for inserting
+something after the "introduction" to cope with both the old and new
+syntax while we converted QAPI to the new syntax. There's a bug in
+that code that only shows up in a handful of cases and only when using
+the new syntax while this affordance/flex code is still enabled.
+
+In the case that we do actually have a real bona-fide intro section,
+we want to insert directly after that real-deal intro section, not
+after any plaintext sections that may follow it. This code adjusts the
+temporary code to strongly prefer inserting after the actual intro
+section if it exists.
+
+Once again: once conversion is done, you will be delighted by how much
+of this ugly code goes away.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ scripts/qapi/parser.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 9e14c2f7921..6a9a5589c14 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -845,6 +845,14 @@ def _insert_after_intro(
+         needed and ``_insert_near_kind(QAPIDoc.Kind.INTRO, ...)`` will
+         be sufficient.
+         """
++        first = self.all_sections[0]
++        if first.text and first.kind == QAPIDoc.Kind.INTRO:
++            # First section is introduction and is non-empty: insert here.
++            # Rest assured all of this ugliness will very soon go away.
++            # Pinkie-swear.
++            self._insert_near_kind(QAPIDoc.Kind.INTRO, section, after=True)
++            return
++
+         index = 0
+         for index, ref_section in enumerate(self.all_sections):
+             if ref_section.kind.name in ("PLAIN", "INTRO"):
+-- 
+2.55.0
 
 
