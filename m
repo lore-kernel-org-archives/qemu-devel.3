@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9115C982C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A555FC982C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 20:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6wJk-0007f7-4u; Wed, 16 Sep 2026 16:33:20 -0400
+	id 1x6wJm-0007hd-5p; Wed, 16 Sep 2026 16:33:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x6wJN-0007Zh-Ki; Wed, 16 Sep 2026 16:32:58 -0400
+ id 1x6wJO-0007Zn-Sv; Wed, 16 Sep 2026 16:33:00 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x6wJK-00030g-OU; Wed, 16 Sep 2026 16:32:57 -0400
+ id 1x6wJL-00030e-NA; Wed, 16 Sep 2026 16:32:58 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1Yjs045805; Wed, 16 Sep 2026 20:32:51 GMT
+ 68GG1huJ046034; Wed, 16 Sep 2026 20:32:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=NZa919vWQHK3YK5Ri
- dDPcIbHU1J72f0rAp1tG4Iv7Tk=; b=EeYmOn70vIej6loOEzufIXZu1yHUf6bgh
- ZzCpc0BneAOjXtsiEd0PrRNS35U5qO79B3Nr8lb1Idgcjxjcdyq4pdP275jypbm8
- qgmymKZ6JZmphUtHDnN3afJ6H1RDLttZfQAhe3Slqm7wtEBROJjso1pjHQOrPhn2
- 0AxJOxR3QrFMedRrHmBONqjVzyQGgGVV88LrMOz4iwjkVAQUgu5qXx4xnSa7dnkC
- K7l4TTUPjZGkvPf30W4VXIEzJ3MUnJbWS1A5zLDzpXGoIjiWZt49smAwFrBTNbSN
- eehcI72NTUqvpHpMZAATPnEIW6DKLYnOfd5HsJ0ZddX0cxuas0D6Q==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcv6enb-1
+ :mime-version:references:subject:to; s=pp1; bh=ILf5TJe9Y2znuxk+O
+ dFiNFiXdAyidaqWCS+8QOenYOA=; b=tNxSEKpe00NQZeXWsWNLTGhytAPfiGIsr
+ rlE6zkwBUG+Fv4+9J7czZnEzOgyXOr8b/QMUu4Bn1cweSqk3qeZkRJHWbsJ9wx9K
+ WPkJftFbDDV9YwvxB8xdsvNhUYurllAglYkMuydTBTeCdetIWUXO8IUzgVDcN9dA
+ xP9OuVxXn9hhUWOokln+2mDhfdLjd3OeYs64AEqMU4xWKcdr4XhmtB/InVndeULz
+ Q5+K2rSutvYx7rGm62IyRvHTMqubG76TOjAf/bMLWWllmXXvqNmxhfnrvxnM3y+A
+ m0Bq467VOV1VQ0e1n+Rq3i6FOyZfhI+tygqXmRjVKP+k/i2Ojio+A==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcv6enc-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
  Wed, 16 Sep 2026 20:32:51 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GJ2B7l1713033; Wed, 16 Sep 2026 20:32:50 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gpywf0cqv-1
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68GIwbWb1649282; Wed, 16 Sep 2026 20:32:50 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gq03c0b4a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Wed, 16 Sep 2026 20:32:50 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68GKWkSi30802310
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68GKWkPG35193120
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Wed, 16 Sep 2026 20:32:46 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B841A2004B;
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA6912004D;
  Wed, 16 Sep 2026 20:32:46 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9706120043;
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 902A520043;
  Wed, 16 Sep 2026 20:32:46 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with SMTP;
  Wed, 16 Sep 2026 20:32:46 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 7D5EC16123B; Wed, 16 Sep 2026 22:32:46 +0200 (CEST)
+ id 79521160DDE; Wed, 16 Sep 2026 22:32:46 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Christian Borntraeger <borntraeger@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH 3/9] virtio-ccw: Fix rc check in read configuration path
-Date: Wed, 16 Sep 2026 22:32:35 +0200
-Message-ID: <20260916203242.2509787-4-farman@linux.ibm.com>
+ qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH 1/9] virtio-ccw: Limit ISC to MAX_ISC
+Date: Wed, 16 Sep 2026 22:32:33 +0200
+Message-ID: <20260916203242.2509787-2-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260916203242.2509787-1-farman@linux.ibm.com>
 References: <20260916203242.2509787-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX46CXC2sx45LY
- dYeSR5KjoPnztebGZU7gAjz+pvFgg5gkJVzl1/V7abwU+8+ldVdCrcM+fmxvqr6Wxjv3mjSnmq5
- 7xRxsYM09J9ipoB8EWMp0zAKRzqZxnM=
-X-Proofpoint-ORIG-GUID: v1vNHxSErJTHwPJH8VSwfoM-4Z4SrKZD
-X-Proofpoint-GUID: v1vNHxSErJTHwPJH8VSwfoM-4Z4SrKZD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfXyOs8NAYaCB9l
- GfYqS7y6clzdIyCSdBpF8JDSrP5nxaa+0lneiik71JLHHVnFyTRl/XOlUiLURCCAQKKlsNdoref
- eO6BW150NfBuHfLJw3lKeA31XVCl+feGUXm4CCngvcTk6osQUqhxy8ujWqUWKg2CVC4QdUsnZu/
- qc6y9WIBoL3GGF3H+K2ysUcjcv0WGASy36g+HyYJ8QhqY8IWD2w+kYLjdSyQkqeeHPbPaQ18Et5
- 0GBMJMEJzz7YbDZf+TC3SwIRo4pBX1D3Rd3gBku/Tr8IVTSHVo8MaTzUs39FuvDuT7a1Z4Bbqlg
- hLP2O5Dgd54XQBWzi77AS7Rzb7bSUtcvBhamqZeT4661ENBrNp76hxoXx1UQtpc0l2CT8F6zn0o
- 9SU8IAwnY/fYVVAJQKlVBil0AJHaBwYNuRtqhqjrNV0zSrhfrb+CMpK0/EVKMZor7xchsiDDP4Z
- ZNiGb2KapX+bbHv3mbg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX7ELlZb1Xsna7
+ uPVdbdgIiS27FJo/ad3oLb5bgHS7l6MwQ4NFsvzwChtrWLaL5HrhFLpDgoOcQpdAa8n2T6XLKCZ
+ w76tq8fUNMiTvhC4U7ici63jLHXajhc=
+X-Proofpoint-ORIG-GUID: qg_JnJhkwD8PVcKEVEnK6bzJCaLXHxnI
+X-Proofpoint-GUID: qg_JnJhkwD8PVcKEVEnK6bzJCaLXHxnI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDI4NSBTYWx0ZWRfX5lZvmGKpVwAM
+ WNwl/0LSq/mv6snFvE+H5sTeSEwbKKBtTn4El/XjrhrNHpssVh9Y9DgW6VZ37ZzrprztcMHlo3Y
+ iktyNLW7HXqEovTfYCXu6td8qf38ZVqT0sODcPrppad/iZHU8OiIv5IKlUptAqgGbI/O9qq0Mre
+ HTZ03fEOMh94WIU5yLxG/2TQSgIc72moUQAnZC4HDJoSBPWpVZ10i1mSBoegsHlvxedLeYXOZ47
+ FAxKi2aEtU/dTILrV+PMq7SJ1EUHJp6Pf+V/5+TIIK4n/VsnFbDn1qPgCJgHKHCqydaH+v1pcw1
+ ejsfGlXo5SucKAzZGdCcQtmTPSt0RtejgwHXZRAk46W2QgVMakEg5Tt+2eNXgKEc2DsSk5hfpuA
+ KWa5wXju3g8oWcdMeIn5eV5cbDcKCpv727izmO+Jh7jrUxl7amy5zB3vu9XYWhYzSIgXY0HrYc2
+ BPBEgFmkaACFjBW5NLA==
 X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aaafcf3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=uiMiztMkydEs4ieJCJEA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=osxc_5YrPWMs37QBt84A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
@@ -124,35 +122,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both the read and write config paths use wrappers around cds->op_handler,
-depending on the direction the I/O is flowing. But they expect opposite
-values in the returned variable to indicate success.
+The interrupt subclass is often defined as a uint8, though in practice
+it will be within the range of just 0-7. Ensure that a guest-supplied
+subclass does not extend beyond its expected range, especially when
+used as an array index.
 
-Fix this by unifying those checks, where CCW_CMD_READ_CONF needs to
-see !ret as success. The end result is some erroneous data in the
-SCSW response data, but the overall success/failure is correct.
-
-Cc: qemu-stable@nongnu.org
-Fixes: d895d25ae2 ("s390x: css: report errors from ccw_dstream_read/write=
-")
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/virtio-ccw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/s390x/css.c        | 7 ++++++-
+ hw/s390x/virtio-ccw.c | 6 ++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 76dbca3bb9..9da9128d88 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -654,8 +654,13 @@ void css_adapter_interrupt(CssIoAdapterType type, ui=
+nt8_t isc)
+     S390FLICState *fs =3D s390_get_flic();
+     S390FLICStateClass *fsc =3D s390_get_flic_class(fs);
+     uint32_t io_int_word =3D (isc << 27) | IO_INT_WORD_AI;
+-    IoAdapter *adapter =3D channel_subsys.io_adapters[type][isc];
++    IoAdapter *adapter;
++
++    if (type >=3D CSS_IO_ADAPTER_TYPE_NUMS || isc > MAX_ISC) {
++        return;
++    }
+=20
++    adapter =3D channel_subsys.io_adapters[type][isc];
+     if (!adapter) {
+         return;
+     }
 diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index d700db405b..4622c5d46d 100644
+index 30fb2c0681..eb6378ea4c 100644
 --- a/hw/s390x/virtio-ccw.c
 +++ b/hw/s390x/virtio-ccw.c
-@@ -475,7 +475,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+@@ -46,6 +46,10 @@ static int virtio_ccw_dev_post_load(void *opaque, int =
+version_id)
+     CcwDevice *ccw_dev =3D CCW_DEVICE(dev);
+     CCWDeviceClass *ck =3D CCW_DEVICE_GET_CLASS(ccw_dev);
+=20
++    if (dev->thinint_isc > MAX_ISC) {
++        return -EINVAL;
++    }
++
+     ccw_dev->sch->driver_data =3D dev;
+     if (ccw_dev->sch->thinint_active) {
+         dev->routes.adapter.adapter_id =3D css_get_adapter_id(
+@@ -659,6 +663,8 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
          } else {
-             virtio_bus_get_vdev_config(&dev->bus, vdev->config);
-             ret =3D ccw_dstream_write_buf(&sch->cds, vdev->config, len);
--            if (ret) {
-+            if (!ret) {
-                 sch->curr_status.scsw.count =3D ccw.count - len;
-             }
-         }
+             if (ccw_dstream_read(&sch->cds, thinint)) {
+                 ret =3D -EFAULT;
++            } else if (thinint.isc > MAX_ISC) {
++                ret =3D -ENOSYS;
+             } else {
+                 thinint.ind_bit =3D be64_to_cpu(thinint.ind_bit);
+                 thinint.summary_indicator =3D
 --=20
 2.53.0
 
