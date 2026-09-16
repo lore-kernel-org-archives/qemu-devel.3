@@ -4,85 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C80C88E5C
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7B6C88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 13:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6pcu-00018f-07; Wed, 16 Sep 2026 09:24:40 -0400
+	id 1x6pgE-0001ms-So; Wed, 16 Sep 2026 09:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6pcr-00017u-Sa
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:24:38 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x6pcp-0003T4-SA
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:24:37 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cd38e0e5dso10481255e9.2
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:24:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x6pfz-0001l3-1P
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x6pfw-0003tJ-2V
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 09:27:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789565266;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=cfAAcEhAjcgTSOW7aheuAhtFv0hk1+IZ6ErzEjcuCGs=;
+ b=GN1a4lq+VXcLc8KTlEpTtPi2ik3yI9ibTmLI9aAn3G73zU5hBMbVPdnjKmWXB/Wd2yXtb6
+ JBJeJl72UzIPVacVU7q97iK+XOMJZw7Bdf8evRWt/pzJh4zBD5oJeuCNWV1eKexSG6zTBd
+ i64IDbpFmzRFMtQk4Yp91t/TvU7xz4I=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-288-slqVhLd6NHas6KS1y5aBnw-1; Wed, 16 Sep 2026 09:27:45 -0400
+X-MC-Unique: slqVhLd6NHas6KS1y5aBnw-1
+X-Mimecast-MFC-AGG-ID: slqVhLd6NHas6KS1y5aBnw_1789565264
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49ccfad90f1so32755745e9.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 06:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1789565072; x=1790169872; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789565264; x=1790170064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AmT2DTipzV88wzGzPmVEFbqXiHfgiQPbVpiLoDeBPpw=;
- b=UOA8RPwaPdegJdv94AOL/oCVhSRt8GGzsV6tTnt/g5JIQQFs+Rvrmcmk8648neNLKA
- VJwoFTQbdj0rEpGvBu4oetbQ6E1Vsy/JcewXUvTyhhzgNNNRy9dNAPC8w9lOexL2I4BR
- JtD9jJKytIov7BJpNtW93g6z1GcVzDY5Ol7G8HSTbOSm/13Afe/OobgTi8L+YwlAVbMN
- LlKA4p2z/EoZ4jzcXCdS703dqF1UnEOwzXyvMBmLXLdi6TfNBDsXTB0vC8c5SoTx8oxa
- jm1Q+UpZf76FniRqO059KUkalt21tmgpPMZIiyQLcvedha6LkyPn7nE3hvN6kr+aBEZd
- 3ZuQ==
+ bh=cfAAcEhAjcgTSOW7aheuAhtFv0hk1+IZ6ErzEjcuCGs=;
+ b=ZMUVx7su/91V7EG9F3qHlooKSnMCO61xwjvqkACuCLOHe+qsavGqufjMe57tGZmvNb
+ IHXKwvF8ZotV9mQpFvS2XZ/XJMpC/2f8pfHQ6QxrV7LAvYd9frtK93trarJ193ajZJB1
+ GpbF52xOswSUYJcUucpwBAMJayQ/dSNcNnNjra7+jbBDj7ZLsbBI4rE+Nj7glw1Gl72J
+ Gn7IMEds17+NrpTRsjNw6PN9EZjBquxyf+qmzg9yCLsQQ5FMSVpmpU9ZSV6cCkwdlWb1
+ h/gi8gwQBkUaZQLOA//FqRg36glUqxF8HTTv5SuzJzoyIDRMJ0RDf6ysbPttj1ILwlJf
+ cvsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789565072; x=1790169872;
+ d=1e100.net; s=20260707; t=1789565264; x=1790170064;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AmT2DTipzV88wzGzPmVEFbqXiHfgiQPbVpiLoDeBPpw=;
- b=V+74tAlhp9PASdkb+hy3HRLdoGZejPear3gBCR/EREbjKWoy3ILYMaBYKxMpNHswgv
- 0WRSxM7E7mHiQ8I3rF8hpnXX/m6oe7csBV4Flrzmq1FzRGRNccPH7BCTBWkAdarLMFHE
- 7nwkR9snAJUHC03cqjshVDJk+4rFvvGloKmAKLMy5hWhklan45eGyZxKxJrZWiv258nO
- Hocgj6pgRKBE+rr/BzKRSGHYGdWPuxxCWZfaq1j0X78xNkyz9HG1pChuTr7+Lm+AKvly
- kc3YXxw6YJjODai/7qWF20XLoP3aOFaMx4kwez43yCcMN1uC1qb2QagSkkjWhDbTobDj
- X1aQ==
-X-Gm-Message-State: AFuF++nEjwSh/AtQadHjI0KsL9ISKdHNlAg6wajvoFKTQ+QOSEdp0++S
- nsa/eDhdKR00VfEiqmQhHsIa3fV3sfXIvWJ1wrN0h0cynhOtKHQviIuVKhkkiLZiDonbXTaQlh7
- eyFIH
-X-Gm-Gg: AYBFou28M0rbCdcP7HmUQtZs0MT9ir4c3WnezqUeBH/S6Axz9T/mFLbotESb786FDzC
- KRH3cOzL+yLrtXGygNJN14OVZHrtKQdBLhObGWVSoQugtnvQd6zy0KHnZoPIG33eE3lKUNrn29Y
- T4qap3t7Ph6FeL1UFfmBil3zS8P/Yb7DbbnBqjyMlPXVx2ffqQgvPbmasXm12wlhxBJ4JO888PR
- sxltrifzWmChbGLcSgRAulMFYdmzLa/IoEygBUVGwFtymdaIyM0pkop9yh6vVfmg7maEik2Kscl
- dzMVZkV04TjdXzblZFMv1bxqGKuLsK+g/0BT/9lVbkXezLbZbcpsjNpljJu4jT9I0r1tywde9ot
- Tr3xK4Uo5EYhGy/PF60bIXzBltVyMzWXLsD2EV4i1V0F3Py7oOLdglW4hfyn7wVFYvKbk+IIKGp
- p0g/1HIqUt69IwOFzofUnZHigNtqWPY5x1tydPHU+viiY9ul/KpRZlhJ6CBVlA/i5psrDC
-X-Received: by 2002:a05:600c:3e15:b0:49c:f617:7cf with SMTP id
- 5b1f17b1804b1-49eac41066amr59412845e9.0.1789565072239; 
- Wed, 16 Sep 2026 06:24:32 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:f56f:c51e:c53f:b1ce])
+ bh=cfAAcEhAjcgTSOW7aheuAhtFv0hk1+IZ6ErzEjcuCGs=;
+ b=YB7UaW0NR6RtYuOCmiCnlZh6Y4jirTxsiCzs29dgbmMj+Q4MzHI81GzSDtUzbFR01H
+ /wW5Ke2yHQbVUY+xItAxGn1956EaL2luDnPw3WVo0D/EFFTYgIi5PITUJw6JWTTEd2aP
+ Ni61vu9vqCygC5kt026mj2YaRXGRjeQIZBp1DX0IxzBnWljqseZDFSKIHOK5dcvHXsFL
+ OqXPsVww6Z5JSHtMmi+07KCIA7589yHaA8peq2y1Vg5MC05hTAAJS+VSB9eiR5toCwvi
+ CsdMmuM+gIJRMFS3/Yod0Qb70h8Xa6D8eOQCI+LQi716VigUfIEeR5jDCDQTGyLDgDWQ
+ +Ojg==
+X-Gm-Message-State: AFuF++nyxhiFWO0dCx85Ru73XcF6qic2CCsoonbqkPUB5FCOqbHrDx//
+ UpUJ2SkcV+uPxnNbTWsdKmeUD/o/C+ok7ZiQGD5lZF4u9VXb2Qx4ZgCdK/hKqrAvyB5e6R56cWZ
+ M1VgPxYI1q/GVEotDx12VVoIZEUcfXz0NcIiLYgPh7zo7QO3L6yc54ftUO+YQsjgRIHAZCD/PWG
+ EGhAj16+Hkq1MQUrB6xZNZQc46/4BBdgKqPQyYfPWi
+X-Gm-Gg: AYBFou1RjHqiyVI04l/fz5Ry8QPgLERImEy1Qco6iHvmcQbSrYThVFlcVhttfAVThjz
+ PBYxJjd9Bax+Z2xDVuYSnJ2MELodToHwLoZodAYCyEQRvGAxAyVNlZIa3DhlhjxEGlo7FdC6wWz
+ fXVm1xBlD+KpLy9+f4vKXC6bItjbBkssF7Qo19iENGvzdhPBkOdAI1Uzc3YXgoQ3aZUUekceYQq
+ vfTGEE5YZPaxMmXAPaq3iWNyf9FWjBmdfqtN/wDTYRvRe6oYFfW+24GMJEtE397gMf/5IpbKeel
+ DCDU1TwNbNgBTrF1YE/OuIllLuUn5/LKJ1AOK+gvO9ZYxFXVjfpR/vyoGRSVwVF01V9my0e1U9C
+ Wwcd2lJcw1mk+yUCnJttpVRlRO3r9sfMszAwIOuRboZd7rbp2E5WiBP37Mla+ZHJWOaOLgb06gX
+ y/YFmf
+X-Received: by 2002:a05:600d:8485:10b0:49f:bc43:9e96 with SMTP id
+ 5b1f17b1804b1-49fbc43a0a0mr6428575e9.8.1789565263980; 
+ Wed, 16 Sep 2026 06:27:43 -0700 (PDT)
+X-Received: by 2002:a05:600d:8485:10b0:49f:bc43:9e96 with SMTP id
+ 5b1f17b1804b1-49fbc43a0a0mr6428085e9.8.1789565263375; 
+ Wed, 16 Sep 2026 06:27:43 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf4161fsm6579272f8f.34.2026.09.16.06.24.30
+ ffacd0b85a97d-4870bf27df9sm6892837f8f.19.2026.09.16.06.27.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 06:24:31 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
+ Wed, 16 Sep 2026 06:27:41 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH 1/1] migration/cpr: lock the cpr state
-Date: Wed, 16 Sep 2026 15:24:28 +0200
-Message-ID: <20260916132428.1628553-1-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
+Cc: den@openvz.org,
+	qemu-block@nongnu.org
+Subject: [PATCH 0/2] nbd: two small locking patches
+Date: Wed, 16 Sep 2026 15:27:38 +0200
+Message-ID: <20260916132740.872244-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=den@openvz.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,194 +117,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+Two patches from 2022 (!), rediscovered now that Denis reinvented another
+patch I had written but never tested (now commit cd3be3bd96c, "block/nbd:
+clear reply.cookie under receive_mutex", 2026-09-02).
 
-The cpr state is a process wide registry of the resources that have to
-survive an exec. Entries are added and dropped from realize and teardown
-paths all over the tree, and a caller has no way to tell which thread the
-next caller will run in.
+The first is just documentation, the second is an (at least theoretical)
+race condition on s->reconnect_delay_timer.
 
-The state carries no serialization of its own. It is safe today only
-because its callers happen to hold the BQL, and that is a property of
-where those callers live rather than anything the interface promises or
-checks. A caller that is correct within its own subsystem can therefore
-break this one from a distance: two that overlap corrupt the registry,
-and the next lookup walks an entry that has already been freed.
+Paolo Bonzini (2):
+  nbd: comment on locking for requests[].coroutine
+  nbd: call reconnect_delay_timer_del with requests_lock taken
 
-Give the state a lock of its own instead of relying on that. Entries
-move when a device is realized, when a resource is handed over, and when
-a migration starts, so none of this is on a hot path and an uncontended
-mutex costs nothing.
+ block/nbd.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-Take the lock in every accessor and across the save and load walks.
-Holding it over the walk callbacks is safe because none of them comes
-back through this interface. State that is not reached through these
-accessors, such as the VFIO device list that hw/vfio manipulates
-directly, stays outside it.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Mark Kanda <mark.kanda@oracle.com>
-Cc: Ben Chaney <bchaney@akamai.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>
----
- migration/cpr.c | 59 ++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 49 insertions(+), 10 deletions(-)
-
-diff --git a/migration/cpr.c b/migration/cpr.c
-index bca43e9bf3..503057e262 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -9,6 +9,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qemu/lockable.h"
- #include "hw/vfio/vfio-cpr.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
-@@ -26,6 +27,14 @@
- CprState cpr_state;
- static GHashTable *cpr_fds_hash;
- 
-+/* Callers are spread across the tree and need not share a thread. */
-+static QemuMutex cpr_fds_lock;
-+
-+static void __attribute__((constructor)) cpr_fds_lock_init(void)
-+{
-+    qemu_mutex_init(&cpr_fds_lock);
-+}
-+
- /****************************************************************************/
- 
- typedef struct CprFd {
-@@ -94,6 +103,8 @@ static int cpr_fd_pre_save(void *opaque)
-     GHashTableIter iter;
-     CprFd *elem;
- 
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-     QLIST_INIT(&state->fds);
- 
-     g_hash_table_iter_init(&iter, get_cpr_fds_hash());
-@@ -109,6 +120,8 @@ static int cpr_fd_post_load(void *opaque, int version_id)
-     CprState *state = (CprState *)opaque;
-     CprFd *elem;
- 
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-     while ((elem = QLIST_FIRST(&state->fds))) {
-         QLIST_REMOVE(elem, next);
- 
-@@ -127,7 +140,7 @@ static int cpr_fd_post_load(void *opaque, int version_id)
-     return 0;
- }
- 
--void cpr_save_fd(const char *name, int id, int fd)
-+static void do_cpr_save_fd(const char *name, int id, int fd)
- {
-     CprFd *elem = g_new0(CprFd, 1);
- 
-@@ -139,6 +152,13 @@ void cpr_save_fd(const char *name, int id, int fd)
-     cpr_fd_hash_insert(elem);
- }
- 
-+void cpr_save_fd(const char *name, int id, int fd)
-+{
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-+    do_cpr_save_fd(name, id, fd);
-+}
-+
- static CprFd *find_fd(const char *name, int id)
- {
-     CprFd key = {
-@@ -149,6 +169,15 @@ static CprFd *find_fd(const char *name, int id)
-     return g_hash_table_lookup(get_cpr_fds_hash(), &key);
- }
- 
-+static int do_cpr_find_fd(const char *name, int id)
-+{
-+    CprFd *elem = find_fd(name, id);
-+    int fd = elem ? elem->fd : -1;
-+
-+    trace_cpr_find_fd(name, id, fd);
-+    return fd;
-+}
-+
- void cpr_delete_fd(const char *name, int id)
- {
-     CprFd key = {
-@@ -156,6 +185,8 @@ void cpr_delete_fd(const char *name, int id)
-         .id = id,
-     };
- 
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-     g_hash_table_remove(get_cpr_fds_hash(), &key);
- 
-     trace_cpr_delete_fd(name, id);
-@@ -163,20 +194,23 @@ void cpr_delete_fd(const char *name, int id)
- 
- int cpr_find_fd(const char *name, int id)
- {
--    CprFd *elem = find_fd(name, id);
--    int fd = elem ? elem->fd : -1;
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
- 
--    trace_cpr_find_fd(name, id, fd);
--    return fd;
-+    return do_cpr_find_fd(name, id);
- }
- 
- void cpr_resave_fd(const char *name, int id, int fd)
- {
--    CprFd *elem = find_fd(name, id);
--    int old_fd = elem ? elem->fd : -1;
-+    CprFd *elem;
-+    int old_fd;
-+
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-+    elem = find_fd(name, id);
-+    old_fd = elem ? elem->fd : -1;
- 
-     if (old_fd < 0) {
--        cpr_save_fd(name, id, fd);
-+        do_cpr_save_fd(name, id, fd);
-     } else if (old_fd != fd) {
-         error_report("internal error: cpr fd '%s' id %d value %d "
-                      "already saved with a different value %d",
-@@ -188,12 +222,15 @@ void cpr_resave_fd(const char *name, int id, int fd)
- int cpr_open_fd(const char *path, int flags, const char *name, int id,
-                 Error **errp)
- {
--    int fd = cpr_find_fd(name, id);
-+    int fd;
- 
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-+    fd = do_cpr_find_fd(name, id);
-     if (fd < 0) {
-         fd = qemu_open(path, flags, errp);
-         if (fd >= 0) {
--            cpr_save_fd(name, id, fd);
-+            do_cpr_save_fd(name, id, fd);
-         }
-     }
-     return fd;
-@@ -204,6 +241,8 @@ bool cpr_walk_fd(cpr_walk_fd_cb cb)
-     GHashTableIter iter;
-     CprFd *elem;
- 
-+    QEMU_LOCK_GUARD(&cpr_fds_lock);
-+
-     g_hash_table_iter_init(&iter, get_cpr_fds_hash());
-     while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
-         g_assert(elem->fd >= 0);
 -- 
-2.53.0
+2.55.0
 
 
