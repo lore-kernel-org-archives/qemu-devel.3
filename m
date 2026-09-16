@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B5F3C982C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94D9C88E5C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 10:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6mRo-0008BG-SW; Wed, 16 Sep 2026 06:01:01 -0400
+	id 1x6mRr-0008CG-4y; Wed, 16 Sep 2026 06:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1x6mRg-00087o-Fe
+ id 1x6mRg-00087s-G2
  for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:54 -0400
 Received: from qs-2003c-snip6-11.eps.apple.com ([2a01:b747:3006:204::21]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1x6mRa-0005EP-TE
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:50 -0400
+ id 1x6mRa-0005E4-Kv
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 06:00:49 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-8 (Postfix) with ESMTPS id
- 3641418009FE; Wed, 16 Sep 2026 10:00:42 +0000 (UTC)
-X-ICL-RepId: 01a0a9a9-5595-7a0e-b009-edd138a9faa8
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0IShMFUgddTVYNRw9YHlwUFwlAQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wLSAFbB1IDRghIA10FWhxHCkABWBpdHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
+ E071518009F1; Wed, 16 Sep 2026 10:00:40 +0000 (UTC)
+X-ICL-RepId: 01a0a9a9-5052-7ae2-a645-d6cbbd5d202d
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0ISxMFUgddTVYNRw9YHlwUFwlAQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wLSAFbB1IDRghIA10FWhxHCkABWBpeHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1789552845; x=1792144845;
- bh=X43fhFYPtF0mjqJMmFhMIodO6U95ZjocBPYULWRQocY=;
+ s=sig1; t=1789552844; x=1792144844;
+ bh=Vd967nqTBhrEi2kDcB3CUx3ds/jf5dl62DCQCUC6cT0=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=QRWFJb+ppjsbu/cxRq+foxEmywxyHAqZqMKo4D61ygGIqTrb75iRyjaS5YfUg6O5PPKz1mx9CVKj2Ao+Jh9OrMIvns5FxOZWLTzDdlxipldoJWta1RG7QmlvikVS8hde/iM5n86elXjmMCgR7s6xCOepIB+NYffFXoODYn7Zwov8BD49zcQsQM8JO79f6vMNE/UFixGyDVcpS91J86kxlob0bzi0JvA4wGurGtI4p0KSeLLcgRqaGY/jtq7aBubSIZIiY0iqwOJQx6QTNOFGNX6ovX9y2+EyPGsmtw9Qrbdz++EICTbWvr2Po9kr4a640U2hVHwEA1rToI93RSEsZQ==
+ b=KT9NiyAsRXVGsDjQJ0q2tsp2xM4DbdSzDbrEo2G5X/bmHVJqCWFBelSrpy2Z8kvANxjXG3UOC+n9SF6L/k2iibKjbS+fek/uT6jcRNgpCtwvtsevtTjsXtKstfY7X6Ocy8Hf5XEGVnQJglZDSL9jpSeJ8a4PEwQT7GUE6H3nEW0OxE1rwSBat2O6j7XaMFZPxfA7695pWPjcsoel23suqHxxSqnjAjlslwxRERDQqg+PruUSxzfbOBE/zn0HmvTojPICMBfvHj4BYWa8pfG1pnJ0LcUoGvqLjaeCawHKvsYr0fht6Qq9xbZ3kkZ721DjrN44IYDFZXOOLwIqCU38MQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-8 (Postfix) with ESMTPSA id
- 190DC18000BF; Wed, 16 Sep 2026 10:00:40 +0000 (UTC)
+ 5A5BA180010A; Wed, 16 Sep 2026 10:00:38 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -44,29 +44,30 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH v8 05/10] vmapple: apple-gfx: make it work on the latest
- macOS release
-Date: Wed, 16 Sep 2026 12:00:13 +0200
-Message-ID: <20260916100021.73825-6-mohamed@unpredictable.fr>
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Lucas Amaral <lucaaamaral@gmail.com>
+Subject: [RFC PATCH v8 04/10] target/arm/hvf,
+ whpx: wire ISV=0 emulation for data aborts
+Date: Wed, 16 Sep 2026 12:00:12 +0200
+Message-ID: <20260916100021.73825-5-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260916100021.73825-1-mohamed@unpredictable.fr>
 References: <20260916100021.73825-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDEzMCBTYWx0ZWRfX3l0axmXKeZSI
- Dx1nv3vJ5B3OokI4gdjv2TZUshQY+flVAagHvRhHMafLhoMlSzkdOVwx+mK8FJ+pFCTubC6Su2P
- Fl0loInVUDieW/KO0nJZd46haf7xUnP9Wnij43acigO8hpvh+YIVzPsD/OaG9KKESw1VibCIhX9
- 112Lf7GD9Xhi7b+99oJG5jtvbyXWk7ky2Ll4yjGicIznlhvQ6yHb+ZaJGEOuaI4EmcSjC0M9hqo
- f0Rls0VPot5SwD91IGxFLarQ2avkyA+EmrW2L74c6EjnJEJWiireQXu87NmqlAQ8aCriZH2+dk3
- /nyuh/L+ZUP86Y6wDljVMMOl99m8XOTnnuwDjK7H3d338vYIPykQYmK/Is9hPI=
-X-Authority-Info-Out: v=2.4 cv=f51FxeyM c=1 sm=1 tr=0 ts=6aaa68cb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDEzMCBTYWx0ZWRfX0MwwonVxIjHU
+ /tr7zs1mZEGwdf99wTMHXFwj8+QhkwKVzCLCMNgRmVmKPleNY9/ImWwwY3T8V24MsaxWAlFYAGE
+ dJkOTX/FZ+5N9ymwHyuq8dDreaCY8sJFxfOV44hUdgnF9XrzpmaSAAAajEgxYNZaVwdMFe5AgYT
+ jUfwXR8wLSpCrB1E74iWDSvrA0m+XP2L2CbmVU6bRH5DK9e5tFCSu2K10F2aFvzySiSquU/fwuW
+ bH0DyDg7mcZhhL8jDNcjrtRlYMjMXdBZqc8tbQCUb4upXbr//2ceAtk9GWVid/3UvZN8073BZGF
+ 9Ugkyi8ldGK+yWdbRrhN7oAQ/W9Ig+29WjWOmgOmT3IogMkInoCBOAVwAQt1P8=
+X-Authority-Info-Out: v=2.4 cv=TaybdBQh c=1 sm=1 tr=0 ts=6aaa68ca
  cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=XaNHVGzJZ3ayr3Wv:21 a=VdqzKS8jKosA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=_6z4mGRrJ5MUOnpCZZoA:9
-X-Proofpoint-GUID: 2XJXUsEPn1Kp8y9Dd8iWsHjbOmsgSWfd
-X-Proofpoint-ORIG-GUID: 2XJXUsEPn1Kp8y9Dd8iWsHjbOmsgSWfd
-X-JNJ: AAAAAAAB3BVlHVz2hRU3b06Ye63weOhbJ+o3srlVAZsbBAeSccthi9IYotdfkj5uxuZmXIWemwXKA2j17XAmeXcAv49qRRiEGhuEVTR/ZC7lHl1ce6dHskjV0wSyJztt0HAHAGyEpoSXa37Gzk7NEyDuZ0vjxhDCjYPmEk1kQXXowL2Wv9GBfy0Krk4/LhN7db2jMERGRnh1sYsJDx08JiocmvhOXEzLD99vJC/LxZxCoW1a7HRiSNqvV5pxzQtKZYHdErNsHwTQZZ8f7NnnPOR87MZ1iigsypfYj9l5MOgVPcntzAVRlVLQcAO9xSJM+xD8NSiYkKfcNMLTZwiQvT6USslYJHKTdOvOdlSqkGV30gz5u3L61LOh2q2S6B9EchRvoYAhBuJSVQwcRI+AeSzil/SPJ0nntPkxzBloPtB6LBdpCtUhsGK5uJGWILkd2n2pVBUXzIbQZiQ8anqb5eMzyHBxRl1u15l+4+8pybXuv28+n63gjpZjdy3qofrRthgxe3nk7QskQ2COSQy3ESDY0rTKD5Qodf73V18REyT243f+p+RQvhdqjnhQB6aDrK2QqII0dvaiiUzSheG0kGa4ePHGQBNa/MN1kUdbLcNQSJXj1Sv7Seziu070m/aUllkQPn2hjeHHcQ643ERSzU7UKP1OMxrhJfnVbTXwt7xtH2EObnHZk4auWNVBK/jvYdvdRiQB5RK/cz29DV1Te4zIfC4LdCGlAETO5qZLR2opozhRxc5RipVToy2tsLh2Jumzwo9jMqp1Nfbt+dLXSmXKiCIcKo2HmLnwuxrXiC6G3cYvD2awcQb9Cgll0JODuwwfu6oBiZR8PXpYY1L+1LZBtfg9kthLgz/YJucf1QrVB+NvtsE=
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=pGLkceISAAAA:8 a=1-PEhprmmTEWANFiw-YA:9
+X-Proofpoint-GUID: UQojr-6vxKyqjNhtfji93Z-vJNrclCBq
+X-Proofpoint-ORIG-GUID: UQojr-6vxKyqjNhtfji93Z-vJNrclCBq
+X-JNJ: AAAAAAABW0TIoUwbnb2/Y4BHNHHZJwYj3XHB1AE9bA1WaBE3owluuHG9gpFhgRkiDwqGwytzG34sg6AStCblyQk9S7MEF4yQsVgesR3jqFD/XqAuhnfOEj2MC90zSU0n5YfHh09voJ0C8MVODVhRLF0UofpVxP0WyD8Wym801CA6mXa9sHYZ5orlLQBQrc+y+OXVeQN5vkeSLBXaU/lLOSKumpSoo/GxHdc7LL4gogdQuTOgQ7LYk3NHmCHlJEqE+dLbCknyKYz0AO6hc3T5OJ9Sh07miUk+miCRdwiVUFtj+oQa6qgh+CJH45pLCL5mIumwH8ngjKdcBmGwfIuxdkmc0ODP1ziirHGXy9DyBDXrx7s5m/QeHJiAAZRlz+TLXdWzO2AhWZN6+jF4mDawxxyv6lYhVupQkdhUTgRWA/4ZHGicQTAfHqqj0BQIcTGTZTk2L+N4bDyQJHpUrlWgpka+E1LcgJKsmc6hlct+MBJubU475mdrnNRvKcpBuoSrbwJ+8SlQ3lZAP6l6E78ZwbxpyhzeL3wGAY8c5UbdZ+hs3C/8nuAB+HjisbFTyumtOs5Bs+ZCa6F/95zzCea8gf5jiVof5fH3QUIca1bxIJg+1NzAiEvMUZs7B1sI4o5Lb29++nBj6FkbbOpo/1B+ojO/21yQtygBgDj2/2WwqosjaghPUPNf3r8fVYgpDAAZZGEXYqRMArobfT3ZwTSgPOleqba9+Wn3YToOzFzqht0cJT0bvMeaA34/ZH6KwzXTJJMi4QN7RQAXbH5BvpUjstDhlFdmzmVFJGW7WvoGJ1Jq1IPlLLlsNooSyrJZZNfSV1nmUq9QiZB1P1VeKAQWs7EZel/4nj+U/BzlwvU=
 Received-SPF: pass client-ip=2a01:b747:3006:204::21;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
@@ -74,7 +75,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,315 +91,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow changes in memory management introduced on macOS 15.4.
+From: Lucas Amaral <lucaaamaral@gmail.com>
 
-The legacy memory management API has been removed for the IOSurface mapper on that macOS version.
+When a data abort with ISV=0 occurs during MMIO emulation, the
+syndrome register does not carry the access size or target register.
+Previously this hit an assert(isv) and killed the VM.
 
-Also enable process isolation for a sandboxed GPU process when on a new OS.
+Replace the assert with instruction fetch + decode + emulate using the
+shared library in target/arm/emulate/.  The faulting instruction is read
+from guest memory via cpu_memory_rw_debug(), decoded by the decodetree-
+generated decoder, and emulated against the vCPU register file.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Both HVF (macOS) and WHPX (Windows Hyper-V) use the same pattern:
+  1. cpu_synchronize_state() to flush hypervisor registers
+  2. Fetch 4-byte instruction at env->pc
+  3. arm_emul_insn(env, insn)
+  4. On success, advance PC past the emulated instruction
+
+If the instruction is unhandled or a memory error occurs, a synchronous
+external abort is injected into the guest via syn_data_abort_no_iss()
+with fnv=1 and fsc=0x10, matching the syndrome that KVM uses in
+kvm_inject_arm_sea().  The guest kernel's fault handler then reports
+the error through its normal data abort path.
+
+WHPX adds a whpx_inject_data_abort() helper and adjusts the
+whpx_handle_mmio() return convention so the caller skips PC advancement
+when an exception has been injected.
+
+Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 ---
- hw/display/apple-gfx-mmio.m | 58 ++++++++++++++++++------
- hw/display/apple-gfx.h      | 16 +++++++
- hw/display/apple-gfx.m      | 90 ++++++++++++++++++++++++++++++++-----
- 3 files changed, 138 insertions(+), 26 deletions(-)
+ target/arm/hvf/hvf.c       | 46 ++++++++++++++++++++++++++--
+ target/arm/whpx/whpx-all.c | 61 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 103 insertions(+), 4 deletions(-)
 
-diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-index 58beaadd1f..19e2d38a1e 100644
---- a/hw/display/apple-gfx-mmio.m
-+++ b/hw/display/apple-gfx-mmio.m
-@@ -19,6 +19,7 @@
- #include "hw/core/irq.h"
- #include "apple-gfx.h"
- #include "trace.h"
-+#include "system/address-spaces.h"
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index b00a7e1a84..a087e920e9 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -34,6 +34,7 @@
+ #include "arm-powerctl.h"
+ #include "target/arm/cpu.h"
+ #include "target/arm/internals.h"
++#include "emulate/arm_emulate.h"
+ #include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
+ #include "target/arm/trace.h"
+@@ -2441,10 +2442,49 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+         assert(!s1ptw);
  
- #import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
- 
-@@ -36,12 +37,19 @@ typedef bool(^IOSFCMapMemory)(uint64_t phys, uint64_t len, bool ro, void **va,
- 
- @interface PGDeviceDescriptor (IOSurfaceMapper)
- @property (readwrite, nonatomic) bool usingIOSurfaceMapper;
-+@property (readwrite, nonatomic) bool enableArgumentBuffers;
-+@property (readwrite, nonatomic) bool enableProcessIsolation;
-+@property (readwrite, nonatomic) bool enableProtectedContent;
+         /*
+-         * TODO: ISV will be 0 for SIMD or SVE accesses.
+-         * Inject the exception into the guest.
++         * ISV=0: syndrome doesn't carry access size/register info.
++         * Fetch and emulate via target/arm/emulate/.
+          */
+-        assert(isv);
++        if (!isv) {
++            ARMCPU *arm_cpu = ARM_CPU(cpu);
++            CPUARMState *env = &arm_cpu->env;
++            uint32_t insn;
++            ArmEmulResult r;
 +
-+@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
- @end
- 
- @interface PGIOSurfaceHostDeviceDescriptor : NSObject
- -(PGIOSurfaceHostDeviceDescriptor *)init;
- @property (readwrite, nonatomic, copy, nullable) IOSFCMapMemory mapMemory;
- @property (readwrite, nonatomic, copy, nullable) IOSFCUnmapMemory unmapMemory;
-+@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
-+@property (readwrite, nonatomic) unsigned long long mmioLength;
- @property (readwrite, nonatomic, copy, nullable) IOSFCRaiseInterrupt raiseInterrupt;
- @end
- 
-@@ -183,19 +191,32 @@ static bool apple_gfx_mmio_unmap_surface_memory(void *ptr)
-         [PGIOSurfaceHostDeviceDescriptor new];
-     PGIOSurfaceHostDevice *iosfc_host_dev;
- 
--    iosfc_desc.mapMemory =
--        ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
--            *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
--
--            trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
--
--            return *va != NULL;
--        };
--
--    iosfc_desc.unmapMemory =
--        ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
--            return apple_gfx_mmio_unmap_surface_memory(va);
--        };
-+    /*
-+     * The legacy memory management API is no longer present
-+     * for the IOSurface mapper as of macOS 15.4.
-+     */
-+    if (@available(macOS 15.4, *)) {
-+        PGMemoryMapDescriptor *memory_map_descriptor = [PGMemoryMapDescriptor new];
-+        FlatView* fv = address_space_to_flatview(&address_space_memory);
-+        flatview_for_each_range(fv, apple_gfx_register_memory_cb, memory_map_descriptor);
-+        /* the device model defines this as a single-page MMIO region, hence 16KB */
-+        iosfc_desc.mmioLength = 0x10000;
-+        iosfc_desc.memoryMapDescriptor = memory_map_descriptor;
-+    } else {
-+        iosfc_desc.mapMemory =
-+            ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
-+                *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
++            cpu_synchronize_state(cpu);
 +
-+                trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
++            if (cpu_memory_rw_debug(cpu, env->pc,
++                                    (uint8_t *)&insn, 4, false) != 0) {
++                bool same_el = arm_current_el(env) == 1;
++                uint32_t esr = syn_data_abort_no_iss(same_el,
++                    1, 0, 0, 0, iswrite, 0x10);
 +
-+                return *va != NULL;
-+            };
++                error_report("HVF: cannot read insn at pc=0x%" PRIx64,
++                             (uint64_t)env->pc);
++                env->exception.vaddress = excp->virtual_address;
++                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
++                break;
++            }
 +
-+        iosfc_desc.unmapMemory =
-+            ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
-+                return apple_gfx_mmio_unmap_surface_memory(va);
-+            };
-+    }
- 
-     iosfc_desc.raiseInterrupt = ^bool(uint32_t vector) {
-         trace_apple_gfx_iosfc_raise_irq(vector);
-@@ -223,13 +244,22 @@ static void apple_gfx_mmio_realize(DeviceState *dev, Error **errp)
-         };
- 
-         desc.usingIOSurfaceMapper = true;
--        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
-+        /* 
-+         * Process isolation needs PGMemoryMapDescriptor instead of
-+         * the legacy memory management interface present in releases
-+         * older than macOS 15.4.
-+         */
-+        if (@available(macOS 15.4, *)) {
-+            desc.enableProcessIsolation = true;
++            r = arm_emul_insn(env, insn);
++            if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
++                bool same_el = arm_current_el(env) == 1;
++                uint32_t esr = syn_data_abort_no_iss(same_el,
++                    1, 0, 0, 0, iswrite, 0x10);
++
++                error_report("HVF: ISV=0 %s insn 0x%08x at "
++                             "pc=0x%" PRIx64 ", injecting data abort",
++                             r == ARM_EMUL_UNHANDLED ? "unhandled"
++                                                     : "memory error",
++                             insn, (uint64_t)env->pc);
++                env->exception.vaddress = excp->virtual_address;
++                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
++                break;
++            }
++
++            advance_pc = true;
++            break;
 +        }
  
-         if (!apple_gfx_common_realize(&s->common, dev, desc, errp)) {
-             [s->pgiosfc release];
-             s->pgiosfc = nil;
-         }
+         /*
+          * Emulate MMIO.
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index d106400686..c916df35a7 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -29,6 +29,7 @@
+ #include "syndrome.h"
+ #include "target/arm/cpregs.h"
+ #include "internals.h"
++#include "emulate/arm_emulate.h"
  
-+        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
-+
-         [desc release];
-         desc = nil;
-     }
-diff --git a/hw/display/apple-gfx.h b/hw/display/apple-gfx.h
-index 3197bd853d..384aee0c5f 100644
---- a/hw/display/apple-gfx.h
-+++ b/hw/display/apple-gfx.h
-@@ -12,6 +12,7 @@
- #include "system/memory.h"
- #include "hw/core/qdev-properties.h"
- #include "ui/surface.h"
-+#include "objc/NSObject.h"
+ #include "system/whpx-internal.h"
+ #include "system/whpx-accel-ops.h"
+@@ -350,6 +351,27 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
+     whpx_set_reg(cpu, reg, reg_val);
+ }
  
- #define TYPE_APPLE_GFX_MMIO         "apple-gfx-mmio"
- #define TYPE_APPLE_GFX_PCI          "apple-gfx-pci"
-@@ -23,6 +24,17 @@
- @protocol MTLTexture;
- @protocol MTLCommandQueue;
- 
-+typedef struct PGGuestPhysicalRange_s
++/*
++ * Inject a synchronous external abort (data abort) into the guest.
++ * Used when ISV=0 instruction emulation fails.  Matches the syndrome
++ * that KVM uses in kvm_inject_arm_sea().
++ */
++static void whpx_inject_data_abort(CPUState *cpu, bool iswrite)
 +{
-+    uint64_t physicalAddress;
-+    uint64_t physicalLength;
-+    void *hostAddress;
-+} PGGuestPhysicalRange_t;
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    bool same_el = arm_current_el(env) == 1;
++    uint32_t esr = syn_data_abort_no_iss(same_el, 1, 0, 0, 0, iswrite, 0x10);
 +
-+@interface PGMemoryMapDescriptor : NSObject
-+-(void)addRange:(PGGuestPhysicalRange_t) range;
-+@end
++    cpu->exception_index = EXCP_DATA_ABORT;
++    env->exception.target_el = 1;
++    env->exception.syndrome = esr;
 +
- typedef QTAILQ_HEAD(, PGTask_s) PGTaskList;
- 
- typedef struct AppleGFXDisplayMode {
-@@ -68,6 +80,10 @@ void *apple_gfx_host_ptr_for_gpa_range(uint64_t guest_physical,
-                                        uint64_t length, bool read_only,
-                                        MemoryRegion **mapping_in_region);
- 
-+bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
-+                                  const MemoryRegion *mr,
-+                                  hwaddr offset_in_region, void *opaque);
-+
- extern const PropertyInfo qdev_prop_apple_gfx_display_mode;
- 
- #endif
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index be0061b9db..4ef8f6dbf3 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -21,6 +21,7 @@
- #include "system/address-spaces.h"
- #include "system/dma.h"
- #include "migration/blocker.h"
-+#include "system/memory.h"
- #include "ui/console.h"
- #include "apple-gfx.h"
- #include "trace.h"
-@@ -79,6 +80,7 @@ static dispatch_queue_t get_background_queue(void)
-     GPtrArray *mapped_regions;
- };
- 
-+API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0)) 
- static PGTask_t *apple_gfx_new_task(AppleGFXState *s, uint64_t len)
- {
-     mach_vm_address_t task_mem;
-@@ -102,6 +104,7 @@ static dispatch_queue_t get_background_queue(void)
-     return task;
- }
- 
-+API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
- static void apple_gfx_destroy_task(AppleGFXState *s, PGTask_t *task)
- {
-     GPtrArray *regions = task->mapped_regions;
-@@ -151,6 +154,7 @@ static void apple_gfx_destroy_task(AppleGFXState *s, PGTask_t *task)
-     return host_ptr;
- }
- 
-+API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
- static bool apple_gfx_task_map_memory(AppleGFXState *s, PGTask_t *task,
-                                       uint64_t virtual_offset,
-                                       PGPhysicalMemoryRange_t *ranges,
-@@ -207,6 +211,7 @@ static bool apple_gfx_task_map_memory(AppleGFXState *s, PGTask_t *task,
-     return success;
- }
- 
-+API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
- static void apple_gfx_task_unmap_memory(AppleGFXState *s, PGTask_t *task,
-                                         uint64_t virtual_offset, uint64_t length)
- {
-@@ -596,6 +601,36 @@ void apple_gfx_common_init(Object *obj, AppleGFXState *s, const char* obj_name)
-     /* TODO: PVG framework supports serialising device state: integrate it! */
- }
- 
-+@interface PGDeviceDescriptor (IOSurfaceMapper)
-+@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
-+@end
-+
-+bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
-+                                  const MemoryRegion *mr,
-+                                  hwaddr offset_in_region, void *opaque) {
-+    PGGuestPhysicalRange_t range;
-+    PGMemoryMapDescriptor *memory_map_descriptor = opaque;
-+    if (memory_access_is_direct(mr, true, MEMTXATTRS_UNSPECIFIED)) {
-+        range.physicalAddress = start;
-+        range.physicalLength = len;
-+        range.hostAddress = memory_region_get_ram_ptr(mr);
-+        [memory_map_descriptor addRange:range];
-+    }
-+    return false;
++    bql_lock();
++    arm_cpu_do_interrupt(cpu);
++    bql_unlock();
 +}
 +
-+static void apple_gfx_register_memory(AppleGFXState *s,
-+                                                     PGDeviceDescriptor *desc)
-+{
-+    PGMemoryMapDescriptor* memoryMapDescriptor = [PGMemoryMapDescriptor new];
-+
-+    FlatView* fv = address_space_to_flatview(&address_space_memory);
-+    flatview_for_each_range(fv, apple_gfx_register_memory_cb, memoryMapDescriptor);
-+
-+    desc.memoryMapDescriptor = memoryMapDescriptor;
-+}
-+
-+API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
- static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
-                                                      PGDeviceDescriptor *desc)
+ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
  {
-@@ -667,16 +702,25 @@ static void new_frame_handler_bh(void *opaque)
-         BQL_LOCK_GUARD();
-         set_mode(s, sizeInPixels.x, sizeInPixels.y);
-     };
--    disp_desc.cursorGlyphHandler = ^(NSBitmapImageRep *glyph,
--                                     PGDisplayCoord_t hotspot) {
--        AppleGFXSetCursorGlyphJob *job = g_malloc0(sizeof(*job));
--        job->s = s;
--        job->glyph = glyph;
--        job->hotspot = hotspot;
--        [glyph retain];
--        aio_bh_schedule_oneshot(qemu_get_aio_context(),
--                                set_cursor_glyph, job);
--    };
-+
-+    if (@available(macOS 27.0, *)) {
-+
-+    } else {
-+#ifndef __MAC_27_0
-+        disp_desc.cursorGlyphHandler = ^(NSBitmapImageRep *glyph,
-+                                         PGDisplayCoord_t hotspot) {
-+            AppleGFXSetCursorGlyphJob *job = g_malloc0(sizeof(*job));
-+            job->s = s;
-+            job->glyph = glyph;
-+            job->hotspot = hotspot;
-+            [glyph retain];
-+            aio_bh_schedule_oneshot(qemu_get_aio_context(),
-+                                    set_cursor_glyph, job);
-+        };
-+#else
-+        abort();
-+#endif
-+    }
-     disp_desc.cursorShowHandler = ^(BOOL show) {
-         trace_apple_gfx_cursor_show(show);
-         qatomic_set(&s->cursor_show, show);
-@@ -763,11 +807,33 @@ bool apple_gfx_common_realize(AppleGFXState *s, DeviceState *dev,
+     uint64_t syndrome = ctx->Syndrome;
+@@ -365,7 +387,40 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
  
-     desc.device = s->mtl;
- 
--    apple_gfx_register_task_mapping_handlers(s, desc);
-+    /* 
-+     * The legacy memory management interface doesn't allow for
-+     * vGPU sandboxing. As such, always use the new interface
-+     * on macOS 15.4 onwards. 
+     assert(syn_get_ec(syndrome) == EC_DATAABORT);
+     assert(!cm);
+-    assert(isv);
++
++    /*
++     * ISV=0: syndrome doesn't carry access size/register info.
++     * Fetch and decode the faulting instruction via the emulation library.
 +     */
-+    if (@available(macOS 15.4, *)) {
-+        apple_gfx_register_memory(s, desc);
-+    } else {
-+#ifndef __MAC_27_0
-+        apple_gfx_register_task_mapping_handlers(s, desc);
-+#else
-+        abort();
-+#endif
++    if (!isv) {
++        ARMCPU *arm_cpu = ARM_CPU(cpu);
++        CPUARMState *env = &arm_cpu->env;
++        uint32_t insn;
++        ArmEmulResult r;
++
++        cpu_synchronize_state(cpu);
++
++        if (cpu_memory_rw_debug(cpu, env->pc,
++                                (uint8_t *)&insn, 4, false) != 0) {
++            error_report("WHPX: cannot read insn at pc=0x%" PRIx64,
++                         (uint64_t)env->pc);
++            whpx_inject_data_abort(cpu, iswrite);
++            return 1;
++        }
++
++        r = arm_emul_insn(env, insn);
++        if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
++            error_report("WHPX: ISV=0 %s insn 0x%08x at "
++                         "pc=0x%" PRIx64 ", injecting data abort",
++                         r == ARM_EMUL_UNHANDLED ? "unhandled"
++                                                 : "memory error",
++                         insn, (uint64_t)env->pc);
++            whpx_inject_data_abort(cpu, iswrite);
++            return 1;
++        }
++
++        return 0;
 +    }
  
-     s->cursor_show = true;
+     if (iswrite) {
+         val = whpx_get_gp_reg(cpu, srt);
+@@ -451,6 +506,10 @@ int whpx_vcpu_run(CPUState *cpu)
+             }
  
--    s->pgdev = PGNewDeviceWithDescriptor(desc);
-+    if (@available(macOS 15.2, *)) {
-+        s->pgdev = PGCreateDeviceWithDescriptor(desc);
-+    }
-+    else {
-+#ifndef __MAC_27_0
-+        s->pgdev = PGNewDeviceWithDescriptor(desc);
-+#else
-+        abort();
-+#endif
-+    }
- 
-     disp_desc = apple_gfx_prepare_display_descriptor(s);
-     /*
+             ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
++            if (ret > 0) {
++                advance_pc = false;
++                ret = 0;
++            }
+             break;
+         case WHvRunVpExitReasonCanceled:
+             cpu->exception_index = EXCP_INTERRUPT;
 -- 
 2.54.0 (Apple Git-157)
 
