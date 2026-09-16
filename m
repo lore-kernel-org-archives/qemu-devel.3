@@ -4,158 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDBCC88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111CBC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 08:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6l0V-0004Jk-8a; Wed, 16 Sep 2026 04:28:43 -0400
+	id 1x6lLg-00071F-1v; Wed, 16 Sep 2026 04:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6l0U-0004JQ-1l
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:28:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x6l0R-00020V-2X
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:28:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789547317;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=y9aomF5UjsiAjOHszeiwlBzzH3cEWz7LBPwOfKjRpog=;
- b=C9meCd576YCHgapISNIrjOoAiTH1Ge3f3EBrpKM7fLPKDQgah9eMm4iV0rke4emqlPYQFL
- QwktmBCwTb816JfdR5uv+ZlzJ7tB1VazemoEL/VvsC+hKU8267GoZcbr2Dek0A3NPSZp+8
- XiIWFXbF7M2wTzMCWetyIeSoqsnKEMQ=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-37-ZIIBWWUbPR2YNwyfkTN9jA-1; Wed, 16 Sep 2026 04:28:34 -0400
-X-MC-Unique: ZIIBWWUbPR2YNwyfkTN9jA-1
-X-Mimecast-MFC-AGG-ID: ZIIBWWUbPR2YNwyfkTN9jA_1789547313
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-c293bac1764so375151366b.0
- for <qemu-devel@nongnu.org>; Wed, 16 Sep 2026 01:28:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789547313; x=1790152113; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=y9aomF5UjsiAjOHszeiwlBzzH3cEWz7LBPwOfKjRpog=;
- b=Mw0mwzAQ+ror1yTdU7vVhD0hI+YLez3Y4NiNpBtA616rkpV8m+srNBACYqxlzLj29u
- XqF4Jq9hf0YVHbDk4k6BB2d3Xwg8N/hQfMfiTRokXvgCzZuEWPwr8C/aSuDfHtADrYV1
- d8CBvNTMsKiBQyAprEh8/iDVLBDatBEp4iqBBA3GcStqeOkOIi/1nfuoJ98BfcS0IIoZ
- 3IB6jNdmToVEJRy2Ug9kZ/yXO3s+o6u4+AL+JiKDct3lWpAzOWcknOnWJqofynNi6DG9
- 9DwY4O52TQ6eSgmn5i+aouoUBmJfZE4qZ3jbXbYhxj5pCRqIP9F16xiWWTrgg8UtCiB9
- LJvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789547313; x=1790152113;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=y9aomF5UjsiAjOHszeiwlBzzH3cEWz7LBPwOfKjRpog=;
- b=d3frfEJF4hxUusi/zXWIdIxbP3/bfclX+GNL6lYGWihE5oVZA0BEHf0iSUGg5Zj4y6
- kxgCATYpAqSBvHf2IctMDUXLB1tsocoBzqwSgvf17hrkz96Hew4DEp7nIt844EkSwiiQ
- KHfq5ExWBOUbCkINb/felqm98UVR8LyTuR95yOgM6saI6YWt3QzQMdZNasL8zyisNpjs
- qHufa2CpTnJ5qLwbzW6L+ZCCCjRN+fLqbYakFXkD85VUXjNSUzfhWegsGABqe8wSb6TG
- gNirPgadC6UKzW3/5a1uxSerk+Cid0dNNsry2KELnvED4E/t5j5IFNS47BVfFEss3s9F
- PGxw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwnYXMIRaM/afqLxh0MWE73ofWa23p+fKUUHb8GRtlVQzfl7YyxqJy7+kq0TY/bfKQsLNLS9ttR1llT@nongnu.org
-X-Gm-Message-State: AFuF++nL+/uAy2QjZpQnMlOCtItUtgoGJp1cO9llSI5jIKq0JsDaujlR
- aHbOirW5BrXi8fXecqt45JHsqokr0O/HYVs/sREugfge7a9DN0OEfA6bHx5ZYGx/pcBleqDt41s
- +fAhWURjycqNeMJk/AOI/GOo9Ji2u7mCAmIf932coDGXHByAkyh93O9m3
-X-Gm-Gg: AYBFou2K8JCIHIb4slyRbiNwAndL9yvaGJ+FI1n7XQtSgvHg1D1J0cNK0F8uDtrZ5mn
- khmeiDp+4EtvHyFB04HzH4lQqmkv6XkzZMEukLcS09J5z6AkiSxxD3nnQudq33kiG8+vcigcDjS
- G35i3UVyyR/mMrVQfjRtmfL+7JKL/uJqcWWbukV467qRMFKTKGKbMnYE6yCMV+RL3bHf0s8mTKQ
- KXYhSvG3qcp+fnrsI8//GmXeG0JedFxk6y1QqnE/osAq6H4aQph+mPvPHu7KTjNoQ+dPbsTvMSg
- 5SmfHis4GF/SYHdimzZ5RN6cwkbOoT73pE2/wzDdFMroTztm/CwBtzbvK6oUJ3z0sOtWWVlLcRn
- AcorTH39qhlhINMTLsesUY8Rn3ya/7CnSUD54F8j2pw==
-X-Received: by 2002:a05:6402:52c4:b0:6a3:ff14:ebc9 with SMTP id
- 4fb4d7f45d1cf-6aa22402ed1mr2217886a12.11.1789547312679; 
- Wed, 16 Sep 2026 01:28:32 -0700 (PDT)
-X-Received: by 2002:a05:6402:52c4:b0:6a3:ff14:ebc9 with SMTP id
- 4fb4d7f45d1cf-6aa22402ed1mr2217841a12.11.1789547312158; 
- Wed, 16 Sep 2026 01:28:32 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
- ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aa1d2406d6sm1072896a12.12.2026.09.16.01.28.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Sep 2026 01:28:31 -0700 (PDT)
-Message-ID: <8a44f72e-2d00-4663-b348-8ca174ab276e@redhat.com>
-Date: Wed, 16 Sep 2026 10:28:30 +0200
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1x6lLe-000717-LA
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:50:34 -0400
+Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <prcups@krgm.moe>) id 1x6lLb-0004i4-Py
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 04:50:33 -0400
+Received: from yuno-loong.localnet (unknown [103.47.186.116])
+ by krgm.moe (Postfix) with ESMTPSA id 9CE2C7A11;
+ Wed, 16 Sep 2026 14:20:24 +0530 (IST)
+From: SignKirigami <prcups@krgm.moe>
+To: qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+Subject: Re: [PATCH v4 02/14] target/loongarch: Add LVZ CPU state definitions
+Date: Wed, 16 Sep 2026 16:50:21 +0800
+Message-ID: <xoCdfudmTUW6mj9tEmh4Cw@krgm.moe>
+In-Reply-To: <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
+References: <cover.1787739852.git.prcups@krgm.moe>
+ <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
+ <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/14] migration/cpr: forbid saving duplicate CprFds
- into hash table
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
-Cc: bchaney@akamai.com, mark.kanda@oracle.com, farosas@suse.de,
- den@openvz.org, sgarzare@redhat.com, philmd@oss.qualcomm.com,
- maciej.szmigiero@oracle.com, mst@redhat.com, dongli.zhang@oracle.com,
- peterx@redhat.com
-References: <20260915-up-vsock-vhost-v5-v6-0-4d31b2dc6afd@virtuozzo.com>
- <20260915-up-vsock-vhost-v5-v6-1-4d31b2dc6afd@virtuozzo.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260915-up-vsock-vhost-v5-v6-1-4d31b2dc6afd@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 2a14:640:1:12b5::1 (failed)
+Received-SPF: pass client-ip=2a14:640:1:12b5::1; envelope-from=prcups@krgm.moe;
+ helo=krgm.moe
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,379 +57,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/15/26 22:59, Andrey Drobyshev wrote:
-> In its current form, the mechanism for saving CPR FDs into hash table
-> has flaws.
-> 
-> The CPR fd hash table uses the same CprFd for both key and value, and
-> is created with a key destroy function.  Inserting a second element
-> with the same (name, id) key leads to a use after free.  According to
-> GLib docs [1], g_hash_table_insert() keeps the old key, replaces the
-> value with the new element, and destroys the new key.  Thus when
-> inserting 2 CprFd elements fd1 and fd2 with equal keys we get:
-> 
->    g_hash_table_insert(table, fd1, fd1);  /* table has fd1 -> fd1 */
->    g_hash_table_insert(table, fd2, fd2);  /* table has fd1 -> fd2, fd2 freed */
-> 
-> Any subsequent cpr_find_fd() for that key then returns freed memory.
-> 
-> This is reachable whenever two CPR-aware objects register fds under the
-> same name, and it happens long before an actual CPR, since cpr_save_fd()
-> is typically called from .realize(), i.e. at boot time.
-> 
-> Apart from the UAF itself, when the user decides to perform CPR migration,
-> on CPR target we'd get corrupted FD from the hash table and fail somewhere
-> in .realize() for affected devices.
-> 
-> As a solution, let's altogether prohibit adding CprFds with duplicate
-> keys.  Since FDs are being registered for a subsequent CPR right at the
-> startup in .realize(), that'll allow us to error out and exit QEMU (or
-> fail a device hotplug op) gracefully instead of delaying potential
-> problems for later.  To do so, let's make cpr_save_fd() return 'bool'
-> instead of 'void' and provide an 'errp' argument to it.  That way caller
-> becomes responsible for checking the return value and propagating the
-> error.
-> 
-> Also update all the callers to use the adjusted interface to keep things
-> compilable and bisectable.
-> 
-> [1] https://docs.gtk.org/glib/type_func.HashTable.insert.html
-> 
-> Fixes: a181df93bb3 ("migration/cpr: use hashtable for cpr fds")
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->   backends/hostmem-memfd.c   |  5 ++++-
->   backends/hostmem-shm.c     |  5 ++++-
->   backends/iommufd.c         |  4 +++-
->   hw/vfio/container-legacy.c | 17 +++++++++-----
->   hw/vfio/cpr-legacy.c       | 10 +++++----
->   hw/vfio/cpr.c              |  6 ++---
->   hw/vfio/pci.c              |  5 ++++-
->   include/hw/vfio/vfio-cpr.h |  6 ++---
->   include/migration/cpr.h    |  2 +-
->   migration/cpr.c            | 55 ++++++++++++++++++++++++++++++----------------
->   system/physmem.c           |  5 +++--
->   11 files changed, 78 insertions(+), 42 deletions(-)
-> 
-> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> index e21c5a3f2e2..a95a4368a9e 100644
-> --- a/backends/hostmem-memfd.c
-> +++ b/backends/hostmem-memfd.c
-> @@ -54,7 +54,10 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->       if (fd == -1) {
->           return false;
->       }
-> -    cpr_save_fd(name, 0, fd);
-> +    if (!cpr_save_fd(name, 0, fd, errp)) {
-> +        close(fd);
-> +        return false;
-> +    }
->   
->   have_fd:
->       backend->aligned = true;
-> diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
-> index 806e2670e03..2fa7b823a62 100644
-> --- a/backends/hostmem-shm.c
-> +++ b/backends/hostmem-shm.c
-> @@ -48,7 +48,10 @@ shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->       if (fd < 0) {
->           return false;
->       }
-> -    cpr_save_fd(backend_name, 0, fd);
-> +    if (!cpr_save_fd(backend_name, 0, fd, errp)) {
-> +        close(fd);
-> +        return false;
-> +    }
->   
->   have_fd:
->       /* Let's do the same as memory-backend-ram,share=on would do. */
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 15f2a513501..45fd2e44c7f 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -85,7 +85,9 @@ static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
->           if (cpr_is_incoming()) {
->               be->fd = cpr_find_fd(name, 0);
->           } else {
-> -            cpr_save_fd(name, 0, be->fd);
-> +            if (!cpr_save_fd(name, 0, be->fd, errp)) {
-> +                return;
-> +            }
->           }
->       } else if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
->           error_setg(errp, "/dev/iommu does not exist"
-> diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-> index 7ac7b372145..1d2c8356189 100644
-> --- a/hw/vfio/container-legacy.c
-> +++ b/hw/vfio/container-legacy.c
-> @@ -844,16 +844,21 @@ static void vfio_group_put(VFIOGroup *group)
->   static bool vfio_device_get(VFIOGroup *group, const char *name,
->                               VFIODevice *vbasedev, Error **errp)
->   {
-> +    ERRP_GUARD();
->       g_autofree struct vfio_device_info *info = NULL;
->       int fd;
->   
-> -    fd = vfio_cpr_group_get_device_fd(group->fd, name);
-> +    fd = vfio_cpr_group_get_device_fd(group->fd, name, errp);
->       if (fd < 0) {
-> -        error_setg_errno(errp, errno, "error getting device from group %d",
-> -                         group->groupid);
-> -        error_append_hint(errp,
-> -                      "Verify all devices in group %d are bound to vfio-<bus> "
-> -                      "or pci-stub and not already in use\n", group->groupid);
-> +        if (!*errp) {
-> +            error_setg_errno(errp, errno,
-> +                             "error getting device from group %d",
-> +                             group->groupid);
-> +            error_append_hint(errp,
-> +                              "Verify all devices in group %d are bound to "
-> +                              "vfio-<bus> or pci-stub and not already in use\n",
-> +                              group->groupid);
-> +        }
->           return false;
->       }
->   
-> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-> index 2d40d8baeaf..14a06a1fa59 100644
-> --- a/hw/vfio/cpr-legacy.c
-> +++ b/hw/vfio/cpr-legacy.c
-> @@ -254,15 +254,16 @@ bool vfio_cpr_ram_discard_replay_populated(VFIOContainer *bcontainer,
->                                                   &vrdl->listener) == 0;
->   }
->   
-> -int vfio_cpr_group_get_device_fd(int d, const char *name)
-> +int vfio_cpr_group_get_device_fd(int d, const char *name, Error **errp)
->   {
->       const int id = 0;
->       int fd = cpr_find_fd(name, id);
->   
->       if (fd < 0) {
->           fd = ioctl(d, VFIO_GROUP_GET_DEVICE_FD, name);
-> -        if (fd >= 0) {
-> -            cpr_save_fd(name, id, fd);
-> +        if (fd >= 0 && !cpr_save_fd(name, id, fd, errp)) {
-> +            close(fd);
-> +            fd = -1;
->           }
->       }
->       return fd;
-> @@ -291,6 +292,7 @@ bool vfio_cpr_container_match(VFIOLegacyContainer *container, VFIOGroup *group,
->        */
->       cpr_delete_fd("vfio_container_for_group", group->groupid);
->       close(fd);
-> -    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd);
-> +    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd,
-> +                &error_abort);
->       return true;
->   }
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index ffa4f8e099d..6e1659dcddc 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -32,11 +32,11 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
->   #define STRDUP_VECTOR_FD_NAME(vdev, name)   \
->       g_strdup_printf("%s_%s", (vdev)->vbasedev.name, (name))
->   
-> -void vfio_cpr_save_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr,
-> -                             int fd)
-> +bool vfio_cpr_save_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr,
-> +                             int fd, Error **errp)
->   {
->       g_autofree char *fdname = STRDUP_VECTOR_FD_NAME(vdev, name);
-> -    cpr_save_fd(fdname, nr, fd);
-> +    return cpr_save_fd(fdname, nr, fd, errp);
->   }
->   
->   int vfio_cpr_load_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr)
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 428ab2f0698..ad13f2306f1 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -76,7 +76,10 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
->       }
->   
->       fd = event_notifier_get_fd(e);
-> -    vfio_cpr_save_vector_fd(vdev, name, nr, fd);
-> +    if (!vfio_cpr_save_vector_fd(vdev, name, nr, fd, errp)) {
-> +        event_notifier_cleanup(e);
-> +        return false;
-> +    }
->       return true;
->   }
->   
-> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-> index ecabe0c747d..e57766e7e2b 100644
-> --- a/include/hw/vfio/vfio-cpr.h
-> +++ b/include/hw/vfio/vfio-cpr.h
-> @@ -60,7 +60,7 @@ void vfio_iommufd_cpr_register_device(struct VFIODevice *vbasedev);
->   void vfio_iommufd_cpr_unregister_device(struct VFIODevice *vbasedev);
->   void vfio_cpr_load_device(struct VFIODevice *vbasedev);
->   
-> -int vfio_cpr_group_get_device_fd(int d, const char *name);
-> +int vfio_cpr_group_get_device_fd(int d, const char *name, Error **errp);
->   
->   bool vfio_cpr_container_match(struct VFIOLegacyContainer *container,
->                                 struct VFIOGroup *group, int fd);
-> @@ -71,8 +71,8 @@ void vfio_cpr_giommu_remap(struct VFIOContainer *bcontainer,
->   bool vfio_cpr_ram_discard_replay_populated(
->       struct VFIOContainer *bcontainer, const MemoryRegionSection *section);
->   
-> -void vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
-> -                             int nr, int fd);
-> +bool vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
-> +                             int nr, int fd, Error **errp);
->   int vfio_cpr_load_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
->                               int nr);
->   void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index 56fb67e6b4d..3ad084d5bab 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -28,7 +28,7 @@ typedef struct CprState {
->   
->   extern CprState cpr_state;
->   
-> -void cpr_save_fd(const char *name, int id, int fd);
-> +bool cpr_save_fd(const char *name, int id, int fd, Error **errp);
->   void cpr_delete_fd(const char *name, int id);
->   int cpr_find_fd(const char *name, int id);
->   void cpr_resave_fd(const char *name, int id, int fd);
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index bca43e9bf35..aeb9ad12392 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -82,10 +82,27 @@ static GHashTable *get_cpr_fds_hash(void)
->       return cpr_fds_hash;
->   }
->   
-> +static CprFd *find_fd(const char *name, int id)
-> +{
-> +    CprFd key = {
-> +        .name = (char *)name,
-> +        .id = id,
-> +    };
-> +
-> +    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
-> +}
-> +
->   static void cpr_fd_hash_insert(CprFd *elem)
->   {
-> -    /* Use the same CprFd as key and value. */
-> -    g_hash_table_insert(get_cpr_fds_hash(), elem, elem);
-> +    GHashTable *hash = get_cpr_fds_hash();
-> +
-> +    /*
-> +     * The same CprFd is used as key and value, and the table owns the key.
-> +     * Inserting a duplicate would destroy the new element while keeping it
-> +     * as the value, so a duplicate key is a bug in the caller.
-> +     */
-> +    g_assert(!g_hash_table_contains(hash, elem));
-> +    g_hash_table_insert(hash, elem, elem);
->   }
->   
->   static int cpr_fd_pre_save(void *opaque)
-> @@ -127,26 +144,24 @@ static int cpr_fd_post_load(void *opaque, int version_id)
->       return 0;
->   }
->   
-> -void cpr_save_fd(const char *name, int id, int fd)
-> +bool cpr_save_fd(const char *name, int id, int fd, Error **errp)
->   {
-> -    CprFd *elem = g_new0(CprFd, 1);
-> +    CprFd *elem;
->   
-> +    if (find_fd(name, id)) {
-> +        error_setg(errp, "cpr fd '%s' id %d is already registered", name, id);
-> +        return false;
-> +    }
-> +
-> +    elem = g_new0(CprFd, 1);
->       trace_cpr_save_fd(name, id, fd);
->       elem->name = g_strdup(name);
->       elem->namelen = strlen(name) + 1;
->       elem->id = id;
->       elem->fd = fd;
->       cpr_fd_hash_insert(elem);
-> -}
-> -
-> -static CprFd *find_fd(const char *name, int id)
-> -{
-> -    CprFd key = {
-> -        .name = (char *)name,
-> -        .id = id,
-> -    };
->   
-> -    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
-> +    return true;
->   }
->   
->   void cpr_delete_fd(const char *name, int id)
-> @@ -176,7 +191,7 @@ void cpr_resave_fd(const char *name, int id, int fd)
->       int old_fd = elem ? elem->fd : -1;
->   
->       if (old_fd < 0) {
-> -        cpr_save_fd(name, id, fd);
-> +        cpr_save_fd(name, id, fd, &error_abort);
->       } else if (old_fd != fd) {
->           error_report("internal error: cpr fd '%s' id %d value %d "
->                        "already saved with a different value %d",
-> @@ -192,8 +207,9 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
->   
->       if (fd < 0) {
->           fd = qemu_open(path, flags, errp);
-> -        if (fd >= 0) {
-> -            cpr_save_fd(name, id, fd);
-> +        if (fd >= 0 && !cpr_save_fd(name, id, fd, errp)) {
-> +            close(fd);
-> +            fd = -1;
->           }
->       }
->       return fd;
-> @@ -400,10 +416,11 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
->           }
->       } else {
->           fd = monitor_fd_param(monitor_cur(), fdname, errp);
-> -        if (fd >= 0) {
-> -            cpr_save_fd(name, index, fd);
-> -        } else {
-> +        if (fd < 0) {
->               error_prepend(errp, "Could not parse object fd %s:", fdname);
-> +        } else if (!cpr_save_fd(name, index, fd, errp)) {
-> +            close(fd);
-> +            fd = -1;
->           }
->       }
->       return fd;
-> diff --git a/system/physmem.c b/system/physmem.c
-> index a4a6a4710c6..e94fe5d4a4a 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2445,8 +2445,9 @@ static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
->           fd = qemu_shm_alloc(0, errp);
->       }
->   
-> -    if (fd >= 0) {
-> -        cpr_save_fd(name, 0, fd);
-> +    if (fd >= 0 && !cpr_save_fd(name, 0, fd, errp)) {
-> +        close(fd);
-> +        fd = -1;
-
-May be return -1 directly ?
-
->       }
->       *reused = false;
->       return fd;
-> 
+On 2026=E5=B9=B48=E6=9C=8831=E6=97=A5=E6=98=9F=E6=9C=9F=E4=B8=80 =E4=B8=AD=
+=E5=9B=BD=E6=A0=87=E5=87=86=E6=97=B6=E9=97=B4 10:56:26=EF=BC=8CBibo Mao wro=
+te=EF=BC=9A
+>=20
+> On 2026/8/26 =E4=B8=8B=E5=8D=886:30, SignKirigami wrote:
+> > Add host and guest system-state banks, LVZ exception and MMU indices,
+> > CPU and translation state, and helpers for selecting a VM-level CSR ban=
+k.
+> >=20
+> > Read host ERA and BADV explicitly when generating ELF core notes so the
+> > result does not depend on the currently selected guest state.
+> >=20
+> > Signed-off-by: SignKirigami <prcups@krgm.moe>
+> > Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> > ---
+> >   target/loongarch/arch_dump.c |  6 ++--
+> >   target/loongarch/cpu.c       |  4 +--
+> >   target/loongarch/cpu.h       | 64 ++++++++++++++++++++++++++++++++++--
+> >   target/loongarch/translate.h |  2 ++
+> >   4 files changed, 68 insertions(+), 8 deletions(-)
+> >=20
+> > diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
+> > index 9d84faef96..711b23257b 100644
+> > --- a/target/loongarch/arch_dump.c
+> > +++ b/target/loongarch/arch_dump.c
+> > @@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFun=
+ction f, CPUState *cs,
+> >   {
+> >       struct loongarch_note note;
+> >       CPULoongArchState *env =3D &LOONGARCH_CPU(cs)->env;
+> > -    CPUSysState *sys =3D env_sys(env);
+> > +    CPUSysState *host =3D get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+> >       int ret, i;
+> yes, it need similar modification with loongarch_cpu_write_elf64_note().
+> can we keep local variable sys unchanged so that the change is smaller?
+I think it may be more clear if using host for host mode, guest for guest m=
+ode, and sys
+for current mode in use.
+Regards
+SignKirigami
+>=20
+> BTW I do not know which name is better between LOONGARCH_VM_LEVEL_HOST=20
+> and LOONGARCH_VM_LEVEL0. Such as in KVM mode, it is to dump CSR=20
+> resisters of guest VM; however in TCG mode, it is for host.
+> >  =20
+> >       loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
+> > @@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFun=
+ction f, CPUState *cs,
+> >       for (i =3D 0; i < 32; ++i) {
+> >           note.prstatus.pr_reg.gpr[i] =3D cpu_to_dump64(s, env->gpr[i]);
+> >       }
+> > -    note.prstatus.pr_reg.csr_era  =3D cpu_to_dump64(s, sys->CSR_ERA);
+> > -    note.prstatus.pr_reg.csr_badv =3D cpu_to_dump64(s, sys->CSR_BADV);
+> > +    note.prstatus.pr_reg.csr_era  =3D cpu_to_dump64(s, host->CSR_ERA);
+> > +    note.prstatus.pr_reg.csr_badv =3D cpu_to_dump64(s, host->CSR_BADV);
+> >       ret =3D f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
+> >       if (ret < 0) {
+> >           return -1;
+> > diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> > index fb03424ffa..2f7692dc93 100644
+> > --- a/target/loongarch/cpu.c
+> > +++ b/target/loongarch/cpu.c
+> > @@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
+> >       uint32_t data =3D 0, field;
+> >       int i;
+> >  =20
+> > -    set_sys_state(env, &env->sys_states[0]);
+> > +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
+> >       for (i =3D 0; i < 21; i++) {
+> >           env->cpucfg[i] =3D 0x0;
+> >       }
+> > @@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
+> >       uint32_t data =3D 0;
+> >       int i;
+> >  =20
+> > -    set_sys_state(env, &env->sys_states[0]);
+> > +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
+> >       for (i =3D 0; i < 21; i++) {
+> >           env->cpucfg[i] =3D 0x0;
+> >       }
+> I still think that it need split to smaller version, such as
+>    1. get_sys()/set_sys() and its user.
+>    2. mmu_idx change for new added LVZ
+>    3. others
+>=20
+> > diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> > index ad30c73167..be982b7695 100644
+> > --- a/target/loongarch/cpu.h
+> > +++ b/target/loongarch/cpu.h
+> > @@ -20,6 +20,8 @@
+> >   #include "cpu-csr.h"
+> >   #include "cpu-qom.h"
+> >  =20
+> > +#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
+> > +
+> >   #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+> >   #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+> >   #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
+> > @@ -93,6 +95,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
+> >   #define  EXCCODE_WPEM                EXCODE(19, 1)
+> >   #define  EXCCODE_BTD                 EXCODE(20, 0)
+> >   #define  EXCCODE_BTE                 EXCODE(21, 0)
+> > +#define  EXCCODE_GSPR                EXCODE(22, 0)
+> > +#define  EXCCODE_HVC                 EXCODE(23, 0)
+> > +#define  EXCCODE_GCSC                EXCODE(24, 0)
+> > +#define  EXCCODE_GCHC                EXCODE(25, 0)
+> The exception for LVZ is added however not used, it had better be added=20
+> in patch where it is actually used.
+> >   #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcod=
+e used for debug */
+> >  =20
+> >   /* cpucfg[0] bits */
+> > @@ -255,6 +261,7 @@ FIELD(TLB_MISC, E, 0, 1)
+> >   FIELD(TLB_MISC, ASID, 1, 10)
+> >   FIELD(TLB_MISC, VPPN, 13, 35)
+> >   FIELD(TLB_MISC, PS, 48, 6)
+> > +FIELD(TLB_MISC, GID, 54, 8)
+> >  =20
+> >   /*Msg interrupt registers */
+> >   #define N_MSGIS                4
+> > @@ -314,6 +321,10 @@ typedef struct  LoongArchBT {
+> >       uint32_t ftop;
+> >   } lbt_t;
+> >  =20
+> > +#define LOONGARCH_VM_LEVEL_HOST      0
+> > +#define LOONGARCH_VM_LEVEL_GUEST     1
+> > +#define LOONGARCH_VM_LEVELS          2
+> > +
+> >   #define CPU_VENDOR_LOONGSON   "Loongson"
+> >   #define CPU_MODEL_3A5000      "3A5000"
+> >   #define CPU_MODEL_1C101       "1C101"
+> > @@ -375,10 +386,18 @@ typedef struct CPUSysState {
+> >       uint64_t CSR_DBG;
+> >       uint64_t CSR_DERA;
+> >       uint64_t CSR_DSAVE;
+> > +    uint64_t CSR_GSTAT;
+> > +    uint64_t CSR_GCFG;
+> > +    uint64_t CSR_GINTC;
+> > +    uint64_t CSR_GCNTC;
+> > +    uint64_t CSR_GTLBC;
+> I think this patch can move to patch 1.
+>=20
+> >       /* Msg interrupt registers */
+> >       uint64_t CSR_MSGIS[N_MSGIS];
+> >       uint64_t CSR_MSGIR;
+> >       uint64_t CSR_MSGIE;
+> > +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> > +    LoongArchTLB tlb[LOONGARCH_TLB_MAX];
+> > +#endif
+> It can be deleted in this patch.
+>=20
+> >   } CPUSysState;
+> >  =20
+> >   typedef struct CPUArchState {
+> > @@ -394,7 +413,7 @@ typedef struct CPUArchState {
+> >       uint32_t pv_features;
+> >       uint64_t vendor_id;
+> >       uint64_t cpu_id;
+> > -    CPUSysState sys_states[1];
+> > +    CPUSysState sys_states[LOONGARCH_VM_LEVELS];
+> >  =20
+> >       struct {
+> >           uint64_t guest_addr;
+> > @@ -419,6 +438,7 @@ typedef struct CPUArchState {
+> >       uint32_t mp_state;
+> >   #endif
+> >       CPUSysState *sys_state;
+> > +    bool vm_exit;
+> >   } CPULoongArchState;
+> >  =20
+> >   typedef struct LoongArchCPUTopo {
+> > @@ -438,8 +458,10 @@ struct ArchCPU {
+> >  =20
+> >       CPULoongArchState env;
+> >       QEMUTimer timer;
+> > +    QEMUTimer guest_timer;
+> >       uint32_t  phy_id;
+> >       OnOffAuto lbt;
+> > +    OnOffAuto lvz;
+> >       OnOffAuto pmu;
+> >       OnOffAuto ptw;
+> >       OnOffAuto lsx;
+> > @@ -484,15 +506,44 @@ struct LoongArchCPUClass {
+> >   #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
+> >   #define MMU_USER_IDX     MMU_PLV_USER
+> >   #define MMU_DA_IDX       4
+> > +#define MMU_GUEST_IDX    5
+> > +#define MMU_GUEST_DA_IDX 9
+> > +
+> > +static inline bool is_guest_mmu_idx(int mmu_idx)
+> > +{
+> > +    return mmu_idx >=3D MMU_GUEST_IDX;
+> > +}
+> > +
+> > +static inline int mmu_idx_to_plv(int mmu_idx)
+> > +{
+> > +    if (mmu_idx =3D=3D MMU_DA_IDX || mmu_idx =3D=3D MMU_GUEST_DA_IDX) {
+> > +        return 0;
+> > +    }
+> > +    if (is_guest_mmu_idx(mmu_idx)) {
+> > +        return mmu_idx - MMU_GUEST_IDX;
+> > +    }
+> > +    return mmu_idx;
+> > +}
+> >  =20
+> >   static inline CPUSysState *env_sys(CPULoongArchState *env)
+> >   {
+> >       return env->sys_state;
+> >   }
+> >  =20
+> > -static inline void set_sys_state(CPULoongArchState *env, CPUSysState *=
+sys)
+> > +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_leve=
+l)
+> > +{
+> > +    return &env->sys_states[vm_level];
+> > +}
+> > +
+> > +static inline void set_sys(CPULoongArchState *env, int vm_level)
+> >   {
+> > -    env->sys_state =3D sys;
+> > +    env->sys_state =3D get_sys(env, vm_level);
+> > +}
+> > +
+> > +static inline int env_vm_level(CPULoongArchState *env)
+> > +{
+> > +    return env_sys(env) =3D=3D get_sys(env, LOONGARCH_VM_LEVEL_GUEST) ?
+> > +           LOONGARCH_VM_LEVEL_GUEST : LOONGARCH_VM_LEVEL_HOST;
+> >   }
+> >  =20
+> >   static inline bool is_la64(CPULoongArchState *env)
+> > @@ -530,6 +581,13 @@ static inline void set_pc(CPULoongArchState *env, =
+uint64_t value)
+> >   #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
+> >   #define HW_FLAGS_VA32       0x20
+> >   #define HW_FLAGS_EUEN_ASXE  0x40
+> > +#define HW_FLAGS_GUEST_MODE 0x80
+> > +
+> > +bool has_lvz_capability(CPULoongArchState *env);
+> > +bool will_return_to_guest(CPULoongArchState *env);
+> > +uint8_t get_gid(CPULoongArchState *env);
+> > +uint8_t get_tgid(CPULoongArchState *env);
+> > +void trigger_vm_exit(CPULoongArchState *env);
+> There is only function declaration, no function implementation and=20
+> called. I think it can be removed in this patch.
+>=20
+> In general it requires that every single patch can pass to compile and wo=
+rk.
+>=20
+> Regards
+> Bibo Mao
+> >  =20
+> >   #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
+> >  =20
+> > diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+> > index 8aa8325dc6..257c3bbddd 100644
+> > --- a/target/loongarch/translate.h
+> > +++ b/target/loongarch/translate.h
+> > @@ -24,6 +24,7 @@
+> >   #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
+> >   #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
+> >   #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
+> > +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
+> >   #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
+> >   #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
+> >   #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
+> > @@ -66,6 +67,7 @@ typedef struct DisasContext {
+> >       TCGv zero;
+> >       bool la64; /* LoongArch64 mode */
+> >       bool va32; /* 32-bit virtual address */
+> > +    bool guest_mode;
+> >       uint32_t cpucfg1;
+> >       uint32_t cpucfg2;
+> >       uint32_t cpucfg3;
+> >=20
+>=20
+>=20
 
 
-Anyhow,
 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
 
 
