@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8D0C88E77
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A9AC88E77
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Sep 2026 07:50:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x6kMc-0002oG-Mg; Wed, 16 Sep 2026 03:47:30 -0400
+	id 1x6kMe-0002th-7n; Wed, 16 Sep 2026 03:47:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMa-0002eq-QP; Wed, 16 Sep 2026 03:47:28 -0400
+ id 1x6kMZ-0002Yr-Pw; Wed, 16 Sep 2026 03:47:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x6kMY-0005Pq-UH; Wed, 16 Sep 2026 03:47:28 -0400
+ id 1x6kMX-0005Os-WD; Wed, 16 Sep 2026 03:47:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789544619; bh=fGIfOHo4G3xiBmArlwd/EnZidqgBSF17YDxjakE2cNI=;
+ t=1789544619; bh=dqYtT2IAPAYcJUav5EC8iwsqGWDCxqOhCO0lF2sDFQc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=d2F7z5zFbjFV0AvB93nOjC9KveMPKYvvF2D7GAlttzgeQQI6QIzLD0+oklTzfkRDF
- k2IUdRxmutIxzU82G74v2LDK5mitIHPLl4CneWfXDl5yESfJp7m/HgCCVxooTlJNch
- l4H9I40K723SqLd115hTv8uEI43ZG895B1IqHlLUK2QtrzjFW9zO/z8wOMvlzsQCgA
- /AI4PUScMTo86IzxRPfov6uXPlBEYh6csMVSVeBX+6/M/a0VwfKv5XOdUAJlc+tWpF
- Fni1MTC7OV9KzgxTvQv7YLPRPP42akDG6/NCvXTbrpFfyMJgRZEqTzZ6O4B5lpPqw0
- l467cHFn0QCtg==
+ b=B7mKq6aLnSM3+ZLT8pR9tdEnTiPh7SOO9v2Z5AFLJDyEEo5PxrzIDpXg2eYXGxD7p
+ +EwovIzCqGfi1au2xDgTqxlMPhDLTY4Ke7px2uZ6ymCoHoyPcTqwBkSe0PHNngB0c3
+ aNUfJ+xw59atv4GHfhvVBitWRJTipT6NfsLWkQmj36ItzWKefLNgkY6+NpN+IML/oo
+ JDuM5ViO6IctPgIB5f2E6j9P+0r2q93aTOi8vGRG9Jo7/6eKV/dubPCighG1I6Tbax
+ ZBU8uePSqQtrU2ZpPYosCbeODSE+HKvpEbU3TFU/+YAU1/J/dTlqOhr0vdP9AQYI8N
+ D7cbdI1qaGiBQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2EF351D55BC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 272EE1D55BB;
  Wed, 16 Sep 2026 10:43:39 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2974429B75;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB04C429B74;
  Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5BF595A71D; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
+ id 58D0C5A71B; Wed, 16 Sep 2026 10:44:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 46/49] ui/cursor: make the cursor refcount atomic
-Date: Wed, 16 Sep 2026 10:43:04 +0300
-Message-ID: <20260916074346.671467-46-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 45/49] hw/display/qxl: hold ssd.lock while replacing
+ ssd.cursor
+Date: Wed, 16 Sep 2026 10:43:03 +0300
+Message-ID: <20260916074346.671467-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260916104135@cover.tls.msk.ru>
@@ -74,103 +75,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-A QEMUCursor outlives the call that publishes it and is shared between
-threads, but its refcount was a plain int with no single lock covering
-every user. qemu_console_set_cursor() takes and drops references from
-the main loop under the BQL alone, hw/display/qxl-render.c does so from
-the SPICE display worker thread, and ui/spice-display.c does so under
-SimpleSpiceDisplay::lock. ui/cocoa.m and ui/dbus-listener.c add two more
-threads.
+qxl_spice_reset_cursor() unrefs qxl->ssd.cursor and installs the hidden
+cursor without holding qxl->ssd.lock. Every other writer of that field
+takes it: qxl_render_cursor(), display_mouse_define() and
+qemu_spice_cursor_refresh_bh().
 
-The pair that collides is qemu_spice_cursor_refresh_bh(), which drops
-ssd->lock before calling qemu_console_set_cursor(), and the worker
-refcounting the same cursor under that lock. A lost increment frees the
-cursor while the console still points at it, so the console's next unref
-decrements memory the allocator has already handed out again. Locking
-ssd.cursor is not enough on its own: with that done, this is the race
-that remains.
+The unlocked path runs on a vCPU thread, reached from ioport_write() on
+QXL_IO_DESTROY_PRIMARY and QXL_IO_DESTROY_PRIMARY_ASYNC, and holds only
+the BQL, which the SPICE display worker never takes. Unlike
+qxl_hard_reset(), it leaves that worker running.
+spice_qxl_reset_cursor() does round trip through the dispatcher, but the
+worker is free again as soon as it returns, so it can enter
+qxl_render_cursor() and unref the same QEMUCursor a few instructions
+later. Both threads then drop one reference for what is a single
+reference, freeing a cursor that another user still holds. The store to
+ssd.cursor races the same way, and a guest that keeps this up also ends
+up waiting forever in qxl_fence_wait().
 
-Assert on the value the decrement observed while here. Dropping a
-reference that was never taken used to be silent, because the decrement
-lands in the allocator metadata of the freed chunk: nothing is logged,
-the object is not freed twice, and the process runs on until some later
-allocation walks the damaged free list and faults, arbitrarily far from
-the code that caused it.
+A guest reaches this by switching QXL mode while it also updates the
+pointer shape.
 
-Fixes: 0b2824e5e48a ("spice: use bottom half instead of refresh timer for cursor updates")
+Fixes: 958c2bceba06 ("qxl: fix cursor reset")
 Cc: qemu-stable@nongnu.org
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260903192647.2677279-3-den@openvz.org>
-(cherry picked from commit 1063bbb711856353625d78a9c498988470e91b22)
+Message-ID: <20260903192647.2677279-2-den@openvz.org>
+(cherry picked from commit 2c43897356ac10dcce76a0287de8f9561c84fe82)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 46b31281850..4ebd28f6af1 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -164,6 +164,15 @@ typedef struct QEMUCursor {
- } QEMUCursor;
- 
- QEMUCursor *cursor_alloc(uint16_t width, uint16_t height);
-+
-+/*
-+ * A cursor may be shared between the main loop, a vCPU thread and a
-+ * display backend's own thread, so the refcount is atomic and these two
-+ * may be called from any of them.  The object itself is not otherwise
-+ * thread-safe: take a reference before publishing the pointer anywhere
-+ * another thread can reach it, and never dereference a cursor you do
-+ * not hold a reference to.
-+ */
- QEMUCursor *cursor_ref(QEMUCursor *c);
- void cursor_unref(QEMUCursor *c);
- QEMUCursor *cursor_builtin_hidden(void);
-diff --git a/ui/cursor.c b/ui/cursor.c
-index 6e23244fbe6..69d27d49a13 100644
---- a/ui/cursor.c
-+++ b/ui/cursor.c
-@@ -1,4 +1,5 @@
- #include "qemu/osdep.h"
-+#include "qemu/atomic.h"
- #include "ui/console.h"
- 
- #include "cursor_hidden.xpm"
-@@ -103,24 +104,28 @@ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height)
-     c = g_malloc0(sizeof(QEMUCursor) + datasize);
-     c->width  = width;
-     c->height = height;
--    c->refcount = 1;
-+    qatomic_set(&c->refcount, 1);
-     return c;
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 7d7961a150f..96fba65a92f 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -299,10 +299,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
+     qemu_mutex_lock(&qxl->track_lock);
+     qxl->guest_cursor = 0;
+     qemu_mutex_unlock(&qxl->track_lock);
++    qemu_mutex_lock(&qxl->ssd.lock);
+     if (qxl->ssd.cursor) {
+         cursor_unref(qxl->ssd.cursor);
+     }
+     qxl->ssd.cursor = cursor_builtin_hidden();
++    qemu_mutex_unlock(&qxl->ssd.lock);
  }
  
- QEMUCursor *cursor_ref(QEMUCursor *c)
- {
--    c->refcount++;
-+    qatomic_inc(&c->refcount);
-     return c;
- }
- 
- void cursor_unref(QEMUCursor *c)
- {
-+    int refcount;
-+
-     if (c == NULL)
-         return;
--    c->refcount--;
--    if (c->refcount)
--        return;
--    g_free(c);
-+
-+    refcount = qatomic_fetch_dec(&c->refcount);
-+    assert(refcount > 0);
-+    if (refcount == 1) {
-+        g_free(c);
-+    }
- }
- 
- int cursor_get_mono_bpl(QEMUCursor *c)
+ static uint32_t qxl_crc32(const uint8_t *p, unsigned len)
 -- 
 2.47.3
 
