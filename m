@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA083C982C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B15C982C1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x77S3-0001yw-2r; Thu, 17 Sep 2026 04:26:39 -0400
+	id 1x77S3-0001z1-3J; Thu, 17 Sep 2026 04:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x77Rt-0001y3-ID
+ id 1x77Rt-0001y4-In
  for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:26:29 -0400
 Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x77Rp-0002vg-Uh
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:26:28 -0400
+ id 1x77Rp-0002vp-MY
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:26:29 -0400
 Received: by mail-pj2-x0f.google.com with SMTP id
- d9443c01a7336-2db1ca069c8so5254225ad.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:26:23 -0700 (PDT)
+ d9443c01a7336-2dd88a115c1so5864285ad.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789633582; x=1790238382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789633583; x=1790238383; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rJDnLsnWHhzbZgpskXvFIj3BvWPVniv6p550VmuEYUQ=;
- b=W+lex79b0Lz7FEGjcHJ+wOKWN18XsOv0Dyc2DDQPtdgL+Ngs7oC/1LckzQthe5HbHC
- u3kEu9TIxCabVv4WAGMvHPz4fa/PNEC/VXYoXd1eFlRpPoYL/CtSBN6MJbT0t7GSjaMO
- uIood1jnQqmOMFgrMaYkf+PsotyYbQ7tOYgTTXje6vDnUI/N7OpOJJh4NrhFVfkZCd5P
- rphjhQYrJq5od7HwHAmOMVvNn+qLXSFnsRjjWFoPt3kPL6Dy/BaEIEQkV9b7fuRsf4/x
- 0KLPHz3PEmemJQAGZSgIPwoZidh++xCDokrcS6iYuesrhE3OJvRKjC8EvmG87+WgtUk+
- /XmA==
+ bh=gPX5EBK1/0IuVMAfMbD5bOc3n7+JoD6VEvdWx9oeki0=;
+ b=Ekirf1NKzzHbkJLXQ4km2ZzeyYGXWsfWws1QSX7kWNvjJ7/GLtpVVmRRNVXWT0O67v
+ 1nbFUbJlLpwmX0FbM9yk/YccnYXIvUytwgufKezuc3U3bdCRR178oKsaLljbK4SxJNr7
+ ApMmpX8ZGaV4n1uVJW+fIl59tjE8+mrieb3zeeJJI8ZOyydRgrMCDCwzk7ArGSZDnB3h
+ S4YvH7HURj2UBdd+YqgpQNn/haROlbBe9dy43kXwRB7fgW2+WxynBFIMeiPfjtHU1/IP
+ wAKQz3MfxUMzzVP/Vqmo7eoJM9ssI1wFwqapE7ArsUDaaa/1BWNLURTsxUezzgrQ/tfo
+ EObA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789633582; x=1790238382;
+ d=1e100.net; s=20260707; t=1789633583; x=1790238383;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=rJDnLsnWHhzbZgpskXvFIj3BvWPVniv6p550VmuEYUQ=;
- b=JcmMd7o31Qmg9QLe02jFDqYS686LL1h1H9qpVrK5Cwmw27gVuXSHrWp0oCyaYEYA9E
- lqLN24n5SdhcF6mpEwu7Xy/HYKO5M27js/yP1iOwcMG3k1CCJXP3xWiQs3MMXxEDVb9n
- Z+BCXwRAUjbC4Eh0nEadzBkvjlgm2qRBDEn2H01TsxXAEKFfGQIFHsHzBzG0PsY6DIyb
- wXd4eytzwVPE1TNvzYGqM0kgg/Oyt6yZb0muaXnTsRCW8y1i0LmXIbOW7nnvXR4DP9tU
- +aiX7YmB9O45thcyIP8IXp8fhQnamvcE7zCChA3RRO4vD8Eq/kTvnBXERj5cDPzHxTOI
- ICkw==
-X-Gm-Message-State: AFuF++n8Vrwu8tCiXizoMDEc6BB0/yNTo9g+5DPEZOMXbWeZ3dilH4a1
- y62EOc1rQpN9TbNKqgisJL4QVPgpFEpijsX7aZcw6+w4AaOsVtS2TA3IjTiDhg2x6v1/Uq6kMi1
- zkF1+oaM=
-X-Gm-Gg: AYBFou29Yaigu9wLZnv+5O13bpihc6Ufik1b06iE+sxie4rt22x++K1wZayT/TW/pa0
- TNkxwbuedCZ+UZ+8sxdjbr5a6xIl4SZa/SuydEjZYfyPhhies6XWmJiPTpsKZioS6eHk0yZ+kqm
- 2drHAqDegpf5Ma3vCya3UddHhmRcUJBltObUnE93K43OPjcM8liE95UXI6lj+Xnga+J9kXPZ/2Y
- OqgUqXcsETgrrKpQPhirYRX7AYwU6meI0qy8sqZrJFBFXQIcstxe/NoWab/Cj3/GBJIJdv75bpd
- E+usNJt6B8n7v+3+JO/4qAUxvDBCdEohM3u0sGfY0HacfyvDMWQqLBe9I6wdKCo4uC6GmqzYKej
- KSCwgfiKKW4IpAakdDAj4oxKhjGSP1tS5W7lVJr6J/1EVO6XEdm3voixotvwiXykQZwyVA1IEV1
- IJIrT2TultgNRB7A3cZB4RW/vw9rrY44KiPZZs9la4gwrw9OyZHKnLw73zfQ1YCZRuQDb9FEPii
- vkrcu7c
-X-Received: by 2002:a17:902:f54f:b0:2dd:8b95:d8fb with SMTP id
- d9443c01a7336-2dd8e52df8emr128503095ad.14.1789633581988; 
- Thu, 17 Sep 2026 01:26:21 -0700 (PDT)
+ bh=gPX5EBK1/0IuVMAfMbD5bOc3n7+JoD6VEvdWx9oeki0=;
+ b=RSMCeBuzc4bLwxqciu9swHM2FVsu16HTay7U5Q5h0Pjr9ysm9hKo2dsGJ1WVyLUcRE
+ +/cPDllnCweV5iD2diFWt7QCqCzVGiRLNaWXYl39Tlc0BFmqdOQyd5uyHhkiv2dPrQMu
+ pRIn031XYloPN/fK9EHt/DXFTkFDD4aLUIBftZ2HlBqmGt0ia9hDL1M9584JZW4kMrrJ
+ VASBSLNXBUwVizMqtOm3rcx8ZnsgPtAtiD6qQZpGJWLT/hDPI1rKZy/owmbKZcHVJ0OQ
+ 56uszotF6XfywcKjFLzgIraDOuljTyaTlV8bdIgFfORmMUXxyrToqhK/EQrndvImRu3s
+ ykfA==
+X-Gm-Message-State: AFuF++kLEFWonfRRHnZrNjwrB/2eK5rvdYaietyn5V1rQ3f7BpJtFbD6
+ 4WQSdRdSYp8+umhG4lH05KwHvz1/3/fFrlxYMvWbwKr/riCxGj7N5pJ5if1IamNafBGl9GYYwgk
+ LqugdZ5s=
+X-Gm-Gg: AYBFou0tc9Vx0ok/tNYZ+oeQp5ogoNysQkdZnFPodJ2qDf35hhkR29EC2T1Apgukb5B
+ dIhjKQlN6yqeOu14qeXcTJhHB/pgd2orbGK34PujEYpPA7WtfY9dDf3kFXu1vyChMXdcrzWJ2AJ
+ 424HqQ/JUJnDSowm8U72v27GOjrPKjUUcpUEYgsyixHDbjVniI+crrQ9g7nVkZ1R4Qtes6WbbNw
+ ur8r/lPrZhqYWQWS0vLR4OPyYO/WVf1tlGqFWapdTIdcgUzsqZDpowpFNym1iOk8IPWGEzUc6c5
+ xcobrA2J9wm74kpNw3sSpf9TFi6gLcAqDDcZpGuYEVPmpCOS9NHsjVJ0JchnkF4VcUQY6InMutJ
+ SKgZRjOgiMijo9lIAwAOUCkJqOE4J8ZumAhBTndwV22usHNQV0FoDqtK87fkzYuhDTn89twR/0i
+ CBbKaQECjiyEcn1Zca5sKpqOn05HswhiaLnG5HcXQ5DK6CGV38Dxa+c5FAdzGInSr9Gvbq1Cc1/
+ sJMpVc=
+X-Received: by 2002:a17:90b:390d:b0:39d:f66e:1720 with SMTP id
+ 98e67ed59e1d1-39e1e4907e8mr18568364a91.13.1789633583124; 
+ Thu, 17 Sep 2026 01:26:23 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:325f:1938:d075:8c13])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5ac978esm13484357eec.18.2026.09.17.01.26.21
+ 5a478bee46e88-33bf5ac978esm13484357eec.18.2026.09.17.01.26.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 01:26:21 -0700 (PDT)
+ Thu, 17 Sep 2026 01:26:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mattst88@gmail.com
-Subject: [PATCH v6 1/2] accel: Change AccelOpsClass.update_guest_debug to void
-Date: Wed, 16 Sep 2026 22:26:17 -1000
-Message-ID: <20260917082618.1076988-2-richard.henderson@linaro.org>
+Subject: [PATCH v6 2/2] accel/tcg: fold the dynamic cflags into
+ CPUState::tcg_cflags
+Date: Wed, 16 Sep 2026 22:26:18 -1000
+Message-ID: <20260917082618.1076988-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260917082618.1076988-1-richard.henderson@linaro.org>
 References: <20260917082618.1076988-1-richard.henderson@linaro.org>
@@ -100,74 +101,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The return value is never used, so drop it.
+From: Matt Turner <mattst88@gmail.com>
 
+curr_cflags() is called once per TB dispatch, from helper_lookup_tb_ptr()
+and from the cpu_exec() loop. It recomputes the same value every time:
+
+    uint32_t cflags = cpu->tcg_cflags;
+    if (unlikely(cpu_single_stepping(cpu))) { ... }
+    else if (qatomic_read(&one_insn_per_tb)) { ... }
+    else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) { ... }
+
+That is three loads and three branches on the hottest path in the
+interpreter, for state that changes only when gdb enables single-step,
+when one-insn-per-tb is toggled, or when the log mask changes.
+
+None of the three has to be sampled at dispatch time. Fold each into
+CPUState::tcg_cflags where it changes and curr_cflags() becomes a single
+load of a field that TB lookup has to read anyway.
+
+The derived bits -- CF_COUNT_MASK, CF_NO_GOTO_TB, CF_NO_GOTO_PTR and
+CF_SINGLE_STEP -- are never set by tcg_cflags_set(), so tcg_update_cflags()
+can recompute them in place without disturbing the rest, and conversely
+tcg_cflags_set() ORs in its bits without disturbing them.
+
+There are three places to call it:
+
+  - tcg_exec_realizefn(), so that a CPU created after the command line has
+    been parsed starts out with the right value. This covers user-only,
+    where tcg_cpu_init_cflags() is not reached. linux-user's cpu_copy()
+    copies tcg_cflags wholesale, so a cloned thread inherits it.
+
+  - cpu_single_step(), which changes one CPU.  gdb is the only caller that
+    matters; in system mode it runs with the vCPUs stopped, and in user mode
+    gdb_continue_partial() can reach a thread that is still running, because
+    gdb_handlesig() stops only the thread that trapped. That is exactly the
+    plain cross-thread store to another CPU's CPUState that
+    cpu->singlestep_flags already was, read back by that CPU through
+    cpu_single_stepping() in curr_cflags(). This patch changes which field
+    carries it, not who writes it or how.
+
+  - hmp_one_insn_per_tb() and hmp_log(), which change every CPU while the
+    vCPUs are running, so the update is queued with async_run_on_cpu() and
+    each CPU writes its own cflags from its own thread. The command line
+    spellings of those two settings need nothing: they are parsed before
+    any CPU is realized, so tcg_exec_realizefn() picks them up.
+
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, in a
+build configured with --enable-lto:
+
+    before: 1,646,994,254,249 instructions
+    after:  1,562,204,796,597 instructions   -5.15%
+
+That workload issues 8.4 billion dispatches, so the per-call saving is
+small but the aggregate is not. The emulated compiler produces
+byte-identical output before and after.
+
+Wall clock does not move: 133.19s to 132.58s, a 0.46% difference against a
+run-to-run spread larger than that. The removed work is a few predictable
+loads and branches that the host executes largely in parallel with the
+surrounding dispatch, so this patch is worth taking for the instruction
+count and for what it enables, not for a time saving that can be measured
+on its own.
+
+v4: Update the cflags from the HMP handlers for 'log' and 'one-insn-per-tb'
+    rather than from qemu_set_log_internal() and the accelerator property
+    setter. Those are the paths that reach a running vCPU, and the monitor
+    is the only thing that does. Suggested by Richard Henderson.
+
+v4: Queue the per-CPU update with async_run_on_cpu() rather than
+    async_safe_run_on_cpu(). Halting the other vCPUs buys nothing: the
+    queued work already runs on the owning CPU's own thread. Suggested by
+    Alex Bennee, who also asked whether there are cross-vCPU updates of
+    tcg_cflags at all. With this change the monitor path has none: the
+    only remaining writer from another thread is cpu_single_step(), above,
+    which is neither new nor made worse here.
+
+v4: Move the stub to accel/stubs/, which is where the other accelerator
+    stubs live.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260901034808.3524945-2-mattst88@gmail.com>
 ---
- include/accel/accel-cpu-ops.h | 2 +-
- include/system/hvf_int.h      | 2 +-
- accel/hvf/hvf-accel-ops.c     | 3 +--
- accel/kvm/kvm-accel-ops.c     | 4 ++--
- 4 files changed, 5 insertions(+), 6 deletions(-)
+ accel/tcg/internal-common.h | 11 +++++++++--
+ include/system/tcg.h        | 12 ++++++++++++
+ accel/tcg/cpu-exec-common.c | 33 ++++++++++++++++++++++++++++++---
+ accel/tcg/cpu-exec.c        |  3 +++
+ accel/tcg/tcg-accel-ops.c   |  2 ++
+ cpu-target.c                |  5 ++++-
+ monitor/hmp-cmds.c          |  7 +++++++
+ system/runstate-hmp-cmds.c  | 18 ++++++++++++------
+ 8 files changed, 79 insertions(+), 12 deletions(-)
 
-diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
-index f0c7ee7542c..af71fd9ab34 100644
---- a/include/accel/accel-cpu-ops.h
-+++ b/include/accel/accel-cpu-ops.h
-@@ -85,7 +85,7 @@ struct AccelOpsClass {
-     int64_t (*get_elapsed_ticks)(void);
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 9e7be2d78df..853d1b51eeb 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -69,8 +69,15 @@ void tlb_destroy(CPUState *cpu);
+ bool tcg_exec_realizefn(CPUState *cpu, Error **errp);
+ void tcg_exec_unrealizefn(CPUState *cpu);
  
-     /* gdbstub hooks */
--    int (*update_guest_debug)(CPUState *cpu);
-+    void (*update_guest_debug)(CPUState *cpu);
-     int (*insert_gdbstub_breakpoint)(CPUState *cpu, GdbBreakpointType type,
-                                      vaddr addr, vaddr len);
-     int (*remove_gdbstub_breakpoint)(CPUState *cpu, GdbBreakpointType type,
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index a01691ce172..1b419b5428a 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -105,7 +105,7 @@ void hvf_arch_remove_all_gdbstub_hw_breakpoints(void);
-  * Update guest to enable or disable debugging. Per-arch specifics will be
-  * handled by calling down to hvf_arch_update_guest_debug.
-  */
--int hvf_update_guest_debug(CPUState *cpu);
-+void hvf_update_guest_debug(CPUState *cpu);
+-/* current cflags for hashing/comparison */
+-uint32_t curr_cflags(CPUState *cpu);
++/*
++ * Current cflags for hashing/comparison.  Everything that feeds into the
++ * value is folded into CPUState::tcg_cflags when it changes, by
++ * tcg_update_cflags(), so that TB dispatch only has to load it.
++ */
++static inline uint32_t curr_cflags(CPUState *cpu)
++{
++    return cpu->tcg_cflags;
++}
  
- bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
- uint32_t hvf_arch_get_default_ipa_bit_size(void);
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index d2276d8513e..6491a109ba4 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -227,10 +227,9 @@ static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data arg)
-     hvf_arch_update_guest_debug(cpu);
- }
+ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
  
--int hvf_update_guest_debug(CPUState *cpu)
-+void hvf_update_guest_debug(CPUState *cpu)
- {
-     run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
--    return 0;
- }
- 
- static int hvf_insert_gdbstub_breakpoint(CPUState *cpu, GdbBreakpointType type,
-diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
-index c8e7aa38709..47244d33f7d 100644
---- a/accel/kvm/kvm-accel-ops.c
-+++ b/accel/kvm/kvm-accel-ops.c
-@@ -86,9 +86,9 @@ static bool kvm_cpus_are_resettable(void)
- }
- 
- #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
--static int kvm_update_guest_debug_ops(CPUState *cpu)
-+static void kvm_update_guest_debug_ops(CPUState *cpu)
- {
--    return kvm_update_guest_debug(cpu, 0);
-+    kvm_update_guest_debug(cpu, 0);
- }
+diff --git a/include/system/tcg.h b/include/system/tcg.h
+index 7622dcea302..2c2dbc753b3 100644
+--- a/include/system/tcg.h
++++ b/include/system/tcg.h
+@@ -17,6 +17,18 @@ extern bool tcg_allowed;
+ #define tcg_enabled() 0
  #endif
  
++/*
++ * Recompute the parts of CPUState::tcg_cflags that TB dispatch consumes but
++ * tcg_cflags_set() does not provide: gdb single-step, one-insn-per-tb and
++ * the CPU_LOG_TB_NOCHAIN log flag.  Call whenever one of those changes.
++ *
++ * tcg_update_cflags() updates one CPU and must be called from that CPU's
++ * thread, or with it stopped.  tcg_update_all_cflags() updates every CPU
++ * and is safe to call from the monitor while the vCPUs run.
++ */
++void tcg_update_cflags(CPUState *cpu);
++void tcg_update_all_cflags(void);
++
+ /**
+  * qemu_tcg_mttcg_enabled:
+  * Check whether we are running MultiThread TCG or not.
+diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
+index 44e84344f3b..9f3517f36b6 100644
+--- a/accel/tcg/cpu-exec-common.c
++++ b/accel/tcg/cpu-exec-common.c
+@@ -36,9 +36,16 @@ void tcg_cflags_set(CPUState *cpu, uint32_t flags)
+     cpu->tcg_cflags |= flags;
+ }
+ 
+-uint32_t curr_cflags(CPUState *cpu)
++/*
++ * The bits of CPUState::tcg_cflags that tcg_cflags_set() never sets, because
++ * they are derived from gdb single-step, one-insn-per-tb and -d nochain.
++ */
++#define CF_DERIVED  (CF_COUNT_MASK | CF_NO_GOTO_TB | CF_NO_GOTO_PTR | \
++                     CF_SINGLE_STEP)
++
++void tcg_update_cflags(CPUState *cpu)
+ {
+-    uint32_t cflags = cpu->tcg_cflags;
++    uint32_t cflags = cpu->tcg_cflags & ~CF_DERIVED;
+ 
+     /*
+      * Record gdb single-step.  We should be exiting the TB by raising
+@@ -55,7 +62,27 @@ uint32_t curr_cflags(CPUState *cpu)
+         cflags |= CF_NO_GOTO_TB;
+     }
+ 
+-    return cflags;
++    cpu->tcg_cflags = cflags;
++}
++
++static void tcg_update_cflags_work(CPUState *cpu, run_on_cpu_data data)
++{
++    tcg_update_cflags(cpu);
++}
++
++void tcg_update_all_cflags(void)
++{
++    CPUState *cpu;
++
++    /*
++     * one-insn-per-tb and -d nochain can both be changed from the monitor
++     * while the vCPUs are running.  Queue the update onto each CPU rather
++     * than writing tcg_cflags from here, so that the field is only ever
++     * written by the CPU that owns it.
++     */
++    CPU_FOREACH(cpu) {
++        async_run_on_cpu(cpu, tcg_update_cflags_work, RUN_ON_CPU_NULL);
++    }
+ }
+ 
+ /* exit the current TB, but without causing any exception to be raised */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 46b723cb734..5226cfb7650 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -1071,6 +1071,9 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+         tcg_target_initialized = true;
+     }
+ 
++    /* Pick up one-insn-per-tb and -d nochain from the command line. */
++    tcg_update_cflags(cpu);
++
+     cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
+     tlb_init(cpu);
+ #ifndef CONFIG_USER_ONLY
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 9c3d2214162..2e50df20c18 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -48,6 +48,7 @@
+ #include "tcg-accel-ops-mttcg.h"
+ #include "tcg-accel-ops-rr.h"
+ #include "tcg-accel-ops-icount.h"
++#include "internal-common.h"
+ 
+ /* common functionality among all TCG variants */
+ 
+@@ -222,6 +223,7 @@ static void tcg_accel_ops_init(AccelClass *ac)
+     ops->insert_gdbstub_breakpoint = tcg_insert_gdbstub_breakpoint;
+     ops->remove_gdbstub_breakpoint = tcg_remove_gdbstub_breakpoint;
+     ops->remove_all_gdbstub_breakpoints = tcg_remove_all_gdbstub_breakpoints;
++    ops->update_guest_debug = tcg_update_cflags;
+ }
+ 
+ static void tcg_accel_ops_class_init(ObjectClass *oc, const void *data)
+diff --git a/cpu-target.c b/cpu-target.c
+index 4783845c9bf..9bd1605e831 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -24,6 +24,7 @@
+ #include "exec/replay-core.h"
+ #include "exec/log.h"
+ #include "hw/core/cpu.h"
++#include "system/tcg.h"
+ #include "trace/trace-root.h"
+ 
+ /* enable or disable single step mode. EXCP_DEBUG is returned by the
+@@ -35,7 +36,9 @@ void cpu_single_step(CPUState *cpu, unsigned flags)
+                                           cpu->singlestep_flags, flags);
+         cpu->singlestep_flags = flags;
+ 
+-#if !defined(CONFIG_USER_ONLY)
++#ifdef CONFIG_USER_ONLY
++        tcg_update_cflags(cpu);
++#else
+         const AccelOpsClass *ops = cpus_get_accel();
+         if (ops->update_guest_debug) {
+             ops->update_guest_debug(cpu);
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 91701ddf331..9b1b94f8ea9 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -40,6 +40,7 @@
+ #include "system/hw_accel.h"
+ #include "system/memory.h"
+ #include "system/system.h"
++#include "system/tcg.h"
+ #include "disas/disas.h"
+ 
+ /* Please update hmp-commands.hx when adding or changing commands */
+@@ -340,6 +341,12 @@ void hmp_log(MonitorHMP *hmp, const QDict *qdict)
+ 
+     if (!qemu_set_log(mask, &err)) {
+         error_report_err(err);
++        return;
++    }
++
++    /* CPU_LOG_TB_NOCHAIN feeds into the per-CPU cflags. */
++    if (tcg_enabled()) {
++        tcg_update_all_cflags();
+     }
+ }
+ 
+diff --git a/system/runstate-hmp-cmds.c b/system/runstate-hmp-cmds.c
+index ad70b53f8ab..eb34d14d062 100644
+--- a/system/runstate-hmp-cmds.c
++++ b/system/runstate-hmp-cmds.c
+@@ -22,6 +22,7 @@
+ #include "qapi/qapi-commands-run-state.h"
+ #include "qobject/qdict.h"
+ #include "qemu/accel.h"
++#include "system/tcg.h"
+ 
+ void hmp_info_status(MonitorHMP *hmp, const QDict *qdict)
+ {
+@@ -43,16 +44,17 @@ void hmp_info_status(MonitorHMP *hmp, const QDict *qdict)
+ 
+ void hmp_one_insn_per_tb(MonitorHMP *hmp, const QDict *qdict)
+ {
+-    const char *option = qdict_get_try_str(qdict, "option");
+-    AccelState *accel = current_accel();
++    const char *option;
++    AccelState *accel;
+     bool newval;
+ 
+-    if (!object_property_find(OBJECT(accel), "one-insn-per-tb")) {
+-        monitor_hmp_printf(hmp,
+-                           "This accelerator does not support setting one-insn-per-tb\n");
++    if (!tcg_enabled()) {
++        monitor_hmp_printf(hmp, "This accelerator does not support "
++                           "setting one-insn-per-tb\n");
+         return;
+     }
+ 
++    option = qdict_get_try_str(qdict, "option");
+     if (!option || !strcmp(option, "on")) {
+         newval = true;
+     } else if (!strcmp(option, "off")) {
+@@ -61,9 +63,13 @@ void hmp_one_insn_per_tb(MonitorHMP *hmp, const QDict *qdict)
+         monitor_hmp_printf(hmp, "unexpected option %s\n", option);
+         return;
+     }
+-    /* If the property exists then setting it can never fail */
++
++    accel = current_accel();
+     object_property_set_bool(OBJECT(accel), "one-insn-per-tb",
+                              newval, &error_abort);
++
++    /* one-insn-per-tb feeds into the per-CPU cflags. */
++    tcg_update_all_cflags();
+ }
+ 
+ void hmp_watchdog_action(MonitorHMP *hmp, const QDict *qdict)
 -- 
 2.53.0
 
