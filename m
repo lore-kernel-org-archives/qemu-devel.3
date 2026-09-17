@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD99C982CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E60C982C1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:49:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7298-0006M7-1P; Wed, 16 Sep 2026 22:46:46 -0400
+	id 1x729Y-0006Pw-Ha; Wed, 16 Sep 2026 22:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x7292-0006L0-U0
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:41 -0400
+ id 1x7298-0006MA-63
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:46 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x728z-00058u-QY
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:40 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x7296-0005A5-EY
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:45 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxjdKLVKtqDOEMAA--.37407S3;
- Thu, 17 Sep 2026 10:46:35 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxPtOSVKtqFeEMAA--.37412S3;
+ Thu, 17 Sep 2026 10:46:42 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBxKs6LVKtqCq0hAA--.39703S3;
- Thu, 17 Sep 2026 10:46:35 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxe86QVKtqDK0hAA--.39741S3;
+ Thu, 17 Sep 2026 10:46:42 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 05/11] target/loongarch: Add CPUTimerState structure
-Date: Thu, 17 Sep 2026 10:47:36 +0800
-Message-ID: <20260917024742.200257-6-maobibo@loongson.cn>
+Cc: Song Gao <17746591750@163.com>
+Subject: [PULL 09/11] target/loongarch: Set msgint property with auto detected
+Date: Thu, 17 Sep 2026 10:47:40 +0800
+Message-ID: <20260917024742.200257-10-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260917024742.200257-1-maobibo@loongson.cn>
 References: <20260917024742.200257-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxKs6LVKtqCq0hAA--.39703S3
+X-CM-TRANSID: qMiowJCxe86QVKtqDK0hAA--.39741S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxKFyfWw4UCrWDGr45Gw1UXFc_yoWfXrW5pr
- W2kry7Kr18JrZrAwn3ta98WF1DXr17Ww129a1SyrWIkan7Jr4rua4kt39FgFWDu3yrWrW2
- qFn5A3W5XFW7XacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8wNVDUUUUU==
+X-Coremail-Antispam: 1Uk129KBj9xXoWrKw4fXFWxWw18uryxAFykXrc_yoWkKFg_Xa
+ 47tasagF1DCas8Kr429r95J34rCry8GFnakF4DWF1fAr1UAF15Zr409rWDA3ZFqw4UZF15
+ urW3A34rCw1jyosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUb7AYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUtVWrXwAv7VC2z280aVAF
+ wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28IcxkI7V
+ AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
+ r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6x
+ IIjxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
+ w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x
+ 0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU84xRDUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -76,254 +76,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Structure CPUTimerState is added in structure CPUSysState, QEMUTimer
-and IRQ number is included, so it is easy to add another separate
-timer if LVZ feature is supported.
+Linux kernel and KVM has supported msgint irqchip, set msgint property
+with value ON_OFF_AUTO_AUTO with max CPU type in both KVM and TCG mode.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by:   Xianglai Li <lixianglai@loongson.cn>
+Reviewed-by:   Song Gao <17746591750@163.com>
 ---
- target/loongarch/cpu.c            | 11 +++++++++--
- target/loongarch/cpu.h            | 15 ++++++++++++++-
- target/loongarch/internals.h      |  6 +++---
- target/loongarch/tcg/csr_helper.c | 14 ++++++--------
- target/loongarch/tcg/op_helper.c  |  6 +++---
- target/loongarch/tcg/timer.c      | 27 ++++++++++++---------------
- 6 files changed, 47 insertions(+), 32 deletions(-)
+ target/loongarch/cpu.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index ab37a9e2e6..b8e95750bb 100644
+index 2d58277549..99499034ed 100644
 --- a/target/loongarch/cpu.c
 +++ b/target/loongarch/cpu.c
-@@ -727,11 +727,18 @@ static void loongarch_cpu_init(Object *obj)
- {
- #ifndef CONFIG_USER_ONLY
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+#ifdef CONFIG_TCG
-+    CPULoongArchState *env = &cpu->env;
-+    CPUTimerState *timer;
-+#endif
+@@ -473,9 +473,8 @@ static void loongarch_max_initfn(Object *obj)
+     loongarch_la464_initfn(obj);
  
-     qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, N_IRQS);
- #ifdef CONFIG_TCG
--    timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
--                  &cpu_loongarch_timer_cb, cpu);
-+    timer = env_timer(env);
-+    timer->irq = IRQ_TIMER;
-+    timer->cs  = CPU(obj);
-+    timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
-+                  &cpu_loongarch_timer_cb, timer);
- #endif
- #endif
- }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index d83dcef6f8..c592f69885 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -315,6 +315,12 @@ typedef struct  LoongArchBT {
-     uint32_t ftop;
- } lbt_t;
+     cpu->ptw = ON_OFF_AUTO_AUTO;
+-    if (kvm_enabled()){
+-        cpu->msgint=ON_OFF_AUTO_OFF;
+-    }
++    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
++    cpu->msgint = ON_OFF_AUTO_AUTO;
  
-+typedef struct CPUTimerState {
-+    QEMUTimer timer;
-+    int irq;
-+    CPUState *cs;
-+} CPUTimerState;
-+
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
- #define CPU_MODEL_1C101       "1C101"
-@@ -384,6 +390,9 @@ typedef struct CPUSysState {
-     uint64_t CSR_PRCFG1;
-     uint64_t CSR_PRCFG2;
-     uint64_t CSR_PRCFG3;
-+#ifdef CONFIG_TCG
-+    CPUTimerState timer_state;
-+#endif
- } CPUSysState;
- 
- typedef struct CPUArchState {
-@@ -446,7 +455,6 @@ struct ArchCPU {
-     CPUState parent_obj;
- 
-     CPULoongArchState env;
--    QEMUTimer timer;
-     uint32_t  phy_id;
-     OnOffAuto lbt;
-     OnOffAuto pmu;
-@@ -504,6 +512,11 @@ static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
-     env->sys_state = sys;
- }
- 
-+static inline CPUTimerState *env_timer(CPULoongArchState *env)
-+{
-+    return &env->sys_states[0].timer_state;
-+}
-+
- static inline bool is_la64(CPULoongArchState *env)
- {
-     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 8c5f095782..f9a0680fe0 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -35,9 +35,9 @@ void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
- 
- void cpu_loongarch_timer_cb(void *opaque);
--uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu);
--uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu);
--void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value);
-+uint64_t cpu_loongarch_get_timer_counter(CPUTimerState *timer);
-+uint64_t cpu_loongarch_get_timer_ticks(CPUTimerState *timer);
-+void cpu_loongarch_set_timer_config(CPUTimerState *timer, uint64_t value);
- bool loongarch_cpu_has_work(CPUState *cs);
- bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
- #endif /* !CONFIG_USER_ONLY */
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index b1a0b005e9..88656b5344 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -72,9 +72,7 @@ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
- 
- target_ulong helper_csrrd_tval(CPULoongArchState *env)
- {
--    LoongArchCPU *cpu = env_archcpu(env);
+     /* Enable LA v1.1 instructions */
+     data = cpu->env.cpucfg[2];
+@@ -494,9 +493,6 @@ static void loongarch_max_initfn(Object *obj)
+         data = cpu->env.cpucfg[2];
+         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
+         cpu->env.cpucfg[2] = data;
 -
--    return cpu_loongarch_get_timer_ticks(cpu);
-+    return cpu_loongarch_get_timer_ticks(env_timer(env));
- }
- 
- target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-@@ -135,23 +133,23 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
- 
- target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
- {
--    LoongArchCPU *cpu = env_archcpu(env);
--    CPUSysState *sys = env_sys(env);
-+    CPUTimerState *timer = env_timer(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     int64_t old_v = sys->CSR_TCFG;
- 
--    cpu_loongarch_set_timer_config(cpu, val);
-+    cpu_loongarch_set_timer_config(timer, val);
- 
-     return old_v;
- }
- 
- target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
- {
--    LoongArchCPU *cpu = env_archcpu(env);
-+    CPUTimerState *timer = env_timer(env);
-     int64_t old_v = 0;
- 
-     if (val & 0x1) {
-         bql_lock();
--        loongarch_cpu_set_irq(cpu, IRQ_TIMER, 0);
-+        loongarch_cpu_set_irq(LOONGARCH_CPU(timer->cs), timer->irq, 0);
-         bql_unlock();
-     }
-     return old_v;
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index c090d5b12e..f98fe4d4a1 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -73,15 +73,15 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
-     return cpu_get_host_ticks();
- #else
-     uint64_t plv;
--    LoongArchCPU *cpu = env_archcpu(env);
--    CPUSysState *sys = env_sys(env);
-+    CPUTimerState *timer = env_timer(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
- 
-     plv = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
-     if (extract64(sys->CSR_MISC, R_CSR_MISC_DRDTL_SHIFT + plv, 1)) {
-         do_raise_exception(env, EXCCODE_IPE, GETPC());
-     }
- 
--    return cpu_loongarch_get_timer_counter(cpu);
-+    return cpu_loongarch_get_timer_counter(timer);
- #endif
- }
- 
-diff --git a/target/loongarch/tcg/timer.c b/target/loongarch/tcg/timer.c
-index a25312b9ab..6a96dfd429 100644
---- a/target/loongarch/tcg/timer.c
-+++ b/target/loongarch/tcg/timer.c
-@@ -15,60 +15,57 @@
- #define CONSTANT_TIMER_TICK_MASK    0xfffffffffffcUL
- #define CONSTANT_TIMER_ENABLE       0x1UL
- 
--uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_timer_counter(CPUTimerState *timer)
- {
-     return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / TIMER_PERIOD;
- }
- 
--uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_timer_ticks(CPUTimerState *timer)
- {
--    CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     uint64_t now, expire;
- 
-     if ((sys->CSR_TCFG & CONSTANT_TIMER_ENABLE) &&
-         (sys->CSR_TVAL < sys->CSR_TCFG)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        expire = timer_expire_time_ns(&cpu->timer);
-+        expire = timer_expire_time_ns(&timer->timer);
-         sys->CSR_TVAL = (expire - now) / TIMER_PERIOD;
-     }
- 
-     return sys->CSR_TVAL;
- }
- 
--void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value)
-+void cpu_loongarch_set_timer_config(CPUTimerState *timer, uint64_t value)
- {
--    CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     uint64_t now, next;
- 
-     sys->CSR_TCFG = value;
-     if (value & CONSTANT_TIMER_ENABLE) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (value & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
--        timer_mod(&cpu->timer, next);
-+        timer_mod(&timer->timer, next);
-         sys->CSR_TVAL = sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK;
-     } else {
--        timer_del(&cpu->timer);
-+        timer_del(&timer->timer);
-         sys->CSR_TVAL = 0;
+-	 cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
+-        cpu->msgint = ON_OFF_AUTO_AUTO;
      }
  }
  
- void cpu_loongarch_timer_cb(void *opaque)
- {
--    LoongArchCPU *cpu  = opaque;
--    CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUTimerState *timer = opaque;
-+    CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     uint64_t now, next;
- 
-     if (FIELD_EX64(sys->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
--        timer_mod(&cpu->timer, next);
-+        timer_mod(&timer->timer, next);
-         sys->CSR_TVAL = sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK;
-     } else {
-         sys->CSR_TVAL = CONSTANT_TIMER_TICK_MASK;
-     }
- 
--    loongarch_cpu_set_irq(opaque, IRQ_TIMER, 1);
-+    loongarch_cpu_set_irq(LOONGARCH_CPU(timer->cs), timer->irq, 1);
- }
 -- 
 2.54.0
 
