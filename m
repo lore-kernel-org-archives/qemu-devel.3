@@ -4,112 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C012DC982CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 01:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC86C982C1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x71CE-0001U4-Ey; Wed, 16 Sep 2026 21:45:54 -0400
+	id 1x7299-0006Mh-JU; Wed, 16 Sep 2026 22:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x71CC-0001TI-2r; Wed, 16 Sep 2026 21:45:52 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x71CA-000818-BZ; Wed, 16 Sep 2026 21:45:51 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68GG1pIM046283; Thu, 17 Sep 2026 01:45:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=x/MQ34
- DWYhGmx51vGRd2MxbJjMIzR34kSsc6DRj3rUs=; b=oqHcNuAJ2Y7sp6KK1rMTso
- QsTZLur85TVMm/7Cq/RILfGJcX25hZ+yOkgzFacQTiWhHWvpoOudq9iZCYdZ+OFS
- /EwQ599SZeo5C8dcK09Y4XGpeiKoccPuP02b4mELRW604aQdJD96rrfMt1jGTJPs
- +8UxF36Id6kPjvn7QLCOeb99IhSjfxdmj0LphQmfQBzFbmhPDEkZrJP0Jm+vuYj4
- jqpgZ+xO6PkV/o2gx5jWPmPWV638xy9VIGxyhHiz86KdANEsUhD+OJqmujDC7QNX
- ndgneIv7zpfzwDRA2uWKQBtCRMZoOdVmRkC7WW5myGXKY2Ols5rSh8tfoHnjCzTQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcv7ctp-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 01:45:48 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68H0iRPb2316401; Thu, 17 Sep 2026 01:45:47 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gr5xa05kh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 01:45:47 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68H1jkP03277446
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Sep 2026 01:45:46 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 86DE758052;
- Thu, 17 Sep 2026 01:45:46 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD31358050;
- Thu, 17 Sep 2026 01:45:45 +0000 (GMT)
-Received: from [9.61.177.109] (unknown [9.61.177.109])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Sep 2026 01:45:45 +0000 (GMT)
-Message-ID: <139ec7b4-b467-4ef4-8832-9437f5047767@linux.ibm.com>
-Date: Wed, 16 Sep 2026 21:45:45 -0400
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x7291-0006Kx-Rd
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:41 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x728z-00058f-M9
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:39 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8DxC9KJVKtqCeEMAA--.37653S3;
+ Thu, 17 Sep 2026 10:46:33 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJCx+c18VKtqA60hAA--.39456S5;
+ Thu, 17 Sep 2026 10:46:32 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Xianglai Li <lixianglai@loongson.cn>
+Subject: [PULL 03/11] target/loongarch: Rename function name constant_timer
+ with timer
+Date: Thu, 17 Sep 2026 10:47:34 +0800
+Message-ID: <20260917024742.200257-4-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260917024742.200257-1-maobibo@loongson.cn>
+References: <20260917024742.200257-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] s390x/pci: fix DMA slot leak on I/O TLB entry
- replacement
-To: Farhan Ali <alifm@linux.ibm.com>, Omar Elghoul <oelghoul@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, cohuck@redhat.com, qemu-stable@nongnu.org
-References: <20260910132408.12707-1-oelghoul@linux.ibm.com>
- <9aded4ae-512f-4b54-9421-02cb1f973ec0@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <9aded4ae-512f-4b54-9421-02cb1f973ec0@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDAxOCBTYWx0ZWRfXxwyGskWAnqWj
- RQdlQSSexQ/1kGFWxQBODlUh4wCwfbl/cAZEnTy82viax+zZccZcjoXR8CYbIFRTzx8egBDLo5M
- Z5EQjfhtjX+vnqQMuh9WiYA226UUlo4=
-X-Proofpoint-ORIG-GUID: 7fWpW4R5x4VP39u7z7JQjap6hDd_IaGX
-X-Proofpoint-GUID: 7fWpW4R5x4VP39u7z7JQjap6hDd_IaGX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDAxOCBTYWx0ZWRfXwsQq8wi3oVKe
- 6RSxouyeSNOQb5n3CQWm9oE+ieo38EZzAfoF1YGYpGcFElwKw0MHk0RdoTy0z36vvneQ8asi3ZN
- kw8Ow4TyCrPVZdvhoMS642N1dEwMK/D2AWr7j67Os7cy8XuvlJZFjr6ughWXrT1fo3TUpFxtFch
- UP98anl4U9zW2XAYd5qXdit2TIwclWFqXAYmaDbmpv+cFdqfqbpwju0zX6kFVX1MWwq1Lkmd8Vg
- 4dyIymdQH46RCog/AUGtKe7fRUfi+xKREpGKL6JO9HzBhg556sHV3C/rq4VxmUcoWxVA0utPMpN
- NCjS5qmHwT1VAb5UUxd09uKkCMC29jtlh5EwcKIP5xEvUxD9hrvQA0tlO9ZYMfJHFtKKBIoRb3c
- YbMp6iV87OQeh6SFajcSmBhTgLPZq2VHQZkHoOUACPKK6QLAd/CfoOqdQpbJAiRKEwlZtZlSJHy
- 2L+aoggmeMRfcBferYA==
-X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aab464c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=qsyVNPzcmnk0oqjtYO4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170018
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: qMiowJCx+c18VKtqA60hAA--.39456S5
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxur4fGFWkXrykZF17Ar17XFc_yoW7Gr18pr
+ Wxury7Kr48trZ8Wa4kJ3s8WF1DXr42ga42v3WftrWIkrs7Xrn7Ww18trsFgF45Aa48Wry2
+ qFn5Z3WUXF47ZwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,74 +77,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/14/26 5:27 PM, Farhan Ali wrote:
-> 
-> On 9/10/2026 6:24 AM, Omar Elghoul wrote:
->> When s390_pci_update_iotlb() does a mapping update for an IOVA that has
->> an already-existing TLB entry with different permissions or translated
->> address, it unmaps then remaps it. However, at the end of the map path,
->> it unconditionally decrements the available DMA slot counter without a
->> corresponding increment in the intermediate unmap branch.
->>
->> This causes the DMA slot count to be decremented on every remapping of
->> an active IOVA, leading to a permanent DMA slot leak. This remapping
->> without a prior invalidation and sync is not seen today in well-behaved
->> guests but is allowed by the architecture. Fix it by only decrementing
->> available DMA slots when inserting a brand new mapping.
->>
->> Cc: qemu-stable@nongnu.org
->> Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
->> Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
->> ---
->>   hw/s390x/s390-pci-inst.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
->> index b7de23c7d2..5840675aba 100644
->> --- a/hw/s390x/s390-pci-inst.c
->> +++ b/hw/s390x/s390-pci-inst.c
->> @@ -665,6 +665,9 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU
->> *iommu,
->>               memory_region_notify_iommu(&iommu->iommu_mr, 0, event);
->>               event.type = IOMMU_NOTIFIER_MAP;
->>               event.entry.perm = entry->perm;
->> +        } else {
->> +            /* only new mappings consume DMA slots */
->> +            dec_dma_avail(iommu);
->>           }
-> To me the else statement here makes it a little more confusing. I think
-> it would be easier to read, if we increment above when do the unmap in
-> the intermediate step. That way we associate incrementing the available
-> entries with unmap and decrementing it with map operation. But I guess
-> this avoids an additional function call for the same result.
+There is only one timer type on LoongArch, its frequency is fixed at
+100MHZ. Here rename function name constant_timer_xxx with timer_xxx for
+simplity.
 
-So first, for the code itself:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by:   Xianglai Li <lixianglai@loongson.cn>
+---
+ target/loongarch/cpu.c                | 2 +-
+ target/loongarch/internals.h          | 9 ++++-----
+ target/loongarch/tcg/constant_timer.c | 9 ++++-----
+ target/loongarch/tcg/csr_helper.c     | 4 ++--
+ target/loongarch/tcg/op_helper.c      | 2 +-
+ 5 files changed, 12 insertions(+), 14 deletions(-)
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 614d6a9542..ab37a9e2e6 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -731,7 +731,7 @@ static void loongarch_cpu_init(Object *obj)
+     qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, N_IRQS);
+ #ifdef CONFIG_TCG
+     timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
+-                  &loongarch_constant_timer_cb, cpu);
++                  &cpu_loongarch_timer_cb, cpu);
+ #endif
+ #endif
+ }
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 0b670f9466..8c5f095782 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -34,11 +34,10 @@ extern const VMStateDescription vmstate_loongarch_cpu;
+ void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+ 
+-void loongarch_constant_timer_cb(void *opaque);
+-uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
+-uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
+-void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
+-                                               uint64_t value);
++void cpu_loongarch_timer_cb(void *opaque);
++uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu);
++uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu);
++void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value);
+ bool loongarch_cpu_has_work(CPUState *cs);
+ bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
+ #endif /* !CONFIG_USER_ONLY */
+diff --git a/target/loongarch/tcg/constant_timer.c b/target/loongarch/tcg/constant_timer.c
+index b91ad1de69..a25312b9ab 100644
+--- a/target/loongarch/tcg/constant_timer.c
++++ b/target/loongarch/tcg/constant_timer.c
+@@ -15,12 +15,12 @@
+ #define CONSTANT_TIMER_TICK_MASK    0xfffffffffffcUL
+ #define CONSTANT_TIMER_ENABLE       0x1UL
+ 
+-uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu)
++uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu)
+ {
+     return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / TIMER_PERIOD;
+ }
+ 
+-uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu)
++uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu)
+ {
+     CPULoongArchState *env = &cpu->env;
+     CPUSysState *sys = env_sys(env);
+@@ -36,8 +36,7 @@ uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu)
+     return sys->CSR_TVAL;
+ }
+ 
+-void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
+-                                               uint64_t value)
++void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value)
+ {
+     CPULoongArchState *env = &cpu->env;
+     CPUSysState *sys = env_sys(env);
+@@ -55,7 +54,7 @@ void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
+     }
+ }
+ 
+-void loongarch_constant_timer_cb(void *opaque)
++void cpu_loongarch_timer_cb(void *opaque)
+ {
+     LoongArchCPU *cpu  = opaque;
+     CPULoongArchState *env = &cpu->env;
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 155482efc6..b1a0b005e9 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -74,7 +74,7 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+ {
+     LoongArchCPU *cpu = env_archcpu(env);
+ 
+-    return cpu_loongarch_get_constant_timer_ticks(cpu);
++    return cpu_loongarch_get_timer_ticks(cpu);
+ }
+ 
+ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+@@ -139,7 +139,7 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+     CPUSysState *sys = env_sys(env);
+     int64_t old_v = sys->CSR_TCFG;
+ 
+-    cpu_loongarch_store_constant_timer_config(cpu, val);
++    cpu_loongarch_set_timer_config(cpu, val);
+ 
+     return old_v;
+ }
+diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+index f41f0cb1e6..c090d5b12e 100644
+--- a/target/loongarch/tcg/op_helper.c
++++ b/target/loongarch/tcg/op_helper.c
+@@ -81,7 +81,7 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
+         do_raise_exception(env, EXCCODE_IPE, GETPC());
+     }
+ 
+-    return cpu_loongarch_get_constant_timer_counter(cpu);
++    return cpu_loongarch_get_timer_counter(cpu);
+ #endif
+ }
+ 
+-- 
+2.54.0
 
-As to the readability vs adding an intermediate increment -- maybe if
-you add another small comment it would help with readability?
-
-Something like:
-
-if (cache) {
-    /* valid->valid transitions re-use a DMA slot */
-    ...
-} else {
-    /* invalid->valid transitions consume a new DMA slot */
-    ...
-}
-
-Note I did tweak your wording a little bit.
-
-You could even add a comment in the straight unmap case if you think it
-would also be helpful e.g.
-
-/* valid->invalid transitions will release a DMA slot */
-
-I think this makes it very clear when the counter should be going
-up/down/neutral.
-
-Thanks,
-Matt
 
