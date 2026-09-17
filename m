@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88953C982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 22:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510D0C982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 22:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7K9h-000476-PO; Thu, 17 Sep 2026 18:00:33 -0400
+	id 1x7KAC-0004F5-Fo; Thu, 17 Sep 2026 18:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x7K9K-00040k-NT; Thu, 17 Sep 2026 18:00:11 -0400
+ id 1x7K9K-000418-VV; Thu, 17 Sep 2026 18:00:11 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x7K9H-0004JM-OR; Thu, 17 Sep 2026 18:00:10 -0400
+ id 1x7K9I-0004JZ-46; Thu, 17 Sep 2026 18:00:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Y1e0liqUIZ+sm0ao7oeu51+iSvv0QEqEvlPHQlD6Cd4=; b=kCzJ5g1CBhBsDIe
- 8Bv4NoAIV8Tlw7HnLbl6dEy6KcSSsFEPYkIKe916UovivxE+7WVe4YGycqOB16igNjSqQPOOYcsoW
- VynJbWj4xOLqwFdORv3cLLki1FU3S4sWR1giWCa0BC2haVHVDiJM4Kx7UpuZ2qqm806AWp7kboqaw
- Qo=;
-Date: Fri, 18 Sep 2026 00:04:58 +0200
-Subject: [PATCH v5 04/11] target/riscv: Widen riscv_new_csr_seed()
+ List-Help; bh=0vAoNB/3VWSS/2euNZcCeW3I/VqyUnURpiUkZYBy9gs=; b=pZtSeGn2xx84VnQ
+ Cay3HGcXvoEMEGZQdzh53vdX0APHDwxemhUGc97Cu1zQbU7KlbhWUfhyW0MhTdW+yeTbp3KcUG1KJ
+ K0OvqRZDEWG3FfyjcCEkSEj3FLnJoDSX3EagAJZdfr3hXUx0RN5WS1mOxWLrGyKvvEkBzGmyMQE64
+ GU=;
+Date: Fri, 18 Sep 2026 00:04:59 +0200
+Subject: [PATCH v5 05/11] target/riscv: Stub out kvm functions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-hw-riscv-cpu-int-v5-4-f98c5a244636@rev.ng>
+Message-Id: <20260918-hw-riscv-cpu-int-v5-5-f98c5a244636@rev.ng>
 References: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
 In-Reply-To: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
 To: qemu-devel@nongnu.org
@@ -41,11 +41,11 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org,
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1789682743; l=1906;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789682743; l=2075;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=X4H21qjaUazXmk0B6c99tXoKiE7rwRXEXQhXdnXbFvs=;
- b=lRuVebmhkm1k5uOHD2Qw2eYI52TYFzTYMV7WqXT4HWgnUatJAkNBsmk02mPhCR3gZd/bnG/aK
- 5FPezexCh/4Bx6JGWYaQAdUyiy5uvjyWsphYkXY2HaN5zg0nP6ne0bE
+ bh=SmQC4q0Y5o0T40JGR8Ackm0oNwRh0OgKntILAQviVXI=;
+ b=cKAh5xGLf3GjCO4rfg0M0uBR4tJWdD4rSkS7Sa/VdpZwuK6qrxeAhM0e6cSXgYhgkxqhl+Q7d
+ dQOHcNZi1nyC0f41NIW/xcpKHdrHPsgsRWYMRX0hs426xj1koEFy3iP
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -73,54 +73,71 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the function is exposed through the cpu.h header, make sure it's
-rv32/rv64 agnostic.  Note return type could be made uint32_t and arguments
-dropped, but I chose to follow the existing CSR OP style of functions,
-in case there are other plans for this one.
+Functions used externally by hw/riscv are stubbed out for non-kvm
+configurations, allowing a single compilation of hw/riscv.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h | 4 ++--
- target/riscv/cpu.c | 6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ target/riscv/kvm/kvm-stub.c  | 23 +++++++++++++++++++++++
+ target/riscv/kvm/meson.build |  1 +
+ target/riscv/meson.build     |  3 +++
+ 3 files changed, 27 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a820ec2f6e..a5fb75b990 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -953,8 +953,8 @@ void riscv_add_satp_mode_properties(Object *obj);
- bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+diff --git a/target/riscv/kvm/kvm-stub.c b/target/riscv/kvm/kvm-stub.c
+new file mode 100644
+index 0000000000..64e39c96d8
+--- /dev/null
++++ b/target/riscv/kvm/kvm-stub.c
+@@ -0,0 +1,23 @@
++/*
++ * QEMU RISCV specific KVM stubs
++ *
++ *  Copyright (c) rev.ng Labs Srl.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "target/riscv/kvm/kvm_riscv.h"
++
++void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
++                          uint64_t aia_irq_num, uint64_t aia_msi_num,
++                          uint64_t aplic_base, uint64_t imsic_base,
++                          uint64_t guest_num)
++{
++    g_assert_not_reached();
++}
++
++uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/riscv/kvm/meson.build b/target/riscv/kvm/meson.build
+index 7e92415091..75e35b2150 100644
+--- a/target/riscv/kvm/meson.build
++++ b/target/riscv/kvm/meson.build
+@@ -1 +1,2 @@
+ riscv_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-cpu.c'))
++riscv_stubs_ss.add(files('kvm-stub.c'))
+diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+index 42d0f6d538..e1b51d2bd4 100644
+--- a/target/riscv/meson.build
++++ b/target/riscv/meson.build
+@@ -19,6 +19,8 @@ riscv_ss.add(files(
+   'gdbstub.c',
+ ))
  
- void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
--target_ulong riscv_new_csr_seed(target_ulong new_value,
--                                target_ulong write_mask);
-+uint64_t riscv_new_csr_seed(uint64_t new_value,
-+                            uint64_t write_mask);
- const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
++riscv_stubs_ss = ss.source_set()
++
+ riscv_system_ss = ss.source_set()
+ riscv_system_ss.add(files(
+   'arch_dump.c',
+@@ -33,3 +35,4 @@ subdir('kvm')
  
- const char *priv_spec_to_str(int priv_version);
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 4f58e91b62..3356ba61d2 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -546,13 +546,13 @@ static void set_satp_mode_default_map(RISCVCPU *cpu)
- #endif
- 
- /* Used by csr.c and the KVM driver */
--target_ulong riscv_new_csr_seed(target_ulong new_value,
--                                target_ulong write_mask)
-+uint64_t riscv_new_csr_seed(uint64_t new_value,
-+                            uint64_t write_mask)
- {
-     uint16_t random_v;
-     Error *random_e = NULL;
-     int random_r;
--    target_ulong rval;
-+    uint64_t rval;
- 
-     random_r = qemu_guest_getrandom(&random_v, 2, &random_e);
-     if (unlikely(random_r < 0)) {
+ target_arch += {'riscv': riscv_ss}
+ target_system_arch += {'riscv': riscv_system_ss}
++target_stubs_arch += {'riscv': riscv_stubs_ss}
 
 -- 
 2.52.0
