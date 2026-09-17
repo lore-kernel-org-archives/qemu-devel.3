@@ -4,147 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65834C88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8046FC982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Fe0-0002He-UX; Thu, 17 Sep 2026 13:11:35 -0400
+	id 1x7FhS-0002ry-2i; Thu, 17 Sep 2026 13:15:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x7Fdf-0002G3-A5
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:11:16 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1x7FhE-0002pu-7u; Thu, 17 Sep 2026 13:14:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x7Fdb-0003W3-0P
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:11:10 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HH5cFm2413145
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:11:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- X/qzGqqmFA9h9uBfZY89IhzbfuoCEb26SKcQvVBkvb0=; b=n5FcacdanXFmckrn
- hEWigGIhKl1tY2U8l66pXuZr9iql1iaa1yaKnHc33PsfQnFNd3hcA3wbXA1icQrW
- HAt9aLowpDOe8MNfEjjmZT7bjiq0zFtgCu6J5AGt/2Xh08u9edzEaNT6o3AnmvLu
- Txw6Ub43JifQ06TI13SdkU9xLG1h7YGoezwYo1hFfi7cwtXDDUTszgeeqGHl0aRo
- fl29TbxWs0CcqkQPZGoyeYrQs0U+/34XUy2FqBzwCNxFzEVplbgJbPhCNTmNLsGm
- XT9MV8aM23ZnMXNcE9kOhKldqm+oOvY/Zi+rnf4lBcVMTTVdbic6e+TRuKOZgeRJ
- +WPMnQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4grgu5h7bj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:11:03 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cc42a07d04aso904271a12.1
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789665063; x=1790269863; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=X/qzGqqmFA9h9uBfZY89IhzbfuoCEb26SKcQvVBkvb0=;
- b=FicqhjHLBtoY0c08wHtAZKljuj3aV19AGsIWREcAqLncd9DyVaEvLezToludXtgjo6
- a4+VX+7dz3+RW6PzdWNiFG9dHUKgdxvD/Clt1AAA4HO089xCMFhhalx8MIPO5MfDTXu2
- O46eOzzyZ1iqCCzmLAH/cw7u9/1FMHhpP6A8BlIktRovYgvqnW65E8LLGCnp+metJ/iV
- baMt6SSgRBJR/FEJxa75MuZmN95guQZMd6kplKBagb2QTyVxQ4HcvDumxkFMtusD4SjI
- JElEeIHma4p1holNTPdET9NzwgKHp3XAW17WlkyEQ/WHV+VnNUQ08W+51XwAoIf8Lzcu
- 9z6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789665063; x=1790269863;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=X/qzGqqmFA9h9uBfZY89IhzbfuoCEb26SKcQvVBkvb0=;
- b=SxJc7duuJsuBC3M3GXaY3kEowg/cfDdLlYbx8JoR6fnWJ9ALTxaORfGSzdBj7GTxco
- 1/IlWgZxC5DaAkuBcwVPwHwum8GhnS2nMbHzIP/McMmzuzQtobNhdcjCe4m2w/m4g0ly
- ISai53CP4DU53bHWmjcIjfOPGQ9BBrN0vhLxD4vi50dZij8giML/1DKZqd8qjc0n3r9C
- zCqYhU+1Ny6zBXmoAxVzD16VfLwVIbeFpkK+I2dDQIzSaTw+yv4XMCBhs0vPJ5vweMme
- +GiweQvgirDV52p9mFUTwX4H5UvEjP15pa1ohZGYEaCxyQNpg4mnGHEBqjd4wqmeNlg5
- F1QQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBz6afv+7042lALteSITIi7CVw9kqJwzO80XqDMcp3fqgu5BEQLKP9inQelF8Xb834dxVfcr8SFfv9fy@nongnu.org
-X-Gm-Message-State: AFuF++mLkDCmKmIGttPnqDwYNfQ95BfmanWV5wqjgTdEvgeHL0pMCQP4
- cKKh9pGv+RA8T4OhK7FZVhVovkk+7X/gEOtWEsKt3otwTlNz0PMiETM4Hbb4CldWXdCEVbbWD/v
- lAFHjDRroavuzR3z8zouq2Rd47wviT0mAQ1+PjTfJZQ5wVxp+Pn6mJjGeIQ==
-X-Gm-Gg: AYBFou34SC5OMtWwuyamoAAsXWhWfBmVUhyNMioJJHZRcP0R0mJWfdnIXeTqIWwVxnA
- q6kTyMLWYH0WpJ48TBbR+IIU7inqvyksWGG6FBLrwLetUYvz91YyG6qwc7VoFGE3qABZDjtk4Vk
- G0IBIyylSG/FOYX/61DQgxNz8wkRQPjQFcRswt/7gMrApuZgkg8lxNfJ8n+EgcOX8rvSbYpjQ6I
- AUrBcUc6V7DJdlQeV3vvUpEnCMK+UEdcSSlf2o0OtvFNY9LQCmtRrLw8BEywCldyOg/N2p02/iN
- UvnDOyqQD7avCVZnfnqzD8623KPknz+6Z8wTK3YOsbrQgAlJP8zi5o05wmBI6ppgT1xf3tUR4vv
- oqaS2/nHkWCMWd9MVMszAwMhvmb+ppX0nQaYniO1qAAtK+t5THtgnhQ8ku93xmcAbUarC
-X-Received: by 2002:a05:6a20:6a0b:b0:3d3:ae1f:d7f3 with SMTP id
- adf61e73a8af0-3dd5f73ef30mr18598223637.19.1789665062810; 
- Thu, 17 Sep 2026 10:11:02 -0700 (PDT)
-X-Received: by 2002:a05:6a20:6a0b:b0:3d3:ae1f:d7f3 with SMTP id
- adf61e73a8af0-3dd5f73ef30mr18598161637.19.1789665062239; 
- Thu, 17 Sep 2026 10:11:02 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf596e1f6sm19371296eec.1.2026.09.17.10.11.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Sep 2026 10:11:01 -0700 (PDT)
-Message-ID: <686611d2-d6ca-4022-adbd-49cb7b0b943a@oss.qualcomm.com>
-Date: Thu, 17 Sep 2026 10:11:00 -0700
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1x7FhC-0003y1-3t; Thu, 17 Sep 2026 13:14:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HE1UmH1536242; Thu, 17 Sep 2026 17:14:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=m1yBLV
+ HckyGCJWyUYHrOAJXVzQfiaywqr7xwH/UHK5U=; b=pX16eKfARbNQGfXsnMj2ws
+ VT/khf6wUBDZCQQIAUxRz4WVjk5w5j/epe5gmGR1CtP0eG/b4GPAXPq9Wlkhx9NU
+ qvne0vSdglK9GSXHhi217c0kzjr5H9eTdWIxvLFfY5itG+/atEF5pkx7AATIHAaY
+ wiyZeFuJJ2x8fGa0KnBRzD9JqoTLN8gcGYTCywMVXnkVItdYMWV5EueKwHJraqnu
+ 38JIdJJFg7Jik1RiAfUr8KUNkBsD5O39BBylAFrKZKeRBrvTpk8hg2MQ0DMPIqRn
+ g7QWsvMIykfQCml8MTi4/0I+bZaO9UfyC3XtDJoMbLWrNBUlbO9xQRL0rix+Me/Q
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5ebbfg-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 17 Sep 2026 17:14:37 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HH8wql3546797; Thu, 17 Sep 2026 17:14:36 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gr5ffbf6a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Sep 2026 17:14:36 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68HHEWSN40174030
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Sep 2026 17:14:32 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A5CCD20049;
+ Thu, 17 Sep 2026 17:14:32 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 358EF2004B;
+ Thu, 17 Sep 2026 17:14:29 +0000 (GMT)
+Received: from [9.39.22.229] (unknown [9.39.22.229])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Sep 2026 17:14:28 +0000 (GMT)
+Message-ID: <85471317-0434-46bc-8c44-d899a3bcd177@linux.ibm.com>
+Date: Thu, 17 Sep 2026 22:44:27 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/12] target-info: Introduce target_riscv32
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: luoyonggang@gmail.com
-Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
- philmd@oss.qualcomm.com, palmer@dabbelt.com, alistair.francis@wdc.com
-References: <20260916-hw-riscv-cpu-int-v4-0-babc367b60f5@rev.ng>
- <20260916-hw-riscv-cpu-int-v4-10-babc367b60f5@rev.ng>
- <f692f936-550b-4e5b-90ee-399edf21de73@oss.qualcomm.com>
- <CAE2XoE9KkW+WPWL1g4hzT6OtkQhfYvaMAopBW4NfFMkXn9hjzQ@mail.gmail.com>
- <ef62c7fc-9db5-43f2-adbc-e86a805757b4@oss.qualcomm.com>
+Subject: Re: [RFC PATCH 1/8] ppc/spapr: add PReP boot partition detection
+To: uverma@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ aik@ozlabs.ru
+Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
+ harshpb@linux.ibm.com, amachhiw@linux.ibm.com, rathc@linux.ibm.com,
+ balaton@eik.bme.hu, philmd@oss.qualcomm.com, npiggin@gmail.com,
+ marcandre.lureau@redhat.com, fam@euphon.net
+References: <20260817102733.605346-1-uverma@linux.ibm.com>
+ <20260817102733.605346-2-uverma@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <ef62c7fc-9db5-43f2-adbc-e86a805757b4@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDI0NSBTYWx0ZWRfX+RGoj3lA48CM
- 7xWFF5XemBph2gxWOmrAj2RZML/82cjifldvK9uFMZAKYg3b7xuAfuYL18Hl+smU6OKFc70kilZ
- Fz/RKpxUcHVtfYKhXKaKXP/Jp+B6bsY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDI0NSBTYWx0ZWRfX9vfA5dTlneOe
- MvNLrn2VExrZWPuswM0njonmKIHJt+7cHaY2MX1YYN54LXRDvZDmt0g68uhN8fS67zMmJmt4ib9
- jBpRutFXN2n3qdwQcr/Zjhf15qpY+2n469Clqp8itXLFEkQrjzn0sqF1h5TxqlRfnWS/poofSVY
- hFOl4ZAyPWfylpgf6X+t2mqDbsi5eOfqj2ZLEDj9F2uH8ZNc1aYIlHMcZeYZ392lcgI4HZ5IL1Y
- nqMQGJB5ASFbOnQx6Xl6DtjgM4TpakoRfToi/1aC/9wEercr+Yq8zRrX/riUZO3lp+EMX+osS0U
- sc4rY+JTqPl4cs1Wf6kDdX9z1dOxbOTUCvyqFIYtiZ6sw629+TI92Q1Tkk2ASeyBELb0zB0sJwV
- 5fuzWbVPN6yJs0xIVqYe05NR+SEziej+a1A+UgWQWaEM2dm3eGSbTVvl2JybR96FnCja2QjLsI3
- VYnReiLK0jZNLApONzA==
-X-Proofpoint-GUID: HLGg8ldTF9wpLUrITtLPr9PJpAKdurXf
-X-Authority-Analysis: v=2.4 cv=GvbXaU1C c=1 sm=1 tr=0 ts=6aac1f27 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=UNydBOIn-IAKdUVdJZ8A:9 a=lqcHg5cX4UMA:10 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-ORIG-GUID: HLGg8ldTF9wpLUrITtLPr9PJpAKdurXf
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+In-Reply-To: <20260817102733.605346-2-uverma@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDI0MyBTYWx0ZWRfX/aCwfUTL4udU
+ qdmnpl2xEu6FH8/HMR38AsTDWhu607a4qp4kpjRDlh/RmFBPbFWiU+8ClJ0MQ0YGEXLYJGTX1y8
+ RjPaH6vt/nu/q2SHTU0kEB6JV3LBnCPjGKhElJZcnNv2nJAYR83iVbFC2YhXI3D9uXiHB/+CoAG
+ MEX+gtQIZ7QxkW6krik9sDGlvC5AtROfSoMK965kZKCPaHzf2eqQLZcgQsAGx32YbV1j7xfsHz3
+ Un6SjvnUH7DvlM3xX9TryoNwPNJpVKti3H/UbQQrFAC6hE7wdkPa/i8h3QlR+ZEHDRPHyteqOaP
+ 5WKd/GaCuqDdpbsyOCHyt4LlAAW/NZUd26ENvlKocZrH9kMHgu4FXB776lnVyuRFLeJ4s2HDMrH
+ gryfcQTLHIrfhNv2w0OorWFRDfr4WBQrrDgu76nZid1/NddQUiRNvfdl+isX/CWaMHGbq0tP44G
+ iveVJFOk/Nc0P7OKmMw==
+X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aac1ffd cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=jPD9I9OL_0JefA9qJ9oA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: mfwW1oK0paiSfmyJSm--U2su__SSmlcY
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDI0MyBTYWx0ZWRfXx6i5fJh2Qg3U
+ i80TwJAhTxAxEgcDWBPasKp2OPAF+dEH8DfRk6fbqiOl3zkvZzzhZfeYjoKVFT9GG6ni9vyCbEM
+ /T92JiMXJdzzyqgXxHMw03+7Qfk0I4M=
+X-Proofpoint-GUID: WjNsAADu8J9r37w_4ipCNuZitilorEMF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_04,2026-09-16_02,2025-10-01_01
+ definitions=2026-09-17_03,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 adultscore=0 spamscore=0 impostorscore=0
- bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170245
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ adultscore=0 clxscore=1011 bulkscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609170243
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,162 +129,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/2026 10:05 AM, Pierrick Bouvier wrote:
-> On 9/16/2026 6:00 PM, Yonggang Luo wrote:
->> As I said before, we need the `const TargetInfo*` parameter to for
->> is_avaiable.  I've get all accelerator and i386/x86_64/aarch64/arm/
->> risv32/riscv64/
->>
-> 
-> In general, on QEMU dev, we can't block other series to do a change
-> compatible with a current work in progress. In other words, the first
-> merged wins, and the second has to solve the conflicts. That's sometimes
-> frustrating, and having worked on single-binary for more than a year,
-> yes I confirm it's not always fun to "cleanup" behind people patches.
-> That's part of the work though.
->
 
-I should say "request changes" instead of "block", because I know you're
-kindly asking for it.
 
-> In this case, this series is based on upstream, which doesn't have or
-> need this parameter yet.
+On 17/08/26 3:57 PM, uverma@linux.ibm.com wrote:
+> From: Utkarsh Verma <uverma@linux.ibm.com>
 > 
-> Also, in the series where you introduced this parameter, the usage was
-> object.c: is_available(target_info()), which is strictly equivalent to
-> what we have today. We asked what was the goal but didn't get an answer.
+> Add spapr_vof_partition.c which implements basic MBR and GPT partition
+> table scanning to locate the PReP boot partition during VOF enabled boot.
 > 
->>
->>  single_binary_supported_targets = [
->>    'aarch64-softmmu',
->>    'arm-softmmu',
->> +  'i386-softmmu',
->>    'microblaze-softmmu',
->>    'riscv32-softmmu',
->>    'riscv64-softmmu',
->> +  'x86_64-softmmu',
->>  ]
->>  
->>
->> On Thu, Sep 17, 2026 at 1:03 AM Pierrick Bouvier
->> <pierrick.bouvier@oss.qualcomm.com
->> <mailto:pierrick.bouvier@oss.qualcomm.com>> wrote:
->>>
->>> On 9/16/2026 2:19 AM, Anton Johansson wrote:
->>>> Will be used in the following commit to filter machines using
->>>> TypeInfo::is_available, so a simple !target_riscv64() is not sufficient.
->>>>
->>>> Signed-off-by: Anton Johansson <anjo@rev.ng <mailto:anjo@rev.ng>>
->>>> ---
->>>>  include/qemu/target-info.h | 7 +++++++
->>>>  target-info.c              | 5 +++++
->>>>  2 files changed, 12 insertions(+)
->>>>
->>>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com
->> <mailto:pierrick.bouvier@oss.qualcomm.com>>
->>>
->>
->>
->>  include/qemu/target-info.h | 30 ++++++++++++++++++++++++++++++
->>  target-info.c              | 26 ++++++++++++++++++++++++++
->>  2 files changed, 56 insertions(+)
->>
->> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
->> index 0620a3db84..560d589bcf 100644
->> --- a/include/qemu/target-info.h
->> +++ b/include/qemu/target-info.h
->> @@ -239,6 +239,36 @@ bool target_is_s390x(const TargetInfo *ti);
->>   */
->>  bool target_s390x(void);
->>  
->> +/**
->> + * target_is_base_riscv:
->> + * @ti: TargetInfo to inspect
->> + *
->> + * Returns whether @ti is RISC-V 32-bit or 64-bit.
->> + */
->> +bool target_is_base_riscv(const TargetInfo *ti);
->> +
->> +/**
->> + * target_base_riscv:
->> + *
->> + * Returns whether the target architecture is RISC-V 32-bit or 64-bit.
->> + */
->> +bool target_base_riscv(void);
->> +
->> +/**
->> + * target_is_riscv32:
->> + * @ti: TargetInfo to inspect
->> + *
->> + * Returns whether @ti is RISC-V 32-bit.
->> + */
->> +bool target_is_riscv32(const TargetInfo *ti);
->> +
->> +/**
->> + * target_riscv32:
->> + *
->> + * Returns whether the target architecture is RISC-V 32-bit.
->> + */
->> +bool target_riscv32(void);
->> +
->>  /**
->>   * target_is_riscv64:
->>   * @ti: TargetInfo to inspect
->> diff --git a/target-info.c b/target-info.c
->> index 9083b7bca6..a9fcd1c07b 100644
->> --- a/target-info.c
->> +++ b/target-info.c
->> @@ -250,6 +250,32 @@ bool target_s390x(void)
->>      return target_is_s390x(target_info());
->>  }
->>  
->> +bool target_is_base_riscv(const TargetInfo *ti)
->> +{
->> +    switch (ti->target_arch) {
->> +    case SYS_EMU_TARGET_RISCV32:
->> +    case SYS_EMU_TARGET_RISCV64:
->> +        return true;
->> +    default:
->> +        return false;
->> +    }
->> +}
->> +
->> +bool target_base_riscv(void)
->> +{
->> +    return target_is_base_riscv(target_info());
->> +}
->> +
->> +bool target_is_riscv32(const TargetInfo *ti)
->> +{
->> +    return ti->target_arch == SYS_EMU_TARGET_RISCV32;
->> +}
->> +
->> +bool target_riscv32(void)
->> +{
->> +    return target_is_riscv32(target_info());
->> +}
->> +
->>  bool target_is_riscv64(const TargetInfo *ti)
->>  {
->>      return ti->target_arch == SYS_EMU_TARGET_RISCV64;
->>
->>
->> These are the helpers I needed, that are very important.for subsequent
->> work, otherwise the latter work will be repeated again. and split 
->> target_is_* out again.
->>
->> Those is_avaiable should use target_is_*, that's differ from 
->> target_riscv32 and so on.
->> --
->>          此致
->> 礼
->> 罗勇刚
->> Yours
->>     sincerely,
->> Yonggang Luo
+> AI-used-for: code
+> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
+> ---
+>   hw/ppc/meson.build           |   5 +-
+>   hw/ppc/spapr_vof_partition.c | 176 +++++++++++++++++++++++++++++++++++
+>   include/hw/ppc/spapr_vof.h   |  14 +++
+>   3 files changed, 194 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/ppc/spapr_vof_partition.c
+>   create mode 100644 include/hw/ppc/spapr_vof.h
 > 
-> Regards,
-> Pierrick
+> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+> index 37aa535db2..68a5d2622f 100644
+> --- a/hw/ppc/meson.build
+> +++ b/hw/ppc/meson.build
+> @@ -93,6 +93,9 @@ ppc_ss.add(when: 'CONFIG_AMIGAONE', if_true: files('amigaone.c'))
+>   ppc_ss.add(when: 'CONFIG_PEGASOS', if_true: files('pegasos.c'))
+>   
+>   ppc_ss.add(when: 'CONFIG_VOF', if_true: files('vof.c'))
+> -ppc_ss.add(when: ['CONFIG_VOF', 'CONFIG_PSERIES'], if_true: files('spapr_vof.c'))
+> +ppc_ss.add(when: ['CONFIG_VOF', 'CONFIG_PSERIES'], if_true: files(
+> +  'spapr_vof.c',
+> +  'spapr_vof_partition.c',
+> +))
+>   
+>   hw_arch += {'ppc': ppc_ss}
+> diff --git a/hw/ppc/spapr_vof_partition.c b/hw/ppc/spapr_vof_partition.c
+> new file mode 100644
+> index 0000000000..ced2818998
+> --- /dev/null
+> +++ b/hw/ppc/spapr_vof_partition.c
+> @@ -0,0 +1,176 @@
+> +/*
+> + * QEMU PowerPC sPAPR VOF Partition Table Support.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This implements partition table detection for VOF boot,
+> + * supporting MBR and GPT partition tables with focus on PReP boot partition.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/bswap.h"
+> +#include "qemu/error-report.h"
+> +#include "system/block-backend-io.h"
+> +#include "hw/ppc/spapr_vof.h"
+> +
+> +#define SECTOR_SIZE              512
+> +#define MBR_PARTITION_ENTRY_SIZE 16
+> +#define MBR_PARTITION_TABLE_OFFSET 446
+> +#define MBR_NUM_PARTITIONS       4
+> +
+> +#define PARTITION_TYPE_PREP      0x41  /* PReP Boot partition */
+> +#define PARTITION_TYPE_GPT       0xEE
+> +
+> +#define GPT_SIGNATURE            "EFI PART"
+> +#define GPT_SIGNATURE_SIZE       8
+> +
+> +/* PReP Boot: 9E1A2D38-C612-4316-AA26-8B49521E5A8B */
+> +static const uint8_t GUID_PREP_BOOT[16] = {
+> +    0x38, 0x2D, 0x1A, 0x9E, 0x12, 0xC6, 0x16, 0x43,
+> +    0xAA, 0x26, 0x8B, 0x49, 0x52, 0x1E, 0x5A, 0x8B
+> +};
+> +
+> +typedef struct MBRPartitionEntry {
+> +    uint8_t  boot_flag;
+> +    uint8_t  start_chs[3];
+> +    uint8_t  type;
+> +    uint8_t  end_chs[3];
+> +    uint32_t start_lba;
+> +    uint32_t num_sectors;
+> +} QEMU_PACKED MBRPartitionEntry;
+> +
+> +typedef struct GPTHeader {
+> +    char     signature[8];
+> +    uint32_t revision;
+> +    uint32_t header_size;
+> +    uint32_t header_crc32;
+> +    uint32_t reserved;
+> +    uint64_t current_lba;
+> +    uint64_t backup_lba;
+> +    uint64_t first_usable_lba;
+> +    uint64_t last_usable_lba;
+> +    uint8_t  disk_guid[16];
+> +    uint64_t partition_entries_lba;
+> +    uint32_t num_partition_entries;
+> +    uint32_t partition_entry_size;
+> +    uint32_t partition_array_crc32;
+> +} QEMU_PACKED GPTHeader;
+> +
+> +typedef struct GPTPartitionEntry {
+> +    uint8_t  type_guid[16];
+> +    uint8_t  partition_guid[16];
+> +    uint64_t first_lba;
+> +    uint64_t last_lba;
+> +    uint64_t attributes;
+> +    uint16_t name[36];
+> +} QEMU_PACKED GPTPartitionEntry;
+> +
+> +static bool find_prep_partition_gpt(BlockBackend *blk,
+> +                                    uint64_t *offset, uint64_t *size)
+> +{
+> +    uint8_t lba1[SECTOR_SIZE];
+> +    GPTHeader *header;
+> +    uint64_t entries_lba;
+> +    uint32_t num_entries;
+> +    uint32_t entry_size;
+> +    uint64_t current_entry_offset;
+> +    uint8_t *buf;
+> +    GPTPartitionEntry *current_entry;
+> +    uint32_t i;
+> +    int ret;
+> +
+> +    ret = blk_pread(blk, SECTOR_SIZE, SECTOR_SIZE, lba1, 0);
+> +    if (ret < 0) {
+> +        warn_report("GPT: failed to read LBA1 (ret=%d)", ret);
+> +        return false;
+> +    }
+> +
+> +    header = (GPTHeader *)lba1;
+> +
+> +    if (memcmp(header->signature, GPT_SIGNATURE, GPT_SIGNATURE_SIZE) != 0) {
+> +        return false;
+> +    }
+> +
+> +    entries_lba = le64_to_cpu(header->partition_entries_lba);
+> +    num_entries = le32_to_cpu(header->num_partition_entries);
+> +    entry_size = le32_to_cpu(header->partition_entry_size);
+> +
+> +    if (num_entries > 128) {
+> +        num_entries = 128;
+> +    }
+Why is silently truncating to 128 the right behaviour?
+
+This bounds the loop, which is good, but it also means that a valid PReP 
+partition after entry 127 will not be found. If 128 is an intentional 
+VOF limitation, can we document that? Otherwise it may be better to 
+validate the table size and iterate the actual number of entries subject 
+to an explicit resource limit.
+> +
+> +    if (entry_size < 128) {
+> +        return false;
+> +    }
+> +
+> +    buf = g_malloc(entry_size);
+The "entry_size" comes directly from the GPT header, so checking only 
+the lower bound means a malformed image can drive an arbitrarily large 
+host allocation here.
+
+Do we need to allocate "entry_size" bytes at all?
+
+We only consume the fixed fields at the beginning of the GPT entry. It 
+seems safer to use `entry_size` only as the stride between entries and 
+read `sizeof(GPTPartitionEntry)` bytes for each entry after checking 
+that `entry_size >= sizeof(GPTPartitionEntry)`.
+
+That also avoids having to invent an arbitrary maximum GPT entry size.
+
+> +    for (i = 0; i < num_entries; i++) {
+> +        current_entry_offset = (entries_lba * SECTOR_SIZE) +
+> +                               ((uint64_t)i * entry_size);
+Both the multiplication and addition are based on image-controlled 
+fields. Could we validate the complete partition-entry array against 
+blk_getlength() using checked arithmetic before iterating it?
+> +
+> +        ret = blk_pread(blk, current_entry_offset, entry_size, buf, 0);
+> +        if (ret < 0) {
+> +            warn_report("GPT: failed to read partition entry %u "
+> +                        "(ret=%d)", i, ret);
+> +            g_free(buf);
+> +            return false;
+> +        }
+> +
+> +        current_entry = (GPTPartitionEntry *)buf;
+> +        if (memcmp(current_entry->type_guid, GUID_PREP_BOOT,
+> +                   sizeof(GUID_PREP_BOOT)) == 0) {
+> +            *offset = le64_to_cpu(current_entry->first_lba) * SECTOR_SIZE;
+> +            *size = (le64_to_cpu(current_entry->last_lba) -
+> +                     le64_to_cpu(current_entry->first_lba) + 1) * SECTOR_SIZE;
+I think this needs validation before returning the partition.
+
+If last_lba < first_lba, the subtraction underflows and produces a very 
+large partition size. There are also multiplication/partition-end 
+overflow cases.
+
+I'd expect something along the lines of:
+	first_lba <= last_lba
+	first_lba <= disk_last_lba
+	last_lba <= disk_last_lba
+
+> +            g_free(buf);
+> +            return true;
+> +        }
+> +    }
+> +    g_free(buf);
+> +    return false;
+> +}
+> +
+> +static bool find_prep_partition_mbr(BlockBackend *blk,
+> +                                    uint64_t *offset, uint64_t *size)
+> +{
+> +    uint8_t mbr[SECTOR_SIZE];
+> +    MBRPartitionEntry *entry;
+> +    int ret;
+> +    int i;
+> +
+> +    ret = blk_pread(blk, 0, SECTOR_SIZE, mbr, 0);
+> +    if (ret < 0) {
+> +        warn_report("MBR: failed to read MBR sector (ret=%d)", ret);
+> +        return false;
+> +    }
+> +
+> +    /* MBR boot signature: byte 510 = 0x55, byte 511 = 0xAA */
+> +    if (mbr[510] != 0x55 || mbr[511] != 0xAA) {
+> +        return false;
+> +    }
+> +
+> +    for (i = 0; i < MBR_NUM_PARTITIONS; i++) {
+> +        entry = (MBRPartitionEntry *)&mbr[MBR_PARTITION_TABLE_OFFSET +
+> +                                          i * MBR_PARTITION_ENTRY_SIZE];
+> +
+> +        if (entry->type == PARTITION_TYPE_GPT) {
+> +            return find_prep_partition_gpt(blk, offset, size);
+> +        }
+> +
+> +        if (entry->type == PARTITION_TYPE_PREP) {
+> +            *offset = (uint64_t)le32_to_cpu(entry->start_lba) * SECTOR_SIZE;
+> +            *size = (uint64_t)le32_to_cpu(entry->num_sectors) * SECTOR_SIZE;
+> +            return true;
+> +        }
+> +    }
+> +    return false;
+> +}
+> +
+> +bool spapr_vof_find_prep_partition(BlockBackend *blk,
+> +                                   uint64_t *offset, uint64_t *size)
+> +{
+> +    if (!blk) {
+> +        return false;
+> +    }
+> +    return find_prep_partition_mbr(blk, offset, size);
+> +}
+> diff --git a/include/hw/ppc/spapr_vof.h b/include/hw/ppc/spapr_vof.h
+> new file mode 100644
+> index 0000000000..08787d2aeb
+> --- /dev/null
+> +++ b/include/hw/ppc/spapr_vof.h
+> @@ -0,0 +1,14 @@
+> +/*
+> + * QEMU PowerPC sPAPR VOF Support
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef HW_SPAPR_VOF_H
+> +#define HW_SPAPR_VOF_H
+> +
+> +typedef struct BlockBackend BlockBackend;
+> +
+> +bool spapr_vof_find_prep_partition(BlockBackend *blk,
+> +                                   uint64_t *offset, uint64_t *size);
+> +
+> +#endif /* HW_SPAPR_VOF_H */
+
+we parse header_size, CRC fields, usable-LBA fields, etc. into 
+GPTHeader, but only check the signature.
+
+I don't think CRC validation should replace range validation, but at 
+least the header fields which determine the layout we consume should 
+probably be validated before trusting the partition table.
+
+check CRC validation posibilities .
+
+Thanks,
+Narayana Murty N
 
 
