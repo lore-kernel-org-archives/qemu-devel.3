@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0221C982C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29FAC982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x77Jf-0002ki-BC; Thu, 17 Sep 2026 04:17:59 -0400
+	id 1x77JW-0002ic-KQ; Thu, 17 Sep 2026 04:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x77JC-0002ez-M2
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:17:33 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1x77JM-0002gt-GO
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:17:40 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x77J9-0001tj-N0
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:17:29 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2caced6038eso4940925ad.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:17:26 -0700 (PDT)
+ id 1x77JI-0001wD-KD
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:17:38 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-39647aa9d52so473218a91.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789633045; x=1790237845; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=aM5GazrmTsSs4YpTLVmzO3nGyDRcEg1ZWw1nkFowSsc=;
- b=HqjSUZP83Xk46cmUxdHim3bYemu7Ym8THZlhmAhpuArLYwhsTY22IZmaQ1ehsyEHO6
- Z5dkVX0GPaSjU+duKDdp3cHhBgq3co2cLlt90Tkyhaf/TewwEsqC9UOkUPWsHHBVcL5b
- VVLowtkvVUPuBXPptXfygPvLdLJ9iHWbAnRarJzfuKqsmRaYWnWBrR3LL/Si7s3GssP4
- Rx4Asdl84RETh0dZ/szO3NT3yPnp6Q5JWAr+6s7uayiRJit27oI2gBV7XGdecbZfGiaw
- VYYctADA75dN6KSRGZzZRBSlX2F8L/zaBHSL08l1OOKld05QRefrmvyb9s5/Mo3EdOjp
- Ukkg==
+ d=linaro.org; s=google; t=1789633055; x=1790237855; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=1reDOt4Ue25bUW6XWAKTeS4BRx5x9LuLs9+NuAuYaAM=;
+ b=yHzyE62N9c17jsEwJIn9G8+TAuk5kMIfNtBZTcgQoJgDvhdWOwtJzr54zbovtoeCJc
+ dhdeeD/bMWkZg1mXm28OvK4TB4W42zAzhpdmYYztmMcJPouUDTyBsJXHHuxsunvN3lHi
+ Kb4TScjFqc/+sKErX4congvuK0lUSKNOII+fOxnKPBtpE+cV3zSJZSMoRAvg6x0wmlOx
+ oYw5aiQPeIziVIwMYkmuVAqAqpt5w1DPRLZcP9fP/mlKpq15CoFgdF78++tuGibn1pu2
+ aiAVHh/MaFrCZ0tABKxJaJ1FoQyok4yVz/2vfmg+TgZu0oIi/ivtEbQFbldiQrshuEd9
+ o3mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789633045; x=1790237845;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=aM5GazrmTsSs4YpTLVmzO3nGyDRcEg1ZWw1nkFowSsc=;
- b=EhFyfRaBrHEk20LzyQGpf3Au/w59DWqznCEH8Yl6+c63I4sYq42Rx/oaunSzCH8a0h
- LwSYYtwIQk2KqPb2VC2i8chK3XN+NW3L3/r3vb5THUd9Ib7PfPnS+i3H4uY3nX1DGroe
- Fo2oMYo9l16gmo6HRvJlxDA+RsefPioXX7GbGRr6XdNJi0iAhxaEjoQ7rrFqIvktQ2yD
- tz1pzIOXJH1PHVGsBGbwcElZ2lEmhMZRqcqlNarGEV6prRggXI5QCiPeiYOpU8x+Sx/U
- GDvOl2igBEnrMKWFeqt0yhgpgzGs3nUapHOOHO/7paIPEWw2zfeZHLpObaBNyMGudjK4
- l3cA==
-X-Gm-Message-State: AFuF++mdaWsHn06K8Hr9EM0k+ZZOwWH6cDZ8IeJpx32T9n7gq3nzg/0g
- lPM2NGqqBg/zWw4HROICL6jnJz+pIzl6dM8UUQufLlb9kc4nKMiJCDxKVMETNgyeCvsjirX+65g
- KqJ+F0ow=
-X-Gm-Gg: AYBFou0qMACdRsNbDpnFFj6daXcyCwQBHhzro/lSkqzZHhkyBbAxs7I39sMHUReWybH
- tP9Kxc2YXo9eQP4pGMeT/83oCVKJ/Zvupp3UNkhc8/31RvDEKkMVeqo9wXhuQBKjoaEbvcwbAIE
- yZEhWBi5iWSZKaArpsOFhM90xMAEX0k4ovmEl/AC6h2OAf9GJWiv5KkDhdKjvotvTB4pb1eYNbf
- kB7p0pXi6hp+r6eTLpChT1kqxE8YzsfqA+81TH4mgO0kIWeq88aIwUQfgusefzrzhqXaKHwWpsc
- 1Hw4wKejfSUyTl8U0HjqwhiTacBKNXejfounXO8MM5Y19cIbpqmGsKebsjrVam7+MMOds5ikC4c
- ZxupbheFHS2uL3HMszhe1hggtDG1AO68cF+V4M12+Dh+166MQFGIDXZSxP/MNtPYpmUBDLFTrRX
- 9VIzstnrQeKhd0hf5uPOD3idrzAX3qbIhUNlQwHW/ybJmJCwPJtlf0ENS8F2WLlblWZ9Tu3DBry
- SLYKAM=
-X-Received: by 2002:a17:902:cccd:b0:2d8:d4d2:d137 with SMTP id
- d9443c01a7336-2dd9ca26d17mr43862095ad.19.1789633045392; 
- Thu, 17 Sep 2026 01:17:25 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789633055; x=1790237855;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=1reDOt4Ue25bUW6XWAKTeS4BRx5x9LuLs9+NuAuYaAM=;
+ b=sOd73/ZWLoiSLwGPkIrQuipMh+0TxtFQDvWLVt3Rqe4QN4MQ2gbqTBCyh4wRKvpPdw
+ gfkyFhS+OREswbzlIjlxPt0LgQQxRsWtS2qdWtWozA6rkIEBnN1vO40F68C7lAfM+mXy
+ lhMKCN3Pkuv5UU3GMX5OFBXcnf//CZ6aHE1+KZ9J+J+iu3ocB+itXZUS1srJzBLx1gCx
+ ScOIJVptLwe/e/fLQdUow9oxdfCzUm/QUR/hrFibmTKXu/C51MBUB1tnMg4svVDjm0rv
+ yRCQBo1plYnOfANrwtG840UNo4lrbslgyLb6WsWNdc7Rj4oVxypbeFX3aTva2OGd/1YE
+ Ph3Q==
+X-Gm-Message-State: AFuF++lUSxiDGycEtsjM5a81bizK46fKhxQA0UHa+p3DrX7YvTcivisg
+ nMx7wwjaNs5M3bqFHH8crWA3Xpi/I0KXM2yov4dEZafJ/UTwyrt3KDoqC4runSeRoXtYRMPjjuy
+ Xuyv20rc=
+X-Gm-Gg: AYBFou2uu5tA1WoaqjNGmkBnAHIfhtokcgCtziFdYQCURgrRGC+IELbMZoH57Khy69h
+ 1ljaVSYRKmgKC9OrmzZuX+80X3m9cd9stmvpvviPaZ6CJCBFQAM8zVkG8qr0D7lD3Kothr2L/a+
+ uhrMocwJxCPuk4/QsfXZEnqWjfsE7mYykmUMP+KnVBP3BNMlgnncE8EMh+LDMmf3SVT1/TmF8ew
+ KbPIthASOwYoy6L6dg0vXTqRPKrRe3PtUWqEV6e7GBZvsMrFIED8Om2lfQWgg63CruTexPKqjCp
+ UBdbkn3uXPMeR1wBem5VYheFBEwqebdn0lagKZFPohk59rSvvopQg8+o2xDa6BqQeR92SXdD9ly
+ Qy14iNqWwAsqqw655amtzRFy1T6pCJrh5Rb+u7ZFT+6GhwnfSVz+gJxljvHp1hQdAc7uVQN1WpG
+ 8u6pg3H/5F36t2sNTFB0BcJGNnd7T5nTEqBHWwReAs7gfqIBg8t7JfN7QUV+0nRJB7Ag/iuAn+s
+ YPKdKI=
+X-Received: by 2002:a17:90b:384f:b0:39e:455f:36fc with SMTP id
+ 98e67ed59e1d1-39e455f3d97mr443157a91.28.1789633054527; 
+ Thu, 17 Sep 2026 01:17:34 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:325f:1938:d075:8c13])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33c1943f4bcsm127638eec.21.2026.09.17.01.17.24
+ 5a478bee46e88-33c1943f4bcsm127638eec.21.2026.09.17.01.17.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 01:17:25 -0700 (PDT)
+ Thu, 17 Sep 2026 01:17:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 06/16] target/mips: Use tcg_gen_lea() for [D]LSA and MXU
- S32LD*V opcodes
-Date: Wed, 16 Sep 2026 22:17:06 -1000
-Message-ID: <20260917081716.946668-7-richard.henderson@linaro.org>
+Cc: Matt Turner <mattst88@gmail.com>
+Subject: [PATCH v2 14/16] tcg/aarch64: Implement INDEX_op_lea
+Date: Wed, 16 Sep 2026 22:17:14 -1000
+Message-ID: <20260917081716.946668-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260917081716.946668-1-richard.henderson@linaro.org>
 References: <20260917081716.946668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,54 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260831062630.58771-1-philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/mxu_translate.c        | 3 +--
- target/mips/tcg/translate_addr_const.c | 6 ++----
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ tcg/aarch64/tcg-target-has.h | 4 ++--
+ tcg/aarch64/tcg-target.c.inc | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
-index a38f4da12ba..5361c94b343 100644
---- a/target/mips/tcg/mxu_translate.c
-+++ b/target/mips/tcg/mxu_translate.c
-@@ -1596,8 +1596,7 @@ static void gen_mxu_s32ldxvx(DisasContext *ctx, bool reversed,
+diff --git a/tcg/aarch64/tcg-target-has.h b/tcg/aarch64/tcg-target-has.h
+index 86672b2eab4..9420a7bc73c 100644
+--- a/tcg/aarch64/tcg-target-has.h
++++ b/tcg/aarch64/tcg-target-has.h
+@@ -57,7 +57,7 @@
+ #define TCG_TARGET_sextract_valid(type, ofs, len)  1
+ #define TCG_TARGET_deposit_valid(type, ofs, len)   1
  
-     gen_load_gpr(t0, Rb);
-     gen_load_gpr(t1, Rc);
--    tcg_gen_shli_i32(t1, t1, strd2);
--    tcg_gen_add_i32(t0, t0, t1);
-+    tcg_gen_lea_i32(t0, t0, t1, strd2, 0);
+-#define TCG_TARGET_lea_sh_valid(type, sh)          0
+-#define TCG_TARGET_lea_imm_valid(type, imm)        0
++#define TCG_TARGET_lea_sh_valid(type, sh)      ((sh) < tcg_type_size(type) * 8)
++#define TCG_TARGET_lea_imm_valid(type, imm)    ((imm) == 0)
  
-     tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx,
-                        MO_SL | mo_endian_rev(ctx, reversed) |
-diff --git a/target/mips/tcg/translate_addr_const.c b/target/mips/tcg/translate_addr_const.c
-index 1d140e918da..910177e43bc 100644
---- a/target/mips/tcg/translate_addr_const.c
-+++ b/target/mips/tcg/translate_addr_const.c
-@@ -26,8 +26,7 @@ bool gen_lsa(DisasContext *ctx, int rd, int rt, int rs, int sa)
-     t1 = tcg_temp_new();
-     gen_load_gpr(t0, rs);
-     gen_load_gpr(t1, rt);
--    tcg_gen_shli_tl(t0, t0, sa);
--    tcg_gen_add_tl(cpu_gpr[rd], t0, t1);
-+    tcg_gen_lea_tl(cpu_gpr[rd], t1, t0, sa, 0);
-     tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
-     return true;
- }
-@@ -47,7 +46,6 @@ bool gen_dlsa(DisasContext *ctx, int rd, int rt, int rs, int sa)
-     t1 = tcg_temp_new();
-     gen_load_gpr(t0, rs);
-     gen_load_gpr(t1, rt);
--    tcg_gen_shli_tl(t0, t0, sa);
--    tcg_gen_add_tl(cpu_gpr[rd], t0, t1);
-+    tcg_gen_lea_tl(cpu_gpr[rd], t1, t0, sa, 0);
-     return true;
- }
+ #endif
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index 76adb2256f9..6836c0dd94f 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -3081,8 +3081,15 @@ static const TCGOutOpStore outop_st = {
+     .out_r = tcg_out_st,
+ };
+ 
++static void tgen_lea(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
++                     TCGReg a2, unsigned sh, tcg_target_long imm)
++{
++    tcg_out_insn(s, addsub_realshift, ADD_LSL, type, a0, a1, a2, sh);
++}
++
+ static const TCGOutOpLea outop_lea = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_O1_I2(r, r, r),
++    .out = tgen_lea,
+ };
+ 
+ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
 -- 
 2.53.0
 
