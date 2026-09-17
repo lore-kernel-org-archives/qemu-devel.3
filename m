@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7781C982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCE5C982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7K07-0001U3-BF; Thu, 17 Sep 2026 17:50:39 -0400
+	id 1x7K0J-00021O-HH; Thu, 17 Sep 2026 17:50:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7K04-0001M7-0Z
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:50:36 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ id 1x7K0H-0001xT-DV
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:50:49 -0400
+Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7K01-0002jw-RD
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:50:35 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-396ccafb752so116252a91.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:50:33 -0700 (PDT)
+ id 1x7K0F-0002p6-OD
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:50:49 -0400
+Received: by mail-pz2-x0f.google.com with SMTP id
+ d2e1a72fcca58-85469b355ffso73892b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:50:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789681832; x=1790286632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789681846; x=1790286646; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MW/t/GvMSyUXlIM0eIcKq0E57Y4Rnp6duUcMnIYcYWg=;
- b=XEPTJDo8sFWjGkitTtsBZqDM4zyQ2vyNBla0iqmKKpXhTSplrqfPhvBf2TTGVxPfme
- 4t5SD71dLNvnIM2SBC9Gtv+FU43lEYmh7bTxzPH2JfkAXW0Quhs6iFhHcL0eChoFIIvL
- 0bbKnLoNqHBTHgabECP9xvwUCHU0PlqbircHKRfBLVvQdGcYUT3sQsWLe9qgZcF2RCnT
- W9djjNn9HqFLlhPJcZgqTpccPqgeB5xwmkaeNN+PVwxz6nEYkNGrmziG7rp00tc4xjzO
- /ZqC52LKMXiULye1+FGXcnY8mxMAOMRI7BVlY71Wzh+SF+1nEByRgqBr3UL0MWlan+lV
- 5OXQ==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Svj+lMI5oIYb2v+4aL5AoNG9IHIpPEaV2xJ0SEo6gQw=;
+ b=w0pk2/Zk756lY4cm5kCOJZ833KWajDCLv8GKVSqhtUsaACEaWMwjz3TnAd/w7j7nYU
+ LetHbxQBp9rx+c4LFFFqY85uGUAeQMvzcGkWjHezTZYzd5dr+nvfn3NcMwxBPgbuuwZ8
+ 01H5FiqkYZl5GRUGJ3eEidSEMDUt/cheBSMGPvR/hISkkZAiJhE+K9+bMyQzjBHQAdHX
+ 1WKJLg2/T2nqgESXFyo8GI0TL0rhFCYFJMeXphlQw6O78Nrmx5Q3egDrInPZhuII0UhU
+ kiW3ak19w7aZmNZENm01uThMBuFCEoA0EsfL/NONizyjm7MBy2VHxpzCbcsrC/8u5tTy
+ 3w7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789681832; x=1790286632;
+ d=1e100.net; s=20260707; t=1789681846; x=1790286646;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MW/t/GvMSyUXlIM0eIcKq0E57Y4Rnp6duUcMnIYcYWg=;
- b=ioo35ZgAfkL6ejOiwsNmVHM/feSViDJk/LuScA84pOUqxKTf+WhYd2Bubl5aZ3ZTTo
- o0w0W6sdd5Ui0I2KC6Mg1fDqMqz7cidhyGDZzD6RFlFTx0uLoqleBsq72P/gjAPp5Ju2
- kuV9kCVBKMY5BgENcWUSpTk3YYTKpe8YzuQx7Ul5OtclNr0r7D9OFrhh1ZmwH/GoY9pY
- +4S6a4ipVO7foItQUvziBmYgpwhxw0aAUn/Ko2tCEdooGJd7bq1OrSnYZ+6tOFJQ6KKS
- l3sFbZEf8kT2t9SWO/vRjQVNQmdXOMQfrFY5UGl19152hRrlhICGBuvbJf1YQVP7a24v
- nTkQ==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Svj+lMI5oIYb2v+4aL5AoNG9IHIpPEaV2xJ0SEo6gQw=;
+ b=EuWAgIanYz3oNPnm4tYIFkEVVDuzsmFle+PUrwSA44djys0+BMe5obSP43UW7AMIos
+ 7a2++n2370lhFwhi9yrzJ1DY4eckL+wiBTlVTMjG2gCad0113OYGB7itsMMrzJ2x5Yqo
+ +t0mx2INSYtDbyqahROXuStYbnrTdWDlHDrvQlSr7GbfktqThMkNlTPM9+RgZrcb3VRF
+ xDC5knNYladvpiTulVDr4MDeB9eyD3cqfBUHBJw6BDK/D70PtLdoOaYuXJA8VgUOUOTx
+ mc7ED4X+GGlZZm2Aixl5phJ6XBjGINlTrvisShpRPyfWnqsK2pdLp5J/bT0Sgc+bgaO2
+ UMaw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxTQFkFrjyF70xJC6mEVyXxY0HjFMkXAU/z/Yvondyjz+lXtVz1pOF4w2/4eS/l9HDV+aPwm1Y0wEqE@nongnu.org
-X-Gm-Message-State: AFuF++mEscO06YnEo1M1mZtLphQqDOr45Z6lacyql2lcyXKbeBacphrw
- +KjeW3jThVHrGmez//DlGWhPO97v2Ra0AJX72hWx3DwQQiB86twCjoViKRiCb7dTBSY=
-X-Gm-Gg: AYBFou15NgsGTfBgPKeqhpX+449JnpHgr/TNwgzZj0a4WsA/7jq9Hvl9HcLdl+uGOfm
- qRz6xXcJXDKU2qPqHbvDDfh2G1G0Y0sqqM/jDHqczIPmhfxe/K7QTjhrom87kRyvaGJL+oz8RIU
- IUorHjxIbiR3dAq5CxUYxkZ8HHTY/jI1eiH2hpommXOqUhwX2Nzp3x6/DOEWxp3XEdNTHkxwUJ0
- 6gwFBiYY3SYJdBzfkbtiW2R1BaxKnLUU3ri7vl2H6eahan+PrvybLnoTIlv4YZDEgCSeZ3vRX3P
- p90NnfJO4zolaFGxeudOpQJSdhdNbwzj6OxOm34tU9I/4kFCvjAp0FzYTMQGHhxmqweDqKGTHkX
- CwR0VKVWEmsiGXsVV8qXSdA41aAzxGpzJsR7Aap6bjz5pDZHNhYXOsG5YKCO2IKwONR6gFB3Kj/
- IehBCWxnXvqnMNXuNFYi0LuFQiHvvfL7aqpM2WiG08S31F8DTueCKcFHGLyPbzPBVzVc9uCj0Y/
- DPfEV0aX1Sr5IFVIXunPm6hOzOh4iqjb+1xAU6unOej2/oFbQTT4lGcjAMBnw==
-X-Received: by 2002:a17:90b:2243:b0:39d:f773:37b5 with SMTP id
- 98e67ed59e1d1-39e549c5057mr1725241a91.0.1789681832285; 
- Thu, 17 Sep 2026 14:50:32 -0700 (PDT)
+ AKwUvBytRjHkU7gz4by2Z00fJwqVLEVemV63YyBqOQZ53O/Pbm1jI3H8Zornf4qbc7b2SkEr8g1JLAq2/5W1@nongnu.org
+X-Gm-Message-State: AFuF++mhQM/WXh3vsz16ya7Lnqi9FooQYQeRNAbKgdgaW44irlhd3DS+
+ L2+z5x9KufflPATnVfJOD/edIoYMof49RNJ3b45Ig8jDEvcQtY0MrZm2fCFskF6t14k=
+X-Gm-Gg: AYBFou2QP8A2rx6+ReXnsdd+9edufEooYnFLmdmVJP2Xshn4DH2v+IgkK8PN6nTeK/c
+ aqAzOjsAmpwoZCUi5FYiw9RcVQh0fxDLxUvdRwwKj0x295sG8JTn5EnCPsDQ7t/HItEg0gpW5QQ
+ 8LUMh8DFoCvfM6vrl439z2zn5NzBLKrJR56IHRKE8tJYr+yLMAyIyHRuqE3mJO6YQlAlW9Ovn0K
+ RmspRBKVyH8ifwZMr2fVooKDf6n5eJkpsCpXXhtsy1H9RtFBeXSjdj7WnApr6g36C4HFMStwKKk
+ Xv7rxipskP6ME/NzG0ZmdOwfwKIgNLpwBN5JtEcbSCMOhtf8mWN013URsm53XBXC1afYUWvhYTF
+ +HW1H2QWMWA3p2XXhMRC30m/s4mYPI3+jbkeJFD4NXEm4CMTU9q5wwW2KAYQbzJD61h0nJqIHpG
+ vcBbdfE12O6PpUdieu6T/Q2ENcZ1vPitEpSqB+JI7ve0TKopGLwecBk3HdO3Rcg/bXXFwmih85e
+ vbO5PfcoEpYEvcZq6bjv1RhXqRolDHxeQy6FeL3QgH4YCQX4yXxmJwq28MaLQ==
+X-Received: by 2002:a05:6a20:9c8c:b0:3dd:85a9:559d with SMTP id
+ adf61e73a8af0-3dd8c57fe0emr601870637.31.1789681845705; 
+ Thu, 17 Sep 2026 14:50:45 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:5a4b:653b:1dce:569f?
  ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14395d771e5sm15663827c88.15.2026.09.17.14.50.31
+ 5a478bee46e88-33bf5aee8b0sm35753840eec.23.2026.09.17.14.50.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Sep 2026 14:50:31 -0700 (PDT)
-Message-ID: <c008c71b-071e-427d-96c4-7b9024a5cfb0@linaro.org>
-Date: Thu, 17 Sep 2026 11:50:29 -1000
+ Thu, 17 Sep 2026 14:50:45 -0700 (PDT)
+Message-ID: <a8180a70-2dbd-4c54-9a05-15920cc194eb@linaro.org>
+Date: Thu, 17 Sep 2026 11:50:43 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] Firmware 20260917 patches
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20260917133318.2004317-1-kraxel@redhat.com>
+Subject: Re: [PULL 00/14] QOM security status patches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260917160525.1275388-1-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260917133318.2004317-1-kraxel@redhat.com>
+In-Reply-To: <20260917160525.1275388-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,23 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/26 03:33, Gerd Hoffmann wrote:
+On 9/17/26 06:05, Daniel P. Berrangé wrote:
 > The following changes since commit f8296b816fabd370307cd22b0270b610fc0fa279:
 > 
 >    Merge tag 'pull-loongarch-20260917' ofhttps://github.com/bibo-mao/qemu into staging (2026-09-16 18:24:08 -1000)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/kraxel/qemu.git tags/firmware-20260917-pull-request
+>    https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
 > 
-> for you to fetch changes up to a1b96fcde870e49896cddee40459d5feb1f15694:
+> for you to fetch changes up to f49f267664ac9a681ab19c1790cc3d75a1723790:
 > 
->    hw/uefi: improve default config security (2026-09-17 13:16:02 +0200)
+>    machine: add helpers for declaring secure/insecure machine types (2026-09-17 17:00:44 +0100)
 > 
 > ----------------------------------------------------------------
-> - igvm: add checks to parameter directive processing
-> - hw/uefi: add check to uefi_vars_mm_lock_variable
-> - hw/uefi: align default config with upstream edk2
+> Merge support for recording & reporting object security status
+> 
+> * '-compat' gains a new option 'insecure-types=reject|warn|accept'
+> * '-device help', '-accel help' and '-machine help' report
+>    security status of their objects
+> * 'qom-list-types' can filter and report on security status of types
+> * 'query-machines' can report on security status of machines
+> * Adding macros for defining secure machine types
 
 Applied, thanks.
 
