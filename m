@@ -4,105 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E14DFC982C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C95C982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x77PY-0000zo-Ay; Thu, 17 Sep 2026 04:24:04 -0400
+	id 1x77Pl-00016o-LU; Thu, 17 Sep 2026 04:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x77PV-0000zT-3E
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:24:01 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x77PT-0002Ur-6c
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:24:00 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc1cea4bfd1so402120a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:23:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789633437; cv=none;
- d=google.com; s=arc-20260327;
- b=pwrtbIbggSFC1j8SeTd1AL74YoqLGDCnijbni8jrotlB+YsQXJbu3w8iVPGgFL+XTG
- WvJLmZ4lIJi1y/F9Q0aDuVc5AcffvxUoqBxYx/TA2389HnHdi41UYbor/FOBjkebNWrX
- wNjrqYyiXCPM6krGrDFzUqI/CQ9c/OcO+enxR2B8i2ciK3c7JRCIgEYu78ntSsUolsAe
- faF08b5NEDC7GiXlcv6bkcfOf2fw1dMdXMOPTA52GPOwbSGCoC68klKsAo89rQzzGyxx
- BuDh+7w3b3cdcXlmTFGRDsmvFjpdoIoU4oT4dQa88qml0YEC2iQt1zpC5SSv6SI7K/T2
- SWWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=MgljbMx+9tbggmGmsP3W5ODQaw4qYd5hbvO8caxkUQI=;
- fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
- b=Sjn1Chhv8N7FPSFkypHgGhqo/ViT0U2GiZpDAzjgzilAtZHa98ePsV4RuWu0+nMZoF
- oIqeqxsp70fELr8Jx+ZfIJ3eCV5rcz5GloistRSuAJFNu6iLGYtJWKhgfHyu+F042krb
- f1lRellUnc+IP77Y8U0ixvtKjJQCixmXgmSvt+P0QTmwp90QmOK0x+uwE2Fk5Ae6lduA
- ZKvCTbENtji/zTMPdcd2cSqXfaSOET/n2zUEw1AWoBJhJrfUTLVvGhq1ACooLsbPKRh7
- dVqp9vqA4OFoZXE0fa2cgNdijkOyG1HZa/OI9R2cEI18tcdP8W6zRzBy7/5UcrwVIeUI
- XPdg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x77Pj-00014L-BY
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:24:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x77Pf-0002Wt-Kr
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:24:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789633448;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mjRxrr8bXpQ+C+RspEvvJUmTW6jnsH/Jva0+1T6sCL8=;
+ b=OqK4McxQVWhQCSDKNe3J9g/GuXlyINRYfaAQo57iG5Ys5ngziH1uF+uqZOm4eOHbPKTWLv
+ jVWqMfx4sNJcVyF1FPv3eEoewHpoi69kzUM8gv7TLbZ21GWmyWlrXMX3k7eqxI91JFJGCl
+ pL0lN8cf4rc4xSz7eqlcku2TYOeZeSc=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-70-VIPy0ZjFPzCPBw7MF-QXFQ-1; Thu, 17 Sep 2026 04:24:06 -0400
+X-MC-Unique: VIPy0ZjFPzCPBw7MF-QXFQ-1
+X-Mimecast-MFC-AGG-ID: VIPy0ZjFPzCPBw7MF-QXFQ_1789633445
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4870af30a85so289894f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789633437; x=1790238237; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MgljbMx+9tbggmGmsP3W5ODQaw4qYd5hbvO8caxkUQI=;
- b=N+UXjEE/X6LkqdywpUfM2FUz2hyPM1gBA1hwPmb8Z/tH85zokC6pCIf3c+2iXRd2sJ
- WzJU/Ng98SfPfo2EOgbRdysiQFXSvU/I1SzbjzCXK+uvfsPeAyiqT/GJtNp3f1pTP2pf
- R2g+0bBbxal78QF5UeAJeezOR+cvE/MXk0//1T7fyXCrkWfvjYUm1WPuR9vfPXH1mJV9
- HFOWAb2/9eb+Nuj9MxkbTU76IvUfoEfQ/5JQl6OjPtr8CRwCgI8qAPu+7ffZuyPtCu3I
- gH8EKRuZlo7TKkebwQDMSmlqYoGV8A0hiqcaEjvaf3Uxcah0l9e6Psjw6KfmmQ8kj3zH
- sVWA==
+ d=redhat.com; s=google; t=1789633445; x=1790238245; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=mjRxrr8bXpQ+C+RspEvvJUmTW6jnsH/Jva0+1T6sCL8=;
+ b=mdC4ZC4D6aBWIAm4CHu+EWT0T4EuAmu/JM1pDWQFg3bV/YaDenxhYAnlXRjI/65LJ0
+ BSeds9TzqibnKMBJeYuQg2NYaQiuDDP7rOzph8r4bA4wswf6eJG43MAp53mg2ZqFb/lv
+ xt5ThDMhxX1QJA77reX4TJkZ46l44hrPUZi2R2oYEdOwvypawipYflNXw1nWawuTkLMn
+ 41101EZwOtP+t2uNqEz+PAOjWvJc9WA1RBOmedbxEvQ/UKocrmwAjOkbTLyDFbyTYDIa
+ qR2n/i3T8y9R0RuVkCtkP0y6CC8j/H4DuVdC3JxCiSXsjtTcida360jfU06IC3zRyiR+
+ Ta8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789633437; x=1790238237;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MgljbMx+9tbggmGmsP3W5ODQaw4qYd5hbvO8caxkUQI=;
- b=HQNxCLuntBuaViNZ2kkqfBvvrX4q2exBb0h70Vh+9U3ZZ0/WhhUqIVMcl4O4YCy47j
- FiZ5C1SMktK3U0Mcoam4wN4/Z/C5zp+BF+UpgjrnQ1fNiyF8P+AltGNIj+NZtTke9iSz
- hoMxJQavz7+vh551e7bZBzGhoj2Av+kNzKlQsPrYP7RHS2zFFN0z4TnRZO8VBf2W87sQ
- NFbin8RXyt675wTZaS0NBsE75M7SMQ+CD7hbQHpct1l1M5m5cXQeU5/viEj7L150VQjF
- 9X7eOikma/AptkR/6K/T9GHeI413SpmtYf+h+ouSyK+avF9MxG1tfFT84DZgrY/asQZf
- 7Z5g==
-X-Gm-Message-State: AFuF++m849F7MpM7vYfzzy+tyqsJ72itpcxLN3hYcEaey+whKp10HjDp
- FRC88FFE9JDlm0BJ9eJPgtk8uVNKQ8KBeV4g9se2f2tnM5BC7SbFOb/ThWTFHMxPqWE0fRI06xZ
- qZ6qOFwMbME8l77BbgaBSkt0pRTNq3CE=
-X-Gm-Gg: AYBFou11xHt3+stSiRdm6OOVbVttMzH+xxkab1yrJ2abMGm82LQrZaQcQZ6jRZUwx3W
- DcWUGweOGRfwYY+QUS7jP7kLZWS7cq7zSbPz854LwBWydHf9PQipc8s4Rqnzq8oVRhJuo0RzNq5
- zI0dvLnejFGbGSZA+FDJovyIRkb5sXGZ3jxrm8En3cPR7zIjkILuJZRlxnkqjBG/ugT/GZ2Ufht
- sIhHZQJerxk9WQTYghYC1PBx33sgDMppPLT7aKvYcj3V3+jzeRAoDl/d7XPMgZgbPDCS9rvlzRO
- HbvyrJzMUxspVT2sO1T7uzujJn/6nbiV9xhJ75hNvFRkw09UAcEXF7yVTEEMMKEDSQrvL6DsgfJ
- urp5W5cdZLwQ=
-X-Received: by 2002:a17:90b:2744:b0:398:ba56:b926 with SMTP id
- 98e67ed59e1d1-39e1e5770b9mr19219704a91.25.1789633437220; Thu, 17 Sep 2026
- 01:23:57 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789633445; x=1790238245;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mjRxrr8bXpQ+C+RspEvvJUmTW6jnsH/Jva0+1T6sCL8=;
+ b=sPV9qjiQIFff8uusj/1Bd3wofQ/v1n0wKgbnpYHNiLsmNsUkbJXs7k6Etd96hRe9Io
+ rfIYpwhuTGe8O3FSb0jNo3aeT3HwKhHOjGlJw2E3d5YMzKpPG6XFzs0F6anIQKsCf/j2
+ MMaqG8aLFpXWuiUwoazCseVnBOsmRZx6tkV9oFxfvs3GZNZOvxu69QWf5AO990oiYUlB
+ x5CXTjHKfpFd4ZlzwXeqibDysIujxFn2d42SX6lcZE7WqJ5+1gLT+kg5mLZ+QzJOVgfY
+ IjdDwxmHOmurkJcAeXSUBPY5EZW+eT8Yuwn6tHhTHTShs6yTsrs7P/+MMnchgFwGOLlO
+ jG8Q==
+X-Gm-Message-State: AFuF++nA4ylB3xMujxsCh7GiclDyxHvbOZa9vZ3IUMO0Z+pFtYU8/MEj
+ c3uKZubpiC553qa6ZlEtWapsR/GXXItqO1yEksZ40SnuEUZdaZDyW4jeYfyIU9zsDTqvJa/PfD0
+ wd6yoDIqWyWqLibzPFOl2lQ/lZrDkep4s2KZktooNruwm211jzSlCLwyt
+X-Gm-Gg: AYBFou22Ad5tDz9LANVnSDCasBSPIYE34mjlUJjtIBY6bX3XPvrjFbpY6sHStHYIWDS
+ cluKlry4Hi6y+GrF6mPYrilHiNsy6cxkvNWsPAFKh20Fa+wjxHe4P6mDDz6qpH0ll9bT3eJNNZi
+ z9KdqXH/Evu+ZSa2ud3Gqtjwzpc+qWUUy78Z2gT0GCKl10ZKWtkGrgGY4EyUSH00rzfqwfWri1N
+ eooo9TFyO5G9uWSD2gKWAEDTnn/Ii6V7vXpwfGgz1kwN9dhasNHvgz0E4OJpFx8uvKdAw7xo+WC
+ GCe1uoroQxHhe2RDQsUURis2BKD0trsYBTf1Lwp6tc/Tc3z9sWWQKQZ4F+7m1yPewT+gAjorww=
+ =
+X-Received: by 2002:a05:6000:1ac8:b0:487:fb2:1a0f with SMTP id
+ ffacd0b85a97d-48713aff89bmr3728840f8f.6.1789633445151; 
+ Thu, 17 Sep 2026 01:24:05 -0700 (PDT)
+X-Received: by 2002:a05:6000:1ac8:b0:487:fb2:1a0f with SMTP id
+ ffacd0b85a97d-48713aff89bmr3728809f8f.6.1789633444687; 
+ Thu, 17 Sep 2026 01:24:04 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.181])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4870bf1fa70sm13366378f8f.9.2026.09.17.01.24.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Sep 2026 01:24:04 -0700 (PDT)
+Message-ID: <b6f9631d-a086-435a-be47-3092bfc426ce@redhat.com>
+Date: Thu, 17 Sep 2026 10:24:02 +0200
 MIME-Version: 1.0
-References: <20260805092017.21028-1-dongwon.kim@intel.com>
-In-Reply-To: <20260805092017.21028-1-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 17 Sep 2026 12:23:44 +0400
-X-Gm-Features: AcwNN1UWZ6-67jlYvxjVS83NLC56rU91JsNtw6_gyVe6Q8K17crbojue23AHqgo
-Message-ID: <CAJ+F1CJb0uN6912RBvhe5H=epKnShmCVGDVRw8_mJWs-ActKVw@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Enable fullscreen and zoom hotkeys for detached
- windows
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pz2-x10.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [qemu-web PATCH] Add GSoC 2026 wrap-up post
+To: Stefano Garzarella <sgarzare@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Tanish Desai <tanishdesai37@gmail.com>,
+ Aadeshveer Singh <aadeshveer07@gmail.com>, i@uchout.moe, niko.ramak@gmail.com
+References: <20260915153326.90014-1-stefanha@redhat.com>
+ <CAGxU2F6MSE3sskAhXOjFUu7QQwSBYWr-Qv5VCsYBpjYLQu8drA@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAGxU2F6MSE3sskAhXOjFUu7QQwSBYWr-Qv5VCsYBpjYLQu8drA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,179 +165,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 17/09/2026 09.42, Stefano Garzarella wrote:
+> On Tue, 15 Sept 2026 at 17:34, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>>
+>> Google Summer of Code 2026 has completed and it's time to showcase the
+>> projects that QEMU's 4 contributors worked on this summer.
+>>
+>> Cc: Tanish Desai <tanishdesai37@gmail.com>
+>> Cc: Aadeshveer Singh <aadeshveer07@gmail.com>
+>> Cc: i@uchout.moe
+>> Cc: niko.ramak@gmail.com
+>> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> ---
+>> Aadeshveer, Nicola, Tanish, and uchouT: Feel free to suggest edits!
+>>
+>>   _posts/2026-09-15-gsoc-2026-wrap-up.md | 96 ++++++++++++++++++++++++++
+>>   1 file changed, 96 insertions(+)
+>>   create mode 100644 _posts/2026-09-15-gsoc-2026-wrap-up.md
+>>
+>> diff --git a/_posts/2026-09-15-gsoc-2026-wrap-up.md b/_posts/2026-09-15-gsoc-2026-wrap-up.md
+>> new file mode 100644
+>> index 0000000..c652251
+>> --- /dev/null
+>> +++ b/_posts/2026-09-15-gsoc-2026-wrap-up.md
+>> @@ -0,0 +1,96 @@
+>> +---
+>> +layout: post
+>> +title:  "QEMU Google Summer of Code 2026 project report"
+>> +date:   2026-09-15 07:00:00 +0000
+>> +categories: [internships, gsoc]
+>> +---
+>> +QEMU participated in [Google Summer of
+>> +Code](https://summerofcode.withgoogle.com/) 2026 with 4 contributors working on
+>> +open source internships from May through August. The contributors gained
+>> +experience in open source software development working on 12-week projects.
+>> +
+>> +This post covers the GSoC projects that QEMU had this summer.
+>> +
+>> +## Fast Snapshot Load in QEMU (Aadeshveer Singh)
+>> +When virtual machine snapshots are loaded by QEMU, the entire contents of RAM
+>> +and all device state is loaded before the virtual machine can start executing.
+>> +A lazy approach is actually possible where the contents of RAM are loaded
+>> +on-demand when accessed by the virtual machine. This can significantly speed up
+>> +snapshot load times since virtual machines may have a large amount of RAM and
+>> +loading it upfront takes time.
+>> +
+>> +Aadeshveer implemented fast snapshot load by taking advantage of QEMU's
+>> +postcopy migration infrastructure, which monitors RAM accesses using Linux
+>> +userfaultfd(2) so that memory pages can be populated on-demand. A thread is
+>> +introduced to load RAM in the background while the virtual machine is already
+>> +running so that on-demand loading is minimized (it affects virtual machine
+>> +performance). Testing showed that fast snapshot load indeed provides a major
+>> +speed up.
+>> +
+>> +Aadeshveer has written up a [project
+>> +report](https://gist.github.com/Aadeshveer/6a16579aed93f5d483bbb9419ecd2211) as
+>> +well as a [detailed
+>> +journal](https://aadeshveer.bearblog.dev/a-summer-with-qemu/) if you would like
+>> +to learn more. This project was mentored by Peter Xu.
+>> +
+>> +## Support x86 Process Context Identifiers (PCID) in COCONUT-SVSM (Tanish Desai)
+>> +Process Context Identifiers are an x86 CPU feature that improves context
+>> +switching performance. Without PCID, software has to flush the Translation
+>> +Lookaside Buffer (TLB) when context switching so that memory translations that
+>> +are no longer relevant in the new context are no longer used. PCID allows
+>> +translations from multiple address spaces (contexts) to exist in the TLB and
+>> +this can help if they are needed again in the near future.
+>> +
+>> +Tanish implemented PCID support in COCONUT-SVSM, software used by confidential
+>> +virtual machines. This involved:
+>> +1. Creating a [Rust crate for x86 CPUID feature descriptors](https://github.com/coconut-svsm/cpufeature) so that PCID functionality can be detected.
+>> +1. Adding a PCID to each address space, including writing a bitmap allocator for the available 4,096 PCIDs.
+>> +
+>> +Tanish described this in more detail
+>> +[here](https://tanish111.github.io/tanishd/blog.html). This project was
+>> +mentored by Luigi Leonardi and Jörg Rödel.
+>> +
+>> +## Observability Support for COCONUT-SVSM (Nicola Ramacciotti)
+>> +Troubleshooting confidential virtual machines can be challenging because the
+>> +host is untrusted and does not have visibility into logs, traces, etc from
+>> +inside the virtual machine. Instead, an operating system running inside the
+>> +confidential virtual machine could extract logs and the new Observability and
+>> +Configuration Protocol (OCP) has been defined for this purpose.
+>> +
+>> +Nicola implemented OCP in COCONUT-SVSM, creating the interface that software
+>> +inside the guest can use to read logs. A Linux device driver was also
+>> +implemented together with a userspace utility called svsm-tools that exposes
+>> +OCP functionality to list, read, and write data.
+>> +
+>> +Nicola published a project report that goes into detail
+>> +[here](https://github.com/n-ramacciotti/GSoC-2026-ocp-svsm). This project was
+>> +mentored by Stefano Garzarella, Gerd Hoffmann, and Joerg Roedel.
+> 
+> nit: since we had "Jörg Rödel" in the previous section, I'd use the
+> same in both sections.
+> 
+> Anyway, it's really a minor, LGTM:
+> 
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Thanks everybody, I've pushed the article now to the repo with the fixed name:
 
-On Tue, Sep 15, 2026 at 11:02=E2=80=AFPM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> Currently, the fullscreen toggle hotkey (Ctrl+Alt+f by default) and zoom
-> hotkeys (Ctrl+Alt++, Ctrl+Alt+-, Ctrl+Alt+0) only function for the main
-> QEMU window. When a VC is detached (untabified), it loses these capabilit=
-ies.
->
-> Implement toggle helpers, gd_win_full_screen and zoom helpers
-> (gd_win_zoom_in, gd_win_zoom_out, gd_win_zoom_fixed) and connect them
-> to the detached window's accelerator group in gd_menu_untabify.
->
-> Also remove a leftover debug fprintf in gd_win_grab.
->
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  ui/gtk.c | 102 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 98 insertions(+), 4 deletions(-)
->
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index a723c8215d..632e302ed7 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -1547,7 +1547,6 @@ static gboolean gd_win_grab(void *opaque)
->  {
->      VirtualConsole *vc =3D opaque;
->
-> -    fprintf(stderr, "%s: %s\n", __func__, vc->label);
->      if (vc->s->ptr_owner) {
->          gd_ungrab_pointer(vc->s);
->      } else {
-> @@ -1556,6 +1555,86 @@ static gboolean gd_win_grab(void *opaque)
->      return TRUE;
->  }
->
-> +static gboolean gd_win_full_screen(void *opaque)
-> +{
-> +    VirtualConsole *vc =3D opaque;
-> +    GdkWindow *window;
-> +    GdkWindowState state;
-> +
-> +    if (!vc->window || !gtk_widget_get_realized(vc->window)) {
-> +        return TRUE;
-> +    }
-> +
-> +    window =3D gtk_widget_get_window(vc->window);
-> +    if (!window) {
-> +        return TRUE;
-> +    }
-> +
-> +    state =3D gdk_window_get_state(window);
-> +
-> +    if (state & GDK_WINDOW_STATE_FULLSCREEN) {
-> +        gtk_window_unfullscreen(GTK_WINDOW(vc->window));
-> +
-> +        if (vc->type =3D=3D GD_VC_GFX) {
-> +            vc->gfx.scale_x =3D vc->gfx.preferred_scale;
-> +            vc->gfx.scale_y =3D vc->gfx.preferred_scale;
-> +            gd_update_windowsize(vc);
-> +        }
-> +    } else {
-> +        if (vc->type =3D=3D GD_VC_GFX) {
-> +            gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1);
-> +        }
-> +        gtk_window_fullscreen(GTK_WINDOW(vc->window));
-> +    }
-> +
-> +    gd_update_cursor(vc);
-> +    return TRUE;
-> +}
-> +
-> +static gboolean gd_win_zoom_in(void *opaque)
-> +{
-> +    VirtualConsole *vc =3D opaque;
-> +    GtkDisplayState *s =3D vc->s;
-> +
-> +    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item)=
-,
-> +                                   FALSE);
-> +
-> +    vc->gfx.scale_x +=3D VC_SCALE_STEP;
-> +    vc->gfx.scale_y +=3D VC_SCALE_STEP;
-> +
-> +    gd_update_windowsize(vc);
-> +    return TRUE;
-> +}
-> +
-> +static gboolean gd_win_zoom_out(void *opaque)
-> +{
-> +    VirtualConsole *vc =3D opaque;
-> +    GtkDisplayState *s =3D vc->s;
-> +
-> +    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item)=
-,
-> +                                   FALSE);
-> +
-> +    vc->gfx.scale_x -=3D VC_SCALE_STEP;
-> +    vc->gfx.scale_y -=3D VC_SCALE_STEP;
-> +
-> +    vc->gfx.scale_x =3D MAX(vc->gfx.scale_x, VC_SCALE_MIN);
-> +    vc->gfx.scale_y =3D MAX(vc->gfx.scale_y, VC_SCALE_MIN);
-> +
-> +    gd_update_windowsize(vc);
-> +    return TRUE;
-> +}
-> +
-> +static gboolean gd_win_zoom_fixed(void *opaque)
-> +{
-> +    VirtualConsole *vc =3D opaque;
-> +
-> +    vc->gfx.scale_x =3D vc->gfx.preferred_scale;
-> +    vc->gfx.scale_y =3D vc->gfx.preferred_scale;
-> +
-> +    gd_update_windowsize(vc);
-> +    return TRUE;
-> +}
-> +
+  https://www.qemu.org/2026/09/15/gsoc-2026-wrap-up/
 
-This duplicates existing code. Can you refactor it so we avoid logic
-duplication?
+  Thomas
 
-btw, it would make sense to send a patch series now that you have 2
-ui/gtk patches and more to come.
-
-thanks
-
->  static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
->  {
->      GtkDisplayState *s =3D opaque;
-> @@ -1590,9 +1669,24 @@ static void gd_menu_untabify(GtkMenuItem *item, vo=
-id *opaque)
->              GtkAccelGroup *ag =3D gtk_accel_group_new();
->              gtk_window_add_accel_group(GTK_WINDOW(vc->window), ag);
->
-> -            GClosure *cb =3D g_cclosure_new_swap(G_CALLBACK(gd_win_grab)=
-,
-> -                                               vc, NULL);
-> -            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, =
-cb);
-> +            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0,
-> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_grab),
-> +                                        vc, NULL));
-> +            gtk_accel_group_connect(ag, GDK_KEY_f, HOTKEY_MODIFIERS, 0,
-> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_full_screen),
-> +                                        vc, NULL));
-> +            gtk_accel_group_connect(ag, GDK_KEY_plus, HOTKEY_MODIFIERS, =
-0,
-> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_in),
-> +                                        vc, NULL));
-> +            gtk_accel_group_connect(ag, GDK_KEY_equal, HOTKEY_MODIFIERS,=
- 0,
-> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_in),
-> +                                        vc, NULL));
-> +            gtk_accel_group_connect(ag, GDK_KEY_minus, HOTKEY_MODIFIERS,=
- 0,
-> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_out),
-> +                                        vc, NULL));
-> +            gtk_accel_group_connect(ag, GDK_KEY_0, HOTKEY_MODIFIERS, 0,
-> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_fixed),
-> +                                        vc, NULL));
->          }
->
->          gd_rebuild_vc_menu(s);
-> --
-> 2.43.0
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
