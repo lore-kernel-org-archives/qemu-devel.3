@@ -4,132 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7256EC88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BC6C982D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 18:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7GMl-0007m7-GE; Thu, 17 Sep 2026 13:57:47 -0400
+	id 1x7GXL-0000hy-U9; Thu, 17 Sep 2026 14:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GMj-0007lQ-H1
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:57:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GMh-0005Ic-JX
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:57:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789667862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
- b=TBp79/DY7GPZzPdZXcbASS8gYFr+OY5FZqk6Ks9UQSbBd79+wFBTx/uS98VTVVdZrd3vN3
- j+77puUunqBCl94q8KprWL3Yw6/bay6VZMimZ3AftE7crbAzQDCW073Jf4WYh5cBfv4MXW
- kwklA1FpIzu+U8tVeq+lbGS9ERv+618=
-Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
- [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-FeyXbE57NRycOphoVC7jUQ-1; Thu, 17 Sep 2026 13:57:41 -0400
-X-MC-Unique: FeyXbE57NRycOphoVC7jUQ-1
-X-Mimecast-MFC-AGG-ID: FeyXbE57NRycOphoVC7jUQ_1789667860
-Received: by mail-yx1-f72.google.com with SMTP id
- 956f58d0204a3-671203c3d56so1287792d50.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:57:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789667860; cv=none;
- d=google.com; s=arc-20260327;
- b=EPzJOezB2N6aRFGEOwQYSRoboyNt6gcqMsFwYISM2VM4kD1yYIvtXV13EAeZTDvp/k
- FsHjOEE+98pCdF6liJ/eyyFNTvndy2naQQBqvpSzZR538hygsSJc0677MmBtB868ymqp
- GDFSmmO4Sx/A4v19SRUXoXMNlDrsqWtLnCbQPHc+jEL8+kWd4YJYw9TvUoxq4xuPC9qO
- mBVFXwWh9Ts0mDfZVv7IwsEgu9KvCTTZM4gHaTZtg3Aae//jkLrgdxI0h02PyXhCZQ79
- TJEIHhUDr4vQTGgVGS1iakqv0efBfFA9wwdo3SIpcBfgO1SpbZBPvz3f0QwT5YCZoxJp
- ul3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
- fh=N1T2rJRgpF5SwCDa8mYUq6XaRC8Zgv+Raym5wifJ61I=;
- b=seqLE3LWyzlXhZetWibz040sSQuHtslkdLGDsl5HSnapdRxvp/UYIF+i/uWN34x1z3
- Y4ZPptLY8x8C3riBgR//bMqao/1qH6B5lp+WqWrxFnPng7FP+0FvRpzYlCvNfyHCYZkO
- 9ogyjSw7lZT3UK2Ilej9fk//1rNuzCClR47/BsJUhGv8qVkgBESMTTqHaL5YEAqbXCn3
- Nq0Abfx+aj9tw7RtIRzFZ6JOTj5wrkrqSezEoajn/QA558O8AFH7wezO+PC0MoLbmKU2
- 6kGfC8+8FaU9UnbAmu6ch0sqviA+bLSIpTzPApNcUp29oIFjcmyLuf5Q7yu2YBJYFWAC
- IPDA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
+ id 1x7GXL-0000hc-6B
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 14:08:43 -0400
+Received: from mail-ej2-x29.google.com ([2a00:1450:4864:34::29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
+ id 1x7GXI-0006p0-8t
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 14:08:42 -0400
+Received: by mail-ej2-x29.google.com with SMTP id
+ a640c23a62f3a-c294af0caa8so190405366b.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 11:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789667860; x=1790272660; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
- b=BbO3h+jo+ZpFz7p8uD5kWWshB4nWfvI/eHLuGvMlrRSLZ1iMrldx8IONOxAr5FB5G5
- 8PJpsvNXKdIvquMj0HDPE9QcJE6w0Sr3R/cgKDWUnP/U1UcnYdvaOVmFvYaoAQYyl5MD
- f8xwB9Uen+I0bN3830YctEVwSZmEXqZ1eUtyxqoSmBClqEgvr0wn3a8MtIuz6dkEQfZ6
- 2JtveQ/1trbGm7t/g4kv7iE0C3yfISxTh4kkHEbI9+Q9fArYhWLZb7U81pb6NQpHpeKe
- 4U7OTx3075AaZMg+TZeVE+mwUwiqj4QiACW4ZKmIC3lVpYHImkcfT2hMxgxTb9yswb9g
- qk6w==
+ d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1789668519; x=1790273319;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=32Fkd6ZHAaqWVx7kItExss6YwXiuwpZufmwVbTcjIK8=;
+ b=IrxkXM+71jHRBD8f3wyuw3RGNa/n91BOux+uJLoDhXJePmRQUgstvYtBhEdJi6L30O
+ EbD42NYBK6xLPCS2z1x2s417DtklKYzTpTwMW9RWfbWXgAMexuffe7goB0fGYsM/Mwte
+ gulP12OVztgBpj7ZIQTcrWZ6l1EGAU38UIGAbrMSYHCi7C35NimGC4S1gy8KbEw15dyi
+ roO7WtuTKdJy+LSOZJ3+cVOHCc5upX49SftIMmCqqkyMklyTpG4hLs0u8/8a4chdmNSY
+ sZfqUuoqaGcbR/vdWRHNdr6Zh/shg9hlPNxkiQ73JNNXWn2JvWUj8rxkCe4HPYapM5q4
+ 94ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789667860; x=1790272660;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
- b=UaKIxYNZvylrwefGUY/CovF2Xgs3BHzlX1Zj0K/W1pcJmr9Q2GRUYvC9cMPySXkr5L
- CWyHvLzS1dOXg/Du6UlxOFHgODIjRn+EwheSufstmOwfAqU9Z0fWQQG6nE9B99Fw+LGb
- TfVi4UPKlnAMw7ojcXRaqRWfdH1OJSv7zHVw+h4JEAQkNZscvL7UBxu5SH3Nul9beOwq
- DqEA/iAPImatbuo2lltHqw6xwqGLvZroe4fb3FEjZvUnotGZHSTN9p/Cx7/9gR+VUBTE
- gmfoWI4w94PpvAqgKoNKMc8uGutPJeYBUqgrsDGCDC42sGi+5wRBca57+m6VG0aXY0Yd
- btsw==
-X-Gm-Message-State: AFuF++lSaCsnKm/4ghM7+1eGs3vH7NECjwczJh65/TSRLnNi8UuI7O/1
- d8EzBhTKHlzOpv8tETB+2q9FHuk/8Dfn11INVx9MZ9iWUz68a35NtgdZ5Au794vG1iosZeBGpI0
- 8fbJTg4XW20delKn1PQGn/ORxVTP94Rjs4amwt6P4NISZbgtsI7HBVkRKvs52SSIi6NrppcXWDw
- HuFxmew3JacRNk2Z07EQqCvOwrXYIcx0s=
-X-Gm-Gg: AYBFou04isg+ynR1CSH/fCRCPYKzT7AKj5WphjBjxamfFETE9mDo6Sq2rBEbbNCGSjn
- LwLhf5fYNQg9bRawIKVdzZIYvX7J7tJJ9xxec+vkI7bDkXpXButv2UuIz1Mit5/5/mAscnbYyjP
- uEwY5/bMdqOcEGamGZTuFtuqyx9v83shW+QPS/jCioAv9Y/SGJJLv+Mi+XKookGQeecWe+KU2ow
- uiUktRmBfdd1pvf
-X-Received: by 2002:a05:690e:120c:b0:66a:b15e:bb93 with SMTP id
- 956f58d0204a3-6717034c5afmr1189620d50.13.1789667860159; 
- Thu, 17 Sep 2026 10:57:40 -0700 (PDT)
-X-Received: by 2002:a05:690e:120c:b0:66a:b15e:bb93 with SMTP id
- 956f58d0204a3-6717034c5afmr1189605d50.13.1789667859750; Thu, 17 Sep 2026
- 10:57:39 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789668519; x=1790273319;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=32Fkd6ZHAaqWVx7kItExss6YwXiuwpZufmwVbTcjIK8=;
+ b=zliJ518A6+83NNQAXbDmRKQeKhwJR1U14wQWwBe0ULAeTZusLlra+7hnu1xMCVTZg5
+ 58wz2PY6lW5egmpu/KC/DqiRVRaI3zs8+Uz9VmscAGsWDk7uhN0poBj51ad1+OD7iHM5
+ W4K6QWZDNgyDAsXrkhVYB4pGY7ezFXE/Pwyi3SWHqJL/VmaETMODCNZrmGZNkxPM9d7J
+ ZiN8bVFLAVmEWJcki8WWWoAnBuITrob+33gVZbBaCjChBuJRSKEtPaeuX6I84aaVpki1
+ de+D2j8BP6MiHMwFEKlDOwOcQUlcGCljMXM67s1jYYFXKngi3OAAUik59EP3gP1SgggO
+ us1A==
+X-Gm-Message-State: AFuF++mxwtTLJPIgL8pG14r9BCLf2EOMbQXpcEea5b1fX21DaC8qecHZ
+ edKUxXuLkm7ajnOOYGxOpl8sqpxOR2PYrYKBG10MOwfE1Mdl8PtYzNHUrg7bp7ivuBsI1/6OScP
+ lbagW
+X-Gm-Gg: AYBFou2jwUSCJxc+1M9PLM4JD4ubIYgd/2csKv0Xd86ujbdonhqW1bvDRvVAFJxmN+w
+ qCCMpXUOpc+AeuUql4B7oX+xDjGuXM9g6TcsfTDoN7hWIMq+iFCKuCmSsoEnpYHvoqVGNOAwpCr
+ X/lhWqcLoEThWT4b/vX/zFwTG5uq0T4P2pNUt4RAF1bfOSs3YWBeOHBe+3GUcllnD8hk8WUNmkr
+ bivvNSzhC+/gXB9ve8ucr8eFeeQ1IJ0IrVHMU/7eIJPUMftIu5Vi01m4NERhQlBs2t+vY6Oq+y0
+ JjN5vGFPu86ElbakryaHLy77oM6JVMf7C9mPvzyLDa9r6VC/H52PGkQ/T6jVUoOktmpiCQWKzcV
+ sI0QpHWJ4GzEDmjpiyuvE8Ls6lcdnF5iNFYmGWfdsCNEhnjfYfLdXyvTe91MPlxzj7qZjS1rs6w
+ mz3hpjZThA2w6S7MR86xo4JC6CHXHLercsc97uEdpWcRTw6zzvrvCaNfUrwWG0sRZfwQRD37V8A
+ vbl+Hk9vxqdCpBlkeMCFKu8HpiWnBvwlbCOpPz0ksYn61XjHyQl3BmFR71bbezHLg==
+X-Received: by 2002:a17:907:970f:b0:c26:207d:8a8f with SMTP id
+ a640c23a62f3a-c2a157fcec6mr590166b.27.1789668518707; 
+ Thu, 17 Sep 2026 11:08:38 -0700 (PDT)
+Received: from node-dev.home
+ (86-45-19-184-dynamic.agg1.roc.bbh-prp.eircom.net. [86.45.19.184])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c29de5a5337sm334676466b.34.2026.09.17.11.08.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Sep 2026 11:08:38 -0700 (PDT)
+From: Weqaar Janjua <weqaar.janjua@packetfive.com>
+To: qemu-devel@nongnu.org
+Cc: Weqaar Janjua <weqaar.janjua@packetfive.com>,
+	kraxel@redhat.com
+Subject: [PATCH 1/2] pci: Add device ID for CnuasNIC RDMA network adapter
+Date: Thu, 17 Sep 2026 18:08:28 +0000
+Message-ID: <20260917180831.3142920-2-weqaar.janjua@packetfive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260917180831.3142920-1-weqaar.janjua@packetfive.com>
+References: <20260917180831.3142920-1-weqaar.janjua@packetfive.com>
 MIME-Version: 1.0
-References: <20260916135841.3614495-1-jsnow@redhat.com>
- <20260916135841.3614495-6-jsnow@redhat.com>
- <87tsno5ulh.fsf@pond.sub.org>
-In-Reply-To: <87tsno5ulh.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 17 Sep 2026 13:57:28 -0400
-X-Gm-Features: AcwNN1XG52uuiUnWNJlaDC6V1kzKVkLG2iXP2kRaAwxcqV_ifQ48YVjOovC8RbY
-Message-ID: <CAFn=p-YAVahwz2-MmWkwO10RxrDaJDKNp_2-eqEAyzjqbneW3g@mail.gmail.com>
-Subject: Re: [PATCH v4 5/7] qapi/parser: fix intermediate "intro" detection
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Jonathan Cameron <jic23@kernel.org>, Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>,
- linux-cxl@vger.kernel.org, 
- qemu-block@nongnu.org, Junjie Cao <junjie.cao@intel.com>, 
- Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2a00:1450:4864:34::29;
+ envelope-from=weqaar.janjua@packetfive.com; helo=mail-ej2-x29.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,88 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 17, 2026 at 1:13=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > In 43e7ad1a3fa5, I adjusted the insertion algorithm for inserting
-> > something after the "introduction" to cope with both the old and new
-> > syntax while we converted QAPI to the new syntax. There's a bug in
-> > that code that only shows up in a handful of cases and only when using
-> > the new syntax while this affordance/flex code is still enabled.
-> >
-> > In the case that we do actually have a real bona-fide intro section,
-> > we want to insert directly after that real-deal intro section, not
-> > after any plaintext sections that may follow it. This code adjusts the
-> > temporary code to strongly prefer inserting after the actual intro
-> > section if it exists.
-> >
-> > Once again: once conversion is done, you will be delighted by how much
-> > of this ugly code goes away.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  scripts/qapi/parser.py | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index 9e14c2f7921..6a9a5589c14 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -845,6 +845,14 @@ def _insert_after_intro(
-> >          needed and ``_insert_near_kind(QAPIDoc.Kind.INTRO, ...)`` will
-> >          be sufficient.
-> >          """
-> > +        first =3D self.all_sections[0]
-> > +        if first.text and first.kind =3D=3D QAPIDoc.Kind.INTRO:
-> > +            # First section is introduction and is non-empty: insert h=
-ere.
-> > +            # Rest assured all of this ugliness will very soon go away=
-.
-> > +            # Pinkie-swear.
-> > +            self._insert_near_kind(QAPIDoc.Kind.INTRO, section, after=
-=3DTrue)
->
-> Isn't this a roundabout way to do
->
->                self.all_sections.insert(1, section)
->
-> ?
+PCI device ID under QEMU vendor ID 0x1b36, device ID 0x0015
 
-Yes O:-)
+Request is for the CnuasNIC non-virtio QEMU device model of the Cnuas project.
 
-... but it's the more semantically abstracted version that does not
-rely on the specific location of the section. By the end of the
-next-next series, all of this goes away anyway. I think I was
-preferring to avoid using insert in more than the two helpers we
-already use it in. (But since I intend to delete it all, I don't
-really care about fighting for purity in isolating this call.)
+CnuasNIC (QEMU device name: cnuas-vnic) is a software-emulated RDMA NIC supporting RoCEv2 and native InfiniBand, with guest Linux network and RDMA drivers and a standard verbs provider.
 
-Specifically:
+Datasheet: https://cnuas.io/cnuas/docs/datasheets/CnuasNIC_Datasheet/
 
-_insert_near_kind(), _insert_after_intro() both go away.
-append_member_stub() also goes away. ensure_returns() stays but
-becomes something like two lines.
+The allocation is requested in preparation for public release and upstream submission.
 
-*all* section modification in the next-next series happens exclusively
-through a method named `_append()` which Does The Right Thing In All
-Cases.
+Cnuas is an experimental rack-scale AI/HPC emulation platform for functional experimentation in academic and industrial research and development. Its architecture and device interfaces are described in the public arXiv preprint paper:
 
---js
+Cnuas: A Software-Defined AI/HPC Rack-scale Emulation Platform and Hyperscale Data Center Facility Twin
+https://doi.org/10.48550/arXiv.2609.15889
 
->
-> > +            return
-> > +
-> >          index =3D 0
-> >          for index, ref_section in enumerate(self.all_sections):
-> >              if ref_section.kind.name in ("PLAIN", "INTRO"):
->                    continue
->                break
->            else:
->                index +=3D 1
->
->            self.all_sections.insert(index, section)
->
+Website: https://cnuas.io
+
+Signed-off-by: Weqaar Janjua <weqaar.janjua@packetfive.com>
+---
+ docs/specs/pci-ids.rst | 2 ++
+ include/hw/pci/pci.h   | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index 261b0f359f..ec65a0e9ab 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -100,6 +100,8 @@ PCI devices (other than virtio):
+   PCI UFS device (``-device ufs``)
+ 1b36:0014
+   PCI RISC-V IOMMU device
++1b36:0015
++  CnuasNIC RDMA network adapter
+ 
+ All these devices are documented in :doc:`index`.
+ 
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index f2448e941a..51b3f83514 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -121,6 +121,7 @@ extern bool pci_available;
+ #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
+ #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
+ #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
++#define PCI_DEVICE_ID_REDHAT_CNUASNIC    0x0015
+ #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+ 
+ #define FMT_PCIBUS                      PRIx64
+-- 
+2.43.0
 
 
