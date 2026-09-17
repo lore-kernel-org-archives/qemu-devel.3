@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9D8C88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 07:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA7AC88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 07:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x76eO-0004l7-5y; Thu, 17 Sep 2026 03:35:20 -0400
+	id 1x76fY-0005JI-Dt; Thu, 17 Sep 2026 03:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1x76eJ-0004kf-8k; Thu, 17 Sep 2026 03:35:15 -0400
+ id 1x76fW-0005F5-GN; Thu, 17 Sep 2026 03:36:30 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1x76eH-00042i-BN; Thu, 17 Sep 2026 03:35:14 -0400
+ id 1x76fU-00047s-Sd; Thu, 17 Sep 2026 03:36:30 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68H61dps4025533; Thu, 17 Sep 2026 07:35:08 GMT
+ 68H61jBS4025613; Thu, 17 Sep 2026 07:36:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=U3TZ5x
- h7I9+1Db/3h5FhAHITJhm7yk3kBWDEOqUIcsM=; b=H1eTtvYs5kHf8TWBJJ/KPR
- c6OraCCdvLFcAO23hmA+L5s6hNVXr6JbXJMVaIQnqehBzowPA4Dfx/05piSGmN4o
- sxqjNGZrXo4C1gmfujbdBt7YZRW+mlAhhjxDJBIr1stE6UFgmqjv1zoY+AF7442D
- 56nLPeJvr7Qlhf47ZG1PmKqBBsxbMkOjNLXOZCtC7Tv3NURkfNT1hGixPudsupbx
- boNOjQuFqIPDfiLQd2LiSD9IVkzg6yvetibFsx9gWkg4JreFmvzt50waiqXZA5Fy
- SmA69MDbLVa7OMi6JvFOV/73Ps2pWxvt4aXpaeo/950K/hII1sU0g4nF2RGFo6uw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=fnM0Vi
+ 4vCnfpWOfbmjl6sOTNGyjp/Kb8JuaTy+uSfOE=; b=nktJ/lNNZnYi9WBYUg0G6I
+ YtsOXlCIq6n9sapoYpBYWHH8npbLRlFGOVXV5WHScZOdL4X6Ef8rahN3lBbpgaSN
+ AkyySQrpyPljcs9rCS7IQtpLDr0XbQpBR5RHfnGCXs2U7jfxvy5m7Hj6inh4DodN
+ gJiuspLBoF2rELokTWS5oNRVpSvdhRTadRUS5uYWY4FvsdZRuzGqheR2vNh+4czG
+ usE1v63xpzXrNHkuuwwdc7J1tWOodkhQarchcdBElXPEYv0XFrOX3P9xvpRu4MXP
+ TMUASmPiSjamA7xCAbp7EohJmjQdZKfzdsGcqNwEz/aKiMsM/Wz4SdIo3vSXe/0g
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdqh10g-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdqh14t-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 07:35:08 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68H653bw2678206; Thu, 17 Sep 2026 07:35:07 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gr5xa18gw-1
+ Thu, 17 Sep 2026 07:36:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68H65Bmd2638636; Thu, 17 Sep 2026 07:36:26 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gra3f8dnc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 07:35:07 +0000 (GMT)
+ Thu, 17 Sep 2026 07:36:26 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68H7Z3qU45547842
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68H7aM4s52036002
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Sep 2026 07:35:03 GMT
+ Thu, 17 Sep 2026 07:36:22 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 938F620043;
- Thu, 17 Sep 2026 07:35:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4AC3820043;
+ Thu, 17 Sep 2026 07:36:22 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45E4E20040;
- Thu, 17 Sep 2026 07:35:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E92FF20040;
+ Thu, 17 Sep 2026 07:36:21 +0000 (GMT)
 Received: from [9.224.77.173] (unknown [9.224.77.173])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Sep 2026 07:35:03 +0000 (GMT)
-Message-ID: <cbb1f499-7776-4066-9b96-3071cc0406d9@linux.ibm.com>
-Date: Thu, 17 Sep 2026 09:35:03 +0200
+ Thu, 17 Sep 2026 07:36:21 +0000 (GMT)
+Message-ID: <fe70daf7-bf89-46ea-81d1-a3de6eda0692@linux.ibm.com>
+Date: Thu, 17 Sep 2026 09:36:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] virtio-ccw: Do not overwrite existing indicators
-To: Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH 1/9] virtio-ccw: Limit ISC to MAX_ISC
+To: Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260916203242.2509787-1-farman@linux.ibm.com>
- <20260916203242.2509787-3-farman@linux.ibm.com>
+ <20260916203242.2509787-2-farman@linux.ibm.com>
+ <bdec4140-8d65-4480-9723-9c04595431d1@linux.ibm.com>
 Content-Language: en-US
 From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20260916203242.2509787-3-farman@linux.ibm.com>
+In-Reply-To: <bdec4140-8d65-4480-9723-9c04595431d1@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDEwMSBTYWx0ZWRfXzB61duluMCQf
- IXdLMGcnGmUFPsl5eizFk0KZPJ7JlsWl+scNXRpJ3ijPSyDdQz6sjMIQcpX5vS9atT7ijcT2Xfq
- 6UCP3zo9LY50oUKaOxJswBvPUD8ao7Y71uXS+DO3ennV9uO+F1EKuBgr6b5ooH2nyseNodMJsqV
- zV4wc3kPPPYhfVY8b2HS/GhySIzoVxbG8BdjLQhzdnqvNK0NG7n0gf8jB9Vbn4L0VhoaKYg3q8k
- Jc4QgX/3CuO0Y48UnUnwoJnL/MANYToHGJXlnEQLHHOmVJX5XMjKXSIPywZfFLMASbOyRvKPfG6
- Gq4xJ3P+l3svA7IH0MljEKpfLThhZI6ZZIiuOZHGSUJeem13v1tAa3/AftkKprSE2EMLqeAnbdZ
- n0DtlyyUvyRuTIH2B7fgrUFqAyABf2Dz0iiZi8VAkSz5v7BCjLgKZuWI28vp5w/ts0/4N3KkHBa
- 7L4gsKZck5ZnZS7C/JQ==
-X-Proofpoint-GUID: -Az5PpA8d_60Z_s0fGUZHe_usuPNsnU_
-X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aab982c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDEwMSBTYWx0ZWRfX9eUIBOPDmiyl
+ UtqAqFK181HC6fMmnmEqtdaPZb9eWQC+XrTz2oZbHTKjBZLodz1nVb/puK5D0TJThuqYBoGyHOe
+ xrYH1WsL0offLFXXRSzA2SYHZoAE5OS2IrQr/GMkS2wt3cB34j36XfWFV9LFPj4QIZqis73TCnj
+ Zqg8AG7BsHgA5Xaxjp2cUvZJHyr9+Wr5FXtF4+dJc60RHlAi0qcCrADELaROtiIsKmd51owBYl+
+ 9lEvHf5IBZE+zX0NVQcamjmOPFai8kFqSlGADosPmlHaLbCFFvygwwGkmrwMVyzRtnzDmGz3i+n
+ QmxR3zZwYb3k5xH7VfNFFU0LkiaHM7e39RRp5aiPGkV+zGGXb1sjQAD4aA8VOm+xvu0PWM8Fn20
+ sjieqNlCrdazKYmnhARg6fA+C6eoVeFYoSyaFJqJdReuBmxxZ6+UHgZH6Rl00dxhU++B4NHMrrp
+ snCDD3nrhfQ1+OBjFQA==
+X-Proofpoint-GUID: boonySYsOp9-JedvQ2zAwk4z56gLeJfk
+X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aab987b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=cEUPhHmS8o58IKH7ITkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: -Az5PpA8d_60Z_s0fGUZHe_usuPNsnU_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDEwMSBTYWx0ZWRfX3rC/JKxlE7hm
- +ysk+SULUKd+hVrQzegoq7UWop/aqSmTFCqzfUFORXJbL6SSJ3T3CigAGzFKHmM44Le1PC1oqR8
- u224po7Znhws0n5TFmZoGoK87gu+E8M=
+ a=Na_xMrO-gH8wGSdr7SoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: boonySYsOp9-JedvQ2zAwk4z56gLeJfk
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDEwMSBTYWx0ZWRfXx3XJQzBbOMGc
+ Pem4xnT9EGvOPwkL/jaGbls3LwGK2rmidXRrNixxBYEv1AGAB9ImtJnO4Wx21+9e3EbwlUZUcFx
+ Y8YzGfOH8+4RAsEaDtpM5wbglVKFIqE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-17_01,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
+ spamscore=0 clxscore=1011 adultscore=0 bulkscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170101
 Received-SPF: pass client-ip=148.163.156.1;
@@ -126,68 +127,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 16.09.26 um 22:32 schrieb Eric Farman:
-> The various indicators pointers allow them to be overwritten,
-> but leak any existing structs that might be there. The adapter
-> indicators path checks that it isn't converting from regular
-> to thin interrupts, but a check in the reverse direction isn't
-> performed.
+Am 17.09.26 um 01:15 schrieb Matthew Rosato:
+> On 9/16/26 4:32 PM, Eric Farman wrote:
+>> The interrupt subclass is often defined as a uint8, though in practice
+>> it will be within the range of just 0-7. Ensure that a guest-supplied
+>> subclass does not extend beyond its expected range, especially when
+>> used as an array index.
+>>
+>> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+>> ---
+>>   hw/s390x/css.c        | 7 ++++++-
+>>   hw/s390x/virtio-ccw.c | 6 ++++++
+>>   2 files changed, 12 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+>> index 76dbca3bb9..9da9128d88 100644
+>> --- a/hw/s390x/css.c
+>> +++ b/hw/s390x/css.c
+>> @@ -654,8 +654,13 @@ void css_adapter_interrupt(CssIoAdapterType type, uint8_t isc)
+>>       S390FLICState *fs = s390_get_flic();
+>>       S390FLICStateClass *fsc = s390_get_flic_class(fs);
+>>       uint32_t io_int_word = (isc << 27) | IO_INT_WORD_AI;
+>> -    IoAdapter *adapter = channel_subsys.io_adapters[type][isc];
 > 
-> Rather than unwinding the existing allocations to allow additional
-> assignments, just reject these duplicates.
+> I think this deserve a fixes/cc stable.  This would have been an
+> out-of-range access before this patch.
 > 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->   hw/s390x/virtio-ccw.c | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
+> The initial support didn't have the concept of MAX_ISC, it showed up in
 > 
-> diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-> index eb6378ea4c..d700db405b 100644
-> --- a/hw/s390x/virtio-ccw.c
-> +++ b/hw/s390x/virtio-ccw.c
-> @@ -565,6 +565,11 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
->               ret = -EINVAL;
->               break;
->           }
-> +        if (dev->indicators) {
-> +            /* Do not set without un-setting first */
-> +            ret = -ENOSYS;
-> +            break;
-> +        }
->           if (sch->thinint_active) {
->               /* Trigger a command reject. */
->               ret = -ENOSYS;
-> @@ -599,6 +604,11 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
->               ret = -EINVAL;
->               break;
->           }
-> +        if (dev->indicators2) {
-> +            /* Do not set without un-setting first */
-> +            ret = -ENOSYS;
-> +            break;
-> +        }
->           if (!ccw.cda) {
->               ret = -EFAULT;
->           } else {
-> @@ -657,7 +667,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
->           }
->           if (!ccw.cda) {
->               ret = -EFAULT;
-> -        } else if (dev->indicators && !sch->thinint_active) {
-> +        } else if (dev->indicators || dev->summary_indicator) {
->               /* Trigger a command reject. */
->               ret = -ENOSYS;
->           } else {
+> dde522bbc5 ("s390x: register I/O adapters per ISC during init")
 
-I think we have to do the full unwind.
-The Linux driver deregisters indicators by issuing SET_IND with address 0,
-or SET_IND_ADAPTER with device indicator 0. The virtio drivers reset the
-device before del_vqs, so the deregistration lands on a clean state and
-QEMU records an indicator at address 0. A later rebind or module reload
-does not reset again, so the next SET_IND_ADAPTER and the SET_IND fallback
-are both rejected and the probe fails. The old condition on SET_IND_ADAPTER
-existed precisely to let the deregistration through while thinint is active.
-The fix should release the existing indicator before overwriting, or treat
-address 0 as deregistration. Releasing before overwriting also handles the
-find_vqs error path in the guest, which deregisters without a reset in between.
+Yes.
+
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+
 
