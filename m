@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6314AC88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 20:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53153C88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 20:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Inf-0006YQ-Kd; Thu, 17 Sep 2026 16:33:43 -0400
+	id 1x7IrP-0007uz-Sb; Thu, 17 Sep 2026 16:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x7Ina-0006Xt-Us; Thu, 17 Sep 2026 16:33:39 -0400
+ id 1x7IrN-0007ul-Uk; Thu, 17 Sep 2026 16:37:33 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x7InY-00045x-Ft; Thu, 17 Sep 2026 16:33:38 -0400
+ id 1x7IrL-0004dH-2B; Thu, 17 Sep 2026 16:37:33 -0400
 Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68HKXDFh079285
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68HKbCpb080176
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 18 Sep 2026 05:33:13 +0900 (JST)
+ Fri, 18 Sep 2026 05:37:12 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=QtAJ/F433f/dMldZVGQ7McQrO8EIPVAwjghZix6O/FI=; 
+DKIM-Signature: a=rsa-sha256; bh=dPLXbKow37dh7WPmzkGAhMdpX+7mzyE6T5kzZTMPOOc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1789677193; v=1;
- b=k98soOrJog9R6hMArHhru10KrHwYPQc1xAngZI0/ROOslL8LaM7ZegZLochZ/9DH
- rLrWoPvzsbEs9Wk1qrLMZ+iFI/yEtcgKN9jm01v++4BZEd7nlKqV1pYhnLTidSmV
- x2sLMRjZ1n7xRCYrGbXhiC6K01YVgsP1VKQZ9Irkc/XdVLiS1a1fP2M19wSh84Rj
- d4EQhFWrUb5p0aguKXb+25K2MbW9bwUltkrYC1kLNiQb7+IoSIluTHKLFJ5th2j3
- eKaWeyeXXnd6QVQPmp6oJbdx5dm6S+722A1kFQOiSY+wGlrLKBsGV3Igjo+l2AIP
- ZCsxGdcw1t71EyV2+FVk/w==
-Message-ID: <1870813f-648f-47c5-b40a-14cba75f69af@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 18 Sep 2026 05:33:13 +0900
+ s=rs20250326; t=1789677432; v=1;
+ b=tSMnhTB5mN1/SwIZLDWQ83RlUnh+uHA7A2D5UCgL4mrikOOUo1kv5DGYmNi8L5Vv
+ HQ2bZaHj7TvbX8CfwN6WSwwomxCqC07Bf/CWb3QMREPHbv8l+4svQVJJL5JN10Sd
+ jJwOtGoJVj6PgAvqhsjdPk7kw1eA98gYyIGlarXCsmTnGznfVMXzuuFKyA5FGxnG
+ zzS2cmlD2tLX2FnwkDLu4FNKZEc/T1v9ybbD3PPWEgzgcLIkxjDICG2779Zi8aKD
+ 2Q9gEIl6CK6JuVUv8WmRzIBV+JpQfNxHbCDYjW4n2140u+9LGsAArk/MVuGAoanN
+ F+ZYZpPOo/F5TVuIHnJ52g==
+Message-ID: <bea1f8ac-4dd0-4c98-b3b5-9040b6d6f771@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 18 Sep 2026 05:37:11 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v8 03/10] target/arm/emulate: add load/store pair
+Subject: Re: [RFC PATCH v8 04/10] target/arm/hvf, whpx: wire ISV=0 emulation
+ for data aborts
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
@@ -48,12 +49,12 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Lucas Amaral <lucaaamaral@gmail.com>
 References: <20260916100021.73825-1-mohamed@unpredictable.fr>
- <20260916100021.73825-4-mohamed@unpredictable.fr>
+ <20260916100021.73825-5-mohamed@unpredictable.fr>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260916100021.73825-4-mohamed@unpredictable.fr>
+In-Reply-To: <20260916100021.73825-5-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -19
@@ -80,244 +81,204 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026/09/16 19:00, Mohamed Mediouni wrote:
 > From: Lucas Amaral <lucaaamaral@gmail.com>
 > 
-> Add emulation for load/store pair instructions (DDI 0487 C3.3.14 --
-> C3.3.16).  All addressing modes are covered: non-temporal (STNP/LDNP),
-> post-indexed, signed offset, and pre-indexed.
+> When a data abort with ISV=0 occurs during MMIO emulation, the
+> syndrome register does not carry the access size or target register.
+> Previously this hit an assert(isv) and killed the VM.
 > 
-> Instruction coverage:
->    - STP/LDP (GPR): 32/64-bit pairs, all addressing modes
->    - STP/LDP (SIMD/FP): 32/64/128-bit pairs, all addressing modes
->    - LDPSW: sign-extending 32-bit pair load
->    - STGP: store allocation tag pair (tag operation is NOP for MMIO)
+> Replace the assert with instruction fetch + decode + emulate using the
+> shared library in target/arm/emulate/.  The faulting instruction is read
+> from guest memory via cpu_memory_rw_debug(), decoded by the decodetree-
+> generated decoder, and emulated against the vCPU register file.
+> 
+> Both HVF (macOS) and WHPX (Windows Hyper-V) use the same pattern:
+>    1. cpu_synchronize_state() to flush hypervisor registers
+>    2. Fetch 4-byte instruction at env->pc
+>    3. arm_emul_insn(env, insn)
+>    4. On success, advance PC past the emulated instruction
+> 
+> If the instruction is unhandled or a memory error occurs, a synchronous
+> external abort is injected into the guest via syn_data_abort_no_iss()
+> with fnv=1 and fsc=0x10, matching the syndrome that KVM uses in
+> kvm_inject_arm_sea().  The guest kernel's fault handler then reports
+> the error through its normal data abort path.
+> 
+> WHPX adds a whpx_inject_data_abort() helper and adjusts the
+> whpx_handle_mmio() return convention so the caller skips PC advancement
+> when an exception has been injected.
 > 
 > Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 > ---
->   target/arm/emulate/a64-ldst.decode |  68 ++++++++++++++++++
->   target/arm/emulate/arm_emulate.c   | 111 +++++++++++++++++++++++++++++
->   2 files changed, 179 insertions(+)
+>   target/arm/hvf/hvf.c       | 46 ++++++++++++++++++++++++++--
+>   target/arm/whpx/whpx-all.c | 61 +++++++++++++++++++++++++++++++++++++-
+>   2 files changed, 103 insertions(+), 4 deletions(-)
 > 
-> diff --git a/target/arm/emulate/a64-ldst.decode b/target/arm/emulate/a64-ldst.decode
-> index af6babe14a..f3de3f86cb 100644
-> --- a/target/arm/emulate/a64-ldst.decode
-> +++ b/target/arm/emulate/a64-ldst.decode
-> @@ -10,6 +10,9 @@
->   # 'u' flag: 0 = 9-bit signed immediate (byte offset), 1 = 12-bit unsigned (needs << sz)
->   &ldst_imm       rt rn imm sz sign w p unpriv ext u
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index b00a7e1a84..a087e920e9 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -34,6 +34,7 @@
+>   #include "arm-powerctl.h"
+>   #include "target/arm/cpu.h"
+>   #include "target/arm/internals.h"
+> +#include "emulate/arm_emulate.h"
+>   #include "target/arm/multiprocessing.h"
+>   #include "target/arm/gtimer.h"
+>   #include "target/arm/trace.h"
+> @@ -2441,10 +2442,49 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>           assert(!s1ptw);
 >   
-> +# Load/store pair (GPR and SIMD/FP)
-> +&ldstpair       rt2 rt rn imm sz sign w p
+>           /*
+> -         * TODO: ISV will be 0 for SIMD or SVE accesses.
+> -         * Inject the exception into the guest.
+> +         * ISV=0: syndrome doesn't carry access size/register info.
+> +         * Fetch and emulate via target/arm/emulate/.
+>            */
+> -        assert(isv);
+> +        if (!isv) {
+> +            ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +            CPUARMState *env = &arm_cpu->env;
+> +            uint32_t insn;
+> +            ArmEmulResult r;
 > +
->   # Load/store register offset
->   &ldst           rm rn rt sign ext sz opt s
+> +            cpu_synchronize_state(cpu);
+> +
+> +            if (cpu_memory_rw_debug(cpu, env->pc,
+> +                                    (uint8_t *)&insn, 4, false) != 0) {
+> +                bool same_el = arm_current_el(env) == 1;
+
+This hardcodes exception target EL1, including failures at guest EL2 
+with virtualization=on. arm_cpu_do_interrupt() then selects VBAR_EL1, 
+overwrites EL1 exception registers, and changes execution to EL1. Derive 
+the abort target and same_el from the current EL and exception routing. 
+The instruction-fetch failure branch has the same defect.
+
+Regards,
+Akihiko Odaki
+
+> +                uint32_t esr = syn_data_abort_no_iss(same_el,
+> +                    1, 0, 0, 0, iswrite, 0x10);
+> +
+> +                error_report("HVF: cannot read insn at pc=0x%" PRIx64,
+> +                             (uint64_t)env->pc);
+> +                env->exception.vaddress = excp->virtual_address;
+> +                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
+> +                break;
+> +            }
+> +
+> +            r = arm_emul_insn(env, insn);
+> +            if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
+> +                bool same_el = arm_current_el(env) == 1;
+> +                uint32_t esr = syn_data_abort_no_iss(same_el,
+> +                    1, 0, 0, 0, iswrite, 0x10);
+> +
+> +                error_report("HVF: ISV=0 %s insn 0x%08x at "
+> +                             "pc=0x%" PRIx64 ", injecting data abort",
+> +                             r == ARM_EMUL_UNHANDLED ? "unhandled"
+> +                                                     : "memory error",
+> +                             insn, (uint64_t)env->pc);
+> +                env->exception.vaddress = excp->virtual_address;
+> +                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
+> +                break;
+> +            }
+> +
+> +            advance_pc = true;
+> +            break;
+> +        }
 >   
-> @@ -24,6 +27,9 @@
->   # Load/store unsigned offset (12-bit, handler scales by << sz)
->   @ldst_uimm      .. ... . .. .. imm:12 rn:5 rt:5        &ldst_imm u=1 unpriv=0 p=0 w=0
+>           /*
+>            * Emulate MMIO.
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index d106400686..c916df35a7 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -29,6 +29,7 @@
+>   #include "syndrome.h"
+>   #include "target/arm/cpregs.h"
+>   #include "internals.h"
+> +#include "emulate/arm_emulate.h"
 >   
-> +# Load/store pair: imm7 is signed, scaled by element size in handler
-> +@ldstpair       .. ... . ... . imm:s7 rt2:5 rn:5 rt:5          &ldstpair
-> +
->   # Load/store register offset
->   @ldst           .. ... . .. .. . rm:5 opt:3 s:1 .. rn:5 rt:5   &ldst
->   
-> @@ -128,6 +134,68 @@ STR_v_i         00 111 1 01 10 ............ ..... .....         @ldst_uimm sign=
->   LDR_v_i         sz:2 111 1 01 01 ............ ..... .....       @ldst_uimm sign=0 ext=0
->   LDR_v_i         00 111 1 01 11 ............ ..... .....         @ldst_uimm sign=0 ext=0 sz=4
->   
-> +### Load/store pair — non-temporal (STNP/LDNP)
-> +
-> +# STNP/LDNP: offset only, no writeback.  Non-temporal hint ignored.
-> +STP             00 101 0 000 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +LDP             00 101 0 000 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +STP             10 101 0 000 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +LDP             10 101 0 000 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +STP_v           00 101 1 000 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +LDP_v           00 101 1 000 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +STP_v           01 101 1 000 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +LDP_v           01 101 1 000 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +STP_v           10 101 1 000 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-> +LDP_v           10 101 1 000 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-> +
-> +### Load/store pair — post-indexed
-> +
-> +STP             00 101 0 001 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-> +LDP             00 101 0 001 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-> +LDP             01 101 0 001 1 ....... ..... ..... .....        @ldstpair sz=2 sign=1 p=1 w=1
-> +STP             10 101 0 001 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-> +LDP             10 101 0 001 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-> +STP_v           00 101 1 001 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-> +LDP_v           00 101 1 001 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-> +STP_v           01 101 1 001 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-> +LDP_v           01 101 1 001 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-> +STP_v           10 101 1 001 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=1 w=1
-> +LDP_v           10 101 1 001 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=1 w=1
-> +
-> +### Load/store pair — signed offset
-> +
-> +STP             00 101 0 010 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +LDP             00 101 0 010 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +LDP             01 101 0 010 1 ....... ..... ..... .....        @ldstpair sz=2 sign=1 p=0 w=0
-> +STP             10 101 0 010 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +LDP             10 101 0 010 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +STP_v           00 101 1 010 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +LDP_v           00 101 1 010 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-> +STP_v           01 101 1 010 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +LDP_v           01 101 1 010 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +STP_v           10 101 1 010 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-> +LDP_v           10 101 1 010 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-> +
-> +### Load/store pair — pre-indexed
-> +
-> +STP             00 101 0 011 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-> +LDP             00 101 0 011 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-> +LDP             01 101 0 011 1 ....... ..... ..... .....        @ldstpair sz=2 sign=1 p=0 w=1
-> +STP             10 101 0 011 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-> +LDP             10 101 0 011 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-> +STP_v           00 101 1 011 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-> +LDP_v           00 101 1 011 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-> +STP_v           01 101 1 011 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-> +LDP_v           01 101 1 011 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-> +STP_v           10 101 1 011 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=1
-> +LDP_v           10 101 1 011 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=1
-> +
-> +### Load/store pair — STGP (store allocation tag + pair)
-> +
-> +STGP            01 101 0 001 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-> +STGP            01 101 0 010 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-> +STGP            01 101 0 011 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-> +
->   ### Load/store register — register offset
->   
->   # GPR
-> diff --git a/target/arm/emulate/arm_emulate.c b/target/arm/emulate/arm_emulate.c
-> index bf09e2a67b..6c63a0d0d1 100644
-> --- a/target/arm/emulate/arm_emulate.c
-> +++ b/target/arm/emulate/arm_emulate.c
-> @@ -122,6 +122,117 @@ static uint64_t load_extend(uint64_t val, int sz, int sign, int ext)
->       return val;
+>   #include "system/whpx-internal.h"
+>   #include "system/whpx-accel-ops.h"
+> @@ -350,6 +351,27 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
+>       whpx_set_reg(cpu, reg, reg_val);
 >   }
 >   
 > +/*
-> + * Load/store pair: STP, LDP, STNP, LDNP, STGP, LDPSW
-> + * (DDI 0487 C3.3.14 -- C3.3.16)
+> + * Inject a synchronous external abort (data abort) into the guest.
+> + * Used when ISV=0 instruction emulation fails.  Matches the syndrome
+> + * that KVM uses in kvm_inject_arm_sea().
 > + */
-> +
-> +static bool trans_STP(DisasContext *ctx, arg_ldstpair *a)
+> +static void whpx_inject_data_abort(CPUState *cpu, bool iswrite)
 > +{
-> +    int esize = 1 << a->sz;                   /* 4 or 8 bytes */
-> +    int64_t offset = (int64_t)a->imm << a->sz;
-> +    uint64_t base = base_read(ctx, a->rn);
-> +    uint64_t va = a->p ? base : base + offset; /* post-index: unmodified base */
-> +    uint8_t buf[16];                           /* max 2 x 8 bytes */
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +    CPUARMState *env = &arm_cpu->env;
+> +    bool same_el = arm_current_el(env) == 1;
+> +    uint32_t esr = syn_data_abort_no_iss(same_el, 1, 0, 0, 0, iswrite, 0x10);
 > +
-> +    uint64_t v1 = gpr_read(ctx, a->rt);
-> +    uint64_t v2 = gpr_read(ctx, a->rt2);
-> +    memcpy(buf, &v1, esize);
-> +    memcpy(buf + esize, &v2, esize);
+> +    cpu->exception_index = EXCP_DATA_ABORT;
+> +    env->exception.target_el = 1;
+> +    env->exception.syndrome = esr;
 > +
-> +    if (mem_write(ctx, va, buf, 2 * esize) != 0) {
-> +        return true;
-> +    }
-> +
-> +    if (a->w) {
-> +        base_write(ctx, a->rn, base + offset);
-> +    }
-> +    return true;
+> +    bql_lock();
+> +    arm_cpu_do_interrupt(cpu);
+> +    bql_unlock();
 > +}
 > +
-> +static bool trans_LDP(DisasContext *ctx, arg_ldstpair *a)
-> +{
-> +    int esize = 1 << a->sz;
-> +    int64_t offset = (int64_t)a->imm << a->sz;
-> +    uint64_t base = base_read(ctx, a->rn);
-> +    uint64_t va = a->p ? base : base + offset;
-> +    uint8_t buf[16];
-> +    uint64_t v1 = 0, v2 = 0;
-> +
-> +    if (mem_read(ctx, va, buf, 2 * esize) != 0) {
-> +        return true;
-> +    }
-> +    memcpy(&v1, buf, esize);
-> +    memcpy(&v2, buf + esize, esize);
-> +
-> +    /* LDPSW: sign-extend 32-bit values to 64-bit (sign=1, sz=2) */
-> +    if (a->sign) {
-> +        v1 = sign_extend(v1, 8 * esize);
-> +        v2 = sign_extend(v2, 8 * esize);
-> +    }
-> +
-> +    gpr_write(ctx, a->rt, v1);
-> +    gpr_write(ctx, a->rt2, v2);
-> +
-> +    if (a->w) {
-> +        base_write(ctx, a->rn, base + offset);
-> +    }
-> +    return true;
-> +}
-> +
-> +/* STGP: tag operation is a NOP for emulation; data stored via STP */
-> +static bool trans_STGP(DisasContext *ctx, arg_ldstpair *a)
-> +{
-> +    return trans_STP(ctx, a);
-
-This uses half the required immediate offset. It delegates directly to 
-STP, which scales by sz=3. STGP requires scaling by the 16-byte tag 
-granule, independently of its 8-byte register elements. Consequently 
-both the destination address and writeback are wrong for every nonzero 
-immediate. Existing TCG trans_STGP in target/arm/tcg/translate-a64.c 
-correctly uses LOG2_TAG_GRANULE; ARM ARM DDI0487L.a C6.2.366 confirms it.
-
-> +}
-> +
-> +/*
-> + * SIMD/FP load/store pair: STP_v, LDP_v
-> + * (DDI 0487 C3.3.14 -- C3.3.16)
-> + */
-> +
-> +static bool trans_STP_v(DisasContext *ctx, arg_ldstpair *a)
-> +{
-> +    int esize = 1 << a->sz;                   /* 4, 8, or 16 bytes */
-> +    int64_t offset = (int64_t)a->imm << a->sz;
-> +    uint64_t base = base_read(ctx, a->rn);
-> +    uint64_t va = a->p ? base : base + offset;
-> +    uint8_t buf[32];                           /* max 2 x 16 bytes */
-> +
-> +    fpreg_read(ctx, a->rt, buf, esize);
-> +    fpreg_read(ctx, a->rt2, buf + esize, esize);
-> +
-> +    if (mem_write(ctx, va, buf, 2 * esize) != 0) {
-> +        return true;
-> +    }
-> +
-> +    if (a->w) {
-> +        base_write(ctx, a->rn, base + offset);
-> +    }
-> +    return true;
-> +}
-> +
-> +static bool trans_LDP_v(DisasContext *ctx, arg_ldstpair *a)
-> +{
-> +    int esize = 1 << a->sz;
-> +    int64_t offset = (int64_t)a->imm << a->sz;
-> +    uint64_t base = base_read(ctx, a->rn);
-> +    uint64_t va = a->p ? base : base + offset;
-> +    uint8_t buf[32];
-> +
-> +    if (mem_read(ctx, va, buf, 2 * esize) != 0) {
-> +        return true;
-> +    }
-> +
-> +    fpreg_write(ctx, a->rt, buf, esize);
-> +    fpreg_write(ctx, a->rt2, buf + esize, esize);
-> +
-> +    if (a->w) {
-> +        base_write(ctx, a->rn, base + offset);
-> +    }
-> +    return true;
-> +}
-> +
->   /* Load/store single -- immediate (GPR) (DDI 0487 C3.3.8 -- C3.3.13) */
+>   static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+>   {
+>       uint64_t syndrome = ctx->Syndrome;
+> @@ -365,7 +387,40 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
 >   
->   static bool trans_STR_i(DisasContext *ctx, arg_ldst_imm *a)
+>       assert(syn_get_ec(syndrome) == EC_DATAABORT);
+>       assert(!cm);
+> -    assert(isv);
+> +
+> +    /*
+> +     * ISV=0: syndrome doesn't carry access size/register info.
+> +     * Fetch and decode the faulting instruction via the emulation library.
+> +     */
+> +    if (!isv) {
+> +        ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +        CPUARMState *env = &arm_cpu->env;
+> +        uint32_t insn;
+> +        ArmEmulResult r;
+> +
+> +        cpu_synchronize_state(cpu);
+> +
+> +        if (cpu_memory_rw_debug(cpu, env->pc,
+> +                                (uint8_t *)&insn, 4, false) != 0) {
+> +            error_report("WHPX: cannot read insn at pc=0x%" PRIx64,
+> +                         (uint64_t)env->pc);
+> +            whpx_inject_data_abort(cpu, iswrite);
+> +            return 1;
+> +        }
+> +
+> +        r = arm_emul_insn(env, insn);
+> +        if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
+> +            error_report("WHPX: ISV=0 %s insn 0x%08x at "
+> +                         "pc=0x%" PRIx64 ", injecting data abort",
+> +                         r == ARM_EMUL_UNHANDLED ? "unhandled"
+> +                                                 : "memory error",
+> +                         insn, (uint64_t)env->pc);
+> +            whpx_inject_data_abort(cpu, iswrite);
+> +            return 1;
+> +        }
+> +
+> +        return 0;
+> +    }
+>   
+>       if (iswrite) {
+>           val = whpx_get_gp_reg(cpu, srt);
+> @@ -451,6 +506,10 @@ int whpx_vcpu_run(CPUState *cpu)
+>               }
+>   
+>               ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
+> +            if (ret > 0) {
+> +                advance_pc = false;
+> +                ret = 0;
+> +            }
+>               break;
+>           case WHvRunVpExitReasonCanceled:
+>               cpu->exception_index = EXCP_INTERRUPT;
 
 
