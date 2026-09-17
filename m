@@ -4,133 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AFAC88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4530FC982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7GGe-0006Qp-0O; Thu, 17 Sep 2026 13:51:28 -0400
+	id 1x7GHD-0006WS-0v; Thu, 17 Sep 2026 13:52:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GGU-0006Pe-G9
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:51:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1x7GH5-0006Vi-Rg; Thu, 17 Sep 2026 13:52:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GGS-0003Pb-0Y
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:51:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789667472;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
- b=WlB2SO+Rute91IWZhfpWKrctuEXeGD/AIyOYyl1ikQjxNZepSAfDZ57LDSUBs9E/Zo0VIs
- PRIhUcdAugIAO0lO/Hxcf1RrPGRRZzDxpxHuGLvR2mqGrEpzjxzUQY3iHAbhGsGP44fe9z
- hQ5v0SwpWjklmMt0uanzr6mWbKAVGX0=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-339-R69O9XSAPfeTDkIzzpfozw-1; Thu, 17 Sep 2026 13:51:11 -0400
-X-MC-Unique: R69O9XSAPfeTDkIzzpfozw-1
-X-Mimecast-MFC-AGG-ID: R69O9XSAPfeTDkIzzpfozw_1789667471
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-8546e211940so8033447b3.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:51:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789667471; cv=none;
- d=google.com; s=arc-20260327;
- b=nbYjeFtZ3Op5N6n6g6P8IQAbKUVOJmTzTNaGjiaEH2J8d6VZ8fx7sU9M+SMmEh2R9z
- 6CShl8NPrmM7NE9mkRD1dzvrEWdupe0/Rj8HnOjC4b+mjXQc4/eUwEzc6s8WbDjqscl8
- t7qkke9z/VBZMtgdIszBZs4fWYhzk75RJGkErYI1Ml5QAx+RU0RyGvkTz63ZczrtzZRw
- CemRh3jUx8vIuPwoCMdysc+1apGITJ9vO1mm6GJQ/O+eZjgJrVQDWiPSN1fXTmh5X1a8
- iiV50Pg5VujoH+c9FP4WTageDwhDzCLjpgUPe14BVLNqWWdKFlV9rQs2KI6XPpvvbEHN
- vjCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
- fh=N1T2rJRgpF5SwCDa8mYUq6XaRC8Zgv+Raym5wifJ61I=;
- b=GKJI2OrlU0EMn5YF47lZ6Nbjghe8sEcZiXKKLpwOucx9eslfbAjJkv7VSSn1n3cssR
- obqYIN8Ug3U5iMVZHCYVctwzu6Ibbd4R9Sf7IVXAaveOiAgKosD6hnl56COhmmk6xRs3
- wabxHknz2OpISBfgVNLCJot8+n4ntwqR22i4AW+vb8QGNBjFRqQXtl7UOc0g9k/Qoggs
- 5wwLMTm/qS3MGYC5DbtPX/MtSoh7rXWZAWYaZ0jtZj9NKtBL2+pn87r0iLiK//P7kRD0
- sBY7pZdui7wi0VZ6svzk4SFAfATHz34wJi8gOqJslT9GBuB1gLwtyZ736pIJmYFuxcTT
- BjaQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789667471; x=1790272271; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
- b=QBvqH+ENt8GK4xRbVg7XsCEYGR1A2+4o/vpP5G+lEq9kvzE02anrOlBUc35l9vaBap
- zbLZmzTBFRqEGG3RBzKNDgQSvB07rvLg4GrMHlSxXiVcONmaT9h+LZ7OIHCkI1nDKyLc
- rnLl5JyLAZB8u/DNd/LD6qpmz3ZoFDJ01FrAN4nHqWfKF92q+aRlPGSdO2s5hzWMm2l7
- AAoVx3l3cGaTXaaUuaUyXSjo8Uw7dJHVNWQUd5SKxhGNb0XaR5fiySFYPxz5z9MOO++k
- UkRmqyl66VWaTHfnNSUTngHwfvvSPJUczxUYWeSEd7s2FlQxQGRa1ovrsedvodrOu07b
- raLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789667471; x=1790272271;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
- b=Pp072tJJgECNiYUczDn2Ys2P3M5UCdXtFSfRioOAO4cp3mryaxWBexyncsMEDmqqdL
- Qzqph+MhyN5lLu8/85xHhyS9qnEQnQQqjsaFzJ1ApINSFQcy6KHMjHJlB/5HuI9Mb5rx
- AqqwHQUd0C+IIroJBURtO+Hg1Jm0A5uAPNDVj39sj10YwvXP4Atp50jTxHH+y0iv+knQ
- 1jeFq3cmxOVof+l0OzvfMtQ+8fpJ5a6X+IJOa9dCIVh72Yze9AAjZwz3W3W8RRXXiPHd
- w2VbjPvI63Cz5aTFUfDEmzFYKFzUva+vieGZiMbqpsmc9WUJKIDcfWZOLBx8rUsmOmJf
- vbhg==
-X-Gm-Message-State: AFuF++mFuLw1BEjxWGjhdUZQpAUrqB+Dj7w8Yk2T9jLGyM2AnAot+FzW
- sQiXGNtJOXmo0PIlE70jQbEHiCq5Go2BzbaZxcSi9snVADtjFo85HteYZspt7kvv4Jbf4S2SeJ4
- /InPeyHibIMUCNhbIbPIjNfYnD8iGXs1t/R5KFEuqtT/V6HtfCu7k6cAQ7mizNYHiHBcwnxt6By
- 75hBtsO3gGwKJWw1HLWE1V3yaRGbMQRdU=
-X-Gm-Gg: AYBFou3n+W46Uqa5qTMbyDVSxhb+nQ2ZNNPWmISddHlbFN+TxczPflWBWQYC5bJh5IB
- 7j7jme43xUfirnF18b4N0s5fEZ+K4ua34JGOOV9bssIjStU9x7oOfaxKg88U6u4/48T6ZmILEWX
- vzBNEffAroImqq/gsl6E+ucOr9czbk6qb0rcbPjy9RfN+QIVeoPLeuDwnQipQpifDh8zrnc724i
- to8V+C+7umuNLqt
-X-Received: by 2002:a05:690e:450b:10b0:66c:486c:aa1b with SMTP id
- 956f58d0204a3-671631f05acmr1743275d50.38.1789667470754; 
- Thu, 17 Sep 2026 10:51:10 -0700 (PDT)
-X-Received: by 2002:a05:690e:450b:10b0:66c:486c:aa1b with SMTP id
- 956f58d0204a3-671631f05acmr1743251d50.38.1789667470302; Thu, 17 Sep 2026
- 10:51:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1x7GH2-0003W2-2p; Thu, 17 Sep 2026 13:51:53 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HHVfaQ3143685; Thu, 17 Sep 2026 17:51:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5MMvVd
+ 8jwd/aIPBKyD9KVUiINi1fAXgrUKb/kIVZnmY=; b=qAUrb8zoTlD6/itr+wVGXD
+ AE3ZM/zFa+neziDHO9NeDn58revexJjqZ+53VUBEnqilVo81piS+FbHLg7VKNHHe
+ O7koF8DCN/ge41L+WqgTx+zk092D05ZeFMJ4iUFIN4NSKOpc/Rda+XDsWRiHiQeI
+ xUGqB+FGDwJdWjFbA3JMYPehwqm9mzStaclQH8s6NsSXolMHqww7KOk3uEm3nWJp
+ 7Idjb3uUQ3GlUCpH+gTSOy04fCPsFOMn8uQiOn/UkFVgVjzV3ss5kJTjpEC6CtXK
+ NFTleMswqMxtzctZJTlVYJfpMDhOK1AgqVlhhiXEH2IrVSLOY+dOniDp4JBWcTuQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmx843y3u-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 17 Sep 2026 17:51:49 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HH9Gaw3494061; Thu, 17 Sep 2026 17:51:48 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gr5fjkm1e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Sep 2026 17:51:48 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68HHpgmp53477686
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Sep 2026 17:51:42 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8E7DD2004D;
+ Thu, 17 Sep 2026 17:51:42 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 43F412004B;
+ Thu, 17 Sep 2026 17:51:38 +0000 (GMT)
+Received: from [9.43.67.51] (unknown [9.43.67.51])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Sep 2026 17:51:38 +0000 (GMT)
+Message-ID: <09af11cb-e455-4a9a-83ce-e0ee037663e7@linux.ibm.com>
+Date: Thu, 17 Sep 2026 23:21:36 +0530
 MIME-Version: 1.0
-References: <20260916135841.3614495-1-jsnow@redhat.com>
- <20260916135841.3614495-8-jsnow@redhat.com>
- <877bkl6p5s.fsf@pond.sub.org>
-In-Reply-To: <877bkl6p5s.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 17 Sep 2026 13:50:59 -0400
-X-Gm-Features: AcwNN1X3Ijah7JnB4DXCnn25H-wDvOuxeeEXSvmMKd70__JU6VQ57kzsptrcuPY
-Message-ID: <CAFn=p-YbywppYTRUj9K9ncrue8b9NTgqXtcjWzMYiiJwTgYCpA@mail.gmail.com>
-Subject: Re: [PATCH v4 7/7] qapi: convert intro sections followed by
- notes/examples
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Jonathan Cameron <jic23@kernel.org>, Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>,
- linux-cxl@vger.kernel.org, 
- qemu-block@nongnu.org, Junjie Cao <junjie.cao@intel.com>, 
- Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/6] ppc/spapr: Add ibm,errinjct RTAS call handler
+To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, mahesh@linux.ibm.com, sbhat@linux.ibm.com,
+ anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
+ sourabhjain@linux.ibm.com, adityag@linux.ibm.com
+Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
+ harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
+ shivangu@linux.ibm.com
+References: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
+ <20260901174110.45356-3-nnmlinux@linux.ibm.com>
+Content-Language: en-US
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+In-Reply-To: <20260901174110.45356-3-nnmlinux@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDI1MCBTYWx0ZWRfX+pubTH5nS8sL
+ VZNRiYQYcSNTfU6ivt3UhZRAEHmFNl4SKN9GsfrWg8Rq2sqrfJMzJo1kv1UQsWJgeu7KZxfbDOp
+ qyXry41FxMCrShjojiH0iEetr89JuT1O/oowosjoJtXsSJ5F3YE/C7jdd/2ywIEbbp+8c+1EE8v
+ E67Cjbz30ga387L4fQYg2g1VwV7cxs1LLH6EqCyjlC+C1UIAWPFzC/Z9MVdebBPSMBMHLjGoBbk
+ 0rYP7FsAH0tNFZnUtEVCH4s10SOUCN8rRdJT+9ZL+MifWFkA2eMAXkPJnnsOGJsmVauB784qb74
+ Db5AzOzJkumFgxPx8lsDRIKcfCv2oV5HDOOJxjMwRP8pr6pu+lHACNJ6hpJv+1uJmMWnNYgqgqt
+ JXKkc/NG1gh6+2TXyApz89dkQaXPah2hkFZjACC8iMVJ41S8OLi8NGlBiFq0L35yRT1QT2rs0pT
+ p+X1pZN8Cuds1/KcaOw==
+X-Proofpoint-ORIG-GUID: 5xa7MOjdF85atlfPpifOKpnePesfz5TB
+X-Proofpoint-GUID: cFHAfdBHHxf-7XK8vNuY5qcJUbMhMVuw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDI1MCBTYWx0ZWRfX0oKlA9XrpAXs
+ gAqldP+aQ27EGWAhSel06g6UyGktgp9zc9plRxZelFLnf7ash2gMOd7vY2loOkb2OMfeg6DD3lK
+ E+ib2IHm9XpxMteDNVbvIrqsMrzkzvE=
+X-Authority-Analysis: v=2.4 cv=cY9HPXDM c=1 sm=1 tr=0 ts=6aac28b5 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=Cz9WfFLmUSrPgHwx-qUA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-17_04,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170250
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,107 +129,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 16, 2026 at 2:13=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > These provide a rather natural cutoff point, but technically this does
-> > introduce a new intro/details split to these documentation blocks.
->
-> Not sure what you mean by "technically".
 
-As a German, when an American says "technically", you can just omit
-that word from the sentence.
-I think, translating for you: "I don't expect these changes to have
-any immediate effect, but it's possible they might".
-You found the case where they might - a case where we probably
-actually did want a "TODO:" but never added it.
 
->
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  qapi/machine.json   |  5 ++---
-> >  qapi/migration.json | 15 +++++++--------
-> >  qapi/misc.json      |  3 +--
-> >  qapi/run-state.json |  7 +++----
-> >  4 files changed, 13 insertions(+), 17 deletions(-)
-> >
-> > diff --git a/qapi/machine.json b/qapi/machine.json
-> > index 84d95c8d87f..276258d9e5c 100644
-> > --- a/qapi/machine.json
-> > +++ b/qapi/machine.json
-> > @@ -1209,9 +1209,8 @@
-> >
-> >  ##
-> >  # @HV_BALLOON_STATUS_REPORT:
-> > -#
-> > -# Emitted when the hv-balloon driver receives a "STATUS" message from
-> > -# the guest.
-> > +#     Emitted when the hv-balloon driver receives a "STATUS" message
-> > +#     from the guest.
-> >  #
-> >  # .. note:: This event is rate-limited.
-> >  #
->    # Since: 8.2
->
-> The patch splits the first section between after the first paragraph,
-> i.e. before the note.
->
-> This matters, because we insert generated argument documentation after
-> the first section.  Rendered documentation changes like this
->
->     Emitted when the hv-balloon driver receives a "STATUS" message from
->     the guest.
->
-> +   Members:
-> +      * The members of "HvBalloonInfo".
+On 01/09/26 23:11, Narayana Murty N wrote:
+> +    switch (type) {
+> +    case RTAS_ERR_TYPE_IOA_BUS_ERROR:
+> +    case RTAS_ERR_TYPE_IOA_BUS_ERROR_64:
+> +        is_64bit = (type == RTAS_ERR_TYPE_IOA_BUS_ERROR_64);
+> +        ret = spapr_errinjct_parse_ioa_bus_error(param_buf, is_64bit,
+> +                                                 &addr, &mask,
+> +                                                 &config_addr, &buid, &func);
+> +        if (ret != RTAS_OUT_SUCCESS) {
+> +            goto param_error_exit;
+> +        }
+> +        break;
 > +
->     Note:
->
->       This event is rate-limited.
->
-> -   Members:
-> -      * The members of "HvBalloonInfo".
-> -
->     Example::
->
->        <- { "event": "HV_BALLOON_STATUS_REPORT",
->
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index d571c06fc20..a272e701385 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -1254,10 +1254,10 @@
-> >
-> >  ##
-> >  # @migrate_cancel:
-> > -#
-> > -# Cancel the currently executing migration process.  Allows a new
-> > -# migration to be started right after.  When postcopy-ram is in use,
-> > -# cancelling is not allowed after the postcopy phase has started.
-> > +#     Cancel the currently executing migration process.  Allows a new
-> > +#     migration to be started right after.  When postcopy-ram is in
-> > +#     use, cancelling is not allowed after the postcopy phase has
-> > +#     started.
-> >  #
-> >  # .. note:: This command succeeds even if there is no migration
-> >  #    process running.
->
-> Similar split, but rendered documentation doesn't change, because
-> nothing gets inserted.
->
-> Same for the remaining hunks.
->
-> Should the one hunk that changes rendered documentation be in the "qapi:
-> convert/split remaining QAPI/QMP intro sections" series?
+> +    case RTAS_ERR_TYPE_RECOVERED_SPECIAL_EVENT:
+> +    case RTAS_ERR_TYPE_CORRUPTED_PAGE:
+> +    case RTAS_ERR_TYPE_CORRUPTED_DCACHE_START:
+> +    case RTAS_ERR_TYPE_CORRUPTED_DCACHE_END:
+> +    case RTAS_ERR_TYPE_CORRUPTED_ICACHE_START:
+> +    case RTAS_ERR_TYPE_CORRUPTED_ICACHE_END:
+> +    case RTAS_ERR_TYPE_CORRUPTED_TLB_START:
+> +    case RTAS_ERR_TYPE_CORRUPTED_TLB_END:
+> +        spapr_errinjct_return_non_ioa_unsupported(rets);
+> +        return;
+> +
+> +    default:
+> +        goto param_error_exit;
+> +    }
 
-If you should so please. I was splitting by semantics and not effect,
-but I can split this one out for you.
+Hi Narayana,
 
->
-> [...]
->
+In Patch 1, you defined full suite of RTAS error types in enum 
+rtas_err_type. However, the switch (type) statement in 
+rtas_ibm_errinjct() only handles a subset of them. The omitted types 
+fall to the default case and jump to param_error_exit. But they are not 
+wrong params, they are just not supported by QEMU. This is just a nit, 
+as I can see in grep that both RTAS_OUT_PARAM_ERROR and 
+RTAS_OUT_NOT_SUPPORTED map to -3 value, but it would be good for code 
+clarity to explicitly route these valid-but-unimplemented types to the 
+unsupported path and not PARAM_ERROR, as this explicitly signals to 
+future readers that these are valid PAPR tokens lacking a QEMU 
+implementation, rather than invalid parameters.
 
+Rest the patch looks good to me. My above mentioned concern is not a 
+blocker. Feel free to add my tag:
+
+Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+
+Thanks & Regards
+~ Nikhil
 
