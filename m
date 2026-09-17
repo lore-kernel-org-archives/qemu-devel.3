@@ -4,58 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E1F7C88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 16:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17544C982D9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 16:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Ecc-0005ud-To; Thu, 17 Sep 2026 12:06:02 -0400
+	id 1x7Ech-00067e-Mg; Thu, 17 Sep 2026 12:06:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x7EcG-0005pI-Ne
+ id 1x7EcH-0005pW-VM
  for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:05:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x7EcA-0006qY-PQ
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:05:39 -0400
+ id 1x7EcE-0006rR-9i
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:05:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789661131;
+ s=mimecast20190719; t=1789661136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=vsK008jneCPOWTLQgm33Ub5Z02WevHXo6MuuyRtYqgU=;
- b=Ph11NEa2l/k+zUmtEK+SmvfFOM1GRo69YDkZGJ5tZZeZ0hktsXpLx7xd8ypt5pDHUWSLcn
- CVKkitXafPxm9/dfFTBZlKQH0Md3heH8eBGowpAUrwl1oWGbv3n0Vz3FCKrmGw4YPCah7N
- kIlHcwvQSeVj2cvxDq+QNLMBxPRKKUE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Tp4k2TnLWm2690QQrf2eUErZJWedHgYyEX3pnFdeeD0=;
+ b=M8GN7A+cq2fm3B/3Mgh93WKuPjHIp8Esb2WruUAH1ltaxGDPlYRau0c2rgy5o7KtZkhB/O
+ eTROvi3biBMg2SoqBcUN5l5FKOes3MfM0zZba6V/TYS9j7VzPQ936zijTHrXghLYhp8m/U
+ l1kZqjHrhFFbuWuwksb2OBluctjrHB8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-AMnvnH95P0mwGs93wX8kIA-1; Thu,
- 17 Sep 2026 12:05:29 -0400
-X-MC-Unique: AMnvnH95P0mwGs93wX8kIA-1
-X-Mimecast-MFC-AGG-ID: AMnvnH95P0mwGs93wX8kIA_1789661128
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-2cvvQTDKPjOsm0e9XJNkMg-1; Thu,
+ 17 Sep 2026 12:05:33 -0400
+X-MC-Unique: 2cvvQTDKPjOsm0e9XJNkMg-1
+X-Mimecast-MFC-AGG-ID: 2cvvQTDKPjOsm0e9XJNkMg_1789661132
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F7E918C1074
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 16:05:28 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BDCD1828B22; Thu, 17 Sep 2026 16:05:32 +0000 (UTC)
 Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E3CD30002D5; Thu, 17 Sep 2026 16:05:26 +0000 (UTC)
+ id DD83A300022B; Thu, 17 Sep 2026 16:05:30 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 00/14] QOM security status patches
-Date: Thu, 17 Sep 2026 17:05:11 +0100
-Message-ID: <20260917160525.1275388-1-berrange@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 02/14] qapi: add 'insecure-types' option for -compat argument
+Date: Thu, 17 Sep 2026 17:05:13 +0100
+Message-ID: <20260917160525.1275388-3-berrange@redhat.com>
+In-Reply-To: <20260917160525.1275388-1-berrange@redhat.com>
+References: <20260917160525.1275388-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -82,72 +86,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f8296b816fabd370307cd22b0270b610fc0fa279:
+This introduces a new 'insecure-types' option for the 'compat'
+argument that accepts three values
 
-  Merge tag 'pull-loongarch-20260917' of https://github.com/bibo-mao/qemu into staging (2026-09-16 18:24:08 -1000)
+ * accept: Allow any usage
+ * reject: Reject with an error reported
+ * warn: Allow any usage, with a warning reported
 
-are available in the Git repository at:
+For historical compatibility it defaults to 'accept'.
 
-  https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
+The 'reject' and 'warn' values will take effect for any type
+that has been explicitly marked insecure, or is lacking an
+explicit declaration of its security status.
 
-for you to fetch changes up to f49f267664ac9a681ab19c1790cc3d75a1723790:
+This new command line option is currently a no-op, but will
+become functional as following patches enable the checks.
 
-  machine: add helpers for declaring secure/insecure machine types (2026-09-17 17:00:44 +0100)
-
-----------------------------------------------------------------
-Merge support for recording & reporting object security status
-
-* '-compat' gains a new option 'insecure-types=reject|warn|accept'
-* '-device help', '-accel help' and '-machine help' report
-  security status of their objects
-* 'qom-list-types' can filter and report on security status of types
-* 'query-machines' can report on security status of machines
-* Adding macros for defining secure machine types
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (14):
-  qom: add tracking of security state of object types
-  qapi: add 'insecure-types' option for -compat argument
-  qom: add helper API for checking object class security policy
-    compliance
-  system: check security for accelerator types
-  system: report acclerator security status in help output
-  system: check security for machine types
-  system: report machine security status in help output
-  system: check security of device types
-  system: report device security status in help output
-  hw/core: report security status in query-machines
-  qom: refactor data passing for QOM list filtering
-  qom: report & filter on security status in qom-list-types
-  docs: expand security docs with info about security status
-  machine: add helpers for declaring secure/insecure machine types
-
- docs/system/security.rst     | 36 ++++++++++++++++++++++++++++++++++++
- hw/arm/bananapi_m2u.c        |  2 +-
- hw/arm/cubieboard.c          |  2 +-
- hw/arm/imx8mm-evk.c          |  2 +-
- hw/arm/integratorcp.c        |  2 +-
- hw/arm/mcimx7d-sabre.c       |  2 +-
- hw/arm/orangepi.c            |  2 +-
- hw/core/machine-qmp-cmds.c   |  1 +
- hw/ppc/pegasos.c             |  3 ++-
- include/hw/core/boards.h     | 25 ++++++++++++++++++++-----
- include/hw/i386/pc.h         | 11 ++++++++++-
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
  include/qapi/compat-policy.h |  5 +++++
- include/qom/object.h         | 26 ++++++++++++++++++++++++++
  qapi/compat.json             | 23 ++++++++++++++++++++++-
- qapi/machine.json            |  8 +++++++-
  qapi/qapi-util.c             | 30 ++++++++++++++++++++++++++++++
- qapi/qom.json                | 13 +++++++++++--
- qom/object.c                 | 16 ++++++++++++++++
- qom/qom-qmp-cmds.c           | 35 +++++++++++++++++++++++++++++------
- rust/qom/src/qom.rs          |  4 ++++
- system/qdev-monitor.c        |  7 +++++++
- system/vl.c                  | 30 +++++++++++++++++++++++++-----
- tests/qtest/fuzz/qos_fuzz.c  |  3 ++-
- 23 files changed, 259 insertions(+), 29 deletions(-)
+ 3 files changed, 57 insertions(+), 1 deletion(-)
 
+diff --git a/include/qapi/compat-policy.h b/include/qapi/compat-policy.h
+index ea65e10744a..f5af2090692 100644
+--- a/include/qapi/compat-policy.h
++++ b/include/qapi/compat-policy.h
+@@ -24,6 +24,11 @@ bool compat_policy_input_ok(uint64_t features,
+                             const char *kind, const char *name,
+                             Error **errp);
+ 
++bool compat_policy_check_security(const CompatPolicy *policy,
++                                  const char *typename,
++                                  bool is_secure,
++                                  Error **errp);
++
+ /*
+  * Create a QObject input visitor for @obj for use with QMP
+  *
+diff --git a/qapi/compat.json b/qapi/compat.json
+index 90b8d51cf27..b54f8eb3713 100644
+--- a/qapi/compat.json
++++ b/qapi/compat.json
+@@ -37,6 +37,23 @@
+ { 'enum': 'CompatPolicyOutput',
+   'data': [ 'accept', 'hide' ] }
+ 
++##
++# @CompatPolicySecurity:
++#
++# Policy for handling any devices or backends which do not provide a
++# security boundary to protect against untrusted environments
++#
++# @accept: Allow any usage
++#
++# @reject: Reject with an error reported
++#
++# @warn: Allow any usage, with a warning reported
++#
++# Since: 11.2
++##
++{ 'enum': 'CompatPolicySecurity',
++  'data': [ 'accept', 'reject', 'warn' ] }
++
+ ##
+ # @CompatPolicy:
+ #
+@@ -62,10 +79,14 @@
+ # @unstable-output: how to handle unstable output (default 'accept')
+ #     (since 6.2)
+ #
++# @insecure-types: how to handle types that are not declared secure
++#     (default 'accept') (since 11.2)
++#
+ # Since: 6.0
+ ##
+ { 'struct': 'CompatPolicy',
+   'data': { '*deprecated-input': 'CompatPolicyInput',
+             '*deprecated-output': 'CompatPolicyOutput',
+             '*unstable-input': 'CompatPolicyInput',
+-            '*unstable-output': 'CompatPolicyOutput' } }
++            '*unstable-output': 'CompatPolicyOutput',
++            '*insecure-types': 'CompatPolicySecurity' } }
+diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
+index 3d849fe0347..38b1cec7a41 100644
+--- a/qapi/qapi-util.c
++++ b/qapi/qapi-util.c
+@@ -14,6 +14,7 @@
+ #include "qapi/compat-policy.h"
+ #include "qapi/error.h"
+ #include "qemu/ctype.h"
++#include "qemu/error-report.h"
+ #include "qapi/qmp/qerror.h"
+ 
+ CompatPolicy compat_policy;
+@@ -58,6 +59,35 @@ bool compat_policy_input_ok(uint64_t features,
+     return true;
+ }
+ 
++bool compat_policy_check_security(const CompatPolicy *policy,
++                                  const char *typename,
++                                  bool is_secure,
++                                  Error **errp)
++{
++    if (is_secure) {
++        return true;
++    }
++
++    switch (policy->insecure_types) {
++    case COMPAT_POLICY_SECURITY_ACCEPT:
++        return true;
++
++    case COMPAT_POLICY_SECURITY_REJECT:
++        error_setg(errp, "Type '%s' does not provide a security boundary "
++                   "to protect against untrusted data or actions", typename);
++        return false;
++
++    case COMPAT_POLICY_SECURITY_WARN:
++        warn_report("Type '%s' does not provide a security boundary "
++                    "to protect against untrusted data or actions", typename);
++        return true;
++
++    default:
++        g_assert_not_reached();
++    }
++}
++
++
+ const char *qapi_enum_lookup(const QEnumLookup *lookup, int val)
+ {
+     assert(val >= 0 && val < lookup->size);
 -- 
 2.55.0
 
