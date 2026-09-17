@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC7D7C982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D33BAC88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7FWF-0007Qw-5S; Thu, 17 Sep 2026 13:03:31 -0400
+	id 1x7FW8-0007J9-Bu; Thu, 17 Sep 2026 13:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7FVy-0007FD-0D
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:17 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1x7FVs-0007Cz-20
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:09 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7FVv-0001lc-HM
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:13 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912e64ccso7722325e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:03:09 -0700 (PDT)
+ id 1x7FVp-0001jo-Dn
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:07 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-48586861639so425738f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789664589; x=1790269389; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789664584; x=1790269384; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=1kX6+O4tJe0pWhj+BvPQgaI0joLlV1TeCnlxudU5Yr0=;
- b=eUeromc8MwtEv8yxfYcpFO7QOO1SjYfN+pY/0yhMRuz+aSXsRmu4+47/JXc3l4zhWw
- PTYUU1r4bOC/Z38vm31n43oRzUqP/AIcZhlifD49WgY4uiFDo0Y1IBLmbgI8ULPOkUQG
- LO/yiZ/B+VOEzBlekjmYVnnUr3zM5V3mhjAzmPHt5yalNlIFlncNn6r6y/uYeFza13EE
- MzTXkWotUdNNvmGWYqSoCCt/WesekqignnR12EyxYozgWhRBVKD+tXVUsT65wdTM7sDP
- Hq/MOog8zzQUmG7p2wrbK4ryuRI2++ykIvomjVcxEEq8JXAprKtVBsPa0GGQQdAqO+Ru
- A9JQ==
+ bh=qqeexVrUP7S+bjRwHH7RDoI2I5dpPVlDr3aItml2BS4=;
+ b=ECgwnMG/2UYlh/hcci4GXXTtcKqY9VEvDnFal2i7mP+98sgXzxYlzAHA3NAHUHNs4M
+ hUAQeYQh/DK/1AkU5VpYM3gDNUZymoT/B2Z64RFwHRBl7YY5mkd7bP9+dcjB+Vb1dXPT
+ DUH0TXWQ/qPJkIC6cX1ZqnoLca4XY7W2S7AJBgdvUbbJTWiY1YdXf2cIzUb51uUt6Ypp
+ YT1cEq4pTsI4+mxggqARQAToq/pfjaYp3L1aAClflQKbMlsvX30LRN/xOvzBNfkRcRYP
+ kiLxLgEocOJ1SBE2yxDWYcYk4QRh5oTw079X720FG9sAsVcPXxaMoM0l0DRCONo05x9X
+ vUIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789664589; x=1790269389;
+ d=1e100.net; s=20260707; t=1789664584; x=1790269384;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=1kX6+O4tJe0pWhj+BvPQgaI0joLlV1TeCnlxudU5Yr0=;
- b=Fo3LFrguRbzJbD9OkEd00iuOWujUh5GzsSeq+nIeineFjN+32mc8YFQ3zMJASxhR6p
- ziks1ey8e+tqQIbIw1y480QDHDYu3fqbIypE32DTZIkPhR5l676+S+5GP++kIyl/o8ge
- 7SauU5+K5+wQqp/mL2WkSDd3QHwyXucWz/gE4mDsDIZkpfOja6ENWxoSepT+m8b3Ri3l
- 7u7QkLo2KFaNj4er2NRWIWhtE2guphMMz0N5tueghbhY5t149MqDleZJM4q/+KbaEWYg
- oaPQUO/75iJOOcO1ZOT7LuBL/4oCxaYgJ9eoB2PaPoEP74phPM3AwzZ8CyOiF/MZJdar
- K36w==
-X-Gm-Message-State: AFuF++lWKkMFvMon045qinh7oHgjXI4gHKT8z2PFJOoiU6NAwsFD7lp1
- YpYScBxl/I4P+ELEeXuLDZaMwkz6Enwc1yM/27LJhFEvpxdyrfxMitvgPopzh2zT3cc=
-X-Gm-Gg: AYBFou3XBgm5QRViL0sVuoUTOct33ofUtYXjuqrD6DpdXYRxKr5KA4SmNvcGX+AAeLE
- SSp71WMrsmRGFXyf7lS5pLanCWj4/4OpCZEio+hnAThb1oumUNygiqETELtBt3kRYNQLmWiEeqB
- xbh9aoYIPTZXPlaPHZvveiFHFNhkItRBbYp2CUJuXF2kRBKg6DL2AeIvKya+HB7ueXnGZJS6kLM
- CsJ3W380RfQnB4bU/J4LctGgjRIGwjHcTvIMyJLtIurSB3EhN9yLs+9Bnc+twDO27+ZqTJsllyS
- JkjVMGpjff8FauA72muZ96VH+NyKaGpzEylrTdbiHCw/K8FupdETtqDGo3r3fLQporYJgVvt++q
- 4jDYRJZnp9jXdTq7MjShxbM1xmPDlxxF0P5JDFzom4I4zKzRbpx/O4q/KQtGzYYxlY6fi/guFa8
- Vuza+lxpu1cbcnjV6KEA3yrsUCCY16R4jUV50SIFnNgBHC51JVox6U+UEukHCBnJMaW5O6P5w=
-X-Received: by 2002:a05:600c:a08b:b0:49f:bd3c:bc21 with SMTP id
- 5b1f17b1804b1-49fbd3cbcf4mr52074155e9.28.1789664588678; 
- Thu, 17 Sep 2026 10:03:08 -0700 (PDT)
+ bh=qqeexVrUP7S+bjRwHH7RDoI2I5dpPVlDr3aItml2BS4=;
+ b=F8uQdc7l59/oIGhTaWtq6/qYsDExRXoEZ3zNfu4J8Gi4hkjbq9rgMG6GJun4JaFNy0
+ D/T/m19XppAX/TJx+wlq5kY1ffIVoKtPlxUuVRuH28JoubQ+W+AQAcpMNd++Tp1WOmi+
+ vHcyX0KnOtmwFdIMGzyxTR4sbSWqwTqWndaqcDvr3V+tvx97cP43Ykm4HDcLOSw1399k
+ LqUtvt0x3HTB6Cq4r9ovHfq3n5dfInHVVEFytgF2oONTJqHCfJ09GaPYcw04xqkN4CS1
+ D25vIljCCl/1acS0Hw+GgJylhx/1JJZiqVU7n/CMX2GlX4EEoMq13UClOxkwvfNPqaY/
+ TLqQ==
+X-Gm-Message-State: AFuF++nOLv0Ef9TEAwMWm9PzDy3+bVcy16NphvzcRSJl0beyddDzkySI
+ nZsgjYU81NIDYIn7AgnKbpbrKsFWGEYN6F2yIyVleUhDJb9m8qmfsvqky4SauPCGf9Y=
+X-Gm-Gg: AYBFou07Hw/SpHoaWcuqbqy0iw4JA0husBXyE3XoItdFF93DVBbs4yaQ3uEtNcDxAJ+
+ kibLs8Z05w/M6TCD44yfbgGlEOA1WN+OfTawDFdfUQVeRgAd8n1ct1tzNeVLxnkGtPur4uPZEQh
+ B2TP/A1gzHYpv3jNbm6/mmNK9tSZVHW1GsIs9Odgzv8fahJiCapFTO6LRl5NmRnE7z30naP3hTS
+ N+xnGBipwmC3xia5z3gQm2P7KnZdnuTWzQPbq/UhYcWFnVvJy7PvNDbuPAmKhK1QihGR/20CgH7
+ 2cbYVr0nn3FIbl7SqTAeNVvqxAFsYHuxFjic6Uu7s3Ff+KLi5Ji4Ua4LOPtquBwPwhVlRRSx+b3
+ zJqgZAnNU4971eJAF2vSQ/TU0c/zWRAQcWGV3owjtziP0qQSUHApFPSn6FHwRaBnMhm8OAHxQp5
+ Rl9Ta8TPSrj6BUWTqxwHFlruOM5ae8YiDij/tgl+e0dVlRq7EOmZ8rriTpZGz7qFNmLlYx4q0=
+X-Received: by 2002:a05:6000:2992:20b0:487:64b:ea03 with SMTP id
+ ffacd0b85a97d-48713c056damr4437989f8f.10.1789664583856; 
+ Thu, 17 Sep 2026 10:03:03 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fc4886e11sm502475e9.3.2026.09.17.10.03.01
+ ffacd0b85a97d-4870bf418dcsm17047776f8f.35.2026.09.17.10.03.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 10:03:07 -0700 (PDT)
+ Thu, 17 Sep 2026 10:03:02 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BD2FA5FCB8;
+ by draig.lan (Postfix) with ESMTP id 0001E5FEF7;
  Thu, 17 Sep 2026 17:56:03 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -88,18 +88,17 @@ Cc: Cleber Rosa <crosa@redhat.com>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>,
  Brad Smith <brad@comstyle.com>, Kyle Evans <kevans@freebsd.org>
-Subject: [PATCH v5 15/17] tests/tcg: add console property to docker image
- custom target
-Date: Thu, 17 Sep 2026 17:55:59 +0100
-Message-ID: <20260917165602.3405537-16-alex.bennee@linaro.org>
+Subject: [PATCH v5 17/17] gitlab: drop check-tcg from clang-system job
+Date: Thu, 17 Sep 2026 17:56:01 +0100
+Message-ID: <20260917165602.3405537-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260917165602.3405537-1-alex.bennee@linaro.org>
 References: <20260917165602.3405537-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,30 +121,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the meson docs this serialises the target in a special
-"console" pool which also disables the buffering of stdout. This helps
-avoid the appearance of a massive stall when a docker image is built.
+We have no cross-compilers in the fedora image so don't bother trying
+to run the tests.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ .gitlab-ci.d/buildtest.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 053ef147df0..95f533b0ab5 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -265,6 +265,7 @@ foreach target, plan: tcg_tests
-       endif
-       t = custom_target(image_name, command: cmd,
-                         build_by_default: false,
-+                        console: true,
-                         output: 'no_output_' + image_name)
-       image_targets += {cc_dockerfile: t}
-     endif
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 5f21703645b..a97cc0b20b8 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -441,7 +441,7 @@ clang-system:
+     CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
+       --extra-cflags=-fno-sanitize-recover=undefined
+     TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390x-softmmu
+-    MAKE_CHECK_ARGS: check-qtest check-tcg
++    MAKE_CHECK_ARGS: check-qtest
+ 
+ clang-user:
+   extends: .native_build_job_template
 -- 
 2.47.3
 
