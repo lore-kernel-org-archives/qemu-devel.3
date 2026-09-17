@@ -4,160 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA836C982D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 13:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E61EC982D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 14:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7CbD-0005Up-7b; Thu, 17 Sep 2026 09:56:27 -0400
+	id 1x7Cjg-0006bY-VJ; Thu, 17 Sep 2026 10:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x7Cb8-0005UR-Sw
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 09:56:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
+ id 1x7CjS-0006Z6-BQ; Thu, 17 Sep 2026 10:04:58 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x7Cb7-0008AO-7Y
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 09:56:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789653379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SeeVHLhsNNmXNhyLrRU75c16AY5Z+goC/mThK3A06qY=;
- b=NJjL2GZhNAkrURYuP6zCd5Grp8b4sS8HKZfsAAn7MT8BzIWY8uF7T5nHbWPKUg23+uzr+m
- TxbfUyzzPNmGPJgg1B3J9VKK//nSCPArPPn5V2t9j9tq2f/GhMALPWVYMJ8lRhunvSCi5e
- ifoxo/pDTXZI4QnTdD4W8k65X0I9K6c=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-GnLpU4VGPkqKFaGMHXBWsA-1; Thu, 17 Sep 2026 09:56:17 -0400
-X-MC-Unique: GnLpU4VGPkqKFaGMHXBWsA-1
-X-Mimecast-MFC-AGG-ID: GnLpU4VGPkqKFaGMHXBWsA_1789653376
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-6a3e6916a5eso1285215a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 06:56:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789653376; x=1790258176; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=SeeVHLhsNNmXNhyLrRU75c16AY5Z+goC/mThK3A06qY=;
- b=T9QDvUNNjOs1hWA7j0yLjmq2J4Fc8xw+lJWO7kuaErbwV1iPTdKBa4HIZOQ7H02kpB
- SbXC1Vibm6ckN7RrpIWzdbeMr76pVzdyoEiPPdeot8dmrWoHTjIyq4hB3Kd2EsmsU8De
- o7vDf5y8XmNuNtX5daeKqqcSCzoXK6pVfTc3pnyfce8tQLv41Z8e8bArc9EZ0T+t/4TP
- VDRy9+gu76ekGsqpDJkOb6PiZKABfAjfuAQPOAfhECgODFm2G7ijgMsCAcAj5DBmt8mg
- YLGrJ8sxd2S/w4LjubalWjI6BxZ3yiFCz3TMoHi+1gWXw2vcLCJL5+jLTdvxDFsGLlBk
- c0NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789653376; x=1790258176;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=SeeVHLhsNNmXNhyLrRU75c16AY5Z+goC/mThK3A06qY=;
- b=I/sOqNMPHSAWp64zoOnY05Zv5HkH3z7JurLbGeKPjhHyVjZHyUKAf3Pp32wl4MtuGz
- VqbBolKgg2YLateB9DYIdN4CE9ouxkXVkfyfKzakycRQ6xhGWHEhpwBs2+KbMcTKkGlN
- mxsTxax0fGYe3HXF+3UAUq6FTrXX4MJkcoBrJXoPVRgJB2gklFNMGpefn9TNnhUEYoEf
- f9g/uwUvJN8MJhtdZDcUAUTKYZs/sMPLUXZ4mnBQwNVqd5PI18dMr4SxExBq/8UP6E2l
- zDWF1S96p/xQQ/cRP4Tum7wNix0OnzxngFocOf56COVOTCtv5s71I90gXoBQP8CwhKcW
- XmXA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByBYWz4yFTRWcMK3phLC5WHXl4840RoAc03elPhcI6TmOMDi/Dz+OjWG+29BROy84ZEDOuImGRGzj/q@nongnu.org
-X-Gm-Message-State: AFuF++k6C/RG8pE2F7qfI59+U6isePyix6+wUoXmmaf2CyYW6L8S18/B
- r6uu5X7IMGgJ/xLyKz446SiiKHm3a8rB/oW89gFNGsRhhQm0mIvsUD4nodo72KuX4CDSc6nT86o
- lOJVELPw2SEfmP9nJ2GbzpLDoznfTqjykyzmF62II81XUxTTfNOnnkBnZ
-X-Gm-Gg: AYBFou0Lp4luO4iQ/8BivBwsQRg9J4hqeBhqGkQ+AAmp/qVIgowgCq2u50gLHMiSuU4
- 7v6VG9dhrT7CHVVF1EpYxYmqaO34GeT7Z8zYQHMfEjs6erMDh36WUK7zNG7JUICjIGLbWZO6DrO
- 0anTt2nOewUGV+zeUACaS4MT1nM6jG+BLZjioHnBOn4mD5eUPFabUa+emNXqtIkFl/ssq7wIYxu
- Gya+BE/OO/7r+KdgkM89rX6P8ATLCFLd1B2d3PPfI+96qL2HvlJsur9ZLMFQJgp7vOEGV8jXUaa
- wSPj38WpTCx2NAaEpcsfzn7KtalBlALv2WMxeuhEZUYbH7pzvtfRM1bcpvrGmkqmhqxF2jyvuW7
- u4MSqeWHhzVXSg2LkyaBn+ZdwbMe9nUFO2myQiIkkvg==
-X-Received: by 2002:a05:6402:28cc:b0:6aa:1da6:3536 with SMTP id
- 4fb4d7f45d1cf-6aa2235ac04mr4345200a12.10.1789653376109; 
- Thu, 17 Sep 2026 06:56:16 -0700 (PDT)
-X-Received: by 2002:a05:6402:28cc:b0:6aa:1da6:3536 with SMTP id
- 4fb4d7f45d1cf-6aa2235ac04mr4345173a12.10.1789653375597; 
- Thu, 17 Sep 2026 06:56:15 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
- ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aa1d2727bfsm3365323a12.20.2026.09.17.06.56.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Sep 2026 06:56:15 -0700 (PDT)
-Message-ID: <0991dccb-a123-471c-8a72-e4194da6c596@redhat.com>
-Date: Thu, 17 Sep 2026 15:56:13 +0200
+ (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
+ id 1x7CjQ-0001Qg-Ah; Thu, 17 Sep 2026 10:04:58 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HE1PhW2697594; Thu, 17 Sep 2026 14:04:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=4R2dzHKiDJ7sTRUVNJ9RZlIdWASxwsV33dEo1UBm+
+ ME=; b=YSXAyZ409+1E+QlxuK9iY2fcrfPIrK4i8NfntMSCxuqN/tC1uywWJ7gKM
+ 6MFZeDJwUq5nQPGorgW0ntTCQTGukOHcVJhJ+7oDmgJbPGPTMlHVerMnRxo82AcD
+ cVXw4hMddsQCfIKSWK5opFtbSFeP3Sn83MBR1jPnPQ5DXoC9WwHZH6OlmoMiz7UZ
+ 0H10eWRhTZB7/PkOSSY7c/ZpG1qKoBlbc3Dhcm5+bvuRIvCN/oL7TbGKBk6gtvtU
+ bsHAv7MsCZSiZL9sd9olpalhF5MmmCUaPuDeoz696IlKPrF5VuYXCXQnMCtqJdVy
+ fWnMhvKGHDvfjcopRgim1bveFadGA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmx842u2d-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 17 Sep 2026 14:04:52 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HDa3AP4151503; Thu, 17 Sep 2026 14:04:52 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gr7gejag4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Sep 2026 14:04:52 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68HE4nou13828660
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Sep 2026 14:04:49 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5B10558065;
+ Thu, 17 Sep 2026 14:04:49 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AED6658052;
+ Thu, 17 Sep 2026 14:04:48 +0000 (GMT)
+Received: from Mac.ibm.com (unknown [9.61.247.238])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Sep 2026 14:04:48 +0000 (GMT)
+From: Omar Elghoul <oelghoul@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ cohuck@redhat.com, qemu-stable@nongnu.org
+Subject: [PATCH v2] s390x/pci: fix DMA slot leak on I/O TLB entry replacement
+Date: Thu, 17 Sep 2026 10:04:31 -0400
+Message-ID: <20260917140431.45343-1-oelghoul@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/10] hw/vfio/pci: Back the CXL memory with a
- RAM-device region
-To: mhonap@nvidia.com, alex@shazbot.org, ankita@nvidia.com, jic23@kernel.org, 
- dave.jiang@intel.com, alejandro.lucero-palau@amd.com, smadhavan@nvidia.com,
- pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, pbonzini@redhat.com, eric.auger@redhat.com,
- peter.maydell@linaro.org, richard.henderson@linaro.org, cohuck@redhat.com
-Cc: kjaju@nvidia.com, vsethi@nvidia.com, zhiw@nvidia.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, linux-cxl@vger.kernel.org
-References: <20260916184412.3825713-1-mhonap@nvidia.com>
- <20260916184412.3825713-6-mhonap@nvidia.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260916184412.3825713-6-mhonap@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDE5OCBTYWx0ZWRfXzfSINC12oUoL
+ fBntGAk4hDF065mW1nONXESgJjaEEN5RhF04Pu9VQuyYhC6tVslxb2UKdQc7lnSvVyC4cK0v3CP
+ 5ZoZYpM3FRU0jMhb6v+VZKvv5IDvgyIJX2uT6Hrfox2zXo2nN0qGAwrhwo1hL8i18YakYmu9zvE
+ 8wO8pLoyPpCrKg8bmmoTJlo5SdXUgglB9pG7Lhot2hOekFXXTduMdw7oBX4dnOkj7LsPoicAn60
+ NW98YFD88Rew8VUEKs/QH/IF4vAmVeF9hGdUnyHiB02HxkFoIPqiuW3WKQTkmw65t7HfBWZLLf0
+ 9nNQYRLcCBCFsyaZCbagsGuS/SS4tsNmJQwbn3WfiARRQNSOT09Vm8l9JA1jW1fFgOlaHuNM41t
+ lK4zTGidlRY1SxNIMJrd4s7WxMAHQo1DXIifo8BjhqIN9oMGfICyx9FK7OgNOV8aY89rXhyMo14
+ zedz/iE3fBwlq9y0zDQ==
+X-Proofpoint-ORIG-GUID: qaH5cGVwITJwgdj1erEQP3-m5OtB2zsN
+X-Proofpoint-GUID: qaH5cGVwITJwgdj1erEQP3-m5OtB2zsN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDE5OCBTYWx0ZWRfX/PiR1orU5WGy
+ +LeZ2bDIBcB5U43CyBjlKVrYG0eMZGbwfCSb+JgMkOp6v7my196ad+zULeNI6D7PWBSu1oTrseT
+ gZm655mNv9PxyOoJDw7uUHdTbBwBlds=
+X-Authority-Analysis: v=2.4 cv=cY9HPXDM c=1 sm=1 tr=0 ts=6aabf384 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=9xhCHi5sD7DbSV9palMA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-17_03,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170198
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=oelghoul@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -173,108 +118,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/26 20:44, mhonap@nvidia.com wrote:
-> From: Manish Honap <mhonap@nvidia.com>
-> 
-> mmap the kernel's HDM memory region so its host physical pages back a
-> RAM-device MemoryRegion. It stays out of the guest address space until
-> the guest commits its decoder and QEMU learns the GPA to place it at.
-> 
-> AI-used-for: code (prototype)
-> Signed-off-by: Manish Honap <mhonap@nvidia.com>
-> ---
->   hw/vfio/pci.c | 34 ++++++++++++++++++++++++++++++++++
->   hw/vfio/pci.h |  1 +
->   2 files changed, 35 insertions(+)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 10b13f200d..4716266595 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3221,8 +3221,11 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
->       return true;
->   }
->   
-> +static void vfio_cxl_teardown(VFIOPCIDevice *vdev);
-> +
->   void vfio_pci_put_device(VFIOPCIDevice *vdev)
->   {
-> +    vfio_cxl_teardown(vdev);
->       vfio_display_finalize(vdev);
->       vfio_bars_finalize(vdev);
->       vfio_cpr_pci_unregister_device(vdev);
-> @@ -3696,11 +3699,42 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
->           return false;
->       }
->   
-> +    /*
-> +     * The HDM memory is host physical. Set up the region, which installs the
-> +     * fd read/write path, and mmap it for direct guest access; it is added to
-> +     * the guest address space only once the guest commits its endpoint decoder.
-> +     */
-> +    if (vfio_region_setup(OBJECT(vdev), vbasedev, &cxl->mem_region,
-> +                          cxl->mem_region_index, "cxl-mem", errp)) {
-> +        return false;
-> +    }
-> +    if (vfio_region_mmap(&cxl->mem_region)) {
-> +        /*
-> +         * Without mmap the region falls back to the kernel's fd read/write
-> +         * path, which works but traps every access. Warn rather than fail.
-> +         */
-> +        warn_report("vfio-cxl: %s: failed to mmap the HDM memory region; "
-> +                    "performance may be slow", vbasedev->name);
-> +    }
+When s390_pci_update_iotlb() does a mapping update for an IOVA that has
+an already-existing TLB entry with different permissions or translated
+address, it unmaps then remaps it. However, at the end of the map path,
+it unconditionally decrements the available DMA slot counter without a
+corresponding increment in the intermediate unmap branch.
 
-vfio_cxl_setup calls vfio_region_setup() then vfio_region_mmap()
-back-to-back when other 'normal' BARs split these calls across
-vfio_populate_device() and vfio_bar_register(). I guess it is fine
-for CXL since it is not a PCI BAR.
+This causes the DMA slot count to be decremented on every remapping of
+an active IOVA, leading to a permanent DMA slot leak. This remapping
+without a prior invalidation and sync is not seen today in well-behaved
+guests but is allowed by the architecture. Fix it by only decrementing
+available DMA slots when inserting a brand new mapping.
 
->       cxl->enabled = true;
->   
->       return true;
->   }
->   
-> +static void vfio_cxl_teardown(VFIOPCIDevice *vdev)
-> +{
-> +    VFIOCXL *cxl = &vdev->cxl;
-> +
-> +    if (!cxl->enabled) {
-> +        return;
-> +    }
-> +    if (cxl->mem_region.mem) {
-> +        vfio_region_exit(&cxl->mem_region);
-> +        vfio_region_finalize(&cxl->mem_region);
+Cc: qemu-stable@nongnu.org
+Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
+Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+---
+ hw/s390x/s390-pci-inst.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-However, the tear down should be split between :
-
-1. vfio_exitfn (unrealize)
-    drops mmaps, removes subregions and removes references so the
-    MR refcount can reach zero.
-2. vfio_pci_finalize (instance_finalize)
-    frees the MemoryRegion.
-
-Thanks,
-
-C.
-
-> +    }
-> +}
-> +
->   static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->   {
->       ERRP_GUARD();
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 7fdd695704..06d15e807d 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -134,6 +134,7 @@ typedef struct VFIOCXL {
->       uint32_t comp_bar;               /* component BAR carrying that block */
->       uint64_t hdm_offset;             /* block offset within the component BAR */
->       uint64_t dpa_size;               /* size of the HDM memory region */
-> +    VFIORegion mem_region;           /* HDM memory, mapped at committed GPA */
->   } VFIOCXL;
->   
->   struct VFIOPCIDevice {
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index b7de23c7d2..652e1712ec 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -655,6 +655,7 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
+         goto out;
+     } else {
+         if (cache) {
++            /* valid->valid transitions reuse the DMA slot */
+             if (cache->perm == entry->perm &&
+                 cache->translated_addr == entry->translated_addr) {
+                 goto out;
+@@ -665,6 +666,9 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
+             memory_region_notify_iommu(&iommu->iommu_mr, 0, event);
+             event.type = IOMMU_NOTIFIER_MAP;
+             event.entry.perm = entry->perm;
++        } else {
++            /* invalid->valid transitions consume a new DMA slot */
++            dec_dma_avail(iommu);
+         }
+ 
+         cache = g_new(S390IOTLBEntry, 1);
+@@ -673,7 +677,6 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
+         cache->len = TARGET_PAGE_SIZE;
+         cache->perm = entry->perm;
+         g_hash_table_replace(iommu->iotlb, &cache->iova, cache);
+-        dec_dma_avail(iommu);
+     }
+ 
+     /*
+-- 
+2.55.0
 
 
