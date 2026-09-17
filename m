@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94EEEC88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC7D7C982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7FWD-0007Pc-U1; Thu, 17 Sep 2026 13:03:30 -0400
+	id 1x7FWF-0007Qw-5S; Thu, 17 Sep 2026 13:03:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7FVz-0007FX-0d
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:20 -0400
+ id 1x7FVy-0007FD-0D
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:17 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7FVv-0001kj-Hx
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:14 -0400
+ id 1x7FVv-0001lc-HM
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:03:13 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3931so8517075e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:03:08 -0700 (PDT)
+ 5b1f17b1804b1-49b912e64ccso7722325e9.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789664587; x=1790269387; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789664589; x=1790269389; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=IV0tF1sRRNpIOPotsbAY17LevOYRtBEbl2/JNz6ncs4=;
- b=LEt6ZndEbVdxR6jIsgzPir1Zx+nT6OZuQmKZBiXNtis6gJcHrZcsaog0SX0gE1ZhsS
- jTHWZsoY03arX27nNEsFnEUXIN9jVojg5TWJJpNU9Sdf2hgMhAR+JYPNAom42oxXGrdA
- I+wKoIYB/Ua53GHIYs/l1xOp5dmN426rd43gFxHSCBPfia1NwBsRIV+ewY/FGYeSMATv
- k8Rbsjttx80hhu3SmAoNmeR6rnJphI/UPmUzJ3fOJl/lSApW0evNsprHBtow8e470x/8
- xCLcC1L1+ieHnbqnAEkumGsxLHn6lXkliNSGXo/Zmv8K/QDedK7RBGWdCVqYZSD1H7gb
- SnNA==
+ bh=1kX6+O4tJe0pWhj+BvPQgaI0joLlV1TeCnlxudU5Yr0=;
+ b=eUeromc8MwtEv8yxfYcpFO7QOO1SjYfN+pY/0yhMRuz+aSXsRmu4+47/JXc3l4zhWw
+ PTYUU1r4bOC/Z38vm31n43oRzUqP/AIcZhlifD49WgY4uiFDo0Y1IBLmbgI8ULPOkUQG
+ LO/yiZ/B+VOEzBlekjmYVnnUr3zM5V3mhjAzmPHt5yalNlIFlncNn6r6y/uYeFza13EE
+ MzTXkWotUdNNvmGWYqSoCCt/WesekqignnR12EyxYozgWhRBVKD+tXVUsT65wdTM7sDP
+ Hq/MOog8zzQUmG7p2wrbK4ryuRI2++ykIvomjVcxEEq8JXAprKtVBsPa0GGQQdAqO+Ru
+ A9JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789664587; x=1790269387;
+ d=1e100.net; s=20260707; t=1789664589; x=1790269389;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=IV0tF1sRRNpIOPotsbAY17LevOYRtBEbl2/JNz6ncs4=;
- b=nHcukiWFlvTjOFXLD0N7ngp/v/SW0Jhty0olXoZDS0HSIVyPoZ6ng/+b1d3pAJU9i1
- hmK1p+MIgEvxFEh1MW0emkOQAl02ihS1dMby0Z7p5PuOEglG15e7Ntqm16FHZz5aYMTd
- +ZYyrg6W1mstdn6QUZOuBuEv8gnaHjbLTbg1EZaJdGaDmy2ocziqWT1oTJp0xg36XaMA
- YImAJeF2/j4NN4T2vYC22bS/PjHKbckcDZgZBzj8gQCYWo417wadYNS9MBoxRlZWhMpT
- MUO4nAGXY0dl6bc7Rqjc8jK2lBuFVLJOneVEXVvWPbqZvRSoUho5zGqKh9CTPal/e5jo
- F8+Q==
-X-Gm-Message-State: AFuF++nOer/hH3IpejxS5W1pRSuixK2C335pe+su+EUe7M5znmyNYtvP
- a8VwrKa9qIg24dTV0FqZNKodOR94PbjLAs4hxvMXQzLIRs+gClrnCiR7Yg6m3Fd4Fpc=
-X-Gm-Gg: AYBFou0kZtcGuUA2YN+5+fsdWtua1gpIWGGBVxpLbE4pCRuHGAaA1YrUHxhvC+AJ+js
- hmCoh+VSvFdXCIlseolMA+cruJV76nTRAAbkhj7b8IfIMDdmq8XmQmu2eJgqyhFl7gsZr1+M/L0
- AXmQoG0mCjYTVGDShPGQlglXZXzPbf6Z8Eo+xc24xG0kqcIMwcsN1BIszBDrD1QxaMyzOmxfk4q
- g5acRip1g5IpGLiH+s8UAAVd+dh2+G3wEICODiDCVnmDoPKXt3vms+ZT230GyO8+gwdzjPe3kUC
- TGIocZTjAciXiZsf+nunz/fG7hRHUg/z1O2duuYe5ZuiayhTalKS+VOC63KYJF7mL4z+0gogfZe
- 689Hz/vkc08Z0gWvubkyX4c7wuyJuVtmUi3l7tDvH1Pqb1aAvuuG4nsr2L5tmkSRaTEBPcaCs8e
- UF7FzDCKRrbuyPEybKLkuhzv8orJkWAzZIPXUZXXnM1ET5/6Gsx9okVdPp//0QuuKCjKNEFic=
-X-Received: by 2002:a05:600c:3ba4:b0:49d:17d4:d6ad with SMTP id
- 5b1f17b1804b1-49eb7337325mr121275635e9.23.1789664587072; 
- Thu, 17 Sep 2026 10:03:07 -0700 (PDT)
+ bh=1kX6+O4tJe0pWhj+BvPQgaI0joLlV1TeCnlxudU5Yr0=;
+ b=Fo3LFrguRbzJbD9OkEd00iuOWujUh5GzsSeq+nIeineFjN+32mc8YFQ3zMJASxhR6p
+ ziks1ey8e+tqQIbIw1y480QDHDYu3fqbIypE32DTZIkPhR5l676+S+5GP++kIyl/o8ge
+ 7SauU5+K5+wQqp/mL2WkSDd3QHwyXucWz/gE4mDsDIZkpfOja6ENWxoSepT+m8b3Ri3l
+ 7u7QkLo2KFaNj4er2NRWIWhtE2guphMMz0N5tueghbhY5t149MqDleZJM4q/+KbaEWYg
+ oaPQUO/75iJOOcO1ZOT7LuBL/4oCxaYgJ9eoB2PaPoEP74phPM3AwzZ8CyOiF/MZJdar
+ K36w==
+X-Gm-Message-State: AFuF++lWKkMFvMon045qinh7oHgjXI4gHKT8z2PFJOoiU6NAwsFD7lp1
+ YpYScBxl/I4P+ELEeXuLDZaMwkz6Enwc1yM/27LJhFEvpxdyrfxMitvgPopzh2zT3cc=
+X-Gm-Gg: AYBFou3XBgm5QRViL0sVuoUTOct33ofUtYXjuqrD6DpdXYRxKr5KA4SmNvcGX+AAeLE
+ SSp71WMrsmRGFXyf7lS5pLanCWj4/4OpCZEio+hnAThb1oumUNygiqETELtBt3kRYNQLmWiEeqB
+ xbh9aoYIPTZXPlaPHZvveiFHFNhkItRBbYp2CUJuXF2kRBKg6DL2AeIvKya+HB7ueXnGZJS6kLM
+ CsJ3W380RfQnB4bU/J4LctGgjRIGwjHcTvIMyJLtIurSB3EhN9yLs+9Bnc+twDO27+ZqTJsllyS
+ JkjVMGpjff8FauA72muZ96VH+NyKaGpzEylrTdbiHCw/K8FupdETtqDGo3r3fLQporYJgVvt++q
+ 4jDYRJZnp9jXdTq7MjShxbM1xmPDlxxF0P5JDFzom4I4zKzRbpx/O4q/KQtGzYYxlY6fi/guFa8
+ Vuza+lxpu1cbcnjV6KEA3yrsUCCY16R4jUV50SIFnNgBHC51JVox6U+UEukHCBnJMaW5O6P5w=
+X-Received: by 2002:a05:600c:a08b:b0:49f:bd3c:bc21 with SMTP id
+ 5b1f17b1804b1-49fbd3cbcf4mr52074155e9.28.1789664588678; 
+ Thu, 17 Sep 2026 10:03:08 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bef7678sm17418206f8f.2.2026.09.17.10.03.01
+ 5b1f17b1804b1-49fc4886e11sm502475e9.3.2026.09.17.10.03.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 10:03:02 -0700 (PDT)
+ Thu, 17 Sep 2026 10:03:07 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8D0E35FCA7;
+ by draig.lan (Postfix) with ESMTP id BD2FA5FCB8;
  Thu, 17 Sep 2026 17:56:03 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -87,11 +87,11 @@ Cc: Cleber Rosa <crosa@redhat.com>, Helge Deller <deller@gmx.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>,
- Brad Smith <brad@comstyle.com>, Kyle Evans <kevans@freebsd.org>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v5 13/17] tests/docker: fix ccache directory variable expansion
-Date: Thu, 17 Sep 2026 17:55:57 +0100
-Message-ID: <20260917165602.3405537-14-alex.bennee@linaro.org>
+ Brad Smith <brad@comstyle.com>, Kyle Evans <kevans@freebsd.org>
+Subject: [PATCH v5 15/17] tests/tcg: add console property to docker image
+ custom target
+Date: Thu, 17 Sep 2026 17:55:59 +0100
+Message-ID: <20260917165602.3405537-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260917165602.3405537-1-alex.bennee@linaro.org>
 References: <20260917165602.3405537-1-alex.bennee@linaro.org>
@@ -106,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,41 +122,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anders Roxell <anders.roxell@linaro.org>
+According to the meson docs this serialises the target in a special
+"console" pool which also disables the buffering of stdout. This helps
+avoid the appearance of a massive stall when a docker image is built.
 
-DOCKER_QEMU_CCACHE_DIR is missing $() around DOCKER_QEMU_CACHE_DIR, so
-$HOME/.cache/qemu is never created.  podman then fails to mount it:
-
-  Error: statfs /home/user/.cache/qemu: no such file or directory
-
-It only works if the directory already exists.  Add the missing $().
-
-Fixes: 8a1975e4d44b ("tests/docker: expose $HOME/.cache/qemu as docker volume")
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-Message-ID: <20260915072403.347639-1-anders.roxell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Tested-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v5
-  - dropped my fix in favour of Anders with a better commit (an he was
-  first)
----
- tests/docker/Makefile.include | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/tcg/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index 74bf471f171..9237a0dbe7f 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -197,7 +197,7 @@ docker-help: docker
- # Where QEMU caches build artefacts
- DOCKER_QEMU_CACHE_DIR := $$HOME/.cache/qemu
- # Use a global constant ccache directory to speed up repetitive builds
--DOCKER_QEMU_CCACHE_DIR := DOCKER_QEMU_CACHE_DIR/docker-ccache
-+DOCKER_QEMU_CCACHE_DIR := $(DOCKER_QEMU_CACHE_DIR)/docker-ccache
- 
- # This rule if for directly running against an arbitrary docker target.
- # It is called by the expanded docker targets (e.g. make
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 053ef147df0..95f533b0ab5 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -265,6 +265,7 @@ foreach target, plan: tcg_tests
+       endif
+       t = custom_target(image_name, command: cmd,
+                         build_by_default: false,
++                        console: true,
+                         output: 'no_output_' + image_name)
+       image_targets += {cc_dockerfile: t}
+     endif
 -- 
 2.47.3
 
