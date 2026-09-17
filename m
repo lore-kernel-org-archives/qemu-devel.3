@@ -4,74 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56772C982D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 13:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15705C982CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 13:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7C5t-0006mu-GN; Thu, 17 Sep 2026 09:24:05 -0400
+	id 1x7C6j-0007Cl-Oj; Thu, 17 Sep 2026 09:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x7C5r-0006mX-UW
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 09:24:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x7C5q-0001Vn-Ax
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 09:24:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789651439;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ChCY5TX3UCrRlMx5zsM7smij0veR3PzOkYQ5oXFAkmk=;
- b=Gcc832RubmEPmfdWmjrW6RkxEDgSOBJR+dnhyYkNl3KGzUTejc0eobjzq2iRD6NDYjHLSf
- pSshjjv1A11jAU7VJCVe0bJunktlb5HiRMIVHZG9CTQorSBeEqFpeZ0hbs9bDjc4q4xWuE
- mEUwvkVVAQacWEnW/kgVyWCZ6LmvuPE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-qBT4C-vwMEeO3AiMQR_-IQ-1; Thu,
- 17 Sep 2026 09:23:55 -0400
-X-MC-Unique: qBT4C-vwMEeO3AiMQR_-IQ-1
-X-Mimecast-MFC-AGG-ID: qBT4C-vwMEeO3AiMQR_-IQ_1789651434
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7CF8180A9E0; Thu, 17 Sep 2026 13:23:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.111])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 175C61956049; Thu, 17 Sep 2026 13:23:50 +0000 (UTC)
-Date: Thu, 17 Sep 2026 15:23:48 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Subject: Re: [GIT PULL 21/50] qemu-io: propagate errors through Error API
- instead of printf
-Message-ID: <aqvp5H5FvEao80BV@redhat.com>
-References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
- <20260829-nohmp-v1-21-4dcc2b4b0055@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7C6e-0007B5-LM
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 09:24:53 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7C6a-0001cF-Q8
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 09:24:51 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49e69b9e16aso8239805e9.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 06:24:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789651486; x=1790256286; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Ga8Fn+E2e0/kenWcJ7v5mMLDb0i5OVxx3dxW9Oyn8Mw=;
+ b=z6+6sdpotTHS/4fvali+gm5lFvzFWboHkqua/RZKdrFfRc1QqKB8s1usUPtlkwWfdm
+ nbP+cAFP+GCgf79MJPAWYCodb995Ro3Rop52OpgDs6TbzC5kP5lfZ14khZCMUVLE1Bng
+ nsbivg60TmW8VEY5IsblQyH79Pd8DFgi5O6uE6qH3j1Hk+v9utqt3mvgUxDvDcE+F8Hi
+ 3BhqEBIihe4AYORLxKj3ujhqVwuwoRzB+4GaPxfUV7BIk2v29iBRMU7lj0q1nVOLfZ2a
+ Etd4RDd4NK3uKqZOMpUqZ7ZHWghO+I9Zv7uLjBPyexP+OH01HuYupBgn+M2x75w0vYWz
+ XCXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789651486; x=1790256286;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Ga8Fn+E2e0/kenWcJ7v5mMLDb0i5OVxx3dxW9Oyn8Mw=;
+ b=tpjgJwc2YxXpZYpWfo4stQmykDBNtsUF90cZqTrbQHwT9BrWKlVdPgbgE3FbkApfMz
+ QFaa3yVweueE2A4Xfd/Duxa6DiiYRhd21cigqqDfDol3/v7KHbHRETZh6shqRvRIEmOD
+ X2AN/er/a4lqkvSj3nNTT0pb8xzAdjT5BB80HT/hwelWBZw/eaVl5iVEDtYr5ySjBHVN
+ 2vOE3VQIvAf7Id3bewRytSLNZgjrEAZdzHBS326NrHfMK6qTCATQNculJxckDedZdnWG
+ GTLjYqMS86uQDizPr+AEGZPRlhQ4JgQHcmowFByz12778VJGcO+4oO+C3m2OP1/oDP5i
+ xe4g==
+X-Gm-Message-State: AFuF++meSlqu/G1zYlnqDsgYea0g9Zd+F2pjrfRBeVkmzEYyzMFyW6er
+ Oj16Ph+wB10f5Ydzq2n9NDYhAIB4rAbRNTZpF2VVfuGXrHN4yaUwaDP+/j4Vx+EzSEY=
+X-Gm-Gg: AYBFou0fwIfvON3871hFbgDfJNY/kM0i6E3r0IAtLjJJU/5ZclhmYyxzf2FiUjWBFN4
+ eDzOxTmeYe9xx1MqcsL2ZPyxWjsrAOi1jB2VthKJnJSzvtLvtET+Y+dwQB8zJOrKXIn5JTijzgt
+ ftklopgqV6VnH8KET27TPXqkYJBWgejQD4835KKSBlF8TZcfmmeQd/gn6KK1905g1dawKLWnzsl
+ HqEJcB0kaVgUGVToNUuiXxX5143nZQzdqSn2ln+aLBIxtVmPEK6lOCT0++P0XiWSqtI/dXeWBOW
+ 5X1RS7b9QOXdtYD64hed8SmRA1eJbLN/qJb79bDRviSmkJOymdpbJ93VHt/NmeRqff+EkucxopT
+ 6FWp4pdxoshyd7yQy9IBzC+mlpI9HVT7Xh2Axyajo3Afy0vVfGeTjFZI15CMt3ankFtZTujAWzO
+ YdSPyVmzsUe5NRDWHaQRaIflqIVpjrynSUdpx7l8wr5CMROQFfpBqQnnr1x1X6koHaYIgu6Mc=
+X-Received: by 2002:a05:600c:8518:b0:49c:fa21:1c86 with SMTP id
+ 5b1f17b1804b1-49eb73308b1mr84792035e9.27.1789651485872; 
+ Thu, 17 Sep 2026 06:24:45 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fbd23f4e6sm91676035e9.8.2026.09.17.06.24.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Sep 2026 06:24:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E981F5F834;
+ Thu, 17 Sep 2026 14:24:43 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ qemu-arm@nongnu.org,  Cornelia Huck <cohuck@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ John Snow <jsnow@redhat.com>,  David Hildenbrand <david@kernel.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Warner Losh
+ <imp@bsdimp.com>,  Song Gao <gaosong@loongson.cn>,  Kyle Evans
+ <kevans@freebsd.org>,  Eric Farman <farman@linux.ibm.com>,  Brad Smith
+ <brad@comstyle.com>,  Fabiano Rosas <farosas@suse.de>,  Helge Deller
+ <deller@gmx.de>,  Laurent Vivier <laurent@vivier.eu>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-s390x@nongnu.org,  Matthew Rosato <mjrosato@linux.ibm.com>,  Brian
+ Cain <brian.cain@oss.qualcomm.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v4 02/19] Revert "tests/tcg/meson.build: implement
+ ./configure -cross-cc-* options"
+In-Reply-To: <65a743c6-54ae-4e2c-ae4d-08e1d6f87ef3@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Wed, 16 Sep 2026 09:31:45 -0700")
+References: <20260916153013.2134555-1-alex.bennee@linaro.org>
+ <20260916153013.2134555-3-alex.bennee@linaro.org>
+ <65a743c6-54ae-4e2c-ae4d-08e1d6f87ef3@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Thu, 17 Sep 2026 14:24:43 +0100
+Message-ID: <87wlsk6mec.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260829-nohmp-v1-21-4dcc2b4b0055@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,58 +123,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 28.08.2026 um 22:42 hat Marc-André Lureau geschrieben:
-> Convert the qemu-io command infrastructure to use QEMU's Error API
-> (Error **errp) for error propagation instead of printing directly to
-> stdout/stderr via printf/fprintf.
-> 
-> The cfunc_t typedef, all ~35 command functions, the dispatcher chain
-> (command/init_check_command/qemuio_command), and helper functions
-> (parse_pattern, create_iovec, qemu_io_alloc_from_file) all gain an
-> Error **errp parameter. Async completion callbacks (aio_read_done,
-> aio_write_done, aio_discard_done) use error_report() since they have
-> no Error path back to the caller.
-> 
-> Update tests:
-> - error_report_err() prepends qemu-io: prefix
-> - copy-before-write: check the HMP return value, rather than stdio
-> - other tests: update to check JSON {"return": "Error: error text"}
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Message-ID: <20260828-qemu-no-hmp-v5-21-9227de146347@redhat.com>
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-This was not a great change, it results in a mess for qemu-io output.
+> On 9/16/2026 8:29 AM, Alex Benn=C3=A9e wrote:
+>> We want to keep configuring of the cross compiler within configure so
+>> it can be used by the firmware.
+>>
+>
+> Would that be possible to add in command message that it disable effect
+> of those options for tcg-tests?
 
-When used from HMP, success output still ends up on stdout, but (some)
-errors go to the monitor instead now. Some commands may even get their
-output split across both stdout and the monitor. The old experience
-wasn't great (everything should have gone to the monitor instead of
-having everything in the terminal), but the new one is terrible.
+I'm wondering if we should revert this at all, or just merge with the
+meson commands (because currently this breaks the MacOS tcg checks)
+>
+>> This reverts commit 7e1d54da6faf10e1fc70f6b3d8247068b80b1597.
+>> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>=20
+>> ---
+>> v3
+>>   - declare empty container_command/use_containers to avoid unref var
+>> ---
+>>  configure             | 31 ++++++++-------
+>>  meson_options.txt     | 89 -------------------------------------------
+>>  tests/tcg/meson.build | 31 +++------------
+>>  3 files changed, 23 insertions(+), 128 deletions(-)
+>>=20
+>
+> For the rest,
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>
+> Regards,
+> Pierrick
 
-Please fix the inconsistency or revert.
-
-> diff --git a/tests/qemu-iotests/004.out b/tests/qemu-iotests/004.out
-> index fb8593289f51..37da6024809f 100644
-> --- a/tests/qemu-iotests/004.out
-> +++ b/tests/qemu-iotests/004.out
-> @@ -6,36 +6,36 @@ wrote 1048576/1048576 bytes at offset 133169152
->  1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
->  
->  write into image boundary
-> -write failed: Input/output error
-> +qemu-io: write failed: Input/output error
->  [...]
-
-Instead changing the output of all test outputs to include an
-unnecessary and inconsistently applied "qemu-io" prefix, it would have
-been better to disable the prefix after command line parsing.
-
-qemu-io is still primarily an interactive program, and constantly
-printing the name of the program you're interacting with has little
-value.
-
-Kevin
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
