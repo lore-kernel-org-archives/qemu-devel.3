@@ -4,87 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1935C982E8
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 22:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FFAC982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 22:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7KGY-0001pb-BC; Thu, 17 Sep 2026 18:07:38 -0400
+	id 1x7KKX-00038C-4V; Thu, 17 Sep 2026 18:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7KGP-0001oh-AC
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 18:07:29 -0400
-Received: from mail-pz2-x1d.google.com ([2607:f8b0:4864:3b::1d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7KGM-0006HB-3F
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 18:07:29 -0400
-Received: by mail-pz2-x1d.google.com with SMTP id
- 41be03b00d2f7-cc1cebad4aeso15799a12.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 15:07:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x7KKR-00037F-5H
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 18:11:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x7KKP-0006go-LR
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 18:11:38 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68HLGDIk2823314
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 22:11:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=BiV5aJ47pPH
+ oITuBcURTf56PBkKU6RMPPi7LEVmmSqg=; b=PYxQYXRFsBhKgTqUF7xq+x/pX0+
+ J8J6h/VEwoOqBfQvRucJabUzlPzzaWEryMSLwVNntwtV/3Qk33aARFAz/BxaVOgg
+ zGlSDY3SnBrlGI0Pn4nFNlZbvXtwlKmkLYOfE+HvOfSNaRtT3koK8qb6y+8v7+1E
+ PkX+a4pY1VgzWT5uHyoUZuFiK9rGaarG0xhtzBF2o7m+7H7mkRlWqLkQC7XaRQoM
+ bFcPe4Clvl3Wor2RqAsvSEB5AINnJjtO//gMEl3vHfMp8Mfe+N8/9HFZDetudOsv
+ 2rxisB/nCufJ6z5ITp76ICDz8Tu/U8kFeQpADrx/WAAhxdY7Y8nD/MawlKw==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4grjkt1tpp-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 22:11:35 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cc11b5dd54dso50523a12.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 15:11:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789682844; x=1790287644; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1789683094; x=1790287894; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=9mNCAIqDOepKwDLnim2xcE5EzzCaL66TpsgNkeIyCS4=;
- b=dnh9RUktTUytuGItI9fNcOkzuvDn5C3AHrDB5+MdH4h42JDgXzjTOdTLLZxESl6WkY
- aQizdANAi0Y/y3G8ThTsFGlZHFSl681dlScuuh5kT/xNqbr5ymkjNyXyr6ka/cr2YUj5
- p0RFdj1/veetYK90ZPdNtRAJxkzYDuSHesLZNsdyrkaJ8HVHcfsVTn100jl19HAiJ+Hh
- ppcc1j/BqZxIs8WfyMuTYChFxttiRN0ZyxyG8PUhc4vdtPIgY9MzXOs+BfhbRpF7Nhze
- ERGuGm9CDwQ5mn92r5gHchXVER4d6V35kjd9ufOK/+Lt6MpWQKLu4IT07XLXqr8VJI9r
- nPfg==
+ bh=BiV5aJ47pPHoITuBcURTf56PBkKU6RMPPi7LEVmmSqg=;
+ b=Xy1dG82Z0HQKPmm1ZQfSo7PjmFNuOXbGHr105i8ZtlmrCCO/Z+EM1r2sPmlEzX7J4o
+ d2bJI8ZNue2rpWLBGk5l7hj2iyECxeFOLdA34CkDmcc6Vip7WN+LZnbjNLFezTpjsGz2
+ ot4Enxyj6/GUpniug7X2fHS8q70CbTfQ75jiS/QbhkpmaMpRMevOdCRO5T1bszuQCdTn
+ lK5vkZRgCXRo+S6h65QGxUtXmK5rk0qJK/hLEX/vbvQuyZ/PwEYs9GJe+61/i5txDWL+
+ NXyTDbfqUjSMz68uB7bWaJDoy5IcmHQXm7JdLeW2iVB/paaFOCFPxW1sYDEaYa6SCkYA
+ 0whA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789682844; x=1790287644;
+ d=1e100.net; s=20260707; t=1789683094; x=1790287894;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=9mNCAIqDOepKwDLnim2xcE5EzzCaL66TpsgNkeIyCS4=;
- b=LbjIcnSrEsZFD9WdFxW2+TpOc4+yXAnLCyujOW+rG30VFaF2L0/6/45FlaOIv4HQnu
- n9W1GOmUBXm4S1dOKOlLgS3CVKcWFH/iRvQ9weBXTFXx5Hy8Fm2pgDp4ei9Of762OMxe
- 9nquV9EtfmR7H6WTTgx9FQgJlifh16BIHqyy1LJYpKOTqyqR/GjWSN2W0rAKDG77lP67
- LVP3ISOKA/my0k0v2TlGoaiu6f3F0gwiq3o8vX8Ehtg+p9bVsRRq63QkAf/nEOqnzoyk
- jVFDpnJsysmyNJ5gh927S9dSn1CV204AGvAgXDQiOIRpBmQPSY4gEZ5zs1GSfLNEq1Hc
- oMKw==
-X-Gm-Message-State: AFuF++kTcxqu7BWnVlW/oYBO5Pz49bOS20cOzu7lIVrezhS74NoiBhxa
- IL2DPvWYArmIx8m0dyAf2iYuw+gKxYAiwN5Coh8cozoQMr1jKIM5kFi0plGh2SysEvJKtFBGoNq
- e+ZKCwgM=
-X-Gm-Gg: AYBFou0AKtmYQSjqnc0IdnFh1rvR+aWawWxvHZtFif6n7lHOXVvlpLbrGuyy8iHwv9V
- DCllkDuAXUrj0ka3i6UbjLgRwS2MXVC/ithQG4VWgStMrsstJpuf6vs4p8yl8xD/6WdBaUYEUTW
- Uvu/83SNM1pwjr1USEYUD7EnHgr1vpapPyS5lXzsrtCT9k3Kp3t7oHVbL8VSAKx0ovTnqOoQRNx
- tQMNV8DDuOfIIIB4JdBgkxO4ktCtdjV+rf98N/YM0YfXc6R+OlJfKMzDXiGoSte6Nh3nmPoFkXv
- /D/mqfPaCl650nr49hWp6ynMeRVC2kXHGj6BGcy7a5EskEx6oaExnbqWMCz3EZAa5OLAIBuKlbJ
- S0K2oQZkfES0483PKMmYJCDCP2KPQ9U/dHFUt8FIepF+WRXmQrHF+v6mu0VVeCwFee9EHSTY8g5
- GkyL65Ci3gsQ7YzY8HcWoyonHXHZv1PoX7317Nxqezl22sAFO9Uisv8oYmGmQfL5csUmDiKkv1h
- jXI/D+/
-X-Received: by 2002:a05:6a20:6a0b:b0:3dd:85a8:4c64 with SMTP id
- adf61e73a8af0-3dd8c5dbaa5mr597625637.43.1789682844311; 
- Thu, 17 Sep 2026 15:07:24 -0700 (PDT)
-Received: from stoup ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14395d3a31asm14558131c88.9.2026.09.17.15.07.23
+ bh=BiV5aJ47pPHoITuBcURTf56PBkKU6RMPPi7LEVmmSqg=;
+ b=x0Tynq4FVw1Hxo7oWJP+8kt8tOWsYre/lyT90hERPg0p+DX+Gao6HrDeyO1brRS1pD
+ L1Vfl9QMP3FBIRjMBJFKVAAMqHHLNr71atoFr9hoADylmdI5+2WPpJIGvR3a7+oPi5yj
+ vrRwbiE63KHezkO0WKb1ZKnNnLHbkibh2KEQ4SzxgIeq/jrMtlBa5+KUlRoyZMMC8/l+
+ 95kZPNkFNO00xpqmA6U/LzlO7gNt1Q1SokB1T8WFnr+xwC3yelRy35OPs3ezHweyoV4Y
+ e4OiQ0J/s1ljp1E/M3XumVDkO6KbvjSejG0bVk7V3/0pWKOv8Vl34f9ShAtKMgj4iZY/
+ ETPA==
+X-Gm-Message-State: AFuF++nAEcm0/X2siXIObBZFdWkgBLCPigYeqRQptEcu8ZfRbR4MPLSc
+ 1ekYurEg5R36aUetbzKQPu9QP/+nea0DXu3fIA9zHTJ/xytkZ53+Re0vyvXwTRWz2zgIiFAWAvZ
+ sIRDGLdGBc4wU1oH+HZn4880vqoY8/6lpeupHgHS3WwPi3PmhntY6HPsJZEJ/xarOkQ==
+X-Gm-Gg: AYBFou2w7bg3bst+mOUdzBB+jtRLd1AuAiIGcumHg4c53XhihPOL+sAdu3khkFUtmIa
+ IaLquBPUozdAg1ivkNgiHq2LPm5zaMVM5HmJ5lgqcRZmoyoHeP+Pes70Axc1xHgfUUoffdZAqjR
+ 4LWl5EBFLfyyH3tJ1VSXsq1SNq7P38VU2UiPtoNnllxARJiRp9xHPslGdF4XvhTyu83RVxdjoUz
+ 91kjqyeaRqYTlptRczP8DCoUEgXKCGbcp1W/MMkUCnQtc8SbgCOjW8LIziizrHqDh3pEXAUcBE6
+ fSCCGNv8K6MIhgRlk9QcOQzEKSerf4JRWVv9i9eZB8hfsP9qdfyn5D8mPDAc9WvC2N+X2HG/SkJ
+ GWLZDHRktxGPfeD2CRkMjkALcVwsfAQutGzX846iSwEIQCLiuXxuRnPHzVaU=
+X-Received: by 2002:a05:6a20:6a08:b0:3dd:7b24:b344 with SMTP id
+ adf61e73a8af0-3dd8c52f8demr694881637.18.1789683093900; 
+ Thu, 17 Sep 2026 15:11:33 -0700 (PDT)
+X-Received: by 2002:a05:6a20:6a08:b0:3dd:7b24:b344 with SMTP id
+ adf61e73a8af0-3dd8c52f8demr694842637.18.1789683093455; 
+ Thu, 17 Sep 2026 15:11:33 -0700 (PDT)
+Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bf5aa1194sm21021430eec.14.2026.09.17.15.11.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 15:07:23 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Thu, 17 Sep 2026 15:11:32 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-Subject: [PATCH v6 2/2] accel/tcg: Allow cross-page goto_tb chaining in
- user-only builds
-Date: Thu, 17 Sep 2026 12:07:18 -1000
-Message-ID: <20260917220718.60899-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260917220718.60899-1-richard.henderson@linaro.org>
-References: <20260917220718.60899-1-richard.henderson@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 2/3] tests/docker/docker.py: fix run command with $UID == 0
+Date: Thu, 17 Sep 2026 15:11:16 -0700
+Message-ID: <20260917221117.274619-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260917221117.274619-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260917221117.274619-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::1d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x1d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDMxOSBTYWx0ZWRfX365nnw02F4Zw
+ 0jvt3SBsy1wNh/KT0La9tZlOHoWQ2uQPJbVZwvwCHiwRaQfxY3LBuiE1KDGFll0xTR4l6nK0nwE
+ 3Dko+Y5gSjo1rrC3+ZrS8s1soLxh8Y/xIgYtyQA9VRqELwDHiaENuZs28dWECktMDxHtp4u09Nr
+ j/ZNbavwF8c5i7oNZ1ZCEHXQkkwcRY926VHdaQZL5y26/oFZJLzJH0ey8zpytgjPpvxZcQlp4ub
+ hB+qcTaW2PtWN/WF6HrNnT+kRsi6KbD40owrHlbG4uUWNUfu31GKf5BhG/Sqa8brBg/kFki4rRx
+ rfmxYNgvHgGrFarnOObUUvjjDvgvtc3xcsoTTK3diiynbQXFnlLvEe2Ox5K5RST/61ZCScIVG0A
+ J4ZZ7nr2QanHAbmhJXKPqbzDFX+N0g6LKqRf1v1yPA4c76K1PB6MTLj+d6E47wANEzloZKlXuhj
+ e11qOiN6Kkmzy55MEqg==
+X-Proofpoint-GUID: P5safvovPQSPE36_Pg8jGQMcbXFAkrDb
+X-Proofpoint-ORIG-GUID: P5safvovPQSPE36_Pg8jGQMcbXFAkrDb
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDMxOSBTYWx0ZWRfX0Ov/bRTBlcGd
+ aphVlCDum4LFy35ypahf1GojOeCH9qCHcmc9FXqi9eBUEMjoPkoChteBbAmzJTGjg4ElntkAosU
+ mwOEBfXZt61jTt/oyYq3jDTxRaVhpgk=
+X-Authority-Analysis: v=2.4 cv=Y/VtIReN c=1 sm=1 tr=0 ts=6aac6597 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
+ a=T_LeFyhLTpD9Fp5MPwMA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-17_05,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609170319
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,598 +151,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+when running with uid 0 (like in nested container), podman run fails
+sporadically with:
+``
+Error: preparing container ... for attach: container uses ID mappings ([]specs
+.LinuxIDMapping{specs.LinuxIDMapping{ContainerID:0x3e9, HostID:0x0, Size:0x1}}), but doesn't map UID 0
+```
 
-translator_use_goto_tb() refuses to chain unless the destination is on the
-same page as the start of the TB.  For guests whose text is much larger than
-a page this is expensive: an emulated alpha gcc compiling a 255k line
-translation unit takes the indirect dispatch path for 8.4 billion of its
-34.2 billion TB exits, and a large share of those are ordinary direct
-branches that simply crossed an 8 KiB page boundary.
+Since default user in containers is 0 (run without -u option), there is
+no need to repeat that in this case.
 
-The restriction was made unconditional by d3a2a1d803 ("accel/tcg:
-Introduce translator_use_goto_tb"), whose rationale was:
-
-    Various targets avoid the page crossing test for CONFIG_USER_ONLY,
-    but that is wrong: mmap and mprotect can change page permissions.
-
-That is true, but in user-only builds the invalidation path already covers
-it.  There are no page tables: every mmap, mprotect and munmap reaches
-page_set_flags(), which calls tb_invalidate_phys_range() whenever the flags
-actually change, and tb_phys_invalidate() calls tb_jmp_unlink() to reset
-incoming jumps.  A chained cross-page jump is therefore broken whenever the
-destination page's permissions change. This is not true in system mode,
-where TBs are keyed by physical address and a page table change invalidates
-nothing, so the restriction is kept there.
-
-The rule protects one more thing, which the original rationale does not
-mention: it guarantees that execution cannot enter a page without a TB
-lookup, and so without check_for_breakpoints().  That is what makes a
-breakpoint set after a block was translated take effect, since insertion
-deliberately invalidates nothing. A link established before the breakpoint
-was set would jump straight over it.
-
-So the chaining is only enabled for a run that can never acquire a
-breakpoint. In user-only mode every breakpoint comes from gdb -- BP_CPU is
-g_assert_not_reached() there, and the guest cannot ask for one -- and gdb
-has to be requested with -g before the first block is translated, even
-though with suspend=n it may connect later. gdb_may_set_breakpoints()
-reports whether it was, and is fixed for the lifetime of the process.
-
-Add tests/tcg/multiarch/test-xpage-chain.c to cover both hazards directly.
-It writes the last instruction of one page and the first of the next, so
-that the fall-through between them is a cross-page goto_tb, runs it 200000
-times so the chain is established, then checks that mprotect(PROT_NONE)
-makes the next call fault, and that different code written into the page
-once it is mapped back runs rather than a stale translation.
-
-The two instructions -- set the return value register, and return -- are
-all the architecture specific code there is; thirteen architectures supply
-them and the rest skip.
-
-The test detects the hazard it is meant to detect: with the
-tb_invalidate_phys_range() call in page_set_flags() commented out,
-it fails both phases, executing page B after PROT_NONE and returning
-the stale result.
-
-Run with -b, the same binary stops once the chain is established and
-lets tests/tcg/multiarch/gdbstub/xpage-bp.py set a breakpoint on the
-far side of it, which the next call has to stop on.
-With gdb_may_set_breakpoints() forced to false so that the chaining
-stays on under gdb, that breakpoint is missed and the test fails,
-which is what makes it a test of the gate rather than of gdb.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-[rth: Update for meson test infrastructure]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260901034808.3524945-8-mattst88@gmail.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- include/gdbstub/user.h                  |  11 +
- accel/tcg/translator.c                  |  33 ++-
- gdbstub/user.c                          |  14 +
- tests/tcg/multiarch/test-xpage-chain.c  | 336 ++++++++++++++++++++++++
- tests/tcg/multiarch/gdbstub/xpage-bp.py |  37 +++
- tests/tcg/multiarch/meson.build         |   6 +
- 6 files changed, 436 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/multiarch/test-xpage-chain.c
- create mode 100644 tests/tcg/multiarch/gdbstub/xpage-bp.py
+ tests/docker/docker.py | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
-index 654986d483b..c091cd97586 100644
---- a/include/gdbstub/user.h
-+++ b/include/gdbstub/user.h
-@@ -11,6 +11,17 @@
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index d97dda26967..7c15da59db6 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -334,10 +334,11 @@ def run(self, cmd, keep, quiet, as_user=False):
  
- #define MAX_SIGINFO_LENGTH 128
+         if as_user:
+             uid = os.getuid()
+-            cmd = [ "-u", str(uid) ] + cmd
+-            # podman requires a bit more fiddling
+-            if self._command[0] == "podman":
+-                cmd.insert(0, '--userns=keep-id')
++            if uid != 0:
++                cmd = [ "-u", str(uid) ] + cmd
++                # podman requires a bit more fiddling
++                if self._command[0] == "podman":
++                    cmd.insert(0, '--userns=keep-id')
  
-+/**
-+ * gdb_may_set_breakpoints() - whether a breakpoint can ever be inserted
-+ *
-+ * In user-only mode every breakpoint comes from gdb, and gdb is only ever
-+ * reachable if -g was given at startup, before the guest ran a single
-+ * instruction.  A run that has no gdbstub can therefore never acquire a
-+ * breakpoint, which lets translation take shortcuts that a breakpoint
-+ * would invalidate.  Stays true once true, even if gdb detaches.
-+ */
-+bool gdb_may_set_breakpoints(void);
-+
- /**
-  * gdb_handlesig() - yield control to gdb
-  * @cpu: CPU
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index e9943006947..7d1caf56553 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -15,6 +15,9 @@
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/target_page.h"
- #include "exec/translator.h"
-+#ifdef CONFIG_USER_ONLY
-+#include "gdbstub/user.h"
-+#endif
- #include "exec/plugin-gen.h"
- #include "tcg/tcg-op-common.h"
- #include "internal-common.h"
-@@ -110,6 +113,34 @@ bool translator_is_same_page(const DisasContextBase *db, vaddr addr)
-     return ((addr ^ db->pc_first) & TARGET_PAGE_MASK) == 0;
- }
- 
-+/*
-+ * Whether a direct jump may be chained to a destination outside the page
-+ * the TB started in.
-+ *
-+ * In user-only mode there are no page tables.  Every mmap, mprotect and
-+ * munmap goes through page_set_flags(), which calls tb_invalidate_phys_range()
-+ * whenever the flags actually change, and tb_phys_invalidate() unlinks
-+ * incoming jumps.  A cross-page link is therefore broken whenever the
-+ * destination page's permissions change.
-+ *
-+ * What the same-page rule also provides is that execution cannot enter a page
-+ * without a TB lookup, and so without check_for_breakpoints(), which is what
-+ * makes a breakpoint set after a block was translated take effect.  Nothing
-+ * invalidates on breakpoint insertion, so a link established beforehand would
-+ * jump straight over it.  In user-only mode breakpoints only ever come from
-+ * gdb -- BP_CPU is g_assert_not_reached() there and the guest has no way to
-+ * ask for one -- and gdb has to be requested with -g before the first block
-+ * is translated, so a run that has no gdbstub can never acquire a breakpoint.
-+ */
-+static bool use_cross_page_goto_tb(void)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    return !gdb_may_set_breakpoints();
-+#else
-+    return false;
-+#endif
-+}
-+
- bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
- {
-     /* Suppress goto_tb if requested. */
-@@ -118,7 +149,7 @@ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
-     }
- 
-     /* Check for the dest on the same page as the start of the TB.  */
--    return translator_is_same_page(db, dest);
-+    return use_cross_page_goto_tb() || translator_is_same_page(db, dest);
- }
- 
- void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 9e6f9a6f376..d810f0f38c3 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -470,6 +470,18 @@ static void *gdbserver_accept_thread(void *arg)
- 
- #define USAGE "\nUsage: -g {port|path}[,suspend={y|n}]"
- 
-+/*
-+ * Set before the guest runs and never cleared, so that code translated at
-+ * any point can rely on it: with suspend=n gdb may connect long after
-+ * startup, and once connected it can insert a breakpoint at any time.
-+ */
-+static bool gdbserver_requested;
-+
-+bool gdb_may_set_breakpoints(void)
-+{
-+    return gdbserver_requested;
-+}
-+
- bool gdbserver_start(const char *args, Error **errp)
- {
-     g_auto(GStrv) argv = g_strsplit(args, ",", 0);
-@@ -513,6 +525,8 @@ bool gdbserver_start(const char *args, Error **errp)
-         return false;
-     }
- 
-+    gdbserver_requested = true;
-+
-     if (suspend) {
-         if (gdbserver_accept(port, gdb_fd, port_or_path)) {
-             gdb_handlesig(first_cpu, 0, NULL, NULL, 0);
-diff --git a/tests/tcg/multiarch/test-xpage-chain.c b/tests/tcg/multiarch/test-xpage-chain.c
-new file mode 100644
-index 00000000000..a4e34149e72
---- /dev/null
-+++ b/tests/tcg/multiarch/test-xpage-chain.c
-@@ -0,0 +1,336 @@
-+/*
-+ * Cross-page TB chaining hazard test.
-+ *
-+ * Two adjacent pages of hand-written code.  The last instruction of page A
-+ * sets the return value and falls through into page B, which returns; a TB
-+ * always ends at a page boundary, so page A reaches page B through a
-+ * cross-page goto_tb.
-+ *
-+ * Phase 1: run it enough times that QEMU chains TB_A -> TB_B.
-+ * Phase 2: mprotect page B away. Re-running must fault.
-+ * Phase 3: map it back and write different code into it. Re-running must
-+ *          execute the NEW code, not a stale chained translation.
-+ *
-+ * With -b, phases 2 and 3 are replaced by a stop at break_here(), where the
-+ * gdbstub test sets a breakpoint on page B -- after the chain exists -- and
-+ * checks that re-running the chain still stops on it.  See
-+ * tests/tcg/multiarch/gdbstub/xpage-bp.py.
-+ *
-+ * The code the two pages hold is architecture specific, so each
-+ * architecture supplies two emitters:
-+ *
-+ *   emit_set_ret(p, val) - set the integer return value register to val
-+ *   emit_ret(p)          - return to the caller
-+ *
-+ * both writing at @p and returning the number of bytes written.  Neither
-+ * may contain a branch: the fall-through from page A into page B is the
-+ * whole point, and a delay slot must not straddle the boundary.  An
-+ * architecture that supplies neither skips the test.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <setjmp.h>
-+#include <signal.h>
-+#include <stdint.h>
-+#include <sys/mman.h>
-+#include <unistd.h>
-+
-+static inline size_t put32(void *p, uint32_t insn)
-+{
-+    memcpy(p, &insn, sizeof(insn));
-+    return sizeof(insn);
-+}
-+
-+static inline size_t put16(void *p, uint16_t insn)
-+{
-+    memcpy(p, &insn, sizeof(insn));
-+    return sizeof(insn);
-+}
-+
-+#if defined(__aarch64__)
-+#define HAVE_EMITTERS
-+/* movz w0, #val */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x52800000u | ((uint32_t)val << 5));
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put32(p, 0xd65f03c0u);                       /* ret */
-+}
-+#elif defined(__alpha__)
-+#define HAVE_EMITTERS
-+/* lda $0, val($31) */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x201f0000u | (uint16_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put32(p, 0x6bfa8001u);                       /* ret */
-+}
-+#elif defined(__arm__)
-+#define HAVE_EMITTERS
-+/* mov r0, #val */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0xe3a00000u | (uint8_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put32(p, 0xe12fff1eu);                       /* bx lr */
-+}
-+#elif defined(__hppa__)
-+#define HAVE_EMITTERS
-+/* ldi val, %ret0 */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x341c0000u | ((uint32_t)val << 1));
-+}
-+static size_t emit_ret(void *p)
-+{
-+    size_t n = put32(p, 0xe840c000u);                   /* bv %r0(%rp) */
-+    return n + put32((char *)p + n, 0x08000240u);       /* nop (delay slot) */
-+}
-+#elif defined(__i386__) || defined(__x86_64__)
-+#define HAVE_EMITTERS
-+/* mov $val, %eax */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    uint32_t imm = val;
-+    *(unsigned char *)p = 0xb8;
-+    return 1 + put32((char *)p + 1, imm);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    *(unsigned char *)p = 0xc3;                         /* ret */
-+    return 1;
-+}
-+#elif defined(__loongarch64)
-+#define HAVE_EMITTERS
-+/* ori $a0, $zero, val */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x03800004u | ((uint32_t)val << 10));
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put32(p, 0x4c000020u);                       /* jr $ra */
-+}
-+#elif defined(__m68k__)
-+#define HAVE_EMITTERS
-+/* moveq #val, %d0 */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put16(p, 0x7000u | (uint8_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put16(p, 0x4e75u);                           /* rts */
-+}
-+#elif defined(__mips__)
-+#define HAVE_EMITTERS
-+/* li $v0, val */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x24020000u | (uint16_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    size_t n = put32(p, 0x03e00008u);                   /* jr $ra */
-+    return n + put32((char *)p + n, 0x00000000u);       /* nop (delay slot) */
-+}
-+/*
-+ * ELFv1 function pointers are descriptors rather than code addresses, so
-+ * there is nothing to call the raw code through.
-+ */
-+#elif defined(__powerpc__) && \
-+      (!defined(__powerpc64__) || (defined(_CALL_ELF) && _CALL_ELF == 2))
-+#define HAVE_EMITTERS
-+/* li r3, val */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x38600000u | (uint16_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put32(p, 0x4e800020u);                       /* blr */
-+}
-+#elif defined(__riscv)
-+#define HAVE_EMITTERS
-+/* addi a0, zero, val -- the 4 byte form, never c.li */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x00000513u | ((uint32_t)val << 20));
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put32(p, 0x00008067u);                       /* jalr zero, 0(ra) */
-+}
-+#elif defined(__s390x__)
-+#define HAVE_EMITTERS
-+/* lghi %r2, val */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    size_t n = put16(p, 0xa729u);
-+    return n + put16((char *)p + n, (uint16_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    return put16(p, 0x07feu);                           /* br %r14 */
-+}
-+#elif defined(__sh__)
-+#define HAVE_EMITTERS
-+/* mov #val, r0 */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put16(p, 0xe000u | (uint8_t)val);
-+}
-+static size_t emit_ret(void *p)
-+{
-+    size_t n = put16(p, 0x000bu);                       /* rts */
-+    return n + put16((char *)p + n, 0x0009u);           /* nop (delay slot) */
-+}
-+#elif defined(__sparc__)
-+#define HAVE_EMITTERS
-+/* mov val, %o0 */
-+static size_t emit_set_ret(void *p, int val)
-+{
-+    return put32(p, 0x90102000u | (uint32_t)(val & 0x1fff));
-+}
-+static size_t emit_ret(void *p)
-+{
-+    size_t n = put32(p, 0x81c3e008u);                   /* retl */
-+    return n + put32((char *)p + n, 0x01000000u);       /* nop (delay slot) */
-+}
-+#endif
-+
-+/* Where the fall-through lands, for the gdbstub test to breakpoint on. */
-+void *page_b_entry;
-+
-+/* Somewhere for the gdbstub test to stop once the chain is established. */
-+void __attribute__((noinline)) break_here(void)
-+{
-+    asm volatile ("");
-+}
-+
-+#ifdef HAVE_EMITTERS
-+static sigjmp_buf jb;
-+/*
-+ * Written by the SIGSEGV handler and read by main(), so it must not be
-+ * cached in a register across the faulting call.
-+ */
-+static volatile sig_atomic_t caught;
-+
-+static void segv(int sig)
-+{
-+    caught = 1;
-+    siglongjmp(jb, 1);
-+}
-+#endif
-+
-+int main(int argc, char **argv)
-+{
-+    bool bp_mode = argc > 1 && strcmp(argv[1], "-b") == 0;
-+#ifndef HAVE_EMITTERS
-+    printf("SKIP: no code emitters for this architecture\n");
-+    if (bp_mode) {
-+        break_here();
-+    }
-+    return 0;
-+#else
-+    unsigned char tmp[16];
-+    struct sigaction sa;
-+    long (*fn)(void);
-+    size_t setlen, n;
-+    long ps = sysconf(_SC_PAGESIZE);
-+    int rc = 0;
-+    unsigned char *m = mmap(NULL, 2 * ps, PROT_READ | PROT_WRITE | PROT_EXEC,
-+                            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    if (m == MAP_FAILED) {
-+        perror("mmap");
-+        return 2;
-+    }
-+
-+    unsigned char *pb = m + ps;
-+
-+    /*
-+     * Page A ends with the store to the return value register, so that the
-+     * next instruction executed is the first one on page B.
-+     */
-+    setlen = emit_set_ret(tmp, 1);
-+    memcpy(pb - setlen, tmp, setlen);
-+    emit_ret(pb);
-+    __builtin___clear_cache((char *)m, (char *)m + 2 * ps);
-+
-+    page_b_entry = pb;
-+    fn = (long (*)(void))(pb - setlen);
-+
-+    for (int i = 0; i < 200000; i++) {
-+        if (fn() != 1) {
-+            printf("FAIL: phase 1 wrong result\n");
-+            return 1;
-+        }
-+    }
-+    printf("phase 1 ok (chained)\n");
-+
-+    if (bp_mode) {
-+        /*
-+         * The chain from page A to page B now exists.  gdb puts a breakpoint
-+         * on page_b_entry here; the call below has to stop on it rather than
-+         * jump over it.
-+         */
-+        break_here();
-+        if (fn() != 1) {
-+            printf("FAIL: bp phase wrong result\n");
-+            return 1;
-+        }
-+        printf("bp phase ok\n");
-+        return 0;
-+    }
-+
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_handler = segv;
-+    sigemptyset(&sa.sa_mask);
-+    if (sigaction(SIGSEGV, &sa, NULL) != 0) {
-+        perror("sigaction");
-+        return 2;
-+    }
-+    if (mprotect(pb, ps, PROT_NONE) != 0) {
-+        perror("mprotect");
-+        return 2;
-+    }
-+    if (sigsetjmp(jb, 1) == 0) {
-+        fn();
-+        printf("FAIL: phase 2 executed page B after mprotect(PROT_NONE)\n");
-+        rc = 1;
-+    } else if (!caught) {
-+        printf("FAIL: phase 2 longjmp without entering the handler\n");
-+        rc = 1;
-+    } else {
-+        printf("phase 2 ok (faulted)\n");
-+    }
-+
-+    /* Phase 3: map back, overwrite, expect the new code to run. */
-+    if (mprotect(pb, ps, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
-+        perror("mprotect back");
-+        return 2;
-+    }
-+    n = emit_set_ret(pb, 2);
-+    emit_ret(pb + n);
-+    __builtin___clear_cache((char *)pb, (char *)pb + ps);
-+
-+    long r = fn();
-+    if (r != 2) {
-+        printf("FAIL: phase 3 returned %ld, expected 2 (stale chain)\n", r);
-+        rc = 1;
-+    } else {
-+        printf("phase 3 ok (new code ran)\n");
-+    }
-+    return rc;
-+#endif
-+}
-diff --git a/tests/tcg/multiarch/gdbstub/xpage-bp.py b/tests/tcg/multiarch/gdbstub/xpage-bp.py
-new file mode 100644
-index 00000000000..f40024f16de
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/xpage-bp.py
-@@ -0,0 +1,37 @@
-+"""Test that a breakpoint set after a cross-page chain is established is hit.
-+
-+translator_use_goto_tb() lets a direct branch chain to another page in
-+user-only builds, which is only safe because a run with no gdbstub can never
-+acquire a breakpoint.  This runs with one, so the chaining must be off and
-+the breakpoint must still be reached.
-+
-+This runs as a sourced script (via -x, via run-test.py).
-+
-+SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+from test_gdbstub import main, report
-+
-+
-+def run_test():
-+    """Run through the tests one by one"""
-+    gdb.Breakpoint("break_here")
-+    gdb.execute("continue")
-+
-+    # The chain exists by now; put a breakpoint on the far side of it.
-+    target = int(gdb.parse_and_eval("(unsigned long)page_b_entry"))
-+    if target == 0:
-+        report(True, "no code emitters for this architecture, skipped")
-+        return
-+    gdb.execute("break *{}".format(target))
-+    gdb.execute("continue")
-+
-+    pc = int(gdb.parse_and_eval("(unsigned long)$pc"))
-+    report(pc == target, "stopped at {:#x}, expected {:#x}".format(pc, target))
-+
-+    gdb.execute("delete")
-+    gdb.execute("continue")
-+    exitcode = int(gdb.parse_and_eval("$_exitcode"))
-+    report(exitcode == 0, "{} == 0".format(exitcode))
-+
-+
-+main(run_test)
-diff --git a/tests/tcg/multiarch/meson.build b/tests/tcg/multiarch/meson.build
-index 508fdb585b7..6e68d75fb20 100644
---- a/tests/tcg/multiarch/meson.build
-+++ b/tests/tcg/multiarch/meson.build
-@@ -118,6 +118,12 @@ tests += {
-     'gdb_test': ['--test', files('gdbstub/follow-fork-mode-parent.py')],
-   },
- }
-+tests += {
-+  multiarch/'test-xpage-chain.c': {
-+    'test_name': 'xpage-chain',
-+    'gdb_test': ['--test', files('gdbstub/xpage-bp.py'), '--pargs=-b'],
-+  },
-+}
- 
- # Specific plugin tests
- # Test plugin memory access instrumentation
+         ret = self._do_check(["run", "--rm", "--label",
+                              "com.qemu.instance.uuid=" + label] + cmd,
 -- 
-2.53.0
+2.47.3
 
 
