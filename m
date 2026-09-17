@@ -4,63 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448EFC982D9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 20:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E57BC982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 20:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7IsQ-00088H-UL; Thu, 17 Sep 2026 16:38:44 -0400
+	id 1x7J4i-00020c-Aj; Thu, 17 Sep 2026 16:51:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x7Irl-00083M-H8; Thu, 17 Sep 2026 16:37:59 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x7Iri-0004es-MC; Thu, 17 Sep 2026 16:37:57 -0400
-Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68HKbWUc080283
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 18 Sep 2026 05:37:33 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=eAhES7TD99B4z9qV/SxTJsj5ekik/74Wjchz2W4mLjs=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1789677453; v=1;
- b=nX3LhJqsbyP4VIoNBvfbFSwtabdiubQj546jaCGyq9B+IkgqzJcKaL/VVejaj/gx
- K6FLMmyGA8x3qsVh5Zs9fSslqOwwEqtX2MrfTUP728vHaocG5DgBGRe30XWD81MF
- U3DQfuHZ2Pyqw+kiY6SXRT5W3XG2x1/z+Jp7XhGr3cjSsCo8xjawG/9xxve+0mCX
- 9oMjdID5so63l/k548H8BTseH+0/SDv7NhQyH/1OQQaw4YQC2i9g67DsRM4acRrk
- 1OI47xLWaAfm+rS58i30qqJRdTmnbsQOZJjTiOF0O3/gcfRLy1Eb6onuoWtV0glr
- AClvvX+OAomC8vp3C44zhg==
-Message-ID: <47a7ca78-0dca-4469-9366-3a95e48e61a5@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 18 Sep 2026 05:37:32 +0900
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7J4f-000207-Tp
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 16:51:18 -0400
+Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7J4e-0007Gl-7V
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 16:51:17 -0400
+Received: by mail-pz2-x0e.google.com with SMTP id
+ 41be03b00d2f7-cc4aa0f1766so1067483a12.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 13:51:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789678274; x=1790283074; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=S1NLi4QS0kW/YsWZ9DyyaAD9U0xrPbTu7ggvIBtsciY=;
+ b=qDca3R5on6JxTLG6HZb7QtP/palISPTao9MA1TTSdm+fnMsvPgZixaw4dalQheXS1Y
+ DFCI1Zuc6W51kyvZzcKqO/rnaLP2rxmp1Lk1cwvm/Db0ZqBpwKmNIoMr3Qfl+7LQE+zy
+ /dQOSlQNgnpEUfEdNipnYerPtesD3BSTtgjoSrze42O5blStxfcPPqmu+F6izelRBW97
+ A9Afzp1kOTOBJSM6Jfc8iJQW7OZdL5z9i5wysVZrkWqL/yMoleMg9pelKY/0ghgh/qS/
+ 9yGhjo5/BxznUz5XTT/C7bjKzMuT67b4WpVsrSIReW3GlE6TVPYmmOCTGt3vA72Q9BU+
+ FIkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789678274; x=1790283074;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=S1NLi4QS0kW/YsWZ9DyyaAD9U0xrPbTu7ggvIBtsciY=;
+ b=1YA5Cw4vUid7kZI5c+cy+0bw20E9H1W7TLoWKe4XL1NkJxp2XTvRayFI223cdPMBc/
+ va3KQ7A91jS1dp5vqQpimFmJG4I2tJIj+J5GMbd4nj5FN1QGRT68XywPa7LhR02zK8Zl
+ CH1TSla6x6eZDjsC361r902sKDiLxZX/16oLyxJ7OJrzTDe2A3NpG7nZvYmQrSyKR3q+
+ 5YHSjZTRkTSpcm5ip//VVLv2xTDQ3v+nDOWauoFhPYVUVHk54QIGd2Eu69ZNY3YoExuV
+ /8po9uK/Br4MP31CXGycS8id9VFrfQyVzmeUd/vPP6yCdYZBRqCJY9zEMpMe31iat9lr
+ ElJA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzMza38jjRfney8KEji81M1g3k9hnFWvApGq8NshE7rkSzSxHsoP0Vi5MKv0RBhJbzUrC1NOVBSS5Wb@nongnu.org
+X-Gm-Message-State: AFuF++kkcIff/9xgcfSsT3p5M+yGgoXZR8W2Ba8+M6X463UuPQXufJvb
+ NmxE/3vj/30fEh48ulPAhQnGOgPEQFej+QVWILkwW4xSRFzanNW10RKFTf9nU5Z5ITY=
+X-Gm-Gg: AYBFou0MXjr+74eUWIiYWksVx1rl6yq111Awzvovqyh61VCcfbz2djzh0LcX4VKI3tU
+ sFQd+Go+ozQteM92TXuzSEJ7okLoW32qvZjnJRUj0LNXFDEka1zcl19ViQtgUWospfviPu/0x1N
+ Zv6wCBkT0Jd9cOSP9lSNso6BtTL5SnMv74mXdCVKLx+45baFlKyLF2cETSfVOa0IRdw2sWKSQW/
+ eaW+P7mw8dm1wFHBrFV5oCJTsvO+Y9oYY1RvtGLdLaUMuQCgFc05SLHn0HYCzssdlBG+ULobCmS
+ vW4nGqQtmiTZmclEUf4yGe1Wzj5yyJVRDfZOcylBDEicTCUVf1QnYaN8GIRd84uWhkjYY9s0V3R
+ +jpktu6BY4m8uJxIO/75srFXj6L/bQo4sTn8goezs5HWJmNYKbsFJa5hv+rxdMGpd78IJgpydrF
+ PgG3L/ZqxhFzbIhn6DpyitdwKE+mxmDU0jBsMewpbwHlqq2wmGK2lDgyYcH6tlEvCfZTx1fwA+4
+ CcpRkGQgcGzAp8tYg9KISmItwcBCYj9HIKhctePHsxMyao9iABTuJAkHxDOrg==
+X-Received: by 2002:a17:90b:5291:b0:39d:e54c:a28a with SMTP id
+ 98e67ed59e1d1-39e54bba9e8mr812124a91.8.1789678274228; 
+ Thu, 17 Sep 2026 13:51:14 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:5a4b:653b:1dce:569f?
+ ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bf5af4f0bsm20571690eec.24.2026.09.17.13.51.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Sep 2026 13:51:13 -0700 (PDT)
+Message-ID: <48d3cf9d-4d76-41c8-aa73-e1cc57db3f40@linaro.org>
+Date: Thu, 17 Sep 2026 10:51:10 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v8 05/10] vmapple: apple-gfx: make it work on the
- latest macOS release
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260916100021.73825-1-mohamed@unpredictable.fr>
- <20260916100021.73825-6-mohamed@unpredictable.fr>
+Subject: Re: [PATCH v2] tcg/riscv64: Set vtype before whole-register vector
+ moves
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Joel Stanley <joel@jms.id.au>
+References: <20260917133755.1049697-1-max.chou@sifive.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260916100021.73825-6-mohamed@unpredictable.fr>
+In-Reply-To: <20260917133755.1049697-1-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,396 +110,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/16 19:00, Mohamed Mediouni wrote:
-> Follow changes in memory management introduced on macOS 15.4.
+On 9/17/26 03:37, Max Chou wrote:
+> According to the RISC-V unpriviledge spec,
+>    "vset{i}vl{i} and whole register loads and stores do not depend upon
+>     vtype."
+> The whole-register vector move instructions reuqire legal vtype that
+> trap when VILL is set.
 > 
-> The legacy memory management API has been removed for the IOSurface mapper on that macOS version.
+> The tcg_out_mov in tcg/riscv64 missed the vtype setup before emitting the
+> OPC_VMVNR_V.
 > 
-> Also enable process isolation for a sandboxed GPU process when on a new OS.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
->   hw/display/apple-gfx-mmio.m | 58 ++++++++++++++++++------
->   hw/display/apple-gfx.h      | 16 +++++++
->   hw/display/apple-gfx.m      | 90 ++++++++++++++++++++++++++++++++-----
->   3 files changed, 138 insertions(+), 26 deletions(-)
+>   tcg/riscv64/tcg-target.c.inc | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
-> diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-> index 58beaadd1f..19e2d38a1e 100644
-> --- a/hw/display/apple-gfx-mmio.m
-> +++ b/hw/display/apple-gfx-mmio.m
-> @@ -19,6 +19,7 @@
->   #include "hw/core/irq.h"
->   #include "apple-gfx.h"
->   #include "trace.h"
-> +#include "system/address-spaces.h"
->   
->   #import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
->   
-> @@ -36,12 +37,19 @@ typedef bool(^IOSFCMapMemory)(uint64_t phys, uint64_t len, bool ro, void **va,
->   
->   @interface PGDeviceDescriptor (IOSurfaceMapper)
->   @property (readwrite, nonatomic) bool usingIOSurfaceMapper;
-> +@property (readwrite, nonatomic) bool enableArgumentBuffers;
-> +@property (readwrite, nonatomic) bool enableProcessIsolation;
-> +@property (readwrite, nonatomic) bool enableProtectedContent;
+> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+> index 2ce9d47a633..e3cfedb579d 100644
+> --- a/tcg/riscv64/tcg-target.c.inc
+> +++ b/tcg/riscv64/tcg-target.c.inc
+> @@ -778,6 +778,10 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+>           {
+>               int lmul = type - riscv_lg2_vlenb;
+>               int nf = 1 << MAX(lmul, 0);
 > +
-> +@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
->   @end
->   
->   @interface PGIOSurfaceHostDeviceDescriptor : NSObject
->   -(PGIOSurfaceHostDeviceDescriptor *)init;
->   @property (readwrite, nonatomic, copy, nullable) IOSFCMapMemory mapMemory;
->   @property (readwrite, nonatomic, copy, nullable) IOSFCUnmapMemory unmapMemory;
-> +@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
-> +@property (readwrite, nonatomic) unsigned long long mmioLength;
->   @property (readwrite, nonatomic, copy, nullable) IOSFCRaiseInterrupt raiseInterrupt;
->   @end
->   
-> @@ -183,19 +191,32 @@ static bool apple_gfx_mmio_unmap_surface_memory(void *ptr)
->           [PGIOSurfaceHostDeviceDescriptor new];
->       PGIOSurfaceHostDevice *iosfc_host_dev;
->   
-> -    iosfc_desc.mapMemory =
-> -        ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
-> -            *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
-> -
-> -            trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
-> -
-> -            return *va != NULL;
-> -        };
-> -
-> -    iosfc_desc.unmapMemory =
-> -        ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
-> -            return apple_gfx_mmio_unmap_surface_memory(va);
-> -        };
-> +    /*
-> +     * The legacy memory management API is no longer present
-> +     * for the IOSurface mapper as of macOS 15.4.
-> +     */
-> +    if (@available(macOS 15.4, *)) {
-> +        PGMemoryMapDescriptor *memory_map_descriptor = [PGMemoryMapDescriptor new];
-> +        FlatView* fv = address_space_to_flatview(&address_space_memory);
-> +        flatview_for_each_range(fv, apple_gfx_register_memory_cb, memory_map_descriptor);
-> +        /* the device model defines this as a single-page MMIO region, hence 16KB */
-> +        iosfc_desc.mmioLength = 0x10000;
-> +        iosfc_desc.memoryMapDescriptor = memory_map_descriptor;
-> +    } else {
-> +        iosfc_desc.mapMemory =
-> +            ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
-> +                *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
-> +
-> +                trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
-> +
-> +                return *va != NULL;
-> +            };
-> +
-> +        iosfc_desc.unmapMemory =
-> +            ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
-> +                return apple_gfx_mmio_unmap_surface_memory(va);
-> +            };
-> +    }
->   
->       iosfc_desc.raiseInterrupt = ^bool(uint32_t vector) {
->           trace_apple_gfx_iosfc_raise_irq(vector);
-> @@ -223,13 +244,22 @@ static void apple_gfx_mmio_realize(DeviceState *dev, Error **errp)
->           };
->   
->           desc.usingIOSurfaceMapper = true;
-> -        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
-> +        /*
-> +         * Process isolation needs PGMemoryMapDescriptor instead of
-> +         * the legacy memory management interface present in releases
-> +         * older than macOS 15.4.
-> +         */
-> +        if (@available(macOS 15.4, *)) {
-> +            desc.enableProcessIsolation = true;
-> +        }
->   
->           if (!apple_gfx_common_realize(&s->common, dev, desc, errp)) {
->               [s->pgiosfc release];
->               s->pgiosfc = nil;
+> +            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
+> +                set_vtype_len(s, type);
+> +            }
+>               tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1);
 >           }
->   
-> +        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
-> +
->           [desc release];
->           desc = nil;
->       }
-> diff --git a/hw/display/apple-gfx.h b/hw/display/apple-gfx.h
-> index 3197bd853d..384aee0c5f 100644
-> --- a/hw/display/apple-gfx.h
-> +++ b/hw/display/apple-gfx.h
-> @@ -12,6 +12,7 @@
->   #include "system/memory.h"
->   #include "hw/core/qdev-properties.h"
->   #include "ui/surface.h"
-> +#include "objc/NSObject.h"
->   
->   #define TYPE_APPLE_GFX_MMIO         "apple-gfx-mmio"
->   #define TYPE_APPLE_GFX_PCI          "apple-gfx-pci"
-> @@ -23,6 +24,17 @@
->   @protocol MTLTexture;
->   @protocol MTLCommandQueue;
->   
-> +typedef struct PGGuestPhysicalRange_s
-> +{
-> +    uint64_t physicalAddress;
-> +    uint64_t physicalLength;
-> +    void *hostAddress;
-> +} PGGuestPhysicalRange_t;
-> +
-> +@interface PGMemoryMapDescriptor : NSObject
-> +-(void)addRange:(PGGuestPhysicalRange_t) range;
-> +@end
-> +
->   typedef QTAILQ_HEAD(, PGTask_s) PGTaskList;
->   
->   typedef struct AppleGFXDisplayMode {
-> @@ -68,6 +80,10 @@ void *apple_gfx_host_ptr_for_gpa_range(uint64_t guest_physical,
->                                          uint64_t length, bool read_only,
->                                          MemoryRegion **mapping_in_region);
->   
-> +bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
-> +                                  const MemoryRegion *mr,
-> +                                  hwaddr offset_in_region, void *opaque);
-> +
->   extern const PropertyInfo qdev_prop_apple_gfx_display_mode;
->   
->   #endif
-> diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-> index be0061b9db..4ef8f6dbf3 100644
-> --- a/hw/display/apple-gfx.m
-> +++ b/hw/display/apple-gfx.m
-> @@ -21,6 +21,7 @@
->   #include "system/address-spaces.h"
->   #include "system/dma.h"
->   #include "migration/blocker.h"
-> +#include "system/memory.h"
->   #include "ui/console.h"
->   #include "apple-gfx.h"
->   #include "trace.h"
-> @@ -79,6 +80,7 @@ static dispatch_queue_t get_background_queue(void)
->       GPtrArray *mapped_regions;
->   };
->   
-> +API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
+>           break;
 
-git am detected trailing whitespaces:
+Do you have a reproducer for this?  I ask because I still wonder how 
+this can occur.
 
-$ b4 shazam 20260916100021.73825-1-mohamed@unpredictable.fr
-Looking up 20260916100021.73825-1-mohamed@unpredictable.fr
-Checking for newer revisions
-Grabbing search results from lore.kernel.org
-Analyzing 15 messages in the thread
-Looking for additional code-review trailers on lore.kernel.org
-Analyzing 94 code-review messages
-Checking attestation on all messages, may take a moment...
----
-   ✓ [PATCH RFC v8 1/10] target/arm/emulate: add ISV=0 emulation library 
-with load/store immediate
-   ✓ [PATCH RFC v8 2/10] target/arm/emulate: add load/store register offset
-   ✓ [PATCH RFC v8 3/10] target/arm/emulate: add load/store pair
-   ✓ [PATCH RFC v8 4/10] target/arm/hvf, whpx: wire ISV=0 emulation for 
-data aborts
-   ✓ [PATCH RFC v8 5/10] vmapple: apple-gfx: make it work on the latest 
-macOS release
-   ✓ [PATCH RFC v8 6/10] hw/vmapple: aes: convert MAX_LEN to a #define
-   ✓ [PATCH RFC v8 7/10] Revert "hw/arm: Do not build VMapple machine by 
-default"
-   ✓ [PATCH RFC v8 8/10] vmapple: add gicv2m
-   ✓ [PATCH RFC v8 9/10] vmapple, gicv2m: add macOS compat quirk
-   ✓ [PATCH RFC v8 10/10] hw/vmapple: virtio-blk: allow FileVault off
-   ---
-   ✓ Signed: DKIM/unpredictable.fr
----
-Total patches: 10
----
-Applying: target/arm/emulate: add ISV=0 emulation library with 
-load/store immediate
-Applying: target/arm/emulate: add load/store register offset
-Applying: target/arm/emulate: add load/store pair
-Applying: target/arm/hvf, whpx: wire ISV=0 emulation for data aborts
-Applying: vmapple: apple-gfx: make it work on the latest macOS release
-Applying: hw/vmapple: aes: convert MAX_LEN to a #define
-Applying: Revert "hw/arm: Do not build VMapple machine by default"
-Applying: vmapple: add gicv2m
-Applying: vmapple, gicv2m: add macOS compat quirk
-Applying: hw/vmapple: virtio-blk: allow FileVault off
-/home/me/q/var/qemu/.git/rebase-apply/patch:90: trailing whitespace.
-         /*
-/home/me/q/var/qemu/.git/rebase-apply/patch:166: trailing whitespace.
-API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
-/home/me/q/var/qemu/.git/rebase-apply/patch:272: trailing whitespace.
-     /*
-/home/me/q/var/qemu/.git/rebase-apply/patch:275: trailing whitespace.
-      * on macOS 15.4 onwards.
-warning: 4 lines add whitespace errors.
+Given that
 
->   static PGTask_t *apple_gfx_new_task(AppleGFXState *s, uint64_t len)
->   {
->       mach_vm_address_t task_mem;
-> @@ -102,6 +104,7 @@ static dispatch_queue_t get_background_queue(void)
->       return task;
->   }
->   
-> +API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
->   static void apple_gfx_destroy_task(AppleGFXState *s, PGTask_t *task)
->   {
->       GPtrArray *regions = task->mapped_regions;
-> @@ -151,6 +154,7 @@ static void apple_gfx_destroy_task(AppleGFXState *s, PGTask_t *task)
->       return host_ptr;
->   }
->   
-> +API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
->   static bool apple_gfx_task_map_memory(AppleGFXState *s, PGTask_t *task,
->                                         uint64_t virtual_offset,
->                                         PGPhysicalMemoryRange_t *ranges,
-> @@ -207,6 +211,7 @@ static bool apple_gfx_task_map_memory(AppleGFXState *s, PGTask_t *task,
->       return success;
->   }
->   
-> +API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
->   static void apple_gfx_task_unmap_memory(AppleGFXState *s, PGTask_t *task,
->                                           uint64_t virtual_offset, uint64_t length)
->   {
-> @@ -596,6 +601,36 @@ void apple_gfx_common_init(Object *obj, AppleGFXState *s, const char* obj_name)
->       /* TODO: PVG framework supports serialising device state: integrate it! */
->   }
->   
-> +@interface PGDeviceDescriptor (IOSurfaceMapper)
-> +@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
-> +@end
-> +
-> +bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
-> +                                  const MemoryRegion *mr,
-> +                                  hwaddr offset_in_region, void *opaque) {
-> +    PGGuestPhysicalRange_t range;
-> +    PGMemoryMapDescriptor *memory_map_descriptor = opaque;
-> +    if (memory_access_is_direct(mr, true, MEMTXATTRS_UNSPECIFIED)) {
-> +        range.physicalAddress = start;
+(1) all vector registers are call-clobbered, there should be none live 
+across tcg_out_call_int (which clears the remembered vtype),
 
-Please convert Int128 through its helpers. This assigns Int128 directly 
-into the two uint64_t fields. With CONFIG_TCG_INTERPRETER, QEMU 
-deliberately represents Int128 as a structure, even on hosts supporting 
-native __int128. Both assignments fail compilation. A focused Clang 
-check using the actual QEMU headers reproduced the incompatible-type 
-errors; int128_get64() provides the intended checked conversion.
+(2) the first vector action with no vector registers live must be a load 
+or movi (which will initialize vtype).
 
-> +        range.physicalLength = len;
-> +        range.hostAddress = memory_region_get_ram_ptr(mr);
+Performing a move between vector registers when all such registers must 
+be dead is... wrong.  It indicates that there's a bug elsewhere.
 
-The FlatView slice offset, offset_in_region, needs to be honored when 
-registering RAM.
+I'll throw an assert in here locally and see what happens...
 
-For apple-gfx-pci, ordinary PC RAM above 4 GiB aliases machine->ram 
-starting at below_4g_mem_size; GPU accesses to that range now alias low 
-RAM instead. Other clipped FlatView ranges have the same problem. The 
-previous mapping path adds the translated offset correctly.
 
-> +        [memory_map_descriptor addRange:range];
-> +    }
-> +    return false;
-> +}
-> +
-> +static void apple_gfx_register_memory(AppleGFXState *s,
-> +                                                     PGDeviceDescriptor *desc)
-> +{
-> +    PGMemoryMapDescriptor* memoryMapDescriptor = [PGMemoryMapDescriptor new];
-> +
-> +    FlatView* fv = address_space_to_flatview(&address_space_memory);
-> +    flatview_for_each_range(fv, apple_gfx_register_memory_cb, memoryMapDescriptor);
-> +
-> +    desc.memoryMapDescriptor = memoryMapDescriptor;
-> +}
-> +
-> +API_OBSOLETED("Legacy ParavirtualizedGraphics", macos(11.0, 27.0, 27.0))
->   static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
->                                                        PGDeviceDescriptor *desc)
->   {
-> @@ -667,16 +702,25 @@ static void new_frame_handler_bh(void *opaque)
->           BQL_LOCK_GUARD();
->           set_mode(s, sizeInPixels.x, sizeInPixels.y);
->       };
-> -    disp_desc.cursorGlyphHandler = ^(NSBitmapImageRep *glyph,
-> -                                     PGDisplayCoord_t hotspot) {
-> -        AppleGFXSetCursorGlyphJob *job = g_malloc0(sizeof(*job));
-> -        job->s = s;
-> -        job->glyph = glyph;
-> -        job->hotspot = hotspot;
-> -        [glyph retain];
-> -        aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> -                                set_cursor_glyph, job);
-> -    };
-> +
-> +    if (@available(macOS 27.0, *)) {
-> +
-> +    } else {
-> +#ifndef __MAC_27_0
-> +        disp_desc.cursorGlyphHandler = ^(NSBitmapImageRep *glyph,
-> +                                         PGDisplayCoord_t hotspot) {
-> +            AppleGFXSetCursorGlyphJob *job = g_malloc0(sizeof(*job));
-> +            job->s = s;
-> +            job->glyph = glyph;
-> +            job->hotspot = hotspot;
-> +            [glyph retain];
-> +            aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> +                                    set_cursor_glyph, job);
-> +        };
-> +#else
-> +        abort();
-> +#endif
-
-I wonder what is this #ifdefs for. It tests SDK macro __MAC_27_0, 
-whereas the surrounding @available tests the runtime OS. A binary built 
-with that SDK aborts during display realization on every pre-27 host, 
-including macOS 26. Older hosts also encounter explicit aborts in the 
-memory/device fallback paths. Turning supported runtime fallback paths 
-into unconditional process termination depending when SDK is available 
-does not look correct.
-
-Regards,
-Akihiko Odaki
-
-> +    }
->       disp_desc.cursorShowHandler = ^(BOOL show) {
->           trace_apple_gfx_cursor_show(show);
->           qatomic_set(&s->cursor_show, show);
-> @@ -763,11 +807,33 @@ bool apple_gfx_common_realize(AppleGFXState *s, DeviceState *dev,
->   
->       desc.device = s->mtl;
->   
-> -    apple_gfx_register_task_mapping_handlers(s, desc);
-> +    /*
-> +     * The legacy memory management interface doesn't allow for
-> +     * vGPU sandboxing. As such, always use the new interface
-> +     * on macOS 15.4 onwards.
-> +     */
-> +    if (@available(macOS 15.4, *)) {
-> +        apple_gfx_register_memory(s, desc);
-> +    } else {
-> +#ifndef __MAC_27_0
-> +        apple_gfx_register_task_mapping_handlers(s, desc);
-> +#else
-> +        abort();
-> +#endif
-> +    }
->   
->       s->cursor_show = true;
->   
-> -    s->pgdev = PGNewDeviceWithDescriptor(desc);
-> +    if (@available(macOS 15.2, *)) {
-> +        s->pgdev = PGCreateDeviceWithDescriptor(desc);
-> +    }
-> +    else {
-> +#ifndef __MAC_27_0
-> +        s->pgdev = PGNewDeviceWithDescriptor(desc);
-> +#else
-> +        abort();
-> +#endif
-> +    }
->   
->       disp_desc = apple_gfx_prepare_display_descriptor(s);
->       /*
-
+r~
 
