@@ -4,113 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5EBC982CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 12:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0D1C88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 12:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7BFV-00011P-T5; Thu, 17 Sep 2026 08:29:57 -0400
+	id 1x7BIE-0001wV-53; Thu, 17 Sep 2026 08:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7BFQ-00010v-Bh
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 08:29:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1x7BIC-0001wH-87
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 08:32:44 -0400
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7BFO-00086v-3C
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 08:29:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789648188;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+laE03R+oB5XHI3Umg1Xx7VxnHqA/Y6t4kVSuzivhMA=;
- b=Y903J1+GmJ38PjaIHA2cOs8MXSqTcF8vayyAfFod1e8NNq3+bWptQFCkRcjAjMiVIIvQWg
- WNHygIwS0alerxxQZwJrZVEszF00M5/LU8I7XD+DnpFltuqh9mtrD6sIHN+b88gcQzd924
- AJuXnsXNSaBn50kU5xGtckouj9H4X9g=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-452-yx7mVsLiNJmDxN5bkaJ_dQ-1; Thu, 17 Sep 2026 08:29:46 -0400
-X-MC-Unique: yx7mVsLiNJmDxN5bkaJ_dQ-1
-X-Mimecast-MFC-AGG-ID: yx7mVsLiNJmDxN5bkaJ_dQ_1789648185
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-90c8da50f8dso20028916d6.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 05:29:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789648185; x=1790252985; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+laE03R+oB5XHI3Umg1Xx7VxnHqA/Y6t4kVSuzivhMA=;
- b=tuIZZBjOXEAmFdI4lgFhYmfmSjRZG0I2f0NPTo+4xWXt0TydNepokZ3v4h3NjU4Icx
- zEzZCWa3aQrQ+/SW3hkoB0Q7IjNhrGPEM74ntVrCtvX7oodu5hCZI5A/EyWYPI15A0wR
- IRJEvNvcn7Yo6A9NOf4XeA+1X3nuyg9OnE0hQzP0uadyuJnhHnUA4OoQdlO8XtVWcq8l
- u/cXyvfR3BrKZQq0KyNbUPzPDYp24cYd/5NSfWsofQw8+DUAbukyossYgcEDB2kUBoBo
- lIQBAX7FwaTolj6v8UFjUk94H8+56wwYAbGLuaY17+XzW6NATVUby9P5GjBm82TazWk2
- Y/mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789648185; x=1790252985;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=+laE03R+oB5XHI3Umg1Xx7VxnHqA/Y6t4kVSuzivhMA=;
- b=FUnFzU3y6AkUOasfgAg3Eqro3/4iTwrBFvTCoJ9snfYqbhHAGu7ac0hlJXAN7uefom
- RxHMSetEKOI3tKS/S5MTk29HmUgbG+uKtqBluyK86awpdXi5uRO0YjYn3plVx4Fjp6/9
- 3p57V+AfgaCj41mL3kPd/Bp7knf1+s6gQZI8ziyyKE9E8OxpvC0QefLmaaZKB1NEi7WF
- W4JN3fEDmu2v9HJTKJvChqI4QaUT1ORWSZ7CRF1V46k8AMJxSx4SCzJ0f6Ia95o/eM2o
- u+DR1DcyXKaersab4i378z+glkEZs+5xla1A5ZuIXlqLcN78fmZUTClP74449BbYFmDT
- /tYg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwHo3PYJ+r1pzn/RX9MzoossUPgBZzrMmE0L6837z0PWKF7aXBFY0OBNGJUcbOqJ4gAbNvXeivXlKIW@nongnu.org
-X-Gm-Message-State: AFuF++kqFGHgaD1/NmX12m5PW8LkbYGDnpWFXfNuHdORKnj2q1IJF7i6
- cIQEvmWW4I8/FQsQNNP5zxE2DA1vUvUsq1024FFsHSsi7yGLoU/GenI9H+FRTfXm88qpajwXX1C
- 3nj9io/jElxfDqOYnCUHOi8XJ1fuKUwZbIZmPQKKQu9RtWS7HsxPw641f
-X-Gm-Gg: AYBFou08j4UvOSVdA1zjiOdgoznTHq9aW0B4t9eI1qg9JMiInhuXxK5DTCF/UBQra7M
- APkz0Mh0s+d+Ct+1NWsa5d093789c0vCDbX8k0cOkPqXpQJEiKBo846FALalwhN+JXNfzVA9TKZ
- YZioe539LtexvFjVT+Qz6pj7+FSKHi+aY1S7MTsVlDpG+XCqhhqfG3OgzBHmJL0fCWjdPSZvXeF
- bHOXXLRqivWveBsV2JSezN19aJUY51VcPc4o+zJzk99AuZrxZHeGcXq7i0apLkU1dXaCWOvf0yG
- DM3wjsLrpP0/xql8DJfHktllfCNXeBOQqyLi1YkPL+6Zx44BwbWJK/t6nckF/co6zOmO
-X-Received: by 2002:a05:6214:b6b:b0:8c9:c38a:20e1 with SMTP id
- 6a1803df08f44-9123d74d285mr111373616d6.10.1789648185355; 
- Thu, 17 Sep 2026 05:29:45 -0700 (PDT)
-X-Received: by 2002:a05:6214:b6b:b0:8c9:c38a:20e1 with SMTP id
- 6a1803df08f44-9123d74d285mr111373126d6.10.1789648184706; 
- Thu, 17 Sep 2026 05:29:44 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-9123bddcee0sm49050706d6.1.2026.09.17.05.29.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 05:29:44 -0700 (PDT)
-Date: Thu, 17 Sep 2026 08:29:33 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: Fabiano Rosas <farosas@suse.de>, "Denis V. Lunev" <den@openvz.org>,
- qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH 1/1] migration/cpr: lock the cpr state
-Message-ID: <aqvdLTnCbkHjJZO0@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260916132428.1628553-1-den@openvz.org>
- <aqrhPxFO7zHvZgs5@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <87v785rpml.fsf@suse.de>
- <c7cef33d-5f23-493a-b437-e55a3b48736d@virtuozzo.com>
- <aqr_ZzShIhXG8oTk@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <2dc82f7a-9132-487c-92a6-000bfa32e085@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1x7BIA-0000VD-4E
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 08:32:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=n1JAXenoYFMhGddkDnqNjEUY1gQ2os8O8Y0McMhJ2sJkH/fQZ0VeNE4kDYpcbAQRPP+ZhE1Yq6P3LpspJRyOORDZBoVMyNsDYJm6t9M5FooawAsEnb7MG81KbF6cRQn9OWHbGfPHRV06Qy9uwB/znMjf3P2AVnexJLYm0K8RYZugwQRBdNki9icEowk3MzZflYO2EHoPvWixVzWUTGyPTII45tc0EsSP5AKTcQE9oaZ90vYSYWdFKDHLFdUjt9sTKHZA22qynN6S+4T8hZX9uj/nTEQJC0ZMNEnkuXN0BUZgokuXfOPHY8JXcQnoSgwEyJXOLmGWR84qyHCXEQtG6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MycP9p5XGNghJ0H8rEQNB8c2SEtspbrmn0IX3PUWA7Y=;
+ b=AlMjz8/XPnINbp3Zg+dyLvv2bFXLfRif3S+cGL53UXJhuoXNSheakA4b6VEUhDTmoKJhE5bXhPyGWm8So0dVAc8kT9xFVHSsdLHAVsqsairZjbNFsDqVyFgj7a62XyvT/Gah10LuP5/1+KCFsaxzMD9MnEBnbIJNY5Np3j6UikgUN9PqLUDWqWp/fF2w5+/LkeNYzM/Dh2GA4o/GEgopDaV0lfQZKxqYrkpVGwggHaMnvvoACJlWfwkTImtvIgjYRWIKr4H9FlsyE+PpDz4xTIzktSFmyi+bM9vaba9hQuX0LDP/Py5bhpjFoNseL/6wrDoQDLgCUl/7L6WdgJXaCg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MycP9p5XGNghJ0H8rEQNB8c2SEtspbrmn0IX3PUWA7Y=;
+ b=HquAov/C26vrjrOHwVEV0NCXu/oN/jm3dPgkxVx0Ad45RmxLw1x3rfkJS6LVfEHD5GO+0dTD1kwO31foi0lGPpfRhaPZO3wUBJVaOF6A65LlQvSn5MfgoTGRDqzftw5hN7cEEG2UFgZ5770VbEb49z9xUD5J6NvZxuXT+Y3jJrF3gPulXG5x7YbWZk1oohnJOsqjU5g5lvk0bZ1MF4HVRp4xMxXpfOwg9zKq2fB+dfZ9jZXfwAu0x8HMmZK9oe1QaZp+xMRYwO5pV0NsAAMqgxKbah4hyllnjThBH7FHo64+WKPpRy4AObbg0dwqC6oNQ3VJVv5xcfG48Qdy+lA0AA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by AS8PR08MB6599.eurprd08.prod.outlook.com
+ (2603:10a6:20b:332::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.5; Thu, 17 Sep
+ 2026 12:32:34 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0428.008; Thu, 17 Sep 2026
+ 12:32:33 +0000
+Message-ID: <ed87c09d-f750-4ea1-abad-2777792564a8@virtuozzo.com>
+Date: Thu, 17 Sep 2026 15:32:32 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 00/14] migration/cpr: support vhost-vsock devices
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: bchaney@akamai.com, mark.kanda@oracle.com, farosas@suse.de,
+ den@openvz.org, clg@redhat.com, sgarzare@redhat.com,
+ philmd@oss.qualcomm.com, maciej.szmigiero@oracle.com, mst@redhat.com,
+ dongli.zhang@oracle.com, peterx@redhat.com
+References: <20260915-up-vsock-vhost-v5-v6-0-4d31b2dc6afd@virtuozzo.com>
+ <3e3ba3a6-1437-4b36-b1d6-8434c1005499@yandex-team.ru>
+Content-Language: en-US
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <3e3ba3a6-1437-4b36-b1d6-8434c1005499@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR4P281CA0023.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:c9::9) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2dc82f7a-9132-487c-92a6-000bfa32e085@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS8PR08MB6599:EE_
+X-MS-Office365-Filtering-Correlation-Id: 644dedcc-c9eb-4008-18b7-08df14b7bf81
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|23010399003|10067099003|56012099006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: zjZ7V+5ECPmsu6gWrdnw5/+1lgd0+BtCyr/YswG09m2iC7nDobScQ398AibBZMgu/agKQHgkEBVLQ6Jm1Wn8yyunk5rbjq+TIhh4uHzNqehTo3EypP3EZMZ8rUgzV+mNmuUIybYGOZQ65SEvqfEEc69RZx6vPjMnCf1bXKEwrifkdQwXbGvy84GbHL+ZWqGThigGGvdJ9bWY37h7v3Agb5tUxpG7nMjeoN+zFrJdw9UVC7WxxITRNRZrdQh76ogy5JIbQ1np3oZIaIfJjFXY/hHZhSUnOJIHgcdC2YBHlHYx8KLtyeJQOCfK6GaIcnukEx+gjIJW9JlE0vCo51ABrJDm49OmSDAhcigCCJhL49CCjGQaZVNU2oCYrYCa0uTHbhtOoeeXgt4LIUthYb7VQsDKf9g/621Um4rTNYAfxy5fVGElsO51UOatvtBbLGUR5j2Ur6WCQIdQRzpGq0ikpnYqzbKg6fMFGCoXz1sWp5Fp/vYgehccMhxyDLDFw7UpJnBrz4f4wHCI5bgUAtUbePqvVN4LKPo4PzALkICp8MXq0dL2RHMMoDsiwPHnMAcsf67AuE7PcfS4KS9Syi8EY5VzFFkxwhaFHBfQsJuaSUc1CewmrmxwHJXBnUJMIkMzEsD5gHK3jh5XlgkH+FHYrwzKjV3oWo3pOBpbB5egCZA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(23010399003)(10067099003)(56012099006)(4143699003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RENxclhNZlI3RjRjbkNLamI2c0FaMVBpYmZWVjN4a3Y2QllTalczbm1CU1BT?=
+ =?utf-8?B?L3IyWHNBRjJyRllmcTBENDZBcFhRbWg5K0NER1lTalo1bFJDNnE2WmxuV2Jv?=
+ =?utf-8?B?ZFBGV2pQZjU4MXZteEo0QXJQUUsvUXhhY2JSbUphcVVIalY5bmpIb0lyT280?=
+ =?utf-8?B?OVBPNmRhOWFoS1BKVXFZZUdHdTZDVnhCUVFWd0duU3Q5MjJ3UHJJUnVnazhZ?=
+ =?utf-8?B?amJiQW5qNi9lT1RNVmdIcW05VmpKbURkeGNlZWtncmQ1Q3JUUytiVzNhQVZO?=
+ =?utf-8?B?N3hYeWpMN2dsVmtWNHBMc3lLdysya3hLZDhDSFpPV3UvakdjWUpQby9JdXE3?=
+ =?utf-8?B?NkhDUU02Qmk5U2xlWmwyRGVaaEI4bUdxUkIyd01HNGRDRFFlNUJiNzN3VXdF?=
+ =?utf-8?B?VW1hZlc0M2p6aHFKZXhiNTRCcE1CUTNSVG5nb0ZZOGNRWlhkZVJuYzFYaGhP?=
+ =?utf-8?B?aE5NMFZXRTlKVVAySWRyakNBa2tqUDViZTI3RGxFZytsbUU0SEVxL1ZHUE5a?=
+ =?utf-8?B?cnJyeVdKaER2UFY4V1RLTElESDhPM0d5UGxzbFlCVDFtdFZzekg5Z1k2bDZk?=
+ =?utf-8?B?cGRMUEt2dTNLKzBPMXJwOHBqQ3h5R1J0cE5iOXEyRDdvT1RWVHpmRXY2T0xv?=
+ =?utf-8?B?US9sZi9hbG1CN09TMmlwUnVLOFliUWlickYvN2Rtb29sZmZvTjNMRVZldzdL?=
+ =?utf-8?B?clJ5bkFkOG5LSHJuK2NmSXI1ZUg1SThLelNkclAvblVhdVlBeVJZMWFHaXl1?=
+ =?utf-8?B?OTkrSWZGRHE5V2ZhV3BNcFZOUlVQbmVyaHJ0THRqODgwOHZuYStXMEthSE8w?=
+ =?utf-8?B?MWpudGJLeDA1aGlqWUNiekF1amNOYXhSa2J3V0x0RXArUzlrSGVXTWhDcitE?=
+ =?utf-8?B?bjZ2ZitRY1dxc1RJeDRTRFd1aEhxZmZRQmhHU0NISEFza0YvcFJiaW9aTVd5?=
+ =?utf-8?B?S2Raa1QrQThJaW9uOGFaNXowelF0aFRHbW5vZDE1VmNLdXJEam0yY0I3L0Rr?=
+ =?utf-8?B?L1RkWHhNQUltQTQ0a3pTZXFmdEhDejEvMnJVV0tBSVo3aG9nUjNvS2hqZk0y?=
+ =?utf-8?B?MWFudEl4SnF5Vml1cXBaUWgzNkhjZCt1MVBxSkFBbHNMU2RBbVYwejVUTENM?=
+ =?utf-8?B?d1FZc2V0ZlljNGhHODU5L0FadjR1WVZBMEJxdWRsZmhPSkRBNFYrVU9EV0Z4?=
+ =?utf-8?B?eGlwdnVXbTFuTW9udk5QeDkwZWVxMjdCb25tYTMwUS8xMmtWYThIaktxRDZP?=
+ =?utf-8?B?SnFQYmVvZE5udlJZRXVzbkFrK2dmeHBwaXhGQlNrK0k1YUd5ZDNSSmFiK2pE?=
+ =?utf-8?B?STNKKzVLK3FWcVlIcDI5MU1PUmptSytxSXh0akhCQXVhR3NwSTM0RVM2YWFE?=
+ =?utf-8?B?MjFqd2JPakkxVnBEeVVhaG0wRnNXdHlaQUNHdkRUTXREc2h0aXFsL1pVVFNX?=
+ =?utf-8?B?NFZQbXM2NllOUDN0QWxwRkl2cE1Tbi9ET1gyd0RDaUI1T2FKL1BialJXMlox?=
+ =?utf-8?B?S3pmRmgvSFpvbmZaV0s2Q3RtNXg3SDhmT2d0ek1jWEQ2b0Y4MDVnQWNDZWVS?=
+ =?utf-8?B?M3hwczhOdmRtanArOHY4VmhlcEExdzlCZnR3dXlCejMxMnRSeDA0SnptZkNV?=
+ =?utf-8?B?RVBWUXZ6RFNqTFNqN2VvM3FURTlKa1ZINVFsRXk2QnN1ZWQ0SllDU0owcE9t?=
+ =?utf-8?B?aXpxVDNhY2dpYWhTMFFlVzNRd0I3cjc1ckhFZFg5MVM3S2RNaEZLa2YvMWVj?=
+ =?utf-8?B?NlJhN2xadEdwUWVjRm1ZZnpkZUpYQWJHRjA1MjRCNWl6dGgwVmNOK0N3SlJP?=
+ =?utf-8?B?d2ttVHdCbW5hc0VIYVpBcXduQ0E2eXRCZVM4eElBZzNNTXhMaWhUYW1iYUhR?=
+ =?utf-8?B?QVgrQ01ibDBUYTlFNm1GeWd4R013M29wRkZSV1cvK1NYNFMzU2R6QlI4aU1D?=
+ =?utf-8?B?OWZWclpCUG1qVlhPNHptNlJzQmRWMW4zZjZKd2ViTnBUVy9hNkdoTS9vMmdZ?=
+ =?utf-8?B?eFN5bDk3MG8zd2JNSHJtOW8zV1R6YjBWUmhwa0FORkFWNlNCQ2tkbDR6cWRY?=
+ =?utf-8?B?YmZtSGtodTB1WWI5Smt3VnFrTnhLcDN6MDh3Q0pHQ21pMytueU5IenF4SlBM?=
+ =?utf-8?B?bFQ3QnZ1QlpQUjVvYk96Y0QyWlBUUy9kN00xK3F2d2JCdEJaQnlCTG1yQmZW?=
+ =?utf-8?B?S0lUK1BKZjdMNTZ2YnFDeGlhOTFSUG1vcW1IVXJYMUMwRnRBZllTOGc0aXRx?=
+ =?utf-8?B?Q1IzaGZIUE5CMXl6YklGSlIvZmZOZUZXZmlVNE5pVlZSNDA2bmpucU9nM1Ax?=
+ =?utf-8?B?cERaQ1B1czI0MzhqVUxCUEtqb2lxUk5OeUFNY3BIcUxJZXBPNWVhOG84M3BF?=
+ =?utf-8?Q?TINjLmxAjJ7P9Ve4=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 644dedcc-c9eb-4008-18b7-08df14b7bf81
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 12:32:33.6766 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SnDH7oBmPeMPvyxaeJ7PoWoiENJluSVwOtEa5X/xM2x/oOVWMW7JeKHqg5eHJmP+pUi+0UoPKMNQcKWFXdJEoxBQmUlb5LbFzCok6Fa5iGU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB6599
+Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,134 +156,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 17, 2026 at 11:48:52AM +0200, Denis V. Lunev wrote:
-> On 9/16/26 22:43, Peter Xu wrote:
-> > On Wed, Sep 16, 2026 at 09:45:56PM +0200, Denis V. Lunev wrote:
-> >> On 9/16/26 20:57, Fabiano Rosas wrote:
-> >>> Peter Xu <peterx@redhat.com> writes:
-> >>>
-> >>>> On Wed, Sep 16, 2026 at 03:24:28PM +0200, Denis V. Lunev wrote:
-> >>>>> From: Denis V. Lunev <den@openvz.org>
-> >>>>>
-> >>>>> The cpr state is a process wide registry of the resources that have to
-> >>>>> survive an exec. Entries are added and dropped from realize and teardown
-> >>>>> paths all over the tree, and a caller has no way to tell which thread the
-> >>>>> next caller will run in.
-> >>>>>
-> >>>>> The state carries no serialization of its own. It is safe today only
-> >>>>> because its callers happen to hold the BQL, and that is a property of
-> >>>>> where those callers live rather than anything the interface promises or
-> >>>>> checks. A caller that is correct within its own subsystem can therefore
-> >>>>> break this one from a distance: two that overlap corrupt the registry,
-> >>>>> and the next lookup walks an entry that has already been freed.
-> >>>>>
-> >>>>> Give the state a lock of its own instead of relying on that. Entries
-> >>>>> move when a device is realized, when a resource is handed over, and when
-> >>>>> a migration starts, so none of this is on a hot path and an uncontended
-> >>>>> mutex costs nothing.
-> >>>>>
-> >>>>> Take the lock in every accessor and across the save and load walks.
-> >>>>> Holding it over the walk callbacks is safe because none of them comes
-> >>>>> back through this interface. State that is not reached through these
-> >>>>> accessors, such as the VFIO device list that hw/vfio manipulates
-> >>>>> directly, stays outside it.
-> >>>>>
-> >>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> >>>>> Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> >>>>> Cc: Peter Xu <peterx@redhat.com>
-> >>>>> Cc: Fabiano Rosas <farosas@suse.de>
-> >>>>> Cc: Mark Kanda <mark.kanda@oracle.com>
-> >>>>> Cc: Ben Chaney <bchaney@akamai.com>
-> >>>>> Cc: Steve Sistare <steven.sistare@oracle.com>
-> >>>> Is there a real problem anywhere?
-> >>>>
-> >>>> My gut feeling is we shouldn't be randomly adding fds into cpr unless we're
-> >>>> creating a new device or so, which should normally need bql already.
-> >>>>
-> >>>> To ask in another way, shall we simply assert bql_locked()?
-> >>>>
-> >>>> Thanks,
-> >>> Fair questions, let's see what Denis says.
-> >>>
-> >>> From my point of view, if the work is already done to use a lock, I'd
-> >>> take it; one less place for us to bother when dealing with BQL issues.
-> >>>
-> >>> (on the other hand, I'm not doing any active use or testing of cpr aside
-> >>> from migration-test, so my opinion is the least important here)
-> >> The fair answer if the following.
-> >>
-> >> 1. Right now FD database is already accessed from main thread and
-> >>    from vCPU threads (MSIx handling). It is fortunately protected
-> >>    with BQL.
-> >>
-> >> 2. There is no real today problem right now. You are right. The
-> >>    problem is in downstream.
-> >>
-> >> But the problem is real. We either should fix either contract
-> >> in written - just BQL or add the lock.
-> >>
-> >> I do think that CPR have value for the project - devices will
-> >> come sooner or late and the database is to be protected.
-> >>
-> >> This is fair statement for today.
-> > Thanks for the explanation.
-> >
-> > Logically we shouldn't merge anything that only works for downstream but
-> > not upstream, but I agree this one is sensible on its own.
-> >
-> > Perhaps we can add some more info into the commig log?  The vCPU MSIx
-> > handling, even if not applicable to a real issue, seems to be a good
-> > example to illustrate the potential problem. In this case, personally I'd
-> > even prefer stating the fact that "only our downstream is affected, but we
-> > want to upstream this patch too because .."  these kind of things, rather
-> > than being obscure on reasoning.
-> >
-> > Do you plan to upstream the affected component?  If so, I would still
-> > suggest to have this patch be together with that series, because that's
-> > where it really will make a difference (rather than purely wasting pCPU
-> > cycles on some lock bit..).
-> >
-> > Otherwise I don't have a strong opinion, this one is a light change, maint
-> > cost low (it'll be different if cpr_walk_fd() can take any cb().. but it's
-> > not the case), we can have it.  I'll leave this to Fabiano to say. Sorry if
-> > I'm too verbose here.
-> >
-> > Thanks,
-> >
-> The problems is caused by the external communication sockets
-> which we are willing to keep, starting from monitor.
-> Monitor in reality should be kept in the other case
-> it would be very unclear at which moment libvirt should
-> start reconnecting.
+On 9/17/26 9:03 AM, Vladimir Sementsov-Ogievskiy wrote:
+> On 15.09.26 23:59, Andrey Drobyshev wrote:
+>> v5 -> v6:
+>>
+>>    * Patch 9:
+>>      - use the device path (qdev_get_dev_path(), i.e. the device's
+>>        address on the bus) + "vhost-vsock" suffix as the CPR key instead
+>>        of the device ID;
+>>      - drop the device ID requirement altogether;
+>>      - introduce 'cpr_incoming' local here rather than in patch 14.
+>>
+>>    * Patch 14:
+>>      - lift the CPR blocker entirely instead of keeping it for ID-less
+>>        devices;
+>>      - skip RESET_OWNER in .pre_save() if the ownership was already
+>>        released by a previous failed CPR attempt;
+>>      - reword commit message.
+>>
+>> v5: https://lore.kernel.org/qemu-devel/20260914-up-vsock-vhost-v5-v5-0-d17423589f48@virtuozzo.com
+>>
+>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>> ---
+>> Andrey Drobyshev (14):
+>>        migration/cpr: forbid saving duplicate CprFds into hash table
+>>        tests/unit: add test for duplicate keys in CPR FD table
+>>        migration: forbid snapshots in CPR migration modes
+>>        tests/qtest/migration: add test for snapshot rejection in CPR modes
+>>        vhost-vsock: block CPR migration modes
+>>        vhost: add vhost_reset_owner op
+>>        vhost-vsock: don't reset connections during CPR
+>>        vhost-vsock: fix FD leak in realize()
+>>        vhost-vsock: preserve vhost FD during CPR
+>>        vhost: factor out vhost_dev_init_backend()
+>>        vhost: make vhost_dev_cleanup() safe on a partially initialized device
+>>        vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
+>>        vhost: add vhost_dev_is_initialized() helper
+>>        vhost-vsock: hand off device ownership across CPR
+>>
+>>   backends/hostmem-memfd.c          |   5 +-
+>>   backends/hostmem-shm.c            |   5 +-
+>>   backends/iommufd.c                |   4 +-
+>>   hw/vfio/container-legacy.c        |  17 ++--
+>>   hw/vfio/cpr-legacy.c              |  10 +-
+>>   hw/vfio/cpr.c                     |   6 +-
+>>   hw/vfio/pci.c                     |   5 +-
+>>   hw/virtio/vhost-kernel.c          |   6 ++
+>>   hw/virtio/vhost-vsock.c           | 193 +++++++++++++++++++++++++++++++++++---
+>>   hw/virtio/vhost.c                 |  57 ++++++++---
+>>   include/hw/vfio/vfio-cpr.h        |   6 +-
+>>   include/hw/virtio/vhost-backend.h |   2 +
+>>   include/hw/virtio/vhost-vsock.h   |   1 +
+>>   include/hw/virtio/vhost.h         |  61 ++++++++++++
+>>   include/migration/cpr.h           |   2 +-
+>>   migration/cpr.c                   |  55 +++++++----
+>>   migration/options.c               |   7 ++
+>>   system/physmem.c                  |   5 +-
+>>   tests/qtest/migration/cpr-tests.c |  36 ++++++-
+>>   tests/unit/meson.build            |   1 +
+>>   tests/unit/test-cpr.c             |  98 +++++++++++++++++++
+>>   21 files changed, 512 insertions(+), 70 deletions(-)
+>> ---
+>> base-commit: 5f664cd37aec17e8145aa117d8da68f507edc8f1
+>> change-id: 20260908-up-vsock-vhost-v5-c781b39f1c1a
+>>
+>> Best regards,
+>> --
+>> Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > 
-> This adds hooks to socket backend and dances begin.
-> 
-> I will take a look whether this has been sent/discussed and
-> come with this.
+> Hi! Don't you add a test for new functionality?
+Hi Vladimir,
 
-Ah I see, I recall Steve used to upstream something like that for chardev
-backing monitors.  I thought it has landed.  I hope there're not two impl
-of that problem, then it may imply we should upstream one of them.
+You're right, there's no dedicated tests yet.  Basically there're 2
+levels of testing:
 
-> 
-> For now we could add comment: we are protected with BQL.
-> Will this work as a replacement? Both approaches are fine
-> for me.
+1) Launch QEMU without a guest, with the device in question, and perform
+a CPR.  Here we just test that QEMU survives the CPR op, i.e. that FD
+and device handling is fine from the QEMU side.
 
-So now I'm trying to think from the problematic branch, not master.  In
-that case it is libvirt connection kicking off the monitor iothread to
-inject some client socket fd to CPR, right?  In that case, maybe BQL isn't
-suitable anymore, because IIUC we don't want to take BQL in the monitor
-iothread, at least for the same of Out-Of-Band messages to work.
+2) Actual test would be launching QEMU with a real guest, launch
+host<->guest data transfer and perform CPR during that.  That's what
+I've been testing when preparing this series.
 
-Please help investigate the status quo for chardev cpr support and maybe
-we'll know better, thanks.  If we want to merge this then it'll be great
-the commit log contains all important bits (especially, if BQL is not the
-right lock to use), because now I feel like taking BQL there is wrong then.
+As for the guest, AFAICT there're some functional tests which launch
+Fedora.  So this part should be doable.  However one requirement for
+both tests to work is the host kernel having RESET_OWNER support -
+that's added by our recent kernel series, which isn't yet merged to
+kernel master as of now.  So whichever Linux distro you run on your host
+now - it doesn't have this support and is not going to work.
 
-Thanks,
+I'm not sure it makes sense adding a test which nobody else'd be able to
+run unless they build their own kernel.  What do you think?
 
--- 
-Peter Xu
-
+Andrey
 
