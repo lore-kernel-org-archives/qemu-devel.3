@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2CE3C982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A49C982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7JkX-0007yH-2F; Thu, 17 Sep 2026 17:34:33 -0400
+	id 1x7JkV-0007xy-Jp; Thu, 17 Sep 2026 17:34:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7JkP-0007wj-Cz; Thu, 17 Sep 2026 17:34:25 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x7JkN-0007vx-8M; Thu, 17 Sep 2026 17:34:23 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7JkJ-0005y2-BT; Thu, 17 Sep 2026 17:34:24 -0400
+ id 1x7JkH-0005wp-W7; Thu, 17 Sep 2026 17:34:21 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 56B9760209;
- Thu, 17 Sep 2026 21:34:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366BE1F00893;
+ by tor.source.kernel.org (Postfix) with ESMTP id 1071B60202;
  Thu, 17 Sep 2026 21:34:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43431F00898;
+ Thu, 17 Sep 2026 21:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789680858;
- bh=HQ6E4+oLV7DMYAIsbqwuB+snz6Fo+Dd+3qEqXjmVwjI=;
+ s=k20260515; t=1789680855;
+ bh=Ynlks6OjXe/uRxYnEgUbla/LudkyT55AVz8txJwfPoA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cTrsEOiyHETD1ZqF8248HiCuqmxlAYtElE8j7v4xKLm8rzRoA+pXLzMUgWWmpxlGj
- l56PcNdAOCdNXHQRoiZ8zsPNcsp52DgMJBYJev1cEge4rJ2R2m8nzfRQGbcxdpKRkW
- ojTaTs7G5FHkartkj0YNDLPTScyVrCEL1wR7LnEmG0hKYeaRMEYCiDDZzY3eT+Ltor
- uGQNZQXyS7sI/6OtMAfacLbsyKQg2AO0lUs5Ygjeft6FLDeX4oMtUnLB0an/4TFq72
- u30yNyH6yMFo1oU09yHAoXHWmES2oI9Cmy8HMHIZalm3f9qCH0YYRH5E0HdQ2JY++e
- xDbQAHOBi45BA==
+ b=XPuF1wqAJYbJJ9XDA/ElpBh3sWi4LhsMmFb+kRmnYpfDQMc/hCJT2jdhbCTAR8PJl
+ KFoFnauggFw8AEgNBtceZzSZox+2kUwwFpCHQl/MCQPbSVAHfyEQc4k5+YTDtHV6d2
+ VjBMUvPA7GrUfoilFSmj/mTagBSOjowaTi+Wq1P14t1e7mtSnxFUp0TMmOg1WcXDxL
+ u5a240WfRRO/0LOVUdhWcR7jS+SlNCvfgdfNOD1tocb48dlX9zHh6bBvxks4Y41atG
+ XxfhQEvkAh8yNKtaP9ZA1iyEeoE+oZCdwMSo34Q7JnE088rfhe0pALoi3zQohn1JZr
+ ySec+g52Kosew==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
@@ -41,18 +41,17 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>,
  qemu-block@nongnu.org
-Subject: [PATCH 5/7] hw/usb/pc87560-ohci: Add USB OHCI emulation of NS 87560
- SuperIO chip
-Date: Thu, 17 Sep 2026 23:33:58 +0200
-Message-ID: <20260917213402.3127-6-deller@kernel.org>
+Subject: [PATCH 4/7] hw/usb/hcd-ohci: Add big endian and consistency check
+ support
+Date: Thu, 17 Sep 2026 23:33:57 +0200
+Message-ID: <20260917213402.3127-5-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260917213402.3127-1-deller@kernel.org>
 References: <20260917213402.3127-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,389 +75,122 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
 
-Add emulation of the USB OHCI portion of the NS SuperIO chip.
+The OHCI controller allows running in big endian mode. If this mode is enabled, swap the
+buffer contents before accessing them since we by default run OHCI in little endian mode.
+
+Additionally add the architected consistency check which halts OHCI on errors.
 
 Signed-off-by: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- MAINTAINERS           |   1 +
- hw/usb/pc87560-ohci.c | 355 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 356 insertions(+)
- create mode 100644 hw/usb/pc87560-ohci.c
+ hw/usb/hcd-ohci.c | 35 +++++++++++++++++++++++++++++++++++
+ hw/usb/hcd-ohci.h |  5 +++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2da2f00ff3..e8c7030dec 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1357,6 +1357,7 @@ F: roms/seabios-hppa/
- F: tests/functional/hppa/
- F: hw/isa/pc87560.c
- F: hw/ide/pc87560-ide.c
-+F: hw/usb/pc87560-ohci.c
- F: include/hw/isa/pc87560.h
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 23990115ab..5e5fe41f47 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -74,6 +74,7 @@ struct ohci_hcca {
+ /* Flags in the head field of an Endpoint Descriptor. */
+ #define OHCI_ED_H         1
+ #define OHCI_ED_C         2
++#define OHCI_ED_HEAD_RSVD   (1 << 2 | 1 << 3)
  
- Hexagon Machines
-diff --git a/hw/usb/pc87560-ohci.c b/hw/usb/pc87560-ohci.c
-new file mode 100644
-index 0000000000..cc00f6e936
---- /dev/null
-+++ b/hw/usb/pc87560-ohci.c
-@@ -0,0 +1,355 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * NS PC87560 SuperI/O — USB OHCI emulation
-+ *
-+ * Copyright (c) 2026 Abizer abizerlokhandwalastd10@gmail.com
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/timer.h"
-+#include "hw/usb/usb.h"
-+#include "migration/vmstate.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
-+#include "trace.h"
-+#include "hcd-ohci.h"
-+#include "qom/object.h"
-+
-+#define TYPE_NSC_PCI_OHCI "pc87560-ohci"
-+OBJECT_DECLARE_SIMPLE_TYPE(OHCIPCIState, NSC_PCI_OHCI)
-+
-+struct OHCIPCIState {
-+
-+    PCIDevice parent_obj;
-+    OHCIState state;
-+    MemoryRegion nsc_bar;
-+    char *masterbus;
-+    uint32_t num_ports;
-+    uint32_t firstport;
-+    qemu_irq irq_out[1];
-+
-+    /* NSC (NUSSBAR) vendor-specific register state */
-+    uint32_t nsc_control;
-+    uint32_t nsc_status;
-+};
-+
-+#define NSC_CONTROL             0x00
-+#define NSC_COMMAND_STATUS      0x04
-+#define NSC_PORT_RX_STATUS      0x08
-+#define NSC_ROOT_HUB_STATUS     0x34
-+#define NSC_CTL_BIG_ENDIAN      (1U << 0)
-+#define NSC_CTL_CCE             (1U << 1)      /* Consistency Check Enable */
-+#define NSC_CTL_WORDCOUNT        (0x3fU << 2)   /* bits 7:2 */
-+#define NSC_CTL_MODE             (0x3U << 8)     /* bits 9:8 */
-+#define NSC_CTL_LIMIT_CONTROL   (1U << 16)
-+#define NSC_CTL_RISE_TIME       (0xffU << 24)  /* bits 31:24 */
-+#define NSC_CTL_WRMASK  (NSC_CTL_BIG_ENDIAN | NSC_CTL_CCE | NSC_CTL_WORDCOUNT |\
-+                          NSC_CTL_MODE | NSC_CTL_LIMIT_CONTROL | \
-+                          NSC_CTL_RISE_TIME)
-+#define NSC_CONTROL_RESET        0x90000014U
-+#define NSC_CS_MEDIA_ERROR      0x00000fffU    /* bits 11:0, 12-bit counter */
-+#define NSC_CS_MEDIA_ERR_OVFL   (1U << 16)
-+#define NSC_CS_UE_PCI           (1U << 17)
-+#define NSC_CS_UE_DESCRIPTOR    (1U << 18)
-+#define NSC_CS_UE_INTERNAL      (1U << 19)
-+#define NSC_CS_SCHEDULE_ERROR   (1U << 20)
-+#define NSC_CS_PHY_OVERRUN      (1U << 21)
-+#define NSC_CS_W1C_MASK  (NSC_CS_MEDIA_ERR_OVFL | NSC_CS_UE_PCI |\
-+                          NSC_CS_UE_DESCRIPTOR | NSC_CS_UE_INTERNAL |\
-+                          NSC_CS_SCHEDULE_ERROR | NSC_CS_PHY_OVERRUN)
-+#define NSC_OHCI_INTR_SO   (1U << 0)
-+#define NSC_RHPORT_CCS   (1U << 0)   /* CurrentConnectStatus */
-+#define NSC_RHPORT_PES   (1U << 1)   /* PortEnableStatus */
-+#define NSC_RHPORT_PSS   (1U << 2)   /* PortSuspendStatus */
-+#define NSC_RHPORT_PRS   (1U << 4)   /* PortResetStatus */
-+#define NSC_RHPORT_PPS   (1U << 8)   /* PortPowerStatus */
-+
-+static uint32_t nsc_hub_port_state(OHCIState *s, int port)
+ /* Bitfields for the first word of a Transfer Descriptor. */
+ #define OHCI_TD_R         (1 << 18)
+@@ -371,6 +372,8 @@ void ohci_hard_reset(OHCIState *ohci)
+     ohci_soft_reset(ohci);
+     ohci->ctl = 0;
+     ohci_roothub_reset(ohci);
++    ohci->big_endian = false;
++    ohci->consistency_check = false;
+ }
+ 
+ /* Get an array of dwords from main memory */
+@@ -867,6 +870,18 @@ static void ohci_td_pkt(const char *msg, const uint8_t *buf, size_t len)
+     }
+ }
+ 
++static void ohci_bswap_buf(uint8_t *buf, size_t len)
 +{
-+    uint32_t ctrl = s->rhport[port].ctrl;
-+
-+    if (!(ctrl & NSC_RHPORT_PPS)) {
-+        return 0x8;             /* POWER OFF */
-+    }
-+    if (!(ctrl & NSC_RHPORT_CCS)) {
-+        return 0xa;             /* DISCONNECTED */
-+    }
-+    if (ctrl & NSC_RHPORT_PRS) {
-+        return 0x2;             /* RESET */
-+    }
-+    if (ctrl & NSC_RHPORT_PSS) {
-+        return 0xc;             /* SUSPENDED */
-+    }
-+    if (ctrl & NSC_RHPORT_PES) {
-+        return 0xe;             /* ENABLED, Idle */
-+    }
-+    return 0xb;                 /* DISABLED */
-+}
-+
-+static uint32_t nsc_root_hub_status(OHCIPCIState *ohci)
-+{
-+    OHCIState *s = &ohci->state;
-+    uint32_t val = 0;
-+
-+    if (s->num_ports >= 1) {
-+        val |= nsc_hub_port_state(s, 0);       /* Port 1 Status[3:0] */
-+    }
-+    if (s->num_ports >= 2) {
-+        val |= nsc_hub_port_state(s, 1) << 8;  /* Port 2 Status[3:0] */
-+    }
-+    return val;
-+}
-+
-+static void nsc_ohci_media_error(OHCIState *ohci)
-+{
-+    OHCIPCIState *dev = container_of(ohci, OHCIPCIState, state);
-+    uint32_t count = dev->nsc_status & NSC_CS_MEDIA_ERROR;
-+
-+    if (count == NSC_CS_MEDIA_ERROR) {
-+        dev->nsc_status |= NSC_CS_MEDIA_ERR_OVFL;
-+    } else {
-+        dev->nsc_status = (dev->nsc_status & ~NSC_CS_MEDIA_ERROR) | (count + 1);
++    uint32_t w;
++    while (len >= sizeof(w)) {
++        memcpy(&w, buf, sizeof(w));
++        w = bswap32(w);
++        memcpy(buf, &w, sizeof(w));
++        buf += sizeof(w);
++        len -= sizeof(w);
 +    }
 +}
 +
-+static void nsc_ohci_descriptor_error(OHCIState *ohci)
-+{
-+    OHCIPCIState *dev = container_of(ohci, OHCIPCIState, state);
-+    dev->nsc_status |= NSC_CS_UE_DESCRIPTOR;
-+}
-+
-+static uint64_t nsc_usb_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    OHCIPCIState *ohci = opaque;
-+    uint32_t val;
-+
-+    switch (addr & ~3) {
-+    case NSC_CONTROL:
-+        val = ohci->nsc_control;
-+        break;
-+    case NSC_COMMAND_STATUS:
-+        val = ohci->nsc_status;
-+        if (ohci->state.intr_status & NSC_OHCI_INTR_SO) {
-+            val |= NSC_CS_SCHEDULE_ERROR;
+ /*
+  * Service a transport descriptor.
+  * Returns nonzero to terminate processing of this endpoint.
+@@ -975,6 +990,9 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+                                  DMA_DIRECTION_TO_DEVICE)) {
+                     ohci_die(ohci);
+                 }
++                if (ohci->big_endian) {
++                    ohci_bswap_buf(ohci->usb_buf, pktlen);
++                }
+             }
+         }
+     }
+@@ -1024,6 +1042,9 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+ 
+     if (ret >= 0) {
+         if (dir == OHCI_TD_DIR_IN) {
++            if (ohci->big_endian) {
++                ohci_bswap_buf(ohci->usb_buf, ret);
++            }
+             if (ohci_copy_td(ohci, &td, ohci->usb_buf, ret,
+                              DMA_DIRECTION_FROM_DEVICE)) {
+                 ohci_die(ohci);
+@@ -1108,6 +1129,13 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+         ohci->done_count = i;
+     }
+ exit_no_retire:
++    if (ohci->media_error) {
++        int cc = OHCI_BM(td.flags, TD_CC);
++        /* only these 2 errors will ever actually be possible in qemu */
++        if (cc == OHCI_CC_DEVICENOTRESPONDING || cc == OHCI_CC_UNDEXPETEDPID) {
++            ohci->media_error(ohci);
 +        }
-+        break;
-+    case NSC_PORT_RX_STATUS:
-+        val = 0;
-+        break;
-+    case NSC_ROOT_HUB_STATUS:
-+        val = nsc_root_hub_status(ohci);
-+        break;
-+    default:
-+        val = 0;
-+        break;
 +    }
-+
-+    val >>= (addr & 3) * 8;
-+    if (size < 4) {
-+        val &= (1U << (size * 8)) - 1;
-+    }
-+    return val;
-+}
-+
-+static void pc87560_usb_irq_relay(void *opaque, int n, int level)
-+{
-+    OHCIPCIState *ohci = opaque;
-+    qemu_set_irq(ohci->irq_out[0], level);
-+}
-+
-+static void nsc_usb_write(void *opaque, hwaddr addr, uint64_t val,
-+                          unsigned size)
-+{
-+    OHCIPCIState *ohci = opaque;
-+    uint32_t shift = (addr & 3) * 8;
-+    uint32_t lane = (size < 4) ? (((1U << (size * 8)) - 1) << shift)
-+                                : 0xffffffffU;
-+    uint32_t wval = ((uint32_t)val << shift) & lane;
-+
-+    switch (addr & ~3) {
-+    case NSC_CONTROL:
-+        ohci->nsc_control = (ohci->nsc_control & ~lane) |
-+                            (wval & NSC_CTL_WRMASK);
-+        ohci->state.big_endian = (ohci->nsc_control & NSC_CTL_BIG_ENDIAN) != 0;
-+        ohci->state.consistency_check = (ohci->nsc_control & NSC_CTL_CCE) != 0;
-+        break;
-+
-+    case NSC_COMMAND_STATUS:
-+        if (wval & NSC_CS_MEDIA_ERROR) {
-+            ohci->nsc_status &= ~NSC_CS_MEDIA_ERROR;
+     if (ohci_put_td(ohci, addr, &td)) {
+         ohci_die(ohci);
+         return 1;
+@@ -1136,6 +1164,13 @@ static int ohci_service_ed_list(OHCIState *ohci, uint32_t head)
+             ohci_die(ohci);
+             return 0;
+         }
++        if (ohci->consistency_check && (ed.head & OHCI_ED_HEAD_RSVD)) {
++            if (ohci->descriptor_error) {
++                ohci->descriptor_error(ohci);
++            }
++            ohci_die(ohci);
++            return 0;
 +        }
-+        ohci->nsc_status &= ~(wval & NSC_CS_W1C_MASK);
-+        if (wval & NSC_CS_SCHEDULE_ERROR) {
-+            ohci->state.intr_status &= ~NSC_OHCI_INTR_SO;
-+        }
-+        break;
+ 
+         next_ed = ed.next & OHCI_DPTR_MASK;
+ 
+diff --git a/hw/usb/hcd-ohci.h b/hw/usb/hcd-ohci.h
+index 243cd1f46a..d079f8d24e 100644
+--- a/hw/usb/hcd-ohci.h
++++ b/hw/usb/hcd-ohci.h
+@@ -93,6 +93,11 @@ struct OHCIState {
+     bool async_complete;
+ 
+     void (*ohci_die)(OHCIState *ohci);
++    void (*media_error)(OHCIState *ohci);
++    void (*descriptor_error)(OHCIState *ohci);
 +
-+    case NSC_PORT_RX_STATUS:
-+    case NSC_ROOT_HUB_STATUS:
-+        break;
-+
-+    default:
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps nsc_usb_ops = {
-+    .read = nsc_usb_read,
-+    .write = nsc_usb_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void ohci_pci_die(struct OHCIState *ohci)
-+{
-+    OHCIPCIState *dev = container_of(ohci, OHCIPCIState, state);
-+
-+    ohci_sysbus_die(ohci);
-+
-+    dev->nsc_status |= NSC_CS_UE_INTERNAL;
-+
-+    pci_set_word(dev->parent_obj.config + PCI_STATUS,
-+                 PCI_STATUS_DETECTED_PARITY);
-+}
-+
-+static uint32_t pc87560_ohci_config_read(PCIDevice *pci, uint32_t addr, int len)
-+{
-+    uint32_t val = pci_default_read_config(pci, addr, len);
-+    return val;
-+}
-+
-+static void pc87560_ohci_config_write(PCIDevice *pci, uint32_t addr,
-+                                       uint32_t val, int len)
-+{
-+    pci_default_write_config(pci, addr, val, len);
-+}
-+
-+static void usb_ohci_realize_pci(PCIDevice *dev, Error **errp)
-+{
-+    Error *err = NULL;
-+    OHCIPCIState *ohci = NSC_PCI_OHCI(dev);
-+
-+    dev->config[PCI_CLASS_PROG]    = 0x10;
-+    dev->wmask[PCI_CLASS_PROG]     = 0xff;
-+    dev->config[PCI_INTERRUPT_PIN] = 0x01;
-+
-+    qdev_init_gpio_out(DEVICE(dev), ohci->irq_out, 1);
-+    ohci->state.irq = qemu_allocate_irq(pc87560_usb_irq_relay, ohci, 0);
-+
-+    usb_ohci_init(&ohci->state, DEVICE(dev), ohci->num_ports, 0,
-+                  ohci->masterbus, ohci->firstport,
-+                  pci_get_address_space(dev), ohci_pci_die, &err);
-+    if (err) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+    ohci->state.media_error = nsc_ohci_media_error;
-+    ohci->state.descriptor_error = nsc_ohci_descriptor_error;
-+
-+    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &ohci->state.mem);
-+
-+    memory_region_init_io(&ohci->nsc_bar, OBJECT(dev), &nsc_usb_ops, ohci,
-+                          "nsc-usb", 0x1000);
-+    pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_MEMORY, &ohci->nsc_bar);
-+}
-+
-+static void usb_ohci_exit(PCIDevice *dev)
-+{
-+    OHCIPCIState *ohci = NSC_PCI_OHCI(dev);
-+    OHCIState *s = &ohci->state;
-+
-+    trace_usb_ohci_exit(s->name);
-+    ohci_bus_stop(s);
-+
-+    if (s->async_td) {
-+        usb_cancel_packet(&s->usb_packet);
-+        s->async_td = 0;
-+    }
-+    ohci_stop_endpoints(s);
-+
-+    if (!ohci->masterbus) {
-+        usb_bus_release(&s->bus);
-+    }
-+
-+    timer_free(s->eof_timer);
-+}
-+
-+static void usb_ohci_reset_pci(DeviceState *d)
-+{
-+    PCIDevice *dev = PCI_DEVICE(d);
-+    OHCIPCIState *ohci = NSC_PCI_OHCI(dev);
-+    OHCIState *s = &ohci->state;
-+
-+    ohci_hard_reset(s);
-+
-+    ohci->nsc_control = NSC_CONTROL_RESET;
-+    ohci->nsc_status = 0;
-+}
-+
-+static const Property ohci_pci_properties[] = {
-+    DEFINE_PROP_STRING("masterbus", OHCIPCIState, masterbus),
-+    DEFINE_PROP_UINT32("num-ports", OHCIPCIState, num_ports, 3),
-+    DEFINE_PROP_UINT32("firstport", OHCIPCIState, firstport, 0),
-+};
-+
-+static const VMStateDescription vmstate_ohci = {
-+    .name = "pc87560-ohci",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_PCI_DEVICE(parent_obj, OHCIPCIState),
-+        VMSTATE_STRUCT(state, OHCIPCIState, 1, vmstate_ohci_state, OHCIState),
-+        VMSTATE_UINT32(nsc_control, OHCIPCIState),
-+        VMSTATE_UINT32(nsc_status, OHCIPCIState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void ohci_pci_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+
-+    k->realize       = usb_ohci_realize_pci;
-+    k->exit          = usb_ohci_exit;
-+    k->config_read   = pc87560_ohci_config_read;
-+    k->config_write  = pc87560_ohci_config_write;
-+    k->vendor_id     = PCI_VENDOR_ID_NS;
-+    k->device_id     = PCI_DEVICE_ID_NS_87560_USB;
-+    k->revision      = 0x01;
-+    k->class_id      = PCI_CLASS_SERIAL_USB;
-+    k->subsystem_vendor_id = PCI_VENDOR_ID_HP;
-+    k->subsystem_id        = 0x10A7;
-+
-+    set_bit(DEVICE_CATEGORY_USB, dc->categories);
-+    dc->desc         = "National Semiconductor USB Controller";
-+    device_class_set_props(dc, ohci_pci_properties);
-+    dc->hotpluggable = false;
-+    dc->user_creatable = false;
-+    dc->vmsd         = &vmstate_ohci;
-+    device_class_set_legacy_reset(dc, usb_ohci_reset_pci);
-+}
-+
-+static const TypeInfo ohci_pci_info = {
-+    .name          = TYPE_NSC_PCI_OHCI,
-+    .parent        = TYPE_PCI_DEVICE,
-+    .instance_size = sizeof(OHCIPCIState),
-+    .class_init    = ohci_pci_class_init,
-+    .interfaces = (const InterfaceInfo[]) {
-+        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+        { },
-+    },
-+};
-+
-+static void ohci_pci_register_types(void)
-+{
-+    type_register_static(&ohci_pci_info);
-+}
-+
-+type_init(ohci_pci_register_types)
++    bool big_endian;
++    bool consistency_check;
+ };
+ 
+ #define TYPE_SYSBUS_OHCI "sysbus-ohci"
 -- 
 2.54.0
 
