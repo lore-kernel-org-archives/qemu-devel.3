@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A7FC982CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 12:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380E5C88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 12:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Ava-0005Br-6N; Thu, 17 Sep 2026 08:09:22 -0400
+	id 1x7B1K-0006BQ-N6; Thu, 17 Sep 2026 08:15:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x7AvY-0005BV-I1; Thu, 17 Sep 2026 08:09:20 -0400
+ id 1x7B1B-00065v-2d; Thu, 17 Sep 2026 08:15:10 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x7AvW-00051R-HM; Thu, 17 Sep 2026 08:09:20 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1x7B19-0005TU-8b; Thu, 17 Sep 2026 08:15:08 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HA1wIU2206706; Thu, 17 Sep 2026 12:09:15 GMT
+ 68HA1UWv322340; Thu, 17 Sep 2026 12:15:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GSqzNY
- shc8oqPUkR85gIwZRhc83VF3P2+tI1ay/t0js=; b=Ns+wjQb9p/EVw7AHE8zVPc
- cQAFnL2hMKnFnmobBS4AF72VRKvusJd2+SW3WoAY2kkCZFpx1DWCp397tQt7edic
- BOJ6EdpWalPFO3uPSuUE4Ca692KXb5/sb2CO3SIgmSTCVy07/2q4BkepuO/OGP6Q
- c50BOaBSj1V/PFqS4V1MKBEViCU1xwibzw34iuR77JP6Sa8XkP5uRfCZsP+pyxNA
- pz8wpZj73+KdEA0Yv75F3tT3+2tAeKPtSxKKEJ4N2FsHkNEq2XYL7PnJ2wXBlJj7
- 1jpD2PZc2LJgiwJBDIEzPzz/GMAkhVL6fr6Mf37DBxuh5m81Cqmfu53NMjjIbbUA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jt5e7o
+ H1ycYBWTjwUUUlolnhWS0mpXPi1LgQ0N4P/oA=; b=OB49HgdquMWf7sYNhPoCFo
+ eiAa1Lqnerb2pash1n3vQ9/fvxzvFjGACLiZGq8hDkjUqb9MbQSi9V72KhCMWw++
+ WIMjPaNvo47ZZW5deoH6E9f1vUYsYDwlpvVPnP3oIwmUrYfq8TzoepSNnZ6Oz8Ek
+ OHBSjX/XnJZ54qxucM9WRU12JK8YoxeaauPiCBXzNqDeJkB7f4egpmS98BKEN3wa
+ g8XMfvCw/KPNR92qUQhDB40jQl9GaEGl0gg9BVZcC1JYoPeic3xPlNh0UnamHw3y
+ yp6YXg6dZIIPUNKH2y5bpWNUxdB+68XI0xi2HFkVnrGY03adPL1IUFNlo+U/yytQ
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxf5a80a-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdqj8d6-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 12:09:15 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68H9aLOU2879609; Thu, 17 Sep 2026 12:09:14 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gra3f9bkq-1
+ Thu, 17 Sep 2026 12:15:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68H9aIKE3858883; Thu, 17 Sep 2026 12:15:03 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gr7gehw49-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 12:09:14 +0000 (GMT)
+ Thu, 17 Sep 2026 12:15:03 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68HC9D4033620578
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68HCF2ts25756362
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Sep 2026 12:09:13 GMT
+ Thu, 17 Sep 2026 12:15:02 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E87E958045;
- Thu, 17 Sep 2026 12:09:12 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6BA255805E;
+ Thu, 17 Sep 2026 12:15:02 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 603BA5805E;
- Thu, 17 Sep 2026 12:09:12 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BC23E58056;
+ Thu, 17 Sep 2026 12:15:01 +0000 (GMT)
 Received: from [9.61.156.236] (unknown [9.61.156.236])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Sep 2026 12:09:12 +0000 (GMT)
-Message-ID: <e668c819-b682-49fd-ac82-bd81b2fdc0bd@linux.ibm.com>
-Date: Thu, 17 Sep 2026 08:09:11 -0400
+ Thu, 17 Sep 2026 12:15:01 +0000 (GMT)
+Message-ID: <2964473a-740d-4ea0-8411-a36c8f9863f5@linux.ibm.com>
+Date: Thu, 17 Sep 2026 08:15:01 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] virtio-ccw: Limit ISC to MAX_ISC
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH 6/9] hw/intc/s390x: Fix payload to KVM_HAS_DEVICE_ATTR
+ ioctl
+To: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
 References: <20260916203242.2509787-1-farman@linux.ibm.com>
- <20260916203242.2509787-2-farman@linux.ibm.com>
- <bdec4140-8d65-4480-9723-9c04595431d1@linux.ibm.com>
+ <20260916203242.2509787-7-farman@linux.ibm.com>
+ <a68f223a-8664-433d-96fb-16236aeaaf43@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -116,37 +117,37 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <bdec4140-8d65-4480-9723-9c04595431d1@linux.ibm.com>
+In-Reply-To: <a68f223a-8664-433d-96fb-16236aeaaf43@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: gA1OGycuvupTIdjKa7EqoCxy37fmxxs5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDE2OCBTYWx0ZWRfX7XEYoE7oWiqd
- fHl8iVG9d7jBKiWat+ugxBCbBXbg6Xt2DoVqwY1p5KQ09vWGFbkSlfkiJreAa3v9DKxkQFhF3iG
- zmUeJtKNnz5q31Ecv4ZhGZ1JA40yJw4=
-X-Authority-Analysis: v=2.4 cv=cvgOAF4i c=1 sm=1 tr=0 ts=6aabd86b cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDE2OCBTYWx0ZWRfXzSTWdz3Az50o
+ IdBKBKxgNyYnwgOhgdP8AWVlserklcDVk4YkRde6Wu71/BeuJot5C4ESPFUt5DYWu2zuo/9UhXW
+ 75ZQ601liWmUc4rg63hBEOkmJq9+ALmC9nxHj0GLPkCJ4HhaEJJgMrIuNUnDDTgCRIAnIqntFx7
+ bszjq5zXT8LSZFo1EaDJqSMCM3qfmsUXzGzB6NtDy6FGzSlQN5ArXZP901X7UvCVXV3gB26HwlF
+ g0wIm4r5FGv9wCDlIdtsQ7iU9dcMAaGWyvfsb/vtM9FR89/EuSYSm6icU1h5JG1veRTYJvVSX89
+ o7Owx3+p3C/I94vHCkZA31selZt7+j2RBTor0cZapASJfqbcdZU/JWjoyU847juaZW6rnjGeqtJ
+ 0jtfO5KsrXwabejmCl/HCrt8GctPX/BtkLWsIbNg4zOFazJitIVMBJMeUYaf+JYzkSoTIFc3w1d
+ E2aV4nq4wKLIbCGllgw==
+X-Proofpoint-GUID: o0u8anSarTqnQBlZUT4Mesd2bR6sbwZp
+X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aabd9c8 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=c84zAlJ4oS4KRIEuEZgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: gA1OGycuvupTIdjKa7EqoCxy37fmxxs5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDE2OCBTYWx0ZWRfXx7bxO1B2jaIU
- lFM82/1ELoiSFXPvk7AxiW/1Z0OP0NWTQlkbj1hsLaAMRZjlaGBvhZePp8LgXOmvisR/3G8vMN2
- vkxymouxmiZYZ9Ma9rJY++e9qdyeStv8OvVCDnb65OAHUfUL/PLQS5G7YKL4ZTml7PYnRRiSeNn
- jbfXi2Po7w+NElWEs/OaVf+CLkESTlNGlXEkR2df6AEmlWI6LLhKh4SASL3kXCipjEcjONelcB8
- XxFy8awzB4TidguAZ2iJRYjWVVSPOFkBRLTZ0m2A7vcyOoPnlwZXL2c5AV/YnqIj4yDyQdD/PJ0
- wpoVaO9F4GAa9nHQGomHbBlzqiz3M7JT544EHhunudW7AtjNuyKeQ05QuLIE2HR8BnPGBg28LSp
- 5soo5eeC4Mq9F+prbobXhYAAMw16HyhcFZAodGge2iYFaGndtZWCTj01q/jqIGass+dBdHeVs4U
- q1A8MlJtzjJd/a+iqsw==
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8
+ a=VnNF1IyMAAAA:8 a=i7nT4BTmzY2qJzPWweUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: o0u8anSarTqnQBlZUT4Mesd2bR6sbwZp
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDE2OCBTYWx0ZWRfX/gdBiVOBI5mi
+ g8ZIQrEC33o9cUzPQrsMwMLdImdf7pcSKlg01WHEwYi8EcFKk11F8bgYad02fyFpUnMGsF8COTj
+ K8ZhV7D0V4wzy/lEZePleLXKwmbl8YY=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-17_02,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609170168
+ phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170168
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -173,105 +174,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/16/26 7:15 PM, Matthew Rosato wrote:
-> On 9/16/26 4:32 PM, Eric Farman wrote:
->> The interrupt subclass is often defined as a uint8, though in practice
->> it will be within the range of just 0-7. Ensure that a guest-supplied
->> subclass does not extend beyond its expected range, especially when
->> used as an array index.
+On 9/17/26 3:45 AM, Christian Borntraeger wrote:
+> 
+> 
+> Am 16.09.26 um 22:32 schrieb Eric Farman:
+>> The ioctl to determine whether KVM_DEV_FLIC_CLEAR_IO_IRQ is present
+>> receives the contents of the attribute struct as its payload,
+>> rather than a pointer to the payload itself as is convention.
 >>
+>> This may result in erroneous errors from the ioctl, which would
+>> result in clear_io_supported being false when it otherwise could
+>> be used (which is helpful in device recovery).
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 9eccb8622c ("s390x/kvm: add interface for clearing IO irqs")
 >> Signed-off-by: Eric Farman <farman@linux.ibm.com>
 >> ---
->>   hw/s390x/css.c        | 7 ++++++-
->>   hw/s390x/virtio-ccw.c | 6 ++++++
->>   2 files changed, 12 insertions(+), 1 deletion(-)
+>>   hw/intc/s390_flic_kvm.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> diff --git a/hw/s390x/css.c b/hw/s390x/css.c
->> index 76dbca3bb9..9da9128d88 100644
->> --- a/hw/s390x/css.c
->> +++ b/hw/s390x/css.c
->> @@ -654,8 +654,13 @@ void css_adapter_interrupt(CssIoAdapterType type, uint8_t isc)
->>       S390FLICState *fs = s390_get_flic();
->>       S390FLICStateClass *fsc = s390_get_flic_class(fs);
->>       uint32_t io_int_word = (isc << 27) | IO_INT_WORD_AI;
->> -    IoAdapter *adapter = channel_subsys.io_adapters[type][isc];
+>> diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
+>> index f833a3996a..5e6d422fba 100644
+>> --- a/hw/intc/s390_flic_kvm.c
+>> +++ b/hw/intc/s390_flic_kvm.c
+>> @@ -633,7 +633,7 @@ static void kvm_s390_flic_realize(DeviceState 
+>> *dev, Error **errp)
+>>       /* Check clear_io_irq support */
+>>       test_attr.group = KVM_DEV_FLIC_CLEAR_IO_IRQ;
+>>       flic_state->clear_io_supported = !ioctl(flic_state->fd,
+>> -                                            KVM_HAS_DEVICE_ATTR, 
+>> test_attr);
+>> +                                            KVM_HAS_DEVICE_ATTR, 
+>> &test_attr);
+>>   }
+>>   static void kvm_s390_flic_reset(DeviceState *dev)
 > 
-> I think this deserve a fixes/cc stable.  This would have been an
-> out-of-range access before this patch.
+> Certainly a correct fix but maybe its not as bad. Aggregates > 8 byte 
+> are passed as
+> reference. Looks like the third argument is a pointer to a stack copy 
+> when testing, so
+> the old code might have worked by accident.
 
-Ack.
+Ah, thanks for the assembler, I should have looked at that.
 
-> 
-> The initial support didn't have the concept of MAX_ISC, it showed up in
-> 
-> dde522bbc5 ("s390x: register I/O adapters per ISC during init")
-> 
-> Frankly I think at that point we should have started fencing
-> registration > MAX_ISC already, but that patch DID locally fence its new
-> array indexes against MAX_ISC.  It wasn't until
-> 
-> 25a08b8ded ("s390x/css: update css_adapter_interrupt")
-> 
-> when the above array index was added without the fence that you are now
-> adding.  So I think 25a08b8ded is really the culprit.
+As I was testing this, I became worried that this whole part of error 
+recovery was broken, but I was finding that clear_io_supported was 
+already true even without this patch. I presumed ioctl magic, and that 
+seems to be the case.
 
-I was considering 25a08b8ded, since the array indexing was the impetus 
-for this patch. So will go with that.
-
-> 
->> +    IoAdapter *adapter;
->> +
->> +    if (type >= CSS_IO_ADAPTER_TYPE_NUMS || isc > MAX_ISC) {
->> +        return;
->> +    }
->>   
->> +    adapter = channel_subsys.io_adapters[type][isc];
->>       if (!adapter) {
->>           return;
->>       }
->> diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
->> index 30fb2c0681..eb6378ea4c 100644
->> --- a/hw/s390x/virtio-ccw.c
->> +++ b/hw/s390x/virtio-ccw.c
->> @@ -46,6 +46,10 @@ static int virtio_ccw_dev_post_load(void *opaque, int version_id)
->>       CcwDevice *ccw_dev = CCW_DEVICE(dev);
->>       CCWDeviceClass *ck = CCW_DEVICE_GET_CLASS(ccw_dev);
->>   
->> +    if (dev->thinint_isc > MAX_ISC) {
->> +        return -EINVAL;
->> +    }
-> 
-> Is this safe to check before thinint_active?
-> 
-> I guess if we get here before an ISC was ever set it would just be
-> zero-initialized so it wouldn't erroneously trigger this check.
-
-That was my reasoning. I thought that adding it outside the 
-thinint_active block would highlight potential shenanigans, even though 
-that variable would end up being ignored in that case. Of course...
+Maybe drop the stable tags from this one then, since it's working "by 
+design"
 
 > 
-> Assuming your reasoning matches mine:
-> 
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> 
->> +
->>       ccw_dev->sch->driver_data = dev;
->>       if (ccw_dev->sch->thinint_active) {
->>           dev->routes.adapter.adapter_id = css_get_adapter_id(
-
-... the above css_get_adapter_id() call will already check that it's 
-within MAX_ISC, so it's probably unnecessary.
-
->> @@ -659,6 +663,8 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
->>           } else {
->>               if (ccw_dstream_read(&sch->cds, thinint)) {
->>                   ret = -EFAULT;
->> +            } else if (thinint.isc > MAX_ISC) {
->> +                ret = -ENOSYS;
->>               } else {
->>                   thinint.ind_bit = be64_to_cpu(thinint.ind_bit);
->>                   thinint.summary_indicator =
+>       f8c:       d2 0f f0 a8 f0 d8       mvc     168(16,%r15),216(%r15) 
+> <--- stack copy
+>       f92:       b9 14 00 20             lgfr    %r2,%r0
+>       f96:       41 40 f0 a8             la      %r4,168(%r15) <-- pointer
+>       f9a:       c0 31 40 18 ae e3       lgfi    %r3,1075359459
+>       fa0:       d2 07 f0 b8 f0 e8       mvc     184(8,%r15),232(%r15)
+>       fa6:       c0 e5 00 00 00 00       brasl   %r14,fa6 
+> <kvm_s390_flic_realize+0x136>
+>                          fa8: R_390_PLT32DBL     ioctl+0x2
+>                                              KVM_HAS_DEVICE_ATTR, 
+> test_attr);
 > 
 
 
