@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A12C982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32602C982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Jo8-0003F5-Tm; Thu, 17 Sep 2026 17:38:17 -0400
+	id 1x7Jnt-0002YL-MP; Thu, 17 Sep 2026 17:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7Jo4-0002mW-SD
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:38:13 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ id 1x7Jnq-0002XW-Vu
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:37:59 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7Jo3-0007mw-9E
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:38:12 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc1cea50dc0so639233a12.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:38:10 -0700 (PDT)
+ id 1x7Jnp-0007bQ-BG
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:37:58 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-cc52c1b8286so21892a12.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789681090; x=1790285890; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3Oqd+89YbJDB2DyKGjGr0gV1UqVGACVX/6aSSSxFh6c=;
- b=dYyLOpAvB1PJFYbo2308b+l8r82c3E+mpJQ72M0rRAjIOmUYxPYQXS5R86jfRg7pc7
- 5k5EKo+ZrOgF9FhuGTTjJtwccQQ6NiVGwpFlMlwMohOMSZJtbSSwo028Ls/CIU4b1VmJ
- +j1eRT1bDz4RGPZOu1h7vENOqGtRgss6tOJ/Y793nOYI5fnyEXynGEo8Io43jGn5YqEs
- 9C/fMI/HKmu8IN/EatRFyj5LwRvlGVASp/N5qO8vCfOeaSp1aeY5vVW7VG3/3G2aFVLV
- hUeBDwacn9GdIzg1fKA3jHT0tqxjygnwyHS7pNdnzGx4dpAX3NuIkWMxC4h7PH/DZXr7
- SZyA==
+ d=linaro.org; s=google; t=1789681076; x=1790285876; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=n4WCxTUogcOh2fA/Ia8OvzsJEVhHn8hs6z/vSKlDtUE=;
+ b=ditsplTv+t0L8T34zMQPtSe9pqxkqktJHGIDwyQWA8Te2vKWXwI+mici1L78tHgrgN
+ Az7twVwo02paJK0O1XR1jC+p0yD3BrpsnEh7wf0C/R1X2/ycnXB6vAwPbMkRUTPRRQA+
+ cNj3qewZbKw274z46Bda5J5O5bYfl9r/kW18iGNYnqleJmWuFC7VA7jbU4K9cqRrkEc1
+ bSjOpJzoijADns7YdkOFlK7xixLKvmOG9opDcetfsVWSQwIPgYMIHpYZ4UOJWMde4WeG
+ 8vo/MkG1Ew2S0tA1XkM7uaBx7HbMwXGO717xoN1pmvcODPAzBpRQn8gLyIlo+77gP16g
+ tG9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789681090; x=1790285890;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3Oqd+89YbJDB2DyKGjGr0gV1UqVGACVX/6aSSSxFh6c=;
- b=HeUmPfIyjFBNQOjAjqooIYFz209MetYEGyC9G8Pftu7L1zpQABlfTPODfD+YfakyMS
- bKkm+x2cCA6xxFU9vooIEJMbxz0D2Umlv2OJy0SUQjw6uBvjAmm0rFMZMc7BVxRcreV1
- aQMxWFpsG5sE4mSpm9nur/NLq10uNNlHqeVfDBluIqg2B8YRdow5zz2oTX8oecBTjuYZ
- pA5FX25O1NkyMKOTuiwrfj8cvtPHuGXPJegbYDM3HGdLr2mnLKplDSoWP7rjT58/2xe0
- NVOLpe7e2Hlb/OdJNwef0BQm/Z7TWrSenEchMetLSaj752+zNlXdFOhr9P11N/2oM/YV
- ed3w==
-X-Gm-Message-State: AFuF++lDUacu7AkgDS/VvQBCgbA6ndzHTVkRDk7A/tTs0EgfxgIIxokE
- wLDldxw97zj54t9Oqo/JiAWuumkMYxTAL3odSijTznzTkBEPYbrNwD9UYqWNxADAmPSU4CXOuzU
- XEgFiLIU=
-X-Gm-Gg: AYBFou3HayOreGjclKRcNGmZhK/THFl4jbfUb3KSX1UvuEKzoP6XccwiT8HzTcost+3
- Jy2GcjLgvfFym8e50NUcMGYkkHx3A/DCldHdRXTxVR8XrG+tmsEI9+0so2xkIxge0HOndohf5M3
- 3/ugS1yvJ8K12K+zJDAl4hZU6stpOJsAj464RrqNxJVcWW3vo3ufZfXFIa9oLZ1nz/ULnvl+ivt
- 7BB6y8/v+D3cW+Nfr6gELx1nUHuPBscRRXg2tFCQcwASVT2COLlsB2AMqyL+bTyz6C55OeTRiPB
- lgCaXqRHf8eIuQY/HPmAcpBw6r7RQPhdJmjsk1pD6eUhHqTmGKuhBrbXfOHg4y9VZtJK3rGdFHD
- zfNV9C1N3tOLo73Q7RT+Kj3ABGIsXx0Uy/o6fBJqsxPAGYa5YSlcSrnLkOvltEr22qmNXW/O9oU
- f3LD/6jSp4sWRr2kDR7wsT3E2YejuTeyYmNyDyPaBDXAJvomqzxGaw7Usptc/opNd294GbGqqt4
- MBWJpMJibiZYfefRPo=
-X-Received: by 2002:a05:6a21:7105:b0:3c4:3321:4fe9 with SMTP id
- adf61e73a8af0-3dd8c3d20d1mr543705637.7.1789681089936; 
- Thu, 17 Sep 2026 14:38:09 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789681076; x=1790285876;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=n4WCxTUogcOh2fA/Ia8OvzsJEVhHn8hs6z/vSKlDtUE=;
+ b=zc8rr+M/irlaeeIqUEWFa8Sw5GbeAETzb7C9Nuv8cS6cvZjjgnxyhHwuZ08eDAqeNO
+ FvXIJ9OSzk/fG0gna8IyWuU29RbFdk4p+8e/0d6hY9oDP+PxwMJwqbOqEUc6oIF6SNj9
+ kUY5S6qddjAmhxsfElgDVwyD5MqTorA/Iwg+Km6vYKQjQJ8NbR//blew97obqgBoUNiJ
+ GadvOMyoufPkVeswfzBB7I3NIygIAVt+cwc06Lb/q8Pwbkwq7yprhROpcqHvPhvgOKkW
+ 7UCJPJS0uQ0qL1mDReDBiqCscDoRS09z2hCcSsyvFAtv+iQSIos4Ik/TanTfYRvF2YNt
+ BGXg==
+X-Gm-Message-State: AFuF++l7Vdn9mWcNCN6E0gx3RzXHF76D+rpSoQRvPkdzheSharG+TYhm
+ RQ03M+3PADYRNKUch56gD1G1lVQQjTigDsQNmO6lAXusfhpZ2oWBbkNS+3ABBOxFsEaz/4sHaq5
+ MIbmAWmk=
+X-Gm-Gg: AYBFou1I5hjVJVGSa/o9PPU/mqLpisqTQsx39ohPJJuWnXcLhWd/nhR+JePEyzd21WV
+ i/Kf7VJXyPlhYyrG1rO6C7kXz6zsvTElBTMJOoISA1hFBklRNJSWopY24eKFytAI6nQDWyXRK3x
+ QsdVP50ZbwLTJ4o5EFrw8IKJScw4s2v2KItIjR1ABXkTNNCPAz0IPpkV466oE013dIdEPS2iFxs
+ lld+INHMGWo5uabESYU+EDamQq1tZXrESzGPR7WmwUgRuuFk6zfUKxc5HaosNf57I3A+w1nW/v6
+ Qm9UvR51K079uX0t0jv3k2FYarjjBegEo9uRwkqg10gz/x+ki77LC5eDirQe/gbObqeVzrNVvVU
+ ULni3HymQaelz3fcCpS4Pza8up/Ju0h063yDUxPYsqk2RdB7z1+9YRcAsz96jnJbQrl5iswCQDs
+ qeM64I9eVQokp4z7kfSHR9cPEpgkwy6icLqXwjMdx0/dK6YQGAqkZTcGCGprSR/WTFE+kZwPYuS
+ OOclAA=
+X-Received: by 2002:a05:6a21:4987:b0:3a2:c9a1:2c26 with SMTP id
+ adf61e73a8af0-3dd7251144fmr5970497637.7.1789681075765; 
+ Thu, 17 Sep 2026 14:37:55 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf56d7e5bsm18178395eec.0.2026.09.17.14.38.09
+ 5a478bee46e88-33bf56d7e5bsm18178395eec.0.2026.09.17.14.37.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 14:38:09 -0700 (PDT)
+ Thu, 17 Sep 2026 14:37:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 15/15] tests/tcg/s390x: Test LOAD and STORE REVERSED
-Date: Thu, 17 Sep 2026 11:37:49 -1000
-Message-ID: <20260917213749.36756-16-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 03/15] target/s390x/tcg: Convert op_ld16s to op_ld
+Date: Thu, 17 Sep 2026 11:37:37 -1000
+Message-ID: <20260917213749.36756-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260917213749.36756-1-richard.henderson@linaro.org>
 References: <20260917213749.36756-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,84 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-
-Add a small test to prevent regressions.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260803123928.1875606-1-iii@linux.ibm.com>
+Message-ID: <20260731185628.23161-4-richard.henderson@linaro.org>
 ---
- tests/tcg/s390x/load-store-reversed.c | 46 +++++++++++++++++++++++++++
- tests/tcg/s390x/meson.build           |  1 +
- 2 files changed, 47 insertions(+)
- create mode 100644 tests/tcg/s390x/load-store-reversed.c
+ target/s390x/tcg/insn-data.h.inc | 12 ++++++------
+ target/s390x/tcg/translate.c     |  6 ------
+ 2 files changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/tests/tcg/s390x/load-store-reversed.c b/tests/tcg/s390x/load-store-reversed.c
-new file mode 100644
-index 00000000000..bcc6b98dd3b
---- /dev/null
-+++ b/tests/tcg/s390x/load-store-reversed.c
-@@ -0,0 +1,46 @@
-+/*
-+ * Test the LOAD REVERSED and STORE REVERSED instructions.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+
-+int main(void)
-+{
-+    long i = 0x123456789abcdefULL, o;
-+
-+    o = i;
-+    asm("lrvr %0,%1" : "+r" (o) : "r" (i));
-+    assert(o == 0x1234567efcdab89ULL);
-+
-+    o = i;
-+    asm("lrvgr %0,%1" : "+r" (o) : "r" (i));
-+    assert(o == 0xefcdab8967452301ULL);
-+
-+    o = i;
-+    asm("lrvh %0,%1" : "=r" (o) : "T" (i));
-+    assert(o == 0x123456789ab2301ULL);
-+
-+    o = i;
-+    asm("lrv %0,%1" : "=r" (o) : "T" (i));
-+    assert(o == 0x123456767452301ULL);
-+
-+    o = i;
-+    asm("lrvg %0,%1" : "=r" (o) : "T" (i));
-+    assert(o == 0xefcdab8967452301ULL);
-+
-+    o = i;
-+    asm("strvh %1,%0" : "=T" (o) : "r" (i));
-+    assert(o == 0xefcd456789abcdefULL);
-+
-+    o = i;
-+    asm("strv %1,%0" : "=T" (o) : "r" (i));
-+    assert(o == 0xefcdab8989abcdefULL);
-+
-+    o = i;
-+    asm("strvg %1,%0" : "=T" (o) : "r" (i));
-+    assert(o == 0xefcdab8967452301ULL);
-+
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/s390x/meson.build b/tests/tcg/s390x/meson.build
-index dc6271c7c73..c9af66aa1b0 100644
---- a/tests/tcg/s390x/meson.build
-+++ b/tests/tcg/s390x/meson.build
-@@ -73,6 +73,7 @@ tests += {
-   'stckf.c': {},
-   'ts.c': {},
-   'ex-smc.c': {'cflags': ['-Wl,--no-warn-rwx-segments']},
-+  'load-store-reversed.c': {},
+diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
+index 403992460be..68ce6c2b198 100644
+--- a/target/s390x/tcg/insn-data.h.inc
++++ b/target/s390x/tcg/insn-data.h.inc
+@@ -498,17 +498,17 @@
+ /* LOAD HALFWORD */
+     C(0xb927, LHR,     RRE,   EI,  0, r2_16s, 0, r1_32, mov2, 0)
+     C(0xb907, LGHR,    RRE,   EI,  0, r2_16s, 0, r1, mov2, 0)
+-    C(0x4800, LH,      RX_a,  Z,   0, a2, new, r1_32, ld16s, 0)
+-    C(0xe378, LHY,     RXY_a, LD,  0, a2, new, r1_32, ld16s, 0)
+-    C(0xe315, LGH,     RXY_a, Z,   0, a2, r1, 0, ld16s, 0)
++    D(0x4800, LH,      RX_a,  Z,   0, a2, new, r1_32, ld, 0, MO_BESW)
++    D(0xe378, LHY,     RXY_a, LD,  0, a2, new, r1_32, ld, 0, MO_BESW)
++    D(0xe315, LGH,     RXY_a, Z,   0, a2, r1, 0, ld, 0, MO_BESW)
+ /* LOAD HALFWORD HIGH */
+-    C(0xe3c4, LHH,     RXY_a, HW,  0, a2, new, r1_32h, ld16s, 0)
++    D(0xe3c4, LHH,     RXY_a, HW,  0, a2, new, r1_32h, ld, 0, MO_BESW)
+ /* LOAD HALFWORD IMMEDIATE */
+     C(0xa708, LHI,     RI_a,  Z,   0, i2, 0, r1_32, mov2, 0)
+     C(0xa709, LGHI,    RI_a,  Z,   0, i2, 0, r1, mov2, 0)
+ /* LOAD HALFWORD RELATIVE LONG */
+-    C(0xc405, LHRL,    RIL_b, GIE, 0, ri2, new, r1_32, ld16s, 0)
+-    C(0xc404, LGHRL,   RIL_b, GIE, 0, ri2, r1, 0, ld16s, 0)
++    D(0xc405, LHRL,    RIL_b, GIE, 0, ri2, new, r1_32, ld, 0, MO_BESW)
++    D(0xc404, LGHRL,   RIL_b, GIE, 0, ri2, r1, 0, ld, 0, MO_BESW)
+ /* LOAD HIGH */
+     D(0xe3ca, LFH,     RXY_a, HW,  0, a2, new, r1_32h, ld32u, 0, 0)
+ /* LOAG HIGH AND TRAP */
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index f3f990b669c..31239866180 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -2755,12 +2755,6 @@ static DisasJumpType op_ld(DisasContext *s, DisasOps *o)
+     return DISAS_NEXT;
  }
  
- foreach src: tests_s390x_pgm
+-static DisasJumpType op_ld16s(DisasContext *s, DisasOps *o)
+-{
+-    tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s), MO_BESW);
+-    return DISAS_NEXT;
+-}
+-
+ static DisasJumpType op_ld16u(DisasContext *s, DisasOps *o)
+ {
+     tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s), MO_BEUW);
 -- 
 2.53.0
 
