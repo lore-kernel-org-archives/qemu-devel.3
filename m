@@ -4,124 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B769C88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 16:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F345C88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 16:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7EYr-0003uM-7t; Thu, 17 Sep 2026 12:02:09 -0400
+	id 1x7Eb6-0005PU-Q1; Thu, 17 Sep 2026 12:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aagbaria@redhat.com>)
- id 1x7EYZ-0003Vn-CC
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:01:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x7Eb5-0005PC-Qf
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:04:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aagbaria@redhat.com>)
- id 1x7EYU-00066P-4x
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:01:48 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x7Eb3-0006Ve-Vm
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 12:04:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789660897;
+ s=mimecast20190719; t=1789661064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yvXvqxM/xjpFmvZADiRqpUFY3+XcQ/u/yPTWbn8mbso=;
- b=TVrgi3RvCCVtm0ZWcLV1u1BrBZ4saVWRtuxcWjXzEVIX+CvCBVAJWgvHyTh53n2wFxcjp2
- 5c9l72UoeGgmv4SmM9B+FpWXFPr7DeRkUBk2Fas+IS/5WoJHiqPlXM4HuYwwt9penGZePp
- GpzM9ItogAKob8UD91O1ah0O1eYVZYE=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9mmrwX7rrp+nAEKNQR+TnszC+oD27WN8cxCUrE8893c=;
+ b=C9zMkjSOpvw8XyufgT7M7adpseBS/NzBUbcseCHu06/J2VNEyQTU9yJTE8eOvOVHDgs2In
+ F/7Gs6Y6/t+9X0ODbrrNvoSZpwvNb+bm9hkfivtJdnfwp+yO4vFWbkaG/g8xw+aDieumXb
+ wxZepdiySmNGY8SgcTUOILd/99WdyuA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-TpdkWTY0NMmRnoKg-DemzA-1; Thu, 17 Sep 2026 12:01:36 -0400
-X-MC-Unique: TpdkWTY0NMmRnoKg-DemzA-1
-X-Mimecast-MFC-AGG-ID: TpdkWTY0NMmRnoKg-DemzA_1789660896
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-4b1bc2e44e0so1234052b6e.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 09:01:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789660896; cv=none;
- d=google.com; s=arc-20260327;
- b=CFQygtwFllQnKSW6ZZma13uzzguLBNsMxdidDqUv48VpNT/so3TP3QrvWxDAg8S/2x
- wZZWM1SF8yewr9UqMmSrM4I5scn1jR+oYqr8wbpzFZg8wuLGBQsyX0dMrnOwkF+S9tHT
- XT0Ej7LKEki8MzwPym6/0aE/AUWJblbwJTrh24jZX9kZ4Nui+xLZMEKkNsMuWSJCPOHX
- UAaAO/Z+vTryT/1hjK3NYC1cFIH7/1swJtkNbi2F/1zpgju3X9QSdm8ju1RIqX29jJgL
- ADkXUU2eaGnCOxI+z5rqdyIfYsFtr9o0SAoNRc4PeeCSI1RlLpreh2VfZVNvYHwegxi9
- Eusg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yvXvqxM/xjpFmvZADiRqpUFY3+XcQ/u/yPTWbn8mbso=;
- fh=X/zqn7d5N5+aMUG78wD6+MA8oVnuZMLaoUrrYwzwmeY=;
- b=JINlXejRnZbY4r+koKr+AOwFwwihMlcaQmWSkjXhZ+2SlZ/EHvS9xJ55qeJeR5SCsW
- KKeHvHJI5mZpwL+D7fIkSRp1XBJJ1DdIG/8MCFohng5AcCp5KmPWrXLnDjAwGUjspSgX
- wllIIA24GAydGUVg+mPx2Moxa5+P79s9z44IvROPWVRmR7dhpR1KxazOPt6S9YeSvkBt
- apk/zQ4PC/xuOK4gbCIydg/k9C+r2+eoh/yLrzgUX3Ay+usxKjj9Q6Na8I8mFz69bVG0
- ilMrc7hgQ5j6lz/OkWlykBrpITMVaglw40IdGhW3W6dpzp0ae9TazUlWr3YhGlqxTcvL
- d9tg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-692-BlbDOQlQPq6V27yH9ZEZ8w-1; Thu, 17 Sep 2026 12:04:22 -0400
+X-MC-Unique: BlbDOQlQPq6V27yH9ZEZ8w-1
+X-Mimecast-MFC-AGG-ID: BlbDOQlQPq6V27yH9ZEZ8w_1789661061
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4870142fd5cso505589f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 09:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789660896; x=1790265696; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=yvXvqxM/xjpFmvZADiRqpUFY3+XcQ/u/yPTWbn8mbso=;
- b=RFPVPM7SiZG5IrjHrZRVDrOoVtEiYwv6mEJcm1Jo/RQPhE2uRm9iObnfCnJVf+QFSn
- F2k9/XGoDuqIsReFwvo/1+LGS95f4vPyrAgRycTRVeqjgtBMennsadDekfgkCf0lG515
- t6UyLYonG6+zg6Ir0VWmNyqbXVbJVgK/pWuRgs9D9cvlrJ3/8LJTHC7bRLV29IPmRPN6
- saMFhfQW5/5KuqW570FthtPZhAnbZgFCWBKeMJTbuhPyWofDjMJwAJLKrfRegsIYwUI+
- PvE0nHXn1bWHytzGHyrBiBRVfLaO82XmZHrrt6iiDZULAw2QAkyPWJV/+Hv03u/FEDdZ
- Gl6w==
+ d=redhat.com; s=google; t=1789661061; x=1790265861; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=9mmrwX7rrp+nAEKNQR+TnszC+oD27WN8cxCUrE8893c=;
+ b=OesgdvYBiDHeNEs7v/oDduUMG4pRNrBmihvP48kZNbSfjm24S/vJ38sKT5YL7DC6Cy
+ 0946PjRYOQPXJH8jY8Op1NmMO0bLA5HL6JJLXxFk+K7XSh4XOhdafbFlIWKZpE0iY4Nt
+ LYsrgrhi4UqamALnsbxKEh5+Pxh3CA/wHFTIG9E1cFxyB+NHUJjUVAwKw9Dj4jaS8wep
+ x3nKrk2G7W823xJ7Ts23f8/2cCQTzjEa1o9NGMDm+2kkNPEoCwkF4vlmzcuWgiqtrvKN
+ ulrM4JEQG9HA9EpVA0CzDlaLD+NF0WfOKu7gh+ql5jfFRtXTSFrCBBeEItnqKa6af6T6
+ KE4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789660896; x=1790265696;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yvXvqxM/xjpFmvZADiRqpUFY3+XcQ/u/yPTWbn8mbso=;
- b=P2Np7k4Mmm2SvAXNZDMKg3lw6QA5Zr+R+vl8xVFt0VlbN7GSzpFNXRu3bvS6puBRBi
- sPbCYEYXjNOZnnk1IzI0oqdYgTMWadx3i+kdzh3dDb4xKJi9RqErRWOPam5X7kQfD6ZD
- 8h0tEX9tXPkf/y2jAJsuy7ihYGxPEeJ2hqKg27ZnXhMIuMMHNeDKE6T0ierxw0v5Cp7S
- TuWtdgZM8UQGiotCtKJzI7INMn2SGJNEclL/WNhS9uVi12YQ07R3I2oh79dSY63BW54D
- vB10mBLD3urUGwpTEcRMP0uRRba5c6yUXi7aGPcXsOc1V2Gv9ZEot8/kx0bb62IAACEI
- Ue+A==
-X-Gm-Message-State: AFuF++mdMfZ8V6i0NQyUlwB26X/iru8J49Enl8H89iDVzDT5wgy26AfO
- IVhmN3AJbZKfh1yA2IXwgj3lryVhJf5s1EuPQJI2cHpZFw59R/Dx77CT9fYANICz7cWNcIwkHcr
- w6+nLNWOoip5EuC2Hx7svtOGnCzOFCiSdIzFgaXdMYK72IcYo0J46HNiIesfLWVn43BbgSwxllb
- +19Fp3wvtfzzSjk3EPCgV87KpXd8gifOk=
-X-Gm-Gg: AYBFou0dL5FP7DJv2ZQdrXhsGJhmGo30NDge1ZBAT9EzJzwqTcRsa3lcluLRVqT90+s
- eT/phZiSrQHr8JbUo7X6S+Zad5lugKnSPTK8tXBqnrWoDmMfwAe2QcqNS+KRnvBiytE1sOJJnM+
- bXuoebh2TEruOQrQvBI2LAwoiXLal7C9oxKWNDzqTRdGd6SBrPToF2g3J50z/dkRjrnTfdtzDLp
- ZMeO+kz2FIMW6EVmw==
-X-Received: by 2002:a05:6808:28b:b0:4cb:f21b:6f96 with SMTP id
- 5614622812f47-4cbf21b73d7mr1601819b6e.41.1789660895394; 
- Thu, 17 Sep 2026 09:01:35 -0700 (PDT)
-X-Received: by 2002:a05:6808:28b:b0:4cb:f21b:6f96 with SMTP id
- 5614622812f47-4cbf21b73d7mr1601756b6e.41.1789660894634; Thu, 17 Sep 2026
- 09:01:34 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789661061; x=1790265861;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=9mmrwX7rrp+nAEKNQR+TnszC+oD27WN8cxCUrE8893c=;
+ b=ZzyAusiHdCszSqGrP4BYVpOAEFBVuv1xAY5bl4HZ9ygc2mGhw38Q1rQt7chLsENTp8
+ VearewRYlNjA5C+PF27xwy5yk0xiKYINJmrUP2zXRFjbf/+n3gY9rCIP5L9EKD0gT+PV
+ HaNmdkTFnSlNHGt3gg8ygw9Sla41SAl7Dw8W6b3rATttgndekib8b8CkodsQLI9Ob/zD
+ YIw/tqc6FbZ7jbdm76nFpHnVXZmrCpE/gIwA6Gm0t0fgq/M/zfwFycSQ2bBIAZdZNe9m
+ kZyoyDwKw9F3m5NnkCw1DGrfl9bgUv3nb0BivImMa/mhxplPHpPWhwf/ZKMyqxn03gvG
+ Qtbw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwLg/I2gDIwJNWtG7ofniFBwRneoLLz9mIHXAk2hEcz3/LoyR3280OwxcnbsXt/8LZwduApAaZlXBET@nongnu.org
+X-Gm-Message-State: AFuF++nTFEX2GeKPcUqA5TtHqY85JT87wee+E9RnWQqP8M001VuAf2bU
+ 7Jn8BQtaIAtWEtpXDhh7mCx+HWLpMRntTpHBsi4/to2KRKA6V4EUr25InY1FNo9bQK2IgDXnMFz
+ RhYeVAS/NOZyH+A6I2tVFkciCikgHIIAbjecEYE7keKEXVMKfirql2tvP
+X-Gm-Gg: AYBFou2Oo4FTuKVpksWe0EdeNgY1nLYVjVJsI1gccFOA3AGnXfmsYGGlKOk4sb2jqY+
+ WqMcRwdpH9Bcklo4D7MPjiVrBVsS0BRnquWi0+EIKUwIo9jr3Jn5LJngLyfAhffh04CazDpIdvK
+ th7k1F0xjFA4gADmqfkEjD2ObgvsXlIry5KyV8Thih60yYo7O4ebu7HjzmdNk93rucSh/+n9g8H
+ tT7xK0mrfnav7tKCIrO5Z+XX7BA+ZIbAgStTA6T++ZjkBcxdwG68vRr/c0SiFkkrG8v141Qi2LA
+ 2aZkS8FpXTq5SD0XswEMz7w+gDMyAe2JGz4VlMs2RLhd14pobCxoV0vAP8pmCrqsiis8W5xx6qL
+ OGN+Gx1pIH/aE0/cSLVg1zvkMhVNWVW9Prntd//d30A==
+X-Received: by 2002:a5d:64ef:0:b0:487:765:46bf with SMTP id
+ ffacd0b85a97d-4870cf2080amr9058258f8f.19.1789661061269; 
+ Thu, 17 Sep 2026 09:04:21 -0700 (PDT)
+X-Received: by 2002:a5d:64ef:0:b0:487:765:46bf with SMTP id
+ ffacd0b85a97d-4870cf2080amr9058209f8f.19.1789661060786; 
+ Thu, 17 Sep 2026 09:04:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:1292:d530:e939:7a09:c368:e5d5?
+ ([2a01:e0a:1292:d530:e939:7a09:c368:e5d5])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4870bf1fad3sm15095107f8f.12.2026.09.17.09.04.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Sep 2026 09:04:20 -0700 (PDT)
+Message-ID: <ae80ab03-fbf3-4f6e-84f8-50daa6841c8b@redhat.com>
+Date: Thu, 17 Sep 2026 18:04:18 +0200
 MIME-Version: 1.0
-References: <20260915145320.215663-1-aagbaria@redhat.com>
- <CAJ+F1CLyzZePL0-MaXHoXWsi6gaoodCGxxxQLn97OcuX9tSdHQ@mail.gmail.com>
-In-Reply-To: <CAJ+F1CLyzZePL0-MaXHoXWsi6gaoodCGxxxQLn97OcuX9tSdHQ@mail.gmail.com>
-From: Abed Agbaria <aagbaria@redhat.com>
-Date: Thu, 17 Sep 2026 19:01:23 +0300
-X-Gm-Features: AcwNN1XBlDvHtfmfNSrtnhNiA3rUQa9w_e7JF0aduY2hWCG9JyprEDPR7sp74p4
-Message-ID: <CALn8900HdLPaEuG58Yce=njGMf1qE4vQPPDSxHg4yrViiEGwkQ@mail.gmail.com>
-Subject: Re: [PATCH] qga/vss-win32/install.cpp: remove orphaned VSS provider
- service
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aagbaria@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/10] hw/vfio/pci: Detect a CXL Type-2 device and read
+ its geometry
+To: mhonap@nvidia.com, alex@shazbot.org, ankita@nvidia.com, jic23@kernel.org, 
+ dave.jiang@intel.com, alejandro.lucero-palau@amd.com, smadhavan@nvidia.com,
+ pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com, pbonzini@redhat.com, eric.auger@redhat.com,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, cohuck@redhat.com
+Cc: kjaju@nvidia.com, vsethi@nvidia.com, zhiw@nvidia.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, linux-cxl@vger.kernel.org
+References: <20260916184412.3825713-1-mhonap@nvidia.com>
+ <20260916184412.3825713-4-mhonap@nvidia.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260916184412.3825713-4-mhonap@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,204 +173,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=C3=A9,
+On 9/16/26 20:44, mhonap@nvidia.com wrote:
+> From: Manish Honap <mhonap@nvidia.com>
+> 
+> The kernel marks a passthroughed CXL Type-2 device with a device flag and
+> exposes two regions:
+> - HDM memory (host physical)
+> - the trapped HDM decoder register block.
+> 
+> Read the flag, locate both regions by type, and take the component BAR
+> and block offset from the geometry capability. Realize only records this;
+> later patches build the guest mapping on top.
+> 
+> AI-used-for: code (prototype)
+> Signed-off-by: Manish Honap <mhonap@nvidia.com>
 
-Thanks for the review.
+LGTM.
 
-v2: https://lore.kernel.org/qemu-devel/20260917154901.321702-1-aagbaria@red=
-hat.com/
+Thanks,
 
-On Wed, Sep 16, 2026 at 11:29=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
->
-> Hi
->
-> On Tue, Sep 15, 2026 at 7:03=E2=80=AFPM Abed Agbaria <aagbaria@redhat.com=
-> wrote:
-> >
-> > COMRegister() probes the COM+ catalog to decide whether to unregister
-> > first, but it is the SCM that blocks installation when a service of the
-> > same name is left over.  If the COM+ application is gone and the servic=
-e
-> > survives, install fails with 0x80070431 and never recovers.
-> >
-> >  - Check the SCM as well as the COM+ catalog in COMRegister().
-> >  - Delete the provider service in COMUnregister() and at the
-> >    DllUnregisterServer() call sites in DllRegisterServer().
-> >
-> > Signed-off-by: Abed Agbaria <aagbaria@redhat.com>
-> > ---
-> >  qga/vss-win32/install.cpp | 88 ++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 87 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> > index 5b7a8e9bc5..0e4f2ac009 100644
-> > --- a/qga/vss-win32/install.cpp
-> > +++ b/qga/vss-win32/install.cpp
-> > @@ -241,6 +241,89 @@ out:
-> >      return hr;
-> >  }
-> >
-> > +/* Check whether the QGA VSS provider service is registered with the S=
-CM.*/
-> > +static bool QGAProviderServiceExists(void)
-> > +{
-> > +    qga_debug_begin;
-> > +
-> > +    bool exists =3D false;
-> > +    DWORD err;
-> > +    SC_HANDLE manager =3D OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT=
-);
-> > +    SC_HANDLE service =3D NULL;
-> > +
-> > +    if (!manager) {
-> > +        errmsg(GetLastError(), "Failed to open service manager");
-> > +        goto out;
-> > +    }
-> > +
-> > +    service =3D OpenService(manager, QGA_PROVIDER_NAME, SERVICE_QUERY_=
-CONFIG);
-> > +    if (service) {
-> > +        exists =3D true;
-> > +    } else {
-> > +        err =3D GetLastError();
-> > +        if (err !=3D ERROR_SERVICE_DOES_NOT_EXIST) {
-> > +            errmsg(err, "Failed to open service");
-> > +        }
-> > +    }
-> > +
-> > +out:
-> > +    if (service) {
-> > +        CloseServiceHandle(service);
-> > +    }
-> > +    if (manager) {
-> > +        CloseServiceHandle(manager);
-> > +    }
-> > +    qga_debug_end;
-> > +    return exists;
-> > +}
-> > +
-> > +/* Delete a QGA VSS provider service that COM+ no longer owns.*/
-> > +static HRESULT QGAProviderRemoveService(void)
-> > +{
-> > +    qga_debug_begin;
-> > +
-> > +    HRESULT hr =3D S_OK;
-> > +    DWORD err;
-> > +    SC_HANDLE manager =3D OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT=
-);
-> > +    SC_HANDLE service =3D NULL;
-> > +
-> > +    if (!manager) {
-> > +        hr =3D HRESULT_FROM_WIN32(GetLastError());
-> > +        errmsg(hr, "Failed to open service manager");
->
-> errmsg is called with win32 error code and HRESULT. This is already
-> inconsistent. Imho it should be fixed first before introducing more
-> inconsistency.
-
-Fixed in v2: every win32 path now passes the GetLastError() code to
-errmsg(). StopService() was the remaining offender - it passed E_FAIL
-three times and discarded the real error; it now logs the win32 code
-and returns HRESULT_FROM_WIN32(). errmsg() still receives HRESULTs from
-the COM paths via chk(), which I left alone.
->
->
->
-> > +        goto out;
-> > +    }
-> > +
-> > +    service =3D OpenService(manager, QGA_PROVIDER_NAME, DELETE);
->
-> you are adding 2 more places to open a service, when there is already
-> similar code in  StopService(). I think it could be factored out.
-
-Factored into QGAProviderOpenService(access, &err), and StopService()
-is converted to it - v2 removes more of this boilerplate than it adds.
-I also replaced SC_MANAGER_ALL_ACCESS there with the minimal rights:
-SC_MANAGER_CONNECT plus SERVICE_QUERY_CONFIG / DELETE / SERVICE_STOP.
-
->
->
-> > +    if (!service) {
-> > +        err =3D GetLastError();
-> > +        if (err !=3D ERROR_SERVICE_DOES_NOT_EXIST) {
-> > +            hr =3D HRESULT_FROM_WIN32(err);
-> > +            errmsg(hr, "Failed to open service");
-> > +        }
-> > +        goto out;
-> > +    }
-> > +
-> > +    qga_debug("Removing service: %s", QGA_PROVIDER_NAME);
-> > +
-> > +    if (!DeleteService(service)) {
-> > +        err =3D GetLastError();
-> > +        if (err !=3D ERROR_SERVICE_MARKED_FOR_DELETE) {
-> > +            hr =3D HRESULT_FROM_WIN32(err);
-> > +            errmsg(hr, "Failed to delete service");
-> > +        }
-> > +    }
-> > +
-> > +out:
-> > +    if (service) {
-> > +        CloseServiceHandle(service);
-> > +    }
-> > +    if (manager) {
-> > +        CloseServiceHandle(manager);
-> > +    }
-> > +    qga_debug_end;
-> > +    return hr;
-> > +}
-> > +
-> >  /* Unregister this module from COM+ Applications Catalog */
-> >  STDAPI COMUnregister(void);
-> >  STDAPI COMUnregister(void)
-> > @@ -251,6 +334,7 @@ STDAPI COMUnregister(void)
-> >
-> >      DllUnregisterServer();
-> >      chk(QGAProviderFind(QGAProviderRemove, NULL));
-> > +    chk(QGAProviderRemoveService());
-> >  out:
-> >      qga_debug_end;
-> >      return hr;
-> > @@ -286,7 +370,7 @@ STDAPI COMRegister(void)
-> >      }
-> >
-> >      chk(QGAProviderFind(QGAProviderCount, (void *)&count));
-> > -    if (count) {
-> > +    if (count || QGAProviderServiceExists()) {
-> >          qga_debug("QGA VSS Provider is already installed. Attempting t=
-o unregister first.");
-> >          hr =3D COMUnregister();
-> >          if (FAILED(hr)) {
-> > @@ -499,6 +583,7 @@ STDAPI DllRegisterServer(void)
-> >                                       g_gProviderVersion);
-> >      if (hr =3D=3D (long int) VSS_E_PROVIDER_ALREADY_REGISTERED) {
-> >          DllUnregisterServer();
-> > +        QGAProviderRemoveService();
-> >          hr =3D pVssAdmin->RegisterProvider(g_gProviderId, CLSID_QGAVSS=
-Provider,
-> >                                           const_cast<WCHAR * >
-> >                                           (QGA_PROVIDER_LNAME),
-> > @@ -515,6 +600,7 @@ STDAPI DllRegisterServer(void)
-> >  out:
-> >      if (FAILED(hr)) {
-> >          DllUnregisterServer();
-> > +        QGAProviderRemoveService();
-> >      }
-> >
-> >      qga_debug_end;
-> > --
-> > 2.55.0
-> >
-> >
->
->
-> --
-> Marc-Andr=C3=A9 Lureau
->
+C.
 
 
-Abed Agbaria
+> ---
+>   hw/vfio/pci.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>   hw/vfio/pci.h | 15 +++++++++++
+>   2 files changed, 87 insertions(+)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 428ab2f069..2f84af5cf8 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3570,6 +3570,64 @@ bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
+>       return true;
+>   }
+>   
+> +/*
+> + * Learn the CXL geometry the kernel reports: the HPA-backed HDM memory region
+> + * and the trapped HDM decoder block (which BAR carries it and at what offset).
+> + * A non-CXL device leaves cxl.enabled false and takes no CXL paths.
+> + */
+> +static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
+> +{
+> +    VFIODevice *vbasedev = &vdev->vbasedev;
+> +    VFIOCXL *cxl = &vdev->cxl;
+> +    struct vfio_region_info *mem_info = NULL, *comp_info = NULL;
+> +    struct vfio_region_info_cap_cxl_comp_regs *cap;
+> +    struct vfio_info_cap_header *hdr;
+> +
+> +    if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_CXL)) {
+> +        return true;
+> +    }
+> +
+> +    if (vfio_device_get_region_info_type(vbasedev,
+> +                                         VFIO_REGION_TYPE_PCI_VENDOR_TYPE |
+> +                                         CXL_VENDOR_ID,
+> +                                         VFIO_REGION_SUBTYPE_CXL_MEM,
+> +                                         &mem_info)) {
+> +        error_setg(errp, "vfio-cxl: %s: CXL memory region not found",
+> +                   vbasedev->name);
+> +        return false;
+> +    }
+> +
+> +    if (vfio_device_get_region_info_type(vbasedev,
+> +                                         VFIO_REGION_TYPE_PCI_VENDOR_TYPE |
+> +                                         CXL_VENDOR_ID,
+> +                                         VFIO_REGION_SUBTYPE_CXL_COMP_REGS,
+> +                                         &comp_info)) {
+> +        error_setg(errp,
+> +                   "vfio-cxl: %s: CXL component-register region not found",
+> +                   vbasedev->name);
+> +        return false;
+> +    }
+> +
+> +    hdr = vfio_get_region_info_cap(comp_info,
+> +                                   VFIO_REGION_INFO_CAP_CXL_COMP_REGS);
+> +    if (!hdr) {
+> +        error_setg(errp,
+> +                   "vfio-cxl: %s: component-register geometry not reported",
+> +                   vbasedev->name);
+> +        return false;
+> +    }
+> +    cap = container_of(hdr, struct vfio_region_info_cap_cxl_comp_regs, header);
+> +
+> +    cxl->mem_region_index = mem_info->index;
+> +    cxl->comp_regs_region_index = comp_info->index;
+> +    cxl->dpa_size = mem_info->size;
+> +    cxl->comp_bar = cap->bar;
+> +    cxl->hdm_offset = cap->offset;
+> +    cxl->enabled = true;
+> +
+> +    return true;
+> +}
+> +
+>   static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
+>   {
+>       ERRP_GUARD();
+> @@ -3700,6 +3758,20 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
+>           }
+>       }
+>   
+> +    if (!vfio_cxl_setup(vdev, errp)) {
+> +        /*
+> +         * vfio_migration_realize() above installed a migration blocker in auto
+> +         * mode (generic vfio-pci exposes no migration ops). out_deregister does
+> +         * not remove it, so a rejected CXL setup would leave VM migration
+> +         * blocked until QEMU restarts. Drop it here, under the same
+> +         * failover-pair condition used to install it.
+> +         */
+> +        if (!pdev->failover_pair_id) {
+> +            vfio_migration_exit(vbasedev);
+> +        }
+> +        goto out_deregister;
+> +    }
+> +
+>       vfio_pci_register_err_notifier(vdev);
+>       vfio_pci_register_req_notifier(vdev);
+>       vfio_setup_resetfn_quirk(vdev);
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index c9ab949870..7fdd695704 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -122,10 +122,25 @@ typedef struct VFIOMSIXInfo {
+>   
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_DEVICE)
+>   
+> +/*
+> + * State for a CXL Type-2 device. The kernel owns the host physical placement
+> + * of the device memory; QEMU only maps it at the guest physical address the
+> + * guest commits into its endpoint HDM decoder.
+> + */
+> +typedef struct VFIOCXL {
+> +    bool enabled;
+> +    uint32_t mem_region_index;       /* HPA-backed HDM memory VFIO region */
+> +    uint32_t comp_regs_region_index; /* trapped HDM decoder register block */
+> +    uint32_t comp_bar;               /* component BAR carrying that block */
+> +    uint64_t hdm_offset;             /* block offset within the component BAR */
+> +    uint64_t dpa_size;               /* size of the HDM memory region */
+> +} VFIOCXL;
+> +
+>   struct VFIOPCIDevice {
+>       PCIDevice parent_obj;
+>   
+>       VFIODevice vbasedev;
+> +    VFIOCXL cxl;
+>       VFIOINTx intx;
+>       unsigned int config_size;
+>       uint8_t *emulated_config_bits; /* QEMU emulated bits, little-endian */
 
 
