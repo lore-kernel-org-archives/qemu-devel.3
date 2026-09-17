@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC86C982C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E9AC982CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7299-0006Mh-JU; Wed, 16 Sep 2026 22:46:47 -0400
+	id 1x7299-0006N5-Pi; Wed, 16 Sep 2026 22:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x7291-0006Kx-Rd
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:41 -0400
+ id 1x7294-0006Le-C8
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:42 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x728z-00058f-M9
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:39 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x728y-00058h-ND
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:42 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxC9KJVKtqCeEMAA--.37653S3;
- Thu, 17 Sep 2026 10:46:33 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxLNKIVKtqCOEMAA--.37639S3;
+ Thu, 17 Sep 2026 10:46:32 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJCx+c18VKtqA60hAA--.39456S5;
+ by front1 (Coremail) with SMTP id qMiowJCx+c18VKtqA60hAA--.39456S4;
  Thu, 17 Sep 2026 10:46:32 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 03/11] target/loongarch: Rename function name constant_timer
- with timer
-Date: Thu, 17 Sep 2026 10:47:34 +0800
-Message-ID: <20260917024742.200257-4-maobibo@loongson.cn>
+Subject: [PULL 02/11] target/loongarch: Remove CSR registers relative MERR
+Date: Thu, 17 Sep 2026 10:47:33 +0800
+Message-ID: <20260917024742.200257-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260917024742.200257-1-maobibo@loongson.cn>
 References: <20260917024742.200257-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx+c18VKtqA60hAA--.39456S5
+X-CM-TRANSID: qMiowJCx+c18VKtqA60hAA--.39456S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxur4fGFWkXrykZF17Ar17XFc_yoW7Gr18pr
- Wxury7Kr48trZ8Wa4kJ3s8WF1DXr42ga42v3WftrWIkrs7Xrn7Ww18trsFgF45Aa48Wry2
- qFn5Z3WUXF47ZwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7KryftryUAFy8tr48AFy5GFX_yoW8KrWkpr
+ ZrZrWDKF48XryDCw15Jas0v34DXF47G3y2qa1fC340vrZ8A3yjgr4rtFyvgFyrJay5Jry0
+ 9F1kZr92vF4xJ3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
  14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
  0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
  7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
  C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
  04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UUUUU==
+ CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9N3UUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -77,126 +76,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is only one timer type on LoongArch, its frequency is fixed at
-100MHZ. Here rename function name constant_timer_xxx with timer_xxx for
-simplity.
+Registers relative with MERR are used for HW error handling, such as CPU
+cache etc now both KVM and TCG do not support MERR. Remove these CSR
+registers, vmstate keeps unchanged for compatibility.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by:   Xianglai Li <lixianglai@loongson.cn>
 ---
- target/loongarch/cpu.c                | 2 +-
- target/loongarch/internals.h          | 9 ++++-----
- target/loongarch/tcg/constant_timer.c | 9 ++++-----
- target/loongarch/tcg/csr_helper.c     | 4 ++--
- target/loongarch/tcg/op_helper.c      | 2 +-
- 5 files changed, 12 insertions(+), 14 deletions(-)
+ target/loongarch/cpu.c   | 6 ------
+ target/loongarch/csr.c   | 6 ------
+ target/loongarch/disas.c | 6 ------
+ 3 files changed, 18 deletions(-)
 
 diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 614d6a9542..ab37a9e2e6 100644
+index cd39572b5c..614d6a9542 100644
 --- a/target/loongarch/cpu.c
 +++ b/target/loongarch/cpu.c
-@@ -731,7 +731,7 @@ static void loongarch_cpu_init(Object *obj)
-     qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, N_IRQS);
- #ifdef CONFIG_TCG
-     timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
--                  &loongarch_constant_timer_cb, cpu);
-+                  &cpu_loongarch_timer_cb, cpu);
- #endif
- #endif
- }
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 0b670f9466..8c5f095782 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -34,11 +34,10 @@ extern const VMStateDescription vmstate_loongarch_cpu;
- void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+@@ -153,12 +153,6 @@ static void loongarch_la464_init_csr(DeviceState *dev)
+         }
+         set_csr_flag(LOONGARCH_CSR_IMPCTL1, CSRFL_UNUSED);
+         set_csr_flag(LOONGARCH_CSR_IMPCTL2, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRCTL, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRINFO1, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRINFO2, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRENTRY, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRERA, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRSAVE, CSRFL_UNUSED);
+         set_csr_flag(LOONGARCH_CSR_CTAG, CSRFL_UNUSED);
  
--void loongarch_constant_timer_cb(void *opaque);
--uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
--uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
--void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
--                                               uint64_t value);
-+void cpu_loongarch_timer_cb(void *opaque);
-+uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu);
-+uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu);
-+void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value);
- bool loongarch_cpu_has_work(CPUState *cs);
- bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
- #endif /* !CONFIG_USER_ONLY */
-diff --git a/target/loongarch/tcg/constant_timer.c b/target/loongarch/tcg/constant_timer.c
-index b91ad1de69..a25312b9ab 100644
---- a/target/loongarch/tcg/constant_timer.c
-+++ b/target/loongarch/tcg/constant_timer.c
-@@ -15,12 +15,12 @@
- #define CONSTANT_TIMER_TICK_MASK    0xfffffffffffcUL
- #define CONSTANT_TIMER_ENABLE       0x1UL
- 
--uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_timer_counter(LoongArchCPU *cpu)
- {
-     return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / TIMER_PERIOD;
- }
- 
--uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_timer_ticks(LoongArchCPU *cpu)
- {
-     CPULoongArchState *env = &cpu->env;
-     CPUSysState *sys = env_sys(env);
-@@ -36,8 +36,7 @@ uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu)
-     return sys->CSR_TVAL;
- }
- 
--void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
--                                               uint64_t value)
-+void cpu_loongarch_set_timer_config(LoongArchCPU *cpu, uint64_t value)
- {
-     CPULoongArchState *env = &cpu->env;
-     CPUSysState *sys = env_sys(env);
-@@ -55,7 +54,7 @@ void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
-     }
- }
- 
--void loongarch_constant_timer_cb(void *opaque)
-+void cpu_loongarch_timer_cb(void *opaque)
- {
-     LoongArchCPU *cpu  = opaque;
-     CPULoongArchState *env = &cpu->env;
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 155482efc6..b1a0b005e9 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -74,7 +74,7 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
- {
-     LoongArchCPU *cpu = env_archcpu(env);
- 
--    return cpu_loongarch_get_constant_timer_ticks(cpu);
-+    return cpu_loongarch_get_timer_ticks(cpu);
- }
- 
- target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-@@ -139,7 +139,7 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
-     CPUSysState *sys = env_sys(env);
-     int64_t old_v = sys->CSR_TCFG;
- 
--    cpu_loongarch_store_constant_timer_config(cpu, val);
-+    cpu_loongarch_set_timer_config(cpu, val);
- 
-     return old_v;
- }
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index f41f0cb1e6..c090d5b12e 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -81,7 +81,7 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
-         do_raise_exception(env, EXCCODE_IPE, GETPC());
-     }
- 
--    return cpu_loongarch_get_constant_timer_counter(cpu);
-+    return cpu_loongarch_get_timer_counter(cpu);
- #endif
- }
- 
+         for (i = env->perf_event_num; i < MAX_PERF_EVENTS; i++) {
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 309b826ca9..d2ac39dee9 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -82,12 +82,6 @@ static CSRInfo csr_info[] = {
+     CSR_OFF(TLBRELO1),
+     CSR_OFF(TLBREHI),
+     CSR_OFF(TLBRPRMD),
+-    CSR_OFF(MERRCTL),
+-    CSR_OFF(MERRINFO1),
+-    CSR_OFF(MERRINFO2),
+-    CSR_OFF(MERRENTRY),
+-    CSR_OFF(MERRERA),
+-    CSR_OFF(MERRSAVE),
+     CSR_OFF(CTAG),
+     CSR_OFF_ARRAY(DMW, 0),
+     CSR_OFF_ARRAY(DMW, 1),
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 3249ab7ac6..928b8b94c2 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -98,12 +98,6 @@ static const char * const csr_names[] = {
+     CSR_NAME(TLBRELO1),
+     CSR_NAME(TLBREHI),
+     CSR_NAME(TLBRPRMD),
+-    CSR_NAME(MERRCTL),
+-    CSR_NAME(MERRINFO1),
+-    CSR_NAME(MERRINFO2),
+-    CSR_NAME(MERRENTRY),
+-    CSR_NAME(MERRERA),
+-    CSR_NAME(MERRSAVE),
+     CSR_NAME(CTAG),
+     CSR_NAME(DMW(0)),
+     CSR_NAME(DMW(1)),
 -- 
 2.54.0
 
