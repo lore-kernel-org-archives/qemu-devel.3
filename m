@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25468C982D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 09:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DC3C88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 09:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x78Ul-00048v-IT; Thu, 17 Sep 2026 05:33:31 -0400
+	id 1x78Uk-00048t-Do; Thu, 17 Sep 2026 05:33:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x78Ug-00046d-8w
+ id 1x78Ug-00046f-98
  for qemu-devel@nongnu.org; Thu, 17 Sep 2026 05:33:26 -0400
-Received: from mail-oo2-x0d.google.com ([2607:f8b0:4864:31::d])
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x78Ub-00018g-Uz
+ id 1x78Ud-00018n-GE
  for qemu-devel@nongnu.org; Thu, 17 Sep 2026 05:33:25 -0400
-Received: by mail-oo2-x0d.google.com with SMTP id
- 006d021491bc7-6b1ae736c64so397311eaf.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 02:33:21 -0700 (PDT)
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-39b350c69b4so476131a91.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 02:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789637600; x=1790242400; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789637601; x=1790242401; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FF1abLCI8hOgy/bnmlJrvZZgw7N9jJryEB1UClwJUt8=;
- b=CENMBfCifjf/VrCdn3xVOI75bOi//G/2U6FMxp5OVMjf75keXfo1sVizKlF1Gjr8+w
- 1UYlWddR0f+cLdzkMckSw0Tuly0/OrP5svnbBD63B5UAVUdSxBl2NNaUhZjYBBD8R2bd
- IPYzNQArxlNKNOWfd0O1ms10TlQQOGAA/qtmTkRAVodOnOUAwJbWbThU8khfHgO0y3W+
- U665PO1W/Fff9wQu6/Nn8o/zQKBqswE13v0ohV8jST2B+X5+5g1tbJCoD6EC7V9yGXLH
- 8G1wfAfHJRNPqY7wpisQ6TOa8xolDbIk0HcUPpxI1ULXuIgQTo0a4A0Jm5FQAwkIlcsf
- ubSg==
+ bh=HGQQ50JsOahOLBW9+5ijBQfjL0p9qJt2JNKmDhmxlVU=;
+ b=JmtDSfo+v4NRgFWM9PMWk7DIzqqE7SBUxW5tD+BUZ8s4x3tUt6woZ/mQ6W7y3+0ijm
+ JRA2ZPpoDqqtTxQrEDhr4Hqdd3PLpYOaHjXOgjBRo/Gz1oOwtinVPIjvQDsn0zx+QKnj
+ HPimNnTn8gCHiIaIprEiBnDULxP4blVrySkMjSkl/c8JxtrpWyZ9wgbgT8+x8gW4Rjj3
+ RKtr6+o73ELh6pgLQixSAoPD326BCRGgEbsSYqISqUd7u7E7hmM/5qOqZY0BswIvF68t
+ yRFpODUdlD1QjQA2o1o6oWxzTwReM8XQHc/dMQJfa2rlE++JxbAymo2zItl8FYmTUBV4
+ jXGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789637600; x=1790242400;
+ d=1e100.net; s=20260707; t=1789637601; x=1790242401;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=FF1abLCI8hOgy/bnmlJrvZZgw7N9jJryEB1UClwJUt8=;
- b=L3durpgOb1z9tfYx7AHR8mH1WLFT+FftIXtZHqZr79mR41DzlEpVtb8EtUXakqOFRK
- OunoFG/EWoX+YSlQ6mDvaK1i7yLezUyrsGFrh6Shp0wWCEL2xDmR6CVUtIp+RztI3Pim
- zlB0ti7BY00/WSdEz4vYCNAluruogb1/l002PB6sJXEe4muY8D/9YXt9p2IVCtvucR6p
- mczKA9E6KpxB1tPrjTLDTl1a8/Z94LcrkBTjoYl75YysNe8Je7tK8g6qZam71H3wr0DP
- ZWrx6INCGx16P1+HPRaKqLd/SW0o1blBl/IHQzqxcOw5ltFvbMZPSQV+V047MnOj/UKe
- ysgA==
-X-Gm-Message-State: AFuF++l6sZqKu39nNlsrS1O4zISt/eg6spr3tFDOdfBZWpvFvuJRN8nk
- mo9dtzlfa1HdE72po6pYGt3MhvmrwW7cnIiXMWKPlJa3QL7OcBT+e4fUh1eeC8vT2QfTSmym/Pn
- Plem9W1Y=
-X-Gm-Gg: AYBFou0ZotLhgvinPZan++A4/XH/5aXc9IU0nBSHBMlP5fx8nJbpY3g0ZPgfTmv7Jnl
- BiWMe47OyNDz4q/3EQxbJFzQd/uM1buzGjzVOpYy94v6WKGNnhnw0kGi+W+H5+cB0u20O92Tx+o
- ZusoJtJkUmYwSfnLw81l+LCzS3VYdRivbL/AuOIU4KrzUO1L5UsotJVGdgMzwbgqEXABOwmu+YF
- eH7OfkJwYZItzbfXIUpm1rIozJwYTcgNcxpLrMh7AE2jGSMzu5QkpDJSaBPX9WadjCgx5qYZHEA
- wW77AAoj/kVpMW+R8JlUb0twn9B4DFtjmmoWymSn8hroW3TJ0nEBbNsSwlRateSZmm06UGOB3vz
- uqH6PD8Nqy3vsEBnUU8cYhn9FNI1Z295RD2yp8tuERzwiPKBpgKofFfXW15XYW7WbH617OLQn+H
- c9NWlVAuvzbuGDcwc5j2MIDy4AZMMEHrCnEnyFwPselQApxcT1U+nibC+Fnd7O60HAqUKpupSdy
- 8fyQbc=
-X-Received: by 2002:a05:6820:1c9d:b0:6bd:850:7634 with SMTP id
- 006d021491bc7-6c7d0de78e1mr5330193eaf.26.1789637600213; 
- Thu, 17 Sep 2026 02:33:20 -0700 (PDT)
+ bh=HGQQ50JsOahOLBW9+5ijBQfjL0p9qJt2JNKmDhmxlVU=;
+ b=svnDSq+Wr3Nb5+9fH/om44OG3H1Wu5jBTLFCWD/f+HsCa0VPIu3BUNNA1G3984Hrgm
+ OiZlfTd90mTgRUjIr9mOrm/xC5gY3g1ZBbzE6fivkKLXQvNLHtFiFQeBsRg9xULwfVPB
+ Iv/36xiESNUjUDVHHWKsc31zzY2uwDIJNvQILTPRsBEeVjSMB4XE/bc7Phpfl/bJzB5j
+ p9HqYnO3QDlIf3YbBZBW9XNSYNiQhUUM5PcQyhJue87xyIxZgGUI22pzpxPMO/2V8gc1
+ FGDaVcH81levOSelU102N3/M8E1+/g+ZVKyXqjLIIyeGlsHiiRCLyf3nhNdt2QxpPzoG
+ vHBA==
+X-Gm-Message-State: AFuF++kOKHE+/UXnj20ACV6qlw6VJpDgnyfUv9mTVCyFrwk8SsfqbzvZ
+ V3H/v1zvW8Be8Ra8CFBnMx+JTtXJrZW272hzPEBTKPVcgzcIb30E9b8m3CXfDOPqKBqpyyjSR1j
+ 1x/H7
+X-Gm-Gg: AYBFou3PSrkF5mcnwnXq2loG53w5el+4ScycxL3UJ7tirbNOkwTKq6OJVpu7NvIYKMK
+ +nTT3mo5NA38O/iOe4TvAbPu4GKsjAo/LxKb1TM2QtJFB/m5PBlJ7F8KMoOlLBQ9rh+wR+z4EqB
+ ur/2vst7vz7KqmIGx5YDOrr8nHRXlwTDthi5i3GsCUVoVx/FCisaic8WaOe5jWJ7+LHmU3DDZdK
+ kARj5ba6EBOXNAkTYRiHFYfvsq2+YXwfQvXO6ss/5gRZwSXfOONJu69lv9nYjmoNXzOmmITlcak
+ E1jd5dNyKMJi71lbNrSXOySWQPUSCUfGwaQJhWx4ZckGI/zsy4LAeZ+7WtHtYsZGWn/wqN5Y2U+
+ 3yjP3jYZTq178nbIA7uwcA3l6G0aqjJ2hctdSYjhFB3lSwNdemj7L05GhQnj3USBWjuJIptldTa
+ y0FtMKc2h/a7A1+n1S0xh327co6Qt/fsNQTMOBTtjvicRTSZLsgRQsUBKvTHln6D7nxivBIeqdY
+ 71Rlls=
+X-Received: by 2002:a17:90b:4f81:b0:39d:febe:7460 with SMTP id
+ 98e67ed59e1d1-39e1e4e354cmr13224434a91.22.1789637601323; 
+ Thu, 17 Sep 2026 02:33:21 -0700 (PDT)
 Received: from stoup ([2603:800c:7900:ed00:325f:1938:d075:8c13])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14395d771e5sm12494696c88.15.2026.09.17.02.33.19
+ a92af1059eb24-14395d771e5sm12494696c88.15.2026.09.17.02.33.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 02:33:19 -0700 (PDT)
+ Thu, 17 Sep 2026 02:33:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mattst88@gmail.com
-Subject: [PATCH v6 09/13] tcg: Probe the TB jump cache inline instead of
- calling a helper
-Date: Wed, 16 Sep 2026 23:33:03 -1000
-Message-ID: <20260917093307.1092084-10-richard.henderson@linaro.org>
+Subject: [PATCH v6 10/13] tcg: Add INDEX_op_goto_jc
+Date: Wed, 16 Sep 2026 23:33:04 -1000
+Message-ID: <20260917093307.1092084-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260917093307.1092084-1-richard.henderson@linaro.org>
 References: <20260917093307.1092084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:31::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo2-x0d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,234 +101,355 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+Allow goto_jc to be implemented in the backend.
 
-Every indirect branch that cannot use goto_tb ends in a dispatch that calls
-helper_lookup_tb_ptr(). For an emulated compiler that is 8.4 billion helper
-calls in a single translation unit: 24.6% of all TB exits take this path,
-because jsr/ret/jmp have a register destination and because goto_tb is
-restricted to same-page targets.
-
-The helper itself is already tight, but each call pays for a call frame,
-the can_do_io store, the get_tb_cpu_state() indirect call through
-TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
-jump cache probe that almost always hits (95.8% for this workload).
-
-Emit the probe inline instead, for the callers that have migrated to
-tcg_gen_goto_jc_*(). Those supply what it needs: the destination PC is in a
-TCG temp, and the flags, cflags and cs_base the destination must match are
-constants at translation time. The fast path is therefore a hash, four
-guarded loads and a goto_ptr. Only a miss calls the helper, which still owns
-filling the cache.
-
-Two details matter for the generated code. The flags and cflags guards are
-folded into a single aligned 64-bit load and compare, since the fields are
-adjacent. And each path emits its own goto_ptr rather than branching to a
-shared one: a temp live across the label is spilled and reloaded on every
-dispatch, which cost 6.3% on its own.
-
-The flags and cflags constants are safe against the other things that can
-change them. CF_PARALLEL is only ever set by begin_parallel_context(),
-which flushes first, so no block predating it survives to dispatch. gdb
-single-step is only turned on with the CPU stopped, and a block translated
-without CF_SINGLE_STEP can only be re-entered through tb_lookup(), which
-from then on demands the new cflags -- so a stale-cflags block is never the
-one running. Breakpoints are handled by CF_NO_GOTO_JC, added by the previous
-patch: while one is set, blocks are translated with a cflags that both keeps
-them off the inline path and keeps them unreachable from blocks already on
-it. What is left is one_insn_per_tb and -d nochain; see below.
-
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
-build, on top of the preceding patches:
-
-    before: 1,402,667,803,616 instructions
-    after:    916,415,123,244 instructions   -34.67%
-
-    before: 115.56s wall clock
-    after:   85.59s wall clock               -25.94%
-
-The gap between the two is the point at which this stops being a
-straight-line win: the helper call was highly predictable work that the
-host pipelined well, so removing it retires far fewer instructions than it
-saves time. IPC falls from 2.48 to 2.17 across this patch for that reason.
-
-Despite emitting more code, this also reduces instruction cache pressure,
-because a dispatch no longer jumps into qemu's .text and evicts translated
-code:
-
-    before: 11,735,141,703 L1-icache-load-misses
-    after:   7,154,863,292 L1-icache-load-misses   -39.0%
-
-The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
-falls from 31.01% of samples to 0.35%, and qemu's own .text falls from
-38.8% to 5.3%, with the balance moving into generated code.
-
-Combined with the preceding patches, against an unmodified LTO build,
-1,646,994,254,249 instructions fall to 916,415,123,244, or -44.36%. The
-emulated compiler produces byte-identical output throughout.
-
-A follow-up worth having: the probe is emitted entirely out of generic TCG
-ops, and several backends can do much better than the result. x86_64 and
-s390x have memory-operand comparisons; aarch64 can form env + off + h * 16
-with a shift-add, load (tb, pc) and (cs_base, flags) with two ldp, and halve
-the branches with ccmp. That wants a backend expansion of a dedicated
-opcode, which is a separate series.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260901034808.3524945-7-mattst88@gmail.com>
 ---
- tcg/tcg-op.c | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 108 insertions(+), 2 deletions(-)
+ docs/devel/tcg-ops.rst           | 11 +++++
+ include/tcg/tcg-opc.h            |  1 +
+ tcg/tcg-op.c                     | 73 ++++++++++++++++++++------------
+ tcg/tcg.c                        | 22 ++++++++++
+ tcg/aarch64/tcg-target.c.inc     |  4 ++
+ tcg/loongarch64/tcg-target.c.inc |  4 ++
+ tcg/ppc64/tcg-target.c.inc       |  4 ++
+ tcg/riscv64/tcg-target.c.inc     |  4 ++
+ tcg/s390x/tcg-target.c.inc       |  4 ++
+ tcg/sparc64/tcg-target.c.inc     |  4 ++
+ tcg/tci/tcg-target.c.inc         |  4 ++
+ tcg/x86_64/tcg-target.c.inc      |  4 ++
+ 12 files changed, 111 insertions(+), 28 deletions(-)
 
+diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+index 51fa183e911..ca640610b42 100644
+--- a/docs/devel/tcg-ops.rst
++++ b/docs/devel/tcg-ops.rst
+@@ -752,6 +752,17 @@ QEMU specific operations
+        | This operation is optional. If the TCG backend does not implement the
+          goto_ptr opcode, emitting this op is equivalent to emitting exit_tb(0).
+ 
++   * - goto_jc *jc*, *pc*, *cs_base*, *flags*, *label*
++
++     - | *jc* is a CPUJumpCache pointer.  Generate code for:
++       |
++       | if (jc->pc != pc) goto label;
++       | tb = jc->tb;
++       | if (tb == NULL) goto label;
++       | if (tb->flags != flags) goto label;
++       | if (tb->cs_base != cs_base) goto label;
++       | goto tb->tc.ptr;
++
+    * - qemu_ld_i32/i64/i128 *t0*, *t1*, *flags*, *memidx*
+ 
+        qemu_st_i32/i64/i128 *t0*, *t1*, *flags*, *memidx*
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index 884345afe56..ce7703d5830 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -122,6 +122,7 @@ DEF(insn_start, 0, 0, INSN_START_WORDS, TCG_OPF_NOT_PRESENT)
+ DEF(exit_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END | TCG_OPF_NOT_PRESENT)
+ DEF(goto_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END | TCG_OPF_NOT_PRESENT)
+ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
++DEF(goto_jc, 0, 4, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+ 
+ DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
+ DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
 diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 09d9a7963ae..cd10a00bf9e 100644
+index cd10a00bf9e..0c609f8b38e 100644
 --- a/tcg/tcg-op.c
 +++ b/tcg/tcg-op.c
-@@ -28,6 +28,8 @@
- #include "tcg/tcg-op-common.h"
- #include "exec/translation-block.h"
- #include "exec/plugin-gen.h"
-+#include "hw/core/cpu.h"
-+#include "../accel/tcg/tb-hash.h"
- #include "tcg-internal.h"
- #include "tcg-has.h"
- 
-@@ -1942,12 +1944,17 @@ void tcg_gen_goto_tb(unsigned idx)
-     tcg_gen_op1i(INDEX_op_goto_tb, 0, idx);
+@@ -158,6 +158,14 @@ static TCGOp *gen_op_ttttt(TCGOpcode opc, TCGType type,
+                        temp_arg(t3), temp_arg(t4));
  }
  
-+static void gen_goto_ptr(TCGTemp *ptr)
++static TCGOp *gen_op_tttti(TCGOpcode opc, TCGType type,
++                           TCGTemp *t0, TCGTemp *t1, TCGTemp *t2,
++                           TCGTemp *t3, TCGArg a4)
 +{
-+    tcg_gen_op1(INDEX_op_goto_ptr, TCG_TYPE_PTR, temp_arg(ptr));
++    return tcg_gen_op5(opc, type, temp_arg(t0), temp_arg(t1),
++                       temp_arg(t2), temp_arg(t3), a4);
 +}
 +
- static void gen_lookup_tb_ptr_and_goto(void)
+ static TCGOp *gen_op_ttttti(TCGOpcode opc, TCGType type,
+                             TCGTemp *t0, TCGTemp *t1, TCGTemp *t2,
+                             TCGTemp *t3, TCGTemp *t4, TCGArg a5)
+@@ -1997,7 +2005,13 @@ static void gen_jc_probe(TCGTemp *pc, TCGTemp *cs_base, uint32_t flags)
  {
-     TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
- 
-     gen_helper_lookup_tb_ptr(ptr, tcg_env);
--    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
-+    gen_goto_ptr(tcgv_ptr_temp(ptr));
-     tcg_temp_free_ptr(ptr);
- }
- 
-@@ -1962,6 +1969,96 @@ void tcg_gen_lookup_and_goto_ptr(void)
-     gen_lookup_tb_ptr_and_goto();
- }
- 
-+static void gen_jc_hash(TCGTemp *h, TCGTemp *t, TCGTemp *pc)
-+{
-+#ifdef CONFIG_SOFTMMU
+     const TranslationBlock *tb = tcg_ctx->gen_tb;
+     TCGLabel *slow = gen_new_label();
+-    uint64_t fpair;
 +    /*
-+     * tb_jmp_cache_hash_func(), softmmu form.  TARGET_PAGE_BITS is a load
-+     * from target_page in this translation unit, but it is decided long
-+     * before any translation happens, so it is a constant here.
++     * flags and cflags are adjacent uint32_t, so one aligned 64-bit load
++     * and compare covers both.
 +     */
-+    int shift = TARGET_PAGE_BITS - TB_JMP_PAGE_BITS;
++    uint64_t fpair = (HOST_BIG_ENDIAN
++                      ? deposit64(tb->cflags, 32, 32, flags)
++                      : deposit64(flags, 32, 32, tb->cflags));
+ 
+     QEMU_BUILD_BUG_ON(sizeof_field(CPUJumpCache, array[0]) != 16);
+     QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) % 8 != 0);
+@@ -2018,37 +2032,40 @@ static void gen_jc_probe(TCGTemp *pc, TCGTemp *cs_base, uint32_t flags)
+                    offsetof(CPUState, tb_jmp_cache) - sizeof(CPUState));
+         gen_lea(TCG_TYPE_I64, p, t, h, 4, 0);
+ 
+-        /*
+-         * The pc first: on a hash miss it is the field most likely to differ,
+-         * and an entry whose tb is NULL has a zero pc that only pc 0 matches.
+-         */
+-        gen_ld(TCG_TYPE_I64, t, p, offsetof(CPUJumpCache, array[0].pc));
+-        gen_brcond(TCG_TYPE_I64, TCG_COND_NE, t, pc, slow);
++        if (tcg_op_supported(INDEX_op_goto_jc, TCG_TYPE_PTR, 0)) {
++            TCGOp *op = gen_op_tttti(INDEX_op_goto_jc, TCG_TYPE_PTR,
++                                     p, pc, cs_base,
++                                     tcg_constant_internal(TCG_TYPE_I64, fpair),
++                                     label_arg(slow));
++            add_as_label_use(slow, op);
++        } else {
++            /*
++             * The pc first: on a hash miss it is the field most likely
++             * to differ, and an entry whose tb is NULL has a zero pc
++             * that only pc 0 matches.
++             */
++            gen_ld(TCG_TYPE_I64, t, p, offsetof(CPUJumpCache, array[0].pc));
++            gen_brcond(TCG_TYPE_I64, TCG_COND_NE, t, pc, slow);
+ 
+-        gen_ld(TCG_TYPE_PTR, p, p, offsetof(CPUJumpCache, array[0].tb));
+-        gen_brcond(TCG_TYPE_PTR, TCG_COND_EQ,
+-                   p, tcg_constant_internal(TCG_TYPE_PTR, 0), slow);
++            gen_ld(TCG_TYPE_PTR, p, p, offsetof(CPUJumpCache, array[0].tb));
++            gen_brcond(TCG_TYPE_PTR, TCG_COND_EQ,
++                       p, tcg_constant_internal(TCG_TYPE_PTR, 0), slow);
+ 
+-        /*
+-         * flags and cflags are adjacent uint32_t, so one aligned 64-bit load
+-         * and compare covers both.
+-         */
+-        fpair = (HOST_BIG_ENDIAN
+-                 ? deposit64(tb->cflags, 32, 32, flags)
+-                 : deposit64(flags, 32, 32, tb->cflags));
+-        gen_ld(TCG_TYPE_I64, t, p, offsetof(TranslationBlock, flags));
+-        gen_brcond(TCG_TYPE_I64, TCG_COND_NE,
+-                   t, tcg_constant_internal(TCG_TYPE_I64, fpair), slow);
++            gen_ld(TCG_TYPE_I64, t, p, offsetof(TranslationBlock, flags));
++            gen_brcond(TCG_TYPE_I64, TCG_COND_NE,
++                       t, tcg_constant_internal(TCG_TYPE_I64, fpair), slow);
+ 
+-        /*
+-         * cs_base is a second word of target-specific flags despite the name,
+-         * and the pc alone does not imply it on a target that uses it.
+-         */
+-        gen_ld(TCG_TYPE_I64, t, p, offsetof(TranslationBlock, cs_base));
+-        gen_brcond(TCG_TYPE_I64, TCG_COND_NE, t, cs_base, slow);
++            /*
++             * cs_base is a second word of target-specific flags despite
++             * the name, and the pc alone does not imply it on a target
++             * that uses it.
++             */
++            gen_ld(TCG_TYPE_I64, t, p, offsetof(TranslationBlock, cs_base));
++            gen_brcond(TCG_TYPE_I64, TCG_COND_NE, t, cs_base, slow);
+ 
+-        gen_ld(TCG_TYPE_PTR, p, p, offsetof(TranslationBlock, tc.ptr));
+-        gen_goto_ptr(p);
++            gen_ld(TCG_TYPE_PTR, p, p, offsetof(TranslationBlock, tc.ptr));
++            gen_goto_ptr(p);
++        }
+     }
+ 
+     /*
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index b88ee847039..a08e83f3954 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1101,6 +1101,12 @@ typedef struct TCGOutOpLea {
+                 TCGReg a2, unsigned sh, tcg_target_long imm);
+ } TCGOutOpLea;
+ 
++typedef struct TCGOutOpGotoJC {
++    TCGOutOp base;
++    void (*out)(TCGContext *s, TCGReg jc, TCGReg pc, TCGArg cs, bool const_cs,
++                TCGArg fl, bool const_fl, TCGLabel *l);
++} TCGOutOpGotoJC;
 +
-+    gen_shri(TCG_TYPE_I64, t, pc, shift);
-+    gen_xor(TCG_TYPE_I64, t, t, pc);
-+    gen_shri(TCG_TYPE_I64, h, t, shift);
-+    gen_andi(TCG_TYPE_I64, h, h, TB_JMP_PAGE_MASK);
-+    gen_andi(TCG_TYPE_I64, t, t, TB_JMP_ADDR_MASK);
-+    gen_or(TCG_TYPE_I64, h, h, t);
-+#else
-+    /* tb_jmp_cache_hash_func(), user-only form. */
-+    gen_shri(TCG_TYPE_I64, h, pc, TB_JMP_CACHE_BITS);
-+    gen_xor(TCG_TYPE_I64, h, h, pc);
-+    gen_andi(TCG_TYPE_I64, h, h, TB_JMP_CACHE_SIZE - 1);
-+#endif
-+}
+ #include "tcg-target.c.inc"
+ 
+ #ifndef CONFIG_TCG_INTERPRETER
+@@ -1190,6 +1196,7 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+     OUTOP(INDEX_op_extrh_i64_i32, TCGOutOpUnary, outop_extrh_i64_i32),
+     OUTOP(INDEX_op_extrl_i64_i32, TCGOutOpUnary, outop_extrl_i64_i32),
+     OUTOP(INDEX_op_extu_i32_i64, TCGOutOpUnary, outop_extu_i32_i64),
++    OUTOP(INDEX_op_goto_jc, TCGOutOpGotoJC, outop_goto_jc),
+     OUTOP(INDEX_op_ld, TCGOutOpLoad, outop_ld),
+     OUTOP(INDEX_op_ld8s, TCGOutOpLoad, outop_ld8s),
+     OUTOP(INDEX_op_ld8u, TCGOutOpLoad, outop_ld8u),
+@@ -3009,6 +3016,7 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+             case INDEX_op_set_label:
+             case INDEX_op_br:
+             case INDEX_op_brcond:
++            case INDEX_op_goto_jc:
+                 col += ne_fprintf(f, "%s$L%d", k ? "," : "",
+                                   arg_label(op->args[k])->id);
+                 i++, k++;
+@@ -3478,6 +3486,9 @@ void tcg_op_remove(TCGContext *s, TCGOp *op)
+     case INDEX_op_brcond:
+         remove_label_use(op, 3);
+         break;
++    case INDEX_op_goto_jc:
++        remove_label_use(op, 4);
++        break;
+     default:
+         break;
+     }
+@@ -3576,6 +3587,9 @@ static void move_label_uses(TCGLabel *to, TCGLabel *from)
+         case INDEX_op_brcond:
+             op->args[3] = label_arg(to);
+             break;
++        case INDEX_op_goto_jc:
++            op->args[4] = label_arg(to);
++            break;
+         default:
+             g_assert_not_reached();
+         }
+@@ -3650,6 +3664,7 @@ reachable_code_pass(TCGContext *s)
+         case INDEX_op_br:
+         case INDEX_op_exit_tb:
+         case INDEX_op_goto_ptr:
++        case INDEX_op_goto_jc:
+             /* Unconditional branches; everything following is dead.  */
+             dead = true;
+             break;
+@@ -6017,6 +6032,13 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+         tcg_out_goto_ptr(s, new_args[0]);
+         break;
+ 
++    case INDEX_op_goto_jc:
++        tcg_debug_assert(!const_args[0]);
++        tcg_debug_assert(!const_args[1]);
++        outop_goto_jc.out(s, new_args[0], new_args[1], new_args[2], const_args[2],
++                          new_args[3], const_args[3], arg_label(new_args[4]));
++        break;
 +
-+static void gen_jc_probe(TCGTemp *pc, TCGTemp *cs_base, uint32_t flags)
-+{
-+    const TranslationBlock *tb = tcg_ctx->gen_tb;
-+    TCGLabel *slow = gen_new_label();
-+    uint64_t fpair;
+     default:
+         tcg_debug_assert(def->flags & TCG_OPF_VECTOR);
+         tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index 6836c0dd94f..a0f23914224 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -2008,6 +2008,10 @@ static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
+     .out = tgen_qemu_st2,
+ };
+ 
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
 +
-+    QEMU_BUILD_BUG_ON(sizeof_field(CPUJumpCache, array[0]) != 16);
-+    QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) % 8 != 0);
-+    /* One 64-bit load has to cover both, so they must be adjacent... */
-+    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=
-+                      offsetof(TranslationBlock, flags) + 4);
-+    /* ...and aligned, which nothing else currently relies on. */
-+    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, flags) % 8 != 0);
+ static const tcg_insn_unit *tb_ret_addr;
+ 
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 377cd9ec08d..733cce516e0 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -2113,6 +2113,10 @@ static const TCGOutOpLea outop_lea = {
+     .out = tgen_lea,
+ };
+ 
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
 +
-+    {
-+        g_autoptr(TCGTemp) t = tcg_temp_new_ebb(TCG_TYPE_I64);
-+        g_autoptr(TCGTemp) h = tcg_temp_new_ebb(TCG_TYPE_I64);
-+        g_autoptr(TCGTemp) p = tcg_temp_new_ebb(TCG_TYPE_PTR);
-+
-+        /* p = &jc->array[tb_jmp_cache_hash_func(pc)] */
-+        gen_jc_hash(h, t, pc);
-+        gen_op_tti(INDEX_op_ld, TCG_TYPE_I64, t, tcgv_ptr_temp(tcg_env),
-+                   offsetof(CPUState, tb_jmp_cache) - sizeof(CPUState));
-+        gen_lea(TCG_TYPE_I64, p, t, h, 4, 0);
-+
-+        /*
-+         * The pc first: on a hash miss it is the field most likely to differ,
-+         * and an entry whose tb is NULL has a zero pc that only pc 0 matches.
-+         */
-+        gen_ld(TCG_TYPE_I64, t, p, offsetof(CPUJumpCache, array[0].pc));
-+        gen_brcond(TCG_TYPE_I64, TCG_COND_NE, t, pc, slow);
-+
-+        gen_ld(TCG_TYPE_PTR, p, p, offsetof(CPUJumpCache, array[0].tb));
-+        gen_brcond(TCG_TYPE_PTR, TCG_COND_EQ,
-+                   p, tcg_constant_internal(TCG_TYPE_PTR, 0), slow);
-+
-+        /*
-+         * flags and cflags are adjacent uint32_t, so one aligned 64-bit load
-+         * and compare covers both.
-+         */
-+        fpair = (HOST_BIG_ENDIAN
-+                 ? deposit64(tb->cflags, 32, 32, flags)
-+                 : deposit64(flags, 32, 32, tb->cflags));
-+        gen_ld(TCG_TYPE_I64, t, p, offsetof(TranslationBlock, flags));
-+        gen_brcond(TCG_TYPE_I64, TCG_COND_NE,
-+                   t, tcg_constant_internal(TCG_TYPE_I64, fpair), slow);
-+
-+        /*
-+         * cs_base is a second word of target-specific flags despite the name,
-+         * and the pc alone does not imply it on a target that uses it.
-+         */
-+        gen_ld(TCG_TYPE_I64, t, p, offsetof(TranslationBlock, cs_base));
-+        gen_brcond(TCG_TYPE_I64, TCG_COND_NE, t, cs_base, slow);
-+
-+        gen_ld(TCG_TYPE_PTR, p, p, offsetof(TranslationBlock, tc.ptr));
-+        gen_goto_ptr(p);
-+    }
-+
-+    /*
-+     * Emit a second goto_ptr rather than branching to a shared one: a temp
-+     * live across the label would be spilled and reloaded on every dispatch.
-+     */
-+    gen_set_label(slow);
-+    gen_lookup_tb_ptr_and_goto();
-+}
-+
- static void gen_goto_jc3(TCGType type, TCGTemp *pc,
-                          TCGTemp *cs_base, unsigned flags)
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+                             TCGReg rd, TCGReg rs)
  {
-@@ -1988,7 +2085,16 @@ static void gen_goto_jc3(TCGType type, TCGTemp *pc,
-                              tcg_constant_i32(flags));
- #endif
+diff --git a/tcg/ppc64/tcg-target.c.inc b/tcg/ppc64/tcg-target.c.inc
+index 99f4469f4b9..466ae836d5a 100644
+--- a/tcg/ppc64/tcg-target.c.inc
++++ b/tcg/ppc64/tcg-target.c.inc
+@@ -3637,6 +3637,10 @@ static const TCGOutOpLea outop_lea = {
+     .base.static_constraint = C_NotImplemented,
+ };
  
--    gen_lookup_tb_ptr_and_goto();
-+    /*
-+     * A breakpoint is the one thing the probe cannot check for itself, so
-+     * while one is set the flag is set too and every dispatch takes the
-+     * helper, which does check.  See tcg_update_cflags().
-+     */
-+    if (tcg_ctx->gen_tb->cflags & (CF_NO_GOTO_PTR | CF_NO_GOTO_JC)) {
-+        gen_lookup_tb_ptr_and_goto();
-+    } else {
-+        gen_jc_probe(pc, cs_base, flags);
-+    }
- }
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+ {
+     switch (opc) {
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index ba7aab9246c..effa9d7a1ac 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -2743,6 +2743,10 @@ static const TCGOutOpLea outop_lea = {
+     .out = tgen_lea,
+ };
  
- static void gen_goto_jc(TCGType type, TCGTemp *pc)
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+                            unsigned vecl, unsigned vece,
+                            const TCGArg args[TCG_MAX_OP_ARGS],
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index db3b2fc3c92..3b63383315d 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -3202,6 +3202,10 @@ static const TCGOutOpLea outop_lea = {
+     .out = tgen_lea,
+ };
+ 
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+                             TCGReg dst, TCGReg src)
+ {
+diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
+index cb457453ff9..0582dc8bdd3 100644
+--- a/tcg/sparc64/tcg-target.c.inc
++++ b/tcg/sparc64/tcg-target.c.inc
+@@ -2124,6 +2124,10 @@ static const TCGOutOpLea outop_lea = {
+     .base.static_constraint = C_NotImplemented,
+ };
+ 
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+index 6942fdbb4e0..5d8892abc44 100644
+--- a/tcg/tci/tcg-target.c.inc
++++ b/tcg/tci/tcg-target.c.inc
+@@ -1224,6 +1224,10 @@ static const TCGOutOpLea outop_lea = {
+     .base.static_constraint = C_NotImplemented,
+ };
+ 
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ /* Test if a constant matches the constraint. */
+ static bool tcg_target_const_match(int64_t val, int ct,
+                                    TCGType type, TCGCond cond, int vece)
+diff --git a/tcg/x86_64/tcg-target.c.inc b/tcg/x86_64/tcg-target.c.inc
+index a41252782e1..08dec0dace8 100644
+--- a/tcg/x86_64/tcg-target.c.inc
++++ b/tcg/x86_64/tcg-target.c.inc
+@@ -3344,6 +3344,10 @@ static const TCGOutOpLea outop_lea = {
+     .out = tgen_lea,
+ };
+ 
++static const TCGOutOpGotoJC outop_goto_jc = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ static int const umin_insn[4] = {
+     OPC_PMINUB, OPC_PMINUW, OPC_PMINUD, OPC_VPMINUQ
+ };
 -- 
 2.53.0
 
