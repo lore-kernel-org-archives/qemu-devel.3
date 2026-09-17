@@ -4,117 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF22DC982D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 15:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE09C982DC
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 15:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7EMK-0008Ag-KV; Thu, 17 Sep 2026 11:49:16 -0400
+	id 1x7EMt-0008HZ-Qh; Thu, 17 Sep 2026 11:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x7EM6-0008A2-Vu; Thu, 17 Sep 2026 11:48:59 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <aagbaria@redhat.com>)
+ id 1x7EMo-0008F9-3t
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 11:49:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x7EM2-0002tE-EZ; Thu, 17 Sep 2026 11:48:55 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HE1W4r1536295; Thu, 17 Sep 2026 15:48:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9ahjCW
- gNk/CYaACrgqmDhL4lyhUoxIeAzi25RPldpCQ=; b=ZjSJrKNjsWgIuCUv1eQGbL
- ZNrNKuVsRlqCKISK8co2UhXk3e6lxAI2u5oM7AYowDTLrgpow0otN7Ynk0qFiON3
- d/gdEbYX50tNbMw5E9JdmXihG1yYUZtqVAEZ+EyEANggRJ/qInxAck5azlYVyAcy
- X27VkplkiMdLq1IuWklftUChNWlv3EQTbs/FomQ3XCSVzIgnqCuGr3usruBaEwae
- R0kYFrO6h1Y/8nK25PbUZNPRd2uzc+4K+ssheiQUibb64Tw9cwu7e7nqdEvXWXI9
- Fu1cxvCPjLAypqRSA9kX6J/KGulXABs9VfXsmXIiv+N+QUr6gVJ7Xc5MwgOG8W4w
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5eawns-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 15:48:50 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HDa2Pv4151495; Thu, 17 Sep 2026 15:48:49 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gr7gejp2v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 15:48:49 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68HFmiE151904976
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Sep 2026 15:48:45 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFBE220049;
- Thu, 17 Sep 2026 15:48:44 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62D1020040;
- Thu, 17 Sep 2026 15:48:41 +0000 (GMT)
-Received: from [9.39.22.229] (unknown [9.39.22.229])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Sep 2026 15:48:41 +0000 (GMT)
-Message-ID: <87238b78-23ff-452a-8939-7ccc8d4cfa8e@linux.ibm.com>
-Date: Thu, 17 Sep 2026 21:18:40 +0530
+ (Exim 4.90_1) (envelope-from <aagbaria@redhat.com>)
+ id 1x7EMX-00030X-S0
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 11:49:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789660163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gXsgD9aeUmhzLoJqn2DRizwCL4Lga8IhLPEIIiubbGI=;
+ b=a5wxEaW9XD6Dr4ZQUQJhsKL4L8BMS0QC1fV1q1jeDiKfmdzCFep0J3asJu7bnpqnrlAE27
+ zkNI3Sr5M2QKO9tsHlYSjeFc8vOaIpIksGKVjCwiD3OCtQmpxqPeadMLoKPmAJDB23VeCN
+ QWgvRcC1RCETF8W9s9qS9FdvW89xKZ4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-D4viizJXOTuVGsbSwGQdWQ-1; Thu,
+ 17 Sep 2026 11:49:10 -0400
+X-MC-Unique: D4viizJXOTuVGsbSwGQdWQ-1
+X-Mimecast-MFC-AGG-ID: D4viizJXOTuVGsbSwGQdWQ_1789660149
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EB241830191; Thu, 17 Sep 2026 15:49:09 +0000 (UTC)
+Received: from aagbaria-thinkpadt14gen6.raanaii.csb (unknown [10.47.238.11])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 473D31800581; Thu, 17 Sep 2026 15:49:06 +0000 (UTC)
+From: Abed Agbaria <aagbaria@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@gmail.com, kkostiuk@redhat.com, michael.roth@amd.com,
+ Abed Agbaria <aagbaria@redhat.com>
+Subject: [PATCH v2] qga/vss-win32: remove orphaned VSS provider service
+Date: Thu, 17 Sep 2026 18:49:00 +0300
+Message-ID: <20260917154901.321702-1-aagbaria@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] ppc/spapr: Add VFIO EEH error injection backend
-To: Nikhil Kumar Singh <nikhilks@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, mahesh@linux.ibm.com, sbhat@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
- sourabhjain@linux.ibm.com, adityag@linux.ibm.com
-Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
- harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
- shivangu@linux.ibm.com
-References: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
- <20260901174110.45356-2-nnmlinux@linux.ibm.com>
- <97eda650-c75a-4342-96d6-d44c4780a1ad@linux.ibm.com>
-Content-Language: en-US
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-In-Reply-To: <97eda650-c75a-4342-96d6-d44c4780a1ad@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDIyMCBTYWx0ZWRfX3QlhWaoXLQxx
- REjYNdUGAn85+bw2dMtnmyCX2YNUVFAvcILJGophK1My6WbcF0HsCH7+PYEn2KCSN8iyCEUiCu1
- vJ8Wyi5LGRtaQ0JuJSQMTBBz4GJaKSpLd9iF29Q2AoNnYZrkFl/87HPLfEZ/XR+dxWFLirl6dMy
- DRvPs/2D/tn4hJ4sHOU2NdENjUL4W2uJuy+dP+UTIC+1TjXArOPCUCoTaZykHo7xanUPRXrnxBI
- 0ySVxN3Q71WSSDtD/imQse16Q6uF4niTRZp/m/RZP7Y9BTGtC/oPkr01HsYLhxniohosHRps2Ck
- HCH35kjBPpE8V7QDJhmJsbCN874jieGFAiEy8BzczSO+9cnIj+tEmAYgyV8RQMPjFxA4Yb3bd7c
- 2BQLZtgL9/lbnDXxGuInGmVWvQIZ5PWCA49Is6oTn6h62IAnkuEOmEJvgQmM++uLikWd7yZ03xQ
- PeZhusGKHBjwrhiuSow==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aac0be3 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=Ps1BV3FplG9IjyAbGJwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: oHNt-wP_ObL7nNi_1zXtAJnIgFmlSpaP
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDIyMCBTYWx0ZWRfXx3ymimFz9KUd
- AZKWmQ3b4BDdZ0XWzT6NReqzBdQCTA863ED9Uli2u2Ul2kCJ+Ov6W9HEOCXPv5b0i0CKCFyDXiF
- JQQqO1V8BDlUdzrH4N1qky1lev8+/+U=
-X-Proofpoint-GUID: JiL9-6KTuVphG6PdL-g7iPGoHF1LtDIx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609170220
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aagbaria@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,54 +81,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nikhil,
+COMRegister() probes the COM+ catalog to decide whether to unregister
+first, but it is the SCM that blocks installation when a service of the
+same name is left over.  If the COM+ application is gone and the service
+survives, install fails with 0x80070431 and never recovers.
 
-Thanks for reviewing,
+ - Check the SCM as well as the COM+ catalog in COMRegister().
+ - Delete the provider service in COMUnregister() and at the
+   DllUnregisterServer() call sites in DllRegisterServer().
 
-On 17/09/26 1:50 PM, Nikhil Kumar Singh wrote:
-> 
-> On 01/09/26 23:11, Narayana Murty N wrote:
-> 
->> +    if (ioctl(container->fd, VFIO_EEH_PE_OP, &op) < 0) {
->> +        error_report("vfio/eeh errinjct: VFIO_EEH_PE_OP failed: %s",
->> +                     strerror(errno));
->> +        switch (errno) {
->> +        case EINVAL:
->> +            return RTAS_OUT_PARAM_ERROR;
->> +        case ENOTTY:
->> +        case EOPNOTSUPP:
->> +            return RTAS_OUT_NOT_SUPPORTED;
->> +        default:
->> +            return RTAS_OUT_HW_ERROR;
->> +        }
->> +    }
-> 
-> Hi Narayana,
-> 
-> In existing QEMU EEH code, I have seen that EEH operations call 
-> vfio_eeh_container_ok(container) before EEH ioctl is issued. That part 
-> is missing in this code. Can you please add it? And if that check is 
-> intentionally skipped and not necessary here, could you clarify the 
-> reasoning?
-It got removed unintentionally the block
-     /* Enforce exactly one group per container check matching other EEH 
-ops */
-     if (!vfio_eeh_container_ok(container)) {
-         error_report("vfio/eeh errinjct: kernel requires a container 
-with exactly one group");
-         return RTAS_OUT_HW_ERROR;
+Opening the SCM, opening the provider service and closing both handles
+is boilerplate that StopService() already contains, so move it into
+QGAProviderOpenService(), which returns a single service handle and
+reports the win32 error through an out parameter, and convert
+StopService() to it.  The service handle stays valid after the SCM
+handle is closed, so the helper closes it and each caller is left with
+one handle to release.
+
+While at it, fix two pre-existing problems in StopService():
+
+ - It logged errmsg(E_FAIL, ...) and returned E_FAIL for every failure,
+   discarding the GetLastError() value.  It now passes the win32 error
+   code to errmsg() and returns HRESULT_FROM_WIN32().
+ - It opened the SCM with SC_MANAGER_ALL_ACCESS, which implies
+   SC_MANAGER_CREATE_SERVICE and is therefore refused to
+   non-administrators, and passed that same SCM mask to OpenService()
+   as a service access mask.  Each operation now requests only what it
+   needs: SC_MANAGER_CONNECT on the SCM, and SERVICE_QUERY_CONFIG,
+   DELETE or SERVICE_STOP on the service.
+
+StopService()'s return value changes from E_FAIL to a specific
+HRESULT_FROM_WIN32(); its only caller, in requester.cpp, ignores it.
+
+Signed-off-by: Abed Agbaria <aagbaria@redhat.com>
+---
+ qga/vss-win32/install.cpp | 122 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 105 insertions(+), 17 deletions(-)
+
+v1: https://lore.kernel.org/qemu-devel/20260915145320.215663-1-aagbaria@redhat.com/
+
+v2:
+ - Pass win32 error codes to errmsg() consistently instead of mixing
+   error codes and HRESULTs (Marc-André)
+ - Factor the SCM/OpenService boilerplate into QGAProviderOpenService()
+   and convert the existing StopService() to it (Marc-André)
+ - Restrict StopService() to the access rights it actually needs
+
+Tested on a Windows guest by replacing the installed build with this
+one and running a full install/uninstall cycle, including installation
+over a leftover provider service.
+
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+index 5b7a8e9bc5..cfafc2d95e 100644
+--- a/qga/vss-win32/install.cpp
++++ b/qga/vss-win32/install.cpp
+@@ -241,6 +241,96 @@ out:
+     return hr;
+ }
+ 
++/*
++ * Open the QGA VSS provider service with the requested access rights.
++ *
++ * On success, return a service handle which the caller must release with
++ * CloseServiceHandle().  On failure, return NULL and store the win32 error
++ * code in *err.  ERROR_SERVICE_DOES_NOT_EXIST just means the service is not
++ * installed, which is a normal condition for all callers, so it is not
++ * reported here; the caller decides what it means.
++ */
++static SC_HANDLE QGAProviderOpenService(DWORD access, DWORD *err)
++{
++    qga_debug_begin;
++
++    SC_HANDLE service = NULL;
++    SC_HANDLE manager = OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT);
++
++    *err = ERROR_SUCCESS;
++
++    if (!manager) {
++        *err = GetLastError();
++        errmsg(*err, "Failed to open service manager");
++        goto out;
++    }
++
++    service = OpenService(manager, QGA_PROVIDER_NAME, access);
++    if (!service) {
++        *err = GetLastError();
++        if (*err != ERROR_SERVICE_DOES_NOT_EXIST) {
++            errmsg(*err, "Failed to open service");
++        }
++    }
++
++out:
++    if (manager) {
++        CloseServiceHandle(manager);
++    }
++    qga_debug_end;
++    return service;
++}
++
++/* Check whether the QGA VSS provider service is registered with the SCM */
++static bool QGAProviderServiceExists(void)
++{
++    qga_debug_begin;
++
++    DWORD err;
++    SC_HANDLE service = QGAProviderOpenService(SERVICE_QUERY_CONFIG, &err);
++
++    if (service) {
++        CloseServiceHandle(service);
++    }
++
++    qga_debug_end;
++    return service != NULL;
++}
++
++/* Delete a QGA VSS provider service that COM+ no longer owns */
++static HRESULT QGAProviderRemoveService(void)
++{
++    qga_debug_begin;
++
++    HRESULT hr = S_OK;
++    DWORD err;
++    SC_HANDLE service = QGAProviderOpenService(DELETE, &err);
++
++    if (!service) {
++        if (err != ERROR_SERVICE_DOES_NOT_EXIST) {
++            hr = HRESULT_FROM_WIN32(err);
++        }
++        goto out;
++    }
++
++    qga_debug("Removing service: %s", QGA_PROVIDER_NAME);
++
++    if (!DeleteService(service)) {
++        err = GetLastError();
++        if (err != ERROR_SERVICE_MARKED_FOR_DELETE) {
++            hr = HRESULT_FROM_WIN32(err);
++            errmsg(err, "Failed to delete service");
++        }
++    }
++
++out:
++    if (service) {
++        CloseServiceHandle(service);
++    }
++    qga_debug_end;
++    return hr;
++}
++
+ /* Unregister this module from COM+ Applications Catalog */
+ STDAPI COMUnregister(void);
+ STDAPI COMUnregister(void)
+@@ -251,6 +341,7 @@ STDAPI COMUnregister(void)
+ 
+     DllUnregisterServer();
+     chk(QGAProviderFind(QGAProviderRemove, NULL));
++    chk(QGAProviderRemoveService());
+ out:
+     qga_debug_end;
+     return hr;
+@@ -286,7 +377,7 @@ STDAPI COMRegister(void)
      }
-will correct it in next version.
-
-Thanks,
-Narayana Murty N
-> 
-> The rest of the patch looks fine to me. Once this concern is addressed, 
-> feel free to add my tag:
-> 
-> Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-> 
-> Thanks & Regards
-> ~ Nikhil
+ 
+     chk(QGAProviderFind(QGAProviderCount, (void *)&count));
+-    if (count) {
++    if (count || QGAProviderServiceExists()) {
+         qga_debug("QGA VSS Provider is already installed. Attempting to unregister first.");
+         hr = COMUnregister();
+         if (FAILED(hr)) {
+@@ -499,6 +590,7 @@ STDAPI DllRegisterServer(void)
+                                      g_gProviderVersion);
+     if (hr == (long int) VSS_E_PROVIDER_ALREADY_REGISTERED) {
+         DllUnregisterServer();
++        QGAProviderRemoveService();
+         hr = pVssAdmin->RegisterProvider(g_gProviderId, CLSID_QGAVSSProvider,
+                                          const_cast<WCHAR * >
+                                          (QGA_PROVIDER_LNAME),
+@@ -515,6 +607,7 @@ STDAPI DllRegisterServer(void)
+ out:
+     if (FAILED(hr)) {
+         DllUnregisterServer();
++        QGAProviderRemoveService();
+     }
+ 
+     qga_debug_end;
+@@ -575,29 +668,24 @@ STDAPI StopService(void)
+     qga_debug_begin;
+ 
+     HRESULT hr = S_OK;
+-    SC_HANDLE manager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+-    SC_HANDLE service = NULL;
+-
+-    if (!manager) {
+-        errmsg(E_FAIL, "Failed to open service manager");
+-        hr = E_FAIL;
+-        goto out;
+-    }
+-    service = OpenService(manager, QGA_PROVIDER_NAME, SC_MANAGER_ALL_ACCESS);
++    DWORD err;
++    SC_HANDLE service = QGAProviderOpenService(SERVICE_STOP, &err);
+ 
+     if (!service) {
+-        errmsg(E_FAIL, "Failed to open service");
+-        hr =  E_FAIL;
++        hr = HRESULT_FROM_WIN32(err);
+         goto out;
+     }
+-    if (!(ControlService(service, SERVICE_CONTROL_STOP, NULL))) {
+-        errmsg(E_FAIL, "Failed to stop service");
+-        hr = E_FAIL;
++
++    if (!ControlService(service, SERVICE_CONTROL_STOP, NULL)) {
++        err = GetLastError();
++        hr = HRESULT_FROM_WIN32(err);
++        errmsg(err, "Failed to stop service");
+     }
+ 
+ out:
+-    CloseServiceHandle(service);
+-    CloseServiceHandle(manager);
++    if (service) {
++        CloseServiceHandle(service);
++    }
+     qga_debug_end;
+     return hr;
+ }
+-- 
+2.55.0
 
 
