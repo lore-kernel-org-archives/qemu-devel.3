@@ -4,108 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85535C88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AFAC88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7GBI-0004JG-Im; Thu, 17 Sep 2026 13:45:56 -0400
+	id 1x7GGe-0006Qp-0O; Thu, 17 Sep 2026 13:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7GBF-0004Fw-Gw
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:45:53 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7GBD-0002AZ-TA
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:45:53 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49ccff31419so9503565e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:45:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GGU-0006Pe-G9
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:51:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GGS-0003Pb-0Y
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:51:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789667472;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
+ b=WlB2SO+Rute91IWZhfpWKrctuEXeGD/AIyOYyl1ikQjxNZepSAfDZ57LDSUBs9E/Zo0VIs
+ PRIhUcdAugIAO0lO/Hxcf1RrPGRRZzDxpxHuGLvR2mqGrEpzjxzUQY3iHAbhGsGP44fe9z
+ hQ5v0SwpWjklmMt0uanzr6mWbKAVGX0=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-339-R69O9XSAPfeTDkIzzpfozw-1; Thu, 17 Sep 2026 13:51:11 -0400
+X-MC-Unique: R69O9XSAPfeTDkIzzpfozw-1
+X-Mimecast-MFC-AGG-ID: R69O9XSAPfeTDkIzzpfozw_1789667471
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-8546e211940so8033447b3.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:51:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789667471; cv=none;
+ d=google.com; s=arc-20260327;
+ b=nbYjeFtZ3Op5N6n6g6P8IQAbKUVOJmTzTNaGjiaEH2J8d6VZ8fx7sU9M+SMmEh2R9z
+ 6CShl8NPrmM7NE9mkRD1dzvrEWdupe0/Rj8HnOjC4b+mjXQc4/eUwEzc6s8WbDjqscl8
+ t7qkke9z/VBZMtgdIszBZs4fWYhzk75RJGkErYI1Ml5QAx+RU0RyGvkTz63ZczrtzZRw
+ CemRh3jUx8vIuPwoCMdysc+1apGITJ9vO1mm6GJQ/O+eZjgJrVQDWiPSN1fXTmh5X1a8
+ iiV50Pg5VujoH+c9FP4WTageDwhDzCLjpgUPe14BVLNqWWdKFlV9rQs2KI6XPpvvbEHN
+ vjCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
+ fh=N1T2rJRgpF5SwCDa8mYUq6XaRC8Zgv+Raym5wifJ61I=;
+ b=GKJI2OrlU0EMn5YF47lZ6Nbjghe8sEcZiXKKLpwOucx9eslfbAjJkv7VSSn1n3cssR
+ obqYIN8Ug3U5iMVZHCYVctwzu6Ibbd4R9Sf7IVXAaveOiAgKosD6hnl56COhmmk6xRs3
+ wabxHknz2OpISBfgVNLCJot8+n4ntwqR22i4AW+vb8QGNBjFRqQXtl7UOc0g9k/Qoggs
+ 5wwLMTm/qS3MGYC5DbtPX/MtSoh7rXWZAWYaZ0jtZj9NKtBL2+pn87r0iLiK//P7kRD0
+ sBY7pZdui7wi0VZ6svzk4SFAfATHz34wJi8gOqJslT9GBuB1gLwtyZ736pIJmYFuxcTT
+ BjaQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789667150; x=1790271950; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=WidEHgTxlK3+Y8ica2DT63uylQstSG3MoUmxmbfym+k=;
- b=zWIitNejcz2gJ3XKD6iahx63tJFfoyco3lCt605Pqg7Swo1e1QF1YYfbYUD4qoKIAm
- yBhfG/RL4dD+XGLIW3kIKPybBLWxn2cvysJmgKFnq8vaJJeZ7ztivafH7Z8/2YtZeN6T
- pZWHDaJTbxiCycS/OzT2+3KpYOxOBcWkYXxdlZu5RalkXLwRtbY78cw4Qfpt0B6Zy4qZ
- IgK4VrDHUk3lRZO+M/0hzmhZQowkm8DacM25FtwymtKfsLNX0kUf1jIgQS/Um0NP7G6d
- 2kIk7h4/whGpsAQoSeHYKdVfI34ulFsOirfn8w+YtJ1AP22/QCw7nEL5SZ9OGDYqiJ5W
- xblQ==
+ d=redhat.com; s=google; t=1789667471; x=1790272271; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
+ b=QBvqH+ENt8GK4xRbVg7XsCEYGR1A2+4o/vpP5G+lEq9kvzE02anrOlBUc35l9vaBap
+ zbLZmzTBFRqEGG3RBzKNDgQSvB07rvLg4GrMHlSxXiVcONmaT9h+LZ7OIHCkI1nDKyLc
+ rnLl5JyLAZB8u/DNd/LD6qpmz3ZoFDJ01FrAN4nHqWfKF92q+aRlPGSdO2s5hzWMm2l7
+ AAoVx3l3cGaTXaaUuaUyXSjo8Uw7dJHVNWQUd5SKxhGNb0XaR5fiySFYPxz5z9MOO++k
+ UkRmqyl66VWaTHfnNSUTngHwfvvSPJUczxUYWeSEd7s2FlQxQGRa1ovrsedvodrOu07b
+ raLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789667150; x=1790271950;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1789667471; x=1790272271;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WidEHgTxlK3+Y8ica2DT63uylQstSG3MoUmxmbfym+k=;
- b=p2mt/7ylTGN+k4JGUHr/sT9nWavUPemwdY3OIFaKUTfAKbhnkHvkYd8BczuBUEW+fu
- tGThcqrUpxrtsh3XjUjasaP/dROaJCX9fYdUnM09AWD1w9aTyBD8wH1fgvf6fqfTjOX+
- yyWfRIJsIEY4aSNyKlInl8QSv5T1k0wJHEEccIlrQlotN6vVK50x3/9GotlejZdqNsbi
- J1Shtnv2LV/W3xTo9KOymfDRVkUAs2rJGNlqHrnvtTM0eslHqcj3dzKiaRTaL07CNSEg
- etTGLpwh99LJq1xBnCsurdt7CxTqQ4pi2ejJejWRRzdLU22vBwu/r8sTuiAxi1lyJLZ0
- enrA==
-X-Gm-Message-State: AFuF++ngwGd3ObRYjo1pi9lT44sKliOIjgRCkDBpKycc8WkE0W0o9pT0
- v1Df3juqX2FFxxukWXyXl749wTn5meamcbmV/+CM0YebZnsOeuRpy4A46Lr2rUI60LA=
-X-Gm-Gg: AYBFou2D43tLtJFrI1cA08A16bRmhPmK713TYBejurPe6qePTFYF1dTRwYzyzSWtTc6
- zlJ1pP8yPG4gm75s3HCoTlEI0Ra2dE312DvmiS6hr4OTC+5mfS5es7gCJWZi1paD2LzKjthNYad
- PO2p+FRfoDzz3IhDvbJLXCEvBwlQfwvugEX3+p7FD4FAoRzem5VjNl1z+nHGD0yzz2ZqfLnVJHE
- YzK8iJgHee2+igKRUgA8r1pdbd3pfCrArImRuXzHsUY0cJUkwtUBRdr0v/wbc7D4Kfmm5NkWUBh
- FCUh4TL/S0TgDmR3ibpsG13nnLl1xtXZF+mFV2DwdhDx6n20md+hgNdfvzWCWTQF25KgtaTHfvn
- Lv0Z5g9uNhqc/KuP4cIfTqPCtvtsNFPfMSJv7PwDeYzfRO6lEMp5JNHap8bQpiywD74w9tvPbSF
- W6QfU/tVOCC2jPUcKvPTB9iy8ImRsav19YnRPdsnPx1xLa38/cUg7Xvl9yCgHigU1FG4YmhUc=
-X-Received: by 2002:a05:600c:8b86:b0:49c:fff9:f684 with SMTP id
- 5b1f17b1804b1-49eb7320be4mr90447925e9.21.1789667149870; 
- Thu, 17 Sep 2026 10:45:49 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd227141sm109699905e9.2.2026.09.17.10.45.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 10:45:48 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CD2A85F872;
- Thu, 17 Sep 2026 18:45:47 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Helge Deller
- <deller@gmx.de>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  qemu-arm@nongnu.org,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Thomas Huth <th.huth+qemu@posteo.eu>,
- Matthew Rosato <mjrosato@linux.ibm.com>,  David Hildenbrand
- <david@kernel.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,  Song Gao
- <gaosong@loongson.cn>,  Warner Losh <imp@bsdimp.com>,  John Snow
- <jsnow@redhat.com>,  Eric Farman <farman@linux.ibm.com>,  Cornelia Huck
- <cohuck@redhat.com>,  qemu-s390x@nongnu.org,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>,  Brad Smith <brad@comstyle.com>,
- Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH v5 00/17] testing: various docker clean-ups post meson
- tcg conversion (pre-PR)
-In-Reply-To: <c0c5cf55-b4ff-495b-babd-3a75fd991127@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Thu, 17 Sep 2026 10:20:12 -0700")
-References: <20260917165602.3405537-1-alex.bennee@linaro.org>
- <c0c5cf55-b4ff-495b-babd-3a75fd991127@oss.qualcomm.com>
-User-Agent: mu4e 1.14.4-pre3; emacs 30.1
-Date: Thu, 17 Sep 2026 18:45:47 +0100
-Message-ID: <87qzir7ovo.fsf@draig.linaro.org>
+ bh=09DtJ8tZJ8rs9LEZY0Pk2zz/2jXY4P8CwFFo3BQnx2Q=;
+ b=Pp072tJJgECNiYUczDn2Ys2P3M5UCdXtFSfRioOAO4cp3mryaxWBexyncsMEDmqqdL
+ Qzqph+MhyN5lLu8/85xHhyS9qnEQnQQqjsaFzJ1ApINSFQcy6KHMjHJlB/5HuI9Mb5rx
+ AqqwHQUd0C+IIroJBURtO+Hg1Jm0A5uAPNDVj39sj10YwvXP4Atp50jTxHH+y0iv+knQ
+ 1jeFq3cmxOVof+l0OzvfMtQ+8fpJ5a6X+IJOa9dCIVh72Yze9AAjZwz3W3W8RRXXiPHd
+ w2VbjPvI63Cz5aTFUfDEmzFYKFzUva+vieGZiMbqpsmc9WUJKIDcfWZOLBx8rUsmOmJf
+ vbhg==
+X-Gm-Message-State: AFuF++mFuLw1BEjxWGjhdUZQpAUrqB+Dj7w8Yk2T9jLGyM2AnAot+FzW
+ sQiXGNtJOXmo0PIlE70jQbEHiCq5Go2BzbaZxcSi9snVADtjFo85HteYZspt7kvv4Jbf4S2SeJ4
+ /InPeyHibIMUCNhbIbPIjNfYnD8iGXs1t/R5KFEuqtT/V6HtfCu7k6cAQ7mizNYHiHBcwnxt6By
+ 75hBtsO3gGwKJWw1HLWE1V3yaRGbMQRdU=
+X-Gm-Gg: AYBFou3n+W46Uqa5qTMbyDVSxhb+nQ2ZNNPWmISddHlbFN+TxczPflWBWQYC5bJh5IB
+ 7j7jme43xUfirnF18b4N0s5fEZ+K4ua34JGOOV9bssIjStU9x7oOfaxKg88U6u4/48T6ZmILEWX
+ vzBNEffAroImqq/gsl6E+ucOr9czbk6qb0rcbPjy9RfN+QIVeoPLeuDwnQipQpifDh8zrnc724i
+ to8V+C+7umuNLqt
+X-Received: by 2002:a05:690e:450b:10b0:66c:486c:aa1b with SMTP id
+ 956f58d0204a3-671631f05acmr1743275d50.38.1789667470754; 
+ Thu, 17 Sep 2026 10:51:10 -0700 (PDT)
+X-Received: by 2002:a05:690e:450b:10b0:66c:486c:aa1b with SMTP id
+ 956f58d0204a3-671631f05acmr1743251d50.38.1789667470302; Thu, 17 Sep 2026
+ 10:51:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260916135841.3614495-1-jsnow@redhat.com>
+ <20260916135841.3614495-8-jsnow@redhat.com>
+ <877bkl6p5s.fsf@pond.sub.org>
+In-Reply-To: <877bkl6p5s.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 17 Sep 2026 13:50:59 -0400
+X-Gm-Features: AcwNN1X3Ijah7JnB4DXCnn25H-wDvOuxeeEXSvmMKd70__JU6VQ57kzsptrcuPY
+Message-ID: <CAFn=p-YbywppYTRUj9K9ncrue8b9NTgqXtcjWzMYiiJwTgYCpA@mail.gmail.com>
+Subject: Re: [PATCH v4 7/7] qapi: convert intro sections followed by
+ notes/examples
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Jonathan Cameron <jic23@kernel.org>, Eric Blake <eblake@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ linux-cxl@vger.kernel.org, 
+ qemu-block@nongnu.org, Junjie Cao <junjie.cao@intel.com>, 
+ Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,52 +146,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> On 9/17/2026 9:55 AM, Alex Benn=C3=A9e wrote:
->> This cleans up a few bits and pieces although doesn't totally solve
->> the issue of an apparent stall while meson builds the docker image.
->> However with these changes there should be no difference between the
->> meson build and the equivalent "make docker-image-foo" invocation.
->>=20
->> We also finally get rid of the ill-advised magic caching support in
->> docker.py.
->>=20
->> v5
->>  - fixup a bunch of rebase damage
->>  - swap out my ccache fix for Anders
->>  - rename revert to "configure: ensure it also honours container configu=
-ration"
->>  - use Pierricks solution for avoid too many SKIPs while validating conf=
-ig
->>
+On Wed, Sep 16, 2026 at 2:13=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
-> It seems that this version removes patch:
-> Revert "tests/tcg/meson.build: implement ./configure -cross-cc-* options"
+> John Snow <jsnow@redhat.com> writes:
 >
-> That's fine and correct, but we're missing two things:
-> - cross-cc-cflags and prefix should be passed to config.mak also
-> (similar to the merge for container options). Not strictly needed as I'm
-> not sure anyone needs this "extra" flexibility for roms/vdso, but needed
-> if we want to make sure we don't break anything for anyone.
+> > These provide a rather natural cutoff point, but technically this does
+> > introduce a new intro/details split to these documentation blocks.
+>
+> Not sure what you mean by "technically".
 
-The rom builds are outside the main makefile anyway so they just include
-random bits as they want.
-
-> - scripts/meson_buildoptions.sh update that was missing originally for
-> those meson options.
-
-We need to do something about it because at various times
-"update-buildoptions" does and doesn't change things. Sometimes there
-are more options than I've been messing with. It is super confusing.
+As a German, when an American says "technically", you can just omit
+that word from the sentence.
+I think, translating for you: "I don't expect these changes to have
+any immediate effect, but it's possible they might".
+You found the case where they might - a case where we probably
+actually did want a "TODO:" but never added it.
 
 >
-> For the rest, it looks good and ready!
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  qapi/machine.json   |  5 ++---
+> >  qapi/migration.json | 15 +++++++--------
+> >  qapi/misc.json      |  3 +--
+> >  qapi/run-state.json |  7 +++----
+> >  4 files changed, 13 insertions(+), 17 deletions(-)
+> >
+> > diff --git a/qapi/machine.json b/qapi/machine.json
+> > index 84d95c8d87f..276258d9e5c 100644
+> > --- a/qapi/machine.json
+> > +++ b/qapi/machine.json
+> > @@ -1209,9 +1209,8 @@
+> >
+> >  ##
+> >  # @HV_BALLOON_STATUS_REPORT:
+> > -#
+> > -# Emitted when the hv-balloon driver receives a "STATUS" message from
+> > -# the guest.
+> > +#     Emitted when the hv-balloon driver receives a "STATUS" message
+> > +#     from the guest.
+> >  #
+> >  # .. note:: This event is rate-limited.
+> >  #
+>    # Since: 8.2
 >
-> Regards,
-> Pierrick
+> The patch splits the first section between after the first paragraph,
+> i.e. before the note.
+>
+> This matters, because we insert generated argument documentation after
+> the first section.  Rendered documentation changes like this
+>
+>     Emitted when the hv-balloon driver receives a "STATUS" message from
+>     the guest.
+>
+> +   Members:
+> +      * The members of "HvBalloonInfo".
+> +
+>     Note:
+>
+>       This event is rate-limited.
+>
+> -   Members:
+> -      * The members of "HvBalloonInfo".
+> -
+>     Example::
+>
+>        <- { "event": "HV_BALLOON_STATUS_REPORT",
+>
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index d571c06fc20..a272e701385 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -1254,10 +1254,10 @@
+> >
+> >  ##
+> >  # @migrate_cancel:
+> > -#
+> > -# Cancel the currently executing migration process.  Allows a new
+> > -# migration to be started right after.  When postcopy-ram is in use,
+> > -# cancelling is not allowed after the postcopy phase has started.
+> > +#     Cancel the currently executing migration process.  Allows a new
+> > +#     migration to be started right after.  When postcopy-ram is in
+> > +#     use, cancelling is not allowed after the postcopy phase has
+> > +#     started.
+> >  #
+> >  # .. note:: This command succeeds even if there is no migration
+> >  #    process running.
+>
+> Similar split, but rendered documentation doesn't change, because
+> nothing gets inserted.
+>
+> Same for the remaining hunks.
+>
+> Should the one hunk that changes rendered documentation be in the "qapi:
+> convert/split remaining QAPI/QMP intro sections" series?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+If you should so please. I was splitting by semantics and not effect,
+but I can split this one out for you.
+
+>
+> [...]
+>
+
 
