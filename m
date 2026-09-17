@@ -4,160 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98DDC982D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 22:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B94CFC982D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 22:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7KBV-0005XW-6I; Thu, 17 Sep 2026 18:02:27 -0400
+	id 1x7KAv-0004kS-QJ; Thu, 17 Sep 2026 18:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x7K9l-00049d-Sm
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 18:00:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1x7K9k-000494-63; Thu, 17 Sep 2026 18:00:37 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x7K9g-0004ae-1p
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 18:00:36 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HLG2Tf2710821
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 22:00:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DRgEwlJmK8bcf4OSTwYjgga3u2VCWo00NwdUB25UExo=; b=d9NOgjAXcqcDjSdm
- FjTEiOR+Dz0xw9epkQMowNB9g5xNm/CxTe7JKV+ogUtLRVd9vIqfSdc3ZQzPJFd+
- r6vyC8iu0MJcNFuBtIOtFmBCFHkzhSB0P1sbN58WrqH74/fIO4lNaIqxMIwc1f81
- nWF9Gre6iFAchT0S82K4TqmBuBwSQbtyhbRONA05zzwFA8Yun8GVgA70leOZyB+n
- VEMBy7yZyx7nCu13mUqCfmrMrUS0YXwnn7Z6CLfAsA1AXorxK15ic4oTqERbB1wx
- 9BpHooZf1YDGO5CJqqJqS3HnhAeijuB7bDcq/PgLyHogebokahbCmdlVA/zNXycj
- PbJmJg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4grk97sk1e-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 22:00:29 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2dc92350888so1768005ad.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 15:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789682428; x=1790287228; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=DRgEwlJmK8bcf4OSTwYjgga3u2VCWo00NwdUB25UExo=;
- b=XSRnHo2niQgNDZF0iPA1DDxkDq31qvi8MyCg8dvM8A4VIJrVdazd8TxE3Di5wqjTa+
- rPoDG3zwdcJjV/QN9WA8fdhucVlTAyMoDOXlg/csm/CpT8oQOkbX4lX5AJGhgbXZY+sL
- X2YzgotoFPHAjh8o3Xj9CFRXdHyan2Vr9uof3Sxg/W/dD7mPWsuPeeLLocLRdic8TeCZ
- UvlOdylcjC3SqUlkJZml5mvFERwuUxsDOQ465O+H/ggDN1GbKAoz6MiRMQqFyYsjaoVz
- x55JBVEtFpEUp+E/ndtC7rr/FOFV814pz8O9BkN1JBrdHApgFsCPNB9LtvghVG4i9MUg
- 7oUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789682428; x=1790287228;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DRgEwlJmK8bcf4OSTwYjgga3u2VCWo00NwdUB25UExo=;
- b=o3tRfEegZy/3v7S83IiOU2zoof6QJuoqTzQXV5ohhmgudLx7WpaBLdmZ8cJz+Bxcmd
- dBhljQKJABc4gkEZkWMFgxvrJhz4AR9e0XmxO2VUK4E7UHF19MNUiOzq1ObcakStp7vZ
- oNDtSWL3vYdHw4gLT8dKxDK5umKe4d+JqYYbNxaUe/pc9jnNXSLe2b2Hg+f19nTCzfw8
- C27vWo7IMABgHhRnDJSUOcSXw2TRiMCvunVivoVii1Q+o7Ba1icPWU5iw2VKReGQLKL8
- 9Avrdj696z/ZEfB/K0JZrnWbGsHrHrk7fLYtc7s61u/yY9jnAHEMGIRXp9EOd6/G4Uza
- dDwQ==
-X-Gm-Message-State: AFuF++lWQjvCYsLd5KSIax1vuTg/bH+mxnlA3Ssg55jCvlwVBsmJ//z2
- 9qFLZ3K0jpwenuXyE7C7E3/JpGQENzNR/BMsH0Ip1PVVWcoAV1JdhOBhNTbdr8L396MuIDYWCWO
- wOViQTqAPrRz12SU+nddVEPu0ZI9IShbsfDT2NgAOsY+fvAyfRgilQBLUjw==
-X-Gm-Gg: AYBFou1juoraLp0b0DmBj3oqryoqyh6gjDkn3RU44igF0t3otDKVFcD9yAd8GX1Z4GP
- Ssrdh4Z/zYgpG7K51qb2K9CEeBQby/ZvJlxzpEwehWjsrYb4zY+LVJmrvBlr8R9XoV9LfGfk2mg
- 59kegYcSZ+1hpRIREcjIobbUCDftUIXHR0SxbUmUCcW0qTfiXW9/RLh989YUlGErgZJ87xN4bJ3
- Qs+Do3GgRYxin3ERkc0Dj+aSPk0mkwQI19EiB6ZEovl415RqGBRdZHCd3brCBV/LR7H4g3G0rqb
- rbV+U0cRtOUUIL0MmdGmx7yEIdobLrBeWMuiGeHStRPfKdCJftkaA4AAIOjm5TJjGxnHDka7roP
- VcHY1IzIA+FOf307aBbRie1jLCq0UvD423k/jxcHQJzfQF8WAd4ox9u/Hqd9ptCnbyBR4
-X-Received: by 2002:a17:903:4b03:b0:2dd:ad73:c937 with SMTP id
- d9443c01a7336-2ddb1b989dfmr9654895ad.24.1789682428012; 
- Thu, 17 Sep 2026 15:00:28 -0700 (PDT)
-X-Received: by 2002:a17:903:4b03:b0:2dd:ad73:c937 with SMTP id
- d9443c01a7336-2ddb1b989dfmr9654195ad.24.1789682427422; 
- Thu, 17 Sep 2026 15:00:27 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5aee8b0sm35823924eec.23.2026.09.17.15.00.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Sep 2026 15:00:26 -0700 (PDT)
-Message-ID: <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
-Date: Thu, 17 Sep 2026 15:00:23 -0700
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1x7K9g-0004LZ-5h; Thu, 17 Sep 2026 18:00:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=mMRpVMSst98vUE1cTbcc1vWeWwbqgmyfGyzpZB5Y+BQ=; b=Das+0dYTzD/fB3K
+ YFyqy5p0g1w2ERVLPo18lUCHfpoDUBTiPHI9j50mr4INpNryey8ejGnhWXVZA4Y/lOIE1dEcbXn8l
+ D48UGuVrDAnqaDsSx+6d50uhT/AAc21Ik4BMJtigDUUqHwJsgw0Nhav9kCU7R03ap/SUUjGp/GVJD
+ vk=;
+Date: Fri, 18 Sep 2026 00:05:04 +0200
+Subject: [PATCH v5 10/11] hw/riscv: Filter for 32- or 64-bit machine types
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic from
- docker.py
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Helge Deller <deller@gmx.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-arm@nongnu.org,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Matthew Rosato
- <mjrosato@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Song Gao <gaosong@loongson.cn>, Warner Losh <imp@bsdimp.com>,
- John Snow <jsnow@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, Brad Smith <brad@comstyle.com>,
- Kyle Evans <kevans@freebsd.org>
-References: <20260917165602.3405537-1-alex.bennee@linaro.org>
- <20260917165602.3405537-12-alex.bennee@linaro.org>
- <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
- <87fqz77dln.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <87fqz77dln.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=LOzz05W9 c=1 sm=1 tr=0 ts=6aac62fd cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=cSby643O2cv9IJhTg8EA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDMxNiBTYWx0ZWRfXw297n+Np1+D0
- 8WDEtN+BQKh9h2bfdwfgjcd5la88TDekCvUX4W8qO7Uvk9MGAyHZcMaeoaieDO6xW3B+tBW9uzB
- aWo4jrNENr50sJW4suw2ZRH43xPQhC1Dpvp8OO3y3eyvzb2TDdtjFbrYUljOku8rhQZRqc5b0By
- 6chMdhYpRlF6PwzX7F18vQvua7nsU9OkltLL5cnqDaQZ3A7El+qL3o5fgziuC6BGzpQiNou0vSR
- 4d8zQFEcgYqZ3npdwa7CILOjqDZuDoTXuYvCC0BCheaMe8YG2sjjnYpGGWfRssnxkdAZGpnilXS
- Ls4mbjT2eyDC/ujYkcNhd6cdNENxrW7jc9b7BjGsN2TOpxmvDz2t6aQtMrzTWX6qXds7PXrvr+U
- 6+eQLWRe8lhp/uWYIjPpctRiQbQGnVZdH3PYLMERSC/8Py6QUuM2/ymUnkDVdq+y17/mMo3DvFY
- rd4j5MoRQOZowaHrhZQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDMxNiBTYWx0ZWRfX6AmFqG2FAqJ0
- pXe3YXNHpLn1sIC4cACKqhkqeGQQdtpsO9ufR/b/Ls7jfXuH7Q37NjSx8ooteP7uifOVb54LiJH
- Q/706TZVpxjdkUPXRax/+W0gHtlSWfQ=
-X-Proofpoint-ORIG-GUID: p4pwa71TlsX9j3AdAAux8Co3doF2SOQ9
-X-Proofpoint-GUID: p4pwa71TlsX9j3AdAAux8Co3doF2SOQ9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_05,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0
- spamscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170316
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260918-hw-riscv-cpu-int-v5-10-f98c5a244636@rev.ng>
+References: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
+In-Reply-To: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, 
+ daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1789682744; l=8455;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=UBmbIKF8k5MDtsnP+GDSom1GqHBRktVVsp7PYnJ2xtY=;
+ b=jJ+DyBf0llhQcjtOTOHGWjaQ/PDf/nSqL8Ry+P/ELYtZXZe6KSF8/MjRfL/5rGemILOviKb9Z
+ 2rTITjiFZGiDiCwusB49MUrmYL7hJMOaFkNun9Zei51Ti33jDBJcGWT
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,87 +68,257 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/2026 2:49 PM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> On 9/17/2026 9:55 AM, Alex Bennée wrote:
->>> The caching logic was a remnant of an older time when we had multiple
->>> shared layers building that went into the final image. It was arguable
->>> that it worked back then but it is definitely not needed now so into
->>> the bin it goes.
->>>
->>> Tested-by: Richard Henderson <richard.henderson@linaro.org>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> ---
->>>  tests/docker/docker.py | 148 ++++++++++++++---------------------------
->>>  1 file changed, 49 insertions(+), 99 deletions(-)
->>>
->>
->> After testing this series, it's not a good idea to include this patch.
->>
->> It forces a systematic rebuild, even when image is already. This has
->> three consequences:
->> - verbosity: we see build log systematically
-> 
-> You asked me to drop the verbose/quiet switch patch which addresses this.
->
+Filters for 32- or 64-bit machine types using TypeInfo::is_available,
+machines available for both 32-bit and 64-bit (amd-microblaze-v-generic,
+sifive-[e|u], spike, virt) leave the field unset.  For boston-aia,
+DEFINE_MACHINE() has been inlined to set is_available.
 
-Which is good, because it was hiding the problem.
-I was waiting to see the series is in good shape before testing it.
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ hw/riscv/boston-aia.c      | 34 ++++++++++++++++++++--------------
+ hw/riscv/k230.c            |  3 +++
+ hw/riscv/microchip_pfsoc.c |  3 +++
+ hw/riscv/opentitan.c       |  3 +++
+ hw/riscv/shakti_c.c        |  3 +++
+ hw/riscv/tt_atlantis.c     |  3 +++
+ hw/riscv/xiangshan_kmh.c   |  3 +++
+ 7 files changed, 38 insertions(+), 14 deletions(-)
 
->> - slower: running a noop rebuild takes time
-> 
-> how much time? it flies past when I run a rebuild.
->
+diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
+index b90da096ea..ba16b7dbc6 100644
+--- a/hw/riscv/boston-aia.c
++++ b/hw/riscv/boston-aia.c
+@@ -10,6 +10,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qemu/units.h"
+ 
+ #include "hw/core/boards.h"
+@@ -263,18 +264,6 @@ static const MemoryRegionOps boston_platreg_ops = {
+     },
+ };
+ 
+-static const TypeInfo boston_device = {
+-    .name          = TYPE_MIPS_BOSTON_AIA,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(BostonState),
+-};
+-
+-static void boston_register_types(void)
+-{
+-    type_register_static(&boston_device);
+-}
+-type_init(boston_register_types)
+-
+ #define NUM_INSNS 6
+ static void gen_firmware(uint32_t *p)
+ {
+@@ -462,8 +451,9 @@ static void boston_mach_init(MachineState *machine)
+     }
+ }
+ 
+-static void boston_mach_class_init(MachineClass *mc)
++static void boston_mach_class_init(ObjectClass *oc, const void *data)
+ {
++    MachineClass *mc = MACHINE_CLASS(oc);
+     mc->desc = "MIPS Boston-aia";
+     mc->init = boston_mach_init;
+     mc->block_default_type = IF_IDE;
+@@ -473,4 +463,20 @@ static void boston_mach_class_init(MachineClass *mc)
+     mc->default_cpu_type = TYPE_RISCV_CPU_MIPS_P8700;
+ }
+ 
+-DEFINE_MACHINE("boston-aia", boston_mach_class_init)
++static const TypeInfo boston_types[] = {
++    {
++        .name          = TYPE_MIPS_BOSTON_AIA,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(BostonState),
++        .is_available  = target_riscv64,
++    },
++    {
++        .name          = MACHINE_TYPE_NAME("boston-aia"),
++        .parent        = TYPE_MACHINE,
++        .class_init    = boston_mach_class_init,
++        .instance_size = sizeof(MachineState),
++        .is_available  = target_riscv64,
++    },
++};
++
++DEFINE_TYPES(boston_types)
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 1e4ca38579..43b6ae6d2f 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -17,6 +17,7 @@
+ #include "cpu-qom.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "system/device_tree.h"
+ #include "system/system.h"
+@@ -420,6 +421,7 @@ static const TypeInfo k230_soc_type_info = {
+     .instance_size = sizeof(K230SoCState),
+     .instance_init = k230_soc_init,
+     .class_init = k230_soc_class_init,
++    .is_available = target_riscv64,
+ };
+ 
+ static void k230_soc_register_types(void)
+@@ -558,6 +560,7 @@ static const TypeInfo k230_machine_typeinfo = {
+     .class_init = k230_machine_class_init,
+     .instance_init = k230_machine_instance_init,
+     .instance_size = sizeof(K230MachineState),
++    .is_available = target_riscv64,
+ };
+ 
+ static void k230_machine_init_register_types(void)
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index edd29626fa..b2991e5a71 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -38,6 +38,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/units.h"
+ #include "qemu/cutils.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+ #include "hw/core/boards.h"
+@@ -504,6 +505,7 @@ static const TypeInfo microchip_pfsoc_soc_type_info = {
+     .instance_size = sizeof(MicrochipPFSoCState),
+     .instance_init = microchip_pfsoc_soc_instance_init,
+     .class_init = microchip_pfsoc_soc_class_init,
++    .is_available = target_riscv64,
+ };
+ 
+ static void microchip_pfsoc_soc_register_types(void)
+@@ -757,6 +759,7 @@ static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
+     .class_init = microchip_icicle_kit_machine_class_init,
+     .instance_init = microchip_icicle_kit_machine_instance_init,
+     .instance_size = sizeof(MicrochipIcicleKitState),
++    .is_available = target_riscv64,
+ };
+ 
+ static void microchip_icicle_kit_machine_init_register_types(void)
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index 8cd660dd41..c3a563db92 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -20,6 +20,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
++#include "qemu/target-info.h"
+ #include "hw/riscv/opentitan.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+@@ -332,11 +333,13 @@ static const TypeInfo open_titan_types[] = {
+         .instance_size  = sizeof(LowRISCIbexSoCState),
+         .instance_init  = lowrisc_ibex_soc_init,
+         .class_init     = lowrisc_ibex_soc_class_init,
++        .is_available   = target_riscv32,
+     }, {
+         .name           = TYPE_OPENTITAN_MACHINE,
+         .parent         = TYPE_MACHINE,
+         .instance_size  = sizeof(OpenTitanState),
+         .class_init     = opentitan_machine_class_init,
++        .is_available   = target_riscv32,
+     }
+ };
+ 
+diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
+index 3b6efd25be..76cfe30918 100644
+--- a/hw/riscv/shakti_c.c
++++ b/hw/riscv/shakti_c.c
+@@ -21,6 +21,7 @@
+ #include "hw/riscv/shakti_c.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "qemu/target-info.h"
+ #include "hw/intc/sifive_plic.h"
+ #include "hw/intc/riscv_aclint.h"
+ #include "system/system.h"
+@@ -97,6 +98,7 @@ static const TypeInfo shakti_c_machine_type_info = {
+     .class_init = shakti_c_machine_class_init,
+     .instance_init = shakti_c_machine_instance_init,
+     .instance_size = sizeof(ShaktiCMachineState),
++    .is_available = target_riscv64,
+ };
+ 
+ static void shakti_c_machine_type_info_register(void)
+@@ -186,6 +188,7 @@ static const TypeInfo shakti_c_type_info = {
+     .class_init = shakti_c_soc_class_init,
+     .instance_init = shakti_c_soc_instance_init,
+     .instance_size = sizeof(ShaktiCSoCState),
++    .is_available = target_riscv64,
+ };
+ 
+ static void shakti_c_type_info_register(void)
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index b2333e7f6a..f54eb942f3 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -11,6 +11,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/guest-random.h"
++#include "qemu/target-info.h"
+ #include "qemu/units.h"
+ 
+ #include "hw/core/boards.h"
+@@ -694,11 +695,13 @@ static const TypeInfo tt_atlantis_types[] = {
+         .instance_size = sizeof(TTAtlantisSoCState),
+         .instance_init = tt_atlantis_soc_init,
+         .class_init = tt_atlantis_soc_class_init,
++        .is_available = target_riscv64,
+     }, {
+         .name       = MACHINE_TYPE_NAME("tt-atlantis"),
+         .parent     = TYPE_MACHINE,
+         .class_init = tt_atlantis_machine_class_init,
+         .instance_size = sizeof(TTAtlantisState),
++        .is_available = target_riscv64,
+     },
+ };
+ 
+diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
+index a234c5f352..f2383c5399 100644
+--- a/hw/riscv/xiangshan_kmh.c
++++ b/hw/riscv/xiangshan_kmh.c
+@@ -30,6 +30,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/boards.h"
+@@ -157,6 +158,7 @@ static const TypeInfo xiangshan_kmh_soc_info = {
+     .instance_size = sizeof(XiangshanKmhSoCState),
+     .instance_init = xiangshan_kmh_soc_instance_init,
+     .class_init = xiangshan_kmh_soc_class_init,
++    .is_available = target_riscv64,
+ };
+ 
+ static void xiangshan_kmh_soc_register_types(void)
+@@ -220,6 +222,7 @@ static const TypeInfo xiangshan_kmh_machine_info = {
+     .parent = TYPE_MACHINE,
+     .instance_size = sizeof(XiangshanKmhState),
+     .class_init = xiangshan_kmh_machine_class_init,
++    .is_available = target_riscv64,
+ };
+ 
+ static void xiangshan_kmh_machine_register_types(void)
 
-For a no-op tcg-tests build (i.e. with tests already built):
-
-- With current patch:
-time ninja -C tcg-tests
-...
-verbose pull and build
-320 lines of output
-...
-real    0m15.817s
-user    0m1.342s
-sys     0m0.840s
-
-Without the current patch (current behavior):
-time ninja -C tcg-tests
-[0/534] Generating tests/tcg/image-debian-all-test-cross with a custom
-command
-[1/288] Generating tests/tcg/image-debian-hexagon-cross with a custom
-command
-[2/193] Generating tests/tcg/image-debian-loongarch-cross with a custom
-command
-[3/156] Generating tests/tcg/image-debian-tricore-cross with a custom
-command
-[4/135] Generating tests/tcg/image-debian-amd64-cross with a custom command
-[5/84] Generating tests/tcg/image-debian-xtensa-cross with a custom command
-real    0m0.704s
-user    0m0.504s
-sys     0m0.132s
-
->> - network dependency: docker.py --registry triggers a pull, which fails
->> if there is no network. It breaks offline make check.
->> Also, it slows down things too.
-> 
-> we should be able to gate the registry on network access.
->
-
-It's not as simple as "is_network_connected", there might be timeout
-involved in case network has issues, amplifying the problem.
-
->>
->> So, let's drop this patch and keep the caching mechanism for now, it's
->> still useful/needed.
->>
->> Regards,
->> Pierrick
-> 
+-- 
+2.52.0
 
 
