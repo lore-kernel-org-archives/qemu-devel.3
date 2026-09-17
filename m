@@ -4,115 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4530FC982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7256EC88E72
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 17:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7GHD-0006WS-0v; Thu, 17 Sep 2026 13:52:03 -0400
+	id 1x7GMl-0007m7-GE; Thu, 17 Sep 2026 13:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1x7GH5-0006Vi-Rg; Thu, 17 Sep 2026 13:52:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GMj-0007lQ-H1
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:57:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1x7GH2-0003W2-2p; Thu, 17 Sep 2026 13:51:53 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HHVfaQ3143685; Thu, 17 Sep 2026 17:51:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5MMvVd
- 8jwd/aIPBKyD9KVUiINi1fAXgrUKb/kIVZnmY=; b=qAUrb8zoTlD6/itr+wVGXD
- AE3ZM/zFa+neziDHO9NeDn58revexJjqZ+53VUBEnqilVo81piS+FbHLg7VKNHHe
- O7koF8DCN/ge41L+WqgTx+zk092D05ZeFMJ4iUFIN4NSKOpc/Rda+XDsWRiHiQeI
- xUGqB+FGDwJdWjFbA3JMYPehwqm9mzStaclQH8s6NsSXolMHqww7KOk3uEm3nWJp
- 7Idjb3uUQ3GlUCpH+gTSOy04fCPsFOMn8uQiOn/UkFVgVjzV3ss5kJTjpEC6CtXK
- NFTleMswqMxtzctZJTlVYJfpMDhOK1AgqVlhhiXEH2IrVSLOY+dOniDp4JBWcTuQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmx843y3u-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 17:51:49 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68HH9Gaw3494061; Thu, 17 Sep 2026 17:51:48 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gr5fjkm1e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 17:51:48 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68HHpgmp53477686
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Sep 2026 17:51:42 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8E7DD2004D;
- Thu, 17 Sep 2026 17:51:42 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43F412004B;
- Thu, 17 Sep 2026 17:51:38 +0000 (GMT)
-Received: from [9.43.67.51] (unknown [9.43.67.51])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Sep 2026 17:51:38 +0000 (GMT)
-Message-ID: <09af11cb-e455-4a9a-83ce-e0ee037663e7@linux.ibm.com>
-Date: Thu, 17 Sep 2026 23:21:36 +0530
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x7GMh-0005Ic-JX
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 13:57:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789667862;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
+ b=TBp79/DY7GPZzPdZXcbASS8gYFr+OY5FZqk6Ks9UQSbBd79+wFBTx/uS98VTVVdZrd3vN3
+ j+77puUunqBCl94q8KprWL3Yw6/bay6VZMimZ3AftE7crbAzQDCW073Jf4WYh5cBfv4MXW
+ kwklA1FpIzu+U8tVeq+lbGS9ERv+618=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-205-FeyXbE57NRycOphoVC7jUQ-1; Thu, 17 Sep 2026 13:57:41 -0400
+X-MC-Unique: FeyXbE57NRycOphoVC7jUQ-1
+X-Mimecast-MFC-AGG-ID: FeyXbE57NRycOphoVC7jUQ_1789667860
+Received: by mail-yx1-f72.google.com with SMTP id
+ 956f58d0204a3-671203c3d56so1287792d50.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 10:57:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789667860; cv=none;
+ d=google.com; s=arc-20260327;
+ b=EPzJOezB2N6aRFGEOwQYSRoboyNt6gcqMsFwYISM2VM4kD1yYIvtXV13EAeZTDvp/k
+ FsHjOEE+98pCdF6liJ/eyyFNTvndy2naQQBqvpSzZR538hygsSJc0677MmBtB868ymqp
+ GDFSmmO4Sx/A4v19SRUXoXMNlDrsqWtLnCbQPHc+jEL8+kWd4YJYw9TvUoxq4xuPC9qO
+ mBVFXwWh9Ts0mDfZVv7IwsEgu9KvCTTZM4gHaTZtg3Aae//jkLrgdxI0h02PyXhCZQ79
+ TJEIHhUDr4vQTGgVGS1iakqv0efBfFA9wwdo3SIpcBfgO1SpbZBPvz3f0QwT5YCZoxJp
+ ul3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
+ fh=N1T2rJRgpF5SwCDa8mYUq6XaRC8Zgv+Raym5wifJ61I=;
+ b=seqLE3LWyzlXhZetWibz040sSQuHtslkdLGDsl5HSnapdRxvp/UYIF+i/uWN34x1z3
+ Y4ZPptLY8x8C3riBgR//bMqao/1qH6B5lp+WqWrxFnPng7FP+0FvRpzYlCvNfyHCYZkO
+ 9ogyjSw7lZT3UK2Ilej9fk//1rNuzCClR47/BsJUhGv8qVkgBESMTTqHaL5YEAqbXCn3
+ Nq0Abfx+aj9tw7RtIRzFZ6JOTj5wrkrqSezEoajn/QA558O8AFH7wezO+PC0MoLbmKU2
+ 6kGfC8+8FaU9UnbAmu6ch0sqviA+bLSIpTzPApNcUp29oIFjcmyLuf5Q7yu2YBJYFWAC
+ IPDA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789667860; x=1790272660; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
+ b=BbO3h+jo+ZpFz7p8uD5kWWshB4nWfvI/eHLuGvMlrRSLZ1iMrldx8IONOxAr5FB5G5
+ 8PJpsvNXKdIvquMj0HDPE9QcJE6w0Sr3R/cgKDWUnP/U1UcnYdvaOVmFvYaoAQYyl5MD
+ f8xwB9Uen+I0bN3830YctEVwSZmEXqZ1eUtyxqoSmBClqEgvr0wn3a8MtIuz6dkEQfZ6
+ 2JtveQ/1trbGm7t/g4kv7iE0C3yfISxTh4kkHEbI9+Q9fArYhWLZb7U81pb6NQpHpeKe
+ 4U7OTx3075AaZMg+TZeVE+mwUwiqj4QiACW4ZKmIC3lVpYHImkcfT2hMxgxTb9yswb9g
+ qk6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789667860; x=1790272660;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=O/q/6dJD/yPJToU467v7Aq+z2ukz3I9Dup6fwZQVmx0=;
+ b=UaKIxYNZvylrwefGUY/CovF2Xgs3BHzlX1Zj0K/W1pcJmr9Q2GRUYvC9cMPySXkr5L
+ CWyHvLzS1dOXg/Du6UlxOFHgODIjRn+EwheSufstmOwfAqU9Z0fWQQG6nE9B99Fw+LGb
+ TfVi4UPKlnAMw7ojcXRaqRWfdH1OJSv7zHVw+h4JEAQkNZscvL7UBxu5SH3Nul9beOwq
+ DqEA/iAPImatbuo2lltHqw6xwqGLvZroe4fb3FEjZvUnotGZHSTN9p/Cx7/9gR+VUBTE
+ gmfoWI4w94PpvAqgKoNKMc8uGutPJeYBUqgrsDGCDC42sGi+5wRBca57+m6VG0aXY0Yd
+ btsw==
+X-Gm-Message-State: AFuF++lSaCsnKm/4ghM7+1eGs3vH7NECjwczJh65/TSRLnNi8UuI7O/1
+ d8EzBhTKHlzOpv8tETB+2q9FHuk/8Dfn11INVx9MZ9iWUz68a35NtgdZ5Au794vG1iosZeBGpI0
+ 8fbJTg4XW20delKn1PQGn/ORxVTP94Rjs4amwt6P4NISZbgtsI7HBVkRKvs52SSIi6NrppcXWDw
+ HuFxmew3JacRNk2Z07EQqCvOwrXYIcx0s=
+X-Gm-Gg: AYBFou04isg+ynR1CSH/fCRCPYKzT7AKj5WphjBjxamfFETE9mDo6Sq2rBEbbNCGSjn
+ LwLhf5fYNQg9bRawIKVdzZIYvX7J7tJJ9xxec+vkI7bDkXpXButv2UuIz1Mit5/5/mAscnbYyjP
+ uEwY5/bMdqOcEGamGZTuFtuqyx9v83shW+QPS/jCioAv9Y/SGJJLv+Mi+XKookGQeecWe+KU2ow
+ uiUktRmBfdd1pvf
+X-Received: by 2002:a05:690e:120c:b0:66a:b15e:bb93 with SMTP id
+ 956f58d0204a3-6717034c5afmr1189620d50.13.1789667860159; 
+ Thu, 17 Sep 2026 10:57:40 -0700 (PDT)
+X-Received: by 2002:a05:690e:120c:b0:66a:b15e:bb93 with SMTP id
+ 956f58d0204a3-6717034c5afmr1189605d50.13.1789667859750; Thu, 17 Sep 2026
+ 10:57:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/6] ppc/spapr: Add ibm,errinjct RTAS call handler
-To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, mahesh@linux.ibm.com, sbhat@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
- sourabhjain@linux.ibm.com, adityag@linux.ibm.com
-Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
- harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
- shivangu@linux.ibm.com
-References: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
- <20260901174110.45356-3-nnmlinux@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <20260901174110.45356-3-nnmlinux@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDI1MCBTYWx0ZWRfX+pubTH5nS8sL
- VZNRiYQYcSNTfU6ivt3UhZRAEHmFNl4SKN9GsfrWg8Rq2sqrfJMzJo1kv1UQsWJgeu7KZxfbDOp
- qyXry41FxMCrShjojiH0iEetr89JuT1O/oowosjoJtXsSJ5F3YE/C7jdd/2ywIEbbp+8c+1EE8v
- E67Cjbz30ga387L4fQYg2g1VwV7cxs1LLH6EqCyjlC+C1UIAWPFzC/Z9MVdebBPSMBMHLjGoBbk
- 0rYP7FsAH0tNFZnUtEVCH4s10SOUCN8rRdJT+9ZL+MifWFkA2eMAXkPJnnsOGJsmVauB784qb74
- Db5AzOzJkumFgxPx8lsDRIKcfCv2oV5HDOOJxjMwRP8pr6pu+lHACNJ6hpJv+1uJmMWnNYgqgqt
- JXKkc/NG1gh6+2TXyApz89dkQaXPah2hkFZjACC8iMVJ41S8OLi8NGlBiFq0L35yRT1QT2rs0pT
- p+X1pZN8Cuds1/KcaOw==
-X-Proofpoint-ORIG-GUID: 5xa7MOjdF85atlfPpifOKpnePesfz5TB
-X-Proofpoint-GUID: cFHAfdBHHxf-7XK8vNuY5qcJUbMhMVuw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDI1MCBTYWx0ZWRfX0oKlA9XrpAXs
- gAqldP+aQ27EGWAhSel06g6UyGktgp9zc9plRxZelFLnf7ash2gMOd7vY2loOkb2OMfeg6DD3lK
- E+ib2IHm9XpxMteDNVbvIrqsMrzkzvE=
-X-Authority-Analysis: v=2.4 cv=cY9HPXDM c=1 sm=1 tr=0 ts=6aac28b5 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=Cz9WfFLmUSrPgHwx-qUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_04,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609170250
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260916135841.3614495-1-jsnow@redhat.com>
+ <20260916135841.3614495-6-jsnow@redhat.com>
+ <87tsno5ulh.fsf@pond.sub.org>
+In-Reply-To: <87tsno5ulh.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 17 Sep 2026 13:57:28 -0400
+X-Gm-Features: AcwNN1XG52uuiUnWNJlaDC6V1kzKVkLG2iXP2kRaAwxcqV_ifQ48YVjOovC8RbY
+Message-ID: <CAFn=p-YAVahwz2-MmWkwO10RxrDaJDKNp_2-eqEAyzjqbneW3g@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] qapi/parser: fix intermediate "intro" detection
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Jonathan Cameron <jic23@kernel.org>, Eric Blake <eblake@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ linux-cxl@vger.kernel.org, 
+ qemu-block@nongnu.org, Junjie Cao <junjie.cao@intel.com>, 
+ Lukas Straub <lukasstraub2@web.de>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,55 +145,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Sep 17, 2026 at 1:13=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > In 43e7ad1a3fa5, I adjusted the insertion algorithm for inserting
+> > something after the "introduction" to cope with both the old and new
+> > syntax while we converted QAPI to the new syntax. There's a bug in
+> > that code that only shows up in a handful of cases and only when using
+> > the new syntax while this affordance/flex code is still enabled.
+> >
+> > In the case that we do actually have a real bona-fide intro section,
+> > we want to insert directly after that real-deal intro section, not
+> > after any plaintext sections that may follow it. This code adjusts the
+> > temporary code to strongly prefer inserting after the actual intro
+> > section if it exists.
+> >
+> > Once again: once conversion is done, you will be delighted by how much
+> > of this ugly code goes away.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  scripts/qapi/parser.py | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> > index 9e14c2f7921..6a9a5589c14 100644
+> > --- a/scripts/qapi/parser.py
+> > +++ b/scripts/qapi/parser.py
+> > @@ -845,6 +845,14 @@ def _insert_after_intro(
+> >          needed and ``_insert_near_kind(QAPIDoc.Kind.INTRO, ...)`` will
+> >          be sufficient.
+> >          """
+> > +        first =3D self.all_sections[0]
+> > +        if first.text and first.kind =3D=3D QAPIDoc.Kind.INTRO:
+> > +            # First section is introduction and is non-empty: insert h=
+ere.
+> > +            # Rest assured all of this ugliness will very soon go away=
+.
+> > +            # Pinkie-swear.
+> > +            self._insert_near_kind(QAPIDoc.Kind.INTRO, section, after=
+=3DTrue)
+>
+> Isn't this a roundabout way to do
+>
+>                self.all_sections.insert(1, section)
+>
+> ?
 
+Yes O:-)
 
-On 01/09/26 23:11, Narayana Murty N wrote:
-> +    switch (type) {
-> +    case RTAS_ERR_TYPE_IOA_BUS_ERROR:
-> +    case RTAS_ERR_TYPE_IOA_BUS_ERROR_64:
-> +        is_64bit = (type == RTAS_ERR_TYPE_IOA_BUS_ERROR_64);
-> +        ret = spapr_errinjct_parse_ioa_bus_error(param_buf, is_64bit,
-> +                                                 &addr, &mask,
-> +                                                 &config_addr, &buid, &func);
-> +        if (ret != RTAS_OUT_SUCCESS) {
-> +            goto param_error_exit;
-> +        }
-> +        break;
-> +
-> +    case RTAS_ERR_TYPE_RECOVERED_SPECIAL_EVENT:
-> +    case RTAS_ERR_TYPE_CORRUPTED_PAGE:
-> +    case RTAS_ERR_TYPE_CORRUPTED_DCACHE_START:
-> +    case RTAS_ERR_TYPE_CORRUPTED_DCACHE_END:
-> +    case RTAS_ERR_TYPE_CORRUPTED_ICACHE_START:
-> +    case RTAS_ERR_TYPE_CORRUPTED_ICACHE_END:
-> +    case RTAS_ERR_TYPE_CORRUPTED_TLB_START:
-> +    case RTAS_ERR_TYPE_CORRUPTED_TLB_END:
-> +        spapr_errinjct_return_non_ioa_unsupported(rets);
-> +        return;
-> +
-> +    default:
-> +        goto param_error_exit;
-> +    }
+... but it's the more semantically abstracted version that does not
+rely on the specific location of the section. By the end of the
+next-next series, all of this goes away anyway. I think I was
+preferring to avoid using insert in more than the two helpers we
+already use it in. (But since I intend to delete it all, I don't
+really care about fighting for purity in isolating this call.)
 
-Hi Narayana,
+Specifically:
 
-In Patch 1, you defined full suite of RTAS error types in enum 
-rtas_err_type. However, the switch (type) statement in 
-rtas_ibm_errinjct() only handles a subset of them. The omitted types 
-fall to the default case and jump to param_error_exit. But they are not 
-wrong params, they are just not supported by QEMU. This is just a nit, 
-as I can see in grep that both RTAS_OUT_PARAM_ERROR and 
-RTAS_OUT_NOT_SUPPORTED map to -3 value, but it would be good for code 
-clarity to explicitly route these valid-but-unimplemented types to the 
-unsupported path and not PARAM_ERROR, as this explicitly signals to 
-future readers that these are valid PAPR tokens lacking a QEMU 
-implementation, rather than invalid parameters.
+_insert_near_kind(), _insert_after_intro() both go away.
+append_member_stub() also goes away. ensure_returns() stays but
+becomes something like two lines.
 
-Rest the patch looks good to me. My above mentioned concern is not a 
-blocker. Feel free to add my tag:
+*all* section modification in the next-next series happens exclusively
+through a method named `_append()` which Does The Right Thing In All
+Cases.
 
-Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+--js
 
-Thanks & Regards
-~ Nikhil
+>
+> > +            return
+> > +
+> >          index =3D 0
+> >          for index, ref_section in enumerate(self.all_sections):
+> >              if ref_section.kind.name in ("PLAIN", "INTRO"):
+>                    continue
+>                break
+>            else:
+>                index +=3D 1
+>
+>            self.all_sections.insert(index, section)
+>
+
 
