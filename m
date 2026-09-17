@@ -4,103 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D81C982D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 355A5C982D8
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7JzH-0000XG-6h; Thu, 17 Sep 2026 17:49:49 -0400
+	id 1x7Jyr-0000WA-WD; Thu, 17 Sep 2026 17:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7Jz2-0000Wl-I1
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:49:32 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7Jyk-0000VE-AO
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:49:14 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7Jyx-0002C9-Uf
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:49:32 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f6351832so11913f8f.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:49:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7Jyi-000283-13
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:49:13 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ d2e1a72fcca58-85469a34908so128836b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:49:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789681766; x=1790286566; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=D4MMz/goLiadpU4Et634dJgG7s3Iih8vlGTULjp/ZnI=;
- b=ph1m2/FDNcidts4GK2yXm2i3WS7USLSaJg01Ec0l037G/riFxCw7WMFqdz1AtSQiNx
- y/hUW0kQMIRKyW5JQif/Yks3PZpz8bBFuX0u3PUa63spvHQY+sgZMhEWjzmut7wgGHDg
- TdnVowAgaxEqF+imX2kE7l80D8vTn84y3szB0d7nnqqFp4nQfffWypR4HnO42AwdZHcH
- CSFZrCyqTSlKY8ah6ktIHPP8TsRDPIx0rjK4T2ZXGVLcHI4EQWPtgYaS5SDptbj9gkFA
- ta5cleB2D2RXtt0zas96wgHcisCDKOsfNbbwtvVMn+2ZjNq1XpLuNMk5783Jys3/OQXA
- jKMQ==
+ d=linaro.org; s=google; t=1789681750; x=1790286550; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6oQHcoELX0fMS4pTkpsgmaooO/x8cXFYbN32QAxzfT0=;
+ b=hNxpollli0LfCxUA14jZFQFRSXsfkNdrLwPPiYguUa3MUrRk/KZctT/RQwYMHv7vIJ
+ ey5HrDJ8aFUBhk6WhQBmk9E3y6R8j+iiQlC7ailvT/LA62RxmxDJJGwZ3G4AS8Wj0BPQ
+ qb/677z7rMpMrey1u/jqCUSAjAtSIZF8GA0xQceBPcynrJ7jsSQ6iRtyFSnjxCSiWz9M
+ 3tv90fD45wdEjoycxns3o9SEz4G2gBzAV/02QII3UQSynAxmeCmbZV21jzrba+nCSbQ8
+ BOiFyQrPLE4hESuVgvUgL89hcWIFt5O75pj+irrEt/y6M0YC22irBU3giYu4BOWc4rZP
+ OLtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789681766; x=1790286566;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=D4MMz/goLiadpU4Et634dJgG7s3Iih8vlGTULjp/ZnI=;
- b=BPnqgrcERXbG/oXGhcKG2Mll5mk3ADgdEh7icyI90+uRkmXAUFRDe4YGfODoJRRGXD
- 7KjNRqpRch4WfTFg0guHzMYrVOfNPwUFJgidT2uU9aiqLMHtBaePZH2of6rswpKbaOmO
- K6PyqaMoVDlNP/O4AviI4FvELTF9Xo5d/VgiWRavf2vppnAwwV7WK5cVkLIH5vJiIFec
- 7c0ZO5GYKANQu7ZuoJ2D5n5jIt0spY5FcFsVPoWCr+IShNniFdPgisgaKDEMxmM6B5V3
- k0rNSMvYcAfeKRgee05B9XH0/a4UZhUQf7adl8MLgJ14Z2UmCl6eROAI6QBtnQqeI//l
- T8Zg==
-X-Gm-Message-State: AFuF++nNOP60iAVN5nB93aNBRFXGs22RQ9n10QjRW/nEYpSlc0ss5XbX
- RpoOJx2QC/7FkaUgW31VgXFx6ApF06LHPW0fp1ryIzvH1rEC0rKOY+Qr4N16StSDof0=
-X-Gm-Gg: AYBFou28H+Q4zD5lfzKw+B2CNY/8zPktasDnacVphXw6Q1ItrXhRvbm3NplA1PoF7kp
- DFxFzTVfy/dsx2W1PQDCSLrG3zjTsAEP0U0G0nBBmwo0aNvRNS60kpoTAAwJJtJga6w1fp2HLnD
- r72H0A1r7W7EpwqmlLrdauZsoeBCrjx22Dl4i1ay6hCv9NNwvZMJkFIgoUmpYdOU34mO93DsG2y
- MEZGGzzsmqLDxQ1rGA2sbjGF/AwsyOm5pUfTW6AeZ16w+gIwnPcGKhYAeDaUKZj3Odbz4zT0vNn
- UgW3URp9puZ/bPZQ94uWsZxS1psjtYXNh31sZtNnMwGdfF+Sz8JYT3SsIimueHeWImLaYerO+AC
- obaIBE0FiTXXU3Z+id9JnoyTifMNFiIaZcpq/moSuZEfCJEca+ax0vWNwBBmLpRvhSqhMDIT9Kw
- Oo20M182Z++XXg0ge8XVyHXp90kmiagejk9/uzhRzmfp6IK6qmLZpVFzWPW+vkzmjt5D+gvUg=
-X-Received: by 2002:a05:6000:2003:b0:487:57d:18c9 with SMTP id
- ffacd0b85a97d-4871e37d1e0mr253772f8f.55.1789681766311; 
- Thu, 17 Sep 2026 14:49:26 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4870bf27df9sm19201332f8f.19.2026.09.17.14.49.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 14:49:25 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6D13B5F872;
- Thu, 17 Sep 2026 22:49:24 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Helge Deller
- <deller@gmx.de>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  qemu-arm@nongnu.org,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Thomas Huth <th.huth+qemu@posteo.eu>,
- Matthew Rosato <mjrosato@linux.ibm.com>,  David Hildenbrand
- <david@kernel.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,  Song Gao
- <gaosong@loongson.cn>,  Warner Losh <imp@bsdimp.com>,  John Snow
- <jsnow@redhat.com>,  Eric Farman <farman@linux.ibm.com>,  Cornelia Huck
- <cohuck@redhat.com>,  qemu-s390x@nongnu.org,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>,  Brad Smith <brad@comstyle.com>,
- Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic
- from docker.py
-In-Reply-To: <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Thu, 17 Sep 2026 14:19:32 -0700")
-References: <20260917165602.3405537-1-alex.bennee@linaro.org>
- <20260917165602.3405537-12-alex.bennee@linaro.org>
- <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
-User-Agent: mu4e 1.14.4-pre3; emacs 30.1
-Date: Thu, 17 Sep 2026 22:49:24 +0100
-Message-ID: <87fqz77dln.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1789681750; x=1790286550;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6oQHcoELX0fMS4pTkpsgmaooO/x8cXFYbN32QAxzfT0=;
+ b=PhpBWn/zgGY47OmWGSYYBvCwXz2cH6zu1bgTEiBAdINSRSCu0QYQItu0dMjGtI9qI6
+ XGK4Rgse3pwiZqbpgI07yGS+aJ1nAeGmU4YTOJm9pgPL7OGEYsaKBhSADn8+8VFuXA/E
+ 4H05oweB6Pz0VnGawkHlbD9f8dJMNOuu/1UgHJpLt+TohJ6Xd0OPF5l7R4sG0+IXSeFM
+ xH+7E+BmFJL26mD9CpDymQOeWBb70s3xu5c9p338wznyEK6pqDM5YguBj+zldhTW0iBl
+ 5A+jtUdJ+lC18Zbv71bYs3ObNd2wIUQfqXiDYsA/MFjy4ioeqYbvyv2fjYqM5731LI9L
+ RC7w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwXuyZHMYbM1+CHu1nTBcKPiPK48z7LunPvQ9x3iph4KcTlth9x5VFXih4NTY7LtvktrGgLk9P8I4J2@nongnu.org
+X-Gm-Message-State: AFuF++lRT0ayKsfTJC6Du1UwliyH6O7AKBE0Cs2DbIDn+B05XJlE3XHv
+ xsdvmGeiRCHNjvOdU6j5EfJz7HfTsMZu8v3w3MdTTH51S4c2Jyr3lNSGVabxjngV9a4=
+X-Gm-Gg: AYBFou3qhihKm40MdCFYOaAu1SC0wFt2gx+6itQKeJbBPPMmB8bHw7cJBLgBXw6bv+x
+ p1RIBve8CT+QbBIFjkFHe5BAMfrhdmXy7DZeC1ecPPyw6EM7SByz0BPTPKLMLzFxo4qi5/I7JbW
+ LVeKwUgUZUqHj+RdFtMqmdyz+WzXa3omdhuxaGr48Zb+shu+sFE3V6RQ/Z6VkGS7oXyTfLAatL5
+ uLYOa1fqub+HhZT6Cw8RK4u6yCpi3xaICmZSMwBjlOVfEG55jhOpNKx5emF2414V09zii7ZKldn
+ uQlLiuv/XHKgFOsvbTBHzYgsAX6YPQh2nP/RIyn4W2fTWAu1N5uOBZzwEJlyIkSOEF76RDq8CIV
+ a+RE0UNiQu1bJGM3z7Cq5141UNo3sGoIQVs+aim6pueEf7GWLgRNLYwy2XuWaMRkyp9w0dXKNPr
+ LUbrMDlJg9r6D8b3+aF6IAMVjjI8oYZy5WZOu5wWC2G5iNZmrzSFro/00v50EtX6yE3yvolEta6
+ Zexw93TmVMvt6bGVkNoTvr5azI5QJ+TM9SJSL7ooxq8TM2ktqdDaNAnCetVcg==
+X-Received: by 2002:a05:6a20:e293:b0:3dd:85a9:55a4 with SMTP id
+ adf61e73a8af0-3dd8c59e06amr539494637.29.1789681750167; 
+ Thu, 17 Sep 2026 14:49:10 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:5a4b:653b:1dce:569f?
+ ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c00ede586sm14879319eec.10.2026.09.17.14.49.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Sep 2026 14:49:09 -0700 (PDT)
+Message-ID: <1f02f0fc-fee2-4722-9798-97bb0132561d@linaro.org>
+Date: Thu, 17 Sep 2026 11:49:07 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tcg/riscv64: Set vtype before whole-register vector
+ moves
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: max.chou@sifive.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ daniel.barboza@oss.qualcomm.com, joel@jms.id.au
+References: <mhng-F8D5674F-046D-44A0-8196-38EDF98E50C3@Palmers-Mini.rwc.dabbelt.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <mhng-F8D5674F-046D-44A0-8196-38EDF98E50C3@Palmers-Mini.rwc.dabbelt.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,48 +109,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> On 9/17/2026 9:55 AM, Alex Benn=C3=A9e wrote:
->> The caching logic was a remnant of an older time when we had multiple
->> shared layers building that went into the final image. It was arguable
->> that it worked back then but it is definitely not needed now so into
->> the bin it goes.
->>=20
->> Tested-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>  tests/docker/docker.py | 148 ++++++++++++++---------------------------
->>  1 file changed, 49 insertions(+), 99 deletions(-)
+On 9/17/26 10:59, Palmer Dabbelt wrote:
+> On Thu, 17 Sep 2026 13:51:10 PDT (-0700), Richard Henderson wrote:
+>> On 9/17/26 03:37, Max Chou wrote:
+>>> According to the RISC-V unpriviledge spec,
+>>>    "vset{i}vl{i} and whole register loads and stores do not depend upon
+>>>     vtype."
+>>> The whole-register vector move instructions reuqire legal vtype that
+>>> trap when VILL is set.
+>>>
+>>> The tcg_out_mov in tcg/riscv64 missed the vtype setup before emitting 
+>>> the
+>>> OPC_VMVNR_V.
+>>>
+>>> Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
+>>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>>> Reviewed-by: Joel Stanley <joel@jms.id.au>
+>>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>>> ---
+>>>   tcg/riscv64/tcg-target.c.inc | 4 ++++
+>>>   1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+>>> index 2ce9d47a633..e3cfedb579d 100644
+>>> --- a/tcg/riscv64/tcg-target.c.inc
+>>> +++ b/tcg/riscv64/tcg-target.c.inc
+>>> @@ -778,6 +778,10 @@ static bool tcg_out_mov(TCGContext *s, TCGType 
+>>> type, TCGReg ret, TCGReg arg)
+>>>           {
+>>>               int lmul = type - riscv_lg2_vlenb;
+>>>               int nf = 1 << MAX(lmul, 0);
+>>> +
+>>> +            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
+>>> +                set_vtype_len(s, type);
+>>> +            }
+>>>               tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1);
+>>>           }
+>>>           break;
 >>
->
-> After testing this series, it's not a good idea to include this patch.
->
-> It forces a systematic rebuild, even when image is already. This has
-> three consequences:
-> - verbosity: we see build log systematically
+>> Do you have a reproducer for this?  I ask because I still wonder how
+>> this can occur.
+>>
+>> Given that
+>>
+>> (1) all vector registers are call-clobbered, there should be none live
+>> across tcg_out_call_int (which clears the remembered vtype),
+>>
+>> (2) the first vector action with no vector registers live must be a load
+>> or movi (which will initialize vtype).
+>>
+>> Performing a move between vector registers when all such registers must
+>> be dead is... wrong.  It indicates that there's a bug elsewhere.
+> 
+> I'm not quite sure the commit message is right here, but this whole area 
+> is a bit of a landmine: one of the post-ratification changes to V was 
+> either this (or very close to this), so we've been through it for every 
+> project.
+> 
+> Here's the LLVM thread, which I think has links to everything else: 
+> https://github.com/llvm/llvm-project/issues/114518 (there's a GCC change 
+> as well).  IIRC hardware is a bit all over the place on this one, for 
+> the compilers we decided to just emit the code that's safe either way -- 
+> that's not really an option for QEMU, though, so we'll have to pick one 
+> side or the other.
+Yes, I get that.  But my point stands that after a function call (which 
+can set VILL), all vector registers should be dead.  A move of a dead 
+register is itself a bug.
 
-You asked me to drop the verbose/quiet switch patch which addresses this.
+There should have been *something* that brought the source vector 
+register back to life: a load or a movi.  Both of which reinitialize vtype.
 
-> - slower: running a noop rebuild takes time
+That's why I'd like to see a reproducer, or if there isn't one,
 
-how much time? it flies past when I run a rebuild.
+     tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
 
-> - network dependency: docker.py --registry triggers a pull, which fails
-> if there is no network. It breaks offline make check.
-> Also, it slows down things too.
+I'm currently running the assert through the testsuite to make sure I've 
+not gone loopy.
 
-we should be able to gate the registry on network access.
 
->
-> So, let's drop this patch and keep the caching mechanism for now, it's
-> still useful/needed.
->
-> Regards,
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
