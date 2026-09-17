@@ -4,57 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41848C982CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFDCC982CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 02:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x729D-0006Np-IO; Wed, 16 Sep 2026 22:46:51 -0400
+	id 1x729c-0006QI-2J; Wed, 16 Sep 2026 22:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x7295-0006Lx-9c
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:45 -0400
+ id 1x728z-0006Ku-T7
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:38 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x7293-00059S-CG
- for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:43 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x728x-00058X-7Y
+ for qemu-devel@nongnu.org; Wed, 16 Sep 2026 22:46:37 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8AxS_CPVKtqEuEMAA--.37832S3;
- Thu, 17 Sep 2026 10:46:39 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxYdGAVKtqAuEMAA--.38031S3;
+ Thu, 17 Sep 2026 10:46:25 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBxKs6LVKtqCq0hAA--.39703S5;
- Thu, 17 Sep 2026 10:46:37 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx+c18VKtqA60hAA--.39456S2;
+ Thu, 17 Sep 2026 10:46:20 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Song Gao <17746591750@163.com>
-Subject: [PULL 07/11] target/loongarch/kvm: Check LoongArch Instruction Set
- version 1.1
-Date: Thu, 17 Sep 2026 10:47:38 +0800
-Message-ID: <20260917024742.200257-8-maobibo@loongson.cn>
+Subject: [PULL 00/11] loongarch queue
+Date: Thu, 17 Sep 2026 10:47:31 +0800
+Message-ID: <20260917024742.200257-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260917024742.200257-1-maobibo@loongson.cn>
-References: <20260917024742.200257-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxKs6LVKtqCq0hAA--.39703S5
+X-CM-TRANSID: qMiowJCx+c18VKtqA60hAA--.39456S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWry7ZF18ury7AFy3Gr4DGFX_yoW5AF48pr
- 4UCrs0grWrtFZ7Cwn3JrWqvrs8ZF48K3yIyFyxArySvwn8JrnrZFyIya1DZFn8G34rZrs3
- WF4kAFZ8uF1DAwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7uFWftF1fCF1DWw15Cw1fKrX_yoW8ZryUpr
+ W3ury3Kr48JrZrGr1fXa45Xrn8Jr1xGw42q3W3tryxCw43ZryxXF18t392gFy5Ja48Wry2
+ qF1rCw15XF4UJwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8CztUUUUU=
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1j6r15MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -77,105 +73,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Besides PTW and DINTC features, there are some small features about
-LoongArch Instruction Set version 1.1, mainly they are about atomic
-instruction enhancement.
+The following changes since commit 28e7aad52202c7e6210e0e05d4f60360aaf8d027:
 
-For these features, there are no special property selection, and they
-are enabled from CPU type selection such as host or max CPU type. Here
-adds these features if host supports and they are enabled from the
-specified CPU type.
+  Merge tag 'pull-target-arm-20260915' of https://gitlab.com/pm215/qemu into staging (2026-09-15 09:50:49 -1000)
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by:   Song Gao <17746591750@163.com>
----
- target/loongarch/kvm/kvm.c | 65 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+are available in the Git repository at:
 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 15082a01f8..0626c553d5 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1234,6 +1234,65 @@ static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+/* Check LoongArch Instruction Set 1.1 others feature */
-+static int kvm_cpu_check_misc_v1_1(CPUState *cs, Error **errp)
-+{
-+    int ret;
-+    uint64_t val, field;
-+    struct kvm_device_attr attr;
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    uint32_t data;
-+
-+    val = 0;
-+    attr.group = KVM_LOONGARCH_VCPU_CPUCFG;
-+    attr.attr  = 2;
-+    attr.addr  = (uint64_t)&val;
-+    ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-+    if (!ret) {
-+        ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-+    }
-+
-+    /* Disable LA 1.1 features if host cpucfg2 get not supported */
-+    if (ret) {
-+        val = 0;
-+    }
-+
-+    data = cpu->env.cpucfg[2];
-+    val &= data;
-+    field = FIELD_EX32((uint32_t)val, CPUCFG2, FRECIPE);
-+    data  = FIELD_DP32(data, CPUCFG2, FRECIPE, field);
-+    field = FIELD_EX32((uint32_t)val, CPUCFG2, LAM_BH);
-+    data = FIELD_DP32(data, CPUCFG2, LAM_BH, field);
-+    field = FIELD_EX32((uint32_t)val, CPUCFG2, LAMCAS);
-+    data = FIELD_DP32(data, CPUCFG2, LAMCAS, field);
-+    field = FIELD_EX32((uint32_t)val, CPUCFG2, LLACQ_SCREL);
-+    data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, field);
-+    field = FIELD_EX32((uint32_t)val, CPUCFG2, SCQ);
-+    data = FIELD_DP32(data, CPUCFG2, SCQ, field);
-+    cpu->env.cpucfg[2] = data;
-+
-+    val = 0;
-+    attr.group = KVM_LOONGARCH_VCPU_CPUCFG;
-+    attr.attr  = 3;
-+    attr.addr  = (uint64_t)&val;
-+    ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-+    if (!ret) {
-+        ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-+    }
-+
-+    /* Disable LA 1.1 features if host cpucfg3 get not supported */
-+    if (ret) {
-+        val = 0;
-+    }
-+
-+    data = cpu->env.cpucfg[3];
-+    val &= data;
-+    field = FIELD_EX32((uint32_t)val, CPUCFG3, DBAR_HINTS);
-+    data  = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, field);
-+    cpu->env.cpucfg[3] = data;
-+    return 0;
-+}
-+
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-     return 0;
-@@ -1295,6 +1354,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return ret;
-     }
- 
-+    ret = kvm_cpu_check_misc_v1_1(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
--- 
-2.54.0
+  https://github.com/bibo-mao/qemu.git pull-loongarch-20260917
+
+for you to fetch changes up to 2dfba02c30509a8c36a3bf10ccac5519495a811d:
+
+  target/loongarch: Add la664 CPU type (2026-09-17 10:08:16 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20260917 queue
+
+----------------------------------------------------------------
+Bibo Mao (11):
+      target/loongarch: Fix data race in CSR_ESTAT
+      target/loongarch: Remove CSR registers relative MERR
+      target/loongarch: Rename function name constant_timer with timer
+      target/loongarch: Rename filename constant_timer.c with timer.c
+      target/loongarch: Add CPUTimerState structure
+      hw/intc/loongarch_dintc: Check irqchip in kernel mode firstly
+      target/loongarch/kvm: Check LoongArch Instruction Set version 1.1
+      target/loongarch: Enable LoongArch Instruction Set version 1.1
+      target/loongarch: Set msgint property with auto detected
+      target/loongarch: Enable HW PTW feature by default
+      target/loongarch: Add la664 CPU type
+
+ hw/intc/loongarch_dintc.c                          | 19 +++--
+ target/loongarch/cpu.c                             | 89 +++++++++++++---------
+ target/loongarch/cpu.h                             | 15 +++-
+ target/loongarch/csr.c                             |  6 --
+ target/loongarch/disas.c                           |  6 --
+ target/loongarch/internals.h                       |  9 +--
+ target/loongarch/kvm/kvm.c                         | 66 ++++++++++++++++
+ target/loongarch/tcg/csr_helper.c                  | 14 ++--
+ target/loongarch/tcg/meson.build                   |  2 +-
+ target/loongarch/tcg/op_helper.c                   |  6 +-
+ target/loongarch/tcg/{constant_timer.c => timer.c} | 30 ++++----
+ 11 files changed, 170 insertions(+), 92 deletions(-)
+ rename target/loongarch/tcg/{constant_timer.c => timer.c} (65%)
 
 
