@@ -4,91 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E57BC982D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 20:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FE1C982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 20:57:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7J4i-00020c-Aj; Thu, 17 Sep 2026 16:51:20 -0400
+	id 1x7JAe-0002q4-9C; Thu, 17 Sep 2026 16:57:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7J4f-000207-Tp
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 16:51:18 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7J4e-0007Gl-7V
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 16:51:17 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc4aa0f1766so1067483a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 13:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789678274; x=1790283074; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=S1NLi4QS0kW/YsWZ9DyyaAD9U0xrPbTu7ggvIBtsciY=;
- b=qDca3R5on6JxTLG6HZb7QtP/palISPTao9MA1TTSdm+fnMsvPgZixaw4dalQheXS1Y
- DFCI1Zuc6W51kyvZzcKqO/rnaLP2rxmp1Lk1cwvm/Db0ZqBpwKmNIoMr3Qfl+7LQE+zy
- /dQOSlQNgnpEUfEdNipnYerPtesD3BSTtgjoSrze42O5blStxfcPPqmu+F6izelRBW97
- A9Afzp1kOTOBJSM6Jfc8iJQW7OZdL5z9i5wysVZrkWqL/yMoleMg9pelKY/0ghgh/qS/
- 9yGhjo5/BxznUz5XTT/C7bjKzMuT67b4WpVsrSIReW3GlE6TVPYmmOCTGt3vA72Q9BU+
- FIkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789678274; x=1790283074;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=S1NLi4QS0kW/YsWZ9DyyaAD9U0xrPbTu7ggvIBtsciY=;
- b=1YA5Cw4vUid7kZI5c+cy+0bw20E9H1W7TLoWKe4XL1NkJxp2XTvRayFI223cdPMBc/
- va3KQ7A91jS1dp5vqQpimFmJG4I2tJIj+J5GMbd4nj5FN1QGRT68XywPa7LhR02zK8Zl
- CH1TSla6x6eZDjsC361r902sKDiLxZX/16oLyxJ7OJrzTDe2A3NpG7nZvYmQrSyKR3q+
- 5YHSjZTRkTSpcm5ip//VVLv2xTDQ3v+nDOWauoFhPYVUVHk54QIGd2Eu69ZNY3YoExuV
- /8po9uK/Br4MP31CXGycS8id9VFrfQyVzmeUd/vPP6yCdYZBRqCJY9zEMpMe31iat9lr
- ElJA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzMza38jjRfney8KEji81M1g3k9hnFWvApGq8NshE7rkSzSxHsoP0Vi5MKv0RBhJbzUrC1NOVBSS5Wb@nongnu.org
-X-Gm-Message-State: AFuF++kkcIff/9xgcfSsT3p5M+yGgoXZR8W2Ba8+M6X463UuPQXufJvb
- NmxE/3vj/30fEh48ulPAhQnGOgPEQFej+QVWILkwW4xSRFzanNW10RKFTf9nU5Z5ITY=
-X-Gm-Gg: AYBFou0MXjr+74eUWIiYWksVx1rl6yq111Awzvovqyh61VCcfbz2djzh0LcX4VKI3tU
- sFQd+Go+ozQteM92TXuzSEJ7okLoW32qvZjnJRUj0LNXFDEka1zcl19ViQtgUWospfviPu/0x1N
- Zv6wCBkT0Jd9cOSP9lSNso6BtTL5SnMv74mXdCVKLx+45baFlKyLF2cETSfVOa0IRdw2sWKSQW/
- eaW+P7mw8dm1wFHBrFV5oCJTsvO+Y9oYY1RvtGLdLaUMuQCgFc05SLHn0HYCzssdlBG+ULobCmS
- vW4nGqQtmiTZmclEUf4yGe1Wzj5yyJVRDfZOcylBDEicTCUVf1QnYaN8GIRd84uWhkjYY9s0V3R
- +jpktu6BY4m8uJxIO/75srFXj6L/bQo4sTn8goezs5HWJmNYKbsFJa5hv+rxdMGpd78IJgpydrF
- PgG3L/ZqxhFzbIhn6DpyitdwKE+mxmDU0jBsMewpbwHlqq2wmGK2lDgyYcH6tlEvCfZTx1fwA+4
- CcpRkGQgcGzAp8tYg9KISmItwcBCYj9HIKhctePHsxMyao9iABTuJAkHxDOrg==
-X-Received: by 2002:a17:90b:5291:b0:39d:e54c:a28a with SMTP id
- 98e67ed59e1d1-39e54bba9e8mr812124a91.8.1789678274228; 
- Thu, 17 Sep 2026 13:51:14 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:5a4b:653b:1dce:569f?
- ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5af4f0bsm20571690eec.24.2026.09.17.13.51.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Sep 2026 13:51:13 -0700 (PDT)
-Message-ID: <48d3cf9d-4d76-41c8-aa73-e1cc57db3f40@linaro.org>
-Date: Thu, 17 Sep 2026 10:51:10 -1000
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1x7JAc-0002pv-DE
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 16:57:26 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1x7JAa-00005g-6r
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 16:57:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=P5ZjY01EgPSYmgWfZZ272FJ1p54AnWlNzDDqUbfXwSI=; b=ZREwSM3IXsWV/wrT
+ lqY5K0PAhyjdOYmRP21w5BBxV0K/6fNVLbpo3ZUq3IF3fzgXGwT1NecEldhTTLQ06gjowxNmkkspI
+ 7D+qjOy8iuNs+O8xzcuwChkRzCzY5phtM5W7qhO2zIRNJvmkAjNJfmTt+Jy8TGQnyOEt0VY+ho4tU
+ oSzRuG3ujNeLlFFdo/q2A/rO5NrN3KhfMnb//WfRR7AuvjAgRzPqGCE/vDEjtph2JQpNY3c1DRLbn
+ 6kwBmXdlKkCQsGlGZ5zl7Mu2PiWKK8FBJfQkVX631s7jfOHdKvkFgmtzw/SG11Sjtrb6ezFLCfI0x
+ k9Fb4PUqlptJukkW/g==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1x7JAW-00000001iMI-3zew;
+ Thu, 17 Sep 2026 20:57:20 +0000
+Date: Thu, 17 Sep 2026 20:57:20 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 14/20] migration: Use output visitor in info command
+Message-ID: <aqxUMH9Q3OtkV9oW@gallifrey>
+References: <20260915000209.3692668-1-farosas@suse.de>
+ <20260915000209.3692668-15-farosas@suse.de>
+ <87zexg2ix9.fsf@pond.sub.org>
+ <aqw0anGmdLfHtv3q@zhexu-thinkpadt14gen5.rmtcaon.csb>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tcg/riscv64: Set vtype before whole-register vector
- moves
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Joel Stanley <joel@jms.id.au>
-References: <20260917133755.1049697-1-max.chou@sifive.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260917133755.1049697-1-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <aqw0anGmdLfHtv3q@zhexu-thinkpadt14gen5.rmtcaon.csb>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.107+deb13-amd64 (x86_64)
+X-Uptime: 20:55:48 up 5 days, 8:41, 2 users, load average: 0.04, 0.04, 0.01
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,56 +72,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/26 03:37, Max Chou wrote:
-> According to the RISC-V unpriviledge spec,
->    "vset{i}vl{i} and whole register loads and stores do not depend upon
->     vtype."
-> The whole-register vector move instructions reuqire legal vtype that
-> trap when VILL is set.
+* Peter Xu (peterx@redhat.com) wrote:
+> On Thu, Sep 17, 2026 at 01:53:22PM +0200, Markus Armbruster wrote:
+> > Fabiano Rosas <farosas@suse.de> writes:
+> > 
+> > > The hmp_info_migrate_parameters function currently open-codes the
+> > > mon_printf calls for each migration parameter. As with the set command
+> > > in the last patch, this should not be necessary as the QAPI
+> > > infrastructure already has generated code that takes type and struct
+> > > member names into account, including converting _ from C into the '-'
+> > > character as part of parameter names strings.
+> > >
+> > > The current code is also quite painful to rebase if a series has been
+> > > carried for a long time while parameters have been added in master.
+> > >
+> > > Replace all of this with a conversion from MigrationParameters to
+> > > QDict using an output visitor and a loop over the QDict that prints
+> > > per-QAPI-type formatted strings.
+> > >
+> > > Modelled after block/qapi.c:dump_qobject, but with some changes to
+> > > keep the migration command output formatting.
+> > >
+> > > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > 
+> > Old output of info migrate_parameters for me:
+> > 
+> >     announce-initial: 50
+> >     announce-max: 550
+> >     announce-rounds: 5
+> >     announce-step: 100
+> >     throttle-trigger-threshold: 50
+> >     cpu-throttle-initial: 20
+> >     cpu-throttle-increment: 10
+> >     cpu-throttle-tailslow: off
+> >     max-cpu-throttle: 99
+> >     tls-creds: 
+> >     tls-hostname: 
+> >     tls-authz: 
+> >     max-bandwidth: 134217728
+> >     avail-switchover-bandwidth: 0
+> >     max-postcopy-bandwidth: 0
+> >     downtime-limit: 300
+> >     x-checkpoint-delay: 20000
+> >     multifd-channels: 2
+> >     multifd-compression: none
+> >     zero-page-detection: multifd
+> >     xbzrle-cache-size: 67108864
+> >     x-vcpu-dirty-limit-period: 1000
+> >     vcpu-dirty-limit: 1
+> >     mode: normal
+> >     direct-io: off
+> >     x-rdma-chunk-size: 1048576
+> >     cpr-exec-command:
+> > 
+> > New output:
+> > 
+> >     cpu-throttle-tailslow: off
+> >     xbzrle-cache-size: 67108864
+> >     cpu-throttle-initial: 20
+> >     announce-max: 550
+> >     direct-io: off
+> >     avail-switchover-bandwidth: 0
+> >     local: off
+> >     zero-page-detection: multifd
+> >     multifd-qatzip-level: 1
+> >     x-rdma-chunk-size: 1048576
+> >     multifd-channels: 2
+> >     mode: normal
+> >     multifd-zstd-level: 1
+> >     announce-initial: 50
+> >     downtime-limit: 300
+> >     tls-authz: 
+> >     cpr-exec-command:
+> > 
+> >     vcpu-dirty-limit: 1
+> >     multifd-compression: none
+> >     announce-rounds: 5
+> >     announce-step: 100
+> >     tls-creds: 
+> >     x-vcpu-dirty-limit-period: 1000
+> >     multifd-zlib-level: 1
+> >     max-cpu-throttle: 99
+> >     max-postcopy-bandwidth: 0
+> >     tls-hostname: 
+> >     throttle-trigger-threshold: 50
+> >     max-bandwidth: 134217728
+> >     x-checkpoint-delay: 20000
+> >     cpu-throttle-increment: 10
+> > 
+> > New output has an unwanted blank line after "cpr-exec-command:".
+> > 
+> > New output adds @local, @multifd-qatzip-level, @multifd-zlib-level,
+> > @multifd-zstd-level.  Commit message should point that out.
+> > 
+> > Order of parameters changes, and not for the better.  Hmm.
 > 
-> The tcg_out_mov in tcg/riscv64 missed the vtype setup before emitting the
-> OPC_VMVNR_V.
+> Good point.. it might start to be awkward to users looking for tls-*,
+> multifd-*, announce-* or cpu-throttle*, etc. after this change, expecting
+> them grouped.
 > 
-> Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
->   tcg/riscv64/tcg-target.c.inc | 4 ++++
->   1 file changed, 4 insertions(+)
+> Maybe we can sort them by name with inserting top level to a QList first
+> from the QDict.
+
+Are there any filter visitors in qemu's visitor system - e.g. something that
+sorts?
+
+Dave
+
+> We won't be able to keep all relevant fields together, for example, we used
+> to have max-cpu-throttle together with cpu-throttle-*, now also separate
+> even with alphabetical order, but it's a special case of bad name since the
+> start.. where it could have been "cpu-throttle-max".  Meanwhile, as another
+> good side effect, we can finally have max-* fields together too.
 > 
-> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-> index 2ce9d47a633..e3cfedb579d 100644
-> --- a/tcg/riscv64/tcg-target.c.inc
-> +++ b/tcg/riscv64/tcg-target.c.inc
-> @@ -778,6 +778,10 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
->           {
->               int lmul = type - riscv_lg2_vlenb;
->               int nf = 1 << MAX(lmul, 0);
-> +
-> +            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
-> +                set_vtype_len(s, type);
-> +            }
->               tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1);
->           }
->           break;
-
-Do you have a reproducer for this?  I ask because I still wonder how 
-this can occur.
-
-Given that
-
-(1) all vector registers are call-clobbered, there should be none live 
-across tcg_out_call_int (which clears the remembered vtype),
-
-(2) the first vector action with no vector registers live must be a load 
-or movi (which will initialize vtype).
-
-Performing a move between vector registers when all such registers must 
-be dead is... wrong.  It indicates that there's a bug elsewhere.
-
-I'll throw an assert in here locally and see what happens...
-
-
-r~
+> -- 
+> Peter Xu
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
