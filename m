@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C867C982C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1507C982C1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x77Ta-00032G-2J; Thu, 17 Sep 2026 04:28:14 -0400
+	id 1x77aJ-0003y1-UP; Thu, 17 Sep 2026 04:35:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x77TW-000325-CY
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:28:10 -0400
+ id 1x77a8-0003v6-Iz
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:35:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x77TT-0002yn-QZ
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:28:09 -0400
+ id 1x77a6-0003Ua-QZ
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:35:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789633686;
+ s=mimecast20190719; t=1789634098;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WrQ0anvr6bN20/n/L6hgJPzL3+TdN+q+yt5MMOQe070=;
- b=NfiA+X9eGoaT6gxdgEUudHSOGLy7XOJ2eepk99yv0s7ZMP4d2wPJ6MFuPH8rDC8H26LrbT
- snNy6WMAMO5PN1Cnwmgyr2nus8DC5A6WC+yNwF6EFHLhtDEeTQRrylzVNTlpQ3hPDIMTqN
- j3P07uhC3oamFlUFgQPBiRFhhLs4gsc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Ik26bOfsXZGpXhYJCk46YY++gVp2OxoA64fhTZV+Vgc=;
+ b=QTH1MkkBagvYeYqAvfBY4BRpR92AS5UDvcPyPiNiiq6tpDTej6Q5ri1AmPJHg7fbJ7NkWq
+ /WYUta/9r8MlfaJyNjSsRV2s+PGMT+BtOzHgCjoBZDJbDcIhucPiDl2Lov4t/uJKaO4XAc
+ my8UctHcJxvBohgAONMuTW7sCOYiOzw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-WbAA7BPpOV-fvfkQf-nNaA-1; Thu,
- 17 Sep 2026 04:28:03 -0400
-X-MC-Unique: WbAA7BPpOV-fvfkQf-nNaA-1
-X-Mimecast-MFC-AGG-ID: WbAA7BPpOV-fvfkQf-nNaA_1789633682
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-GVXDMmCtOZCqEBaopHd8rA-1; Thu,
+ 17 Sep 2026 04:34:54 -0400
+X-MC-Unique: GVXDMmCtOZCqEBaopHd8rA-1
+X-Mimecast-MFC-AGG-ID: GVXDMmCtOZCqEBaopHd8rA_1789634093
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C795E1954AD6; Thu, 17 Sep 2026 08:28:01 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E96801802178; Thu, 17 Sep 2026 08:34:52 +0000 (UTC)
 Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A7AF30001A2; Thu, 17 Sep 2026 08:28:00 +0000 (UTC)
-Date: Thu, 17 Sep 2026 09:27:57 +0100
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E9AE427; Thu, 17 Sep 2026 08:34:51 +0000 (UTC)
+Date: Thu, 17 Sep 2026 09:34:48 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: Tim Foerster <tim.foerster@hetzner.com>, qemu-devel@nongnu.org,
- Jason Wang <jasowangio@gmail.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: QMP: exposing the host TAP interface name
-Message-ID: <aqukjSkXD5XycdN-@redhat.com>
-References: <DLGIW2X7905Z.1AXV42Q0QG1CM@hetzner.com>
- <CAJ+F1CLxsqfT302SGcq9vx5pgjrY3OiibmTpZHVtx1d-rXroVQ@mail.gmail.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Alexander von Gluck IV <kallisti5@unixzen.com>,
+ John Snow <jsnow@redhat.com>, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] tests/vm: Drop the broken Haiku VM
+Message-ID: <aqumKKh9rjksBnjC@redhat.com>
+References: <20260917062615.783485-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CLxsqfT302SGcq9vx5pgjrY3OiibmTpZHVtx1d-rXroVQ@mail.gmail.com>
+In-Reply-To: <20260917062615.783485-1-thuth@redhat.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,118 +89,29 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 16, 2026 at 05:18:05PM +0400, Marc-André Lureau wrote:
-> Hi
+On Thu, Sep 17, 2026 at 08:26:15AM +0200, Thomas Huth wrote:
+> The Haiku VM has bitrotted again: At least since Haiku r1beta6 has
+> been released, the image does not work anymore. I tried to update
+> the script to use the r1beta6 repositories instead, but after the
+> update, the Haiku kernel only crashes during reboot.
 > 
-> On Wed, Sep 16, 2026 at 10:22 AM Tim Foerster via qemu development
-> <qemu-devel@nongnu.org> wrote:
-> >
-> > Hi,
-> >
-> > I'd like to query the host TAP interface name of a network backend via QMP, especially when the TAP FD is passed to QEMU using SCM_RIGHTS
-> > and then assigned to a backend through fd=.
-> >
-> > In my current setup, retrieving this information externally requires CAP_SYS_PTRACE. This gives the management process far more access
-> > than needed and conflicts with the Landlock sandboxing I want to apply, due to Landlock's ptrace restrictions [1].
-> >
-> > QEMU already owns the FD, and tap_fd_get_ifname() can retrieve the name using TUNGETIFF on Linux. For a TAP passed through fd=, x-query-
-> > network currently reports the following (simplified):
-> >
-> > {
-> >   "name": "hostnet0",
-> >   "type": "tap",
-> >   "info-str": "fd=42"
-> > }
-> >
-> > I'd like to obtain the actual interface name in a structured field, regardless of how the TAP was created or passed to QEMU. For example:
-> >
-> > {
-> >   "name": "hostnet0",
-> >   "type": "tap",
-> >   "info-str": "fd=42",
-> >   "data": {
-> >     "ifname": "vnet7"
-> >   }
-> > }
-> >
-> > Would extending x-query-network be the preferred approach? If so, would you prefer a dedicated ifname field or a type-specific data object
-> > selected by the existing type field?
+> Given the fact that hardly anybody seems to use this image and
+> that it is more often broken than working, let's stop wasting our
+> time here and simply remove it.
 > 
-> x- QMP commands are not meant for any other usage than debugging and
-> testing (in fact, we should probably exclude them in production
-> builds!). In particular, this command is currently only meant to be a
-> HMP "info network" substitute for test/debugging only atm.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  If somebody wants to see Haiku being tested more frequently again,
+>  it might be better to look into alternatives like Github actions.
 > 
-> >
-> > Personally, I'd prefer an approach that is reasonably easy to backport downstream to older QEMU releases. Since x-query-network is
-> > relatively new, extending it would also require bringing that command to releases which don't have it yet, potentially increasing the
-> > backporting effort.
-> >
-> > A type-specific data object could also accommodate additional TAP properties later, such as multiqueue mode or vnet_hdr. However, those
-> > are outside my current scope, I only need the interface name.
-> 
-> I'd suggest a new query-network-tap(name: hostnet0) -> TAPInfo command
-> for your specific case. Eventually, later, NetworkClientInfo could
-> later embed that data.
-> 
-> Let see what other people & maintainers think
+>  tests/vm/haiku.x86_64 | 124 ------------------------------------------
+>  1 file changed, 124 deletions(-)
+>  delete mode 100755 tests/vm/haiku.x86_64
 
-A minor nitpick about naming, on the command line and QMP command
-we use the term 'netdev' for the modern config approach, rather
-than "net" or "network" which is the original terminology prior
-to "netdev".
-
-On the general design though, IMHO, adding such narrow commands
-is not very desirable.
-
-On the input side we already have a data structure defined for
-the input arguments to 'netdev-add', namely "Netdev", which
-has fields for all the possible config options of all the
-backends via a discriminated union.
-
-In the case of TAP devices there are two scenarios - the low
-level backend represented in NetdevTapOptions, and the high
-level backend rerpesented in NetdevBridgeOptions.
-
-The NetdevTapOptions struct already includes a "ifname" field.v
-In the case of passing in an FD during 'netdev-add', 'fd' would
-be set, while 'ifname' would be left unset.
-
-It is reasonable to say, however, then upon querying the live
-NetdevTapOptions, *only* the "ifname" field ought to be present,
-either the orignal value from the user, or the derived value
-from calling tap_fd_get_ifname(). 
-
-IOW, what I'm saying is that if we want to query the live netdv
-backend config, we should have:
-
-   { 'command': 'query-netdevs', 'data': ['Netdev'] }
-
-as a formal QAPI model.
-
-Aside from the general plumbing work, two things to be aware of
-
- * After creating the netdev initially, we throw away the
-   original "Netdev" struct data. We would need to preserve
-   that struct, so that we can later report it back with
-   query-netdevs. The TAP backend would also have to fill-in
-   the 'ifname' field when given an 'fd' initially.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
- * In theory someone could still be using '-net' instead
-   of '-netdev', where IIUC, we will have an "Netdev"
-   struct at any point.
 
-   The idealized thing todo is to fold "-net" onto "-netdev"
-   by making it synthesize a "Netdev" and then go through
-   the Netdev setup code path, but their semantics aren't a
-   perfect match which is why they're separate to begin
-   with. So ignore that idea.
-
-   The more practical thing to do is merely document that
-   'query-netdevs' only reports on backends created via
-   '-netdev' and thus declare '-net' compatibility entirely
-   out of scope.
 
 With regards,
 Daniel
