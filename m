@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4815EC88E72
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 18:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E974C982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 19:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7HKo-0000k3-DL; Thu, 17 Sep 2026 14:59:51 -0400
+	id 1x7HMp-0001Ih-W1; Thu, 17 Sep 2026 15:01:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x7HKl-0000jc-9n
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 14:59:47 -0400
+ id 1x7HMo-0001IK-OR
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 15:01:54 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x7HKg-0005zi-7h
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 14:59:47 -0400
+ id 1x7HMl-0006SF-9u
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 15:01:54 -0400
 Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68HIxJTx054291
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68HJ1cdg054802
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 18 Sep 2026 03:59:19 +0900 (JST)
+ Fri, 18 Sep 2026 04:01:38 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Hur+Q13jqYRoD2YSsMsCEJRml1LnUGOOs66f6/VMglw=; 
+DKIM-Signature: a=rsa-sha256; bh=k10+8mZz4ynNQ6rYNxQ8qC60DPzcDFOOYup91lj9MsU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1789671560; v=1;
- b=BL8kBsq185ch8pu0j8c3X5aJ7sk0oZLG5nPOa4yepOQE8I9pCy/61vbuvSdMSrFN
- Y1CKfJfDn7FSooF2HGGJNgkUmtoCQIFsLw7igr5qJH4pxHPeZfIn8BmU6wqV4KVO
- DZ195wKdaIHOXJY51ZVrZrrZFIAmaYzklR36ubkTCDq94a4K7/ZxzlbI8zxKPQm2
- BTJ+wNzHqHN1nmn8o+XWgEXoxiW6oTODYV82nBLrb6Xm9Y1Kbbk9Mr8F+WmJ7Rvv
- EQXVNVqerZtrE1gqCNRtXpiI43B4Hc/HkiEJumtPxLrhvQepnFOwRWzr1eYWLGMl
- rZDSJIRalDWHrtIgybhdew==
-Message-ID: <5700669b-ed70-4b97-a128-38db113ac87f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 18 Sep 2026 03:59:19 +0900
+ s=rs20250326; t=1789671698; v=1;
+ b=uQVn/0TthAUGMLJHODBYueaz8iawLC17SZdHUMSz8MBnYwPoN+Qw6Gx6S3Xsht7p
+ bKQQLaKRYfoRkItifc8XXvNh2hfeJW3QU092a3jPzLnas+s/ojOHIdBZ6TdlbX7x
+ ip8VEnYcfLFqCYofjGSc2GkZLMg4z/D67+jfPUkRO/b/MLgwunIwI3Y2Q5l0SjIh
+ HX9qA2iLso3a8uplBVEIFN8xCBtbl5OarJHy+5N8t9rPZdEugcKlfy9BZVTptIt1
+ 6w8yWOgoeCoUy9OTxl3We1iSEUBsH/+qA2qxzoXZS3A2DOfa0cJxvcXOPwhcBoyl
+ dEg4WYf/hV8JcxN3ZonWcA==
+Message-ID: <f652f02c-3459-4ae1-88e7-95aec80d3032@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 18 Sep 2026 04:01:38 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 3/9] igb: Add VF state serialization for live
- migration
+Subject: Re: [RFC PATCH v2 4/9] igb: Add VF post-load fixups for live migration
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
  Peter Xu <peterx@redhat.com>
 References: <20260902192054.3329753-1-clg@redhat.com>
- <20260902192054.3329753-4-clg@redhat.com>
- <846e77a1-56df-4d14-a1ee-d6c6489a2bcb@rsg.ci.i.u-tokyo.ac.jp>
- <471c83b2-5190-4eb2-a9c7-9286fb9b1399@redhat.com>
+ <20260902192054.3329753-5-clg@redhat.com>
+ <ac517c84-40a3-422c-b022-41b3c8456855@rsg.ci.i.u-tokyo.ac.jp>
+ <8b44c432-7737-4a3b-9abc-a8b30318749f@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <471c83b2-5190-4eb2-a9c7-9286fb9b1399@redhat.com>
+In-Reply-To: <8b44c432-7737-4a3b-9abc-a8b30318749f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -78,547 +77,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/15 16:47, Cédric Le Goater wrote:
-> Hello Akihiko,
-> 
-> On 9/8/26 10:01, Akihiko Odaki wrote:
->>
->>
+On 2026/09/15 16:58, Cédric Le Goater wrote:
+> On 9/8/26 10:10, Akihiko Odaki wrote:
 >> On 2026/09/03 4:20, Cédric Le Goater wrote:
->>> Implement per-VF state serialization and deserialization for the SAVE
->>> and LOAD commands. The wire format consists of a header (magic,
->>> version, VF number, register count), per-VF register offset/value
->>> pairs from a whitelist, RA table entries owned by the VF, and TX
->>> queue contexts.
->>>
->>> Register offsets are relocated on load so a VF can migrate to a
->>> different VF number on the destination. RA pool ownership bits are
->>> swapped accordingly.
+>>> After restoring per-VF register state, propagate the VF's PVT shadow
+>>> values back into the PF's aggregate EIMS/EIAC/EIAM registers and
+>>> re-apply the VTIVAR interrupt vector routing to the shared IVAR0.
 >>>
 >>> AI-used-for: analysis, code (prototype)
 >>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 >>> ---
->>>   hw/net/igb_core.h      |   2 +
->>>   hw/net/igb_migration.h |   2 +
->>>   hw/net/igb.c           |   5 +
->>>   hw/net/igb_migration.c | 347 ++++++++++++++++++++++++++++++++++++++++-
->>>   4 files changed, 354 insertions(+), 2 deletions(-)
+>>>   hw/net/igb_core.h      |  3 ++
+>>>   hw/net/igb_core.c      | 66 ++++++++++++++++++++++++++++++++++++++++++
+>>>   hw/net/igb_migration.c |  7 +++++
+>>>   3 files changed, 76 insertions(+)
 >>>
 >>> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
->>> index d70b54e318f1..60724e2824ab 100644
+>>> index 60724e2824ab..22e10e4e6d0b 100644
 >>> --- a/hw/net/igb_core.h
 >>> +++ b/hw/net/igb_core.h
->>> @@ -143,4 +143,6 @@ igb_receive_iov(IGBCore *core, const struct iovec 
->>> *iov, int iovcnt);
->>>   void
->>>   igb_start_recv(IGBCore *core);
->>> +IGBCore *igb_pf_get_core(void *pf);
+>>> @@ -145,4 +145,7 @@ igb_start_recv(IGBCore *core);
+>>>   IGBCore *igb_pf_get_core(void *pf);
+>>> +void igb_core_vf_propagate_irqs(IGBCore *core, uint16_t vfn);
+>>> +void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn);
 >>> +
 >>>   #endif
->>> diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
->>> index ea40ac65c54b..b2f601e74346 100644
->>> --- a/hw/net/igb_migration.h
->>> +++ b/hw/net/igb_migration.h
->>> @@ -73,6 +73,8 @@
->>>   #define IGB_MIG_ERR_NO_BUFFER           3
->>>   #define IGB_MIG_ERR_DMA_FAILED          4
->>>   #define IGB_MIG_ERR_BAD_SIZE            5
->>> +#define IGB_MIG_ERR_BAD_MAGIC           6
->>> +#define IGB_MIG_ERR_BAD_VERSION         7
->>>   /* Shared buffer constants */
->>>   #define IGB_VF_STATE_MAX_SIZE           4096
->>> diff --git a/hw/net/igb.c b/hw/net/igb.c
->>> index 7268e5473fc3..f39f2bc3a04e 100644
->>> --- a/hw/net/igb.c
->>> +++ b/hw/net/igb.c
->>> @@ -133,6 +133,11 @@ void igb_vf_reset(void *opaque, uint16_t vfn)
->>>       igb_core_vf_reset(&s->core, vfn);
+>>> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+>>> index 2a4883907353..01745fe756d0 100644
+>>> --- a/hw/net/igb_core.c
+>>> +++ b/hw/net/igb_core.c
+>>> @@ -4552,3 +4552,69 @@ igb_core_post_load(IGBCore *core)
+>>>       return 0;
 >>>   }
->>> +IGBCore *igb_pf_get_core(void *pf)
->>> +{
->>> +    return &IGB(pf)->core;
->>> +}
->>> +
->>>   static bool
->>>   igb_io_get_reg_index(IGBState *s, uint32_t *idx)
->>>   {
->>> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
->>> index 8e7e6fac9b9b..c34035974620 100644
->>> --- a/hw/net/igb_migration.c
->>> +++ b/hw/net/igb_migration.c
->>> @@ -10,18 +10,241 @@
->>>   #include "qemu/log.h"
->>>   #include "hw/pci/pci_device.h"
->>>   #include "hw/pci/pcie.h"
->>> +#include "net/eth.h"
->>> +#include "net/net.h"
->>>   #include "igb_common.h"
->>> +#include "igb_core.h"
->>>   #include "igb_migration.h"
->>>   #include "system/address-spaces.h"
->>>   #include "trace.h"
->>> +static IGBCore *igbvf_get_core(IgbVfState *s)
->>> +{
->>> +    return igb_pf_get_core(pcie_sriov_get_pf(PCI_DEVICE(s)));
->>> +}
->>> +
->>>   /*
->>>    * Per-VF state serialization / deserialization
->>>    */
->>> +#define IGB_MIG_BLOB_MAGIC        0x4D494742  /* "MIGB" */
->>> +#define IGB_MIG_BLOB_VERSION      1
->>> +
->>> +typedef struct IgbMigRegPair {
->>> +    uint32_t offset;
->>> +    uint32_t value;
->>> +} IgbMigRegPair;
->>> +
->>> +typedef struct IgbMigTxCtx {
->>> +    uint32_t ctx_desc[8];         /* 2 × adv_tx_context_desc (4 
->>> dwords each) */
->>> +    uint32_t first_cmd_type_len;
->>> +    uint32_t first_olinfo_status;
->>> +    uint32_t first;
->>> +    uint32_t skip_cp;
->>> +} IgbMigTxCtx;
->>> +
->>> +#define IGB_VF_MAX_FIXED_REGS     64
->>> +#define IGB_VF_MAX_RA_REGS        48  /* (16 + 8) RA entries × 2 
->>> (RAL+RAH) */
->>> +
->>> +typedef struct IgbMigBlob {
->>> +    uint32_t magic;
->>> +    uint32_t version;
->>> +    uint32_t vfn;
->>> +    uint32_t num_regs;
->>> +    IgbMigRegPair regs[IGB_VF_MAX_FIXED_REGS];
->>> +    uint32_t num_ra;
->>> +    IgbMigRegPair ra[IGB_VF_MAX_RA_REGS];
->>> +    uint32_t num_tx_ctx;
->>> +    IgbMigTxCtx tx_ctx[2];
->>> +} IgbMigBlob;
->>> +
->>> +#define IGB_MIG_BLOB_SIZE            sizeof(IgbMigBlob)
->>> +
->>> +QEMU_BUILD_BUG_ON(IGB_MIG_BLOB_SIZE > IGB_VF_STATE_MAX_SIZE);
->>> +
->>> +/* Register offsets that constitute a VF's state slice */
->>> +static int igb_vf_reg_list(uint16_t vfn, uint32_t *offsets)
->>> +{
->>> +    int n = 0;
->>> +    int q0 = vfn;
->>> +    int q1 = vfn + IGB_NUM_VM_POOLS;
->>> +
->>> +    /* Per-VF control and interrupt registers */
->>> +    offsets[n++] = E1000_PVTCTRL(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVTEICS(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVTEIMS(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVTEIMC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVTEIAC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVTEIAM(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVTEICR(vfn) >> 2;
->>> +
->>> +    /* Per-VF statistics */
->>> +    offsets[n++] = E1000_PVFGPRC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGPTC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGORC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGOTC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFMPRC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGPRLBC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGPTLBC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGORLBC(vfn) >> 2;
->>> +    offsets[n++] = E1000_PVFGOTLBC(vfn) >> 2;
->>> +
->>> +    /*
->>> +     * Mailbox control registers only - the 16-dword payload buffer
->>> +     * (VMBMEM) is transient and drained on quiesce.
->>> +     */
->>> +    offsets[n++] = E1000_V2PMAILBOX(vfn) >> 2;
->>> +    offsets[n++] = E1000_P2VMAILBOX(vfn) >> 2;
->>> +
->>> +    /* Per-VF config */
->>> +    offsets[n++] = E1000_VMOLR(vfn) >> 2;
->>> +    offsets[n++] = E1000_VMVIR(vfn) >> 2;
->>> +    offsets[n++] = E1000_PSRTYPE(vfn) >> 2;
->>> +
->>> +    /*
->>> +     * VF receive addresses (RA/RA2) are saved dynamically in
->>> +     * igb_core_vf_save_state by scanning for entries whose pool
->>> +     * bits match this VF - the PF driver chooses the RA slot.
->>> +     */
->>> +
->>> +    /* Interrupt routing */
->>> +    offsets[n++] = (E1000_VTIVAR + vfn * 4) >> 2;
->>> +    offsets[n++] = (E1000_VTIVAR_MISC + vfn * 4) >> 2;
->>> +
->>> +    /*
->>> +     * EITR (Extended Interrupt Throttle Register) - 3 vectors per VF.
->>> +     * Each VF has 3 MSI-X vectors, each with its own EITR controlling
->>> +     * interrupt coalescing. Without saving these, interrupt
->>> +     * throttling resets to zero after migration which can cause
->>> +     * interrupt storms or latency changes. VF N uses PF EITR indices
->>> +     * (22 - N*3) .. (24 - N*3).
->>> +     */
->>> +    {
->>> +        int eitr_base = 22 - vfn * 3;
->>> +        offsets[n++] = E1000_EITR(eitr_base) >> 2;
->>> +        offsets[n++] = E1000_EITR(eitr_base + 1) >> 2;
->>> +        offsets[n++] = E1000_EITR(eitr_base + 2) >> 2;
->>> +    }
->>> +
->>> +    /* RX and TX queue registers for queues q0 and q1 */
->>> +#define ADD_QUEUE_REGS(q) do { \
->>> +    offsets[n++] = E1000_RDBAL(q) >> 2; \
->>> +    offsets[n++] = E1000_RDBAH(q) >> 2; \
->>> +    offsets[n++] = E1000_RDLEN(q) >> 2; \
->>> +    offsets[n++] = E1000_SRRCTL(q) >> 2; \
->>> +    offsets[n++] = E1000_RDH(q) >> 2; \
->>> +    offsets[n++] = E1000_RDT(q) >> 2; \
->>> +    offsets[n++] = E1000_RXDCTL(q) >> 2; \
->>> +    offsets[n++] = E1000_RXCTL(q) >> 2; \
->>> +    offsets[n++] = E1000_RQDPC(q) >> 2; \
->>> +    offsets[n++] = E1000_TDBAL(q) >> 2; \
->>> +    offsets[n++] = E1000_TDBAH(q) >> 2; \
->>> +    offsets[n++] = E1000_TDLEN(q) >> 2; \
->>> +    offsets[n++] = E1000_TDH(q) >> 2; \
->>> +    offsets[n++] = E1000_TDT(q) >> 2; \
->>> +    offsets[n++] = E1000_TXDCTL(q) >> 2; \
->>> +    offsets[n++] = E1000_TXCTL(q) >> 2; \
->>> +    offsets[n++] = E1000_TDWBAL(q) >> 2; \
->>> +    offsets[n++] = E1000_TDWBAH(q) >> 2; \
->>> +} while (0)
->>> +
->>> +    ADD_QUEUE_REGS(q0);
->>> +    ADD_QUEUE_REGS(q1);
->>> +#undef ADD_QUEUE_REGS
->>> +
->>> +    g_assert(n <= IGB_VF_MAX_FIXED_REGS);
->>> +    return n;
->>> +}
 >>> +
 >>> +/*
->>> + * Scan RA and RA2 arrays for receive address entries assigned to
->>> + * this VF. The PF driver picks the RA slot, so we cannot use a
->>> + * fixed index - instead check each entry's pool bits.
+>>> + * Propagate VF interrupt state to PF aggregates after loading VF
+>>> + * registers. The load path writes directly to mac[] bypassing the
+>>> + * register handlers that OR VF bits into EIMS/EIAC/EIAM. Also clear
+>>> + * stale VF bits in EICR that may have been set by packets arriving
+>>> + * between PF vmstate restore and VF state load.
 >>> + */
->>> +static int igb_core_vf_save_ra(IGBCore *core, uint16_t vfn,
->>> +                               IgbMigRegPair *regs)
+>>> +void igb_core_vf_propagate_irqs(IGBCore *core, uint16_t vfn)
 >>> +{
->>> +    uint32_t vf_pool_bit = E1000_RAH_POOL_1 << vfn;
->>> +    int n = 0;
->>> +    static const struct {
->>> +        uint32_t base;
->>> +        int count;
->>> +    } ra_banks[] = {
->>> +        { RA,  16 },
->>> +        { RA2,  8 },
->>> +    };
+>>> +    uint32_t shift = 22 - vfn * IGBVF_MSIX_VEC_NUM;
+>>> +    uint32_t vf_mask = 0x7 << shift;
+>>> +    uint32_t pvt_idx;
 >>> +
->>> +    for (int i = 0; i < ARRAY_SIZE(ra_banks); i++) {
->>> +        for (int j = 0; j < ra_banks[i].count; j++) {
->>> +            uint32_t ral_off = ra_banks[i].base + j * 2;
->>> +            uint32_t rah_off = ra_banks[i].base + j * 2 + 1;
->>> +            uint32_t rah_val = core->mac[rah_off];
->>> +
->>> +            if ((rah_val & E1000_RAH_AV) && (rah_val & vf_pool_bit)) {
->>> +                regs[n].offset = cpu_to_le32(ral_off);
->>> +                regs[n].value = cpu_to_le32(core->mac[ral_off]);
->>> +                n++;
->>> +                regs[n].offset = cpu_to_le32(rah_off);
->>> +                regs[n].value = cpu_to_le32(rah_val);
->>> +                n++;
->>> +            }
->>> +        }
->>> +    }
->>> +    return n;
->>> +}
->>> +
->>> +static void igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
->>> +                                    IgbMigTxCtx *tx)
->>> +{
->>> +    struct igb_tx *src = &core->tx[queue];
->>> +
->>> +    memcpy(tx->ctx_desc, src->ctx, sizeof(tx->ctx_desc));
->>> +    tx->first_cmd_type_len = cpu_to_le32(src->first_cmd_type_len);
->>> +    tx->first_olinfo_status = cpu_to_le32(src->first_olinfo_status);
->>> +    tx->first = cpu_to_le32(src->first);
->>> +    tx->skip_cp = cpu_to_le32(src->skip_cp);
->>> +}
->>> +
->>>   static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t 
->>> buf_size)
->>>   {
->>> -    int size = 0;
->>> +    int size = IGB_MIG_BLOB_SIZE;
->>> +    IGBCore *core = igbvf_get_core(s);
->>> +    IgbMigBlob *blob = buf;
->>> +    uint32_t offsets[IGB_VF_MAX_FIXED_REGS];
->>> +    int num_regs;
->>> +    int q0 = s->vfn;
->>> +    int q1 = s->vfn + IGB_NUM_VM_POOLS;
->>> +
->>> +    /*
->>> +     * Save PVT shadow registers (PVTEIMS/PVTEIAC/PVTEIAM) instead of
->>> +     * extracting from PF aggregates - the L1 PF driver may have
->>> +     * transiently cleared EIMS via EIMC. The load path ORs them back.
->>> +     */
->>> +    num_regs = igb_vf_reg_list(s->vfn, offsets);
->>> +
->>> +    if (!buf) {
->>> +        return size;
->>> +    }
->>> +
->>> +    if (size > buf_size) {
->>> +        return -IGB_MIG_ERR_BAD_SIZE;
->>> +    }
->>> +
->>> +    blob->magic = cpu_to_le32(IGB_MIG_BLOB_MAGIC);
->>> +    blob->version = cpu_to_le32(IGB_MIG_BLOB_VERSION);
->>> +    blob->vfn = cpu_to_le32(s->vfn);
->>> +
->>> +    blob->num_regs = cpu_to_le32(num_regs);
->>> +    for (int i = 0; i < num_regs; i++) {
->>> +        blob->regs[i].offset = cpu_to_le32(offsets[i]);
->>> +        blob->regs[i].value = cpu_to_le32(core->mac[offsets[i]]);
->>> +    }
->>> +
->>> +    blob->num_ra = cpu_to_le32(igb_core_vf_save_ra(core, s->vfn, 
->>> blob->ra));
+>>> +    core->mac[EIMS] &= ~vf_mask;
 >>
->> The serialized state contains RA entries but excludes VFTA/VLVF and 
->> MTA/UTA state. 
-> 
-> VLVF should not be too complex to add support for. It is the same pattern
-> as the RA scan.
-> 
-> VFTA/MTA/UTA support is tougher. IIUC, these are PF shared tables and there
-> are no per-VF bits. So we either need to add per-VF shadow tracking, which
-> is intrusive or, to begin with, we can ignore: detect and warn.
-> 
-> 
->> A guest-configured VLAN therefore resumes on a destination lacking its 
->> filter membership: packets are rejected by the global VLAN check or 
->> have their VF queue removed  in igb_receive_assign(),. Likewise, 
->> restored VMOLR.ROMPE cannot receive subscribed multicast without its 
->> MTA hash bits. These are guest-requested settings communicated through 
->> the PF mailbox, and the resumed guest does not recreate them 
->> automatically.
-> 
-> yes. If we could restore some of the VF state using the PF mailbox, we
-> would avoid poking the core igb device from the VF but the model doesn't
-> have enough support yet.
-
-I mentioned the PF mailbox to explain how those settings were 
-established, not to suggest using it to transport or restore migration 
-state.
-
-The complication is that a VF request through the mailbox can result in 
-configuration held in shared PF state, outside the VF registers. 
-Restoring the VF registers alone therefore does not restore everything 
-the guest previously configured. The resumed guest already considers 
-those requests complete, so we cannot rely on it to issue them again.
-
-Migration needs to preserve the effects of those requests while 
-respecting the destination's existing allocations and keeping the PF's 
-resource management consistent. Mailbox replay might be one way to 
-coordinate that, but my original point was about the state that should 
-not be silently discarded, rather than the mechanism used to restore it.
-
-> 
+>> Restore the effective interrupt mask rather than the last EIMS write.
 >>
->>> +
->>> +    blob->num_tx_ctx = cpu_to_le32(2);
->>> +    igb_core_vf_save_tx_ctx(core, q0, &blob->tx_ctx[0]);
->>> +    igb_core_vf_save_tx_ctx(core, q1, &blob->tx_ctx[1]);
->>>       trace_igbvf_mig_save_state(s->vfn, size);
->>>       return size;
->>> @@ -29,11 +252,131 @@ static int igb_core_vf_save_state(IgbVfState 
->>> *s, void *buf, size_t buf_size)
->>>   static int igb_core_vf_max_data_size(IgbVfState *s)
->>>   {
->>> -    return sizeof(s->mig.mig_data);
->>> +    int size = igb_core_vf_save_state(s, NULL, 0);
->>> +
->>> +    g_assert(size > 0 && size <= IGB_VF_STATE_MAX_SIZE);
->>> +    return size;
->>> +}
->>> +
->>> +static void igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
->>> +                                    const IgbMigTxCtx *tx)
->>> +{
->>> +    struct igb_tx *dst = &core->tx[queue];
->>> +
->>> +    /*
->>> +     * Preserve the destination's tx_pkt - it's a host-side object,
->>> +     * not guest state
->>> +     */
->>> +    memcpy(dst->ctx, tx->ctx_desc, sizeof(dst->ctx));
->>> +    dst->first_cmd_type_len = le32_to_cpu(tx->first_cmd_type_len);
->>> +    dst->first_olinfo_status = le32_to_cpu(tx->first_olinfo_status);
->>> +    dst->first = le32_to_cpu(tx->first);
->>> +    dst->skip_cp = le32_to_cpu(tx->skip_cp);
->>> +}
->>> +
->>> +static uint32_t igb_vf_relocate_offset(uint32_t offset,
->>> +                                       const uint32_t *src_offsets,
->>> +                                       const uint32_t *dst_offsets,
->>> +                                       int num_offsets)
->>> +{
->>> +    for (int i = 0; i < num_offsets; i++) {
->>> +        if (src_offsets[i] == offset) {
->>> +            return dst_offsets[i];
->>> +        }
->>> +    }
->>> +    return 0;
->>>   }
->>>   static int igb_core_vf_load_state(IgbVfState *s, const void *buf, 
->>> size_t size)
->>>   {
->>> +    IGBCore *core = igbvf_get_core(s);
->>> +    uint32_t src_offsets[IGB_VF_MAX_FIXED_REGS];
->>> +    uint32_t dst_offsets[IGB_VF_MAX_FIXED_REGS];
->>> +    int q0 = s->vfn;
->>> +    int q1 = s->vfn + IGB_NUM_VM_POOLS;
->>> +
->>> +    if (size < IGB_MIG_BLOB_SIZE) {
->>> +        return -IGB_MIG_ERR_BAD_SIZE;
->>> +    }
->>> +
->>> +    const IgbMigBlob *blob = buf;
->>> +
->>> +    uint32_t magic = le32_to_cpu(blob->magic);
->>> +    uint32_t version = le32_to_cpu(blob->version);
->>> +    uint32_t saved_vfn = le32_to_cpu(blob->vfn);
->>> +    uint32_t num_regs = le32_to_cpu(blob->num_regs);
->>> +
->>> +    if (magic != IGB_MIG_BLOB_MAGIC) {
->>> +        return -IGB_MIG_ERR_BAD_MAGIC;
->>> +    }
->>> +    if (version != IGB_MIG_BLOB_VERSION) {
->>> +        return -IGB_MIG_ERR_BAD_VERSION;
->>> +    }
->>> +    if (num_regs > IGB_VF_MAX_FIXED_REGS) {
->>> +        return -IGB_MIG_ERR_BAD_SIZE;
->>> +    }
->>> +
->>> +    uint32_t num_ra = le32_to_cpu(blob->num_ra);
->>> +    if (num_ra > IGB_VF_MAX_RA_REGS) {
->>> +        return -IGB_MIG_ERR_BAD_SIZE;
->>> +    }
->>> +
->>> +    int num_offsets = igb_vf_reg_list(saved_vfn, src_offsets);
->>> +    igb_vf_reg_list(s->vfn, dst_offsets);
->>> +
->>> +    for (uint32_t i = 0; i < num_regs; i++) {
->>> +        uint32_t src_off = le32_to_cpu(blob->regs[i].offset);
->>> +        uint32_t value = le32_to_cpu(blob->regs[i].value);
->>> +        uint32_t offset = igb_vf_relocate_offset(src_off,
->>> +            src_offsets, dst_offsets, num_offsets);
->>> +        if (!offset) {
->>> +            return -IGB_MIG_ERR_BAD_SIZE;
->>> +        }
->>> +
->>> +        core->mac[offset] = value;
->>> +
->>> +        /*
->>> +         * Sync EITR to eitr_guest_value[] shadow array, stripping
->>> +         * E1000_EITR_CNT_IGNR so guest register readback returns the
->>> +         * correct value.
->>> +         */
->>> +        if (offset >= EITR0 && offset < EITR0 + IGB_INTR_NUM) {
->>> +            core->eitr_guest_value[offset - EITR0] =
->>> +                value & ~E1000_EITR_CNT_IGNR;
->>> +        }
->>> +    }
->>> +
->>> +    /*
->>> +     * MSI-X table/PBA is not saved - L1's VFIO reprograms it with
->>> +     * destination-specific IRTE references after migration.
->>> +     */
->>> +
->>> +    uint32_t src_pool = E1000_RAH_POOL_1 << saved_vfn;
->>> +    uint32_t dst_pool = E1000_RAH_POOL_1 << s->vfn;
->>> +
->>> +    for (uint32_t i = 0; i < num_ra; i++) {
->>> +        uint32_t offset = le32_to_cpu(blob->ra[i].offset);
->>> +        uint32_t value = le32_to_cpu(blob->ra[i].value);
->>> +
->>> +        /* RAH entries: swap pool ownership bits */
->>> +        if (offset >= RA && offset < RA + 32 && (offset - RA) % 2 == 
->>> 1) {
->>> +            value = (value & ~src_pool) | dst_pool;
->>> +        }
->>> +        if (offset >= RA2 && offset < RA2 + 16 && (offset - RA2) % 2 
->>> == 1) {
->>> +            value = (value & ~src_pool) | dst_pool;
->>> +        }
->>> +
->>> +        core->mac[offset] = value;
->>
->> Please validate RA offsets before writing core->mac. 
+>> This clears the destination VF mask and copies PVTEIMS, but that 
+>> shadow records only the last write: igb_set_vteims() assigns it before 
+>> applying set-bit semantics to aggregate EIMS. For example, source 
+>> writes EIMS=1, then EIMS=2, leave effective mask 3 and shadow 2; 
+>> migration restores 2, suppressing vector 0 until explicitly enabled 
+>> again. Conversely, EIMC updates aggregate EIMS without updating 
+>> PVTEIMS, so migration reenables explicitly masked vectors. Patch 7 
+>> repeats this fixup on unquiesce without repairing the bookkeeping.
 > 
-> Drat. my bad. It should be done and it's easy :
-> 
->     reject offsets not in  [RA, RA+32) or [RA2, RA2+16)
+> ok. I guess we can save and restore the VF's effective mask bits directly
+> and drop the fixup then. Same for EIAC/EIAM. It should simplify the flow.
+> How's that ?
 
-That addresses the out-of-bounds write. Please also validate the 
-complete blob before modifying any state, including the TX context 
-count, so a rejected LOAD does not leave partially restored state.
+Yes, saving and restoring the VF's effective bits in EIMS/EIAC/EIAM 
+would address my concern and remove the need for that shadow-based 
+fixup. Restore only this VF's bits, preserving the PF and other VFs 
+bits in those shared registers.
 
-> 
->> A valid-sized LOAD blob with one RA entry and an out-of-range offset 
->> produces an out-of-bounds 32-bit host write. LOAD reads this blob 
->> directly from guest RAM. Please validate all offsets and saved_vfn 
->> before modifying state.
-> 
-> 
-> I think we should drop VF relocation support.
-> 
->      if (saved_vfn != s->vfn) {
->          return -IGB_MIG_ERR_BAD_VFN;
->      }
-> 
-> 
-> I was too optimistic in v2. This adds too much complexity and we haven't
-> covered the simple case yet. Let's consider that VF number is part of
-> the migration state to have more invariants and avoid collisions.
-> 
->>
->> This loop also changes the VF pool bit but preserves the source RA 
->> slot. A valid VF0→VF1 migration onto a destination already using VF0 
->> overwrites destination VF0’s primary MAC entry. Linux assigns the 
->> primary entry as rar_entry_count - (vf + 1); receive filtering 
->> consumes these slots directly in igb_receive_assign(). Thus the 
->> unrelated destination VF loses unicast reception. Existing destination 
->> entries owned by the migrating VF are also left behind.
-> 
-> There should be no/few entries on the destination for the VF being
-> migrated, only the fixed primary MAC entries for the VF. So, with the
-> same VF number enforced, slot assignments should be deterministic
-> and we can scan and clear any entries with this VF's pool bit at load
-> time.
-
-Requiring the same VF number sounds like a reasonable restriction for 
-the initial implementation. However, it does not guarantee that the 
-source and destination use the same RA slots. An additional source entry 
-can occupy a slot used by another VF on the destination, even when the 
-migrating VF keeps its number.
-
-Scanning and clearing destination entries also needs to preserve other 
-pools: an RA entry can have multiple pool bits set. We should remove 
-only this VF's membership and avoid importing unrelated source pool 
-bits. Conflicting destination slots need to be handled or rejected.
-
-VLVF has a similar issue. Scanning by pool bit identifies the VF's VLAN 
-memberships, but restoration needs to match VLAN IDs rather than copy 
-source slots, preserving other destination memberships. The 
-corresponding VFTA bits also need to be present.
-
-For unsupported VFTA/MTA/UTA state, could we reject migration rather 
-than just warn? Otherwise migration succeeds while the resumed VF loses 
-reception. Restricting the supported configurations seems fine, provided 
-those restrictions are checked.
+Please also ensure that the saved EIMS bits reflect the mask before 
+quiescing disables interrupts, and that unquiesce restores that saved 
+mask rather than reconstructing it from PVTEIMS.
 
 Regards,
 Akihiko Odaki
+
+> 
+> Thanks
+> 
+> C.
+> 
+> 
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>> +    pvt_idx = PVTEIMS0 + vfn * 0x40;
+>>> +    core->mac[EIMS] |= (core->mac[pvt_idx] & 0x7) << shift;
+>>> +
+>>> +    core->mac[EIAC] &= ~vf_mask;
+>>> +    pvt_idx = PVTEIAC0 + vfn * 0x40;
+>>> +    core->mac[EIAC] |= (core->mac[pvt_idx] & 0x7) << shift;
+>>> +
+>>> +    core->mac[EIAM] &= ~vf_mask;
+>>> +    pvt_idx = PVTEIAM0 + vfn * 0x40;
+>>> +    core->mac[EIAM] |= (core->mac[pvt_idx] & 0x7) << shift;
+>>> +
+>>> +    core->mac[EICR] &= ~vf_mask;
+>>> +}
+>>> +
+>>> +/*
+>>> + * Re-apply VTIVAR -> IVAR0 interrupt routing. The L1 PF driver
+>>> + * may have overwritten the shared IVAR0 entries with its own
+>>> + * queue routing after L0 vmstate restore.
+>>> + */
+>>> +void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn)
+>>> +{
+>>> +    uint32_t vtivar = core->mac[VTIVAR + vfn];
+>>> +    int n;
+>>> +    uint8_t ent;
+>>> +    uint32_t mask;
+>>> +
+>>> +    n = igb_ivar_entry_rx(vfn);
+>>> +    mask = 0xffU << (8 * (n % 4));
+>>> +    if (vtivar & E1000_IVAR_VALID) {
+>>> +        ent = E1000_IVAR_VALID |
+>>> +              (24 - vfn * IGBVF_MSIX_VEC_NUM - (2 - (vtivar & 0x7)));
+>>> +        core->mac[IVAR0 + n / 4] =
+>>> +            (core->mac[IVAR0 + n / 4] & ~mask) |
+>>> +            ((uint32_t)ent << (8 * (n % 4)));
+>>> +    } else {
+>>> +        core->mac[IVAR0 + n / 4] &= ~mask;
+>>> +    }
+>>> +
+>>> +    n = igb_ivar_entry_tx(vfn);
+>>> +    mask = 0xffU << (8 * (n % 4));
+>>> +    ent = vtivar >> 8;
+>>> +    if (ent & E1000_IVAR_VALID) {
+>>> +        ent = E1000_IVAR_VALID |
+>>> +              (24 - vfn * IGBVF_MSIX_VEC_NUM - (2 - (ent & 0x7)));
+>>> +        core->mac[IVAR0 + n / 4] =
+>>> +            (core->mac[IVAR0 + n / 4] & ~mask) |
+>>> +            ((uint32_t)ent << (8 * (n % 4)));
+>>> +    } else {
+>>> +        core->mac[IVAR0 + n / 4] &= ~mask;
+>>> +    }
+>>> +}
+>>> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
+>>> index c34035974620..af7257ccc4fd 100644
+>>> --- a/hw/net/igb_migration.c
+>>> +++ b/hw/net/igb_migration.c
+>>> @@ -384,12 +384,19 @@ static int igb_core_vf_load_state(IgbVfState 
+>>> *s, const void *buf, size_t size)
+>>>   static int igbvf_mig_load(IgbVfState *s, const void *buf, size_t size)
+>>>   {
+>>>       int ret;
+>>> +    IGBCore *core = igbvf_get_core(s);
+>>>       ret = igb_core_vf_load_state(s, buf, size);
+>>>       if (ret < 0) {
+>>>           return ret;
+>>>       }
+>>> +    /*
+>>> +     * Post-load: sync VF interrupt and routing state to PF aggregates
+>>> +     */
+>>> +    igb_core_vf_propagate_irqs(core, s->vfn);
+>>> +    igb_core_vf_propagate_ivar(core, s->vfn);
+>>> +
+>>>       return 0;
+>>>   }
+>>
+> 
+
 
