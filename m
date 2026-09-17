@@ -4,64 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9959C982D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 14:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A8CC982D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 14:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7D8A-0001qI-QD; Thu, 17 Sep 2026 10:30:30 -0400
+	id 1x7DF7-0005Tt-2J; Thu, 17 Sep 2026 10:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x7D83-0001oQ-PR
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 10:30:25 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7DEm-0005T2-NX
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 10:37:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x7D80-0007fz-66
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 10:30:23 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id CFB34C0A2B;
- Thu, 17 Sep 2026 17:30:18 +0300 (MSK)
-Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:b33::1:33])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id DUXfb20WRqM0-lCITyc2b; Thu, 17 Sep 2026 17:30:18 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1789655418;
- bh=jXtNyScx3RS9/pxq7vM9HasQv8AbMFT+TjkQxTj1mVU=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=hL3Ta1mFQA4EAUXPmSaidy5IiwMvkZp2uWarXf3StwCSJw7FUA00a+HWdq16dfb+D
- AXhchsndmFEagnmwrcViAAXqA1t5G+Jajw+oBNGtK5h34+SNcRdIuZ94yLTib3XDG3
- NUqXVwrJnc+IU6s1t1xql9mI9hMss0GombZ3O4JM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: mst@redhat.com
-Cc: sgarzare@redhat.com,
-	qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru
-Subject: [PATCH 8/8] vhost-user: stop store userspace_addr for shadow when GPA
- negotiated
-Date: Thu, 17 Sep 2026 17:30:11 +0300
-Message-ID: <20260917143011.881361-9-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260917143011.881361-1-vsementsov@yandex-team.ru>
-References: <20260917143011.881361-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7DEk-0000ot-H4
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 10:37:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789655837;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wzPfsIGovdQT2Rs/VimLkRhihk0xNZIASw9vF0ggNi8=;
+ b=WqdqOKZoFT6B2CIm3kqOeZcpWy25ELsS9Tds3UJ07XbrzjJPV5JeKqQPOISfAtp9efLe4M
+ f8+cVCejXwnanXU2SF3dqfRXBDMy55AVc2ViGcW00SSiVohlkn/XlixjeN3rueqiRGIhh8
+ n477FPNMOxHWc+OJq5PW5L7P21yO78I=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-494-ucLxvLOtMCKcSeoBVXFJCA-1; Thu, 17 Sep 2026 10:37:15 -0400
+X-MC-Unique: ucLxvLOtMCKcSeoBVXFJCA-1
+X-Mimecast-MFC-AGG-ID: ucLxvLOtMCKcSeoBVXFJCA_1789655835
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-530f5e827c6so19939881cf.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 07:37:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789655835; x=1790260635; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=wzPfsIGovdQT2Rs/VimLkRhihk0xNZIASw9vF0ggNi8=;
+ b=cNcL/gom6S3/2fF4nDnxljNjYem7C4CgU80DS6wHkkljkvYztOJ1QIYnjemmE+cMB+
+ +CLiYawBKVJbWlpolaOjj5QbiX9taCMmRSwVsALWLTV8OUjpYMi6Dk2n+KbPFf3sXnUx
+ ndjNxVvYraPD98g68SxgukQP6UTRO7q/Qoshp5K7FPKMlbVl9kSu/45FHtqxJiE1xkZQ
+ P6OtL6+UDx+WI7CMgFzf5qDCn5r+2rSoFfrSDlLlrcV8tDomeYLY/Ijok2JqYh2ejEmG
+ 2HYjIRh/odhUb2maXcOlFrRd0WkOuzHa+HYqzQXaoxUfzc9nA7VsdDlpAYufomHemIgS
+ Y+FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789655835; x=1790260635;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=wzPfsIGovdQT2Rs/VimLkRhihk0xNZIASw9vF0ggNi8=;
+ b=sMtx+bZ16grRI+qpYhma3Z7x0M/irp9BcO8kmM6S3z35Q/u7dAULDvi6Y2wc+g6hTn
+ kp1c7yyAtgwe7XpWlgQbwnbFGuax6XBsfkmOsckLtjJGF9aoD/Jzo7V1UUrp21lJxtUF
+ oMYP2X2m2HXliF1v68KHD3ZcIxjZUpUMHfwwg67k2R3GVdrHsOVLW/GK/ygsj8F0c+9U
+ uEqS1GXInabuRIPk5zg6uQd3dfxZjh8a5fdTGdX21MFddzQXwP2f2LKMxHXpSsMASLHR
+ jMXE8r5q/BXJaFTgmnUNzNUtNSgjL2r9oIsD7/CX+NAcStH8oexr2C06ZWAMgoOYLB0j
+ mxtQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByfFaGQJKFJkF5xeZnhTM9q2Joj3oAh2oYuVdt3kgFF8KZOSzbZ1S5qodlWR+j5Pq5zLmlQuAke3Qgj@nongnu.org
+X-Gm-Message-State: AFuF++l7mCVs6JpdWw9mlsmVu8JIsMupVE6osHfrekcVMPIHekRjdi0V
+ t0rm0XbRbO/vlm4QOdTzJrbtXXqfAkgxa8gJnYl0J30O7/FUBhN/jXNiIM+j+s1tq+o4fpblO+4
+ /LMt9N5xnnAwFcTMN96HvTItYgyST6T7HIWWwbXjAXzDKAM1BI6EWxsjo
+X-Gm-Gg: AYBFou1W6f64s1l5P1GT1HICeP/dbzRzcdD3LvN7aIuX6NtnJExSzQgsCR8ihsBcyo4
+ vVDAwDBDb0jWLBGZjDTT4enqNCoe/HXjgOw8OEtbqyMJv1Tahl22mnch36ZHgb6vBn7YIJikQya
+ sNst4owcpXmYLhXgJ1nZDm9/PV1K2iVQ8qBFUdGUmeDMxMEH+vWCZpYb143ASOM4HxoISAV3IPs
+ ChT+sih3zp2nC/wgxfD0kEdPNwceAKXtWBaQWfx98MGYETLaKwH9nbQvwv9tirLIaCAWeyrd06F
+ AcEwBmDIBpD/4MnWI4dECNujD7NEgSOltD1SKZCsDHa8py3kMj377VnOEBrfao5Pbe3ixCw=
+X-Received: by 2002:a05:622a:98a:b0:532:9ade:b6f7 with SMTP id
+ d75a77b69052e-5329adec5f0mr10178871cf.77.1789655834820; 
+ Thu, 17 Sep 2026 07:37:14 -0700 (PDT)
+X-Received: by 2002:a05:622a:98a:b0:532:9ade:b6f7 with SMTP id
+ d75a77b69052e-5329adec5f0mr10178341cf.77.1789655834302; 
+ Thu, 17 Sep 2026 07:37:14 -0700 (PDT)
+Received: from localhost ([2605:8d80:6cc5:ca21:5af0:e7f:3a22:9538])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-532620c2ffbsm51495881cf.27.2026.09.17.07.37.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Sep 2026 07:37:13 -0700 (PDT)
+Date: Thu, 17 Sep 2026 10:37:11 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>
+Subject: Re: [PATCH 1/1] migration/cpr: lock the cpr state
+Message-ID: <aqv7Fxeog6EiZ1xm@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260916132428.1628553-1-den@openvz.org>
+ <aqrhPxFO7zHvZgs5@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <87v785rpml.fsf@suse.de>
+ <aqrwAftZOnT4LsI6@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <88028fa0-6b8d-44a6-8a59-41480b9d7b69@maciej.szmigiero.name>
+ <aqve6zlIKMMcIfKV@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <aqvgvw44pMtCZRGB@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <fdabb32a-cb79-40cf-ba68-2de565aae639@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fdabb32a-cb79-40cf-ba68-2de565aae639@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,90 +126,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This make the logic clear, that we don't need and don't use
-userspace address when GPA negotiated. This helps to introduce
-vhost-user local migration later (as we can't migrate userspace
-addresses).
+On Thu, Sep 17, 2026 at 04:17:54PM +0200, Maciej S. Szmigiero wrote:
+> On 17.09.2026 14:44, Peter Xu wrote:
+> > On Thu, Sep 17, 2026 at 08:36:59AM -0400, Peter Xu wrote:
+> > > On Thu, Sep 17, 2026 at 02:24:42PM +0200, Maciej S. Szmigiero wrote:
+> > > > Isn't moving to more fine grained locking than BQL desirable in the long term,
+> > > > much like BKL was split and removed from Linux kernel years ago?
+> > > 
+> > > My question was more seeking the issue behind.  CPR is pretty special, I
+> > > didn't expect any new fd addition didn't already take BQL, at least before
+> > > reading the last message.
+> > > 
+> > > I don't think we should randomly add lock for any structure that is
+> > > currently protected by BQL, it'll unnecessarily slow things down.  We
+> > > should only do smaller granule locking when we can consider getting rid of
+> > > BQL in the first place.
+> > 
+> > Now having some understanding of the issue, I noticed I'm not very certain
+> > whether this small lock can avoid all the issues.
+> > 
+> > Consider a race between cpr-exec migration at the very end, cpr_exec_cb()
+> > does cpr_exec_preserve_fds() walking all the fds, then another connection
+> > established in monitor iothread trying to add a new fd.
+> > 
+> > In this case, when without this smaller lock, it may crash accessing the
+> > hash.
+> > 
+> > When with the lock, two operations are serialized, but is it enough?  It
+> > means cpr_exec_preserve_fds() may take the lock first, mark all fds
+> > reserved but without the new connection.
+> > 
+> > Would that be a problem?  Theoretically, cpr should persist all fds in this
+> > case, including the newly attached?
+> > 
+> > Maybe it will never happen in practise because libvirt should never add
+> > another connection there, but I feel like it's more than "protecting
+> > concurrent access to a hash" problem.
+> 
+> I though monitor connection FDs aren't CPR-preserved in the first place, no?
+> 
+> And if you meant a monitor adding some non-monitor FD, I think this will
+> be handled in the main loop anyway (and so, serialized) via qmp_dispatcher?
 
-Feature: vhost-user-blk-fd-mig
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/virtio/vhost-user.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+My commnet above may not apply to master, but Denis's branch which
+originally exposed this problem.  And I confess so far it's kind of my
+interpretation of the issue from reading Denis's email, it may or may not
+be accurate.
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index e677f1bd05d..4a29bb77dc9 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -325,7 +325,12 @@ static VhostUserMsg m __attribute__ ((unused));
- typedef struct VhostShadowRegion {
-     uint64_t guest_phys_addr;
-     uint64_t memory_size; /* bytes */
--    uint64_t userspace_addr;
-+    /*
-+     * @userspace_addr_or_zero is unused and must be zero
-+     * when vhost_user_gpa_addresses(). Otherwise, it's
-+     * a userspace address, sent to backend.
-+     */
-+    uint64_t userspace_addr_or_zero;
-     QLIST_ENTRY(VhostShadowRegion) next;
- } VhostShadowRegion;
- 
-@@ -627,7 +632,8 @@ static void vhost_user_fill_rem_msg_region(struct vhost_dev *dev,
- 
-     assert(src != NULL && dst != NULL);
- 
--    dst->userspace_addr = use_phys ? src->guest_phys_addr : src->userspace_addr;
-+    dst->userspace_addr =
-+        use_phys ? src->guest_phys_addr : src->userspace_addr_or_zero;
-     dst->memory_size = src->memory_size;
-     dst->guest_phys_addr = src->guest_phys_addr;
-     dst->mmap_offset = 0;
-@@ -689,11 +695,15 @@ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
-     return 0;
- }
- 
--static inline bool reg_equal(VhostShadowRegion *shadow_reg,
-+static inline bool reg_equal(struct vhost_dev *dev,
-+                             VhostShadowRegion *shadow_reg,
-                              struct vhost_memory_region *vdev_reg)
- {
-+    bool use_phys = vhost_user_gpa_addresses(dev);
-+
-     return shadow_reg->guest_phys_addr == vdev_reg->guest_phys_addr &&
--        shadow_reg->userspace_addr == vdev_reg->userspace_addr &&
-+        (use_phys ||
-+         shadow_reg->userspace_addr_or_zero == vdev_reg->userspace_addr) &&
-         shadow_reg->memory_size == vdev_reg->memory_size;
- }
- 
-@@ -767,6 +777,7 @@ static int send_remove_region(struct vhost_dev *dev,
- static int send_add_region(struct vhost_dev *dev,
-                            struct vhost_memory_region *reg)
- {
-+    bool use_phys = vhost_user_gpa_addresses(dev);
-     struct vhost_user *u = dev->opaque;
-     int fd, ret;
-     ram_addr_t offset;
-@@ -791,7 +802,7 @@ static int send_add_region(struct vhost_dev *dev,
-     new_reg = g_new(VhostShadowRegion, 1);
-     *new_reg = (VhostShadowRegion) {
-         .guest_phys_addr = reg->guest_phys_addr,
--        .userspace_addr = reg->userspace_addr,
-+        .userspace_addr_or_zero = use_phys ? 0 : reg->userspace_addr,
-         .memory_size = reg->memory_size,
-     };
-     QLIST_INSERT_HEAD(&u->shadow_regions, new_reg, next);
-@@ -814,7 +825,7 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev)
-         bool matching = false;
- 
-         for (i = 0; i < dev->mem->nregions; i++) {
--            if (reg_equal(shadow_reg, &dev->mem->regions[i])) {
-+            if (reg_equal(dev, shadow_reg, &dev->mem->regions[i])) {
-                 matching = true;
-                 found[i] = true;
-                 break;
+My understanding is the connection happens with the iothread not main
+thread from a client, it may not really need bql.
+
+Denis may have more info when he collects enough info, and correct what I
+might be wrong.
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
