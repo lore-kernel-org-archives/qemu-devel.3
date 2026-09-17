@@ -4,59 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37EB1C982D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C32C982D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 21:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Jkc-0007zq-JC; Thu, 17 Sep 2026 17:34:38 -0400
+	id 1x7Jnt-0002Y4-1R; Thu, 17 Sep 2026 17:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7JkZ-0007z4-V3; Thu, 17 Sep 2026 17:34:36 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7JkO-00060X-HW; Thu, 17 Sep 2026 17:34:35 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id B82FC41B32;
- Thu, 17 Sep 2026 21:34:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23351F000FF;
- Thu, 17 Sep 2026 21:34:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789680862;
- bh=FhRw3AtyOopeiazjNZ1pbw976Fvw+qCbMTto/y6m/4k=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Fg8fqrf7J9IuW+I7dPLoqArANxWQ9Ccnezi6o7raHhtdBnTW7YnIu6EX6kPfPwPb/
- 6hzJWJxqiXaa8/0EsWz5Xd2Xbz9O0Oqh2rkl87MSHVvzNHCtitqaFcr8mwjBJwPaPB
- Ws/mX51nwboh80ohpeMp+dMJ8Eew7RCFvHUwzsFaGE7smct+HFBjR59c261sAY+QYB
- f+NRfgJYq42ynLtm5isSN3rXbKsIl9OBkBBxMDE+JXYbh9LUQ2TTjP4L4xhCkAxq1O
- g6KdFfPJNzuOoiatJTvjfxNLQkW71v2+Pmh0gKl3uP+E7aECisRaQ7No866sSRJZTC
- IVRfosifvwyYw==
-From: Helge Deller <deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7Jnp-0002XG-My
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:37:57 -0400
+Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7Jno-0007b6-4h
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 17:37:57 -0400
+Received: by mail-pj2-x0f.google.com with SMTP id
+ d9443c01a7336-2d9004a1ac0so533275ad.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 14:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789681075; x=1790285875; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=4hVwuMuu99BWPwGHzeBU3e4L/rPchl7P0/CAAhG1YDs=;
+ b=PUMUSpPZH35Cs9cr2L7XJBgrcJ2OCN6cMaUAyMIyFYBTw/lJLBPnParSu2VB7qujQ7
+ cuFtBxdG9EeK8+eZYGZUb8IJbAkePvwW+N3Qcdlzr4hwTDxa0s6ud9g2nKEFSgCfDqOO
+ I4lH+Eu2uuTiukMP6GwuN5EhU3Tdl40lp7/mKVfDns7RB5slCvp1ujew27FytRKTN/GD
+ xODtONdsAMqp4Fit63POIusHNiTE8OFn+rOxQKHwWUeMkv1J53FCZx2PYweVDe9LArVc
+ Q97ssoMtU+8uGEZbBytOpZbRahkxrFA8dHs3ghdv3gf3kPJvbUZ1lB2U6UOGkSx2xKMx
+ 0eCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789681075; x=1790285875;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=4hVwuMuu99BWPwGHzeBU3e4L/rPchl7P0/CAAhG1YDs=;
+ b=CoqMMHIRXjrEezTLzW9xHrEHjj9jnwxnrOzQSEs/AODgt1mOKKR9NoJHSx9m0B2QZH
+ S5QtIvrLfoOjrmbWhRi8sgIHK+APOxD67aX0rxQ7aezA1qT0bjJknqoWJV5KGGJoDWK+
+ CltMNivTdg+tjWAOfF9SLFpcO9pG4q6/4NU1xmUEaHa8hDb0I7UM1yRj64bI2+EwayL1
+ b2zLQQ5ucGqlPG2l42j6LkedQvNrpYEvmpDpfqSNX22tT8fXi6gedxCnrFHd6qc89Fj5
+ n8eZX0hfNqpeVmdgIvT3RAlg2S8/7H7xHIDcCkE+3o+qCuZltWhAs/NOh0QQRe9EWEbX
+ WTSQ==
+X-Gm-Message-State: AFuF++mcNDuwdKolcgR4gCvvlPdrU7AI4Xqz2MwPZo1viy38j8Z1ZMrX
+ 9SpZNBDDwxHGc5vyTb316hfuZW+Ps5bLhOzhmeL4I4RwsieaX2N9yWOjCo51An04Qzy1ZEjw/5G
+ GpimtjVs=
+X-Gm-Gg: AYBFou1VE8E8ppKFkjAsGE7yi1AA2SC24f8YNMrYtZwD9sfSNzxyp/WCY0FnXKebRMn
+ VtRUOYN16Q0yUb+fi2q6Fkvgzv58ZiHPSTcx1rVfH3zRIG1XP6PLSVHikxiWV87JMQaZMenmpZ8
+ vWuNjm0VKEh/lIZUkpa6D9d1HMod3JazLBCthCebHnJaAkRbrAPrRqI5/afzrZptm85OwoIbnUZ
+ CX6BvlPu9iyaGED4KltWGK2/IBjVhoQH/Av6Gasc7I2GGL2irraICTnO40KXvap1C1mW7ubrM+Y
+ aYEkdL3JUa11E2kMBsrfJb7GcYnUTphS6bDlM/SihaU3/CPmbC6GkLzixZemvzLKe9IHBqsZnfD
+ KG62mgUZs8nhDsN2DCoy6gJ64BE6aqPY92S5KlLMWJmGjZZu1UixS7zbLWyi2yhC4R74Iemv1Rg
+ q/TZaB7I80G9eBhP+uOrTFYvtECnBJrO1w40hYw2tG24UwTRI/ZIutZRmGgQNM17qSsgC3fwm7a
+ RZLFyU=
+X-Received: by 2002:a17:902:c945:b0:2dd:ad74:ac26 with SMTP id
+ d9443c01a7336-2ddb1b9a0fcmr9047885ad.24.1789681074689; 
+ Thu, 17 Sep 2026 14:37:54 -0700 (PDT)
+Received: from stoup ([2603:800c:7900:ed00:5a4b:653b:1dce:569f])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33bf56d7e5bsm18178395eec.0.2026.09.17.14.37.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Sep 2026 14:37:54 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
- Helge Deller <deller@gmx.de>, John Snow <jsnow@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>,
- qemu-block@nongnu.org
-Subject: [PATCH 7/7] hw/hppa: Add NS 87560 SuperIO chip to HP C3700 machine
-Date: Thu, 17 Sep 2026 23:34:00 +0200
-Message-ID: <20260917213402.3127-8-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260917213402.3127-1-deller@kernel.org>
-References: <20260917213402.3127-1-deller@kernel.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 02/15] target/s390x/tcg: Convert op_ld8u to op_ld
+Date: Thu, 17 Sep 2026 11:37:36 -1000
+Message-ID: <20260917213749.36756-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260917213749.36756-1-richard.henderson@linaro.org>
+References: <20260917213749.36756-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,115 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-
-Due to the lack of the emulated NS 87560 SuperIO chip, we used until now the
-emulated serial ports of a Diva GSP management board as a temporary
-replacement.  Since the NS SuperIO chip emulation was just added in the
-previous commits, switch over to use it which allows us to emulate the physical
-hardware more closely.
-
-Signed-off-by: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260731185628.23161-3-richard.henderson@linaro.org>
 ---
- hw/hppa/machine.c | 41 ++++++++++++++++++++++++++++++++++-------
- 1 file changed, 34 insertions(+), 7 deletions(-)
+ target/s390x/tcg/insn-data.h.inc | 6 +++---
+ target/s390x/tcg/translate.c     | 6 ------
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 98931481b2..96133f09ba 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -394,7 +394,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
-  * Last creation step: Add NICs, graphics & load firmware
-  */
- static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
--                                        TranslateFn *translate)
-+                                    TranslateFn *translate, bool create_diva)
- {
-     const char *kernel_filename = machine->kernel_filename;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-@@ -426,7 +426,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-         pci_init_nic_devices(pci_bus, mc->default_nic);
-     }
+diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
+index be698ee0022..403992460be 100644
+--- a/target/s390x/tcg/insn-data.h.inc
++++ b/target/s390x/tcg/insn-data.h.inc
+@@ -523,10 +523,10 @@
+ /* LOAD LOGICAL CHARACTER */
+     C(0xb994, LLCR,    RRE,   EI,  0, r2_8u, 0, r1_32, mov2, 0)
+     C(0xb984, LLGCR,   RRE,   EI,  0, r2_8u, 0, r1, mov2, 0)
+-    C(0xe394, LLC,     RXY_a, EI,  0, a2, new, r1_32, ld8u, 0)
+-    C(0xe390, LLGC,    RXY_a, Z,   0, a2, r1, 0, ld8u, 0)
++    D(0xe394, LLC,     RXY_a, EI,  0, a2, new, r1_32, ld, 0, MO_UB)
++    D(0xe390, LLGC,    RXY_a, Z,   0, a2, r1, 0, ld, 0, MO_UB)
+ /* LOAD LOGICAL CHARACTER HIGH */
+-    C(0xe3c2, LLCH,    RXY_a, HW,  0, a2, new, r1_32h, ld8u, 0)
++    D(0xe3c2, LLCH,    RXY_a, HW,  0, a2, new, r1_32h, ld, 0, MO_UB)
+ /* LOAD LOGICAL HALFWORD */
+     C(0xb995, LLHR,    RRE,   EI,  0, r2_16u, 0, r1_32, mov2, 0)
+     C(0xb985, LLGHR,   RRE,   EI,  0, r2_16u, 0, r1, mov2, 0)
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 4a0573820d2..f3f990b669c 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -2755,12 +2755,6 @@ static DisasJumpType op_ld(DisasContext *s, DisasOps *o)
+     return DISAS_NEXT;
+ }
  
--    if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
-+    if (pci_bus && hppa_is_pa20(&cpu[0]->env) && create_diva) {
-         /* BMC board: HP Diva GSP PCI card */
-         pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
-         if (!lasi_dev) {
-@@ -442,8 +442,9 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     /* create USB OHCI controller for USB keyboard & mouse on Astro machines */
-     if (!lasi_dev && machine->enable_graphics && defaults_enabled()) {
-         USBBus *usb_bus;
+-static DisasJumpType op_ld8u(DisasContext *s, DisasOps *o)
+-{
+-    tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s), MO_UB);
+-    return DISAS_NEXT;
+-}
 -
--        pci_create_simple(pci_bus, -1, "pci-ohci");
-+        if (create_diva) {
-+            pci_create_simple(pci_bus, -1, "pci-ohci");
-+        }
-         usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                           &error_abort));
-         usb_create_simple(usb_bus, "usb-kbd");
-@@ -647,7 +648,7 @@ static void machine_HP_715_init(MachineState *machine)
-     }
- 
-     /* Add NICs, graphics & load firmware */
--    machine_HP_common_init_tail(machine, NULL, translate);
-+    machine_HP_common_init_tail(machine, NULL, translate, false);
- }
- 
- /*
-@@ -726,7 +727,7 @@ static void machine_HP_B160L_init(MachineState *machine)
-     }
- 
-     /* Add NICs, graphics & load firmware */
--    machine_HP_common_init_tail(machine, pci_bus, translate);
-+    machine_HP_common_init_tail(machine, pci_bus, translate, false);
- }
- 
- static AstroState *astro_init(void)
-@@ -771,6 +772,32 @@ static void machine_HP_C3700_init(MachineState *machine)
-     pci_bus = PCI_BUS(qdev_get_child_bus(DEVICE(astro->elroy[0]), "pci"));
-     assert(pci_bus);
- 
-+    /* The C3700 has a SuperIO chip, while the A400 hasn't. */
-+    MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    bool is_C3700 = strcmp(mc->name, "C3700") == 0;
-+    if (is_C3700)  {
-+        PCIDevice *ide_pdev = pci_create_simple(pci_bus, PCI_DEVFN(2, 0),
-+                                                "pc87560-ide");
-+        PCIDevice *usb_pdev = pci_create_simple(pci_bus, PCI_DEVFN(2, 2),
-+                                                "pc87560-ohci");
-+        PCIDevice *sio_pdev = pci_new(PCI_DEVFN(2, 1), "pc87560-superio");
-+        if (serial_hd(0)) {
-+            qdev_prop_set_chr(DEVICE(sio_pdev), "serial0", serial_hd(0));
-+        }
-+        if (serial_hd(1)) {
-+            qdev_prop_set_chr(DEVICE(sio_pdev), "serial1", serial_hd(1));
-+        }
-+        pci_realize_and_unref(sio_pdev, pci_bus, &error_fatal);
-+
-+        qdev_connect_gpio_out(DEVICE(ide_pdev), 0,
-+            qdev_get_gpio_in_named(DEVICE(sio_pdev), "pic-irq", 7));
-+        qdev_connect_gpio_out(DEVICE(usb_pdev), 0,
-+            qdev_get_gpio_in_named(DEVICE(sio_pdev), "pic-irq", 1));
-+
-+        qdev_connect_gpio_out_named(DEVICE(sio_pdev), "pic-out", 0,
-+                                    pci_allocate_irq(usb_pdev));
-+    }
-+
-     /* SCSI disk setup. */
-     if (drive_get_max_bus(IF_SCSI) >= 0) {
-         DeviceState *dev = DEVICE(pci_create_simple(pci_bus, -1, "lsi53c895a"));
-@@ -778,7 +805,7 @@ static void machine_HP_C3700_init(MachineState *machine)
-     }
- 
-     /* Add NICs, graphics & load firmware */
--    machine_HP_common_init_tail(machine, pci_bus, translate);
-+    machine_HP_common_init_tail(machine, pci_bus, translate, !is_C3700);
- }
- 
- /*
+ static DisasJumpType op_ld16s(DisasContext *s, DisasOps *o)
+ {
+     tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s), MO_BESW);
 -- 
-2.54.0
+2.53.0
 
 
