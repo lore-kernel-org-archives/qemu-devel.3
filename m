@@ -4,116 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B892C982D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E14DFC982C1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Sep 2026 08:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x77MF-0008RV-C8; Thu, 17 Sep 2026 04:20:40 -0400
+	id 1x77PY-0000zo-Ay; Thu, 17 Sep 2026 04:24:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1x77M1-0008MO-JF; Thu, 17 Sep 2026 04:20:25 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1x77Ly-0002Ow-TG; Thu, 17 Sep 2026 04:20:24 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68H62V9W543292; Thu, 17 Sep 2026 08:20:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YH2ViF
- 0lJ9F8QlTU4AxhSTwc3pnQnd8XuhSDsRxDaaA=; b=nmH9O2en+fO2AU+YJBQri1
- p19QRXG20V92TP4wKtXlc36+8miuibvXfncFhwng2Mm3Nhkmm6aGLuQm917vGM6U
- z77XspVb6x4PEG5FT3XPMMPuT17gqMV4GrVkYkCiTiyB6MgSCKOoZ/kSMSFKBrY8
- CrXsRZWGZzVaYOWVj3G08kOj+X6II7S0mDHUXD8JtHS8wyuGU2ous8PrT7EcZcV7
- 3DkqiSETpnyou2fOjhdtF+9DKk7Cva+nUVsi5fEfnft2ZB4SE8cleZHSTkwRjXoG
- DklsBs0eeYd+/XiJj7iO2QUb8re/RcpExfkbgZS7mfeODX+7qXT54UgC1ubRaiAQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5e8v5p-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 08:20:18 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68H652Cq2723214; Thu, 17 Sep 2026 08:20:18 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gra3yrjcy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Sep 2026 08:20:18 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68H8KCwJ48038294
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Sep 2026 08:20:12 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CAE0A20049;
- Thu, 17 Sep 2026 08:20:12 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 028D420040;
- Thu, 17 Sep 2026 08:20:09 +0000 (GMT)
-Received: from [9.43.124.189] (unknown [9.43.124.189])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Sep 2026 08:20:08 +0000 (GMT)
-Message-ID: <97eda650-c75a-4342-96d6-d44c4780a1ad@linux.ibm.com>
-Date: Thu, 17 Sep 2026 13:50:07 +0530
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x77PV-0000zT-3E
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:24:01 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x77PT-0002Ur-6c
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 04:24:00 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ 41be03b00d2f7-cc1cea4bfd1so402120a12.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 01:23:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789633437; cv=none;
+ d=google.com; s=arc-20260327;
+ b=pwrtbIbggSFC1j8SeTd1AL74YoqLGDCnijbni8jrotlB+YsQXJbu3w8iVPGgFL+XTG
+ WvJLmZ4lIJi1y/F9Q0aDuVc5AcffvxUoqBxYx/TA2389HnHdi41UYbor/FOBjkebNWrX
+ wNjrqYyiXCPM6krGrDFzUqI/CQ9c/OcO+enxR2B8i2ciK3c7JRCIgEYu78ntSsUolsAe
+ faF08b5NEDC7GiXlcv6bkcfOf2fw1dMdXMOPTA52GPOwbSGCoC68klKsAo89rQzzGyxx
+ BuDh+7w3b3cdcXlmTFGRDsmvFjpdoIoU4oT4dQa88qml0YEC2iQt1zpC5SSv6SI7K/T2
+ SWWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MgljbMx+9tbggmGmsP3W5ODQaw4qYd5hbvO8caxkUQI=;
+ fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
+ b=Sjn1Chhv8N7FPSFkypHgGhqo/ViT0U2GiZpDAzjgzilAtZHa98ePsV4RuWu0+nMZoF
+ oIqeqxsp70fELr8Jx+ZfIJ3eCV5rcz5GloistRSuAJFNu6iLGYtJWKhgfHyu+F042krb
+ f1lRellUnc+IP77Y8U0ixvtKjJQCixmXgmSvt+P0QTmwp90QmOK0x+uwE2Fk5Ae6lduA
+ ZKvCTbENtji/zTMPdcd2cSqXfaSOET/n2zUEw1AWoBJhJrfUTLVvGhq1ACooLsbPKRh7
+ dVqp9vqA4OFoZXE0fa2cgNdijkOyG1HZa/OI9R2cEI18tcdP8W6zRzBy7/5UcrwVIeUI
+ XPdg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789633437; x=1790238237; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MgljbMx+9tbggmGmsP3W5ODQaw4qYd5hbvO8caxkUQI=;
+ b=N+UXjEE/X6LkqdywpUfM2FUz2hyPM1gBA1hwPmb8Z/tH85zokC6pCIf3c+2iXRd2sJ
+ WzJU/Ng98SfPfo2EOgbRdysiQFXSvU/I1SzbjzCXK+uvfsPeAyiqT/GJtNp3f1pTP2pf
+ R2g+0bBbxal78QF5UeAJeezOR+cvE/MXk0//1T7fyXCrkWfvjYUm1WPuR9vfPXH1mJV9
+ HFOWAb2/9eb+Nuj9MxkbTU76IvUfoEfQ/5JQl6OjPtr8CRwCgI8qAPu+7ffZuyPtCu3I
+ gH8EKRuZlo7TKkebwQDMSmlqYoGV8A0hiqcaEjvaf3Uxcah0l9e6Psjw6KfmmQ8kj3zH
+ sVWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789633437; x=1790238237;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MgljbMx+9tbggmGmsP3W5ODQaw4qYd5hbvO8caxkUQI=;
+ b=HQNxCLuntBuaViNZ2kkqfBvvrX4q2exBb0h70Vh+9U3ZZ0/WhhUqIVMcl4O4YCy47j
+ FiZ5C1SMktK3U0Mcoam4wN4/Z/C5zp+BF+UpgjrnQ1fNiyF8P+AltGNIj+NZtTke9iSz
+ hoMxJQavz7+vh551e7bZBzGhoj2Av+kNzKlQsPrYP7RHS2zFFN0z4TnRZO8VBf2W87sQ
+ NFbin8RXyt675wTZaS0NBsE75M7SMQ+CD7hbQHpct1l1M5m5cXQeU5/viEj7L150VQjF
+ 9X7eOikma/AptkR/6K/T9GHeI413SpmtYf+h+ouSyK+avF9MxG1tfFT84DZgrY/asQZf
+ 7Z5g==
+X-Gm-Message-State: AFuF++m849F7MpM7vYfzzy+tyqsJ72itpcxLN3hYcEaey+whKp10HjDp
+ FRC88FFE9JDlm0BJ9eJPgtk8uVNKQ8KBeV4g9se2f2tnM5BC7SbFOb/ThWTFHMxPqWE0fRI06xZ
+ qZ6qOFwMbME8l77BbgaBSkt0pRTNq3CE=
+X-Gm-Gg: AYBFou11xHt3+stSiRdm6OOVbVttMzH+xxkab1yrJ2abMGm82LQrZaQcQZ6jRZUwx3W
+ DcWUGweOGRfwYY+QUS7jP7kLZWS7cq7zSbPz854LwBWydHf9PQipc8s4Rqnzq8oVRhJuo0RzNq5
+ zI0dvLnejFGbGSZA+FDJovyIRkb5sXGZ3jxrm8En3cPR7zIjkILuJZRlxnkqjBG/ugT/GZ2Ufht
+ sIhHZQJerxk9WQTYghYC1PBx33sgDMppPLT7aKvYcj3V3+jzeRAoDl/d7XPMgZgbPDCS9rvlzRO
+ HbvyrJzMUxspVT2sO1T7uzujJn/6nbiV9xhJ75hNvFRkw09UAcEXF7yVTEEMMKEDSQrvL6DsgfJ
+ urp5W5cdZLwQ=
+X-Received: by 2002:a17:90b:2744:b0:398:ba56:b926 with SMTP id
+ 98e67ed59e1d1-39e1e5770b9mr19219704a91.25.1789633437220; Thu, 17 Sep 2026
+ 01:23:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] ppc/spapr: Add VFIO EEH error injection backend
-To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, mahesh@linux.ibm.com, sbhat@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
- sourabhjain@linux.ibm.com, adityag@linux.ibm.com
-Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
- harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
- shivangu@linux.ibm.com
-References: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
- <20260901174110.45356-2-nnmlinux@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <20260901174110.45356-2-nnmlinux@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDEwOCBTYWx0ZWRfX7iXrK4MUWYnp
- MUtchXtmXUhKL5Eja0ISg6+yog+JoSYYtriIoXwoxS/ipozm/sCH8/PJDBWzhY1euChpKqlGOi9
- NnbD4h/w704nNfPvHFI4eNQk+j+F4SVo/4YxR/90/Y2dcUp1IK8z6/S9/aGVdn2R+4vTnXG9rnV
- wvYC0b4VH55KuHBzYj+hPzpBj2coI5ye/nYdO8qEqhIUE0oeJG3eAJPVWlB7EpDtdIjoWJZebRe
- ToRiTl0wtILosHVxY+kzsUMPCZ+7Hl3+EEyOZDp+QmzZIj0VPp+g/sOSrD4LLSIruVfvYmzl5Sk
- WOu97jy4ImWzwgVUP9pgE0lDy8x4eR0q6IVRXvZdNpzkzq5qzGfBIZswQgNVnQ07aCPSXk/JRor
- 0wDofvf5l/RmvIVlrxbDVAkLgLulkPsTArTKWeBQgiiC2URHipb4civ1ZLJuff6RiM+SSX0iA03
- 48tOq+tmc/tlQ3dvhsA==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aaba2c3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=eECvpAt6tWSfZlz6KskA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: n4Lh-Ewifa-NUDFJCfSHUDonOXF260He
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDEwOCBTYWx0ZWRfXzoPGTCyUEyT2
- 3AtxmD+S/HmM7Nr3IUIypzRNiE9myB3em9SU1xSp3xYKm1txfCeMdaErLRkSxiCVHl024l/SAVh
- +asqdZAF8niLV7lXJrSRn2h6cRAnt9E=
-X-Proofpoint-GUID: kSq1I2e7WHZsNsxIXCy0NtYRqVpwadCT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-17_01,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609170108
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260805092017.21028-1-dongwon.kim@intel.com>
+In-Reply-To: <20260805092017.21028-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 17 Sep 2026 12:23:44 +0400
+X-Gm-Features: AcwNN1UWZ6-67jlYvxjVS83NLC56rU91JsNtw6_gyVe6Q8K17crbojue23AHqgo
+Message-ID: <CAJ+F1CJb0uN6912RBvhe5H=epKnShmCVGDVRw8_mJWs-ActKVw@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Enable fullscreen and zoom hotkeys for detached
+ windows
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pz2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,37 +118,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
-
-On 01/09/26 23:11, Narayana Murty N wrote:
-
-> +    if (ioctl(container->fd, VFIO_EEH_PE_OP, &op) < 0) {
-> +        error_report("vfio/eeh errinjct: VFIO_EEH_PE_OP failed: %s",
-> +                     strerror(errno));
-> +        switch (errno) {
-> +        case EINVAL:
-> +            return RTAS_OUT_PARAM_ERROR;
-> +        case ENOTTY:
-> +        case EOPNOTSUPP:
-> +            return RTAS_OUT_NOT_SUPPORTED;
-> +        default:
-> +            return RTAS_OUT_HW_ERROR;
-> +        }
+On Tue, Sep 15, 2026 at 11:02=E2=80=AFPM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> Currently, the fullscreen toggle hotkey (Ctrl+Alt+f by default) and zoom
+> hotkeys (Ctrl+Alt++, Ctrl+Alt+-, Ctrl+Alt+0) only function for the main
+> QEMU window. When a VC is detached (untabified), it loses these capabilit=
+ies.
+>
+> Implement toggle helpers, gd_win_full_screen and zoom helpers
+> (gd_win_zoom_in, gd_win_zoom_out, gd_win_zoom_fixed) and connect them
+> to the detached window's accelerator group in gd_menu_untabify.
+>
+> Also remove a leftover debug fprintf in gd_win_grab.
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>  ui/gtk.c | 102 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 98 insertions(+), 4 deletions(-)
+>
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index a723c8215d..632e302ed7 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -1547,7 +1547,6 @@ static gboolean gd_win_grab(void *opaque)
+>  {
+>      VirtualConsole *vc =3D opaque;
+>
+> -    fprintf(stderr, "%s: %s\n", __func__, vc->label);
+>      if (vc->s->ptr_owner) {
+>          gd_ungrab_pointer(vc->s);
+>      } else {
+> @@ -1556,6 +1555,86 @@ static gboolean gd_win_grab(void *opaque)
+>      return TRUE;
+>  }
+>
+> +static gboolean gd_win_full_screen(void *opaque)
+> +{
+> +    VirtualConsole *vc =3D opaque;
+> +    GdkWindow *window;
+> +    GdkWindowState state;
+> +
+> +    if (!vc->window || !gtk_widget_get_realized(vc->window)) {
+> +        return TRUE;
 > +    }
+> +
+> +    window =3D gtk_widget_get_window(vc->window);
+> +    if (!window) {
+> +        return TRUE;
+> +    }
+> +
+> +    state =3D gdk_window_get_state(window);
+> +
+> +    if (state & GDK_WINDOW_STATE_FULLSCREEN) {
+> +        gtk_window_unfullscreen(GTK_WINDOW(vc->window));
+> +
+> +        if (vc->type =3D=3D GD_VC_GFX) {
+> +            vc->gfx.scale_x =3D vc->gfx.preferred_scale;
+> +            vc->gfx.scale_y =3D vc->gfx.preferred_scale;
+> +            gd_update_windowsize(vc);
+> +        }
+> +    } else {
+> +        if (vc->type =3D=3D GD_VC_GFX) {
+> +            gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1);
+> +        }
+> +        gtk_window_fullscreen(GTK_WINDOW(vc->window));
+> +    }
+> +
+> +    gd_update_cursor(vc);
+> +    return TRUE;
+> +}
+> +
+> +static gboolean gd_win_zoom_in(void *opaque)
+> +{
+> +    VirtualConsole *vc =3D opaque;
+> +    GtkDisplayState *s =3D vc->s;
+> +
+> +    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item)=
+,
+> +                                   FALSE);
+> +
+> +    vc->gfx.scale_x +=3D VC_SCALE_STEP;
+> +    vc->gfx.scale_y +=3D VC_SCALE_STEP;
+> +
+> +    gd_update_windowsize(vc);
+> +    return TRUE;
+> +}
+> +
+> +static gboolean gd_win_zoom_out(void *opaque)
+> +{
+> +    VirtualConsole *vc =3D opaque;
+> +    GtkDisplayState *s =3D vc->s;
+> +
+> +    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item)=
+,
+> +                                   FALSE);
+> +
+> +    vc->gfx.scale_x -=3D VC_SCALE_STEP;
+> +    vc->gfx.scale_y -=3D VC_SCALE_STEP;
+> +
+> +    vc->gfx.scale_x =3D MAX(vc->gfx.scale_x, VC_SCALE_MIN);
+> +    vc->gfx.scale_y =3D MAX(vc->gfx.scale_y, VC_SCALE_MIN);
+> +
+> +    gd_update_windowsize(vc);
+> +    return TRUE;
+> +}
+> +
+> +static gboolean gd_win_zoom_fixed(void *opaque)
+> +{
+> +    VirtualConsole *vc =3D opaque;
+> +
+> +    vc->gfx.scale_x =3D vc->gfx.preferred_scale;
+> +    vc->gfx.scale_y =3D vc->gfx.preferred_scale;
+> +
+> +    gd_update_windowsize(vc);
+> +    return TRUE;
+> +}
+> +
 
-Hi Narayana,
+This duplicates existing code. Can you refactor it so we avoid logic
+duplication?
 
-In existing QEMU EEH code, I have seen that EEH operations call 
-vfio_eeh_container_ok(container) before EEH ioctl is issued. That part 
-is missing in this code. Can you please add it? And if that check is 
-intentionally skipped and not necessary here, could you clarify the 
-reasoning?
+btw, it would make sense to send a patch series now that you have 2
+ui/gtk patches and more to come.
 
-The rest of the patch looks fine to me. Once this concern is addressed, 
-feel free to add my tag:
+thanks
 
-Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+>  static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+>  {
+>      GtkDisplayState *s =3D opaque;
+> @@ -1590,9 +1669,24 @@ static void gd_menu_untabify(GtkMenuItem *item, vo=
+id *opaque)
+>              GtkAccelGroup *ag =3D gtk_accel_group_new();
+>              gtk_window_add_accel_group(GTK_WINDOW(vc->window), ag);
+>
+> -            GClosure *cb =3D g_cclosure_new_swap(G_CALLBACK(gd_win_grab)=
+,
+> -                                               vc, NULL);
+> -            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, =
+cb);
+> +            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0,
+> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_grab),
+> +                                        vc, NULL));
+> +            gtk_accel_group_connect(ag, GDK_KEY_f, HOTKEY_MODIFIERS, 0,
+> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_full_screen),
+> +                                        vc, NULL));
+> +            gtk_accel_group_connect(ag, GDK_KEY_plus, HOTKEY_MODIFIERS, =
+0,
+> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_in),
+> +                                        vc, NULL));
+> +            gtk_accel_group_connect(ag, GDK_KEY_equal, HOTKEY_MODIFIERS,=
+ 0,
+> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_in),
+> +                                        vc, NULL));
+> +            gtk_accel_group_connect(ag, GDK_KEY_minus, HOTKEY_MODIFIERS,=
+ 0,
+> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_out),
+> +                                        vc, NULL));
+> +            gtk_accel_group_connect(ag, GDK_KEY_0, HOTKEY_MODIFIERS, 0,
+> +                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_fixed),
+> +                                        vc, NULL));
+>          }
+>
+>          gd_rebuild_vc_menu(s);
+> --
+> 2.43.0
+>
+>
 
-Thanks & Regards
-~ Nikhil
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
