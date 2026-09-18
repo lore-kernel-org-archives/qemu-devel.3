@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9C2C982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 02:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4705C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 02:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7OFL-0002TZ-2h; Thu, 17 Sep 2026 22:22:39 -0400
+	id 1x7OK0-00034h-E0; Thu, 17 Sep 2026 22:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x7OFE-0002TE-Mz
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:22:33 -0400
+ id 1x7OJx-00034Z-SR
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:27:25 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x7OF9-00044P-No
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:22:32 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x7OJu-0004yh-Rd
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:27:25 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxLtNboKxq3EYNAA--.38820S3;
- Fri, 18 Sep 2026 10:22:19 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxhvB_oaxqQUcNAA--.38802S3;
+ Fri, 18 Sep 2026 10:27:11 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxlMxXoKxqdw4iAA--.45210S2;
- Fri, 18 Sep 2026 10:22:18 +0800 (CST)
-Subject: Re: [PATCH v4 03/14] target/loongarch: Add LVZ CSR metadata
+ by front1 (Coremail) with SMTP id qMiowJAx1cx7oaxqBg8iAA--.44759S2;
+ Fri, 18 Sep 2026 10:27:10 +0800 (CST)
+Subject: Re: [PATCH v4 02/14] target/loongarch: Add LVZ CPU state definitions
 To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: xianglai li <lixianglai@loongson.cn>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 References: <cover.1787739852.git.prcups@krgm.moe>
- <2c261c4b32b901a077952757d7228570a822e592.1787739852.git.prcups@krgm.moe>
- <24a8e1b0-c986-367e-fbb9-9a6f53f0a4f6@loongson.cn>
- <uxrjBmMGQxybFt1E_UoFpA@krgm.moe>
+ <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
+ <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
+ <xoCdfudmTUW6mj9tEmh4Cw@krgm.moe>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <5c6a0c39-39fa-e941-350c-ee976fa758a0@loongson.cn>
-Date: Fri, 18 Sep 2026 10:21:53 +0800
+Message-ID: <8dd0c761-bff2-15eb-a221-71aae2df386b@loongson.cn>
+Date: Fri, 18 Sep 2026 10:26:45 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <uxrjBmMGQxybFt1E_UoFpA@krgm.moe>
+In-Reply-To: <xoCdfudmTUW6mj9tEmh4Cw@krgm.moe>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxlMxXoKxqdw4iAA--.45210S2
+X-CM-TRANSID: qMiowJAx1cx7oaxqBg8iAA--.44759S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3ur1rCF4xJFy5Xw4xArW5urX_yoWkCry3pr
- s7GFWUWrWfWF95Xry2v3WYk3W5W34xt342qr4UCryrtFW8Grn3Ka4Ykas0gF17AF1rtry8
- ZFW7ZF15AFZxGacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW3ur1rtrW8CFW5CFWkZFW5Jwc_yoWDWF4Upr
+ W7CFW5KF48KrW7u3Z2qwn8KFnFqr1xGr12934xKryIyFWqqryxGr1kKrZIkFyUZw48ur18
+ Za18Aa13uFZ3tagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
  Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
  xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
  AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
  kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
  wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUU
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
  UUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
@@ -68,8 +67,7 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,267 +85,286 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2026/9/2 上午11:09, SignKirigami wrote:
-> 
-> 
-> 于 2026年9月1日 GMT+08:00 15:08:59，Bibo Mao <maobibo@loongson.cn> 写道：
->>
+On 2026/9/16 下午4:50, SignKirigami wrote:
+> On 2026年8月31日星期一 中国标准时间 10:56:26，Bibo Mao wrote：
 >>
 >> On 2026/8/26 下午6:30, SignKirigami wrote:
->>> Add LVZ host and guest CSR access metadata to the existing CSR table. Keep
->>> one shared register description and calculate the host or guest bank
->>> offset at translation time instead of duplicating CSRInfo entries.
+>>> Add host and guest system-state banks, LVZ exception and MMU indices,
+>>> CPU and translation state, and helpers for selecting a VM-level CSR bank.
 >>>
->>> Mark guest read-only, sensitive and unavailable CSRs for later LVZ
->>> instruction translation.
+>>> Read host ERA and BADV explicitly when generating ELF core notes so the
+>>> result does not depend on the currently selected guest state.
 >>>
 >>> Signed-off-by: SignKirigami <prcups@krgm.moe>
 >>> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 >>> ---
->>>    target/loongarch/cpu.c                        |   3 +-
->>>    target/loongarch/csr.c                        | 108 +++++++++---------
->>>    target/loongarch/csr.h                        |   2 +
->>>    .../tcg/insn_trans/trans_extra.c.inc          |   2 +-
->>>    .../tcg/insn_trans/trans_privileged.c.inc     |   6 +-
->>>    5 files changed, 65 insertions(+), 56 deletions(-)
+>>>    target/loongarch/arch_dump.c |  6 ++--
+>>>    target/loongarch/cpu.c       |  4 +--
+>>>    target/loongarch/cpu.h       | 64 ++++++++++++++++++++++++++++++++++--
+>>>    target/loongarch/translate.h |  2 ++
+>>>    4 files changed, 68 insertions(+), 8 deletions(-)
 >>>
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index 2f7692dc93..0f6a211949 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -783,7 +783,8 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
->>>                qemu_fprintf(f, " CSR%03d:", col);
->>>            }
->>>    -        addr = (void *)env + get_csr_offset(csr_info, 0);
->>> +        addr = (void *)env + get_csr_offset(csr_info,
->>> +                                             LOONGARCH_VM_LEVEL_HOST);
->>>            qemu_fprintf(f, " %s ", csr_info->name);
->>>            len = strlen(csr_info->name);
->>>            for (; len < 6; len++) {
->>> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
->>> index 309b826ca9..fa018a4582 100644
->>> --- a/target/loongarch/csr.c
->>> +++ b/target/loongarch/csr.c
->>> @@ -13,15 +13,16 @@
->>>            .flags = FL, .readfn = RD, .writefn = WR           \
->>>        }
->>>    -#define CSR_OFF_ARRAY(NAME, N)                                \
->>> +#define CSR_OFF_ARRAY_FLAGS(NAME, N, FL)                      \
->>>        [LOONGARCH_CSR_##NAME(N)] = {                             \
->>>            .name   = (stringify(NAME##N)),                       \
->>>            .offset = CSR_OFFSET(CSR_##NAME[N]),                  \
->>> -        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL           \
->>> +        .flags = FL                                           \
->>>        }
->>>      #define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
->>>    #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, CSRFL_BASIC)
->>> +#define CSR_OFF_ARRAY(NAME, N)    CSR_OFF_ARRAY_FLAGS(NAME, N, CSRFL_BASIC)
->>>      static CSRInfo csr_info[] = {
->>>        CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
->>> @@ -35,6 +36,7 @@ static CSRInfo csr_info[] = {
->>>        CSR_OFF_FLAGS(BADI, CSRFL_READONLY),
->>>        CSR_OFF(EENTRY),
->>>        CSR_OFF(TLBIDX),
->>> +    CSR_OFF_FLAGS(GTLBC, CSRFL_GSPR),
->>>        CSR_OFF(TLBEHI),
->>>        CSR_OFF(TLBELO0),
->>>        CSR_OFF(TLBELO1),
->>> @@ -71,9 +73,13 @@ static CSRInfo csr_info[] = {
->>>        CSR_OFF_FLAGS(TVAL, CSRFL_READONLY | CSRFL_IO),
->>>        CSR_OFF(CNTC),
->>>        CSR_OFF_FLAGS(TICLR, CSRFL_IO),
->> Should previous CSR_OFF_FLAGS(GTLBC, CSRFL_GSPR) be moved to here? since all these registers relative with LVZ.
->>> +    CSR_OFF_FLAGS(GSTAT, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(GCFG, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(GINTC, CSRFL_IO | CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(GCNTC, CSRFL_GSPR),
->>>        CSR_OFF(LLBCTL),
->>> -    CSR_OFF(IMPCTL1),
->>> -    CSR_OFF(IMPCTL2),
->>> +    CSR_OFF_FLAGS(IMPCTL1, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(IMPCTL2, CSRFL_GSPR),
->> It change the old flags, previous its flag is CSRFL_BASIC, and not it is replaced with CSRFL_GSPR. How about CSRFL_BASIC | CSRFL_GSPR and keep old flag still on?
-> CSRFL_BASIC is for "no flag but valid", as new get_csr sees csr_info with flag 0 as invalid,
-> no other code uses this flag so it is ok to delete this flag when another flag exists.
-ok, it should be fine to delete flag CSRFL_BASIC and replace it with 
-CSRFL_GSPR.
+>>> diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
+>>> index 9d84faef96..711b23257b 100644
+>>> --- a/target/loongarch/arch_dump.c
+>>> +++ b/target/loongarch/arch_dump.c
+>>> @@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>>>    {
+>>>        struct loongarch_note note;
+>>>        CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
+>>> -    CPUSysState *sys = env_sys(env);
+>>> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>>>        int ret, i;
+>> yes, it need similar modification with loongarch_cpu_write_elf64_note().
+>> can we keep local variable sys unchanged so that the change is smaller?
+> I think it may be more clear if using host for host mode, guest for guest mode, and sys
+> for current mode in use.
+If you insist on this, please use two patches:
+  1. One patch is to replace env_sys(env) with get_sys(env, 
+LOONGARCH_VM_LEVEL_HOST), and variable name sys keep unchanged;
+  2. The other patch is to change variable name sys with host, and note 
+that there is no function change.
+
+If so, it is easy to review.
 
 Regards
 Bibo Mao
-> 
+
 > Regards
 > SignKirigami
 >>
->>>        CSR_OFF(TLBRENTRY),
->>>        CSR_OFF(TLBRBADV),
->>>        CSR_OFF(TLBRERA),
->>> @@ -82,57 +88,57 @@ static CSRInfo csr_info[] = {
->>>        CSR_OFF(TLBRELO1),
->>>        CSR_OFF(TLBREHI),
->>>        CSR_OFF(TLBRPRMD),
->>> -    CSR_OFF(MERRCTL),
->>> -    CSR_OFF(MERRINFO1),
->>> -    CSR_OFF(MERRINFO2),
->>> -    CSR_OFF(MERRENTRY),
->>> -    CSR_OFF(MERRERA),
->>> -    CSR_OFF(MERRSAVE),
->>> -    CSR_OFF(CTAG),
->>> +    CSR_OFF_FLAGS(MERRCTL, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(MERRINFO1, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(MERRINFO2, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(MERRENTRY, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(MERRERA, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(MERRSAVE, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(CTAG, CSRFL_GSPR),
->>>        CSR_OFF_ARRAY(DMW, 0),
->>>        CSR_OFF_ARRAY(DMW, 1),
->>>        CSR_OFF_ARRAY(DMW, 2),
->>>        CSR_OFF_ARRAY(DMW, 3),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 0),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 0),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 1),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 1),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 2),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 2),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 3),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 3),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 4),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 4),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 5),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 5),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 6),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 6),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 7),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 7),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 8),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 8),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 9),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 9),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 10),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 10),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 11),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 11),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 12),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 12),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 13),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 13),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 14),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 14),
->>> -    CSR_OFF_ARRAY(PERFCTRL, 15),
->>> -    CSR_OFF_ARRAY(PERFCNTR, 15),
->>> -    CSR_OFF(DBG),
->>> -    CSR_OFF(DERA),
->>> -    CSR_OFF(DSAVE),
->>> -    CSR_OFF_ARRAY(MSGIS, 0),
->>> -    CSR_OFF_ARRAY(MSGIS, 1),
->>> -    CSR_OFF_ARRAY(MSGIS, 2),
->>> -    CSR_OFF_ARRAY(MSGIS, 3),
->>> -    CSR_OFF(MSGIR),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 0, CSRFL_GUEST_INVALID),
->> what is different between flag CSRFL_GSPR and CSRFL_GUEST_INVALID?
->>
->> With CSR register access instruction, on host value zero is return if it is not implemented. On guest mode, I think that there should be GSPR exception and trap to host and let hypervisor to handle this if it is not implemented. There is no much meaning to return zero and does not trap to host.
->>
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 0, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 1, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 1, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 2, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 2, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 3, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 3, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 4, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 4, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 5, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 5, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 6, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 6, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 7, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 7, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 8, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 8, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 9, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 9, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 10, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 10, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 11, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 11, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 12, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 12, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 13, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 13, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 14, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 14, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 15, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 15, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_FLAGS(DBG, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(DERA, CSRFL_GSPR),
->>> +    CSR_OFF_FLAGS(DSAVE, CSRFL_GSPR),
->>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 0, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 1, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 2, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 3, CSRFL_GUEST_INVALID),
->>> +    CSR_OFF_FLAGS(MSGIR, CSRFL_GUEST_INVALID),
->>>    };
->>>      CSRInfo *get_csr(unsigned int csr_num)
->>> diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
->>> index c2b6b882bc..647695e248 100644
->>> --- a/target/loongarch/csr.h
->>> +++ b/target/loongarch/csr.h
->>> @@ -20,6 +20,8 @@ enum {
->>>        CSRFL_IO       = (1 << 2),
->>>        CSRFL_UNUSED   = (1 << 3),
->>>        CSRFL_BASIC    = (1 << 4),
->>> +    CSRFL_GSPR     = (1 << 5),
->>> +    CSRFL_GUEST_INVALID = (1 << 6),
->>>    };
->>>      typedef struct {
->>> diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
->>> index 655dce329e..e69384497f 100644
->>> --- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
->>> +++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
->>> @@ -55,7 +55,7 @@ static bool gen_rdtime(DisasContext *ctx, arg_rr *a,
->>>            tcg_gen_sextract_tl(dst1, dst1, high ? 32 : 0, 32);
+>> BTW I do not know which name is better between LOONGARCH_VM_LEVEL_HOST
+>> and LOONGARCH_VM_LEVEL0. Such as in KVM mode, it is to dump CSR
+>> resisters of guest VM; however in TCG mode, it is for host.
+>>>    
+>>>        loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
+>>> @@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>>>        for (i = 0; i < 32; ++i) {
+>>>            note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
 >>>        }
->>>    -    offset = CPU_CSR_OFFSET(CSR_TID, 0);
->>> +    offset = CPU_CSR_OFFSET(CSR_TID, LOONGARCH_VM_LEVEL_HOST);
->> This should be another small patch.
+>>> -    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
+>>> -    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
+>>> +    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, host->CSR_ERA);
+>>> +    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, host->CSR_BADV);
+>>>        ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
+>>>        if (ret < 0) {
+>>>            return -1;
+>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>> index fb03424ffa..2f7692dc93 100644
+>>> --- a/target/loongarch/cpu.c
+>>> +++ b/target/loongarch/cpu.c
+>>> @@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
+>>>        uint32_t data = 0, field;
+>>>        int i;
+>>>    
+>>> -    set_sys_state(env, &env->sys_states[0]);
+>>> +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>>>        for (i = 0; i < 21; i++) {
+>>>            env->cpucfg[i] = 0x0;
+>>>        }
+>>> @@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
+>>>        uint32_t data = 0;
+>>>        int i;
+>>>    
+>>> -    set_sys_state(env, &env->sys_states[0]);
+>>> +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>>>        for (i = 0; i < 21; i++) {
+>>>            env->cpucfg[i] = 0x0;
+>>>        }
+>> I still think that it need split to smaller version, such as
+>>     1. get_sys()/set_sys() and its user.
+>>     2. mmu_idx change for new added LVZ
+>>     3. others
+>>
+>>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+>>> index ad30c73167..be982b7695 100644
+>>> --- a/target/loongarch/cpu.h
+>>> +++ b/target/loongarch/cpu.h
+>>> @@ -20,6 +20,8 @@
+>>>    #include "cpu-csr.h"
+>>>    #include "cpu-qom.h"
+>>>    
+>>> +#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
+>>> +
+>>>    #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+>>>    #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+>>>    #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
+>>> @@ -93,6 +95,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
+>>>    #define  EXCCODE_WPEM                EXCODE(19, 1)
+>>>    #define  EXCCODE_BTD                 EXCODE(20, 0)
+>>>    #define  EXCCODE_BTE                 EXCODE(21, 0)
+>>> +#define  EXCCODE_GSPR                EXCODE(22, 0)
+>>> +#define  EXCCODE_HVC                 EXCODE(23, 0)
+>>> +#define  EXCCODE_GCSC                EXCODE(24, 0)
+>>> +#define  EXCCODE_GCHC                EXCODE(25, 0)
+>> The exception for LVZ is added however not used, it had better be added
+>> in patch where it is actually used.
+>>>    #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
+>>>    
+>>>    /* cpucfg[0] bits */
+>>> @@ -255,6 +261,7 @@ FIELD(TLB_MISC, E, 0, 1)
+>>>    FIELD(TLB_MISC, ASID, 1, 10)
+>>>    FIELD(TLB_MISC, VPPN, 13, 35)
+>>>    FIELD(TLB_MISC, PS, 48, 6)
+>>> +FIELD(TLB_MISC, GID, 54, 8)
+>>>    
+>>>    /*Msg interrupt registers */
+>>>    #define N_MSGIS                4
+>>> @@ -314,6 +321,10 @@ typedef struct  LoongArchBT {
+>>>        uint32_t ftop;
+>>>    } lbt_t;
+>>>    
+>>> +#define LOONGARCH_VM_LEVEL_HOST      0
+>>> +#define LOONGARCH_VM_LEVEL_GUEST     1
+>>> +#define LOONGARCH_VM_LEVELS          2
+>>> +
+>>>    #define CPU_VENDOR_LOONGSON   "Loongson"
+>>>    #define CPU_MODEL_3A5000      "3A5000"
+>>>    #define CPU_MODEL_1C101       "1C101"
+>>> @@ -375,10 +386,18 @@ typedef struct CPUSysState {
+>>>        uint64_t CSR_DBG;
+>>>        uint64_t CSR_DERA;
+>>>        uint64_t CSR_DSAVE;
+>>> +    uint64_t CSR_GSTAT;
+>>> +    uint64_t CSR_GCFG;
+>>> +    uint64_t CSR_GINTC;
+>>> +    uint64_t CSR_GCNTC;
+>>> +    uint64_t CSR_GTLBC;
+>> I think this patch can move to patch 1.
+>>
+>>>        /* Msg interrupt registers */
+>>>        uint64_t CSR_MSGIS[N_MSGIS];
+>>>        uint64_t CSR_MSGIR;
+>>>        uint64_t CSR_MSGIE;
+>>> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>>> +    LoongArchTLB tlb[LOONGARCH_TLB_MAX];
+>>> +#endif
+>> It can be deleted in this patch.
+>>
+>>>    } CPUSysState;
+>>>    
+>>>    typedef struct CPUArchState {
+>>> @@ -394,7 +413,7 @@ typedef struct CPUArchState {
+>>>        uint32_t pv_features;
+>>>        uint64_t vendor_id;
+>>>        uint64_t cpu_id;
+>>> -    CPUSysState sys_states[1];
+>>> +    CPUSysState sys_states[LOONGARCH_VM_LEVELS];
+>>>    
+>>>        struct {
+>>>            uint64_t guest_addr;
+>>> @@ -419,6 +438,7 @@ typedef struct CPUArchState {
+>>>        uint32_t mp_state;
+>>>    #endif
+>>>        CPUSysState *sys_state;
+>>> +    bool vm_exit;
+>>>    } CPULoongArchState;
+>>>    
+>>>    typedef struct LoongArchCPUTopo {
+>>> @@ -438,8 +458,10 @@ struct ArchCPU {
+>>>    
+>>>        CPULoongArchState env;
+>>>        QEMUTimer timer;
+>>> +    QEMUTimer guest_timer;
+>>>        uint32_t  phy_id;
+>>>        OnOffAuto lbt;
+>>> +    OnOffAuto lvz;
+>>>        OnOffAuto pmu;
+>>>        OnOffAuto ptw;
+>>>        OnOffAuto lsx;
+>>> @@ -484,15 +506,44 @@ struct LoongArchCPUClass {
+>>>    #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
+>>>    #define MMU_USER_IDX     MMU_PLV_USER
+>>>    #define MMU_DA_IDX       4
+>>> +#define MMU_GUEST_IDX    5
+>>> +#define MMU_GUEST_DA_IDX 9
+>>> +
+>>> +static inline bool is_guest_mmu_idx(int mmu_idx)
+>>> +{
+>>> +    return mmu_idx >= MMU_GUEST_IDX;
+>>> +}
+>>> +
+>>> +static inline int mmu_idx_to_plv(int mmu_idx)
+>>> +{
+>>> +    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
+>>> +        return 0;
+>>> +    }
+>>> +    if (is_guest_mmu_idx(mmu_idx)) {
+>>> +        return mmu_idx - MMU_GUEST_IDX;
+>>> +    }
+>>> +    return mmu_idx;
+>>> +}
+>>>    
+>>>    static inline CPUSysState *env_sys(CPULoongArchState *env)
+>>>    {
+>>>        return env->sys_state;
+>>>    }
+>>>    
+>>> -static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
+>>> +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_level)
+>>> +{
+>>> +    return &env->sys_states[vm_level];
+>>> +}
+>>> +
+>>> +static inline void set_sys(CPULoongArchState *env, int vm_level)
+>>>    {
+>>> -    env->sys_state = sys;
+>>> +    env->sys_state = get_sys(env, vm_level);
+>>> +}
+>>> +
+>>> +static inline int env_vm_level(CPULoongArchState *env)
+>>> +{
+>>> +    return env_sys(env) == get_sys(env, LOONGARCH_VM_LEVEL_GUEST) ?
+>>> +           LOONGARCH_VM_LEVEL_GUEST : LOONGARCH_VM_LEVEL_HOST;
+>>>    }
+>>>    
+>>>    static inline bool is_la64(CPULoongArchState *env)
+>>> @@ -530,6 +581,13 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
+>>>    #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
+>>>    #define HW_FLAGS_VA32       0x20
+>>>    #define HW_FLAGS_EUEN_ASXE  0x40
+>>> +#define HW_FLAGS_GUEST_MODE 0x80
+>>> +
+>>> +bool has_lvz_capability(CPULoongArchState *env);
+>>> +bool will_return_to_guest(CPULoongArchState *env);
+>>> +uint8_t get_gid(CPULoongArchState *env);
+>>> +uint8_t get_tgid(CPULoongArchState *env);
+>>> +void trigger_vm_exit(CPULoongArchState *env);
+>> There is only function declaration, no function implementation and
+>> called. I think it can be removed in this patch.
+>>
+>> In general it requires that every single patch can pass to compile and work.
 >>
 >> Regards
 >> Bibo Mao
->>>        tcg_gen_ld_i64(dst2, tcg_env, offset);
->>>          return true;
->>> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>> index 6728ce5ec9..bcfc977990 100644
->>> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>> @@ -122,7 +122,7 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
->>>            if (readfn) {
->>>                readfn(dest, tcg_env);
->>>            } else {
->>> -            offset = get_csr_offset(csr, 0);
->>> +            offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
->>>                tcg_gen_ld_tl(dest, tcg_env, offset);
->>>            }
->>>        }
->>> @@ -157,7 +157,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
->>>            writefn(dest, tcg_env, src1);
->>>        } else {
->>>            dest = tcg_temp_new();
->>> -        offset = get_csr_offset(csr, 0);
->>> +        offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
->>>            tcg_gen_ld_tl(dest, tcg_env, offset);
->>>            tcg_gen_st_tl(src1, tcg_env, offset);
->>>        }
->>> @@ -196,7 +196,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
->>>        newv = tcg_temp_new();
->>>        temp = tcg_temp_new();
->>>    -    offset = get_csr_offset(csr, 0);
->>> +    offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
->>>        tcg_gen_ld_tl(oldv, tcg_env, offset);
->>>        tcg_gen_and_tl(newv, src1, mask);
->>>        tcg_gen_andc_tl(temp, oldv, mask);
+>>>    
+>>>    #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
+>>>    
+>>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+>>> index 8aa8325dc6..257c3bbddd 100644
+>>> --- a/target/loongarch/translate.h
+>>> +++ b/target/loongarch/translate.h
+>>> @@ -24,6 +24,7 @@
+>>>    #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
+>>>    #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
+>>>    #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
+>>> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
+>>>    #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
+>>>    #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
+>>>    #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
+>>> @@ -66,6 +67,7 @@ typedef struct DisasContext {
+>>>        TCGv zero;
+>>>        bool la64; /* LoongArch64 mode */
+>>>        bool va32; /* 32-bit virtual address */
+>>> +    bool guest_mode;
+>>>        uint32_t cpucfg1;
+>>>        uint32_t cpucfg2;
+>>>        uint32_t cpucfg3;
 >>>
 >>
+>>
+> 
+> 
 > 
 > 
 
