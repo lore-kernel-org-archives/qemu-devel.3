@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD1CC982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82DDC982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7YTn-0003VG-8q; Fri, 18 Sep 2026 09:18:15 -0400
+	id 1x7YUw-0003zv-5o; Fri, 18 Sep 2026 09:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YTP-0003S1-1B; Fri, 18 Sep 2026 09:17:53 -0400
+ id 1x7YUt-0003zd-1S; Fri, 18 Sep 2026 09:19:24 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YTN-0008AF-G4; Fri, 18 Sep 2026 09:17:50 -0400
+ id 1x7YUr-0008K6-1q; Fri, 18 Sep 2026 09:19:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID;
- bh=8QeWgOLWciIRqnF/OqA+rDP7NOpOgBUUfhIian4kPhk=; b=rvAzpG6GlPnqjPwVzsVr1gluj4
- VhSxSJDK2v2DRSwilPPzVVZiYFGPzzu4eFmKtG+4NrDUXldA9PbR0U1EzOStOJt0dEvyjUTBTRpym
- ChLsjBMHZSPCDDdneO0ocRxt+BPJhEf1mmGW3iv9KbgdqPsuOimI2tLxvKx88HL03pCeQ/DQIyTtd
- BkNQ17UG2YtWb6+1T5Il0aKdPmrIXEt1LSuQuwQ94iFM02E8WaTno64g+uwLJBDV8BdUVbb6J34k3
- 86fhr8f+Vsq3yyu3tE4E9qNPcPl5hxseevhBKG7q0h3jRJx7aFjy3U9l6RDQ8bXMVZTbh1Ww0TC1Y
- dkLvD9SaK1WFpfsog2JF/4r2SnfVoOtKhugFh6Fx4VBfvBQCDkkR4IiONCIaP4qxP8fZl4FsMMFJx
- V1YyKt5u0sGpVOoVNKrdNdsGp0pf7iTCDMLSkut0cghO8JYgPRJaeQPd8RjtmeBkOB6q7MpkN5kSG
- yhRzKoELME9s93tJkRbai9hu8Zp7OyqrPQYKoivnQcwKIlTawibupbMiYnkw3oWO5oJkI6T+hJGhc
- +rARf2Fj604nVaONltAvPM4HD+N0FE1cnkjYMULwi8w/BluBrrmsmhqry2EpDkFOouR4iTyqTCoar
- LI5Pf2EJfOppzCV6uqXs/y72YdFaEWub1hxSSmeOo=;
+ bh=41TQMwYy0Qbw042I/rVmL1V+yeuo8Hluto1ZQyNvicw=; b=SOeObvtWQsYQqHDpBZ/IVNs9Va
+ tvwGTAnte5I3pGYAMlMKnTJJ1fjiDOpCi3O7Q8eaZzGm7L7FHP/EbR29KEzrws95IeN8Cb3SpW5cc
+ A1M+Y2adAuMwmPVtj1egfmdzsJqdmlLYznHf9RU7iOnu5AwVUiQG/UAloTbuqI6Q333s+BswU1OPE
+ fWWJTsTw5rzf8LtS+nA1+Q0DtQf54AfS0dtPFGpOm3W/R+gx9l4UBTsPEztbfFNQUR+0FQ1wHo3j1
+ uq63N+4j+VKOFtXw8iRHxX45WWW+qAiBiUwvGk+64Vic2/eWKlspY2cAAimqBVtVA3gCPhfj0tgUp
+ MDKe7+dzbpGhbkABhZBrG2X1Jo8rib42FdlTPG7RRHaRBo71DqQRaY0V3j3Tg50eQ/DiWSbwmTsGB
+ aV8faFoK8hKq2YZa4Qw8MHHE3CVypP27NNbttp4Qyje1oYFMUOslfbP3bDOWcuncQvphjaNTCy8sZ
+ S42MCaHopRuccA+mqLiJfdi7u5pfrF0MVTLJYDdB2+fjni+fFVQVQ26ypXG8U5tBuDykti3RpabKc
+ DXqqDM+olkIwzKnatm/oRISliFbyfHIF4jTwHWT7DttyGI0B35mXZAkCNlxqt2UVHnKXK0S314ETx
+ yt3shtQkRq6VKwF1bMoWf24wYJM58rjn2MdmZ8Zvo=;
 Received: from [217.155.175.48] (helo=[10.8.0.6])
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YSr-00EgRI-2D; Fri, 18 Sep 2026 14:17:17 +0100
-Message-ID: <c3fedfcf-2644-4b64-a9ec-2566aef30db5@ilande.co.uk>
-Date: Fri, 18 Sep 2026 14:17:46 +0100
+ id 1x7YUI-00EgRy-25; Fri, 18 Sep 2026 14:18:46 +0100
+Message-ID: <3cc35c1e-febf-4ea7-94d2-e9191bc4acb8@ilande.co.uk>
+Date: Fri, 18 Sep 2026 14:19:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: "Kirill A. Korinsky" <kirill@korins.ky>,
@@ -48,7 +48,7 @@ To: "Kirill A. Korinsky" <kirill@korins.ky>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20260903115229.95811-1-kirill@korins.ky>
- <20260903115229.95811-2-kirill@korins.ky>
+ <20260903115229.95811-3-kirill@korins.ky>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -75,12 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260903115229.95811-2-kirill@korins.ky>
+In-Reply-To: <20260903115229.95811-3-kirill@korins.ky>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 217.155.175.48
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/5] openpic: Preserve IRQs masked by CTPR
+Subject: Re: [PATCH 2/5] ppc: Raise decrementer IRQ on zero write
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -108,53 +108,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/09/2026 12:50, Kirill A. Korinsky wrote:
 
-> OpenBSD exposes this by raising CTPR while handling interrupts. If an
-> edge remains pending when EOI lowers the servicing priority, QEMU
-> reasserts INT without checking CTPR; IACK then returns the spurious
-> vector and consumes the masked edge before CTPR permits delivery.
+> OpenBSD writes zero to an edge triggered decrementer, then enters idle
+> expecting its interrupt. QEMU defers the already due edge to a timer at
+> the current virtual time, leaving the guest stalled.
 > 
 > Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 > ---
->   hw/intc/openpic.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+>   hw/ppc/ppc.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
-> index 99d2a1e65e..6f9a562163 100644
-> --- a/hw/intc/openpic.c
-> +++ b/hw/intc/openpic.c
-> @@ -1033,8 +1033,9 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
->           n_IRQ = IRQ_get_next(opp, &dst->raised);
->           if (n_IRQ != -1) {
->               src = &opp->src[n_IRQ];
-> -            if (s_IRQ == -1 ||
-> -                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
-> +            if (IVPR_PRIORITY(src->ivpr) > dst->ctpr &&
-> +                (s_IRQ == -1 ||
-> +                 IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
->                   DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
->                           idx, n_IRQ);
->                   qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-> @@ -1070,12 +1071,13 @@ static uint32_t openpic_iack(OpenPICState *opp, IRQDest *dst, int cpu)
->       }
->   
->       src = &opp->src[irq];
-> -    if (!(src->ivpr & IVPR_ACTIVITY_MASK) ||
-> -            !(IVPR_PRIORITY(src->ivpr) > dst->ctpr)) {
-> +    if (!(src->ivpr & IVPR_ACTIVITY_MASK)) {
->           error_report("%s: bad raised IRQ %d ctpr %d ivpr 0x%08x",
->                   __func__, irq, dst->ctpr, src->ivpr);
->           openpic_update_irq(opp, irq);
->           retval = opp->spve;
-> +    } else if (IVPR_PRIORITY(src->ivpr) <= dst->ctpr) {
-> +        return opp->spve;
->       } else {
->           /* IRQ enter servicing state */
->           IRQ_setbit(&dst->servicing, irq);
+> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> index b123b4cc1c..d99e47d532 100644
+> --- a/hw/ppc/ppc.c
+> +++ b/hw/ppc/ppc.c
+> @@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+>        * an edge interrupt, so raise it here too.
+>        */
+>       if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
+> +        ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0) ||
+>           ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+>             && signed_decr >= 0)) {
+>           (*raise_excp)(cpu);
 
-Getting hold of the OpenPIC datasheet was a little tricky, however from what I can 
-tell this matches the expected behaviour.
-
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+LGTM, however since this is core PPC code I'd like a R-B tag from the main PPC 
+maintainers above. Chinmay/Harsh?
 
 
 ATB,
