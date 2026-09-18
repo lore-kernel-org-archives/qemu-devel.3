@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E634CC982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17135C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7cPI-0004Zr-Qy; Fri, 18 Sep 2026 13:29:54 -0400
+	id 1x7cPM-0004bm-QG; Fri, 18 Sep 2026 13:29:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cP7-0004Yu-TU; Fri, 18 Sep 2026 13:29:41 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x7cP7-0004Yt-Pu; Fri, 18 Sep 2026 13:29:41 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cP6-0000GG-9p; Fri, 18 Sep 2026 13:29:41 -0400
+ id 1x7cP5-0000G6-Bo; Fri, 18 Sep 2026 13:29:41 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 669FE60A55;
- Fri, 18 Sep 2026 17:29:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45ACE1F000FF;
- Fri, 18 Sep 2026 17:29:36 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id D00B940711;
+ Fri, 18 Sep 2026 17:29:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229561F0089A;
+ Fri, 18 Sep 2026 17:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789752578;
- bh=TO+F2pc2vn4cH6gj+eUGA+TbOU46rfxX7z+qzRTHsOk=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CHk5vSnA/vTHa+s5khICf2zOKAI9wWhe7P0BAGvwVsT43fL4u2jamcbmxE1VaILyp
- b1W6sd6wAq4BruUWPBUPjyJzls16e3DfPrF7gCrO1dBhtLXE/RrI4ZXn37fKiaZ3we
- bWP8bJDvyFaCK3EPzrnUzW22ARfq8Z7rjSOYSI+HZnipHOWHMxzcWe/PdZmQc8apWH
- gGyc5kC0R2mNDYtwcn7ZLqqVCW6sAnE0zyBH+ECP5/FiTyAGOq/lX1SBDMSw9Y2yet
- 0Avmd+KHRYLb9KUHPqggS3bO+B5GZpIszbhIo7aiSrbcQm63v0oh1xmIP0CVjh9cTy
- RSiuy10LLFjFw==
+ s=k20260515; t=1789752575;
+ bh=s1VuQ9nWUfklkbVLPzHIzgtuwQKdW2OPg3L23R+nMsY=;
+ h=From:To:Cc:Subject:Date;
+ b=JQpyLSyAiaILATofQOdZmmHcmEo7uzdwSPb+RDEImXnwytBqAhociEJX10wWBvtAT
+ PMbQq8mwJf8NQwv57m4qljP1tH2NtuyNJfOvXY8GQAwj+1hxDyzyeuGP8XhW5Z3Wgu
+ ADhC9xR8qYYu3ifwCAtPwVC05VvZsjK5xw186Jv0v1fHmQBNJtK7mrfqyMZZWxrfQV
+ ZjeLrBC+Aqng15o4UmEPP5gvhKGwtA0SvnJs5bQMIBn8tEQKdyc8x45Vstg4gT8ucE
+ U8b9H1TQtc6OGMCkozz8I7Ibr3VCbUX55qYmYn36DS4tlq6WuJb3WR74AQYQ+z6Hzf
+ CAgJEf4BuapFA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v5 01/15] block: widen BlockLimits.zone_size to uint64_t
-Date: Fri, 18 Sep 2026 19:29:09 +0200
-Message-ID: <20260918172925.2640888-2-cassel@kernel.org>
+Subject: [PATCH v5 00/15] block: fix the zone write granularity and the zone
+ append limit
+Date: Fri, 18 Sep 2026 19:29:08 +0200
+Message-ID: <20260918172925.2640888-1-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260918172925.2640888-1-cassel@kernel.org>
-References: <20260918172925.2640888-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,48 +71,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sam Li <faithilikerun@gmail.com>
+Hello Stefan, Kevin, and everyone else,
 
-The zone-size field in BlockLimits is currently uint32_t, capping
-expressible zone sizes at 4 GiB. Real zoned-device protocols
-like NVMe ZNS allow larger zones. Widen BlockLimits.zone_size to
-uint64_t to match.
+This series fixes how QEMU reports and enforces the two constraints that a
+zoned device places on a write to a sequential zone: the write granularity,
+and the largest zone append that it accepts. It also fixes two bugs in the
+zone append emulation in file-posix, one of which a guest can reach.
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- block/file-posix.c               | 2 +-
- include/block/block_int-common.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Most of it is preparation for Sam Li's zoned qcow2 series. The first two
+patches are taken directly from there, as they are unrelated to qcow2.
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9aad156aad..c0d6ee30e4 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3598,7 +3598,7 @@ raw_co_zone_append(BlockDriverState *bs,
- 
-     if (*offset & zone_size_mask) {
-         error_report("sector offset %" PRId64 " is not aligned to zone size "
--                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
-+                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
-         return -EINVAL;
-     }
- 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..7571ed9968 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -901,7 +901,7 @@ typedef struct BlockLimits {
-     BlockZoneModel zoned;
- 
-     /* zone size expressed in bytes */
--    uint32_t zone_size;
-+    uint64_t zone_size;
- 
-     /* total number of zones */
-     uint32_t nr_zones;
+Neither of the two values that this series touches is derived from
+BlockLimits any more, which was Stefan's objection to v4: the guest has
+been told the value, so it is part of the migration stream, and a
+destination host whose disks report something else breaks the guest. The
+write granularity now comes from the logical and the physical block size,
+the append limit from a property, and a backend that needs more than the
+configuration can express is refused at realize. The conditions that hold
+for every backend rather than for a particular one moved into the block
+layer, where they also cover callers that are not a device model.
+
+Changes since v4:
+- Patch 4 is new: a helper to check if a zone is conventional. The device
+  model tested that by reaching into bs->wps->wp[] and decoding the bit
+  that the block layer encodes it in, which two patches here would have
+  added two more instances of.
+- Patch 5: derive the granularity from the logical and the physical block
+  size rather than from BlockLimits. Document
+  BlockLimits.write_granularity. Dropped Damien's Reviewed-by, as the
+  derivation itself changed.
+- Patch 7: also refuse a backend that needs a coarser granularity than the
+  block sizes can express. Dropped Damien's Reviewed-by, as the patch
+  gained a check.
+- Patch 9 is new: reject an append larger than a zone. This is the bound
+  that the device model gives up by no longer deriving its own limit.
+- Patch 11: a max-append-sectors property rather than a value derived from
+  the backend. It now precedes patch 12, which v4 had first; that way round
+  left a commit that reported a zero limit to the guest.
+- Patch 12: remove BlockLimits.max_append_sectors, rather than have
+  file-posix report max_hw_transfer for it. Nothing reads the field once
+  virtio-blk takes its limit from a property, and file-posix was its only
+  writer. Damien, your Reviewed-by was for reporting max_hw_transfer, so I
+  have dropped it.
+- Patch 15 is new: the CoroutineIOCompletion cleanup.
+
+Niklas Cassel (13):
+  block: add a helper for the index of the zone an offset falls in
+  block: add a helper to check if a zone is conventional
+  hw/block: derive the zone write granularity from the block sizes
+  virtio-blk: check the write granularity of writes to sequential zones
+  hw/block: reject a zoned device that the block sizes cannot address
+  block: reject zone appends that are not a multiple of the sector size
+  block: reject a zone append that is larger than a zone
+  file-posix: remove the zone append write granularity check
+  virtio-blk: add a max-append-sectors property
+  block: remove BlockLimits.max_append_sectors
+  file-posix: reject a zone append past the device capacity
+  file-posix: reject a zone append to a full or conventional zone
+  block: do not use CoroutineIOCompletion to hold a return value
+
+Sam Li (2):
+  block: widen BlockLimits.zone_size to uint64_t
+  virtio-blk: do not merge requests across a zone boundary
+
+ block/block-backend.c             |  11 +++
+ block/file-posix.c                |  59 +++++++-----
+ block/io.c                        |  79 ++++++++++++----
+ hw/block/block.c                  |  68 ++++++++++++++
+ hw/block/virtio-blk.c             | 146 ++++++++++++++++++++++++++----
+ include/block/block-io.h          |  14 +++
+ include/block/block_int-common.h  |  19 +++-
+ include/hw/block/block.h          |  14 +++
+ include/hw/virtio/virtio-blk.h    |   1 +
+ include/system/block-backend-io.h |   1 +
+ 10 files changed, 349 insertions(+), 63 deletions(-)
+
+
+base-commit: 3b5d71cc3652fa7f5ecc449f05dae3ead2b718d7
 -- 
 2.55.0
 
