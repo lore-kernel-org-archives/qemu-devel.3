@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4DEBC982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A64BC982D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:13:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7M9t-0001Kp-E5; Thu, 17 Sep 2026 20:08:53 -0400
+	id 1x7MDj-0003NM-Lh; Thu, 17 Sep 2026 20:12:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1x7M9l-0000wj-CQ
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:08:46 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ id 1x7MDg-0003Mb-1z
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:12:48 -0400
+Received: from mail-pj2-x27.google.com ([2607:f8b0:4864:39::27])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1x7M9j-00053T-2J
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:08:45 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- d9443c01a7336-2dd77300825so1701615ad.1
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:08:42 -0700 (PDT)
+ id 1x7MDe-0005j7-8F
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:12:47 -0400
+Received: by mail-pj2-x27.google.com with SMTP id
+ d9443c01a7336-2dd77300825so1723125ad.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789690121; x=1790294921; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GbkI346fxcHA/nXGhCmqFivbP5y+/rqRpb0D7kL2b0w=;
- b=cEV5JpBkoi10Z5nSKi/cnht8t2tZx0e1tcfrSPfNBBIZRoXXT1d2PuPGDCJPpqCllY
- co/cxx76Kc5vbTRMEhklLY2E69BvZ9cOWKWBHogjcb9F3dJ/Q1mr8lpdVkne1Uorq0v7
- IdT9+uyLkSepisa6bMWfACZt9bElCWAxanqi61xPreQWiERIxSypeMvlrogm59vrzwr5
- kc1b7daGKFJzotU5XOFF8iVGFB6wDRViptcilpucZEFFxggLeFRO6wYfNkJSSAgxgwLk
- YTs8D6U2ivcSofT3mAjKcbis9eSvQgnw2m1NWEAqFhN6lc0Do053Jb8ettLGCStwxre4
- 3EpA==
+ d=gmail.com; s=20251104; t=1789690364; x=1790295164; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=jXP2919FVisNmiCCtkt7g+fhepVZbAOAHp8p9Hho5rs=;
+ b=GrMD5osWVIc5DwUK0CliszF114eYg/z7NUYVVANTL7WbmQr+PxMdZAEu69tncXG7Yw
+ 5LZ/f9iXbJjolMxhyjFwDtIkQtcrXsnEjhtIAsmLR6G0M8BkHDALNU1eygf44vbRYJUn
+ qa0p26Jz0Ne8OOvajX9dYZxDX8EqBhis8f59PA1GGjjP+OAXoqJEzPCraQkFZBb7zlnk
+ Lf05aFfKSGxRNfmHQe5NM7j67PO6Cj4cdnX5kPuwpLYYywqX+cS79JHPZBwpt0vPKybS
+ eOs5cg+xPjS6Jagb5rg/Jx0tGGPNYPxVhkIeua/THqxugLx8KEt/uFG/HHwQhI/MX2vx
+ VYqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789690121; x=1790294921;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GbkI346fxcHA/nXGhCmqFivbP5y+/rqRpb0D7kL2b0w=;
- b=1ARcr+XK0mZMAbTOjGrwjonJsbzCHUzNTTwNHpOSnh/XJp0/fNfMufsRykpn2l/pkH
- 8lMUP4Fmi09awIqeewV6qeCH6XIuYd/rKHh9D2zdrsH3tPZ/W6doD2PjsjbUGEg1wXjG
- BWdH1cxBlHZ2DRZoFx3Fmyrk49havfJdELhmG8JQax3EZYa9YwZYrfG5W6fw8991Q0yY
- Ps+GsBrZagpMV/f9h0P9ELOrfGKWF85rJi2mLDUeQQxdb5RYvTkGPDkcvqvVBVRgc7cy
- YJKPk7F5fHnowLRuJWdW4L0S6KS844PScnnGYUFaFMgDwGT1Uf0SgvfG2U3Z2jx8KA5z
- fQGQ==
-X-Gm-Message-State: AFuF++mQHvFLmZZ9rL+6Q1qD7Pi/P3FVHPs/qL5r7Wda104fiC6RMtUe
- 7OE7eH5Ib2jL27tO3T50td9lnai8PgaA9B2qPDsguvE6rhA498Iwbzlr5zVPAw==
-X-Gm-Gg: AYBFou2kZ6KvmRYnKVzfEB4wBHn2JXDEYdqx+iP4NVOHdsB9LGHirCkYcnj326NHPBO
- Jq8zlBGOjO4t+grvQn3bRbleaPi49BgzGmsL95NV2D115Zf3S6LZZkXB9GmO/1qe8X+QTb2NWPt
- aQgW1qDK3+78pgc15dErZyUPU96q7T7H6Y3DptmVLn9pKekAp+cvBcUT084bC5xkLFu88ZWkOy9
- cIErLfFQbdLxQBR4CMIK2h8hcifKfsloL52hUEj35B9VtKlAGJzuwojPoU1mB4wpR1LfjG9W70X
- +AMVJA2/qZzeQVCvlpE055UCTu6pmwAdf8qGu7IhtGvf9ffEgsUk+ceOAYJEKL3Fhyr/jM0DNQs
- Bg9KP2jVUiXr7rN+V3l/d/YTC6P0+o+KwouUpCCElcPJRqrL2VWmWa0OWLMCpseifhWQ6LlVfOZ
- h29+ym0t46/BkHjz/ZcJbS+u13iwNXDjraHpH7sNj2I+jzO5owoTq3Ke7Zmy7NdJNyEP1PKso6M
- o2p
-X-Received: by 2002:a17:90b:3f84:b0:39e:4c7e:f042 with SMTP id
- 98e67ed59e1d1-39e54f91d4amr1528550a91.31.1789690121325; 
- Thu, 17 Sep 2026 17:08:41 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([211.226.54.223])
+ d=1e100.net; s=20260707; t=1789690364; x=1790295164;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jXP2919FVisNmiCCtkt7g+fhepVZbAOAHp8p9Hho5rs=;
+ b=HEAB3Lig1T/hgusoOcp59hh91w/v0MKahCgCUxOOtfZ47wy2ytKd0eGEVRfq1td9zs
+ 51L2NyKsoxJgUv2Qzg/hfMTHs4Cz9RfG6gy0dtWkjyuSCWdhUg3OzmE4GckASK9HMmso
+ FTzDmKBZ0MJqQ6EnjrcuLFz1jiFJge4YNh5NyuFTkigwP7VEGrwA/9cetbxi6MoPwDPi
+ rBypVOd6X+NYVpYNah1GCXkNTw8GoqVPhc65sDGZwyoT75ZbZoxq/2m04BXW9+u8PLEC
+ P3/8aQ5ZcadevVikvgrOGzgRRbFySjt21jy1Sjo/A0cnHT8rERBOv09j7E4KO3H5aXCo
+ Qc3g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwhTVGryFiAiFRyZItTOcztn5Oa90/s/ahZl+QnU4jP7IufDdtYeNNh5IwLqUMR0WI4NAJMjYZmrLTn@nongnu.org
+X-Gm-Message-State: AFuF++m63S3+Hbbx9WA6Uv9Z7VSgb2/rHKjYovXGTdc/KohyiOFnPkbz
+ /DKls7LlqFbm0GTtsOX02GAKKFlXMhgdvNmR8dskYeyikt1mmG+Ty+AW
+X-Gm-Gg: AYBFou1brOzGgH3NhnnzEcfnHbjXhWG42e0Z1nOKZBydxIixvX41mc35bgM2f3eEE+R
+ wFzsbYe2o3MbcAi1T2VzVJ1zNhex+pl6s9cfVOO5YqjDIuOmUw4F9s0XzLw49JtY1VTg646n6Nv
+ 52Y9iHeoxadssxfgAFnAstL3WkwQgWtjm9RL5V7glC1gQdZkGT1f19BfpPefNb3wzGFu9f8IQG3
+ H93lQR8AoAra7RlLBAUnLJ3Ir3re5V29j6To6DbAPQG4sWdARXvSYolIYQDA21A/ACj83r6vb8i
+ pkYnlPXWnCD5iQ45hPVZm47Qen3YwCy5i0sRKE8hMzvq5uKG/x6rHxhEel8R4v3Brq5nj/ktIWk
+ 0xIhtxBsyqA+nwHwKqfu2qAbPiKZc1unozeWo0n1yMYJI4QhTP7cS2d/ST8oM4qsv2Ejt1/v7Vf
+ KBecjVeDfCTh3Z4dZ0mwf4eWmdIPbj3f1UGk758HM8N9XmskX4AWAxYDlU0JyP7rkhfkARSSpaP
+ Ayv/vRxHwaxYUWTlQ==
+X-Received: by 2002:a17:90b:4c50:b0:39e:4c7e:f03f with SMTP id
+ 98e67ed59e1d1-39e54f6a423mr1559194a91.28.1789690364380; 
+ Thu, 17 Sep 2026 17:12:44 -0700 (PDT)
+Received: from [192.168.0.22] ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39e5a5993bbsm33827a91.17.2026.09.17.17.08.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 17:08:41 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, jeuk20.kim@samsung.com, j-young.choi@samsung.com,
- stanleyjhu@google.com, richard.henderson@linaro.org, stefanha@redhat.com
-Subject: [PULL 1/1] hw/ufs: Reset controller and MCQ state on HCE transition
- to 0
-Date: Fri, 18 Sep 2026 09:08:17 +0900
-Message-ID: <cc1d72231c925a632f360937d9eb48ea12bd539c.1789689763.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1789689763.git.jeuk20.kim@samsung.com>
-References: <cover.1789689763.git.jeuk20.kim@samsung.com>
+ 98e67ed59e1d1-39e36171944sm8530822a91.7.2026.09.17.17.12.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Sep 2026 17:12:43 -0700 (PDT)
+Message-ID: <d85e012a-1ee2-4678-994f-bb46a93151d8@gmail.com>
+Date: Fri, 18 Sep 2026 09:12:38 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pj2-x11.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hw/ufs: Reset controller and MCQ state on HCE
+ transition to 0
+To: Stanley Jhu <stanleyjhu@google.com>, Jeuk Kim <jeuk20.kim@samsung.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jinyoung Choi <j-young.choi@samsung.com>
+References: <20260902081610.2290123-1-stanleyjhu@google.com>
+ <21bbbab6-192b-4243-980e-4167b450c478@gmail.com>
+ <18d61b20acd45382.3137322e31362e3131332e313435.ea6a.0000sendgmr@google.com>
+Content-Language: ko
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+In-Reply-To: <18d61b20acd45382.3137322e31362e3131332e313435.ea6a.0000sendgmr@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::27;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj2-x27.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,244 +111,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stanley Jhu <stanleyjhu@google.com>
 
-According to the JEDEC Universal Flash Storage Host Controller Interface
-(UFSHCI) specification (Section 5.2.1 "Host Controller Enable"):
-when Host Controller Enable (HCE) transitions from 1 to 0, a host
-controller reset is initiated. The host controller shall abort all
-active transfers, return internal state machines to idle, and de-assert
-all interrupts.
+On 9/17/2026 9:22 PM, Stanley Jhu wrote:
+> On Thu, Sep 03, 2026 at 03:06:42PM +0900, Jeuk Kim wrote:
+>> Thank you for your contribution.
+>
+>> Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+>
+> Hi Jeuk, Stefan, and all,
+>
+> Gentle ping on this patch. It has held Reviewed-by from Jeuk for two
+> weeks:
+> https://lore.kernel.org/qemu-devel/20260902081610.2290123-1-stanleyjhu@google.com/ 
+>
+>
+> Could this please be queued for the next UFS or block pull request?
+>
+> Thanks,
+> Stanley
 
-Currently, QEMU's UFS emulator only clears HCS and HCE registers upon
-HCE=0, leaving internal state active. Specifically:
-- Outstanding SCSI requests in the block layer are not purged.
-- Active bottom halves (doorbell_bh, complete_bh, and MCQ sq/cq BHs)
-  remain scheduled.
-- Allocated MCQ Submission and Completion Queues (sq and cq) are
-  not freed.
-- Dynamic MCQ queue registers, legacy UTRL request states, and status
-  registers (UTRLCNR, UTRLRSR) remain stale.
 
-Implement ufs_hce_reset() to:
-1. Implement .cancel callback in ufs_scsi_info to properly unref
-   scsi_req and prevent reference leaks when SCSI requests are purged.
-2. Cancel active bottom halves (doorbell_bh, complete_bh, and MCQ sq/cq
-   BHs) and guard them with a resetting flag before purging requests,
-   ensuring blk_drain() cannot run or reschedule request-producing BHs.
-3. Purge outstanding SCSI requests for all logical units via
-   scsi_device_purge_requests().
-4. Clear standard request list slots and release SGLs via
-   ufs_clear_req(), and clear doorbells and status registers (UTRLCNR,
-   UTRLRSR).
-5. Free allocated MCQ queues and clear dynamic queue registers while
-   preserving static capability offsets.
-6. De-assert interrupts via ufs_irq_check().
-7. Add a trace_ufs_hce_reset() trace event.
+Hi Stanley,
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- hw/ufs/lu.c         |  7 ++++
- hw/ufs/trace-events |  1 +
- hw/ufs/ufs.c        | 96 ++++++++++++++++++++++++++++++++++++++++++++-
- hw/ufs/ufs.h        |  2 +
- 4 files changed, 105 insertions(+), 1 deletion(-)
+Sorry for the delay. I was away for the past few weeks.
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index eeca865eb5..bdb1650851 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -188,6 +188,12 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
-     scsi_req_unref(scsi_req);
- }
- 
-+static void ufs_scsi_command_cancelled(SCSIRequest *scsi_req)
-+{
-+    scsi_req->hba_private = NULL;
-+    scsi_req_unref(scsi_req);
-+}
-+
- static QEMUSGList *ufs_get_sg_list(SCSIRequest *scsi_req)
- {
-     UfsRequest *req = scsi_req->hba_private;
-@@ -202,6 +208,7 @@ static const struct SCSIBusInfo ufs_scsi_info = {
- 
-     .get_sg_list = ufs_get_sg_list,
-     .complete = ufs_scsi_command_complete,
-+    .cancel = ufs_scsi_command_cancelled,
- };
- 
- static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 0cd3ba9b02..922293355b 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -14,6 +14,7 @@ ufs_process_uiccmd(uint32_t uiccmd, uint32_t ucmdarg1, uint32_t ucmdarg2, uint32
- ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
- ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t size) "mcq create sq sqid %"PRIu8", cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
- ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
-+ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request lists"
- 
- # error condition
- ufs_err_dma_read_utrd(uint32_t slot, uint64_t addr) "failed to read utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 160a4ac4f3..3c4d7424da 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -452,6 +452,10 @@ static void ufs_mcq_process_sq(void *opaque)
-     uint16_t head = ufs_mcq_sq_head(u, sq->sqid);
-     int err;
- 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     while (!(ufs_mcq_sq_empty(u, sq->sqid) || QTAILQ_EMPTY(&sq->req_list))) {
-         addr = sq->addr + head;
-         err = ufs_addr_read(sq->u, addr, (void *)&sqe, sizeof(sqe));
-@@ -525,7 +529,7 @@ static void ufs_mcq_process_cq(void *opaque)
-         tail = (tail + sizeof(req->cqe)) % (cq->size * sizeof(req->cqe));
-         ufs_mcq_update_cq_tail(u, cq->cqid, tail);
- 
--        if (QTAILQ_EMPTY(&req->sq->req_list) &&
-+        if (!u->resetting && QTAILQ_EMPTY(&req->sq->req_list) &&
-             !ufs_mcq_sq_empty(u, req->sq->sqid)) {
-             /* Dequeueing from SQ was blocked due to lack of free requests */
-             qemu_bh_schedule(req->sq->bh);
-@@ -722,6 +726,87 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
-     return true;
- }
- 
-+static void ufs_hce_reset(UfsHc *u)
-+{
-+    int i;
-+
-+    trace_ufs_hce_reset();
-+
-+    u->resetting = true;
-+
-+    /* 1. Cancel active Bottom Halves before purging requests */
-+    if (u->doorbell_bh) {
-+        qemu_bh_cancel(u->doorbell_bh);
-+    }
-+    if (u->complete_bh) {
-+        qemu_bh_cancel(u->complete_bh);
-+    }
-+    if (u->params.mcq) {
-+        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+            if (u->sq[i] && u->sq[i]->bh) {
-+                qemu_bh_cancel(u->sq[i]->bh);
-+            }
-+        }
-+        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+            if (u->cq[i] && u->cq[i]->bh) {
-+                qemu_bh_cancel(u->cq[i]->bh);
-+            }
-+        }
-+    }
-+
-+    /* 2. Purge outstanding SCSI requests for all logical units */
-+    for (i = 0; i < UFS_MAX_LUS; i++) {
-+        if (u->lus[i] && u->lus[i]->scsi_dev) {
-+            scsi_device_purge_requests(u->lus[i]->scsi_dev, SENSE_CODE(RESET));
-+        }
-+    }
-+
-+    /* 3. Reset standard request list slots, doorbells, and status registers */
-+    for (i = 0; i < u->params.nutrs; i++) {
-+        ufs_clear_req(&u->req_list[i]);
-+        u->req_list[i].state = UFS_REQUEST_IDLE;
-+    }
-+    u->reg.utrldbr = 0;
-+    u->reg.utmrldbr = 0;
-+    u->reg.utrlcnr = 0;
-+    u->reg.utrlrsr = 0;
-+    u->reg.is = 0;
-+
-+    /* 4. Free MCQ Queues and reset MCQ dynamic registers */
-+    if (u->params.mcq) {
-+        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+            if (u->sq[i]) {
-+                ufs_mcq_free_sq(u->sq[i]);
-+                u->sq[i] = NULL;
-+            }
-+        }
-+        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+            if (u->cq[i]) {
-+                ufs_mcq_free_cq(u->cq[i]);
-+                u->cq[i] = NULL;
-+            }
-+        }
-+
-+        /* Clear dynamic queue configuration registers without overwriting static capability offsets */
-+        for (i = 0; i < ARRAY_SIZE(u->mcq_reg); i++) {
-+            u->mcq_reg[i].sqattr = 0;
-+            u->mcq_reg[i].sqlba = 0;
-+            u->mcq_reg[i].squba = 0;
-+            u->mcq_reg[i].sqcfg = 0;
-+            u->mcq_reg[i].cqattr = 0;
-+            u->mcq_reg[i].cqlba = 0;
-+            u->mcq_reg[i].cquba = 0;
-+            u->mcq_reg[i].cqcfg = 0;
-+        }
-+        memset(u->mcq_op_reg, 0, sizeof(u->mcq_op_reg));
-+    }
-+
-+    u->resetting = false;
-+
-+    /* 5. De-assert IRQ */
-+    ufs_irq_check(u);
-+}
-+
- static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
- {
-     switch (offset) {
-@@ -739,6 +824,7 @@ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
-             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 1);
-         } else if (FIELD_EX32(u->reg.hce, HCE, HCE) &&
-                    !FIELD_EX32(data, HCE, HCE)) {
-+            ufs_hce_reset(u);
-             u->reg.hcs = 0;
-             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 0);
-         }
-@@ -2089,6 +2175,10 @@ static void ufs_process_req(void *opaque)
-     UfsRequest *req;
-     int slot;
- 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     for (slot = 0; slot < u->params.nutrs; slot++) {
-         req = &u->req_list[slot];
- 
-@@ -2115,6 +2205,10 @@ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result)
- 
-     req->state = UFS_REQUEST_COMPLETE;
- 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     if (ufs_mcq_req(req)) {
-         trace_ufs_mcq_complete_req(req->sq->sqid);
-         QTAILQ_INSERT_TAIL(&req->sq->cq->req_list, req, entry);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index aa8361d93d..6f2693b7ca 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -173,6 +173,8 @@ typedef struct UfsHc {
-     UfsSq *sq[UFS_MAX_MCQ_QNUM];
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
- 
-+    bool resetting;
-+
-     /* Extended features */
-     UfsWb wb;
- 
--- 
-2.43.0
+I've just sent a pull request including this patch:
+https://lore.kernel.org/qemu-devel/cover.1789689763.git.jeuk20.kim@samsung.com/
+
+I'll also catch up on the remaining UFS patches and review them next week.
+
+Thanks,
+Jeuk
+
+
 
 
