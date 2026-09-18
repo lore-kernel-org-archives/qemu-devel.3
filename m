@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE701C982D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE75C982D7
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 06:54:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7SUB-0006k9-Ae; Fri, 18 Sep 2026 02:54:15 -0400
+	id 1x7SU5-0006if-Pk; Fri, 18 Sep 2026 02:54:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1x7SU4-0006iH-I6; Fri, 18 Sep 2026 02:54:08 -0400
+ id 1x7SU2-0006hd-4Q; Fri, 18 Sep 2026 02:54:06 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1x7SU3-0002rT-24; Fri, 18 Sep 2026 02:54:08 -0400
+ id 1x7SU0-0002rT-2a; Fri, 18 Sep 2026 02:54:05 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ONUFJ0FN8nMy+r5uyL0xdRvPPeINy8fT3+5P0RIqSVAZsar0Sca7+TUcPGY5UAG8mrzYYF7JmHgQh187c7EKnMYzWkuwrL2RdUVnxPOthvG/kyQB4VV/SQrSw9OTl6gSyewWjcj8jeTmvf1UopNRtP1EA5W86CvCyv7aan7Mz+XPaVVf5EMXio+qYOpazGSy+oxYh1ONGaDhPrcaK/fd3PrMd4HiR2TZ/9/WbyIi1teIbWuETSmkhciNV0b+WCE6AMFQ72HhMb7bxEETYG5j0yi1Yb/27YhzqAAUS3bP1DkiuT5B3BqLvQNp94waZrrz49ZhT+P2ORpiHHj7zRr+BA==
+ b=MXVt25rAOfaAeHLXYtbE1pmtf7B5tcuHjFGMJngFblVS889fI2g1t6+GaTibyMGDRf9X5cqimVT40FrATb5rBdKxz+0Me+Z/TpFO5nXIIVCK1+bYuzNS9KGZ90MNR3GhAI7zOopuN2pZy3eBEZqvEuqLuYcyxHoUNEmjgM6GHk/6e9zif3FIGF1qjCGYL0FPksxdEZfievGqybSUMn3QekC7zAWaid6LYS6gnFpHB9PwwZASMA0r4+NhVmZkgTMgreuqit7Y7xaOf7ygPvBbKWCLV4aFpU8dhWXe5RRMzTIha1DjAXjL1AfRcc9yZNFA5OEYb+NwqCBtpe7e4NrIQQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WqW0LM2U54X71PU5+QnQHrPKP1sexrVpSNlxuxYWMo0=;
- b=EtVbZaVEgutD3Ei1Ojb+MtyZ2GstbyX56RwaNJL06vZE7NGcVfJejmOSiT4MuOt5ZOUafirg9nvKzPw2C3EJYsdhmTzF/5J/QJnNa3rELVul+8kj9BxSeI7mTwvoYyVKvhHpYdIj9uBREq7ngbhstHWmubfu1hutrORVEoKkXWh82G3inhgNGJnZi5Awr6QsrobAhDaWtuvnWmPBDjzuVL7ZhTPbF+MoCXRQM7lkoMQF7jNTLHU9l8wVduG6UGLy50lO6skSmCSleJ+Rq5AMWeoeQTYNmqlvigSXOxzBepxPu6+LuLi8I8tf7OCJfK1GZ9pWxzEJni3OuVqHbsXBrA==
+ bh=0OY+Lxi2/fmImLicnUT3qxAlXQseN+iDcInS7GaTGTU=;
+ b=Tp/FpUQ1lPVT1OEVHWiR83GYVjLnGwtOW9Ba/rUeo9z159IpeE5Jdm5hNR1syrWNYwV4dnjFtLjsieaV8YiJb6daM4maKeVueemfSswJRVjKkRHbjLLCNvBRYVHldJvR+9F/lgc6K1rXW5LGcJ8+My/K8w/8cfOC8cUPKG+qXrSBnSG/2oG7gMnA45oIrjTi/PHdrwYwDJd4evqXvzk3VDGfcNuG1Owo/sBro/DdELqllrVVwriDudXkCntBY8H9O7Q0Q1xiRYt+2B1siy9wjMsC55gFOV3OqgrqRKO+wjQQR8I2OpL5/05HSzM1nXYjs5ej2G1gFTFUiOgNlYp67w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WqW0LM2U54X71PU5+QnQHrPKP1sexrVpSNlxuxYWMo0=;
- b=q0+He17SdcDKhXiQsc1i0txuEzPUJUUaCPlHsFZv3fgT/lLOaC530991YJZaNJpV/scCiD9l9kcE4RCc/4l1WJegp16D7cZt1Xazay6u4schNUXuQt77R76wrircTMJlpNJ2y4l2eyzRKeMbW9VUT9cPDNISIEtjetHgg11qKAUCalrZ+x6rfHub+ctvowHe2twGm2qwPStDzxanZWugG+qyz4vUSagiurOx3xK0xPgaroMr6MTkoPnkK2U0vknB9w9SX+VpKB2w7oc9B2AtWkbMwZD/Ok8P4jH/3JcpvTfbxDlRyWTvUftw2l+SaL3ctkfjettm1Tr3/G1RKTg8cg==
+ bh=0OY+Lxi2/fmImLicnUT3qxAlXQseN+iDcInS7GaTGTU=;
+ b=ltSI35APXPrP9ubDmrlU74j5UqfdC7fpEgaMAMWka5kdDIfywX3JdppX0s6jDPWnVOQn21sUjkNOpPwjSUf12w3nRAsMGN2Bd/KJlpBoLSKc0Wjigcev/dEhhyB4fgCVJim/xhrvQvcFIURyIxQEtbg8fid53L2yRqYGF7QTG1zV2FA06j+TfQC+2YdL/J9U/qQxZWXpzOCwPGBzlg7rMzND6jk8w7D5rxMK5paf1xj9Nhw3JHrJ90yxTEqvj51h5ZCZlyuMDDMB7rv+zZ1OijymAni7yPIsratNpyaEf1Sc//U9QQENvJtgeKwgtVUMZEWU681SI6qz9/Jb/Qfs3w==
 Received: from SEZPR06MB7619.apcprd06.prod.outlook.com (2603:1096:101:249::5)
  by SEZPR06MB8814.apcprd06.prod.outlook.com (2603:1096:101:33d::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.13; Fri, 18 Sep
- 2026 06:53:52 +0000
+ 2026 06:53:50 +0000
 Received: from SEZPR06MB7619.apcprd06.prod.outlook.com
  ([fe80::c8d3:efda:b73:f6a6]) by SEZPR06MB7619.apcprd06.prod.outlook.com
  ([fe80::c8d3:efda:b73:f6a6%4]) with mapi id 15.21.0428.011; Fri, 18 Sep 2026
- 06:53:52 +0000
+ 06:53:50 +0000
 From: Kane Chen <kane_chen@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -51,13 +51,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 3/3] hw/misc/aspeed_sbc: Derive secure boot state from OTP
- config
-Thread-Topic: [PATCH v2 3/3] hw/misc/aspeed_sbc: Derive secure boot state from
- OTP config
-Thread-Index: AQHdRzp2QR099gXF2UW86apyi1Ym2g==
-Date: Fri, 18 Sep 2026 06:53:51 +0000
-Message-ID: <20260918065347.3713868-4-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 2/3] hw/misc/aspeed_sbc: Derive ABR state from OTP config
+ straps
+Thread-Topic: [PATCH v2 2/3] hw/misc/aspeed_sbc: Derive ABR state from OTP
+ config straps
+Thread-Index: AQHdRzp2ulw00Hg0h0Gv5ZmgRF7wwg==
+Date: Fri, 18 Sep 2026 06:53:50 +0000
+Message-ID: <20260918065347.3713868-3-kane_chen@aspeedtech.com>
 References: <20260918065347.3713868-1-kane_chen@aspeedtech.com>
 In-Reply-To: <20260918065347.3713868-1-kane_chen@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -68,61 +68,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SEZPR06MB7619:EE_|SEZPR06MB8814:EE_
-x-ms-office365-filtering-correlation-id: bbbc2445-518f-4b55-498e-08df15519964
+x-ms-office365-filtering-correlation-id: 2a99ac63-406e-4d43-179d-08df15519899
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|23010399003|366016|376014|10067099003|6133799003|22082099003|18002099003|56012099006|38070700021;
-x-microsoft-antispam-message-info: 8mlE/isGfgeskawd/dGOSwceT3eK7UdNLq+QLTM3C6QXZxTH7vbqDp+70wypsJemx6nP1v4jC3Du4kFUm9k7Pgx6/WfyZf1VFX+YtgpVf5ti+/CEqlXl6TqaSxjazE+vwsUQJU+uWADZNTS/5B0VoThvf/Y4m/G276fQO/lofwg3VYsPaSoEUbaxxfxxUJP5vm4aW5on45tlw6UvAFQjvMTXEiXyciiN14AyVrpZ8/31SGS8XOQV/NKVIg7kHU8Mcf4OcqpZ5cSHSrDRpPGOGM3Z/C/m37Hh11DihRiJRAuQS5FNk4W0DkfBmy/JFLcYUlOy8l+tnGKlchUD+YsOR0XRdrmJD5Oj+HvK/RvMxDlpFmnFwgEeDFlvn7cABBkBDk3Ibo8PC37BLnaoPSeB3AOwkdq228L1LHfH4lZw7BmdXHcKIyl2bX2rYG0wf6cGmIiEQUhjRYw4LZc3bxAeP0liUJPeqG4Vv669++E+o7+bfrK02BqBVQRiVT0xCZUfq9WG4LbDQ7Sgl0lfxQuk8F1F5ORoRvfMcQD7py1Ki628Vn7BEWqsnlqKkjit7rnzZyFyy7G3d7spEEISg6anoqcJXK9RH0SbN6KHt9hdpZokiLMzsrVJQ7QhhYbGfZlJO+SLkqAj0dauKKRyRgPvZHUMFvozA8g8T+Szh9lWuBKmjdDEEcPsKN0O+ZK1USqpkBokMJkCyEyOBgHzFVL8mfA5f2kDqNLa2p1HE9fWH0Y=
+x-microsoft-antispam-message-info: ix4fz32HOgLSFz+7rtPRHCzWF/ExEKRYkv194boVIAvUJLqxdmlRAIhKU2oQN/zUvXwLZQ79U7JgYH5mIRdxUT4cg+mZrKfhhiwbvt3nwkv+Ji5v4VhQ9TVUol2r5wXAEzwbr0TpCf8uPuhsxqyN8fk+VFZ9cIyYVuCPuw8+KzCmCNzRbnKk9/cDXZQd5hZBx2t2i2OpdJw92+ZnrgivSnUvLCCtjnA9+vrw/p5fNbNyDMN2Hh63wYkKFSMFArTmg8J2MmWL0Lf95RScna6ae2ljRjlklVxIeoPL8L6nM4m+N/1wXc+PqQ/hqR8Me18pBxhrH04y5dfYt/zkejseoKNZVpoBqLGdrAHaR47fa6n+p8pv99h7SuQCeG6uS5J6eXBmJLonzKxtkhLIWLQf9UFnXzCgi9F3v8aRlPfbnTOoWtufAkohI8w3ePxo3dihK9CEzHxP1xSftVS1PQLIVcjei9bv8PGV3OQoY6fu9uyXggEaBRmAMImOhCkFDEdHLM/Q4WquvSyIkNTp6Jm3D60cX6bdriutj1u9ls5obotanbSqOIo/Dx3Xtdf6/Gucih5N6loZp6Itx+sTvwpKxz7aZbycDK/dKy4r6+7A+IMcoPCexeDGl+jdbH2sroR2zaItwWRwgKhEE+5JibdBu8aRq2bQPAALEQiAFcSQGadi1ZrVUJjR33C+G27JGM1XlV3Quwe+8hbqnau7XwIi2lEQ9ToJaUPuLt4OuARZNro=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7619.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(10067099003)(6133799003)(22082099003)(18002099003)(56012099006)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?68rqIKBoar/5/rE8NNxt1/3HI4W9O6x9I0EANcmav6OXnV2uaeyLkHAeZy?=
- =?iso-8859-1?Q?bS7dE4Z73q19HI4TLYjONebLjlsgAd2RNO/4r/HHjKpHO/wFFHUMkQwNpn?=
- =?iso-8859-1?Q?zP6/J4wyHSjYuCPBa7pjpx6+jFaQ0yMyqERHFjHfP6vt3Zt/b0BzCwTmhs?=
- =?iso-8859-1?Q?+nA3H2v1jgNUECre5QCVWBcJfeGko0onBritYZlPwYjTijg9JJdqpy4K9P?=
- =?iso-8859-1?Q?mrHAO4deM1T582gjVxW+R2ztOdEObU15bwtbIXoTY64htHDFGRbaR+ID/T?=
- =?iso-8859-1?Q?1aVVDV01it4sHh+6WLNKAKUoXENIFKt9afL3E7ymoBFEIGALKJrG3C/Vbk?=
- =?iso-8859-1?Q?CxkZFesYKHe7eVuFacP1EJdclVSBGxGxxREOaJUJUoW5ef2M6H6aDq06Ir?=
- =?iso-8859-1?Q?MryE8PfxcLx3F7jQbRDnzZWNKLyuGfHYOrOvdl+orrDOlZY861pjWOOrK9?=
- =?iso-8859-1?Q?NUZW6/ugVPwhedgHH9Z1TLT89ARcllxEoChInoVwRcuAaPkGuWxysJihVV?=
- =?iso-8859-1?Q?KGetzaYJA+C751nCI07zPuFgyM437B9Kh7AsXiGDNygT1k+q+ZELL8cBG3?=
- =?iso-8859-1?Q?RCxzaCAhOh0VKwoFSRG4LStnYKhDI/Ock8R7XhVCr5NyW0VlW1KpzcBR7M?=
- =?iso-8859-1?Q?AfXRgJdKs24euOI208yasZhcD35IfmTqqZG9YhjGnHPZMCorLBpMB8DaP9?=
- =?iso-8859-1?Q?Qs3+jaWcvKDEBiO2mqrf86QXX5i5NeJWfbAcJpqTQS/efvsqkF3a0t5lsX?=
- =?iso-8859-1?Q?69u6wNc34+vwHvZC8ubhrCiUC1TlBc6Ub3rasidT72MXO1owvgVHqOGIGj?=
- =?iso-8859-1?Q?jlw/QRx1p21MVeYLi4lhK+5ls5TrYtxwfGxTMlQPx5rtQAxQWumd2ZbQ7M?=
- =?iso-8859-1?Q?HEzncIuI024kRkBJbiqbb4csO0El9nh/kWvc/ybqAvBkdCmxbM8le3lMFd?=
- =?iso-8859-1?Q?rq5dg7L/AqDzo+fjAgEZjn8C83ZJfA6OAWSonaPb05kss1/JjWVZiyOoPE?=
- =?iso-8859-1?Q?DqHzHaZYTF7K/Ho6rjdS3PkBYzb2X4mp8MZTQJujbBxMZSsklKpeUV+N83?=
- =?iso-8859-1?Q?4Vx/Oifxzk8kwj5cYQgyEp71jmbF2/XMx41UIIUOGDW2ZurG2GtFRy+n6A?=
- =?iso-8859-1?Q?RiDJgMR6LvUX1BZWUNv4Dam3veOhKrB85T6FipJ8nGxnKjBL/4KfEZXN0/?=
- =?iso-8859-1?Q?sKGo75hkbUC0bis8Bs7JB0TwCoqkrVXG3t9l2iBjezpTEXpM3LELeGIZf6?=
- =?iso-8859-1?Q?/fqO7o9j7dN4ch1DbBZmjS+vceC2fFegrD+GJqALmMw0wtRIt2zDvL4xqb?=
- =?iso-8859-1?Q?C5zATKIqlamJKcHQ54drKeFKIeIKoVzsgCbeA0oxD/lOFfv1q0jS443sI0?=
- =?iso-8859-1?Q?l9FCpssjOEYtbf8EGKIy247oCKQ5evm4mfiGN+Tq7IWY3edJCPinpLYpUG?=
- =?iso-8859-1?Q?T5hllanLHmkH73XFVX7RCbKYZyytTppjP2o27M/6y9WxL8werZ/mtWMOlG?=
- =?iso-8859-1?Q?nZOl3xvXL4zvLb25rC9/YBPPNnfU1EDxkYvERQvSXV8zzgvuFqvq6TeWkz?=
- =?iso-8859-1?Q?Yx6EgL4yWaFCIY90yfX/hbaoFVhrQ+TBMuZfmHaCcrhrhryLmUpE1jH0FG?=
- =?iso-8859-1?Q?GwiecqCMBz5n2T0RUfiThK0v4pfS+l56FJ3mZFA6ZPXHvtAqUYV7YvVtTf?=
- =?iso-8859-1?Q?pO43LBUPX5nD11x77jIVux8bfzAh2Jzq/vW2VALSpEuCrJgJaRQlC3kzmd?=
- =?iso-8859-1?Q?cCdQcmVtZCaC9uqjBwa0NBEHWHnQQTB1IvGMTVbQBzloGbjvsOvnrgBg4U?=
- =?iso-8859-1?Q?JgkmtvMuBg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?5pIfYJivUs9SpG+pMMnFznLu/GbtMG9FdsN49MLJcg4bwf9LooX2y0QRFe?=
+ =?iso-8859-1?Q?h3MndGMUWLb8HN1GuJeOaC3RnBA2yY0lgWSAe7LIHsEbo8OnuxW+7+Onoy?=
+ =?iso-8859-1?Q?HSI20qz0hj8+hW6/moZEaADu30tM3T//MQAWKeZiUSKd8UTykrIcJMkw9i?=
+ =?iso-8859-1?Q?tCPkU2Htnd+wtdhNClKXSIDUtSdXNSwixdXW2GeHp1LgoPNYd5kY6rH9nG?=
+ =?iso-8859-1?Q?OTh/HgSHA1scGJlft1pvPsF7V5Ui2mlVXvNcJKMQAYhUDzOd3+AAtOyPKp?=
+ =?iso-8859-1?Q?MJGNbDnrlbHovWXHdrjgtLdNm8VAOd+izeXEnMHdOK9f6zXktcmdZcTKsb?=
+ =?iso-8859-1?Q?ig4eIv9v0KCotD1BAmEA5QBu4uED1ip/1DBuDM75ckmrxcaGvbRyu5PNCY?=
+ =?iso-8859-1?Q?BZix42RGFap8jxhAHiw0mFAg9iK7kN2Y0g+ONI47olXTx+PUo16FAtcyCV?=
+ =?iso-8859-1?Q?s3vHmtBtUQPCze2XZ5vERXEnLKKXvUO6RvQEV9ji8W6f/tObHBcr92JNj2?=
+ =?iso-8859-1?Q?G5YQO6v5TRmqnXa4yG5GYiXb842EXmGT9s+7jeGU7ZOYnYq7YTWeD8kAQb?=
+ =?iso-8859-1?Q?/TO1waR3ZAnE03YXmyvb2ez/q3SRs7XVTnC/xB+c1RjS32Ca8jBDoO+/bl?=
+ =?iso-8859-1?Q?xj6PU4gBIbW2j3FgDW7k3JaQfLdrABt7cf5PW1qku/YRyn/CqN5Hnpyrv2?=
+ =?iso-8859-1?Q?z6QXh8j+9xJqusWRqj7P/oU/cuDHHL/cNN7Mlr0QGKobjaEx/1XnaBoeWx?=
+ =?iso-8859-1?Q?Np1Zi7SOZXRop84LsiMhg474jRGjnYUzsTDG9+IR+yRUsXqa7Tgkv6XRT0?=
+ =?iso-8859-1?Q?IEJb9WJFjQrPcVb7OAr3FJwD8rrBs7Kt5iXuWc8rLP6LTwik7piPfIz7i/?=
+ =?iso-8859-1?Q?vOP4ru97+OUkji0MNZSPcjC3oit01zGeRALkmo/bMsoek7aMaAC2qevh9G?=
+ =?iso-8859-1?Q?Uue4zaIq2mclC1qzoEPwPisjatlwlSiVfn0/QG/EW3kqgIsxkUlxldWuXh?=
+ =?iso-8859-1?Q?CwAd1g+l+l1LKcYUDZ1osOOCveiPAxucN1DgE5b7doI8S9EGAzpRD1isR7?=
+ =?iso-8859-1?Q?Oa8j61Y3M+iVSYrQGtPLa6RoFny8iFkYWz4ByCaTXQc3n8J+JfxwPFi6oj?=
+ =?iso-8859-1?Q?QIEPvoZGn0SUwlCj5hO1nW3DT53c34dEoBrdwhkNSLySQJFbCKtAJ6zPO1?=
+ =?iso-8859-1?Q?pEmZKQFnbtTBP2sFLzQ+KTO2YgsmFUSk+2f/TS9wBz5U8eN7JDgxVheEoT?=
+ =?iso-8859-1?Q?Dtv6/ciWPzoX7sc9KbL94gnqBKOVEfW7CEPM3gueWHaGQPWEQXBLm2Iziu?=
+ =?iso-8859-1?Q?0nDnpnu+AjnRhfDQrRcnUoVXiaKHKdVjB5GXGwSwnMouFdZ3fscOKCVZnz?=
+ =?iso-8859-1?Q?gYqwEhRdlCpnMVzjqMuyTxXOzv/6c/pg1ZJ0U+4fqnYbYHnVuKFFXCg0nO?=
+ =?iso-8859-1?Q?ioExZDh/gZXGD5/tIJ20BQoP5uSPcuHklhAVBYc9XWES9rcieDfOJEO7Zi?=
+ =?iso-8859-1?Q?K0Dkki7FYl3SFKYO5wFMy3VFX0fqs0nVokAY/QyKEtHbTbrSHFStbS4BTw?=
+ =?iso-8859-1?Q?f4Uv677ZtfSBRNmvo5Qii6MmiwiSyAlDcYi1dRSANfid/OhCXyYUVxvRhM?=
+ =?iso-8859-1?Q?DwsJ+wMPMzlw+8y5OxwrpPAu9AYTUOM3qgP65UZ3mXxTPV2WoqMgS+fVeO?=
+ =?iso-8859-1?Q?XJsXPzCk+cHIZPERao2jpuI0mOPDDoJv4MVgmOFiQoc4x+oLaj1BM3Tlg1?=
+ =?iso-8859-1?Q?LdgYuNoULLV7x2sdTNRCT58rigiZvDRd25JRl4NaApxr6aXv5YC5h2TY1k?=
+ =?iso-8859-1?Q?znv8BBzXZA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: BU3UdKVD71KHQsFYZtD9/6Yu9LqC2Vy9sFtfNhoejacvR+3gdrLTLzpQSZ2mTdL9GQRH82rxAJo9tMuAPPH+PkemDexbJ93X5aUkSgDkUVOwgpLLt/jwmqRcxpdjwJ66ii//9jqvTP/pqf82K4Z5+Tmy2+WNCY04eDXatatuh/8QILL9IZXkg0tE/Rpw3MRLn43BiWyzrSTVZLpg9It3pGhrD8WwDYRw4omk4TpcFYYZw5Tf1EwiCjFCCUc6T6bb5PGJT7TyNvWYouP8F1kSDxzMLNtpA8eFnfwhwYL7IjvYNoCgel7/9hKIphHEVvOc4ULK/UyxdtXg8tQtvxyW+Q==
+X-Exchange-RoutingPolicyChecked: Yfpv7cEw/FFxjF2EC3iKwTUeCA+3TEgh85ilIWP9BqXR8NK3oAzrCi2le98MW09yVPXMIIGAUPg3OArqZLtqnNFxpEJfef8ppgJ/IsbpqVqobP/k9farSOlSoS/H55B8nhpBkOS1mZU1fQuadVubfjHy9UNfAD2RnGitiPtmFZj/k2wZWWqujr7d2KasJRxcRrgYu9XxvPEQm2IEtdLYSKr4hzzso5e1heYOGO8FaQ4hC/WYSfKUtXTsGV+LPOCQLqn+L970cOSP1JctzGv7Ws4ZUZZcc2YrOWuvNTtSdk5yETNcc5K7KFJX+8owfPV9Ten6nQYySYkDvlZTR5pInQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7619.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bbbc2445-518f-4b55-498e-08df15519964
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Sep 2026 06:53:51.9301 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a99ac63-406e-4d43-179d-08df15519899
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Sep 2026 06:53:50.6236 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SSF55vJwsoVxpluVBkNXFI4h331UaBEzkE4oPVpU7GEH5+GaJ+PfUy+Irw6Cs2t7BbVo3H/HoO5I4NPdqCdsZTOvqoBhEAv1dZdHGKX8LEg=
+X-MS-Exchange-CrossTenant-userprincipalname: GpsDLduFCguWaJ6r7e/nludqe54sZ5lsKY8hY/g9g63rKfLcJ9fSSeQjL7Lv4ynkfpLppgyap++ke77K1CVn4dAjkyM9ZsX231DmRsyoTR8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB8814
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=kane_chen@aspeedtech.com;
@@ -149,99 +149,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The secure boot state is currently controlled by the=0A=
-"signing-settings" machine property instead of the OTP configuration.=0A=
+The eMMC ABR enable state is currently controlled by the "emmc-abr"=0A=
+machine property instead of the OTP configuration.=0A=
 =0A=
-Derive SECURE_BOOT_EN and R_QSR from the OTP configuration when the=0A=
-registers are read.=0A=
+Add helpers to read the OTP configuration and resolve strap values.=0A=
+Use the ABR strap value to update ABR_EN when R_STATUS is read.=0A=
 =0A=
-Remove the "signing-settings" property as the secure boot state is now=0A=
-derived from OTP.=0A=
+Remove the "emmc-abr" property as the ABR state is now derived from=0A=
+OTP.=0A=
 =0A=
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>=0A=
 ---=0A=
- include/hw/misc/aspeed_sbc.h |  2 --=0A=
- hw/misc/aspeed_sbc.c         | 22 +++++++++++++---------=0A=
- 2 files changed, 13 insertions(+), 11 deletions(-)=0A=
+ include/hw/misc/aspeed_sbc.h  |  1 -=0A=
+ include/hw/nvram/aspeed_otp.h | 23 +++++++++++--=0A=
+ hw/misc/aspeed_sbc.c          | 29 ++++++++++++----=0A=
+ hw/nvram/aspeed_otp.c         | 63 +++++++++++++++++++++++++++++++++++=0A=
+ 4 files changed, 106 insertions(+), 10 deletions(-)=0A=
 =0A=
 diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h=0A=
-index b210ffb8aa..7f3fa7062f 100644=0A=
+index 756c612356..b210ffb8aa 100644=0A=
 --- a/include/hw/misc/aspeed_sbc.h=0A=
 +++ b/include/hw/misc/aspeed_sbc.h=0A=
-@@ -32,8 +32,6 @@ OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEE=
+@@ -32,7 +32,6 @@ OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEE=
 D_SBC)=0A=
  struct AspeedSBCState {=0A=
      SysBusDevice parent;=0A=
  =0A=
--    uint32_t signing_settings;=0A=
--=0A=
-     MemoryRegion iomem;=0A=
+-    bool emmc_abr;=0A=
+     uint32_t signing_settings;=0A=
  =0A=
-     uint32_t regs[ASPEED_SBC_NR_REGS];=0A=
+     MemoryRegion iomem;=0A=
+diff --git a/include/hw/nvram/aspeed_otp.h b/include/hw/nvram/aspeed_otp.h=
+=0A=
+index 2b6c2eaaa3..f91af12ea9 100644=0A=
+--- a/include/hw/nvram/aspeed_otp.h=0A=
++++ b/include/hw/nvram/aspeed_otp.h=0A=
+@@ -24,11 +24,27 @@ OBJECT_DECLARE_SIMPLE_TYPE(AspeedOTPState, ASPEED_OTP)=
+=0A=
+  *=0A=
+  *  - [0, OTP_DATA_DWORD_COUNT]: the data region. Each address contains=0A=
+  *    64 bits of data.=0A=
+- *  - [OTP_DATA_DWORD_COUNT, OTP_MEMORY_SIZE / 4]: the configuration=0A=
+- *    region. Each address contains 32 bits of data.=0A=
++ *  - [OTP_DATA_DWORD_COUNT(OTP_CFG0), OTP_MEMORY_SIZE / 4]: the=0A=
++ *    configuration region. Each address contains 32 bits of data.=0A=
+  */=0A=
+ #define OTP_DATA_DWORD_COUNT            (0x800)=0A=
+ =0A=
++/* Start of the OTP configuration/strap region. */=0A=
++#define OTP_CFG0                        (0x800)=0A=
++=0A=
++/*=0A=
++ * OTP straps are a 64-bit value packed as two 32-bit halves starting at=
+=0A=
++ * config word OTP_STRAP_START_INDEX (OTPCFG16 and OTPCFG17). Each strap=
+=0A=
++ * bit is stored redundantly in OTP_STRAP_COPY_NUM config words, spaced=0A=
++ * (OTP_STRAP_BIT_NUM / 32) words apart -- i.e. one word per 32-bit half,=
+=0A=
++ * so the two halves interleave; the effective bit value is the XOR of=0A=
++ * all copies, matching how the real hardware and the ast-otp reference=0A=
++ * tool resolve straps.=0A=
++ */=0A=
++#define OTP_STRAP_START_INDEX           16=0A=
++#define OTP_STRAP_BIT_NUM               64=0A=
++#define OTP_STRAP_COPY_NUM              6=0A=
++=0A=
+ typedef struct AspeedOTPState {=0A=
+     DeviceState parent_obj;=0A=
+ =0A=
+@@ -43,4 +59,7 @@ typedef struct AspeedOTPState {=0A=
+     uint8_t *storage;=0A=
+ } AspeedOTPState;=0A=
+ =0A=
++uint32_t aspeed_otp_read_config(AspeedOTPState *s, unsigned int cfg_word);=
+=0A=
++bool aspeed_otp_read_strap(AspeedOTPState *s, unsigned int bit);=0A=
++=0A=
+ #endif /* ASPEED_OTP_H */=0A=
 diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c=0A=
-index 6cec9ad3da..ad4c2b4b1d 100644=0A=
+index 3402cef5c3..6cec9ad3da 100644=0A=
 --- a/hw/misc/aspeed_sbc.c=0A=
 +++ b/hw/misc/aspeed_sbc.c=0A=
-@@ -79,6 +79,8 @@=0A=
- #define MODE_REGISTER_A             (0x3000)=0A=
- #define MODE_REGISTER_B             (0x5000)=0A=
+@@ -71,6 +71,9 @@=0A=
+ #define SBC_OTP_CMD_WRITE 0x23b1e362=0A=
+ #define SBC_OTP_CMD_PROG 0x23b1e364=0A=
  =0A=
-+static bool aspeed_sbc_otp_read(AspeedSBCState *s, uint32_t otp_addr);=0A=
++/* OTP strap bits */=0A=
++#define OTP_STRAP_ABR_EN        0x2b=0A=
 +=0A=
- static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int si=
-ze)=0A=
- {=0A=
-     AspeedSBCState *s =3D ASPEED_SBC(opaque);=0A=
-@@ -102,8 +104,16 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr a=
-ddr, unsigned int size)=0A=
-             val &=3D ~ABR_EN;=0A=
-         }=0A=
+ /* Voltage mode */=0A=
+ #define MODE_REGISTER               (0x1000)=0A=
+ #define MODE_REGISTER_A             (0x3000)=0A=
+@@ -89,7 +92,21 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr add=
+r, unsigned int size)=0A=
+         return 0;=0A=
+     }=0A=
  =0A=
-+        if (aspeed_otp_read_config(&s->otp, 0) & BIT(1)) {=0A=
-+            val |=3D SECURE_BOOT_EN;=0A=
+-    return s->regs[addr];=0A=
++    switch (addr) {=0A=
++    case R_STATUS: {=0A=
++        uint32_t val =3D s->regs[R_STATUS];=0A=
++=0A=
++        if (aspeed_otp_read_strap(&s->otp, OTP_STRAP_ABR_EN)) {=0A=
++            val |=3D ABR_EN;=0A=
 +        } else {=0A=
-+            val &=3D ~SECURE_BOOT_EN;=0A=
++            val &=3D ~ABR_EN;=0A=
 +        }=0A=
 +=0A=
-         return val;=0A=
-     }=0A=
-+    case R_QSR:=0A=
-+        return aspeed_otp_read_config(&s->otp, 0);=0A=
-     default:=0A=
-         return s->regs[addr];=0A=
-     }=0A=
-@@ -406,16 +416,11 @@ static void aspeed_sbc_reset_hold(Object *obj, ResetT=
-ype type)=0A=
-     memset(s->regs, 0, sizeof(s->regs));=0A=
- =0A=
-     /*=0A=
--     * ABR_EN is derived from OTP on every read, see aspeed_sbc_read().=0A=
--     * Set secure boot enabled with RSA4096_SHA256.=0A=
-+     * ABR_EN and SECURE_BOOT_EN are derived from OTP on every read, see=
-=0A=
-+     * aspeed_sbc_read(), since the SBC status register is just a=0A=
-+     * reflection of the OTP fuse state.=0A=
-      */=0A=
-     s->regs[R_STATUS] =3D OTP_IDLE | OTP_MEM_IDLE;=0A=
--=0A=
--    if (s->signing_settings) {=0A=
--        s->regs[R_STATUS] &=3D SECURE_BOOT_EN;=0A=
--    }=0A=
--=0A=
--    s->regs[R_QSR] =3D s->signing_settings;=0A=
++        return val;=0A=
++    }=0A=
++    default:=0A=
++        return s->regs[addr];=0A=
++    }=0A=
  }=0A=
  =0A=
- static void aspeed_sbc_instance_init(Object *obj)=0A=
-@@ -468,7 +473,6 @@ static const VMStateDescription vmstate_aspeed_sbc =3D =
+ static bool aspeed_otp_read(AspeedSBCState *s, uint32_t otp_addr,=0A=
+@@ -388,13 +405,12 @@ static void aspeed_sbc_reset_hold(Object *obj, ResetT=
+ype type)=0A=
+ =0A=
+     memset(s->regs, 0, sizeof(s->regs));=0A=
+ =0A=
+-    /* Set secure boot enabled with RSA4096_SHA256 and enable eMMC ABR */=
+=0A=
++    /*=0A=
++     * ABR_EN is derived from OTP on every read, see aspeed_sbc_read().=0A=
++     * Set secure boot enabled with RSA4096_SHA256.=0A=
++     */=0A=
+     s->regs[R_STATUS] =3D OTP_IDLE | OTP_MEM_IDLE;=0A=
+ =0A=
+-    if (s->emmc_abr) {=0A=
+-        s->regs[R_STATUS] &=3D ABR_EN;=0A=
+-    }=0A=
+-=0A=
+     if (s->signing_settings) {=0A=
+         s->regs[R_STATUS] &=3D SECURE_BOOT_EN;=0A=
+     }=0A=
+@@ -452,7 +468,6 @@ static const VMStateDescription vmstate_aspeed_sbc =3D =
 {=0A=
  };=0A=
  =0A=
  static const Property aspeed_sbc_properties[] =3D {=0A=
--    DEFINE_PROP_UINT32("signing-settings", AspeedSBCState, signing_setting=
+-    DEFINE_PROP_BOOL("emmc-abr", AspeedSBCState, emmc_abr, 0),=0A=
+     DEFINE_PROP_UINT32("signing-settings", AspeedSBCState, signing_setting=
 s, 0),=0A=
      DEFINE_PROP_LINK("sram", AspeedSBCState, sram,=0A=
                       TYPE_MEMORY_REGION, MemoryRegion *),=0A=
- };=0A=
+diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c=0A=
+index 81304bda3a..127da15642 100644=0A=
+--- a/hw/nvram/aspeed_otp.c=0A=
++++ b/hw/nvram/aspeed_otp.c=0A=
+@@ -106,6 +106,69 @@ static void aspeed_otp_write(void *opaque, hwaddr otp_=
+offset,=0A=
+     trace_aspeed_otp_prog(otp_offset, val, value);=0A=
+ }=0A=
+ =0A=
++/*=0A=
++ * Each OTP configuration setting contains 32 bits of data.=0A=
++ * Configuration words are grouped in banks of 8, with banks spaced=0A=
++ * 0x200 dwords apart and words within a bank spaced 2 dwords apart:=0A=
++ *=0A=
++ *   offset(n) =3D OTP_CFG0 + (n / 8) * 0x200 + (n % 8) * 2=0A=
++ *=0A=
++ * Returns 0 if the OTP read fails.=0A=
++ */=0A=
++uint32_t aspeed_otp_read_config(AspeedOTPState *s, unsigned int cfg_word)=
+=0A=
++{=0A=
++    uint32_t otp_addr =3D OTP_CFG0 + (cfg_word / 8) * 0x200 + (cfg_word % =
+8) * 2;=0A=
++    uint32_t value =3D 0;=0A=
++=0A=
++    if (address_space_read(&s->as, otp_addr << 2, MEMTXATTRS_UNSPECIFIED,=
+=0A=
++                            &value, sizeof(value)) !=3D MEMTX_OK) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: Failed to read OTP config word %u\n",=0A=
++                      __func__, cfg_word);=0A=
++        return 0;=0A=
++    }=0A=
++=0A=
++    return value;=0A=
++}=0A=
++=0A=
++/*=0A=
++ * OTP straps are a 64-bit value split across two 32-bit config words,=0A=
++ * each of which is repeated OTP_STRAP_COPY_NUM times for reliability.=0A=
++ * The two words interleave starting at OTP_STRAP_START_INDEX:=0A=
++ *=0A=
++ *   cfg_word:    16   17   18   19   20   21   22   23   24   25   26   2=
+7=0A=
++ *              +----+----+----+----+----+----+----+----+----+----+----+--=
+--+=0A=
++ *              | L0 | H0 | L1 | H1 | L2 | H2 | L3 | H3 | L4 | H4 | L5 | H=
+5 |=0A=
++ *              +----+----+----+----+----+----+----+----+----+----+----+--=
+--+=0A=
++ *=0A=
++ *   Lx =3D copy #x of bit 0-31, Hx =3D copy #x of bit 32-63=0A=
++ *   (x =3D 0 .. OTP_STRAP_COPY_NUM - 1)=0A=
++ *=0A=
++ * To resolve strap bit `n` (0 <=3D n < OTP_STRAP_BIT_NUM):=0A=
++ *   half    =3D n / 32   -- 0 selects the L* words, 1 selects the H* word=
+s=0A=
++ *   bit_pos =3D n % 32   -- bit position within the word=0A=
++ *   word(i) =3D OTP_STRAP_START_INDEX + half + i * (OTP_STRAP_BIT_NUM / 3=
+2)=0A=
++ *=0A=
++ * The effective value of bit `n` is the XOR of bit `bit_pos` across all=
+=0A=
++ * OTP_STRAP_COPY_NUM copies of word(i).=0A=
++ */=0A=
++bool aspeed_otp_read_strap(AspeedOTPState *s, unsigned int bit)=0A=
++{=0A=
++    uint32_t cfg_word =3D OTP_STRAP_START_INDEX + bit / 32;=0A=
++    uint32_t bit_pos =3D bit % 32;=0A=
++    bool enable =3D false;=0A=
++    int i;=0A=
++=0A=
++    assert(bit < OTP_STRAP_BIT_NUM);=0A=
++=0A=
++    for (i =3D 0; i < OTP_STRAP_COPY_NUM; i++) {=0A=
++        enable ^=3D (aspeed_otp_read_config(s, cfg_word) >> bit_pos) & 0x1=
+;=0A=
++        cfg_word +=3D OTP_STRAP_BIT_NUM / 32;=0A=
++    }=0A=
++=0A=
++    return enable;=0A=
++}=0A=
++=0A=
+ static bool aspeed_otp_init_storage(AspeedOTPState *s, Error **errp)=0A=
+ {=0A=
+     uint32_t *p;=0A=
 -- =0A=
 2.43.0=0A=
 
