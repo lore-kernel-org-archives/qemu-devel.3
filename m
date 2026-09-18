@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E45EAC982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 05:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4EE0C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 05:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7R5u-0000Va-LV; Fri, 18 Sep 2026 01:25:06 -0400
+	id 1x7R6A-0000c6-Cx; Fri, 18 Sep 2026 01:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x7R5m-0000Pr-TD; Fri, 18 Sep 2026 01:24:59 -0400
+ id 1x7R68-0000ZR-Bc; Fri, 18 Sep 2026 01:25:20 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x7R5h-0002EL-Qh; Fri, 18 Sep 2026 01:24:57 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1x7R65-0002RV-Cx; Fri, 18 Sep 2026 01:25:19 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68I2WNG22366279; Fri, 18 Sep 2026 05:24:47 GMT
+ 68I2VRoR042714; Fri, 18 Sep 2026 05:25:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hCBf42
- nrUYHh91jHHxb9bZBGSpLxNWDLvvia1MdM0pA=; b=QXzemwul/j0St0QAgavCs3
- PJfH/wza5p3LYBJkUBR3t4gGkBg885Tkuvqz2zPa7WCRJZ/hJPDkNbUCimWgCIFo
- CD0BRoeeAv7zcJRBpPRBBEbed6ium9yEhf7U2qBDM72C//FLy8yOU452hlZkAF4C
- ym/nhOwAV6OuWd5KalOpvYio9JYrfoOPJf6xzW7kHsG5sShKmciClc54Bjzxt9+t
- OU9L0crr0bDZQidzcaVTcRbOfIoRUQfGsK5N2hhavmIVnZKTYKNVem2bVfdOluC5
- ubIKemjGfLArpKybvG/d2JbSakGKrMePk1KO5fn9dMxSSAYl9K4lctJ4e7/2xB0Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jdOPEA
+ TbwkgKzKNidqrzLfqSf0l8YEhArCf80vSCbXM=; b=UAZOTOn1wWRxSTupO8trYt
+ VLQhYWkrOxHbcIWk+ixjhOD9OGeFAh4RdSTGApqW6JuOimum6AHOnsjKRfFYcHbp
+ j1k92KKrWF1GUhNLwqUIe3fvBYwc/r85d2/Sdk+F0JUPb8Cusm+17eCVLBEbXD7A
+ lmGrJlS7HCnca6H/nxQ3daU8y6k+7aGmgLtmRtchAFzfWfCZIHjBOqqkwTDyFB3Q
+ Be1i7NeStg0wNfU4We5XkLVHNlQoV52O1uFgMpIpAXhwmFT89WyoL4fr1Iw/q4a3
+ k5Kw7lFFQbfyOhX+8Hnvqmh2OEPFCfCU6LFFY+Qhi9W36f7x3/u0o3OS0T/MNugQ
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxdqpbs2-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmx846c5g-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 18 Sep 2026 05:24:46 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68I2ZBGu015834; Fri, 18 Sep 2026 05:24:45 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gra3yvyc7-1
+ Fri, 18 Sep 2026 05:25:11 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68I2Z44l4128813; Fri, 18 Sep 2026 05:25:10 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gra3fcy9g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Sep 2026 05:24:45 +0000 (GMT)
+ Fri, 18 Sep 2026 05:25:10 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68I5OfN548497142
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68I5P6vi47841784
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Sep 2026 05:24:41 GMT
+ Fri, 18 Sep 2026 05:25:06 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A9DC20043;
- Fri, 18 Sep 2026 05:24:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4EB662004B;
+ Fri, 18 Sep 2026 05:25:06 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C765620040;
- Fri, 18 Sep 2026 05:24:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 70E2920040;
+ Fri, 18 Sep 2026 05:25:03 +0000 (GMT)
 Received: from [9.123.2.177] (unknown [9.123.2.177])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 18 Sep 2026 05:24:38 +0000 (GMT)
-Message-ID: <a389ef6f-54bd-4f73-9043-05ce62ae9739@linux.ibm.com>
-Date: Fri, 18 Sep 2026 10:54:37 +0530
+ Fri, 18 Sep 2026 05:25:03 +0000 (GMT)
+Message-ID: <faa52670-30fb-480d-bad5-d2962aec9f0d@linux.ibm.com>
+Date: Fri, 18 Sep 2026 10:55:02 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 6/8] spapr_vscsi: add VOF disk nodes to the device tree
+Subject: Re: [RFC PATCH 7/8] ppc/spapr: strip OF path argument suffix in
+ path_offset
 To: uverma@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
  aik@ozlabs.ru
 Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
@@ -70,38 +71,39 @@ Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
  balaton@eik.bme.hu, philmd@oss.qualcomm.com, npiggin@gmail.com,
  marcandre.lureau@redhat.com, fam@euphon.net, avnish@linux.ibm.com
 References: <20260817102733.605346-1-uverma@linux.ibm.com>
- <20260817102733.605346-7-uverma@linux.ibm.com>
+ <20260817102733.605346-8-uverma@linux.ibm.com>
 Content-Language: en-US
 From: Narayana Murty N <nnmlinux@linux.ibm.com>
-In-Reply-To: <20260817102733.605346-7-uverma@linux.ibm.com>
+In-Reply-To: <20260817102733.605346-8-uverma@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDA2NCBTYWx0ZWRfX5UpdighxSrpx
- 3xgOtiO9HeQQvlr8xJQrULVjW9Q6BMjnIpfbEifx+naFmf8zATpASTpkSerAH3p7CBY2Og2dtiR
- nS0YJLqCL1K/JR3VW1+Os6dJlke0jFpWbWEbKJ5YnoMGq4FCVQn8r+vZ3GAwYXoKy9aXbSo5sPR
- Pn+y9uGjG6uMhB2Izf+X/lHeB/PL/ovOJ15Uih0eKilakQAGx0iGW/MYRkN5gIG7/xWTw1elTXx
- b8m6r+MRMhKfqxh7aDbNeJiHNSTtIl69Qq8ERM2LO9/W2GH+E8BEk8tw1ZDeX1uNicJfg/sikG5
- VZqUO2Fn72cFw+n/VRH91PX89l4KZZi9HQ+61pLFEpuFEMovx3cf/+Y27rq+MTM+9msvbGo8URP
- /uNFiSaDF+HYj9tutBL5RcPaHC60vP3N+jfU4PevS8dhAuap1KMe8kEy9p2vbnsKMvWeKNWvCXQ
- tGVmCyyzV9bGq8uH8tw==
-X-Proofpoint-GUID: 343OXfm8npCJ0zhpwh6ovykS_jRSEFrv
-X-Authority-Analysis: v=2.4 cv=DobDa2/+ c=1 sm=1 tr=0 ts=6aaccb1e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDA2NCBTYWx0ZWRfX9bDGM8Y/+K7X
+ X245Zgq98niIqsz5C7RUiMxViT+ljDJV/Adju2xadJyv57bTZn1GuIcgRacHuXBcbWCscbDDy1z
+ L4NkNy9re9Xwbut9y9XsQlVDL9eiQKzJE+EYiOxW136O80H/UTGu+QcPgyfqhA1g6nsIFo+D0et
+ YJyh6sJ4TIqqvr2HX8s2ucZmgyhE6YyWMunkD6+n+0UTxSejz+gIVMU8DsCg0k5IAAFEVzMYisz
+ BSWCjktFoWzwJgDctyJQyvv0d0bzImiIPcJOTLfYWwdiGUY/G22THiAXDnpjDRuDhn/FzbF28Pt
+ XA/9YcRX2y/IbFCliDb2iHf/UsCw8Pd0u+rW4TVp4wnAE0YxgTl5/hzDBsBg1zEBPYUfHRuKUM/
+ gm4dXJHEo2ti9EN9ZIFHn0mXGwkewPhCteKQrVDEGnRd1anqSb2wGf3Jwz0X2qsdcsQ6u/9f/Ni
+ kbl5YAJGHxs0G1wsCug==
+X-Proofpoint-ORIG-GUID: VydFpNziMdV1EnSHj-SG9FGyBHBwSdtt
+X-Proofpoint-GUID: tfNyIAGDyEz9-495z0E1Dfvlg-5MZElp
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDA2NCBTYWx0ZWRfXyuODt7R5M/dy
+ S3AZtobv4emwpTOFXFJqfnKXI7RlXMBf+xIc4Do+rxXxEHWnUV6AvwtfInwNk5Yt+T/Q52fo+WC
+ ylI5pthV+REXZ/XAfLYApp3SIhvnocM=
+X-Authority-Analysis: v=2.4 cv=cY9HPXDM c=1 sm=1 tr=0 ts=6aaccb37 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=egB_odwYocRQA0WEMpMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: LJgrIjxSDDwOR4SQWk47KMlnKipibVBy
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDA2NCBTYWx0ZWRfX43Jjd9uS75we
- YbS+ib1sOIIV5v1RlvsbjJUqnceLLSXiNVOI3psynd9Nn9T/LGlehD+UxCeb0YE3qUjj49V8GWU
- YhZ8Gltrojg/nQ/MAv1LnVYXrQjXBaQ=
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=gEfo2CItAAAA:8
+ a=VnNF1IyMAAAA:8 a=Yvm-aczM9p3Ow2khW44A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=sptkURWiP4Gy88Gu7hUp:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-18_01,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609180064
 Received-SPF: pass client-ip=148.163.156.1;
@@ -133,105 +135,61 @@ Hi Utkarsh,
 On 17/08/26 3:57 PM, uverma@linux.ibm.com wrote:
 > From: Utkarsh Verma <uverma@linux.ibm.com>
 > 
-> Populate the vSCSI device tree node with child disk nodes for VOF
-> guests.
+> OF paths can include a ":argument" suffix on the last component (e.g.
+> "disk@8000000000000000:0"), which is an OF path argument such as a
+> partition number.  This is not part of the FDT node name and causes
+> fdt_path_offset() to fail.
 > 
-> This lets Open Firmware clients such as GRUB open fully-qualified
-> paths like /vdevice/v-scsi@.../disk@<srp-lun> for attached vSCSI
-> disks.
-> 
-> Each child node is named from the encoded SRP LUN and includes a reg
-> property with the 64-bit LUN value, along with device_type set to
-> "block".
+> Strip any ":<suffix>" from the last path component only, leaving
+> intermediate components untouched.
 > 
 > AI-used-for: code
 > Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 > ---
->   hw/scsi/spapr_vscsi.c | 40 ++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 40 insertions(+)
+>   hw/ppc/vof.c | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
 > 
-> diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-> index b4c8f94d22..03f5f27f5f 100644
-> --- a/hw/scsi/spapr_vscsi.c
-> +++ b/hw/scsi/spapr_vscsi.c
-> @@ -1243,6 +1243,8 @@ void spapr_vscsi_create(SpaprVioBus *bus)
->   
->   static int spapr_vscsi_devnode(SpaprVioDevice *dev, void *fdt, int node_off)
+> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+> index b1c574aabf..d3b0df30e4 100644
+> --- a/hw/ppc/vof.c
+> +++ b/hw/ppc/vof.c
+> @@ -142,6 +142,8 @@ static int path_offset(const void *fdt, const char *path)
 >   {
-> +    VSCSIState *s = VIO_SPAPR_VSCSI_DEVICE(dev);
-> +    BusChild *kid;
->       int ret;
+>       g_autofree char *p = NULL;
+>       char *at;
+> +    char *last_slash;
+> +    char *colon;
 >   
->       ret = fdt_setprop_cell(fdt, node_off, "#address-cells", 2);
-> @@ -1255,6 +1257,44 @@ static int spapr_vscsi_devnode(SpaprVioDevice *dev, void *fdt, int node_off)
->           return ret;
->       }
->   
+>       /*
+>        * https://www.devicetree.org/open-firmware/bindings/ppc/release/ppc-2_1.html#HDR16
+> @@ -151,6 +153,20 @@ static int path_offset(const void *fdt, const char *path)
+>        * suppressing leading zeros".
+>        */
+>       p = g_strdup(path);
+> +
 > +    /*
-> +     * In VOF mode, add a child FDT node for each attached SCSI disk so that OF
-> +     * clients (e.g. GRUB via VOF) can open a fully-qualified path like
-> +     * /vdevice/v-scsi@.../disk@<srp-lun>.
+> +     * Strip any ":argument" suffix from the last path component (e.g.
+> +     * "disk@8000000000000000:0") — it is an OF path argument, not part of
+> +     * the FDT node name.
 > +     */
-> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
-> +    if (spapr->vof) {
-> +        QTAILQ_FOREACH(kid, &s->bus.qbus.children, sibling) {
-> +            SCSIDevice *sdev = SCSI_DEVICE(kid->child);
-> +            char disk_name[32];
-> +            uint64_t srp_lun;
-> +            uint32_t reg[2];
-> +            int disk_off;
-> +
-> +            srp_lun = ((uint64_t)(0x8000 | (sdev->id << 8) |
-> +                                   (sdev->channel << 5) | sdev->lun)) << 48;
-This matches the decoder introduced in patch 5 for the corresponding bit 
-ranges, but patch 8 constructs SRP LUNs using a different expression.
-
-Avoid hard coded values, define or use existing relative MACRO definitions.
-
-> +
-> +            snprintf(disk_name, sizeof(disk_name), "disk@%"PRIx64, srp_lun);
-> +
-> +            disk_off = fdt_add_subnode(fdt, node_off, disk_name);
-> +            if (disk_off < 0) {
-> +                return disk_off;
-> +            }
-> +
-> +            reg[0] = cpu_to_be32((uint32_t)(srp_lun >> 32));
-> +            reg[1] = cpu_to_be32((uint32_t)(srp_lun & 0xFFFFFFFF));
-> +            ret = fdt_setprop(fdt, disk_off, "reg", reg, sizeof(reg));
-> +            if (ret < 0) {
-> +                return ret;
-> +            }
-> +
-> +            ret = fdt_setprop_string(fdt, disk_off, "device_type", "block");
-> +            if (ret < 0) {
-> +                return ret;
-> +            }
+> +    last_slash = strrchr(p, '/');
+> +    if (last_slash) {
+> +        colon = strchr(last_slash, ':');
+> +        if (colon) {
+> +            *colon = '\0';
 > +        }
 > +    }
-> +
->       return 0;
->   }
-Could we please introduce a single helper for SRP-LUN encoding and 
-decoding and use it in patches 5, 6 and 8?
+Is path_offset() guaranteed to always receive an absolute path?
 
-Something along the lines of:
-
-spapr_vscsi_encode_srp_lun(channel, id, lun)
-spapr_vscsi_decode_srp_lun(srplun, ...)
-
-That would also make it straightforward to add tests for:
-
-id      = 0, 1, 31, 32, 63
-channel = 0 .. 7
-lun     = 0, 1, 31
-
-At the moment the common channel=0/id=0 case can hide inconsistencies 
-between the three implementations.
-
+If not, paths without /, such as disk@8000000000000000:0, won't have the 
+suffix stripped. Either document the absolute-path requirement or handle 
+the no-slash case as well.
 
 Thanks,
-Narayana Murty N.
->   
+Narayana Murty N
+> +
+>       for (at = strchr(p, '@'); at && *at; ) {
+>               if (*at == '/') {
+>                   at = strchr(at, '@');
 
 
