@@ -4,60 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C5BC982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 16:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B4BC982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7bdm-0004TB-V2; Fri, 18 Sep 2026 12:40:48 -0400
+	id 1x7c44-0001pf-3n; Fri, 18 Sep 2026 13:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7bbz-0003Fy-Nn; Fri, 18 Sep 2026 12:39:05 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x7c42-0001pU-SB
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 13:07:54 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7bbo-0002hB-ON; Fri, 18 Sep 2026 12:38:49 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 967E4602CC;
- Fri, 18 Sep 2026 16:38:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572331F000FF;
- Fri, 18 Sep 2026 16:38:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789749521;
- bh=t4g5agFiRNfPbZXPOnNO6N7ceP6Sa/ds2pu3mKmfFxY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lpDIP3PVQ2HbnQIRP9EyZghl9AOFdFw8z0YGZ7T62PszNmRK2Vtymi1YV2NXVvjcJ
- uj4dzDg7J5mlNpy2PNFx1bhcnpuznF/wZj7/UJ69NAip1F5788P2+7iuEUXBi9X2vJ
- goA99l7qT9nC9rHg80lIIzCQN/CDhaGe+DuWwK2f7LkOt7AOVsnTWj8DwJ9i/fjr0T
- IIC2huh+oA6/U66O1KCdgqQXCTmjLHpYGpHjg8bmCpW6+2U0THuZJloM0kDhb6w49i
- 3ergw/l4T14jIagDHOhFEjCEsj7jOF51NnFA7FdrHteHVwVQG0x6xFqVUY8vKzDpfs
- h5NAMrUMQTjIA==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Helge Deller <deller@gmx.de>, "Denis V. Lunev" <den@openvz.org>,
- Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-Subject: [PULL 3/7] hw/ide/pc87560-ide: Add IDE emulation of NS 87560 SuperIO
- chip
-Date: Fri, 18 Sep 2026 18:38:24 +0200
-Message-ID: <20260918163829.2917-4-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260918163829.2917-1-deller@kernel.org>
-References: <20260918163829.2917-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x7c3z-0006H1-Pc
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 13:07:54 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68IGoFp2508888
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 17:07:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ TzkGwgOGfQ4qWlUdAXViubhnnGYtcCWWHFCp2XE4Xtk=; b=FBgFdMJSvo6Bar0f
+ MdFbpRYm12Iaf1QLpkbrS+lEh5b24dqE/O+XTFdDtq3+uNdSeFvpJCxD/Y5//4oN
+ jRtgrXI0bx9t9hLHHKZsR3iRLHwPVt5+UqhRSw0kNca1ucqZKJdJqLDeLF2UCImd
+ gjqeu0njlQMgrqAua/wV/DI1k84F2+DCW1noXN/dMDy4PKu6NTbEhBA1ABNNQYp2
+ gY82gigYCUp2HgEexKMFGOyiY5hA0XhYvxQP4knvkWXJXscwqc64rXsgWr1rE/lr
+ f6ShgpB1eJ/i5tU60nnVz3WCg/RoTloRssz5WG4w6OyfZFsAbtEeAvSmzRBeWBje
+ ClpypA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gs84a0dtw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 17:07:47 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-39b6416441eso1656238a91.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 10:07:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789751267; x=1790356067; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TzkGwgOGfQ4qWlUdAXViubhnnGYtcCWWHFCp2XE4Xtk=;
+ b=cefESusoXvT1rUHwdGKOFKKisyE5YObO3WtX6TJV300Ru9hOJDH9s/QhQChxgFD85v
+ 2YH0rj6DcXFZ1Mz4G64GKABunXnf/3JWiHCCd/7E91m63+uuONKYpax2ScEAKrvJTY47
+ gXoxLlBj+kqeFHrnPuaF9nGjBwalXBdVADIC3zGKBFsgVcZRbkoOIO1pjCeaTPrhE8yy
+ 2b6ovJLIMDDtxuy7RU0h3BTu9uIuooftB/NWoNqWjlMpdsCVg+r8QMOaJVD2OpgfJA+x
+ bDsFI5a4kURbjk3qzVbWY8/phSwVPwaUHA4ZPOY/+OqQYFTVchrVEnw207Ptv/OW+xUp
+ L6hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789751267; x=1790356067;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TzkGwgOGfQ4qWlUdAXViubhnnGYtcCWWHFCp2XE4Xtk=;
+ b=z5eWJSA2HDDHLEnT6TvOYCIScqSh69JzrFQ9B9XwN9nrUB6pN6p32rCLONzxySuN52
+ LWIOIlogcwn6tP3o+Yso13MF+L0BAbbQwFNuWjGCqggQRInibiA1LFeQRC4wsGAj9FRI
+ arHF3eLccE1bKw+BLcwiSS1asaKsdTbgqO1bvfBzVigMu/Cadv2iLnByVra76m4tpwUL
+ 7QDDORA2TOyiJjl81t9ydA9+PMkD2sOfGgy41D9O3PxC4XIqi7CJy1u54xenYBAFYT5Z
+ QZ//afCK8WHwf9Dq4JIjxTgU7ySiy8RJ0kbj+GJLAL/Fo+0+X8YpRJDY9i1ZilKHN4/l
+ Hcxw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwU/vwXgTfScVcBm+7BVAox7ecC3vVF6hMw0S1YJ3SeYTW+eoRG//IVtNcsrAq2RvpKOI01ESZVISao@nongnu.org
+X-Gm-Message-State: AFuF++nnM7uqwvkD6J29Zc8Y33AapRzIhJwqLizzrcgtuKEdAFQQ4Dtx
+ i58iCRTpMDsX1wgRJ0LKt0LMgIYooQUaMeqOX0L1awNB7FhJ9el92xePQE/GExF0Fz7yLBNrO1w
+ wEiejmeHw0OvDGLsom/NTSJqih4vNO5DhnfFBv7aJaFfvpDJV9Qt1XlzVSQ==
+X-Gm-Gg: AYBFou2Z/+Q+ehUWs//cDfN0EPRfLs3C/EzBamKFMzZO2wByUhJLxqq1mv8Cyzi9HNG
+ CHe7ZXqfNXFNEFlELUdbZqwpGNWtU7PWT/Hyh88pyv9LNjUO2hTNhmF7dN5hn2cALWV62k+58HS
+ 0hhSKN8xigYbgYOwxtCMVaGLHSHCHSJH0ON/v9a1l3siz3xgiq/r7OTFKkSc/G/DQ09AJJqFaXJ
+ Zb5h4eYEZAjROhiJjIEo7fHRHMhLTZ0mOwCuWVOp48pRJnMMestafa9QtccHBYzvgCN82oP6K/z
+ bfq6UGv+rCOk1fKlouF0Q+2+2p9nAB0fQv9neJVuKi7fHdKYSMdojO3fBHTv/E+0xwzOWRAREge
+ +Bv6XJcdWAaZ+0OsGKUWqYfYcRliaJsPZ4acAJkp0T+jHHF8slqVxAMDyd7C5gQrtBqEq
+X-Received: by 2002:a17:90b:58ef:b0:39e:27e:2f09 with SMTP id
+ 98e67ed59e1d1-39e54d126b5mr7711635a91.8.1789751266456; 
+ Fri, 18 Sep 2026 10:07:46 -0700 (PDT)
+X-Received: by 2002:a17:90b:58ef:b0:39e:27e:2f09 with SMTP id
+ 98e67ed59e1d1-39e54d126b5mr7711567a91.8.1789751265880; 
+ Fri, 18 Sep 2026 10:07:45 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c33186490sm112964eec.18.2026.09.18.10.07.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Sep 2026 10:07:44 -0700 (PDT)
+Message-ID: <7393baca-7746-4211-94cd-e0400cb864b2@oss.qualcomm.com>
+Date: Fri, 18 Sep 2026 10:07:42 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic from
+ docker.py
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260917165602.3405537-1-alex.bennee@linaro.org>
+ <20260917165602.3405537-12-alex.bennee@linaro.org>
+ <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
+ <87fqz77dln.fsf@draig.linaro.org>
+ <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
+ <96e3f93f-a12f-4d18-badd-2ea60efc715b@linaro.org>
+ <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com>
+ <87a4pf6moc.fsf@draig.linaro.org>
+ <d1cf4f82-5604-47b1-887c-99d69cf1b754@oss.qualcomm.com>
+ <87y0cy6ace.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87y0cy6ace.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: Cr_fUt5Y3S3i3k34swreyKJv6abSCbZ8
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDI0NSBTYWx0ZWRfX0d4Ovtv0MWK/
+ oGxbJgc7GTeM04ekMwtwQPlFM2hMvU2Kqiob0k3k74XJGmJoCt7VxqY/ml+Z1pcARpSfmmwnoHf
+ GfffnhrScyk/Y6diujLsLss396EBPXg=
+X-Proofpoint-ORIG-GUID: Cr_fUt5Y3S3i3k34swreyKJv6abSCbZ8
+X-Authority-Analysis: v=2.4 cv=MLD1C8Zl c=1 sm=1 tr=0 ts=6aad6fe3 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=EPOArxBXykR0hS9015wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDI0NSBTYWx0ZWRfX6ZdeLMUTeTFZ
+ thMPg+1ufOD90QMobRJq+E/JKvJ19Lpa31sbrPCKXaoF8w00F8meHUSIdfJ0PXaRNY9Kan0imd7
+ x1a0LWldQ3aaOHaAr32BOi5K4BWlqTjBxhtkG918AGVWi62WXEkBf74n3HnaQ95UZHh2+6C8RGR
+ grrMhCScZjulxOIeCv1H9svisHrcSr2KUO3ou4bGAt/PcCDLUe4qnwy/PK++f2Zu3bF8UbDtfkH
+ 4S1ZUCVYGDxFy1mtpogeQLBnD2gM1B96lklcklDGupi0dLUVTYD9uO+/yYnvqc+owfUmZMpPH2s
+ ssfbddp4kcqGwLwYvjs6JdxNmaIcss33Ar5wteZm332SfiW3oYPqp11umcIeT6fgm3pqO2f/zm/
+ oF8CD2HelFmB2aERrKzJDkHQ4vo5NelPBzLOwdagmI7dSGHs8euaoatRxe6wv5Zf5TM4sJpN588
+ lCqb++VE6YpTyRU8C5A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-18_05,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609180245
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,411 +165,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
+On 9/18/2026 4:57 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> On 9/18/2026 12:30 AM, Alex Bennée wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> On 9/17/2026 3:18 PM, Richard Henderson wrote:
+>>>>> On 9/17/26 12:00, Pierrick Bouvier wrote:
+>>>>>> On 9/17/2026 2:49 PM, Alex Bennée wrote:
+>>>>>>> how much time? it flies past when I run a rebuild.
+>>>>>>>
+>>>>>>
+>>>>>> For a no-op tcg-tests build (i.e. with tests already built):
+>>>>>>
+>>>>>> - With current patch:
+>>>>>> time ninja -C tcg-tests
+>>>>>> ...
+>>>>>> verbose pull and build
+>>>>>> 320 lines of output
+>>>>>> ...
+>>>>>> real    0m15.817s
+>>>>>> user    0m1.342s
+>>>>>> sys     0m0.840s
+>>>
+>>>   ✗  time ninja
+>>>   [1/114] Generating qemu-version.h with a custom command (wrapped by meson to capture output)
+>>>
+>>>   ________________________________________________________
+>>>   Executed in  515.16 millis    fish           external
+>>>      usr time  433.82 millis  968.00 micros  432.85 millis
+>>>      sys time   86.05 millis  253.00 micros   85.80 millis
+>>>
+>>> Not sure whats going on there then. The whole tcg suite completes in
+>>> under a minute (and would be shorter if i386-linux-user-test-i386-fprem
+>>> and riscv64-softmmu-plugin-discons-with-interruptedmemory where in the
+>>> thorough test suite).
+>>>
+>>
+>> You need to run "ninja tcg-tests" explicitly, as tests (and images) are
+>> not built by default.
+> 
+> What is that target trying to do? Because when I run:
+>
 
-Add emulation of the IDE ports of the NS SuperIO chip.
+tcg-tests will build only tests (and their dependencies, container images).
 
-Signed-off-by: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- MAINTAINERS          |   1 +
- hw/ide/pc87560-ide.c | 358 +++++++++++++++++++++++++++++++++++++++++++
- hw/ide/trace-events  |   4 +
- 3 files changed, 363 insertions(+)
- create mode 100644 hw/ide/pc87560-ide.c
+tcg/tests/meson.build
+```
+if exe_name not in built_tests
+    exe = custom_target(exe_name,
+                        input: file,
+                        command: [cc, '@INPUT@',
+                                  '-o', '@OUTPUT@', '-static',
+                                  '-MMD', '-MF', '@DEPFILE@',
+                                  '-Wall', '-Werror',
+                                  '-O0', '-g', '-fno-strict-aliasing',
+                                  cflags],
+                        depfile: exe_name + '.d',
+                        output: exe_name + '.test',
+                        depends: exe_depends,
+                        depend_files: build_test_depend_files,
+                        build_by_default: false)
+    exe_targets += exe
+endif
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e3b1e80ad6..2da2f00ff3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1356,6 +1356,7 @@ F: pc-bios/hppa-firmware.img
- F: roms/seabios-hppa/
- F: tests/functional/hppa/
- F: hw/isa/pc87560.c
-+F: hw/ide/pc87560-ide.c
- F: include/hw/isa/pc87560.h
- 
- Hexagon Machines
-diff --git a/hw/ide/pc87560-ide.c b/hw/ide/pc87560-ide.c
-new file mode 100644
-index 0000000000..879b5f1234
---- /dev/null
-+++ b/hw/ide/pc87560-ide.c
-@@ -0,0 +1,358 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * NS PC87560 SuperI/O — IDE emulation
-+ *
-+ * Copyright (c) 2026 Abizer abizerlokhandwalastd10@gmail.com
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/pci/pci.h"
-+#include "migration/vmstate.h"
-+#include "qemu/module.h"
-+#include "hw/isa/isa.h"
-+#include "hw/core/irq.h"
-+#include "hw/ide/pci.h"
-+#include "ide-internal.h"
-+#include "trace.h"
-+
-+#define PC87415_IDE_CHANNELS        2
-+
-+/* PCI configuration space */
-+#define PC87415_CTRL                0x40
-+#define PC87415_WRITE_BUFFER_STATUS 0x43
-+
-+/* CTRL register, byte 1 (PCI config offset 0x41) */
-+#define PC87415_CTRL_CH1_INT_MASK  BIT(0)
-+#define PC87415_CTRL_CH2_INT_MASK  BIT(1)
-+
-+/* PCI programming interface */
-+#define PC87415_PIF_CH1_PROGRAMMABLE  BIT(1)
-+#define PC87415_PIF_CH2_PROGRAMMABLE  BIT(3)
-+#define PC87415_PIF_MASTER_IDE        BIT(7)
-+
-+#define PC87415_PIF_DEFAULT \
-+    (PC87415_PIF_CH1_PROGRAMMABLE | \
-+     PC87415_PIF_CH2_PROGRAMMABLE | \
-+     PC87415_PIF_MASTER_IDE)
-+
-+/* Per-device timing registers */
-+#define PC87415_CH1_DEV1_READ_TIMING   0x44
-+#define PC87415_CH1_DEV1_WRITE_TIMING  0x45
-+#define PC87415_CH1_DEV2_READ_TIMING   0x48
-+#define PC87415_CH1_DEV2_WRITE_TIMING  0x49
-+#define PC87415_CH2_DEV1_READ_TIMING   0x4c
-+#define PC87415_CH2_DEV1_WRITE_TIMING  0x4d
-+#define PC87415_CH2_DEV2_READ_TIMING   0x50
-+#define PC87415_CH2_DEV2_WRITE_TIMING  0x51
-+
-+#define PC87415_CMD_TIMING             0x54
-+#define PC87415_SECTOR_SIZE            0x55
-+
-+/* PCI BARs */
-+#define PC87415_BAR_CH1_DATA           0
-+#define PC87415_BAR_CH1_CONTROL        1
-+#define PC87415_BAR_CH2_DATA           2
-+#define PC87415_BAR_CH2_CONTROL        3
-+#define PC87415_BAR_BMDMA              4
-+
-+/* Bus-master IDE registers */
-+#define PC87415_BMDMA_CMD              0x00
-+#define PC87415_BMDMA_STATUS           0x02
-+#define PC87415_BMDMA_PRD              0x04
-+#define PC87415_BMDMA_CHANNEL_SIZE     0x08
-+#define PC87415_BMDMA_BAR_SIZE         0x10
-+
-+/*
-+ * Bus-master command register:
-+ * bit 0 = start/stop
-+ * bit 3 = read/write
-+ */
-+#define PC87415_BMDMA_CMD_START        BIT(0)
-+#define PC87415_BMDMA_CMD_WRITE        BIT(3)
-+#define PC87415_BMDMA_CMD_MASK \
-+    (PC87415_BMDMA_CMD_START | PC87415_BMDMA_CMD_WRITE)
-+
-+/*
-+ * Bus-master status register:
-+ * bit 1 = error
-+ * bit 2 = interrupt
-+ */
-+#define PC87415_BMDMA_STATUS_ERROR     BIT(1)
-+#define PC87415_BMDMA_STATUS_INT       BIT(2)
-+
-+static qemu_irq pc87560_ide_irq_out;
-+static void pc87560_update_irq(PCIDevice *pd);
-+
-+static uint64_t bmdma_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    BMDMAState *bm = opaque;
-+    uint32_t val;
-+
-+    if (size != 1) {
-+        return ((uint64_t)1 << (size * 8)) - 1;
-+    }
-+
-+    switch (addr & 3) {
-+    case 0:
-+        val = bm->cmd;
-+        break;
-+    case 2:
-+        val = bm->status;
-+        break;
-+    default:
-+        val = 0xff;
-+        break;
-+    }
-+    return val;
-+}
-+
-+static void bmdma_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
-+{
-+    BMDMAState *bm = opaque;
-+    PCIDevice *pd = PCI_DEVICE(bm->bus->qbus.parent);
-+
-+    if (size != 1) {
-+        return;
-+    }
-+
-+    switch (addr & 3) {
-+    case 0: {
-+        /*
-+         * NS87415 erratum: writing the command register also clears
-+         * the error and interrupt status bits.
-+         */
-+        uint8_t status_clear = val & (PC87415_BMDMA_STATUS_INT |
-+                                      PC87415_BMDMA_STATUS_ERROR);
-+        uint8_t real_cmd = val & PC87415_BMDMA_CMD_MASK;
-+        /* only START(0) and WRITE(3) are real cmd bits */
-+
-+        bm->status &= ~status_clear;
-+
-+        if (real_cmd != (bm->cmd & 0x09)) {
-+            bmdma_cmd_writeb(bm, real_cmd);
-+        }
-+
-+        pc87560_update_irq(pd);
-+        break;
-+    }
-+    case 2:
-+        bmdma_status_writeb(bm, val);
-+        pc87560_update_irq(pd);
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
-+static void pc87560_update_irq(PCIDevice *pd)
-+{
-+    PCIIDEState *d = PCI_IDE(pd);
-+    uint8_t ctrl1 = pd->config[PC87415_CTRL + 1];
-+    int level = 0;
-+
-+    if (!(ctrl1 & PC87415_CTRL_CH1_INT_MASK)) {
-+        level |= !!(d->bmdma[0].status & BM_STATUS_INT);
-+    }
-+
-+    if (!(ctrl1 & PC87415_CTRL_CH2_INT_MASK)) {
-+        level |= !!(d->bmdma[1].status & BM_STATUS_INT);
-+    }
-+
-+    qemu_set_irq(pc87560_ide_irq_out, level);
-+}
-+
-+static const MemoryRegionOps pc87560_bmdma_ops = {
-+    .read = bmdma_read,
-+    .write = bmdma_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static void bmdma_setup_bar(PCIIDEState *d)
-+{
-+    unsigned int i;
-+
-+    memory_region_init(&d->bmdma_bar, OBJECT(d), "pc87415-bmdma",
-+                       PC87415_BMDMA_BAR_SIZE);
-+
-+    for (i = 0; i < PC87415_IDE_CHANNELS; i++) {
-+        BMDMAState *bm = &d->bmdma[i];
-+
-+        memory_region_init_io(&bm->extra_io, OBJECT(d),
-+                              &pc87560_bmdma_ops, bm,
-+                              "pc87415-bmdma-cmd-status",
-+                              4);
-+        memory_region_add_subregion(&d->bmdma_bar,
-+                                    i * PC87415_BMDMA_CHANNEL_SIZE,
-+                                    &bm->extra_io);
-+
-+        memory_region_init_io(&bm->addr_ioport, OBJECT(d),
-+                              &bmdma_addr_ioport_ops, bm,
-+                              "pc87415-bmdma-prd",
-+                              4);
-+        memory_region_add_subregion(&d->bmdma_bar,
-+                                    i * PC87415_BMDMA_CHANNEL_SIZE +
-+                                    PC87415_BMDMA_PRD,
-+                                    &bm->addr_ioport);
-+    }
-+}
-+
-+
-+static void pc87560_set_irq(void *opaque, int channel, int level)
-+{
-+    PCIIDEState *d = opaque;
-+    PCIDevice *pd = PCI_DEVICE(d);
-+
-+    if (level) {
-+        d->bmdma[channel].status |= BM_STATUS_INT;
-+    }
-+    pc87560_update_irq(pd);
-+}
-+
-+
-+static void pc87560_reset(Object *dev, ResetType type)
-+{
-+    PCIIDEState *d = PCI_IDE(dev);
-+    unsigned int i;
-+
-+    for (i = 0; i < 2; i++) {
-+        ide_bus_reset(&d->bus[i], IDE_RESET_HARDWARE);
-+    }
-+}
-+
-+
-+static void pc87560_pci_config_write(PCIDevice *d, uint32_t addr, uint32_t val,
-+                                    int len)
-+{
-+    pci_default_write_config(d, addr, val, len);
-+
-+    if (ranges_overlap(addr, len, PC87415_CTRL + 1, 1)) {
-+        pc87560_update_irq(d);
-+    }
-+}
-+
-+static void pci_pc87560_ide_realize(PCIDevice *dev, Error **errp)
-+{
-+
-+    PCIIDEState *d = PCI_IDE(dev);
-+    DeviceState *ds = DEVICE(dev);
-+    uint8_t *pci_conf = dev->config;
-+    int i;
-+
-+    dev->cap_present |= QEMU_PCI_CAP_MULTIFUNCTION;
-+    pci_conf[PCI_HEADER_TYPE] |= PCI_HEADER_TYPE_MULTI_FUNCTION;
-+
-+    pci_conf[PCI_CLASS_PROG] = 0x8a;
-+    dev->wmask[PCI_CLASS_PROG] = 0xff;
-+
-+    pci_conf[PCI_INTERRUPT_PIN] = 0x01;
-+    qdev_init_gpio_out(ds, &pc87560_ide_irq_out, 1);
-+
-+    memset(&dev->wmask[PC87415_CTRL], 0xff, 3);
-+
-+    dev->wmask[PC87415_CH1_DEV1_READ_TIMING] = 0xff;
-+    dev->wmask[PC87415_CH1_DEV1_WRITE_TIMING] = 0xff;
-+
-+    dev->wmask[PC87415_CH1_DEV2_READ_TIMING] = 0xff;
-+    dev->wmask[PC87415_CH1_DEV2_WRITE_TIMING] = 0xff;
-+
-+    dev->wmask[PC87415_CH2_DEV1_READ_TIMING] = 0xff;
-+    dev->wmask[PC87415_CH2_DEV1_WRITE_TIMING] = 0xff;
-+
-+    dev->wmask[PC87415_CH2_DEV2_READ_TIMING] = 0xff;
-+    dev->wmask[PC87415_CH2_DEV2_WRITE_TIMING] = 0xff;
-+
-+    dev->wmask[PC87415_CMD_TIMING] = 0xff;
-+    dev->wmask[PC87415_SECTOR_SIZE] = 0xff;
-+
-+    pci_conf[PC87415_CTRL + 0] = 0x00;
-+    pci_conf[PC87415_CTRL + 1] = 0x00;
-+    pci_conf[PC87415_CTRL + 2] = 0x00;
-+
-+    pci_conf[PC87415_CH1_DEV1_READ_TIMING]  = 0x85;
-+    pci_conf[PC87415_CH1_DEV1_WRITE_TIMING] = 0x85;
-+    pci_conf[PC87415_CH1_DEV2_READ_TIMING]  = 0x85;
-+    pci_conf[PC87415_CH1_DEV2_WRITE_TIMING] = 0x85;
-+    pci_conf[PC87415_CH2_DEV1_READ_TIMING]  = 0x85;
-+    pci_conf[PC87415_CH2_DEV1_WRITE_TIMING] = 0x85;
-+    pci_conf[PC87415_CH2_DEV2_READ_TIMING]  = 0x85;
-+    pci_conf[PC87415_CH2_DEV2_WRITE_TIMING] = 0x85;
-+
-+    pci_conf[PC87415_CMD_TIMING] = 0xB7;
-+    pci_conf[PC87415_SECTOR_SIZE] = 0xEE;
-+
-+    memory_region_init_io(&d->data_bar[0], OBJECT(d), &pci_ide_data_le_ops,
-+                          &d->bus[0], "pc87560-data0", 8);
-+    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &d->data_bar[0]);
-+
-+    memory_region_init_io(&d->cmd_bar[0], OBJECT(d), &pci_ide_cmd_le_ops,
-+                          &d->bus[0], "pc87560-cmd0", 4);
-+    pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &d->cmd_bar[0]);
-+
-+    memory_region_init_io(&d->data_bar[1], OBJECT(d), &pci_ide_data_le_ops,
-+                          &d->bus[1], "pc87560-data1", 8);
-+    pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_IO, &d->data_bar[1]);
-+
-+    memory_region_init_io(&d->cmd_bar[1], OBJECT(d), &pci_ide_cmd_le_ops,
-+                          &d->bus[1], "pc87560-cmd1", 4);
-+    pci_register_bar(dev, 3, PCI_BASE_ADDRESS_SPACE_IO, &d->cmd_bar[1]);
-+
-+    bmdma_setup_bar(d);
-+    pci_register_bar(dev, 4, PCI_BASE_ADDRESS_SPACE_IO, &d->bmdma_bar);
-+
-+    qdev_init_gpio_in(ds, pc87560_set_irq, 2);
-+    for (i = 0; i < 2; i++) {
-+        ide_bus_init(&d->bus[i], sizeof(d->bus[i]), ds, i, 2);
-+        ide_bus_init_output_irq(&d->bus[i], qdev_get_gpio_in(ds, i));
-+
-+        bmdma_init(&d->bus[i], &d->bmdma[i], d);
-+        d->bmdma[i].bus = &d->bus[i];
-+        ide_bus_register_restart_cb(&d->bus[i]);
-+    }
-+}
-+
-+static void pci_pc87560_ide_exitfn(PCIDevice *dev)
-+{
-+    PCIIDEState *d = PCI_IDE(dev);
-+    unsigned int i;
-+
-+    for (i = 0; i < 2; ++i) {
-+        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
-+        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
-+    }
-+}
-+
-+
-+static void pc87560_ide_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->phases.hold = pc87560_reset;
-+    dc->vmsd = &vmstate_ide_pci;
-+    dc->user_creatable = false;
-+    k->realize = pci_pc87560_ide_realize;
-+    k->exit = pci_pc87560_ide_exitfn;
-+    k->vendor_id = PCI_VENDOR_ID_NS;
-+    k->device_id = PCI_DEVICE_ID_NS_87415;
-+    k->revision = 0x02;
-+    k->subsystem_vendor_id = PCI_VENDOR_ID_HP;
-+    k->subsystem_id = 0x10A7;
-+    k->class_id = PCI_CLASS_STORAGE_IDE;
-+    k->config_write = pc87560_pci_config_write;
-+    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-+}
-+
-+
-+static const TypeInfo pc87560_ide_info = {
-+    .name          = "pc87560-ide",
-+    .parent        = TYPE_PCI_IDE,
-+    .class_init    = pc87560_ide_class_init,
-+};
-+
-+static void pc87560_ide_register_types(void)
-+{
-+    type_register_static(&pc87560_ide_info);
-+}
-+
-+type_init(pc87560_ide_register_types)
-diff --git a/hw/ide/trace-events b/hw/ide/trace-events
-index 3ab5e7bd1d..c44eec6c58 100644
---- a/hw/ide/trace-events
-+++ b/hw/ide/trace-events
-@@ -27,6 +27,10 @@ ide_dma_cb(void *s, int64_t sector_num, int n, const char *dma) "IDEState %p; se
- bmdma_read_cmd646(uint64_t addr, uint32_t val) "bmdma: readb 0x%"PRIx64" : 0x%02x"
- bmdma_write_cmd646(uint64_t addr, uint64_t val) "bmdma: writeb 0x%"PRIx64" : 0x%02"PRIx64
- 
-+# hw/ide/pc87560.c
-+bmdma_read_pc87560(uint64_t addr, uint32_t val) "bmdma: readb 0x%"PRIx64" : 0x%02x"
-+bmdma_write_pc87560(uint64_t addr, uint64_t val) "bmdma: writeb 0x%"PRIx64" : 0x%02"PRIx64
-+
- # pci.c
- bmdma_reset(void) ""
- bmdma_cmd_writeb(uint32_t val) "val: 0x%08x"
--- 
-2.54.0
+...
+
+if exe_targets.length() > 0
+  # finally create a top level target to rebuild all tests
+  alias_target('tcg-tests', exe_targets)
+endif
+```
+
+build_test_depend_files contains container images, and eventually some
+generated files given in "depends" field of test declaration. It's used
+for x86 tests who need to generate headers.
+
+Test compilation generates depfile (.d), which meson reintegrates
+automatically, so test depends on all their headers correctly.
+
+```
+build_test_depends = []
+build_test_depends_files = []
+...
+      build_test_depends += image_targets[cc_dockerfile]
+      build_test_depend_files += dockerfile
+...
+exe_depends = build_test_depends
+if 'depends' in setup
+    exe_depends += setup['depends']
+endif
+
+exe..
+   depends: exe_depends,
+   depend_files: build_test_depend_files,
+# meson has distinct fields for target dependencies and file
+# dependencies, which is a bit confusing IMHO.
+```
+
+>   ./run meson test --suite tcg
+>
+
+This target will build test dependencies, and run them also.
+
+```
+test(test_name, env, args: cmd,
+     depends: test_depends,
+     timeout: 120,
+     suite: ['tcg', 'tcg-' + target])
+```
+
+test_depends contains the test binary itself (as seen above), but also
+qemu binaries, plugins.
+
+```
+test_depends = []
+...
+if 'plugin_test' in setup
+   test_depends += plugin
+endif
+...
+test_depends += qemu
+```
+
+Also, meson adds an implicit dependency on every target included in cmd
+(args: cmd) array, which includes transitively test binaries and all
+their deps.
+
+> it still ends up rebuilding the test binaries. 
+>
+
+So from all code above, it should now be clear that:
+   `meson --suite tcg`
+will automatically build all that is needed (and no more - like no other
+test binaries). Also, if you modify an existing dockerfile, it will
+automatically rebuilds all tests associated for you.
+
+Same goes for any subsuite: tcg-aarch64-softmmu, which only build
+qemu-system-aarch64, needed container images, and only test binaries.
+
+Beyond a better maintainability, one of the goal of original series was
+to have *complete* dependencies, so we never need to add fake "all"
+dependencies on Makefile level, which is why I insisted to remove the
+patch that was doing it for images in this series.
+
+Hope it's more clear now!
+
+>>
+>>>>>
+>>>>> The variance from the middle of the pacific ocean, and associated
+>>>>> network latency, is between 20 and 27 seconds.
+>>>>>
+>>>>> Amusingly, with the network actively disconnected (airplane mode), the
+>>>>> no-op build completes in 1 to 2 seconds.
+>>>>>
+>>>>
+>>>> Funny, on my side if hangs a long time (timeout 30s), then retry 3 times
+>>>> per image. I tried it on WSL on my windows laptop.
+>>>>
+>>>>>
+>>>>> r~
+>>>
+> 
 
 
