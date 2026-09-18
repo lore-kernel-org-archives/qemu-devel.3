@@ -4,110 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A3CC982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A235EC982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7WxO-0000pq-Us; Fri, 18 Sep 2026 07:40:42 -0400
+	id 1x7XDf-0006CI-Mz; Fri, 18 Sep 2026 07:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WxK-0000em-Mu
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:40:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WxI-0001uK-HP
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:40:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789731635;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BuuoV/RtDVXCu0xt5LIWVsLTHx3UsyTgDjBv1wuZ3To=;
- b=Qu0nZiT4tGnLjs4rbdfflgOMIw0xlqRGCWdZ+IO1Spb4PeLt0/xGXPp62glLuRckUmoLEU
- EC0YEsPIskac51/xKKsVEslEQ3lbBMhUgIvmUvM7EmHV8Yl6eaLV9p8Qb+6T/P3maj238Q
- Wtn1vlq3+Rtf5ngNY+pR8+SV76bTacs=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-Md_aPixpPJ2FeRPgsylj4Q-1; Fri, 18 Sep 2026 07:40:34 -0400
-X-MC-Unique: Md_aPixpPJ2FeRPgsylj4Q-1
-X-Mimecast-MFC-AGG-ID: Md_aPixpPJ2FeRPgsylj4Q_1789731634
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-90c8da50f8dso17586696d6.2
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:40:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7XDb-0006C3-LW
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:57:27 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7XDZ-0003tz-TS
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:57:27 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49ccead2aecso3454835e9.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789731634; x=1790336434; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=BuuoV/RtDVXCu0xt5LIWVsLTHx3UsyTgDjBv1wuZ3To=;
- b=sRD1VHuM9LK/F4FrXwPAcDuZk5shPZYYrSw1Aq/XdPdPCJgJGh0cluSYCLPxp3lAdU
- lUGLOZakQGuGeyuN121xM7hmA6PBdSX4SMdBzOxmX0D0lcZEMSTcaTQE07iNN0tKR/9k
- 6EvsmnCU8g49v+DBawVxoMrbPJOOqf1WeeKHEzI16Ss1RuJakSllDdDTUg0qKsnVWBZR
- eKVs7ck3udq+mr+SGUfw+Do4UIGlfe7F04SYzIJKK6L+dq9rRLWmDjAkGP4Fm4vEFG3u
- 8x/CL4BeqGnW0B5USa2FJAI94IYRNl5OGgH3KErxT7wIictLcz9bD3ov5o05HdFA1Hzp
- 8Q2A==
+ d=linaro.org; s=google; t=1789732644; x=1790337444; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=IUwAX9bleEAKJ0c2PYl3tD8d1S8g4JpqwvSQWkT4XEU=;
+ b=VsQbAVAfRarUaZ446olCUDD31MP+djvle57H0B8S6rFmwurye7dulNAgUhjjVC3Qen
+ y0YMuMHXM139JaMOM2IiWlUESX7j+ISrg/Z+248cPEKrz7U7TZYoJLFudyck9ArJR2HB
+ v5l2r5EgTskw+80rXqvvJKp8wxQTbm+iZyj5m7CBSzpTvAxmU5TCs9uj/J/NtHoqG6Rr
+ k1lrdPEMhe09BpDRQqR5DICP5oxey8sA5yIwpoVbmn1S380OhiRXQmVIldbCGSIEmpqR
+ hDly0S3NyLKUxOqOAp0aO0BvAArFfzYTSPwxT5pYkHmx3uYKZYMoLXgusLjkKhR16zel
+ huiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789731634; x=1790336434;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1789732644; x=1790337444;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=BuuoV/RtDVXCu0xt5LIWVsLTHx3UsyTgDjBv1wuZ3To=;
- b=wXNl2VFXw/GcELSzu6Ayd1UZLKDOQMkK91bhHT5CCqDf65y/TbaDC8Rn3COByAbScl
- btVzz0M4I2ldfE2tmEp6xIMk71ioKwI+nAHYXAyqcANGVnWQeUPStTvlKOhu7KOJQ2Ky
- rsG+x8kZ9KUYUv39S+WX2yX9r75oPrqwLVhfSavN5JYO8t9RpnaInysYStykKhhkFoY4
- PkNnMtXU8gmwAn1nUWvTp5QobxmxzcrJIyuld1rtMEUHC65gxBbf6YzxsnmIRPx3xz8n
- 4YQXFIbeACCEOoUoLK84lsrdSkwOnooOHZwLzGrzus6LH9yRdr73pWlEwZd/6q3Sduvz
- qw/w==
-X-Gm-Message-State: AFuF++lGkIP2uhCDQhjlIQ5XVIsuZmgQjp9apYw9rEfH/szjz0eBzWHS
- Sp52EgpJyyoDwRXzRj64WYamnxLetOx7roCLA5B4sPYn34yck+HPrQ8J1oeiqHBLTRNKYuNZRb6
- /9WkMhdV5alvq1eFmoJdqOM2YNqfeboeB4eDSo+vipCh5CWe9quP15Ef5wljXBRPeI+shDa88uL
- AuBXbjS2gLhktcefpoJxIi4hwh4Cs+DleMrdKmaB/M
-X-Gm-Gg: AYBFou24f5R0dprBBVDaVBbPDM+yLqIxipHfrhAIUaOYI+hrtN2dNWXaUWfjcF4Xn/m
- 0zb16gdBvzNJ7DtA0h2Ddfr+1sV2DNe+/vNimQPtHKfixaCA/CJTMsI/QMhEZn5leMfDZVZp/Tz
- POG7+iFZIUH1fFvsU3Lfutg9fRqW42zyaK6LF/+tyQPUr0V2hB6wK58b7uBP6JpiyDjmZmKeCSA
- ZTdgYAOehcVCRVcXDAgbYyT7RFBUDNBgg3fR3Me3A1rZvxqmcgiq5IErwcXbI3vA4aXDqh+DoL+
- IU18cYB6nBXxLlRBL8Do9S33I3bKqGYVo6rVycUywqd1Ed1jWaUdxYtVl0tNRzdehKoezkUqlzQ
- Gfxu6Jph95GYvwO2Cze+T/Nl3Li7s83uTroGMhrtarql8LlN0TwTwP17LQ6w=
-X-Received: by 2002:a05:6214:2588:b0:912:518e:d0a4 with SMTP id
- 6a1803df08f44-91254ca41famr33606726d6.60.1789731634013; 
- Fri, 18 Sep 2026 04:40:34 -0700 (PDT)
-X-Received: by 2002:a05:6214:2588:b0:912:518e:d0a4 with SMTP id
- 6a1803df08f44-91254ca41famr33606246d6.60.1789731633223; 
- Fri, 18 Sep 2026 04:40:33 -0700 (PDT)
-Received: from localhost
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91258057e41sm10416946d6.34.2026.09.18.04.40.32
+ bh=IUwAX9bleEAKJ0c2PYl3tD8d1S8g4JpqwvSQWkT4XEU=;
+ b=ZGQKl6dRt4L1/4F8d2n0uqYit0lHwFQFahD2Fx5i1VKIIeL7oJW9ff6b/KlHPbau7a
+ EOzg4Ih1EhbOyEIqZnXJAS+l/nWYIbYion4GVGr37Eu+b9kSvnuT3sU5BRiZ2AtqMloS
+ U/BcUHuIvO7hm8QS76usEoxhJY8elhvG54nodVUE//hJeiQ68TxKSML1qsJ3OuwoF1J4
+ NQiePVtwNqF5oWZUec8bxatkINzYV9/WH5SY3yZPOk9lZKkP5+71/7JZCj0yNFbF3RYv
+ SYDsPt6ZckT5cLt86x4RUy8JtGulII0bGY86j0/H100fZK/fiPoJG56l4xoy8eFhbb4+
+ zSCQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzXyoDdrPFytL3tIqqOn9nJMiDaLhtC6uk4VtzTNU0vyqOK07BWZiajYqq0hi9QZWfl7CTHrhgZk1wS@nongnu.org
+X-Gm-Message-State: AFuF++l2WpZzmm2aQA5SpIbOk2wEA4KCFt01Ag3RuJ04i32wpkpCWogC
+ v5m3M0p6kbLK2BHk4uDoT5Zon6nuq9stkzek3VtwYCZAwqLuICPoDSXJG27xZXBDFYk=
+X-Gm-Gg: AYBFou1z94G2PYV8177AaOrWX5DNzm9oKb6TT4Jsnrv/Q4/kT0ZQobD5k7JtIpuTAYo
+ iVAgsbdbB1OnJ8MtoLdpNZKbv/k0rAG1uDr4eXjqjx1yhvjyXocrjrijehoTJP8aXfY1fEMnSQO
+ iG8Pi7LmO+A++oNufLpceH6mIB78nSQ1qSVhDpKYvJBewM+q16dMlRtr125t1drca0vJmx/LkJa
+ 06ZPClc0lji9hfoNo9qQqepnglNfxsUO1GIpMTqCPEorgyu/dVBWgmip4922QhE2y/yKZ+taQ7S
+ O6CCqIAzxy+Jll7q3+JM2I9taYtFrLtEh1nLcE27Grn/oIqa0pQoPz0WukrcSMMg5ZLsHIy63Z4
+ IueOAuZWpsqkcvMq7ofPMY70NRRuj7Q60LitZkqAg29sIrtNDHbeDoQeJIbDTxedl7LSp/QUUNt
+ N9xO1lVt6h3LtyZjgGgn1lagsF5aVZuRMXdeQlZXUL+ax+JU1ysu61W50fkhTJJuPpUquidaE=
+X-Received: by 2002:a05:600c:5250:b0:49f:bd0d:59f5 with SMTP id
+ 5b1f17b1804b1-49fc5746338mr29243525e9.18.1789732643747; 
+ Fri, 18 Sep 2026 04:57:23 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48720072501sm3498882f8f.22.2026.09.18.04.57.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 04:40:32 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL 10/11] system/physmem: Improve guest memory allocation failure
- error message
-Date: Fri, 18 Sep 2026 07:39:25 -0400
-Message-ID: <20260918113926.831204-11-peterx@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260918113926.831204-1-peterx@redhat.com>
-References: <20260918113926.831204-1-peterx@redhat.com>
+ Fri, 18 Sep 2026 04:57:22 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CAF785F8B4;
+ Fri, 18 Sep 2026 12:57:21 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic
+ from docker.py
+In-Reply-To: <d1cf4f82-5604-47b1-887c-99d69cf1b754@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Fri, 18 Sep 2026 01:05:01 -0700")
+References: <20260917165602.3405537-1-alex.bennee@linaro.org>
+ <20260917165602.3405537-12-alex.bennee@linaro.org>
+ <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
+ <87fqz77dln.fsf@draig.linaro.org>
+ <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
+ <96e3f93f-a12f-4d18-badd-2ea60efc715b@linaro.org>
+ <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com>
+ <87a4pf6moc.fsf@draig.linaro.org>
+ <d1cf4f82-5604-47b1-887c-99d69cf1b754@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Fri, 18 Sep 2026 12:57:21 +0100
+Message-ID: <87y0cy6ace.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,53 +115,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@redhat.com>
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-When Linux refuses to overcommit a seriously wild allocation we get:
+> On 9/18/2026 12:30 AM, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>=20
+>>> On 9/17/2026 3:18 PM, Richard Henderson wrote:
+>>>> On 9/17/26 12:00, Pierrick Bouvier wrote:
+>>>>> On 9/17/2026 2:49 PM, Alex Benn=C3=A9e wrote:
+>>>>>> how much time? it flies past when I run a rebuild.
+>>>>>>
+>>>>>
+>>>>> For a no-op tcg-tests build (i.e. with tests already built):
+>>>>>
+>>>>> - With current patch:
+>>>>> time ninja -C tcg-tests
+>>>>> ...
+>>>>> verbose pull and build
+>>>>> 320 lines of output
+>>>>> ...
+>>>>> real=C2=A0=C2=A0=C2=A0 0m15.817s
+>>>>> user=C2=A0=C2=A0=C2=A0 0m1.342s
+>>>>> sys=C2=A0=C2=A0=C2=A0=C2=A0 0m0.840s
+>>=20
+>>   =E2=9C=97  time ninja
+>>   [1/114] Generating qemu-version.h with a custom command (wrapped by me=
+son to capture output)
+>>=20
+>>   ________________________________________________________
+>>   Executed in  515.16 millis    fish           external
+>>      usr time  433.82 millis  968.00 micros  432.85 millis
+>>      sys time   86.05 millis  253.00 micros   85.80 millis
+>>=20
+>> Not sure whats going on there then. The whole tcg suite completes in
+>> under a minute (and would be shorter if i386-linux-user-test-i386-fprem
+>> and riscv64-softmmu-plugin-discons-with-interruptedmemory where in the
+>> thorough test suite).
+>>
+>
+> You need to run "ninja tcg-tests" explicitly, as tests (and images) are
+> not built by default.
 
-  $ qemu-system-i386 -m 40000000
-  qemu-system-i386: cannot set up guest memory 'pc.ram':
-  Cannot allocate memory
+What is that target trying to do? Because when I run:
 
-Slightly improve the error message, displaying the memory size
-requested (in case the user didn't expect unspecified memory size
-unit is in MiB):
+  ./run meson test --suite tcg
 
-  $ qemu-system-i386 -m 40000000
-  qemu-system-i386: Cannot set up 38.1 TiB of guest memory 'pc.ram':
-  Cannot allocate memory
+it still ends up rebuilding the test binaries.=20
 
-Reported-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Link: https://lore.kernel.org/r/20260822122710.3731595-2-bin.meng@processmission.com
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: "Philippe Mathieu-Daudé" <philmd@mailo.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- system/physmem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+>
+>>>>
+>>>> The variance from the middle of the pacific ocean, and associated
+>>>> network latency, is between 20 and 27 seconds.
+>>>>
+>>>> Amusingly, with the network actively disconnected (airplane mode), the
+>>>> no-op build completes in 1 to 2 seconds.
+>>>>
+>>>
+>>> Funny, on my side if hangs a long time (timeout 30s), then retry 3 times
+>>> per image. I tried it on WSL on my windows laptop.
+>>>
+>>>>
+>>>> r~
+>>=20
 
-diff --git a/system/physmem.c b/system/physmem.c
-index a4a6a4710c..bd5f41cb02 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2171,8 +2171,10 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-                                                   &new_block->mr->align,
-                                                   shared, noreserve);
-             if (!new_block->host) {
-+                g_autofree char *size_s = size_to_str(new_block->max_length);
-                 error_setg_errno(errp, errno,
--                                 "cannot set up guest memory '%s'",
-+                                 "Cannot set up %s of guest memory '%s'",
-+                                 size_s,
-                                  memory_region_name(new_block->mr));
-                 qemu_mutex_unlock_ramlist();
-                 return;
--- 
-2.55.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
