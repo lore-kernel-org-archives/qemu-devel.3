@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08998C982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 16:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6879C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 16:41:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7bdQ-0003tn-US; Fri, 18 Sep 2026 12:40:26 -0400
+	id 1x7bd4-0003QM-Hc; Fri, 18 Sep 2026 12:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7bbz-0003G2-PB; Fri, 18 Sep 2026 12:39:10 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x7bbz-0003G1-Ob; Fri, 18 Sep 2026 12:39:05 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7bbu-0002hz-7k; Fri, 18 Sep 2026 12:38:55 -0400
+ id 1x7bbr-0002hK-0l; Fri, 18 Sep 2026 12:38:50 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id CCCD8601EF;
- Fri, 18 Sep 2026 16:38:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E151F000FF;
- Fri, 18 Sep 2026 16:38:46 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CCAFF43D6B;
+ Fri, 18 Sep 2026 16:38:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFE61F000FF;
+ Fri, 18 Sep 2026 16:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789749528;
- bh=9uo/+I4cswb4xdQvbLnSxCqgYRLjAK5uSCjQBc2QM44=;
+ s=k20260515; t=1789749523;
+ bh=Ynlks6OjXe/uRxYnEgUbla/LudkyT55AVz8txJwfPoA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aLgon6zKqjyljl5GhDY1+cUvcP0F3glHTKQl5bYy/Psg1x6GPN8woLIdnxn3f8otI
- En9Bz2+xpvK9pS+a/ZnPxH1m64mIh0qGZP0wneuMaRYmBb1I4w7dQXcTRQN5+z21cy
- oDNKBSV6I7bzJ6rswdc6RUN1NNQaPJghjWs0l1mcs4u/EZxvcfIt3apR2AUS4fnBKF
- /jYBl0vQ4p7Dl9gCwZgtXQRp+Rl39QvwOBH5iC3Q3j3hVt6OVWN2pGT6M741t/Z1LW
- UgQVNv9BWF9OmyuttTXzmDLH26/qDoa5hMvBM+IwnHum3wO9e8nZz3dVYl0sDkIFKd
- HiREHhy0caGKg==
+ b=fZGVPD/6wcoLui2w1CANkELSoqGv/OSLoqZEyIsfOk/xbjM1kag0Ha1z8tRSOZqFW
+ 3ZeT/Qp0PoMLnGpkSMGhVm1fBgp6zcJo2MLTOVk4EXdn1VQA97oM3nME6Y8BO2QkrA
+ WhQoXMh64/53ZmOTZ/Nn63UfJYabrVWaF6XrQNRXGtdYskVprfOJG+k43D7PU1Xer3
+ Q1HbjX9CDCDx8aAj+KqtjSSuApJLYUWGr0Y1/sieRai5JF3bw/EVYC6+ztk0ng0YSr
+ +Eq8WECbcRtOeGqPYEWgbU1zkGxZZ6mGu/GqvAOotVQmgOntL2qBAAX/6kfJAjGyAJ
+ fIMXX8r9ano0w==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -40,16 +40,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  Helge Deller <deller@gmx.de>, "Denis V. Lunev" <den@openvz.org>,
  Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-Subject: [PULL 6/7] hw/pc87560: Wire up emulation of NS 87560 SuperIO chip
-Date: Fri, 18 Sep 2026 18:38:27 +0200
-Message-ID: <20260918163829.2917-7-deller@kernel.org>
+Subject: [PULL 4/7] hw/usb/hcd-ohci: Add big endian and consistency check
+ support
+Date: Fri, 18 Sep 2026 18:38:25 +0200
+Message-ID: <20260918163829.2917-5-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260918163829.2917-1-deller@kernel.org>
 References: <20260918163829.2917-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -73,48 +74,122 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
 
-Put everything together and add the meson code to enable build of the IDE-,
-USB- and core portions of the NS SuperIO chip.
+The OHCI controller allows running in big endian mode. If this mode is enabled, swap the
+buffer contents before accessing them since we by default run OHCI in little endian mode.
+
+Additionally add the architected consistency check which halts OHCI on errors.
 
 Signed-off-by: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/ide/meson.build | 1 +
- hw/isa/meson.build | 1 +
- hw/usb/meson.build | 1 +
- 3 files changed, 3 insertions(+)
+ hw/usb/hcd-ohci.c | 35 +++++++++++++++++++++++++++++++++++
+ hw/usb/hcd-ohci.h |  5 +++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/hw/ide/meson.build b/hw/ide/meson.build
-index ddd7066040..be82ee8974 100644
---- a/hw/ide/meson.build
-+++ b/hw/ide/meson.build
-@@ -14,3 +14,4 @@ system_ss.add(when: 'CONFIG_IDE_PCI', if_true: files('pci.c'))
- system_ss.add(when: 'CONFIG_IDE_PIIX', if_true: files('piix.c', 'ioport.c'))
- system_ss.add(when: 'CONFIG_IDE_SII3112', if_true: files('sii3112.c'))
- system_ss.add(when: 'CONFIG_IDE_VIA', if_true: files('via.c'))
-+system_ss.add(when: 'CONFIG_PC87560', if_true: files('pc87560-ide.c'))
-diff --git a/hw/isa/meson.build b/hw/isa/meson.build
-index 3219282217..1a150e7069 100644
---- a/hw/isa/meson.build
-+++ b/hw/isa/meson.build
-@@ -8,4 +8,5 @@ system_ss.add(when: 'CONFIG_PIIX', if_true: files('piix.c'))
- system_ss.add(when: 'CONFIG_SMC37C669', if_true: files('smc37c669-superio.c'))
- system_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686.c'))
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 23990115ab..5e5fe41f47 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -74,6 +74,7 @@ struct ohci_hcca {
+ /* Flags in the head field of an Endpoint Descriptor. */
+ #define OHCI_ED_H         1
+ #define OHCI_ED_C         2
++#define OHCI_ED_HEAD_RSVD   (1 << 2 | 1 << 3)
  
-+specific_ss.add(when: 'CONFIG_PC87560', if_true: files('pc87560.c'))
- specific_ss.add(when: 'CONFIG_LPC_ICH9', if_true: files('lpc_ich9.c'))
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index d4ba60a91c..429dcd6a24 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -45,6 +45,7 @@ system_ss.add(when: 'CONFIG_USB_STORAGE_UAS', if_true: files('dev-uas.c'))
- system_ss.add(when: 'CONFIG_USB_AUDIO', if_true: files('dev-audio.c'))
- system_ss.add(when: 'CONFIG_USB_SERIAL', if_true: files('dev-serial.c'))
- system_ss.add(when: 'CONFIG_USB_NETWORK', if_true: files('dev-network.c'))
-+system_ss.add(when: 'CONFIG_PC87560', if_true: files('pc87560-ohci.c'))
- if host_os != 'windows'
-   system_ss.add(when: 'CONFIG_USB_STORAGE_MTP', if_true: files('dev-mtp.c'))
- endif
+ /* Bitfields for the first word of a Transfer Descriptor. */
+ #define OHCI_TD_R         (1 << 18)
+@@ -371,6 +372,8 @@ void ohci_hard_reset(OHCIState *ohci)
+     ohci_soft_reset(ohci);
+     ohci->ctl = 0;
+     ohci_roothub_reset(ohci);
++    ohci->big_endian = false;
++    ohci->consistency_check = false;
+ }
+ 
+ /* Get an array of dwords from main memory */
+@@ -867,6 +870,18 @@ static void ohci_td_pkt(const char *msg, const uint8_t *buf, size_t len)
+     }
+ }
+ 
++static void ohci_bswap_buf(uint8_t *buf, size_t len)
++{
++    uint32_t w;
++    while (len >= sizeof(w)) {
++        memcpy(&w, buf, sizeof(w));
++        w = bswap32(w);
++        memcpy(buf, &w, sizeof(w));
++        buf += sizeof(w);
++        len -= sizeof(w);
++    }
++}
++
+ /*
+  * Service a transport descriptor.
+  * Returns nonzero to terminate processing of this endpoint.
+@@ -975,6 +990,9 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+                                  DMA_DIRECTION_TO_DEVICE)) {
+                     ohci_die(ohci);
+                 }
++                if (ohci->big_endian) {
++                    ohci_bswap_buf(ohci->usb_buf, pktlen);
++                }
+             }
+         }
+     }
+@@ -1024,6 +1042,9 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+ 
+     if (ret >= 0) {
+         if (dir == OHCI_TD_DIR_IN) {
++            if (ohci->big_endian) {
++                ohci_bswap_buf(ohci->usb_buf, ret);
++            }
+             if (ohci_copy_td(ohci, &td, ohci->usb_buf, ret,
+                              DMA_DIRECTION_FROM_DEVICE)) {
+                 ohci_die(ohci);
+@@ -1108,6 +1129,13 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+         ohci->done_count = i;
+     }
+ exit_no_retire:
++    if (ohci->media_error) {
++        int cc = OHCI_BM(td.flags, TD_CC);
++        /* only these 2 errors will ever actually be possible in qemu */
++        if (cc == OHCI_CC_DEVICENOTRESPONDING || cc == OHCI_CC_UNDEXPETEDPID) {
++            ohci->media_error(ohci);
++        }
++    }
+     if (ohci_put_td(ohci, addr, &td)) {
+         ohci_die(ohci);
+         return 1;
+@@ -1136,6 +1164,13 @@ static int ohci_service_ed_list(OHCIState *ohci, uint32_t head)
+             ohci_die(ohci);
+             return 0;
+         }
++        if (ohci->consistency_check && (ed.head & OHCI_ED_HEAD_RSVD)) {
++            if (ohci->descriptor_error) {
++                ohci->descriptor_error(ohci);
++            }
++            ohci_die(ohci);
++            return 0;
++        }
+ 
+         next_ed = ed.next & OHCI_DPTR_MASK;
+ 
+diff --git a/hw/usb/hcd-ohci.h b/hw/usb/hcd-ohci.h
+index 243cd1f46a..d079f8d24e 100644
+--- a/hw/usb/hcd-ohci.h
++++ b/hw/usb/hcd-ohci.h
+@@ -93,6 +93,11 @@ struct OHCIState {
+     bool async_complete;
+ 
+     void (*ohci_die)(OHCIState *ohci);
++    void (*media_error)(OHCIState *ohci);
++    void (*descriptor_error)(OHCIState *ohci);
++
++    bool big_endian;
++    bool consistency_check;
+ };
+ 
+ #define TYPE_SYSBUS_OHCI "sysbus-ohci"
 -- 
 2.54.0
 
