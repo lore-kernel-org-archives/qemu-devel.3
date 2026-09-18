@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43040C982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B480C982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:24:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7YYA-000513-Tg; Fri, 18 Sep 2026 09:22:46 -0400
+	id 1x7YZm-0005vS-97; Fri, 18 Sep 2026 09:24:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YY6-0004z1-K1; Fri, 18 Sep 2026 09:22:43 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
+ id 1x7YZk-0005vJ-DM
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:24:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YY3-0000XD-Rh; Fri, 18 Sep 2026 09:22:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=HX2aFgF/iJZ9tJuqi/xdjuGMApTOid+QHKDER0Pk5O0=; b=WD8AZ3vCEXWEAgKKGuz2GUfR1C
- S7Kg08KAZNN73ewmdzk46bDVxspk3Zook4DC7bFlFBwBibVl34zPj9p60H/xC15L6UgEct61b45az
- HWSsjEFIY75CKQSdXmHWPLj5Wy73WNw7xNM30FN7P0lMNJkjuybU486c7YM4jSOcCFj5J+0IPYc8L
- hiT9rnieN5Exe6N973DTQUGRUmMLm7lGvrmu0Ca0hBFzPd7g09l2txc7wM5r/u0xgdsifB/UUyCWY
- 4nWJU2GRYzqIQzIgOZ0i47s0cVbVbAxgXGE1ToGQbFoCPCe1AsqZ5uwlENFjokzNZj316UmptGoOB
- vxMhEhhJMc8Xz4/BMkPRJNn0RbM/12CFE1AObwzRofQhHMbtuOfBTz6EncVr3YyG4ZC6DzlnZZXAe
- x+aM+u1AMcrbYo3f/R4w5lD5rB5lcynoP4igKqmKf3oftSc9RvHhyIoIZ63KzgdjMncNY3KjxWhJr
- N2Zaii6DPKbkgUH1lNg1ZxCOSkBSSGl8rK6ZmSIIS0nX5Yg94PBvl58OugebtnHw6un5jyX+Lu9lm
- AQeW7DaJoDW61XBa4dEXsti2LJf92wv2RCOZ4uspumFhRtLf4O59Vb1joXbkh3gWoHA8+HnPWX+ZW
- xnhBrfEPXqG/VKotO377HJ2RN45yJ5r4FwuE/oSI4=;
-Received: from [217.155.175.48] (helo=[10.8.0.6])
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YXX-00EgTG-8B; Fri, 18 Sep 2026 14:22:07 +0100
-Message-ID: <7cc698d6-5e8c-4c4d-bb65-8fbcca266df9@ilande.co.uk>
-Date: Fri, 18 Sep 2026 14:22:36 +0100
+ (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
+ id 1x7YZi-0000gP-ME
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:24:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789737860;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y03CptqPpMz1qV88YXGt1sI6qsry1H9sngOkjjJV1H4=;
+ b=isCSG1Wl93vv9OyjHhfQBMX1VZpP6dTjGf6cvYc9krzXy+ZfaGr9XKBwejosslcNOS7Qiw
+ ocLWlkC3q0BJlYE8rlA64Xm8aG/BEIPYpLG3yTeGsuy+aC8Hz0u0njDKUGRMwmgi4oIVj6
+ YIWQJMUwo7raiWFhBQ5WR7IupwzZrbU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-SDl8Y-96NRix85NgrPSypA-1; Fri,
+ 18 Sep 2026 09:24:14 -0400
+X-MC-Unique: SDl8Y-96NRix85NgrPSypA-1
+X-Mimecast-MFC-AGG-ID: SDl8Y-96NRix85NgrPSypA_1789737852
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28AC11955F28; Fri, 18 Sep 2026 13:24:12 +0000 (UTC)
+Received: from nucbdw.ghoffman.csb.home.kraxel.org
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 136FC1956047; Fri, 18 Sep 2026 13:24:11 +0000 (UTC)
+Received: by nucbdw.ghoffman.csb.home.kraxel.org (Postfix, from userid 11758)
+ id BEB1A407754F; Fri, 18 Sep 2026 15:24:08 +0200 (CEST)
+Date: Fri, 18 Sep 2026 15:24:08 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Tushar Dave <tdave@nvidia.com>
+Cc: devel@edk2.groups.io, gaoliming@byosoft.com.cn, 
+ ardb+tianocore@kernel.org, sami.mujawar@arm.com, jiewen.yao@intel.com, 
+ qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com
+Subject: Re: [PATCH 0/3] MdeModulePkg, ArmVirtPkg, OvmfPkg: fixed PCI BAR
+ placement
+Message-ID: <aq06JQWs6KszJI9w@nucbdw.ghoffman.csb.home.kraxel.org>
+References: <20260916192408.928411-1-tdave@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: "Kirill A. Korinsky" <kirill@korins.ky>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20260903115229.95811-1-kirill@korins.ky>
- <20260903115229.95811-4-kirill@korins.ky>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20260903115229.95811-4-kirill@korins.ky>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 217.155.175.48
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 3/5] cuda: Include command in successful ADB replies
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260916192408.928411-1-tdave@nvidia.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ghoffman@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,42 +89,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2026 12:50, Kirill A. Korinsky wrote:
+  Hi,
 
-> OpenBSD and Linux expect the ADB command between the CUDA status and
-> reply data. QEMU omits it on success, so guests consume the first data
-> byte as the command and lose it from the reply.
-> 
-> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-> ---
->   hw/misc/macio/cuda.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
-> index 312dde242b..ccb3e1d74b 100644
-> --- a/hw/misc/macio/cuda.c
-> +++ b/hw/misc/macio/cuda.c
-> @@ -431,11 +431,12 @@ static void cuda_receive_packet_from_host(CUDAState *s,
->           {
->               uint8_t obuf[ADB_MAX_OUT_LEN + 3];
->               int olen;
-> -            olen = adb_request(&s->adb_bus, obuf + 2, data + 1, len - 1);
-> +            olen = adb_request(&s->adb_bus, obuf + 3, data + 1, len - 1);
->               if (olen > 0) {
->                   obuf[0] = ADB_PACKET;
->                   obuf[1] = 0x00;
-> -                cuda_send_packet_to_host(s, obuf, olen + 2);
-> +                obuf[2] = data[1];
-> +                cuda_send_packet_to_host(s, obuf, olen + 3);
->               } else {
->                   /* error */
->                   obuf[0] = ADB_PACKET;
+> The series was tested together with the QEMU companion patches on the
+> AArch64 virt machine across a range of PCIe topologies: emulated devices,
+> VFIO passthrough devices, PCIe switches, single and multiple fixed-BAR
+> endpoints under a shared root port, and fixed BARs behind nested bridges.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Given this is active for both aarch64 and x86_64:  Any testing with OVMF
+on x86_64?
 
+Overall this looks good to me.  edk2 has switched to github PRs, so
+please open a PR there.  edk2 has a policy that patches should not touch
+multiple packages, so patch #2 should be split into two for ArmVirtPkg
+and OvmfPkg.
 
-ATB,
-
-Mark.
+take care,
+  Gerd
 
 
