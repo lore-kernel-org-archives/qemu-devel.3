@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC46C982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26932C982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7YwM-00036o-SS; Fri, 18 Sep 2026 09:47:46 -0400
+	id 1x7YwQ-00038J-H9; Fri, 18 Sep 2026 09:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x7YwJ-00035X-8V
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:47:43 -0400
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ id 1x7YwO-00037M-9s
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:47:48 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x7YwG-0003Dj-OS
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:47:42 -0400
+ id 1x7YwM-0003Df-Bt
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:47:48 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=U3C7BJiCsEpOSncP301eg2V142JZbW+SlnjAe5NJryrIwbIFvb2wDGuRv0vGdM0ZkYk2LPyMgPDiJdZjem+ekkIx1E6hQusauGSS9oQr8a0AWQ8S+NsimHvtKtyi7BDEL0cS6HgFGCnvPZF6hIlQkBKQM+5obnseZ45OXekgfNYWYAMNQy3JDhGYqAzlVeiUtsgmUNwuQbmmHkbKwQCRr2Zx22oMcSdXIkB/D7SG7LUHNj125670dDlGxAmr5RK1QPUjQqdlTS5ikXAtIetWBfnAQxIdhWRBAcuHEl2CvMJuJPnuyupypdhbpF3qP7JMhumh5gKKiZmObsvrH+o+vw==
+ b=hBSgvfenjGFUGtq6KVIOKlnbQUtRjdy2XnWir3qkRZa01uzXWbwi2njsH83uMw3Xn1ytWoTj03py1ZiBpjTbCwbGKVfyVHiS+CAFRhKUoCfMUkhDPO9MnkLk/nzHITw+WsGJQEyjA/b6NyJ2dx4MZeyamJYfFBel5qmYgWGkuKkeiteHUfQr79q3EvU0YfC3X/K795klvuR4hxWUZQ8k4jOEY7WkdE8H/s45U9D+3mpJOkA7+2zZAjXhgKxN/kRRFvji0W8+W5faOCz/DH3KiZQpOY30ffz+XuTzwaYfixTR9bjDssy9A7Z1kq/l1Q8G+2wjsFVVwZaPTkyB28BBSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7dz+tvtnKigbX/oRMLQY9R46dOBjnT4EgsqvJZo9ufA=;
- b=Tou1fJvMhVjGIEtJe+eaY1DnpcPSMmOFqhMTZ4rPMG1+JYKscYZR5nL1VMWvR32okpYK9xXrMkgCIiR3kL7YbKp5CtdG+J4txERkqKcYaqWuKtSoqvdnGxqU7A3QBxR+lJ60kEMPZw/hEVC4vBlEbt0CgFtcfyOzM0wI/NVf9x9vETnpC5weoTP3xXyi2kpfzqgoQMnHksNEJM7oXR65dhf220DVocJ+ybT5hafCw4gKtYeOTLzTsbTmr119S4ffwToNUHnYLPm92ftX/6zGfmSZ9sJUKjNnA1Oo79TpdqJipom3HHvO2RDEgYVsJf3FzWrZNU6/blBy5TqYzUCKCw==
+ bh=p/btqmLLhLY5zLNFmM6XykIvIxv9nTvzD+HEmHnMwKc=;
+ b=xM4P96bvmavYgDBb5dqkgJjMBk+apwr7EYR5O8HWuvKdMMXpXtNYGz5jlyCCGHOY+QQghRdzsrG2MguVjD/pk8XEe8p/Bx4s2HUsZ7+WAurVoEUWGwmHYSCBb5/vtKQR0bUNFSFedlYdiZMVtWXKa0ooNINSkqDDLuibJSTxPLT2fdXdf/8CdMORSJZIK6qKFWvsWuLQO8XKB5kKR0zyGbif8xkR1T5NpH/08sT+u9vKhOwDUgvWDWVWnLGZGtPEBr97lcIMj6s7XrJTjw7N3/01/vZqtNoQhFuzAJwhz3pER9PJF0R9ZKxxDok5p9hSOF7rcFH6KnHEV9u0CBuSlA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7dz+tvtnKigbX/oRMLQY9R46dOBjnT4EgsqvJZo9ufA=;
- b=AYb8lSl9mE7dWs7oK74TRMwhjWlpuyld4txY8Iyocih8TBiT0+i7wQ8Rsol/T4iFQnpL3SwN3JK2AhL58GWWJlc4/ARBIfR0KT8sp06OxjWVH+L7fUp/6tlNtffU1wJ13nFKGiBpend/adzTKDOnW9rxu9S7OTPAiFPQ2riy7Z+dr6k6pJHZRG+RpwHrKDLsOdWxIyMQoNMxCzIVBDmkUPT1W+cbgI7cBi+65GprMHVgzAcuMV7bqJyXNIlbJQkGVagOGVthqexruprOecrx9+/GEGnSfIHu7lbKs2tuKMZwuq8XBV8EdZAM7Y6+5ofuqRSez45eeERWnui8Q93WCA==
+ bh=p/btqmLLhLY5zLNFmM6XykIvIxv9nTvzD+HEmHnMwKc=;
+ b=tASsbpps92CoP/5MZFPFyA12ynGMuyMebrPZjUkHLk60oi+8p1dAr37v3WJmamcwjoT58qXwAR7L3atMcijyEW4Ik5X4Y3hnniYiziwMWA0iuMsLM0nVlxFJLcumZkchIur6I8arJ1XeFumMBUNUsA0ywFEDnv9Tl6x/ZDJiwXQnK+Yo/T/K0R+284VxGCSJHd7UaISwDU1unKSk0ZXu8bpMFQpa9UVJhaPcrpfgjMUZ1ejb54u9X4MMLFMSnHiyUCRW+s4jaCsG4HZ+LLwm7FKaa5KYjbgicYSbZnu83sOOFntkYGUUfgpodRlp4WQGuyau1StaGYvakHQvIgQbqQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by DB8PR08MB5483.eurprd08.prod.outlook.com
- (2603:10a6:10:11b::23) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10a6:800:20a::12) by DB4PR08MB7933.eurprd08.prod.outlook.com
+ (2603:10a6:10:37b::19) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.5; Fri, 18 Sep
- 2026 13:47:31 +0000
+ 2026 13:47:24 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0428.008; Fri, 18 Sep 2026
- 13:47:31 +0000
+ 13:47:24 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Fri, 18 Sep 2026 16:47:07 +0300
-Subject: [PATCH v7 16/16] tests/functional: add vhost-vsock CPR test with a
- live guest
+Date: Fri, 18 Sep 2026 16:47:00 +0300
+Subject: [PATCH v7 09/16] vhost-vsock: preserve vhost FD during CPR
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-up-vsock-vhost-v5-v7-16-6ef9ef033c35@virtuozzo.com>
+Message-Id: <20260918-up-vsock-vhost-v5-v7-9-6ef9ef033c35@virtuozzo.com>
 References: <20260918-up-vsock-vhost-v5-v7-0-6ef9ef033c35@virtuozzo.com>
 In-Reply-To: <20260918-up-vsock-vhost-v5-v7-0-6ef9ef033c35@virtuozzo.com>
 To: qemu-devel@nongnu.org
@@ -68,71 +67,71 @@ X-ClientProxiedBy: VI1PR07CA0292.eurprd07.prod.outlook.com
  (2603:10a6:800:20a::12)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB8PR08MB5483:EE_
-X-MS-Office365-Filtering-Correlation-Id: 908d068d-4c9d-4902-e5c7-08df158b62df
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB4PR08MB7933:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2a0c6d15-f127-45cb-2798-08df158b5e32
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|366016|376014|52116014|1800799024|23010399003|3023799007|10067099003|56012099006|18002099003|22082099003|38350700014;
-X-Microsoft-Antispam-Message-Info: +Ai4Hw55676HowRluHpeaa5ntp2rOgUpLmTHEUmiFzR9B/tCRWEP3LMmh6Vg1KmSGldSW4JiFMzbn3nWeqSts9ONITq0s1UF8Koigksz9BifYfUqkDWd3ndOaOFyJbnMCSwCcB1EeWyyhvMkQuwTReM4lnTXb/qXywobaYuyZiZalXYvVypePigtOwwV17PLIoN7gUbxuyazwLYE8WfekvFlzpWkf5cYs86bnz7FAbMjhB2nbvcZOXFAG30B/XCkC+3cuLgvyiE59EsHJFiqwrVs0h8OE8yocV6TPcicn1oPGmc659guaew9k7VkIgj51huHstXLOW6qwky3wZGfLpL+idlz68F9szj5x7aNbgtRWV0dxugKunwDJmk5DCeB3MT0PKimuTLIOvH4pBpbKEPju7/7DZIL84q46ANmSsigR4xmOxiZMPl3Qj93/DqRaxUdF0iZOuO9h4GEzNPxyfD9eP7c3q2Mz2QrhZMS3zm1o7t12tlMB3vfOgIHUihjJknGI9B9U2yk1BpAmFtJQwWtIY0kSzKMvazV1pn8xkdpstOaPgXD9Gez4W/Gld2iBgZYfRnpdYMjEf8NuKPcb4ThvLmp7ky+3lI29NDRzTBXWmFzvweOsZ0tiBRPNOdA8JvfX1LiFlCn3zZc8SJl5qvOCF47io6PKTHY69LGNBK0ZJCGBiWRftmSe7MyKwvLMprAwTT19P1zP/zfhDEGxRuSqMu4atLSsEOk6oGzygk=
+ ARA:13230040|23010399003|1800799024|376014|7416014|52116014|366016|56012099006|10067099003|22082099003|18002099003|38350700014;
+X-Microsoft-Antispam-Message-Info: yfQmWeBSAS2OnXY7ZyNvMaCzOtSRHuEu6IiuSG3aAlPNZFAFDIiEOvYC6r5Xx0qyr2vhlUJOymYUZD+RK9DwRn16yDcIDfstEAJctw669veNFowMel14vdWsvC2j63hyfVxpymFFqGKsWnEioFHPtv3UmtCZURpaTc6QvA6+S5G9zCygU1iWwcd0sTR0MAxFg1xBteNbm90/KvjNfuoeiNTsC3UQa5wIaMhdiXNb757lZEPZnSQzdMqyzD1LIBbM5uWR+Upog7ADhxYQ67bqmWN3j4zN8mdkLf0IfWSp+R5WPxnhBUQde6UVwP01y/IgoXitdg5Ao8l2a4Di3CnIEPgmHGGBTvYjmOGr7IF0u+e+C2mwEPQWsByMr4yCXSIGFbf7PERPjGEB7IwsfNIgM5qwEoZn8TZGFat+OgtHegdJkb+C1Wi4Anqkj2vNaR8R+E7r4qYpYS2WLs08bwlU73MPQr5O+0JoQU/0MzD9/Xd3xg7wpetUrdG4SHA6cVxkr1t2kchzHNTwe90tlYagYJfdu80tmh8PHN5GpBK6f6XRWT08JcIon+IhSOJQHbW3IwiJW7UBjFCWngWPzgcd6eEri9wcOkLiWXhpXULoCQYZiGgwQutc4BxxXcxJtlnqlEbZ4jbzg81SF7vDs6yOAiMBVKaa81TkKj9ruPRcaRmJ/B5wcMUcSs6Egl1px2rlGC8+or2b+WqXw+Uzm24y3amKJPF2lZoPv/jeSp1ojzI=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(366016)(376014)(52116014)(1800799024)(23010399003)(3023799007)(10067099003)(56012099006)(18002099003)(22082099003)(38350700014);
+ SFS:(13230040)(23010399003)(1800799024)(376014)(7416014)(52116014)(366016)(56012099006)(10067099003)(22082099003)(18002099003)(38350700014);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NWxvZWs3UkxXS1lrQUhaT1BCenErcDZjYk05UnhrdmY3dGhRbXFXT1FPNHR1?=
- =?utf-8?B?MERuRUFtU1h2Y1QxaVhXWG51aGJ1Q2pMeEExY282b0lDN01GUWtkbUg3a1VB?=
- =?utf-8?B?Z0NJMDFFQllTeEltRmZIQ3RXdmhBY09yajFRWVhXalZSa0pZczdUY292a01q?=
- =?utf-8?B?K3FWZ2E1dXduUWZpb0JKam9wYmp1ZmlLZkhMUXVFZHZzQ2tqTFdvV1RrNUt6?=
- =?utf-8?B?SHMyVVAxMWZnU3NENVRZV00xMFRUaGgyOXRVUTRNYlF2anZ4QUIrWDBLUERv?=
- =?utf-8?B?bHVscU9SVnBDYi9ISElJd1U3bXRicjI1TGkrK3FXSlVkK0VmYU5aSXFQN080?=
- =?utf-8?B?Sjh4ZVdCR0tuRS9QdXVsTEJWN3R3MytrWWV4Mmhvd3RoZGUzT1JhTXIwTUMy?=
- =?utf-8?B?eXIrNXUxSG5wOUJpekFyUEFWRWJOb2kwbjJ0UURLbDJqbnVZUW5tTWxvOGpo?=
- =?utf-8?B?UVpHRlh4M3RIYnFOYldmSDllZUhNeDBqRGZaRTUwVWxqcjB5SWxKa0JWK0Zn?=
- =?utf-8?B?bHlobHhhZytiY3RxL3BkZGdoL2RDajJZamVKeGFyS2k0ZDBTa25iU3d2Wk9m?=
- =?utf-8?B?NmhIZGgxQ2k4VlBCZTNQVEw5dHBBUmR2dzg0VnlxaklEZlQyejlrR0NOUTMr?=
- =?utf-8?B?TWJCQ3BuNnNZNEhsRStqb2pYeWFGcmthU2ZCb0tJSUgrZThlNjFMQmRvWnU3?=
- =?utf-8?B?NVJNYlNQbGZXY2J6SFZSZWFqNFlqQ3ZZSmpjSnhmZnA3RzlmTjJPNU1wTy9h?=
- =?utf-8?B?dlEzWUpwSCtZQXd4MmdKSjRCSUwzMm02VFBOK1F1eXBQdFozbi9vNUZsZnha?=
- =?utf-8?B?My9EeHdIY2ZDeEVXbk5VbGxrKzM5bHlSb3hobVBUZzhNd0xZZXZiTDRxQ2hl?=
- =?utf-8?B?U0V2YkxOTzArNnV6OEtmZXIyaDBQVFdiSjlrL3NNNzJPTlIzUXFrVlp4YUNL?=
- =?utf-8?B?NUYzNEkycEJCWVR2a21FUWN4NDZ4NC9LVndveWlqT3hqWHRibHQ1dzlGYXBs?=
- =?utf-8?B?RisxVkFZblN1czVHT1FrajZnNFBFTzJHcDB5NXBaSEJ6NnBHTzV6ZUNNMnp6?=
- =?utf-8?B?YTVOOWtneG1FVmpDV2FpVlVTS2R5SGNaSnlGK1A3UGxtUUpoVm1PNCtIR295?=
- =?utf-8?B?VnJkdGNHQ3NNVitTNlgxcHFYUE93NHhtRVlCYS9HenlXQkhuZ1FWbFo5MjM1?=
- =?utf-8?B?ZnVmME9jMVdWdnYyelQrN0t5bm1vT2IrRFlBbllPTHY2NjdqelBmUWRyYTdl?=
- =?utf-8?B?eXNQTitLcWovd3ZxaTNkcXFBRFJxSXFLOHZIWFhKTU1zejRzcTl6TFJlVzNs?=
- =?utf-8?B?bTMyWDRzSFdVTEJDV3dUVDNtUEFudEEwOU0zZWxQa1BkemtIRTRmakoyYUdh?=
- =?utf-8?B?VDUrNThHYzlqajFKUjhDb0VXSEtMeC9xWkdSRy9nSEYrRmppV2JENStlcmR4?=
- =?utf-8?B?VFZRV01yd3p1RlEyT3Jpdk12MFNxQ2RoQ0MxU2VZWEM2dG1KajJ6V2NPK1BY?=
- =?utf-8?B?RSszd2hSQkgvQUFkVFFsU0Q2QktXcVA2QnV0V0ZqNjVLN2FzN0pMNlFlTWl3?=
- =?utf-8?B?YjlmVjhEZVFHWkdGdnFCNTBQaDlYSWZHTTZQVzA0LzM5NEs4UjFQeCtwWjcx?=
- =?utf-8?B?K1FSQTdDRTJPb2VxM25yNGlYSzBoYzEyVWRzV2pRRUZDODdKZ0czT3JVTTZl?=
- =?utf-8?B?ZytkNjFvbU1RZnZiekpJYnlXQUhHZHpHMTBiWXJrbUcxTk5SbTdXMkFDWjFC?=
- =?utf-8?B?Ykd6cnBDVEM1OE9SUGdWU0x3UFlicThlMzBIRk9JU0xPekFISFhnbG9YZVkr?=
- =?utf-8?B?L3ZwODB2UTJsckJhNEtNcmlhUE1qa3oybStudVhvSVRuUFdUMytGYjRHZ003?=
- =?utf-8?B?YlNTSGZJTXMzZ296b1BrUXdHbFZOaW5rU2xRSnQ3QXdCZTc1M2RKME02UENx?=
- =?utf-8?B?WFJzSEJESVQ1b2UvdkUyZzRWRnZFRW83NUZlWW1RUHRkSk9IVDh6Z3c0ZHZW?=
- =?utf-8?B?UjZROXlOUXZ4eWZDWkhxSUVrdkdXUTQ0TmdXdm1ZQUxHL0lKamZYcm0yUXZz?=
- =?utf-8?B?VzlLbDgrRDR0Y0wzcFNkaXNRZlRINzBKNWpKemhkeVY4U2lWeUlYQStmNnZx?=
- =?utf-8?B?UVRNYUlTdjVMbDlHZ2FmRVkxM2pqM3lLTm9jb0cxSGdNUyt1YWV5UjlEUmg0?=
- =?utf-8?B?OEJVcm1Ldkt6bnlXZVU4dW1mZm9rc1N4Y3liQVZZY2pwNEdUY1Ewell2OU1U?=
- =?utf-8?B?NDR0eDhZOXNzWjhpTkVWdHRWVHJ5NEdBdE93ZUNhcytpUHdVV2k2QmZyQnlp?=
- =?utf-8?B?N2FkWjR3Ykc0aTc0MUVHcVVsWUFDamlvYVczWWRPeFBVWTF0TW56UHhFLzdi?=
- =?utf-8?Q?2YuiKT5EkGVOE9Fw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WFpHVlFvekN0SUFTUEk1bmRveVlnODBCN2YrTFBxc0hndFBmeFpBZlVrVU1h?=
+ =?utf-8?B?czF5OWdoM0kwQ05TVXhhcU1PS1UxWnhsL1grQ092ODQ4dmN5MFArU3RGNVRt?=
+ =?utf-8?B?Z3Fmd2JZWDNxRWVGTnp3S3drV2JaR0EvN1VWUU1EOTl4Q05JdWphamkyTVIr?=
+ =?utf-8?B?cFRmWWFub1FkQ2hISjV2Y3ZkZUxFWVJkM2NMc2k2WFE2bmp6czZneTI4SUs2?=
+ =?utf-8?B?VXdXNVkwWEhza2V3SGhUU214QVY1V005THp0VCtJRVNYRDd4dmRxeGlOelJF?=
+ =?utf-8?B?ZVliVkpOWEowcjVXRW1JeHJwMDFDVmtER0xGMm1lSThCN1lxZFpVanRXTVVW?=
+ =?utf-8?B?NkpHTjVNd3dieFdWMFdCdVVtNlM2N0VYZG52ZVdWaGsvNGlOam1URWJmcC9l?=
+ =?utf-8?B?RjhlRHcwcUJHcnNyVVpnZDBlbWlSOU04YlJrSUhLZHhkb0sybWc4MDVOaXVP?=
+ =?utf-8?B?TGFDdXI5OG1pdTRPTHR1RHAwbXlJUEczaWpjejFlTVlkWFMxSE91TXpPMnNN?=
+ =?utf-8?B?b2h2Y3BWcUZjL3FxeE9MTlVpUHpIdlladFFZLzhvVS9ZOWQ1ZmErR1psK0dV?=
+ =?utf-8?B?VHpMR2xFbFA5TFdMUWNybHZ6R2czSm9YMy9IWU01N2JZNWh0aEtVTDFVUVRG?=
+ =?utf-8?B?cEZGakQrZkhud3FYbHdBckxmOUdoTnU2bFpGM1hLQ3BpWnVVWVJBYVU3ZGZI?=
+ =?utf-8?B?L1BwazNkWXFuNVpTVnAwRm9mZHlqSHM3dXBmVGFNVnBUMWtwSFF0bVRYblJ4?=
+ =?utf-8?B?TlJta0Y5bDZETjNpY3RSRXF1MTdaampjbS9FRCsvcUt1dEYyVWgyaWlxRlY2?=
+ =?utf-8?B?NkJ0R0FjVFhOMVRzMmZaaFVmbFBlY0xKcWMzU0RxQWM0dmZvT1o4dk1GSXEx?=
+ =?utf-8?B?aXNsN0tOdVpPaXF0R2FJSWJzYStTZkZzUnpaMkY1N2ZTK2VTMHJKQXZ0VVhv?=
+ =?utf-8?B?WFA5cjRlVmZQRWJ4VDJuMU91L3hRVWNjY3hseFl1N3BGK1hhNTRGN2Z3WXo1?=
+ =?utf-8?B?TW1YamdaYktrQ3NJMXBsYnNpWmNBNUhpTy9nVklRTWg2ZUdLWTdhakRqMVZP?=
+ =?utf-8?B?Nlh5aDVVc094cmUreWMyeEQrYmJyUWtRVVFSaytXNk5LSU1PMnBWQkJqRks0?=
+ =?utf-8?B?Wm1DL091Zit3K1crKzNhN3F6VVcxZGhYMWJuL1JWVXlNSFArQktyaGFjYXJB?=
+ =?utf-8?B?L1o5cFAwb1RGQ1dvZXlTNWNLQ3JVa1hzVnFWRXg3OVlUYlRna0Y0QzB2U2sr?=
+ =?utf-8?B?azZxNWxQVU5tVy9sQkpSQ1FlVG1oY0xSMlh0Z2ZnQnRocG5LS20wMHhhMmJX?=
+ =?utf-8?B?bXl5OGJydDNCdVM3Q3BnbnNwc1VINkdKZCtWV2M0VGdsTmMzUm04RDFUZnYv?=
+ =?utf-8?B?dmxyUGV1UEVyVHlra3lyWEpYQTRGdmhmdS9zaW9OTDQ4MHJJaHltcmx1TjFi?=
+ =?utf-8?B?b2RiWUhGYkZlMFNqK1o5ZHFXT2xLYk9vL0NZVWFRUi9oQWo3M0NYQlNDZDZs?=
+ =?utf-8?B?S2NCWVR2dDNFUTl4Yk95Z2RIczJiSFE4RGFxcGtOTzR2VkE3SmZKSmEvWjd6?=
+ =?utf-8?B?YktuY1JUZG1zaitFWGhTK3VtdjNDWXFETlVpMytxUGliNUpHdWU4VXh1a3pa?=
+ =?utf-8?B?YXQ1b3NsUnZvaysyVm9xNXV2SWlaQzhxR2FzNUZPZ1dmNWo5TzJVTEhac2Y2?=
+ =?utf-8?B?WlVmaHp3REIzTzB6UnVWRnRsUWRuWTBxZzdueUZlRDBQN0ZUOTFKOHdBUUI3?=
+ =?utf-8?B?MnozMFp0NG8vNzN0MExWZlYvVXJGL1ZCWXpvM1dFRVRlZmVGekdZamorRjZB?=
+ =?utf-8?B?WlVhUk1XYk5Icm9vUzM4U0kxOEQ5ZTFmdFF1OTNvZVpLUkt5Qm8reHIxQ0Rj?=
+ =?utf-8?B?elR3SjdoTFNFcyt3ZkNMa1ZTNEhJS25rU2pZTmxKditaNGVTT3RzTFQ5Mi9j?=
+ =?utf-8?B?MzZKT0ZqSWE0ZEFhSU1YL0ZmQnJzaUJ0d0p6ZGU4MGVVZVoxRlZJQkUyWUpx?=
+ =?utf-8?B?ZmF4TUVkbVFrMzNpV0M4RXdJUm53bGJSTWoxZXRPZG45cXVlTFpiYXVKbDg4?=
+ =?utf-8?B?Qk8rTHRuTlVKbldqaFpuVVlCaXBydTRMZmlhTGVpdFAxZVZYKzljc1lwTDBi?=
+ =?utf-8?B?RXV1T05ud1g5ZkpJdFRXOTlRNG50TEVQdnpibzVvdm9qd3ZHM24rVVQ4WjB2?=
+ =?utf-8?B?NmowS0tjWDhtMnR0KzNqMnp1VEZrYnVEbU1Kb1FJNG1rSmZtTFhPNXlZWlNT?=
+ =?utf-8?B?MXEzdnVCZ2MvZUVWZnIxdmx3YVB1RzZHcy95ZGpxdzFNTkN1cGwzVUFIKzFH?=
+ =?utf-8?B?ZDNvYm0vV3h0eHhoVFFaclRIbzYvU1pTYmJ5b2lYM0pUNFF5V3NWT0RPQVJi?=
+ =?utf-8?Q?i2hLWHFNm7LRJIyY=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 908d068d-4c9d-4902-e5c7-08df158b62df
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a0c6d15-f127-45cb-2798-08df158b5e32
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2026 13:47:31.4864 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2026 13:47:23.7119 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TQEBlsbh4Xvz3SlynE186siZ/+DZV6Ktk92slwheZDJ9yNTprZcPVq+Cq3ELur7uZIwlP5MS4Y79fhRnjzAiwpiX3onY8AFV8Zue2Nq9MiQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR08MB5483
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+X-MS-Exchange-CrossTenant-UserPrincipalName: rCxJREDAUJ0s8UG9PuMGQcA9q6RCXxKzp5HfERZ3XphMSvUEA1SsRU25JnlYvrcQbgPMKPrKQU/BHWXuPY3yIPtYnib30b5bsXtRI7iN7q8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB4PR08MB7933
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
  envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
+ helo=AM0PR02CU008.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -155,303 +154,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qtests only cover the QEMU side of the vhost-vsock handoff.  Add a
-functional test which runs an actual host<->guest vsock transfer across
-a series of CPR migrations, for both cpr-transfer and cpr-exec:
+During CPR (checkpoint-restore) migration the guest keeps running on the
+same host, so instead of reopening /dev/vhost-vsock on the destination,
+we should reuse the FD from the source.  The FD is saved in the CPR
+namespace (hash table) with cpr_save_fd() and then reclaimed on the
+target via cpr_find_fd().
 
-  - the guest is booted on top of a qcow2 overlay shared by all the QEMU
-    instances it goes through;
+Use the (suffixed) device path as the key in CPR hash table.  Device
+path is obtained with qdev_get_dev_path() and is essentially the
+device's address on the underlying bus.  As any vhost-vsock device is
+attached to a virtio bus, whose .get_dev_path() forwards to the proxy
+device, and every proxy bus (PCI, MMIO, CCW) implements it, we should
+always be getting a unique non-empty path with qdev_get_dev_path().
 
-  - the host sends a 512M file of random data to the guest with socat,
-    where it's stored on disk, then gets it back the same way; a CPR
-    migration is performed every 0.2s while a transfer is in progress;
-
-  - with cpr-transfer each migration starts a fresh target QEMU and
-    retires the source; with cpr-exec the same process is re-exec'ed
-    over and over;
-
-  - the file received back must be identical to the one sent, and both
-    socat instances in the guest must exit cleanly.
-
-The test needs KVM, socat and /dev/vhost-vsock on the host, and a kernel
-supporting VHOST_RESET_OWNER for vhost-vsock.  If any of those
-requirements are missing the test is skipped.
+vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
+Deferring the ownership handoff to pre_save/post_load is done in a
+following patch.  Until then CPR remains blocked, so the restore path
+added here is not reachable yet.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/functional/x86_64/meson.build             |   2 +
- tests/functional/x86_64/test_vhost_vsock_cpr.py | 245 ++++++++++++++++++++++++
- 2 files changed, 247 insertions(+)
+ hw/virtio/vhost-vsock.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 0353b2af8e1..718bdc5195c 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -7,6 +7,7 @@ test_x86_64_timeouts = {
-   'netdev_ethtool' : 180,
-   'replay' : 480,
-   'virtio_balloon': 120,
-+  'vhost_vsock_cpr': 300,
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index 3ec20d87606..6e89007b2ce 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -69,6 +69,18 @@ static int vhost_vsock_set_running(VirtIODevice *vdev, int start)
+     return 0;
  }
  
- tests_x86_64_system_quick = [
-@@ -51,4 +52,5 @@ tests_x86_64_system_thorough = [
-   'virtio_balloon',
-   'virtio_gpu',
-   'rebuild_vmfd',
-+  'vhost_vsock_cpr',
- ]
-diff --git a/tests/functional/x86_64/test_vhost_vsock_cpr.py b/tests/functional/x86_64/test_vhost_vsock_cpr.py
-new file mode 100755
-index 00000000000..035307fc82f
---- /dev/null
-+++ b/tests/functional/x86_64/test_vhost_vsock_cpr.py
-@@ -0,0 +1,245 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test for vhost-vsock over CPR (cpr-transfer and cpr-exec):
-+# a host<->guest vsock transfer must survive repeated CPR migrations, in
-+# either direction.
-+#
-+# Copyright (c) 2026 Virtuozzo International GmbH.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Any vhost-vsock device is attached to a virtio bus, whose .get_dev_path()
++ * forwards to the proxy device, and every proxy bus (PCI, MMIO, CCW)
++ * implements it.  Thus qdev_get_dev_path() always returns a non-empty string,
++ * which guarantees us a unique CPR name.
++ */
++static char *vhost_vsock_cpr_name(DeviceState *dev)
++{
++    g_autofree char *path = qdev_get_dev_path(dev);
++    g_assert(path && path[0]);
++    return g_strdup_printf("%s/vhost-vsock", path);
++}
+ 
+ static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+ {
+@@ -143,6 +155,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
++    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
++    bool cpr_incoming = cpr_is_incoming();
+     int vhostfd;
+     int ret;
+ 
+@@ -170,7 +184,14 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    if (vsock->conf.vhostfd) {
++    if (cpr_incoming) {
++        /* Reuse the fd handed over from the source QEMU */
++        vhostfd = cpr_find_fd(cpr_name, 0);
++        if (vhostfd < 0) {
++            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
++            goto err_blocker;
++        }
++    } else if (vsock->conf.vhostfd) {
+         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+         if (vhostfd == -1) {
+             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+@@ -186,6 +207,9 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+ 
+     if (!qemu_set_blocking(vhostfd, false, errp)) {
+         close(vhostfd);
++        if (cpr_incoming) {
++            cpr_delete_fd(cpr_name, 0);
++        }
+         goto err_blocker;
+     }
+ 
+@@ -207,11 +231,20 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+         goto err_vhost_dev;
+     }
+ 
++    /* Register the fd for a future CPR after a fully successful realize */
++    if (!cpr_incoming && !cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
++        goto err_vhost_dev;
++    }
 +
-+import fcntl
-+import filecmp
-+import os
-+import subprocess
-+import time
-+
-+from qemu.qmp import ConnectError, ExecInterruptedError
-+from qemu.qmp.legacy import QEMUMonitorProtocol
-+from qemu_test import (Asset, LinuxKernelTest, exec_command,
-+                       exec_command_and_wait_for_pattern, get_qemu_img,
-+                       skipIfMissingCommands)
-+
-+GUEST_CID = 4000000010    # we expect this CID to be free on the host
-+VSOCK_PORT = 5000
-+
-+TRANSFER_SIZE = 512 * 1024 * 1024    # file size for host<->guest transfer
-+CPR_INTERVAL = 0.2                   # interval between CPR ops
-+
-+VHOST_SET_OWNER = 0xAF01      # _IO(VHOST_VIRTIO, 0x01)
-+VHOST_RESET_OWNER = 0xAF02    # _IO(VHOST_VIRTIO, 0x02)
-+
-+# What a QMP connection raises when its QEMU goes away underneath it
-+QMP_GONE = (OSError, EOFError, ConnectError, ExecInterruptedError)
-+
-+
-+@skipIfMissingCommands('socat')
-+class VhostVsockCPR(LinuxKernelTest):
-+    # This should have passwordless root login, vsock support + socat
-+    ASSET_DISKIMAGE = Asset(
-+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
-+         'debian-12-nocloud-amd64-20231210-1590.qcow2'),
-+        'b94e3f34db59988a815b33dffc24f5a58502540efece2cc1ed15e0ac8749bb2e')
-+
-+    def require_vhost_vsock_cpr(self):
-+        try:
-+            fd = os.open('/dev/vhost-vsock', os.O_RDWR)
-+        except OSError:
-+            self.skipTest('/dev/vhost-vsock is not available')
-+        try:
-+            for name, request in (('VHOST_SET_OWNER', VHOST_SET_OWNER),
-+                                  ('VHOST_RESET_OWNER', VHOST_RESET_OWNER)):
-+                try:
-+                    fcntl.ioctl(fd, request)
-+                except OSError:
-+                    self.skipTest(f'{name} is not supported for vhost-vsock')
-+        finally:
-+            os.close(fd)
-+
-+    def setUp(self):
-+        super().setUp()
-+        self.require_accelerator('kvm')
-+        self.require_device('vhost-vsock-pci')
-+        self.require_vhost_vsock_cpr()
-+        self.set_machine('q35')
-+
-+        # Use Debian cloud image as a backing.  During host<->guest
-+        # transfer the guest will write data to its disk, so we start
-+        # it with an overlay
-+        self.disk = self.scratch_file('disk.qcow2')
-+        subprocess.check_call([get_qemu_img(self), 'create', '-q', '-f',
-+                               'qcow2', '-b', self.ASSET_DISKIMAGE.fetch(),
-+                               '-F', 'qcow2', self.disk])
-+
-+        self.payload = self.scratch_file('payload')
-+        with open(self.payload, 'wb') as f:
-+            for _ in range(TRANSFER_SIZE >> 20):
-+                f.write(os.urandom(1 << 20))
-+
-+        self.sock_dir = self.socket_dir().name
-+        self.cpr_count = 0
-+
-+        self.guest = None
-+        self.qmp_path = None
-+
-+    def prepare_vm(self, vm, name, *extra_args):
-+        # We don't want QEMUMachine.launch() set up QMP for us.  In this
-+        # case launch() waits for greeting - which won't be sent cause
-+        # CPR target is reading CPR migration channel before QMP
-+        qmp_path = os.path.join(self.sock_dir, f'{name}-qmp.sock')
-+        vm.set_qmp_monitor(False)
-+        vm.set_console()
-+        vm.add_args('-accel', 'kvm', '-m', '1G',
-+                    '-object', 'memory-backend-memfd,id=ram,share=on,size=1G',
-+                    '-machine', 'memory-backend=ram,aux-ram-share=on',
-+                    '-drive', f'file={self.disk},if=none,id=disk,format=qcow2',
-+                    '-device', 'virtio-blk-pci,drive=disk',
-+                    '-device', f'vhost-vsock-pci,guest-cid={GUEST_CID}',
-+                    '-qmp', f'unix:{qmp_path},server=on,wait=off',
-+                    *extra_args)
-+        return qmp_path
-+
-+    def wait_for(self, what, cond, timeout=60):
-+        """Poll cond() until it returns something true, and return that"""
-+        deadline = time.monotonic() + timeout
-+        while True:
-+            value = cond()
-+            if value:
-+                return value
-+            self.assertLess(time.monotonic(), deadline,
-+                            f'timed out waiting for {what}')
-+            time.sleep(0.2)
-+
-+    def qmp_connect(self, qmp_path):
-+        """Connect to a QEMU which may still be starting up"""
-+        def attempt():
-+            try:
-+                qmp = QEMUMonitorProtocol(qmp_path)
-+                qmp.connect()
-+                return qmp
-+            except (OSError, ConnectError):
-+                return None
-+        return self.wait_for('QMP to come up', attempt)
-+
-+    def wait_migration(self, qmp):
-+        def completed():
-+            status = qmp.cmd('query-migrate').get('status')
-+            self.assertNotEqual(status, 'failed', 'migration failed')
-+            return status == 'completed'
-+        self.wait_for('migration completion', completed)
-+
-+    def wait_running(self, qmp_path):
-+        # Make sure we're dealing with the new QEMU after CPR
-+        while True:
-+            try:
-+                with self.qmp_connect(qmp_path) as qmp:
-+                    self.wait_for('the VM to resume', lambda: qmp.cmd(
-+                        'query-status')['status'] == 'running')
-+                return
-+            except QMP_GONE:
-+                pass
-+
-+    def boot(self):
-+        self.guest = self.vm
-+        self.qmp_path = self.prepare_vm(self.guest, 'source')
-+        self.guest.launch()
-+        self.wait_for_console_pattern('login:')
-+        exec_command_and_wait_for_pattern(self, 'root', 'root@localhost:~#')
-+
-+    def transfer(self, guest_cmd, host_cmd, cpr):
-+        """
-+        Run a socat transfer between the guest and the host, and keep
-+        performing CPR migrations as long as it's in progress
-+        """
-+        exec_command(self, f'{guest_cmd} &', vm=self.guest)
-+        with subprocess.Popen(host_cmd) as socat:
-+            while socat.poll() is None:
-+                time.sleep(CPR_INTERVAL)
-+                cpr()
-+        self.assertEqual(socat.returncode, 0, 'host socat failed')
-+        exec_command_and_wait_for_pattern(self, 'wait %1; echo RC_$?',
-+                                          'RC_0', vm=self.guest)
-+
-+    def transfer_both_ways(self, cpr):
-+        """
-+        Send the payload to a file on the guest's disk, get it back into
-+        another file on the host, then compare.
-+        """
-+        echo = self.scratch_file('echo')
-+        connect = f'VSOCK-CONNECT:{GUEST_CID}:{VSOCK_PORT},retry=10'
-+
-+        self.transfer(f'socat -u VSOCK-LISTEN:{VSOCK_PORT} CREATE:/root/data',
-+                      ['socat', '-u', f'FILE:{self.payload}', connect], cpr)
-+        self.transfer(f'socat -u FILE:/root/data VSOCK-LISTEN:{VSOCK_PORT}',
-+                      ['socat', '-u', connect, f'CREATE:{echo}'], cpr)
-+
-+        self.log.info('%d CPR migrations performed', self.cpr_count)
-+        self.assertTrue(filecmp.cmp(self.payload, echo, shallow=False),
-+                        'the data came back different')
-+
-+    def test_cpr_transfer(self):
-+        """
-+        Perform consecutive cpr-transfer migrations during vsock file
-+        transfer, starting a new QEMU instance on each one, migrating into
-+        it and shutting down the source
-+        """
-+        def cpr():
-+            n = self.cpr_count
-+            mig_sock = os.path.join(self.sock_dir, f'mig{n}.sock')
-+            cpr_sock = os.path.join(self.sock_dir, f'cpr{n}.sock')
-+            target = self.get_vm(name=f'target{n}')
-+            target_qmp_path = self.prepare_vm(
-+                target, f'target{n}',
-+                '-incoming', f'unix:{mig_sock}',
-+                '-incoming', 'cpr,addr.transport=socket,addr.type=unix,'
-+                             f'addr.path={cpr_sock}')
-+
-+            # The target listens on the CPR channel: wait for it to be there
-+            target.launch()
-+            self.wait_for('the CPR socket', lambda: os.path.exists(cpr_sock))
-+
-+            with self.qmp_connect(self.qmp_path) as qmp:
-+                qmp.cmd('migrate-set-parameters', mode='cpr-transfer')
-+                qmp.cmd('migrate', channels=[
-+                    {'channel-type': 'main',
-+                     'addr': {'transport': 'socket', 'type': 'unix',
-+                              'path': mig_sock}},
-+                    {'channel-type': 'cpr',
-+                     'addr': {'transport': 'socket', 'type': 'unix',
-+                              'path': cpr_sock}}])
-+                self.wait_migration(qmp)
-+            self.wait_running(target_qmp_path)
-+
-+            self.guest.shutdown()
-+            self.guest, self.qmp_path = target, target_qmp_path
-+            self.cpr_count += 1
-+
-+        self.boot()
-+        self.transfer_both_ways(cpr)
-+
-+    def test_cpr_exec(self):
-+        """
-+        Perform consecutive cpr-exec migration during vsock file transfer,
-+        saving devices' state to a file
-+        """
-+        state = self.scratch_file('cpr.state')
-+
-+        def cpr():
-+            try:
-+                with self.qmp_connect(self.qmp_path) as qmp:
-+                    qmp.cmd('migrate-set-parameters', **{
-+                        'mode': 'cpr-exec', 'cpr-exec-command': exec_cmd})
-+                    qmp.cmd('migrate', uri=f'file:{state}')
-+                    self.wait_migration(qmp)
-+            except QMP_GONE:
-+                pass
-+            self.wait_running(self.qmp_path)
-+            self.cpr_count += 1
-+
-+        self.boot()
-+        exec_cmd = [*self.guest._qemu_full_args, '-incoming', f'file:{state}']
-+        self.transfer_both_ways(cpr)
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     return;
+ 
+ err_vhost_dev:
+     /* vhost_dev_cleanup() closes the vhostfd passed to vhost_dev_init() */
+     vhost_dev_cleanup(&vvc->vhost_dev);
++    if (cpr_incoming) {
++        /* The fd came from cpr_find_fd() and is closed now, drop the entry */
++        cpr_delete_fd(cpr_name, 0);
++    }
+ err_virtio:
+     vhost_vsock_common_unrealize(vdev);
+ err_blocker:
+@@ -223,10 +256,12 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
++    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
+ 
+     /* This will stop vhost backend if appropriate. */
+     vhost_vsock_set_status(vdev, 0);
+ 
++    cpr_delete_fd(cpr_name, 0);
+     migrate_del_blocker(&vsock->migration_blocker);
+     vhost_dev_cleanup(&vvc->vhost_dev);
+     vhost_vsock_common_unrealize(vdev);
 
 -- 
 2.47.1
