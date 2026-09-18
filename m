@@ -4,75 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B577DC88E75
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 08:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BA4C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 08:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7TpX-0006uf-RZ; Fri, 18 Sep 2026 04:20:23 -0400
+	id 1x7TsZ-0007ZM-IC; Fri, 18 Sep 2026 04:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x7TpS-0006uN-9p
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 04:20:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x7TpP-0003jC-Nh
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 04:20:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789719613;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l+nW1m+5xJZL918Ewt0PNVZ9gHF4RYb87c5kkBqHO3k=;
- b=Bhw8uNUYUvMgF72GAQSprYGS4uvYG2eRPxmTt0JzgH4fNEccKgxOMI9HuQ+rACcW36lGAZ
- oRuZgALwaaRmUTwfGfeJhw8qgNtsjcdJD9ZdVutDLw3Y+XlhPBHLBa+4twGcdqylzxkDng
- VoG3C4KmAvJl1j4VWGLg1mtIB/7du2U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-IrAn0d-WOQKHa6J7eOtFLQ-1; Fri,
- 18 Sep 2026 04:20:10 -0400
-X-MC-Unique: IrAn0d-WOQKHa6J7eOtFLQ-1
-X-Mimecast-MFC-AGG-ID: IrAn0d-WOQKHa6J7eOtFLQ_1789719609
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E58B91805A1C; Fri, 18 Sep 2026 08:20:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32AEA1956047; Fri, 18 Sep 2026 08:20:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7E49321E6A04; Fri, 18 Sep 2026 10:20:05 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Peter Xu <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 14/20] migration: Use output visitor in info command
-In-Reply-To: <aqxUMH9Q3OtkV9oW@gallifrey> (David Alan Gilbert's message of
- "Thu, 17 Sep 2026 20:57:20 +0000")
-References: <20260915000209.3692668-1-farosas@suse.de>
- <20260915000209.3692668-15-farosas@suse.de>
- <87zexg2ix9.fsf@pond.sub.org>
- <aqw0anGmdLfHtv3q@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <aqxUMH9Q3OtkV9oW@gallifrey>
-Date: Fri, 18 Sep 2026 10:20:05 +0200
-Message-ID: <87h5jnnf7u.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x7TsY-0007Yz-C7
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 04:23:30 -0400
+Received: from mail-pj2-x05.google.com ([2607:f8b0:4864:39::5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x7TsW-0003tF-DU
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 04:23:30 -0400
+Received: by mail-pj2-x05.google.com with SMTP id
+ d9443c01a7336-2d6fbdc8772so2522865ad.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 01:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789719806; x=1790324606; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=sUlMgu8lp9I4VUTAWqavbi7GYxbQken/Zb1Wf28IRYI=;
+ b=AFFIUKk8ZVwPUaecct+rkjMt2Wtookb9nzQf7VQszziiidQGSpdDmeCx6WgdO9T5mC
+ HKJPr66FLE96oz9H4LdVHXjR6dIUVLDhzY0+QgSFAFqMNkyvF090ipBeyE3ox3Ygp61w
+ TFng6lXYVtBmNdF2FV5o31UqWgfjuXspvbweGwvdAlo12IifZtkOWsEWo5jba0Uw9edB
+ x9JRGs5Ao70iM/CeqhGO7ocsMeLHEdoUjFELZb6iBxVPwObh/JDzQgJEW5RBtG1QjW7z
+ vu539Qsy1vz6m/jARudE/u2SHvl7Ix9tDTC4zDJwtzIKRcHZiQRJnctOuwqq09O2ruA9
+ lvQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789719806; x=1790324606;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=sUlMgu8lp9I4VUTAWqavbi7GYxbQken/Zb1Wf28IRYI=;
+ b=SWvLgjs05xyZGKBuFbcHgiApb+xvVH9pSAWR2PSLFdG3YE8peT7phuBoxiSchln1DV
+ a3uPgl+E3WYhsZJ6eKGx7ZB6WZv9fpXEcRz2eC1OKdmzxhYRSZimbsfLxBnfinyA2wlh
+ 0fVJADu2JGNwYf3QDoTddK1f/juykbXMcxGm4RWAu8JRlk9F+oHTSdX3CD7Ty+cEQB/M
+ Lk6kbrJuBDYl/Zn+rGsL9Mv11CuaKyuU0NyNGWGrSOKtEbAojVVNtP+FG8GfqHAAscQF
+ MqNjg6gPutr2Vl04oWcXZGbKX20mZezMg81p+R4Bh0EyfBiDSpnsrpzpoUTASWkWt1Md
+ M1xQ==
+X-Gm-Message-State: AFuF++mhGOdwYXhvgj1uFoYlibEAoZjHAwFFm6VeQiE4AggchzHD8jmP
+ IBlT4dI+dbWekVaRgDKRoW1welpGT0RItQGmLYFam8P6cedQB26zMhQ=
+X-Gm-Gg: AYBFou24FXnwGxkWMdPw15tlNiHJtDfLUResvvbJtFk70in1c4T9+mQ+eHdtjxGo7al
+ 8mCI8m8299G5Gf07hirvetZfS++zicIdnZLTX6nwop7qtdnqIz/kREGTUIw6daMGf4rjXXNPVl6
+ +hL0UPeZ1U+eCi2uN0hjIO3ssvAj1vbCFsqGVoZUpzk4REVFJLtPjhMCn7Eag0r+xvDwpaNfhZg
+ UUbs73Eo/tNzUFOJcKA4P3unVHfgkjqzj0YluAh8fXeqsp5xJmujScG0jKHKkC107+cMWYTe/gX
+ rwEs76EWbD33gbfXac3e09oJxt5UxuLUqMvi/NRICBX/qhDEid0fpLqYEUlhSGyPP9eEfG9PoY1
+ 8tUq3C/DyCMSwDHTmMeRvfqID2JlJr0TER6zNiqJSVyBPl/Hnuf6mzTTOBqOWoOsFYYYlCv7gvl
+ BTXQgGSGFhUdvRJVHb7aeYNxYScdTHbyNoUiuVzvVSfS67J+x4txMz6FcdyMRqI8IC+XruTPzLm
+ iMkRzRl6n9Tp11hwViMG5P91twmHdUl/L5/nAW13G0Kn9joGtbZfRU=
+X-Received: by 2002:a17:902:d4c5:b0:2da:ef81:37e7 with SMTP id
+ d9443c01a7336-2ddb1b995dbmr36675115ad.21.1789719805973; 
+ Fri, 18 Sep 2026 01:23:25 -0700 (PDT)
+Received: from ?IPV6:2408:820c:8ffa:c0f0:308d:821d:80d8:cadb?
+ ([2408:820c:8ffa:c0f0:308d:821d:80d8:cadb])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c2876ad4dsm2503804eec.21.2026.09.18.01.23.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Sep 2026 01:23:25 -0700 (PDT)
+Message-ID: <4999b79f-e5e2-4a20-a245-4784913fea1c@gmail.com>
+Date: Fri, 18 Sep 2026 16:23:21 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/igd: Add device ID support for Meteor Lake and
+ Arrow Lake
+To: "Wang, Yuan1" <yuan1.wang@intel.com>
+Cc: qemu-devel@nongnu.org, alex@shazbot.org, clg@redhat.com,
+ bosheng.xue@intel.com, junjie.cao@intel.com
+References: <e1c9833b-e534-4b02-831d-a22a25cc2a47@gmail.com>
+ <20260915013037.648161-1-junjie.cao@intel.com>
+ <948e2399-1c85-4b51-9964-892750f7ce68@gmail.com>
+ <57ff9cf6-412b-4cbb-844e-d9d1b0efbe95@intel.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <57ff9cf6-412b-4cbb-844e-d9d1b0efbe95@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:39::5;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj2-x05.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,133 +108,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
+On 2026-09-18 16:00, Wang, Yuan1 wrote:
+>=20
+> On 9/16/2026 1:33 PM, Tomita Moeko wrote:
+>> So on MTL+ BAR2 is mapped to the physical memory at GSMBASE, with firs=
+t 8M
+>> for GTT. PTE addresses are relative addresses so that accessing indire=
+ctly
+>> from BAR or directly works. That makes sense.=20
+>>
+>> Meteor and later IGDs are supposed to access DSM from BAR2 instead of =
+directly
+>> from DSMBASE, but there is some hardware issues in Meteor Lake and Arr=
+ow Lake's
+>> BAR2, software workarounds it to by falling back to DSMBASE. i915 won'=
+t read
+>> DSMBASE register if the WA is not enabled (and it's always disabled wh=
+en
+>> virtualization enabled), while it's possible for GOP driver (and maybe=
+ windows
+>> driver) to read it. Is my understanding correct?
+>>
+> Yes, your understanding is correct. In virtualization, we still go to B=
+AR2.
+>=20
+>>> Agree with the direction, and it is cheaper than that: a read-only BA=
+R0
+>>> quirk can take pci_get_bar_addr(pdev, 2) at read time, returning BAR2=
+ at
+>>> 0x108100 and BAR2 + 8M at 0x1080C0.  Then the CPU-side address resolv=
+es
+>>> to real stolen memory through the aperture instead of guest RAM,
+>>> bdsm-size stays 0 as documented, and nothing in config space is
+>>> invented.
+>> Yes hooking on 0x1080C0 register read is easier and more straightforwa=
+rd.
+>>
+>>>> Possibly an easier way is emulating MTL_PCODE_STOLEN_ACCESS(0x138914=
+) to
+>>>> disallowed in QEMU, if the GOP driver code checks it, to enforce the=
+ access
+>>>> via BAR2 in guest.
+>>> 0x138914 reads 1 on the host and is not quirked, so a guest sees 1 to=
+o.
+>>> Returning 0 there is a small addition and covers a GOP that checks it=
+;
+>>> the DSMBASE quirk covers one that does not.  On the Wa itself: i915
+>>> already takes the BAR path in guests (i915_run_as_guest() short-circu=
+its
+>>> i915_direct_stolen_access()), so that path has upstream precedent; we=
 
-> * Peter Xu (peterx@redhat.com) wrote:
->> On Thu, Sep 17, 2026 at 01:53:22PM +0200, Markus Armbruster wrote:
->> > Fabiano Rosas <farosas@suse.de> writes:
->> > 
->> > > The hmp_info_migrate_parameters function currently open-codes the
->> > > mon_printf calls for each migration parameter. As with the set command
->> > > in the last patch, this should not be necessary as the QAPI
->> > > infrastructure already has generated code that takes type and struct
->> > > member names into account, including converting _ from C into the '-'
->> > > character as part of parameter names strings.
->> > >
->> > > The current code is also quite painful to rebase if a series has been
->> > > carried for a long time while parameters have been added in master.
->> > >
->> > > Replace all of this with a conversion from MigrationParameters to
->> > > QDict using an output visitor and a loop over the QDict that prints
->> > > per-QAPI-type formatted strings.
->> > >
->> > > Modelled after block/qapi.c:dump_qobject, but with some changes to
->> > > keep the migration command output formatting.
->> > >
->> > > Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> > 
->> > Old output of info migrate_parameters for me:
->> > 
->> >     announce-initial: 50
->> >     announce-max: 550
->> >     announce-rounds: 5
->> >     announce-step: 100
->> >     throttle-trigger-threshold: 50
->> >     cpu-throttle-initial: 20
->> >     cpu-throttle-increment: 10
->> >     cpu-throttle-tailslow: off
->> >     max-cpu-throttle: 99
->> >     tls-creds: 
->> >     tls-hostname: 
->> >     tls-authz: 
->> >     max-bandwidth: 134217728
->> >     avail-switchover-bandwidth: 0
->> >     max-postcopy-bandwidth: 0
->> >     downtime-limit: 300
->> >     x-checkpoint-delay: 20000
->> >     multifd-channels: 2
->> >     multifd-compression: none
->> >     zero-page-detection: multifd
->> >     xbzrle-cache-size: 67108864
->> >     x-vcpu-dirty-limit-period: 1000
->> >     vcpu-dirty-limit: 1
->> >     mode: normal
->> >     direct-io: off
->> >     x-rdma-chunk-size: 1048576
->> >     cpr-exec-command:
->> > 
->> > New output:
->> > 
->> >     cpu-throttle-tailslow: off
->> >     xbzrle-cache-size: 67108864
->> >     cpu-throttle-initial: 20
->> >     announce-max: 550
->> >     direct-io: off
->> >     avail-switchover-bandwidth: 0
->> >     local: off
->> >     zero-page-detection: multifd
->> >     multifd-qatzip-level: 1
->> >     x-rdma-chunk-size: 1048576
->> >     multifd-channels: 2
->> >     mode: normal
->> >     multifd-zstd-level: 1
->> >     announce-initial: 50
->> >     downtime-limit: 300
->> >     tls-authz: 
->> >     cpr-exec-command:
->> > 
->> >     vcpu-dirty-limit: 1
->> >     multifd-compression: none
->> >     announce-rounds: 5
->> >     announce-step: 100
->> >     tls-creds: 
->> >     x-vcpu-dirty-limit-period: 1000
->> >     multifd-zlib-level: 1
->> >     max-cpu-throttle: 99
->> >     max-postcopy-bandwidth: 0
->> >     tls-hostname: 
->> >     throttle-trigger-threshold: 50
->> >     max-bandwidth: 134217728
->> >     x-checkpoint-delay: 20000
->> >     cpu-throttle-increment: 10
->> > 
->> > New output has an unwanted blank line after "cpr-exec-command:".
->> > 
->> > New output adds @local, @multifd-qatzip-level, @multifd-zlib-level,
->> > @multifd-zstd-level.  Commit message should point that out.
->> > 
->> > Order of parameters changes, and not for the better.  Hmm.
->> 
->> Good point.. it might start to be awkward to users looking for tls-*,
->> multifd-*, announce-* or cpu-throttle*, etc. after this change, expecting
->> them grouped.
->> 
->> Maybe we can sort them by name with inserting top level to a QList first
->> from the QDict.
->
-> Are there any filter visitors in qemu's visitor system - e.g. something that
-> sorts?
+>>> have not measured whether the hang reproduces there.
+>>>
+>> Quirking 0x138914 prevents driver applying that WA, but we are not sur=
+e
+>> if driver checks it before WA. While hooking read to 0x1080C0 fakes th=
+e
+>> DSMBASE to (BAR2 + 8M) in guest address space. Both tries to enforce
+>> guest accesses to DSM via BAR2. I personally prefers hooking 0x1080C0
+>> as it's driver-independent.
+> By some internal sync with Junjie and Bosheng, we plan to quirk 0x13891=
+4 as you point
+>=20
+> before. We have checked the GOP code, it always checks the=C2=A00x13891=
+4 first to determine
+>=20
+> the address it used.=C2=A0 If you think it is ok, we will raise a V3 pa=
+tch based on it.
 
-No.  Visitors walk members in source order.  Source order is good as
-long as we care to make it good.  But it doesn't help us here, because
-we use the visitor only to convert to QObject, then walk that.  This
-loses order.
+Sure please proceed with that.
 
-If QDict iterated in insertion order, we'd be fine.  Python dict do.
-Could be a fun little project for someone with time to spare.
-
-The other solution is to iterate over sorted QDict keys, as Peter says.
-
-> Dave
->
->> We won't be able to keep all relevant fields together, for example, we used
->> to have max-cpu-throttle together with cpu-throttle-*, now also separate
->> even with alphabetical order, but it's a special case of bad name since the
->> start.. where it could have been "cpu-throttle-max".  Meanwhile, as another
->> good side effect, we can finally have max-* fields together too.
->> 
->> -- 
->> Peter Xu
->> 
+>> Btw, this quirk seems only necessary for Meteor and Arrow lake. That W=
+A
+>> is not applied in Xe driver. I'm not sure if it still presents in GOP =
+or
+>> windows driver for later generations.
+>=20
+> The WA is only needed for MTL/ARL. The later ones don't need this WA.
+>=20
+>>> The firmware still has to program ASLS.  The IgdAssignmentDxe build t=
+he
+>>> v2 commit message describes aborts on bdsm-size=3D0 before doing so;
+>>> VfioIgdPkg has no such check and programs ASLS for MTL+ as is.
+>>>
+>>> I'll write the quirk.  It can go into Yuan's v3 or on top of it as a
+>>> separate patch -- Yuan, your call.  Either way it needs a run with th=
+e
+>>> stock GOP build on your setup.
+>>>
+>>> Junjie
+>> Yes OpRegion is needed for display to work. In the "hooking 0x1080C0 r=
+ead"
+>> approach above, allocating DSM in guest is not needed. It sounds bette=
+r to
+>> make your IgdAssignmentDxe not aborting if bdsm-size=3D0.
+>>
+>> Best Regards,
+>> Moeko
+>=20
+> Yes,=C2=A0 that's a good idea. If we can make IgdAssignmentDxe not abor=
+ting, it looks better.=C2=A0
+>=20
+> And this function is in the offline patch of OVMF and is maintained in =
+ECI's website.
+>=20
+> We are discussing this with the ECI team to update the offline patch. T=
+he gen_id() may not
+>=20
+> need to be changed now if they accepted. And the V3 patch should only i=
+nclude the
+>=20
+> quirk for 0x138914 for MTL/ARL.
+>=20
+>=20
+> Thanks
+>=20
+> Yuan
 
 
