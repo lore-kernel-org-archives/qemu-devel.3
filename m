@@ -4,103 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D147C982DD
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 20:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F08C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 21:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7fFm-00037b-7U; Fri, 18 Sep 2026 16:32:14 -0400
+	id 1x7fjf-0006xl-BR; Fri, 18 Sep 2026 17:03:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7fFj-00037F-VR
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 16:32:11 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7fFi-0003vt-31
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 16:32:11 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1x7fjc-0006xK-Gx
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 17:03:04 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1x7fjW-000296-5P
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 17:03:01 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4hmlSm3Dcgz8PbR;
+ Fri, 18 Sep 2026 17:02:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+ :from:to:cc:subject:message-id:mime-version:content-type; s=
+ default; bh=BShrA4pzR3oXbQSU5TrSUAV7Gpc8OTMZBKlE1MjipzI=; b=bMhf
+ u2QvWll7gjXcTy9H3TM+NgkLUB0yhdV4r7AMYZTvyAEQTvU9K4n/Blf3LOLw4xit
+ kQNEmyh+lI6ux12JeQc7Jp02tq3umivuP88JQVZf5CobCrn11q7uVyEqUN5RbneH
+ mogh/eGswC6VYpaRcLKWniAQINg/4vdccmOqaOI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+ :cc:subject:message-id:mime-version:content-type; q=dns; s=
+ default; b=olrJNQmTXop0jqpJO1+dwARbGnmyU7v4AxpnyzDOmfZkbQlB7TE3T
+ p8nE93RImifMB7W+FwGcMup6kHDV4VcAGxMI5kh85VK0lFowpWYIde2jOmANTxnU
+ jDeT5aVAmLnl2v/icDVNeJXA+eOlFtwTFlKOMmTi9AS74rZB4jBj3k=
+Received: from humpty.home.comstyle.com (unknown
+ [IPv6:2001:470:b050:3:855b:b772:3733:23e1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CA74521EE9;
- Fri, 18 Sep 2026 20:31:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789763524; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=iIia9LF/FU6W/WcOdcz2d8EjzufmNNdj0WLEnEAJ3Tc=;
- b=Dk+wJ2PDPijxW2LQ+XsZ8jpqGWzS2xt0/mnmMSUpRODpc40wLCOIzKnutlWoLllBAeJ6/z
- VhXY7Dvpjp2hjjHQDdBE8heVgJYgjramxa2BYPbC96DZditL3enVd7ZZJFZP72Po2G5paD
- Cc6fbtBDSqWI26QwjQACEBuxmob7jRI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789763524;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=iIia9LF/FU6W/WcOdcz2d8EjzufmNNdj0WLEnEAJ3Tc=;
- b=q+F5OwaxEl1YJEdTsbso0Ytli/gmyJQCA+gh2sfBAY5TH2XvJwJHLFOAI568Sr8WDBrsU2
- Xfk8yLeq+/ipLoBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789763519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=iIia9LF/FU6W/WcOdcz2d8EjzufmNNdj0WLEnEAJ3Tc=;
- b=Qal1hBjVRJYygifvsOpLxYzkNh4FKKe00m/mZAkzsYEAiBN77OTXuT4jpjTtGmeDjBgB5q
- 1Vd9xfx6voG1F8MK9De94OxYQXZXgNB0elvwqztzx5o1veEByx6fCoEhaKasyhUqUXXc26
- dnEW63hMAbdx+vkjV6RvAS3vinkIfYQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789763519;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=iIia9LF/FU6W/WcOdcz2d8EjzufmNNdj0WLEnEAJ3Tc=;
- b=cc7i7rKpRS6yohgCGU37MZpu7g0xomgmfNZ1GTMhZOgobZmHyfgQgso54lk/HYE28XNSXN
- YS1AefELk5zDrADA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B99E01348F;
- Fri, 18 Sep 2026 20:31:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +WaBFryfrWpNfgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 18 Sep 2026 20:31:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH] meson: Fix meson suites invocation from make check
-Date: Fri, 18 Sep 2026 17:31:52 -0300
-Message-ID: <20260918203153.3874488-1-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4hmlSm236kz8PbQ;
+ Fri, 18 Sep 2026 17:02:48 -0400 (EDT)
+Date: Fri, 18 Sep 2026 17:02:47 -0400
+From: Brad Smith <brad@comstyle.com>
+To: Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] qga: implement 'guest-get-fsinfo' for NetBSD and OpenBSD
+Message-ID: <aq2m9yuSGK0m2zRb@humpty.home.comstyle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.995];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_TWELVE(0.00)[14]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,mtest2make.py:url,meson.build:url];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,101 +74,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-make check is currently by default running tests tagged
-"slow". Running make check with no SPEED variable set should be
-equivalent to SPEED=quick and run the meson 'quick' test setup, which
-explicitly excludes slow tests:
+qga: implement 'guest-get-fsinfo' for NetBSD and OpenBSD
 
-  add_test_setup('quick', exclude_suites: ['slow', 'thorough'] ...
-
-The problem is that the mtest2make.py script is effectively overriding
-the "meson test --setup" setting by using --suite which takes
-precedence over --setup according to meson documentation.
-
-Fix by excluding suites directly with the "--no-suite" option while
-generating Makefile.mtest.
-
-Although the 'exclude_suites' in meson.build are useless for make
-check, they still help when running 'meson test' from the
-command-line, so keep them around.
-
-For the configure line I'm using:
-
-make check goes from 1100 to 996 tests
-make SPEED=slow check stays at 2158 tests
-make SPEED=thorough check stays at 2279 tests
-
-(the rest of the test targets look sane, but maintainers please
-double-check)
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Brad Smith <brad@comstyle.com>
 ---
-- With this change we obviously lose coverage in make check. I suggest
-  we use this opportunity to review what gets put in the quick
-  suite.
+ qga/commands-bsd.c    | 19 +++++++++++++------
+ qga/commands-common.h | 12 +++++++-----
+ qga/commands-posix.c  |  4 ++--
+ qga/qapi-schema.json  | 12 ++++++------
+ 4 files changed, 28 insertions(+), 19 deletions(-)
 
-  For migration, I want to keep only the smoke tests in make
-  check. I'll send a patch adding them back if this change is
-  accepted.
-
-- Some of the suffixes from functional tests could probably be removed
-  and rely on having the tests in the proper suite instead. I.e. use
-  'slow' instead of 'foobar_slow'.
----
- scripts/mtest2make.py          | 11 +++++++++--
- tests/qemu-iotests/meson.build |  2 +-
- 2 files changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
-index 383ea68b16..a61a83f775 100644
---- a/scripts/mtest2make.py
-+++ b/scripts/mtest2make.py
-@@ -26,6 +26,11 @@ def names(self, base):
- .speed.slow = $(sort $(filter-out %-thorough, $1))
- .speed.thorough = $(sort $1)
- 
-+.speed_exclude_suites.quick = --no-suite slow --no-suite thorough \
-+                              --no-suite optional
-+.speed_exclude_suites.slow = --no-suite thorough
-+.speed_exclude_suites.thorough =
+diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
+index 1c51d099eb..0c6caec4a3 100644
+--- a/qga/commands-bsd.c
++++ b/qga/commands-bsd.c
+@@ -28,12 +28,20 @@
+ #include <net/ethernet.h>
+ #endif
+ #include <paths.h>
++#ifdef __FreeBSD__
++#include <ufs/ffs/fs.h>
++#endif
 +
- TIMEOUT_MULTIPLIER ?= 1
- .mtestargs = --no-rebuild -t $(TIMEOUT_MULTIPLIER)
- ifneq ($(SPEED), quick)
-@@ -34,7 +39,8 @@ def names(self, base):
- .mtestargs += $(subst -j,--num-processes , $(filter-out -j, $(lastword -j1 $(filter -j%, $(MAKEFLAGS)))))
++#ifdef __NetBSD__
++typedef struct statvfs bsd_fsinfo_t;
++#else
++typedef struct statfs bsd_fsinfo_t;
++#endif
  
- .check.mtestargs = $(MTESTARGS) $(.mtestargs) $(if $(V),--verbose,--print-errorlogs) \
--    $(foreach s, $(sort $(.check.mtest-suites)), --suite $s)
-+    $(foreach s, $(sort $(.check.mtest-suites)), --suite $s) \
-+    $(.speed_exclude_suites.$(SPEED))
- .bench.mtestargs = $(MTESTARGS) $(.mtestargs) --benchmark --verbose \
-     $(foreach s, $(sort $(.bench.mtest-suites)), --suite $s)''')
+-#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM) || defined(__FreeBSD__)
+ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
+ {
+     FsMount *mount;
+-    struct statfs *mntbuf, *mntp;
++    bsd_fsinfo_t *mntbuf, *mntp;
+     struct stat statbuf;
+     int i, count, ret;
  
-@@ -102,7 +108,8 @@ def emit_suite(name, suite, prefix):
-         targets += f' {prefix} {prefix}-report.junit.xml'
-     print(f'ifneq ($(filter {targets}, $(MAKECMDGOALS)),)')
-     # for the "base" suite possibly add FOO-slow and FOO-thorough
--    print(f".{prefix}.mtest-suites += {name} $(call .speed.$(SPEED), {names})")
-+    print(f".{prefix}.mtest-suites += {name} $(call .speed.$(SPEED), {names}) "
-+          ".speed_exclude_suites.$(SPEED)")
-     print(f'endif')
+@@ -57,16 +65,17 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
+         mount->dirname = g_strdup(mntp->f_mntonname);
+         mount->devtype = g_strdup(mntp->f_fstypename);
+         mount->fromname = g_strdup(mntp->f_mntfromname);
++        mount->dev = statbuf.st_dev;
+         mount->devmajor = major(mount->dev);
+         mount->devminor = minor(mount->dev);
++#ifdef CONFIG_FSFREEZE
+         mount->fsid = mntp->f_fsid;
+-        mount->dev = statbuf.st_dev;
++#endif
  
- targets = {t['id']: [os.path.relpath(f) for f in t['filename']]
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 8857f25f29..34cfcdc53b 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -68,7 +68,7 @@ foreach driver, speed: qemu_iotests_drivers
-   endif
+         QTAILQ_INSERT_TAIL(mounts, mount, next);
+     }
+     return true;
+ }
+-#endif /* CONFIG_FSFREEZE || CONFIG_FSTRIM */
  
-   # Every driver gets put in the driver specific suite
--  suites = ['block-' + driver + '-optional']
-+  suites = ['block-' + driver + '-optional', 'optional']
-   # Any driver tagged quick or slow also gets added to slow
-   # otherwise its tagged thorough
-   if speed != 'thorough'
+ #if defined(CONFIG_FSFREEZE)
+ static int ufssuspend_fd = -1;
+@@ -181,7 +190,6 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigned char *buf,
+ }
+ #endif /* HAVE_GETIFADDRS */
+ 
+-#if defined(__FreeBSD__)
+ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount)
+ {
+     GuestFilesystemInfo *fs = g_new0(GuestFilesystemInfo, 1);
+@@ -228,4 +236,3 @@ GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
+     free_fs_mount_list(&mounts);
+     return ret;
+ }
+-#endif /* __FreeBSD__ */
+diff --git a/qga/commands-common.h b/qga/commands-common.h
+index a07d0885f5..0d3c69b480 100644
+--- a/qga/commands-common.h
++++ b/qga/commands-common.h
+@@ -18,17 +18,19 @@
+ #endif /* __linux__ */
+ 
+ #ifdef __FreeBSD__
+-#include <ufs/ffs/fs.h>
++#include <sys/mount.h>
+ #endif /* __FreeBSD__ */
+ 
+-#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
++#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM) || defined(CONFIG_BSD)
+ typedef struct FsMount {
+     char *dirname;
+     char *devtype;
+     unsigned int devmajor, devminor;
+-#if defined(__FreeBSD__)
+-    dev_t dev;
++#ifdef __FreeBSD__
+     fsid_t fsid;
++#endif
++#ifdef CONFIG_BSD
++    dev_t dev;
+     char *fromname;
+ #endif
+     QTAILQ_ENTRY(FsMount) next;
+@@ -38,7 +40,7 @@ typedef QTAILQ_HEAD(FsMountList, FsMount) FsMountList;
+ 
+ bool build_fs_mount_list(FsMountList *mounts, Error **errp);
+ void free_fs_mount_list(FsMountList *mounts);
+-#endif /* CONFIG_FSFREEZE || CONFIG_FSTRIM */
++#endif /* CONFIG_FSFREEZE || CONFIG_FSTRIM || CONFIG_BSD */
+ 
+ #if defined(CONFIG_FSFREEZE)
+ int64_t qmp_guest_fsfreeze_do_freeze_list(bool has_mountpoints,
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 837e285b6d..dcc683f6c9 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -718,7 +718,7 @@ void qmp_guest_file_flush(int64_t handle, Error **errp)
+     }
+ }
+ 
+-#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
++#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM) || defined(CONFIG_BSD)
+ void free_fs_mount_list(FsMountList *mounts)
+ {
+      FsMount *mount, *temp;
+@@ -731,7 +731,7 @@ void free_fs_mount_list(FsMountList *mounts)
+          QTAILQ_REMOVE(mounts, mount, next);
+          g_free(mount->dirname);
+          g_free(mount->devtype);
+-#if defined(__FreeBSD__)
++#ifdef CONFIG_BSD
+          g_free(mount->fromname);
+ #endif
+          g_free(mount);
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 8cd0ba048b..fb640ea1bc 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -874,7 +874,7 @@
+   'data': [ 'ide', 'fdc', 'scsi', 'virtio', 'xen', 'usb', 'uml', 'sata',
+             'sd', 'unknown', 'ieee1394', 'ssa', 'fibre', 'raid', 'iscsi',
+             'sas', 'mmc', 'virtual', 'file-backed-virtual', 'nvme' ],
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_BSD' ] } }
+ 
+ ##
+ # @GuestPCIAddress:
+@@ -892,7 +892,7 @@
+ { 'struct': 'GuestPCIAddress',
+   'data': {'domain': 'int', 'bus': 'int',
+            'slot': 'int', 'function': 'int'},
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_BSD' ] } }
+ 
+ ##
+ # @GuestCCWAddress:
+@@ -912,7 +912,7 @@
+            'ssid': 'int',
+            'subchno': 'int',
+            'devno': 'int'},
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_BSD' ] } }
+ 
+ ##
+ # @GuestDiskAddress:
+@@ -942,7 +942,7 @@
+            'bus': 'int', 'target': 'int', 'unit': 'int',
+            '*serial': 'str', '*dev': 'str',
+            '*ccw-address': 'GuestCCWAddress'},
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_BSD' ] } }
+ 
+ ##
+ # @GuestNVMeSmart:
+@@ -1063,7 +1063,7 @@
+   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
+            '*used-bytes': 'uint64', '*total-bytes': 'uint64',
+            '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']},
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_BSD' ] } }
+ 
+ ##
+ # @guest-get-fsinfo:
+@@ -1077,7 +1077,7 @@
+ ##
+ { 'command': 'guest-get-fsinfo',
+   'returns': ['GuestFilesystemInfo'],
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_BSD' ] } }
+ 
+ ##
+ # @guest-set-user-password:
 -- 
-2.53.0
+2.55.0
 
 
