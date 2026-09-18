@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27EFC982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9E3C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7cS1-0007NO-LI; Fri, 18 Sep 2026 13:32:43 -0400
+	id 1x7cPt-0004wO-Uy; Fri, 18 Sep 2026 13:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPa-0004lc-UJ; Fri, 18 Sep 2026 13:30:12 -0400
+ id 1x7cPQ-0004cf-37; Fri, 18 Sep 2026 13:30:02 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPY-0000Vf-RY; Fri, 18 Sep 2026 13:30:10 -0400
+ id 1x7cPO-0000IX-LC; Fri, 18 Sep 2026 13:29:59 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 7EAC840F24;
- Fri, 18 Sep 2026 17:30:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897491F000FF;
- Fri, 18 Sep 2026 17:30:05 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 7C3D241875;
+ Fri, 18 Sep 2026 17:29:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595261F000FF;
+ Fri, 18 Sep 2026 17:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789752607;
- bh=aJ4D99PRE9FsrB0XYN1JFXE/oB3XRrxb2xhanlbrQFI=;
+ s=k20260515; t=1789752597;
+ bh=vXQYAj1GDHVUV/kpueHVjpCwP39k1qM4lW2PSzvXObk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ATyu0SAeIXzY1Walxg2RQA4UlYrAJH6qh3ESu+gXaYbvCCFx1BB0i4LdaHWZkZbbk
- 2ePGKOVGkUMCKs9P6+ZHtqKY38vBTr1mUV2h0LkujIqQ11455dcCUq8p4+Dp68lO7W
- FWfbPJGEIfilsKKTXQzAL4Mzek2i0WSboFZQFT3UlFjtmiKsElZHUG9Zn4BNmpwGqr
- 5Lw0+YrgaIkplBRySMhLk+2mFRzKXnNOxGoaChIJ7T9A1+SkS4ByTpvXN8OnhzWM0r
- 1VzDJ+SKaZBSoXaAcy3x7R3p1mmqaQdlNNQcyc8rM3bgkrG/bwkdWJ02xdrafDWg83
- 8bn+dCZ0pZ6SQ==
+ b=hJlp1zclrRFoDLkYwL0hOhx3aD06E6C6j9fHQm1PrgVNSpCX5qlDJVJ/Op97wIKKV
+ z4y7F3g1rJj7zS8/v2ksfORAamDpV0C8Q/k/kTo5Zulsp+TmlgGtaaunPFq/hh2HoI
+ TCSloL/k6eSKX8Jmvu+3mALivHCwGLTKoYGEn/x9doZUMTdTvZBHoCUwP0FMLuw5iF
+ 5ramu0cEYtZNGMjxCj+V3urrnO0NX3CurLWYGtj3gX5Kiv86kGSYQ3SZTX+t1Ol0kq
+ 6sfUAsPyFr7UGHhxgwfj/ID9tcwsnQqzGOhsSMvP28+BUoekSWW0yMECTpH5oeSlqs
+ et5M7vACfvnsA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v5 12/15] block: remove BlockLimits.max_append_sectors
-Date: Fri, 18 Sep 2026 19:29:20 +0200
-Message-ID: <20260918172925.2640888-13-cassel@kernel.org>
+Subject: [PATCH v5 08/15] block: reject zone appends that are not a multiple
+ of the sector size
+Date: Fri, 18 Sep 2026 19:29:16 +0200
+Message-ID: <20260918172925.2640888-9-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918172925.2640888-1-cassel@kernel.org>
 References: <20260918172925.2640888-1-cassel@kernel.org>
@@ -70,68 +71,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field described the largest zone append that a backend accepts. It
-had one writer and one reader, and neither is left.
+Zone write pointers are tracked and reported in units of
+BDRV_SECTOR_SIZE, so an append whose data size is not a multiple of it
+would leave a write pointer that cannot be represented, neither in a
+BlockZoneDescriptor nor in the virtio and NVMe zone reports derived from
+one.
 
-file-posix filled it from the zone_append_max_bytes queue attribute,
-which bounds REQ_OP_ZONE_APPEND, an operation it never issues: Linux has
-no userspace interface for one, so raw_co_zone_append() substitutes the
-write pointer of the zone for the offset and the request reaches the
-host as a plain pwritev().
+Nothing states that invariant. file-posix, the only driver that carries
+out an append itself, does enforce it, but only as a side effect of
+checking each iovec against BlockLimits.write_granularity, which is never
+smaller than the sector size. That conflates two constraints: the sector
+granularity holds for every driver, whereas write_granularity describes a
+coarser requirement of the medium below a driver, and only a driver that
+has such a medium should express it.
 
-The transfer limit does not apply either, no more than it does to an
-ordinary write. This driver reports max_hw_transfer but never sets
-BlockLimits.max_transfer, which is what bdrv_aligned_pwritev() splits
-by, so a request of any size goes to the host kernel whole and is split
-there: on a null_blk device whose zone_append_max_bytes is 130560, a
-16 MiB append completes and advances the write pointer by 16 MiB. That
-is safe for a sequential zone, as Linux issues the fragments of a split
-write in order, with zone write plugging since 6.10 and zone write
-locking before that.
+Check the invariant once in bdrv_co_zone_append(), so that it no longer
+rests on a driver that happens to have a granularity of its own to
+report.
 
-virtio-blk was the reader, and now takes what it reports to a guest from
-a property instead.
+This is a lower bound, not the alignment that a guest has to observe. The
+block layer cannot know that one, because it also depends on the logical
+block size the device is configured with, which is a property of the
+frontend. The alignment that applies to a guest is the larger of the two,
+and it is the frontend that reports it, that validates requests against
+it, and that has to refuse a device whose write pointers do not satisfy
+it.
 
-Remove the field and the assignment that filled it. Keeping it would be
-worse than not having it: a driver that set it, believing something
-enforced it, would be silently ignored.
-
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/file-posix.c               | 5 -----
- include/block/block_int-common.h | 3 ---
- 2 files changed, 8 deletions(-)
+ block/io.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index c1ac49d23d..1a4ca9d942 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1488,11 +1488,6 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
+diff --git a/block/io.c b/block/io.c
+index da61e641ac..b9d0b3fd7b 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -3355,6 +3355,16 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+         return ret;
      }
-     bs->bl.nr_zones = ret;
  
--    ret = get_sysfs_long_val(st, "zone_append_max_bytes");
--    if (ret > 0) {
--        bs->bl.max_append_sectors = ret >> BDRV_SECTOR_BITS;
--    }
--
-     ret = get_sysfs_long_val(st, "zone_write_granularity");
-     if (ret >= 0) {
-         bs->bl.write_granularity = ret;
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 7abd2b12bb..cfc7b0f427 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -913,9 +913,6 @@ typedef struct BlockLimits {
-     /* total number of zones */
-     uint32_t nr_zones;
- 
--    /* maximum sectors of a zone append write operation */
--    uint32_t max_append_sectors;
--
-     /* maximum number of open zones */
-     uint32_t max_open_zones;
- 
++    /*
++     * Zone write pointers are kept and reported in units of BDRV_SECTOR_SIZE,
++     * so an append that would leave a write pointer at a finer granularity
++     * cannot be represented. Drivers may impose a coarser granularity of their
++     * own, see BlockLimits.write_granularity.
++     */
++    if (!QEMU_IS_ALIGNED(qiov->size, BDRV_SECTOR_SIZE)) {
++        return -EINVAL;
++    }
++
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
+         co.ret = -ENOTSUP;
 -- 
 2.55.0
 
