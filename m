@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CA4C982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B628AC982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Ydz-00080G-FM; Fri, 18 Sep 2026 09:28:47 -0400
+	id 1x7YiA-0000Xm-4i; Fri, 18 Sep 2026 09:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7Ydx-0007zV-BM; Fri, 18 Sep 2026 09:28:45 -0400
+ id 1x7Yi6-0000XN-Gz
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:33:03 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7Ydv-000179-3z; Fri, 18 Sep 2026 09:28:45 -0400
+ id 1x7Yi4-0001y2-VZ
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 09:33:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=vuYlT8WGLbo+IjimnuqnwM+iXb7QV7uAeYbZVPXsSKM=; b=xdO7mNMgl/MvjW3tZotjBijEhx
- wDzOS1qeqqmw+YY6RNtCgW07fI6xeP8zbcVAxNtKEHojSBKle/ZR/JJDD6vRwO7C0wPa9EI2X08nr
- H9iXSLt+JfcsoYFSc+8xE5WvcgUgMi5XI64BaH30nlW6LIOwdKBJk9+QMk1c8BJlzblUCYIBtRtFn
- hDkGxxxnZzjsZiH4LW+dWJHK35iLj6EWUgWJr8A6eQ5bnJBlfUPIzKkNFMBdqLW6/gQyvsqih1Ne1
- AT6iQHnzLuHiruul4y4Bxm50+HXJNoGrmXxTiWUYEYIm4cffofeIS2nNL0QzHiRykM0WOQxI8viim
- 0MVerVrRzkwZjQ8W0soZ94jxUdoCfbld3flGrrkUdW34l4w4VFU9IjQ88kcR4zRBRrNP8kTKQmEiT
- TkZL+Zm7SCUih17p66XObrx4X42MntQVmCswX5hAKBTiQCPflnWXX2xAVNfEA6GTM3/tNnNHvNmpF
- jlO9l38Kef8z8NzlbxApDN7vOJhnf6lMfHQ37gJBDzPmwWM4rTkTp2MdIOIm0EhN/H/ftFxT6u1rq
- 6xygplbn3fXL5rh7EfEhWMJnjmWWG1sCxZewePc9lmQW4yZ/av2h48lSyG7MCbr24ufKF/CJjQcTz
- xhB6DY5kRXhHEMd7yxU1nW65m8QN0u6GqwWmyC8BA=;
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=ILNWnfSal2kmuc9DNxkb4v4FlbYAEIDaLZt18RgQVBE=; b=QCIcNIlATpN21Y6WivhDbEsPjP
+ jHGqNuR44kddkhYYK5tTf0Y3U0ecnHC+F7zMHoLYf0cTvGhc6NSC4lxY0vGhKrNa/AKJlACxMMS9P
+ 4uFV8Zuz9ekbxpxwjV6mqblwz7Jxh8uhIZPFvrW40LSSwoZfjQS1g4NyDCRYp0fV7QGwc7SviN5ZG
+ P0JtFZzqBHFxH4LN4WR2HcUCoWUcprK1DEQLa+hykXRAQZ7nTTKDxqoQyEbS0TZcfgSfGjBvLX0t1
+ KsysCiwP0VzMNvnwgxOXKxkY3Shk2GldyG4pHkOM2lxbNKmzBXxudkcf0QEl0M2gMEoJs8z9pS8fv
+ B7sSAeXcGquh8MVpeqtJeH2NG8yW112jWg2vT+MlsqGVY90WUjGuVw5h5HkR/15qDPH81QNE+r6O5
+ TRK+X6Xt9cWx9OAiayqKsR/rmcQ3wm/uLfDRssLOVzHGkF+gvIzO5twsi6EkL8Epmn7TF4BeIp8YW
+ /+FABeujRY4L53AqxZSu8kXciCqw9/CWIFMqHTv7/oGCysMamV0QqzT/y2Kz2NjZHescW2tEJ8EPs
+ HA0HUXaYdQ12pcf94Df0LfCCVtGoqmGo7Vl6z4vTOqqY8e3AdUXCGuK4KBTNPWM0Od7VoaiIbnV0a
+ NvjmbXUXFMNUan3gJgrqonAuEjbd0rFI3zHpTZk9o=;
 Received: from [217.155.175.48] (helo=[10.8.0.6])
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YdO-00EgVY-8p; Fri, 18 Sep 2026 14:28:10 +0100
-Message-ID: <7b782da8-5424-4c6c-b9b7-7ca50fc6749b@ilande.co.uk>
-Date: Fri, 18 Sep 2026 14:28:39 +0100
+ id 1x7YhY-00EgWx-Sy; Fri, 18 Sep 2026 14:32:29 +0100
+Message-ID: <8310b400-544e-4ed5-8eb6-e0797a924a8d@ilande.co.uk>
+Date: Fri, 18 Sep 2026 14:32:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: "Kirill A. Korinsky" <kirill@korins.ky>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20260903115229.95811-1-kirill@korins.ky>
- <20260903115229.95811-6-kirill@korins.ky>
+To: Purr Box <54weasels@gmail.com>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, BALATON Zoltan <balaton@eik.bme.hu>
+References: <20260903044626.24453-1-54weasels@gmail.com>
+ <CAFWf6u8rjCECp+cdP21kfB7QUYff3crQiE1v5DnHXcMVzWan9w@mail.gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -75,12 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260903115229.95811-6-kirill@korins.ky>
+In-Reply-To: <CAFWf6u8rjCECp+cdP21kfB7QUYff3crQiE1v5DnHXcMVzWan9w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 217.155.175.48
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 5/5] tests/functional: Boot OpenBSD on mac99
+Subject: Re: [PATCH v5 0/6] Implement missing functionality and hooks in m68k
+ to support upcoming Sun-3 implementation
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,95 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2026 12:50, Kirill A. Korinsky wrote:
+On 09/09/2026 19:54, Purr Box wrote:
 
-> OpenBSD device discovery exercises CTPR masking, zero decrementer
-> writes, and CUDA reply timing and layout; regressions in any of these
-> paths stall the guest before the installer starts.
-> 
-> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-> ---
->   tests/functional/ppc/meson.build     |  2 ++
->   tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++
->   2 files changed, 48 insertions(+)
->   create mode 100755 tests/functional/ppc/test_openbsd.py
-> 
-> diff --git a/tests/functional/ppc/meson.build b/tests/functional/ppc/meson.build
-> index ae061fe5a6..1055cdaa17 100644
-> --- a/tests/functional/ppc/meson.build
-> +++ b/tests/functional/ppc/meson.build
-> @@ -2,6 +2,7 @@
->   
->   test_ppc_timeouts = {
->     '40p' : 240,
-> +  'openbsd' : 240,
->   }
->   
->   tests_ppc_system_quick = [
-> @@ -15,6 +16,7 @@ tests_ppc_system_thorough = [
->     'bamboo',
->     'mac',
->     'mpc8544ds',
-> +  'openbsd',
->     'ppe42',
->     'replay',
->     'sam460ex',
-> diff --git a/tests/functional/ppc/test_openbsd.py b/tests/functional/ppc/test_openbsd.py
-> new file mode 100755
-> index 0000000000..cf45930a7c
-> --- /dev/null
-> +++ b/tests/functional/ppc/test_openbsd.py
-> @@ -0,0 +1,46 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Test that OpenBSD boots on mac99 and reaches the installer.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +
-> +
-> +class OpenBSDMac99(QemuSystemTest):
-> +
-> +    ASSET_CD = Asset(
-> +        'https://ftp.eu.openbsd.org/pub/OpenBSD/7.9/macppc/cd79.iso',
-> +        '227fef3d5089d56ce8376d8bfa28181ce5b19f0eceef0a6d82d58d8e52832b24')
-> +
-> +    def test_openbsd_79_installer(self):
-> +        self.set_machine('mac99')
-> +        self.require_accelerator('tcg')
-> +        cdrom_path = self.ASSET_CD.fetch()
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args('-M', 'via=cuda,graphics=off,usb=off',
-> +                         '-cpu', '7400',
-> +                         '-accel', 'tcg,thread=single',
-> +                         '-smp', '1',
-> +                         '-m', '2g',
-> +                         '-nic', 'none',
-> +                         '-device', 'VGA',
-> +                         '-global', 'cuda.sr-delay-ns=0',
-> +                         '-prom-env', 'input-device=ttya',
-> +                         '-prom-env', 'output-device=ttya',
-> +                         '-cdrom', cdrom_path,
-> +                         '-boot', 'd',
-> +                         '-no-reboot')
-> +        self.vm.launch()
-> +
-> +        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
-> +        wait_for_console_pattern(
-> +            self,
-> +            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
-> +            'panic:')
-> +
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
+> Gentle ping on this series. v5 addresses Zoltan's review feedback from v4 (fsave 
+> simplification, NMI edge-trigger rationale, added Signed-off-by). Would appreciate 
+> any review when you have a chance.
 
-LGTM, although I'm curious as to why you need to set usb=off - given that USB is 
-mandatory for mac99 machines, presumably this means there is a bug somewhere in our 
-OHCI emulation somewhere being tickled by OpenBSD?
+Apologies for the delay: I will have quick look through the series over the next few 
+days, although I suspect I'd need to defer to Laurent's greater 68k knowledge here.
+
+> Dan.
+> 
+> On Wed, Sep 2, 2026 at 9:46 PM 54weasels <54weasels@gmail.com 
+> <mailto:54weasels@gmail.com>> wrote:
+> 
+>     This series adds M68020/030-specific features to the m68k target that
+>     are required by the Sun-3 machine (series C) and its PROM/SunOS guests:
+> 
+>        1/6: CAAR register stub for 68020/030 cache control
+>        2/6: fsave/frestore fix for 68881 (non-68040) FPU frames
+>        3/6: Edge-triggered NMI semantics for Level 7 interrupts
+>        4/6: Function code extraction during TLB fills
+>        5/6: Custom MMU intercept hook for Sun-3 transparent translation
+>        6/6: Physical Bus Error and M68020 Format 0xB stack frames
+> 
+>     Changes since v4:
+>        - Added Signed-off-by to all patches.
+>        - Patch 2/6 (fsave): Addressed Zoltan's review — replaced redundant
+>          M68040||FPU check with just M68K_FEATURE_FPU, removed unnecessary
+>          if/else in frestore, moved Context: below --- separator.
+>        - Patch 3/6 (NMI): Addressed Zoltan's review — nmi_pending cannot be
+>          replaced by testing pending_level == 7. The flag captures the edge
+>          transition (level < 7 → 7) required by Motorola's NMI specification,
+>          while pending_level only reflects the current interrupt level.
+>          Testing pending_level alone would produce level-triggered behavior,
+>          firing on every interrupt check rather than once per edge.
+>        - Rebased on current master.
+> 
+>     54weasels (6):
+>        target/m68k: Add dummy CAAR register
+>        target/m68k: Fix fsave/frestore for 68881 FPU
+>        target/m68k: Fix NMI pending for Level 7 interrupts
+>        target/m68k: Extract Function Codes during TLB fills
+>        target/m68k: Implement custom MMU intercept hook
+>        target/m68k: Implement Physical Bus Error and Stack
+> 
+>       target/m68k/cpu.c       |   4 +-
+>       target/m68k/cpu.h       |  21 ++++-
+>       target/m68k/helper.c    | 130 ++++++++++++++++++++++++++++-
+>       target/m68k/op_helper.c | 175 ++++++++++++++++++++++++++--------------
+>       target/m68k/translate.c |  30 ++++---
+>       5 files changed, 280 insertions(+), 80 deletions(-)
+> 
+>     -- 
+>     2.50.1 (Apple Git-155)
 
 
 ATB,
