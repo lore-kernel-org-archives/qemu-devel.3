@@ -4,95 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD0AC982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 22:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3606FC982E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 22:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7h6M-000836-8P; Fri, 18 Sep 2026 18:30:38 -0400
+	id 1x7h6D-0007qd-Ku; Fri, 18 Sep 2026 18:30:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7h6K-0007x4-A0
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:30:36 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7h6C-0007px-EX
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:30:28 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7h6I-0000fu-1D
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:30:35 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7h6A-0000er-Jc
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:30:28 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 90A9521EE0;
- Fri, 18 Sep 2026 22:30:24 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 301D221EDD;
+ Fri, 18 Sep 2026 22:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789770628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1789770621; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pil+c5ItAOj/L/psslVm/o4LvQJFfan0el4xUxvvKmw=;
- b=FK1BR9QOwtm6cbyuV2Ex0/nuPEDgQx/SQKnnGvChPbB8P/Fs3+juPBwp9dLrHbuepzPO4T
- v/EvUWONKm6oryShjG47mVAHx3iIARAaAMvNZf0LRgc7ZvzdgQzfZISF8WE8gAkP4Q8Etd
- AsIEhUxJ4oCO5DAL8zr3CtiTCsmxpyo=
+ bh=xKw/qSlgEJX8NppOT5mW4Ogp1/OYlPI6vcH8jQThncI=;
+ b=1CIaPbNTyyrzsHHT1kvsurHvzyEVQza+/QxQvsOHMNh7iNqHQuYzaUO3rx6i+bCMRjDSHO
+ znw0R2cZZj31RPOmVWfeV68NlEy2pahJGiSh3poaxJFbzWgz32vsQyvDgjIBojvk/1odKB
+ ROVUFWd96SCugvSE/QBuN2NEOMJazCg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789770628;
+ s=susede2_ed25519; t=1789770621;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pil+c5ItAOj/L/psslVm/o4LvQJFfan0el4xUxvvKmw=;
- b=ovYgVvAkBUZ7tve8tphe8sJSHFbbgQwyY/y9w1WIvWn6BG41dvqLRHwpzCGkOU0kd2K/uD
- 102cL73ryFSYNqAw==
+ bh=xKw/qSlgEJX8NppOT5mW4Ogp1/OYlPI6vcH8jQThncI=;
+ b=2w6et1sWOKP3hkmSLV//ddi609/93GuymC+My68UyyL9OggnX+QReABluT14AUyh1m0HmO
+ PxBSKhwE6iLaBGDg==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=eoAqlQtL;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xm1uDZZv
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789770624; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1789770617; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pil+c5ItAOj/L/psslVm/o4LvQJFfan0el4xUxvvKmw=;
- b=2YlzxAYDv7ajKXDyCYAwC2k/EcjNWIZTq2N+8BsQSkQrvFcOlEUG8EQ3YIrfW6560lBNEE
- U7ai1f5n6Rxfze7WRUOxec9Nv2Inn/AhBq9eL5ZUO8X7ZNha70m7HN6gOBKW5D2+Ko8/RQ
- SE6/kZJndZUL7Qn1T+ND8e/UFPE9JeU=
+ bh=xKw/qSlgEJX8NppOT5mW4Ogp1/OYlPI6vcH8jQThncI=;
+ b=eoAqlQtLhgC3gp4jJs9OKlcu8m1ltA3lF0JKKzhRxvccu21QklDrnrfLfOhYU1IQeXDrG4
+ bEI2EUOp2XL+JYEhJlQjMtOqkR1b9PPfWJLk0lOjv7WCQ2J5jm9wnxjOKo3uk60xBn18jH
+ JVC+sZvT6tzDwEgfoDqYYZwdRPzPHIw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789770624;
+ s=susede2_ed25519; t=1789770617;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pil+c5ItAOj/L/psslVm/o4LvQJFfan0el4xUxvvKmw=;
- b=iGA4Dbg4VfKKTIuLw5yxHrmx4dOplTbpTDWk2gPkeLHcsuf9bjGPd7GkfkG39bbm49/Yot
- /BEHLZz9cyDJKNDA==
+ bh=xKw/qSlgEJX8NppOT5mW4Ogp1/OYlPI6vcH8jQThncI=;
+ b=xm1uDZZvsTy9Kh9W/9ei789uv9eOx3qPq59eikQuZlHi8ZxMXyUUoulzYpdoZ1UQmlWGX0
+ yTv3Sn7a9Yf8ZjCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AFE91139B1;
- Fri, 18 Sep 2026 22:30:23 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1E3381348F;
+ Fri, 18 Sep 2026 22:30:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id hQIbBW27rWrsdQAAD6G6ig:T12
- (envelope-from <farosas@suse.de>); Fri, 18 Sep 2026 22:30:23 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hQIbBW27rWrsdQAAD6G6ig:T8
+ (envelope-from <farosas@suse.de>); Fri, 18 Sep 2026 22:30:14 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH 11/14] qemu-options: pass an Error into get_opt_name_value
-Date: Fri, 18 Sep 2026 19:29:58 -0300
-Message-ID: <20260918223002.1892021-12-farosas@suse.de>
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: [RFC PATCH 07/14] qemu-options: Consolidate qemu_opts_parse* functions
+Date: Fri, 18 Sep 2026 19:29:54 -0300
+Message-ID: <20260918223002.1892021-8-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260918223002.1892021-1-farosas@suse.de>
 References: <20260918223002.1892021-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 301D221EDD
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.996];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+ URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -117,88 +125,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Passing a boolean into get_opt_name_value() is to put too much
-responsibility into this low-level routine. Have it just fill an Error
-object and let the caller decide what to do with it. Setting an Error
-is an easily recognizable pattern so it saves the reader from mentally
-parsing the boolean logic.
+The qemu_opts_parse, qemu_opts_parse_list and qemu_opts_parse_noisily
+functions all call opts_parse(), they can reuse code.
+
+Consolidate them at qemu_opts_parse_list(). Use the presence of the
+Error pointer to determine whether the caller wants to be noisy: if
+there is an Error pointer, then use it, otherwise print the message.
+
+This makes the code more opaque, so keep the qemu_opts_parse and
+qemu_opts_parse_noisily functions as wrappers to make sure the intent
+at the callers is still clear.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- util/qemu-option.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ tests/unit/test-opts-visitor.c |  2 +-
+ util/qemu-option.c             | 32 ++++++++++++++++++--------------
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
+diff --git a/tests/unit/test-opts-visitor.c b/tests/unit/test-opts-visitor.c
+index a9e45c0251..dd9a8faf12 100644
+--- a/tests/unit/test-opts-visitor.c
++++ b/tests/unit/test-opts-visitor.c
+@@ -39,7 +39,7 @@ setup_fixture(OptsVisitorFixture *f, gconstpointer test_data)
+     QemuOpts *opts;
+     Visitor *v;
+ 
+-    opts = qemu_opts_parse("userdef", opts_string, false, NULL);
++    opts = qemu_opts_parse("userdef", opts_string, false, &error_abort);
+     g_assert(opts != NULL);
+ 
+     v = opts_visitor_new(opts);
 diff --git a/util/qemu-option.c b/util/qemu-option.c
-index 37e6d68f02..94e06b194d 100644
+index bb38d305c9..c8e552823b 100644
 --- a/util/qemu-option.c
 +++ b/util/qemu-option.c
-@@ -756,9 +756,9 @@ void qemu_opts_print(QemuOpts *opts, const char *separator)
- 
- static const char *get_opt_name_value(const char *params,
-                                       const char *firstname,
--                                      bool warn_on_flag,
-                                       bool *help_wanted,
--                                      char **name, char **value)
-+                                      char **name, char **value,
-+                                      Error **errp)
+@@ -938,7 +938,23 @@ QemuOpts *qemu_opts_parse(const char *group, const char *params,
+ QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
+                                bool permit_abbrev, Error **errp)
  {
-     const char *p;
-     const char *prefix = "";
-@@ -783,13 +783,15 @@ static const char *get_opt_name_value(const char *params,
-                 *value = g_strdup("on");
-                 is_help = is_help_option(*name);
-             }
--            if (!is_help && warn_on_flag) {
--                warn_report("short-form boolean option '%s%s' deprecated", prefix, *name);
-+            if (!is_help) {
-                 if (g_str_equal(*name, "delay")) {
--                    error_printf("Please use nodelay=%s instead\n", prefix[0] ? "on" : "off");
-+                    error_setg(errp, "Please use nodelay=%s instead",
-+                               prefix[0] ? "on" : "off");
-                 } else {
--                    error_printf("Please use %s=%s instead\n", *name, *value);
-+                    error_setg(errp, "Please use %s=%s instead", *name, *value);
-                 }
-+                error_prepend(errp, "short-form boolean option '%s%s' "
-+                              "deprecated", prefix, *name);
-             }
-         }
-     } else {
-@@ -821,9 +823,14 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
-         g_autofree char *option = NULL;
-         g_autofree char *value = NULL;
-         bool is_help = false;
-+        Error *warn = NULL;
+-    return opts_parse(list, params, permit_abbrev, false, false, errp);
++    bool noisily = !errp;
++    QemuOpts *opts = NULL;
 +
-+        p = get_opt_name_value(p, firstname, &is_help, &option, &value, &warn);
++    if (noisily) {
++        Error *err = NULL;
++        bool help_wanted = !opts_accepts_any(list);
 +
-+        if (warn_on_flag && warn) {
-+            warn_report_err(warn);
++        opts = opts_parse(list, params, permit_abbrev, true, help_wanted, &err);
++        if (!opts && err) {
++            error_report_err(err);
 +        }
++
++    } else {
++        opts = opts_parse(list, params, permit_abbrev, false, false, errp);
++    }
++
++    return opts;
+ }
  
--        p = get_opt_name_value(p, firstname, warn_on_flag, &is_help, &option,
--                               &value);
-         if (help_wanted && is_help) {
-             qemu_opts_print_help(opts->list, true);
-             return false;
-@@ -852,7 +859,7 @@ static char *opts_parse_id(const char *params)
-         g_autofree char *name = NULL;
-         g_autofree char *value = NULL;
+ /**
+@@ -952,19 +968,7 @@ QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
+ QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *params,
+                                   bool permit_abbrev)
+ {
+-    Error *err = NULL;
+-    QemuOpts *opts;
+-    bool help_wanted = !opts_accepts_any(list);
+-
+-    opts = opts_parse(list, params, permit_abbrev, true, help_wanted, &err);
+-    if (!opts) {
+-        if (help_wanted) {
+-            assert(!err);
+-        } else {
+-            error_report_err(err);
+-        }
+-    }
+-    return opts;
++    return qemu_opts_parse_list(list, params, permit_abbrev, NULL);
+ }
  
--        p = get_opt_name_value(p, NULL, false, NULL, &name, &value);
-+        p = get_opt_name_value(p, NULL, NULL, &name, &value, NULL);
-         if (!strcmp(name, "id")) {
-             return g_steal_pointer(&value);
-         }
-@@ -870,7 +877,7 @@ bool has_help_option(const char *params)
-         g_autofree char *name = NULL;
-         g_autofree char *value = NULL;
- 
--        p = get_opt_name_value(p, NULL, false, &ret, &name, &value);
-+        p = get_opt_name_value(p, NULL, &ret, &name, &value, NULL);
-         if (ret) {
-             return true;
-         }
+ static bool qemu_opts_from_qdict_entry(QemuOpts *opts,
 -- 
 2.53.0
 
