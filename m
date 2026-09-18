@@ -4,112 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 182E7C982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 15:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F8EC982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 15:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7afu-0006VT-RM; Fri, 18 Sep 2026 11:38:55 -0400
+	id 1x7akx-0001PV-5F; Fri, 18 Sep 2026 11:44:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1x7afs-0006V8-JX
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 11:38:52 -0400
-Received: from mail-lf2-x10.google.com ([2a00:1450:4864:36::10])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7akv-0001P8-6i
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 11:44:05 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1x7afr-0003Fi-5u
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 11:38:52 -0400
-Received: by mail-lf2-x10.google.com with SMTP id
- 2adb3069b0e04-5b5e4f1e428so313000e87.1
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 08:38:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7akt-00043z-Lq
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 11:44:04 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49b912d3920so6467425e9.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 08:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789745930; x=1790350730; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xMoDu1QpByTuhtR85NT6ecGaH4mvJ93T6FOMbhh47lQ=;
- b=NjUlBbEly2qT7u4E/LhRxGEtUIAuaxmcKEuHLe4wdR2JBdQw1c/D2OZM761GfEOwGB
- 9EhjlTuzzr+Oi4FYOW+ggzCbkpwClsDp2bzo/ciYqYGkUhgv2XaOSW42/YB2ncpid9vG
- DlLUVyEMAbonKZ5GNoLFs88ZvR1CZCxytgvj+eb1M/4ZstZxbCRevEMZcOeNNQxgJvXL
- 3rnCqfVDF1b1+Nd0fmTFJ3A5fBBMPtFZfOBZW6oGJ4u1aNOJNSHXFLP1YKVEt/FGvtfK
- rNjx1MAbLGnLz4kPLAb2xPC0Ai9EG5XOgv72wqltvAG5XtD9WIZiDDc3Mh0bhXTPS5Pu
- 9X9A==
+ d=linaro.org; s=google; t=1789746241; x=1790351041; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=cexAuOEHyzsb7T5VuESWNM/x8j7S4muvGPwFa5qreCQ=;
+ b=A2p47gGmxXFP2JZQ4sTCQ476Lsnf8YVz+jh+dRoRyXYufFb3LqnJKDM+9BnV7WbQAy
+ /x8Do3pjsu/QIe5kz1hyPk9xQoyLH7FcYuHrEa3P5UO3yBa4oTDkM7A6aWTPMsGz0kDf
+ jJjBxRrzn5OJ0f6qQe7vLIwyLOSvNEpCte+hexIF75wqXCGztnlgPcqGvSH+xD1KQoVo
+ 9OdUpE/c0a7Zm+VSPrNtzlJVmqvW6EjzE3Zo6Gc70iQLFhFUWb6smODQMhgCduj4n6Eb
+ D+NaCuKpYrJBAivoggBH2enUUYSy9awIoiFOY0OZkXELIqVaOkTPz6fmaq8GFwTf2e6X
+ XFZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789745930; x=1790350730;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1789746241; x=1790351041;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xMoDu1QpByTuhtR85NT6ecGaH4mvJ93T6FOMbhh47lQ=;
- b=25TKosNGSafdl1Vq7w+WEqaaVtJSMVT6yLGphXKUgeeY3GBh0ARbe8LvRKUadAfO/2
- 03pxNwjd3iQOMiQV788H32ZQ86GrIN4Nlk3wBrOWbf3YOAzl2C2xxItYLF2dYDfHNoDJ
- 29oV5o3dyGZQWW2X2HrQkcPZUKpcr9SMBd7KLj0mKSrju1pGTgJbC2tbSlWG1AvduYwb
- bcQ2sD6JvZEGc3v+aAIi3jWEWnqMmDZnbUdXr3ZhJhkv/DrzTEkzuuYkcI/rqL1WIFeL
- jMVvZzDDSHZoP+Zp3L3QkQCeqFJHOaUevKybfhUOy4ImnKRcB7qCeZKZvqvNmDBVW18q
- XVQg==
-X-Gm-Message-State: AFuF++lvcXuZp9b0xxx6Q66dPHiaZFbJWFbwYwby75VXxm3CGACm5mj4
- nvRvdzEYnvkoH4u0zs9PAx2Bill0WTZLgnxtrwgRlrMIq44HAa5fp2Y0q9MpC62O
-X-Gm-Gg: AYBFou25mQIKG7r4YOhxaRcB2/9i3xvLp0+B62o0rEg2BzvB2Ns/ZW6I6Bmwgbn+yZ7
- 4eM23ueKWKKtAiu1JTULRuv0S1oQlol8VsQp1iy6bg6Rj1LX0i3VbPfr/sP7ojdm/tQ4BwKrltr
- 3XKGUtMBiY9/yV0olz+zzW5zQxyBpCsHz9T+xqw4VCNbXv6VaSzaEiDTJrMwgh8n5bLw6fAge24
- +zlFZnkNC3NBAjqOBDrZC3MKoqlEoZZ1hSaDlfRK05cjsZ7LOd/GQtEE6+5m2UyX8KLmO4SSd4K
- EGyGjk2oDqXcQUhfZoZlevKk5Y3r6rq/MBv1ivxTVz5Ii/fgQoml3gfhsi2LzUGwn64IoSQmamd
- 9XoZIxzHuBrTPcgLeQovq2VqY37EvspoYV03da2dySjU/FrwCQEuFB8H890Ot0NcBcDu4ySm2sf
- b4jn+cN2+EeXpF6mQvY2j6kq3aDSq/n+Eq85CZxoGPBG2x7y7C+DYbsn5LHHAOSfp/w4UM
-X-Received: by 2002:ac2:4c55:0:b0:5b7:5cbb:661a with SMTP id
- 2adb3069b0e04-5b8c13bf8aemr999985e87.0.1789745929438; 
- Fri, 18 Sep 2026 08:38:49 -0700 (PDT)
-Received: from localhost ([213.79.119.14]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b8c2764436sm557642e87.58.2026.09.18.08.38.48
+ bh=cexAuOEHyzsb7T5VuESWNM/x8j7S4muvGPwFa5qreCQ=;
+ b=OerN5qsq+sZkZRT6tdnj56Banli/kg/HnSL6nIKEco+AV95Jf6zxokkxPOMvqnep7j
+ gsCphFUPuyRLXLVDYLXJQuzKsDGDlgEI+qWom6bqU58ElWrEJKzF0Tc05Wx0YKzk8lyH
+ Z9suAgNZPMgpM8YHR7PKyUdlVIaQYbAYhGyYOsuO6+k26xuEjty9aVHANchoP2mL90ge
+ vnRMjBusRBxl7y1borXRpu2HwOBUZ1gcjjtW/meReICMGJJAWj1L4nlepRx+M6lMoEy5
+ 19cK7xFNfnzeSCQJtPCM0a+oZFNvcHMpfljvanxsFuHweM336uiaszHC02VGAzIqtW9X
+ 0xPA==
+X-Gm-Message-State: AFuF++kEfcfPLg7fvnnmoCQH1WAg1BKB6C1U1oNz6K2oiSkO/GM4SuC/
+ JNUcfHJBh//ARCfYf9iCFj/hjvVjsuolrzXgOQwLIdDs82yFiiKVO7Z1Sf2eD83ZAmDltQnEEuW
+ 8+PJd
+X-Gm-Gg: AYBFou17ytNpaseZMTbH0NBE7MT1mHMbo+oCcEc+imLJQg85fwOGau0qIPc7CLOiv0m
+ GgAsoC53rOgdRjHEksmypNJQ1WGI+qd5X7R78ZAIFdRkJJtkBGZji5oDy2gF818LkIRbJxDSeq+
+ eRsFp0EK+8qKRKNZ4OgGs/SvF8WuPkmeL9rb+spv1YhqZlU+z9uKLNdITK4s0R/Lb8Mb3Cfjfu7
+ 5vxW/668zaisThdW4hJtizOXpRz5+cVVdlRl7V+zOBgj8tmOhywpZZYfwG2mPouUTAPtpWZnefZ
+ O/AOuvG8u2qX87J+alJro+xEBLXnIhQ7tlVY5ZPOOyrrIDsD9jTKrCiFP5m6qT5tlAsLX6BNNVr
+ p0QmuVceVZyePjgfdb5VVkAETtR5AVBqSDDysdB9YJ7Yuxc+lrMZX5dE54DqA0ajm6xcoAQGuDo
+ vFpuUZ0bZF5gGF0uCxghNqL3/ow3GQXWSJEnrbnJfXM2sPEscyTqDjDjjj4zCkxDs0mdgphiLLX
+ BpgjMtnWg==
+X-Received: by 2002:a05:600c:c490:b0:49e:6e43:ef13 with SMTP id
+ 5b1f17b1804b1-49fc574122amr35188705e9.24.1789746241508; 
+ Fri, 18 Sep 2026 08:44:01 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fc8dde38fsm49629915e9.1.2026.09.18.08.44.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 08:38:48 -0700 (PDT)
-From: Konstantin Semichastnov <antikostya2@gmail.com>
-Date: Fri, 18 Sep 2026 18:34:41 +0300
-Subject: [PATCH 5/6] hw/riscv/trace-encoder: emit Ownership after ProgTraceSync
+ Fri, 18 Sep 2026 08:44:00 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A2EF15F8B4;
+ Fri, 18 Sep 2026 16:43:59 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com
+Subject: Re: [qemu-web RFC PATCH] blog post: some notes on the bugpocolypse
+In-Reply-To: <10111cde-7d2e-4e81-8233-4ae940a95dac@redhat.com> (Thomas Huth's
+ message of "Thu, 17 Sep 2026 11:10:07 +0200")
+References: <20260911173420.1581755-1-alex.bennee@linaro.org>
+ <10111cde-7d2e-4e81-8233-4ae940a95dac@redhat.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Fri, 18 Sep 2026 16:43:59 +0100
+Message-ID: <87mrte5zuo.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-upstream-ntrace_msg-v1-5-16a56ad8e0ef@gmail.com>
-References: <20260918-upstream-ntrace_msg-v1-0-16a56ad8e0ef@gmail.com>
-In-Reply-To: <20260918-upstream-ntrace_msg-v1-0-16a56ad8e0ef@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-riscv@nongnu.org, Alexei Filippov <halip0503@gmail.com>, 
- Arseniy Semenov <ar.semenov@outlook.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1116; i=antikostya2@gmail.com; 
- h=from:subject:message-id;
- bh=5JAFVF/giib3mLt4b9gt4wJtuYMMVV92C3OMq/vyy3Y=; 
- b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqrVoN2SxrrR81DB1JB04q0+gAxuoEaom7S9eMn
- WFcvgmJncOJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCaq1aDQAKCRBIiqVupVDe
- dsV3D/oCnp96819FhtWSaXX5rei7idGuR53pyslT7FhdSpC9v9tZazeZhiBk3lnL3Xer8FYDFbJ
- 0EutWFxjEAMicEjpl2dPaGJTJD05A456RihQ4cY4WtaZdfbFqTh0idIkDd2kxT1spmt4c/vhVAZ
- YJh83WunjECzkLCKaYrgos96fCQsQJrA2adr8A1EkOd4R76rFjHFoxKrU+3FF/ugBHrA4Hutozv
- Eiu+bZPg8YYPrIQCHjCqAGLh68gTXHKfS/S5FYqSgM0O8TqCbxiuB7r0BPWYE8QWod0h3FEAFuK
- qjWOzbLDK+Q1IV9rzdjwqqmKbJH+i3d3kA7w1ddjOdxS2ChnBOrL+fOei1Dnk12C2ovG+yvbFBr
- 4664iNidJlyOV3bvhoc+BEEh+BgSiL90pwNHttlYeMSRlS/D0S05DKy/HjCuKHlVsS32ovkTE/H
- Zw0TfqIfPgUYle5+CKSx0ymfvScZkvFba01qMs9JmGCwgGwgHLpwKk2zbLCdt9YVtGuCQ4irqez
- Swr/FPhPQG9+f4rg6pLZc8s6vbO64dNmhtx4OkvHI7ecaRFiPYhBj2aCbqr6X69DNx4mz5I3l43
- oHRExr9m4bYgubJQ1svJyb0rE1PRepqQNcbhsqB6eiPlvkJkQSytPsi6UR2dlPOFaTXyue9jrqo
- 4Sqb9kbhp3DNokg==
-X-Developer-Key: i=antikostya2@gmail.com; a=openpgp;
- fpr=4C0562F1DA8FA58A710F1018488AA56EA550DE76
-Received-SPF: pass client-ip=2a00:1450:4864:36::10;
- envelope-from=antikostya2@gmail.com; helo=mail-lf2-x10.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,34 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to RISC-V N-Trace specification Ownership messages should
-immediately follow ProgTraceSync messsages.
+Thomas Huth <thuth@redhat.com> writes:
 
-Signed-off-by: Arseniy Semenov <ar.semenov@outlook.com>
----
- hw/riscv/trace-encoder.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+> On 11/09/2026 19.34, Alex Benn=C3=A9e wrote:
+>> As we've been going throw the growing pains of AI bug bots I thought
+>> it might be worth addressing in a blog post. I'm mainly just trying to
+>> outline the challenges and maybe dissuade people from spam bombing the
+>> bug tracker with lots of low value bugs in the more dusty corners of
+>> the code base.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>
+>  Hi Alex,
+>
+> I was hoping that some native speaker would chime in first, but since
+> nobody replied yet so far, let me try to provide some feedback:
 
-diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
-index a2a030bb83..7d8b5d4fae 100644
---- a/hw/riscv/trace-encoder.c
-+++ b/hw/riscv/trace-encoder.c
-@@ -737,6 +737,13 @@ void trencoder_send_prog_trace_sync(Object *trencoder_obj, uint64_t pc)
-     msg_size = rv_ntrace_gen_encoded_prog_trace_sync_msg(msg, faddr);
- 
-     trencoder_send_message_smem(trencoder, msg, msg_size);
-+
-+    if (ARRAY_FIELD_EX32(trencoder->regs, TR_TE_CONTROL, CONTEXT)) {
-+        trencoder_send_ownership_msg(trencoder, FORMAT_SYNC_HCONTEXT,
-+                                     trencoder->cpu->env.priv);
-+        trencoder_send_ownership_msg(trencoder, FORMAT_SYNC_SCONTEXT,
-+                                     trencoder->cpu->env.priv);
-+    }
- }
- 
- static uint64_t rv_ntrace_encode_uaddr(TraceEncoder *trencoder, uint64_t target_pc)
+I think non-native speakers are well placed to review blog posts because
+helps make sure I don't introduce too many English colloquiums which
+make the text less accessible.
 
--- 
-2.43.0
+With that in mind:
 
+  Message-ID: <20260918141937.334849-1-alex.bennee@linaro.org>
+  Date: Fri, 18 Sep 2026 15:19:37 +0100
+  Subject: [qemu-web PATCH v2] blog post: some notes on the bugpocolypse
+  From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
+
+;-)
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
