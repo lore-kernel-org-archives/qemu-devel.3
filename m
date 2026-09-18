@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5199FC982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 14:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DABAC982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 14:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7ZW4-0005lM-TZ; Fri, 18 Sep 2026 10:24:41 -0400
+	id 1x7ZWb-000681-Mp; Fri, 18 Sep 2026 10:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7ZW2-0005kh-Fn
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:38 -0400
+ id 1x7ZWC-0005nF-7G
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:51 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7ZW0-0007p0-9s
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:38 -0400
+ id 1x7ZWA-0007qk-9n
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:47 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cd5462b69so4734485e9.1
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 07:24:35 -0700 (PDT)
+ 5b1f17b1804b1-49b912df756so6059465e9.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 07:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789741475; x=1790346275; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789741485; x=1790346285; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=50aCxFdjvgOonBzfwDq4lxvq9N8Gbe3Y6UNEwMKBtjw=;
- b=k7Y1GKLIREnj+KxWU2n4iL8HmkmMJ4Ax2qkibrGUJ+Fa6Z5EyeOMTxZGetO4g2paNH
- 8ca7ieHgLgKlm3vY2J0HaNiVxqES3RwNBImI14v3wJzjtKYYc/fHODzT6alOMJtFDAxh
- nsV+Jauwd00DHpWPw6eBtowT9Z8KZ5SvfLW91iRG2zSphrpL+JD1+xdETVIftPKLvCkZ
- 7ydhiphzDII4iff044us602w394Zql5gy40mBEqGdMy610Xg7OB5Oq0eTCoTrUHYxzRr
- eTz9TJFFWScX9uOt3SR32xrCEuZ76f5X5PXPDT5dZiLR86NnjPhPnX/i9Q+twUPQc2mt
- Kgvg==
+ bh=jxff3xmmsE6KuWRYrIIbIyGuz0FUO2yvzlzbuIVyHAg=;
+ b=LFngSX3o09Ori48gZxKQymRxuEeV/h0toukwimZwb0BQItOjJ0EhYqls8y/q97U2Ay
+ TTMg3hlDuT6mlf9aOQpKWoH6UrjrT8tTWftNk4iYe9d5pm+DSMzvx4UhjDBBGd2ZkFYf
+ d41ph0lIrMDPPREPBLfIBmd2gi7X10fGZSUGGXgppoKVPz5p3nHezsennqH1u+F8Pwsk
+ XMapg9DOT9miXAiE2IKYTOvTYkmdqnGh290YGXdWzi0fo6GCXzzVVh5ov1i17+AspUAQ
+ TlIx7yhgYaUrFeD58C/nSIsgVEn2kK1fqOmh2mE4OPBOBOrHzZm3tjbr8AFcp6jNeak9
+ pcqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789741475; x=1790346275;
+ d=1e100.net; s=20260707; t=1789741485; x=1790346285;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=50aCxFdjvgOonBzfwDq4lxvq9N8Gbe3Y6UNEwMKBtjw=;
- b=v2+npf/m83U2LB3UHU8s/TGfpajTNN5cqpsyDv+ZnCS4+y7X+y0iLTbS5DTokP6r1b
- tvUunkiYzYA/wTF+10wOROpM861jT24YNiSgewwqwB6RY7JVruab8ZlfIfzKHpSa3fkI
- RSayu24xTVnNgmulKv5Ji9tSlevdfkz4CTbdWqrEKaSd2QA9MHi0DoPinbX0tXGWOVTT
- gQAfufhpGl/Fne12dkTp8fwcC2s6tf1CU5vb6mrIUDwZWUl/vBRQIcA9yYW87XO60iQ3
- fplaJ8xPcT78pq1zNC7F1RpkvjwP1KWKEO0sUKrmzxnlCmFdwphywIMe/qpLBxrJ1a9x
- 4HdA==
-X-Gm-Message-State: AFuF++m1e0dL06Ty7Urbn7PLFgwj0t8Ki1eXpAgV2hEB8Mznv9udKTGy
- L2p+6Vjd1qJViGcjTM1C/rldEpEjcUfUKMJwQtX1BINWPRpOR6Kgevr+AB20lX8qEtA=
-X-Gm-Gg: AYBFou3B8rBrNQAZwF/MVfSn/baIfzxDyza6eFQc7Z11pOxYL5EGbhtg9cqnHsiGAy3
- j8xnfPpXScpH/rChSSFQPhOaFCLBmALmW793CFlsMjmHOqgrdHtJL2syYia9PvVvWvtavz/oCwq
- 5/5yFNdEuy8Oh/TGBZqSfz93MRELpUiHvQ3fux//Sa9np8ARuwR7fE1DiQoS2ULhtIxd821Z2Zm
- 6M2M12NDHBD1uih3NTsYeu+ECqBVKDTM1/xkgj15J2jfu7cPSpw0fGAEEed5LF8TUp6kaykI2L5
- Uwv+IxRodjLfKHYk/uL2z2HPdLqb8uchisUYj00GYd7Wj0c4A31Seevr690JEHs2wWrFkJrtkP2
- +L38Lg79P5RVKSgrwSL9WuimOeErtPDbgRNJiAh3o1yULNBwrbE5pZ7Hw07CAfGGa5TRWFLAfEs
- b5QCpuJMGrzC3SiqXQ+dhB47mpwgKU7L4sK6ro87tdpJC+y8PqXx9SVuD3LmhYFv0oRqH9fJ4p
-X-Received: by 2002:a05:600c:1986:b0:49b:9105:cdaf with SMTP id
- 5b1f17b1804b1-49fc56cb2f7mr63463755e9.8.1789741474629; 
- Fri, 18 Sep 2026 07:24:34 -0700 (PDT)
+ bh=jxff3xmmsE6KuWRYrIIbIyGuz0FUO2yvzlzbuIVyHAg=;
+ b=deP4/vOUWEJpM+jU02To5aWX+HuKwoUFzEc0dkIQhothvf1KngGUacT7ycihbiQPuq
+ lcJAze62yiVpM1SYhE0xO4hap4LcgB+K1S4fDHxXqRiKd7oQVfl89h+yCXWyKgttCvMC
+ FliSHrptLL5Za3iw57N5Jb576PGnRlFTVW9Ep5EW7tnWmKwOQ0RgWBsVWP/Hd7g/Izqc
+ uFpCgFNLkMFUWyiYgZt2LVFV11CCKGiWgy9JG0G7QDogFqZG7/6AVVPiuT+hB3SiRZ8E
+ u/phLUE/YpR2150Doy8NKIuInrYZOdmDTvtbcDnkPYfy3JhxEMtRSZJz7b5OS/l0yco1
+ L41g==
+X-Gm-Message-State: AFuF++kzNlIqqVK40GEXS9zybj3Mzz+DPub2vOWJbZgC0S3FY2TMh3Gu
+ nzJFoaxOCbRtL4DFF44zNh/AnZ13O8PObr4ApvwBLuth1Txqa5WE3tbPoQTuRxk6uh0=
+X-Gm-Gg: AYBFou3Kw6MHGdsS5030ukoNbH/JO9fES+8xbzvrnghjZQpJxkkiU7rPpatz1CwtWXq
+ 3rbdSawA0V9yVw4qsPXnSTbUEox1zfV4JzaMyUmrs665pvBJDGUdQTIJvkPBje2ZOMrD/VYTbYt
+ Yi7qBcCKg8w5nuUiWEzKmPO8JaH/YicmNXBVp5dLgZ6krFI43ASWLH+F31Dz+LxoHFdmPyRZapC
+ 8r2KE5h9PPy7HrWLA1mQmNgvpA0Vf3NafUt0lQq7phZ3lyu4KE5ze/cCBliXdaQ8iSyM+q6NkKx
+ gsNrIQ9cT4HcEdaD4wT2v6OP4KiXOXfOxfd5631rCujDIKf0ftUNhCDBgWGsWH3iHwDFXMn/0Bn
+ 2S57STzMc33UK0V++SAwFv5aX/ZTQ2FLeg0J3OSun1gTGJ85CzWKpkjvXyFnnu0UM+oaSSu+lHH
+ ZTKzNSpDXbPtJUNSOBMiz72GU/bqTtkA89cmo8e5yHiEUKU6uH9WzkEoVNOTebNg3CG85oXh4=
+X-Received: by 2002:a05:600c:6214:b0:49b:9202:6f80 with SMTP id
+ 5b1f17b1804b1-49fc568129emr35618275e9.6.1789741484722; 
+ Fri, 18 Sep 2026 07:24:44 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fc79bdc35sm59367035e9.0.2026.09.18.07.24.30
+ 5b1f17b1804b1-49fc7b7a6e6sm65793945e9.1.2026.09.18.07.24.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 07:24:30 -0700 (PDT)
+ Fri, 18 Sep 2026 07:24:37 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B545D5F948;
- Fri, 18 Sep 2026 15:24:29 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 730085FC17;
+ Fri, 18 Sep 2026 15:24:30 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 01/17] scripts: update meson-buildoptions.sh
-Date: Fri, 18 Sep 2026 15:24:12 +0100
-Message-ID: <20260918142429.336497-2-alex.bennee@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 08/17] tests/tcg: use --add-current-user when building
+ containers
+Date: Fri, 18 Sep 2026 15:24:19 +0100
+Message-ID: <20260918142429.336497-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260918142429.336497-1-alex.bennee@linaro.org>
 References: <20260918142429.336497-1-alex.bennee@linaro.org>
@@ -106,125 +106,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This wasn't run because the automatic trigger is fickle. We don't want
-to expose all the tcg-test-cross-cc options to help as we already have
-processing via --cross-cc-ARCH so we tweak the CONFIGURE_HELP filter
-in the update script.
+As the meson tcg build routes the container builds through docker.py
+we can also clean up its hack which involved appending a RUN line to
+the dockerfile. All the dockerfiles that care will work with the
+--build-arg.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260917185322.3457036-1-alex.bennee@linaro.org>
+Tested-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260917165602.3405537-8-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/scripts/meson-buildoptions.py b/scripts/meson-buildoptions.py
-index 9e3a75c8b11..a2bfff9c4bf 100644
---- a/scripts/meson-buildoptions.py
-+++ b/scripts/meson-buildoptions.py
-@@ -56,6 +56,7 @@
- # Options that configure prints help for, so we can skip
- CONFIGURE_HELP = {
-     "gdb",
-+    "tcg_tests_cross",
- }
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index 315fa2ff848..6090a9dc957 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -297,13 +297,6 @@ def build_image(self, tag, docker_dir, dockerfile,
+                                              dir=docker_dir, suffix=".docker")
+         tmp_df.write(dockerfile)
  
- # Builtin options that should be definable via configure.  Some of the others
-@@ -194,7 +195,7 @@ def print_help(options):
-         key = cli_help_key(opt)
-         # The first section includes options that have an arguments,
-         # and booleans (i.e., only one of enable/disable makes sense)
--        if opt["name"] in CONFIGURE_HELP:
-+        if any(opt["name"].startswith(h) for h in CONFIGURE_HELP):
-             pass
-         elif require_arg(opt):
-             metavar = cli_metavar(opt)
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index ba3c9de216b..4ad8c1c5d35 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -10,7 +10,10 @@ meson_options_help() {
-   printf "%s\n" '  --block-drv-rw-whitelist=VALUE'
-   printf "%s\n" '                           set block driver read-write whitelist (by default'
-   printf "%s\n" '                           affects only QEMU, not tools like qemu-img)'
-+  printf "%s\n" '  --container-command=VALUE'
-+  printf "%s\n" '                           command to build/run containers'
-   printf "%s\n" '  --datadir=VALUE          Data file directory [share]'
-+  printf "%s\n" '  --disable-containers     use containers to cross compile tcg tests'
-   printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better performance)'
-   printf "%s\n" '  --disable-debug-info     Enable debug symbols and other information'
-   printf "%s\n" '  --disable-hexagon-idef-parser'
-@@ -195,7 +198,7 @@ meson_options_help() {
-   printf "%s\n" '  spice-protocol  Spice protocol support'
-   printf "%s\n" '  stack-protector compiler-provided stack protection'
-   printf "%s\n" '  tcg             TCG support'
--  printf "%s\n" '  tests           build test suite'
-+  printf "%s\n" '  tests           Build the test suite'
-   printf "%s\n" '  tools           build support utilities that come with QEMU'
-   printf "%s\n" '  tpm             TPM support'
-   printf "%s\n" '  u2f             U2F emulation support'
-@@ -282,6 +285,9 @@ _meson_option_parse() {
-     --disable-cocoa) printf "%s" -Dcocoa=disabled ;;
-     --enable-colo-proxy) printf "%s" -Dcolo_proxy=enabled ;;
-     --disable-colo-proxy) printf "%s" -Dcolo_proxy=disabled ;;
-+    --container-command=*) quote_sh "-Dcontainer_command=$2" ;;
-+    --enable-containers) printf "%s" -Dcontainers=true ;;
-+    --disable-containers) printf "%s" -Dcontainers=false ;;
-     --enable-coreaudio) printf "%s" -Dcoreaudio=enabled ;;
-     --disable-coreaudio) printf "%s" -Dcoreaudio=disabled ;;
-     --with-coroutine=*) quote_sh "-Dcoroutine_backend=$2" ;;
-@@ -518,9 +524,53 @@ _meson_option_parse() {
-     --disable-tcg) printf "%s" -Dtcg=disabled ;;
-     --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=true ;;
-     --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=false ;;
--    --tls-priority=*) quote_sh "-Dtls_priority=$2" ;;
-+    --tcg-tests-cross-cc-aarch64=*) quote_sh "-Dtcg_tests_cross_cc_aarch64=$2" ;;
-+    --tcg-tests-cross-cc-aarch64-be=*) quote_sh "-Dtcg_tests_cross_cc_aarch64_be=$2" ;;
-+    --tcg-tests-cross-cc-alpha=*) quote_sh "-Dtcg_tests_cross_cc_alpha=$2" ;;
-+    --tcg-tests-cross-cc-arm=*) quote_sh "-Dtcg_tests_cross_cc_arm=$2" ;;
-+    --tcg-tests-cross-cc-hexagon=*) quote_sh "-Dtcg_tests_cross_cc_hexagon=$2" ;;
-+    --tcg-tests-cross-cc-hppa=*) quote_sh "-Dtcg_tests_cross_cc_hppa=$2" ;;
-+    --tcg-tests-cross-cc-i386=*) quote_sh "-Dtcg_tests_cross_cc_i386=$2" ;;
-+    --tcg-tests-cross-cc-loongarch64=*) quote_sh "-Dtcg_tests_cross_cc_loongarch64=$2" ;;
-+    --tcg-tests-cross-cc-m68k=*) quote_sh "-Dtcg_tests_cross_cc_m68k=$2" ;;
-+    --tcg-tests-cross-cc-mips=*) quote_sh "-Dtcg_tests_cross_cc_mips=$2" ;;
-+    --tcg-tests-cross-cc-mips64=*) quote_sh "-Dtcg_tests_cross_cc_mips64=$2" ;;
-+    --tcg-tests-cross-cc-mips64el=*) quote_sh "-Dtcg_tests_cross_cc_mips64el=$2" ;;
-+    --tcg-tests-cross-cc-or1k=*) quote_sh "-Dtcg_tests_cross_cc_or1k=$2" ;;
-+    --tcg-tests-cross-cc-ppc64=*) quote_sh "-Dtcg_tests_cross_cc_ppc64=$2" ;;
-+    --tcg-tests-cross-cc-ppc64le=*) quote_sh "-Dtcg_tests_cross_cc_ppc64le=$2" ;;
-+    --tcg-tests-cross-cc-riscv64=*) quote_sh "-Dtcg_tests_cross_cc_riscv64=$2" ;;
-+    --tcg-tests-cross-cc-s390x=*) quote_sh "-Dtcg_tests_cross_cc_s390x=$2" ;;
-+    --tcg-tests-cross-cc-sh4=*) quote_sh "-Dtcg_tests_cross_cc_sh4=$2" ;;
-+    --tcg-tests-cross-cc-tricore=*) quote_sh "-Dtcg_tests_cross_cc_tricore=$2" ;;
-+    --tcg-tests-cross-cc-x86-64=*) quote_sh "-Dtcg_tests_cross_cc_x86_64=$2" ;;
-+    --tcg-tests-cross-cc-xtensa=*) quote_sh "-Dtcg_tests_cross_cc_xtensa=$2" ;;
-+    --tcg-tests-cross-cc-xtensaeb=*) quote_sh "-Dtcg_tests_cross_cc_xtensaeb=$2" ;;
-+    --tcg-tests-cross-cflags-aarch64=*) quote_sh "-Dtcg_tests_cross_cflags_aarch64=$2" ;;
-+    --tcg-tests-cross-cflags-aarch64-be=*) quote_sh "-Dtcg_tests_cross_cflags_aarch64_be=$2" ;;
-+    --tcg-tests-cross-cflags-alpha=*) quote_sh "-Dtcg_tests_cross_cflags_alpha=$2" ;;
-+    --tcg-tests-cross-cflags-arm=*) quote_sh "-Dtcg_tests_cross_cflags_arm=$2" ;;
-+    --tcg-tests-cross-cflags-hexagon=*) quote_sh "-Dtcg_tests_cross_cflags_hexagon=$2" ;;
-+    --tcg-tests-cross-cflags-hppa=*) quote_sh "-Dtcg_tests_cross_cflags_hppa=$2" ;;
-+    --tcg-tests-cross-cflags-i386=*) quote_sh "-Dtcg_tests_cross_cflags_i386=$2" ;;
-+    --tcg-tests-cross-cflags-loongarch64=*) quote_sh "-Dtcg_tests_cross_cflags_loongarch64=$2" ;;
-+    --tcg-tests-cross-cflags-m68k=*) quote_sh "-Dtcg_tests_cross_cflags_m68k=$2" ;;
-+    --tcg-tests-cross-cflags-mips=*) quote_sh "-Dtcg_tests_cross_cflags_mips=$2" ;;
-+    --tcg-tests-cross-cflags-mips64=*) quote_sh "-Dtcg_tests_cross_cflags_mips64=$2" ;;
-+    --tcg-tests-cross-cflags-mips64el=*) quote_sh "-Dtcg_tests_cross_cflags_mips64el=$2" ;;
-+    --tcg-tests-cross-cflags-or1k=*) quote_sh "-Dtcg_tests_cross_cflags_or1k=$2" ;;
-+    --tcg-tests-cross-cflags-ppc64=*) quote_sh "-Dtcg_tests_cross_cflags_ppc64=$2" ;;
-+    --tcg-tests-cross-cflags-ppc64le=*) quote_sh "-Dtcg_tests_cross_cflags_ppc64le=$2" ;;
-+    --tcg-tests-cross-cflags-riscv64=*) quote_sh "-Dtcg_tests_cross_cflags_riscv64=$2" ;;
-+    --tcg-tests-cross-cflags-s390x=*) quote_sh "-Dtcg_tests_cross_cflags_s390x=$2" ;;
-+    --tcg-tests-cross-cflags-sh4=*) quote_sh "-Dtcg_tests_cross_cflags_sh4=$2" ;;
-+    --tcg-tests-cross-cflags-tricore=*) quote_sh "-Dtcg_tests_cross_cflags_tricore=$2" ;;
-+    --tcg-tests-cross-cflags-x86-64=*) quote_sh "-Dtcg_tests_cross_cflags_x86_64=$2" ;;
-+    --tcg-tests-cross-cflags-xtensa=*) quote_sh "-Dtcg_tests_cross_cflags_xtensa=$2" ;;
-+    --tcg-tests-cross-cflags-xtensaeb=*) quote_sh "-Dtcg_tests_cross_cflags_xtensaeb=$2" ;;
-     --enable-tests) printf "%s" -Dtests=enabled ;;
-     --disable-tests) printf "%s" -Dtests=disabled ;;
-+    --tls-priority=*) quote_sh "-Dtls_priority=$2" ;;
-     --enable-tools) printf "%s" -Dtools=enabled ;;
-     --disable-tools) printf "%s" -Dtools=disabled ;;
-     --enable-tpm) printf "%s" -Dtpm=enabled ;;
+-        if user:
+-            uid = os.getuid()
+-            uname = getpass.getuser()
+-            tmp_df.write("\n")
+-            tmp_df.write("RUN id %s 2>/dev/null || useradd -u %d -U %s" %
+-                         (uname, uid, uname))
+-
+         tmp_df.write("\n")
+         tmp_df.write("LABEL com.qemu.dockerfile-checksum=%s\n" % (checksum))
+         for f, c in extra_files_cksum:
+@@ -315,6 +308,12 @@ def build_image(self, tag, docker_dir, dockerfile,
+         if self._buildkit:
+             build_args += ["--build-arg", "BUILDKIT_INLINE_CACHE=1"]
+ 
++        if user:
++            uid = os.getuid()
++            uname = getpass.getuser()
++            build_args += ["--build-arg", "USER=%s" % uname,
++                           "--build-arg", "UID=%s" % uid]
++
+         if registry is not None:
+             pull_args = ["pull", "%s/%s" % (registry, tag)]
+             self._do(pull_args, quiet=quiet)
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 0604c4b90b9..814f2f8cd8c 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -255,7 +255,8 @@ foreach target, plan: tcg_tests
+     image_name = 'image-' + cc_dockerfile
+     has_docker = docker_host_arch_supported and docker_supported
+     if cc_dockerfile not in image_targets and has_docker
+-      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile]
++      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile,
++             '--add-current-user']
+       t = custom_target(image_name, command: cmd,
+                         build_by_default: false,
+                         output: 'no_output_' + image_name)
 -- 
 2.47.3
 
