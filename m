@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAC1C982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE5FC982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7QAG-0005XG-IR; Fri, 18 Sep 2026 00:25:32 -0400
+	id 1x7QAY-0005bb-Ki; Fri, 18 Sep 2026 00:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QA8-0005Mx-FW
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:24 -0400
-Received: from mail-oi2-x0f.google.com ([2607:f8b0:4864:32::f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAT-0005b9-QV
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:46 -0400
+Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QA6-0004Az-OM
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:24 -0400
-Received: by mail-oi2-x0f.google.com with SMTP id
- 46e09a7af769-7f4f0d37f93so193850a34.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAR-0004OS-43
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:45 -0400
+Received: by mail-oi2-x10.google.com with SMTP id
+ 46e09a7af769-7f4f0d37f94so153568a34.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705521; x=1790310321;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705542; x=1790310342;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1md8Q5IGeth07Sa1XguPxqxA55w0N697rIHuBKnwpxg=;
- b=UhjfdejzhzsuVHYEcgunhVWWR+hPm/oXHftVq2atxraryPtH996gYhCO+O3GVuNbxh
- MdBDaG6ufbX2RDC34AJmvlxN0aLpjH9wjLdAmiLTWzl9kg/pT2PC2H+ynPyWq4qn6c1m
- Sj+zLXnDB5/Uky72RK0fndzfp02mU/ZkWjxUpFe9ueIPGTLKwEbWGgbspZtN5blfA9pn
- QuFnG9aiX6A7l5fGJ8qnlldxN4XtfduxYUchHZeqSatW7F/AJAN2awvBBI+zKOcvQNHT
- Xj2r/ne2BnM0pbpkWHqwQiDPnTGhLUDlOqKoXkZymlV9Z5EPXwrxiaI9YMX1xVdXEyJj
- 8VSw==
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Q4gjGaNr4yxlY8ZppEOnVIAMeRkY3pfpMP0U3O5LX0E=;
+ b=dJVK7cglUoqKrWJX/CvEiEwkXxTelaKZDvLP+sTzEMWfFneIqzZKu6uBnU5eRPQAOi
+ Lndttyq5ye+bLPlA6bdpjCls89Lt82N4z5iNU7mPpJ9rokNd6hmnEk+q3K1hPrM2L+Qy
+ HDO3RXbVxnQ0giYvjA9uDhAQK6tCdsCWudNVvMBGcW+k1lLI4NhCGcZPfSyp4Z2wd49g
+ ocXeP+aSbcG/6dY4h8gkH8GOsqkVOH7/q1yWmbpARdg7/L4gwpKLQzDWtvkxV4/OEffb
+ qmBAgYmdFVXFzx+ATgVLzC915j6cA92+FjvtIe2ifDcdMPoI3xZ3427wOGQiA1TWmm03
+ /Eqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789705521; x=1790310321;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1md8Q5IGeth07Sa1XguPxqxA55w0N697rIHuBKnwpxg=;
- b=mhZF0IkeauqKTnox4UcNUsscwhyytez3FDVAnEmrOKwMKMOwQQ4QDIYUfNX79ZYJHM
- gls6Q67RS74VlyY8NqOR4Q5/PFWrvAf7F3LSGEGwy5nTFjN68ZvvtK93VnBmars4AbZY
- WGf06/Wte+e529xCe8cE59B2vS6H8sbzlRkLY7FT8V59N6YjjFP0m7SDzRpayK90J6gG
- Co52Rl4nGO99saNucb/BNeZx++8QAKgCKjKsAyTkxUKxFMGCGX5Ah5mcnv6HKpCHtHwt
- YcBFf2ishYQA6F3hio2qYvhqgsGEFIkZ3lH6eyj4I+QnbQlVkQf6IBG6pcCWcrQMM2Dm
- Vzkg==
-X-Gm-Message-State: AFuF++nIRpsgPelEwJ51gDDaFcLGVoT3Uk+I0yw8HhsEOsxyzjHhmovJ
- GgR3ES509i6Hlr13fuHfYBgHexVhi9hOm44GITsUGDaFP7CIqnQerT2I3dOUBRE9+PwoU1nVO9N
- CC3q5oeA=
-X-Gm-Gg: AYBFou3F8EWbunznZNiIBNVUwXlRnw0umfbHx+EJUZh7x6WqawrRB4n8ml/gYN7zqJu
- csA6JpxSj98KUqSVxQ50IceJydx1rR0axyxOBPSzRSLisN4g4gUijgTeZM3mpcp7pCmHkD5GlfF
- Esmk22CnGADfCFGiUBeANBsZ/PiRd8JC/PLrX+Kk8dlr/YbHx7byNcbdE8tkNVKC4BKjJPU5VtE
- dQUSitA139o1GnfrmXsEfQW+9mjZAn0jAegt5+jfx5EF54DvjVxyu2lMicmMUgpm2guukQx1NkI
- Yf+XNccZcfkJHoK6Q9i/DIhNMwkJmpSzTMAEafeyzNqXGk5C6PB3OhPFlnphUe9QTFaLrgpW+Ij
- mRAkI8lhRLA/UtlEOMAEDIfwq7fNV5yD3OMTHum+3wp141jBW+GbCLFWpvzCFpIGYpRjgubHdUR
- cBBGF1r6b9Sjs8O3pc1wAuChbMIf27/87wgiTS/UFOpTU9HdBczod+jzMJSQ==
-X-Received: by 2002:a05:6830:7318:b0:803:3878:bf56 with SMTP id
- 46e09a7af769-80de38f0c33mr1412728a34.25.1789705521571; 
- Thu, 17 Sep 2026 21:25:21 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789705542; x=1790310342;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Q4gjGaNr4yxlY8ZppEOnVIAMeRkY3pfpMP0U3O5LX0E=;
+ b=iyQX0LUOJA6ksN2cpG4XU6IqvYueEnGDIA1+np8/hvp7KiYXCg8IhvfEHFEIXN2v1N
+ BJ20l+zYXwiKmaztIULs+s+qzb4tvHgd+d/jcvF0js7nVb+P73HWHg1tC81vKrHX8MAs
+ yrZaSUlrmAKfpy2b2Yn8vMns+uCs8CQDfaUBuJaPAvxvXqDBqXSgqT2kc1pzed5NWJs6
+ fdLY0SvqgSdlLnmdn3rmyv7Wx0WDQZnq0zj4L8v+e4HefdEAoSNP3rek3AWH4T/oMKYi
+ tIvsjYxqi9LzZTg4BWfbsWfFWd0fy9sr6YK9US34/7wa9xjstkrYcsRODHERRzOTSfzn
+ uVdw==
+X-Gm-Message-State: AFuF++kyMCJoQ5f2rFnGQN0kBIWHgO6xX1aKBEGTCreRbXtVXnURxXlI
+ 7nUSz2vDz3Cn4KgwMn0sqJKFtg+5/ljK8JbBbXDGFd1vKXpasog8g0fmMel8rtFLZ8aINiIE7E9
+ yV3iPrek=
+X-Gm-Gg: AYBFou1ULKYTLxJWoudVjtec5uTU4YiLd1yCuzWfrAEXc5++pC5KC5uvrNZp+VupMwP
+ xCEKHmGsVa/F85ppXOtpAi5Zd98RSA2bcotZuVzwdxshur/krjN+Q3EzPq4FygDHrJYNBjlkQJi
+ oKH7XJc515tvyJCyJjqPJHkizraKBjtveueKp8ySbm0yRwsZE1MwtE3Kwwy43alsGrVME/Fk3nQ
+ IWZWACQuCS9Pd0FLux4Fu5e+JNPmcJ4s8bkks4+zt87ocQVLDpaeycmT7Kuq6Y0UnF5TQClEQVK
+ 9MMKqN2HET40K7dFLOl5a9zHpE/2aWXpEJ0N/6hn9jTzxsMDf/RMFfoLr+8pLpYQ+tZGisOoaWN
+ 2iAasXWpiB+m2zsU0LLuK7y2OixHMuhFY3dklBASu3rVd47prsbOTxocjD1oCQE5+HFalp9Af/g
+ +7BQEHy+zBHDQ39PGNLP4o2W2BM90Hwq/uvIo9Vgt+Mf4twh8moqKdFOGCRQ==
+X-Received: by 2002:a05:6830:2e11:b0:7fa:5c49:5255 with SMTP id
+ 46e09a7af769-80de3ee14d1mr1680566a34.28.1789705541973; 
+ Thu, 17 Sep 2026 21:25:41 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.20
+ 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 21:25:21 -0700 (PDT)
+ Thu, 17 Sep 2026 21:25:41 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
  Stacey Son <sson@FreeBSD.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Mika=C3=ABl=20Urankar?= <mikael.urankar@gmail.com>,
+ Kyle Evans <kevans@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/41] bsd-user: Add os-file.h with chflagsat, close_range,
- and more
-Date: Thu, 17 Sep 2026 22:23:53 -0600
-Message-ID: <20260918042422.38713-13-imp@bsdimp.com>
+Subject: [PULL 27/41] bsd-user: Add os-time.c and time-related type definitions
+Date: Thu, 17 Sep 2026 22:24:08 -0600
+Message-ID: <20260918042422.38713-28-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918042422.38713-1-imp@bsdimp.com>
 References: <20260918042422.38713-1-imp@bsdimp.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:32::f; envelope-from=imp@bsdimp.com;
- helo=mail-oi2-x0f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::10;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,203 +104,513 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add FreeBSD-specific file operation shims: chflagsat, close_range,
-copy_file_range, and __specialfd. Also add the safe_copy_file_range and
-safe_ppoll syscall wrappers and the target_specialfd_eventfd type
-definitions.
+Add os-time.c with time conversion helpers (t2h/h2t functions for
+timespec, timeval, timex, ntptimeval, itimerspec) and POSIX timer
+helper functions. Also add target_freebsd_timex, target_freebsd_ntptimeval,
+target_freebsd_itimerspec, kevent structures, and timer definitions
+to syscall_defs.h.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Assisted-by: Claude Opus 4.6 (1M context)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-file.h    | 103 ++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-syscall.c |  25 +++++++++
- bsd-user/syscall_defs.h       |  10 ++++
- 3 files changed, 138 insertions(+)
- create mode 100644 bsd-user/freebsd/os-file.h
+ bsd-user/freebsd/meson.build  |   3 +-
+ bsd-user/freebsd/os-syscall.c |   2 +
+ bsd-user/freebsd/os-time.c    | 347 ++++++++++++++++++++++++++++++++++
+ bsd-user/freebsd/os-time.h    |   3 +
+ bsd-user/freebsd/qemu-os.h    |  30 +++
+ bsd-user/syscall_defs.h       |  41 ++++
+ 6 files changed, 425 insertions(+), 1 deletion(-)
+ create mode 100644 bsd-user/freebsd/os-time.c
 
-diff --git a/bsd-user/freebsd/os-file.h b/bsd-user/freebsd/os-file.h
-new file mode 100644
-index 0000000000..d5d91336ea
---- /dev/null
-+++ b/bsd-user/freebsd/os-file.h
-@@ -0,0 +1,103 @@
-+/*
-+ * FreeBSD file related system call shims and definitions
-+ *
-+ * Copyright (c) 2014 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef FREEBSD_OS_FILE_H
-+#define FREEBSD_OS_FILE_H
-+
-+#include <sys/specialfd.h>
-+
-+/*
-+ * Asynchronous I/O.
-+ */
-+
-+/* chflagsat(2) */
-+static inline abi_long do_bsd_chflagsat(int fd, abi_ulong path,
-+        abi_ulong flags, int atflags)
-+{
-+    abi_long ret;
-+    void *p;
-+
-+    LOCK_PATH(p, path);
-+    ret = get_errno(chflagsat(fd, p, flags, atflags)); /* XXX path(p)? */
-+    UNLOCK_PATH(p, path);
-+
-+    return ret;
-+}
-+
-+/* close_range(2) */
-+static inline abi_long do_freebsd_close_range(unsigned int lowfd,
-+    unsigned int highfd, int flags)
-+{
-+
-+    return get_errno(close_range(lowfd, highfd, flags));
-+}
-+
-+ssize_t safe_copy_file_range(int, off_t *, int, off_t *, size_t, unsigned int);
-+
-+/* copy_file_range(2) */
-+static inline abi_long do_freebsd_copy_file_range(int infd,
-+    abi_ulong inofftp, int outfd, abi_ulong outofftp, size_t len,
-+    unsigned int flags)
-+{
-+    off_t inoff, outoff, *inp, *outp;
-+    abi_long ret;
-+
-+    inp = outp = NULL;
-+    if (inofftp != 0 && !access_ok(VERIFY_WRITE, inofftp, sizeof(off_t))) {
-+        return -TARGET_EFAULT;
-+    } else if (inofftp != 0) {
-+        inoff = tswap64(*(off_t *)g2h_untagged(inofftp));
-+        inp = &inoff;
-+    }
-+    if (outofftp != 0 && !access_ok(VERIFY_WRITE, outofftp, sizeof(off_t))) {
-+        return -TARGET_EFAULT;
-+    } else if (outofftp != 0) {
-+        outoff = tswap64(*(off_t *)g2h_untagged(outofftp));
-+        outp = &outoff;
-+    }
-+
-+    ret = get_errno(safe_copy_file_range(infd, inp, outfd, outp, len,
-+        flags));
-+
-+    if (!is_error(ret)) {
-+        if (inofftp != 0) {
-+            *(off_t *)g2h_untagged(inofftp) = tswap64(inoff);
-+        }
-+        if (outofftp != 0) {
-+            *(off_t *)g2h_untagged(outofftp) = tswap64(outoff);
-+        }
-+    }
-+    return ret;
-+}
-+
-+static inline abi_long do_freebsd___specialfd(int type, abi_ulong req,
-+    size_t len)
-+{
-+    abi_long ret;
-+
-+    ret = -TARGET_EINVAL;
-+    switch (type) {
-+    case TARGET_SPECIALFD_EVENT: {
-+        struct specialfd_eventfd evfd;
-+        struct target_specialfd_eventfd *target_eventfd;
-+
-+        if (!lock_user_struct(VERIFY_READ, target_eventfd, req, 1)) {
-+            return -TARGET_EFAULT;
-+        }
-+
-+        evfd.initval = tswap32(target_eventfd->initval);
-+        evfd.flags = tswap32(target_eventfd->flags);
-+        ret = get_errno(syscall(SYS___specialfd, type, &evfd, sizeof(evfd)));
-+        unlock_user_struct(target_eventfd, req, 0);
-+        break;
-+    }
-+    }
-+
-+    return ret;
-+}
-+
-+#endif /* FREEBSD_OS_FILE_H */
+diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
+index 83593a1e20..163d5657db 100644
+--- a/bsd-user/freebsd/meson.build
++++ b/bsd-user/freebsd/meson.build
+@@ -8,6 +8,7 @@ bsd_user_ss.add(files(
+   'os-socket.c',
+   'os-stat.c',
+   'os-sys.c',
+-  'os-syscall.c'),
++  'os-syscall.c',
++  'os-time.c'),
+   bsd_syscall_nr
+ )
 diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 06148fe3ce..4fc230e8e5 100644
+index 5d3a66e360..521660e8c8 100644
 --- a/bsd-user/freebsd/os-syscall.c
 +++ b/bsd-user/freebsd/os-syscall.c
-@@ -44,6 +44,7 @@
- #include "os-stat.h"
- #include "os-proc.h"
- #include "os-signal.h"
-+#include "os-file.h"
- #include "os-misc.h"
+@@ -89,6 +89,8 @@ safe_syscall6(ssize_t, sendto, int, fd, const void *, buf, size_t, len, int,
+ safe_syscall3(ssize_t, recvmsg, int, s, struct msghdr *, msg, int, flags);
+ safe_syscall3(ssize_t, sendmsg, int, s, const struct msghdr *, msg, int, flags);
  
- /* I/O */
-@@ -65,6 +66,9 @@ safe_syscall3(ssize_t, writev, int, fd, const struct iovec *, iov, int, iovcnt);
- safe_syscall4(ssize_t, pwritev, int, fd, const struct iovec *, iov, int, iovcnt,
-     off_t, offset);
- 
-+safe_syscall6(ssize_t, copy_file_range, int, infd, off_t *, inoffp, int, outfd,
-+    off_t *, outoffp, size_t, len, unsigned int, flags);
++int g_posix_timers[32] = { 0, } ;
 +
  /* used in os-proc */
  safe_syscall4(pid_t, wait4, pid_t, wpid, int *, status, int, options,
      struct rusage *, rusage);
-@@ -692,6 +696,27 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_undelete(arg1);
-         break;
+diff --git a/bsd-user/freebsd/os-time.c b/bsd-user/freebsd/os-time.c
+new file mode 100644
+index 0000000000..0dae7dc008
+--- /dev/null
++++ b/bsd-user/freebsd/os-time.c
+@@ -0,0 +1,347 @@
++/*
++ * FreeBSD time related system call helpers
++ *
++ * Copyright (c) 2013-2015 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++
++#include <errno.h>
++#include <time.h>
++#include <sys/timex.h>
++#include <sys/types.h>
++#include <sys/select.h>
++#include <sys/umtx.h>
++
++#include "qemu.h"
++#include "qemu-os.h"
++
++/*
++ * FreeBSD time conversion functions
++ */
++abi_long t2h_freebsd_timeval(struct timeval *tv, abi_ulong target_tv_addr)
++{
++    struct target_freebsd_timeval *target_tv;
++
++    if (!lock_user_struct(VERIFY_READ, target_tv, target_tv_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++    __get_user(tv->tv_sec, &target_tv->tv_sec);
++    __get_user(tv->tv_usec, &target_tv->tv_usec);
++    unlock_user_struct(target_tv, target_tv_addr, 0);
++
++    return 0;
++}
++
++abi_long h2t_freebsd_timeval(struct timeval *tv, abi_ulong target_tv_addr)
++{
++    struct target_freebsd_timeval *target_tv;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_tv, target_tv_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    __put_user(tv->tv_sec, &target_tv->tv_sec);
++    __put_user(tv->tv_usec, &target_tv->tv_usec);
++    unlock_user_struct(target_tv, target_tv_addr, 1);
++
++    return 0;
++}
++
++abi_long t2h_freebsd_timespec(struct timespec *ts, abi_ulong target_ts_addr)
++{
++    struct target_freebsd_timespec *target_ts;
++
++    if (!lock_user_struct(VERIFY_READ, target_ts, target_ts_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++    __get_user(ts->tv_sec, &target_ts->tv_sec);
++    __get_user(ts->tv_nsec, &target_ts->tv_nsec);
++    unlock_user_struct(target_ts, target_ts_addr, 0);
++
++    return 0;
++}
++
++abi_long h2t_freebsd_timespec(abi_ulong target_ts_addr, struct timespec *ts)
++{
++    struct target_freebsd_timespec *target_ts;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_ts, target_ts_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    __put_user(ts->tv_sec, &target_ts->tv_sec);
++    __put_user(ts->tv_nsec, &target_ts->tv_nsec);
++    unlock_user_struct(target_ts, target_ts_addr, 1);
++
++    return 0;
++}
++
++abi_long t2h_freebsd_umtx_time(abi_ulong target_ut_addr,
++        abi_ulong target_ut_size, void *host_t, size_t *host_tsz)
++{
++    abi_long ret;
++
++    if (target_ut_size <= sizeof(struct target_freebsd_timespec)) {
++        ret = t2h_freebsd_timespec((struct timespec *)host_t, target_ut_addr);
++        if (ret == 0) {
++            *host_tsz = sizeof(struct timespec);
++        }
++        return ret;
++    } else {
++        struct target_freebsd__umtx_time *target_ut;
++        struct _umtx_time *ut = (struct _umtx_time *)host_t;
++
++        if (!lock_user_struct(VERIFY_READ, target_ut, target_ut_addr, 1)) {
++            return -TARGET_EFAULT;
++        }
++        if (t2h_freebsd_timespec(&ut->_timeout, h2g(&target_ut->_timeout))) {
++            unlock_user_struct(target_ut, target_ut_addr, 0);
++            return -TARGET_EFAULT;
++        }
++        __get_user(ut->_flags, &target_ut->_flags);
++        __get_user(ut->_clockid, &target_ut->_clockid);
++        unlock_user_struct(target_ut, target_ut_addr, 0);
++
++        if (target_ut_size > sizeof(struct target_freebsd__umtx_time)) {
++            *host_tsz = sizeof(struct _umtx_time) + sizeof(struct timespec);
++        } else {
++            *host_tsz = sizeof(struct _umtx_time);
++        }
++
++        return 0;
++    }
++}
++
++abi_long t2h_freebsd_timex(struct timex *host_tx, abi_ulong target_tx_addr)
++{
++    struct target_freebsd_timex *target_tx;
++
++    if (!lock_user_struct(VERIFY_READ, target_tx, target_tx_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++    __get_user(host_tx->modes, &target_tx->modes);
++    __get_user(host_tx->offset, &target_tx->offset);
++    __get_user(host_tx->freq, &target_tx->freq);
++    __get_user(host_tx->maxerror, &target_tx->maxerror);
++    __get_user(host_tx->esterror, &target_tx->esterror);
++    __get_user(host_tx->status, &target_tx->status);
++    __get_user(host_tx->constant, &target_tx->constant);
++    __get_user(host_tx->precision, &target_tx->precision);
++    __get_user(host_tx->tolerance, &target_tx->tolerance);
++    __get_user(host_tx->ppsfreq, &target_tx->ppsfreq);
++    __get_user(host_tx->jitter, &target_tx->jitter);
++    __get_user(host_tx->shift, &target_tx->shift);
++    __get_user(host_tx->stabil, &target_tx->stabil);
++    __get_user(host_tx->jitcnt, &target_tx->jitcnt);
++    __get_user(host_tx->calcnt, &target_tx->calcnt);
++    __get_user(host_tx->errcnt, &target_tx->errcnt);
++    __get_user(host_tx->stbcnt, &target_tx->stbcnt);
++    unlock_user_struct(target_tx, target_tx_addr, 0);
++
++    return 0;
++}
++
++abi_long h2t_freebsd_timex(abi_ulong target_tx_addr, struct timex *host_tx)
++{
++    struct target_freebsd_timex *target_tx;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_tx, target_tx_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    __put_user(host_tx->modes, &target_tx->modes);
++    __put_user(host_tx->offset, &target_tx->offset);
++    __put_user(host_tx->freq, &target_tx->freq);
++    __put_user(host_tx->maxerror, &target_tx->maxerror);
++    __put_user(host_tx->esterror, &target_tx->esterror);
++    __put_user(host_tx->status, &target_tx->status);
++    __put_user(host_tx->constant, &target_tx->constant);
++    __put_user(host_tx->precision, &target_tx->precision);
++    __put_user(host_tx->tolerance, &target_tx->tolerance);
++    __put_user(host_tx->ppsfreq, &target_tx->ppsfreq);
++    __put_user(host_tx->jitter, &target_tx->jitter);
++    __put_user(host_tx->shift, &target_tx->shift);
++    __put_user(host_tx->stabil, &target_tx->stabil);
++    __put_user(host_tx->jitcnt, &target_tx->jitcnt);
++    __put_user(host_tx->calcnt, &target_tx->calcnt);
++    __put_user(host_tx->errcnt, &target_tx->errcnt);
++    __put_user(host_tx->stbcnt, &target_tx->stbcnt);
++    unlock_user_struct(target_tx, target_tx_addr, 1);
++
++    return 0;
++}
++
++abi_long h2t_freebsd_ntptimeval(abi_ulong target_ntv_addr,
++        struct ntptimeval *ntv)
++{
++    struct target_freebsd_ntptimeval *target_ntv;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_ntv, target_ntv_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    __put_user(ntv->time.tv_sec, &target_ntv->time.tv_sec);
++    __put_user(ntv->time.tv_nsec, &target_ntv->time.tv_nsec);
++    __put_user(ntv->maxerror, &target_ntv->maxerror);
++    __put_user(ntv->esterror, &target_ntv->esterror);
++    __put_user(ntv->tai, &target_ntv->tai);
++    __put_user(ntv->time_state, &target_ntv->time_state);
++    unlock_user_struct(target_ntv, target_ntv_addr, 1);
++
++    return 0;
++}
++
++/*
++ * select(2) fdset copy functions
++ */
++abi_ulong copy_from_user_fdset(fd_set *fds, abi_ulong target_fds_addr, int n)
++{
++    int i, nw, j, k;
++    abi_ulong b, *target_fds;
++
++    nw = (n + TARGET_ABI_BITS - 1) / TARGET_ABI_BITS;
++    target_fds = lock_user(VERIFY_READ, target_fds_addr,
++            sizeof(abi_ulong) * nw, 1);
++    if (target_fds == NULL) {
++        return -TARGET_EFAULT;
++    }
++    FD_ZERO(fds);
++    k = 0;
++    for (i = 0; i < nw; i++) {
++        /* grab the abi_ulong */
++        __get_user(b, &target_fds[i]);
++        for (j = 0; j < TARGET_ABI_BITS; j++) {
++            /* check the bit inside the abi_ulong */
++            if ((b >> j) & 1) {
++                FD_SET(k, fds);
++            }
++            k++;
++        }
++    }
++    unlock_user(target_fds, target_fds_addr, 0);
++
++    return 0;
++}
++
++abi_ulong copy_from_user_fdset_ptr(fd_set *fds, fd_set **fds_ptr,
++        abi_ulong target_fds_addr, int n)
++{
++
++    if (target_fds_addr) {
++        if (copy_from_user_fdset(fds, target_fds_addr, n)) {
++            return -TARGET_EFAULT;
++        }
++        *fds_ptr = fds;
++    } else {
++        *fds_ptr = NULL;
++    }
++
++    return 0;
++}
++
++abi_long copy_to_user_fdset(abi_ulong target_fds_addr, const fd_set *fds, int n)
++{
++    int i, nw, j, k;
++    abi_long v;
++    abi_ulong *target_fds;
++
++    nw = (n + TARGET_ABI_BITS - 1) / TARGET_ABI_BITS;
++    target_fds = lock_user(VERIFY_WRITE, target_fds_addr,
++            sizeof(abi_ulong) * nw, 0);
++    if (target_fds == NULL) {
++        return -TARGET_EFAULT;
++    }
++    k = 0;
++    for (i = 0; i < nw; i++) {
++        v = 0;
++        for (j = 0; j < TARGET_ABI_BITS; j++) {
++            v |= ((FD_ISSET(k, fds) != 0) << j);
++            k++;
++        }
++        __put_user(v, &target_fds[i]);
++    }
++    unlock_user(target_fds, target_fds_addr, sizeof(abi_ulong) * nw);
++
++    return 0;
++}
++
++abi_int next_free_host_timer(void)
++{
++    int k ;
++    /* FIXME: Does finding the next free slot require a lock? */
++    for (k = 0; k < ARRAY_SIZE(g_posix_timers); k++) {
++        if (g_posix_timers[k] == 0) {
++            g_posix_timers[k] = 1;
++            return k;
++        }
++    }
++    return -1;
++}
++
++int host_to_target_timerid(int timerid)
++{
++    int k;
++
++    for (k = 0; k < ARRAY_SIZE(g_posix_timers); k++) {
++        if (g_posix_timers[k] == timerid) {
++            return TIMER_MAGIC | k;
++        }
++    }
++
++    return -1;
++}
++
++abi_long target_to_host_itimerspec(struct itimerspec *host_itspec,
++                                                 abi_ulong target_addr)
++{
++    struct target_freebsd_itimerspec *target_itspec;
++
++    if (!lock_user_struct(VERIFY_READ, target_itspec, target_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++
++    host_itspec->it_interval.tv_sec =
++                            tswapal(target_itspec->it_interval.tv_sec);
++    host_itspec->it_interval.tv_nsec =
++                            tswapal(target_itspec->it_interval.tv_nsec);
++    host_itspec->it_value.tv_sec = tswapal(target_itspec->it_value.tv_sec);
++    host_itspec->it_value.tv_nsec = tswapal(target_itspec->it_value.tv_nsec);
++
++    unlock_user_struct(target_itspec, target_addr, 0);
++    return 0;
++}
++
++abi_long host_to_target_itimerspec(abi_ulong target_addr,
++                                               struct itimerspec *host_its)
++{
++    struct target_freebsd_itimerspec *target_itspec;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_itspec, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++
++    target_itspec->it_interval.tv_sec = tswapal(host_its->it_interval.tv_sec);
++    target_itspec->it_interval.tv_nsec = tswapal(host_its->it_interval.tv_nsec);
++
++    target_itspec->it_value.tv_sec = tswapal(host_its->it_value.tv_sec);
++    target_itspec->it_value.tv_nsec = tswapal(host_its->it_value.tv_nsec);
++
++    unlock_user_struct(target_itspec, target_addr, 1);
++    return 0;
++}
++
++/* Convert QEMU provided timer ID back to internal 16bit index format */
++int get_timer_id(abi_long arg)
++{
++    int timerid = arg;
++
++    if ((timerid & TIMER_MAGIC_MASK) != TIMER_MAGIC) {
++        return -TARGET_EINVAL;
++    }
++
++    timerid &= 0xffff;
++
++    if (timerid >= ARRAY_SIZE(g_posix_timers)) {
++        return -TARGET_EINVAL;
++    }
++
++    return timerid;
++}
+diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
+index 05cb5db7d1..213bd16850 100644
+--- a/bsd-user/freebsd/os-time.h
++++ b/bsd-user/freebsd/os-time.h
+@@ -202,6 +202,9 @@ static inline abi_long do_freebsd_ntp_adjtime(abi_ulong target_tx_addr)
+     if (ret == 0) {
+         ret = get_errno(ntp_adjtime(&host_tx));
+     }
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_timex(target_tx_addr, &host_tx);
++    }
  
-+    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
-+        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
-+        break;
+     return ret;
+ }
+diff --git a/bsd-user/freebsd/qemu-os.h b/bsd-user/freebsd/qemu-os.h
+index 12adc50928..ee18b23422 100644
+--- a/bsd-user/freebsd/qemu-os.h
++++ b/bsd-user/freebsd/qemu-os.h
+@@ -32,6 +32,36 @@
+ 
+ struct freebsd11_stat;
+ 
++/* os-time.c */
++abi_long t2h_freebsd_timeval(struct timeval *tv, abi_ulong target_tv_addr);
++abi_long h2t_freebsd_timeval(struct timeval *tv, abi_ulong target_tv_addr);
 +
-+    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
-+        ret = do_freebsd_close_range(arg1, arg2, arg3);
-+        break;
++abi_long t2h_freebsd_timespec(struct timespec *ts, abi_ulong target_ts_addr);
++abi_long h2t_freebsd_timespec(abi_ulong target_ts_addr, struct timespec *ts);
 +
-+    case TARGET_FREEBSD_NR___realpathat:
-+        /* __realpathat(2) (XXX no realpathat()) */
-+        ret = do_freebsd_realpathat(arg1, arg2, arg3, arg4, arg5);
-+        break;
++abi_long t2h_freebsd_umtx_time(abi_ulong target_ut_addr,
++        abi_ulong target_ut_size, void *host_t, size_t *host_tsz);
 +
-+    case TARGET_FREEBSD_NR_copy_file_range:
-+        ret = do_freebsd_copy_file_range(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
++abi_long t2h_freebsd_timex(struct timex *host_tx, abi_ulong target_tx_addr);
++abi_long h2t_freebsd_timex(abi_ulong target_tx_addr, struct timex *host_tx);
 +
-+    case TARGET_FREEBSD_NR___specialfd:
-+        ret = do_freebsd___specialfd(arg1, arg2, arg3);
-+        break;
++abi_long h2t_freebsd_ntptimeval(abi_ulong target_ntv_addr,
++        struct ntptimeval *ntv);
 +
-         /*
-          * ioctl(2)
-          */
++abi_ulong copy_from_user_fdset(fd_set *fds, abi_ulong target_fds_addr, int n);
++abi_ulong copy_from_user_fdset_ptr(fd_set *fds, fd_set **fds_ptr,
++        abi_ulong target_fds_addr, int n);
++abi_long copy_to_user_fdset(abi_ulong target_fds_addr, const fd_set *fds,
++        int n);
++
++abi_int next_free_host_timer(void);
++int host_to_target_timerid(int timerid);
++abi_long target_to_host_itimerspec(struct itimerspec *host_itspec,
++        abi_ulong target_addr);
++abi_long host_to_target_itimerspec(abi_ulong target_addr,
++        struct itimerspec *host_its);
++int get_timer_id(abi_long arg);
++
+ /* os-stat.c */
+ abi_long h2t_freebsd11_stat(abi_ulong target_addr,
+         struct freebsd11_stat *host_st);
 diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 47aa01fbb5..88dd7a763a 100644
+index f4bb687388..75f2d6fa36 100644
 --- a/bsd-user/syscall_defs.h
 +++ b/bsd-user/syscall_defs.h
-@@ -418,6 +418,16 @@ struct target_freebsd_flock {
- /* user: vfork(2) semantics, clear signals */
- #define TARGET_RFSPAWN (1U << 31)
+@@ -155,6 +155,47 @@ struct target_freebsd_timeval {
+ #endif
+ };
  
-+/* sys/specialfd.h */
-+enum target_specialfd_type {
-+    TARGET_SPECIALFD_EVENT         = 1,
++/* compare to sys/timex.h */
++struct target_freebsd_ntptimeval {
++    struct target_freebsd_timespec  time;
++    abi_long    maxerror;
++    abi_long    esterror;
++    abi_long    tai;
++    int32_t     time_state;
 +};
 +
-+struct target_specialfd_eventfd {
-+    unsigned int initval;
-+    int flags;
++struct target_freebsd_itimerspec {
++    struct target_freebsd_timespec it_interval;
++    struct target_freebsd_timespec it_value;
 +};
++
++struct target_freebsd_timex {
++    uint32_t    modes;
++    abi_long    offset;
++    abi_long    freq;
++    abi_long    maxerror;
++    abi_long    esterror;
++    int32_t     status;
++    abi_long    constant;
++    abi_long    precision;
++    abi_long    tolerance;
++
++    abi_long    ppsfreq;
++    abi_long    jitter;
++    int32_t     shift;
++    abi_long    stabil;
++    abi_long    jitcnt;
++    abi_long    calcnt;
++    abi_long    errcnt;
++    abi_long    stbcnt;
++};
++
++/* Maxiumum of 32 active POSIX timers allowed at any one time. */
++extern int g_posix_timers[32];
++
++#define TIMER_MAGIC 0x0caf0000
++#define TIMER_MAGIC_MASK 0xffff0000
 +
  /*
-  *  sys/uuid.h
+  * sys/event.h
   */
 -- 
 2.55.0
