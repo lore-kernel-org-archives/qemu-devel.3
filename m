@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A910C982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A43C0C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7cR0-00069y-KI; Fri, 18 Sep 2026 13:31:43 -0400
+	id 1x7cPs-0004tQ-Cr; Fri, 18 Sep 2026 13:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPj-0004qg-5L; Fri, 18 Sep 2026 13:30:19 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x7cP9-0004ZJ-Pw; Fri, 18 Sep 2026 13:29:43 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPg-0000Ww-5T; Fri, 18 Sep 2026 13:30:17 -0400
+ id 1x7cP8-0000GS-06; Fri, 18 Sep 2026 13:29:43 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 3CABD6053D;
- Fri, 18 Sep 2026 17:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00B31F000FF;
- Fri, 18 Sep 2026 17:30:12 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CA51640951;
+ Fri, 18 Sep 2026 17:29:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C261F000FF;
+ Fri, 18 Sep 2026 17:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789752614;
- bh=wkePXI2ZAhs57urNC3Xrzyj8N64ULkLTlQbeBh3xUWk=;
+ s=k20260515; t=1789752580;
+ bh=73VXbOmIWKrxxbLYFyatApK8x2l7ryOhTMdeyx8DgzQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CVzQrGourI1q4QpFbSes7/dYfTMPKYo7gTMSfl3V+pucUJZZMVnfKfSSybkK5fzJw
- t1rSKRQ3xrpzwtwo6cMc5GsNyGAnevTu3UJ4BwT5f+5yoPvJJ9EShCjiPZVZfOR40I
- 4Xr2ymvLUY53KNWxxsIYPUKcPBG0tNes/RokfJGXh08XdApA6Tv+XZJFnVJFG2S0bP
- gy2ODR1/9fEL6rv2L45/yBKnmBQblIkUa2mdnl9QAHqYNNtigBxE8Uo+ds3bGFMDA+
- BT9OzygS1vkYZRqna5/I/LKigOd3KRX7VnRvjRIb2gqwwiihSVHn1n0zI0Ib8QYqpN
- E2y8llc2ePUJA==
+ b=B1xqUa0Q5xX4wdDLruTlKty31dH9mWK5W6JJiy8BpSG1FYDOy4sVAId/EBi2by4g0
+ xSd5Z8L0AADk9OduLaJtKY6I7KsrnoW5O377Nlx+vKrHn/gl71sECtb1WuYQkkEcWf
+ ScqbYy/Svst4UFi2YaNyedk8ajiQgOdGISrcf7K8vBKuR4e6AlG9T4ZOU4a4sPKmBU
+ se7eZm1WnaQ4mRW/Y1oQf/hcSZz6WmP5pRsS0qIQ9TjgkmCBZ5gjAQQi1drwwIngJq
+ kLOxxwiOVbA1GTn3d/L0gf3PWXG6X6PtKKnhPVudZkv4dK+3Ss2UrtIAT/1o9GCPB+
+ +pyuicsDMpV0A==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v5 15/15] block: do not use CoroutineIOCompletion to hold a
- return value
-Date: Fri, 18 Sep 2026 19:29:23 +0200
-Message-ID: <20260918172925.2640888-16-cassel@kernel.org>
+Subject: [PATCH v5 02/15] virtio-blk: do not merge requests across a zone
+ boundary
+Date: Fri, 18 Sep 2026 19:29:10 +0200
+Message-ID: <20260918172925.2640888-3-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918172925.2640888-1-cassel@kernel.org>
 References: <20260918172925.2640888-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,105 +71,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bdrv_co_zone_report(), bdrv_co_zone_mgmt() and bdrv_co_zone_append() each
-declare a CoroutineIOCompletion in order to use its ret field, and never
-touch the coroutine field that the rest of the structure exists for.
+From: Sam Li <faithilikerun@gmail.com>
 
-That structure is for a request which completes through
-bdrv_co_io_em_complete(), where the callback has to store the result
-somewhere and wake the coroutine that is waiting for it. These three call
-into the driver directly and are already running in the coroutine that
-wants the result, so there is nothing to wake and nowhere else for the
-value to live.
+virtio_blk_submit_multireq() fuses adjacent in-zone requests into a
+single request. On a zoned backend, a merged zone append request
+that straddles a zone boundary is rejected by the device because
+each write/read must stay within a single zone (virtio 1.4, 5.2.6.1).
 
-Use a plain int. bdrv_co_zone_append() already has one.
+Add a bail condition to the merge coalescer: if combining the
+candidate request into the current batch would cross a zone
+boundary, flush the current batch and start a new one.
 
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Sam Li <faithilikerun@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/io.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ block/block-backend.c             | 11 +++++++++++
+ hw/block/virtio-blk.c             | 22 +++++++++++++++++++++-
+ include/system/block-backend-io.h |  1 +
+ 3 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/block/io.c b/block/io.c
-index a4fb56f799..c62c3764d3 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3303,40 +3303,36 @@ int coroutine_fn bdrv_co_zone_report(BlockDriverState *bs, int64_t offset,
-                         BlockZoneDescriptor *zones)
- {
-     BlockDriver *drv = bs->drv;
--    CoroutineIOCompletion co = {
--            .coroutine = qemu_coroutine_self(),
--    };
-+    int ret;
-     IO_CODE();
- 
-     bdrv_inc_in_flight(bs);
-     if (!drv || !drv->bdrv_co_zone_report || bs->bl.zoned == BLK_Z_NONE) {
--        co.ret = -ENOTSUP;
-+        ret = -ENOTSUP;
-         goto out;
-     }
--    co.ret = drv->bdrv_co_zone_report(bs, offset, nr_zones, zones);
-+    ret = drv->bdrv_co_zone_report(bs, offset, nr_zones, zones);
- out:
-     bdrv_dec_in_flight(bs);
--    return co.ret;
-+    return ret;
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 37ba7e9fc4..049e70ddcb 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -2326,6 +2326,17 @@ uint32_t blk_get_request_alignment(BlockBackend *blk)
+     return bs ? bs->bl.request_alignment : BDRV_SECTOR_SIZE;
  }
  
- int coroutine_fn bdrv_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
-         int64_t offset, int64_t len)
++/*
++ * Returns the zone size in bytes for a zoned backend, or 0 if @blk does
++ * not present zoned geometry.
++ */
++uint64_t blk_get_zone_size(BlockBackend *blk)
++{
++    BlockDriverState *bs = blk_bs(blk);
++    IO_CODE();
++    return bs ? bs->bl.zone_size : 0;
++}
++
+ /* Returns the optimal write zeroes alignment, in bytes; guaranteed nonzero */
+ uint32_t blk_get_pwrite_zeroes_alignment(BlockBackend *blk)
  {
-     BlockDriver *drv = bs->drv;
--    CoroutineIOCompletion co = {
--            .coroutine = qemu_coroutine_self(),
--    };
-+    int ret;
-     IO_CODE();
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 61c341ce2c..1b93364b24 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -288,6 +288,9 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
+     int i = 0, start = 0, num_reqs = 0, niov = 0, nb_sectors = 0;
+     uint32_t max_transfer;
+     int64_t sector_num = 0;
++    uint64_t zone_size = blk_get_zone_size(s->blk);
++    bool zone_cross;
++    int64_t zone_nr_sectors, end_sector;
  
-     bdrv_inc_in_flight(bs);
-     if (!drv || !drv->bdrv_co_zone_mgmt || bs->bl.zoned == BLK_Z_NONE) {
--        co.ret = -ENOTSUP;
-+        ret = -ENOTSUP;
-         goto out;
-     }
--    co.ret = drv->bdrv_co_zone_mgmt(bs, op, offset, len);
-+    ret = drv->bdrv_co_zone_mgmt(bs, op, offset, len);
- out:
-     bdrv_dec_in_flight(bs);
--    return co.ret;
-+    return ret;
- }
+     if (mrb->num_reqs == 1) {
+         submit_requests(s, mrb, 0, 1, -1);
+@@ -303,17 +306,34 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
+     for (i = 0; i < mrb->num_reqs; i++) {
+         VirtIOBlockReq *req = mrb->reqs[i];
+         if (num_reqs > 0) {
++            /*
++             * On zoned backends, a single backend write/read must not span
++             * a zone boundary. Bail out of merging if combining req into
++             * the current batch would straddle a zone.
++             */
++            if (zone_size > 0) {
++                zone_nr_sectors = zone_size / BDRV_SECTOR_SIZE;
++                end_sector = req->sector_num
++                                + req->qiov.size / BDRV_SECTOR_SIZE - 1;
++                zone_cross = (sector_num / zone_nr_sectors) !=
++                             (end_sector / zone_nr_sectors);
++            } else {
++                zone_cross = false;
++            }
++
+             /*
+              * NOTE: We cannot merge the requests in below situations:
+              * 1. requests are not sequential
+              * 2. merge would exceed maximum number of IOVs
+              * 3. merge would exceed maximum transfer length of backend device
++             * 4. merge would cross a zone boundary on a zoned backend
+              */
+             if (sector_num + nb_sectors != req->sector_num ||
+                 niov > blk_get_max_iov(s->blk) - req->qiov.niov ||
+                 req->qiov.size > max_transfer ||
+                 nb_sectors > (max_transfer -
+-                              req->qiov.size) / BDRV_SECTOR_SIZE) {
++                              req->qiov.size) / BDRV_SECTOR_SIZE ||
++                zone_cross) {
+                 submit_requests(s, mrb, start, num_reqs, niov);
+                 num_reqs = 0;
+             }
+diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
+index fd84723d9d..78d410b8df 100644
+--- a/include/system/block-backend-io.h
++++ b/include/system/block-backend-io.h
+@@ -121,6 +121,7 @@ uint32_t blk_get_request_alignment(BlockBackend *blk);
+ uint32_t blk_get_pwrite_zeroes_alignment(BlockBackend *blk);
+ uint32_t blk_get_max_transfer(BlockBackend *blk);
+ uint64_t blk_get_max_hw_transfer(BlockBackend *blk);
++uint64_t blk_get_zone_size(BlockBackend *blk);
  
- int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
-@@ -3345,9 +3341,6 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
- {
-     int ret;
-     BlockDriver *drv = bs->drv;
--    CoroutineIOCompletion co = {
--            .coroutine = qemu_coroutine_self(),
--    };
-     IO_CODE();
- 
-     ret = bdrv_check_qiov_request(*offset, qiov->size, qiov, 0, NULL);
-@@ -3379,13 +3372,13 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
- 
-     bdrv_inc_in_flight(bs);
-     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
--        co.ret = -ENOTSUP;
-+        ret = -ENOTSUP;
-         goto out;
-     }
--    co.ret = drv->bdrv_co_zone_append(bs, offset, qiov, flags);
-+    ret = drv->bdrv_co_zone_append(bs, offset, qiov, flags);
- out:
-     bdrv_dec_in_flight(bs);
--    return co.ret;
-+    return ret;
- }
- 
- uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
+ int coroutine_fn blk_co_copy_range(BlockBackend *blk_in, int64_t off_in,
+                                    BlockBackend *blk_out, int64_t off_out,
 -- 
 2.55.0
 
