@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCA4C982D6
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09FD9C982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7WLA-0003uy-Bl; Fri, 18 Sep 2026 07:01:12 -0400
+	id 1x7WwW-0000Q1-8A; Fri, 18 Sep 2026 07:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
- id 1x7WL3-0003uo-FC
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:01:05 -0400
-Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
- id 1x7WKy-0004gi-9L
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:01:03 -0400
-Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c254f55efebso86433066b.1
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:00:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwU-0000Pk-VI
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwS-0001cV-9i
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789731582;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LKSYJJbF1CnOtKRsw6x3RjE3m87irXE7r2mCU0EZIfY=;
+ b=O09iGiKqy6dXhqglnQKLNtZnFHHIiIPG7WYWIZfQwyk7YLuyXUwTAvdD54YvBtodG5bAY5
+ njHbwoHpms47IvDWn1QnwlUCfYfoFl7SLYZGLEW146sNHfvRH4XSk5rj1jZk+LQAd4LOYu
+ 1NXPqp0Ufm0k8DF280cEgiCDWVeNGGk=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-523-VDlAfkyNMmaypGkzhndCsw-1; Fri, 18 Sep 2026 07:39:40 -0400
+X-MC-Unique: VDlAfkyNMmaypGkzhndCsw-1
+X-Mimecast-MFC-AGG-ID: VDlAfkyNMmaypGkzhndCsw_1789731580
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5328cdb38bcso12942421cf.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789729258; x=1790334058; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/eWtYmZ6IPdKcCP/yRuIkzYB3vfj0RuOmPORlqQ0E/Y=;
- b=AqxNmAa2ZE7QBzqLk4gXja/eYdW/VoNHIt5J0W39Ipc1wU5S3mhk7dGc9YuLlN+aSE
- q36CfkV7bz/RcrbuAWGqlws35UXL5eyzF7DGz5lu+RtNSpIj8jokrJbNZ/WcLrt8+T+W
- S5iuwcwb0kFDgYT9kv+oAj57o31waUr+QWeka/uQONdcoBbdslMi0t3hP0FzF+VXHuUV
- x80hSKvp8bsWVEYyaojJZ6H7hEhH3GhCIYckfs822A+6gKKjRpM4ERdzN9128Uye684X
- JFjw5lbFgIDaiWsgKjkMWk7sWUXZxB6+UKfTL3/WQat7sev5hU/b+74ImJm2yFN5JZs/
- uEDA==
+ d=redhat.com; s=google; t=1789731580; x=1790336380; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=LKSYJJbF1CnOtKRsw6x3RjE3m87irXE7r2mCU0EZIfY=;
+ b=OkrwgZOocmML2D/yh0A8iDprOhSIE6rfOqOazcT8H+tmUJ+DVPt1dk5U1Ds/4WsTxu
+ iUXhDTK6LRvywVbygiD7Si5Y1ofBBup2GZbpy1VVkGThGKsbFP5EW/2ptcesPKl0/+CB
+ nDKeQk55vZXAQi2viFSmqorvVwwIM1v9F7r2MJJJJb8hulHhcOBC0cL+2JXU6HuZosMh
+ ElOySGio+NKU8/0+q5DmsG7jCnrVr6VsukYVHxSgtVtU2UzxMy2xBLj1xE8wy64LOYuv
+ hwv+G+vHJ74v+3yEf1DjtnNSs1Vw6s0R7gjoq4q8tYOaFCduuPiWuh9tuJNzVHZG5VuJ
+ l7tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789729258; x=1790334058;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/eWtYmZ6IPdKcCP/yRuIkzYB3vfj0RuOmPORlqQ0E/Y=;
- b=JNwcWNH7zZccmwiGSxRsaY3s4o4r9zMwzmR8p8XCQiqd2fxFa/NdMWdDfXlR+Cv3j7
- ecZ9mWajvJKBkdMkj+erbSm0Z3+Q9t0XsCqYdfoHmIxF/ZXR3QoVA13uJLzNk2f8VFjO
- 8/oHVQ9FDRxBpzx+snvOTs4qx5gKFUYPZNNRRPEWgLcrTc6vS2jcYEsjkXN2nkFvJvpj
- KTs111N3zjNB9xgq5pAth/87swZSXpll0bSrzoWoVAUCwfK9Gw6S6JhOsXhfPDRgkaNO
- 0lGHLy98KYdnYLlE5f4fgp2VLHGsWgy4+7FU+io3OglMXFP6lBYy9UzNWSqqzbi9Dpbc
- Oh2g==
-X-Gm-Message-State: AFuF++kpOs8+7D2D6drn5RNMyD8Zn4AvlDjp0nzM+Y2VHli/ak3vPRk1
- bAKM9j6cjSn0m+Gw7Lw5kcz4wKvfFMS8e57sjCVY19X5PhXGDG7VA7F+3+c0HA==
-X-Gm-Gg: AYBFou0WmAV0HymkjItLZ6RTxyWQO/LndYdMmZ9ZLDkt+M+iYp/fFeqoEO9wae9Zra9
- ekoRGZvarmDA+Zdx8r9TETCgv7QTqhcHu7NYK91oQaEcGUxIENdR66sX/9sMk4+jtJL5P/vvN3E
- agXluNQfsGsBhQv0IRwWbtBwQJl4XF3PHsVrpoirtocXC9wrX3WBjQp34xwP//JqfU3yJcAXv4A
- 8z/W409grvrpMc0YLla+n/84AkqG7gqsHKqu73ilhT4v/kzRvQNCvakrtelJ//eNH2nbRqTqy4u
- 2SuBFJ7yXXja6mrJpEPzKe4A25FIy5ZsjDHcJLk5MgakblzVUOXQwzmwIU4r7AlY+DpM2iw2OcR
- m8A3tksxIQhLN7JeDDb01CjH2Z25mUiyLDMF6o1nGo8UNWoHyZkryhLl1FjdBKrBzI68Gn7ngwX
- p8OOM5nch/fUiAPErzfu9MY5IvwrSffh3OPud/fj8khGsC8birn9fbIqnZLhtsK/aV4CyzIhPWT
- c+/2jxOismqUuneUNjRbSYkwrEwSNCoI8Dd4zxic5wwzBnYGH8+GIcwfO80Dg==
-X-Received: by 2002:a17:907:d07:b0:c26:1691:b374 with SMTP id
- a640c23a62f3a-c2a15827d9fmr213879766b.45.1789729257709; 
- Fri, 18 Sep 2026 04:00:57 -0700 (PDT)
-Received: from vmbox.lan (088156177242.warszawa.vectranet.pl. [88.156.177.242])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2a1bb8ba4dsm45904566b.44.2026.09.18.04.00.56
+ d=1e100.net; s=20260707; t=1789731580; x=1790336380;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LKSYJJbF1CnOtKRsw6x3RjE3m87irXE7r2mCU0EZIfY=;
+ b=I1WBqQYcqLeYf74TmzP98W9iw6py8XE8vjnZA681SKy7p+pyxF8Pokp/Sx6hOWihf5
+ SiNO4MvQ33v0ygScMEg/iLAJi5otOniBf7N3qVpMsKSPJtgGOXEtbZ6yP2TrLtJfJBVC
+ jTWnpk10r693oC3s7FJVg97EQIy62c0EnUIpLHBUQnvb5x/PJTE2pV2CuvF5EFxoEB0e
+ lA/HsmH+z+m7YL5kc8zIJjIUgDmOzubla/VGsgjTjxOCEHmaTYW/UKGstCvD23it0k+E
+ zDQP3mesES1Apq3CB6+7Ty+oItaDLB3UPN611DkpcqCYQVdXSO5uF8jVxP+HChP4GbVH
+ 7TRQ==
+X-Gm-Message-State: AFuF++mvSnFe7lKWdKSfDMhp/oEnfQfg6d+aQmV9jt8eRPYWX76XHf5n
+ +qefHCN/TgdUCSuK5YlkuAaCuVQY7YJimaQGtY1FYXSjAff2yu0nyOAn8WYLXV4r6RlTmn5APsK
+ 8/Eb7Kmm/AgOu2xqN884jtEtGDtN2Pijt7FdoZPijnBiu4+dAqByPMJhfPRq2yq6uY+cZWwYkcI
+ bM4tiV57b4JfxeV5zqagL5Pns2TbAcd0/CPlJnbbGd
+X-Gm-Gg: AYBFou3B7JU+HfgVL+tpuiSxIHy3qkyOTQ25tYD4DI5V/7nuM6MgaY0TvBNI7b4xBMs
+ GjiP7LRpGYo+F0P/c47DNMuKuO9HREHHw02z830cm7cUsMydpECJ9GCG4PXgqTN8sMSBEx59Bq0
+ EZnocNEYmA43xDOOTrUdot3MXkcY/Y2IV7TN5Umd2VXkqo6afzuq/YG47lrJ114TuPqqvpFg1QZ
+ UX/R/oKzRrN/zPixwpc/R/nMjuLu+hs+ui1O5wNWrRg8Yy+2jaRZCaO0FS2Ap7m1jGPRL1UAEyj
+ K9r6Cyl0smwnOwOZBzBs/grmjzanWd70CQGODsX6XXn7P0Bo3XLDtTHGskjS9vFr4VFW
+X-Received: by 2002:ac8:5ac9:0:b0:530:7bd0:72a7 with SMTP id
+ d75a77b69052e-5329e258415mr35662881cf.14.1789731579896; 
+ Fri, 18 Sep 2026 04:39:39 -0700 (PDT)
+X-Received: by 2002:ac8:5ac9:0:b0:530:7bd0:72a7 with SMTP id
+ d75a77b69052e-5329e258415mr35662521cf.14.1789731579285; 
+ Fri, 18 Sep 2026 04:39:39 -0700 (PDT)
+Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-532a1964d98sm11419631cf.7.2026.09.18.04.39.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 04:00:57 -0700 (PDT)
-From: dpim <sun4qemu@gmail.com>
+ Fri, 18 Sep 2026 04:39:38 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, dpim <sun4qemu@gmail.com>
-Subject: [PATCH v2] target/sparc: implement TTE page-size for 32M/256M pages
-Date: Fri, 18 Sep 2026 12:57:05 +0200
-Message-ID: <20260918105705.433093-1-sun4qemu@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Peter Xu <peterx@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 00/11] Next patches
+Date: Fri, 18 Sep 2026 07:39:15 -0400
+Message-ID: <20260918113926.831204-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:34::10;
- envelope-from=sun4qemu@gmail.com; helo=mail-ej2-x10.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,188 +113,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the TTE's page-size field, Size, is 2 bits wide:
+The following changes since commit f8296b816fabd370307cd22b0270b610fc0fa279:
 
-    #define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
+  Merge tag 'pull-loongarch-20260917' of https://github.com/bibo-mao/qemu into staging (2026-09-16 18:24:08 -1000)
 
-That is the TTE of every UltraSPARC before UltraSPARC IV+.
-The JPS1 implementation supplements for UltraSPARC III and IV+
-describe the TTE word in tables F-1 and F-1-4 respectively, and differ
-in one bit:
-Before IV+ bit 48 is reserved and reads as 0, Size is 2 bits at 62:61;
-On IV+ bit 48 is Size<2>, which "is the most significant bit of the
-page size and is concatenated with bits <62:61>"
-On T1 the same split exists, szl at 62:61 and szh at 48 (T1 Supplement,
-sec. 13.1.2).
+are available in the Git repository at:
 
-QEMU models parts on both sides of that change (UltraSPARC III/IIIi/IV,
-IV+, T1, T2) with the III layout: Size<2> was never implemented.
-Bit 48 gets lost in more than one place:
+  https://gitlab.com/peterx/qemu.git tags/next-pull-request
 
-On sun4u the raw TTE word is stored as the guest wrote it, bit 48
-included, but TTE_PGSIZE() only reads bits 62:61: the bit survives in
-the TLB, it is just never decoded.
+for you to fetch changes up to 666dd3c9b10a70eea4aae3c09b0f945175a7cb8e:
 
-On sun4v, sun4v_tte_to_sun4u() converts the incoming three-bit code
-(cpu.h defines TTE_PGSIZE_UA2005() for it, unused until now) but masked
-it to two:
+  system/ram-discard-manager: fix offset_within_address_space in replay_by_populated_state() (2026-09-18 07:36:52 -0400)
 
-    sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
+----------------------------------------------------------------
+Mem api pull
 
-so the third bit was dropped before it was stored.
+- Peter's patchset to drop some dead code for 32bit hosts
+- Phil/Bin's patch to enhance error message for mem allocations
+- Cam's fix to virtio-mem crash in multi-source work
 
-demap_tlb() duplicates the same 2-bit math instead of calling
-TTE_PGSIZE(), so it misses bit 48 too, for a TTE from either origin.
+----------------------------------------------------------------
 
-Either way 256M decodes as 64K and 32M as 8K; the guest faults on the
-first access past the truncated entry.
+Cam Miller (1):
+  system/ram-discard-manager: fix offset_within_address_space in
+    replay_by_populated_state()
 
-This patch implements Size<2> at bit 48, where the hardware keeps it.
+Peter Xu (9):
+  system: Define ram_addr_t to be always uint64_t
+  hw/vexpress.c: Remove forced cast to u64
+  arm/mps: Remove 32bit define for MPS3_DDR_SIZE
+  xen-mapcache: Remove 32bit support
+  bsd-user: Remove 32bit host support in thunk_convert|print()
+  linux-user: Remove 32bit host support in thunk_convert|print()
+  arm/aspeed: Drop ASPEED_RAM_SIZE
+  hw/arm/raspi4b: Drop board_rev for 32bit hosts
+  machine: Remove 32bit limitation on ram size
 
-TTE_PGSIZE() now reads bit 48 as the high bit; on parts that keep bit
-48 reserved it reads as zero, so they decode as before.
-sun4v_tte_to_sun4u() stores the full three-bit code, and demap_tlb()
-now calls TTE_PGSIZE() instead of its own copy. dump_mmu() gains 32M
-and 256M labels.
+Philippe Mathieu-Daudé (1):
+  system/physmem: Improve guest memory allocation failure error message
 
-Link: https://lore.kernel.org/qemu-devel/20260727233646.332875-1-sun4qemu@gmail.com/
-AI-used-for: code, analysis
-Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
----
-v2: described behaviour across sun4u/sun4v instead of the sun4v
-conversion; no functional change. QEMU_BUILD_BUG_ON and comments in
-cpu.h/ldst_helper.c are dropped.
+ include/hw/arm/aspeed.h           |  7 -----
+ include/system/ram_addr.h         | 16 +++++------
+ bsd-user/thunk.c                  | 47 ++-----------------------------
+ hw/arm/aspeed_ast2600_anacapa.c   |  2 +-
+ hw/arm/aspeed_ast2600_bletchley.c |  2 +-
+ hw/arm/aspeed_ast2600_catalina.c  |  2 +-
+ hw/arm/aspeed_ast2600_fby35.c     |  2 +-
+ hw/arm/aspeed_ast2600_fuji.c      |  2 +-
+ hw/arm/aspeed_ast2600_gb200nvl.c  |  2 +-
+ hw/arm/aspeed_ast2600_sanmiguel.c |  2 +-
+ hw/arm/mps2-tz.c                  |  9 ------
+ hw/arm/mps3r.c                    |  8 ------
+ hw/arm/raspi4b.c                  |  4 ---
+ hw/arm/vexpress.c                 | 13 ++-------
+ hw/core/machine.c                 |  8 ------
+ hw/xen/xen-mapcache.c             | 12 ++------
+ linux-user/thunk.c                | 47 ++-----------------------------
+ system/physmem.c                  |  4 ++-
+ system/ram-discard-manager.c      | 29 ++++++++++---------
+ 19 files changed, 43 insertions(+), 175 deletions(-)
 
-This email's text -- beyond the code and analysis the trailer above
-covers -- also had AI involvement: current policy (AGENTS.md)
-declines AI-derived content outright, and even the not-yet-merged
-llm-usage.rst RFC would require it to be human-written regardless of
-any trailer. Sending as-is rather than silently -- happy to hear if
-that's not acceptable here.
-
-Happy to run more tests or provide more evidence if this isn't enough.
-
-Guest is OpenSolaris snv_134 (osol-dev-134-ai-sparc.iso). Firmware is
-the S10image/ set from OpenSPARCT1_Arch.1.5.tar.bz2, which
-docs/system/target-sparc64.rst names for this machine, except the
-MD/hv-config pair (1up-md.bin, 1up-hv.bin), from the repo below. The
-archive's own config only boots disk.s10hw2, capped at 4M pages.
-
-Observed on upstream 5f664cd37a, with and without this patch -- same
-guest, firmware and RAM, plain `boot` at the `ok` prompt (occasionally
-hits an unrelated, pre-existing trap in OBP's loader phase before the
-kernel runs):
-
-  pristine: hangs after "Loading: /platform/sun4v/kernel/sparcv9/unix";
-            "info tlb" shows no 32M or 256M entry.
-  patched:  boots to "Enter user name for system maintenance";
-            "info tlb" shows 256M entries, e.g.
-            [17] VA: 600108b8000, PA: 140000000, 256M, priv, RW, ...
-  Full info tlb dumps:
-    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/logs/pristine-plain-boot-tlb.txt
-    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/logs/patched-plain-boot-tlb.txt
-
-The reproduction as a script, verify.sh (fetches firmware, MD and
-ISO, checks their hashes, boots):
-  https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/verify.sh
-
-On sun4u the pre-extension page sizes are verified by
-make check-qtest-sparc64 and make check-functional-sparc64 (sun4u,
-tuxrun, migration), which pass on the patched build with logs:
-  https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-qtest-sparc64.log
-  https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-functional-sparc64.log
-To check whether
-Size<2> is exercised at all, I added a temporary log in
-replace_tlb_entry() and ran both suites again: zero hits, as expected
--- IIi predates IV+ and doesn't implement Size<2>, so the guest
-running under it never sets bit 48. Result:
-  https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/sun4u-bit48-probe/RESULT
-Probe and logs:
-  https://github.com/unix0cc/qemu-experimental-patches/tree/967a037/verification/0002-tte-size2/sun4u-bit48-probe/
-32M/256M on sun4u stays untested by this suite; that would need a guest
-running under Sun-UltraSparc-IV-plus.
-
-Overview of everything above (scripts, logs, README):
-  https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/README
-
- target/sparc/cpu.h         |  4 +++-
- target/sparc/ldst_helper.c |  9 +++++++--
- target/sparc/mmu_helper.c  | 12 ++++++++++++
- 3 files changed, 22 insertions(+), 3 deletions(-)
-
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 31a16c2af0..1ab420d831 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -307,7 +307,9 @@ enum {
- #define TTE_SET_USED(tte)   ((tte) |= TTE_USED_BIT)
- #define TTE_SET_UNUSED(tte) ((tte) &= ~TTE_USED_BIT)
- 
--#define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
-+#define TTE_PGSIZE_HI_BIT   (1ULL << 48)
-+#define TTE_PGSIZE(tte)     ((((tte) >> 61) & 3ULL) | \
-+                             (((tte) & TTE_PGSIZE_HI_BIT) >> 46))
- #define TTE_PGSIZE_UA2005(tte)     ((tte) & 7ULL)
- #define TTE_PA(tte)         ((tte) & 0x1ffffffe000ULL)
- 
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index 4ec8799d1f..142c1c24de 100644
---- a/target/sparc/ldst_helper.c
-+++ b/target/sparc/ldst_helper.c
-@@ -186,7 +186,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_ulong demap_addr,
-                 /* demap page
-                    will remove any entry matching VA */
-                 mask = 0xffffffffffffe000ULL;
--                mask <<= 3 * ((tlb[i].tte >> 61) & 3);
-+                mask <<= 3 * TTE_PGSIZE(tlb[i].tte);
- 
-                 if (!compare_masked(demap_addr, tlb[i].tag, mask)) {
-                     continue;
-@@ -217,7 +217,12 @@ static uint64_t sun4v_tte_to_sun4u(CPUSPARCState *env, uint64_t tag,
-         return sun4v_tte;
-     }
-     sun4u_tte = TTE_PA(sun4v_tte) | (sun4v_tte & TTE_VALID_BIT);
--    sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
-+    {
-+        uint64_t pgsz = TTE_PGSIZE_UA2005(sun4v_tte);
-+        sun4u_tte |= (pgsz & 3ULL) << 61; /* TTE_PGSIZE bits 61-62 */
-+        sun4u_tte |= (pgsz & 4ULL) ?
-+            TTE_PGSIZE_HI_BIT : 0; /* TTE_PGSIZE bit 48 */
-+    }
-     sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_NFO_BIT_UA2005, TTE_NFO_BIT);
-     sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_USED_BIT_UA2005, TTE_USED_BIT);
-     sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_W_OK_BIT_UA2005, TTE_W_OK_BIT);
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 07ba25dfce..8544de097d 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -830,6 +830,12 @@ void dump_mmu(CPUSPARCState *env)
-             case 0x3:
-                 mask = "  4M";
-                 break;
-+            case 0x4:
-+                mask = " 32M";
-+                break;
-+            case 0x5:
-+                mask = "256M";
-+                break;
-             }
-             if (TTE_IS_VALID(env->dtlb[i].tte)) {
-                 qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
-@@ -869,6 +875,12 @@ void dump_mmu(CPUSPARCState *env)
-             case 0x3:
-                 mask = "  4M";
-                 break;
-+            case 0x4:
-+                mask = " 32M";
-+                break;
-+            case 0x5:
-+                mask = "256M";
-+                break;
-             }
-             if (TTE_IS_VALID(env->itlb[i].tte)) {
-                 qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
 -- 
-2.43.0
+2.55.0
 
 
