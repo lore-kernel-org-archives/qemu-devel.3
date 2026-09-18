@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC39C982D9
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 10:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5019C982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 10:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7VZj-0003Jn-5Y; Fri, 18 Sep 2026 06:12:12 -0400
+	id 1x7VZg-0003Hh-GL; Fri, 18 Sep 2026 06:12:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1x7VZe-0003HJ-IR
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:06 -0400
+ id 1x7VZb-0003H3-UU
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:05 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1x7VZa-0007ZA-W7
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:05 -0400
+ id 1x7VZZ-0007Z0-RP
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:03 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b91369d18so4690845e9.0
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 03:12:02 -0700 (PDT)
+ 5b1f17b1804b1-49cd38e0e5dso7704435e9.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 03:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789726321; x=1790331121; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=D1PWRByFEcPjNpPU5pKK1U3jBKWtNaCEnaq4yPhhMXc=;
- b=cRxcepSropmWzVtZjD6V/Xltan+PtCR+vOggo8MXOe6RTtlYaUbemTWtdhRk381l6n
- 7CP1hhEEyrJYqlGsqN601pZqxXvCraMMfUyPYci9I7fruNE5G3W6HP6vRxlNQLSsndcZ
- d40bkw9AYbSU6+JmBZImTQO8+sr9p4MsZUBQdc5W4T8OSglsHcX3mP983bHxLmttxAGB
- 4Cl1eakcWA+JkI2rltn8sUmBQIdzm7ILavIRxfgYjxIR448NzK2jHzUHrHN/hDc1evzq
- WnKrlTYkHFQVs7qFWeZTgXDHBbo+yhTXrMNq+joLzK0CINW0whfLYPGEAPO8aMsHAhkz
- ymVA==
+ d=gmail.com; s=20251104; t=1789726320; x=1790331120; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=hnKCbrC0Zs/mZbt9e5kbgGMShsQaKsoLEnuOqJTSAUA=;
+ b=eR3dKhoHIPHKdZTGeyIsPXGuFz7UIR9y6KY5WUmO1mAfR3MsA3reqehOMVPCTH0nnZ
+ ib8R51Kb9nZr+tuUOcGSv3mGAMZZ1xRRBIy82meT3+oIvh7ujV1e8bAasVkP0VGH5/Ha
+ Xu0Z9NH1MXy9b5ELfFivwf4Hl1O6cM3Riphl9E4rKY5jS3ogXZ9+eIulsuH8N6wYR61A
+ DZ/XYjMi1yYWEOUSD1l9GcajJk5+kTxkUdR1iJ7X5Cy2oFfQRmXWKtWngEwpyKJLl15v
+ Lh0PIxggYhZnACISEDUzbXW6269RS9J9mWzCg2F6/NrSknv0rYlNIJRzuxmy6uZW/ZJX
+ E/uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789726321; x=1790331121;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=D1PWRByFEcPjNpPU5pKK1U3jBKWtNaCEnaq4yPhhMXc=;
- b=TH+NtAKydvb2vEPfPm1EpjK2N5xQG+FqUxcXG4EqDlmGBfYJGFuTjc6qpuC8mmpC5Z
- AAR3Mlnkd48RCgY+pXWHZFfNYkebmHn7+wPGdm9e8T49+kiLLEqpLZwcvbaUNEqJKS7t
- TXLZ6LSBXrXqIMPFXVuilT9C2AEPHm2rvZtv3f5K51DoKLRKD3HoTh152dJXaglxG0t9
- wmdz/hEVe9p9WeQFreGGrFAwStmiB+MigDF0e/67983HhsNRselwzJbGbbzgWc2ENTYk
- IRK/0p+e1bDm3Y+MlwzbH+vY+EzM/0dcbwY7VydfmyE0tpTwRQwjytAYQ6TIJ3LB9k7/
- 3XFQ==
-X-Gm-Message-State: AFuF++n12nI4FLYTGqo3sO7U1I9Uavk7awAJIfWH412DaTj73aBJhoqD
- bxApkani6U1Qw1CXGQRK3gzhqhSjyf+LD16RnRKu7TauOpfb/KfDDxaPNEJMqV/Y
-X-Gm-Gg: AYBFou0WKYKnKsT5ATWi8eHcMzWYTKW7hZHbbudUzUunjZoCfyd1Fi2u6/qEE09FpPm
- vAuvr0iBXWNwANKBH7zYvfGm1gYhMIYZlQo/4+7IwIS7xuv079o/nSPT3DvPKjus7AE+Yv+i4g6
- gKIeR041vy/J9P71pHUS1m+Vs9cG9q0MumwuHrvm6J+l5Zdx5D9hIkxOblN4EeIQrhy/TDAVcP1
- yIGtZLQAQsaFrkoULKWZz6kMxcqauUe621Oxt0NB7D68e2EgbkHyfWxzJ0HDoJKkQO+qNaM+IKB
- FSlbrerPcFsiypQWpUGvRu8OInHGPfza7lzXktbmSsQTotspt7jv+tkgm8aaQTjYY8vAivK47XG
- 3wSZsN7UGVyibw2pedO8k1C3QB5vR0kiVA6SgUmVQ1JeZH16MVq0fGUFwe8CQDFvF5UbUteDLmQ
- 0XC/xw/oK9rf13SSQq+B8g9hmarMT3fGJEovQzzPjyJx1smsFszMCynNpG/0blSrziAHbmwcbME
- 0dBQ4agujxfPCnAJg8ktxo=
-X-Received: by 2002:a05:600c:3584:b0:49b:96a0:5c00 with SMTP id
- 5b1f17b1804b1-49fc57227b7mr32090515e9.13.1789726320879; 
- Fri, 18 Sep 2026 03:12:00 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789726320; x=1790331120;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hnKCbrC0Zs/mZbt9e5kbgGMShsQaKsoLEnuOqJTSAUA=;
+ b=KsCWjtWxyohmIJHevm2X+dYxA7iHpOhABPkSuuqgHn/FXzQV+KZgZlYlh6P82xqKA0
+ ATiNomvQngMk+Dv17YK0v+6YKVw1OXG2K1zuX0VhZ1msKttm37J0VL1+urP0R4qZlTjC
+ gy6GjpG1vqJ0RiRJyptRYDnWH0qTwYvx1610H1rCtYapPZkth8DHAl8n2I2qpHaGFDZ/
+ RoctE53IR8kyI5nn1mdrOM+1MMg09BDYTjd4ttyDKnasrxx/VLuNf/Ia8uKtFsjtTeiM
+ PbbcggOk4Nk3CIqFwuNPhjWbR+bwDug0nnznG3F8Yq1tkWgrYhj6Lcqq1zxqWMX5qjXK
+ 0iWA==
+X-Gm-Message-State: AFuF++nFwBmJLSzKstQinPTFnqj51EGdqQNsG4E/9V7k28U5TndE9MOy
+ ZG/JHYiDfxmAbFxsoy53wTtWRIi9N8I5R/L/dxluqpcyXjggD1pP7uw7hGzxvbfw
+X-Gm-Gg: AYBFou399gwQj0jxZDtObeNixTscBExFNLeP1XdH/zTcqYXgzUTwZR3uvl95RiP9zA4
+ ZWN7Y4hAg2NGZC1n2Crg++Ek8ODsbmPYQrMF9AnHGavsdb8aZLTip6cWu3f++HdgICVt260Nlti
+ i+kBai+lwtgY4bqAvWD6HxTZA0Nu46MEdT6ZKee8A3GKCaBbQeeIhU3tGNrzwH2lGnFd3kqt6tf
+ HMMGFRP6XNrzDXcOEHHkdQWkWbHQS+3rvubRmw5VoUV1+dsWngovkx/l8ah75dUjPMUYDncZ33+
+ dAMtI/oJvIbkXjQQ6Ph382gQ/3Eb1Yym0mmIFFeHONU6iOKwxiz3NfhShr2mFSb7/XLjc/b7+D+
+ 73hwOFC2+D9ObEXPzTqiRsHaYZD1D3WoXNDwAgrsizu5wbXkOh1Q82LxAloX7zP9qI2lL/C5BBb
+ gPGu5H1VIej5kYqTxbgBT2HmrpxNk8TW1pLADT6QBu5pcAntm8tUreraDRgAEBNECnjUmkHSuJb
+ JA3uOv96J79YFCsY2zqoirmEKytudus
+X-Received: by 2002:a05:600c:354e:b0:49f:bd3c:bc1d with SMTP id
+ 5b1f17b1804b1-49fc573a7famr22729335e9.24.1789726319860; 
+ Fri, 18 Sep 2026 03:11:59 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc20:5e84:de9d:56c6:df83:7819])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd225898sm153886245e9.9.2026.09.18.03.11.59
+ 5b1f17b1804b1-49fbd225898sm153886245e9.9.2026.09.18.03.11.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 03:12:00 -0700 (PDT)
+ Fri, 18 Sep 2026 03:11:59 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org,
@@ -78,13 +77,12 @@ Cc: Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v8 1/7] hw/misc: Add Beckhoff CCAT device
-Date: Fri, 18 Sep 2026 12:11:52 +0200
-Message-ID: <20260918101158.42101-2-corvin.koehne@gmail.com>
+Subject: [PATCH v8 0/7] hw/arm: add Beckhoff CX7200 board
+Date: Fri, 18 Sep 2026 12:11:51 +0200
+Message-ID: <20260918101158.42101-1-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260918101158.42101-1-corvin.koehne@gmail.com>
-References: <20260918101158.42101-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:31::10;
  envelope-from=corvin.koehne@gmail.com; helo=mail-wm2-x10.google.com
@@ -110,404 +108,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+From: Corvin Köhne <c.koehne@beckhoff.com>
 
-This adds the Beckhoff Communication Controller (CCAT). The information
-block, EEPROM interface and DMA controller are currently  implemented.
+Hi,
 
-The EEPROM provides production information for Beckhoff Devices.
-An EEPORM binary must therefor be handed over. It should be aligned to
-a power of two. If no EEPROM binary is handed over an empty EEPROM of
-size 4096 is initialized.
+Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+platform. This commit series adds the Beckhoff CX7200 as new board variant to
+QEMU.
 
-This device is needed for the Beckhoff CX7200 board emulation.
+The emulation is able to successfully boot an CX7200 image. The image includes
+some self tests executed on every boot. Only the cache self test fails due to
+QEMU emulating the cache as always being coherent. The self tests include f.e.:
 
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
----
- hw/misc/Kconfig         |   2 +
- hw/misc/beckhoff_ccat.c | 347 ++++++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build     |   1 +
- 3 files changed, 350 insertions(+)
+* Network
+* Flash
+* CCAT DMA + EEPROM [1]
+* TwinCAT (Beckhoff's automation control software [2])
+
+[1] https://github.com/beckhoff/ccat
+[2] https://www.beckhoff.com/en-us/products/automation/
+
+YannickV (7):
+  hw/misc: Add Beckhoff CCAT device
+  hw/arm/xilinx_zynq: Add flash type as machine class property
+  hw/misc/zynq_slcr: Add CPU clock outputs and ratios
+  hw/timer,cpu: Add Clock API support to A9MPCore timers
+  hw/arm/xilinx_zynq: Make PS frequency configurable
+  hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+  docs/system/arm: Add support for Beckhoff CX7200
+
+ MAINTAINERS                         |   9 +
+ docs/system/arm/beckhoff-cx7200.rst |  68 ++++++
+ docs/system/target-arm.rst          |   1 +
+ hw/arm/Kconfig                      |   7 +
+ hw/arm/beckhoff_CX7200.c            |  79 +++++++
+ hw/arm/meson.build                  |   1 +
+ hw/arm/xilinx_zynq.c                |  23 +-
+ hw/cpu/a9mpcore.c                   |  12 +
+ hw/misc/Kconfig                     |   2 +
+ hw/misc/beckhoff_ccat.c             | 347 ++++++++++++++++++++++++++++
+ hw/misc/meson.build                 |   1 +
+ hw/misc/zynq_slcr.c                 |  37 +++
+ hw/timer/a9gtimer.c                 |  42 +++-
+ hw/timer/arm_mptimer.c              |  19 +-
+ include/hw/arm/xilinx_zynq.h        |   9 +-
+ include/hw/cpu/a9mpcore.h           |   1 +
+ include/hw/timer/a9gtimer.h         |   1 +
+ include/hw/timer/arm_mptimer.h      |   2 +
+ 18 files changed, 643 insertions(+), 18 deletions(-)
+ create mode 100644 docs/system/arm/beckhoff-cx7200.rst
+ create mode 100644 hw/arm/beckhoff_CX7200.c
  create mode 100644 hw/misc/beckhoff_ccat.c
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 46e3c03cc8df..605833829b0a 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -261,6 +261,8 @@ config AXIADO_CLK
-     bool
- 
- config K230_DECOMP_GZIP
-+
-+config BECKHOFF_CCAT
-     bool
- 
- source macio/Kconfig
-diff --git a/hw/misc/beckhoff_ccat.c b/hw/misc/beckhoff_ccat.c
-new file mode 100644
-index 000000000000..58c38f3b1df1
---- /dev/null
-+++ b/hw/misc/beckhoff_ccat.c
-@@ -0,0 +1,347 @@
-+/*
-+ * Beckhoff Communication Controller Emulation
-+ *
-+ * Copyright (c) Beckhoff Automation GmbH. & Co. KG
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/sysbus.h"
-+#include "qemu/units.h"
-+#include "hw/core/register.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "system/block-backend.h"
-+#include "system/address-spaces.h"
-+#include "system/memory.h"
-+#include "system/dma.h"
-+#include "qemu/error-report.h"
-+#include "block/block.h"
-+#include "block/block_int.h"
-+#include "block/qdict.h"
-+#include "hw/block/block.h"
-+#include "migration/vmstate.h"
-+#include "qemu/bswap.h"
-+
-+#ifndef CCAT_ERR_DEBUG
-+#define CCAT_ERR_DEBUG 0
-+#endif
-+
-+#define TYPE_BECKHOFF_CCAT "beckhoff-ccat"
-+OBJECT_DECLARE_SIMPLE_TYPE(BeckhoffCcat, BECKHOFF_CCAT)
-+
-+#define MAX_NUM_SLOTS 32
-+#define CCAT_FUNCTION_BLOCK_SIZE 16
-+
-+#define CCAT_EEPROM_OFFSET 0x100
-+#define CCAT_DMA_OFFSET 0x8000
-+
-+#define CCAT_MEM_SIZE (64 * KiB)
-+#define CCAT_DMA_SIZE 0x800
-+#define CCAT_EEPROM_SIZE 0x20
-+
-+#define EEPROM_MEMORY_SIZE 0x1000
-+
-+#define EEPROM_CMD_OFFSET (CCAT_EEPROM_OFFSET + 0x00)
-+    #define EEPROM_CMD_WRITE_MASK 0x2
-+    #define EEPROM_CMD_READ_MASK 0x1
-+#define EEPROM_ADR_OFFSET (CCAT_EEPROM_OFFSET + 0x04)
-+#define EEPROM_DATA_OFFSET (CCAT_EEPROM_OFFSET + 0x08)
-+
-+#define DMA_BUFFER_OFFSET (CCAT_DMA_OFFSET + 0x00)
-+#define DMA_DIRECTION_OFFSET (CCAT_DMA_OFFSET + 0x7c0)
-+    #define DMA_DIRECTION_MASK 1
-+#define DMA_TRANSFER_OFFSET (CCAT_DMA_OFFSET + 0x7c4)
-+#define DMA_HOST_ADR_OFFSET (CCAT_DMA_OFFSET + 0x7c8)
-+#define DMA_TRANSFER_LENGTH_OFFSET (CCAT_DMA_OFFSET + 0x7cc)
-+
-+/*
-+ * The information block is always located at address 0x0.
-+ * Address and size are therefore replaced by two identifiers.
-+ * The Parameter give information about the maximal number of
-+ * function slots and the creation date (in this case 01.01.2001)
-+ */
-+#define CCAT_ID_1 0x88a4
-+#define CCAT_ID_2 0x54414343
-+#define CCAT_INFO_BLOCK_PARAMS ((MAX_NUM_SLOTS << 0) | (0x1 << 8) | \
-+                              (0x1 << 16) | (0x1 << 24))
-+
-+#define CCAT_FUN_TYPE_ENTRY 0x0001
-+#define CCAT_FUN_TYPE_EEPROM 0x0012
-+#define CCAT_FUN_TYPE_DMA 0x0013
-+
-+typedef struct BeckhoffCcat {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    uint8_t mem[CCAT_MEM_SIZE];
-+
-+    BlockBackend *eeprom_blk;
-+    uint8_t *eeprom_storage;
-+    uint32_t eeprom_size;
-+} BeckhoffCcat;
-+
-+static void sync_eeprom(BeckhoffCcat *s)
-+{
-+    if (!s->eeprom_blk) {
-+        return;
-+    }
-+    blk_pwrite(s->eeprom_blk, 0, s->eeprom_size, s->eeprom_storage, 0);
-+}
-+
-+static uint64_t beckhoff_ccat_eeprom_read(void *opaque, hwaddr addr,
-+                                          unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    return ldn_le_p(&s->mem[addr], size);
-+}
-+
-+static void beckhoff_ccat_eeprom_write(void *opaque, hwaddr addr, uint64_t val,
-+                              unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t eeprom_adr;
-+    uint64_t buf;
-+    uint32_t bytes_to_read;
-+
-+    switch (addr) {
-+    case EEPROM_CMD_OFFSET:
-+        eeprom_adr = ldl_le_p(&s->mem[EEPROM_ADR_OFFSET]);
-+        eeprom_adr = (eeprom_adr * 2) % s->eeprom_size;
-+        if (val & EEPROM_CMD_READ_MASK) {
-+            buf = 0;
-+            bytes_to_read = 8;
-+            if (eeprom_adr > s->eeprom_size - 8) {
-+                bytes_to_read = s->eeprom_size - eeprom_adr;
-+            }
-+            buf = ldn_le_p(s->eeprom_storage + eeprom_adr, bytes_to_read);
-+            stq_le_p(&s->mem[EEPROM_DATA_OFFSET], buf);
-+        } else if (val & EEPROM_CMD_WRITE_MASK) {
-+            buf = ldl_le_p(&s->mem[EEPROM_DATA_OFFSET]);
-+            stw_le_p((s->eeprom_storage + eeprom_adr), buf);
-+            sync_eeprom(s);
-+        }
-+        break;
-+    default:
-+        stn_le_p(&s->mem[addr], size, val);
-+    }
-+}
-+
-+static uint64_t beckhoff_ccat_dma_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+
-+    switch (addr) {
-+    case DMA_TRANSFER_OFFSET:
-+        /*
-+         * Real hardware keeps the 0x1 bit set while the DMA transfer is
-+         * running. Complete the emulated transfer only after software has
-+         * observed that intermediate state, since Beckhoff drivers expect the DMA
-+         * transfer not to finish immediately.
-+         */
-+        if (s->mem[DMA_TRANSFER_OFFSET] & 0x1) {
-+            s->mem[DMA_TRANSFER_OFFSET] = 0;
-+        }
-+        break;
-+    }
-+    return ldn_le_p(&s->mem[addr], size);
-+}
-+
-+static void beckhoff_ccat_dma_write(void *opaque, hwaddr addr, uint64_t val,
-+                           unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    dma_addr_t dma_addr;
-+    uint8_t len;
-+    uint8_t *mem_buf;
-+
-+    switch (addr) {
-+    case DMA_TRANSFER_OFFSET:
-+        len = s->mem[DMA_TRANSFER_LENGTH_OFFSET];
-+        mem_buf = &s->mem[DMA_BUFFER_OFFSET];
-+        dma_addr = ldl_le_p(&s->mem[DMA_HOST_ADR_OFFSET]);
-+        if (s->mem[DMA_DIRECTION_OFFSET] & DMA_DIRECTION_MASK) {
-+            dma_memory_read(&address_space_memory, dma_addr,
-+                            mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-+        } else {
-+            /*
-+             * The write transfer uses Host DMA Address + 8 as the target
-+             * offset, as described in the CCAT manual Version 0.0.41
-+             * section 20.2.
-+             */
-+            dma_memory_write(&address_space_memory, dma_addr + 8,
-+                                mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-+        }
-+        break;
-+    }
-+    stn_le_p(&s->mem[addr], size, val);
-+}
-+
-+static uint64_t beckhoff_ccat_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+
-+    assert(addr <= CCAT_MEM_SIZE - size);
-+
-+    if (addr >= CCAT_EEPROM_OFFSET &&
-+                        addr <= CCAT_EEPROM_OFFSET + s->eeprom_size) {
-+        return beckhoff_ccat_eeprom_read(opaque, addr, size);
-+    } else if (addr >= CCAT_DMA_OFFSET &&
-+                        addr <= CCAT_DMA_OFFSET + CCAT_DMA_SIZE) {
-+        return beckhoff_ccat_dma_read(opaque, addr, size);
-+    } else {
-+        val = ldn_le_p(&s->mem[addr], size);
-+    }
-+
-+    return val;
-+}
-+
-+static void beckhoff_ccat_write(void *opaque, hwaddr addr, uint64_t val,
-+                                unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+
-+    assert(addr <= CCAT_MEM_SIZE - size);
-+
-+    if (addr >= CCAT_EEPROM_OFFSET &&
-+                        addr <= CCAT_EEPROM_OFFSET + s->eeprom_size) {
-+        beckhoff_ccat_eeprom_write(opaque, addr, val, size);
-+    } else if (addr >= CCAT_DMA_OFFSET &&
-+                        addr <= CCAT_DMA_OFFSET + CCAT_DMA_SIZE) {
-+        beckhoff_ccat_dma_write(opaque, addr, val, size);
-+    } else {
-+        stn_le_p(&s->mem[addr], size, val);
-+    }
-+}
-+
-+static const MemoryRegionOps beckhoff_ccat_ops = {
-+    .read = beckhoff_ccat_read,
-+    .write = beckhoff_ccat_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
-+static void beckhoff_ccat_reset_hold(Object *obj, ResetType type)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(obj);
-+
-+    memset(&s->mem[0], 0, MAX_NUM_SLOTS * CCAT_FUNCTION_BLOCK_SIZE);
-+
-+    size_t offset = 0 * CCAT_FUNCTION_BLOCK_SIZE;
-+    stw_le_p(&s->mem[offset + 0], CCAT_FUN_TYPE_ENTRY);
-+    stw_le_p(&s->mem[offset + 2], 0x0001);
-+    stl_le_p(&s->mem[offset + 4], CCAT_INFO_BLOCK_PARAMS);
-+    stl_le_p(&s->mem[offset + 8], CCAT_ID_1);
-+    stl_le_p(&s->mem[offset + 12], CCAT_ID_2);
-+
-+    offset = 11 * CCAT_FUNCTION_BLOCK_SIZE;
-+    stw_le_p(&s->mem[offset + 0], CCAT_FUN_TYPE_EEPROM);
-+    stw_le_p(&s->mem[offset + 2], 0x0001);
-+    stl_le_p(&s->mem[offset + 4], 0);
-+    stl_le_p(&s->mem[offset + 8], CCAT_EEPROM_OFFSET);
-+    stl_le_p(&s->mem[offset + 12], CCAT_EEPROM_SIZE);
-+
-+    offset = 15 * CCAT_FUNCTION_BLOCK_SIZE;
-+    stw_le_p(&s->mem[offset + 0], CCAT_FUN_TYPE_DMA);
-+    stw_le_p(&s->mem[offset + 2], 0x0000);
-+    stl_le_p(&s->mem[offset + 4], 0);
-+    stl_le_p(&s->mem[offset + 8], CCAT_DMA_OFFSET);
-+    stl_le_p(&s->mem[offset + 12], CCAT_DMA_SIZE);
-+}
-+
-+static void beckhoff_ccat_realize(DeviceState *dev, Error **errp)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(dev);
-+    BlockBackend *blk;
-+
-+    blk = s->eeprom_blk;
-+
-+    if (blk) {
-+        uint64_t blk_size = blk_getlength(blk);
-+        if (!is_power_of_2(blk_size)) {
-+            error_setg(errp, "Blockend size is not a power of two.");
-+            return;
-+        }
-+
-+        if (blk_size < 512) {
-+            error_setg(errp, "Blockend size is too small.");
-+            return;
-+        } else {
-+            blk_set_perm(blk, BLK_PERM_WRITE, BLK_PERM_ALL, errp);
-+
-+            s->eeprom_size = blk_size;
-+            s->eeprom_blk = blk;
-+            s->eeprom_storage = blk_blockalign(s->eeprom_blk, s->eeprom_size);
-+
-+            if (!blk_check_size_and_read_all(s->eeprom_blk, DEVICE(s),
-+                                             s->eeprom_storage, s->eeprom_size,
-+                                             errp)) {
-+                return;
-+            }
-+        }
-+    } else {
-+        s->eeprom_size = EEPROM_MEMORY_SIZE;
-+        s->eeprom_storage = blk_blockalign(NULL, s->eeprom_size);
-+        memset(s->eeprom_storage, 0x00, s->eeprom_size);
-+    }
-+}
-+
-+static void beckhoff_ccat_init(Object *obj)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &beckhoff_ccat_ops, s,
-+                          TYPE_BECKHOFF_CCAT, CCAT_MEM_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static const VMStateDescription vmstate_beckhoff_ccat = {
-+    .name = "beckhoff-ccat",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8_ARRAY(mem, BeckhoffCcat, CCAT_MEM_SIZE),
-+        VMSTATE_UINT32(eeprom_size, BeckhoffCcat),
-+        VMSTATE_VBUFFER_UINT32(eeprom_storage, BeckhoffCcat, 1, NULL,
-+                               eeprom_size),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const Property beckhoff_ccat_properties[] = {
-+    DEFINE_PROP_DRIVE("eeprom", BeckhoffCcat, eeprom_blk),
-+};
-+
-+static void beckhoff_ccat_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    dc->realize = beckhoff_ccat_realize;
-+    rc->phases.hold = beckhoff_ccat_reset_hold;
-+    dc->vmsd = &vmstate_beckhoff_ccat;
-+    device_class_set_props(dc, beckhoff_ccat_properties);
-+}
-+
-+static const TypeInfo beckhoff_ccat_info = {
-+ .name = TYPE_BECKHOFF_CCAT,
-+ .parent = TYPE_SYS_BUS_DEVICE,
-+ .instance_size = sizeof(BeckhoffCcat),
-+ .instance_init = beckhoff_ccat_init,
-+ .class_init = beckhoff_ccat_class_init,
-+};
-+
-+static void beckhoff_ccat_register_types(void)
-+{
-+    type_register_static(&beckhoff_ccat_info);
-+}
-+
-+type_init(beckhoff_ccat_register_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 9790afa1044f..7b808d56860e 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -16,6 +16,7 @@ system_ss.add(when: 'CONFIG_PL310', if_true: files('arm_l2x0.c'))
- system_ss.add(when: 'CONFIG_INTEGRATOR_DEBUG', if_true: files('arm_integrator_debug.c'))
- system_ss.add(when: 'CONFIG_A9SCU', if_true: files('a9scu.c'))
- system_ss.add(when: 'CONFIG_ARM11SCU', if_true: files('arm11scu.c'))
-+system_ss.add(when: 'CONFIG_BECKHOFF_CCAT', if_true: files('beckhoff_ccat.c'))
- 
- system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_ras.c'))
- 
 -- 
 2.47.3
 
