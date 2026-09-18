@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BB6C982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 18:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46C3C982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 18:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7dYy-0008RI-WA; Fri, 18 Sep 2026 14:43:57 -0400
+	id 1x7dbd-0000lI-C2; Fri, 18 Sep 2026 14:46:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x7dYf-0008P4-4S; Fri, 18 Sep 2026 14:43:38 -0400
+ id 1x7dbE-0000ij-6K; Fri, 18 Sep 2026 14:46:24 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x7dYd-0006Or-5o; Fri, 18 Sep 2026 14:43:36 -0400
+ id 1x7dbC-0006wj-Mu; Fri, 18 Sep 2026 14:46:15 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68IH1rw3660624; Fri, 18 Sep 2026 18:43:33 GMT
+ 68IH1pWN660585; Fri, 18 Sep 2026 18:46:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=GHgZoH3AlE5hs/FJyj6VsFCZdlcNfj
- QNnacKpoe5IcE=; b=dzt5pprumP5s43euAo4/d5N30dqk5LBC0M+6FGuPq4laOd
- 4tcNodmCSPsZH4f9bknuOZRiShPRALaqAoSqwPfWY/86pALBwYqcT7dD7nfvBW19
- fLEH6DZhEVDt46eW2Qn9w5zdADmMzRAF6Pl0UBZPsZfXQMg0B+TFA4DKdDmqZ9Lu
- /6hPA9lNvHVYTXjEwlqRTBDslmIeqmL5/8iVvUN3+jvA5G7FGRQ1Avtr8JYmwT5E
- Vss5tTWq6mDwZfP7WoO3M5pevzIRuuQIIMU+tHyeKKkegA0X/qo2nDWtL0xxHhRF
- iCGN/wOvd1J7IGp0I5QxeOoY8tmMVA/jKsqz982Q==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5eh9bv-1
+ :references:subject:to; s=pp1; bh=nj+wwWbiPG8wZbsPWuUCTeGB93pT9c
+ xKRXFo3rOYdTg=; b=oEe35jbJjBBzrDdCYX0Hy47cYSryHsgF7W40V3kRxBOK8L
+ pROypmMMLUMioQ+vxlUHS9bL+yn2XBBSWzRcaneasHWAIYN9AsDb4b+JOY3uIwha
+ VmfxwoLSX+he1LCefW6fddCvweA0vNGW+hPwRBS0HoNIAiG0V4CHQy4nSZtR/SLC
+ M6Lz9dzvowMvoqGHvIjVm3H9xfRW2M7iBUnxItrVYzXMNes19pewx9d3GInKtDl4
+ DDpqw/pxrs4VnwJ5ulYujiaIgf6RtxglpdgA0P8pVk6DnN8G0bxlyoBMR6KP0JGW
+ t0X0wuGaQ7fwvfoF70Y/QGCYjb2Yu51yJ6Q3foYg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmw5eh9nf-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 18 Sep 2026 18:43:32 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68IGp3TM983720; Fri, 18 Sep 2026 18:43:31 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gs56q9gdn-1
+ Fri, 18 Sep 2026 18:46:11 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68IGpC5k1015632; Fri, 18 Sep 2026 18:46:11 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gr5ffgrvv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Sep 2026 18:43:31 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68IIhRwf51511766
+ Fri, 18 Sep 2026 18:46:10 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68IIk7Rx14811432
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Sep 2026 18:43:27 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A6C3020043;
- Fri, 18 Sep 2026 18:43:27 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5F30B20040;
- Fri, 18 Sep 2026 18:43:25 +0000 (GMT)
+ Fri, 18 Sep 2026 18:46:07 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 350A620043;
+ Fri, 18 Sep 2026 18:46:07 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D854B20040;
+ Fri, 18 Sep 2026 18:46:04 +0000 (GMT)
 Received: from fedora (unknown [9.5.7.39])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 18 Sep 2026 18:43:25 +0000 (GMT)
-Date: Sat, 19 Sep 2026 00:21:11 +0530
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 18 Sep 2026 18:46:04 +0000 (GMT)
+Date: Sat, 19 Sep 2026 00:23:51 +0530
 From: Amit Machhiwal <amachhiw@linux.ibm.com>
 To: Aniket Sahu <asahu1x@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  rathc@linux.ibm.com, milesg@linux.ibm.com, harshpb@linux.ibm.com,
  anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com,
  adityag@linux.ibm.com, gautam@linux.ibm.com, thuth@redhat.com
-Subject: Re: [PATCH v2 1/2] tests/functional/ppc64: extend pseries migration
- tests
-Message-ID: <20260919002034.1d2bad71-fa-amachhiw@linux.ibm.com>
+Subject: Re: [PATCH v2 2/2] tests/functional/ppc64: extend ppc64 powernv net
+ device tests
+Message-ID: <20260919002127.3cdafd83-be-amachhiw@linux.ibm.com>
 Mail-Followup-To: Aniket Sahu <asahu1x@linux.ibm.com>, 
  qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  rathc@linux.ibm.com, 
@@ -74,31 +74,31 @@ Mail-Followup-To: Aniket Sahu <asahu1x@linux.ibm.com>,
  misanjum@linux.ibm.com, adityag@linux.ibm.com, gautam@linux.ibm.com,
  thuth@redhat.com
 References: <20260916103635.7797-1-asahu1x@linux.ibm.com>
- <20260916103635.7797-2-asahu1x@linux.ibm.com>
+ <20260916103635.7797-3-asahu1x@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260916103635.7797-2-asahu1x@linux.ibm.com>
+In-Reply-To: <20260916103635.7797-3-asahu1x@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDI2NiBTYWx0ZWRfXwJnNy7P6V07I
- krO6GAa+oSLT4yYH+mVKvHYNsK0rHn1JNdj/zNs4okw3bDZJhz+UfM2rLAsjZwM7z2gH3fEP1sn
- UmnRvD1KrVw9exHz3ZCWa/FvENH7DKPAUOWgRojxHLJ1uyIVbO+lnnSBa6zaSgokHwcqx1L4O6A
- 2YqgN7q8I2KwHss01NTt3hWikYm1jupVz3V324RTQEZea4k6+Pk1n+vnL7FmxeWOsCt5EvBMm+U
- zM/c2g3fE3I4XpyWSk+BcTOsYmfGEcurhMIlCrBWZ4t+Wgkr1hegEvq1YHsyIx35cDphYUjE33b
- p5u7HqbobNKaWQCPWAwWF88WlKrDZB07QxJFdQsyDgKBtbFz6nueVeFCHiBn1EqDAFXel3wGh7E
- WmwGXsM/MudN4AVXJf+y80Fi8Iu5uHQYbDVndC+yQE1F1zo82iXxBo2zRRNH3gA20KY01/KqV+U
- Kapz7+b0BCfwHbzQYJA==
-X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aad8654 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDI2NiBTYWx0ZWRfX+zVLXRJzj2BF
+ KCczNZSWzRM9VUOa0SKZ9typG2jufCQD7MryzASTqECAY0UnbCJpjx8DmakSrxfr2cKP+AXj5KQ
+ qZLhYuTfdSJxIpiSMUtqQA1XL/CnxmTNS4S2Hu+PdGAdtG6YkeGFdkSWK8mlUL3xJD05az28wQG
+ g/iwEGeS0v3cICPJM7IpHTI4xUHY8eTa5PjFK81I4+UmQ3aIijvf3FF1wfuGWbZw+hyeYOCWW90
+ DVhNT+OJ4NFw8bODLIchD4EInZY0t9927mnbDPkN4MEANSh5RLxZj4WNTB7DHcl3zWxxnnL2Rih
+ cqcP97f3kEtUAfWfZ2OUw/ZwG2LMM2U97OaN9fMBflUHAlr9H3CfM+g10NfVLOwzA/VoTTdfvGE
+ kHx8GUxO01ln2PbVHauo9Havb+GVhwWXvtvND/0eq4XDKzi+d7oXTr85CI2Md25c7IWKBN287lR
+ TglHWEeagoqwyuNAf+w==
+X-Authority-Analysis: v=2.4 cv=E/NYNqdl c=1 sm=1 tr=0 ts=6aad86f4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=Wme-NVSrK1k7gbpzGMEA:9
- a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: l-OKkD-ymRBe5dPXZi3_Gvm04mzr-lEY
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDI2NiBTYWx0ZWRfX2yV2c1tSYRKv
- 4iD7kaVgQ1KWnUJTrEnhpE1fPqhdykOqHm5urZfPamPAvyspfXJgG6JYYWmcriF/x6fkNCXWbIO
- Id6hGeKPcSosjaS4P8DowdrgN2VAO4c=
-X-Proofpoint-GUID: HHOZqIWs_dlugD7DRqbqS7zMOuEMH7oi
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=gbOv8vlnZcgnT89JuzEA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: -IdymL8VhDWr4GmqGFyFdYrpSBI36XSi
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDI2NiBTYWx0ZWRfXyM7v2yxifDHw
+ fhC2PcdBIojb8ABQECwCFLrldT5ycLg+aV/tjbkX1/91U7TyZSxAWTct3crViWKVBft2QcHHLPq
+ FKI02h9xxgORor+9wsn5+Me+fAtXNeI=
+X-Proofpoint-GUID: mxiKRu5mS-8EdNEGO4fRA1dB0UN3l9hU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-18_05,2026-09-16_02,2025-10-01_01
@@ -133,100 +133,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/09/16 04:06 PM, Aniket Sahu wrote:
-> Made a few changes to test_pseries.py to extend the migration
-> tests to validate exec (socat) and UNIX paths.
-> 
-> - Refactored test_ppc64_linux_migration to a private method
-> _do_linux_migration(dst_uri, src_uri=None).
-> - It is then called by three separate methods which exercise the
-> TCP, UNIX and exec paths via the migrate_vms method from
-> MigrationTest.
+> Added console checks as the probe log lines will appear before the
+> S14Silence-console init scripts.
 
-Also noticed: the patch is missing a Signed-off-by tag.  Please add it.
+Please add your missing SOB.  The changes look good to me.
+
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+Thanks,
+Amit
 
 > ---
->  tests/functional/ppc64/test_pseries.py | 41 ++++++++++++++++++++++----
->  1 file changed, 36 insertions(+), 5 deletions(-)
+>  tests/functional/ppc64/test_powernv.py | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
-> index cb6d25dc81..19f31141b1 100755
-> --- a/tests/functional/ppc64/test_pseries.py
-> +++ b/tests/functional/ppc64/test_pseries.py
-> @@ -8,8 +8,9 @@
->  # later.  See the COPYING file in the top-level directory.
+> diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+> index f3e05e4d38..200fd2c894 100755
+> --- a/tests/functional/ppc64/test_powernv.py
+> +++ b/tests/functional/ppc64/test_powernv.py
+> @@ -201,9 +201,12 @@ def do_test_ppc64_powernv(self, proc):
 >  
->  from qemu_test import Asset
-> -from qemu_test import wait_for_console_pattern
-> +from qemu_test import wait_for_console_pattern, which
->  from migration import MigrationTest
-> +from qemu_test.ports import Ports
+>          self.wait_for_console_pattern("CPU: " + proc + " generation processor")
+>          self.wait_for_console_pattern("INIT: Starting kernel at ")
+> +        # NVMe, e1000e, and xHCI are probed synchronously by the kernel
+> +        # during PCI enumeration, after OPAL hands off to Linux.
+> +        self.wait_for_console_pattern("nvme nvme0")
+> +        self.wait_for_console_pattern("e1000e")
+> +        self.wait_for_console_pattern("xhci_hcd")
+>          self.wait_for_console_pattern("Run /sbin/init as init process")
+> -        # Device detection output driven by udev probing is sometimes cut off
+> -        # from console output, suspect S14silence-console init script.
 >  
->  class PseriesMachine(MigrationTest):
->  
-> @@ -88,12 +89,20 @@ def test_ppc64_linux_big_boot(self):
->          wait_for_console_pattern(self, console_pattern, self.panic_message)
->          wait_for_console_pattern(self, self.good_message, self.panic_message)
->  
-> -    def test_ppc64_linux_migration(self):
-> +    def _do_linux_migration(self, dst_uri, src_uri=None):
-> +        """
-> +        Boot a pseries kernel on a source VM, wait until Linux is up, then
-> +        migrate to a destination VM over the given URI(s) and verify the boot
-> +        continues on the destination.
-> +        """
->          self.set_machine('pseries')
->  
->          kernel_path = self.ASSET_KERNEL.fetch()
->          kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
->  
-> +        if src_uri is None:
-> +            src_uri = dst_uri
-> +
->          dest_vm = self.get_vm(name="dest-qemu")
->          dest_vm.add_args('-incoming', 'defer')
->          dest_vm.add_args('-smp', '4')
-> @@ -111,16 +120,38 @@ def test_ppc64_linux_migration(self):
->          source_vm.set_console()
->          source_vm.launch()
->  
-> -        # ensure the boot has reached Linux
-> +        # ensure the boot has reached Linux before migrating
->          console_pattern = 'smp: Brought up 1 node, 4 CPUs'
->          wait_for_console_pattern(self, console_pattern, self.panic_message,
->                                   vm=source_vm)
->  
-> -        self.migration_with_tcp_localhost_vms(dest_vm, source_vm)
-> +        self.migrate_vms(dst_uri, src_uri, dest_vm, source_vm)
->  
-> -        # ensure the boot proceeds after migration
-> +        # ensure the boot continues on the destination after migration
->          wait_for_console_pattern(self, self.good_message, self.panic_message,
->                                   vm=dest_vm)
->  
-> +    def test_ppc64_linux_migration(self):
-> +        with Ports() as ports:
-> +            port = ports.find_free_port()
-> +            if port is None:
-> +                self.skipTest('Failed to find a free port')
-> +            self._do_linux_migration('tcp:localhost:%u' % port)
-> +
-> +    def test_ppc64_linux_migration_unix(self):
-> +        self._do_linux_migration(
-> +            'unix:%s/migration.sock' % self.socket_dir().name)
-> +
-> +    def test_ppc64_linux_migration_exec(self):
-> +        if not which('socat'):
-> +            self.skipTest('socat is not available')
-> +        with Ports() as ports:
-> +            port = ports.find_free_port()
-> +            if port is None:
-> +                self.skipTest('Failed to find a free port')
-> +            self._do_linux_migration(
-> +                'exec:socat TCP-LISTEN:%u -' % port,
-> +                'exec:socat - TCP:localhost:%u,forever' % port)
-> +
->  if __name__ == '__main__':
->      MigrationTest.main()
+>      def test_ppc64_powernv_external_dtb(self):
+>          self.set_machine('powernv11')
 > -- 
 > 2.52.0
 > 
