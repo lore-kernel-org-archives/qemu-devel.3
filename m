@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E84BC982D9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E69C982D0
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7M8c-0006rZ-FP; Thu, 17 Sep 2026 20:07:35 -0400
+	id 1x7M7y-0006bZ-NB; Thu, 17 Sep 2026 20:06:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7M8Y-0006ol-6T
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:07:31 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ id 1x7M7w-0006av-Is
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:06:52 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7M8W-0004x6-Bb
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:07:29 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- d9443c01a7336-2d9004a1ac0so956565ad.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:07:27 -0700 (PDT)
+ id 1x7M7u-0004ql-U9
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:06:52 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-39647aa9d52so141036a91.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789690046; x=1790294846; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2QNZBjooEwaWCMUyoLrrVewBfsIr1xO0E5E0pjxZJzw=;
- b=SVSot5PSq62zziBGNgg99RY2Z4BCUPzotCvLZb4cSLIHZfkd537YHAbQsLMq33sF9R
- /wog6PJR7Es8OE+MCewPiNZbypv7U1eb9EAbQUkzINGltIsMaVJPmeSkwxvWenCHAfgJ
- i2iCbiF93vDttFlSefZI73YiW7199Q4ZwI9hL4OasmlE2/yqBQf0qhetH1d5TTw1Jlfp
- mDQJnPN0DbUmNOBfsWEf+dzyQKRaYzCok607jjWJ6KlRlZvnze1I6EjuFEzxcYpIB6x7
- fCWO9T0FbJWMMFi4gVwS6+7Lb+lJMKLNEr4O4FIuEzqdOLXAFMm3vKS++WAsJrushuqa
- uucw==
+ d=gmail.com; s=20251104; t=1789690009; x=1790294809; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=dSdxLTVBDZLas3mi12fziPFTxITSX7k0t06YRU4w+ds=;
+ b=MDrf+QI/ziY56Bn6Syi4l6c3mD6gvhTks3wsfNMexkAMPvxwVyqfKrpnqYeRiEeRGN
+ KTR4lPljQwrzLBxXYhBNL0tWfZi0qmKtYmpo+0xcstDCx8DuVz2E4Q1ChAxSmMw18IM5
+ XZqg1c/HD7rqfBvBnC2gL9ELNV/TOrzEvbhsrH2ql/SNV9FAhI3HK+jDEJBxwKEcEpd+
+ h9hv7oaq6+EnaYh14WRpZWI/iFvj1siM/g16MRt/GRFoj8NslqttXdCrB5PurRHakeAe
+ vR6hVaZQB8FQX7iGlvInbF25HuHvu688+grZLtXKzPnYVH1Q2tnrYKivJu472ylovnPv
+ ne4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789690046; x=1790294846;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2QNZBjooEwaWCMUyoLrrVewBfsIr1xO0E5E0pjxZJzw=;
- b=ju6g/uo8jD66LTEdHhR/G/pZZVWmz2dA4rI3ticHj99tO81HbrHkV7P5TUUV5oqFOj
- V94X1aXc3GnDPqX68dUcj+ZwkSxBqSP/MdcKkiYbAeLFpNSRX362UwYR/weseXPx4hm6
- gY/1smU+bsEYmbuDVYBbZoEanKXXFIROa+HhG5/CycAronTqHavzTtQHS5jktMThfp/S
- o6w4NdlVRDmNNkF8MdwvZlkukSezDPewUHgtU1Td/Ybu6+rtG8GDf0CTEPOcA1+Mr1RC
- Vixc9Dj9cQYchR271ZbO0pal80Raov1aIn2NBiIKipLPTwQlrOG9WgjTLX00zdQ6swDg
- JLgA==
-X-Gm-Message-State: AFuF++neRolF00sgCZIk3NYrwS82rQ9cc+ufqZdlI9KEv8Zzh68d+6yY
- l7SG6PgWjW53PZd7rQ9EhNckzPMTyOqv8aPc+7QpYlIzys4UNSQEGCf2QmSicNQl2TQ=
-X-Gm-Gg: AYBFou1idtGd1H4H8GYeX41/q//xUTo7mrWhYT1wYfn+Y7ME58XGD4vVi8+MxSHsnUi
- 6dCIdIdH2phgReFxGWM25udarYVH5xzhP27m8hZDjwiY1wzpPKVXtzl1P0fNNQrqbTQ96yAn0Ta
- N2sCpmN7DKLL0gehVDa9Tl+/D8VXJ/i88MwfSAl6woCJVbCwuRdok/YFXSEIzfYdxUEDLGasGQ+
- L54dPgtM7cXXjCc4r4xo3C9sXU5TwSY2ZiBnFHeK4KLzkQrv10cmmW36luHCDS6MqKJxhiWxtLQ
- zktntMFLq9YpbY/Vnr5tJAp2Z91AcIRiTGPZ/2vY4Q30dQvv5JKPVwcadHV96dpVjZkylc/Gq2a
- 7wzVRXRd3r/wIKPrJ6MdvK81CyjvJsccYLEOhNpkCaT12bZHMuIPK6XX0Lw5GLWXXJ1m8Fah7Ne
- 6isWEhCZwnfzJMv9//w6QU3Ya8iwbeWEQtzRYcxf6dIBb0ncb224rzovEyXNTpwZAq20veWr2oW
- OrcUkkRYdtUEo/fLoG144ixnT2YGQLI
-X-Received: by 2002:a17:902:ebc7:b0:2d6:ff5f:eeda with SMTP id
- d9443c01a7336-2ddb1a90bfcmr16101145ad.6.1789690046041; 
- Thu, 17 Sep 2026 17:07:26 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789690009; x=1790294809;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=dSdxLTVBDZLas3mi12fziPFTxITSX7k0t06YRU4w+ds=;
+ b=bm6BLsd6cXMOiNWm/l0EugkMGIuG5sh4NHXjkRKLPwrNrqM9RWAPL3n70DDl46zgot
+ nM+z3g+9iw/5f8c86rQiL0OChbX+Gbo7cy0AgsbgQYroZ0KW0XS6QrPDZr48PuCEoiVK
+ MgOowKtMUKtS790YRruJVX+cyWv++rTT4mra0xGcOyTdgmfuID7XtMADPnXfH0rGz2Oc
+ SZ0xTP/6iCbc0hD69yWwnZ1WTURYxkyzWSlrVHV7PDIs0jv1yf/UujIE6eeo57CCIjMu
+ fsGYlLlqrhnO2ZzoU9oGrlxXiK9rRU8Thj0vVHcbWH77AmBXQT0XGwF+VdpGKR34cuPr
+ 7NsQ==
+X-Gm-Message-State: AFuF++knUvlPrugbavkTcKv7hDJFQoYP91xWMBm8f6APBk4ilPCDUIcl
+ u1T7VgQGe2Dtz+eSIzkhcbckZ6Y+oxabvUE21fOkPdweOnEnFF7R3x53367F6pTy
+X-Gm-Gg: AYBFou2E7/XWFybcGSuBaw4MvwFW+6qj19dlaEA+VSjP/kMeYy+QKLwN8vpphEkk8wU
+ DCfGpE598POaG9KvxZotwTnSaRYobuseSDQbSoJwlGzW7L0MVNUNinViTzRmYYoYj1HfBcbatR8
+ XRs6V8b5Oh63CiMHuELw9X5EFR1JX4w9ApsnTiUeLHUbK51diMuDxxAeTiDao0/RAxXWuyqD1gG
+ fISYEHLZXVDrTbDkCJNXN58NxQHHeb5GnoPrMPuXEuOdIIEwxrZCSKICCr/tevB6JpWMfKMM175
+ B9S44XGf1L/X6ZZ9CqSyVdkUEErIJCz3MAmfQRwg+TaF9xmzsflAzuWwT/spFsZQ/pSFVWHxESJ
+ bN30zF56wvhEGAyppKa3dnNIpuTjWPVg6AYKlEk12GrFFGQFBQZ38ZPkh2PEq4Z9QG38y9UH/+/
+ ayF4dcvmdxdULHV3VI8ws2Om9L+79aFGAIldY2PqEudSI2lLBvc1OU7zDFutaISjHJhO/adFI1K
+ /ZLlMJm4KYeXcrzyZ6Poruh6GnS2r2O
+X-Received: by 2002:a17:90b:58c4:b0:39d:e445:1d44 with SMTP id
+ 98e67ed59e1d1-39e361afbe1mr7537456a91.31.1789690009222; 
+ Thu, 17 Sep 2026 17:06:49 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33bf5b1d335sm20328212eec.28.2026.09.17.17.07.21
+ 5a478bee46e88-33bf5b1d335sm20328212eec.28.2026.09.17.17.06.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 17:07:25 -0700 (PDT)
+ Thu, 17 Sep 2026 17:06:48 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Xianglai Li <lixianglai@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
@@ -83,22 +82,22 @@ Cc: Xianglai Li <lixianglai@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 7/8] hw/m68k/virt: use unique QOM name
-Date: Fri, 18 Sep 2026 08:06:38 +0800
-Message-ID: <20260918000640.1001-8-luoyonggang@gmail.com>
+Subject: [PATCH 0/8] machine: uniquify virt QOM names
+Date: Fri, 18 Sep 2026 08:06:31 +0800
+Message-ID: <20260918000640.1001-1-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
-In-Reply-To: <20260918000640.1001-1-luoyonggang@gmail.com>
-References: <20260918000640.1001-1-luoyonggang@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-pj2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=luoyonggang@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,47 +113,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the parent and versioned QOM types to m68k-virt so M68K virt no
-longer collides with other virt-machine types in one process. Keep
-the -M / help / migration name as virt-* via
-machine_class_set_name().
+Multiple targets register a virt board as MACHINE_TYPE_NAME("virt").
+Those QOM types collide if more than one board is linked into one
+qemu-system process. This series splits the QOM type from the -M name
+so each virt board can keep a unique type while -M virt, help, and
+migration stay the same.
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- hw/m68k/virt.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+- Add machine_class_set_name() so boards can set MachineClass::name
+  when it must differ from the QOM type. machine_class_base_init still
+  defaults the name to the QOM type without -machine. Document that
+  MachineClass::name is the -M name, not the QOM type. Sort -M help
+  by that name so order matches the printed names after types are
+  prefixed (arm-virt-11.1-machine vs virt-11.1).
+- Give each colliding virt board a unique QOM type and keep the
+  existing -M name via machine_class_set_name(): riscv-virt, arm-virt,
+  or1k-virt, hexagon-virt, loongarch-virt, m68k-virt, and xtensa-virt.
+  Versioned ARM, LoongArch, and M68K boards keep virt-<ver>. Latest
+  ARM virt still sets mc->alias to virt.
 
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index 274970978ff..1faa178bdfc 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -323,7 +323,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
- }
- 
- static const TypeInfo virt_machine_info = {
--    .name       = MACHINE_TYPE_NAME("virt"),
-+    .name       = MACHINE_TYPE_NAME("m68k-virt"),
-     .parent     = TYPE_MACHINE,
-     .abstract   = true,
-     .class_init = virt_machine_class_init,
-@@ -345,14 +345,15 @@ type_init(virt_machine_register_types)
-         MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-         mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " M68K Virtual Machine"; \
-         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-+        machine_class_set_name(mc, "virt-" MACHINE_VER_STR(__VA_ARGS__)); \
-         if (latest) { \
-             mc->alias = "virt"; \
-         } \
-     } \
-     static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-     { \
--        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
--        .parent = MACHINE_TYPE_NAME("virt"), \
-+        .name = MACHINE_VER_TYPE_NAME("m68k-virt", __VA_ARGS__), \
-+        .parent = MACHINE_TYPE_NAME("m68k-virt"), \
-         .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-     }; \
-     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+Yonggang Luo (8):
+  machine: allow -M name to differ from QOM type
+  hw/riscv/virt: use unique QOM name
+  hw/arm/virt: use unique QOM name
+  hw/or1k/virt: use unique QOM name
+  hw/hexagon/virt: use unique QOM name
+  hw/loongarch/virt: use unique QOM name
+  hw/m68k/virt: use unique QOM name
+  hw/xtensa/virt: use unique QOM name
+
+ hw/arm/virt.c               |  3 ++-
+ hw/core/machine.c           |  6 ++++++
+ hw/hexagon/virt.c           |  1 +
+ hw/loongarch/virt.c         |  3 ++-
+ hw/m68k/virt.c              |  7 ++++---
+ hw/or1k/virt.c              |  3 ++-
+ hw/riscv/virt.c             |  3 ++-
+ hw/xtensa/virt.c            |  3 ++-
+ include/hw/arm/virt.h       |  2 +-
+ include/hw/core/boards.h    | 12 +++++++++++-
+ include/hw/hexagon/virt.h   |  2 +-
+ include/hw/loongarch/virt.h |  2 +-
+ include/hw/riscv/virt.h     |  2 +-
+ system/vl.c                 |  8 +++-----
+ 14 files changed, 39 insertions(+), 18 deletions(-)
+
 -- 
 2.52.0.windows.1
 
