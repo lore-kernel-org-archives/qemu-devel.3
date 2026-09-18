@@ -4,70 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4705C982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 02:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B22C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 03:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7OK0-00034h-E0; Thu, 17 Sep 2026 22:27:28 -0400
+	id 1x7PFI-0007zt-C5; Thu, 17 Sep 2026 23:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x7OJx-00034Z-SR
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:27:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x7OJu-0004yh-Rd
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:27:25 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxhvB_oaxqQUcNAA--.38802S3;
- Fri, 18 Sep 2026 10:27:11 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAx1cx7oaxqBg8iAA--.44759S2;
- Fri, 18 Sep 2026 10:27:10 +0800 (CST)
-Subject: Re: [PATCH v4 02/14] target/loongarch: Add LVZ CPU state definitions
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <cover.1787739852.git.prcups@krgm.moe>
- <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
- <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
- <xoCdfudmTUW6mj9tEmh4Cw@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <8dd0c761-bff2-15eb-a221-71aae2df386b@loongson.cn>
-Date: Fri, 18 Sep 2026 10:26:45 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x7PFG-0007zF-SL
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 23:26:38 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x7PFF-0006ld-CR
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 23:26:38 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68I2UW5S262836
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 03:26:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ NJLPYacTxXFB17HuXQnVy4Hrs2GiTJh7L+fMJxukKJg=; b=XzZ05LfUgtEGmila
+ Hp023JF/qhkVq3MT5kF5wjfFyYjXRtCsh0/WV4tO1Ner2ddRQlEXmbANX9OpJdOc
+ ab5VocN/E4OC3+iQMT4QpN2h7UnaCNjMBq1DFA2VQLAwwI7Ef06ftrLeLWK5qqhB
+ 9GAPXF4nvZuPfTLbbhiiVX9G2733aoDP+HTPCFUYA/oR2+y4v6qHSVvoaP2EXKLt
+ ui4Iq+yA7PTbtTtnsEz12qLOxwskEPwPN5GQEA/5DVDJlAMp6qAsGJ3ghje25Krf
+ kVsxjHMUVXxG8bpoapGxT/S9Vf1MT7LiiENgkJKeXsuZkOZmGdLd1Omq23F6Wo6g
+ LmdDaQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4grrg41433-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 03:26:29 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5329e965ba3so3349671cf.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 20:26:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1789701988; x=1790306788; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=NJLPYacTxXFB17HuXQnVy4Hrs2GiTJh7L+fMJxukKJg=;
+ b=Y8uk88Zvqm1jo8VxrX6sfMw/omwciED34yhkO/69dUJBw8BTU2svxdccdmlHVrrwdc
+ 6m+jju9Vi8zPzgMcyPU0eK9uh1RHR9uGfjDGfOQNk6utOReVsR+C5TYih1+K67FR0R+s
+ p296mB/3BbJ6DQdWFnu5A47K5ABMmWWP7ek0JSZEr4nX2J+BhQjPKzGB1+0S+ImGHnot
+ r6a0ewtERCZz4Om+mmG6Ya3FZ0DElD6Z99CjYkTCL3qLsAElXo7Go1NSawsRkYkl+WDH
+ h4oO4ZQBAVdhwnNJ/fSnfmBstkoaD5cM2zzB2J+tZ37kn5w/tt42k2DFib2EzHSt51RT
+ zmgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789701988; x=1790306788;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=NJLPYacTxXFB17HuXQnVy4Hrs2GiTJh7L+fMJxukKJg=;
+ b=XSGu1SiF4L5ddM3BmfIV3kmHUxF1CTla9ldqx+6QhxHJuiloQ1+IM1AWjbYn2Og4AR
+ K9FWI3uf5bTqymxh0wvtFwzF9LflkE95ubyKlx33XzmvCSGQ7kEV5Dm9kNcEuJq87tkn
+ sNMx8/q1GGvsvg585IKP1CRsibd6y6os51x6ha/jFMViZ6eafd/RXiBJoV4ZV1ivOi4a
+ 03B3Lf+BYFbfj0JbY1cF2crJs2H365hM9r0BDMxR+9sMNz42CwlthfCx7jgHquZm6N+K
+ SaEIqwe4/t/V1IGk5G4kNuESlxoNR3wll1R676aPsOlsMEgwSdPKTw02CVf7v0fSY3ro
+ Zv6A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwx09XJPW4aa6+RwGLj1mOfnqxjkmf/3KO21quNc/9KQyqAwB5C5yS+Dr+V0mbP5Dc48n6klDV5mQSC@nongnu.org
+X-Gm-Message-State: AFuF++k95RxAOKJIUR7g6LzyyiRvINnXSjZHzss8SGTOuyk8z1aznWRa
+ 274mirAfseB4JcgQVOxZM2v/mzfqenHN5jt2IrG/EQRp7QvVMl0+GLuigMPA5Nehn/kqgVwCS4e
+ IqzMT8cHRNnZ19qi9YZsmyeRJkESxudCHhC3jdHOLJbg8vmxvj6aKffjDgQ==
+X-Gm-Gg: AYBFou3p/5G+fDMOhWNn1CN80OqJb3DI+6vsJApzfgbWtlF3nHzcQx7aESuqtgf5Qtn
+ effEykB8EFORgN4zQzr22XAQjqQYlBP8ngd6OLMEyvGJ6uFkDxrk3cVfQyac/4fsm0FetCCMULo
+ MTusZZ6zccJny8U7zj7UuUBAbmiukJNq85EYNsJPCKshEhpRj14MxRqn9VVuA/08XsRf7VWKH3D
+ zynPhHGHPYJhBupkTGYhQaH1DNILDa4SVFtEnMeocuTrzkEA1zojESghZkkZyEJX1DU734RtInx
+ RXU+4Cawz1GK8q7aes8/QvRaaFntVKwYG4wik4qzoZt8pCLNc/4Md9cCHuOKMzViQXJvMAR1JZ+
+ Orvkx3nnRt4wqFCbMV1o9Pyg/UkOkbTpls/Qn3wtS8udz2Bo42uA3LgxzZzDU7hIYcXO7KRCeOy
+ w2QLM=
+X-Received: by 2002:a05:620a:4809:b0:93b:d7c0:461c with SMTP id
+ af79cd13be357-93bdca91c94mr156050785a.87.1789701988319; 
+ Thu, 17 Sep 2026 20:26:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:4809:b0:93b:d7c0:461c with SMTP id
+ af79cd13be357-93bdca91c94mr156047685a.87.1789701987908; 
+ Thu, 17 Sep 2026 20:26:27 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93be0e90276sm31322585a.21.2026.09.17.20.26.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Sep 2026 20:26:27 -0700 (PDT)
+Message-ID: <8c35fd98-e9cb-46bc-a014-bdef47c0e524@oss.qualcomm.com>
+Date: Thu, 17 Sep 2026 22:26:18 -0500
 MIME-Version: 1.0
-In-Reply-To: <xoCdfudmTUW6mj9tEmh4Cw@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] hw/hexagon/virt: use unique QOM name
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Xianglai Li <lixianglai@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Stafford Horne <shorne@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <17746591750@163.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Bibo Mao <maobibo@loongson.cn>, Chao Liu <chao.liu@processmission.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Max Filippov <jcmvbkbc@gmail.com>
+References: <20260918000640.1001-1-luoyonggang@gmail.com>
+ <20260918000640.1001-6-luoyonggang@gmail.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx1cx7oaxqBg8iAA--.44759S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3ur1rtrW8CFW5CFWkZFW5Jwc_yoWDWF4Upr
- W7CFW5KF48KrW7u3Z2qwn8KFnFqr1xGr12934xKryIyFWqqryxGr1kKrZIkFyUZw48ur18
- Za18Aa13uFZ3tagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260918000640.1001-6-luoyonggang@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: R_U9uHxzRuNZQnGlsAcUFx-VaiNInbor
+X-Authority-Analysis: v=2.4 cv=ZO9CCn7b c=1 sm=1 tr=0 ts=6aacaf65 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=ne3SjsFjHeSDkW3U5kIA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: R_U9uHxzRuNZQnGlsAcUFx-VaiNInbor
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDA0MiBTYWx0ZWRfX2eONu4ys5B01
+ aaTMLpZ0GFPGdPJ8Fzjt4GkG1W/RROOVt6PeiegYkdfoSY8M+oibuJc7m1OQ/RwWgM3ufvaQyYI
+ 2ZN+AAphiECzaF0BeciR9gtrb/j/D1InoouLerxjWzD1ZVLrPK4D8dvayYEv3eEUuXvH9QVew9S
+ hu9TgqFvDhWvkJJ6eaVh6tXxE6bAVvjVrx54qVqf/P7CQxC/EWIA16oG3k5ttkyHQ8HxAFpE1PW
+ nolTjBhT/f4ch2FML7Js/YraftMDHglD4O8prml8vqTzu/QKrDLi48XyEWUuXAHoTdW/+xWS1j+
+ v52eb1CLOhTxeXB+ILc2Acmc8IJe1DCqwhxWbDTBmKjSGxha0/TEegOK50fdPI1e6PD3WCCRDOv
+ y8sXAaL7NrvnT5qYhB8hIfFlEYwHxJh5a+9/DoHY7uZRJ7129728fO4UMvyATRsuHkQthvaW8KC
+ sYkVUDt+s6VHUMTlGLA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDA0MiBTYWx0ZWRfX/dNO8PJw86nv
+ /T7TDXRtxbbzEX0l0D2aXAAj0NXbStYQ3UraMtI8vCT6R2NGzVhu+X7RlubgG//bZ6mMhHnDC1y
+ 47CPhp1EMC9W/jD23u6dDnUcnXWLZlc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-18_01,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609180042
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,288 +170,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 9/17/2026 7:06 PM, Yonggang Luo wrote:
+> Set TYPE_HEXAGON_VIRT_MACHINE to MACHINE_TYPE_NAME("hexagon-virt") so
+> Hexagon virt no longer collides with other virt-machine types in one
+> process. Keep the -M / help / migration name as virt via
+> machine_class_set_name().
+>
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> ---
 
-On 2026/9/16 下午4:50, SignKirigami wrote:
-> On 2026年8月31日星期一 中国标准时间 10:56:26，Bibo Mao wrote：
->>
->> On 2026/8/26 下午6:30, SignKirigami wrote:
->>> Add host and guest system-state banks, LVZ exception and MMU indices,
->>> CPU and translation state, and helpers for selecting a VM-level CSR bank.
->>>
->>> Read host ERA and BADV explicitly when generating ELF core notes so the
->>> result does not depend on the currently selected guest state.
->>>
->>> Signed-off-by: SignKirigami <prcups@krgm.moe>
->>> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
->>> ---
->>>    target/loongarch/arch_dump.c |  6 ++--
->>>    target/loongarch/cpu.c       |  4 +--
->>>    target/loongarch/cpu.h       | 64 ++++++++++++++++++++++++++++++++++--
->>>    target/loongarch/translate.h |  2 ++
->>>    4 files changed, 68 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
->>> index 9d84faef96..711b23257b 100644
->>> --- a/target/loongarch/arch_dump.c
->>> +++ b/target/loongarch/arch_dump.c
->>> @@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
->>>    {
->>>        struct loongarch_note note;
->>>        CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
->>> -    CPUSysState *sys = env_sys(env);
->>> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
->>>        int ret, i;
->> yes, it need similar modification with loongarch_cpu_write_elf64_note().
->> can we keep local variable sys unchanged so that the change is smaller?
-> I think it may be more clear if using host for host mode, guest for guest mode, and sys
-> for current mode in use.
-If you insist on this, please use two patches:
-  1. One patch is to replace env_sys(env) with get_sys(env, 
-LOONGARCH_VM_LEVEL_HOST), and variable name sys keep unchanged;
-  2. The other patch is to change variable name sys with host, and note 
-that there is no function change.
 
-If so, it is easy to review.
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-Regards
-Bibo Mao
 
-> Regards
-> SignKirigami
->>
->> BTW I do not know which name is better between LOONGARCH_VM_LEVEL_HOST
->> and LOONGARCH_VM_LEVEL0. Such as in KVM mode, it is to dump CSR
->> resisters of guest VM; however in TCG mode, it is for host.
->>>    
->>>        loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
->>> @@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
->>>        for (i = 0; i < 32; ++i) {
->>>            note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
->>>        }
->>> -    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
->>> -    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
->>> +    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, host->CSR_ERA);
->>> +    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, host->CSR_BADV);
->>>        ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
->>>        if (ret < 0) {
->>>            return -1;
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index fb03424ffa..2f7692dc93 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
->>>        uint32_t data = 0, field;
->>>        int i;
->>>    
->>> -    set_sys_state(env, &env->sys_states[0]);
->>> +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
->>>        for (i = 0; i < 21; i++) {
->>>            env->cpucfg[i] = 0x0;
->>>        }
->>> @@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
->>>        uint32_t data = 0;
->>>        int i;
->>>    
->>> -    set_sys_state(env, &env->sys_states[0]);
->>> +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
->>>        for (i = 0; i < 21; i++) {
->>>            env->cpucfg[i] = 0x0;
->>>        }
->> I still think that it need split to smaller version, such as
->>     1. get_sys()/set_sys() and its user.
->>     2. mmu_idx change for new added LVZ
->>     3. others
->>
->>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->>> index ad30c73167..be982b7695 100644
->>> --- a/target/loongarch/cpu.h
->>> +++ b/target/loongarch/cpu.h
->>> @@ -20,6 +20,8 @@
->>>    #include "cpu-csr.h"
->>>    #include "cpu-qom.h"
->>>    
->>> +#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
->>> +
->>>    #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
->>>    #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
->>>    #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
->>> @@ -93,6 +95,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
->>>    #define  EXCCODE_WPEM                EXCODE(19, 1)
->>>    #define  EXCCODE_BTD                 EXCODE(20, 0)
->>>    #define  EXCCODE_BTE                 EXCODE(21, 0)
->>> +#define  EXCCODE_GSPR                EXCODE(22, 0)
->>> +#define  EXCCODE_HVC                 EXCODE(23, 0)
->>> +#define  EXCCODE_GCSC                EXCODE(24, 0)
->>> +#define  EXCCODE_GCHC                EXCODE(25, 0)
->> The exception for LVZ is added however not used, it had better be added
->> in patch where it is actually used.
->>>    #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
->>>    
->>>    /* cpucfg[0] bits */
->>> @@ -255,6 +261,7 @@ FIELD(TLB_MISC, E, 0, 1)
->>>    FIELD(TLB_MISC, ASID, 1, 10)
->>>    FIELD(TLB_MISC, VPPN, 13, 35)
->>>    FIELD(TLB_MISC, PS, 48, 6)
->>> +FIELD(TLB_MISC, GID, 54, 8)
->>>    
->>>    /*Msg interrupt registers */
->>>    #define N_MSGIS                4
->>> @@ -314,6 +321,10 @@ typedef struct  LoongArchBT {
->>>        uint32_t ftop;
->>>    } lbt_t;
->>>    
->>> +#define LOONGARCH_VM_LEVEL_HOST      0
->>> +#define LOONGARCH_VM_LEVEL_GUEST     1
->>> +#define LOONGARCH_VM_LEVELS          2
->>> +
->>>    #define CPU_VENDOR_LOONGSON   "Loongson"
->>>    #define CPU_MODEL_3A5000      "3A5000"
->>>    #define CPU_MODEL_1C101       "1C101"
->>> @@ -375,10 +386,18 @@ typedef struct CPUSysState {
->>>        uint64_t CSR_DBG;
->>>        uint64_t CSR_DERA;
->>>        uint64_t CSR_DSAVE;
->>> +    uint64_t CSR_GSTAT;
->>> +    uint64_t CSR_GCFG;
->>> +    uint64_t CSR_GINTC;
->>> +    uint64_t CSR_GCNTC;
->>> +    uint64_t CSR_GTLBC;
->> I think this patch can move to patch 1.
->>
->>>        /* Msg interrupt registers */
->>>        uint64_t CSR_MSGIS[N_MSGIS];
->>>        uint64_t CSR_MSGIR;
->>>        uint64_t CSR_MSGIE;
->>> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
->>> +    LoongArchTLB tlb[LOONGARCH_TLB_MAX];
->>> +#endif
->> It can be deleted in this patch.
->>
->>>    } CPUSysState;
->>>    
->>>    typedef struct CPUArchState {
->>> @@ -394,7 +413,7 @@ typedef struct CPUArchState {
->>>        uint32_t pv_features;
->>>        uint64_t vendor_id;
->>>        uint64_t cpu_id;
->>> -    CPUSysState sys_states[1];
->>> +    CPUSysState sys_states[LOONGARCH_VM_LEVELS];
->>>    
->>>        struct {
->>>            uint64_t guest_addr;
->>> @@ -419,6 +438,7 @@ typedef struct CPUArchState {
->>>        uint32_t mp_state;
->>>    #endif
->>>        CPUSysState *sys_state;
->>> +    bool vm_exit;
->>>    } CPULoongArchState;
->>>    
->>>    typedef struct LoongArchCPUTopo {
->>> @@ -438,8 +458,10 @@ struct ArchCPU {
->>>    
->>>        CPULoongArchState env;
->>>        QEMUTimer timer;
->>> +    QEMUTimer guest_timer;
->>>        uint32_t  phy_id;
->>>        OnOffAuto lbt;
->>> +    OnOffAuto lvz;
->>>        OnOffAuto pmu;
->>>        OnOffAuto ptw;
->>>        OnOffAuto lsx;
->>> @@ -484,15 +506,44 @@ struct LoongArchCPUClass {
->>>    #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
->>>    #define MMU_USER_IDX     MMU_PLV_USER
->>>    #define MMU_DA_IDX       4
->>> +#define MMU_GUEST_IDX    5
->>> +#define MMU_GUEST_DA_IDX 9
->>> +
->>> +static inline bool is_guest_mmu_idx(int mmu_idx)
->>> +{
->>> +    return mmu_idx >= MMU_GUEST_IDX;
->>> +}
->>> +
->>> +static inline int mmu_idx_to_plv(int mmu_idx)
->>> +{
->>> +    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
->>> +        return 0;
->>> +    }
->>> +    if (is_guest_mmu_idx(mmu_idx)) {
->>> +        return mmu_idx - MMU_GUEST_IDX;
->>> +    }
->>> +    return mmu_idx;
->>> +}
->>>    
->>>    static inline CPUSysState *env_sys(CPULoongArchState *env)
->>>    {
->>>        return env->sys_state;
->>>    }
->>>    
->>> -static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
->>> +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_level)
->>> +{
->>> +    return &env->sys_states[vm_level];
->>> +}
->>> +
->>> +static inline void set_sys(CPULoongArchState *env, int vm_level)
->>>    {
->>> -    env->sys_state = sys;
->>> +    env->sys_state = get_sys(env, vm_level);
->>> +}
->>> +
->>> +static inline int env_vm_level(CPULoongArchState *env)
->>> +{
->>> +    return env_sys(env) == get_sys(env, LOONGARCH_VM_LEVEL_GUEST) ?
->>> +           LOONGARCH_VM_LEVEL_GUEST : LOONGARCH_VM_LEVEL_HOST;
->>>    }
->>>    
->>>    static inline bool is_la64(CPULoongArchState *env)
->>> @@ -530,6 +581,13 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
->>>    #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
->>>    #define HW_FLAGS_VA32       0x20
->>>    #define HW_FLAGS_EUEN_ASXE  0x40
->>> +#define HW_FLAGS_GUEST_MODE 0x80
->>> +
->>> +bool has_lvz_capability(CPULoongArchState *env);
->>> +bool will_return_to_guest(CPULoongArchState *env);
->>> +uint8_t get_gid(CPULoongArchState *env);
->>> +uint8_t get_tgid(CPULoongArchState *env);
->>> +void trigger_vm_exit(CPULoongArchState *env);
->> There is only function declaration, no function implementation and
->> called. I think it can be removed in this patch.
->>
->> In general it requires that every single patch can pass to compile and work.
->>
->> Regards
->> Bibo Mao
->>>    
->>>    #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
->>>    
->>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
->>> index 8aa8325dc6..257c3bbddd 100644
->>> --- a/target/loongarch/translate.h
->>> +++ b/target/loongarch/translate.h
->>> @@ -24,6 +24,7 @@
->>>    #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
->>>    #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
->>>    #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
->>> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
->>>    #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
->>>    #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
->>>    #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
->>> @@ -66,6 +67,7 @@ typedef struct DisasContext {
->>>        TCGv zero;
->>>        bool la64; /* LoongArch64 mode */
->>>        bool va32; /* 32-bit virtual address */
->>> +    bool guest_mode;
->>>        uint32_t cpucfg1;
->>>        uint32_t cpucfg2;
->>>        uint32_t cpucfg3;
->>>
->>
->>
-> 
-> 
-> 
-> 
-
+>   hw/hexagon/virt.c         | 1 +
+>   include/hw/hexagon/virt.h | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
+> index 64d8366d27d..04591066bef 100644
+> --- a/hw/hexagon/virt.c
+> +++ b/hw/hexagon/virt.c
+> @@ -359,6 +359,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>   
+>       mc->desc = "Hexagon Virtual Machine";
+> +    machine_class_set_name(mc, "virt");
+>       mc->init = virt_init;
+>       mc->default_cpu_type = HEXAGON_CPU_TYPE_NAME("v68");
+>       mc->default_ram_size = 4 * GiB;
+> diff --git a/include/hw/hexagon/virt.h b/include/hw/hexagon/virt.h
+> index 4ca2f1ef859..523c4858036 100644
+> --- a/include/hw/hexagon/virt.h
+> +++ b/include/hw/hexagon/virt.h
+> @@ -26,7 +26,7 @@ struct HexagonVirtMachineState {
+>   
+>   void hexagon_load_fdt(const struct HexagonVirtMachineState *vms);
+>   
+> -#define TYPE_HEXAGON_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
+> +#define TYPE_HEXAGON_VIRT_MACHINE MACHINE_TYPE_NAME("hexagon-virt")
+>   OBJECT_DECLARE_SIMPLE_TYPE(HexagonVirtMachineState, HEXAGON_VIRT_MACHINE)
+>   
+>   #endif /* HW_HEXAGONVIRT_H */
 
