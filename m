@@ -4,61 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD8DC982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 07:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5287C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 07:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7T0T-0004CO-V3; Fri, 18 Sep 2026 03:27:37 -0400
+	id 1x7T3x-0004tc-QG; Fri, 18 Sep 2026 03:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x7T0H-0004B0-JB
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:27:26 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x7T0F-0006Hq-2p
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:27:25 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Bx69HP56xqvFYNAA--.38818S3;
- Fri, 18 Sep 2026 15:27:12 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBxpMzP56xqXyIiAA--.46206S2;
- Fri, 18 Sep 2026 15:27:11 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] target/loongarch: Preserve PTW dirty tracking on read fills
-Date: Fri, 18 Sep 2026 15:28:33 +0800
-Message-ID: <20260918072833.265906-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7T3q-0004tD-S6
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:31:07 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x7T3o-0006uT-OP
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:31:06 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd4ba9f68so5450285e9.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 00:31:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789716662; x=1790321462; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=C50ngcUJwMDdFwqnf41FXjZ8xdJC1dZlvW6hU1/RDIU=;
+ b=u+pGDA43BQkSQ0QNTB/W7vbABZHkva7MrWm7Nv3zYSsdb7asnl0xgsSrJLtAxsWK0Z
+ VHmQt1cvKbbKtmL3w2NS0MgytvuYnRbotT2cigx6EMpjWEASNF0Zzry/8bEqeHrwANUC
+ MQINtJgkrbvtpWZWjNmk5U8sbwwZNnu45pjx2BvGGOl+M5QbbID3fNsRwbn8nhowbEO5
+ 32NIREKtmNmNlargYZEwQCbOBJqx24LiNRNcC84bQEaBFzkLlgNSk87FVmU4eowlld5D
+ DH4G636G1Kwu6Gi54PJajohf/oCKd3rlXSP3BlSfPpmjGAccsAecFjGxwYeQKa7fE0Ec
+ /6Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789716662; x=1790321462;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=C50ngcUJwMDdFwqnf41FXjZ8xdJC1dZlvW6hU1/RDIU=;
+ b=m0nrgM5mhxGwzMd5u22FnkNRj6vBKFH8VMrjwupuH3+Orbb9G86wrZGUoyez0kh43i
+ eoOMMKk4xzhqFmWN6KY7U94hoQwzcUXSGqSpsUamriHssMkhfg7b0eX9XEyn2hTUZ9pD
+ spDGd4yLPzajiGHvXPK+O2P4Wa2WwNdT6B3FkMdKbq6eKkN6DrZDDbzYpV2zl0nzrYVu
+ ZlPbUeUyk5bfW55Ihirkzgb1A2R2lOwsQGffhwDov14obHM1BkXg63x6yQZ7A8TuAYW1
+ ri59MIJ4CsGAQVDICd8Qk77LtADrfNFWo2Lo3E5YvlncAHzzS/QvNYA9rDrMwPm+X9lZ
+ tuKg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByBSWtTjWiMRRxBoaj5A8JnP2N0RlSfFttD1gFGOO2ONWncwn7AlUFWhAnW6yM9+ovGxSJSC8EzliHc@nongnu.org
+X-Gm-Message-State: AFuF++k64l7SJMmnjY6eHbH6lfVC6GTTfje+W9UP1oWKziVYutYFwakb
+ xhWeMHFTEjTEOz2YAmOv3z/+qTGW1h30oR1/EZpLmXPnAHteli2RJ5gwMzFl440Mhv4=
+X-Gm-Gg: AYBFou2cW2uxi6Wmzbk8Fv29GtAZeqz6+GDXpjufYvqK8RS3yZAUxuQfGTUvtjLQ0in
+ qi4IxZMoT2FjSQiDljzcKC+YhMC0J9jTvGD0VIKSrJCSMgsj7AzoWyYySLqsCFFdKSwILkKs6CX
+ kAa+Csf6KC3KV0tPk3Fis7n/7wvLFQIr6M7KA/tAT7MG7aSjev259YXM0K7A7FbzUSuhdvOXPQH
+ 4N4GLCgj0l+QZ0rzAQDoKZBekjjMW550SoMg1D2PwYrKb3fMRomBhpR8euTQW1PbIqd67/CZHoW
+ S7QwOFKSTo5C4cI9uG4oQjknP/bVhw8Mv7q0AcfUMH8pggM1rWdFM6NrWcZ0vP38F753TtTLupH
+ uxoflAVp9LAzi1O6j/XyVNKOVBmejUeGbo1WV/+wZNtSWUsMS7eI/HTZTJUVJNEKKuQr44nniae
+ gsAofoux/iunnDgQ1KysfZtqdOLmDYJtEcwFb/ukpuyTYwWD8CopbYpcr/rlJxKJH4zNj0tJQ=
+X-Received: by 2002:a05:600c:19d1:b0:49c:fed6:cd3f with SMTP id
+ 5b1f17b1804b1-49fc5743bc4mr17097325e9.23.1789716662071; 
+ Fri, 18 Sep 2026 00:31:02 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fc8dde38fsm18880275e9.1.2026.09.18.00.31.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Sep 2026 00:31:00 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CF4675F8B4;
+ Fri, 18 Sep 2026 08:30:59 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic
+ from docker.py
+In-Reply-To: <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Thu, 17 Sep 2026 15:25:20 -0700")
+References: <20260917165602.3405537-1-alex.bennee@linaro.org>
+ <20260917165602.3405537-12-alex.bennee@linaro.org>
+ <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
+ <87fqz77dln.fsf@draig.linaro.org>
+ <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
+ <96e3f93f-a12f-4d18-badd-2ea60efc715b@linaro.org>
+ <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre3; emacs 30.1
+Date: Fri, 18 Sep 2026 08:30:59 +0100
+Message-ID: <87a4pf6moc.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpMzP56xqXyIiAA--.46206S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CrW7XF43CF1xXF4fAry7Arc_yoW8Kr4kpF
- Z7CF4Sva1ktrZ3A3sIq3W0vF15urs7Cay7Was3tryS9ws8Xrykur4vk34YyFW8XF48Xw1j
- qF1qyF15ZFn5X3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
- Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
- 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
- vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
- 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
- kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UWHqcUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,64 +113,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-with LoongArch hardware page table walking (PTW) enabled, a PTE
-can be writable (W=1) but still clean (D=0). A load or instruction fetch
-can install PAGE_WRITE in QEMU's software TLB based on W alone. A later
-store then bypasses loongarch_cpu_tlb_fill() and PTW, dirty bit of PTE
-will not be set with the later store operation.
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Here remove PAGE_WRITE for clean PTEs on read/fetch fills at the common
-software TLB fill point. The next store must re-enter PTW to set D before
-using a writable cached translation.
+> On 9/17/2026 3:18 PM, Richard Henderson wrote:
+>> On 9/17/26 12:00, Pierrick Bouvier wrote:
+>>> On 9/17/2026 2:49 PM, Alex Benn=C3=A9e wrote:
+>>>> how much time? it flies past when I run a rebuild.
+>>>>
+>>>
+>>> For a no-op tcg-tests build (i.e. with tests already built):
+>>>
+>>> - With current patch:
+>>> time ninja -C tcg-tests
+>>> ...
+>>> verbose pull and build
+>>> 320 lines of output
+>>> ...
+>>> real=C2=A0=C2=A0=C2=A0 0m15.817s
+>>> user=C2=A0=C2=A0=C2=A0 0m1.342s
+>>> sys=C2=A0=C2=A0=C2=A0=C2=A0 0m0.840s
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/tcg/tlb_helper.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+  =E2=9C=97  time ninja
+  [1/114] Generating qemu-version.h with a custom command (wrapped by meson=
+ to capture output)
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 40cc076424..dae04854ad 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -652,15 +652,6 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-             need_update = false;
-         } else if (access_type != MMU_DATA_STORE && pte_access(context.pte)) {
-             need_update = false;
--
--            /*
--             * FIXME: should context.prot be set without PAGE_WRITE with
--             * pte_write(context.pte) && !pte_dirty(context.pte)??
--             *
--             * Otherwise there will be no loongarch_cpu_tlb_fill() function call
--             * for MMU_DATA_STORE access_type in future since QEMU TLB with
--             * prot PAGE_WRITE is added already
--             */
-         }
- 
-         if (need_update) {
-@@ -684,6 +675,19 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     if (ret == TLBRET_MATCH) {
-         physical = context.physical;
-         prot = context.prot;
-+
-+        /*
-+         * Loads or instruction fetches must not cache write access to a
-+         * clean PTE. The first store must enter PTW to set D, whether this
-+         * translation came from the LoongArch TLB or a page table walk.
-+         * Store walks have already handled D, but context.pte may still
-+         * contain its old value. Direct mappings have no PTE to check.
-+         */
-+        if (cpu_has_ptw(env) && context.mmu_index != MMU_DA_IDX &&
-+            access_type != MMU_DATA_STORE && !pte_dirty(context.pte)) {
-+            prot &= ~PAGE_WRITE;
-+        }
-+
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                      physical & TARGET_PAGE_MASK, prot,
-                      mmu_idx, TARGET_PAGE_SIZE);
+  ________________________________________________________
+  Executed in  515.16 millis    fish           external
+     usr time  433.82 millis  968.00 micros  432.85 millis
+     sys time   86.05 millis  253.00 micros   85.80 millis
 
-base-commit: c66824ffb01931be0ddfe49a1642a78570abf44b
--- 
-2.54.0
+Not sure whats going on there then. The whole tcg suite completes in
+under a minute (and would be shorter if i386-linux-user-test-i386-fprem
+and riscv64-softmmu-plugin-discons-with-interruptedmemory where in the
+thorough test suite).
 
+>>=20
+>> The variance from the middle of the pacific ocean, and associated
+>> network latency, is between 20 and 27 seconds.
+>>=20
+>> Amusingly, with the network actively disconnected (airplane mode), the
+>> no-op build completes in 1 to 2 seconds.
+>>
+>
+> Funny, on my side if hangs a long time (timeout 30s), then retry 3 times
+> per image. I tried it on WSL on my windows laptop.
+>
+>>=20
+>> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
