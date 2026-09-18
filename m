@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB86C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 19:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10D5C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 19:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7ee7-00043N-TA; Fri, 18 Sep 2026 15:53:19 -0400
+	id 1x7eiv-0005Bp-KP; Fri, 18 Sep 2026 15:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7ee5-00042m-QZ
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:53:17 -0400
-Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7ee4-0003c3-5D
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:53:17 -0400
-Received: by mail-pz2-x0d.google.com with SMTP id
- 41be03b00d2f7-cc50d1b048eso1014096a12.1
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 12:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789761194; x=1790365994; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=vjdXuaG3iJg7i7k9uMXqziqO22/cGEXfDziw3Ph4U7M=;
- b=CDLVBf0TP9S4FbP5/4nRhgv+Zlpmh+O86KNwvfNLskR3EXK1JX/iUp7CFhbD6lFqjX
- DKd+csQVVOqXsvLu9htJ1SVFuNWTvAYigfV5A2FCDzuV22pevEq+a/lyfH1dPXX75wVi
- 7FNXayEbXCv4MXP5fbm2+4AG/bevkFdSo4TOpo5froBpOxqiKQTHKP4KoXXbCsSP9A/+
- WET2LE9qN/JwvCOjPdMNyjav1cdvWQgVlPTJjbVBE2T09VH4Osn9aBn+f1FLHC8xXV1p
- 9BgvkVgNQ0cR9b0Mi3mZyVCtdL29v+0UfzX4M2tYLfJ7biOZeQE2bybGJ8fouRU7Wiv3
- fDHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789761194; x=1790365994;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=vjdXuaG3iJg7i7k9uMXqziqO22/cGEXfDziw3Ph4U7M=;
- b=l4cmg27T5vCCPEw4lo9iXKcpr6561xVj8VPjE62muiEh7NzI9gkqQVfTXG+UMSSxLB
- senNChWQh0LTVwORhlM1D+OkdkLTBJPDtUmOZE15+xzdQTz1ppIAgefoYMsvB3lB5uKZ
- PA2diA71V7rT0z9KJEUhIrTqqap17IR2jGQCvPeE5MN9Csm4KIfNUeOExLAi4XkfCgTF
- ePm8+lbzX/XhVGrXvXt38WXOHmxke5QfmmsY3lTrZ+rdwFygVWC51EE7D7PKwNYgJUEg
- XiHkmuKcQXCs+vRMl5KocoLtK7cjXGpgH9rC2CkIxYkyZDKUyHoS1CsFuqAI1B7BZbCw
- 8dWw==
-X-Gm-Message-State: AFuF++nXvkXcXz2vHKqKgZDBS1PBdP13MdIYE/ujPxiE5izVfylpcNRx
- VlVMV+ckDy9eK/XPT20zQpD2ke+keqsRuI7j5JaT1QnWMTbsqVw8f7zLkv91B9ZlfPQ=
-X-Gm-Gg: AYBFou0V0ohFHZOUzGyXUwEZEn4SHf2TB431aOTzkhm6+S9tomnGA9F4tOXO29ApMNW
- UnGN24RITQU55hSwMnw2eLegNmRlSvp79e5HFOLSbIb6BBqQWrh1Y+IVwSEBWdmX8+wfkQVeVdm
- y4QH26d0t56MSfL3HsUvfo4rJqY3Xu6HJvQmzweL8j6VPxjCIBjgMZdR2D4bFy1AzpR/MeQ4nBL
- FZs+aSQucO+dkMLgMo2shJL6Tz7d2w+C/2jk2ypZ5qeeCyz7RGsG1+JA9rudGb/rOE1Va2RSGJy
- 8rh7zImmifsVcXPPLNcSmiISxlHfAsRXn9coQGuO7FvBOzdqeCbWu1kVUSuvTJc8SoIJdjn104l
- ARqStsoGF8hX3r8y/82lvi7B15v6pNSqwtpVFDGB01EqJUaJuEqYiB0QZ6mAn2L0x2qUo74lD/p
- ili8x5l/Oe10wWxzxw4VYUE4Wj3fI62KLl4PDBttrcWslwnHSP+kcT1kn/XGQjl8qjAlrqsSTyy
- bm/kXr6wAH9/6WGfEhgRw3ZzzGAVaOVmKW/FS+Nwa3GOkragUigQnUkgHv3AQ==
-X-Received: by 2002:a17:90a:6c8f:b0:39e:5acb:2849 with SMTP id
- 98e67ed59e1d1-39e5acb6103mr3999418a91.17.1789761194449; 
- Fri, 18 Sep 2026 12:53:14 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:317e:3514:d7db:974c?
- ([2603:800c:7900:ed00:317e:3514:d7db:974c])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33c33142a37sm878920eec.15.2026.09.18.12.53.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Sep 2026 12:53:13 -0700 (PDT)
-Message-ID: <6752efa2-799a-4c9d-aa4a-ee96bbe1810c@linaro.org>
-Date: Fri, 18 Sep 2026 09:53:11 -1000
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1x7eip-0005AR-KN; Fri, 18 Sep 2026 15:58:11 -0400
+Received: from mx2.catap.net ([65.21.79.163])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1x7ein-0004gW-W4; Fri, 18 Sep 2026 15:58:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=HpHiUQK
+ qA+39MAeLrwWqD44W3+bHotf/YPjcHlWzstSeJi8e5jF/QuYuzAG+Bt3vw9ySUmm+GuaFx
+ s1QPGHz4rVWhB8IHqXAKsM5UNBhCsC+Qj+KTK7Bec9tnuTDbrSN0Nr0stz6PcGx1wKiRV2
+ WTwIXr62uhJMYA89nwoAjIoQ7Tku6HWqGF6tiEhQf+rvtzaPlsJyWOdO2Z3Ct/zO6b/9r5
+ NOXEU/YLiZdRLy91tePOPNR9cKnWkgFezOpbIVKbvx6SH4+Cfvpx2DOv/xXR5inx+zV1a+
+ /11XS8weREH26B0tIPc/hyfwEjZI2M8JBkYf4k6fuC7URcxXulArQoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=Q
+ 3oC94hsCElkXImz8Zf7mmH2YJt7SH4HxhLu8/o1TRg=;
+ h=references:in-reply-to:
+ subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=A27z+eLn3nB6o7nZCAbAmqE25fN0nGszNQdV8bdz2vaJWkQljXp45hHqLsM9uLF0CL1b
+ cMkCsb07K8J4sxbWxkLku99mLj3QVce0c2O0vAwAHwdgSF3m2T2ENDCUjx9wXGWgyhBqNG
+ bwZJLKyAqHSxqdJpDQrD5y6DaI8OVP3TsRSNu1VhWaofSAHTp/lL4fdb/l1b9WWHA2tMic
+ BR44JBlOY02pbTfyBfhTUAXEO79uJMyYdY/Y7UV0D1WE+0SuMzYdvNhzJKkIHhXLh85S00
+ sElZ5EVljZYRlvZPIkk9JgZ/3Zrnnmf8+5oB2NDUk1Bxy4wkmWinx+BzzcoL+Jbg==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=pNAqdcxD; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=mwO+0S+C;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=Q3oC94hs
+ CElkXImz8Zf7mmH2YJt7SH4HxhLu8/o1TRg=; h=references:in-reply-to:
+ subject:cc:to:from:date; d=korins.ky;
+ b=pNAqdcxDNXCO6iGrolsoIkrMSNPzZM
+ W8fqvjwxG5l2vi2EV+sU3dd5VhCiKzZU7VWuTgGp42Kk/TXYIJwpp5JGcKoqOYfxEaOViP
+ gi5/LSOTmL3+EdxgtBfABL38iNdbu/91/LDACsZja4a6ReXAxU5UiQtuQLKVALjCYxqB+K
+ UFIvnoOwJG32me7HaelJBA6YJ6ZG64cEhPLbcgOFH9N/2ZODvHMGufWpr5psar6a4LVl6J
+ eTD6MvLMzEgkHIIeB1+3u9why7n8iMPdi++OQpXG0hXQmeZ7QIPh4kyA3QHsB/DXQG/lq1
+ PUkb3dnQUJ3M6cUr2crPb+XDSLon6uBg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=Q3oC94hsCElkXImz8Zf7mmH2YJt7SH4HxhLu8/o1TRg=; h=references:
+ in-reply-to:subject:cc:to:from:date; d=korins.ky; b=mwO+0S+CqZO7t80Cp4
+ ClwnvC/ILvNFwp0u48/aJ81Y+ej1FqnutK1QfOPvnmoy/FslI8Ia1ZPQc96ohyNdGrBw==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 99318a32
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 18 Sep 2026 21:58:07 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) id 71421515;
+ Fri, 18 Sep 2026 21:58:05 +0200 (CEST)
+Date: Fri, 18 Sep 2026 21:58:05 +0200
+Message-ID: <87fqz6uyb6.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH 4/5] cuda: Make shift register delay configurable
+In-Reply-To: <71fb85ee-3cb8-4201-b470-d481a5b24fb4@ilande.co.uk>
+References: <20260903115229.95811-1-kirill@korins.ky>
+ <20260903115229.95811-5-kirill@korins.ky>
+ <71fb85ee-3cb8-4201-b470-d481a5b24fb4@ilande.co.uk>
+User-Agent: Wanderlust
+Mail-Followup-To: mark.cave-ayland@ilande.co.uk, rathc@linux.ibm.com,
+ npiggin@gmail.com, milesg@linux.ibm.com,
+ harshpb@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, "Kirill A. Korinsky" <kirill@korins.ky>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic from
- docker.py
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20260917165602.3405537-1-alex.bennee@linaro.org>
- <20260917165602.3405537-12-alex.bennee@linaro.org>
- <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
- <87fqz77dln.fsf@draig.linaro.org>
- <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
- <96e3f93f-a12f-4d18-badd-2ea60efc715b@linaro.org>
- <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com>
- <87a4pf6moc.fsf@draig.linaro.org>
- <d1cf4f82-5604-47b1-887c-99d69cf1b754@oss.qualcomm.com>
- <87y0cy6ace.fsf@draig.linaro.org>
- <7393baca-7746-4211-94cd-e0400cb864b2@oss.qualcomm.com>
- <5bc81802-f243-4faf-822a-04adb5717563@linaro.org>
- <8c2c4869-d31a-4551-bcea-49f4f45a8fe0@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <8c2c4869-d31a-4551-bcea-49f4f45a8fe0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,27 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/26 09:22, Pierrick Bouvier wrote:
-> On 9/18/2026 10:58 AM, Richard Henderson wrote:
->> On 9/18/26 07:07, Pierrick Bouvier wrote:
->>>     # finally create a top level target to rebuild all tests
->>>     alias_target('tcg-tests', exe_targets)
->>
->> FWIW, that used to be called build-tcg.
->>
+On Fri, 18 Sep 2026 15:27:09 +0200,
+Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> wrote:
 > 
-> Would you prefer to change name to that?
+> On 03/09/2026 12:50, Kirill A. Korinsky wrote:
 > 
-> I don't mind personally, and if some people were used to it, it makes
-> sense to provide the same.
-If we're going to provide a fake target at all, we might as well keep it 
-the same.
+> > The CUDA model assumes a 20 microsecond delay before each shift
+> > register interrupt. OpenBSD times out during device discovery with that
+> > timing, so retain the existing default but allow an override.
+> 
+> This is curious: 20us is effectively nothing, but we need a slight delay
+> otherwise MacOS 9 fails to read from the CUDA device (maybe one day I
+> will analyse the code to understand why this is the case).
+> 
+> Can you explain a bit more why 20us is enough to cause a timeout but only for OpenBSD?
+> 
 
-Though being able to run individual tests from the make/meson 
-command-line is probably the biggest new feature, plausibly obviating 
-most uses of "just build all the tests so I can run the one I want 
-manually".
+If I recall right it right, it ends that I run Qemu on OpenBSD host and here
+hz=100 and ppoll() sleep in host's timeout between ticks. What makes it that
+sleep something like 10 or 20 ms.
 
+so, 20us is nothing, but on OpenBSD host it turns to larger value 20-40 ms,
+and it was enough to reach a timeout.
 
-r~
+This is why I added a way to switch off that delay.
+
+-- 
+wbr, Kirill
 
