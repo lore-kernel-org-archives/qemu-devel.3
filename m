@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085C7C982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BF6C982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7cPa-0004cv-4k; Fri, 18 Sep 2026 13:30:10 -0400
+	id 1x7cPs-0004tk-Ow; Fri, 18 Sep 2026 13:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPD-0004Zt-6q; Fri, 18 Sep 2026 13:29:49 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1x7cPI-0004aV-8z; Fri, 18 Sep 2026 13:29:54 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPA-0000Gt-Q3; Fri, 18 Sep 2026 13:29:46 -0400
+ id 1x7cPG-0000HY-Gi; Fri, 18 Sep 2026 13:29:51 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 9BC4640951;
- Fri, 18 Sep 2026 17:29:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8D01F000FF;
- Fri, 18 Sep 2026 17:29:41 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 8FCE66053D;
+ Fri, 18 Sep 2026 17:29:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93821F000FF;
+ Fri, 18 Sep 2026 17:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789752583;
- bh=r4pQbb7stqN5koXvzUoBxkiXWQPhpFT8DfoDGXIJxgk=;
+ s=k20260515; t=1789752589;
+ bh=BaGydPCSUAeNb0eWyHPI3N0R/c7Ye/3rI6LSXHt3/po=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YhkKJ/bM9zoEqsAj6YKWPC9Tza4ig/ecJbZe5Hf9keV15YOLn5156JjdRYZbz8OGS
- 0GubZh+GgGvRp89LmXekTWtMLlOYE7gjoFuZ9YQD5TMoPxM46FC71cfJ8dz8Qgd85c
- gx2/+TrTyNHXaYazeBbE27OpXQGwAlyUvmrsIanH5kADIbam2f7Xe/pTCnUEFwm+xf
- 4Ytb9AhmiWe0gPWWTIEyhpPZti7x17P0ag00GNHF5VYAAewpVWu4un0fbQSw8Qxkx1
- V3BqHil/XSsjiFy9I2pESSjxSasxu9vQXnY7i+QRwfhlNytzJUFvz6DdcT/ApfYWS6
- 2Kz3irJk26u2Q==
+ b=WPijOOlBiW6mwx3Q4eMZWunDf0bg+Di90+IV2GGngToJ022j0R4w6c5dZUKA9835B
+ 9GdoH7Z2Y+jxCDakQ/aYCjkHs6Nhw0TPCj8jMlu7la2tsaOFchrRUutHKEB5QNM1a/
+ uLcEvGos+OdS3NCsYvX4aec0qnzqkS6qw/GoY+o9IbWAK4tifFFiInUha0zrXwqu+8
+ 7vZFjGgUNJroHzYzgb4e1rd7/LSAYjIJ8XFHRRJiAF92gFCnZNROreYe0IpLEf/Exy
+ h4g1qs2b9h1m6SKTQDw/5/AtMVQrYc5gy9p4GsVWWMLCKKNF6+beF8ir6F8D+Q2rPX
+ vLDZd3wHLj2Qg==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
- "Michael S. Tsirkin" <mst@redhat.com>
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v5 03/15] block: add a helper for the index of the zone an
- offset falls in
-Date: Fri, 18 Sep 2026 19:29:11 +0200
-Message-ID: <20260918172925.2640888-4-cassel@kernel.org>
+Subject: [PATCH v5 05/15] hw/block: derive the zone write granularity from the
+ block sizes
+Date: Fri, 18 Sep 2026 19:29:13 +0200
+Message-ID: <20260918172925.2640888-6-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918172925.2640888-1-cassel@kernel.org>
 References: <20260918172925.2640888-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,144 +72,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deriving the zone that an offset belongs to is open coded in five places,
-in two files, as a division of the offset by BlockLimits.zone_size.
+For ZBC/ZAC devices the write granularity is the physical block size, so
+a 512e SMR disk exposed through a host_device backend has a logical block
+size of 512 and a zone write granularity of 4096. We told the guest
+driver 512 while raw_co_zone_append() rejects anything that is not 4096
+byte aligned, so the driver saw a plain I/O error for a request it had
+been told was valid.
 
-The zone size of a zoned device is always a power of two. Linux requires
-that of every zoned device it accepts, in blk_revalidate_disk_zones() and
-in each of the drivers that report one, and qcow2 rejects an image whose
-header says otherwise. So the division is a shift, and the shift is worth
-deriving once rather than at every use: record it in BlockLimits as
-zone_size_bits, next to the size it comes from, and assert the property
-that it relies on where it is computed.
+Report the larger of the logical and the physical block size instead.
+Both are properties of the device model, so the value that a guest is
+given does not change when it is migrated to a host whose disks differ,
+which a value taken from BlockLimits would. It is also what a guest
+derives for itself: blk_validate_zoned_limits() raises
+zone_write_granularity to the logical block size, and for a SCSI disk
+sd_zbc_read_zones() takes it from the physical block size.
 
-Add bdrv_zone_index() and use it. No functional change; the count of zones
-that a management operation spans stays a division, since it is a length
-rather than an offset.
+blkconf_blocksizes() rejects a logical block size larger than the
+physical block size, so this is the physical block size in practice. It
+is expressed as the larger of the two because that is the constraint
+which applies: a guest cannot issue a write finer than the logical block
+size, and the medium cannot take one finer than the physical block size.
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Add it as a helper next to blkconf_blocksizes(), since it is derived from
+a BlockConf, and use it for the zone append offset check in
+check_zoned_request(), which validated against bs->bl.write_granularity.
+The value reported to the driver and the value that requests are
+validated against then cannot drift apart. The helper cannot return zero
+because blkconf_blocksizes() always leaves a logical block size behind,
+so the check no longer needs to guard against an unset granularity.
+
+Fixes: 4f7366506a96 ("virtio-blk: add zoned storage emulation for zoned devices")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/file-posix.c               |  8 ++++----
- block/io.c                       | 12 ++++++++++++
- hw/block/virtio-blk.c            |  2 +-
- include/block/block-io.h         |  2 ++
+ hw/block/block.c                 |  5 +++++
+ hw/block/virtio-blk.c            | 13 +++++++------
  include/block/block_int-common.h |  7 +++++++
- 5 files changed, 26 insertions(+), 5 deletions(-)
+ include/hw/block/block.h         | 13 +++++++++++++
+ 4 files changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index c0d6ee30e4..00323f7a9f 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1359,7 +1359,7 @@ static int get_zones_wp(BlockDriverState *bs, int fd, int64_t offset,
-     size_t rep_size;
-     uint64_t sector = offset >> BDRV_SECTOR_BITS;
-     BlockZoneWps *wps = bs->wps;
--    unsigned int j = offset / bs->bl.zone_size;
-+    unsigned int j = bdrv_zone_index(bs, offset);
-     unsigned int n = 0, i = 0;
-     int ret;
-     rep_size = sizeof(struct blk_zone_report) + nrz * sizeof(struct blk_zone);
-@@ -2560,7 +2560,7 @@ raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
-         bs->bl.zoned != BLK_Z_NONE) {
-         qemu_co_mutex_lock(&bs->wps->colock);
-         if (type & QEMU_AIO_ZONE_APPEND) {
--            int index = offset / bs->bl.zone_size;
-+            int index = bdrv_zone_index(bs, offset);
-             offset = bs->wps->wp[index];
-         }
-     }
-@@ -2615,7 +2615,7 @@ out:
-         bs->bl.zoned != BLK_Z_NONE) {
-         BlockZoneWps *wps = bs->wps;
-         if (ret == 0) {
--            uint64_t *wp = &wps->wp[offset / bs->bl.zone_size];
-+            uint64_t *wp = &wps->wp[bdrv_zone_index(bs, offset)];
-             if (!BDRV_ZT_IS_CONV(*wp)) {
-                 if (type & QEMU_AIO_ZONE_APPEND) {
-                     *offset_ptr = *wp;
-@@ -3513,7 +3513,7 @@ static int coroutine_fn raw_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
-         return -EINVAL;
-     }
- 
--    uint32_t i = offset / bs->bl.zone_size;
-+    uint32_t i = bdrv_zone_index(bs, offset);
-     uint32_t nrz = len / bs->bl.zone_size;
-     uint64_t *wp = &wps->wp[i];
-     if (BDRV_ZT_IS_CONV(*wp) && len != capacity) {
-diff --git a/block/io.c b/block/io.c
-index a916b236c3..cef23ee5bc 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -227,6 +227,11 @@ void bdrv_refresh_limits(BlockDriverState *bs, Transaction *tran, Error **errp)
-         }
-     }
- 
-+    if (bs->bl.zone_size) {
-+        assert(is_power_of_2(bs->bl.zone_size));
-+        bs->bl.zone_size_bits = ctz64(bs->bl.zone_size);
-+    }
-+
-     if (bs->bl.request_alignment > BDRV_MAX_ALIGNMENT) {
-         error_setg(errp, "Driver requires too large request alignment");
-     }
-@@ -3361,6 +3366,13 @@ out:
-     return co.ret;
+diff --git a/hw/block/block.c b/hw/block/block.c
+index f187fa025d..79b0a67cea 100644
+--- a/hw/block/block.c
++++ b/hw/block/block.c
+@@ -201,6 +201,11 @@ bool blkconf_blocksizes(BlockConf *conf, Error **errp)
+     return true;
  }
  
-+uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
++uint32_t blkconf_zone_write_granularity(BlockConf *conf)
 +{
-+    IO_CODE();
-+
-+    return offset >> bs->bl.zone_size_bits;
++    return MAX(conf->logical_block_size, conf->physical_block_size);
 +}
 +
- void *qemu_blockalign(BlockDriverState *bs, size_t size)
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp)
  {
-     IO_CODE();
 diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 1b93364b24..6e4a7a4076 100644
+index dd69d81532..6bf1049aea 100644
 --- a/hw/block/virtio-blk.c
 +++ b/hw/block/virtio-blk.c
-@@ -523,7 +523,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-             }
+@@ -516,11 +516,11 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+     }
+ 
+     if (append) {
+-        if (bs->bl.write_granularity) {
+-            if ((offset % bs->bl.write_granularity) != 0) {
+-                *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
+-                return false;
+-            }
++        uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
++
++        if (offset & wg_mask) {
++            *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
++            return false;
          }
  
--        index = offset / bs->bl.zone_size;
-+        index = bdrv_zone_index(bs, offset);
-         if (BDRV_ZT_IS_CONV(bs->wps->wp[index])) {
-             *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-             return false;
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index d34d846bb2..9d1c0eb7fb 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -126,6 +126,8 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
-                                                   int64_t *offset,
-                                                   QEMUIOVector *qiov,
-                                                   BdrvRequestFlags flags);
-+/* The index of the zone that @offset falls in. */
-+uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
- 
- bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
- 
+         index = bdrv_zone_index(bs, offset);
+@@ -1276,7 +1276,8 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+                      bs->bl.max_active_zones);
+         virtio_stl_p(vdev, &blkcfg.zoned.max_open_zones,
+                      bs->bl.max_open_zones);
+-        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity, blk_size);
++        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
++                     blkconf_zone_write_granularity(conf));
+         virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
+                      bs->bl.max_append_sectors);
+     } else {
 diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 7571ed9968..82aa0c1a6e 100644
+index 82aa0c1a6e..7abd2b12bb 100644
 --- a/include/block/block_int-common.h
 +++ b/include/block/block_int-common.h
-@@ -903,6 +903,13 @@ typedef struct BlockLimits {
-     /* zone size expressed in bytes */
-     uint64_t zone_size;
+@@ -922,6 +922,13 @@ typedef struct BlockLimits {
+     /* maximum number of active zones */
+     uint32_t max_active_zones;
  
 +    /*
-+     * log2 of zone_size, derived by bdrv_refresh_limits(). A zoned device
-+     * always has a zone size that is a power of two, so the zone an offset
-+     * falls in is a shift rather than a division. See bdrv_zone_index().
++     * The granularity that the backend requires of a write to a sequential
++     * zone, in bytes, or zero if it has none. This describes the host, so it
++     * must not be reported to a guest: a frontend reports
++     * blkconf_zone_write_granularity() and checks this against it when the
++     * device is realized.
 +     */
-+    uint32_t zone_size_bits;
-+
-     /* total number of zones */
-     uint32_t nr_zones;
+     uint32_t write_granularity;
+ } BlockLimits;
+ 
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index df941df19f..c769b1297d 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -114,6 +114,19 @@ bool blkconf_geometry(BlockConf *conf, int *trans,
+                       unsigned cyls_max, unsigned heads_max, unsigned secs_max,
+                       Error **errp);
+ bool blkconf_blocksizes(BlockConf *conf, Error **errp);
++/*
++ * The alignment constraint that applies to writes to a sequential zone. A guest
++ * cannot issue a write finer than the logical block size, and the medium cannot
++ * take one finer than the physical block size, so the constraint that applies
++ * is the larger of the two. A frontend must report this value to its guest and
++ * validate requests against it.
++ *
++ * It is derived from the configuration and not from the backend, so that a
++ * guest is not given a property of the host, which would differ after
++ * migration. blkconf_blocksizes() rejects a logical block size larger than the
++ * physical block size, so this is the physical block size in practice.
++ */
++uint32_t blkconf_zone_write_granularity(BlockConf *conf);
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp);
  
 -- 
 2.55.0
