@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5287C982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 07:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8FBC982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 07:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7T3x-0004tc-QG; Fri, 18 Sep 2026 03:31:17 -0400
+	id 1x7T7p-0005cz-FY; Fri, 18 Sep 2026 03:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7T3q-0004tD-S6
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:31:07 -0400
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x7T7m-0005aN-IX
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:35:10 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7T3o-0006uT-OP
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:31:06 -0400
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x7T7k-00071A-2N
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:35:10 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cd4ba9f68so5450285e9.1
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 00:31:03 -0700 (PDT)
+ 5b1f17b1804b1-49d097b4939so2300105e9.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 00:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789716662; x=1790321462; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789716904; x=1790321704; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=C50ngcUJwMDdFwqnf41FXjZ8xdJC1dZlvW6hU1/RDIU=;
- b=u+pGDA43BQkSQ0QNTB/W7vbABZHkva7MrWm7Nv3zYSsdb7asnl0xgsSrJLtAxsWK0Z
- VHmQt1cvKbbKtmL3w2NS0MgytvuYnRbotT2cigx6EMpjWEASNF0Zzry/8bEqeHrwANUC
- MQINtJgkrbvtpWZWjNmk5U8sbwwZNnu45pjx2BvGGOl+M5QbbID3fNsRwbn8nhowbEO5
- 32NIREKtmNmNlargYZEwQCbOBJqx24LiNRNcC84bQEaBFzkLlgNSk87FVmU4eowlld5D
- DH4G636G1Kwu6Gi54PJajohf/oCKd3rlXSP3BlSfPpmjGAccsAecFjGxwYeQKa7fE0Ec
- /6Ew==
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=0+l4O0wrIcvpyykuq1KsiocN+EMCJ67yV+f1GHJxf7w=;
+ b=F0NH+PCLnj4A3tmF2yeW6nUxfbKX4NpLcSKwCgNwe5C+As99IYx2W/40ZXGedpW/DT
+ w2insHfQBpyMNBngnTZvRJAMCJlH+WmRxGLXlf8KDORkEaGYi8Z60dTVzo3p4fHyKk6J
+ y7/Vcw7jidgwph2R7t8eLUQqbMksDPOvBNe7iTYAGwjcSpKVao8Mh081cFuAierQHeba
+ TW9R8kZop0+dddetqZ2GB+wOj2lZ0xnmhcHJYJRswSqQNG2WhJipn101MY/gBxgvVPl8
+ dGs6iBDHi5PNngcmeKdUdOnHeY9SItJXHlcDDIsAB7ot4ymhs7YnTaSuC1Bu3bbWecYL
+ 1bqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789716662; x=1790321462;
+ d=1e100.net; s=20260707; t=1789716904; x=1790321704;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=C50ngcUJwMDdFwqnf41FXjZ8xdJC1dZlvW6hU1/RDIU=;
- b=m0nrgM5mhxGwzMd5u22FnkNRj6vBKFH8VMrjwupuH3+Orbb9G86wrZGUoyez0kh43i
- eoOMMKk4xzhqFmWN6KY7U94hoQwzcUXSGqSpsUamriHssMkhfg7b0eX9XEyn2hTUZ9pD
- spDGd4yLPzajiGHvXPK+O2P4Wa2WwNdT6B3FkMdKbq6eKkN6DrZDDbzYpV2zl0nzrYVu
- ZlPbUeUyk5bfW55Ihirkzgb1A2R2lOwsQGffhwDov14obHM1BkXg63x6yQZ7A8TuAYW1
- ri59MIJ4CsGAQVDICd8Qk77LtADrfNFWo2Lo3E5YvlncAHzzS/QvNYA9rDrMwPm+X9lZ
- tuKg==
-X-Forwarded-Encrypted: i=1;
- AKwUvByBSWtTjWiMRRxBoaj5A8JnP2N0RlSfFttD1gFGOO2ONWncwn7AlUFWhAnW6yM9+ovGxSJSC8EzliHc@nongnu.org
-X-Gm-Message-State: AFuF++k64l7SJMmnjY6eHbH6lfVC6GTTfje+W9UP1oWKziVYutYFwakb
- xhWeMHFTEjTEOz2YAmOv3z/+qTGW1h30oR1/EZpLmXPnAHteli2RJ5gwMzFl440Mhv4=
-X-Gm-Gg: AYBFou2cW2uxi6Wmzbk8Fv29GtAZeqz6+GDXpjufYvqK8RS3yZAUxuQfGTUvtjLQ0in
- qi4IxZMoT2FjSQiDljzcKC+YhMC0J9jTvGD0VIKSrJCSMgsj7AzoWyYySLqsCFFdKSwILkKs6CX
- kAa+Csf6KC3KV0tPk3Fis7n/7wvLFQIr6M7KA/tAT7MG7aSjev259YXM0K7A7FbzUSuhdvOXPQH
- 4N4GLCgj0l+QZ0rzAQDoKZBekjjMW550SoMg1D2PwYrKb3fMRomBhpR8euTQW1PbIqd67/CZHoW
- S7QwOFKSTo5C4cI9uG4oQjknP/bVhw8Mv7q0AcfUMH8pggM1rWdFM6NrWcZ0vP38F753TtTLupH
- uxoflAVp9LAzi1O6j/XyVNKOVBmejUeGbo1WV/+wZNtSWUsMS7eI/HTZTJUVJNEKKuQr44nniae
- gsAofoux/iunnDgQ1KysfZtqdOLmDYJtEcwFb/ukpuyTYwWD8CopbYpcr/rlJxKJH4zNj0tJQ=
-X-Received: by 2002:a05:600c:19d1:b0:49c:fed6:cd3f with SMTP id
- 5b1f17b1804b1-49fc5743bc4mr17097325e9.23.1789716662071; 
- Fri, 18 Sep 2026 00:31:02 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fc8dde38fsm18880275e9.1.2026.09.18.00.31.00
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0+l4O0wrIcvpyykuq1KsiocN+EMCJ67yV+f1GHJxf7w=;
+ b=TsZVTP7zf7YRfszIi2zqnPDzWA1XcvxFh7/mCyyYUOage9tmP7s3uEd3otapwyv8LX
+ jHhsSnoFl4URXST6pLzxPc4nbsc41NIgaJyxnnknR7uIISG2KBWr1wchaW8G7zKYSIWR
+ En9JoerZrbRTtLdP/Tf3wA0Y3kCflYuywi5o3sh81hkIJzRUxPL85sBVo9TeDuphNqZ8
+ /KXRfRXZf+xpXTFgYMdLeD8I83o/WnX8KNWUPuQksP5oR2gOAdpvXf/3/ExHuFriVZn/
+ Jrcm6AVyN7NyWz/4YW9Oy0C/jlyONZaf0kLAJRre12al7vsgcSDLE0kUieu4qiOCfhcH
+ UhhA==
+X-Gm-Message-State: AFuF++kZKaaTOQyGoBjsJ7wSBDe+rQvjgmomwQcH71cCSt5HA30kTGxR
+ f3lwbWE9JgqpgUwJEo1m5lR2YBEQ2ZfEeWbNpk/rv7+d28ejUer+SshaclU+HdErvEOHtqEe6JG
+ OFOlHWFU=
+X-Gm-Gg: AYBFou2pr1Ech3J6rSrDtzQiJsJO8fEBhP6tpAh3wut3hqsC4gLb/zGUfOMVtZiiDQ7
+ hkrYR6MVM/qupyw2Yi4k3lQFFEO+2DlQW+rhn0El8nZJOw/Un638UuqOVZyiu5ga8uDaDVz9Rqx
+ WAEDLo6yvAZfef84wSqVXDzxX3PBST5tWRSZGwtW5BvTtImbRYvqA697v7i5sJGLcfxGry09tYQ
+ FFoZZ0og1u5rhlraCKmRom23TuFKFK2oPLm7CspxQs96VtueImhjOKNEVt5HsfxfXqyU3TqjWAz
+ OlP532mW5CNy0ewjSQaPJoy3YCPQexjmqRXoQKVias2xU2BJlsF+layZl8DMtcZX7hwGtWqmkSj
+ 8YYxGBm9bUMidLd3qYlOuTDy+kpPvzCp39dGN/69z95PM61OI2FBXOjz/ruS5DU7Y6lW77PZ251
+ vHyGzN0ADJzLpfnYqORe/xVkGso/tu/9xC+UteS1hJFb2G6uOeRSkOtXb9Fx2VWx7+J6MTSdbK4
+ iGlC4zNzrpjHg9sUGuJyy830gJiVkSI0NUcxreigKAYbhdoPyY5Xjfm/BWgpNXPzxniOwwSiDzf
+ dXCX/csO0Gz9RKyN9LJkJ8CGSKaDcWxFbRXHFutLf74/2mSuL6QRX4W3fz43Uc5ySsSBj8tdD4m
+ A8w2uwZuulY2ixmJh8VrYzMchNoeij+GfSA==
+X-Received: by 2002:a05:600c:1391:b0:49d:1fd8:b874 with SMTP id
+ 5b1f17b1804b1-49fc574114fmr16310275e9.19.1789716904243; 
+ Fri, 18 Sep 2026 00:35:04 -0700 (PDT)
+Received: from localhost.localdomain (athedsl-116222.home.otenet.gr.
+ [85.75.29.157]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fc471b9a2sm23879825e9.0.2026.09.18.00.35.03
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 00:31:00 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CF4675F8B4;
- Fri, 18 Sep 2026 08:30:59 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic
- from docker.py
-In-Reply-To: <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Thu, 17 Sep 2026 15:25:20 -0700")
-References: <20260917165602.3405537-1-alex.bennee@linaro.org>
- <20260917165602.3405537-12-alex.bennee@linaro.org>
- <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
- <87fqz77dln.fsf@draig.linaro.org>
- <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
- <96e3f93f-a12f-4d18-badd-2ea60efc715b@linaro.org>
- <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com>
-User-Agent: mu4e 1.14.4-pre3; emacs 30.1
-Date: Fri, 18 Sep 2026 08:30:59 +0100
-Message-ID: <87a4pf6moc.fsf@draig.linaro.org>
+ Fri, 18 Sep 2026 00:35:03 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/10] virtio-sound migration
+Date: Fri, 18 Sep 2026 10:34:43 +0300
+Message-ID: <20260918073502.3265143-1-manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,55 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+The following changes since commit b36ad6a0510aee81ecf6087b59f412b9bccaa369:
 
-> On 9/17/2026 3:18 PM, Richard Henderson wrote:
->> On 9/17/26 12:00, Pierrick Bouvier wrote:
->>> On 9/17/2026 2:49 PM, Alex Benn=C3=A9e wrote:
->>>> how much time? it flies past when I run a rebuild.
->>>>
->>>
->>> For a no-op tcg-tests build (i.e. with tests already built):
->>>
->>> - With current patch:
->>> time ninja -C tcg-tests
->>> ...
->>> verbose pull and build
->>> 320 lines of output
->>> ...
->>> real=C2=A0=C2=A0=C2=A0 0m15.817s
->>> user=C2=A0=C2=A0=C2=A0 0m1.342s
->>> sys=C2=A0=C2=A0=C2=A0=C2=A0 0m0.840s
+  hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
 
-  =E2=9C=97  time ninja
-  [1/114] Generating qemu-version.h with a custom command (wrapped by meson=
- to capture output)
+are available in the Git repository at:
 
-  ________________________________________________________
-  Executed in  515.16 millis    fish           external
-     usr time  433.82 millis  968.00 micros  432.85 millis
-     sys time   86.05 millis  253.00 micros   85.80 millis
+  https://gitlab.com/epilys/qemu.git virtio-snd-migrate
 
-Not sure whats going on there then. The whole tcg suite completes in
-under a minute (and would be shorter if i386-linux-user-test-i386-fprem
-and riscv64-softmmu-plugin-discons-with-interruptedmemory where in the
-thorough test suite).
+for you to fetch changes up to b36ad6a0510aee81ecf6087b59f412b9bccaa369:
 
->>=20
->> The variance from the middle of the pacific ocean, and associated
->> network latency, is between 20 and 27 seconds.
->>=20
->> Amusingly, with the network actively disconnected (airplane mode), the
->> no-op build completes in 1 to 2 seconds.
->>
->
-> Funny, on my side if hangs a long time (timeout 30s), then retry 3 times
-> per image. I tried it on WSL on my windows laptop.
->
->>=20
->> r~
+  hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+----------------------------------------------------------------
+
+Alexander Mikhalitsyn (2):
+  hw/audio/virtio-sound: remove channel positions field from
+    VirtIOSoundPCMStream
+  hw/audio/virtio-sound: drop unused struct
+    VirtIOSoundPCMStream.flushing field
+
+Volker Rümelin (8):
+  hw/audio/virtio-sound: remove command and stream mutexes
+  hw/audio/virtio-sound: allocate an array of streams
+  hw/audio/virtio-sound: free all stream buffers on reset
+  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+  hw/audio/virtio-sound: add stream state variable
+  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+  hw/audio/virtio-sound: introduce virtio_snd_set_active()
+  hw/audio/virtio-sound: add missing vmstate fields
+
+ include/hw/audio/virtio-snd.h |  26 +-
+ hw/audio/virtio-snd.c         | 716 ++++++++++++++++++++--------------
+ 2 files changed, 424 insertions(+), 318 deletions(-)
+
+-- 
+γαῖα πυρί μιχθήτω
+
 
