@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B3EC982DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2129AC982D9
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 10:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7VZn-0003Ls-H8; Fri, 18 Sep 2026 06:12:15 -0400
+	id 1x7VZn-0003Lt-Hm; Fri, 18 Sep 2026 06:12:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1x7VZg-0003I0-FQ
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:08 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1x7VZj-0003K0-0H
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:12 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1x7VZe-0007Zq-Ak
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:08 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ccff31419so4818775e9.3
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 03:12:04 -0700 (PDT)
+ id 1x7VZf-0007aP-5Y
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 06:12:10 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49cd38e0e5dso7705455e9.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 03:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789726324; x=1790331124; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789726326; x=1790331126; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=B+hQqjm9SfOhf2ajgDo0RLSHqaRysZxCYOMqoEpP3cs=;
- b=s+sTfumdAzkZS46GjixZAyCVe+tG+/H6HNm+pI5Inn9gdpstiRBKk9bj1uZ9dWtyMO
- XmNteOg1ELh0Qw8PqMpmJ74qZx3pHYrnMsZesCMl1+WDBcWywez85PMmGlNwxfR2j1XP
- M0nWjZyiKR8qluR8fHwtN7yGjREaSLiAArYKhTDx582eOw2f63GcsnYzVGZNzI80Lz71
- yvrLCpuniIe0J3ZI1CL7WCR+xkK9RVy5Q/KtpzPxWIQ+1JPxQeHVAhfKU9OQ2Yi4dGZ+
- dSMoTzT9G/NVSYrqBloFSndXOOb23A+SXeJtGWb5KutwkBqmFKARKnC03aTS3vewWzKM
- 3hjw==
+ bh=ImzkDyQh7LMz3GFaLfWGldnOX3oL1DgmW35r5Yk//gg=;
+ b=LPuALkdbaeHekqTo7mHC5SwbgWnMegOZuclAdtHABR0NUnug2FHdPamhmXtLmexgaD
+ Tl1iPHu0XmOBQ0ecCvwJvp5V742U0g7IE92xfTq9kA+36FJxu0aVUOVO4b1BYPrYNSHO
+ bahmTeMfcXV0B6gKrmVZkMp6oGZd4SweQGkIzjDoglSD82b3HR1rb+7gIdzLPNHjnzMs
+ ySWjG7vgjVGayZhxMI0B3oYSehB+OvED4pkbLIevpK9xCBDKd/PhLzSmYsgkbU2r4Q5y
+ z41fGf4Qo+EvdO9qe+kD/AeiuAey3IfNJVBEh93ia5fZ/C0jOm0nUhwSGWNOn0Aj1Hn+
+ JiwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789726324; x=1790331124;
+ d=1e100.net; s=20260707; t=1789726326; x=1790331126;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=B+hQqjm9SfOhf2ajgDo0RLSHqaRysZxCYOMqoEpP3cs=;
- b=12jOW+zX9jLpazIZ1l/lnGjLR6fU2BEbNmlGNXUZP/gd3DLnmGs8oXt+y0S+c2tsWO
- Nk1fHK3tX92lv2KnkSg+SkWBFUi+NBtMmMPDyYAPMzzYm58lzNrOzi0qE0Nz1YG4h6KU
- SOGYZb1GN5JPjw7mhlilnrQe/9JxcUrefM95nLHGUB7zWWbLoTeIRuKptq5BabV0a5Oq
- 2MqEwXdJl1Nb2kgpnH6I55Rz5f/QTCL7YSj5tHn2w5dwolXDcSJil+S0XRtDlYwuEpDy
- cezrVRiK47TclzhUma8QnUS3CDCKSSLroxd8RQPNLCMNK+7EPmIFJLce2q2xece5J3EV
- OLjg==
-X-Gm-Message-State: AFuF++nkaYCBdlTKnKpGFqerVKafeEzLp65gmBYTocYFZwwOjGcBuLbM
- PjFwCzsQw33s7RUhPHeP4ip3ldbLa+e/OQtWfYcs6P02RVJIILV/azBRPAdhjL1j
-X-Gm-Gg: AYBFou26bEjIosZsUZ7r3oJTfF8F4YyEkPG9e8GSUwFd7gR5IT6Va8gZaHxd9SR5lnt
- cUE2ruaprcbi33ZUFN6RCVocwYJssJMj0uHuxY4ovHbMvXJe/jM0H+9T0HzOo1s3xR5JITiK3vx
- ezvEoc66Jeh6ajTHKXmb1OWcH0BFusb4eDJNrIQhNLrhUiTNqM5IA8E9aYGGIUXi6rX35oWIiB0
- jhgtFvVWx6rNkV2loBebK8Qb0bUEFbq514uyfXFKezvVCqE5IKRI93Assc5qKBpPSBV7uFz9ozG
- mRNx1RkM0GJEJdBzeaHTOy8m2BzNPmsB//BydjQNz90dXVHniwKYdFZB28TRmj9ZO30OlgpsxwQ
- sD0H88G1Ay5H9n6T3QsL+GXEi8xCkVjPCBqOpFsHsw09vLAedRhIgtRB9jkEOdKt8wD5Tl+dkVE
- gE2FrHQzx0a0XIhg15/G0wNQmE+6XN0yy2QC/VwUfDCHxA9sp+SFHN/tCXRzCihZpIqNPI/vGK2
- YrkVs5170/Uj0KGUNHyPQp7FTJER/lx
-X-Received: by 2002:a05:600c:674f:b0:49d:4ef:bf70 with SMTP id
- 5b1f17b1804b1-49fc56aef4fmr23457615e9.10.1789726323573; 
- Fri, 18 Sep 2026 03:12:03 -0700 (PDT)
+ bh=ImzkDyQh7LMz3GFaLfWGldnOX3oL1DgmW35r5Yk//gg=;
+ b=y/7K2XdwBK65yLoqwtb+FOH+e62c1KNhVROhsKC1zePkxsM0pvUVHJj6vK9w5DCbrg
+ d9mGbjsYZn8TpuNQ0EzUIGuv7DbQh+NqstVmMlzvEWSQPA8PPa+zyO6J/XPcOwC5uAsP
+ tpSszZJpBvcbo7lg69G2kG1fEA62+oeNLWBo9WVsoqpSl6u1Nmnltfs0UbB/lPbg8k0X
+ hJCSM8/FoXwEIdWkx1YjONrxAz/DmYuzJIVeZan2y/Li0a59bBVICgQckmHMM9UAcxZr
+ ZxhU7Zxp8k+ArFiw9foB+KWyxdWv06uEINknsmuGWOT9fhJhSbWq+cJiSVnGoQ85ugE/
+ lgeQ==
+X-Gm-Message-State: AFuF++l7lesRkfOGBQqrt9Qa1zzznEf/24Bd/lT+gOy6+2zUDgFPNueB
+ tcRBZEHbHdANL+KkJBZQH/3donwSD82abbmBnVaf6t206J6N5kSLrWNFSurPXkmN
+X-Gm-Gg: AYBFou0ynRw7Xu/l6XXi75WFCthaWs8WqotHbYzTC1SpGu4CaDsaum6v4CnJWyQcGQr
+ NiYPdkC4orDHtWNuo1cmlhW2WS1ohzwmE4UE0CBqo1mOJVUEq5wkhsR9J+Upg8OduvuZE03Vuqu
+ f/a9KkCHBkNAJJu/boqWpwl09zccFjX4FQD4N55H4ntPSWY6+li5DPlO9XAUYhTwe8mlhuqGSRG
+ zsZb0ma8YX3muc5ki3VET+ANNSToYnFHjn9gvST8wnC/XfPK+sykLhS80FdNIhmpuImd1zGF351
+ sMOPRloE4qYxNDlGziIh1I1ZSBtwH10+0J1lYQTTWQ0rjLyybXC5PpMOvHbXQpr7Ff/vNIdWPzN
+ 1+3US0cYwovS6gaY0+xD25k2kwO6/4iim7bGK9ECH3+rwBH3nyazOLMMDB41+pxllgdkq4ZdUMu
+ gkshgNHss6KSCDk2NmZgIM/yNxLf0VbJXnfVH3zusGqkKFOA8W/UnMoPxdlnycD5lFOuG/7DTns
+ JSgbVHt49inOEe2PLjGvQ==
+X-Received: by 2002:a05:600c:a14:b0:49d:1e09:694a with SMTP id
+ 5b1f17b1804b1-49fc568f869mr22070695e9.11.1789726325673; 
+ Fri, 18 Sep 2026 03:12:05 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc20:5e84:de9d:56c6:df83:7819])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd225898sm153886245e9.9.2026.09.18.03.12.02
+ 5b1f17b1804b1-49fbd225898sm153886245e9.9.2026.09.18.03.12.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 03:12:03 -0700 (PDT)
+ Fri, 18 Sep 2026 03:12:05 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org,
@@ -78,23 +78,22 @@ Cc: Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v8 3/7] hw/misc/zynq_slcr: Add CPU clock outputs and ratios
-Date: Fri, 18 Sep 2026 12:11:54 +0200
-Message-ID: <20260918101158.42101-4-corvin.koehne@gmail.com>
+Subject: [PATCH v8 5/7] hw/arm/xilinx_zynq: Make PS frequency configurable
+Date: Fri, 18 Sep 2026 12:11:56 +0200
+Message-ID: <20260918101158.42101-6-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260918101158.42101-1-corvin.koehne@gmail.com>
 References: <20260918101158.42101-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,106 +111,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-Add CPU clock outputs and derive the related domains from the base CPU
-clock ratio. This makes the CPU clock domains visible and keeps their
-ratios consistent with the hardware clock tree.
+Add ps_clk_freq to ZynqMachineClass so derived machine types can set
+their own PS clock frequency instead of using the hardcoded default.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 ---
- hw/misc/zynq_slcr.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ hw/arm/xilinx_zynq.c         | 3 ++-
+ include/hw/arm/xilinx_zynq.h | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-index d0f899c3be4d..86f8685d2b2e 100644
---- a/hw/misc/zynq_slcr.c
-+++ b/hw/misc/zynq_slcr.c
-@@ -61,6 +61,13 @@ REG32(DDR_PLL_CFG, 0x114)
- REG32(IO_PLL_CFG, 0x118)
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index f7190118f7ff..1e09182b1cbe 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -253,7 +253,7 @@ static void zynq_init(MachineState *machine)
+     object_property_add_child(OBJECT(zynq_machine), "ps_clk",
+                               OBJECT(zynq_machine->ps_clk));
+     object_unref(OBJECT(zynq_machine->ps_clk));
+-    clock_set_hz(zynq_machine->ps_clk, PS_CLK_FREQUENCY);
++    clock_set_hz(zynq_machine->ps_clk, zmc->ps_clk_freq);
  
- REG32(ARM_CLK_CTRL, 0x120)
-+    FIELD(ARM_CLK_CTRL, CPU_PERI_CLKACT, 28, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_1XCLKACT, 27, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_2XCLKACT, 26, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_3OR2XCLKACT, 25, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_6OR4XCLKACT, 24, 1);
-+    FIELD(ARM_CLK_CTRL, DIVISOR, 8, 6);
-+    FIELD(ARM_CLK_CTRL, SRCSEL, 4, 2);
- REG32(DDR_CLK_CTRL, 0x124)
- REG32(DCI_CLK_CTRL, 0x128)
- REG32(APER_CLK_CTRL, 0x12c)
-@@ -98,6 +105,7 @@ FPGA_CTRL_REGS(3, 0x1a0)
- REG32(BANDGAP_TRIP, 0x1b8)
- REG32(PLL_PREDIVISOR, 0x1c0)
- REG32(CLK_621_TRUE, 0x1c4)
-+    FIELD(CLK_621_TRUE, CLK_621_TRUE, 0, 1)
- 
- REG32(PSS_RST_CTRL, 0x200)
-     FIELD(PSS_RST_CTRL, SOFT_RST, 0, 1)
-@@ -206,6 +214,10 @@ struct ZynqSLCRState {
-     Clock *ps_clk;
-     Clock *uart0_ref_clk;
-     Clock *uart1_ref_clk;
-+    Clock *cpu_1x;
-+    Clock *cpu_2x;
-+    Clock *cpu_3x2x;
-+    Clock *cpu_6x4x;
-     uint8_t boot_mode;
- };
- 
-@@ -286,14 +298,31 @@ static void zynq_slcr_compute_clocks_internal(ZynqSLCRState *s, uint64_t ps_clk)
-     uint64_t io_pll = zynq_slcr_compute_pll(ps_clk, s->regs[R_IO_PLL_CTRL]);
-     uint64_t arm_pll = zynq_slcr_compute_pll(ps_clk, s->regs[R_ARM_PLL_CTRL]);
-     uint64_t ddr_pll = zynq_slcr_compute_pll(ps_clk, s->regs[R_DDR_PLL_CTRL]);
-+    uint64_t cpu_base;
- 
-     uint64_t uart_mux[4] = {io_pll, io_pll, arm_pll, ddr_pll};
-+    uint64_t cpu_mux[4] = {arm_pll, arm_pll, ddr_pll, io_pll};
-+
-+    bool use_621 = FIELD_EX32(s->regs[R_CLK_621_TRUE], CLK_621_TRUE,
-+                              CLK_621_TRUE);
-+    /* Select 6:2:1 (true) or 4:2:1 (false) CPU clock ratios. */
-+    uint32_t ratio_6x4x = use_621 ? 6 : 4;
-+    uint32_t ratio_3x2x = use_621 ? 3 : 2;
-+
- 
-     /* compute uartX reference clocks */
-     clock_set(s->uart0_ref_clk,
-               ZYNQ_COMPUTE_CLK(s, uart_mux, R_UART_CLK_CTRL, CLKACT0));
-     clock_set(s->uart1_ref_clk,
-               ZYNQ_COMPUTE_CLK(s, uart_mux, R_UART_CLK_CTRL, CLKACT1));
-+
-+    /* Base is CPU clock (6x/4x domain). Derive other CPU domains via ratios. */
-+    cpu_base = ZYNQ_COMPUTE_CLK(s, cpu_mux, R_ARM_CLK_CTRL, CPU_6OR4XCLKACT);
-+
-+    clock_set(s->cpu_6x4x, cpu_base);
-+    clock_set(s->cpu_3x2x, cpu_base * ratio_6x4x / ratio_3x2x);
-+    clock_set(s->cpu_2x,   cpu_base * ratio_6x4x / 2);
-+    clock_set(s->cpu_1x,   cpu_base * ratio_6x4x);
+     /* Create slcr, keep a pointer to connect clocks */
+     slcr = qdev_new("xilinx-zynq_slcr");
+@@ -480,6 +480,7 @@ static void zynq_machine_class_init(ObjectClass *oc, const void *data)
+                                           " jtag qspi sd nor");
+     object_property_set_default_str(prop, "qspi");
+     zmc->qspi_flash_type = "n25q128";
++    zmc->ps_clk_freq = PS_CLK_FREQUENCY;
  }
  
- /**
-@@ -322,6 +351,10 @@ static void zynq_slcr_propagate_clocks(ZynqSLCRState *s)
- {
-     clock_propagate(s->uart0_ref_clk);
-     clock_propagate(s->uart1_ref_clk);
-+    clock_propagate(s->cpu_1x);
-+    clock_propagate(s->cpu_2x);
-+    clock_propagate(s->cpu_3x2x);
-+    clock_propagate(s->cpu_6x4x);
- }
- 
- static void zynq_slcr_ps_clk_callback(void *opaque, ClockEvent event)
-@@ -619,6 +652,10 @@ static const ClockPortInitArray zynq_slcr_clocks = {
-     QDEV_CLOCK_IN(ZynqSLCRState, ps_clk, zynq_slcr_ps_clk_callback, ClockUpdate),
-     QDEV_CLOCK_OUT(ZynqSLCRState, uart0_ref_clk),
-     QDEV_CLOCK_OUT(ZynqSLCRState, uart1_ref_clk),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_1x),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_2x),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_3x2x),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_6x4x),
-     QDEV_CLOCK_END
+ static const TypeInfo zynq_machine_type = {
+diff --git a/include/hw/arm/xilinx_zynq.h b/include/hw/arm/xilinx_zynq.h
+index 33a68cdcd15e..a52caca18eb9 100644
+--- a/include/hw/arm/xilinx_zynq.h
++++ b/include/hw/arm/xilinx_zynq.h
+@@ -33,6 +33,7 @@ struct ZynqMachineState {
+ struct ZynqMachineClass {
+     MachineClass parent_class;
+     const char *qspi_flash_type;
++    uint64_t ps_clk_freq;
  };
  
+ #endif /* QEMU_ARM_ZYNQ_H */
 -- 
 2.47.3
 
