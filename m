@@ -4,103 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F3CC982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 01:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9C2C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 02:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7NWY-0007qp-Hg; Thu, 17 Sep 2026 21:36:22 -0400
+	id 1x7OFL-0002TZ-2h; Thu, 17 Sep 2026 22:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7NWW-0007qa-RL
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:36:20 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7NWU-0007hE-Ua
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:36:20 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a6056c2064so247078a12.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 18:36:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789695377; cv=none;
- d=google.com; s=arc-20260327;
- b=fKpEqjIga44Gf/los5VwR3t7yo4YA0MdZLb04pS+bMqomNCZlmsgrG9Yn2Rn6tzxMI
- dLI4lPjLLscxd2NMOyS1eV4VI0TKWYVsf28eLjRil3KcE6ywnNSLdGRGpq41ntSBeIFJ
- xw1VuywLqC1mwhPnxFSlFP3vrhH83PgaJ3znaAcMesFlDpc2FumZ+i6OLtIbYrS5UejY
- CcBf7Q22G88Lkip4TMO/xit0KsgP9hYGX46f/gwLH3w/H+3qGaOLxnAcAwPq3nP5dB66
- 05o0VaTB2dJ9FhDUr5AiyYUjMHRHddQ3WmqXHhy/x2pK3GSMKFkhPUYVTcO7DW8wdaph
- riZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ZY9puDclBvEzT6YB4uwjAUe0cpa5tvMQY/c5MhF/Ucw=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=koZ8qJ4cKA01hZ1BuEgqe4zBUCMd+v4SCuOeAVFtrdqNf7UnUY706IUhkgM9389g6x
- stuIUrfnkwW42m5+oWovboHJLUUVdZ4Wd4ys51fjb237ejf5Uu0lRF+OlKeKj2xlxrfi
- yBnYOBPfDI1pZh0skqN4RMO9BESzRiu+CNQxA/3+esYNvoocAIoyjUo3SOh7E3uKxKyo
- qmVh8ihXBK4FfhJLq9JT4QTocP7srbmv5Ww2GuJW/SE9d2AJNOKUL2BcfDwC06tp7YwQ
- 8LHA40AlH7pvMkiYMIgtmwUoWyAO90wsAuT4AhQMYKLdyapC6TQjM0X36ntNH4MxdfZK
- my2w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789695377; x=1790300177; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZY9puDclBvEzT6YB4uwjAUe0cpa5tvMQY/c5MhF/Ucw=;
- b=R4LpBOF7OA3GhVnFscHawTvzEOLL30HJ4Hoot/dpUP3jFZmFMKeN2xN10Yxy7//JGI
- vL6H99ZNqk8k5LHa9b1gMZakPu+Bh+cDhCe5RZN0Q7+FUNx5jfxxiR8VwplmdBly14oI
- p9Ul8nUPRUmZzOu2YbxhPuzmtJwllMZqmSDpaTd9BuOsLeySB+4e14yAj4l+KGcVIE10
- Y6Ti7sPWCKkeFPWWDv1gxlnlA/3hLHPdXfoofCsGlaZ4raRNVLGLFXn60x8o4VkedNdL
- ew4Szbp1Mdc5XuGzswF1FbvCGrAKmsy0GLzVAIr/vyO0YkbFVUTayG5XBow/IYSIoLR2
- psGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789695377; x=1790300177;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZY9puDclBvEzT6YB4uwjAUe0cpa5tvMQY/c5MhF/Ucw=;
- b=dB+xXWYZoFFAMbxVMkuaxVk4e6stRKezwIICl7QjS1nafibmDZvL7TwQwgeZ/1KkrX
- 5ORzReOMRg0KvYhLPhFzGc7EPTOGHd+11agfgKqSsyMd4eFwCND4IuBrphSryqpbLVr/
- WgiDEn9nNvspVc1NpWxbphkUVjouBVaNj4OOKSnWLe5eERhzPzI79ZlxjcBqss+UEkTK
- Z5p7uZ1Q11eHu6Bv0YUyaHcm3FxaupvaGYgq4LbAdUbGV54RbUxXiH3Ttcy6HDseuI6V
- d/4QjmUN+vzz1GsjvseS2aPFih5yggOdpJhE0pG00wFbJfU6VzCi74sCPZh0xwKsV4Dp
- p/0g==
-X-Gm-Message-State: AFuF++kO4W4V9Ezj8K7Hut57+hXmhMRQUqJLUvwSzioEdgONGUJO+ziN
- YXOvBR7p2DDQzDeQMbSS13XBzyMsTq3dn2hi0PdB4IlkDWOmMLNHkcoNlfcuF/EK267ZQON8nK6
- CDZvplYunN8sunBJQEFnumKJIcWDmaMU=
-X-Gm-Gg: AYBFou1ZNBnmOOUlaRjTpGFipujvoteqhmmOubkYnIfiSJnlyqjcModWmW13wDENuUe
- 2sdX3GNhmYef8HSp68bHyHGfoNt62cpSjO2Szgds7XZmg00nirfi/ogEFGqTfcOM0noPJCk5B08
- pXJSQTqzgjgKmIG6NTd9zsoWUOqczur3tScTeHrj+Q7jEKnSjGcbI5fmHnm8MXBXo4tUyDurh81
- lAEGAiSgzhuGrHSgqXnDkkYl4tDph5wUFdJfrsbY4gZEMeI2puFR6RgGfDybtrFQ7idKxMkaKSe
- gzYz1nGha45/MyoqIObSyfyirdlXq8z0/GJCbngwQbDyGbQBoJNR/Tw=
-X-Received: by 2002:a17:907:c1b:b0:c26:19e3:e979 with SMTP id
- a640c23a62f3a-c2a157c41b3mr92775166b.25.1789695376737; Thu, 17 Sep 2026
- 18:36:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x7OFE-0002TE-Mz
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:22:33 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x7OF9-00044P-No
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 22:22:32 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxLtNboKxq3EYNAA--.38820S3;
+ Fri, 18 Sep 2026 10:22:19 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxlMxXoKxqdw4iAA--.45210S2;
+ Fri, 18 Sep 2026 10:22:18 +0800 (CST)
+Subject: Re: [PATCH v4 03/14] target/loongarch: Add LVZ CSR metadata
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1787739852.git.prcups@krgm.moe>
+ <2c261c4b32b901a077952757d7228570a822e592.1787739852.git.prcups@krgm.moe>
+ <24a8e1b0-c986-367e-fbb9-9a6f53f0a4f6@loongson.cn>
+ <uxrjBmMGQxybFt1E_UoFpA@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <5c6a0c39-39fa-e941-350c-ee976fa758a0@loongson.cn>
+Date: Fri, 18 Sep 2026 10:21:53 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260918004225.827-1-luoyonggang@gmail.com>
- <20260918004225.827-3-luoyonggang@gmail.com>
- <db731c3c-69c3-4c4d-b1d4-27e2a943d900@linaro.org>
-In-Reply-To: <db731c3c-69c3-4c4d-b1d4-27e2a943d900@linaro.org>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 18 Sep 2026 09:36:02 +0800
-X-Gm-Features: AcwNN1XALxAE471dq9S7qtW3S-9RErAdHzzxsQo1O1xZI8X5l-YENDERcGK4BWE
-Message-ID: <CAE2XoE-Pvvqux9NeD8k6FTJ-TYKjdVNtsVDU3SXB=bi8_TjW5Q@mail.gmail.com>
-Subject: Re: [PATCH 02/21] helper-gen: move helper_info extern into gen_helper
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000002fca3e065bb7edf6"
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <uxrjBmMGQxybFt1E_UoFpA@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxlMxXoKxqdw4iAA--.45210S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3ur1rCF4xJFy5Xw4xArW5urX_yoWkCry3pr
+ s7GFWUWrWfWF95Xry2v3WYk3W5W34xt342qr4UCryrtFW8Grn3Ka4Ykas0gF17AF1rtry8
+ ZFW7ZF15AFZxGacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,149 +82,273 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002fca3e065bb7edf6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Sep 18, 2026 at 8:58=E2=80=AFAM Richard Henderson <
-richard.henderson@linaro.org> wrote:
->
-> On 9/17/26 14:42, Yonggang Luo wrote:
-> > Declare helper_info inside each gen_helper_* body so a comment on
-> > DEF_HELPER attaches to gen_helper_*, not helper_info_*. The extern
-> > still refers to the global from helper-info.c.inc. Silence
-> > -Wnested-externs around the HELPER_H expansion only.
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > ---
-> >   include/exec/helper-gen.h.inc | 24 ++++++++++++++++--------
-> >   1 file changed, 16 insertions(+), 8 deletions(-)
->
-> Huh?  Why does comment placement matter?
->
->
-> >   #define DEF_HELPER_FLAGS_0(name, flags, ret)
-   \
-> > -extern TCGHelperInfo glue(helper_info_, name);
- \
-> >   static inline void glue(gen_helper_, name)(dh_retvar_decl0(ret))
-   \
-
-Please look here, this is the implementation in the header already, so we
-have no .c file to
-comment on it. comments on  &glue(helper_info_,name) do not help, because
-we are always calling
-to gen_helper_$name. The clangd and other auto-tools can not infer comments
-from &glue(helper_info_,name).
-
-If we move extern TCGHelperInfo glue(helper_info_, name);   into inline
-function content, then the comment on
-DEF_HELPER_*() macros will take effect.
-
-The static inline void is the source of the issue. I have no other way to
-deal with it.
-
-> >   {
-  \
-> > +    extern TCGHelperInfo glue(helper_info_, name);
- \
-> >       tcg_gen_call0(glue(helper_info_,name).func,
-  \
-> >                     &glue(helper_info_,name), dh_retvar(ret));
-   \
-> >   }
 
 
-> ...> +/*
-> > + * helper_info_* is declared inside gen_helper_* so a comment on
-> > + * DEF_HELPER attaches to gen_helper_*, not helper_info_*. That is a
-> > + * nested extern; silence -Wnested-externs for this expansion only.
-> > + */
-> > +#pragma GCC diagnostic push
-> > +#pragma GCC diagnostic ignored "-Wnested-externs"
-> >   #include HELPER_H
-> > +#pragma GCC diagnostic pop
-> >
-> >   #undef DEF_HELPER_FLAGS_0
-> >   #undef DEF_HELPER_FLAGS_1
->
-> That you have to have to have this workaround makes me less than
-receptive.
->
->
-> r~
+On 2026/9/2 上午11:09, SignKirigami wrote:
+> 
+> 
+> 于 2026年9月1日 GMT+08:00 15:08:59，Bibo Mao <maobibo@loongson.cn> 写道：
+>>
+>>
+>> On 2026/8/26 下午6:30, SignKirigami wrote:
+>>> Add LVZ host and guest CSR access metadata to the existing CSR table. Keep
+>>> one shared register description and calculate the host or guest bank
+>>> offset at translation time instead of duplicating CSRInfo entries.
+>>>
+>>> Mark guest read-only, sensitive and unavailable CSRs for later LVZ
+>>> instruction translation.
+>>>
+>>> Signed-off-by: SignKirigami <prcups@krgm.moe>
+>>> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+>>> ---
+>>>    target/loongarch/cpu.c                        |   3 +-
+>>>    target/loongarch/csr.c                        | 108 +++++++++---------
+>>>    target/loongarch/csr.h                        |   2 +
+>>>    .../tcg/insn_trans/trans_extra.c.inc          |   2 +-
+>>>    .../tcg/insn_trans/trans_privileged.c.inc     |   6 +-
+>>>    5 files changed, 65 insertions(+), 56 deletions(-)
+>>>
+>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>> index 2f7692dc93..0f6a211949 100644
+>>> --- a/target/loongarch/cpu.c
+>>> +++ b/target/loongarch/cpu.c
+>>> @@ -783,7 +783,8 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
+>>>                qemu_fprintf(f, " CSR%03d:", col);
+>>>            }
+>>>    -        addr = (void *)env + get_csr_offset(csr_info, 0);
+>>> +        addr = (void *)env + get_csr_offset(csr_info,
+>>> +                                             LOONGARCH_VM_LEVEL_HOST);
+>>>            qemu_fprintf(f, " %s ", csr_info->name);
+>>>            len = strlen(csr_info->name);
+>>>            for (; len < 6; len++) {
+>>> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+>>> index 309b826ca9..fa018a4582 100644
+>>> --- a/target/loongarch/csr.c
+>>> +++ b/target/loongarch/csr.c
+>>> @@ -13,15 +13,16 @@
+>>>            .flags = FL, .readfn = RD, .writefn = WR           \
+>>>        }
+>>>    -#define CSR_OFF_ARRAY(NAME, N)                                \
+>>> +#define CSR_OFF_ARRAY_FLAGS(NAME, N, FL)                      \
+>>>        [LOONGARCH_CSR_##NAME(N)] = {                             \
+>>>            .name   = (stringify(NAME##N)),                       \
+>>>            .offset = CSR_OFFSET(CSR_##NAME[N]),                  \
+>>> -        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL           \
+>>> +        .flags = FL                                           \
+>>>        }
+>>>      #define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
+>>>    #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, CSRFL_BASIC)
+>>> +#define CSR_OFF_ARRAY(NAME, N)    CSR_OFF_ARRAY_FLAGS(NAME, N, CSRFL_BASIC)
+>>>      static CSRInfo csr_info[] = {
+>>>        CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+>>> @@ -35,6 +36,7 @@ static CSRInfo csr_info[] = {
+>>>        CSR_OFF_FLAGS(BADI, CSRFL_READONLY),
+>>>        CSR_OFF(EENTRY),
+>>>        CSR_OFF(TLBIDX),
+>>> +    CSR_OFF_FLAGS(GTLBC, CSRFL_GSPR),
+>>>        CSR_OFF(TLBEHI),
+>>>        CSR_OFF(TLBELO0),
+>>>        CSR_OFF(TLBELO1),
+>>> @@ -71,9 +73,13 @@ static CSRInfo csr_info[] = {
+>>>        CSR_OFF_FLAGS(TVAL, CSRFL_READONLY | CSRFL_IO),
+>>>        CSR_OFF(CNTC),
+>>>        CSR_OFF_FLAGS(TICLR, CSRFL_IO),
+>> Should previous CSR_OFF_FLAGS(GTLBC, CSRFL_GSPR) be moved to here? since all these registers relative with LVZ.
+>>> +    CSR_OFF_FLAGS(GSTAT, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(GCFG, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(GINTC, CSRFL_IO | CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(GCNTC, CSRFL_GSPR),
+>>>        CSR_OFF(LLBCTL),
+>>> -    CSR_OFF(IMPCTL1),
+>>> -    CSR_OFF(IMPCTL2),
+>>> +    CSR_OFF_FLAGS(IMPCTL1, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(IMPCTL2, CSRFL_GSPR),
+>> It change the old flags, previous its flag is CSRFL_BASIC, and not it is replaced with CSRFL_GSPR. How about CSRFL_BASIC | CSRFL_GSPR and keep old flag still on?
+> CSRFL_BASIC is for "no flag but valid", as new get_csr sees csr_info with flag 0 as invalid,
+> no other code uses this flag so it is ok to delete this flag when another flag exists.
+ok, it should be fine to delete flag CSRFL_BASIC and replace it with 
+CSRFL_GSPR.
 
+Regards
+Bibo Mao
+> 
+> Regards
+> SignKirigami
+>>
+>>>        CSR_OFF(TLBRENTRY),
+>>>        CSR_OFF(TLBRBADV),
+>>>        CSR_OFF(TLBRERA),
+>>> @@ -82,57 +88,57 @@ static CSRInfo csr_info[] = {
+>>>        CSR_OFF(TLBRELO1),
+>>>        CSR_OFF(TLBREHI),
+>>>        CSR_OFF(TLBRPRMD),
+>>> -    CSR_OFF(MERRCTL),
+>>> -    CSR_OFF(MERRINFO1),
+>>> -    CSR_OFF(MERRINFO2),
+>>> -    CSR_OFF(MERRENTRY),
+>>> -    CSR_OFF(MERRERA),
+>>> -    CSR_OFF(MERRSAVE),
+>>> -    CSR_OFF(CTAG),
+>>> +    CSR_OFF_FLAGS(MERRCTL, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(MERRINFO1, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(MERRINFO2, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(MERRENTRY, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(MERRERA, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(MERRSAVE, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(CTAG, CSRFL_GSPR),
+>>>        CSR_OFF_ARRAY(DMW, 0),
+>>>        CSR_OFF_ARRAY(DMW, 1),
+>>>        CSR_OFF_ARRAY(DMW, 2),
+>>>        CSR_OFF_ARRAY(DMW, 3),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 0),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 0),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 1),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 1),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 2),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 2),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 3),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 3),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 4),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 4),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 5),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 5),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 6),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 6),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 7),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 7),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 8),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 8),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 9),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 9),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 10),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 10),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 11),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 11),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 12),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 12),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 13),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 13),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 14),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 14),
+>>> -    CSR_OFF_ARRAY(PERFCTRL, 15),
+>>> -    CSR_OFF_ARRAY(PERFCNTR, 15),
+>>> -    CSR_OFF(DBG),
+>>> -    CSR_OFF(DERA),
+>>> -    CSR_OFF(DSAVE),
+>>> -    CSR_OFF_ARRAY(MSGIS, 0),
+>>> -    CSR_OFF_ARRAY(MSGIS, 1),
+>>> -    CSR_OFF_ARRAY(MSGIS, 2),
+>>> -    CSR_OFF_ARRAY(MSGIS, 3),
+>>> -    CSR_OFF(MSGIR),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 0, CSRFL_GUEST_INVALID),
+>> what is different between flag CSRFL_GSPR and CSRFL_GUEST_INVALID?
+>>
+>> With CSR register access instruction, on host value zero is return if it is not implemented. On guest mode, I think that there should be GSPR exception and trap to host and let hypervisor to handle this if it is not implemented. There is no much meaning to return zero and does not trap to host.
+>>
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 0, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 1, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 1, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 2, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 2, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 3, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 3, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 4, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 4, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 5, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 5, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 6, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 6, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 7, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 7, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 8, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 8, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 9, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 9, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 10, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 10, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 11, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 11, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 12, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 12, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 13, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 13, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 14, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 14, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCTRL, 15, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(PERFCNTR, 15, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_FLAGS(DBG, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(DERA, CSRFL_GSPR),
+>>> +    CSR_OFF_FLAGS(DSAVE, CSRFL_GSPR),
+>>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 0, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 1, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 2, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_ARRAY_FLAGS(MSGIS, 3, CSRFL_GUEST_INVALID),
+>>> +    CSR_OFF_FLAGS(MSGIR, CSRFL_GUEST_INVALID),
+>>>    };
+>>>      CSRInfo *get_csr(unsigned int csr_num)
+>>> diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
+>>> index c2b6b882bc..647695e248 100644
+>>> --- a/target/loongarch/csr.h
+>>> +++ b/target/loongarch/csr.h
+>>> @@ -20,6 +20,8 @@ enum {
+>>>        CSRFL_IO       = (1 << 2),
+>>>        CSRFL_UNUSED   = (1 << 3),
+>>>        CSRFL_BASIC    = (1 << 4),
+>>> +    CSRFL_GSPR     = (1 << 5),
+>>> +    CSRFL_GUEST_INVALID = (1 << 6),
+>>>    };
+>>>      typedef struct {
+>>> diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>> index 655dce329e..e69384497f 100644
+>>> --- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>> +++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>> @@ -55,7 +55,7 @@ static bool gen_rdtime(DisasContext *ctx, arg_rr *a,
+>>>            tcg_gen_sextract_tl(dst1, dst1, high ? 32 : 0, 32);
+>>>        }
+>>>    -    offset = CPU_CSR_OFFSET(CSR_TID, 0);
+>>> +    offset = CPU_CSR_OFFSET(CSR_TID, LOONGARCH_VM_LEVEL_HOST);
+>> This should be another small patch.
+>>
+>> Regards
+>> Bibo Mao
+>>>        tcg_gen_ld_i64(dst2, tcg_env, offset);
+>>>          return true;
+>>> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>> index 6728ce5ec9..bcfc977990 100644
+>>> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>> @@ -122,7 +122,7 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+>>>            if (readfn) {
+>>>                readfn(dest, tcg_env);
+>>>            } else {
+>>> -            offset = get_csr_offset(csr, 0);
+>>> +            offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
+>>>                tcg_gen_ld_tl(dest, tcg_env, offset);
+>>>            }
+>>>        }
+>>> @@ -157,7 +157,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+>>>            writefn(dest, tcg_env, src1);
+>>>        } else {
+>>>            dest = tcg_temp_new();
+>>> -        offset = get_csr_offset(csr, 0);
+>>> +        offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
+>>>            tcg_gen_ld_tl(dest, tcg_env, offset);
+>>>            tcg_gen_st_tl(src1, tcg_env, offset);
+>>>        }
+>>> @@ -196,7 +196,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>>>        newv = tcg_temp_new();
+>>>        temp = tcg_temp_new();
+>>>    -    offset = get_csr_offset(csr, 0);
+>>> +    offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
+>>>        tcg_gen_ld_tl(oldv, tcg_env, offset);
+>>>        tcg_gen_and_tl(newv, src1, mask);
+>>>        tcg_gen_andc_tl(temp, oldv, mask);
+>>>
+>>
+> 
+> 
 
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---0000000000002fca3e065bb7edf6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div id=3D"gmail-:2ij" class=3D"gmail-Am gmail-aiL gmail-a=
-O9 gmail-Al editable gmail-LW-avf gmail-tS-tW gmail-tS-tY" aria-label=3D"Me=
-ssage Body" role=3D"textbox" aria-multiline=3D"true" tabindex=3D"1" style=
-=3D"direction:ltr;min-height:85px" aria-controls=3D":2l6" aria-expanded=3D"=
-false"><br><br>On Fri, Sep 18, 2026 at 8:58=E2=80=AFAM Richard Henderson &l=
-t;<a href=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.=
-org</a>&gt; wrote:<br>&gt;<br>&gt; On 9/17/26 14:42, Yonggang Luo wrote:<br=
->&gt; &gt; Declare helper_info inside each gen_helper_* body so a comment o=
-n<br>&gt; &gt; DEF_HELPER attaches to gen_helper_*, not helper_info_*. The =
-extern<br>&gt; &gt; still refers to the global from helper-info.c.inc. Sile=
-nce<br>&gt; &gt; -Wnested-externs around the HELPER_H expansion only.<br>&g=
-t; &gt;<br>&gt; &gt; Signed-off-by: Yonggang Luo &lt;<a href=3D"mailto:luoy=
-onggang@gmail.com">luoyonggang@gmail.com</a>&gt;<br>&gt; &gt; ---<br>&gt; &=
-gt; =C2=A0 include/exec/helper-gen.h.inc | 24 ++++++++++++++++--------<br>&=
-gt; &gt; =C2=A0 1 file changed, 16 insertions(+), 8 deletions(-)<br>&gt;<br=
->&gt; Huh?=C2=A0 Why does comment placement matter?<br>&gt;<br>&gt;<br>&gt;=
- &gt; =C2=A0 #define DEF_HELPER_FLAGS_0(name, flags, ret) =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0\<br>&gt; &gt; -extern TCGHelperInfo glue(helper_info_, name); =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0\<br>&gt; &gt; =C2=A0 static inline void glue(gen_helper_, name)(=
-dh_retvar_decl0(ret)) =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br><br>Please look here,=
- this is the implementation in the header already, so we have no .c file to=
-<br>comment on it. comments on =C2=A0&amp;glue(helper_info_,name) do not he=
-lp, because we are always calling<br>to gen_helper_$name. The clangd and ot=
-her auto-tools can not infer comments from &amp;glue(helper_info_,name).<br=
-><br>If we move extern TCGHelperInfo glue(helper_info_, name); =C2=A0 into =
-inline function content, then the comment on <br>DEF_HELPER_*() macros will=
- take effect.<br><br>The static inline void is the source of the issue. I h=
-ave no other way to deal with it.<br><br>&gt; &gt; =C2=A0 { =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0extern TCGHelperInfo glue(helper_i=
-nfo_, name); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0\<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 tcg_gen_call0(glue(helper=
-_info_,name).func, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;glue(helper_info_,name), dh_ret=
-var(ret)); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; =C2=A0 }=
-<br><br><br>&gt; ...&gt; +/*<br>&gt; &gt; + * helper_info_* is declared ins=
-ide gen_helper_* so a comment on<br>&gt; &gt; + * DEF_HELPER attaches to ge=
-n_helper_*, not helper_info_*. That is a<br>&gt; &gt; + * nested extern; si=
-lence -Wnested-externs for this expansion only.<br>&gt; &gt; + */<br>&gt; &=
-gt; +#pragma GCC diagnostic push<br>&gt; &gt; +#pragma GCC diagnostic ignor=
-ed &quot;-Wnested-externs&quot;<br>&gt; &gt; =C2=A0 #include HELPER_H<br>&g=
-t; &gt; +#pragma GCC diagnostic pop<br>&gt; &gt; =C2=A0<br>&gt; &gt; =C2=A0=
- #undef DEF_HELPER_FLAGS_0<br>&gt; &gt; =C2=A0 #undef DEF_HELPER_FLAGS_1<br=
->&gt;<br>&gt; That you have to have to have this workaround makes me less t=
-han receptive.<br>&gt;<br>&gt;<br>&gt; r~<br><br><br><br>--<br>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=
-=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div></di=
-v>
-
---0000000000002fca3e065bb7edf6--
 
