@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CF8C982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 09:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11580C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 09:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7V98-0000C9-3J; Fri, 18 Sep 2026 05:44:42 -0400
+	id 1x7VLn-0001l2-Bi; Fri, 18 Sep 2026 05:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1x7V96-0000Bt-IC
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:44:40 -0400
-Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1x7VLk-0001km-Mq
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:57:44 -0400
+Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1x7V8z-0004TQ-GS
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:44:40 -0400
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1x7VLi-00061c-0U
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:57:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1789724642; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
- bh=WK9FLpL3ptUqDCmb5UMMVEvr5GDD1rJ5h2gx8o1iKGI=;
- b=gZruI023vfEMuqXcm8412Uz3G3JxAx7F4McwRCHDCyiEF4bQu9C63IBv2DpxwbXtCXioZWeni3nAyFTxg1NoVnKFAWghVerqx4QshXVDqY06IBdb6UkRGzQeNSFv7WLVYWahzYkVcLo0aPEIPvUlb6A0y3teshCxFsrrbTeKe90=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=zhengrong_li@linux.alibaba.com; NM=1; PH=DS; RN=5; SR=0;
- TI=SMTPD_---0XBAwgF7_1789724635; 
-Received: from U-92DF4J33-2338.local(mailfrom:zhengrong_li@linux.alibaba.com
- fp:SMTPD_---0XBAwgF7_1789724635 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 18 Sep 2026 17:44:01 +0800
-From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
+ t=1789725440; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=t6B3Hmi6/wt4BzgK76LeXSgNmOywanfs4/UuSOxIqd8=;
+ b=Kkd6GqjmhElHA/zrDqWOH+RqrWA8COdNQks7d/eJgttbNm/+vkTgXbVBYNukQ60U5jpev9wp4XCfwL0H0RndV71ULqiBacKatgzAXeB+4ISUjSOxbOI2qzme1UjsHXw5Uxxc4Ry/KQYz4p6eUbPwCksYJ6LX94h0Ik3A8tqT47A=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=1; SR=0;
+ TI=SMTPD_---0XBAzfrM_1789725439; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0XBAzfrM_1789725439 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 18 Sep 2026 17:57:20 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, seanjc@google.com,
- zhengrong_li@linux.alibaba.com
-Subject: [PATCH v2] target/i386: show nested VMX peer state in info registers
-Date: Fri, 18 Sep 2026 16:51:16 +0800
-Message-ID: <178972459476.60317.5936346209022583956@linux.alibaba.com>
-In-Reply-To: <178672181798.77890.17896034190526266014@linux.alibaba.com>
-References: <178672181798.77890.17896034190526266014@linux.alibaba.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH] hw/usb/canokey: validate endpoint number in
+ canokey_handle_data
+Date: Fri, 18 Sep 2026 17:57:18 +0800
+Message-ID: <20260918095718.33745-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
-Received-SPF: pass client-ip=115.124.30.119;
- envelope-from=zhengrong_li@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -71,315 +68,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a vCPU is running an L2 guest, "info registers" shows only
-L2's current state and not the L1 state that will be restored on a
-VM-exit. Likewise, while L1 is current, it does not show the L2
-guest state configured in vmcs12.
+canokey_handle_data() takes the endpoint number from the USB packet
+(p->ep->nr, guest-selectable 1..15) and uses it to index the fixed-size
+ep_out[] / ep_out_size[] arrays of CanoKeyState, which hold only
+CANOKEY_EP_NUM = 3 entries.  A forged bulk-OUT transfer on any endpoint
+number >= 3 therefore reads a bogus length from past ep_out_size[] and
+writes guest data through a wild pointer read from past ep_out[].
 
-The vmcs12 blob returned by KVM_GET_NESTED_STATE contains both the
-guest-state area configured for L2 and the host-state area restored
-for L1. Parse the relevant fields from the migration-stable vmcs12
-layout and append the other level's state to the existing register
-dump.
+Validate p->ep->nr against CANOKEY_EP_NUM and return USB_RET_STALL for
+invalid endpoints, before any array access.
 
-Use KVM_STATE_NESTED_GUEST_MODE to identify the current level, and
-guard the parser with the VMCS12 revision. This is limited to VMX;
-SVM nested state is left unchanged.
-
-Signed-off-by: Zhengrong Li <zhengrong_li@linux.alibaba.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4481
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
+ hw/usb/canokey.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Changes in v2:
-- Use KVM_STATE_NESTED_GUEST_MODE instead of HF_GUEST_MASK to select
-  the current level.
-- Label the existing register dump as current state and VMCS12 values
-  as additional state for the other level.
-- Test both L1-current and L2-current paths with a nested Windows guest.
-
-v1: https://lore.kernel.org/qemu-devel/178672181798.77890.17896034190526266014@linux.alibaba.com/
-
- target/i386/cpu-dump.c | 255 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 255 insertions(+)
-
-diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
-index 9e290c0..178d1dc 100644
---- a/target/i386/cpu-dump.c
-+++ b/target/i386/cpu-dump.c
-@@ -23,6 +23,9 @@
- #ifndef CONFIG_USER_ONLY
- #include "hw/i386/apic_internal.h"
- #endif
-+#ifdef CONFIG_KVM
-+#include <linux/kvm.h>
-+#endif
- 
- /***********************************************************/
- /* x86 debug */
-@@ -343,6 +346,253 @@ void x86_cpu_dump_local_apic_state(CPUState *cs, int flags)
- #define DUMP_CODE_BYTES_TOTAL    50
- #define DUMP_CODE_BYTES_BACKWARD 20
- 
-+#ifdef CONFIG_KVM
-+/*
-+ * Byte offsets into the vmcs12 blob returned by KVM_GET_NESTED_STATE.
-+ * Taken from struct vmcs12 in arch/x86/kvm/vmx/vmcs12.h (kernel v6.16).
-+ * The layout is locked by live-migration compatibility and compile-time
-+ * CHECK_OFFSET assertions in the kernel, so existing offsets are stable.
-+ * Only new fields may be appended at the end; existing fields cannot be
-+ * moved, deleted, or have their type changed.
-+ */
-+#define VMCS12_REVISION                  0x11e57ed0
-+#define VMCS12_GUEST_IA32_PAT            192
-+#define VMCS12_GUEST_IA32_EFER           200
-+#define VMCS12_HOST_IA32_PAT             256
-+#define VMCS12_HOST_IA32_EFER            264
-+#define VMCS12_GUEST_CR0                 424
-+#define VMCS12_GUEST_CR3                 432
-+#define VMCS12_GUEST_CR4                 440
-+#define VMCS12_GUEST_ES_BASE             448
-+#define VMCS12_GUEST_CS_BASE             456
-+#define VMCS12_GUEST_SS_BASE             464
-+#define VMCS12_GUEST_DS_BASE             472
-+#define VMCS12_GUEST_FS_BASE             480
-+#define VMCS12_GUEST_GS_BASE             488
-+#define VMCS12_GUEST_LDTR_BASE           496
-+#define VMCS12_GUEST_TR_BASE             504
-+#define VMCS12_GUEST_GDTR_BASE           512
-+#define VMCS12_GUEST_IDTR_BASE           520
-+#define VMCS12_GUEST_DR7                 528
-+#define VMCS12_GUEST_RSP                 536
-+#define VMCS12_GUEST_RIP                 544
-+#define VMCS12_GUEST_RFLAGS              552
-+#define VMCS12_GUEST_SYSENTER_ESP        568
-+#define VMCS12_GUEST_SYSENTER_EIP        576
-+#define VMCS12_HOST_CR0                  584
-+#define VMCS12_HOST_CR3                  592
-+#define VMCS12_HOST_CR4                  600
-+#define VMCS12_HOST_FS_BASE              608
-+#define VMCS12_HOST_GS_BASE              616
-+#define VMCS12_HOST_TR_BASE              624
-+#define VMCS12_HOST_GDTR_BASE            632
-+#define VMCS12_HOST_IDTR_BASE            640
-+#define VMCS12_HOST_IA32_SYSENTER_ESP    648
-+#define VMCS12_HOST_IA32_SYSENTER_EIP    656
-+#define VMCS12_HOST_RSP                  664
-+#define VMCS12_HOST_RIP                  672
-+#define VMCS12_GUEST_ES_LIMIT            840
-+#define VMCS12_GUEST_CS_LIMIT            844
-+#define VMCS12_GUEST_SS_LIMIT            848
-+#define VMCS12_GUEST_DS_LIMIT            852
-+#define VMCS12_GUEST_FS_LIMIT            856
-+#define VMCS12_GUEST_GS_LIMIT            860
-+#define VMCS12_GUEST_LDTR_LIMIT          864
-+#define VMCS12_GUEST_TR_LIMIT            868
-+#define VMCS12_GUEST_GDTR_LIMIT          872
-+#define VMCS12_GUEST_IDTR_LIMIT          876
-+#define VMCS12_GUEST_ES_AR_BYTES         880
-+#define VMCS12_GUEST_CS_AR_BYTES         884
-+#define VMCS12_GUEST_SS_AR_BYTES         888
-+#define VMCS12_GUEST_DS_AR_BYTES         892
-+#define VMCS12_GUEST_FS_AR_BYTES         896
-+#define VMCS12_GUEST_GS_AR_BYTES         900
-+#define VMCS12_GUEST_LDTR_AR_BYTES       904
-+#define VMCS12_GUEST_TR_AR_BYTES         908
-+#define VMCS12_GUEST_SYSENTER_CS         920
-+#define VMCS12_HOST_IA32_SYSENTER_CS     924
-+#define VMCS12_GUEST_ES_SELECTOR         964
-+#define VMCS12_GUEST_CS_SELECTOR         966
-+#define VMCS12_GUEST_SS_SELECTOR         968
-+#define VMCS12_GUEST_DS_SELECTOR         970
-+#define VMCS12_GUEST_FS_SELECTOR         972
-+#define VMCS12_GUEST_GS_SELECTOR         974
-+#define VMCS12_GUEST_LDTR_SELECTOR       976
-+#define VMCS12_GUEST_TR_SELECTOR         978
-+#define VMCS12_HOST_ES_SELECTOR          982
-+#define VMCS12_HOST_CS_SELECTOR          984
-+#define VMCS12_HOST_SS_SELECTOR          986
-+#define VMCS12_HOST_DS_SELECTOR          988
-+#define VMCS12_HOST_FS_SELECTOR          990
-+#define VMCS12_HOST_GS_SELECTOR          992
-+#define VMCS12_HOST_TR_SELECTOR          994
-+
-+static inline uint64_t vmcs12_read64(const uint8_t *vmcs12, size_t off)
-+{
-+    uint64_t val;
-+    memcpy(&val, vmcs12 + off, sizeof(val));
-+    return val;
-+}
-+
-+static inline uint32_t vmcs12_read32(const uint8_t *vmcs12, size_t off)
-+{
-+    uint32_t val;
-+    memcpy(&val, vmcs12 + off, sizeof(val));
-+    return val;
-+}
-+
-+static inline uint16_t vmcs12_read16(const uint8_t *vmcs12, size_t off)
-+{
-+    uint16_t val;
-+    memcpy(&val, vmcs12 + off, sizeof(val));
-+    return val;
-+}
-+
-+static void dump_vmcs12_nested_state(CPUX86State *env, FILE *f,
-+                                     const char *seg_name[6])
-+{
-+    const uint8_t *vmcs12;
-+    uint64_t base[8];
-+    uint32_t limit[8], ar[8];
-+    uint16_t sel[8];
-+    int i;
-+
-+    if (!env->nested_state ||
-+        env->nested_state->format != KVM_STATE_NESTED_FORMAT_VMX) {
-+        return;
-+    }
-+
-+    vmcs12 = env->nested_state->data.vmx[0].vmcs12;
-+
-+    /* Sanity check: vmcs12 revision must match expected layout */
-+    if (vmcs12_read32(vmcs12, 0) != VMCS12_REVISION) {
-+        return;
-+    }
-+
-+    qemu_fprintf(f, "\nNested VMX context:\n");
-+    if (env->nested_state->flags & KVM_STATE_NESTED_GUEST_MODE) {
-+        /*
-+         * The registers above are L2's current state. Show the
-+         * additional L1 state that VM-exit will restore.
-+         */
-+        qemu_fprintf(f, "Current state: L2 (registers above)\n");
-+        qemu_fprintf(f, "Additional L1 state (VMCS12 host-state area):\n");
-+        qemu_fprintf(f, "RIP=%016" PRIx64 " RSP=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_RIP),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_RSP));
-+        qemu_fprintf(f, "CR0=%016" PRIx64 " CR3=%016" PRIx64
-+                     " CR4=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_CR0),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_CR3),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_CR4));
-+        qemu_fprintf(f, "EFER=%016" PRIx64 " PAT=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_IA32_EFER),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_IA32_PAT));
-+
-+        sel[0] = vmcs12_read16(vmcs12, VMCS12_HOST_ES_SELECTOR);
-+        sel[1] = vmcs12_read16(vmcs12, VMCS12_HOST_CS_SELECTOR);
-+        sel[2] = vmcs12_read16(vmcs12, VMCS12_HOST_SS_SELECTOR);
-+        sel[3] = vmcs12_read16(vmcs12, VMCS12_HOST_DS_SELECTOR);
-+        sel[4] = vmcs12_read16(vmcs12, VMCS12_HOST_FS_SELECTOR);
-+        sel[5] = vmcs12_read16(vmcs12, VMCS12_HOST_GS_SELECTOR);
-+        for (i = 0; i < 6; i++) {
-+            qemu_fprintf(f, "%-4s sel=%04x\n", seg_name[i], sel[i]);
-+        }
-+        qemu_fprintf(f, "TR   sel=%04x base=%016" PRIx64 "\n",
-+                     vmcs12_read16(vmcs12, VMCS12_HOST_TR_SELECTOR),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_TR_BASE));
-+        qemu_fprintf(f, "FS base=%016" PRIx64 " GS base=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_FS_BASE),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_GS_BASE));
-+        qemu_fprintf(f, "GDT=     %016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_GDTR_BASE));
-+        qemu_fprintf(f, "IDT=     %016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_IDTR_BASE));
-+        qemu_fprintf(f, "SYSENTER cs=%08x esp=%016" PRIx64
-+                     " eip=%016" PRIx64 "\n",
-+                     vmcs12_read32(vmcs12, VMCS12_HOST_IA32_SYSENTER_CS),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_IA32_SYSENTER_ESP),
-+                     vmcs12_read64(vmcs12, VMCS12_HOST_IA32_SYSENTER_EIP));
-+    } else {
-+        /*
-+         * The registers above are L1's current state. Show the
-+         * additional L2 state configured in the guest-state area.
-+         */
-+        qemu_fprintf(f, "Current state: L1 (registers above)\n");
-+        qemu_fprintf(f, "Additional L2 state (VMCS12 guest-state area):\n");
-+        qemu_fprintf(f, "RIP=%016" PRIx64 " RSP=%016" PRIx64
-+                     " RFL=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_RIP),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_RSP),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_RFLAGS));
-+        qemu_fprintf(f, "CR0=%016" PRIx64 " CR3=%016" PRIx64
-+                     " CR4=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_CR0),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_CR3),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_CR4));
-+        qemu_fprintf(f, "DR7=%016" PRIx64 " EFER=%016" PRIx64
-+                     " PAT=%016" PRIx64 "\n",
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_DR7),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_IA32_EFER),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_IA32_PAT));
-+
-+        sel[0] = vmcs12_read16(vmcs12, VMCS12_GUEST_ES_SELECTOR);
-+        sel[1] = vmcs12_read16(vmcs12, VMCS12_GUEST_CS_SELECTOR);
-+        sel[2] = vmcs12_read16(vmcs12, VMCS12_GUEST_SS_SELECTOR);
-+        sel[3] = vmcs12_read16(vmcs12, VMCS12_GUEST_DS_SELECTOR);
-+        sel[4] = vmcs12_read16(vmcs12, VMCS12_GUEST_FS_SELECTOR);
-+        sel[5] = vmcs12_read16(vmcs12, VMCS12_GUEST_GS_SELECTOR);
-+        base[0] = vmcs12_read64(vmcs12, VMCS12_GUEST_ES_BASE);
-+        base[1] = vmcs12_read64(vmcs12, VMCS12_GUEST_CS_BASE);
-+        base[2] = vmcs12_read64(vmcs12, VMCS12_GUEST_SS_BASE);
-+        base[3] = vmcs12_read64(vmcs12, VMCS12_GUEST_DS_BASE);
-+        base[4] = vmcs12_read64(vmcs12, VMCS12_GUEST_FS_BASE);
-+        base[5] = vmcs12_read64(vmcs12, VMCS12_GUEST_GS_BASE);
-+        limit[0] = vmcs12_read32(vmcs12, VMCS12_GUEST_ES_LIMIT);
-+        limit[1] = vmcs12_read32(vmcs12, VMCS12_GUEST_CS_LIMIT);
-+        limit[2] = vmcs12_read32(vmcs12, VMCS12_GUEST_SS_LIMIT);
-+        limit[3] = vmcs12_read32(vmcs12, VMCS12_GUEST_DS_LIMIT);
-+        limit[4] = vmcs12_read32(vmcs12, VMCS12_GUEST_FS_LIMIT);
-+        limit[5] = vmcs12_read32(vmcs12, VMCS12_GUEST_GS_LIMIT);
-+        ar[0] = vmcs12_read32(vmcs12, VMCS12_GUEST_ES_AR_BYTES);
-+        ar[1] = vmcs12_read32(vmcs12, VMCS12_GUEST_CS_AR_BYTES);
-+        ar[2] = vmcs12_read32(vmcs12, VMCS12_GUEST_SS_AR_BYTES);
-+        ar[3] = vmcs12_read32(vmcs12, VMCS12_GUEST_DS_AR_BYTES);
-+        ar[4] = vmcs12_read32(vmcs12, VMCS12_GUEST_FS_AR_BYTES);
-+        ar[5] = vmcs12_read32(vmcs12, VMCS12_GUEST_GS_AR_BYTES);
-+        for (i = 0; i < 6; i++) {
-+            qemu_fprintf(f, "%-4s sel=%04x base=%016" PRIx64
-+                         " limit=%08x ar=%08x\n",
-+                         seg_name[i], sel[i], base[i], limit[i], ar[i]);
-+        }
-+        qemu_fprintf(f, "LDT  sel=%04x base=%016" PRIx64
-+                     " limit=%08x ar=%08x\n",
-+                     vmcs12_read16(vmcs12, VMCS12_GUEST_LDTR_SELECTOR),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_LDTR_BASE),
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_LDTR_LIMIT),
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_LDTR_AR_BYTES));
-+        qemu_fprintf(f, "TR   sel=%04x base=%016" PRIx64
-+                     " limit=%08x ar=%08x\n",
-+                     vmcs12_read16(vmcs12, VMCS12_GUEST_TR_SELECTOR),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_TR_BASE),
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_TR_LIMIT),
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_TR_AR_BYTES));
-+
-+        qemu_fprintf(f, "GDT=     %016" PRIx64 " %08x\n",
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_GDTR_BASE),
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_GDTR_LIMIT));
-+        qemu_fprintf(f, "IDT=     %016" PRIx64 " %08x\n",
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_IDTR_BASE),
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_IDTR_LIMIT));
-+        qemu_fprintf(f, "SYSENTER cs=%08x esp=%016" PRIx64
-+                     " eip=%016" PRIx64 "\n",
-+                     vmcs12_read32(vmcs12, VMCS12_GUEST_SYSENTER_CS),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_SYSENTER_ESP),
-+                     vmcs12_read64(vmcs12, VMCS12_GUEST_SYSENTER_EIP));
-+    }
-+}
-+#endif /* CONFIG_KVM */
-+
- void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+diff --git a/hw/usb/canokey.c b/hw/usb/canokey.c
+index c3baedac2c..91dd886761 100644
+--- a/hw/usb/canokey.c
++++ b/hw/usb/canokey.c
+@@ -189,6 +189,11 @@ static void canokey_handle_data(USBDevice *dev, USBPacket *p)
  {
-     X86CPU *cpu = X86_CPU(cs);
-@@ -595,4 +845,9 @@ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-         }
-         qemu_fprintf(f, "\n");
-     }
+     CanoKeyState *key = CANOKEY(dev);
+ 
++    if (p->ep->nr >= CANOKEY_EP_NUM) {
++        p->status = USB_RET_STALL;
++        return;
++    }
 +
-+#ifdef CONFIG_KVM
-+    /* Show nested peer state from vmcs12 when applicable */
-+    dump_vmcs12_nested_state(env, f, seg_name);
-+#endif
- }
+     uint8_t ep_in = CANOKEY_EP_IN(p->ep->nr);
+     uint8_t ep_out = p->ep->nr;
+     uint32_t in_len;
 -- 
-2.43.7
+2.50.1 (Apple Git-155)
 
 
