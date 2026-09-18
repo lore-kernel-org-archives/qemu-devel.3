@@ -4,131 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F94C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 19:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D122C982DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 19:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7eEI-0007l8-3R; Fri, 18 Sep 2026 15:26:38 -0400
+	id 1x7eKo-0000Jm-AU; Fri, 18 Sep 2026 15:33:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x7eE3-0007kD-7N
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:26:26 -0400
+ id 1x7eKm-0000JD-DV
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:33:20 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x7eE1-00060N-DL
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:26:22 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1x7eKk-0007Pq-Ek
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:33:20 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68IGoNJs1211764
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 19:26:19 GMT
+ 68IGoEBJ1666287
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 19:33:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LVsfTIB5Y7UT9fiTnYVNAz39psrFU8ty8Y3fWy7XmHo=; b=GUxHzH0JA1OrD421
- rwZNn3PzmlApkNjR77wsKwkU+74uVzCfjxA3gmEqHScOucSF+aoyG/Q0XiOR1PmJ
- iw3LJuyvAYrtDexXmvV/3N84lbCvJrI9hytLDsV1243IMXkrxGy45DOBxg1he9pj
- 83Slwz82N/ZYJjXWrzApjr1M+4Sc9htcGwnqPSodwMyBxauPZYO1MSNMS1d3fJv2
- BnQxdRfMc+RWojFoTsI/k7KGNfT0o9FQGxV/3EDDoWrls9oUnVpOfh715ofkWKBL
- PVXOeqh8sMF2cot15CL25Ff0fQIGnH4/ZhQ+WQuENJUYAiBqY523LJzQ5u1PU3/p
- jexlIg==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gs2392pga-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=ganEZGG0Sc7
+ 4bkQYkohPbHsmNDuXbzCHwths6crHjrM=; b=PpRcyN5LKAhvb0uVrUSEEfoo+vu
+ C1tQjGWnSLiS0CVQaAONTDfJdC4CmpWlIFVC7YkAce7EzxgNuWYwftCE440MMgoz
+ TFD4eHS+V2cRCtU6Z+LIHvucJJWUDq5VG+PnTiSkPqapybr6uNba+Sy4H7QFhPz+
+ 4ARuUdnl6efFPjLQCKUejavYdnfkBKyfXAHCI8m2zAcAr3fP8qM//wO9RGhYlzmX
+ 5LCgFO5O9U/xouwDTHl/BXtOrPjSZFPxA2nBR4BNoP9WZYe5ZtueTxu5sV6pYyBZ
+ HwHJO9XZhBoNgFLlX9vagxrZAjk5phQtbBJ+OXz/AIYW4ao62cFUJxzwV+A==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4grxp2ujrh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 19:26:19 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-39533bb224cso2136687a91.3
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 12:26:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 19:33:16 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-cc1bbd7d6e6so1069553a12.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 12:33:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789759579; x=1790364379; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=LVsfTIB5Y7UT9fiTnYVNAz39psrFU8ty8Y3fWy7XmHo=;
- b=hEdngXQcL/mStRHFGqM3cAArzYce/ipC4riB7WiKFMr0ARUf9KfR7DMq0QlmhF/ePF
- Nl73Mln5BhgJEM0eWxSVrIEO9rkY6LDvCm3zUfeEBJIbMAm4bwr5e1NuYCkleTjROmpf
- usbDazCEepw+JqUkoxpZAOawTke4izF2tgWgXYTKJx8UEos5X4MyNpwE2sFFeGuKD7TV
- IXhPmMhHV5dpXQGW/gCA3vG7ikjKNECbC5hPwJqg81V8JlD6v9AUlH5+oeLKG31ltOSo
- RQFXJ+plAH2rOs6CWmnov0B9uxRgutEsAdebu9trCI8ugngXm571I+GEIBFC4X/Uyo9J
- BhqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789759579; x=1790364379;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1789759996; x=1790364796; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=LVsfTIB5Y7UT9fiTnYVNAz39psrFU8ty8Y3fWy7XmHo=;
- b=P5ZIkODNhQbXs0CmD3o9UIAOmzelCh7MBuyxmJJQTdCDu5gtj7xEUv1dXO8zvcNf/l
- KyLJgNyjIBY/J3BvP34KSYtoVvHklnF5ETytbTBwOk18Y2uc7098sFQuqINjEkg3VFK4
- 03tDqKZlgusv5xQQowCymjS/OruEv251M37ImWGFltJ9gFwRxRLtwIoYad5b9OVi/BNk
- lhxcpwcZm1wlgtwEqtgtcLxE1A5xJO/BznIorLNm9q0J4pP5yCTpUq9iH+hYZm/cjP81
- ncwndYP/gWCNsGPiyRzvoE8qeRuXx6Ls9mLauWZ4H8ettd52lIPhRY+BVfMFvi7Mzw+G
- vBlA==
-X-Gm-Message-State: AFuF++nj4HNfNA542ZlkLoiGlRqUAo+48g6hYElilQZRlyb2XHWcTY6A
- //himzjDH4wMUVosy+EQcp85ql7TuCSfiJuZCsqhQpb1Ep3EuU+cnpzI/Y/VkIcoBpIwmIZW/bZ
- +zt/4opNfVl33Pf2Qx9pb6LvdZuKZgPYXyTMamYZ2MPSHgfqS2Ay7mVKzGzMF632TPg==
-X-Gm-Gg: AYBFou3cZMBmN3zNLL3cNjscl8HRW1sjh/rj8PYxl2DunRKnlFAo1Xnt0zquxCXJarg
- JI5KNgKVfDevga23rFptxxcDqBUpW1k33LFoDjuz285z218dCH//WBIbRAnc0AxL/nm1CQG1CHL
- 2+Y+uCtnN0jQHlk10jVYEofrvbIy5q3jvwcJaA3R4q9XzqriSIx+xqh3nyGxxxYj5CHtB/g+wav
- 4rjQJ/fDGmz+dOf2U0znOEIMf1OHz/GINfgVkdU2lnC0VOiR+JYErKPxgf1dto5OWQwiBb7TJk7
- fgwBkVBq3K+SK/Ns4K/T62s0S/341aCIhsJdXm0rYS9C/WOrmZeyVnI/2kabMs7RjLzFZGz2DGC
- jdu2wJcYN533/3c9NCU8UfED4PZjRnIbcg5M7oGzSPkzgPLcM43yqrQZUQZ/a8x/QNKbM
-X-Received: by 2002:a17:90b:4f81:b0:37d:f983:7b5 with SMTP id
- 98e67ed59e1d1-39e54d8d8aemr7064948a91.9.1789759578681; 
- Fri, 18 Sep 2026 12:26:18 -0700 (PDT)
-X-Received: by 2002:a17:90b:4f81:b0:37d:f983:7b5 with SMTP id
- 98e67ed59e1d1-39e54d8d8aemr7064928a91.9.1789759578127; 
- Fri, 18 Sep 2026 12:26:18 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ bh=ganEZGG0Sc74bkQYkohPbHsmNDuXbzCHwths6crHjrM=;
+ b=YTK/EtA2EAmeF+ZFozoPYLK4iupas6EZ7suwCwlj3qrPQT7X3dKvck0KkTGMVGbjIr
+ 3iNqkAlnzNmnfKb1mt2iDTv6Yr9Y6wyCCNOMAsqh1HQczNIEMwY1HpdaJW3y9urY9s2U
+ RLs8B/jfwMicYATM/6YcodGNL3xw+/HKT3bdgN0f8UDkjjiZEUVrt3zse1M1Ya914erh
+ ygsCVNDdUcYdEEP+GuzIdu4rNfUqrBz0xBcxigi8ocqUsd26OWATQ+T/vkd4yjj2tkpP
+ vwo4BAwEi+4PCUlU6574I+ZxGnIXot7DNYYYUyhfaNFiZHbrYZQRR/O8BWo1MjFpSOGo
+ IcIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789759996; x=1790364796;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ganEZGG0Sc74bkQYkohPbHsmNDuXbzCHwths6crHjrM=;
+ b=D14xNqsJXeod7j4p9ei5JQ/3Sjw+hUU99SrZMynZk16JMjtnUusluWBq43980vFrG6
+ BVtVjE0DIH2BIj/PsF5tCXV41rdb2ySAgUpFNV49RfNaWO2c4Q0SLnSxWKaUbj+cJ0i5
+ lmtufA82OYvPjuFegOAv96niNaVPdkj82EJQelkEnYtcRCZrtsOFJBf4Gop0O0K327hu
+ KKnhsRs1Q61nSZzIJmc7ixwUK4sOji67t0DEsaDE6tzGkmx0+7/RNmB+aFAl5UYwOXJB
+ JQG3+S8h1n3ISmlNoiNtKbaIXVkXJwb79ol5LnnaPCTdB6k6OxPcE5OXPifncYg3aelo
+ ojag==
+X-Gm-Message-State: AFuF++ndUknkUKMGpo1TpxLrfHqnVfYHxlZmEhqoekgnk+Bs6kydvDyx
+ /yCYXsvR8O6sr1cWGkTE3DUbzsXq9Sm43Q7FLy/GrDfxHk4cM6i/clrF3V6eK3Vi/v9RWgY620B
+ jt1cfRhC7m+EcaJn+9RAP/MzzbL6LaNUxrAa+r2dNcHH86OJZAmqd3hbPUgeQjPYZBg==
+X-Gm-Gg: AYBFou2Luv25QQ/tpyontbRVy5oadQpa9Dipgnyx17QIFuKDXzBARuUy9MBHGL3Szd/
+ fQL5IkvqX2mkE3kGlv2gMuwiCq01erwnLOLtoiSuh+yX2kKJbTSL+MX+eLg+N+O1JuOLnAL5auO
+ Pbvt+vxVeQvWtuVNYdDcJpTC3fZ0F0yJBpjnGLWRJe1QXR+E0kIKhSuy0vDS8FPd9j8yzyMXSmC
+ CYuPUsKrg01koMPMZtmFlJ9ol/BDWwlsMiRn3BYXv9bEVeLfOMNY9+gEcHXbW5nt1Bs22OoJd+v
+ 7jDtu/MHi3ZF8Z3VOZtN2xT8krAKqxippBb9mholbc7tAZ0GMOsPqamXaYILmy1p0yXRuxUeB1+
+ i9v7dH1069J6FtT4FOZWLk3bMWD3EngcUc44Na0R+zsGC/qH5GgeQrETrIe0=
+X-Received: by 2002:a17:90b:554b:b0:39e:6c6a:2097 with SMTP id
+ 98e67ed59e1d1-39e6c6a2359mr858008a91.56.1789759995801; 
+ Fri, 18 Sep 2026 12:33:15 -0700 (PDT)
+X-Received: by 2002:a17:90b:554b:b0:39e:6c6a:2097 with SMTP id
+ 98e67ed59e1d1-39e6c6a2359mr857988a91.56.1789759995142; 
+ Fri, 18 Sep 2026 12:33:15 -0700 (PDT)
+Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144d55e29absm779249c88.12.2026.09.18.12.26.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Sep 2026 12:26:16 -0700 (PDT)
-Message-ID: <77b5f317-458d-4905-ad35-63dc651e7046@oss.qualcomm.com>
-Date: Fri, 18 Sep 2026 12:26:15 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] tests/tcg: fix more container issues
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>
-References: <20260917221117.274619-1-pierrick.bouvier@oss.qualcomm.com>
+ 5a478bee46e88-33c3311a716sm810682eec.8.2026.09.18.12.33.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Sep 2026 12:33:13 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260917221117.274619-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDI4MCBTYWx0ZWRfX75CNJ+blFHto
- Ig0txkTxl5Poph6R6rt+e64cmBkJD6TJX2HtDmR4Nyz60OYlcwGOBijUUr1k+fhqnok+UW/+xIp
- 7XW/RPBdk8u1/s847P+DZXfv5LQPMec=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDI4MCBTYWx0ZWRfX1RKTN1+v1N8h
- Ndw9vI2I3+hnjBDqhxTdIOnZTknw6qtmZ+VAW6W2tmCCk+WKM8N6ALB+qVB7EEQvaAWhi5yZiUt
- SHRTb07WPMrNcIeph3S5QXpMDyNaYF7DuWduxZlKekKYYG2fz5BJbICbjYKIeFgxAdukUBvEqb7
- Cu6Gbo137+26+2TcYv0YVKOiBWajMF7FVoUhyhWSbUV3oW+e8TKTQa4fHOEtQMoOhoyrQJkngPJ
- KQTioGfCfhd4O3ZsEMlXVHZDuUBrE+Pp8WbxWxdTUyFIfxvtsNBqecphkfYCUI4w50yWxjD0pqe
- rpsircE5fMnwzGcsfPHvKuun3pjEpa5KPu+5N/sHo91Nzr2wNoDc59LmOQuyXOjeTiPHiHAy2G6
- g2M+lDLfj8bx4qglT/NP3zhZpiId8H9/EpsPkQtTRxIkniB1sGjE7wUROaTVi2b9b6eYUMPIe/D
- hSJn3k5mpOeKzmyj7Sw==
-X-Proofpoint-ORIG-GUID: GePRzgkryOIcBU8TgiA0SDAfV0GV_443
-X-Authority-Analysis: v=2.4 cv=I7zw19gg c=1 sm=1 tr=0 ts=6aad905b cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=9se8sku01-J-kCAVwN4A:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: GePRzgkryOIcBU8TgiA0SDAfV0GV_443
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 2/3] tests/docker/docker.py: fix run command with $UID == 0
+Date: Fri, 18 Sep 2026 12:32:58 -0700
+Message-ID: <20260918193259.704462-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260918193259.704462-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260918193259.704462-1-pierrick.bouvier@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDI4MSBTYWx0ZWRfXx6GKlHEN6cdh
+ vFpQftOhidPix/RhgLUmBHnst6ZLlNoC2JFMVdo4NQH1K83D4LWtRVZA4lEYcTH7bOKqvee1P6u
+ xG0ud5wWxo4+lbboy4Y1iOS44bdTUPc=
+X-Proofpoint-GUID: lLriY7aZ8T0oCXMioxvUiV-eb574e2s2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDI4MSBTYWx0ZWRfX6jJLfzLbV/nH
+ oveRBQRMZa+P1GcC3dwMIfJQ+uLl/n3KhAXROzi+qSOSRPjo+KLynEp79SDz3jouOOMQi4FM6oB
+ OsKc6MXjkz16yYoPPtg2GOSXW097+EU3iGVLcHpuh8OyXwR01UjAUj8da9KPD2nmmXj+wNjP4Mt
+ YCGJsFeptIXESQml7qI4UIdMlltvIFPJy60vTTtEu63xyubA7X/KdjTBz3N/Rx84FsVNDHTHa9I
+ YDksbSkxXFgbjR3XiLoUqN+n9U4q7T+85l4wqyVd2f4BdrhBeDZdCymrwBJzb3+ZzqpXXMzsdnI
+ sHua33kIUqPTcr6hPhoTWUT1qpsOGqF01WUuuhLlip6/lIGPYaqRgRJfmM/zoMxl8iWT3TZTWUK
+ RM7/sDg+vUx85/3OABdEaZ5D41o3jKVzBnvphjEvSBJpyBDpiB9ZReShWnQFHgRQ48aSGyzZIkw
+ qK0S4wCQnxDxU03Garw==
+X-Proofpoint-ORIG-GUID: lLriY7aZ8T0oCXMioxvUiV-eb574e2s2
+X-Authority-Analysis: v=2.4 cv=cNF1IVeN c=1 sm=1 tr=0 ts=6aad91fc cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=T_LeFyhLTpD9Fp5MPwMA:9
+ a=bFCP_H2QrGi7Okbo017w:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-18_05,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609180280
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609180281
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -154,27 +149,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/2026 3:11 PM, Pierrick Bouvier wrote:
-> This series fix tcg tests compilation with containers.
-> It fixes SELinux hosts and dev container with rootless podman.
-> 
-> @Alex: it's based on the v5 series and can be applied on top of it.
-> It can be added for the PR coming tomorrow.
-> 
-> Based-on: 20260917165602.3405537-1-alex.bennee@linaro.org
-> [PATCH v5 00/17] testing: various docker clean-ups post meson tcg conversion (pre-PR)
-> 
-> Pierrick Bouvier (3):
->   tests/tcg/meson.build: fix host fs mount on SELinux enabled systems
->   tests/docker/docker.py: fix run command with $UID == 0
->   tests/docker/docker.py: do not add-current-user if $UID == 0
-> 
->  tests/docker/docker.py | 16 +++++++++-------
->  tests/tcg/meson.build  |  2 ++
->  2 files changed, 11 insertions(+), 7 deletions(-)
-> 
+when running with uid 0 (like in nested container), podman run fails
+sporadically with:
+``
+Error: preparing container ... for attach: container uses ID mappings ([]specs
+.LinuxIDMapping{specs.LinuxIDMapping{ContainerID:0x3e9, HostID:0x0, Size:0x1}}), but doesn't map UID 0
+```
 
-To pass this series as PR:
+Since default user in containers is 0 (run without -u option), there is
+no need to repeat that in this case.
+
+Tested-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260917221117.274619-3-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/docker/docker.py | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index d97dda26967..7c15da59db6 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -334,10 +334,11 @@ def run(self, cmd, keep, quiet, as_user=False):
+ 
+         if as_user:
+             uid = os.getuid()
+-            cmd = [ "-u", str(uid) ] + cmd
+-            # podman requires a bit more fiddling
+-            if self._command[0] == "podman":
+-                cmd.insert(0, '--userns=keep-id')
++            if uid != 0:
++                cmd = [ "-u", str(uid) ] + cmd
++                # podman requires a bit more fiddling
++                if self._command[0] == "podman":
++                    cmd.insert(0, '--userns=keep-id')
+ 
+         ret = self._do_check(["run", "--rm", "--label",
+                              "com.qemu.instance.uuid=" + label] + cmd,
+-- 
+2.47.3
 
 
