@@ -4,100 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09FD9C982DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A00C982DC
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7WwW-0000Q1-8A; Fri, 18 Sep 2026 07:39:48 -0400
+	id 1x7Wwb-0000Rm-EX; Fri, 18 Sep 2026 07:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwU-0000Pk-VI
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwZ-0000RO-Gy
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwS-0001cV-9i
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwX-0001d0-JP
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789731582;
+ s=mimecast20190719; t=1789731589;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=LKSYJJbF1CnOtKRsw6x3RjE3m87irXE7r2mCU0EZIfY=;
- b=O09iGiKqy6dXhqglnQKLNtZnFHHIiIPG7WYWIZfQwyk7YLuyXUwTAvdD54YvBtodG5bAY5
- njHbwoHpms47IvDWn1QnwlUCfYfoFl7SLYZGLEW146sNHfvRH4XSk5rj1jZk+LQAd4LOYu
- 1NXPqp0Ufm0k8DF280cEgiCDWVeNGGk=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yfu1MBXsRmVP1HEFbBooqDFu2xyDHNFt7BQUuf2IFiw=;
+ b=ZAGJhbRMOFF1NmfnQR2tEYChj+GLMfx/KgVl+vidi/Xpx5+lmJrTqgaIucK38oY1WygJkq
+ Wz0hVZLibMWB8qYg43NM1jXUxbrMJrMeYgxF600HwlPao8ENhwiu/A6C75alun+GT2zAiA
+ oHeKtgb9YsK3y8xOCVDLU3SDfQnOa6I=
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-VDlAfkyNMmaypGkzhndCsw-1; Fri, 18 Sep 2026 07:39:40 -0400
-X-MC-Unique: VDlAfkyNMmaypGkzhndCsw-1
-X-Mimecast-MFC-AGG-ID: VDlAfkyNMmaypGkzhndCsw_1789731580
+ us-mta-168-Gs9fzMA8M4iEiGaDW6bE2g-1; Fri, 18 Sep 2026 07:39:47 -0400
+X-MC-Unique: Gs9fzMA8M4iEiGaDW6bE2g-1
+X-Mimecast-MFC-AGG-ID: Gs9fzMA8M4iEiGaDW6bE2g_1789731587
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5328cdb38bcso12942421cf.3
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:39:40 -0700 (PDT)
+ d75a77b69052e-530f65ddee1so12388501cf.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789731580; x=1790336380; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=LKSYJJbF1CnOtKRsw6x3RjE3m87irXE7r2mCU0EZIfY=;
- b=OkrwgZOocmML2D/yh0A8iDprOhSIE6rfOqOazcT8H+tmUJ+DVPt1dk5U1Ds/4WsTxu
- iUXhDTK6LRvywVbygiD7Si5Y1ofBBup2GZbpy1VVkGThGKsbFP5EW/2ptcesPKl0/+CB
- nDKeQk55vZXAQi2viFSmqorvVwwIM1v9F7r2MJJJJb8hulHhcOBC0cL+2JXU6HuZosMh
- ElOySGio+NKU8/0+q5DmsG7jCnrVr6VsukYVHxSgtVtU2UzxMy2xBLj1xE8wy64LOYuv
- hwv+G+vHJ74v+3yEf1DjtnNSs1Vw6s0R7gjoq4q8tYOaFCduuPiWuh9tuJNzVHZG5VuJ
- l7tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789731580; x=1790336380;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=redhat.com; s=google; t=1789731586; x=1790336386; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LKSYJJbF1CnOtKRsw6x3RjE3m87irXE7r2mCU0EZIfY=;
- b=I1WBqQYcqLeYf74TmzP98W9iw6py8XE8vjnZA681SKy7p+pyxF8Pokp/Sx6hOWihf5
- SiNO4MvQ33v0ygScMEg/iLAJi5otOniBf7N3qVpMsKSPJtgGOXEtbZ6yP2TrLtJfJBVC
- jTWnpk10r693oC3s7FJVg97EQIy62c0EnUIpLHBUQnvb5x/PJTE2pV2CuvF5EFxoEB0e
- lA/HsmH+z+m7YL5kc8zIJjIUgDmOzubla/VGsgjTjxOCEHmaTYW/UKGstCvD23it0k+E
- zDQP3mesES1Apq3CB6+7Ty+oItaDLB3UPN611DkpcqCYQVdXSO5uF8jVxP+HChP4GbVH
- 7TRQ==
-X-Gm-Message-State: AFuF++mvSnFe7lKWdKSfDMhp/oEnfQfg6d+aQmV9jt8eRPYWX76XHf5n
- +qefHCN/TgdUCSuK5YlkuAaCuVQY7YJimaQGtY1FYXSjAff2yu0nyOAn8WYLXV4r6RlTmn5APsK
- 8/Eb7Kmm/AgOu2xqN884jtEtGDtN2Pijt7FdoZPijnBiu4+dAqByPMJhfPRq2yq6uY+cZWwYkcI
- bM4tiV57b4JfxeV5zqagL5Pns2TbAcd0/CPlJnbbGd
-X-Gm-Gg: AYBFou3B7JU+HfgVL+tpuiSxIHy3qkyOTQ25tYD4DI5V/7nuM6MgaY0TvBNI7b4xBMs
- GjiP7LRpGYo+F0P/c47DNMuKuO9HREHHw02z830cm7cUsMydpECJ9GCG4PXgqTN8sMSBEx59Bq0
- EZnocNEYmA43xDOOTrUdot3MXkcY/Y2IV7TN5Umd2VXkqo6afzuq/YG47lrJ114TuPqqvpFg1QZ
- UX/R/oKzRrN/zPixwpc/R/nMjuLu+hs+ui1O5wNWrRg8Yy+2jaRZCaO0FS2Ap7m1jGPRL1UAEyj
- K9r6Cyl0smwnOwOZBzBs/grmjzanWd70CQGODsX6XXn7P0Bo3XLDtTHGskjS9vFr4VFW
-X-Received: by 2002:ac8:5ac9:0:b0:530:7bd0:72a7 with SMTP id
- d75a77b69052e-5329e258415mr35662881cf.14.1789731579896; 
- Fri, 18 Sep 2026 04:39:39 -0700 (PDT)
-X-Received: by 2002:ac8:5ac9:0:b0:530:7bd0:72a7 with SMTP id
- d75a77b69052e-5329e258415mr35662521cf.14.1789731579285; 
- Fri, 18 Sep 2026 04:39:39 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-532a1964d98sm11419631cf.7.2026.09.18.04.39.37
+ bh=yfu1MBXsRmVP1HEFbBooqDFu2xyDHNFt7BQUuf2IFiw=;
+ b=Ii5gfaJPplqCXWjzp+POKKOsMeCYtPDviYVCOr4oEVsqPt4QZWfxs35vvE0EryTkwl
+ DAfgYFCGy1NazDgYLTDMNd24/rZmZou9e+vemBSd8g+o3NGFZUgd5UfTG9NhyeQGMUWb
+ +u8vNKzqKLH56Hu45VqEZnwka93XQ/092wv7SydcQua25ZYhGNkB/moVkntaXRUJyV5F
+ XgxajDWkma9mquHJyF698LXfVVZ5v4WRS4C8uPOPJn98NVrzfBx1qmrgoy7nPojt1wze
+ 61z4wsAopRMGnn/mu6zynsE3nZJwvBHlfWRQkmVluwCgdNNXRQit9vLk5ysBUL5UDkAv
+ 14ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789731586; x=1790336386;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=yfu1MBXsRmVP1HEFbBooqDFu2xyDHNFt7BQUuf2IFiw=;
+ b=decJt2HQzt5dj9Vi6IxZd8g7iEMOzmFDoQJfyGsdG4sG6o9zHEcrVdlzwXWRio5sNz
+ 6zKHWG4CHah6fjy9eN3EKPSdoTdZjOeBoEzSMeGYoD31MtV5mX1IPZ7jAygzP4qp2yoN
+ 1L2Y9dVifdPqHsiqTX/iIe56Y4jjYjP7ZxuClV67G7Qb/ijx24dd9LE4aCP2Ernlbd9X
+ R40IRV3BvLjgNRaMMKU1tkL2LK4N82RYSG/Cf+cblU2UfT5TorBtFJZe6ZoKcThG04/X
+ TuziiY0l5+WbTwwvIyGx1haCBQ8hYOxguQVZbmuAkbPL5B5P8KOpph+gsL95EJhXaFFi
+ UKpg==
+X-Gm-Message-State: AFuF++kiXN1HzulH36IGK87f4g8HL9F4ha2rK8qtLvhdajXof/J4S80Y
+ 5R1l22zH3UTwKC/Mzp9mKt5Omzjb6luRXXGcDo1hu28I20g0mtJQxEVbBgvRNCG3HTK5dUpMO9C
+ yOiVSiqdmnc7dZIdALInhljr6XIR+PpmGgJKK4uahFKyMLe3V3n0J9Otn2pmn9RIEQgzGutEtH1
+ 1irctWTuYjN+pO2ZrS11ZP50FqItdPK96LYEj9h1Xu
+X-Gm-Gg: AYBFou3VGHUMuWQu0jDkoWHI6VGQKUYi8H4tBPwJsVtfP0nDZhmUGsaSpNL6fnxUl+m
+ 4Xt76HtDpoxU3kkvC6l5tWwK61X8UbCnR+AH3OkE+wDl8TATCIhh+Qi3rS+NUMc20ZxU89KX8Le
+ 6M8Gg6Z26uj6lF9mnTfgg9Y63f0TA4Prb+MUISVO5VE2l6V/qbA4VxkwLiic+ex98C+TE2eLlKS
+ Tnk7dM+iSMSaQqk2mHFDF/tcufA3jVB0i2vS+xC+L5iulPSr2f3z9rVCDeZ4cMSVJOWHFOfqP31
+ 3QZDX/KPbyhkj611n5MW9KqdUJE1XxfVmhaKvcx+QkMbfs9Zc4mZ+O5BnuornC48QQzgW3/tc5/
+ YafccWHiw92Ott9jb7bw3XD6XMGvGz1x/IzccSPby+zr8yoBH61GD5jN9yC8=
+X-Received: by 2002:a05:622a:587:b0:530:ea70:39f8 with SMTP id
+ d75a77b69052e-5329e47e893mr32013241cf.40.1789731586556; 
+ Fri, 18 Sep 2026 04:39:46 -0700 (PDT)
+X-Received: by 2002:a05:622a:587:b0:530:ea70:39f8 with SMTP id
+ d75a77b69052e-5329e47e893mr32012811cf.40.1789731586002; 
+ Fri, 18 Sep 2026 04:39:46 -0700 (PDT)
+Received: from localhost
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-532a19f19f1sm11263171cf.22.2026.09.18.04.39.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 04:39:38 -0700 (PDT)
+ Fri, 18 Sep 2026 04:39:44 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 00/11] Next patches
-Date: Fri, 18 Sep 2026 07:39:15 -0400
-Message-ID: <20260918113926.831204-1-peterx@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-arm@nongnu.org
+Subject: [PULL 02/11] hw/vexpress.c: Remove forced cast to u64
+Date: Fri, 18 Sep 2026 07:39:17 -0400
+Message-ID: <20260918113926.831204-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260918113926.831204-1-peterx@redhat.com>
+References: <20260918113926.831204-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,66 +124,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f8296b816fabd370307cd22b0270b610fc0fa279:
+Now since ram_addr_t has switched to u64, remove the forced cast as not
+needed.
 
-  Merge tag 'pull-loongarch-20260917' of https://github.com/bibo-mao/qemu into staging (2026-09-16 18:24:08 -1000)
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260818172012.3052821-3-peterx@redhat.com
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ hw/arm/vexpress.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/peterx/qemu.git tags/next-pull-request
-
-for you to fetch changes up to 666dd3c9b10a70eea4aae3c09b0f945175a7cb8e:
-
-  system/ram-discard-manager: fix offset_within_address_space in replay_by_populated_state() (2026-09-18 07:36:52 -0400)
-
-----------------------------------------------------------------
-Mem api pull
-
-- Peter's patchset to drop some dead code for 32bit hosts
-- Phil/Bin's patch to enhance error message for mem allocations
-- Cam's fix to virtio-mem crash in multi-source work
-
-----------------------------------------------------------------
-
-Cam Miller (1):
-  system/ram-discard-manager: fix offset_within_address_space in
-    replay_by_populated_state()
-
-Peter Xu (9):
-  system: Define ram_addr_t to be always uint64_t
-  hw/vexpress.c: Remove forced cast to u64
-  arm/mps: Remove 32bit define for MPS3_DDR_SIZE
-  xen-mapcache: Remove 32bit support
-  bsd-user: Remove 32bit host support in thunk_convert|print()
-  linux-user: Remove 32bit host support in thunk_convert|print()
-  arm/aspeed: Drop ASPEED_RAM_SIZE
-  hw/arm/raspi4b: Drop board_rev for 32bit hosts
-  machine: Remove 32bit limitation on ram size
-
-Philippe Mathieu-Daudé (1):
-  system/physmem: Improve guest memory allocation failure error message
-
- include/hw/arm/aspeed.h           |  7 -----
- include/system/ram_addr.h         | 16 +++++------
- bsd-user/thunk.c                  | 47 ++-----------------------------
- hw/arm/aspeed_ast2600_anacapa.c   |  2 +-
- hw/arm/aspeed_ast2600_bletchley.c |  2 +-
- hw/arm/aspeed_ast2600_catalina.c  |  2 +-
- hw/arm/aspeed_ast2600_fby35.c     |  2 +-
- hw/arm/aspeed_ast2600_fuji.c      |  2 +-
- hw/arm/aspeed_ast2600_gb200nvl.c  |  2 +-
- hw/arm/aspeed_ast2600_sanmiguel.c |  2 +-
- hw/arm/mps2-tz.c                  |  9 ------
- hw/arm/mps3r.c                    |  8 ------
- hw/arm/raspi4b.c                  |  4 ---
- hw/arm/vexpress.c                 | 13 ++-------
- hw/core/machine.c                 |  8 ------
- hw/xen/xen-mapcache.c             | 12 ++------
- linux-user/thunk.c                | 47 ++-----------------------------
- system/physmem.c                  |  4 ++-
- system/ram-discard-manager.c      | 29 ++++++++++---------
- 19 files changed, 43 insertions(+), 175 deletions(-)
-
+diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+index 914cda66d2..a4328ec74b 100644
+--- a/hw/arm/vexpress.c
++++ b/hw/arm/vexpress.c
+@@ -362,16 +362,9 @@ static void a15_daughterboard_init(VexpressMachineState *vms,
+     MachineState *machine = MACHINE(vms);
+     MemoryRegion *sysmem = get_system_memory();
+ 
+-    {
+-        /* We have to use a separate 64 bit variable here to avoid the gcc
+-         * "comparison is always false due to limited range of data type"
+-         * warning if we are on a host where ram_addr_t is 32 bits.
+-         */
+-        uint64_t rsz = ram_size;
+-        if (rsz > (30ULL * 1024 * 1024 * 1024)) {
+-            error_report("vexpress-a15: cannot model more than 30GB RAM");
+-            exit(1);
+-        }
++    if (ram_size > (30ULL * 1024 * 1024 * 1024)) {
++        error_report("vexpress-a15: cannot model more than 30GB RAM");
++        exit(1);
+     }
+ 
+     /* RAM is from 0x80000000 upwards; there is no low-memory alias for it. */
 -- 
 2.55.0
 
