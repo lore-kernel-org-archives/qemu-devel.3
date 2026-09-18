@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF516C982D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C716C982D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:42:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7MMK-0004PH-8N; Thu, 17 Sep 2026 20:21:44 -0400
+	id 1x7Mfd-0006Km-Bz; Thu, 17 Sep 2026 20:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
- id 1x7MMI-0004Ow-Ti
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:21:42 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7Mfb-0006Kd-Oz
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:41:39 -0400
+Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
- id 1x7MME-0006sy-Vc
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:21:42 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- d9443c01a7336-2db22383fe8so883015ad.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:21:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7MfZ-0001L6-Ja
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:41:39 -0400
+Received: by mail-pz2-x0d.google.com with SMTP id
+ d2e1a72fcca58-85469d249c6so188486b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=dabbelt-com.20251104.gappssmtp.com; s=20251104; t=1789690897; x=1790295697;
- darn=nongnu.org; 
- h=content-transfer-encoding:content-type:mime-version:message-id:to
- :from:cc:in-reply-to:subject:date:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=97TDR70D9CUjsZCdV4r40XKTc/2M9oFwzn6aISGw0JU=;
- b=G2T1HgwA2KOJ7rCDZjyr9NZIKUkX5msnT/2jyICJZMDfp4afL9F8BK9euDiAO8ngA1
- gmGMTLWkmoSmU4ExFjeZbDs2r2rlPLFQfXvsoBlxfXbei/7Qhp5O/3unYcDsltmc6giN
- JI7lRvJVJQSTKPEFFBJBTGcIKQus/6t9zAlO3vO3QXayZs7JVjwpwW9a84Sxmg3N1AYp
- li79CKMHTdXwU2O4IqlUqrqI4Hzl/Q8bQSikrzEWZDLgrrawh4cBCOL8GdJJ6NAmwPD5
- lpmyfwCpfBivnEE2sPYDczkUMmQDqTqLG3ag8lZllpgww0LycTkePNtC9koQMQwsdsBR
- kfbg==
+ d=linaro.org; s=google; t=1789692095; x=1790296895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=c0KJgv8KJg16z+He/lIJzqS4Rbyje7/sUnz+qG6RhnU=;
+ b=gGJ7efrSqL/fk5+i2VTsmOEH+iWuK3L5gH1vAkjifFZ4PNEAUBMK/GKzV8OE1xza6g
+ ZE3nGiGQ4AaSWQ7rfy09C+CDY5AOGGrME051fuk8CHF7MAo5di9HyWVWSDSmRiIBv13L
+ vydEGo+bFSnrwCW4uZyMfGIy3zQ2CRpkWQdJ3zvGh3fAvc5v4cZe7nXrbxuWy4WoeoYx
+ EzUiIDq8zbkVtHnAfycvNj9UqnNJRXt10lN59dGWCbcnJW6wNv6C/A05zmN9rqZ+TI5n
+ YyjxdjAHuMMvFGpYYF4+5aGos3lIVyikBO0hFFx1DODP6tHqSj+vmF5VejgvthT2/e93
+ 98JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789690897; x=1790295697;
- h=content-transfer-encoding:content-type:mime-version:message-id:to
- :from:cc:in-reply-to:subject:date:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=97TDR70D9CUjsZCdV4r40XKTc/2M9oFwzn6aISGw0JU=;
- b=E1JyIjr3LvW4LIq7GHqEFTlG7OP5WPvd8A9hlTF2cw9AOw2Dt99zTp0T7gns35qtz9
- H1V3h51PbnMWlA7qcbA4fK+Y61ECYw/E0KQbwRYrrUFYlD6hm6JOz8wIf+Wu8y0cSGmi
- XQWoWy8LW8YZM79RMm36vT3bWNxf9gmPTze0CYMC4Bf2/A36lIpMeI8Wcg4yXifuOfwQ
- aRw6nHeN7Hsdzj0OZ/DIFUhPoZ28ZveetAJBwzi2F4we5Kc2a+OjAOIHV5ZtYf6ND54y
- U/kNNQALNrcEnsHTNROmALbevY73GFXh82asC6pfA6y+4lnc6BwltmC3tNnghF2d1gVr
- 6hmA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBz3Eu8omMq+UXv0Y71NwQ/emfXi/p6YbkPucQr5b3YNjr/PafPQdoTXlCyhadIh3rC/fqogISy4ScSU@nongnu.org
-X-Gm-Message-State: AFuF++lHKn83lokTUneCynLDE/ODlqsgjg/Ujj1l8wpRKXW9bEF6woFD
- UPcs1PcyDtWgsEgXzjHYoVrn525tzeADQawWaipVWAGN50AAsXCB36APK5dWTLk2qqs=
-X-Gm-Gg: AYBFou1H4AP3Z4XwEvE1G2ZsAULni16xvVcNL/wmeN7+rpeCjKSnRZmPocuj0tPvTy+
- QTK+K/cx4BU3q+Xm7PgYhjQ9JdUoEv5vKdktwgGv6tB5j1PksOutoQ5ghbYNZc2X7BsniipVIrX
- It1s1btG7h1+gubqRoY5uPFfRTORWiUDVbZ1jRdQsSzz2IshWokUb6JMa2HiyM+akAf7HoCt4Bx
- V453jJDqrOa9Vj44qQjao6fdxkPnvnDgvXDV73x9pJS/+RuXVfTE+hVRTFjJn4h/DWYlJjNOyZY
- BARxCM9UWNoiOwQJOGGNDzYPUjK96nbgIYzeyjPX6JUtDpGFEDG4lVROuEW9aMRYRvSS/J9ZGIR
- PiiS3Udwh06qzkPmQef53kp5LuElom5dvV+p7z3G1USq5lAjk1GXRY5hUkDCbwubYvZ1fasz9JF
- lcahIpDlGgmEr+APYa0dwcWe18+gNa4cSYLHuAsnN3BqsA/ha3fQJmkZJkaa5JtE7EFc16SNVOM
- +LbEphYZYAxyGjCAXqohkS0rAZ5iQ==
-X-Received: by 2002:a17:903:2f84:b0:2cf:8131:75e8 with SMTP id
- d9443c01a7336-2ddb1af51a9mr14384985ad.13.1789690896524; 
- Thu, 17 Sep 2026 17:21:36 -0700 (PDT)
-Received: from localhost ([2001:5a8:4687:d600:a432:5959:dbd9:36fd])
+ d=1e100.net; s=20260707; t=1789692095; x=1790296895;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=c0KJgv8KJg16z+He/lIJzqS4Rbyje7/sUnz+qG6RhnU=;
+ b=ogmBgyYbBHv9pNx8F0BNLZy8MFYRKT1EzbI4Eb1MsF91HiFK5FVcelLJ0IjkZtQ5a1
+ 0LtLQaHywFfdUqQCXSdGbj2ZeEeT7xmQyczWbmkgkPD+PJgwbAe23RAKgHEDxPOVGXEt
+ tiQOjEkmvXdh/E+Ds9fJ8IrIm9LenCjxLzfuHaAEnwwhb8ksX5gQ6P6q57mR4wKDG+nf
+ GyGcQIXfwMlsoSUsrLrZ9AYdFS8rT1iVIgzS8q3TubMoTQ4HHbZJgmJE10XtftUX8Fmx
+ JYrW8vJHX8aoZ6UG4JXFYz9yMk9A0nbKGaBls5DcIXXUNAOn3VG1ci5NFGfDWSnyN0HR
+ n2FA==
+X-Gm-Message-State: AFuF++kPbEueu7GwpzVxZfUNdYgw67n5qqeK+RmmpImdrTAjyzRVnbu/
+ u222MThxENg+xZR0JZmfgMSMuM5b1DYEwHPkncCcrdxCNlgh445CcDZ0mrRvTcgrc+y8ymA/jn8
+ 1pUFTFxM=
+X-Gm-Gg: AYBFou3qZDN/yoIhBT6lNmp7GzApsYYtQgVh+8AfOeVKBXDjizmdQ1ZV3dpNFRpLuc2
+ cQ0UFmxYehiA/2qZMQjdjKx6mda/E+ZiczV7/qzn3Hd8pVYIuQHBLAvB0i1LFtgn6V00JnxzrlX
+ hof9jHG9aUMXrJmwRpx8WMqR9+p0Xwtf3pqd3ep5Toiu2tY/lO81cZiXa5/LUESzy4I6qgLtIbv
+ //csY69k6WNFsOfjHWXH1G5tyS25ga+6KO4uhbqG5bnWfTt1+Btd7Ys+Dmm35WmlCxTxMlKqKt8
+ UcG9jOIDFRMlMTyhHKMvzBscBTmNPBG7U5Jgn2rQkC1voFjuPBjejuwgfZV8zKjTaOspRlf81uD
+ 2nLBtvmh6PbHAnFT+XInrdxqUeV34KkryIFMwCrk7uy+tSJtvPEqpC3I+mT/AScLI7LzUmtjjIT
+ 6XI4tgo48uXOnv8TUegzaHgaTwnT+WY2+VcX/TIgycoAy7DJB5P7hkhyMc17E+aI94rdMMHLOpP
+ cP5AkI=
+X-Received: by 2002:a05:6a20:438c:b0:3dd:85a8:cb80 with SMTP id
+ adf61e73a8af0-3dd8c4decdfmr1558944637.35.1789692095326; 
+ Thu, 17 Sep 2026 17:41:35 -0700 (PDT)
+Received: from stoup ([2603:800c:7900:ed00:83aa:9d68:3956:350a])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33bf5a93f1fsm18873823eec.11.2026.09.17.17.21.35
+ 5a478bee46e88-33bfb19f8cesm25150780eec.2.2026.09.17.17.41.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 17:21:35 -0700 (PDT)
-Date: Thu, 17 Sep 2026 17:21:35 -0700 (PDT)
-X-Google-Original-Date: Thu, 17 Sep 2026 17:21:34 PDT (-0700)
-Subject: Re: [PATCH v2] tcg/riscv64: Set vtype before whole-register vector
- moves
-In-Reply-To: <1f02f0fc-fee2-4722-9798-97bb0132561d@linaro.org>
-CC: max.chou@sifive.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Alistair Francis <Alistair.Francis@wdc.com>, daniel.barboza@oss.qualcomm.com,
- joel@jms.id.au
-From: Palmer Dabbelt <palmer@dabbelt.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <mhng-2ECF390B-6BDB-4DF3-8133-18F4AC3A4DD2@Palmers-Mini.rwc.dabbelt.com>
-Mime-Version: 1.0 (MHng)
-Content-Type: text/plain; charset=utf-8; format=flowed
+ Thu, 17 Sep 2026 17:41:34 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: deller@gmx.de
+Subject: [PATCH] target/hppa/tcg: Always initialize DisasCond.{a0,a1}
+Date: Thu, 17 Sep 2026 14:41:32 -1000
+Message-ID: <20260918004132.365434-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=palmer@dabbelt.com; helo=mail-pj2-x11.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,101 +97,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 17 Sep 2026 14:49:07 PDT (-0700), Richard Henderson wrote:
-> On 9/17/26 10:59, Palmer Dabbelt wrote:
->> On Thu, 17 Sep 2026 13:51:10 PDT (-0700), Richard Henderson wrote:
->>> On 9/17/26 03:37, Max Chou wrote:
->>>> According to the RISC-V unpriviledge spec,
->>>>    "vset{i}vl{i} and whole register loads and stores do not depend upon
->>>>     vtype."
->>>> The whole-register vector move instructions reuqire legal vtype that
->>>> trap when VILL is set.
->>>>
->>>> The tcg_out_mov in tcg/riscv64 missed the vtype setup before emitting
->>>> the
->>>> OPC_VMVNR_V.
->>>>
->>>> Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
->>>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->>>> Reviewed-by: Joel Stanley <joel@jms.id.au>
->>>> Signed-off-by: Max Chou <max.chou@sifive.com>
->>>> ---
->>>>   tcg/riscv64/tcg-target.c.inc | 4 ++++
->>>>   1 file changed, 4 insertions(+)
->>>>
->>>> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
->>>> index 2ce9d47a633..e3cfedb579d 100644
->>>> --- a/tcg/riscv64/tcg-target.c.inc
->>>> +++ b/tcg/riscv64/tcg-target.c.inc
->>>> @@ -778,6 +778,10 @@ static bool tcg_out_mov(TCGContext *s, TCGType
->>>> type, TCGReg ret, TCGReg arg)
->>>>           {
->>>>               int lmul = type - riscv_lg2_vlenb;
->>>>               int nf = 1 << MAX(lmul, 0);
->>>> +
->>>> +            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
->>>> +                set_vtype_len(s, type);
->>>> +            }
->>>>               tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1);
->>>>           }
->>>>           break;
->>>
->>> Do you have a reproducer for this?  I ask because I still wonder how
->>> this can occur.
->>>
->>> Given that
->>>
->>> (1) all vector registers are call-clobbered, there should be none live
->>> across tcg_out_call_int (which clears the remembered vtype),
->>>
->>> (2) the first vector action with no vector registers live must be a load
->>> or movi (which will initialize vtype).
->>>
->>> Performing a move between vector registers when all such registers must
->>> be dead is... wrong.  It indicates that there's a bug elsewhere.
->>
->> I'm not quite sure the commit message is right here, but this whole area
->> is a bit of a landmine: one of the post-ratification changes to V was
->> either this (or very close to this), so we've been through it for every
->> project.
->>
->> Here's the LLVM thread, which I think has links to everything else:
->> https://github.com/llvm/llvm-project/issues/114518 (there's a GCC change
->> as well).  IIRC hardware is a bit all over the place on this one, for
->> the compilers we decided to just emit the code that's safe either way --
->> that's not really an option for QEMU, though, so we'll have to pick one
->> side or the other.
-> Yes, I get that.  But my point stands that after a function call (which
-> can set VILL), all vector registers should be dead.  A move of a dead
-> register is itself a bug.
+Forthcoming tcg improvements will diagnose the passed
+null pointer with --enable-ubsan:
 
-That's true for standard ABI functions, but there's a variant for 
-vector-ABI functions that allows some registers to be saved and that 
-variant doesn't preserve vtype.  That's basically how we ended up in the 
-mess with whole-register moves: pre-change vector-1.0 versions didn't 
-trap whole-vector moves on vtype=VILL, so variant functions could use 
-whole-register moves to save/restore registers and it was legal.  It was 
-only when Linux started clobbering with VILL on implementations that 
-respected the post-change ISA that we ended up with the traps.
+../src/target/hppa/translate.c:579:9: runtime error: null pointer passed as argument 3, which is declared to never be null
+../src/target/hppa/translate.c:579:9: runtime error: null pointer passed as argument 4, which is declared to never be null
 
-That said, in GCC we just had a proper bug in there where we treated 
-vytpe as saved over calls, so it was pretty easy to roll it up into that 
-fix.  Here's the GCC bug, if you're interested: 
-<https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117544>.  IIUC it was a 
-little different in LLVM because they didn't have that bug and were thus 
-actually correct for the pre-change ISA, but they also decided to just 
-emit the code that's safe for both cases.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/hppa/translate.c | 72 ++++++++++++++++++++---------------------
+ 1 file changed, 36 insertions(+), 36 deletions(-)
 
-> There should have been *something* that brought the source vector
-> register back to life: a load or a movi.  Both of which reinitialize vtype.
->
-> That's why I'd like to see a reproducer, or if there isn't one,
->
->      tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
->
-> I'm currently running the assert through the testsuite to make sure I've
-> not gone loopy.
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 002189ddfbd..41300c0dd73 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -339,30 +339,30 @@ static void set_insn_breg(DisasContext *ctx, int breg)
+     tcg_set_insn_start_param(ctx->base.insn_start, 2, breg);
+ }
+ 
+-static DisasCond cond_make_f(void)
++static DisasCond cond_make_f(DisasContext *ctx)
+ {
+     return (DisasCond){
+         .c = TCG_COND_NEVER,
+-        .a0 = NULL,
+-        .a1 = NULL,
++        .a0 = ctx->zero,
++        .a1 = ctx->zero,
+     };
+ }
+ 
+-static DisasCond cond_make_t(void)
++static DisasCond cond_make_t(DisasContext *ctx)
+ {
+     return (DisasCond){
+         .c = TCG_COND_ALWAYS,
+-        .a0 = NULL,
+-        .a1 = NULL,
++        .a0 = ctx->zero,
++        .a1 = ctx->zero,
+     };
+ }
+ 
+-static DisasCond cond_make_n(void)
++static DisasCond cond_make_n(DisasContext *ctx)
+ {
+     return (DisasCond){
+         .c = TCG_COND_NE,
+         .a0 = cpu_psw_n,
+-        .a1 = tcg_constant_i64(0)
++        .a1 = ctx->zero,
+     };
+ }
+ 
+@@ -562,7 +562,7 @@ static void nullify_over(DisasContext *ctx)
+ 
+         tcg_gen_brcond_i64(ctx->null_cond.c, ctx->null_cond.a0,
+                            ctx->null_cond.a1, ctx->null_lab);
+-        ctx->null_cond = cond_make_f();
++        ctx->null_cond = cond_make_f(ctx);
+     }
+ }
+ 
+@@ -580,7 +580,7 @@ static void nullify_save(DisasContext *ctx)
+                             ctx->null_cond.a0, ctx->null_cond.a1);
+         ctx->psw_n_nonzero = true;
+     }
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+ }
+ 
+ /* Set a PSW[N] to X.  The intention is that this is used immediately
+@@ -626,7 +626,7 @@ static bool nullify_end(DisasContext *ctx)
+            label we have the proper value in place.  */
+         nullify_save(ctx);
+         gen_set_label(null_lab);
+-        ctx->null_cond = cond_make_n();
++        ctx->null_cond = cond_make_n(ctx);
+     }
+     if (status == DISAS_NORETURN) {
+         ctx->base.is_jmp = DISAS_NEXT;
+@@ -766,7 +766,7 @@ static bool gen_excp_iir(DisasContext *ctx, int exc)
+         DisasDelayException *e = delay_excp(ctx, exc);
+         tcg_gen_brcond_i64(tcg_invert_cond(ctx->null_cond.c),
+                            ctx->null_cond.a0, ctx->null_cond.a1, e->lab);
+-        ctx->null_cond = cond_make_f();
++        ctx->null_cond = cond_make_f(ctx);
+     }
+     return true;
+ }
+@@ -859,7 +859,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+ 
+     switch (cf >> 1) {
+     case 0: /* Never / TR    (0 / 1) */
+-        cond = cond_make_f();
++        cond = cond_make_f(ctx);
+         break;
+     case 1: /* = / <>        (Z / !Z) */
+         cond = cond_make_vi(zero_cond, res, zero_imm);
+@@ -984,7 +984,7 @@ static DisasCond do_log_cond(DisasContext *ctx, unsigned cf, bool d,
+     case 4:  /* undef, C */
+     case 5:  /* undef, C & !Z */
+     case 6:  /* undef, V */
+-        return cf & 1 ? cond_make_t() : cond_make_f();
++        return cf & 1 ? cond_make_t(ctx) : cond_make_f(ctx);
+     case 1:  /* == / <> */
+         tc = d ? TCG_COND_EQ : TCG_COND_TSTEQ;
+         imm = d ? 0 : UINT32_MAX;
+@@ -1034,7 +1034,7 @@ static DisasCond do_sed_cond(DisasContext *ctx, unsigned orig, bool d,
+ }
+ 
+ /* Similar, but for unit zero conditions.  */
+-static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
++static DisasCond do_unit_zero_cond(DisasContext *ctx, unsigned cf, bool d, TCGv_i64 res)
+ {
+     TCGv_i64 tmp;
+     uint64_t d_repl = d ? 0x0000000100000001ull : 1;
+@@ -1058,7 +1058,7 @@ static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
+     }
+     if (ones == 0) {
+         /* Undefined, or 0/1 (never/always). */
+-        return cf & 1 ? cond_make_t() : cond_make_f();
++        return cf & 1 ? cond_make_t(ctx) : cond_make_f(ctx);
+     }
+ 
+     /*
+@@ -1171,7 +1171,7 @@ static void gen_tc(DisasContext *ctx, DisasCond *cond)
+         e = delay_excp(ctx, EXCP_COND);
+         tcg_gen_brcond_i64(cond->c, cond->a0, cond->a1, e->lab);
+         /* In the non-trap path, the condition is known false. */
+-        *cond = cond_make_f();
++        *cond = cond_make_f(ctx);
+         break;
+     }
+ }
+@@ -1473,7 +1473,7 @@ static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+         } else {
+             tcg_gen_sub_i64(dest, in1, in2);
+         }
+-        cond = do_unit_zero_cond(cf, d, dest);
++        cond = do_unit_zero_cond(ctx, cf, d, dest);
+     } else {
+         TCGv_i64 cb = tcg_temp_new_i64();
+ 
+@@ -2131,7 +2131,7 @@ static void do_page_zero(DisasContext *ctx)
+ 
+ static bool trans_nop(DisasContext *ctx, arg_nop *a)
+ {
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2145,7 +2145,7 @@ static bool trans_sync(DisasContext *ctx, arg_sync *a)
+     /* No point in nullifying the memory barrier.  */
+     tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
+ 
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2157,7 +2157,7 @@ static bool trans_mfia(DisasContext *ctx, arg_mfia *a)
+     tcg_gen_andi_i64(dest, dest, -4);
+ 
+     save_gpr(ctx, a->t, dest);
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2172,7 +2172,7 @@ static bool trans_mfsp(DisasContext *ctx, arg_mfsp *a)
+ 
+     save_gpr(ctx, rt, t0);
+ 
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2217,7 +2217,7 @@ static bool trans_mfctl(DisasContext *ctx, arg_mfctl *a)
+     save_gpr(ctx, rt, tmp);
+ 
+  done:
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2257,7 +2257,7 @@ static bool trans_mtctl(DisasContext *ctx, arg_mtctl *a)
+         tcg_gen_andi_i64(tmp, reg, ctx->is_pa20 ? 63 : 31);
+         save_or_nullify(ctx, cpu_sar, tmp);
+ 
+-        ctx->null_cond = cond_make_f();
++        ctx->null_cond = cond_make_f(ctx);
+         return true;
+     }
+ 
+@@ -2331,7 +2331,7 @@ static bool trans_mtsarcm(DisasContext *ctx, arg_mtsarcm *a)
+     tcg_gen_andi_i64(tmp, tmp, ctx->is_pa20 ? 63 : 31);
+     save_or_nullify(ctx, cpu_sar, tmp);
+ 
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2348,7 +2348,7 @@ static bool trans_ldsid(DisasContext *ctx, arg_ldsid *a)
+ #endif
+     save_gpr(ctx, a->t, dest);
+ 
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2512,7 +2512,7 @@ static bool trans_nop_addrx(DisasContext *ctx, arg_ldst *a)
+         tcg_gen_add_i64(dest, src1, src2);
+         save_gpr(ctx, a->b, dest);
+     }
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2754,7 +2754,7 @@ static bool trans_lci(DisasContext *ctx, arg_lci *a)
+        since the entire address space is coherent.  */
+     save_gpr(ctx, a->t, ctx->zero);
+ 
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -2831,7 +2831,7 @@ static bool trans_or(DisasContext *ctx, arg_rrr_cf_d *a)
+         unsigned rt = a->t;
+ 
+         if (rt == 0) { /* NOP */
+-            ctx->null_cond = cond_make_f();
++            ctx->null_cond = cond_make_f(ctx);
+             return true;
+         }
+         if (r2 == 0) { /* COPY */
+@@ -2842,7 +2842,7 @@ static bool trans_or(DisasContext *ctx, arg_rrr_cf_d *a)
+             } else {
+                 save_gpr(ctx, rt, cpu_gr[r1]);
+             }
+-            ctx->null_cond = cond_make_f();
++            ctx->null_cond = cond_make_f(ctx);
+             return true;
+         }
+ #ifndef CONFIG_USER_ONLY
+@@ -2910,7 +2910,7 @@ static bool trans_uxor(DisasContext *ctx, arg_rrr_cf_d *a)
+     tcg_gen_xor_i64(dest, tcg_r1, tcg_r2);
+     save_gpr(ctx, a->t, dest);
+ 
+-    ctx->null_cond = do_unit_zero_cond(a->cf, a->d, dest);
++    ctx->null_cond = do_unit_zero_cond(ctx, a->cf, a->d, dest);
+     return nullify_end(ctx);
+ }
+ 
+@@ -2936,7 +2936,7 @@ static bool do_uaddcm(DisasContext *ctx, arg_rrr_cf_d *a, bool is_tc)
+             tcg_gen_subi_i64(tmp, tmp, 1);
+         }
+         save_gpr(ctx, a->t, tmp);
+-        ctx->null_cond = cond_make_f();
++        ctx->null_cond = cond_make_f(ctx);
+         return true;
+     }
+ 
+@@ -3460,7 +3460,7 @@ static bool trans_ldil(DisasContext *ctx, arg_ldil *a)
+ 
+     tcg_gen_movi_i64(tcg_rt, a->i);
+     save_gpr(ctx, a->t, tcg_rt);
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -3471,7 +3471,7 @@ static bool trans_addil(DisasContext *ctx, arg_addil *a)
+ 
+     tcg_gen_addi_i64(tcg_r1, tcg_rt, a->i);
+     save_gpr(ctx, 1, tcg_r1);
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -3487,7 +3487,7 @@ static bool trans_ldo(DisasContext *ctx, arg_ldo *a)
+         tcg_gen_addi_i64(tcg_rt, cpu_gr[a->b], a->i);
+     }
+     save_gpr(ctx, a->t, tcg_rt);
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     return true;
+ }
+ 
+@@ -4689,7 +4689,7 @@ static void hppa_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+     /* Seed the nullification status from PSW[N], as saved in TB->FLAGS.  */
+-    ctx->null_cond = cond_make_f();
++    ctx->null_cond = cond_make_f(ctx);
+     ctx->psw_n_nonzero = false;
+     if (ctx->tb_flags & PSW_N) {
+         ctx->null_cond.c = TCG_COND_ALWAYS;
+-- 
+2.53.0
 
-Ya, seems reasonable.  It's certainly pretty likely this is masking some 
-other bug as it was in GCC.
 
