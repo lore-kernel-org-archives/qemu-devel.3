@@ -4,195 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FBBC88E75
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 07:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD8DC982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 07:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7SrZ-0002x7-Cu; Fri, 18 Sep 2026 03:18:25 -0400
+	id 1x7T0T-0004CO-V3; Fri, 18 Sep 2026 03:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x7SrU-0002vS-NO
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:18:21 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1x7SrS-0005Pf-0C
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:18:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1789715893; x=1790320693; i=deller@gmx.de;
- bh=5/5LYNb3AqiirutStUOas3NyEDn8y/1SHhXZDYUGMp4=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=U9dJib/zWXTojXD7/gkbxOtFWQy/CE5CrJMX8vtCRKWZJ2inEr8RiHnh+Gt/gkt/
- J9zIDwVY5n58DeTNT4mLN+OJQlTMTl97wWboFEYZBKQD7vBsvOiWK3ALgi9kL5RLd
- KlfQOls9VHf40RHmnjD3LMO04y2puJ7bCkq9QjXB0tyLJARGs4PZuIGLGzEl1RUWp
- AyumLcS3wjTmFYZg32imLTouRVYlVPUtW5F/ntwePYRd2Yg5LJNTJHBxfYAZT2b3Y
- +i3Es8INShHTTTkjHc/DZ96bnZ4ZkcE4uKyF+DTMCxobr5Ec4uJd4WHqcSh41IQMR
- R7bxgP9OSG8LDb4BAw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3DNt-1x4RWW30sH-00581g; Fri, 18
- Sep 2026 09:18:13 +0200
-Message-ID: <309c1091-6504-4318-bb21-ec9c1d45bc0d@gmx.de>
-Date: Fri, 18 Sep 2026 09:18:09 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x7T0H-0004B0-JB
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:27:26 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x7T0F-0006Hq-2p
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 03:27:25 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8Bx69HP56xqvFYNAA--.38818S3;
+ Fri, 18 Sep 2026 15:27:12 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJBxpMzP56xqXyIiAA--.46206S2;
+ Fri, 18 Sep 2026 15:27:11 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Preserve PTW dirty tracking on read fills
+Date: Fri, 18 Sep 2026 15:28:33 +0800
+Message-ID: <20260918072833.265906-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa/tcg: Always initialize DisasCond.{a0,a1}
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260918004132.365434-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20260918004132.365434-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+ps+tUPIwrj8/ysocnIsaScMIgWuWQ2Y1KOjsvmevPUOYTguaVE
- Qgbnh7p/K8eXVEt5TTuMYH6zv0e4am9FCkOfJe5g84yjwTjy6OjnKYFL0J5WA0141krxOr0
- oZROVV0afwSssWfISkwCqdlTUk3t9Fh07kJqlsxK5Y3zWFgUWXsgVPABLoyO0r7TUSAENgF
- occ5qeX1OgfliU0/9qENg==
-UI-OutboundReport: notjunk:1;M01:P0:bcP23y2iySs=;VuGaOQvVvL2QTkUoOWhx6nmUWJc
- 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
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJBxpMzP56xqXyIiAA--.46206S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrW7XF43CF1xXF4fAry7Arc_yoW8Kr4kpF
+ Z7CF4Sva1ktrZ3A3sIq3W0vF15urs7Cay7Was3tryS9ws8Xrykur4vk34YyFW8XF48Xw1j
+ qF1qyF15ZFn5X3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
+ kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UWHqcUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -208,18 +75,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/26 02:41, Richard Henderson wrote:
-> Forthcoming tcg improvements will diagnose the passed
-> null pointer with --enable-ubsan:
->=20
-> ../src/target/hppa/translate.c:579:9: runtime error: null pointer passed=
- as argument 3, which is declared to never be null
-> ../src/target/hppa/translate.c:579:9: runtime error: null pointer passed=
- as argument 4, which is declared to never be null
->=20
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/hppa/translate.c | 72 ++++++++++++++++++++---------------------
->   1 file changed, 36 insertions(+), 36 deletions(-)
-Reviewed-by: Helge Deller <deller@gmx.de>
+with LoongArch hardware page table walking (PTW) enabled, a PTE
+can be writable (W=1) but still clean (D=0). A load or instruction fetch
+can install PAGE_WRITE in QEMU's software TLB based on W alone. A later
+store then bypasses loongarch_cpu_tlb_fill() and PTW, dirty bit of PTE
+will not be set with the later store operation.
+
+Here remove PAGE_WRITE for clean PTEs on read/fetch fills at the common
+software TLB fill point. The next store must re-enter PTW to set D before
+using a writable cached translation.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/tcg/tlb_helper.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
+
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 40cc076424..dae04854ad 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -652,15 +652,6 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+             need_update = false;
+         } else if (access_type != MMU_DATA_STORE && pte_access(context.pte)) {
+             need_update = false;
+-
+-            /*
+-             * FIXME: should context.prot be set without PAGE_WRITE with
+-             * pte_write(context.pte) && !pte_dirty(context.pte)??
+-             *
+-             * Otherwise there will be no loongarch_cpu_tlb_fill() function call
+-             * for MMU_DATA_STORE access_type in future since QEMU TLB with
+-             * prot PAGE_WRITE is added already
+-             */
+         }
+ 
+         if (need_update) {
+@@ -684,6 +675,19 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     if (ret == TLBRET_MATCH) {
+         physical = context.physical;
+         prot = context.prot;
++
++        /*
++         * Loads or instruction fetches must not cache write access to a
++         * clean PTE. The first store must enter PTW to set D, whether this
++         * translation came from the LoongArch TLB or a page table walk.
++         * Store walks have already handled D, but context.pte may still
++         * contain its old value. Direct mappings have no PTE to check.
++         */
++        if (cpu_has_ptw(env) && context.mmu_index != MMU_DA_IDX &&
++            access_type != MMU_DATA_STORE && !pte_dirty(context.pte)) {
++            prot &= ~PAGE_WRITE;
++        }
++
+         tlb_set_page(cs, address & TARGET_PAGE_MASK,
+                      physical & TARGET_PAGE_MASK, prot,
+                      mmu_idx, TARGET_PAGE_SIZE);
+
+base-commit: c66824ffb01931be0ddfe49a1642a78570abf44b
+-- 
+2.54.0
+
 
