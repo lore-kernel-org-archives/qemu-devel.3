@@ -4,79 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BFF1C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 09:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC71C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 09:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7UWU-0004A2-9g; Fri, 18 Sep 2026 05:04:46 -0400
+	id 1x7UjW-0005k4-IW; Fri, 18 Sep 2026 05:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x7UWS-00049u-Gh
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:04:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x7UWQ-0008Sq-IL
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:04:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789722280;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VY8Wv6pO6J2vAPa4HAjbP6zE8TfDRO0pmZfg1snFmrs=;
- b=AEzVoMCjm0tKmtcpnGGsTI4hXgCWEOMv5wGrSIvenzC1rOlMvbiNbo7nZq2gnhsQn1ODIv
- kHIgAfU0OuJza3X+CCaTNoG8iGmKcH8m9aWsQAqTi/C+pkvS6hVaBd4HbKb+m3iMgU559b
- 5F43T6rdycbvB+Y0SdDu07K8VNIh2Jo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-C3EQTJt7OcOhM_zJQELDHw-1; Fri,
- 18 Sep 2026 05:04:36 -0400
-X-MC-Unique: C3EQTJt7OcOhM_zJQELDHw-1
-X-Mimecast-MFC-AGG-ID: C3EQTJt7OcOhM_zJQELDHw_1789722275
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94748195605E; Fri, 18 Sep 2026 09:04:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD5E61800446; Fri, 18 Sep 2026 09:04:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A28C621E6A04; Fri, 18 Sep 2026 11:04:31 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- pbonzini@redhat.com,
- richard.henderson@linaro.org,  mst@redhat.com,  mtosatti@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 2/8] qom/object.c: introduce
- object_class_property_add_alias()
-In-Reply-To: <8d9f755c-a82a-4b22-8a9c-ff75bdc23da2@nutanix.com> (Mark
- Cave-Ayland's message of "Fri, 18 Sep 2026 09:38:21 +0100")
-References: <20260902144207.2553037-1-mark.caveayland@nutanix.com>
- <20260902144207.2553037-3-mark.caveayland@nutanix.com>
- <CAMxuvaxoQXZz3AhM9wnRuM7hRn8LD4hMT0ONaV-vRtz5Jy0big@mail.gmail.com>
- <8d9f755c-a82a-4b22-8a9c-ff75bdc23da2@nutanix.com>
-Date: Fri, 18 Sep 2026 11:04:31 +0200
-Message-ID: <875x03nd5s.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x7UjU-0005hp-28
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:18:12 -0400
+Received: from mail-ed2-x26.google.com ([2a00:1450:4864:33::26])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x7UjS-0001cu-8Y
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 05:18:11 -0400
+Received: by mail-ed2-x26.google.com with SMTP id
+ 4fb4d7f45d1cf-6aa13e194easo800507a12.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 02:18:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789723089; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lEu8yvqu8RXmJ0gdJc2ZZNd6UBYG8WK8E5oQ9dGuF8YDczKR5kVoukqwXCwpoJrkMh
+ Sr15C9rkuRKE5QN+ZvYd2zP+wkd4/FztgLKyjpwQ4sul5k8RR0YhFjVIE3KXnY1EYBO+
+ l+1ER5dt6UJ3t1dt8OgLpNFKVyQHu07SZHiuIOT7rE1hyilWUfwbFtyQD0v950oHEtgi
+ r0XeJyWYVEFEC9sPFIWV7wd7Ca4aK4gGiTUN9WHfAEpUYIg4bsqjjUvrtBItrRDKki+d
+ +xjUnrAvOzRihnKFKunNYVhlaWEfl+YrkEWP4XdHXTB5jbdRVdEySgIDikTwGd9sFixC
+ 4gug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=cexpEaDGGB36NWj2P0w0cT6MqbxnZouittz5QFOj9fI=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=KqNdh/mNJW9LKUHI6DMOCF45/Kx0NPrmgULw5+5JojulzH3CpMm0yHglWtjt27IB4l
+ xbDty1vWAuP2DsfCDOxT2xY1kgKKy5DzNxBSYIwgJS+ZHj1u5CfeMsduf9rJ3AQF7crC
+ 8/pDBYQeDsg0mOi7A5dBUYzpVEJsvGd26n9P6cEBnXOXc/gk1UgWGck4ODVNKHctWKIa
+ jc6BP7YC3bkF+l6zkc1Aw4dx/++MR3Tvi4mv4gq+eLNFCbpFFkl+UuH4Td3ctaydP5eS
+ 6aUS4Tzy7BuyUfW2kSJ+HMrVg8ACRl9Q+C9U3Q0gK7/UC/JB8Li+hNnWQDQPGFz6PI30
+ 9WUw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789723089; x=1790327889; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cexpEaDGGB36NWj2P0w0cT6MqbxnZouittz5QFOj9fI=;
+ b=aKpjHclytZtBipO19choaO3sys8dbGCkhxdh9rtkRJrmFkApQ/E12zMVNB7mJfL8eG
+ gAsyiM9XkMFRog1n1Dfzb4hTXsMVOavnhCQzsdCMj52+Da1WUgUNKRoIfeAEBzwoNAcP
+ bCMOnD75UzWVTomH3HyAru+6wm/QH537+Yf9oSAAkmYBz9MMT8liV+F7aQnWGD3qhmoM
+ OYRH1wL3SNmW6HcxRRhodoZMmaa5TjIMWjU2Cbjj9EyRExxOHG8ugwLQuj6+dm8THG/1
+ 2mEsoeOd5J25rGkcmZAv/EeEpE7JzdYEeBEusZC+XA+JlPxRtm0ofLCFbI4eK7yE72fK
+ ON5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789723089; x=1790327889;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cexpEaDGGB36NWj2P0w0cT6MqbxnZouittz5QFOj9fI=;
+ b=krdRXZEa+2R7EjgGNY4lMCy6dIxRmRqY+FynGySamdeI7J7vfU8rwNTwol4ou9gEDQ
+ bveWWmSJQbL9iOf/iktKRK8dKa6Kh2QNGJ0w44LgkVm9htq2adyIZDrWPz+2d8b/uuQx
+ ud9b+PsV8DM9Z6QHt6T2MZkTz4imz3vXPlChzkg728VxpvS3cJRHUnpHmEkGjTeDoFEA
+ dz6n+HGS6zHDILxJW8nA0K67y57tbuWidrZv4MXBF5V7O7vsPP6Nz2XlzIjpujtqK8wZ
+ nPQ8E9LRh9WtNqKjJ98IkL8qZfZVGtM5fpIqUkRs9qKBVEES+/xNDA/pESb06Sw2VMBY
+ pcvA==
+X-Gm-Message-State: AFuF++nKXwT9Yed98J48KhhNzwiNfoi5gK+rJURKFaHcx0hpOuE9kRgs
+ 6emsAtIofrTLLUrHEtG5NY89JBZ3QdQIY5sONJzB/owbcXm0EAAEgYEnnLDskJrMRKA/2tayZKt
+ urpyaq8WMirTZw7dRmYwHiCDoXwWupkAcIljd8/O8Yg==
+X-Gm-Gg: AYBFou15C4aPBX8lKmGJpPdm+Im6DWBn3oBvDaBQM60cmdJjjoZktXotvtjMrz3Trr9
+ HBwZw0fpnm9JhDfD0LcdNWTPcry/w0EAkv99F5WUb/nIgEpY8dpI0YTlm167njwr6WtacVwztQ6
+ pUss4bFycGP8feXfYeZfJfLP3IkVG15Sb5xh9uhhfe/UBbygtwN6vMfOzOrjqn+Pncuo75fep9g
+ nbO0UyRYso6402gttHHzD6nbFhLW7JH+DKyssQJGuzO4iYRZCtHXb4yhk+vjEdnRiDmhYSDBxV7
+ RiGXL14M9b+1AoJYyMFhPvTUSc+tolllRd0D6sRGHA/pBUELzLZ2HehIROBYoxc7XQ==
+X-Received: by 2002:a05:6402:24dc:b0:6a7:ee56:8156 with SMTP id
+ 4fb4d7f45d1cf-6aa579ad808mr627209a12.36.1789723088507; Fri, 18 Sep 2026
+ 02:18:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260918004225.827-1-luoyonggang@gmail.com>
+ <20260918004225.827-4-luoyonggang@gmail.com>
+ <724e2043-fbd3-4c1d-85b3-a2e6056b9ec8@linaro.org>
+ <CAE2XoE8X8cAS0CsQ52pgBXsrbND14bL03SehRnx64tCGSOxrWw@mail.gmail.com>
+ <975a89d3-3614-494e-bdc4-3d892658f095@linaro.org>
+In-Reply-To: <975a89d3-3614-494e-bdc4-3d892658f095@linaro.org>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 18 Sep 2026 17:17:52 +0800
+X-Gm-Features: AcwNN1VPAOtFQGt39bUNUXlAfMC664jutReThqDuSTP16jy6xd6XWfznJ443UG4
+Message-ID: <CAE2XoE8HqY3XH-myj1Y-w4g9FM1mbzFXU+cf-3pkYeV8-quRog@mail.gmail.com>
+Subject: Re: [PATCH 03/21] accel/tcg: add helper raise_excp
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000efd5cc065bbe607a"
+Received-SPF: pass client-ip=2a00:1450:4864:33::26;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x26.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,143 +115,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark Cave-Ayland <mark.caveayland@nutanix.com> writes:
+--000000000000efd5cc065bbe607a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On 17/09/2026 09:52, Marc-Andr=C3=A9 Lureau wrote:
+On Fri, Sep 18, 2026 at 4:09=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 >
->> Hi
->> On Wed, Sep 2, 2026 at 6:42=E2=80=AFPM Mark Cave-Ayland
->> <mark.caveayland@nutanix.com> wrote:
->>>
->>> This is eventually intended to be a replacement for object_property_add=
-_alias()
->>> which uses an object property instead of a class property.
->>>
->>> With the advent of class properties, it is possible that QOM may attemp=
-t to
->>> set or retrieve the value of an unset alias property. Update the existi=
-ng
->>> property_get_alias() and property_set_alias() functions to use the null=
- visitor
->>> if the alias target has not been set, and property_resolve_alias() to r=
-eturn
->>> NULL for the same case.
->>>
->>> This ensures that unset class alias properties accessed e.g. via the mo=
-nitor do
->>> not cause QEMU to crash.
->>>
->>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->>> ---
->>>   include/qom/object.h |  25 +++++++++++
->>>   qom/object.c         | 100 +++++++++++++++++++++++++++++++++++++------
->>>   2 files changed, 113 insertions(+), 12 deletions(-)
->>>
->>> diff --git a/include/qom/object.h b/include/qom/object.h
->>> index e24f0a2b2d..96c76975ef 100644
->>> --- a/include/qom/object.h
->>> +++ b/include/qom/object.h
->>> @@ -2263,6 +2263,11 @@ ObjectProperty *object_class_static_property_add=
-_uint64_ptr(ObjectClass *klass,
->>>                                             const uint64_t *v,
->>>                                             ObjectPropertyFlags flags);
->>>
->>> +typedef enum {
->>> +    /* private */
->>> +    OBJ_PROP_ALIAS_CLASS =3D 0x1,
->>> +} ObjectPropertyAliasFlags;
->>> +
->>>   /**
->>>    * object_property_add_alias:
->>>    * @obj: the object to add a property to
->>> @@ -2283,6 +2288,26 @@ ObjectProperty *object_class_static_property_add=
-_uint64_ptr(ObjectClass *klass,
->>>   ObjectProperty *object_property_add_alias(Object *obj, const char *na=
-me,
->>>                                  Object *target_obj, const char *target=
-_name);
->>>
->>> +/**
->>> + * object_class_property_add_alias:
->>> + * @klass: the object class to add a property to
->>> + * @name: the name of the property
->>> + * @offset: the offset from the object instance where the object alias=
- is
->>> + *   stored
->>> + * @target_type: QOM type we expect the alias to resolve to
->>> + * @target_name: the name of the property on the forwarded object
->>> + *
->>> + * Add an alias for a property on an object.  This function will add a=
- property
->>> + * of the same type as the forwarded property.
->>> + *
->>> + * Returns: The newly added property on success, or %NULL on failure.
->> actually, it assert() on error and never returns NULL.
+> On 9/17/26 18:06, Yonggang Luo wrote:
+> >  > (1) Put the comment before the implementation, not the header.
+> >  > That avoids whatever you're concerned about vs patch 2.
+> >
+> > Indeed I tried, and I found basically all tcg's gen_ function have no
+> > comment(detect by the auto-tools),
+> > and it's parameter arg0 arg1 arg2 that can not understand at all; and
+> > can not link to the impl
+> > helper_* that defined as HELPEP(X) that makes me reading the tcg code
+> > very hard.
 >
-> I was able to reproduce this by attempting to add a class alias property =
-with the same name again, and then started to look at other related functio=
-ns do to understand what the behaviour should be. There seems to be a numbe=
-r of existing issues here:
+> Ah, new-fangled tooling.  Something I don't use.
+
+I
+
 >
-> - object_property_try_add() returns NULL in the case a property cannot
->   be created (which seems to be only when an attempt to make add a
->   property that already exists). However since object_property_add()
->   always passes &error_abort, then QEMU terminates immediately without
->   returning the NULL.
+> To me, the only thing that's interesting is the implementation.
+> That is, helper_foo.  The wrapper, gen_helper_foo is not interesting.
+>
+> Since I don't use it, I'm not sure what to suggest.  Putting big block
+> comments in what are essentially templates does not make much sense.
+> Is there something the tooling can use to cross-reference the "real" code=
+?
 
-Convention: when we have a pair of functions FOO_try_BAR() and
-FOO_BAR(), the former can fail and the latter cannot.  The latter is
-useful when failure would be a programming error.
+Using `clangd` can do that, any IDE along with clangd  e Language Server
+Protocol (LSP)  will work with that.
 
-When FOO_try_BAR() sets an Error on failure, FOO_BAR() is a thin wrapper
-that passes &error_abort.
+>
+> >  > (2) Don't pass an extra argument that changes behavior like this.
+> >  > Better to have two separate functions, each doing one thing.
+> >
+> > how about gen_helper_raise_excp and gen_helper_raise_excp_restore
+>
+> Sure.
+>
+> >  > (3) Maybe better to place the functions in cpu-exec-common.c, so tha=
+t
+> >  > the compiler can see all the definitions at once.
+> >
+> > Do you mean do not use  DEF_HELPER_FLAGS_3 at all?
+> Absolutely not.  I meant put helper_raise_excp* in cpu-exec-common.c
+> instead of tcg-runtime.c.
 
-We pass &error_abort when failure would be a programming error.  It's
-more concise than "call then assert it didn't fail".  Concise is good.
+Thanks, now I know how to go next,
 
-The wrapper makes calls that cannot fail even more concise.  Worth
-having only when there are plenty of callers that profit from that.
-Someone decided this is the case for object_property_try_add() /
-object_property_add().
+void HELPER(raise_excp)(CPUArchState *env, uint32_t exception)
+{
+    cpu_loop_exit_excp(env_cpu(env), exception, 0);
+}
 
-> - object_class_property_add() will currently assert() if an attempt is
->   made to add a duplicate property: it is fairly trivial to update it to
->   return the same error that object_property_add() does, however it is
->   interesting to note that the kernel-doc states that
->   error_setg(&error_abort, ...) should NOT be used. However in this case
->   it appears to return a genuinely helpful message which I think is
->   worth keeping.
+or
 
-The only difference between object_class_property_add() and
-object_property_add() should be where the property is recorded (class
-vs. object).  In particular, they should treat failure the same way.
+void helper_raise_excp(CPUArchState *env, uint32_t exception)
+{
+    cpu_loop_exit_excp(env_cpu(env), exception, 0);
+}
 
-This may make object_class_property_try_add() necessary.
 
-> - There are several places in qom/object.c that do not check the
-> return value of object_property_add() / object_class_property_add()
-> such as object_add_link_prop(), object_property_add_alias() which
-> could potentially dereference a NULL pointer.
+which I should use? I'll prefer  HELPER(raise_excp)
 
-object_property_add() is specified not to fail, i.e. not to return null.
-It's a programming error if it does.  Letting the program crash on
-programming errors by dereferencing a null pointer is just fine.  We can
-dress up the crash with assert(obj), but I wouldn't bother.
+>
+>
+> r~
 
-Use object_property_add() when failure is a programming error.  Use
-object_property_try_add() and handle the error when it's not.
 
-> It feels like the assumption is actually that these functions will &error=
-_abort rather than returning NULL as indicated by the kernel-doc. Any thoug=
-hts on what we should do here? Ideally we want the same behaviour between t=
-he object_property*() and object_class_property*() functions to aid the tra=
-nsition.
 
-Hope this helps!
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
-[...]
+--000000000000efd5cc065bbe607a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br><br>On Fri, Sep 18, =
+2026 at 4:09=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
+derson@linaro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt; w=
+rote:<br>&gt;<br>&gt; On 9/17/26 18:06, Yonggang Luo wrote:<br>&gt; &gt; =
+=C2=A0&gt; (1) Put the comment before the implementation, not the header.<b=
+r>&gt; &gt; =C2=A0&gt; That avoids whatever you&#39;re concerned about vs p=
+atch 2.<br>&gt; &gt;<br>&gt; &gt; Indeed I tried, and I found basically all=
+ tcg&#39;s gen_ function have no<br>&gt; &gt; comment(detect by the auto-to=
+ols),<br>&gt; &gt; and it&#39;s parameter arg0 arg1 arg2 that can not under=
+stand at all; and<br>&gt; &gt; can not link to the impl<br>&gt; &gt; helper=
+_* that defined as HELPEP(X) that makes me reading the tcg code<br>&gt; &gt=
+; very hard.<br>&gt;<br>&gt; Ah, new-fangled tooling.=C2=A0 Something I don=
+&#39;t use.<br><br>I<br><br>&gt;<br>&gt; To me, the only thing that&#39;s i=
+nteresting is the implementation.<br>&gt; That is, helper_foo.=C2=A0 The wr=
+apper, gen_helper_foo is not interesting.<br>&gt;<br>&gt; Since I don&#39;t=
+ use it, I&#39;m not sure what to suggest.=C2=A0 Putting big block<br>&gt; =
+comments in what are essentially templates does not make much sense.<br>&gt=
+; Is there something the tooling can use to cross-reference the &quot;real&=
+quot; code?<br><br>Using `clangd` can do that, any IDE along with clangd =
+=C2=A0e Language Server Protocol (LSP) =C2=A0will work with that.<br><br>&g=
+t;<br>&gt; &gt; =C2=A0&gt; (2) Don&#39;t pass an extra argument that change=
+s behavior like this.<br>&gt; &gt; =C2=A0&gt; Better to have two separate f=
+unctions, each doing one thing.<br>&gt; &gt;<br>&gt; &gt; how about gen_hel=
+per_raise_excp and gen_helper_raise_excp_restore<br>&gt;<br>&gt; Sure.<br>&=
+gt;<br>&gt; &gt; =C2=A0&gt; (3) Maybe better to place the functions in cpu-=
+exec-common.c, so that<br>&gt; &gt; =C2=A0&gt; the compiler can see all the=
+ definitions at once.<br>&gt; &gt;<br>&gt; &gt; Do you mean do not use =C2=
+=A0DEF_HELPER_FLAGS_3 at all?<br>&gt; Absolutely not.=C2=A0 I meant put hel=
+per_raise_excp* in cpu-exec-common.c<br>&gt; instead of tcg-runtime.c.<br><=
+br>Thanks, now I know how to go next,=C2=A0</div><div dir=3D"ltr"><br>void =
+HELPER(raise_excp)(CPUArchState *env, uint32_t exception)<br>{<br>=C2=A0 =
+=C2=A0 cpu_loop_exit_excp(env_cpu(env), exception, 0);<br>}<br><br>or<br><b=
+r>void helper_raise_excp(CPUArchState *env, uint32_t exception)<div>{</div>=
+=C2=A0 =C2=A0 cpu_loop_exit_excp(env_cpu(env), exception, 0);<br><div>}<br>=
+<br><br>which I should use? I&#39;ll prefer=C2=A0
+
+HELPER(raise_excp)<br><br>&gt;<br>&gt;<br>&gt; r~<br><br><br><br>--<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=
+=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</di=
+v></div>
+</div>
+</div>
+
+--000000000000efd5cc065bbe607a--
 
