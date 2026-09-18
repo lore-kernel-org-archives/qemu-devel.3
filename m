@@ -4,90 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72353C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 19:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB86C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 19:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7ede-0003k5-GD; Fri, 18 Sep 2026 15:52:50 -0400
+	id 1x7ee7-00043N-TA; Fri, 18 Sep 2026 15:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x7eda-0003jX-5I; Fri, 18 Sep 2026 15:52:48 -0400
-Received: from mx2.catap.net ([65.21.79.163])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x7edY-0003Tk-25; Fri, 18 Sep 2026 15:52:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=w+9Oc1G
- Z+tSc2422JUufOk85mLpBtgfjlwkY0HBK0iQy2+DKIWVsTI+RG6GwEI89nE+4yES9RBWB4
- 25qbHD2mGjNDOTKUOZYr1BigSn5Wps42evAnytg9u9tMKPFl6it5uaN9X5IkdWrP7FjEzs
- Wk+s9O1DMt7IWGwUTHTWQZF12/F3dNvdCcm2RbgnfUHHnfQUWHId6G61rbtlnQSJtjy5pm
- CT/oRoTI36Gj0bs/kq5iMilOnMBZ5YU+tVPh5PZ6lpypHlXPUg5TtJrXQys7HtiYw6jdm9
- HLEl1SXCzUtdFCq6+ZMAzx5V/G/F5mQJEnQYGM7dv2SODZZ92YXfOzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=V
- KEZJZ1wvNuD36ERDKSH5tVfm0IejyRum9qish0hOIE=;
- h=references:in-reply-to:
- subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
- b=ewbYg+uyvjI6kFDtiy6iFTVe/L8ZDyc1s4997cdqVvNHpvKFak414zZI46c+b8p8iOnu
- gWMel2v+zG5ynzpZH79Y5suvZsEkKVzkZZA8lMGNA7Ci5BLpr/9QLGvpkA5vR20LVd7a2h
- HSD7cCGaqUrWH+7D8PeuyhlRmcbfIFhNfSlOBkVZm5gJ9n4otmBdyl8gj17OR8nU0hOOfv
- Lz+XZXFwI1hP1nii4qjB1Ydjv3or9p/+hFRICsIboFqnyr3FJ4CuH94d1OuLANGK71PNo1
- 796sxIwrnXc59TKiMDnwXxF0SauM3dxKx2KcvElsAi3PRYgY5qNsMk6ngm43VxYg==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=TQk8ZoVn; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=0Ud1RvhT;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=VKEZJZ1w
- vNuD36ERDKSH5tVfm0IejyRum9qish0hOIE=; h=references:in-reply-to:
- subject:cc:to:from:date; d=korins.ky;
- b=TQk8ZoVncvwxWWZR2q11SwfXbnvb2O
- ydiQlibwzIq7/Sm/4xOjoEt9YY3qnxkaWqrIbvSXGLZFqn6SEee9eJoYYnqxYU4zer44Bg
- 0diXxNowMgQJK+2oBmloQSfPBxzsXZFaryRn1qhiPQfYZBLhy7RPIkcE4/ZXV+uVdzcarD
- AyXX8rTZYI3B50C/0B4XqgbTCEd3SPRCAG83lO9adFRJ6Xh53A2eFGvxNH1f0RhlMZnABN
- yiSUN7au+mvpOc++ZIFAB0/HJrBDfhC5YJM+7h1rerBuHA0bOlIOwSVtncGOoW1P38+6Ti
- 8SAkdpBopBHR61moj132t2+iSmPMfXdQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=VKEZJZ1wvNuD36ERDKSH5tVfm0IejyRum9qish0hOIE=; h=references:
- in-reply-to:subject:cc:to:from:date; d=korins.ky; b=0Ud1RvhTt4dLL+PTqv
- YlbgXmvlZJfih5807dcxnXYh4RKONyEhN8DbShxUVLHN9nI4diXi+oIIT7JNKQRWgHAg==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 28078bd0
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 18 Sep 2026 21:52:34 +0200 (CEST)
-Received: by matebook.home.arpa (OpenSMTPD) id 56eb637c;
- Fri, 18 Sep 2026 21:52:31 +0200 (CEST)
-Date: Fri, 18 Sep 2026 21:52:31 +0200
-Message-ID: <87h5jmuykg.wl-kirill@korins.ky>
-From: Kirill A. Korinsky <kirill@korins.ky>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH 5/5] tests/functional: Boot OpenBSD on mac99
-In-Reply-To: <0a82d49f-61ad-32e5-fd78-9adbe2e6c2c6@eik.bme.hu>
-References: <20260903115229.95811-1-kirill@korins.ky>
- <20260903115229.95811-6-kirill@korins.ky>
- <7b782da8-5424-4c6c-b9b7-7ca50fc6749b@ilande.co.uk>
- <0a82d49f-61ad-32e5-fd78-9adbe2e6c2c6@eik.bme.hu>
-User-Agent: Wanderlust
-Mail-Followup-To: balaton@eik.bme.hu, mark.cave-ayland@ilande.co.uk,
- rathc@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, "Kirill A. Korinsky" <kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7ee5-00042m-QZ
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:53:17 -0400
+Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7ee4-0003c3-5D
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 15:53:17 -0400
+Received: by mail-pz2-x0d.google.com with SMTP id
+ 41be03b00d2f7-cc50d1b048eso1014096a12.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 12:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789761194; x=1790365994; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vjdXuaG3iJg7i7k9uMXqziqO22/cGEXfDziw3Ph4U7M=;
+ b=CDLVBf0TP9S4FbP5/4nRhgv+Zlpmh+O86KNwvfNLskR3EXK1JX/iUp7CFhbD6lFqjX
+ DKd+csQVVOqXsvLu9htJ1SVFuNWTvAYigfV5A2FCDzuV22pevEq+a/lyfH1dPXX75wVi
+ 7FNXayEbXCv4MXP5fbm2+4AG/bevkFdSo4TOpo5froBpOxqiKQTHKP4KoXXbCsSP9A/+
+ WET2LE9qN/JwvCOjPdMNyjav1cdvWQgVlPTJjbVBE2T09VH4Osn9aBn+f1FLHC8xXV1p
+ 9BgvkVgNQ0cR9b0Mi3mZyVCtdL29v+0UfzX4M2tYLfJ7biOZeQE2bybGJ8fouRU7Wiv3
+ fDHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789761194; x=1790365994;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=vjdXuaG3iJg7i7k9uMXqziqO22/cGEXfDziw3Ph4U7M=;
+ b=l4cmg27T5vCCPEw4lo9iXKcpr6561xVj8VPjE62muiEh7NzI9gkqQVfTXG+UMSSxLB
+ senNChWQh0LTVwORhlM1D+OkdkLTBJPDtUmOZE15+xzdQTz1ppIAgefoYMsvB3lB5uKZ
+ PA2diA71V7rT0z9KJEUhIrTqqap17IR2jGQCvPeE5MN9Csm4KIfNUeOExLAi4XkfCgTF
+ ePm8+lbzX/XhVGrXvXt38WXOHmxke5QfmmsY3lTrZ+rdwFygVWC51EE7D7PKwNYgJUEg
+ XiHkmuKcQXCs+vRMl5KocoLtK7cjXGpgH9rC2CkIxYkyZDKUyHoS1CsFuqAI1B7BZbCw
+ 8dWw==
+X-Gm-Message-State: AFuF++nXvkXcXz2vHKqKgZDBS1PBdP13MdIYE/ujPxiE5izVfylpcNRx
+ VlVMV+ckDy9eK/XPT20zQpD2ke+keqsRuI7j5JaT1QnWMTbsqVw8f7zLkv91B9ZlfPQ=
+X-Gm-Gg: AYBFou0V0ohFHZOUzGyXUwEZEn4SHf2TB431aOTzkhm6+S9tomnGA9F4tOXO29ApMNW
+ UnGN24RITQU55hSwMnw2eLegNmRlSvp79e5HFOLSbIb6BBqQWrh1Y+IVwSEBWdmX8+wfkQVeVdm
+ y4QH26d0t56MSfL3HsUvfo4rJqY3Xu6HJvQmzweL8j6VPxjCIBjgMZdR2D4bFy1AzpR/MeQ4nBL
+ FZs+aSQucO+dkMLgMo2shJL6Tz7d2w+C/2jk2ypZ5qeeCyz7RGsG1+JA9rudGb/rOE1Va2RSGJy
+ 8rh7zImmifsVcXPPLNcSmiISxlHfAsRXn9coQGuO7FvBOzdqeCbWu1kVUSuvTJc8SoIJdjn104l
+ ARqStsoGF8hX3r8y/82lvi7B15v6pNSqwtpVFDGB01EqJUaJuEqYiB0QZ6mAn2L0x2qUo74lD/p
+ ili8x5l/Oe10wWxzxw4VYUE4Wj3fI62KLl4PDBttrcWslwnHSP+kcT1kn/XGQjl8qjAlrqsSTyy
+ bm/kXr6wAH9/6WGfEhgRw3ZzzGAVaOVmKW/FS+Nwa3GOkragUigQnUkgHv3AQ==
+X-Received: by 2002:a17:90a:6c8f:b0:39e:5acb:2849 with SMTP id
+ 98e67ed59e1d1-39e5acb6103mr3999418a91.17.1789761194449; 
+ Fri, 18 Sep 2026 12:53:14 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:317e:3514:d7db:974c?
+ ([2603:800c:7900:ed00:317e:3514:d7db:974c])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c33142a37sm878920eec.15.2026.09.18.12.53.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Sep 2026 12:53:13 -0700 (PDT)
+Message-ID: <6752efa2-799a-4c9d-aa4a-ee96bbe1810c@linaro.org>
+Date: Fri, 18 Sep 2026 09:53:11 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/17] tests/docker: strip remaining caching logic from
+ docker.py
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260917165602.3405537-1-alex.bennee@linaro.org>
+ <20260917165602.3405537-12-alex.bennee@linaro.org>
+ <a42e8f17-8bdd-4c9b-b465-0428ada507e7@oss.qualcomm.com>
+ <87fqz77dln.fsf@draig.linaro.org>
+ <7a587ac5-b7bb-4c69-a022-3e65e49070c6@oss.qualcomm.com>
+ <96e3f93f-a12f-4d18-badd-2ea60efc715b@linaro.org>
+ <26dff9eb-b48b-4fd1-822a-806c3e83aadd@oss.qualcomm.com>
+ <87a4pf6moc.fsf@draig.linaro.org>
+ <d1cf4f82-5604-47b1-887c-99d69cf1b754@oss.qualcomm.com>
+ <87y0cy6ace.fsf@draig.linaro.org>
+ <7393baca-7746-4211-94cd-e0400cb864b2@oss.qualcomm.com>
+ <5bc81802-f243-4faf-822a-04adb5717563@linaro.org>
+ <8c2c4869-d31a-4551-bcea-49f4f45a8fe0@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <8c2c4869-d31a-4551-bcea-49f4f45a8fe0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,22 +117,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Sep 2026 16:18:52 +0200,
-BALATON Zoltan <balaton@eik.bme.hu> wrote:
+On 9/18/26 09:22, Pierrick Bouvier wrote:
+> On 9/18/2026 10:58 AM, Richard Henderson wrote:
+>> On 9/18/26 07:07, Pierrick Bouvier wrote:
+>>>     # finally create a top level target to rebuild all tests
+>>>     alias_target('tcg-tests', exe_targets)
+>>
+>> FWIW, that used to be called build-tcg.
+>>
 > 
-> Isn't via=cuda still the default? But why not use via=pmu instead that
-> actually emulates something that exists in real life as opposed to G4
-> with cuda which does not match the rest of the hardware mac99 emulates.
-> With mac99,via=pmu it is close to a real PowerMac3,1 Mac which is also
-> what OpenBIOS tells the guest so I think that's a better config to use.
+> Would you prefer to change name to that?
 > 
+> I don't mind personally, and if some people were used to it, it makes
+> sense to provide the same.
+If we're going to provide a fake target at all, we might as well keep it 
+the same.
 
-When I figured out how to make it works I had tested both via=pmu and
-via=pmu-adb and both reached mounted rd0 but hangs.
+Though being able to run individual tests from the make/meson 
+command-line is probably the biggest new feature, plausibly obviating 
+most uses of "just build all the tests so I can run the one I want 
+manually".
 
-If I recall right (it was in begining of summer) I had some issue with PMI
-tick and some IRQ.
 
--- 
-wbr, Kirill
+r~
 
