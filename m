@@ -4,107 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F04DC982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 21:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F570C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 22:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7gZZ-0004GX-97; Fri, 18 Sep 2026 17:56:45 -0400
+	id 1x7h5F-0007YA-Sx; Fri, 18 Sep 2026 18:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7gZW-0004BI-UY
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 17:56:43 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7h5E-0007Xk-8l
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:29:28 -0400
+Received: from mail-pj2-x16.google.com ([2607:f8b0:4864:39::16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7gZR-000373-L8
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 17:56:40 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C200D21DB0;
- Fri, 18 Sep 2026 21:56:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789768592; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WSupzlOjZXxO5d++9IUKd7X6vzexwIwk1jsKdF60F+Q=;
- b=QcYLbi4nexc1aKMHgftDaOHtXUpYC8/v7sah6JEtEqpKka4lQuWn74RaGJDpW20qlKHE8T
- Do/18xkFf3S/4lXqq9dReAHngL2kURBOeAX7jv0182ICUuzJ1bJxHpt0gUkaj5fo9UchRg
- xykvTiGDU11JfDhu57n6OpBZHV8VlmM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789768592;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WSupzlOjZXxO5d++9IUKd7X6vzexwIwk1jsKdF60F+Q=;
- b=YkYuiXxhTlG0kN8DIM7G5cNhjVi9Df9EWlD0LcTQPJLO09gdztxpA13mxhLQCJEMlBYMz7
- cVNVVEQyNRtO1CCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789768587; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WSupzlOjZXxO5d++9IUKd7X6vzexwIwk1jsKdF60F+Q=;
- b=t8l4dm5OlNrz5nr3bHzhCpGjA5ft9MaCl/tT9EY9Q+mCw0F1/Qkrpfdp5CbphIvckPAZi9
- Lsi3DQn1Jisk0eBRFTnCCvBysz0o3TGkaEwN4CNkP3If7lZqT1cC8VcwlPlJbKuPV/OKRG
- 2SP9l9D4M+BC5Iq+JRff7tO3GtE4Ts0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789768587;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WSupzlOjZXxO5d++9IUKd7X6vzexwIwk1jsKdF60F+Q=;
- b=OHLuFxhLycYXQz3sEVfb/4AETzn/U5+hBsE93yotFfxPO073Vj8xmleXCiyHoGZt9bfrcQ
- h0pk58uDDbV623BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ECA5A1348F;
- Fri, 18 Sep 2026 21:56:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id adOmI4qzrWqHVAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 18 Sep 2026 21:56:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 0/10] system: add a watchdog for the Big QEMU Lock
-In-Reply-To: <20260915203455.580999-1-den@openvz.org>
-References: <20260915203455.580999-1-den@openvz.org>
-Date: Fri, 18 Sep 2026 18:56:16 -0300
-Message-ID: <87mrterzpb.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x7h5C-00004s-IE
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:29:27 -0400
+Received: by mail-pj2-x16.google.com with SMTP id
+ d9443c01a7336-2db22383fe8so8463445ad.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 15:29:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789770565; x=1790375365; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cjovbqUG8pDb3JYn/0DqlIpADH3BiP3dQlfOoMfeXEU=;
+ b=ocl1kzvOf8K4TFFMBzeh3m2vkB0umkI6IbzawOI+S8CrOxtYJamFqnxsl3pRVOFmpG
+ Ppr0eU8sfMqfEwSIyHyPXwx7+TS/zqOLXfb0e1znsBET2HknbQ3OGRTBkGsOo6JWdm3o
+ 0NeH3VD+Wb0cm7nFgwzpu1lBErSqIycetQYpebB7ymycAh6vWz1qMyNHcy1xtdAUh2bm
+ 1BeZS/9V+vnIhItWe1pWmyOfwvOpRNUN/atUODH0zj+x97Tb1zB1aRXqesLICzuFlt5d
+ Uf/BQQ4VF7Y/gt0Ul6zApJdUjaVDK4qymzLTt9CZ5ZfcyyTk7mxRH74YQ/o78HBYhmVS
+ BAOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789770565; x=1790375365;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cjovbqUG8pDb3JYn/0DqlIpADH3BiP3dQlfOoMfeXEU=;
+ b=ZWK3gpayetJDa7qmd6Z32VAzPXf00jHCI/hGfchTGNsVLlu5uOmkpD6UTNFiO7ETVQ
+ l47gJR9djqwRogiVC1/+bFBKg9P6O1Ex2Y2UccblZNhnLpnz+zZkEl7LLUXQqAqKn6IX
+ CEWrIN8Kg1iVmS/bnfYH2K5HvlZSl1ogfLravAJnr66WuUEVZYsaBlv2003JqNyO0r1X
+ iafKRvMe52CTm9udHB96JeBWjq5/CUEAPScI7P+3Yz5gvHYUVK/vkqySXp3Vf0/4QVXQ
+ Y1rdNfdyYAflaKkEKKHeTXClGny1fZJK1SfzZUpTtikHXiU5Uk3DgltnkoyxYZytmaY/
+ Ysmw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByRiziu/Q3AyZWrAVVlf2nNhkloPz8be6/txKxqvr8CwazfwxmPtks4STOlIYGLWZDgBfTm74hCS3zW@nongnu.org
+X-Gm-Message-State: AFuF++lwu76n6we5g0nIRYljvBna8XcYDt+woHUIKQ7ZoWjDOvBmiixO
+ VwTKfPYen5zjXdoPmr0+PnDMpg3ImMB+FqRHpu9lhciEskYjpasQHTyBBYFyqCdJIvg=
+X-Gm-Gg: AYBFou0UNCN/Sdlrm1ZFZL/bl5mJUQscuhgnpO7SAtSTsEQNFM0wU9aj3d2nHjQqA52
+ zuBcsZ0oDYr++MfSMPb+HlHTmYME2xwKAO55vBmJ/EyXRZ5XJZZMNSUkYrwtAuagmLfIdebgaPu
+ qFTta+4/VwHprvkS6cTQzEF6DBk1QfpYd5RxpLYgWfEutDhdbe/X2GumPpcnlDgiKvMcNDhHg+a
+ a6ZlcYNiMOjrdOyHIhqOU0TZZkmaDetVRT95YsGVMFlcBrw1O93/NX/s5+DHGg8Lbwwbz5Ti8WJ
+ 9zJlTwRelTWhpeiPiaphsATEtP4bCJ9Ywa4G6spfYC0SigTYX5ggnksd43LCecxCKAMrePA6t2b
+ W0fs8RMQ2zCl2tjNCJVanabCuVpFstQ02zlki3qpBWjJSLkChw920j0xKcGjy2l0BIaDRaqzFHu
+ SIYxLnaJmVaaVBVjOgBwHzo1lA5pz7QgjxBJdr9a/jm9PqRc7IyY6yymjjPTYamsm/czsGTp4KL
+ ws6q92Lxt2oSADEjMqh7EzUoPl/yuQhCQ4gCQ81yerrUbQOtUB6g5qhTRE0Rw==
+X-Received: by 2002:a17:903:1a0b:b0:2dd:7549:39d0 with SMTP id
+ d9443c01a7336-2ddb1b86d77mr65676925ad.18.1789770564614; 
+ Fri, 18 Sep 2026 15:29:24 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:fc68:7352:7265:5984?
+ ([2603:800c:7900:ed00:fc68:7352:7265:5984])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c3311a6e5sm1457181eec.7.2026.09.18.15.29.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Sep 2026 15:29:24 -0700 (PDT)
+Message-ID: <83bac8eb-9b82-4af7-ba99-d517fe84cd7b@linaro.org>
+Date: Fri, 18 Sep 2026 12:29:21 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- qualcomm.com:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/tcg/meson.build: reintroduce build-tcg target
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260918202704.9790-1-pierrick.bouvier@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260918202704.9790-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::16;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x16.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,116 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Denis V. Lunev" <den@openvz.org> writes:
+On 9/18/26 10:27, Pierrick Bouvier wrote:
+> The refactoring introduced a new target named tcg-tests to build all
+> ... tcg tests.
+> Previously, this target was named build-tcg. Keep both for compatiblity
+> sake if people were relying on it.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   tests/tcg/meson.build | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+> index a5e0462732d..a571b939b89 100644
+> --- a/tests/tcg/meson.build
+> +++ b/tests/tcg/meson.build
+> @@ -522,4 +522,6 @@ endforeach
+>   if exe_targets.length() > 0
+>     # finally create a top level target to rebuild all tests
+>     alias_target('tcg-tests', exe_targets)
+> +  # before, this target was called build-tcg. Keep it for compatibility sake.
+> +  alias_target('build-tcg', exe_targets)
+>   endif
 
-> A vCPU thread reacquires the BQL on every exit that needs userspace. A
-> holder that keeps it for tens of seconds stops every vCPU, the guest
-> reports a soft lockup or panics, and qemu itself records nothing. The
-> guest log is the only evidence, and it cannot say whether the hypervisor
-> held the lock or the guest wedged on its own.
->
-> This series adds a BQL watchdog. A sampler thread watches a sequence
-> counter that bql_update_status() advances on every acquire and release.
-> One odd value across the whole window means one owner held the lock for
-> the whole window. On expiry the watchdog names the holder and prints the
-> state of every other thread:
->
->   qemu-system-x86_64: 2026-09-15T15:53:57Z BQL held for more than 100 ms =
-by thread 168146
->     168146  qemu-system-x86  S
->         pc 0x785a4dbcb884 liburing.so.2+0x2884
->         wchan io_cqring_wait
->     168147  call_rcu         S
->         pc 0x785a4d534acb syscall+0x1b
->         wchan futex_do_wait
->     168148  IO mon_iothread  S
->         pc 0x785a4d4ac802 libc.so.6+0xac802
->         wchan poll_schedule_timeout.constprop.0
->
-> With CAP_SYS_ADMIN the wchan line becomes the kernel stack. The pc line
-> comes from signalling each thread and reading the program counter out of
-> its signal frame, which is what tells a thread spinning in userspace
-> from one asleep in a syscall.
->
-> The watchdog is off by default and stays quiet under a debugger. Two
-> machine properties drive it: bql-watchdog-ms sets the deadline, on the
-> command line or over qom-set at any time, and bql-watchdog-abort turns
-> the report into a core dump for hosts where the answer is worth more
-> than the guest.
->
-> Patches 1 to 6 are the pieces: a fix for bql_locked across the timed
-> condvar wait, a debugger check, the per-thread state reader and its
-> kernel stack and program counter extensions, and the signal reserved for
-> the latter. Patches 7 to 9 are the watchdog itself. Patch 10 is a
-> functional test that holds the BQL through an HMP qemu-io write to a
-> null-co node with a latency longer than the deadline.
->
-> The program counter lives at a host specific offset in the signal frame,
-> so patch 6 reads it through a host/include header. The Linux headers for
-> aarch64, ppc64, riscv64, s390x and loongarch64 repeat what linux-user's
-> host-signal.h already knows about those frames, but only the x86_64 one
-> has been compiled here, and the Windows half of patch 1 has not been
-> compiled either.
->
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Cc: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
->
-> Denis V. Lunev (10):
->   util/qemu-thread: track bql_locked across the timed condvar wait
->   oslib: add qemu_debugger_attached()
->   oslib: add qemu_thread_states()
->   oslib: report kernel stacks in qemu_thread_states()
->   util/qemu-thread: reserve a signal for thread introspection
->   oslib: report each thread's program counter
->   system/cpus: report a BQL held past a deadline
->   system/cpus: hold off the BQL watchdog under a debugger
->   system/cpus: add bql-watchdog-abort
->   tests/functional: cover the BQL watchdog
->
->  host/include/aarch64/host/signal-pc.h         |  20 ++
->  host/include/generic/host/signal-pc.h         |  11 +
->  host/include/loongarch64/host/signal-pc.h     |  20 ++
->  host/include/ppc64/host/signal-pc.h           |  22 ++
->  host/include/riscv64/host/signal-pc.h         |  20 ++
->  host/include/s390x/host/signal-pc.h           |  20 ++
->  host/include/x86_64/host/signal-pc.h          |  20 ++
->  hw/core/machine.c                             |  44 +++
->  include/qemu/osdep.h                          |  29 ++
->  include/system/cpus.h                         |   8 +
->  meson.build                                   |   2 +
->  qemu-options.hx                               |  11 +
->  system/cpus.c                                 | 143 ++++++++
->  tests/functional/generic/meson.build          |   1 +
->  tests/functional/generic/test_bql_watchdog.py |  60 ++++
->  util/oslib-posix.c                            | 316 ++++++++++++++++++
->  util/oslib-win32.c                            |  10 +
->  util/qemu-thread-posix.c                      |   8 +-
->  util/qemu-thread-win32.c                      |   4 +-
->  19 files changed, 765 insertions(+), 4 deletions(-)
->  create mode 100644 host/include/aarch64/host/signal-pc.h
->  create mode 100644 host/include/generic/host/signal-pc.h
->  create mode 100644 host/include/loongarch64/host/signal-pc.h
->  create mode 100644 host/include/ppc64/host/signal-pc.h
->  create mode 100644 host/include/riscv64/host/signal-pc.h
->  create mode 100644 host/include/s390x/host/signal-pc.h
->  create mode 100644 host/include/x86_64/host/signal-pc.h
->  create mode 100755 tests/functional/generic/test_bql_watchdog.py
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The problem you state is definitely a pervasive one and I've encountered
-it many times. It's a pain do debug. I'm working (on and off, you know
-how it goes) on a perf improvement for dirty logging disabling, which is
-basically this issue after migrate_cancel. I've been writing custom code
-to track the blocking windows, so this series looks like it could help a
-lot.
-
-I'm putting it on my queue to review, I'll make some time for it soon.
-
-One other thing I have in flight is a change to qtests to allow testing
-a linux guest while a worker thread does some BQL intensive work in
-parallel such as serial IO. I'm currently checking the guest serial
-console for panics and lockups, but the watchdog would report the issue
-right at the source.
+r~
 
