@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683EDC982D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48D5BC982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:43:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Mgj-0006eR-JY; Thu, 17 Sep 2026 20:42:49 -0400
+	id 1x7MhM-0007ME-Nu; Thu, 17 Sep 2026 20:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7Mgi-0006bq-ID
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:42:48 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1x7MhK-0007HZ-GV
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:43:26 -0400
+Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7Mgg-0001PF-Tp
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:42:48 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d8fbef5018so2511575ad.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:42:46 -0700 (PDT)
+ id 1x7MhG-0001c2-C4
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:43:26 -0400
+Received: by mail-pz2-x0e.google.com with SMTP id
+ 41be03b00d2f7-cc50bcf87b2so55457a12.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789692166; x=1790296966; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789692201; x=1790297001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wIZSbkvaEy6mXK2aVNYREGi8JRqUA4yskA/TpdLSFIk=;
- b=jLD5FTVQXrmNS66hfw30vJ7DIYX/Wtfw96WXMbvGNRrl2I4RqNSHGYCQUvvxsY1Kqc
- QaSV5pP92Dby1Qvn8w28jAOLII/16b7UiMNsM/K/5bfqiYsUeL6bWHXvuoW5qNedm8Xt
- IKQMMZ5TKBDMJjGjMVRfw7ff9nCCrcvfdGZOCQgwGkKhwDFPVAGu8EIGSl/r8akJdrb+
- Q0/tzXqAHmUQVkdGmY2mVCCq50T9htlmypOo2yyjPo62EuSUMV0N254x7H+GFbISk4i/
- HfATDbdSLfcC2oIWZjlgOe+pSOR2kbtNe19m+x6eociz4ZANJGfTfdzHonYs5nVwAV3p
- PC1Q==
+ bh=zN3y/mIpjt/bmBZNPB+r/pIktPtlMB/bFusxpzCBNfs=;
+ b=mdtE+beUg3X+HxFsLLk/RBU/8iH/6Yo2iwRbQj/ifc9nwIH008pBz92Wo+PpjAiHdr
+ FJ7BSFacLQ6PmcTp3vnbRIDViNuSBdxlsWb+h8Qp8KBAFbMk+/9EpRFLvFZyF+zih9mE
+ DVeKn9otGkO0JNh/4lCUi6pD/se3n6TsdJO6XvS6QvttlGdNESPbGABGACPRMK0lXihy
+ hBiOAvEnK+NhPQROLDsXzqYLsVmtN/E2ZHD2l2lJdbHWkNQfwZNfRqzgVgHxwqw67m6q
+ VUbkH2MkLyC6Ujn6yPLjnWindLCoyXiqYTQIPDZAmhCfBFQpSP5n6TKp7tUdI1EWQzkB
+ hYYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789692166; x=1790296966;
+ d=1e100.net; s=20260707; t=1789692201; x=1790297001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wIZSbkvaEy6mXK2aVNYREGi8JRqUA4yskA/TpdLSFIk=;
- b=BdR6V8qQDouBuyAG0EvwIyKJydMlDyU4dgaGkqvPHeXAL4ywxuURZpsaLR05AOQR6Q
- kbNQzV7I88Q0xPWvL0i68PDBPA1aOv5cpvKY3Rk0Q0N597YxJKTSBLI9g2A+E0ciiRsx
- 7lS4J4D7peFoKHqlj2oLdlOhTLZpN76ldqJV+NE38pMu8e4tG56U/fDLAnnQN+pZJYYL
- DN8RxBftlaBZYOYLgLenr1L42O9VUDr91bNKYqK+adsRGhaxcIRJw0s0Gi0KeGWy9e4g
- xoIYC/7eEIhIo36JGp+Fvjh29G2GtUOML7eqHOL7Z1j+mA/+/nNsq86qnWnuRVZEXs1A
- K0OA==
-X-Gm-Message-State: AFuF++kmXtoGpOZWzk/kGrY2hZFX12cUmEvt/xZN7Y8by5S+aKdh27dV
- zdYzlfDMMLIBSXf2ipXzJ3fVg/a/dxbzZQe10+/vYKsdpG3pU8K4BBVIeqbqEEDGwPk=
-X-Gm-Gg: AYBFou28Sudg1jkky3NeYfYLCfArkJw2noywHXvEh8Hu0L7VmMLcqBvk5e9vMRCISKR
- Tkn8pX3/Pa83klY1TA1ZrF9nxDpPfx0iOzUDYFeOjnrEoVKSKzU3hQvhxevBsFw+7iiE1OGZ2v/
- ecdjCOLa7p0kJkDQGbvA+5EaMChpcKmj/3J9Ka6sbc6cxyoHPgm4Oj2j8rnYZkkzc1zNAV1Ec3A
- OWwZfrdWVNfYeDgVmDfJaL0CzOiYPnYHDaqNRWgPiDZEB1Dq/lDiGW1r4JSlUp2/1GIY5H45Kam
- EqAPeak0bYhsjY1lzyT2FLihRJsvenR8Eboft4oQjeicrkjPp9oYgsWVLAPeaShsOqECHRFT/Iw
- o+7P7yIKLb4Cssv9VMSXlY+iF1SK7w4aebI80yBNOPJ0PNlrXIt+K/4fj9B5ky+WnwGI1xYRgCR
- LOuadc8FVlXnAwhIgbpwvgY+9RwszhROiIhmSTw9zx4ucny63AUx9PyYi2vOx+drBONuY5B1A5V
- 5vmDLNKMWOmrOPL2R+5qwP9w5bifODV
-X-Received: by 2002:a17:90b:17c5:b0:39e:1633:d29e with SMTP id
- 98e67ed59e1d1-39e54cc6ef6mr1830117a91.5.1789692165578; 
- Thu, 17 Sep 2026 17:42:45 -0700 (PDT)
+ bh=zN3y/mIpjt/bmBZNPB+r/pIktPtlMB/bFusxpzCBNfs=;
+ b=dsXQNgBIsamoaQA23EE6AqZAqiq/ets4t7CE820LiC3d2sd7c/VXPKC+2ai8GvF4lR
+ 1t5h1wMmtMTpwzB0w34jbEJkVN4y72Klq+DKdaOiVLZSYgpdTghPjGVs4WiKhVPIwQQG
+ pwbNPDv3ZEPWhkmUWVkjMOq1h0Kxp3wgzzLYQgXuK9BQ17C7lgoYk4CoBEgvGUlObueZ
+ 3KhKz9BMAs5F/mGFyq40bOLtJceA2ag5901R9+RF/0BKfyJ1UgFM2gnMUee26dPiLrax
+ 15wClxUyxgocG0KLrtJ3BTUQVAaeZp5dGCrUgQDEOCLLNp2JsQ17A4RtezgVJaon4wLR
+ kTYw==
+X-Gm-Message-State: AFuF++nB8PquXqk6G9kYpZyV2/L4hNsHBL7dHZLxbwyG8e19KGPACYHr
+ 4/iqNVxFzlyF9QOiBlrDA8EsN8CFJH7AvGBVSufqhqPUFUt8bRzR45NxHE+gLEUv9Eo=
+X-Gm-Gg: AYBFou30y34uxv3M+N98YIvANSnbvqHp5qUq3ME+mpaH9aM5SYLBzENDO7/HaSPlgGN
+ CXKPwH0aJCu5N02I5CjFd2L0d5RVBvFlvlExySlzO4vfBVc7zCFyqOeH7/IDQW0hOAim0FtRyvb
+ s0rdIhwTX+lYkIKD1aIVZbCTjboT3yxUSrVCppUZMrjYqH5T8h8Au2ChN695ZQerbQMlJx+JdCk
+ z4x8qBI0r1kquE8G0wRuQzdZYF6r2FmBYkeD0sYWWqyaOjB/Pqi5MNd1Cf1VmrVMfSWqX646fkd
+ 2qt/NisqxZ5A8sQMuEDsQO3QvHjOD3Arq5Jd/owed3gnkJmYrDbR9TVRvoW6N50R7vPaP5YjKXK
+ Ih1hKMfGlqEbNXJwVSIhJL62E3YqQA0b1U5R1zvspKisASLakbN7oCFYvJu6GcqO2/A+JTzRZbp
+ A7kY8tpAUWfEbEq7ZUegJ5czzSFO9xnw941YV1OURrGEYVNSbldPScAJZ7zTftGu5HdDdpF0ZFY
+ FiYONfahiDZ/Nbo1UO2+PYD5pbQUETG
+X-Received: by 2002:a05:6a20:548d:b0:3dd:85a8:cac7 with SMTP id
+ adf61e73a8af0-3dd8c44e2famr1245944637.30.1789692200945; 
+ Thu, 17 Sep 2026 17:43:20 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-144cdfc3df2sm600286c88.5.2026.09.17.17.42.38
+ a92af1059eb24-144cdfc3df2sm600286c88.5.2026.09.17.17.43.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 17:42:44 -0700 (PDT)
+ Thu, 17 Sep 2026 17:43:20 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-s390x@nongnu.org,
@@ -98,23 +98,22 @@ Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-s390x@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH 01/21] accel/tcg: add cpu_loop_exit_excp
-Date: Fri, 18 Sep 2026 08:42:03 +0800
-Message-ID: <20260918004225.827-2-luoyonggang@gmail.com>
+Subject: [PATCH 05/21] target/sh4: convert raises to raise_excp
+Date: Fri, 18 Sep 2026 08:42:07 +0800
+Message-ID: <20260918004225.827-6-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260918004225.827-1-luoyonggang@gmail.com>
 References: <20260918004225.827-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-pj2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-pz2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,57 +129,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cpu_loop_exit_excp next to cpu_loop_exit_restore. Set
-cpu->exception_index then restore and exit the TB. host_pc == 0
-skips restore, matching existing wrappers.
+Name guest trap numbers SH4_EXCP_* in cpu.h. TCG loop codes such as
+EXCP_INTERRUPT start at 0x10000. Translate illegal and FPU-disable
+through gen_helper_raise_excp. Drop unused raise_* TCG helpers and
+the one-line raise_exception wrapper. Keep leftover sleep, trapa,
+and exclusive helpers. Exit unaligned and tlb_fill through
+cpu_loop_exit_excp. Log reset, manual reset, TLB multiple, and
+user break.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- accel/tcg/cpu-exec-common.c  |  6 ++++++
- include/accel/tcg/cpu-loop.h | 13 +++++++++++++
- 2 files changed, 19 insertions(+)
+ target/sh4/cpu.h       | 24 +++++++++++++
+ target/sh4/helper.c    | 82 +++++++++++++++++++++---------------------
+ target/sh4/helper.h    |  4 ---
+ target/sh4/op_helper.c | 43 +++-------------------
+ target/sh4/translate.c | 17 ++++++---
+ 5 files changed, 84 insertions(+), 86 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index 44e84344f3b..a33ec922745 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -82,6 +82,12 @@ void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc)
-     cpu_loop_exit(cpu);
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index 33027023763..d440aa6dbe7 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -137,6 +137,30 @@ typedef struct memory_content {
+     struct memory_content *next;
+ } memory_content;
+ 
++/*
++ * Guest trap numbers in cs->exception_index. TCG loop codes such as
++ * EXCP_INTERRUPT start at 0x10000 in cpu-common.h and do not overlap these.
++ */
++enum {
++    SH4_EXCP_RESET = 0x000,
++    SH4_EXCP_MANUAL_RESET = 0x020,
++    SH4_EXCP_TLB_MISS = 0x040,
++    SH4_EXCP_DTLB_MISS_WRITE = 0x060,
++    SH4_EXCP_INITIAL_PAGE_WRITE = 0x080,
++    SH4_EXCP_TLB_VIOLATION = 0x0a0,
++    SH4_EXCP_DTLB_VIOLATION_WRITE = 0x0c0,
++    SH4_EXCP_ADDR_ERROR = 0x0e0,
++    SH4_EXCP_DATA_WRITE = 0x100,
++    SH4_EXCP_FPU = 0x120,
++    SH4_EXCP_TLB_MULTIPLE = 0x140,
++    SH4_EXCP_TRAPA = 0x160,
++    SH4_EXCP_ILLEGAL_INSTRUCTION = 0x180,
++    SH4_EXCP_SLOT_ILLEGAL_INSTRUCTION = 0x1a0,
++    SH4_EXCP_USER_BREAK = 0x1e0,
++    SH4_EXCP_FPU_DISABLE = 0x800,
++    SH4_EXCP_SLOT_FPU_DISABLE = 0x820,
++};
++
+ typedef struct CPUArchState {
+     uint32_t flags;             /* general execution flags */
+     uint32_t gregs[24];         /* general registers */
+diff --git a/target/sh4/helper.c b/target/sh4/helper.c
+index b6b057f104b..e22f02a5647 100644
+--- a/target/sh4/helper.c
++++ b/target/sh4/helper.c
+@@ -70,7 +70,7 @@ void superh_cpu_do_interrupt(CPUState *cs)
+     do_irq = do_irq && (cs->exception_index == -1);
+ 
+     if (env->sr & (1u << SR_BL)) {
+-        if (do_exp && cs->exception_index != 0x1e0) {
++        if (do_exp && cs->exception_index != SH4_EXCP_USER_BREAK) {
+             /* In theory a masked exception generates a reset exception,
+                which in turn jumps to the reset vector. However this only
+                works when using a bootloader. When using a kernel and an
+@@ -97,45 +97,57 @@ void superh_cpu_do_interrupt(CPUState *cs)
+     if (qemu_loglevel_mask(CPU_LOG_INT)) {
+         const char *expname;
+         switch (cs->exception_index) {
+-        case 0x0e0:
++        case SH4_EXCP_RESET:
++            expname = "reset";
++            break;
++        case SH4_EXCP_MANUAL_RESET:
++            expname = "manual_reset";
++            break;
++        case SH4_EXCP_ADDR_ERROR:
+             expname = "addr_error";
+             break;
+-        case 0x040:
++        case SH4_EXCP_TLB_MISS:
+             expname = "tlb_miss";
+             break;
+-        case 0x0a0:
++        case SH4_EXCP_TLB_MULTIPLE:
++            expname = "tlb_multiple";
++            break;
++        case SH4_EXCP_TLB_VIOLATION:
+             expname = "tlb_violation";
+             break;
+-        case 0x180:
++        case SH4_EXCP_ILLEGAL_INSTRUCTION:
+             expname = "illegal_instruction";
+             break;
+-        case 0x1a0:
++        case SH4_EXCP_SLOT_ILLEGAL_INSTRUCTION:
+             expname = "slot_illegal_instruction";
+             break;
+-        case 0x800:
++        case SH4_EXCP_FPU_DISABLE:
+             expname = "fpu_disable";
+             break;
+-        case 0x820:
++        case SH4_EXCP_SLOT_FPU_DISABLE:
+             expname = "slot_fpu";
+             break;
+-        case 0x100:
++        case SH4_EXCP_DATA_WRITE:
+             expname = "data_write";
+             break;
+-        case 0x060:
++        case SH4_EXCP_DTLB_MISS_WRITE:
+             expname = "dtlb_miss_write";
+             break;
+-        case 0x0c0:
++        case SH4_EXCP_DTLB_VIOLATION_WRITE:
+             expname = "dtlb_violation_write";
+             break;
+-        case 0x120:
++        case SH4_EXCP_FPU:
+             expname = "fpu_exception";
+             break;
+-        case 0x080:
++        case SH4_EXCP_INITIAL_PAGE_WRITE:
+             expname = "initial_page_write";
+             break;
+-        case 0x160:
++        case SH4_EXCP_TRAPA:
+             expname = "trapa";
+             break;
++        case SH4_EXCP_USER_BREAK:
++            expname = "user_break";
++            break;
+         default:
+             expname = do_irq ? "interrupt" : "???";
+             break;
+@@ -161,18 +173,18 @@ void superh_cpu_do_interrupt(CPUState *cs)
+     if (do_exp) {
+         env->expevt = cs->exception_index;
+         switch (cs->exception_index) {
+-        case 0x000:
+-        case 0x020:
+-        case 0x140:
++        case SH4_EXCP_RESET:
++        case SH4_EXCP_MANUAL_RESET:
++        case SH4_EXCP_TLB_MULTIPLE:
+             env->sr &= ~(1u << SR_FD);
+             env->sr |= 0xf << 4; /* IMASK */
+             env->pc = 0xa0000000;
+             break;
+-        case 0x040:
+-        case 0x060:
++        case SH4_EXCP_TLB_MISS:
++        case SH4_EXCP_DTLB_MISS_WRITE:
+             env->pc = env->vbr + 0x400;
+             break;
+-        case 0x160:
++        case SH4_EXCP_TRAPA:
+             env->spc += 2; /* special case for TRAPA */
+             /* fall through */
+         default:
+@@ -632,7 +644,7 @@ void cpu_sh4_write_mmaped_utlb_addr(CPUSH4State *s, hwaddr addr,
+                     CPUState *cs = env_cpu(s);
+ 
+                     /* Multiple TLB Exception */
+-                    cs->exception_index = 0x140;
++                    cs->exception_index = SH4_EXCP_TLB_MULTIPLE;
+                     s->tea = addr;
+                     break;
+                 }
+@@ -828,37 +840,27 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     switch (ret) {
+     case MMU_ITLB_MISS:
+     case MMU_DTLB_MISS_READ:
+-        cs->exception_index = 0x040;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_TLB_MISS, retaddr);
+     case MMU_DTLB_MULTIPLE:
+     case MMU_ITLB_MULTIPLE:
+-        cs->exception_index = 0x140;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_TLB_MULTIPLE, retaddr);
+     case MMU_ITLB_VIOLATION:
+-        cs->exception_index = 0x0a0;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_TLB_VIOLATION, retaddr);
+     case MMU_DTLB_MISS_WRITE:
+-        cs->exception_index = 0x060;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_DTLB_MISS_WRITE, retaddr);
+     case MMU_DTLB_INITIAL_WRITE:
+-        cs->exception_index = 0x080;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_INITIAL_PAGE_WRITE, retaddr);
+     case MMU_DTLB_VIOLATION_READ:
+-        cs->exception_index = 0x0a0;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_TLB_VIOLATION, retaddr);
+     case MMU_DTLB_VIOLATION_WRITE:
+-        cs->exception_index = 0x0c0;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_DTLB_VIOLATION_WRITE, retaddr);
+     case MMU_IADDR_ERROR:
+     case MMU_DADDR_ERROR_READ:
+-        cs->exception_index = 0x0e0;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_ADDR_ERROR, retaddr);
+     case MMU_DADDR_ERROR_WRITE:
+-        cs->exception_index = 0x100;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_DATA_WRITE, retaddr);
+     default:
+         cpu_abort(cs, "Unhandled MMU fault");
+     }
+-    cpu_loop_exit_restore(cs, retaddr);
+ }
+ #endif /* !CONFIG_USER_ONLY */
+diff --git a/target/sh4/helper.h b/target/sh4/helper.h
+index 29011d3dbbb..593b20c0af2 100644
+--- a/target/sh4/helper.h
++++ b/target/sh4/helper.h
+@@ -1,8 +1,4 @@
+ DEF_HELPER_1(ldtlb, void, env)
+-DEF_HELPER_1(raise_illegal_instruction, noreturn, env)
+-DEF_HELPER_1(raise_slot_illegal_instruction, noreturn, env)
+-DEF_HELPER_1(raise_fpu_disable, noreturn, env)
+-DEF_HELPER_1(raise_slot_fpu_disable, noreturn, env)
+ DEF_HELPER_1(sleep, noreturn, env)
+ DEF_HELPER_2(trapa, noreturn, env, i32)
+ DEF_HELPER_1(exclusive, noreturn, env)
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 777380f8e40..535bffb08f1 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -33,15 +33,12 @@ void superh_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+     switch (access_type) {
+     case MMU_INST_FETCH:
+     case MMU_DATA_LOAD:
+-        cs->exception_index = 0x0e0;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_ADDR_ERROR, retaddr);
+     case MMU_DATA_STORE:
+-        cs->exception_index = 0x100;
+-        break;
++        cpu_loop_exit_excp(cs, SH4_EXCP_DATA_WRITE, retaddr);
+     default:
+         g_assert_not_reached();
+     }
+-    cpu_loop_exit_restore(cs, retaddr);
  }
  
-+void cpu_loop_exit_excp(CPUState *cpu, int exception_index, uintptr_t pc)
-+{
-+    cpu->exception_index = exception_index;
-+    cpu_loop_exit_restore(cpu, pc);
-+}
-+
- void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc)
- {
-     /* Prevent looping if already executing in a serial context. */
-diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
-index f4d38bc2bca..04c14396d93 100644
---- a/include/accel/tcg/cpu-loop.h
-+++ b/include/accel/tcg/cpu-loop.h
-@@ -65,6 +65,19 @@ G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
- G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t host_pc);
- G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t host_pc);
+ #endif
+@@ -55,49 +52,19 @@ void helper_ldtlb(CPUSH4State *env)
+ #endif
+ }
  
-+/**
-+ * cpu_loop_exit_excp:
-+ * @cpu: the cpu context
-+ * @exception_index: EXCP_* or target trap number
-+ * @host_pc: the host pc within the translation, or 0
-+ *
-+ * Set cpu->exception_index and exit the TB. If @host_pc is in
-+ * translated code, restore guest state first (same as
-+ * cpu_loop_exit_restore). @host_pc == 0 skips restore.
-+ */
-+G_NORETURN void cpu_loop_exit_excp(CPUState *cpu, int exception_index,
-+                                   uintptr_t host_pc);
-+
- /**
-  * cpu_loop_exit:
-  * @cpu: the cpu context
+-static inline G_NORETURN
+-void raise_exception(CPUSH4State *env, int index,
+-                     uintptr_t retaddr)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = index;
+-    cpu_loop_exit_restore(cs, retaddr);
+-}
+-
+-void helper_raise_illegal_instruction(CPUSH4State *env)
+-{
+-    raise_exception(env, 0x180, 0);
+-}
+-
+-void helper_raise_slot_illegal_instruction(CPUSH4State *env)
+-{
+-    raise_exception(env, 0x1a0, 0);
+-}
+-
+-void helper_raise_fpu_disable(CPUSH4State *env)
+-{
+-    raise_exception(env, 0x800, 0);
+-}
+-
+-void helper_raise_slot_fpu_disable(CPUSH4State *env)
+-{
+-    raise_exception(env, 0x820, 0);
+-}
+-
+ void helper_sleep(CPUSH4State *env)
+ {
+     CPUState *cs = env_cpu(env);
+ 
+     cs->halted = 1;
+     env->in_sleep = 1;
+-    raise_exception(env, EXCP_HLT, 0);
++    cpu_loop_exit_excp(cs, EXCP_HLT, 0);
+ }
+ 
+ void helper_trapa(CPUSH4State *env, uint32_t tra)
+ {
+     env->tra = tra << 2;
+-    raise_exception(env, 0x160, 0);
++    cpu_loop_exit_excp(env_cpu(env), SH4_EXCP_TRAPA, 0);
+ }
+ 
+ void helper_exclusive(CPUSH4State *env)
+@@ -255,7 +222,7 @@ static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
+         cause = (env->fpscr & FPSCR_CAUSE_MASK) >> FPSCR_CAUSE_SHIFT;
+         enable = (env->fpscr & FPSCR_ENABLE_MASK) >> FPSCR_ENABLE_SHIFT;
+         if (cause & enable) {
+-            raise_exception(env, 0x120, retaddr);
++            cpu_loop_exit_excp(env_cpu(env), SH4_EXCP_FPU, retaddr);
+         }
+     }
+ }
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 373950fd662..a439be4c74e 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -1765,10 +1765,15 @@ static void _decode_opc(DisasContext * ctx)
+     if (ctx->envflags & TB_FLAG_DELAY_SLOT_MASK) {
+  do_illegal_slot:
+         gen_save_cpu_state(ctx, true);
+-        gen_helper_raise_slot_illegal_instruction(tcg_env);
++        gen_helper_raise_excp(tcg_env,
++                              tcg_constant_i32(
++                                  SH4_EXCP_SLOT_ILLEGAL_INSTRUCTION),
++                              tcg_constant_i32(0));
+     } else {
+         gen_save_cpu_state(ctx, true);
+-        gen_helper_raise_illegal_instruction(tcg_env);
++        gen_helper_raise_excp(tcg_env,
++                              tcg_constant_i32(SH4_EXCP_ILLEGAL_INSTRUCTION),
++                              tcg_constant_i32(0));
+     }
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return;
+@@ -1776,9 +1781,13 @@ static void _decode_opc(DisasContext * ctx)
+  do_fpu_disabled:
+     gen_save_cpu_state(ctx, true);
+     if (ctx->envflags & TB_FLAG_DELAY_SLOT_MASK) {
+-        gen_helper_raise_slot_fpu_disable(tcg_env);
++        gen_helper_raise_excp(tcg_env,
++                              tcg_constant_i32(SH4_EXCP_SLOT_FPU_DISABLE),
++                              tcg_constant_i32(0));
+     } else {
+-        gen_helper_raise_fpu_disable(tcg_env);
++        gen_helper_raise_excp(tcg_env,
++                              tcg_constant_i32(SH4_EXCP_FPU_DISABLE),
++                              tcg_constant_i32(0));
+     }
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
 -- 
 2.52.0.windows.1
 
