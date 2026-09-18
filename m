@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D9CC982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B455C982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Wwu-0000UU-6K; Fri, 18 Sep 2026 07:40:12 -0400
+	id 1x7Wx1-0000Vc-Jv; Fri, 18 Sep 2026 07:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7Wws-0000UD-OA
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:40:10 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7Wx0-0000VB-5n
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:40:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7Wwr-0001rB-3e
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:40:10 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7Wwy-0001rz-Fa
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:40:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789731608;
+ s=mimecast20190719; t=1789731615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NkBLN6iytHxigslhO22YLF7Mj8QQdsoSIRTOupiudCQ=;
- b=DWarsyvRPrEpCEApSj9vmdgyBRmm7dZ1zOLlXP7kBcKxtCLlAMA1w3Iqm8u3C8Ect0a+jq
- EonFhgtPPRhXlx+WCK+H2iL3vVw8bScS6ZxG8oW15M/GNdyq4TbAtLyP6tVdcO00MzC7fa
- kedIDJvGLRQh8wo0A0b4XlPvV2xT5Lw=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=f0YAk1LgwLEMJZh6lGah9roTe2m/EXT2KmvH9Za1r6I=;
+ b=fQ7JxnDjwjnY0jz6ozEMt7OV4VCyQLkMD9h0k89PkA8sEXEJok+RD4l2R2QvhYT3b5+NSS
+ ZG4tx8AeCYfnkUfTffEirLuY7ZPrHTikDuk2WSlPcC+wbd5qj8gafK+/n0nCHrmHmQ1eKR
+ 1r9tt7dbOrXNj/Gl0aRTRFcF2eaXsl4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-583-SQWKDgIkN7SFvf4sCEXbFw-1; Fri, 18 Sep 2026 07:40:06 -0400
-X-MC-Unique: SQWKDgIkN7SFvf4sCEXbFw-1
-X-Mimecast-MFC-AGG-ID: SQWKDgIkN7SFvf4sCEXbFw_1789731605
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-52fb8f67601so6854561cf.3
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:40:06 -0700 (PDT)
+ us-mta-625-keWH_FP5Nh6Tji5FeLem4g-1; Fri, 18 Sep 2026 07:40:14 -0400
+X-MC-Unique: keWH_FP5Nh6Tji5FeLem4g-1
+X-Mimecast-MFC-AGG-ID: keWH_FP5Nh6Tji5FeLem4g_1789731613
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93a00c70d28so95435285a.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789731605; x=1790336405; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789731613; x=1790336413; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NkBLN6iytHxigslhO22YLF7Mj8QQdsoSIRTOupiudCQ=;
- b=KdswAop+ew0ZiMfCQYw7wBn5q5wWvh+l0Jzlogmms5PX12U85IBMs0D3gjHNYVzhOT
- WALedSYbNm7ZsYSerQZgcfBq0DqkiLN7c9FLvbDDS5VsoNHLuu+ZlfvU5t3EQAJTiAdq
- 2W7trcOsk6xe4g5UyBz+zd1usmbTPu/1O3Ojgp6xGPkTr2TEJscwk84++Zk2T91JAt/4
- h7hhOdHtgJtcqVihkQNd8twnilCtyKzIvEypVWJ4L2uWbx1fVuqObY6o8iZL9vLek2uB
- bDpC9jYQw21PQ0VQQZ/5dl9S1r/+Ysh7xt9paUxoAsB3FfBjVYHpWbxl7qIlhq/IScSk
- otkQ==
+ bh=f0YAk1LgwLEMJZh6lGah9roTe2m/EXT2KmvH9Za1r6I=;
+ b=nBECGrW4eO0+7RwgtFYz1VH9t1LbiWN0Im5atW2u5Ht8XIJwFbGgLkw4fBgA6Ze0LO
+ 1GNXnChAOIQcMaN0u87HoWGYMlhDT4Z4B3UVWpB+GSS3SOMtqxVp7+cF483CZnkc/sjf
+ bQVACn8cxn/4FtgfvKsjdoeF6EWBCFcjCU+k+RWdLvCxONC1DfAzUzzWWEVyZMHuiIvA
+ hvBHuzm9DvCKrSapIeE4GsRyqlTrnAgUQneZdE65gIk6o+Td7hOZQL6Si9wYpPR3geyw
+ aeu0ZcggqAb0PGIBfsg+FGpIsiEDBhTRnQSQ2xmQzU52XBTbDWboscNX69bH6jxQ+OJG
+ sCOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789731605; x=1790336405;
+ d=1e100.net; s=20260707; t=1789731613; x=1790336413;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NkBLN6iytHxigslhO22YLF7Mj8QQdsoSIRTOupiudCQ=;
- b=szT5EQ2kRDXKEzJNOQ3a27s0/RSEu/Z9lbfPnEOFSeaw4587f1/oBdCOCA6E9++hlo
- kJU9sGFSc3adhFPOB8wHsJDQyShhxLtYXDLGMDtKYJXYM5fF4a0vsZH9haWBgXbheed1
- fj8EiKwbcvAYfXWPft5Tj6I7oT8TDaEENI+M4klWq6PJfa/II0jPqfnPAo+W1vDmJziq
- AUU9CBSskXDmTjarwfhFFRaiU0M5Ttd2rA6tbRfTPIyB6zn/fH8G7q6HO4wvQwbOqe9k
- Dy3atkOn7skb3qFHPKRA1ar/EiMxTFunfaC5vcdzEyW3CtgiyUztbzn3INP2s04EZH5T
- C1Ow==
-X-Gm-Message-State: AFuF++kDJAKvseG/9Al5s8cCR0nxDoMabojrHSl2GU8wxGel9IIqhnci
- OHsHFd2T3rNLfXSFsLYjnKA4NE7Tcrvt87ctP5i9bDx12H+uMgOOQg58yG0oZ7lSsO4utqsU7lh
- m22nguRRPclb7FZrVcx4W4geQqb8aJeE8B3zaLVjlxcmJp054PMhRKor6sGOMxfydLEh3ggTn2O
- NUMyvHmivW50NfwynFIPuuDFdqZhXZTBCXtihlA2uI
-X-Gm-Gg: AYBFou18CAwR+MN2TvYmVeq9r5l2N7F+acRqZTYhcsfmi+nFFNAjPgjJwCAw5z8GMaF
- 0vOVlRe3RGACIxhpCxJr9wbd5TqMugDvV+WKLKJyZJothMxu0Navj2zaoOwYcEqkp4vOvG+PZVj
- IIS0Eb8805T2y7i7u2Ee1YyyHsUxz1eynBcYOKAZB8ujPPWeX6rfS0NJXSNgOgl7BMKn6/dn6AI
- y+MMQKyB1cC7W4xYZijTYFD4OxW8h38QzkF7k9LV2EWDq5o6rgtJxU7F4IBCygyddFTDuHT+Zjq
- aG5Z5NEMayVVYZjhcttyP9UwUNMoACBPmaCY60mOhQ/LKkYl+byefGA/ItcovWn0HZVv3GB1Xjg
- ZPF4mnzwttrg0sbaSBFLdRz8rgrpzf0ohdwWnOnH2pC4aCt5B6PTdGrOuwg4=
-X-Received: by 2002:ac8:5dd2:0:b0:531:214b:42b with SMTP id
- d75a77b69052e-5329e48fed1mr32543751cf.40.1789731605365; 
- Fri, 18 Sep 2026 04:40:05 -0700 (PDT)
-X-Received: by 2002:ac8:5dd2:0:b0:531:214b:42b with SMTP id
- d75a77b69052e-5329e48fed1mr32543271cf.40.1789731604756; 
- Fri, 18 Sep 2026 04:40:04 -0700 (PDT)
+ bh=f0YAk1LgwLEMJZh6lGah9roTe2m/EXT2KmvH9Za1r6I=;
+ b=Z6l75YTq8luGvAN8tUJATmK4uxD/OlWG4ZiBS5Hxqm4v5FBd6qPrHBNPg50VVwQF9l
+ sR8KOztAfYYDK8Zm8o+iwsGxoTbssoixOc9s9tEUVR6JKGQcIzSEEvChCZ1B5UEpnee5
+ t0wAnLvuFh+GwJINQpPo+99fNbemEJ+nJ+TsWxJGtpNz+kJrzSngb8yM+fShBC46OIho
+ JHZ4Erzr7wKk3k8m9l9kAwA61OcYgLJNfoTj+JbnAGYwgQFi1ihGtmqkQi+mgZ7EPdmj
+ dvXGMB2kPVOURk/FP8MeWAqrZIecWXLjNolz2dvUoR4WXg4JA7TQIyDU16miuXNhmfWU
+ kNcw==
+X-Gm-Message-State: AFuF++nQgDJWV+4TIa72CO2LgIq4WfHZvxSIJJlVsMS3X4g69tybH2e6
+ XYRQ/S/QARKkJNIvrf2vzT/pJ/mtsTsiWMzdKLJx6rEhPYVTyeS1qnMDYIYiniRqyBeNwUFF4BX
+ YEpLCll3bfG9aevKIEmZahp7WKP3sU/6m4foh7Wx5rEv9uJTnclkPF84gxj3Q2W2z6HlvorSag/
+ jKIeeYLVb6zjjhnxssSPoJpH/aM57Z3Rq56MsdC/MZ
+X-Gm-Gg: AYBFou0sICyexPfaaGj1IdV6m4rb0hh0scKcGUDRYrytrGReDc37ZIQr09VIO9x0gQw
+ ZHilad3fxwhs3KrSvj5B80fj96bk3EbpZANVMKAxTk7Lf2msoN9lzSfH7XV11XEVlgoTQGXN8qP
+ Ra/mYwV3QaSfUcQS1DYS02UktCCvoi7g0bVxqW9+WJtxb4vrso1TpPnxEUxzNI7pIVLcZdGu+wj
+ n6YcasXcKDt9bHm5Il1KPgOAQsCyRCjtDkireS0sXm3Gjv+3HV2SRAC2mXRUcI8FR8bajyV0liU
+ yYce2NIUL3hv97Ta4LhHitkuKOYV2Qj8hbKJ4t1LbdYK+HtOrJW5pCjTFh58MATF+nkTUbYSQ6Z
+ 3QBgZFSQPxJxeEzRYfJrxdLCSf1Lmh2/Bc6f5kQUSIF7LCVIj9DUTWOI9KzU=
+X-Received: by 2002:a05:620a:6493:b0:93b:d7a2:83d5 with SMTP id
+ af79cd13be357-93bdca24c27mr251790185a.68.1789731613479; 
+ Fri, 18 Sep 2026 04:40:13 -0700 (PDT)
+X-Received: by 2002:a05:620a:6493:b0:93b:d7a2:83d5 with SMTP id
+ af79cd13be357-93bdca24c27mr251785285a.68.1789731612873; 
+ Fri, 18 Sep 2026 04:40:12 -0700 (PDT)
 Received: from localhost
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-532a19a4fa5sm11367371cf.13.2026.09.18.04.40.03
+ af79cd13be357-93be0a9eb64sm121185985a.0.2026.09.18.04.40.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 04:40:03 -0700 (PDT)
+ Fri, 18 Sep 2026 04:40:12 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-Subject: [PULL 04/11] xen-mapcache: Remove 32bit support
-Date: Fri, 18 Sep 2026 07:39:19 -0400
-Message-ID: <20260918113926.831204-5-peterx@redhat.com>
+ Kyle Evans <kevans@freebsd.org>
+Subject: [PULL 05/11] bsd-user: Remove 32bit host support in
+ thunk_convert|print()
+Date: Fri, 18 Sep 2026 07:39:20 -0400
+Message-ID: <20260918113926.831204-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918113926.831204-1-peterx@redhat.com>
 References: <20260918113926.831204-1-peterx@redhat.com>
@@ -123,49 +122,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU has switched to 64bit-only hosts for all system emulations.
+QEMU has switched to 64bit-only hosts for all system/user emulations.
 
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260818172012.3052821-5-peterx@redhat.com
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Anthony PERARD <anthony@xenproject.org>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: xen-devel@lists.xenproject.org
+Link: https://lore.kernel.org/r/20260818172012.3052821-6-peterx@redhat.com
+Cc: Warner Losh <imp@bsdimp.com>
+Cc: Kyle Evans <kevans@freebsd.org>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/xen/xen-mapcache.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ bsd-user/thunk.c | 47 +++--------------------------------------------
+ 1 file changed, 3 insertions(+), 44 deletions(-)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 85cf0cf359..e30c07c2ee 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -26,11 +26,7 @@
- #include <xenevtchn.h>
- #include <xengnttab.h>
- 
--#if HOST_LONG_BITS == 32
--#  define MCACHE_MAX_SIZE     (1UL<<31) /* 2GB Cap */
--#else
--#  define MCACHE_MAX_SIZE     (1UL<<35) /* 32GB Cap */
--#endif
-+#define MCACHE_MAX_SIZE     (1UL << 35) /* 32GB Cap */
- 
- /* This is the size of the virtual address space reserve to QEMU that will not
-  * be use by MapCache.
-@@ -151,11 +147,7 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
-         exit(EXIT_FAILURE);
-     }
- 
--    if (HOST_LONG_BITS == 32) {
--        bucket_shift = 16;
--    } else {
--        bucket_shift = 20;
--    }
-+    bucket_shift = 20;
- 
-     if (geteuid() == 0) {
-         rlimit_as.rlim_cur = RLIM_INFINITY;
+diff --git a/bsd-user/thunk.c b/bsd-user/thunk.c
+index 3c89ae3ab8..6703286609 100644
+--- a/bsd-user/thunk.c
++++ b/bsd-user/thunk.c
+@@ -134,13 +134,7 @@ const argtype *thunk_convert(void *dst, const void *src,
+     case TYPE_ULONGLONG:
+         *(uint64_t *)dst = tswap64(*(uint64_t *)src);
+         break;
+-#if HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 32
+-    case TYPE_LONG:
+-    case TYPE_ULONG:
+-    case TYPE_PTRVOID:
+-        *(uint32_t *)dst = tswap32(*(uint32_t *)src);
+-        break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 32
++#if TARGET_ABI_BITS == 32
+     case TYPE_LONG:
+     case TYPE_ULONG:
+     case TYPE_PTRVOID:
+@@ -155,27 +149,12 @@ const argtype *thunk_convert(void *dst, const void *src,
+             *(uint32_t *)dst = tswap32(*(uint64_t *)src & 0xffffffff);
+         }
+         break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 64
++#elif TARGET_ABI_BITS == 64
+     case TYPE_LONG:
+     case TYPE_ULONG:
+     case TYPE_PTRVOID:
+         *(uint64_t *)dst = tswap64(*(uint64_t *)src);
+         break;
+-#elif HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 64
+-    case TYPE_LONG:
+-    case TYPE_ULONG:
+-    case TYPE_PTRVOID:
+-        if (to_host) {
+-            *(uint32_t *)dst = tswap64(*(uint64_t *)src);
+-        } else {
+-            if (type == TYPE_LONG) {
+-                /* sign extension */
+-                *(uint64_t *)dst = tswap64(*(int32_t *)src);
+-            } else {
+-                *(uint64_t *)dst = tswap64(*(uint32_t *)src);
+-            }
+-        }
+-        break;
+ #else
+ #warning unsupported conversion
+ #endif
+@@ -283,17 +262,7 @@ const argtype *thunk_print(void *arg, const argtype *type_ptr)
+     case TYPE_ULONGLONG:
+         qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
+         break;
+-#if HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 32
+-    case TYPE_PTRVOID:
+-        qemu_log("0x%" PRIx32, tswap32(*(uint32_t *)arg));
+-        break;
+-    case TYPE_LONG:
+-        qemu_log("%" PRId32, tswap32(*(uint32_t *)arg));
+-        break;
+-    case TYPE_ULONG:
+-        qemu_log("%" PRIu32, tswap32(*(uint32_t *)arg));
+-        break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 32
++#if TARGET_ABI_BITS == 32
+     case TYPE_PTRVOID:
+         qemu_log("0x%" PRIx32, tswap32(*(uint64_t *)arg & 0xffffffff));
+         break;
+@@ -303,16 +272,6 @@ const argtype *thunk_print(void *arg, const argtype *type_ptr)
+     case TYPE_ULONG:
+         qemu_log("%" PRIu32, tswap32(*(uint64_t *)arg & 0xffffffff));
+         break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 64
+-    case TYPE_PTRVOID:
+-        qemu_log("0x%" PRIx64, tswap64(*(uint64_t *)arg));
+-        break;
+-    case TYPE_LONG:
+-        qemu_log("%" PRId64, tswap64(*(uint64_t *)arg));
+-        break;
+-    case TYPE_ULONG:
+-        qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
+-        break;
+ #else
+     case TYPE_PTRVOID:
+         qemu_log("0x%" PRIx64, tswap64(*(uint64_t *)arg));
 -- 
 2.55.0
 
