@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EFD3C982DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 14:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24158C982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 14:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7ZWc-00068z-OT; Fri, 18 Sep 2026 10:25:14 -0400
+	id 1x7ZWj-0006Jb-QU; Fri, 18 Sep 2026 10:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7ZW9-0005mo-7l
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:48 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1x7ZWF-0005nS-E3
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:55 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x7ZW7-0007q7-Ka
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:44 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ccf3ca626so4136385e9.0
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 07:24:43 -0700 (PDT)
+ id 1x7ZWD-0007rP-Nt
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 10:24:51 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49e6b885ef8so4829855e9.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 07:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789741482; x=1790346282; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789741488; x=1790346288; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ASTm/YOo+kNQKpxTKvr6w86Tke+vQk9M5QNLP09G1mU=;
- b=T3AydBefiZ4JZP+jtsjFMcEAUa+RI8ybGYQ8rMagjIuZeh6EXQyKZZehjW5R6F/eV8
- PMFlAQ191OucXnwMU3NE7vqXb6vZriZ7svcVL9CH2TCZp2etu8spCTky8TbRZLIkpyy7
- Q1vhFddg966Y0sQ5UwlsKP/q1faFGW0XC1dY/3+cgVY2OvKQc0QamBmIZV+2ECrmV3/Q
- Hxdk6TZM4ERbzOXhTQLqrw2q8l/oP1+dwG7e/89C7iPKpaEqMdTiQePfwE10Vu54QbDm
- GeviywiNGQGfhh9wdR1w/XABE7iMWzDdB2vVBwfNvF9K0DqJO4XVoler+l5uHgsA6Eoz
- CGAQ==
+ bh=Bb+3yGL+ssGZS3JwUTq61gT9ppntoVMqPfYZY4KfhEc=;
+ b=NugKNE7pIfLgtYXgi1nqujcxDXWo4G3FxpV8vPkbuK4jqbL/3XGOqLoxWd5lo2s425
+ 79C+QSIx9phuiYMMFha/Hw6l5pc+PQkbPyE30svHSHk7+nVfyID4EZniXtWRuN3aqtjK
+ RkdPtVBdOFrHwqLh9MXVBEc12wtlrCmRPc2R96gtTNukgnkBVB0Rlg9ajWSVPG/b0URk
+ PitjyY5E2k8WzAl81cU5JnrIpuRnfzrw8d/uxYoz5kYdpfzsPjPoCFt4kj/d5VMK72tB
+ zwyhvxiZ6k2v7LryDs/mFmPD/ht74UBMOlooCyqSxs1v+EGkVYiWC5D0SICBoajdmwwu
+ bA5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789741482; x=1790346282;
+ d=1e100.net; s=20260707; t=1789741488; x=1790346288;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ASTm/YOo+kNQKpxTKvr6w86Tke+vQk9M5QNLP09G1mU=;
- b=M5Wkt9x4EOREH3FdJjwhkkoPQc3ehEV6u6NrJ3JpdGOnHJx4Cu6BFRABgNw1O3Vz4V
- dsJINcLyVm+VqqgW6LQxILavg+rcKGsMjwGp6wQFQSBCcHlndEOF+/qD/63PsvtgnYAG
- nAWiuP3pVq+xvVo4i2R5FeTHlW8crUqQpAFnpsOeOuaVn1GfJNFcSyHzAtFkmtMxkp94
- rH1xQVMK9HS3Yr2H4AwNy8p5RPL++0bN2ubHgMigzjZAp4UeLrkw6DuZ7zfnnqIOVjCd
- 9J5rWS4K1HXTIhrXOkQCYcdfqu3VTvHgUi71BtHJ4NcSnUpnm5qSBd+R0kljn3UsIlYq
- QPgA==
-X-Gm-Message-State: AFuF++k33B8ekYOTawld7AQ3QjKewqLZQGZT4IeS151z3LFTgQbdJS0U
- EZSr85AA6y2RauhhtkbRgOdseeIm59JyjOe/Q82GvM2r3aPy++UeYP2vbeVs5FHRMj8=
-X-Gm-Gg: AYBFou2g6+r8WIf2qneRx77DvMxgzKvPjV3lnq+49cMP17wqEkQ5gnbYKorDW0/LuBy
- /XIHhsFN5XVbHrK5FUBQNvLuTEcwSKtRrcCWIyCMm/HBPuGhLNPbDj7zp0LZsptjA0ccrj8HEQb
- jFuYc5NLMdQtlBg9UfBnfz45oevV98W5fOJO+3aUr8hTeNzCzyen1Nw9X3KzFFo4u4AC7mJy4ho
- W0OhuCxvqcDndix1wMuKrZY//n1TK42vDJata4g35hb8g8v9wq6nlV9ULGSahDqP69fLCam6oFO
- FQolnC9NKxJI1KTBhbjCOxMjEdybY5o02JemIT1lQBBAoAeMr1Krf8FK9LJIzEDKjBRl+9mBTEJ
- 8KPaDMo6e9QZ55iyMhIWATiDL8v37fC/iQa1H2YPpRJx+q0dmZpQx/NcnQ1se5JXPenWD+aAJMp
- ICoAOiu4pTqxAoyjZVjSe4f9X4O7fD0HHaSjsznrdKjbKkR3KfhuISO8oTuhH0hGXw03D1GjQ=
-X-Received: by 2002:a05:600c:1908:b0:499:8aff:59b6 with SMTP id
- 5b1f17b1804b1-49fc56ad81cmr32759795e9.14.1789741482135; 
- Fri, 18 Sep 2026 07:24:42 -0700 (PDT)
+ bh=Bb+3yGL+ssGZS3JwUTq61gT9ppntoVMqPfYZY4KfhEc=;
+ b=FGBl189U2+zvVrh7C21WG7dtODWQ6mwkJR4Skv9zJNeAQRNDrtvFIZqTSa0R1QUH05
+ P8kpMKuAd6UW0whXEs0aXgYCsuXgDmh0hZ4WvvqF/Ppmi7H4JU3nfwwo70F+TuccITqy
+ nrt4pdSbOZGNoGGDhXLC9sGn9z6+N5rK5YD3hKDkWrd25QYskNu4blr86xCdAKrojxoZ
+ BaIo3kaOP1+flLajz9UewIeICUeAdERPNLMC32xiZowRNnEwDULxX+lzNPieqoiKq/XC
+ eNzr80rHEKj/VQ0ziDvtTDmc7jttXKVMY9jwEvnFyeptJr2bzLBmh4OluB3mwuZj3vUQ
+ 8Luw==
+X-Gm-Message-State: AFuF++lhEzSaWa5/jxEXqNalESW9SrcnEFgD8PPX0nqxmmTVQ6vkUszq
+ tWKfP70A3coNyGya97jgYCHBQ62OvIFY86HkeU320hkQ27iSqGOHvgpcFiIhUXRcxNs=
+X-Gm-Gg: AYBFou2PRYymnlMYamm/ezw8eawRtmmUIqh1XBU2aDN6Kmjeo+642YgCxpd4IhSLpAs
+ URts9eM9jF0oQ/6cPq+cCBF9ba7T9Yh16iP3fvrCRMBfaeXQrbexocUJFyeE7fKb4jU2pzp95Qc
+ KqbudqGU+1b7OlOhFNwUzR/qtTRyKIjm0dt00jwYnfk6qxutFPuZNqMrIM1qKRLc8V/WfPyUKCG
+ jWuRNSCtHB+Cj12fU473WKhDyUIzZ6Hyl/Ffkz8bqpnwsMngfoarXrEO26XkadpwRpVR3R2IPjy
+ eiHA8JCWN36rdHBEjwvvFmqKzczqDM8nao/8aNS2lhfPWZoF85dcrZFXyf673ZPO00N1Zd4Q2xo
+ cOR9iYkCuNvUdk1MaKhuWEDcH8nDcv4JaUF3ETkrLNydDI5HLUKTbL3Beu4CyZ5mrQdcnjSn/Aj
+ lzQHFjeNYdk+LBrsLd3yi1PuU7G7Ec7vnLb2ofDKRxZJ+i9fftZqlR5iC+Md+9Gvw/dJtG71c=
+X-Received: by 2002:a05:600c:4e53:b0:49e:715e:ec1f with SMTP id
+ 5b1f17b1804b1-49fc5757378mr36044745e9.30.1789741488074; 
+ Fri, 18 Sep 2026 07:24:48 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fbd2160c2sm166863355e9.6.2026.09.18.07.24.33
+ 5b1f17b1804b1-49fbd1d0d0bsm158133615e9.1.2026.09.18.07.24.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 18 Sep 2026 07:24:37 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 580625FBDB;
+ by draig.lan (Postfix) with ESMTP id D913E5FC99;
  Fri, 18 Sep 2026 15:24:30 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 07/17] tests/tcg: prefix meson built docker tags with qemu/
-Date: Fri, 18 Sep 2026 15:24:18 +0100
-Message-ID: <20260918142429.336497-8-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 12/17] tests/docker: add specific command to parser
+Date: Fri, 18 Sep 2026 15:24:23 +0100
+Message-ID: <20260918142429.336497-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260918142429.336497-1-alex.bennee@linaro.org>
 References: <20260918142429.336497-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,64 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the meson changes we now build the images directly by calling
-docker.py. However the Makefile.include builds prefix all the images
-with qemu/:
+A future change will want to use additional flags which clash with
+docker/podman command lines. Currently they would get snarfed up by
+argparser. Make the pass-through commands explicit to avoid this.
 
-  # General rule for building docker images.
-  docker-image-%: $(DOCKER_FILES_DIR)/%.docker
-            $(call quiet-command,			\
-                  DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
-                  $(if $(DOCKER_V),,--quiet)		\
-                  $(if $(NOCACHE),--no-cache,		\
-                          $(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
-                  --build-arg BUILDKIT_INLINE_CACHE=1 	\
-                  $(if $(NOUSER),,			\
-                          --build-arg USER=$(USER)	\
-                          --build-arg UID=$(UID))		\
-                  -t qemu/$* - < $< $(if $(DOCKER_V),,> /dev/null),\
-                  "BUILD", $*)
-
-So to ensure we don't end up building every container twice make sure
-the naming conventions line up.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Tested-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260917165602.3405537-7-alex.bennee@linaro.org>
+Message-ID: <20260917165602.3405537-13-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
+diff --git a/scripts/coverity-scan/run-coverity-scan b/scripts/coverity-scan/run-coverity-scan
+index 2f9ccd5e44b..0e1361606e0 100755
+--- a/scripts/coverity-scan/run-coverity-scan
++++ b/scripts/coverity-scan/run-coverity-scan
+@@ -381,7 +381,7 @@ if [ "$DOCKER" = yes ]; then
+     # Arrange for this docker run to get access to the sources with -v.
+     # We pass through all the configuration from the outer script to the inner.
+     export COVERITY_EMAIL COVERITY_BUILD_CMD
+-    tests/docker/docker.py run -it --env COVERITY_EMAIL --env COVERITY_BUILD_CMD \
++    tests/docker/docker.py run -- -it --env COVERITY_EMAIL --env COVERITY_BUILD_CMD \
+            -v "$SECRETDIR:/work" coverity-scanner \
+            ./run-coverity-scan --version "$VERSION" \
+            --description "$DESCRIPTION" $ARGS --tokenfile /work/token \
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index fd0cbdfe856..d97dda26967 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -379,9 +379,12 @@ def args(self, parser):
+                             help="Don't remove image when command completes")
+         parser.add_argument("--run-as-current-user", action="store_true",
+                             help="Run container using the current user's uid")
++        parser.add_argument('cmd', nargs='*',
++                            help="""The command to run. You should precede with
++                            -- to avoid confusion about its flags""")
+ 
+     def run(self, args, argv):
+-        return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
++        return Docker(args.command).run(args.cmd, args.keep, quiet=args.quiet,
+                                         as_user=args.run_as_current_user)
+ 
+ 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index d41a228fb3d..0604c4b90b9 100644
+index 482de73ac72..053ef147df0 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -255,7 +255,7 @@ foreach target, plan: tcg_tests
-     image_name = 'image-' + cc_dockerfile
-     has_docker = docker_host_arch_supported and docker_supported
-     if cc_dockerfile not in image_targets and has_docker
--      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', cc_dockerfile]
-+      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile]
-       t = custom_target(image_name, command: cmd,
-                         build_by_default: false,
-                         output: 'no_output_' + image_name)
-@@ -270,7 +270,7 @@ foreach target, plan: tcg_tests
+@@ -275,7 +275,7 @@ foreach target, plan: tcg_tests
+       mount = meson.project_source_root()
+       mount = mount + ':' + mount
        here = meson.project_build_root()
-       cc = [docker_wrapper, 'run', '--run-as-current-user',
+-      cc = [docker_wrapper, 'run', '--run-as-current-user',
++      cc = [docker_wrapper, 'run', '--run-as-current-user', '--',
              '-w', here, '-v', mount,
--            cc_dockerfile, plan['cc']]
-+            'qemu/' + cc_dockerfile, plan['cc']]
+             'qemu/' + cc_dockerfile, plan['cc']]
        has_cc = true
-     endif
-   endif
-@@ -279,7 +279,7 @@ foreach target, plan: tcg_tests
-   if has_cc
-     summary_cc = plan['cc']
-     if not cc_from_system
--      summary_cc += ' (from \'' + plan['cc_dockerfile'] + '\' container)'
-+      summary_cc += ' (from \'qemu/' + plan['cc_dockerfile'] + '\' container)'
-     endif
-   endif
-   tcg_tests_summary += {'cc for ' + target: summary_cc}
 -- 
 2.47.3
 
