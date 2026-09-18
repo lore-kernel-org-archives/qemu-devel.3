@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C20CC88E75
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0284DC982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7QAr-0006DE-TO; Fri, 18 Sep 2026 00:26:09 -0400
+	id 1x7QAJ-0005YP-Ph; Fri, 18 Sep 2026 00:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAn-00061u-T8
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:26:06 -0400
-Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAE-0005WG-J6
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:31 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAl-0004Pa-VV
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:26:05 -0400
-Received: by mail-oi2-x10.google.com with SMTP id
- 46e09a7af769-80a6fbf797dso67425a34.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAC-0004Mc-JE
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:30 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-80638c24bedso266070a34.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705553; x=1790310353;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705527; x=1790310327;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WtfmsscsalVrAJPd73Q0DzcpHT4vVxE/8E3wbnd6UT0=;
- b=IuYG2vtyUol9Jel2MiWkx79Oe1UdJyisOI1PGglbTpV57fORCudDJETO4qIaoS7Hp+
- dDvJM4rJQFsaWdpRfrFa9xBk8TtBE8rtnjw2PUz9cAaJGwZa5WQUDKKi9+d2WG8XJEb1
- Osy4+4elVnrMl8Zm2fCzgN8vZkuOrpv3/HSRSEYxlQfHBFcejY0kBRgtZwwWxKIM/vRg
- j34Vjh/3daSA2ZUxFfjaEA0eKqDwMfh5RrrbDh2R6J5YKFDlfrKOOnfNQqE2YNxtNSgo
- FU1jAGsN0aSOoWVRWsELB4+4HXL3UN0s8/zXP2KUWO801s/f32o+jSQaaQ/btmu1PJ6Z
- nwdQ==
+ bh=eYUyMQoT40u2msHNKD8OftoQr7GgD9EvZv1AL0aAxu4=;
+ b=atJSwybuR4al1J2DZ5JVnxTpLWibKhA++UJ1hI/4u3M/lZ/Kl1jzN0014PHMa3mhC9
+ nDZNvbNX4PRVrGf5poYqpYI/+e/k/wQEWHPS8KamI8jw/63dzkewkUL9geFYohVxWZkt
+ 8kUECUWdPQY0Y+vTsbNr+02lJ915cijXWBJdvHKukFt5y8boe4ZPzwb8u1JuX/gunQL2
+ BdMxAurQAJKeHIiPDM9HvVKEzwYViSqMs5CPSeAurTn9Q2zVXejAwPpRpJ8NWteWC3fp
+ 8Oqk/eu4uQB1pI1Mbr3smPGX16zXpbtMhAUMKc/UzapNbPj8Isn1nP4hbjMl5jULUuJT
+ rT7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789705553; x=1790310353;
+ d=1e100.net; s=20260707; t=1789705527; x=1790310327;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=WtfmsscsalVrAJPd73Q0DzcpHT4vVxE/8E3wbnd6UT0=;
- b=cuwEF9WrLUVoYdj1HjftxFJdjv6HOKgwWbArotdd45gS59kHqDDVgJLWlOynyYl0aK
- hM4QK/4c2hCR2otMK4nY24o/o1lSNMSv/fNCv+BzlYMP6DAodWh37QI0lpxYZGhMrBN1
- idSNzj28SGqcV4QA1t1XFpIztw0HZltUpu3Nd2McUsq6KB1oTjop3ZTysrt1Up/zlNin
- AhRlgsbQwtCNdoUF4ceRbCiaM90OSfj8PYictxdu9ysafsm8iEThaOxMPGmIYPFskJhw
- 7E0zLeyPCDH2yFTGSakyMWl5UCoHA4liis2rwNR6oLsPZ4gkkpBpO89NslL0umw7G36s
- InNA==
-X-Gm-Message-State: AFuF++lGgwZ6tylwEIHeafyI3FD4T5OGrihyeevoDpB5bjwqVwew2BqY
- gaVs6zz5r2NwFZx+vc8OwK6xr4Sm/MGWoUA6Patr7B0nHtov2IRPYSmbBQG4sEcdtEN6n69I4NX
- +CYIjhmk=
-X-Gm-Gg: AYBFou3/a6w6Sh6TcV0GtP/bQZAuWZtM9AIoARgUXf9LqJXHa2yhmQ2USePLpLhBwP4
- 6CVdEzftWo+XsbizPW0Aq18JrR2M6NkVvx99EZRTPfY34o/7o3TRaofkiLo78dn3E4fsT7aWuSR
- oY7izCx2V+QhEyUjyDaU0v1TgzCjIFp0ZhEutBWoAXt4+Rj1bW2GNkZGb+ibmvxYC8iJ0siYFLr
- Yn3z52+aRlA9oBsp7ZkrlChi5XrDzpwaXaMxR7ws70mpDvRN/UtrZm9M+pXCoE8whdJGJ1WLg2L
- 3ptJHp2bJmSrbmST/PAuq+cbxgiLyWpRCgQKaMvy5bSpT7sE1sCzgHGxr+hSHndQcq4hMgY2e3z
- eAEgrEi8WwrlPEp3Q8dQ1/A0uBiCqk1ForwVZ/I14Mpn1QHUWZtsKqf5S9Mwuuzq0/1EbFNF2WA
- jV8z0HNsMYs6Dmr5vclmTm4FLGaCWplVpzHcwhCBu78NTPZR3FLY5kQLBKnQAlO26MrBki
-X-Received: by 2002:a05:6830:3819:b0:807:3423:e50a with SMTP id
- 46e09a7af769-80de1371824mr1268231a34.15.1789705552880; 
- Thu, 17 Sep 2026 21:25:52 -0700 (PDT)
+ bh=eYUyMQoT40u2msHNKD8OftoQr7GgD9EvZv1AL0aAxu4=;
+ b=xozlAYt9Aa01pUvdQFz3t8v0Oy3lWiXu6W/Gr2VF5R5wzbOh+jj3FyPvx1+CGzm6sB
+ Q+DX5lZu2G+a0HUYheifieYrDDu7I6bby6dSFp8rkMjoOlwNkk8tqTLEjO6Ih8vtzEXc
+ +DOowurp1xWLyJxs20u9uKRQkgrX1P5a0oKEi+nIs1W7bdK+SE1zZqGggCGSB6DApEV9
+ 1sYAwyMJjNWgcbiQSS2TKtfZ8XOxP4CW642NOrcyYWjHlaKM7CP3bcc5Vg4x1Fw5t7C7
+ mH9Zi63Co5bHcpOdvcqL8XBStrW6KUBLYzQwnB8jfWjjL5aPMT9sby559hw4QqA7+45U
+ gArA==
+X-Gm-Message-State: AFuF++norWMuhrpAzCJJb8eOCSTlzvUWW5VvTEH7yl4a22n1qToMnxRf
+ kEfVpnuwnuUaynGvqo0eH3PEeIbLEKaJhukmwf3n5FfqA87nhAsJx4KQn5PdFKKgb0twVeA9269
+ GaTgy/VQ=
+X-Gm-Gg: AYBFou2prZYQ+f5ClC3Vcpws+Lx2kfXHQtkbLwUNbQeLIlzkUwjzpEGiHShunEp3or4
+ q7rsQJJINrhdbkphTnu+NUE7iuv1bJk43p+M93v6kEU9Ya2n1SuIU66ttSvWg7Bhn1rdiL6fGcW
+ 5LQThBzy6+pCBEmlIMEPeV8pPwNN+srL635QNg4M9J76Qix5xoAHvi43FCLLCmUN/OFYLNPIMSg
+ Yp5LJU0lZT+WLBvlJem01zorb7aSUMav1poXcQ3LhaVtVRr/75G2Fp1mGg1T5jh1TOF5MgCJ/cg
+ ITz/c/E41O3Df8cL+zet64fpO3aTyUq3ett8cUrGjbZP9T5XISK3+kzifOx1+2JXIdkM+WQes5x
+ sq0oOe0FmkK25bcT3S7ziFHpHscZcrlHCfg4wa/TzgoD3YxLg3l4sZJOuBK8ESNCR54tj5reBsc
+ HsMUZOUBMwu21Ma8sH9foFayVOHuMP9bll73LtTQYU/+jp8IfxF3hnAP4V2Q==
+X-Received: by 2002:a05:6830:a1d0:10b0:804:3ca9:8e5c with SMTP id
+ 46e09a7af769-80c4bd14d95mr3486551a34.8.1789705527407; 
+ Thu, 17 Sep 2026 21:25:27 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.52
+ 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 21:25:52 -0700 (PDT)
+ Thu, 17 Sep 2026 21:25:27 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- Stacey Son <sson@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 36/41] bsd-user: Add os-extattr.c with ACL conversion functions
-Date: Thu, 17 Sep 2026 22:24:17 -0600
-Message-ID: <20260918042422.38713-37-imp@bsdimp.com>
+Subject: [PULL 18/41] bsd-user: Implement both getsockopt and setsockopt
+Date: Thu, 17 Sep 2026 22:23:59 -0600
+Message-ID: <20260918042422.38713-19-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918042422.38713-1-imp@bsdimp.com>
 References: <20260918042422.38713-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:32::10;
- envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::334;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,178 +99,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add os-extattr.c with t2h_freebsd_acl, h2t_freebsd_acl, and
-t2h_freebsd_acl_type helper functions for ACL operations. Add
-os-extattr.c to the build and include os-extattr.h in the
-syscall dispatcher.
+Implement get/setsockopt with the generated file describing the socket
+options. This uses a table driven conversion. At the moment, we only
+implement the simple types. For 64 on 64 with the same endian, we also
+try to just copy in/out since the representation should be the same.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Assisted-by: Claude Opus 4.6 (1M context)
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/meson.build  |   1 +
- bsd-user/freebsd/os-extattr.c | 118 ++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-syscall.c |   2 +
- 3 files changed, 121 insertions(+)
- create mode 100644 bsd-user/freebsd/os-extattr.c
+ bsd-user/freebsd/os-socket.h | 340 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 340 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-socket.h
 
-diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
-index db531604ad..0fc779749d 100644
---- a/bsd-user/freebsd/meson.build
-+++ b/bsd-user/freebsd/meson.build
-@@ -4,6 +4,7 @@ bsd_syscall_nr = custom_target('bsd-syscall-h',
-     command: [sh, meson.current_source_dir() / 'scripts/syscallhdr.sh', '@INPUT@', '@OUTPUT@', 'FREEBSD'])
- 
- bsd_user_ss.add(files(
-+  'os-extattr.c',
-   'os-proc.c',
-   'os-socket.c',
-   'os-stat.c',
-diff --git a/bsd-user/freebsd/os-extattr.c b/bsd-user/freebsd/os-extattr.c
+diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
 new file mode 100644
-index 0000000000..3456157b4d
+index 0000000000..126e49b282
 --- /dev/null
-+++ b/bsd-user/freebsd/os-extattr.c
-@@ -0,0 +1,118 @@
++++ b/bsd-user/freebsd/os-socket.h
+@@ -0,0 +1,340 @@
 +/*
-+ * FreeBSD extend attributes and ACL conversions
++ * FreeBSD socket related system call shims
 + *
-+ * Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#include "qemu/osdep.h"
++#ifndef BSD_USER_FREEBSD_OS_SOCKET_H
++#define BSD_USER_FREEBSD_OS_SOCKET_H
 +
-+#ifndef _ACL_PRIVATE
-+#define _ACL_PRIVATE
-+#endif
-+#include <sys/acl.h>
++#include <sys/types.h>
++#include <sys/socket.h>
++#include <sys/un.h>
++#include <netinet/in.h>
 +
-+#include "qemu.h"
 +#include "qemu-os.h"
++#include "os-sockopt.h"
 +
-+/*
-+ * FreeBSD ACL conversion.
-+ */
-+abi_long t2h_freebsd_acl(struct acl *host_acl, abi_ulong target_addr)
++ssize_t safe_recvmsg(int s, struct msghdr *msg, int flags);
++ssize_t safe_sendmsg(int s, const struct msghdr *msg, int flags);
++
++/* do_sendrecvmsg_locked() Must return target values and target errnos. */
++static abi_long do_sendrecvmsg_locked(int fd, struct target_msghdr *msgp,
++                                      int flags, int send)
 +{
-+    uint32_t i;
-+    struct target_freebsd_acl *target_acl;
++    abi_long ret, len;
++    struct msghdr msg;
++    abi_ulong count;
++    struct iovec *vec;
++    abi_ulong target_vec;
 +
-+    if (!lock_user_struct(VERIFY_READ, target_acl, target_addr, 1)) {
++    if (msgp->msg_name) {
++        msg.msg_namelen = tswap32(msgp->msg_namelen);
++        msg.msg_name = alloca(msg.msg_namelen + 1);
++        ret = target_to_host_sockaddr(msg.msg_name,
++                                      tswapal(msgp->msg_name),
++                                      msg.msg_namelen);
++        if (ret == -TARGET_EFAULT) {
++            /*
++             * For connected sockets msg_name and msg_namelen must be ignored,
++             * so returning EFAULT immediately is wrong.  Instead, pass a bad
++             * msg_name to the host kernel, and let it decide whether to return
++             * EFAULT or not.
++             */
++            msg.msg_name = (void *)-1;
++        } else if (ret) {
++            goto out2;
++        }
++    } else {
++        msg.msg_name = NULL;
++        msg.msg_namelen = 0;
++    }
++    msg.msg_controllen = 2 * tswap32(msgp->msg_controllen);
++    if (msgp->msg_control) {
++        msg.msg_control = alloca(msg.msg_controllen);
++        memset(msg.msg_control, 0, msg.msg_controllen);
++    } else {
++        msg.msg_control = NULL;
++    }
++
++    msg.msg_flags = tswap32(msgp->msg_flags);
++
++    count = tswap32(msgp->msg_iovlen);
++    target_vec = tswapal(msgp->msg_iov);
++
++    if (count > IOV_MAX) {
++        /*
++         * sendrcvmsg returns a different errno for this condition than
++         * readv/writev, so we must catch it here before lock_iovec() does.
++         */
++        ret = -TARGET_EMSGSIZE;
++        goto out2;
++    }
++
++    vec = lock_iovec(send ? VERIFY_READ : VERIFY_WRITE,
++                     target_vec, count, send);
++    if (vec == NULL) {
++        ret = -host_to_target_errno(errno);
++        goto out2;
++    }
++    msg.msg_iovlen = count;
++    msg.msg_iov = vec;
++
++    if (send) {
++        if (msg.msg_control != NULL) {
++            ret = t2h_freebsd_cmsg(&msg, msgp);
++        } else {
++            ret = 0;
++        }
++        if (ret == 0) {
++            ret = get_errno(safe_sendmsg(fd, &msg, flags));
++        }
++    } else {
++        ret = get_errno(safe_recvmsg(fd, &msg, flags));
++        if (!is_error(ret)) {
++            len = ret;
++            if (msg.msg_control != NULL) {
++                ret = h2t_freebsd_cmsg(msgp, &msg);
++            } else {
++                ret = 0;
++            }
++            if (!is_error(ret)) {
++                msgp->msg_namelen = tswap32(msg.msg_namelen);
++                msgp->msg_flags = tswap32(msg.msg_flags);
++                if (msg.msg_name != NULL && msg.msg_name != (void *)-1) {
++                    ret = host_to_target_sockaddr(tswapal(msgp->msg_name),
++                                    msg.msg_name, msg.msg_namelen);
++                    if (ret) {
++                        goto out;
++                    }
++                }
++
++                ret = len;
++            }
++        }
++    }
++
++out:
++    unlock_iovec(vec, target_vec, count, !send);
++out2:
++    return ret;
++}
++
++
++static abi_long do_sendrecvmsg(int fd, abi_ulong target_msg,
++                               int flags, int send)
++{
++    abi_long ret;
++    struct target_msghdr *msgp;
++
++    if (!lock_user_struct(send ? VERIFY_READ : VERIFY_WRITE,
++                          msgp,
++                          target_msg,
++                          send ? 1 : 0)) {
 +        return -TARGET_EFAULT;
 +    }
-+    __get_user(host_acl->acl_maxcnt, &target_acl->acl_maxcnt);
-+    __get_user(host_acl->acl_cnt, &target_acl->acl_cnt);
-+
-+    if (host_acl->acl_maxcnt > ACL_MAX_ENTRIES ||
-+        host_acl->acl_cnt > ACL_MAX_ENTRIES) {
-+        unlock_user_struct(target_acl, target_addr, 0);
-+        return -TARGET_EINVAL;
-+    }
-+
-+    for (i = 0; i < host_acl->acl_cnt; i++) {
-+        __get_user(host_acl->acl_entry[i].ae_tag,
-+            &target_acl->acl_entry[i].ae_tag);
-+        __get_user(host_acl->acl_entry[i].ae_id,
-+            &target_acl->acl_entry[i].ae_id);
-+        __get_user(host_acl->acl_entry[i].ae_perm,
-+            &target_acl->acl_entry[i].ae_perm);
-+        __get_user(host_acl->acl_entry[i].ae_entry_type,
-+            &target_acl->acl_entry[i].ae_entry_type);
-+        __get_user(host_acl->acl_entry[i].ae_flags,
-+            &target_acl->acl_entry[i].ae_flags);
-+    }
-+
-+    unlock_user_struct(target_acl, target_addr, 0);
-+    return 0;
++    ret = do_sendrecvmsg_locked(fd, msgp, flags, send);
++    unlock_user_struct(msgp, target_msg, send ? 0 : 1);
++    return ret;
 +}
 +
-+abi_long h2t_freebsd_acl(abi_ulong target_addr, struct acl *host_acl)
++static inline struct sockopt_entry *get_sockopt_entry(int level)
 +{
-+    uint32_t i;
-+    struct target_freebsd_acl *target_acl;
++    for (int i = 0; i < ARRAY_SIZE(so_cache); i++) {
++        if (so_cache[i].level == level) {
++            return so_cache[i].entry;
++        }
++    }
++    return NULL;
++}
 +
-+    if (host_acl->acl_maxcnt > ACL_MAX_ENTRIES ||
-+        host_acl->acl_cnt > ACL_MAX_ENTRIES) {
-+        return -TARGET_EINVAL;
++/* setsockopt(2) */
++static inline abi_long do_bsd_setsockopt(int sockfd, int level, int optname,
++        abi_ulong optval_addr, socklen_t optlen)
++{
++    abi_long ret;
++    int val;
++    u_char ch;
++    uint64_t val64;
++    struct sockopt_entry *e = get_sockopt_entry(level);
++    void *p;
++
++    if (e == NULL) {
++        gemu_log("Unsupported setsockopt level=%d optname=%d\n",
++                 level, optname);
++        return -TARGET_ENOPROTOOPT;
 +    }
 +
-+    if (!lock_user_struct(VERIFY_WRITE, target_acl, target_addr, 0)) {
++    while (e->level != SOCK_LEVEL_NONE && e->optname != optname) {
++        e++;
++    }
++
++    if (e->level == SOCK_LEVEL_NONE) {
++        gemu_log("Unsupported setsockopt level=%d optname=%d\n",
++                 level, optname);
++        return -TARGET_ENOPROTOOPT;
++    }
++
++    for (int i = 0; i < ARRAY_SIZE(e->type) && e->type[i] != 0; i++) {
++        switch (e->type[i]) {
++        case SOCKOPT_TYPE_BOOL:
++        case SOCKOPT_TYPE_INT:
++        case SOCKOPT_TYPE_U_INT:
++        case SOCKOPT_TYPE_UINT32_T:
++            if (optlen != sizeof(int)) {
++                continue;
++            }
++            if (get_user_u32(val, optval_addr)) {
++                return -TARGET_EFAULT;
++            }
++            return get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
++        case SOCKOPT_TYPE_U_CHAR:
++            if (optlen != sizeof(u_char)) {
++                continue;
++            }
++            if (get_user_u8(ch, optval_addr)) {
++                return -TARGET_EFAULT;
++            }
++            return get_errno(setsockopt(sockfd, level, optname, &ch, sizeof(ch)));
++        case SOCKOPT_TYPE_UINT64_T:
++            if (optlen != sizeof(uint64_t)) {
++                continue;
++            }
++            if (get_user_u64(val64, optval_addr)) {
++                return -TARGET_EFAULT;
++            }
++            return get_errno(setsockopt(sockfd, level, optname, &val64, sizeof(val64)));
++        default:
++#if HOST_LONG_BITS != TARGET_ABI_BITS || HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
++            gemu_log("Unsupported setsockopt level=%d optname=%d\n",
++                     level, optname);
++            return -TARGET_ENOPROTOOPT;
++#endif
++            break;
++        }
++    }
++
++    /*
++     * When bit size and endian are the same, the structures are the same (we hope).
++     */
++    p = lock_user(VERIFY_READ, optval_addr, optlen, 1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(setsockopt(sockfd, level, optname, p, optlen));
++    unlock_user(p, optval_addr, 0);
++    return ret;
++}
++
++/* getsockopt(2) */
++static inline abi_long do_bsd_getsockopt(int sockfd, int level, int optname,
++        abi_ulong optval_addr, abi_ulong optlen)
++{
++    abi_long ret;
++    int val;
++    u_char ch;
++    socklen_t len;
++    uint64_t val64;
++    struct sockopt_entry *e = get_sockopt_entry(level);
++    void *p;
++
++    if (e == NULL) {
++        gemu_log("Unsupported getsockopt level=%d optname=%d\n",
++                 level, optname);
++        return -TARGET_ENOPROTOOPT;
++    }
++
++    while (e->level != SOCK_LEVEL_NONE && e->optname != optname) {
++        e++;
++    }
++
++    if (e->level == SOCK_LEVEL_NONE) {
++        gemu_log("Unsupported getsockopt level=%d optname=%d\n",
++                 level, optname);
++        return -TARGET_ENOPROTOOPT;
++    }
++
++    if (get_user_u32(len, optlen)) {
 +        return -TARGET_EFAULT;
 +    }
 +
-+    __put_user(host_acl->acl_maxcnt, &target_acl->acl_maxcnt);
-+    __put_user(host_acl->acl_cnt, &target_acl->acl_cnt);
-+
-+    for (i = 0; i < host_acl->acl_cnt; i++) {
-+        __put_user(host_acl->acl_entry[i].ae_tag,
-+            &target_acl->acl_entry[i].ae_tag);
-+        __put_user(host_acl->acl_entry[i].ae_id,
-+            &target_acl->acl_entry[i].ae_id);
-+        __put_user(host_acl->acl_entry[i].ae_perm,
-+            &target_acl->acl_entry[i].ae_perm);
-+        __put_user(host_acl->acl_entry[i].ae_entry_type,
-+            &target_acl->acl_entry[i].ae_entry_type);
-+        __put_user(host_acl->acl_entry[i].ae_flags,
-+            &target_acl->acl_entry[i].ae_flags);
++    for (int i = 0; i < ARRAY_SIZE(e->type) && e->type[i] != 0; i++) {
++        switch (e->type[i]) {
++        case SOCKOPT_TYPE_BOOL:
++        case SOCKOPT_TYPE_INT:
++        case SOCKOPT_TYPE_U_INT:
++        case SOCKOPT_TYPE_UINT32_T:
++            if (len != sizeof(int)) {
++                continue;
++            }
++            ret = get_errno(getsockopt(sockfd, level, optname, &val, &len));
++            if (ret < 0) {
++                return ret;
++            }
++            if (len == sizeof(int)) {
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++                goto done;
++            }
++            continue;
++        case SOCKOPT_TYPE_U_CHAR:
++            if (len != sizeof(u_char)) {
++                continue;
++            }
++            ret = get_errno(getsockopt(sockfd, level, optname, &ch, &len));
++            if (ret < 0) {
++                return ret;
++            }
++            if (len == sizeof(u_char)) {
++                if (put_user_u8(ch, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++                goto done;
++            }
++            continue;
++        case SOCKOPT_TYPE_UINT64_T:
++            if (len != sizeof(uint64_t)) {
++                continue;
++            }
++            ret = get_errno(getsockopt(sockfd, level, optname, &val64, &len));
++            if (ret < 0) {
++                return ret;
++            }
++            if (len == sizeof(uint64_t)) {
++                if (put_user_u64(val64, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++                goto done;
++            }
++            continue;
++        default:
++#if HOST_LONG_BITS != TARGET_ABI_BITS || HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
++            gemu_log("Unsupported getsockopt level=%d optname=%d\n",
++                     level, optname);
++            return -TARGET_ENOPROTOOPT;
++#endif
++            break;
++        }
 +    }
 +
-+    unlock_user_struct(target_acl, target_addr, 1);
-+    return 0;
-+}
-+
-+abi_long t2h_freebsd_acl_type(acl_type_t *host_type, abi_long target_type)
-+{
-+
-+    switch (target_type) {
-+    case TARGET_FREEBSD_ACL_TYPE_ACCESS_OLD:
-+        *host_type = ACL_TYPE_ACCESS_OLD;
-+        break;
-+
-+    case TARGET_FREEBSD_ACL_TYPE_DEFAULT_OLD:
-+        *host_type = ACL_TYPE_DEFAULT_OLD;
-+        break;
-+
-+    case TARGET_FREEBSD_ACL_TYPE_ACCESS:
-+        *host_type = ACL_TYPE_ACCESS;
-+        break;
-+
-+    case TARGET_FREEBSD_ACL_TYPE_DEFAULT:
-+        *host_type = ACL_TYPE_DEFAULT;
-+        break;
-+
-+    case TARGET_FREEBSD_ACL_TYPE_NFS4:
-+        *host_type = ACL_TYPE_NFS4;
-+        break;
-+
-+    default:
-+        return -TARGET_EINVAL;
++    /*
++     * When bit size and endian are the same, the structures are the same, and
++     * if not that is handled above.
++     */
++    p = lock_user(VERIFY_WRITE, optval_addr, len, 0);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
 +    }
-+    return 0;
++    ret = get_errno(getsockopt(sockfd, level, optname, p, &len));
++    unlock_user(p, optval_addr, ret < 0 ? 0 : len);
++done:
++    if (put_user_u32(len, optlen)) {
++        return -TARGET_EFAULT;
++    }
++    return ret;
 +}
 +
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 0c729da0ab..f385034a53 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -17,6 +17,7 @@
-  *  You should have received a copy of the GNU General Public License
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
-+#define _ACL_PRIVATE
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
- #include "qemu/path.h"
-@@ -43,6 +44,7 @@
- #include "bsd-socket.h"
- 
- /* BSD dependent syscall shims */
-+#include "os-extattr.h"
- #include "os-stat.h"
- #include "os-proc.h"
- #include "os-signal.h"
++
++#endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
 -- 
 2.55.0
 
