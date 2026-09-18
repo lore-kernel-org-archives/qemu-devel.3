@@ -4,96 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96044C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151B3C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 18:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7cn4-0004aY-V5; Fri, 18 Sep 2026 13:54:26 -0400
+	id 1x7d1m-0002G5-CF; Fri, 18 Sep 2026 14:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7cn2-0004aG-JU
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 13:54:24 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7cn1-0004bN-65
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 13:54:24 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-39b31b4281eso1133492a91.2
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 10:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789754061; x=1790358861; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cBbrd4UylHTdxSGmgajUxStwLqnV+Nx3pEBRu8g5XuU=;
- b=AQBOgT513ND2grrKTpUtaFGOyURhgPUI9KVnSvT9fshOHXA7v9NtoiLik1kIi23yUn
- hmm7pCO05IYVCev/4sHGDMvmZVOz30NEOdRsZ54lR3iTb/gLYAvxKcKW2CGX1xyh3xc0
- iKAR3ky0TYg773TJ+mmEo9bRtwZk+rNEUsUAYWgHMBIY/yvX8hXGtbdmkITNPq+JgVbi
- uYid4PebJQ+MZZzgUln7LdcOvXh86a0MpD1X+yPigOcPb+F5JUipqQuPn1VPn4ZMkwQh
- GIEuLVIjN5ftVHXeVcJhpIUFDzgLu3LSxD/pt/5F1oWwvEp1M+8hRfJ9upZ39ddSaKBV
- 84Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789754061; x=1790358861;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cBbrd4UylHTdxSGmgajUxStwLqnV+Nx3pEBRu8g5XuU=;
- b=QxQAzGHpgWRRSFmiDYq545qAO/8WKV3z3+uzkqLn04aTEby/ue/OB4wz8bl1AWOPf2
- YM3PfHATFZGTQREjLBddsByDotkcsnHlvDrLh8yfZVmeGQAL+0E1EZYVWUev1Vu6/LbB
- iMU4jbQBteZdzZaj49jwhfTbpv3WuMCGELH3vBxK63+Xdaxx2rP2Y438XYtIAClEDWxO
- sRTYwfZP983F1mvdPoj/95Ix1aWnuBozSrhilJdA9AcHYTviDAH9XL8YaK9rpVhiRgsc
- 3y2Pre5L/uTVCjQTggkdk+WJMs2xTd90Hh52VTQ913s1dYYYUozgrbMYBK85RdsBBW83
- 7JnA==
-X-Gm-Message-State: AFuF++lLVM6K4X+WshDCLnTUySLlgwIOdP6bPCCMIkBZT6WWyp9i01/0
- zV5LowWpkFUnC1RbXWSsmaWNxfPv7ijNzRfLKCu6Brx1IFC3uvhrkFHHzCeLGCyI4/dpKEKXveP
- uAiemLkM=
-X-Gm-Gg: AYBFou0eifsY7ELOiBekhgIP4cVL9HDQaMLxypOK9xZzuM9PUMHJ+Yuwsc88Fz3KlZu
- FGMUIqBhfv6kO6A0FsW1nGl4UrKOw76t1PB84yIsxbtsEGAoKqarKe/VPwo+N7NVNWNK3IgzPPl
- r9VofZrpFOSzP60UmfVNRfcEE3uSGS35TUjY12bKyq3FHksumA1JFp9c9vQ1wEkKZCCP92Gy4V1
- igzjyWAsOJHpEoGCX9OuZ3dkpCOHZO0ii4Amsvl1JjTBwKbBE3i5s333y7OdJQxaLXBbFFeIun7
- f6r+Rz+uK5Nfe4YHBc3xXbuB/E/hV05pHQJkgfIsxFUwvaBCNPhEWAj7V1wIpWls9TfSsi3c+PP
- NMHERyVK7SbUCVEzAc2pPjGlsaWdUbhyc479HU0QNr2+8kwiPKQJ5w7PIY7MrLJhzVjqcfaulSe
- DswwnUvJQhDsnszy4XqP2t2gWDQv+z2FQ6r8Se3ggIoL5Z5L+5xkErwspl8UCPJrwxuUzRDuA5N
- 5O61xgyQES8bhwW6iX9kLA3eiupWeeg/K1q3ZGtQSWYB5XyOIqpMTbB59HENGyohEMzyCB2
-X-Received: by 2002:a17:90b:4d91:b0:39e:6c68:c782 with SMTP id
- 98e67ed59e1d1-39e6c68c9f1mr549125a91.56.1789754061037; 
- Fri, 18 Sep 2026 10:54:21 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:a77b:e7c1:e15f:5180?
- ([2603:800c:7900:ed00:a77b:e7c1:e15f:5180])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144d55e8954sm251770c88.14.2026.09.18.10.54.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Sep 2026 10:54:20 -0700 (PDT)
-Message-ID: <8a7f4fb2-09a8-407f-b655-ebfe5036c794@linaro.org>
-Date: Fri, 18 Sep 2026 07:54:17 -1000
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1x7d1k-0002Fr-Uq; Fri, 18 Sep 2026 14:09:36 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1x7d1j-0000Qm-30; Fri, 18 Sep 2026 14:09:36 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 4CE266053B;
+ Fri, 18 Sep 2026 18:09:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918901F000FF;
+ Fri, 18 Sep 2026 18:09:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1789754973;
+ bh=nn2ACGNl0JItvk+0dkDagjUvBrduDougE0sMWGM5CWk=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=nRV+wbv/BkAlmuezx4TiByOsWJT6GF+mf5cHezPCJ+62yTvsl+kW/uStIBT8fEa/y
+ irPPm+Z63V5kb6MvDQFkWwo/Wd7Q4y3EINvgVHwLvH48WP1o5V9COVhWyqJMJDBO18
+ 212ut6ijwjw2KMSF22BCuv8K7o32IPlfZBjeUd/wAeYJ4PMm47b20rGC+ThBvEplzz
+ tbvCaLVEJo2RTYp7FiBLDgiv4FWFocSou997CT5KUKDDrQ6+OxTvP9jsvM/yE4C/Fc
+ w6XNKE06OIdxfvEFmWpCEcDyaxagIg5rGTGF+gog3LaAws59bpQPfXIYPdWmmxfon9
+ HbGF7Q5APBZ1Q==
+Date: Fri, 18 Sep 2026 20:09:27 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 00/15] block: fix the zone write granularity and the
+ zone append limit
+Message-ID: <aq1-V-1kBKvoTbJV@ryzen>
+References: <20260918172925.2640888-1-cassel@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/21] accel/tcg: add helper raise_excp
-To: luoyonggang@gmail.com
-Cc: qemu-devel@nongnu.org
-References: <20260918004225.827-1-luoyonggang@gmail.com>
- <20260918004225.827-4-luoyonggang@gmail.com>
- <724e2043-fbd3-4c1d-85b3-a2e6056b9ec8@linaro.org>
- <CAE2XoE8X8cAS0CsQ52pgBXsrbND14bL03SehRnx64tCGSOxrWw@mail.gmail.com>
- <975a89d3-3614-494e-bdc4-3d892658f095@linaro.org>
- <CAE2XoE8HqY3XH-myj1Y-w4g9FM1mbzFXU+cf-3pkYeV8-quRog@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAE2XoE8HqY3XH-myj1Y-w4g9FM1mbzFXU+cf-3pkYeV8-quRog@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260918172925.2640888-1-cassel@kernel.org>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,10 +72,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/26 23:17, Yonggang Luo wrote:
-> I'll prefer HELPER(raise_excp)
+On Fri, Sep 18, 2026 at 07:29:08PM +0200, Niklas Cassel wrote:
+> Hello Stefan, Kevin, and everyone else,
+> 
+> This series fixes how QEMU reports and enforces the two constraints that a
+> zoned device places on a write to a sequential zone: the write granularity,
+> and the largest zone append that it accepts. It also fixes two bugs in the
+> zone append emulation in file-posix, one of which a guest can reach.
+> 
+> Most of it is preparation for Sam Li's zoned qcow2 series. The first two
+> patches are taken directly from there, as they are unrelated to qcow2.
+> 
+> Neither of the two values that this series touches is derived from
+> BlockLimits any more, which was Stefan's objection to v4: the guest has
+> been told the value, so it is part of the migration stream, and a
+> destination host whose disks report something else breaks the guest. The
+> write granularity now comes from the logical and the physical block size,
+> the append limit from a property, and a backend that needs more than the
+> configuration can express is refused at realize. The conditions that hold
+> for every backend rather than for a particular one moved into the block
+> layer, where they also cover callers that are not a device model.
+> 
+> Changes since v4:
+> - Patch 4 is new: a helper to check if a zone is conventional. The device
+>   model tested that by reaching into bs->wps->wp[] and decoding the bit
+>   that the block layer encodes it in, which two patches here would have
+>   added two more instances of.
+> - Patch 5: derive the granularity from the logical and the physical block
+>   size rather than from BlockLimits. Document
+>   BlockLimits.write_granularity. Dropped Damien's Reviewed-by, as the
+>   derivation itself changed.
+> - Patch 7: also refuse a backend that needs a coarser granularity than the
+>   block sizes can express. Dropped Damien's Reviewed-by, as the patch
+>   gained a check.
+> - Patch 9 is new: reject an append larger than a zone. This is the bound
+>   that the device model gives up by no longer deriving its own limit.
+> - Patch 11: a max-append-sectors property rather than a value derived from
+>   the backend. It now precedes patch 12, which v4 had first; that way round
+>   left a commit that reported a zero limit to the guest.
+> - Patch 12: remove BlockLimits.max_append_sectors, rather than have
+>   file-posix report max_hw_transfer for it. Nothing reads the field once
+>   virtio-blk takes its limit from a property, and file-posix was its only
+>   writer. Damien, your Reviewed-by was for reporting max_hw_transfer, so I
+>   have dropped it.
+> - Patch 15 is new: the CoroutineIOCompletion cleanup.
 
-Yes, please.
+Stefan, it seems like my tooling failed to pick up your tags because they
+were multipart messages.... I'm very sorry about that.
 
-r~
+Patches that you have reviewed, and are supposed to have your R-b tag:
+1, 2, 3, 6, 8, 10, 13, 14
+
+
+
+Patches that you need to review - changed so much that I dropped tags:
+7, 12
+
+Patches that you need to review - patches that you had comments on:
+5, 11
+
+Patches that you need to review - patches that are new:
+4, 9, 15
+
+
+
+Kind regards,
+Niklas
 
